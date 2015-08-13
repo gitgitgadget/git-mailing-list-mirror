@@ -1,58 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] http: add support for specifying the SSL version
-Date: Thu, 13 Aug 2015 07:58:41 -0700
-Message-ID: <CAPc5daUZFEDN9OqQVwYFxsyHZYtvw8D-Ost-bopreKZmV0epxw@mail.gmail.com>
-References: <1439389491-21669-1-git-send-email-gitter.spiros@gmail.com>
- <xmqqoaicmtac.fsf@gitster.dls.corp.google.com> <CA+EOSBmWqpT6zSZuCyBdW0cL0OLWbq1yvYmwqgTCUVF5T51K-w@mail.gmail.com>
+Subject: Re: Git Stickers
+Date: Thu, 13 Aug 2015 08:03:48 -0700
+Message-ID: <CAPc5daVq181Z2ARLTL1Q8X-9PF+8=orno4yb06iCGYD54cm0GA@mail.gmail.com>
+References: <320F569E-5444-40A9-A16C-4DB976260CAF@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 16:59:16 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Rodolfo Faioli <rodolfo.faioli@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 17:04:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPtyN-0003cA-Qb
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 16:59:16 +0200
+	id 1ZPu3C-0007ik-PX
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 17:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753161AbbHMO7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 10:59:05 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:36427 "EHLO
-	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752464AbbHMO7C (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 10:59:02 -0400
-Received: by iodv127 with SMTP id v127so38838495iod.3
-        for <git@vger.kernel.org>; Thu, 13 Aug 2015 07:59:01 -0700 (PDT)
+	id S1752421AbbHMPEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 11:04:10 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:34735 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751692AbbHMPEJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 11:04:09 -0400
+Received: by iodb91 with SMTP id b91so54661716iod.1
+        for <git@vger.kernel.org>; Thu, 13 Aug 2015 08:04:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type;
-        bh=E9GbKAJ/Bq0ZVeEDna4hTwI3tKTcXZDcI0gZ2SaxiNU=;
-        b=BmNp1/KDs7zUKGMrt8xtkUXNiJsvQifwuSlNKdUGPGFj8XW2jSJoOwgb5BEczelLhh
-         ptdYHoH69XqX7nz135ERa+VWJrAipi1KsjgMdfM6mXXQuDOKB9Vfol7c2t+SZEynwcYv
-         ELZGTfp1YfFtDmhHx1zhrJa0kY6B8OnhzJt7KMEdTaTGUbiRoXfqVjCMyABftOKIhfH3
-         BmTj2Uysb81D7dkAEuX+PUqrleMKvOCfFLO5P2Jgsxg4K0YjLoVTs3+11vyAGoT1Rr60
-         4yhAlXmwhIFeJiuaSYrebxOT6xLIUBFiya6cQeERMfsVCYM6ZQRF0mgLAuNO+ujZXq7x
-         1Dgg==
-X-Received: by 10.107.148.7 with SMTP id w7mr15884283iod.82.1439477941218;
- Thu, 13 Aug 2015 07:59:01 -0700 (PDT)
-Received: by 10.36.41.149 with HTTP; Thu, 13 Aug 2015 07:58:41 -0700 (PDT)
-In-Reply-To: <CA+EOSBmWqpT6zSZuCyBdW0cL0OLWbq1yvYmwqgTCUVF5T51K-w@mail.gmail.com>
-X-Google-Sender-Auth: qcTeGk99XCU2LvWCyZrjLukN_J0
+        bh=pDjEw0xSjfOqWekCR8QzemvRl7vxcngr1+NrryCPBEw=;
+        b=xOlWaGVpc8W0d4jQ8C4jM1o0I4NP5Q9BR9rJQghrN2a9Q5V0ZE/k2inp/I52t70gsE
+         8h9LYNyKM1NQz/SqsNxyFY5wU0H5gFo2F3XfOnrKhg/UF2xcEFGpGSqw5KY2TWZFd9Kr
+         TqVGIo6fcH3MYEzcMLJ7kHIvm4er/qnNdW9AFVdartpmoBnS23a2mnBzOCcjmPhLbqm+
+         fqVO64N9C586MrNGJpPzd2vcCwqA0hlnoCCMHfsd1w6ndKPyI3JggtdcUOIZCrxNNBBb
+         ElthLsfS13TVK2QGZ+T36TZACspde+tYaJaGhdkn1UlcHyzyjB3hlLi2vss39MuQ7UBm
+         CbrQ==
+X-Received: by 10.107.148.7 with SMTP id w7mr15917173iod.82.1439478248250;
+ Thu, 13 Aug 2015 08:04:08 -0700 (PDT)
+Received: by 10.36.41.149 with HTTP; Thu, 13 Aug 2015 08:03:48 -0700 (PDT)
+In-Reply-To: <320F569E-5444-40A9-A16C-4DB976260CAF@gmail.com>
+X-Google-Sender-Auth: EprhmF8WN2-YEdWlbzRISkc0r9Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275847>
 
-On Thu, Aug 13, 2015 at 7:30 AM, Elia Pinto <gitter.spiros@gmail.com> wrote:
->>
-> unfortunately they are enum constant (not #defined)
+I see a few hits from http://lmgtfy.com/?q=Git+Stickers
 
-Ahh, then checking LIBCURL_VERSION_NUM is unfortunately the
-best we could do. Sorry for the noise.
+AFAIK, none of them is "official" in the sense that the project
+ordered printing or the proceeds from sales come to the project,
+though. And no, the project does not have "official" sticker ;-)
 
-You still can go with the table-driven approach, though.
+
+
+On Thu, Aug 13, 2015 at 7:56 AM, Rodolfo Faioli
+<rodolfo.faioli@gmail.com> wrote:
+> I would like to know if a can have an Git stickers. I am really want some to stick on my laptop
+>
+> thank you--
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
