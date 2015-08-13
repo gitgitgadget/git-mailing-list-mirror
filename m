@@ -1,103 +1,100 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 3/4] refs: make refs/worktree/* per-worktree
-Date: Thu, 13 Aug 2015 16:32:26 -0400
-Organization: Twitter
-Message-ID: <1439497946.8855.22.camel@twopensource.com>
-References: <1439416645-19173-1-git-send-email-dturner@twopensource.com>
-		 <1439416645-19173-3-git-send-email-dturner@twopensource.com>
-		 <CAPig+cRM-J-5SHJ9JVsHPR+B2Y05nwFrRQWsd0M56pm9jS-mTQ@mail.gmail.com>
-	 <1439487708.8855.2.camel@twopensource.com> <55CCFB32.30608@alum.mit.edu>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v10 04/13] utf8: add function to align a string into given strbuf
+Date: Fri, 14 Aug 2015 02:25:44 +0530
+Message-ID: <CAOLa=ZSZyfrHOe1Gjw457mbJCP5yW1uesDAW8zuv8DqoE+yuJQ@mail.gmail.com>
+References: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
+ <1439129506-9989-5-git-send-email-Karthik.188@gmail.com> <CAPig+cS+rS=xKX-LrJSTqFgaopuLzbh3hqURFWXfzMXH=XUk2w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>, Jacob Keller <jacob.keller@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 13 22:32:35 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 22:56:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPzAv-0003rK-P7
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 22:32:34 +0200
+	id 1ZPzY1-0000QV-Qd
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 22:56:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752620AbbHMUc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 16:32:29 -0400
-Received: from mail-qg0-f52.google.com ([209.85.192.52]:34393 "EHLO
-	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752022AbbHMUc3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 16:32:29 -0400
-Received: by qgeg42 with SMTP id g42so39691801qge.1
-        for <git@vger.kernel.org>; Thu, 13 Aug 2015 13:32:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=Pkh0ykZOlavng4YydYKTefiRPcWXUK+lLN8958S1TjA=;
-        b=JCCSNgS+k0iSWeimp4ZX84tsjRLw/4ABaJjCl9KTiRJjPK+j78I4Hx9ke9OIUx5MS9
-         FMRUqCZVwBE/S8Cd75j3hnpK5dhZINjuqQJ+Ec47EXP/U4XfBkSf4M4paFOFWCAHLMZq
-         WuQ4nNtGX0TlxmPWXfbT4IGZvh8kCGCZrTWI87Z2eXc31gboIDx6Dxc8p1Tgnieu7tPJ
-         00zph3wgDgJ5jn1V726Mg4Q/KihYL6TvAvKigM4tfXVam0bVKvGDKqJBrqc9P0WotVF2
-         mgIMSqRIJ1np/0DL3yowCG1/GHWNwlsXQqmh4oTWC0xmBsMiQWAO9g9r2nrKWY/vg2SA
-         GdOA==
-X-Gm-Message-State: ALoCoQnxNne77VtXcWYM4KAlwtSps4jHn7IJY8ejL+jMXf3QSNGylkFVbkB7OAGAxp8H688hwYO8
-X-Received: by 10.140.217.138 with SMTP id n132mr8870873qhb.96.1439497948129;
-        Thu, 13 Aug 2015 13:32:28 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id h49sm1744379qgh.43.2015.08.13.13.32.26
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Aug 2015 13:32:27 -0700 (PDT)
-In-Reply-To: <55CCFB32.30608@alum.mit.edu>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1754121AbbHMU4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 16:56:15 -0400
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:33359 "EHLO
+	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754025AbbHMU4O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 16:56:14 -0400
+Received: by oio137 with SMTP id 137so33835014oio.0
+        for <git@vger.kernel.org>; Thu, 13 Aug 2015 13:56:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=73yTHcSW36I6lC/e2WnqdI45JoC0gRGclt2hbD10njE=;
+        b=Qldilondmy4qmvAg3gT7QmoFGcfYyXn1XCM7AdPbdQcCu2WUzHHLj4IB+ibvEs/qUK
+         b8v0Yb+XzxTgd0b27CaA3M6dRIUUIOHSfCh5Wf35VihTWTcawUe1s/Ucv92RGJR3YFhL
+         UQgpV478tQzVi2juQjqxYFzlNZg4Vqb7C50hMtme9lCkGZ/sbsWrTq61VuVAhVMdawLd
+         XHYqGoZjVsyfn7UZEkn5W2FOUctzyT2vZhCqiLYJqNJQ5R4TDQZXIADUNhlfK1NnkHHQ
+         hnzj5NKbPLQEZ6l/9WHoYBq9sZ/p9GiNP/Cjs0SLLinlTEK8J7mj414nGxkiqcypkZdC
+         /0+A==
+X-Received: by 10.202.200.75 with SMTP id y72mr35296053oif.111.1439499373470;
+ Thu, 13 Aug 2015 13:56:13 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Thu, 13 Aug 2015 13:55:44 -0700 (PDT)
+In-Reply-To: <CAPig+cS+rS=xKX-LrJSTqFgaopuLzbh3hqURFWXfzMXH=XUk2w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275894>
 
-On Thu, 2015-08-13 at 22:16 +0200, Michael Haggerty wrote:
-> On 08/13/2015 07:41 PM, David Turner wrote:
-> > On Thu, 2015-08-13 at 13:15 -0400, Eric Sunshine wrote:
-> >> On Wed, Aug 12, 2015 at 5:57 PM, David Turner <dturner@twopensource.com> wrote:
-> >>> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-> >>> index 93605f4..28e6dff 100755
-> >>> --- a/t/t0060-path-utils.sh
-> >>> +++ b/t/t0060-path-utils.sh
-> >>> +test_expect_success 'handle per-worktree refs in refs/worktree' '
-> >>> +       git commit --allow-empty -m "initial commit" &&
-> >>> +       git worktree add -b branch worktree &&
-> >>> +       (
-> >>> +               cd worktree &&
-> >>> +               git commit --allow-empty -m "test commit"  &&
-> >>> +               git for-each-ref | test_must_fail grep refs/worktree &&
-> >>
-> >> s/test_must_fail/!/
-> >>
-> >> From t/README:
-> >>
-> >>    On the other hand, don't use test_must_fail for running regular
-> >>    platform commands; just use '! cmd'.  We are not in the business
-> >>    of verifying that the world given to us sanely works.
-> > 
-> > When I make that change, my test fails with:
-> > 
-> > FATAL: Unexpected exit with code 2
-> > 
-> > Apparently, you can't use ! in pipelines like that.  So that's why I
-> > used test_must_fail.
-> 
-> You would have to negate the whole pipeline, like
-> 
->     ! git for-each-ref | grep refs/worktree
-> 
-> The result of a pipeline is taken from the last command.
+On Fri, Aug 14, 2015 at 12:38 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sun, Aug 9, 2015 at 10:11 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Add strbuf_utf8_align() which will align a given string into a strbuf
+>> as per given align_type and width. If the width is greater than the
+>> string length then no alignment is performed.
+>
+> In addition to Junio's valuable comments...
+>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/utf8.h b/utf8.h
+>> index 5a9e94b..db8ca63 100644
+>> --- a/utf8.h
+>> +++ b/utf8.h
+>> @@ -55,4 +55,17 @@ int mbs_chrlen(const char **text, size_t *remainder_p, const char *encoding);
+>>   */
+>>  int is_hfs_dotgit(const char *path);
+>>
+>> +typedef enum {
+>> +       ALIGN_LEFT,
+>> +       ALIGN_MIDDLE,
+>> +       ALIGN_RIGHT
+>> +} align_type;
+>> +
+>> +/*
+>> + * Align the string given and store it into a strbuf as per the type
+>> + * and width.
+>> + */
+>
+> Please extend this documentation to state explicitly that this
+> function preserves (does not truncate) the input string if it is wider
+> than 'width'. That's quite important information for the caller to
+> know.
+>
+> (Aside: I could easily see this function being extended to support
+> optional truncation, but that's a separate topic, and something that
+> can be done by someone else when the feature is actually needed; it's
+> not your responsibility.)
+>
+>> +void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int width,
+>> +                      const char *s);
+>> +
+>>  #endif
 
-Yes, but that would pass if for-each-ref fails, which I do not want.  
+Yeah will do :)
 
-Jacob's suggestion of parentheses around (! grep refs/worktree) seems to
-work.
+-- 
+Regards,
+Karthik Nayak
