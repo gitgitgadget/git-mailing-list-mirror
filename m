@@ -1,135 +1,89 @@
-From: Kosenko Roman <madkite@gmail.com>
-Subject: Re: [bug] git-svn segmentation fault
-Date: Thu, 13 Aug 2015 18:28:31 +0100
-Message-ID: <CAB4xWX4Z+1jKTj2d7_UPVxudsu8V6y7h2nk5StLzRdwRkSk05g@mail.gmail.com>
-References: <CAB4xWX7R_FrFATqnwebRqAWsUrZd-ATU3rTGxjq6c-44XbRUgw@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v3 3/4] refs: make refs/worktree/* per-worktree
+Date: Thu, 13 Aug 2015 13:41:48 -0400
+Organization: Twitter
+Message-ID: <1439487708.8855.2.camel@twopensource.com>
+References: <1439416645-19173-1-git-send-email-dturner@twopensource.com>
+	 <1439416645-19173-3-git-send-email-dturner@twopensource.com>
+	 <CAPig+cRM-J-5SHJ9JVsHPR+B2Y05nwFrRQWsd0M56pm9jS-mTQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 13 19:29:03 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
+	<pclouds@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 19:41:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPwJF-0004cj-Tl
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 19:28:58 +0200
+	id 1ZPwVn-0007Zo-OG
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 19:41:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752604AbbHMR2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 13:28:53 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:35594 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751993AbbHMR2w (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 13:28:52 -0400
-Received: by wicne3 with SMTP id ne3so148221293wic.0
-        for <git@vger.kernel.org>; Thu, 13 Aug 2015 10:28:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=d/+ggBS2Ym0uZVzhl8mQHSIj0hdsqFq+Fh6dWJQRHF8=;
-        b=CSjG341AyP1QSnuXn4fHLpI6Hi1DACg3yRq3XHTS/yZR5iXIgqIb5rcNJ8I7wOeTsv
-         UPvsob4eK9kOK14NjyFKNCgIsRj4PLpf4k6eB82kKdzNr3itiKQNzWNca3UVJitZNyiI
-         qdnZbG89sjdU9OM8AWxM4hcKkkGDIKBU7LvRH/Sfwy3DDj3i1ifvh1zD3sdpkrZizK+8
-         zd9Ttay5YEIljmtxCt1w385FOgGyoohI/aKkMiymKpPlUKw1eX+1O98xXHfVT1cDfDJa
-         5xFhpnP7QEw0dvLgSpD4wBSYKwh/hrHHqRwtjCJU3/8eUwz+44mCNPQDNAXD8P9/mqVw
-         u0Nw==
-X-Received: by 10.180.104.68 with SMTP id gc4mr8695009wib.78.1439486931200;
- Thu, 13 Aug 2015 10:28:51 -0700 (PDT)
-Received: by 10.28.103.68 with HTTP; Thu, 13 Aug 2015 10:28:31 -0700 (PDT)
-In-Reply-To: <CAB4xWX7R_FrFATqnwebRqAWsUrZd-ATU3rTGxjq6c-44XbRUgw@mail.gmail.com>
+	id S1753040AbbHMRlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 13:41:51 -0400
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:33561 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751559AbbHMRlu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 13:41:50 -0400
+Received: by qged69 with SMTP id d69so35837012qge.0
+        for <git@vger.kernel.org>; Thu, 13 Aug 2015 10:41:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=FbUn41lV0kwW/ooqO/UbULL+/x1KnEACkuinT3hXpww=;
+        b=AQ+Gu2MeXvyPptNRD/ZcLY3wJM7QRjcELOXQ54PuXAiUyrMzaKvzYQlpN/tKrIgS7i
+         /e2PAhYoeWeGaunABkZFVN+gixWLQP93g69aMeg4K+gDR2uRq4oCxzNq3WonO3XBbmz5
+         WpJGbZa41sh1pKQWaGDw1JLmr2mcX+NN3s0Nntncvyseqrk8bOXJ7mXwEAqQIpiugw0U
+         IoIcp9tKOi1db6WjKoP0aIZPkwAeVbpBSsFfHSvaS2Py8zlUy87AodFGs0TOVUkJInD8
+         pnR5Oz0uVSGCjoAULbjaXbfZRvZmjjc8dp6hWmfyYwzGL5681dwQ+6bb4wQYoVHgIMWW
+         Epdg==
+X-Gm-Message-State: ALoCoQlqoJRchOr85Qi8z0G38dlOEwh1VHkxEVlzzrSii7n8Jk13AFfP3YPw2jRXXI0TPTq5wzXF
+X-Received: by 10.140.238.195 with SMTP id j186mr18616223qhc.21.1439487710049;
+        Thu, 13 Aug 2015 10:41:50 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id f194sm1479562qka.49.2015.08.13.10.41.48
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Aug 2015 10:41:49 -0700 (PDT)
+In-Reply-To: <CAPig+cRM-J-5SHJ9JVsHPR+B2Y05nwFrRQWsd0M56pm9jS-mTQ@mail.gmail.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275866>
 
-Sorry for bothering, it seems like this is not related to git, this is
-because of broken subversion package in this buggy archlinux.
+On Thu, 2015-08-13 at 13:15 -0400, Eric Sunshine wrote:
+> On Wed, Aug 12, 2015 at 5:57 PM, David Turner <dturner@twopensource.com> wrote:
+> > diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+> > index 93605f4..28e6dff 100755
+> > --- a/t/t0060-path-utils.sh
+> > +++ b/t/t0060-path-utils.sh
+> > +test_expect_success 'handle per-worktree refs in refs/worktree' '
+> > +       git commit --allow-empty -m "initial commit" &&
+> > +       git worktree add -b branch worktree &&
+> > +       (
+> > +               cd worktree &&
+> > +               git commit --allow-empty -m "test commit"  &&
+> > +               git for-each-ref | test_must_fail grep refs/worktree &&
+> 
+> s/test_must_fail/!/
+> 
+> From t/README:
+> 
+>    On the other hand, don't use test_must_fail for running regular
+>    platform commands; just use '! cmd'.  We are not in the business
+>    of verifying that the world given to us sanely works.
 
-On 11 August 2015 at 12:56, Kosenko Roman <madkite@gmail.com> wrote:
-> Hello,
-> I use git-svn. I have used it without any problem for two month. Now
-> git starts crashing after "svn rebase" (maybe also after other
-> operations with a remote svn server, I'll check when will do "svn
-> dcommit" next time). It successfully done the operation and only then
-> it crashes:
->
-> $ git svn rebase
-> Current branch master is up to date.
-> error: git-svn died of signal 11
->
-> $ dmesg | tail -n5
-> [518105.393218] git-svn[25148]: segfault at 7f81c0775c50 ip
-> 00007f81c0775c50 sp 00007ffca025adc8 error 14 in
-> Glob.so[7f81c0979000+6000]
-> [518113.627053] git-svn[25487]: segfault at 7f0547a76c50 ip
-> 00007f0547a76c50 sp 00007ffe31c39958 error 14 in
-> Glob.so[7f0547c7a000+6000]
-> [518137.038469] git-svn[25677]: segfault at 7fe124d4fc50 ip
-> 00007fe124d4fc50 sp 00007ffc821fc848 error 14 in
-> Glob.so[7fe124f53000+6000]
-> [518173.339068] git-svn[25864]: segfault at 7f0919006c50 ip
-> 00007f0919006c50 sp 00007ffe78e51b58 error 14 in
-> Glob.so[7f091920a000+6000]
-> [519070.924619] git-svn[26467]: segfault at 7f119202ec50 ip
-> 00007f119202ec50 sp 00007fff2af3a948 error 14 in
-> Glob.so[7f1192232000+6000]
->
-> This behaviour is persistent and I can reproduce it any time.
->
-> Versions info:
->
-> $ uname -a
-> Linux hs-arch 4.1.4-1-ARCH #1 SMP PREEMPT Mon Aug 3 21:30:37 UTC 2015
-> x86_64 GNU/Linux
->
-> $ git --version
-> git version 2.5.0
->
-> $ svn --version
-> svn, version 1.8.13 (r1667537)
->    compiled Jun  3 2015, 05:30:35 on x86_64-unknown-linux-gnu
->
-> Copyright (C) 2014 The Apache Software Foundation.
-> This software consists of contributions made by many people;
-> see the NOTICE file for more information.
-> Subversion is open source software, see http://subversion.apache.org/
->
-> The following repository access (RA) modules are available:
->
-> * ra_svn : Module for accessing a repository using the svn network protocol.
->   - with Cyrus SASL authentication
->   - handles 'svn' scheme
-> * ra_local : Module for accessing a repository on local disk.
->   - handles 'file' scheme
-> * ra_serf : Module for accessing a repository via WebDAV protocol using serf.
->   - using serf 1.3.8
->   - handles 'http' scheme
->   - handles 'https' scheme
->
-> $ perl --version
->
-> This is perl 5, version 22, subversion 0 (v5.22.0) built for
-> x86_64-linux-thread-multi
->
-> Copyright 1987-2015, Larry Wall
->
-> Perl may be copied only under the terms of either the Artistic License or the
-> GNU General Public License, which may be found in the Perl 5 source kit.
->
-> Complete documentation for Perl, including FAQ lists, should be found on
-> this system using "man perl" or "perldoc perl".  If you have access to the
-> Internet, point your browser at http://www.perl.org/, the Perl Home Page.
->
-> I don't know exact version of Subversion on the remote server (web ui
-> doesn't show it).
-> Core dump: http://madkite.cc/git/core.git-svn.1000.e28aeb54778749879c9313b05ea040e8.26467.1439282047000000.lz4
->
-> I have tried on another environment (cygwin x64, git 2.4.5, svn
-> 1.8.13, perl 5.14.4) - it works fine with the same repo.
-> Also my environment works fine with other repos.
->
-> Is there anything else you need from me?
->
-> Best regards, Roman.
+When I make that change, my test fails with:
+
+FATAL: Unexpected exit with code 2
+
+Apparently, you can't use ! in pipelines like that.  So that's why I
+used test_must_fail.
