@@ -1,79 +1,84 @@
-From: Matthieu Moy <matthieu.moy@imag.fr>
-Subject: Re: [PATCH 01/10] ref-filter: add option to filter only branches
-Date: Thu, 13 Aug 2015 18:52:11 +0200
-Message-ID: <FC0BD660-1476-430A-9F71-E9D0E6681780@imag.fr>
-References: <CAOLa=ZSnn19DR_Y5MqUXHed0g5MSk_dwFc48dk8GoPYvL5DQ=Q@mail.gmail.com> <1438693282-15516-1-git-send-email-Karthik.188@gmail.com> <xmqqpp2tspb6.fsf@gitster.dls.corp.google.com> <CAOLa=ZRRU4htKgB46g0FAGVEGGFN+1N1250AOYJh7H5apv=RJQ@mail.gmail.com> <CAOLa=ZQic2=z6bJ0Ykhn2x8mE86w4HwBrJP7pb_RaemGKCZzmQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 3/4] refs: make refs/worktree/* per-worktree
+Date: Thu, 13 Aug 2015 13:15:28 -0400
+Message-ID: <CAPig+cRM-J-5SHJ9JVsHPR+B2Y05nwFrRQWsd0M56pm9jS-mTQ@mail.gmail.com>
+References: <1439416645-19173-1-git-send-email-dturner@twopensource.com>
+	<1439416645-19173-3-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 18:53:21 2015
+Cc: Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 19:15:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPvkh-000723-BL
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 18:53:15 +0200
+	id 1ZPw6I-00018T-CK
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 19:15:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753304AbbHMQxG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Aug 2015 12:53:06 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38137 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753174AbbHMQxD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 12:53:03 -0400
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t7DGqsOA019443
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 13 Aug 2015 18:52:55 +0200
-Received: from [10.181.21.44] ([37.163.150.109])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id t7DGqcZ4014979
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 13 Aug 2015 18:52:51 +0200
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAOLa=ZQic2=z6bJ0Ykhn2x8mE86w4HwBrJP7pb_RaemGKCZzmQ@mail.gmail.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 13 Aug 2015 18:52:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t7DGqsOA019443
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@imag.fr
-MailScanner-NULL-Check: 1440089575.25008@jxKT9TgCiMUdXknu/Yd3Bw
+	id S1753526AbbHMRPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 13:15:31 -0400
+Received: from mail-yk0-f176.google.com ([209.85.160.176]:33990 "EHLO
+	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752935AbbHMRP3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 13:15:29 -0400
+Received: by ykdt205 with SMTP id t205so47121394ykd.1
+        for <git@vger.kernel.org>; Thu, 13 Aug 2015 10:15:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Bes89Jy35eUdkHj5G2gITGEgquZnSbZQ3E9jwG5aYBI=;
+        b=CkNsRN6mEwzFGiZ0x7MmJ3adEJSj8vaJLqc1FOUhUC2KTxr/1NIyJ1c8iZdaVxQNW7
+         zTh5QERApRPuKZyoGgUUhpZ8hcVZDck88fHJQQatwc/OYBrJZpD0QlYjF9oh0/cUoK9r
+         7OZnOAoMSQ4FN9I+2U2qSsJPbGEWaVL9FNaCQPBx9zMXzbKCfjsREU4wQPDn4R9N+oGJ
+         ZxD7LMWbeOPoVLmh6lZ2Rr2qVOXsRQ3YEe7qoARyt15NjKu7HMbljB94Z2H12Qc+8K6U
+         pGKIuhb6VzXuVTt26cUcjwktVnKhX9d/XLhjUW5ysEK0fio82tgz+SQy0wfzjcLOh/Th
+         tVbA==
+X-Received: by 10.170.233.10 with SMTP id z10mr39853324ykf.71.1439486128876;
+ Thu, 13 Aug 2015 10:15:28 -0700 (PDT)
+Received: by 10.37.208.78 with HTTP; Thu, 13 Aug 2015 10:15:28 -0700 (PDT)
+In-Reply-To: <1439416645-19173-3-git-send-email-dturner@twopensource.com>
+X-Google-Sender-Auth: CuGJTfKp4beESLxCegqpfi1L2Cg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275864>
 
+On Wed, Aug 12, 2015 at 5:57 PM, David Turner <dturner@twopensource.com> wrote:
+> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+> index 93605f4..28e6dff 100755
+> --- a/t/t0060-path-utils.sh
+> +++ b/t/t0060-path-utils.sh
+> +test_expect_success 'handle per-worktree refs in refs/worktree' '
+> +       git commit --allow-empty -m "initial commit" &&
+> +       git worktree add -b branch worktree &&
+> +       (
+> +               cd worktree &&
+> +               git commit --allow-empty -m "test commit"  &&
+> +               git for-each-ref | test_must_fail grep refs/worktree &&
 
+s/test_must_fail/!/
 
-Le 13 ao=C3=BBt 2015 13:35:21 GMT+02:00, Karthik Nayak <karthik.188@gma=
-il.com> a =C3=A9crit :
->On Thu, Aug 13, 2015 at 4:21 PM, Karthik Nayak <karthik.188@gmail.com>
->wrote:
->>
->> This was taken from branch.c, I thought of using an enum instead but
->that
->> would again require most of branch.c, hence it's been carried over
->> without changing
->> I'm thinking of changing it, any suggestions?
->>
->
->What I was thinking was of having:
->
->#define FILTER_REFS_INCLUDE_BROKEN 0x1
->#define FILTER_REFS_TAGS 0x2
->#define FILTER_REFS_BRANCHES 0x4
->#define FILTER_REFS_REMOTES 0x8
->#define FILTER_REFS_DETACHED_HEAD 0x16
+>From t/README:
 
-You meant 0x10, not 0x16 I guess.
+   On the other hand, don't use test_must_fail for running regular
+   platform commands; just use '! cmd'.  We are not in the business
+   of verifying that the world given to us sanely works.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> +               git update-ref refs/worktree/something HEAD &&
+> +               git rev-parse refs/worktree/something >../worktree-head &&
+> +               git for-each-ref | grep refs/worktree/something
+> +       ) &&
+> +       test_path_is_missing .git/refs/worktree &&
+> +       test_must_fail git rev-parse refs/worktree/something &&
+> +       git update-ref refs/worktree/something HEAD &&
+> +       git rev-parse refs/worktree/something >main-head &&
+> +       ! test_cmp main-head worktree-head
+> +'
