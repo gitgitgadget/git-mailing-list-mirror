@@ -1,101 +1,96 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] prepare_packed_git(): refactor garbage reporting in
- pack directory
-Date: Thu, 13 Aug 2015 14:46:10 -0400
-Message-ID: <CAPig+cS0ntr1sYzVAPjNCwd8ei4oGQRNs+W=qMBV4Z6NaRWCWA@mail.gmail.com>
-References: <xmqqwpx6wx74.fsf@gitster.dls.corp.google.com>
-	<1439488973-11522-1-git-send-email-dougk.ff7@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Doug Kelly <dougk.ff7@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 20:46:18 2015
+From: Dave Borowitz <dborowitz@google.com>
+Subject: [PATCH 3/7] Documentation/git-send-pack.txt: Document --signed
+Date: Thu, 13 Aug 2015 15:00:47 -0400
+Message-ID: <1439492451-11233-4-git-send-email-dborowitz@google.com>
+References: <1439492451-11233-1-git-send-email-dborowitz@google.com>
+Cc: Dave Borowitz <dborowitz@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 13 21:01:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPxW5-0006HU-1Z
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 20:46:17 +0200
+	id 1ZPxkN-00032R-TK
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 21:01:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753528AbbHMSqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 14:46:12 -0400
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:34431 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753174AbbHMSqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 14:46:11 -0400
-Received: by ykdt205 with SMTP id t205so49374251ykd.1
-        for <git@vger.kernel.org>; Thu, 13 Aug 2015 11:46:10 -0700 (PDT)
+	id S1753759AbbHMTA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 15:00:59 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:36997 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753643AbbHMTA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 15:00:58 -0400
+Received: by igui7 with SMTP id i7so5791280igu.0
+        for <git@vger.kernel.org>; Thu, 13 Aug 2015 12:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=FpdeAhdCdLBnOTlwRTnRih1RL++DeFszkEcqwjZXENU=;
-        b=xy5aUvG8v7SlLLiZ2744WJPwHJ+hcSasq0OvAlXear3ROYnvn3KrO3Ra3vGY6b9dCY
-         oBO7/egTFYZZ2vGM33R3sy133pJsuTVyn+rXg9IO4wlMfBiUoSWm8TYTUlUpUMl/EaDA
-         sz/amC6ltfLrVn3FtT3D5lZ22pgWf+miULRW38uplsiA4wiTnuxyqGR5zksDyZX4o5mP
-         sT21fBrxW3LcU6GEVSKmfR5CtN6M2Desh41ATHdk93EfrIlZifIedw6qsOSlvt8lOI2Z
-         zRV7P1+MYV+cQb8jXudVRc8MWACoFjEfxSIecrQV/NV4xbHnNe40ovAJOX+QpcsJc+0D
-         V3DA==
-X-Received: by 10.170.233.10 with SMTP id z10mr40271463ykf.71.1439491570626;
- Thu, 13 Aug 2015 11:46:10 -0700 (PDT)
-Received: by 10.37.208.78 with HTTP; Thu, 13 Aug 2015 11:46:10 -0700 (PDT)
-In-Reply-To: <1439488973-11522-1-git-send-email-dougk.ff7@gmail.com>
-X-Google-Sender-Auth: TRyOWHbY8swG40z4FRBdnQSEbaU
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=n0q+PCKEGL74laP6oi03i7y83KeYo40dNN6HibpN1aU=;
+        b=TD9bCdpULFeBc02aQRRgYpnIcN6PnkBIDEbnYFyiW1JP0a5E2JSgDpoQNTHrezvaKK
+         J7kNceOZoCe3rDoy8HkS899n5Wvxn6eNQ/lke680LYL5RGeQberhhdi4XjrB2iWwasq3
+         bR4+tV/bAim/CBvLIZUGLp5X95U7XAvFrSR/vXXGIabxIIJim0mRwwKaQj2IAz5u6pss
+         x4ycI4lcS2hlVojjq70T1c+2PQvJqW/OS6jWzPivN7fjlZpkqBGfS5hoak0m8oFeihT7
+         adQ1dswfZcPWzFkgNxiNOMNCzS0jCe7fyCJHovU87ssIFx5WyKzyt20FSMazEVBj2rMg
+         AnAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=n0q+PCKEGL74laP6oi03i7y83KeYo40dNN6HibpN1aU=;
+        b=BFErwRZf1x4zLgfJ9nHiPh7MXyZCUgbw5rnetpZDMUWBHBLwo229ecDvxVihLvnclf
+         etODGd+23u/HfvvpIHUN+oynxbuB/BnfWCFeM4NV1VZXN3tsxspsyMUKWTmmYwQu+NUq
+         MNGqzmmVOLndM+fWldpuyuUGn5XcouFKzwP6NQSXhbw3qd6xmVvEfMFoJlvTueYc8PRT
+         VW3PsZ6gWOBvLOa4bCd8sus8BKfr8Eg3tgyNGXfm8XF60WHudufCq0G9U2p3ZyU5Gjzu
+         9Zpk78jWkN3iJcnzFLOqOepvEG1AnRlhFhTZZ9u7/UXpdGoYuviB5/C93LD/g5O6j+gB
+         GFiA==
+X-Gm-Message-State: ALoCoQmU/0GXc6RNB5MywhNMu+/ZiXNgF9pOmGYq8uDTgqGS83XnhJIQJUTPGH6998dVyaPO4ne+
+X-Received: by 10.50.142.67 with SMTP id ru3mr29354305igb.16.1439492457887;
+        Thu, 13 Aug 2015 12:00:57 -0700 (PDT)
+Received: from serval.arb.corp.google.com ([172.29.229.12])
+        by smtp.gmail.com with ESMTPSA id c91sm2078646ioj.43.2015.08.13.12.00.57
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 13 Aug 2015 12:00:57 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0.276.gf5e568e
+In-Reply-To: <1439492451-11233-1-git-send-email-dborowitz@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275875>
 
-On Thu, Aug 13, 2015 at 2:02 PM, Doug Kelly <dougk.ff7@gmail.com> wrote:
-> From: Junio C Hamano <gitster@pobox.com>
->
-> The hook to report "garbage" files in $GIT_OBJECT_DIRECTORY/pack/
-> could be generic but is too specific to count-object's needs.
->
-> Move the part to produce human-readable messages to count-objects,
-> and refine the interface to callback with the "bits" with values
-> defined in the cache.h header file, so that other callers (e.g.
-> prune) can later use the same mechanism to enumerate different
-> kinds of garbage files and do something intelligent about them,
-> other than reporting in textual messages.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Dave Borowitz <dborowitz@google.com>
+---
+ Documentation/git-send-pack.txt | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-Since you're forwarding Junio's patch, you'd also want to sign-off
-(following his).
-
-> ---
-> diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-> index ad0c799..4c3198e 100644
-> --- a/builtin/count-objects.c
-> +++ b/builtin/count-objects.c
-> @@ -15,9 +15,31 @@ static int verbose;
->  static unsigned long loose, packed, packed_loose;
->  static off_t loose_size;
->
-> -static void real_report_garbage(const char *desc, const char *path)
-> +const char *bits_to_msg(unsigned seen_bits)
-
-If you don't expect other callers outside this file, then this should
-be declared 'static'. If you do expect future external callers, then
-this should be declared in a public header file (but renamed to be
-more meaningful).
-
-> +{
-> +       switch (seen_bits) {
-> +       case 0:
-> +               return "no corresponding .idx or .pack";
-> +       case PACKDIR_FILE_GARBAGE:
-> +               return "garbage found";
-> +       case PACKDIR_FILE_PACK:
-> +               return "no corresponding .idx";
-> +       case PACKDIR_FILE_IDX:
-> +               return "no corresponding .pack";
-> +       case PACKDIR_FILE_PACK|PACKDIR_FILE_IDX:
-> +       default:
-> +               return NULL;
-> +       }
-> +}
+diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
+index 6affff6..dde13b0 100644
+--- a/Documentation/git-send-pack.txt
++++ b/Documentation/git-send-pack.txt
+@@ -10,7 +10,8 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>]
+-		[--verbose] [--thin] [--atomic] [<host>:]<directory> [<ref>...]
++		[--verbose] [--thin] [--atomic] [--signed]
++		[<host>:]<directory> [<ref>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -68,6 +69,14 @@ be in a separate packet, and the list must end with a flush packet.
+ 	fails to update then the entire push will fail without changing any
+ 	refs.
+ 
++--signed::
++	GPG-sign the push request to update refs on the receiving
++	side, to allow it to be checked by the hooks and/or be
++	logged.  See linkgit:git-receive-pack[1] for the details
++	on the receiving end.  If the `gpg` executable is not available,
++	or if the server does not support signed pushes, the push will
++	fail.
++
+ <host>::
+ 	A remote host to house the repository.  When this
+ 	part is specified, 'git-receive-pack' is invoked via
+-- 
+2.5.0.276.gf5e568e
