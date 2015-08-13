@@ -1,81 +1,85 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [msysGit] Re: [PATCH bc/connect-plink] t5601-clone: remove broken
- and pointless check for plink.exe
-Date: Thu, 13 Aug 2015 20:07:13 +0200
-Message-ID: <55CCDCD1.4080109@kdbg.org>
-References: <55CA6066.5070500@kdbg.org>
- <866a41f50ef9b4807da72576a4bca717@www.dscho.org>
- <CABPQNSZHtAKbe6JwxRoK3LpCabfp6r2_kTmF1qokObt_yKnSDg@mail.gmail.com>
- <55CB9110.4060005@kdbg.org> <43f88e9611755e20715bf9f38795f276@www.dscho.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v10 05/13] ref-filter: implement an `align` atom
+Date: Thu, 13 Aug 2015 14:26:31 -0400
+Message-ID: <CAPig+cRhgfOozy42UiDs24JFQTw5k8CYS0c+3DTOFB+XkPrLRQ@mail.gmail.com>
+References: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
+	<1439129506-9989-6-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: kusmabite@gmail.com, Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 13 20:07:26 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 20:26:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZPwuT-0004gM-4v
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 20:07:25 +0200
+	id 1ZPxD3-0005BK-Ul
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Aug 2015 20:26:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753077AbbHMSHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2015 14:07:20 -0400
-Received: from bsmtp8.bon.at ([213.33.87.20]:57027 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751559AbbHMSHT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2015 14:07:19 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3msbTJ0CRWz5tlB;
-	Thu, 13 Aug 2015 20:07:15 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id B0A3F52E1;
-	Thu, 13 Aug 2015 20:07:13 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-In-Reply-To: <43f88e9611755e20715bf9f38795f276@www.dscho.org>
+	id S1753271AbbHMS0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2015 14:26:32 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:34621 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751993AbbHMS0c (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2015 14:26:32 -0400
+Received: by ykdt205 with SMTP id t205so48896264ykd.1
+        for <git@vger.kernel.org>; Thu, 13 Aug 2015 11:26:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=BgEEHJaxHWHW88iLBW6JtZVonf493hhGNfmtub48sQc=;
+        b=cIBUM+tfL65z02kcAzn9qVbVEOzx/lI6iUgO2e0WlUd86sRtqeXABw0hWEuvXzhepP
+         FAqnncDzIkpUigOC0lwpic6F+HpsJYjvmPWP40tQ+fN8MJ6ANHLHQftqyGhF4ncnSPeB
+         uTAytYfR3X1QWx+T39INEaID6d3l7mT2hqiazE3/hcx2Vfoz41znksT1NWXZsBNwx/Rw
+         eMFr/mtL9z/pCaDcqOdeBh9bbfniWkACObEutKLVskjmFaIsGqizsJKN73ve7lftzONB
+         Q3YUhIHCReyawxS0rntqnu5DZrMS4pRbCDIAnvhsXNii3Qyx7NmC/Zh9l/PkxjqRdDzA
+         qXeQ==
+X-Received: by 10.170.172.84 with SMTP id o81mr11743629ykd.69.1439490391491;
+ Thu, 13 Aug 2015 11:26:31 -0700 (PDT)
+Received: by 10.37.208.78 with HTTP; Thu, 13 Aug 2015 11:26:31 -0700 (PDT)
+In-Reply-To: <1439129506-9989-6-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: zySMNZvVsk9X31sT-IzaohpmrTY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275870>
 
-Am 13.08.2015 um 09:30 schrieb Johannes Schindelin:
-> Hi Johannes,
+On Sun, Aug 9, 2015 at 10:11 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Implement an `align` atom which left-, middle-, or right-aligns the
+> content between %(align:..) and %(end).
 >
-> On 2015-08-12 20:31, Johannes Sixt wrote:
->> Am 12.08.2015 um 13:58 schrieb Erik Faye-Lund:
->>> On Wed, Aug 12, 2015 at 1:07 PM, Johannes Schindelin
->>> <johannes.schindelin@gmx.de> wrote:
->>>> FWIW Git for Windows has this patch (that I wanted to contribute
->>>> in  due time, what with being busy with all those tickets) to solve the
->>>> problem mentioned in your patch in a different way:
->>>>
->>>> https://github.com/git-for-windows/git/commit/2fff4b54a0d4e5c5e2e4638c9b0739d3c1ff1e45
->>>
->>> Yuck. On Windows, it's the extension of a file that dictates what kind
->>> of file it is (and if it's executable or not), not the contents. If we
->>> get a shell script written with the ".exe"-prefix, it's considered as
->>> an invalid executable by the system. We should consider it the same
->>> way, otherwise we're on the path to user-experience schizophrenia.
->>>
->>> I'm not sure I consider this commit a step in the right direction.
->>
->> I, too, think that it is a wrong decision to pessimize git for the
->> sake of a single test case.
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> index e49d578..d949812 100644
+> --- a/Documentation/git-for-each-ref.txt
+> +++ b/Documentation/git-for-each-ref.txt
+> @@ -127,6 +127,15 @@ color::
+>         Change output color.  Followed by `:<colorname>`, where names
+>         are described in `color.branch.*`.
 >
-> Oh, you make it sound as if you believe that I had indeed weakened
-> Git  *just* for a single test case.
+> +align::
+> +       Implement an `align` atom which left-, middle-, or
+> +       right-aligns the content between %(align:..)  and
 
-Whatever. Since I do not have the time to provide hard numbers that 
-prove my claim that your patch removes an optimization (and, 
-furthermore, I do not want to reply to your arguments that I consider 
-mostly philosophical rather than pragmatic), I bow out. Until this 
-solution or that one is in upstream, I can help myself.
+This documentation seems to be copied a bit too literally from the
+commit message. Saying "Implement an `align` atom" makes sense for the
+commit message, but not for the documentation of the 'align' atom.
+Instead,
 
-Junio, please drop my patch. I do not have the nerves to support it.
+    Left-, middle-, or right-align the content between
+    %(align:...) and %(end).
 
--- Hannes
+would sound better.
+
+> +       %(end). Followed by `:<position>,<width>`, where the
+> +       `<position>` is either left, right or middle and `<width>` is
+> +       the total length of the content with alignment. If the
+> +       contents length is more than the width then no alignment is
+> +       performed. Currently nested alignment is not supported.
