@@ -1,74 +1,106 @@
-From: Dave Borowitz <dborowitz@google.com>
-Subject: Re: [PATCH 0/7] Flags and config to sign pushes by default
-Date: Fri, 14 Aug 2015 16:29:16 -0400
-Message-ID: <CAD0k6qRAG96a=zhTpw7nta6QjK7gEYTfYvMvCeob35LLzKkKYw@mail.gmail.com>
-References: <1439492451-11233-1-git-send-email-dborowitz@google.com> <xmqqbne9ivry.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/4] path: optimize common dir checking
+Date: Fri, 14 Aug 2015 13:27:17 -0700
+Message-ID: <xmqq1tf5ipju.fsf@gitster.dls.corp.google.com>
+References: <1439416645-19173-1-git-send-email-dturner@twopensource.com>
+	<1439416645-19173-2-git-send-email-dturner@twopensource.com>
+	<55CC5DED.5050304@alum.mit.edu>
+	<xmqqtws1iyxn.fsf@gitster.dls.corp.google.com>
+	<1439582644.8855.89.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 22:31:30 2015
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	chriscool@tuxfamily.org, pclouds@gmail.com
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 22:32:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQLbi-0004E9-3c
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 22:29:42 +0200
+	id 1ZQLZU-00024c-9c
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 22:27:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752349AbbHNU3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2015 16:29:37 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:38520 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752330AbbHNU3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2015 16:29:37 -0400
-Received: by igfj19 with SMTP id j19so19812442igf.1
-        for <git@vger.kernel.org>; Fri, 14 Aug 2015 13:29:36 -0700 (PDT)
+	id S1752150AbbHNU1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2015 16:27:20 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33508 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752143AbbHNU1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2015 16:27:19 -0400
+Received: by pabyb7 with SMTP id yb7so66221469pab.0
+        for <git@vger.kernel.org>; Fri, 14 Aug 2015 13:27:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=P85W/hz3R8jRduk+7Ar+r+kKK++66flDBQZG5kHslrM=;
-        b=HbO4VRym9xZw0qaSrjsfPi9BJ+ddhJKTW/coU/6JI39rfmniLwfkktH9cHOLwghucq
-         azQh5UhYRQhUqnHttC6zg4ShX9rMCtVPDdfeoSYx0rmjP0q/7znq0aH9ErSEoA48k4Yp
-         my+kyIEs1l3RfXamV9AY1rt8hf8DiEkgWqanNsHUDIEbY2JIACWoqgwSIzyLxzczAvs0
-         MWEaGCcgv5B7FvhjUn/+giOEFtAopgwoaGXaHqGlxTfLZi3sfahJ8vr9mI+RZX7jBRSS
-         xFb4Vr1kKux70yh9ni6x7C/eQqw53u/oQfGO4idOHs9qOv2FVGUi/cmCm+BBh22lfpCd
-         +MCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=P85W/hz3R8jRduk+7Ar+r+kKK++66flDBQZG5kHslrM=;
-        b=VV4/TWG6f+jYe9T1k6wmlgXElCfYluKW32ocCuni2T0+pbPqUHN2Mlyh23B8sqOkiR
-         1290RXiuBDQv5I70HM6q2GrVZIBowaafqUdqZqD/+i0iUwQxUWUyX6EOSAu6aJqR50t8
-         eDH1MN4yxrBlklni7kdtmz7hbkvqGxs8uj9m/nIUbJyT7DtkWSCPtHXwzVnBcMiSUPyf
-         3/NqzlfRTTCH92v7mmpi58Ruc+liGDkZG6FOE95vF9W+uyeLEfi3YwwWoMoOA/STmKVE
-         shb1YlU9FxiNQwrBUoragVNdZM2aSPm0HIbZLb4GlAw8VITwY+03FggAv7EhB1aeUqFT
-         TP3A==
-X-Gm-Message-State: ALoCoQnXNbvOcaHvC6/OHoROlogX/6tAnBveAxT8368LGSzqe4f5gfwr4oMprYWWaNZcHk26z1I9
-X-Received: by 10.50.43.197 with SMTP id y5mr4371788igl.27.1439584176268; Fri,
- 14 Aug 2015 13:29:36 -0700 (PDT)
-Received: by 10.107.4.201 with HTTP; Fri, 14 Aug 2015 13:29:16 -0700 (PDT)
-In-Reply-To: <xmqqbne9ivry.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=8Hk1MxnNYkSCUt/J9pKXcLW3nRqWmbbxYmMYpltJt+I=;
+        b=AvDR4e07QlkJp31qwzri5r21hnTIVKFLkDaoEGPEQGSbHDa6y4mTDsGmD2iEKHWwDT
+         sN6iOTvD5oFrlWjPxgBTfcG+tEHpmTRmai+YYa8May/ogWH9dcazgc1HCUo3mCswRBCc
+         xgdqidZC+up4sqrimTCEV74iU8AreLAVCfbge6W3X+mcTdumtFzyUhYiZJ+Pz/A0kVfL
+         w3sO3biMol8zie2eN5NK3nGeWi6bSAWomB7ZmIHuX31alUO4ZNfGFt0Okkv0Mr0ncEsy
+         tOeraCWgdWd9GyDsWGm05P5E1MhM/nnFk1YLbfb82vYmMGqNeLzvzG9JJD0i8bgsrJQQ
+         1tMg==
+X-Received: by 10.68.192.9 with SMTP id hc9mr73941543pbc.57.1439584038748;
+        Fri, 14 Aug 2015 13:27:18 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a820:aa0d:2b52:954f])
+        by smtp.gmail.com with ESMTPSA id fy3sm7020808pac.37.2015.08.14.13.27.18
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 14 Aug 2015 13:27:18 -0700 (PDT)
+In-Reply-To: <1439582644.8855.89.camel@twopensource.com> (David Turner's
+	message of "Fri, 14 Aug 2015 16:04:04 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275939>
 
-On Fri, Aug 14, 2015 at 2:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> So I am fine as long as "if-possible" turns a failure to make signed
-> push into a success _only_ when the reason of the failure is because
-> we did not see the capability supported by the receiving end.  If
-> the reason why you cannot do a signed push is because you cannot
-> sign push certificate, "if-possible" should still fail.
+David Turner <dturner@twopensource.com> writes:
 
-I completely agree with your reasoning, and that's exactly how I
-implemented and documented --signed-if-possible.
+> Random side note: the present workspace path name component is not
+> acceptable for this if alternate ref backends use a single db for
+> storage across all workspaces.  That's because you might create a
+> workspace at foo, then manually rm -r it, and then create a new one also
+> named foo.  The database wouldn't know about this series of events, and
+> would then have stale per-workspace refs for foo.
 
->From patch 6/7:
-+--signed-if-possible::
-+       Like --signed, but only if the server supports signed pushes. If
-+       the server supports signed pushes but the `gpg` is not available,
-+       the push will fail.
+The users can do "Create, manuallly rm -r and recreate" dance all
+they want, but the result must still honor the invariant:
+
+    For any $workspace, $workspace/.git is a "gitdir:" file that
+    points at one subdirectory in $GIT_COMMON_DIR/worktrees/.
+
+The "name" I had in mind was the names of the directories in
+$GIT_COMMON_DIR/worktrees/ that by definition has to be unique.
+
+Another invariant 
+
+    $GIT_COMMON_DIR/worktrees/$that_subdirectory has commondir file
+    that points at the $GIT_COMMON_DIR/.
+
+must also be preserved by "Create, manuallly rm -r and recreate"
+dance, but it is not important to define what the workspace ID is.
+
+> That said, with my lmdb backend, I've been falling back to the files
+> backend for per-workspace refs.
+
+I think that is perfectly fine and within the 3-bullet design
+guideline we saw earlier.  Your backend is honoring the decision
+made by the system as a whole what is private and what is shared,
+which is the only thing that counts in the larger picture.  It is up
+to individual ref-backend implementations how they do so, and it is
+perfectly fine that your backend takes advantage of the ref layout
+by storing some stuff in lmdb storage (which I presume will live in
+"common" part of the filesystem storage) and some other stuff
+directly in the filesystem.
+
+> There is one case where the refs code will probably need to directly
+> call git_workspace_path: when we fix git prune to handle detached HEADs
+> in workspaces.  It could just set the workspace and then call git_path,
+> but that is less elegant.  So I think when we fix that (which should
+> probably wait on for_each_worktree), we can implement Junio's proposal.
+
+Yeah, I said *three* helper functions, but we do need the "enumerate
+all workspaces" if we want to go that route, and we do need to
+expose Michael's common_path() and workspace_path() to the code that
+needs such an enumeration.
