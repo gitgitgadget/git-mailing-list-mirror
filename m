@@ -1,125 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] Flags and config to sign pushes by default
-Date: Fri, 14 Aug 2015 11:12:49 -0700
-Message-ID: <xmqqbne9ivry.fsf@gitster.dls.corp.google.com>
-References: <1439492451-11233-1-git-send-email-dborowitz@google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 01/10] ref-filter: add option to filter only branches
+Date: Sat, 15 Aug 2015 00:15:56 +0530
+Message-ID: <CAOLa=ZTiVftC51e+dpq1=Ui38L5bUseq0M0+vMJ3O-Db9311XQ@mail.gmail.com>
+References: <CAOLa=ZSnn19DR_Y5MqUXHed0g5MSk_dwFc48dk8GoPYvL5DQ=Q@mail.gmail.com>
+ <1438693282-15516-1-git-send-email-Karthik.188@gmail.com> <xmqqpp2tspb6.fsf@gitster.dls.corp.google.com>
+ <CAOLa=ZRRU4htKgB46g0FAGVEGGFN+1N1250AOYJh7H5apv=RJQ@mail.gmail.com>
+ <CAOLa=ZQic2=z6bJ0Ykhn2x8mE86w4HwBrJP7pb_RaemGKCZzmQ@mail.gmail.com>
+ <CAOLa=ZQSVCgcuUQFsF2Mq-m+wS8im3t4Z3PSEgoAHcV0gGuvPA@mail.gmail.com> <xmqq614hkgnd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 20:13:00 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 20:46:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQJTO-0008UE-HA
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 20:12:58 +0200
+	id 1ZQJzr-00071x-Ns
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 20:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753314AbbHNSMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2015 14:12:53 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:36558 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753195AbbHNSMv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2015 14:12:51 -0400
-Received: by pacrr5 with SMTP id rr5so65086273pac.3
-        for <git@vger.kernel.org>; Fri, 14 Aug 2015 11:12:51 -0700 (PDT)
+	id S1751652AbbHNSq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2015 14:46:27 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:35189 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750702AbbHNSq0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2015 14:46:26 -0400
+Received: by obbop1 with SMTP id op1so68704004obb.2
+        for <git@vger.kernel.org>; Fri, 14 Aug 2015 11:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=oPTrgdfKrq0aU40YOJeVwrjGYkeoaJ2rh2PqqCmI6RY=;
-        b=Orr+ikvwXqzmzehLYx14/i7n2nN9DiWQUSlc7fCBKRfYheeNUjDRVvGgy3zR4A1d8p
-         pQYVDRNT53LENUxzw3qQkMmN6PUEX6k4c1yclH8yIWJP7e4EF2n8HFYnANT1UMLaktHw
-         8k3NK1XqsaNxaS+GJOynuM0vLCP25lWAGJRcBCVz0V6LlDvAZHdEZ719JZLvK4j+s4mk
-         XSc82AL8rEuMUFWcZdfx4Ml9kNcpSRTeZFx/aiZdTcvgdrEQHv5JI8WVaZGRqmOlILHu
-         6KPNwGSOTNh1aYIXsqJmUbtUkM3k+oKEMjRZJe2ZL5Zj3FRPODd0MiEJc4tcCIIhrAxq
-         c+qA==
-X-Received: by 10.68.234.34 with SMTP id ub2mr89208757pbc.101.1439575970747;
-        Fri, 14 Aug 2015 11:12:50 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a820:aa0d:2b52:954f])
-        by smtp.gmail.com with ESMTPSA id hi1sm6737043pbc.47.2015.08.14.11.12.49
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 14 Aug 2015 11:12:50 -0700 (PDT)
-In-Reply-To: <1439492451-11233-1-git-send-email-dborowitz@google.com> (Dave
-	Borowitz's message of "Thu, 13 Aug 2015 15:00:44 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=namQQ/zNt7NHCdPvMYObdbsDi5us3Rn/WlH/OAKssac=;
+        b=yAJHUcuGJu/3dzcfeTf3/P798Aq4ovNrdOLDKbE5FFTFe2DO+RJsh4dwHsIdPOhCfW
+         HiHQ2Nc7kO4AjqP6eWgdNO8hPC90Rwiru9m1hMZxzm4xU+8cSKoAB9KOJODxaPw7BpiM
+         vrsHWRyeiZgXxvUooGrg4HGu2/hpeDHnCZ1klakZ3YxzSLaXxZ95Go1txWgbD/GAo1WK
+         cfxm8SaW18qkGn/Jz8t7YyX1ueaE+DSPtNjQVMhPjkZCdMIiT+XqqxFG4a2DMCxS8FYg
+         i8GmRzoFK1MtyNwkVfEBGe1V4jZhu7kvQi5Mkbt9K8KxMMp7iKcCL59XEX+GaB5hocNR
+         t5eg==
+X-Received: by 10.182.153.161 with SMTP id vh1mr40132835obb.34.1439577985778;
+ Fri, 14 Aug 2015 11:46:25 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Fri, 14 Aug 2015 11:45:56 -0700 (PDT)
+In-Reply-To: <xmqq614hkgnd.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275923>
 
-Dave Borowitz <dborowitz@google.com> writes:
-
-> Remembering to pass --signed to git push on every push is extra typing that is
-> easy to forget, and just leads to annoyance if the remote has a hook that makes
-> signed pushes required. Add a config option push.gpgSign, analogous to
-> commit.gpgSign, allowing users to set this flag by default.
+On Fri, Aug 14, 2015 at 9:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> Since --signed push will simply fail on any remote that does not advertise a
-> push cert nonce, actually setting this to true is not very useful (except for
-> the super-paranoid who would never want to push to a server that does not
-> support signed pushes). So, add a third state to this boolean, "if-possible",
-> to sign the push if and only if supported by the server. To keep parity between
-> the config and command line options, add a --signed-if-possible flag to git
-> push as well.
+>> On Thu, Aug 13, 2015 at 5:05 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>> On Thu, Aug 13, 2015 at 4:21 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>>>
+>>>> This was taken from branch.c, I thought of using an enum instead but that
+>>>> would again require most of branch.c, hence it's been carried over
+>>>> without changing
+>>>> I'm thinking of changing it, any suggestions?
+>>>>
+>>>
+>>> What I was thinking was of having:
+>>>
+>>> #define FILTER_REFS_INCLUDE_BROKEN 0x1
+>>> #define FILTER_REFS_TAGS 0x2
+>>> #define FILTER_REFS_BRANCHES 0x4
+>>> #define FILTER_REFS_REMOTES 0x8
+>>> #define FILTER_REFS_DETACHED_HEAD 0x16
+>>>
+>>> and using these for showing ref kind also instead of separately
+>>> having 'REF_DETACHED_HEAD' and so on.
+>>>
+>>
+>> Something like this:
+>> https://github.com/KarthikNayak/git/commit/0ec5381420dcdfe7c62000b56168e2842d5d0063
 >
-> The "if-possible" name and weird tri-state boolean is basically a straw man,
-> and I am happy to change if someone has a clearer suggestion.
+> I notice a few things in ref-filter.c in that commit (a web
+> interface including GitHub one is horrible in showing the things in
+> wider context across files, so I'll base my discussion by guessing
+> what the caller of this function and helpers this function calls
+> do):
+>
+>  - Your "ALL" silently overrides others.  Is that sensible?  Perhaps
+>    you would instead want to define FILTER_REFS_OTHER (not needed to
+>    be exposed to UI) and then define FILTER_REFS_ALL as the ORed
+>    value of FILTER_REFS_{BRANCHES,...,OTHER}?
+>
 
-Yes, it looks somewhat strange.  Let me go on a slight tangent to
-explain why I think it is OK for "push --signed".
+Well okay I could something on those lines.
 
-First imagine the case where we were talking an optional setting for
-"git tag -a" and what our reaction would be.
+>  - When the caller asks for "--branches --tags", you run
+>    ref-filter-handler twice on ref_cbdata.  Does that make sense?
+>    Shouldn't you iterate over all the available refs just once,
+>    rejecting ones that aren't in either refs/{heads,tags}/ instead?
 
-Because the reason "git tag -s" would fail when "git tag -a" can
-succeed can only be because you do not have a working GPG set-up
-(i.e. correctly built and installed GPG with a usable key of your
-own to sign), I would say "please sign this tag if I can, but do not
-bother failing, an unsigned annotated tag is also OK for me" is not
-a sensible request.  In such a case, you'd better get your act
-together and make yourself ready to sign before doing the "tag -s"
-thing.  Otherwise you'd never get around to do it.  So I'd say "git
-tag --sign-if-possible" would not make sense.
+I was under the idea that since we're dealing with do_for_each_entry()
+eventually and in that we set the loose_dir value based on the given 'base'
+hence when the caller asks for something like "--branches --tags", it would
+be better to just iterate through the refs in the directory of
+"--branches --tags"
+rather than go through the whole list of refs and drop ones which don't belong
+to "--branches --tags". but this was an over the top look at how
+do_for_each_entry()
+works, I could be totally off the mark.
 
-But "push --signed" can fail even if you have a perfectly good
-GPG set-up.  It will not succeed until the receiving end becomes
-ready to accept a signed push, and often you would not be in control
-of the receiving end.
-
-More importantly, the meaning and the purose of the GPG signature in
-signed tags and signed pushes are vastly different.  In the former
-case, you are attesting that the signed objects were made by you to
-help yourself.  If somebody else created a tag or a commit and
-claimed it is from you, you can say "that signature does not match,
-it is not mine".
-
-But "signed push" is not about helping you.  It is about helping the
-receiving end by allowing them to be more credible when they say
-"This is what David Borowitz said he wanted to put at the tip of
-this branch" to other people.  Currently, they can only make a weak
-claim "Well, you know, the push was made after we authenticated a
-pusher with our own authentication methond, and here is the log that
-says the pusher was David".  The log entries could be faked, and the
-general public cannot audit.  With a signed push, they can say "Here
-is the push certificate, dated and signed by David Borowitz", and
-the general public can check without trusting the receiving end
-(i.e. hosting site).  If the receiving end does not offer signed
-pushes, it just means that they are not ready to be helped by you,
-and you should have the option of pushing without helping them,
-which is what your "if-possible" is about.
-
-Because of the above reasoning, I think a weaker "I want to do a
-signed push if the recipient is capable of accepting one, but
-otherwise just pushing there is OK" is a perfectly reasonable
-request.
-
-So I am fine as long as "if-possible" turns a failure to make signed
-push into a success _only_ when the reason of the failure is because
-we did not see the capability supported by the receiving end.  If
-the reason why you cannot do a signed push is because you cannot
-sign push certificate, "if-possible" should still fail.
-
-Thanks.
+-- 
+Regards,
+Karthik Nayak
