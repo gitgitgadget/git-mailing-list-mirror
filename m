@@ -1,67 +1,81 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: git svn clone fails
-Date: Fri, 14 Aug 2015 13:54:59 +0200
-Message-ID: <55CDD713.1050205@web.de>
-References: <mpa8th$m80$1@ger.gmane.org> <mppsku$h97$1@ger.gmane.org>
- <mqk6mb$qi8$1@ger.gmane.org> <55CDA784.7080809@web.de>
- <mqkgee$ju3$1@ger.gmane.org>
+From: Dmitry Oksenchuk <oksenchuk89@gmail.com>
+Subject: git merge changes file mode from 644 to 755
+Date: Fri, 14 Aug 2015 15:02:43 +0300
+Message-ID: <CA+POfmsohJAGVYHM3nHJydoyxe92QFd59eWT_UG+_0fM46SATA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?Q?J=c3=b6rg_Schaible?= <joerg.schaible@swisspost.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 14 13:55:15 2015
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 14 14:02:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQDZq-0001TT-9m
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 13:55:14 +0200
+	id 1ZQDhA-0000Td-81
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 14:02:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752188AbbHNLzH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Aug 2015 07:55:07 -0400
-Received: from mout.web.de ([212.227.17.12]:53509 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751856AbbHNLzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2015 07:55:06 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MOAjQ-1ZTUp645wK-005YQk; Fri, 14 Aug 2015 13:55:01
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.1.0
-In-Reply-To: <mqkgee$ju3$1@ger.gmane.org>
-X-Provags-ID: V03:K0:yeHj4r63hU6A6w7xDQ+hQTI/3DgTJ2Ju3505ewuqBEnoz4Tv6gt
- rAdpygf9CVf+hhWePSlQckWw8Nuq5cDFu3P75vptgN7POZSd4ykmbq6+/P5OkWd0PUPAgu9
- Rx++WvCxQsi3ArxsDccHY6+z/8WpkidOqwb3NNtazNume78Pbollg+4gXA5wf5lBlyc9a47
- Gc2BgXUuHKUVFaaFtfClQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:S3d6qEVs+qU=:8babr3GDWleOp6BwYTn2kN
- QeGK5QA01EYZkusC9wK+GUctSo0pbgfsSC7d8/CXrtZ6OgCxWIMuR5OS87ur3kqlDINlmF+wO
- uQ1CBATHP4Ub7YpknE9Vu0TR0F86EbH/Hv/3QEAdH2q3QSoDuhT9v6aNq+C9KcPG4qhcEB0g8
- P/1FzgAgX3YFgWDMP0wA2hdcTXWOM1ZmAuvqxLXed3SZzry7eoXmSsdcaV8JWHBChGDWeqvQv
- bxaotB4g+5fzxzNB0PkPvCCRqZfuJYlSyRVWnwyysDyUsyod1b7bPOZKpzsqdy2XzcIkw+kxc
- Qx3h7bhQGIvVsVHHzAvedVCXN3DZVmTYiou/tu/CwbZB2y/Mu9j0UemIhsEfxYqUidSDbTTyr
- 4X4yFGEEeB/1tXLtJNk5MqEM7sjYDOK456BjQM1syn4LUHpBswIpjLiRXyAT3Pmwgq+cYobQB
- z/mIPDBjTvgvbqmxHOF8HUhqnM8LqajQEKnswRZ3oVWjx580zrnJjhkRMNoyiMsU47t0GTkSb
- QwR5JJvoTk4yynrfRltFiYRx18K8rq+RRLu1xBtQHP++zFhWg8GqfW7CT/dgf2baGkgN/X7FB
- 7iKKE/7tIMoGvXhtobiOO9l5Rq/m1n6zyq4WEGbK7aQF910stgtr90IeftuwF+31v/yDOSzWm
- AmH8eWUS6ewrRq+G5f8FQed13HGoPgAA4CjK3yoJ5/cETMD6eKqOHntmHPV1zS9JR+YPeMsS1
- KARIVNVmtjI3yJob/bwIJEC1ml4LRrNYJGTTfA==
+	id S1753512AbbHNMCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2015 08:02:44 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:34818 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751867AbbHNMCn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2015 08:02:43 -0400
+Received: by igbjg10 with SMTP id jg10so10374151igb.0
+        for <git@vger.kernel.org>; Fri, 14 Aug 2015 05:02:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=q4df6c9Y/vOGAZhi8JKll2q9P9ptrbCUqvciCjF0dcQ=;
+        b=UYNwhWL6OcJMlAZm3J3kWjTWdzJq106gQIpKR+N5Tb5YMpoq/k28yU/lHjJqaCSB7W
+         bZtpGRXbexKyKZ/UermMKCxTvFXXeILyFG4GVwJfqB1lndRwcJjjQIxVdJFuoWPVHTYF
+         SHTpxvBJ8rfVEf6R7emYTgHpC/5KsHWc7AvYCHa9ZVfa7FK8Z3mGqUL0j7LgmSEM2IrM
+         GPVt3zCF44LllPc6/kzz9Ppb8j9njoWENUEgh5e+mqUr29hmyY54vbdUR86IpSxUUPTI
+         46/eHPzAeeWq7Xi3lWywz4p2jdWExRdFc8YnR4Tru/S6oOQ2kv7Vr2zLqtwVYQ0+Jdvw
+         9rMA==
+X-Received: by 10.50.79.129 with SMTP id j1mr2166106igx.16.1439553763113; Fri,
+ 14 Aug 2015 05:02:43 -0700 (PDT)
+Received: by 10.79.78.16 with HTTP; Fri, 14 Aug 2015 05:02:43 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275902>
 
-On 2015-08-14 12.38, J=C3=B6rg Schaible wrote:
-> Any idea how to proceed?
+Hello,
 
-Git itself doesn't version empty directories at all, only files
-(and soft links, sub modules....).
+I've noticed strange behavior of git merge on Windows with
+core.filemode=false (set by default). Git changed mode of some files
+from 644 to 755 for unknown reason. One of the files is stdafx.cpp,
+it's absent in the common ancestor, it was added in the first branch
+(master) with mode 644 and it's still absent in the second branch
+(feature). So, git merges the file without conflicts but changes mode
+from 644 to 755.
 
-Git creates a directory as a "side effect" to be able to store files
-there.
+Example with git merge:
+$ git reset --hard 9b90bac - the first branch
+$ git merge-base 9b90bac f41bd44 - the second branch
+e44b025b000fe71cf621b5aadad88e71d209e301 - the common ancestor
+$ git ls-tree 9b90bac stdafx.cpp
+100644 blob 0bf386d4ae494503129921f5b5077a74976c8f91    stdafx.cpp -
+644 in the first branch
+$ git ls-tree e44b025 stdafx.cpp - absent in the common ancestor
+$ git ls-tree f41bd44 stdafx.cpp - absent in the second branch
+$ git merge f41bd44
+Auto-merging stdafx.cpp
+$ git ls-files -s stdafx.cpp
+100755 0bf386d4ae494503129921f5b5077a74976c8f91 0       stdafx.cpp -
+755 after merge
 
-May be I am off-topic, but would it be possible to fill the empty
-directories with a dummy file ".empty" ?
-Add those to svn and force Git to create a nearly empty directory.
+Example with git read-tree:
+$ git reset --hard 9b90bac
+$ git read-tree -m e44b025 9b90bac f41bd44
+$ git ls-files -s stdafx.cpp
+100644 0bf386d4ae494503129921f5b5077a74976c8f91 0       stdafx.cpp -
+644 after read-tree -m
+
+Why git merge changes mode from 644 to 755? Is it a known issue?
+
+I use git version 1.9.5.msysgit.0. Maybe the issue was fixed in a later version?
+
+Regards,
+Dmitry
