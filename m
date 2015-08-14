@@ -1,169 +1,70 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCHv5] http: add support for specifying the SSL version
-Date: Fri, 14 Aug 2015 15:57:13 -0400
-Message-ID: <CAPig+cTANAgB-5gw5h-Eo=hE-qFavoxiUxQAvaYeV1fbuMiiWA@mail.gmail.com>
-References: <1439581063-29771-1-git-send-email-gitter.spiros@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [bug] 2.5.0 build with NO_PERL is broken
+Date: Fri, 14 Aug 2015 12:59:29 -0700
+Message-ID: <xmqq7foxiqu6.fsf@gitster.dls.corp.google.com>
+References: <loom.20150814T171757-901@post.gmane.org>
+	<loom.20150814T184447-932@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 21:57:26 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Renato Botelho <garga@FreeBSD.org>
+X-From: git-owner@vger.kernel.org Fri Aug 14 21:59:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQL6N-000050-9D
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 21:57:19 +0200
+	id 1ZQL8a-0002In-3o
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 21:59:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966AbbHNT5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2015 15:57:15 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:33360 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750703AbbHNT5O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2015 15:57:14 -0400
-Received: by ykll84 with SMTP id l84so14854168ykl.0
-        for <git@vger.kernel.org>; Fri, 14 Aug 2015 12:57:13 -0700 (PDT)
+	id S1751465AbbHNT7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2015 15:59:32 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:32972 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751255AbbHNT7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2015 15:59:31 -0400
+Received: by pabyb7 with SMTP id yb7so65842808pab.0
+        for <git@vger.kernel.org>; Fri, 14 Aug 2015 12:59:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=dqBIEu9FuSZAhNraqI6QLGPO/jYwciRI0phiIzwkw+o=;
-        b=xzLAgNhkGFFkekaVxhAN4wb1NI4yP6Pq2ThOhN5w9elj4pmSFfK8Mvh156SdtlVZ7o
-         8Xw8aiis1Gri8y1bTk0Lj8KqrOEEzjKlwg4Ll74p1PtdFQ9aHsM5EyEryFqqx/4jghyi
-         LpyA5R3U1kJ97SYzENHQL+ghytWn3hRkm0gNlu7E6JzuUqdnrBN8u4RC0uw15H9LnUYu
-         JGSRKmm6sZosNDedDO6y6+jiKBWQBi2vXSTKGO0txKkApNBNyIr+O2wK8ScOmQwhkdEN
-         cf6kEUbuTSA+hZpXsIKJPp0VdE0bI3oUwzR8Y2qHbyKTfHqHsunjXq/2FWY4rMWKPi6z
-         yH7g==
-X-Received: by 10.170.97.9 with SMTP id o9mr46788994yka.84.1439582233894; Fri,
- 14 Aug 2015 12:57:13 -0700 (PDT)
-Received: by 10.37.208.78 with HTTP; Fri, 14 Aug 2015 12:57:13 -0700 (PDT)
-In-Reply-To: <1439581063-29771-1-git-send-email-gitter.spiros@gmail.com>
-X-Google-Sender-Auth: juo1-tl1H5ytxTFRsxvM17DHi-4
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=ZYGKWSi8uI6KfDRGLAi81e+5eFscXA8IL8GVGQvGTIg=;
+        b=hnsH/w9OJGDWq9CpNmksgYDrM73fFoY6ThobRcfIpqrJj+pn3cmoLQUoKdmOiDZE21
+         O+FvAbjjRibSOwwyTwIZ36QPLlxlUElnqmx37jJU3XQ8PlU1OsIB5zMh1Ejf8J9RMw/7
+         HbdSUWwFis2rhh31rpPxE9HMFnwm1Vz8VZMK4vUpX3jg5P8M9fp3HDK6Nb035h/cvRQA
+         1Il13dOH4Fq//HEfemEzMj0Vr/pcI5Q7M09tdU3hepl9UGAVWf4KaXCNycMoqM5i8XGx
+         QiAW1MEq+eHE1rop5D1lCr7xylYT1dzUfZI+pLjh2X4upxy3CGsjMVtycOeMrvRUtdU+
+         RCvQ==
+X-Received: by 10.66.121.233 with SMTP id ln9mr90171867pab.142.1439582370521;
+        Fri, 14 Aug 2015 12:59:30 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a820:aa0d:2b52:954f])
+        by smtp.gmail.com with ESMTPSA id x11sm6984384pas.46.2015.08.14.12.59.29
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 14 Aug 2015 12:59:30 -0700 (PDT)
+In-Reply-To: <loom.20150814T184447-932@post.gmane.org> (Renato Botelho's
+	message of "Fri, 14 Aug 2015 16:46:18 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275933>
 
-On Fri, Aug 14, 2015 at 3:37 PM, Elia Pinto <gitter.spiros@gmail.com> wrote:
-> Teach git about a new option, "http.sslVersion", which permits one to
-> specify the SSL version  to use when negotiating SSL connections.  The
-> setting can be overridden by the GIT_SSL_VERSION environment
-> variable.
->
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
-> This is the fifth version of the patch. Changes from the previous version:
->
-> - Minor style changes (Eric)
+Renato Botelho <garga@FreeBSD.org> writes:
 
-Looks better. Thanks.
+> I also found that some commands require perl when NO_PERL is set:
+>
+> git-submodule
+> git-request-pull
+> git-am
+>
+> Definitely NO_PERL is not working as expected.
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 315f271..b23b01a 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1595,6 +1595,28 @@ http.saveCookies::
->         If set, store cookies received during requests to the file specified by
->         http.cookieFile. Has no effect if http.cookieFile is unset.
->
-> +http.sslVersion::
-> +       The SSL version to use when negotiating an SSL connection, if you
-> +       want to force the default.  The available and default version depend on
-> +       whether libcurl was built against NSS or OpenSSL and the particular configuration
-> +       of the crypto library in use. Internally this sets the 'CURLOPT_SSL_VERSION'
-> +       option; see the libcurl documentation for more details on the format
-> +       of this option and for the ssl version supported. Actually the possible values
-> +       of this option are:
-> +
-> +       - sslv2
-> +       - sslv3
-> +       - tlsv1
-> +       - tlsv1.0
-> +       - tlsv1.1
-> +       - tlsv1.2
-> +
-> ++
-> +Can be overridden by the 'GIT_SSL_VERSION' environment variable.
-> +To force git to use libcurl's default ssl version and ignore any
-> +explicit http.sslversion option, set 'GIT_SSL_VERSION' to the
-> +empty string.
-> +
->  http.sslCipherList::
->    A list of SSL ciphers to use when negotiating an SSL connection.
->    The available ciphers depend on whether libcurl was built against
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index c97c648..6e9359c 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -2118,6 +2118,7 @@ _git_config ()
->                 http.postBuffer
->                 http.proxy
->                 http.sslCipherList
-> +               http.sslVersion
->                 http.sslCAInfo
->                 http.sslCAPath
->                 http.sslCert
-> diff --git a/http.c b/http.c
-> index e9c6fdd..4c5a2e0 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -37,6 +37,20 @@ static int curl_ssl_verify = -1;
->  static int curl_ssl_try;
->  static const char *ssl_cert;
->  static const char *ssl_cipherlist;
-> +static const char *ssl_version;
-> +static struct {
-> +       const char *name;
-> +       long ssl_version;
-> +       } sslversions[] = {
-> +               { "sslv2", CURL_SSLVERSION_SSLv2 },
-> +               { "sslv3", CURL_SSLVERSION_TLSv1 },
-> +               { "tlsv1", CURL_SSLVERSION_TLSv1 },
-> +#if LIBCURL_VERSION_NUM >= 0x072200
-> +               { "tlsv1.0", CURL_SSLVERSION_TLSv1_0 },
-> +               { "tlsv1.1", CURL_SSLVERSION_TLSv1_1 },
-> +               { "tlsv1.2", CURL_SSLVERSION_TLSv1_2 }
-> +#endif
-> +};
->  #if LIBCURL_VERSION_NUM >= 0x070903
->  static const char *ssl_key;
->  #endif
-> @@ -190,6 +204,8 @@ static int http_options(const char *var, const char *value, void *cb)
->         }
->         if (!strcmp("http.sslcipherlist", var))
->                 return git_config_string(&ssl_cipherlist, var, value);
-> +       if (!strcmp("http.sslversion", var))
-> +               return git_config_string(&ssl_version, var, value);
->         if (!strcmp("http.sslcert", var))
->                 return git_config_string(&ssl_cert, var, value);
->  #if LIBCURL_VERSION_NUM >= 0x070903
-> @@ -364,9 +380,23 @@ static CURL *get_curl_handle(void)
->         if (http_proactive_auth)
->                 init_curl_http_auth(result);
->
-> +       if (getenv("GIT_SSL_VERSION"))
-> +               ssl_version = getenv("GIT_SSL_VERSION");
-> +       if (ssl_version && *ssl_version) {
-> +               int i;
-> +               for (i = 0; i < ARRAY_SIZE(sslversions); i++) {
-> +                       if (!strcmp(ssl_version, sslversions[i].name)) {
-> +                               curl_easy_setopt(result, CURLOPT_SSLVERSION,
-> +                                       sslversions[i].ssl_version);
-> +                               break;
-> +                       }
-> +               }
-> +               if (i == ARRAY_SIZE(sslversions))
-> +                       warning("unsupported ssl version %s: using default", ssl_version);
-> +       }
-> +
->         if (getenv("GIT_SSL_CIPHER_LIST"))
->                 ssl_cipherlist = getenv("GIT_SSL_CIPHER_LIST");
-> -
->         if (ssl_cipherlist != NULL && *ssl_cipherlist)
->                 curl_easy_setopt(result, CURLOPT_SSL_CIPHER_LIST,
->                                 ssl_cipherlist);
-> --
-> 2.5.0.235.gb9bd8dc
->
+NO_PERL merely means "I want to build a subset of Git that is meant
+to be usable on a system without a working Perl installed".  These
+scripts that do require Perl installed are indeed not expected to
+work under NO_PERL (if you think about it, that would be natural and
+the only sensible expectation---otherwise we would have coded them
+without using Perl at all, in which case there will be no need for
+NO_PERL in the first place).
