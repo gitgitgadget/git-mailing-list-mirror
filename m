@@ -1,78 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] Flags and config to sign pushes by default
-Date: Fri, 14 Aug 2015 14:03:34 -0700
-Message-ID: <xmqqk2sxh9ax.fsf@gitster.dls.corp.google.com>
-References: <1439492451-11233-1-git-send-email-dborowitz@google.com>
-	<xmqqbne9ivry.fsf@gitster.dls.corp.google.com>
-	<CAD0k6qSjZW-5eMw-OOHP0cGdj08PesdKVgE9OAFvESwCueyH6w@mail.gmail.com>
-	<xmqqwpwxha4r.fsf@gitster.dls.corp.google.com>
-	<CAD0k6qR2HkHHYu8429mvdvN1bkLeTpD-5EbO4Mt+o69rC+P6aQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v6 3/4] notes: add notes.mergestrategy option to select
+ default strategy
+Date: Fri, 14 Aug 2015 17:06:11 -0400
+Message-ID: <CAPig+cTjQu2LRuR5cC+VSihVB00k-bjew3eCqA4Ee_tRuDK_=w@mail.gmail.com>
+References: <1439585329-10542-1-git-send-email-jacob.e.keller@intel.com>
+	<1439585329-10542-4-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 23:03:44 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 23:06:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQM8b-0003o7-36
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 23:03:41 +0200
+	id 1ZQMB6-0006GS-Lh
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 23:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752017AbbHNVDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2015 17:03:37 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:35674 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751722AbbHNVDg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2015 17:03:36 -0400
-Received: by pacgr6 with SMTP id gr6so66867293pac.2
-        for <git@vger.kernel.org>; Fri, 14 Aug 2015 14:03:35 -0700 (PDT)
+	id S1752149AbbHNVGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2015 17:06:12 -0400
+Received: from mail-yk0-f176.google.com ([209.85.160.176]:35310 "EHLO
+	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751830AbbHNVGM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2015 17:06:12 -0400
+Received: by ykbi184 with SMTP id i184so15415508ykb.2
+        for <git@vger.kernel.org>; Fri, 14 Aug 2015 14:06:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=l5KJPgFq61QzURDA42J5ZVwvWWr9UAcHfooTEbnIK4s=;
-        b=Hef+QUbAoJ1x+eMDc7Mi/HMBtrRerDRUJ9ypZfvStunKxKDzBdoYNSc47+kBLv+vB7
-         dWZm7D/YWaqUDWYuUnsPT9v5+c1lLJoFZXJfQF5c5hHVQzHMn7J9WIiCKbw4aRN70AvH
-         1Xy8Lf0/otV1e5lIWQ8AjRTI2SN5i/zBsXaubPn4d4b4dzb4nSzWNJdC+hYfv/pcZIfQ
-         IvSFJ/Gs3/H4HLN9gGZyLgoUasA49ovH63Nudro3zfSSmujXJSmUnBoe/MetFG5h+Ku3
-         ldr9/xHXh/C0CmCbxgZ8BTBA6YHbSxXj7SyBLNrCqX0Mm0Cr1i4Gh6hSvZ8WLwXI9KGk
-         zEZQ==
-X-Received: by 10.68.198.37 with SMTP id iz5mr90839482pbc.129.1439586215875;
-        Fri, 14 Aug 2015 14:03:35 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a820:aa0d:2b52:954f])
-        by smtp.gmail.com with ESMTPSA id hz5sm7010889pbb.39.2015.08.14.14.03.35
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 14 Aug 2015 14:03:35 -0700 (PDT)
-In-Reply-To: <CAD0k6qR2HkHHYu8429mvdvN1bkLeTpD-5EbO4Mt+o69rC+P6aQ@mail.gmail.com>
-	(Dave Borowitz's message of "Fri, 14 Aug 2015 16:55:03 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=fO/r4vN9HZuNEPBllGS6Qd1BfnOgvjamjO7GgVev2Yc=;
+        b=VNzUv8RC0GJJ//RgXeTqvU2ctK7gWPeFtMHyiZhDb8T5mOe0BSgBLD78Ecvo8xK2DX
+         uTMyOhuxFPmR3Gdo4FBFZzZvzLOXBwDilQia0A7xWQ1par0+DrQfvJadief19XK2+vTd
+         Gq6fV32ysQ90SgismbQZGT0ShUun9OlTtu9GFHNG5QN85ysrFzCojNgS2Wm+GT2QtxL3
+         IHxl7kQRKHK0lPoDCCSv133fubv7njkleruZ/EHpqER08pNFAHt7u0fo3XnftgGjqhum
+         Dg1y5HXXvT2wgW9iQC9u5MEAaDrmiJpI5I0oulLY2XAzc79HuJUkBiaDz+rmUvYiJ085
+         44Ag==
+X-Received: by 10.170.81.133 with SMTP id x127mr47153447ykx.13.1439586371300;
+ Fri, 14 Aug 2015 14:06:11 -0700 (PDT)
+Received: by 10.37.208.78 with HTTP; Fri, 14 Aug 2015 14:06:11 -0700 (PDT)
+In-Reply-To: <1439585329-10542-4-git-send-email-jacob.e.keller@intel.com>
+X-Google-Sender-Auth: kkomfdT4Uo6SP1cpfE4qMpk9jEg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275954>
 
-Dave Borowitz <dborowitz@google.com> writes:
+On Fri, Aug 14, 2015 at 4:48 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> Teach git-notes about "notes.mergestrategy" to select a general strategy
+> for all notes merges. This enables a user to always get expected merge
+> strategy such as "cat_sort_uniq" without having to pass the "-s" option
+> manually.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index 042348082709..d65134f89b40 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+> @@ -738,6 +738,41 @@ static int merge_commit(struct notes_merge_options *o)
+> +static int git_config_get_notes_strategy(const char *key,
+> +                                        enum notes_merge_strategy *strategy)
+> +{
+> +       const char *value = NULL;
+> +
+> +       git_config_get_string_const(key, &value);
+> +
+> +       if (value) {
+> +               if (parse_notes_strategy(value, strategy))
+> +                       git_die_config(key, "unknown notes merge strategy '%s'", value);
+> +               else
+> +                       return 0;
+> +       }
+> +
+> +       return 1;
+> +}
 
-> Ok, so let us bikeshed a bit further.
->
-> Bikeshed 1.
-> Option A: --signed/--no-signed--signed-if-possible
-> Option B: --signed=true|false|if-possible, "--signed" alone implies "=true".
->
-> Bikeshed 2.
->
-> Option A: if-possible
->
-> The possibly confusing thing is one might interpret missing "gpg" to
-> mean "impossible", i.e. "if gpg is not installed don't attempt to
-> sign", which is not the behavior we want.
->
-> I don't have another succinct way of saying this.
-> "if-server-supported" is a mouthful. I think Jonathan mentioned
-> "opportunistic", which is fairly opaque.
+Nice. This seems like a better (and more user-helpful) approach.
 
-I would call what we agreed is a good behaviour during this
-discussion "--sign-if-asked".
+Instead of initializing value to NULL and ignoring the return value of
+git_config_get_string_const(), would it instead make sense to respect
+the return of git_config_get_string_const(), like this?
+
+    const char *value;
+
+    if (!git_config_get_string_const(key, &value)) {
+        if (parse_notes_strategy(value, strategy))
+            git_die_config(key, "unknown notes merge strategy '%s'", value);
+        return 0;
+    }
+    return 1;
+
+Or, the equivalent, but less indented:
+
+    if (git_config_get_string_const(key, &value))
+        return 1;
+    if (parse_notes_strategy(value, strategy))
+        git_die_config(key, "unknown notes merge strategy '%s'", value);
+    return 0;
