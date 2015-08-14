@@ -1,101 +1,100 @@
-From: Sven Strickroth <sven@cs-ware.de>
-Subject: [PATCH] Correctly close config file handle in case of error
-Date: Fri, 14 Aug 2015 21:44:17 +0200
-Message-ID: <55CE4511.6050704@cs-ware.de>
-References: <55CE3F23.7040702@cs-ware.de>
- <CAPig+cQMng-bPjO3WLYb1z7aghYhhHqewSr+EGFgV6Gs6_JZRQ@mail.gmail.com>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCH v3] http: add support for specifying the SSL version
+Date: Fri, 14 Aug 2015 21:51:29 +0200
+Message-ID: <CA+EOSBmqVo8LsOLjzc6vLV1YFT2t=57f-GM7DC8Na6Ggi2anUQ@mail.gmail.com>
+References: <1439479731-16018-1-git-send-email-gitter.spiros@gmail.com>
+	<55CCBF6F.3070808@web.de>
+	<xmqqlhddiy5a.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 21:44:41 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 21:51:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQKu7-0004fg-OH
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 21:44:40 +0200
+	id 1ZQL0p-000363-HY
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 21:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750911AbbHNTof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2015 15:44:35 -0400
-Received: from srv1.79p.de ([213.239.234.118]:48379 "EHLO srv1.79p.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750702AbbHNTof (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2015 15:44:35 -0400
-X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
-Received: from [IPv6:2003:88:6b2b:1300:a502:7b37:ac72:2ad5] (p200300886B2B1300A5027B37AC722AD5.dip0.t-ipconnect.de [IPv6:2003:88:6b2b:1300:a502:7b37:ac72:2ad5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: sven@cs-ware.de)
-	by srv1.79p.de (Postfix) with ESMTPSA id 8EF29223D7C;
-	Fri, 14 Aug 2015 21:44:32 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cs-ware.de;
-	s=mail2015; t=1439581472;
-	bh=vXCjQSbeWSMmkLqA4ja1jPN92xAZazID5F6O6k9O3zI=;
-	h=Subject:To:References:From:Date:In-Reply-To;
-	b=MMaYH1+KX+8FalB1GKpdbx6SDXBZIjcVntEcHdm5jcXSSsJNwCM+S/NeXPvDrEpY/
-	 85BwtOjcoF3FS9WvkSbZ8sz+zjYJVgqTNwgHQeG/SMhH1j8mcrRrORLoHtcJD+Bnn6
-	 gzs6wys9iOVM7eEKjCwvgerzJwSA7Y78VC/m8wTKbacHOZOKpIe1xdkieFl04eek/Y
-	 1vSvkgPNgMzLv2YjwDN1Uq0W2Kv2xgbZ8yObV0y4ybitRO7e9XbqSKDMnrMKoNPY6w
-	 3VtnYlENeFk23ZDhNO9orc1A4VVZtNIAcznFp7yPT0MUkNlEJeorcg90U0zmZV3XTx
-	 IjD54s7eFMVeQ==
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-In-Reply-To: <CAPig+cQMng-bPjO3WLYb1z7aghYhhHqewSr+EGFgV6Gs6_JZRQ@mail.gmail.com>
+	id S1751431AbbHNTvb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Aug 2015 15:51:31 -0400
+Received: from mail-vk0-f45.google.com ([209.85.213.45]:35626 "EHLO
+	mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751184AbbHNTva convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Aug 2015 15:51:30 -0400
+Received: by vkfi73 with SMTP id i73so34181866vkf.2
+        for <git@vger.kernel.org>; Fri, 14 Aug 2015 12:51:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=3hVVf0/JcOje7Uk3sh+wcc1houst0mHcUgEGmmDaMx0=;
+        b=SvJmpXmatRs1YYFLwEBfZGw4/VoOPJx66Ip3tZv6R0ugmS2reiadwn2Xa+nSo/Goyq
+         vqPIDg5JSCLt7L7BJn/kOFdwYmuN/rmTLoK5ZSQIxaSIjrtKWKTM82AMMERf/a3XK6rT
+         4NWt11NEIY/SYhiXR11eumolyWFnnfWqInzjFtIcl/DaEF8igCPPx9uz1IvGKqLfId4W
+         2M9k5ukqm/jbEvUn9bts82+FLSaozcKStZKmu9h7pEcb/93CngtD0RRTiBTIqjmd0KVX
+         dtRhuiqFHiWfE9wYTYy/berc4nhuTnDHiPaj0BPQVut9j1o//bRz+ErcVkLwmTMmLH4t
+         Rsbw==
+X-Received: by 10.52.226.161 with SMTP id rt1mr2554312vdc.53.1439581889710;
+ Fri, 14 Aug 2015 12:51:29 -0700 (PDT)
+Received: by 10.31.16.146 with HTTP; Fri, 14 Aug 2015 12:51:29 -0700 (PDT)
+In-Reply-To: <xmqqlhddiy5a.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275930>
 
-Without this patch there might be open file handle leaks.
+2015-08-14 19:21 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>
+>>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>>> index 315f271..b23b01a 100644
+>>> --- a/Documentation/config.txt
+>>> +++ b/Documentation/config.txt
+>>> @@ -1595,6 +1595,28 @@ http.saveCookies::
+>>>      If set, store cookies received during requests to the file spe=
+cified by
+>>>      http.cookieFile. Has no effect if http.cookieFile is unset.
+>>>
+>>> +http.sslVersion::
+>> should this be https.sslVersion ?
+>> (http doesn't use ssl)
+>
+> But there are sslCipherList, etc., already present, and more
+> importantly, I think you want http.proxy to apply even if you happen
+> to be talking http over SSL.
+>
+> More importantly, given that we have the "limited to this URL"
+> mechanism "http.<url>.<variable>" that overrides "http.<variable>",
+> introducing "https.sslWhatEver" would force people to have two
+> configuration sections for no real benefit, other than silencing
+> pedants that want to say "these things should be defined only for
+> https".
+>
+>>> + if (sslversions[i].name !=3D NULL && *sslversions[i].name &&
+>>> !strcmp(ssl_version,sslversions[i].name)) {
+>>> +                            curl_easy_setopt(result, CURLOPT_SSLVE=
+RSION,
+>>> +                                    sslversions[i].ssl_version);
+>> This is what my man page says:
+>>  CURLcode curl_easy_setopt(CURL *handle, CURLoption option, paramete=
+r);
+>> []
+>>
+>> RETURN VALUE
+>>        CURLE_OK (zero) means that the option was set properly...
+>> Should the return value checked (and we die() if we fail ?
+>
+> Probably.  Do we check status from other calls to setopt?
+No. In this case anyway is not important i think: we already check if
+the version is accepted by curl, and if it is deprecated ( sslv2 for
+eample) we have an error in any case. refs
+http://curl.haxx.se/libcurl/c/CURLOPT_SSLVERSION.html
 
-Signed-off-by: Sven Strickroth <email@cs-ware.de>
-Signed-off-by: Sup Yut Sum <ch3cooli@gmail.com>
----
- config.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/config.c b/config.c
-index 9fd275f..c06dc2f 100644
---- a/config.c
-+++ b/config.c
-@@ -2010,6 +2010,7 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 				error("invalid pattern: %s", value_regex);
- 				free(store.value_regex);
- 				ret = CONFIG_INVALID_PATTERN;
-+				close(in_fd);
- 				goto out_free;
- 			}
- 		}
-@@ -2034,6 +2035,7 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 				free(store.value_regex);
- 			}
- 			ret = CONFIG_INVALID_FILE;
-+			close(in_fd);
- 			goto out_free;
- 		}
- 
-@@ -2048,6 +2050,7 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 		if ((store.seen == 0 && value == NULL) ||
- 				(store.seen > 1 && multi_replace == 0)) {
- 			ret = CONFIG_NOTHING_SET;
-+			close(in_fd);
- 			goto out_free;
- 		}
- 
-@@ -2062,6 +2065,7 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 			      config_filename, strerror(errno));
- 			ret = CONFIG_INVALID_FILE;
- 			contents = NULL;
-+			close(in_fd);
- 			goto out_free;
- 		}
- 		close(in_fd);
--- 
-Best regards,
- Sven Strickroth
- PGP key id F5A9D4C4 @ any key-server
+Best Regards
