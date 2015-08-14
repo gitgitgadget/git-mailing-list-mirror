@@ -1,106 +1,100 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 2/4] path: optimize common dir checking
-Date: Fri, 14 Aug 2015 16:54:20 -0400
-Organization: Twitter
-Message-ID: <1439585660.8855.102.camel@twopensource.com>
-References: <1439416645-19173-1-git-send-email-dturner@twopensource.com>
-	 <1439416645-19173-2-git-send-email-dturner@twopensource.com>
-	 <55CC5DED.5050304@alum.mit.edu>
-	 <xmqqtws1iyxn.fsf@gitster.dls.corp.google.com>
-	 <1439582644.8855.89.camel@twopensource.com>
-	 <xmqq1tf5ipju.fsf@gitster.dls.corp.google.com>
+From: Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH 0/7] Flags and config to sign pushes by default
+Date: Fri, 14 Aug 2015 16:55:03 -0400
+Message-ID: <CAD0k6qR2HkHHYu8429mvdvN1bkLeTpD-5EbO4Mt+o69rC+P6aQ@mail.gmail.com>
+References: <1439492451-11233-1-git-send-email-dborowitz@google.com>
+ <xmqqbne9ivry.fsf@gitster.dls.corp.google.com> <CAD0k6qSjZW-5eMw-OOHP0cGdj08PesdKVgE9OAFvESwCueyH6w@mail.gmail.com>
+ <xmqqwpwxha4r.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	chriscool@tuxfamily.org, pclouds@gmail.com
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 22:54:32 2015
+X-From: git-owner@vger.kernel.org Fri Aug 14 22:55:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQLzi-0003IT-Aa
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 22:54:30 +0200
+	id 1ZQM0g-0004HM-7R
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 22:55:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752617AbbHNUyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2015 16:54:25 -0400
-Received: from mail-qk0-f181.google.com ([209.85.220.181]:35443 "EHLO
-	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751748AbbHNUyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2015 16:54:22 -0400
-Received: by qkbm65 with SMTP id m65so29606399qkb.2
-        for <git@vger.kernel.org>; Fri, 14 Aug 2015 13:54:22 -0700 (PDT)
+	id S1752636AbbHNUzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2015 16:55:25 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:34141 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750940AbbHNUzY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2015 16:55:24 -0400
+Received: by iodb91 with SMTP id b91so96905655iod.1
+        for <git@vger.kernel.org>; Fri, 14 Aug 2015 13:55:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Lu6S1J+0qGOJwh0dF4yDQ6g7KpSHPLEOTy+HE42dsiU=;
+        b=iX4Ag5kPjMGW4JfdUNFzgOCon+0FgEi74Z0xoj5wNdGvEykpfDapf4r2tgHaZ3Zb4r
+         ePNx/pLhp6oqrgbK1N2hEdZkuqxqOdcsLd5tj777alBp9qfer6wdFAzxphfDkHpabi8j
+         nv4DWas++y+xeveKPjFO5cEME4AXQXLh7ONHBnhPcy4aJVcKkuoBwM1J83KwgoZuFLH2
+         RgmFR8HuiBoKlMVv80tZZrXTNnt4j5cYXZbZrrtOm4+A3FRhV7L+bySfBgEwVumvFKqB
+         ASKxdDKuzThvlBnwC5GDHqB7a91mgp2hvqyb7Qy8MkeVSUDc5Orx7ZFFca9mGPDNF3Dr
+         Ag3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=nTWDF5iHrJE7dwRZ8G7+Wi6WWECq1ZOkTjG1NyN06gw=;
-        b=TjCYeuKn53Qpm1zqOwpBq/MHmElxtu5jeV2cI/OX3u5G1c5ETK09V59VynlZr8EON2
-         YbGjCBXQNBNR0UHiGy+EWWzqYYMSbq6NnCy83/0AjkMJbQBD+vTZESeDvuXN0MfjfJZI
-         b/YajZ3/+98mndCkBudYsKMksQI78umLy7gl32k+/rNfC8+fMpEC2SSNovmWMFEWM/eS
-         +NB+JAfDVqiH2I1eKx5u5FFvE8DQ7iA5tGwgNHdZYAK5TRIngiilL74Hk8Ee6oqMZzRm
-         BfDhxs36hFsASxHLzFC5ZPcjlJKd6inq7Ly629MWnfXPmLYAK7A3XlcUKkaDuMeZ6aEa
-         LhgA==
-X-Gm-Message-State: ALoCoQkH0WlNKDcldpbeNfGBbMPnLMTQZmrk7sd0NPZ8/UPrPGVOJErApiR4Od1O3yUThiklV9gV
-X-Received: by 10.55.204.13 with SMTP id r13mr7254274qki.99.1439585662072;
-        Fri, 14 Aug 2015 13:54:22 -0700 (PDT)
-Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id 108sm3704902qgz.17.2015.08.14.13.54.20
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Aug 2015 13:54:21 -0700 (PDT)
-In-Reply-To: <xmqq1tf5ipju.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=Lu6S1J+0qGOJwh0dF4yDQ6g7KpSHPLEOTy+HE42dsiU=;
+        b=Gr2AcdGOJaF3oTtdhZSm9reabONMA4MIq8BGaqtvKBbD/r8/kj5IWAnGKpI/y1I5Qy
+         b4m2iy6lQKWu8fWbKrO6hUmQIkL15WJtaLZ1oqMnZea+bm0LFCpWAKOXJzkq0LXBELOy
+         nC0sMFcfIggXHo9bDJZYluqWYuPUB8jEZiHmFL3Lgjku/ZRQi7ckDpGmwyO3HhP55NRS
+         YIzakRpRv0pK4dZH3u6yfPcUJpsh9SQLVteAmhOUpqV2tppDbqiWT/Isg+d1Maf6H2zv
+         yslRb66FDbuhIvjTZpnjEeLB6mJEXhxKEZYGahgL2seSkKyti0aikCoW71noDwTMYa3q
+         e0FA==
+X-Gm-Message-State: ALoCoQnz4d75v6bjzxTq8d6v+3Y2Wj4g5ONpEzVkOFyDhCOnlHbNQOnhBlDvQAntYUuBKseyjirL
+X-Received: by 10.107.160.197 with SMTP id j188mr51149955ioe.194.1439585723272;
+ Fri, 14 Aug 2015 13:55:23 -0700 (PDT)
+Received: by 10.107.4.201 with HTTP; Fri, 14 Aug 2015 13:55:03 -0700 (PDT)
+In-Reply-To: <xmqqwpwxha4r.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275950>
 
-On Fri, 2015-08-14 at 13:27 -0700, Junio C Hamano wrote:
-> David Turner <dturner@twopensource.com> writes:
-> 
-> > Random side note: the present workspace path name component is not
-> > acceptable for this if alternate ref backends use a single db for
-> > storage across all workspaces.  That's because you might create a
-> > workspace at foo, then manually rm -r it, and then create a new one also
-> > named foo.  The database wouldn't know about this series of events, and
-> > would then have stale per-workspace refs for foo.
-> 
-> The users can do "Create, manuallly rm -r and recreate" dance all
-> they want, but the result must still honor the invariant:
-> 
->     For any $workspace, $workspace/.git is a "gitdir:" file that
->     points at one subdirectory in $GIT_COMMON_DIR/worktrees/.
-> 
-> The "name" I had in mind was the names of the directories in
-> $GIT_COMMON_DIR/worktrees/ that by definition has to be unique.
-> 
-> Another invariant 
+On Fri, Aug 14, 2015 at 4:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Dave Borowitz <dborowitz@google.com> writes:
 >
->    $GIT_COMMON_DIR/worktrees/$that_subdirectory has commondir file
->    that points at the $GIT_COMMON_DIR/.
+>> On Fri, Aug 14, 2015 at 2:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Yes, it looks somewhat strange.
+>> ... The straw-man
+>> strangeness is that two of them are the traditional boolean values
+>> "true/false" and the third is "file not found^W^W^Wif-possible" :)
 >
-> must also be preserved by "Create, manuallly rm -r and recreate"
-> dance, but it is not important to define what the workspace ID is.
+> It actually is not uncommon for a Git configuration variable to
+> start its life as a boolean and then later become tristate (or more)
+> as we gain experience with the system, so don't worry about it being
+> "strange".  A tristate, among whose choices two of them are true and
+> false, is not "strange" around here.
 
-My worry was that workspace would get deleted and
-recreated without the refs db finding out.  Then the refs db would
-retain per-workspace references from the deleted version of the
-worskace.  That is, these names are unique at any given time, but not
-across time.
+Ok, so let us bikeshed a bit further.
 
-My idea was just to have `git workspace add` create per-workspace
-"workspace_id" file with a long random number in it. The id would be
-$that_subdirectory/$random_number; we would know to split it at / and
-double-check that the workspace id is still current before assuming that
-our refs data was valid for the workspace.  
+Bikeshed 1.
+Option A: --signed/--no-signed--signed-if-possible
+Option B: --signed=true|false|if-possible, "--signed" alone implies "=true".
 
-Alternately, git workspace add could inform the refs backend that a
-workspace is being added, which would solve the problem in a different
-way.
+Bikeshed 2.
 
-But given my refs lmdb backend design, I can actually ignore this for
-now, so that's what I'm going to do.
+Option A: if-possible
+
+The possibly confusing thing is one might interpret missing "gpg" to
+mean "impossible", i.e. "if gpg is not installed don't attempt to
+sign", which is not the behavior we want.
+
+I don't have another succinct way of saying this.
+"if-server-supported" is a mouthful. I think Jonathan mentioned
+"opportunistic", which is fairly opaque.
+
+
+> By "strange", I was referring to the possible perception issue on
+> having a choice other than yes/no for a configuration that allows
+> you to express your security preference.
+>
+> Thanks.
