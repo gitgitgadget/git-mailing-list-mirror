@@ -1,73 +1,83 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v6 3/4] notes: add notes.mergestrategy option to select
- default strategy
-Date: Fri, 14 Aug 2015 14:12:20 -0700
-Message-ID: <CA+P7+xpPFO4cJbK=nZMMy8DYAB71xzq=gEaTB5D+_KACZLzaDw@mail.gmail.com>
-References: <1439585329-10542-1-git-send-email-jacob.e.keller@intel.com>
- <1439585329-10542-4-git-send-email-jacob.e.keller@intel.com> <CAPig+cTjQu2LRuR5cC+VSihVB00k-bjew3eCqA4Ee_tRuDK_=w@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Git List <git@vger.kernel.org>,
-	Johan Herland <johan@herland.net>,
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH v7 1/4] notes: document cat_sort_uniq rewriteMode
+Date: Fri, 14 Aug 2015 14:13:52 -0700
+Message-ID: <1439586835-15712-2-git-send-email-jacob.e.keller@intel.com>
+References: <1439586835-15712-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Johan Herland <johan@herland.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 23:12:50 2015
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 14 23:14:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQMHR-0004Ro-Dp
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 23:12:49 +0200
+	id 1ZQMIw-0005z1-Cl
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 23:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbbHNVMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2015 17:12:40 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:34619 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751803AbbHNVMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2015 17:12:39 -0400
-Received: by iodb91 with SMTP id b91so97337288iod.1
-        for <git@vger.kernel.org>; Fri, 14 Aug 2015 14:12:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0zwJ+ySJqd4VFqK8jQmHEUUfzyBEtWLHH+lAOw4cT6k=;
-        b=g8qHDdvG+4S2gXr4tcbPJbbTNO5XuxTJQHnFZML+hhDfumxECn0yGg1XR4sT14uyoo
-         1VB3ntTjXdY3Rjh+IxC6DlIefAGDf8Ipp9eBEGMVbNVxxIvInpG/mP0EFdmHMRRbvKdd
-         I7oV6iG1h5P/0sQ3Hr1ZMO0klRsKnsk2rNB1o4IzFftIZIhnxf473mXOIILxgyaY6K98
-         Qv3LU0JQyUXiMBdrnXNwlCEnZgXwxiJldbIz1xWna/Bw/qBmiOGZBK8gRT7pw5GB4xJS
-         Hgy4kZYNkZdlsabPVfPAcR5aVFqPrbZidOwIJoktjL195xH9AtPrEsMVJ2rnMkZaxg/J
-         Br4w==
-X-Received: by 10.107.154.67 with SMTP id c64mr3340874ioe.0.1439586759333;
- Fri, 14 Aug 2015 14:12:39 -0700 (PDT)
-Received: by 10.107.5.203 with HTTP; Fri, 14 Aug 2015 14:12:20 -0700 (PDT)
-In-Reply-To: <CAPig+cTjQu2LRuR5cC+VSihVB00k-bjew3eCqA4Ee_tRuDK_=w@mail.gmail.com>
+	id S1752536AbbHNVOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2015 17:14:17 -0400
+Received: from mga09.intel.com ([134.134.136.24]:14107 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752027AbbHNVOQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2015 17:14:16 -0400
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga102.jf.intel.com with ESMTP; 14 Aug 2015 14:14:02 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.15,680,1432623600"; 
+   d="scan'208";a="784359581"
+Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.85])
+  by orsmga002.jf.intel.com with ESMTP; 14 Aug 2015 14:13:57 -0700
+X-Mailer: git-send-email 2.5.0.280.g4aaba03
+In-Reply-To: <1439586835-15712-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275956>
 
-On Fri, Aug 14, 2015 at 2:06 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->     const char *value;
->
->     if (!git_config_get_string_const(key, &value)) {
->         if (parse_notes_strategy(value, strategy))
->             git_die_config(key, "unknown notes merge strategy '%s'", value);
->         return 0;
->     }
->     return 1;
->
-> Or, the equivalent, but less indented:
->
->     if (git_config_get_string_const(key, &value))
->         return 1;
->     if (parse_notes_strategy(value, strategy))
->         git_die_config(key, "unknown notes merge strategy '%s'", value);
->     return 0;
+From: Jacob Keller <jacob.keller@gmail.com>
 
+Teach documentation about the cat_sort_uniq rewriteMode that got added
+at the same time as the equivalent merge strategy.
 
-I like it. Will do.
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ Documentation/config.txt    | 4 ++--
+ Documentation/git-notes.txt | 3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 75ec02e8e90a..de67ad1fdedf 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1947,8 +1947,8 @@ notes.rewriteMode::
+ 	When copying notes during a rewrite (see the
+ 	"notes.rewrite.<command>" option), determines what to do if
+ 	the target commit already has a note.  Must be one of
+-	`overwrite`, `concatenate`, or `ignore`.  Defaults to
+-	`concatenate`.
++	`overwrite`, `concatenate`, `cat_sort_uniq`, or `ignore`.
++	Defaults to `concatenate`.
+ +
+ This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
+ environment variable.
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 851518d531b5..674682b34b83 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -331,7 +331,8 @@ environment variable.
+ notes.rewriteMode::
+ 	When copying notes during a rewrite, what to do if the target
+ 	commit already has a note.  Must be one of `overwrite`,
+-	`concatenate`, and `ignore`.  Defaults to `concatenate`.
++	`concatenate`, `cat_sort_uniq`, or `ignore`.  Defaults to
++	`concatenate`.
+ +
+ This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
+ environment variable.
+-- 
+2.5.0.280.g4aaba03
