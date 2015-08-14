@@ -1,109 +1,100 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v10 05/13] ref-filter: implement an `align` atom
-Date: Fri, 14 Aug 2015 21:16:32 +0530
-Message-ID: <CAOLa=ZQcd37Vq8j9sRYwnio0T3ua5C3frMc7-uEqLWsLo6eYYg@mail.gmail.com>
-References: <1439129506-9989-1-git-send-email-Karthik.188@gmail.com>
- <1439129506-9989-6-git-send-email-Karthik.188@gmail.com> <xmqqy4hhr72q.fsf@gitster.dls.corp.google.com>
- <CAOLa=ZTnS0kL=CK8Lx-brO0tryB5YzOFUpapsM4LMW-m2Yf9pw@mail.gmail.com>
- <xmqqpp2sl9au.fsf@gitster.dls.corp.google.com> <CAOLa=ZQbjVnJCxVu5SgKDUEVnidY=zw9nVYqG_z3nWhK8QnLTA@mail.gmail.com>
- <xmqqr3n8jlvv.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/10] ref-filter: add option to filter only branches
+Date: Fri, 14 Aug 2015 08:56:38 -0700
+Message-ID: <xmqq614hkgnd.fsf@gitster.dls.corp.google.com>
+References: <CAOLa=ZSnn19DR_Y5MqUXHed0g5MSk_dwFc48dk8GoPYvL5DQ=Q@mail.gmail.com>
+	<1438693282-15516-1-git-send-email-Karthik.188@gmail.com>
+	<xmqqpp2tspb6.fsf@gitster.dls.corp.google.com>
+	<CAOLa=ZRRU4htKgB46g0FAGVEGGFN+1N1250AOYJh7H5apv=RJQ@mail.gmail.com>
+	<CAOLa=ZQic2=z6bJ0Ykhn2x8mE86w4HwBrJP7pb_RaemGKCZzmQ@mail.gmail.com>
+	<CAOLa=ZQSVCgcuUQFsF2Mq-m+wS8im3t4Z3PSEgoAHcV0gGuvPA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 17:47:09 2015
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 17:56:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQHCG-0006dE-G2
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 17:47:08 +0200
+	id 1ZQHLa-0008A7-0O
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 17:56:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755344AbbHNPrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2015 11:47:04 -0400
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:34174 "EHLO
-	mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755140AbbHNPrC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2015 11:47:02 -0400
-Received: by oip136 with SMTP id 136so46165011oip.1
-        for <git@vger.kernel.org>; Fri, 14 Aug 2015 08:47:01 -0700 (PDT)
+	id S1755322AbbHNP4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2015 11:56:41 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35650 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755204AbbHNP4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2015 11:56:41 -0400
+Received: by pacgr6 with SMTP id gr6so62457942pac.2
+        for <git@vger.kernel.org>; Fri, 14 Aug 2015 08:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=fm0PUht3M1kvKpbMVDQCEiY1wCfEKOc9EfMH95jRkwE=;
-        b=UwqUBgsgDB/Tm5NhxnM1Y9LZKOoyMz/Oy8pLIWCW8SSSOXJtyM9nyV3iKB/ZCEx1QC
-         RJp4LqqCkIHtPZRDHnA93MrzfkjNMgzirXGus/jgPrcDhgWkQBLlHMT2C9iSIkAQwXY/
-         32oFygcRkTcOMOPG6gKpa79G1lBHQ5UiRVPX3UTEeTxefYvOSw4C3KnJHglZdLvOBzZg
-         31A5z9eR0TS0rxVVKVtEsmWrl6kjlLCxYOWeoRyqYdZ5qPmmVrGT5GrSLjeKIYNP3BDX
-         VrfXVQNHsB44xVQNvlemige/Ak9XkHoo5SAA77q2R4Rw/Cs7FvbiphzPMQkfuIbHrr+r
-         yhSg==
-X-Received: by 10.202.92.6 with SMTP id q6mr38153659oib.11.1439567221539; Fri,
- 14 Aug 2015 08:47:01 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Fri, 14 Aug 2015 08:46:32 -0700 (PDT)
-In-Reply-To: <xmqqr3n8jlvv.fsf@gitster.dls.corp.google.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=2fPYDDfCyYr3W14Mnavm7a0obRjlTepS93jOTQx10m4=;
+        b=HxPgz7Gf9xK7yE5BR2tTXlnQS9W7z45tb5sIpdtPbapItAVcYT/HdhvZqjizTt+8B+
+         JRGdQRMI+idFoF6FhzmqS9rasylbIadeqcoZxflM6s2dTcrQDgPFeBbKazFlxZoOeb5e
+         r1nVi1ADzHt3rjBtM03hW0+ROZ+Zlk8mUpFMfdkwLNiR0EHrHNBS1RnwAHQJtCDKGZHJ
+         G9QtmvQ1OpmSn5NlCtXg+fZUWDzO6wOlbK6G63fwGV3iqNkj2PnVJwMXQcf7dZQJ44lS
+         tb9tLENyUKkynxlvXJBpVPWLk2ebcz9nwb8BaB7cl9vuIe+RClZjx5rjfpU5TAxtYhsr
+         5jZw==
+X-Received: by 10.68.138.200 with SMTP id qs8mr2282020pbb.19.1439567800590;
+        Fri, 14 Aug 2015 08:56:40 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a820:aa0d:2b52:954f])
+        by smtp.gmail.com with ESMTPSA id y2sm6480883pdp.0.2015.08.14.08.56.39
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 14 Aug 2015 08:56:39 -0700 (PDT)
+In-Reply-To: <CAOLa=ZQSVCgcuUQFsF2Mq-m+wS8im3t4Z3PSEgoAHcV0gGuvPA@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 13 Aug 2015 20:43:02 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275907>
 
-On Thu, Aug 13, 2015 at 1:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> On Wed, Aug 12, 2015 at 10:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> ...
->>> %(objectname:abbrev=8).  To specify two modification magics, each of
->>> which takes a number, the user would say e.g.
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+> On Thu, Aug 13, 2015 at 5:05 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> On Thu, Aug 13, 2015 at 4:21 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
 >>>
->>>     %(objectname:abbrev=8,magic=4)
->>> ...
->>> And that would be following %(align:8).  Both 'left' (implied
->>> default) and '8' are instructing 'align' what to do.
+>>> This was taken from branch.c, I thought of using an enum instead but that
+>>> would again require most of branch.c, hence it's been carried over
+>>> without changing
+>>> I'm thinking of changing it, any suggestions?
+>>>
 >>
->> Will follow this. :)
+>> What I was thinking was of having:
+>>
+>> #define FILTER_REFS_INCLUDE_BROKEN 0x1
+>> #define FILTER_REFS_TAGS 0x2
+>> #define FILTER_REFS_BRANCHES 0x4
+>> #define FILTER_REFS_REMOTES 0x8
+>> #define FILTER_REFS_DETACHED_HEAD 0x16
+>>
+>> and using these for showing ref kind also instead of separately
+>> having 'REF_DETACHED_HEAD' and so on.
+>>
 >
-> I think the most generic way to think about this is to consider that
-> the most fully spelled form of align would be this:
->
->         %(align:width=12,position=left)
->
-> And another rule you would have is that the user is allowed to omit
-> "<attr>=" when it is obvious from its value.  For "align", 'left'
-> can only possibly be the value for 'position' and similarly '12' for
-> 'width'.  That is why the "objectname" example says "abbrev=8", and
-> not "abbrev,8", because from the value of "8" without the attribute
-> name, you cannot tell if the user meant abbrev=8 or magic=8.
->
-> That '"<attr>=" can be omitted' rule makes both of these valid
-> constructs:
->
->         %(align:12,left) %(align:left,12)
->
+> Something like this:
+> https://github.com/KarthikNayak/git/commit/0ec5381420dcdfe7c62000b56168e2842d5d0063
 
-Are you sure you want it to be so flexible? I mean It's nice to have it,
-but it would include a lot more processing, I'd prefer having either the
-generic type you mentioned about so users know what they're typing
-or else a predefined way like
+I notice a few things in ref-filter.c in that commit (a web
+interface including GitHub one is horrible in showing the things in
+wider context across files, so I'll base my discussion by guessing
+what the caller of this function and helpers this function calls
+do):
 
-           %(align:<width>,<position>)
+ - Your "ALL" silently overrides others.  Is that sensible?  Perhaps
+   you would instead want to define FILTER_REFS_OTHER (not needed to
+   be exposed to UI) and then define FILTER_REFS_ALL as the ORed
+   value of FILTER_REFS_{BRANCHES,...,OTHER}?
 
-> Moreover, if you make "left aligned" the default behaviour when
-> position is not specified, you can make %(align:12) the shortest way
-> to spell the same thing.  Note that I said "if you make"; I do not
-> offhand know if all the internal callers of this mechanism your
-> updates to "branch -l" and "tag -l" would want left aligned output
-> (if so, that is one argument to favor making left-aligned the
-> implicit default; if not, it may be better to require the position
-> always specified).
-
-Left align is what I'd prefer as default for branch -l and tag -l so
-that will be
-done.
-
--- 
-Regards,
-Karthik Nayak
+ - When the caller asks for "--branches --tags", you run
+   ref-filter-handler twice on ref_cbdata.  Does that make sense?
+   Shouldn't you iterate over all the available refs just once,
+   rejecting ones that aren't in either refs/{heads,tags}/ instead?
