@@ -1,94 +1,56 @@
-From: =?UTF-8?B?SsO2cmc=?= Schaible <joerg.schaible@swisspost.com>
-Subject: Re: git svn clone fails
-Date: Fri, 14 Aug 2015 12:38:06 +0200
-Organization: Swiss Post Solutions
-Message-ID: <mqkgee$ju3$1@ger.gmane.org>
-References: <mpa8th$m80$1@ger.gmane.org> <mppsku$h97$1@ger.gmane.org> <mqk6mb$qi8$1@ger.gmane.org> <55CDA784.7080809@web.de>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH 0/7] Flags and config to sign pushes by default
+Date: Fri, 14 Aug 2015 23:47:16 +1200
+Message-ID: <CAFOYHZAjvhOJQ1jLvVgOtbWLXfhn-XfKsFuKGR-68_E2D=ASRA@mail.gmail.com>
+References: <1439492451-11233-1-git-send-email-dborowitz@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 14 12:38:37 2015
+Cc: GIT <git@vger.kernel.org>
+To: Dave Borowitz <dborowitz@google.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 13:47:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQCNf-0004Bf-Sd
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 12:38:36 +0200
+	id 1ZQDSW-0002nX-Da
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Aug 2015 13:47:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754905AbbHNKib convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Aug 2015 06:38:31 -0400
-Received: from plane.gmane.org ([80.91.229.3]:44078 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754249AbbHNKi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2015 06:38:29 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1ZQCNS-0003zB-SW
-	for git@vger.kernel.org; Fri, 14 Aug 2015 12:38:22 +0200
-Received: from 62.154.225.82 ([62.154.225.82])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 14 Aug 2015 12:38:22 +0200
-Received: from joerg.schaible by 62.154.225.82 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 14 Aug 2015 12:38:22 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 62.154.225.82
-User-Agent: KNode/4.14.8
+	id S1751622AbbHNLrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2015 07:47:17 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:36553 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751308AbbHNLrR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2015 07:47:17 -0400
+Received: by igxp17 with SMTP id p17so10134230igx.1
+        for <git@vger.kernel.org>; Fri, 14 Aug 2015 04:47:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=FqexqkH7WTtammiiQpdofxd8c98lauv1vbaBDtYmLHU=;
+        b=BVDqgvMbBO1RG8kOdrNEYGNDCmLy9zHb10YSPGkhbzp8SSfb3T4S8VHV/2h4sSE2G9
+         r33BJg1bHsawkIzgsMgUlpuIQru6Hm3NnvAxkGQeISwqPwDQ1ffkc0q1uzhwWtULkatH
+         7akK6jUGQHwRofiHurdIvW4rcRoTSGRiMelDxbnFv8KO5oxBhVcvzzGLmdBcZj9mFVLp
+         f1oqJSMFbYNX/SSbyX2eByNSKam1oQ49YmTw7fwGkA7JNOl+8uUVsh9qAmH0NBwNn5O4
+         FL5wkTPGtLg9dYzbKMayLXTI5w++XF6fyXDR216dNDAuPSkCp9/6Q2lNqfGyVkPUksil
+         crhg==
+X-Received: by 10.50.102.68 with SMTP id fm4mr2098523igb.25.1439552836570;
+ Fri, 14 Aug 2015 04:47:16 -0700 (PDT)
+Received: by 10.79.116.215 with HTTP; Fri, 14 Aug 2015 04:47:16 -0700 (PDT)
+In-Reply-To: <1439492451-11233-1-git-send-email-dborowitz@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275900>
 
-Hi Torsten,
+Bike shedding a little (I've never used the signed push functionality)
 
-thanks for an answer ...
+On Fri, Aug 14, 2015 at 7:00 AM, Dave Borowitz <dborowitz@google.com> wrote:
+> The "if-possible" name and weird tri-state boolean is basically a straw man,
+> and I am happy to change if someone has a clearer suggestion.
 
-Torsten B=C3=B6gershausen wrote:
-
-> On 2015-08-14 09.51, J=C3=B6rg Schaible wrote:
-> I can't reproduce it here:
->=20
->  git svn clone http://websvn/svn/essvn/standard/java-commons/lang
-> Initialized empty Git repository in /home/xx/lang/.git/
-> RA layer request failed: OPTIONS of
-> 'http://websvn/svn/essvn/standard/java-commons/lang': Could not resol=
-ve
-> hostname `websvn': Host not found (http://websvn) at
-> /Users/xx/lib/perl5/site_perl/Git/SVN.pm line 143
-
-It is unfortunately not possible to provide this Subversion repo to the=
-=20
-public.
-=20
-> In other words, is there a way to make this reproducible for others?
-
-Actually I hoped, that my report raised some memories, because errors w=
-ith=20
-this symptom had been examined before and some kind of fix has been add=
-ed=20
-(according http://stackoverflow.com/questions/25353316/error-with-git-s=
-vn-clone) to GIT 2.4.x. However, it seems there's still an issue even i=
-n GIT=20
-2.5.0 when the svn repo contains empty directories that have to be pres=
-erved=20
-=2E..
-
-> If not, how could the problem be tracked down and fixed
-> (from other people than you or somebody in your organization ?)
-
-Actually I am not sure. I tried to create a little dummy project in a=20
-Subversion test repository that contains also empty directories which h=
-ave=20
-to be preserved ... but the conversion for it works flawlessly. Even if=
-=20
-those dirs had been nested, renamed, moved and deleted.
-
-Any idea how to proceed?
-
-Cheers,
-J=C3=B6rg
+what about git push --signed={always|if-possible} defaulting to
+"always" to be backwards compatible. You might also want to add
+--no-signed or --signed=no to override your new config option
