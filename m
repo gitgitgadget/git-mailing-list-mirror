@@ -1,7 +1,7 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v11 12/13] tag.c: implement '--format' option
-Date: Sat, 15 Aug 2015 23:30:42 +0530
-Message-ID: <1439661643-16094-13-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v11 09/13] ref-filter: add option to match literal pattern
+Date: Sat, 15 Aug 2015 23:30:39 +0530
+Message-ID: <1439661643-16094-10-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
@@ -11,168 +11,150 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQfln-0001ma-Ab
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Aug 2015 20:01:27 +0200
+	id 1ZQflg-0001gC-4E
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Aug 2015 20:01:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754310AbbHOSBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2015 14:01:20 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:35596 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754242AbbHOSBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2015 14:01:09 -0400
-Received: by pacgr6 with SMTP id gr6so79478794pac.2
-        for <git@vger.kernel.org>; Sat, 15 Aug 2015 11:01:08 -0700 (PDT)
+	id S1754274AbbHOSBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2015 14:01:10 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:33775 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754235AbbHOSBC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2015 14:01:02 -0400
+Received: by pabyb7 with SMTP id yb7so79257315pab.0
+        for <git@vger.kernel.org>; Sat, 15 Aug 2015 11:01:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=ArlwMJ3VrYdoqBu+6FJk22mR25JRCrM/BcfokKRlzio=;
-        b=fj49jQhcElywHz0xRjVUSQTsbp63Zb8qQuWYY0s/PMdm8umrNJ59Z9ZsW9fyESvlDA
-         SoTisGMuJHxKRaUW06htMSwFaW6Cw81R0ET/zLSwKsUclPudN6EwyNXAe2KBwEM+ou4a
-         QVG+gu1O7PmfSvws8QWiKLjIAMgcLNAUL6Crdjv3OPvbnYnIHHjRkUHt0JHkNzE6VGwt
-         WSJaIm/MnP7/kHzw4VOn5hE2smnBNa8NM862AJH1R9Yr/52BxgNEVYUopyBpOxYu162h
-         9pJ6vr18gAUya0T9lTWnqlKiMyJd76ZgYYgTHeyA7OtDW6hdCpFe4ENSLJCFcyoJ3zmj
-         mkWg==
-X-Received: by 10.66.122.4 with SMTP id lo4mr100670428pab.1.1439661668742;
-        Sat, 15 Aug 2015 11:01:08 -0700 (PDT)
+        bh=H678HcFpW1VO+cSqINJhhNu057V53wp4w3UxaqhXhZg=;
+        b=q3prxf/FTDnfG6SZUaOMo9HYRCXC0C+FmqMz/HLvDo5+K/0vJcOTHani3hddqncT6m
+         tmh/a6xx1+JiQG3MBOULkRkQO0uyjQyINFOwTZcblxWre2NgiLBzVH5TJyamwBo0/pjU
+         704U7QiYs7C1JgYxu6DaqhkKc/gh2jJWCYAzaMr30nfT/fWr9DMESJ13EONWlMyV1gsM
+         1jnCocTQ+NoVL2+ARJZh0vHrygcRuntR1yM0fgxv2bOkeE7/k3Qt+W8pyAa5R3h4IGhu
+         o8JS9xpBELSkls9JWsWezE25F/SNv//Kpyil7K0zp+cvLKKnGggPF9yQJ2+YLImQtJZO
+         te4g==
+X-Received: by 10.68.65.77 with SMTP id v13mr100648714pbs.157.1439661661557;
+        Sat, 15 Aug 2015 11:01:01 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id pe3sm9424144pdb.55.2015.08.15.11.01.06
+        by smtp.gmail.com with ESMTPSA id pe3sm9424144pdb.55.2015.08.15.11.00.59
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 15 Aug 2015 11:01:08 -0700 (PDT)
+        Sat, 15 Aug 2015 11:01:00 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276004>
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Implement the '--format' option provided by 'ref-filter'.
-This lets the user list tags as per desired format similar
-to the implementation in 'git for-each-ref'.
+Since 'ref-filter' only has an option to match path names add an
+option for plain fnmatch pattern-matching.
 
-Add tests and documentation for the same.
+This is to support the pattern matching options which are used in `git
+tag -l` and `git branch -l` where we can match patterns like `git tag
+-l foo*` which would match all tags which has a "foo*" pattern.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-tag.txt | 15 ++++++++++++++-
- builtin/tag.c             | 11 +++++++----
- t/t7004-tag.sh            | 16 ++++++++++++++++
- 3 files changed, 37 insertions(+), 5 deletions(-)
+ builtin/for-each-ref.c |  1 +
+ ref-filter.c           | 40 +++++++++++++++++++++++++++++++++++++---
+ ref-filter.h           |  3 ++-
+ 3 files changed, 40 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 3ac4a96..75703c5 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -13,7 +13,8 @@ SYNOPSIS
- 	<tagname> [<commit> | <object>]
- 'git tag' -d <tagname>...
- 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
--	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>] [<pattern>...]
-+	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
-+	[--format=<format>] [<pattern>...]
- 'git tag' -v <tagname>...
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index e4a4f8a..3ad6a64 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -68,6 +68,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	git_config(git_default_config, NULL);
  
- DESCRIPTION
-@@ -158,6 +159,18 @@ This option is only applicable when listing tags without annotation lines.
- 	The object that the new tag will refer to, usually a commit.
- 	Defaults to HEAD.
+ 	filter.name_patterns = argv;
++	filter.match_as_path = 1;
+ 	filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
+ 	ref_array_sort(sorting, &array);
  
-+<format>::
-+	A string that interpolates `%(fieldname)` from the object
-+	pointed at by a ref being shown.  If `fieldname` is prefixed
-+	with an asterisk (`*`) and the ref points at a tag object, the
-+	value for the field in the object tag refers is used.  When
-+	unspecified, defaults to `%(refname:short)`.  It also
-+	interpolates `%%` to `%`, and `%xx` where `xx` are hex digits
-+	interpolates to character with hex code `xx`; for example
-+	`%00` interpolates to `\0` (NUL), `%09` to `\t` (TAB) and
-+	`%0a` to `\n` (LF).  The fields are same as those in `git
-+	for-each-ref`.
+diff --git a/ref-filter.c b/ref-filter.c
+index 9ed83a3..a6086b2 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1030,9 +1030,33 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
+ 
+ /*
+  * Return 1 if the refname matches one of the patterns, otherwise 0.
++ * A pattern can be a literal prefix (e.g. a refname "refs/heads/master"
++ * matches a pattern "refs/heads/mas") or a wildcard (e.g. the same ref
++ * matches "refs/heads/mas*", too).
++ */
++static int match_pattern(const char **patterns, const char *refname)
++{
++	/*
++	 * When no '--format' option is given we need to skip the prefix
++	 * for matching refs of tags and branches.
++	 */
++	(void)(skip_prefix(refname, "refs/tags/", &refname) ||
++	       skip_prefix(refname, "refs/heads/", &refname) ||
++	       skip_prefix(refname, "refs/remotes/", &refname) ||
++	       skip_prefix(refname, "refs/", &refname));
 +
- 
- CONFIGURATION
- -------------
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 501fc52..69997a4 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -30,10 +30,9 @@ static const char * const git_tag_usage[] = {
- 
- static unsigned int colopts;
- 
--static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
-+static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
++	for (; *patterns; patterns++) {
++		if (!wildmatch(*patterns, refname, 0, NULL))
++			return 1;
++	}
++	return 0;
++}
++
++/*
++ * Return 1 if the refname matches one of the patterns, otherwise 0.
+  * A pattern can be path prefix (e.g. a refname "refs/heads/master"
+- * matches a pattern "refs/heads/") or a wildcard (e.g. the same ref
+- * matches "refs/heads/m*",too).
++ * matches a pattern "refs/heads/" but not "refs/heads/m") or a
++ * wildcard (e.g. the same ref matches "refs/heads/m*", too).
+  */
+ static int match_name_as_path(const char **pattern, const char *refname)
  {
- 	struct ref_array array;
--	char *format;
- 	int i;
+@@ -1053,6 +1077,16 @@ static int match_name_as_path(const char **pattern, const char *refname)
+ 	return 0;
+ }
  
- 	memset(&array, 0, sizeof(array));
-@@ -43,7 +42,7 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
- 
- 	if (filter->lines)
- 		format = "%(align:16,left)%(refname:short)%(end)";
--	else
-+	else if (!format)
- 		format = "%(refname:short)";
- 
- 	verify_ref_format(format);
-@@ -327,6 +326,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct strbuf err = STRBUF_INIT;
- 	struct ref_filter filter;
- 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
-+	const char *format = NULL;
- 	struct option options[] = {
- 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
- 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
-@@ -359,6 +359,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
- 			N_("print only tags of the object"), 0, parse_opt_object_name
- 		},
-+		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
- 		OPT_END()
- 	};
- 
-@@ -398,8 +399,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			copts.padding = 2;
- 			run_column_filter(colopts, &copts);
- 		}
-+		if (format && (filter.lines != -1))
-+			die(_("--format and -n are incompatible"));
- 		filter.name_patterns = argv;
--		ret = list_tags(&filter, sorting);
-+		ret = list_tags(&filter, sorting, format);
- 		if (column_active(colopts))
- 			stop_column_filter();
- 		return ret;
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 1f066aa..1809011 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1519,4 +1519,20 @@ EOF"
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--format cannot be used with -n' '
-+	test_must_fail git tag -l -n4 --format="%(refname)"
-+'
++/* Return 1 if the refname matches one of the patterns, otherwise 0. */
++static int filter_pattern_match(struct ref_filter *filter, const char *refname)
++{
++	if (!*filter->name_patterns)
++		return 1; /* No pattern always matches */
++	if (filter->match_as_path)
++		return match_name_as_path(filter->name_patterns, refname);
++	return match_pattern(filter->name_patterns, refname);
++}
 +
-+test_expect_success '--format should list tags as per format given' '
-+	cat >expect <<-\EOF &&
-+	refname : refs/tags/foo1.10
-+	refname : refs/tags/foo1.3
-+	refname : refs/tags/foo1.6
-+	refname : refs/tags/foo1.6-rc1
-+	refname : refs/tags/foo1.6-rc2
-+	EOF
-+	git tag -l --format="refname : %(refname)" "foo*" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ /*
+  * Given a ref (sha1, refname), check if the ref belongs to the array
+  * of sha1s. If the given ref is a tag, check if the given tag points
+@@ -1156,7 +1190,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	if (!(kind & filter->kind))
+ 		return 0;
+ 
+-	if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
++	if (!filter_pattern_match(filter, refname))
+ 		return 0;
+ 
+ 	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid->hash, refname))
+diff --git a/ref-filter.h b/ref-filter.h
+index a5b6d0e..72fdf9e 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -59,7 +59,8 @@ struct ref_filter {
+ 	} merge;
+ 	struct commit *merge_commit;
+ 
+-	unsigned int with_commit_tag_algo : 1;
++	unsigned int with_commit_tag_algo : 1,
++		match_as_path : 1;
+ 	unsigned int kind,
+ 		lines;
+ };
 -- 
 2.5.0
