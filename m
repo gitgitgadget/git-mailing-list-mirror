@@ -1,160 +1,169 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v7 1/4] notes: document cat_sort_uniq rewriteMode
-Date: Sat, 15 Aug 2015 12:06:14 +0200
-Message-ID: <CALKQrgd=qVBPMKu_bZxVHgqsdYGtJcOvnrQaB2aH9z67ymv=Uw@mail.gmail.com>
-References: <1439586835-15712-1-git-send-email-jacob.e.keller@intel.com>
-	<1439586835-15712-2-git-send-email-jacob.e.keller@intel.com>
-	<xmqq4mk1h66i.fsf@gitster.dls.corp.google.com>
-	<CA+P7+xoSB0um3FkhRAXGF1t0ZoYk0zaxAvAOvFcwn+CWQ-gyfg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 15 12:06:41 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v11 02/13] ref-filter: print output to strbuf for formatting
+Date: Sat, 15 Aug 2015 23:30:32 +0530
+Message-ID: <1439661643-16094-3-git-send-email-Karthik.188@gmail.com>
+Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
+	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 15 20:00:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQYMI-0004Ws-F1
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Aug 2015 12:06:38 +0200
+	id 1ZQflJ-0001Hw-5f
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Aug 2015 20:00:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750844AbbHOKGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2015 06:06:23 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:52621 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748AbbHOKGW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2015 06:06:22 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1ZQYM0-000NVY-3T
-	for git@vger.kernel.org; Sat, 15 Aug 2015 12:06:20 +0200
-Received: by ykll84 with SMTP id l84so25168851ykl.0
-        for <git@vger.kernel.org>; Sat, 15 Aug 2015 03:06:14 -0700 (PDT)
-X-Received: by 10.129.138.129 with SMTP id a123mr49370028ywg.139.1439633174100;
- Sat, 15 Aug 2015 03:06:14 -0700 (PDT)
-Received: by 10.37.201.134 with HTTP; Sat, 15 Aug 2015 03:06:14 -0700 (PDT)
-In-Reply-To: <CA+P7+xoSB0um3FkhRAXGF1t0ZoYk0zaxAvAOvFcwn+CWQ-gyfg@mail.gmail.com>
+	id S1754112AbbHOSAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2015 14:00:52 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:35423 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754085AbbHOSAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2015 14:00:44 -0400
+Received: by pacgr6 with SMTP id gr6so79474492pac.2
+        for <git@vger.kernel.org>; Sat, 15 Aug 2015 11:00:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=VXI8oC7mpRxW/wYXhgel4HGaw7EQvUtFhxAjRFqzWmQ=;
+        b=djHyQOYQ+JsyrT9731LuB9Kc/QLKuGwZfyYHV7VA+3z8Z/7zBFkM5JPkXXC+gkBPis
+         +Z86MBhJ6jHveweeFe4QDJrJL5N8OpW9iQ3zuerOdmpEeFiUpb1VIKgxw2Aq/mvRiNyv
+         ev/zyBHVA9sUHPQsnejG6BhT8dcSYT7zrmEd8cLbnCjKmvEQWteB8Cq7p1j2JLmtUlao
+         L5+gWqE/JNzJ1jGOeKStj9rId+8Fw9C9uu6KwW5OgbliEXOkS0ad9HHvQRSR0vizZ0yI
+         M03tU8n+5n6smh5GahXQM1KMNJszQA8DGP6LsJmQyPcCgz412FybPTq6bDsW0Nw+YZJ2
+         qgew==
+X-Received: by 10.68.195.231 with SMTP id ih7mr101499238pbc.26.1439661643562;
+        Sat, 15 Aug 2015 11:00:43 -0700 (PDT)
+Received: from ashley.localdomain ([106.51.130.23])
+        by smtp.gmail.com with ESMTPSA id pe3sm9424144pdb.55.2015.08.15.11.00.41
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 15 Aug 2015 11:00:43 -0700 (PDT)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275993>
 
-On Sat, Aug 15, 2015 at 12:53 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Fri, Aug 14, 2015 at 3:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jacob Keller <jacob.e.keller@intel.com> writes:
->>
->>> diff --git a/Documentation/config.txt b/Documentation/config.txt
->>> index 75ec02e8e90a..de67ad1fdedf 100644
->>> --- a/Documentation/config.txt
->>> +++ b/Documentation/config.txt
->>> @@ -1947,8 +1947,8 @@ notes.rewriteMode::
->>>       When copying notes during a rewrite (see the
->>>       "notes.rewrite.<command>" option), determines what to do if
->>>       the target commit already has a note.  Must be one of
->>> -     `overwrite`, `concatenate`, or `ignore`.  Defaults to
->>> -     `concatenate`.
->>> +     `overwrite`, `concatenate`, `cat_sort_uniq`, or `ignore`.
->>> +     Defaults to `concatenate`.
->>>  +
->>>  This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
->>>  environment variable.
->>> diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
->>> index 851518d531b5..674682b34b83 100644
->>> --- a/Documentation/git-notes.txt
->>> +++ b/Documentation/git-notes.txt
->>> @@ -331,7 +331,8 @@ environment variable.
->>>  notes.rewriteMode::
->>>       When copying notes during a rewrite, what to do if the target
->>>       commit already has a note.  Must be one of `overwrite`,
->>> -     `concatenate`, and `ignore`.  Defaults to `concatenate`.
->>> +     `concatenate`, `cat_sort_uniq`, or `ignore`.  Defaults to
->>> +     `concatenate`.
->>>  +
->>>  This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
->>>  environment variable.
->>
->> This obviously is not a problem introduced by this patch, but I
->> wonder why we have two similar but different set of modes for
->> rewrtie and merge.
+Introduce a strbuf `output` which will act as a substitute rather than
+printing directly to stdout. This will be used for formatting
+eventually.
 
-We do. Rewrite builds directly on top of the combine_notes_* functions
-that are part of the core/low-level notes code, added in 73f464b5
-(2010-02-13, Refactor notes concatenation into a flexible interface for
-combining notes). Notes merge (and its various strategies) were added
-later, and also build on top of these combine_notes_* functions (see
-merge_one_change() in notes-merge.c). In addition, notes-merge adds the
-'manual' strategy, which depends on surrounding machinery that
-notes-merge provides, but that the low-level combine_notes_* functions
-cannot depend on.
+Rename some functions to reflect the changes made:
+print_value() -> append_atom()
+emit()        -> append_literal()
 
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ ref-filter.c | 34 ++++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
->>  Isn't 'overwrite' like 'ours', 'ignore' like
->> 'theirs', and 'concat' like 'union', and if these are similar
->> enough, perhaps it would be helpful to the end user if we unified
->> the terms (or accepted both as synonyms for backward compatibility)?
-
-The mapping (which is contained in merge_one_change() in notes-merge.c)
-is:
-
-  'manual'        -> [custom handling in notes-merge]
-  'ours'          -> combine_notes_ignore [or simply a no-op]
-  'theirs'        -> combine_notes_overwrite
-  'union'         -> combine_notes_concatenate
-  'cat_sort_uniq' -> combine_notes_cat_sort_uniq
-
->>
->> Also I notice that you cannot manually reconcile while rewriting;
->> don't we want to have 'manual' there, too, I wonder?
-
-No, as stated above, 'manual' requires some external mechanism for
-creating a "worktree" where the notes conflicts can be checked out
-and manipulated by the user. The guts of notes.c is not the correct
-place to do that. I don't know if it's easy to rewrite "rewrite" to
-do a (partial) notes merge instead of using the combine_notes_*
-functions directly, but I imagine that would be the best way forward.
-
->>
->> [jc: Cc'ed Thomas who invented rewrite back when merge was not even
->> there, and Johan who added merge]
->>
->
-> I was not sure. I believe that re-write doesn't do the same thing as
-> merge? I think we could make all of them handle the "overwrite", which
-> is basically a synonym of, I think "theirs" depending on the direction
-> of the "merge".
-
-Correct.
-
-> I don't know if re-write actually supports manual mode at all!
-
-It doesn't.
-
-> Maybe we could make merge support the other names as synonyms, and
-> then code re-write in terms of merging?
-
-Adding the synonyms is fine, but I wouldn't publicize it heavily, as
-the meaning of words like "overwrite" and "ignore" can become quite
-confusing in the context of a merge.
-
-Reimplementing re-write in terms of merge is probably a good idea,
-though.
-
-> I wasn't sure so I chose only to document the mode that was missing.
-
-IMHO, that's good for now.
-
-
-...Johan
-
-
+diff --git a/ref-filter.c b/ref-filter.c
+index e53c77e..edfb1c7 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1195,30 +1195,25 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
+ 	qsort(array->items, array->nr, sizeof(struct ref_array_item *), compare_refs);
+ }
+ 
+-static void print_value(struct atom_value *v, int quote_style)
++static void append_atom(struct atom_value *v, int quote_style, struct strbuf *output)
+ {
+-	struct strbuf sb = STRBUF_INIT;
+ 	switch (quote_style) {
+ 	case QUOTE_NONE:
+-		fputs(v->s, stdout);
++		strbuf_addstr(output, v->s);
+ 		break;
+ 	case QUOTE_SHELL:
+-		sq_quote_buf(&sb, v->s);
++		sq_quote_buf(output, v->s);
+ 		break;
+ 	case QUOTE_PERL:
+-		perl_quote_buf(&sb, v->s);
++		perl_quote_buf(output, v->s);
+ 		break;
+ 	case QUOTE_PYTHON:
+-		python_quote_buf(&sb, v->s);
++		python_quote_buf(output, v->s);
+ 		break;
+ 	case QUOTE_TCL:
+-		tcl_quote_buf(&sb, v->s);
++		tcl_quote_buf(output, v->s);
+ 		break;
+ 	}
+-	if (quote_style != QUOTE_NONE) {
+-		fputs(sb.buf, stdout);
+-		strbuf_release(&sb);
+-	}
+ }
+ 
+ static int hex1(char ch)
+@@ -1239,7 +1234,7 @@ static int hex2(const char *cp)
+ 		return -1;
+ }
+ 
+-static void emit(const char *cp, const char *ep)
++static void append_literal(const char *cp, const char *ep, struct strbuf *output)
+ {
+ 	while (*cp && (!ep || cp < ep)) {
+ 		if (*cp == '%') {
+@@ -1248,13 +1243,13 @@ static void emit(const char *cp, const char *ep)
+ 			else {
+ 				int ch = hex2(cp + 1);
+ 				if (0 <= ch) {
+-					putchar(ch);
++					strbuf_addch(output, ch);
+ 					cp += 3;
+ 					continue;
+ 				}
+ 			}
+ 		}
+-		putchar(*cp);
++		strbuf_addch(output, *cp);
+ 		cp++;
+ 	}
+ }
+@@ -1262,19 +1257,20 @@ static void emit(const char *cp, const char *ep)
+ void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
+ {
+ 	const char *cp, *sp, *ep;
++	struct strbuf output = STRBUF_INIT;
+ 
+ 	for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
+ 		struct atom_value *atomv;
+ 
+ 		ep = strchr(sp, ')');
+ 		if (cp < sp)
+-			emit(cp, sp);
++			append_literal(cp, sp, &output);
+ 		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
+-		print_value(atomv, quote_style);
++		append_atom(atomv, quote_style, &output);
+ 	}
+ 	if (*cp) {
+ 		sp = cp + strlen(cp);
+-		emit(cp, sp);
++		append_literal(cp, sp, &output);
+ 	}
+ 	if (need_color_reset_at_eol) {
+ 		struct atom_value resetv;
+@@ -1283,9 +1279,11 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ 		if (color_parse("reset", color) < 0)
+ 			die("BUG: couldn't parse 'reset' as a color");
+ 		resetv.s = color;
+-		print_value(&resetv, quote_style);
++		append_atom(&resetv, quote_style, &output);
+ 	}
++	fwrite(output.buf, 1, output.len, stdout);
+ 	putchar('\n');
++	strbuf_release(&output);
+ }
+ 
+ /*  If no sorting option is given, use refname to sort as default */
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+2.5.0
