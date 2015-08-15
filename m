@@ -1,308 +1,133 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v11 05/13] ref-filter: implement an `align` atom
-Date: Sat, 15 Aug 2015 23:30:35 +0530
-Message-ID: <1439661643-16094-6-git-send-email-Karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 15 20:01:38 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 2/4] path: optimize common dir checking
+Date: Sat, 15 Aug 2015 20:12:42 +0200
+Message-ID: <55CF811A.8060106@alum.mit.edu>
+References: <1439416645-19173-1-git-send-email-dturner@twopensource.com>	<1439416645-19173-2-git-send-email-dturner@twopensource.com>	<55CC5DED.5050304@alum.mit.edu> <xmqqtws1iyxn.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	chriscool@tuxfamily.org, pclouds@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 15 20:13:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQflv-0001wf-Ct
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Aug 2015 20:01:35 +0200
+	id 1ZQfx5-0004Oh-9F
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Aug 2015 20:13:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754338AbbHOSBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2015 14:01:30 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:33717 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752175AbbHOSAv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2015 14:00:51 -0400
-Received: by pabyb7 with SMTP id yb7so79255710pab.0
-        for <git@vger.kernel.org>; Sat, 15 Aug 2015 11:00:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=R8qEEcApz4IFa9s7r7RFgk+m6+35+/ITfnWZvWGaCAs=;
-        b=DZ7bpedj1yAK1PHn/A4Jbn+LIJ06NCAWDcSRj0X0zSh4iSDIxF2S4pE+4eICqjS6ZL
-         1WqJedlaa8yWCLpyRDI9Uw7nEz5DYvLG3Wy+eD1VihLrgHNYQH1n/+Bde3b1CB9foQuI
-         LczJVua8L99kEVE91ZUqoNIc4jNC/WgN2kvWYD4L1pMhib4S4/jv07QvSXuH4lSRUlTB
-         F1Fh7u0okZjFc9wr7f0P3gLQDN5izfLkY0tGR8V+seswO8D1V+h5JJUlfYTBBagJEdhB
-         2o9/3eLL6JgkT4bQmMjNMzX8NxF69bgq4RciECALyv8PMMShTHZOu4s4LvLiz3Ehr6oI
-         nuGw==
-X-Received: by 10.66.219.102 with SMTP id pn6mr99814996pac.80.1439661651300;
-        Sat, 15 Aug 2015 11:00:51 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id pe3sm9424144pdb.55.2015.08.15.11.00.48
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 15 Aug 2015 11:00:50 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.5.0
+	id S1753461AbbHOSNB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2015 14:13:01 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:44780 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752683AbbHOSNA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Aug 2015 14:13:00 -0400
+X-AuditID: 12074413-f79bd6d000007ac2-87-55cf811e9aca
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id D7.D5.31426.E118FC55; Sat, 15 Aug 2015 14:12:46 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB2AF9.dip0.t-ipconnect.de [93.219.42.249])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7FIChTG032300
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sat, 15 Aug 2015 14:12:44 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <xmqqtws1iyxn.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMKsWRmVeSWpSXmKPExsUixO6iqCvXeD7UoH2imMWm5xOZLeZvOsFo
+	0XWlm8miofcKs0X3lLeMDqweO2fdZfe4eEnZY/mDV+weC57fZ/f4vEkugDWK2yYpsaQsODM9
+	T98ugTvj8dJetoK/khUbFxo3MB4V6WLk4JAQMJFYeiCsi5ETyBSTuHBvPVsXIxeHkMBlRonu
+	Cc+ZIZzzTBLvupYxglTxCmhLNPfMYgexWQRUJa5dbASLswnoSizqaWYCsUUFgiRWLH8BVS8o
+	cXLmExYQW0RATWJi2yEwm1mgVOJ76082kCOEBewk5l9whdh1hVFiR98NsPmcAtYSHWtXskLU
+	60nsuP4LypaXaN46m3kCo8AsJCtmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJd
+	c73czBK91JTSTYyQABfewbjrpNwhRgEORiUe3oZl50KFWBPLiitzDzFKcjApifI+iDofKsSX
+	lJ9SmZFYnBFfVJqTWnyIUYKDWUmE1yoaKMebklhZlVqUD5OS5mBREudVW6LuJySQnliSmp2a
+	WpBaBJOV4eBQkuBVaABqFCxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAfFaXwxMFJB
+	UjxAe3VB2nmLCxJzgaIQracYFaXEeV/WAyUEQBIZpXlwY2Fp6xWjONCXwrxtIO08wJQH1/0K
+	aDAT0GC7GWdBBpckIqSkGhgnZnyZb+m/Z27hO/VbunMuT68I+aKc2HHz89zVxw1Enz4WODCj
+	1OX06n3m/JJPP+Zcd95jZKBzZPbVube3P1B4vfN5ucSdL8+zzzIuX71H7JBZzuZk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276007>
 
-Implement an `align` atom which left-, middle-, or right-aligns the
-content between %(align:..) and %(end).
+On 08/14/2015 07:04 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Let's take a step back.
+>>
+>> We have always had a ton of code that uses `git_path()` and friends to
+>> convert abstract things into filesystem paths. Let's take the
+>> reference-handling code as an example:
+>> ...
+>> This seems crazy to me. It is the *reference* code that should know
+>> whether a particular reference should be stored under `$GIT_DIR` or
+>> `$GIT_COMMON_DIR`, or indeed whether it should be stored in a database.
+> 
+> It is more like:
+> 
+>  1. The system as a whole should decide if HEAD and refs/heads/
+>     should be per workspace or shared across a repository (and we say
+>     the former should be per workspace, the latter should be shared).
+> 
+>  2. The reference code should decide which ref-backend is used to
+>     store refs.
+> 
+>  3. And any ref-backend should follow the decision made by the
+>     system as a whole in 1.
 
-It is followed by `:<width>,<position>`, where the `<position>` is
-either left, right or middle and `<width>` is the size of the area
-into which the content will be placed. If the content between
-%(align:) and %(end) is more than the width then no alignment is
-performed. e.g. to align a refname atom to the middle with a total
-width of 40 we can do: --format="%(align:middle,40)%(refname)%(end)".
+If I understand correctly, you consider the decision of where a
+particular reference should be stored to be a kind of "business logic"
+decision that should live outside of the refs module. I don't think it
+is so important whether this knowledge is inside or outside of the refs
+module (I can live with it either way).
 
-This is done by calling the strbuf_utf8_align() function in utf8.c.
+> I'd imagine that David's ref-backend code inherited from Ronnie
+> would still accept the string "refs/heads/master" from the rest of
+> the system (i.e. callers that call into the ref API) to mean "the
+> ref that represents the 'master' branch", and uses that as the key
+> to decide "ok, that is shared across workspaces" to honor the
+> system-wide decision made in 1.  The outside callers wouldn't pass
+> the result of calling git_path("refs/heads/master") into the ref
+> API, which may expand to "$somewhere_else/refs/heads/master" when
+> run in a secondary workspace to point at the common location.
 
-Add documentation and tests for the same.
+Definitely agreed.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-for-each-ref.txt |  8 ++++
- ref-filter.c                       | 81 +++++++++++++++++++++++++++++++++++---
- ref-filter.h                       |  1 +
- t/t6302-for-each-ref-filter.sh     | 48 ++++++++++++++++++++++
- 4 files changed, 133 insertions(+), 5 deletions(-)
+> I'd also imagine that the workspace API would give ways for the
+> implementation of the reference API to ask these questions:
+> 
+>  - which workspace am I operating for?  where is the "common" thing?
+>    how would I identify this workspace among the ones that share the
+>    same "common" thing?
+> 
+>  - is this ref (or ref-like thing) supposed to be in common or per
+>    workspace?
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index e49d578..2b82334 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -127,6 +127,14 @@ color::
- 	Change output color.  Followed by `:<colorname>`, where names
- 	are described in `color.branch.*`.
- 
-+align::
-+	left-, middle-, or right-align the content between %(align:..)
-+	and %(end). Followed by `:<position>,<width>`, where the
-+	`<position>` is either left, right or middle and `<width>` is
-+	the total length of the content with alignment. If the
-+	contents length is more than the width then no alignment is
-+	performed.
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
-diff --git a/ref-filter.c b/ref-filter.c
-index 3259363..eac99d0 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -10,6 +10,7 @@
- #include "quote.h"
- #include "ref-filter.h"
- #include "revision.h"
-+#include "utf8.h"
- 
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
- 
-@@ -53,16 +54,27 @@ static struct {
- 	{ "flag" },
- 	{ "HEAD" },
- 	{ "color" },
-+	{ "align" },
-+	{ "end" },
-+};
-+
-+struct align {
-+	align_type position;
-+	unsigned int width;
- };
- 
- struct ref_formatting_state {
- 	struct strbuf output;
- 	struct ref_formatting_state *prev;
-+	void (*attend)(struct ref_formatting_state *state);
-+	void *cb_data;
- 	int quote_style;
- };
- 
- struct atom_value {
- 	const char *s;
-+	struct align *align;
-+	void (*handler)(struct atom_value *atomv, struct ref_formatting_state **state);
- 	unsigned long ul; /* used for sorting when not FIELD_STR */
- };
- 
-@@ -137,12 +149,12 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
- 
- static struct ref_formatting_state *push_new_state(struct ref_formatting_state **state)
- {
--	struct ref_formatting_state *new_state = xcalloc(1, sizeof(struct ref_formatting_state));
--	struct ref_formatting_state *tmp = *state;
-+	struct ref_formatting_state *new = xcalloc(1, sizeof(struct ref_formatting_state));
-+	struct ref_formatting_state *old = *state;
- 
--	*state = new_state;
--	new_state->prev = tmp;
--	return new_state;
-+	*state = new;
-+	new->prev = old;
-+	return new;
- }
- 
- static void pop_state(struct ref_formatting_state **state)
-@@ -625,6 +637,34 @@ static inline char *copy_advance(char *dst, const char *src)
- 	return dst;
- }
- 
-+static void align_handler(struct ref_formatting_state *state)
-+{
-+	struct strbuf aligned = STRBUF_INIT;
-+	struct ref_formatting_state *return_to = state->prev;
-+	struct align *align = (struct align *)state->cb_data;
-+
-+	strbuf_utf8_align(&aligned, align->position, align->width, state->output.buf);
-+	strbuf_addbuf(&return_to->output, &aligned);
-+	strbuf_release(&aligned);
-+}
-+
-+static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_state **state)
-+{
-+	struct ref_formatting_state *new = push_new_state(state);
-+	strbuf_init(&new->output, 0);
-+	new->attend = align_handler;
-+	new->cb_data = atomv->align;
-+}
-+
-+static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_state **state)
-+{
-+	struct ref_formatting_state *current = *state;
-+	if (!current->attend)
-+		die(_("format: `end` atom used without a supporting atom"));
-+	current->attend(current);
-+	pop_state(state);
-+}
-+
- /*
-  * Parse the object referred by ref, and grab needed value.
-  */
-@@ -653,6 +693,7 @@ static void populate_value(struct ref_array_item *ref)
- 		int deref = 0;
- 		const char *refname;
- 		const char *formatp;
-+		const char *valp;
- 		struct branch *branch = NULL;
- 
- 		if (*name == '*') {
-@@ -718,6 +759,34 @@ static void populate_value(struct ref_array_item *ref)
- 			else
- 				v->s = " ";
- 			continue;
-+		} else if (skip_prefix(name, "align:", &valp)) {
-+			struct align *align = xmalloc(sizeof(struct align));
-+			char *ep = strchr(valp, ',');
-+
-+			if (ep)
-+				*ep = '\0';
-+
-+			if (strtoul_ui(valp, 10, &align->width))
-+				die(_("positive width expected align:%s"), valp);
-+
-+			if (!ep || starts_with(ep + 1, "left"))
-+				align->position = ALIGN_LEFT;
-+			else if (starts_with(ep + 1, "right"))
-+				align->position = ALIGN_RIGHT;
-+			else if (starts_with(ep + 1, "middle"))
-+				align->position = ALIGN_MIDDLE;
-+			else
-+				die(_("improper format entered align:%s"), ep + 1);
-+
-+			if (ep)
-+				*ep = ',';
-+
-+			v->align = align;
-+			v->handler = align_atom_handler;
-+			continue;
-+		} else if (!strcmp(name, "end")) {
-+			v->handler = end_atom_handler;
-+			continue;
- 		} else
- 			continue;
- 
-@@ -1296,6 +1365,8 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- 		if (cp < sp)
- 			append_literal(cp, sp, state);
- 		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
-+		if (atomv->handler)
-+			atomv->handler(atomv, &state);
- 		append_atom(atomv, state);
- 	}
- 	if (*cp) {
-diff --git a/ref-filter.h b/ref-filter.h
-index 45026d0..144a633 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -5,6 +5,7 @@
- #include "refs.h"
- #include "commit.h"
- #include "parse-options.h"
-+#include "utf8.h"
- 
- /* Quoting styles */
- #define QUOTE_NONE 0
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index 505a360..b252a50 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -81,4 +81,52 @@ test_expect_success 'filtering with --contains' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'left alignment' '
-+	cat >expect <<-\EOF &&
-+	refname is refs/heads/master  |refs/heads/master
-+	refname is refs/heads/side    |refs/heads/side
-+	refname is refs/odd/spot      |refs/odd/spot
-+	refname is refs/tags/double-tag|refs/tags/double-tag
-+	refname is refs/tags/four     |refs/tags/four
-+	refname is refs/tags/one      |refs/tags/one
-+	refname is refs/tags/signed-tag|refs/tags/signed-tag
-+	refname is refs/tags/three    |refs/tags/three
-+	refname is refs/tags/two      |refs/tags/two
-+	EOF
-+	git for-each-ref --format="%(align:30,left)refname is %(refname)%(end)|%(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'middle alignment' '
-+	cat >expect <<-\EOF &&
-+	| refname is refs/heads/master |refs/heads/master
-+	|  refname is refs/heads/side  |refs/heads/side
-+	|   refname is refs/odd/spot   |refs/odd/spot
-+	|refname is refs/tags/double-tag|refs/tags/double-tag
-+	|  refname is refs/tags/four   |refs/tags/four
-+	|   refname is refs/tags/one   |refs/tags/one
-+	|refname is refs/tags/signed-tag|refs/tags/signed-tag
-+	|  refname is refs/tags/three  |refs/tags/three
-+	|   refname is refs/tags/two   |refs/tags/two
-+	EOF
-+	git for-each-ref --format="|%(align:30,middle)refname is %(refname)%(end)|%(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'right alignment' '
-+	cat >expect <<-\EOF &&
-+	|  refname is refs/heads/master|refs/heads/master
-+	|    refname is refs/heads/side|refs/heads/side
-+	|      refname is refs/odd/spot|refs/odd/spot
-+	|refname is refs/tags/double-tag|refs/tags/double-tag
-+	|     refname is refs/tags/four|refs/tags/four
-+	|      refname is refs/tags/one|refs/tags/one
-+	|refname is refs/tags/signed-tag|refs/tags/signed-tag
-+	|    refname is refs/tags/three|refs/tags/three
-+	|      refname is refs/tags/two|refs/tags/two
-+	EOF
-+	git for-each-ref --format="|%(align:30,right)refname is %(refname)%(end)|%(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+Yes, I especially like this last idea. For example, suppose the function
+is "is_common_reference(refname)". It's nice that this function doesn't
+have to know about all possible "things" like your is_common_thing()
+function. Therefore it can be simpler. Almost always the caller (and in
+this case the caller would usually be within the refs module) will know
+that the "thing" it wants to inquire about is a reference name, so it
+can spare the extra expense of calling is_common_thing().
+
+If we still need is_common_thing() (e.g., for the implementation of `git
+rev-parse --git-path`), its definition would become something like
+
+    return is_common_reference(thing) ||
+           is_common_file(thing) ||
+           is_common_flurg(thing) || ...;
+
+In this construction I think it is is clear that is_common_reference()
+would fit pretty well in the refs module, though elsewhere would be OK too.
+
+> [...]
+
+Michael
+
 -- 
-2.5.0
+Michael Haggerty
+mhagger@alum.mit.edu
