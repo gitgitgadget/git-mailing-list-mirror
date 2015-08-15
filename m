@@ -1,302 +1,178 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v11 10/13] tag.c: use 'ref-filter' data structures
-Date: Sat, 15 Aug 2015 23:30:40 +0530
-Message-ID: <1439661643-16094-11-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v11 12/13] tag.c: implement '--format' option
+Date: Sat, 15 Aug 2015 23:30:42 +0530
+Message-ID: <1439661643-16094-13-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 15 20:01:28 2015
+X-From: git-owner@vger.kernel.org Sat Aug 15 20:01:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQflm-0001ma-IZ
+	id 1ZQfln-0001ma-Ab
 	for gcvg-git-2@plane.gmane.org; Sat, 15 Aug 2015 20:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754266AbbHOSBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2015 14:01:08 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:36338 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754242AbbHOSBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2015 14:01:04 -0400
-Received: by pacrr5 with SMTP id rr5so80468368pac.3
-        for <git@vger.kernel.org>; Sat, 15 Aug 2015 11:01:04 -0700 (PDT)
+	id S1754310AbbHOSBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2015 14:01:20 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:35596 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754242AbbHOSBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2015 14:01:09 -0400
+Received: by pacgr6 with SMTP id gr6so79478794pac.2
+        for <git@vger.kernel.org>; Sat, 15 Aug 2015 11:01:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=n10XnVvb7uSjn99dbCAjeLI2OXIdDmob9OsSugvGK6I=;
-        b=B+kmJ/OCBXGRKRmcwHU7G+W4s3C+Dnd0pmu2cy4Ux16ge5ctewOc80Os/cQnUVgADB
-         5MP0ZN1AKBFNUpB7RbG+0CvBpqrx/3sAkQbJcnsL0UD122Zp9Eqab4qjwV3gMaNBGj6H
-         G5WfJYzQEj0fjODzGFQOeQcpcC2GPd0/BCmrnQ7AzIIBxtmwo4HtM4S3HJVCphwTpOM1
-         fuKZBbHnK3Agm82Nn3TQcvXtmtvnSVs89Tzk3VEybWsUenmKZYN2epER7Acu7ThqK7m1
-         tCqJuM+dBmJ/qXukBZamWe9dK0NtX6nHfZoet2INbg3bJziYCcmjtt00mvAL564r9t2h
-         o09Q==
-X-Received: by 10.66.55.41 with SMTP id o9mr99708628pap.148.1439661663882;
-        Sat, 15 Aug 2015 11:01:03 -0700 (PDT)
+        bh=ArlwMJ3VrYdoqBu+6FJk22mR25JRCrM/BcfokKRlzio=;
+        b=fj49jQhcElywHz0xRjVUSQTsbp63Zb8qQuWYY0s/PMdm8umrNJ59Z9ZsW9fyESvlDA
+         SoTisGMuJHxKRaUW06htMSwFaW6Cw81R0ET/zLSwKsUclPudN6EwyNXAe2KBwEM+ou4a
+         QVG+gu1O7PmfSvws8QWiKLjIAMgcLNAUL6Crdjv3OPvbnYnIHHjRkUHt0JHkNzE6VGwt
+         WSJaIm/MnP7/kHzw4VOn5hE2smnBNa8NM862AJH1R9Yr/52BxgNEVYUopyBpOxYu162h
+         9pJ6vr18gAUya0T9lTWnqlKiMyJd76ZgYYgTHeyA7OtDW6hdCpFe4ENSLJCFcyoJ3zmj
+         mkWg==
+X-Received: by 10.66.122.4 with SMTP id lo4mr100670428pab.1.1439661668742;
+        Sat, 15 Aug 2015 11:01:08 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id pe3sm9424144pdb.55.2015.08.15.11.01.01
+        by smtp.gmail.com with ESMTPSA id pe3sm9424144pdb.55.2015.08.15.11.01.06
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 15 Aug 2015 11:01:03 -0700 (PDT)
+        Sat, 15 Aug 2015 11:01:08 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276003>
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Make 'tag.c' use 'ref-filter' data structures and make changes to
-support the new data structures. This is a part of the process
-of porting 'tag.c' to use 'ref-filter' APIs.
+Implement the '--format' option provided by 'ref-filter'.
+This lets the user list tags as per desired format similar
+to the implementation in 'git for-each-ref'.
 
-This is a temporary step before porting 'tag.c' to use 'ref-filter'
-completely. As this is a temporary step, most of the code
-introduced here will be removed when 'tag.c' is ported over to use
-'ref-filter' APIs
+Add tests and documentation for the same.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/tag.c | 106 +++++++++++++++++++++++++++++++---------------------------
- 1 file changed, 57 insertions(+), 49 deletions(-)
+ Documentation/git-tag.txt | 15 ++++++++++++++-
+ builtin/tag.c             | 11 +++++++----
+ t/t7004-tag.sh            | 16 ++++++++++++++++
+ 3 files changed, 37 insertions(+), 5 deletions(-)
 
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 3ac4a96..75703c5 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -13,7 +13,8 @@ SYNOPSIS
+ 	<tagname> [<commit> | <object>]
+ 'git tag' -d <tagname>...
+ 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
+-	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>] [<pattern>...]
++	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
++	[--format=<format>] [<pattern>...]
+ 'git tag' -v <tagname>...
+ 
+ DESCRIPTION
+@@ -158,6 +159,18 @@ This option is only applicable when listing tags without annotation lines.
+ 	The object that the new tag will refer to, usually a commit.
+ 	Defaults to HEAD.
+ 
++<format>::
++	A string that interpolates `%(fieldname)` from the object
++	pointed at by a ref being shown.  If `fieldname` is prefixed
++	with an asterisk (`*`) and the ref points at a tag object, the
++	value for the field in the object tag refers is used.  When
++	unspecified, defaults to `%(refname:short)`.  It also
++	interpolates `%%` to `%`, and `%xx` where `xx` are hex digits
++	interpolates to character with hex code `xx`; for example
++	`%00` interpolates to `\0` (NUL), `%09` to `\t` (TAB) and
++	`%0a` to `\n` (LF).  The fields are same as those in `git
++	for-each-ref`.
++
+ 
+ CONFIGURATION
+ -------------
 diff --git a/builtin/tag.c b/builtin/tag.c
-index 0fc7557..e96bae2 100644
+index 501fc52..69997a4 100644
 --- a/builtin/tag.c
 +++ b/builtin/tag.c
-@@ -17,6 +17,7 @@
- #include "gpg-interface.h"
- #include "sha1-array.h"
- #include "column.h"
-+#include "ref-filter.h"
+@@ -30,10 +30,9 @@ static const char * const git_tag_usage[] = {
  
- static const char * const git_tag_usage[] = {
- 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> [<head>]"),
-@@ -34,15 +35,6 @@ static const char * const git_tag_usage[] = {
- 
- static int tag_sort;
- 
--struct tag_filter {
--	const char **patterns;
--	int lines;
--	int sort;
--	struct string_list tags;
--	struct commit_list *with_commit;
--};
--
--static struct sha1_array points_at;
  static unsigned int colopts;
  
- static int match_pattern(const char **patterns, const char *ref)
-@@ -61,19 +53,20 @@ static int match_pattern(const char **patterns, const char *ref)
-  * removed as we port tag.c to use the ref-filter APIs.
-  */
- static const unsigned char *match_points_at(const char *refname,
--					    const unsigned char *sha1)
-+					    const unsigned char *sha1,
-+					    struct sha1_array *points_at)
+-static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
++static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
  {
- 	const unsigned char *tagged_sha1 = NULL;
- 	struct object *obj;
+ 	struct ref_array array;
+-	char *format;
+ 	int i;
  
--	if (sha1_array_lookup(&points_at, sha1) >= 0)
-+	if (sha1_array_lookup(points_at, sha1) >= 0)
- 		return sha1;
- 	obj = parse_object(sha1);
- 	if (!obj)
- 		die(_("malformed object at '%s'"), refname);
- 	if (obj->type == OBJ_TAG)
- 		tagged_sha1 = ((struct tag *)obj)->tagged->sha1;
--	if (tagged_sha1 && sha1_array_lookup(&points_at, tagged_sha1) >= 0)
-+	if (tagged_sha1 && sha1_array_lookup(points_at, tagged_sha1) >= 0)
- 		return tagged_sha1;
- 	return NULL;
- }
-@@ -228,12 +221,24 @@ free_return:
- 	free(buf);
- }
+ 	memset(&array, 0, sizeof(array));
+@@ -43,7 +42,7 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
  
-+static void ref_array_append(struct ref_array *array, const char *refname)
-+{
-+	size_t len = strlen(refname);
-+	struct ref_array_item *ref = xcalloc(1, sizeof(struct ref_array_item) + len + 1);
-+	memcpy(ref->refname, refname, len);
-+	ref->refname[len] = '\0';
-+	REALLOC_ARRAY(array->items, array->nr + 1);
-+	array->items[array->nr++] = ref;
-+}
-+
- static int show_reference(const char *refname, const struct object_id *oid,
- 			  int flag, void *cb_data)
- {
--	struct tag_filter *filter = cb_data;
-+	struct ref_filter_cbdata *data = cb_data;
-+	struct ref_array *array = data->array;
-+	struct ref_filter *filter = data->filter;
+ 	if (filter->lines)
+ 		format = "%(align:16,left)%(refname:short)%(end)";
+-	else
++	else if (!format)
+ 		format = "%(refname:short)";
  
--	if (match_pattern(filter->patterns, refname)) {
-+	if (match_pattern(filter->name_patterns, refname)) {
- 		if (filter->with_commit) {
- 			struct commit *commit;
- 
-@@ -244,12 +249,12 @@ static int show_reference(const char *refname, const struct object_id *oid,
- 				return 0;
- 		}
- 
--		if (points_at.nr && !match_points_at(refname, oid->hash))
-+		if (filter->points_at.nr && !match_points_at(refname, oid->hash, &filter->points_at))
- 			return 0;
- 
- 		if (!filter->lines) {
--			if (filter->sort)
--				string_list_append(&filter->tags, refname);
-+			if (tag_sort)
-+				ref_array_append(array, refname);
- 			else
- 				printf("%s\n", refname);
- 			return 0;
-@@ -264,36 +269,36 @@ static int show_reference(const char *refname, const struct object_id *oid,
- 
- static int sort_by_version(const void *a_, const void *b_)
- {
--	const struct string_list_item *a = a_;
--	const struct string_list_item *b = b_;
--	return versioncmp(a->string, b->string);
-+	const struct ref_array_item *a = *((struct ref_array_item **)a_);
-+	const struct ref_array_item *b = *((struct ref_array_item **)b_);
-+	return versioncmp(a->refname, b->refname);
- }
- 
--static int list_tags(const char **patterns, int lines,
--		     struct commit_list *with_commit, int sort)
-+static int list_tags(struct ref_filter *filter, int sort)
- {
--	struct tag_filter filter;
-+	struct ref_array array;
-+	struct ref_filter_cbdata data;
-+
-+	memset(&array, 0, sizeof(array));
-+	data.array = &array;
-+	data.filter = filter;
- 
--	filter.patterns = patterns;
--	filter.lines = lines;
--	filter.sort = sort;
--	filter.with_commit = with_commit;
--	memset(&filter.tags, 0, sizeof(filter.tags));
--	filter.tags.strdup_strings = 1;
-+	if (filter->lines == -1)
-+		filter->lines = 0;
- 
--	for_each_tag_ref(show_reference, (void *)&filter);
-+	for_each_tag_ref(show_reference, &data);
- 	if (sort) {
- 		int i;
- 		if ((sort & SORT_MASK) == VERCMP_SORT)
--			qsort(filter.tags.items, filter.tags.nr,
--			      sizeof(struct string_list_item), sort_by_version);
-+			qsort(array.items, array.nr,
-+			      sizeof(struct ref_array_item *), sort_by_version);
- 		if (sort & REVERSE_SORT)
--			for (i = filter.tags.nr - 1; i >= 0; i--)
--				printf("%s\n", filter.tags.items[i].string);
-+			for (i = array.nr - 1; i >= 0; i--)
-+				printf("%s\n", array.items[i]->refname);
- 		else
--			for (i = 0; i < filter.tags.nr; i++)
--				printf("%s\n", filter.tags.items[i].string);
--		string_list_clear(&filter.tags, 0);
-+			for (i = 0; i < array.nr; i++)
-+				printf("%s\n", array.items[i]->refname);
-+		ref_array_clear(&array);
- 	}
- 	return 0;
- }
-@@ -574,17 +579,17 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	const char *object_ref, *tag;
- 	struct create_tag_options opt;
- 	char *cleanup_arg = NULL;
--	int annotate = 0, force = 0, lines = -1;
- 	int create_reflog = 0;
-+	int annotate = 0, force = 0;
- 	int cmdmode = 0;
- 	const char *msgfile = NULL, *keyid = NULL;
- 	struct msg_arg msg = { 0, STRBUF_INIT };
--	struct commit_list *with_commit = NULL;
- 	struct ref_transaction *transaction;
+ 	verify_ref_format(format);
+@@ -327,6 +326,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
  	struct strbuf err = STRBUF_INIT;
-+	struct ref_filter filter;
+ 	struct ref_filter filter;
+ 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
++	const char *format = NULL;
  	struct option options[] = {
  		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
--		{ OPTION_INTEGER, 'n', NULL, &lines, N_("n"),
-+		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
- 				N_("print <n> lines of each tag message"),
- 				PARSE_OPT_OPTARG, NULL, 1 },
- 		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete tags"), 'd'),
-@@ -606,14 +611,14 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 
- 		OPT_GROUP(N_("Tag listing options")),
- 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
--		OPT_CONTAINS(&with_commit, N_("print only tags that contain the commit")),
--		OPT_WITH(&with_commit, N_("print only tags that contain the commit")),
-+		OPT_CONTAINS(&filter.with_commit, N_("print only tags that contain the commit")),
-+		OPT_WITH(&filter.with_commit, N_("print only tags that contain the commit")),
- 		{
- 			OPTION_CALLBACK, 0, "sort", &tag_sort, N_("type"), N_("sort tags"),
- 			PARSE_OPT_NONEG, parse_opt_sort
- 		},
- 		{
--			OPTION_CALLBACK, 0, "points-at", &points_at, N_("object"),
-+			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
+ 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
+@@ -359,6 +359,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
  			N_("print only tags of the object"), 0, parse_opt_object_name
  		},
++		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
  		OPT_END()
-@@ -622,6 +627,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	git_config(git_tag_config, NULL);
+ 	};
  
- 	memset(&opt, 0, sizeof(opt));
-+	memset(&filter, 0, sizeof(filter));
-+	filter.lines = -1;
- 
- 	argc = parse_options(argc, argv, prefix, options, git_tag_usage, 0);
- 
-@@ -638,7 +645,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_tag_usage, options);
- 
- 	finalize_colopts(&colopts, -1);
--	if (cmdmode == 'l' && lines != -1) {
-+	if (cmdmode == 'l' && filter.lines != -1) {
- 		if (explicitly_enable_column(colopts))
- 			die(_("--column and -n are incompatible"));
- 		colopts = 0;
-@@ -651,18 +658,19 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+@@ -398,8 +399,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
  			copts.padding = 2;
  			run_column_filter(colopts, &copts);
  		}
--		if (lines != -1 && tag_sort)
-+		if (filter.lines != -1 && tag_sort)
- 			die(_("--sort and -n are incompatible"));
--		ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, tag_sort);
-+		filter.name_patterns = argv;
-+		ret = list_tags(&filter, tag_sort);
++		if (format && (filter.lines != -1))
++			die(_("--format and -n are incompatible"));
+ 		filter.name_patterns = argv;
+-		ret = list_tags(&filter, sorting);
++		ret = list_tags(&filter, sorting, format);
  		if (column_active(colopts))
  			stop_column_filter();
  		return ret;
- 	}
--	if (lines != -1)
-+	if (filter.lines != -1)
- 		die(_("-n option is only allowed with -l."));
--	if (with_commit)
-+	if (filter.with_commit)
- 		die(_("--contains option is only allowed with -l."));
--	if (points_at.nr)
-+	if (filter.points_at.nr)
- 		die(_("--points-at option is only allowed with -l."));
- 	if (cmdmode == 'd')
- 		return for_each_tag_name(argv, delete_tag);
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 1f066aa..1809011 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1519,4 +1519,20 @@ EOF"
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--format cannot be used with -n' '
++	test_must_fail git tag -l -n4 --format="%(refname)"
++'
++
++test_expect_success '--format should list tags as per format given' '
++	cat >expect <<-\EOF &&
++	refname : refs/tags/foo1.10
++	refname : refs/tags/foo1.3
++	refname : refs/tags/foo1.6
++	refname : refs/tags/foo1.6-rc1
++	refname : refs/tags/foo1.6-rc2
++	EOF
++	git tag -l --format="refname : %(refname)" "foo*" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.5.0
