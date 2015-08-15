@@ -1,75 +1,60 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 1/4] refs: clean up common_list
-Date: Sat, 15 Aug 2015 14:44:13 +0700
-Message-ID: <CACsJy8CE8OA7AvT+BTPodRokX7qxAOkbY1UmR4qbtE8rUSoTqQ@mail.gmail.com>
-References: <1439416645-19173-1-git-send-email-dturner@twopensource.com>
+Subject: Re: [PATCH v3 2/4] path: optimize common dir checking
+Date: Sat, 15 Aug 2015 14:59:16 +0700
+Message-ID: <CACsJy8BCr7StbtcrgsbTiosTX1RkjwwWyRqddz2XDhFn5R+zAw@mail.gmail.com>
+References: <1439416645-19173-1-git-send-email-dturner@twopensource.com> <1439416645-19173-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sat Aug 15 09:45:02 2015
+X-From: git-owner@vger.kernel.org Sat Aug 15 10:00:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQW9E-0007Rr-UG
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Aug 2015 09:45:01 +0200
+	id 1ZQWNr-0004lO-IG
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Aug 2015 10:00:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520AbbHOHon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2015 03:44:43 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:35980 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751398AbbHOHon (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2015 03:44:43 -0400
-Received: by obnw1 with SMTP id w1so77543142obn.3
-        for <git@vger.kernel.org>; Sat, 15 Aug 2015 00:44:42 -0700 (PDT)
+	id S1751335AbbHOH7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2015 03:59:46 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:33375 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751004AbbHOH7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2015 03:59:46 -0400
+Received: by obbhe7 with SMTP id he7so77974719obb.0
+        for <git@vger.kernel.org>; Sat, 15 Aug 2015 00:59:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=5ANw/MjH0cckBl3gDMIT7lPyS2tUEIY/eYA2WKaw3Qk=;
-        b=MKQxF2EDdEY2DFUcAyucyLifFfYoqgybtt3FBDQbrViWKB3xb7Pw1w6RSIquir5Sno
-         FNiJITF9Vd6keQwihx/1ORgcD/RMhlBOB9jH9fQKpe/h0Qz+htuYzAGlwVbPTyP50dLS
-         Wz29i7NZM37h3Tbryzqo3qA/CSLfRaCJXVoI7nnupe8ba7cUf2oTaMnassU2ygjfD/AQ
-         kUgkfBkwRCC7P1hae3UMkbbp1wGJqzB+RIn5z2sS46YUUwVvhws4uFi2Jm4QPWMHnh8d
-         ztZa+3ZllLcUskgseHNpMeKDNEL78p334wrwntBo7Pd5s5k6eUFtHVZPcF4jLfSOx3EN
-         YBaQ==
-X-Received: by 10.60.45.244 with SMTP id q20mr26786631oem.32.1439624682578;
- Sat, 15 Aug 2015 00:44:42 -0700 (PDT)
-Received: by 10.202.52.6 with HTTP; Sat, 15 Aug 2015 00:44:13 -0700 (PDT)
-In-Reply-To: <1439416645-19173-1-git-send-email-dturner@twopensource.com>
+        bh=ZvC/h8Ulz/BvT3mYKOIcf0CigNfnLNoCGUoui5UsVNc=;
+        b=xFc/4N8Wv4UdLCsvt0mYilHE9fP03HGF6qAPphnEub0PTBJhgCedBF9FODLpx+D1sR
+         hJePpNoRULVc4I93XelclOEZiMXLrK4vOgxKjr8apanE8CAmeTw1oO27yn2K1eUl4Bkk
+         Obn4JAy+UFxtfWs+YcItqRp9j3u0Hwe615M+jYNhl3flbM8fItlcPLayp9AUsIma20Lr
+         NMTugHApHZK7TjcoZwW+cJEnS2I1cZQH51ZOhJru+8zJd8M/NByYox5Q/pLHmivA8r+B
+         oTaX2ZUHX/9wy/4P9VIrhCtiSnVdQKnFLxFIaZoXzu2E9MU/bOqbUh4tx30iDRdfhIBr
+         hPHw==
+X-Received: by 10.60.94.52 with SMTP id cz20mr8477206oeb.8.1439625585554; Sat,
+ 15 Aug 2015 00:59:45 -0700 (PDT)
+Received: by 10.202.52.6 with HTTP; Sat, 15 Aug 2015 00:59:16 -0700 (PDT)
+In-Reply-To: <1439416645-19173-2-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/275980>
 
 On Thu, Aug 13, 2015 at 4:57 AM, David Turner <dturner@twopensource.com> wrote:
-> +struct common_dir common_list[] = {
-> +       { "branches", 0, 1, 0 },
-> +       { "hooks", 0, 1, 0 },
-> +       { "info", 0, 1, 0 },
-> +       { "info/sparse-checkout", 0, 0, 1 },
-> +       { "logs", 1, 1, 0 },
-> +       { "logs/HEAD", 1, 1, 1 },
-> +       { "lost-found", 0, 1, 0 },
-> +       { "objects", 0, 1, 0 },
-> +       { "refs", 0, 1, 0 },
-> +       { "remotes", 0, 1, 0 },
-> +       { "worktrees", 0, 1, 0 },
-> +       { "rr-cache", 0, 1, 0 },
-> +       { "svn", 0, 1, 0 },
-> +       { "config", 0, 0, 0 },
-> +       { "gc.pid", 1, 0, 0 },
-> +       { "packed-refs", 0, 0, 0 },
-> +       { "shallow", 0, 0, 0 },
-> +       { NULL, 0, 0, 0 }
->  };
+> Instead of a linear search over common_list to check whether
+> a path is common, use a trie.  The trie search operates on
+> path prefixes, and handles excludes.
 
-Nit. If you make dirname the last field, we would have aligned
-numbers, which might help reading.
+Just be careful that the given key from git_path is not normalized. I
+think you assume it is in the code, but I haven't read carefully. We
+could of course optimize for the good case: assume normalized and
+search, then fall back to explicit normalizing and search again.
 -- 
 Duy
