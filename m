@@ -1,89 +1,62 @@
-From: David Dynerman <david@block-party.net>
-Subject: Bug pushing branch to new remote via SSH
-Date: Sun, 16 Aug 2015 10:56:13 +0900
-Message-ID: <m2si7katdu.fsf@block-party.net>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v3 2/4] path: optimize common dir checking
+Date: Sun, 16 Aug 2015 05:04:22 +0000 (UTC)
+Message-ID: <loom.20150816T070037-969@post.gmane.org>
+References: <1439416645-19173-1-git-send-email-dturner@twopensource.com> <1439416645-19173-2-git-send-email-dturner@twopensource.com> <CACsJy8BCr7StbtcrgsbTiosTX1RkjwwWyRqddz2XDhFn5R+zAw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 16 04:03:02 2015
+X-From: git-owner@vger.kernel.org Sun Aug 16 07:15:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQnHo-0001di-US
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Aug 2015 04:03:01 +0200
+	id 1ZQqIF-0003XJ-QS
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Aug 2015 07:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751874AbbHPCCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2015 22:02:40 -0400
-Received: from anti-capital.block-party.net ([94.254.0.205]:53283 "EHLO
-	anti-capital.block-party.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751576AbbHPCCj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Aug 2015 22:02:39 -0400
-X-Greylist: delayed 375 seconds by postgrey-1.27 at vger.kernel.org; Sat, 15 Aug 2015 22:02:39 EDT
-Received: from CIVIC-TV.localdomain (unknown [103.5.142.12])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: david@block-party.net)
-	by anti-capital.block-party.net (Postfix) with ESMTPSA id 370002342
-	for <git@vger.kernel.org>; Sat, 15 Aug 2015 20:56:21 -0500 (CDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=anti-capital.block-party.net; s=dkim; t=1439690181;
-	bh=AmOKVcLtwGHL+OM7gruzfSWvsv7izE/RNJKviW2d5Rk=;
-	h=From:To:Subject:Date:From;
-	b=Bz2v5Bj43VpXpiu18zLalsPqtifhhJdSA2zsEZ/PbC/8L3SVjbt8zli/LZXFpevyL
-	 vjwJaelVQ0NdjxdO3qFgXOJLKlDIinGngKyV2jcnpn6Bk0JQdMhHn89xHInH32KCXg
-	 yqYfXLhePRqsQSUqFSW/n9qJ/cqcM5zZkSu6iZCM=
-Received: by CIVIC-TV.localdomain (Postfix, from userid 501)
-	id D5A351E511E4; Sun, 16 Aug 2015 10:56:13 +0900 (KST)
+	id S1750719AbbHPFPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Aug 2015 01:15:10 -0400
+Received: from plane.gmane.org ([80.91.229.3]:50729 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750705AbbHPFPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Aug 2015 01:15:09 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ZQqHg-000319-Mw
+	for git@vger.kernel.org; Sun, 16 Aug 2015 07:15:05 +0200
+Received: from 207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com ([207.38.164.98])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 16 Aug 2015 07:15:04 +0200
+Received: from dturner by 207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 16 Aug 2015 07:15:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 207.38.164.98 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/43.0.2357.81 Chrome/43.0.2357.81 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276010>
 
-Hello,
+Duy Nguyen <pclouds@gmail.com> writes:
+> On Thu, Aug 13, 2015 at 4:57 AM, David Turner <dturner@twopensource.com> 
+wrote:
+> > Instead of a linear search over common_list to check whether
+> > a path is common, use a trie.  The trie search operates on
+> > path prefixes, and handles excludes.
+> 
+> Just be careful that the given key from git_path is not normalized. I
+> think you assume it is in the code, but I haven't read carefully. We
+> could of course optimize for the good case: assume normalized and
+> search, then fall back to explicit normalizing and search again.
 
-I am encountering a bizarre error message trying to push a branch to a
-new remote over SSH. The error message is
-
-fatal: packfile name 'remotehost.com' does not end with '.pack'
-
-Here, remotehost.com is the internet domain name of the remote host I'm
-trying to push to.
-
-Obviously pushing to SSH remotes isn't broken generally, so I think this
-is caused by some bad state in my repository. But the error message
-seems odd enough that I think I might be encountering a bug.
-
-If anyone has any hints on how to resolve this, I'd really appreciate
-it.
-
-On my laptop, which is running OS X:
-
-$ git fsck
-Checking object directories: 100% (256/256), done.
-Checking objects: 100% (398/398), done.
-
-$ ssh remotehost.com "git init ~/git/my_repo --bare"
-Initialized empty Git repository in /home/user/git/my_repo/
-
-$ git remote add remotehost ssh://remotehost.com/home/user/git/my_repo
-
-$ git push remotehost master
-Counting objects: 405, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (298/298), done.
-fatal: packfile name 'remotehost.com' does not end with '.pack'
-error: pack-objects died of signal 13
-error: failed to push some refs to
-'ssh://remotehost.com/home/user/git/my_repo/'
-
-$ git --version
-git version 2.2.0
-
-$ ssh remotehost.com "git --version"
-git version 1.7.10.1
-
-Thank you very much,
-David
+What does it mean for a key to be normalized?  Do you mean normalized in 
+terms of upper/lowercase on case-insensitive filesystems?  If so, I think the 
+assumption here is that this will be called with paths generated by git, 
+which will always use the lowercase path.
