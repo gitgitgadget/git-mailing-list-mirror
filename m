@@ -1,120 +1,82 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v3] po/README: Update directions for l10n contributors
-Date: Sun, 16 Aug 2015 19:59:04 +0100
-Organization: OPDS
-Message-ID: <766F16CA94884DEBAEFC7A594DE64529@PhilipOakley>
-References: <CANYiYbEKoF6GhezPmR1fGxRqTvZAE4L2xguvvwFEWqWBkOp9tw@mail.gmail.com> <30198223977cc51444ce3c3a61833fa9d7619dc7.1439704077.git.worldhello.net@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: "git am --abort" screwing up index?
+Date: Sun, 16 Aug 2015 12:46:15 -0700
+Message-ID: <CA+55aFwDkQAS8ULiLt9N5NVOYJ242Nd2MOWeiRX8HrVHXf2zog@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>,
-	"Jiang Xin" <worldhello.net@gmail.com>
-To: "Jiang Xin" <worldhello.net@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 16 20:58:00 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 16 21:46:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZR383-0002ar-Av
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Aug 2015 20:57:59 +0200
+	id 1ZR3sq-0003ue-W0
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Aug 2015 21:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127AbbHPS5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Aug 2015 14:57:55 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:9378 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751021AbbHPS5y (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Aug 2015 14:57:54 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2CtFADF3NBVPKizYwJdGQEBgwBUaYc/uB+FcwQEAoEjTQEBAQEBAQcBAQEBQSQbhB4GAQEECAEBLh4BASELAgMFAgEDDgcMJRQBBAgSBgcDFAYBEggCAQIDAYgIAxYJv1SJCg2FVwELARsEi1KCT4I6gx+BFAWHIYV2iAYBgRKDcYV7gzeEK4wFd4NPg2eEJD0zgkwBAQE
-X-IPAS-Result: A2CtFADF3NBVPKizYwJdGQEBgwBUaYc/uB+FcwQEAoEjTQEBAQEBAQcBAQEBQSQbhB4GAQEECAEBLh4BASELAgMFAgEDDgcMJRQBBAgSBgcDFAYBEggCAQIDAYgIAxYJv1SJCg2FVwELARsEi1KCT4I6gx+BFAWHIYV2iAYBgRKDcYV7gzeEK4wFd4NPg2eEJD0zgkwBAQE
-X-IronPort-AV: E=Sophos;i="5.15,690,1432594800"; 
-   d="scan'208";a="797284433"
-Received: from host-2-99-179-168.as13285.net (HELO PhilipOakley) ([2.99.179.168])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 16 Aug 2015 19:57:50 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751429AbbHPTqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Aug 2015 15:46:16 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:35676 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751081AbbHPTqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Aug 2015 15:46:16 -0400
+Received: by igbjg10 with SMTP id jg10so42298833igb.0
+        for <git@vger.kernel.org>; Sun, 16 Aug 2015 12:46:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
+        bh=fERawN9VZDFq/uS4gR6zMv7QuQ/BQhhbCopscrtxZmo=;
+        b=pb5ezwzhA30Gj0aRP56fFH88tGKkowJ8hBLDa/So12QIfjoGlFweH4gynUEVUWt4RR
+         EkY2skK/6pKpgxYzWiW74tI/JNFXGI/69w1c5eC9LPGSbhR767/HcWlRgdsKj4KzLJ1z
+         EaLGIuk0CzfICfeco3tAViVHlvGEJclWA2rqwxRSFwKV6cYHmXFfvmyWun5BGuKQ6Nvt
+         O1nMVWW/jPyCLwq0l0ZlYPjHsAwtI2t191T4Us/u6M3slCXhRXjDDlPzv6ACHBcpOYRI
+         w7WYpQLl93VfX3gz6IshMbPbA97wv+MLDS8CxZpqFoov7taTGwmfMdzOxs3Mr2biv340
+         xApg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
+        bh=fERawN9VZDFq/uS4gR6zMv7QuQ/BQhhbCopscrtxZmo=;
+        b=SSXVGaBivaU1mLEspjls+/YdXRcDqOuunmSdbQzLwWkCYGd1ipOJHgf7nDRaSNE4mg
+         Qn8EDMUkr49rEmmRsaTA85leix1lo2hmSy7PifE5CPng4Ly3HpzsS6ORDSsKqj2K7m2h
+         V2XRTG8fS8wwkDiA+WNwmEjF9tSFcCrytB87A=
+X-Received: by 10.50.17.9 with SMTP id k9mr13383106igd.93.1439754375432; Sun,
+ 16 Aug 2015 12:46:15 -0700 (PDT)
+Received: by 10.36.219.130 with HTTP; Sun, 16 Aug 2015 12:46:15 -0700 (PDT)
+X-Google-Sender-Auth: 0oV11xIlEcrrUbHxq3TD4H_yzLY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276023>
 
-From: "Jiang Xin" <worldhello.net@gmail.com>
-> From: Philip Oakley <philipoakley@iee.org>
->
-> Some Linux distributions (such as Ubuntu) have their own l10n 
-> workflows,
-> and their translations may be different.  Add notes for this case for
-> l10n translators.
->
-> Signed-off-by: Philip Oakley <philipoakley@iee.org>
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> ---
-> po/README | 19 +++++++++++++++++++
-> 1 file changed, 19 insertions(+)
->
-> diff --git a/po/README b/po/README
-> index d8c9111..fef4c0f 100644
-> --- a/po/README
-> +++ b/po/README
-> @@ -10,10 +10,26 @@ coordinates our localization effort in the l10 
-> coordinator repository:
->
->         https://github.com/git-l10n/git-po/
->
-> +The two character language translation codes are defined by 
-> ISO_639-1, as
-> +stated in the gettext(1) full manual, appendix A.1, Usual Language 
-> Codes.
-> +
-> +
-> +Contributing to an existing translation
-> +---------------------------------------
-> As a contributor for a language XX, you should first check TEAMS file 
-> in
-> this directory to see whether a dedicated repository for your language 
-> XX
-> exists. Fork the dedicated repository and start to work if it exists.
->
-> +Sometime, contributors may find that the translations of their Git
-> +distributions are quite different with the translations of the
-> +corresponding version from Git official. This is because some Git
-> +distributions (such as from Ubuntu, etc.) have their own l10n 
-> workflow.
-> +For this case, wrong translations should be reported and fixed 
-> through
-> +their workflows.
-> +
+So I just noticed while applying a patch with "git am" when I had a
+dirty tree, and I ended up getting a failure and starting over:
 
-OK. That's a reasonable summary of what the reader should do.
+   [torvalds@i7 linux]$ git am --abort
+   [torvalds@i7 linux]$ git reset --hard
+   Checking out files: 100% (50794/50794), done.0794)
+   HEAD is now at 1efdb5f0a924 Merge tag 'scsi-fixes' of
+git://git.kernel.org/pub/scm/linux/kernel/git/jejb/scsi
 
+and the thing I reacted to is that the "git reset --hard" re-checked
+out all the files.
 
-> +
-> +Creating a new language translation
-> +-----------------------------------
-> If you are the first contributor for the language XX, please fork this
-> repository, prepare and/or update the translated message file po/XX.po
-> (described later), and ask the l10n coordinator to pull your work.
-> @@ -23,6 +39,9 @@ coordinate among yourselves and nominate the team 
-> leader for your
-> language, so that the l10n coordinator only needs to interact with one
-> person per language.
->
-> +
-> +Translation Process Flow
-> +------------------------
-> The overall data-flow looks like this:
->
->     +-------------------+            +------------------+
-> -- 
+That implies that "git am --abort" ended up leaving the index in a bad
+state, presumably it re-did the index entirely from HEAD, without
+filling it in with the stat() details from the old index.
 
-Confirmed-by: Philip Oakley <philipoakley@iee.org>
--- 
+Maybe it has always done this, and I just haven't noticed (I usually
+_just_ do the "git reset --hard" thing, don't ask me why I wanted to
+be doubly sure this time). But maybe it's an effect of the new
+built-in "am".
+
+I'm about to go out and don't have time to debug this any further
+right now, but I'll try to get back to it later. I thought I'd send
+out this email in case it makes Paul goes "ahh, yes.. obvious"
+
+Not a big deal - things *work* fine. But forcing checking out every
+file obviously also means that subsequent builds end up being slowed
+down etc.,.
+
+                  Linus
