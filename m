@@ -1,271 +1,97 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3] untracked-cache: fix subdirectory handling
-Date: Sun, 16 Aug 2015 01:17:07 -0400
-Message-ID: <1439702227-15453-1-git-send-email-dturner@twopensource.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH v2 0/1] handling mistranslation reports
+Date: Sun, 16 Aug 2015 13:46:07 +0800
+Message-ID: <CANYiYbEKoF6GhezPmR1fGxRqTvZAE4L2xguvvwFEWqWBkOp9tw@mail.gmail.com>
+References: <1438640973-1452-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Turner <dturner@twopensource.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 16 07:17:42 2015
+Cc: Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sun Aug 16 07:46:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQqKB-0005H3-Dc
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Aug 2015 07:17:39 +0200
+	id 1ZQqmA-0006WD-F2
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Aug 2015 07:46:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749AbbHPFR3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Aug 2015 01:17:29 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:34545 "EHLO
-	mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750705AbbHPFR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Aug 2015 01:17:28 -0400
-Received: by qkcs67 with SMTP id s67so37653998qkc.1
-        for <git@vger.kernel.org>; Sat, 15 Aug 2015 22:17:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=KLy0fDY0mreLDxvCCTreTGfpfnAG6XScYInwNh5uU4c=;
-        b=NK+o0SPWcCwxuS+heeSUMPH30zrXiTztFgTr5NA2j2arW2ghHxAFHaPOkYXBXkfQU4
-         rwvAKtJhJWzV/1pk3ah95/ZWRdTS58RYfWgojKa0S77W25KxM6lYolqA67ofSRPwk3Zp
-         nsDGDnf/3OR+8DzgvoJug4vxiEGjFBTKwpmb8kVoibYWzhT9xzYQ9FSzLzSx3LZBJYGS
-         tkcn8Cpp1icVWdlZP4X8ly0Wm8tLDwsOMM89K0+3zeyXlE1UzAt7L9yF+5n5sIe1K9YJ
-         O42HnhTCinof10RLuoN2ta6mPwGsBNSoMhgZgYAsHl03ZaISkecsv7sfIkzOnFUaJtfy
-         LQ3Q==
-X-Gm-Message-State: ALoCoQngY5Q62iix669nFxwNJn5WqrE/skjA/cewL0Az0kismAK8z/vAK/QINKl+nqxaWV2rm8qs
-X-Received: by 10.55.197.208 with SMTP id k77mr12725977qkl.83.1439702247365;
-        Sat, 15 Aug 2015 22:17:27 -0700 (PDT)
-Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id x201sm6059267qkx.28.2015.08.15.22.17.26
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 15 Aug 2015 22:17:26 -0700 (PDT)
-X-Mailer: git-send-email 2.4.2.622.gac67c30-twtrsrc
+	id S1750763AbbHPFqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Aug 2015 01:46:10 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:33513 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750739AbbHPFqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Aug 2015 01:46:09 -0400
+Received: by lbbsx3 with SMTP id sx3so65011456lbb.0
+        for <git@vger.kernel.org>; Sat, 15 Aug 2015 22:46:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8m+yexNQV0MA5HiuWaVghUUMzEF8nytGG5zvt12CWxc=;
+        b=saLloa7OYmQ8SboSPHgAXQrs7hQWZyw9sodDY3JHUstPk6BigzeNLmw97cToPJsipq
+         FIIhVz+RbUVgHK7nFuAOtal4Z76FKstMbiS8sNlE2bCJi/m8XU72RMZ5kDB8+PuEDDks
+         NE6Wt8jxuny4n83q4db/52kKvln+2nyPzsMuoU+uyqwiGyo7mgNdYjv/Wd2AlfMoLL55
+         x6sjK+0S5QiBDc6khAbKriJOhJ7kcDMSYush9CGMljhTB27rwa8nIn+V6S7PJK6T7Lie
+         d/Pv3XXAS8q96Ijn3cUIfLASv/0Ca2XhaEqCE0TWF02+I131qHE6dTKBq0pqtIDNVMkQ
+         kMcQ==
+X-Received: by 10.112.234.197 with SMTP id ug5mr36657491lbc.79.1439703967812;
+ Sat, 15 Aug 2015 22:46:07 -0700 (PDT)
+Received: by 10.152.105.9 with HTTP; Sat, 15 Aug 2015 22:46:07 -0700 (PDT)
+In-Reply-To: <1438640973-1452-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276012>
 
-Previously, some calls lookup_untracked would pass a full path.  But
-lookup_untracked assumes that the portion of the path up to and
-including to the untracked_cache_dir has been removed.  So
-lookup_untracked would be looking in the untracked_cache for 'foo' for
-'foo/bar' (instead of just looking for 'bar').  This would cause
-untracked cache corruption.
-
-Instead, treat_directory learns to track the base length of the parent
-directory, so that only the last path component is passed to
-lookup_untracked.
-
-Helped-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
+2015-08-04 6:29 GMT+08:00 Philip Oakley <philipoakley@iee.org>:
+> Hi Jiang,
 >
-Signed-off-by: David Turner <dturner@twopensource.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
+> This is my updated patch based on your feedback at $gmane/275141
+> and $gmane/275142.
+>
+> I've used most of your wording, though have retained a comment on
+> considering if the translation could be held here.
+>
+> My original commentary is below, along with the inter-diff between versions.
+>
+> -
+> Recently, on the 'Git for human beings' list, a user reported a
+> mistranslation and asked if/what could be done, with a suggested
+> alternate text [1].
+>
+> I pointed the user at the po/README for general guidance.
+> Unfortunately the user was noting a Spanish (es) translation error which
+> is not held in your tree, but the README does include how to start a new
+> translation. This led to a misunderstanding with regard to which aspect
+> of the README was being referred to (private discussion with Junio).
+>
+> This patch separates out the three different aspects that caused confusion
+> and explicitly brings out what to do for translations not currently held here.
+>
+> I hope my suggested patch will fit with your approach and ask for comments
+> (or Ack / Nack).
+>
+> regards
+>
+> Philip
+>
+> [1] https://groups.google.com/forum/#!topic/git-users/rK5oU6k8Tzw
+>
+> Interdiff:
 
-This version incorporates Duy's version of the dir.c code, and his
-suggested test speedup.
+The subject is "[PATCH v2 0/1]" and I wonder where is the real patch
+file ("v2 1/1")
+aside of this  cover letter.  But today I have time to read it
+carefully, and I know
+this is a fixup commit.
 
----
- dir.c                             | 14 ++++----
- t/t7063-status-untracked-cache.sh | 74 +++++++++++++++++++++++++++++++=
-++++++--
- 2 files changed, 80 insertions(+), 8 deletions(-)
+I squash this reroll to last commit for this series, and simplify both
+the commit
+and the commit log.  See patch v3 in the next email.
 
-diff --git a/dir.c b/dir.c
-index e7b89fe..cd4ac77 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1297,7 +1297,7 @@ static enum exist_status directory_exists_in_inde=
-x(const char *dirname, int len)
-  */
- static enum path_treatment treat_directory(struct dir_struct *dir,
- 	struct untracked_cache_dir *untracked,
--	const char *dirname, int len, int exclude,
-+	const char *dirname, int len, int baselen, int exclude,
- 	const struct path_simplify *simplify)
- {
- 	/* The "len-1" is to strip the final '/' */
-@@ -1324,7 +1324,8 @@ static enum path_treatment treat_directory(struct=
- dir_struct *dir,
- 	if (!(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
- 		return exclude ? path_excluded : path_untracked;
-=20
--	untracked =3D lookup_untracked(dir->untracked, untracked, dirname, le=
-n);
-+	untracked =3D lookup_untracked(dir->untracked, untracked,
-+				     dirname + baselen, len - baselen);
- 	return read_directory_recursive(dir, dirname, len,
- 					untracked, 1, simplify);
- }
-@@ -1444,6 +1445,7 @@ static int get_dtype(struct dirent *de, const cha=
-r *path, int len)
- static enum path_treatment treat_one_path(struct dir_struct *dir,
- 					  struct untracked_cache_dir *untracked,
- 					  struct strbuf *path,
-+					  int baselen,
- 					  const struct path_simplify *simplify,
- 					  int dtype, struct dirent *de)
- {
-@@ -1495,8 +1497,8 @@ static enum path_treatment treat_one_path(struct =
-dir_struct *dir,
- 		return path_none;
- 	case DT_DIR:
- 		strbuf_addch(path, '/');
--		return treat_directory(dir, untracked, path->buf, path->len, exclude=
-,
--			simplify);
-+		return treat_directory(dir, untracked, path->buf, path->len,
-+				       baselen, exclude, simplify);
- 	case DT_REG:
- 	case DT_LNK:
- 		return exclude ? path_excluded : path_untracked;
-@@ -1557,7 +1559,7 @@ static enum path_treatment treat_path(struct dir_=
-struct *dir,
- 		return path_none;
-=20
- 	dtype =3D DTYPE(de);
--	return treat_one_path(dir, untracked, path, simplify, dtype, de);
-+	return treat_one_path(dir, untracked, path, baselen, simplify, dtype,=
- de);
- }
-=20
- static void add_untracked(struct untracked_cache_dir *dir, const char =
-*name)
-@@ -1827,7 +1829,7 @@ static int treat_leading_path(struct dir_struct *=
-dir,
- 			break;
- 		if (simplify_away(sb.buf, sb.len, simplify))
- 			break;
--		if (treat_one_path(dir, NULL, &sb, simplify,
-+		if (treat_one_path(dir, NULL, &sb, baselen, simplify,
- 				   DT_DIR, NULL) =3D=3D path_none)
- 			break; /* do not recurse into it */
- 		if (len <=3D baselen) {
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untrack=
-ed-cache.sh
-index ff23f4e..6716f69 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -402,13 +402,14 @@ test_expect_success 'set up sparse checkout' '
- 	echo "done/[a-z]*" >.git/info/sparse-checkout &&
- 	test_config core.sparsecheckout true &&
- 	git checkout master &&
--	git update-index --untracked-cache &&
-+	git update-index --untracked-cache --force-untracked-cache &&
- 	git status --porcelain >/dev/null && # prime the cache
- 	test_path_is_missing done/.gitignore &&
- 	test_path_is_file done/one
- '
-=20
--test_expect_success 'create files, some of which are gitignored' '
-+test_expect_success 'create/modify files, some of which are gitignored=
-' '
-+	echo two bis >done/two &&
- 	echo three >done/three && # three is gitignored
- 	echo four >done/four && # four is gitignored at a higher level
- 	echo five >done/five # five is not gitignored
-@@ -420,6 +421,7 @@ test_expect_success 'test sparse status with untrac=
-ked cache' '
- 	GIT_TRACE_UNTRACKED_STATS=3D"$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../status.actual &&
- 	cat >../status.expect <<EOF &&
-+ M done/two
- ?? .gitignore
- ?? done/five
- ?? dtwo/
-@@ -459,6 +461,7 @@ test_expect_success 'test sparse status again with =
-untracked cache' '
- 	GIT_TRACE_UNTRACKED_STATS=3D"$TRASH_DIRECTORY/trace" \
- 	git status --porcelain >../status.actual &&
- 	cat >../status.expect <<EOF &&
-+ M done/two
- ?? .gitignore
- ?? done/five
- ?? dtwo/
-@@ -473,4 +476,71 @@ EOF
- 	test_cmp ../trace.expect ../trace
- '
-=20
-+test_expect_success 'set up for test of subdir and sparse checkouts' '
-+	mkdir done/sub &&
-+	mkdir done/sub/sub &&
-+	echo "sub" > done/sub/sub/file
-+'
-+
-+test_expect_success 'test sparse status with untracked cache and subdi=
-r' '
-+	avoid_racy &&
-+	: >../trace &&
-+	GIT_TRACE_UNTRACKED_STATS=3D"$TRASH_DIRECTORY/trace" \
-+	git status --porcelain >../status.actual &&
-+	cat >../status.expect <<EOF &&
-+ M done/two
-+?? .gitignore
-+?? done/five
-+?? done/sub/
-+?? dtwo/
-+EOF
-+	test_cmp ../status.expect ../status.actual &&
-+	cat >../trace.expect <<EOF &&
-+node creation: 2
-+gitignore invalidation: 0
-+directory invalidation: 1
-+opendir: 3
-+EOF
-+	test_cmp ../trace.expect ../trace
-+'
-+
-+test_expect_success 'verify untracked cache dump (sparse/subdirs)' '
-+	test-dump-untracked-cache >../actual &&
-+	cat >../expect <<EOF &&
-+info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
-+core.excludesfile 0000000000000000000000000000000000000000
-+exclude_per_dir .gitignore
-+flags 00000006
-+/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
-+.gitignore
-+dtwo/
-+/done/ 1946f0437f90c5005533cbe1736a6451ca301714 recurse valid
-+five
-+sub/
-+/done/sub/ 0000000000000000000000000000000000000000 recurse check_only=
- valid
-+sub/
-+/done/sub/sub/ 0000000000000000000000000000000000000000 recurse check_=
-only valid
-+file
-+/dthree/ 0000000000000000000000000000000000000000 recurse check_only v=
-alid
-+/dtwo/ 0000000000000000000000000000000000000000 recurse check_only val=
-id
-+two
-+EOF
-+	test_cmp ../expect ../actual
-+'
-+
-+test_expect_success 'test sparse status again with untracked cache and=
- subdir' '
-+	avoid_racy &&
-+	: >../trace &&
-+	GIT_TRACE_UNTRACKED_STATS=3D"$TRASH_DIRECTORY/trace" \
-+	git status --porcelain >../status.actual &&
-+	test_cmp ../status.expect ../status.actual &&
-+	cat >../trace.expect <<EOF &&
-+node creation: 0
-+gitignore invalidation: 0
-+directory invalidation: 0
-+opendir: 0
-+EOF
-+	test_cmp ../trace.expect ../trace
-+'
-+
- test_done
---=20
-2.4.2.622.gac67c30-twtrsrc
+-- 
+Jiang Xin
