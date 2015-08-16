@@ -1,103 +1,89 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 2/4] path: optimize common dir checking
-Date: Sat, 15 Aug 2015 20:20:11 +0200
-Message-ID: <55CF82DB.8010204@alum.mit.edu>
-References: <1439416645-19173-1-git-send-email-dturner@twopensource.com>	 <1439416645-19173-2-git-send-email-dturner@twopensource.com>	 <55CC5DED.5050304@alum.mit.edu>	 <xmqqtws1iyxn.fsf@gitster.dls.corp.google.com> <1439582644.8855.89.camel@twopensource.com>
+From: David Dynerman <david@block-party.net>
+Subject: Bug pushing branch to new remote via SSH
+Date: Sun, 16 Aug 2015 10:56:13 +0900
+Message-ID: <m2si7katdu.fsf@block-party.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, pclouds@gmail.com
-To: David Turner <dturner@twopensource.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 15 20:20:24 2015
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 16 04:03:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZQg46-0002gc-PZ
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Aug 2015 20:20:23 +0200
+	id 1ZQnHo-0001di-US
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Aug 2015 04:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753206AbbHOSUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2015 14:20:16 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:60715 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752109AbbHOSUP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Aug 2015 14:20:15 -0400
-X-AuditID: 1207440d-f79136d00000402c-5e-55cf82de5fd5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 5B.68.16428.ED28FC55; Sat, 15 Aug 2015 14:20:14 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB2AF9.dip0.t-ipconnect.de [93.219.42.249])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7FIKB0b032637
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 15 Aug 2015 14:20:12 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1439582644.8855.89.camel@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqHuv6XyowaZjrBabnk9ktpi/6QSj
-	RdeVbiaLht4rzBbdU94yOrB67Jx1l93j4iVlj+UPXrF7LHh+n93j8ya5ANYobpukxJKy4Mz0
-	PH27BO6M+fPOsBcs56vYOvc0awPjSu4uRk4OCQETibN/PjJC2GISF+6tZ+ti5OIQErjMKDH/
-	1FkWCOc8k8S/zjNgVbwC2hJPJ7aygtgsAqoSs9oXgsXZBHQlFvU0M4HYogJBEiuWv4CqF5Q4
-	OfMJC4gtIhAhsWTyPrBeZgFniY29a4BqODiEBewk5l9whdjVDLTr+yuwGk4BC4l5y14zQ9Sr
-	S/yZdwnKlpdo3jqbeQKjwCwkK2YhKZuFpGwBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0j
-	vdzMEr3UlNJNjJAg593B+H+dzCFGAQ5GJR7exmXnQoVYE8uKK3MPMUpyMCmJ8j6IOh8qxJeU
-	n1KZkVicEV9UmpNafIhRgoNZSYTXKhoox5uSWFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpa
-	kFoEk5Xh4FCS4GUDRrOQYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChW44uB0QqS
-	4gHayw3SzltckJgLFIVoPcWoKCXOO7ERKCEAksgozYMbC0tdrxjFgb4U5rUBqeIBpj247ldA
-	g5mABtvNOAsyuCQRISXVwCh92aanODYkNKE5wVLq15yHSSXP7ttJHUpfdcSj0lViYXHB7xOr
-	GXYubupZZSN+5Nf+pmj74LReO5H6vhsz0lyVt68yeZIWOKlNtrjvg4Dwlcjns34l 
+	id S1751874AbbHPCCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2015 22:02:40 -0400
+Received: from anti-capital.block-party.net ([94.254.0.205]:53283 "EHLO
+	anti-capital.block-party.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751576AbbHPCCj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Aug 2015 22:02:39 -0400
+X-Greylist: delayed 375 seconds by postgrey-1.27 at vger.kernel.org; Sat, 15 Aug 2015 22:02:39 EDT
+Received: from CIVIC-TV.localdomain (unknown [103.5.142.12])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: david@block-party.net)
+	by anti-capital.block-party.net (Postfix) with ESMTPSA id 370002342
+	for <git@vger.kernel.org>; Sat, 15 Aug 2015 20:56:21 -0500 (CDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=anti-capital.block-party.net; s=dkim; t=1439690181;
+	bh=AmOKVcLtwGHL+OM7gruzfSWvsv7izE/RNJKviW2d5Rk=;
+	h=From:To:Subject:Date:From;
+	b=Bz2v5Bj43VpXpiu18zLalsPqtifhhJdSA2zsEZ/PbC/8L3SVjbt8zli/LZXFpevyL
+	 vjwJaelVQ0NdjxdO3qFgXOJLKlDIinGngKyV2jcnpn6Bk0JQdMhHn89xHInH32KCXg
+	 yqYfXLhePRqsQSUqFSW/n9qJ/cqcM5zZkSu6iZCM=
+Received: by CIVIC-TV.localdomain (Postfix, from userid 501)
+	id D5A351E511E4; Sun, 16 Aug 2015 10:56:13 +0900 (KST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276009>
 
-On 08/14/2015 10:04 PM, David Turner wrote:
-> On Fri, 2015-08-14 at 10:04 -0700, Junio C Hamano wrote:
->> [...]
->> So I think we should have *three* functions:
->>
->>  - git_workspace_name(void) returns some name that uniquely
->>    identifies the current workspace among the workspaces linked to
->>    the same repository.
-> 
-> Random side note: the present workspace path name component is not
-> acceptable for this if alternate ref backends use a single db for
-> storage across all workspaces.  That's because you might create a
-> workspace at foo, then manually rm -r it, and then create a new one also
-> named foo.  The database wouldn't know about this series of events, and
-> would then have stale per-workspace refs for foo.
+Hello,
 
-The reference backend should clearly have functions that are called on
-the creation and destruction of a workspace. In these functions the
-backend could initialize / clean up any reference-related resources
-associated with that workspace.
+I am encountering a bizarre error message trying to push a branch to a
+new remote over SSH. The error message is
 
-These functions can be empty for the filesystem backend.
+fatal: packfile name 'remotehost.com' does not end with '.pack'
 
-> That said, with my lmdb backend, I've been falling back to the files
-> backend for per-workspace refs.  This also means I don't have to worry
-> about expiring per-workspace refs when a workspace is removed. 
-> 
-> I could change this, but IIRC, there are a fair number of things that
-> care about the existence of a file called HEAD, so the fallback was
-> easier.  (That is, the other way was a giant hassle).
+Here, remotehost.com is the internet domain name of the remote host I'm
+trying to push to.
 
-OK, so the functions can be empty for the lmdb backend, too :-)
+Obviously pushing to SSH remotes isn't broken generally, so I think this
+is caused by some bad state in my repository. But the error message
+seems odd enough that I think I might be encountering a bug.
 
-> [...]
-> For this patch series, I don't think we need to change anything [...]
-> Implementing
-> Junio's proposal would not affect this series; it would just be an
-> additional patch on top (or beforehand).
+If anyone has any hints on how to resolve this, I'd really appreciate
+it.
 
-OK.
+On my laptop, which is running OS X:
 
-> [...]
+$ git fsck
+Checking object directories: 100% (256/256), done.
+Checking objects: 100% (398/398), done.
 
-Michael
+$ ssh remotehost.com "git init ~/git/my_repo --bare"
+Initialized empty Git repository in /home/user/git/my_repo/
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+$ git remote add remotehost ssh://remotehost.com/home/user/git/my_repo
+
+$ git push remotehost master
+Counting objects: 405, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (298/298), done.
+fatal: packfile name 'remotehost.com' does not end with '.pack'
+error: pack-objects died of signal 13
+error: failed to push some refs to
+'ssh://remotehost.com/home/user/git/my_repo/'
+
+$ git --version
+git version 2.2.0
+
+$ ssh remotehost.com "git --version"
+git version 1.7.10.1
+
+Thank you very much,
+David
