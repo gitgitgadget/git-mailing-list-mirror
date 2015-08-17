@@ -1,83 +1,134 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v8 4/8] notes: allow use of the "rewrite" terminology for
- merge strategies
-Date: Mon, 17 Aug 2015 14:54:18 +0200
-Message-ID: <CALKQrgfLzWdRxC5saBXJ_-iKmVDfs+mBfDKKrSU2-tP7eO5+Zg@mail.gmail.com>
-References: <1439801191-3026-1-git-send-email-jacob.e.keller@intel.com>
-	<1439801191-3026-5-git-send-email-jacob.e.keller@intel.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v11 04/13] utf8: add function to align a string into given strbuf
+Date: Mon, 17 Aug 2015 18:38:08 +0530
+Message-ID: <CAOLa=ZRR8Ytmtj5uo3bPBnkYcGr-vgu-n4hbb4CvKndwc3JeLA@mail.gmail.com>
+References: <1439661643-16094-5-git-send-email-Karthik.188@gmail.com> <CAPig+cSV_cfF8y0HVKSU1yBgOxJ0qrejc-7bQPvt-UkUNAtxKw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 14:54:33 2015
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 15:08:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRJvs-0004Vm-Qq
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 14:54:33 +0200
+	id 1ZRK9b-0003qn-MU
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 15:08:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754963AbbHQMy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 08:54:28 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:56286 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751673AbbHQMy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 08:54:27 -0400
-Received: from mail-yk0-f174.google.com ([209.85.160.174])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1ZRJvl-0001BH-42
-	for git@vger.kernel.org; Mon, 17 Aug 2015 14:54:25 +0200
-Received: by ykfw73 with SMTP id w73so71384993ykf.3
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 05:54:18 -0700 (PDT)
-X-Received: by 10.129.133.199 with SMTP id v190mr1207995ywf.38.1439816058124;
- Mon, 17 Aug 2015 05:54:18 -0700 (PDT)
-Received: by 10.37.201.134 with HTTP; Mon, 17 Aug 2015 05:54:18 -0700 (PDT)
-In-Reply-To: <1439801191-3026-5-git-send-email-jacob.e.keller@intel.com>
+	id S1753191AbbHQNIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 09:08:39 -0400
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:35677 "EHLO
+	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751874AbbHQNIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 09:08:38 -0400
+Received: by oiew67 with SMTP id w67so60819764oie.2
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 06:08:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=uvlfodptRvJ8S8S+SaNcTtAOWRhq9ISfHSTCySJg1Iw=;
+        b=N6vpntrNLD12alYG9OvP0uKYegt6zfwDnNGYuCkpggxiRjIksPJhPGTMWD+jOGQmlG
+         os0xgOC/Ardj3siyc23MiWtEJMvv+MFcWxs1BErJHJveC3ip0kG7oTQiNddRVMlLSBlC
+         14eqYszrUNbeXnXQakKKpYkeIMg5YIlLeZNFF7+UzUmbp9ZdwP2gOw+r5KnGYxEoKZSe
+         ZYMfBjMWsbme2qRDFD4P/3nQBfczsB3gFtCk17o7kzNlnrTM9ov3K+7ENfaZ7yLQpOzt
+         gcSChT6KJGKObvUq7ZhR5BeK6ZvHGI5YbhsRl8W11dGC9NFyI/sDmvRrK8dmg2w95UTn
+         UNSA==
+X-Received: by 10.202.92.6 with SMTP id q6mr1061022oib.11.1439816917628; Mon,
+ 17 Aug 2015 06:08:37 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Mon, 17 Aug 2015 06:08:08 -0700 (PDT)
+In-Reply-To: <CAPig+cSV_cfF8y0HVKSU1yBgOxJ0qrejc-7bQPvt-UkUNAtxKw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276050>
 
-On Mon, Aug 17, 2015 at 10:46 AM, Jacob Keller <jacob.e.keller@intel.com> wrote:
-> From: Jacob Keller <jacob.keller@gmail.com>
+On Mon, Aug 17, 2015 at 5:18 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sat, Aug 15, 2015 at 2:00 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Add strbuf_utf8_align() which will align a given string into a strbuf
+>> as per given align_type and width. If the width is greater than the
+>> string length then no alignment is performed.
 >
-> notes-merge.c already re-uses the same functions for the automatic merge
-> strategies used by the rewrite functionality. Teach the -s/--strategy
-> option how to interpret the equivalent rewrite terminology for
-> consistency.
-
-I'm somewhat negative to this patch. IMHO, adding the rewrite modes as
-merge strategy synonyms adds no benefit - only potential confusion -
-to the existing merge strategies. Words that have a sensible meaning
-in the context of rewrite, do not necessarily have the same sensible
-meaning in the context of merge (and vice versa). I'd rather have the
-rewrite code map ignore/overwrite/concatenate to ours/theirs/union,
-without teaching the notes-merge code about these words. Or maybe even
-drop this patch (and the next?) entirely, and let the future author
-(who implements notes rewrite in terms of notes merge) decide how to
-deal with this? By committing to these synonyms now, you might
-actually be making things harder for the future author: once the
-synonyms are part of the user-visible and documented interface, they
-cannot easily be removed/changed again.
-
-...Johan
-
-> Add tests for the new synonyms.
+> A couple minor comments below...
 >
-> Teaching rewrite how to understand merge terminology is left for a
-> following patch.
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/utf8.c b/utf8.c
+>> index 28e6d76..0fb8e9d 100644
+>> --- a/utf8.c
+>> +++ b/utf8.c
+>> @@ -644,3 +644,24 @@ int skip_utf8_bom(char **text, size_t len)
+>>         *text += strlen(utf8_bom);
+>>         return 1;
+>>  }
+>> +
+>> +void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int width,
+>> +                      const char *s)
+>> +{
+>> +       int slen = strlen(s);
+>> +       int display_len = utf8_strnwidth(s, slen, 0);
+>> +       int utf8_compensation = slen - display_len;
 >
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> Based upon the previous round review, I think you had intended to name
+> this merely 'compensation'.
+>
 
+In the last patch it was suggested because I spelled 'compensation' wrong.
+I think the "utf8_" makes a good addition to the variable name.
 
+>> +       if (display_len >= width) {
+>> +               strbuf_addstr(buf, s);
+>> +               return;
+>> +       }
+>> +
+>> +       if (position == ALIGN_LEFT)
+>> +               strbuf_addf(buf, "%-*s", width + utf8_compensation, s);
+>> +       else if (position == ALIGN_MIDDLE) {
+>> +               int left = (width - display_len)/2;
+>
+> Style: spaces around '/'
+>
+
+will add.
+
+>> +               strbuf_addf(buf, "%*s%-*s", left, "", width - left + utf8_compensation, s);
+>> +       } else if (position == ALIGN_RIGHT)
+>> +               strbuf_addf(buf, "%*s", width + utf8_compensation, s);
+>> +}
+>> diff --git a/utf8.h b/utf8.h
+>> index 5a9e94b..7930b44 100644
+>> --- a/utf8.h
+>> +++ b/utf8.h
+>> @@ -55,4 +55,19 @@ int mbs_chrlen(const char **text, size_t *remainder_p, const char *encoding);
+>>   */
+>>  int is_hfs_dotgit(const char *path);
+>>
+>> +typedef enum {
+>> +       ALIGN_LEFT,
+>> +       ALIGN_MIDDLE,
+>> +       ALIGN_RIGHT
+>> +} align_type;
+>> +
+>> +/*
+>> + * Align the string given and store it into a strbuf as per the
+>> + * 'position' and 'width'. If the given string length is larger than
+>> + * 'width' than then the input string is not truncated and no
+>> + * alignment is done.
+>> + */
+>> +void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int width,
+>> +                      const char *s);
+>> +
+>>  #endif
+>> --
+>> 2.5.0
+
+Thanks for the review.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Regards,
+Karthik Nayak
