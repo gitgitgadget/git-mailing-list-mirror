@@ -1,8 +1,9 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v11 05/13] ref-filter: implement an `align` atom
-Date: Sun, 16 Aug 2015 22:07:24 -0400
-Message-ID: <CAPig+cR=gCBiEnZbnPfZZs0WmjBsQyL+2BjSHggWWp_43rC9cg@mail.gmail.com>
-References: <1439661643-16094-6-git-send-email-Karthik.188@gmail.com>
+Subject: Re: [PATCH v11 06/13] ref-filter: add option to filter out tags,
+ branches and remotes
+Date: Mon, 17 Aug 2015 00:42:52 -0400
+Message-ID: <CAPig+cTZvSW8ZRLFLhmQTYBwotVjMWANZy0OAZHpA79vW8GfGQ@mail.gmail.com>
+References: <1439661643-16094-7-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
@@ -10,275 +11,149 @@ Cc: Git List <git@vger.kernel.org>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>
 To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 04:07:33 2015
+X-From: git-owner@vger.kernel.org Mon Aug 17 06:43:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZR9pj-0006VP-AA
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 04:07:31 +0200
+	id 1ZRCGQ-0004ia-OV
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 06:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752803AbbHQCHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Aug 2015 22:07:25 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:33028 "EHLO
+	id S1750766AbbHQEmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 00:42:53 -0400
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:36484 "EHLO
 	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752117AbbHQCHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Aug 2015 22:07:25 -0400
-Received: by ykll84 with SMTP id l84so50666163ykl.0
-        for <git@vger.kernel.org>; Sun, 16 Aug 2015 19:07:24 -0700 (PDT)
+	with ESMTP id S1750710AbbHQEmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 00:42:52 -0400
+Received: by ykfw73 with SMTP id w73so62673860ykf.3
+        for <git@vger.kernel.org>; Sun, 16 Aug 2015 21:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=vj+70Gool5yCNvCEyrJPk2kUKHzoCy0b5q+TS5m3JEY=;
-        b=WOKn/QKzPlNet0CDlGqMamzudyo0+vXx2omJpX925CBQFS0b/X9LMfeTrCOjxSZpRj
-         QwbOjo5FxIQZyPLtEundzMIctX4zmRvCn+KZZZpEzW12EhTBixBuO7dby3w1Bh5WSStz
-         J1OWsmPyE737yEML3LxD84fWg2jupKye9Gc3GvQ0wyAmKXl7FOe7f3pTauc8LcFvPLRf
-         j+FHft7EOb5MmcPSHziBLwLHxtYkeI79CDoMpXqczIRBUdukT9+vxhPpNl/Cka5CBuaq
-         rwSlq9129kr8o20QHfiA7DACmNMkPjfmcgUZKi/OYj8tJd+q79qbFHcS+srh5+dF8i8O
-         /oUA==
-X-Received: by 10.170.81.133 with SMTP id x127mr56990555ykx.13.1439777244643;
- Sun, 16 Aug 2015 19:07:24 -0700 (PDT)
-Received: by 10.37.208.78 with HTTP; Sun, 16 Aug 2015 19:07:24 -0700 (PDT)
-In-Reply-To: <1439661643-16094-6-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: vmRA8t4guCxyteuU5PO5vdKoQBI
+        bh=l/tblegEQRJzCIP5oAXyrhKziayt5DR9UUhBUFugEXI=;
+        b=aFVW04QCXB9bmEI83t/MKrTbPdDD9UTpeL7p64iYet+xISx9X9rOJY7b8utsSbAHB/
+         UWEKtB4AlY9XPTevujV8g1K/7yQ6nk76Nxh0wKEgFig4H11o9A4CV8safZuwtwGJfWkL
+         xMtGVASF3jn4l1Pn8xn8KrT0kvbw+7/aUTu6vvkdFMNB39Wc2L1WhGhudvVHE6/YbO6a
+         R20RZTxP4+dXPap2qV2nCweQ97gfRf2uy1L52I+A2KCGJ5dv1XCleSJUJIcCy22EDF8f
+         jpf3gXFPSjel4Bbm72JFPYYY7bzcuIV2O2NqHbOQFpaARkFiguSY8bqbNprf4xfWORbI
+         OrrQ==
+X-Received: by 10.13.220.132 with SMTP id f126mr57294962ywe.39.1439786572257;
+ Sun, 16 Aug 2015 21:42:52 -0700 (PDT)
+Received: by 10.37.208.78 with HTTP; Sun, 16 Aug 2015 21:42:52 -0700 (PDT)
+In-Reply-To: <1439661643-16094-7-git-send-email-Karthik.188@gmail.com>
+X-Google-Sender-Auth: S-fUh7n8OkFc_m_z9QQihHxd47c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276029>
 
 On Sat, Aug 15, 2015 at 2:00 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Implement an `align` atom which left-, middle-, or right-aligns the
-> content between %(align:..) and %(end).
+> Add a function called 'for_each_reftype_fullpath()' to refs.{c,h}
+> which iterates through each ref for the given path without trimming
+> the path and also accounting for broken refs, if mentioned.
 >
-> It is followed by `:<width>,<position>`, where the `<position>` is
-> either left, right or middle and `<width>` is the size of the area
-> into which the content will be placed. If the content between
-> %(align:) and %(end) is more than the width then no alignment is
-> performed. e.g. to align a refname atom to the middle with a total
-> width of 40 we can do: --format="%(align:middle,40)%(refname)%(end)".
->
-> This is done by calling the strbuf_utf8_align() function in utf8.c.
->
-> Add documentation and tests for the same.
+> Add 'filter_ref_kind()' in ref-filter.c to check the kind of ref being
+> handled and return the kind to 'ref_filter_handler()', where we
+> discard refs which we do not need and assign the kind to needed refs.
 >
 > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 > ---
 > diff --git a/ref-filter.c b/ref-filter.c
-> index 3259363..eac99d0 100644
+> index eac99d0..abcd235 100644
 > --- a/ref-filter.c
 > +++ b/ref-filter.c
-> @@ -10,6 +10,7 @@
->  #include "quote.h"
->  #include "ref-filter.h"
->  #include "revision.h"
-> +#include "utf8.h"
->
->  typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
->
-> @@ -53,16 +54,27 @@ static struct {
->         { "flag" },
->         { "HEAD" },
->         { "color" },
-> +       { "align" },
-> +       { "end" },
-> +};
-> +
-> +struct align {
-> +       align_type position;
-> +       unsigned int width;
->  };
->
->  struct ref_formatting_state {
->         struct strbuf output;
->         struct ref_formatting_state *prev;
-> +       void (*attend)(struct ref_formatting_state *state);
-
-Junio's suggestion for this member was "at end"; that is what to do
-when you are "at"-the-%(end), not "attend", which isn't meaningful
-here. You could also call it 'end_scope', 'finish' or 'close' or
-'finalize' or something.
-
-> +       void *cb_data;
->         int quote_style;
->  };
->
->  struct atom_value {
->         const char *s;
-> +       struct align *align;
-> +       void (*handler)(struct atom_value *atomv, struct ref_formatting_state **state);
->         unsigned long ul; /* used for sorting when not FIELD_STR */
->  };
->
-> @@ -137,12 +149,12 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
->
->  static struct ref_formatting_state *push_new_state(struct ref_formatting_state **state)
+> @@ -1226,16 +1262,29 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
 >  {
-> -       struct ref_formatting_state *new_state = xcalloc(1, sizeof(struct ref_formatting_state));
-> -       struct ref_formatting_state *tmp = *state;
-> +       struct ref_formatting_state *new = xcalloc(1, sizeof(struct ref_formatting_state));
-> +       struct ref_formatting_state *old = *state;
+>         struct ref_filter_cbdata ref_cbdata;
+>         int ret = 0;
+> +       unsigned int broken = 0;
 >
-> -       *state = new_state;
-> -       new_state->prev = tmp;
-> -       return new_state;
-> +       *state = new;
-> +       new->prev = old;
-> +       return new;
->  }
-
-What are these changes about? They appear only to be renaming some
-variables which were introduced in patch 3. It would make more sense
-to give them the desired names in the patch which introduces them.
-
->  static void pop_state(struct ref_formatting_state **state)
-> @@ -625,6 +637,34 @@ static inline char *copy_advance(char *dst, const char *src)
->         return dst;
->  }
+>         ref_cbdata.array = array;
+>         ref_cbdata.filter = filter;
 >
-> +static void align_handler(struct ref_formatting_state *state)
+>         /*  Simple per-ref filtering */
+> -       if (type & (FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN))
+> -               ret = for_each_rawref(ref_filter_handler, &ref_cbdata);
+> -       else if (type & FILTER_REFS_ALL)
+> -               ret = for_each_ref(ref_filter_handler, &ref_cbdata);
+> -       else if (type)
+> +       if (type & FILTER_REFS_INCLUDE_BROKEN) {
+> +               type -= FILTER_REFS_INCLUDE_BROKEN;
 
-The names 'align_handler' and 'align_atom_handler' are confusingly
-similar. Perhaps name this end_align() or do_align() or
-apply_alignment() or something?
+The above is a somewhat unusual way to say the more idiomatic:
 
-> +{
-> +       struct strbuf aligned = STRBUF_INIT;
-> +       struct ref_formatting_state *return_to = state->prev;
-> +       struct align *align = (struct align *)state->cb_data;
+    type &= ~FILTER_REFS_INCLUDE_BROKEN;
+
+when dealing with bit flags. Is there precedence elsewhere in the
+project for choosing '-' over '~'?
+
+> +               broken = 1;
+> +       }
 > +
-> +       strbuf_utf8_align(&aligned, align->position, align->width, state->output.buf);
-> +       strbuf_addbuf(&return_to->output, &aligned);
+> +       filter->kind = type;
+> +       if (type == FILTER_REFS_BRANCHES)
+> +               ret = for_each_reftype_fullpath(ref_filter_handler, "refs/heads/", broken, &ref_cbdata);
+> +       else if (type == FILTER_REFS_REMOTES)
+> +               ret = for_each_reftype_fullpath(ref_filter_handler, "refs/remotes/", broken, &ref_cbdata);
+> +       else if (type == FILTER_REFS_TAGS)
+> +               ret = for_each_reftype_fullpath(ref_filter_handler, "refs/tags/", broken, &ref_cbdata);
+> +       else if (type & FILTER_REFS_ALL) {
+> +               ret = for_each_reftype_fullpath(ref_filter_handler, "", broken, &ref_cbdata);
 
-A couple comments:
+These cases are all the same except for the (string) second argument,
+aren't they? This might be less noisy and easier to follow if you
+assign the appropriate string to a variable first, and then invoke
+for_each_reftype_fullpath() once with the string variable as an
+argument.
 
-First, why is 'strbuf aligned' needed? Can't you instead just invoke
-strbuf_utf8_align(&return_to->output, ...)?
-
-Second, I realize that Junio suggested the 'return_to' idea, but it
-seems like it could become overly painful since each handler of this
-sort is going to have to perform the same manipulation to append its
-collected output to its parent state's output. What if you instead
-make it the responsibility of pop_state() to append the 'output' from
-the state being popped to the "prev" state's 'output'? This way, it
-happens automatically, thus reducing code in each individual handler,
-and reducing the burden of having to keep writing the same code.
-
-> +       strbuf_release(&aligned);
-> +}
-> +
-> +static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_state **state)
-> +{
-> +       struct ref_formatting_state *new = push_new_state(state);
-> +       strbuf_init(&new->output, 0);
-
-I think this strbuf_init() should be the responsibility of
-push_new_state(), as mentioned in my patch 3 review, otherwise every
-caller of push_new_state() will have to remember to do this.
-
-> +       new->attend = align_handler;
-> +       new->cb_data = atomv->align;
-> +}
-> +
-> +static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_state **state)
-> +{
-> +       struct ref_formatting_state *current = *state;
-> +       if (!current->attend)
-> +               die(_("format: `end` atom used without a supporting atom"));
-> +       current->attend(current);
-> +       pop_state(state);
-> +}
-> +
->  /*
->   * Parse the object referred by ref, and grab needed value.
->   */
-> @@ -653,6 +693,7 @@ static void populate_value(struct ref_array_item *ref)
->                 int deref = 0;
->                 const char *refname;
->                 const char *formatp;
-> +               const char *valp;
->                 struct branch *branch = NULL;
+> +               if (type & FILTER_REFS_DETACHED_HEAD)
+> +                       head_ref(ref_filter_handler, &ref_cbdata);
+> +       } else
+>                 die("filter_refs: invalid type");
 >
->                 if (*name == '*') {
-> @@ -718,6 +759,34 @@ static void populate_value(struct ref_array_item *ref)
->                         else
->                                 v->s = " ";
->                         continue;
-> +               } else if (skip_prefix(name, "align:", &valp)) {
-> +                       struct align *align = xmalloc(sizeof(struct align));
-
-Who is responsible for freeing this memory?
-
-> +                       char *ep = strchr(valp, ',');
-> +
-> +                       if (ep)
-> +                               *ep = '\0';
-> +
-> +                       if (strtoul_ui(valp, 10, &align->width))
-> +                               die(_("positive width expected align:%s"), valp);
-> +
-> +                       if (!ep || starts_with(ep + 1, "left"))
-> +                               align->position = ALIGN_LEFT;
-> +                       else if (starts_with(ep + 1, "right"))
-> +                               align->position = ALIGN_RIGHT;
-> +                       else if (starts_with(ep + 1, "middle"))
-> +                               align->position = ALIGN_MIDDLE;
-
-Shouldn't these be strcmp() rather than starts_with()? You don't want
-to match "leftfoot" as "left".
-
-> +                       else
-> +                               die(_("improper format entered align:%s"), ep + 1);
-> +
-> +                       if (ep)
-> +                               *ep = ',';
-
-What's this conditional about? Why restore the comma?
-
-> +
-> +                       v->align = align;
-> +                       v->handler = align_atom_handler;
-
-Junio's proposal for using handlers[1] is a pretty big change which
-would generalize atom processing overall, and which you haven't
-implemented here. Instead, your use of handlers is just to avoid
-having special-case 'align' and 'end' conditionals spread throughout
-several functions. Am I understanding that correctly?
-
-Is the idea to leave that larger change for a later date (and possibly
-a different programmer)?
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/275710
-
-> +                       continue;
-> +               } else if (!strcmp(name, "end")) {
-> +                       v->handler = end_atom_handler;
-> +                       continue;
->                 } else
->                         continue;
->
-> @@ -1296,6 +1365,8 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
->                 if (cp < sp)
->                         append_literal(cp, sp, state);
->                 get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
-> +               if (atomv->handler)
-> +                       atomv->handler(atomv, &state);
->                 append_atom(atomv, state);
->         }
->         if (*cp) {
+>         /*  Filters that need revision walking */
 > diff --git a/ref-filter.h b/ref-filter.h
-> index 45026d0..144a633 100644
+> index 144a633..64fedd3 100644
 > --- a/ref-filter.h
 > +++ b/ref-filter.h
-> @@ -5,6 +5,7 @@
->  #include "refs.h"
->  #include "commit.h"
->  #include "parse-options.h"
-> +#include "utf8.h"
+> @@ -14,8 +14,14 @@
+> -#define FILTER_REFS_INCLUDE_BROKEN 0x1
+> -#define FILTER_REFS_ALL 0x2
+> +#define FILTER_REFS_INCLUDE_BROKEN 0x0001
+> +#define FILTER_REFS_TAGS           0x0002
+> +#define FILTER_REFS_BRANCHES       0x0004
+> +#define FILTER_REFS_REMOTES        0x0008
+> +#define FILTER_REFS_OTHERS         0x0010
+> +#define FILTER_REFS_ALL            (FILTER_REFS_TAGS | FILTER_REFS_BRANCHES | \
+> +                                   FILTER_REFS_REMOTES | FILTER_REFS_OTHERS)
+> +#define FILTER_REFS_DETACHED_HEAD  0x0020
 
-Why does this need to be #included here?
+I suppose there's some good reason that FILTER_REFS_DETACHED_HEAD is
+not a member of FILTER_REFS_ALL? Perhaps add a comment explaining it?
 
->  /* Quoting styles */
->  #define QUOTE_NONE 0
+> diff --git a/refs.c b/refs.c
+> index 2db2975..0f18c34 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2145,6 +2145,13 @@ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
+>                                strlen(git_replace_ref_base), 0, cb_data);
+>  }
+>
+> +int for_each_reftype_fullpath(each_ref_fn fn, char *type, unsigned int broken, void *cb_data)
+> +{
+> +       if (broken)
+> +               broken = DO_FOR_EACH_INCLUDE_BROKEN;
+
+It's a bit ugly and confusing to have the same variable, 'broken', act
+as both a boolean input argument and as a bit flag argument to the
+called function.
+
+> +       return do_for_each_ref(&ref_cache, type, fn, 0, broken, cb_data);
+> +}
+> +
+>  int head_ref_namespaced(each_ref_fn fn, void *cb_data)
+>  {
+>         struct strbuf buf = STRBUF_INIT;
