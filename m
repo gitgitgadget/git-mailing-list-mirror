@@ -1,83 +1,165 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v11 11/13] tag.c: use 'ref-filter' APIs
-Date: Tue, 18 Aug 2015 00:44:49 +0530
-Message-ID: <CAOLa=ZRxKRsVv5ieJMzxvLUEZRNj-xX7R8-bgi+GaX3y2X9kPA@mail.gmail.com>
-References: <1439661643-16094-12-git-send-email-Karthik.188@gmail.com> <xmqq1tf1eo4w.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] am --abort: merge ORIG_HEAD tree into index
+Date: Mon, 17 Aug 2015 12:33:40 -0700
+Message-ID: <xmqqsi7hd817.fsf@gitster.dls.corp.google.com>
+References: <CA+55aFwDkQAS8ULiLt9N5NVOYJ242Nd2MOWeiRX8HrVHXf2zog@mail.gmail.com>
+	<CA+55aFwwD=K-i9d40N5FtnTLT-ApZOzmgnXhnuA=C0zw2eBt3Q@mail.gmail.com>
+	<03631611149f05dbcd862b4c1e8e9d6b@www.dscho.org>
+	<20150817094819.GA10375@yoshi.chippynet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 21:15:30 2015
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 21:33:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRPsV-0007mI-Nw
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 21:15:28 +0200
+	id 1ZRQAG-00087r-AS
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 21:33:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751621AbbHQTPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 15:15:22 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:36393 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923AbbHQTPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 15:15:21 -0400
-Received: by obnw1 with SMTP id w1so120679942obn.3
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 12:15:20 -0700 (PDT)
+	id S1750867AbbHQTdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 15:33:43 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33093 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750791AbbHQTdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 15:33:42 -0400
+Received: by pabyb7 with SMTP id yb7so114763807pab.0
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 12:33:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NdA4pAYhXBn41gHa6ZrROKFErlriACU4tal1ZGKr85U=;
-        b=cZXZoUUIGWYWBbdbUYmFRanrRnSpHe+2tVm+5x5QF0o7BPFwB6TI5gXPkWi99pz/Dn
-         vNKDfzOtCJZ/ccGQWUSdD7vVDOJ3BBx3UcIkjt2ZDGsMahY63lgLU4oRCOtH18g7dnW8
-         QS8R22fr4BC1CagK3r70HT2VjdLc7F0mWFTmpSlNHs5EvCQm9xf3G8DmNRF/z+1GWH3F
-         1zglVvdTbj1C8EGgbnarou0MjIQoYWWjAK/AIG0Er5uSYDZ/OkhGVHD1l3Ud3VkKq8Pl
-         YWdDHhGcOp4CgfBfUCozPQvTCZvn325sP63IEaDgCEbO4ysVeqCugTRX6obEizcY3ps9
-         HO4g==
-X-Received: by 10.182.60.130 with SMTP id h2mr2502182obr.42.1439838920776;
- Mon, 17 Aug 2015 12:15:20 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Mon, 17 Aug 2015 12:14:49 -0700 (PDT)
-In-Reply-To: <xmqq1tf1eo4w.fsf@gitster.dls.corp.google.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=HfpEyarC75jmIyWY9ypI1N/DASTjF7IVNaI0FTv6rUI=;
+        b=IUOS15adMmaULzvefnnQJPj16FrFpCKSC2d+8Dee3ZmI72jhgoS9cyQ1cTvO+WZoht
+         JxUmjtCtfl/jQF6fdMLbWESstorvSqWrFxEOBRqfsxzXrtrHJr1pJB97UnvCKxp3hPMn
+         9YquhLk/OmBOTMojE3rYl8oidoF9K2p0A8Eb5AAh1lL8Z0p86kFqocFVo6PfL7DhhljD
+         DgBLCyQRv5ORnne/NF6ztCttPUJGf1YNART3/uRPvlUeP3yVwymPgia/HaNSjjShyWtE
+         f/ZwxtGCnv2K19Z/tHe0ClpKU9G78li3QG7mGJ+zsX4pZOCiZgaw0TyOaIdj9i+MOmBX
+         t8yQ==
+X-Received: by 10.68.249.101 with SMTP id yt5mr5714526pbc.6.1439840022096;
+        Mon, 17 Aug 2015 12:33:42 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:d4db:7e94:b576:3da])
+        by smtp.gmail.com with ESMTPSA id f5sm11681256pas.23.2015.08.17.12.33.41
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 17 Aug 2015 12:33:41 -0700 (PDT)
+In-Reply-To: <20150817094819.GA10375@yoshi.chippynet.com> (Paul Tan's message
+	of "Mon, 17 Aug 2015 17:48:19 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276080>
 
-On Tue, Aug 18, 2015 at 12:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> We improve the sorting option provided by 'tag.c' by using the sorting
->> options provided by 'ref-filter'. This causes the test 'invalid sort
->> parameter on command line' in t7004 to fail, as 'ref-filter' throws an
->> error for all sorting fields which are incorrect. The test is changed
->> to reflect the same.
->> ...
->> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
->> index d31788c..1f066aa 100755
->> --- a/t/t7004-tag.sh
->> +++ b/t/t7004-tag.sh
->> @@ -1462,13 +1462,7 @@ test_expect_success 'invalid sort parameter on command line' '
->>
->>  test_expect_success 'invalid sort parameter in configuratoin' '
->>       git config tag.sort "v:notvalid" &&
->> -     git tag -l "foo*" >actual &&
->> -     cat >expect <<-\EOF &&
->> -     foo1.10
->> -     foo1.3
->> -     foo1.6
->> -     EOF
->> -     test_cmp expect actual
->> +     test_must_fail git tag -l "foo*" >actual
->>  '
->
-> You don't have to redirect the output to "actual", then.
+Paul Tan <pyokagan@gmail.com> writes:
 
-Ah okay, will remove that. Thanks
+The codepath in the original looks like this:
 
--- 
-Regards,
-Karthik Nayak
+        head_tree=$(git rev-parse --verify -q HEAD || echo $empty_tree) &&
+==>     git read-tree --reset -u $head_tree $head_tree &&
+        index_tree=$(git write-tree) &&
+        orig_head=$(git rev-parse --verify -q ORIG_HEAD || echo $empty_tree) &&
+==>     git read-tree -m -u $index_tree $orig_head
+        if git rev-parse --verify -q ORIG_HEAD >/dev/null 2>&1
+        then
+                git reset ORIG_HEAD
+        else
+                git read-tree $empty_tree
+                curr_branch=$(git symbolic-ref HEAD 2>/dev/null) &&
+                git update-ref -d $curr_branch
+        fi
+
+Your am_abort() implements the above fairly faithfully up to the
+point where it computes orig_head.  Your clean_index() function that
+is called from there roughly corresponds to the "read-tree --reset -u"
+to reset the index to the HEAD's tree and then "read-tree -m -u" to
+go to ORIG_HEAD from $index_tree.
+
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 1399c8d..6aaa85d 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -1940,15 +1940,48 @@ static int fast_forward_to(struct tree *head, struct tree *remote, int reset)
+>  }
+>  
+>  /**
+> + * Merges a tree into the index. The index's stat info will take precedence
+> + * over the merged tree's. Returns 0 on success, -1 on failure.
+> + */
+> +static int merge_tree(struct tree *tree)
+> +{
+> +...
+> +}
+
+This looks more like "git reset ORIG_HEAD" in the original above ;-)
+
+> +
+> +/**
+>   * Clean the index without touching entries that are not modified between
+>   * `head` and `remote`.
+>   */
+>  static int clean_index(const unsigned char *head, const unsigned char *remote)
+>  {
+> -	struct lock_file *lock_file;
+>  	struct tree *head_tree, *remote_tree, *index_tree;
+>  	unsigned char index[GIT_SHA1_RAWSZ];
+> -	struct pathspec pathspec;
+>  
+>  	head_tree = parse_tree_indirect(head);
+>  	if (!head_tree)
+> @@ -1973,18 +2006,8 @@ static int clean_index(const unsigned char *head, const unsigned char *remote)
+>  	if (fast_forward_to(index_tree, remote_tree, 0))
+>  		return -1;
+>  
+> -	memset(&pathspec, 0, sizeof(pathspec));
+> -
+> -	lock_file = xcalloc(1, sizeof(struct lock_file));
+> -	hold_locked_index(lock_file, 1);
+> -
+> -	if (read_tree(remote_tree, 0, &pathspec)) {
+> -		rollback_lock_file(lock_file);
+> +	if (merge_tree(remote_tree))
+>  		return -1;
+> -	}
+> -
+> -	if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+> -		die(_("unable to write new index file"));
+
+And by getting rid of the call to "one-tree from scratch" form or
+read_tree(), we can lose quite a lot of code from here.  Good ;-)
+
+Note that "am skip" codepath also calls clean_index(), so this patch
+would affect it.
+
+Have you checked how this change affects that codepath?  To put it
+differently, does "am skip" have the same issue without this fix?
+If so, I wonder if we can have a test for that, too?
+
+Thanks.
+
+> diff --git a/t/t4151-am-abort.sh b/t/t4151-am-abort.sh
+> index 05bdc3e..9c3bbd1 100755
+> --- a/t/t4151-am-abort.sh
+> +++ b/t/t4151-am-abort.sh
+> @@ -168,4 +168,16 @@ test_expect_success 'am --abort on unborn branch will keep local commits intact'
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'am --abort leaves index stat info alone' '
+> +	git checkout -f --orphan stat-info &&
+> +	git reset &&
+> +	test_commit should-be-untouched &&
+> +	test-chmtime =0 should-be-untouched.t &&
+> +	git update-index --refresh &&
+> +	git diff-files --exit-code --quiet &&
+> +	test_must_fail git am 0001-*.patch &&
+> +	git am --abort &&
+> +	git diff-files --exit-code --quiet
+> +'
+> +
+>  test_done
