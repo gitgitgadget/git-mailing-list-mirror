@@ -1,114 +1,182 @@
-From: "Mr. Robert Macaulay" <Macaulay@vger.kernel.org>
-Subject: VERY IMPORTANT $ URGENT
-Date: Sun, 16 Aug 2015 01:52:02 +0300
-Message-ID: <SERVERJjvmZp0mmhQZi00007e02@server.allwoods.com>
-Reply-To: <mr.robertmalay@gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v11 05/13] ref-filter: implement an `align` atom
+Date: Tue, 18 Aug 2015 00:42:27 +0530
+Message-ID: <CAOLa=ZQqE4xF_NDahy5T+d5B0k0yNPFjY=qrmLoi3URekZ+QmA@mail.gmail.com>
+References: <1439661643-16094-6-git-send-email-Karthik.188@gmail.com>
+ <CAPig+cR=gCBiEnZbnPfZZs0WmjBsQyL+2BjSHggWWp_43rC9cg@mail.gmail.com>
+ <CAOLa=ZRfA-8_w6VKgWQsoL7TrdyjEq5LTHwas=_04tmx9MWhqA@mail.gmail.com> <xmqqa8tpep3s.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="Windows-1251"
-Content-Transfer-Encoding: 8BIT
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Aug 17 21:07:36 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 21:13:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRPks-0003p0-GB
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 21:07:35 +0200
+	id 1ZRPqE-0006eK-OK
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 21:13:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750846AbbHQTH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 15:07:29 -0400
-Received: from mail-bn1bhn0251.outbound.protection.outlook.com ([157.56.111.251]:31404
-	"EHLO na01-bn1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750759AbbHQTH2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2015 15:07:28 -0400
-X-Greylist: delayed 903 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Aug 2015 15:07:27 EDT
-Received: from BN1BFFO11FD048.protection.gbl (10.58.144.33) by
- BN1BFFO11HUB036.protection.gbl (10.58.144.183) with Microsoft SMTP Server
- (TLS) id 15.1.243.9; Mon, 17 Aug 2015 18:52:22 +0000
-Authentication-Results: spf=none (sender IP is 173.12.97.81)
- smtp.mailfrom=allwoods.com; guidsi.com; dkim=none (message not signed)
- header.d=none;
-Received-SPF: None (protection.outlook.com: allwoods.com does not designate
- permitted sender hosts)
-Received: from server.allwoods.com (173.12.97.81) by
- BN1BFFO11FD048.mail.protection.outlook.com (10.58.145.3) with Microsoft SMTP
- Server id 15.1.243.9 via Frontend Transport; Mon, 17 Aug 2015 18:52:20 +0000
-Received: from User ([37.216.204.68]) by server.allwoods.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Sat, 15 Aug 2015 18:56:42 -0400
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-X-OriginalArrivalTime: 15 Aug 2015 22:56:43.0034 (UTC) FILETIME=[A753B7A0:01D0D7AD]
-X-EOPAttributedMessage: 0
-X-Microsoft-Exchange-Diagnostics: 1;BN1BFFO11FD048;1:Dc4OrmRjoniv2PVTsYoM5F9lHC/F2Edqs7aohWXpqWALxDBlpFvXI1/GMPtzbPSlwIdL8yTQP+IsiGNlZ+hSGp7+W3f3LalQhRnurcg80JEMMRXfu5yZqm8QDzVtbRkm9TOaEmbYgzEnWgx9f8gzQ+XakeKtuBCTqe1i/v4YyrU/OMa+q4MJzvjdoCmZQYVwuyWZzhrLXmcD+06dmFyUislZq1nmYZGj7gt3SEw5cVlnDLlioaFa1FJlWQyyXRtd4iVm0N8x19WnYEcWvsUsjnbYEWAqYI6fNoljG93D9pLlvGbBniaPUKxOjihjDWLki8wC+A3uuAWaAtHgwRpL0/BDZJ5EMZdIkrqANHHVTxdcYzrSjeZMBGeF//tJk/HxVap3d7M4z7wIJMkXgBqazQ==
-X-Forefront-Antispam-Report: CIP:173.12.97.81;CTRY:US;IPV:NLI;EFV:NLI;SFV:SPM;SFS:(10009020)(6009001)(2980300002)(428002)(3050300001)(189002)(199003)(62236002)(325944007)(86296003)(47776003)(69596002)(50226001)(80792005)(561924002)(7520500002)(19580395003)(19580405001)(64706001)(87936001)(105586002)(107886002)(81156007)(4001540100001)(4001600100001)(5001830100001)(218543002)(5001960100002)(106466001)(110136002)(61296003)(62966003)(189998001)(5005630100001)(101416001)(81816999)(5001860100001)(229853001)(81686999)(104016003)(46102003)(77156002)(50986999)(53806999)(551934003)(23686002)(43066003)(46552002)(1671002)(960300001)(4001450100002)(50466002)(44716002)(5456002);DIR:OUT;SFP:1501;SCL:6;SRVR:BN1BFFO11HUB036;H:server.allwoods.com;FPR:;SPF:None;PTR:mail.deco27.net;MX:1;A:1;LANG:en;
-X-Microsoft-Exchange-Diagnostics: 1;BN1BFFO11HUB036;2:2Od7U/Uu8g4NjY7DwZYqWnPyBzyk4P8oe93kWFNdEhnVr9+fm5lkJPdkIcSSkBv4jV4mOMYnODVZrkLw94ui3aHvE5uilQbiIVUr9gAXeXfWdw9SWtEWf9nmIsDr3PgaVHC2sehC6vNqlLSa2vqnM5ENqzSUcXrlCDQS8UTyZy0=;3:LGxiCmuJy8wDoaQt/qjiC/mvMYeIpHP6r1HZZQMPQh7V6yjUrburc3bUIJcxkfhEBtEoIaWLn3vGTCTCcB+PUXyr7C4ErevONhYy/Z5On5SlbRzSRMOsyNxkF97ME5jQEfsj1HXwrUwzt7SjYUWIhR0FxPqm9svKUduTELOJjyRR+k2G5NNTez30+L45ggo9lH/ZiGGUHzcrRoS/g086vaFMkA7flzkg9ejNykQKJXY=;25:HSBiVEJ4oevrtj2e+a5sr6tpZx1BQ8BCeFvxi4LmmdJyOoSkjvkn/TA1HPYqGFfrlH0AlVLQXRN8ZZjgfZrG4oHptjPL5n5/FnQtT8AfG/ycFOVfv+p2D/wU2WvdWtfkYxnITQoF7mEroGtGp1NcytCuXwPRV1NzEFUQO9fGk5inGVuWOswHS+jgCiJPCUNiD0Ly6a+7Dv/WF7teZwIsGEGixSdUQMkjfs/yVHJvbTfKwinSnob2Kwl9sKH2cGyV1CpGtdkzrvOwYtDZV5xaIw==
-X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:BN1BFFO11HUB036;
-X-Microsoft-Antispam-PRVS: <BN1BFFO11HUB03654D1968478BA9E0D26E9BB790@BN1BFFO11HUB036.protection.gbl>
-X-Exchange-Antispam-Report-Test: UriScan:;
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(601004)(5005006)(8121501027)(8121501046)(3002001);SRVR:BN1BFFO11HUB036;BCL:0;PCL:0;RULEID:;SRVR:BN1BFFO11HUB036;
-X-Microsoft-Exchange-Diagnostics: 1;BN1BFFO11HUB036;4:kaZvgGpVhBKCIZvkkJtjRCn5QKTIXcGo+kG5JLF0Fm3/dkHmycIHjxFYlF88ZRim6K5KhxKEI+XEHrEVs3CXmnnUC1wtwMM9uQwS3uguSR6BrsxruVSZcAJOHN0UCCat8JmtNljyUsXB9/1YO7LVTEy0+4xuL30+GdiR2YwPToDJW0foizgtIgyTINxtRYLjoGIj7W/bCPZw9EpZypDNtGX1Vi8cZRVq3T/ACwcjCuNyLm/gk0yaaLRvHgciBB1LcqIA+Yf2B2m+p1dYtBWP7hyueejJ/RCvL4NxADdpmWIfOdatJJphOtu0HL2Q0B5BAzcrGHh6FNfGfeO+ApjZ/xCOrsEra9wxY///PEV7Nzk=
-X-Forefront-PRVS: 0671F32598
-X-Microsoft-Exchange-Diagnostics: =?windows-1251?Q?1;BN1BFFO11HUB036;23:NZOyRq5B5+WwLA5pt69nAN7raDIXW//cXn5?=
- =?windows-1251?Q?wtyN/BJcMUP78f9h24AJpywZmfmb6XDSoQGNcFThABemhcTJXHuEyAsi?=
- =?windows-1251?Q?PGitIY5gNi1DuL0eznOz+UlksFIkgNWhOUn0LRL+TP7E4Id0IEic3ysZ?=
- =?windows-1251?Q?O66lLLvREc5F6l5diT9oF6KauerKx4HkvGqLbv77Gpu5F/5It1dGe/bk?=
- =?windows-1251?Q?HnrvoihwNde/El9TYWdDAiC8LAdFdVWn+MZR4LipcehXrdmO2o3sGbOg?=
- =?windows-1251?Q?EPpXszVKAJ2/PnKRp+TwooQkn+0YDO33e1wrUP1KLYNDl2jUWvqLzMJY?=
- =?windows-1251?Q?udUC51G6qMDJYAlxchkfiQZD9mhPKtdSfONZ/cXSe/uxDVvOPosCdPb+?=
- =?windows-1251?Q?l2HGSj5aul8bcHSsGALal6it5UL943K9jOW2VJShB7GgMYqi7OpW8xFS?=
- =?windows-1251?Q?NSnffN8AFGqLRtanr9jYLdQDay2QrhuBeJLwxOi2OsKEdmxHnnJIM4DO?=
- =?windows-1251?Q?WJ1hb2qxt0Wh8FvFi5R3NgPkURg3Cec8/Uf/HpNqCfnhoth/MAg1ub1p?=
- =?windows-1251?Q?fheY0oknR0z7dIkzeVrvpC8OnTrr9VBE50iG/LCqgEg2sr/t6NTr5Hye?=
- =?windows-1251?Q?0g 
-X-Microsoft-Exchange-Diagnostics: 1;BN1BFFO11HUB036;5:+wMcoyIZbGNHV16RKvVgv+SDlRF22+rQouI2tQLMmNN9YrQslFTq/q9QcpDcGpHJFcQQvqjYuHqhQ7yMe4HlulRC92SQUPE0HC+T7lhzN8UaEdtQ7VDa6awTyI8mE0R25Ye16h4TI3hJrHnYNVeLCA==;24:R1rO/AxUfajdRUmxt7CLexlci5WSoBknXnOiQr2d2C4gkrEl7SWL0MlW1Ii13se4piXsXdC9e0KJG5+PutGWGA==
-SpamDiagnosticOutput: 1:22
-SpamDiagnosticMetadata: 00000000%2D0000%2D0000%2D0000%2D000000000000
-X-OriginatorOrg: allwoods.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2015 18:52:20.4223
- (UTC)
-X-MS-Exchange-CrossTenant-Id: ddb8f6d4-94da-4b1d-982e-416f96a181cc
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ddb8f6d4-94da-4b1d-982e-416f96a181cc;Ip=[173.12.97.81];Helo=[server.allwoods.com]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN1BFFO11HUB036
+	id S1752371AbbHQTM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 15:12:59 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:33405 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751033AbbHQTM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 15:12:57 -0400
+Received: by obbhe7 with SMTP id he7so121105934obb.0
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 12:12:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=c0tnuDdObx26r1mxnJiJpQKvNHibZv01WuTza+93aDo=;
+        b=ipE33pWHX5vsgcUhn0eyTrlh2pKoYpJRuPvczAeypkOAQraz7MJ0BVqVXSV7IQazp/
+         0cZ8Nooi8rQJG3xxLJ8tkN1V+vNlOYRSlSr8emGhL4O2RlhSGCIck3ywmsTbIGYHkaBw
+         z1/1adHIy94zZhMpOFW5a4U53w7VOWT5rxPaxO2bwSpV5BZ+vFzPXvSR+FwYhbwO0dyn
+         xtj6owJc0GMiBDnZPo359/q+QoycaKhwCDfUC/DeSAunxys+k65+nBx5es1ruS4J7KT9
+         8rAqhiObM0ADEmMep0Vy7ff1MQADCbAw+pVYOhIo3yhZ2H5aUOzCJ7ddyutNIEBAc0v3
+         Ne2A==
+X-Received: by 10.182.29.68 with SMTP id i4mr2431696obh.57.1439838776568; Mon,
+ 17 Aug 2015 12:12:56 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Mon, 17 Aug 2015 12:12:27 -0700 (PDT)
+In-Reply-To: <xmqqa8tpep3s.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 20.2 points;
- *  1.8 SUBJ_ALL_CAPS Subject is all capitals
- *  2.2 DEAR_SOMETHING BODY: Contains 'Dear (something)'
- *  0.7 URG_BIZ BODY: Contains urgent matter
- *  1.2 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
- *  3.0 UNCLAIMED_MONEY BODY: People just leave money laying around
- *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?173.12.97.81>]
- *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
- *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
- *  1.5 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
- *  4.2 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276077>
 
-Dear Sir/ Ma,
+On Mon, Aug 17, 2015 at 11:52 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Aug 17, 2015 at 10:28 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> On Mon, Aug 17, 2015 at 7:37 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> On Sat, Aug 15, 2015 at 2:00 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>>> +{
+>>>> +       struct strbuf aligned = STRBUF_INIT;
+>>>> +       struct ref_formatting_state *return_to = state->prev;
+>>>> +       struct align *align = (struct align *)state->cb_data;
+>>>> +
+>>>> +       strbuf_utf8_align(&aligned, align->position, align->width, state->output.buf);
+>>>> +       strbuf_addbuf(&return_to->output, &aligned);
+>>>
+>>> Second, I realize that Junio suggested the 'return_to' idea, but it
+>>> seems like it could become overly painful since each handler of this
+>>> sort is going to have to perform the same manipulation to append its
+>>> collected output to its parent state's output. What if you instead
+>>> make it the responsibility of pop_state() to append the 'output' from
+>>> the state being popped to the "prev" state's 'output'? This way, it
+>>> happens automatically, thus reducing code in each individual handler,
+>>> and reducing the burden of having to keep writing the same code.
+>>
+>> Good question, what if we don't want to append to strbuf at all?
+>> For e.g., We were discussing an "%(if).....%(then)......%(end)"
+>> atom structure, here if the if condition isn't met we wouldn't want to
+>> append to the prev strbuf, hence I thought it's better if the handler
+>> decided whether or not to append to prev strbuf.
+>
+> An %(if)/%(then)/%(end) construct should not present a problem. As
+> long as the processing of the conditional ensures that the current
+> state's 'output' contains no content, when pop_state() appends that
+> (empty) content to the parent state's 'output', then the net result is
+> exactly the desired behavior.
+>
+> The question of "how" the conditional processing ensures that the
+> current state's 'output' is empty when the %(if) condition is false is
+> unimportant (for this discussion). It might be the case that it just
+> doesn't collect any content at all for a false condition, or it
+> collects it but throws it away before the state is popped. Either way,
+> that's an implementation detail which needn't impact the decision to
+> retire 'return_to' and instead make pop_state() responsible for
+> appending the current state's output to the parent state's.
 
-I am Mr. Robert Macaulay, I am a Business Manager of one of the biggest banks in the World with a branch in London, United Kingdom. I am getting in touch with you regarding the funds of a deceased client with our bank Mr. Jeffery Wong, I would respectfully request that you keep the contents of this letter confidential and respect the integrity of the information you come by as a result of this letter. I contact you independently and no one is informed of this communication.
+I guess what you're saying also makes sense. We could make it common
+for pop to push the strbuf into the prev state.
 
-On routine audit check last fiscal year, my department discovered some investment accounts that have been dormant for at least Fifteen years belonging to the deceased, with account balance of US$33,500,000 (Thirty Three Million, Five Hundred Thousand Dollars). Now, banks regulation demands that we do notify the fiscal authorities after a statutory time span of Fifteen years when dormant accounts of this type are called in by the Financial Conduct Authority Regulatory bodies. The above set of facts motivated my reason of writing and proposing to you. My investigation of the said account reveals that the investor, a foreigner from Taiwan died in 2000 which was the exact time the account was last operated. I can confirm with certainty that the said investor died interstate and no next of kin 
- to his funds has been found or has come forward all these years.
- 
-I am of the settled conviction that using my insider leverage, working with you can secure the funds in the account for us and the less privileged, instead of allowing it pass as unclaimed funds into the coffers of the Government. This is possible as you share the same country with the deceased investor. This is exactly why I crave your participation and co-operation. I am seized with all relevant documents (legal and Banking) that will facilitate our putting you forward as the claimant/beneficiary of the funds and ultimately transfer the money to an account to be nominated by you. Definitely you shall be handsomely rewarded for your part in this transaction as I am prepared to allocate 40% slice of the total funds for your efforts. I shall leave out the further details of this transaction
-  till I receive an affirmation of your desire to participate. Be rest assured that I am in control of this situation all the time and there will be no risk whatsoever if you elect to come on board. Needless to say, UTMOST C
+On Tue, Aug 18, 2015 at 12:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> On Mon, Aug 17, 2015 at 7:37 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> ...
+>>> Second, I realize that Junio suggested the 'return_to' idea, but it
+>>> seems like it could become overly painful since each handler of this
+>>> sort is going to have to perform the same manipulation to append its
+>>> collected output to its parent state's output. What if you instead
+>>> make it the responsibility of pop_state() to append the 'output' from
+>>> the state being popped to the "prev" state's 'output'? This way, it
+>>> happens automatically, thus reducing code in each individual handler,
+>>> and reducing the burden of having to keep writing the same code.
+>>
+>> Good question, what if we don't want to append to strbuf at all?
+>> For e.g., We were discussing an "%(if).....%(then)......%(end)"
+>> atom structure, here if the if condition isn't met we wouldn't want to
+>> append to the prev strbuf, hence I thought it's better if the handler
+>> decided whether or not to append to prev strbuf.
+>
+> I'd imagine the implementation of these to be along the lines of
+> (thinking aloud):
+>
+>  - "%(if:[nonempty|empty|...])" pushes a new stack, and sets its
+>    attend/at_end/end_scope function to signal a syntax error.  It
+>    also records what condition (e.g. "nonempty") to use in the new
+>    stack.
+>
+>  - "%(then)" inspects the top-of-stack output and uses the condition
+>    recorded by the %(if) that created the stack to decide true or
+>    false.  The stack element pushed by %(if) is then removed.
+>    Notice that the end_scope function prepared by %(if) is never
+>    called.
+>
+>    Then (no pun intended):
+>
+>    - If true, that means we would want the (expansion of) text up to
+>      "%(end)" or "%(else)", whichever comes first, appended to the
+>      surrounding output.  Push a new stack and set its end_scope
+>      function to the one that appends the top-of-stack output to the
+>      surrounding output, expecting %(end) will follow without
+>      %(else).
+>
+>    - If false, that means we would want the (expansion of) text up
+>      to "%(end)" or "%(else)", whichever comes first, discarded.
+>      Push a new stack and set its end_scope function to the one that
+>      discards the top-of-stack output, expecting %(end) will follow
+>      without %(else).
+>
+>  - "%(else)" inspects the top of the stack, and if it is not left by
+>    "%(then)", signal a syntax error.
+>
+>    Else (no pun intended), it runs the end_scope function left by
+>    "%(then)" on the top-of-stack output (e.g. if "%(then)" found
+>    that the condition holds true, the accumulated output at this
+>    point should be appended to the surrounding output, and it was
+>    expected to be done by "%(end)" if this "%(else)" weren't
+>    present.  We do it here before waiting for "%(end)").
+>
+>    Truncate the top-of-stack output, flip the end_scope function to
+>    the one opposite from the one left by "%(then)".  And let "%(end)"
+>    take care of it.
+>
+>  - "%(end)" just unconditionally runs the end_scope function on the
+>    top of the stack output.
+>
 
-If you are interested, please reply immediately via the private email address: mr.robertmalay@gmail.com, fax no: + 44 207 117 4074 and Direct Tel +4474 5977 2257.
+That seems like the way to go, thanks for summing it up. Will follow this
+when implementing the %(if) %(then) %(else) %(end) atom series.
 
-Awaiting your urgent reply via my contact details.
+> Eric's suggestion is let the caller of the end_scope function to
+> always append the output of the top-of-stack, and I think it makes
+> sense.  It makes a common "%(atom)" implementation simpler.  Things
+> like %(then) and %(else) above need to make sure that they reset the
+> top-of-stack output to empty as necessary, but that is not such a
+> huge implementation burden---their operation is already unusual and
+> needs to be more complex than the plain-vanilla %(atom)s anyway.
 
-Thanks and regards.
- 
-Robert Macaulay
-Email: mr.robertmalay@gmail.com 
-Direct Tel +4474 5977 2257
-fax no: + 44 207 117 4074
+Yea, I get why you're suggesting it too, It'd remove that extra work each
+handler has to do and make sure is done. By moving it to pop_state()
+we don't have to leave it to the handler to be taken care of.
+
+-- 
+Regards,
+Karthik Nayak
