@@ -1,85 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re:
-Date: Mon, 17 Aug 2015 10:49:08 -0700
-Message-ID: <xmqqh9nxerfv.fsf@gitster.dls.corp.google.com>
-References: <349031438778845@web22j.yandex.ru>
-	<CACsJy8Be-kY49CxAJTx2R2XG-c_WeuU=yLFT8-XSoaDkTScPGg@mail.gmail.com>
+From: Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH 1/7] Documentation/git-push.txt: Document when --signed
+ may fail
+Date: Mon, 17 Aug 2015 14:11:44 -0400
+Message-ID: <CAD0k6qS4A0zWWr1oNLaaps0qD08pkGTcj7yGo_tkPGKMxKWGhQ@mail.gmail.com>
+References: <1439492451-11233-1-git-send-email-dborowitz@google.com>
+ <1439492451-11233-2-git-send-email-dborowitz@google.com> <xmqqr3n5fovm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ivan Chernyavsky <camposer@yandex.ru>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 19:49:17 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 20:12:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZROX6-0008Ng-De
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 19:49:16 +0200
+	id 1ZROtI-0002JZ-0B
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 20:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750875AbbHQRtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 13:49:12 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:36123 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750759AbbHQRtL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 13:49:11 -0400
-Received: by pdbmi9 with SMTP id mi9so17611458pdb.3
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 10:49:10 -0700 (PDT)
+	id S1750909AbbHQSMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 14:12:06 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:34490 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750803AbbHQSMF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 14:12:05 -0400
+Received: by igui7 with SMTP id i7so63711747igu.1
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 11:12:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=rSVq7CTUIeZwGwMwCPdIhd9KbGuFvjfAVPogYDaBXjw=;
-        b=H61JUiSVNUE+ee4bpJCteJ/v8RJR6RSS0ThRRwZwAh4lX+UCoOp27Zx/aYMWyEqsDz
-         6Tqc1WOMgKa4xWFjw3UgHi9FZ9QC+5upgPyx+duVN6in6Ns7gp12JiS7HN0Rtr0yCuky
-         AUyZdOjpQ3cKLNZyPnJCEzEkwIrBr17KBl5OU2z6G7ZYMLY80UnOJmuu6PSjKP1VLaWe
-         fup5Yt7Mk7yRyM4HDMYtCjOnL9HxTNyscwDSZhWTes7NoDmLAM8wvnEVdiHWjJnBeXu/
-         NuMfwdx97b6hn1mcisTLkstvC2rvujafgST359qBWNaHbXp+d5JlkTwN9rHHUoL7rywM
-         G91Q==
-X-Received: by 10.70.43.163 with SMTP id x3mr4760804pdl.151.1439833750637;
-        Mon, 17 Aug 2015 10:49:10 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:d4db:7e94:b576:3da])
-        by smtp.gmail.com with ESMTPSA id ld8sm11968099pbc.61.2015.08.17.10.49.09
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 17 Aug 2015 10:49:09 -0700 (PDT)
-In-Reply-To: <CACsJy8Be-kY49CxAJTx2R2XG-c_WeuU=yLFT8-XSoaDkTScPGg@mail.gmail.com>
-	(Duy Nguyen's message of "Sat, 15 Aug 2015 16:19:28 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=DQmqQbN7CF6L4ROKpdJ7LxaB2E4LoD0240zA6wT6vJc=;
+        b=G4s3TLZ2P1tkcDTZzfdaqQZ1W/9K7dCdd4967ZC2e1uqxnkUxVcuVOkPmDdWQXTJKG
+         8srOMg3ZSd1doyPuFedaLjqklwQLKFHG3bzlnLxhDSNEDStA0QsTQ7AGd+By4wHAA2Oe
+         HSUHmAvrbAGpiwcaA834OWMAlU6Wz+vVP2nb/lQFuEaHdTCu48Rq7XeMLeGLItcCtTNo
+         Q6br4rGc45c7BnjI18uUtJBcvkWW4elLJ/tCBHSG9n95wxpll2UpIC7/N2037G0fkASw
+         nmNsAObctH07fRtBzHqgP0oCUdzYmdcnW3nArfZWu0q8OIlRvzYDMfFOSyViT3kRBXLT
+         oPMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=DQmqQbN7CF6L4ROKpdJ7LxaB2E4LoD0240zA6wT6vJc=;
+        b=lTWQc3aaMCkJNKL15b318aUhbQ/SR58b5yi2P1Nm9IF7TvnG4MT/YdmT1Bnv1CwCLj
+         Nw7lowiFxanJ4+6jUWLjhjSlZ+mQhVjaofNUnHonxqUhIlmMqrfndEDDQCCaM2D+adeC
+         WA3lOmJZj+KjHttlonY98FbXLUQnMqsSqbEeTSYf4024FOZNEcHCUgF2PCJ9TcZOfy3I
+         pymHPM39An+FA7revWrox7rY9GmKpXVbK+UngCnfxoX0xC3qXxwgJ6T1biRFlsQC6SEB
+         t2WrxVoLxdlDfPHgxTS1WeYcMGYc130m5m6TfN73IqVjYryNTfPH3H/iNxZx2CyVti6o
+         y1gQ==
+X-Gm-Message-State: ALoCoQlAHklhNDsw6MZtQFp1YAdDkBy8MuLICY2zaHxPNmNeKuR2RZ/Zm4QF2V9rA1f7gXts/+S3
+X-Received: by 10.50.20.8 with SMTP id j8mr16728818ige.36.1439835124000; Mon,
+ 17 Aug 2015 11:12:04 -0700 (PDT)
+Received: by 10.107.4.201 with HTTP; Mon, 17 Aug 2015 11:11:44 -0700 (PDT)
+In-Reply-To: <xmqqr3n5fovm.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276064>
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> On Wed, Aug 5, 2015 at 7:47 PM, Ivan Chernyavsky <camposer@yandex.ru> wrote:
->> Dear community,
->>
->> For some time I'm wondering why there's no "--grep" option to the
->> "git branch" command, which would request to print only branches
->> having specified string/regexp in their history.
+On Fri, Aug 14, 2015 at 7:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Dave Borowitz <dborowitz@google.com> writes:
 >
-> Probably because nobody is interested and steps up to do it. The lack
-> of response to you mail is a sign. Maybe you can try make a patch? I
-> imagine it would not be so different from current --contains code, but
-> this time we need to look into commits, not just commit id.
-
-That is a dangeous thought.  I'd understand if it were internally
-two step process, i.e. (1) the first pass finds commits that hits
-the --grep criteria and then (2) the second pass does "--contains"
-for all the hits found in the first pass using existing code, but
-still, this operation is bound to dig all the way through the root
-of the history when asked to find something that does not exist.
-
->> So for example:
+>> Like --atomic, --signed will fail if the server does not advertise the
+>> necessary capability. In addition, it requires gpg on the client side.
 >>
->>     $ git branch -r --grep=BUG12345
+>> Signed-off-by: Dave Borowitz <dborowitz@google.com>
+>> ---
+>>  Documentation/git-push.txt | 4 +++-
+>>  1 file changed, 3 insertions(+), 1 deletion(-)
 >>
->> should be roughly equivalent to following expression I'm using now for the same task:
->>
->>     $ for r in `git rev-list --grep=BUG12345 --remotes=origin`; do git branch -r --list --contains=$r 'origin/*'; done | sort -u
+>> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+>> index 135d810..f8b8b8b 100644
+>> --- a/Documentation/git-push.txt
+>> +++ b/Documentation/git-push.txt
+>> @@ -137,7 +137,9 @@ already exists on the remote side.
+>>       GPG-sign the push request to update refs on the receiving
+>>       side, to allow it to be checked by the hooks and/or be
+>>       logged.  See linkgit:git-receive-pack[1] for the details
+>> -     on the receiving end.
+>> +     on the receiving end.  If the `gpg` executable is not available,
+>> +     or if the server does not support signed pushes, the push will
+>> +     fail.
+>
+> Looks good.
+>
+> I am wondering if another mode of failure is worth mentioning: `gpg`
+> available, you have _some_ keys, but signingkey configured does not
+> match any of the keys.
+>
+> Note that I said "am wondering", which is very different from "I
+> think we should also describe".
 
-You should at least feed all --contains to a single invocation of
-"git branch".  They are designed to be OR'ed together.
+I think we don't need to go down the path of enumerating all possible
+ways the operation can fail. There is probably a reasonably concise
+way to include more possibilities. How about:
+
+"If the attempt to sign with `gpg` fails, or if the server does not
+support signed pushes, the push will fail."
+
+This should cover gpg not being found, gpg being fatally
+misconfigured, crazy unexpected pipe closures, etc.
+
+> Thanks.
