@@ -1,54 +1,55 @@
 From: Lars Vogel <lars.vogel@vogella.com>
 Subject: [PATCH] Documentation: read-tree consistent usage of working tree
-Date: Mon, 17 Aug 2015 22:03:19 +0200
-Message-ID: <1439841799-27039-1-git-send-email-Lars.Vogel@vogella.com>
+Date: Mon, 17 Aug 2015 22:06:19 +0200
+Message-ID: <1439841979-27110-1-git-send-email-Lars.Vogel@vogella.com>
 Cc: Lars Vogel <Lars.Vogel@vogella.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 17 22:03:41 2015
+X-From: git-owner@vger.kernel.org Mon Aug 17 22:06:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRQd9-0004q1-N8
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 22:03:40 +0200
+	id 1ZRQfy-00062F-7H
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 22:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483AbbHQUDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 16:03:35 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:34141 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751353AbbHQUDe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 16:03:34 -0400
-Received: by wicne3 with SMTP id ne3so83696765wic.1
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 13:03:33 -0700 (PDT)
+	id S1751118AbbHQUG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 16:06:29 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:35001 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750873AbbHQUG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 16:06:29 -0400
+Received: by wicne3 with SMTP id ne3so79051976wic.0
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 13:06:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=6JqoFwtzaF+fSBtk5c/S2matmChISC1SXpTwuNfh7Sw=;
-        b=FNSgfwa/vqlFqtTiiLwFvIS0hhG88NRpfsHFExpPD9KBMXEY/4e1OZz01rU4ASJy/d
-         JePP9U+cqJO+ctsAYu4j6hS12OkfdQCyDdcW5+jzhA9vpyq70+E4F/H19XtYdaIGkVNu
-         1/9qZGRxd+WpOiMMH8BqwmtwZ031/97UpqQlWGyQcqRJ/N37dpEiMHH0gNcMGTeI5qaP
-         PbCPindMk8MVVtM6Nd42vROjy95H/Kz1GmxMftKH8SSCylWsdnBzsxnRvf+3fDJezRId
-         88qw3SqWw55sXmjE5j+33OHpZcoR4xMqIDFF6zNVhTwIyz9pyOEn+7klLqt7qy+ghlbF
-         MkiQ==
-X-Gm-Message-State: ALoCoQmB57qwJPlLu0HvyX8+1m6byyJh/oqSkvEI5YlldiEUOkW/gROGPqoPKri7hMnaQSpKOj/z
-X-Received: by 10.194.113.101 with SMTP id ix5mr6064470wjb.66.1439841813886;
-        Mon, 17 Aug 2015 13:03:33 -0700 (PDT)
+        bh=3WnrFxPDXE2cICKCQNmh71XaEV7SSds64hMjocEcuEk=;
+        b=GQNdgtIxvjAsYraIixMVvCcoNA7/U0wfHMQaUilY3dQWP705lcdtZpuDwAizu7nASy
+         RDc3e7JTwRuoCJzArSeYCR7sT+xVH+D3DTnK9+OMYuuqMcaCKvwDKEgJlDbaX5O4MSAw
+         VKQWOBxREYXjWHzJbfi1waaf+RsBZCmaEIpJsT9ExSfEj/HOj5+g8XKR0nvxPQOP5lqS
+         mHa3+Yu4CMHpE7w4MxysFjXvptUoNLghuU9jkUdzbaliHrSfi1v/HwVdnX0/v5QQVMTE
+         UcvCjxjVKf9IXb8Q3BVxvGtb1KUITFLhAUe3dK33AA06IeJb4GzjtWS2VH4cvdVpACnB
+         OqXA==
+X-Gm-Message-State: ALoCoQn8H+6yROH5OyRcnTNxrhYhCGqOsVtxDtyrbhglDaddfzY9hVc9yk3AZEuK8acByb8mVBoi
+X-Received: by 10.180.198.48 with SMTP id iz16mr36726021wic.91.1439841988008;
+        Mon, 17 Aug 2015 13:06:28 -0700 (PDT)
 Received: from BigMachine.fritz.box (p5DC86C17.dip0.t-ipconnect.de. [93.200.108.23])
-        by smtp.gmail.com with ESMTPSA id dz4sm18128787wib.17.2015.08.17.13.03.32
+        by smtp.gmail.com with ESMTPSA id s7sm18128375wix.23.2015.08.17.13.06.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 17 Aug 2015 13:03:33 -0700 (PDT)
+        Mon, 17 Aug 2015 13:06:27 -0700 (PDT)
 X-Google-Original-From: Lars Vogel <Lars.Vogel@vogella.com>
 X-Mailer: git-send-email 2.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276089>
 
 http://git-scm.com/docs/git-clone speaks only about working tree, the
-usage of "working directory" for working tree is confusing. Working tree
-describes the current directory.
+usage of "working directory" for working tree is confusing. Working
+directory describes the current directory while working tree describes
+all files and sub directories.
 
 Signed-off-by: Lars Vogel <Lars.Vogel@vogella.com>
 ---
@@ -88,4 +89,4 @@ index fa1d557..21daee9 100644
  checkout" because skip-worktree bits are still in the index and your working
  directory is still sparsely populated. You should re-populate the working
 -- 
-2.1.4
+2.5.0
