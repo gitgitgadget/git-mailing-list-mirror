@@ -1,81 +1,91 @@
-From: Dave Borowitz <dborowitz@google.com>
-Subject: Re: [PATCH 0/7] Flags and config to sign pushes by default
-Date: Mon, 17 Aug 2015 16:00:52 -0400
-Message-ID: <CAD0k6qS9qA2vrrxF6SQJ-RsX01rryCuZ0zPn4k+OP__TOPR2gg@mail.gmail.com>
-References: <1439492451-11233-1-git-send-email-dborowitz@google.com>
- <xmqqbne9ivry.fsf@gitster.dls.corp.google.com> <CAD0k6qSjZW-5eMw-OOHP0cGdj08PesdKVgE9OAFvESwCueyH6w@mail.gmail.com>
- <xmqqwpwxha4r.fsf@gitster.dls.corp.google.com> <CAD0k6qR2HkHHYu8429mvdvN1bkLeTpD-5EbO4Mt+o69rC+P6aQ@mail.gmail.com>
- <xmqqtwrxesqa.fsf@gitster.dls.corp.google.com> <CAD0k6qTWojeWT10xw_Dc5=Fw5r3rP0PUQOyqO7JAz6Vu+tV54w@mail.gmail.com>
- <xmqq614deoq8.fsf@gitster.dls.corp.google.com> <CAD0k6qRPxkdOgAo=0+_f8bcFoL70MSvLDJ_OjrFtVMKtcqVV_A@mail.gmail.com>
- <xmqq7fotd71o.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 22:01:19 2015
+From: Lars Vogel <lars.vogel@vogella.com>
+Subject: [PATCH] Documentation: read-tree consistent usage of working tree
+Date: Mon, 17 Aug 2015 22:03:19 +0200
+Message-ID: <1439841799-27039-1-git-send-email-Lars.Vogel@vogella.com>
+Cc: Lars Vogel <Lars.Vogel@vogella.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 17 22:03:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRQat-0003vf-96
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 22:01:19 +0200
+	id 1ZRQd9-0004q1-N8
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 22:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751945AbbHQUBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 16:01:14 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:35961 "EHLO
-	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751257AbbHQUBN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 16:01:13 -0400
-Received: by iodv127 with SMTP id v127so148805700iod.3
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 13:01:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=1QyKvN754GlF3jLOJMtFN8IiRCqSlGfEB7ddL+BJ1bc=;
-        b=pt+/Yr26uRg0MYQ2bWTVb5kuMq3Ka6ZCk2di3Cg+YmuQ9FrQyKkG08A3bF7Qre4gp1
-         KMMvTI1yAMNu4e00uq6yZMMpKqIPo6Dyl9og/VSxkEvYspxEJ3zeQw90SGvdY9NE/Uji
-         hJXoUnuCTaKjEBYf9Rw2GdHaoAc1JJw5oVspq4AdG41Uss16+VgzZMK4for7uHat7eHl
-         V5puJJCKjmzWyhOMHk8DxlIkNlAdCIBkmu3jm7msMfAjac44PoezwqLpKvhktinMHd+4
-         LvttVM0eVyC7gjl7rHnJcc7K6BwVmRuFl1HSxBTfTICeZIMjuJs6uXfzId4CqwrreNSm
-         KS2Q==
+	id S1751483AbbHQUDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 16:03:35 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:34141 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751353AbbHQUDe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 16:03:34 -0400
+Received: by wicne3 with SMTP id ne3so83696765wic.1
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 13:03:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=1QyKvN754GlF3jLOJMtFN8IiRCqSlGfEB7ddL+BJ1bc=;
-        b=g3VetZK4JK+TF3NZ9xPH6Xy6avxJc7uhVPzx/dc4hqdn0Ef0M+U51ZB+vCruMTfZeR
-         yzWw1t7PXvOx4htZyX0h3ZkwhgLiECMahDN7AuxtU7X3XXbXV6iO44vCx17pdNHgNPtp
-         1P9kKL0m9/ec0T8CSxkzxCkTw4/E3iZ0N8VumlattymyiO238QyZt1x/A1dHqfrlAPPT
-         l/+Q7jK8cvX1O28GA2pom6qh+iqlTe5vnabSifVDLblxmC/e5NUKa2qbpnWuYAwLYSnf
-         JJdE4lIRly73u7V2CHdF1RcbSTxWYHL/GRwxP6RiBVmDppmVf45vSHUPYmYyD6Xe+efo
-         LE/g==
-X-Gm-Message-State: ALoCoQlrsKPac8h31B5lKjcvTQOAYXcDiMLDRGEO1kICq2f3Ef9BX5psLZkaLl+7rpfm2fPI+Hrc
-X-Received: by 10.107.136.66 with SMTP id k63mr1032291iod.194.1439841672468;
- Mon, 17 Aug 2015 13:01:12 -0700 (PDT)
-Received: by 10.107.4.201 with HTTP; Mon, 17 Aug 2015 13:00:52 -0700 (PDT)
-In-Reply-To: <xmqq7fotd71o.fsf@gitster.dls.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=6JqoFwtzaF+fSBtk5c/S2matmChISC1SXpTwuNfh7Sw=;
+        b=FNSgfwa/vqlFqtTiiLwFvIS0hhG88NRpfsHFExpPD9KBMXEY/4e1OZz01rU4ASJy/d
+         JePP9U+cqJO+ctsAYu4j6hS12OkfdQCyDdcW5+jzhA9vpyq70+E4F/H19XtYdaIGkVNu
+         1/9qZGRxd+WpOiMMH8BqwmtwZ031/97UpqQlWGyQcqRJ/N37dpEiMHH0gNcMGTeI5qaP
+         PbCPindMk8MVVtM6Nd42vROjy95H/Kz1GmxMftKH8SSCylWsdnBzsxnRvf+3fDJezRId
+         88qw3SqWw55sXmjE5j+33OHpZcoR4xMqIDFF6zNVhTwIyz9pyOEn+7klLqt7qy+ghlbF
+         MkiQ==
+X-Gm-Message-State: ALoCoQmB57qwJPlLu0HvyX8+1m6byyJh/oqSkvEI5YlldiEUOkW/gROGPqoPKri7hMnaQSpKOj/z
+X-Received: by 10.194.113.101 with SMTP id ix5mr6064470wjb.66.1439841813886;
+        Mon, 17 Aug 2015 13:03:33 -0700 (PDT)
+Received: from BigMachine.fritz.box (p5DC86C17.dip0.t-ipconnect.de. [93.200.108.23])
+        by smtp.gmail.com with ESMTPSA id dz4sm18128787wib.17.2015.08.17.13.03.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 17 Aug 2015 13:03:33 -0700 (PDT)
+X-Google-Original-From: Lars Vogel <Lars.Vogel@vogella.com>
+X-Mailer: git-send-email 2.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276088>
 
-On Mon, Aug 17, 2015 at 3:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> In the shorter term, at least we should be able to introduce
-> git_parse_maybe_bool() that does not take "name", use that as a
-> helper to implement git_config_maybe_bool(), so that the existing
-> callers of git_config_maybe_bool() does not have to change.  And
-> that new helper can be used as your "Basically it, but not
-> specifically about configs".
+http://git-scm.com/docs/git-clone speaks only about working tree, the
+usage of "working directory" for working tree is confusing. Working tree
+describes the current directory.
 
-Will do, thanks for the suggestion.
+Signed-off-by: Lars Vogel <Lars.Vogel@vogella.com>
+---
+ Documentation/git-read-tree.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Slight digression for a question that came up during reworking the
-series: would it be reasonable to rewrite option parsing in
-builtin/send-pack.c to use the options API? That way we can easily
-reuse the option callback from builtin/push.c. (It would have some
-side effects like making --no-* variants work where they did not
-before; I assume that's a good thing, but it's marginally inconsistent
-with some other plumbing commands like receive-pack.)
+diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+index fa1d557..21daee9 100644
+--- a/Documentation/git-read-tree.txt
++++ b/Documentation/git-read-tree.txt
+@@ -378,15 +378,15 @@ have finished your work-in-progress), attempt the merge again.
+ Sparse checkout
+ ---------------
+ 
+-"Sparse checkout" allows populating the working directory sparsely.
++"Sparse checkout" allows populating the working tree sparsely.
+ It uses the skip-worktree bit (see linkgit:git-update-index[1]) to tell
+-Git whether a file in the working directory is worth looking at.
++Git whether a file in the working tree is worth looking at.
+ 
+ 'git read-tree' and other merge-based commands ('git merge', 'git
+ checkout'...) can help maintaining the skip-worktree bitmap and working
+ directory update. `$GIT_DIR/info/sparse-checkout` is used to
+ define the skip-worktree reference bitmap. When 'git read-tree' needs
+-to update the working directory, it resets the skip-worktree bit in the index
++to update the working tree, it resets the skip-worktree bit in the index
+ based on this file, which uses the same syntax as .gitignore files.
+ If an entry matches a pattern in this file, skip-worktree will not be
+ set on that entry. Otherwise, skip-worktree will be set.
+@@ -404,7 +404,7 @@ negate patterns. For example, to remove the file `unwanted`:
+ !unwanted
+ ----------------
+ 
+-Another tricky thing is fully repopulating the working directory when you
++Another tricky thing is fully repopulating the working tree when you
+ no longer want sparse checkout. You cannot just disable "sparse
+ checkout" because skip-worktree bits are still in the index and your working
+ directory is still sparsely populated. You should re-populate the working
+-- 
+2.1.4
