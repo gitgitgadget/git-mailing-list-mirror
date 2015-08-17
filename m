@@ -1,109 +1,240 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: "git am --abort" screwing up index?
-Date: Mon, 17 Aug 2015 10:01:29 +0200
-Organization: gmx
-Message-ID: <03631611149f05dbcd862b4c1e8e9d6b@www.dscho.org>
-References: <CA+55aFwDkQAS8ULiLt9N5NVOYJ242Nd2MOWeiRX8HrVHXf2zog@mail.gmail.com>
- <CA+55aFwwD=K-i9d40N5FtnTLT-ApZOzmgnXhnuA=C0zw2eBt3Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Paul Tan <pyokagan@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Aug 17 10:01:45 2015
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH v8 5/8] notes: implement parse_combine_rewrite_fn using parse_notes_merge_strategy
+Date: Mon, 17 Aug 2015 01:46:28 -0700
+Message-ID: <1439801191-3026-6-git-send-email-jacob.e.keller@intel.com>
+References: <1439801191-3026-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Johan Herland <johan@herland.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 17 10:47:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRFMV-0003mV-GV
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 10:01:43 +0200
+	id 1ZRG4g-0002kE-CB
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 10:47:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752960AbbHQIBj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 04:01:39 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51394 "EHLO mout.gmx.net"
+	id S1754675AbbHQIrT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 04:47:19 -0400
+Received: from mga14.intel.com ([192.55.52.115]:40512 "EHLO mga14.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751331AbbHQIBi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 04:01:38 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MaZrd-1ZBePi0HOr-00KA13; Mon, 17 Aug 2015 10:01:31
- +0200
-In-Reply-To: <CA+55aFwwD=K-i9d40N5FtnTLT-ApZOzmgnXhnuA=C0zw2eBt3Q@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:bVXnKgtuJMNNsAqzdTOVhJw/bclahQRbK7mnPD4gauQS6BqXPJi
- zo3Uk8LzGxXGPmdMFxYPRhN18noachh0OHcppasTEHpY5R90pif1xvDjoezYhZOuCXmxyKz
- SLVlVrSt70QDHv+iDa86CmR0FpvbCZi6m5qhgDf1SyBAuWrKoAQtWTGssHxRCI1DQ7wIWl2
- DV/yzAxUsJT1h+2b79DZA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qZXMGNW8SG4=:9Ft8iq2IIom1SMYtnPSmkZ
- zOKHguCg+jAoTSz1xURjS/Ir/pmZ3p7Xb6VqlJd4+Ko5F5TiIgGpoOsNVdb9hNycOFt7cE0aP
- BkkZQ3pln04PUSb9M2YHAKJ4Rzd8fYV/stgkCVusRvE8KzuFjjL2y4gIM0BdGkUQcFkLHVE1u
- ZTqd7DQcnrsZwiS3LcFfZ74SVg8cCAyoNMzeT52Q4g0pGH8s+vHHwGQRuwO4MqfcNwFRc6qJ/
- xBPsATrFboZ3PKKmR/yC3GjpfHK5AbJV0ol85l8/R7FoJhxa2Ec/2XJnMR/VEf7PuCjXe+YSM
- ibgDVndEQkYXfNzDkNnpsMFdZYqukvnE6U/RnPMs2IPaC9phkbNi35pSKO7Vx3cP/W1CS0LZm
- TNMXGyaaqVQcX+h2nAWiy5BqjramUWhwNZGA36sPbUG7uu6Jbt/ByCoobfUt+g5kG+9gUfyUm
- gkYkMMHtEVrns/A/sRfTHFYHoyRviKPwgODJlQCslNSlOcBUD/Ptj6K2Cw00fOqqxHv9okqRD
- LzuwlwZjNr5LrB7ZAA1cRTqGCxlxDv9YvwkPIRM6dkV0tQJRwT6/h2H8uy1RaJyOkp2j5Y+Wr
- j+EPm07hiFkIUHyJYOEqMslhYr/Ky/em06qCYDwtXxaELJCqQS02u+825mP2RuWZ2cYH1cEpR
- kTVoDx3Sf2DavA/KDkf9n53pOyTEO6Y3cRAfjLWW2q+yXbcrvcQM10jkJ1mayNXCLaeeFOiVF
- q2cgO7u4O02XqJtFtsB3d34UoHYnv4z13LztJg==
+	id S1751334AbbHQIrR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 04:47:17 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga103.fm.intel.com with ESMTP; 17 Aug 2015 01:47:16 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.15,693,1432623600"; 
+   d="scan'208";a="770177871"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.123])
+  by fmsmga001.fm.intel.com with ESMTP; 17 Aug 2015 01:47:15 -0700
+X-Mailer: git-send-email 2.5.0.280.g4aaba03
+In-Reply-To: <1439801191-3026-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276036>
 
-Hi Linus,
+From: Jacob Keller <jacob.keller@gmail.com>
 
-On 2015-08-17 01:33, Linus Torvalds wrote:
-> On Sun, Aug 16, 2015 at 12:46 PM, Linus Torvalds
-> <torvalds@linux-foundation.org> wrote:
->>
->> Maybe it has always done this, and I just haven't noticed (I usually
->> _just_ do the "git reset --hard" thing, don't ask me why I wanted to
->> be doubly sure this time). But maybe it's an effect of the new
->> built-in "am".
-> 
-> I bisected this. It's definitely used to work, and the regression is
-> from the new built-in am.
+Teach the rewrite combine notes to use the same names as git-notes
+merge. This will support all current names plus a few new synonyms.
 
-This patch is a reproducer:
+Update documentation to point to NOTES MERGE STRATEGIES to explain the
+various rewrite options available.
 
--- snipsnap --
-From 5323f1c309ad40721e2e19fa9c6ce5ad52d98271 Mon Sep 17 00:00:00 2001
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Mon, 17 Aug 2015 09:37:39 +0200
-Subject: [PATCH] t4151: demonstrate that builtin am corrupts index' stat data
+Implementing rewrite functionality completely in terms of merging is
+left as an exercise for a future contributor.
 
-Reported by Linus Torvalds.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- t/t4151-am-abort.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ Documentation/config.txt    |  8 ++++---
+ Documentation/git-notes.txt | 18 ++++++++++-----
+ notes-utils.c               | 26 +++++++++++++--------
+ t/t3301-notes.sh            | 55 +++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 89 insertions(+), 18 deletions(-)
 
-diff --git a/t/t4151-am-abort.sh b/t/t4151-am-abort.sh
-index 05bdc3e..bf2e6f4 100755
---- a/t/t4151-am-abort.sh
-+++ b/t/t4151-am-abort.sh
-@@ -168,4 +168,16 @@ test_expect_success 'am --abort on unborn branch will keep local commits intact'
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index de67ad1fdedf..4daa804b1eab 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1946,9 +1946,11 @@ notes.rewrite.<command>::
+ notes.rewriteMode::
+ 	When copying notes during a rewrite (see the
+ 	"notes.rewrite.<command>" option), determines what to do if
+-	the target commit already has a note.  Must be one of
+-	`overwrite`, `concatenate`, `cat_sort_uniq`, or `ignore`.
+-	Defaults to `concatenate`.
++	the target commit already has a note.  With the exception of `manual`,
++	any automatic merge strategy may be chosen.  Beware that in the
++	re-write context the typical notion of `ours` and `theirs` is reversed.
++	See the "NOTES MERGE STRATEGIES" section above for information on each
++	of the available strategies.
+ +
+ This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
+ environment variable.
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 5028e9355de5..678dadfdf3c3 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -336,9 +336,11 @@ environment variable.
+ 
+ notes.rewriteMode::
+ 	When copying notes during a rewrite, what to do if the target
+-	commit already has a note.  Must be one of `overwrite`,
+-	`concatenate`, `cat_sort_uniq`, or `ignore`.  Defaults to
+-	`concatenate`.
++	commit already has a note.  With the exception of `manual`, any
++	automatic merge strategy may be chosen.  Beware that in the re-write
++	context the typical notion of `ours` and `theirs` is reversed .  See
++	the "NOTES MERGE STRATEGIES" section above for information on each of
++	the available strategies.
+ +
+ This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
+ environment variable.
+@@ -374,9 +376,13 @@ does not match any refs is silently ignored.
+ 
+ 'GIT_NOTES_REWRITE_MODE'::
+ 	When copying notes during a rewrite, what to do if the target
+-	commit already has a note.
+-	Must be one of `overwrite`, `concatenate`, `cat_sort_uniq`, or `ignore`.
+-	This overrides the `core.rewriteMode` setting.
++	commit already has a note.  With the exception of `manual`, any
++	automatic merge strategy may be chosen.  Beware that in the re-write
++	context the typical notion of `ours` and `theirs` is reversed .  See
++	the "NOTES MERGE STRATEGIES" section above for information on each of
++	the available strategies.
+++
++Overrides the notes.rewriteMode configuration option.
+ 
+ 'GIT_NOTES_REWRITE_REF'::
+ 	When rewriting commits, which notes to copy from the original
+diff --git a/notes-utils.c b/notes-utils.c
+index 656b0ea152e2..8d4cc8909bcf 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -80,16 +80,24 @@ int parse_notes_merge_strategy(const char *v, enum notes_merge_strategy *s)
+ 
+ static combine_notes_fn parse_combine_notes_fn(const char *v)
+ {
+-	if (!strcasecmp(v, "overwrite"))
+-		return combine_notes_overwrite;
+-	else if (!strcasecmp(v, "ignore"))
+-		return combine_notes_ignore;
+-	else if (!strcasecmp(v, "concatenate"))
+-		return combine_notes_concatenate;
+-	else if (!strcasecmp(v, "cat_sort_uniq"))
+-		return combine_notes_cat_sort_uniq;
+-	else
++	enum notes_merge_strategy s;
++
++	if (parse_notes_merge_strategy(v, &s))
+ 		return NULL;
++
++	switch (s) {
++	case NOTES_MERGE_RESOLVE_OURS:
++		return combine_notes_ignore;
++	case NOTES_MERGE_RESOLVE_THEIRS:
++		return combine_notes_overwrite;
++	case NOTES_MERGE_RESOLVE_UNION:
++		return combine_notes_concatenate;
++	case NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ:
++		return combine_notes_cat_sort_uniq;
++	case NOTES_MERGE_RESOLVE_MANUAL:
++	default:
++		return NULL;
++	}
+ }
+ 
+ static int notes_rewrite_config(const char *k, const char *v, void *cb)
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 8cffd35fb03d..eb1b5824a422 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -997,6 +997,26 @@ test_expect_success 'git notes copy --for-rewrite (overwrite)' '
  	test_cmp expect actual
  '
  
-+test_expect_failure 'am --abort leaves index stat info alone' '
-+	git checkout -f --orphan stat-info &&
-+	git reset &&
-+	test_commit should-be-untouched &&
-+	test-chmtime =0 should-be-untouched.t &&
-+	git update-index --refresh &&
-+	git diff-files --exit-code --quiet &&
-+	test_must_fail git am 0001-*.patch &&
-+	git am --abort &&
-+	git diff-files --exit-code --quiet
++test_expect_success 'git notes copy --for-rewrite (theirs)' '
++	cat >expect <<-EOF &&
++		commit 4acf42e847e7fffbbf89ee365c20ac7caf40de89
++		Author: A U Thor <author@example.com>
++		Date:   Thu Apr 7 15:27:13 2005 -0700
++
++		${indent}15th
++
++		Notes:
++		${indent}a fresh note
++	EOF
++	git notes add -f -m"a fresh note" HEAD^ &&
++	test_config notes.rewriteMode theirs &&
++	test_config notes.rewriteRef "refs/notes/*" &&
++	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
++	git notes copy --for-rewrite=foo &&
++	git log -1 >actual &&
++	test_cmp expect actual
 +'
 +
- test_done
+ test_expect_success 'git notes copy --for-rewrite (ignore)' '
+ 	test_config notes.rewriteMode ignore &&
+ 	test_config notes.rewriteRef "refs/notes/*" &&
+@@ -1006,6 +1026,15 @@ test_expect_success 'git notes copy --for-rewrite (ignore)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git notes copy --for-rewrite (ours)' '
++	test_config notes.rewriteMode ours &&
++	test_config notes.rewriteRef "refs/notes/*" &&
++	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
++	git notes copy --for-rewrite=foo &&
++	git log -1 >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'git notes copy --for-rewrite (append)' '
+ 	cat >expect <<-EOF &&
+ 		commit 4acf42e847e7fffbbf89ee365c20ac7caf40de89
+@@ -1028,6 +1057,30 @@ test_expect_success 'git notes copy --for-rewrite (append)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git notes copy --for-rewrite (union append)' '
++	cat >expect <<-EOF &&
++		commit 4acf42e847e7fffbbf89ee365c20ac7caf40de89
++		Author: A U Thor <author@example.com>
++		Date:   Thu Apr 7 15:27:13 2005 -0700
++
++		${indent}15th
++
++		Notes:
++		${indent}a fresh note
++		${indent}
++		${indent}another fresh note
++		${indent}
++		${indent}yet again a fresh note
++	EOF
++	git notes add -f -m"yet again a fresh note" HEAD^ &&
++	test_config notes.rewriteMode union &&
++	test_config notes.rewriteRef "refs/notes/*" &&
++	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
++	git notes copy --for-rewrite=foo &&
++	git log -1 >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'git notes copy --for-rewrite (append two to one)' '
+ 	cat >expect <<-EOF &&
+ 		commit 4acf42e847e7fffbbf89ee365c20ac7caf40de89
+@@ -1041,6 +1094,8 @@ test_expect_success 'git notes copy --for-rewrite (append two to one)' '
+ 		${indent}
+ 		${indent}another fresh note
+ 		${indent}
++		${indent}yet again a fresh note
++		${indent}
+ 		${indent}append 1
+ 		${indent}
+ 		${indent}append 2
 -- 
-2.3.1.windows.1.9.g8c01ab4
+2.5.0.280.g4aaba03
