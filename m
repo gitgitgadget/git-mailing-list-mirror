@@ -1,134 +1,110 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v11 04/13] utf8: add function to align a string into given strbuf
-Date: Mon, 17 Aug 2015 18:38:08 +0530
-Message-ID: <CAOLa=ZRR8Ytmtj5uo3bPBnkYcGr-vgu-n4hbb4CvKndwc3JeLA@mail.gmail.com>
-References: <1439661643-16094-5-git-send-email-Karthik.188@gmail.com> <CAPig+cSV_cfF8y0HVKSU1yBgOxJ0qrejc-7bQPvt-UkUNAtxKw@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH v8 8/8] notes: teach git-notes about notes.<ref>.mergeStrategy
+ option
+Date: Mon, 17 Aug 2015 15:21:09 +0200
+Message-ID: <CALKQrgeBVfkWOPZYJLnLqJiBPG5XR++G2Mmma2tyc-kwZ5aW_A@mail.gmail.com>
+References: <1439801191-3026-1-git-send-email-jacob.e.keller@intel.com>
+	<1439801191-3026-9-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 15:08:44 2015
+Cc: Git mailing list <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 15:21:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRK9b-0003qn-MU
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 15:08:44 +0200
+	id 1ZRKLq-0002D2-RT
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 15:21:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753191AbbHQNIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 09:08:39 -0400
-Received: from mail-oi0-f45.google.com ([209.85.218.45]:35677 "EHLO
-	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751874AbbHQNIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 09:08:38 -0400
-Received: by oiew67 with SMTP id w67so60819764oie.2
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 06:08:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=uvlfodptRvJ8S8S+SaNcTtAOWRhq9ISfHSTCySJg1Iw=;
-        b=N6vpntrNLD12alYG9OvP0uKYegt6zfwDnNGYuCkpggxiRjIksPJhPGTMWD+jOGQmlG
-         os0xgOC/Ardj3siyc23MiWtEJMvv+MFcWxs1BErJHJveC3ip0kG7oTQiNddRVMlLSBlC
-         14eqYszrUNbeXnXQakKKpYkeIMg5YIlLeZNFF7+UzUmbp9ZdwP2gOw+r5KnGYxEoKZSe
-         ZYMfBjMWsbme2qRDFD4P/3nQBfczsB3gFtCk17o7kzNlnrTM9ov3K+7ENfaZ7yLQpOzt
-         gcSChT6KJGKObvUq7ZhR5BeK6ZvHGI5YbhsRl8W11dGC9NFyI/sDmvRrK8dmg2w95UTn
-         UNSA==
-X-Received: by 10.202.92.6 with SMTP id q6mr1061022oib.11.1439816917628; Mon,
- 17 Aug 2015 06:08:37 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Mon, 17 Aug 2015 06:08:08 -0700 (PDT)
-In-Reply-To: <CAPig+cSV_cfF8y0HVKSU1yBgOxJ0qrejc-7bQPvt-UkUNAtxKw@mail.gmail.com>
+	id S1754983AbbHQNVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 09:21:18 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:49644 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751673AbbHQNVS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 09:21:18 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1ZRKLj-0001uL-TD
+	for git@vger.kernel.org; Mon, 17 Aug 2015 15:21:16 +0200
+Received: by ykfw73 with SMTP id w73so72167938ykf.3
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 06:21:09 -0700 (PDT)
+X-Received: by 10.170.153.68 with SMTP id u65mr1342417ykc.94.1439817669987;
+ Mon, 17 Aug 2015 06:21:09 -0700 (PDT)
+Received: by 10.37.201.134 with HTTP; Mon, 17 Aug 2015 06:21:09 -0700 (PDT)
+In-Reply-To: <1439801191-3026-9-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276051>
 
-On Mon, Aug 17, 2015 at 5:18 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sat, Aug 15, 2015 at 2:00 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Add strbuf_utf8_align() which will align a given string into a strbuf
->> as per given align_type and width. If the width is greater than the
->> string length then no alignment is performed.
->
-> A couple minor comments below...
->
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->> diff --git a/utf8.c b/utf8.c
->> index 28e6d76..0fb8e9d 100644
->> --- a/utf8.c
->> +++ b/utf8.c
->> @@ -644,3 +644,24 @@ int skip_utf8_bom(char **text, size_t len)
->>         *text += strlen(utf8_bom);
->>         return 1;
->>  }
->> +
->> +void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int width,
->> +                      const char *s)
->> +{
->> +       int slen = strlen(s);
->> +       int display_len = utf8_strnwidth(s, slen, 0);
->> +       int utf8_compensation = slen - display_len;
->
-> Based upon the previous round review, I think you had intended to name
-> this merely 'compensation'.
->
+Allow me to suggest a different wording, somewhat inspired by the
+branch.<name>.* documentation...
 
-In the last patch it was suggested because I spelled 'compensation' wrong.
-I think the "utf8_" makes a good addition to the variable name.
-
->> +       if (display_len >= width) {
->> +               strbuf_addstr(buf, s);
->> +               return;
->> +       }
->> +
->> +       if (position == ALIGN_LEFT)
->> +               strbuf_addf(buf, "%-*s", width + utf8_compensation, s);
->> +       else if (position == ALIGN_MIDDLE) {
->> +               int left = (width - display_len)/2;
+On Mon, Aug 17, 2015 at 10:46 AM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
 >
-> Style: spaces around '/'
+> Add new option "notes.<ref>.mergeStrategy" option which specifies the merge
+> strategy for merging into a given notes ref.
+
+Add new "notes.<name>.mergeStrategy" config, which specifies the merge
+strategy for notes merges into refs/notes/<name>.
+
+> This option enables
+> selection of merge strategy for particular notes refs, rather than all
+> notes ref merges, as user may not want cat_sort_uniq for all refs, but
+> only some. Note that the <ref> is the local reference we are merging
+
+s/<ref>/<name>/
+
+> into, not the remote ref we merged from. The assumption is that users
+> will mostly want to configure separate local ref merge strategies rather
+> than strategies depending on which remote ref they merge from. Also,
+> notes.<ref>.merge overrides the general behavior as it is more specific.
+
+same here
+
 >
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+>  Documentation/config.txt            |  7 +++++++
+>  Documentation/git-notes.txt         |  6 ++++++
+>  builtin/notes.c                     | 14 ++++++++++++-
+>  t/t3309-notes-merge-auto-resolve.sh | 39 +++++++++++++++++++++++++++++++++++++
+>  4 files changed, 65 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 56e20446f587..a48c111d3ce0 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1926,6 +1926,13 @@ notes.mergeStrategy::
+>         STRATEGIES" section of linkgit:git-notes[1] for more information
+>         on each strategy.
+>
+> +notes.<localref>.mergeStrategy::
+> +       Which merge strategy to choose if the local ref for a notes merge
+> +       matches <localref>, overriding "notes.mergeStrategy". <localref> must
+> +       be the short name of a ref under refs/notes/.
 
-will add.
+notes.<name>.mergeStrategy::
+        Which merge strategy to use when doing a notes merge into
+        refs/notes/<name>. This overrides the more general
+"notes.mergeStrategy".
 
->> +               strbuf_addf(buf, "%*s%-*s", left, "", width - left + utf8_compensation, s);
->> +       } else if (position == ALIGN_RIGHT)
->> +               strbuf_addf(buf, "%*s", width + utf8_compensation, s);
->> +}
->> diff --git a/utf8.h b/utf8.h
->> index 5a9e94b..7930b44 100644
->> --- a/utf8.h
->> +++ b/utf8.h
->> @@ -55,4 +55,19 @@ int mbs_chrlen(const char **text, size_t *remainder_p, const char *encoding);
->>   */
->>  int is_hfs_dotgit(const char *path);
->>
->> +typedef enum {
->> +       ALIGN_LEFT,
->> +       ALIGN_MIDDLE,
->> +       ALIGN_RIGHT
->> +} align_type;
->> +
->> +/*
->> + * Align the string given and store it into a strbuf as per the
->> + * 'position' and 'width'. If the given string length is larger than
->> + * 'width' than then the input string is not truncated and no
->> + * alignment is done.
->> + */
->> +void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int width,
->> +                      const char *s);
->> +
->>  #endif
->> --
->> 2.5.0
+Otherwise, the series (except possibly #4/#5, see separate discussion)
+looks good to me.
 
-Thanks for the review.
+
+...Johan
+
+
 
 -- 
-Regards,
-Karthik Nayak
+Johan Herland, <johan@herland.net>
+www.herland.net
