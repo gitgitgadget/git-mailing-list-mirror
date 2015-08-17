@@ -1,70 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] am --abort: merge ORIG_HEAD tree into index
-Date: Mon, 17 Aug 2015 07:54:46 -0700
-Message-ID: <CA+55aFzvw4ogQCUpEQXtOrpbvehXiVHTfQsPDk0-ZhEaEchm2Q@mail.gmail.com>
-References: <CA+55aFwDkQAS8ULiLt9N5NVOYJ242Nd2MOWeiRX8HrVHXf2zog@mail.gmail.com>
-	<CA+55aFwwD=K-i9d40N5FtnTLT-ApZOzmgnXhnuA=C0zw2eBt3Q@mail.gmail.com>
-	<03631611149f05dbcd862b4c1e8e9d6b@www.dscho.org>
-	<20150817094819.GA10375@yoshi.chippynet.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v11 08/13] ref-filter: add support to sort by version
+Date: Mon, 17 Aug 2015 20:35:49 +0530
+Message-ID: <CAOLa=ZR=xxbgeaqke6iA37cij8HMygOSzeHOD2jPYbXhmV2noQ@mail.gmail.com>
+References: <1439661643-16094-9-git-send-email-Karthik.188@gmail.com> <CAPig+cRs3EbO1HmHmfNTaXXiiDjyqgeiUqv2_XGJL1=Ogb6a2g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 16:54:52 2015
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 17:06:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRLoJ-0006VP-Vi
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 16:54:52 +0200
+	id 1ZRLzT-0005IS-LE
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 17:06:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbbHQOys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 10:54:48 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:34383 "EHLO
-	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752794AbbHQOyr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 10:54:47 -0400
-Received: by iodb91 with SMTP id b91so153504876iod.1
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 07:54:46 -0700 (PDT)
+	id S1754751AbbHQPGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 11:06:19 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:35410 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753615AbbHQPGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 11:06:19 -0400
+Received: by obbop1 with SMTP id op1so115293944obb.2
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 08:06:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=yvbfg6mj9Yie+9SxLPHxWWc5+b+idqlNA6acvUy/xCE=;
-        b=LldBSQsP0BM+CQ7OX3gRKu1FUxWpnljQ2ccSZoDhAjkPk9AetaSTDgiha3PNdg/4Xw
-         hwnae+1rEnrDgrPtbAFTf6cJuclHaze69uGmoRiGCu9+uxdJGgusDJvJZNeLqJEsnQVW
-         8zABlF+V/1uIiJhGa71yOcXHooo+ZDRx6AvqdvifWM/CG7R28Oig05X2jdtuJFgEwm8n
-         IWpdicsLTv4jPZP+507ww4SNjKVO3DYtsFPVK8KSklcFjbjPu93nCAFs+PSQuh+Gg190
-         dpEEZ1D95l8SgGwNfcEFkCMSn/3zTY2AGJt7RFwS1WWI/UenXp6Kc2KYzmnk602Hbker
-         E6AA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=yvbfg6mj9Yie+9SxLPHxWWc5+b+idqlNA6acvUy/xCE=;
-        b=E17Vv4JRVFiC0lovmQtQw5RLBtyAzQR0t6QlDarXSot40EwL42Pbrvw/T2BZwP2Vn2
-         RW7GAtJeSnEOLekfP3sonbaog+xgSp8jLDH/vXSe249eAET3UVzQfdRMqm3NNzwlxHYC
-         lEFOSBPerPFwdD+uzp0DqTDsqbMwvalPsseXc=
-X-Received: by 10.107.167.134 with SMTP id q128mr2073114ioe.137.1439823286451;
- Mon, 17 Aug 2015 07:54:46 -0700 (PDT)
-Received: by 10.36.219.130 with HTTP; Mon, 17 Aug 2015 07:54:46 -0700 (PDT)
-In-Reply-To: <20150817094819.GA10375@yoshi.chippynet.com>
-X-Google-Sender-Auth: flS0azwxZY1lNAOvAl0JoPWbWPw
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=iAEkMoNtgR6fCDFloXN73jkKs8eSn51OtEihFrhDMN4=;
+        b=HHuoGqVDuKu5pOi9tD3/0Ka+w9UXoetDAAbYi+tm6UJDjORuaz87in/BO6hnXxnJW6
+         U8KYvaysiYUl25oHuc0Mn/8SymGyxWjICmGxNl36nKP6toMklmLiQU0uDrJFvQlE0o9E
+         ZkWLJxT5g18XbFxHKy74CD4akvCwjXmYFuVFdoVa6wY3NvmKMUHGxFx+aJldPuRrlXvz
+         t8BNj4npwBHNuqpDA8GoMQldNF4lmXLatKgaLmBz7Zb1kK0ibr4pgbyNCxD4HbOIr/h+
+         b8MsCyXr1zEpl7p9iBle7IyEHqTUIuI3t2gX8l6AnKT0riPBPubdLtG4YaOqNn254z3V
+         lwiQ==
+X-Received: by 10.60.62.105 with SMTP id x9mr1565896oer.1.1439823978357; Mon,
+ 17 Aug 2015 08:06:18 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Mon, 17 Aug 2015 08:05:49 -0700 (PDT)
+In-Reply-To: <CAPig+cRs3EbO1HmHmfNTaXXiiDjyqgeiUqv2_XGJL1=Ogb6a2g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276055>
 
-On Mon, Aug 17, 2015 at 2:48 AM, Paul Tan <pyokagan@gmail.com> wrote:
+On Mon, Aug 17, 2015 at 10:23 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sat, Aug 15, 2015 at 2:00 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Add support to sort by version using the "v:refname" and
+>> "version:refname" option. This is achieved by using the 'versioncmp()'
+>> function as the comparing function for qsort.
+>>
+>> This option is included to support sorting by versions in `git tag -l`
+>> which will eventaully be ported to use ref-filter APIs.
 >
-> It's true that we need to merge the ORIG_HEAD tree into the index
-> instead of overwriting it. Patch below.
+> s/eventaully/eventually/
+>
 
-Seems to work for me. Thanks,
+Will change thanks :)
 
-                     Linus
+>> Add documentation and tests for the same.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+
+
+
+-- 
+Regards,
+Karthik Nayak
