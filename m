@@ -1,87 +1,86 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v9 0/6] implement notes.mergeStrategy
-Date: Mon, 17 Aug 2015 14:33:28 -0700
-Message-ID: <1439847214-2980-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 17 23:33:57 2015
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v11 12/13] tag.c: implement '--format' option
+Date: Mon, 17 Aug 2015 14:38:33 -0700
+Message-ID: <CA+P7+xr5C2DfAKtb-BDKUGW=4LB4ZRfO6wg=N-8APVNaCEgR5Q@mail.gmail.com>
+References: <1439661643-16094-13-git-send-email-Karthik.188@gmail.com>
+ <xmqqwpwtd9d0.fsf@gitster.dls.corp.google.com> <CAOLa=ZSvJ7WO9XADUtZkm=QK6S3n1KRcG4nLpPLKnZUxQ+BrJQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 23:38:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRS2U-0003aM-UB
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 23:33:55 +0200
+	id 1ZRS7N-0006sp-Vm
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 23:38:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751986AbbHQVdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 17:33:38 -0400
-Received: from mga03.intel.com ([134.134.136.65]:43514 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751652AbbHQVdh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 17:33:37 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP; 17 Aug 2015 14:33:36 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.15,697,1432623600"; 
-   d="scan'208";a="785910985"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.123])
-  by orsmga002.jf.intel.com with ESMTP; 17 Aug 2015 14:33:36 -0700
-X-Mailer: git-send-email 2.5.0.280.g4aaba03
+	id S1751257AbbHQViy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 17:38:54 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:34221 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751034AbbHQVix (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 17:38:53 -0400
+Received: by iodb91 with SMTP id b91so166935061iod.1
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 14:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=TT/QKcmpZH40AmTyvcD3LGvccI461HCdDNTK8oym9/w=;
+        b=NN0mtgKKQso18QoCfTfbGBUwSijRPElW4N2I/aAdnt5OoUkRCOvoB5b7oZf4Fh834N
+         LZf8C7Tot2xCN7Adr3G+aEC3jFxXU4DQ7d4mdwqGKPLGm4T2Ey3ke+1VwnRY6D7E1jDZ
+         hzQVAShowPno2eJt58gr4a357ozk+r/Kroo/pIQmIMDQ6TBs467w2TXn6gJq2FOFcE5o
+         edCCOJ/AK+FzX7trOj+eJrfHGnj1P6C5aZIaoT5J/OmVnCLy+l3JZScMjivs1xWIeIdP
+         BtMY3q8QOKiF947Ih4BbQ7kbJSoLTw8/qgL9MWUziFjnvd+MnEfmpggQJqJx8vD0chwo
+         +kgw==
+X-Received: by 10.107.133.137 with SMTP id p9mr3495598ioi.146.1439847532705;
+ Mon, 17 Aug 2015 14:38:52 -0700 (PDT)
+Received: by 10.107.5.203 with HTTP; Mon, 17 Aug 2015 14:38:33 -0700 (PDT)
+In-Reply-To: <CAOLa=ZSvJ7WO9XADUtZkm=QK6S3n1KRcG4nLpPLKnZUxQ+BrJQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276099>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Mon, Aug 17, 2015 at 12:14 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> On Tue, Aug 18, 2015 at 12:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>
+>>> From: Karthik Nayak <karthik.188@gmail.com>
+>>>
+>>> Implement the '--format' option provided by 'ref-filter'.
+>>> This lets the user list tags as per desired format similar
+>>> to the implementation in 'git for-each-ref'.
+>>>
+>>> Add tests and documentation for the same.
+>>
+>> Hmm, do we want "--format" added to "tag -l" and "branch -l" in the
+>> first place?  Scriptors should be using "for-each-ref" plumbing in
+>> the first place, and the point of unifying these three is to share
+>> filtering features among them, which would make "for-each-ref" able
+>> to express what the other two can do.  I'd hesitate to add too much
+>> flexibility to "branch -l" and "tag -l" Porcelains to entice people
+>> to script around them.
+>>
+>
+> I'll leave that decision to you, but I see it as a good feature, when perhaps
+> I just want to list tags with authors. Agreed `for-each-ref` can handle this too
+> but I don't see why `tag -l` shouldn't.
+>
+> --
+> Regards,
+> Karthik Nayak
 
-This series implements mergeStrategy configuration options which take
-the same value as --strategy. This series does not change the allowed
-refs to merge from or to. There is a known limitation that you cannot
-merge from refs outside of refs/notes (precluding the use of such refs
-as refs/tracking/origin/notes/ and so forth).
+I agree with Karthik,it doesn't really hurt to add it to tag, and will
+allow users who aren't familiar with for-each-ref to be able to get
+the --format for some use cases. I think it would increase visibility
+and use of the format option if it's available on tag and branch.
 
-- Changes since v8 -
-* drop the rewrite and merge option patches, since rewrite names are not
-  really equivalent to merge names (ours/theirs is flipped)
-* change docs on notes.<name>.mergeStrategy
-
-This series does *not* deal with:
-* changes to which refs can be merged, init_notes_check already prevents
-  git-notes-merge into refs outside of refs/notes*
-* use of rewrite names for merge strategies, including even concatenate
-
-Hopefully a future contributor will have some time to look at making
-re-write just use the notes merge instead of doing re-write by hand.
-This would also potentially allow for manual merges. This series does
-not begin down this road, since we do not want to limit what this future
-author is allowed to do with regards to rewrite and merge strategy
-names.
-
-I think finally this series is good. It may be worth adding some
-test_expect_failures around merging from refs/tracking/origin/notes if
-we intend to ever allow notes merges from these sources.
-
-Jacob Keller (6):
-  notes: document cat_sort_uniq rewriteMode
-  notes: extract enum notes_merge_strategy to notes-utils.h
-  note: extract parse_notes_merge_strategy to notes-utils
-  notes: add tests for --commit/--abort/--strategy exclusivity
-  notes: add notes.mergeStrategy option to select default strategy
-  notes: teach git-notes about notes.<name>.mergeStrategy option
-
- Documentation/config.txt              | 16 ++++++-
- Documentation/git-notes.txt           | 25 +++++++++--
- builtin/notes.c                       | 43 +++++++++++++------
- notes-merge.h                         | 10 ++---
- notes-utils.c                         | 18 ++++++++
- notes-utils.h                         |  9 ++++
- t/t3309-notes-merge-auto-resolve.sh   | 79 +++++++++++++++++++++++++++++++++++
- t/t3310-notes-merge-manual-resolve.sh | 12 ++++++
- 8 files changed, 187 insertions(+), 25 deletions(-)
-
--- 
-2.5.0.280.g4aaba03
+Regards,
+Jake
