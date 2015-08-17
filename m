@@ -1,117 +1,129 @@
-From: Dave Borowitz <dborowitz@google.com>
-Subject: Re: [PATCH 0/7] Flags and config to sign pushes by default
-Date: Mon, 17 Aug 2015 14:32:03 -0400
-Message-ID: <CAD0k6qTWojeWT10xw_Dc5=Fw5r3rP0PUQOyqO7JAz6Vu+tV54w@mail.gmail.com>
-References: <1439492451-11233-1-git-send-email-dborowitz@google.com>
- <xmqqbne9ivry.fsf@gitster.dls.corp.google.com> <CAD0k6qSjZW-5eMw-OOHP0cGdj08PesdKVgE9OAFvESwCueyH6w@mail.gmail.com>
- <xmqqwpwxha4r.fsf@gitster.dls.corp.google.com> <CAD0k6qR2HkHHYu8429mvdvN1bkLeTpD-5EbO4Mt+o69rC+P6aQ@mail.gmail.com>
- <xmqqtwrxesqa.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v11 05/13] ref-filter: implement an `align` atom
+Date: Mon, 17 Aug 2015 11:39:35 -0700
+Message-ID: <xmqqa8tpep3s.fsf@gitster.dls.corp.google.com>
+References: <1439661643-16094-6-git-send-email-Karthik.188@gmail.com>
+	<CAPig+cR=gCBiEnZbnPfZZs0WmjBsQyL+2BjSHggWWp_43rC9cg@mail.gmail.com>
+	<CAOLa=ZRfA-8_w6VKgWQsoL7TrdyjEq5LTHwas=_04tmx9MWhqA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 20:32:33 2015
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 20:39:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRPCy-0003KY-2F
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 20:32:32 +0200
+	id 1ZRPJv-0006j4-Uy
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 20:39:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751821AbbHQScZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 14:32:25 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:34059 "EHLO
-	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751803AbbHQScX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 14:32:23 -0400
-Received: by iodb91 with SMTP id b91so161186675iod.1
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 11:32:23 -0700 (PDT)
+	id S1751311AbbHQSjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 14:39:39 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35496 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751296AbbHQSji (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 14:39:38 -0400
+Received: by pacgr6 with SMTP id gr6so113858855pac.2
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 11:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=g9SPxYCut2nJ5Kv3/HURFS6MZnE4iCz/t2pr7LIAQ4Q=;
-        b=M0gyhCLIlre6OyofyQv5IAnGdnmhouzBHnRNH2OBtr1ToBO7+beSs9VjOIYItcvb8W
-         ixMBY6nrNuSAbcWFclHNeT3R2/a5FKXms58eV6YPags07nTmKeMNKRKNQtkS8I/bhNpo
-         Pggmln/SAKRuMobYOGR/K4J5nV4NXSRVMlaAemyjLhs5qLe4si3A8GCfDVH2spyzoGoW
-         rUQrrBc3f3wIBwGOGodLTgRbKQFlILDDq6G5ggwArEnXKplJePoWA8UiwXT4XQw64RGF
-         3A+hNalCGZZldcvvHm/GeSFzQ6sPSLfTonpszs1Gr0xhUDg0UdnLDx3f573GEkmKw+ll
-         hreg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=g9SPxYCut2nJ5Kv3/HURFS6MZnE4iCz/t2pr7LIAQ4Q=;
-        b=CzSx0GxBNkN8s97lZJJrri4aLoIKm9A+JG2XFGeLyCHxiqFQRR/2kx6iweyRTk55Xc
-         VhC0M67+PdvjIj/gJJeectqMxmIADPNCKdqRwXpqdHXAP4pf/9wCBm92DfbCOOuFgIsD
-         VNmIRMk2vx6WZ2xIU3FltkrYakD/RFBsHyo+jSne5FiSAvYSvqlnCL+3hlrVfg9JgBzi
-         cs1QJ5U2q9hNCMB9aHCfhgWBUlC3hngiDcOpPRkszeqWwz1VQBV6pkna8zmK5xoccofd
-         /f7PZ0wUGvjDLn/flud01aiq+PcFoMXh0PzhNkrc5+6+2I/LEFtxCIb3YlL+V9mOJZ27
-         bscA==
-X-Gm-Message-State: ALoCoQluw9l8KATcB1yLoSqn513h12WJfeH7wF+L5OENDDkkDKuOiFZPHM4eKmIDXK91mcfRHWQO
-X-Received: by 10.107.136.66 with SMTP id k63mr616427iod.194.1439836342936;
- Mon, 17 Aug 2015 11:32:22 -0700 (PDT)
-Received: by 10.107.4.201 with HTTP; Mon, 17 Aug 2015 11:32:03 -0700 (PDT)
-In-Reply-To: <xmqqtwrxesqa.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=M5yYefOWfe7tXvwATeDQJGrehLMVtw/MeZAhfNvt2Vo=;
+        b=NUFxkphctyLHBPhapYqBwufMAo91dAIqMyp3ceA9qFAsWeMo192LIM8g6XvCBEyyHE
+         W/uVP4M1XhW9AgwbQgknF02QDQvWWI/Cisku75oNYiLLee7PwGODwgFydcBMkBB0g+SQ
+         EbuDNusZpJFLONmbX0OwhLpO84kZAAZRvjO/dzVfvCbp0C+pVB3VFXNzjbtO/GGRywO+
+         aeKfLCtLab+lft+Ibe1zB5799WNxmcLFKZHDr8uuha6VIf5pTImHF+qO9o42keyDZi7o
+         uEYmJXcbgMxFaVzJzanqZciZAwg9yfuefqV3zSZF4A0uKkwsIe5PV0AAcf8vOvn+az8S
+         Yyqw==
+X-Received: by 10.68.112.194 with SMTP id is2mr5203363pbb.61.1439836777670;
+        Mon, 17 Aug 2015 11:39:37 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:d4db:7e94:b576:3da])
+        by smtp.gmail.com with ESMTPSA id a2sm15416329pbu.41.2015.08.17.11.39.36
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 17 Aug 2015 11:39:36 -0700 (PDT)
+In-Reply-To: <CAOLa=ZRfA-8_w6VKgWQsoL7TrdyjEq5LTHwas=_04tmx9MWhqA@mail.gmail.com>
+	(Karthik Nayak's message of "Mon, 17 Aug 2015 19:58:10 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276070>
 
-On Mon, Aug 17, 2015 at 1:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Dave Borowitz <dborowitz@google.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+> On Mon, Aug 17, 2015 at 7:37 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> ...
+>> Second, I realize that Junio suggested the 'return_to' idea, but it
+>> seems like it could become overly painful since each handler of this
+>> sort is going to have to perform the same manipulation to append its
+>> collected output to its parent state's output. What if you instead
+>> make it the responsibility of pop_state() to append the 'output' from
+>> the state being popped to the "prev" state's 'output'? This way, it
+>> happens automatically, thus reducing code in each individual handler,
+>> and reducing the burden of having to keep writing the same code.
 >
->> Ok, so let us bikeshed a bit further.
->>
->> Bikeshed 1.
->> Option A: --signed/--no-signed--signed-if-possible
->> Option B: --signed=true|false|if-possible, "--signed" alone implies "=true".
->>
->> Bikeshed 2.
->>
->> Option A: if-possible
->>
->> The possibly confusing thing is one might interpret missing "gpg" to
->> mean "impossible", i.e. "if gpg is not installed don't attempt to
->> sign", which is not the behavior we want.
->>
->> I don't have another succinct way of saying this.
->> "if-server-supported" is a mouthful. I think Jonathan mentioned
->> "opportunistic", which is fairly opaque.
->>
->>> By "strange", I was referring to the possible perception issue on
->>> having a choice other than yes/no for a configuration that allows
->>> you to express your security preference.
->
-> My preference on Bikeshed 1. would probably be to add
->
->     --sign=yes/no/if-asked
->
-> and to keep --[no-]signed for "no" and "yes" for existing users.
+> Good question, what if we don't want to append to strbuf at all?
+> For e.g., We were discussing an "%(if).....%(then)......%(end)"
+> atom structure, here if the if condition isn't met we wouldn't want to
+> append to the prev strbuf, hence I thought it's better if the handler
+> decided whether or not to append to prev strbuf.
 
-Incidentally, I just looked up incidence of true/false vs. yes/no in
-command line options, and the results are decidedly undecided:
+I'd imagine the implementation of these to be along the lines of
+(thinking aloud):
 
-$ grep -e '--[^ ]*=[^ ]*true' Documentation/*.txt
-Documentation/git-init.txt:--shared[=(false|true|umask|group|all|world|everybody|0xxx)]::
-Documentation/git-pull.txt:--rebase[=false|true|preserve]::
-Documentation/git-svn.txt:--shared[=(false|true|umask|group|all|world|everybody)]::
-$ grep -e '--[^ ]*=[^ ]*yes' Documentation/*.txt
-Documentation/fetch-options.txt:--recurse-submodules[=yes|on-demand|no]::
-Documentation/fetch-options.txt:--recurse-submodules-default=[yes|on-demand]::
-Documentation/git-pull.txt:--[no-]recurse-submodules[=yes|on-demand|no]::
+ - "%(if:[nonempty|empty|...])" pushes a new stack, and sets its
+   attend/at_end/end_scope function to signal a syntax error.  It
+   also records what condition (e.g. "nonempty") to use in the new
+   stack.
 
-Consistency is hard.
+ - "%(then)" inspects the top-of-stack output and uses the condition
+   recorded by the %(if) that created the stack to decide true or
+   false.  The stack element pushed by %(if) is then removed.
+   Notice that the end_scope function prepared by %(if) is never
+   called.
 
-I am inclined to stick with yes/no in this case because
---recurse-submodules at least feels like a more modern option that we
-should emulate, but don't feel strongly either way.
+   Then (no pun intended):
 
-> Regarding Bikeshed 2., I do not have a strong opinion myself.
+   - If true, that means we would want the (expansion of) text up to
+     "%(end)" or "%(else)", whichever comes first, appended to the
+     surrounding output.  Push a new stack and set its end_scope
+     function to the one that appends the top-of-stack output to the
+     surrounding output, expecting %(end) will follow without
+     %(else).
 
-Although it sounds like you already expressed an opinion for if-asked
-> if-possible, which is stronger than my own :)
+   - If false, that means we would want the (expansion of) text up
+     to "%(end)" or "%(else)", whichever comes first, discarded.
+     Push a new stack and set its end_scope function to the one that
+     discards the top-of-stack output, expecting %(end) will follow
+     without %(else).
 
-> Thanks.
+ - "%(else)" inspects the top of the stack, and if it is not left by
+   "%(then)", signal a syntax error.
+
+   Else (no pun intended), it runs the end_scope function left by
+   "%(then)" on the top-of-stack output (e.g. if "%(then)" found
+   that the condition holds true, the accumulated output at this
+   point should be appended to the surrounding output, and it was
+   expected to be done by "%(end)" if this "%(else)" weren't
+   present.  We do it here before waiting for "%(end)").
+
+   Truncate the top-of-stack output, flip the end_scope function to
+   the one opposite from the one left by "%(then)".  And let "%(end)"
+   take care of it.
+
+ - "%(end)" just unconditionally runs the end_scope function on the
+   top of the stack output.
+
+Eric's suggestion is let the caller of the end_scope function to
+always append the output of the top-of-stack, and I think it makes
+sense.  It makes a common "%(atom)" implementation simpler.  Things
+like %(then) and %(else) above need to make sure that they reset the
+top-of-stack output to empty as necessary, but that is not such a
+huge implementation burden---their operation is already unusual and
+needs to be more complex than the plain-vanilla %(atom)s anyway.
