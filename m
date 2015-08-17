@@ -1,94 +1,117 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v8 4/8] notes: allow use of the "rewrite" terminology for
- merge strategies
-Date: Mon, 17 Aug 2015 11:28:41 -0700
-Message-ID: <CA+P7+xq5qTPVsSq0JOSUm5o9w=szD1c2oFm0e3s_f97E0=Zh+A@mail.gmail.com>
-References: <1439801191-3026-1-git-send-email-jacob.e.keller@intel.com>
- <1439801191-3026-5-git-send-email-jacob.e.keller@intel.com> <CALKQrgfLzWdRxC5saBXJ_-iKmVDfs+mBfDKKrSU2-tP7eO5+Zg@mail.gmail.com>
+From: Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH 0/7] Flags and config to sign pushes by default
+Date: Mon, 17 Aug 2015 14:32:03 -0400
+Message-ID: <CAD0k6qTWojeWT10xw_Dc5=Fw5r3rP0PUQOyqO7JAz6Vu+tV54w@mail.gmail.com>
+References: <1439492451-11233-1-git-send-email-dborowitz@google.com>
+ <xmqqbne9ivry.fsf@gitster.dls.corp.google.com> <CAD0k6qSjZW-5eMw-OOHP0cGdj08PesdKVgE9OAFvESwCueyH6w@mail.gmail.com>
+ <xmqqwpwxha4r.fsf@gitster.dls.corp.google.com> <CAD0k6qR2HkHHYu8429mvdvN1bkLeTpD-5EbO4Mt+o69rC+P6aQ@mail.gmail.com>
+ <xmqqtwrxesqa.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Aug 17 20:29:09 2015
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 20:32:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRP9f-0001e2-Os
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 20:29:08 +0200
+	id 1ZRPCy-0003KY-2F
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Aug 2015 20:32:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750893AbbHQS3D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 14:29:03 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:32823 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750855AbbHQS3B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 14:29:01 -0400
-Received: by iods203 with SMTP id s203so161700816iod.0
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 11:29:01 -0700 (PDT)
+	id S1751821AbbHQScZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 14:32:25 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:34059 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751803AbbHQScX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 14:32:23 -0400
+Received: by iodb91 with SMTP id b91so161186675iod.1
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 11:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=IV96dsFxNIdFbgqPxQzlc4Vr9vtR1PQGqdnkEh0YRq4=;
-        b=0NIJku57Crq/8455l5azEwo6/+vDw/+jJILkVXa1Lka6dfXz8SQTqyLIJQUNZRpbnL
-         Uhx7P6U9rVArsB4CDlZHE5Zt+B0i4FoJNdG9lae5L/NwVeXMbrP44FEiZyqYgZRFvCTq
-         TAKtMs8vRYWFxXXK1TpJtGONIpNQWUR2ILgDlFsgl+0At5eaaUrGw1yFGJjbfgb5aP4d
-         TQ3nbDy54AButSS8XdjmVQ2iAUH20pphpNmvj7wwslmIOuql8vqQs476z1Yeyk7dCAWo
-         h8iTo0u7yu4+x7uOjbxn0hiRjI9kTSlUI8iAQtmaxbO2KHDSnaOIEa5yKqKNbo/U3EsK
-         As6Q==
-X-Received: by 10.107.133.137 with SMTP id p9mr2736406ioi.146.1439836140985;
- Mon, 17 Aug 2015 11:29:00 -0700 (PDT)
-Received: by 10.107.5.203 with HTTP; Mon, 17 Aug 2015 11:28:41 -0700 (PDT)
-In-Reply-To: <CALKQrgfLzWdRxC5saBXJ_-iKmVDfs+mBfDKKrSU2-tP7eO5+Zg@mail.gmail.com>
+        bh=g9SPxYCut2nJ5Kv3/HURFS6MZnE4iCz/t2pr7LIAQ4Q=;
+        b=M0gyhCLIlre6OyofyQv5IAnGdnmhouzBHnRNH2OBtr1ToBO7+beSs9VjOIYItcvb8W
+         ixMBY6nrNuSAbcWFclHNeT3R2/a5FKXms58eV6YPags07nTmKeMNKRKNQtkS8I/bhNpo
+         Pggmln/SAKRuMobYOGR/K4J5nV4NXSRVMlaAemyjLhs5qLe4si3A8GCfDVH2spyzoGoW
+         rUQrrBc3f3wIBwGOGodLTgRbKQFlILDDq6G5ggwArEnXKplJePoWA8UiwXT4XQw64RGF
+         3A+hNalCGZZldcvvHm/GeSFzQ6sPSLfTonpszs1Gr0xhUDg0UdnLDx3f573GEkmKw+ll
+         hreg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=g9SPxYCut2nJ5Kv3/HURFS6MZnE4iCz/t2pr7LIAQ4Q=;
+        b=CzSx0GxBNkN8s97lZJJrri4aLoIKm9A+JG2XFGeLyCHxiqFQRR/2kx6iweyRTk55Xc
+         VhC0M67+PdvjIj/gJJeectqMxmIADPNCKdqRwXpqdHXAP4pf/9wCBm92DfbCOOuFgIsD
+         VNmIRMk2vx6WZ2xIU3FltkrYakD/RFBsHyo+jSne5FiSAvYSvqlnCL+3hlrVfg9JgBzi
+         cs1QJ5U2q9hNCMB9aHCfhgWBUlC3hngiDcOpPRkszeqWwz1VQBV6pkna8zmK5xoccofd
+         /f7PZ0wUGvjDLn/flud01aiq+PcFoMXh0PzhNkrc5+6+2I/LEFtxCIb3YlL+V9mOJZ27
+         bscA==
+X-Gm-Message-State: ALoCoQluw9l8KATcB1yLoSqn513h12WJfeH7wF+L5OENDDkkDKuOiFZPHM4eKmIDXK91mcfRHWQO
+X-Received: by 10.107.136.66 with SMTP id k63mr616427iod.194.1439836342936;
+ Mon, 17 Aug 2015 11:32:22 -0700 (PDT)
+Received: by 10.107.4.201 with HTTP; Mon, 17 Aug 2015 11:32:03 -0700 (PDT)
+In-Reply-To: <xmqqtwrxesqa.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276069>
 
-Hi,
-
-On Mon, Aug 17, 2015 at 5:54 AM, Johan Herland <johan@herland.net> wrote:
-> On Mon, Aug 17, 2015 at 10:46 AM, Jacob Keller <jacob.e.keller@intel.com> wrote:
->> From: Jacob Keller <jacob.keller@gmail.com>
+On Mon, Aug 17, 2015 at 1:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Dave Borowitz <dborowitz@google.com> writes:
+>
+>> Ok, so let us bikeshed a bit further.
 >>
->> notes-merge.c already re-uses the same functions for the automatic merge
->> strategies used by the rewrite functionality. Teach the -s/--strategy
->> option how to interpret the equivalent rewrite terminology for
->> consistency.
+>> Bikeshed 1.
+>> Option A: --signed/--no-signed--signed-if-possible
+>> Option B: --signed=true|false|if-possible, "--signed" alone implies "=true".
+>>
+>> Bikeshed 2.
+>>
+>> Option A: if-possible
+>>
+>> The possibly confusing thing is one might interpret missing "gpg" to
+>> mean "impossible", i.e. "if gpg is not installed don't attempt to
+>> sign", which is not the behavior we want.
+>>
+>> I don't have another succinct way of saying this.
+>> "if-server-supported" is a mouthful. I think Jonathan mentioned
+>> "opportunistic", which is fairly opaque.
+>>
+>>> By "strange", I was referring to the possible perception issue on
+>>> having a choice other than yes/no for a configuration that allows
+>>> you to express your security preference.
 >
-> I'm somewhat negative to this patch. IMHO, adding the rewrite modes as
-> merge strategy synonyms adds no benefit - only potential confusion -
-> to the existing merge strategies. Words that have a sensible meaning
-> in the context of rewrite, do not necessarily have the same sensible
-> meaning in the context of merge (and vice versa). I'd rather have the
-> rewrite code map ignore/overwrite/concatenate to ours/theirs/union,
-> without teaching the notes-merge code about these words. Or maybe even
-> drop this patch (and the next?) entirely, and let the future author
-> (who implements notes rewrite in terms of notes merge) decide how to
-> deal with this? By committing to these synonyms now, you might
-> actually be making things harder for the future author: once the
-> synonyms are part of the user-visible and documented interface, they
-> cannot easily be removed/changed again.
+> My preference on Bikeshed 1. would probably be to add
 >
-> ...Johan
+>     --sign=yes/no/if-asked
 >
+> and to keep --[no-]signed for "no" and "yes" for existing users.
 
-I am ok dropping these, I really only added them after Junio brought
-it up. I think that documenting union/concatenate is fine, but I think
-that ours/theirs is very confusing. However, I think you're right that
-a future author can deal with this when working on rewrite -> merge. I
-don't think we need to do this now.
+Incidentally, I just looked up incidence of true/false vs. yes/no in
+command line options, and the results are decidedly undecided:
 
-I'll drop these patches, but I will leave the
-parse_notes_merge_strategy in it's location here.
+$ grep -e '--[^ ]*=[^ ]*true' Documentation/*.txt
+Documentation/git-init.txt:--shared[=(false|true|umask|group|all|world|everybody|0xxx)]::
+Documentation/git-pull.txt:--rebase[=false|true|preserve]::
+Documentation/git-svn.txt:--shared[=(false|true|umask|group|all|world|everybody)]::
+$ grep -e '--[^ ]*=[^ ]*yes' Documentation/*.txt
+Documentation/fetch-options.txt:--recurse-submodules[=yes|on-demand|no]::
+Documentation/fetch-options.txt:--recurse-submodules-default=[yes|on-demand]::
+Documentation/git-pull.txt:--[no-]recurse-submodules[=yes|on-demand|no]::
 
-We could document concatenate as a synonym of union but I don't think
-that is a big deal.
+Consistency is hard.
 
-Regards,
-Jake
+I am inclined to stick with yes/no in this case because
+--recurse-submodules at least feels like a more modern option that we
+should emulate, but don't feel strongly either way.
+
+> Regarding Bikeshed 2., I do not have a strong opinion myself.
+
+Although it sounds like you already expressed an opinion for if-asked
+> if-possible, which is stronger than my own :)
+
+> Thanks.
