@@ -1,251 +1,360 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 4/7] submodule: Allow errornous values for the fetchrecursesubmodules option
-Date: Mon, 17 Aug 2015 17:22:00 -0700
-Message-ID: <1439857323-21048-5-git-send-email-sbeller@google.com>
+Subject: [PATCH 7/7] submodule: implement `module_clone` as a builtin helper
+Date: Mon, 17 Aug 2015 17:22:03 -0700
+Message-ID: <1439857323-21048-8-git-send-email-sbeller@google.com>
 References: <1439857323-21048-1-git-send-email-sbeller@google.com>
 Cc: gitster@pobox.com, Jens.Lehmann@web.de, hvoigt@hvoigt.net,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 18 02:22:34 2015
+X-From: git-owner@vger.kernel.org Tue Aug 18 02:22:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRUfh-0007we-Bp
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 02:22:33 +0200
+	id 1ZRUfi-0007we-QN
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 02:22:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059AbbHRAWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 20:22:21 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:34923 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751212AbbHRAWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 20:22:17 -0400
-Received: by pacgr6 with SMTP id gr6so118962723pac.2
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 17:22:16 -0700 (PDT)
+	id S1752132AbbHRAW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 20:22:28 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:34718 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752129AbbHRAW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 20:22:26 -0400
+Received: by pdbfa8 with SMTP id fa8so61127788pdb.1
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 17:22:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FP1kCRMHi0bzOcW5voWEIhPa/iETJ3duImuhUW8/+6k=;
-        b=BFl3dq0jxknlF5SPRnjBcBZceI+iBgl58Ezw7ELRK7JFQfresgz0Ophuql2m2r0p0V
-         AcKSKUhZFimbLnihUa1Hyi81SX3WsBSEY3NeVoWe+9E6rhrsBNDF/om0ircwKsZ6k9ah
-         X6a2Gk112Elcu4R4vRMvaa1RwAFNtiItOzgd+h25YDhaaqgSCFpOyT/qbZBqs1bojeRp
-         a2N32QGAS1Y/IuzQU5NRTmFVR6IkidAYMaIO9XjPZ4iQbnt4IhVNJQhHc6As+S9bv1fX
-         3wtvOlrIahHA2+KOgYt0TUfT7mKtg8aofqH14h5hCY2j11SNEi7AUyw5Ccj4tj7RZIZ5
-         K2Mg==
+        bh=2EKJradrqzt7RP3+IRkduvfHrWqp5YZ6CLBWlQPqWWc=;
+        b=paqBjlkQzo2B9F5j9Vo56Iud7gUjEn9/FcEeJbFpmNL9OTwn+31ELIXyDUBWEQ1QFh
+         CJ1CRmD3yOh08b/GcrCicVJGx7WyBJsXDR4CEOn1XivkiLx0rZQEUu5jfioXO72Vil9c
+         JI/Nhh0G3iFEys8tzKiG2W8Fl3PqdXCXLSbxhNRSNNnX7kWBIiAH5HOAd3h24wIhQTZo
+         p30SDSmx0hdQsIvfQOeyY3Ax4E2rRMbnIwKe0U3hZfsRrIsYtxymTyAn84sE82n69igI
+         gcLBip4/CcQ3bSYeaTcy2mUrYdqo/61Lys3gdgjTgBpzqrxmZl33PT9J+kaMLFSQ5QYR
+         QtMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FP1kCRMHi0bzOcW5voWEIhPa/iETJ3duImuhUW8/+6k=;
-        b=HSOVFeHj7WWjO5n48G7C2l525xpuiNlknreyoD3O+2VqHW365iFT5K3geTg8TYDdf4
-         Bf6NAVSEVQDaosbpG8wO9ZYhncPZWrRLDLkmq09ktJvaDKzyx3jZGV9ZteFSjbF1WtBE
-         yXU0kwo4V07JLPr+VljNuV+mcELcHbg7ZzhKoGH4TNeMyqBHjWejo1tFzz2SmTKOvUTF
-         DzyRQWhYDqriKLdaptLBLdwFZRtv79JuleZJuPTm1R6zAhKw7a1d8LwY36JHXCWckRee
-         FJAJkoKeRgYbVeTtlQRfbCODDzZ/rlUIT3jGdH0So5GNZzORA5yzzKTu3mjlAXGt3jZS
-         Vt3A==
-X-Gm-Message-State: ALoCoQnC2jw4XaOqfaBQt4L+VKXBmR9qmrjRTClp2H3d5QE+8S313wQAwWkS9348+e59FJNeIiYI
-X-Received: by 10.66.253.229 with SMTP id ad5mr7499760pad.101.1439857336611;
-        Mon, 17 Aug 2015 17:22:16 -0700 (PDT)
+        bh=2EKJradrqzt7RP3+IRkduvfHrWqp5YZ6CLBWlQPqWWc=;
+        b=EjQIOZ++m9oa6ydf2Z4PwX5QmdxQ0PU8GdP4ZDbJoMmFNTG0znmh2XN9buqN9acfKl
+         tTVEt+R4+2I6Paca174LF+QKSP55zyKxXb2xi/DhaQKdJelfxIhZcHMrffsLr6Lkh1Vq
+         vyO4BT8no8MH56Ow1gMtyZTKQySoXBxuo7Vlv8vo+8KHECkLw1KA986nrtg4h76fg2CJ
+         kIJf3qFDsRAlF1xBNpI4+WUqmQ7TvjRvoxFC93zVqqPqV9NKMgShTh3hSNBL4LRVeslk
+         EZhGMKiq8Q2Zj8BizhrDa0cEKrinCmLylrjA5mJXls+nPqdFzz2PIACi0iX3Ud6pPlVG
+         pskQ==
+X-Gm-Message-State: ALoCoQn37wRCXt75P/bBDwPnGLDySQDY82GDK0iRkm/JhPpxmqApqrMu5Jn6FqTeqsnF0FPk5TOZ
+X-Received: by 10.70.47.232 with SMTP id g8mr7500597pdn.67.1439857346004;
+        Mon, 17 Aug 2015 17:22:26 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:bca6:6b6f:4dbb:30a3])
-        by smtp.gmail.com with ESMTPSA id p1sm15951075pdb.3.2015.08.17.17.22.15
+        by smtp.gmail.com with ESMTPSA id a2sm15887333pbu.41.2015.08.17.17.22.24
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 17 Aug 2015 17:22:16 -0700 (PDT)
+        Mon, 17 Aug 2015 17:22:24 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.330.g130be8e.dirty
 In-Reply-To: <1439857323-21048-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276115>
 
-From: Heiko Voigt <hvoigt@hvoigt.net>
+`module_clone` is part of the update command, which I want to convert
+to C next.
 
-We should not die when reading the submodule config cache since the user
-might not be able to get out of that situation when the configuration is
-part of the history.
-
-We should handle this condition later when the value is about to be
-used.
-
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/fetch.c             |  1 +
- submodule-config.c          | 29 ++++++++++++++++++++++++++++-
- submodule-config.h          |  1 +
- submodule.c                 | 15 ---------------
- submodule.h                 |  2 +-
- t/t7411-submodule-config.sh | 35 +++++++++++++++++++++++++++++++++++
- 6 files changed, 66 insertions(+), 17 deletions(-)
+ builtin/submodule--helper.c | 161 +++++++++++++++++++++++++++++++++++++++++++-
+ git-submodule.sh            |  78 +--------------------
+ 2 files changed, 162 insertions(+), 77 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index df16d0a..ee1f1a9 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -11,6 +11,7 @@
- #include "run-command.h"
- #include "parse-options.h"
- #include "sigchain.h"
-+#include "submodule-config.h"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 80d13f5..44ff935 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -8,6 +8,7 @@
  #include "submodule.h"
- #include "connected.h"
- #include "argv-array.h"
-diff --git a/submodule-config.c b/submodule-config.c
-index c64faf3..393de53 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -204,6 +204,30 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 	return submodule;
+ #include "submodule-config.h"
+ #include "string-list.h"
++#include "run-command.h"
+ 
+ static const struct cache_entry **ce_entries;
+ static int ce_alloc, ce_used;
+@@ -124,6 +125,156 @@ static int module_name(int argc, const char **argv, const char *prefix)
+ 	return 0;
  }
  
-+static int parse_fetch_recurse(const char *opt, const char *arg,
-+			       int die_on_error)
++static int clone_submodule(const char *path, const char *gitdir, const char *url,
++			   const char *depth, const char *reference, int quiet)
 +{
-+	switch (git_config_maybe_bool(opt, arg)) {
-+	case 1:
-+		return RECURSE_SUBMODULES_ON;
-+	case 0:
-+		return RECURSE_SUBMODULES_OFF;
-+	default:
-+		if (!strcmp(arg, "on-demand"))
-+			return RECURSE_SUBMODULES_ON_DEMAND;
++	struct child_process cp;
++	child_process_init(&cp);
 +
-+		if (die_on_error)
-+			die("bad %s argument: %s", opt, arg);
-+		else
-+			return RECURSE_SUBMODULES_ERROR;
++	argv_array_push(&cp.args, "clone");
++	argv_array_push(&cp.args, "--no-checkout");
++	if (quiet)
++		argv_array_push(&cp.args, "--quiet");
++	if (depth && strcmp(depth, "")) {
++		argv_array_push(&cp.args, "--depth");
++		argv_array_push(&cp.args, depth);
 +	}
++	if (reference && strcmp(reference, "")) {
++		argv_array_push(&cp.args, "--reference");
++		argv_array_push(&cp.args, reference);
++	}
++	if (gitdir) {
++		argv_array_push(&cp.args, "--separate-git-dir");
++		argv_array_push(&cp.args, gitdir);
++	}
++	argv_array_push(&cp.args, url);
++	argv_array_push(&cp.args, path);
++
++	cp.git_cmd = 1;
++	cp.env = local_repo_env;
++
++	cp.no_stdin = 1;
++	cp.no_stdout = 1;
++	cp.no_stderr = 1;
++	return run_command(&cp);
 +}
 +
-+int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
++/*
++ * Clone a submodule
++ *
++ * $1 = submodule path
++ * $2 = submodule name
++ * $3 = URL to clone
++ * $4 = reference repository to reuse (empty for independent)
++ * $5 = depth argument for shallow clones (empty for deep)
++ *
++ * Prior to calling, cmd_update checks that a possibly existing
++ * path is not a git repository.
++ * Likewise, cmd_add checks that path does not exist at all,
++ * since it is the location of a new submodule.
++ */
++static int module_clone(int argc, const char **argv, const char *prefix)
 +{
-+	return parse_fetch_recurse(opt, arg, 1);
++	const char *path = NULL, *name = NULL, *url = NULL, *reference = NULL, *depth = NULL;
++	int quiet = 0;
++	FILE *submodule_dot_git;
++	const char *sm_gitdir, *p;
++	struct strbuf rel_path = STRBUF_INIT;
++	struct strbuf sb = STRBUF_INIT;
++
++	struct option module_update_options[] = {
++		OPT_STRING(0, "prefix", &alternative_path,
++			   N_("path"),
++			   N_("alternative anchor for relative paths")),
++		OPT_STRING(0, "path", &path,
++			   N_("path"),
++			   N_("where the new submodule will be cloned to")),
++		OPT_STRING(0, "name", &name,
++			   N_("string"),
++			   N_("name of the new submodule")),
++		OPT_STRING(0, "url", &url,
++			   N_("string"),
++			   N_("url where to clone the submodule from")),
++		OPT_STRING(0, "reference", &reference,
++			   N_("string"),
++			   N_("reference repository")),
++		OPT_STRING(0, "depth", &depth,
++			   N_("string"),
++			   N_("depth for shallow clones")),
++		OPT_END()
++	};
++
++	static const char * const git_submodule_helper_usage[] = {
++		N_("git submodule--helper update [--prefix=<path>] [--quiet] [--remote] [-N|--no-fetch]"
++		   "[-f|--force] [--rebase|--merge] [--reference <repository>]"
++		   "[--depth <depth>] [--recursive] [--] [<path>...]"),
++		NULL
++	};
++
++	argc = parse_options(argc, argv, prefix, module_update_options,
++			     git_submodule_helper_usage, 0);
++
++	if (getenv("GIT_QUIET"))
++		quiet = 1;
++
++	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
++	sm_gitdir = strbuf_detach(&sb, NULL);
++	strbuf_reset(&sb);
++
++	if (!file_exists(sm_gitdir)) {
++		safe_create_leading_directories_const(sm_gitdir);
++		if (clone_submodule(path, sm_gitdir, url, depth, reference, quiet))
++			die(N_("Clone of '%s' into submodule path '%s' failed"),
++			    url, path);
++	} else {
++		safe_create_leading_directories_const(path);
++		unlink(sm_gitdir);
++	}
++
++	/* Write a .git file in the submodule to redirect to the superproject. */
++	const char *t;
++	if (alternative_path && !strcmp(alternative_path, "")) {
++		t = relative_path(path, alternative_path, &sb);
++		strbuf_reset(&sb);
++	} else
++		t = path;
++
++	if (safe_create_leading_directories_const(t) < 0)
++		die("Could not create directory '%s'", t);
++
++	strbuf_addf(&sb, "%s/.git", t);
++
++	if (safe_create_leading_directories_const(sb.buf) < 0)
++		die(_("could not create leading directories of '%s'"), sb.buf);
++	submodule_dot_git = fopen(sb.buf, "w");
++	if (!submodule_dot_git)
++		die ("Cannot open file '%s': %s", sb.buf, strerror(errno)	);
++
++	fprintf(submodule_dot_git, "gitdir: %s\n",
++		relative_path(sm_gitdir, path, &rel_path));
++	if (fclose(submodule_dot_git))
++		die("Could not close file %s", sb.buf);
++	strbuf_reset(&sb);
++
++	/* Redirect the worktree of the submodule in the superprojects config */
++	if (!is_absolute_path(sm_gitdir)) {
++		char *s = (char*)sm_gitdir;
++		strbuf_addf(&sb, "%s/%s", xgetcwd(), sm_gitdir);
++		sm_gitdir = strbuf_detach(&sb, NULL);
++		strbuf_reset(&sb);
++		free(s);
++	}
++	strbuf_addf(&sb, "%s/%s", xgetcwd(), path);
++	t = relative_path(sb.buf, sm_gitdir, &rel_path);
++
++	p = git_pathdup_submodule(path, "config");
++	if (!p)
++		die("Could not get submodule directory for '%s'", path);
++	git_config_set_in_file(p, "core.worktree", t);
++	strbuf_release(&sb);
++	return 0;
 +}
 +
- static void warn_multiple_config(const unsigned char *commit_sha1,
- 				 const char *name, const char *option)
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
  {
-@@ -255,6 +279,8 @@ static int parse_config(const char *var, const char *value, void *data)
- 		submodule->path = strbuf_detach(&path, NULL);
- 		cache_put_path(me->cache, submodule);
- 	} else if (!strcmp(item.buf, "fetchrecursesubmodules")) {
-+		/* when parsing worktree configurations we can die early */
-+		int die_on_error = is_null_sha1(me->gitmodules_sha1);
- 		if (!me->overwrite &&
- 		    submodule->fetch_recurse != RECURSE_SUBMODULES_NONE) {
- 			warn_multiple_config(me->commit_sha1, submodule->name,
-@@ -262,7 +288,8 @@ static int parse_config(const char *var, const char *value, void *data)
- 			goto release_return;
- 		}
+ 	if (argc < 2)
+@@ -135,6 +286,14 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+ 	if (!strcmp(argv[1], "module_name"))
+ 		return module_name(argc - 2, argv + 2, prefix);
  
--		submodule->fetch_recurse = parse_fetch_recurse_submodules_arg(var, value);
-+		submodule->fetch_recurse = parse_fetch_recurse(var, value,
-+								die_on_error);
- 	} else if (!strcmp(item.buf, "ignore")) {
- 		struct strbuf ignore = STRBUF_INIT;
- 		if (!me->overwrite && submodule->ignore != NULL) {
-diff --git a/submodule-config.h b/submodule-config.h
-index 5fe44ce..9061e4e 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -18,6 +18,7 @@ struct submodule {
- 	unsigned char gitmodules_sha1[20];
- };
- 
-+int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- int parse_submodule_config_option(const char *var, const char *value);
- const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
- 		const char *name);
-diff --git a/submodule.c b/submodule.c
-index a382677..9fcc86f 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -288,21 +288,6 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
++	if (!strcmp(argv[1], "module_clone"))
++		return module_clone(argc - 1, argv + 1, prefix);
++	if (!strcmp(argv[1], "test")) {
++		struct strbuf sb = STRBUF_INIT;
++
++		relative_path(".git/modules/example", "init", &sb);
++		return 0;
++	}
+ usage:
+-	usage("git submodule--helper [module_list module_name]\n");
++	usage("git submodule--helper [module_list module_name module_clone]\n");
+ }
+diff --git a/git-submodule.sh b/git-submodule.sh
+index e6ff38d..6e8561e 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -178,80 +178,6 @@ get_submodule_config () {
+ 	printf '%s' "${value:-$default}"
  }
  
--int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
+-#
+-# Clone a submodule
+-#
+-# $1 = submodule path
+-# $2 = submodule name
+-# $3 = URL to clone
+-# $4 = reference repository to reuse (empty for independent)
+-# $5 = depth argument for shallow clones (empty for deep)
+-#
+-# Prior to calling, cmd_update checks that a possibly existing
+-# path is not a git repository.
+-# Likewise, cmd_add checks that path does not exist at all,
+-# since it is the location of a new submodule.
+-#
+-module_clone()
 -{
--	switch (git_config_maybe_bool(opt, arg)) {
--	case 1:
--		return RECURSE_SUBMODULES_ON;
--	case 0:
--		return RECURSE_SUBMODULES_OFF;
--	default:
--		if (!strcmp(arg, "on-demand"))
--			return RECURSE_SUBMODULES_ON_DEMAND;
--		/* TODO: remove the die for history parsing here */
--		die("bad %s argument: %s", opt, arg);
--	}
+-	sm_path=$1
+-	name=$2
+-	url=$3
+-	reference="$4"
+-	depth="$5"
+-	quiet=
+-	if test -n "$GIT_QUIET"
+-	then
+-		quiet=-q
+-	fi
+-
+-	gitdir=
+-	gitdir_base=
+-	base_name=$(dirname "$name")
+-
+-	gitdir=$(git rev-parse --git-dir)
+-	gitdir_base="$gitdir/modules/$base_name"
+-	gitdir="$gitdir/modules/$name"
+-
+-	if test -d "$gitdir"
+-	then
+-		mkdir -p "$sm_path"
+-		rm -f "$gitdir/index"
+-	else
+-		mkdir -p "$gitdir_base"
+-		(
+-			clear_local_git_env
+-			git clone $quiet ${depth:+"$depth"} -n ${reference:+"$reference"} \
+-				--separate-git-dir "$gitdir" "$url" "$sm_path"
+-		) ||
+-		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
+-	fi
+-
+-	# We already are at the root of the work tree but cd_to_toplevel will
+-	# resolve any symlinks that might be present in $PWD
+-	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
+-	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
+-	# Remove all common leading directories after a sanity check
+-	if test "${a#$b}" != "$a" || test "${b#$a}" != "$b"; then
+-		die "$(eval_gettext "Gitdir '\$a' is part of the submodule path '\$b' or vice versa")"
+-	fi
+-	while test "${a%%/*}" = "${b%%/*}"
+-	do
+-		a=${a#*/}
+-		b=${b#*/}
+-	done
+-	# Now chop off the trailing '/'s that were added in the beginning
+-	a=${a%/}
+-	b=${b%/}
+-
+-	# Turn each leading "*/" component into "../"
+-	rel=$(printf '%s\n' "$b" | sed -e 's|[^/][^/]*|..|g')
+-	printf '%s\n' "gitdir: $rel/$a" >"$sm_path/.git"
+-
+-	rel=$(printf '%s\n' "$a" | sed -e 's|[^/][^/]*|..|g')
+-	(clear_local_git_env; cd "$sm_path" && GIT_WORK_TREE=. git config core.worktree "$rel/$b")
 -}
 -
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
-diff --git a/submodule.h b/submodule.h
-index 547219d..5507c3d 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -5,6 +5,7 @@ struct diff_options;
- struct argv_array;
+ isnumber()
+ {
+ 	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
+@@ -412,7 +338,7 @@ Use -f if you really want to add it." >&2
+ 				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
+ 			fi
+ 		fi
+-		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" || exit
++		git submodule--helper module_clone --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" --reference "$reference_path" --depth "$depth" || exit
+ 		(
+ 			clear_local_git_env
+ 			cd "$sm_path" &&
+@@ -774,7 +700,7 @@ Maybe you want to use 'update --init'?")"
  
- enum {
-+	RECURSE_SUBMODULES_ERROR = -3,
- 	RECURSE_SUBMODULES_NONE = -2,
- 	RECURSE_SUBMODULES_ON_DEMAND = -1,
- 	RECURSE_SUBMODULES_OFF = 0,
-@@ -21,7 +22,6 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- int submodule_config(const char *var, const char *value, void *cb);
- void gitmodules_config(void);
- void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
--int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index 7229978..fc97c33 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -115,4 +115,39 @@ test_expect_success 'reading of local configuration' '
- 	)
- '
- 
-+cat >super/expect_fetchrecurse_die.err <<EOF
-+fatal: bad submodule.submodule.fetchrecursesubmodules argument: blabla
-+EOF
-+
-+test_expect_success 'local error in fetchrecursesubmodule dies early' '
-+	(cd super &&
-+		git config submodule.submodule.fetchrecursesubmodules blabla &&
-+		test_must_fail test-submodule-config \
-+			"" b \
-+			"" submodule \
-+				>actual.out 2>actual.err &&
-+		touch expect_fetchrecurse_die.out &&
-+		test_cmp expect_fetchrecurse_die.out actual.out  &&
-+		test_cmp expect_fetchrecurse_die.err actual.err  &&
-+		git config --unset submodule.submodule.fetchrecursesubmodules
-+	)
-+'
-+
-+test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
-+	(cd super &&
-+		git config -f .gitmodules \
-+			submodule.submodule.fetchrecursesubmodules blabla &&
-+		git add .gitmodules &&
-+		git config --unset -f .gitmodules \
-+			submodule.submodule.fetchrecursesubmodules &&
-+		git commit -m "add error in fetchrecursesubmodules" &&
-+		test-submodule-config \
-+			HEAD b \
-+			HEAD submodule \
-+				>actual &&
-+		test_cmp expect_error actual  &&
-+		git reset --hard HEAD^
-+	)
-+'
-+
- test_done
+ 		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
+ 		then
+-			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
++			git submodule--helper module_clone --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
+ 			cloned_modules="$cloned_modules;$name"
+ 			subsha1=
+ 		else
 -- 
 2.5.0.330.g130be8e.dirty
