@@ -1,72 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git-am: add am.threeWay config variable
-Date: Tue, 18 Aug 2015 11:36:36 +0200
-Message-ID: <vpqfv3h9bvf.fsf@anie.imag.fr>
-References: <1438697966-4958-1-git-send-email-pyokagan@gmail.com>
+From: Renato Botelho <garga@FreeBSD.org>
+Subject: Re: [bug] 2.5.0 build with =?utf-8?b?Tk9fUEVSTA==?= is broken
+Date: Tue, 18 Aug 2015 11:05:45 +0000 (UTC)
+Message-ID: <loom.20150818T130309-687@post.gmane.org>
+References: <loom.20150814T171757-901@post.gmane.org> <loom.20150814T184447-932@post.gmane.org> <xmqq7foxiqu6.fsf@gitster.dls.corp.google.com> <CAPig+cR77oFo6D3f8BjAB_yM-xPt+3EUGK4vZr3eYWJGTtksAQ@mail.gmail.com> <xmqqoai9h9co.fsf@gitster.dls.corp.google.com> <CAPig+cR6iT=AC8zq-vHHTkXMzRmDA-o9JLi0h8gbR1tzbqNyKA@mail.gmail.com> <xmqqzj1tfr2g.fsf@gitster.dls.corp.google.com> <CAPig+cQkApWfZ6N159F-XFZk+nnzY-gAgLRfZXNitdd0CHpm2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 11:36:52 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 18 13:06:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRdK7-0000hG-6G
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 11:36:51 +0200
+	id 1ZReid-0005Ak-3W
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 13:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751990AbbHRJgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2015 05:36:45 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:55237 "EHLO shiva.imag.fr"
+	id S1751714AbbHRLGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2015 07:06:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:42423 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751860AbbHRJgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2015 05:36:44 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t7I9aahd022215
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 18 Aug 2015 11:36:36 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t7I9aaov000609;
-	Tue, 18 Aug 2015 11:36:36 +0200
-In-Reply-To: <1438697966-4958-1-git-send-email-pyokagan@gmail.com> (Paul Tan's
-	message of "Tue, 4 Aug 2015 22:19:26 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 18 Aug 2015 11:36:36 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t7I9aahd022215
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1440495398.01245@qAfa5PBd9YMLpGecnKiqOA
+	id S1750741AbbHRLGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2015 07:06:08 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ZReiS-00055G-Jt
+	for git@vger.kernel.org; Tue, 18 Aug 2015 13:06:05 +0200
+Received: from mail2.bluepex.com ([200.247.39.210])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 18 Aug 2015 13:06:04 +0200
+Received: from garga by mail2.bluepex.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 18 Aug 2015 13:06:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 200.247.39.210 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:40.0) Gecko/20100101 Firefox/40.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276123>
 
-Paul Tan <pyokagan@gmail.com> writes:
+Eric Sunshine <sunshine <at> sunshineco.com> writes:
 
-> From: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
->
-> Add the am.threeWay configuration variable to use the -3 or --3way
-> option of git am by default. When am.threeway is set and not desired
-> for a specific git am command, the --no-3way option can be used to
-> override it.
->
-> Signed-off-by: Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-> Signed-off-by: Paul Tan <pyokagan@gmail.com>
-> ---
-> I tweaked Remi's patch so it is implemented on top of builtin/am.c. Hopefully
-> there will be no regressions this time ;)
+> 
+> On Fri, Aug 14, 2015 at 6:22 PM, Junio C Hamano <gitster <at> pobox.com>
+wrote:
+> > Eric Sunshine <sunshine <at> sunshineco.com> writes:
+> >
+> >> On Fri, Aug 14, 2015 at 5:02 PM, Junio C Hamano <gitster <at>
+pobox.com> wrote:
+> >>> Eric Sunshine <sunshine <at> sunshineco.com> writes:
+> >>>
+> >>> I do not think that is anything new.  We always have assumed "some"
+> >>> version of Perl available in order to run t/ scripts.
+> >>
+> >> True, but prior to 527ec39, without Perl available, git itself could
+> >> at least be built and used (with some commands unavailable), even if
+> >> it couldn't be fully tested. As of 527ec39, however, git won't even
+> >> build because common-cmds.h can't be generated.
+> >
+> > I wouldn't bother digging in the history myself, but I am reasonably
+> > sure that the current genereate-common-cmds is not the sole instance
+> > that we relied on Perl to build (not test) in the past, and that is
+> > another reason why I do not think this is anything new.
+> 
+> Hmm. In my tests by setting PERL_PATH to a bogus (non-existent)
+> command, prior to 527ec39, git builds successfully, whereas, following
+> 527ec39, it does not build. But, perhaps I overlooked something...(?)
 
-Thanks for doing this.
+It builds but there will be at least 3 commands that won't work:
 
-I don't remember the details of the regression we had with the shell
-version, but that would probably deserve an additional test to enforce
-the "Hopefully there will be no regressions" part of your message.
+git-submodule
+git-request-pull
+git-am
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I'm considering to add perl dependency as mandatory on FreeBSD ports tree,
+and maybe this NO_PERL option doesn't make more sense nowadays...
