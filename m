@@ -1,45 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 8/8] branch: add '--points-at' option
-Date: Wed, 19 Aug 2015 00:45:45 +0530
-Message-ID: <1439925345-9969-9-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v2 1/8] branch: refactor width computation
+Date: Wed, 19 Aug 2015 00:45:38 +0530
+Message-ID: <1439925345-9969-2-git-send-email-Karthik.188@gmail.com>
 References: <1439925345-9969-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 18 21:16:12 2015
+X-From: git-owner@vger.kernel.org Tue Aug 18 21:16:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRmMj-0003qn-TW
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 21:16:10 +0200
+	id 1ZRmMZ-0003fv-NZ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 21:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754218AbbHRTQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2015 15:16:06 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:33420 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754213AbbHRTQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2015 15:16:03 -0400
-Received: by pdrh1 with SMTP id h1so72032222pdr.0
-        for <git@vger.kernel.org>; Tue, 18 Aug 2015 12:16:02 -0700 (PDT)
+	id S1754045AbbHRTPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2015 15:15:44 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:35919 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753221AbbHRTPn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2015 15:15:43 -0400
+Received: by pdbmi9 with SMTP id mi9so30662205pdb.3
+        for <git@vger.kernel.org>; Tue, 18 Aug 2015 12:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CTdYxUASa7EQjFhqeg0+A6SC1XvIR2AqGXoSqxOLDKs=;
-        b=I9Xc77QJCD7FJLCyLE70eu7Pu2zqH6wp3Smirlq+MDTj5Jxh2XWHtTncO9z2npjGjP
-         01G8R9NcadiSPEVvrTD/qNgUAdMJkl7XqE5OopCm+Aos9Ymi0CD4VW+85eGojq3DV/yU
-         3BzXy5oEnsqlGe4gbUCNQa7K8MaCYSRjXdc5kwV+ImMVKuCjF8UTqzcMK213B8koSV6E
-         SnuiIH6wMmErpxx9fhLDGqniRmHCqtUlzW2YDnvhZ5kUjtv4SEVW9De6JCHmMrPEXtr+
-         yJDF1lgDprI2NLp2mF6t8Jzw8N6IIK14g54K8LnIzv9kVJvt4kliDuD+scBf43Tvpe3E
-         scIA==
-X-Received: by 10.70.64.131 with SMTP id o3mr16349721pds.111.1439925362593;
-        Tue, 18 Aug 2015 12:16:02 -0700 (PDT)
+        bh=vQptzrVzJEiS22RSfB3lZAmrHczY474civybJTkbHGk=;
+        b=GNErtqZJ3Bp6Monhf4yP4hxXnHoOh2An0TWDBult3RVe6d4w2iNSnrZf5GjR/cVbLI
+         YsvW8wyQ0eLTqL1JOO8G67p/N8S5mpfwkx675yJhagLIj+BPFYSTL/PeEz673B/dNdnz
+         dLTBhOVklBrnYLX2/Y7LkZ3qoQQASVuTiYn2W/DB46UXvSKn9/S/VUI9I+3SNw/h15W5
+         jUTxkO7BRZcBUYbk6VaePw0EN8bsEJWyX9q/dLBJLs3CuvrAG20aCd1/eZVbqbhnlhM2
+         omCaULpIcBb37cYwnBY4oy4BYzGtNSHyLezFcq3rr46+jvy1sYcn2pjEen5RJSFJ5nvD
+         omSg==
+X-Received: by 10.70.127.206 with SMTP id ni14mr16263091pdb.53.1439925342741;
+        Tue, 18 Aug 2015 12:15:42 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id v2sm43800pda.34.2015.08.18.12.16.00
+        by smtp.gmail.com with ESMTPSA id v2sm43800pda.34.2015.08.18.12.15.40
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 18 Aug 2015 12:16:02 -0700 (PDT)
+        Tue, 18 Aug 2015 12:15:42 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <1439925345-9969-1-git-send-email-Karthik.188@gmail.com>
@@ -47,95 +46,187 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276153>
 
-Add the '--points-at' option provided by 'ref-filter'. The option lets
-the user to list only branches which points at the given object.
+From: Karthik Nayak <karthik.188@gmail.com>
 
-Add documentation and tests for the same.
+Remove unnecessary variables from ref_list and ref_item which were
+used for width computation. This is to make ref_item similar to
+ref-filter's ref_array_item. This will ensure a smooth port of
+branch.c to use ref-filter APIs in further patches.
 
+Previously the maxwidth was computed when inserting the refs into the
+ref_list. Now, we obtain the entire ref_list and then compute
+maxwidth.
+
+Based-on-patch-by: Jeff King <peff@peff.net>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-branch.txt | 6 +++++-
- builtin/branch.c             | 7 ++++++-
- t/t3203-branch-output.sh     | 9 +++++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
+ builtin/branch.c | 64 ++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 34 insertions(+), 30 deletions(-)
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 897cd81..211cfc3 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -11,7 +11,8 @@ SYNOPSIS
- 'git branch' [--color[=<when>] | --no-color] [-r | -a]
- 	[--list] [-v [--abbrev=<length> | --no-abbrev]]
- 	[--column[=<options>] | --no-column]
--	[(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>] [<pattern>...]
-+	[(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>]
-+	[--points-at <object>] [<pattern>...]
- 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
- 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
- 'git branch' --unset-upstream [<branchname>]
-@@ -237,6 +238,9 @@ start-point is either a local or remote-tracking branch.
- 	for-each-ref`. Sort order defaults to sorting based on branch
- 	type.
- 
-+--points-at <object>::
-+	Only list branches of the given object.
-+
- Examples
- --------
- 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 61b1c40..dd2fdbe 100644
+index 4fc8beb..28a10d6 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -26,6 +26,7 @@ static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] [-l] [-f] <branch-name> [<start-point>]"),
- 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
- 	N_("git branch [<options>] (-m | -M) [<old-branch>] <new-branch>"),
-+	N_("git branch [<options>] [-r | -a] [--points-at]"),
- 	NULL
+@@ -282,14 +282,14 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ struct ref_item {
+ 	char *name;
+ 	char *dest;
+-	unsigned int kind, width;
++	unsigned int kind;
+ 	struct commit *commit;
+ 	int ignore;
  };
  
-@@ -654,6 +655,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_COLUMN(0, "column", &colopts, N_("list branches in columns")),
- 		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
- 			     N_("field name to sort on"), &parse_opt_ref_sorting),
-+		{
-+			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
-+			N_("print only branches of the object"), 0, parse_opt_object_name
-+		},
- 		OPT_END(),
- 	};
+ struct ref_list {
+ 	struct rev_info revs;
+-	int index, alloc, maxwidth, verbose, abbrev;
++	int index, alloc, verbose, abbrev;
+ 	struct ref_item *list;
+ 	struct commit_list *with_commit;
+ 	int kinds;
+@@ -386,15 +386,8 @@ static int append_ref(const char *refname, const struct object_id *oid, int flag
+ 	newitem->name = xstrdup(refname);
+ 	newitem->kind = kind;
+ 	newitem->commit = commit;
+-	newitem->width = utf8_strwidth(refname);
+ 	newitem->dest = resolve_symref(orig_refname, prefix);
+ 	newitem->ignore = 0;
+-	/* adjust for "remotes/" */
+-	if (newitem->kind == REF_REMOTE_BRANCH &&
+-	    ref_list->kinds != REF_REMOTE_BRANCH)
+-		newitem->width += 8;
+-	if (newitem->width > ref_list->maxwidth)
+-		ref_list->maxwidth = newitem->width;
  
-@@ -682,7 +687,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (!delete && !rename && !edit_description && !new_upstream && !unset_upstream && argc == 0)
- 		list = 1;
+ 	return 0;
+ }
+@@ -505,11 +498,12 @@ static void add_verbose_info(struct strbuf *out, struct ref_item *item,
+ }
  
--	if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE)
-+	if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE || filter.points_at.nr)
- 		list = 1;
+ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+-			   int abbrev, int current, char *prefix)
++			   int abbrev, int current, const char *remote_prefix)
+ {
+ 	char c;
+ 	int color;
+ 	struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
++	const char *prefix = "";
  
- 	if (!!delete + !!rename + !!new_upstream +
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 38c68bd..1deb7cb 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -154,4 +154,13 @@ EOF
- 	test_i18ncmp expect actual
- '
+ 	if (item->ignore)
+ 		return;
+@@ -520,6 +514,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ 		break;
+ 	case REF_REMOTE_BRANCH:
+ 		color = BRANCH_COLOR_REMOTE;
++		prefix = remote_prefix;
+ 		break;
+ 	default:
+ 		color = BRANCH_COLOR_PLAIN;
+@@ -557,16 +552,22 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ 	strbuf_release(&out);
+ }
  
-+test_expect_success 'git branch --points-at option' '
-+	cat >expect <<EOF &&
-+  master
-+  branch-one
-+EOF
-+	git branch --points-at=branch-one >actual &&
-+	test_cmp expect actual
-+'
+-static int calc_maxwidth(struct ref_list *refs)
++static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
+ {
+-	int i, w = 0;
++	int i, max = 0;
+ 	for (i = 0; i < refs->index; i++) {
+-		if (refs->list[i].ignore)
++		struct ref_item *it = &refs->list[i];
++		int w;
 +
- test_done
++		if (it->ignore)
+ 			continue;
+-		if (refs->list[i].width > w)
+-			w = refs->list[i].width;
++		w = utf8_strwidth(it->name);
++		if (it->kind == REF_REMOTE_BRANCH)
++			w += remote_bonus;
++		if (w > max)
++			max = w;
+ 	}
+-	return w;
++	return max;
+ }
+ 
+ static char *get_head_description(void)
+@@ -600,21 +601,18 @@ static char *get_head_description(void)
+ 	return strbuf_detach(&desc, NULL);
+ }
+ 
+-static void show_detached(struct ref_list *ref_list)
++static void show_detached(struct ref_list *ref_list, int maxwidth)
+ {
+ 	struct commit *head_commit = lookup_commit_reference_gently(head_sha1, 1);
+ 
+ 	if (head_commit && is_descendant_of(head_commit, ref_list->with_commit)) {
+ 		struct ref_item item;
+ 		item.name = get_head_description();
+-		item.width = utf8_strwidth(item.name);
+ 		item.kind = REF_LOCAL_BRANCH;
+ 		item.dest = NULL;
+ 		item.commit = head_commit;
+ 		item.ignore = 0;
+-		if (item.width > ref_list->maxwidth)
+-			ref_list->maxwidth = item.width;
+-		print_ref_item(&item, ref_list->maxwidth, ref_list->verbose, ref_list->abbrev, 1, "");
++		print_ref_item(&item, maxwidth, ref_list->verbose, ref_list->abbrev, 1, "");
+ 		free(item.name);
+ 	}
+ }
+@@ -624,6 +622,16 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 	int i;
+ 	struct append_ref_cb cb;
+ 	struct ref_list ref_list;
++	int maxwidth = 0;
++	const char *remote_prefix = "";
++
++	/*
++	 * If we are listing more than just remote branches,
++	 * then remote branches will have a "remotes/" prefix.
++	 * We need to account for this in the width.
++	 */
++	if (kinds != REF_REMOTE_BRANCH)
++		remote_prefix = "remotes/";
+ 
+ 	memset(&ref_list, 0, sizeof(ref_list));
+ 	ref_list.kinds = kinds;
+@@ -667,26 +675,22 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 			clear_commit_marks(item->commit, ALL_REV_FLAGS);
+ 		}
+ 		clear_commit_marks(filter, ALL_REV_FLAGS);
+-
+-		if (verbose)
+-			ref_list.maxwidth = calc_maxwidth(&ref_list);
+ 	}
++	if (verbose)
++		maxwidth = calc_maxwidth(&ref_list, strlen(remote_prefix));
+ 
+ 	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
+ 
+ 	detached = (detached && (kinds & REF_LOCAL_BRANCH));
+ 	if (detached && match_patterns(pattern, "HEAD"))
+-		show_detached(&ref_list);
++		show_detached(&ref_list, maxwidth);
+ 
+ 	for (i = 0; i < ref_list.index; i++) {
+ 		int current = !detached &&
+ 			(ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
+ 			!strcmp(ref_list.list[i].name, head);
+-		char *prefix = (kinds != REF_REMOTE_BRANCH &&
+-				ref_list.list[i].kind == REF_REMOTE_BRANCH)
+-				? "remotes/" : "";
+-		print_ref_item(&ref_list.list[i], ref_list.maxwidth, verbose,
+-			       abbrev, current, prefix);
++		print_ref_item(&ref_list.list[i], maxwidth, verbose,
++			       abbrev, current, remote_prefix);
+ 	}
+ 
+ 	free_ref_list(&ref_list);
 -- 
 2.5.0
