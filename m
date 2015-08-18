@@ -1,44 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v12 13/13] tag.c: implement '--merged' and '--no-merged' options
-Date: Wed, 19 Aug 2015 00:07:32 +0530
-Message-ID: <1439923052-7373-14-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v12 08/13] ref-filter: add support to sort by version
+Date: Wed, 19 Aug 2015 00:07:27 +0530
+Message-ID: <1439923052-7373-9-git-send-email-Karthik.188@gmail.com>
 References: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 18 20:38:18 2015
+X-From: git-owner@vger.kernel.org Tue Aug 18 20:38:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRlm4-0000Cc-Kt
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 20:38:17 +0200
+	id 1ZRlm3-0000Cc-Ft
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 20:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754067AbbHRSiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2015 14:38:07 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:36802 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754061AbbHRSiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2015 14:38:03 -0400
-Received: by pawq9 with SMTP id q9so41148699paw.3
-        for <git@vger.kernel.org>; Tue, 18 Aug 2015 11:38:03 -0700 (PDT)
+	id S1754046AbbHRShz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2015 14:37:55 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:35590 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753952AbbHRShx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2015 14:37:53 -0400
+Received: by pacgr6 with SMTP id gr6so138235629pac.2
+        for <git@vger.kernel.org>; Tue, 18 Aug 2015 11:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OCtKSuLJgU7m2/X8NlfJANReed6TkU2VaAuG3mFH/jM=;
-        b=IdHyXaRYKOxd7S4mJX6voNNzeMsmNrs5qXjssabG7DW26g8cMNpyxIeScgUszt6/kI
-         FkQQsE0Yx+jnQq+Erm63uvIU+fLdOlgTfI4xjNVJFaL2JAce91ut9EG9FYffvcKlX1Mn
-         VScPgl9jL8+d7FaZG0Zw665MfaQ2xykoUZlh6y92Y5nx5ea97C5pqNPkcf+Jfg2ZuCTJ
-         no2z4WifaYd3g7dNVm886aRbtZ4RctN7YORVRj0y7O5n3oJoIC5DCkSOA4jjdG4NxTgy
-         SnGPXsvdD3cq0Rl/aGxjg9VdFIfbPJwE7FifnP6CS5GgThAYutJ1y4jJRN7OBfK2NyoW
-         3QVA==
-X-Received: by 10.66.131.6 with SMTP id oi6mr15977546pab.121.1439923083246;
-        Tue, 18 Aug 2015 11:38:03 -0700 (PDT)
+        bh=bzz4GSshkNKs5fWaoVx8iXXaC2kv8dZVIStBarGK178=;
+        b=q5JFrrDJTZCnnc6Wm9O0tocsfi5Bv343o+CuqMK+XSu6QpTpIITElh9XUcwlRUn5Sd
+         h1wE1o7lCMv0kfmNUA5uIafd1xpSibQmM0mBGH312C77eu6ZMdpNWCCUPPCa24LoWn1p
+         FFerrxNK9MI7XN0S60Y66j04Cnttsjo8aFjMTZ/T4G8PZESRaMF7uXZyvJ0OVczHDZh9
+         qULVMcHWBdyUosWg12o99HyrnKSt9C5oqGdWQNdHAomXeFo+nmVXkv2f6blqS6dWI21z
+         jYnZD5GvgajqpnnWr6R3/QjZCdMXCKkBBXw29wzWJKyjn8iRsM5RfOe9PR4pNgoayRJo
+         NqUw==
+X-Received: by 10.68.234.69 with SMTP id uc5mr15782117pbc.81.1439923071156;
+        Tue, 18 Aug 2015 11:37:51 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id i9sm18858190pbq.44.2015.08.18.11.38.00
+        by smtp.gmail.com with ESMTPSA id i9sm18858190pbq.44.2015.08.18.11.37.48
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 18 Aug 2015 11:38:02 -0700 (PDT)
+        Tue, 18 Aug 2015 11:37:50 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
@@ -46,15 +46,16 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276145>
 
 From: Karthik Nayak <karthik.188@gmail.com>
 
-Use 'ref-filter' APIs to implement the '--merged' and '--no-merged'
-options into 'tag.c'. The '--merged' option lets the user to only list
-tags merged into the named commit. The '--no-merged' option lets the
-user to only list tags not merged into the named commit.  If no object
-is provided it assumes HEAD as the object.
+Add support to sort by version using the "v:refname" and
+"version:refname" option. This is achieved by using the 'versioncmp()'
+function as the comparing function for qsort.
+
+This option is included to support sorting by versions in `git tag -l`
+which will eventually be ported to use ref-filter APIs.
 
 Add documentation and tests for the same.
 
@@ -62,99 +63,129 @@ Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-tag.txt |  7 ++++++-
- builtin/tag.c             |  6 +++++-
- t/t7004-tag.sh            | 27 +++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+), 2 deletions(-)
+ Documentation/git-for-each-ref.txt |  3 +++
+ ref-filter.c                       | 15 ++++++++++-----
+ ref-filter.h                       |  3 ++-
+ t/t6302-for-each-ref-filter.sh     | 36 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 51 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 75703c5..c2785d9 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 'git tag' -d <tagname>...
- 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
- 	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
--	[--format=<format>] [<pattern>...]
-+	[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]
- 'git tag' -v <tagname>...
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index fe7889c..760d719 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -153,6 +153,9 @@ For sorting purposes, fields with numeric values sort in numeric
+ order (`objectsize`, `authordate`, `committerdate`, `taggerdate`).
+ All other fields are used to sort in their byte-value order.
  
- DESCRIPTION
-@@ -171,6 +171,11 @@ This option is only applicable when listing tags without annotation lines.
- 	`%0a` to `\n` (LF).  The fields are same as those in `git
- 	for-each-ref`.
- 
-+--[no-]merged [<commit>]::
-+	Only list tags whose tips are reachable, or not reachable
-+	if '--no-merged' is used, from the specified commit ('HEAD'
-+	if not specified).
++There is also an option to sort by versions, this can be done by using
++the fieldname `version:refname` or its alias `v:refname`.
 +
+ In any case, a field name that refers to a field inapplicable to
+ the object referred by the ref does not cause an error.  It
+ returns an empty string instead.
+diff --git a/ref-filter.c b/ref-filter.c
+index a9fe54a..67c7846 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -11,6 +11,8 @@
+ #include "ref-filter.h"
+ #include "revision.h"
+ #include "utf8.h"
++#include "git-compat-util.h"
++#include "version.h"
  
- CONFIGURATION
- -------------
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 69997a4..781d3e5 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -23,7 +23,7 @@ static const char * const git_tag_usage[] = {
- 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> [<head>]"),
- 	N_("git tag -d <tagname>..."),
- 	N_("git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>]"
--		"\n\t\t[<pattern>...]"),
-+		"\n\t\t[--[no-]merged [<commit>]] [<pattern>...]"),
- 	N_("git tag -v <tagname>..."),
- 	NULL
+ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+ 
+@@ -1305,19 +1307,19 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+ 
+ 	get_ref_atom_value(a, s->atom, &va);
+ 	get_ref_atom_value(b, s->atom, &vb);
+-	switch (cmp_type) {
+-	case FIELD_STR:
++	if (s->version)
++		cmp = versioncmp(va->s, vb->s);
++	else if (cmp_type == FIELD_STR)
+ 		cmp = strcmp(va->s, vb->s);
+-		break;
+-	default:
++	else {
+ 		if (va->ul < vb->ul)
+ 			cmp = -1;
+ 		else if (va->ul == vb->ul)
+ 			cmp = 0;
+ 		else
+ 			cmp = 1;
+-		break;
+ 	}
++
+ 	return (s->reverse) ? -cmp : cmp;
+ }
+ 
+@@ -1519,6 +1521,9 @@ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
+ 		s->reverse = 1;
+ 		arg++;
+ 	}
++	if (skip_prefix(arg, "version:", &arg) ||
++	    skip_prefix(arg, "v:", &arg))
++		s->version = 1;
+ 	len = strlen(arg);
+ 	s->atom = parse_ref_filter_atom(arg, arg+len);
+ 	return 0;
+diff --git a/ref-filter.h b/ref-filter.h
+index c599ea2..5aa2f40 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -27,7 +27,8 @@ struct atom_value;
+ struct ref_sorting {
+ 	struct ref_sorting *next;
+ 	int atom; /* index into used_atom array (internal) */
+-	unsigned reverse : 1;
++	unsigned reverse : 1,
++		version : 1;
  };
-@@ -353,6 +353,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
- 		OPT_CONTAINS(&filter.with_commit, N_("print only tags that contain the commit")),
- 		OPT_WITH(&filter.with_commit, N_("print only tags that contain the commit")),
-+		OPT_MERGED(&filter, N_("print only tags that are merged")),
-+		OPT_NO_MERGED(&filter, N_("print only tags that are not merged")),
- 		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
- 			     N_("field name to sort on"), &parse_opt_ref_sorting),
- 		{
-@@ -413,6 +415,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		die(_("--contains option is only allowed with -l."));
- 	if (filter.points_at.nr)
- 		die(_("--points-at option is only allowed with -l."));
-+	if (filter.merge_commit)
-+		die(_("--merged and --no-merged option are only allowed with -l"));
- 	if (cmdmode == 'd')
- 		return for_each_tag_name(argv, delete_tag);
- 	if (cmdmode == 'v')
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 26670e0..335396e 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1535,4 +1535,31 @@ test_expect_success '--format should list tags as per format given' '
+ 
+ struct ref_array_item {
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index b252a50..1c56879 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -129,4 +129,40 @@ test_expect_success 'right alignment' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'setup --merged test tags' '
-+	git tag mergetest-1 HEAD~2 &&
-+	git tag mergetest-2 HEAD~1 &&
-+	git tag mergetest-3 HEAD
++test_expect_success 'setup for version sort' '
++	test_commit foo1.3 &&
++	test_commit foo1.6 &&
++	test_commit foo1.10
 +'
 +
-+test_expect_success '--merged cannot be used in non-list mode' '
-+	test_must_fail git tag --merged=mergetest-2 foo
-+'
-+
-+test_expect_success '--merged shows merged tags' '
++test_expect_success 'version sort' '
++	git for-each-ref --sort=version:refname --format="%(refname:short)" refs/tags/ | grep "foo" >actual &&
 +	cat >expect <<-\EOF &&
-+	mergetest-1
-+	mergetest-2
++	foo1.3
++	foo1.6
++	foo1.10
 +	EOF
-+	git tag -l --merged=mergetest-2 mergetest-* >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success '--no-merged show unmerged tags' '
++test_expect_success 'version sort (shortened)' '
++	git for-each-ref --sort=v:refname --format="%(refname:short)" refs/tags/ | grep "foo" >actual &&
 +	cat >expect <<-\EOF &&
-+	mergetest-3
++	foo1.3
++	foo1.6
++	foo1.10
 +	EOF
-+	git tag -l --no-merged=mergetest-2 mergetest-* >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'reverse version sort' '
++	git for-each-ref --sort=-version:refname --format="%(refname:short)" refs/tags/ | grep "foo" >actual &&
++	cat >expect <<-\EOF &&
++	foo1.10
++	foo1.6
++	foo1.3
++	EOF
 +	test_cmp expect actual
 +'
 +
