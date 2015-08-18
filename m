@@ -1,45 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v12 03/13] ref-filter: introduce the ref_formatting_state stack machinery
-Date: Wed, 19 Aug 2015 00:07:22 +0530
-Message-ID: <1439923052-7373-4-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v12 09/13] ref-filter: add option to match literal pattern
+Date: Wed, 19 Aug 2015 00:07:28 +0530
+Message-ID: <1439923052-7373-10-git-send-email-Karthik.188@gmail.com>
 References: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 18 20:37:54 2015
+X-From: git-owner@vger.kernel.org Tue Aug 18 20:38:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRllb-0008Iz-2u
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 20:37:47 +0200
+	id 1ZRllr-0008Tk-Uu
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 20:38:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753991AbbHRShj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2015 14:37:39 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:34898 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751612AbbHRShi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2015 14:37:38 -0400
-Received: by pdob1 with SMTP id b1so15491495pdo.2
-        for <git@vger.kernel.org>; Tue, 18 Aug 2015 11:37:38 -0700 (PDT)
+	id S1754050AbbHRSh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2015 14:37:56 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:34230 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754015AbbHRShy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2015 14:37:54 -0400
+Received: by paccq16 with SMTP id cq16so94604832pac.1
+        for <git@vger.kernel.org>; Tue, 18 Aug 2015 11:37:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5n/L14IoQk+m5/kVakQtyErqqPKjdGhTLxptYiTQTbE=;
-        b=vwcCRZ2y7XMImQ53tjYK3TETLQ58yMJM1N5FVMrbm150+lb1muoKjlSXR0IRTawDdn
-         s3NxWnvP69EolISuk/MohN9LA6VozcEDVJL7BFjcfF7VODCfVNohYMNL/nd0fs7udrtK
-         tRlglFEAdudeKpZBNc7x3VPMX83VCl2T/sr0wlDeNrmQ4sI7ETyuKOSykUK8VZg4mEyn
-         3M2c8n+1Hune76WsKu8FY1OvE0neAwE+OpyOot5NVL95eUvwmMbOa5htPcFZqA4qK29u
-         1lBWf1sSmX9qY95zhRmTfNg90eOE2IvtsHsbbvLlVK/wOasWdE42Irq5/cBwqpu9vyoG
-         FpRA==
-X-Received: by 10.70.51.65 with SMTP id i1mr16094314pdo.90.1439923058380;
-        Tue, 18 Aug 2015 11:37:38 -0700 (PDT)
+        bh=bQEYE6FGr5KHPkAytb24irV5t5FkpeafLwVbFiwAyv4=;
+        b=J7n/soRadlmzL/4GZUxkfSmRMB9BJ6CjjR4M6iovEDyEiADYgaSsjJdwYCxluZuwG1
+         ecrdHm76fNbhjEnAFcsHaOxkQwRwJg/Wa144ojst9MoMwgpVVZQmb8bJU1aq/g9SgfhA
+         YgQPCkNH79F4HaBAulPlRYC5Xqdev9D6x8cnP5WGgYT0ds1RJa5upIUFdYdBtfkw7iu6
+         W2QBoskvu2VDbGH6U3VY7St+9fu9RaEaAfeeDCbhSZQCuopvR3xQstzfZumIm6vPNelg
+         SPFLT0roizTYuuGzGyCDprUfbG4JqRjVUDejnw7f/JmnNnTQnwWWshJ5BKAGY5C/xcEb
+         ZGhA==
+X-Received: by 10.68.201.105 with SMTP id jz9mr11698561pbc.86.1439923073551;
+        Tue, 18 Aug 2015 11:37:53 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id i9sm18858190pbq.44.2015.08.18.11.37.35
+        by smtp.gmail.com with ESMTPSA id i9sm18858190pbq.44.2015.08.18.11.37.51
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 18 Aug 2015 11:37:37 -0700 (PDT)
+        Tue, 18 Aug 2015 11:37:52 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.0
 In-Reply-To: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
@@ -47,106 +46,117 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276141>
 
-Introduce a stack machinery for ref_formatting_state, this allows us
-to push and pop states. Whenever we pop a state the strbuf from that
-state is appended into the next state on the stack, this will allow us
-to support nesting of modifier atoms.
+From: Karthik Nayak <karthik.188@gmail.com>
+
+Since 'ref-filter' only has an option to match path names add an
+option for plain fnmatch pattern-matching.
+
+This is to support the pattern matching options which are used in `git
+tag -l` and `git branch -l` where we can match patterns like `git tag
+-l foo*` which would match all tags which has a "foo*" pattern.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- ref-filter.c | 42 +++++++++++++++++++++++++++++++++---------
- 1 file changed, 33 insertions(+), 9 deletions(-)
+ builtin/for-each-ref.c |  1 +
+ ref-filter.c           | 40 +++++++++++++++++++++++++++++++++++++---
+ ref-filter.h           |  3 ++-
+ 3 files changed, 40 insertions(+), 4 deletions(-)
 
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index e4a4f8a..3ad6a64 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -68,6 +68,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	git_config(git_default_config, NULL);
+ 
+ 	filter.name_patterns = argv;
++	filter.match_as_path = 1;
+ 	filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
+ 	ref_array_sort(sorting, &array);
+ 
 diff --git a/ref-filter.c b/ref-filter.c
-index dd62640..74532d3 100644
+index 67c7846..665221b 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -56,6 +56,7 @@ static struct {
- };
+@@ -1033,9 +1033,33 @@ static int commit_contains(struct ref_filter *filter, struct commit *commit)
  
- struct ref_formatting_state {
-+	struct ref_formatting_state *prev;
- 	struct strbuf output;
- 	int quote_style;
- };
-@@ -134,6 +135,27 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
- 	return at;
- }
- 
-+static void push_new_state(struct ref_formatting_state **stack)
+ /*
+  * Return 1 if the refname matches one of the patterns, otherwise 0.
++ * A pattern can be a literal prefix (e.g. a refname "refs/heads/master"
++ * matches a pattern "refs/heads/mas") or a wildcard (e.g. the same ref
++ * matches "refs/heads/mas*", too).
++ */
++static int match_pattern(const char **patterns, const char *refname)
 +{
-+	struct ref_formatting_state *s = xcalloc(1, sizeof(struct ref_formatting_state));
++	/*
++	 * When no '--format' option is given we need to skip the prefix
++	 * for matching refs of tags and branches.
++	 */
++	(void)(skip_prefix(refname, "refs/tags/", &refname) ||
++	       skip_prefix(refname, "refs/heads/", &refname) ||
++	       skip_prefix(refname, "refs/remotes/", &refname) ||
++	       skip_prefix(refname, "refs/", &refname));
 +
-+	strbuf_init(&s->output, 0);
-+	s->prev = *stack;
-+	*stack = s;
++	for (; *patterns; patterns++) {
++		if (!wildmatch(*patterns, refname, 0, NULL))
++			return 1;
++	}
++	return 0;
 +}
 +
-+static void pop_state(struct ref_formatting_state **stack)
++/*
++ * Return 1 if the refname matches one of the patterns, otherwise 0.
+  * A pattern can be path prefix (e.g. a refname "refs/heads/master"
+- * matches a pattern "refs/heads/") or a wildcard (e.g. the same ref
+- * matches "refs/heads/m*",too).
++ * matches a pattern "refs/heads/" but not "refs/heads/m") or a
++ * wildcard (e.g. the same ref matches "refs/heads/m*", too).
+  */
+ static int match_name_as_path(const char **pattern, const char *refname)
+ {
+@@ -1056,6 +1080,16 @@ static int match_name_as_path(const char **pattern, const char *refname)
+ 	return 0;
+ }
+ 
++/* Return 1 if the refname matches one of the patterns, otherwise 0. */
++static int filter_pattern_match(struct ref_filter *filter, const char *refname)
 +{
-+	struct ref_formatting_state *current = *stack;
-+	struct ref_formatting_state *prev = current->prev;
-+
-+	if (prev)
-+		strbuf_addbuf(&prev->output, &current->output);
-+	strbuf_release(&current->output);
-+	free(current);
-+	*stack = prev;
++	if (!*filter->name_patterns)
++		return 1; /* No pattern always matches */
++	if (filter->match_as_path)
++		return match_name_as_path(filter->name_patterns, refname);
++	return match_pattern(filter->name_patterns, refname);
 +}
 +
  /*
-  * In a format string, find the next occurrence of %(atom).
-  */
-@@ -1262,23 +1284,24 @@ static void append_literal(const char *cp, const char *ep, struct ref_formatting
- void show_ref_array_item(struct ref_array_item *info, const char *format, int quote_style)
- {
- 	const char *cp, *sp, *ep;
--	struct ref_formatting_state state;
-+	struct strbuf *final_buf;
-+	struct ref_formatting_state *state = NULL;
+  * Given a ref (sha1, refname), check if the ref belongs to the array
+  * of sha1s. If the given ref is a tag, check if the given tag points
+@@ -1159,7 +1193,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	if (!(kind & filter->kind))
+ 		return 0;
  
--	strbuf_init(&state.output, 0);
--	state.quote_style = quote_style;
-+	push_new_state(&state);
-+	state->quote_style = quote_style;
+-	if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
++	if (!filter_pattern_match(filter, refname))
+ 		return 0;
  
- 	for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
- 		struct atom_value *atomv;
+ 	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid->hash, refname))
+diff --git a/ref-filter.h b/ref-filter.h
+index 5aa2f40..8241066 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -58,7 +58,8 @@ struct ref_filter {
+ 	} merge;
+ 	struct commit *merge_commit;
  
- 		ep = strchr(sp, ')');
- 		if (cp < sp)
--			append_literal(cp, sp, &state);
-+			append_literal(cp, sp, state);
- 		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
--		append_atom(atomv, &state);
-+		append_atom(atomv, state);
- 	}
- 	if (*cp) {
- 		sp = cp + strlen(cp);
--		append_literal(cp, sp, &state);
-+		append_literal(cp, sp, state);
- 	}
- 	if (need_color_reset_at_eol) {
- 		struct atom_value resetv;
-@@ -1287,11 +1310,12 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- 		if (color_parse("reset", color) < 0)
- 			die("BUG: couldn't parse 'reset' as a color");
- 		resetv.s = color;
--		append_atom(&resetv, &state);
-+		append_atom(&resetv, state);
- 	}
--	fwrite(state.output.buf, 1, state.output.len, stdout);
-+	final_buf = &state->output;
-+	fwrite(final_buf->buf, 1, final_buf->len, stdout);
-+	pop_state(&state);
- 	putchar('\n');
--	strbuf_release(&state.output);
- }
- 
- /*  If no sorting option is given, use refname to sort as default */
+-	unsigned int with_commit_tag_algo : 1;
++	unsigned int with_commit_tag_algo : 1,
++		match_as_path : 1;
+ 	unsigned int kind,
+ 		lines;
+ };
 -- 
 2.5.0
