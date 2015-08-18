@@ -1,98 +1,153 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] config.mak.uname: Cygwin: Use renames for creation
-Date: Tue, 18 Aug 2015 17:44:31 +0200
+Subject: Git for Windows 2.5.0
+Date: Tue, 18 Aug 2015 18:30:04 +0200
 Organization: gmx
-Message-ID: <053a445c5b44e4c92dccba4dd5de26b9@www.dscho.org>
-References: <1438979428-5888-1-git-send-email-adam@dinwoodie.org>
- <55C66AF2.3060706@gmail.com>
- <20150808210627.GB155450@vauxhall.crustytoothpaste.net>
- <CA+kUOa=KRBSKDqWUj2RiO45PqVYGmN+yqG426jtUoXayxGkduw@mail.gmail.com>
- <058a7756ada2fa5043ca9b910d6e1543@www.dscho.org>
- <55C7883C.7040504@dinwoodie.org>
+Message-ID: <654220c3a9a816244094a1672fa087bf@www.dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org,
-	Eric Blake <eblake@redhat.com>,
-	"Shawn O . Pearce" <spearce@spearce.org>
-To: Adam Dinwoodie <adam@dinwoodie.org>
-X-From: git-owner@vger.kernel.org Tue Aug 18 17:44:57 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>, msysgit@googlegroups.com,
+ git-for-windows@googlegroups.com
+X-From: msysgit+bncBCZPH74Q5YNRBEN3ZWXAKGQEHWGM2SY@googlegroups.com Tue Aug 18 18:30:13 2015
+Return-path: <msysgit+bncBCZPH74Q5YNRBEN3ZWXAKGQEHWGM2SY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f191.google.com ([209.85.212.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRj4D-0004Sv-Ub
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 17:44:50 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753412AbbHRPop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2015 11:44:45 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64765 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751634AbbHRPop (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2015 11:44:45 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MKYLf-1ZS0JS1TVP-0020RD; Tue, 18 Aug 2015 17:44:33
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBEN3ZWXAKGQEHWGM2SY@googlegroups.com>)
+	id 1ZRjm6-00047b-SH
+	for gcvm-msysgit@m.gmane.org; Tue, 18 Aug 2015 18:30:10 +0200
+Received: by wicxr16 with SMTP id xr16sf21811223wic.1
+        for <gcvm-msysgit@m.gmane.org>; Tue, 18 Aug 2015 09:30:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:content-type:date:from:to:subject:organization
+         :message-id:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=B1AvJ67J849RdbFUk8vC8lp9zqfzwuMl+louDZtglSw=;
+        b=CE0aodp4KepZgEFY4+Ikk0zO8nXH8JY8rwsuaZtSJVGQPdftdSnu03RXuXa3vhQsMR
+         o0UBPLWRrVDJ4CcLssD8lcEoRbACyfqEwQgGeYs03QUNavFCQJBNM+JiVQQxH+SLw4LV
+         NprOk7n8+JTl4ncE4c3irZtIyO9aESqNncfOYhxsLHQbd310HX+EtEqc1lTIPoSabzZk
+         49W+i8tCMrc53r+rLnVK25xp8gZqQFccHYN/lxz34an8sJF4heuI+ttdZeLvBGGbUXMe
+         GNbOCTi49w7dmdOKgum96eOhg2wlvwhEsQPBi4wK5EXe8vUuBOkNCIkCmmmYRLVAz215
+         NZVQ==
+X-Received: by 10.152.180.235 with SMTP id dr11mr48569lac.23.1439915410568;
+        Tue, 18 Aug 2015 09:30:10 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.26.65 with SMTP id j1ls812630lag.39.gmail; Tue, 18 Aug
+ 2015 09:30:09 -0700 (PDT)
+X-Received: by 10.112.149.39 with SMTP id tx7mr2055769lbb.11.1439915409264;
+        Tue, 18 Aug 2015 09:30:09 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.22])
+        by gmr-mx.google.com with ESMTPS id jv9si509674wid.0.2015.08.18.09.30.09
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 18 Aug 2015 09:30:09 -0700 (PDT)
+Received-SPF: pass (google.com: domain of johannes.schindelin@gmx.de designates 212.227.17.22 as permitted sender) client-ip=212.227.17.22;
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MeMOx-1Z87G629ol-00Q8GK; Tue, 18 Aug 2015 18:30:05
  +0200
-In-Reply-To: <55C7883C.7040504@dinwoodie.org>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:t126cTT0eAk/vyxG7AHTrNvQ4Wi/qWq6bnoxNh6pcKpyUalvGUq
- PjEIUJTW2do3nsJU6kAWZhigSC8WyqQBT3a5cNiUfUPGV3ZndDX2scHLGi4FPp0DF46c4kd
- PTFBj2BnYT7EfwWOFoO9XoHSjc1S6QV8gzX9zlAuxlqkYCD1sv9QAX9dO26vU5iQOXxG+Z8
- oDdZAZw0nmzZtd1i1P+lg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZytJr+EA85I=:bL/Jb7dqN1VS3Hi7lZSa6Q
- c7WIIZWHAgpKHMpTTBqup/y992R6DN+0bYY5+crLBjmGQnpdDxSmg6oQZZNru0SCVKAJW8k7C
- SKQKe/zCB9U7UVtITEIrLpu0xVcSZEYuc7HyOb1+1Yszw6TDGrccIODET8Ex7gTvkHGuI0+Q7
- TPrL2mnTjY2EcKjW7ixJozv/3jb3ZYrjIqC9TVQPNl2hpjD4/N8qpbSYHTljjXiEbkzgKlMVs
- uzfSEbDnx7w72yLqP6rTN66nqwNSEK7YrtniZQbJLhRDl2CZ9/WM+kpdiAy8yKc9ZVrPCypAn
- W9vHeeq3F40l/4q4Ab9to7GEQZ6F8afaFX28+d6oWTJOtm7MBhyiTpjIvEkBqo7CU1esPvbeV
- gWHPIbxV2jIZr6nbm5p7oRWHUI69AL7vWTt1wsSP5nG3T2fvj2+TtTmjQtswK6+BVBa7Q5RiL
- nk/0v81a2+9hUf7F8Pjt3pzQE+1MsPjsP0/dAg0djKo86RlCQSCkkGba7KUG+d1hdr29LY1VO
- ccnvENNVhPme38G8v6uJDuDVUXM5qX2e3UMzIqZsamynGts+piFU6AnlapdPo/P3XO/kZrarR
- ofNPt3JM7ghlPsrpRonBXYCPciAqEGgv6RrW3Pw3Gp4ah9Gi05dO5OzQL1eIimaOjMBldmuq5
- t6bXrZ38h2+1wDATeIY1SFA9U+o/HwLluegiMxKXJCUQ3W+R6OR6AzrDvV7VKv4zQpBs0EkXQ
- 8aHzFwAtvW6FheOzKTrMRAwJqJTS4ZFuEfEuzg==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276127>
+X-Provags-ID: V03:K0:vnc7NkRWB9uYkl+MINfpYlFMVI40nYgJdGWBXdMxU72YzpfhtGw
+ Gpd9YMPovQZJpLEp6mbl3oQStQsi2y+kbNglHs6hxtf5vz8u0Ij3Ie04jJcfB8C9ZYi7yIc
+ 7KBJq1BWaon/Go4WpDrtIdaZlojWt5lJXMPv50Z9S8Iz41RsNduY5OMbDb5dEqxy+1hiM6J
+ yb5id4UKWlNj91d1t3Egg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wa4MdopFU3g=:JK+S0zAQfMHkpXuZAmW2Xg
+ zHKg4bmidbC4yCHdsvUcUzPIgQbOvFwJPCLxTdOb9JwGX6i4Q9sQQXRgCEu41x/gw3dQuC7no
+ uM1Q23liUY6owO6e1Q+G19VwSKRXu3I9xKedeU/sDFqGGxTGwacx0ILgaHPx+K8cqVy1sGWuX
+ FzNg1g9BvM4WagVR0/AgSreGv+QJME9mCSEVY1EJhWq8EDlzgtEtsnc+lL6eLh8YKJewaoZVU
+ kk8v8EKnKQhbJ1kiNPT0oDen1DvCClOJ327xW/gskTpUd6RpD/rIOwWlmDSXnanfKXk5lriYP
+ oVMEcx51XGDS4icOEyqnCNLEH72gx1ftigX4WvOBBmo/3jqmjFMdIMoxnqhsRzEcNWfcMSejt
+ 1bYOwDIhUXtfktOPpPhGsUHHGvM0DJN1da/LVEu/Vh1jjYXs94Mky8u1Uk48S6HT0zHVas4Vp
+ CGXPk1X2nC3VAoCFquDAdCDdewkFKapa2WehfSFZ9PNpyGkRrclXgEEyPBKQX3UV+mjzdzT9c
+ SZ3u6LKYCoixjVeiTjUYL2gH4RKEEpLX879Tp7JXywbdIlszoWVe0iKldoeHi+a8DjqKYr4Wh
+ C9yjuwBJizWvJc8PTNHRe7/Du7WY4LaoQhq/SEGuedAbPn4JEzd+GQDyV4ki1rGcaJWW30Nul
+ i+AKvQrelTIhkom0QL1clS1dXpS0SMuVOsoTpeTr0Hz1+tHexWbwSvO2TAxV77jbTtciV2UHS
+ zMBXal0ryQqnEzhf2Hdwrs3aDeUwH1N7xAtfDQ==
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of johannes.schindelin@gmx.de designates 212.227.17.22 as
+ permitted sender) smtp.mailfrom=johannes.schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Spam-Checked-In-Group: msysgit@googlegroups.com
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276128>
 
-Hi Adam,
+Dear Git (for Windows) users,
 
-On 2015-08-09 19:05, Adam Dinwoodie wrote:
-> On 09/08/2015 10:01, Johannes Schindelin wrote:
->> On 2015-08-09 04:01, Adam Dinwoodie wrote:
->>> 
->>>> We've gotten a lot of users on the list who ask why their Git
->>>> directories on shared drives aren't working (or are broken in some way).
->>>> Since I don't use Windows, let me ask: does the Cygwin DLL handle
->>>> link(2) properly on shared drives, and if not, would this patch help it
->>>> do so?  I can imagine that perhaps SMB doesn't support the necessary
->>>> operations to make a POSIX link(2) work properly.
->>>
->>> I'd need to go back to the Cygwin list to get a definite answer, but as
->>> I understand it, yes, this is is exactly the problem -- quoting Corinna,
->>> one of the Cygwin project leads, "The MS NFS is not very reliable in
->>> keeping up with changes to metadata."
->>>
->>> We have verified that setting `core.createobject rename` resolves the
->>> problem for people who are seeing it, which very strongly implies that
->>> this build option would solve the problem similarly, but would fix it
->>> for all users, not just those who spend enough time investigating the
->>> problem to find that setting.
->>
->>  From my experience, it appears that providing Corinna Vinschen (or better put: the Cygwin developers in general) with a sound patch gets things fixed pretty timely.
->>
->> And since `core.createObject = rename` seems to work around the problem, it should be possible to patch the Cygwin runtime accordingly. Sure, it will take a little investigation *what* code should be changed, and how, but the obvious benefit to *all* Cygwin applications should make that effort worth your while.
-> 
-> Hmm. I'm not sure what a Cygwin fix would look like here. As I
-> understand it, using link(2) will fail if the target exists, while
-> using rename(2) will just clobber a target file.
+it is my great pleasure to announce the first official version of Git for
+Windows. We finally have caught up with Git 2.x and are ready to leave the
+-preview suffix behind (more on that below).
 
-Thanks to you and Junio for explaining why my idea was bad. Sorry!
+It is available at https://git-for-windows.github.io/ and also at https://git-scm.com/.
+
+So how does that affect you?
+
+- The biggest benefit is that we finally have a 64-bit Git for Windows. This
+  not only makes a huge difference with large repositories; It also avoids
+  some bugs (if you are interested in technical details, please have a look
+  at https://github.com/git-for-windows/git/wiki/32-bit-issues).
+
+- Another huge benefit is that we benefit from (and contribute to) the very
+  active MSys2 community; MSys2 is a minimal POSIX system (forked from
+  Cygwin) that sports a package manager and many packages that are kept
+  up-to-date.
+
+- As a consequence of basing Git for Windows on MSys2's packages, Git for
+  Windows now comes with up-to-date versions of Bash and OpenSSL. Oh, and
+  we finally have support in `git svn` for recent Subversion features!
+
+- Since there were not many users of Git Cheetah, the Explorer extension
+  similar to TortoiseSVN, and since there is the actively maintained
+  TortoiseGit, Git for Windows dropped support for Git Cheetah.
+
+- Git for Windows will be maintained more actively from now on, following
+  Git development more closely. And of course, contributions are welcome!
+
+- GitHub for Windows is slated to integrate this new version soon and will
+  continue to follow Git for Windows' development closely.
+
+I probably forgot to mention some really important improvements, so feel
+free to point them out as replies to this mail.
+
+Work on upgrading Git for Windows to use MSys2 and follow Git 2.x has been a
+lot of work that has been going on since the end of January. It would not have
+been possible without substantial support of GitHub, in particular Michael
+Haggerty, Jeff King and Brendan Forster, the help of Karsten Blees, Nalla,
+Sebastian Schuberth, and other contributors. The maintenance of Git for
+Windows is supported by Microsoft from now on.
+
+I would like to take the opportunity to thank above-mentioned developers and
+companies: this is your release just as much as it is mine.
 
 Ciao,
 Johannes
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "Git for Windows" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
