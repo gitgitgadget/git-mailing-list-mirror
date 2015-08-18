@@ -1,374 +1,367 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 5/7] submodule: implement `module_list` as a builtin helper
-Date: Mon, 17 Aug 2015 17:22:01 -0700
-Message-ID: <1439857323-21048-6-git-send-email-sbeller@google.com>
+Subject: Re: [PATCH 7/7] submodule: implement `module_clone` as a builtin helper
+Date: Mon, 17 Aug 2015 17:26:11 -0700
+Message-ID: <CAGZ79kZYk8_266eAtmW72XWNP7xAvQTkdLS8-XTSj_NioiN2-g@mail.gmail.com>
 References: <1439857323-21048-1-git-send-email-sbeller@google.com>
-Cc: gitster@pobox.com, Jens.Lehmann@web.de, hvoigt@hvoigt.net,
+	<1439857323-21048-8-git-send-email-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
 	Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 18 02:22:53 2015
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 18 02:26:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZRUg0-00085k-8i
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 02:22:52 +0200
+	id 1ZRUjI-0001Hx-Qc
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Aug 2015 02:26:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752139AbbHRAWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2015 20:22:44 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:33718 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751212AbbHRAWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2015 20:22:23 -0400
-Received: by pabyb7 with SMTP id yb7so119043507pab.0
-        for <git@vger.kernel.org>; Mon, 17 Aug 2015 17:22:23 -0700 (PDT)
+	id S1751959AbbHRA0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2015 20:26:12 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:34924 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750994AbbHRA0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2015 20:26:12 -0400
+Received: by ykbi184 with SMTP id i184so78837209ykb.2
+        for <git@vger.kernel.org>; Mon, 17 Aug 2015 17:26:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=XC8SDYEzOBymEYQE5xXWIub18gor2y2Mp/bHuS/EHaw=;
-        b=ib8ZsYNks9RGmHlDJKwZadopT7d4iof+D2LtMLxwbI1+uV0EKJalq3PD/UD9CPEZyl
-         IXWDrX+rnoTHBYkGz3yumtvmOr8kUQGE/M1PYXQIUPuCBVeSo92dkM6I9I9uoXWJ+mZP
-         FkgxzNkUGdREccMpzhcSbJ2scizXPXl4oLjmWl3RDqdnvT4ZABeoDqSk6sIbVyMIE3dM
-         xIcj3JySwlSqZkU5bRDk+vEFoUXl3MzeMDoXMhJJAMgSGlsH4RgCvR6CVB+UNz4se6GZ
-         EZvmJ+lxQWRkhMNxcWsyy7KBC51Y/MwogO56k6/B6sdm+qBiW9zdMWl2N0sS/AoV1E5y
-         wOQQ==
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=iTUNDzORHLyqXPi7FcrOrkIPMenZrmCLJji018194Nk=;
+        b=jwqadCrJW7OQU3VZR1/lBLoKS9DCR/T5a4/nNupoCQDENGUSJZNtuvB9SNu6wMuijo
+         wmGANSvnx4qm9s+uH25S+V6teABAuF5K4tJsMj6TB3wntQsTMf759cfsKdRCqzQho56g
+         ijQHQJhDrWIL8yKsuQj7vC+1VnfRB/UxYISf+iqtuYml6hsxVGTeWW4riGbtN3BeC9DR
+         f7G58lmqKwcHYtWES+WQhNj3pg1tYTSN6QImVsDmlWcv/mq5d5Q13+6fFR4bSQGCGirw
+         48G3nlwxhmtNI/ON4t8NxwMJOxzgM5XxnvrdJCUj6QWEmhoZwWEgOdtzDfbUfsHEz6vI
+         UhwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=XC8SDYEzOBymEYQE5xXWIub18gor2y2Mp/bHuS/EHaw=;
-        b=knBQC3RsX7Plwpv3G60KCSpKUp+qEiKGbqvkhVveJIOKv6Qh/rjk6STibux0JVHRAI
-         nbP5wrzOjc+C3ZwSKAK6My0CRZyu03t4RzIT6a1u7UZZs9WH+rdb9IZZFOo0bLtDfPO5
-         lqwZoKpsU1BtCswJX2I208R/FZCE2lWbZLvjNWlqZ+OZEh9KUssGH/nfz1skA27UuFLc
-         iq7G8QAZGHV3eGoBEb/7UBqMYWMdNUIhn0x33IaSYiT6odl6B9wLxdM8JfllvVZ6sYyd
-         pgAS8wMjndPRvZ9GRTiYC36CDjmvRtvniM0W8Glwx0xuBXc/Z1TnqjTS6pySp9qplyAI
-         zZ6w==
-X-Gm-Message-State: ALoCoQmKa9g6tvjat6g1p45FnBpjMHSgbhJMgYZ3KaAb+FX57gRnwrGt5Zx3+zLUEa0lg1u2coXN
-X-Received: by 10.68.250.98 with SMTP id zb2mr7558645pbc.40.1439857342950;
-        Mon, 17 Aug 2015 17:22:22 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:bca6:6b6f:4dbb:30a3])
-        by smtp.gmail.com with ESMTPSA id jv5sm979998pbc.47.2015.08.17.17.22.17
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 17 Aug 2015 17:22:17 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.330.g130be8e.dirty
-In-Reply-To: <1439857323-21048-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=iTUNDzORHLyqXPi7FcrOrkIPMenZrmCLJji018194Nk=;
+        b=GzF/NApQB85/K1WNpUbeZ0XgZj3NOXJTdNVk1UMcNlHIDbNcp73u9uAtqNIoHdTB9i
+         tlPuGRD1grx/QbtDV0fCCivZb1bzwcXTyPzorZyem+rk3NuFeO6X32vx7AVDYwUepqXc
+         nSkWd77Ar4Aundh+up0ZdjmIMTIHobAOLu3YZ9vIPnkx6DXwoYo/2rRc4anh+F8NvWf5
+         9xnhBfYaHlmgsA55fPa0KiUxadX1PzOwHmCnpZCZaQFgc+82D4NpiyDEWsD+Imt9eH8e
+         xJNUkM3zV75oVrupI8pvFsJ+nksBXqboyizaRe5jEWOVlJUgR4aT905Ed72ZvP4jgimn
+         omlw==
+X-Gm-Message-State: ALoCoQl2HE3XGKsdkmNf7tdujehRfhg4AiSXgQS5vbdl2FfQEo6Mh8qLfrFSpk0dQabXXgHANDXe
+X-Received: by 10.170.200.212 with SMTP id r203mr4188050yke.10.1439857571069;
+ Mon, 17 Aug 2015 17:26:11 -0700 (PDT)
+Received: by 10.37.21.129 with HTTP; Mon, 17 Aug 2015 17:26:11 -0700 (PDT)
+In-Reply-To: <1439857323-21048-8-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276118>
 
-Most of the submodule operations work on a set of submodules.
-Calculating and using this set is usually done via:
+On Mon, Aug 17, 2015 at 5:22 PM, Stefan Beller <sbeller@google.com> wrote:
+> `module_clone` is part of the update command, which I want to convert
+> to C next.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  builtin/submodule--helper.c | 161 +++++++++++++++++++++++++++++++++++++++++++-
+>  git-submodule.sh            |  78 +--------------------
+>  2 files changed, 162 insertions(+), 77 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 80d13f5..44ff935 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -8,6 +8,7 @@
+>  #include "submodule.h"
+>  #include "submodule-config.h"
+>  #include "string-list.h"
+> +#include "run-command.h"
+>
+>  static const struct cache_entry **ce_entries;
+>  static int ce_alloc, ce_used;
+> @@ -124,6 +125,156 @@ static int module_name(int argc, const char **argv, const char *prefix)
+>         return 0;
+>  }
+>
+> +static int clone_submodule(const char *path, const char *gitdir, const char *url,
+> +                          const char *depth, const char *reference, int quiet)
+> +{
+> +       struct child_process cp;
+> +       child_process_init(&cp);
+> +
+> +       argv_array_push(&cp.args, "clone");
+> +       argv_array_push(&cp.args, "--no-checkout");
+> +       if (quiet)
+> +               argv_array_push(&cp.args, "--quiet");
+> +       if (depth && strcmp(depth, "")) {
+> +               argv_array_push(&cp.args, "--depth");
+> +               argv_array_push(&cp.args, depth);
+> +       }
+> +       if (reference && strcmp(reference, "")) {
+> +               argv_array_push(&cp.args, "--reference");
+> +               argv_array_push(&cp.args, reference);
+> +       }
+> +       if (gitdir) {
+> +               argv_array_push(&cp.args, "--separate-git-dir");
+> +               argv_array_push(&cp.args, gitdir);
+> +       }
+> +       argv_array_push(&cp.args, url);
+> +       argv_array_push(&cp.args, path);
+> +
+> +       cp.git_cmd = 1;
+> +       cp.env = local_repo_env;
+> +
+> +       cp.no_stdin = 1;
+> +       cp.no_stdout = 1;
+> +       cp.no_stderr = 1;
+> +       return run_command(&cp);
+> +}
+> +
+> +/*
+> + * Clone a submodule
+> + *
+> + * $1 = submodule path
+> + * $2 = submodule name
+> + * $3 = URL to clone
+> + * $4 = reference repository to reuse (empty for independent)
+> + * $5 = depth argument for shallow clones (empty for deep)
+> + *
+> + * Prior to calling, cmd_update checks that a possibly existing
+> + * path is not a git repository.
+> + * Likewise, cmd_add checks that path does not exist at all,
+> + * since it is the location of a new submodule.
+> + */
+> +static int module_clone(int argc, const char **argv, const char *prefix)
+> +{
+> +       const char *path = NULL, *name = NULL, *url = NULL, *reference = NULL, *depth = NULL;
+> +       int quiet = 0;
+> +       FILE *submodule_dot_git;
+> +       const char *sm_gitdir, *p;
+> +       struct strbuf rel_path = STRBUF_INIT;
+> +       struct strbuf sb = STRBUF_INIT;
+> +
+> +       struct option module_update_options[] = {
+> +               OPT_STRING(0, "prefix", &alternative_path,
+> +                          N_("path"),
+> +                          N_("alternative anchor for relative paths")),
+> +               OPT_STRING(0, "path", &path,
+> +                          N_("path"),
+> +                          N_("where the new submodule will be cloned to")),
+> +               OPT_STRING(0, "name", &name,
+> +                          N_("string"),
+> +                          N_("name of the new submodule")),
+> +               OPT_STRING(0, "url", &url,
+> +                          N_("string"),
+> +                          N_("url where to clone the submodule from")),
+> +               OPT_STRING(0, "reference", &reference,
+> +                          N_("string"),
+> +                          N_("reference repository")),
+> +               OPT_STRING(0, "depth", &depth,
+> +                          N_("string"),
+> +                          N_("depth for shallow clones")),
+> +               OPT_END()
+> +       };
+> +
+> +       static const char * const git_submodule_helper_usage[] = {
+> +               N_("git submodule--helper update [--prefix=<path>] [--quiet] [--remote] [-N|--no-fetch]"
+> +                  "[-f|--force] [--rebase|--merge] [--reference <repository>]"
+> +                  "[--depth <depth>] [--recursive] [--] [<path>...]"),
+> +               NULL
+> +       };
+> +
+> +       argc = parse_options(argc, argv, prefix, module_update_options,
+> +                            git_submodule_helper_usage, 0);
+> +
+> +       if (getenv("GIT_QUIET"))
+> +               quiet = 1;
+> +
+> +       strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
+> +       sm_gitdir = strbuf_detach(&sb, NULL);
+> +       strbuf_reset(&sb);
+> +
+> +       if (!file_exists(sm_gitdir)) {
+> +               safe_create_leading_directories_const(sm_gitdir);
+> +               if (clone_submodule(path, sm_gitdir, url, depth, reference, quiet))
+> +                       die(N_("Clone of '%s' into submodule path '%s' failed"),
+> +                           url, path);
+> +       } else {
+> +               safe_create_leading_directories_const(path);
+> +               unlink(sm_gitdir);
+> +       }
+> +
+> +       /* Write a .git file in the submodule to redirect to the superproject. */
+> +       const char *t;
 
-       module_list "$@" | {
-           while read mode sha1 stage sm_path
-           do
-                # the actual operation
-           done
-       }
+declaration after statement.
 
-Currently the function `module_list` is implemented in the
-git-submodule.sh as a shell script wrapping a perl script.
-The rewrite is in C, such that it is faster and can later be
-easily adapted when other functions are rewritten in C.
-
-git-submodule.sh similar to the builtin commands will navigate
-to the top most directory of the repository and keeping the
-subdirectories as a variable. As the helper is called from
-within the git-submodule.sh script, we are already navigated
-to the root level, but the path arguments are stil relative
-to the subdirectory we were in when calling git-submodule.sh.
-That's why there is a `--prefix` option pointing to an alternative
-path where to anchor relative path arguments.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- .gitignore                  |   1 +
- Makefile                    |   1 +
- builtin.h                   |   1 +
- builtin/submodule--helper.c | 114 ++++++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  54 +++------------------
- git.c                       |   1 +
- 6 files changed, 124 insertions(+), 48 deletions(-)
- create mode 100644 builtin/submodule--helper.c
-
-diff --git a/.gitignore b/.gitignore
-index 4fd81ba..1c2f832 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -155,6 +155,7 @@
- /git-status
- /git-stripspace
- /git-submodule
-+/git-submodule--helper
- /git-svn
- /git-symbolic-ref
- /git-tag
-diff --git a/Makefile b/Makefile
-index 24b636d..d434e73 100644
---- a/Makefile
-+++ b/Makefile
-@@ -901,6 +901,7 @@ BUILTIN_OBJS += builtin/shortlog.o
- BUILTIN_OBJS += builtin/show-branch.o
- BUILTIN_OBJS += builtin/show-ref.o
- BUILTIN_OBJS += builtin/stripspace.o
-+BUILTIN_OBJS += builtin/submodule--helper.o
- BUILTIN_OBJS += builtin/symbolic-ref.o
- BUILTIN_OBJS += builtin/tag.o
- BUILTIN_OBJS += builtin/unpack-file.o
-diff --git a/builtin.h b/builtin.h
-index 839483d..924e6c4 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -119,6 +119,7 @@ extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
- extern int cmd_status(int argc, const char **argv, const char *prefix);
- extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
-+extern int cmd_submodule__helper(int argc, const char **argv, const char *prefix);
- extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
- extern int cmd_tag(int argc, const char **argv, const char *prefix);
- extern int cmd_tar_tree(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-new file mode 100644
-index 0000000..610ec51
---- /dev/null
-+++ b/builtin/submodule--helper.c
-@@ -0,0 +1,114 @@
-+#include "builtin.h"
-+#include "cache.h"
-+#include "parse-options.h"
-+#include "quote.h"
-+#include "pathspec.h"
-+#include "dir.h"
-+#include "utf8.h"
-+
-+static const struct cache_entry **ce_entries;
-+static int ce_alloc, ce_used;
-+static const char *alternative_path;
-+
-+static int module_list_compute(int argc, const char **argv,
-+				const char *prefix,
-+				struct pathspec *pathspec)
-+{
-+	int i;
-+	char *max_prefix, *ps_matched = NULL;
-+	int max_prefix_len;
-+	parse_pathspec(pathspec, 0,
-+		       PATHSPEC_PREFER_FULL |
-+		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
-+		       prefix, argv);
-+
-+	/* Find common prefix for all pathspec's */
-+	max_prefix = common_prefix(pathspec);
-+	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
-+
-+	if (pathspec->nr)
-+		ps_matched = xcalloc(1, pathspec->nr);
-+
-+	if (read_cache() < 0)
-+		die("index file corrupt");
-+
-+	for (i = 0; i < active_nr; i++) {
-+		const struct cache_entry *ce = active_cache[i];
-+
-+		if (!match_pathspec(pathspec, ce->name, ce_namelen(ce),
-+				    max_prefix_len, ps_matched,
-+				    S_ISGITLINK(ce->ce_mode) | S_ISDIR(ce->ce_mode)))
-+			continue;
-+
-+		if (S_ISGITLINK(ce->ce_mode)) {
-+			ALLOC_GROW(ce_entries, ce_used + 1, ce_alloc);
-+			ce_entries[ce_used++] = ce;
-+		}
-+
-+		while (i + 1 < active_nr && !strcmp(ce->name, active_cache[i + 1]->name))
-+			/*
-+			 * Skip entries with the same name in different stages
-+			 * to make sure an entry is returned only once.
-+			 */
-+			i++;
-+	}
-+	free(max_prefix);
-+
-+	if (ps_matched && report_path_error(ps_matched, pathspec, prefix))
-+		return -1;
-+
-+	return 0;
-+}
-+
-+static int module_list(int argc, const char **argv, const char *prefix)
-+{
-+	int i;
-+	static struct pathspec pathspec;
-+
-+	struct option module_list_options[] = {
-+		OPT_STRING(0, "prefix", &alternative_path,
-+			   N_("path"),
-+			   N_("alternative anchor for relative paths")),
-+		OPT_END()
-+	};
-+
-+	static const char * const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper module_list [--prefix=<path>] [<path>...]"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, module_list_options,
-+			     git_submodule_helper_usage, 0);
-+
-+	if (module_list_compute(argc, argv, alternative_path
-+					    ? alternative_path
-+					    : prefix, &pathspec) < 0) {
-+		printf("#unmatched\n");
-+		return 1;
-+	}
-+
-+	for (i = 0; i < ce_used; i++) {
-+		const struct cache_entry *ce = ce_entries[i];
-+
-+		if (ce_stage(ce)) {
-+			printf("%06o %s U\t", ce->ce_mode, sha1_to_hex(null_sha1));
-+		} else {
-+			printf("%06o %s %d\t", ce->ce_mode, sha1_to_hex(ce->sha1), ce_stage(ce));
-+		}
-+
-+		utf8_fprintf(stdout, "%s\n", ce->name);
-+	}
-+	return 0;
-+}
-+
-+int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-+{
-+	if (argc < 2)
-+		goto usage;
-+
-+	if (!strcmp(argv[1], "module_list"))
-+		return module_list(argc - 1, argv + 1, prefix);
-+
-+usage:
-+	usage("git submodule--helper module_list\n");
-+}
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 36797c3..af9ecef 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -145,48 +145,6 @@ relative_path ()
- 	echo "$result$target"
- }
- 
--#
--# Get submodule info for registered submodules
--# $@ = path to limit submodule list
--#
--module_list()
--{
--	eval "set $(git rev-parse --sq --prefix "$wt_prefix" -- "$@")"
--	(
--		git ls-files -z --error-unmatch --stage -- "$@" ||
--		echo "unmatched pathspec exists"
--	) |
--	@@PERL@@ -e '
--	my %unmerged = ();
--	my ($null_sha1) = ("0" x 40);
--	my @out = ();
--	my $unmatched = 0;
--	$/ = "\0";
--	while (<STDIN>) {
--		if (/^unmatched pathspec/) {
--			$unmatched = 1;
--			next;
--		}
--		chomp;
--		my ($mode, $sha1, $stage, $path) =
--			/^([0-7]+) ([0-9a-f]{40}) ([0-3])\t(.*)$/;
--		next unless $mode eq "160000";
--		if ($stage ne "0") {
--			if (!$unmerged{$path}++) {
--				push @out, "$mode $null_sha1 U\t$path\n";
--			}
--			next;
--		}
--		push @out, "$_\n";
--	}
--	if ($unmatched) {
--		print "#unmatched\n";
--	} else {
--		print for (@out);
--	}
--	'
--}
--
- die_if_unmatched ()
- {
- 	if test "$1" = "#unmatched"
-@@ -532,7 +490,7 @@ cmd_foreach()
- 	# command in the subshell (and a recursive call to this function)
- 	exec 3<&0
- 
--	module_list |
-+	git submodule--helper module_list --prefix "$wt_prefix"|
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-@@ -592,7 +550,7 @@ cmd_init()
- 		shift
- 	done
- 
--	module_list "$@" |
-+	git submodule--helper module_list --prefix "$wt_prefix" "$@" |
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-@@ -674,7 +632,7 @@ cmd_deinit()
- 		die "$(eval_gettext "Use '.' if you really want to deinitialize all submodules")"
- 	fi
- 
--	module_list "$@" |
-+	git submodule--helper module_list --prefix "$wt_prefix" "$@" |
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-@@ -790,7 +748,7 @@ cmd_update()
- 	fi
- 
- 	cloned_modules=
--	module_list "$@" | {
-+	git submodule--helper module_list --prefix "$wt_prefix" "$@" | {
- 	err=
- 	while read mode sha1 stage sm_path
- 	do
-@@ -1222,7 +1180,7 @@ cmd_status()
- 		shift
- 	done
- 
--	module_list "$@" |
-+	git submodule--helper module_list --prefix "$wt_prefix" "$@" |
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-@@ -1299,7 +1257,7 @@ cmd_sync()
- 		esac
- 	done
- 	cd_to_toplevel
--	module_list "$@" |
-+	git submodule--helper module_list --prefix "$wt_prefix" "$@" |
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-diff --git a/git.c b/git.c
-index 55c327c..deecba0 100644
---- a/git.c
-+++ b/git.c
-@@ -469,6 +469,7 @@ static struct cmd_struct commands[] = {
- 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
- 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
- 	{ "stripspace", cmd_stripspace },
-+	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP },
- 	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
- 	{ "tag", cmd_tag, RUN_SETUP },
- 	{ "unpack-file", cmd_unpack_file, RUN_SETUP },
--- 
-2.5.0.330.g130be8e.dirty
+> +       if (alternative_path && !strcmp(alternative_path, "")) {
+> +               t = relative_path(path, alternative_path, &sb);
+> +               strbuf_reset(&sb);
+> +       } else
+> +               t = path;
+> +
+> +       if (safe_create_leading_directories_const(t) < 0)
+> +               die("Could not create directory '%s'", t);
+> +
+> +       strbuf_addf(&sb, "%s/.git", t);
+> +
+> +       if (safe_create_leading_directories_const(sb.buf) < 0)
+> +               die(_("could not create leading directories of '%s'"), sb.buf);
+> +       submodule_dot_git = fopen(sb.buf, "w");
+> +       if (!submodule_dot_git)
+> +               die ("Cannot open file '%s': %s", sb.buf, strerror(errno)       );
+> +
+> +       fprintf(submodule_dot_git, "gitdir: %s\n",
+> +               relative_path(sm_gitdir, path, &rel_path));
+> +       if (fclose(submodule_dot_git))
+> +               die("Could not close file %s", sb.buf);
+> +       strbuf_reset(&sb);
+> +
+> +       /* Redirect the worktree of the submodule in the superprojects config */
+> +       if (!is_absolute_path(sm_gitdir)) {
+> +               char *s = (char*)sm_gitdir;
+> +               strbuf_addf(&sb, "%s/%s", xgetcwd(), sm_gitdir);
+> +               sm_gitdir = strbuf_detach(&sb, NULL);
+> +               strbuf_reset(&sb);
+> +               free(s);
+> +       }
+> +       strbuf_addf(&sb, "%s/%s", xgetcwd(), path);
+> +       t = relative_path(sb.buf, sm_gitdir, &rel_path);
+> +
+> +       p = git_pathdup_submodule(path, "config");
+> +       if (!p)
+> +               die("Could not get submodule directory for '%s'", path);
+> +       git_config_set_in_file(p, "core.worktree", t);
+> +       strbuf_release(&sb);
+> +       return 0;
+> +}
+> +
+>  int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+>  {
+>         if (argc < 2)
+> @@ -135,6 +286,14 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+>         if (!strcmp(argv[1], "module_name"))
+>                 return module_name(argc - 2, argv + 2, prefix);
+>
+> +       if (!strcmp(argv[1], "module_clone"))
+> +               return module_clone(argc - 1, argv + 1, prefix);
+> +       if (!strcmp(argv[1], "test")) {
+> +               struct strbuf sb = STRBUF_INIT;
+> +
+> +               relative_path(".git/modules/example", "init", &sb);
+> +               return 0;
+> +       }
+>  usage:
+> -       usage("git submodule--helper [module_list module_name]\n");
+> +       usage("git submodule--helper [module_list module_name module_clone]\n");
+>  }
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index e6ff38d..6e8561e 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -178,80 +178,6 @@ get_submodule_config () {
+>         printf '%s' "${value:-$default}"
+>  }
+>
+> -#
+> -# Clone a submodule
+> -#
+> -# $1 = submodule path
+> -# $2 = submodule name
+> -# $3 = URL to clone
+> -# $4 = reference repository to reuse (empty for independent)
+> -# $5 = depth argument for shallow clones (empty for deep)
+> -#
+> -# Prior to calling, cmd_update checks that a possibly existing
+> -# path is not a git repository.
+> -# Likewise, cmd_add checks that path does not exist at all,
+> -# since it is the location of a new submodule.
+> -#
+> -module_clone()
+> -{
+> -       sm_path=$1
+> -       name=$2
+> -       url=$3
+> -       reference="$4"
+> -       depth="$5"
+> -       quiet=
+> -       if test -n "$GIT_QUIET"
+> -       then
+> -               quiet=-q
+> -       fi
+> -
+> -       gitdir=
+> -       gitdir_base=
+> -       base_name=$(dirname "$name")
+> -
+> -       gitdir=$(git rev-parse --git-dir)
+> -       gitdir_base="$gitdir/modules/$base_name"
+> -       gitdir="$gitdir/modules/$name"
+> -
+> -       if test -d "$gitdir"
+> -       then
+> -               mkdir -p "$sm_path"
+> -               rm -f "$gitdir/index"
+> -       else
+> -               mkdir -p "$gitdir_base"
+> -               (
+> -                       clear_local_git_env
+> -                       git clone $quiet ${depth:+"$depth"} -n ${reference:+"$reference"} \
+> -                               --separate-git-dir "$gitdir" "$url" "$sm_path"
+> -               ) ||
+> -               die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
+> -       fi
+> -
+> -       # We already are at the root of the work tree but cd_to_toplevel will
+> -       # resolve any symlinks that might be present in $PWD
+> -       a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
+> -       b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
+> -       # Remove all common leading directories after a sanity check
+> -       if test "${a#$b}" != "$a" || test "${b#$a}" != "$b"; then
+> -               die "$(eval_gettext "Gitdir '\$a' is part of the submodule path '\$b' or vice versa")"
+> -       fi
+> -       while test "${a%%/*}" = "${b%%/*}"
+> -       do
+> -               a=${a#*/}
+> -               b=${b#*/}
+> -       done
+> -       # Now chop off the trailing '/'s that were added in the beginning
+> -       a=${a%/}
+> -       b=${b%/}
+> -
+> -       # Turn each leading "*/" component into "../"
+> -       rel=$(printf '%s\n' "$b" | sed -e 's|[^/][^/]*|..|g')
+> -       printf '%s\n' "gitdir: $rel/$a" >"$sm_path/.git"
+> -
+> -       rel=$(printf '%s\n' "$a" | sed -e 's|[^/][^/]*|..|g')
+> -       (clear_local_git_env; cd "$sm_path" && GIT_WORK_TREE=. git config core.worktree "$rel/$b")
+> -}
+> -
+>  isnumber()
+>  {
+>         n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
+> @@ -412,7 +338,7 @@ Use -f if you really want to add it." >&2
+>                                 echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
+>                         fi
+>                 fi
+> -               module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" || exit
+> +               git submodule--helper module_clone --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" --reference "$reference_path" --depth "$depth" || exit
+>                 (
+>                         clear_local_git_env
+>                         cd "$sm_path" &&
+> @@ -774,7 +700,7 @@ Maybe you want to use 'update --init'?")"
+>
+>                 if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
+>                 then
+> -                       module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
+> +                       git submodule--helper module_clone --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
+>                         cloned_modules="$cloned_modules;$name"
+>                         subsha1=
+>                 else
+> --
+> 2.5.0.330.g130be8e.dirty
+>
