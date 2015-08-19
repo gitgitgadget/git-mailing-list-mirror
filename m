@@ -1,75 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v12 03/13] ref-filter: introduce the ref_formatting_state stack machinery
-Date: Wed, 19 Aug 2015 11:52:43 -0700
-Message-ID: <xmqq37zf9klg.fsf@gitster.dls.corp.google.com>
-References: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
-	<1439923052-7373-4-git-send-email-Karthik.188@gmail.com>
-	<vpqvbcb2uoi.fsf@anie.imag.fr>
+Subject: Re: [PATCH 7/7] submodule: implement `module_clone` as a builtin helper
+Date: Wed, 19 Aug 2015 12:08:40 -0700
+Message-ID: <xmqqy4h785af.fsf@gitster.dls.corp.google.com>
+References: <1439857323-21048-8-git-send-email-sbeller@google.com>
+	<1439935980-30087-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 19 20:53:03 2015
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, hvoigt@hvoigt.net
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 21:08:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZS8Tn-0000JK-4I
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 20:52:55 +0200
+	id 1ZS8jE-0005W4-2x
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 21:08:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913AbbHSSwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2015 14:52:46 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:36735 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751257AbbHSSwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2015 14:52:45 -0400
-Received: by pdbmi9 with SMTP id mi9so4478459pdb.3
-        for <git@vger.kernel.org>; Wed, 19 Aug 2015 11:52:45 -0700 (PDT)
+	id S1751364AbbHSTIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2015 15:08:42 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:33883 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750985AbbHSTIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2015 15:08:42 -0400
+Received: by pdbfa8 with SMTP id fa8so4636096pdb.1
+        for <git@vger.kernel.org>; Wed, 19 Aug 2015 12:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=EjPecpbwvNTlEpHLgGB6zcU6fFFySxbDMeNWrOS7YF4=;
-        b=DXYxgqV18+qUgcbHnSNrahfT/aslinJqPQ8m8cqqUfvAuN34BuaZY6ApGtOKrIRLkl
-         NgpdpIEmGeDtBjbri7KDFuoMXPy0bRYI+v5fPAgZ486p60/Sei8ANS8W3N7aAuLGGNJB
-         18MCaWb1lo98i93f0C1XyHxxeN+i8thDjOrjdnTikWo4TtCF2H73DGMK+qxsJfqsB3xI
-         7ExxFW2BH+TzDQPjKakuKhabVgqt5lHuq1wawkRjBDTJiF3GGKH0ftxEudh8rv47wPwJ
-         i7JDw16MjZXJIX8gutojsqBsZk3MVWYKULJgjSxjimL5GIsY4yZGt6Q68oCz4cuIOKhb
-         K/NA==
-X-Received: by 10.70.134.134 with SMTP id pk6mr27586113pdb.143.1440010364930;
-        Wed, 19 Aug 2015 11:52:44 -0700 (PDT)
+        bh=9HTVzU2Lgdc7Ll5aPg4JVftHofZe0ZYJCcfbvI41wh4=;
+        b=frjEYSmTsH7ezrKDbNlWZNaP0jOVVg+mY7rjDY5KK8Zi44UWa3IbEsabwS/iJYP2Ou
+         L63mVScRuAANE1YbuemzpDHj0l0Q3FvIoJwKR54Ka4hOzGEEkraOkvLWqO6IIbm5T5Bd
+         zLT1VFhdqUEBobXGYsEoLBmgoSbgNdVkQDbdvZbLO+tbsBae18jwPpOu2vNGwVuYPCvA
+         2piP5jpP13cueBg8PVcpnhiMsTzaH8ukMFCcInJ59VWU/bLJKvd7+lpX5WgXEsUixNdX
+         hs+aKONrKqg7AujNJmgxWQGDgRuQtmPJ62Mi+R9dEhNOXt0Ek1v+DMMuZvmGxWvLv1R7
+         T9vg==
+X-Received: by 10.70.51.165 with SMTP id l5mr27368420pdo.75.1440011321704;
+        Wed, 19 Aug 2015 12:08:41 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:a5d7:91a5:eac5:b635])
-        by smtp.gmail.com with ESMTPSA id ea4sm1687512pbc.48.2015.08.19.11.52.44
+        by smtp.gmail.com with ESMTPSA id z3sm1726367pas.19.2015.08.19.12.08.40
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 19 Aug 2015 11:52:44 -0700 (PDT)
-In-Reply-To: <vpqvbcb2uoi.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	19 Aug 2015 16:56:45 +0200")
+        Wed, 19 Aug 2015 12:08:41 -0700 (PDT)
+In-Reply-To: <1439935980-30087-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 18 Aug 2015 15:13:00 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276214>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> You replaced the quote_style argument with ref_formatting_state, and I
-> think you should have kept this argument and added ref_formatting_state.
-> The other option is to add an extra indirection like
+> `module_clone` is part of the update command, which I want to convert
+> to C next.
 >
-> struct ref_formatting_state {
-> 	int quote_style;
-> 	struct ref_formatting_stack *stack;
-> }
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 >
-> (ref_formatting_stack would be what you currently call
-> ref_formatting_state). But that's probably overkill.
+> This is the only patch that broke by a last minute fix,
+> so this replaces the previous PATCH 7/7.
 
-I think this is the right way to go.  As you explained in your later
-messages, this is conceptually a global setting that applies to
-anybody working in the callchain and not something individual
-recursion levels would want to muck with.
+... which still breaks 7400.82, though.
 
-Thanks.
+Output from running it with "-i -v" ends like this:
+
+expecting success: 
+        mkdir super &&
+        pwd=$(pwd) &&
+        (
+                cd super &&
+                git init &&
+                git submodule add --depth=1 file://"$pwd"/example2 submodule &&
+                (
+                        cd submodule &&
+                        test 1 = $(git log --oneline | wc -l)
+                )
+        )
+
+Initialized empty Git repository in /home/gitster/w/git.git/t/trash directory.t7400-submodule-basic/super/.git/
+fatal: Clone of 'file:///home/gitster/w/git.git/t/trash directory.t7400-submodule-basic/example2' into submodule path 'submodule' failed
+not ok 82 - submodule add clone shallow submodule
+#
+#               mkdir super &&
+#               pwd=$(pwd) &&
+#               (
+#                       cd super &&
+#                       git init &&
+#                       git submodule add --depth=1 file://"$pwd"/example2 submodule &&
+#                       (
+#                               cd submodule &&
+#                               test 1 = $(git log --oneline | wc -l)
+#                       )
+#               )
+#
