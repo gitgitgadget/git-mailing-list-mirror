@@ -1,85 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/9] Documentation/git-send-pack.txt: Flow long synopsis line
-Date: Wed, 19 Aug 2015 12:56:47 -0700
-Message-ID: <xmqqtwrv8328.fsf@gitster.dls.corp.google.com>
-References: <1439998007-28719-1-git-send-email-dborowitz@google.com>
-	<1439998007-28719-3-git-send-email-dborowitz@google.com>
+From: "Yojem Mejoy" <yojem@gmx.com>
+Subject: BUG REPORT: gitk displays diffs with angle brackets incorrectly
+Date: Wed, 19 Aug 2015 21:57:02 +0200
+Message-ID: <trinity-67046fdf-65d7-4ab9-a391-709a73002fee-1440014221975@3capp-mailcom-bs12>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Wed Aug 19 21:56:55 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 19 21:57:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZS9Tj-0004pk-Cg
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 21:56:55 +0200
+	id 1ZS9Ty-00055e-Eg
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 21:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751878AbbHST4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2015 15:56:50 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:36818 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751623AbbHST4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2015 15:56:49 -0400
-Received: by pawq9 with SMTP id q9so9945391paw.3
-        for <git@vger.kernel.org>; Wed, 19 Aug 2015 12:56:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=2urCPpTyjyq0e531fSix4hHo8tYuDJDNzmA49pxL3U4=;
-        b=n5Qxb8O2veIcgN5U9P6NztowpilxqnGDXHNXvW2YRl5htBkBYPIVnnxwfNXLACzQAI
-         mL7M9DHmI9PF1bSVecvcgdJs4SIaoZDrX5e+mZDVHKSEfY1AsFtcRznDFzOtg8jnMjQJ
-         +qg77CjbnR9Zv+e6DPdxIoyytVriMY1eNkMjobpDyYkzFH6OI5qmY4v+XWMFkRqHNDAh
-         UPCaHCjpFT6Cfob31kAgVUNH2qORuyJCqDaTHUVhnLubUyM6iTHRsePFdGzmDJhJ0fTr
-         NaSli3if05i3SLBWtN+F6Ame2zdSDS6rwgB0uJxi1MeRJVzBK7RkMn7CowMOXn2iPVxS
-         FPOg==
-X-Received: by 10.66.118.39 with SMTP id kj7mr28150333pab.115.1440014209294;
-        Wed, 19 Aug 2015 12:56:49 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:a5d7:91a5:eac5:b635])
-        by smtp.gmail.com with ESMTPSA id au10sm1766382pbd.81.2015.08.19.12.56.48
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 19 Aug 2015 12:56:48 -0700 (PDT)
-In-Reply-To: <1439998007-28719-3-git-send-email-dborowitz@google.com> (Dave
-	Borowitz's message of "Wed, 19 Aug 2015 11:26:40 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752030AbbHST5G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Aug 2015 15:57:06 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49993 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751940AbbHST5F convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Aug 2015 15:57:05 -0400
+Received: from [173.174.96.53] by 3capp-mailcom-bs12.server.lan (via HTTP);
+ Wed, 19 Aug 2015 21:57:02 +0200
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K0:S4vp2lUEdh9Db/XJkeD/djQ8T5a7CDoLlU6HshiBgHr
+ VzHYC94XitGoE91ECquzf2xWJtGMW05eJ1aSugHcti4SPyGPgz
+ HFcLD0qXwFD8GQp7jlnfIkU2DBI/Ox70anjPEkLHYoiWa5p+3N
+ 2EhOmpesSiLzfXQdYBLnU18U/SJegw+VOxkK69dhpNdukLjj/8
+ aKUjL98JlDah4CpavU7uANa3Z2PmIl+JoZdPDOqO1ibouPr9Qq
+ 7bmL/YIyTbHKoIysQtrvbVkJNh2EsOwr79wVFbaB8aPY0Gfnen
+ ecwskikJdd+ayttd7OVaX5sAyCY
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Z1V5ksxn4qg=:CGppzw3MFq74fEfE4Z3nmv
+ XM4r1cIzRL7NRfo8YbLNdqKaqBsuiZNfnwOKfXjp1Wmrw85JuGWnrN0QgzjbFKO2bl3JuvMQq
+ gkfdkmzadPx5fMGS6RMviG3rjQzWjM1MxeSVPT4omdh8+mttHERiwC2g/mZyTT9mbEGKKbTr1
+ cyCIwBf76+LQSjzFS/xlE8rmRv7JCUQt4YMpw6vHry/Y3Noc4+kDIfD72Rkr7FU53wzEE1omE
+ CeimSk71UcjsCdkVTP7SrojGYe2My+2aBFObb/HtZi7DiPj1bJEbLV1OpWqJGBhz45cm8letN
+ g5PJLxfGh6qybS1mOGueMUYZaQEFPPVU9fGrMx87RPhNmbpDlCeREX88KpRKaGHk0xH7GlI3X
+ hEGsO95jq0YQMrzjUWImpjOzJjfWrIdJPpQHpJqtIqdkVJg0sYHYXkBICS5vmWG1mKk7Le3PH
+ Y89DOOgqUw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276219>
 
-Dave Borowitz <dborowitz@google.com> writes:
+Summary: Certain diffs containing angle brackets ('<' or '>' characters=
+) are displayed incorrectly in gitk's "markup words" and "color words" =
+modes. The bug is caused by a feature that isn't aware of the formattin=
+g difference for the word diff modes.
 
-> Signed-off-by: Dave Borowitz <dborowitz@google.com>
-> ---
->  Documentation/git-send-pack.txt | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-> index b5d09f7..6affff6 100644
-> --- a/Documentation/git-send-pack.txt
-> +++ b/Documentation/git-send-pack.txt
-> @@ -9,7 +9,8 @@ git-send-pack - Push objects over Git protocol to another repository
->  SYNOPSIS
->  --------
->  [verse]
-> -'git send-pack' [--all] [--dry-run] [--force]
-> [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [--atomic]
-> [<host>:]<directory> [<ref>...]
-> +'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>]
-> +		[--verbose] [--thin] [--atomic] [<host>:]<directory> [<ref>...]
->  
->  DESCRIPTION
->  -----------
+How to reproduce the bug:
+=C2=A0
+Create a file with the following, and commit:
+x < 1
+y > 2
+=C2=A0
+Modify it to this, and commit:
+z < 1
+w > 2
+=C2=A0
+Then view the results with:
+gitk --color-words
+=C2=A0
+You will see:
+ * "Diff" shows bogus removal on 1st line and bogus addition on 2nd lin=
+e.
+ * "Old version" cuts off at right angle bracket.
+ * "New Version" cuts off at left angle bracket.
 
-As can be expected from the Subject: line, this patch is
-line-wrapped and does not apply ;-)
-
-I've done a trivial fix-up and took the liberty of making the result
-of this step into three lines, not two.  That would make 3/9 look
-more trivial.
-
-Thanks.
+I personally use a 2-line patch to fix this by disabling/breaking the f=
+eature that does string comparisons for "=C2=A0 >" and "=C2=A0 <", but =
+I know that's not the correct fix, so I'm not including it in this post=
+=2E
