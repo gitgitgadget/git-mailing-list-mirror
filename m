@@ -1,96 +1,102 @@
 From: Dave Borowitz <dborowitz@google.com>
-Subject: [PATCH v2 3/9] Documentation/git-send-pack.txt: Document --signed
-Date: Wed, 19 Aug 2015 11:26:41 -0400
-Message-ID: <1439998007-28719-4-git-send-email-dborowitz@google.com>
+Subject: [PATCH v2 5/9] transport: Remove git_transport_options.push_cert
+Date: Wed, 19 Aug 2015 11:26:43 -0400
+Message-ID: <1439998007-28719-6-git-send-email-dborowitz@google.com>
 References: <1439998007-28719-1-git-send-email-dborowitz@google.com>
 Cc: Dave Borowitz <dborowitz@google.com>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Aug 19 17:27:49 2015
+X-From: git-owner@vger.kernel.org Wed Aug 19 17:27:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZS5HE-0005AP-BM
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 17:27:44 +0200
+	id 1ZS5HB-0005AP-On
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 17:27:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751955AbbHSP1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2015 11:27:36 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:33463 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751700AbbHSP1P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2015 11:27:15 -0400
-Received: by iods203 with SMTP id s203so13020894iod.0
-        for <git@vger.kernel.org>; Wed, 19 Aug 2015 08:27:15 -0700 (PDT)
+	id S1751981AbbHSP1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2015 11:27:20 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:35882 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751358AbbHSP1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2015 11:27:18 -0400
+Received: by igxp17 with SMTP id p17so108040847igx.1
+        for <git@vger.kernel.org>; Wed, 19 Aug 2015 08:27:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BjZferK/wpeJfpvW84sFcd2m59Bify7ZhaKapuqXiww=;
-        b=omyev7rwNtux4xDSQjQHxNGIP04ZzHF/nVhU/fhqEnT5IT7EIE7j771mEJqSXDGpCi
-         3dTiNJeB6lxVtxl2+tG2x2JFHGdXMRjjb5aUe1CDr59qgRR7jzZflQMzSn9WcQgndVhC
-         IYOWGM4FUG6hInO14W7ybW6Lt4oyLoxiehYGaeCjb8t+itvLVpvyAik9Q0w0rjEL1Qmq
-         J4G4sx/smRcxN46mSFz/ZiKsi86a6U3Umlp4xJx6jabQCXa3iXlfsqH2K7WuCv80JH9B
-         AK2lw2VYn3RXVx2BcTjF11c3kOqXTllMLztG9GyEX3rwsvG7A9t8c+vk+0We2Gx6Kb5p
-         Ttfw==
+        bh=UByGPUEKWQ5gzsF5XlX57xh2xOx38nyrOsFL34wuALk=;
+        b=dD/AMZwJ6OuHW1srXmuILo9Q+4Qsan+MghXhFDvae9uPT+vaFxiBsgYzzBWyQ+w+65
+         FMoT+YqzRPbV+MJC7uiZCeQasC0lVpbPC9zIcQtFJRMUMSCbT1PQL/nRkJyX6hi0vAs6
+         vOCykj2uIxYlJnlZxGOJYJCWaRhTWQXODskPkilHqrddwUO8/ysHutGHXp6gwiPPPiUI
+         NH3lB2WvpAOekbuXC+l71Y42/Fchnz3priyfic0nyFFxG3SgCtmwhvBPO/LEoRGC86MI
+         gcu1h/8KqOmd05Q4jNT5VP+ELc6uHUgf6CGVT63zzthBNzISDtDWHWgh5KCgtI0SlG6o
+         Cq4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=BjZferK/wpeJfpvW84sFcd2m59Bify7ZhaKapuqXiww=;
-        b=XJcmD9dkxgIy1tSYImVFwA6Cl8r64oqrWT2nMXt7QI5i4sSR8R/omzFlYrEsnSjeEh
-         o0Yt3+18F6+uCv+p5Zb16mN2RKW+mZkoPaNq5NuDLcNYV+Ym0hsJ+7cclfLsbQBH11Cp
-         vF0fwLHcKAOcHIRVYCI3SvMBuol1R/BV1Vvcyb+w6OLLZc7u0wFlb0ygOzOEPOGvdyqL
-         R55TYgtgbjAiaVxJkjPkSvwXq0hJmPKQQ+cLs26+iQlK5T618NNhVN4SsSZ09G9h+1TS
-         1lx0sNH5ABqbOyu8CMfcQEG+d02BolceXiJK7jUa7UShFWGo7tHiPVL4yABrDBHE3RLz
-         kFWA==
-X-Gm-Message-State: ALoCoQkl3mw3KWZrJzJaXfy71IOaOM5m4qVVgIz1FshHp3RA6xrCZOqM3DQOJnVy0qcISVGByNs2
-X-Received: by 10.107.170.36 with SMTP id t36mr14513446ioe.107.1439998035162;
-        Wed, 19 Aug 2015 08:27:15 -0700 (PDT)
+        bh=UByGPUEKWQ5gzsF5XlX57xh2xOx38nyrOsFL34wuALk=;
+        b=PMBVUcYhaTVklCHQPfQEANwap55UAP/GFUDmp0+NXP8HOAGYCiEv4/rWWZf1Za7tzt
+         z8WywwRFgA6AsSNUR+qKGr4S2eRqH2nxH34U4jQhquC2wjPUzmNk0NAXiuYwULV8kk4v
+         XvhA1f9J/Mwh/nIl0lVFR0/Pjjuz0JfuHzhQjJob8FEDt/WsX4e1HV6F9/KKK68m7dLc
+         WacyejaHDLP7fyCV2hPAEGycS5ERJZxtxy/5Pn+e5M3HtivZRqNFb6O/HUkfJWeZVHW8
+         2gRFoOQwV+4a28wfKjSSNa1aaY44OeJz8lWK2K+tB2InICRDACBXUFG0YecSCBQDfHK7
+         MxGQ==
+X-Gm-Message-State: ALoCoQk3hX1WieNaIS5nUuI56ySoji1MgFf+HNhUeZRrGxMiKbXscUzBR3ayM3kRlqsm7q9nbrXf
+X-Received: by 10.50.141.193 with SMTP id rq1mr2377148igb.4.1439998036680;
+        Wed, 19 Aug 2015 08:27:16 -0700 (PDT)
 Received: from serval.arb.corp.google.com ([172.29.229.12])
-        by smtp.gmail.com with ESMTPSA id o19sm2347819igs.18.2015.08.19.08.27.14
+        by smtp.gmail.com with ESMTPSA id o19sm2347819igs.18.2015.08.19.08.27.16
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Aug 2015 08:27:14 -0700 (PDT)
+        Wed, 19 Aug 2015 08:27:16 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.276.gf5e568e
 In-Reply-To: <1439998007-28719-1-git-send-email-dborowitz@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276194>
+
+This field was set in transport_set_option, but never read in the push
+code. The push code basically ignores the smart_options field
+entirely, and derives its options from the flags arguments to the
+push* callbacks. Note that in git_transport_push there are already
+several args set from flags that have no corresponding field in
+git_transport_options; after this change, push_cert is just like
+those.
 
 Signed-off-by: Dave Borowitz <dborowitz@google.com>
 ---
- Documentation/git-send-pack.txt | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ transport.c | 3 ---
+ transport.h | 1 -
+ 2 files changed, 4 deletions(-)
 
-diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-index 6affff6..0a0a3fb 100644
---- a/Documentation/git-send-pack.txt
-+++ b/Documentation/git-send-pack.txt
-@@ -10,7 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>]
--		[--verbose] [--thin] [--atomic] [<host>:]<directory> [<ref>...]
-+		[--verbose] [--thin] [--atomic] [--signed]
-+		[<host>:]<directory> [<ref>...]
- 
- DESCRIPTION
- -----------
-@@ -68,6 +69,14 @@ be in a separate packet, and the list must end with a flush packet.
- 	fails to update then the entire push will fail without changing any
- 	refs.
- 
-+--signed::
-+	GPG-sign the push request to update refs on the receiving
-+	side, to allow it to be checked by the hooks and/or be
-+	logged.  See linkgit:git-receive-pack[1] for the details
-+	on the receiving end.  If the attempt to sign with `gpg` fails,
-+	or if the server does not support signed pushes, the push will
-+	fail.
-+
- <host>::
- 	A remote host to house the repository.  When this
- 	part is specified, 'git-receive-pack' is invoked via
+diff --git a/transport.c b/transport.c
+index 40692f8..3dd6e30 100644
+--- a/transport.c
++++ b/transport.c
+@@ -476,9 +476,6 @@ static int set_git_option(struct git_transport_options *opts,
+ 				die("transport: invalid depth option '%s'", value);
+ 		}
+ 		return 0;
+-	} else if (!strcmp(name, TRANS_OPT_PUSH_CERT)) {
+-		opts->push_cert = !!value;
+-		return 0;
+ 	}
+ 	return 1;
+ }
+diff --git a/transport.h b/transport.h
+index 18d2cf8..79190df 100644
+--- a/transport.h
++++ b/transport.h
+@@ -12,7 +12,6 @@ struct git_transport_options {
+ 	unsigned check_self_contained_and_connected : 1;
+ 	unsigned self_contained_and_connected : 1;
+ 	unsigned update_shallow : 1;
+-	unsigned push_cert : 1;
+ 	int depth;
+ 	const char *uploadpack;
+ 	const char *receivepack;
 -- 
 2.5.0.276.gf5e568e
