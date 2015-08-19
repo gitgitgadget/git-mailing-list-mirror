@@ -1,210 +1,75 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v4 3/3] untracked cache: fix entry invalidation
-Date: Wed, 19 Aug 2015 20:01:26 +0700
-Message-ID: <1439989286-24355-4-git-send-email-pclouds@gmail.com>
-References: <1439702227-15453-1-git-send-email-dturner@twopensource.com>
- <1439989286-24355-1-git-send-email-pclouds@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: No dialog box appears
+Date: Wed, 19 Aug 2015 15:17:00 +0200
+Organization: gmx
+Message-ID: <be6333650abce8a04c753112e4fa0c27@www.dscho.org>
+References: <4096511439969624@web22g.yandex.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Turner <dturner@twopensource.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 19 15:01:59 2015
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?=D0=A6=D0=B0=D0=BF=D0=BA=D0=BE=D0=B2_=D0=90=D0=BB=D0=B5?=
+	 =?UTF-8?Q?=D0=BA=D1=81=D0=B5=D0=B9?= <jiba88@ya.ru>
+X-From: git-owner@vger.kernel.org Wed Aug 19 15:17:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZS30A-0004NN-9t
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 15:01:58 +0200
+	id 1ZS3Ey-0008Qo-QT
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 15:17:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752399AbbHSNBx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Aug 2015 09:01:53 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:34687 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751161AbbHSNBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2015 09:01:52 -0400
-Received: by pdbfa8 with SMTP id fa8so1496125pdb.1
-        for <git@vger.kernel.org>; Wed, 19 Aug 2015 06:01:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=fNiX1Q/5r0nbOVtqmV6gWpj44ZVNz2Smp52FnQY9o6Q=;
-        b=vBo/psD0CSp2S/agzbYvroMDzYFLpAinC5/O9MsNcM/DSmiwOK7c9WJCeiyn587GH2
-         QDBIBWR9rrr022wxDfebhIl6SkhYlzW8CQSH4XaMzYTCTzLwDvnzhqZZvmWc7W2jTQp9
-         irQxbeA5DTn42/EX01s+xadEFbmNHknEbvolIQ+EqMz2EFFqKyq4F7NqUOR6/i4SZ0ol
-         YPHmCYp8XF3kqH6o/AWIbKGJnC3/4Xwc9LHLWy9goD/lj93d350kW2W4tAbq6b++m/HL
-         Toi9RFoKCrjnlee56qQ4E87KFVuqhCuznOQUm1Oq7RKK29JN3glPlx86lnLs4jho0PxS
-         p26A==
-X-Received: by 10.70.98.163 with SMTP id ej3mr24856127pdb.61.1439989312435;
-        Wed, 19 Aug 2015 06:01:52 -0700 (PDT)
-Received: from lanh ([171.232.84.126])
-        by smtp.gmail.com with ESMTPSA id gu2sm894851pbc.1.2015.08.19.06.01.49
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 19 Aug 2015 06:01:51 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 19 Aug 2015 20:01:48 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <1439989286-24355-1-git-send-email-pclouds@gmail.com>
+	id S1752520AbbHSNRG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Aug 2015 09:17:06 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53644 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750958AbbHSNRF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2015 09:17:05 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MPD8G-1ZNfWX2rYG-004T6Y; Wed, 19 Aug 2015 15:17:01
+ +0200
+In-Reply-To: <4096511439969624@web22g.yandex.ru>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:y+/exSUWqiATrx0D36ATsSHy0OY4hUw7FLT8cFR8Z26rAZy0L2V
+ nyjuvThpwGyMNGNJfQheEw7Of4NXCK8S7Qk5485AApF+5vR20BSSqdEIjbKX+edIkPIIuWY
+ IbLr9kaOQdTbQWjpsybhNdcWm6gW6WYUVsaDY16tpHZK7uPbamVF70d4EGX0TRA9KlXFeWt
+ on1WxZJ3Nr+i/FLResFWA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NL2malFTALc=:kP7Xlfc2qLppV3Z2GofqlX
+ VebPbHKzkAiIQ7tiy9ptPZQeOhKPpGQTrd2wM5h5gDX3nd3u5JtmH857IdLyVIZWIu4a0ZPby
+ NTIc9A2J17N1blPr1Cju3G+U0ATC+KZ1G3v7TFo3NWZUKIBsRGWoWQaPYxmJnZgQC6Y3w/tFT
+ PZvmWk7c7fLaPQsSKFQ0/4mdDHrHPv/vdvk1wIguGHgOytJoa05UNYS8XKRnrPEjMcsAsZXs6
+ n7EaA3LtKKdtpjKfyxBDZoRLDkK5dSJpJ4YJZhwaYW1XFRsYyg/A3Lnz7SynnpwfcU845vhYj
+ 7JJ7SgH8XsoA9ZdwZW+HJkGsXuj4iZTYvIVJfPCX4rG9L209tsKEB/LeYYQ9JvQyhSYxL8PI5
+ Jgw22eGjQRvtvgovqkbqDJoN6zrj3tqps4+PH94mnar2/pBr+fZloUn3RgAsHf5Tr5na/7Wkx
+ y1jZapZuQ/DyF2MdhM4LKXldjIWhyTBe+9xfyxW4xDn7Tx/0QYi8JYYJVQtyEryxUfHoR45X2
+ vMFLPAEhj9hWuRavCs8mlSWnNaGtD04ye48b34u2pTjOxXtHL9RMfrzuv6OAo14NU4UMVtr+5
+ Cs27UeD0ovTXc5vCPpTr/oV6Dgvb0OCZ3PNaNC+aQZk7KTXoyr9yJlmsZS1SMkrm8dPNPKTQy
+ dyPTDMzN3xxd2DlsZUjcMX9NZuGvNYB51tRP8jxhDxbtgPEGUqSAZq4vi2/mprd9Qf0T6QwgF
+ YQtDOJl0+cO+oDNF7K6PCyvAPB9BpTrgUgjsiA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276177>
 
-=46irst, the current code in untracked_cache_invalidate_path() is wrong
-because it can only handle paths "a" or "a/b", not "a/b/c" because
-lookup_untracked() only looks for entries directly under the given
-directory. In the last case, it will look for the entry "b/c" in
-directory "a" instead. This means if you delete or add an entry in a
-subdirectory, untracked cache may become out of date because it does no=
-t
-invalidate properly. This is noticed by David Turner.
+Hi Aleksey,
 
-The second problem is about invalidation inside a fully untracked/exclu=
-ded
-directory. In this case we may have to invalidate back to root. See the
-comment block for detail.
+On 2015-08-19 09:33, =D0=A6=D0=B0=D0=BF=D0=BA=D0=BE=D0=B2 =D0=90=D0=BB=D0=
+=B5=D0=BA=D1=81=D0=B5=D0=B9 wrote:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- dir.c                             | 68 +++++++++++++++++++++++++++++++=
-+-------
- t/t7063-status-untracked-cache.sh | 28 +++++++++++++++-
- 2 files changed, 83 insertions(+), 13 deletions(-)
+> When installing the Git is not a dialog box appears with a choice ssh=
+=2E
+> What could be the reason?
 
-diff --git a/dir.c b/dir.c
-index cd4ac77..c1edabf 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2616,23 +2616,67 @@ done2:
- 	return uc;
- }
-=20
-+static void invalidate_one_directory(struct untracked_cache *uc,
-+				     struct untracked_cache_dir *ucd)
-+{
-+	uc->dir_invalidated++;
-+	ucd->valid =3D 0;
-+	ucd->untracked_nr =3D 0;
-+}
-+
-+/*
-+ * Normally when an entry is added or removed from a directory,
-+ * invalidating that directory is enough. No need to touch its
-+ * ancestors. When a directory is shown as "foo/bar/" in git-status
-+ * however, deleting or adding an entry may have cascading effect.
-+ *
-+ * Say the "foo/bar/file" has become untracked, we need to tell the
-+ * untracked_cache_dir of "foo" that "bar/" is not an untracked
-+ * directory any more (because "bar" is managed by foo as an untracked
-+ * "file").
-+ *
-+ * Similarly, if "foo/bar/file" moves from untracked to tracked and it
-+ * was the last untracked entry in the entire "foo", we should show
-+ * "foo/" instead. Which means we have to invalidate past "bar" up to
-+ * "foo".
-+ *
-+ * This function traverses all directories from root to leaf. If there
-+ * is a chance of one of the above cases happening, we invalidate back
-+ * to root. Otherwise we just invalidate the leaf. There may be a more
-+ * sophisticated way than checking for SHOW_OTHER_DIRECTORIES to
-+ * detect these cases and avoid unnecessary invalidation, for example,
-+ * checking for the untracked entry named "bar/" in "foo", but for now
-+ * stick to something safe and simple.
-+ */
-+static int invalidate_one_component(struct untracked_cache *uc,
-+				    struct untracked_cache_dir *dir,
-+				    const char *path, int len)
-+{
-+	const char *rest =3D strchr(path, '/');
-+
-+	if (rest) {
-+		int component_len =3D rest - path;
-+		struct untracked_cache_dir *d =3D
-+			lookup_untracked(uc, dir, path, component_len);
-+		int ret =3D
-+			invalidate_one_component(uc, d, rest + 1,
-+						 len - (component_len + 1));
-+		if (ret)
-+			invalidate_one_directory(uc, dir);
-+		return ret;
-+	}
-+
-+	invalidate_one_directory(uc, dir);
-+	return uc->dir_flags & DIR_SHOW_OTHER_DIRECTORIES;
-+}
-+
- void untracked_cache_invalidate_path(struct index_state *istate,
- 				     const char *path)
- {
--	const char *sep;
--	struct untracked_cache_dir *d;
- 	if (!istate->untracked || !istate->untracked->root)
- 		return;
--	sep =3D strrchr(path, '/');
--	if (sep)
--		d =3D lookup_untracked(istate->untracked,
--				     istate->untracked->root,
--				     path, sep - path);
--	else
--		d =3D istate->untracked->root;
--	istate->untracked->dir_invalidated++;
--	d->valid =3D 0;
--	d->untracked_nr =3D 0;
-+	invalidate_one_component(istate->untracked, istate->untracked->root,
-+				 path, strlen(path));
- }
-=20
- void untracked_cache_remove_from_index(struct index_state *istate,
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untrack=
-ed-cache.sh
-index 22393b9..37a24c1 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -375,7 +375,7 @@ EOF
- node creation: 0
- gitignore invalidation: 0
- directory invalidation: 0
--opendir: 1
-+opendir: 2
- EOF
- 	test_cmp ../trace.expect ../trace
- '
-@@ -543,4 +543,30 @@ EOF
- 	test_cmp ../trace.expect ../trace
- '
-=20
-+test_expect_success 'move entry in subdir from untracked to cached' '
-+	git add dtwo/two &&
-+	git status --porcelain >../status.actual &&
-+	cat >../status.expect <<EOF &&
-+ M done/two
-+A  dtwo/two
-+?? .gitignore
-+?? done/five
-+?? done/sub/
-+EOF
-+	test_cmp ../status.expect ../status.actual
-+'
-+
-+test_expect_success 'move entry in subdir from cached to untracked' '
-+	git rm --cached dtwo/two &&
-+	git status --porcelain >../status.actual &&
-+	cat >../status.expect <<EOF &&
-+ M done/two
-+?? .gitignore
-+?? done/five
-+?? done/sub/
-+?? dtwo/
-+EOF
-+	test_cmp ../status.expect ../status.actual
-+'
-+
- test_done
---=20
-2.3.0.rc1.137.g477eb31
+I assume that you are referring to the Git for Windows installer (pleas=
+e state such details in the future). And I assume you were wondering wh=
+y you could not choose putty as your ssh program. If that is the case, =
+I think you might need to add connections to your putty first, otherwis=
+e the installer will not even present the choice to you.
+
+But maybe you want to move this to the issue tracker at https://github.=
+com/git-for-windows/git/issues?
+
+Ciao,
+Johannes
