@@ -1,124 +1,85 @@
-From: Anders Kaseorg <andersk@mit.edu>
-Subject: [BUG/PATCH] t9350-fast-export: Add failing test for
- symlink-to-directory
-Date: Wed, 19 Aug 2015 15:46:27 -0400 (EDT)
-Message-ID: <alpine.DEB.2.10.1508191532330.31851@buzzword-bingo.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/9] Documentation/git-send-pack.txt: Flow long synopsis line
+Date: Wed, 19 Aug 2015 12:56:47 -0700
+Message-ID: <xmqqtwrv8328.fsf@gitster.dls.corp.google.com>
+References: <1439998007-28719-1-git-send-email-dborowitz@google.com>
+	<1439998007-28719-3-git-send-email-dborowitz@google.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Aug 19 21:51:51 2015
+To: Dave Borowitz <dborowitz@google.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 21:56:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZS9Of-0000A0-Nc
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 21:51:42 +0200
+	id 1ZS9Tj-0004pk-Cg
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 21:56:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751955AbbHSTvc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Aug 2015 15:51:32 -0400
-Received: from dmz-mailsec-scanner-3.mit.edu ([18.9.25.14]:63209 "EHLO
-	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751494AbbHSTvb convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2015 15:51:31 -0400
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Aug 2015 15:51:31 EDT
-X-AuditID: 1209190e-f79c76d000002631-1c-55d4dd165310
-Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
-	(using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by dmz-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 97.2F.09777.61DD4D55; Wed, 19 Aug 2015 15:46:30 -0400 (EDT)
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id t7JJkTxA031105;
-	Wed, 19 Aug 2015 15:46:29 -0400
-Received: from localhost (buzzword-bingo.mit.edu [18.9.64.24])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id t7JJkRwE001960
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 19 Aug 2015 15:46:28 -0400
-User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixG6noit290qowf4NfBZdV7qZLBp6rzA7
-	MHlcvKTs8XmTXABTFJdNSmpOZllqkb5dAlfGkS3LmQq28Fa0H/7H2sD4hquLkZNDQsBEYt7U
-	j4wQtpjEhXvr2UBsIYHFTBJrz5t2MXIB2RsZJaa//cUG4exmkji3az8zSBWLgLbE/fa97CA2
-	m4CaxIejX1lBbBEBUYkj8xeBTWIWEJfYtPwNE4gtLBAssWXJZDCbV8BDYvGHdjBbVEBX4tC/
-	P2wQcUGJkzOfsED0qksc+HSREcIG2nWzjW0CI/8sJGWzkJTNQlK2gJF5FaNsSm6Vbm5iZk5x
-	arJucXJiXl5qka6xXm5miV5qSukmRlAwckry7WD8elDpEKMAB6MSD++HHZdDhVgTy4orcw8x
-	SnIwKYnypp29EirEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhPdWAlCONyWxsiq1KB8mJc3BoiTO
-	u+kHX4iQQHpiSWp2ampBahFMVoaDQ0mC9+ltoEbBotT01Iq0zJwShDQTByfIcB6g4f9AaniL
-	CxJzizPTIfKnGBWlxHlXgiQEQBIZpXlwvbBk8YpRHOgVYd6XIFU8wEQD1/0KaDAT0ODDEy6C
-	DC5JREhJNTDaSyyIefd20i4DLX2DS11suQc+OD2u7zqbfuoi3+GgX4XVCfOc5sdVVRtYb/3F
-	V8oZdOrS0XcHHj/9oc/UvD6qP+cGf7+Kxz575p6gF9O4hGffWmBZsf/bTQXf3uhz2m7BmW0n
-	BHoZ2I8dn6k/Z7+JV9K0i/yrZ+7NPW2t412o7a/MqHb/SroSS3FGoqEWc1FxIgCj 
+	id S1751878AbbHST4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2015 15:56:50 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:36818 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751623AbbHST4t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2015 15:56:49 -0400
+Received: by pawq9 with SMTP id q9so9945391paw.3
+        for <git@vger.kernel.org>; Wed, 19 Aug 2015 12:56:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=2urCPpTyjyq0e531fSix4hHo8tYuDJDNzmA49pxL3U4=;
+        b=n5Qxb8O2veIcgN5U9P6NztowpilxqnGDXHNXvW2YRl5htBkBYPIVnnxwfNXLACzQAI
+         mL7M9DHmI9PF1bSVecvcgdJs4SIaoZDrX5e+mZDVHKSEfY1AsFtcRznDFzOtg8jnMjQJ
+         +qg77CjbnR9Zv+e6DPdxIoyytVriMY1eNkMjobpDyYkzFH6OI5qmY4v+XWMFkRqHNDAh
+         UPCaHCjpFT6Cfob31kAgVUNH2qORuyJCqDaTHUVhnLubUyM6iTHRsePFdGzmDJhJ0fTr
+         NaSli3if05i3SLBWtN+F6Ame2zdSDS6rwgB0uJxi1MeRJVzBK7RkMn7CowMOXn2iPVxS
+         FPOg==
+X-Received: by 10.66.118.39 with SMTP id kj7mr28150333pab.115.1440014209294;
+        Wed, 19 Aug 2015 12:56:49 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a5d7:91a5:eac5:b635])
+        by smtp.gmail.com with ESMTPSA id au10sm1766382pbd.81.2015.08.19.12.56.48
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 19 Aug 2015 12:56:48 -0700 (PDT)
+In-Reply-To: <1439998007-28719-3-git-send-email-dborowitz@google.com> (Dave
+	Borowitz's message of "Wed, 19 Aug 2015 11:26:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276218>
 
-git fast-export | git fast-import fails to preserve a commit that repla=
-ces=20
-a symlink with a directory.  Add a failing test case demonstrating this=
-=20
-bug.
+Dave Borowitz <dborowitz@google.com> writes:
 
-The fast-export output for the commit in question looks like
+> Signed-off-by: Dave Borowitz <dborowitz@google.com>
+> ---
+>  Documentation/git-send-pack.txt | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
+> index b5d09f7..6affff6 100644
+> --- a/Documentation/git-send-pack.txt
+> +++ b/Documentation/git-send-pack.txt
+> @@ -9,7 +9,8 @@ git-send-pack - Push objects over Git protocol to another repository
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git send-pack' [--all] [--dry-run] [--force]
+> [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [--atomic]
+> [<host>:]<directory> [<ref>...]
+> +'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>]
+> +		[--verbose] [--thin] [--atomic] [<host>:]<directory> [<ref>...]
+>  
+>  DESCRIPTION
+>  -----------
 
-  commit refs/heads/master
-  mark :4
-  author =E2=80=A6
-  committer =E2=80=A6
-  data 4
-  two
-  M 100644 :1 foo/world
-  D foo
+As can be expected from the Subject: line, this patch is
+line-wrapped and does not apply ;-)
 
-fast-import deletes the symlink foo and ignores foo/world.  Swapping th=
-e M=20
-line with the D line would give the correct result.
+I've done a trivial fix-up and took the liberty of making the result
+of this step into three lines, not two.  That would make 3/9 look
+more trivial.
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- t/t9350-fast-export.sh | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 66c8b0a..5fb8a04 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -419,6 +419,30 @@ test_expect_success 'directory becomes symlink'   =
-     '
- 	(cd result && git show master:foo)
- '
-=20
-+test_expect_failure 'symlink becomes directory'        '
-+	git init symlinktodir &&
-+	git init symlinktodirresult &&
-+	(
-+		cd symlinktodir &&
-+		mkdir bar &&
-+		echo hello > bar/world &&
-+		test_ln_s_add bar foo &&
-+		git add foo bar/world &&
-+		git commit -q -mone &&
-+		git rm foo &&
-+		mkdir foo &&
-+		echo hello > foo/world &&
-+		git add foo/world &&
-+		git commit -q -mtwo
-+	) &&
-+	(
-+		cd symlinktodir &&
-+		git fast-export master -- foo |
-+		(cd ../symlinktodirresult && git fast-import --quiet)
-+	) &&
-+	(cd symlinktodirresult && git show master:foo)
-+'
-+
- test_expect_success 'fast-export quotes pathnames' '
- 	git init crazy-paths &&
- 	(cd crazy-paths &&
---=20
-2.5.0
+Thanks.
