@@ -1,56 +1,127 @@
-From: christain147@gmail.com
-Subject: Re:
-Date: Wed, 19 Aug 2015 13:41:01 -0600
-Message-ID: <20150819192814.962575EC23A@mail.holatours.com>
-Reply-To: admin@ukchambs.co.uk
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] generate-cmdlist: re-implement as shell script
+Date: Wed, 19 Aug 2015 15:38:58 -0700
+Message-ID: <xmqqegiy9a4d.fsf@gitster.dls.corp.google.com>
+References: <1440015528-7791-1-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients <christain147@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 20 00:16:33 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Renato Botelho <garga@freebsd.org>,
+	=?utf-8?Q?S?= =?utf-8?Q?=C3=A9bastien?= Guimmara 
+	<sebastien.guimmara@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Aug 20 00:39:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSBeq-0007Im-53
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 00:16:32 +0200
+	id 1ZSC0h-0001uX-Qk
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 00:39:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752540AbbHSWQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2015 18:16:27 -0400
-Received: from mail.holatours.com ([190.167.194.126]:39190 "EHLO
-	mail.holatours.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752287AbbHSWQ1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Aug 2015 18:16:27 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.holatours.com (Postfix) with ESMTP id 799775EC9F3;
-	Wed, 19 Aug 2015 15:28:23 -0400 (AST)
-Received: from mail.holatours.com ([127.0.0.1])
-	by localhost (mail.holatours.com [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id YdWmEmifDxwv; Wed, 19 Aug 2015 15:28:23 -0400 (AST)
-Received: from localhost (localhost [127.0.0.1])
-	by mail.holatours.com (Postfix) with ESMTP id 2E30D5EC9E6;
-	Wed, 19 Aug 2015 15:28:18 -0400 (AST)
-X-Virus-Scanned: amavisd-new at holatours.com
-Received: from mail.holatours.com ([127.0.0.1])
-	by localhost (mail.holatours.com [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id bF_Q7l6F6fHH; Wed, 19 Aug 2015 15:28:18 -0400 (AST)
-Received: from [74.208.125.209] (s18497373.onlinehome-server.com [74.208.125.209])
-	by mail.holatours.com (Postfix) with ESMTPA id 962575EC23A;
-	Wed, 19 Aug 2015 15:28:14 -0400 (AST)
-Content-Description: Mail message body
+	id S1752549AbbHSWjC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2015 18:39:02 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:34057 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752074AbbHSWjA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2015 18:39:00 -0400
+Received: by paccq16 with SMTP id cq16so12408697pac.1
+        for <git@vger.kernel.org>; Wed, 19 Aug 2015 15:39:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=dB3o3m9hpYUBjCNbM4AR7eb52VN3vGBJEsX9jGy75m0=;
+        b=J2T4riZPaWSTcuImh8zmPMOkSH/zjDG0ODHfzJwRRWZGm94qru9gLyvjrEPmrhxEGv
+         5FN22p5wdGGUKr11eYsJ25BxYcCqkk1s/nRDQ8c8yMJvI62IAYQl1AhGJYuRu3b/HTI7
+         056AF1oEPgSk5o4Uu6Je0JrzqXkG3Ee9u7NHemjpzvAvCQ2VWbok2bYCPo+j3fadIdeb
+         oe5eJ0rlOwSLXZbZIxc243dGJggx9Cl4y7JfJiq/tGnK/PXSxdL+Ke40ThDbifP88boM
+         BNzgXdEwCemn+8N2iCCWC98N10DkzZGx2VEMzmXQ3expnMExaUPfQOeSlYGT/CqHUnVR
+         gxcg==
+X-Received: by 10.68.69.7 with SMTP id a7mr29876768pbu.78.1440023940323;
+        Wed, 19 Aug 2015 15:39:00 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a5d7:91a5:eac5:b635])
+        by smtp.gmail.com with ESMTPSA id b4sm2010909pdn.42.2015.08.19.15.38.59
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 19 Aug 2015 15:38:59 -0700 (PDT)
+In-Reply-To: <1440015528-7791-1-git-send-email-sunshine@sunshineco.com> (Eric
+	Sunshine's message of "Wed, 19 Aug 2015 16:18:48 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276228>
 
-Good day,hoping you read this email and respond to me in good time.I do not intend to solicit for funds but  your time and energy in using my own resources to assist the less privileged.I am medically confined at the moment hence I request your indulgence.
-I will give you a comprehensive brief once I hear from you.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Please forward your response to my private email address:
-gudworks104@yahoo.com
+> In addition to reviving 527ec39^:generate-cmdlist.sh and extending it, I
+> also re-indented it with tabs instead of spaces, so it's helpful to
+> ignore whitespace changes when comparing the old and new versions of the
+> shell script.
 
-Thanks and reply.
+Hmph.  Perhaps we can view it as part of reverting 527ec39 and then
+redoing it in shell.  The way the shell script accumulates matchgrp
+variable (i.e. the literal LF in ${var:+string}) makes me feel some
+possible portability scare, which might be solved in a more stupid
+(i.e. not giving various reimplementations of Bourne shells a chance
+to screw it up) way by using another temporary file, but other than
+that the resurrected script looks OK to me.
 
-Robert Grondahl
+Thanks.
+
+> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+> new file mode 100755
+> index 0000000..1ac329d
+> --- /dev/null
+> +++ b/generate-cmdlist.sh
+> @@ -0,0 +1,50 @@
+> +#!/bin/sh
+> +
+> +echo "/* Automatically generated by $0 */
+> +struct cmdname_help {
+> +	char name[16];
+> +	char help[80];
+> +	unsigned char group;
+> +};
+> +
+> +static const char *common_cmd_groups[] = {"
+> +
+> +tmp=cmdgrps$$.tmp
+> +trap "rm -fr $tmp" 0 1 2 3 15
+> +
+> +sed -n '
+> +	1,/^### common groups/b
+> +	/^### command list/q
+> +	/^#/d; /^[ 	]*$/b
+> +	h;s/^[^ 	][^ 	]*[ 	][ 	]*\(.*\)/	N_("\1"),/p
+> +	g;s/^\([^ 	][^ 	]*\)[ 	].*/\1/w '$tmp'
+> +	'
+> +printf '};\n\n'
+> +
+> +n=0
+> +matchgrp=
+> +substnum=
+> +while read grp
+> +do
+> +	matchgrp="$matchgrp${matchgrp:+
+> +}^git-..*[ 	]$grp"
+> +	substnum="$substnum${substnum:+;}s/[ 	]$grp/$n/"
+> +	n=$(($n+1))
+> +done <$tmp
+> +
+> +printf 'static struct cmdname_help common_cmds[] = {\n'
+> +grep "$matchgrp" |
+> +sed 's/^git-//' |
+> +sort |
+> +while read cmd tags
+> +do
+> +	tag=$(echo $tags | sed "$substnum; s/[^0-9]//g")
+> +	sed -n '
+> +		/^NAME/,/git-'"$cmd"'/H
+> +		${
+> +			x
+> +			s/.*git-'"$cmd"' - \(.*\)/	{"'"$cmd"'", N_("\1"), '$tag'},/
+> +			p
+> +		}' "Documentation/git-$cmd.txt"
+> +done
+> +echo "};"
