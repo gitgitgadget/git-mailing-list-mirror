@@ -1,68 +1,56 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3] untracked-cache: fix subdirectory handling
-Date: Wed, 19 Aug 2015 18:39:37 +0700
-Message-ID: <CACsJy8DUUmT0xvBtMiC41qt+f=a02W1F-+i5gWjounNmpLA1tQ@mail.gmail.com>
-References: <1439702227-15453-1-git-send-email-dturner@twopensource.com> <CACsJy8C=rnqrJHqMBSQcBsD1ihSvztVCnQ46N2mzoeh=HFM6qw@mail.gmail.com>
+From: christain147@gmail.com
+Subject: Re:
+Date: Wed, 19 Aug 2015 05:09:41 -0600
+Message-ID: <20150819105655.CAAE15A4C9E@mail.holatours.com>
+Reply-To: admin@ukchambs.co.uk
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Aug 19 13:40:19 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <christain147@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 14:22:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZS1j7-00066E-PJ
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 13:40:18 +0200
+	id 1ZS2OM-0006tb-3O
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 14:22:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753541AbbHSLkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2015 07:40:08 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:37491 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752654AbbHSLkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2015 07:40:07 -0400
-Received: by igui7 with SMTP id i7so3543779igu.0
-        for <git@vger.kernel.org>; Wed, 19 Aug 2015 04:40:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=OQzNMpjbIn57r6hbqqYgMufAdxrISQAdjjdl4nyYujY=;
-        b=0KoskzgZtsKKihgHJnyKVxxxNBF580gjonU13COFfmTLDXgYwVo5AYnN3IilUgKokA
-         JL+biwBhjgR94+aE+AvYvMn/lxWDG58t34vLFQN0gKXS2WEVmUleJNCRmwN3aMLCKxMW
-         Ok78nVbMLZK+0aBQnaNpEMmxJ5u0hHag7zHkDIIymJMXhDPtmwupZuPjEIuq6fdvrvhy
-         OcOMkZkZy26FU71T4yUlFGFr9vMB+k20wToHFq2AYUqxCvR2VmtEFEVhtmXMN37MrbMN
-         Szq0Z0EQ7AbEyy8bl7FuVs4btAEg2qC3fg6nQubd/GWrTEZGmehLADKjTAXVOsfVWgHv
-         oGaA==
-X-Received: by 10.50.79.196 with SMTP id l4mr25965544igx.48.1439984407225;
- Wed, 19 Aug 2015 04:40:07 -0700 (PDT)
-Received: by 10.107.191.193 with HTTP; Wed, 19 Aug 2015 04:39:37 -0700 (PDT)
-In-Reply-To: <CACsJy8C=rnqrJHqMBSQcBsD1ihSvztVCnQ46N2mzoeh=HFM6qw@mail.gmail.com>
+	id S1754018AbbHSMWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2015 08:22:50 -0400
+Received: from mail.holatours.com ([190.167.194.126]:43307 "EHLO
+	mail.holatours.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753596AbbHSMWt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Aug 2015 08:22:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.holatours.com (Postfix) with ESMTP id E3A3A5A4C9E;
+	Wed, 19 Aug 2015 06:56:57 -0400 (AST)
+Received: from mail.holatours.com ([127.0.0.1])
+	by localhost (mail.holatours.com [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id Ko73KezulnvP; Wed, 19 Aug 2015 06:56:57 -0400 (AST)
+Received: from localhost (localhost [127.0.0.1])
+	by mail.holatours.com (Postfix) with ESMTP id AEC175A43AE;
+	Wed, 19 Aug 2015 06:56:57 -0400 (AST)
+X-Virus-Scanned: amavisd-new at holatours.com
+Received: from mail.holatours.com ([127.0.0.1])
+	by localhost (mail.holatours.com [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id IsLgVd8gUvG8; Wed, 19 Aug 2015 06:56:57 -0400 (AST)
+Received: from [74.208.125.209] (s18497373.onlinehome-server.com [74.208.125.209])
+	by mail.holatours.com (Postfix) with ESMTPA id CAAE15A4C9E;
+	Wed, 19 Aug 2015 06:56:55 -0400 (AST)
+Content-Description: Mail message body
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276171>
 
-On Sun, Aug 16, 2015 at 7:16 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Aug 16, 2015 at 12:17 PM, David Turner <dturner@twopensource.com> wrote:
->> Previously, some calls lookup_untracked would pass a full path.  But
->> lookup_untracked assumes that the portion of the path up to and
->> including to the untracked_cache_dir has been removed.  So
->> lookup_untracked would be looking in the untracked_cache for 'foo' for
->> 'foo/bar' (instead of just looking for 'bar').  This would cause
->> untracked cache corruption.
->>
->> Instead, treat_directory learns to track the base length of the parent
->> directory, so that only the last path component is passed to
->> lookup_untracked.
->
-> Your v2 also fixes untracked_cache_invalidate_path(), which is not
-> included here. Maybe it's in another patch?
+Good day,hoping you read this email and respond to me in good time.I do not intend to solicit for funds but  your time and energy in using my own resources to assist the less privileged.I am medically confined at the moment hence I request your indulgence.
+I will give you a comprehensive brief once I hear from you.
 
-No I was wrong. Your changes and the original code are effectively the
-same (I misread strrchr as strchr). But I think there's a bug
-somewhere as I'm writing tests to understand that code..
--- 
-Duy
+Please forward your response to my private email address:
+gudworks104@yahoo.com
+
+Thanks and reply.
+
+Robert Grondahl
