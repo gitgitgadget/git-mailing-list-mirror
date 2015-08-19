@@ -1,95 +1,79 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v12 03/13] ref-filter: introduce the ref_formatting_state
- stack machinery
-Date: Wed, 19 Aug 2015 21:40:00 +0530
-Message-ID: <CAOLa=ZRBTrWa5EEOxa-Rf+J+8DWP7gSGGEYaG75EsR=A1DofRA@mail.gmail.com>
-References: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
- <1439923052-7373-4-git-send-email-Karthik.188@gmail.com> <vpqvbcb2uoi.fsf@anie.imag.fr>
- <CAOLa=ZTy8QO=H9g9g3SKU4HaG=qg71GidGuXKLXNgu7Su3FQ9A@mail.gmail.com>
- <vpqa8tn2sgy.fsf@anie.imag.fr> <CAOLa=ZSzXyQZJksNqyroU6Td+LG7ZRTF_WNNryusAGZxTYTmDg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 0/3] dt/untracked-subdir
+Date: Wed, 19 Aug 2015 10:47:54 -0700
+Message-ID: <xmqq37zfb25x.fsf@gitster.dls.corp.google.com>
+References: <1439702227-15453-1-git-send-email-dturner@twopensource.com>
+	<1439989286-24355-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 19 18:11:40 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, David Turner <dturner@twopensource.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 19:48:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZS5xi-0007j0-Eo
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 18:11:39 +0200
+	id 1ZS7Sz-0004e7-NI
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 19:48:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751690AbbHSQLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2015 12:11:34 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:34601 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751526AbbHSQLd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2015 12:11:33 -0400
-Received: by obbfr1 with SMTP id fr1so8302513obb.1
-        for <git@vger.kernel.org>; Wed, 19 Aug 2015 09:10:30 -0700 (PDT)
+	id S1751794AbbHSRr5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Aug 2015 13:47:57 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:33117 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751773AbbHSRr4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2015 13:47:56 -0400
+Received: by padfo6 with SMTP id fo6so1667918pad.0
+        for <git@vger.kernel.org>; Wed, 19 Aug 2015 10:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=KCUOI2CPAHZBpJ2DH5Xmy4Kt7yU16LnDnbP1bvjga1E=;
-        b=0q4MnUz+asVb7UKmWGIugGfChwFomcaKJWz4I94GF/pjE+DghQTI6rztDSw6iXpamC
-         gdrUCJwctWgvI+0jIgnlNuJ1LGj8UKDfLodggPS+686n7K6pUXD34RIlwd8eLv+Ypm/6
-         IDV6JCUs4sn0cVExs4xrVcjqVvfChTZVkfOC01DuE09cBTfm1995hbIzd+wjSLo5lESe
-         EnvdH/scOMKws9pfmJI4y9uN+UeX6l3WSOfozURFRgs7iMy4Y+mKMWKalgilR7aMCcXf
-         NpNvCCxCXekcBM44ojq8RAFYmh6jq4S0EeGosfHLF4heBmoFs7iWlO9xMYj/1wP1h8ns
-         XC0Q==
-X-Received: by 10.182.29.68 with SMTP id i4mr11044378obh.57.1440000630395;
- Wed, 19 Aug 2015 09:10:30 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Wed, 19 Aug 2015 09:10:00 -0700 (PDT)
-In-Reply-To: <CAOLa=ZSzXyQZJksNqyroU6Td+LG7ZRTF_WNNryusAGZxTYTmDg@mail.gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=UhJrhpbjMcwNs7QxLuLw6K+celFm8E1FyFEbXFlexEk=;
+        b=0UU2DO6ErU+Fcky+1Tfe0p0HZOPjtUjW/r9mgLKwN/II7L4qCjDwfojh2KZWcffbd/
+         4UTgzFw1Um5bPzJ0J/qlE9/bG4qZB64Ppxtz3Vi73J7FD+sa+5jfsi+kf6pCkWM+Vggf
+         4LLGF4yXWMOzyWl5QGpKRhUQ6zFuubhEADybzEUlws1tDyp9mhiLQzQD+ywbb9VbpCdY
+         QoiqaS/gxivdgoWyH9fqLMR2KNEWZjQ56tmSqHIKonvUMHoA8taRea5Ll/x0r2N6X2mi
+         Kg/pp4cdRS3ptBlouK9lZVVH7zPJx3ny94LbsJA8dlEMEPdiTkU/DForDXZDc9omSxZa
+         77Ng==
+X-Received: by 10.66.55.66 with SMTP id q2mr27093922pap.94.1440006476256;
+        Wed, 19 Aug 2015 10:47:56 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:a5d7:91a5:eac5:b635])
+        by smtp.gmail.com with ESMTPSA id bu1sm1582429pdb.35.2015.08.19.10.47.55
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 19 Aug 2015 10:47:55 -0700 (PDT)
+In-Reply-To: <1439989286-24355-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 19
+ Aug 2015 20:01:23 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276205>
 
-On Wed, Aug 19, 2015 at 9:24 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> On Wed, Aug 19, 2015 at 9:14 PM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>>> --- a/ref-filter.c
->>>> +++ b/ref-filter.c
->>>> @@ -155,6 +155,8 @@ static void push_new_state(struct ref_formatting_state **stack)
->>>>
->>>>         strbuf_init(&s->output, 0);
->>>>         s->prev = *stack;
->>>> +       if (*stack)
->>>> +               s->quote_style = (*stack)->quote_style;
->>>>         *stack = s;
->>>>  }
->>>>
->>>>
->>>
->>> This seems about right, why do you think it's a stupid fix?
->>
->> If you have a stack of N elemments, why replicate a field N times if all
->> the N instances always have the same value?
->>
->> There's nothing to be pushed or poped with quote_style, so having it in
->> the stack is confusing to the reader (one has to infer the property "all
->> instances have the same value" by reading the code instead of having
->> just one variable), and error-prone for the author: you already got
->> it wrong once.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+
+> The first patch is a split from David's v3 patch because it should
+> belong to dt/untracked-sparse. The second is basically David's v3.
+> The third patch fixes untracked_cache_invalidate_path(). David fixed
+> it in v2, but there's another bug in this code.
 >
-> Thats also there, I'll guess it makes more sense to remove it from
-> ref_formatting_state.
+> David Turner (1):
+>   untracked-cache: fix subdirectory handling
 >
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+>   t7063: use --force-untracked-cache to speed up a bit
+>   untracked cache: fix entry invalidation
+>
+>  dir.c                             |  82 +++++++++++++++++++++++-----=
+--
+>  t/t7063-status-untracked-cache.sh | 102 ++++++++++++++++++++++++++++=
+++++++++--
+>  2 files changed, 163 insertions(+), 21 deletions(-)
 
-Speaking of quote_value, The quote doesn't work well with color's
-for e.g.
-git for-each-ref --shell --format="%(color:green)%(refname)"
-'''refs/heads/allow-unknown-type'''
-Seems like an simple fix, probably after GSoC I'll do this :)
+They all look reasonable.  Will replace v3 with these and wait a bit
+to give chance to David and others to comment.
 
--- 
-Regards,
-Karthik Nayak
+Thanks.
