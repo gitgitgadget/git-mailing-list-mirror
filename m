@@ -1,102 +1,77 @@
-From: Dave Borowitz <dborowitz@google.com>
-Subject: [PATCH v2 5/9] transport: Remove git_transport_options.push_cert
-Date: Wed, 19 Aug 2015 11:26:43 -0400
-Message-ID: <1439998007-28719-6-git-send-email-dborowitz@google.com>
-References: <1439998007-28719-1-git-send-email-dborowitz@google.com>
-Cc: Dave Borowitz <dborowitz@google.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Aug 19 17:27:52 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v12 01/13] ref-filter: move `struct atom_value` to ref-filter.c
+Date: Wed, 19 Aug 2015 20:59:44 +0530
+Message-ID: <CAOLa=ZTuhUfXmqQdmGJ2u=5js23akgQWprDUWZYNJsd+=ncw5A@mail.gmail.com>
+References: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
+ <1439923052-7373-2-git-send-email-Karthik.188@gmail.com> <vpqy4h72up1.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 19 17:30:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZS5HB-0005AP-On
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 17:27:42 +0200
+	id 1ZS5Jl-0007HA-Tl
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 17:30:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981AbbHSP1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2015 11:27:20 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:35882 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751358AbbHSP1S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2015 11:27:18 -0400
-Received: by igxp17 with SMTP id p17so108040847igx.1
-        for <git@vger.kernel.org>; Wed, 19 Aug 2015 08:27:16 -0700 (PDT)
+	id S1751084AbbHSPaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2015 11:30:15 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:32802 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750921AbbHSPaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2015 11:30:14 -0400
+Received: by obbhe7 with SMTP id he7so7285070obb.0
+        for <git@vger.kernel.org>; Wed, 19 Aug 2015 08:30:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UByGPUEKWQ5gzsF5XlX57xh2xOx38nyrOsFL34wuALk=;
-        b=dD/AMZwJ6OuHW1srXmuILo9Q+4Qsan+MghXhFDvae9uPT+vaFxiBsgYzzBWyQ+w+65
-         FMoT+YqzRPbV+MJC7uiZCeQasC0lVpbPC9zIcQtFJRMUMSCbT1PQL/nRkJyX6hi0vAs6
-         vOCykj2uIxYlJnlZxGOJYJCWaRhTWQXODskPkilHqrddwUO8/ysHutGHXp6gwiPPPiUI
-         NH3lB2WvpAOekbuXC+l71Y42/Fchnz3priyfic0nyFFxG3SgCtmwhvBPO/LEoRGC86MI
-         gcu1h/8KqOmd05Q4jNT5VP+ELc6uHUgf6CGVT63zzthBNzISDtDWHWgh5KCgtI0SlG6o
-         Cq4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=UByGPUEKWQ5gzsF5XlX57xh2xOx38nyrOsFL34wuALk=;
-        b=PMBVUcYhaTVklCHQPfQEANwap55UAP/GFUDmp0+NXP8HOAGYCiEv4/rWWZf1Za7tzt
-         z8WywwRFgA6AsSNUR+qKGr4S2eRqH2nxH34U4jQhquC2wjPUzmNk0NAXiuYwULV8kk4v
-         XvhA1f9J/Mwh/nIl0lVFR0/Pjjuz0JfuHzhQjJob8FEDt/WsX4e1HV6F9/KKK68m7dLc
-         WacyejaHDLP7fyCV2hPAEGycS5ERJZxtxy/5Pn+e5M3HtivZRqNFb6O/HUkfJWeZVHW8
-         2gRFoOQwV+4a28wfKjSSNa1aaY44OeJz8lWK2K+tB2InICRDACBXUFG0YecSCBQDfHK7
-         MxGQ==
-X-Gm-Message-State: ALoCoQk3hX1WieNaIS5nUuI56ySoji1MgFf+HNhUeZRrGxMiKbXscUzBR3ayM3kRlqsm7q9nbrXf
-X-Received: by 10.50.141.193 with SMTP id rq1mr2377148igb.4.1439998036680;
-        Wed, 19 Aug 2015 08:27:16 -0700 (PDT)
-Received: from serval.arb.corp.google.com ([172.29.229.12])
-        by smtp.gmail.com with ESMTPSA id o19sm2347819igs.18.2015.08.19.08.27.16
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Aug 2015 08:27:16 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.276.gf5e568e
-In-Reply-To: <1439998007-28719-1-git-send-email-dborowitz@google.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Pl1K/C7zuJW3yOpjIYzSR5MLqd+8rKP1QTCSc2QpkfI=;
+        b=VRpNPrStI/+RtJ/ubCi2OLAzSYdHIapiDN9+Dl2MlYT+gdbIFpBU9NcS0a42WLtvA+
+         8QzZSJnmP8tiazS/XVKrcxPqsy00cgRskJpErtpzmyDqbZxmYT3eQA39xPIj7SEY3VSS
+         cx3MrFJ8bnbE0trkZAxIBW5YJMUR49kvyiWchpE6CkyxyBvp1VIQlwVmy8Jb3ntx0OM0
+         sAKqMiTxvFklo3vGe6krVGarsSaJjcrGFUmarlrsX88vbLldPC6mhrYf3U4iewit3Z4M
+         wA8821hKn3YqOxLJP/EuvBzrgrtbkacGPg+zgWg6ouv4754jo05R/ST7eIngUmmSHjTW
+         +KPg==
+X-Received: by 10.60.62.105 with SMTP id x9mr10911463oer.1.1439998213564; Wed,
+ 19 Aug 2015 08:30:13 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Wed, 19 Aug 2015 08:29:44 -0700 (PDT)
+In-Reply-To: <vpqy4h72up1.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276195>
 
-This field was set in transport_set_option, but never read in the push
-code. The push code basically ignores the smart_options field
-entirely, and derives its options from the flags arguments to the
-push* callbacks. Note that in git_transport_push there are already
-several args set from flags that have no corresponding field in
-git_transport_options; after this change, push_cert is just like
-those.
+On Wed, Aug 19, 2015 at 8:26 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> +static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_state **state)
+>> +{
+>> +     struct ref_formatting_state *current = *state;
+>> +     if (!current->at_end)
+>> +             die(_("format: `end` atom used without a supporting atom"));
+>
+> You error out on %(end) without %(align), but not on %(align) without
+> %(end).
+>
+> You should probably check that the stack is empty at the end and error
+> out otherwise.
+>
 
-Signed-off-by: Dave Borowitz <dborowitz@google.com>
----
- transport.c | 3 ---
- transport.h | 1 -
- 2 files changed, 4 deletions(-)
+You're right,
 
-diff --git a/transport.c b/transport.c
-index 40692f8..3dd6e30 100644
---- a/transport.c
-+++ b/transport.c
-@@ -476,9 +476,6 @@ static int set_git_option(struct git_transport_options *opts,
- 				die("transport: invalid depth option '%s'", value);
- 		}
- 		return 0;
--	} else if (!strcmp(name, TRANS_OPT_PUSH_CERT)) {
--		opts->push_cert = !!value;
--		return 0;
- 	}
- 	return 1;
- }
-diff --git a/transport.h b/transport.h
-index 18d2cf8..79190df 100644
---- a/transport.h
-+++ b/transport.h
-@@ -12,7 +12,6 @@ struct git_transport_options {
- 	unsigned check_self_contained_and_connected : 1;
- 	unsigned self_contained_and_connected : 1;
- 	unsigned update_shallow : 1;
--	unsigned push_cert : 1;
- 	int depth;
- 	const char *uploadpack;
- 	const char *receivepack;
+    if (state->prev)
+        die(_("format: `end` atom missing"));
+
+should do before printing.
+
 -- 
-2.5.0.276.gf5e568e
+Regards,
+Karthik Nayak
