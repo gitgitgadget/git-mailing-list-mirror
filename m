@@ -1,81 +1,81 @@
 From: Dave Borowitz <dborowitz@google.com>
-Subject: [PATCH v2 4/9] gitremote-helpers.txt: Document pushcert option
-Date: Wed, 19 Aug 2015 11:26:42 -0400
-Message-ID: <1439998007-28719-5-git-send-email-dborowitz@google.com>
+Subject: [PATCH v2 2/9] Documentation/git-send-pack.txt: Flow long synopsis line
+Date: Wed, 19 Aug 2015 11:26:40 -0400
+Message-ID: <1439998007-28719-3-git-send-email-dborowitz@google.com>
 References: <1439998007-28719-1-git-send-email-dborowitz@google.com>
 Cc: Dave Borowitz <dborowitz@google.com>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Aug 19 17:27:36 2015
+X-From: git-owner@vger.kernel.org Wed Aug 19 17:27:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZS5Gz-0004yA-GL
+	id 1ZS5Gy-0004yA-PM
 	for gcvg-git-2@plane.gmane.org; Wed, 19 Aug 2015 17:27:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220AbbHSP1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2015 11:27:23 -0400
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:35571 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750942AbbHSP1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751907AbbHSP1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 19 Aug 2015 11:27:16 -0400
-Received: by igbjg10 with SMTP id jg10so107489394igb.0
-        for <git@vger.kernel.org>; Wed, 19 Aug 2015 08:27:16 -0700 (PDT)
+Received: from mail-io0-f181.google.com ([209.85.223.181]:35391 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750942AbbHSP1P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2015 11:27:15 -0400
+Received: by iodt126 with SMTP id t126so12997102iod.2
+        for <git@vger.kernel.org>; Wed, 19 Aug 2015 08:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1TRM+Q82F4XY1jQjsI2MKz742ziyEFF9wjOo7aPqdBc=;
-        b=ObmcFmSUrZJQB+8oe0za13SjE1qAF0Jlkye0YlKoGivAAUOOYhtV//A7Pg4UH7d2Hf
-         NJdkBAKR7XM8IPECe7piGZUsLNZRsDZTnRODx24RPFVKxdNz3ZD3GYimLq34TAVt0TDe
-         rOdl8hadLest+Dz56KIqlZyZ2k0sziNs7hI57g18YQIZTLZg3isTU1UuKNjslZrvIV4D
-         9yYnBflWyy8h/AUF62M87xbgW1Sg/4NMAbKsMdRLDhoUUVeZGrKUAiAHEDzceKXT0U07
-         b95fGK/IQ4suf6bmZZXoN5UVpvp/qlqk1C1whv04jcuo79jPkP8WrZ/Owy+YpvmWHFqA
-         SyJg==
+        bh=MjT1KgrHogw8pONMb3Yj8Sx+b8V5XCmJ+OG2crsjWcE=;
+        b=coImT1uWbdwcoQI58q4VLdB0D6MxVobgEMf0fWrJNnmeOArxQYyNr/twyi7u/h/VQt
+         L/ktEFOByaSjjCEHRhDGNwlvUCGASfWbGgrurHDIQfSnrwX3G1L0bIsr0TTOMcMqztp+
+         yE7XzcViteuokrzm7Axzu3av/VMWQnI6F6uuTvfoxfDXqHoGCcoNullCZRIhfuJshqsf
+         LyUE0c2dg27f6QBTyQV8VtzhZxzwB32xFKED7robYmB9ODQ5zeh3nMFMT+gUZJ7QIroG
+         Blsh9ijSvVkCyi1bjZTiEGNo5ES/Pq9KCh5+G+M9tu6hXnWSwzXbBpliDR/kuxddlO5y
+         wzNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1TRM+Q82F4XY1jQjsI2MKz742ziyEFF9wjOo7aPqdBc=;
-        b=K2pdVVISR+DK0WFMVrkfiawaQJDoVKKzioHBQ7r7ikVain10hSurkut4fCc56g7E5j
-         pNSWNuu8E9cPEqEGHTsIOkDe+xuGjJxR9HHTQLGPE2voetfV4Ack4uo7iK7d6mQpzTzX
-         OBFfzbC0nAsO2PHddp13VAelflhFjm9Sp5CvnB1REzjyE2Tcyx+m4k3Bs2p+RKjneUMO
-         xWeXSmFgxLuFakYVVoegP6eqbKMp9s+3F7vcaJNiRQtvvspaCO47GvHhGvhaWOJK9far
-         pnqxuXttuWQi+dUU3Y4R/QMVXf80ydhHA3tj5LzE44m839OFyeZC0Dyd+/xuIfjuBz8P
-         QUNA==
-X-Gm-Message-State: ALoCoQkirSOO2FMraRJsIVRyUVlFQMPspJbeNXYjRfxr+lkvaaN2omNusLqOy9wxxyt280CjQJ1E
-X-Received: by 10.50.18.36 with SMTP id t4mr2324575igd.3.1439998035937;
-        Wed, 19 Aug 2015 08:27:15 -0700 (PDT)
+        bh=MjT1KgrHogw8pONMb3Yj8Sx+b8V5XCmJ+OG2crsjWcE=;
+        b=bsyei/vHQsbJ9ilCqYkqYwInjBpnRI671WLo8NGzD7N0z343CX9jmCjPqs99W4pxfe
+         BSeh+3tt+ZzGytc8GTvVjwLcizUQcxrSgymCN1vkdArX216Y4rBDHkfyLvM2gCd9EipQ
+         tmaFT075Tfw2JjT4KxE82z6czj0G6fcyO53E4q3kXmK+rRt1V89KdXIKqwXLOi0JXzHy
+         ASxARUPOeJH2Yjwa2fKFiUFncHHUF4BA/T3C0KMCtgwMNa/FNoQvGYcHz2/g/5ei58fA
+         iI6DZuYtZjR05krypLErNpxvONXRVlCxWJ5Uq0+hzyxpozJSWWiVgXNoMbItOkUPC2G7
+         twZg==
+X-Gm-Message-State: ALoCoQnxxxWa49gdUxoH/c5f4dwExC3coR4jxtKYiSfmtXCT4L47eLK0Ki3FFqvW2k5+C4JnyZly
+X-Received: by 10.107.156.5 with SMTP id f5mr13129379ioe.111.1439998034312;
+        Wed, 19 Aug 2015 08:27:14 -0700 (PDT)
 Received: from serval.arb.corp.google.com ([172.29.229.12])
-        by smtp.gmail.com with ESMTPSA id o19sm2347819igs.18.2015.08.19.08.27.15
+        by smtp.gmail.com with ESMTPSA id o19sm2347819igs.18.2015.08.19.08.27.13
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Aug 2015 08:27:15 -0700 (PDT)
+        Wed, 19 Aug 2015 08:27:13 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.276.gf5e568e
 In-Reply-To: <1439998007-28719-1-git-send-email-dborowitz@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276190>
 
 Signed-off-by: Dave Borowitz <dborowitz@google.com>
 ---
- Documentation/gitremote-helpers.txt | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/git-send-pack.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-index 82e2d15..78e0b27 100644
---- a/Documentation/gitremote-helpers.txt
-+++ b/Documentation/gitremote-helpers.txt
-@@ -448,6 +448,9 @@ set by Git if the remote helper has the 'option' capability.
- 'option update-shallow {'true'|'false'}::
- 	Allow to extend .git/shallow if the new refs require it.
- 
-+'option pushcert {'true'|'false'}::
-+	GPG sign pushes.
-+
- SEE ALSO
+diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
+index b5d09f7..6affff6 100644
+--- a/Documentation/git-send-pack.txt
++++ b/Documentation/git-send-pack.txt
+@@ -9,7 +9,8 @@ git-send-pack - Push objects over Git protocol to another repository
+ SYNOPSIS
  --------
- linkgit:git-remote[1]
+ [verse]
+-'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [--atomic] [<host>:]<directory> [<ref>...]
++'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>]
++		[--verbose] [--thin] [--atomic] [<host>:]<directory> [<ref>...]
+ 
+ DESCRIPTION
+ -----------
 -- 
 2.5.0.276.gf5e568e
