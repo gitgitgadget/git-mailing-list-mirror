@@ -1,122 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH] generate-cmdlist: re-implement as shell script
-Date: Thu, 20 Aug 2015 10:24:26 -0700
-Message-ID: <xmqqmvxl7u0l.fsf@gitster.dls.corp.google.com>
+Date: Thu, 20 Aug 2015 14:11:41 -0400
+Message-ID: <CAPig+cROaXkRVbpRJYiAL1yiXB1HV_12To=VMO8kZVk_AFE+2w@mail.gmail.com>
 References: <1440015528-7791-1-git-send-email-sunshine@sunshineco.com>
+	<xmqqegiy9a4d.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Renato Botelho <garga@freebsd.org>,
-	=?utf-8?Q?S?= =?utf-8?Q?=C3=A9bastien?= Guimmara 
-	<sebastien.guimmara@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Aug 20 19:24:34 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Renato Botelho <garga@freebsd.org>,
+	=?UTF-8?Q?S=C3=A9bastien_Guimmara?= <sebastien.guimmara@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 20 20:11:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSTZp-0001S8-Ib
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 19:24:33 +0200
+	id 1ZSUJX-0007PP-7E
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 20:11:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752205AbbHTRY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2015 13:24:29 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:34175 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753296AbbHTRY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2015 13:24:28 -0400
-Received: by pacgr6 with SMTP id gr6so1175115pac.1
-        for <git@vger.kernel.org>; Thu, 20 Aug 2015 10:24:28 -0700 (PDT)
+	id S1751245AbbHTSLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2015 14:11:42 -0400
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:34161 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750981AbbHTSLm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2015 14:11:42 -0400
+Received: by ykdt205 with SMTP id t205so46488116ykd.1
+        for <git@vger.kernel.org>; Thu, 20 Aug 2015 11:11:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=A2j9gN6HMEvGpvKAFoG004hTOYuuwbkwIchy7IOMh0w=;
-        b=cFQBZ8/bWDqtww4ts8QxmY57fyfPuHuFk2gswBUI5VV3yIEykffDaHDkDIW1gh5AFA
-         a7K+mVxB8wdpFbVyiUsD2Yda9gfVdbwFB8G1H1cq35PmvevzBZuGUl0kU967qFTPbbQ1
-         3v9GTOJl5W989XJ9+IFqnA25hEJcUanJbTv8epjDT4wu8/iK626bkXDrmsWV1qCSHxTo
-         47XzTmEasiQra89TqcgCzv62gg0Va7iB1t0E/e6zk8gvq0KQcZgLRzX9FoYofY2TGZSz
-         drop91shJ0ot7riuyUjoDLa9rojzxa/u1fXUzyeWCTl+N2wskbBVXpLRsF7KOE0bbXBw
-         10aA==
-X-Received: by 10.68.220.132 with SMTP id pw4mr8281314pbc.149.1440091468134;
-        Thu, 20 Aug 2015 10:24:28 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:247b:3165:9cce:44a3])
-        by smtp.gmail.com with ESMTPSA id bu10sm5006933pac.36.2015.08.20.10.24.27
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 20 Aug 2015 10:24:27 -0700 (PDT)
-In-Reply-To: <1440015528-7791-1-git-send-email-sunshine@sunshineco.com> (Eric
-	Sunshine's message of "Wed, 19 Aug 2015 16:18:48 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=MVtfcnZtoPCjxYoBKbes5FvqEI4MkRqF3vfS5SFMd2I=;
+        b=ql8w6Gphe7NAzb9VXEAQWZwKHsCPWk/Rn3TAFOPfTLfViSyoFi8X0l6Wkq6jZeli5I
+         x1RCjwR6Pwqicm7nRs2fdyHaPYZ3iOCj14F2lqm/ffiuW+W2QtVFFuZJ5AY6CV7DMGpH
+         QYFQ6icBa8k7qC432DvGutwIhyZx/+WcCgyIBZB9vGBGfHTKadkScETJ2sW/ux13kBGb
+         MfsSn0jN0DgxqVdEgG3BJXzjqf8XzxAoPhUpOq8B0DALTLsYSvBtP5s1r4WHZggSn79D
+         WULiA9176Nk3NRq2FsJ8TE4eUkSzBKACCn96xFx5X5eR2iBAhzKXKXRZ/9SqBKHHIgfM
+         4j3w==
+X-Received: by 10.170.55.70 with SMTP id 67mr5429430ykx.82.1440094301450; Thu,
+ 20 Aug 2015 11:11:41 -0700 (PDT)
+Received: by 10.37.208.78 with HTTP; Thu, 20 Aug 2015 11:11:41 -0700 (PDT)
+In-Reply-To: <xmqqegiy9a4d.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: 0wfcEFbpD8DNDbqSQCJK-7Z_Yqs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276256>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Wed, Aug 19, 2015 at 6:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> In addition to reviving 527ec39^:generate-cmdlist.sh and extending it, I
+>> also re-indented it with tabs instead of spaces, so it's helpful to
+>> ignore whitespace changes when comparing the old and new versions of the
+>> shell script.
+>
+> Hmph.  Perhaps we can view it as part of reverting 527ec39 and then
+> redoing it in shell.
 
-> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-> new file mode 100755
-> index 0000000..1ac329d
-> --- /dev/null
-> +++ b/generate-cmdlist.sh
-> @@ -0,0 +1,50 @@
-> +#!/bin/sh
-> +
-> +echo "/* Automatically generated by $0 */
-> +struct cmdname_help {
-> +	char name[16];
-> +	char help[80];
-> +	unsigned char group;
-> +};
-> +
-> +static const char *common_cmd_groups[] = {"
-> +
-> +tmp=cmdgrps$$.tmp
-> +trap "rm -fr $tmp" 0 1 2 3 15
-> +
-> +sed -n '
-> +	1,/^### common groups/b
-> +	/^### command list/q
-> +	/^#/d; /^[ 	]*$/b
-> +	h;s/^[^ 	][^ 	]*[ 	][ 	]*\(.*\)/	N_("\1"),/p
-> +	g;s/^\([^ 	][^ 	]*\)[ 	].*/\1/w '$tmp'
-> +	'
-> +printf '};\n\n'
+I'm having trouble understanding. Are you asking that this be
+presented as a series of patches which first revert 527ec39, then do
+the whitespace cleanup, and then augment the script for the extended
+functionality? If so, it's a bit problematic because the original
+script still expects the 'common' tag to be present, but that tag was
+removed by the subsequent patch 2f5b495 (command-list.txt: drop the
+"common" tag, 2015-05-21). So, reverting 527ec39 would also require
+reverting 2f5b495.
 
-Unfortunately, this does not seem to work for me.  Even though sed
-stops reading after seeing the "### command list" line, I suspect
-that its stdin buffer has been filled with other lines that follow
-it from the input to the buffer size, consuming what you meant to
-feed the later 'grep $matchgrp"' with.
+> The way the shell script accumulates matchgrp
+> variable (i.e. the literal LF in ${var:+string}) makes me feel some
+> possible portability scare, which might be solved in a more stupid
+> (i.e. not giving various reimplementations of Bourne shells a chance
+> to screw it up) way by using another temporary file[...]
 
-This is a one-time thing, so I do not mind to update the Makefile
-so that it does not feed command-list.txt from the standard input
-but gives the path as "$1" to this script.
-
-> +n=0
-> +matchgrp=
-> +substnum=
-> +while read grp
-> +do
-> +	matchgrp="$matchgrp${matchgrp:+
-> +}^git-..*[ 	]$grp"
-> +	substnum="$substnum${substnum:+;}s/[ 	]$grp/$n/"
-> +	n=$(($n+1))
-> +done <$tmp
-> +
-> +printf 'static struct cmdname_help common_cmds[] = {\n'
-> +grep "$matchgrp" |
-> +sed 's/^git-//' |
-> +sort |
-> +while read cmd tags
-> +do
-> +	tag=$(echo $tags | sed "$substnum; s/[^0-9]//g")
-> +	sed -n '
-> +		/^NAME/,/git-'"$cmd"'/H
-> +		${
-> +			x
-> +			s/.*git-'"$cmd"' - \(.*\)/	{"'"$cmd"'", N_("\1"), '$tag'},/
-> +			p
-> +		}' "Documentation/git-$cmd.txt"
-> +done
-> +echo "};"
+In addition to the literal newline and the temporary file, other
+options I considered included assigning the newline to a variable and
+then interpolating that variable (${var:+$LF}), or expanding the list
+of patterns into a set of '-e' arguments for grep. But, I think I'll
+just go with the temporary file.
