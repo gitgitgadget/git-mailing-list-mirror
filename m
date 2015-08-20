@@ -1,112 +1,76 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v12 12/13] tag.c: implement '--format' option
-Date: Thu, 20 Aug 2015 21:20:40 +0530
-Message-ID: <CAOLa=ZQfEeJofxe0ei_h7efrhMVnXMQ=K+5PzZ1fRWU0us7KBA@mail.gmail.com>
-References: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
- <1439923052-7373-13-git-send-email-Karthik.188@gmail.com> <vpq614b49dk.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-p4: fix faulty paths for case insensitive systems
+Date: Thu, 20 Aug 2015 08:55:35 -0700
+Message-ID: <xmqq37ze7y4o.fsf@gitster.dls.corp.google.com>
+References: <1440014686-63290-1-git-send-email-larsxschneider@gmail.com>
+	<1440014686-63290-2-git-send-email-larsxschneider@gmail.com>
+	<55D55EC9.6050002@web.de>
+	<917E3751-4BC8-4034-9101-30C77426D81C@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Aug 20 17:54:03 2015
+Content-Type: text/plain
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org, luke@diamand.org, pw@padd.com,
+	torarvid@gmail.com, ksaitoh560@gmail.com
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 20 17:55:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSSAD-0000vn-4j
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 17:54:01 +0200
+	id 1ZSSBq-0002Ay-Fz
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 17:55:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143AbbHTPxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2015 11:53:52 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:36559 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751878AbbHTPxv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2015 11:53:51 -0400
-Received: by iodv127 with SMTP id v127so50852458iod.3
-        for <git@vger.kernel.org>; Thu, 20 Aug 2015 08:53:50 -0700 (PDT)
+	id S1752108AbbHTPzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2015 11:55:38 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:34324 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752176AbbHTPzh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2015 11:55:37 -0400
+Received: by pdbfa8 with SMTP id fa8so15695044pdb.1
+        for <git@vger.kernel.org>; Thu, 20 Aug 2015 08:55:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=KXs6Mf/Ot2bkvSIC07GB/8NngqVtl7sZyp399arShG0=;
-        b=Ce6Q2E8A9Z+xoj87woOuRPBdasy84RgXQNIDvv+MVRttDipypX/FhydODxAO/ZeHlt
-         kJ8dRg7fCaqrDHM0U2fj7NZIlcINVnc7ekwGpk7FMoXj/+lFVMFMzFLMdtW4LsUHviKu
-         VzpwfJqqlprDBLHZ0d5U7Ydoa/AW27mGC2HX/wDQ4HT+mpcC9zkiYARfH59WNhj/vQ0O
-         YshiNsd8wBlMiJ4lPZ1tDnUpTfYPuoVauPZHQ3OQ2X9/fCtgQCT6qOHULa3vWl7PCVuc
-         KSyOCn3lPXOOCcjhVTPr43sLTmJ8/1gC42C9bEC60g6mwEhdIp3qiyXO89L6XeRK/XyH
-         3hFQ==
-X-Received: by 10.107.10.214 with SMTP id 83mr3147780iok.120.1440086030609;
- Thu, 20 Aug 2015 08:53:50 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Thu, 20 Aug 2015 08:50:40 -0700 (PDT)
-In-Reply-To: <vpq614b49dk.fsf@anie.imag.fr>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=D7ivIDIOujoRuSjtpP6RQiFjkiFRN7FWOd0wK0Bc6/Q=;
+        b=v1fFWTIDGQTsbbYAYX6w6qQu60Ft3Oe2+PRqD5C/+ZYpn0JAUPuMXfbDSKH4ANTdwE
+         R2SAKtfnJOI1WhRym/etvb/cei2wDNYjIdBa+DJKtzIOVHGVDq7NRL0RocNttgL45AIW
+         T/eQamrk6P7yfw+0URQGD9BuYR0UV7PKfbEbYrfug85XobgXrdEIrPmU17Hgjfcr3bSM
+         nvJjoAzo04wsPiDDd8sQK+qfQigVwVoRj3T68XW4t13khejowk73fXJVSr1DPoZnUZWk
+         BcF6Xx4Elm/KocI9vXM2YyEhfnXbPwEoWrtZFEXaoi/0SZNsxeEfZlnPRHGf1P3rwV01
+         +HHg==
+X-Received: by 10.70.7.162 with SMTP id k2mr7627880pda.128.1440086136914;
+        Thu, 20 Aug 2015 08:55:36 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:247b:3165:9cce:44a3])
+        by smtp.gmail.com with ESMTPSA id y1sm2955856pdh.37.2015.08.20.08.55.35
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Thu, 20 Aug 2015 08:55:35 -0700 (PDT)
+In-Reply-To: <917E3751-4BC8-4034-9101-30C77426D81C@gmail.com> (Lars
+	Schneider's message of "Thu, 20 Aug 2015 09:16:39 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276249>
 
-On Wed, Aug 19, 2015 at 8:23 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> --- a/Documentation/git-tag.txt
->> +++ b/Documentation/git-tag.txt
->> @@ -158,6 +159,18 @@ This option is only applicable when listing tags without annotation lines.
->>       The object that the new tag will refer to, usually a commit.
->>       Defaults to HEAD.
->>
->> +<format>::
->> +     A string that interpolates `%(fieldname)` from the object
->> +     pointed at by a ref being shown.  If `fieldname` is prefixed
->> +     with an asterisk (`*`) and the ref points at a tag object, the
->> +     value for the field in the object tag refers is used.  When
->> +     unspecified, defaults to `%(refname:short)`.  It also
->> +     interpolates `%%` to `%`, and `%xx` where `xx` are hex digits
->> +     interpolates to character with hex code `xx`; for example
->> +     `%00` interpolates to `\0` (NUL), `%09` to `\t` (TAB) and
->> +     `%0a` to `\n` (LF).  The fields are same as those in `git
->> +     for-each-ref`.
->> +
->
-> This documentation should probably be shortened to stg like
->
->         A string that interpolates `%(fieldname)` from the object
->         pointed at by a ref being shown. The format is the same as the
->         one of linkgit:git-for-each-ref[1]. When unspecified, defaults
->         to `%(refname:short)`
->
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-I guess this makes sense with what you're saying below, the --format option
-for tag.c is more of an extra add-on, and such a discrioption may not be needed.
-Will change this.
+>>> +		find . | grep TWO/file1.txt &&
+>>> +		find . | grep TWO/File2.txt &&
+>>> +		find . | grep TWO/file3.txt &&
+>> Not sure about the find | grep here either.
+> See answers above.
 
-> Alternatively, you can extract the "FIELD NAMES" section of
-> git-for-each-ref.txt to a separate file and include it in the doc for
-> each command having this --format option (this is how it's done for "git
-> log --format" IIRC). But taking that much space to describe hexadecimal
-> escapes that very few people would use and not documenting the %(atoms)
-> is counter-productive IMHO.
->
+These are not very good tests; they will match "OTWO/file1.txto",
+too.  Besides, it is wasteful to run find three times.
 
-I guess, It'll be better to write a document on the whole of
-ref-filter. I'll probably do that
-at the end of this.
+        find ?* -print | sort >actual &&
+        cat >expect <<-\EOF &&
+        TWO/file1.txt
+        ...
+        EOF
+	test_cmp expect actual
 
-> I would favor the first option (keep it short, include a pointer) with
-> Junio's remark in mind: "git tag" and "git branch" are meant to be
-> simple commands, and the scary swiss-army-knife should remain "git
-> for-each-ref".
->
-> I am still (slightly) in favor of adding --format to tag and branch, as
-> long as it does not make the commands too scary.
->
-
-Will change this, thanks for the suggestions.
-
-
--- 
-Regards,
-Karthik Nayak
+or something like that instead?
