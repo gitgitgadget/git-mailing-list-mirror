@@ -1,80 +1,74 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v12 03/13] ref-filter: introduce the ref_formatting_state
- stack machinery
-Date: Thu, 20 Aug 2015 16:01:09 +0530
-Message-ID: <CAOLa=ZTxNVfwHboxLBcd0obL8RbfemWmq51GVUvbdKoYsSnfQA@mail.gmail.com>
-References: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
- <1439923052-7373-4-git-send-email-Karthik.188@gmail.com> <vpqvbcb2uoi.fsf@anie.imag.fr>
- <xmqq37zf9klg.fsf@gitster.dls.corp.google.com>
+From: Konstantin Hollerith <khollerith@gmail.com>
+Subject: Why does 'git branch -d' act differntly after clone?
+Date: Thu, 20 Aug 2015 14:10:37 +0200
+Message-ID: <CALwJaCzYgDKdcT7H7=5x0fnNRv4MsrtjJoHJcB9rJyh3dU--xQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 20 12:31:50 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 20 14:10:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSN8L-0000L0-7H
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 12:31:45 +0200
+	id 1ZSOgC-0007OK-VM
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 14:10:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610AbbHTKbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2015 06:31:41 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:35039 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751210AbbHTKbj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2015 06:31:39 -0400
-Received: by obbwr7 with SMTP id wr7so28302372obb.2
-        for <git@vger.kernel.org>; Thu, 20 Aug 2015 03:31:39 -0700 (PDT)
+	id S1752329AbbHTMKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2015 08:10:40 -0400
+Received: from mail-oi0-f42.google.com ([209.85.218.42]:34478 "EHLO
+	mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752307AbbHTMKi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2015 08:10:38 -0400
+Received: by oiey141 with SMTP id y141so21241294oie.1
+        for <git@vger.kernel.org>; Thu, 20 Aug 2015 05:10:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=uEEv1GQbbcF1+XuB0POs69OXH45tRtLPwYsecMyK7LU=;
-        b=wiBjmkeW41ZaoDr11sC/ZNQqxu2pe6imORpc46bCycqQ76swabvR6N526QqeHCgfw+
-         8UaXXww2Af8XxNG7wDLH3t7W3uAu7Y3Plc7usBtLd3UYR1suYULzK9dAEN5XgJC8uATU
-         INECyHOfI0w1iuZSmauzYc6uGO6fFuWaLozqQusLkBLvkzyogVOGZZRPPOLDzbhCAKkU
-         lWvKZR3vtWLKZZmgyJwiUcMe0Q82DfAp2pbU9Sl0WJj7uho3/6EMvR1dUbvSVfB2OvK7
-         RdFrsu2HTpp2mOTGO4zwpyVcEfkFc2QVKvUIPJuRRtjKyZTWoSHD7zjQRNYTJ4/C//qK
-         eRTg==
-X-Received: by 10.60.92.37 with SMTP id cj5mr2061897oeb.30.1440066698821; Thu,
- 20 Aug 2015 03:31:38 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Thu, 20 Aug 2015 03:31:09 -0700 (PDT)
-In-Reply-To: <xmqq37zf9klg.fsf@gitster.dls.corp.google.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=D+Yv5791MlLOvAAC/S7SFIE4RQ82kwWVXjHoVhKNRO4=;
+        b=OvdQNWgdnNGzu/kxRrDV9NkohrOe9M24wG36n2nEX51U4KCP0ZUCUyyhVBOI0xyRA2
+         QakFoxzMqd/ONGLXgYigEiAvN2JP5l0iPEcJujKcJxPnRgzVKkTZYALVpXGQN4sCLYJo
+         EoO66vk2pYFzHYZyXh5A2XWpvAM6TvZdd/KwojbzzslCHukW2aG+YQumgkhLWyIlhfR5
+         WUd0zntjuBy9llOBQExfyVnyTAIkB7iBaubNb92PLzPIEg4hhl7CQOyAKqqXFG6oLiEU
+         vB7OWwOaOG+hsHkVOd45eFRFs4RR9MUm13xJzC6vW7iSuLdKKv6qfZu5n+k5cCHG0nt5
+         OX9A==
+X-Received: by 10.202.15.11 with SMTP id 11mr2281122oip.127.1440072638054;
+ Thu, 20 Aug 2015 05:10:38 -0700 (PDT)
+Received: by 10.76.38.227 with HTTP; Thu, 20 Aug 2015 05:10:37 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276235>
 
-On Thu, Aug 20, 2015 at 12:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> You replaced the quote_style argument with ref_formatting_state, and I
->> think you should have kept this argument and added ref_formatting_state.
->> The other option is to add an extra indirection like
->>
->> struct ref_formatting_state {
->>       int quote_style;
->>       struct ref_formatting_stack *stack;
->> }
->>
->> (ref_formatting_stack would be what you currently call
->> ref_formatting_state). But that's probably overkill.
->
-> I think this is the right way to go.  As you explained in your later
-> messages, this is conceptually a global setting that applies to
-> anybody working in the callchain and not something individual
-> recursion levels would want to muck with.
->
-> Thanks.
->
+Hi,
 
-I'll work on this :)
+I created a simple repository.
+If i create a new branch from master and commit some changes and
+then delete it with
 
--- 
-Regards,
-Karthik Nayak
+    git branch -d neuerTestBranch
+
+I'll get a error:
+
+    error: The branch 'neuerTestBranch' is not fully merged.
+
+I like that error, it reminds me, that i forgot to merge.
+However, if i don't delete this branch and clone the Repository somewhere
+else, i don't get the error anymore. When i delete the branch now, i get
+this message:
+
+    warning: deleting branch 'neuerTestBranch' that has been merged to
+    'refs/remotes/origin/neuerTestBranch', but not yet merged to HEAD.
+
+And the Branch is deleted right away.
+
+Why does git branch -d acts differently after a clone?
+Is this behavior maybe a Bug?
+Is it possible to force a behavior like the first in cloned repositories,
+too?
+
+I use 'git version 2.5.0.windows.1'.
+
+Cheers,
+Konstantin
