@@ -1,76 +1,122 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v12 03/13] ref-filter: introduce the ref_formatting_state stack machinery
-Date: Thu, 20 Aug 2015 19:19:35 +0200
-Message-ID: <vpqmvxlubbs.fsf@anie.imag.fr>
-References: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
-	<1439923052-7373-4-git-send-email-Karthik.188@gmail.com>
-	<vpqvbcb2uoi.fsf@anie.imag.fr>
-	<CAOLa=ZTy8QO=H9g9g3SKU4HaG=qg71GidGuXKLXNgu7Su3FQ9A@mail.gmail.com>
-	<vpqa8tn2sgy.fsf@anie.imag.fr>
-	<CAOLa=ZSzXyQZJksNqyroU6Td+LG7ZRTF_WNNryusAGZxTYTmDg@mail.gmail.com>
-	<CAOLa=ZRBTrWa5EEOxa-Rf+J+8DWP7gSGGEYaG75EsR=A1DofRA@mail.gmail.com>
-	<vpq7foq1kpe.fsf@anie.imag.fr>
-	<xmqqvbc97vpn.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] generate-cmdlist: re-implement as shell script
+Date: Thu, 20 Aug 2015 10:24:26 -0700
+Message-ID: <xmqqmvxl7u0l.fsf@gitster.dls.corp.google.com>
+References: <1440015528-7791-1-git-send-email-sunshine@sunshineco.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 20 19:19:51 2015
+Cc: git@vger.kernel.org, Renato Botelho <garga@freebsd.org>,
+	=?utf-8?Q?S?= =?utf-8?Q?=C3=A9bastien?= Guimmara 
+	<sebastien.guimmara@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Aug 20 19:24:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSTVF-0006lU-CD
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 19:19:49 +0200
+	id 1ZSTZp-0001S8-Ib
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 19:24:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752574AbbHTRTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2015 13:19:44 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47674 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752583AbbHTRTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2015 13:19:43 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t7KHJXg3018179
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 20 Aug 2015 19:19:33 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t7KHJZ4C007393;
-	Thu, 20 Aug 2015 19:19:35 +0200
-In-Reply-To: <xmqqvbc97vpn.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 20 Aug 2015 09:47:48 -0700")
+	id S1752205AbbHTRY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2015 13:24:29 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:34175 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753296AbbHTRY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2015 13:24:28 -0400
+Received: by pacgr6 with SMTP id gr6so1175115pac.1
+        for <git@vger.kernel.org>; Thu, 20 Aug 2015 10:24:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=A2j9gN6HMEvGpvKAFoG004hTOYuuwbkwIchy7IOMh0w=;
+        b=cFQBZ8/bWDqtww4ts8QxmY57fyfPuHuFk2gswBUI5VV3yIEykffDaHDkDIW1gh5AFA
+         a7K+mVxB8wdpFbVyiUsD2Yda9gfVdbwFB8G1H1cq35PmvevzBZuGUl0kU967qFTPbbQ1
+         3v9GTOJl5W989XJ9+IFqnA25hEJcUanJbTv8epjDT4wu8/iK626bkXDrmsWV1qCSHxTo
+         47XzTmEasiQra89TqcgCzv62gg0Va7iB1t0E/e6zk8gvq0KQcZgLRzX9FoYofY2TGZSz
+         drop91shJ0ot7riuyUjoDLa9rojzxa/u1fXUzyeWCTl+N2wskbBVXpLRsF7KOE0bbXBw
+         10aA==
+X-Received: by 10.68.220.132 with SMTP id pw4mr8281314pbc.149.1440091468134;
+        Thu, 20 Aug 2015 10:24:28 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:247b:3165:9cce:44a3])
+        by smtp.gmail.com with ESMTPSA id bu10sm5006933pac.36.2015.08.20.10.24.27
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 20 Aug 2015 10:24:27 -0700 (PDT)
+In-Reply-To: <1440015528-7791-1-git-send-email-sunshine@sunshineco.com> (Eric
+	Sunshine's message of "Wed, 19 Aug 2015 16:18:48 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 20 Aug 2015 19:19:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t7KHJXg3018179
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1440695976.13367@Wt6hBGBxMt/NspYCCwibUQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276255>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> So I think 'quote' should apply only to the top-level atoms in the
-> nested %(magic)...%(end) world.
+> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+> new file mode 100755
+> index 0000000..1ac329d
+> --- /dev/null
+> +++ b/generate-cmdlist.sh
+> @@ -0,0 +1,50 @@
+> +#!/bin/sh
+> +
+> +echo "/* Automatically generated by $0 */
+> +struct cmdname_help {
+> +	char name[16];
+> +	char help[80];
+> +	unsigned char group;
+> +};
+> +
+> +static const char *common_cmd_groups[] = {"
+> +
+> +tmp=cmdgrps$$.tmp
+> +trap "rm -fr $tmp" 0 1 2 3 15
+> +
+> +sed -n '
+> +	1,/^### common groups/b
+> +	/^### command list/q
+> +	/^#/d; /^[ 	]*$/b
+> +	h;s/^[^ 	][^ 	]*[ 	][ 	]*\(.*\)/	N_("\1"),/p
+> +	g;s/^\([^ 	][^ 	]*\)[ 	].*/\1/w '$tmp'
+> +	'
+> +printf '};\n\n'
 
-This is true in most cases, but I think there would also be use-cases
-where you would want the opposite, like:
+Unfortunately, this does not seem to work for me.  Even though sed
+stops reading after seeing the "### command list" line, I suspect
+that its stdin buffer has been filled with other lines that follow
+it from the input to the buffer size, consuming what you meant to
+feed the later 'grep $matchgrp"' with.
 
---format '
-    %(if:whatever)
-    echo %(refname)
-    %(end)
-'
+This is a one-time thing, so I do not mind to update the Makefile
+so that it does not feed command-list.txt from the standard input
+but gives the path as "$1" to this script.
 
-I'm not sure what's best, but if both can make sense, perhaps we should
-just keep the simplest to implement, i.e. the current behavior.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> +n=0
+> +matchgrp=
+> +substnum=
+> +while read grp
+> +do
+> +	matchgrp="$matchgrp${matchgrp:+
+> +}^git-..*[ 	]$grp"
+> +	substnum="$substnum${substnum:+;}s/[ 	]$grp/$n/"
+> +	n=$(($n+1))
+> +done <$tmp
+> +
+> +printf 'static struct cmdname_help common_cmds[] = {\n'
+> +grep "$matchgrp" |
+> +sed 's/^git-//' |
+> +sort |
+> +while read cmd tags
+> +do
+> +	tag=$(echo $tags | sed "$substnum; s/[^0-9]//g")
+> +	sed -n '
+> +		/^NAME/,/git-'"$cmd"'/H
+> +		${
+> +			x
+> +			s/.*git-'"$cmd"' - \(.*\)/	{"'"$cmd"'", N_("\1"), '$tag'},/
+> +			p
+> +		}' "Documentation/git-$cmd.txt"
+> +done
+> +echo "};"
