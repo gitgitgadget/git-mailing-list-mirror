@@ -1,115 +1,114 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2] git-p4: fix faulty paths for case insensitive systems
-Date: Thu, 20 Aug 2015 21:02:29 +0200
-Message-ID: <55D62445.5030402@web.de>
-References: <1440014686-63290-1-git-send-email-larsxschneider@gmail.com>
- <1440014686-63290-2-git-send-email-larsxschneider@gmail.com>
- <55D55EC9.6050002@web.de> <917E3751-4BC8-4034-9101-30C77426D81C@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] wt-status: move #include "pathspec.h" to the header
+Date: Thu, 20 Aug 2015 12:05:34 -0700
+Message-ID: <xmqq61497pc1.fsf@gitster.dls.corp.google.com>
+References: <1440079587-26491-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, luke@diamand.org, pw@padd.com,
-	torarvid@gmail.com, ksaitoh560@gmail.com
-To: Lars Schneider <larsxschneider@gmail.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Aug 20 21:02:48 2015
+Cc: git@vger.kernel.org
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Aug 20 21:05:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSV6u-0007Op-HR
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 21:02:48 +0200
+	id 1ZSV9k-0000wP-9o
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 21:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751711AbbHTTCo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Aug 2015 15:02:44 -0400
-Received: from mout.web.de ([212.227.17.11]:64711 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751417AbbHTTCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2015 15:02:43 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0MA5v3-1ZdkaU0NS5-00BK2r; Thu, 20 Aug 2015 21:02:39
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
- Gecko/20100101 Thunderbird/38.2.0
-In-Reply-To: <917E3751-4BC8-4034-9101-30C77426D81C@gmail.com>
-X-Provags-ID: V03:K0:AAy1SGiW0RIUuIhh2nIsyH6WKr98guqrYisN4x7RrRmzsGlra34
- dw9JUwXz8h1bFDr/Xd3a0f07gGFF0VDa2xXY1ggaqW4El0jrenptlQQpntuWVowWuJkhZmC
- ByKW1m0UKgnskV2pA34q0tzxruw7E/9F2cflh+9lJ8A1kr01H4d1CioNpCT7nYPu0qLKlXa
- xJvu5jjlORQ/uIzQo35oA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zqM18I5nuEM=:wMhqUmkTKB/oTDDekZkRmN
- tFEyqO70eGASch0v6e9ztUvn8QyPpL5nm9h1L1Y0ks7KCQsxNzCdKkENRg3jbKllGsWCYp2nk
- 132eyMd8y/HyFU5In8YqPc0vXw1mxwb5c4bcMO96X0id9/1TwE7d4TiqAYlr2AyvPA+hZNStm
- gejWXfup9sOva/Ya7V5nzdz5dowEwhQWUIgNTkCgT6npasunWGeiYcs3QbaVUScMaIJtZiUTb
- xKPaJQOk/kur4DgU56ynbX0o0rKyi+4LEVu38XLEC65sBOPgoE9Vm9ZkP8Yg1W6426BStKqbO
- xccAE2KvEGH2v2hBM2lIO9wL807vfUbzFpaQgl9oq3AMp1mZReo0Q1zU6Sesdy7Te+FY5uR4J
- tqttTnDbnj0SCKWNFhaKIEanPbToRHoYDi3sXYo7G6OtixC3GEJKB9k/qNcazsg6yVyGfSWaJ
- gSkEjvIkWv8Yj/ZKJvnjiQ30YZypJrxS+pqka06TShUd6+7WTr3AVTKsTMy3ZoyaOWofrYzEc
- ounagqlcQmnGetRUbQ/ReH0EkCHPf15qLWk1hNV98E9Z9KJdxkpEk1taUcsytdhJ/yFU50ISq
- hF7vwxNZFOMkG4zFGcIE+boh2ZYQGrrmWhP4IwPJqVKwSLdppDeHqXvZigAvV2oDkte8+ir9t
- 628LgnSv+MXsiJVuWncpWydqQCNf/N2uMAhOekeUMgVBI1GFZX6Ws0JpUZETS3+yrDwpqq8XY
- 0sZBwptoSZCW/WQTeeIzjJ9+oU1eD9n5YocGug==
+	id S1752602AbbHTTFi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Aug 2015 15:05:38 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:36551 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752151AbbHTTFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2015 15:05:36 -0400
+Received: by pawq9 with SMTP id q9so34184913paw.3
+        for <git@vger.kernel.org>; Thu, 20 Aug 2015 12:05:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=6+03vHGypaMCbJchslDl35shssLgXfPFcysWcm93ln4=;
+        b=qdgPlYkmOwlAkYzjZZ2BOEXuJeQhj2RR4Uzw/mealVE7zoT9r9frvVp33B4JFhwiQp
+         0ie4QUAInr1tOhZdAAJTTrvkKIfiJ0UE96kHTyUcZ4ctyMabzH4mrcnWMEEyJN4m+pKT
+         QComDyN/E6VzJWYVOXmE9M+zpUZAOwm+OrU1G2V0MvN45Te/fuBxOteQm0QQdnZJZTxZ
+         mOq4HvtukTGLcqaGAzNw1qfJq2UG/9h82v6IZfOWNynEDgZ+Kw6qpzjvHSGHbDHDLOcE
+         xOjraBJ+iuFGATYI8DfKrLWBTPqk+OBu5GtWzspd5HGPUhN76wP6ECxSSuSvGHJuwwHz
+         Z28A==
+X-Received: by 10.66.219.227 with SMTP id pr3mr7430472pac.140.1440097536243;
+        Thu, 20 Aug 2015 12:05:36 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:247b:3165:9cce:44a3])
+        by smtp.gmail.com with ESMTPSA id am4sm5169125pbd.58.2015.08.20.12.05.35
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Thu, 20 Aug 2015 12:05:35 -0700 (PDT)
+In-Reply-To: <1440079587-26491-1-git-send-email-szeder@ira.uka.de> ("SZEDER
+	=?utf-8?Q?G=C3=A1bor=22's?= message of "Thu, 20 Aug 2015 16:06:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276262>
 
-On 2015-08-20 09.16, Lars Schneider wrote:
-> Thanks for your feedback! See my answers below.
->> Identify path names that are different with respect to case sensitiv=
-ity.
-> Agreed!
->=20
->>
->>
->>> If there are any then run `p4 dirs` to build up a dictionary
->>> containing the "correct" cases for each path. It looks like P4
->>> interprets "correct" here as the existing path of the first file in=
- a
->>> directory. The path dictionary is used later on to fix all paths.
->>>
->>> This is only applied if the parameter "--fix-paths" is passed to th=
-e
->>> git-p4 clone command.
->> The "fix-path" doesn't tell a user what exactly is fixed.
->> Something like "fix-path-case" may be more self-explaining,
->> but I would simply use "--ignore-case", which is more in line
->> with Git. (But this is debatable)
-> I agree but =93=97ignore-case=94 seems a bit broad to me. How about =93=
-=97ignore-path-case=94? Because it is really only about paths case, not=
- filename case.
-OK, better.
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
+> The declaration of 'struct wt_status' requires the declararion of 'st=
+ruct
+> pathspec'.
 
->>> -    def update_client_spec_path_cache(self, files):
->>> +    def update_client_spec_path_cache(self, files, fixPathCase =3D=
- None):
-If you want, you can change the name of the parameter into ignorePathCa=
-se,
-but I'm not sure...
+I think this is fine.
 
+I am guessing that you are saying it is wrong to force wt-status.c
+to include pathspec.h before including wt-status.h; I am fine with
+that.
 
+This is a tangent, but the above is different from saying that with
+a single liner test.c that has
 
-> Can you try to rephrase your comment? I don=92t get it. My =93cd comm=
-and=94 is already in parenthesis (=3D=3D subshell), no?
-I may have commented on the wrong TC :-(
+    #include "wt-status.h"
 
-This is the one:
-+test_expect_success 'Create a repo with path case variations' '
-+	client_view "//depot/... //client/..." &&
-+	cd "$cli" &&
-+
-+	mkdir -p One/two &&
-+	[snip]
-+'
+your compilation "cc -c test.c" should succeed.  But for that goal,
+direct inclusion of <stdio.h> to wt-status.h is also iffy.  We
+include the system headers from git-compat-util.h because some
+platforms are picky about order of inclusion of system header files
+and definitions of feature test macros.
 
-which should be like this:
-+test_expect_success 'Create a repo with path case variations' '
-+ client_view "//depot/... //client/..." &&
-+ (
-+	cd "$cli" &&
-+	mkdir -p One/two &&
-+ 	[snip]
-+ )
-+'
+Right now, the codebase is correct only because it is NOT our goal
+to guarantee that such a single-liner test.c file compiles.
+Instead, everybody is instructed to #include "git-compat-util.h" as
+the first thing, either directly or indirectly.
+
+So in that sense, we should also remove that inclusion from
+wt-status.h, I think.
+
+Thanks.
+
+> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+> ---
+>  wt-status.c | 1 -
+>  wt-status.h | 1 +
+>  2 files changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/wt-status.c b/wt-status.c
+> index 717fd48d13..c327fe8128 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1,5 +1,4 @@
+>  #include "cache.h"
+> -#include "pathspec.h"
+>  #include "wt-status.h"
+>  #include "object.h"
+>  #include "dir.h"
+> diff --git a/wt-status.h b/wt-status.h
+> index e0a99f75c7..c9b3b744e9 100644
+> --- a/wt-status.h
+> +++ b/wt-status.h
+> @@ -4,6 +4,7 @@
+>  #include <stdio.h>
+>  #include "string-list.h"
+>  #include "color.h"
+> +#include "pathspec.h"
+> =20
+>  enum color_wt_status {
+>  	WT_STATUS_HEADER =3D 0,
