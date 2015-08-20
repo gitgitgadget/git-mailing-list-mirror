@@ -1,80 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] format_config: don't init strbuf
-Date: Thu, 20 Aug 2015 10:46:04 -0400
-Message-ID: <20150820144604.GA11913@sigill.intra.peff.net>
-References: <20150820144504.GA22935@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Why does 'git branch -d' act differntly after clone?
+Date: Thu, 20 Aug 2015 08:49:24 -0700
+Message-ID: <xmqqa8tm7yez.fsf@gitster.dls.corp.google.com>
+References: <CALwJaCzYgDKdcT7H7=5x0fnNRv4MsrtjJoHJcB9rJyh3dU--xQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	git@vger.kernel.org
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Aug 20 16:53:38 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Konstantin Hollerith <khollerith@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 20 17:49:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSRDm-0004Tz-37
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 16:53:38 +0200
+	id 1ZSS5s-0006pV-Px
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 17:49:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753304AbbHTOxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2015 10:53:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47561 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753443AbbHTOqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2015 10:46:07 -0400
-Received: (qmail 3315 invoked by uid 102); 20 Aug 2015 14:46:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Aug 2015 09:46:06 -0500
-Received: (qmail 23743 invoked by uid 107); 20 Aug 2015 14:46:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Aug 2015 10:46:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Aug 2015 10:46:04 -0400
-Content-Disposition: inline
-In-Reply-To: <20150820144504.GA22935@sigill.intra.peff.net>
+	id S1751725AbbHTPt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2015 11:49:28 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:34886 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751210AbbHTPt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2015 11:49:27 -0400
+Received: by pdob1 with SMTP id b1so15603604pdo.2
+        for <git@vger.kernel.org>; Thu, 20 Aug 2015 08:49:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=L2VI/9rIYWr93XCIqNddxIPW/kgSB2HYW7x/gHWwM0I=;
+        b=AhfGPiiI66M5Oge0ch3PeJ5cnmuAJVAwn72w00xKrGZasyQPve35zZXJ06GimAuQFN
+         JpBYJDHCQAq+dA83QEWHt9/L1bHEkyKiCuyaiR+mNQOlp6qi4lgAxxsSuzlvzRquclKy
+         l4qAWIHJ81aDUeL8LWCW8QKPLtvMQ1Wz4ZlUqiqzaTcSNngHJKvBTlYQEC25XHTxJQoC
+         M/pTz+LHtmiWVNdCK2FSoYXk1eCyjR04aSGbTLRleRszDRTYCLD8ynLr6rmsWCZAeYtH
+         Izuh9lwWZJvXrZVEXK9sesEFinyq9pUek2WY0z3naN75k+5TCZny3Yort/t2QdJ160zb
+         g3RA==
+X-Received: by 10.70.91.73 with SMTP id cc9mr7564362pdb.59.1440085766697;
+        Thu, 20 Aug 2015 08:49:26 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:247b:3165:9cce:44a3])
+        by smtp.gmail.com with ESMTPSA id qw2sm4812498pbc.5.2015.08.20.08.49.24
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 20 Aug 2015 08:49:25 -0700 (PDT)
+In-Reply-To: <CALwJaCzYgDKdcT7H7=5x0fnNRv4MsrtjJoHJcB9rJyh3dU--xQ@mail.gmail.com>
+	(Konstantin Hollerith's message of "Thu, 20 Aug 2015 14:10:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276247>
 
-It's unusual for a function which writes to a passed-in
-strbuf to call strbuf_init; that will throw away anything
-already there, leaking memory. In this case, there are
-exactly two callers; one relies on this initialization and
-the other passes in an already-initialized buffer.
+Konstantin Hollerith <khollerith@gmail.com> writes:
 
-There's no leak, as the initialized buffer doesn't have
-anything in it. But let's bump the strbuf_init out to the
-one caller who needs it, making format_config more
-idiomatic.
+> Why does git branch -d acts differently after a clone?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/config.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+In the former case, that branch is the only thing that knows about
+the commits near the tip of it.  Immediately after you clone that
+repository, you have a copy of that branch as a remote-tracking
+branch for origin/neuerTestBranch.  You didn't say how you got a
+local copy of it in there, but I'd imagine that in the clone you did
+something like:
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 810e104..91aa56f 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -108,8 +108,6 @@ struct strbuf_list {
- 
- static int format_config(struct strbuf *buf, const char *key_, const char *value_)
- {
--	strbuf_init(buf, 0);
--
- 	if (show_keys)
- 		strbuf_addstr(buf, key_);
- 	if (!omit_values) {
-@@ -166,6 +164,7 @@ static int collect_config(const char *key_, const char *value_, void *cb)
- 		return 0;
- 
- 	ALLOC_GROW(values->items, values->nr + 1, values->alloc);
-+	strbuf_init(&values->items[values->nr], 0);
- 
- 	return format_config(&values->items[values->nr++], key_, value_);
- }
--- 
-2.5.0.680.g69e7703
+    $ git checkout neuerTestBranch
+
+which is a short-hand for
+
+    $ git checkout -b neuerTestBranch origin/neuerTestBranch
+
+and then went back to a branch other than that branch when you asked
+the branch to be removed, e.g.
+
+    $ git checkout master
+    $ git branch -d neuerTestBranch
+
+without building any further history on neuerTestBranch.
+
+Now, your local neuerTestBranch is a mere unmodified copy of the
+remote-tracking branch origin/neuerTestBranch; the commits on the
+former will not become unreachable if you remove neuerTestBranch,
+because they are all reachable via origin/neuerTestBranch.  And that
+is why the deletion of it has less severe potential of information
+lossage, compared to the original case where you attempt to remove
+the only copy.
