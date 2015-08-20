@@ -1,120 +1,86 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v12 05/13] ref-filter: implement an `align` atom
-Date: Thu, 20 Aug 2015 16:23:57 -0400
-Message-ID: <CAPig+cRB86+1D_CrVjoLxopgf-Rd221Q49UP75hTsZSPdN6QrQ@mail.gmail.com>
-References: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
-	<1439923052-7373-6-git-send-email-Karthik.188@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] wt-status: move #include "pathspec.h" to the header
+Date: Thu, 20 Aug 2015 16:38:41 -0400
+Message-ID: <20150820203841.GA12386@sigill.intra.peff.net>
+References: <1440079587-26491-1-git-send-email-szeder@ira.uka.de>
+ <xmqq61497pc1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 20 22:24:04 2015
+Content-Type: text/plain; charset=utf-8
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 20 22:38:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSWNX-0001xg-G7
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 22:24:03 +0200
+	id 1ZSWbo-0003Jj-K4
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Aug 2015 22:38:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752607AbbHTUX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2015 16:23:59 -0400
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:34695 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752293AbbHTUX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2015 16:23:58 -0400
-Received: by ykdt205 with SMTP id t205so50477539ykd.1
-        for <git@vger.kernel.org>; Thu, 20 Aug 2015 13:23:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=V5AvETanXIv+HCSdDrDK6qXaGLw5pcwZ/yzcO4Mjkcs=;
-        b=b3Ifw1HnvvYlxWs6pB/tw3pFW9Afshp4HUvUbxnQ/+I+k6cHAO4haUi4ogZnZmtU1e
-         BeYr1Q/O+wXswO/LgzxCDPW+bSTXT+znwK+hfPbK4AW9LJWY5L2T6z3CAtVTM+JRmsWe
-         otC+dalIzVTpMILj5lbuY4GVae0Ll0h1md7ydqKb1BWSgGxiM3SGpHiHIKDYZXW0stmm
-         gT/aWxSRrEyGCfalhzo5s9OXxqQoewqhaBSUy+WsWLzHna8kcg6DrCwPFhdub6phX3gG
-         RXlJdadVCdH9iGREpcGtjvP2zBq02GjQx4o18hZR5r29ql9a2oNEtTs695zPxuO1is/C
-         iESg==
-X-Received: by 10.129.134.3 with SMTP id w3mr6457680ywf.48.1440102238041; Thu,
- 20 Aug 2015 13:23:58 -0700 (PDT)
-Received: by 10.37.208.78 with HTTP; Thu, 20 Aug 2015 13:23:57 -0700 (PDT)
-In-Reply-To: <1439923052-7373-6-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: e4Zp8-Lf1Lgm5uNNfv4dv_TWWuY
+	id S1752783AbbHTUio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2015 16:38:44 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47764 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752777AbbHTUin (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2015 16:38:43 -0400
+Received: (qmail 25797 invoked by uid 102); 20 Aug 2015 20:38:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Aug 2015 15:38:43 -0500
+Received: (qmail 27054 invoked by uid 107); 20 Aug 2015 20:38:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Aug 2015 16:38:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Aug 2015 16:38:41 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq61497pc1.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276265>
 
-On Tue, Aug 18, 2015 at 2:37 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Implement an `align` atom which left-, middle-, or right-aligns the
-> content between %(align:..) and %(end).
->
-> It is followed by `:<width>,<position>`, where the `<position>` is
-> either left, right or middle and `<width>` is the size of the area
-> into which the content will be placed. If the content between
-> %(align:) and %(end) is more than the width then no alignment is
-> performed. e.g. to align a refname atom to the middle with a total
-> width of 40 we can do: --format="%(align:middle,40)%(refname)%(end)".
->
-> We now have a `handler()` for each atom_value which will be called
-> when that atom_value is being parsed, and similarly an `at_end`
-> function for each state which is to be called when the `end` atom is
-> encountered. Using this implement the `align` atom which aligns the
-> given strbuf by calling `strbuf_utf8_align()` from utf8.c
->
-> This is done by assigning a 'handler' function to each atom_value and
-> a related 'at_end' function for each state. The align_handler()
-> defined uses strbuf_utf8_align() from utf8.c to perform the alignment.
->
-> Add documentation and tests for the same.
->
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 74532d3..ecbcc5a 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -626,6 +638,36 @@ static inline char *copy_advance(char *dst, const char *src)
->         return dst;
->  }
->
-> +static void align_handler(struct ref_formatting_state *state)
-> +{
-> +       struct align *align = (struct align *)state->cb_data;
-> +       struct strbuf s = STRBUF_INIT;
-> +
-> +       strbuf_utf8_align(&s, align->position, align->width, state->output.buf);
-> +       strbuf_reset(&state->output);
-> +       strbuf_addbuf(&state->output, &s);
-> +       free(align);
-> +}
+On Thu, Aug 20, 2015 at 12:05:34PM -0700, Junio C Hamano wrote:
 
-Leaking 'strbuf s' here.
+> This is a tangent, but the above is different from saying that with
+> a single liner test.c that has
+> 
+>     #include "wt-status.h"
+> 
+> your compilation "cc -c test.c" should succeed.  But for that goal,
+> direct inclusion of <stdio.h> to wt-status.h is also iffy.  We
+> include the system headers from git-compat-util.h because some
+> platforms are picky about order of inclusion of system header files
+> and definitions of feature test macros.
+> 
+> Right now, the codebase is correct only because it is NOT our goal
+> to guarantee that such a single-liner test.c file compiles.
+> Instead, everybody is instructed to #include "git-compat-util.h" as
+> the first thing, either directly or indirectly.
+> 
+> So in that sense, we should also remove that inclusion from
+> wt-status.h, I think.
 
-Also, this operation can be expressed more concisely as:
+Yeah, I think that is actively wrong. Running[1]:
 
-    strbuf_utf8_align(&s, ...);
-    strbuf_swap(&state->output, &s);
-    strbuf_release(&s);
+  git grep '#include <' -- '*.h' ':!git-compat-util.h'
 
-Seeing this is also making me question my earlier suggestion of making
-pop_state() responsible for appending the current state's output to
-the previous state's output. The reason is that if align_handler() is
-responsible for appending to the previous state's output, then all the
-above string handling collapses to the one line:
+shows a few other weird ones. Things like zlib.h, pcre.h, etc, are
+probably OK. They are not really "system" headers, and it is probably OK
+as long as they come after git-compat-util (which they must, if they are
+in a header file).
 
-    strbuf_utf8_align(&state->prev->output, ..., state->output.buf);
+The inclusion of stdlib.h in compat/bswap.h is suspect (both are
+included by git-compat-util itself). But it is inside an #ifdef _MSC_VER
+block, so I cannot test that there is not some subtle interaction going
+on.
 
-which is even simpler, and doesn't involve a temporary strbuf or
-swapping of strbuf contents.
+A few headers include pthread.h. I would have thought that should go in
+git-compat-util for the usual reasons, but nobody has complained (and
+most files do not need it, though that has not generally stopped us from
+making git-compat-util a catch-all for other system files).
 
-On the other hand, it won't always be the case that all handlers can
-get by with such simple code, and they might end up creating temporary
-strbuf(s) and such anyhow, so I don't feel too strongly about it, and
-it can always be changed at a later date (by someone) if that approach
-ends up being better.
+-Peff
+
+[1] Too bad I needed the "--" separator there. Recent git nicely learned
+    to DWIM "*.h" as a pathspec, but we do not seem to give the same
+    treatment to "magic" pathspecs.
