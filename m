@@ -1,90 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/3] Showing merges easier with "git log"
-Date: Thu, 20 Aug 2015 15:43:08 -0700
-Message-ID: <1440110591-12941-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH 2/3] log: when --cc is given, default to -p unless told otherwise
+Date: Thu, 20 Aug 2015 15:43:10 -0700
+Message-ID: <1440110591-12941-3-git-send-email-gitster@pobox.com>
+References: <1440110591-12941-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 21 00:43:22 2015
+X-From: git-owner@vger.kernel.org Fri Aug 21 00:43:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSYYL-0002fX-0r
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 00:43:21 +0200
+	id 1ZSYYL-0002fX-KW
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 00:43:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752687AbbHTWnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2015 18:43:14 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:36694 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751732AbbHTWnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2015 18:43:13 -0400
-Received: by pawq9 with SMTP id q9so37472937paw.3
-        for <git@vger.kernel.org>; Thu, 20 Aug 2015 15:43:12 -0700 (PDT)
+	id S1752745AbbHTWnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2015 18:43:18 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:34261 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752632AbbHTWnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2015 18:43:15 -0400
+Received: by pdbfa8 with SMTP id fa8so19009440pdb.1
+        for <git@vger.kernel.org>; Thu, 20 Aug 2015 15:43:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:subject:date:message-id;
-        bh=8QBzSN9GuaNYzjJA9X01xiG8lVsAdf4+jIywnlt2Mek=;
-        b=jgFmMOS62pRo4QqEdNTJvhiD8b0t5mZEhRaJrAqxtSCbIZfSzx254aNoq3LRScllY7
-         +kcOVy3ns2wf2ve6dhJyp7+9xmYX25feAIlDlHO6wV4yeIzC5p+OA52IxY8tsgiXOf6m
-         cC7FihWf8zh+WI7UUlMdLuhEwYt67I2MqYVfHt5F7PD9sLUerlHbGLHWip5XQCZVHHO/
-         DKnWeTQglNhM8vuIQb2aAFFlh605wepW8ByUMOCKPMOAUjzg38v6JL9UKUjZdUhP/sUq
-         IL3LVPzMZ+mcoqrfDsIQ20ndEG0naEB5tm2rgTuCVzpLXQDdO2WkgtFkkNQj5dTib+wk
-         Qp6g==
-X-Received: by 10.66.221.193 with SMTP id qg1mr417727pac.103.1440110592826;
-        Thu, 20 Aug 2015 15:43:12 -0700 (PDT)
+        h=sender:from:to:subject:date:message-id:in-reply-to:references;
+        bh=yxjpZ9anvPzgZ0RllPpsZOmkhyKN/GPCfJlT7+cLbZE=;
+        b=WIDDOyP1imKomTRrUkXzIBl12Xqndair2ShtRmYOgWW9FXJ9zl238U3X4w/v7dyQN+
+         /12jiw8j4i7AKIPI+zLKfMqznkjoRkKeynwy4hBDZ6ALQ02YFcOgqv+FwxEuNdQK4Fkf
+         YMd53ZIuRJ0sAU4ZQdAnZHiF2W5oaJLGm5604ZgHHYf+q4WeVtvoWedWa7+I3VtHczio
+         w79rV0tiiZO6G/RIj2Ue9YDf/3S96mFVx/klCKhkeFFqhLGUc/fKTPuVE30Brbptq15f
+         8u+CL9r/8KjBdF201FmB1iV00CLoITHXiMu7T7L/ldEpkAs210/G5dcegLJAchf7G7sY
+         j8Zw==
+X-Received: by 10.70.14.36 with SMTP id m4mr2942435pdc.117.1440110594526;
+        Thu, 20 Aug 2015 15:43:14 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:247b:3165:9cce:44a3])
-        by smtp.gmail.com with ESMTPSA id jr12sm5440589pbb.91.2015.08.20.15.43.12
+        by smtp.gmail.com with ESMTPSA id fp5sm5434068pbb.94.2015.08.20.15.43.14
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 20 Aug 2015 15:43:12 -0700 (PDT)
+        Thu, 20 Aug 2015 15:43:14 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0-546-gb1bbc0d
+In-Reply-To: <1440110591-12941-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276270>
 
-This is a combination of two closely related topics.
+The "--cc" option to "git log" is clearly a request to show some
+sort of combined diff (be it --patch or --raw), but traditionally
+we required the command line to explicitly ask for "git log -p --cc".
 
- - The second patch is my long-time pet peeve (it is even on the
-   leftover-bits list at git-blame blog).  When inspecting a branch,
-   I often type "git log --first-parent --cc master..", and then
-   realize that I need to give "-p" to actually view the condensed
-   patch.  We do the same for "log -c" (combined but not desified
-   form).
+Teach the command line parser to treat a lone "--cc" as if the user
+specified "-p --cc".  Formats that do ask for other forms of diff
+output, e.g. "log --raw --cc", are not overriden.
 
- - The third one is about "git log --cc master..", with which the
-   user is clearly telling us that s/he wants to see interesting
-   changes for both single-parent commits and for merges (otherwise
-   s/he wouldn't be saying "--cc" in the first place).  Even with
-   the second one that makes "--cc" imply "-p" unless another patch
-   output format (e.g. "--raw") was asked, you'd need "-m", which
-   was irritating.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/log.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-The latter was inspired by a recent discussion, most notably
-
-   http://thread.gmane.org/gmane.comp.version-control.git/273937/focus=273988
-
-but implements it with a much less UI impact.  Tweaking "git log -p"
-has a lot of fallout---interested parties can try it out and how two
-tests in t4xxx series break.  Doing this for "log --cc" is
-conceptually cleaner, as "-p" does not tell us what the user wants
-to see for merges (nothing?  first-parent diff?  pairwise diff?
-combined?), but "--cc" is a clear indication that dense combined
-patch is desired.
-
-Note that this conflicts with 'tr/remerge-diff' topic that has been
-stalled on 'pu' for quite some time.  I'll tentatively drop that
-other topic before pushing out today's integration result.  People
-who are interested in that topic may want to help resurrect and
-reroll it.  Hint, hint...
-
-Junio C Hamano (3):
-  log: rename "tweak" helpers
-  log: when --cc is given, default to -p unless told otherwise
-  log: show merge commit when --cc is given
-
- builtin/log.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
-
+diff --git a/builtin/log.c b/builtin/log.c
+index 8651105..e37c27a 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -633,6 +633,10 @@ static void log_setup_revisions_tweak(struct rev_info *rev,
+ 	if (DIFF_OPT_TST(&rev->diffopt, DEFAULT_FOLLOW_RENAMES) &&
+ 	    rev->prune_data.nr == 1)
+ 		DIFF_OPT_SET(&rev->diffopt, FOLLOW_RENAMES);
++
++	/* Turn --cc/-c into -p --cc/-c when -p was not given */
++	if (!rev->diffopt.output_format && rev->combine_merges)
++		rev->diffopt.output_format = DIFF_FORMAT_PATCH;
+ }
+ 
+ int cmd_log(int argc, const char **argv, const char *prefix)
 -- 
 2.5.0-546-gb1bbc0d
