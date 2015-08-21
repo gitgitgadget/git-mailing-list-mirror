@@ -1,363 +1,123 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH v4] git-p4: fix faulty paths for case insensitive systems
-Date: Fri, 21 Aug 2015 19:19:38 +0200
-Message-ID: <1440177578-5317-1-git-send-email-larsxschneider@gmail.com>
-Cc: luke@diamand.org, pw@padd.com, torarvid@gmail.com,
-	ksaitoh560@gmail.com, tboegi@web.de, sunshine@sunshineco.com,
-	gitster@pobox.com, Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 21 19:19:51 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] contrib: teach completion about git-worktree options and arguments
+Date: Fri, 21 Aug 2015 10:21:03 -0700
+Message-ID: <xmqq37zc7e2o.fsf@gitster.dls.corp.google.com>
+References: <1437684550-21884-1-git-send-email-sunshine@sunshineco.com>
+	<CAPig+cQhh7YCiirp4a1+R0bWh46JoFgVOVUCNidTWXK8uNL2Mg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Aug 21 19:21:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSpyo-0005PJ-AG
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 19:19:51 +0200
+	id 1ZSq07-0006GB-Ef
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 19:21:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904AbbHURTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2015 13:19:46 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:33959 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779AbbHURTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2015 13:19:45 -0400
-Received: by wicne3 with SMTP id ne3so25233017wic.1
-        for <git@vger.kernel.org>; Fri, 21 Aug 2015 10:19:43 -0700 (PDT)
+	id S1751757AbbHURVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2015 13:21:07 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:35402 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751340AbbHURVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 13:21:05 -0400
+Received: by pdob1 with SMTP id b1so28721672pdo.2
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 10:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=T/+SXbPawdG6Gh3iGgTojY/QFVgyZIn/Su1Y2wtDMJg=;
-        b=HTLe9xmzSoPFEUjSKmsjaEyuBlVmZAp9kL3br6VKQryfG9E88Y1GJ8pP7T7zlUyeSw
-         IVpIRCN8zXEO6FuXrS1ulAvuiFSw31qn3pvmKuBzQOD/yd9dKrBmNVeUoQl7E6vVgXRj
-         GwqFC+DISQRlGy25wGcmJ0YDSwKxTCZ8jFLsEOwkc3W8WVrbIqh04Rjm1GARzrNk8aMR
-         /ym26XSINpsxVY9HXdNdYsPvl4HygizWqFxAF43o7WHckgBJKRNSGCWtDWI8fvz0g7R/
-         NwGAZI2JmQ1FAK3Qmb62nrxE9gF7Q0NhknZdUcnicqYqBFolFXXU/rkB7hRAeMBPrHcu
-         eGLA==
-X-Received: by 10.180.74.229 with SMTP id x5mr7201128wiv.90.1440177583693;
-        Fri, 21 Aug 2015 10:19:43 -0700 (PDT)
-Received: from slxBook3.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id h6sm3784534wiy.3.2015.08.21.10.19.42
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 21 Aug 2015 10:19:42 -0700 (PDT)
-X-Mailer: git-send-email 1.9.5 (Apple Git-50.3)
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=erKl5CaFcOJtgd+fjrD+g8oCaw7Yx9kN/KvmEfX3AOI=;
+        b=GS3eb63v7RgYRfPHPRdomv+/Y5kDwski9LDUfuprJHlgs+LeQ9hewW20j6FpEsiknZ
+         PTZ6qf7lWneQMDn0K3SZFWg3gAg+D5UdaM7CprfeWzV8iK/jfwZWWH202JcNQf3S5Rvf
+         gVaWr8yjUcTmXZm2i/zso5LRrxRH+tgV0o2ZdcdcXimC0hCKluIwFd0Xy30+37zr7h6n
+         FlR6thfsLJbBfT0zibMbuvJZNs8OVTiTT5HNTNFq8jiud437p8MvMjRp1mZq7dKVJNEU
+         PSujXX7yLqHpPeDm1vnvW0bsAaLm+PV38rOo2QLXmvDcj6Pd7I9CvFWRo8bA9ySCxakP
+         2rcA==
+X-Received: by 10.70.20.196 with SMTP id p4mr19262641pde.58.1440177664749;
+        Fri, 21 Aug 2015 10:21:04 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:4c7d:6904:6af7:82e1])
+        by smtp.gmail.com with ESMTPSA id c12sm8464349pdk.47.2015.08.21.10.21.03
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 21 Aug 2015 10:21:03 -0700 (PDT)
+In-Reply-To: <CAPig+cQhh7YCiirp4a1+R0bWh46JoFgVOVUCNidTWXK8uNL2Mg@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 6 Aug 2015 12:29:53 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276315>
 
-From: Lars Schneider <larsxschneider@gmail.com>
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-PROBLEM:
-We run P4 servers on Linux and P4 clients on Windows. For an unknown
-reason the file path for a number of files in P4 does not match the
-directory path with respect to case sensitivity.
+> On Thu, Jul 23, 2015 at 4:49 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> Complete subcommands 'add' and 'prune', as well as their respective
+>> options --force, --detach, --dry-run, --verbose, and --expire. Also
+>> complete 'refname' in "git worktree add [-b <newbranch>] <path>
+>> <refname>".
+>
+> Ping[1]?
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/274526
 
-E.g. `p4 files` might return
-//depot/path/to/file1
-//depot/PATH/to/file2
+Ping indeed?
 
-If you use P4/P4V then these files end up in the same directory, e.g.
-//depot/path/to/file1
-//depot/path/to/file2
-
-If you use git-p4 then all files not matching the correct file path
-(e.g. `file2`) will be ignored.
-
-SOLUTION:
-Identify path names that are different with respect to case sensitivity.
-If there are any then run `p4 dirs` to build up a dictionary
-containing the "correct" cases for each path. It looks like P4
-interprets "correct" here as the existing path of the first file in a
-directory. The path dictionary is used later on to fix all paths.
-
-This is only applied if the parameter "--ignore-path-case" is passed to
-the git-p4 clone command.
-
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- git-p4.py                         |  82 ++++++++++++++++++++++++++--
- t/t9821-git-p4-path-variations.sh | 109 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 187 insertions(+), 4 deletions(-)
- create mode 100755 t/t9821-git-p4-path-variations.sh
-
-diff --git a/git-p4.py b/git-p4.py
-index 073f87b..61a587b 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1931,7 +1931,7 @@ class View(object):
-                 (self.client_prefix, clientFile))
-         return clientFile[len(self.client_prefix):]
- 
--    def update_client_spec_path_cache(self, files):
-+    def update_client_spec_path_cache(self, files, fixPathCase = None):
-         """ Caching file paths by "p4 where" batch query """
- 
-         # List depot file paths exclude that already cached
-@@ -1950,6 +1950,8 @@ class View(object):
-             if "unmap" in res:
-                 # it will list all of them, but only one not unmap-ped
-                 continue
-+            if fixPathCase:
-+                res['depotFile'] = fixPathCase(res['depotFile'])
-             self.client_spec_path_cache[res['depotFile']] = self.convert_client_path(res["clientFile"])
- 
-         # not found files or unmap files set to ""
-@@ -1987,6 +1989,7 @@ class P4Sync(Command, P4UserMap):
-                                      help="Maximum number of changes to import"),
-                 optparse.make_option("--changes-block-size", dest="changes_block_size", type="int",
-                                      help="Internal block size to use when iteratively calling p4 changes"),
-+                optparse.make_option("--ignore-path-case", dest="ignorePathCase", action="store_true"),
-                 optparse.make_option("--keep-path", dest="keepRepoPath", action='store_true',
-                                      help="Keep entire BRANCH/DIR/SUBDIR prefix during import"),
-                 optparse.make_option("--use-client-spec", dest="useClientSpec", action='store_true',
-@@ -2017,6 +2020,7 @@ class P4Sync(Command, P4UserMap):
-         self.maxChanges = ""
-         self.changes_block_size = None
-         self.keepRepoPath = False
-+        self.ignorePathCase = False
-         self.depotPaths = None
-         self.p4BranchesInGit = []
-         self.cloneExclude = []
-@@ -2049,7 +2053,8 @@ class P4Sync(Command, P4UserMap):
-         files = []
-         fnum = 0
-         while commit.has_key("depotFile%s" % fnum):
--            path =  commit["depotFile%s" % fnum]
-+            path = commit["depotFile%s" % fnum]
-+            path = self.fixPathCase(path)
- 
-             if [p for p in self.cloneExclude
-                 if p4PathStartsWith(path, p)]:
-@@ -2113,7 +2118,9 @@ class P4Sync(Command, P4UserMap):
-         branches = {}
-         fnum = 0
-         while commit.has_key("depotFile%s" % fnum):
--            path =  commit["depotFile%s" % fnum]
-+            path = commit["depotFile%s" % fnum]
-+            path = self.fixPathCase(path)
-+
-             found = [p for p in self.depotPaths
-                      if p4PathStartsWith(path, p)]
-             if not found:
-@@ -2240,6 +2247,10 @@ class P4Sync(Command, P4UserMap):
-             if marshalled["code"] == "error":
-                 if "data" in marshalled:
-                     err = marshalled["data"].rstrip()
-+
-+        if "depotFile" in marshalled:
-+            marshalled['depotFile'] = self.fixPathCase(marshalled['depotFile'])
-+
-         if err:
-             f = None
-             if self.stream_have_file_info:
-@@ -2314,6 +2325,7 @@ class P4Sync(Command, P4UserMap):
- 
-             # do the last chunk
-             if self.stream_file.has_key('depotFile'):
-+                self.stream_file['depotFile'] = self.fixPathCase(self.stream_file['depotFile'])
-                 self.streamOneP4File(self.stream_file, self.stream_contents)
- 
-     def make_email(self, userid):
-@@ -2371,7 +2383,8 @@ class P4Sync(Command, P4UserMap):
-                 sys.stderr.write("Ignoring file outside of prefix: %s\n" % f['path'])
- 
-         if self.clientSpecDirs:
--            self.clientSpecDirs.update_client_spec_path_cache(files)
-+            self.clientSpecDirs.update_client_spec_path_cache(
-+                files, lambda x: self.fixPathCase(x))
- 
-         self.gitStream.write("commit %s\n" % branch)
- #        gitStream.write("mark :%s\n" % details["change"])
-@@ -2835,6 +2848,62 @@ class P4Sync(Command, P4UserMap):
-             print "IO error with git fast-import. Is your git version recent enough?"
-             print self.gitError.read()
- 
-+    def fixPathCase(self, path):
-+        if self.caseCorrectedPaths:
-+            components = path.split('/')
-+            filename = components.pop()
-+            dirname = '/'.join(components).lower() + '/'
-+            if dirname in self.caseCorrectedPaths:
-+                path = self.caseCorrectedPaths[dirname] + filename
-+        return path
-+
-+    def generatePathCaseDict(self, clientPrefix):
-+        # Query all files and generate a list of all used paths
-+        # e.g. this files list:
-+        # //depot/path/to/file1
-+        # //depot/PATH/to/file2
-+        #
-+        # result in this path list:
-+        # //depot/
-+        # //depot/PATH/
-+        # //depot/path/
-+        # //depot/PATH/to/
-+        # //depot/path/to/
-+        p4_paths = set()
-+        for f in p4CmdList(["files", clientPrefix + "..."]):
-+            components = f["depotFile"].split('/')[0:-1]
-+            for i in range(3, len(components)+1):
-+                p4_paths.add('/'.join(components[0:i]) + '/')
-+        p4_paths = sorted(list(p4_paths), key=len)
-+
-+        if len(p4_paths) > len(set([p.lower() for p in p4_paths])):
-+            print "ATTENTION: File paths with different case variations detected. Fixing may take a while..."
-+            found_variations = True
-+            while found_variations:
-+                for path in p4_paths:
-+                    found_variations = False
-+                    path_variations = [p for p in p4_paths if p.lower() == path.lower()]
-+
-+                    if len(path_variations) > 1:
-+                        print  "%i different case variations for path '%s' detected." % (len(path_variations), path)
-+                        # If we detect path variations (e.g. //depot/path and //depot/PATH) then we query P4 to list
-+                        # the subdirectories of the parent (e.g //depot/*). P4 will return these subdirectories with
-+                        # the correct case.
-+                        parent_path = '/'.join(path.split('/')[0:-2])
-+                        case_ok_paths = [p["dir"] + '/' for p in p4CmdList(["dirs", "-D", parent_path + '/*'])]
-+
-+                        # Replace all known paths with the case corrected path from P4 dirs command
-+                        for case_ok_path in case_ok_paths:
-+                            pattern = re.compile("^" + re.escape(case_ok_path), re.IGNORECASE)
-+                            p4_paths = sorted(list(set([pattern.sub(case_ok_path, p) for p in p4_paths])), key=len)
-+
-+                        found_variations = True
-+                        break
-+            return dict((p.lower(), p) for p in p4_paths)
-+        else:
-+            if self.verbose:
-+                print "All file paths have consistent case"
-+            return None
- 
-     def run(self, args):
-         self.depotPaths = []
-@@ -3006,6 +3075,11 @@ class P4Sync(Command, P4UserMap):
- 
-         self.depotPaths = newPaths
- 
-+        if self.ignorePathCase and self.clientSpecDirs:
-+            self.caseCorrectedPaths = self.generatePathCaseDict(self.clientSpecDirs.client_prefix)
-+        else:
-+            self.caseCorrectedPaths = None
-+
-         # --detect-branches may change this for each branch
-         self.branchPrefixes = self.depotPaths
- 
-diff --git a/t/t9821-git-p4-path-variations.sh b/t/t9821-git-p4-path-variations.sh
-new file mode 100755
-index 0000000..90515a1
---- /dev/null
-+++ b/t/t9821-git-p4-path-variations.sh
-@@ -0,0 +1,109 @@
-+#!/bin/sh
-+
-+test_description='Clone repositories with path case variations'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d with case folding enabled' '
-+	start_p4d -C1
-+'
-+
-+test_expect_success 'Create a repo with path case variations' '
-+	client_view "//depot/... //client/..." &&
-+	(
-+		cd "$cli" &&
-+
-+		mkdir -p One/two &&
-+		>One/two/File2.txt &&
-+		p4 add One/two/File2.txt &&
-+		p4 submit -d "Add file2" &&
-+		rm -rf One &&
-+
-+		mkdir -p one/TWO &&
-+		>one/TWO/file1.txt &&
-+		p4 add one/TWO/file1.txt &&
-+		p4 submit -d "Add file1" &&
-+		rm -rf one &&
-+
-+		mkdir -p one/two &&
-+		>one/two/file3.txt &&
-+		p4 add one/two/file3.txt &&
-+		p4 submit -d "Add file3" &&
-+		rm -rf one &&
-+
-+		mkdir -p outside-spec &&
-+		>outside-spec/file4.txt &&
-+		p4 add outside-spec/file4.txt &&
-+		p4 submit -d "Add file4" &&
-+		rm -rf outside-spec
-+	)
-+'
-+
-+test_expect_success 'Clone the repo and WITHOUT path fixing' '
-+	client_view "//depot/One/... //client/..." &&
-+	git p4 clone --use-client-spec --destination="$git" //depot &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		# This method is used instead of "test -f" to ensure the case is
-+		# checked even if the test is executed on case-insensitive file systems.
-+		cat >expect <<-\EOF &&
-+			two/File2.txt
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'Clone the repo WITH path fixing' '
-+	client_view "//depot/One/... //client/..." &&
-+	git p4 clone --ignore-path-case --use-client-spec --destination="$git" //depot &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		cat >expect <<-\EOF &&
-+			TWO/File2.txt
-+			TWO/file1.txt
-+			TWO/file3.txt
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# It looks like P4 determines the path case based on the first file in
-+# lexicographical order. Please note the lower case "two" directory for all
-+# files triggered through the addition of "File0.txt".
-+test_expect_success 'Add a new file and clone the repo WITH path fixing' '
-+	client_view "//depot/... //client/..." &&
-+	(
-+		cd "$cli" &&
-+
-+		mkdir -p One/two &&
-+		>One/two/File0.txt &&
-+		p4 add One/two/File0.txt &&
-+		p4 submit -d "Add file" &&
-+		rm -rf One
-+	) &&
-+
-+	client_view "//depot/One/... //client/..." &&
-+	git p4 clone --ignore-path-case --use-client-spec --destination="$git" //depot &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		cat >expect <<-\EOF &&
-+			two/File0.txt
-+			two/File2.txt
-+			two/file1.txt
-+			two/file3.txt
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
--- 
-1.9.5 (Apple Git-50.3)
+>
+>> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+>> ---
+>>
+>> This is RFC since this is my first foray into the Git completion script,
+>> and there are likely better and more idiomatic ways to accomplish this.
+>>
+>>  contrib/completion/git-completion.bash | 32 ++++++++++++++++++++++++++++++++
+>>  1 file changed, 32 insertions(+)
+>>
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index c97c648..07c34ef 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -2564,6 +2564,38 @@ _git_whatchanged ()
+>>         _git_log
+>>  }
+>>
+>> +_git_worktree ()
+>> +{
+>> +       local subcommands='add prune'
+>> +       local subcommand="$(__git_find_on_cmdline "$subcommands")"
+>> +       local c=2 n=0 refpos=2
+>> +       if [ -z "$subcommand" ]; then
+>> +               __gitcomp "$subcommands"
+>> +       else
+>> +               case "$subcommand,$cur" in
+>> +               add,--*)
+>> +                       __gitcomp "--force --detach"
+>> +                       ;;
+>> +               add,*)
+>> +                       while [ $c -lt $cword ]; do
+>> +                               case "${words[c]}" in
+>> +                               --*) ;;
+>> +                               -[bB]) ((refpos++)) ;;
+>> +                               *) ((n++)) ;;
+>> +                               esac
+>> +                               ((c++))
+>> +                       done
+>> +                       if [ $n -eq $refpos ]; then
+>> +                               __gitcomp_nl "$(__git_refs)"
+>> +                       fi
+>> +                       ;;
+>> +               prune,--*)
+>> +                       __gitcomp "--dry-run --verbose --expire"
+>> +                       ;;
+>> +               esac
+>> +       fi
+>> +}
+>> +
+>>  __git_main ()
+>>  {
+>>         local i c=1 command __git_dir
+>> --
+>> 2.5.0.rc3.407.g68aafd0
