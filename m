@@ -1,119 +1,170 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Which branch(es) contain certain commits? (was Re: (unknown))
-Date: Fri, 21 Aug 2015 15:39:46 -0700
-Message-ID: <xmqqio88466l.fsf@gitster.dls.corp.google.com>
-References: <349031438778845@web22j.yandex.ru>
-	<CACsJy8Be-kY49CxAJTx2R2XG-c_WeuU=yLFT8-XSoaDkTScPGg@mail.gmail.com>
-	<xmqqh9nxerfv.fsf@gitster.dls.corp.google.com>
-	<5570041440192599@web21j.yandex.ru>
+From: =?UTF-8?Q?J=C4=81nis_Ruk=C5=A1=C4=81ns?= <janis.ruksans@gmail.com>
+Subject: Submodule, subtree, or something else?
+Date: Sat, 22 Aug 2015 01:47:42 +0300
+Message-ID: <1440197262.23145.191.camel@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ivan Chernyavsky <camposer@yandex.ru>
-X-From: git-owner@vger.kernel.org Sat Aug 22 00:40:02 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 22 00:48:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSuye-0002Zc-Tm
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 00:40:01 +0200
+	id 1ZSv6f-0007EW-52
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 00:48:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751436AbbHUWjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2015 18:39:49 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:34809 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751165AbbHUWjs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2015 18:39:48 -0400
-Received: by padfo6 with SMTP id fo6so15914781pad.1
-        for <git@vger.kernel.org>; Fri, 21 Aug 2015 15:39:48 -0700 (PDT)
+	id S1752633AbbHUWsM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 18:48:12 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:33305 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750970AbbHUWsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 18:48:11 -0400
+Received: by lbbsx3 with SMTP id sx3so52056352lbb.0
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 15:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=85mPwbR7TQlbRl/R7aN0odRHGTegz12/tZ10R+7yc4I=;
-        b=TUDTjWI3XiMrSgLmbLwLqZzh9GG4KyB7IEdhKRfacn5TbPLIS9VVcL3YVsfgDfFNXS
-         4pp1zgDyOVeL7OgJ7yjLuXLd2HLxp4oT2Znx0dfobYDShIVLbR/ZYbF9Ozhm7TwWhke5
-         /D07pp/4Ex2XYbH9fTLvikN6fSGS/CGCF7I8z9uooqRcMbOuWLjM4XSHNhn+ZElHOXKe
-         KQPaiRnoa7NiUVSsGQmDZH0BNXR0pfOfhF0T6PcOXsD8RlNWhECyFs8IuR+eeb7esM8M
-         dwjcuJhoLTn/dS3Qk934dGdXM7/SVPcVfL9i6hSUoXJywW6InwAyCJuNrJGUnPFsULDA
-         jXIA==
-X-Received: by 10.66.175.7 with SMTP id bw7mr21960495pac.155.1440196788181;
-        Fri, 21 Aug 2015 15:39:48 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:4c7d:6904:6af7:82e1])
-        by smtp.gmail.com with ESMTPSA id s17sm8981603pdl.2.2015.08.21.15.39.47
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 21 Aug 2015 15:39:47 -0700 (PDT)
-In-Reply-To: <5570041440192599@web21j.yandex.ru> (Ivan Chernyavsky's message
-	of "Sat, 22 Aug 2015 00:29:59 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=message-id:subject:from:to:date:content-type:mime-version
+         :content-transfer-encoding;
+        bh=ztRHPXp4oNWH1Fpiy+Yq58ZSnI/M8C+d0ig7rBWgp/U=;
+        b=x/A427wvAQyOtFVRHq7B9GYE3P5OYlrQM0yDJ2xSMp/eA1gXT9vHuGxHq+fpPiOhIq
+         ttRUwbNEGOz6YUkzInvhiH/HFyXuhH6R/l8az8vUTU3n2bAWEYJl5dZ5msSQ5hBmMiGR
+         jqBIFG3yOhBhv/yzIf43zbeVFvTS3KIUSmDb/biKkf5casSboZgLkTFFJRFKW0RgVpQo
+         l5mgP+fgNLnl07DMxRapT0r6JbbnP1LbsOZEtD5uPqh6XzEDsRUoFyNSUrtMtNzQ7f4N
+         Gj03MhtVhuYS+al1cyvWE8UsF8IHQuF+JvytOWbLdaeK33/4fl6UQsxBP3RPKi6gRTYZ
+         +Eow==
+X-Received: by 10.112.219.70 with SMTP id pm6mr9596874lbc.41.1440197289820;
+        Fri, 21 Aug 2015 15:48:09 -0700 (PDT)
+Received: from ganja ([46.109.200.48])
+        by smtp.googlemail.com with ESMTPSA id ut5sm2701642lbc.33.2015.08.21.15.48.08
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Aug 2015 15:48:08 -0700 (PDT)
+X-Mailer: Evolution 3.12.11 (3.12.11-1.fc21) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276340>
 
-Ivan Chernyavsky <camposer@yandex.ru> writes:
+Hello,
 
-> But now I had a look on the source and I can see that builtin/branch.c
-> builds the list of references and prints them in a single place
-> (print_ref_list()) so I will have to split that function into two in
-> order to reuse existing functionality.
->
-> Another problem is that builtin/branch.c currently does not use
-> setup_revisions(), so I'll have to hook it there as well.
->
-> Then, I assume, I'll need to use the initial ref_list (filled the same
-> as for the current "list" case) to configure the rev_info structure
-> after setup_revisions(), and start revision traversal.
->
-> I'm not sure I've got it all right from the source in those few days,
-> so I apologize in advance if it's stupid in some part or as a whole.
 
-Heh, you say "problem" above, but I do not think it is a "problem"
-per-se.  If you want to teach branch some preprocessing based on the
-revision traversal API, you naturally need to call setup_revisions().
+=46irst of all, I apologise for the wall of text that follows; obviousl=
+y I
+am bad at this.
 
-The outlined steps above all feel sensible; one thing you did not
-mention is that you may probably have to clear object flags after
-you are done with the initial "--grep" revision traversal, as some
-features of branch may want to use the object flags (e.g. --merged
-would use in_merge_bases()).  Other than that, all of it sounds
-easily implementable.
+My $DAYJOB is switching from Subversion to Git, primarily because of
+it's distributed nature (we are scattered all across the globe), and th=
+e
+ease of branching and merging.  One issue that has popped up is how to
+manage code shared between multiple projects.
 
-Note that "branch --list", "tag --list" and "for-each-ref" are being
-revamped to share more internal code.  If you want to pursue this,
-you probably would want to build on top of that effort once it is
-done.  That way, you may get "tag --grep=FIX123" for free.
+Our SVN setup used a shared repository for all projects, either using
+externals for shared code, or, more often than not, simply merging the
+code between projects as needed.  Ignoring the fact that merging with
+SVN is somewhat cumbersome, overall it has worked quite well for us,
+especially when combined with git-svn.
 
-> That said, do you think the goal is worth such changes?
+=46or external libraries that rarely change, submodules appear to be th=
+e
+obvious choice when using Git.  On the other hand, I've found them
+somewhat cumbersome to use, and subtree merging (either using git
+subtree, or directly with git merge -s subtree) is closer to what we
+were doing in SVN.  A major drawback of submodules in my opinion is the
+inability to make a full clone from an existing one without having
+access to the central repository, which is something I have to do from
+time to time.
 
-That is a dangerous question.  As Duy already said,
+=46or internal libraries, the situation is even less clear.  For many o=
+f
+these libraries, most of the development happens within the context of =
+a
+single project, with commits to main project being interleaved with
+commits to the subproject(s), resulting in histories resembling:
 
-> Probably because nobody is interested and steps up to do it. The lack
-> of response to you mail is a sign.
+ (using git submodule)
 
-apparently not many people thought it is worth; otherwise we would
-already have such a feature.
+   A---B---S1---S2---C---S3
+          ,=C2=B4   ,=C2=B4       ,=C2=B4
+     N---O----P----Q---R
 
-If you are asking me personally, I'm sorry but I have to say no.
+ (using git subtree with --rejoin)
 
-The reason why I personally do not think your "branch --grep=FIX123"
-would be very useful to me is because I would imagine that I would
-be interested in learning the exact commit that mentions FIX123 as
-well as which branches contain it, if I had a need for such a
-feature.
+   A---B---N---O---M1---M2---Q---C---R---M3
+                  /    /                /
+             N'--O'---P--------Q'------R'
 
-That is, it would inherently be two step process for me anyway, i.e.
+ (using merge -s subtree)
 
- (1) I'd run "log -p --grep" to find which commits are about FIX123
-     and check that what they did indeed make sense; and
+   A---B---M1---M2---C---M3
+          /    /        /
+     N---O----P----Q---R
 
- (2) I'd then run "branch --contains" to learn which ones are
-     already up to date with respect to the fix.
+where A, B and C are changes to the main project, N, O, P, Q and R are
+changes to library code, and Sn and Mn are submodule updates and merge
+commits, respectively.
 
-Your "branch --grep=FIX123" that only tells me the names of branches
-would have no use in that workflow, as it would not even give me an
-indication that the request --grep=FIX123 found the right commit in
-the first place.
+=46rom what I have gathered, submodules have issues with branching and
+merging, therefore, unless I'm mistaken, submodules are kinda out of
+question.  Of the remaining two options, merging directly results in a
+nicer history, but requires making all changes to the library repo firs=
+t
+(although I am quite sure that a similar effect can be achieved with
+plumbing, similarly to how git subtree split works), and is harder to
+use than git subtree.  Also, all three options can result in the main
+project history being cluttered with extra commits.
+
+Lastly, there is a particularly painful 3rd party library that has an
+enormous amount of local modifications that are never going to make it
+upstream, essentially making it a fork, project specific changes that
+are required for one project, but would break others, separate language
+bindings that access the internals (often requiring bug fixes to be mad=
+e
+simultaneously to both), and, if that wasn't enough, it *requires*
+several source files to be modified for each individual project that
+uses it.  It's a complete mess, but we're stuck with it for the existin=
+g
+projects, as switching to an alternative would be too time consuming.
+
+
+To sum up, I'm looking for something that would let us share code
+between multiple projects, allow for:
+
+1) separate histories with relatively easy branching and merging
+
+2) distributed workflow without having to set up a multiple repositorie=
+s
+everywhere (eg. work <-> home <-> laptop)
+
+3) to work on the shared code within a project using it
+
+4) inspection of the complete history
+
+5) modifications that are not shared with other projects
+
+and would not result in lots of clutter in the history.
+
+Repository size is somewhat less of an issue, because each submodule ha=
+s
+to be checked out anyway.
+
+Submodules let you have #3, and #1, #2 and #5 to a point, after which i=
+t
+becomes a pain.  git subtree allows #1, #2, #3 and #4, and #5 with some
+pain (?), but results in duplicate commits.  Using subtree merge
+strategy directly gives everything except #3, but is harder to use than
+submodules or subtree.
+
+Are there any other options beside these three for sharing (or in some
+cases, not sharing) common code between projects using Git, that would
+address the above points better?  Or, alternatively, ways to work aroun=
+d
+the drawbacks of the existing tools?
+
+Lastly, I will be grateful for any suggestions about how to handle the
+messy case described above better.
+
+Thanks,
+J=C4=81nis
