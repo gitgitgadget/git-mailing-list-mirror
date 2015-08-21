@@ -1,155 +1,124 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC/PATCH] contrib: teach completion about git-worktree options
- and arguments
-Date: Fri, 21 Aug 2015 17:59:15 -0400
-Message-ID: <CAPig+cQ9Rema_n1xBJQNSv9i75sGT=RWu1AheWJFTBMa89DyFA@mail.gmail.com>
-References: <1437684550-21884-1-git-send-email-sunshine@sunshineco.com>
-	<CAPig+cQhh7YCiirp4a1+R0bWh46JoFgVOVUCNidTWXK8uNL2Mg@mail.gmail.com>
-	<xmqq37zc7e2o.fsf@gitster.dls.corp.google.com>
-	<20150821224918.Horde.edB9u314lsP17FLUzwFsQA1@webmail.informatik.kit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Minor bug with help.autocorrect.
+Date: Fri, 21 Aug 2015 15:13:38 -0700
+Message-ID: <xmqqmvxk47e5.fsf@gitster.dls.corp.google.com>
+References: <CA+cck7Ex4UO9BAzZ1kq5jw1vYqFb+mbzNQh-RvYAvK5v2T4G0g@mail.gmail.com>
+	<xmqqsi7c7hc4.fsf@gitster.dls.corp.google.com>
+	<20150821162347.GA4828@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Aug 21 23:59:21 2015
+Content-Type: text/plain
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	=?utf-8?Q?Bj=C3=B8rnar?= Snoksrud <snoksrud@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 22 00:13:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSuLJ-0004oW-3m
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 23:59:21 +0200
+	id 1ZSuZG-0004CE-NE
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 00:13:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101AbbHUV7Q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 17:59:16 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:36275 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751885AbbHUV7Q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Aug 2015 17:59:16 -0400
-Received: by ykfw73 with SMTP id w73so84318184ykf.3
-        for <git@vger.kernel.org>; Fri, 21 Aug 2015 14:59:15 -0700 (PDT)
+	id S1753421AbbHUWNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2015 18:13:42 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:33247 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753322AbbHUWNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 18:13:40 -0400
+Received: by pacgr6 with SMTP id gr6so2664665pac.0
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 15:13:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=Lgp/vztvA1Y6e/PVshEptDGBYHfMFBRWeZL8fWt/uXE=;
-        b=qEx6a/MN++kb1eiwU/0BmW36dvUKxWSaA8NsNeM/lV1HedJHLJ4yf2ILXTuLnOTyVp
-         Jh7Ws6MwoQTM8xLpGZV4J5bsjvVpUIzpmBZFM1j2ksBfWpQwv3UY/Hu+xWfrPOnCvCuu
-         +NSyYmTTDte5RDBD/NPY5cVLL9oJR59+5oBASXZMXLI9PeI43HowfZql1dpNfvMBrZ/b
-         0K7ko4roLQI0KtjPGfIcx/Lu7eYOCmuv1fp59GpAylk2JtxJqQnRY/rKlRLFAl/AG8Td
-         G7owLABjiefmB8nprEzt9v9ZP7c6UAK+x6NsEzUpRvBPIBVadJduacesi9E3C0W47iN+
-         AxDA==
-X-Received: by 10.170.172.84 with SMTP id o81mr15099591ykd.69.1440194355421;
- Fri, 21 Aug 2015 14:59:15 -0700 (PDT)
-Received: by 10.37.208.78 with HTTP; Fri, 21 Aug 2015 14:59:15 -0700 (PDT)
-In-Reply-To: <20150821224918.Horde.edB9u314lsP17FLUzwFsQA1@webmail.informatik.kit.edu>
-X-Google-Sender-Auth: xVQINY_Elo_9DA58_Cs3reiWmHU
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=93Eww9NBxSa748NEmxqDZxtCiQ9n7TAq9OrrC9QzvtQ=;
+        b=G7ZtPekPxITGReYx9g3ATT/jg+3HbfYt8NEdVeRSQTXtCoaxCiwu1bqyZxaW5fi6Pu
+         akVdpOBgv25vSZgQ1WBCsZOOchCbZARGd5tQw2r1cGbJKqVCq/7VDmP+CbgBGiI45moP
+         VZ8rFBfAEfkQXEJ4jHRotZCkdIom4mHgg6uZgM7fg0ld4cL/c0Q6/3ue7HTUtnr6ht0a
+         TN74GGq5y50rRVYXN3XnplcEUAYihc0Eg81CMcj+0Jo4XC7NZFjEVOfRoTuqKwkn/lFw
+         39+0/RtzWx6pYKGvkHcS3NwRAqr0NCj849L/K5i1LJpv1kouJyqN7ZLJNNX8kIzATKJ3
+         5i/A==
+X-Received: by 10.68.113.37 with SMTP id iv5mr21624326pbb.104.1440195219930;
+        Fri, 21 Aug 2015 15:13:39 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:4c7d:6904:6af7:82e1])
+        by smtp.gmail.com with ESMTPSA id e6sm8933496pas.35.2015.08.21.15.13.39
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 21 Aug 2015 15:13:39 -0700 (PDT)
+In-Reply-To: <20150821162347.GA4828@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 21 Aug 2015 12:23:48 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276338>
 
-On Fri, Aug 21, 2015 at 4:49 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de> =
-wrote:
-> Quoting Junio C Hamano <gitster@pobox.com>:
->> Eric Sunshine <sunshine@sunshineco.com> writes:
->>> On Thu, Jul 23, 2015 at 4:49 PM, Eric Sunshine <sunshine@sunshineco=
-=2Ecom>
->>> wrote:
->>>> Complete subcommands 'add' and 'prune', as well as their respectiv=
-e
->>>> options --force, --detach, --dry-run, --verbose, and --expire. Als=
-o
->>>> complete 'refname' in "git worktree add [-b <newbranch>] <path>
->>>> <refname>".
->>>
->>> Ping[1]?
->>
->> Ping indeed?
+Jeff King <peff@peff.net> writes:
+
+> I think the plan is:
 >
-> Yeah, right, sorry.  Non-subscribed occasional gmane-reader here amid=
-st
-> job hunting, so thanks for the ping.  And the re-ping...
-
-Thanks for the review.
-
->>>> +_git_worktree ()
->>>> +{
->>>> +       local subcommands=3D'add prune'
->>>> +       local subcommand=3D"$(__git_find_on_cmdline "$subcommands"=
-)"
->>>> +       local c=3D2 n=3D0 refpos=3D2
+>   1. squelch the warning message from the config code; even if we change
+>      the config format to pager.*.command, we will have to support
+>      pager.* for historical reasons.
 >
-> A more descriptive variable name for 'n' would be great.
-
-Indeed. I was planning on resubmitting with better variable names
-(even if I didn't get any feedback)...
-
->>>> +       if [ -z "$subcommand" ]; then
->>>> +               __gitcomp "$subcommands"
->>>> +       else
->>>> +               case "$subcommand,$cur" in
->>>> +               add,--*)
->>>> +                       __gitcomp "--force --detach"
+>   2. introduce pager.*.command so that "git foo_bar" can use
+>      pager.foo_bar.command.
 >
-> We usually don't offer '--force', because that option must be
-> handled with care.
+> We should do (1) in the near-term. We do not have to do (2) at all (and
+> people with funny command names are simply out of luck), but it would be
+> nice in the long run.
 
-As a person who never uses git-completion (or git-prompt), I wasn't
-aware of that, so thanks for the heads-up. I only installed completion
-(and prompt) when I decided to work on this (and I don't think I've
-used tab-completion since then).
+That sounds sensible.
 
->>>> +                       ;;
->>>> +               add,*)
->>>> +                       while [ $c -lt $cword ]; do
->>>> +                               case "${words[c]}" in
->>>> +                               --*) ;;
->>>> +                               -[bB]) ((refpos++)) ;;
->>>> +                               *) ((n++)) ;;
->>>> +                               esac
->>>> +                               ((c++))
->>>> +                       done
->>>> +                       if [ $n -eq $refpos ]; then
->
-> I suppose here you wanted to calculate where (i.e. at which word on
-> the command line) we should offer refs and fall back to bash builtin
-> filename completion otherwise.  It works well in the common cases,
-> but:
->
->   - it doesn't offer refs after -b or -B
+> The patch from Tanay in $gmane/263888 accomplishes (1), but there was a
+> minor cleanup needed (checking the individual bit in "flags", rather
+> than the whole variable). Here it is with that fix:
 
-That was intentional since this is a new branch name, so it didn't
-seem sensible to offer completion of existing refs. On the other hand,
-it doesn't make much since to offer pathname completion either, but I
-didn't see a better alternative. On reflection, I suppose ref
-completion can make sense if the new branch name is going to be
-similar to an existing one.
+Thanks; let's take a look.  I have a suspicion that it "accomplishes"
+a lot more than (1) and may be discarding useful errors.
 
->   - it gets fooled by options to the git command, e.g. 'git
->     --git-dir=3D.git worktree add <TAB>' offers refs instead of files=
-,
->     'git --git-dir=3D.git worktree add ../some/path <TAB>' offers
->     refs, etc.
+> diff --git a/config.c b/config.c
+> index 9fd275f..dd0cb52 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1314,7 +1314,7 @@ static struct config_set_element *configset_find_element(struct config_set *cs,
+>  	 * `key` may come from the user, so normalize it before using it
+>  	 * for querying entries from the hashmap.
+>  	 */
+> -	ret = git_config_parse_key(key, &normalized_key, NULL);
+> +	ret = git_config_parse_key(key, &normalized_key, NULL, CONFIG_ERROR_QUIET);
 
-This shortcoming could be addressed by computing relative to the
-subcommand-index as your version does, correct?
+Hmm, I am not sure if this is correct, or it is trying to do things
+at too low a level.
 
-I don't have enough background with the (git-specific) completion
-facility to be able to judge if this patch and approach has merit and
-ought to be pursued further, or if it would be better to drop in favor
-of (some version of) your patch. I don't care strongly, and am fine
-with dropping this patch if it's approach is suboptimal.
+configset_add_value() calls configset_find_element().
 
->>>> +                               __gitcomp_nl "$(__git_refs)"
->>>> +                       fi
->>>> +                       ;;
->>>> +               prune,--*)
->>>> +                       __gitcomp "--dry-run --verbose --expire"
->>>> +                       ;;
->>>> +               esac
->>>> +       fi
->>>> +}
->>>> +
+A NULL return from find_element() could be because parse_key()
+errored out due to bad name, or the key genuinely did not exist in
+the hashmap, and the caller cannot tell.  So add_value() can end up
+adding a new <key,value> pair under a bogus key, which is not a new
+problem, but what makes me cautious is that it happens silently with
+the updated code.
+
+In fact, git_configset_add_file() uses git_config_from_file() with
+configset_add_value() as its callback function, and the error that
+is squelched with this CONFIG_ERROR_QUIET would be the only thing
+that tells the user that the config file being read is malformed.
+
+Right now, "git config" does not seem to use the full configset API
+so nobody would notice, but still...
+
+I wonder if alias_lookup() and check_pager_config(), two functions
+that *know* that the string they have, cmd, could be invalid and
+unusable key to give to the config API, should be doing an extra
+effort (e.g. call parse_key() with QUIET option and refrain from
+calling git_config_get_value()).  It feels that for existing callers
+of parse_key(), not passing QUIET would be the right thing to do.
+
+Of course, I am OK if git_config_get_value() and friends took the
+QUIET flag and and passed it all the way down to parse_key(); that
+would be a much more correct approach to address this issue (these
+two callers do not have to effectively call parse_key() twice that
+way), but at the same time, that would be a lot more involved
+change.
