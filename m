@@ -1,78 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 7/9] builtin/send-pack.c: Use option parsing API
-Date: Fri, 21 Aug 2015 11:06:14 -0400
-Message-ID: <20150821150613.GB565@sigill.intra.peff.net>
-References: <1439998007-28719-1-git-send-email-dborowitz@google.com>
- <1439998007-28719-8-git-send-email-dborowitz@google.com>
- <CAGZ79kYSNAqsaj-rWvt1fSbNd+LPpeSSACcX5kHNZPe9+brLiw@mail.gmail.com>
- <CAD0k6qSp5af+N9QvjAxw1M19ytzh_n4repFA1+5Nq6v+px+fPw@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: [PATCH] Documentation/config: fix inconsistent label
+Date: Fri, 21 Aug 2015 17:06:18 +0200
+Message-ID: <87lhd4wuj9.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 17:06:29 2015
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 21 17:06:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSntd-0000WV-6P
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 17:06:21 +0200
+	id 1ZSntj-0000ZW-Fr
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 17:06:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752174AbbHUPGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2015 11:06:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48190 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752068AbbHUPGQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2015 11:06:16 -0400
-Received: (qmail 32553 invoked by uid 102); 21 Aug 2015 15:06:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Aug 2015 10:06:16 -0500
-Received: (qmail 1925 invoked by uid 107); 21 Aug 2015 15:06:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Aug 2015 11:06:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Aug 2015 11:06:14 -0400
-Content-Disposition: inline
-In-Reply-To: <CAD0k6qSp5af+N9QvjAxw1M19ytzh_n4repFA1+5Nq6v+px+fPw@mail.gmail.com>
+	id S1752319AbbHUPGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2015 11:06:23 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:56414 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752068AbbHUPGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 11:06:22 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3myR4r3J0lz3hhvk
+	for <git@vger.kernel.org>; Fri, 21 Aug 2015 17:06:20 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3myR4r2v4WzvktY
+	for <git@vger.kernel.org>; Fri, 21 Aug 2015 17:06:20 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id lM2hLxpoZT7A for <git@vger.kernel.org>;
+	Fri, 21 Aug 2015 17:06:19 +0200 (CEST)
+X-Auth-Info: cHExmxLj20NhG837OO6BbKEQ8LTnvwS5YwoSLGNIZWUfVoFICMQokEEeoCWrT+dP
+Received: from igel.home (ppp-93-104-63-89.dynamic.mnet-online.de [93.104.63.89])
+	by mail.mnet-online.de (Postfix) with ESMTPA
+	for <git@vger.kernel.org>; Fri, 21 Aug 2015 17:06:19 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id F32612C4487; Fri, 21 Aug 2015 17:06:18 +0200 (CEST)
+X-Yow: Two LITTLE black dots and one BIG black dot...nice 'n' FLUFFY!!
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276304>
 
-On Wed, Aug 19, 2015 at 03:46:25PM -0400, Dave Borowitz wrote:
+Change <ref> to <pattern> in the description of
+gc.*.reflogExpireUnreachable, since that is what the text refers to.
 
-> >> +       unsigned dry_run = 0;
-> >> +       unsigned send_mirror = 0;
-> >> +       unsigned force_update = 0;
-> >> +       unsigned quiet = 0;
-> >> +       unsigned push_cert = 0;
-> >> +       unsigned use_thin_pack = 0;
-> >> +       unsigned atomic = 0;
-> >> +       unsigned stateless_rpc = 0;
-> >
-> > First I thought:
-> >     You could write to the args flags directly from the options. No
-> > need to have (most of)
-> >     the variables around here and copy over the values. You'd need to
-> > use OPT_BIT instead
-> >     for setting a specific bit though
-> > but then I realized we do not have a direct bit field in args, which
-> > would make it a bit unreadable.
-> 
-> Right, and &args->push_cert etc. is invalid, and I didn't know if it
-> was ok to expand the args struct to be several words longer. But I'm
-> not a C programmer so I'm happy to take suggestions how to make this
-> more idiomatic.
+Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+---
+ Documentation/config.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I think it would be fine to expand it. The reason to use bitfields is to
-save memory, and there is literally only one of these structs per
-program. I'm sure we can afford the extra dozen bytes.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 75ec02e..b4f7c46 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1329,7 +1329,7 @@ gc.<pattern>.reflogExpire::
+ 	the refs that match the <pattern>.
+ 
+ gc.reflogExpireUnreachable::
+-gc.<ref>.reflogExpireUnreachable::
++gc.<pattern>.reflogExpireUnreachable::
+ 	'git reflog expire' removes reflog entries older than
+ 	this time and are not reachable from the current tip;
+ 	defaults to 30 days. The value "now" expires all entries
+-- 
+2.5.0
 
-Making the struct members single-bits also communicates to readers that
-they are true booleans, but I think a comment in the declaration of
-send_pack_args could do the same.
-
--Peff
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
