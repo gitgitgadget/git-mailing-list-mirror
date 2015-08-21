@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 05/10] grep/icase: avoid kwsset when -F is specified
-Date: Fri, 21 Aug 2015 19:47:15 +0700
-Message-ID: <1440161240-28554-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v4 06/10] grep/pcre: prepare locale-dependent tables for icase matching
+Date: Fri, 21 Aug 2015 19:47:16 +0700
+Message-ID: <1440161240-28554-7-git-send-email-pclouds@gmail.com>
 References: <1436880280-18194-1-git-send-email-pclouds@gmail.com>
  <1440161240-28554-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -14,228 +14,130 @@ Cc: Junio C Hamano <gitster@pobox.com>, plamen.totev@abv.bg,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 21 14:58:58 2015
+X-From: git-owner@vger.kernel.org Fri Aug 21 14:59:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSluL-00045G-64
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 14:58:57 +0200
+	id 1ZSluX-0004C8-N6
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 14:59:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752840AbbHUM6x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 08:58:53 -0400
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:34259 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752785AbbHUM6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2015 08:58:52 -0400
-Received: by pdbfa8 with SMTP id fa8so26597830pdb.1
-        for <git@vger.kernel.org>; Fri, 21 Aug 2015 05:58:51 -0700 (PDT)
+	id S1752911AbbHUM7F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 08:59:05 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:36475 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752785AbbHUM7D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 08:59:03 -0400
+Received: by pawq9 with SMTP id q9so52524056paw.3
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 05:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=L/tQImsg/+whvwivEsz/7rZYimWjth0d66dDCWzsSws=;
-        b=0VBBlpRzYXwHa6XcBTbOLrcfURO/f4Dx/noi/UWc9lVuOg/VC3raYxtHNQdEsuZlM8
-         wOXhQ2qzNDgYsEMnaT5NGJP13Q2BLGGbOb9jQrI3uE34/+G+303EIZBMrftuC1xYafq6
-         dq3PbnGd8LaDXHhYdULXgJD4DX3GvHbDshX6tvw/59rgIsIfuBxMEn9F2Wz3O669/j9+
-         PSrp3QE7TcNY9PHd4amctI61K2d2VlQ4ikcaG9k6NfBVvZp+67Hn41KL0w0nntDw3w5m
-         1fwkXDDcL9LH+G9wiXePZVc4y/i3gf5/w6eFj2aI4yNIlIb3TP/Vbiwr7B2HX8F6+Anb
-         cKeA==
-X-Received: by 10.70.38.69 with SMTP id e5mr4891505pdk.31.1440161931778;
-        Fri, 21 Aug 2015 05:58:51 -0700 (PDT)
+        bh=LMowQcmcfh+76Cqjr/cIY5tM11Et+mt9/P26wWtr0e0=;
+        b=BHBb5BExhAAq5AoekYSuxOexclJ2gVPb3FY7x+s0tOhDMsxeA042945o2JVdF53n/l
+         yQsY3sV10pyTfU0oZQhsYaKpsf/2J3MbJYX41DyopvF8Xf91syrtK43wagfBJQk/4oea
+         BdHfZ2aJfE2+zooDXVj9X/TtrzR6Vt3rlMXlNFTZ106EmyKs8+DSPFrV34ipeXDFkF2J
+         btaogpWChy8GFg75XNnEuyKcK404hHdEV5+ofEo1JJKNE3uZsDI1Vbless7FJuDBthg5
+         ysBf0Yz55oL+dfYzg9U09pgSgl4XgsciL61KLX0v1NzuB2c3oWpq39VDiNrJ+JCM4mtB
+         F+MQ==
+X-Received: by 10.66.186.39 with SMTP id fh7mr17062777pac.136.1440161942957;
+        Fri, 21 Aug 2015 05:59:02 -0700 (PDT)
 Received: from lanh ([171.232.84.126])
-        by smtp.gmail.com with ESMTPSA id hv3sm7777614pbb.83.2015.08.21.05.58.48
+        by smtp.gmail.com with ESMTPSA id b11sm7778818pbu.80.2015.08.21.05.58.59
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Aug 2015 05:58:51 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Fri, 21 Aug 2015 19:58:48 +0700
+        Fri, 21 Aug 2015 05:59:02 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Fri, 21 Aug 2015 19:58:54 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1440161240-28554-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276294>
 
-Similar to the previous commit, we can't use kws on icase search
-outside ascii range. But we can't simply pass the pattern to
-regcomp/pcre like the previous commit because it may contain regex
-special characters, so we need to quote the regex first.
+The default tables are usually built with C locale and only suitable
+for LANG=3DC or similar.  This should make case insensitive search work
+correctly for all single-byte charsets.
 
-To avoid misquote traps that could lead to undefined behavior, we
-always stick to basic regex engine in this case. We don't need fancy
-features for grepping a literal string anyway.
-
-basic_regex_quote_buf() assumes that if the pattern is in a multibyte
-encoding, ascii chars must be unambiguously encoded as single
-bytes. This is true at least for UTF-8. For others, let's wait until
-people yell up. Chances are nobody uses multibyte, non utf-8 charsets
-any more..
-
-Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-Noticed-by: Plamen Totev <plamen.totev@abv.bg>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- grep.c                          | 25 ++++++++++++++++++++++++-
- quote.c                         | 37 +++++++++++++++++++++++++++++++++=
-++++
- quote.h                         |  1 +
- t/t7812-grep-icase-non-ascii.sh | 26 ++++++++++++++++++++++++++
- 4 files changed, 88 insertions(+), 1 deletion(-)
+ grep.c                             |  8 ++++++--
+ grep.h                             |  1 +
+ t/t7813-grep-icase-iso.sh (new +x) | 19 +++++++++++++++++++
+ 3 files changed, 26 insertions(+), 2 deletions(-)
+ create mode 100755 t/t7813-grep-icase-iso.sh
 
 diff --git a/grep.c b/grep.c
-index d795b0e..8fce54f 100644
+index 8fce54f..f0fbf99 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -5,6 +5,7 @@
- #include "diff.h"
- #include "diffcore.h"
- #include "commit.h"
-+#include "quote.h"
+@@ -324,11 +324,14 @@ static void compile_pcre_regexp(struct grep_pat *=
+p, const struct grep_opt *opt)
+ 	int erroffset;
+ 	int options =3D PCRE_MULTILINE;
 =20
- static int grep_source_load(struct grep_source *gs);
- static int grep_source_is_binary(struct grep_source *gs);
-@@ -397,6 +398,24 @@ static int is_fixed(const char *s, size_t len)
- 	return 1;
- }
-=20
-+static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *=
-opt)
-+{
-+	struct strbuf sb =3D STRBUF_INIT;
-+	int err;
-+
-+	basic_regex_quote_buf(&sb, p->pattern);
-+	err =3D regcomp(&p->regexp, sb.buf, opt->regflags & ~REG_EXTENDED);
-+	if (opt->debug)
-+		fprintf(stderr, "fixed%s\n", sb.buf);
-+	strbuf_release(&sb);
-+	if (err) {
-+		char errbuf[1024];
-+		regerror(err, &p->regexp, errbuf, 1024);
-+		regfree(&p->regexp);
-+		compile_regexp_failed(p, errbuf);
+-	if (opt->ignore_case)
++	if (opt->ignore_case) {
++		if (has_non_ascii(p->pattern))
++			p->pcre_tables =3D pcre_maketables();
+ 		options |=3D PCRE_CASELESS;
 +	}
-+}
-+
- static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+=20
+ 	p->pcre_regexp =3D pcre_compile(p->pattern, options, &error, &erroffs=
+et,
+-			NULL);
++				      p->pcre_tables);
+ 	if (!p->pcre_regexp)
+ 		compile_regexp_failed(p, error);
+=20
+@@ -362,6 +365,7 @@ static void free_pcre_regexp(struct grep_pat *p)
  {
- 	int icase_non_ascii;
-@@ -411,7 +430,11 @@ static void compile_regexp(struct grep_pat *p, str=
-uct grep_opt *opt)
- 	if (!icase_non_ascii && is_fixed(p->pattern, p->patternlen))
- 		p->fixed =3D 1;
- 	else if (opt->fixed) {
--		p->fixed =3D 1;
-+		p->fixed =3D !icase_non_ascii;
-+		if (!p->fixed) {
-+			compile_fixed_regexp(p, opt);
-+			return;
-+		}
- 	} else
- 		p->fixed =3D 0;
-=20
-diff --git a/quote.c b/quote.c
-index 7920e18..43a8057 100644
---- a/quote.c
-+++ b/quote.c
-@@ -439,3 +439,40 @@ void tcl_quote_buf(struct strbuf *sb, const char *=
-src)
- 	}
- 	strbuf_addch(sb, '"');
+ 	pcre_free(p->pcre_regexp);
+ 	pcre_free(p->pcre_extra_info);
++	pcre_free((void *)p->pcre_tables);
  }
+ #else /* !USE_LIBPCRE */
+ static void compile_pcre_regexp(struct grep_pat *p, const struct grep_=
+opt *opt)
+diff --git a/grep.h b/grep.h
+index 95f197a..cee4357 100644
+--- a/grep.h
++++ b/grep.h
+@@ -48,6 +48,7 @@ struct grep_pat {
+ 	regex_t regexp;
+ 	pcre *pcre_regexp;
+ 	pcre_extra *pcre_extra_info;
++	const unsigned char *pcre_tables;
+ 	kwset_t kws;
+ 	unsigned fixed:1;
+ 	unsigned ignore_case:1;
+diff --git a/t/t7813-grep-icase-iso.sh b/t/t7813-grep-icase-iso.sh
+new file mode 100755
+index 0000000..efef7fb
+--- /dev/null
++++ b/t/t7813-grep-icase-iso.sh
+@@ -0,0 +1,19 @@
++#!/bin/sh
 +
-+void basic_regex_quote_buf(struct strbuf *sb, const char *src)
-+{
-+	char c;
++test_description=3D'grep icase on non-English locales'
 +
-+	if (*src =3D=3D '^') {
-+		/* only beginning '^' is special and needs quoting */
-+		strbuf_addch(sb, '\\');
-+		strbuf_addch(sb, *src++);
-+	}
-+	if (*src =3D=3D '*')
-+		/* beginning '*' is not special, no quoting */
-+		strbuf_addch(sb, *src++);
++. ./lib-gettext.sh
 +
-+	while ((c =3D *src++)) {
-+		switch (c) {
-+		case '[':
-+		case '.':
-+		case '\\':
-+		case '*':
-+			strbuf_addch(sb, '\\');
-+			strbuf_addch(sb, c);
-+			break;
-+
-+		case '$':
-+			/* only the end '$' is special and needs quoting */
-+			if (*src =3D=3D '\0')
-+				strbuf_addch(sb, '\\');
-+			strbuf_addch(sb, c);
-+			break;
-+
-+		default:
-+			strbuf_addch(sb, c);
-+			break;
-+		}
-+	}
-+}
-diff --git a/quote.h b/quote.h
-index 99e04d3..362d315 100644
---- a/quote.h
-+++ b/quote.h
-@@ -67,5 +67,6 @@ extern char *quote_path_relative(const char *in, cons=
-t char *prefix,
- extern void perl_quote_buf(struct strbuf *sb, const char *src);
- extern void python_quote_buf(struct strbuf *sb, const char *src);
- extern void tcl_quote_buf(struct strbuf *sb, const char *src);
-+extern void basic_regex_quote_buf(struct strbuf *sb, const char *src);
-=20
- #endif
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-a=
-scii.sh
-index 6eff490..aba6b15 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -20,4 +20,30 @@ test_expect_success REGEX_LOCALE 'grep literal strin=
-g, no -F' '
- 	git grep -i "TILRAUN: HALL=C3=93 HEIMUR!"
- '
-=20
-+test_expect_success REGEX_LOCALE 'grep literal string, with -F' '
-+	git grep --debug -i -F "TILRAUN: Hall=C3=B3 Heimur!"  2>&1 >/dev/null=
- |
-+		 grep fixed >debug1 &&
-+	echo "fixedTILRAUN: Hall=C3=B3 Heimur!" >expect1 &&
-+	test_cmp expect1 debug1 &&
-+
-+	git grep --debug -i -F "TILRAUN: HALL=C3=93 HEIMUR!"  2>&1 >/dev/null=
- |
-+		 grep fixed >debug2 &&
-+	echo "fixedTILRAUN: HALL=C3=93 HEIMUR!" >expect2 &&
-+	test_cmp expect2 debug2
++test_expect_success GETTEXT_ISO_LOCALE 'setup' '
++	printf "TILRAUN: Hall=F3 Heimur!" >file &&
++	git add file &&
++	LC_ALL=3D"$is_IS_iso_locale" &&
++	export LC_ALL
 +'
 +
-+test_expect_success REGEX_LOCALE 'grep string with regex, with -F' '
-+	printf "^*TILR^AUN:.* \\Hall=C3=B3 \$He[]imur!\$" >file &&
-+
-+	git grep --debug -i -F "^*TILR^AUN:.* \\Hall=C3=B3 \$He[]imur!\$" 2>&=
-1 >/dev/null |
-+		 grep fixed >debug1 &&
-+	echo "fixed\\^*TILR^AUN:\\.\\* \\\\Hall=C3=B3 \$He\\[]imur!\\\$" >exp=
-ect1 &&
-+	test_cmp expect1 debug1 &&
-+
-+	git grep --debug -i -F "^*TILR^AUN:.* \\HALL=C3=93 \$HE[]IMUR!\$"  2>=
-&1 >/dev/null |
-+		 grep fixed >debug2 &&
-+	echo "fixed\\^*TILR^AUN:\\.\\* \\\\HALL=C3=93 \$HE\\[]IMUR!\\\$" >exp=
-ect2 &&
-+	test_cmp expect2 debug2
++test_expect_success GETTEXT_ISO_LOCALE,LIBPCRE 'grep pcre string' '
++	git grep --perl-regexp -i "TILRAUN: H.ll=F3 Heimur!" &&
++	git grep --perl-regexp -i "TILRAUN: H.LL=D3 HEIMUR!"
 +'
 +
- test_done
++test_done
 --=20
 2.3.0.rc1.137.g477eb31
