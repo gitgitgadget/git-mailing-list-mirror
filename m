@@ -1,76 +1,83 @@
-From: =?koi8-r?B?48HQy8/XIOHMxcvTxco=?= <jiba88@ya.ru>
-Subject: Re: No dialog box appears
-Date: Fri, 21 Aug 2015 08:08:54 +0300
-Message-ID: <2366991440133734@web7g.yandex.ru>
-References: <4096511439969624@web22g.yandex.ru> <be6333650abce8a04c753112e4fa0c27@www.dscho.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] trailer: ignore first line of message
+Date: Fri, 21 Aug 2015 09:01:34 +0200
+Message-ID: <vpqk2sprupd.fsf@anie.imag.fr>
+References: <CAP8UFD0YcBdAfMJxc2bQD_zTp+kPk2L2sQfWYzTDn+trFk+DMA@mail.gmail.com>
+	<1440107955-26892-1-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 21 07:19:43 2015
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 21 09:01:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSejv-0003RS-82
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 07:19:43 +0200
+	id 1ZSgKe-0000C3-Sj
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 09:01:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752668AbbHUFTi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 01:19:38 -0400
-Received: from forward18p.cmail.yandex.net ([77.88.31.38]:47479 "EHLO
-	forward18p.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751058AbbHUFTh (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Aug 2015 01:19:37 -0400
-X-Greylist: delayed 633 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Aug 2015 01:19:37 EDT
-Received: from web7g.yandex.ru (web7g.yandex.ru [95.108.252.107])
-	by forward18p.cmail.yandex.net (Yandex) with ESMTP id 88E5920FDE;
-	Fri, 21 Aug 2015 08:08:55 +0300 (MSK)
-Received: from 127.0.0.1 (localhost [127.0.0.1])
-	by web7g.yandex.ru (Yandex) with ESMTP id D622027A1224;
-	Fri, 21 Aug 2015 08:08:54 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1440133735; bh=K993tsq3iZkAgYgj2iYbG70DFlqhoNN68U77XQ5RmH0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=jNxuBoRxgDranyMxQ8wA0EKDEH8GPBlVhXghF5FvyKTQ/mYRA1YQUd6IVygYVTXfM
-	 Wd1ZgqbKa/WpstmUB6O0SvYendTISsooGiqjrm1fUxJKRL8W0OGHOMT86AE7GnGwmu
-	 0BpTfJcXJtKmTq61Hae1cLPNi4ovWLr110W3NXr4=
-Received: by web7g.yandex.ru with HTTP;
-	Fri, 21 Aug 2015 08:08:54 +0300
-Envelope-From: jiba88@yandex.ru
-In-Reply-To: <be6333650abce8a04c753112e4fa0c27@www.dscho.org>
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
+	id S1752510AbbHUHBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2015 03:01:40 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56899 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751807AbbHUHBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 03:01:40 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t7L71XP8018494
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 21 Aug 2015 09:01:33 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t7L71YMs014900;
+	Fri, 21 Aug 2015 09:01:34 +0200
+In-Reply-To: <1440107955-26892-1-git-send-email-chriscool@tuxfamily.org>
+	(Christian Couder's message of "Thu, 20 Aug 2015 23:59:15 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 21 Aug 2015 09:01:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t7L71XP8018494
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1440745296.81875@mbAh5LNDtkfIVV6db3yzMA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276278>
 
-Yes. You're right. It is about Git for Windows installer. Thanks for th=
-e answer. My problem was solved by creating a variable HOME in the para=
-meters of the medium and refers to ssh.
+Christian Couder <christian.couder@gmail.com> writes:
 
-19.08.2015, 16:17, "Johannes Schindelin" <johannes.schindelin@gmx.de>:
-> Hi Aleksey,
->
-> On 2015-08-19 09:33, =E3=C1=D0=CB=CF=D7 =E1=CC=C5=CB=D3=C5=CA wrote:
->
->> =9AWhen installing the Git is not a dialog box appears with a choice=
- ssh.
->> =9AWhat could be the reason?
->
-> I assume that you are referring to the Git for Windows installer (ple=
-ase state such details in the future). And I assume you were wondering =
-why you could not choose putty as your ssh program. If that is the case=
-, I think you might need to add connections to your putty first, otherw=
-ise the installer will not even present the choice to you.
->
-> But maybe you want to move this to the issue tracker at https://githu=
-b.com/git-for-windows/git/issues?
->
-> Ciao,
-> Johannes
+> When looking for the start of the trailers in the message
+> we are passed, we should ignore the first line of the message.
 
---=20
-Shincho itte kudasai. Anime miteru hito!
+Thanks, this fixes my issue.
+
+There's one more corner-case I've just thought of:
+
+git commit -m 'place of
+code: change we made'
+
+(with the line break)
+
+Git considers this message as a summary line broken in the middle. "git
+log --oneline" shows it as a one-liner, as if it were
+'place of code: change we made'.
+
+Even with your patch, the trailer is added without a blank line, and
+renders on the subject line in `git log --oneline`. My command above
+with a commit-msg hook outputs:
+
+[master 86f32d5] place of: code: change we made Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+
+(on a single line)
+
+I do not care deeply, but you may want to let interpret-trailers deal
+with this case too.
+
+Thanks,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
