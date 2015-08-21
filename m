@@ -1,125 +1,94 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] describe: make '--always' fallback work after
- '--exact-match' failed
-Date: Fri, 21 Aug 2015 13:40:39 +0200
-Message-ID: <20150821134039.Horde.wW7OPRQO28gZidreZRgP7g2@webmail.informatik.kit.edu>
-References: <1440072823-18024-1-git-send-email-szeder@ira.uka.de>
- <xmqqegix7qjk.fsf@gitster.dls.corp.google.com>
+From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+Subject: Unable to create temporary file
+ '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR': Permission denied
+Date: Fri, 21 Aug 2015 11:36:49 +0000
+Message-ID: <1440157010.1759.83.camel@transmode.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 13:40:56 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 21 13:46:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSkgo-0007OS-O5
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 13:40:55 +0200
+	id 1ZSkmZ-0002ZQ-EL
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 13:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752804AbbHULku convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 07:40:50 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:37516 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752680AbbHULkt convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2015 07:40:49 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1ZSkgg-00044D-Mi; Fri, 21 Aug 2015 13:40:46 +0200
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1ZSkgZ-00056i-6l; Fri, 21 Aug 2015 13:40:39 +0200
-Received: from x4db19803.dyn.telefonica.de (x4db19803.dyn.telefonica.de
- [77.177.152.3]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Fri, 21 Aug 2015 13:40:39 +0200
-In-Reply-To: <xmqqegix7qjk.fsf@gitster.dls.corp.google.com>
-User-Agent: Internet Messaging Program (IMP) H5 (6.2.2)
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1440157246.
+	id S1753204AbbHULqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2015 07:46:47 -0400
+Received: from smtp.transmode.se ([31.15.61.139]:53700 "EHLO smtp.transmode.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752625AbbHULqq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Aug 2015 07:46:46 -0400
+X-Greylist: delayed 594 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Aug 2015 07:46:46 EDT
+Received: from exch1.transmode.se (exch1.transmode.se [192.168.201.16])
+	by smtp.transmode.se (Postfix) with ESMTP id 7C166118708E
+	for <git@vger.kernel.org>; Fri, 21 Aug 2015 13:36:50 +0200 (CEST)
+Received: from exch1.transmode.se (192.168.201.16) by exch1.transmode.se
+ (192.168.201.16) with Microsoft SMTP Server (TLS) id 15.0.1076.9; Fri, 21 Aug
+ 2015 13:36:50 +0200
+Received: from exch1.transmode.se ([fe80::bd49:a412:5dc4:aadd]) by
+ exch1.transmode.se ([fe80::bd49:a412:5dc4:aadd%17]) with mapi id
+ 15.00.1076.000; Fri, 21 Aug 2015 13:36:50 +0200
+Thread-Topic: Unable to create temporary file
+ '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR': Permission denied
+Thread-Index: AQHQ3AWrwIzpMheT9Eux2nyM5SUrUQ==
+Accept-Language: en-US, sv-SE
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: Evolution 3.16.4 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [192.168.200.4]
+Content-ID: <D774D9940B29094FBC0F2310E1944AB1@transmode.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276285>
+
+I cannot push:
+# > git push origin
+Login for jocke@git.transmode.se
+Password: 
+Counting objects: 7, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 13.73 KiB | 0 bytes/s, done.
+Total 7 (delta 4), reused 0 (delta 0)
+fatal: Unable to create temporary file '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR': Permission denied
+fatal: The remote end hung up unexpectedly
+fatal: The remote end hung up unexpectedly
+cu-km022 tmv3-target-overlay # ls -l
+total 0
+drwxr-xr-x 1 root root  72 Aug 19 17:59 ./
+drwxr-xr-x 1 root root  38 Aug 19 17:59 ../
+drwxr-xr-x 1 root root 216 Aug 21 13:07 .git/
+drwxr-xr-x 1 root root  22 Aug 19 17:59 metadata/
+drwxr-xr-x 1 root root  58 Aug 19 18:27 profiles/
+drwxr-xr-x 1 root root  74 Aug 19 17:59 sys-apps/
+drwxr-xr-x 1 root root  42 Aug 19 17:59 sys-libs/
+
+On server I have:
+# >ls -la
+total 24
+dr-xr-sr-x   6 apache tm-3000  123 Jun 10 15:25 .
+drwxr-xr-x  36 root   root    4096 Jun 25 11:11 ..
+-r--r--r--   1 root   tm-3000  263 Jun 10 15:18 config
+-r--r--r--   1 apache tm-3000   73 Jun 10 15:18 description
+-rw-r--r--   1 root   tm-3000    0 Jun 10 15:25 git-daemon-export-ok
+-r--r--r--   1 apache tm-3000   23 Jun 10 15:18 HEAD
+drwxr-sr-x   2 root   tm-3000 4096 Jun 10 15:18 hooks
+drwxrwsr-x   2 apache tm-3000   20 Jun 10 15:18 info
+drwxrwsr-x 135 apache tm-3000 4096 Aug 20 19:07 objects
+drwxrwsr-x   4 apache tm-3000   29 Jun 10 15:18 refs
 
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+I suspect this is because no one is allowed to write the repos top dir.
+It would be much better if git allowed a tmp dir inside the repo and used that 
+for push etc.
+Meanwhile, is there some workaround I can use?
 
-> SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
->
->> 'git describe [...] --always' should always show the unique abbrevia=
-ted
->> object name as a fallback when the given commit cannot be described =
-with
->> the given set of options, see da2478dbb0 (describe --always: fall ba=
-ck
->> to showing an abbreviated object name, 2008-03-02).
->>
->> However, this is not the case when the combination '--exact-match
->> --always' is given and the commit cannot be described, because in su=
-ch
->> cases 'git describe' errors out, as if '--always' were not given at =
-all.
->>
->> Respect '--always' and print the unique abbreviated object name inst=
-ead
->> of erroring out when the commit cannot be described with '--exact-ma=
-tch
->> --always'.
->>
->> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
->
-> Well, that can be argued both ways.  Your patch introduces a
-> regression, as "--exact-match" is an instruction to error out when
-> no tag exactly matches, and you deliberately break that.
-
-This patch doesn't break '--exact-match', in fact doesn't modify it at =
-all
-when it's on its own or combined with other options, but it makes
-'--exact-match --always' finally work.
-
-'git describe' errors out by default if it can't describe the given
-commit.  So if a user wants an exact match or an error otherwise, then =
-he
-should not give '--always' at all, because that's the instruction to no=
-t
-error out but give the abbreviated object name instead.
-
-Why should '--exact-match' be any different from the other options that
-tell 'git describe' what to use for the description?  Why should
-'--always' not work with '--exact-match', when it works in the other
-cases?
-
-Consider '--contains': it should find a tag that comes after the given
-commit or error out if such a tag doesn't exist.  Now, in current git.g=
-it:
-
-   $ git describe --contains master
-   fatal: cannot describe 'ff86faf2fa02bc21933c9e1dcc75c8d81b3e104a'
-   $ git describe --contains --always master
-   ff86faf2fa
-
-Or the default behavior without any options: it should find a tag
-reachable from the given commit or error out, but what if we pass in a
-commit before the first tag?  It recommends '--always':
-
-   $ git describe e83c516
-   fatal: No tags can describe 'e83c5163316f89bfbde7d9ab23ca2e25604af29=
-0'.
-   Try --always, or create some tags.
-   $ git describe --always e83c516
-   e83c516331
-
-
-> My knee-jerk reaction is that the most sensible way forward is to
-> make --exact-match and --always mutually incompatible.
-
-That would be wrong, it's perfectly valid to ask for an exactly matchin=
-g
-tag or, if there is no such tag, the abbreviated object name as a
-fallback.
+ Jocke
