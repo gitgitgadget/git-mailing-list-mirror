@@ -1,365 +1,371 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/3] submodule: implement `module_clone` as a builtin helper
-Date: Thu, 20 Aug 2015 18:40:35 -0700
-Message-ID: <1440121237-24576-1-git-send-email-sbeller@google.com>
+Subject: [RFC PATCH 2/3] run-commands: add an async queue processor
+Date: Thu, 20 Aug 2015 18:40:36 -0700
+Message-ID: <1440121237-24576-2-git-send-email-sbeller@google.com>
+References: <1440121237-24576-1-git-send-email-sbeller@google.com>
 Cc: gitster@pobox.com, jrnieder@gmail.com, hvoigt@hvoigt.net,
 	jens.lehmann@web.de, Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 21 03:40:51 2015
+X-From: git-owner@vger.kernel.org Fri Aug 21 03:40:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSbK6-0000iC-IL
+	id 1ZSbK7-0000iC-Gb
 	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 03:40:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985AbbHUBkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753072AbbHUBkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2015 21:40:47 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:34078 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752953AbbHUBkp (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 20 Aug 2015 21:40:45 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:36298 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752796AbbHUBko (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2015 21:40:44 -0400
-Received: by pdbmi9 with SMTP id mi9so20395512pdb.3
-        for <git@vger.kernel.org>; Thu, 20 Aug 2015 18:40:43 -0700 (PDT)
+Received: by pdbfa8 with SMTP id fa8so20452340pdb.1
+        for <git@vger.kernel.org>; Thu, 20 Aug 2015 18:40:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=JNQUxwuRC7m+uUNccse2j0svxSu4KgkyPvUDzX9wP8U=;
-        b=ESoBUiGhiVlRbuz19XhShZo0ajHikNBP7SfIxe5XlOKdHBx162DlY2IqgVSc2G3dmk
-         rSEcbfuptGJo8V3Ple8pwk3R4H7oKXLD8apxbcRPB2QD+9R6zKbex3+Xls0L7SHUaP+6
-         TSH0bT4AIXO4FSFRcG++p4oLZtG9eISrwPA4w5n75SBzO0HvY/ivNcSfCHW87EktawUv
-         AJnXaNd2Pth/SjGMDhKcUo6MpfRoYa/sxiG8zWAvKCVc5898Tjo0mxuLmzr2fboFLt44
-         puIrvz2s/sIkvFMgJP6nW+Fwlo1plh4mSnUb5aRK4rMgoFDXgDzHeX+tBGXMA/htn8v1
-         /GqA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=i0Gq0heIVfNEP4VZBNYZIHTn+nEzGDuaEbepu93aouM=;
+        b=M0j97v30HmrP/DztHTfFztfOcgT6GIHCMD2cqNhHaAhCoKHsI7diISpyaZiGw34Eq2
+         wIOoA0dWQStjTuG1BBL26f0x6GJviB2aUMhBYGFBoCeaMOciknOFSnnw5lk6xYbwl4f4
+         hqIWSSb1T52bbKMCkirqpqQwtVz7HmhubDeIKSxVzo3NlypxOj2N5+bFMB6vUA8VBx7U
+         74On0wA0gIT09QcSWS4kjIT03UiS+EtzkEbMJN9FcdaqlsHQC3RUuaosTZFrPxsPVCLR
+         ZFjdguvPhQZgPV94ShR5zfBCUkBkpujXb21VMbHRume/xcmGFEbfEYW63sBc1SGb5EFd
+         9NLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=JNQUxwuRC7m+uUNccse2j0svxSu4KgkyPvUDzX9wP8U=;
-        b=aBXRZnoZ0+3ZvIwP6BkpoJwaTPhLMpzihQCj1PHSRelIXzFvvJyZC/aHDQyPbGP+lm
-         MtyB9IdJHDDNi8lbvctaWAZG88aESqDJedT0d68c+eqOPCt6KRrkMfKakpsTv74okDhf
-         ws8Ge0J4zrmuee4k95PYUSeBtpKelRj/AknORSjig0rGyNNNMj8SHBnWhY2KK3GFLRcJ
-         WRJ23ApItGU4TGDIfUjMfpyRLzNIDlz/9IVQywCX3s3ubSoNXbIpVEFPiiO140Otp2Dg
-         hmEKsMZ71/GwcclWBtlv45fIFW5RJhe4vHNhZg7vpfjh3cs57iebsrnqC4hg1mCB82Wx
-         pN5w==
-X-Gm-Message-State: ALoCoQmXgH49tONDImZCoRHT4ouBNR7+iFbpWLTj6PmcwOQ0xWAoCqC9Oox18jr/pkDfxyVPmqc0
-X-Received: by 10.70.137.37 with SMTP id qf5mr12365894pdb.12.1440121243572;
-        Thu, 20 Aug 2015 18:40:43 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=i0Gq0heIVfNEP4VZBNYZIHTn+nEzGDuaEbepu93aouM=;
+        b=fhYXB6CYDGyjoYiAFyfEJsEUDYgPcWcvoL8hSSYTyxrl5SnOfwPt9oMKfUOg5Jdxxf
+         GYLf20ut0HYCVMxWY9EHOP5c4EpssyI5oGlgezsVN3GnDr6Ch7RR5kcqcSz0vl5faQrZ
+         nc3p84VnoEd5THw0Q9ZuuUiyQF/Gjixtrc2I/iewjh/bJ8KToDg4teN8SJZ51B2wOykD
+         D+TPWzeHjyJcKTy06A0X8VT1gPIhvjRi8lPeINqGOz7R5qubpt1doIbqaDiTjueL4gLR
+         26R6pA3FxmstremnaKefwxVHNfK9aDOHnkWfOq52UZjmCAZPCB+Q2cPh9y2jWqC2KG9Y
+         0r8Q==
+X-Gm-Message-State: ALoCoQlv/jMnUSfqIwan10T+Hxm0qfaSDE+gbMWHdKvSlDGRdKWSK25JULDn84cyvHU+Zl7hwEv1
+X-Received: by 10.70.109.232 with SMTP id hv8mr12282493pdb.108.1440121244775;
+        Thu, 20 Aug 2015 18:40:44 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:fdaa:d3b8:45bc:ac82])
-        by smtp.gmail.com with ESMTPSA id gx1sm5711771pbc.29.2015.08.20.18.40.42
+        by smtp.gmail.com with ESMTPSA id j4sm5709078pdo.62.2015.08.20.18.40.44
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 20 Aug 2015 18:40:42 -0700 (PDT)
+        Thu, 20 Aug 2015 18:40:44 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.264.g01b5c38.dirty
+In-Reply-To: <1440121237-24576-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276274>
 
-`module_clone` is part of the update command, which I want to convert
-to C next.
+This adds functionality to do work in parallel.
+
+The whole life cycle of such a thread pool would look like
+
+    struct task_queue * tq = create_task_queue(32); // no of threads
+    for (...)
+        add_task(tq, process_one_item_function, item); // non blocking
+    ...
+    int ret = finish_task_queue(tq); // blocks until all tasks are done
+    if (!tq)
+        die ("Not all items were be processed");
+
+The caller must take care of handling the output.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
 
-Replacing the latest patch in sb/submodule-helper as that contains
-debug code in `cmd_submodule__helper`.
+I sent this a while ago to the list, no comments on it :(
+The core functionality stayed the same, but I hope to improved naming and
+location of the code.
 
- builtin/submodule--helper.c | 156 +++++++++++++++++++++++++++++++++++++++++++-
- git-submodule.sh            |  80 +----------------------
- 2 files changed, 158 insertions(+), 78 deletions(-)
+The WIP is only for the NO_PTHREADS case.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4b32a3c..ae74b80 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -8,6 +8,7 @@
- #include "submodule.h"
- #include "submodule-config.h"
- #include "string-list.h"
-+#include "run-command.h"
+
+ run-command.c | 212 ++++++++++++++++++++++++++++++++++++++++++++++++++++++----
+ run-command.h |  30 +++++++++
+ 2 files changed, 230 insertions(+), 12 deletions(-)
+
+diff --git a/run-command.c b/run-command.c
+index 28e1d55..4029011 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -4,6 +4,21 @@
+ #include "sigchain.h"
+ #include "argv-array.h"
  
- static const struct cache_entry **ce_entries;
- static int ce_alloc, ce_used;
-@@ -124,6 +125,156 @@ static int module_name(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
++#ifdef NO_PTHREADS
++
++#else
++
++#include "thread-utils.h"
++
++#include <pthread.h>
++#include <semaphore.h>
++#include <stdio.h>
++#include <unistd.h>
++
++#endif
++
++#include "git-compat-util.h"
++
+ void child_process_init(struct child_process *child)
+ {
+ 	memset(child, 0, sizeof(*child));
+@@ -668,6 +683,22 @@ int git_atexit(void (*handler)(void))
  
-+static int clone_submodule(const char *path, const char *gitdir, const char *url,
-+			   const char *depth, const char *reference, int quiet)
+ #endif
+ 
++void setup_main_thread()
 +{
-+	struct child_process cp;
-+	child_process_init(&cp);
-+
-+	argv_array_push(&cp.args, "clone");
-+	argv_array_push(&cp.args, "--no-checkout");
-+	if (quiet)
-+		argv_array_push(&cp.args, "--quiet");
-+	if (depth && strcmp(depth, "")) {
-+		argv_array_push(&cp.args, "--depth");
-+		argv_array_push(&cp.args, depth);
++	if (!main_thread_set) {
++		/*
++		 * We assume that the first time that start_async is called
++		 * it is from the main thread.
++		 */
++		main_thread_set = 1;
++		main_thread = pthread_self();
++		pthread_key_create(&async_key, NULL);
++		pthread_key_create(&async_die_counter, NULL);
++		set_die_routine(die_async);
++		set_die_is_recursing_routine(async_die_is_recursing);
 +	}
-+	if (reference && strcmp(reference, "")) {
-+		argv_array_push(&cp.args, "--reference");
-+		argv_array_push(&cp.args, reference);
-+	}
-+	if (gitdir) {
-+		argv_array_push(&cp.args, "--separate-git-dir");
-+		argv_array_push(&cp.args, gitdir);
-+	}
-+	argv_array_push(&cp.args, url);
-+	argv_array_push(&cp.args, path);
-+
-+	cp.git_cmd = 1;
-+	cp.env = local_repo_env;
-+
-+	cp.no_stdin = 1;
-+	cp.no_stdout = 1;
-+	cp.no_stderr = 1;
-+
-+	return run_command(&cp);
 +}
++
+ int start_async(struct async *async)
+ {
+ 	int need_in, need_out;
+@@ -740,18 +771,7 @@ int start_async(struct async *async)
+ 	else if (async->out)
+ 		close(async->out);
+ #else
+-	if (!main_thread_set) {
+-		/*
+-		 * We assume that the first time that start_async is called
+-		 * it is from the main thread.
+-		 */
+-		main_thread_set = 1;
+-		main_thread = pthread_self();
+-		pthread_key_create(&async_key, NULL);
+-		pthread_key_create(&async_die_counter, NULL);
+-		set_die_routine(die_async);
+-		set_die_is_recursing_routine(async_die_is_recursing);
+-	}
++	setup_main_thread();
+ 
+ 	if (proc_in >= 0)
+ 		set_cloexec(proc_in);
+@@ -852,3 +872,171 @@ int capture_command(struct child_process *cmd, struct strbuf *buf, size_t hint)
+ 	close(cmd->out);
+ 	return finish_command(cmd);
+ }
++
++#ifndef NO_PTHREADS
++struct job_list {
++	int (*fct)(struct task_queue *aq, void *task);
++	void *task;
++	struct job_list *next;
++};
++#endif
++
++struct task_queue {
++#ifndef NO_PTHREADS
++	/*
++	 * To avoid deadlocks always aquire the semaphores with lowest priority
++	 * first, priorites are in descending order as listed.
++	 *
++	 * The `mutex` is a general purpose lock for modifying data in the async
++	 * queue, such as adding a new task or adding a return value from
++	 * an already run task.
++	 *
++	 * `workingcount` and `freecount` are opposing semaphores, the sum of
++	 * their values should equal `max_threads` at any time while the `mutex`
++	 * is available.
++	 */
++	sem_t mutex;
++	sem_t workingcount;
++	sem_t freecount;
++
++	pthread_t *threads;
++	unsigned max_threads;
++
++	struct job_list *first;
++	struct job_list *last;
++#endif
++	int early_return;
++};
++
++#ifndef NO_PTHREADS
++
++static void get_task(struct task_queue *aq,
++		     int (**fct)(struct task_queue *aq, void *task),
++		     void **task,
++		     int *early_return)
++{
++	struct job_list *job;
++
++	sem_wait(&aq->workingcount);
++	sem_wait(&aq->mutex);
++
++	if (!aq->first)
++		die("BUG: internal error with dequeuing jobs for threads");
++	job = aq->first;
++	*fct = job->fct;
++	*task = job->task;
++	aq->early_return |= *early_return;
++	*early_return = aq->early_return;
++	aq->first = job->next;
++	if (!aq->first)
++		aq->last = NULL;
++
++	sem_post(&aq->freecount);
++	sem_post(&aq->mutex);
++
++	free(job);
++}
++
++static void* dispatcher(void *args)
++{
++	void *task;
++	int (*fct)(struct task_queue *aq, void *data);
++	int early_return = 0;
++	struct task_queue *aq = args;
++
++	get_task(aq, &fct, &task, &early_return);
++	while (fct || early_return != 0) {
++		early_return = fct(aq, task);
++		get_task(aq, &fct, &task, &early_return);
++	}
++
++	pthread_exit(0);
++}
++#endif
++
++struct task_queue *create_task_queue(unsigned max_threads)
++{
++	struct task_queue *aq = xmalloc(sizeof(*aq));
++
++#ifndef NO_PTHREADS
++	int i;
++	if (!max_threads)
++		aq->max_threads = online_cpus();
++	else
++		aq->max_threads = max_threads;
++
++	sem_init(&aq->mutex, 0, 1);
++	sem_init(&aq->workingcount, 0, 0);
++	sem_init(&aq->freecount, 0, aq->max_threads);
++	aq->threads = xmalloc(aq->max_threads * sizeof(pthread_t));
++
++	for (i = 0; i < aq->max_threads; i++)
++		pthread_create(&aq->threads[i], 0, &dispatcher, aq);
++
++	aq->first = NULL;
++	aq->last = NULL;
++
++	setup_main_thread();
++#endif
++	aq->early_return = 0;
++
++	return aq;
++}
++
++void add_task(struct task_queue *aq,
++	      int (*fct)(struct task_queue *aq, void *task),
++	      void *task)
++{
++#ifndef NO_PTHREADS
++	struct job_list *job_list;
++
++	job_list = xmalloc(sizeof(*job_list));
++	job_list->task = task;
++	job_list->fct = fct;
++	job_list->next = NULL;
++
++	sem_wait(&aq->freecount);
++	sem_wait(&aq->mutex);
++
++	if (!aq->last) {
++		aq->last = job_list;
++		aq->first = aq->last;
++	} else {
++		aq->last->next = job_list;
++		aq->last = aq->last->next;
++	}
++
++	sem_post(&aq->workingcount);
++	sem_post(&aq->mutex);
++#else
++	ALLOC_GROW(aq->ret->ret, aq->ret->count + 1, aq->ret->alloc);
++	aq->ret->ret[aq->ret->count++] = aq->function(job);
++#endif
++}
++
++int finish_task_queue(struct task_queue *aq)
++{
++	int ret;
++#ifndef NO_PTHREADS
++	int i;
++	for (i = 0; i < aq->max_threads; i++)
++		add_task(aq, NULL, NULL);
++
++	for (i = 0; i < aq->max_threads; i++)
++		pthread_join(aq->threads[i], 0);
++
++	sem_destroy(&aq->mutex);
++	sem_destroy(&aq->workingcount);
++	sem_destroy(&aq->freecount);
++
++	if (aq->first)
++		die("BUG: internal error with queuing jobs for threads");
++
++	free(aq->threads);
++#endif
++	ret = aq->early_return;
++
++	free(aq);
++	return ret;
++}
++
+diff --git a/run-command.h b/run-command.h
+index 5b4425a..c2cfd49 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -119,4 +119,34 @@ struct async {
+ int start_async(struct async *async);
+ int finish_async(struct async *async);
+ 
++/*
++ * Creates a struct `task_queue`, which holds a list of tasks. Up to
++ * `max_threads` threads are active to process the enqueued tasks
++ * processing the tasks in a first in first out order.
++ *
++ * If `max_threads` is zero the number of cores available will be used.
++ *
++ * Currently this only works in environments with pthreads, in other
++ * environments, the task will be processed sequentially in `add_task`.
++ */
++struct task_queue *create_task_queue(unsigned max_threads);
 +
 +/*
-+ * Clone a submodule
++ * The function and data are put into the task queue.
 + *
-+ * $1 = submodule path
-+ * $2 = submodule name
-+ * $3 = URL to clone
-+ * $4 = reference repository to reuse (empty for independent)
-+ * $5 = depth argument for shallow clones (empty for deep)
-+ *
-+ * Prior to calling, cmd_update checks that a possibly existing
-+ * path is not a git repository.
-+ * Likewise, cmd_add checks that path does not exist at all,
-+ * since it is the location of a new submodule.
++ * The function `fct` must not be NULL, as that's used internally
++ * in `finish_task_queue` to signal shutdown. If the return code
++ * of `fct` is unequal to 0, the tasks will stop eventually,
++ * the current parallel tasks will be flushed out.
 + */
-+static int module_clone(int argc, const char **argv, const char *prefix)
-+{
-+	const char *path = NULL, *name = NULL, *url = NULL, *reference = NULL, *depth = NULL;
-+	int quiet = 0;
-+	FILE *submodule_dot_git;
-+	const char *sm_gitdir, *p;
-+	struct strbuf rel_path = STRBUF_INIT;
-+	struct strbuf sb = STRBUF_INIT;
++void add_task(struct task_queue *aq,
++	      int (*fct)(struct task_queue *aq, void *task),
++	      void *task);
 +
-+	struct option module_update_options[] = {
-+		OPT_STRING(0, "prefix", &alternative_path,
-+			   N_("path"),
-+			   N_("alternative anchor for relative paths")),
-+		OPT_STRING(0, "path", &path,
-+			   N_("path"),
-+			   N_("where the new submodule will be cloned to")),
-+		OPT_STRING(0, "name", &name,
-+			   N_("string"),
-+			   N_("name of the new submodule")),
-+		OPT_STRING(0, "url", &url,
-+			   N_("string"),
-+			   N_("url where to clone the submodule from")),
-+		OPT_STRING(0, "reference", &reference,
-+			   N_("string"),
-+			   N_("reference repository")),
-+		OPT_STRING(0, "depth", &depth,
-+			   N_("string"),
-+			   N_("depth for shallow clones")),
-+		OPT_END()
-+	};
++/*
++ * Waits for all tasks to be done and frees the object. The return code
++ * is zero if all enqueued tasks were processed.
++ */
++int finish_task_queue(struct task_queue *aq);
 +
-+	static const char * const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper update [--prefix=<path>] [--quiet] [--remote] [-N|--no-fetch]"
-+		   "[-f|--force] [--rebase|--merge] [--reference <repository>]"
-+		   "[--depth <depth>] [--recursive] [--] [<path>...]"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, module_update_options,
-+			     git_submodule_helper_usage, 0);
-+
-+	if (getenv("GIT_QUIET"))
-+		quiet = 1;
-+
-+	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
-+	sm_gitdir = strbuf_detach(&sb, NULL);
-+	strbuf_reset(&sb);
-+
-+	if (!file_exists(sm_gitdir)) {
-+		safe_create_leading_directories_const(sm_gitdir);
-+		if (clone_submodule(path, sm_gitdir, url, depth, reference, quiet))
-+			die(N_("Clone of '%s' into submodule path '%s' failed"),
-+			    url, path);
-+	} else {
-+		safe_create_leading_directories_const(path);
-+		unlink(sm_gitdir);
-+	}
-+
-+	/* Write a .git file in the submodule to redirect to the superproject. */
-+	if (alternative_path && !strcmp(alternative_path, "")) {
-+		p = relative_path(path, alternative_path, &sb);
-+		strbuf_reset(&sb);
-+	} else
-+		p = path;
-+
-+	if (safe_create_leading_directories_const(p) < 0)
-+		die("Could not create directory '%s'", p);
-+
-+	strbuf_addf(&sb, "%s/.git", p);
-+
-+	if (safe_create_leading_directories_const(sb.buf) < 0)
-+		die(_("could not create leading directories of '%s'"), sb.buf);
-+	submodule_dot_git = fopen(sb.buf, "w");
-+	if (!submodule_dot_git)
-+		die ("Cannot open file '%s': %s", sb.buf, strerror(errno));
-+
-+	fprintf(submodule_dot_git, "gitdir: %s\n",
-+		relative_path(sm_gitdir, path, &rel_path));
-+	if (fclose(submodule_dot_git))
-+		die("Could not close file %s", sb.buf);
-+	strbuf_reset(&sb);
-+
-+	/* Redirect the worktree of the submodule in the superprojects config */
-+	if (!is_absolute_path(sm_gitdir)) {
-+		char *s = (char*)sm_gitdir;
-+		strbuf_addf(&sb, "%s/%s", xgetcwd(), sm_gitdir);
-+		sm_gitdir = strbuf_detach(&sb, NULL);
-+		strbuf_reset(&sb);
-+		free(s);
-+	}
-+	strbuf_addf(&sb, "%s/%s", xgetcwd(), path);
-+
-+	p = git_pathdup_submodule(path, "config");
-+	if (!p)
-+		die("Could not get submodule directory for '%s'", path);
-+	git_config_set_in_file(p, "core.worktree",
-+			       relative_path(sb.buf, sm_gitdir, &rel_path));
-+	strbuf_release(&sb);
-+	return 0;
-+}
-+
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- {
- 	if (argc < 2)
-@@ -135,6 +286,9 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- 	if (!strcmp(argv[1], "module_name"))
- 		return module_name(argc - 2, argv + 2, prefix);
- 
-+	if (!strcmp(argv[1], "module_clone"))
-+		return module_clone(argc - 1, argv + 1, prefix);
-+
- usage:
--	usage("git submodule--helper [module_list module_name]\n");
-+	usage("git submodule--helper [module_list module_name module_clone]\n");
- }
-diff --git a/git-submodule.sh b/git-submodule.sh
-index e6ff38d..fb5155e 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -178,80 +178,6 @@ get_submodule_config () {
- 	printf '%s' "${value:-$default}"
- }
- 
--#
--# Clone a submodule
--#
--# $1 = submodule path
--# $2 = submodule name
--# $3 = URL to clone
--# $4 = reference repository to reuse (empty for independent)
--# $5 = depth argument for shallow clones (empty for deep)
--#
--# Prior to calling, cmd_update checks that a possibly existing
--# path is not a git repository.
--# Likewise, cmd_add checks that path does not exist at all,
--# since it is the location of a new submodule.
--#
--module_clone()
--{
--	sm_path=$1
--	name=$2
--	url=$3
--	reference="$4"
--	depth="$5"
--	quiet=
--	if test -n "$GIT_QUIET"
--	then
--		quiet=-q
--	fi
--
--	gitdir=
--	gitdir_base=
--	base_name=$(dirname "$name")
--
--	gitdir=$(git rev-parse --git-dir)
--	gitdir_base="$gitdir/modules/$base_name"
--	gitdir="$gitdir/modules/$name"
--
--	if test -d "$gitdir"
--	then
--		mkdir -p "$sm_path"
--		rm -f "$gitdir/index"
--	else
--		mkdir -p "$gitdir_base"
--		(
--			clear_local_git_env
--			git clone $quiet ${depth:+"$depth"} -n ${reference:+"$reference"} \
--				--separate-git-dir "$gitdir" "$url" "$sm_path"
--		) ||
--		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
--	fi
--
--	# We already are at the root of the work tree but cd_to_toplevel will
--	# resolve any symlinks that might be present in $PWD
--	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
--	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
--	# Remove all common leading directories after a sanity check
--	if test "${a#$b}" != "$a" || test "${b#$a}" != "$b"; then
--		die "$(eval_gettext "Gitdir '\$a' is part of the submodule path '\$b' or vice versa")"
--	fi
--	while test "${a%%/*}" = "${b%%/*}"
--	do
--		a=${a#*/}
--		b=${b#*/}
--	done
--	# Now chop off the trailing '/'s that were added in the beginning
--	a=${a%/}
--	b=${b%/}
--
--	# Turn each leading "*/" component into "../"
--	rel=$(printf '%s\n' "$b" | sed -e 's|[^/][^/]*|..|g')
--	printf '%s\n' "gitdir: $rel/$a" >"$sm_path/.git"
--
--	rel=$(printf '%s\n' "$a" | sed -e 's|[^/][^/]*|..|g')
--	(clear_local_git_env; cd "$sm_path" && GIT_WORK_TREE=. git config core.worktree "$rel/$b")
--}
--
- isnumber()
- {
- 	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
-@@ -301,7 +227,7 @@ cmd_add()
- 			shift
- 			;;
- 		--depth=*)
--			depth=$1
-+			depth="$1"
- 			;;
- 		--)
- 			shift
-@@ -412,7 +338,7 @@ Use -f if you really want to add it." >&2
- 				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
- 			fi
- 		fi
--		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" || exit
-+		git submodule--helper module_clone --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" "$reference" "$depth" || exit
- 		(
- 			clear_local_git_env
- 			cd "$sm_path" &&
-@@ -774,7 +700,7 @@ Maybe you want to use 'update --init'?")"
- 
- 		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
- 		then
--			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
-+			git submodule--helper module_clone --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
- 			cloned_modules="$cloned_modules;$name"
- 			subsha1=
- 		else
+ #endif
 -- 
 2.5.0.264.g01b5c38.dirty
