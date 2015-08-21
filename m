@@ -1,279 +1,133 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [WIP/PATCH 3/3] submodule: helper to run foreach in parallel
-Date: Thu, 20 Aug 2015 18:40:37 -0700
-Message-ID: <1440121237-24576-3-git-send-email-sbeller@google.com>
-References: <1440121237-24576-1-git-send-email-sbeller@google.com>
-Cc: gitster@pobox.com, jrnieder@gmail.com, hvoigt@hvoigt.net,
-	jens.lehmann@web.de, Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 21 03:40:59 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v12 05/13] ref-filter: implement an `align` atom
+Date: Fri, 21 Aug 2015 07:25:14 +0530
+Message-ID: <CAOLa=ZSb69ad=EM4qq5XP7jOmY5KXCQ-ZheyVqMsu0qNRLYWiw@mail.gmail.com>
+References: <1439923052-7373-1-git-send-email-Karthik.188@gmail.com>
+ <1439923052-7373-6-git-send-email-Karthik.188@gmail.com> <CAPig+cRB86+1D_CrVjoLxopgf-Rd221Q49UP75hTsZSPdN6QrQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Aug 21 03:56:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSbKE-0000px-8Y
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 03:40:58 +0200
+	id 1ZSbYl-0001w0-4m
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 03:55:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753095AbbHUBkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2015 21:40:51 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:35375 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752989AbbHUBkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2015 21:40:46 -0400
-Received: by pacdd16 with SMTP id dd16so31992970pac.2
-        for <git@vger.kernel.org>; Thu, 20 Aug 2015 18:40:46 -0700 (PDT)
+	id S1752145AbbHUBzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2015 21:55:45 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:36711 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751622AbbHUBzo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2015 21:55:44 -0400
+Received: by obkg7 with SMTP id g7so47709783obk.3
+        for <git@vger.kernel.org>; Thu, 20 Aug 2015 18:55:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JkX5Mw8uvlTiWW4SpdpNI9YjIFzTv2NUENz5eB+Ufow=;
-        b=HtZn67mfKa4UV7kOBOHeZHHHNu+guE7qh6ctBUGwBEPoAAsrcIn0BPhGJDUiTPN/bX
-         l18wkYal2xsl9PZ1E2AwLSfFyts0NJ1jDjvY6d6xEVks+Aj6TFpjXKzKfPEERuC1vTIt
-         7fyhyeVN1ir4uTLO4VIMnoO6ce84NQ/bLdSgCgQN4jx8tDQY/f6VWbL5OfxEMJnUqXxS
-         T0R5Tog4wBgjgJgPKR4BZ+6XDvhsJz7SbqzWNoHO/CHgoWjFyR7O2cxclGdA5DT6j6/C
-         RoHEox22oVMsy0/myIjy5qYCveZ6skoQykaT/JC+YAYsmldYoz9Fo1+g4edaesXjow9Y
-         trcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=JkX5Mw8uvlTiWW4SpdpNI9YjIFzTv2NUENz5eB+Ufow=;
-        b=QiGIBKEDGYJ6x4/i63S6gcRoQAte96a1MIue005rBKB3ZyHjukp+BjSuLIsFsLHobl
-         xuGh70+TQ6R8JO0fjroJ7QukF4j2Dh+DZp9Z6tfszkNQSmWGeVrD7CioMuMW8hM2iPNk
-         f1mWZ4RSUhVgWIUxpcWTYNnpqV0/Ik6P82Cjzk6f8ZBX4vbnURl6PWb+r6hdaCPf5ZfL
-         sFwsx3XZ+eqywdVGjIE0XzoDN4cNLxGzlU1rVSa8MnSfusCvZ9+XmeFuXcJpFmXJ32yG
-         /PpULyi/YepLDBT9xFqxMpXTKp/EWkUeQD2HvU73Tbd8xZnhV0Lg7FK/NoRczmgOsU+S
-         Iisg==
-X-Gm-Message-State: ALoCoQnTJg+8LnXZwe5nkAZyEgMw+UYP3gd7RbO5nduV8p5R4OO0/svf1iBdne3VufvWLilXUJBN
-X-Received: by 10.66.245.142 with SMTP id xo14mr11812843pac.151.1440121245926;
-        Thu, 20 Aug 2015 18:40:45 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:fdaa:d3b8:45bc:ac82])
-        by smtp.gmail.com with ESMTPSA id gu2sm5731132pbc.1.2015.08.20.18.40.45
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 20 Aug 2015 18:40:45 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.264.g01b5c38.dirty
-In-Reply-To: <1440121237-24576-1-git-send-email-sbeller@google.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4Cye/soMcZ8qZVeyNr12u4aMBpUPGpD60zx93nBZaxI=;
+        b=zJ01tKPP8rT0/KlBdFcV8B09Yayw6gg0fiF83AxYRHPNPyZfeafY5yN/DaziDmbbsi
+         h301qYxOzWCiC4yPbW6H0yTsn5o1p+Wm5vp+8hKcOHUpwq2Z9dgE9502dJnnLesjwFyV
+         zR/lJlabQHtkJZc/JwCWz5WqIBTXjckxh8J5A0TN73GND+YKfBUljE3elAL3zlRa0EAg
+         /CDeRN/5zdpTZ041ODXqsfW4Kr/ZeF1+yUkh2S5NhdoXBHsV88zI8YbzDQoTpvOBFy3P
+         z1IaAT6YhjAB8gZ2QSBstxoyExLKJKBA95/mRZUQcLamQ+3nx+VJeePdbRLQno3tc55p
+         hxHg==
+X-Received: by 10.60.50.169 with SMTP id d9mr2622075oeo.9.1440122144290; Thu,
+ 20 Aug 2015 18:55:44 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Thu, 20 Aug 2015 18:55:14 -0700 (PDT)
+In-Reply-To: <CAPig+cRB86+1D_CrVjoLxopgf-Rd221Q49UP75hTsZSPdN6QrQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276276>
 
-This runs a command on each submodule in parallel and should eventually
-replace `git submodule foreach`.
+On Fri, Aug 21, 2015 at 1:53 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Aug 18, 2015 at 2:37 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Implement an `align` atom which left-, middle-, or right-aligns the
+>> content between %(align:..) and %(end).
+>>
+>> It is followed by `:<width>,<position>`, where the `<position>` is
+>> either left, right or middle and `<width>` is the size of the area
+>> into which the content will be placed. If the content between
+>> %(align:) and %(end) is more than the width then no alignment is
+>> performed. e.g. to align a refname atom to the middle with a total
+>> width of 40 we can do: --format="%(align:middle,40)%(refname)%(end)".
+>>
+>> We now have a `handler()` for each atom_value which will be called
+>> when that atom_value is being parsed, and similarly an `at_end`
+>> function for each state which is to be called when the `end` atom is
+>> encountered. Using this implement the `align` atom which aligns the
+>> given strbuf by calling `strbuf_utf8_align()` from utf8.c
+>>
+>> This is done by assigning a 'handler' function to each atom_value and
+>> a related 'at_end' function for each state. The align_handler()
+>> defined uses strbuf_utf8_align() from utf8.c to perform the alignment.
+>>
+>> Add documentation and tests for the same.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index 74532d3..ecbcc5a 100644
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -626,6 +638,36 @@ static inline char *copy_advance(char *dst, const char *src)
+>>         return dst;
+>>  }
+>>
+>> +static void align_handler(struct ref_formatting_state *state)
+>> +{
+>> +       struct align *align = (struct align *)state->cb_data;
+>> +       struct strbuf s = STRBUF_INIT;
+>> +
+>> +       strbuf_utf8_align(&s, align->position, align->width, state->output.buf);
+>> +       strbuf_reset(&state->output);
+>> +       strbuf_addbuf(&state->output, &s);
+>> +       free(align);
+>> +}
+>
+> Leaking 'strbuf s' here.
+>
+> Also, this operation can be expressed more concisely as:
+>
+>     strbuf_utf8_align(&s, ...);
+>     strbuf_swap(&state->output, &s);
+>     strbuf_release(&s);
+>
 
-There is a new option -j/--jobs (inspired by make) to specify the number
-of parallel threads.
+This seems neater.
 
-The jobs=1 case needs to be special cases to exactly replicate the current
-default behavior of `git submodule foreach` such as working stdin input.
-For more than one job there is no input possible and the output of both
-stdout/stderr of the command are put into the stderr in an ordered fashion,
-i.e. the tasks to not intermingle their output in races.
+> Seeing this is also making me question my earlier suggestion of making
+> pop_state() responsible for appending the current state's output to
+> the previous state's output. The reason is that if align_handler() is
+> responsible for appending to the previous state's output, then all the
+> above string handling collapses to the one line:
+>
+>     strbuf_utf8_align(&state->prev->output, ..., state->output.buf);
+>
+> which is even simpler, and doesn't involve a temporary strbuf or
+> swapping of strbuf contents.
+>
+> On the other hand, it won't always be the case that all handlers can
+> get by with such simple code, and they might end up creating temporary
+> strbuf(s) and such anyhow, so I don't feel too strongly about it, and
+> it can always be changed at a later date (by someone) if that approach
+> ends up being better.
 
-what currently works:
- git submodule--helper foreach "echo \$toplevel-\$name-\$path-\$sha1"
-which I took for testing during development from t7407.
+I did try to tell the same on your previous suggestion, maybe I wasn't
+clear enough.
+But I see pros and cons for both, so with only one modifier atom at the moment,
+It's hard to fixate on one method. Maybe we could change it 'if needed' when we
+introduce new atoms eventually.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-This is still WIP, but comments are welcome.
-
- builtin/submodule--helper.c | 147 +++++++++++++++++++++++++++++++++++++++++++-
- git-submodule.sh            |   9 +++
- 2 files changed, 154 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index ae74b80..9823302 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -9,7 +9,9 @@
- #include "submodule-config.h"
- #include "string-list.h"
- #include "run-command.h"
--
-+#ifndef NO_PTHREADS
-+#include <semaphore.h>
-+#endif
- static const struct cache_entry **ce_entries;
- static int ce_alloc, ce_used;
- static const char *alternative_path;
-@@ -275,6 +277,144 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+struct submodule_args {
-+	const char *name;
-+	const char *path;
-+	const char *sha1;
-+	const char *toplevel;
-+	const char *prefix;
-+	const char **cmd;
-+	struct submodule_output *out;
-+	sem_t *mutex;
-+};
-+
-+int run_cmd_submodule(struct task_queue *aq, void *task)
-+{
-+	int i;
-+	struct submodule_args *args = task;
-+	struct strbuf out = STRBUF_INIT;
-+	struct strbuf sb = STRBUF_INIT;
-+	struct child_process *cp = xmalloc(sizeof(*cp));
-+	char buf[1024];
-+
-+	strbuf_addf(&out, N_("Entering %s\n"), relative_path(args->path, args->prefix, &sb));
-+
-+	child_process_init(cp);
-+	argv_array_pushv(&cp->args, args->cmd);
-+
-+	argv_array_pushf(&cp->env_array, "name=%s", args->name);
-+	argv_array_pushf(&cp->env_array, "path=%s", args->path);
-+	argv_array_pushf(&cp->env_array, "sha1=%s", args->sha1);
-+	argv_array_pushf(&cp->env_array, "toplevel=%s", args->toplevel);
-+
-+	for (i = 0; local_repo_env[i]; i++)
-+		argv_array_push(&cp->env_array, local_repo_env[i]);
-+
-+	cp->no_stdin = 1;
-+	cp->out = 0;
-+	cp->err = -1;
-+	cp->dir = args->path;
-+	cp->stdout_to_stderr = 1;
-+	cp->use_shell = 1;
-+
-+	if (start_command(cp)) {
-+		die("Could not start command");
-+		for (i = 0; cp->args.argv; i++)
-+			fprintf(stderr, "%s\n", cp->args.argv[i]);
-+	}
-+
-+	while (1) {
-+		ssize_t len = xread(cp->err, buf, sizeof(buf));
-+		if (len < 0)
-+			die("Read from child failed");
-+		else if (len == 0)
-+			break;
-+		else {
-+			strbuf_add(&out, buf, len);
-+		}
-+	}
-+	if (finish_command(cp))
-+		die("command died with error");
-+
-+	sem_wait(args->mutex);
-+	fputs(out.buf, stderr);
-+	sem_post(args->mutex);
-+
-+	return 0;
-+}
-+
-+int module_foreach_parallel(int argc, const char **argv, const char *prefix)
-+{
-+	int i, recursive = 0, number_threads = 1, quiet = 0;
-+	static struct pathspec pathspec;
-+	struct strbuf sb = STRBUF_INIT;
-+	struct task_queue *aq;
-+	char **cmd;
-+	const char **nullargv = {NULL};
-+	sem_t *mutex = xmalloc(sizeof(*mutex));
-+
-+	struct option module_update_options[] = {
-+		OPT_STRING(0, "prefix", &alternative_path,
-+			   N_("path"),
-+			   N_("alternative anchor for relative paths")),
-+		OPT_STRING(0, "cmd", &cmd,
-+			   N_("string"),
-+			   N_("command to run")),
-+		OPT_BOOL('r', "--recursive", &recursive,
-+			 N_("Recurse into nexted submodules")),
-+		OPT_INTEGER('j', "jobs", &number_threads,
-+			    N_("Recurse into nexted submodules")),
-+		OPT__QUIET(&quiet, N_("Suppress output")),
-+		OPT_END()
-+	};
-+
-+	static const char * const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper foreach [--prefix=<path>] [<path>...]"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, module_update_options,
-+			     git_submodule_helper_usage, 0);
-+
-+	if (module_list_compute(0, nullargv, NULL, &pathspec) < 0)
-+		return 1;
-+
-+	gitmodules_config();
-+
-+	aq = create_task_queue(number_threads);
-+
-+	for (i = 0; i < ce_used; i++) {
-+		const struct submodule *sub;
-+		const struct cache_entry *ce = ce_entries[i];
-+		struct submodule_args *args = malloc(sizeof(*args));
-+
-+		if (ce_stage(ce))
-+			args->sha1 = xstrdup(sha1_to_hex(null_sha1));
-+		else
-+			args->sha1 = xstrdup(sha1_to_hex(ce->sha1));
-+
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, "%s/.git", ce->name);
-+		if (!file_exists(sb.buf))
-+			continue;
-+
-+		args->path = ce->name;
-+		sub = submodule_from_path(null_sha1, args->path);
-+		if (!sub)
-+			die("No submodule mapping found in .gitmodules for path '%s'", args->path);
-+
-+		args->name = sub->name;
-+		args->toplevel = xstrdup(xgetcwd());
-+		args->cmd = argv;
-+		args->mutex = mutex;
-+		args->prefix = alternative_path;
-+		add_task(aq, run_cmd_submodule, args);
-+	}
-+
-+	finish_task_queue(aq);
-+	return 0;
-+}
-+
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- {
- 	if (argc < 2)
-@@ -289,6 +429,9 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- 	if (!strcmp(argv[1], "module_clone"))
- 		return module_clone(argc - 1, argv + 1, prefix);
- 
-+	if (!strcmp(argv[1], "foreach"))
-+		return module_foreach_parallel(argc - 1, argv + 1, prefix);
-+
- usage:
--	usage("git submodule--helper [module_list module_name module_clone]\n");
-+	usage("git submodule--helper [module_list module_name module_clone foreach]\n");
- }
-diff --git a/git-submodule.sh b/git-submodule.sh
-index fb5155e..fa18434 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -431,6 +431,15 @@ cmd_foreach()
- }
- 
- #
-+# Execute an arbitrary command sequence in each checked out
-+# submodule in parallel.
-+#
-+cmd_foreach_parallel()
-+{
-+	git submodule--helper module_foreach_parallel --prefix "$wt_prefix" $@
-+}
-+
-+#
- # Register submodules in .git/config
- #
- # $@ = requested paths (default to all)
 -- 
-2.5.0.264.g01b5c38.dirty
+Regards,
+Karthik Nayak
