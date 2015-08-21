@@ -1,159 +1,147 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [WIP/PATCH 3/3] submodule: helper to run foreach in parallel
-Date: Fri, 21 Aug 2015 13:21:32 -0700
-Message-ID: <CAGZ79kYxYawAtATAoTmgG42w7E+2fEPfHek5bpbMgZ32wya5Zw@mail.gmail.com>
-References: <1440121237-24576-1-git-send-email-sbeller@google.com>
-	<1440121237-24576-3-git-send-email-sbeller@google.com>
-	<xmqq7foo5tty.fsf@gitster.dls.corp.google.com>
+From: "Olga Nikolova" <announcement@wopu.org>
+Subject: Urgent,   Dear Invited Author,
+Date: Fri, 21 Aug 2015 16:45:06 +0300
+Message-ID: <20150821134506.50FEB394F1C6@genf174.server4you.net>
+Reply-To: "Olga Nikolova" <olga.nikolova@outlook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <jens.lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 22:21:42 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 21 22:23:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSsol-0003M7-QC
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 22:21:40 +0200
+	id 1ZSsqf-0004XL-2D
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 22:23:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818AbbHUUVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2015 16:21:35 -0400
-Received: from mail-yk0-f182.google.com ([209.85.160.182]:36497 "EHLO
-	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752570AbbHUUVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2015 16:21:33 -0400
-Received: by ykfw73 with SMTP id w73so81993915ykf.3
-        for <git@vger.kernel.org>; Fri, 21 Aug 2015 13:21:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DeUDuXPpPSIXzMVEymFjicQbsczE/rTAMppjbhvVrY0=;
-        b=B8COa5cnIMD0yCXFbgnDdvbVZTYbs8Am8mRLfO1DNMy/bG1L0e6RmY0AwVZjCXizS4
-         hcw47vj5Zg199g2bVrqXRS49ToOK5a3gwY6UY2fyPIjii3jUeYznBpS6BCXBpRP3A6lX
-         jCSZvK212Y5U86gJZwT1gC/XsW6nARjMGVb0YeqXwArtIE44nH9Wnvx3ZzBpd6S/2PbY
-         px5M7Gmc4VDesXn+mifHqh5QMfJqeU2UhNZw/8GSqq02neQTsTGS09T/q5yeb1jHUyZn
-         +5o5XbSQGf8bZouhHi+taJ6eLwRsn6PXghrFFB0izMhnhJoSkUHouq9vTrWsKXblbeQ3
-         eXmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=DeUDuXPpPSIXzMVEymFjicQbsczE/rTAMppjbhvVrY0=;
-        b=cuVKimHQsN0FMdxTZkUj263e4wG02Ia+Uifjg5zVyJAvQ0WSztvBF/v0dm9/hJoxRq
-         X79xXOqNuX1mHplvNwaKtT1EzKkb1wRDpmXXaH4O4kOYip437PkHhyeaav1mTTEfvCpE
-         qZwWny2VOiC3GpyieYijSNX459DmErK/yZm6wmA3IWAMTKiX2Uo8KOJzQwNTOcUW4ZPt
-         nIHUCVccTvfxSR6TF6GAMkqjvMqzAnoLMDCOsjlE+q3Huoa1rGq3dfXITGwxxpAnJC0D
-         4FOp5+Lp3LR0pJMF+z6+luv8N/DSY+TVis7ijo14pRZttFicYTE1XTeOKd7ANi8k2O/P
-         36rw==
-X-Gm-Message-State: ALoCoQkO9wqVSdqpLPyRQrhKnmNqQMOEV/sgON0rrbyjBC3CYL4nExpEWyWbFoZVZyC8V21WN7yM
-X-Received: by 10.13.218.131 with SMTP id c125mr14547561ywe.129.1440188492395;
- Fri, 21 Aug 2015 13:21:32 -0700 (PDT)
-Received: by 10.37.21.132 with HTTP; Fri, 21 Aug 2015 13:21:32 -0700 (PDT)
-In-Reply-To: <xmqq7foo5tty.fsf@gitster.dls.corp.google.com>
+	id S1752871AbbHUUXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2015 16:23:32 -0400
+Received: from genf174.server4you.net ([217.172.184.70]:46535 "EHLO
+	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752298AbbHUUXb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Aug 2015 16:23:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 57082394A8A1
+	for <git@vger.kernel.org>; Fri, 21 Aug 2015 19:18:08 +0200 (CEST)
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 70_t3Zv8XSKP for <git@vger.kernel.org>;
+	Fri, 21 Aug 2015 19:18:07 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 477C43947AD3
+	for <git@vger.kernel.org>; Fri, 21 Aug 2015 17:10:45 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at genf174.server4you.net
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id u9uUSkB71LV5 for <git@vger.kernel.org>;
+	Fri, 21 Aug 2015 17:10:45 +0200 (CEST)
+Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
+	by genf174.server4you.net (Postfix) with SMTP id 50FEB394F1C6
+	for <git@vger.kernel.org>; Fri, 21 Aug 2015 15:45:05 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276329>
 
-On Fri, Aug 21, 2015 at 12:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> +struct submodule_args {
->> +     const char *name;
->> +     const char *path;
->> +     const char *sha1;
->> +     const char *toplevel;
->> +     const char *prefix;
->> +     const char **cmd;
->> +     struct submodule_output *out;
->> +     sem_t *mutex;
->> +};
->
-> I do not see what submodule_output looks like in the patch, but I
-> guess you are capturing _all_ output from a task and emitting
-> everything at the end, after the task is done?
+Dear Invited Author,
 
-It was a leftover and will be removed. Sorry for wasting your time.
-So jrnieder and me had a discussion on how to do get the output right.
+You have 6 days until August 25 for your Invited Paper in the WSEAS Conferences in Seoul, South Korea. 
+We have just upgraded the role of Invited Speakers (see below). The extended version of the accepted papers will be published in our collaborating 44 ISI Journals.
 
-And we had 2 designs:
+If August 25 is too early for you to upload your invited paper in our conferences in Seoul, South Korea, you must know
+that we have also conferences in Michigan State University, East Lansing, MI, USA, September 20-22, 2015
+and we would like to invite you to come as Invited Speaker to present an Invited Paper. 
 
-1) The worker thread acquires a mutex to be allowed to write to
-  stdout. This makes early output easy for each thread in case of
-  error messages. It also requires less resources than 2).
-  Also the expected code complexity is lower as the decisions
-  are made locally.
+So, select one of our conferences in Seouls, Korea and/or Michigan State University, USA via http://www.wseas.org   
+and upload your invited paper until until August 25 for Seouls, Korea and September 8, 2015  for Michigan State University, East Lansing, MI
+(Maximum 10 pages. Format see the web page of the conference)
 
-2) Have a single handler which deals with all output of all tasks.
-  This handler would `select` on a huge number of pipes from
-  all the tasks, (so we would require a lot of pipes). And this central
-  handler (which would be submodule_output in this case) would
-  take care of having no intermingled racy output from tasks, with
-  prefixes and all bells and whistles. This handler could also
-  give a progress meter (300 out of 500 submodules updated already)
-  for all threads, or when the last task is running switch to piping
-  the output of that task to stdout in real time, so you'd get progress
-  of the last task as you're already used to.
+Michigan State University is co-sponsor and co-organizer and the events will be held inside the buildings of the University
 
-The outcome of the discussion was to split the worker pool/load
-distribution from the output handling in any case as there is no need
-to couple them. In my very first designs I had the output handling
-as part of the asynchronous worker pool.
+This is really a unique opportunity with publication in our ISI (indexed by Thomson Reuters) Journals
+You can publish your paper in one of our 44 ISI (indexed by Thomson Reuters) Journals 
+Upload your invited paper now by selecting the most appropriate conference via www.wseas.org
 
-This RFC implements 1), that's why there is only the mutex.
-I plan on enhancing this to let the last task output in real time (no buffering)
-as well as another counter "task n/m completed" after each task
-is done.
+Invited Authors can also have an Interview in our channel (See some recent interviews of our Invited and Plenary Speakers
+in the third column of our Web Portal under the "Bulletin Board").
 
->
-> I have to wonder if that is what people would expect and more
-> importantly if that is the most useful.  I am sympathetic to the
-> desire to avoid the output totally mixed up from different processes
-> emitting things in an uncoordinated manner, and "slurp everything
-> and then show everything in one go" is certainly _one_ way to do so,
-> but early feedback also counts.  Besides, because the order in which
-> tasks are dispatched and completed is unpredictable, you cannot
-> expect a machine parseable output _without_ assuming some help from
-> the command invoked by each task (e.g. by prefixing the task's output
-> with some string that identifies which submodule the output is about).
+You can follow us in Facebook: www.facebook.con/Wseas and you can see several photos and video from our recent conferences here: wseas.org
 
-I was very focused on the "submodule foreach" output, which (in case of
-no -q given), displays a
+The ISI Journals (with Impact Factor from Thomson Reuters) that publish the accepted papers from WSEAS Conferences are now 44.  
+Several ISI Journals sent us proposals for collaboration in November and December of 2014, 
+so the number of ISI Journals that publish the accepted papers of WSEAS conferences are now 44.
+Each journal will host approximately 10-15 papers from WSEAS Conferences.
 
-    "Entering %s"
+You can upload your Invited Paper if you fill-in in the field "Session": INVITED-BY-OLGA-NIKOLOVA-git@vger.kernel.org
+Do not send papers by email. 
 
-as the first line for each finished task. I suspect that is not enough to
-make it a good machine parseable output. So I will prefix each
-line with a running number of the task. Maybe like this:
+Invited Authors have
+==========================
+a) Invitation for Additional publication of the extended version
+in ISI Journals and Positive Recommendation from an Editor for publication in an ISI Journal. 
+You select the Journal where you can publish the extended version of your paper.
 
-  [001/500] Entering 'foo/bar'
-  [001/500] Here goes the text for task foo/bar
-  [001/500] Here goes another text for task foo/bar
-  [002/500] Entering 'foo/baz'
-  [002/500] Here goes the text for task foo/baz
-  [002/500] Here goes another text for task foo/bar
-  [003/500] Entering 'foo/bla'
-  ...
+b) Priority in the conference program
 
-This will make the output for each task distinguishable from
-other tasks as well offering some sort of progress meter.
-(The fewer submodules you have the less fine grained
-the progress bar becomes)
+c) Double time for presentation (not 15 minutes as the regular papers, but 30 minutes)
 
-Jonathan suggested to add a capability to the git protocol for a
-machine readable progress meter in another channel. so we do not
-need to parse the current output Counting/Compressing/Transfer/etc
+d) Invited Papers are noted explicitly in the conference program as Invited Papers
 
->
-> Once you assume that the command is _aware_ that it needs to help
-> the foreach-parallel infrastructure so that the user can sift their
-> collective outputs to make sense of them, wouldn't a line-buffered
-> intermixing also acceptable, and wouldn't it be a much lower impact
-> approach to solve the same problem?
+e) Invited Authors can be included in the Program Committee of our future conferences of 2015
+
+f) Invitation for Co-organizing a future WSEAS Event.
+
+g) 20 additional days to upload their invited papers
+
+
+All the authors have
+====================
+Publication in the Conference proceedings and distribution in the conference 10 Books + 1 CD-ROM (total of the 10 books)
+
+You must upload your Invited Paper only via the particular conference web site and you must declare in the 
+Field of Special Session this code:  INVITED-by-OLGA-NIKOLOVA-git@vger.kernel.org (in order to consider your paper as Invited paper). 
+Do not send papers by email.
+
+
+
+Remarks
+-------------
+1)  Invited Authors represent only a 3-5% of our authors,
+see for example the papers with Italics here:  http://www.wseas.org/main/conferences/2014/Salerno/Program.pdf )
+
+2) Invited Authors are selected very carefully according their recent publications and citations and
+they must fit to the topics of the conference.
+
+3) If you want, you can give also an Interview in our Web Channel during the days of the conference.
+Please, check:  http://wseas.org/cms.action?id=8322
+
+Do not hesitate to contact me for more questions
+
+
+Indexing
+=======
+ISI (Thomson Reuters), ELSEVIER, SCOPUS, ACM -  Association for Computing Machinery, Zentralblatt MATH, British Library, EBSCO, SWETS, EMBASE, CAS - American Chemical Society, CiteSeerx, Cabell Publishing, Electronic Journals, Library, SAO/NASA Astrophysics Data System
+EI Compendex, Engineering Village, CSA Cambridge Scientific Abstracts, DoPP, GEOBASE, Biobase, American Mathematical Society (AMS), Inspec - The IET, Ulrich's International Periodicals Directory
+
+The ISI Journals (with Impact Factor from Thomson Reuters) that publish the accepted papers from WSEAS Conferences are now 44.  Several ISI Journals sent us proposals for collaboration in November and December of 2014, so the number of ISI Journals that publish the accepted papers of WSEAS conferences are now 33.
+Each journal will host approximately 10-15 papers from WSEAS Conferences in Michigan State University, East Lansing, MI, September 20-22, 2015 
+
+Best Regards
+(more details:  publishing@wseas.org )
+
+Dr. Olga Nikolova
+WSEAS Editorial Office
+www.wseas.org
+publishing@wseas.org
+
+
+--------------------------------------
+If you do not want to participate any longer in our academic activities, 
+
+send an EMPTY email to publishing@wseas.org with SUBJECT:  << REMOVE git@vger.kernel.org >>
+
+The unsubscription procedure is automatic and it will be executed if and only if in your empty email
+the subject is exactly this : << REMOVE git@vger.kernel.org >> (with your email address, please)
