@@ -1,124 +1,119 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Minor bug with help.autocorrect.
-Date: Fri, 21 Aug 2015 15:13:38 -0700
-Message-ID: <xmqqmvxk47e5.fsf@gitster.dls.corp.google.com>
-References: <CA+cck7Ex4UO9BAzZ1kq5jw1vYqFb+mbzNQh-RvYAvK5v2T4G0g@mail.gmail.com>
-	<xmqqsi7c7hc4.fsf@gitster.dls.corp.google.com>
-	<20150821162347.GA4828@sigill.intra.peff.net>
+Subject: Re: Which branch(es) contain certain commits? (was Re: (unknown))
+Date: Fri, 21 Aug 2015 15:39:46 -0700
+Message-ID: <xmqqio88466l.fsf@gitster.dls.corp.google.com>
+References: <349031438778845@web22j.yandex.ru>
+	<CACsJy8Be-kY49CxAJTx2R2XG-c_WeuU=yLFT8-XSoaDkTScPGg@mail.gmail.com>
+	<xmqqh9nxerfv.fsf@gitster.dls.corp.google.com>
+	<5570041440192599@web21j.yandex.ru>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	=?utf-8?Q?Bj=C3=B8rnar?= Snoksrud <snoksrud@gmail.com>,
+Cc: Duy Nguyen <pclouds@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 22 00:13:51 2015
+To: Ivan Chernyavsky <camposer@yandex.ru>
+X-From: git-owner@vger.kernel.org Sat Aug 22 00:40:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSuZG-0004CE-NE
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 00:13:47 +0200
+	id 1ZSuye-0002Zc-Tm
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 00:40:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753421AbbHUWNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2015 18:13:42 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:33247 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753322AbbHUWNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2015 18:13:40 -0400
-Received: by pacgr6 with SMTP id gr6so2664665pac.0
-        for <git@vger.kernel.org>; Fri, 21 Aug 2015 15:13:40 -0700 (PDT)
+	id S1751436AbbHUWjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2015 18:39:49 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:34809 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751165AbbHUWjs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 18:39:48 -0400
+Received: by padfo6 with SMTP id fo6so15914781pad.1
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 15:39:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=93Eww9NBxSa748NEmxqDZxtCiQ9n7TAq9OrrC9QzvtQ=;
-        b=G7ZtPekPxITGReYx9g3ATT/jg+3HbfYt8NEdVeRSQTXtCoaxCiwu1bqyZxaW5fi6Pu
-         akVdpOBgv25vSZgQ1WBCsZOOchCbZARGd5tQw2r1cGbJKqVCq/7VDmP+CbgBGiI45moP
-         VZ8rFBfAEfkQXEJ4jHRotZCkdIom4mHgg6uZgM7fg0ld4cL/c0Q6/3ue7HTUtnr6ht0a
-         TN74GGq5y50rRVYXN3XnplcEUAYihc0Eg81CMcj+0Jo4XC7NZFjEVOfRoTuqKwkn/lFw
-         39+0/RtzWx6pYKGvkHcS3NwRAqr0NCj849L/K5i1LJpv1kouJyqN7ZLJNNX8kIzATKJ3
-         5i/A==
-X-Received: by 10.68.113.37 with SMTP id iv5mr21624326pbb.104.1440195219930;
-        Fri, 21 Aug 2015 15:13:39 -0700 (PDT)
+        bh=85mPwbR7TQlbRl/R7aN0odRHGTegz12/tZ10R+7yc4I=;
+        b=TUDTjWI3XiMrSgLmbLwLqZzh9GG4KyB7IEdhKRfacn5TbPLIS9VVcL3YVsfgDfFNXS
+         4pp1zgDyOVeL7OgJ7yjLuXLd2HLxp4oT2Znx0dfobYDShIVLbR/ZYbF9Ozhm7TwWhke5
+         /D07pp/4Ex2XYbH9fTLvikN6fSGS/CGCF7I8z9uooqRcMbOuWLjM4XSHNhn+ZElHOXKe
+         KQPaiRnoa7NiUVSsGQmDZH0BNXR0pfOfhF0T6PcOXsD8RlNWhECyFs8IuR+eeb7esM8M
+         dwjcuJhoLTn/dS3Qk934dGdXM7/SVPcVfL9i6hSUoXJywW6InwAyCJuNrJGUnPFsULDA
+         jXIA==
+X-Received: by 10.66.175.7 with SMTP id bw7mr21960495pac.155.1440196788181;
+        Fri, 21 Aug 2015 15:39:48 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:4c7d:6904:6af7:82e1])
-        by smtp.gmail.com with ESMTPSA id e6sm8933496pas.35.2015.08.21.15.13.39
+        by smtp.gmail.com with ESMTPSA id s17sm8981603pdl.2.2015.08.21.15.39.47
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 21 Aug 2015 15:13:39 -0700 (PDT)
-In-Reply-To: <20150821162347.GA4828@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 21 Aug 2015 12:23:48 -0400")
+        Fri, 21 Aug 2015 15:39:47 -0700 (PDT)
+In-Reply-To: <5570041440192599@web21j.yandex.ru> (Ivan Chernyavsky's message
+	of "Sat, 22 Aug 2015 00:29:59 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276339>
 
-Jeff King <peff@peff.net> writes:
+Ivan Chernyavsky <camposer@yandex.ru> writes:
 
-> I think the plan is:
+> But now I had a look on the source and I can see that builtin/branch.c
+> builds the list of references and prints them in a single place
+> (print_ref_list()) so I will have to split that function into two in
+> order to reuse existing functionality.
 >
->   1. squelch the warning message from the config code; even if we change
->      the config format to pager.*.command, we will have to support
->      pager.* for historical reasons.
+> Another problem is that builtin/branch.c currently does not use
+> setup_revisions(), so I'll have to hook it there as well.
 >
->   2. introduce pager.*.command so that "git foo_bar" can use
->      pager.foo_bar.command.
+> Then, I assume, I'll need to use the initial ref_list (filled the same
+> as for the current "list" case) to configure the rev_info structure
+> after setup_revisions(), and start revision traversal.
 >
-> We should do (1) in the near-term. We do not have to do (2) at all (and
-> people with funny command names are simply out of luck), but it would be
-> nice in the long run.
+> I'm not sure I've got it all right from the source in those few days,
+> so I apologize in advance if it's stupid in some part or as a whole.
 
-That sounds sensible.
+Heh, you say "problem" above, but I do not think it is a "problem"
+per-se.  If you want to teach branch some preprocessing based on the
+revision traversal API, you naturally need to call setup_revisions().
 
-> The patch from Tanay in $gmane/263888 accomplishes (1), but there was a
-> minor cleanup needed (checking the individual bit in "flags", rather
-> than the whole variable). Here it is with that fix:
+The outlined steps above all feel sensible; one thing you did not
+mention is that you may probably have to clear object flags after
+you are done with the initial "--grep" revision traversal, as some
+features of branch may want to use the object flags (e.g. --merged
+would use in_merge_bases()).  Other than that, all of it sounds
+easily implementable.
 
-Thanks; let's take a look.  I have a suspicion that it "accomplishes"
-a lot more than (1) and may be discarding useful errors.
+Note that "branch --list", "tag --list" and "for-each-ref" are being
+revamped to share more internal code.  If you want to pursue this,
+you probably would want to build on top of that effort once it is
+done.  That way, you may get "tag --grep=FIX123" for free.
 
-> diff --git a/config.c b/config.c
-> index 9fd275f..dd0cb52 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1314,7 +1314,7 @@ static struct config_set_element *configset_find_element(struct config_set *cs,
->  	 * `key` may come from the user, so normalize it before using it
->  	 * for querying entries from the hashmap.
->  	 */
-> -	ret = git_config_parse_key(key, &normalized_key, NULL);
-> +	ret = git_config_parse_key(key, &normalized_key, NULL, CONFIG_ERROR_QUIET);
+> That said, do you think the goal is worth such changes?
 
-Hmm, I am not sure if this is correct, or it is trying to do things
-at too low a level.
+That is a dangerous question.  As Duy already said,
 
-configset_add_value() calls configset_find_element().
+> Probably because nobody is interested and steps up to do it. The lack
+> of response to you mail is a sign.
 
-A NULL return from find_element() could be because parse_key()
-errored out due to bad name, or the key genuinely did not exist in
-the hashmap, and the caller cannot tell.  So add_value() can end up
-adding a new <key,value> pair under a bogus key, which is not a new
-problem, but what makes me cautious is that it happens silently with
-the updated code.
+apparently not many people thought it is worth; otherwise we would
+already have such a feature.
 
-In fact, git_configset_add_file() uses git_config_from_file() with
-configset_add_value() as its callback function, and the error that
-is squelched with this CONFIG_ERROR_QUIET would be the only thing
-that tells the user that the config file being read is malformed.
+If you are asking me personally, I'm sorry but I have to say no.
 
-Right now, "git config" does not seem to use the full configset API
-so nobody would notice, but still...
+The reason why I personally do not think your "branch --grep=FIX123"
+would be very useful to me is because I would imagine that I would
+be interested in learning the exact commit that mentions FIX123 as
+well as which branches contain it, if I had a need for such a
+feature.
 
-I wonder if alias_lookup() and check_pager_config(), two functions
-that *know* that the string they have, cmd, could be invalid and
-unusable key to give to the config API, should be doing an extra
-effort (e.g. call parse_key() with QUIET option and refrain from
-calling git_config_get_value()).  It feels that for existing callers
-of parse_key(), not passing QUIET would be the right thing to do.
+That is, it would inherently be two step process for me anyway, i.e.
 
-Of course, I am OK if git_config_get_value() and friends took the
-QUIET flag and and passed it all the way down to parse_key(); that
-would be a much more correct approach to address this issue (these
-two callers do not have to effectively call parse_key() twice that
-way), but at the same time, that would be a lot more involved
-change.
+ (1) I'd run "log -p --grep" to find which commits are about FIX123
+     and check that what they did indeed make sense; and
+
+ (2) I'd then run "branch --contains" to learn which ones are
+     already up to date with respect to the fix.
+
+Your "branch --grep=FIX123" that only tells me the names of branches
+would have no use in that workflow, as it would not even give me an
+indication that the request --grep=FIX123 found the right commit in
+the first place.
