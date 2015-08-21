@@ -1,136 +1,103 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PoC PATCH] completion: support 'git worktree'
-Date: Fri, 21 Aug 2015 22:50:56 +0200
-Message-ID: <1440190256-21794-1-git-send-email-szeder@ira.uka.de>
-References: <20150821224918.Horde.edB9u314lsP17FLUzwFsQA1@webmail.informatik.kit.edu>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH 2/3] run-commands: add an async queue processor
+Date: Fri, 21 Aug 2015 13:56:50 -0700
+Message-ID: <CAGZ79kaj0=2yw+KBLKQCkMzZpmcdFk93yDd7m+3x6Jn7gGap8w@mail.gmail.com>
+References: <1440121237-24576-1-git-send-email-sbeller@google.com>
+	<1440121237-24576-2-git-send-email-sbeller@google.com>
+	<xmqqegiw5uom.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kZrcPAAt+miHDGQp=052S-q=JaKvvLgKHaPG+G6cDjBtg@mail.gmail.com>
+	<xmqqy4h44bdp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 22:51:22 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Jens Lehmann <jens.lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 21 22:57:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZStHV-0004yd-4q
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 22:51:21 +0200
+	id 1ZStMu-00009e-N8
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 22:56:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753040AbbHUUvQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 16:51:16 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:48914 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752573AbbHUUvQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Aug 2015 16:51:16 -0400
-Received: from x4db19803.dyn.telefonica.de ([77.177.152.3] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
-	iface 141.3.10.81 id 1ZStHM-0006CT-4h; Fri, 21 Aug 2015 22:51:13 +0200
-X-Mailer: git-send-email 2.5.0.418.gdd37a9b
-In-Reply-To: <20150821224918.Horde.edB9u314lsP17FLUzwFsQA1@webmail.informatik.kit.edu>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1440190273.
+	id S1752704AbbHUU4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2015 16:56:52 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:34233 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752516AbbHUU4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 16:56:51 -0400
+Received: by ykdt205 with SMTP id t205so83200510ykd.1
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 13:56:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Cq9ZysYD2ji5WYvphVNfnAw3aokgwWhslLRHvadQ/ck=;
+        b=cUsn6p9tNz3SvY+E8KoC4eWcUvz2dSV2l57Xh7w2sCbrQpuDKFYiJpee0QYF6XE5u4
+         TZLnKCkYddlWSLmrer797QOlcWt2knQUpdIQDSvD6ax4eNfL8qAob7reLJax9x11AtTo
+         zxbHsBSrtJkbkZrwe/+dO5bdz8hmzgJLlclWwIAewV8twm88u0wmIErFw/GZXn0rLbCF
+         6dJEB1DImK9ojDNAF6kVPE13DG7vljymL2nKSuqNbm9PdWQD1IL+HEXmGQGew6eP+uFB
+         PYUctZCTdJWhw9/jdF+9cwc4DoE2YNt2V37PuY3kDeYmTxoubPT7iaA0uADMSgA0OKYx
+         snIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=Cq9ZysYD2ji5WYvphVNfnAw3aokgwWhslLRHvadQ/ck=;
+        b=bMaNcoWrd9xXxWuvzqLBEJPXSFZsoEpwrZ5rQmx/wsDRIR6eNY22DkYHRvz6Zk5hyt
+         Sv3JNGYgN/3rKPJjKBGAosBm2AcH2adVnJjvRGEb1VAFVjXlR6PXnfY48QDigCr2M+2d
+         jFkMhzCWJFuM6zRZFcYYOkg/wASXS12baEebr67agkT1BAElVlGHktYm+HTaJFyXF0Y3
+         7/9TpB+ij+QxpQL61kYlD2mKICudERA+AtviV9SSorwQwgb+mHi3kWMvJhlfLo3ONFB/
+         KeU/ItQtOIwNZ7FEBTmkgDqmeuxaY4HTWJEIZC8C13KkVfYDzU0hmg8ZoMhRSisRcl3r
+         mQ+A==
+X-Gm-Message-State: ALoCoQlTLfv5Z+pQrpV5mt82nOW+oi1KS/dhlANKXxJax/z68mIbLF6zZTzzyGaFV1yuGUXx7O1t
+X-Received: by 10.170.56.8 with SMTP id 8mr14625361yky.115.1440190610696; Fri,
+ 21 Aug 2015 13:56:50 -0700 (PDT)
+Received: by 10.37.21.132 with HTTP; Fri, 21 Aug 2015 13:56:50 -0700 (PDT)
+In-Reply-To: <xmqqy4h44bdp.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276334>
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
+On Fri, Aug 21, 2015 at 1:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> I do not think we are on the same wavelength.  What I meant was to
+> do this:
+>
+>         aq = xmalloc(...);
+>         set up _everything_ in aq and make it a consistent state;
+>         /* aq->first and aq->last are part of _everything_ in aq */
+>         for (many times)
+>                 pthread_create(...);
+>
+>         /* No aq->first = aq->last = NULL assignment here */
+>
+> instead of
+>
+>         aq = xmalloc(...);
+>         set up part of aq;
+>         for (many times)
+>                 pthread_create(...);
+>         belatedly initialize aq->first and aq->last and finally
+>         aq becomes a consistent state.
+>
+> which is what we see above.  The latter works _only_ because the
+> threads created are blocked waiting on aq->workingcount which is
+> initialized to block before threads are created to run dispatch,
+> and one of the early things dispatch does is to try acquiring that
+> semaphore to block before accessing aq->first and aq->last.
 
-> I wrote a completion function for 'git worktree' as well, turns out a=
- week
-> or two before you posted this, but I never submitted it as it was way=
- too
-> convoluted.  Anyway, will send it in reply to this, just for referenc=
-e.
+I see your point and it makes sense to me as it makes the
+mental memory model cleaner
 
-And here it is.
-=46rom the number of indentation levels and comment lines you can see w=
-hy
-I haven't submitted this patch yet :)
-
-OTOH it offers refs for -b and -B, and there are only fairly narrow
-corner cases when 'git --options' can fool it (but that's a general
-issue with __git_find_on_cmdline(), I wouldn't go into that).
-
- contrib/completion/git-completion.bash | 59 ++++++++++++++++++++++++++=
-++++++++
- 1 file changed, 59 insertions(+)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index c97c648d7e..20a17e2c50 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2564,6 +2564,65 @@ _git_whatchanged ()
- 	_git_log
- }
-=20
-+_git_worktree ()
-+{
-+	local subcommand subcommand_idx sc c=3D1
-+	local subcommands=3D"add prune"
-+
-+	while [ $c -lt $cword ] && [ -z "$subcommand" ]; do
-+		for sc in $subcommands; do
-+			if [ "$sc" =3D "${words[c]}" ]; then
-+				subcommand=3D$sc
-+				subcommand_idx=3D$c
-+				break
-+			fi
-+		done
-+		((c++))
-+	done
-+
-+	case "$subcommand,$cur" in
-+	,*)
-+		__gitcomp "$subcommands"
-+		;;
-+	add,--*)
-+		__gitcomp "--detach"
-+		;;
-+	add,*)
-+		case "$prev" in
-+		-b|-B)
-+			__gitcomp_nl "$(__git_refs)"
-+			;;
-+		-*)	# $prev is an option without argument: have to complete
-+			# the path for the new worktree, fall back to bash
-+			# filename completion
-+			;;
-+		*)	# $prev is not an option, so it must be either the
-+			# 'add' subcommand, an argument of an option (e.g.
-+			# branch for -b|-B), or the path for the new worktree
-+			if [ $cword -eq $((subcommand_idx+1)) ]; then
-+				# right after the 'add' subcommand, have to
-+				# complete the path
-+				:
-+			else
-+				case "${words[cword-2]}" in
-+				-b|-B)	# after '-b <branch>', have to complete
-+					# the path
-+					;;
-+				*)	# after the path, have to complete the
-+					# branch to be checked out
-+					__gitcomp_nl "$(__git_refs)"
-+					;;
-+				esac
-+			fi
-+			;;
-+		esac
-+		;;
-+	prune,--*)
-+		__gitcomp "--dry-run --verbose --expire"
-+		;;
-+	esac
-+}
-+
- __git_main ()
- {
- 	local i c=3D1 command __git_dir
---=20
-2.5.0.418.gdd37a9b
+I viewed the methods as atomic units (you would not call add_task
+before the constructor has finished, so no harm there. And a dispatcher
+in the pthread would just block on the `workingcount` semaphore as the
+semaphores are the main inter thread communication. I viewed the queue
+as just a secondary thing to distribute the work load.
