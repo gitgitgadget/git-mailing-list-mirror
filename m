@@ -1,85 +1,80 @@
-From: Anders Kaseorg <andersk@mit.edu>
-Subject: Re: [BUG/PATCH] t9350-fast-export: Add failing test for
- symlink-to-directory
-Date: Fri, 21 Aug 2015 12:47:30 -0400 (EDT)
-Message-ID: <alpine.DEB.2.10.1508211238570.31851@buzzword-bingo.mit.edu>
-References: <alpine.DEB.2.10.1508191532330.31851@buzzword-bingo.mit.edu> <20150821145827.GA565@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/config: fix inconsistent label
+Date: Fri, 21 Aug 2015 10:11:24 -0700
+Message-ID: <xmqq7foo7eir.fsf@gitster.dls.corp.google.com>
+References: <87lhd4wuj9.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 21 18:52:47 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Fri Aug 21 19:11:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSpYZ-0005Lc-Qq
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 18:52:44 +0200
+	id 1ZSpql-000091-De
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Aug 2015 19:11:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752151AbbHUQwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2015 12:52:39 -0400
-Received: from dmz-mailsec-scanner-8.mit.edu ([18.7.68.37]:56492 "EHLO
-	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751699AbbHUQwj (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Aug 2015 12:52:39 -0400
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Aug 2015 12:52:39 EDT
-X-AuditID: 12074425-f799a6d000007db3-45-55d756244d4a
-Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
-	(using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by dmz-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 16.61.32179.42657D55; Fri, 21 Aug 2015 12:47:33 -0400 (EDT)
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id t7LGlWOw017059;
-	Fri, 21 Aug 2015 12:47:32 -0400
-Received: from localhost (buzzword-bingo.mit.edu [18.9.64.24])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id t7LGlUPg026331
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 21 Aug 2015 12:47:31 -0400
-In-Reply-To: <20150821145827.GA565@sigill.intra.peff.net>
-User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrMIsWRmVeSWpSXmKPExsUixG6noqsadj3U4HS4RdeVbiaLht4rzBY/
-	WnqYHZg9nvXuYfS4eEnZ4/MmuQDmKC6blNSczLLUIn27BK6MX4/ushR8Z6t4c2ouYwNjL2sX
-	IyeHhICJxN3Xs9ghbDGJC/fWs3UxcnEICSxmkvi+di07hLORUeLDym4oZzeTxMGZG8BaWAS0
-	JaY/vM4CYrMJqEl8OPoVbKyIgKzE98MbGUFsZgEtiT8f3jGD2MIC4RLHl95nA7E5BSwlnh78
-	ygRi8wp4SCy/vwxoJgfQglKJ5rUeIGFRAV2JQ//+sEGUCEqcnPmEBWbk8unbWCYwCsxCkpqF
-	JLWAkWkVo2xKbpVubmJmTnFqsm5xcmJeXmqRroVebmaJXmpK6SZGcHi6qO5gnHBI6RCjAAej
-	Eg/vjMhroUKsiWXFlbmHGCU5mJREeZ/4XA8V4kvKT6nMSCzOiC8qzUktPsQowcGsJML72RIo
-	x5uSWFmVWpQPk5LmYFES5930gy9ESCA9sSQ1OzW1ILUIJivDwaEkwXs1BKhRsCg1PbUiLTOn
-	BCHNxMEJMpwHaPgHkBre4oLE3OLMdIj8KUZdjgU/bq9lEmLJy89LlRLn3QdSJABSlFGaBzcH
-	llZeMYoDvSXMaxcKVMUDTElwk14BLWECWhJZfhVkSUkiQkqqgbHw5Nn9N45Y93/pE14h0nz/
-	2OzCewkzOTTb8la+7gngeb73W+Szvs2eqVfKayfNVJQ4MZOJTSrszffzGVV3l13d78qo+/Hb
-	7RdtW5KZz0VM/+RcIWL8PjrA8s/GmSYTZe+8FXG7ePnwwdnlv5fNOfrFuGDH340i 
+	id S1751604AbbHURL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2015 13:11:27 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:36225 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751302AbbHURL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 13:11:26 -0400
+Received: by pawq9 with SMTP id q9so56628660paw.3
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 10:11:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=OzpPif3LD7KGL01OrxUR6ZK1e6x+S3EVJe/Aks8jntg=;
+        b=wCJmWoZ/G4+6HNGU1gPDO7oDl1CeYMKaWQ7eV5nVXrxy/CLLeqgXRoETzFUzHGiB1I
+         7RznLI0KjwA8EcebKi5xVIQqz4CIZgkdaI5NXMRNow1neD7M1+MZyiPxqSXGReX99sTG
+         7VNZJMKDL3cy1xbvfwc8NQq2gLBNBuYGcST8jcvMuF4XPnSf4OZ9gdmWGcnRBIYYAFaE
+         RLo/JdEhzykUZZ20GBVbeTCiYiu0GiulsLkTPAekkrRVBEz7gTYO/HtVBxu9rNaRFVmF
+         FX+tuvRDXlu9TSWH6HksRuTPdF7XrLZmREloxRnURqjz9O6tT6WOcl8cca6pUwuI9eC9
+         Z0sg==
+X-Received: by 10.66.249.101 with SMTP id yt5mr19125081pac.116.1440177085764;
+        Fri, 21 Aug 2015 10:11:25 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:4c7d:6904:6af7:82e1])
+        by smtp.gmail.com with ESMTPSA id w17sm8441322pbt.17.2015.08.21.10.11.24
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 21 Aug 2015 10:11:24 -0700 (PDT)
+In-Reply-To: <87lhd4wuj9.fsf@igel.home> (Andreas Schwab's message of "Fri, 21
+	Aug 2015 17:06:18 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276313>
 
-On Fri, 21 Aug 2015, Jeff King wrote:
->   - we may still have the opposite problem with renames. That is, a
->     rename is _also_ a deletion, but will go to the end. So I would
->     expect renaming the symlink "foo" to "bar" and then adding
->     "foo/world" would end up with:
-> 
->        M 100644 :3 foo/world
->        R foo bar
-> 
->     (because we push renames to the end in our sort). And indeed,
->     importing that does seem to get it wrong (we end up with "bar/world"
->     and no symlink).
-> 
-> We can't fix the ordering in the second case without breaking the first
-> case. So I'm not sure it's fixable on the fast-export end.
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-Hmm, renames have a more fundamental ordering problem: swapping two 
-(normal) files and using fast-export -C -B results in
+> Change <ref> to <pattern> in the description of
+> gc.*.reflogExpireUnreachable, since that is what the text refers to.
+>
+> Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+> ---
 
-  R foo bar
-  R bar foo
+Makes sense.  Thanks.
 
-which cannot be reimported correctly without fast-import fixes.
-
-Anders
+>  Documentation/config.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 75ec02e..b4f7c46 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1329,7 +1329,7 @@ gc.<pattern>.reflogExpire::
+>  	the refs that match the <pattern>.
+>  
+>  gc.reflogExpireUnreachable::
+> -gc.<ref>.reflogExpireUnreachable::
+> +gc.<pattern>.reflogExpireUnreachable::
+>  	'git reflog expire' removes reflog entries older than
+>  	this time and are not reachable from the current tip;
+>  	defaults to 30 days. The value "now" expires all entries
+> -- 
+> 2.5.0
