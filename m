@@ -1,63 +1,85 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] Fix `git rev-list --show-notes HEAD` when there are no notes
-Date: Sat, 22 Aug 2015 18:30:41 +0200
-Message-ID: <CALKQrgcvRvs8wLy-O2eZZg9iMG2T7coFMoFwmDu3nmAXHhdW1w@mail.gmail.com>
-References: <0LZlZ2-1Z1Zyn1mzk-00lZ3Z@mail.gmx.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 7/8] branch.c: use 'ref-filter' APIs
+Date: Sat, 22 Aug 2015 23:20:32 +0530
+Message-ID: <CAOLa=ZSwU94-JgAdw-xoL5mDNVL8nsbuBCD-MhN3H+m1gFD9gQ@mail.gmail.com>
+References: <1440226309-25415-1-git-send-email-Karthik.188@gmail.com>
+ <1440226309-25415-8-git-send-email-Karthik.188@gmail.com> <CAP8UFD3rXJqB1DEz5LfdM8xxanzoJp6J=weED+FygeZmufG4Sw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Aug 22 18:31:05 2015
+Cc: git <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 22 19:51:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTBhB-0004Wa-Cb
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 18:31:05 +0200
+	id 1ZTCwf-000738-Ai
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 19:51:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753144AbbHVQau (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2015 12:30:50 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:64436 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752596AbbHVQau (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2015 12:30:50 -0400
-Received: from mail-yk0-f173.google.com ([209.85.160.173])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1ZTBgt-000JfK-TU
-	for git@vger.kernel.org; Sat, 22 Aug 2015 18:30:48 +0200
-Received: by ykll84 with SMTP id l84so98433736ykl.0
-        for <git@vger.kernel.org>; Sat, 22 Aug 2015 09:30:42 -0700 (PDT)
-X-Received: by 10.13.232.142 with SMTP id r136mr20262384ywe.38.1440261042031;
- Sat, 22 Aug 2015 09:30:42 -0700 (PDT)
-Received: by 10.37.201.134 with HTTP; Sat, 22 Aug 2015 09:30:41 -0700 (PDT)
-In-Reply-To: <0LZlZ2-1Z1Zyn1mzk-00lZ3Z@mail.gmx.com>
+	id S1753265AbbHVRvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2015 13:51:04 -0400
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:36437 "EHLO
+	mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753097AbbHVRvD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Aug 2015 13:51:03 -0400
+Received: by oiev193 with SMTP id v193so58424605oie.3
+        for <git@vger.kernel.org>; Sat, 22 Aug 2015 10:51:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Iz8ioPXbTYP+7CjBT71N9KTTkpG5Fe1hEtTc2jcPH1s=;
+        b=GDR80ip/Rf+o+O39MbNzExzr3Q6/EALiVgkSN/e7TANUqQt+zQ3BQeVrSoe7EdnqpM
+         feUE05tDcOASdbeM9PPuGDmPDIsMdzNLlUz54y8JqK4EdM/PNZI6IX/8nXaa0K6uTpac
+         biP9dWrzeRnzyC64jd87cymQSL1GX3CQk2uA6wK+IhKJQKTGz1bdDMiakIVoTP71Xwtr
+         rUQiVwvsvN/iQ11Tcl3ac3C68TG5DA1gU4wpfHnOa77WC4aFgZC6sXQo66k2uJAWPC79
+         xn4gSKGvl2DLq7CCFZwoim/Yo19AZWjEJBzPCjpHMFiRtMQIN1RZfnDY1lMYDWyDEgxF
+         ajrQ==
+X-Received: by 10.202.92.65 with SMTP id q62mr13084838oib.11.1440265861621;
+ Sat, 22 Aug 2015 10:51:01 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Sat, 22 Aug 2015 10:50:32 -0700 (PDT)
+In-Reply-To: <CAP8UFD3rXJqB1DEz5LfdM8xxanzoJp6J=weED+FygeZmufG4Sw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276392>
 
-On Sat, Aug 22, 2015 at 5:14 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> The `format_display_notes()` function clearly assumes that the data
-> structure holding the notes has been initialized already, i.e. that the
-> `display_notes_trees` variable is no longer `NULL`.
+On Sat, Aug 22, 2015 at 9:21 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Sat, Aug 22, 2015 at 8:51 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>
+>> The test t1430 'git branch shows badly named ref' has been changed to
+>> check the stderr for the warning regarding the broken ref. This is
+>> done as ref-filter throws a warning for broken refs rather than
+>> directly printing them.
 >
-> However, when there are no notes whatsoever, this variable is still
-> `NULL`, even after initialization.
+> [...]
 >
-> So let's be graceful and just return if that data structure is `NULL`.
+>> diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
+>> index 16d0b8b..db3627e 100755
+>> --- a/t/t1430-bad-ref-name.sh
+>> +++ b/t/t1430-bad-ref-name.sh
+>> @@ -41,7 +41,7 @@ test_expect_success 'fast-import: fail on invalid branch name "bad[branch]name"'
+>>  test_expect_success 'git branch shows badly named ref' '
+>>         cp .git/refs/heads/master .git/refs/heads/broken...ref &&
+>>         test_when_finished "rm -f .git/refs/heads/broken...ref" &&
+>> -       git branch >output &&
+>> +       git branch 2>output &&
+>>         grep -e "broken\.\.\.ref" output
+>>  '
 >
-> Reported in https://github.com/msysgit/git/issues/363.
+> Maybe the test could be renamed to 'git branch warns about badly named
+> ref' and maybe you could also check that "broken\.\.\.ref" is not
+> printed on stdout.
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Acked-by: Johan Herland <johan@herland.net>
+The name change sounds reasonable, do we really need to check for it in the
+stdout?
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Regards,
+Karthik Nayak
