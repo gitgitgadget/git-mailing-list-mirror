@@ -1,229 +1,161 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 8/8] Resurrect "diff-lib.c: adjust position of i-t-a entries in diff"
-Date: Sat, 22 Aug 2015 08:14:38 +0700
-Message-ID: <1440206078-20559-1-git-send-email-pclouds@gmail.com>
-References: <1440205700-19749-1-git-send-email-pclouds>
+Subject: [PATCH v3] gc: save log from daemonized gc --auto and print it next time
+Date: Sat, 22 Aug 2015 09:12:26 +0700
+Message-ID: <1440209546-23442-1-git-send-email-pclouds@gmail.com>
+References: <CACsJy8AKbXqsuNJL7Usb-haiynDcCDQXk56WYh5PxzGU3NvaAw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, phiggins@google.com,
-	snoksrud@gmail.com,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 22 03:14:50 2015
+X-From: git-owner@vger.kernel.org Sat Aug 22 04:13:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSxOS-0008FD-9c
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 03:14:48 +0200
+	id 1ZSyJG-0002Pf-8n
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 04:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752721AbbHVBOo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 21:14:44 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:36413 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752549AbbHVBOn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2015 21:14:43 -0400
-Received: by pdbmi9 with SMTP id mi9so31966859pdb.3
-        for <git@vger.kernel.org>; Fri, 21 Aug 2015 18:14:43 -0700 (PDT)
+	id S1752285AbbHVCNI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 22:13:08 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:36167 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752136AbbHVCNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 22:13:06 -0400
+Received: by pdbmi9 with SMTP id mi9so32316557pdb.3
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 19:13:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=VCJKsrQQziXFNarsz5fT4VODy627L4vRlU3bJukyUK4=;
-        b=k6+4yHXbHJh/Oxl5d2RHZHXSgZwPCFLAkhx6DiAlSwre67+oOC2AL1m3bACFdDCUl9
-         w9/K13SYD/t0vyqPjzRLsDOE3ELTeviRDceSQaGZzaYPFm0sHBB496wSLeE1bNaNbY+N
-         r4/+5OQUdJoVLSyNdUlDAMbQLs5R7C3CzUBPVDOibiayISiviY7GMfYpXgpO+FnoQDXj
-         6dSCC6X3mIE3+GKmYRJp3fPLHI6sEPd/ucVNNUnQJPMCquA0ZGLdfIqcfhp8nX7CVSox
-         zbZ0y0F6n5ILPhpayw1DhPnN4Jv5n5EIwlSujnybirNkCEWL3LvTE/ineZu7Jq8YyXo8
-         0iSw==
-X-Received: by 10.70.132.228 with SMTP id ox4mr22924422pdb.0.1440206083261;
-        Fri, 21 Aug 2015 18:14:43 -0700 (PDT)
+        bh=DH9bvRM1pkb6ZeUufzYsC2rTU8+PMRhTaEMK8HWfD7w=;
+        b=nJZzotxe8KpCsfEYOIFwwtcbaoGKpLo57msOWvmHJBbsUVSqHSYlalWIt4sBuY23m0
+         bBqvdShNR3aT/5thtPXhQFJ5vAwknX63B1d37pCwAJecLuLNDZj+bqrTAudE3embGOxZ
+         1cXIGmmM2FBBBpkZoDV8Y7lMj/DS+23dmqGRqtjEDUg3k2sn/F66vp3hv5u3/NXc8xZO
+         oSv+Le2QPyZSoZaSVLjC9ilD+hutqKYFn7/PiWL3r8KnfxIKH6EjeAL2i/ZNV6KUl9Op
+         6mED/mu5My0yB7nec+9X/D60kWlUjEmA2DyanWjQymlA06AwFXsJs0cnGyEk+qDIfEqJ
+         QJXw==
+X-Received: by 10.70.50.165 with SMTP id d5mr23524378pdo.23.1440209585396;
+        Fri, 21 Aug 2015 19:13:05 -0700 (PDT)
 Received: from lanh ([171.232.84.126])
-        by smtp.gmail.com with ESMTPSA id v9sm9139590pdn.69.2015.08.21.18.14.40
+        by smtp.gmail.com with ESMTPSA id d4sm9215063pdc.93.2015.08.21.19.13.02
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Aug 2015 18:14:42 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 22 Aug 2015 08:14:40 +0700
+        Fri, 21 Aug 2015 19:13:04 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 22 Aug 2015 09:13:01 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <1440205700-19749-1-git-send-email-pclouds>
+In-Reply-To: <CACsJy8AKbXqsuNJL7Usb-haiynDcCDQXk56WYh5PxzGU3NvaAw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276362>
 
-The original commit d95d728aba06a34394d15466045cbdabdada58a2 was
-reverted in commit 78cc1a540ba127b13f2f3fd531777b57f3a9cd46 because we
-were (and still are) not ready for a new world order. A lot more
-investigation must be done to see what is impacted. See the 78cc1a5 for
-details.
+While commit 9f673f9 (gc: config option for running --auto in
+background - 2014-02-08) helps reduce some complaints about 'gc
+--auto' hogging the terminal, it creates another set of problems.
 
-This patch takes a smaller and safer step. The new behavior is
-controlled by SHIFT_INTENT_TO_ADD flag. We can gradually move more diff
-users to the new behavior after we are sure it's safe to do so. This
-flag is exposed to outside as "--shift-ita".
+The latest in this set is, as the result of daemonizing, stderr is
+closed and all warnings are lost. This warning at the end of cmd_gc()
+is particularly important because it tells the user how to avoid "gc
+--auto" running repeatedly. Because stderr is closed, the user does
+not know, naturally they complain about 'gc --auto' wasting CPU.
 
-"git status" sets this flag unconditionally to display i-t-a entries
-correctly. See d95d728 for details about "git status" and i-t-a entries=
-=2E
+Daemonized gc now saves stderr to $GIT_DIR/gc.log. Following gc runs
+will not be daemonized and gc.log printed out until the user removes
+gc.log.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/diff-options.txt |  6 ++++++
- diff-lib.c                     | 14 ++++++++++++++
- diff.c                         |  2 ++
- diff.h                         |  1 +
- t/t2203-add-intent.sh          | 20 ++++++++++++++++++--
- wt-status.c                    |  2 ++
- 6 files changed, 43 insertions(+), 2 deletions(-)
+ Let's try again. Compared to v2 [1], this version does not delete
+ gc.log automatically any more. The user needs to take action, then
+ delete gc.log to bring it background again.
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
-s.txt
-index d56ca90..b69db29 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -556,5 +556,11 @@ endif::git-format-patch[]
- --no-prefix::
- 	Do not show any source or destination prefix.
+ [1] http://thread.gmane.org/gmane.comp.version-control.git/266182/focu=
+s=3D266320
+
+ builtin/gc.c | 36 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index bcc75d9..00a83e1 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -43,9 +43,20 @@ static struct argv_array prune_worktrees =3D ARGV_AR=
+RAY_INIT;
+ static struct argv_array rerere =3D ARGV_ARRAY_INIT;
 =20
-+--shift-ita::
-+	By default entries added by "git add -N" appear as an existing
-+	empty file in "git diff" and a new file in "git diff --cached".
-+	This option makes the entry appear as a new file in "git diff"
-+	and non-existent in "git diff --cached".
+ static char *pidfile;
++static struct strbuf log_filename =3D STRBUF_INIT;
++static int daemonized;
+=20
+ static void remove_pidfile(void)
+ {
++	if (daemonized && log_filename.len) {
++		struct stat st;
 +
- For more detailed explanation on these common options, see also
- linkgit:gitdiffcore[7].
-diff --git a/diff-lib.c b/diff-lib.c
-index ae09034..2546f5a 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -212,6 +212,12 @@ int run_diff_files(struct rev_info *revs, unsigned=
- int option)
- 					       ce->sha1, !is_null_sha1(ce->sha1),
- 					       ce->name, 0);
- 				continue;
-+			} else if (DIFF_OPT_TST(&revs->diffopt, SHIFT_INTENT_TO_ADD) &&
-+				   ce_intent_to_add(ce)) {
-+				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
-+					       EMPTY_BLOB_SHA1_BIN, 0,
-+					       ce->name, 0);
-+				continue;
- 			}
++		close(2);
++		if (stat(log_filename.buf, &st) ||
++		    !st.st_size ||
++		    rename(log_filename.buf, git_path("gc.log")))
++			unlink(log_filename.buf);
++	}
+ 	if (pidfile)
+ 		unlink(pidfile);
+ }
+@@ -330,13 +341,24 @@ int cmd_gc(int argc, const char **argv, const cha=
+r *prefix)
+ 			fprintf(stderr, _("See \"git help gc\" for manual housekeeping.\n")=
+);
+ 		}
+ 		if (detach_auto) {
++			struct strbuf sb =3D STRBUF_INIT;
++			if (strbuf_read_file(&sb, git_path("gc.log"), 0) > 0) {
++				warning(_("last gc run reported:\n"
++					  "%s\n"
++					  "running in foreground until %s is removed"),
++					sb.buf, git_path("gc.log"));
++				detach_auto =3D 0;
++			}
++			strbuf_release(&sb);
++		}
++		if (detach_auto) {
+ 			if (gc_before_repack())
+ 				return -1;
+ 			/*
+ 			 * failure to daemonize is ok, we'll continue
+ 			 * in foreground
+ 			 */
+-			daemonize();
++			daemonized =3D !daemonize();
+ 		}
+ 	} else
+ 		add_repack_all_option();
+@@ -349,6 +371,18 @@ int cmd_gc(int argc, const char **argv, const char=
+ *prefix)
+ 		    name, (uintmax_t)pid);
+ 	}
 =20
- 			changed =3D match_stat_with_submodule(&revs->diffopt, ce, &st,
-@@ -376,6 +382,14 @@ static void do_oneway_diff(struct unpack_trees_opt=
-ions *o,
- 	struct rev_info *revs =3D o->unpack_data;
- 	int match_missing, cached;
-=20
-+	/* i-t-a entries do not actually exist in the index */
-+	if (DIFF_OPT_TST(&revs->diffopt, SHIFT_INTENT_TO_ADD) &&
-+	    idx && ce_intent_to_add(idx)) {
-+		idx =3D NULL;
-+		if (!tree)
-+			return;	/* nothing to diff.. */
++	if (daemonized) {
++		int fd;
++
++		strbuf_addstr(&log_filename, git_path("gc.log_XXXXXX"));
++		fd =3D xmkstemp(log_filename.buf);
++		if (fd >=3D 0) {
++			dup2(fd, 2);
++			close(fd);
++		} else
++			strbuf_release(&log_filename);
 +	}
 +
- 	/* if the entry is not checked out, don't examine work tree */
- 	cached =3D o->index_only ||
- 		(idx && ((idx->ce_flags & CE_VALID) || ce_skip_worktree(idx)));
-diff --git a/diff.c b/diff.c
-index 2485870..e554cad 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3890,6 +3890,8 @@ int diff_opt_parse(struct diff_options *options, =
-const char **av, int ac)
- 		return parse_submodule_opt(options, arg);
- 	else if (skip_prefix(arg, "--ws-error-highlight=3D", &arg))
- 		return parse_ws_error_highlight(options, arg);
-+	else if (!strcmp(arg, "--shift-ita"))
-+		DIFF_OPT_SET(options, SHIFT_INTENT_TO_ADD);
+ 	if (gc_before_repack())
+ 		return -1;
 =20
- 	/* misc options */
- 	else if (!strcmp(arg, "-z"))
-diff --git a/diff.h b/diff.h
-index 4241aa5..68a4400 100644
---- a/diff.h
-+++ b/diff.h
-@@ -92,6 +92,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct dif=
-f_options *opt, void *data)
- #define DIFF_OPT_FUNCCONTEXT         (1 << 29)
- #define DIFF_OPT_PICKAXE_IGNORE_CASE (1 << 30)
- #define DIFF_OPT_DEFAULT_FOLLOW_RENAMES (1 << 31)
-+#define DIFF_OPT_SHIFT_INTENT_TO_ADD (1ULL << 32)
-=20
- #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
- #define DIFF_OPT_TOUCHED(opts, flag)    ((opts)->touched_flags & DIFF_=
-OPT_##flag)
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index d0f36a4..7c90eee 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -5,10 +5,24 @@ test_description=3D'Intent to add'
- . ./test-lib.sh
-=20
- test_expect_success 'intent to add' '
-+	test_commit 1 &&
-+	git rm 1.t &&
-+	echo hello >1.t &&
- 	echo hello >file &&
- 	echo hello >elif &&
- 	git add -N file &&
--	git add elif
-+	git add elif &&
-+	git add -N 1.t
-+'
-+
-+test_expect_success 'git status' '
-+	git status --porcelain | grep -v actual >actual &&
-+	cat >expect <<-\EOF &&
-+	DA 1.t
-+	A  elif
-+	 A file
-+	EOF
-+	test_cmp expect actual
- '
-=20
- test_expect_success 'check result of "add -N"' '
-@@ -43,7 +57,9 @@ test_expect_success 'i-t-a entry is simply ignored' '
- 	git add -N nitfol &&
- 	git commit -m second &&
- 	test $(git ls-tree HEAD -- nitfol | wc -l) =3D 0 &&
--	test $(git diff --name-only HEAD -- nitfol | wc -l) =3D 1
-+	test $(git diff --name-only HEAD -- nitfol | wc -l) =3D 1 &&
-+	test $(git diff --name-only --shift-ita HEAD -- nitfol | wc -l) =3D 0=
- &&
-+	test $(git diff --name-only --shift-ita -- nitfol | wc -l) =3D 1
- '
-=20
- test_expect_success 'can commit with an unrelated i-t-a entry in index=
-' '
-diff --git a/wt-status.c b/wt-status.c
-index 717fd48..534d4ad 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -497,6 +497,7 @@ static void wt_status_collect_changes_worktree(stru=
-ct wt_status *s)
- 	setup_revisions(0, NULL, &rev, NULL);
- 	rev.diffopt.output_format |=3D DIFF_FORMAT_CALLBACK;
- 	DIFF_OPT_SET(&rev.diffopt, DIRTY_SUBMODULES);
-+	DIFF_OPT_SET(&rev.diffopt, SHIFT_INTENT_TO_ADD);
- 	if (!s->show_untracked_files)
- 		DIFF_OPT_SET(&rev.diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
- 	if (s->ignore_submodule_arg) {
-@@ -520,6 +521,7 @@ static void wt_status_collect_changes_index(struct =
-wt_status *s)
- 	setup_revisions(0, NULL, &rev, &opt);
-=20
- 	DIFF_OPT_SET(&rev.diffopt, OVERRIDE_SUBMODULE_CONFIG);
-+	DIFF_OPT_SET(&rev.diffopt, SHIFT_INTENT_TO_ADD);
- 	if (s->ignore_submodule_arg) {
- 		handle_ignore_submodules_arg(&rev.diffopt, s->ignore_submodule_arg);
- 	} else {
 --=20
 2.3.0.rc1.137.g477eb31
