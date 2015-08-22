@@ -1,242 +1,165 @@
-From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 3/3] archive-zip: support more than 65535 entries
-Date: Sat, 22 Aug 2015 21:06:45 +0200
-Message-ID: <55D8C845.3090908@web.de>
-References: <20150811104056.16465.58131@localhost> <55CBA140.7050301@web.de>
- <20150813022545.30116.44787@localhost>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schauer <josch@debian.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 22 21:07:05 2015
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH v5 1/2] worktree: add 'for_each_worktree' function
+Date: Sat, 22 Aug 2015 17:51:33 -0400
+Message-ID: <1440280294-50679-2-git-send-email-rappazzo@gmail.com>
+References: <1440280294-50679-1-git-send-email-rappazzo@gmail.com>
+Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
+To: gitster@pobox.com, sunshine@sunshineco.com,
+	dturner@twopensource.com
+X-From: git-owner@vger.kernel.org Sat Aug 22 23:51:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTE89-0002yY-6q
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 21:07:05 +0200
+	id 1ZTGhi-0001LV-VO
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 23:51:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753462AbbHVTHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2015 15:07:00 -0400
-Received: from mout.web.de ([212.227.15.4]:49632 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753310AbbHVTG7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2015 15:06:59 -0400
-Received: from [192.168.178.36] ([79.253.186.87]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0MNP6P-1ZMubR1A41-006tMy; Sat, 22 Aug 2015 21:06:48
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-In-Reply-To: <20150813022545.30116.44787@localhost>
-X-Provags-ID: V03:K0:Sd3R4FrkCktYauRjtDmVArfH7vezOvZxVo0cUFhgAfnYMpSQai9
- KnRV1S5miZFrGsLNK15QlPXlnrHZ8jStz+KPhei06kqX0CMM3+EcaXZq9n8hxcAJEYXHebM
- 1QZUp5YAcDgzuvTqHsxFNsnvXM+I26e3FNclVQBpLPyY5WdU4CmMsFwehiFlNLsaJc6luo2
- lgMKIU2swde2mVEDyQuPQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0NzBKy2ixho=:WFVUm9DJdyqiMzCCx6LXcV
- nY4iHqA0O+4vUR4BCy+Izq3e+0sgUWVy/f8+ob0Fj4jbvhqApZ3CnSAHjeCJWEdw6+V0aPkLk
- QYSk3wIjzVB2hVIfTSsZwOVse42mGtk+nI6JURTeBjeBWQlI+Ib3/JpNd4KxAEtdrmgJMOMXH
- u2FbpXZDY0xeYADV5IK42r8Hs05Kv8f1D9N3c70Q/WvWTlVcwQJmZfbB0rblNILEctNmDs41R
- cy4MrzgMrlw+GiMyiOsA6BQ5HqZ80i2s2prCzOcV4RSq5vV7Juy4y7StGNyvZJ+xegZOBfWV2
- Z9nsLRTcFBg5wrDHMtjoIOerb8UAFh+2J4YdJTrqMIu/rBWOONCBJnAZdSzNolKiYShl4Va9I
- XW82GTPTxQL9Lp/1OZEetNhNOdK27dmNiW04D4Dilg5Zn2AjPma7UG7wpFBEeBwCr67bKvRNS
- 81CBjqsOq+4DWIVuj1xrMTTW2xcF4Ozsc+st0GRKqQsbbkML700rWuD34KQjazXNVGlvZB2Jw
- YVYLUg/xL3kxs4qQh90vopXHRzcHju+cAEehIk/zqIzwD3fr8oZXZrT7wK64OWLd40Nr4GgN5
- 8+dJ9EsZmZHvHcLpHsGlj3lVfaemldOjnAeF9vD8tWaKGIZA7k3zwHxvRElUjRGveL6xy51WV
- /alt0hotIxJ+q5kRWyuG4AnQlaw2aC7o4LuYia0J+IVoZjwjGVmd0gcTzsr1dmkTpFGEPa7ii
- LAwPgiV/BP1/cnQymr1WoJh7T9ko9kMy2ezRfA==
+	id S1751436AbbHVVvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2015 17:51:42 -0400
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:33812 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751304AbbHVVvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Aug 2015 17:51:40 -0400
+Received: by qgeg42 with SMTP id g42so66263716qge.1
+        for <git@vger.kernel.org>; Sat, 22 Aug 2015 14:51:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=HWY1AmwUmS53NRJjAsRb1w5+9qES6JTSknhfDDAnnBg=;
+        b=KK4F06UdFQmcFJO6n+69SO1ezgKfxalCy6FT/Q/Hgnf31KrtH5xC781CaWpB9kkyvw
+         MtnV2+pbFOK1TAZ+hEEBdZAnhxGVD6cqGVL3VdbG1sKAO6zySbs2/GSpnZAwdcfgrM4K
+         YahO6iFakD2o9sW7aZgs2QqCie2s0AB5FllKM3Lnq+2IxaTQtPchfg/4ehx/zseKfr0k
+         mxuLiU3zCTDtxrO0qqT/rtMvUrCzRURpLDNXbIGGWpVjj4VED2MbbDWOWr9E2HpLHCdf
+         0V2i/7ymLdpfvLeD5i4Sde7A/vdvucMnoB+kzI6sKIBxiCqLXXyj4giMJObXfxWJ4xZp
+         E1Kw==
+X-Received: by 10.140.217.199 with SMTP id n190mr36567445qhb.74.1440280299418;
+        Sat, 22 Aug 2015 14:51:39 -0700 (PDT)
+Received: from Macbook-wireless.gtnexus.info (ool-18e49664.dyn.optonline.net. [24.228.150.100])
+        by smtp.gmail.com with ESMTPSA id v22sm982607qkv.45.2015.08.22.14.51.38
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 22 Aug 2015 14:51:38 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0
+In-Reply-To: <1440280294-50679-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276396>
 
-Support more than 65535 entries cleanly by writing a "zip64 end of
-central directory record" (with a 64-bit field for the number of
-entries) before the usual "end of central directory record" (which
-contains only a 16-bit field).  InfoZIP's zip does the same.
-Archives with 65535 or less entries are not affected.
+for_each_worktree iterates through each worktree and invokes a callback
+function.  The main worktree (if not bare) is always encountered first,
+followed by worktrees created by `git worktree add`.
 
-Programs that extract all files like InfoZIP's zip and 7-Zip
-ignored the field and could extract all files already.  Software
-that relies on the ZIP file directory to show a list of contained
-files quickly to simulate to normal directory like Windows'
-built-in ZIP functionality only saw a subset of the included files.
+If the callback function returns a non-zero value, iteration stops, and
+the callback's return value is returned from the for_each_worktree
+function.
 
-Windows supports ZIP64 since Vista according to
-https://en.wikipedia.org/wiki/Zip_%28file_format%29#ZIP64.
-
-Suggested-by: Johannes Schauer <josch@debian.org>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
 ---
- archive-zip.c                   | 93 +++++++++++++++++++++++++++++++++++++++--
- t/t5004-archive-corner-cases.sh |  2 +-
- 2 files changed, 91 insertions(+), 4 deletions(-)
+ builtin/worktree.c | 83 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 83 insertions(+)
 
-diff --git a/archive-zip.c b/archive-zip.c
-index 2a76156..9db4735 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -16,7 +16,9 @@ static unsigned int zip_dir_size;
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 430b51e..7b3cb96 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -26,6 +26,14 @@ static int show_only;
+ static int verbose;
+ static unsigned long expire;
  
- static unsigned int zip_offset;
- static unsigned int zip_dir_offset;
--static unsigned int zip_dir_entries;
-+static uint64_t zip_dir_entries;
++/*
++ * The signature for the callback function for the for_each_worktree()
++ * function below.  The memory pointed to by the callback arguments
++ * is only guaranteed to be valid for the duration of a single
++ * callback invocation.
++ */
++typedef int each_worktree_fn(const char *path, const char *git_dir, void *cb_data);
 +
-+static unsigned int max_creator_version;
- 
- #define ZIP_DIRECTORY_MIN_SIZE	(1024 * 1024)
- #define ZIP_STREAM	(1 <<  3)
-@@ -86,6 +88,28 @@ struct zip_extra_mtime {
- 	unsigned char _end[1];
- };
- 
-+struct zip64_dir_trailer {
-+	unsigned char magic[4];
-+	unsigned char record_size[8];
-+	unsigned char creator_version[2];
-+	unsigned char version[2];
-+	unsigned char disk[4];
-+	unsigned char directory_start_disk[4];
-+	unsigned char entries_on_this_disk[8];
-+	unsigned char entries[8];
-+	unsigned char size[8];
-+	unsigned char offset[8];
-+	unsigned char _end[1];
-+};
-+
-+struct zip64_dir_trailer_locator {
-+	unsigned char magic[4];
-+	unsigned char disk[4];
-+	unsigned char offset[8];
-+	unsigned char number_of_disks[4];
-+	unsigned char _end[1];
-+};
-+
- /*
-  * On ARM, padding is added at the end of the struct, so a simple
-  * sizeof(struct ...) reports two bytes more than the payload size
-@@ -98,6 +122,12 @@ struct zip_extra_mtime {
- #define ZIP_EXTRA_MTIME_SIZE	offsetof(struct zip_extra_mtime, _end)
- #define ZIP_EXTRA_MTIME_PAYLOAD_SIZE \
- 	(ZIP_EXTRA_MTIME_SIZE - offsetof(struct zip_extra_mtime, flags))
-+#define ZIP64_DIR_TRAILER_SIZE	offsetof(struct zip64_dir_trailer, _end)
-+#define ZIP64_DIR_TRAILER_RECORD_SIZE \
-+	(ZIP64_DIR_TRAILER_SIZE - \
-+	 offsetof(struct zip64_dir_trailer, creator_version))
-+#define ZIP64_DIR_TRAILER_LOCATOR_SIZE \
-+	offsetof(struct zip64_dir_trailer_locator, _end)
- 
- static void copy_le16(unsigned char *dest, unsigned int n)
+ static int prune_worktree(const char *id, struct strbuf *reason)
  {
-@@ -113,6 +143,31 @@ static void copy_le32(unsigned char *dest, unsigned int n)
- 	dest[3] = 0xff & (n >> 030);
+ 	struct stat st;
+@@ -359,6 +367,81 @@ static int add(int ac, const char **av, const char *prefix)
+ 	return add_worktree(path, branch, &opts);
  }
  
-+static void copy_le64(unsigned char *dest, uint64_t n)
++/*
++ * Iterate through each worktree and invoke the callback function.  If
++ * the callback function returns non-zero, the iteration stops, and
++ * this function returns that return value
++ */
++static int for_each_worktree(each_worktree_fn fn, void *cb_data)
 +{
-+	dest[0] = 0xff & n;
-+	dest[1] = 0xff & (n >> 010);
-+	dest[2] = 0xff & (n >> 020);
-+	dest[3] = 0xff & (n >> 030);
-+	dest[4] = 0xff & (n >> 040);
-+	dest[5] = 0xff & (n >> 050);
-+	dest[6] = 0xff & (n >> 060);
-+	dest[7] = 0xff & (n >> 070);
++	struct strbuf worktree_path = STRBUF_INIT;
++	struct strbuf worktree_git = STRBUF_INIT;
++	const char *common_dir;
++	int main_is_bare = 0;
++	int ret = 0;
++
++	common_dir = get_git_common_dir();
++	if (!strcmp(common_dir, get_git_dir())) {
++		/* simple case - this is the main repo */
++		main_is_bare = is_bare_repository();
++		if (!main_is_bare) {
++			strbuf_addstr(&worktree_path, get_git_work_tree());
++		} else {
++			strbuf_addstr(&worktree_path, common_dir);
++		}
++	} else {
++		strbuf_addstr(&worktree_path, common_dir);
++		/* If the common_dir DOES NOT end with '/.git', then it is bare */
++		main_is_bare = !strbuf_strip_suffix(&worktree_path, "/.git");
++	}
++	strbuf_addstr(&worktree_git, worktree_path.buf);
++
++	if (!main_is_bare) {
++		strbuf_addstr(&worktree_git, "/.git");
++
++		ret = fn(worktree_path.buf, worktree_git.buf, cb_data);
++		if (ret)
++			goto done;
++	}
++	strbuf_addstr(&worktree_git, "/worktrees");
++
++	if (is_directory(worktree_git.buf)) {
++		DIR *dir = opendir(worktree_git.buf);
++		if (dir) {
++			struct stat st;
++			struct dirent *d;
++			size_t base_path_len = worktree_git.len;
++
++			while ((d = readdir(dir)) != NULL) {
++				if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
++					continue;
++
++				strbuf_setlen(&worktree_git, base_path_len);
++				strbuf_addf(&worktree_git, "/%s/gitdir", d->d_name);
++
++				if (stat(worktree_git.buf, &st)) {
++					fprintf(stderr, "Unable to read worktree git dir: %s\n", worktree_git.buf);
++					continue;
++				}
++
++				strbuf_reset(&worktree_path);
++				strbuf_read_file(&worktree_path, worktree_git.buf, st.st_size);
++				strbuf_strip_suffix(&worktree_path, "/.git\n");
++
++				strbuf_strip_suffix(&worktree_git, "/gitdir");
++				ret = fn(worktree_path.buf, worktree_git.buf, cb_data);
++				if (ret)
++					break;
++			}
++		}
++		closedir(dir);
++	}
++done:
++	strbuf_release(&worktree_git);
++	strbuf_release(&worktree_path);
++	return ret;
 +}
 +
-+static uint64_t clamp_max(uint64_t n, uint64_t max, int *clamped)
-+{
-+	if (n <= max)
-+		return n;
-+	*clamped = 1;
-+	return max;
-+}
-+
-+static void copy_le16_clamp(unsigned char *dest, uint64_t n, int *clamped)
-+{
-+	copy_le16(dest, clamp_max(n, 0xffff, clamped));
-+}
-+
- static void *zlib_deflate_raw(void *data, unsigned long size,
- 			      int compression_level,
- 			      unsigned long *compressed_size)
-@@ -282,6 +337,9 @@ static int write_zip_entry(struct archiver_args *args,
- 				sha1_to_hex(sha1));
- 	}
- 
-+	if (creator_version > max_creator_version)
-+		max_creator_version = creator_version;
-+
- 	if (buffer && method == 8) {
- 		out = deflated = zlib_deflate_raw(buffer, size,
- 						  args->compression_level,
-@@ -439,20 +497,49 @@ static int write_zip_entry(struct archiver_args *args,
- 	return 0;
- }
- 
-+static void write_zip64_trailer(void)
-+{
-+	struct zip64_dir_trailer trailer64;
-+	struct zip64_dir_trailer_locator locator64;
-+
-+	copy_le32(trailer64.magic, 0x06064b50);
-+	copy_le64(trailer64.record_size, ZIP64_DIR_TRAILER_RECORD_SIZE);
-+	copy_le16(trailer64.creator_version, max_creator_version);
-+	copy_le16(trailer64.version, 45);
-+	copy_le32(trailer64.disk, 0);
-+	copy_le32(trailer64.directory_start_disk, 0);
-+	copy_le64(trailer64.entries_on_this_disk, zip_dir_entries);
-+	copy_le64(trailer64.entries, zip_dir_entries);
-+	copy_le64(trailer64.size, zip_dir_offset);
-+	copy_le64(trailer64.offset, zip_offset);
-+
-+	copy_le32(locator64.magic, 0x07064b50);
-+	copy_le32(locator64.disk, 0);
-+	copy_le64(locator64.offset, zip_offset + zip_dir_offset);
-+	copy_le32(locator64.number_of_disks, 1);
-+
-+	write_or_die(1, &trailer64, ZIP64_DIR_TRAILER_SIZE);
-+	write_or_die(1, &locator64, ZIP64_DIR_TRAILER_LOCATOR_SIZE);
-+}
-+
- static void write_zip_trailer(const unsigned char *sha1)
+ int cmd_worktree(int ac, const char **av, const char *prefix)
  {
- 	struct zip_dir_trailer trailer;
-+	int clamped = 0;
- 
- 	copy_le32(trailer.magic, 0x06054b50);
- 	copy_le16(trailer.disk, 0);
- 	copy_le16(trailer.directory_start_disk, 0);
--	copy_le16(trailer.entries_on_this_disk, zip_dir_entries);
--	copy_le16(trailer.entries, zip_dir_entries);
-+	copy_le16_clamp(trailer.entries_on_this_disk, zip_dir_entries,
-+			&clamped);
-+	copy_le16_clamp(trailer.entries, zip_dir_entries, &clamped);
- 	copy_le32(trailer.size, zip_dir_offset);
- 	copy_le32(trailer.offset, zip_offset);
- 	copy_le16(trailer.comment_length, sha1 ? GIT_SHA1_HEXSZ : 0);
- 
- 	write_or_die(1, zip_dir, zip_dir_offset);
-+	if (clamped)
-+		write_zip64_trailer();
- 	write_or_die(1, &trailer, ZIP_DIR_TRAILER_SIZE);
- 	if (sha1)
- 		write_or_die(1, sha1_to_hex(sha1), GIT_SHA1_HEXSZ);
-diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
-index c6bd729..cca2338 100755
---- a/t/t5004-archive-corner-cases.sh
-+++ b/t/t5004-archive-corner-cases.sh
-@@ -122,7 +122,7 @@ test_lazy_prereq ZIPINFO '
- 	test "x$n" = "x0"
- '
- 
--test_expect_failure ZIPINFO 'zip archive with many entries' '
-+test_expect_success ZIPINFO 'zip archive with many entries' '
- 	# add a directory with 256 files
- 	mkdir 00 &&
- 	for a in 0 1 2 3 4 5 6 7 8 9 a b c d e f
+ 	struct option options[] = {
 -- 
 2.5.0
