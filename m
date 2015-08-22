@@ -1,60 +1,59 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 Subject: [PATCH 7/8] diff.h: extend "flags" field to 64 bits because we're out of bits
-Date: Sat, 22 Aug 2015 08:11:14 +0700
-Message-ID: <1440205874-20295-1-git-send-email-pclouds@gmail.com>
-References: <1440205700-19749-7-git-send-email-pclouds@gmail.com>
+Date: Sat, 22 Aug 2015 08:14:22 +0700
+Message-ID: <1440206062-20504-1-git-send-email-pclouds@gmail.com>
+References: <1440205700-19749-1-git-send-email-pclouds>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, plamen.totev@abv.bg,
-	l.s.r@web.de, Eric Sunshine <sunshine@sunshineco.com>,
-	tboegi@web.de,
+Cc: Junio C Hamano <gitster@pobox.com>, phiggins@google.com,
+	snoksrud@gmail.com,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 22 03:11:35 2015
+X-From: git-owner@vger.kernel.org Sat Aug 22 03:14:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSxLK-0006Lq-5g
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 03:11:34 +0200
+	id 1ZSxOE-00087m-Tj
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 03:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753129AbbHVBL3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 21:11:29 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:34593 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753124AbbHVBL3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2015 21:11:29 -0400
-Received: by padfo6 with SMTP id fo6so17821013pad.1
-        for <git@vger.kernel.org>; Fri, 21 Aug 2015 18:11:28 -0700 (PDT)
+	id S1752382AbbHVBOb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 21:14:31 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:33991 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751528AbbHVBOa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 21:14:30 -0400
+Received: by padfo6 with SMTP id fo6so17857165pad.1
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 18:14:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=mHnN1NaQjFEenc8uCy35NbQOvwhxmgoU5MEgZZ5dtvQ=;
-        b=DfZmuS4LyyjBeFFeO2EeNhW7b81hUT0jEj/BwE6uv/o3M4jB2goZASTqotDuuTwzjq
-         1vaqZqDjhOL/pDEApQnuKqt/t0GZOqOLtZqX4jl22qr8zFlP56ssFE+gWBPGnioqVSkA
-         dWeTmsxnRyI/2Y/xMVzdenR50TX+M1CTEAei+bFM96y5Ra85k4POEuFgTRr35CYzXeDa
-         yNKRJibdutBSDZEZaiFM5rLaGZz6sUSvpASCgzaeK97KrEZX9E/jTbwMI0U7vBsI5EYY
-         pmMbEvanynFEiVwAwZYFUPWPF9ogPZLLPMG9swtBMjVp/br+FI6B/GfavO1XwTy5tCOS
-         o3eQ==
-X-Received: by 10.66.243.225 with SMTP id xb1mr22659114pac.78.1440205888774;
-        Fri, 21 Aug 2015 18:11:28 -0700 (PDT)
+        bh=zqSjcUZ++j/ONAmq5QUzPqF0TvzLhLqKAQzGamKAAvE=;
+        b=Qv9TFJWHNhikzxPzwkllBxs0b/ewaW+r556c43oj7uJ4YFKzTsi8qCHBmCuzGAn3F8
+         VebAGo6Hx6bHrHT3UdDlG1Hu2EQnnZ6Az9FYomPCNtdj7VEW6peVfXy1JAtlUtmye2oq
+         MYD4tVG42z/rT0bpU6xTzEF3o5lDJVMTbKFPedY2wjU1CJS06Labd0/n1MaexRAwvmKn
+         HSmOWVUUUDbJOvsedr4eyFszc0VkrxWJ+xWHeDTkZc4euEu1BuupNvT0oroJtf3qkQaN
+         aFGl7wQy8b9IiLkVUO+SUvouuXJ88D/WJrLfADqELkYVOBLIG4q/TekRGQlU06BN+XVv
+         ABfQ==
+X-Received: by 10.66.194.201 with SMTP id hy9mr12946383pac.45.1440206070174;
+        Fri, 21 Aug 2015 18:14:30 -0700 (PDT)
 Received: from lanh ([171.232.84.126])
-        by smtp.gmail.com with ESMTPSA id gx1sm9135765pbc.29.2015.08.21.18.11.25
+        by smtp.gmail.com with ESMTPSA id bz4sm9157255pbd.6.2015.08.21.18.14.26
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Aug 2015 18:11:28 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 22 Aug 2015 08:11:24 +0700
+        Fri, 21 Aug 2015 18:14:29 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 22 Aug 2015 08:14:26 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <1440205700-19749-7-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1440205700-19749-1-git-send-email-pclouds>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276360>
 
 I renamed both "flags" and "touched_flags" fields while making this
 patch to make sure I was aware of how these flags were manipulated
@@ -63,6 +62,8 @@ patch to make sure I was aware of how these flags were manipulated
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
+ Resend to the right recipients. I screwed send-email up..
+
  builtin/commit.c | 2 +-
  diff-lib.c       | 4 ++--
  diff.c           | 2 +-
