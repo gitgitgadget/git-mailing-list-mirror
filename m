@@ -1,72 +1,86 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: Which branch(es) contain certain commits? (was Re: (unknown))
-Date: Sat, 22 Aug 2015 16:29:55 +0530
-Message-ID: <CAOLa=ZRdYKqSjT90VRW0qOeQ9YG6xN0QojrhUwrar2V1DyHe5w@mail.gmail.com>
-References: <349031438778845@web22j.yandex.ru> <CACsJy8Be-kY49CxAJTx2R2XG-c_WeuU=yLFT8-XSoaDkTScPGg@mail.gmail.com>
- <xmqqh9nxerfv.fsf@gitster.dls.corp.google.com> <5570041440192599@web21j.yandex.ru>
- <xmqqio88466l.fsf@gitster.dls.corp.google.com> <2689531440235153@web22m.yandex.ru>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] Fix `git rev-list --show-notes HEAD` when there are no notes
+Date: Sat, 22 Aug 2015 17:14:39 +0200
+Organization: gmx
+Message-ID: <0LZlZ2-1Z1Zyn1mzk-00lZ3Z@mail.gmx.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Ivan Chernyavsky <camposer@yandex.ru>
-X-From: git-owner@vger.kernel.org Sat Aug 22 13:00:33 2015
+X-From: git-owner@vger.kernel.org Sat Aug 22 17:14:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZT6XG-00008b-Dk
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 13:00:30 +0200
+	id 1ZTAVP-0003w1-Eg
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 17:14:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753572AbbHVLA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2015 07:00:26 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:35868 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753562AbbHVLAZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2015 07:00:25 -0400
-Received: by obkg7 with SMTP id g7so77667850obk.3
-        for <git@vger.kernel.org>; Sat, 22 Aug 2015 04:00:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=04lvZ1lZBzSqnRpUW81+s7lEbnPTjZdh2IvczIeGDys=;
-        b=BwWq3k5ZVovrjZntYOOq8pRpTTOC5lNb3rzJ87ysY8F/3sUUtm/kYsHah4u/CRvIi1
-         ui3jHo5i2vw1ojzaKgSU6nq4B4sdV/xESToebgCN80dcQiErX1JLXpOABups+VeaaDl9
-         UVYJc8e78/2espiFcOSRzqiyBcvB4lGpVJt3iKBmHCkBas/513eTCnxQNhVA4njfB/vE
-         WgG8Ag5hyZN6UDaMfKCoKNEXSQXD7GP3eVLMKQMgVWQu/D7dL68gEnf7Ls0BO5+BirDu
-         L1rLuUJwjw0O5VDSjF31PaYvlOeowgO8129PFiBDDpSfIYJaY3LLX3zu4gqchLbIL+Vx
-         tAgg==
-X-Received: by 10.60.70.104 with SMTP id l8mr12245337oeu.37.1440241224724;
- Sat, 22 Aug 2015 04:00:24 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Sat, 22 Aug 2015 03:59:55 -0700 (PDT)
-In-Reply-To: <2689531440235153@web22m.yandex.ru>
+	id S1753226AbbHVPOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2015 11:14:47 -0400
+Received: from mout.gmx.net ([212.227.17.20]:64685 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752455AbbHVPOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Aug 2015 11:14:46 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Li1hG-1YynlD1lvm-00nC9P; Sat, 22 Aug 2015 17:14:41
+ +0200
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:PyROnUDR5hKt+MQvfc1dBVvnEMteomp2Gd+h+eYm2kXIjgYJOXC
+ NyImR8fORR1F8T6ZGLpHJUR1ZczzD1G3wCNA1dc+N0Di85jruMh26Qs5MT+87nElmLU400m
+ RTi9JJBCqe/iz4CqOvuPUcFcJ+9suA16c+zwcM37hZRJn9TVzwF4WjNpbQGh8rOkW2OdQso
+ GzsK7T5JrMur14KPFQntA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XvrHceNO7dA=:hiBzNBnIg6AiP5K7+rvq3e
+ MD2N0xvAcOCvPug6JhQN48BtNP8xbHEVjInsyD5W6vjZ6jWr9CxCeCpbD/AkLJyPfIRrH4Q63
+ Zz36jyjaPaxegR7NeHk23YqSvivJIXrA52+k5/LOlP9g28/xx+j99O7nWTbJGht/6aNh5xOSY
+ 4Os3AULFWDCMxw1RvCBQdzsOM1kJPVg1wurBvKrIaA8Eur4Q3o8l6dxuAUJa/zvno1jo6JPi5
+ 9TXgQwl8QvJZYYlqRx9cwGt628lCgpI1RPEWRV0GVseZUmII4Ek/Skv28Kymy+DbUE1eNfHNq
+ dlbxSapipFnm4qczfWebURuPxSw+SxYk91gK8OPzAhlU8abSZhO2kt2ex0gWN4w3Vf4VWN92I
+ bV50pWixl3ezN/xqURfgsZ0Btf4go+H9gHfYW3YSHS/+Quaecf8meIyhVDscrymka0EgS7nxU
+ 2j9SqEMIMX0jHTx/Elw2hg7ge2hH/oYVAajJEaCbbqfx7ayqVLqtC4xFXUgOAxTdf7tIOY7kb
+ PlM2kHgDRnGVOWe3vUvGuN4KGZaShNsTgF4pTMzThF03JR1C/4Jt6CtlaSub8Ndk4YiCspe6Z
+ iBxY3VKbUC//h5DfiJ6qmL3xi3xLy9ukSypguUfjACSK1kxqQZskxm5Zxj+Mgw32w/Qm9zfO8
+ /cprt39HkHRTY8UMu9q6WevNtAVk69ipspZsAyYeQUL5aEzkmP92zL15CVszYBY1+KL4pkJf0
+ efNC3s1EMgMO7rf/b+bFGqmW3/Wp85HHatssVA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276389>
 
-On Sat, Aug 22, 2015 at 2:49 PM, Ivan Chernyavsky <camposer@yandex.ru> wrote
->
->>  Note that "branch --list", "tag --list" and "for-each-ref" are being
->>  revamped to share more internal code. If you want to pursue this,
->>  you probably would want to build on top of that effort once it is
->>  done. That way, you may get "tag --grep=FIX123" for free.
->>
->
-> This is interesting. So can I have a look on some repo/branch or just wait until it'll be merged?
->
+The `format_display_notes()` function clearly assumes that the data
+structure holding the notes has been initialized already, i.e. that the
+`display_notes_trees` variable is no longer `NULL`.
 
-This should be what you're looking for:
-http://thread.gmane.org/gmane.comp.version-control.git/276363
-http://thread.gmane.org/gmane.comp.version-control.git/276377
+However, when there are no notes whatsoever, this variable is still
+`NULL`, even after initialization.
 
-This is the current progress, the rest is in git/next.
+So let's be graceful and just return if that data structure is `NULL`.
 
-There is still a series of porting the printing part of branch.c to be done.
+Reported in https://github.com/msysgit/git/issues/363.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ notes.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/notes.c b/notes.c
+index df08209..24a335a 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1266,7 +1266,10 @@ void format_display_notes(const unsigned char *object_sha1,
+ 			  struct strbuf *sb, const char *output_encoding, int raw)
+ {
+ 	int i;
+-	assert(display_notes_trees);
++
++	if (!display_notes_trees)
++		return;
++
+ 	for (i = 0; display_notes_trees[i]; i++)
+ 		format_note(display_notes_trees[i], object_sha1, sb,
+ 			    output_encoding, raw);
 -- 
-Regards,
-Karthik Nayak
+2.3.1.windows.1.9.g8c01ab4
