@@ -1,232 +1,212 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 1/8] branch: refactor width computation
-Date: Sat, 22 Aug 2015 12:21:42 +0530
-Message-ID: <1440226309-25415-2-git-send-email-Karthik.188@gmail.com>
-References: <1440226309-25415-1-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v3 0/8] port the filtering part of ref-filter to branch.c
+Date: Sat, 22 Aug 2015 12:21:41 +0530
+Message-ID: <1440226309-25415-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 22 08:51:51 2015
+X-From: git-owner@vger.kernel.org Sat Aug 22 08:51:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZT2ec-0004EU-Fp
+	id 1ZT2eb-0004EU-Nd
 	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 08:51:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbbHVGvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2015 02:51:47 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:35388 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752377AbbHVGvq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2015 02:51:46 -0400
-Received: by pacdd16 with SMTP id dd16so58868091pac.2
-        for <git@vger.kernel.org>; Fri, 21 Aug 2015 23:51:46 -0700 (PDT)
+	id S1752351AbbHVGvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2015 02:51:45 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:34870 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751300AbbHVGvo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Aug 2015 02:51:44 -0400
+Received: by pdob1 with SMTP id b1so34051459pdo.2
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 23:51:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vQptzrVzJEiS22RSfB3lZAmrHczY474civybJTkbHGk=;
-        b=pzM5OK60y7PBKtNeuT7aqBArhLCV6WVHRoDmSMg0kXZ8tmrhK6Ixpw70K29qXlfC7e
-         qEzn7BlxoBhebhoVKwKZ38Okv/SaJNALWESGtLjJkczF3shz2q+elCgIYygF349A/W5x
-         kOYAH0/Aegzxe4lh3qUxxs1FvsQ8k0/tjymM1IqyZuIhDfazjKp6j66kGOIG5S6WhbuV
-         JwROxn4CD5o7ijYdM9e5Pi0AJOOhzIBbvkV3QslWsB4lBU1gnktwdiqkHTyxiWKN6SqW
-         eGXtY1ngyXLfqYp2/acx8Ws6592rqiD4cPyrjImX1xb34tl3QbRKktWGHWsNW5yVvTbx
-         /U4A==
-X-Received: by 10.66.249.70 with SMTP id ys6mr2977953pac.100.1440226306020;
-        Fri, 21 Aug 2015 23:51:46 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=k4KhASZSgPgqzSjz2Grt+R+cNFOQ84C87U5SISwz8KE=;
+        b=wr/PfyUWAOf0hQZSU2Y86Zv13KBnpHgzD4dAceXwKlhlwGHDs496e0VUrTw3a0zut9
+         chVqVnJbvyNJJqT6khjnJu24GCLzYs4kwIyTthcqH1q3ZKaCI5im5Ji45WxoSjwk/Qf5
+         hh8LhnqGPK9vZQadSZoGd1WCPi44anqHhOOb3gPgxxG35ro6PFWQ8YXTnFOsOW+fihR4
+         /88LorFxDAyRWK0IUlUTH/y/8yzoB/AEaxT8yaepnMf7oaICweXWDk68u9uqh352iXVN
+         CqDEn4Bd7m75UyKu9FGIopnl+ECeu9eXXTg0o6SUDJ/NphqvU5Ln1Mo1YH1CrA0Ql8ot
+         kLYw==
+X-Received: by 10.70.36.138 with SMTP id q10mr25085219pdj.32.1440226303650;
+        Fri, 21 Aug 2015 23:51:43 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id hy5sm4412342pac.22.2015.08.21.23.51.43
+        by smtp.gmail.com with ESMTPSA id hy5sm4412342pac.22.2015.08.21.23.51.41
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 21 Aug 2015 23:51:45 -0700 (PDT)
+        Fri, 21 Aug 2015 23:51:42 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.0
-In-Reply-To: <1440226309-25415-1-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276377>
 
-From: Karthik Nayak <karthik.188@gmail.com>
+This is a follow up to porting tag.c to use ref-fitler APIs.
 
-Remove unnecessary variables from ref_list and ref_item which were
-used for width computation. This is to make ref_item similar to
-ref-filter's ref_array_item. This will ensure a smooth port of
-branch.c to use ref-filter APIs in further patches.
+v2 of this patch series can be found here:
+http://thread.gmane.org/gmane.comp.version-control.git/276147
 
-Previously the maxwidth was computed when inserting the refs into the
-ref_list. Now, we obtain the entire ref_list and then compute
-maxwidth.
+Changes made in this series:
+* Improve comment in 3/8 and fix grammar in 5/8.
+* Fix the test in t1430 to check stderr for the broken ref warning.
+* Instead of showing the detached head, reducing the no of array elements
+and displaying all of the other refs and then free'ing all of the refs. We
+now free the detached head ref immediately after displaying so we don't have
+to bother about decrementing and incrementing the no of array elements.
+* 
 
-Based-on-patch-by: Jeff King <peff@peff.net>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- builtin/branch.c | 64 ++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 34 insertions(+), 30 deletions(-)
+Karthik Nayak (8):
+  branch: refactor width computation
+  branch: bump get_head_description() to the top
+  branch: roll show_detached HEAD into regular ref_list
+  branch: move 'current' check down to the presentation layer
+  branch: drop non-commit error reporting
+  branch.c: use 'ref-filter' data structures
+  branch.c: use 'ref-filter' APIs
+  branch: add '--points-at' option
+
+ Documentation/git-branch.txt |  13 +-
+ builtin/branch.c             | 506 +++++++++++++------------------------------
+ ref-filter.c                 |   4 +-
+ ref-filter.h                 |   8 +-
+ t/t1430-bad-ref-name.sh      |   2 +-
+ t/t3203-branch-output.sh     |  20 ++
+ 6 files changed, 197 insertions(+), 356 deletions(-)
+
+Interdiff:
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 4fc8beb..28a10d6 100644
+index dd2fdbe..32a0d11 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -282,14 +282,14 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- struct ref_item {
- 	char *name;
- 	char *dest;
--	unsigned int kind, width;
-+	unsigned int kind;
- 	struct commit *commit;
- 	int ignore;
- };
+@@ -475,7 +475,7 @@ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
  
- struct ref_list {
- 	struct rev_info revs;
--	int index, alloc, maxwidth, verbose, abbrev;
-+	int index, alloc, verbose, abbrev;
- 	struct ref_item *list;
- 	struct commit_list *with_commit;
- 	int kinds;
-@@ -386,15 +386,8 @@ static int append_ref(const char *refname, const struct object_id *oid, int flag
- 	newitem->name = xstrdup(refname);
- 	newitem->kind = kind;
- 	newitem->commit = commit;
--	newitem->width = utf8_strwidth(refname);
- 	newitem->dest = resolve_symref(orig_refname, prefix);
- 	newitem->ignore = 0;
--	/* adjust for "remotes/" */
--	if (newitem->kind == REF_REMOTE_BRANCH &&
--	    ref_list->kinds != REF_REMOTE_BRANCH)
--		newitem->width += 8;
--	if (newitem->width > ref_list->maxwidth)
--		ref_list->maxwidth = newitem->width;
- 
- 	return 0;
- }
-@@ -505,11 +498,12 @@ static void add_verbose_info(struct strbuf *out, struct ref_item *item,
- }
- 
- static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
--			   int abbrev, int current, char *prefix)
-+			   int abbrev, int current, const char *remote_prefix)
+ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting)
  {
- 	char c;
- 	int color;
- 	struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
-+	const char *prefix = "";
+-	int i, index;
++	int i;
+ 	struct ref_array array;
+ 	int maxwidth = 0;
+ 	const char *remote_prefix = "";
+@@ -493,17 +493,16 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	memset(&array, 0, sizeof(array));
  
- 	if (item->ignore)
- 		return;
-@@ -520,6 +514,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 		break;
- 	case REF_REMOTE_BRANCH:
- 		color = BRANCH_COLOR_REMOTE;
-+		prefix = remote_prefix;
- 		break;
- 	default:
- 		color = BRANCH_COLOR_PLAIN;
-@@ -557,16 +552,22 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 	strbuf_release(&out);
- }
+ 	verify_ref_format("%(refname)%(symref)");
+-	filter_refs(&array, filter, filter->kind);
++	filter_refs(&array, filter, filter->kind | FILTER_REFS_INCLUDE_BROKEN);
  
--static int calc_maxwidth(struct ref_list *refs)
-+static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
- {
--	int i, w = 0;
-+	int i, max = 0;
- 	for (i = 0; i < refs->index; i++) {
--		if (refs->list[i].ignore)
-+		struct ref_item *it = &refs->list[i];
-+		int w;
-+
-+		if (it->ignore)
- 			continue;
--		if (refs->list[i].width > w)
--			w = refs->list[i].width;
-+		w = utf8_strwidth(it->name);
-+		if (it->kind == REF_REMOTE_BRANCH)
-+			w += remote_bonus;
-+		if (w > max)
-+			max = w;
- 	}
--	return w;
-+	return max;
- }
+ 	if (filter->verbose)
+ 		maxwidth = calc_maxwidth(&array, strlen(remote_prefix));
  
- static char *get_head_description(void)
-@@ -600,21 +601,18 @@ static char *get_head_description(void)
- 	return strbuf_detach(&desc, NULL);
- }
- 
--static void show_detached(struct ref_list *ref_list)
-+static void show_detached(struct ref_list *ref_list, int maxwidth)
- {
- 	struct commit *head_commit = lookup_commit_reference_gently(head_sha1, 1);
- 
- 	if (head_commit && is_descendant_of(head_commit, ref_list->with_commit)) {
- 		struct ref_item item;
- 		item.name = get_head_description();
--		item.width = utf8_strwidth(item.name);
- 		item.kind = REF_LOCAL_BRANCH;
- 		item.dest = NULL;
- 		item.commit = head_commit;
- 		item.ignore = 0;
--		if (item.width > ref_list->maxwidth)
--			ref_list->maxwidth = item.width;
--		print_ref_item(&item, ref_list->maxwidth, ref_list->verbose, ref_list->abbrev, 1, "");
-+		print_ref_item(&item, maxwidth, ref_list->verbose, ref_list->abbrev, 1, "");
- 		free(item.name);
- 	}
- }
-@@ -624,6 +622,16 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 	int i;
- 	struct append_ref_cb cb;
- 	struct ref_list ref_list;
-+	int maxwidth = 0;
-+	const char *remote_prefix = "";
-+
-+	/*
-+	 * If we are listing more than just remote branches,
-+	 * then remote branches will have a "remotes/" prefix.
-+	 * We need to account for this in the width.
-+	 */
-+	if (kinds != REF_REMOTE_BRANCH)
-+		remote_prefix = "remotes/";
- 
- 	memset(&ref_list, 0, sizeof(ref_list));
- 	ref_list.kinds = kinds;
-@@ -667,26 +675,22 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 			clear_commit_marks(item->commit, ALL_REV_FLAGS);
- 		}
- 		clear_commit_marks(filter, ALL_REV_FLAGS);
+-	index = array.nr;
 -
--		if (verbose)
--			ref_list.maxwidth = calc_maxwidth(&ref_list);
- 	}
-+	if (verbose)
-+		maxwidth = calc_maxwidth(&ref_list, strlen(remote_prefix));
- 
- 	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
- 
- 	detached = (detached && (kinds & REF_LOCAL_BRANCH));
- 	if (detached && match_patterns(pattern, "HEAD"))
--		show_detached(&ref_list);
-+		show_detached(&ref_list, maxwidth);
- 
- 	for (i = 0; i < ref_list.index; i++) {
- 		int current = !detached &&
- 			(ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
- 			!strcmp(ref_list.list[i].name, head);
--		char *prefix = (kinds != REF_REMOTE_BRANCH &&
--				ref_list.list[i].kind == REF_REMOTE_BRANCH)
--				? "remotes/" : "";
--		print_ref_item(&ref_list.list[i], ref_list.maxwidth, verbose,
--			       abbrev, current, prefix);
-+		print_ref_item(&ref_list.list[i], maxwidth, verbose,
-+			       abbrev, current, remote_prefix);
+ 	/* Print detached HEAD before sorting and printing the rest */
+ 	if (filter->kind & FILTER_REFS_DETACHED_HEAD) {
+-		format_and_print_ref_item(array.items[index - 1], maxwidth, filter, remote_prefix);
+-		array.nr -= 1;
++		format_and_print_ref_item(array.items[array.nr - 1], maxwidth, filter, remote_prefix);
++		free_array_item(array.items[array.nr - 1]);
++		array.nr--;
  	}
  
- 	free_ref_list(&ref_list);
+ 	if (!sorting) {
+@@ -517,7 +516,6 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	for (i = 0; i < array.nr; i++)
+ 		format_and_print_ref_item(array.items[i], maxwidth, filter, remote_prefix);
+ 
+-	array.nr = index;
+ 	ref_array_clear(&array);
+ }
+ 
+diff --git a/ref-filter.c b/ref-filter.c
+index 112feaa..3cd0c00 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1251,7 +1251,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ }
+ 
+ /*  Free memory allocated for a ref_array_item */
+-static void free_array_item(struct ref_array_item *item)
++void free_array_item(struct ref_array_item *item)
+ {
+ 	free((char *)item->symref);
+ 	free(item);
+diff --git a/ref-filter.h b/ref-filter.h
+index 3e29e5d..3e25d84 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -89,6 +89,8 @@ struct ref_filter_cbdata {
+  * filtered refs in the ref_array structure.
+  */
+ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int type);
++/*  Clear memory allocated to a ref_array_item */
++void free_array_item(struct ref_array_item *item);
+ /*  Clear all memory allocated to ref_array */
+ void ref_array_clear(struct ref_array *array);
+ /*  Parse format string and sort specifiers */
+diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
+index dcf2931..db3627e 100755
+--- a/t/t1430-bad-ref-name.sh
++++ b/t/t1430-bad-ref-name.sh
+@@ -38,11 +38,11 @@ test_expect_success 'fast-import: fail on invalid branch name "bad[branch]name"'
+ 	test_must_fail git fast-import <input
+ '
+ 
+-test_expect_failure 'git branch shows badly named ref' '
+-       cp .git/refs/heads/master .git/refs/heads/broken...ref &&
+-       test_when_finished "rm -f .git/refs/heads/broken...ref" &&
+-       git branch >output &&
+-       grep -e "broken\.\.\.ref" output
++test_expect_success 'git branch shows badly named ref as warning' '
++	cp .git/refs/heads/master .git/refs/heads/broken...ref &&
++	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
++	git branch 2>output &&
++	grep -e "broken\.\.\.ref" output
+ '
+ 
+ test_expect_success 'branch -d can delete badly named ref' '
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 1deb7cb..c819f3e 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -144,21 +144,21 @@ EOF
+ '
+ 
+ test_expect_success 'git branch `--sort` option' '
+-	cat >expect <<EOF &&
+-* (HEAD detached from fromtag)
+-  branch-two
+-  branch-one
+-  master
+-EOF
++	cat >expect <<-\EOF &&
++	* (HEAD detached from fromtag)
++	  branch-two
++	  branch-one
++	  master
++	EOF
+ 	git branch --sort=objectsize >actual &&
+ 	test_i18ncmp expect actual
+ '
+ 
+ test_expect_success 'git branch --points-at option' '
+-	cat >expect <<EOF &&
+-  master
+-  branch-one
+-EOF
++	cat >expect <<-\EOF &&
++	  master
++	  branch-one
++	EOF
+ 	git branch --points-at=branch-one >actual &&
+ 	test_cmp expect actual
+ '
+
+
 -- 
 2.5.0
