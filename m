@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 4/8] apply: make sure check_preimage() does not leave empty file on error
-Date: Sat, 22 Aug 2015 08:08:07 +0700
-Message-ID: <1440205700-19749-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 5/8] checkout(-index): do not checkout i-t-a entries
+Date: Sat, 22 Aug 2015 08:08:08 +0700
+Message-ID: <1440205700-19749-6-git-send-email-pclouds@gmail.com>
 References: <xmqqy4j80wdb.fsf@gitster.dls.corp.google.com>
  <1440205700-19749-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,122 +13,145 @@ Cc: Junio C Hamano <gitster@pobox.com>, phiggins@google.com,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 22 03:09:03 2015
+X-From: git-owner@vger.kernel.org Sat Aug 22 03:09:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZSxIq-0004ul-JJ
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 03:09:00 +0200
+	id 1ZSxIy-0004yK-7V
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Aug 2015 03:09:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752941AbbHVBI4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 21:08:56 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:34340 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752932AbbHVBIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2015 21:08:55 -0400
-Received: by padfo6 with SMTP id fo6so17790017pad.1
-        for <git@vger.kernel.org>; Fri, 21 Aug 2015 18:08:54 -0700 (PDT)
+	id S1752968AbbHVBJC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2015 21:09:02 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:35483 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752950AbbHVBJB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2015 21:09:01 -0400
+Received: by pacdd16 with SMTP id dd16so54731083pac.2
+        for <git@vger.kernel.org>; Fri, 21 Aug 2015 18:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=YTEvQbUhlrw+UTfnsniOxDaQgvPi42zQQObTKMvwLqE=;
-        b=eP7l0cnYyYTZsfzc1wiFc2ccqcpNGNoSeY1j7awmc+9kR3I4ZYgLVVR001poDhSuWK
-         5J1PvjV3Eyqg0MaTsatzHDV+LoZn/uSlgO5IPQoNldmI6miwDbOzctxvbhkTHY1xBhsv
-         YkOY5npKt0kUbuDlp4arzSCs1g/l44GAjrB4gLkm6WHwpBRJ1eo7vuXl/ybeuFQGjKiC
-         eyFrleUmclpvS0wUCQwkdbQ26Zu45938ANymrH9p4lYJYSx/3U80gVSYepodML1X6TBW
-         LXoDVyCXQcmTff5JYMS3WaQxaZhktQDpZ3NwM/iEN1ASvsItlBubwsdEi1JAykuEXNR3
-         UHYA==
-X-Received: by 10.66.185.72 with SMTP id fa8mr22745354pac.44.1440205734926;
-        Fri, 21 Aug 2015 18:08:54 -0700 (PDT)
+        bh=jKySagnPBnowXGfVoIWfhtiESK/3PJgW7GBb7lYjfXg=;
+        b=sxINlwEWsrFM6ohXtSYW2nMr4pAe4XhV6KsU8mrYg8SGkdo61IvuAY9xrUUrI89/mT
+         hp7mFPC2Q3QSm5T3Dv/gveI0MnPi2inl81Ncpnn6Ei7SL5RwoaJ1DqqFrvywx3VhrqDr
+         ghwZl5XJG0hIVPoDiRQBI+Ah4dECxZfIQHV028OVueKNckYJuo+z8ZmqqLbhgmYOY3Ii
+         fgoHr5ECCuHTRP4boCK3lLTy9IjhdIQhHPf5bvbWyPKeHrdyy4OlS6iY6XBIDPUtsTuB
+         Ct49pnQacmQ9nxlfxtTfwv1BTMmOsSkgJyDBJj8pXa4KDlYMztFhhaTmlstv/wAeUwUI
+         rZBw==
+X-Received: by 10.66.141.199 with SMTP id rq7mr22152191pab.57.1440205740607;
+        Fri, 21 Aug 2015 18:09:00 -0700 (PDT)
 Received: from lanh ([171.232.84.126])
-        by smtp.gmail.com with ESMTPSA id fm5sm9117685pbb.60.2015.08.21.18.08.51
+        by smtp.gmail.com with ESMTPSA id jr12sm9100267pbb.91.2015.08.21.18.08.57
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Aug 2015 18:08:54 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 22 Aug 2015 08:08:51 +0700
+        Fri, 21 Aug 2015 18:08:59 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 22 Aug 2015 08:08:57 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1440205700-19749-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276357>
 
-The test case probably describes the test scenario the best. We have a
-patch to modify some file but the base file is gone. Because
-check_preimage() finds an index entry with the same old_name, it tries
-to restore the on-disk base file with cached content with
-checkout_target() and move on.
+The cached blob of i-t-a entries are empty blob. By checkout, we delete
+the content we have. Don't do it.
 
-If this old_name is i-t-a, before this patch "apply -3" will call
-checkout_target() which will write an empty file (i-t-a entries always
-have "empty blob" SHA-1), then it'll fail at verify_index_match()
-(i-t-a entries are always "modified") and the operation is aborted.
-
-This empty file should not be created. Compare to the case where
-old_name does not exist in index, "apply -3" fails with a different
-error message "...: does not exist" but it does not touch
-worktree. This patch makes sure the same happens to i-t-a entries.
-
-load_current() shares the same code pattern (look up an index entry,
-if on-disk version is not found, restore using the cached
-version). Fix it too (even though it's not exercised in any test case)
+This is done higher up instead of inside checkout_entry() because we
+would have limited options in there: silently ignore, loudly ignore,
+die. At higher level we can do better reporting. For example, "git
+checkout -- foo" will complain that "foo" does not match pathspec, just
+like when "foo" is not registered with "git add -N"
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/apply.c       |  4 ++--
- t/t2203-add-intent.sh | 16 ++++++++++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ builtin/checkout-index.c |  5 ++++-
+ builtin/checkout.c       |  2 ++
+ t/t2203-add-intent.sh    | 34 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 76b58a1..b185c97 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -3348,7 +3348,7 @@ static int load_current(struct image *image, stru=
-ct patch *patch)
- 		die("BUG: patch to %s is not a creation", patch->old_name);
-=20
- 	pos =3D cache_name_pos(name, strlen(name));
--	if (pos < 0)
-+	if (pos < 0 || ce_intent_to_add(active_cache[pos]))
- 		return error(_("%s: does not exist in index"), name);
- 	ce =3D active_cache[pos];
- 	if (lstat(name, &st)) {
-@@ -3501,7 +3501,7 @@ static int check_preimage(struct patch *patch, st=
-ruct cache_entry **ce, struct s
-=20
- 	if (check_index && !previous) {
- 		int pos =3D cache_name_pos(old_name, strlen(old_name));
--		if (pos < 0) {
-+		if (pos < 0 || ce_intent_to_add(active_cache[pos])) {
- 			if (patch->is_new < 0)
- 				goto is_new;
- 			return error(_("%s: does not exist in index"), old_name);
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index 8028c37..eca975d 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -56,7 +56,8 @@ static int checkout_file(const char *name, const char=
+ *prefix)
+ 	while (pos < active_nr) {
+ 		struct cache_entry *ce =3D active_cache[pos];
+ 		if (ce_namelen(ce) !=3D namelen ||
+-		    memcmp(ce->name, name, namelen))
++		    memcmp(ce->name, name, namelen) ||
++		    ce_intent_to_add(ce))
+ 			break;
+ 		has_same_name =3D 1;
+ 		pos++;
+@@ -99,6 +100,8 @@ static void checkout_all(const char *prefix, int pre=
+fix_length)
+ 		if (ce_stage(ce) !=3D checkout_stage
+ 		    && (CHECKOUT_ALL !=3D checkout_stage || !ce_stage(ce)))
+ 			continue;
++		if (ce_intent_to_add(ce))
++			continue;
+ 		if (prefix && *prefix &&
+ 		    (ce_namelen(ce) <=3D prefix_length ||
+ 		     memcmp(prefix, ce->name, prefix_length)))
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index e1403be..02889d4 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -300,6 +300,8 @@ static int checkout_paths(const struct checkout_opt=
+s *opts,
+ 			 * anything to this entry at all.
+ 			 */
+ 			continue;
++		if (ce_intent_to_add(ce))
++			continue;
+ 		/*
+ 		 * Either this entry came from the tree-ish we are
+ 		 * checking the paths out of, or we are checking out
 diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index bb5ef2b..96c8755 100755
+index 96c8755..d0f36a4 100755
 --- a/t/t2203-add-intent.sh
 +++ b/t/t2203-add-intent.sh
-@@ -95,5 +95,21 @@ test_expect_success 'apply adds new file on i-t-a en=
-try' '
+@@ -111,5 +111,39 @@ test_expect_success 'apply:check_preimage() not cr=
+eating empty file' '
  	)
  '
 =20
-+test_expect_success 'apply:check_preimage() not creating empty file' '
-+	git init check-preimage &&
++test_expect_success 'checkout ignores i-t-a' '
++	git init checkout &&
 +	(
-+		cd check-preimage &&
-+		echo oldcontent >newfile &&
-+		git add newfile &&
-+		echo newcontent >newfile &&
-+		git diff >patch &&
-+		rm .git/index &&
-+		git add -N newfile &&
-+		rm newfile &&
-+		test_must_fail git apply -3 patch &&
-+		! test -f newfile
++		cd checkout &&
++		echo data >file &&
++		git add -N file &&
++		test_must_fail git checkout -- file &&
++		echo data >expected &&
++		test_cmp expected file
++	)
++'
++
++test_expect_success 'checkout-index ignores i-t-a' '
++	(
++		cd checkout &&
++		git checkout-index file &&
++		echo data >expected &&
++		test_cmp expected file
++	)
++'
++
++test_expect_success 'checkout-index --all ignores i-t-a' '
++	(
++		cd checkout &&
++		echo data >anotherfile &&
++		git add anotherfile &&
++		rm anotherfile &&
++		git checkout-index --all &&
++		echo data >expected &&
++		test_cmp expected file &&
++		test_cmp expected anotherfile
 +	)
 +'
 +
