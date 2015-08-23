@@ -1,79 +1,63 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: Eric Sunshine mail delivery failure
-Date: Sun, 23 Aug 2015 14:57:56 -0400
-Message-ID: <CAPig+cSSO3ZTauM1hgUV=govWdmde0ds-fyt7QdHQauiwSmQBw@mail.gmail.com>
-References: <20150811104056.16465.58131@localhost>
-	<55CBA140.7050301@web.de>
-	<20150813022545.30116.44787@localhost>
-	<55D8C824.6000704@web.de>
-	<CAPig+cSy+c9mOGOTN9e4xfLrvPc8nv7e0T_4PDA-vB-otwrvjw@mail.gmail.com>
-	<trinity-6e67d416-0a61-4e73-9779-63519dd83fdb-1440322151491@3capp-webde-bs47>
-	<55D993F8.4080506@web.de>
-	<20150823171622.GA28700@zorg.kyriasis.com>
-	<CAPig+cR3zZK5BJmG0S2K0PLcY9p-1Ko4ynR9GzM2wLq8xjn36g@mail.gmail.com>
-	<CA+EOSBmk2cdQe3owaXgkYAgTZqpUFa=J8g5FYq28-=VhDcJ4EA@mail.gmail.com>
-	<CAPig+cS+sDQV0O=pZXL9sw8ww39J=asxrbNm28jG0VSFhXtmtA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: List tags for a certain branch
+Date: Sun, 23 Aug 2015 14:58:23 -0400
+Message-ID: <20150823185822.GA8005@sigill.intra.peff.net>
+References: <20150823170751.GA24194@sigill.intra.peff.net>
+ <0322fd40-7473-4faa-840f-8be27f555435@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 23 20:58:02 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: CoDEmanX <codemanx@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Aug 23 20:58:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTaSw-0000xd-1I
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Aug 2015 20:58:02 +0200
+	id 1ZTaTO-0001Gr-87
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Aug 2015 20:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752812AbbHWS55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Aug 2015 14:57:57 -0400
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:35550 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752728AbbHWS54 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Aug 2015 14:57:56 -0400
-Received: by ykbi184 with SMTP id i184so115406878ykb.2
-        for <git@vger.kernel.org>; Sun, 23 Aug 2015 11:57:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=/BRxA+7mXUB9TkAUuj9ewxqg+9CLw6ON3f3FvWyRQac=;
-        b=C3ve4rryCOjM4fRUCZrA6j70GILDBKP58lMzCyHPdOo4lhgShLGX6L0ZnfSzniEPSR
-         L4oDdsIZ4OLtITuq6w799SUFoNJAcOW9hVdT8+Tb4TtiDzOH66KzzwCABZXbw0YNW1ZW
-         lCQ0Z5nOelpCQeYwWCcERk5d/qUTl5z09pMI4lZH7TwC+B8XJi0lsdH7j1DNBsUT85wZ
-         4GC61Pd/JhR0e4V5gAR+jcW4pmXWxDLtz4GkgR34j7P/4TEu0qQreKS5AMzs9Xyfnhzf
-         ew7QFimelHl1dnxqT9vr4hrsDCkUCAEjifaU8+iJYvAOZYNLHh/JRdPeVNQlbXG67ljm
-         L/kw==
-X-Received: by 10.129.76.151 with SMTP id z145mr25681863ywa.17.1440356276384;
- Sun, 23 Aug 2015 11:57:56 -0700 (PDT)
-Received: by 10.37.208.78 with HTTP; Sun, 23 Aug 2015 11:57:56 -0700 (PDT)
-In-Reply-To: <CAPig+cS+sDQV0O=pZXL9sw8ww39J=asxrbNm28jG0VSFhXtmtA@mail.gmail.com>
-X-Google-Sender-Auth: g5UL6hTqSTieISJaw5P1LfAYT1Y
+	id S1752728AbbHWS60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Aug 2015 14:58:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48793 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752430AbbHWS6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Aug 2015 14:58:25 -0400
+Received: (qmail 4669 invoked by uid 102); 23 Aug 2015 18:58:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 23 Aug 2015 13:58:25 -0500
+Received: (qmail 16795 invoked by uid 107); 23 Aug 2015 18:58:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 23 Aug 2015 14:58:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 23 Aug 2015 14:58:23 -0400
+Content-Disposition: inline
+In-Reply-To: <0322fd40-7473-4faa-840f-8be27f555435@email.android.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276423>
 
-On Sun, Aug 23, 2015 at 2:48 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sun, Aug 23, 2015 at 2:36 PM, Elia Pinto <gitter.spiros@gmail.com> wrote:
->> Il 23/Ago/2015 20:26, "Eric Sunshine" <sunshine@sunshineco.com> ha scritto:
->>> I did change the CNAME to an A just in case, though who knows how long
->>> it will take for the change to propagate over to web.de's server.
->> Anyone can check Here https://dnschecker.org/#CNAME/Mail.sunshineco.com
->> It would fail with your change
->
-> Interesting service; thanks for the pointer. However, since it's just
-> querying a random set of DNS servers, it's not necessarily indicative
-> of whether the change has actually propagated to the DNS server(s)
-> answering web.de's mail server's queries. Local configuration (TTL's,
-> etc.) on those servers or anywhere in between, as well as network
-> conditions, could impact propagation to an unknown degree.
+On Sun, Aug 23, 2015 at 08:06:39PM +0200, CoDEmanX wrote:
 
-Also, the propagation time of the A record can be quite different from
-the point at which the CNAME record finally expires (based upon its
-TTL, which may differ dramatically from server to server), so the
-above CNAME query may continue to succeed long after the A record has
-propagated.
+> > in a future version of git you should be able to do "git tag 
+> --merged" to get the tags that are "merged" to a particular branch. 
+> 
+> Would it return every tag in the branch, even if it was created in
+> that branch, and not merged from somewhere else? If no, than it's not
+> what I am looking for. 
+> 
+> (Or more precisely: would it give a list of all tags, that point to
+> commits present in the specified branch, regardless of whether these
+> commits were originally done in that branch or merged from another
+> branch? I hope my understanding of git is correct here...)
+
+Yes, it would show all tags that are present in the history leading up
+to that branch tip[1]. Git tracks a DAG of the history; it does not
+remember "which branch" a particular action happened on.
+
+-Peff
+
+[1] Actually the argument to "--merged" does not need to be a branch at
+    all. It is really a commit, so you could specify a tag, an extended
+    sha-1 expression, etc.
