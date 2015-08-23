@@ -1,187 +1,77 @@
-From: =?UTF-8?Q?=22Ren=C3=A9_Scharfe=22?= <l.s.r@web.de>
-Subject: Re: [PATCH 1/3] t5004: test ZIP archives with many entries
-Date: Sun, 23 Aug 2015 11:29:11 +0200
-Message-ID: <trinity-6e67d416-0a61-4e73-9779-63519dd83fdb-1440322151491@3capp-webde-bs47>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Eric Sunshine mail delivery failure
+Date: Sun, 23 Aug 2015 11:35:52 +0200
+Message-ID: <55D993F8.4080506@web.de>
 References: <20150811104056.16465.58131@localhost> <55CBA140.7050301@web.de>
- <20150813022545.30116.44787@localhost> <55D8C824.6000704@web.de>,
+ <20150813022545.30116.44787@localhost> <55D8C824.6000704@web.de>
  <CAPig+cSy+c9mOGOTN9e4xfLrvPc8nv7e0T_4PDA-vB-otwrvjw@mail.gmail.com>
+ <trinity-6e67d416-0a61-4e73-9779-63519dd83fdb-1440322151491@3capp-webde-bs47>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Johannes Schauer" <josch@debian.org>,
-	"Git List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Eric Sunshine" <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Aug 23 11:29:39 2015
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 23 11:36:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTRas-0007aj-Tp
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Aug 2015 11:29:39 +0200
+	id 1ZTRhQ-0002uE-CL
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Aug 2015 11:36:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751503AbbHWJ3S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Aug 2015 05:29:18 -0400
-Received: from mout.web.de ([212.227.15.3]:59964 "EHLO mout.web.de"
+	id S1751484AbbHWJgC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Aug 2015 05:36:02 -0400
+Received: from mout.web.de ([212.227.15.3]:52882 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751462AbbHWJ3R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Aug 2015 05:29:17 -0400
-Received: from [79.253.147.160] by 3capp-webde-bs47.server.lan (via HTTP);
- Sun, 23 Aug 2015 11:29:11 +0200
-Importance: normal
-Sensitivity: Normal
-In-Reply-To: <CAPig+cSy+c9mOGOTN9e4xfLrvPc8nv7e0T_4PDA-vB-otwrvjw@mail.gmail.com>
-X-UI-Message-Type: mail
-X-Priority: 3
-X-Provags-ID: V03:K0:m79tkELO3kN9OSCOPuNADjSzGGRBADr7JTBI621gMIy
- sb9WLD74BaK5i+z7QwgW0nobht9ehO22/Y5RDB6T3w+EPF155V
- bsIXErkGxAY0tl1LIEZCFdAsfXSomQHfxxjeBzLJw/0aNmDqM8
- aMUUFn7ViL+VhIBbCgWCVsjbcaD3b9mqmTgVt9ppeCidyIbPWD
- WR4UYbVrgU+sDh7IFg9lJNzjF4XT9+N8pHKEVhGT+N/lJybFam
- nfTDuPA7zqQy2xiCkDsfRPAj94Wz0hpAyG+u6nTCVXMJd3+/xR 2+mI4I=
-X-UI-Out-Filterresults: notjunk:1;V01:K0:E7sXvwippT4=:ZZOxDJABpRXdjcEuj1MLQR
- 52ludJ+Ro4DtywCHGEdBPwa5Uhu5d1Fy3uHruoIxYr/T4CBWqoNvSiVc+24C5guCBzpQHhoW5
- xQZ4kF+fCQWpr22GSXFpiTg2euFKooe/45xfMdzFN1oLH0+vnUdc0eSETHHRGBx9kGGWaUKbH
- JLFXrtaV/NfNcyR06cFuTslH4h3CInf8xg3dxnxEFg/WapZWeDJura6efO/p+UUFlwRgdk5JS
- 0Ewi/XZu9ad1c34Dd5Vf2QSFSAzIMPpw2AEtBHbBVMVEIZiXubXbxHexw9bgGRJyM+Y0NwWMP
- w8Z9/7DjdqjGFA6zXC5nLZ2kuw/mj00ColM5DG3Kn/P9lnLW6P5SHHvx6VB6orQimOgfE6gTX
- g0iPppetDyMYXq3QBrKJIdb2h85Hgz1OsRENx+UKU5BQsTzfdsWh72/3DQpoFIfE1gUxwk+Wj
- f4vFU16xDg==
+	id S1751385AbbHWJgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Aug 2015 05:36:00 -0400
+Received: from [192.168.178.36] ([79.253.147.160]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MB06e-1ZdNqF18w0-009wlZ for <git@vger.kernel.org>;
+ Sun, 23 Aug 2015 11:35:59 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+In-Reply-To: <trinity-6e67d416-0a61-4e73-9779-63519dd83fdb-1440322151491@3capp-webde-bs47>
+X-Provags-ID: V03:K0:l3cbbq0PrXykLjUeYvbe8i651ob/Cqz0/F/kByyBhZLNeAebxqB
+ fO5o+PJShnHSvO3PbsR5wQbx596yqo1SMPWtxP3MCaanUpNmv7lrUkDR3YbUWPDk3wc4rwU
+ WUn/bu4u6XK2dV5B7OC33eztrs3itbknXX8h6d6lWs1dsrYROLF0J8QYWM5vMwwx2YL4aN3
+ 82IQ0x0yy3kV0zxRyV/ag==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AvVcAFV3Q+8=:vbA0Z/6XnzoDalkNCUuH/k
+ 5bUE07LwHpQpZmDFnsNCszngnV72cqv93DkTF04sniSxZwPPBSlH3VNlCx/pJNBCoCKSFUR1g
+ fWxF1Iez+8JWOk1Y7sRMS0EQIJvjffprEnjj98xz/CE/afGO0V6BZ4AlniIX3Npk1mcRtr/fo
+ ACHm+JTFnaTk6uyJ2/QKes6TxC89/MTMbuL01zhi76kvcDJR4/I5dgi1PUye/+qMVw+6+46Er
+ Vu/yvRSdzeUfSPVsPAJsKMt2LG7/BF3KNCaWXalVrH1LM3yyy4Hqtp+PWguZEk44cN8BhkNu+
+ JCfcxhVp/rJOVpyoFEtU7Yj+++ohWEInJCkk+vrMIaU76mVRxg+9UMqWRcWT17r7puiIpeIhx
+ 7hnJLVPxhrAuGGCn9MPMc2cAMm8IoUYkJ6J4xxvBsv+4YeJ4LEcHsEN5M2DZQNXjhqk0t8mI+
+ pCKtrQ/wPZ1t7bxTCjuRLJJX1IQ5/766mAHFWSjpvwCyLRUVp3s5pXWYiVD6N89uAlbwDwqzC
+ ghRLDEnQPVkklOTzh0SyPxVJ+WPKkPXJiUAxv5eKsv5cICXsoiDbXtut+0nVGtgBrG8xT8JSG
+ SpfjEzeYsnvPNC8PHXyWk2V5LwG2I8S0U3gTtnr7Ja3YRrpgfegWLStLkqrhnhVM1WE5SsJsa
+ 6T2HG/na3l99pTofVxdb28rDJyGPWrjKo0xvE1F7JNbLcA5bH4ofdH6CACsfaUrht+kJcn1Kd
+ CtEH7tleQ66e5uTI2O+OOmTFZVUqCeF+0gI6Gw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276403>
 
-Am 23.08.2015 um 07:54 schrieb Eric Sunshine:
-> On Sat, Aug 22, 2015 at 3:06 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wro=
-te:
->> diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corne=
-r-cases.sh
->> index 654adda..c6bd729 100755
->> --- a/t/t5004-archive-corner-cases.sh
->> +++ b/t/t5004-archive-corner-cases.sh
->> @@ -115,4 +115,44 @@ test_expect_success 'archive empty subtree by d=
-irect pathspec' '
->>          check_dir extract sub
->>   '
->>
->> +ZIPINFO=3Dzipinfo
->> +
->> +test_lazy_prereq ZIPINFO '
->> +       n=3D$("$ZIPINFO" "$TEST_DIRECTORY"/t5004/empty.zip | sed -n =
-"2s/.* //p")
->> +       test "x$n" =3D "x0"
->> +'
->=20
-> Unfortunately, this sed expression isn't portable due to dissimilar
-> output of various zipinfo implementations. On Linux, the output of
-> zipinfo is:
->=20
->      $ zipinfo t/t5004/empty.zip
->      Archive:  t/t5004/empty.zip
->      Zip file size: 62 bytes, number of entries: 0
->      Empty zipfile.
->      $
->=20
-> however, on Mac OS X:
->=20
->      $ zipinfo t/t5004/empty.zip
->      Archive:  t/t5004/empty.zip   62 bytes   0 files
->      Empty zipfile.
->      $
->=20
-> and on FreeBSD, the zipinfo command seems to have been removed
-> altogether in favor of "unzip -Z" (emulate zipinfo).
+Eric, hope you see this reply on the list. Direct replies to=20
+sunshine@sunshineco.com are rejected by my mail provider on submit in=20
+Thunderbird with the following message:
 
-Thanks for your thorough checks!
+     Requested action not taken: mailbox unavailable
+     invalid DNS MX or A/AAAA resource record.
 
-I suspected that zipinfo's output might be formatted differently on
-different platforms and tried to guard against it by checking for the
-number zero there. Git's ZIP file creation is platform independent
-(modulo bugs), so having a test run at least somewhere should
-suffice. In theory.
+And with this one when using their web interface:
 
-We could add support for the one-line-summary variant on OS X easily,
-though.
+     A message that you sent could not be delivered to one or more of
+     its recipients. This is a permanent error. The following address
+     failed:
 
-> One might hope that "unzip -Z" would be a reasonable replacement for
-> zipinfo, however, it is apparently only partially implemented on
-> FreeBSD, and requires that -1 be passed, as well. Even with "unzip -Z
-> -1", there are issues. The output on Linux and Mac OS X is:
->=20
->      $ unzip -Z -1 t/t5004/empty.zip
->      Empty zipfile.
->      $
->=20
-> but FreeBSD differs:
->=20
->      $ unzip -Z -1 t/t5004/empty.zip
->      $
->=20
-> With a non-empty zip file, the output is identical on all platforms:
->=20
->      $ unzip -Z -1 twofiles.zip
->      file1
->      file2
->      $
->=20
-> So, if you combine that with "wc -l" or test_line_count, you may have
-> a portable and reliable entry counter.
+     "sunshine@sunshineco.com":
+     no valid MX hosts found
 
-Counting all entries is slow, and more importantly it's not what we
-want. In this test we need the number of entries recorded in the ZIP
-directory, not the actual number of entries found by scanning the
-archive, or the directory.
+It seems web.de wants you to get an AAAA record before I'm allowed to=20
+send mails to you.  Sounds crazy.  Sorry about that.  Time to find a
+better provider, I guess. :-(
 
-On Linux "unzip -Z -1 many.zip | wc -l" reports 65792 even before
-adding ZIP64 support; only without -1 we get the interesting numbers
-(specifically with "unzip -Z many.zip | sed -n '2p;$p'"):
-
-    Zip file size: 6841366 bytes, number of entries: 256
-    65792 files, 0 bytes uncompressed, 0 bytes compressed: 0.0%
-
-> With these three patches applied, Mac OS X has trouble with 'many.zip=
-':
->=20
->      $ unzip -Z -1 many.zip
->      warning [many.zip]:  76 extra bytes at beginning or within zipfi=
-le
->        (attempting to process anyway)
->      error [many.zip]:  reported length of central directory is
->        -76 bytes too long (Atari STZip zipfile?  J.H.Holm ZIPSPLIT 1.=
-1
->        zipfile?).  Compensating...
->      00/
->      00/00
->      ...
->      ff/ff
->      error: expected central file header signature not found (file
->        #65793). (please check that you have transferred or created th=
-e
->        zipfile in the appropriate BINARY mode and that you have compi=
-led
->        UnZip properly)
->=20
-> And FreeBSD doesn't like it either:
->=20
->      $ unzip -Z -1 many.zip
->      unzip: Invalid central directory signature
->      $
->=20
-
-Looks like they don't support ZIP64. Or I got some of the fields wrong
-after all.
-
-https://en.wikipedia.org/wiki/Zip_%28file_format%29#ZIP64 says: "OS X
-Yosemite does support the creation of ZIP64 archives, but does not
-support unzipping these archives using the shipped unzip command-line
-utility or graphical Archive Utility.[citation needed]".
-
-How does unzip react to a ZIP file with more than 65535 entries that
-was created natively on these platforms? And what does zipinfo (a real
-one, without -1) report at the top for such files?
-
-Thanks,
 Ren=C3=A9
