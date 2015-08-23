@@ -1,131 +1,134 @@
-From: Johannes =?utf-8?B?TMO2dGhiZXJn?= <johannes@kyriasis.com>
-Subject: Re: Eric Sunshine mail delivery failure
-Date: Sun, 23 Aug 2015 19:16:22 +0200
-Message-ID: <20150823171622.GA28700@zorg.kyriasis.com>
-References: <20150811104056.16465.58131@localhost>
- <55CBA140.7050301@web.de>
- <20150813022545.30116.44787@localhost>
- <55D8C824.6000704@web.de>
- <CAPig+cSy+c9mOGOTN9e4xfLrvPc8nv7e0T_4PDA-vB-otwrvjw@mail.gmail.com>
- <trinity-6e67d416-0a61-4e73-9779-63519dd83fdb-1440322151491@3capp-webde-bs47>
- <55D993F8.4080506@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Fix `git rev-list --show-notes HEAD` when there are no
+ notes
+Date: Sun, 23 Aug 2015 13:43:09 -0400
+Message-ID: <20150823174309.GA24735@sigill.intra.peff.net>
+References: <0LZlZ2-1Z1Zyn1mzk-00lZ3Z@mail.gmx.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="x+6KMIRAuhnl3hBn"
-Cc: Git List <git@vger.kernel.org>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Sun Aug 23 19:23:13 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Aug 23 19:43:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTYz9-0001VT-Mj
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Aug 2015 19:23:12 +0200
+	id 1ZTZIr-0004xh-9d
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Aug 2015 19:43:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752734AbbHWRXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Aug 2015 13:23:07 -0400
-Received: from theos.kyriasis.com ([212.71.254.33]:36199 "EHLO
-	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752265AbbHWRXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Aug 2015 13:23:05 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sun, 23 Aug 2015 13:23:05 EDT
-Received: from theos.kyriasis.com (localhost [127.0.0.1])
-	by theos.kyriasis.com (OpenSMTPD) with ESMTP id 1bf6981a;
-	Sun, 23 Aug 2015 17:16:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=date:from
-	:to:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=theos; bh=rJAQ+7SHJQkMqK1ibwKqeDQGrdA=; b=IDPblY
-	wKw2uMEalouHPuH+5pVpWwPPrwvndejh0LnfQ7oUqK29eoqrv7QVIzqwqkEjebwW
-	IK1s2D5ZNgHKEs9D6apLnBYE6v5SEceNwdanAwN3oTN9KkN4QMPXoa7nkO2oMA44
-	mVYoZOik1a1oKGwwHnez7E7udBdA6sLvB3nVI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=date:from:to
-	:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=theos; b=fCiBmMhsvrcOEBMEVM1hNEqSOkgauJmk
-	Z+6k8RZn2SmSHA7q/56Iv0+mO4uJzCJdQe0K+h5vdJ2pR/iTs+NjecGHnFoiGqpe
-	bsAJ/SNPoOWwwdRBCziYsNC5IgR0f+Mh99w9mIxRWipR7u0SsZx4lBJTjRnvwZ4u
-	tGGvcm7928w=
-Received: from leeloo.kyriasis.com (c83-253-173-217.bredband.comhem.se [83.253.173.217])
-	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id 6cd0bd44
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	Sun, 23 Aug 2015 17:16:23 +0000 (UTC)
-Mail-Followup-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>
+	id S1752483AbbHWRnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Aug 2015 13:43:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48763 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752123AbbHWRnM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Aug 2015 13:43:12 -0400
+Received: (qmail 29749 invoked by uid 102); 23 Aug 2015 17:43:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 23 Aug 2015 12:43:12 -0500
+Received: (qmail 16330 invoked by uid 107); 23 Aug 2015 17:43:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 23 Aug 2015 13:43:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 23 Aug 2015 13:43:09 -0400
 Content-Disposition: inline
-In-Reply-To: <55D993F8.4080506@web.de>
-User-Agent: Mutt/1.5.23.1 (2014-03-12)
+In-Reply-To: <0LZlZ2-1Z1Zyn1mzk-00lZ3Z@mail.gmx.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276415>
 
+On Sat, Aug 22, 2015 at 05:14:39PM +0200, Johannes Schindelin wrote:
 
---x+6KMIRAuhnl3hBn
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The `format_display_notes()` function clearly assumes that the data
+> structure holding the notes has been initialized already, i.e. that the
+> `display_notes_trees` variable is no longer `NULL`.
+> 
+> However, when there are no notes whatsoever, this variable is still
+> `NULL`, even after initialization.
+> 
+> So let's be graceful and just return if that data structure is `NULL`.
 
-On 23/08, Ren=C3=A9 Scharfe wrote:
->Eric, hope you see this reply on the list. Direct replies to=20
->sunshine@sunshineco.com are rejected by my mail provider on submit in=20
->Thunderbird with the following message:
->
->    Requested action not taken: mailbox unavailable
->    invalid DNS MX or A/AAAA resource record.
->
->And with this one when using their web interface:
->
->    A message that you sent could not be delivered to one or more of
->    its recipients. This is a permanent error. The following address
->    failed:
->
->    "sunshine@sunshineco.com":
->    no valid MX hosts found
->
->It seems web.de wants you to get an AAAA record before I'm allowed to=20
->send mails to you.  Sounds crazy.  Sorry about that.  Time to find a
->better provider, I guess. :-(
->
+Hrm. This is supposed to be made non-NULL by calling init_display_notes.
+The "git-log" code does this properly, and can show notes. The
+"rev-list" code does not, and hits this assert. But that also means that
+it cannot actually _show_ notes, and your patch is papering over the
+problem.
 
-Just an A record would be enough. The issue is that mail.sunshineco.com=20
-has neither an A nor an AAAA record, it is a CNAME to sunshineco.com,=20
-which is invalid according to RFC2181.
+I would think we would need something more like this:
 
---=20
-Sincerely,
-  Johannes L=C3=B6thberg
-  PGP Key ID: 0x50FB9B273A9D0BB5
-  https://theos.kyriasis.com/~kyrias/
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index ff84a82..fc73a6f 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -279,6 +279,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	int bisect_show_vars = 0;
+ 	int bisect_find_all = 0;
+ 	int use_bitmap_index = 0;
++	struct userformat_want w;
+ 
+ 	git_config(git_default_config, NULL);
+ 	init_revisions(&revs, prefix);
+@@ -349,6 +350,14 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	    revs.diff)
+ 		usage(rev_list_usage);
+ 
++	memset(&w, 0, sizeof(w));
++	userformat_find_requirements(NULL, &w);
++
++	if (!revs.show_notes_given && w.notes)
++		revs.show_notes = 1;
++	if (revs.show_notes)
++		init_display_notes(&revs.notes_opt);
++
+ 	save_commit_buffer = (revs.verbose_header ||
+ 			      revs.grep_filter.pattern_list ||
+ 			      revs.grep_filter.header_list);
 
---x+6KMIRAuhnl3hBn
-Content-Type: application/pgp-signature; name="signature.asc"
+but it looks like that is not enough to convince the pretty-printer to
+actually show notes (I suspect we need something like the
+pretty_ctx->notes_message setup that is in show_log()).
 
------BEGIN PGP SIGNATURE-----
+I don't know how deeply anybody _cares_ about showing notes via
+rev-list. It has clearly never worked. But rather than silently
+accepting --show-notes (and not showing any notes!), perhaps we should
+tell the user that it does not work. Likewise, the "%N" --format
+specifier never expands in rev-list, and should probably be removed from
+the rev-list documentation.
 
-iQQcBAEBCgAGBQJV2f/jAAoJEJAcHDIOsNRdaSogAK6wt/QutcLLGb71kS6SezB3
-YhPM8vi9ADBiWz8p8lZIvPNvSC8z8OJ96IMsUjfQBZVAiF3PCkEEQIZWQ3TJND7M
-vesr+RGEMIPMKw7NZSwJCBtVbkwJp1vZraRQAEyQX0OYYyqHCiHOJGgW2Wfwk0dL
-BVQjtB0jwMnIv3HxG7Om+cnDfARA9TbZylwddjtoAr5tnvNUR2r4QbAzFx1TdDLD
-nYg8dGvXWl919wVrin+E9zDS/pQs+2OVta/RjfhlZ1MEdIVIZ3eCjD1uhU2hPG5D
-jJkxNsOjgI2hJ8OGi4/Rr8ct/NBDrBGJDY4Mf4lCXrY5hiwHTk34FPDd4y61SpZN
-tbgOGzkYufK1qfwAflkoWX1tF+8Wqy9BXoBhSzBSoHSyS1o8KnIu6fLlpuNlipCs
-EbIATsfavAEnXlOKwwe9Q0SyFGNMmeq6ili8ZzQAgy9qcmEtJVuhfhTiSAiMnioC
-EZjlEMV2PQ00S1pez8ySKcCLo4xJBD8Jge1UcpGJn7tLn/YRQWoJPDyadXDOD1Am
-C8cNt09ETvVdnUVI5XJyf2ytVdNSIYgP74rUy+IuWwLkWsA1oh/Z/ezGh1wOrK+L
-wgEiEFwFdglnHC4ZPWbh0Jt+OKXF7z+YEpw0XzQrF8t9B3p2uUVe4pJr86yAPm1J
-nxMOdsT6GcpMg1S5j7rFKKGP+Ro+FC5SKQKliDTZxSnbVHGAb9ASCDO3x3Qy6qvI
-inCF3MBZ3Cv7H4nG5Cj1IN0xv2/lwMuj1bTAlYQs2VUPK3/q+NNF8y4kLi7IvD3j
-lt7cOUT5Ijef1kj1LmMZeRqzgKTlQRsL3p3bcXqA9CN8893oIRatZIMJ6pOoFIfD
-tHO54UWsMhKgcxFLuedUax+FD/VteJKJrEo1uVC+eh1z6dBptUsAFx5RE/TT6C0v
-Crn9zXuzwWfRFdhhaNb4AyDn2hAZ/W7aqsuhIwCeds8EnFuffjO84jWjBkhNwRSe
-lIjVX/jNuzU/5Ek2Yy5nAJiUgrw0KrgsbCjE3nXFn6Cs4Ku+uvUmpAE/0CNg7xks
-5zMbPeLiG9hP5p51xUgp04E+Q2d0Y5VpjYsbSzRZlDJThxypZUItwY7rTXiotHkY
-S+eIcfyC+0DT69j6AXfboDMNvK9Mic/I2OlRZZCgCuk+CmmuCCCTusBAjs88LALC
-AKu3mAet7ziGOYp0D1uKRvQnf6/h4/qe2cb5j5bkSJwJDu9gpQxFKgasHkLXhKiZ
-nLzhf07GpuK2TJZ4ncZ2NKFFoQov30aZJHVqZm3zCz6JviM3dI/ovEzG3i0eJeGZ
-569Fu71VISOM4eGbpuJQXk2Iwth7tkAD2jFLfNjS0YVpBGC7HITNo7NknRvIS1k=
-=2l/g
------END PGP SIGNATURE-----
+Although...
 
---x+6KMIRAuhnl3hBn--
+> Reported in https://github.com/msysgit/git/issues/363.
+
+After reading your subject, I wondered why "git rev-list --show-notes
+HEAD" did not crash for me (whether or not I had notes). But the key
+element from that issue is the addition of "--grep", which is what
+triggers us to actually look at the notes (since rev-list otherwise does
+not support displaying them). And that _does_ work with my patch above.
+So perhaps that is useful, though again, it has never worked in the
+past (and with your patch, it would silently return no results, whether
+the grep matched or not).
+
+Of course it's a terrible interface to make "--show-notes --grep" grep
+the notes, but not actually _show_ them. :-/
+
+> diff --git a/notes.c b/notes.c
+> index df08209..24a335a 100644
+> --- a/notes.c
+> +++ b/notes.c
+> @@ -1266,7 +1266,10 @@ void format_display_notes(const unsigned char *object_sha1,
+>  			  struct strbuf *sb, const char *output_encoding, int raw)
+>  {
+>  	int i;
+> -	assert(display_notes_trees);
+> +
+> +	if (!display_notes_trees)
+> +		return;
+> +
+
+So I'm not really in favor of this approach, but if we do go that route,
+the comment above the declaration of format_display_notes needs to be
+updated.
+
+-Peff
