@@ -1,142 +1,105 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v2] describe --contains: default to HEAD when no commit-ish is given
-Date: Mon, 24 Aug 2015 18:15:18 +0200
-Message-ID: <1440432918-27751-1-git-send-email-szeder@ira.uka.de>
-References: <20150824181417.Horde.2DAlveA2ZaXbdApUl8wLOQ8@webmail.informatik.kit.edu>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Submodule, subtree, or something else?
+Date: Mon, 24 Aug 2015 09:51:01 -0700
+Message-ID: <CAGZ79kY+HLzd4esdy+i82Eh5Vhc1NEDDfinD2iiBMvV41GSCiw@mail.gmail.com>
+References: <1440197262.23145.191.camel@gmail.com>
+	<CAGZ79kbUXwEYnpDWgKqnUab2xP4m9m7FMskaK2u8WcqnLSSoog@mail.gmail.com>
+	<1440339066.32140.17.camel@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 24 18:15:39 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?B?SsSBbmlzIFJ1a8WhxIFucw==?= <janis.ruksans@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 24 18:51:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTuPI-0006aU-UJ
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 18:15:37 +0200
+	id 1ZTuxh-0007yH-3z
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 18:51:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754119AbbHXQPd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Aug 2015 12:15:33 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:52034 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751061AbbHXQPc (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2015 12:15:32 -0400
-Received: from x4db0f032.dyn.telefonica.de ([77.176.240.50] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
-	iface 141.3.10.81 id 1ZTuPA-0000K0-Im; Mon, 24 Aug 2015 18:15:30 +0200
-X-Mailer: git-send-email 2.5.0.418.gdd37a9b
-In-Reply-To: <20150824181417.Horde.2DAlveA2ZaXbdApUl8wLOQ8@webmail.informatik.kit.edu>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1440432930.
+	id S1755150AbbHXQvE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Aug 2015 12:51:04 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:36013 "EHLO
+	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755143AbbHXQvD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2015 12:51:03 -0400
+Received: by qkda128 with SMTP id a128so26359493qkd.3
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 09:51:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=da1X3R+Rldp+wboIOhaNvzHoTCtEkNOTHzME8ULKFvE=;
+        b=MQ7XGTFVT9yFbefp4saLUM6ww361Tnln7IN8hI89hhQvwAQRK0JMR0lcR3rItrLOAL
+         BXW0sf0CjD01V4964/Cg7g/2DSGSARY0wRsWanTEerATXhvOv8c62tNlZ9eIOb94VOO1
+         u2jcpJIL2cHw0L+h+62UvT31QFz68OFuQJ5tCzn7pTmJGn44L7un3KkFruLpPPuWxOoF
+         jcqcaJTCN8kDYYP1cNixZ/kWPjjCWhx4FCH/OroYU9A/D+Gk0aj9NG0R7t1mUUX43bZQ
+         VZZfUrM5qSJd1I+C08P0GgQo7/GwMu6xBk1lmp5xppG22BNA4sDdNYucP177/dS7RPg6
+         7Kjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=da1X3R+Rldp+wboIOhaNvzHoTCtEkNOTHzME8ULKFvE=;
+        b=RY8ZDbBek7oUs9fuXPVoPBg5ZG32fP1ztS9E7lC8gf0R62FMwXwDCu9SS4a4zKjmnZ
+         QrSSZtc7TyLYHkiJKkiG34nochrWd8jX/euA3K11zFAE3C7p9RTsQ4RAU00oJsDDxfDY
+         8ndWUap6cLwXBSiVxOmlmSmMeGRDdzSvRdevl0BulcJccjDa8pIO89jWp0Vbm/vUqF48
+         BGkMgQI3e1a4sIOcGUnsP3OGhrxvf54o8UH/8LBWtkp6k3X78bGadPonrmGqcrlPCP5D
+         LFoTPxE/zICJpi7PPtBu3+1yykASnXr98OJbndCfd/HKVgJWBzMID8pNQ7jGsnLrYY8j
+         B+pA==
+X-Gm-Message-State: ALoCoQkDOHfVpzYt+32A2fvKw+za1mR7Ny6pDCiwcEjfChaMHN+VJu/AJdsPLe+X9gYkua9oL3dh
+X-Received: by 10.170.186.131 with SMTP id c125mr30600162yke.25.1440435061536;
+ Mon, 24 Aug 2015 09:51:01 -0700 (PDT)
+Received: by 10.37.21.132 with HTTP; Mon, 24 Aug 2015 09:51:01 -0700 (PDT)
+In-Reply-To: <1440339066.32140.17.camel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276459>
 
-'git describe --contains' doesn't default to HEAD when no commit is
-given, and it doesn't produce any output, not even an error:
+On Sun, Aug 23, 2015 at 7:11 AM, J=C4=81nis Ruk=C5=A1=C4=81ns <janis.ru=
+ksans@gmail.com> wrote:
+> On Pk, 2015-08-21 at 17:07 -0700, Stefan Beller wrote:
+>> On Fri, Aug 21, 2015 at 3:47 PM, J=C4=81nis Ruk=C5=A1=C4=81ns <janis=
+=2Eruksans@gmail.com> wrote:
+>> >
+>> > A major drawback of submodules in my opinion is the
+>> > inability to make a full clone from an existing one without having
+>> > access to the central repository, which is something I have to do =
+from
+>> > time to time.
+>>
+>> Can you elaborate on that a bit more?
+>> git clone --recurse-submodules should do that no matter which remote
+>> you contact?
+>
+> I mean that if I have cloned a repository with submodules, cloning th=
+at
+> repository with --recurse-submodules will either access the "central
+> server" if absolute URLs are used, or requires additional clones for
+> each submodule.  For example
+>
+> git clone --recursive http://somewhere/projectA.git
+> git clone --recursive file://$(pwd)/projectA projectA.tmp
+>
+> The second command will cause the submodules to be downloaded again, =
+or
+> expect them to be found in $(pwd).
 
-  ~/src/git ((v2.5.0))$ ./git describe --contains
-  ~/src/git ((v2.5.0))$ ./git describe --contains HEAD
-  v2.5.0^0
+IIUC, the second command will lookup the submodules in $(pwd), but if t=
+hey
+are not there they are skipped, so all of the existing submodules are c=
+loned.
+Why do you need more submodules in the tmp clone than in $(pwd)/project=
+A
+would be my next question. But I see your point now.
 
-Unlike other 'git describe' options, the '--contains' code path is
-implemented by calling 'name-rev' with a bunch of options plus all the
-commit-ishes that were passed to 'git describe'.  If no commit-ish was
-present, then 'name-rev' got invoked with none, which then leads to the
-behavior illustrated above.
 
-Porcelain commands usually default to HEAD when no commit-ish is given,
-and 'git describe' already does so in all other cases, so it should do
-so with '--contains' as well.
 
-Pass HEAD to 'name-rev' when no commit-ish is given on the command line
-to make '--contains' behave consistently with other 'git describe'
-options.  While at it, use argv_array_pushv() instead of the loop to
-pass commit-ishes to 'git name-rev'.
-
-'git describe's short help already indicates that the commit-ish is
-optional, but the synopsis in the man page doesn't, so update it
-accordingly as well.
-
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- Documentation/git-describe.txt | 4 ++--
- builtin/describe.c             | 8 ++++----
- t/t6120-describe.sh            | 8 ++++++++
- 3 files changed, 14 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describ=
-e.txt
-index e045fc73f8..c8f28c8c86 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -9,7 +9,7 @@ git-describe - Describe a commit using the most recent =
-tag reachable from it
- SYNOPSIS
- --------
- [verse]
--'git describe' [--all] [--tags] [--contains] [--abbrev=3D<n>] <commit-=
-ish>...
-+'git describe' [--all] [--tags] [--contains] [--abbrev=3D<n>] [<commit=
--ish>...]
- 'git describe' [--all] [--tags] [--contains] [--abbrev=3D<n>] --dirty[=
-=3D<mark>]
-=20
- DESCRIPTION
-@@ -27,7 +27,7 @@ see the -a and -s options to linkgit:git-tag[1].
- OPTIONS
- -------
- <commit-ish>...::
--	Commit-ish object names to describe.
-+	Commit-ish object names to describe.  Defaults to HEAD if omitted.
-=20
- --dirty[=3D<mark>]::
- 	Describe the working tree.
-diff --git a/builtin/describe.c b/builtin/describe.c
-index ce36032b1f..9dadfb58c8 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -443,10 +443,10 @@ int cmd_describe(int argc, const char **argv, con=
-st char *prefix)
- 			if (pattern)
- 				argv_array_pushf(&args, "--refs=3Drefs/tags/%s", pattern);
- 		}
--		while (*argv) {
--			argv_array_push(&args, *argv);
--			argv++;
--		}
-+		if (argc)
-+			argv_array_pushv(&args, argv);
-+		else
-+			argv_array_push(&args, "HEAD");
- 		return cmd_name_rev(args.argc, args.argv, prefix);
- 	}
-=20
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 57d50156bb..bf52a0a1cc 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -115,6 +115,14 @@ check_describe e-3-* --first-parent --tags
-=20
- check_describe $(git rev-parse --short HEAD) --exact-match --always HE=
-AD
-=20
-+test_expect_success 'describe --contains defaults to HEAD without comm=
-it-ish' '
-+	echo "A^0" >expect &&
-+	git checkout A &&
-+	test_when_finished "git checkout -" &&
-+	git describe --contains >actual &&
-+	test_cmp expect actual
-+'
-+
- : >err.expect
- check_describe A --all A^0
- test_expect_success 'no warning was displayed for A' '
---=20
-2.5.0.418.gdd37a9b
+>
+> Or am I mistaken, or doing something wrong?
+>
