@@ -1,142 +1,236 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 4/6] write_file_v(): do not leave incomplete line at the end
-Date: Mon, 24 Aug 2015 13:58:08 -0700
-Message-ID: <1440449890-29490-5-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 1/6] builtin/am: introduce write_state_*() helper functions
+Date: Mon, 24 Aug 2015 13:58:05 -0700
+Message-ID: <1440449890-29490-2-git-send-email-gitster@pobox.com>
 References: <xmqqzj1g31e5.fsf@gitster.dls.corp.google.com>
  <1440449890-29490-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 24 22:58:29 2015
+X-From: git-owner@vger.kernel.org Mon Aug 24 22:58:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTyp1-0006xJ-7j
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 22:58:27 +0200
+	id 1ZTyp3-0006xJ-3k
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 22:58:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754361AbbHXU6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2015 16:58:17 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:34759 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754249AbbHXU6P (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754197AbbHXU6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 24 Aug 2015 16:58:15 -0400
-Received: by pabzx8 with SMTP id zx8so14632629pab.1
-        for <git@vger.kernel.org>; Mon, 24 Aug 2015 13:58:15 -0700 (PDT)
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:36049 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753970AbbHXU6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2015 16:58:13 -0400
+Received: by padfo6 with SMTP id fo6so1680686pad.3
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 13:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:subject:date:message-id:in-reply-to:references;
-        bh=6+9O7vNf9Gu3ipo/xFkB4yElxKK58B1+6dl3tqhgImE=;
-        b=gwKxXiIvyRfJWXfzQivLSfBz/mQ5o7QXAsLoSD40pNe/6z8h3iOBYA/470OkheE215
-         jfzUBF4gdYCGZaF+v74TkJXLE/cd6/7uGeOm1j6V3oj+crzY2+3R0IhcqHdNRRqlefmM
-         cEEZQwcijOKlXs35V7Jk7yGslBy13DDvYjH1FIiRq6KbyCpRd9eBND0InS+rY6+/aWLC
-         nnjh/W2/bmthwrvRjFoecHuScg1moKfpnq2RNzXXxs122/zJgooFl9fLkuBccN0XdVdp
-         AOk0iUk5aygITYgvXVIMR/HYLM6qH1a5I7XFpcmIjnIt50GiCN9rEzaCo3JrcXKhhnZz
-         Czjg==
-X-Received: by 10.66.150.66 with SMTP id ug2mr10205300pab.4.1440449895324;
-        Mon, 24 Aug 2015 13:58:15 -0700 (PDT)
+        bh=mjnbkrEMIPRBDo8Mx2KavlWN1FGL9iq8avOux5HDPHI=;
+        b=j0pJlITTglBBajCGkz/BQZD7F0uwvOuw39Bnfm9T/LbsSRRX/QY7usRsX92Ib25yqJ
+         ahi4L+AaZjQg68MEVsmbezW+aHSSs54h6q1cr4pUdEvHKDLjWHMRwbjUmIXpFU8KIcfR
+         uzlVEhP/j8KohE2/Vov0dLnQfQSUY0vSpgX8Y1edVYJgy6WPpBdZ5eRv/Rtmp6y7Mc/j
+         M+V7ergeNN/f6toxGEDYlpGxBTM50YUBY8GOQxV/OdM4CQRpe7LAJg7zagWhIrn+9d0f
+         I8J3VySrt4wwqnRkVWED0xrHcGy2OfSfJZHsxR3/80Bkgev9S9I07MNuFaV60r0iMrvM
+         NYxw==
+X-Received: by 10.68.233.134 with SMTP id tw6mr50268705pbc.22.1440449892903;
+        Mon, 24 Aug 2015 13:58:12 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:813d:881a:159:a8e7])
-        by smtp.gmail.com with ESMTPSA id v5sm18433784pdo.87.2015.08.24.13.58.14
+        by smtp.gmail.com with ESMTPSA id m4sm18429462pda.90.2015.08.24.13.58.12
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Mon, 24 Aug 2015 13:58:14 -0700 (PDT)
+        Mon, 24 Aug 2015 13:58:12 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0-568-g53a3e28
 In-Reply-To: <1440449890-29490-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276485>
 
-All existing callers to this function use it to produce a text file
-or an empty file, and a new callsite that mimick them must end their
-payload with a LF.  If they forget to do so, the resulting file will
-end with an incomplete line.
+There are many calls to write_file() that repeat the same pattern in
+the implementation of the builtin version of "am".  They all share
+the same traits, i.e they
 
-Introduce WRITE_FILE_BINARY flag bit, which no existing callers
-pass, and unless that bit is set, make sure that write_file_v() adds
-an extra LF at the end of an incomplete line as necessary.
+ - produce a text file with a single string in it;
 
-With this, the caller-side fix in builtin/am.c becomes unnecessary.
+ - have enough information to produce the entire contents of that
+   file;
 
+ - generate the pathname of the file by making a call to am_path(); and
+
+ - they ask write_file() to die() upon failure.
+
+The slight differences among the call sites throw them into roughly
+three categories:
+
+ - many write either "t" or "f" based on a boolean value to a file;
+
+ - some write the integer value in decimal text;
+
+ - some others write more general string, e.g. an object name in
+   hex, an empty string (i.e. the presense of the file itself serves
+   as a flag), etc.
+
+Introduce three helpers, write_state_bool(), write_state_count() and
+write_state_text(), to reduce direct calls to write_file().
+
+This is a preparatory step for the next step to ensure that no
+"state" file this command leaves in $GIT_DIR is with an incomplete
+line at the end.
+
+Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/am.c | 10 ++--------
- wrapper.c    | 14 +++++++++++---
- 2 files changed, 13 insertions(+), 11 deletions(-)
+ builtin/am.c | 68 ++++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 41 insertions(+), 27 deletions(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index 9c57677..486ff59 100644
+index 634f7a7..4d34dc5 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -199,19 +199,13 @@ static inline const char *am_path(const struct am_state *state, const char *path
- static int write_state_text(const struct am_state *state,
- 			    const char *name, const char *string)
- {
--	const char *fmt;
+@@ -194,6 +194,27 @@ static inline const char *am_path(const struct am_state *state, const char *path
+ }
+ 
+ /**
++ * For convenience to call write_file()
++ */
++static int write_state_text(const struct am_state *state,
++			    const char *name, const char *string)
++{
++	return write_file(am_path(state, name), 1, "%s", string);
++}
++
++static int write_state_count(const struct am_state *state,
++			     const char *name, int value)
++{
++	return write_file(am_path(state, name), 1, "%d", value);
++}
++
++static int write_state_bool(const struct am_state *state,
++			    const char *name, int value)
++{
++	return write_state_text(state, name, value ? "t" : "f");
++}
++
++/**
+  * If state->quiet is false, calls fprintf(fp, fmt, ...), and appends a newline
+  * at the end.
+  */
+@@ -362,7 +383,7 @@ static void write_author_script(const struct am_state *state)
+ 	sq_quote_buf(&sb, state->author_date);
+ 	strbuf_addch(&sb, '\n');
+ 
+-	write_file(am_path(state, "author-script"), 1, "%s", sb.buf);
++	write_state_text(state, "author-script", sb.buf);
+ 
+ 	strbuf_release(&sb);
+ }
+@@ -1000,13 +1021,10 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 	if (state->rebasing)
+ 		state->threeway = 1;
+ 
+-	write_file(am_path(state, "threeway"), 1, state->threeway ? "t" : "f");
 -
--	if (*string && string[strlen(string) - 1] != '\n')
--		fmt = "%s\n";
--	else
--		fmt = "%s";
--	return write_file(am_path(state, name), fmt, string);
-+	return write_file(am_path(state, name), "%s", string);
- }
+-	write_file(am_path(state, "quiet"), 1, state->quiet ? "t" : "f");
+-
+-	write_file(am_path(state, "sign"), 1, state->signoff ? "t" : "f");
+-
+-	write_file(am_path(state, "utf8"), 1, state->utf8 ? "t" : "f");
++	write_state_bool(state, "threeway", state->threeway);
++	write_state_bool(state, "quiet", state->quiet);
++	write_state_bool(state, "sign", state->signoff);
++	write_state_bool(state, "utf8", state->utf8);
  
- static int write_state_count(const struct am_state *state,
- 			     const char *name, int value)
- {
--	return write_file(am_path(state, name), "%d\n", value);
-+	return write_file(am_path(state, name), "%d", value);
- }
- 
- static int write_state_bool(const struct am_state *state,
-diff --git a/wrapper.c b/wrapper.c
-index 8c8925b..db39e1b 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -621,17 +621,25 @@ char *xgetcwd(void)
- 	return strbuf_detach(&sb, NULL);
- }
- 
--static int write_file_v(const char *path, int fatal,
-+
-+#define WRITE_FILE_GENTLY (1 << 0)
-+#define WRITE_FILE_BINARY (1 << 1)
-+
-+static int write_file_v(const char *path, unsigned flags,
- 			const char *fmt, va_list params)
- {
-+	int fatal = !(flags & WRITE_FILE_GENTLY);
- 	struct strbuf sb = STRBUF_INIT;
- 	int fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0666);
-+
- 	if (fd < 0) {
- 		if (fatal)
- 			die_errno(_("could not open %s for writing"), path);
- 		return -1;
+ 	switch (state->keep) {
+ 	case KEEP_FALSE:
+@@ -1022,9 +1040,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 		die("BUG: invalid value for state->keep");
  	}
- 	strbuf_vaddf(&sb, fmt, params);
-+	if (!(flags & WRITE_FILE_BINARY))
-+		strbuf_complete_line(&sb);
- 	if (write_in_full(fd, sb.buf, sb.len) != sb.len) {
- 		int err = errno;
- 		close(fd);
-@@ -656,7 +664,7 @@ int write_file(const char *path, const char *fmt, ...)
- 	va_list params;
  
- 	va_start(params, fmt);
--	status = write_file_v(path, 1, fmt, params);
-+	status = write_file_v(path, 0, fmt, params);
- 	va_end(params);
- 	return status;
- }
-@@ -667,7 +675,7 @@ int write_file_gently(const char *path, const char *fmt, ...)
- 	va_list params;
+-	write_file(am_path(state, "keep"), 1, "%s", str);
+-
+-	write_file(am_path(state, "messageid"), 1, state->message_id ? "t" : "f");
++	write_state_text(state, "keep", str);
++	write_state_bool(state, "messageid", state->message_id);
  
- 	va_start(params, fmt);
--	status = write_file_v(path, 0, fmt, params);
-+	status = write_file_v(path, WRITE_FILE_GENTLY, fmt, params);
- 	va_end(params);
- 	return status;
+ 	switch (state->scissors) {
+ 	case SCISSORS_UNSET:
+@@ -1039,24 +1056,23 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 	default:
+ 		die("BUG: invalid value for state->scissors");
+ 	}
+-
+-	write_file(am_path(state, "scissors"), 1, "%s", str);
++	write_state_text(state, "scissors", str);
+ 
+ 	sq_quote_argv(&sb, state->git_apply_opts.argv, 0);
+-	write_file(am_path(state, "apply-opt"), 1, "%s", sb.buf);
++	write_state_text(state, "apply-opt", sb.buf);
+ 
+ 	if (state->rebasing)
+-		write_file(am_path(state, "rebasing"), 1, "%s", "");
++		write_state_text(state, "rebasing", "");
+ 	else
+-		write_file(am_path(state, "applying"), 1, "%s", "");
++		write_state_text(state, "applying", "");
+ 
+ 	if (!get_sha1("HEAD", curr_head)) {
+-		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(curr_head));
++		write_state_text(state, "abort-safety", sha1_to_hex(curr_head));
+ 		if (!state->rebasing)
+ 			update_ref("am", "ORIG_HEAD", curr_head, NULL, 0,
+ 					UPDATE_REFS_DIE_ON_ERR);
+ 	} else {
+-		write_file(am_path(state, "abort-safety"), 1, "%s", "");
++		write_state_text(state, "abort-safety", "");
+ 		if (!state->rebasing)
+ 			delete_ref("ORIG_HEAD", NULL, 0);
+ 	}
+@@ -1066,9 +1082,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 	 * session is in progress, they should be written last.
+ 	 */
+ 
+-	write_file(am_path(state, "next"), 1, "%d", state->cur);
+-
+-	write_file(am_path(state, "last"), 1, "%d", state->last);
++	write_state_count(state, "next", state->cur);
++	write_state_count(state, "last", state->last);
+ 
+ 	strbuf_release(&sb);
  }
+@@ -1101,12 +1116,12 @@ static void am_next(struct am_state *state)
+ 	unlink(am_path(state, "original-commit"));
+ 
+ 	if (!get_sha1("HEAD", head))
+-		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(head));
++		write_state_text(state, "abort-safety", sha1_to_hex(head));
+ 	else
+-		write_file(am_path(state, "abort-safety"), 1, "%s", "");
++		write_state_text(state, "abort-safety", "");
+ 
+ 	state->cur++;
+-	write_file(am_path(state, "next"), 1, "%d", state->cur);
++	write_state_count(state, "next", state->cur);
+ }
+ 
+ /**
+@@ -1479,8 +1494,7 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
+ 	write_commit_patch(state, commit);
+ 
+ 	hashcpy(state->orig_commit, commit_sha1);
+-	write_file(am_path(state, "original-commit"), 1, "%s",
+-			sha1_to_hex(commit_sha1));
++	write_state_text(state, "original-commit", sha1_to_hex(commit_sha1));
+ 
+ 	return 0;
+ }
+@@ -1782,7 +1796,7 @@ static void am_run(struct am_state *state, int resume)
+ 	refresh_and_write_cache();
+ 
+ 	if (index_has_changes(&sb)) {
+-		write_file(am_path(state, "dirtyindex"), 1, "t");
++		write_state_bool(state, "dirtyindex", 1);
+ 		die(_("Dirty index: cannot apply patches (dirty: %s)"), sb.buf);
+ 	}
+ 
 -- 
 2.5.0-568-g53a3e28
