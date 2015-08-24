@@ -1,84 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v13 00/12] port tag.c to use ref-filter APIs
-Date: Mon, 24 Aug 2015 11:53:47 -0700
-Message-ID: <xmqq8u904ix0.fsf@gitster.dls.corp.google.com>
-References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
-	<xmqqy4h04mx4.fsf@gitster.dls.corp.google.com>
-	<CAOLa=ZRYWNVmMeMCZSa+GcOTQ7NzuVB9RH_TFJ6-u7aFhrU=NA@mail.gmail.com>
+Subject: Re: [PATCH 0/5] "am" state file fix with write_file() clean-up
+Date: Mon, 24 Aug 2015 12:57:38 -0700
+Message-ID: <xmqqzj1g31e5.fsf@gitster.dls.corp.google.com>
+References: <20150824065033.GA4124@sigill.intra.peff.net>
+	<1440436186-7894-1-git-send-email-gitster@pobox.com>
+	<20150824174142.GA4794@sigill.intra.peff.net>
+	<xmqqlhd04ko4.fsf@gitster.dls.corp.google.com>
+	<20150824183554.GA5883@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 24 20:54:01 2015
+Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Aug 24 21:57:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTwsT-0005fx-UN
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 20:53:59 +0200
+	id 1ZTxsK-00043F-0O
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 21:57:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755231AbbHXSxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2015 14:53:51 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:34359 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751959AbbHXSxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2015 14:53:49 -0400
-Received: by pabzx8 with SMTP id zx8so12590654pab.1
-        for <git@vger.kernel.org>; Mon, 24 Aug 2015 11:53:49 -0700 (PDT)
+	id S1753855AbbHXT5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2015 15:57:41 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:33020 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750941AbbHXT5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2015 15:57:40 -0400
+Received: by pacti10 with SMTP id ti10so31091397pac.0
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 12:57:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=sbx40DdGNPldLSzqVNwqWmJkGSvI9JpssSM32s7tNm0=;
-        b=ZMhMuJHdLr3qQkbtFYOxPt5tWiEeHAXfuGrxz5ozPZ/LDGReBpEzCT4jHeWOm6pOY7
-         vUcKmeIRphpGb6DKohVQ3qUyGmUetg0V9SMqyY1PWCARXAwYwFPhtuhntJ4YCwHpVcq7
-         K085ak/2DisoEPQsEn3UsbcysSjUzJIuLv8fKz+p8xIUhXHs9S9yhvFkzxbS6CvaZPjv
-         y9YLJMagOgUlUAgPuyuKLwcYo2EkxkwiPFP4x2uGIoZ3InaIi3ut5uYVg18fXe9Fh0/5
-         UCbZ7jyWNU+Jdpyg9i+6qXkOfXUOzc4HdUJF6wTN/M6iGsc6itA2s+8oXc7yN5EIGL0g
-         MLmw==
-X-Received: by 10.68.117.142 with SMTP id ke14mr48748351pbb.93.1440442429206;
-        Mon, 24 Aug 2015 11:53:49 -0700 (PDT)
+        bh=2CR9Xgrjo7xJjRcG9T+foNRkccqD6c2joBCINWrMgLw=;
+        b=04eit0oeXhl8kbNvNRX1fCjOQBj5IjS5M9RbBX7ljWSQNBa66e8Usleu+3DaZ70+wh
+         0OLHkVW8gxnR+1+HcuoiXGnNELVgyl1XGLEjiNlGW5Hrc948OaFa363Po2Z2PwKCjHIp
+         3c0vKtG/1HHPQomMJYA8VBRG8UEq5eQrgY2u+Yh9Bk3cbX8ovZNtHU1D1JF+K7MgygDH
+         Ov3T0cJbsvY5qvfOBjWpKYFqoAYeU06rEZw8TIDgMxqvnqV/funT4BcZqJk1vacjHZQm
+         LkLmitfKz6YHwUkrTKIZsTM/lbbYx8BDZ65lfztEkOyaXjQKcvZhSOGjxQb8iF8T+iaD
+         ksIw==
+X-Received: by 10.66.255.42 with SMTP id an10mr47956591pad.107.1440446260003;
+        Mon, 24 Aug 2015 12:57:40 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:813d:881a:159:a8e7])
-        by smtp.gmail.com with ESMTPSA id cn1sm18241234pdb.91.2015.08.24.11.53.47
+        by smtp.gmail.com with ESMTPSA id df2sm11920540pad.19.2015.08.24.12.57.39
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Mon, 24 Aug 2015 11:53:48 -0700 (PDT)
-In-Reply-To: <CAOLa=ZRYWNVmMeMCZSa+GcOTQ7NzuVB9RH_TFJ6-u7aFhrU=NA@mail.gmail.com>
-	(Karthik Nayak's message of "Mon, 24 Aug 2015 23:39:06 +0530")
+        Mon, 24 Aug 2015 12:57:39 -0700 (PDT)
+In-Reply-To: <20150824183554.GA5883@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 24 Aug 2015 14:35:55 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276479>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Mon, Aug 24, 2015 at 10:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->> ...
->>> +     performed. If used with '--quote' everything in between %(align:..)
->>> +     and %(end) is quoted.
-> ...
-> I might have misunderstood you, But based on the discussion held here
-> (thread.gmane.org/gmane.comp.version-control.git/276140)
-> I thought we wanted everything inside the %(align) .... %(end) atoms
-> to be quoted.
+> On Mon, Aug 24, 2015 at 11:15:55AM -0700, Junio C Hamano wrote:
+>
+>> > This all looks good to me. The topics-in-flight compatibility stuff in
+>> > patches 3 and 5 is neatly done. Usually I would just cheat and change
+>> > the order of arguments to make the compiler notice such problems, but
+>> > that's hard to do here because of the varargs (you cannot just bump
+>> > "flags" to the end).
+>> 
+>> Actually, I think my compatibility stuff is worthless.  It would not
+>> catch new callers that wants to only probe and do their own error
+>> handling by passing 0 (and besides, assert() is a shoddy way to do
+>> this---there is no guarantee that tests will trigger all the
+>> codepaths in the first place).
+>
+> Oh, hrm, you're right. I was focused on making sure the common 1-passers
+> were not broken, but patch 3 does break 0-passers (obviously, because
+> they needed updated in the same patch ;) ).
+>
+> And I do agree that build-time assertions are much better than run-time
+> ones.
+>
+>> We should deprecate and remove write_file() by renaming the one with
+>> the updated semantics to something else, possibly with a backward
+>> compatiblity thin wrapper around it that is called write_file(), or
+>> without it to force a link-time error.
+>
+> That sounds reasonable. Maybe "format_to_file" or something?
 
-Perhaps I misunderstood your intention in the doc.
-	
-I took "everything in between %(align:...) and %(end) is quoted" to
-mean that
+I am going into a slightly different tangent.  Binary support is not
+something we need right now, so I'll keep the door open for that in
+the future by
 
-	%(if:empty)%(align)%(end)%(then)Empty%(else)Not Empty%(end)
+ - drop the "int fatal" altogether from write_file() without adding
+   "unsigned flags";
 
-can never satisfy %(if:empty), because %(align)%(end) would expand
-to a string that has two single-quotes, that is not an empty string.
+ - add write_file_gently(), again without "unsigned flags";
 
-If that is not what would happen in the "branch --list" enhancement,
-then the proposed behaviour is good, but the above documentation would
-need to be updated when it happens, I think.  It at least is misleading.
+ - make them call write_file_v() that takes "unsigned flags" and
+   va_list.
 
-Thanks.
+I earlier said there were 2 oddball callers, one of them being
+suspicious, but it turns out that there are 3 callers that want
+write_file_gently().  Only the one in the setup codepath is asking
+for "fatal=0" while discarding the error return, which is
+suspicious; other two are handling an error themselves and are OK.
