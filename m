@@ -1,85 +1,108 @@
-From: =?UTF-8?Q?J=C4=81nis_Ruk=C5=A1=C4=81ns?= <janis.ruksans@gmail.com>
-Subject: Re: Submodule, subtree, or something else?
-Date: Mon, 24 Aug 2015 20:53:15 +0300
-Message-ID: <1440438795.32140.98.camel@gmail.com>
-References: <1440197262.23145.191.camel@gmail.com>
-	 <CAGZ79kbUXwEYnpDWgKqnUab2xP4m9m7FMskaK2u8WcqnLSSoog@mail.gmail.com>
-	 <1440339066.32140.17.camel@gmail.com>
-	 <CAGZ79kY+HLzd4esdy+i82Eh5Vhc1NEDDfinD2iiBMvV41GSCiw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 2/2] worktree: add 'list' command
+Date: Mon, 24 Aug 2015 11:05:17 -0700
+Message-ID: <xmqqpp2c4l5u.fsf@gitster.dls.corp.google.com>
+References: <1440280294-50679-1-git-send-email-rappazzo@gmail.com>
+	<1440280294-50679-3-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Aug 24 19:53:25 2015
+Content-Type: text/plain
+Cc: sunshine@sunshineco.com, dturner@twopensource.com,
+	git@vger.kernel.org
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 24 20:05:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTvvx-00042A-6o
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 19:53:25 +0200
+	id 1ZTw7Z-0004cr-1K
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 20:05:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753894AbbHXRxV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Aug 2015 13:53:21 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:34785 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751179AbbHXRxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2015 13:53:19 -0400
-Received: by lbbtg9 with SMTP id tg9so85217126lbb.1
-        for <git@vger.kernel.org>; Mon, 24 Aug 2015 10:53:18 -0700 (PDT)
+	id S1752320AbbHXSFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2015 14:05:20 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:34439 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751235AbbHXSFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2015 14:05:19 -0400
+Received: by pabzx8 with SMTP id zx8so11758462pab.1
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 11:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :content-type:mime-version:content-transfer-encoding;
-        bh=lgzRDpjgfyB/4GVc4SVFZ+/30JWiehfj+CjFsLDZcCA=;
-        b=L/ck6pPH4LPo3ioioVr1TUwZlkzDTpVa3QX9iSt2BNWqC8XJMVjL41lLRg4ca+c29P
-         ED39ec/IegRu5lV8Oa4Wsg9Z2k2MXrqdCmKoxcjAC0gFicleOFaWMAzPtc0u0U/OotsA
-         khwxC7y4/TLp1yhJoYN5RKvtVAd0XjbaCUYVu34n/1RbhMZTk9bypX1Fbtui95w5RgbD
-         l8/QkygFeYv01lEa7E2jJAhkkrPvca20oYEgNt6eKopL/oTWd/C6FOhje/3M3eRLVJzd
-         7hwNngujxdtG1HKEXNKjDuOaqjfJ8wwDZ+S/8Hjn2vrk7Q0q9j46DdU6hVYXuU6RZC7z
-         OhYg==
-X-Received: by 10.112.52.2 with SMTP id p2mr21474118lbo.8.1440438798213;
-        Mon, 24 Aug 2015 10:53:18 -0700 (PDT)
-Received: from ganja (two.vendomar.lv. [195.244.143.5])
-        by smtp.googlemail.com with ESMTPSA id cm12sm5243720lbd.2.2015.08.24.10.53.16
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Aug 2015 10:53:16 -0700 (PDT)
-In-Reply-To: <CAGZ79kY+HLzd4esdy+i82Eh5Vhc1NEDDfinD2iiBMvV41GSCiw@mail.gmail.com>
-X-Mailer: Evolution 3.12.11 (3.12.11-1.fc21) 
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=KeOgDWCFyhoYOg573lsArL6Ytv1uyUzBxbk5YLmOpgU=;
+        b=TZi+Quyg0FVUK7iv6JUpI6JOYtCMxK8Uq09YRkmZL28Ysv9AcA62+K+7n+yyOdRlBc
+         41EYKorHqYkobv/Y4SszjbwWkle5NMaQDH7O/k/Mhk+JO8U2nPCiDMTPh73n0q0EH3KD
+         3McgB1m5fJhW0ut8JdIzRYxuWn33FpCNIqnNodnr3H64aYxS071hVB1iTxhQQtHZT6x9
+         CTOK2n7KoRTZRUkl1M2RsflkwZHks0Hxc/BLPlbyiQeBelFUar2QmYFgLmFCO2OF9u+F
+         vra49kT1z5K5UC9pCVHnrIjUHkHmeAF8zUrqN5SbhSakgNxBaSz4YmJkT6wA+uSwSuuJ
+         aSjg==
+X-Received: by 10.66.249.166 with SMTP id yv6mr48062110pac.126.1440439519230;
+        Mon, 24 Aug 2015 11:05:19 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:813d:881a:159:a8e7])
+        by smtp.gmail.com with ESMTPSA id c6sm18231001pat.13.2015.08.24.11.05.18
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Mon, 24 Aug 2015 11:05:18 -0700 (PDT)
+In-Reply-To: <1440280294-50679-3-git-send-email-rappazzo@gmail.com> (Michael
+	Rappazzo's message of "Sat, 22 Aug 2015 17:51:34 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276471>
 
-On P , 2015-08-24 at 09:51 -0700, Stefan Beller wrote:
-> IIUC, the second command will lookup the submodules in $(pwd), but if
-> they are not there they are skipped, so all of the existing submodule=
-s
-> are cloned.
-> Why do you need more submodules in the tmp clone than in
-> $(pwd)/projectA would be my next question. But I see your point now.
+Michael Rappazzo <rappazzo@gmail.com> writes:
 
-The $(pwd) was just an example to illustrate my point.  The actual use
-case is that I would be hacking on something at work, notice that it is
-already late and I have to catch the last bus home, yet I don't want to
-postpone whatever I was working on until the next day.  So I would do
-git commit -a -m "[WIP] Stuff, finish at home" to save my work so far,
-go home, and clone / fetch it over ssh.
+> +static int print_worktree_details(const char *path, const char *git_dir, void *cb_data)
+> +{
+> +	struct strbuf head_file = STRBUF_INIT;
+> +	struct strbuf head_ref = STRBUF_INIT;
+> +	struct stat st;
+> +	struct list_opts *opts = cb_data;
+> +	const char *ref_prefix = "ref: refs/heads/";
+> +
+> +	strbuf_addf(&head_file, "%s/HEAD", git_dir);
+> +	if (!opts->path_only && !stat(head_file.buf, &st)) {
+> +		strbuf_read_file(&head_ref, head_file.buf, st.st_size);
 
-Another important factor is that a lot of our code can be meaningfully
-tested only on the actual hardware, and is built in a VM.  Quite often
-getting things right involve many iterations of hack hack hack, git
-commit --amend, fetch && reset --hard in the VM, build, test, repeat.
-Being able to clone / fetch directly from the copy I am working on make=
-s
-it a lot easier.
+This does not work for traditional "symlinked HEAD", no?
 
-As I wrote in the other e-mail, I managed to achieve the desired result
-by using ./<submodule> (without .git suffix) as the submodule URL, and
-creating a file named <submodule> in the bare repo with
-'gitdir: ../<submodule.git>' as it's contents, but I'm not sure whether
-it is a good idea or not.
+I'd prefer to see the callback functions of for_each_worktree() not
+to duplicate the logic we already have elsewhere in the system.
+Such an incomplete attempt to duplication (as we see here) will lead
+to unnecessary bugs (as we see here).
 
-J=C4=81nis
+Conceptually, for-each-worktree should give us the worktree root
+(i.e. equivalent to $GIT_WORK_TREE in the pre-multi-worktree world)
+and the git directory (i.e. equivalent to $GIT_DIR in the
+pre-multi-worktree world), and the callbacks should be able to do an
+equivalent of
+
+    system("git --work-tree=$GIT_WORK_TREE --git-dir=$GIT_DIR cmd")
+
+where in this particular case "cmd" may be "symbolic-ref HEAD" or
+something, no?
+
+> +		strbuf_strip_suffix(&head_ref, "\n");
+> +
+> +		if (starts_with(head_ref.buf, ref_prefix)) {
+> +			/* branch checked out */
+> +			strbuf_remove(&head_ref, 0, strlen(ref_prefix));
+> +		/* } else {
+> +		 *  headless -- no-op
+> +		 */
+> +		}
+> +		printf("%s  (%s)\n", path, head_ref.buf);
+
+Is this new command meant to be a Porcelain?  This would not work as
+a plumbing that produces a machine-parseable stable output.
+
+I am not saying that it _should_; I do not know if we even need a
+'list' command that is driven from an end-user script that gives
+anything more than "where the work trees are".
+
+My inclination is to suggest dropping the "which branch" code
+altogether and only give "path_only" behaviour.
+
+Thanks.
