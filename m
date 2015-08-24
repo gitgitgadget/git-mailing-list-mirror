@@ -1,101 +1,95 @@
-From: Luke Diamand <luke@diamand.org>
+From: Lars Schneider <larsxschneider@gmail.com>
 Subject: Re: [PATCH v4] git-p4: fix faulty paths for case insensitive systems
-Date: Mon, 24 Aug 2015 13:28:14 +0100
-Message-ID: <CAE5ih78P2-oiZTY-d_5NYgchG3mh4FVy8GaNmBhicmmceU2k8w@mail.gmail.com>
-References: <1440177578-5317-1-git-send-email-larsxschneider@gmail.com>
-	<CAE5ih7_zTP-5WFtPfEcgVsG-sV6k2BhfYh5Z_ttS0oVvJx4NgA@mail.gmail.com>
-	<24F604FE-6052-4250-80CD-3C366FE5D8DC@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Date: Mon, 24 Aug 2015 14:43:29 +0200
+Message-ID: <FB860908-F176-4EA3-A2D1-962E97BD12F7@gmail.com>
+References: <1440177578-5317-1-git-send-email-larsxschneider@gmail.com> <CAE5ih7_zTP-5WFtPfEcgVsG-sV6k2BhfYh5Z_ttS0oVvJx4NgA@mail.gmail.com> <24F604FE-6052-4250-80CD-3C366FE5D8DC@gmail.com> <CAE5ih78P2-oiZTY-d_5NYgchG3mh4FVy8GaNmBhicmmceU2k8w@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Users <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>,
 	Tor Arvid Lund <torarvid@gmail.com>, ksaitoh560@gmail.com,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	=?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 24 14:28:26 2015
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Mon Aug 24 14:43:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTqrR-0001D3-4N
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 14:28:25 +0200
+	id 1ZTr6F-0002uf-H0
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 14:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754262AbbHXM2R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Aug 2015 08:28:17 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:32853 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754185AbbHXM2P convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2015 08:28:15 -0400
-Received: by obbhe7 with SMTP id he7so111441227obb.0
-        for <git@vger.kernel.org>; Mon, 24 Aug 2015 05:28:14 -0700 (PDT)
+	id S932934AbbHXMne convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Aug 2015 08:43:34 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:36646 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932183AbbHXMnd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2015 08:43:33 -0400
+Received: by wicja10 with SMTP id ja10so70831948wic.1
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 05:43:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=d6WRPF0c/h5GLB6LvicgNBrLW6WeBIZ23owsOOK/Qqw=;
-        b=N6HKNsFkKB8dl74KPY6+fBhf8B7s/2SOxe4pdycU42/P/AyUmwnCNwxgLRXOxJc1rt
-         UHIg96exqIHD9PUElvx+g6val9oFu050qaYjGE6jugQcb/2+51UDUnqbc99cZ/40mT6y
-         3lXqABUtqwzHZE6AoKIT/AgqNxc18kmMWGUec=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=d6WRPF0c/h5GLB6LvicgNBrLW6WeBIZ23owsOOK/Qqw=;
-        b=hPzpZA3JEn8ZAXDLrXNin3rD1vk+foz84wyBQ1t0PcmcLPSWYF3FeD3QcgBZKK0Gy2
-         0p/U4QbHVPYYL7Rsxo2tldrvc4eKrrV/tBfEFeFvmtMK/B+PpuNI+WXHimomaAI9LQGM
-         ZsSbz5H83XyYgx99rvuhboqmgdj7ZoE0QqJRNfThx+a9MIuS4nstB1byKSAvslTVSDpq
-         8OFaRTdrByxE1nf5tf74jkzAJyD9ZBVM098uK2p7p9E2JlQFYX4cdqN87T3IQR1PGChf
-         T1woRz2RzGdVxZ4+3M6Nq/+l74y91YDLdWq0MqLM62mywhy+YfKimGSkDoKooWwsTLqd
-         +GlQ==
-X-Gm-Message-State: ALoCoQmcF4UlAZFK9mWjQYlYBEbImE67aIPPQga4STBtQHnOe5Zw9qadSuOLkQ++hV97VesOuzxK
-X-Received: by 10.60.54.1 with SMTP id f1mr21562954oep.68.1440419294280; Mon,
- 24 Aug 2015 05:28:14 -0700 (PDT)
-Received: by 10.60.162.5 with HTTP; Mon, 24 Aug 2015 05:28:14 -0700 (PDT)
-In-Reply-To: <24F604FE-6052-4250-80CD-3C366FE5D8DC@gmail.com>
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=RfpEv0X+aWW1PSWfE0jyKA1ZMDQw1MVWQvfrCr37a2o=;
+        b=swq/IfDpT1V2jwaOItzog3V7J6q/rU1WOLK2hDroT8a7XviLOpQdlYpYVR82KScRq+
+         tVeWAyJJM6tm+4DaS8SCVdfPVb0BlbzhLBwKJHk3Y2LiO3U9xaA3/XP/DBgs+D2cfiq6
+         myQ3X44CLurf9TUHxZcVchEzTR2Ve/ANbJ95ZsSEgmvhEztTXehpj+JpKpNurFFlF53M
+         Gg4QtFYwI2QkJ4N1vFgj+zehHTiI/M+tQFbB1VJSeWFc/MO+aNKY4jfmUXdacjd7HTIG
+         RxrS02WCsFot5hJhVmAoKWNTKp1rIdzEODxxeKLPEw1D32Itaot+AV1sK5q/S6nuZY88
+         qlfQ==
+X-Received: by 10.194.92.143 with SMTP id cm15mr41177972wjb.17.1440420212262;
+        Mon, 24 Aug 2015 05:43:32 -0700 (PDT)
+Received: from slxbook3.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id r8sm12195989wik.16.2015.08.24.05.43.31
+        (version=TLS1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 24 Aug 2015 05:43:31 -0700 (PDT)
+In-Reply-To: <CAE5ih78P2-oiZTY-d_5NYgchG3mh4FVy8GaNmBhicmmceU2k8w@mail.gmail.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276446>
 
-On 24 August 2015 at 10:51, Lars Schneider <larsxschneider@gmail.com> w=
-rote:
->>
->> I'm still trying to fully understand what's going on here - can you
->> point out where I've got it wrong below please!
-> Your welcome + sure :)
->
 
-<snip>
+>=20
+> <snip>
+>=20
+>>=20
+>> While I was working on the examples for this email reply I realized =
+that the problem is only present for paths given in a client-spec. I ad=
+ded a test case to prove that. That means I don=92t need to request *al=
+l* paths. I *think* it is sufficient to request the paths mentioned in =
+the client spec which would usually be really fast. Stay tuned for PATC=
+H v5.
+>=20
+> I've just tried a small experiment with stock unaltered git-p4.
+>=20
+> - Started p4d with -C1 option to case-fold.
+> - Add some files with different cases of directory (Path/File1,
+> PATH/File2, pATH/File3).
+> - git-p4 clone.
+>=20
+> The result of the clone is separate directories if I do nothing
+> special (PATH/File1, Path/File2, etc). But if I set core.ignorecase, =
+I
+> get a single case-folded directory, Path/File1, Path/File2, etc. I'm
+> still failing to get how that isn't what you need (other than being a
+> bit obscure to get to the right invocation).
+>=20
+> I've put a script that shows this here:
+>=20
+> https://github.com/luked99/quick-git-p4-case-folding-test
+As mentioned I realized that the problem occurs only if you use client =
+specs. Can you take a look at this test case / run it?
+https://github.com/larsxschneider/git/blob/d3a191cb5fb4d8f5f48ca9314c77=
+2169d5dbf65b/t/t9821-git-p4-path-variations.sh#L112-L127
 
->
-> While I was working on the examples for this email reply I realized t=
-hat the problem is only present for paths given in a client-spec. I add=
-ed a test case to prove that. That means I don=E2=80=99t need to reques=
-t *all* paths. I *think* it is sufficient to request the paths mentione=
-d in the client spec which would usually be really fast. Stay tuned for=
- PATCH v5.
+Does this make sense to you? If you want to I could also modify =93quic=
+k-git-p4-case-folding-test=94 to show the problem.
 
-I've just tried a small experiment with stock unaltered git-p4.
-
-- Started p4d with -C1 option to case-fold.
-- Add some files with different cases of directory (Path/File1,
-PATH/File2, pATH/File3).
-- git-p4 clone.
-
-The result of the clone is separate directories if I do nothing
-special (PATH/File1, Path/File2, etc). But if I set core.ignorecase, I
-get a single case-folded directory, Path/File1, Path/File2, etc. I'm
-still failing to get how that isn't what you need (other than being a
-bit obscure to get to the right invocation).
-
-I've put a script that shows this here:
-
-https://github.com/luked99/quick-git-p4-case-folding-test
-
-Thanks!
-Luke
+Cheers,
+Lars
