@@ -1,93 +1,90 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v13 11/12] tag.c: implement '--format' option
-Date: Mon, 24 Aug 2015 20:51:54 +0530
-Message-ID: <CAOLa=ZR6L1LjaD2pTsN1BCh5fHk7CvsE_9KeS3F4f1+RDDzrXw@mail.gmail.com>
+Subject: Re: [PATCH v13 00/12] port tag.c to use ref-filter APIs
+Date: Mon, 24 Aug 2015 20:52:45 +0530
+Message-ID: <CAOLa=ZRbWDBEoSkeGRdL2qS5BCEka=zmJL0JXdE9fvomrmOGcQ@mail.gmail.com>
 References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
- <1440214788-1309-12-git-send-email-Karthik.188@gmail.com> <vpq37z9lqwp.fsf@anie.imag.fr>
- <CAOLa=ZR4LJSou5QqmZJm1M49tD74t4Besb64F+XOHefjnxo7xw@mail.gmail.com> <vpq37z8afci.fsf@anie.imag.fr>
+ <vpqzj1hkc5q.fsf@anie.imag.fr> <CAOLa=ZQx_eWdq5cLskAT_c1OjZ-7DwWwZTC9S=ZafEDYHFGncg@mail.gmail.com>
+ <vpqvbc490oh.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 24 17:22:34 2015
+X-From: git-owner@vger.kernel.org Mon Aug 24 17:23:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTtZt-0000ko-Nd
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 17:22:30 +0200
+	id 1ZTtaj-0001PR-CW
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 17:23:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754813AbbHXPWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2015 11:22:24 -0400
-Received: from mail-oi0-f43.google.com ([209.85.218.43]:34187 "EHLO
-	mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754798AbbHXPWY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2015 11:22:24 -0400
-Received: by oiey141 with SMTP id y141so82201396oie.1
-        for <git@vger.kernel.org>; Mon, 24 Aug 2015 08:22:23 -0700 (PDT)
+	id S1754832AbbHXPXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2015 11:23:15 -0400
+Received: from mail-oi0-f54.google.com ([209.85.218.54]:33258 "EHLO
+	mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754738AbbHXPXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2015 11:23:15 -0400
+Received: by oieu205 with SMTP id u205so11986990oie.0
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 08:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=gcKnXtotTJ0GXsAYcQbEFh4+5+iOsUDV7l8Tw5Atc2g=;
-        b=GagHqkJ5pHJGNWaJGRUTJ7oEHRhu2F44sLvfac3dNvjRQjemtHaXsE/bopQ203LRYa
-         AMIGV2nlK8IJepRkaDv4b4zYMs4wVDVLXMe1MOqBHPIiZBlkO9cQqSXANizN7qbw0O0e
-         5InVrhzj/XzhzB+AU+ZrRVMN/ztAoDx/PPRGac7e9SVLocchpoVJjaCqSBler4Ft+1qK
-         vsa7T4ebLXThXYhmIOzlnDvoNpicHT8piATTbNlDtZ/uQUrgi+idiJ/bR8+3UC8/0VWe
-         9CLQf7ALpvn7Bir8YL/cif1QTGvgqzzBLrYwS5dmSnfLJQpXl1AG1mAzSaZococisbg8
-         DAPg==
-X-Received: by 10.202.92.65 with SMTP id q62mr20302156oib.11.1440429743582;
- Mon, 24 Aug 2015 08:22:23 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Mon, 24 Aug 2015 08:21:54 -0700 (PDT)
-In-Reply-To: <vpq37z8afci.fsf@anie.imag.fr>
+        bh=iMayq7P8myvy1oad+J6pieW3m5a0jvQ3Z9J5fCR2lNE=;
+        b=gFD9TtG+loIQk0tQAqxFS9kl9XJtOEJmHi8330gbRFsOnlGwoEkl61SJ4XbKNzy4H6
+         QkXCJTdnk2JV08dkiWjN1WnnGk0PBpRQDdIUmEhstoUywaBBC/UlkvmwbibLgkYgY5zf
+         2TVOjupIiKplmXz/ekqGG9qY/S4emLJ5qWZPq6EmohP7mEWQ20pJHZ2VIKhLPw4ZfZk9
+         ddcDeTAbscmMUZUnnuf+3KsM5KVZh1HE6fKA2EajYpnhrirHUqm0qx8/L3kw0N6XBw71
+         xiHRGkVa2kqIIGZ56LKM7JhESeP4DsXO0eupcWb/wOcMms5qzdZLr6m03x6bq6DzAsfy
+         j5+g==
+X-Received: by 10.202.105.133 with SMTP id e127mr20860860oic.60.1440429794485;
+ Mon, 24 Aug 2015 08:23:14 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Mon, 24 Aug 2015 08:22:45 -0700 (PDT)
+In-Reply-To: <vpqvbc490oh.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276455>
 
-On Mon, Aug 24, 2015 at 8:44 PM, Matthieu Moy
+On Mon, Aug 24, 2015 at 8:46 PM, Matthieu Moy
 <Matthieu.Moy@grenoble-inp.fr> wrote:
 > Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> On Mon, Aug 24, 2015 at 1:26 AM, Matthieu Moy
+>> On Mon, Aug 24, 2015 at 1:30 AM, Matthieu Moy
 >> <Matthieu.Moy@grenoble-inp.fr> wrote:
 >>> Karthik Nayak <karthik.188@gmail.com> writes:
 >>>
->>>> --- a/Documentation/git-tag.txt
->>>> +++ b/Documentation/git-tag.txt
->>>> @@ -13,7 +13,8 @@ SYNOPSIS
->>>>       <tagname> [<commit> | <object>]
->>>>  'git tag' -d <tagname>...
->>>>  'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
->>>> -     [--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>] [<pattern>...]
->>>> +     [--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
->>>> +     [--format=<format>] [<pattern>...]
->>>>  'git tag' -v <tagname>...
->>>>
->>>>  DESCRIPTION
->>>> @@ -158,6 +159,11 @@ This option is only applicable when listing tags without annotation lines.
->>>>       The object that the new tag will refer to, usually a commit.
->>>>       Defaults to HEAD.
->>>>
->>>> +<format>::
+>>>> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+>>>> index 1997657..06d468e 100644
+>>>> --- a/Documentation/git-for-each-ref.txt
+>>>> +++ b/Documentation/git-for-each-ref.txt
+>>>> @@ -133,7 +133,8 @@ align::
+>>>>       `<position>` is either left, right or middle and `<width>` is
+>>>>       the total length of the content with alignment. If the
+>>>>       contents length is more than the width then no alignment is
+>>>> -     performed.
+>>>> +     performed. If used with '--quote' everything in between %(align:..)
+>>>> +     and %(end) is quoted.
 >>>
->>> Shouldn't this be --format <format>, not just <format>? We usually use
->>> the named argument in the SYNOPSIS for positional arguments, but not for
->>> arguments following an option.
+>>> There's no --quote, there are --shell, --python, ... (well, actually, I
+>>> would have prefered to have a single --quote=language option, but that's
+>>> not how it is now).
 >>
->> This is how it was in for-each-ref Documentation, hence to keep it similar I
->> just put <format>.
+>> That'd be easy to implement, but I didn't because `git tag -l` is
+>> human readable and
+>> I didn't see the necessity for having something like `--<quote_type>` here.
 >
-> "It's wrong in another place" sounds like an argument to fix the other
-> place, not to get it wrong here too ;-).
+> Agreed: tag does not have --shell, --python & so and does not need it.
+>
+> But that's not my point: you write "if used with '--quote'", and the
+> option name is not --quote. It should be "if used with `--shell`,
+> `--python`, ... then everything ...".
 >
 
-Of course! That was just me justifying my action. I agree, it should
-be corrected both places.
+Oops! misread what you sent, maybe' --<quote_type>' instead.
 
 -- 
 Regards,
