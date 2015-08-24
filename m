@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/6] builtin/am: introduce write_state_*() helper functions
-Date: Mon, 24 Aug 2015 13:58:05 -0700
-Message-ID: <1440449890-29490-2-git-send-email-gitster@pobox.com>
+Subject: [PATCH v2 3/6] write_file(): drop "fatal" parameter
+Date: Mon, 24 Aug 2015 13:58:07 -0700
+Message-ID: <1440449890-29490-4-git-send-email-gitster@pobox.com>
 References: <xmqqzj1g31e5.fsf@gitster.dls.corp.google.com>
  <1440449890-29490-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
@@ -11,226 +11,267 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTyp3-0006xJ-3k
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 22:58:29 +0200
+	id 1ZTyp3-0006xJ-Nx
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 22:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754197AbbHXU6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754584AbbHXU62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2015 16:58:28 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:34748 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754124AbbHXU6P (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 24 Aug 2015 16:58:15 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:36049 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753970AbbHXU6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2015 16:58:13 -0400
-Received: by padfo6 with SMTP id fo6so1680686pad.3
-        for <git@vger.kernel.org>; Mon, 24 Aug 2015 13:58:12 -0700 (PDT)
+Received: by pabzx8 with SMTP id zx8so14632401pab.1
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 13:58:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:subject:date:message-id:in-reply-to:references;
-        bh=mjnbkrEMIPRBDo8Mx2KavlWN1FGL9iq8avOux5HDPHI=;
-        b=j0pJlITTglBBajCGkz/BQZD7F0uwvOuw39Bnfm9T/LbsSRRX/QY7usRsX92Ib25yqJ
-         ahi4L+AaZjQg68MEVsmbezW+aHSSs54h6q1cr4pUdEvHKDLjWHMRwbjUmIXpFU8KIcfR
-         uzlVEhP/j8KohE2/Vov0dLnQfQSUY0vSpgX8Y1edVYJgy6WPpBdZ5eRv/Rtmp6y7Mc/j
-         M+V7ergeNN/f6toxGEDYlpGxBTM50YUBY8GOQxV/OdM4CQRpe7LAJg7zagWhIrn+9d0f
-         I8J3VySrt4wwqnRkVWED0xrHcGy2OfSfJZHsxR3/80Bkgev9S9I07MNuFaV60r0iMrvM
-         NYxw==
-X-Received: by 10.68.233.134 with SMTP id tw6mr50268705pbc.22.1440449892903;
-        Mon, 24 Aug 2015 13:58:12 -0700 (PDT)
+        bh=dc9mHkak2JdH8Ks0C1/LdEmXlC7iYKJvq7VowOntwJQ=;
+        b=t1zf47Lppn4cmJkcqyswyyWf90ZiSmBZMNFnwDq4iwxUS+nx+FsgFoW/HVGk10iu3Y
+         q8QmUsAx3coym7twb5N/7N+SwnApJhecWR/A/HJGMRmSF7UEDSshzlbOswbKH1SHwccX
+         HHYCPRnrpUpVbWkG4mTud88ibtFWA5smMzTgvZf9EzfrJ5DnONiLnS91BVzSodLofgqv
+         cnr+sG4webZM3CKjGsd566o0qqHKQpsy47AkAuIuNet2ykI2xc0Wx7/nQzH41cCWm7f5
+         HLIJRtG3cHAEJEkFAmBNMwqH0Ko58ZPVzUWvRrOvwhWrKi3CBmMwrb4HykN0phyrXpjY
+         qXkA==
+X-Received: by 10.67.30.161 with SMTP id kf1mr49635627pad.89.1440449894491;
+        Mon, 24 Aug 2015 13:58:14 -0700 (PDT)
 Received: from localhost ([2620:0:10c2:1012:813d:881a:159:a8e7])
-        by smtp.gmail.com with ESMTPSA id m4sm18429462pda.90.2015.08.24.13.58.12
+        by smtp.gmail.com with ESMTPSA id pg5sm18430726pdb.81.2015.08.24.13.58.13
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Mon, 24 Aug 2015 13:58:12 -0700 (PDT)
+        Mon, 24 Aug 2015 13:58:14 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0-568-g53a3e28
 In-Reply-To: <1440449890-29490-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276486>
 
-There are many calls to write_file() that repeat the same pattern in
-the implementation of the builtin version of "am".  They all share
-the same traits, i.e they
+All callers except three passed 1 for the "fatal" parameter to ask
+this function to die upon error, but to a casual reader of the code,
+it was not all obvious what that 1 meant.  Instead, split the
+function into two based on a common write_file_v() that takes the
+flag, introduce write_file_gently() as a new way to attempt creating
+a file without dying on error, and make three callers to call it.
 
- - produce a text file with a single string in it;
-
- - have enough information to produce the entire contents of that
-   file;
-
- - generate the pathname of the file by making a call to am_path(); and
-
- - they ask write_file() to die() upon failure.
-
-The slight differences among the call sites throw them into roughly
-three categories:
-
- - many write either "t" or "f" based on a boolean value to a file;
-
- - some write the integer value in decimal text;
-
- - some others write more general string, e.g. an object name in
-   hex, an empty string (i.e. the presense of the file itself serves
-   as a flag), etc.
-
-Introduce three helpers, write_state_bool(), write_state_count() and
-write_state_text(), to reduce direct calls to write_file().
-
-This is a preparatory step for the next step to ensure that no
-"state" file this command leaves in $GIT_DIR is with an incomplete
-line at the end.
-
-Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/am.c | 68 ++++++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 41 insertions(+), 27 deletions(-)
+ builtin/am.c       |  4 ++--
+ builtin/branch.c   |  2 +-
+ builtin/init-db.c  |  2 +-
+ builtin/worktree.c | 10 +++++-----
+ cache.h            |  5 +++--
+ daemon.c           |  2 +-
+ setup.c            |  2 +-
+ submodule.c        |  2 +-
+ transport.c        |  2 +-
+ wrapper.c          | 28 ++++++++++++++++++++++++----
+ 10 files changed, 40 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index 634f7a7..4d34dc5 100644
+index f0a046b..9c57677 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -194,6 +194,27 @@ static inline const char *am_path(const struct am_state *state, const char *path
- }
- 
- /**
-+ * For convenience to call write_file()
-+ */
-+static int write_state_text(const struct am_state *state,
-+			    const char *name, const char *string)
-+{
-+	return write_file(am_path(state, name), 1, "%s", string);
-+}
-+
-+static int write_state_count(const struct am_state *state,
-+			     const char *name, int value)
-+{
-+	return write_file(am_path(state, name), 1, "%d", value);
-+}
-+
-+static int write_state_bool(const struct am_state *state,
-+			    const char *name, int value)
-+{
-+	return write_state_text(state, name, value ? "t" : "f");
-+}
-+
-+/**
-  * If state->quiet is false, calls fprintf(fp, fmt, ...), and appends a newline
-  * at the end.
-  */
-@@ -362,7 +383,7 @@ static void write_author_script(const struct am_state *state)
- 	sq_quote_buf(&sb, state->author_date);
- 	strbuf_addch(&sb, '\n');
- 
--	write_file(am_path(state, "author-script"), 1, "%s", sb.buf);
-+	write_state_text(state, "author-script", sb.buf);
- 
- 	strbuf_release(&sb);
- }
-@@ -1000,13 +1021,10 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 	if (state->rebasing)
- 		state->threeway = 1;
- 
--	write_file(am_path(state, "threeway"), 1, state->threeway ? "t" : "f");
--
--	write_file(am_path(state, "quiet"), 1, state->quiet ? "t" : "f");
--
--	write_file(am_path(state, "sign"), 1, state->signoff ? "t" : "f");
--
--	write_file(am_path(state, "utf8"), 1, state->utf8 ? "t" : "f");
-+	write_state_bool(state, "threeway", state->threeway);
-+	write_state_bool(state, "quiet", state->quiet);
-+	write_state_bool(state, "sign", state->signoff);
-+	write_state_bool(state, "utf8", state->utf8);
- 
- 	switch (state->keep) {
- 	case KEEP_FALSE:
-@@ -1022,9 +1040,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 		die("BUG: invalid value for state->keep");
- 	}
- 
--	write_file(am_path(state, "keep"), 1, "%s", str);
--
--	write_file(am_path(state, "messageid"), 1, state->message_id ? "t" : "f");
-+	write_state_text(state, "keep", str);
-+	write_state_bool(state, "messageid", state->message_id);
- 
- 	switch (state->scissors) {
- 	case SCISSORS_UNSET:
-@@ -1039,24 +1056,23 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 	default:
- 		die("BUG: invalid value for state->scissors");
- 	}
--
--	write_file(am_path(state, "scissors"), 1, "%s", str);
-+	write_state_text(state, "scissors", str);
- 
- 	sq_quote_argv(&sb, state->git_apply_opts.argv, 0);
--	write_file(am_path(state, "apply-opt"), 1, "%s", sb.buf);
-+	write_state_text(state, "apply-opt", sb.buf);
- 
- 	if (state->rebasing)
--		write_file(am_path(state, "rebasing"), 1, "%s", "");
-+		write_state_text(state, "rebasing", "");
+@@ -205,13 +205,13 @@ static int write_state_text(const struct am_state *state,
+ 		fmt = "%s\n";
  	else
--		write_file(am_path(state, "applying"), 1, "%s", "");
-+		write_state_text(state, "applying", "");
+ 		fmt = "%s";
+-	return write_file(am_path(state, name), 1, fmt, string);
++	return write_file(am_path(state, name), fmt, string);
+ }
  
- 	if (!get_sha1("HEAD", curr_head)) {
--		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(curr_head));
-+		write_state_text(state, "abort-safety", sha1_to_hex(curr_head));
- 		if (!state->rebasing)
- 			update_ref("am", "ORIG_HEAD", curr_head, NULL, 0,
- 					UPDATE_REFS_DIE_ON_ERR);
- 	} else {
--		write_file(am_path(state, "abort-safety"), 1, "%s", "");
-+		write_state_text(state, "abort-safety", "");
- 		if (!state->rebasing)
- 			delete_ref("ORIG_HEAD", NULL, 0);
+ static int write_state_count(const struct am_state *state,
+ 			     const char *name, int value)
+ {
+-	return write_file(am_path(state, name), 1, "%d\n", value);
++	return write_file(am_path(state, name), "%d\n", value);
+ }
+ 
+ static int write_state_bool(const struct am_state *state,
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 58aa84f..ff05869 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -776,7 +776,7 @@ static int edit_branch_description(const char *branch_name)
+ 		    "  %s\n"
+ 		    "Lines starting with '%c' will be stripped.\n",
+ 		    branch_name, comment_line_char);
+-	if (write_file(git_path(edit_description), 0, "%s", buf.buf)) {
++	if (write_file_gently(git_path(edit_description), "%s", buf.buf)) {
+ 		strbuf_release(&buf);
+ 		return error(_("could not write branch description template: %s"),
+ 			     strerror(errno));
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 49df78d..bfe1d08 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -378,7 +378,7 @@ static void separate_git_dir(const char *git_dir)
+ 			die_errno(_("unable to move %s to %s"), src, git_dir);
  	}
-@@ -1066,9 +1082,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 	 * session is in progress, they should be written last.
+ 
+-	write_file(git_link, 1, "gitdir: %s\n", git_dir);
++	write_file(git_link, "gitdir: %s\n", git_dir);
+ }
+ 
+ int init_db(const char *template_dir, unsigned int flags)
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 6a264ee..368502d 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -213,7 +213,7 @@ static int add_worktree(const char *path, const char **child_argv)
+ 	 * after the preparation is over.
  	 */
+ 	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
+-	write_file(sb.buf, 1, "initializing\n");
++	write_file(sb.buf, "initializing\n");
  
--	write_file(am_path(state, "next"), 1, "%d", state->cur);
--
--	write_file(am_path(state, "last"), 1, "%d", state->last);
-+	write_state_count(state, "next", state->cur);
-+	write_state_count(state, "last", state->last);
+ 	strbuf_addf(&sb_git, "%s/.git", path);
+ 	if (safe_create_leading_directories_const(sb_git.buf))
+@@ -223,8 +223,8 @@ static int add_worktree(const char *path, const char **child_argv)
  
- 	strbuf_release(&sb);
+ 	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s/gitdir", sb_repo.buf);
+-	write_file(sb.buf, 1, "%s\n", real_path(sb_git.buf));
+-	write_file(sb_git.buf, 1, "gitdir: %s/worktrees/%s\n",
++	write_file(sb.buf, "%s\n", real_path(sb_git.buf));
++	write_file(sb_git.buf, "gitdir: %s/worktrees/%s\n",
+ 		   real_path(get_git_common_dir()), name);
+ 	/*
+ 	 * This is to keep resolve_ref() happy. We need a valid HEAD
+@@ -241,10 +241,10 @@ static int add_worktree(const char *path, const char **child_argv)
+ 		die(_("unable to resolve HEAD"));
+ 	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
+-	write_file(sb.buf, 1, "%s\n", sha1_to_hex(rev));
++	write_file(sb.buf, "%s\n", sha1_to_hex(rev));
+ 	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
+-	write_file(sb.buf, 1, "../..\n");
++	write_file(sb.buf, "../..\n");
+ 
+ 	fprintf_ln(stderr, _("Enter %s (identifier %s)"), path, name);
+ 
+diff --git a/cache.h b/cache.h
+index 6bb7119..3f79e6b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1539,8 +1539,9 @@ static inline ssize_t write_str_in_full(int fd, const char *str)
+ {
+ 	return write_in_full(fd, str, strlen(str));
  }
-@@ -1101,12 +1116,12 @@ static void am_next(struct am_state *state)
- 	unlink(am_path(state, "original-commit"));
+-__attribute__((format (printf, 3, 4)))
+-extern int write_file(const char *path, int fatal, const char *fmt, ...);
++
++extern int write_file(const char *path, const char *fmt, ...);
++extern int write_file_gently(const char *path, const char *fmt, ...);
  
- 	if (!get_sha1("HEAD", head))
--		write_file(am_path(state, "abort-safety"), 1, "%s", sha1_to_hex(head));
-+		write_state_text(state, "abort-safety", sha1_to_hex(head));
- 	else
--		write_file(am_path(state, "abort-safety"), 1, "%s", "");
-+		write_state_text(state, "abort-safety", "");
+ /* pager.c */
+ extern void setup_pager(void);
+diff --git a/daemon.c b/daemon.c
+index d3d3e43..9154509 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -1376,7 +1376,7 @@ int main(int argc, char **argv)
+ 		sanitize_stdfds();
  
- 	state->cur++;
--	write_file(am_path(state, "next"), 1, "%d", state->cur);
-+	write_state_count(state, "next", state->cur);
+ 	if (pid_file)
+-		write_file(pid_file, 1, "%"PRIuMAX"\n", (uintmax_t) getpid());
++		write_file(pid_file, "%"PRIuMAX"\n", (uintmax_t) getpid());
+ 
+ 	/* prepare argv for serving-processes */
+ 	cld_argv = xmalloc(sizeof (char *) * (argc + 2));
+diff --git a/setup.c b/setup.c
+index 5f9f07d..feb8565 100644
+--- a/setup.c
++++ b/setup.c
+@@ -404,7 +404,7 @@ static void update_linked_gitdir(const char *gitfile, const char *gitdir)
+ 
+ 	strbuf_addf(&path, "%s/gitfile", gitdir);
+ 	if (stat(path.buf, &st) || st.st_mtime + 24 * 3600 < time(NULL))
+-		write_file(path.buf, 0, "%s\n", gitfile);
++		write_file_gently(path.buf, "%s\n", gitfile);
+ 	strbuf_release(&path);
  }
  
- /**
-@@ -1479,8 +1494,7 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
- 	write_commit_patch(state, commit);
+diff --git a/submodule.c b/submodule.c
+index 700bbf4..5519f11 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1103,7 +1103,7 @@ void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir)
  
- 	hashcpy(state->orig_commit, commit_sha1);
--	write_file(am_path(state, "original-commit"), 1, "%s",
--			sha1_to_hex(commit_sha1));
-+	write_state_text(state, "original-commit", sha1_to_hex(commit_sha1));
+ 	/* Update gitfile */
+ 	strbuf_addf(&file_name, "%s/.git", work_tree);
+-	write_file(file_name.buf, 1, "gitdir: %s\n",
++	write_file(file_name.buf, "gitdir: %s\n",
+ 		   relative_path(git_dir, real_work_tree, &rel_path));
  
+ 	/* Update core.worktree setting */
+diff --git a/transport.c b/transport.c
+index 40692f8..0254394 100644
+--- a/transport.c
++++ b/transport.c
+@@ -291,7 +291,7 @@ static int write_one_ref(const char *name, const struct object_id *oid,
+ 
+ 	strbuf_addstr(buf, name);
+ 	if (safe_create_leading_directories(buf->buf) ||
+-	    write_file(buf->buf, 0, "%s\n", oid_to_hex(oid)))
++	    write_file_gently(buf->buf, "%s\n", oid_to_hex(oid)))
+ 		return error("problems writing temporary file %s: %s",
+ 			     buf->buf, strerror(errno));
+ 	strbuf_setlen(buf, len);
+diff --git a/wrapper.c b/wrapper.c
+index e451463..8c8925b 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -621,19 +621,17 @@ char *xgetcwd(void)
+ 	return strbuf_detach(&sb, NULL);
+ }
+ 
+-int write_file(const char *path, int fatal, const char *fmt, ...)
++static int write_file_v(const char *path, int fatal,
++			const char *fmt, va_list params)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+-	va_list params;
+ 	int fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0666);
+ 	if (fd < 0) {
+ 		if (fatal)
+ 			die_errno(_("could not open %s for writing"), path);
+ 		return -1;
+ 	}
+-	va_start(params, fmt);
+ 	strbuf_vaddf(&sb, fmt, params);
+-	va_end(params);
+ 	if (write_in_full(fd, sb.buf, sb.len) != sb.len) {
+ 		int err = errno;
+ 		close(fd);
+@@ -652,6 +650,28 @@ int write_file(const char *path, int fatal, const char *fmt, ...)
  	return 0;
  }
-@@ -1782,7 +1796,7 @@ static void am_run(struct am_state *state, int resume)
- 	refresh_and_write_cache();
  
- 	if (index_has_changes(&sb)) {
--		write_file(am_path(state, "dirtyindex"), 1, "t");
-+		write_state_bool(state, "dirtyindex", 1);
- 		die(_("Dirty index: cannot apply patches (dirty: %s)"), sb.buf);
- 	}
- 
++int write_file(const char *path, const char *fmt, ...)
++{
++	int status;
++	va_list params;
++
++	va_start(params, fmt);
++	status = write_file_v(path, 1, fmt, params);
++	va_end(params);
++	return status;
++}
++
++int write_file_gently(const char *path, const char *fmt, ...)
++{
++	int status;
++	va_list params;
++
++	va_start(params, fmt);
++	status = write_file_v(path, 0, fmt, params);
++	va_end(params);
++	return status;
++}
++
+ void sleep_millisec(int millisec)
+ {
+ 	poll(NULL, 0, millisec);
 -- 
 2.5.0-568-g53a3e28
