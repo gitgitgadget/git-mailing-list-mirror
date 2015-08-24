@@ -1,95 +1,91 @@
-From: Lars Schneider <larsxschneider@gmail.com>
+From: Luke Diamand <luke@diamand.org>
 Subject: Re: [PATCH v4] git-p4: fix faulty paths for case insensitive systems
-Date: Mon, 24 Aug 2015 14:43:29 +0200
-Message-ID: <FB860908-F176-4EA3-A2D1-962E97BD12F7@gmail.com>
-References: <1440177578-5317-1-git-send-email-larsxschneider@gmail.com> <CAE5ih7_zTP-5WFtPfEcgVsG-sV6k2BhfYh5Z_ttS0oVvJx4NgA@mail.gmail.com> <24F604FE-6052-4250-80CD-3C366FE5D8DC@gmail.com> <CAE5ih78P2-oiZTY-d_5NYgchG3mh4FVy8GaNmBhicmmceU2k8w@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
+Date: Mon, 24 Aug 2015 14:49:43 +0100
+Message-ID: <CAE5ih78OAm=i6BEGpZc40EQ6MwJOcEgLHEBsEPq5XyDw6xcu2A@mail.gmail.com>
+References: <1440177578-5317-1-git-send-email-larsxschneider@gmail.com>
+	<CAE5ih7_zTP-5WFtPfEcgVsG-sV6k2BhfYh5Z_ttS0oVvJx4NgA@mail.gmail.com>
+	<24F604FE-6052-4250-80CD-3C366FE5D8DC@gmail.com>
+	<CAE5ih78P2-oiZTY-d_5NYgchG3mh4FVy8GaNmBhicmmceU2k8w@mail.gmail.com>
+	<FB860908-F176-4EA3-A2D1-962E97BD12F7@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Users <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>,
 	Tor Arvid Lund <torarvid@gmail.com>, ksaitoh560@gmail.com,
-	=?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Mon Aug 24 14:43:48 2015
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 24 15:50:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTr6F-0002uf-H0
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 14:43:44 +0200
+	id 1ZTs8P-0002X0-QM
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 15:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932934AbbHXMne convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Aug 2015 08:43:34 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:36646 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932183AbbHXMnd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2015 08:43:33 -0400
-Received: by wicja10 with SMTP id ja10so70831948wic.1
-        for <git@vger.kernel.org>; Mon, 24 Aug 2015 05:43:32 -0700 (PDT)
+	id S1754717AbbHXNtp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Aug 2015 09:49:45 -0400
+Received: from mail-oi0-f47.google.com ([209.85.218.47]:35288 "EHLO
+	mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754192AbbHXNtn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2015 09:49:43 -0400
+Received: by oiew67 with SMTP id w67so80529463oie.2
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 06:49:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=RfpEv0X+aWW1PSWfE0jyKA1ZMDQw1MVWQvfrCr37a2o=;
-        b=swq/IfDpT1V2jwaOItzog3V7J6q/rU1WOLK2hDroT8a7XviLOpQdlYpYVR82KScRq+
-         tVeWAyJJM6tm+4DaS8SCVdfPVb0BlbzhLBwKJHk3Y2LiO3U9xaA3/XP/DBgs+D2cfiq6
-         myQ3X44CLurf9TUHxZcVchEzTR2Ve/ANbJ95ZsSEgmvhEztTXehpj+JpKpNurFFlF53M
-         Gg4QtFYwI2QkJ4N1vFgj+zehHTiI/M+tQFbB1VJSeWFc/MO+aNKY4jfmUXdacjd7HTIG
-         RxrS02WCsFot5hJhVmAoKWNTKp1rIdzEODxxeKLPEw1D32Itaot+AV1sK5q/S6nuZY88
-         qlfQ==
-X-Received: by 10.194.92.143 with SMTP id cm15mr41177972wjb.17.1440420212262;
-        Mon, 24 Aug 2015 05:43:32 -0700 (PDT)
-Received: from slxbook3.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id r8sm12195989wik.16.2015.08.24.05.43.31
-        (version=TLS1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 24 Aug 2015 05:43:31 -0700 (PDT)
-In-Reply-To: <CAE5ih78P2-oiZTY-d_5NYgchG3mh4FVy8GaNmBhicmmceU2k8w@mail.gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=uPFS1xW3NAEa2wwzyaFHGFVpd0eJe9OWiCof7h19L/g=;
+        b=KHCGvNe7xGJTivStlDVgIrH9DDuMZnjh6ZsLQ1Phx7DRJuG6zAJxhyWHlO4Zd+XQMZ
+         2SIP+bhUksTrZtsujRDJ0dse4TOqv5XAfwchBG66nzAEZN5toxRIno2L5/azEA0NA6ou
+         RS5h9CJd98YnW3fgGoKNEKVnBkDd3xFxQHZTI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=uPFS1xW3NAEa2wwzyaFHGFVpd0eJe9OWiCof7h19L/g=;
+        b=mz+pKynPFM+0i4Fm9CernoLTY92s9pn3MOQylroJxZDj5Gt1ZpF8yObzz7czAh3YnM
+         cH3Ffcxxm0X9VzCYcmSqPZN7QlFSHaSppTBxuvHeQ8j6kXxthi6Gm6mYxA4kGrZP1D1S
+         sLR+5rLB+Vk4Fz7JXnNhMQ3R4np9xh4wQlg6OepEtZhe2hQ3oqKQ9WSpvuhnMb3jcUNv
+         yR4C/3hfNSBoVtUU8BQscCZNvafEWLqqJJty0WnMcX95x1OBB/PhzD52v0VOfzXbqxA3
+         n2RhZsFerNrZ9bXCpS9wPGkwYb1AkNf2BJ3T67q8QkwEOYVCVByCFks7CBuJzE+FteD0
+         ZFow==
+X-Gm-Message-State: ALoCoQnC1pkV5wDv+Ch4HCLlEKpRWuglU39ki93YRKOZ59pqg6Do9P5gsreq5F9GMXTUDI7kx8nx
+X-Received: by 10.202.198.212 with SMTP id w203mr20243571oif.72.1440424183429;
+ Mon, 24 Aug 2015 06:49:43 -0700 (PDT)
+Received: by 10.60.162.5 with HTTP; Mon, 24 Aug 2015 06:49:43 -0700 (PDT)
+In-Reply-To: <FB860908-F176-4EA3-A2D1-962E97BD12F7@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276447>
 
+On 24 August 2015 at 13:43, Lars Schneider <larsxschneider@gmail.com> w=
+rote:
+>>
+>> https://github.com/luked99/quick-git-p4-case-folding-test
+> As mentioned I realized that the problem occurs only if you use clien=
+t specs. Can you take a look at this test case / run it?
+> https://github.com/larsxschneider/git/blob/d3a191cb5fb4d8f5f48ca9314c=
+772169d5dbf65b/t/t9821-git-p4-path-variations.sh#L112-L127
+>
+> Does this make sense to you? If you want to I could also modify =E2=80=
+=9Cquick-git-p4-case-folding-test=E2=80=9D to show the problem.
 
->=20
-> <snip>
->=20
->>=20
->> While I was working on the examples for this email reply I realized =
-that the problem is only present for paths given in a client-spec. I ad=
-ded a test case to prove that. That means I don=92t need to request *al=
-l* paths. I *think* it is sufficient to request the paths mentioned in =
-the client spec which would usually be really fast. Stay tuned for PATC=
-H v5.
->=20
-> I've just tried a small experiment with stock unaltered git-p4.
->=20
-> - Started p4d with -C1 option to case-fold.
-> - Add some files with different cases of directory (Path/File1,
-> PATH/File2, pATH/File3).
-> - git-p4 clone.
->=20
-> The result of the clone is separate directories if I do nothing
-> special (PATH/File1, Path/File2, etc). But if I set core.ignorecase, =
-I
-> get a single case-folded directory, Path/File1, Path/File2, etc. I'm
-> still failing to get how that isn't what you need (other than being a
-> bit obscure to get to the right invocation).
->=20
-> I've put a script that shows this here:
->=20
-> https://github.com/luked99/quick-git-p4-case-folding-test
-As mentioned I realized that the problem occurs only if you use client =
-specs. Can you take a look at this test case / run it?
-https://github.com/larsxschneider/git/blob/d3a191cb5fb4d8f5f48ca9314c77=
-2169d5dbf65b/t/t9821-git-p4-path-variations.sh#L112-L127
+If you're able to fix my hacky test to show the problem that would be v=
+ery kind.
 
-Does this make sense to you? If you want to I could also modify =93quic=
-k-git-p4-case-folding-test=94 to show the problem.
+If the problem only shows up when using client specs, is it possible
+that the core.ignorecase logic is just missing a code path somewhere?
 
-Cheers,
-Lars
+Glancing through the code, stripRepoPath() could perhaps be the
+culprit? If self.useClientSpec is FALSE, it will do the
+core.ignorecase trick by calling p4PathStartsWith, but if it is TRUE,
+it won't.
+
+Thanks!
+Luke
