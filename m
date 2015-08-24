@@ -1,112 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v13 00/12] port tag.c to use ref-filter APIs
-Date: Mon, 24 Aug 2015 15:58:12 -0700
-Message-ID: <xmqqy4h01egr.fsf@gitster.dls.corp.google.com>
-References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
-	<vpqzj1hkc5q.fsf@anie.imag.fr>
-	<xmqq7fok2u57.fsf@gitster.dls.corp.google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] am: terminate state files with a newline
+Date: Mon, 24 Aug 2015 23:36:12 +0000
+Message-ID: <20150824233612.GE232027@vauxhall.crustytoothpaste.net>
+References: <20150820152247.Horde.3yFLIbhFFocB99yz8o1iwg1@webmail.informatik.kit.edu>
+ <xmqqa8tl7qi3.fsf@gitster.dls.corp.google.com>
+ <20150823055053.GA15849@yoshi.chippynet.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Aug 25 00:58:19 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Lb0e7rgc7IsuDeGj"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 01:36:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZU0h0-00019g-HX
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 00:58:18 +0200
+	id 1ZU1I5-0007gi-Go
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 01:36:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754745AbbHXW6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2015 18:58:15 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:34132 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753819AbbHXW6O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2015 18:58:14 -0400
-Received: by pabzx8 with SMTP id zx8so16536108pab.1
-        for <git@vger.kernel.org>; Mon, 24 Aug 2015 15:58:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=yglBAmk7a4nkELJW8ypr3U1q4+Z1FU9UNWoUPLNStzU=;
-        b=lnBqF/ClmFEW/1MkKIxF123y/m8eNeUBfRhBSZpvmb00ba/9sOMLG1wPFiVoIdCpEL
-         D0x/ziCqqIzg0MKjnkIIl0zYUCLgehQkcCwsFwTiRsUm+NgpAVNu6UMkPYFUF6urHwkK
-         oEeeBW/iP40KX4fHle0lj7EScqQ3bbJAWXTUFkPzcuh8yVk9xzg4T5j1HHb6lx9FOQBq
-         /dee2RHNoaJnM70Re1lUTifyPEHznxcs0HwaGUD+LmBdq66ESPSz//WUVvNpM+AJpESI
-         Omqn9hD0mLmMfGGuaGeC3SplqnUhHfOB9GpdEj9CwsEnStQmlGiRfMB4yzy0O4cw/24N
-         qypQ==
-X-Received: by 10.66.222.161 with SMTP id qn1mr51102170pac.66.1440457093931;
-        Mon, 24 Aug 2015 15:58:13 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:813d:881a:159:a8e7])
-        by smtp.gmail.com with ESMTPSA id w11sm18563692pbs.55.2015.08.24.15.58.12
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Mon, 24 Aug 2015 15:58:13 -0700 (PDT)
-In-Reply-To: <xmqq7fok2u57.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 24 Aug 2015 15:34:12 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754830AbbHXXgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2015 19:36:33 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:45979 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753810AbbHXXgS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2015 19:36:18 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 175D628094;
+	Mon, 24 Aug 2015 23:36:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1440459377;
+	bh=6vJzDa9xdmXqYLhytGBVhZYcYNipzmVNd6M0Lc0bMyI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=P1stV4ptq8xfqjOGgCl9rPNBGVoO14N49kzZ2FgaqTwFRj6VxgCuyLW0azYgOkJlU
+	 OZnz0QfRlHa1h/KLz6U53rQYXCWJ0u6qqvpfVywDtIupRn1rUCekFFBFDoYZKEb2ia
+	 Y7kS/DhRM2DnS9PS5N5yXRA8sl11oPpHY/vb2rn3wq01cyoI0Gseo+B2314ATDhEdm
+	 c5868HcvWUuz+LvQJ+KSRhtLAQr7XvPJR/hgcemRdqiOx33g1fIKm3oN/0aOJJAbUv
+	 oJTTrpmby9wPgXNB+GozvtJK0UzMf1/pT0ja6tKDNv5NGjmTOx4mWk08z06XVIsSSE
+	 sk5pbiGcvnWJudUGmk/4PhyvxlaF2a+Ba62t6xJxcEnl2S7JUdoqmtH8BxF7jhbPEj
+	 btqbNCGFYE9oARfB25VEyAB6pM0kUT7W9WC7Fqtco7T1ZT2whJu1fsaNgKDZ0l3/FT
+	 vOKwdu2Jdm5nIDnitBwtnx8KsDouOBxukFMHCFVBqhiHuehn82I
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20150823055053.GA15849@yoshi.chippynet.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.1.0-1-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276497>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
->>> index 1997657..06d468e 100644
->>> --- a/Documentation/git-for-each-ref.txt
->>> +++ b/Documentation/git-for-each-ref.txt
->>> @@ -133,7 +133,8 @@ align::
->>>  	`<position>` is either left, right or middle and `<width>` is
->>>  	the total length of the content with alignment. If the
->>>  	contents length is more than the width then no alignment is
->>> -	performed.
->>> +	performed. If used with '--quote' everything in between %(align:..)
->>> +	and %(end) is quoted.
->>
->> There's no --quote, there are --shell, --python, ... (well, actually, I
->> would have prefered to have a single --quote=language option, but that's
->> not how it is now).
->>
->> I had already commented on a preliminary version of this series
->> off-list. I think all my previous comments have been taken into account.
->
-> Thanks, both.  I think this is pretty close to being satisfactory
-> ;-)  There may probably be a handful of minor nits like the above
-> that need to be addressed, but I do not think I saw anything
-> glaringly wrong that makes the series unsalvageable.  It was a very
-> pleasant read.
->
-> It's almost there, and I am very happy to see how this and other
-> series evolved so far ;-)
+--Lb0e7rgc7IsuDeGj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Having said all that, it seems that there is some trivial typo or
-thinko in the formatting code to break t7004.
+On Sun, Aug 23, 2015 at 01:50:53PM +0800, Paul Tan wrote:
+> Did we ever explictly allow external programs to poke around the
+> contents of the .git/rebase-apply directory? I think it may not be so
+> good, as it means that it may not be possible to switch the storage
+> format in the future (e.g. to allow atomic modifications, maybe?) :-/ .
 
-Here is what I see...
+zsh's vcs_info does read files in those directories in order to
+determine which patches have been applied.  I just submitted a patch to
+zsh that fixed warnings when a conflict occurred with git rebase -m.
 
-ok 98 - verifying rfc1991 signature
+I expect that unless we provide a programmatic way to discover all of
+that information trivially (and maybe even then, due to compatibility
+with older versions of git), people are going to poke around those
+directories.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-expecting success:
-        echo "rfc1991" >gpghome/gpg.conf &&
-        echo "rfc1991-signed-tag RFC1991 signed tag" >expect &&
-        git tag -l -n1 rfc1991-signed-tag >actual &&
-        test_cmp expect actual &&
-        git tag -l -n2 rfc1991-signed-tag >actual &&
-        test_cmp expect actual &&
-        git tag -l -n999 rfc1991-signed-tag >actual &&
-        test_cmp expect actual
+--Lb0e7rgc7IsuDeGj
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
---- expect      2015-08-24 22:54:44.607272653 +0000
-+++ actual      2015-08-24 22:54:44.611272643 +0000
-@@ -1 +1 @@
--rfc1991-signed-tag RFC1991 signed tag
-+rfc1991-signed-tagRFC1991 signed tag
-not ok 99 - list tag with rfc1991 signature
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.7 (GNU/Linux)
+
+iQIcBAEBCgAGBQJV26psAAoJEL9TXYEfUvaLQy4QAK5OFpAhHYyRRxGiPxMqNTrL
+kPViJsgfBQxLuSxklEQ+yFMSPI1vCqnV849aIqVUZc51fEeG6dYAqlKHS1X35U/s
+mx/H/JjaENhOMUMsTTe2Ff2dcJtD9zIZTTw1qxUZGjwFWtjr5EVyL9OpzfvWwVtn
+bJ/QbHO2mhpqgqSCOoekuvN4RhRlUp3TNayG7LPcg674PwYIVXXDHpCz9MLX8xLM
+R8EIYw4XuAK0oRkkOKF4oOXwdeJ6K5OuXsXfUcHm8l9HJ/8RpA2wyzLs9HpLVj5/
+qM36QGlit0IcLdn6Oap85Ej+nb7WZYexp3KDw9qtK3ijl1v4u8ubk6Hrcx8MzULW
+ejdI2ttL3I6Lm2li6eOBQw5SQZG1JIbuDkESskyeJnLrG5mEUSNFd1ok6Oxpx2Ye
+o3UNeJ1/PpAx9jwrXABv/XtK58dSdaSFtAO9ZFk6R+zoWNJagm8Xkz+db+Ppb6nO
+CuthO55RvkgvR1x01pDorrw2HsKq79YRLzQVF4Mi+DniHC17GLzSx8w5IdQikui7
+vuiP+OmikiAFO0R3zJcW9CTmpt3xXyr9++JJC9vcr1Kjp6qjvrkknR1fe/EbMH/O
+XRuhfyRcrGGQNOXxyFjFZPqgvSWI6Ulx+MtbuH/gtHJQQjGiy9EIRz1UDRJQDW1X
+icUF+T+4aSB/H2b9+EO5
+=/cL6
+-----END PGP SIGNATURE-----
+
+--Lb0e7rgc7IsuDeGj--
