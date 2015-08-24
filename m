@@ -1,105 +1,99 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Submodule, subtree, or something else?
-Date: Mon, 24 Aug 2015 09:51:01 -0700
-Message-ID: <CAGZ79kY+HLzd4esdy+i82Eh5Vhc1NEDDfinD2iiBMvV41GSCiw@mail.gmail.com>
-References: <1440197262.23145.191.camel@gmail.com>
-	<CAGZ79kbUXwEYnpDWgKqnUab2xP4m9m7FMskaK2u8WcqnLSSoog@mail.gmail.com>
-	<1440339066.32140.17.camel@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: =?UTF-8?B?SsSBbmlzIFJ1a8WhxIFucw==?= <janis.ruksans@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 24 18:51:13 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/5] "am" state file fix with write_file() clean-up
+Date: Mon, 24 Aug 2015 10:09:41 -0700
+Message-ID: <1440436186-7894-1-git-send-email-gitster@pobox.com>
+References: <20150824065033.GA4124@sigill.intra.peff.net>
+Cc: Jeff King <peff@peff.net>, Paul Tan <pyokagan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 24 19:09:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZTuxh-0007yH-3z
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 18:51:09 +0200
+	id 1ZTvFq-000596-HP
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Aug 2015 19:09:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755150AbbHXQvE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Aug 2015 12:51:04 -0400
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:36013 "EHLO
-	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755143AbbHXQvD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2015 12:51:03 -0400
-Received: by qkda128 with SMTP id a128so26359493qkd.3
-        for <git@vger.kernel.org>; Mon, 24 Aug 2015 09:51:01 -0700 (PDT)
+	id S1754628AbbHXRJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2015 13:09:49 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:35452 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751734AbbHXRJs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2015 13:09:48 -0400
+Received: by pdob1 with SMTP id b1so55569293pdo.2
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 10:09:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=da1X3R+Rldp+wboIOhaNvzHoTCtEkNOTHzME8ULKFvE=;
-        b=MQ7XGTFVT9yFbefp4saLUM6ww361Tnln7IN8hI89hhQvwAQRK0JMR0lcR3rItrLOAL
-         BXW0sf0CjD01V4964/Cg7g/2DSGSARY0wRsWanTEerATXhvOv8c62tNlZ9eIOb94VOO1
-         u2jcpJIL2cHw0L+h+62UvT31QFz68OFuQJ5tCzn7pTmJGn44L7un3KkFruLpPPuWxOoF
-         jcqcaJTCN8kDYYP1cNixZ/kWPjjCWhx4FCH/OroYU9A/D+Gk0aj9NG0R7t1mUUX43bZQ
-         VZZfUrM5qSJd1I+C08P0GgQo7/GwMu6xBk1lmp5xppG22BNA4sDdNYucP177/dS7RPg6
-         7Kjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=da1X3R+Rldp+wboIOhaNvzHoTCtEkNOTHzME8ULKFvE=;
-        b=RY8ZDbBek7oUs9fuXPVoPBg5ZG32fP1ztS9E7lC8gf0R62FMwXwDCu9SS4a4zKjmnZ
-         QrSSZtc7TyLYHkiJKkiG34nochrWd8jX/euA3K11zFAE3C7p9RTsQ4RAU00oJsDDxfDY
-         8ndWUap6cLwXBSiVxOmlmSmMeGRDdzSvRdevl0BulcJccjDa8pIO89jWp0Vbm/vUqF48
-         BGkMgQI3e1a4sIOcGUnsP3OGhrxvf54o8UH/8LBWtkp6k3X78bGadPonrmGqcrlPCP5D
-         LFoTPxE/zICJpi7PPtBu3+1yykASnXr98OJbndCfd/HKVgJWBzMID8pNQ7jGsnLrYY8j
-         B+pA==
-X-Gm-Message-State: ALoCoQkDOHfVpzYt+32A2fvKw+za1mR7Ny6pDCiwcEjfChaMHN+VJu/AJdsPLe+X9gYkua9oL3dh
-X-Received: by 10.170.186.131 with SMTP id c125mr30600162yke.25.1440435061536;
- Mon, 24 Aug 2015 09:51:01 -0700 (PDT)
-Received: by 10.37.21.132 with HTTP; Mon, 24 Aug 2015 09:51:01 -0700 (PDT)
-In-Reply-To: <1440339066.32140.17.camel@gmail.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=K78xU1o7r5PmIP9dT3rrqFoUcJSM8xU36h5czwvOjR0=;
+        b=WZt/YF7/mpks31gGuB7AwAtzAfoVgaHkf2x/+dSPcVUx/p6Z/7ftFxLDlKFA/tgn+H
+         XIFo2fhY+1X29f3jCjogli1i4HT3OsqAB9ZfTQD0tSiqklhnIEspId+Y3/A/LgM1ZY6O
+         kEDI540cotU7ETAUkJ0WB0QyPhv7QBzjZ9q76M5zQUjivVQB85A3rgID9huMakWCW4bU
+         UjlhLDWP0R+euoWhMhH5Ivn/o7A1UVS9J9r95O1X1JfMyLD6r2fcdN3ZyWijehWM8EZN
+         AZ5Cczu/Q4ps21Dpy9T3dUelvXrQY/wmUR1mR0KtM+91MJ9HetzvWggf8QO0yArQM7x9
+         Cx9Q==
+X-Received: by 10.70.38.101 with SMTP id f5mr46896963pdk.140.1440436187777;
+        Mon, 24 Aug 2015 10:09:47 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:813d:881a:159:a8e7])
+        by smtp.gmail.com with ESMTPSA id mj1sm16617193pab.29.2015.08.24.10.09.47
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Mon, 24 Aug 2015 10:09:47 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0-568-g53a3e28
+In-Reply-To: <20150824065033.GA4124@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276460>
 
-On Sun, Aug 23, 2015 at 7:11 AM, J=C4=81nis Ruk=C5=A1=C4=81ns <janis.ru=
-ksans@gmail.com> wrote:
-> On Pk, 2015-08-21 at 17:07 -0700, Stefan Beller wrote:
->> On Fri, Aug 21, 2015 at 3:47 PM, J=C4=81nis Ruk=C5=A1=C4=81ns <janis=
-=2Eruksans@gmail.com> wrote:
->> >
->> > A major drawback of submodules in my opinion is the
->> > inability to make a full clone from an existing one without having
->> > access to the central repository, which is something I have to do =
-from
->> > time to time.
->>
->> Can you elaborate on that a bit more?
->> git clone --recurse-submodules should do that no matter which remote
->> you contact?
->
-> I mean that if I have cloned a repository with submodules, cloning th=
-at
-> repository with --recurse-submodules will either access the "central
-> server" if absolute URLs are used, or requires additional clones for
-> each submodule.  For example
->
-> git clone --recursive http://somewhere/projectA.git
-> git clone --recursive file://$(pwd)/projectA projectA.tmp
->
-> The second command will cause the submodules to be downloaded again, =
-or
-> expect them to be found in $(pwd).
+So here is an solution based on the "write_file() is primarily to
+produce text, so it should be able to correct the incomplete line
+at the end" approach.
 
-IIUC, the second command will lookup the submodules in $(pwd), but if t=
-hey
-are not there they are skipped, so all of the existing submodules are c=
-loned.
-Why do you need more submodules in the tmp clone than in $(pwd)/project=
-A
-would be my next question. But I see your point now.
+The first one is Peff's idea to consolidate callers in "am", in a
+more concrete form.
+
+The second is the fix to $gmane/276238.
+
+The remainder is to clean up write_file() helper function.  All
+callers except for two were passing 1 as one parameter, whose
+meaning was not all obvious to a casual reader.
+
+In patch 3/5, we flip the default behaviour of write_file() to die
+upon error unless explicitly asked not to with WRITE_FILE_GENTLY
+flag, and change the two oddball callers to pass this new flag.
+
+In patch 4/5, we enhance the default behaviour of write_file() to
+complete an incomplete line at the end, unless asked not to with
+WRITE_FILE_BINARY flag; nobody passes this because all existing
+callers want to produce a text file.
+
+In patch 5/5, the transitional noise left by patches 3 and 4 are
+cleaned up by updating the non-binary callers not to add LF
+themselves and by changing the callers that pass 1 as flags
+parameter to pass 0 (as bit (1<<0) is a no-op since patch 3/5).
+
+The series is built on top of b5e8235, the current tip of the
+pt/am-builtin-options topic.
 
 
+Junio C Hamano (5):
+  builtin/am: introduce write_state_*() helper functions
+  builtin/am: make sure state files are text
+  write_file(): introduce an explicit WRITE_FILE_GENTLY request
+  write_file(): do not leave incomplete line at the end
+  write_file(): clean up transitional mess of flag words and terminating LF
 
->
-> Or am I mistaken, or doing something wrong?
->
+ builtin/am.c       | 68 ++++++++++++++++++++++++++++++++----------------------
+ builtin/init-db.c  |  2 +-
+ builtin/worktree.c | 10 ++++----
+ cache.h            | 16 ++++++++++++-
+ daemon.c           |  2 +-
+ setup.c            |  2 +-
+ submodule.c        |  2 +-
+ transport.c        |  2 +-
+ wrapper.c          | 13 +++++++++--
+ 9 files changed, 77 insertions(+), 40 deletions(-)
+
+-- 
+2.5.0-568-g53a3e28
