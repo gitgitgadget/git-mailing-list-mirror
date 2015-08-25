@@ -1,67 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v13 04/12] ref-filter: implement an `align` atom
-Date: Tue, 25 Aug 2015 10:56:20 -0700
-Message-ID: <xmqqlhczz1yz.fsf@gitster.dls.corp.google.com>
-References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
-	<1440214788-1309-5-git-send-email-Karthik.188@gmail.com>
-	<xmqqmvxg2v3u.fsf@gitster.dls.corp.google.com>
-	<vpqk2sj7tlb.fsf@anie.imag.fr>
-	<CAOLa=ZS1EiU3FFLwR3QUUebCtVkrwUS=qP9xvc93LHanA5eh=A@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v5] git-p4: Obey core.ignorecase when using P4 client
+ specs.
+Date: Tue, 25 Aug 2015 19:24:32 +0100
+Message-ID: <55DCB2E0.5090605@diamand.org>
+References: <1440451805-85095-1-git-send-email-larsxschneider@gmail.com> <55DC111A.6090501@diamand.org> <55DC285D.9030500@web.de> <23CB37E8-9704-4A9D-8CAB-2812AD59394D@gmail.com> <CAE5ih7-o6eVF-z2GORxHa_TdDaXgexLpW3jctESTnL46Mfdo8w@mail.gmail.com> <B7632D9A-BB8B-41E5-9C3D-F7376A0C81D3@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 19:56:28 2015
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Git Users <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>,
+	Tor Arvid Lund <torarvid@gmail.com>, ksaitoh560@gmail.com,
+	Junio C Hamano <gitster@pobox.com>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 20:24:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUISQ-0005eb-Si
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 19:56:27 +0200
+	id 1ZUItm-000561-8K
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 20:24:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755931AbbHYR4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 13:56:23 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:35055 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755922AbbHYR4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 13:56:22 -0400
-Received: by pacdd16 with SMTP id dd16so131059246pac.2
-        for <git@vger.kernel.org>; Tue, 25 Aug 2015 10:56:22 -0700 (PDT)
+	id S932681AbbHYSYi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Aug 2015 14:24:38 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:32894 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755497AbbHYSYh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2015 14:24:37 -0400
+Received: by wijn1 with SMTP id n1so1558869wij.0
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 11:24:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=/+ENqcDeTkb39yHoWQI6VjdEEO3IW7BU1JSTy6G+WaA=;
-        b=MNI4OQ/MI6hPWG52NghM1vtLvGoFpacn8xlLD3bqn38dD4J5Kl9TYOmhRegitZyeHb
-         tl0PMVmqnBTMpX2w1NbRjI0cZgzRgwyy50MAOnM9STY4BL07V3NCp5XVDPvJTf/TzbK2
-         QqBzCK2k8mxo7wNuBGPWh6OFJMI2S+9pAno1Bfd+g1iUeKrQMR7q9PBW9DKZtyo9cKhK
-         SHoVh5U5OuWxPS1Ys3hHs48DI3Cb91z9HJE8l0W5ddYK8DOiAW36gHJ5/p/aAlXh+Wco
-         QUBFtmuL8+fUHlQ4+bWtXcpviyX1oahv73QoZls1ajMWXJDedY65LvPS5WG9EvXrEtQo
-         ztLg==
-X-Received: by 10.68.200.40 with SMTP id jp8mr60124705pbc.16.1440525381916;
-        Tue, 25 Aug 2015 10:56:21 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:cdc0:fd6d:4069:6223])
-        by smtp.gmail.com with ESMTPSA id i7sm21783379pdo.84.2015.08.25.10.56.21
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Tue, 25 Aug 2015 10:56:21 -0700 (PDT)
-In-Reply-To: <CAOLa=ZS1EiU3FFLwR3QUUebCtVkrwUS=qP9xvc93LHanA5eh=A@mail.gmail.com>
-	(Karthik Nayak's message of "Tue, 25 Aug 2015 19:00:13 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=X4sx1nuOVGLc6QZ/YYBzkBw9fe8yEFSYnQ0bSURFt3c=;
+        b=EQ9s4OelEAArYBWY2VfkEIKE7MEcLfkVWwp0kQvDoB4XFs7sS4huu/nTJGEi9cy5jC
+         gNDrQC1LImWNCtGzomLWcbLkFK7nuESq06zdL66T6Jdw2YPe3QAHQUH0smjSuP+6UU+f
+         M1Gml81K2nJb8lDqnVdClxotJbbIEurudSmu4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=X4sx1nuOVGLc6QZ/YYBzkBw9fe8yEFSYnQ0bSURFt3c=;
+        b=mVlYAHspsT+KesdrDUarH5GGuMM1rw9Hv9WQVcsAtV8jJi1r3imR4H1nt4sL3Hft/E
+         xuMFf6H6mcLnIrG6B88A8RiMHeKKKOdhJCJX2v1LHtAT3E1OH1uvT3/ogs5fUD+lkId7
+         Q5C+t+CCXteSPWxD4X+ylo9TxsRjYHrDPOtEqUA47NaSe2I898HicfF3eGnbwLITXxQM
+         ESbrMzuTxKhGH4Hvej3lq+/61XCmKimci/rGks8fneZ+Ufk11QXlCtPPToP0DAYnjsj/
+         Lbtt9efK8hG+lUzDxT2NJbuL2NCdYxUJAMcUef2ZR2743fXBXP8h48h11vDDm04zBa+Q
+         6T5Q==
+X-Gm-Message-State: ALoCoQkuj+lhOW2YshsFMGGXNSQLJaD6rp6U88JFjGMuI8YzY8hFd5k1SQetXDEhH35Avo/+OYVS
+X-Received: by 10.194.78.230 with SMTP id e6mr52958617wjx.43.1440527076490;
+        Tue, 25 Aug 2015 11:24:36 -0700 (PDT)
+Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
+        by smtp.gmail.com with ESMTPSA id d17sm71738wjs.32.2015.08.25.11.24.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 25 Aug 2015 11:24:35 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <B7632D9A-BB8B-41E5-9C3D-F7376A0C81D3@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276555>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On 25/08/15 14:14, Lars Schneider wrote:
+>>
+>> So the choices are:
+>>
+>> 1. A new command-line option which would silently set core.ignorecas=
+e
+>> 2. Users just have to know to set core.ignorecase manually before
+>> using git-p4 (i.e. Lars' patch v5)
+>> 3. Fix fast-import to take a --casefold option (but that's a much bi=
+gger change)
+>>
+> I vote for 2 because that solves the problem consistently with the ex=
+isting implementation for now. That means we don=92t surprise git-p4 us=
+ers. In addition I would try to fix (3), the =97casefold option, in a s=
+eparate patch. Although this (3) patch could take a bit as I have two m=
+ore git-p4 patches in the queue that I want to propose to the mailing l=
+ist first.
 
-> I like the idea of using atomv->handler() a lot, mostly cause this
-> would eventually
-> help us clean up populate_atom() which currently seems like a huge dump of code.
+That works for me. Ack.
 
-I think you already said that last time we had this discussion ;-)
-
-http://thread.gmane.org/gmane.comp.version-control.git/275537/focus=275778
+Thanks!
+Luke
