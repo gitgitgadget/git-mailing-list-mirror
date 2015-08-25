@@ -1,123 +1,157 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: Git's inconsistent command line options
-Date: Tue, 25 Aug 2015 15:21:33 -0700
-Message-ID: <CA+P7+xrawC42hm54_8cNYpv51H+LgUF-F4kKQ9W3pcAe+Q2q=Q@mail.gmail.com>
-References: <mrh7ck$r0g$1@ger.gmane.org> <CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
- <CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com> <CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] submodule: helper to run foreach in parallel
+Date: Tue, 25 Aug 2015 15:23:18 -0700
+Message-ID: <xmqqy4gzvwh5.fsf@gitster.dls.corp.google.com>
+References: <1440523706-23041-1-git-send-email-sbeller@google.com>
+	<1440523706-23041-4-git-send-email-sbeller@google.com>
+	<xmqq7fojxeh3.fsf@gitster.dls.corp.google.com>
+	<CAGZ79kb2N_5_tJv-GURL9_ESFs=pHp=L-Mujn3Df_+-T74_9Dg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Graeme Geldenhuys <graemeg@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 00:22:02 2015
+X-From: git-owner@vger.kernel.org Wed Aug 26 00:23:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUMbO-0007Ow-99
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 00:21:58 +0200
+	id 1ZUMcn-0000B7-EJ
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 00:23:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754808AbbHYWVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 18:21:54 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:35408 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751739AbbHYWVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 18:21:53 -0400
-Received: by igbjg10 with SMTP id jg10so25410909igb.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2015 15:21:53 -0700 (PDT)
+	id S1755525AbbHYWXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2015 18:23:21 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:36111 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751798AbbHYWXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2015 18:23:21 -0400
+Received: by pacgr6 with SMTP id gr6so4138235pac.3
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 15:23:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=n4wrKlPm0UaSdriglr8jQbP4bvkHbbsbV3ifg4BuPFk=;
-        b=obK7ZvL3JowJxwSXBs/zOu3nz7uKTdbbWXSzRIS1MjkaSDIpqhh474RVax3mgJtp9t
-         moyoKXdq5Csv0oIvYqsaMIjqwY+wN2/su0NWI/wGt0bWOjGfdCuCpFjHuF9oJL1dNpfG
-         X9aJ6lZB+eZANPPvIoodi8wXaKh2oF15RpCMPpv8UQ8DOyNQBxHgIwG50NaQ382Fi6iv
-         ntcpQ/MYUeK1M9xfdzgim1u7eXdlh/tEZLtCYYMeuAAzZ7cjYKDk3+TUA5ZrQVkAsDYB
-         TRc97PxMp+2jSTA/6dA/H6JfuZAK/gUJA/L5l0yITI6xxXhqeKDCDaoSAMlFR45dSDAW
-         s4xg==
-X-Received: by 10.50.93.33 with SMTP id cr1mr6776476igb.35.1440541313035; Tue,
- 25 Aug 2015 15:21:53 -0700 (PDT)
-Received: by 10.107.5.203 with HTTP; Tue, 25 Aug 2015 15:21:33 -0700 (PDT)
-In-Reply-To: <CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=rfMKZKFzzLgzc8yCZruEzoBA67Xk4KD2hY2xzIRjbxw=;
+        b=sfTvaVy8kMoFQPUBZk6Fz3TrYwXwQ0w9tGByf170fKpzPJU9hKZbfq2GIH0mAONNfu
+         OAZEdlfBEb0mr0owrVaZ0sUCMeTJDX606YLQNf1su4mT8j9DToxwL5IIl6bry/m69EdZ
+         8ZkInBJnAjluwKbEkE2vlsZZxbICaTR6EcK5OA9WNxPwjmoutZtK5NDIENyeWtHnLvTF
+         m8ukjWhFZaTqUrlGsMvfLhZTY16nAMPuzbOah2K8GwpRrQL0SCbJHVbLYBx6bsbUvExE
+         ExfGp2/5dYtYeWxvkZYl1YhdJJfZm4yAOHfNyqZwoB1OF/rbvryvNI55tbVPh4HvS3d8
+         teWg==
+X-Received: by 10.66.192.162 with SMTP id hh2mr61817959pac.71.1440541400691;
+        Tue, 25 Aug 2015 15:23:20 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:cdc0:fd6d:4069:6223])
+        by smtp.gmail.com with ESMTPSA id m2sm22228598pdr.64.2015.08.25.15.23.18
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Tue, 25 Aug 2015 15:23:18 -0700 (PDT)
+In-Reply-To: <CAGZ79kb2N_5_tJv-GURL9_ESFs=pHp=L-Mujn3Df_+-T74_9Dg@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 25 Aug 2015 14:42:25 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276581>
 
-On Tue, Aug 25, 2015 at 3:06 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Aug 25, 2015 at 2:49 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> On Tue, Aug 25, 2015 at 8:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> On Tue, Aug 25, 2015 at 1:01 AM, Graeme Geldenhuys <graemeg@gmail.com> wrote:
->>>>
->>>> Even though I have worked with Git since 2009, I still have to
->>>> reference the help to remind me of what parameter to use in certain
->>>> situation simply because similar tasks differ so much.
->>>>
->>>> Maybe we could address this in the next major version of Git? Has
->>>> anybody else thought about this or started work on this? Or was this
->>>> discussed before and declined (link?).
->>>
->>> http://article.gmane.org/gmane.comp.version-control.git/231478 comes to mind,
->>> which has been linked from this entry:
->>>
->>> Discuss and decide if we want to choose between the "mode word" UI
->>> (e.g. "git submodule add") and the "mode option" UI (e.g. "git tag --delete")
->>> and standardise on one; if it turns out to be a good idea, devise the migration
->>> plan to break the backward-compatibility.
->>>
->>> in http://git-blame.blogspot.com/p/leftover-bits.html
+Stefan Beller <sbeller@google.com> writes:
+
+>>> +     while (1) {
+>>> +             ssize_t len = xread(cp->err, buf, sizeof(buf));
+>>> +             if (len < 0)
+>>> +                     die("Read from child failed");
+>>> +             else if (len == 0)
+>>> +                     break;
+>>> +             else {
+>>> +                     strbuf_add(&out, buf, len);
+>>> +             }
 >>
->> I would vote for command words, as this is clean and simple.
+>> ... and the whole thing is accumulated in core???
 >
-> me too after rereading the arguments in that thread.
->
->> The
->> downside is in converting all the old options based commands, git-tag,
->> and similar. These commands cannot easily convert because "valid"
->> sequences would become invalid with no easy way to deprecate for
->> example in the linked gmane above, "git tag delete master" can't be a
->> call to delete master as it is currently a call to create a tag
->> "delete" at the commit marked by master.
->
-> git-tag being a porcelain command (i.e. we do not give a promise to keep
-> it set to stone) can be changed with a deprecation announcement period.
-> Say starting with Git 2.6 we would put out warnings for upcoming commands:
->
->  $ git tag --delete master
->  $ echo $?
->  # 0 # actually works as of today!
->
->  $ git tag delete master
->  #  Due to the planned switch to command words, this doesn't work.
->  #  For details see road map at  `man git commandwords-roadmaps`
->  $ echo $?
->  # 128 maybe ?
->
-> $ git tag create delete
->
-> And after a while (maybe 3-5 years, once this version is picked up by
-> debian stable as well as red hat stable)
-> we can change it, so with Git 3.4(?)
->
->  $ git tag --delete master
->  # --delete is deprecated since 3.4, use `git tag delete` instead
->  $ echo $?
->  # 128
->
->  $ git tag delete master
->  # --delete is deprecated since 2.6, use `git tag delete` instead
->  $ echo $?
->  # 0 # actually works!
->
+> The pipes have a limit, so we need to empty them to prevent back-pressure?
 
+Of course.  But that does not lead to "we hold everything in core".
+This side could choose to emit (under protection of args->mutex)
+early, e.g. after reading a line, emit it to our standard output (or
+our standard error).
 
-This seems like a possible strategy for converging on command words.
-So basically, we force all uses of the command words to just fail and
-then once that's picked up we can migrate to the command words.
+> And because we want to have the output of one task at a time, we need to
+> save it up until we can put out the whole output, no?
 
-Regards,
-Jake
+I do not necessarily agree, and I think I said that already:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/276273/focus=276321
+
+>>> +     }
+>>> +     if (finish_command(cp))
+>>> +             die("command died with error");
+>>> +
+>>> +     sem_wait(args->mutex);
+>>> +     fputs(out.buf, stderr);
+>>> +     sem_post(args->mutex);
+>>
+>> ... and emitted to standard error?
+>>
+>> I would have expected that the standard error would be left alone
+>
+> `git fetch` which may be a good candidate for such an operation
+> provides progress on stderr, and we don't want to intermingle
+> 2 different submodule fetch progress displays
+> ("I need to work offline for a bit, so let me get all of the latest stuff,
+> so I'll run `git submodule foreach -j 16 -- git fetch --all" though ideally
+> we want to have `git fetch --recurse-submodules -j16` instead )
+>
+>> (i.e. letting warnings from multiple jobs to be mixed together
+>> simply because everybody writes to the same file descriptor), while
+>> the standard output would be line-buffered, perhaps captured by the
+>> above loop and then emitted under mutex, or something.
+>
+>>
+>> I think I said this earlier, but latency to the first output counts
+>
+> "to the first stderr"
+> in this case?
+
+I didn't mean "output==the standard output stream".  As I said in
+$gmane/276321, an early output, as an indication that we are doing
+something, is important.
+
+> Why would we want to unplug the task queue from somewhere else?
+
+When you have a dispatcher more intelligent than a stupid FIFO, I
+would imagine that you would want to be able to do this pattern,
+especially when coming up with a task (not performing a task) takes
+non-trivial amount of work:
+
+	prepare task queue and have N threads waiting on it;
+
+	plug the queue, i.e. tell threads that do not start picking
+	tasks out of it yet;
+
+	large enough loop to fill the queue to a reasonable size
+	while keeping the threads waiting;
+
+	unplug the queue.  Now the threads can pick tasks from the
+	queue, but they have many to choose from, and a dispatcher
+	can do better than simple FIFO can take advantage of it;
+
+	keep filling the queue with more tasks, if necessary;
+
+        and finally, wait for everything to finish.
+
+Without "plug/unplug" interface, you _could_ do the above by doing
+something stupid like
+
+	prepare a task queue and have N threads waiting on it;
+
+	loop to find enough number of tasks but do not put them to
+	task queue, as FIFO will eat them one-by-one; instead hold
+	onto them in a custom data structure that is outside the
+	task queue system;
+
+	tight and quick loop to move them to the task queue;
+
+	keep finding more tasks and feed them to the task queue;
+
+        and finally, wait for everything to finish.
