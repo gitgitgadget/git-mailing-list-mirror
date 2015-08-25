@@ -1,236 +1,105 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 3/5] submodule: helper to run foreach in parallel
-Date: Tue, 25 Aug 2015 14:42:25 -0700
-Message-ID: <CAGZ79kb2N_5_tJv-GURL9_ESFs=pHp=L-Mujn3Df_+-T74_9Dg@mail.gmail.com>
-References: <1440523706-23041-1-git-send-email-sbeller@google.com>
-	<1440523706-23041-4-git-send-email-sbeller@google.com>
-	<xmqq7fojxeh3.fsf@gitster.dls.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: Git's inconsistent command line options
+Date: Tue, 25 Aug 2015 14:49:10 -0700
+Message-ID: <CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
+References: <mrh7ck$r0g$1@ger.gmane.org> <CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
+Cc: Graeme Geldenhuys <graemeg@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 23:42:33 2015
+X-From: git-owner@vger.kernel.org Tue Aug 25 23:49:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZULzD-00074d-9G
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 23:42:31 +0200
+	id 1ZUM65-0004iJ-JA
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 23:49:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755248AbbHYVm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 17:42:27 -0400
-Received: from mail-qk0-f181.google.com ([209.85.220.181]:35476 "EHLO
-	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751315AbbHYVm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 17:42:26 -0400
-Received: by qkbm65 with SMTP id m65so108583266qkb.2
-        for <git@vger.kernel.org>; Tue, 25 Aug 2015 14:42:25 -0700 (PDT)
+	id S1756075AbbHYVtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2015 17:49:33 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:32881 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755857AbbHYVtc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2015 17:49:32 -0400
+Received: by iods203 with SMTP id s203so204230654iod.0
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 14:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=CtdY/iPZFOeNc2Sm+dnS741swGf4O5HOOiLO2lPWnIM=;
-        b=l8+Hnw47oeNYuRpNFf7QlwMGgRCqJb/dmA9y8SlOxocTOgyFvqyhMLituMu0cgM+oT
-         JAStmUBMdMVt6+Car0qnnCPw32qzZqfy5sjsZ0IZCMRHCToZkQ6jMgKFB5it6Ur4egln
-         HT64H6lCwUOtCgnUzbhXLC+ARCIXkGAtit6e6WP5z3zCcXKLDxCvWl4B4jd9mzqFzX/q
-         x9dves9DwwnCAl2YEaDIWe5Bz8NM18wtqroyyH/YECLrnzDmU/XfLHfKvaZi5M0dV0gO
-         gJkwGxG0YtaX9YG7nermBVToezgq1OqFsbZhajOiHNQwKijZgZnCo/6m4Kdfsj26KF6n
-         JGxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=CtdY/iPZFOeNc2Sm+dnS741swGf4O5HOOiLO2lPWnIM=;
-        b=JkSVkeS2EqbULxz+GE/A8tEPsUrIV4iQIPwe/vxPUbyLxjHDc4CTFTKQRDOSOkpiOp
-         zRRMv7pt5vld3o/qxWWCy03SVJlz6VeitKPMXHqchCk3/5Ufeg+C+F6LMuHu6uEW2Jd5
-         7bvN2yYELCTJGIKCYMZsTAo5muBkIlxhC5ehEHJpQAzao9FEWQL3YoFYArxOVeP7v8cy
-         Ky/olalbcWkjm9PRMN/BLgYou7wYmLyQAmsW3uol2UTHMUZ9nkeoE0DbGl+BC70rnPPZ
-         GSavp0C/KeivXI5p8QiWDfD+h074Wiltp2lfy0So9NM3bJ8O84uphGw4xhq2cxzMJjoT
-         BHXg==
-X-Gm-Message-State: ALoCoQk1IiqKjYSYLOMwlXktPGreo7/6puNJPzM3cQD0XgSJMasrNr4XJrteq+PYzPrrQCqGLLni
-X-Received: by 10.55.217.218 with SMTP id q87mr22147923qkl.56.1440538945266;
- Tue, 25 Aug 2015 14:42:25 -0700 (PDT)
-Received: by 10.140.41.198 with HTTP; Tue, 25 Aug 2015 14:42:25 -0700 (PDT)
-In-Reply-To: <xmqq7fojxeh3.fsf@gitster.dls.corp.google.com>
+        bh=C6E60TfH1pURptMNC6GjaGcHKJ8P1YKuvdY2k1ebOPo=;
+        b=wATddbBviz8sLcKXhtbqmub47zF4j+YZ7WXNTKDVDR4fZCFAzbubMfsV4XiTdRyJcG
+         wJ7t259ilJY34YKNbf3RsiIL3kyGBvCKzntP4yWWVSAV/MybeVKkgLiCujz4EX6qPzn4
+         F7hXok+aTU2opWBzGeLRQ/ArPkJ0YP1f6ef4MouBHkZWrxFcC+WukiwcgHC1OhLvLEX+
+         lhfNABt97Ku2W+iCzGV/uHCgJ0S4BytmWpXpJj1BAKFyJUzvHrEfx3YM2MLrgjudiFe3
+         a9cknfrFvVRsC6EX61sPJtyceZp+CwRt0Iz5A1xHnkmmtkVARcfS/fBu16+hzwtH+MA7
+         E1pw==
+X-Received: by 10.107.133.213 with SMTP id p82mr35236658ioi.71.1440539372325;
+ Tue, 25 Aug 2015 14:49:32 -0700 (PDT)
+Received: by 10.107.5.203 with HTTP; Tue, 25 Aug 2015 14:49:10 -0700 (PDT)
+In-Reply-To: <CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276577>
 
-On Tue, Aug 25, 2015 at 2:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> This runs a command on each submodule in parallel and should eventually
->> replace `git submodule foreach`.
+On Tue, Aug 25, 2015 at 8:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> On Tue, Aug 25, 2015 at 1:01 AM, Graeme Geldenhuys <graemeg@gmail.com> wrote:
 >>
->> There is a new option -j/--jobs (inspired by make) to specify the number
->> of parallel threads.
+>> Even though I have worked with Git since 2009, I still have to
+>> reference the help to remind me of what parameter to use in certain
+>> situation simply because similar tasks differ so much.
 >>
->> The jobs=1 case needs to be special cases to exactly replicate the current
->> default behavior of `git submodule foreach` such as working stdin input.
+>> Maybe we could address this in the next major version of Git? Has
+>> anybody else thought about this or started work on this? Or was this
+>> discussed before and declined (link?).
 >
-> "git submodule foreach-parallel -j1" feels like a roundabout way to
-> say "git submodule foreach"; "I want you to go parallel.  Oh, not
-> really, I want you to do one thing at a time".
-
-Eventually I want to drop the -parallel, such that git foreach ... will
-just work as it always had, and if there is a --jobs argument we
-may want to change the semantics a bit to make it work with the
-piping to stdout/err.
-
+> http://article.gmane.org/gmane.comp.version-control.git/231478 comes to mind,
+> which has been linked from this entry:
 >
-> I do not think these two have to be equivalent---users who need the
-> traditional one-by-one "foreach" behaviour (including the standard
-> input and other aspects that are unreasonable to expect
-> "foreach-parallel -jN" to replicate) can and should choose to use
-> "foreach", not "foreach-parallel -j1".
+> Discuss and decide if we want to choose between the "mode word" UI
+> (e.g. "git submodule add") and the "mode option" UI (e.g. "git tag --delete")
+> and standardise on one; if it turns out to be a good idea, devise the migration
+> plan to break the backward-compatibility.
 >
-> In any case, I do not think I saw any special casing of -j1 case that
-> attempts to leave the standard input operational.  Did I miss
-> something, or is the above describing what is left to do?
+> in http://git-blame.blogspot.com/p/leftover-bits.html
 
-It is the later, I am not quite confident yet about this very patch,
-but I was rather waiting for feedback what people deem is important.
+I would vote for command words, as this is clean and simple. The
+downside is in converting all the old options based commands, git-tag,
+and similar. These commands cannot easily convert because "valid"
+sequences would become invalid with no easy way to deprecate for
+example in the linked gmane above, "git tag delete master" can't be a
+call to delete master as it is currently a call to create a tag
+"delete" at the commit marked by master.
 
->
->> For more than one job there is no input possible and the output of both
->> stdout/stderr of the command are put into the stderr in an ordered fashion,
->> i.e. the tasks to not intermingle their output in races.
->
-> To rephrase what I said earlier, "for parallel version, the above
-> things happen, even with numthreads==1", is perfectly fine.
+I can't think of an easy way to deprecate the change in behavior over
+time, which means that making a conversion would require some other as
+yet unknown way?
 
->
->> +     cp->no_stdin = 1;
->> +     cp->out = 0;
->> +     cp->err = -1;
->> +     cp->dir = args->path;
->> +     cp->stdout_to_stderr = 1;
->
-> So the standard error and the standard output are mixed to a single
-> pipe ...
+It may be possible to convert other options based commands, such as
+how git-branch and git-checkout do things which seem highly unrelated.
+A good example is how checkout is used to both change branches, as
+well as can create a branch, and can also checkout a file. The "reset"
+command is used to rewind history, as well as potentially reset *all*
+files, but it can't be used to reset a single file, and is completely
+different from revert. Some of these distinctions are ok because it's
+just no good way to make everything easy.
 
-I was very focused on fetch, which would report progress and
-information to stderr only.
+Some of these could be fixed by the command word setup, but as many
+have mentioned an actual migration plan is difficult.
 
->
->> +     cp->use_shell = 1;
->> +
->> +     if (start_command(cp)) {
->> +             die("Could not start command");
->> +             for (i = 0; cp->args.argv; i++)
->> +                     fprintf(stderr, "%s\n", cp->args.argv[i]);
->> +     }
->> +
->> +     while (1) {
->> +             ssize_t len = xread(cp->err, buf, sizeof(buf));
->> +             if (len < 0)
->> +                     die("Read from child failed");
->> +             else if (len == 0)
->> +                     break;
->> +             else {
->> +                     strbuf_add(&out, buf, len);
->> +             }
->
-> ... and the whole thing is accumulated in core???
+Personally, I don't want to move to the command option "--status"
+format, as I think these aren't really options, and are very much
+sub-subcommands. I think we should try to push more uses of this
+style, and try to determine a possible migration path towards using
+them. Maybe some warts simply aren't worth the effort to fix though.
 
-The pipes have a limit, so we need to empty them to prevent back-pressure?
-And because we want to have the output of one task at a time, we need to
-save it up until we can put out the whole output, no?
+Other issues are tricker to solve, and are result of git exposing more
+complex functionality and users eventually simply have to learn and
+understand.
 
->
->> +     }
->> +     if (finish_command(cp))
->> +             die("command died with error");
->> +
->> +     sem_wait(args->mutex);
->> +     fputs(out.buf, stderr);
->> +     sem_post(args->mutex);
->
-> ... and emitted to standard error?
->
-> I would have expected that the standard error would be left alone
-
-`git fetch` which may be a good candidate for such an operation
-provides progress on stderr, and we don't want to intermingle
-2 different submodule fetch progress displays
-("I need to work offline for a bit, so let me get all of the latest stuff,
-so I'll run `git submodule foreach -j 16 -- git fetch --all" though ideally
-we want to have `git fetch --recurse-submodules -j16` instead )
-
-> (i.e. letting warnings from multiple jobs to be mixed together
-> simply because everybody writes to the same file descriptor), while
-> the standard output would be line-buffered, perhaps captured by the
-> above loop and then emitted under mutex, or something.
-
->
-> I think I said this earlier, but latency to the first output counts
-
-"to the first stderr"
-in this case?
-
-So you would want one channel (stderr) for a fast reporting possibility
-and another channel (stdout) for a well ordered output mode to cover
-both options. And the command to be run must adhere to the our
-selection of stderr for fast reporting and stdout for output to wait on.
-
-> as an activity feedback mechanism.
->
->> +     if (module_list_compute(0, nullargv, NULL, &pathspec) < 0)
->> +             return 1;
->> +
->> +     gitmodules_config();
->> +
->> +     aq = create_task_queue(number_threads);
->> +
->> +     for (i = 0; i < ce_used; i++) {
->> +             const struct submodule *sub;
->> +             const struct cache_entry *ce = ce_entries[i];
->> +             struct submodule_args *args = malloc(sizeof(*args));
->> +
->> +             if (ce_stage(ce))
->> +                     args->sha1 = xstrdup(sha1_to_hex(null_sha1));
->> +             else
->> +                     args->sha1 = xstrdup(sha1_to_hex(ce->sha1));
->> +
->> +             strbuf_reset(&sb);
->> +             strbuf_addf(&sb, "%s/.git", ce->name);
->> +             if (!file_exists(sb.buf))
->> +                     continue;
->> +
->> +             args->path = ce->name;
->> +             sub = submodule_from_path(null_sha1, args->path);
->> +             if (!sub)
->> +                     die("No submodule mapping found in .gitmodules for path '%s'", args->path);
->> +
->> +             args->name = sub->name;
->> +             args->toplevel = xstrdup(xgetcwd());
->> +             args->cmd = argv;
->> +             args->mutex = mutex;
->> +             args->prefix = alternative_path;
->> +             add_task(aq, run_cmd_submodule, args);
->> +     }
->> +
->> +     finish_task_queue(aq, NULL);
->
-> This is very nice.  Declare a task queue with N workers, throw bunch
-> of task to it and then wait for all of them to complete.  Things
-> can't be simpler than that ;-).  One thing that other callers of the
-> mechanism might want may be to plug and unplug the task queue, but
-> that can wait until the need arises.
-
-I think a queue is the simplest thing at the moment. Eventually we
-may want to have a way to specify a DAG of workers (e.g. 2 tasks reading from
-files to a buffer, 4 tasks to preprocess the output from the first 2 tasks, and
-then 16 tasks to do heavy workload processing, and just one thread doing the
-stdout/err handling).
-
-In the current patches the task queue is passed around and every worker thread
-has access to it, in case it wants to start new tasks itself, so it
-may be doable.
-
-Why would we want to unplug the task queue from somewhere else?
+Regards,
+Jake
