@@ -1,98 +1,92 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v5] git-p4: Obey core.ignorecase when using P4 client specs.
-Date: Tue, 25 Aug 2015 12:57:37 +0100
-Message-ID: <CAE5ih7-o6eVF-z2GORxHa_TdDaXgexLpW3jctESTnL46Mfdo8w@mail.gmail.com>
-References: <1440451805-85095-1-git-send-email-larsxschneider@gmail.com>
-	<55DC111A.6090501@diamand.org>
-	<55DC285D.9030500@web.de>
-	<23CB37E8-9704-4A9D-8CAB-2812AD59394D@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] compat/inet_ntop.c: Use INET_ADDRSTRLEN and
+ INET6_ADDRSTRLEN macroses
+Date: Tue, 25 Aug 2015 14:13:32 +0200
+Organization: gmx
+Message-ID: <9f870e741fc573934ebfe40cd73aba81@www.dscho.org>
+References: <1440498879-12382-1-git-send-email-brilliantov@inbox.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Users <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>,
-	Tor Arvid Lund <torarvid@gmail.com>, ksaitoh560@gmail.com,
-	Junio C Hamano <gitster@pobox.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 13:57:45 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: brilliantov@inbox.ru
+X-From: git-owner@vger.kernel.org Tue Aug 25 14:13:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUCrG-00059z-Gb
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 13:57:42 +0200
+	id 1ZUD6j-0000mA-67
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 14:13:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755496AbbHYL5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 07:57:39 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:34780 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751691AbbHYL5i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 07:57:38 -0400
-Received: by obbfr1 with SMTP id fr1so139352095obb.1
-        for <git@vger.kernel.org>; Tue, 25 Aug 2015 04:57:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DufQYWtHogu6kT88Wh0ku7D6PE+9tiOJsCL1IMpsScA=;
-        b=XAr8puQu6YWL4rl5Ys9lsHMtAfXGxVGW7uuZC8he/Vgh8kAzig6wdOn55sLxOf2s3o
-         VGqpI6KH1AIy9AYmU8XcWZtHhSFTahOtXrsblx+v+9xuTsvPL+MZ+q8CJ+eA7Y9zSEnF
-         svVhSBTG/uQR1bqoMgsuxNNZHe1TWjGCC1LU4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=DufQYWtHogu6kT88Wh0ku7D6PE+9tiOJsCL1IMpsScA=;
-        b=Ht3jHP66tMvzUdSx0OKsHYCCZukRGpdq92gAp74E0bGsCJpEG/Wva7ueyrk2nK/Rut
-         9ybHXyk+9CI/RhglxHSS6eDg8dt9Olltj+6Fk1ym3nj2HaLWMzcKjYfJVW477VYxvCNj
-         IJveaRBpbk+DCFujWYmmDQm2w0de6Qu01Ms/00adzAmWdka2h8lTSP980OxWZ2oXDy1j
-         jPRwyjfWzV1bFmW52sReKTCqCVhQLJqdsgeMvU2AxAjX/O76v010OEsoqFtd6GDDsUiC
-         eEx+Y91D3O+HPaKUFsvL95YBllFoJgZin63K7D0WZKSo4oum8S55tHChKkUB7Q/rRPsO
-         K1Xw==
-X-Gm-Message-State: ALoCoQl4xs60EOjHd19d0QoK9BUbpybCQ/QayHJIktrXbpsgNM20NKSSwlJcdPVJU4y5kY2BEDUc
-X-Received: by 10.60.141.135 with SMTP id ro7mr25615974oeb.13.1440503857537;
- Tue, 25 Aug 2015 04:57:37 -0700 (PDT)
-Received: by 10.60.162.5 with HTTP; Tue, 25 Aug 2015 04:57:37 -0700 (PDT)
-In-Reply-To: <23CB37E8-9704-4A9D-8CAB-2812AD59394D@gmail.com>
+	id S1754619AbbHYMNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2015 08:13:37 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50662 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751726AbbHYMNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2015 08:13:36 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MfzEP-1Z7Iu81b7N-00NTkQ; Tue, 25 Aug 2015 14:13:33
+ +0200
+In-Reply-To: <1440498879-12382-1-git-send-email-brilliantov@inbox.ru>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:MbOFwJLW3QDv0v/+YSQmJiudHLxRbFn4mfr7hUoO9bspd9xvuQr
+ qh4RMydZZGgxMQYADLKlfBZVhVvkvhy/xzXZ1ABOANFlm5XPBgWCzOh4VY2oRlX57qvd4Bq
+ /7L7+l4oaXNTsilaqRoy4aSNnlgXzadSkjNlRsHGt61QHotjnMBsWO+nRojvORlCDoo/w/w
+ JpoBh9v4xbOUySjnawLtA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZMRiQpvsUZU=:/cDhhzTZO8EZB03IebA7bB
+ MUvdS6ZYMDnJ2pVfRuFtyOsFzCxuAfPJ7B35+DFCVAbDSMNolGcHPFj2W2R0Qko+gk/W7haph
+ 5jqLdGkqoFxJv1AJiEmoCfJRV3s+6m0DC7PXgsIfENqF6AqB3EBl/2h6A4PxDpmmVCcixhxOA
+ HfXdE6Uhc4NSosi54LyGQBv4pt/iLUZLDqSsFuYV6B935Aq6w/6prP6qwoB3OnLG0AXP9A9r/
+ AJlETKAnitTSz1CXsO0mO3cCzdcP2X4IE7X8uYFIe4WVq/pR18vtzuS1rpB8u95nayb6VQvao
+ 0LYXPhmr9qBODcw8l2+WDKtziTJqnuqJMKTu8vi65sCOH19G184qGI9A8QD8NAgTIXjuAxJVw
+ DsQKzZKZZ29UCCYYcOU/gMRqRay8nFClnTl+pOHYlh11oLVTST96nn9cXXW1zSn5jkXseKxfu
+ kNxf8x2Nl5MRESQsTGQ9nOb2kM0U/NRULkWdh6YzQNU5paK8xVXeCAkCHMN9KniSI+3b53d8a
+ MPZqErLqNvVA1dTXzpufeLaNJD2WxW6KTU9kAfrcSbcZVBxTt4OgGuUX+VY5vNtRD82xFwOHY
+ 23TukBmMrDHWveBROECA/iIsV9ZgY/rYFvEd1zM/3QsY5zkbt96gMNjTouHG9HtTUEmuORNRO
+ +CQ21Zc1ZfT56BrYYoUv429M0g9lN4xiAkBNtkePxpCYrR4afMzLB4qXb48pGHfczBMBd2oOq
+ 6Um2RZYNc4LJMVu6GlRfGacjtpC8vm9MDM9K8g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276520>
 
- On 25/08/15 11:30, larsxschneider@gmail.com wrote:
+Hi Kirill,
 
-> Unfortunately the command line option is not sufficient as the resulting paths are still messed up. I added the switch but it looks like as core.ignorecase does some additional magic on fast-import. You can see my changes here:
-> https://github.com/larsxschneider/git/commit/b4399179ff542161c2c5b83c34c5b4901287ceb0
->
-> You can also run the unit tests to see the results here:
-> https://github.com/larsxschneider/git/tree/lars/fix-path-v5-with-command-switch
->
-> The only way I could image to fix that is to request every path from P4 as shown in my PATCH v4. This would be slow and the change would be rather huge.
+On 2015-08-25 12:34, brilliantov@inbox.ru wrote:
+> From: Brilliantov Kirill Vladimirovich <brilliantov@inbox.ru>
+> 
+> Signed-off-by: Brilliantov Kirill Vladimirovich <brilliantov@inbox.ru>
 
-Yes, you're right - fast-import has special handling based on core.ignorecase.
+The commit message makes for an excellent place to fill in the reader on information that is not obvious from reading the patch. For example...
 
-There was a thread a while back saying that it shouldn't do this, and
-instead should have a new --casefold option, which would make more
-sense, but isn't the case at present.
+> diff --git a/compat/inet_ntop.c b/compat/inet_ntop.c
+> index 90b7cc4..fcd3b15 100644
+> --- a/compat/inet_ntop.c
+> +++ b/compat/inet_ntop.c
+> @@ -47,7 +47,7 @@ static const char *
+>  inet_ntop4(const u_char *src, char *dst, size_t size)
+>  {
+>  	static const char fmt[] = "%u.%u.%u.%u";
+> -	char tmp[sizeof "255.255.255.255"];
+> +	char tmp[INET_ADDRSTRLEN];
 
-http://www.spinics.net/lists/git/msg243264.html
+Given that we are in compat/ space, i.e. in a space meant for platforms lacking POSIX functions and definitions, is it really safe to assume that INET_ADDRSTRLEN is available there?
 
-> I am curious:
-> I run all my P4 -> git migrations on a Linux box with EXT4 and core.ignorecase=True. I did not realize that this might cause trouble. What could happen and what should I look out for?
+> @@ -78,7 +78,7 @@ inet_ntop6(const u_char *src, char *dst, size_t size)
+>  	 * Keep this in mind if you think this function should have been coded
+>  	 * to use pointer overlays.  All the world's not a VAX.
+>  	 */
+> -	char tmp[sizeof "ffff:ffff:ffff:ffff:ffff:ffff:255.255.255.255"], *tp;
+> +	char tmp[INET6_ADDRSTRLEN], *tp;
 
-An obvious way it could go wrong would be if you had a a repo that
-_did_ care about case (e.g. had Makefile and makefile in the same
-directory) and you then tried to git-p4 clone a separate repo into a
-different branch. In an ideal world, you would only use the
-case-folding on the git-p4 based repo. I think while fast-import just
-checks core.ignorecase, that's not possible.
+Are we really, absolutely sure that INET6_ADDRSTRLEN is defined?
 
-So the choices are:
+Also I wonder: what problem does this patch solve? Is the current way to determine the size of the `tmp` array incorrect?
 
-1. A new command-line option which would silently set core.ignorecase
-2. Users just have to know to set core.ignorecase manually before
-using git-p4 (i.e. Lars' patch v5)
-3. Fix fast-import to take a --casefold option (but that's a much bigger change)
+Please use the commit message space to answer at least these questions.
 
-Luke
+Ciao,
+Johannes
