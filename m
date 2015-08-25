@@ -1,86 +1,103 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v13 04/12] ref-filter: implement an `align` atom
-Date: Tue, 25 Aug 2015 08:47:12 +0200
-Message-ID: <vpqk2sj7tlb.fsf@anie.imag.fr>
-References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
-	<1440214788-1309-5-git-send-email-Karthik.188@gmail.com>
-	<xmqqmvxg2v3u.fsf@gitster.dls.corp.google.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v5] git-p4: Obey core.ignorecase when using P4 client
+ specs.
+Date: Tue, 25 Aug 2015 07:54:18 +0100
+Message-ID: <55DC111A.6090501@diamand.org>
+References: <1440451805-85095-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 08:48:34 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: pw@padd.com, torarvid@gmail.com, ksaitoh560@gmail.com,
+	tboegi@web.de, sunshine@sunshineco.com, gitster@pobox.com
+To: larsxschneider@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 25 08:56:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZU822-0007J6-NM
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 08:48:33 +0200
+	id 1ZU8AC-0007J3-GX
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 08:56:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754878AbbHYGr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 02:47:26 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41780 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753279AbbHYGrZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 02:47:25 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t7P6lBq4021902
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 25 Aug 2015 08:47:12 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t7P6lC6K007630;
-	Tue, 25 Aug 2015 08:47:12 +0200
-In-Reply-To: <xmqqmvxg2v3u.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 24 Aug 2015 15:13:25 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 25 Aug 2015 08:47:12 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t7P6lBq4021902
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1441090036.82898@b79/pnbQcVgVoevEh8MUuQ
+	id S1755389AbbHYG41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2015 02:56:27 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:35907 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752103AbbHYGyX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2015 02:54:23 -0400
+Received: by wicja10 with SMTP id ja10so5166630wic.1
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 23:54:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=SRoeZsoHMVi4A/MvlRzXLZPLb2f1yN7+L+IqfsGSBmw=;
+        b=PnKT1TrQnRRo2MoUj9CLhWlCEoX0TDyceuwG3LTwXs3IsolojBZ9659cMg+V45wXTf
+         JslzmhTyBDf6LNFji32xrX8DSzwtwsDaZkbpujcCATeZ62RvvqTa9x4OXRwDN4LIfhyx
+         ENxGEymTMgU1wKwDx9o3BIhqckDccXdCK9dDY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=SRoeZsoHMVi4A/MvlRzXLZPLb2f1yN7+L+IqfsGSBmw=;
+        b=SPX3TNoua/b1AFRj2bnJLglrdHsBmGOdF6SaF+0BZ2Mh/QI5QH+xo4QweU03l2yu+/
+         mGksYVY3+KC6aa68m3VuTh1FArUmadoiMp957G6lW15ECG4tVG4kA3Q6R1LV93sfDrHu
+         s2NLUdzEMQb4FXOurS1Gpoves+/n5PpRvgxXLNxCy6Ga/mM/3ataGndsol2dmvyX/Y5v
+         /pPYDxMAk4Hf2NA9mjSJ1XP3sSxotVk77FA/HlxSd45BM2BDxye97PkugRCBH06UJ4GE
+         dk8Sj6zGtAO1sFXeHLh8WPl6jCLCJSaRB2EsjsF9SW1FdbAFXNPA+srWsn6sE2p+D39p
+         FlTQ==
+X-Gm-Message-State: ALoCoQk2H+LPrlZAAqzX799qyC1tnP4A6110OSmGHSdTT699kAyNTTjpuf+WOUKliCA2kbF42tNO
+X-Received: by 10.180.106.68 with SMTP id gs4mr1998386wib.61.1440485662051;
+        Mon, 24 Aug 2015 23:54:22 -0700 (PDT)
+Received: from [192.168.245.128] (cpc7-cmbg17-2-0-cust139.5-4.cable.virginm.net. [86.1.43.140])
+        by smtp.gmail.com with ESMTPSA id jr5sm26553555wjc.14.2015.08.24.23.54.21
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 24 Aug 2015 23:54:21 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <1440451805-85095-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276508>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> You can see that I expected that "if !state.stack->prev" check to be
-> inside append_atom(), and I would imagine future readers would have
-> the same expectation when reading this code.  I.e.
+On 24/08/15 22:30, larsxschneider@gmail.com wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
 >
-> 	append_atom(struct atom_value *v, struct ref_f_s *state)
->         {
-> 		if (state->stack->prev)
-> 			strbuf_addstr(&state->stack->output, v->s);
-> 		else
->                 	quote_format(&state->stack->output, v->s, state->quote_style);
-> 	}
+> Thanks to Luke Diamand I realized the core problem and propose here a
+> substiantially simpler fix to my PATCH v4.
 >
-> The end result may be the same,
+> The test cases remain and prove the problem. In particular
+> "8 - Clone path (ignorecase)" and
+> "Add a new file and clone path with new file (ignorecase)" fail with the
+> current implementation on OS X and Linux.
 
-There's another call to append_atom() when inserting the "reset color at
-end of line if needed", so moving this if inside append_atom means we
-would do the check also for the reset color. It would not change the
-behavior (by construction, we insert it only when the stack has only the
-initial element), so it's OK.
+That's a lot simpler, thanks!
 
-I agree that this is a good thing to do.
+Could we give this its own command line option and git config variable?
 
-> Moreover, notice that the function signature of append_atom() is
-> exactly the same as atomv->handler's.  I wonder if it would be
-> easier to understand if you made append_atom() the handler for a
-> non-magic atoms, which would let you do the above without any if/else
-> and just a single unconditional
+Core.ignorecase gets set if the client is on a filing system that 
+ignores case. This is slightly different - it squashes case in depot 
+files for people with depots that have incorrectly jumbled-up case.
 
-I can't decide between "ah, very elegant" and "no, too much magic" ;-).
-I lean towards the former.
+Conflating the two seems like it would cause confusion at some point - 
+for example, I have no idea how the rest of git behaves if 
+core.ignorecase is set to True on a case-preserving file system.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+It would probably be necessary to change p4PathStartsWith() to also 
+check the same flag.
+
+
+>
+> Lars Schneider (1):
+>    git-p4: Obey core.ignorecase when using P4 client specs.
+>
+>   git-p4.py                         |   7 ++
+>   t/t9821-git-p4-path-variations.sh | 200 ++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 207 insertions(+)
+>   create mode 100755 t/t9821-git-p4-path-variations.sh
+>
+> --
+> 1.9.5 (Apple Git-50.3)
+>
