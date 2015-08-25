@@ -1,119 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: bug: git branch -d and case-insensitive file-systems
-Date: Tue, 25 Aug 2015 01:21:23 -0400
-Message-ID: <20150825052123.GA523@sigill.intra.peff.net>
-References: <CAJrRhQz1UmnDi6Giejetfoh3aPX08aYcgY-neZfcKjpUav0=sA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v13 04/12] ref-filter: implement an `align` atom
+Date: Tue, 25 Aug 2015 08:47:12 +0200
+Message-ID: <vpqk2sj7tlb.fsf@anie.imag.fr>
+References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
+	<1440214788-1309-5-git-send-email-Karthik.188@gmail.com>
+	<xmqqmvxg2v3u.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Aaron Dufour <thedufer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 07:21:31 2015
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 08:48:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZU6fr-0006qM-3X
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 07:21:31 +0200
+	id 1ZU822-0007J6-NM
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 08:48:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752900AbbHYFV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 01:21:26 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49541 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752114AbbHYFV0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 01:21:26 -0400
-Received: (qmail 31566 invoked by uid 102); 25 Aug 2015 05:21:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Aug 2015 00:21:26 -0500
-Received: (qmail 32183 invoked by uid 107); 25 Aug 2015 05:21:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Aug 2015 01:21:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Aug 2015 01:21:23 -0400
-Content-Disposition: inline
-In-Reply-To: <CAJrRhQz1UmnDi6Giejetfoh3aPX08aYcgY-neZfcKjpUav0=sA@mail.gmail.com>
+	id S1754878AbbHYGr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2015 02:47:26 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41780 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753279AbbHYGrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2015 02:47:25 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t7P6lBq4021902
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 25 Aug 2015 08:47:12 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t7P6lC6K007630;
+	Tue, 25 Aug 2015 08:47:12 +0200
+In-Reply-To: <xmqqmvxg2v3u.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 24 Aug 2015 15:13:25 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 25 Aug 2015 08:47:12 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t7P6lBq4021902
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1441090036.82898@b79/pnbQcVgVoevEh8MUuQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276507>
 
-On Mon, Aug 24, 2015 at 12:11:13PM -0400, Aaron Dufour wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I use git (2.2.1) on OS X (10.9.5) and recently my repo got into a bad
-> state.  I think this involves a mis-handling of case-insensitive file
-> systems.
-> 
-> This reproduces the problem:
-> 
->     > git init
->     Initialized empty Git repository in /Users/aarond_local/code/git-test/.git/
->     > git commit --allow-empty -m 'first commit'
->     [master (root-commit) 923d8b8] first commit
->     > git checkout -b feature
->     Switched to a new branch 'feature'
->     > git checkout -b Feature
->     fatal: A branch named 'Feature' already exists.
->     > git checkout -B Feature
->     Switched to and reset branch 'Feature'
->     > git branch -d feature
->     Deleted branch feature (was 923d8b8).
->     > git log
->     fatal: bad default revision 'HEAD'
+> You can see that I expected that "if !state.stack->prev" check to be
+> inside append_atom(), and I would imagine future readers would have
+> the same expectation when reading this code.  I.e.
+>
+> 	append_atom(struct atom_value *v, struct ref_f_s *state)
+>         {
+> 		if (state->stack->prev)
+> 			strbuf_addstr(&state->stack->output, v->s);
+> 		else
+>                 	quote_format(&state->stack->output, v->s, state->quote_style);
+> 	}
+>
+> The end result may be the same,
 
-I don't work on a case-insensitive filesystem, so my knowledge may be
-out of date, but as far as I know, we do not do anything special to
-handle ref case-sensitivity. I expect your problem would go away with
-this patch:
+There's another call to append_atom() when inserting the "reset color at
+end of line if needed", so moving this if inside append_atom means we
+would do the check also for the reset color. It would not change the
+behavior (by construction, we insert it only when the stack has only the
+initial element), so it's OK.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 58aa84f..c5545de 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -19,6 +19,7 @@
- #include "column.h"
- #include "utf8.h"
- #include "wt-status.h"
-+#include "dir.h"
- 
- static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] [-r | -a] [--merged | --no-merged]"),
-@@ -223,7 +224,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 		int flags = 0;
- 
- 		strbuf_branchname(&bname, argv[i]);
--		if (kinds == REF_LOCAL_BRANCH && !strcmp(head, bname.buf)) {
-+		if (kinds == REF_LOCAL_BRANCH && !strcmp_icase(head, bname.buf)) {
- 			error(_("Cannot delete the branch '%s' "
- 			      "which you are currently on."), bname.buf);
- 			ret = 1;
+I agree that this is a good thing to do.
 
-but I think that is just the tip of the iceberg. E.g. (on a vfat
-filesystem I just created):
+> Moreover, notice that the function signature of append_atom() is
+> exactly the same as atomv->handler's.  I wonder if it would be
+> easier to understand if you made append_atom() the handler for a
+> non-magic atoms, which would let you do the above without any if/else
+> and just a single unconditional
 
-  $ git init
-  $ git commit -q --allow-empty -m one
-  $ git branch foo
-  $ git branch FOO
-  fatal: A branch named 'FOO' already exists.
+I can't decide between "ah, very elegant" and "no, too much magic" ;-).
+I lean towards the former.
 
-  $ git pack-refs --all --prune ;# usually run as part of git-gc
-  $ git commit -q --allow-empty -m two
-  $ git branch FOO
-  $ git for-each-ref --format='%(refname) %(subject)'
-  refs/heads/FOO two
-  refs/heads/foo one
-  refs/heads/master two
-
-Now the patch I showed above would do the wrong thing. Running "git
-checkout foo; git branch -d FOO" would be rejected, even though I really
-do have two separate branches.
-
-It would be a much more invasive change to fix this correctly. It is
-probably less work overall to move to a pluggable ref system, and to
-design ref storage that isn't dependent on the filesystem (this work is
-already underway).
-
-In the meantime, I think the best advice for mixed-case branch names on
-a case-insensitive filesystem is: don't.
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
