@@ -1,84 +1,87 @@
-From: Anish Athalye <anish.athalye@gmail.com>
-Subject: Re: git-remote-helper behavior on Windows, not recognizing blank line as terminator
-Date: Mon, 24 Aug 2015 18:52:15 -0700
-Message-ID: <304662DC-3759-4482-A06C-3286FD45457F@gmail.com>
-References: <CAFQ6zU1bdUwn+P3=1v2DoyVubMFz29ZuxHmnZ0pfezA-0MB+mQ@mail.gmail.com> <20150824092418.GF1412@serenity.lan>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Aug 25 03:52:24 2015
+From: Mikael Magnusson <mikachu@gmail.com>
+Subject: Re: [PATCH v5 2/2] worktree: add 'list' command
+Date: Tue, 25 Aug 2015 05:01:33 +0200
+Message-ID: <CAHYJk3SaDAJ6rfB2=GtGdeL47=Ckyrktd3qEM-UBH4ZbPYtKgg@mail.gmail.com>
+References: <1440280294-50679-1-git-send-email-rappazzo@gmail.com>
+	<1440280294-50679-3-git-send-email-rappazzo@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: gitster@pobox.com, sunshine@sunshineco.com,
+	dturner@twopensource.com, git <git@vger.kernel.org>
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 05:01:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZU3PS-00049S-HY
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 03:52:22 +0200
+	id 1ZU4Uf-0004F0-IT
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 05:01:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754122AbbHYBwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2015 21:52:18 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:34495 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751060AbbHYBwR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2015 21:52:17 -0400
-Received: by pabzx8 with SMTP id zx8so19652397pab.1
-        for <git@vger.kernel.org>; Mon, 24 Aug 2015 18:52:16 -0700 (PDT)
+	id S1752385AbbHYDBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2015 23:01:34 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:36793 "EHLO
+	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751580AbbHYDBe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2015 23:01:34 -0400
+Received: by iodv127 with SMTP id v127so171513533iod.3
+        for <git@vger.kernel.org>; Mon, 24 Aug 2015 20:01:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=references:mime-version:in-reply-to:content-type
-         :content-transfer-encoding:message-id:cc:from:subject:date:to;
-        bh=kP9cB3ykzxR71UvntwAhMYhWG2BzSzz59lX0hBXAMr4=;
-        b=lNVwz43wyxjksEZd5ZBAijDtVBAIK6o3bXN/jcyrHwzLcnsQgT40zjVm1mv7v/nQyY
-         URASG9nfVhXf3yB/pIDwG1g97HmBvlL3xlPT74bCJ/bvrX7Ebqf5TUqupACxPJ8AsSyx
-         um+Vi83rxMa3hX5obS7JE2l/Ge68YqG121FfwewwLQcN6G4xYyV/t89IDtfPQsAaEGIl
-         re9+xQAmHsnLBzPRWP9TF4UM0T44K+RSHD+suc5qTyzCmZMdm/8yPLL7eIL9IxogizwL
-         iwc8Nxhn1reGqNoXaHukzksc+u87gbsKxaluM+LhluhGfS8jB4V1XHa70GJ69GCm78kW
-         Q2kg==
-X-Received: by 10.66.62.229 with SMTP id b5mr50661471pas.81.1440467536732;
-        Mon, 24 Aug 2015 18:52:16 -0700 (PDT)
-Received: from [192.168.77.225] ([205.189.0.149])
-        by smtp.gmail.com with ESMTPSA id o7sm18884439pdr.25.2015.08.24.18.52.16
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 24 Aug 2015 18:52:16 -0700 (PDT)
-In-Reply-To: <20150824092418.GF1412@serenity.lan>
-X-Mailer: iPhone Mail (12F70)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ezdsvfr420Yimt52K+wp71mBvJiIpTURwwIoQaDl/4k=;
+        b=SJAZiYiPUxmch0TzlmfUNsOMD9lkWoQJx+koDTCslN3SXFW0Ss7w6EajEdPAlQb5E9
+         4RNUnii/NS+gw3I1iCradmC0e3FlKojyJiaMJLv8v1kgBckrmFi84LwTsk6K88LmjX/4
+         t40TxrXowzXoCRq+f3p2Z+VSReTQ15ZLSU5Eaf4uDRdJ57gHrMbwKqEBf1x4ptF6521v
+         K2KrA9YrSYhYTOEmMtt8UNljef6taEX/MKRul4oAc0+V0HjO3zW8fsc3cc5ttNtDi/Ea
+         ybEQ/M1W03QGSd0hkyKBGlZ1JFnlZu/xtv4Nfhct4baXxwgmTzqIhIy4491k6IAl0wcd
+         MwJQ==
+X-Received: by 10.107.138.216 with SMTP id c85mr21359639ioj.187.1440471693467;
+ Mon, 24 Aug 2015 20:01:33 -0700 (PDT)
+Received: by 10.36.206.132 with HTTP; Mon, 24 Aug 2015 20:01:33 -0700 (PDT)
+In-Reply-To: <1440280294-50679-3-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276503>
 
-Wow, yeah, that was it. Thanks for your help!
+On Sat, Aug 22, 2015 at 11:51 PM, Michael Rappazzo <rappazzo@gmail.com> wrote:
+> 'git worktree list' uses the for_each_worktree function to iterate,
+> and outputs in the format: '<worktree>  (<short-ref>)'
+>
+> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+> ---
+>  Documentation/git-worktree.txt | 11 +++++-
+>  builtin/worktree.c             | 55 ++++++++++++++++++++++++++++
+>  t/t2027-worktree-list.sh       | 81 ++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 146 insertions(+), 1 deletion(-)
+>  create mode 100755 t/t2027-worktree-list.sh
+>
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> index fb68156..e953b4e 100644
+> --- a/Documentation/git-worktree.txt
+> +++ b/Documentation/git-worktree.txt
+> @@ -11,6 +11,7 @@ SYNOPSIS
+>  [verse]
+>  'git worktree add' [-f] [--detach] [-b <new-branch>] <path> [<branch>]
+>  'git worktree prune' [-n] [-v] [--expire <expire>]
+> +'git worktree list' [--path-only]
+>
+>  DESCRIPTION
+>  -----------
+> @@ -59,6 +60,12 @@ prune::
+>
+>  Prune working tree information in $GIT_DIR/worktrees.
+>
+> +list::
+> +
+> +List the main worktree followed by all of the linked worktrees.  The default
+> +format of the list includes the full path to the worktree and the branch or
+> +revision that the head of that worktree is currently pointing to.
 
+Maybe just "and the branch or revision currently checked out in that worktree."?
 
-
-> On Aug 24, 2015, at 2:24 AM, John Keeping <john@keeping.me.uk> wrote:
-> 
->> On Sun, Aug 23, 2015 at 11:40:17AM -0700, Anish Athalye wrote:
->> I'm having some issues with git remote helper behavior on Windows.
->> 
->> According to the protocol
->> (https://www.kernel.org/pub/software/scm/git/docs/gitremote-helpers.html),
->> when doing things like listing capabilities, git expects the remote
->> helper to send back a blank line when it's done.
->> 
->> I'm having trouble having git recognize the blank line (see
->> https://github.com/anishathalye/git-remote-dropbox/issues/13#issuecomment-133894730
->> for details).
->> 
->> Has anyone come across this behavior before? Am I doing something
->> wrong, or could there be a bug in git? What's the best way to proceed?
->> 
->> 
->> Any help or suggestions would be greatly appreciated!
-> 
-> The remote-helper parser tends to be very strict about its input.  I
-> suspect that on Windows you are sending CRLF rather than LF, so Git sees
-> a line containing CR.
-> 
-> By default the stdio streams are probably open in "text" mode, which
-> will convert "\n" to "\r\n".  You probably need to reopen stdout in
-> binary mode to make sure the output is correct.
+-- 
+Mikael Magnusson
