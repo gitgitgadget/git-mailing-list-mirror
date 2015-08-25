@@ -1,101 +1,158 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [FEATURE REQUEST] Filter-branch extend progress with a simple
- estimated time remaning
-Date: Tue, 25 Aug 2015 13:12:39 -0400
-Message-ID: <20150825171238.GB9674@sigill.intra.peff.net>
-References: <CANy2qHdngVjH_tPE6=Aao-A2JWrVb_wt2wdu4EzZDQwM6-t_=Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/8] apply: make sure check_preimage() does not leave empty file on error
+Date: Tue, 25 Aug 2015 10:16:09 -0700
+Message-ID: <xmqqd1yb1e7a.fsf@gitster.dls.corp.google.com>
+References: <xmqqy4j80wdb.fsf@gitster.dls.corp.google.com>
+	<1440205700-19749-1-git-send-email-pclouds@gmail.com>
+	<1440205700-19749-5-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Gabor Bernat <bernat@primeranks.net>
-X-From: git-owner@vger.kernel.org Tue Aug 25 19:12:52 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, phiggins@google.com, snoksrud@gmail.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 19:16:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUHmF-0001LZ-AQ
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 19:12:51 +0200
+	id 1ZUHpd-0004G2-QL
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 19:16:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755426AbbHYRMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 13:12:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49858 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755246AbbHYRMl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 13:12:41 -0400
-Received: (qmail 9422 invoked by uid 102); 25 Aug 2015 17:12:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Aug 2015 12:12:41 -0500
-Received: (qmail 5393 invoked by uid 107); 25 Aug 2015 17:12:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Aug 2015 13:12:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Aug 2015 13:12:39 -0400
-Content-Disposition: inline
-In-Reply-To: <CANy2qHdngVjH_tPE6=Aao-A2JWrVb_wt2wdu4EzZDQwM6-t_=Q@mail.gmail.com>
+	id S1755804AbbHYRQP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Aug 2015 13:16:15 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:36005 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755732AbbHYRQK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2015 13:16:10 -0400
+Received: by padfo6 with SMTP id fo6so13609164pad.3
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 10:16:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=ChwC/wPsVV+xX5TMPNtU9k5MrVge6GWi26LIlWj4slM=;
+        b=Eq2GCjFSkuwoqwI0i/JnfudsFHv3ZfHptekSUM7TcvkOxNRBigvYWMXrG971cb7n3g
+         b1Vn5rjsFWhl6QI51kELWPHby0tdt82IaIuuBcB/7hvipx/hUcHjJWoZ9vUxdJf8jlGP
+         hjeWBDU8lyVpesggElB0i81StGkKT8/8yL86TJjIm011m+qOdnsfcmTHUGCBkSM9rSOG
+         B3MP1dxXeSHQh+cf3LGqABiC0mOJvQrPIkSQoF1TCjId6OJF2bEeX7JWG5p2V5ny67rf
+         4kFZ19JIjgcr7Uv2K2+7ZT/uyiQXt2KuTJHlbgMiYXCrXukjnxIKE/thcOM6ZhYDEwGm
+         23AA==
+X-Received: by 10.68.223.229 with SMTP id qx5mr59310979pbc.69.1440522970176;
+        Tue, 25 Aug 2015 10:16:10 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:cdc0:fd6d:4069:6223])
+        by smtp.gmail.com with ESMTPSA id ts1sm21652615pbc.74.2015.08.25.10.16.09
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Tue, 25 Aug 2015 10:16:09 -0700 (PDT)
+In-Reply-To: <1440205700-19749-5-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 22
+ Aug 2015 08:08:07 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276540>
 
-On Tue, Aug 25, 2015 at 05:01:01PM +0200, Gabor Bernat wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> So it would be great if the filter-branch beside the Rewrite
-> f8f0b351ae35ff7ac4bd58078cbba1aa34243779 (523/22625), would also
-> append a basic ETA signaling the end of the operation.
-> 
-> It could be as simple as the the average number of milliseconds per
-> step up to this point multiplied with the remaining number of steps,
-> then convert this into a day:hour:minutes:seconds format. It sound
-> simple enough, but really handy for long running filter branch
-> operations. I could also contribute if one could direct me towards the
-> appropriate files this should go to.
+> The test case probably describes the test scenario the best. We have =
+a
+> patch to modify some file but the base file is gone. Because
+> check_preimage() finds an index entry with the same old_name, it trie=
+s
+> to restore the on-disk base file with cached content with
+> checkout_target() and move on.
+>
+> If this old_name is i-t-a, before this patch "apply -3" will call
+> checkout_target() which will write an empty file (i-t-a entries alway=
+s
+> have "empty blob" SHA-1), then it'll fail at verify_index_match()
+> (i-t-a entries are always "modified") and the operation is aborted.
+>
+> This empty file should not be created. Compare to the case where
+> old_name does not exist in index, "apply -3" fails with a different
+> error message "...: does not exist" but it does not touch
+> worktree. This patch makes sure the same happens to i-t-a entries.
 
-Yeah, I agree the current filter-branch progress reporting is pretty
-simplistic. The line you want to tweak is in git-filter-branch.sh:
+This part (unlike 3/8) is very well explained, and makes sense to
+me.
 
-  printf "\rRewrite $commit ($git_filter_branch__commit_count/$commits)"
+> load_current() shares the same code pattern (look up an index entry,
+> if on-disk version is not found, restore using the cached
+> version).
 
-But the real trick is getting accurate timing in a shell script. You can
-probably do the math within a "$(())" arithmetic block if you're OK with
-integers. But you'd have to run `date` on each loop iteration to get the
-current time, which may have a noticeable speed impact.
+The "fall-back to the cached one" is very much deliberate to allow
+us to work with an empty working tree as long as the index is
+correct, so this perhaps makes sense.  If the user said "add -N F",
+and F is involved in the patch application, we do not want to
+consider F exists in the index and we would instead want to pretend
+that we do not have F ourselves.  It does not even make sense to do
+"apply -3" for such a path, and rejecting with "does not exist" is a
+good thing to do.
 
-Of course, filter-branch is so slow in the first place, maybe it would
-not matter. :)
+Good.
 
-Something like this seems to work:
+> Fix it too (even though it's not exercised in any test case)
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 5b3f63d..04e45bc 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -276,10 +276,21 @@ test $commits -eq 0 && die "Found nothing to rewrite"
- 
- # Rewrite the commits
- 
-+start=$(date +%s)
- git_filter_branch__commit_count=0
- while read commit parents; do
- 	git_filter_branch__commit_count=$(($git_filter_branch__commit_count+1))
--	printf "\rRewrite $commit ($git_filter_branch__commit_count/$commits)"
-+	now=$(date +%s)
-+	elapsed=$(($now - $start))
-+	# work in integer percentages as a sort of fixed-point
-+	pct=$(($git_filter_branch__commit_count * 100 / $commits))
-+	if test $pct -eq 0; then
-+		remain=
-+	else
-+		eta=$(($elapsed * 100 / $pct))
-+		remain="($(($eta - $elapsed)) seconds remaining)   "
-+	fi
-+	printf "\rRewrite $commit ($git_filter_branch__commit_count/$commits) $remain"
- 
- 	case "$filter_subdir" in
- 	"")
+Hmm, as this is adding new test for the other case, perhaps this
+case is covered by another one, too?
 
-but the time jumps around early on because of the lack of precision. And
-of course there's no smoothing, and no emphasis on recent history versus
-the whole operation. I'll leave those as an exercise to the reader. :)
-
--Peff
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  builtin/apply.c       |  4 ++--
+>  t/t2203-add-intent.sh | 16 ++++++++++++++++
+>  2 files changed, 18 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/apply.c b/builtin/apply.c
+> index 76b58a1..b185c97 100644
+> --- a/builtin/apply.c
+> +++ b/builtin/apply.c
+> @@ -3348,7 +3348,7 @@ static int load_current(struct image *image, st=
+ruct patch *patch)
+>  		die("BUG: patch to %s is not a creation", patch->old_name);
+> =20
+>  	pos =3D cache_name_pos(name, strlen(name));
+> -	if (pos < 0)
+> +	if (pos < 0 || ce_intent_to_add(active_cache[pos]))
+>  		return error(_("%s: does not exist in index"), name);
+>  	ce =3D active_cache[pos];
+>  	if (lstat(name, &st)) {
+> @@ -3501,7 +3501,7 @@ static int check_preimage(struct patch *patch, =
+struct cache_entry **ce, struct s
+> =20
+>  	if (check_index && !previous) {
+>  		int pos =3D cache_name_pos(old_name, strlen(old_name));
+> -		if (pos < 0) {
+> +		if (pos < 0 || ce_intent_to_add(active_cache[pos])) {
+>  			if (patch->is_new < 0)
+>  				goto is_new;
+>  			return error(_("%s: does not exist in index"), old_name);
+> diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
+> index bb5ef2b..96c8755 100755
+> --- a/t/t2203-add-intent.sh
+> +++ b/t/t2203-add-intent.sh
+> @@ -95,5 +95,21 @@ test_expect_success 'apply adds new file on i-t-a =
+entry' '
+>  	)
+>  '
+> =20
+> +test_expect_success 'apply:check_preimage() not creating empty file'=
+ '
+> +	git init check-preimage &&
+> +	(
+> +		cd check-preimage &&
+> +		echo oldcontent >newfile &&
+> +		git add newfile &&
+> +		echo newcontent >newfile &&
+> +		git diff >patch &&
+> +		rm .git/index &&
+> +		git add -N newfile &&
+> +		rm newfile &&
+> +		test_must_fail git apply -3 patch &&
+> +		! test -f newfile
+> +	)
+> +'
+> +
+>  test_done
