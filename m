@@ -1,84 +1,111 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 3/5] write_file(): introduce an explicit WRITE_FILE_GENTLY request
-Date: Tue, 25 Aug 2015 17:08:57 +0700
-Message-ID: <CACsJy8A2sUEcaY2JryTHj3hvES-VDJt_eMgogP5WjVA3FiXDsg@mail.gmail.com>
-References: <20150824065033.GA4124@sigill.intra.peff.net> <1440436186-7894-1-git-send-email-gitster@pobox.com>
- <1440436186-7894-4-git-send-email-gitster@pobox.com> <xmqqh9no4jhk.fsf@gitster.dls.corp.google.com>
+From: Rafik E Younan <rafik.arkdev@gmail.com>
+Subject: Re: index file list files not found in working tree
+Date: Tue, 25 Aug 2015 12:16:43 +0200
+Message-ID: <55DC408B.5030804@gmail.com>
+References: <55DAF343.2050908@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 12:09:32 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 25 12:16:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUBAa-0007Jc-0b
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 12:09:32 +0200
+	id 1ZUBHg-0004U5-QU
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 12:16:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751726AbbHYKJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 06:09:27 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:33373 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751087AbbHYKJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 06:09:26 -0400
-Received: by igfj19 with SMTP id j19so7611522igf.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2015 03:09:26 -0700 (PDT)
+	id S1755139AbbHYKQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2015 06:16:48 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:37630 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755046AbbHYKQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2015 06:16:47 -0400
+Received: by widdq5 with SMTP id dq5so10209853wid.0
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 03:16:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=lru2ha4HXlST2fMvfYwk4t40ksLyEEprm3k7xzEKHz4=;
-        b=Sno/V97zJ/MkGhQupmkcIyeBk8sr3Q2pFtYxiaw/sLRXA5+RjkWaSCENcHddqsrpZD
-         cqgXAXS6bpa1ImWjTVYMAnlxY5vdQ1rndE8TtSjrM+YCH0SKt+Ru/J0YyemNP7TVjFsG
-         q12Xzm3d9GkW4tZNmCloawCCyqp1Mmd0YwknSKVHCY9Vy1x8hgafjiTjCsbrbf9gLDUP
-         e5Po+JXnd6uRZZs5FUmh4+WOFl3rEl2PRpblT6fxEPz15qzJrDFrrDwF4rw8vCvXuz9+
-         lyWVZ4y3i9q/ueKwuyHfrx8LlaghbjNQ4Q74ro1ksfP2y/CGZnNYAJ2llIT2Q1o0f2OW
-         C+HA==
-X-Received: by 10.50.108.100 with SMTP id hj4mr1476441igb.65.1440497366342;
- Tue, 25 Aug 2015 03:09:26 -0700 (PDT)
-Received: by 10.107.191.193 with HTTP; Tue, 25 Aug 2015 03:08:57 -0700 (PDT)
-In-Reply-To: <xmqqh9no4jhk.fsf@gitster.dls.corp.google.com>
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=9pooYIuzfQYDec4p80cKMuUy0WBcVzm2P9rV0NV8exw=;
+        b=TGcxwqqgkyIEpQKoBqKDMSkV5c1nMhBi5nMESBehqYiTh/7L/C9l0vC1r3lD54XPMd
+         3DlYHmo0DhjIqX273haJ7F0VzMdctk8QuU5dj3xFMBIGOXRH5s3ev2NE0YbCiilTJDLV
+         UYiPE4BgVve68GKGxlhztOS1KzsCfM+x6saCcdjuk7vqcMWYGQbPKIClLBUMuXjqhCul
+         JBTTX5dCq2GCbx7jSs2sgbiiDW+CQwG8NCtbacL/ASnoUswQik6CmiYhvT8zENoK0OYo
+         AgVju35UfQFltsuGZTZ48wXe4sjHvQVgzylg6Xp0LIpuL3aFF9zCX3Z4RmQCurf6nEsM
+         SiAg==
+X-Received: by 10.180.90.209 with SMTP id by17mr3522691wib.60.1440497806843;
+        Tue, 25 Aug 2015 03:16:46 -0700 (PDT)
+Received: from [192.168.1.115] ([196.205.146.227])
+        by smtp.googlemail.com with ESMTPSA id ej5sm27323514wjd.22.2015.08.25.03.16.45
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 25 Aug 2015 03:16:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+In-Reply-To: <55DAF343.2050908@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276513>
 
-On Tue, Aug 25, 2015 at 1:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> All callers except for two ask this function to die upon error by
->> passing fatal=1; turn the parameter to a more generic "unsigned flag"
->> bag of bits, introduce an explicit WRITE_FILE_GENTLY bit and change
->> these two callers to pass that bit.
->
-> There is a huge iffyness around one of these two oddball callers.
->
->> diff --git a/setup.c b/setup.c
->> index 5f9f07d..718f4e1 100644
->> --- a/setup.c
->> +++ b/setup.c
->> @@ -404,7 +404,7 @@ static void update_linked_gitdir(const char *gitfile, const char *gitdir)
->>
->>       strbuf_addf(&path, "%s/gitfile", gitdir);
->>       if (stat(path.buf, &st) || st.st_mtime + 24 * 3600 < time(NULL))
->> -             write_file(path.buf, 0, "%s\n", gitfile);
->> +             write_file(path.buf, WRITE_FILE_GENTLY, "%s\n", gitfile);
->>       strbuf_release(&path);
->>  }
->
-> This comes from 23af91d1 (prune: strategies for linked checkouts,
-> 2014-11-30).  I cannot tell what the justification is to treat a
-> failure to write a gitfile as a non-error event.  Just a sloppy
-> coding that lets the program go through to its finish, ignoring the
-> harm done by possibly corrupting user repository silently?
+Hi,
 
-Failing to write to this file is not a big deal _if_ the file is not
-corrupted because of this write operation. But we should not be so
-silent about this. If the file content is corrupted and it's old
-enough, this checkout may be pruned. I think there's another bug
-here... wrong name..
--- 
-Duy
+I got a recommendation to use reset --hard. I tried it and it says the 
+HEAD is now at correct commit, but missing files are not restored!
+
+I tried `ls-tree --name-only` and it lists missing files and folders, 
+but the actual working tree doesn't have these files and folders.
+
+The question I'd like to answer, how does git generates the `index` file 
+between checkouts?
+
+Thanks,
+Rafik
+
+On 08/24/2015 12:34 PM, Rafik E Younan wrote:
+> Hi,
+>
+> After several merges and rebases I finally got my branches and history 
+> to reflect valid commits and proper history. Everything is pushed to 
+> internal bare repo and the remotes seems OK.
+>
+> When I clone the updated repository, all branches reflect the correct 
+> updated trees and blobs.
+>
+> The problem occurs only on the original local repository where all the 
+> merging and re-basing took place!
+>
+> When I checkout a branch, several files and folders are deleted from 
+> the working tree. When I examine the history of these files, there are 
+> only commits of adding them and modifying them but no log for deleting 
+> them, and they aren't deleted when I checkout the same branch in 
+> another fresh cloned repo.
+>
+> Git status command doesn't indicate any changes in these files. I 
+> found the files and folders names in the `.git/index` file. So after 
+> manually removing the `.git/index` file and usinge `git reset` 
+> command, `git status` indicates that the files and folders are deleted.
+>
+> I use `git checkout -- <File_or_folder_names>...` and restore all 
+> missing files and folders, just then the working tree matches the 
+> fresh checkout of the same branch on any other cloned repo.
+>
+> After examining the tree object of the current commit, all files and 
+> folders exists, although clearly the checkout missed some of them!
+>
+> Because the repository is local and private, I can't share any url for 
+> publicly accessible repository, and if one exists, no problem could be 
+> found, because the problem resides in just this certain local clone.
+>
+> Answering the following questions might give some clues for the problem:
+> * How does git populate the index file after every branch checkout?
+> * Is there any object to reflect the content of the index file?
+>
+> I would appreciate any pointers for where the problem could be.
+>
+> Thanks,
+> Rafik
+>
