@@ -1,69 +1,99 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v13 02/12] ref-filter: introduce ref_formatting_state and ref_formatting_stack
-Date: Tue, 25 Aug 2015 15:56:56 +0530
-Message-ID: <CAOLa=ZRvzM4xyZi09aDrepAZZ9ovKxz08mA9aHjUNpqddfW-8w@mail.gmail.com>
-References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
- <1440214788-1309-3-git-send-email-Karthik.188@gmail.com> <xmqqr3ms2vvh.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] setup: update the right file in multiple checkouts
+Date: Tue, 25 Aug 2015 17:30:46 +0700
+Message-ID: <1440498646-25663-1-git-send-email-pclouds@gmail.com>
+References: <CACsJy8A2sUEcaY2JryTHj3hvES-VDJt_eMgogP5WjVA3FiXDsg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 12:27:39 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 25 12:30:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUBRz-0003WJ-Up
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 12:27:32 +0200
+	id 1ZUBVF-00066z-Q4
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 12:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751974AbbHYK11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 06:27:27 -0400
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:36662 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792AbbHYK10 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 06:27:26 -0400
-Received: by obkg7 with SMTP id g7so137878501obk.3
-        for <git@vger.kernel.org>; Tue, 25 Aug 2015 03:27:26 -0700 (PDT)
+	id S1755145AbbHYKat convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Aug 2015 06:30:49 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:33990 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755134AbbHYKat (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2015 06:30:49 -0400
+Received: by pabzx8 with SMTP id zx8so29888607pab.1
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 03:30:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=7sXMRlTFn6MCaW+V61lCJSaKXjqsJw/yKYmVun3w82k=;
-        b=Li204AbtZ6xpayuFlWdokkp27ByFdM+tclzk7ykNH1UX1whszNSqtE5v9an35pLBAI
-         /zYXiVV7FLmIxz9oe2Lt4M3QEYyo3vviQio23M6Ix3Ssafealfet8TM2datRkmWUXP4R
-         N1EvvlMpMt+xqf0suEHQ5IYmBcqvhgf1Lb79d7mYYjMExbRRMY/Xb8uAlImbmH2gnyN/
-         Ev43FOyr0m/kH6IpRzrfgNDHA2kS/FWaBmTll8v8O77iu/796QwcDbq6rz2rKEODDBbW
-         nM6mknuqd1zTKawT/uGxBi9OyC7/K7kumKmuEnJ9qRhS0ALsVzSep5pDzzjYzkkWvoOT
-         jBrw==
-X-Received: by 10.60.65.68 with SMTP id v4mr25349243oes.84.1440498446211; Tue,
- 25 Aug 2015 03:27:26 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Tue, 25 Aug 2015 03:26:56 -0700 (PDT)
-In-Reply-To: <xmqqr3ms2vvh.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=jeNpFd2Y0TWe29I7zg0N0dsbEMREo03ifQhT6tiyoMQ=;
+        b=m071QliZrf5sZA6bv6/KMn4266mM6R6wFUITCtiBrAx/lOgW29jmK53stib7X06nYG
+         WmAXIVfg14ItRXP4HpZIwIh4Ff8bLsWhBmscREvZqb1doTOxD7aVTpCUaRCHi9+hWv9v
+         WgVxbSqIwF49II1FTPvwuSaU991A394FNNlWD7lqcv3H3Ke3pP5C4A8VFtfOOPDFjJia
+         Sk0duVFBrC9vMzxOcZDVRHquLRDuwVytd/aC84In6OBKzJG76WvqzfSJ5gsQoBH6YN1g
+         aIPwWjffNwAxnumZ01XGJW1z0/q3tTAFNARZse6Az1fetWXtVmzRtHGANgX8fLOwSFKN
+         afGw==
+X-Received: by 10.66.148.6 with SMTP id to6mr54710012pab.132.1440498648715;
+        Tue, 25 Aug 2015 03:30:48 -0700 (PDT)
+Received: from lanh ([171.232.84.126])
+        by smtp.gmail.com with ESMTPSA id v2sm20536660pda.34.2015.08.25.03.30.45
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Aug 2015 03:30:47 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 25 Aug 2015 17:30:48 +0700
+X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
+In-Reply-To: <CACsJy8A2sUEcaY2JryTHj3hvES-VDJt_eMgogP5WjVA3FiXDsg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276515>
 
-On Tue, Aug 25, 2015 at 3:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> +static void push_new_stack_element(struct ref_formatting_stack **stack)
->> +{
->
-> Micronit.  Perhaps s/_new//;, as you do not call the other function
-> pop_old_stack_element().
->
-> The remainder of this step looks pretty straight-forward and was a
-> pleasant read.
->
-> Thanks.
+This code is introduced in 23af91d (prune: strategies for linked
+checkouts - 2014-11-30), and it's supposed to implement this rule from
+that commit's message:
 
-Will do, thanks for reviewing :)
+ - linked checkouts are supposed to keep its location in $R/gitdir up
+   to date. The use case is auto fixup after a manual checkout move.
 
--- 
-Regards,
-Karthik Nayak
+Note the name, "$R/gitdir", not "$R/gitfile". Correct the path to be
+updated accordingly.
+
+While at there, make sure I/O errors are not silently dropped.
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ The code was right in v2 [1] and became "gitfile" since v3 [2]. I
+ need to reconsider my code quality after this :(
+
+ [1] http://article.gmane.org/gmane.comp.version-control.git/239299
+ [2] http://article.gmane.org/gmane.comp.version-control.git/242325
+
+ setup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index 5f9f07d..64bf2b4 100644
+--- a/setup.c
++++ b/setup.c
+@@ -402,9 +402,9 @@ static void update_linked_gitdir(const char *gitfil=
+e, const char *gitdir)
+ 	struct strbuf path =3D STRBUF_INIT;
+ 	struct stat st;
+=20
+-	strbuf_addf(&path, "%s/gitfile", gitdir);
++	strbuf_addf(&path, "%s/gitdir", gitdir);
+ 	if (stat(path.buf, &st) || st.st_mtime + 24 * 3600 < time(NULL))
+-		write_file(path.buf, 0, "%s\n", gitfile);
++		write_file(path.buf, 1, "%s\n", gitfile);
+ 	strbuf_release(&path);
+ }
+=20
+--=20
+2.3.0.rc1.137.g477eb31
