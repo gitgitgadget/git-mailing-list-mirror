@@ -1,139 +1,86 @@
-From: Aaron Dufour <thedufer@gmail.com>
-Subject: Fwd: bug: git branch -d and case-insensitive file-systems
-Date: Tue, 25 Aug 2015 11:42:03 -0400
-Message-ID: <CAJrRhQyiiAQi6RqHJcVFn7=jBfxNvpp_mbOXTsAWHQMWc6gcuQ@mail.gmail.com>
-References: <CAJrRhQz1UmnDi6Giejetfoh3aPX08aYcgY-neZfcKjpUav0=sA@mail.gmail.com>
- <20150825052123.GA523@sigill.intra.peff.net> <CAJrRhQw-+kbQLexPwa0A6ih-LH9DgbyoTD0DiWWhQeXrOvkYbA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/6] builtin/am: make sure state files are text
+Date: Tue, 25 Aug 2015 09:19:13 -0700
+Message-ID: <xmqqtwrn1gu6.fsf@gitster.dls.corp.google.com>
+References: <xmqqzj1g31e5.fsf@gitster.dls.corp.google.com>
+	<1440449890-29490-1-git-send-email-gitster@pobox.com>
+	<1440449890-29490-3-git-send-email-gitster@pobox.com>
+	<20150824235547.GB13261@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 25 17:42:33 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 25 18:19:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUGMm-0001WQ-Se
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 17:42:29 +0200
+	id 1ZUGwT-0007Bd-Fq
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Aug 2015 18:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755416AbbHYPmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 11:42:24 -0400
-Received: from mail-la0-f43.google.com ([209.85.215.43]:32953 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751726AbbHYPmY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 11:42:24 -0400
-Received: by lalv9 with SMTP id v9so100810614lal.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2015 08:42:22 -0700 (PDT)
+	id S1755512AbbHYQTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2015 12:19:17 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:36062 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755058AbbHYQTP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2015 12:19:15 -0400
+Received: by padfo6 with SMTP id fo6so12155950pad.3
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 09:19:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=f/nhD1KFnAAIwN76oQLrgwE3CmXv/Q2cyawq0DV2aN8=;
-        b=JPeJe1JhxaFde8MFhoIFUElEL3I56dahVz9Gs0yPURwEzvbPLBF48UOapNOtz0GhIL
-         OMQ2hP/+v8aCdZP2em1VOJ45M4V5jMO6A6O287J7h0z9is/w3EG+xk4bRawIvbAtpSWV
-         iC5Y5oaGrb07smQxKIMwYrWJnY2AajpiUPv4Lndr6Ge5E5zsr0TjP9AJ/o8zfpXcn7C/
-         bMhjxgRECTycS0s5TNeblgHdvTj7Ko85RybGuQyr7znUo4By6O+WuNsCg7NbE6LIPymo
-         mTSK7H5i2xCoNREPtcE1dB2txGt1NOhs6qbBZbCOsEXZihkvRkQ+Fif9D0CpFUyg9Ro7
-         oLjg==
-X-Received: by 10.152.27.134 with SMTP id t6mr26619561lag.100.1440517342621;
- Tue, 25 Aug 2015 08:42:22 -0700 (PDT)
-Received: by 10.25.21.84 with HTTP; Tue, 25 Aug 2015 08:42:03 -0700 (PDT)
-In-Reply-To: <CAJrRhQw-+kbQLexPwa0A6ih-LH9DgbyoTD0DiWWhQeXrOvkYbA@mail.gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=5pa9oltLgl7+9I0a9HewyEDeHutZabVLim0A2Kv4kwE=;
+        b=hWQPspqqLrLrDoMJiiNNOHjjgfrCVzYd7BYod+hiDBjAFKWXKQ6DGznqszKeThZUg+
+         EmhXPUFV5cwjv9cAp2iZxobXJEhfU+mHu6nqYOZHHL3l8HSEarRXxGFgbCbJueLxLV5e
+         tQksSW967cP/bG/v+DmBn/bS7sZl8x3SSK22SU3C8B3ZppRDqJ/sOk9yktcj1gW+949S
+         deGB0O5/kb7bZu0JMDMelJ/e0wlGpAhpVi72MtYvQzIgtWmM+9iHg7mm3kzb5CNOLSTd
+         +1PUFgDzRyATGw7wL9gpwOGI3KW/LclQdUcACVslwe42qSzYgs4qXAxBlKnjidlo62ai
+         hDAA==
+X-Received: by 10.68.169.69 with SMTP id ac5mr58491276pbc.14.1440519554636;
+        Tue, 25 Aug 2015 09:19:14 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:cdc0:fd6d:4069:6223])
+        by smtp.gmail.com with ESMTPSA id nt6sm21583240pdb.73.2015.08.25.09.19.13
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Tue, 25 Aug 2015 09:19:13 -0700 (PDT)
+In-Reply-To: <20150824235547.GB13261@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 24 Aug 2015 19:55:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276534>
 
-On Tue, Aug 25, 2015 at 1:21 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Aug 24, 2015 at 12:11:13PM -0400, Aaron Dufour wrote:
->
->> I use git (2.2.1) on OS X (10.9.5) and recently my repo got into a bad
->> state.  I think this involves a mis-handling of case-insensitive file
->> systems.
->>
->> This reproduces the problem:
->>
->>     > git init
->>     Initialized empty Git repository in /Users/aarond_local/code/git-test/.git/
->>     > git commit --allow-empty -m 'first commit'
->>     [master (root-commit) 923d8b8] first commit
->>     > git checkout -b feature
->>     Switched to a new branch 'feature'
->>     > git checkout -b Feature
->>     fatal: A branch named 'Feature' already exists.
->>     > git checkout -B Feature
->>     Switched to and reset branch 'Feature'
->>     > git branch -d feature
->>     Deleted branch feature (was 923d8b8).
->>     > git log
->>     fatal: bad default revision 'HEAD'
->
-> I don't work on a case-insensitive filesystem, so my knowledge may be
-> out of date, but as far as I know, we do not do anything special to
-> handle ref case-sensitivity. I expect your problem would go away with
-> this patch:
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 58aa84f..c5545de 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -19,6 +19,7 @@
->  #include "column.h"
->  #include "utf8.h"
->  #include "wt-status.h"
-> +#include "dir.h"
->
->  static const char * const builtin_branch_usage[] = {
->         N_("git branch [<options>] [-r | -a] [--merged | --no-merged]"),
-> @@ -223,7 +224,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->                 int flags = 0;
->
->                 strbuf_branchname(&bname, argv[i]);
-> -               if (kinds == REF_LOCAL_BRANCH && !strcmp(head, bname.buf)) {
-> +               if (kinds == REF_LOCAL_BRANCH && !strcmp_icase(head, bname.buf)) {
->                         error(_("Cannot delete the branch '%s' "
->                               "which you are currently on."), bname.buf);
->                         ret = 1;
->
-> but I think that is just the tip of the iceberg. E.g. (on a vfat
-> filesystem I just created):
->
->   $ git init
->   $ git commit -q --allow-empty -m one
->   $ git branch foo
->   $ git branch FOO
->   fatal: A branch named 'FOO' already exists.
->
->   $ git pack-refs --all --prune ;# usually run as part of git-gc
->   $ git commit -q --allow-empty -m two
->   $ git branch FOO
->   $ git for-each-ref --format='%(refname) %(subject)'
->   refs/heads/FOO two
->   refs/heads/foo one
->   refs/heads/master two
->
-> Now the patch I showed above would do the wrong thing. Running "git
-> checkout foo; git branch -d FOO" would be rejected, even though I really
-> do have two separate branches.
->
-> It would be a much more invasive change to fix this correctly. It is
-> probably less work overall to move to a pluggable ref system, and to
-> design ref storage that isn't dependent on the filesystem (this work is
-> already underway).
+Jeff King <peff@peff.net> writes:
 
-That's great news!
-
+> On Mon, Aug 24, 2015 at 01:58:06PM -0700, Junio C Hamano wrote:
 >
-> In the meantime, I think the best advice for mixed-case branch names on
-> a case-insensitive filesystem is: don't.
-
-Yeah, that's definitely the solution.  I got into a weird place
-because our build system uses branch names, but it restricts them to
-lowercase letters and I made the mistake of camel-casing.  I'll just
-be more careful.
-
+>> We forgot to terminate the payload given to write_file() with LF,
+>> resulting in files that end with an incomplete line.  Teach the
+>> wrappers builtin/am uses to make sure it adds LF at the end as
+>> necessary.
 >
-> -Peff
+> Is it even worth doing this step? It's completely reverted later in the
+> series. I understand that we do not want to hold the fix to git-am
+> hostage to write_file refactoring, but I don't see any reason these
+> cannot all graduate as part of the same topic.
+>
+> Ignore me if you really are planning on doing the first two to "maint"
+> and holding the others back for "master".
 
--Aaron
+Not really.  The primary reason why this step exists and 1-2/6 make
+a sufficient fix by themselves is because I wasn't even sure if
+3-6/6 were worth doing.
+
+As to "flags exposed to callers" vs "with and without gently", when
+we change the system to allow new modes of operations (e.g. somebody
+wants to write a binary file, or allocate more flag bits for their
+special case), I'd expect that we'd add a more general and verbose
+"write_file_with_options(path, flags, fmt, ...)"), gain experience
+with that function, and then possibly introduce canned thin wrappers
+(e.g. write_binary_file() that is a synonym to passing BINARY but
+not GENTLY) if the new thing proves widely useful, just like I left
+write_file() and write_file_gently() in as fairly common things to
+do.
