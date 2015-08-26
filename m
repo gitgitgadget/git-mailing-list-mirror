@@ -1,118 +1,134 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v13 00/12] port tag.c to use ref-filter APIs
-Date: Thu, 27 Aug 2015 00:44:44 +0530
-Message-ID: <CAOLa=ZS3Fj8EFMp+BXEomeW2PfkBJemoO2-8Tv=RBRb9xGmEyw@mail.gmail.com>
-References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
- <vpqzj1hkc5q.fsf@anie.imag.fr> <xmqq7fok2u57.fsf@gitster.dls.corp.google.com>
- <xmqqy4h01egr.fsf@gitster.dls.corp.google.com> <CAOLa=ZQwW9hpg4p8+DE2oZA28Av7mLrqAhEdcro=esuqHe35Xg@mail.gmail.com>
- <xmqqzj1fxjpj.fsf@gitster.dls.corp.google.com> <CAOLa=ZSu7XyZhWUL=25dnkiGm2mNDyFhXwS_JqudyfKPE5sisQ@mail.gmail.com>
- <xmqq6142w1xf.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: Re* OS X Yosemite make all doc fails
+Date: Wed, 26 Aug 2015 21:40:03 +0200
+Message-ID: <55DE1613.30804@web.de>
+References: <CAJD5XByPQASzYpyTFdKo83RJ0QwPFHg-nPWyusDCucMRFbor4g@mail.gmail.com>
+ <CAJD5XBy=skwogN+kbqHipa3poUt-EjSxMABxRZKoEk0J+2TM3w@mail.gmail.com>
+ <CAJD5XBy+RnM7ZYt9_SGXgoE2gOKaiM=rmUv=Tkn3Ndi4S4-atQ@mail.gmail.com>
+ <20150825010428.GA428718@vauxhall.crustytoothpaste.net>
+ <CAJD5XBze8S23umS5enPaOKF6RFKwqkY-ZyuAfLG4SBp8CbCeRg@mail.gmail.com>
+ <xmqqmvxe2bgo.fsf_-_@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 21:15:24 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Jeff S <acornblue@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 21:40:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUgAM-0005z2-Lh
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 21:15:23 +0200
+	id 1ZUgYY-0007zv-T9
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 21:40:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752902AbbHZTPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2015 15:15:16 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:34711 "EHLO
-	mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751895AbbHZTPP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2015 15:15:15 -0400
-Received: by oiex83 with SMTP id x83so1111788oie.1
-        for <git@vger.kernel.org>; Wed, 26 Aug 2015 12:15:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=W3B69rpIGRrb0ANbqrQ+1ko3DLnPq4M+4LtdpPMkXDc=;
-        b=LIzvyxZTVUP0waTjF06bcPSPdFpbstk+spC85Vse413tf6hUf2MEFDn59n0YYI6PMs
-         cXeqSX8lxhxnTx3muVPCk2mwEw1GxxIK2bBEjjP+KitcTaFagOfvhNzFaY5oDLeMT85W
-         spd4/hvhAhBWZJMHV3KJvpwMJ1nuanSPzsoeggJia42vO+pFB9nfbgsddU6ozq8mes7Z
-         KxKWQ9tJHToEC6epZPMf2+43Ma7tmA9NFYFPOJAzwPjjeoE8x/q9GDqmRQvlPV53Yz89
-         y3DdZz5t6nsdRktDIS3BtRu63eFfXaG3xAzFQ1ZwXybkYlm3VGlwydUsRM/LVpp0hXjp
-         9SMA==
-X-Received: by 10.202.200.75 with SMTP id y72mr32425857oif.111.1440616514237;
- Wed, 26 Aug 2015 12:15:14 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Wed, 26 Aug 2015 12:14:44 -0700 (PDT)
-In-Reply-To: <xmqq6142w1xf.fsf@gitster.dls.corp.google.com>
+	id S1752603AbbHZTkQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Aug 2015 15:40:16 -0400
+Received: from mout.web.de ([212.227.15.4]:52523 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751967AbbHZTkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 15:40:14 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0LopMx-1Yok1S24Et-00goCQ; Wed, 26 Aug 2015 21:40:09
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.2.0
+In-Reply-To: <xmqqmvxe2bgo.fsf_-_@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:dq6+LYR/FdSqR/rMW2eIjNWcxJ4qTQ8HWXQ/sevJ7BBaJDsr8N0
+ wrBQAyAKMiXoZOuio52A9ffyOCkr0yhuZQUj9Q1G/UW52dCnYqPZ/ZFMnSqN9pqGSTO9l/s
+ KqpQSqflfX53nSHsWFXcGs/1W2GmOlWUIXPKosBUftpgJo5V6LEAQH122qJJt8a2cf0CvCz
+ uuNjDwMajEnWyv6tIAN7A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Q2ZQgGNm5OE=:mlGU7Obna+AZ5BEGKaQID7
+ Y+4Wd5QBqMH53l5JycpicsezQVHoMJ0t2y5iIcYgEk/zxHmN5q9BLmoTMifx+GVLM2NrIaRdu
+ NLdTwdKgCTIVJI+A4irzsT3WyG7a0tYG9XZ74ftwae1xkYb2uSzFMqeBQJenfXXrnCr0UqKJI
+ 8xf1eONqAK5N7+UDlwOT8EoHg1GeFrFo/OyNvj3VBC7BjPwSS9CWW53wtLZtb/4TdBuMuWgxA
+ J2TdkL1K0IVWeO51sLyHcWjCCS5ihFlUIAEFVLDqWuVbBDEq+pw8qG75jZbRWREG89yGgTop6
+ sEF2kucTvFf3LXsAkeGu3NZT9QCTR7khMKd49DZstsEcQ7KROuHvRQcjVgVOuCEtnx1WT9yck
+ Pc6LKfsHozWcw6KT/X6b5F1n1t/2DrDYKQZR1C/AjOn6npU6oIv1aOpO1sIOg4Q9C6ebWjUTJ
+ 77r0VCQrmDxHnoLxmSKQbhCsaBhN8Aa7Km1RCsokx1xsf6DtCx+sjuhpMtCm2Bl3e0HpKXVOS
+ cY9X7W3OBI5PD+rxqoMKcMp2vTvPzSwwJB6VZokmD5nPbDR/B8PkbsWMaHNWGyeBfnd4rSgab
+ 0qJANWT7fh1AIdTCRhoqxdJvV4LAtpfrg/m3UEdoy/t1HeLZ/uxW0WjP0T07SFXQ3i4TbdYs2
+ 3cxCcj0jnv1ipCCoZJyb0++FN8f6pVDo1qoZkuWgRrbBmixLrWJpxZHVv5EZjt9g9ASg9+J9d
+ xWLUF7TvAyPYlWqL8tIzaL/o7/2adkSXzlc2Pg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276626>
 
-On Wed, Aug 26, 2015 at 8:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> On Wed, Aug 26, 2015 at 12:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Karthik Nayak <karthik.188@gmail.com> writes:
->>>
->>> I didn't check how wide the original is supposed to be, but perhaps
->>> changing builtin/tag.c this way
->>>
->>>                 if (filter->lines)
->>> -                       format = "%(align:16,left)%(refname:short)%(end)";
->>> +                       format = "%(align:15,left)%(refname:short)%(end) ";
->>>                 else
->>>                         format = "%(refname:short)";
->>>         }
->>>
->>> may be one way to fix it.  Check the original "tag -l" output for
->>> tags whose names are 14, 15, 16 and 17 display-columns wide and try
->>> to match it.
+On 2015-08-26 19.42, Junio C Hamano wrote:
+> Jeff S <acornblue@gmail.com> writes:
+>=20
+>> Brian thanks for responding! I'm finally able to build git completel=
+y.
+>> Would it be possible to add the OS X dependency to the git/INSTALL
+>> file?
 >>
->> That should be the fix, since it's a space problem.
->> ....
->> The problem with doing this is, the lines need to be displayed
->> immediately after  the refname,
->> followed by a newline, what you're suggesting breaks that flow.
->
-> That is only because show_ref_array_item() does too much.  The
-> function is given a placeholder string and a set of data to fill the
-> placeholder with for an item, and the reason why the caller
-> repeatedly calls it, once per item it has, is because it wants to
-> produce a one-line-per-item output.  An alternative valid way to
-> structure the API is to have it format into a string and leave the
-> printing to the caller.  You can give a new format_ref_array_item()
-> that does not print but fills a strbuf to this caller, make
-> show_ref_array_item() a thin wrapper that calls it and prints it
-> with the final LF for other callers.
->
-> Another alternate approach, if you want to give "tag -l" annotation
-> available to for-each-ref, would be to do this:
->
->        if (filter->lines)
->                format = xstrfmt("%%(align:15,left)%%(refname:short)%%(end) "
->                                 "%%(contents:lines=%s)", filter->lines);
->        else
->                format = "%(refname:short)";
->
-> and teach a new %(contents:lines=1) atom.  That way, you can lose
-> the ugly special case call to show_tag_lines() that can only be at
-> the end of the output.  I somehow think this is a better approach.
->
+>> OSX Yosemite 10.10.5
+>> Xcode 6.4 (6E35b)
+>> =E2=80=A6
+>> $ brew install autoconf
+>> $ brew install asciidoc
+>> $ brew install xmlto
+>> $ brew install docbook
+>> $ export XML_CATALOG_FILES=3D/usr/local/etc/xml/catalog
+>> $ brew install docbook-xsl
+>=20
+> It may not be a bad idea to add a whole section at the end of the
+> document to list the prerequisite packages for various common
+> platforms, whose beginning perhaps would look like this?
+>=20
+> diff --git a/INSTALL b/INSTALL
+> index ffb071e..84fa5cf 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -221,3 +221,23 @@ Issues of note:
+>           http://www.oasis-open.org/docbook/xml/4.5/xsl/current \
+>           /usr/share/sgml/docbook/xml-dtd-4.5 \
+>       /etc/xml/catalog
+> +
+> +
+> +Platform specific hints:
+> +
+> +You would need to install prerequiste tools and libraries to compile
+> +and use Git from the source.
+> +
+> + - OSX needs the following packages installed with 'brew install'
+> +   (in addition to the usual make and C compiler suite):
+> +
+> +   autoconf, asciidoc, xmlto, docbook, docbook-xsl
+> +
+> + - Linux distributions derived from Debian need the following packag=
+es
+> +   instaslled via 'apt-get install' or similar (in addition to the
+> +   usual 'make' and C compiler suite that come as part of
+> +   build-essential):
+> +
+> +   autoconf, asciidoc, xmlto, docbook, libz-dev, livcurl4-openssl-de=
+v,
+> +   ...
+> +
+I like this.
 
-This seems like a good approach, since contents is already an atom, this would
-fit in easily.
+This is what I have been using for Debian (and RHEL 6.5 or so)
+(But it doesn't include "make doc")
 
-> Of course you can (and probably would want to) do both, giving a
-> bit lower level "emit to a strbuf" function to the callers _and_
-> losing hardcoded call to show_tag_lines().
+#!/bin/sh
+if type apt-get; then
+  APTGET=3D"sudo apt-get install"
+fi
+if type yum; then
+  APTGET=3D"sudo /usr/bin/yum install"
+fi
+export APTGET
 
-You're saying remove show_ref_array_item() (even the wrapper you mentioned
-above) and just have something like format_ref_array_item() which
-would output to a strbuf. and let the caller worry about the printing?
-
--- 
-Regards,
-Karthik Nayak
+type gcc || $APTGET gcc
+type curl-config || $APTGET libcurl4-openssl-dev || $APTGET libcurl-dev=
+el
+test -r /usr/include/expat.h || $APTGET libexpat1-dev || $APTGET expat-=
+devel
+test -r /usr/include/ssl.h || test -r /usr/include/openssl/ssl.h || $AP=
+TGET
+openssl-devel
+type msgfmt || $APTGET gettext
+type make || $APTGET make
