@@ -1,159 +1,172 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: Git's inconsistent command line options
-Date: Tue, 25 Aug 2015 21:09:41 -0700
-Message-ID: <CA+P7+xoQnq-nCP=_Wtfh39fxxwTvEo+m-=o7fcmrdyaBBfbt8A@mail.gmail.com>
-References: <mrh7ck$r0g$1@ger.gmane.org> <CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
- <CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
- <CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com> <xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v13 00/12] port tag.c to use ref-filter APIs
+Date: Wed, 26 Aug 2015 11:26:58 +0530
+Message-ID: <CAOLa=ZSu7XyZhWUL=25dnkiGm2mNDyFhXwS_JqudyfKPE5sisQ@mail.gmail.com>
+References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
+ <vpqzj1hkc5q.fsf@anie.imag.fr> <xmqq7fok2u57.fsf@gitster.dls.corp.google.com>
+ <xmqqy4h01egr.fsf@gitster.dls.corp.google.com> <CAOLa=ZQwW9hpg4p8+DE2oZA28Av7mLrqAhEdcro=esuqHe35Xg@mail.gmail.com>
+ <xmqqzj1fxjpj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Graeme Geldenhuys <graemeg@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 06:10:11 2015
+X-From: git-owner@vger.kernel.org Wed Aug 26 07:57:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUS2N-0002JV-0M
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 06:10:11 +0200
+	id 1ZUTiP-0004n4-2m
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 07:57:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816AbbHZEKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2015 00:10:03 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:33636 "EHLO
-	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750979AbbHZEKB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2015 00:10:01 -0400
-Received: by iods203 with SMTP id s203so4961018iod.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2015 21:10:00 -0700 (PDT)
+	id S1751982AbbHZF53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2015 01:57:29 -0400
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:32862 "EHLO
+	mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751368AbbHZF52 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 01:57:28 -0400
+Received: by oieu205 with SMTP id u205so44922533oie.0
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 22:57:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=uX8J3alQhBcrgV2dnKz8iVlNZACHpXnvS17aKABWdro=;
-        b=AZ/NRIfiiXG4gXFyLh3NNm/bnzcglFLpP8SVwlzux7mGEF7YNBeHQiNgG4pntpwNjw
-         MwIrjEfk8LbopRjC/uif4aVi45RP6QfUhxtxn3CjD2DaEmJAhtIjVK9EPvy8t0DzHFB3
-         EFQ0J2PGuh05hKXpeXniJGxjxi5dg8WSq+Wr9NT26IPMKLZmiCrkl5s2Jl48pjbw3b+a
-         +wPhRXZI45A9HbE4wubHiFJAJP+yLgSUrOzDWliN2W6la4y4B617fOIm47imko6STBOx
-         GcJt95B26t0fXxqr2+iEeVUdrQ8Afrbqmv+RJiMZ/VfV14EGQD0R1vF1KuPHVQogn81K
-         FggA==
-X-Received: by 10.107.133.137 with SMTP id p9mr826788ioi.146.1440562200804;
- Tue, 25 Aug 2015 21:10:00 -0700 (PDT)
-Received: by 10.107.5.203 with HTTP; Tue, 25 Aug 2015 21:09:41 -0700 (PDT)
-In-Reply-To: <xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
+        bh=2/bnk+CF19K63iCWQkwBZDUFdxg5QF8Pfq2U1LxXCW8=;
+        b=IlwZLEKomPQrMhRNp2aKtaL3cRDS963fiGjmJegTKP24/bsODbDpHdKhmk0vJjezZO
+         xYX0dzzzjav9H9VlORFP9iaM0lUSoOYiTtVqwH31rTfzZ9poZKwoA0PTkS644ydqgZNu
+         Y7mQCCKe9KnwnjCKZTXOk3fwdpWrxRrTzfA3mzeMN8MGV2LcL2girtCvgeiX+qXgX3lN
+         16B41j4vAgFjQZRjFRbjRCqNDkQw4+jEbh1Um5GFR3AHERAFKflpIhiwKxAWd0NKb/5q
+         WIfBtkfEK4XBei+Qj/iY5kXZRUNuDs6zASBO1AhZGRJt7e1lN3EQoGGj2SxdNCSs0E98
+         isGg==
+X-Received: by 10.202.105.133 with SMTP id e127mr29908586oic.60.1440568648063;
+ Tue, 25 Aug 2015 22:57:28 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Tue, 25 Aug 2015 22:56:58 -0700 (PDT)
+In-Reply-To: <xmqqzj1fxjpj.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276595>
 
-On Tue, Aug 25, 2015 at 4:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Wed, Aug 26, 2015 at 12:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
->>  $ git tag --delete master
->>  $ echo $?
->>  # 0 # actually works as of today!
+>>> Here is what I see...
+>>>
+>>> ok 98 - verifying rfc1991 signature
+>>>
+>>> expecting success:
+>>>         echo "rfc1991" >gpghome/gpg.conf &&
+>>>         echo "rfc1991-signed-tag RFC1991 signed tag" >expect &&
+>>>         git tag -l -n1 rfc1991-signed-tag >actual &&
+>>>         test_cmp expect actual &&
+>>>         git tag -l -n2 rfc1991-signed-tag >actual &&
+>>>         test_cmp expect actual &&
+>>>         git tag -l -n999 rfc1991-signed-tag >actual &&
+>>>         test_cmp expect actual
+>>>
+>>> --- expect      2015-08-24 22:54:44.607272653 +0000
+>>> +++ actual      2015-08-24 22:54:44.611272643 +0000
+>>> @@ -1 +1 @@
+>>> -rfc1991-signed-tag RFC1991 signed tag
+>>> +rfc1991-signed-tagRFC1991 signed tag
+>>> not ok 99 - list tag with rfc1991 signature
 >>
->>  $ git tag delete master
->>  #  Due to the planned switch to command words, this doesn't work.
->>  #  For details see road map at  `man git commandwords-roadmaps`
->>  $ echo $?
->>  # 128 maybe ?
+>> Thats weird, I just ran all tests, and nothing failed.
 >
-> This is way too aggressive behaviour and is unacceptable as the
-> first step.  The first step of a transition that breaks backward
-> compatibility should warn loudly about a command line that would
-> behave differently in the endgame version (either the command line
-> that will not do anything or do a totally different thing), but
-> still perform the operation asked for the current version.
+> You may be missing GPG or RFC1991 prerequisites and not running this
+> particular test, which could be why you missed it.
 >
 
+That explains.
 
->     e.g. "git tag delete master" would create a tag named 'delete'
->     out of 'master', but tell the user that this will instead delete
->     'master' in future versions of Git.  "git tag create master"
->     would create a tag named 'create' out of 'master', but tell the
->     user that this will instead create 'master' out of HEAD in
->     future versions of Git.
+> Your builtin/tag.c calls show_ref_array_item() with
 >
->     e.g. "git tag -d foo" would delete a tag named 'foo', but tell
->     the user that this will have to be spelled 'git tag delete foo'
->     in the future versions of Git.
+>         "%(align:16,left)%(refname:short)%(end)"
 >
-> One thing that I am not enthused about the transition plan is that
-> "git tag delete master" will *never* be an invalid operation during
-> the transition.  When making an operation that used to mean one
-> thing to mean something else, a good transition plan should be to
+> as the format, and "rfc1991-signed-tag" is longer than 16.
 >
->  * First warn but do the old thing, and tell users a new way to do
->    that in the new world order.  At the same time, find the new way
->    that used to be an invalid operation in the old world order, and
->    implement it.
+> And immediately after showing that, there is this hack at the end of
+> show_ref_array_item() function, which I _think_ should not be there
+> in ref-filter.c:show_ref_array_item() in the first place.
 >
->  * Then stop supporting the old thing and support only the new
->    thing.
+>         if (lines > 0) {
+>                 struct object_id oid;
+>                 hashcpy(oid.hash, info->objectname);
+>                 show_tag_lines(&oid, lines);
+>         }
 >
-> Then during the transition period, while transitioning to the new
-> way, people can gradually start using the new way with the new
-> system, and when they occasionally have to interact with an old
-> system, the new way will _error out_, because we make sure we find
-> the new way that "used to be an invalid operation" when planning the
-> whole transition plan, without causing any harm.  And once people
-> retrain their finger after 2-3 years, nobody will be hurt if we
-> dropped the old way.
->
-> I do not see a good way to do such a safe transition with command
-> words approach, *unless* we are going to introduce new commands,
-> i.e. "git list-tag", "git create-tag", etc.
->
-> So don't hold your breath.  What you two are discussing is way too
-> uncooked for 2.6 timeframe.
->
->
+> This belongs to the caller who knows that it is dealing with a tag.
 >
 
-Ya, there isn't really a way to make it work, because we can't exactly
-stop supporting "git tag create master" by turning it into a no-op,
-because there is no equivalent tag option that would work for now.
-Since there is no alternative syntax for "create" I think this is the
-issue. One way might be to use the -- splitter to say,
+Explained the idea behind this below.
 
-"if you really mean to create a tag named create, use
+> But that broken design aside, the reason why this breaks is because
+> you do not have a separating SP after the aligned short refs.
+>
 
-git tag -- create master
+Makes sense.
 
-So we'd do:
+> I didn't check how wide the original is supposed to be, but perhaps
+> changing builtin/tag.c this way
+>
+>                 if (filter->lines)
+> -                       format = "%(align:16,left)%(refname:short)%(end)";
+> +                       format = "%(align:15,left)%(refname:short)%(end) ";
+>                 else
+>                         format = "%(refname:short)";
+>         }
+>
+> may be one way to fix it.  Check the original "tag -l" output for
+> tags whose names are 14, 15, 16 and 17 display-columns wide and try
+> to match it.
+>
 
-- step 1 -
-git tag create master
-# warn that this will change behavior in the future and they must
-explicitely pass -- before it
+That should be the fix, since it's a space problem.
 
-- step 2 -
-break create, but don't add anything new. If user really needs it,
-they can pass "git tag -- create master" as per above warning, but
-keep warning on "git tag create master" to say they must be explicit.
+> And then move the tag-specific code at the end of
+> show_ref_array_item() to here:
+>
+>         verify_ref_format(format);
+>         filter_refs(&array, filter, FILTER_REFS_TAGS);
+>         ref_array_sort(sorting, &array);
+>
+> -       for (i = 0; i < array.nr; i++)
+> +       for (i = 0; i < array.nr; i++) {
+>                 show_ref_array_item(array.items[i], format, QUOTE_NONE, filter->lines);
+> +               if (lines) {
+> +                       struct object_id oid;
+> +                       hashcpy(oid.hash, info->objectname);
+> +                       show_tag_lines(&oid, lines);
+> +               }
+> +       }
+>
+> perhaps.
 
-- step 3 -
+The problem with doing this is, the lines need to be displayed
+immediately after  the refname,
+followed by a newline, what you're suggesting breaks that flow.
 
-implement git tag create master to actually perform tag creation
+We could pass a boolean to show_ref_array_item() and print a newline if no
+lines are to be printed and probably print the newline in tag.c
+itself, but seems confusing to me.
 
-I think this might work, as long as "git tag -- create master" is acceptable?
 
-then, eventually we can make it so that "git tag" doesn't mean create
-by default if we ever wanted?
+> Heh, I did it myself.  %(align:15) with trailing whitespace is what
+> you want.
+>
+> An alternative way to spell it would be
+>
+>     "%(align:16,left)%(refname:short) %(end)"
+>
+> I don't know which one is more readable, though.
 
-How does this sound? By the way, this wouldn't be necessarily done
-over 2.6 or even over only a single release, I think the time frame
-would have to be fairly long.
+I find this more readable, since the space is clearly visible, unlike
+format = "%(align:15,left)%(refname:short)%(end) "; in which the space
+after %(end) is easily unnoticeable.
 
-The downside is that there is no point where new and old syntax are
-usable at the same time... but I don't think that will ever be the
-case. We'd need to way the concern of whether this is actually worth
-doing to streamline the overall feel at some point in the future or we
-just live with the warts.
-
+-- 
 Regards,
-Jake
+Karthik Nayak
