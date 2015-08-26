@@ -1,100 +1,78 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 2/2] trailer: support multiline title
-Date: Wed, 26 Aug 2015 16:53:55 +0200
-Message-ID: <CAP8UFD2x8i5wC9JP8d1zAH=d-2BMYWAvpaFmWnu09N5QSG==TA@mail.gmail.com>
-References: <1440557461-1078-1-git-send-email-chriscool@tuxfamily.org>
-	<1440557461-1078-2-git-send-email-chriscool@tuxfamily.org>
-	<vpqa8tetwfi.fsf@anie.imag.fr>
-	<CA+P7+xqaAKckB0P5oqFS64BWU2H1OsVX8Oq=CLLW8PMJ5fdenQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v13 00/12] port tag.c to use ref-filter APIs
+Date: Wed, 26 Aug 2015 08:44:07 -0700
+Message-ID: <xmqqy4gyukag.fsf@gitster.dls.corp.google.com>
+References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
+	<xmqqy4h04mx4.fsf@gitster.dls.corp.google.com>
+	<CAOLa=ZRYWNVmMeMCZSa+GcOTQ7NzuVB9RH_TFJ6-u7aFhrU=NA@mail.gmail.com>
+	<xmqq8u904ix0.fsf@gitster.dls.corp.google.com>
+	<xmqq37z82u2a.fsf@gitster.dls.corp.google.com>
+	<CAOLa=ZS=Mtz0ny0tUWRBY0vfAgiRzaszeF0m_pxnK3+VGn1eVg@mail.gmail.com>
+	<vpqd1yap8ml.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 16:54:09 2015
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 26 17:44:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUc5Y-0003rJ-Fl
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 16:54:08 +0200
+	id 1ZUcs3-0008Rp-O6
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 17:44:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756312AbbHZOx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2015 10:53:57 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:35743 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755183AbbHZOx4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2015 10:53:56 -0400
-Received: by igbjg10 with SMTP id jg10so42025446igb.0
-        for <git@vger.kernel.org>; Wed, 26 Aug 2015 07:53:55 -0700 (PDT)
+	id S1752962AbbHZPoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2015 11:44:11 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:35471 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751571AbbHZPoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 11:44:11 -0400
+Received: by pacdd16 with SMTP id dd16so164290691pac.2
+        for <git@vger.kernel.org>; Wed, 26 Aug 2015 08:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mWFvVvyqyqHGgWlP1thRWIeRi7YaLaYrldeS3x1a26Q=;
-        b=CuFcz+xZXMMShXy3t8V7TLOSiyaN9YcpP3B4+0y4OowaRGFM/KTCWnPaC8teJ6/MvN
-         DevnvNhIS/JEJk+k3EzIPTW8pGqNs7/9X1yP6DXodtXQyxZoxqiQd2n1FthNuEY8plbg
-         lSTV3HYlROfvdTIEFe9EMMtjivnjIPK+MRYxIOM3AIAkuso6i3Rz4ovM/PszBRNxX4LB
-         JnSMUc7FbnWlPrGfHrbS/QkKSVnjAuth0GkdYFONV0qpx2ml9n05VoNoZ5QDs+l4lbPe
-         QpzcvkoRZNQU83pNoRxUosuTB+75/PLMC0ZFPbGSrcUfSOij8/+V4n9Aw0pp01pofuct
-         obNg==
-X-Received: by 10.50.59.180 with SMTP id a20mr4478563igr.31.1440600835586;
- Wed, 26 Aug 2015 07:53:55 -0700 (PDT)
-Received: by 10.79.93.131 with HTTP; Wed, 26 Aug 2015 07:53:55 -0700 (PDT)
-In-Reply-To: <CA+P7+xqaAKckB0P5oqFS64BWU2H1OsVX8Oq=CLLW8PMJ5fdenQ@mail.gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=5xM+ok31Cix56kQSn6i3zSAxsVNJvNtVzQJH7/q58fo=;
+        b=zNRwYEqZSF29MYz7D/Mx1RoOcHZcrJw0zWj5sfzq4I18JycraLF43vh7r4xSn6FldD
+         Tixg2dFwtZvFrUYSC2Li77p1TEWeaH6HY+JGOnafSLswetZAOPx/rASAmtiHcUISprFb
+         EuFZEcK2Cp4aG68dhdgQ8stkPuoVd4ULzmhL0crxs/G593hmuaG1Uy7MD2Qb5kUk33Fp
+         62GKk3NVmNz03i08TJHnxHBkiruIkJqLutJj7a9GV19FDD2Gb6Y7K/7GL0WYrhy7Lsnh
+         2Htuq5+3ClzOH9harVI9Zsv4JlS0F+a3u00fwidM1i3DZ0r0kXPSAXovSzydbX0vcyqH
+         BiVA==
+X-Received: by 10.68.218.65 with SMTP id pe1mr69660373pbc.2.1440603850297;
+        Wed, 26 Aug 2015 08:44:10 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:ac9b:ef8c:b4db:d257])
+        by smtp.gmail.com with ESMTPSA id ye2sm23833008pab.31.2015.08.26.08.44.08
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Wed, 26 Aug 2015 08:44:08 -0700 (PDT)
+In-Reply-To: <vpqd1yap8ml.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
+	26 Aug 2015 13:54:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276609>
 
-Sorry I sent the part below privately by mistake:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-On Tue, Aug 25, 2015 at 11:07 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
+>> For the current code %(if:empty)%(align)%(end)%(then)Empty%(else)Not Empty%(end)
+>> would print non-empty, I guess the documentation holds in that case.
+>> Not sure if we require it to print non-empty.
 >
-> Now, I found another issue: I still have this "interpret-trailers" in my
-> hooks/commit-msg, and it behaves badly when I use "git commit -v". With
-> -v, I get a diff in COMMIT_EDITMSG, and interpret-trailers tries to
-> insert my Sign-off within the diff, like this:
->
->   # Do not touch the line above.
->   # Everything below will be removed.
->   diff --git a/git-multimail/README b/git-multimail/README
->   index f41906b..93d4751 100644
->
->   Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->   --- a/git-multimail/README
->   +++ b/git-multimail/README
+> You don't want the %(if) condition to depend on whether
+> --shell/--python/... is used. Since %(if:empty)%(align)%(end)%(then)
+> holds when you don't use --shell, you also want it to hold when you
+> quote. IOW, you should check for emptyness before (or actually without)
+> doing the quoting. I guess this is what you're doing, and if so, I think
+> it's "The Right Thing".
 
-This might be a bug. I will have a look.
+I agree that %(align)%(end) should expand to empty and %(if:empty)...%(then)
+should look at that empty string without quoting.  So 
 
-> Either commit-msg should be called after stripping the diff from
-> COMMIT_MSG, or interpret-trailers should learn to stop reading when the
-> patch starts.
+    %(if:empty)%(align)%(end)%(then)Empty%(else)Not Empty%(end)
 
-There is already code to detect a patch in interpret-trailers, but it
-relies on the patch starting with a line with only three dashes.
-
-So another option would be to make "commit -v" emit a line with three
-dashes just under the "# Everything below will be removed." line.
-
-> I think the first option is better, since it means that
-> any commit-msg hook does not have to deal with the patch stuff (my guess
-> is that there are many broken commit-msg hooks out there, but people
-> didn't notice because they don't use "commit -v").
-
-Maybe. I don't know if there is a reason why the commit-msg is called
-before removing the patch.
-
-On Wed, Aug 26, 2015 at 8:28 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
->
-> It's always confused me why commit -v doesn't prepend every inserted
-> line with "#" to mark it as a comment.
-
-I think that would make interpret-trailers work properly too.
-
-Thanks both,
-Christian.
+should give "Empty"; otherwise the code is buggy, I think.
