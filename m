@@ -1,337 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/4] path: optimize common dir checking
-Date: Wed, 26 Aug 2015 14:15:41 -0700
-Message-ID: <xmqqwpwh21ky.fsf@gitster.dls.corp.google.com>
-References: <1440618365-20628-1-git-send-email-dturner@twopensource.com>
-	<1440618365-20628-3-git-send-email-dturner@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com,
-	sunshine@sunshineco.com
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 23:15:50 2015
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v6] git-p4: Obey core.ignorecase when using P4 client specs.
+Date: Wed, 26 Aug 2015 23:25:47 +0200
+Message-ID: <4CB47914-F04C-4E88-8D73-E00AFEFEF727@gmail.com>
+References: <1440605295-73844-1-git-send-email-larsxschneider@gmail.com> <xmqqa8td3je7.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 23:26:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUi2u-00040k-BD
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 23:15:48 +0200
+	id 1ZUiCn-000379-W5
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 23:26:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752644AbbHZVPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2015 17:15:44 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:36826 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751693AbbHZVPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2015 17:15:42 -0400
-Received: by pacgr6 with SMTP id gr6so1339678pac.3
-        for <git@vger.kernel.org>; Wed, 26 Aug 2015 14:15:42 -0700 (PDT)
+	id S1752246AbbHZVZw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Aug 2015 17:25:52 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:37729 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751850AbbHZVZv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Aug 2015 17:25:51 -0400
+Received: by widdq5 with SMTP id dq5so27077404wid.0
+        for <git@vger.kernel.org>; Wed, 26 Aug 2015 14:25:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=fiF9HZ7V1iHg0zGhSJYRYKsWQfXa/w037PdQdTt0/XY=;
-        b=aWI3i6tbLCu8Wsz1+l+o0+SzvBB6rv268BuL6iCqxY9qt6awECXEhltm7hCk0z71f9
-         4KIX3Rp3aZXcmoyyst5oFuehv/zpHa27a8obfhosXIOuh7h5ia+ojXYEnMy+Ck/nmEnl
-         C0yLJnbRlgqj2QTfFr6bQCaD95beXhkxg6vx9bXpLSmJqy8T6igENhBuU0TpT7A20/d5
-         6+ZV9hIhI0pgzIpqXEgsGOX9undmOIa7WR3ga4TQUbOLJqBr6AlQd1PbizUKbIRtxyfI
-         uPiCszf6URUp/BHFySxLdQeBFwdWUDEDmwNZvjJMsHTUMOtn+wBqL8D8NCegz4t/AfAV
-         0Qrg==
-X-Received: by 10.68.244.234 with SMTP id xj10mr1087254pbc.13.1440623742329;
-        Wed, 26 Aug 2015 14:15:42 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:ac9b:ef8c:b4db:d257])
-        by smtp.gmail.com with ESMTPSA id y2sm25795957pdp.0.2015.08.26.14.15.41
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Wed, 26 Aug 2015 14:15:41 -0700 (PDT)
-In-Reply-To: <1440618365-20628-3-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Wed, 26 Aug 2015 15:46:03 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=0iiyA+WIcMVeBfHRCj4JplsqDkYrgPJ1U69gN0ecO+M=;
+        b=W3UjmNDzl2gUYkJs03oWae2YwO+8WqqqxvxWx15Ahvdg+IFWW8w/VLeXKtk2DjVI0y
+         mhBgMZTBu/P9RIzxHv/zdtgnpNk2GcXgXKm9Kh8CWN0FrLrF3Nug901ElVHlImJ0lb/J
+         +cURi6tFBANK964iCSzdXD978k1efrmY6v3KxRVb6KyBXSDQKbL6HaVWlcvCxk19BZ7C
+         oSFX1eHwJspuEdslPQC5WqHL3CZ4VQieuGxmYKB4U/t0jOuHxLoY64ffvCQrQtf/89q9
+         jl/4PKnai7qPqif2RW7iWwkpzLFHCiKdSRBCgXURcxO5OsCSsPna0lTSrMP5GNAj6Z8S
+         kVJg==
+X-Received: by 10.180.76.232 with SMTP id n8mr15457056wiw.72.1440624350549;
+        Wed, 26 Aug 2015 14:25:50 -0700 (PDT)
+Received: from neu2l5rvy1.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id fz16sm480963wic.3.2015.08.26.14.25.49
+        (version=TLS1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 26 Aug 2015 14:25:49 -0700 (PDT)
+In-Reply-To: <xmqqa8td3je7.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276641>
 
-David Turner <dturner@twopensource.com> writes:
 
-> Instead of a linear search over common_list to check whether
-> a path is common, use a trie.  The trie search operates on
-> path prefixes, and handles excludes.
->
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
->  path.c                | 226 ++++++++++++++++++++++++++++++++++++++++++++++----
->  t/t0060-path-utils.sh |   1 +
->  2 files changed, 213 insertions(+), 14 deletions(-)
->
-> diff --git a/path.c b/path.c
-> index d24bfa2..c7a4c40 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -121,25 +121,223 @@ struct common_dir common_list[] = {
->  	{ 0, 0, 0, NULL }
->  };
->  
-> -static void update_common_dir(struct strbuf *buf, int git_dir_len)
-> +/*
-> + * A compressed trie.  A trie node consists of zero or more characters that
-> + * are common to all elements with this prefix, optionally followed by some
-> + * children.  If value is not NULL, the trie node is a terminal node.
-> + *
-> + * For example, consider the following set of strings:
-> + * abc
-> + * def
-> + * definite
-> + * definition
-> + *
-> + * The trie would look look like:
-> + * root: len = 0, value = (something), children a and d non-NULL.
+On 26 Aug 2015, at 22:05, Junio C Hamano <gitster@pobox.com> wrote:
 
-"value = NULL", as there is no empty string registered in the trie?
+> larsxschneider@gmail.com writes:
+>=20
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>=20
+>> We run P4 servers on Linux and P4 clients on Windows. For an unknown
+>> reason the file path for a number of files in P4 does not match the
+>> directory path with respect to case sensitivity.
+>=20
+> Thanks, but is this still "For an unknown reason", or during the
+> course of debugging you found the root cause, which is what led to
+> this fix?
+We are migrating away from P4 and therefore I haven=92t debugged the ro=
+ot cause. The source of this problem is 100% P4 related. No Git involve=
+ment at all. Maybe I just remove this paragraph?
 
-> + *    a: len = 2, contents = bc
 
-"value = NULL" here, too (just showing I am following along, not
-just skimming)?
+>=20
+>>=20
+>> E.g. "p4 files" might return
+>> //depot/path/to/file1
+>> //depot/pATH/to/file2
+>>=20
+>> If you use P4/P4V then these files end up in the same directory, e.g=
+=2E
+>> //depot/path/to/file1
+>> //depot/path/to/file2
+>>=20
+>> If you use git-p4 and clone the code via client spec "//depot/path/.=
+=2E."
+>> then all files not matching the case in the client spec will be igno=
+red
+>> (in the example above "file2"). This is correct if core.ignorecase=3D=
+false
+>> but not otherwise.
+>=20
+> This sentence is hard to grok.  What are you describing?  Solution?
+> Current problematic behaviour?  Desired behaviour that the patch
+> attempts to obtain?
+I tried to describe the situation that causes the strange behavior.
 
-> + *    d: len = 2, contents = ef, children i non-NULL, value = (something)
-> + *       i: len = 3, contents = nit, children e and i non-NULL, value = NULL
-> + *           e: len = 0, children all NULL, value = (something)
-> + *           i: len = 2, contents = on, children all NULL, value = (something)
-> + */
-> +struct trie {
-> +	struct trie *children[256];
-> +	int len;
-> +	char *contents;
-> +	void *value;
-> +};
-> +
-> +static struct trie *make_trie_node(const char *key, void *value)
->  {
-> -	char *base = buf->buf + git_dir_len;
-> -	const struct common_dir *p;
-> +	struct trie *new_node = xcalloc(1, sizeof(*new_node));
-> +	new_node->len = strlen(key);
-> +	if (new_node->len) {
-> +		new_node->contents = xmalloc(new_node->len);
-> +		memcpy(new_node->contents, key, new_node->len);
-> +	}
-> +	new_node->value = value;
-> +	return new_node;
-> +}
->  
-> -	if (is_dir_file(base, "logs", "HEAD") ||
-> -	    is_dir_file(base, "info", "sparse-checkout"))
-> -		return;	/* keep this in $GIT_DIR */
-> -	for (p = common_list; p->dirname; p++) {
-> -		const char *path = p->dirname;
-> -		if (p->is_dir && dir_prefix(base, path)) {
-> -			replace_dir(buf, git_dir_len, get_git_common_dir());
-> -			return;
-> +/*
-> + * Add a key/value pair to a trie.  The key is assumed to be \0-terminated.
-> + * If there was an existing value for this key, return it.
-> + */
-> +static void *add_to_trie(struct trie *root, const char *key, void *value)
-> +{
-> +	struct trie *child;
-> +	void *old;
-> +	int i;
-> +
-> +	if (!*key) {
-> +		/* we have reached the end of the key */
-> +		old = root->value;
-> +		root->value = value;
-> +		return old;
-> +	}
-> +
-> +	for (i = 0; i < root->len; ++i) {
-> +		if (root->contents[i] == key[i])
-> +			continue;
-> +
-> +		/*
-> +		 * Split this node: child will contain this node's
-> +		 * existing children.
-> +		 */
-> +		child = malloc(sizeof(*child));
-> +		memcpy(child->children, root->children, sizeof(root->children));
-> +
-> +		child->len = root->len - i - 1;
-> +		if (child->len) {
-> +			child->contents = strndup(root->contents + i + 1,
-> +						   child->len);
->  		}
-> -		if (!p->is_dir && !strcmp(base, path)) {
-> -			replace_dir(buf, git_dir_len, get_git_common_dir());
-> -			return;
-> +		child->value = root->value;
-> +		root->value = NULL;
-> +		root->len = i;
-> +
-> +		memset(root->children, 0, sizeof(root->children));
-> +		root->children[(unsigned char)root->contents[i]] = child;
-> +
-> +		/* This is the newly-added child. */
-> +		root->children[(unsigned char)key[i]] =
-> +			make_trie_node(key + i + 1, value);
-> +		return NULL;
-> +	}
-> +
-> +	/* We have matched the entire compressed section */
-> +	if (key[i]) {
-> +		child = root->children[(unsigned char)key[root->len]];
-> +		if (child) {
-> +			return add_to_trie(child, key + root->len + 1, value);
-> +		} else {
-> +			child = make_trie_node(key + root->len + 1, value);
-> +			root->children[(unsigned char)key[root->len]] = child;
-> +			return NULL;
->  		}
->  	}
-> +
-> +	old = root->value;
-> +	root->value = value;
-> +	return old;
-> +}
-> +
-> +typedef int (*match_fn)(const char *unmatched, void *data, void *baton);
-> +
-> +/*
-> + * Search a trie for some key.  Find the longest /-or-\0-terminated
-> + * prefix of the key for which the trie contains a value.  Call fn
-> + * with the unmatched portion of the key and the found value, and
-> + * return its return value.  If there is no such prefix, return -1.
-> + *
-> + * The key is partially normalized: consecutive slashes are skipped.
-> + *
-> + * For example, consider the trie containing only [refs,
-> + * refs/worktree] (both with values).
-> + *
-> + * | key             | unmatched  | val from node | return value |
-> + * |-----------------|------------|---------------|--------------|
-> + * | a               | not called | n/a           | -1           |
-> + * | refs            | \0         | refs          | as per fn    |
-> + * | refs/           | /          | refs          | as per fn    |
-> + * | refs/w          | /w         | refs          | as per fn    |
-> + * | refs/worktree   | \0         | refs/worktree | as per fn    |
-> + * | refs/worktree/  | /          | refs/worktree | as per fn    |
-> + * | refs/worktree/a | /a         | refs/worktree | as per fn    |
-> + * |-----------------|------------|---------------|--------------|
-> + *
-> + */
-> +static int trie_find(struct trie *root, const char *key, match_fn fn,
-> +		     void *baton)
-> +{
-> +	int i;
-> +	int result;
-> +	struct trie *child;
-> +
-> +	if (!*key) {
-> +		/* we have reached the end of the key */
-> +		if (root->value && !root->len)
-> +			return fn(key, root->value, baton);
-> +		else
-> +			return -1;
-> +	}
-> +
-> +	for (i = 0; i < root->len; ++i) {
-> +		/* Partial path normalization: skip consecutive slashes. */
-> +		if (key[i] == '/' && key[i+1] == '/') {
-> +			key++;
-> +			continue;
-> +		}
-> +		if (root->contents[i] != key[i])
-> +			return -1;
-> +	}
-> +
-> +	/* Matched the entire compressed section */
-> +	key += i;
-> +	if (!*key)
-> +		/* End of key */
-> +		return fn(key, root->value, baton);
-> +
-> +	/* Partial path normalization: skip consecutive slashes */
-> +	while (key[0] == '/' && key[1] == '/')
-> +		key ++;
+>=20
+> If I paraphrase it like this, did I understood you correctly?
+>=20
+>    The current code always ignores paths in wrong case that do not
+>    match client spec.  It is correct to ignore them when
+>    core.ignorecase is not set; //depot/path/ and //depot/pATH/ are
+>    different things in that case.
+>=20
+>    But it is a wrong thing to do if core.ignorecase is set to true.
+>    Let's make sure we avoid it by downcasing the depot_path when
+>    core.ignorecase is set to true.
 
-These "skipping consecutive slashes" inside this function is cute.
-I would have expected me to react "Eek, Ugly" to it, but somehow I
-didn't find them ugly.
+How about this:
 
-> +	child = root->children[(unsigned char)*key];
-> +	if (child)
-> +		result = trie_find(child, key + 1, fn, baton);
-> +	else
-> +		result = -1;
-> +
-> +	if (result >= 0 || (*key != '/' && *key != 0))
-> +		return result;
-> +	if (root->value)
-> +		return fn(key, root->value, baton);
-> +	else
-> +		return -1;
-> +}
-> +
-> +static struct trie common_trie;
-> +static int common_trie_done_setup;
-> +
-> +static void init_common_trie(void)
-> +{
-> +	struct common_dir *p;
-> +
-> +	if (common_trie_done_setup)
-> +		return;
-> +
-> +	for (p = common_list; p->dirname; p++)
-> +		add_to_trie(&common_trie, p->dirname, p);
-> +
-> +	common_trie_done_setup = 1;
-> +}
+-----------------
+The current code always ignores files with paths that do not match the =
+case of the paths defined in the client spec. This commit changes this =
+behavior and obeys these files if =93core.ignorecase=94 is set to "true=
+=94.
 
-I somehow wonder if we'd want to precomute the trie at the build
-time, though ;-)
+Example:
+A P4 repository contains the following files:
+//depot/path/to/file1
+//depot/pATH/to/file2
 
-> +/*
-> + * Helper function for update_common_dir: returns 1 if the dir
-> + * prefix is common.
-> + */
-> +static int check_common(const char *unmatched, void *value, void *baton)
-> +{
-> +	struct common_dir *dir = value;
-> +
-> +	if (!dir)
-> +		return 0;
-> +
-> +	if (dir->is_dir && (unmatched[0] == 0 || unmatched[0] == '/'))
-> +		return !dir->exclude;
-> +
-> +	if (!dir->is_dir && unmatched[0] == 0)
-> +		return !dir->exclude;
-> +
-> +	return 0;
-> +}
-> +
-> +static void update_common_dir(struct strbuf *buf, int git_dir_len)
-> +{
-> +	char *base = buf->buf + git_dir_len;
-> +	init_common_trie();
-> +	if (trie_find(&common_trie, base, check_common, NULL) > 0)
-> +		replace_dir(buf, git_dir_len, get_git_common_dir());
->  }
+The P4 repository is cloned with git-p4 and the following client spec v=
+iew:
+//depot/path/=85 //client/...
 
-Thanks for a pleasant read.
+The cloned Git repository will contain only the following file:
+to/file1
 
->  
->  void report_linked_checkout_garbage(void)
-> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-> index 93605f4..1ca49e1 100755
-> --- a/t/t0060-path-utils.sh
-> +++ b/t/t0060-path-utils.sh
-> @@ -271,6 +271,7 @@ test_git_path GIT_COMMON_DIR=bar objects/bar              bar/objects/bar
->  test_git_path GIT_COMMON_DIR=bar info/exclude             bar/info/exclude
->  test_git_path GIT_COMMON_DIR=bar info/grafts              bar/info/grafts
->  test_git_path GIT_COMMON_DIR=bar info/sparse-checkout     .git/info/sparse-checkout
-> +test_git_path GIT_COMMON_DIR=bar info//sparse-checkout    .git/info//sparse-checkout
->  test_git_path GIT_COMMON_DIR=bar remotes/bar              bar/remotes/bar
->  test_git_path GIT_COMMON_DIR=bar branches/bar             bar/branches/bar
->  test_git_path GIT_COMMON_DIR=bar logs/refs/heads/master   bar/logs/refs/heads/master
+=93file2=94 is not present in the cloned Git repository. If =93core.ign=
+orecase" is set to =93true=94 then path case sensitivity is ignored and=
+ =93file2=94 will be present.
+=97=97=97=97=97=97=97=97
+
+Thanks,
+Lars
