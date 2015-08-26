@@ -1,112 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v13 00/12] port tag.c to use ref-filter APIs
-Date: Wed, 26 Aug 2015 07:37:48 -0700
-Message-ID: <xmqq6142w1xf.fsf@gitster.dls.corp.google.com>
-References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
-	<vpqzj1hkc5q.fsf@anie.imag.fr>
-	<xmqq7fok2u57.fsf@gitster.dls.corp.google.com>
-	<xmqqy4h01egr.fsf@gitster.dls.corp.google.com>
-	<CAOLa=ZQwW9hpg4p8+DE2oZA28Av7mLrqAhEdcro=esuqHe35Xg@mail.gmail.com>
-	<xmqqzj1fxjpj.fsf@gitster.dls.corp.google.com>
-	<CAOLa=ZSu7XyZhWUL=25dnkiGm2mNDyFhXwS_JqudyfKPE5sisQ@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 2/2] trailer: support multiline title
+Date: Wed, 26 Aug 2015 16:53:55 +0200
+Message-ID: <CAP8UFD2x8i5wC9JP8d1zAH=d-2BMYWAvpaFmWnu09N5QSG==TA@mail.gmail.com>
+References: <1440557461-1078-1-git-send-email-chriscool@tuxfamily.org>
+	<1440557461-1078-2-git-send-email-chriscool@tuxfamily.org>
+	<vpqa8tetwfi.fsf@anie.imag.fr>
+	<CA+P7+xqaAKckB0P5oqFS64BWU2H1OsVX8Oq=CLLW8PMJ5fdenQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 16:37:57 2015
+	git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 16:54:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUbpr-0006t1-KW
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 16:37:56 +0200
+	id 1ZUc5Y-0003rJ-Fl
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 16:54:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756589AbbHZOhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2015 10:37:51 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:33484 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752102AbbHZOhu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2015 10:37:50 -0400
-Received: by pacti10 with SMTP id ti10so90222860pac.0
-        for <git@vger.kernel.org>; Wed, 26 Aug 2015 07:37:50 -0700 (PDT)
+	id S1756312AbbHZOx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2015 10:53:57 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:35743 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755183AbbHZOx4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 10:53:56 -0400
+Received: by igbjg10 with SMTP id jg10so42025446igb.0
+        for <git@vger.kernel.org>; Wed, 26 Aug 2015 07:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=yKrTEkOOojeokBweT8IgOKe5tS16ktB1o3fenVJa4CQ=;
-        b=UEN31oncScYJL/AvDC+6VNmxokHzvVSDG6MAgMnjxYIKixPgCXnyI2jlnmMdXlfUfm
-         u91DTjHt+ZArpLKrZH1BXmU9gw2lJv0Rb11IVmHo+JNfsA+EmcMxIySkH6EyMcMcDIaU
-         c+tTkvBxNEmx7iNBVzMmZbtxmkZ3zKphdYPS+N14cOlIfj1b04a4YtIC3DsgtAGpcLD9
-         7AjqLLn524xklZ+b9g7ZHxeClm0GPLCOFGzJgV87hPrYEX4bkHolXJcQTqiLfe52YVa6
-         Io6cHUKMVkIyj3x830FtARmNIbK9C0cCDu/rczy8h71Hi/nh/Y2lITE8wTpQLsXT7kmT
-         n9DQ==
-X-Received: by 10.66.243.225 with SMTP id xb1mr70090545pac.78.1440599870034;
-        Wed, 26 Aug 2015 07:37:50 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:ac9b:ef8c:b4db:d257])
-        by smtp.gmail.com with ESMTPSA id u10sm24960527pbs.16.2015.08.26.07.37.48
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Wed, 26 Aug 2015 07:37:48 -0700 (PDT)
-In-Reply-To: <CAOLa=ZSu7XyZhWUL=25dnkiGm2mNDyFhXwS_JqudyfKPE5sisQ@mail.gmail.com>
-	(Karthik Nayak's message of "Wed, 26 Aug 2015 11:26:58 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mWFvVvyqyqHGgWlP1thRWIeRi7YaLaYrldeS3x1a26Q=;
+        b=CuFcz+xZXMMShXy3t8V7TLOSiyaN9YcpP3B4+0y4OowaRGFM/KTCWnPaC8teJ6/MvN
+         DevnvNhIS/JEJk+k3EzIPTW8pGqNs7/9X1yP6DXodtXQyxZoxqiQd2n1FthNuEY8plbg
+         lSTV3HYlROfvdTIEFe9EMMtjivnjIPK+MRYxIOM3AIAkuso6i3Rz4ovM/PszBRNxX4LB
+         JnSMUc7FbnWlPrGfHrbS/QkKSVnjAuth0GkdYFONV0qpx2ml9n05VoNoZ5QDs+l4lbPe
+         QpzcvkoRZNQU83pNoRxUosuTB+75/PLMC0ZFPbGSrcUfSOij8/+V4n9Aw0pp01pofuct
+         obNg==
+X-Received: by 10.50.59.180 with SMTP id a20mr4478563igr.31.1440600835586;
+ Wed, 26 Aug 2015 07:53:55 -0700 (PDT)
+Received: by 10.79.93.131 with HTTP; Wed, 26 Aug 2015 07:53:55 -0700 (PDT)
+In-Reply-To: <CA+P7+xqaAKckB0P5oqFS64BWU2H1OsVX8Oq=CLLW8PMJ5fdenQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276608>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Sorry I sent the part below privately by mistake:
 
-> On Wed, Aug 26, 2015 at 12:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->> I didn't check how wide the original is supposed to be, but perhaps
->> changing builtin/tag.c this way
->>
->>                 if (filter->lines)
->> -                       format = "%(align:16,left)%(refname:short)%(end)";
->> +                       format = "%(align:15,left)%(refname:short)%(end) ";
->>                 else
->>                         format = "%(refname:short)";
->>         }
->>
->> may be one way to fix it.  Check the original "tag -l" output for
->> tags whose names are 14, 15, 16 and 17 display-columns wide and try
->> to match it.
+On Tue, Aug 25, 2015 at 11:07 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
 >
-> That should be the fix, since it's a space problem.
-> ....
-> The problem with doing this is, the lines need to be displayed
-> immediately after  the refname,
-> followed by a newline, what you're suggesting breaks that flow.
+> Now, I found another issue: I still have this "interpret-trailers" in my
+> hooks/commit-msg, and it behaves badly when I use "git commit -v". With
+> -v, I get a diff in COMMIT_EDITMSG, and interpret-trailers tries to
+> insert my Sign-off within the diff, like this:
+>
+>   # Do not touch the line above.
+>   # Everything below will be removed.
+>   diff --git a/git-multimail/README b/git-multimail/README
+>   index f41906b..93d4751 100644
+>
+>   Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>   --- a/git-multimail/README
+>   +++ b/git-multimail/README
 
-That is only because show_ref_array_item() does too much.  The
-function is given a placeholder string and a set of data to fill the
-placeholder with for an item, and the reason why the caller
-repeatedly calls it, once per item it has, is because it wants to
-produce a one-line-per-item output.  An alternative valid way to
-structure the API is to have it format into a string and leave the
-printing to the caller.  You can give a new format_ref_array_item()
-that does not print but fills a strbuf to this caller, make
-show_ref_array_item() a thin wrapper that calls it and prints it
-with the final LF for other callers.
+This might be a bug. I will have a look.
 
-Another alternate approach, if you want to give "tag -l" annotation
-available to for-each-ref, would be to do this:
+> Either commit-msg should be called after stripping the diff from
+> COMMIT_MSG, or interpret-trailers should learn to stop reading when the
+> patch starts.
 
-       if (filter->lines)
-               format = xstrfmt("%%(align:15,left)%%(refname:short)%%(end) "
-                                "%%(contents:lines=%s)", filter->lines);
-       else
-               format = "%(refname:short)";
+There is already code to detect a patch in interpret-trailers, but it
+relies on the patch starting with a line with only three dashes.
 
-and teach a new %(contents:lines=1) atom.  That way, you can lose
-the ugly special case call to show_tag_lines() that can only be at
-the end of the output.  I somehow think this is a better approach.
+So another option would be to make "commit -v" emit a line with three
+dashes just under the "# Everything below will be removed." line.
 
-Of course you can (and probably would want to) do both, giving a
-bit lower level "emit to a strbuf" function to the callers _and_
-losing hardcoded call to show_tag_lines().
+> I think the first option is better, since it means that
+> any commit-msg hook does not have to deal with the patch stuff (my guess
+> is that there are many broken commit-msg hooks out there, but people
+> didn't notice because they don't use "commit -v").
+
+Maybe. I don't know if there is a reason why the commit-msg is called
+before removing the patch.
+
+On Wed, Aug 26, 2015 at 8:28 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>
+> It's always confused me why commit -v doesn't prepend every inserted
+> line with "#" to mark it as a comment.
+
+I think that would make interpret-trailers work properly too.
+
+Thanks both,
+Christian.
