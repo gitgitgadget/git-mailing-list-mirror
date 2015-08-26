@@ -1,109 +1,104 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v5] git-p4: Obey core.ignorecase when using P4 client specs.
-Date: Wed, 26 Aug 2015 11:18:37 +0100
-Message-ID: <CAE5ih791vqnyk_J8Sq9LXq+WZW31OwEuCiD6-wwVLo-tXxHOMA@mail.gmail.com>
-References: <1440451805-85095-1-git-send-email-larsxschneider@gmail.com>
-	<55DC111A.6090501@diamand.org>
-	<55DC285D.9030500@web.de>
-	<23CB37E8-9704-4A9D-8CAB-2812AD59394D@gmail.com>
-	<CAE5ih7-o6eVF-z2GORxHa_TdDaXgexLpW3jctESTnL46Mfdo8w@mail.gmail.com>
-	<B7632D9A-BB8B-41E5-9C3D-F7376A0C81D3@gmail.com>
-	<55DCB2E0.5090605@diamand.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v13 00/12] port tag.c to use ref-filter APIs
+Date: Wed, 26 Aug 2015 13:54:58 +0200
+Message-ID: <vpqd1yap8ml.fsf@anie.imag.fr>
+References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
+	<xmqqy4h04mx4.fsf@gitster.dls.corp.google.com>
+	<CAOLa=ZRYWNVmMeMCZSa+GcOTQ7NzuVB9RH_TFJ6-u7aFhrU=NA@mail.gmail.com>
+	<xmqq8u904ix0.fsf@gitster.dls.corp.google.com>
+	<xmqq37z82u2a.fsf@gitster.dls.corp.google.com>
+	<CAOLa=ZS=Mtz0ny0tUWRBY0vfAgiRzaszeF0m_pxnK3+VGn1eVg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Users <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>,
-	Tor Arvid Lund <torarvid@gmail.com>, ksaitoh560@gmail.com,
-	Junio C Hamano <gitster@pobox.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 12:18:43 2015
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 13:55:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUXn1-0001kr-1s
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 12:18:43 +0200
+	id 1ZUZIO-0003Ro-LN
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 13:55:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755987AbbHZKSj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Aug 2015 06:18:39 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:36096 "EHLO
-	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755203AbbHZKSi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Aug 2015 06:18:38 -0400
-Received: by oiev193 with SMTP id v193so118421658oie.3
-        for <git@vger.kernel.org>; Wed, 26 Aug 2015 03:18:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ACVNtjKixoo0MuxgYbkfwFXn25JgymZud3p5NkAvYCs=;
-        b=If05Rlypg/35fHNjMtgDw64gN3zDN4/CgJpjZrxR/naH34xfZBN7kJszSRFTNFtZv8
-         WZtwfeVqc876X6/GubKqw7IrHIbJQaXW7gn5vDXndaZu32P3G5KoToiJY1vvgshJyAo2
-         CJu2L2h0HLxIcGNGLJrWKKsQpdGcNrOmMAve4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ACVNtjKixoo0MuxgYbkfwFXn25JgymZud3p5NkAvYCs=;
-        b=juPC0+E0eF/fa8eGnDdwOfP26ASqkaIHQppYysuMWgzeqOTdk/cNxKmQlh1YajEQhe
-         GCB7tjf6EjgttC3WhPmEDpdPNlye5i8o3elfATmtMMfhIRcZxh/sgjyMIrH/n4bGLkxi
-         chon7GM9y/BbMiGwxPFOMXOVN5mjmfPIDmzA2tAJSFADvBnGFxasExQ3zYBjHqFN5wrc
-         TFMpsOHSeEfo62EtVnO3ItONvGBVKs7O5u1xsFWJx7kSdPZxPNHJ5qcub9oveeEkiCOV
-         2hY2p+GIJSP+dJXJrssal/xJ2Rz6VEKTwYfnx47ot8ZhopqWy8iAhUzGuYcwRVcDv8KH
-         lt9A==
-X-Gm-Message-State: ALoCoQkiJbNr6+a5GrT+uoqq/rKJ/09uOMQYucAiSOi6x6+m2ds6EEuCJe6SwTnERORsdGRDup20
-X-Received: by 10.202.87.8 with SMTP id l8mr30352288oib.91.1440584317653; Wed,
- 26 Aug 2015 03:18:37 -0700 (PDT)
-Received: by 10.60.162.5 with HTTP; Wed, 26 Aug 2015 03:18:37 -0700 (PDT)
-In-Reply-To: <55DCB2E0.5090605@diamand.org>
+	id S932911AbbHZLzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2015 07:55:06 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41505 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752794AbbHZLzF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 07:55:05 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t7QBsvj4024897
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 26 Aug 2015 13:54:57 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t7QBsw46032725;
+	Wed, 26 Aug 2015 13:54:58 +0200
+In-Reply-To: <CAOLa=ZS=Mtz0ny0tUWRBY0vfAgiRzaszeF0m_pxnK3+VGn1eVg@mail.gmail.com>
+	(Karthik Nayak's message of "Wed, 26 Aug 2015 15:37:07 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 26 Aug 2015 13:54:57 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t7QBsvj4024897
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1441194898.08794@69c00NwZEVS7LWXp564A5Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276606>
 
-On 25 August 2015 at 19:24, Luke Diamand <luke@diamand.org> wrote:
-> On 25/08/15 14:14, Lars Schneider wrote:
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+> On Tue, Aug 25, 2015 at 4:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Karthik Nayak <karthik.188@gmail.com> writes:
 >>>
+>>>> On Mon, Aug 24, 2015 at 10:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>>>> ...
+>>>>>> +     performed. If used with '--quote' everything in between %(align:..)
+>>>>>> +     and %(end) is quoted.
+>>>> ...
+>>>> I might have misunderstood you, But based on the discussion held here
+>>>> (thread.gmane.org/gmane.comp.version-control.git/276140)
+>>>> I thought we wanted everything inside the %(align) .... %(end) atoms
+>>>> to be quoted.
 >>>
->>> So the choices are:
+>>> Perhaps I misunderstood your intention in the doc.
 >>>
->>> 1. A new command-line option which would silently set core.ignoreca=
-se
->>> 2. Users just have to know to set core.ignorecase manually before
->>> using git-p4 (i.e. Lars' patch v5)
->>> 3. Fix fast-import to take a --casefold option (but that's a much b=
-igger
->>> change)
+>>> I took "everything in between %(align:...) and %(end) is quoted" to
+>>> mean that
 >>>
->> I vote for 2 because that solves the problem consistently with the
->> existing implementation for now. That means we don=E2=80=99t surpris=
-e git-p4 users.
->> In addition I would try to fix (3), the =E2=80=94casefold option, in=
- a separate
->> patch. Although this (3) patch could take a bit as I have two more g=
-it-p4
->> patches in the queue that I want to propose to the mailing list firs=
-t.
+>>>       %(if:empty)%(align)%(end)%(then)Empty%(else)Not Empty%(end)
+>>>
+>>> can never satisfy %(if:empty), because %(align)%(end) would expand
+>>> to a string that has two single-quotes, that is not an empty string.
+>>>
+>>> If that is not what would happen in the "branch --list" enhancement,
+>>> then the proposed behaviour is good, but the above documentation would
+>>> need to be updated when it happens, I think.  It at least is misleading.
+>>
+>> OK, now I checked the code, and I _think_ the recursive logic is
+>> doing the right thing (modulo minor nits on comment-vs-code
+>> discrepancy and code structure I sent separately).
+>>
 >
->
-> That works for me. Ack.
->
-> Thanks!
-> Luke
+> For the current code %(if:empty)%(align)%(end)%(then)Empty%(else)Not Empty%(end)
+> would print non-empty, I guess the documentation holds in that case.
+> Not sure if we require it to print non-empty.
 
-Lars - could you resubmit PATCHv5 as v6, with Acked-by from me added
-after the Signed-off-by: line.
-It then this from SubmittingPatches:
+You don't want the %(if) condition to depend on whether
+--shell/--python/... is used. Since %(if:empty)%(align)%(end)%(then)
+holds when you don't use --shell, you also want it to hold when you
+quote. IOW, you should check for emptyness before (or actually without)
+doing the quoting. I guess this is what you're doing, and if so, I think
+it's "The Right Thing".
 
-> After the list reached a consensus that it is a good idea to apply th=
-e
-> patch, re-send it with "To:" set to the maintainer [*1*] and "cc:" th=
-e
-> list [*2*] for inclusion.
-
-Thanks
-Luke
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
