@@ -1,131 +1,337 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH] tag: teach -n to override tag.sort configuration
-Date: Wed, 26 Aug 2015 14:15:00 -0700
-Message-ID: <1440623700-29324-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Jacob Keller <jacob.keller@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 26 23:15:13 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 2/4] path: optimize common dir checking
+Date: Wed, 26 Aug 2015 14:15:41 -0700
+Message-ID: <xmqqwpwh21ky.fsf@gitster.dls.corp.google.com>
+References: <1440618365-20628-1-git-send-email-dturner@twopensource.com>
+	<1440618365-20628-3-git-send-email-dturner@twopensource.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com,
+	sunshine@sunshineco.com
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 23:15:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUi2I-0003XR-VX
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 23:15:11 +0200
+	id 1ZUi2u-00040k-BD
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 23:15:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbbHZVPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2015 17:15:03 -0400
-Received: from mga14.intel.com ([192.55.52.115]:57172 "EHLO mga14.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751300AbbHZVPC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2015 17:15:02 -0400
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga103.fm.intel.com with ESMTP; 26 Aug 2015 14:15:02 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.17,418,1437462000"; 
-   d="scan'208";a="632848842"
-Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.123])
-  by orsmga003.jf.intel.com with ESMTP; 26 Aug 2015 14:15:02 -0700
-X-Mailer: git-send-email 2.5.0.280.g4aaba03
+	id S1752644AbbHZVPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2015 17:15:44 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:36826 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751693AbbHZVPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 17:15:42 -0400
+Received: by pacgr6 with SMTP id gr6so1339678pac.3
+        for <git@vger.kernel.org>; Wed, 26 Aug 2015 14:15:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=fiF9HZ7V1iHg0zGhSJYRYKsWQfXa/w037PdQdTt0/XY=;
+        b=aWI3i6tbLCu8Wsz1+l+o0+SzvBB6rv268BuL6iCqxY9qt6awECXEhltm7hCk0z71f9
+         4KIX3Rp3aZXcmoyyst5oFuehv/zpHa27a8obfhosXIOuh7h5ia+ojXYEnMy+Ck/nmEnl
+         C0yLJnbRlgqj2QTfFr6bQCaD95beXhkxg6vx9bXpLSmJqy8T6igENhBuU0TpT7A20/d5
+         6+ZV9hIhI0pgzIpqXEgsGOX9undmOIa7WR3ga4TQUbOLJqBr6AlQd1PbizUKbIRtxyfI
+         uPiCszf6URUp/BHFySxLdQeBFwdWUDEDmwNZvjJMsHTUMOtn+wBqL8D8NCegz4t/AfAV
+         0Qrg==
+X-Received: by 10.68.244.234 with SMTP id xj10mr1087254pbc.13.1440623742329;
+        Wed, 26 Aug 2015 14:15:42 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:ac9b:ef8c:b4db:d257])
+        by smtp.gmail.com with ESMTPSA id y2sm25795957pdp.0.2015.08.26.14.15.41
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Wed, 26 Aug 2015 14:15:41 -0700 (PDT)
+In-Reply-To: <1440618365-20628-3-git-send-email-dturner@twopensource.com>
+	(David Turner's message of "Wed, 26 Aug 2015 15:46:03 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276640>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+David Turner <dturner@twopensource.com> writes:
 
-git tag -n will always fail if tag.sort is set to a sort other than the
-default "refname" setting. Teach git tag to have -n override the
-configuration setting when -n is used, instead of failing with
+> Instead of a linear search over common_list to check whether
+> a path is common, use a trie.  The trie search operates on
+> path prefixes, and handles excludes.
+>
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  path.c                | 226 ++++++++++++++++++++++++++++++++++++++++++++++----
+>  t/t0060-path-utils.sh |   1 +
+>  2 files changed, 213 insertions(+), 14 deletions(-)
+>
+> diff --git a/path.c b/path.c
+> index d24bfa2..c7a4c40 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -121,25 +121,223 @@ struct common_dir common_list[] = {
+>  	{ 0, 0, 0, NULL }
+>  };
+>  
+> -static void update_common_dir(struct strbuf *buf, int git_dir_len)
+> +/*
+> + * A compressed trie.  A trie node consists of zero or more characters that
+> + * are common to all elements with this prefix, optionally followed by some
+> + * children.  If value is not NULL, the trie node is a terminal node.
+> + *
+> + * For example, consider the following set of strings:
+> + * abc
+> + * def
+> + * definite
+> + * definition
+> + *
+> + * The trie would look look like:
+> + * root: len = 0, value = (something), children a and d non-NULL.
 
-fatal: --sort and -n incompatible
+"value = NULL", as there is no empty string registered in the trie?
 
-since the user probably sets tag.sort once as a default and would expect
--n to override this setting.
+> + *    a: len = 2, contents = bc
 
-As a consequence, -n and --sort will always be incompatible now, even if
-the --sort is "--sort=refname" which is essentially a no-op and
-previously was acceptable. No sane user should be doing such.
+"value = NULL" here, too (just showing I am following along, not
+just skimming)?
 
-Add a test to document that --sort and -n are incompatible. Add a
-further test to show that tag.sort should be ignored if -n is
-configured.
+> + *    d: len = 2, contents = ef, children i non-NULL, value = (something)
+> + *       i: len = 3, contents = nit, children e and i non-NULL, value = NULL
+> + *           e: len = 0, children all NULL, value = (something)
+> + *           i: len = 2, contents = on, children all NULL, value = (something)
+> + */
+> +struct trie {
+> +	struct trie *children[256];
+> +	int len;
+> +	char *contents;
+> +	void *value;
+> +};
+> +
+> +static struct trie *make_trie_node(const char *key, void *value)
+>  {
+> -	char *base = buf->buf + git_dir_len;
+> -	const struct common_dir *p;
+> +	struct trie *new_node = xcalloc(1, sizeof(*new_node));
+> +	new_node->len = strlen(key);
+> +	if (new_node->len) {
+> +		new_node->contents = xmalloc(new_node->len);
+> +		memcpy(new_node->contents, key, new_node->len);
+> +	}
+> +	new_node->value = value;
+> +	return new_node;
+> +}
+>  
+> -	if (is_dir_file(base, "logs", "HEAD") ||
+> -	    is_dir_file(base, "info", "sparse-checkout"))
+> -		return;	/* keep this in $GIT_DIR */
+> -	for (p = common_list; p->dirname; p++) {
+> -		const char *path = p->dirname;
+> -		if (p->is_dir && dir_prefix(base, path)) {
+> -			replace_dir(buf, git_dir_len, get_git_common_dir());
+> -			return;
+> +/*
+> + * Add a key/value pair to a trie.  The key is assumed to be \0-terminated.
+> + * If there was an existing value for this key, return it.
+> + */
+> +static void *add_to_trie(struct trie *root, const char *key, void *value)
+> +{
+> +	struct trie *child;
+> +	void *old;
+> +	int i;
+> +
+> +	if (!*key) {
+> +		/* we have reached the end of the key */
+> +		old = root->value;
+> +		root->value = value;
+> +		return old;
+> +	}
+> +
+> +	for (i = 0; i < root->len; ++i) {
+> +		if (root->contents[i] == key[i])
+> +			continue;
+> +
+> +		/*
+> +		 * Split this node: child will contain this node's
+> +		 * existing children.
+> +		 */
+> +		child = malloc(sizeof(*child));
+> +		memcpy(child->children, root->children, sizeof(root->children));
+> +
+> +		child->len = root->len - i - 1;
+> +		if (child->len) {
+> +			child->contents = strndup(root->contents + i + 1,
+> +						   child->len);
+>  		}
+> -		if (!p->is_dir && !strcmp(base, path)) {
+> -			replace_dir(buf, git_dir_len, get_git_common_dir());
+> -			return;
+> +		child->value = root->value;
+> +		root->value = NULL;
+> +		root->len = i;
+> +
+> +		memset(root->children, 0, sizeof(root->children));
+> +		root->children[(unsigned char)root->contents[i]] = child;
+> +
+> +		/* This is the newly-added child. */
+> +		root->children[(unsigned char)key[i]] =
+> +			make_trie_node(key + i + 1, value);
+> +		return NULL;
+> +	}
+> +
+> +	/* We have matched the entire compressed section */
+> +	if (key[i]) {
+> +		child = root->children[(unsigned char)key[root->len]];
+> +		if (child) {
+> +			return add_to_trie(child, key + root->len + 1, value);
+> +		} else {
+> +			child = make_trie_node(key + root->len + 1, value);
+> +			root->children[(unsigned char)key[root->len]] = child;
+> +			return NULL;
+>  		}
+>  	}
+> +
+> +	old = root->value;
+> +	root->value = value;
+> +	return old;
+> +}
+> +
+> +typedef int (*match_fn)(const char *unmatched, void *data, void *baton);
+> +
+> +/*
+> + * Search a trie for some key.  Find the longest /-or-\0-terminated
+> + * prefix of the key for which the trie contains a value.  Call fn
+> + * with the unmatched portion of the key and the found value, and
+> + * return its return value.  If there is no such prefix, return -1.
+> + *
+> + * The key is partially normalized: consecutive slashes are skipped.
+> + *
+> + * For example, consider the trie containing only [refs,
+> + * refs/worktree] (both with values).
+> + *
+> + * | key             | unmatched  | val from node | return value |
+> + * |-----------------|------------|---------------|--------------|
+> + * | a               | not called | n/a           | -1           |
+> + * | refs            | \0         | refs          | as per fn    |
+> + * | refs/           | /          | refs          | as per fn    |
+> + * | refs/w          | /w         | refs          | as per fn    |
+> + * | refs/worktree   | \0         | refs/worktree | as per fn    |
+> + * | refs/worktree/  | /          | refs/worktree | as per fn    |
+> + * | refs/worktree/a | /a         | refs/worktree | as per fn    |
+> + * |-----------------|------------|---------------|--------------|
+> + *
+> + */
+> +static int trie_find(struct trie *root, const char *key, match_fn fn,
+> +		     void *baton)
+> +{
+> +	int i;
+> +	int result;
+> +	struct trie *child;
+> +
+> +	if (!*key) {
+> +		/* we have reached the end of the key */
+> +		if (root->value && !root->len)
+> +			return fn(key, root->value, baton);
+> +		else
+> +			return -1;
+> +	}
+> +
+> +	for (i = 0; i < root->len; ++i) {
+> +		/* Partial path normalization: skip consecutive slashes. */
+> +		if (key[i] == '/' && key[i+1] == '/') {
+> +			key++;
+> +			continue;
+> +		}
+> +		if (root->contents[i] != key[i])
+> +			return -1;
+> +	}
+> +
+> +	/* Matched the entire compressed section */
+> +	key += i;
+> +	if (!*key)
+> +		/* End of key */
+> +		return fn(key, root->value, baton);
+> +
+> +	/* Partial path normalization: skip consecutive slashes */
+> +	while (key[0] == '/' && key[1] == '/')
+> +		key ++;
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
+These "skipping consecutive slashes" inside this function is cute.
+I would have expected me to react "Eek, Ugly" to it, but somehow I
+didn't find them ugly.
 
-I wasn't sure who to Cc for this, since I wrote the tag.sort code.
-Noticed this when I tried to use -n option, and it kept failing. Maybe
-this isn't the best way to implement this. I could replace how we read
-tag.sort and grab it using git_config_get_string or something after we
-parse the command line options. But this seemed like the easiest way.
+> +	child = root->children[(unsigned char)*key];
+> +	if (child)
+> +		result = trie_find(child, key + 1, fn, baton);
+> +	else
+> +		result = -1;
+> +
+> +	if (result >= 0 || (*key != '/' && *key != 0))
+> +		return result;
+> +	if (root->value)
+> +		return fn(key, root->value, baton);
+> +	else
+> +		return -1;
+> +}
+> +
+> +static struct trie common_trie;
+> +static int common_trie_done_setup;
+> +
+> +static void init_common_trie(void)
+> +{
+> +	struct common_dir *p;
+> +
+> +	if (common_trie_done_setup)
+> +		return;
+> +
+> +	for (p = common_list; p->dirname; p++)
+> +		add_to_trie(&common_trie, p->dirname, p);
+> +
+> +	common_trie_done_setup = 1;
+> +}
 
- builtin/tag.c  | 11 +++++++++--
- t/t7004-tag.sh | 15 +++++++++++++++
- 2 files changed, 24 insertions(+), 2 deletions(-)
+I somehow wonder if we'd want to precomute the trie at the build
+time, though ;-)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 471d6b1ab884..83f94bd7f833 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -33,6 +33,7 @@ static const char * const git_tag_usage[] = {
- #define REVERSE_SORT    0x8000
- 
- static int tag_sort;
-+static int cmd_line_sort = 0;
- 
- struct tag_filter {
- 	const char **patterns;
-@@ -559,6 +560,8 @@ static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
- {
- 	int *sort = opt->value;
- 
-+	cmd_line_sort = 1;
-+
- 	return parse_sort_string(NULL, arg, sort);
- }
- 
-@@ -647,8 +650,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			copts.padding = 2;
- 			run_column_filter(colopts, &copts);
- 		}
--		if (lines != -1 && tag_sort)
--			die(_("--sort and -n are incompatible"));
-+		if (lines != -1) {
-+			if (cmd_line_sort)
-+				die(_("--sort and -n are incompatible"));
-+			else
-+				tag_sort = 0;
-+		}
- 		ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, tag_sort);
- 		if (column_active(colopts))
- 			stop_column_filter();
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index d31788cc6ce6..92a8f1b4670c 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1392,6 +1392,21 @@ test_expect_success 'multiple --points-at are OR-ed together' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'listing tag with -n --sort=<sort> should fail' '
-+	test_must_fail git tag --sort=refname -n
-+'
-+
-+test_expect_success 'listing tag with -n and tag.sort must not fail' '
-+	echo "tag-one-line    A msg" >expect &&
-+	git -c tag.sort="v:refname" tag -n1 -l | grep "^tag-one-line" >actual &&
-+	test_cmp expect actual &&
-+	echo "tag-lines       tag line one" >expect &&
-+	echo "    tag line two" >>expect &&
-+	echo "    tag line three" >>expect &&
-+	git -c tag.sort="v:refname" tag -n3 -l | grep "^ *tag.line" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'lexical sort' '
- 	git tag foo1.3 &&
- 	git tag foo1.6 &&
--- 
-2.5.0.280.g4aaba03
+> +/*
+> + * Helper function for update_common_dir: returns 1 if the dir
+> + * prefix is common.
+> + */
+> +static int check_common(const char *unmatched, void *value, void *baton)
+> +{
+> +	struct common_dir *dir = value;
+> +
+> +	if (!dir)
+> +		return 0;
+> +
+> +	if (dir->is_dir && (unmatched[0] == 0 || unmatched[0] == '/'))
+> +		return !dir->exclude;
+> +
+> +	if (!dir->is_dir && unmatched[0] == 0)
+> +		return !dir->exclude;
+> +
+> +	return 0;
+> +}
+> +
+> +static void update_common_dir(struct strbuf *buf, int git_dir_len)
+> +{
+> +	char *base = buf->buf + git_dir_len;
+> +	init_common_trie();
+> +	if (trie_find(&common_trie, base, check_common, NULL) > 0)
+> +		replace_dir(buf, git_dir_len, get_git_common_dir());
+>  }
+
+Thanks for a pleasant read.
+
+>  
+>  void report_linked_checkout_garbage(void)
+> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+> index 93605f4..1ca49e1 100755
+> --- a/t/t0060-path-utils.sh
+> +++ b/t/t0060-path-utils.sh
+> @@ -271,6 +271,7 @@ test_git_path GIT_COMMON_DIR=bar objects/bar              bar/objects/bar
+>  test_git_path GIT_COMMON_DIR=bar info/exclude             bar/info/exclude
+>  test_git_path GIT_COMMON_DIR=bar info/grafts              bar/info/grafts
+>  test_git_path GIT_COMMON_DIR=bar info/sparse-checkout     .git/info/sparse-checkout
+> +test_git_path GIT_COMMON_DIR=bar info//sparse-checkout    .git/info//sparse-checkout
+>  test_git_path GIT_COMMON_DIR=bar remotes/bar              bar/remotes/bar
+>  test_git_path GIT_COMMON_DIR=bar branches/bar             bar/branches/bar
+>  test_git_path GIT_COMMON_DIR=bar logs/refs/heads/master   bar/logs/refs/heads/master
