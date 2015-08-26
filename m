@@ -1,323 +1,246 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v4 4/4] bisect: make bisection refs per-worktree
-Date: Wed, 26 Aug 2015 15:46:05 -0400
-Message-ID: <1440618365-20628-5-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v4 3/4] refs: make refs/worktree/* per-worktree
+Date: Wed, 26 Aug 2015 15:46:04 -0400
+Message-ID: <1440618365-20628-4-git-send-email-dturner@twopensource.com>
 References: <1440618365-20628-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com,
 	sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Wed Aug 26 21:46:27 2015
+X-From: git-owner@vger.kernel.org Wed Aug 26 21:46:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUgeQ-000484-KU
+	id 1ZUgeR-000484-7e
 	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 21:46:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933019AbbHZTqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2015 15:46:19 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:34498 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932874AbbHZTqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2015 15:46:17 -0400
-Received: by qgeg42 with SMTP id g42so133760170qge.1
-        for <git@vger.kernel.org>; Wed, 26 Aug 2015 12:46:16 -0700 (PDT)
+	id S933040AbbHZTqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2015 15:46:23 -0400
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:33834 "EHLO
+	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752332AbbHZTqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 15:46:16 -0400
+Received: by qkfh127 with SMTP id h127so126453612qkf.1
+        for <git@vger.kernel.org>; Wed, 26 Aug 2015 12:46:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/mVTmCziHidw4dOWBZ34o+LuhypdnNYgRBtXmgRghYI=;
-        b=F6seIYUvtPJ87wuJZQy9/3DKy0u8iYdFKq59Or5GsW5hyVil4zxOmcNswgb4OaplZ3
-         jfgNpPUl3+jx9ReKnN8Wt68b/qV8JySisBUND0PJtRtIoCDorE6qTrBZoH2zK0FhDh2N
-         Jt2Yjln6Gj/HUdK1yjH1Uxq4+a4Vtuz2HAZkXNGy/AoTdi3v6juHzeUqgf/rVE4P4T4w
-         4TaLwma2Iwi9i0bvHEVwahzAJpRzNUwYBNIuI4txdm4s1wjZglmdvZl8YBKTVGKAdXq3
-         Qu0JSrI6IDMYlin7n/uqR+cBO2MF1LvjJNA+R7RhCeM9tSFF3OM8LclJXO583Xc+Ethy
-         t76w==
-X-Gm-Message-State: ALoCoQnVRY8qFrmYMtx52h20eNPPEenqFmW4oD/dQ8yvKdejej1qXXiwRhV19av9fbn1BnuH0N9C
-X-Received: by 10.140.134.196 with SMTP id 187mr351595qhg.24.1440618376429;
-        Wed, 26 Aug 2015 12:46:16 -0700 (PDT)
-Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id t23sm8049326qkt.18.2015.08.26.12.46.15
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=YzFwSQM9YGwZmchhFHpfkQVBqVKLSiEl4Ob0TO24H/Q=;
+        b=YIz0WuKlRrNmwl0Vs5B2kE/NMvPM1feduGnEwTZFENrXGzL0S5Bhj0GdruDIfXQyWZ
+         f1lzoY95CaSsotAVaAjXzY8U9OAAYf31Cc3DmHaR9FL5/KJhA9SOZ05UMdqr6xoe9PpI
+         b7YoXL/wlxU+gIeWS5fRUyiZDCHBg/zXI2EtHuHlB1wpVMoEt42wJeVjqYG4hl19jRvO
+         aQ4ONy4UJp/uG2y0DLxJxep9y+lljqSdDd45xG9sBDtSzEt/wX0ond2TQgcDB0yRu4AW
+         SNYKHQY5J1onnuMce5WnkMWAl+RTEfMQ32SjLpqvzn3c7AisCjWKCQlEwj5P00+m2ZtE
+         /TmQ==
+X-Gm-Message-State: ALoCoQnAOSwwMQ/AtRLWtiRUQdhjAVcemlka0YMm5MUI4st9MDn5OPf4WT8AF1PQsR9yxCB8Kosb
+X-Received: by 10.55.195.17 with SMTP id a17mr308611qkj.84.1440618375267;
         Wed, 26 Aug 2015 12:46:15 -0700 (PDT)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id t23sm8049326qkt.18.2015.08.26.12.46.14
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 26 Aug 2015 12:46:14 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.622.gac67c30-twtrsrc
 In-Reply-To: <1440618365-20628-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276631>
 
-Using the new refs/worktree/ refs, make bisection per-worktree.
+We need a place to stick refs for bisects in progress that is not
+shared between worktrees.  So we use the refs/worktree/ hierarchy.
+
+The is_per_worktree_ref function and associated docs learn that
+refs/worktree/ is per-worktree, as does the git_path code in path.c
+
+The ref-packing functions learn that per-worktree refs should not be
+packed (since packed-refs is common rather than per-worktree).
+
+Since refs/worktree is per-worktree, logs/refs/worktree should be too.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/git-bisect.txt       |  4 ++--
- Documentation/rev-list-options.txt | 14 +++++++-------
- bisect.c                           |  2 +-
- builtin/rev-parse.c                |  6 ++++--
- git-bisect.sh                      | 14 +++++++-------
- revision.c                         |  2 +-
- t/t6030-bisect-porcelain.sh        | 20 ++++++++++----------
- 7 files changed, 32 insertions(+), 30 deletions(-)
+ Documentation/glossary-content.txt |  5 +++--
+ path.c                             |  2 ++
+ refs.c                             | 32 +++++++++++++++++++++++++++++++-
+ t/t0060-path-utils.sh              |  5 +++++
+ t/t1400-update-ref.sh              | 19 +++++++++++++++++++
+ t/t3210-pack-refs.sh               |  7 +++++++
+ 6 files changed, 67 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index e97f2de..f0c52d1 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -82,7 +82,7 @@ to ask for the next commit that needs testing.
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index 8c6478b..5c707e6 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -413,8 +413,9 @@ exclude;;
  
- Eventually there will be no more revisions left to inspect, and the
- command will print out a description of the first bad commit. The
--reference `refs/bisect/bad` will be left pointing at that commit.
-+reference `refs/worktree/bisect/bad` will be left pointing at that commit.
+ [[def_per_worktree_ref]]per-worktree ref::
+ 	Refs that are per-<<def_working_tree,worktree>>, rather than
+-	global.  This is presently only <<def_HEAD,HEAD>>, but might
+-	later include other unusual refs.
++	global.  This is presently only <<def_HEAD,HEAD>> and any refs
++	that start with `refs/worktree/`, but might later include other
++	unusual refs.
  
+ [[def_pseudoref]]pseudoref::
+ 	Pseudorefs are a class of files under `$GIT_DIR` which behave
+diff --git a/path.c b/path.c
+index c7a4c40..acac7b1 100644
+--- a/path.c
++++ b/path.c
+@@ -107,9 +107,11 @@ struct common_dir common_list[] = {
+ 	{ 0, 0, 1, "info/sparse-checkout" },
+ 	{ 1, 1, 0, "logs" },
+ 	{ 1, 1, 1, "logs/HEAD" },
++	{ 0, 1, 1,  "logs/refs/worktree" },
+ 	{ 0, 1, 0, "lost-found" },
+ 	{ 0, 1, 0, "objects" },
+ 	{ 0, 1, 0, "refs" },
++	{ 0, 1, 1, "refs/worktree", },
+ 	{ 0, 1, 0, "remotes" },
+ 	{ 0, 1, 0, "worktrees" },
+ 	{ 0, 1, 0, "rr-cache" },
+diff --git a/refs.c b/refs.c
+index e6fc3fe..30331bc 100644
+--- a/refs.c
++++ b/refs.c
+@@ -298,6 +298,11 @@ struct ref_entry {
+ };
  
- Bisect reset
-@@ -373,7 +373,7 @@ on a single line.
- ------------
- $ git bisect start HEAD <known-good-commit> [ <boundary-commit> ... ] --no-checkout
- $ git bisect run sh -c '
--	GOOD=$(git for-each-ref "--format=%(objectname)" refs/bisect/good-*) &&
-+	GOOD=$(git for-each-ref "--format=%(objectname)" refs/worktree/bisect/good-*) &&
- 	git rev-list --objects BISECT_HEAD --not $GOOD >tmp.$$ &&
- 	git pack-objects --stdout >/dev/null <tmp.$$
- 	rc=$?
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index a9b808f..1175960 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -183,9 +183,9 @@ explicitly.
+ static void read_loose_refs(const char *dirname, struct ref_dir *dir);
++static int search_ref_dir(struct ref_dir *dir, const char *refname, size_t len);
++static struct ref_entry *create_dir_entry(struct ref_cache *ref_cache,
++					  const char *dirname, size_t len,
++					  int incomplete);
++static void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry);
  
- ifndef::git-rev-list[]
- --bisect::
--	Pretend as if the bad bisection ref `refs/bisect/bad`
-+	Pretend as if the bad bisection ref `refs/worktree/bisect/bad`
- 	was listed and as if it was followed by `--not` and the good
--	bisection refs `refs/bisect/good-*` on the command
-+	bisection refs `refs/worktree/bisect/good-*` on the command
- 	line. Cannot be combined with --first-parent.
- endif::git-rev-list[]
- 
-@@ -548,10 +548,10 @@ Bisection Helpers
- --bisect::
- 	Limit output to the one commit object which is roughly halfway between
- 	included and excluded commits. Note that the bad bisection ref
--	`refs/bisect/bad` is added to the included commits (if it
--	exists) and the good bisection refs `refs/bisect/good-*` are
-+	`refs/worktree/bisect/bad` is added to the included commits (if it
-+	exists) and the good bisection refs `refs/worktree/bisect/good-*` are
- 	added to the excluded commits (if they exist). Thus, supposing there
--	are no refs in `refs/bisect/`, if
-+	are no refs in `refs/worktree/bisect/`, if
- +
- -----------------------------------------------------------------------
- 	$ git rev-list --bisect foo ^bar ^baz
-@@ -571,7 +571,7 @@ one. Cannot be combined with --first-parent.
- 
- --bisect-vars::
- 	This calculates the same as `--bisect`, except that refs in
--	`refs/bisect/` are not used, and except that this outputs
-+	`refs/worktree/bisect/` are not used, and except that this outputs
- 	text ready to be eval'ed by the shell. These lines will assign the
- 	name of the midpoint revision to the variable `bisect_rev`, and the
- 	expected number of commits to be tested after `bisect_rev` is tested
-@@ -584,7 +584,7 @@ one. Cannot be combined with --first-parent.
- --bisect-all::
- 	This outputs all the commit objects between the included and excluded
- 	commits, ordered by their distance to the included and excluded
--	commits. Refs in `refs/bisect/` are not used. The farthest
-+	commits. Refs in `refs/worktree/bisect/` are not used. The farthest
- 	from them is displayed first. (This is the only one displayed by
- 	`--bisect`.)
- +
-diff --git a/bisect.c b/bisect.c
-index 33ac88d..dbe3461 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -425,7 +425,7 @@ static int register_ref(const char *refname, const struct object_id *oid,
- 
- static int read_bisect_refs(void)
+ static struct ref_dir *get_ref_dir(struct ref_entry *entry)
  {
--	return for_each_ref_in("refs/bisect/", register_ref, NULL);
-+	return for_each_ref_in("refs/worktree/bisect/", register_ref, NULL);
+@@ -306,6 +311,24 @@ static struct ref_dir *get_ref_dir(struct ref_entry *entry)
+ 	dir = &entry->u.subdir;
+ 	if (entry->flag & REF_INCOMPLETE) {
+ 		read_loose_refs(entry->name, dir);
++
++		/*
++		 * Manually add refs/worktree, which, being
++		 * per-worktree, might not appear in the directory
++		 * listing for refs/ in the main repo.
++		 */
++		if (!strcmp(entry->name, "refs/")) {
++			int pos = search_ref_dir(dir, "refs/worktree/", 14);
++			if (pos < 0) {
++				struct ref_entry *child_entry;
++				child_entry = create_dir_entry(dir->ref_cache,
++							       "refs/worktree/",
++							       14, 1);
++				add_entry_to_dir(dir, child_entry);
++				read_loose_refs("refs/worktree",
++						&child_entry->u.subdir);
++			}
++		}
+ 		entry->flag &= ~REF_INCOMPLETE;
+ 	}
+ 	return dir;
+@@ -2643,6 +2666,8 @@ struct pack_refs_cb_data {
+ 	struct ref_to_prune *ref_to_prune;
+ };
+ 
++static int is_per_worktree_ref(const char *refname);
++
+ /*
+  * An each_ref_entry_fn that is run over loose references only.  If
+  * the loose reference can be packed, add an entry in the packed ref
+@@ -2656,6 +2681,10 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
+ 	struct ref_entry *packed_entry;
+ 	int is_tag_ref = starts_with(entry->name, "refs/tags/");
+ 
++	/* Do not pack per-worktree refs: */
++	if (is_per_worktree_ref(entry->name))
++		return 0;
++
+ 	/* ALWAYS pack tags */
+ 	if (!(cb->flags & PACK_REFS_ALL) && !is_tag_ref)
+ 		return 0;
+@@ -2850,7 +2879,8 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
+ 
+ static int is_per_worktree_ref(const char *refname)
+ {
+-	return !strcmp(refname, "HEAD");
++	return !strcmp(refname, "HEAD") ||
++		starts_with(refname, "refs/worktree/");
  }
  
- static void read_bisect_paths(struct argv_array *array)
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 02d747d..3240ddf 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -663,8 +663,10 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 			if (!strcmp(arg, "--bisect")) {
--				for_each_ref_in("refs/bisect/bad", show_reference, NULL);
--				for_each_ref_in("refs/bisect/good", anti_reference, NULL);
-+				for_each_ref_in("refs/worktree/bisect/bad",
-+						show_reference, NULL);
-+				for_each_ref_in("refs/worktree/bisect/good",
-+						anti_reference, NULL);
- 				continue;
- 			}
- 			if (starts_with(arg, "--branches=")) {
-diff --git a/git-bisect.sh b/git-bisect.sh
-index ea63223..c16433d 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -210,7 +210,7 @@ bisect_write() {
- 		*)
- 			die "$(eval_gettext "Bad bisect_write argument: \$state")" ;;
- 	esac
--	git update-ref "refs/bisect/$tag" "$rev" || exit
-+	git update-ref "refs/worktree/bisect/$tag" "$rev" || exit
- 	echo "# $state: $(git show-branch $rev)" >>"$GIT_DIR/BISECT_LOG"
- 	test -n "$nolog" || echo "git bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
- }
-@@ -282,8 +282,8 @@ bisect_state() {
- 
- bisect_next_check() {
- 	missing_good= missing_bad=
--	git show-ref -q --verify refs/bisect/$TERM_BAD || missing_bad=t
--	test -n "$(git for-each-ref "refs/bisect/$TERM_GOOD-*")" || missing_good=t
-+	git show-ref -q --verify refs/worktree/bisect/$TERM_BAD || missing_bad=t
-+	test -n "$(git for-each-ref "refs/worktree/bisect/$TERM_GOOD-*")" || missing_good=t
- 
- 	case "$missing_good,$missing_bad,$1" in
- 	,,*)
-@@ -341,15 +341,15 @@ bisect_next() {
- 	# Check if we should exit because bisection is finished
- 	if test $res -eq 10
- 	then
--		bad_rev=$(git show-ref --hash --verify refs/bisect/$TERM_BAD)
-+		bad_rev=$(git show-ref --hash --verify refs/worktree/bisect/$TERM_BAD)
- 		bad_commit=$(git show-branch $bad_rev)
- 		echo "# first $TERM_BAD commit: $bad_commit" >>"$GIT_DIR/BISECT_LOG"
- 		exit 0
- 	elif test $res -eq 2
- 	then
- 		echo "# only skipped commits left to test" >>"$GIT_DIR/BISECT_LOG"
--		good_revs=$(git for-each-ref --format="%(objectname)" "refs/bisect/$TERM_GOOD-*")
--		for skipped in $(git rev-list refs/bisect/$TERM_BAD --not $good_revs)
-+		good_revs=$(git for-each-ref --format="%(objectname)" "refs/worktree/bisect/$TERM_GOOD-*")
-+		for skipped in $(git rev-list refs/worktree/bisect/$TERM_BAD --not $good_revs)
- 		do
- 			skipped_commit=$(git show-branch $skipped)
- 			echo "# possible first $TERM_BAD commit: $skipped_commit" >>"$GIT_DIR/BISECT_LOG"
-@@ -412,7 +412,7 @@ Try 'git bisect reset <commit>'.")"
- 
- bisect_clean_state() {
- 	# There may be some refs packed during bisection.
--	git for-each-ref --format='%(refname) %(objectname)' refs/bisect/\* |
-+	git for-each-ref --format='%(refname) %(objectname)' refs/worktree/bisect/\* |
- 	while read ref hash
- 	do
- 		git update-ref -d $ref $hash || exit
-diff --git a/revision.c b/revision.c
-index b6b2cf7..974a11f 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2084,7 +2084,7 @@ extern void read_bisect_terms(const char **bad, const char **good);
- static int for_each_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data, const char *term) {
- 	struct strbuf bisect_refs = STRBUF_INIT;
- 	int status;
--	strbuf_addf(&bisect_refs, "refs/bisect/%s", term);
-+	strbuf_addf(&bisect_refs, "refs/worktree/bisect/%s", term);
- 	status = for_each_ref_in_submodule(submodule, bisect_refs.buf, fn, cb_data);
- 	strbuf_release(&bisect_refs);
- 	return status;
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 9e2c203..bfd5463 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -68,7 +68,7 @@ test_expect_success 'bisect fails if given any junk instead of revs' '
- 	git bisect reset &&
- 	test_must_fail git bisect start foo $HASH1 -- &&
- 	test_must_fail git bisect start $HASH4 $HASH1 bar -- &&
--	test -z "$(git for-each-ref "refs/bisect/*")" &&
-+	test -z "$(git for-each-ref "refs/worktree/bisect/*")" &&
- 	test -z "$(ls .git/BISECT_* 2>/dev/null)" &&
- 	git bisect start &&
- 	test_must_fail git bisect good foo $HASH1 &&
-@@ -77,7 +77,7 @@ test_expect_success 'bisect fails if given any junk instead of revs' '
- 	test_must_fail git bisect bad $HASH3 $HASH4 &&
- 	test_must_fail git bisect skip bar $HASH3 &&
- 	test_must_fail git bisect skip $HASH1 foo &&
--	test -z "$(git for-each-ref "refs/bisect/*")" &&
-+	test -z "$(git for-each-ref "refs/worktree/bisect/*")" &&
- 	git bisect good $HASH1 &&
- 	git bisect bad $HASH4
- '
-@@ -115,7 +115,7 @@ test_expect_success 'bisect reset removes packed refs' '
- 	git pack-refs --all --prune &&
- 	git bisect next &&
- 	git bisect reset &&
--	test -z "$(git for-each-ref "refs/bisect/*")" &&
-+	test -z "$(git for-each-ref "refs/worktree/bisect/*")" &&
- 	test -z "$(git for-each-ref "refs/heads/bisect")"
+ static int is_pseudoref_syntax(const char *refname)
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 1ca49e1..b2d2005 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -266,6 +266,10 @@ test_expect_success 'setup common repository' 'git --git-dir=bar init'
+ test_git_path GIT_COMMON_DIR=bar index                    .git/index
+ test_git_path GIT_COMMON_DIR=bar HEAD                     .git/HEAD
+ test_git_path GIT_COMMON_DIR=bar logs/HEAD                .git/logs/HEAD
++test_git_path GIT_COMMON_DIR=bar logs/refs/worktree/foo   .git/logs/refs/worktree/foo
++test_git_path GIT_COMMON_DIR=bar logs/refs/worktre/foo    bar/logs/refs/worktre/foo
++test_git_path GIT_COMMON_DIR=bar logs/refs/worktre        bar/logs/refs/worktre
++test_git_path GIT_COMMON_DIR=bar logs/refs/worktreefoo    bar/logs/refs/worktreefoo
+ test_git_path GIT_COMMON_DIR=bar objects                  bar/objects
+ test_git_path GIT_COMMON_DIR=bar objects/bar              bar/objects/bar
+ test_git_path GIT_COMMON_DIR=bar info/exclude             bar/info/exclude
+@@ -276,6 +280,7 @@ test_git_path GIT_COMMON_DIR=bar remotes/bar              bar/remotes/bar
+ test_git_path GIT_COMMON_DIR=bar branches/bar             bar/branches/bar
+ test_git_path GIT_COMMON_DIR=bar logs/refs/heads/master   bar/logs/refs/heads/master
+ test_git_path GIT_COMMON_DIR=bar refs/heads/master        bar/refs/heads/master
++test_git_path GIT_COMMON_DIR=bar refs/worktree/foo        .git/refs/worktree/foo
+ test_git_path GIT_COMMON_DIR=bar hooks/me                 bar/hooks/me
+ test_git_path GIT_COMMON_DIR=bar config                   bar/config
+ test_git_path GIT_COMMON_DIR=bar packed-refs              bar/packed-refs
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 9d21c19..6dc29e6 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -1131,4 +1131,23 @@ test_expect_success ULIMIT_FILE_DESCRIPTORS 'large transaction deleting branches
+ )
  '
  
-@@ -126,7 +126,7 @@ test_expect_success 'bisect reset removes bisect state after --no-checkout' '
- 	git bisect bad $HASH3 &&
- 	git bisect next &&
- 	git bisect reset &&
--	test -z "$(git for-each-ref "refs/bisect/*")" &&
-+	test -z "$(git for-each-ref "refs/worktree/bisect/*")" &&
- 	test -z "$(git for-each-ref "refs/heads/bisect")" &&
- 	test -z "$(git for-each-ref "BISECT_HEAD")"
- '
-@@ -176,7 +176,7 @@ test_expect_success 'bisect start: no ".git/BISECT_START" if checkout error' '
- 	git branch > branch.output &&
- 	grep "* other" branch.output > /dev/null &&
- 	test_must_fail test -e .git/BISECT_START &&
--	test -z "$(git for-each-ref "refs/bisect/*")" &&
-+	test -z "$(git for-each-ref "refs/worktree/bisect/*")" &&
- 	git checkout HEAD hello
- '
- 
-@@ -671,7 +671,7 @@ test_expect_success 'bisect: --no-checkout - target before breakage' '
- 	git bisect bad BISECT_HEAD &&
- 	check_same BROKEN_HASH5 BISECT_HEAD &&
- 	git bisect bad BISECT_HEAD &&
--	check_same BROKEN_HASH5 bisect/bad &&
-+	check_same BROKEN_HASH5 refs/worktree/bisect/bad &&
- 	git bisect reset
- '
- 
-@@ -682,7 +682,7 @@ test_expect_success 'bisect: --no-checkout - target in breakage' '
- 	git bisect bad BISECT_HEAD &&
- 	check_same BROKEN_HASH5 BISECT_HEAD &&
- 	git bisect good BISECT_HEAD &&
--	check_same BROKEN_HASH6 bisect/bad &&
-+	check_same BROKEN_HASH6 refs/worktree/bisect/bad &&
- 	git bisect reset
++test_expect_success 'handle per-worktree refs in refs/worktree' '
++	git commit --allow-empty -m "initial commit" &&
++	git worktree add -b branch worktree &&
++	(
++		cd worktree &&
++		git commit --allow-empty -m "test commit"  &&
++		git for-each-ref >for-each-ref.out &&
++		! grep refs/worktree for-each-ref.out &&
++		git update-ref refs/worktree/something HEAD &&
++		git rev-parse refs/worktree/something >../worktree-head &&
++		git for-each-ref | grep refs/worktree/something
++	) &&
++	test_path_is_missing .git/refs/worktree &&
++	test_must_fail git rev-parse refs/worktree/something &&
++	git update-ref refs/worktree/something HEAD &&
++	git rev-parse refs/worktree/something >main-head &&
++	! test_cmp main-head worktree-head
++'
++
+ test_done
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index 8aae98d..c54cd29 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -160,6 +160,13 @@ test_expect_success 'pack ref directly below refs/' '
+ 	test_path_is_missing .git/refs/top
  '
  
-@@ -693,7 +693,7 @@ test_expect_success 'bisect: --no-checkout - target after breakage' '
- 	git bisect good BISECT_HEAD &&
- 	check_same BROKEN_HASH8 BISECT_HEAD &&
- 	git bisect good BISECT_HEAD &&
--	check_same BROKEN_HASH9 bisect/bad &&
-+	check_same BROKEN_HASH9 refs/worktree/bisect/bad &&
- 	git bisect reset
- '
- 
-@@ -702,13 +702,13 @@ test_expect_success 'bisect: demonstrate identification of damage boundary' "
- 	git checkout broken &&
- 	git bisect start broken master --no-checkout &&
- 	git bisect run \"\$SHELL_PATH\" -c '
--		GOOD=\$(git for-each-ref \"--format=%(objectname)\" refs/bisect/good-*) &&
-+		GOOD=\$(git for-each-ref \"--format=%(objectname)\" refs/worktree/bisect/good-*) &&
- 		git rev-list --objects BISECT_HEAD --not \$GOOD >tmp.\$\$ &&
- 		git pack-objects --stdout >/dev/null < tmp.\$\$
- 		rc=\$?
- 		rm -f tmp.\$\$
- 		test \$rc = 0' &&
--	check_same BROKEN_HASH6 bisect/bad &&
-+	check_same BROKEN_HASH6 refs/worktree/bisect/bad &&
- 	git bisect reset
- "
- 
++test_expect_success 'do not pack ref in refs/worktree' '
++	git update-ref refs/worktree/local HEAD &&
++	git pack-refs --all --prune &&
++	! grep refs/worktree/local .git/packed-refs >/dev/null &&
++	test_path_is_file .git/refs/worktree/local
++'
++
+ test_expect_success 'disable reflogs' '
+ 	git config core.logallrefupdates false &&
+ 	rm -rf .git/logs
 -- 
 2.4.2.622.gac67c30-twtrsrc
