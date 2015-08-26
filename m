@@ -1,72 +1,91 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Git's inconsistent command line options
-Date: Wed, 26 Aug 2015 08:28:36 +0200
-Message-ID: <877foief6z.fsf@igel.home>
-References: <mrh7ck$r0g$1@ger.gmane.org>
-	<CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
-	<CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
-	<CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com>
-	<xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
-	<CA+P7+xoQnq-nCP=_Wtfh39fxxwTvEo+m-=o7fcmrdyaBBfbt8A@mail.gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v2 2/2] trailer: support multiline title
+Date: Tue, 25 Aug 2015 23:28:36 -0700
+Message-ID: <CA+P7+xqaAKckB0P5oqFS64BWU2H1OsVX8Oq=CLLW8PMJ5fdenQ@mail.gmail.com>
+References: <1440557461-1078-1-git-send-email-chriscool@tuxfamily.org>
+ <1440557461-1078-2-git-send-email-chriscool@tuxfamily.org> <vpqa8tetwfi.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Beller <sbeller@google.com>,
-	Graeme Geldenhuys <graemeg@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 08:28:49 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 26 08:29:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUUCV-00071o-AH
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 08:28:47 +0200
+	id 1ZUUCi-0007Ft-Qs
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 08:29:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932844AbbHZG2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2015 02:28:43 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:47013 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751368AbbHZG2m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2015 02:28:42 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3n1HMC1fHhz3hhnP;
-	Wed, 26 Aug 2015 08:28:39 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3n1HMC0GnSzvh2K;
-	Wed, 26 Aug 2015 08:28:39 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id GudtkpCX1ZYa; Wed, 26 Aug 2015 08:28:37 +0200 (CEST)
-X-Auth-Info: mO8lPBSssYj0CuoXjD/ExW0ZIbG2H/vRNVhYZ59JhTn7OMxf1kGyBNuaKjapmNec
-Received: from igel.home (ppp-93-104-186-179.dynamic.mnet-online.de [93.104.186.179])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Wed, 26 Aug 2015 08:28:37 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id B24F32C0833; Wed, 26 Aug 2015 08:28:36 +0200 (CEST)
-X-Yow: Am I accompanied by a PARENT or GUARDIAN?
-In-Reply-To: <CA+P7+xoQnq-nCP=_Wtfh39fxxwTvEo+m-=o7fcmrdyaBBfbt8A@mail.gmail.com>
-	(Jacob Keller's message of "Tue, 25 Aug 2015 21:09:41 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+	id S1755855AbbHZG24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2015 02:28:56 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:34784 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751368AbbHZG24 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 02:28:56 -0400
+Received: by igui7 with SMTP id i7so29708775igu.1
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 23:28:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=j2byKk71kQtzyw6trJI2JAaomK5ScVlamKkPJoYwdjY=;
+        b=LBLjZHmxOWhlKzM6X5CQH586SgUkA81a8tKTJ3x8m/AANRYxG73H4hXOWnOC8ajA4E
+         YLV4fo6ebVcIOZwPISrRmhEYDb424jMzdJIYs+XzwwrLTLQfX8C05cGCFfOMrsGvpfyr
+         oSOTIaNAo61vDwK2GH5LisLHUhP9ff5xcCjy94jSSfzMVQnob6pNvtis0PUXKfysBZgD
+         pleSOaCa/V8K/JE+SnD/G/XiJC2nW0sebUjhdzg22d3nvvdVLkrtsUvMVZyAwM7wsUDw
+         msPi5ETC0tFZwoJBk8CSqUeY3SmFm1LLX//a0/FYRCoUIgr0ibHSrqWfcZpRpYwtY5ik
+         NmTw==
+X-Received: by 10.50.93.33 with SMTP id cr1mr1413543igb.35.1440570535490; Tue,
+ 25 Aug 2015 23:28:55 -0700 (PDT)
+Received: by 10.107.5.203 with HTTP; Tue, 25 Aug 2015 23:28:36 -0700 (PDT)
+In-Reply-To: <vpqa8tetwfi.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276598>
 
-Jacob Keller <jacob.keller@gmail.com> writes:
-
-> "if you really mean to create a tag named create, use
+On Tue, Aug 25, 2015 at 11:07 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> git tag -- create master
+>> Unfortunately this does not work well when a commit is created with a
+>> line break in the title, using for example the following command:
+>>
+>> git commit -m 'place of
+>> code: change we made'
+>
+> I confirm that this patch fixes the behavior for me.
+>
+> Now, I found another issue: I still have this "interpret-trailers" in my
+> hooks/commit-msg, and it behaves badly when I use "git commit -v". With
+> -v, I get a diff in COMMIT_EDITMSG, and interpret-trailers tries to
+> insert my Sign-off within the diff, like this:
+>
+>   # Do not touch the line above.
+>   # Everything below will be removed.
+>   diff --git a/git-multimail/README b/git-multimail/README
+>   index f41906b..93d4751 100644
+>
+>   Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>   --- a/git-multimail/README
+>   +++ b/git-multimail/README
+>
+> Either commit-msg should be called after stripping the diff from
+> COMMIT_MSG, or interpret-trailers should learn to stop reading when the
+> patch starts. I think the first option is better, since it means that
+> any commit-msg hook does not have to deal with the patch stuff (my guess
+> is that there are many broken commit-msg hooks out there, but people
+> didn't notice because they don't use "commit -v").
+>
+> Thanks,
+>
 
-In all other uses of -- refs must be put on the *left* side.
+It's always confused me why commit -v doesn't prepend every inserted
+line with "#" to mark it as a comment.
 
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Regards,
+Jake
