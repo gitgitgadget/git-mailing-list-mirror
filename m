@@ -1,67 +1,99 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH] i18n: am: fix typo in description of -b option
-Date: Wed, 26 Aug 2015 23:51:19 +0800
-Message-ID: <4a9b76e9b4e32a1eedb98a284d8e3faa4fd417ca.1440603650.git.worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 17:51:48 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] trailer: support multiline title
+Date: Wed, 26 Aug 2015 09:05:39 -0700
+Message-ID: <xmqqk2siujak.fsf@gitster.dls.corp.google.com>
+References: <1440557461-1078-1-git-send-email-chriscool@tuxfamily.org>
+	<1440557461-1078-2-git-send-email-chriscool@tuxfamily.org>
+	<vpqa8tetwfi.fsf@anie.imag.fr>
+	<CA+P7+xqaAKckB0P5oqFS64BWU2H1OsVX8Oq=CLLW8PMJ5fdenQ@mail.gmail.com>
+	<CAP8UFD2x8i5wC9JP8d1zAH=d-2BMYWAvpaFmWnu09N5QSG==TA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jacob Keller <jacob.keller@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 18:05:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUczF-0005Kk-RX
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 17:51:42 +0200
+	id 1ZUdCv-0007aO-Es
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 18:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756223AbbHZPvh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2015 11:51:37 -0400
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:35907 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756148AbbHZPvg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2015 11:51:36 -0400
-Received: by qgeb6 with SMTP id b6so128802452qge.3
-        for <git@vger.kernel.org>; Wed, 26 Aug 2015 08:51:35 -0700 (PDT)
+	id S933491AbbHZQFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2015 12:05:44 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:36037 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752827AbbHZQFn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 12:05:43 -0400
+Received: by pacgr6 with SMTP id gr6so13016738pac.3
+        for <git@vger.kernel.org>; Wed, 26 Aug 2015 09:05:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=wJrmXIHWtkkkBDf2zToZ0oOrwq3nFpl3ludVwiSyJM4=;
-        b=Z6C8lnG/IABRuRtyCOTvrO0/JqF/85Y3cm97UP+wGLJWoIWcZaHJzg1FvhdtHp59W7
-         f8H2CHqP/YHupcWSwHYZanbXlXAvXpHbu1E1vv+gZpNVv25bXezZOFNu8KmjKSyK+fBN
-         1GawHTzaJn7L7+7/D8sJra1oZb1JzCd9CyP64XCMTiw4tX2bkVLgcUXY/4oKakcI8VWi
-         N8NplFrfJ+ct8tNV4c70iKkXilZbvK+8Q07PP99d40YlPf0733EV7CzRoNkr/dw3T4Zc
-         aE5vxkBKj5cSFuQWrucXu/Uoi37X4vV29NhUE27rmOAjt6kFAX0u/QuyFF82IKfCE09r
-         TZHA==
-X-Received: by 10.140.133.69 with SMTP id 66mr83297886qhf.12.1440604295392;
-        Wed, 26 Aug 2015 08:51:35 -0700 (PDT)
-Received: from localhost.localdomain ([69.85.93.163])
-        by smtp.googlemail.com with ESMTPSA id w190sm16551515qha.0.2015.08.26.08.51.32
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 26 Aug 2015 08:51:34 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.416.gf01ac32
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=c/sI+5i+3X9pRmF00gq2Mn6+42+fMO0+L6M0KFtnvxU=;
+        b=F3eDMjtPtdGzxN4dMhnv//2MGeukQBRWNWcv6gx0SaEQC6vpoGWUjTVFfNLy5CMP/o
+         t80lWEbqzM+UzoigKpNI4bxTYuBAzwygnj3KUIx9cp7AVqTJJzqBSVMznKZv7MnCtFv7
+         WYriqM3QH0e9rYxLdTYLjR9l/WUojsGlOddWJ1eraV0lYEfiIE6cjPvZGXTF3VKz3Y0j
+         +s4uC+vX5/V8AUe4fk+MJ2BOR16fq8zSCosR4WFPrpzHN1oDAwcrC8fd02clfGngnaMx
+         xCbzAtyiI0gXHc9v0xb4p4m/WRQ3nKmlp5pS3wwXEa5Y9xsMGvhM+W94OZ5uSCyYdG/B
+         5pgA==
+X-Received: by 10.66.235.33 with SMTP id uj1mr5313209pac.10.1440605142556;
+        Wed, 26 Aug 2015 09:05:42 -0700 (PDT)
+Received: from localhost ([2620:0:10c2:1012:ac9b:ef8c:b4db:d257])
+        by smtp.gmail.com with ESMTPSA id ud2sm25323289pab.45.2015.08.26.09.05.40
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Wed, 26 Aug 2015 09:05:40 -0700 (PDT)
+In-Reply-To: <CAP8UFD2x8i5wC9JP8d1zAH=d-2BMYWAvpaFmWnu09N5QSG==TA@mail.gmail.com>
+	(Christian Couder's message of "Wed, 26 Aug 2015 16:53:55 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276613>
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- builtin/am.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Christian Couder <christian.couder@gmail.com> writes:
 
-diff --git a/builtin/am.c b/builtin/am.c
-index b9c62e3..699a924 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2168,7 +2168,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('i', "interactive", &state.interactive,
- 			N_("run interactively")),
- 		OPT_HIDDEN_BOOL('b', "binary", &binary,
--			N_("(historical option -- no-op")),
-+			N_("historical option -- no-op")),
- 		OPT_BOOL('3', "3way", &state.threeway,
- 			N_("allow fall back on 3way merging if needed")),
- 		OPT__QUIET(&state.quiet, N_("be quiet")),
--- 
-2.5.0.416.gf01ac32
+> There is already code to detect a patch in interpret-trailers, but it
+> relies on the patch starting with a line with only three dashes.
+
+Hmm, then it can be taught to notice "everything below..." as
+another marker, right?
+
+> Maybe. I don't know if there is a reason why the commit-msg is called
+> before removing the patch.
+
+Is that "removing", or are you talking about changing the order from
+
+ - prepare log template in-core
+ - add comments and patch to that in-core copy
+ - write in-core copy out
+ - run hook
+ - read the hook's result in-core
+ - use the message
+
+to
+
+ - prepare log template in-core
+ - write in-core copy out
+ - run hook
+ - read the hook's result in-core
+ - add comments and patch to that in-core copy
+ - use the message
+
+While the reordering would certainly stop showing the comments and
+patch, I am not sure if that is a move in the right direction.  It
+will rob from the hooks information that they have traditionally
+been given---it will break some hooks.
+
+But if interpret-trailers is almost there to reliably know where the
+log message ends, teaching it the one last step would be the right
+thing to do anyway.  After all, interpret-trailers was invented
+exactly because we did not want individual hooks to roll their own
+ways to detect the end of the message proper, so the command should
+know where the message ends.
