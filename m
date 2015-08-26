@@ -1,113 +1,159 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 2/2] trailer: support multiline title
-Date: Wed, 26 Aug 2015 04:51:01 +0200
-Message-ID: <1440557461-1078-2-git-send-email-chriscool@tuxfamily.org>
-References: <1440557461-1078-1-git-send-email-chriscool@tuxfamily.org>
-Cc: git <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 26 04:53:05 2015
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: Git's inconsistent command line options
+Date: Tue, 25 Aug 2015 21:09:41 -0700
+Message-ID: <CA+P7+xoQnq-nCP=_Wtfh39fxxwTvEo+m-=o7fcmrdyaBBfbt8A@mail.gmail.com>
+References: <mrh7ck$r0g$1@ger.gmane.org> <CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
+ <CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
+ <CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com> <xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Graeme Geldenhuys <graemeg@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 06:10:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUQpk-0004Ii-1j
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 04:53:04 +0200
+	id 1ZUS2N-0002JV-0M
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 06:10:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755863AbbHZCw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 22:52:59 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:34334 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751872AbbHZCw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 22:52:58 -0400
-Received: by pabzx8 with SMTP id zx8so53495131pab.1
-        for <git@vger.kernel.org>; Tue, 25 Aug 2015 19:52:58 -0700 (PDT)
+	id S1751816AbbHZEKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2015 00:10:03 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:33636 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750979AbbHZEKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 00:10:01 -0400
+Received: by iods203 with SMTP id s203so4961018iod.0
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 21:10:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=z+HL0AweL06MIgBPgVJ6S4SOnBtlW3TYhkxhPxqPRps=;
-        b=qJrhSYwa8rYg61qnMjm1HVJ6y2wDaWak8oKD28R5avPA8vi/2XXjJuixHtfL4WJhs+
-         eBkOoGF37euEh4QaAAaXIpJT24hNkmKgjJ7n2C1en3LMcyV/1XM7yBziBwF47ud0mAWp
-         B7JaOhgey8V+iSbQAiOEqtVaeKMVAy1xuRvxFzAoFvdcP3YvZFSoH1wlmXcfM2k1wGee
-         XlL0LXv+krVEQ+5/HIzgbKDZnymn8fLVl/pXgFGg4Cx+QvYxjPKpseiB2ZMxOUgi7xWA
-         qzv6/3EDkrj0EfJIgTdoCWYm01kAusZDpe+K2Z2vX7cl8ZoIJ9JHOpof/JyC8xtS7c54
-         CeNg==
-X-Received: by 10.69.2.69 with SMTP id bm5mr63137045pbd.41.1440557578054;
-        Tue, 25 Aug 2015 19:52:58 -0700 (PDT)
-Received: from sahnlpt0215.Home (174-31-129-28.tukw.qwest.net. [174.31.129.28])
-        by smtp.gmail.com with ESMTPSA id kv10sm22671617pbc.2.2015.08.25.19.52.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Aug 2015 19:52:57 -0700 (PDT)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.5.0.401.g009ef9b.dirty
-In-Reply-To: <1440557461-1078-1-git-send-email-chriscool@tuxfamily.org>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=uX8J3alQhBcrgV2dnKz8iVlNZACHpXnvS17aKABWdro=;
+        b=AZ/NRIfiiXG4gXFyLh3NNm/bnzcglFLpP8SVwlzux7mGEF7YNBeHQiNgG4pntpwNjw
+         MwIrjEfk8LbopRjC/uif4aVi45RP6QfUhxtxn3CjD2DaEmJAhtIjVK9EPvy8t0DzHFB3
+         EFQ0J2PGuh05hKXpeXniJGxjxi5dg8WSq+Wr9NT26IPMKLZmiCrkl5s2Jl48pjbw3b+a
+         +wPhRXZI45A9HbE4wubHiFJAJP+yLgSUrOzDWliN2W6la4y4B617fOIm47imko6STBOx
+         GcJt95B26t0fXxqr2+iEeVUdrQ8Afrbqmv+RJiMZ/VfV14EGQD0R1vF1KuPHVQogn81K
+         FggA==
+X-Received: by 10.107.133.137 with SMTP id p9mr826788ioi.146.1440562200804;
+ Tue, 25 Aug 2015 21:10:00 -0700 (PDT)
+Received: by 10.107.5.203 with HTTP; Tue, 25 Aug 2015 21:09:41 -0700 (PDT)
+In-Reply-To: <xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276594>
 
-We currently ignore the first line passed to `git interpret-trailers`,
-when looking for the beginning of the trailers.
+On Tue, Aug 25, 2015 at 4:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>>  $ git tag --delete master
+>>  $ echo $?
+>>  # 0 # actually works as of today!
+>>
+>>  $ git tag delete master
+>>  #  Due to the planned switch to command words, this doesn't work.
+>>  #  For details see road map at  `man git commandwords-roadmaps`
+>>  $ echo $?
+>>  # 128 maybe ?
+>
+> This is way too aggressive behaviour and is unacceptable as the
+> first step.  The first step of a transition that breaks backward
+> compatibility should warn loudly about a command line that would
+> behave differently in the endgame version (either the command line
+> that will not do anything or do a totally different thing), but
+> still perform the operation asked for the current version.
+>
 
-Unfortunately this does not work well when a commit is created with a
-line break in the title, using for example the following command:
 
-git commit -m 'place of
-code: change we made'
+>     e.g. "git tag delete master" would create a tag named 'delete'
+>     out of 'master', but tell the user that this will instead delete
+>     'master' in future versions of Git.  "git tag create master"
+>     would create a tag named 'create' out of 'master', but tell the
+>     user that this will instead create 'master' out of HEAD in
+>     future versions of Git.
+>
+>     e.g. "git tag -d foo" would delete a tag named 'foo', but tell
+>     the user that this will have to be spelled 'git tag delete foo'
+>     in the future versions of Git.
+>
+> One thing that I am not enthused about the transition plan is that
+> "git tag delete master" will *never* be an invalid operation during
+> the transition.  When making an operation that used to mean one
+> thing to mean something else, a good transition plan should be to
+>
+>  * First warn but do the old thing, and tell users a new way to do
+>    that in the new world order.  At the same time, find the new way
+>    that used to be an invalid operation in the old world order, and
+>    implement it.
+>
+>  * Then stop supporting the old thing and support only the new
+>    thing.
+>
+> Then during the transition period, while transitioning to the new
+> way, people can gradually start using the new way with the new
+> system, and when they occasionally have to interact with an old
+> system, the new way will _error out_, because we make sure we find
+> the new way that "used to be an invalid operation" when planning the
+> whole transition plan, without causing any harm.  And once people
+> retrain their finger after 2-3 years, nobody will be hurt if we
+> dropped the old way.
+>
+> I do not see a good way to do such a safe transition with command
+> words approach, *unless* we are going to introduce new commands,
+> i.e. "git list-tag", "git create-tag", etc.
+>
+> So don't hold your breath.  What you two are discussing is way too
+> uncooked for 2.6 timeframe.
+>
+>
+>
 
-In this special case, it is best to look at the first line and if it
-does not contain only spaces, consider that the second line is not a
-trailer.
----
- t/t7513-interpret-trailers.sh | 14 ++++++++++++++
- trailer.c                     |  8 +++++++-
- 2 files changed, 21 insertions(+), 1 deletion(-)
+Ya, there isn't really a way to make it work, because we can't exactly
+stop supporting "git tag create master" by turning it into a no-op,
+because there is no equivalent tag option that would work for now.
+Since there is no alternative syntax for "create" I think this is the
+issue. One way might be to use the -- splitter to say,
 
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 9577b4e..56efe88 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -112,6 +112,20 @@ test_expect_success 'with only a title in the message' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'with multiline title in the message' '
-+	cat >expected <<-\EOF &&
-+		place of
-+		code: change
-+
-+		Reviewed-by: Peff
-+		Acked-by: Johan
-+	EOF
-+	printf "%s\n%s\n" "place of" "code: change" |
-+	git interpret-trailers --trailer "Reviewed-by: Peff" \
-+		--trailer "Acked-by: Johan" >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'with config setup' '
- 	git config trailer.ack.key "Acked-by: " &&
- 	cat >expected <<-\EOF &&
-diff --git a/trailer.c b/trailer.c
-index b808868..9a54449 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -759,7 +759,13 @@ static int find_trailer_start(struct strbuf **lines, int count)
- 		return count;
- 	}
- 
--	return only_spaces ? count : 0;
-+	if (only_spaces)
-+		return count;
-+
-+	if (contains_only_spaces(lines[0]->buf))
-+		return 1;
-+
-+	return count;
- }
- 
- /* Get the index of the end of the trailers */
--- 
-2.5.0.401.g009ef9b.dirty
+"if you really mean to create a tag named create, use
+
+git tag -- create master
+
+So we'd do:
+
+- step 1 -
+git tag create master
+# warn that this will change behavior in the future and they must
+explicitely pass -- before it
+
+- step 2 -
+break create, but don't add anything new. If user really needs it,
+they can pass "git tag -- create master" as per above warning, but
+keep warning on "git tag create master" to say they must be explicit.
+
+- step 3 -
+
+implement git tag create master to actually perform tag creation
+
+I think this might work, as long as "git tag -- create master" is acceptable?
+
+then, eventually we can make it so that "git tag" doesn't mean create
+by default if we ever wanted?
+
+How does this sound? By the way, this wouldn't be necessarily done
+over 2.6 or even over only a single release, I think the time frame
+would have to be fairly long.
+
+The downside is that there is no point where new and old syntax are
+usable at the same time... but I don't think that will ever be the
+case. We'd need to way the concern of whether this is actually worth
+doing to streamline the overall feel at some point in the future or we
+just live with the warts.
+
+Regards,
+Jake
