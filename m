@@ -1,115 +1,205 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git's inconsistent command line options
-Date: Tue, 25 Aug 2015 16:43:38 -0700
-Message-ID: <xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
-References: <mrh7ck$r0g$1@ger.gmane.org>
-	<CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
-	<CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
-	<CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com>
+From: Jeff S <acornblue@gmail.com>
+Subject: Re: OS X Yosemite make all doc fails
+Date: Tue, 25 Aug 2015 17:20:02 -0700
+Message-ID: <CAJD5XBze8S23umS5enPaOKF6RFKwqkY-ZyuAfLG4SBp8CbCeRg@mail.gmail.com>
+References: <CAJD5XByPQASzYpyTFdKo83RJ0QwPFHg-nPWyusDCucMRFbor4g@mail.gmail.com>
+	<CAJD5XBy=skwogN+kbqHipa3poUt-EjSxMABxRZKoEk0J+2TM3w@mail.gmail.com>
+	<CAJD5XBy+RnM7ZYt9_SGXgoE2gOKaiM=rmUv=Tkn3Ndi4S4-atQ@mail.gmail.com>
+	<20150825010428.GA428718@vauxhall.crustytoothpaste.net>
+Reply-To: acornblue@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jacob Keller <jacob.keller@gmail.com>,
-	Graeme Geldenhuys <graemeg@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 01:43:46 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 26 02:21:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUNsX-0002xC-5L
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 01:43:45 +0200
+	id 1ZUOTM-00029y-EZ
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Aug 2015 02:21:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756200AbbHYXnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2015 19:43:40 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:33856 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753805AbbHYXnk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2015 19:43:40 -0400
-Received: by pabzx8 with SMTP id zx8so48537480pab.1
-        for <git@vger.kernel.org>; Tue, 25 Aug 2015 16:43:39 -0700 (PDT)
+	id S1756388AbbHZAUF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Aug 2015 20:20:05 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:35454 "EHLO
+	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756364AbbHZAUD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Aug 2015 20:20:03 -0400
+Received: by iodt126 with SMTP id t126so323462iod.2
+        for <git@vger.kernel.org>; Tue, 25 Aug 2015 17:20:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=lfZtkD9UVJkD9TXUZSMmuUXG20sIgVs5b/nsjjESRKw=;
-        b=Wt764J4FvhWl29fqsCuXAzRTGHHIyl9Sqb/LNXbVbHTiTAhKZ5r2WZTnd364aSCSOH
-         H+h0luA8/vVoQLlEBTPnsGvZCq+DLAA5v6EIACWLl4TeykkHDAylMYkv/F26kFyylGVi
-         hmAec5KzBqWfr+Ad1kSndRZSoNExF+jDQjsuaBp3P2L3y3HSRxw7VWTRuLRelOmeDeax
-         b+Bs6qtLomO89lCjfA6S+3tq6E0hUdO1duF3uRqJz/GccEn91Ncg86EgAXPhWwErJdGx
-         PQA8/VNkezMrvccD9QMRRJEvLMcGPLOUlrpybuY/wdxwvIyfxO9EXSwvcSfEnTZXJVjp
-         7FnQ==
-X-Received: by 10.68.241.103 with SMTP id wh7mr61815503pbc.88.1440546219650;
-        Tue, 25 Aug 2015 16:43:39 -0700 (PDT)
-Received: from localhost ([2620:0:10c2:1012:cdc0:fd6d:4069:6223])
-        by smtp.gmail.com with ESMTPSA id qr5sm22332875pbb.26.2015.08.25.16.43.38
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Tue, 25 Aug 2015 16:43:39 -0700 (PDT)
-In-Reply-To: <CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 25 Aug 2015 15:06:20 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        bh=d+83a9ukKVVR6yb1gF9MeDodORKEI3eQiNB55C6R4es=;
+        b=BtSiSRidFV06kSSP/fWMgK2PRCULfjMks5SMOXbK576l/QdjQ+Dp92bLCKQ1e6xpSY
+         XkXAKThQKuB9gYzfXBz8f7dXMYKr6pdP1c/3SJCd05kPZtPT4PNlyRMfecbfkxuevEZ+
+         TV0qsLjlpHrlkxNYiJkjcOSUfTwfGFTdn9JwJgWu2zIpjqmGa+4WKEKarrxxqIAZZxZ+
+         cakl1IGEu5uI7azW+0c1heSHg8Q6SIU+rhCjMc5AcL9ROzQAHT9bt11h0le1XYqoBbSP
+         nLwJghs+ClmA2OiByUvdgXBIdVWNlvpH+wUjjbKzig55GusiJhqgbQWr6/vWwWRLLnFs
+         gBXw==
+X-Received: by 10.107.170.139 with SMTP id g11mr19009ioj.85.1440548402895;
+ Tue, 25 Aug 2015 17:20:02 -0700 (PDT)
+Received: by 10.79.24.196 with HTTP; Tue, 25 Aug 2015 17:20:02 -0700 (PDT)
+In-Reply-To: <20150825010428.GA428718@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276588>
 
-Stefan Beller <sbeller@google.com> writes:
+Brian thanks for responding! I'm finally able to build git completely.
+Would it be possible to add the OS X dependency to the git/INSTALL
+file?
 
->  $ git tag --delete master
->  $ echo $?
->  # 0 # actually works as of today!
+Jeff
+
+OSX Yosemite 10.10.5
+Xcode 6.4 (6E35b)
+=E2=80=A6
+$ brew install autoconf
+$ brew install asciidoc
+$ brew install xmlto
+$ brew install docbook
+$ export XML_CATALOG_FILES=3D/usr/local/etc/xml/catalog
+$ brew install docbook-xsl
+
+http://stackoverflow.com/questions/13519203/git-compilingdocumentation-=
+git-add-xml-does-not-validate
+Jeff
+
+--- sent via the nexus ---
+
+
+On Mon, Aug 24, 2015 at 6:04 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Mon, Aug 24, 2015 at 02:30:39AM -0700, Jeff S wrote:
+>> XSLTPROC user-manual.html
+>> warning: failed to load external entity
+>> "http://docbook.sourceforge.net/release/xsl/current/common/l10n.xsl"
+>> compilation error: file
+>> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl =
+line 29
+>> element include
+>> xsl:include : unable to load
+>> http://docbook.sourceforge.net/release/xsl/current/common/l10n.xsl
+>> warning: failed to load external entity
+>> "http://docbook.sourceforge.net/release/xsl/current/common/utility.x=
+sl"
+>> compilation error: file
+>> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl =
+line 31
+>> element include
+>> xsl:include : unable to load
+>> http://docbook.sourceforge.net/release/xsl/current/common/utility.xs=
+l
+>> warning: failed to load external entity
+>> "http://docbook.sourceforge.net/release/xsl/current/common/labels.xs=
+l"
+>> compilation error: file
+>> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl =
+line 32
+>> element include
+>> xsl:include : unable to load
+>> http://docbook.sourceforge.net/release/xsl/current/common/labels.xsl
+>> warning: failed to load external entity
+>> "http://docbook.sourceforge.net/release/xsl/current/html/autotoc.xsl=
+"
+>> compilation error: file
+>> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl =
+line 39
+>> element include
+>> xsl:include : unable to load
+>> http://docbook.sourceforge.net/release/xsl/current/html/autotoc.xsl
+>> warning: failed to load external entity
+>> "http://docbook.sourceforge.net/release/xsl/current/html/verbatim.xs=
+l"
+>> compilation error: file
+>> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl =
+line 43
+>> element include
+>> xsl:include : unable to load
+>> http://docbook.sourceforge.net/release/xsl/current/html/verbatim.xsl
+>> warning: failed to load external entity
+>> "http://docbook.sourceforge.net/release/xsl/current/html/formal.xsl"
+>> compilation error: file
+>> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl =
+line 46
+>> element include
+>> xsl:include : unable to load
+>> http://docbook.sourceforge.net/release/xsl/current/html/formal.xsl
+>> warning: failed to load external entity
+>> "http://docbook.sourceforge.net/release/xsl/current/common/table.xsl=
+"
+>> compilation error: file
+>> http://docbook.sourceforge.net/release/xsl/current/html/table.xsl li=
+ne 11
+>> element include
+>> xsl:include : unable to load
+>> http://docbook.sourceforge.net/release/xsl/current/common/table.xsl
+>> warning: failed to load external entity
+>> "http://docbook.sourceforge.net/release/xsl/current/html/footnote.xs=
+l"
+>> compilation error: file
+>> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl =
+line 51
+>> element include
+>> xsl:include : unable to load
+>> http://docbook.sourceforge.net/release/xsl/current/html/footnote.xsl
+>> warning: failed to load external entity
+>> "http://docbook.sourceforge.net/release/xsl/current/html/block.xsl"
+>> compilation error: file
+>> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl =
+line 65
+>> element include
+>> xsl:include : unable to load
+>> http://docbook.sourceforge.net/release/xsl/current/html/block.xsl
+>> warning: failed to load external entity
+>> "http://docbook.sourceforge.net/release/xsl/current/common/stripns.x=
+sl"
+>> compilation error: file
+>> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl =
+line 76
+>> element include
+>> xsl:include : unable to load
+>> http://docbook.sourceforge.net/release/xsl/current/common/stripns.xs=
+l
+>> make[1]: *** [user-manual.html] Error 5
+>> make: *** [doc] Error 2
 >
->  $ git tag delete master
->  #  Due to the planned switch to command words, this doesn't work.
->  #  For details see road map at  `man git commandwords-roadmaps`
->  $ echo $?
->  # 128 maybe ?
-
-This is way too aggressive behaviour and is unacceptable as the
-first step.  The first step of a transition that breaks backward
-compatibility should warn loudly about a command line that would
-behave differently in the endgame version (either the command line
-that will not do anything or do a totally different thing), but
-still perform the operation asked for the current version.
-
-    e.g. "git tag delete master" would create a tag named 'delete'
-    out of 'master', but tell the user that this will instead delete
-    'master' in future versions of Git.  "git tag create master"
-    would create a tag named 'create' out of 'master', but tell the
-    user that this will instead create 'master' out of HEAD in
-    future versions of Git.
-
-    e.g. "git tag -d foo" would delete a tag named 'foo', but tell
-    the user that this will have to be spelled 'git tag delete foo'
-    in the future versions of Git.
-
-One thing that I am not enthused about the transition plan is that
-"git tag delete master" will *never* be an invalid operation during
-the transition.  When making an operation that used to mean one
-thing to mean something else, a good transition plan should be to
-
- * First warn but do the old thing, and tell users a new way to do
-   that in the new world order.  At the same time, find the new way
-   that used to be an invalid operation in the old world order, and
-   implement it.
-
- * Then stop supporting the old thing and support only the new
-   thing.
-
-Then during the transition period, while transitioning to the new
-way, people can gradually start using the new way with the new
-system, and when they occasionally have to interact with an old
-system, the new way will _error out_, because we make sure we find
-the new way that "used to be an invalid operation" when planning the
-whole transition plan, without causing any harm.  And once people
-retrain their finger after 2-3 years, nobody will be hurt if we
-dropped the old way.
-
-I do not see a good way to do such a safe transition with command
-words approach, *unless* we are going to introduce new commands,
-i.e. "git list-tag", "git create-tag", etc.
-
-So don't hold your breath.  What you two are discussing is way too
-uncooked for 2.6 timeframe.
+> It's clear from the message that your catalogs are not properly set u=
+p.
+> Once you get that working, the documentation should build correctly.
+>
+>> <nextCatalog
+>> catalog=3D"file:///usr/local/Cellar/docbook-xsl/1.78.1/docbook-xsl/c=
+atalog.xml"/>
+>> <nextCatalog
+>> catalog=3D"file:///usr/local/Cellar/docbook-xsl/1.78.1/docbook-xsl-n=
+s/catalog.xml"/>
+>> </catalog>
+>
+> Unfortunately, this doesn't tell us much, since these are all referen=
+ces
+> to other catalogs.  You need to look in the other catalogs, specifica=
+lly
+> the two mentioned above, and ensure that there are appropriate
+> rewriteURI and rewriteSystem entries pointing to the right place.  On=
+ my
+> system, that looks like the following:
+>
+>   <rewriteURI uriStartString=3D"http://docbook.sourceforge.net/releas=
+e/xsl/current/" rewritePrefix=3D"./"/>
+>   <rewriteSystem systemIdStartString=3D"http://docbook.sourceforge.ne=
+t/release/xsl/current/" rewritePrefix=3D"./"/>
+>
+> I don't know how your system is configured, so I can't tell you what
+> entries would be correct.  You might ask in an appropriate user forum
+> for Homebrew.
+> --
+> brian m. carlson / brian with sandals: Houston, Texas, US
+> +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion o=
+nly
+> OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B=
+187
