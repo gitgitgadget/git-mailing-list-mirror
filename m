@@ -1,407 +1,354 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/5] thread-utils: add a threaded task queue
-Date: Wed, 26 Aug 2015 17:52:43 -0700
-Message-ID: <1440636766-12738-3-git-send-email-sbeller@google.com>
+Subject: [PATCH 3/5] submodule: helper to run foreach in parallel
+Date: Wed, 26 Aug 2015 17:52:44 -0700
+Message-ID: <1440636766-12738-4-git-send-email-sbeller@google.com>
 References: <1440636766-12738-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, jrnieder@gmail.com, gitster@pobox.com,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 27 02:53:12 2015
+X-From: git-owner@vger.kernel.org Thu Aug 27 02:53:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUlRE-0000PV-G8
+	id 1ZUlRD-0000PV-Sl
 	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 02:53:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023AbbH0Aw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2015 20:52:59 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:33474 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751591AbbH0Awz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2015 20:52:55 -0400
-Received: by pacti10 with SMTP id ti10so5247563pac.0
-        for <git@vger.kernel.org>; Wed, 26 Aug 2015 17:52:54 -0700 (PDT)
+	id S1751930AbbH0Aw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2015 20:52:58 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:34304 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751852AbbH0Aw4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2015 20:52:56 -0400
+Received: by pabzx8 with SMTP id zx8so5161630pab.1
+        for <git@vger.kernel.org>; Wed, 26 Aug 2015 17:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OlDhtRUkPt2hKme4tEijrQbzppcbyScRsxMRloCIHgM=;
-        b=XKzafgz9MJCvGeolT93w1mskOHYXRzMdok7BGwBIk5baBZUzrcpEr+oTex77rnbNlk
-         ViD9LCzDoYgOsN1wchbTbdnmKFuUuWCV0BJkzqDkQFGVOf/aKd4pDdkEuWAYdSoiFfub
-         7r/7d5GzVM9a0BPOO5IlIXyUg20/Fb8Q1SqELdPaFSOXgb8LPFtbVlsWE1EfvLTYDK9c
-         UqnWeBcFsL4bXwZl96Wr6o84kjAYud4YKgOyFqpLAXn1EuUXNuH5dJ7TnSzi7QIqkwBp
-         TjJ7zKZby6UzWwdwLACLyGb8hUfIJ01uWT2ENZg3MVESy2oqsLWCPmRqTvrF+SJDNV43
-         4Dcw==
+        bh=cXSSt254HJZQKyeZAfD1JgrZXCk7K2uE7OdU+vIYOKQ=;
+        b=Qk4O7+fHod9eoFrrTEpz5FDl1PTfrlUwvbXwA6gP4Cr9Ca14SOIDUZc6fo/eUH+aFn
+         EmftXR4/NEeoczRGI38Yk/Q6TPBa7SurGq8lKfc6NUCQ7xzsFVOEKkhLqtZg03gWZIyt
+         LiE+I1ZdjTD95arIV7I9dDj7diqzzNRE26ih+qr3MRepTGNrZN86OAAoayD/oeNH2GrK
+         azP+RfkEfvRRPaoqj5gtduxP19rUb1v4pJtXApm+9+YIWUkuKtpltZlkCG90vVcd4Ljd
+         a4koy+c3xLKmSAEfsZiWjLMva0WEEW4ETmrY9EOu/ITrdqsI+vlShZk049pU0zqhFmxM
+         utGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=OlDhtRUkPt2hKme4tEijrQbzppcbyScRsxMRloCIHgM=;
-        b=amOx5pw+9bSlTWcJs6bSUm/yljFD2gsxx6VZ5pOmtTE1DBBTimaGaRGOtmNMiUFqJC
-         Ay5sDOpX5bSloV+GlVdpfPcoC/yVzkiQsilDgaPCxYjtB1JZ1FxMwmtmgUdFx/pCw696
-         mZDBwjpqTGviyCdcG5QUELVWsMvbs2+5HS40l/yy0KD7a+DynkeJsdq5oLPfZ3DB0s8b
-         UAAiK+5fR1s77H5v4X2d/v4OUs9H/3CdOMfKtarVnAsaql745DxCCgcqCgMA6bQWZa7O
-         URVdPkRdzjRJhRea7kO7gle6ARBzmmxd7KrbEnJStHHa2i+AbYb50m2oNja++hGMoVeR
-         geFw==
-X-Gm-Message-State: ALoCoQmSJhlKVw2GgF+j6Wemim99iHvUuOJuxMi8KhEwvXc3gH+PvdPwtH7rMe5FWUqbv4cIgI3J
-X-Received: by 10.68.143.70 with SMTP id sc6mr2220017pbb.87.1440636774765;
-        Wed, 26 Aug 2015 17:52:54 -0700 (PDT)
+        bh=cXSSt254HJZQKyeZAfD1JgrZXCk7K2uE7OdU+vIYOKQ=;
+        b=lvdp9Vr9dA6Q5Ou7f9HZOVhaU9kjWlN6ETO8BiVLuHRoyunFp1yKt4LRc/z9KjC3NM
+         AOPUgFDTswFrE2R+uZknPvlfWo/gIRRxpKl8PDCImrbPoK0sdtLuflDXSqGaheLUFlqI
+         3L3TQpltCCkz4t+ZFkbazIgh7e/xFpdRE79CWJrs87Ifgn1I8Dx2KyvEveWGuLI7AC9C
+         SvC4ZoRefBykwETsl8r/D8NT9Azd03TQpFeg8BG7X8tDJWbKKocToWZfxiVBVoUop012
+         //KC42wktgF3T/ZxeVcGJNLS67YvGF7Z0bGyMUYP22zme4rtyIqsStFgCh188cMlXmNW
+         bJig==
+X-Gm-Message-State: ALoCoQnVN89G9RHg3BKNN+9/1BUE0/CU/6JOT+cCs5WdNSHHUJcM13gXOzvY8baQapAG1seNqvkM
+X-Received: by 10.68.236.194 with SMTP id uw2mr2354402pbc.84.1440636776022;
+        Wed, 26 Aug 2015 17:52:56 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:806a:7c76:ca55:3bf1])
-        by smtp.gmail.com with ESMTPSA id hy5sm288734pac.22.2015.08.26.17.52.53
+        by smtp.gmail.com with ESMTPSA id eu6sm275273pdb.86.2015.08.26.17.52.55
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 26 Aug 2015 17:52:54 -0700 (PDT)
+        Wed, 26 Aug 2015 17:52:55 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.264.g784836d
 In-Reply-To: <1440636766-12738-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276654>
 
-This adds functionality to do work in a parallel threaded
-fashion while the boiler plate code for setting up threads
-and tearing them down as well as queuing up tasks is hidden
-behind the new API.
+Similar to `git submodule foreach` the new command
+`git submodule foreach_parallel` will run a command
+on each submodule.
+
+The commands are run in parallel up to the number of
+cores by default, or you can specify '-j 4' tun just
+run with 4 threads for example.
+
+One major difference to `git submodule foreach` is the
+handling of input and output to the commands. Because
+of the parallel nature of the execution it is not trivial
+how to schedule the std{in,out,err} channel for submodule
+the command is run in. So in this patch there is no
+support for stdin.
+
+The goal of the output for std{out, err} is to look like
+the single threaded version as much as possible, so
+stdout and stderr from one submodule operation are
+buffered together in one single channel and output
+together when the output is allowed.
+
+To do that, we'll have a mutex for the output, which
+each thread will try to acquire and directly pipe their
+output to the standard output if they are lucky to
+get the mutex.
+
+If they do not have the mutex each thread will buffer
+their output.
+
+Example:
+Let's assume we have 5 submodules A,B,C,D,E and the
+operation on each submodule takes a different amount
+of time (say `git fetch`), then the output of
+`git submodule foreach` might look like this:
+
+ time -->
+ output: |---A---|   |-B-|   |----C-----------|   |-D-|   |-E-|
+
+When we schedule these threads into two threads, a schedule
+and sample output over time may look like this:
+
+thread 1: |---A---|   |-D-|   |-E-|
+thread 2: |-B-|   |----C-----------|
+
+output:   |---A---| B |----C-------| E D
+
+So A will be perceived as it would run normally in
+the single threaded version of foreach. As B has finished
+by the time the mutex becomes available, the whole buffer
+will just be dumped into the standard output. This will be
+perceived by the user as just a 'very fast' operation of B.
+Once that is done, C takes the mutex, and flushes the piled
+up buffer to standard output. In case the subcommand is a
+git command, we have a progress display, which will just
+look like the first half of C happend really quickly.
+
+Notice how E and D are put out in a different order than the
+original as the new parallel foreach doesn't care about the
+order.
+
+So this way of output is really good for human consumption
+and not for machine consumption as you always see the progress,
+but it is not easy to tell which output comes from which
+command as there is no indication other than displaying
+"Entering <submodule path>" for each beginning section of
+output.
+
+Maybe we want to integrate the unthreaded foreach eventually
+into the new code base in C and have special cases for that,
+such as accepting stdin again.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- run-command.c  |  29 +++++---
- thread-utils.c | 227 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- thread-utils.h |  35 +++++++++
- 3 files changed, 279 insertions(+), 12 deletions(-)
+ builtin/submodule--helper.c | 160 +++++++++++++++++++++++++++++++++++++++++++-
+ git-submodule.sh            |  11 ++-
+ 2 files changed, 168 insertions(+), 3 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index 28e1d55..cb15cd9 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -668,6 +668,22 @@ int git_atexit(void (*handler)(void))
- 
- #endif
- 
-+void setup_main_thread(void)
-+{
-+	if (!main_thread_set) {
-+		/*
-+		 * We assume that the first time that start_async is called
-+		 * it is from the main thread.
-+		 */
-+		main_thread_set = 1;
-+		main_thread = pthread_self();
-+		pthread_key_create(&async_key, NULL);
-+		pthread_key_create(&async_die_counter, NULL);
-+		set_die_routine(die_async);
-+		set_die_is_recursing_routine(async_die_is_recursing);
-+	}
-+}
-+
- int start_async(struct async *async)
- {
- 	int need_in, need_out;
-@@ -740,18 +756,7 @@ int start_async(struct async *async)
- 	else if (async->out)
- 		close(async->out);
- #else
--	if (!main_thread_set) {
--		/*
--		 * We assume that the first time that start_async is called
--		 * it is from the main thread.
--		 */
--		main_thread_set = 1;
--		main_thread = pthread_self();
--		pthread_key_create(&async_key, NULL);
--		pthread_key_create(&async_die_counter, NULL);
--		set_die_routine(die_async);
--		set_die_is_recursing_routine(async_die_is_recursing);
--	}
-+	setup_main_thread();
- 
- 	if (proc_in >= 0)
- 		set_cloexec(proc_in);
-diff --git a/thread-utils.c b/thread-utils.c
-index a2135e0..b45ab92 100644
---- a/thread-utils.c
-+++ b/thread-utils.c
-@@ -1,5 +1,7 @@
- #include "cache.h"
- #include "thread-utils.h"
-+#include "run-command.h"
-+#include "git-compat-util.h"
- 
- #if defined(hpux) || defined(__hpux) || defined(_hpux)
- #  include <sys/pstat.h>
-@@ -75,3 +77,228 @@ int init_recursive_mutex(pthread_mutex_t *m)
- 	}
- 	return ret;
- }
-+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index f11fb9c..2c06f28 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -8,8 +8,11 @@
+ #include "submodule.h"
+ #include "submodule-config.h"
+ #include "string-list.h"
++#include "thread-utils.h"
+ #include "run-command.h"
+-
 +#ifndef NO_PTHREADS
-+struct job_list {
-+	int (*fct)(struct task_queue *tq, void *task);
-+	void *task;
-+	struct job_list *next;
-+};
-+
-+static pthread_t main_thread;
-+static int main_thread_set;
-+static pthread_key_t async_key;
-+static pthread_key_t async_die_counter;
-+
-+static NORETURN void die_async(const char *err, va_list params)
-+{
-+	vreportf("fatal: ", err, params);
-+
-+	if (!pthread_equal(main_thread, pthread_self()))
-+		pthread_exit((void *)128);
-+
-+	exit(128);
-+}
-+
-+static int async_die_is_recursing(void)
-+{
-+	void *ret = pthread_getspecific(async_die_counter);
-+	pthread_setspecific(async_die_counter, (void *)1);
-+	return ret != NULL;
-+}
-+
-+/* FIXME: deduplicate this code with run-command.c */
-+static void setup_main_thread(void)
-+{
-+	if (!main_thread_set) {
-+		main_thread_set = 1;
-+		main_thread = pthread_self();
-+		pthread_key_create(&async_key, NULL);
-+		pthread_key_create(&async_die_counter, NULL);
-+		set_die_routine(die_async);
-+		set_die_is_recursing_routine(async_die_is_recursing);
-+	}
-+}
-+
-+struct task_queue {
-+	pthread_mutex_t mutex;
-+	pthread_cond_t cond_non_empty;
-+
-+	int queued_tasks;
-+	struct job_list *first;
-+	struct job_list *last;
-+
-+	pthread_t *threads;
-+	unsigned max_threads;
-+	unsigned max_tasks;
-+
-+	void (*finish_function)(struct task_queue *tq);
-+	int early_return;
-+};
-+
-+static void next_task(struct task_queue *tq,
-+		      int (**fct)(struct task_queue *tq, void *task),
-+		      void **task,
-+		      int *early_return)
-+{
-+	struct job_list *job = NULL;
-+
-+	pthread_mutex_lock(&tq->mutex);
-+	while (tq->queued_tasks == 0)
-+		pthread_cond_wait(&tq->cond_non_empty, &tq->mutex);
-+
-+	tq->early_return |= *early_return;
-+
-+	if (!tq->early_return) {
-+		job = tq->first;
-+		tq->first = job->next;
-+		if (!tq->first)
-+			tq->last = NULL;
-+		tq->queued_tasks--;
-+	}
-+
-+	pthread_mutex_unlock(&tq->mutex);
-+
-+	if (job) {
-+		*fct = job->fct;
-+		*task = job->task;
-+	} else {
-+		*fct = NULL;
-+		*task = NULL;
-+	}
-+
-+	free(job);
-+}
-+
-+static void *dispatcher(void *args)
-+{
-+	void *task;
-+	int (*fct)(struct task_queue *tq, void *task);
-+	int early_return = 0;
-+	struct task_queue *tq = args;
-+
-+	next_task(tq, &fct, &task, &early_return);
-+	while (fct && !early_return) {
-+		early_return = fct(tq, task);
-+		next_task(tq, &fct, &task, &early_return);
-+	}
-+
-+	if (tq->finish_function)
-+		tq->finish_function(tq);
-+
-+	pthread_exit(0);
-+}
-+
-+struct task_queue *create_task_queue(unsigned max_threads)
-+{
-+	struct task_queue *tq = xmalloc(sizeof(*tq));
-+
-+	int i, ret;
-+	if (!max_threads)
-+		tq->max_threads = online_cpus();
-+	else
-+		tq->max_threads = max_threads;
-+
-+	pthread_mutex_init(&tq->mutex, NULL);
-+	pthread_cond_init(&tq->cond_non_empty, NULL);
-+
-+	tq->threads = xmalloc(tq->max_threads * sizeof(pthread_t));
-+
-+	tq->queued_tasks = 0;
-+	tq->first = NULL;
-+	tq->last = NULL;
-+
-+	setup_main_thread();
-+
-+	for (i = 0; i < tq->max_threads; i++) {
-+		ret = pthread_create(&tq->threads[i], 0, &dispatcher, tq);
-+		if (ret)
-+			die("unable to create thread: %s", strerror(ret));
-+	}
-+
-+	tq->early_return = 0;
-+
-+	return tq;
-+}
-+
-+void add_task(struct task_queue *tq,
-+	      int (*fct)(struct task_queue *tq, void *task),
-+	      void *task)
-+{
-+	struct job_list *job_list;
-+
-+	job_list = xmalloc(sizeof(*job_list));
-+	job_list->task = task;
-+	job_list->fct = fct;
-+	job_list->next = NULL;
-+
-+	pthread_mutex_lock(&tq->mutex);
-+
-+	if (!tq->last) {
-+		tq->last = job_list;
-+		tq->first = tq->last;
-+	} else {
-+		tq->last->next = job_list;
-+		tq->last = tq->last->next;
-+	}
-+	tq->queued_tasks++;
-+
-+	pthread_mutex_unlock(&tq->mutex);
-+	pthread_cond_signal(&tq->cond_non_empty);
-+}
-+
-+int finish_task_queue(struct task_queue *tq, void (*fct)(struct task_queue *tq))
-+{
-+	int ret;
-+	int i;
-+
-+	tq->finish_function = fct;
-+
-+	for (i = 0; i < tq->max_threads; i++)
-+		add_task(tq, NULL, NULL);
-+
-+	for (i = 0; i < tq->max_threads; i++)
-+		pthread_join(tq->threads[i], 0);
-+
-+	pthread_mutex_destroy(&tq->mutex);
-+	pthread_cond_destroy(&tq->cond_non_empty);
-+
-+	if (tq->first)
-+		die("BUG: internal error with queuing jobs for threads");
-+
-+	free(tq->threads);
-+	ret = tq->early_return;
-+
-+	free(tq);
-+	return ret;
-+}
-+#else /* NO_PTHREADS */
-+
-+struct task_queue {
-+	int early_return;
-+};
-+
-+struct task_queue *create_task_queue(unsigned max_threads)
-+{
-+	struct task_queue *tq = xmalloc(sizeof(*tq));
-+
-+	tq->early_return = 0;
-+}
-+
-+void add_task(struct task_queue *tq,
-+	      int (*fct)(struct task_queue *tq, void *task),
-+	      void *task)
-+{
-+	if (tq->early_return)
-+		return;
-+
-+	tq->early_return |= fct(tq, task);
-+}
-+
-+int finish_task_queue(struct task_queue *tq, void (*fct)(struct task_queue *tq))
-+{
-+	int ret = tq->early_return;
-+	free(tq);
-+	return ret;
-+}
++#include <semaphore.h>
 +#endif
-diff --git a/thread-utils.h b/thread-utils.h
-index d9a769d..f41cfb1 100644
---- a/thread-utils.h
-+++ b/thread-utils.h
-@@ -12,4 +12,39 @@ extern int init_recursive_mutex(pthread_mutex_t*);
- #define online_cpus() 1
+ static const struct cache_entry **ce_entries;
+ static int ce_alloc, ce_used;
+ static const char *alternative_path;
+@@ -279,6 +282,155 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
  
- #endif
++struct submodule_args {
++	const char *name;
++	const char *path;
++	const char *sha1;
++	const char *toplevel;
++	const char *prefix;
++	const char **cmd;
++	pthread_mutex_t *mutex;
++};
 +
-+/*
-+ * Creates a struct `task_queue`, which holds a list of tasks. Up to
-+ * `max_threads` threads are active to process the enqueued tasks
-+ * processing the tasks in a first in first out order.
-+ *
-+ * If `max_threads` is zero the number of cores available will be used.
-+ *
-+ * Currently this only works in environments with pthreads, in other
-+ * environments, the task will be processed sequentially in `add_task`.
-+ */
-+struct task_queue *create_task_queue(unsigned max_threads);
++int run_cmd_submodule(struct task_queue *aq, void *task)
++{
++	int i, lock_acquired = 0;
++	struct submodule_args *args = task;
++	struct strbuf out = STRBUF_INIT;
++	struct strbuf sb = STRBUF_INIT;
++	struct child_process *cp = xmalloc(sizeof(*cp));
++	char buf[1024];
 +
-+/*
-+ * The function and data are put into the task queue.
-+ *
-+ * The function `fct` must not be NULL, as that's used internally
-+ * in `finish_task_queue` to signal shutdown. If the return code
-+ * of `fct` is unequal to 0, the tasks will stop eventually,
-+ * the current parallel tasks will be flushed out.
-+ */
-+void add_task(struct task_queue *tq,
-+	      int (*fct)(struct task_queue *tq, void *task),
-+	      void *task);
++	strbuf_addf(&out, N_("Entering %s\n"), relative_path(args->path, args->prefix, &sb));
 +
-+/*
-+ * Waits for all tasks to be done and frees the object. The return code
-+ * is zero if all enqueued tasks were processed.
-+ *
-+ * The function `fct` is called once in each thread after the last task
-+ * for that thread was processed. If no thread local cleanup needs to be
-+ * performed, pass NULL.
-+ */
-+int finish_task_queue(struct task_queue *tq, void (*fct)(struct task_queue *tq));
++	child_process_init(cp);
++	argv_array_pushv(&cp->args, args->cmd);
 +
- #endif /* THREAD_COMPAT_H */
++	argv_array_pushf(&cp->env_array, "name=%s", args->name);
++	argv_array_pushf(&cp->env_array, "path=%s", args->path);
++	argv_array_pushf(&cp->env_array, "sha1=%s", args->sha1);
++	argv_array_pushf(&cp->env_array, "toplevel=%s", args->toplevel);
++
++	for (i = 0; local_repo_env[i]; i++)
++		argv_array_push(&cp->env_array, local_repo_env[i]);
++
++	cp->no_stdin = 1;
++	cp->out = 0;
++	cp->err = -1;
++	cp->dir = args->path;
++	cp->stdout_to_stderr = 1;
++	cp->use_shell = 1;
++
++	if (start_command(cp)) {
++		die("Could not start command");
++		for (i = 0; cp->args.argv; i++)
++			fprintf(stderr, "%s\n", cp->args.argv[i]);
++	}
++
++	while (1) {
++		ssize_t len = xread(cp->err, buf, sizeof(buf));
++		if (len < 0)
++			die("Read from child failed");
++		else if (len == 0)
++			break;
++		else {
++			strbuf_add(&out, buf, len);
++		}
++		if (!pthread_mutex_trylock(args->mutex))
++			lock_acquired = 1;
++		if (lock_acquired) {
++			fputs(out.buf, stderr);
++			strbuf_reset(&out);
++		}
++	}
++	if (finish_command(cp))
++		die("command died with error");
++
++	if (!lock_acquired)
++		pthread_mutex_lock(args->mutex);
++
++	fputs(out.buf, stderr);
++	pthread_mutex_unlock(args->mutex);
++
++	return 0;
++}
++
++int module_foreach_parallel(int argc, const char **argv, const char *prefix)
++{
++	int i, recursive = 0, number_threads = 0, quiet = 0;
++	static struct pathspec pathspec;
++	struct strbuf sb = STRBUF_INIT;
++	struct task_queue *aq;
++	char **cmd;
++	const char **nullargv = {NULL};
++	pthread_mutex_t mutex;
++
++	struct option module_update_options[] = {
++		OPT_STRING(0, "prefix", &alternative_path,
++			   N_("path"),
++			   N_("alternative anchor for relative paths")),
++		OPT_STRING(0, "cmd", &cmd,
++			   N_("string"),
++			   N_("command to run")),
++		OPT_BOOL('r', "--recursive", &recursive,
++			 N_("Recurse into nexted submodules")),
++		OPT_INTEGER('j', "jobs", &number_threads,
++			    N_("Recurse into nexted submodules")),
++		OPT__QUIET(&quiet, N_("Suppress output")),
++		OPT_END()
++	};
++
++	static const char * const git_submodule_helper_usage[] = {
++		N_("git submodule--helper foreach [--prefix=<path>] [<path>...]"),
++		NULL
++	};
++
++	argc = parse_options(argc, argv, prefix, module_update_options,
++			     git_submodule_helper_usage, 0);
++
++	if (module_list_compute(0, nullargv, NULL, &pathspec) < 0)
++		return 1;
++
++	gitmodules_config();
++
++	pthread_mutex_init(&mutex, NULL);
++	aq = create_task_queue(number_threads);
++
++	for (i = 0; i < ce_used; i++) {
++		const struct submodule *sub;
++		const struct cache_entry *ce = ce_entries[i];
++		struct submodule_args *args = malloc(sizeof(*args));
++
++		if (ce_stage(ce))
++			args->sha1 = xstrdup(sha1_to_hex(null_sha1));
++		else
++			args->sha1 = xstrdup(sha1_to_hex(ce->sha1));
++
++		strbuf_reset(&sb);
++		strbuf_addf(&sb, "%s/.git", ce->name);
++		if (!file_exists(sb.buf)) {
++			free(args);
++			continue;
++		}
++
++		args->path = ce->name;
++		sub = submodule_from_path(null_sha1, args->path);
++		if (!sub)
++			die("No submodule mapping found in .gitmodules for path '%s'", args->path);
++
++		args->name = sub->name;
++		args->toplevel = xgetcwd();
++		args->cmd = argv;
++		args->mutex = &mutex;
++		args->prefix = alternative_path;
++		add_task(aq, run_cmd_submodule, args);
++	}
++
++	finish_task_queue(aq, NULL);
++	pthread_mutex_destroy(&mutex);
++	return 0;
++}
++
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	if (argc < 2)
+@@ -293,6 +445,10 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+ 	if (!strcmp(argv[1], "module_clone"))
+ 		return module_clone(argc - 1, argv + 1, prefix);
+ 
++	if (!strcmp(argv[1], "foreach_parallel"))
++		return module_foreach_parallel(argc - 1, argv + 1, prefix);
++
+ usage:
+-	usage("git submodule--helper [module_list module_name module_clone]\n");
++	fprintf(stderr, "%s", argv[1]);
++	usage("git submodule--helper [module_list module_name module_clone foreach_parallel]\n");
+ }
+diff --git a/git-submodule.sh b/git-submodule.sh
+index fb5155e..f06488a 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -431,6 +431,15 @@ cmd_foreach()
+ }
+ 
+ #
++# Execute an arbitrary command sequence in each checked out
++# submodule in parallel.
++#
++cmd_foreach_parallel()
++{
++	git submodule--helper foreach_parallel --prefix "$wt_prefix" $@
++}
++
++#
+ # Register submodules in .git/config
+ #
+ # $@ = requested paths (default to all)
+@@ -1225,7 +1234,7 @@ cmd_sync()
+ while test $# != 0 && test -z "$command"
+ do
+ 	case "$1" in
+-	add | foreach | init | deinit | update | status | summary | sync)
++	add | foreach | foreach_parallel | init | deinit | update | status | summary | sync)
+ 		command=$1
+ 		;;
+ 	-q|--quiet)
 -- 
 2.5.0.264.g784836d
