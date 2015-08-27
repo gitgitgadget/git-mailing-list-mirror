@@ -1,123 +1,106 @@
 From: Namhyung Kim <namhyung@gmail.com>
-Subject: Re: [PATCH] stash: Add stash.showFlag config variable
-Date: Fri, 28 Aug 2015 00:36:35 +0900
-Message-ID: <CAM9d7chUf=srU060Q4+qQ4mFBaXmRL0yQ1Ns4UeWcDj62CFoYg@mail.gmail.com>
-References: <1440683528-11725-1-git-send-email-namhyung@gmail.com> <1440688825-1303-1-git-send-email-szeder@ira.uka.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Aug 27 17:37:08 2015
+Subject: [PATCH v2] stash: Add stash.showFlag config variable
+Date: Fri, 28 Aug 2015 00:49:13 +0900
+Message-ID: <1440690553-28582-1-git-send-email-namhyung@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 27 17:52:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUzEa-0007Y1-0T
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 17:37:00 +0200
+	id 1ZUzTP-0001mt-KX
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 17:52:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753101AbbH0Pg4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Aug 2015 11:36:56 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:33558 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752010AbbH0Pgz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2015 11:36:55 -0400
-Received: by igbjg10 with SMTP id jg10so19559283igb.0
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 08:36:55 -0700 (PDT)
+	id S1752471AbbH0PwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2015 11:52:15 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:32927 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752060AbbH0PwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 11:52:14 -0400
+Received: by pacti10 with SMTP id ti10so30335320pac.0
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 08:52:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=NxMwwOy0wv1wnVhmfQ3WG/6yICGHnSnAQvHRMDXskPc=;
-        b=TkkQ/AC/ziXink3CupzspampjKFcbHi1WaksEPR4fMppHyOnF7KaAIBsZS24RHaPp/
-         CKsvErjwGfZDZ2xqRp9v8fVEIgQAM+bnL2z3VFa9gzka5qzmPkGm16P5GsSeabfEfdb9
-         IUMADhdKxZHAEH8rzo7Tcv0u4TOABvqusQ30yRDHSTRxyBI3cCubJQPOZNKvKB4Glglf
-         9XzsLLYwnJO41hwTNz7b72AdXn9iMuxk72M0xFVd3Mzxo3089b8q1foia9/rhNfBJ9OQ
-         1C4jXV7yMY2udCm5uVU9rmNshcvDH37kENskf8kZ+koqfHWEeBdEsruWiKLjF8iPz45F
-         RcYA==
-X-Received: by 10.50.17.9 with SMTP id k9mr10650039igd.93.1440689814973; Thu,
- 27 Aug 2015 08:36:54 -0700 (PDT)
-Received: by 10.107.20.5 with HTTP; Thu, 27 Aug 2015 08:36:35 -0700 (PDT)
-In-Reply-To: <1440688825-1303-1-git-send-email-szeder@ira.uka.de>
+        h=from:to:subject:date:message-id;
+        bh=yTptsnxZAAzuLb8kUZfHUeAmPVoJ68mPTWWAqHp4WRI=;
+        b=bItZ+Nw7wPmbltjOdxMrYag/Tl/KjStMObFTiwOWPYgDL/D/FplRHMg6L+46njiBr4
+         dvpAZNM5c0GQakPIzQPnRpvecrbXugaDYidQ8ObDSnWFSwi31iJzJ1utcB3mY/kZd6yk
+         62dFmUsCejbgazvVHiVJitRd8hmzbeeNPk0WpCSgqiWkHYT8+7GKcKsG083YLBCOCFsJ
+         W/mJPYmAUaYXUPFq9r1B/6TaKQZvt9y5+rgsZMXqwACiqcoTupj/c1+8K1FM4adUEu2b
+         TezS+kreAwqUmmLfpreGtYBiGbKbeTjHDS+s/cHtDxFBcloN09RfsohlFlu5daB3iuhu
+         TfnA==
+X-Received: by 10.68.195.231 with SMTP id ih7mr8243213pbc.26.1440690734430;
+        Thu, 27 Aug 2015 08:52:14 -0700 (PDT)
+Received: from localhost.localdomain ([220.120.166.123])
+        by smtp.gmail.com with ESMTPSA id ey3sm360558pbd.28.2015.08.27.08.52.12
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 27 Aug 2015 08:52:13 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276679>
 
-Hi,
+Some users might want to see diff (patch) output always rather than
+diffstat when [s]he runs 'git stash show'.  Although this can be done
+with adding -p option, it'd be better to provide a config option to
+control this behavior IMHO.
 
-On Fri, Aug 28, 2015 at 12:20 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de>=
- wrote:
-> Hi,
->
-> I haven't made up my mind about this feature yet, but have a few
-> comments about its implementation.
+Signed-off-by: Namhyung Kim <namhyung@gmail.com>
+---
+ Documentation/config.txt    | 5 +++++
+ Documentation/git-stash.txt | 1 +
+ git-stash.sh                | 7 ++++++-
+ 3 files changed, 12 insertions(+), 1 deletion(-)
 
-Thanks for taking your time!
-
->
->> diff --git a/git-stash.sh b/git-stash.sh
->> index 1d5ba7a..8432435 100755
->> --- a/git-stash.sh
->> +++ b/git-stash.sh
->> @@ -33,6 +33,12 @@ else
->>         reset_color=3D
->>  fi
->>
->> +if git config --get stash.showflag > /dev/null 2> /dev/null; then
->> +     show_flag=3D$(git config --get stash.showflag)
->> +else
->> +     show_flag=3D--stat
->> +fi
->> +
->
-> Forking and executing processes are costly on some important platform=
-s
-> we care about, so we should strive to avoid them whenever possible.
->
->  - This hunk runs the the exact same 'git config' command twice.  Run=
- it
->    only once, perhaps something like this:
->
->      show_flag=3D$(git config --get stash.showflag || echo --stat)
->
->    (I hope there are no obscure crazy 'echo' implemtations out there
->    that might barf on the unknown option '--stat'...)
-
-What about `echo "--stat"` then?
-
->
->  - It runs 'git config' in the main code path, i.e. even for subcomma=
-nds
->    other than 'show'.  Run it only for 'git stash show'.
->
->  - This config setting is not relevant if there were options given on=
- the
->    command line.  Run it only if there are no options given, i.e. whe=
-n
->    $FLAGS is empty.
-
-=46air enough.  I'll resend v2.
-
-Thanks,
-Namhyung
-
-
->
->
->>  no_changes () {
->>       git diff-index --quiet --cached HEAD --ignore-submodules -- &&
->>       git diff-files --quiet --ignore-submodules &&
->> @@ -305,7 +311,7 @@ show_stash () {
->>       ALLOW_UNKNOWN_FLAGS=3Dt
->>       assert_stash_like "$@"
->>
->> -     git diff ${FLAGS:---stat} $b_commit $w_commit
->> +     git diff ${FLAGS:-${show_flag}} $b_commit $w_commit
->>  }
->>
->>  show_help () {
->> --
->> 2.5.0
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f5d15ff..bbadae6 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2567,6 +2567,11 @@ status.submoduleSummary::
+ 	submodule summary' command, which shows a similar output but does
+ 	not honor these settings.
+ 
++stash.showFlag::
++	The default option to pass to `git stash show` when no option is
++	given. The default is '--stat'.  See description of 'show' command
++	in linkgit:git-stash[1].
++
+ submodule.<name>.path::
+ submodule.<name>.url::
+ 	The path within this project and URL for a submodule. These
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 375213f..e00f67e 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -95,6 +95,7 @@ show [<stash>]::
+ 	shows the latest one. By default, the command shows the diffstat, but
+ 	it will accept any format known to 'git diff' (e.g., `git stash show
+ 	-p stash@{1}` to view the second most recent stash in patch form).
++	You can use stash.showflag config variable to change this behavior.
+ 
+ pop [--index] [-q|--quiet] [<stash>]::
+ 
+diff --git a/git-stash.sh b/git-stash.sh
+index 1d5ba7a..f48a97d 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -305,7 +305,12 @@ show_stash () {
+ 	ALLOW_UNKNOWN_FLAGS=t
+ 	assert_stash_like "$@"
+ 
+-	git diff ${FLAGS:---stat} $b_commit $w_commit
++	if test -z "$FLAGS"
++	then
++		show_flag=$(git config --get stash.showFlag || echo "--stat")
++	fi
++
++	git diff ${FLAGS:-${show_flag}} $b_commit $w_commit
+ }
+ 
+ show_help () {
+-- 
+2.5.0
