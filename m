@@ -1,108 +1,67 @@
-From: Namhyung Kim <namhyung@gmail.com>
-Subject: [PATCH v2.1] stash: Add stash.showFlag config variable
-Date: Fri, 28 Aug 2015 00:55:37 +0900
-Message-ID: <1440690937-11424-1-git-send-email-namhyung@gmail.com>
-References: <1440690553-28582-1-git-send-email-namhyung@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] Mingw: verify both ends of the pipe () call
+Date: Thu, 27 Aug 2015 15:55:52 +0000
+Message-ID: <0000014f6fdf5839-19f5bc24-80bf-4b9e-a26b-2ef089a28f06-000000@eu-west-1.amazonses.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 27 17:58:50 2015
+X-From: git-owner@vger.kernel.org Thu Aug 27 18:07:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUzZa-0006Ud-4X
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 17:58:42 +0200
+	id 1ZUziH-0004gs-I6
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 18:07:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752471AbbH0P6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 11:58:37 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:35806 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751694AbbH0P6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2015 11:58:37 -0400
-Received: by pacdd16 with SMTP id dd16so29829089pac.2
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 08:58:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=BDL5n3gtnmn0b6t8JvgPloXPoPV66Be+db23iLSsahM=;
-        b=w/ZupjShWHKgQQsSzrHygbkHD+ciDqPOl338HkKTW0djkVTlyLV8N9Yqez7Le+iB6O
-         iESVK3DNW7QDly2sz/Oaw762AOVN89ycSZVUVXawv3zSLPPr3aS6wHC1fw7blVlIKEua
-         nQtikDEikXKkmh9wib0fNVVON75dyj9VwcEJZ56ukl/Mc7u/YJxQxMbwz+tucJK4wt1T
-         U2fjRvYe4muOBo62DI13cZIHiXbc2mnpeHWmA4T5T6jQhU5+e3GiPkvTC4+lFpCyDJD6
-         aEHgpc29E5HR5fFLDP1+DrgtE2zZ6lZCtm3ehKVtlg+U5EhJvcxhhkhNAAWFRsutAfjX
-         bfCQ==
-X-Received: by 10.66.65.234 with SMTP id a10mr14585221pat.2.1440691116803;
-        Thu, 27 Aug 2015 08:58:36 -0700 (PDT)
-Received: from localhost.localdomain ([220.120.166.123])
-        by smtp.gmail.com with ESMTPSA id qp5sm2873430pbc.0.2015.08.27.08.58.35
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 27 Aug 2015 08:58:36 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0
-In-Reply-To: <1440690553-28582-1-git-send-email-namhyung@gmail.com>
+	id S1752317AbbH0QHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2015 12:07:37 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:56737
+	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751694AbbH0QHh (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2015 12:07:37 -0400
+X-Greylist: delayed 702 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Aug 2015 12:07:36 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1440690952;
+	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=oDyK08eegyFy3FfKEz/xWryCContN1OyZrGdl6QDHbI=;
+	b=Q/lQKFJH3EAUZvbHhcDfVcgkNHIL8WKEcWjSYzHJPCTsGOuD1A5Z7KeHSukWlzdB
+	Ew5gMtxn1Aqv9v64b22J5cQwfUWin6wvkrEGFoF2GVFwj3d0IvO+ZEsLg8OwJanVgnA
+	xxNEDbaD+Ot4pNcRjbTYWuIwNxK492c3Ta4Zlan0=
+X-SES-Outgoing: 2015.08.27-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276681>
 
-Some users might want to see diff (patch) output always rather than
-diffstat when [s]he runs 'git stash show'.  Although this can be done
-with adding -p option, it'd be better to provide a config option to
-control this behavior IMHO.
+From: jfmc <jfmcjf@gmail.com>
 
-Signed-off-by: Namhyung Kim <namhyung@gmail.com>
+The code to open and test the second end of the pipe clearly imitates
+the code for the first end. A little too closely, though... Let's fix
+the obvious copy-edit bug.
+
+Signed-off-by: Jose F. Morales <jfmcjf@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/config.txt    | 5 +++++
- Documentation/git-stash.txt | 1 +
- git-stash.sh                | 7 ++++++-
- 3 files changed, 12 insertions(+), 1 deletion(-)
+ compat/mingw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f5d15ff..bbadae6 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2567,6 +2567,11 @@ status.submoduleSummary::
- 	submodule summary' command, which shows a similar output but does
- 	not honor these settings.
- 
-+stash.showFlag::
-+	The default option to pass to `git stash show` when no option is
-+	given. The default is '--stat'.  See description of 'show' command
-+	in linkgit:git-stash[1].
-+
- submodule.<name>.path::
- submodule.<name>.url::
- 	The path within this project and URL for a submodule. These
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 375213f..e00f67e 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -95,6 +95,7 @@ show [<stash>]::
- 	shows the latest one. By default, the command shows the diffstat, but
- 	it will accept any format known to 'git diff' (e.g., `git stash show
- 	-p stash@{1}` to view the second most recent stash in patch form).
-+	You can use stash.showflag config variable to change this behavior.
- 
- pop [--index] [-q|--quiet] [<stash>]::
- 
-diff --git a/git-stash.sh b/git-stash.sh
-index 1d5ba7a..992fb02 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -305,7 +305,12 @@ show_stash () {
- 	ALLOW_UNKNOWN_FLAGS=t
- 	assert_stash_like "$@"
- 
--	git diff ${FLAGS:---stat} $b_commit $w_commit
-+	if test -z "$FLAGS"
-+	then
-+		FLAGS=$(git config --get stash.showFlag || echo "--stat")
-+	fi
-+
-+	git diff ${FLAGS} $b_commit $w_commit
- }
- 
- show_help () {
--- 
-2.5.0
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 496e6f8..f74da23 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -681,7 +681,7 @@ int pipe(int filedes[2])
+ 		return -1;
+ 	}
+ 	filedes[1] = _open_osfhandle((int)h[1], O_NOINHERIT);
+-	if (filedes[0] < 0) {
++	if (filedes[1] < 0) {
+ 		close(filedes[0]);
+ 		CloseHandle(h[1]);
+ 		return -1;
+
+--
+https://github.com/git/git/pull/168
