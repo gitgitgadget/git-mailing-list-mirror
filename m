@@ -1,48 +1,50 @@
 From: Namhyung Kim <namhyung@gmail.com>
-Subject: [PATCH v2] stash: Add stash.showFlag config variable
-Date: Fri, 28 Aug 2015 00:49:13 +0900
-Message-ID: <1440690553-28582-1-git-send-email-namhyung@gmail.com>
+Subject: [PATCH v2.1] stash: Add stash.showFlag config variable
+Date: Fri, 28 Aug 2015 00:55:37 +0900
+Message-ID: <1440690937-11424-1-git-send-email-namhyung@gmail.com>
+References: <1440690553-28582-1-git-send-email-namhyung@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 27 17:52:20 2015
+X-From: git-owner@vger.kernel.org Thu Aug 27 17:58:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUzTP-0001mt-KX
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 17:52:19 +0200
+	id 1ZUzZa-0006Ud-4X
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 17:58:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752471AbbH0PwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 11:52:15 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:32927 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752060AbbH0PwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2015 11:52:14 -0400
-Received: by pacti10 with SMTP id ti10so30335320pac.0
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 08:52:14 -0700 (PDT)
+	id S1752471AbbH0P6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2015 11:58:37 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:35806 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751694AbbH0P6h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 11:58:37 -0400
+Received: by pacdd16 with SMTP id dd16so29829089pac.2
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 08:58:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id;
-        bh=yTptsnxZAAzuLb8kUZfHUeAmPVoJ68mPTWWAqHp4WRI=;
-        b=bItZ+Nw7wPmbltjOdxMrYag/Tl/KjStMObFTiwOWPYgDL/D/FplRHMg6L+46njiBr4
-         dvpAZNM5c0GQakPIzQPnRpvecrbXugaDYidQ8ObDSnWFSwi31iJzJ1utcB3mY/kZd6yk
-         62dFmUsCejbgazvVHiVJitRd8hmzbeeNPk0WpCSgqiWkHYT8+7GKcKsG083YLBCOCFsJ
-         W/mJPYmAUaYXUPFq9r1B/6TaKQZvt9y5+rgsZMXqwACiqcoTupj/c1+8K1FM4adUEu2b
-         TezS+kreAwqUmmLfpreGtYBiGbKbeTjHDS+s/cHtDxFBcloN09RfsohlFlu5daB3iuhu
-         TfnA==
-X-Received: by 10.68.195.231 with SMTP id ih7mr8243213pbc.26.1440690734430;
-        Thu, 27 Aug 2015 08:52:14 -0700 (PDT)
+        h=from:to:subject:date:message-id:in-reply-to:references;
+        bh=BDL5n3gtnmn0b6t8JvgPloXPoPV66Be+db23iLSsahM=;
+        b=w/ZupjShWHKgQQsSzrHygbkHD+ciDqPOl338HkKTW0djkVTlyLV8N9Yqez7Le+iB6O
+         iESVK3DNW7QDly2sz/Oaw762AOVN89ycSZVUVXawv3zSLPPr3aS6wHC1fw7blVlIKEua
+         nQtikDEikXKkmh9wib0fNVVON75dyj9VwcEJZ56ukl/Mc7u/YJxQxMbwz+tucJK4wt1T
+         U2fjRvYe4muOBo62DI13cZIHiXbc2mnpeHWmA4T5T6jQhU5+e3GiPkvTC4+lFpCyDJD6
+         aEHgpc29E5HR5fFLDP1+DrgtE2zZ6lZCtm3ehKVtlg+U5EhJvcxhhkhNAAWFRsutAfjX
+         bfCQ==
+X-Received: by 10.66.65.234 with SMTP id a10mr14585221pat.2.1440691116803;
+        Thu, 27 Aug 2015 08:58:36 -0700 (PDT)
 Received: from localhost.localdomain ([220.120.166.123])
-        by smtp.gmail.com with ESMTPSA id ey3sm360558pbd.28.2015.08.27.08.52.12
+        by smtp.gmail.com with ESMTPSA id qp5sm2873430pbc.0.2015.08.27.08.58.35
         for <git@vger.kernel.org>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 27 Aug 2015 08:52:13 -0700 (PDT)
+        Thu, 27 Aug 2015 08:58:36 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0
+In-Reply-To: <1440690553-28582-1-git-send-email-namhyung@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276680>
 
 Some users might want to see diff (patch) output always rather than
 diffstat when [s]he runs 'git stash show'.  Although this can be done
@@ -85,7 +87,7 @@ index 375213f..e00f67e 100644
  pop [--index] [-q|--quiet] [<stash>]::
  
 diff --git a/git-stash.sh b/git-stash.sh
-index 1d5ba7a..f48a97d 100755
+index 1d5ba7a..992fb02 100755
 --- a/git-stash.sh
 +++ b/git-stash.sh
 @@ -305,7 +305,12 @@ show_stash () {
@@ -95,10 +97,10 @@ index 1d5ba7a..f48a97d 100755
 -	git diff ${FLAGS:---stat} $b_commit $w_commit
 +	if test -z "$FLAGS"
 +	then
-+		show_flag=$(git config --get stash.showFlag || echo "--stat")
++		FLAGS=$(git config --get stash.showFlag || echo "--stat")
 +	fi
 +
-+	git diff ${FLAGS:-${show_flag}} $b_commit $w_commit
++	git diff ${FLAGS} $b_commit $w_commit
  }
  
  show_help () {
