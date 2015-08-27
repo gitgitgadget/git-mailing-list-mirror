@@ -1,316 +1,63 @@
 From: larsxschneider@gmail.com
 Subject: [PATCH v8] git-p4: Obey core.ignorecase when using P4 client specs
-Date: Thu, 27 Aug 2015 14:52:28 +0200
-Message-ID: <1440679948-28271-2-git-send-email-larsxschneider@gmail.com>
-References: <1440679948-28271-1-git-send-email-larsxschneider@gmail.com>
+Date: Thu, 27 Aug 2015 14:52:27 +0200
+Message-ID: <1440679948-28271-1-git-send-email-larsxschneider@gmail.com>
 Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 27 14:52:46 2015
+X-From: git-owner@vger.kernel.org Thu Aug 27 14:52:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUwfY-00044E-9I
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 14:52:40 +0200
+	id 1ZUwfZ-00044E-68
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 14:52:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752844AbbH0Mwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 08:52:35 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:37475 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752010AbbH0Mwe (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752525AbbH0Mwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 27 Aug 2015 08:52:34 -0400
-Received: by widdq5 with SMTP id dq5so44205176wid.0
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 05:52:31 -0700 (PDT)
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:37466 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751988AbbH0Mwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 08:52:34 -0400
+Received: by widdq5 with SMTP id dq5so44204802wid.0
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 05:52:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+vUaRbJQQSPVzrzlhcC33Uwq9qRrA4SpD+rRwrQ/oUY=;
-        b=fHjdACl1wAceTvQOM3USq6NR3s6lyO8WHuHfkTwda5YzG8FSI4uxEo8jCIn8RN5xYj
-         b5VjzVphxMrrN9xKEeOYyZeuCy8/CC/XMgmfjrWxf3Uslp6nEb2LVzvv6HfUaVTs7WTV
-         Y7lb8bMIvHv3BKSK3G52Ya+boqbR7rMkpIY3PsfR/YgYgpSgoGz6qTJsgWCRIN9QZx7Q
-         oBDiseu0A0xvsRdDLUHlgW/5WDOclIZOtQw9DMECLSvx0d1yazmQu2XO1MCuufB1nQ+E
-         u8RM63yzYnrMRcEh5ICrk8BSm+z20QFJI7RXSzbe7wXZjBwYYfflqiw36KC1gdBwmdCX
-         rMmQ==
-X-Received: by 10.180.198.50 with SMTP id iz18mr19220811wic.35.1440679951458;
-        Thu, 27 Aug 2015 05:52:31 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=uV7fP2/1ZL8c+tbuUJCs+piNss+FuaCfn1m5LfGqLB0=;
+        b=rq4f/iFEWPVsTtTMs0bc++kVLfRXn/OnXRFQXHqsauj8xLR4keqkcTZfL501cDr3IT
+         hSuIgDcUL8pzGwMi/J39Mv5rlxNCy592WO/lrTwAtcYeIEasRCX1lJB8WgM0TOjwFU9J
+         ZyhWNe7APKi1We798O1BfcjGPiaBRcKRbidv++1L8TSfppovAWjjUle5r5Oxj1Q5cp/x
+         TA7CJ2K11WbvQX8SUbpi0zG5jKHas1iVk4QnZ7bIE3ihejDDD7ZAUs9lCFHNgWWnXMAk
+         o2zmnXNQxmRNF0fptbc1GJOGwsFAgSIfLY6f9RtHDzpn/l9KNp/nRz4XIb9tNArQQ3nl
+         Q02g==
+X-Received: by 10.194.114.37 with SMTP id jd5mr4886429wjb.34.1440679950651;
+        Thu, 27 Aug 2015 05:52:30 -0700 (PDT)
 Received: from slxBook3.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id w8sm3503074wiy.10.2015.08.27.05.52.30
+        by smtp.gmail.com with ESMTPSA id w8sm3503074wiy.10.2015.08.27.05.52.29
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Thu, 27 Aug 2015 05:52:30 -0700 (PDT)
 X-Mailer: git-send-email 1.9.5 (Apple Git-50.3)
-In-Reply-To: <1440679948-28271-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276671>
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Perforce depot may record paths in mixed cases, e.g. "p4 files" may
-show that there are these two paths:
+I realized after reading the mailing list that my v7 was signed off twice. I fixed that in v8.
 
-   //depot/Path/to/file1
-   //depot/pATH/to/file2
+Sorry for the spam,
+Lars
 
-and with "p4" or "p4v", these end up in the same directory, e.g.
+Lars Schneider (1):
+  git-p4: Obey core.ignorecase when using P4 client specs
 
-   //depot/Path/to/file1
-   //depot/Path/to/file2
-
-which is the desired outcome on case insensitive systems.
-
-If git-p4 is used with client spec "//depot/Path/...", however, then
-all files not matching the case in the client spec are ignored (in
-the example above "//depot/pATH/to/file2").
-
-Fix this by using the path case that appears first in lexicographical
-order when core.ignorcase is set to true. This behavior is consistent
-with "p4" and "p4v".
-
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-Acked-by: Luke Diamand <luke@diamand.org>
----
  git-p4.py                         |   7 ++
  t/t9821-git-p4-path-variations.sh | 200 ++++++++++++++++++++++++++++++++++++++
  2 files changed, 207 insertions(+)
  create mode 100755 t/t9821-git-p4-path-variations.sh
 
-diff --git a/git-p4.py b/git-p4.py
-index 073f87b..0093fa3 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1950,10 +1950,14 @@ class View(object):
-             if "unmap" in res:
-                 # it will list all of them, but only one not unmap-ped
-                 continue
-+            if gitConfigBool("core.ignorecase"):
-+                res['depotFile'] = res['depotFile'].lower()
-             self.client_spec_path_cache[res['depotFile']] = self.convert_client_path(res["clientFile"])
-
-         # not found files or unmap files set to ""
-         for depotFile in fileArgs:
-+            if gitConfigBool("core.ignorecase"):
-+                depotFile = depotFile.lower()
-             if depotFile not in self.client_spec_path_cache:
-                 self.client_spec_path_cache[depotFile] = ""
-
-@@ -1962,6 +1966,9 @@ class View(object):
-            depot file should live.  Returns "" if the file should
-            not be mapped in the client."""
-
-+        if gitConfigBool("core.ignorecase"):
-+            depot_path = depot_path.lower()
-+
-         if depot_path in self.client_spec_path_cache:
-             return self.client_spec_path_cache[depot_path]
-
-diff --git a/t/t9821-git-p4-path-variations.sh b/t/t9821-git-p4-path-variations.sh
-new file mode 100755
-index 0000000..81e46ac
---- /dev/null
-+++ b/t/t9821-git-p4-path-variations.sh
-@@ -0,0 +1,200 @@
-+#!/bin/sh
-+
-+test_description='Clone repositories with path case variations'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d with case folding enabled' '
-+	start_p4d -C1
-+'
-+
-+test_expect_success 'Create a repo with path case variations' '
-+	client_view "//depot/... //client/..." &&
-+	(
-+		cd "$cli" &&
-+
-+		mkdir -p Path/to &&
-+		>Path/to/File2.txt &&
-+		p4 add Path/to/File2.txt &&
-+		p4 submit -d "Add file2" &&
-+		rm -rf Path &&
-+
-+		mkdir -p path/TO &&
-+		>path/TO/file1.txt &&
-+		p4 add path/TO/file1.txt &&
-+		p4 submit -d "Add file1" &&
-+		rm -rf path &&
-+
-+		mkdir -p path/to &&
-+		>path/to/file3.txt &&
-+		p4 add path/to/file3.txt &&
-+		p4 submit -d "Add file3" &&
-+		rm -rf path &&
-+
-+		mkdir -p x-outside-spec &&
-+		>x-outside-spec/file4.txt &&
-+		p4 add x-outside-spec/file4.txt &&
-+		p4 submit -d "Add file4" &&
-+		rm -rf x-outside-spec
-+	)
-+'
-+
-+test_expect_success 'Clone root' '
-+	client_view "//depot/... //client/..." &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git init . &&
-+		git config core.ignorecase false &&
-+		git p4 clone --use-client-spec --destination="$git" //depot &&
-+		# This method is used instead of "test -f" to ensure the case is
-+		# checked even if the test is executed on case-insensitive file systems.
-+		# All files are there as expected although the path cases look random.
-+		cat >expect <<-\EOF &&
-+		Path/to/File2.txt
-+		path/TO/file1.txt
-+		path/to/file3.txt
-+		x-outside-spec/file4.txt
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'Clone root (ignorecase)' '
-+	client_view "//depot/... //client/..." &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git init . &&
-+		git config core.ignorecase true &&
-+		git p4 clone --use-client-spec --destination="$git" //depot &&
-+		# This method is used instead of "test -f" to ensure the case is
-+		# checked even if the test is executed on case-insensitive file systems.
-+		# All files are there as expected although the path cases look random.
-+		cat >expect <<-\EOF &&
-+		path/TO/File2.txt
-+		path/TO/file1.txt
-+		path/TO/file3.txt
-+		x-outside-spec/file4.txt
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'Clone root and ignore one file' '
-+	client_view \
-+		"//depot/... //client/..." \
-+		"-//depot/path/TO/file1.txt //client/path/TO/file1.txt" &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git init . &&
-+		git config core.ignorecase false &&
-+		git p4 clone --use-client-spec --destination="$git" //depot &&
-+		# We ignore one file in the client spec and all path cases change from
-+		# "TO" to "to"!
-+		cat >expect <<-\EOF &&
-+		Path/to/File2.txt
-+		path/to/file3.txt
-+		x-outside-spec/file4.txt
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'Clone root and ignore one file (ignorecase)' '
-+	client_view \
-+		"//depot/... //client/..." \
-+		"-//depot/path/TO/file1.txt //client/path/TO/file1.txt" &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git init . &&
-+		git config core.ignorecase true &&
-+		git p4 clone --use-client-spec --destination="$git" //depot &&
-+		# We ignore one file in the client spec and all path cases change from
-+		# "TO" to "to"!
-+		cat >expect <<-\EOF &&
-+		Path/to/File2.txt
-+		Path/to/file3.txt
-+		x-outside-spec/file4.txt
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'Clone path' '
-+	client_view "//depot/Path/... //client/..." &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git init . &&
-+		git config core.ignorecase false &&
-+		git p4 clone --use-client-spec --destination="$git" //depot &&
-+		cat >expect <<-\EOF &&
-+		to/File2.txt
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'Clone path (ignorecase)' '
-+	client_view "//depot/Path/... //client/..." &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git init . &&
-+		git config core.ignorecase true &&
-+		git p4 clone --use-client-spec --destination="$git" //depot &&
-+		cat >expect <<-\EOF &&
-+		TO/File2.txt
-+		TO/file1.txt
-+		TO/file3.txt
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# It looks like P4 determines the path case based on the first file in
-+# lexicographical order. Please note the lower case "to" directory for all
-+# files triggered through the addition of "File0.txt".
-+test_expect_success 'Add a new file and clone path with new file (ignorecase)' '
-+	client_view "//depot/... //client/..." &&
-+	(
-+		cd "$cli" &&
-+		mkdir -p Path/to &&
-+		>Path/to/File0.txt &&
-+		p4 add Path/to/File0.txt &&
-+		p4 submit -d "Add file" &&
-+		rm -rf Path
-+	) &&
-+
-+	client_view "//depot/Path/... //client/..." &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git init . &&
-+		git config core.ignorecase true &&
-+		git p4 clone --use-client-spec --destination="$git" //depot &&
-+		cat >expect <<-\EOF &&
-+		to/File0.txt
-+		to/File2.txt
-+		to/file1.txt
-+		to/file3.txt
-+		EOF
-+		git ls-files >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
 --
 1.9.5 (Apple Git-50.3)
