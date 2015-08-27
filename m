@@ -1,143 +1,123 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v13 05/12] ref-filter: add option to filter out tags,
- branches and remotes
-Date: Thu, 27 Aug 2015 21:05:08 +0530
-Message-ID: <CAOLa=ZS3_sSaMjkSchdQGE1s5bgg00DPWe=F+KsUdjQt=opDyg@mail.gmail.com>
-References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
- <1440214788-1309-6-git-send-email-Karthik.188@gmail.com> <55DDE4DB.2070504@alum.mit.edu>
- <CAOLa=ZQh0MNwjAOLameh1f22LB=JyD7=FeROzDRikpoRXse7cw@mail.gmail.com> <55DF2BA1.2020107@alum.mit.edu>
+From: Namhyung Kim <namhyung@gmail.com>
+Subject: Re: [PATCH] stash: Add stash.showFlag config variable
+Date: Fri, 28 Aug 2015 00:36:35 +0900
+Message-ID: <CAM9d7chUf=srU060Q4+qQ4mFBaXmRL0yQ1Ns4UeWcDj62CFoYg@mail.gmail.com>
+References: <1440683528-11725-1-git-send-email-namhyung@gmail.com> <1440688825-1303-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 27 17:35:46 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Aug 27 17:37:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUzDL-0006d9-39
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 17:35:43 +0200
+	id 1ZUzEa-0007Y1-0T
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 17:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754130AbbH0Pfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 11:35:39 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:34341 "EHLO
-	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753842AbbH0Pfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2015 11:35:38 -0400
-Received: by oiex83 with SMTP id x83so13610894oie.1
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 08:35:37 -0700 (PDT)
+	id S1753101AbbH0Pg4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Aug 2015 11:36:56 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:33558 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752010AbbH0Pgz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2015 11:36:55 -0400
+Received: by igbjg10 with SMTP id jg10so19559283igb.0
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 08:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=JYXTIllBb8v75t26pkct6lnT/6fPJ3GuSBU0tM3abZ8=;
-        b=ZpLehXJxwcPe8kAEH/6y5XlCW3Ii3moRl9y2HTS+LgW78V2ZmwLcwGBG6l9T0Xd2Ii
-         KZbMcjF86ORUea7HGy9wgbOCPxQmJYIJyYH2vEJzBp+uU/UWIi8YEbal++s+45zJNDeg
-         EXrWFUrA3r96uVIq6Wi6LPxeHU5mC3Jo+XliucnLYarx8H3TreGPN2uivAgrDPuHK/Et
-         BuFKXHSHnQiVs/iHa9S7+XpQNfRaY24YBn4ptEexp6ejayv4ek8ILPrw0upkA3fP/FfL
-         1GOkt1yH3/VTSkdIraj0SNDD6i79giwyfmR5aH8PaL0jC9GeWLFvVkbWhzURnhy4DSwV
-         pmfw==
-X-Received: by 10.202.105.133 with SMTP id e127mr2831492oic.60.1440689737638;
- Thu, 27 Aug 2015 08:35:37 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Thu, 27 Aug 2015 08:35:08 -0700 (PDT)
-In-Reply-To: <55DF2BA1.2020107@alum.mit.edu>
+         :cc:content-type:content-transfer-encoding;
+        bh=NxMwwOy0wv1wnVhmfQ3WG/6yICGHnSnAQvHRMDXskPc=;
+        b=TkkQ/AC/ziXink3CupzspampjKFcbHi1WaksEPR4fMppHyOnF7KaAIBsZS24RHaPp/
+         CKsvErjwGfZDZ2xqRp9v8fVEIgQAM+bnL2z3VFa9gzka5qzmPkGm16P5GsSeabfEfdb9
+         IUMADhdKxZHAEH8rzo7Tcv0u4TOABvqusQ30yRDHSTRxyBI3cCubJQPOZNKvKB4Glglf
+         9XzsLLYwnJO41hwTNz7b72AdXn9iMuxk72M0xFVd3Mzxo3089b8q1foia9/rhNfBJ9OQ
+         1C4jXV7yMY2udCm5uVU9rmNshcvDH37kENskf8kZ+koqfHWEeBdEsruWiKLjF8iPz45F
+         RcYA==
+X-Received: by 10.50.17.9 with SMTP id k9mr10650039igd.93.1440689814973; Thu,
+ 27 Aug 2015 08:36:54 -0700 (PDT)
+Received: by 10.107.20.5 with HTTP; Thu, 27 Aug 2015 08:36:35 -0700 (PDT)
+In-Reply-To: <1440688825-1303-1-git-send-email-szeder@ira.uka.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276678>
 
-On Thu, Aug 27, 2015 at 8:54 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 08/27/2015 02:42 PM, Karthik Nayak wrote:
->> On Wed, Aug 26, 2015 at 9:40 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> On 08/22/2015 05:39 AM, Karthik Nayak wrote:
->>>> [...]
->>>> +     if (type == FILTER_REFS_BRANCHES)
->>>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "refs/heads/", broken, &ref_cbdata);
->>>> +     else if (type == FILTER_REFS_REMOTES)
->>>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "refs/remotes/", broken, &ref_cbdata);
->>>> +     else if (type == FILTER_REFS_TAGS)
->>>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "refs/tags/", broken, &ref_cbdata);
->>>> +     else if (type & FILTER_REFS_ALL) {
->>>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "", broken, &ref_cbdata);
->>>> +             if (type & FILTER_REFS_DETACHED_HEAD)
->>>> +                     head_ref(ref_filter_handler, &ref_cbdata);
->>>
->>> The usual promise of the for_each_ref functions is that they stop
->>> iterating if the function ever returns a nonzero value. So the above
->>> should be
->>>
->>>                 if (! ret && (type & FILTER_REFS_DETACHED_HEAD))
->>>                         ret = head_ref(ref_filter_handler, &ref_cbdata);
->>>
->>> Also, these functions usually iterate in lexicographic order, so I think
->>> you should process HEAD before the others.
+Hi,
+
+On Fri, Aug 28, 2015 at 12:20 AM, SZEDER G=C3=A1bor <szeder@ira.uka.de>=
+ wrote:
+> Hi,
+>
+> I haven't made up my mind about this feature yet, but have a few
+> comments about its implementation.
+
+Thanks for taking your time!
+
+>
+>> diff --git a/git-stash.sh b/git-stash.sh
+>> index 1d5ba7a..8432435 100755
+>> --- a/git-stash.sh
+>> +++ b/git-stash.sh
+>> @@ -33,6 +33,12 @@ else
+>>         reset_color=3D
+>>  fi
 >>
->> This is done on purpose, cause we need to print the HEAD ref separately
->> so we print the last ref_array_item in the ref_array, free that memory and
->> sort and print the rest, hence HEAD ref is attached to the last.
+>> +if git config --get stash.showflag > /dev/null 2> /dev/null; then
+>> +     show_flag=3D$(git config --get stash.showflag)
+>> +else
+>> +     show_flag=3D--stat
+>> +fi
+>> +
 >
-> Without having looked at the other patches, this makes me wonder whether
-> it makes sense to store HEAD in the ref_array at all or whether it
-> should be handled separately.
+> Forking and executing processes are costly on some important platform=
+s
+> we care about, so we should strive to avoid them whenever possible.
 >
+>  - This hunk runs the the exact same 'git config' command twice.  Run=
+ it
+>    only once, perhaps something like this:
+>
+>      show_flag=3D$(git config --get stash.showflag || echo --stat)
+>
+>    (I hope there are no obscure crazy 'echo' implemtations out there
+>    that might barf on the unknown option '--stat'...)
 
-Well then we'd need another ref_array just for that, that also could
-be an option.
-But apart from printing it first, everything else is the same for all the refs.
+What about `echo "--stat"` then?
 
->>> But there's another problem here. It seems like
->>> FILTER_REFS_DETACHED_HEAD is only processed if (type & FILTER_REFS_ALL)
->>> is nonzero. But shouldn't it be allowed to process *only* HEAD?
->>>
->>> So, finally, I think this code should look like
->>>
->>>         else if (!filter->kind)
->>>                 die("filter_refs: invalid type");
->>>         else {
->>>                 if (filter->kind & FILTER_REFS_DETACHED_HEAD)
->>>                         ret = head_ref(ref_filter_handler, &ref_cbdata);
->>>                 if (! ret && (filter->kind & FILTER_REFS_ALL))
->>>                         ret =
->>> for_each_reftype_fullpath(ref_filter_handler, "", broken, &ref_cbdata);
->>>         }
->>>
+>
+>  - It runs 'git config' in the main code path, i.e. even for subcomma=
+nds
+>    other than 'show'.  Run it only for 'git stash show'.
+>
+>  - This config setting is not relevant if there were options given on=
+ the
+>    command line.  Run it only if there are no options given, i.e. whe=
+n
+>    $FLAGS is empty.
+
+=46air enough.  I'll resend v2.
+
+Thanks,
+Namhyung
+
+
+>
+>
+>>  no_changes () {
+>>       git diff-index --quiet --cached HEAD --ignore-submodules -- &&
+>>       git diff-files --quiet --ignore-submodules &&
+>> @@ -305,7 +311,7 @@ show_stash () {
+>>       ALLOW_UNKNOWN_FLAGS=3Dt
+>>       assert_stash_like "$@"
 >>
->> So finally something like this perhaps
+>> -     git diff ${FLAGS:---stat} $b_commit $w_commit
+>> +     git diff ${FLAGS:-${show_flag}} $b_commit $w_commit
+>>  }
 >>
->>     if (!filter->kind)
->>         die("filter_refs: invalid type");
->>     else {
->>         if (filter->kind == FILTER_REFS_BRANCHES)
->>             ret = for_each_reftype_fullpath(ref_filter_handler,
->> "refs/heads/", broken, &ref_cbdata);
->>         else if (filter->kind == FILTER_REFS_REMOTES)
->>             ret = for_each_reftype_fullpath(ref_filter_handler,
->> "refs/remotes/", broken, &ref_cbdata);
->>         else if (filter->kind == FILTER_REFS_TAGS)
->>             ret = for_each_reftype_fullpath(ref_filter_handler,
->> "refs/tags/", broken, &ref_cbdata);
->>         else if (filter->kind & FILTER_REFS_ALL)
->>             ret = for_each_reftype_fullpath(ref_filter_handler, "",
->> broken, &ref_cbdata);
->>         if (filter->kind & FILTER_REFS_DETACHED_HEAD)
->>             head_ref(ref_filter_handler, &ref_cbdata);
->>     }
->
-> Yes, but the last test should be
->
->         if (!ret && (filter->kind & FILTER_REFS_DETACHED_HEAD))
->
-> unless you have a reason not to follow the usual convention that a
-> nonzero return value from fn means that the iteration should be aborted.
->
-
-No, of course, I missed that while typing here.
-
--- 
-Regards,
-Karthik Nayak
+>>  show_help () {
+>> --
+>> 2.5.0
