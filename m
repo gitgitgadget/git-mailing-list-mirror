@@ -1,140 +1,128 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/5] thread-utils: add a threaded task queue
-Date: Thu, 27 Aug 2015 10:02:42 -0700
-Message-ID: <CAGZ79kZQ6z8L6Cp-Z56EBq1e-700NsxW9XmFq7fXuMwtUyRSvg@mail.gmail.com>
-References: <1440636766-12738-1-git-send-email-sbeller@google.com>
-	<1440636766-12738-3-git-send-email-sbeller@google.com>
-	<a35977776a7ea97b0ddd4d1921e3e95f@www.dscho.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 27 19:02:56 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH] commit: don't rewrite shared index unnecessarily
+Date: Thu, 27 Aug 2015 13:07:54 -0400
+Message-ID: <1440695274-12400-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org, pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Thu Aug 27 19:08:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZV0Zc-0004NF-JZ
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 19:02:48 +0200
+	id 1ZV0ew-00005z-U6
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 19:08:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752469AbbH0RCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 13:02:44 -0400
-Received: from mail-yk0-f175.google.com ([209.85.160.175]:35174 "EHLO
-	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752203AbbH0RCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2015 13:02:43 -0400
-Received: by ykbi184 with SMTP id i184so26660464ykb.2
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 10:02:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=AhHl26AHhANlx1HmTBJVpp2VZtFshScWWOaPQNc6CsQ=;
-        b=dgHEx3zSPx3lI9EBekbAjxJFZLOvYtKWiZKUJ3mtkgTvqiyLNbckjnFUQGq/mBMJ9c
-         EZNggqbCNOlYQ/cVwN2mQtKPuWdSqjNs3o18iFIDHr/z3lTdi26xyzfDzwM54BZJzCvh
-         JEewqBY/Qe36s6Qqqj03yIFpP/VzTMfQgfxJi3e+6feKj2M2ksXP1hp9oxeSKqum7Y8L
-         nTY+gJfUQisBjy3aLg9CLe9Q5Yu52K7e8+3MDcktWKxnUeeIp5LR3SN2ke3hH/mNjwo6
-         Hci8GkE99+sIWH+Npc/L23xs0aTRugIIjayZffK7rRQFFk8dc73sfYJgfLZXG8WvapAo
-         FOig==
+	id S1752345AbbH0RIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2015 13:08:04 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:36686 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751531AbbH0RIC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 13:08:02 -0400
+Received: by qgeb6 with SMTP id b6so14426884qge.3
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 10:08:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=AhHl26AHhANlx1HmTBJVpp2VZtFshScWWOaPQNc6CsQ=;
-        b=mepptun5yFbQm2kpJ67zNAsOG6wdAIJGD4Qv95Wu+PWPME59N/KBD0BbxOLWptvTvj
-         UCgDelKlEjy6uX4NrhpRAS+HC6WZxrgSYcpwkJTQvSysN8uHeUorHbEDAh+yqDXv1q+w
-         vYNQod78+wkyBcuwEnFHnpPaii1To7eIjZ4+Wg9sewFEc8i9QbJIolgb1iHjVCfK7+Gt
-         ISwI1NtRHX5mfYUPq+u5Jhk2dTzDHDX+3oRpMkNvssri7eZPo7a/6nj0JG8FzEv97GHn
-         fSmle245XADGD4WqkUcqFjfN6K42jCrHWZDSqoHLpm47rzOH0FI2N+tDiDHFjxoEUQDl
-         Pi5A==
-X-Gm-Message-State: ALoCoQktaLm/Edik1O8GLODQmfaeIenKUh52MQohvVi3T/3Rzt/g2QYgRXLnMvHshi6VvEjepmBm
-X-Received: by 10.129.16.212 with SMTP id 203mr3641904ywq.142.1440694962889;
- Thu, 27 Aug 2015 10:02:42 -0700 (PDT)
-Received: by 10.37.21.132 with HTTP; Thu, 27 Aug 2015 10:02:42 -0700 (PDT)
-In-Reply-To: <a35977776a7ea97b0ddd4d1921e3e95f@www.dscho.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=qkKBSlb7quRGUqa53uWAF3gMukAO+zSi7A5y8A8iC3Q=;
+        b=TZB/FXbevJRWPDng3MKW+ZGDv7tpqiymJgDqb1tiaPZnIxapvwv1lUMQ98MlYO19n1
+         Y5dSKkzKFkJecciRrVLGS3Y8oqz1L4a5QioQZyVJxgTByFr2yf7WTuXr4gWM5brr/Vab
+         qVCj219eYq0HgrJo9rkkRLoKb0PELtWp4Eir7qDg8pKbG5o9xWyG2uU4dT9GbISzZ3CN
+         YuG+cqLchW3tAG0KVxTLf9ls0SA2rinS7XinG+sNq1J+xgUEmPC9WEtgVw7V05pdQfxe
+         q6zdDC2nFbb9N2bmCLhcDr0fY2jPzp72237PEVzfRZqHNCDurP9GRUmhX/ohDNfHLu2i
+         s0GA==
+X-Gm-Message-State: ALoCoQk+dHIQj02XTR6b248WE0RX9dypQQ4QhmQSTIiRueeOJrrGYWGu9dLqCwNE7Y4/Vt5oAYR7
+X-Received: by 10.140.238.3 with SMTP id j3mr9439034qhc.14.1440695281329;
+        Thu, 27 Aug 2015 10:08:01 -0700 (PDT)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id y7sm1595517qky.20.2015.08.27.10.07.59
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 27 Aug 2015 10:08:00 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2.622.gac67c30-twtrsrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276684>
 
-On Thu, Aug 27, 2015 at 5:59 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Hi Stefan,
->
-> On 2015-08-27 02:52, Stefan Beller wrote:
->
->> diff --git a/run-command.c b/run-command.c
->> index 28e1d55..cb15cd9 100644
->> --- a/run-command.c
->> +++ b/run-command.c
->> @@ -668,6 +668,22 @@ int git_atexit(void (*handler)(void))
->>
->>  #endif
->>
->> +void setup_main_thread(void)
->> [...]
->>
->> diff --git a/thread-utils.c b/thread-utils.c
->> index a2135e0..b45ab92 100644
->> --- a/thread-utils.c
->> +++ b/thread-utils.c
->> [...]
->> +/* FIXME: deduplicate this code with run-command.c */
->> +static void setup_main_thread(void)
->
-> Do you remember off-hand why the code could not be moved to thread-utils.c wholesale? Just curious.
+Remove a cache invalidation which would cause the shared index to be
+rewritten on as-is commits.
 
-The code in run-command has a few things regarding the struct async
-handling in there,
-which we don't  need/want. I just realized there is some duplicate
-code, but I couldn't cut
-it clearly out.
+When the cache-tree has changed, we need to update it.  But we don't
+necessarily need to update the shared index.  So setting
+active_cache_changed to SOMETHING_CHANGED is unnecessary.  Instead, we
+let update_main_cache_tree just update the CACHE_TREE_CHANGED bit.
 
->
->> +#else /* NO_PTHREADS */
->> +
->> +struct task_queue {
->> +     int early_return;
->> +};
->> +
->> +struct task_queue *create_task_queue(unsigned max_threads)
->> +{
->> +     struct task_queue *tq = xmalloc(sizeof(*tq));
->> +
->> +     tq->early_return = 0;
->> +}
->> +
->> +void add_task(struct task_queue *tq,
->> +           int (*fct)(struct task_queue *tq, void *task),
->
-> Might make sense to typedef this... Maybe task_t?
->
->> +           void *task)
->> +{
->> +     if (tq->early_return)
->> +             return;
->
-> Ah, so "early_return" actually means "interrupted" or "canceled"?
+In order to test this, make test-dump-split-index not segfault on
+missing replace_bitmap/delete_bitmap.  This new codepath is not called
+now that the test passes, but is necessary to avoid a segfault when the
+new test is run with the old builtin/commit.c code.
 
-The early_return is meant to return early in case of an error in some thread.
-In the threaded version, the `dispatcher` is executed in each thread.
-It gets its
-new tasks via `next_task`, which takes the early_return value from the thread,
-ORs it into the early_return of the task queue (which all threads have
-access to).
-So by the ORing into the task queues early_return the signal to abort
-early is propagated to a place all threads have access to. And in case
-that value is
-set, the `next_task` will return NULL as an indication to cleanup and
-pthread_exit.
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
 
->
-> I guess I will have to set aside some time to wrap my head around the way tasks are handled here, in particular how the two `early_return` variables (`dispatcher()`'s local variable and the field in the `task_queue`) interact.
->
-> Thanks!
-> Dscho
+I introduced this bug last year while improving the cache-tree code.
+I guess I probably didn't notice that active_cache_changed wasn't a
+boolean.
+
+---
+ builtin/commit.c        |  4 +---
+ t/t0090-cache-tree.sh   | 10 ++++++++++
+ test-dump-split-index.c |  6 ++++--
+ 3 files changed, 15 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 254477f..1692620 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -404,10 +404,8 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 		hold_locked_index(&index_lock, 1);
+ 		refresh_cache_or_die(refresh_flags);
+ 		if (active_cache_changed
+-		    || !cache_tree_fully_valid(active_cache_tree)) {
++		    || !cache_tree_fully_valid(active_cache_tree))
+ 			update_main_cache_tree(WRITE_TREE_SILENT);
+-			active_cache_changed = 1;
+-		}
+ 		if (active_cache_changed) {
+ 			if (write_locked_index(&the_index, &index_lock,
+ 					       COMMIT_LOCK))
+diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+index 601d02d..f92dd1f 100755
+--- a/t/t0090-cache-tree.sh
++++ b/t/t0090-cache-tree.sh
+@@ -218,4 +218,14 @@ test_expect_success 'no phantom error when switching trees' '
+ 	! test -s errors
+ '
+ 
++test_expect_success 'switching trees does not invalidate shared index' '
++	git update-index --split-index &&
++	>split &&
++	git add split &&
++	test-dump-split-index .git/index | grep -v ^own >before &&
++	git commit -m "as-is" &&
++	test-dump-split-index .git/index | grep -v ^own >after &&
++	test_cmp before after
++'
++
+ test_done
+diff --git a/test-dump-split-index.c b/test-dump-split-index.c
+index 9cf3112..861d28c 100644
+--- a/test-dump-split-index.c
++++ b/test-dump-split-index.c
+@@ -26,9 +26,11 @@ int main(int ac, char **av)
+ 		       sha1_to_hex(ce->sha1), ce_stage(ce), ce->name);
+ 	}
+ 	printf("replacements:");
+-	ewah_each_bit(si->replace_bitmap, show_bit, NULL);
++	if (si->replace_bitmap)
++		ewah_each_bit(si->replace_bitmap, show_bit, NULL);
+ 	printf("\ndeletions:");
+-	ewah_each_bit(si->delete_bitmap, show_bit, NULL);
++	if (si->delete_bitmap)
++		ewah_each_bit(si->delete_bitmap, show_bit, NULL);
+ 	printf("\n");
+ 	return 0;
+ }
+-- 
+2.4.2.622.gac67c30-twtrsrc
