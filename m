@@ -1,50 +1,50 @@
 From: larsxschneider@gmail.com
-Subject: [PATCH v7] git-p4: Obey core.ignorecase when using P4 client specs
-Date: Thu, 27 Aug 2015 14:47:14 +0200
-Message-ID: <1440679634-26738-2-git-send-email-larsxschneider@gmail.com>
-References: <1440679634-26738-1-git-send-email-larsxschneider@gmail.com>
+Subject: [PATCH v8] git-p4: Obey core.ignorecase when using P4 client specs
+Date: Thu, 27 Aug 2015 14:52:28 +0200
+Message-ID: <1440679948-28271-2-git-send-email-larsxschneider@gmail.com>
+References: <1440679948-28271-1-git-send-email-larsxschneider@gmail.com>
 Cc: git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 27 14:47:50 2015
+X-From: git-owner@vger.kernel.org Thu Aug 27 14:52:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUwao-0000jG-Md
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 14:47:47 +0200
+	id 1ZUwfY-00044E-9I
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 14:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755077AbbH0Mrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 08:47:42 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:34739 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932230AbbH0MrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2015 08:47:19 -0400
-Received: by widdq5 with SMTP id dq5so76911495wid.1
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 05:47:17 -0700 (PDT)
+	id S1752844AbbH0Mwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2015 08:52:35 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:37475 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752010AbbH0Mwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 08:52:34 -0400
+Received: by widdq5 with SMTP id dq5so44205176wid.0
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 05:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uCqxINmAr4SLufVpouMOwm1BkUXwIWUqhpOPHixUCAI=;
-        b=twh7L2P8EIl5+8ekiKR0nyGru8APJ1kp0pknTVPcMaBPSd6DiaxsgdncSf4pvqClKZ
-         4rNgDCj4SJn0aEkItm8qEuWw6EBQVQtVPPAiwdqees9Vy1VR7HJD6XuG7J295hkp0WH5
-         Zb3ZiPrcaMQli/I1NVv9c/Xf67uw825ln+DwRatWMf3gIclVA1SdD8qSz9XVfExzs85o
-         e03wQ87czTQ32CY+WmPKQBe80VdYkuqv7JMhjIaDAAiTQJdsrQbbnXjqVIvJwxOrwdy5
-         PD/kzNoggVxg585+sot6VofSrCYAIk9cBxFMlRg7z9ZpNJeBuFw9Ni/jAmQaC0OllaK9
-         sCgw==
-X-Received: by 10.180.219.41 with SMTP id pl9mr10646513wic.30.1440679637747;
-        Thu, 27 Aug 2015 05:47:17 -0700 (PDT)
+        bh=+vUaRbJQQSPVzrzlhcC33Uwq9qRrA4SpD+rRwrQ/oUY=;
+        b=fHjdACl1wAceTvQOM3USq6NR3s6lyO8WHuHfkTwda5YzG8FSI4uxEo8jCIn8RN5xYj
+         b5VjzVphxMrrN9xKEeOYyZeuCy8/CC/XMgmfjrWxf3Uslp6nEb2LVzvv6HfUaVTs7WTV
+         Y7lb8bMIvHv3BKSK3G52Ya+boqbR7rMkpIY3PsfR/YgYgpSgoGz6qTJsgWCRIN9QZx7Q
+         oBDiseu0A0xvsRdDLUHlgW/5WDOclIZOtQw9DMECLSvx0d1yazmQu2XO1MCuufB1nQ+E
+         u8RM63yzYnrMRcEh5ICrk8BSm+z20QFJI7RXSzbe7wXZjBwYYfflqiw36KC1gdBwmdCX
+         rMmQ==
+X-Received: by 10.180.198.50 with SMTP id iz18mr19220811wic.35.1440679951458;
+        Thu, 27 Aug 2015 05:52:31 -0700 (PDT)
 Received: from slxBook3.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id w8sm3482244wiy.10.2015.08.27.05.47.17
+        by smtp.gmail.com with ESMTPSA id w8sm3503074wiy.10.2015.08.27.05.52.30
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 27 Aug 2015 05:47:17 -0700 (PDT)
+        Thu, 27 Aug 2015 05:52:30 -0700 (PDT)
 X-Mailer: git-send-email 1.9.5 (Apple Git-50.3)
-In-Reply-To: <1440679634-26738-1-git-send-email-larsxschneider@gmail.com>
+In-Reply-To: <1440679948-28271-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276670>
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
@@ -71,7 +71,6 @@ with "p4" and "p4v".
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 Acked-by: Luke Diamand <luke@diamand.org>
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
  git-p4.py                         |   7 ++
  t/t9821-git-p4-path-variations.sh | 200 ++++++++++++++++++++++++++++++++++++++
@@ -89,24 +88,24 @@ index 073f87b..0093fa3 100755
 +            if gitConfigBool("core.ignorecase"):
 +                res['depotFile'] = res['depotFile'].lower()
              self.client_spec_path_cache[res['depotFile']] = self.convert_client_path(res["clientFile"])
- 
+
          # not found files or unmap files set to ""
          for depotFile in fileArgs:
 +            if gitConfigBool("core.ignorecase"):
 +                depotFile = depotFile.lower()
              if depotFile not in self.client_spec_path_cache:
                  self.client_spec_path_cache[depotFile] = ""
- 
+
 @@ -1962,6 +1966,9 @@ class View(object):
             depot file should live.  Returns "" if the file should
             not be mapped in the client."""
- 
+
 +        if gitConfigBool("core.ignorecase"):
 +            depot_path = depot_path.lower()
 +
          if depot_path in self.client_spec_path_cache:
              return self.client_spec_path_cache[depot_path]
- 
+
 diff --git a/t/t9821-git-p4-path-variations.sh b/t/t9821-git-p4-path-variations.sh
 new file mode 100755
 index 0000000..81e46ac
@@ -313,5 +312,5 @@ index 0000000..81e46ac
 +'
 +
 +test_done
--- 
+--
 1.9.5 (Apple Git-50.3)
