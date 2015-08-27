@@ -1,141 +1,143 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
+From: Karthik Nayak <karthik.188@gmail.com>
 Subject: Re: [PATCH v13 05/12] ref-filter: add option to filter out tags,
  branches and remotes
-Date: Thu, 27 Aug 2015 17:24:17 +0200
-Message-ID: <55DF2BA1.2020107@alum.mit.edu>
-References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com> <1440214788-1309-6-git-send-email-Karthik.188@gmail.com> <55DDE4DB.2070504@alum.mit.edu> <CAOLa=ZQh0MNwjAOLameh1f22LB=JyD7=FeROzDRikpoRXse7cw@mail.gmail.com>
+Date: Thu, 27 Aug 2015 21:05:08 +0530
+Message-ID: <CAOLa=ZS3_sSaMjkSchdQGE1s5bgg00DPWe=F+KsUdjQt=opDyg@mail.gmail.com>
+References: <1440214788-1309-1-git-send-email-Karthik.188@gmail.com>
+ <1440214788-1309-6-git-send-email-Karthik.188@gmail.com> <55DDE4DB.2070504@alum.mit.edu>
+ <CAOLa=ZQh0MNwjAOLameh1f22LB=JyD7=FeROzDRikpoRXse7cw@mail.gmail.com> <55DF2BA1.2020107@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 27 17:24:59 2015
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Aug 27 17:35:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZUz2q-0006o7-MY
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 17:24:53 +0200
+	id 1ZUzDL-0006d9-39
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Aug 2015 17:35:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386AbbH0PYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 11:24:46 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:50389 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753483AbbH0PYU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2015 11:24:20 -0400
-X-AuditID: 1207440c-f79e16d000002a6e-9e-55df2ba3c346
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id E5.1E.10862.3AB2FD55; Thu, 27 Aug 2015 11:24:19 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB3ABF.dip0.t-ipconnect.de [93.219.58.191])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t7RFOHCx025619
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 27 Aug 2015 11:24:18 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <CAOLa=ZQh0MNwjAOLameh1f22LB=JyD7=FeROzDRikpoRXse7cw@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRmVeSWpSXmKPExsUixO6iqLtY+36owYln5ha3Z7YwW3Rd6Way
-	aOi9wmwxe8sGNotLn9ezOrB67Jx1l91j4pfjrB4XLyl7fN4kF8ASxW2TlFhSFpyZnqdvl8Cd
-	8e52C3vBFZmKw1/WMzcwbhXtYuTkkBAwkfjU380GYYtJXLi3Hsjm4hASuMwo8XVZC5Rznkli
-	1evv7CBVvALaEqsmHAeyOThYBFQlmm/agITZBHQlFvU0M4HYogJBEiuWv2CEKBeUODnzCQuI
-	LSKgKXGgdSIryExmgfWMEh96zjCDzBEWSJA4fCgJYtcjRolruy+DDeIUCJTYvGcfM4jNLKAu
-	8WfeJShbXqJ562zmCYwCs5DsmIWkbBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdA31
-	cjNL9FJTSjcxQkKbZwfjt3UyhxgFOBiVeHgFEu+FCrEmlhVX5h5ilORgUhLljRK5HyrEl5Sf
-	UpmRWJwRX1Sak1p8iFGCg1lJhDddDCjHm5JYWZValA+TkuZgURLnVV2i7ickkJ5YkpqdmlqQ
-	WgSTleHgUJLgva8J1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPitX4YmC0gqR4
-	gPa+AGnnLS5IzAWKQrSeYlSUEudl0gJKCIAkMkrz4MbCEtYrRnGgL4V5BUGqeIDJDq77FdBg
-	JqDBL+PvggwuSURISTUwmpS7LLL1+8bO8qrnCnNz6/Ie96tvnKUtl05Qt192wJQh8I5CzpLj
-	+Q3Pnz/dH/jKditf3N+cCrXK3g6zujB//TfmnQ+3bBYIFkvlTDppEtjcGWRWmnj1 
+	id S1754130AbbH0Pfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2015 11:35:39 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:34341 "EHLO
+	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753842AbbH0Pfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 11:35:38 -0400
+Received: by oiex83 with SMTP id x83so13610894oie.1
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 08:35:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=JYXTIllBb8v75t26pkct6lnT/6fPJ3GuSBU0tM3abZ8=;
+        b=ZpLehXJxwcPe8kAEH/6y5XlCW3Ii3moRl9y2HTS+LgW78V2ZmwLcwGBG6l9T0Xd2Ii
+         KZbMcjF86ORUea7HGy9wgbOCPxQmJYIJyYH2vEJzBp+uU/UWIi8YEbal++s+45zJNDeg
+         EXrWFUrA3r96uVIq6Wi6LPxeHU5mC3Jo+XliucnLYarx8H3TreGPN2uivAgrDPuHK/Et
+         BuFKXHSHnQiVs/iHa9S7+XpQNfRaY24YBn4ptEexp6ejayv4ek8ILPrw0upkA3fP/FfL
+         1GOkt1yH3/VTSkdIraj0SNDD6i79giwyfmR5aH8PaL0jC9GeWLFvVkbWhzURnhy4DSwV
+         pmfw==
+X-Received: by 10.202.105.133 with SMTP id e127mr2831492oic.60.1440689737638;
+ Thu, 27 Aug 2015 08:35:37 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Thu, 27 Aug 2015 08:35:08 -0700 (PDT)
+In-Reply-To: <55DF2BA1.2020107@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276677>
 
-On 08/27/2015 02:42 PM, Karthik Nayak wrote:
-> On Wed, Aug 26, 2015 at 9:40 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> On 08/22/2015 05:39 AM, Karthik Nayak wrote:
->>> [...]
->>> +     if (type == FILTER_REFS_BRANCHES)
->>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "refs/heads/", broken, &ref_cbdata);
->>> +     else if (type == FILTER_REFS_REMOTES)
->>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "refs/remotes/", broken, &ref_cbdata);
->>> +     else if (type == FILTER_REFS_TAGS)
->>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "refs/tags/", broken, &ref_cbdata);
->>> +     else if (type & FILTER_REFS_ALL) {
->>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "", broken, &ref_cbdata);
->>> +             if (type & FILTER_REFS_DETACHED_HEAD)
->>> +                     head_ref(ref_filter_handler, &ref_cbdata);
+On Thu, Aug 27, 2015 at 8:54 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 08/27/2015 02:42 PM, Karthik Nayak wrote:
+>> On Wed, Aug 26, 2015 at 9:40 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>>> On 08/22/2015 05:39 AM, Karthik Nayak wrote:
+>>>> [...]
+>>>> +     if (type == FILTER_REFS_BRANCHES)
+>>>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "refs/heads/", broken, &ref_cbdata);
+>>>> +     else if (type == FILTER_REFS_REMOTES)
+>>>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "refs/remotes/", broken, &ref_cbdata);
+>>>> +     else if (type == FILTER_REFS_TAGS)
+>>>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "refs/tags/", broken, &ref_cbdata);
+>>>> +     else if (type & FILTER_REFS_ALL) {
+>>>> +             ret = for_each_reftype_fullpath(ref_filter_handler, "", broken, &ref_cbdata);
+>>>> +             if (type & FILTER_REFS_DETACHED_HEAD)
+>>>> +                     head_ref(ref_filter_handler, &ref_cbdata);
+>>>
+>>> The usual promise of the for_each_ref functions is that they stop
+>>> iterating if the function ever returns a nonzero value. So the above
+>>> should be
+>>>
+>>>                 if (! ret && (type & FILTER_REFS_DETACHED_HEAD))
+>>>                         ret = head_ref(ref_filter_handler, &ref_cbdata);
+>>>
+>>> Also, these functions usually iterate in lexicographic order, so I think
+>>> you should process HEAD before the others.
 >>
->> The usual promise of the for_each_ref functions is that they stop
->> iterating if the function ever returns a nonzero value. So the above
->> should be
+>> This is done on purpose, cause we need to print the HEAD ref separately
+>> so we print the last ref_array_item in the ref_array, free that memory and
+>> sort and print the rest, hence HEAD ref is attached to the last.
+>
+> Without having looked at the other patches, this makes me wonder whether
+> it makes sense to store HEAD in the ref_array at all or whether it
+> should be handled separately.
+>
+
+Well then we'd need another ref_array just for that, that also could
+be an option.
+But apart from printing it first, everything else is the same for all the refs.
+
+>>> But there's another problem here. It seems like
+>>> FILTER_REFS_DETACHED_HEAD is only processed if (type & FILTER_REFS_ALL)
+>>> is nonzero. But shouldn't it be allowed to process *only* HEAD?
+>>>
+>>> So, finally, I think this code should look like
+>>>
+>>>         else if (!filter->kind)
+>>>                 die("filter_refs: invalid type");
+>>>         else {
+>>>                 if (filter->kind & FILTER_REFS_DETACHED_HEAD)
+>>>                         ret = head_ref(ref_filter_handler, &ref_cbdata);
+>>>                 if (! ret && (filter->kind & FILTER_REFS_ALL))
+>>>                         ret =
+>>> for_each_reftype_fullpath(ref_filter_handler, "", broken, &ref_cbdata);
+>>>         }
+>>>
 >>
->>                 if (! ret && (type & FILTER_REFS_DETACHED_HEAD))
->>                         ret = head_ref(ref_filter_handler, &ref_cbdata);
+>> So finally something like this perhaps
 >>
->> Also, these functions usually iterate in lexicographic order, so I think
->> you should process HEAD before the others.
-> 
-> This is done on purpose, cause we need to print the HEAD ref separately
-> so we print the last ref_array_item in the ref_array, free that memory and
-> sort and print the rest, hence HEAD ref is attached to the last.
+>>     if (!filter->kind)
+>>         die("filter_refs: invalid type");
+>>     else {
+>>         if (filter->kind == FILTER_REFS_BRANCHES)
+>>             ret = for_each_reftype_fullpath(ref_filter_handler,
+>> "refs/heads/", broken, &ref_cbdata);
+>>         else if (filter->kind == FILTER_REFS_REMOTES)
+>>             ret = for_each_reftype_fullpath(ref_filter_handler,
+>> "refs/remotes/", broken, &ref_cbdata);
+>>         else if (filter->kind == FILTER_REFS_TAGS)
+>>             ret = for_each_reftype_fullpath(ref_filter_handler,
+>> "refs/tags/", broken, &ref_cbdata);
+>>         else if (filter->kind & FILTER_REFS_ALL)
+>>             ret = for_each_reftype_fullpath(ref_filter_handler, "",
+>> broken, &ref_cbdata);
+>>         if (filter->kind & FILTER_REFS_DETACHED_HEAD)
+>>             head_ref(ref_filter_handler, &ref_cbdata);
+>>     }
+>
+> Yes, but the last test should be
+>
+>         if (!ret && (filter->kind & FILTER_REFS_DETACHED_HEAD))
+>
+> unless you have a reason not to follow the usual convention that a
+> nonzero return value from fn means that the iteration should be aborted.
+>
 
-Without having looked at the other patches, this makes me wonder whether
-it makes sense to store HEAD in the ref_array at all or whether it
-should be handled separately.
-
->> But there's another problem here. It seems like
->> FILTER_REFS_DETACHED_HEAD is only processed if (type & FILTER_REFS_ALL)
->> is nonzero. But shouldn't it be allowed to process *only* HEAD?
->>
->> So, finally, I think this code should look like
->>
->>         else if (!filter->kind)
->>                 die("filter_refs: invalid type");
->>         else {
->>                 if (filter->kind & FILTER_REFS_DETACHED_HEAD)
->>                         ret = head_ref(ref_filter_handler, &ref_cbdata);
->>                 if (! ret && (filter->kind & FILTER_REFS_ALL))
->>                         ret =
->> for_each_reftype_fullpath(ref_filter_handler, "", broken, &ref_cbdata);
->>         }
->>
-> 
-> So finally something like this perhaps
-> 
->     if (!filter->kind)
->         die("filter_refs: invalid type");
->     else {
->         if (filter->kind == FILTER_REFS_BRANCHES)
->             ret = for_each_reftype_fullpath(ref_filter_handler,
-> "refs/heads/", broken, &ref_cbdata);
->         else if (filter->kind == FILTER_REFS_REMOTES)
->             ret = for_each_reftype_fullpath(ref_filter_handler,
-> "refs/remotes/", broken, &ref_cbdata);
->         else if (filter->kind == FILTER_REFS_TAGS)
->             ret = for_each_reftype_fullpath(ref_filter_handler,
-> "refs/tags/", broken, &ref_cbdata);
->         else if (filter->kind & FILTER_REFS_ALL)
->             ret = for_each_reftype_fullpath(ref_filter_handler, "",
-> broken, &ref_cbdata);
->         if (filter->kind & FILTER_REFS_DETACHED_HEAD)
->             head_ref(ref_filter_handler, &ref_cbdata);
->     }
-
-Yes, but the last test should be
-
-        if (!ret && (filter->kind & FILTER_REFS_DETACHED_HEAD))
-
-unless you have a reason not to follow the usual convention that a
-nonzero return value from fn means that the iteration should be aborted.
-
-Michael
+No, of course, I missed that while typing here.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Regards,
+Karthik Nayak
