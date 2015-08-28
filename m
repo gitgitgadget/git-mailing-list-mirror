@@ -1,327 +1,231 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 9/9] pack-objects: Use new worker pool
-Date: Thu, 27 Aug 2015 18:14:55 -0700
-Message-ID: <1440724495-708-10-git-send-email-sbeller@google.com>
+Subject: [PATCH 2/9] submodule: implement `module_name` as a builtin helper
+Date: Thu, 27 Aug 2015 18:14:48 -0700
+Message-ID: <1440724495-708-3-git-send-email-sbeller@google.com>
 References: <1440724495-708-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, jrnieder@gmail.com, gitster@pobox.com,
 	johannes.schindelin@gmx.de, Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 28 03:16:02 2015
+X-From: git-owner@vger.kernel.org Fri Aug 28 03:16:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZV8Gr-0001AW-24
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 03:15:57 +0200
+	id 1ZV8Gq-0001AW-Ef
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 03:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbbH1BPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1751369AbbH1BPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 27 Aug 2015 21:15:41 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:35164 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751477AbbH1BPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2015 21:15:11 -0400
-Received: by pacdd16 with SMTP id dd16so43391202pac.2
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 18:15:11 -0700 (PDT)
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:33308 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751020AbbH1BPD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 21:15:03 -0400
+Received: by padfo6 with SMTP id fo6so4638916pad.0
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 18:15:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6NAZ1YZ+QPf+TXWy8zUFzeohv5ZqG1FRYJV60ftwCUI=;
-        b=HJvJy84b1ceZWzT5fkpu+fcxqm6arvDYH24E+oG/25+GZWnFs+P94pQD8whiq+ixL9
-         J679uF8CK666M2KHPE+QJkvx+obeoIG+7EqFS4w4Nz4fSCVR0O2LGPyYLfI1dyuk4Iet
-         KvEoGGA5ZhOpoYyxz/vR4EkJiPZ42jHBVJH2BdRI3zxVEpEreoi4w1iqV6c9T2S7LePp
-         xBRcCsBJUFcIpV5ITXyIGSIf/UIUPmRTIIwCgwQW+HdzPKscyG3KmeTKu8O0DvvjQnhY
-         XBo6eUxRoEPCKnmvv/anIzSOqXkHyO7Lbs0lzlb94fOrciulWemElbf+qxtMscS1znPO
-         f8kg==
+        bh=jivMWXfvwKEVa5mAFi417znV262JA7LQEb5co+sGN3I=;
+        b=AfwWnYDQLJELk4zLm3s2y2Vq9l48yCOCaAR2Pbcr6puAB5YAVGpQeSP+GP5wbTObnU
+         MKdWyrmf9cI3nxhKnBwzJhreHeS1Nnmav9qATbAzk/qea9KBarYGZ2ujL9RQ+0n9i+Fs
+         CqJb9eHAeajFN2qMJ6fl66Xk9fPuNYint/ATKPLz6rgb2IJyOGhkuAGNp0is9sXTPAHz
+         aAgwNeE00BS8eobRxxsSorVRdziJhvfE9KcEi1j3Tc4Q8yh+aZNeGk7AG4VJUJZ7SFBR
+         dOXKCjyb9Jqe7VP6nortcKfhDPCoJfoMyD+QvMs67lh+sUI59gov3YMOi9GiihnGczst
+         FBcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=6NAZ1YZ+QPf+TXWy8zUFzeohv5ZqG1FRYJV60ftwCUI=;
-        b=M1ntRY6RjdEroQud1+I6MOBXsjt5p7oGeB/pPVeRTxhscNYfZdEGccgc5bDZkiGg8Q
-         zUWcvv8DfO2wCBGkK+f34HFwHm5O/X30fYOp/ziARSDzM4TIPHOQvSuY5P9d6DcVwzh2
-         8r2IwgPkZUXVf8AWX0bbbFXv9J4uTvLw8uD4wepgPwvmERjeb3EqrHSG2HNwZWasfy/g
-         72L846e5nh+QxbTgnOnfoAwxDmgP8or4y1ytuzq8MqRvIs7qQy8P0n1AX7sKGbAdeiEM
-         3Ttp6Ily3je+NcKlEyvu5HeZ1LrDYB/g2BcI/Rh3kyRd3PrxaXBUYgjt+mZIb/cetKFP
-         XhPQ==
-X-Gm-Message-State: ALoCoQnlaeUD/yys6VMxvJx9FQyVZPGHQX0Uxs4n/qoegkgAsnekYf2YfyWTQ6CHyq3LX6z2AgII
-X-Received: by 10.68.195.231 with SMTP id ih7mr11614557pbc.26.1440724510858;
-        Thu, 27 Aug 2015 18:15:10 -0700 (PDT)
+        bh=jivMWXfvwKEVa5mAFi417znV262JA7LQEb5co+sGN3I=;
+        b=VX0LbghqoVgoIzu7vlb37IpHtBeY9oWuUxXdf0OZwtKsJ4dqhafpKJdoYFaWV55Izo
+         csp+T6Z5X+vC3JUL5maqwuX7kIrUQ4Cv/tGJHmyjmrpnmT/PyPWQmSwYm/PZyrCoPiFf
+         JITBmVglEMZchMGF9SM4P9VEBitOqf+InEr1ugC2jYECdopTHmx/tHpDdfmWkHHsN7DU
+         I27wGowoM9tGzAQH0/V25rwJ+C87vilBhELdiDlG3fgDT9BbZK4XCOGp5bnsAcUIAvKg
+         RcBFvSRpu0b9k7mv/Y7FErdDYtaF9K+ozQPyXkxbQ9xw2okytjtDnmtlZsw+JaUkAwHP
+         vwvg==
+X-Gm-Message-State: ALoCoQmtc8gc9+6O/s7q8xoMIKsObK35Xyrj2slkn/25fak3kFEg9G4j6qqozex39gkqs1qUbC/N
+X-Received: by 10.66.158.3 with SMTP id wq3mr11497629pab.38.1440724501890;
+        Thu, 27 Aug 2015 18:15:01 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:bce4:8b21:c71b:de7e])
-        by smtp.gmail.com with ESMTPSA id fe8sm3755068pab.40.2015.08.27.18.15.09
+        by smtp.gmail.com with ESMTPSA id nm8sm3739074pbc.20.2015.08.27.18.15.01
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Thu, 27 Aug 2015 18:15:10 -0700 (PDT)
+        Thu, 27 Aug 2015 18:15:01 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.264.g5e52b0d
 In-Reply-To: <1440724495-708-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276700>
 
-Before we had <n> threads doing the delta finding work, and the main thread
-was load balancing the threads, i.e. moving work from a thread with a large
-amount left to an idle thread whenever such a situation arose.
+This implements the helper `module_name` in C instead of shell,
+yielding a nice performance boost.
 
-This moves the load balancing to the threads themselves. As soon as one
-thread is done working it will look at its peer threads and will pickup
-half the work load from the thread with the largest pending load.
+Before this patch, I measured a time (best out of three):
 
-By having the load balancing as part of the threads, the locking and
-communication model becomes easier, such that we don't need so many
-mutexes any more.
+  $ time ./t7400-submodule-basic.sh  >/dev/null
+    real	0m11.066s
+    user	0m3.348s
+    sys	0m8.534s
 
-It also demonstrates the usage of the new threading pool being easily
-applied in different situations.
+With this patch applied I measured (also best out of three)
+
+  $ time ./t7400-submodule-basic.sh  >/dev/null
+    real	0m10.063s
+    user	0m3.044s
+    sys	0m7.487s
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/pack-objects.c | 175 ++++++++++++++++---------------------------------
- 1 file changed, 57 insertions(+), 118 deletions(-)
+ builtin/submodule--helper.c | 28 +++++++++++++++++++++++++++-
+ git-submodule.sh            | 32 +++++++-------------------------
+ 2 files changed, 34 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 62cc16d..f46d2df 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -17,6 +17,7 @@
- #include "pack-objects.h"
- #include "progress.h"
- #include "refs.h"
-+#include "run-command.h"
- #include "streaming.h"
- #include "thread-utils.h"
- #include "pack-bitmap.h"
-@@ -1887,26 +1888,12 @@ static void try_to_free_from_threads(size_t size)
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index beaab7d..c8f7e0c 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -5,6 +5,9 @@
+ #include "pathspec.h"
+ #include "dir.h"
+ #include "utf8.h"
++#include "submodule.h"
++#include "submodule-config.h"
++#include "string-list.h"
  
- static try_to_free_t old_try_to_free_routine;
- 
--/*
-- * The main thread waits on the condition that (at least) one of the workers
-- * has stopped working (which is indicated in the .working member of
-- * struct thread_params).
-- * When a work thread has completed its work, it sets .working to 0 and
-- * signals the main thread and waits on the condition that .data_ready
-- * becomes 1.
-- */
--
- struct thread_params {
--	pthread_t thread;
- 	struct object_entry **list;
- 	unsigned list_size;
- 	unsigned remaining;
- 	int window;
- 	int depth;
--	int working;
--	int data_ready;
--	pthread_mutex_t mutex;
--	pthread_cond_t cond;
- 	unsigned *processed;
- };
- 
-@@ -1933,7 +1920,52 @@ static void cleanup_threaded_search(void)
- 	pthread_mutex_destroy(&progress_mutex);
+ static const struct cache_entry **ce_entries;
+ static int ce_alloc, ce_used;
+@@ -101,6 +104,26 @@ static int module_list(int argc, const char **argv, const char *prefix)
+ 	return 0;
  }
  
--static void *threaded_find_deltas(void *arg)
-+static struct thread_params *p;
-+
-+static void threaded_split_largest_workload(struct thread_params *target)
++static int module_name(int argc, const char **argv, const char *prefix)
 +{
-+	int i;
++	const char *name;
++	const struct submodule *sub;
 +
-+	struct object_entry **list;
-+	struct thread_params *victim = NULL;
-+	unsigned sub_size = 0;
++	if (argc != 1)
++		usage("git submodule--helper module_name <path>\n");
 +
-+	/* Find a victim */
-+	progress_lock();
-+	for (i = 0; i < delta_search_threads; i++)
-+		if (p[i].remaining > 2*window &&
-+		    (!victim || victim->remaining < p[i].remaining))
-+			victim = &p[i];
++	gitmodules_config();
++	sub = submodule_from_path(null_sha1, argv[0]);
 +
-+	if (victim) {
-+		sub_size = victim->remaining / 2;
-+		list = victim->list + victim->list_size - sub_size;
-+		while (sub_size && list[0]->hash &&
-+		       list[0]->hash == list[-1]->hash) {
-+			list++;
-+			sub_size--;
-+		}
-+		if (!sub_size) {
-+			/*
-+			 * It is possible for some "paths" to have
-+			 * so many objects that no hash boundary
-+			 * might be found.  Let's just steal the
-+			 * exact half in that case.
-+			 */
-+			sub_size = victim->remaining / 2;
-+			list -= sub_size;
-+		}
-+		victim->list_size -= sub_size;
-+		victim->remaining -= sub_size;
++	if (!sub)
++		die("No submodule mapping found in .gitmodules for path '%s'", argv[0]);
 +
-+		target->list = list;
-+		target->list_size = sub_size;
-+		target->remaining = sub_size;
-+	}
-+	progress_unlock();
-+}
-+
-+static int threaded_find_deltas(struct task_queue *tq, void *arg)
- {
- 	struct thread_params *me = arg;
- 
-@@ -1941,34 +1973,17 @@ static void *threaded_find_deltas(void *arg)
- 		find_deltas(me->list, &me->remaining,
- 			    me->window, me->depth, me->processed);
- 
--		progress_lock();
--		me->working = 0;
--		pthread_cond_signal(&progress_cond);
--		progress_unlock();
--
--		/*
--		 * We must not set ->data_ready before we wait on the
--		 * condition because the main thread may have set it to 1
--		 * before we get here. In order to be sure that new
--		 * work is available if we see 1 in ->data_ready, it
--		 * was initialized to 0 before this thread was spawned
--		 * and we reset it to 0 right away.
--		 */
--		pthread_mutex_lock(&me->mutex);
--		while (!me->data_ready)
--			pthread_cond_wait(&me->cond, &me->mutex);
--		me->data_ready = 0;
--		pthread_mutex_unlock(&me->mutex);
-+		threaded_split_largest_workload(me);
- 	}
--	/* leave ->working 1 so that this doesn't get more work assigned */
--	return NULL;
++	name = sub->name;
++	printf("%s\n", name);
 +
 +	return 0;
- }
- 
- static void ll_find_deltas(struct object_entry **list, unsigned list_size,
- 			   int window, int depth, unsigned *processed)
++}
++
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
  {
--	struct thread_params *p;
--	int i, ret, active_threads = 0;
-+	struct task_queue *tq;
-+	int i;
+ 	if (argc < 2)
+@@ -109,6 +132,9 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+ 	if (!strcmp(argv[1], "module_list"))
+ 		return module_list(argc - 1, argv + 1, prefix);
  
- 	init_threaded_search();
- 
-@@ -1980,8 +1995,11 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
- 	if (progress > pack_to_stdout)
- 		fprintf(stderr, "Delta compression using up to %d threads.\n",
- 				delta_search_threads);
++	if (!strcmp(argv[1], "module_name"))
++		return module_name(argc - 2, argv + 2, prefix);
 +
- 	p = xcalloc(delta_search_threads, sizeof(*p));
- 
-+	tq = create_task_queue(delta_search_threads);
-+
- 	/* Partition the work amongst work threads. */
- 	for (i = 0; i < delta_search_threads; i++) {
- 		unsigned sub_size = list_size / (delta_search_threads - i);
-@@ -1993,8 +2011,6 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
- 		p[i].window = window;
- 		p[i].depth = depth;
- 		p[i].processed = processed;
--		p[i].working = 1;
--		p[i].data_ready = 0;
- 
- 		/* try to split chunks on "path" boundaries */
- 		while (sub_size && sub_size < list_size &&
-@@ -2008,87 +2024,10 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
- 
- 		list += sub_size;
- 		list_size -= sub_size;
-+		add_task(tq, threaded_find_deltas, &p[i]);
- 	}
- 
--	/* Start work threads. */
--	for (i = 0; i < delta_search_threads; i++) {
--		if (!p[i].list_size)
--			continue;
--		pthread_mutex_init(&p[i].mutex, NULL);
--		pthread_cond_init(&p[i].cond, NULL);
--		ret = pthread_create(&p[i].thread, NULL,
--				     threaded_find_deltas, &p[i]);
--		if (ret)
--			die("unable to create thread: %s", strerror(ret));
--		active_threads++;
--	}
--
--	/*
--	 * Now let's wait for work completion.  Each time a thread is done
--	 * with its work, we steal half of the remaining work from the
--	 * thread with the largest number of unprocessed objects and give
--	 * it to that newly idle thread.  This ensure good load balancing
--	 * until the remaining object list segments are simply too short
--	 * to be worth splitting anymore.
--	 */
--	while (active_threads) {
--		struct thread_params *target = NULL;
--		struct thread_params *victim = NULL;
--		unsigned sub_size = 0;
--
--		progress_lock();
--		for (;;) {
--			for (i = 0; !target && i < delta_search_threads; i++)
--				if (!p[i].working)
--					target = &p[i];
--			if (target)
--				break;
--			pthread_cond_wait(&progress_cond, &progress_mutex);
--		}
--
--		for (i = 0; i < delta_search_threads; i++)
--			if (p[i].remaining > 2*window &&
--			    (!victim || victim->remaining < p[i].remaining))
--				victim = &p[i];
--		if (victim) {
--			sub_size = victim->remaining / 2;
--			list = victim->list + victim->list_size - sub_size;
--			while (sub_size && list[0]->hash &&
--			       list[0]->hash == list[-1]->hash) {
--				list++;
--				sub_size--;
--			}
--			if (!sub_size) {
--				/*
--				 * It is possible for some "paths" to have
--				 * so many objects that no hash boundary
--				 * might be found.  Let's just steal the
--				 * exact half in that case.
--				 */
--				sub_size = victim->remaining / 2;
--				list -= sub_size;
--			}
--			target->list = list;
--			victim->list_size -= sub_size;
--			victim->remaining -= sub_size;
--		}
--		target->list_size = sub_size;
--		target->remaining = sub_size;
--		target->working = 1;
--		progress_unlock();
--
--		pthread_mutex_lock(&target->mutex);
--		target->data_ready = 1;
--		pthread_cond_signal(&target->cond);
--		pthread_mutex_unlock(&target->mutex);
--
--		if (!sub_size) {
--			pthread_join(target->thread, NULL);
--			pthread_cond_destroy(&target->cond);
--			pthread_mutex_destroy(&target->mutex);
--			active_threads--;
--		}
--	}
-+	finish_task_queue(tq, NULL);
- 	cleanup_threaded_search();
- 	free(p);
+ usage:
+-	usage("git submodule--helper module_list\n");
++	usage("git submodule--helper [module_list | module_name]\n");
  }
+diff --git a/git-submodule.sh b/git-submodule.sh
+index af9ecef..e6ff38d 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -178,24 +178,6 @@ get_submodule_config () {
+ 	printf '%s' "${value:-$default}"
+ }
+ 
+-
+-#
+-# Map submodule path to submodule name
+-#
+-# $1 = path
+-#
+-module_name()
+-{
+-	# Do we have "submodule.<something>.path = $1" defined in .gitmodules file?
+-	sm_path="$1"
+-	re=$(printf '%s\n' "$1" | sed -e 's/[].[^$\\*]/\\&/g')
+-	name=$( git config -f .gitmodules --get-regexp '^submodule\..*\.path$' |
+-		sed -n -e 's|^submodule\.\(.*\)\.path '"$re"'$|\1|p' )
+-	test -z "$name" &&
+-	die "$(eval_gettext "No submodule mapping found in .gitmodules for path '\$sm_path'")"
+-	printf '%s\n' "$name"
+-}
+-
+ #
+ # Clone a submodule
+ #
+@@ -498,7 +480,7 @@ cmd_foreach()
+ 		then
+ 			displaypath=$(relative_path "$sm_path")
+ 			say "$(eval_gettext "Entering '\$prefix\$displaypath'")"
+-			name=$(module_name "$sm_path")
++			name=$(git submodule--helper module_name "$sm_path")
+ 			(
+ 				prefix="$prefix$sm_path/"
+ 				clear_local_git_env
+@@ -554,7 +536,7 @@ cmd_init()
+ 	while read mode sha1 stage sm_path
+ 	do
+ 		die_if_unmatched "$mode"
+-		name=$(module_name "$sm_path") || exit
++		name=$(git submodule--helper module_name "$sm_path") || exit
+ 
+ 		displaypath=$(relative_path "$sm_path")
+ 
+@@ -636,7 +618,7 @@ cmd_deinit()
+ 	while read mode sha1 stage sm_path
+ 	do
+ 		die_if_unmatched "$mode"
+-		name=$(module_name "$sm_path") || exit
++		name=$(git submodule--helper module_name "$sm_path") || exit
+ 
+ 		displaypath=$(relative_path "$sm_path")
+ 
+@@ -758,7 +740,7 @@ cmd_update()
+ 			echo >&2 "Skipping unmerged submodule $prefix$sm_path"
+ 			continue
+ 		fi
+-		name=$(module_name "$sm_path") || exit
++		name=$(git submodule--helper module_name "$sm_path") || exit
+ 		url=$(git config submodule."$name".url)
+ 		branch=$(get_submodule_config "$name" branch master)
+ 		if ! test -z "$update"
+@@ -1022,7 +1004,7 @@ cmd_summary() {
+ 			# Respect the ignore setting for --for-status.
+ 			if test -n "$for_status"
+ 			then
+-				name=$(module_name "$sm_path")
++				name=$(git submodule--helper module_name "$sm_path")
+ 				ignore_config=$(get_submodule_config "$name" ignore none)
+ 				test $status != A && test $ignore_config = all && continue
+ 			fi
+@@ -1184,7 +1166,7 @@ cmd_status()
+ 	while read mode sha1 stage sm_path
+ 	do
+ 		die_if_unmatched "$mode"
+-		name=$(module_name "$sm_path") || exit
++		name=$(git submodule--helper module_name "$sm_path") || exit
+ 		url=$(git config submodule."$name".url)
+ 		displaypath=$(relative_path "$prefix$sm_path")
+ 		if test "$stage" = U
+@@ -1261,7 +1243,7 @@ cmd_sync()
+ 	while read mode sha1 stage sm_path
+ 	do
+ 		die_if_unmatched "$mode"
+-		name=$(module_name "$sm_path")
++		name=$(git submodule--helper module_name "$sm_path")
+ 		url=$(git config -f .gitmodules --get submodule."$name".url)
+ 
+ 		# Possibly a url relative to parent
 -- 
 2.5.0.264.g5e52b0d
