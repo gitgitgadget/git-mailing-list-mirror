@@ -1,317 +1,327 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 7/9] fetch: fetch submodules in parallel
-Date: Thu, 27 Aug 2015 18:14:53 -0700
-Message-ID: <1440724495-708-8-git-send-email-sbeller@google.com>
+Subject: [PATCH 9/9] pack-objects: Use new worker pool
+Date: Thu, 27 Aug 2015 18:14:55 -0700
+Message-ID: <1440724495-708-10-git-send-email-sbeller@google.com>
 References: <1440724495-708-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, jrnieder@gmail.com, gitster@pobox.com,
 	johannes.schindelin@gmx.de, Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 28 03:16:01 2015
+X-From: git-owner@vger.kernel.org Fri Aug 28 03:16:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZV8Gp-0001AW-MN
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 03:15:56 +0200
+	id 1ZV8Gr-0001AW-24
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 03:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbbH1BPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 21:15:40 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:35109 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbbH1BPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2015 21:15:09 -0400
-Received: by pacdd16 with SMTP id dd16so43389996pac.2
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 18:15:08 -0700 (PDT)
+	id S1751337AbbH1BPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2015 21:15:41 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35164 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477AbbH1BPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 21:15:11 -0400
+Received: by pacdd16 with SMTP id dd16so43391202pac.2
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 18:15:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ACP+AlenJj0IFk1ufA7A+h9WwXe0TQrMTCByVLE1nR8=;
-        b=dVuQxXkRerKrZH91REpbpt1uTW8OuP6RRscttMn4DdA/Ti74VtaEqY5dAjKjHrsZwm
-         LLLSNLrq+0Gg/MaNMTSnxChI7Br7TfkIvM0Qmgp2Gb5AEAXqQdQ9tOz6NaU2xbP9d7z3
-         8vu1Ee0s7KhInGnFoGlQUMHEjFckdNysx+BziDQaV4MznXfzrOL88JAPPSxL1mSphzYT
-         790y1n0YjtUae6jNuhMIXLRRkXo240EDWnLbGv4sTAOzN0RIJiJzXO/PXo35UO1+7bZq
-         49TlPpk8Q42jaDJOekX6OtANDIU0Zdi/rZYU0CMKaFySKYTyF/U1zxOz9lJw/Ms5S9kz
-         OU8g==
+        bh=6NAZ1YZ+QPf+TXWy8zUFzeohv5ZqG1FRYJV60ftwCUI=;
+        b=HJvJy84b1ceZWzT5fkpu+fcxqm6arvDYH24E+oG/25+GZWnFs+P94pQD8whiq+ixL9
+         J679uF8CK666M2KHPE+QJkvx+obeoIG+7EqFS4w4Nz4fSCVR0O2LGPyYLfI1dyuk4Iet
+         KvEoGGA5ZhOpoYyxz/vR4EkJiPZ42jHBVJH2BdRI3zxVEpEreoi4w1iqV6c9T2S7LePp
+         xBRcCsBJUFcIpV5ITXyIGSIf/UIUPmRTIIwCgwQW+HdzPKscyG3KmeTKu8O0DvvjQnhY
+         XBo6eUxRoEPCKnmvv/anIzSOqXkHyO7Lbs0lzlb94fOrciulWemElbf+qxtMscS1znPO
+         f8kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ACP+AlenJj0IFk1ufA7A+h9WwXe0TQrMTCByVLE1nR8=;
-        b=MKVZI4YBozAIylXkM///xjxt4uubKfj9ayTFzAK/+fk4IfpIDKtmneoEjFctU+nU9Z
-         pt9zFPXbSmRPGfKsFOU7cDyMpN7jSrumVPykGBi/dD8e9lTDwAuUhjBJnzaMbXcxPnUD
-         b/01AFeV+NgacovQNCJmEnKo3Z9o+cv/Gq+HN9IAJet85YlCWDy2Tdm50NT19WoONtBf
-         uE0+2C3p//NxjSPdYjm7j1tVea+00P3r8pK6yrq7lzSE+uidFn5L5SwXVrRUf4cGI1YF
-         tPVB7q9KRekPXuF0IfKkTFCXy8ANeYH/hnL/6yuyed6mrR9Xx04CGKk/Xrr2mPnRkBIt
-         3bBQ==
-X-Gm-Message-State: ALoCoQluVxIKYO5scdev2gPvTYSYOm4PiJgfwZFm/U60bOc4/oZ4awethnGPZJ5fNdorBSjDSOyN
-X-Received: by 10.68.217.102 with SMTP id ox6mr11054896pbc.158.1440724508366;
-        Thu, 27 Aug 2015 18:15:08 -0700 (PDT)
+        bh=6NAZ1YZ+QPf+TXWy8zUFzeohv5ZqG1FRYJV60ftwCUI=;
+        b=M1ntRY6RjdEroQud1+I6MOBXsjt5p7oGeB/pPVeRTxhscNYfZdEGccgc5bDZkiGg8Q
+         zUWcvv8DfO2wCBGkK+f34HFwHm5O/X30fYOp/ziARSDzM4TIPHOQvSuY5P9d6DcVwzh2
+         8r2IwgPkZUXVf8AWX0bbbFXv9J4uTvLw8uD4wepgPwvmERjeb3EqrHSG2HNwZWasfy/g
+         72L846e5nh+QxbTgnOnfoAwxDmgP8or4y1ytuzq8MqRvIs7qQy8P0n1AX7sKGbAdeiEM
+         3Ttp6Ily3je+NcKlEyvu5HeZ1LrDYB/g2BcI/Rh3kyRd3PrxaXBUYgjt+mZIb/cetKFP
+         XhPQ==
+X-Gm-Message-State: ALoCoQnlaeUD/yys6VMxvJx9FQyVZPGHQX0Uxs4n/qoegkgAsnekYf2YfyWTQ6CHyq3LX6z2AgII
+X-Received: by 10.68.195.231 with SMTP id ih7mr11614557pbc.26.1440724510858;
+        Thu, 27 Aug 2015 18:15:10 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:bce4:8b21:c71b:de7e])
-        by smtp.gmail.com with ESMTPSA id gx1sm3738807pbc.29.2015.08.27.18.15.07
+        by smtp.gmail.com with ESMTPSA id fe8sm3755068pab.40.2015.08.27.18.15.09
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Thu, 27 Aug 2015 18:15:07 -0700 (PDT)
+        Thu, 27 Aug 2015 18:15:10 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.264.g5e52b0d
 In-Reply-To: <1440724495-708-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276699>
 
-This makes use of the new task queue and the syncing feature of
-run-command to fetch a number of submodules at the same time.
+Before we had <n> threads doing the delta finding work, and the main thread
+was load balancing the threads, i.e. moving work from a thread with a large
+amount left to an idle thread whenever such a situation arose.
 
-The output will look like it would have been run sequential,
-but faster.
+This moves the load balancing to the threads themselves. As soon as one
+thread is done working it will look at its peer threads and will pickup
+half the work load from the thread with the largest pending load.
+
+By having the load balancing as part of the threads, the locking and
+communication model becomes easier, such that we don't need so many
+mutexes any more.
+
+It also demonstrates the usage of the new threading pool being easily
+applied in different situations.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/fetch-options.txt |   7 +++
- builtin/fetch.c                 |   6 ++-
- builtin/pull.c                  |   6 +++
- submodule.c                     | 100 +++++++++++++++++++++++++++++++++-------
- submodule.h                     |   2 +-
- 5 files changed, 102 insertions(+), 19 deletions(-)
+ builtin/pack-objects.c | 175 ++++++++++++++++---------------------------------
+ 1 file changed, 57 insertions(+), 118 deletions(-)
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 45583d8..e2a59c3 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -100,6 +100,13 @@ ifndef::git-pull[]
- 	reference to a commit that isn't already in the local submodule
- 	clone.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 62cc16d..f46d2df 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -17,6 +17,7 @@
+ #include "pack-objects.h"
+ #include "progress.h"
+ #include "refs.h"
++#include "run-command.h"
+ #include "streaming.h"
+ #include "thread-utils.h"
+ #include "pack-bitmap.h"
+@@ -1887,26 +1888,12 @@ static void try_to_free_from_threads(size_t size)
  
-+-j::
-+--jobs=<n>::
-+	Number of threads to be used for fetching submodules. Each thread
-+	will fetch from different submodules, such that fetching many
-+	submodules will be faster. By default the number of cpus will
-+	be used .
-+
- --no-recurse-submodules::
- 	Disable recursive fetching of submodules (this has the same effect as
- 	using the '--recurse-submodules=no' option).
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index ee1f1a9..636707e 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -37,6 +37,7 @@ static int prune = -1; /* unspecified */
- static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
- static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
- static int tags = TAGS_DEFAULT, unshallow, update_shallow;
-+static int max_threads;
- static const char *depth;
- static const char *upload_pack;
- static struct strbuf default_rla = STRBUF_INIT;
-@@ -99,6 +100,8 @@ static struct option builtin_fetch_options[] = {
- 		    N_("fetch all tags and associated objects"), TAGS_SET),
- 	OPT_SET_INT('n', NULL, &tags,
- 		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
-+	OPT_INTEGER('j', "jobs", &max_threads,
-+		    N_("number of threads used for fetching")),
- 	OPT_BOOL('p', "prune", &prune,
- 		 N_("prune remote-tracking branches no longer on remote")),
- 	{ OPTION_CALLBACK, 0, "recurse-submodules", NULL, N_("on-demand"),
-@@ -1217,7 +1220,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		result = fetch_populated_submodules(&options,
- 						    submodule_prefix,
- 						    recurse_submodules,
--						    verbosity < 0);
-+						    verbosity < 0,
-+						    max_threads);
- 		argv_array_clear(&options);
- 	}
+ static try_to_free_t old_try_to_free_routine;
  
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 722a83c..fbbda67 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -94,6 +94,7 @@ static int opt_force;
- static char *opt_tags;
- static char *opt_prune;
- static char *opt_recurse_submodules;
-+static char *max_threads;
- static int opt_dry_run;
- static char *opt_keep;
- static char *opt_depth;
-@@ -177,6 +178,9 @@ static struct option pull_options[] = {
- 		N_("on-demand"),
- 		N_("control recursive fetching of submodules"),
- 		PARSE_OPT_OPTARG),
-+	OPT_PASSTHRU('j', "jobs", &max_threads, N_("n"),
-+		N_("number of threads used for fetching submodules"),
-+		PARSE_OPT_OPTARG),
- 	OPT_BOOL(0, "dry-run", &opt_dry_run,
- 		N_("dry run")),
- 	OPT_PASSTHRU('k', "keep", &opt_keep, NULL,
-@@ -524,6 +528,8 @@ static int run_fetch(const char *repo, const char **refspecs)
- 		argv_array_push(&args, opt_prune);
- 	if (opt_recurse_submodules)
- 		argv_array_push(&args, opt_recurse_submodules);
-+	if (max_threads)
-+		argv_array_push(&args, max_threads);
- 	if (opt_dry_run)
- 		argv_array_push(&args, "--dry-run");
- 	if (opt_keep)
-diff --git a/submodule.c b/submodule.c
-index 9fcc86f..50266a8 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -12,6 +12,7 @@
- #include "sha1-array.h"
- #include "argv-array.h"
- #include "blob.h"
-+#include "thread-utils.h"
+-/*
+- * The main thread waits on the condition that (at least) one of the workers
+- * has stopped working (which is indicated in the .working member of
+- * struct thread_params).
+- * When a work thread has completed its work, it sets .working to 0 and
+- * signals the main thread and waits on the condition that .data_ready
+- * becomes 1.
+- */
+-
+ struct thread_params {
+-	pthread_t thread;
+ 	struct object_entry **list;
+ 	unsigned list_size;
+ 	unsigned remaining;
+ 	int window;
+ 	int depth;
+-	int working;
+-	int data_ready;
+-	pthread_mutex_t mutex;
+-	pthread_cond_t cond;
+ 	unsigned *processed;
+ };
  
- static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
- static struct string_list changed_submodule_paths;
-@@ -615,13 +616,79 @@ static void calculate_changed_submodule_paths(void)
- 	initialized_fetch_ref_tips = 0;
+@@ -1933,7 +1920,52 @@ static void cleanup_threaded_search(void)
+ 	pthread_mutex_destroy(&progress_mutex);
  }
  
-+struct submodule_parallel_fetch {
-+	struct child_process cp;
-+	struct argv_array argv;
-+	int *result;
-+};
+-static void *threaded_find_deltas(void *arg)
++static struct thread_params *p;
 +
-+#ifndef NO_PTHREADS
-+static pthread_mutex_t output_mutex = PTHREAD_MUTEX_INITIALIZER;
-+
-+static void set_output_mutex(struct submodule_parallel_fetch *spf)
++static void threaded_split_largest_workload(struct thread_params *target)
 +{
-+	spf->cp.sync_mutex = &output_mutex;
-+}
++	int i;
 +
-+#define lock_output_mutex() pthread_mutex_lock(&output_mutex)
++	struct object_entry **list;
++	struct thread_params *victim = NULL;
++	unsigned sub_size = 0;
 +
-+#define unlock_output_mutex() pthread_mutex_unlock(&output_mutex)
++	/* Find a victim */
++	progress_lock();
++	for (i = 0; i < delta_search_threads; i++)
++		if (p[i].remaining > 2*window &&
++		    (!victim || victim->remaining < p[i].remaining))
++			victim = &p[i];
 +
-+static void destroy_output_mutex()
-+{
-+	pthread_mutex_destroy(&output_mutex);
-+}
++	if (victim) {
++		sub_size = victim->remaining / 2;
++		list = victim->list + victim->list_size - sub_size;
++		while (sub_size && list[0]->hash &&
++		       list[0]->hash == list[-1]->hash) {
++			list++;
++			sub_size--;
++		}
++		if (!sub_size) {
++			/*
++			 * It is possible for some "paths" to have
++			 * so many objects that no hash boundary
++			 * might be found.  Let's just steal the
++			 * exact half in that case.
++			 */
++			sub_size = victim->remaining / 2;
++			list -= sub_size;
++		}
++		victim->list_size -= sub_size;
++		victim->remaining -= sub_size;
 +
-+#else
-+#define set_output_mutex()
-+#define destroy_output_mutex()
-+#define lock_output_mutex()
-+#define unlock_output_mutex()
-+#endif
-+
-+static struct submodule_parallel_fetch *submodule_parallel_fetch_create()
-+{
-+	struct submodule_parallel_fetch *spf = xmalloc(sizeof(*spf));
-+	child_process_init(&spf->cp);
-+	spf->cp.env = local_repo_env;
-+	spf->cp.git_cmd = 1;
-+	spf->cp.no_stdin = 1;
-+	spf->cp.stdout_to_stderr = 1;
-+	spf->cp.sync_buf = xmalloc(sizeof(spf->cp.sync_buf));
-+	strbuf_init(spf->cp.sync_buf, 0);
-+
-+	argv_array_init(&spf->argv);
-+	return spf;
-+}
-+
-+static int run_command_and_cleanup(struct task_queue *tq, void *arg)
-+{
-+	int code;
-+	struct submodule_parallel_fetch *spf = arg;
-+
-+	spf->cp.argv = spf->argv.argv;
-+
-+	code = run_command(&spf->cp);
-+	if (code) {
-+		lock_output_mutex();
-+		*spf->result = code;
-+		unlock_output_mutex();
++		target->list = list;
++		target->list_size = sub_size;
++		target->remaining = sub_size;
 +	}
-+
-+	argv_array_clear(&spf->argv);
-+	free((char*)spf->cp.dir);
-+	free(spf);
-+	return 0;
++	progress_unlock();
 +}
 +
- int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
--			       int quiet)
-+			       int quiet, int max_parallel_jobs)
++static int threaded_find_deltas(struct task_queue *tq, void *arg)
  {
- 	int i, result = 0;
--	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct task_queue *tq;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
-+	struct submodule_parallel_fetch *spf;
- 	const char *work_tree = get_git_work_tree();
- 	if (!work_tree)
- 		goto out;
-@@ -635,12 +702,9 @@ int fetch_populated_submodules(const struct argv_array *options,
- 	argv_array_push(&argv, "--recurse-submodules-default");
- 	/* default value, "--submodule-prefix" and its value are added later */
+ 	struct thread_params *me = arg;
  
--	cp.env = local_repo_env;
--	cp.git_cmd = 1;
--	cp.no_stdin = 1;
+@@ -1941,34 +1973,17 @@ static void *threaded_find_deltas(void *arg)
+ 		find_deltas(me->list, &me->remaining,
+ 			    me->window, me->depth, me->processed);
+ 
+-		progress_lock();
+-		me->working = 0;
+-		pthread_cond_signal(&progress_cond);
+-		progress_unlock();
 -
- 	calculate_changed_submodule_paths();
- 
-+	tq = create_task_queue(max_parallel_jobs);
- 	for (i = 0; i < active_nr; i++) {
- 		struct strbuf submodule_path = STRBUF_INIT;
- 		struct strbuf submodule_git_dir = STRBUF_INIT;
-@@ -693,24 +757,26 @@ int fetch_populated_submodules(const struct argv_array *options,
- 		if (!git_dir)
- 			git_dir = submodule_git_dir.buf;
- 		if (is_directory(git_dir)) {
-+			spf = submodule_parallel_fetch_create();
-+			spf->result = &result;
-+			spf->cp.dir = strbuf_detach(&submodule_path, NULL);
- 			if (!quiet)
--				printf("Fetching submodule %s%s\n", prefix, ce->name);
--			cp.dir = submodule_path.buf;
--			argv_array_push(&argv, default_argv);
--			argv_array_push(&argv, "--submodule-prefix");
--			argv_array_push(&argv, submodule_prefix.buf);
--			cp.argv = argv.argv;
--			if (run_command(&cp))
--				result = 1;
--			argv_array_pop(&argv);
--			argv_array_pop(&argv);
--			argv_array_pop(&argv);
-+				strbuf_addf(spf->cp.sync_buf,
-+					    "Fetching submodule %s%s",
-+					    prefix, ce->name);
-+			argv_array_pushv(&spf->argv, argv.argv);
-+			argv_array_push(&spf->argv, default_argv);
-+			argv_array_push(&spf->argv, "--submodule-prefix");
-+			argv_array_push(&spf->argv, submodule_prefix.buf);
-+			set_output_mutex(spf);
-+			add_task(tq, run_command_and_cleanup, spf);
- 		}
- 		strbuf_release(&submodule_path);
- 		strbuf_release(&submodule_git_dir);
- 		strbuf_release(&submodule_prefix);
+-		/*
+-		 * We must not set ->data_ready before we wait on the
+-		 * condition because the main thread may have set it to 1
+-		 * before we get here. In order to be sure that new
+-		 * work is available if we see 1 in ->data_ready, it
+-		 * was initialized to 0 before this thread was spawned
+-		 * and we reset it to 0 right away.
+-		 */
+-		pthread_mutex_lock(&me->mutex);
+-		while (!me->data_ready)
+-			pthread_cond_wait(&me->cond, &me->mutex);
+-		me->data_ready = 0;
+-		pthread_mutex_unlock(&me->mutex);
++		threaded_split_largest_workload(me);
  	}
- 	argv_array_clear(&argv);
-+	destroy_output_mutex();
- out:
- 	string_list_clear(&changed_submodule_paths, 1);
- 	return result;
-diff --git a/submodule.h b/submodule.h
-index 5507c3d..cbc0003 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -31,7 +31,7 @@ void set_config_fetch_recurse_submodules(int value);
- void check_for_new_submodule_commits(unsigned char new_sha1[20]);
- int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
--			       int quiet);
-+			       int quiet, int max_parallel_jobs);
- unsigned is_submodule_modified(const char *path, int ignore_untracked);
- int submodule_uses_gitfile(const char *path);
- int ok_to_remove_submodule(const char *path);
+-	/* leave ->working 1 so that this doesn't get more work assigned */
+-	return NULL;
++
++	return 0;
+ }
+ 
+ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 			   int window, int depth, unsigned *processed)
+ {
+-	struct thread_params *p;
+-	int i, ret, active_threads = 0;
++	struct task_queue *tq;
++	int i;
+ 
+ 	init_threaded_search();
+ 
+@@ -1980,8 +1995,11 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 	if (progress > pack_to_stdout)
+ 		fprintf(stderr, "Delta compression using up to %d threads.\n",
+ 				delta_search_threads);
++
+ 	p = xcalloc(delta_search_threads, sizeof(*p));
+ 
++	tq = create_task_queue(delta_search_threads);
++
+ 	/* Partition the work amongst work threads. */
+ 	for (i = 0; i < delta_search_threads; i++) {
+ 		unsigned sub_size = list_size / (delta_search_threads - i);
+@@ -1993,8 +2011,6 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 		p[i].window = window;
+ 		p[i].depth = depth;
+ 		p[i].processed = processed;
+-		p[i].working = 1;
+-		p[i].data_ready = 0;
+ 
+ 		/* try to split chunks on "path" boundaries */
+ 		while (sub_size && sub_size < list_size &&
+@@ -2008,87 +2024,10 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 
+ 		list += sub_size;
+ 		list_size -= sub_size;
++		add_task(tq, threaded_find_deltas, &p[i]);
+ 	}
+ 
+-	/* Start work threads. */
+-	for (i = 0; i < delta_search_threads; i++) {
+-		if (!p[i].list_size)
+-			continue;
+-		pthread_mutex_init(&p[i].mutex, NULL);
+-		pthread_cond_init(&p[i].cond, NULL);
+-		ret = pthread_create(&p[i].thread, NULL,
+-				     threaded_find_deltas, &p[i]);
+-		if (ret)
+-			die("unable to create thread: %s", strerror(ret));
+-		active_threads++;
+-	}
+-
+-	/*
+-	 * Now let's wait for work completion.  Each time a thread is done
+-	 * with its work, we steal half of the remaining work from the
+-	 * thread with the largest number of unprocessed objects and give
+-	 * it to that newly idle thread.  This ensure good load balancing
+-	 * until the remaining object list segments are simply too short
+-	 * to be worth splitting anymore.
+-	 */
+-	while (active_threads) {
+-		struct thread_params *target = NULL;
+-		struct thread_params *victim = NULL;
+-		unsigned sub_size = 0;
+-
+-		progress_lock();
+-		for (;;) {
+-			for (i = 0; !target && i < delta_search_threads; i++)
+-				if (!p[i].working)
+-					target = &p[i];
+-			if (target)
+-				break;
+-			pthread_cond_wait(&progress_cond, &progress_mutex);
+-		}
+-
+-		for (i = 0; i < delta_search_threads; i++)
+-			if (p[i].remaining > 2*window &&
+-			    (!victim || victim->remaining < p[i].remaining))
+-				victim = &p[i];
+-		if (victim) {
+-			sub_size = victim->remaining / 2;
+-			list = victim->list + victim->list_size - sub_size;
+-			while (sub_size && list[0]->hash &&
+-			       list[0]->hash == list[-1]->hash) {
+-				list++;
+-				sub_size--;
+-			}
+-			if (!sub_size) {
+-				/*
+-				 * It is possible for some "paths" to have
+-				 * so many objects that no hash boundary
+-				 * might be found.  Let's just steal the
+-				 * exact half in that case.
+-				 */
+-				sub_size = victim->remaining / 2;
+-				list -= sub_size;
+-			}
+-			target->list = list;
+-			victim->list_size -= sub_size;
+-			victim->remaining -= sub_size;
+-		}
+-		target->list_size = sub_size;
+-		target->remaining = sub_size;
+-		target->working = 1;
+-		progress_unlock();
+-
+-		pthread_mutex_lock(&target->mutex);
+-		target->data_ready = 1;
+-		pthread_cond_signal(&target->cond);
+-		pthread_mutex_unlock(&target->mutex);
+-
+-		if (!sub_size) {
+-			pthread_join(target->thread, NULL);
+-			pthread_cond_destroy(&target->cond);
+-			pthread_mutex_destroy(&target->mutex);
+-			active_threads--;
+-		}
+-	}
++	finish_task_queue(tq, NULL);
+ 	cleanup_threaded_search();
+ 	free(p);
+ }
 -- 
 2.5.0.264.g5e52b0d
