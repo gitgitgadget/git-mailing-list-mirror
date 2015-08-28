@@ -1,357 +1,292 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 3/9] submodule: implement `module_clone` as a builtin helper
-Date: Thu, 27 Aug 2015 18:14:49 -0700
-Message-ID: <1440724495-708-4-git-send-email-sbeller@google.com>
+Subject: [PATCH 6/9] submodule: helper to run foreach in parallel
+Date: Thu, 27 Aug 2015 18:14:52 -0700
+Message-ID: <1440724495-708-7-git-send-email-sbeller@google.com>
 References: <1440724495-708-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, jrnieder@gmail.com, gitster@pobox.com,
 	johannes.schindelin@gmx.de, Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 28 03:15:49 2015
+X-From: git-owner@vger.kernel.org Fri Aug 28 03:15:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZV8Gh-00012l-JM
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 03:15:48 +0200
+	id 1ZV8Ga-0000wZ-U9
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 03:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751390AbbH1BPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 21:15:42 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:34995 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751023AbbH1BPD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2015 21:15:03 -0400
-Received: by pacdd16 with SMTP id dd16so43387523pac.2
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 18:15:03 -0700 (PDT)
+	id S1751561AbbH1BPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2015 21:15:13 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:33412 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751445AbbH1BPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 21:15:07 -0400
+Received: by padfo6 with SMTP id fo6so4641306pad.0
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 18:15:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vVU9Clnh4Wd6sYXUd0ZdVd34AGZWQGJG+DRkFyDbxy8=;
-        b=HfIBgXdlo7+ZSudJxsrsdaafe5HuMPCreqYARHJUKTFo7t1G+zADHUexXqP2tMVK38
-         IEdgD+C5xHplZq1WeWBkrVdW7c/lU3bhMvZVdsk48FPauqk4nyhYW8c2XKwUSf8VhlRm
-         5Zpxtw4QKZHtxrZjTCh5ZUh2CK01V56bV4oMc3gx1QFgp5bA4hrulx13if1g5wDdhcsn
-         Wokz5e8vJQrG0Jzf77mWUKpDbyWQt43apLbxq7kIzOrmfYRC2Opbu+3tzEz2j2gon1f1
-         WugjK9cakPXxZC9nzRrXSHMtH8XymItZqNQdiAIo5ROhV/osF+DJGHtAkxb1MtlIS6rg
-         kp3w==
+        bh=l/El1Olp8OAx2s5ORLNWpvxM8ffwFxh86bTQT3jO8tA=;
+        b=EiaqfydVXkB2WnZxI2o4sa1WijXZh6RBL4oOwBqjTzGCn9UklRxr6d5hhzKcUYv0rP
+         hM9xKRzU5q59s0ZKh3pGIYu3kXalXLlSO0fkhqNawA4nDU9POn8DkUI7Cn+XbeP2bwPh
+         gDmJ8ptKC5djQspIeAg2wrOj2eeA7n++/IaFkH3bb5C4jdw3XlEOK7t6ziJWPfeRaMwl
+         KENASJU2h93ZqkfdFmtb+69CVLv8ZKg7QTuK8elmc1x5NRilPpFutQEdaTwBr14aWJOE
+         SzJMxVWV3Il3gjIohu9tgWA3ohyMmag5WA9OjU1rmxd0Es5ZcIXNKFu9rJ0g5JS/hHBZ
+         Gv3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vVU9Clnh4Wd6sYXUd0ZdVd34AGZWQGJG+DRkFyDbxy8=;
-        b=Ue/Z/i843bRVYA8fmIAPQ0fxgdTBHiTJvLVXqVG7wk7SD+4CdvS1o42YBOjuFaXzE0
-         AjjMJBTI7fEz+vo0w0axVoixmGjxjR8r5Fmb32ZKSlGPCCKJ3ruiPTxUOX3OAFpfRYmT
-         ty5GIlWNTEU2Ge7sURJNDacnzUIYOsGPH1jjayudUiLQ4m6wOTZs5cKBhDLtrsBRKpro
-         ciL5QfRxF43qTb4G4ReUtltJZzT0EpRxpXIYG8vSJaD4Wy9zMajKvcFngc3JRovkp4ll
-         f4spYlJ5Q3h6eemKarhUGsg8KZ84NMSW+nd+/Oi9780b0zj7YKxc+1u1MUX1vhE2V3yd
-         Q5Zw==
-X-Gm-Message-State: ALoCoQn3p+/Bb9EgyAWu848BIog9uPANGeRb9TOqw1wxK6jVt3Ok14QZ2G4OeoEABgxJpLG518fh
-X-Received: by 10.68.168.161 with SMTP id zx1mr11083573pbb.35.1440724503195;
-        Thu, 27 Aug 2015 18:15:03 -0700 (PDT)
+        bh=l/El1Olp8OAx2s5ORLNWpvxM8ffwFxh86bTQT3jO8tA=;
+        b=M9hWHZS767tB7DuuuOwHojoDFfJFIIBpgXoHLRnhlaH/E5TNxH/ALhCufJtYkAGbix
+         FMWKhnSD96YPdB3AD4+gJoJX8EjlOTf0fdBrg4j91je+jXleLAwZnpb3sAvFthWiEtIu
+         DMBHthS1lsCgjOLWVlXJP7ijXp355ehfodQhqhPwQC/jBn0/5aLfuWh08bc2FmG5tpNo
+         7OnVdF/MQYw4Zr4aEOsIiIVI5wH6cUzHWnJTuLaq4LVi2qb5Xbzd4vOX9QL+00AnJ0O6
+         vkqnr5hwELWaDQSFrZY53qM7b0AJ7CFFlSKDQJuzkoFzCNYLbd1c+oKpFR6ER5gdBT/e
+         vYEw==
+X-Gm-Message-State: ALoCoQnvmwbtf3tiH0LZq8VpL5gnB4w4xgHkIJkFDFJzx6iXawtivc/LY/fat3xFCTtgp7Qbm4Ra
+X-Received: by 10.68.243.103 with SMTP id wx7mr10877319pbc.60.1440724506919;
+        Thu, 27 Aug 2015 18:15:06 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:bce4:8b21:c71b:de7e])
-        by smtp.gmail.com with ESMTPSA id lo10sm3757599pab.16.2015.08.27.18.15.02
+        by smtp.gmail.com with ESMTPSA id hy5sm3756702pac.22.2015.08.27.18.15.06
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Thu, 27 Aug 2015 18:15:02 -0700 (PDT)
+        Thu, 27 Aug 2015 18:15:06 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.264.g5e52b0d
 In-Reply-To: <1440724495-708-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276693>
 
-`module_clone` is part of the update command,
-which I want to convert to C next.
+Similar to `git submodule foreach` the new command `git submodule
+foreach_parallel` will run a command on each submodule.
+
+The commands are run in parallel up to the number of cores by default,
+or you can specify '-j 4' tun just run with 4 threads for example.
+
+One major difference to `git submodule foreach` is the handling of input
+and output to the commands. Because of the parallel nature of the execution
+it is not trivial how to schedule the std{in,out,err} channel for submodule
+the command is run in. So in this patch there is no support for stdin.
+stdout will be piped to stderr. stderr will make use of the synchronized
+output feature of run_command.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/submodule--helper.c | 148 +++++++++++++++++++++++++++++++++++++++++++-
- git-submodule.sh            |  80 +-----------------------
- 2 files changed, 150 insertions(+), 78 deletions(-)
+ builtin/submodule--helper.c  | 133 ++++++++++++++++++++++++++++++++++++++++++-
+ git-submodule.sh             |  11 +++-
+ t/t7407-submodule-foreach.sh |  11 ++++
+ 3 files changed, 153 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c8f7e0c..d29499c 100644
+index d29499c..18b67f0 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
 @@ -8,6 +8,7 @@
  #include "submodule.h"
  #include "submodule-config.h"
  #include "string-list.h"
-+#include "run-command.h"
++#include "thread-utils.h"
+ #include "run-command.h"
  
  static const struct cache_entry **ce_entries;
- static int ce_alloc, ce_used;
-@@ -124,6 +125,147 @@ static int module_name(int argc, const char **argv, const char *prefix)
+@@ -266,6 +267,127 @@ static int module_clone(int argc, const char **argv, const char *prefix)
  	return 0;
  }
  
-+static int clone_submodule(const char *path, const char *gitdir, const char *url,
-+			   const char *depth, const char *reference, int quiet)
++#ifndef NO_PTHREADS
++struct submodule_args {
++	const char *name;
++	const char *path;
++	const char *sha1;
++	const char *toplevel;
++	const char *prefix;
++	const char **cmd;
++	pthread_mutex_t *sync;
++};
++
++int run_cmd_submodule(struct task_queue *aq, void *task)
 +{
-+	struct child_process cp;
-+	child_process_init(&cp);
++	int i;
++	struct submodule_args *args = task;
++	struct strbuf out = STRBUF_INIT;
++	struct strbuf sb = STRBUF_INIT;
++	struct child_process *cp = xmalloc(sizeof(*cp));
 +
-+	argv_array_push(&cp.args, "clone");
-+	argv_array_push(&cp.args, "--no-checkout");
-+	if (quiet)
-+		argv_array_push(&cp.args, "--quiet");
-+	if (depth && strcmp(depth, "")) {
-+		argv_array_push(&cp.args, "--depth");
-+		argv_array_push(&cp.args, depth);
-+	}
-+	if (reference && strcmp(reference, "")) {
-+		argv_array_push(&cp.args, "--reference");
-+		argv_array_push(&cp.args, reference);
-+	}
-+	if (gitdir) {
-+		argv_array_push(&cp.args, "--separate-git-dir");
-+		argv_array_push(&cp.args, gitdir);
-+	}
-+	argv_array_push(&cp.args, url);
-+	argv_array_push(&cp.args, path);
++	strbuf_addf(&out, N_("Entering %s\n"), relative_path(args->path, args->prefix, &sb));
 +
-+	cp.git_cmd = 1;
-+	cp.env = local_repo_env;
++	child_process_init(cp);
++	argv_array_pushv(&cp->args, args->cmd);
 +
-+	cp.no_stdin = 1;
-+	cp.no_stdout = 1;
-+	cp.no_stderr = 1;
++	argv_array_pushf(&cp->env_array, "name=%s", args->name);
++	argv_array_pushf(&cp->env_array, "path=%s", args->path);
++	argv_array_pushf(&cp->env_array, "sha1=%s", args->sha1);
++	argv_array_pushf(&cp->env_array, "toplevel=%s", args->toplevel);
 +
-+	return run_command(&cp);
++	for (i = 0; local_repo_env[i]; i++)
++		argv_array_push(&cp->env_array, local_repo_env[i]);
++
++	cp->no_stdin = 1;
++	cp->out = 0;
++	cp->err = -1;
++	cp->dir = args->path;
++	cp->stdout_to_stderr = 1;
++	cp->use_shell = 1;
++	cp->sync_mutex = args->sync;
++	cp->sync_buf = &out;
++
++	return run_command(cp);
 +}
 +
-+static int module_clone(int argc, const char **argv, const char *prefix)
++int module_foreach_parallel(int argc, const char **argv, const char *prefix)
 +{
-+	const char *path = NULL, *name = NULL, *url = NULL;
-+	const char *reference = NULL, *depth = NULL;
-+	int quiet = 0;
-+	FILE *submodule_dot_git;
-+	const char *sm_gitdir, *p;
-+	struct strbuf rel_path = STRBUF_INIT;
++	int i, recursive = 0, number_threads = 0, quiet = 0;
++	static struct pathspec pathspec;
 +	struct strbuf sb = STRBUF_INIT;
++	struct task_queue *aq;
++	char **cmd;
++	const char **nullargv = {NULL};
++	pthread_mutex_t mutex;
 +
 +	struct option module_update_options[] = {
 +		OPT_STRING(0, "prefix", &alternative_path,
 +			   N_("path"),
 +			   N_("alternative anchor for relative paths")),
-+		OPT_STRING(0, "path", &path,
-+			   N_("path"),
-+			   N_("where the new submodule will be cloned to")),
-+		OPT_STRING(0, "name", &name,
++		OPT_STRING(0, "cmd", &cmd,
 +			   N_("string"),
-+			   N_("name of the new submodule")),
-+		OPT_STRING(0, "url", &url,
-+			   N_("string"),
-+			   N_("url where to clone the submodule from")),
-+		OPT_STRING(0, "reference", &reference,
-+			   N_("string"),
-+			   N_("reference repository")),
-+		OPT_STRING(0, "depth", &depth,
-+			   N_("string"),
-+			   N_("depth for shallow clones")),
++			   N_("command to run")),
++		OPT_BOOL('r', "--recursive", &recursive,
++			 N_("Recurse into nexted submodules")),
++		OPT_INTEGER('j', "jobs", &number_threads,
++			    N_("Recurse into nexted submodules")),
++		OPT__QUIET(&quiet, N_("Suppress output")),
 +		OPT_END()
 +	};
 +
 +	static const char * const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper update [--prefix=<path>] [--quiet] [--remote] [-N|--no-fetch]"
-+		   "[-f|--force] [--rebase|--merge] [--reference <repository>]"
-+		   "[--depth <depth>] [--recursive] [--] [<path>...]"),
++		N_("git submodule--helper foreach [--prefix=<path>] [<path>...]"),
 +		NULL
 +	};
 +
 +	argc = parse_options(argc, argv, prefix, module_update_options,
 +			     git_submodule_helper_usage, 0);
 +
-+	if (getenv("GIT_QUIET"))
-+		quiet = 1;
++	if (module_list_compute(0, nullargv, NULL, &pathspec) < 0)
++		return 1;
 +
-+	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
-+	sm_gitdir = strbuf_detach(&sb, NULL);
++	gitmodules_config();
 +
-+	if (!file_exists(sm_gitdir)) {
-+		safe_create_leading_directories_const(sm_gitdir);
-+		if (clone_submodule(path, sm_gitdir, url, depth, reference, quiet))
-+			die(N_("Clone of '%s' into submodule path '%s' failed"),
-+			    url, path);
-+	} else {
-+		safe_create_leading_directories_const(path);
-+		unlink(sm_gitdir);
-+	}
++	pthread_mutex_init(&mutex, NULL);
++	aq = create_task_queue(number_threads);
 +
-+	/* Write a .git file in the submodule to redirect to the superproject. */
-+	if (alternative_path && !strcmp(alternative_path, "")) {
-+		p = relative_path(path, alternative_path, &sb);
++	for (i = 0; i < ce_used; i++) {
++		const struct submodule *sub;
++		const struct cache_entry *ce = ce_entries[i];
++		struct submodule_args *args = malloc(sizeof(*args));
++
++		if (ce_stage(ce))
++			args->sha1 = xstrdup(sha1_to_hex(null_sha1));
++		else
++			args->sha1 = xstrdup(sha1_to_hex(ce->sha1));
++
 +		strbuf_reset(&sb);
-+	} else
-+		p = path;
++		strbuf_addf(&sb, "%s/.git", ce->name);
++		if (!file_exists(sb.buf)) {
++			free(args);
++			continue;
++		}
 +
-+	if (safe_create_leading_directories_const(p) < 0)
-+		die("Could not create directory '%s'", p);
++		args->path = ce->name;
++		sub = submodule_from_path(null_sha1, args->path);
++		if (!sub)
++			die("No submodule mapping found in .gitmodules for path '%s'", args->path);
 +
-+	strbuf_addf(&sb, "%s/.git", p);
-+
-+	if (safe_create_leading_directories_const(sb.buf) < 0)
-+		die(_("could not create leading directories of '%s'"), sb.buf);
-+	submodule_dot_git = fopen(sb.buf, "w");
-+	if (!submodule_dot_git)
-+		die ("Cannot open file '%s': %s", sb.buf, strerror(errno));
-+
-+	fprintf(submodule_dot_git, "gitdir: %s\n",
-+		relative_path(sm_gitdir, path, &rel_path));
-+	if (fclose(submodule_dot_git))
-+		die("Could not close file %s", sb.buf);
-+	strbuf_reset(&sb);
-+
-+	/* Redirect the worktree of the submodule in the superprojects config */
-+	if (!is_absolute_path(sm_gitdir)) {
-+		char *s = (char*)sm_gitdir;
-+		if (strbuf_getcwd(&sb))
-+			die_errno("unable to get current working directory");
-+		strbuf_addf(&sb, "/%s", sm_gitdir);
-+		sm_gitdir = strbuf_detach(&sb, NULL);
-+		free(s);
++		args->name = sub->name;
++		args->toplevel = xgetcwd();
++		args->cmd = argv;
++		args->sync = &mutex;
++		args->prefix = alternative_path;
++		add_task(aq, run_cmd_submodule, args);
 +	}
 +
-+	if (strbuf_getcwd(&sb))
-+		die_errno("unable to get current working directory");
-+	strbuf_addf(&sb, "/%s", path);
-+
-+	p = git_pathdup_submodule(path, "config");
-+	if (!p)
-+		die("Could not get submodule directory for '%s'", path);
-+	git_config_set_in_file(p, "core.worktree",
-+			       relative_path(sb.buf, sm_gitdir, &rel_path));
-+	strbuf_release(&sb);
-+	free((char*)sm_gitdir);
++	finish_task_queue(aq, NULL);
++	pthread_mutex_destroy(&mutex);
 +	return 0;
 +}
++#endif /* NO_PTHREADS */
 +
  int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
  {
  	if (argc < 2)
-@@ -135,6 +277,10 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- 	if (!strcmp(argv[1], "module_name"))
- 		return module_name(argc - 2, argv + 2, prefix);
+@@ -280,7 +402,16 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+ 	if (!strcmp(argv[1], "module_clone"))
+ 		return module_clone(argc - 1, argv + 1, prefix);
  
-+	if (!strcmp(argv[1], "module_clone"))
-+		return module_clone(argc - 1, argv + 1, prefix);
++#ifndef NO_PTHREADS
++	if (!strcmp(argv[1], "foreach_parallel"))
++		return module_foreach_parallel(argc - 1, argv + 1, prefix);
++#endif
 +
  usage:
--	usage("git submodule--helper [module_list | module_name]\n");
-+	usage("git submodule--helper [module_list | module_name | "
-+	      "module_clone]\n");
+ 	usage("git submodule--helper [module_list | module_name | "
+-	      "module_clone]\n");
++	      "module_clone"
++#ifndef NO_PTHREADS
++	      " | foreach_parallel"
++#endif
++	      "]\n");
  }
 diff --git a/git-submodule.sh b/git-submodule.sh
-index e6ff38d..fb5155e 100755
+index fb5155e..f06488a 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -178,80 +178,6 @@ get_submodule_config () {
- 	printf '%s' "${value:-$default}"
+@@ -431,6 +431,15 @@ cmd_foreach()
  }
  
--#
--# Clone a submodule
--#
--# $1 = submodule path
--# $2 = submodule name
--# $3 = URL to clone
--# $4 = reference repository to reuse (empty for independent)
--# $5 = depth argument for shallow clones (empty for deep)
--#
--# Prior to calling, cmd_update checks that a possibly existing
--# path is not a git repository.
--# Likewise, cmd_add checks that path does not exist at all,
--# since it is the location of a new submodule.
--#
--module_clone()
--{
--	sm_path=$1
--	name=$2
--	url=$3
--	reference="$4"
--	depth="$5"
--	quiet=
--	if test -n "$GIT_QUIET"
--	then
--		quiet=-q
--	fi
--
--	gitdir=
--	gitdir_base=
--	base_name=$(dirname "$name")
--
--	gitdir=$(git rev-parse --git-dir)
--	gitdir_base="$gitdir/modules/$base_name"
--	gitdir="$gitdir/modules/$name"
--
--	if test -d "$gitdir"
--	then
--		mkdir -p "$sm_path"
--		rm -f "$gitdir/index"
--	else
--		mkdir -p "$gitdir_base"
--		(
--			clear_local_git_env
--			git clone $quiet ${depth:+"$depth"} -n ${reference:+"$reference"} \
--				--separate-git-dir "$gitdir" "$url" "$sm_path"
--		) ||
--		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
--	fi
--
--	# We already are at the root of the work tree but cd_to_toplevel will
--	# resolve any symlinks that might be present in $PWD
--	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
--	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
--	# Remove all common leading directories after a sanity check
--	if test "${a#$b}" != "$a" || test "${b#$a}" != "$b"; then
--		die "$(eval_gettext "Gitdir '\$a' is part of the submodule path '\$b' or vice versa")"
--	fi
--	while test "${a%%/*}" = "${b%%/*}"
--	do
--		a=${a#*/}
--		b=${b#*/}
--	done
--	# Now chop off the trailing '/'s that were added in the beginning
--	a=${a%/}
--	b=${b%/}
--
--	# Turn each leading "*/" component into "../"
--	rel=$(printf '%s\n' "$b" | sed -e 's|[^/][^/]*|..|g')
--	printf '%s\n' "gitdir: $rel/$a" >"$sm_path/.git"
--
--	rel=$(printf '%s\n' "$a" | sed -e 's|[^/][^/]*|..|g')
--	(clear_local_git_env; cd "$sm_path" && GIT_WORK_TREE=. git config core.worktree "$rel/$b")
--}
--
- isnumber()
- {
- 	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
-@@ -301,7 +227,7 @@ cmd_add()
- 			shift
- 			;;
- 		--depth=*)
--			depth=$1
-+			depth="$1"
- 			;;
- 		--)
- 			shift
-@@ -412,7 +338,7 @@ Use -f if you really want to add it." >&2
- 				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
- 			fi
- 		fi
--		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" || exit
-+		git submodule--helper module_clone --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" "$reference" "$depth" || exit
- 		(
- 			clear_local_git_env
- 			cd "$sm_path" &&
-@@ -774,7 +700,7 @@ Maybe you want to use 'update --init'?")"
+ #
++# Execute an arbitrary command sequence in each checked out
++# submodule in parallel.
++#
++cmd_foreach_parallel()
++{
++	git submodule--helper foreach_parallel --prefix "$wt_prefix" $@
++}
++
++#
+ # Register submodules in .git/config
+ #
+ # $@ = requested paths (default to all)
+@@ -1225,7 +1234,7 @@ cmd_sync()
+ while test $# != 0 && test -z "$command"
+ do
+ 	case "$1" in
+-	add | foreach | init | deinit | update | status | summary | sync)
++	add | foreach | foreach_parallel | init | deinit | update | status | summary | sync)
+ 		command=$1
+ 		;;
+ 	-q|--quiet)
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+index 7ca10b8..16f6138 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -195,6 +195,17 @@ test_expect_success 'test "foreach --quiet --recursive"' '
+ 	test_cmp expect actual
+ '
  
- 		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
- 		then
--			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
-+			git submodule--helper module_clone --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
- 			cloned_modules="$cloned_modules;$name"
- 			subsha1=
- 		else
++test_expect_success 'test "foreach_parallel --quiet"' '
++	(
++		cd clone2 &&
++		git submodule foreach_parallel -q -- "echo \$name-\$path" > ../actual
++	) &&
++	grep nested1-nested1 actual &&
++	grep foo1-sub1 actual &&
++	grep foo2-sub2 actual &&
++	grep foo3-sub3 actual
++'
++
+ test_expect_success 'use "update --recursive" to checkout all submodules' '
+ 	git clone super clone3 &&
+ 	(
 -- 
 2.5.0.264.g5e52b0d
