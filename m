@@ -1,113 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/4] path: optimize common dir checking
-Date: Fri, 28 Aug 2015 09:39:32 -0700
-Message-ID: <xmqqoahr2wqj.fsf@gitster.mtv.corp.google.com>
-References: <1440618365-20628-1-git-send-email-dturner@twopensource.com>
-	<1440618365-20628-3-git-send-email-dturner@twopensource.com>
-	<xmqqwpwh21ky.fsf@gitster.dls.corp.google.com>
-	<1440627031.26055.5.camel@twopensource.com>
-	<1440627545.26055.8.camel@twopensource.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/3] t5004: test ZIP archives with many entries
+Date: Fri, 28 Aug 2015 12:47:30 -0400
+Message-ID: <CAPig+cQzpo=dXxaWmR6AZ2UerZXYzTfMXZQwckrkPmWdDp_wqQ@mail.gmail.com>
+References: <20150811104056.16465.58131@localhost>
+	<55CBA140.7050301@web.de>
+	<20150813022545.30116.44787@localhost>
+	<55D8C824.6000704@web.de>
+	<CAPig+cSy+c9mOGOTN9e4xfLrvPc8nv7e0T_4PDA-vB-otwrvjw@mail.gmail.com>
+	<trinity-6e67d416-0a61-4e73-9779-63519dd83fdb-1440322151491@3capp-webde-bs47>
+	<CAPig+cSNSfpt7gOLvz7P4oDrNF5fTQ38v1pfncJU3h7a6FjMyQ@mail.gmail.com>
+	<xmqqwpwf2z8c.fsf@gitster.mtv.corp.google.com>
+	<xmqqsi732yod.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com,
-	sunshine@sunshineco.com
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 18:39:40 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Johannes Schauer <josch@debian.org>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 18:47:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVMgl-0002F2-EJ
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 18:39:39 +0200
+	id 1ZVMoR-0002Hw-Kw
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 18:47:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591AbbH1Qjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2015 12:39:35 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:33314 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752548AbbH1Qje (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2015 12:39:34 -0400
-Received: by padfo6 with SMTP id fo6so29382341pad.0
-        for <git@vger.kernel.org>; Fri, 28 Aug 2015 09:39:34 -0700 (PDT)
+	id S1752762AbbH1Qrb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Aug 2015 12:47:31 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:36456 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752493AbbH1Qrb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2015 12:47:31 -0400
+Received: by ykek5 with SMTP id k5so7286587yke.3
+        for <git@vger.kernel.org>; Fri, 28 Aug 2015 09:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=lgrRxJuvqMOEtBvHROWoUaEXq91OYqjgOwmTLLwgNYs=;
-        b=wanJXfTS+H4GAENyyer2n2aAy5BUf04mPuHgGi1YQ2B/rOG5NX/6rzUKVcKeLbRfeP
-         UnzTEmQjIO7sJGJ9P9xa71aZcT+PueLDUTHVVzqJdnrbMaOlYw8aBCfLCENAK6HjVjP8
-         LuWoS7YS4LfCqjSjAqzEhhC3DGGKYmpkQetsENo3mUy63t43hlNs0YNIJrkG1oXHYGbc
-         VghodgHowbTe2LaaK921UMLJCUPnZAoy4Pwd2C0Nepictz4ZNxR6922gJtBRut2V2mXZ
-         667bUO3Bx3g4q9NsKDndo3pXy5Vely/2cdpjxfs5k+D/WN1xFtKFWkTJEiZVdOiEOkxX
-         ryjw==
-X-Received: by 10.68.205.232 with SMTP id lj8mr16982414pbc.116.1440779974060;
-        Fri, 28 Aug 2015 09:39:34 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:c919:3f20:8560:5a06])
-        by smtp.gmail.com with ESMTPSA id k8sm6242197pdn.96.2015.08.28.09.39.32
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Fri, 28 Aug 2015 09:39:33 -0700 (PDT)
-In-Reply-To: <1440627545.26055.8.camel@twopensource.com> (David Turner's
-	message of "Wed, 26 Aug 2015 18:19:05 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=1hRo/lOnZoWl0Y7i+kD8M5MRZnDsvBwSFrjh9Z53uR8=;
+        b=TSociZJfM/Kgh1KnSb8truCjvR6EHiOEinEIY1R29BL7gN70mI9dT7BWvA58FNgWAO
+         BQu94oPx5KSUCrSQuHX2HsprThiidw7CqCdqDPWy9ubHKiaN9YdQIEjvPNMoi7r1lJEv
+         DlRAEYgKAGFqmXCNhqcmna6OPHR2rhGr9ZKye4TN4NiYTXkjKaR2/ik5JxAfQzXE1Sh6
+         l/kD2v6m/XNICU6fK6srT6OttyUVV20EGwSZybs7D4deH8oa31CV04Vha3DLbHZ9KAz/
+         pIVCwcfnpQm6vOziE7oSLfjl62Ck9D1iYOM3GEPrB1e0tax55kP9RIwRag51svG3K1aW
+         mQwQ==
+X-Received: by 10.129.83.136 with SMTP id h130mr10033392ywb.95.1440780450456;
+ Fri, 28 Aug 2015 09:47:30 -0700 (PDT)
+Received: by 10.37.208.78 with HTTP; Fri, 28 Aug 2015 09:47:30 -0700 (PDT)
+In-Reply-To: <xmqqsi732yod.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: d1EXekbEhEOIFEsBFdC7iYllSfo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276728>
 
-David Turner <dturner@twopensource.com> writes:
-
-> On Wed, 2015-08-26 at 18:10 -0400, David Turner wrote:
->> On Wed, 2015-08-26 at 14:15 -0700, Junio C Hamano wrote:
->> > > + * For example, consider the following set of strings:
->> > > + * abc
->> > > + * def
->> > > + * definite
->> > > + * definition
->> > > + *
->> > > + * The trie would look look like:
->> > > + * root: len = 0, value = (something), children a and d non-NULL.
->> > 
->> > "value = NULL", as there is no empty string registered in the trie?
->> 
->> Indeed.
->> 
->> > > + *    a: len = 2, contents = bc
->> > 
->> > "value = NULL" here, too (just showing I am following along, not
->> > just skimming)?
->> 
->> Yep.
+On Fri, Aug 28, 2015 at 11:57 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>> On Sun, Aug 23, 2015 at 5:29 AM, "Ren=C3=A9 Scharfe" <l.s.r@web.de>=
+ wrote:
+>>>> I suspected that zipinfo's output might be formatted differently o=
+n
+>>>> different platforms and tried to guard against it by checking for =
+the
+>>>> number zero there. Git's ZIP file creation is platform independent
+>>>> (modulo bugs), so having a test run at least somewhere should
+>>>> suffice. In theory.
+>>>>
+>>>> We could add support for the one-line-summary variant on OS X easi=
+ly,
+>>>> though.
+>>>
+>>> Probably, although it's looking like testing on Mac OS X won't be
+>>> fruitful (see below).
+>>
+>> Can we move this topic forward by introducing a new prerequisite
+>> ZIPINFO and used at the beginning of these tests (make it a lazy
+>> prereq)?  Run zipinfo on a trivial archive and see if its output is
+>> something we recognize to decide if the platform supports that
+>> ZIPINFO prerequisite and do this test only on them.
 >
-> No, wait. value should be non-NULL, since abc is in the string set. 
+> Heh, that is exactly what the patch under discussion does.  So...
+>
+>> After all, what _is_ being tested, i.e. our archive creation, would
+>> not change across platforms, so having a test that runs on a known
+>> subset of platforms is better than not having anything at all.
+>
+> ...I'd say we can take this patch as-is, and those who want to have
+> a working test on MacOS can come up with an enhancement to the way
+> the script parses output from zipinfo that would also work on their
+> platforms.
 
-True.  Here is what I came up with on top of your original.  
+Right, the new test is correctly skipped on Mac OS X and FreeBSD, so
+the patch is suitable as-is. We might, however, want to augment the
+commit message with some of the knowledge learned from this thread.
+Perhaps modify the last sentence of the second paragraph and then
+insert additional information following it, like this?
 
+    ... at least provides
+    *some* way to check this field, although presently only on Linux.
 
+    zipinfo on current Mac OS X (Yosemite 10.10.5) does not support
+    this field, and, when encountered, caps the printed file count at
+    65535 (and spits out warnings and errors), thus is not useful for
+    testing. (Its output also differs from zipinfo on Linux, thus
+    requires changes to the 'sed' recognition and extraction
+    expressions, but that's a minor issue.)
 
- path.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+    zipinfo on FreeBSD seems to have been retired altogether in favor
+    of "unzip -Z", however, only in the emasculated form "unzip -Z
+    -1" which lists archive entries but does not provide a file
+    count, thus is not useful for this test.
 
-diff --git a/path.c b/path.c
-index 4100ba6..ce0530b 100644
---- a/path.c
-+++ b/path.c
-@@ -133,12 +133,13 @@ struct common_dir common_list[] = {
-  * definition
-  *
-  * The trie would look look like:
-- * root: len = 0, value = (something), children a and d non-NULL.
-- *    a: len = 2, contents = bc
-- *    d: len = 2, contents = ef, children i non-NULL, value = (something)
-+ * root: len = 0, children a and d non-NULL, value = NULL.
-+ *    a: len = 2, contents = bc, value = (data for "abc")
-+ *    d: len = 2, contents = ef, children i non-NULL, value = (data for "def")
-  *       i: len = 3, contents = nit, children e and i non-NULL, value = NULL
-- *           e: len = 0, children all NULL, value = (something)
-- *           i: len = 2, contents = on, children all NULL, value = (something)
-+ *           e: len = 0, children all NULL, value = (data for "definite")
-+ *           i: len = 2, contents = on, children all NULL,
-+ *              value = (data for "definition")
-  */
- struct trie {
- 	struct trie *children[256];
+(I also snuck a s/can// fix in there for the last sentence of the
+second paragraph.)
