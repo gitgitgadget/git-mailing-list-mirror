@@ -1,124 +1,113 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 8/9] index-pack: Use the new worker pool
-Date: Thu, 27 Aug 2015 18:14:54 -0700
-Message-ID: <1440724495-708-9-git-send-email-sbeller@google.com>
-References: <1440724495-708-1-git-send-email-sbeller@google.com>
+Subject: [PATCH 0/9] Progress with git submodule
+Date: Thu, 27 Aug 2015 18:14:46 -0700
+Message-ID: <1440724495-708-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, jrnieder@gmail.com, gitster@pobox.com,
 	johannes.schindelin@gmx.de, Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 28 03:15:49 2015
+X-From: git-owner@vger.kernel.org Fri Aug 28 03:15:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZV8Gg-00012l-Fx
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 03:15:46 +0200
+	id 1ZV8GZ-0000wZ-3U
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 03:15:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386AbbH1BPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 21:15:43 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:33473 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751471AbbH1BPK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2015 21:15:10 -0400
-Received: by padfo6 with SMTP id fo6so4642615pad.0
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 18:15:09 -0700 (PDT)
+	id S1751213AbbH1BPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2015 21:15:04 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:36212 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750709AbbH1BPB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 21:15:01 -0400
+Received: by pacgr6 with SMTP id gr6so6672913pac.3
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 18:14:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uzSI0wetqD3a2fnl6TSTdYCuAB+vZKeZqQs9uqKkHq0=;
-        b=ORpzwgGNOYGv3krn/Se2kfzEMH8vjd0L4YZJIh7WkA3SoaX4EVji3MeTMTB/2b+W8t
-         +YW9kl4z8nUc6mszJFMYLsj1rKAQ/sm9+EcyfIQAU0qdbCSF5cysc4/IZIt4uM+v2Lrj
-         EZMupv/fAwKMD/hAao8Wj4Yj8I2DkKsvwQNZnkXDRNeZ/qYB1Aiqe6oizBL9R0fQC7nr
-         eb853wTLpp3TD3WYBtmLhjbkTaVVGWmadsygIU9wSj9m+mEC1o9VuFa7Atcm/mfNaEJQ
-         hI/tKXmIJdHIhrsnIw9GxhhKSnrnp8eYwHTekTZjI0NX4tKuLVycZLX9kG+gOAX57IZY
-         0ZIg==
+        h=from:to:cc:subject:date:message-id;
+        bh=fiEgY6bP9TuCdftKXMWEMLyqtyqbMDbqQ8XY2rs4bbk=;
+        b=UhScAO3f6bCG+xmpjEvhMOzuiYWCP02izYRPmRZoVWLjd16tZv5RLroqcxEM/YUPL/
+         I778mvW91Vz2or4JCKIiQTcWb12Jwc1Zt2Jj2hH7+dU9UOdzU8lUuG9Pmw9Bzi+aMOui
+         JsmY09l4zTHxcItkD8BN3Av5pSuaCZ7ELQesvMIvg6UQ1qX4mFe+jXa7tMucd9bV/Qbb
+         O3W2RbOVSJzKC3NuL4Ol6/rXSKeMlso7sGIF+AFHEzisL8bjSJnzajPydrtE8ii8Isin
+         bTtqdcvMNL6AwamJrJzITApXALg5L5yX9e9ueKZ5zDwh3k8cgabDw4rvQzAg9AA3KZhU
+         JGQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=uzSI0wetqD3a2fnl6TSTdYCuAB+vZKeZqQs9uqKkHq0=;
-        b=kfdSPCW7/gFJ7tcQK5xuzZqP0UHG/4WXBuDDDFo8opAxJZxWDSGt1aQIiNi5e1Nu0Z
-         m81/ZdDY0/1ot+/qzOzDwFSZI1M5ZUjxBM2okoGEv6/zGcaUivUn0L9rHMfgS8VOs1XW
-         KYhxanOIMJqCh9WavRUkuOlJSzSHaXurtMxyNxr5dH8ByxLMtXsWOiwEnIUC8jNFfwuW
-         2qlmtKongA4p5bM7PhLsmCnLu3qp5p1GP1s2ezv3r20mfim6i0dBA+BrZFKljTMmXFZs
-         NDvpxENkBzfbY3fO6IB8KIjOXQZdHTmMBlGNqSlEtTY2pVe7ZEKni0m4wDTnhHsRcMHi
-         xdyA==
-X-Gm-Message-State: ALoCoQnjdnbdgkG+9P+dWE2+74i0ClgcDErJj2s1ouiLucTBS2vl8n0MyVZOXViRgTFcQu7D3B6r
-X-Received: by 10.69.27.68 with SMTP id je4mr10716556pbd.163.1440724509485;
-        Thu, 27 Aug 2015 18:15:09 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=fiEgY6bP9TuCdftKXMWEMLyqtyqbMDbqQ8XY2rs4bbk=;
+        b=AwnYRo948NiHRK8NnRra0iZdw7OnzQHPrnGFsGrg1vkKcB4qJT0bO8Ams8F9zV67mB
+         6w1OvzfKNpggSCprmTR/4WSOre1nILitqCp0qMGGwI1FVWhMnXvrxcSGpwAtRyrme1Jb
+         Tc6f5QqPLNkaqDR8mI9KGa7pggfGa6jMH+KYO5ho+0v2boQgZvJM+9tAPZ5ljcN4HOsd
+         BWcaaTVApbBNntBBCj71jGgdfNFpdYj6tpQ1e8GVPr5PAXQ0b0IX0NZYvkbHKzKCfl6K
+         ouSnpbD97KB/tYXxef9gKFOvHVvRLU9KsLqMgPPX+0CqmNHAhlyBOzh8yIl0IlLUpVa2
+         w3LQ==
+X-Gm-Message-State: ALoCoQnANXLryF/HmtKa2w1ogd6KG2arHkDNd/lICai4UmLpYHuuWguk7thUogQTVNNZz2bNLo4O
+X-Received: by 10.68.205.232 with SMTP id lj8mr11088339pbc.116.1440724499333;
+        Thu, 27 Aug 2015 18:14:59 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:bce4:8b21:c71b:de7e])
-        by smtp.gmail.com with ESMTPSA id mv4sm3736902pdb.51.2015.08.27.18.15.08
+        by smtp.gmail.com with ESMTPSA id u1sm3729401pbz.56.2015.08.27.18.14.58
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Thu, 27 Aug 2015 18:15:09 -0700 (PDT)
+        Thu, 27 Aug 2015 18:14:58 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.264.g5e52b0d
-In-Reply-To: <1440724495-708-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276696>
 
-This demonstrates how the new threading API may be used.
-There is no change in the workflow, just using the new
-threading API instead of keeping track of the pthreads
-ourselves.
+This series replaces origin/sb/submodule-helper and is based on
+5a1ba6b48a62bf55f9c8305d9850c3a8d22365c5, (Merge 'hv/submodule-config' to
+'sb/submodule-helper', which includes jk/git-path and hv/submodule-config)
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/index-pack.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+What changed?
+* The help text of the submodule--helper was adapted to our standard,
+  and removed long line, outdated docs, thanks Dscho!
+  
+* The run-command API was extended to be able to sync the output from
+  various commands running at the same time.
+  (In the previous series this was a one-shot only solution cooked for
+   git submodule foreach_parallel)
+   
+* `git fetch recurse-submodules` will fetch the submodules in parallel!
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 3f10840..187b281 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1075,7 +1075,7 @@ static void resolve_base(struct object_entry *obj)
- }
- 
- #ifndef NO_PTHREADS
--static void *threaded_second_pass(void *data)
-+static int threaded_second_pass(struct task_queue *tq, void *data)
- {
- 	set_thread_data(data);
- 	for (;;) {
-@@ -1096,7 +1096,7 @@ static void *threaded_second_pass(void *data)
- 
- 		resolve_base(&objects[i]);
- 	}
--	return NULL;
-+	return 0;
- }
- #endif
- 
-@@ -1195,18 +1195,19 @@ static void resolve_deltas(void)
- 					  nr_ref_deltas + nr_ofs_deltas);
- 
- #ifndef NO_PTHREADS
--	nr_dispatched = 0;
-+
- 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
-+		struct task_queue *tq;
-+		nr_dispatched = 0;
- 		init_thread();
--		for (i = 0; i < nr_threads; i++) {
--			int ret = pthread_create(&thread_data[i].thread, NULL,
--						 threaded_second_pass, thread_data + i);
--			if (ret)
--				die(_("unable to create thread: %s"),
--				    strerror(ret));
--		}
-+
-+		tq = create_task_queue(nr_threads);
- 		for (i = 0; i < nr_threads; i++)
--			pthread_join(thread_data[i].thread, NULL);
-+			add_task(tq, threaded_second_pass, thread_data + i);
-+
-+		if (finish_task_queue(tq, NULL))
-+			die("Not all threads have finished");
-+
- 		cleanup_thread();
- 		return;
- 	}
+Any feedback welcome,
+specially on patch 4..7
+
+Thanks,
+Stefan
+
+Stefan Beller (9):
+  submodule: implement `module_list` as a builtin helper
+  submodule: implement `module_name` as a builtin helper
+  submodule: implement `module_clone` as a builtin helper
+  thread-utils: add a threaded task queue
+  run-command: add synced output
+  submodule: helper to run foreach in parallel
+  fetch: fetch submodules in parallel
+  index-pack: Use the new worker pool
+  pack-objects: Use new worker pool
+
+ .gitignore                      |   1 +
+ Documentation/fetch-options.txt |   7 +
+ Makefile                        |   1 +
+ builtin.h                       |   1 +
+ builtin/fetch.c                 |   6 +-
+ builtin/index-pack.c            |  23 +--
+ builtin/pack-objects.c          | 175 ++++++-----------
+ builtin/pull.c                  |   6 +
+ builtin/submodule--helper.c     | 417 ++++++++++++++++++++++++++++++++++++++++
+ git-submodule.sh                | 177 +++--------------
+ git.c                           |   1 +
+ run-command.c                   |  99 ++++++++--
+ run-command.h                   |  21 ++
+ submodule.c                     | 100 ++++++++--
+ submodule.h                     |   2 +-
+ t/t7407-submodule-foreach.sh    |  11 ++
+ thread-utils.c                  | 192 ++++++++++++++++++
+ thread-utils.h                  |  35 ++++
+ 18 files changed, 960 insertions(+), 315 deletions(-)
+ create mode 100644 builtin/submodule--helper.c
+
 -- 
 2.5.0.264.g5e52b0d
