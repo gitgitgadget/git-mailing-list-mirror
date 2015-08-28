@@ -1,68 +1,98 @@
-From: Jeremy Morton <admin@game-point.net>
-Subject: Re: Running interpret-trailers automatically on each commit?
-Date: Fri, 28 Aug 2015 18:07:12 +0100
-Message-ID: <55E09540.60805@game-point.net>
-References: <55E07CB1.0@game-point.net> <xmqqk2sf2vic.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/9] fetch: fetch submodules in parallel
+Date: Fri, 28 Aug 2015 10:12:11 -0700
+Message-ID: <xmqqfv332v84.fsf@gitster.mtv.corp.google.com>
+References: <1440724495-708-1-git-send-email-sbeller@google.com>
+	<1440724495-708-8-git-send-email-sbeller@google.com>
+	<CAGZ79kbTAVDVmw+MrXvky6tJWZcG97tT_KAxV7S-pKCiNqRp3g@mail.gmail.com>
+	<20150828170141.GB8165@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 19:09:08 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 19:12:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVN9D-0000Ko-NJ
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 19:09:04 +0200
+	id 1ZVNCN-0003vO-Dx
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 19:12:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752317AbbH1RI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2015 13:08:59 -0400
-Received: from mail.gooeysoftware.com ([208.100.15.213]:46955 "EHLO
-	mail.gooeysoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752108AbbH1RI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2015 13:08:59 -0400
-Received: from [192.168.1.3] (82-69-83-224.dsl.in-addr.zen.co.uk [82.69.83.224])
-	by mail.gooeysoftware.com (Postfix) with ESMTPSA id CA72918A00F2;
-	Fri, 28 Aug 2015 12:07:56 -0500 (CDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
-In-Reply-To: <xmqqk2sf2vic.fsf@gitster.mtv.corp.google.com>
+	id S1752904AbbH1RMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2015 13:12:15 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:35341 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752765AbbH1RMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2015 13:12:14 -0400
+Received: by pacdd16 with SMTP id dd16so68523445pac.2
+        for <git@vger.kernel.org>; Fri, 28 Aug 2015 10:12:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=hFkZqbdSZcBZPoauU6b48MAzWxSY7b4SznkGWAHo6Jk=;
+        b=Ezqe+o7tiss4C8uX2drheekP8XLCNJCoBBEFSSAXN/aPTovP0rlL9JQ+jvTtkEFaWM
+         LfLyLnEaWbAXyg5PqAArSSeUnoBcsOAYAZJfo+Mv6qf+rdXsiSsEntxeyDE7myOdf3bq
+         qtNL0TxR0MmuXNl2zaRKJgkJcX91NhwM4Uswk9BilMIvwEIE8I3shoZWaXKK5l/Rp5vy
+         oHkbNzlSe/4mgSMah4CF/GQPPXWPfhb0GwwIVjKzW5G36smzDH+tMR1EGfNfa3nDFL4e
+         9toQt7f7OZFQbh8pxu3wRnkX4mpHP7766gpihaimu7o++kCyI1kcEysqt/QHoRJBywV6
+         Wu0A==
+X-Received: by 10.66.139.234 with SMTP id rb10mr16954012pab.118.1440781933601;
+        Fri, 28 Aug 2015 10:12:13 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:c919:3f20:8560:5a06])
+        by smtp.gmail.com with ESMTPSA id i3sm4595381pdp.73.2015.08.28.10.12.12
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Fri, 28 Aug 2015 10:12:12 -0700 (PDT)
+In-Reply-To: <20150828170141.GB8165@google.com> (Jonathan Nieder's message of
+	"Fri, 28 Aug 2015 10:01:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276735>
 
-Yeah but it's kind of useless to me having it on each commit on a 
-per-repo basis (and even then, only with hooks).
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
--- 
-Best regards,
-Jeremy Morton (Jez)
+> Stefan Beller wrote:
+>> On Thu, Aug 27, 2015 at 6:14 PM, Stefan Beller <sbeller@google.com> wrote:
+>
+>>> This makes use of the new task queue and the syncing feature of
+>>> run-command to fetch a number of submodules at the same time.
+>>>
+>>> The output will look like it would have been run sequential,
+>>> but faster.
+>>
+>> And it breaks the tests t5526-fetch-submodules.sh as the output is done
+>> on stderr only, instead of putting "Fetching submodule <submodule-path>
+>> to stdout. :(
+>>
+>> I guess combining stdout and stderr is not a good strategy after all now.
+>
+> IMHO the "Fetching submodule <submodule-path>" output always should have
+> gone to stderr.  It is not output that scripts would be relying on ---
+> it is just progress output.
+>
+> So a preliminary patch doing that (and updating tests) would make sense
+> to me.
 
-On 28/08/2015 18:06, Junio C Hamano wrote:
-> Jeremy Morton<admin@game-point.net>  writes:
->
->> I see that interpret-trailers has been added by default in git
->> 2.5.0. However the documentation isn't that great and I can't tell
->> whether it gets run automatically when I do a "git commit".  My guess
->> is that it doesn't - that you have to set up a hook to get it to run
->> each commit.
->
-> All correct, except that it happend in 2.2 timeframe.
->
-> A new experimental feature is shipped, so that people can gain
-> experience with it and come up with the best practice in their
-> hooks, and then laster we may fold the best practice into somewhere
-> deeper in the system.
->
-> We are still in the early "ship an experimental feature to let
-> people play with it" stage.
->
-> Thanks.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Sounds good.
+
+I personally do not think the "we still do all the output from a
+single process while blocking output from others" buffering
+implemented in this n-th round (by the way, please use [PATCH v$n
+N/M]) is worth doing, though.  It does not make the output machine
+parseable, because the reader does not get any signal in what order
+output of these subprocesses arrive anyway.  The payload does not
+even have "here is the beginning of output from the process that
+handled the submodule X" to delimit them.
+
+My preference is still (1) leave standard error output all connected
+to the same fd without multiplexing, and (2) line buffer standard
+output so that the output is at least readable as a text, in a
+similar way a log of an irc channel where everybody is talking at
+the same time.
