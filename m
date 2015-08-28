@@ -1,99 +1,75 @@
-From: =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@stgraber.org>
-Subject: git-send-email and IPv6-only host
-Date: Fri, 28 Aug 2015 00:11:19 -0400
-Message-ID: <20150828041119.GP301234@dakara>
+From: Stephen Kazakoff <sh.kazakoff@gmail.com>
+Subject: http.c (curl_easy_setopt and CURLAUTH_ANY)
+Date: Fri, 28 Aug 2015 16:07:36 +1000
+Message-ID: <CAF0pADEsO0y_6wcx-xNwRqjauJmMcQ8mUmbUbbWCBrK2gQ1quA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KJvkvZqQCzHgjKcr"
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 28 06:17:34 2015
+X-From: git-owner@vger.kernel.org Fri Aug 28 08:07:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVB6a-0006Rt-Q8
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 06:17:33 +0200
+	id 1ZVCpB-0003e8-78
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 08:07:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750969AbbH1ER1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2015 00:17:27 -0400
-Received: from vorash.stgraber.org ([192.99.34.219]:48574 "EHLO
-	smtpout1.stgraber.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750698AbbH1ER0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2015 00:17:26 -0400
-X-Greylist: delayed 360 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Aug 2015 00:17:26 EDT
-Received: from dakara (unknown [IPv6:2607:f2c0:f00f:2700:5dd4:f1ff:8f39:dbf2])
-	by smtpout01.srv.dcmtl.stgraber.net (Postfix) with ESMTPSA id A563128E34E
-	for <git@vger.kernel.org>; Fri, 28 Aug 2015 04:11:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=stgraber.org;
-	s=smtpout1; t=1440735081;
-	bh=AYe3RpqkNYLVC62VhRI3Btfyi1LFQmlD6hGxoC0PJtc=;
-	h=Date:From:To:Subject:From;
-	b=PYjROFZY8cyfyvVoaxaSigpns/ujhXdErQrX+EXwyZtSkkVBD8FwtribTH6z8HUuN
-	 aPOrhS/DDLcSzVyoSYwOa6jIJbYu3IXYpbqXsqC57Pgmsqf8yR8WMDFku3B63yx5e6
-	 1YYohLOD+aICmAlcFp6yVyBKy1eSe9fcp5hig6Kw=
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751823AbbH1GHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2015 02:07:37 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:32884 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751821AbbH1GHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2015 02:07:36 -0400
+Received: by padfo6 with SMTP id fo6so12765002pad.0
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 23:07:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=mpkkaE80F3ICwk41abce4U4UFMGPJ79+mVH2fwHdatQ=;
+        b=lKUjrAVXRm76+VG+20hGJLKkxxWDsN9YSCYw4IOsGJnvj7NAMFGyBA/n9kNYN7SX3F
+         EYw1AMq3m+MoFEJDtlNCfuTgOG22h9fizBKCikzZWeWkaDmlKBdnyONvQ6saCm5Ah7gQ
+         QMTubPT2S84q5ZuNm6JPut3s4VgYt5tdUA1/vPahkjCrWpr9kUZZ5VNpwk42MorqZ6dt
+         1kv6Z+/pVNKGp3oM1KcBOqfuTJhjSpAc7GfgdTeyF410CX3FllvAdfM5W74gwX8fdqZy
+         IIJAMCRRZA1BIlJrnk68Y/TUiPMlbJ2ByZJ0ujLels2X0K5igMdVFPJ1qiObHu+2K91+
+         axOg==
+X-Received: by 10.66.159.197 with SMTP id xe5mr13291261pab.32.1440742056141;
+ Thu, 27 Aug 2015 23:07:36 -0700 (PDT)
+Received: by 10.66.21.136 with HTTP; Thu, 27 Aug 2015 23:07:36 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276705>
+
+Hi,
+
+When I'm behind a proxy (with BASIC authentication), I'm unable to
+perform a git clone.
+
+I managed to fix this by editing http.c and recompiling. The change
+I'd like to propose is to line 452.
 
 
---KJvkvZqQCzHgjKcr
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+From:
 
-Hello,
+curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
 
-I've recently switched my home network to be IPv6-only, using NAT64 and
-DNS64 to reach IPv4 hosts. Pretty much everything I use day to day just
-kept on working fine, but I keep finding some small problems here and
-there, mostly to do with perl software.
+To:
 
-One of those is git-send-email which isn't capable of talking to an IPv6
-SMTP server.
+curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_BASIC | CURLAUTH_NTLM);
 
-I've locally patched my git-send-email to add:
 
-    require Net::INET6Glue::INET_is_INET6;
+I did however find the CURL documentation
+(https://secure.php.net/manual/en/function.curl-setopt.php) slightly
+conflicting. On one hand, "CURLAUTH_ANY" is effectively the same as
+passing "CURLAUTH_BASIC | CURLAUTH_NTLM". But the documentation for
+"CURLOPT_PROXYAUTH" says that only "CURLAUTH_BASIC" and
+"CURLAUTH_NTLM" are currently supported. By that, I'm assuming
+"CURLAUTH_ANY" is not supported.
 
-This seems to be the magic bullet for all IPv6 problems I've had with
-perl software, though I'm not sure whether this is an acceptable fix
-upstream as this does bring an additional dependency to git-send-email.
-Maybe making this require conditional somehow would work, not that I'd
-know how as I've not touched perl in over a decade.
+Also, I do not have access to a NTLM proxy, so I cannot test that
+behaviour. Would someone be able to confirm or deny this bug?
 
-Anyway, I figured that short of having a branch I'm happy with for
-git-send-email, I'd at least send you a bug report along with my current
-fix/workaround.
 
-Thanks!
-
-St=E9phane
-
---KJvkvZqQCzHgjKcr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJV399nAAoJEMY4l01keS1niSIQALoBiLbOvejNNM7qCo5AaCd1
-uHF8nrckxp190p0GUun+JvweYP+NokC+UfknXtbKMHiKuFVutP9Pk2c2MWBVU0+K
-oZHrPR50mtULq7Risn0dMq1RjTEbQ2jokvMJpLSgNtJ6629KicQlP0uqYDsuWFr4
-Tj8b7ajH/JFsU3ToFZd/Yz/oIxOqC6sO/yUYeka6laTmSDTrFBi5tYrvIg0KOpOh
-PHo1dsImummICIihDxYbrtYIajHM4+9pN/TkzMJU5x2wtENQCjagdKuJZog9Mu6Z
-L03B0qNuWdwdVx9d7PhHx6Fh1PfH4i9sbQ/4C9A+u+x+DMnYrTjCzbsz5z7uGA9h
-/HSwDI3iKo48wpqZ4PnfzE/R7ovl2qrJa4adsQVctwI8F/17kF8mdNDLA8iAq5IB
-ABC54bt2drb1UUFjoNRFNbtseED2PLqU4LP/sBnMrNQhjQsR5GUsAgfR++Xv1uC8
-MtDPwptdfIfYFtwmvtT8qSLDnn6JQFvCeetxiOmWDWGeDPTfo9pFRkWr3kgnbiHi
-u64uAYBbfKxfUPkcfKkkgeOJ4q7Fc9QFcsYn6px3hthaT2J0XDaqXef915/Kf8w1
-4vYFixmbFVKKTVPN67ZM/L1VKChNm3pzZrYquPiBsDJ2Jx7E8nSgenrMYN9tzaJi
-/+FMwxqXZ4w/j0NDmyjI
-=5eGW
------END PGP SIGNATURE-----
-
---KJvkvZqQCzHgjKcr--
+Kind regards,
+Steve
