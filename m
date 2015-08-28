@@ -1,7 +1,7 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/9] submodule: implement `module_list` as a builtin helper
-Date: Thu, 27 Aug 2015 18:14:47 -0700
-Message-ID: <1440724495-708-2-git-send-email-sbeller@google.com>
+Subject: [PATCH 8/9] index-pack: Use the new worker pool
+Date: Thu, 27 Aug 2015 18:14:54 -0700
+Message-ID: <1440724495-708-9-git-send-email-sbeller@google.com>
 References: <1440724495-708-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, jrnieder@gmail.com, gitster@pobox.com,
 	johannes.schindelin@gmx.de, Stefan Beller <sbeller@google.com>
@@ -12,363 +12,113 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZV8Ga-0000wZ-0O
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 03:15:40 +0200
+	id 1ZV8Gg-00012l-Fx
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 03:15:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400AbbH1BPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2015 21:15:05 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:34949 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750979AbbH1BPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2015 21:15:01 -0400
-Received: by pacdd16 with SMTP id dd16so43386422pac.2
-        for <git@vger.kernel.org>; Thu, 27 Aug 2015 18:15:00 -0700 (PDT)
+	id S1751386AbbH1BPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2015 21:15:43 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:33473 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751471AbbH1BPK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2015 21:15:10 -0400
+Received: by padfo6 with SMTP id fo6so4642615pad.0
+        for <git@vger.kernel.org>; Thu, 27 Aug 2015 18:15:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZGowO4VVYJ42GErS/x7iaa7zUDeGIjx9FxnL4yCQT2M=;
-        b=VWN+ryk+Ce7pQ9O3uzhMEZyNcX+5tPOLUvXKsvWcvNQp0wavQZD93CNpkz1+/FNNHH
-         9VfPsRQBWxbfK7lwvFiKCRZKSVxgDWcCxeIkztVa5uR80aMtRoSznHoYdNqBWli2nWqi
-         KB0RGPDtInT9tdEJDJPWdRo2i1l6iKh4kXD21F22a6i5AaqQyCjW0LhUIiRC1tJDSfn0
-         hYNAYo75/GnjyZUcTxwL7mmqTO/+TDSu7QLS/xaKnJOhUcDFKRjlqGAsnxIOMTnOgAnm
-         WDeFpDkrwTpAdZK9QySzz3tTYthANciBWg8Vr7mZSv+oi2v2mUPOY6WBsXI6f1s9lkNp
-         V/xA==
+        bh=uzSI0wetqD3a2fnl6TSTdYCuAB+vZKeZqQs9uqKkHq0=;
+        b=ORpzwgGNOYGv3krn/Se2kfzEMH8vjd0L4YZJIh7WkA3SoaX4EVji3MeTMTB/2b+W8t
+         +YW9kl4z8nUc6mszJFMYLsj1rKAQ/sm9+EcyfIQAU0qdbCSF5cysc4/IZIt4uM+v2Lrj
+         EZMupv/fAwKMD/hAao8Wj4Yj8I2DkKsvwQNZnkXDRNeZ/qYB1Aiqe6oizBL9R0fQC7nr
+         eb853wTLpp3TD3WYBtmLhjbkTaVVGWmadsygIU9wSj9m+mEC1o9VuFa7Atcm/mfNaEJQ
+         hI/tKXmIJdHIhrsnIw9GxhhKSnrnp8eYwHTekTZjI0NX4tKuLVycZLX9kG+gOAX57IZY
+         0ZIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ZGowO4VVYJ42GErS/x7iaa7zUDeGIjx9FxnL4yCQT2M=;
-        b=Cw+yVoU1ksFSSiL/ouTnp8y0D5nzLwpFipNvcmOGFW3nBvlQ1JIkljB32mdmJz7T6T
-         VSpLp0Idqz2EUPpAjHrN/9nz8CyvoqXUcuduKaBfgSoUnti9ASuwbMZxS2srRBb3WFed
-         ALFi8FyUS8EnzjH5g9IMIHFk9GhPo3ywepFXZOEIiLaWLNi2aQHy/J8coqfefvd5Y5bA
-         R8eIDxJHsJXHpxjiseS68I/9eBK0IYWef4dzBNxcL7vd3YEZ2XSYDkT3ba65guqGDC7o
-         2rpMfaDpxIZDPGZZCKHu13WpP4YWCaccabMngxh2aHN8jbthuNCvOu74fWAyxQMj8FZS
-         S7rA==
-X-Gm-Message-State: ALoCoQmLvQaHb3+VD0w2pX1LTJO+WS/PSn9jsdkNyizhZOUwnoQd5YvoRn2skLa9m42qNXpBjxIp
-X-Received: by 10.66.158.65 with SMTP id ws1mr11426947pab.18.1440724500595;
-        Thu, 27 Aug 2015 18:15:00 -0700 (PDT)
+        bh=uzSI0wetqD3a2fnl6TSTdYCuAB+vZKeZqQs9uqKkHq0=;
+        b=kfdSPCW7/gFJ7tcQK5xuzZqP0UHG/4WXBuDDDFo8opAxJZxWDSGt1aQIiNi5e1Nu0Z
+         m81/ZdDY0/1ot+/qzOzDwFSZI1M5ZUjxBM2okoGEv6/zGcaUivUn0L9rHMfgS8VOs1XW
+         KYhxanOIMJqCh9WavRUkuOlJSzSHaXurtMxyNxr5dH8ByxLMtXsWOiwEnIUC8jNFfwuW
+         2qlmtKongA4p5bM7PhLsmCnLu3qp5p1GP1s2ezv3r20mfim6i0dBA+BrZFKljTMmXFZs
+         NDvpxENkBzfbY3fO6IB8KIjOXQZdHTmMBlGNqSlEtTY2pVe7ZEKni0m4wDTnhHsRcMHi
+         xdyA==
+X-Gm-Message-State: ALoCoQnjdnbdgkG+9P+dWE2+74i0ClgcDErJj2s1ouiLucTBS2vl8n0MyVZOXViRgTFcQu7D3B6r
+X-Received: by 10.69.27.68 with SMTP id je4mr10716556pbd.163.1440724509485;
+        Thu, 27 Aug 2015 18:15:09 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:bce4:8b21:c71b:de7e])
-        by smtp.gmail.com with ESMTPSA id fx4sm3717570pbb.92.2015.08.27.18.14.59
+        by smtp.gmail.com with ESMTPSA id mv4sm3736902pdb.51.2015.08.27.18.15.08
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Thu, 27 Aug 2015 18:15:00 -0700 (PDT)
+        Thu, 27 Aug 2015 18:15:09 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.264.g5e52b0d
 In-Reply-To: <1440724495-708-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276695>
 
-Most of the submodule operations work on a set of submodules.
-Calculating and using this set is usually done via:
-
-       module_list "$@" | {
-           while read mode sha1 stage sm_path
-           do
-                # the actual operation
-           done
-       }
-
-Currently the function `module_list` is implemented in the
-git-submodule.sh as a shell script wrapping a perl script.
-The rewrite is in C, such that it is faster and can later be
-easily adapted when other functions are rewritten in C.
-
-git-submodule.sh similar to the builtin commands will navigate
-to the top most directory of the repository and keeping the
-subdirectories as a variable. As the helper is called from
-within the git-submodule.sh script, we are already navigated
-to the root level, but the path arguments are stil relative
-to the subdirectory we were in when calling git-submodule.sh.
-That's why there is a `--prefix` option pointing to an alternative
-path where to anchor relative path arguments.
+This demonstrates how the new threading API may be used.
+There is no change in the workflow, just using the new
+threading API instead of keeping track of the pthreads
+ourselves.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- .gitignore                  |   1 +
- Makefile                    |   1 +
- builtin.h                   |   1 +
- builtin/submodule--helper.c | 114 ++++++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  54 +++------------------
- git.c                       |   1 +
- 6 files changed, 124 insertions(+), 48 deletions(-)
- create mode 100644 builtin/submodule--helper.c
+ builtin/index-pack.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 4fd81ba..1c2f832 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -155,6 +155,7 @@
- /git-status
- /git-stripspace
- /git-submodule
-+/git-submodule--helper
- /git-svn
- /git-symbolic-ref
- /git-tag
-diff --git a/Makefile b/Makefile
-index 24b636d..d434e73 100644
---- a/Makefile
-+++ b/Makefile
-@@ -901,6 +901,7 @@ BUILTIN_OBJS += builtin/shortlog.o
- BUILTIN_OBJS += builtin/show-branch.o
- BUILTIN_OBJS += builtin/show-ref.o
- BUILTIN_OBJS += builtin/stripspace.o
-+BUILTIN_OBJS += builtin/submodule--helper.o
- BUILTIN_OBJS += builtin/symbolic-ref.o
- BUILTIN_OBJS += builtin/tag.o
- BUILTIN_OBJS += builtin/unpack-file.o
-diff --git a/builtin.h b/builtin.h
-index 839483d..924e6c4 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -119,6 +119,7 @@ extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
- extern int cmd_status(int argc, const char **argv, const char *prefix);
- extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
-+extern int cmd_submodule__helper(int argc, const char **argv, const char *prefix);
- extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
- extern int cmd_tag(int argc, const char **argv, const char *prefix);
- extern int cmd_tar_tree(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-new file mode 100644
-index 0000000..beaab7d
---- /dev/null
-+++ b/builtin/submodule--helper.c
-@@ -0,0 +1,114 @@
-+#include "builtin.h"
-+#include "cache.h"
-+#include "parse-options.h"
-+#include "quote.h"
-+#include "pathspec.h"
-+#include "dir.h"
-+#include "utf8.h"
-+
-+static const struct cache_entry **ce_entries;
-+static int ce_alloc, ce_used;
-+static const char *alternative_path;
-+
-+static int module_list_compute(int argc, const char **argv,
-+				const char *prefix,
-+				struct pathspec *pathspec)
-+{
-+	int i;
-+	char *max_prefix, *ps_matched = NULL;
-+	int max_prefix_len;
-+	parse_pathspec(pathspec, 0,
-+		       PATHSPEC_PREFER_FULL |
-+		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
-+		       prefix, argv);
-+
-+	/* Find common prefix for all pathspec's */
-+	max_prefix = common_prefix(pathspec);
-+	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
-+
-+	if (pathspec->nr)
-+		ps_matched = xcalloc(pathspec->nr, 1);
-+
-+	if (read_cache() < 0)
-+		die("index file corrupt");
-+
-+	for (i = 0; i < active_nr; i++) {
-+		const struct cache_entry *ce = active_cache[i];
-+
-+		if (!match_pathspec(pathspec, ce->name, ce_namelen(ce),
-+				    max_prefix_len, ps_matched,
-+				    S_ISGITLINK(ce->ce_mode) | S_ISDIR(ce->ce_mode)))
-+			continue;
-+
-+		if (S_ISGITLINK(ce->ce_mode)) {
-+			ALLOC_GROW(ce_entries, ce_used + 1, ce_alloc);
-+			ce_entries[ce_used++] = ce;
-+		}
-+
-+		while (i + 1 < active_nr && !strcmp(ce->name, active_cache[i + 1]->name))
-+			/*
-+			 * Skip entries with the same name in different stages
-+			 * to make sure an entry is returned only once.
-+			 */
-+			i++;
-+	}
-+	free(max_prefix);
-+
-+	if (ps_matched && report_path_error(ps_matched, pathspec, prefix))
-+		return -1;
-+
-+	return 0;
-+}
-+
-+static int module_list(int argc, const char **argv, const char *prefix)
-+{
-+	int i;
-+	static struct pathspec pathspec;
-+
-+	struct option module_list_options[] = {
-+		OPT_STRING(0, "prefix", &alternative_path,
-+			   N_("path"),
-+			   N_("alternative anchor for relative paths")),
-+		OPT_END()
-+	};
-+
-+	static const char * const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper module_list [--prefix=<path>] [<path>...]"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, module_list_options,
-+			     git_submodule_helper_usage, 0);
-+
-+	if (module_list_compute(argc, argv, alternative_path
-+					    ? alternative_path
-+					    : prefix, &pathspec) < 0) {
-+		printf("#unmatched\n");
-+		return 1;
-+	}
-+
-+	for (i = 0; i < ce_used; i++) {
-+		const struct cache_entry *ce = ce_entries[i];
-+
-+		if (ce_stage(ce)) {
-+			printf("%06o %s U\t", ce->ce_mode, sha1_to_hex(null_sha1));
-+		} else {
-+			printf("%06o %s %d\t", ce->ce_mode, sha1_to_hex(ce->sha1), ce_stage(ce));
-+		}
-+
-+		utf8_fprintf(stdout, "%s\n", ce->name);
-+	}
-+	return 0;
-+}
-+
-+int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-+{
-+	if (argc < 2)
-+		goto usage;
-+
-+	if (!strcmp(argv[1], "module_list"))
-+		return module_list(argc - 1, argv + 1, prefix);
-+
-+usage:
-+	usage("git submodule--helper module_list\n");
-+}
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 36797c3..af9ecef 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -145,48 +145,6 @@ relative_path ()
- 	echo "$result$target"
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 3f10840..187b281 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1075,7 +1075,7 @@ static void resolve_base(struct object_entry *obj)
  }
  
--#
--# Get submodule info for registered submodules
--# $@ = path to limit submodule list
--#
--module_list()
--{
--	eval "set $(git rev-parse --sq --prefix "$wt_prefix" -- "$@")"
--	(
--		git ls-files -z --error-unmatch --stage -- "$@" ||
--		echo "unmatched pathspec exists"
--	) |
--	@@PERL@@ -e '
--	my %unmerged = ();
--	my ($null_sha1) = ("0" x 40);
--	my @out = ();
--	my $unmatched = 0;
--	$/ = "\0";
--	while (<STDIN>) {
--		if (/^unmatched pathspec/) {
--			$unmatched = 1;
--			next;
--		}
--		chomp;
--		my ($mode, $sha1, $stage, $path) =
--			/^([0-7]+) ([0-9a-f]{40}) ([0-3])\t(.*)$/;
--		next unless $mode eq "160000";
--		if ($stage ne "0") {
--			if (!$unmerged{$path}++) {
--				push @out, "$mode $null_sha1 U\t$path\n";
--			}
--			next;
--		}
--		push @out, "$_\n";
--	}
--	if ($unmatched) {
--		print "#unmatched\n";
--	} else {
--		print for (@out);
--	}
--	'
--}
--
- die_if_unmatched ()
+ #ifndef NO_PTHREADS
+-static void *threaded_second_pass(void *data)
++static int threaded_second_pass(struct task_queue *tq, void *data)
  {
- 	if test "$1" = "#unmatched"
-@@ -532,7 +490,7 @@ cmd_foreach()
- 	# command in the subshell (and a recursive call to this function)
- 	exec 3<&0
+ 	set_thread_data(data);
+ 	for (;;) {
+@@ -1096,7 +1096,7 @@ static void *threaded_second_pass(void *data)
  
--	module_list |
-+	git submodule--helper module_list --prefix "$wt_prefix"|
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-@@ -592,7 +550,7 @@ cmd_init()
- 		shift
- 	done
+ 		resolve_base(&objects[i]);
+ 	}
+-	return NULL;
++	return 0;
+ }
+ #endif
  
--	module_list "$@" |
-+	git submodule--helper module_list --prefix "$wt_prefix" "$@" |
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-@@ -674,7 +632,7 @@ cmd_deinit()
- 		die "$(eval_gettext "Use '.' if you really want to deinitialize all submodules")"
- 	fi
+@@ -1195,18 +1195,19 @@ static void resolve_deltas(void)
+ 					  nr_ref_deltas + nr_ofs_deltas);
  
--	module_list "$@" |
-+	git submodule--helper module_list --prefix "$wt_prefix" "$@" |
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-@@ -790,7 +748,7 @@ cmd_update()
- 	fi
- 
- 	cloned_modules=
--	module_list "$@" | {
-+	git submodule--helper module_list --prefix "$wt_prefix" "$@" | {
- 	err=
- 	while read mode sha1 stage sm_path
- 	do
-@@ -1222,7 +1180,7 @@ cmd_status()
- 		shift
- 	done
- 
--	module_list "$@" |
-+	git submodule--helper module_list --prefix "$wt_prefix" "$@" |
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-@@ -1299,7 +1257,7 @@ cmd_sync()
- 		esac
- 	done
- 	cd_to_toplevel
--	module_list "$@" |
-+	git submodule--helper module_list --prefix "$wt_prefix" "$@" |
- 	while read mode sha1 stage sm_path
- 	do
- 		die_if_unmatched "$mode"
-diff --git a/git.c b/git.c
-index 55c327c..deecba0 100644
---- a/git.c
-+++ b/git.c
-@@ -469,6 +469,7 @@ static struct cmd_struct commands[] = {
- 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
- 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
- 	{ "stripspace", cmd_stripspace },
-+	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP },
- 	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
- 	{ "tag", cmd_tag, RUN_SETUP },
- 	{ "unpack-file", cmd_unpack_file, RUN_SETUP },
+ #ifndef NO_PTHREADS
+-	nr_dispatched = 0;
++
+ 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
++		struct task_queue *tq;
++		nr_dispatched = 0;
+ 		init_thread();
+-		for (i = 0; i < nr_threads; i++) {
+-			int ret = pthread_create(&thread_data[i].thread, NULL,
+-						 threaded_second_pass, thread_data + i);
+-			if (ret)
+-				die(_("unable to create thread: %s"),
+-				    strerror(ret));
+-		}
++
++		tq = create_task_queue(nr_threads);
+ 		for (i = 0; i < nr_threads; i++)
+-			pthread_join(thread_data[i].thread, NULL);
++			add_task(tq, threaded_second_pass, thread_data + i);
++
++		if (finish_task_queue(tq, NULL))
++			die("Not all threads have finished");
++
+ 		cleanup_thread();
+ 		return;
+ 	}
 -- 
 2.5.0.264.g5e52b0d
