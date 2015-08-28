@@ -1,80 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 7/9] fetch: fetch submodules in parallel
-Date: Fri, 28 Aug 2015 10:01:41 -0700
-Message-ID: <20150828170141.GB8165@google.com>
-References: <1440724495-708-1-git-send-email-sbeller@google.com>
- <1440724495-708-8-git-send-email-sbeller@google.com>
- <CAGZ79kbTAVDVmw+MrXvky6tJWZcG97tT_KAxV7S-pKCiNqRp3g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Running interpret-trailers automatically on each commit?
+Date: Fri, 28 Aug 2015 10:06:03 -0700
+Message-ID: <xmqqk2sf2vic.fsf@gitster.mtv.corp.google.com>
+References: <55E07CB1.0@game-point.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 19:01:52 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeremy Morton <admin@game-point.net>
+X-From: git-owner@vger.kernel.org Fri Aug 28 19:06:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVN2E-0000rh-UU
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 19:01:51 +0200
+	id 1ZVN6T-0005eK-W4
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Aug 2015 19:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752692AbbH1RBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2015 13:01:46 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:35793 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751787AbbH1RBp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2015 13:01:45 -0400
-Received: by pacdd16 with SMTP id dd16so68268850pac.2
-        for <git@vger.kernel.org>; Fri, 28 Aug 2015 10:01:45 -0700 (PDT)
+	id S1753254AbbH1RGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2015 13:06:07 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35183 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753207AbbH1RGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2015 13:06:05 -0400
+Received: by pacdd16 with SMTP id dd16so68375702pac.2
+        for <git@vger.kernel.org>; Fri, 28 Aug 2015 10:06:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=0m3FSQNNDNNOb+iQH3mLd0bGaqsqCUDk9/KGXKclRiI=;
-        b=TVOWNx/ocehEYpS/uFbgWCP70EMmrD+dpNzey9QRy7U4PVaYDD/Mi8ASoGvfnkzgxz
-         fTcdc6LLiK12pBIoF6bQdKwPCDrDSQqSWp192yRXh37O4nTFSLloJ4qUdctUIGjr1N72
-         c/nUkkWpZzAbjSA8u1g8xzsqGFul+76BZbitBJQi/grdrWoi74vYf2XxYRFI/7QjsFZR
-         BDYZOnaUEYlzoU800dUqdQ5TLeOi7TfTbB2CBHuRPPnVlR9p3yD6dUu49+iGCNS3vmqS
-         EPt32LZHQnXatvmSHrUAX/WnZJkop9Ip0wYL1IlWVEYD5xy2oK/i5lk0Raj5cqfABhnd
-         WiLg==
-X-Received: by 10.68.65.47 with SMTP id u15mr16904337pbs.127.1440781305093;
-        Fri, 28 Aug 2015 10:01:45 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:d830:475:d6b6:5fa8])
-        by smtp.gmail.com with ESMTPSA id vq5sm715104pbc.84.2015.08.28.10.01.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 28 Aug 2015 10:01:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbTAVDVmw+MrXvky6tJWZcG97tT_KAxV7S-pKCiNqRp3g@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=omzrTj/23wG1wjTkkTn8iqU98NbOlOVaSOjAluyN3vg=;
+        b=QC51KLa6Eh9keCHfnIrxW2TaipNZFMMjVT8lTEy2Xj45kQaG6/tgHNJ+TWU+GWLdsQ
+         LMokluqYK0uirX4EyRbf8oVCcYuj5e7/DVp2bKsbxoHoQkswkfE6AnTyhCTyyzMWB9aN
+         m3sp3gtOYivltUd/O6XmlY06UPoiNllGUst2OebC4t4eCxJNBrYEzYeeejMnZz92lJke
+         Csev2fnjzsxomYWIPHUJ14XPP+IRV6yZg/5qZyk64AhqgfpgIWkFJo66v9PL0v3kQSDg
+         KbeYIs83jlsMUquqZdci+Zc7JAjGRxl4nEbC8WzMz/3wI3Y71eq8KZpC6Et5YoRqQj1U
+         aJ/g==
+X-Received: by 10.66.162.229 with SMTP id yd5mr17174807pab.102.1440781564977;
+        Fri, 28 Aug 2015 10:06:04 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:c919:3f20:8560:5a06])
+        by smtp.gmail.com with ESMTPSA id cy10sm6321129pdb.13.2015.08.28.10.06.03
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Fri, 28 Aug 2015 10:06:04 -0700 (PDT)
+In-Reply-To: <55E07CB1.0@game-point.net> (Jeremy Morton's message of "Fri, 28
+	Aug 2015 16:22:25 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276732>
 
-Stefan Beller wrote:
-> On Thu, Aug 27, 2015 at 6:14 PM, Stefan Beller <sbeller@google.com> wrote:
+Jeremy Morton <admin@game-point.net> writes:
 
->> This makes use of the new task queue and the syncing feature of
->> run-command to fetch a number of submodules at the same time.
->>
->> The output will look like it would have been run sequential,
->> but faster.
->
-> And it breaks the tests t5526-fetch-submodules.sh as the output is done
-> on stderr only, instead of putting "Fetching submodule <submodule-path>
-> to stdout. :(
->
-> I guess combining stdout and stderr is not a good strategy after all now.
+> I see that interpret-trailers has been added by default in git
+> 2.5.0. However the documentation isn't that great and I can't tell
+> whether it gets run automatically when I do a "git commit".  My guess
+> is that it doesn't - that you have to set up a hook to get it to run
+> each commit.
 
-IMHO the "Fetching submodule <submodule-path>" output always should have
-gone to stderr.  It is not output that scripts would be relying on ---
-it is just progress output.
+All correct, except that it happend in 2.2 timeframe.
 
-So a preliminary patch doing that (and updating tests) would make sense
-to me.
+A new experimental feature is shipped, so that people can gain
+experience with it and come up with the best practice in their
+hooks, and then laster we may fold the best practice into somewhere
+deeper in the system.
 
-Thoughts?
-Jonathan
+We are still in the early "ship an experimental feature to let
+people play with it" stage.
+
+Thanks.
