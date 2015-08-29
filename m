@@ -1,85 +1,102 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] show-ref: place angle brackets around variables in usage string
-Date: Sat, 29 Aug 2015 11:21:14 +0100
-Organization: OPDS
-Message-ID: <47B9DE8756F943C0A0985F41D093340F@PhilipOakley>
-References: <1440821924-4289-1-git-send-email-alexhenrie24@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Gabor Bernat <bernat@primeranks.net>
+Subject: Re: [FEATURE REQUEST] Filter-branch extend progress with a simple
+ estimated time remaning
+Date: Sat, 29 Aug 2015 15:29:50 +0200
+Message-ID: <CANy2qHcCDkszLeOm-aJDCvkUaFFngtEy_VN+_B46K7KTQf4_Sg@mail.gmail.com>
+References: <CANy2qHdngVjH_tPE6=Aao-A2JWrVb_wt2wdu4EzZDQwM6-t_=Q@mail.gmail.com>
+ <20150825171238.GB9674@sigill.intra.peff.net> <xmqqh9nnz08i.fsf@gitster.dls.corp.google.com>
+ <20150825185210.GA10032@sigill.intra.peff.net> <20150825185414.GA10895@sigill.intra.peff.net>
+ <CAPig+cQ1COjZuBq2YWKNdQ7zrzfvrppX-84vc9i1mJ6-yp_ZiQ@mail.gmail.com>
+ <20150826021517.GA20292@sigill.intra.peff.net> <CANy2qHd_GTxr2CsjxLiNCvdwMLtEqcmURUTfFv9+t16FMEjuiw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Alex Henrie" <alexhenrie24@gmail.com>
-To: "Alex Henrie" <alexhenrie24@gmail.com>, <git@vger.kernel.org>,
-	<pclouds@gmail.com>, <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 29 12:21:20 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 29 15:30:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVdGA-0003o9-Vz
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 12:21:19 +0200
+	id 1ZVgDM-0007ja-Fu
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 15:30:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570AbbH2KVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Aug 2015 06:21:14 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:29238 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752135AbbH2KVN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Aug 2015 06:21:13 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2B6DwBzhuFVPOgXFlxdGQEBgwCBPYZRbb48BAQCgSpNAQEBAQEBBwEBAQFBJBtBBYNYBQEBAQECAQgBAS4eAQEUDQUGAgMFAgEDFQwlFAEECBIGBwMUBgESCAIBAgMBiAgDCgy2MIhcDYVRhnCDdoEFgk+BV2WDH4EUBY0oiBkBgROJcpUbhzyCNB2BVT0zgQWBSAEBAQ
-X-IPAS-Result: A2B6DwBzhuFVPOgXFlxdGQEBgwCBPYZRbb48BAQCgSpNAQEBAQEBBwEBAQFBJBtBBYNYBQEBAQECAQgBAS4eAQEUDQUGAgMFAgEDFQwlFAEECBIGBwMUBgESCAIBAgMBiAgDCgy2MIhcDYVRhnCDdoEFgk+BV2WDH4EUBY0oiBkBgROJcpUbhzyCNB2BVT0zgQWBSAEBAQ
-X-IronPort-AV: E=Sophos;i="5.17,429,1437433200"; 
-   d="scan'208";a="689037166"
-Received: from host-92-22-23-232.as13285.net (HELO PhilipOakley) ([92.22.23.232])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 29 Aug 2015 11:21:12 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752052AbbH2NaM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Aug 2015 09:30:12 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:34879 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751995AbbH2NaL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Aug 2015 09:30:11 -0400
+Received: by wicne3 with SMTP id ne3so38890818wic.0
+        for <git@vger.kernel.org>; Sat, 29 Aug 2015 06:30:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=9CDqV8wXZPWWZKOZGVOU9HMzz08VBc3LyKWM9HqCRcA=;
+        b=wvlF82qg68GGld3VEzKdD36Pm4fMXl730LsQyAokgHeiYOYofC47kLUwQ73LZXZxA1
+         sVMaE+pJUZqTsC09Sa7IXE0T4j1zdXJ8WFH1og32Pvl54UOkihioA9JSFLVB6H67Wpys
+         5BH2b/SK6NOwcIa2Lb0DWNWVQ/jpX+T9WHgl8MF407HsR86a6uMfal03uwSVkzZCkmee
+         Jq0m1OJhENof1pDf46ItVyBrhzptzHZjyGzpmnpJmvzigOBuO2LVnNfO4LkuhDyiqWnU
+         /wljgQOjyfH4N+g3LTEqLGn6oR4lWWhdZW5WtOCbWuyndk8SeNqaVkmWMdIYGUCtOdCo
+         ug/w==
+X-Received: by 10.180.107.202 with SMTP id he10mr9919162wib.35.1440855010065;
+ Sat, 29 Aug 2015 06:30:10 -0700 (PDT)
+Received: by 10.194.192.201 with HTTP; Sat, 29 Aug 2015 06:29:50 -0700 (PDT)
+In-Reply-To: <CANy2qHd_GTxr2CsjxLiNCvdwMLtEqcmURUTfFv9+t16FMEjuiw@mail.gmail.com>
+X-Google-Sender-Auth: pgk2kmc3NruqjLMYuG-F_jTZxLw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276775>
 
-From: "Alex Henrie" <alexhenrie24@gmail.com>
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
-> builtin/show-ref.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
+Amended, the latest version is at https://github.com/gaborbernat/git/co=
+mmit/ :)
+Bern=C3=A1t G=C3=81BOR
+
+
+On Sat, Aug 29, 2015 at 11:50 AM, Gabor Bernat <bernat@primeranks.net> =
+wrote:
+> Hello,
 >
-> diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-> index dfbc314..131ef28 100644
-> --- a/builtin/show-ref.c
-> +++ b/builtin/show-ref.c
-> @@ -8,7 +8,7 @@
+> Here's what I ended up using, and seemed to work well:
+> https://github.com/gaborbernat/git/commit/766841bc1b726a5d6e7e051938b=
+82975368695a0
 >
-> static const char * const show_ref_usage[] = {
->  N_("git show-ref [-q | --quiet] [--verify] [--head] [-d 
-> | --dereference] [-s | --hash[=<n>]] [--abbrev[=<n>]] [--tags] 
-> [--heads] [--] [<pattern>...]"),
-> - N_("git show-ref --exclude-existing[=pattern] < ref-list"),
-> + N_("git show-ref --exclude-existing[=<pattern>] < <ref-list>"),
-
-Should the '<' stdin redirection be shown?
-
-It looks (at first glance) as if this gained a double '< <' at the 
-beginning of 'ref-list', rather than being a clean indication of the 
-redirection. Perhaps change 'ref-list' to 'ref-list-file' for a slight 
-improvement in clarity - this it's only occurance, and the redirection 
-would best match a file.
-
-
->  NULL
-> };
+> Does this looks okay, should I create a patch from this?
 >
-> -- 
-> 2.5.0
+> Thanks,
+> Bern=C3=A1t G=C3=81BOR
 >
---
-Philip
-(will be offline for 4 days) 
+>
+> On Wed, Aug 26, 2015 at 4:15 AM, Jeff King <peff@peff.net> wrote:
+>> On Tue, Aug 25, 2015 at 04:12:54PM -0400, Eric Sunshine wrote:
+>>
+>>> > A little googling came up with:
+>>> >
+>>> >     awk 'END { print systime() }' </dev/null
+>>> >
+>>> > which probably (?) works everywhere.
+>>>
+>>> On Mac OS X and FreeBSD:
+>>>
+>>>     $ awk 'END { print systime() }' </dev/null
+>>>     awk: calling undefined function systime
+>>>     source line number 1
+>>>     $
+>>
+>> Oh, well. The reference I saw was that the old Kernighan nawk had it=
+,
+>> but that seems not to be the case:
+>>
+>>   http://www.cs.princeton.edu/~bwk/btl.mirror/
+>>
+>> "date +%s" seems to work on OS X, and so presumably on other BSDs. N=
+o
+>> clue what would work on stuff like SunOS, AIX, etc.
+>>
+>> -Peff
