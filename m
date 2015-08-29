@@ -1,102 +1,92 @@
-From: Christian Soltenborn <christian@soltenborn.de>
-Subject: Git crash on different versions, including current
-Date: Sat, 29 Aug 2015 10:41:45 +0200
-Message-ID: <55E17049.8030706@soltenborn.de>
+From: Gabor Bernat <bernat@primeranks.net>
+Subject: Re: [FEATURE REQUEST] Filter-branch extend progress with a simple
+ estimated time remaning
+Date: Sat, 29 Aug 2015 11:50:21 +0200
+Message-ID: <CANy2qHd_GTxr2CsjxLiNCvdwMLtEqcmURUTfFv9+t16FMEjuiw@mail.gmail.com>
+References: <CANy2qHdngVjH_tPE6=Aao-A2JWrVb_wt2wdu4EzZDQwM6-t_=Q@mail.gmail.com>
+ <20150825171238.GB9674@sigill.intra.peff.net> <xmqqh9nnz08i.fsf@gitster.dls.corp.google.com>
+ <20150825185210.GA10032@sigill.intra.peff.net> <20150825185414.GA10895@sigill.intra.peff.net>
+ <CAPig+cQ1COjZuBq2YWKNdQ7zrzfvrppX-84vc9i1mJ6-yp_ZiQ@mail.gmail.com> <20150826021517.GA20292@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 29 10:47:04 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 29 11:50:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVbmx-00018b-4A
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 10:47:03 +0200
+	id 1ZVcmi-0003mJ-0W
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 11:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752010AbbH2Iq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Aug 2015 04:46:59 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.31.102]:35825 "EHLO
-	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751525AbbH2Iq5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Aug 2015 04:46:57 -0400
-X-Greylist: delayed 311 seconds by postgrey-1.27 at vger.kernel.org; Sat, 29 Aug 2015 04:46:57 EDT
-Received: from [95.223.81.151] (helo=[192.168.1.5])
-	by smtprelay06.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
-	(Exim 4.84)
-	(envelope-from <christian@soltenborn.de>)
-	id 1ZVbhh-00041F-So
-	for git@vger.kernel.org; Sat, 29 Aug 2015 10:41:37 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-X-Df-Sender: Y2hyaXN0aWFuQHNvbHRlbmJvcm4uZGU=
+	id S1752537AbbH2Jum convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Aug 2015 05:50:42 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:38529 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751900AbbH2Jum convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Aug 2015 05:50:42 -0400
+Received: by wifs6 with SMTP id s6so4134926wif.1
+        for <git@vger.kernel.org>; Sat, 29 Aug 2015 02:50:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=r7Z3lG3mBKIbzDb0XApGc+DyIXTj1TO1gklcDZ2tfAg=;
+        b=mrkT52tmjoXC/Ku54O6QUToi94EGO8uA0H3iHq/97B6umTyISQVKMk1zsAJXufRyQN
+         ZOi/wdj8zOjQImQlTZR9XzCJLmAJHKrO2z93dVtLyrdIhkfnxF9zN9I03jt8U/3TnGUB
+         9wfLoK80HJGNHk2fKjEsHZBKcaody4YmSEBNX2TQP3ejRjW6zoKRHVycxeTkg9x+z4Sr
+         kN4spp8RXye9UROR3739XXL9hFKCkx+L1XMB3SZb8NVPWYGbElRy89hsDgYaBNl7q3rc
+         JDodVmtro3KHi86QSaQKqfbjNTh1to+euu1OtT4aKTlfKTuwO6Hpt4fW1qcGUH46Xgwi
+         Z4sw==
+X-Received: by 10.180.211.239 with SMTP id nf15mr9585430wic.13.1440841840634;
+ Sat, 29 Aug 2015 02:50:40 -0700 (PDT)
+Received: by 10.194.192.201 with HTTP; Sat, 29 Aug 2015 02:50:21 -0700 (PDT)
+In-Reply-To: <20150826021517.GA20292@sigill.intra.peff.net>
+X-Google-Sender-Auth: EhU0CYj6kwoLGDBx0RAUuET2UFg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276772>
 
-Hi everybody,
+Hello,
 
-today I ran into a git issue on Windows 7/64. My directory structure
-looks like this, and I wondered why the content of a dir wouldn't get added.
+Here's what I ended up using, and seemed to work well:
+https://github.com/gaborbernat/git/commit/766841bc1b726a5d6e7e051938b82=
+975368695a0
 
-C:\Users\chris\git\GoogleTestExtension
--- .git
--- ConsoleApplication1 (new)
------ gtest-1.7.0 dir (does not get added)
------ stuff that has been successfully added
--- more stuff that's already under git control
+Does this looks okay, should I create a patch from this?
 
-So here's about what I did:
-- Looked at it with Git Gui, noticed that gtest-1.7.0 is a submodule
-- Deleted gtest-1.7.0/.git
-- performed git add --all . within the gtest-1.7.0 dir => crash, output
-below
-- installed git 2.5.0
-- uninstalled git 1.9.1
-- deleted lock file
-- performed git add --all . within the gtest-1.7.0 dir => crash, output
-below
-
-I could provide the according dir for reproducing the issue (I will now
-zip it for reference) - if anybody is interested, drop me an email.
-
-All the best
-Christian
+Thanks,
+Bern=C3=A1t G=C3=81BOR
 
 
-
-Output with git 1.9.1:
-
-C:\Users\chris\git\GoogleTestExtension\ConsoleApplication1\gtest-1.7.0>git
-add --all .
-A
-This application has requested the Runtime to terminate it in an unusual
-way.
-Please contact the application's support team for more information.
-Assertion failed: item->nowildcard_len <= item->len && item->prefix <=
-item->len, file pathspec.c, line 317
-
-
-
-Output with git 2.5.0:
-
-C:\Users\chris\git\GoogleTestExtension\ConsoleApplication1\gtest-1.7.0>git
-add --all .
-
-This application has requested the Runtime to terminate it in an unusual
-way.
-Please contact the application's support team for more information.
-A s s e r t i o n   f a i l e d !
-
- P r o g r a m :   C : \ P r o g r a m   F i l e s \ G i t \ m i n g w 6
-4 \ b i n \ g i t . e x e
- F i l e :   p a t h s p e c . c ,   L i n e   3 1 7
-
- E x p r e s s i o n :   i t e m - > n o w i l d c a r d _ l e n   < =
- i t e m - > l e n   & &   i t e m - > p r e f i x   < =   i t e m - > l
-e n--
-Dylan Thomas: "An alcoholic is someone you don't like who drinks as much
-as you do."
+On Wed, Aug 26, 2015 at 4:15 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Aug 25, 2015 at 04:12:54PM -0400, Eric Sunshine wrote:
+>
+>> > A little googling came up with:
+>> >
+>> >     awk 'END { print systime() }' </dev/null
+>> >
+>> > which probably (?) works everywhere.
+>>
+>> On Mac OS X and FreeBSD:
+>>
+>>     $ awk 'END { print systime() }' </dev/null
+>>     awk: calling undefined function systime
+>>     source line number 1
+>>     $
+>
+> Oh, well. The reference I saw was that the old Kernighan nawk had it,
+> but that seems not to be the case:
+>
+>   http://www.cs.princeton.edu/~bwk/btl.mirror/
+>
+> "date +%s" seems to work on OS X, and so presumably on other BSDs. No
+> clue what would work on stuff like SunOS, AIX, etc.
+>
+> -Peff
