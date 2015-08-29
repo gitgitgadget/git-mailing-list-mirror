@@ -1,129 +1,118 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: http.c (curl_easy_setopt and CURLAUTH_ANY)
-Date: Sat, 29 Aug 2015 00:33:18 +0000
-Message-ID: <20150829003318.GA469190@vauxhall.crustytoothpaste.net>
-References: <CAF0pADEsO0y_6wcx-xNwRqjauJmMcQ8mUmbUbbWCBrK2gQ1quA@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 2/2] trailer: support multiline title
+Date: Sat, 29 Aug 2015 06:00:10 +0200
+Message-ID: <CAP8UFD2Vm0ObZXfH_D-AgHS3eOrL-9W6jqcAMqsZLWA4ArL=3g@mail.gmail.com>
+References: <1440557461-1078-1-git-send-email-chriscool@tuxfamily.org>
+	<1440557461-1078-2-git-send-email-chriscool@tuxfamily.org>
+	<xmqqegip3k5y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BXVAT5kNtrzKuDFl"
-Cc: git@vger.kernel.org
-To: Stephen Kazakoff <sh.kazakoff@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 29 02:33:34 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 29 06:00:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVU5N-0006VO-DP
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 02:33:33 +0200
+	id 1ZVXJU-0003zp-1t
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 06:00:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753134AbbH2Ad2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2015 20:33:28 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:49577 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752899AbbH2Ad1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2015 20:33:27 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 84D8328094;
-	Sat, 29 Aug 2015 00:33:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1440808403;
-	bh=R2yG0gXeZA4V8SQTRw62q0bslaFN+7w1ibT65Pg5kK0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=a/H8EAE6BkKFbon8xZvfkvzo07pqoTdj5Pg+qQpZ1OHlu/uRmFiKYFGqSgyGOO4O3
-	 dUVi8sVTV1YCcz3KiQ5yldnDwOaJKxQ8cS8rl4DGnjHVA26G1tn2TNneyn8rgtMsu4
-	 +M9KNRfkBgjue1IXDJk9mBYKWYhpDaJVkG1Pc3E2HFa74oQao4diBuz2ygAK7IasCV
-	 ScKm2nYWIANJ++pWld7EcVmNjY60mKvPOUgmzIsrqrxF1RUATJWQyjuIjoQ16Qr+NP
-	 pK/lUe3AOl9XE8vUWng+q77bFJD5l1hjzPE05nhCAQWO/GZxZCgbkJ71/oBV8ecjIg
-	 TBtKNTPso+0KPKloS2uVMc2OdiPHR47cieEOsHzX6E75pS97F++W8e6pf6Qe47NxtY
-	 1QKGUiEkSMpDyfxV1/qObazPg2RfpbYDL+TqV/DD9S9yKPy0fjqqkaJI5zbuRJcJff
-	 OTf8z3st/NJOZyv+r4VLlsMm7K3uuFPtoPkhh+MoQcUkLticSHc
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Stephen Kazakoff <sh.kazakoff@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <CAF0pADEsO0y_6wcx-xNwRqjauJmMcQ8mUmbUbbWCBrK2gQ1quA@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.1.0-1-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1751669AbbH2EAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Aug 2015 00:00:13 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:35339 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750825AbbH2EAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Aug 2015 00:00:11 -0400
+Received: by igph8 with SMTP id h8so24504204igp.0
+        for <git@vger.kernel.org>; Fri, 28 Aug 2015 21:00:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=fk9B6jyA85Y1ODEOyA9CM99T9kBy3QU0SOJBne2WOfY=;
+        b=EHaquMJ/Kak5AOpGiFq/GXYPVU0ZsCf54i7cBvQooWf2pJqpfHius/hCJtzmLZL3rb
+         DwzKCqobKj/f43Qc297fMiR5QM4A7ljedC3dalVC3cEjdke0UN482Bf7ojVDfy1vnPP8
+         H6oC2exBaor3V52uFKlfeDd3rBUPGWsj1S8/UchKYydvovGLA+U2Uk8WF3cqxykPPTno
+         oaEZb93ADbym3jJQjJsgvwMoYwkRjBUgxI37tqT31J09a4SCmFxAHXHwtjlJSHe1grPR
+         hTa51/gBBd4qZ8xp7qNbx6sIkxFhpIwy10e+K81yrZzYohLQxSDXMsv/CTUw7YwLdwHZ
+         2LPw==
+X-Received: by 10.50.80.14 with SMTP id n14mr5525712igx.30.1440820810790; Fri,
+ 28 Aug 2015 21:00:10 -0700 (PDT)
+Received: by 10.79.93.131 with HTTP; Fri, 28 Aug 2015 21:00:10 -0700 (PDT)
+In-Reply-To: <xmqqegip3k5y.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276764>
 
+On Wed, Aug 26, 2015 at 9:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> We currently ignore the first line passed to `git interpret-trailers`,
+>> when looking for the beginning of the trailers.
+>>
+>> Unfortunately this does not work well when a commit is created with a
+>> line break in the title, using for example the following command:
+>>
+>> git commit -m 'place of
+>> code: change we made'
+>>
+>> In this special case, it is best to look at the first line and if it
+>> does not contain only spaces, consider that the second line is not a
+>> trailer.
+>> ---
+>
+> Missing sign-off,
 
---BXVAT5kNtrzKuDFl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ok, will add it.
 
-On Fri, Aug 28, 2015 at 04:07:36PM +1000, Stephen Kazakoff wrote:
-> Hi,
->=20
-> When I'm behind a proxy (with BASIC authentication), I'm unable to
-> perform a git clone.
->=20
-> I managed to fix this by editing http.c and recompiling. The change
-> I'd like to propose is to line 452.
->=20
->=20
-> From:
->=20
-> curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
->=20
-> To:
->=20
-> curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_BASIC | CURLAUTH_NTL=
-M);
+[...]
 
-Assuming it's supported upstream, I suspect this would break people who
-are using GSSAPI (or Digest) authentication for their proxy.  This would
-be a logical thing to do where Kerberos is used.
+> I think the analysis behind the first patch is correct.  It stops
+> the backward scan of the main loop to reach there by realizing that
+> the first line, which must be the first line of the patch title
+> paragraph, can never be a trailer.
+>
+> To extend that correct realization to cover the case where the title
+> paragraph has more than one line, the right thing to do is to scan
+> forward from the beginning to find the first paragraph break, which
+> must be the end of the title paragraph, and exclude the whole thing,
+> wouldn't it?
+>
+> That is, I am wondering why the patch is not more like this (there
+> may be off-by-one, but just to illustrate the approach; I didn't
+> even compile test this one so...)?
+>
+> Puzzled...
+>
+>  static int find_trailer_start(struct strbuf **lines, int count)
+>  {
+> -       int start, only_spaces = 1;
+> +       int start, end_of_title, only_spaces = 1;
+> +
+> +       /* The first paragraph is the title and cannot be trailer */
+> +       for (start = 0; start < count; start++)
+> +               if (!lines[start]->len)
+> +                       break; /* paragraph break */
+> +       end_of_title = start;
+>
+>         /*
+>          * Get the start of the trailers by looking starting from the end
+>          * for a line with only spaces before lines with one separator.
+> -        * The first line must not be analyzed as the others as it
+> -        * should be either the message title or a blank line.
+>          */
+> -       for (start = count - 1; start >= 1; start--) {
+> +       for (start = count - 1; start >= end_of_title; start--) {
+>                 if (lines[start]->buf[0] == comment_line_char)
+>                         continue;
+>                 if (contains_only_spaces(lines[start]->buf)) {
 
-It might be worth checking exactly which bits cause problems for you;
-perhaps your proxy might be misconfigured to suggest a type that it
-doesn't support.
+Yeah, we can do that. It will be clearer.
 
-> I did however find the CURL documentation
-> (https://secure.php.net/manual/en/function.curl-setopt.php) slightly
-> conflicting. On one hand, "CURLAUTH_ANY" is effectively the same as
-> passing "CURLAUTH_BASIC | CURLAUTH_NTLM". But the documentation for
-> "CURLOPT_PROXYAUTH" says that only "CURLAUTH_BASIC" and
-> "CURLAUTH_NTLM" are currently supported. By that, I'm assuming
-> "CURLAUTH_ANY" is not supported.
-
-This looks like the documentation for PHP.  The libcurl documentation[0]
-doesn't mention a limitation.
-
-[0] http://curl.haxx.se/libcurl/c/CURLOPT_PROXYAUTH.html
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---BXVAT5kNtrzKuDFl
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.7 (GNU/Linux)
-
-iQIcBAEBCgAGBQJV4P3OAAoJEL9TXYEfUvaLMKwQAJ8Hhzc6p9zwLeZmEeNqjwWk
-ZRNPkcExO4WXmDdtGmEaWySl6r5y3NiROx/E0gs3pzVF4AAeFP6E9nziaKfSrs+F
-kG3sgYc6MElEP7DK9IG2n20QvwWDeJU8ah1Ysm2jiKS/6XqYoc6QiQuyxeNwwRde
-3RdPadrhd37dfDccO1435BkQsc6ImS35e6KuPswKmZZqNj5Gsuukbcp0Jz8etCvN
-bkC935akajAjit3RO+LOmNXPCxfKYkE5y9TJnI2NkK9QepMr7JQ4m+uXIyUTSIV2
-svzO6J17Jtg/jwTQGShf3L0AtifdRSHkwfwmZ4vOJT05q1UNs2W17fqHNSv0rWYn
-josiJN8zVWZrDmrs7+pGaiRfvybV6j39YhKRfQxE5Mqap4DkVNTUD5VDmoEd9ItS
-LyDXXo26JKg8m3yDaHKwLJcIn9Dkxao4zXiJNbMCnoWKQABkvi711CMg8YWOAkmt
-wadSwK2yWj7qLfd2a/8g6jwcJGPL3HnXRfakwcXRHLvf4u4egb45gh5AU13wId+e
-cMRMXiWh/adqUw5qu4Dn66aAas/G4b29N0+HA0VJN8HKyY00tZG5nsZeEv1PB52Z
-jH1P+2molLJo80iR2sfcIUo9Ox84BTX4Xlgxb45ybkqG29XZlMm3aM93GChS+hLB
-ayQ/N0Vya9ywUIMaOH5L
-=PqnC
------END PGP SIGNATURE-----
-
---BXVAT5kNtrzKuDFl--
+Thanks,
+Christian.
