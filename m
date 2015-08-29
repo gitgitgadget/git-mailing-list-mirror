@@ -1,96 +1,73 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v14 03/13] utf8: add function to align a string into given strbuf
-Date: Sat, 29 Aug 2015 23:03:04 +0530
-Message-ID: <CAOLa=ZRq4aJMYcRBaaLV9XFJ0LkeO27cZwaaJUmRMvCnHD1SAQ@mail.gmail.com>
-References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
- <1440857537-13968-4-git-send-email-Karthik.188@gmail.com> <55E1E778.4030400@web.de>
+From: Alex Henrie <alexhenrie24@gmail.com>
+Subject: Re: [PATCH] show-ref: place angle brackets around variables in usage string
+Date: Sat, 29 Aug 2015 15:09:20 -0600
+Message-ID: <CAMMLpeTsL-_e=oGjuqjS5KfBcmd1UKfCOPXmjhaPFv8+qGzRng@mail.gmail.com>
+References: <1440821924-4289-1-git-send-email-alexhenrie24@gmail.com> <47B9DE8756F943C0A0985F41D093340F@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+Cc: Git mailing list <git@vger.kernel.org>, pclouds@gmail.com,
 	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Aug 29 19:33:57 2015
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sat Aug 29 23:09:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVk0n-0000c0-G7
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 19:33:53 +0200
+	id 1ZVnNi-0004fx-7C
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 23:09:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752740AbbH2Rde convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Aug 2015 13:33:34 -0400
-Received: from mail-oi0-f43.google.com ([209.85.218.43]:36635 "EHLO
-	mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752533AbbH2Rde convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Aug 2015 13:33:34 -0400
-Received: by oibi18 with SMTP id i18so40231981oib.3
-        for <git@vger.kernel.org>; Sat, 29 Aug 2015 10:33:33 -0700 (PDT)
+	id S1752911AbbH2VJm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Aug 2015 17:09:42 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:36950 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752880AbbH2VJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Aug 2015 17:09:41 -0400
+Received: by wicfv10 with SMTP id fv10so39461540wic.0
+        for <git@vger.kernel.org>; Sat, 29 Aug 2015 14:09:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=egMyDvAD/zGxkr9JDJ1QDYxiEj8e8tGOHXH8LKpctjk=;
-        b=W9fOMmyT9rKry52R31Ae8lFcmfnaYruKP3PACaaLhOoQ44q0tTRaLlXyovap6Ecyta
-         o7gyR8rG/pHwcX+qjVOY0nRWg8+SK1BxDU8DqlolFeH0NOMZayIWlihr0F+tKutseSN0
-         ObXZA4qw5dPT6cuYT1a8Uy2QNLdmqgPgNoTwAomenhec1FwNG7cVhswdBKDAzwAnaZtx
-         R6FOBSNlzCUS676BOPeOB1uXdYi7cmh0BdzxUH8RrE2JJMtl+qRpRNXmD6QuEFy3CHi/
-         pjy8ooFeIU1Ca8nK7TDdZAPyfeWg0pA4xsIXxozcNRtUoTWUSdEPDmRS+ImMzu5ccFAH
-         py0g==
-X-Received: by 10.202.200.146 with SMTP id y140mr3382299oif.111.1440869613416;
- Sat, 29 Aug 2015 10:33:33 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Sat, 29 Aug 2015 10:33:04 -0700 (PDT)
-In-Reply-To: <55E1E778.4030400@web.de>
+         :cc:content-type;
+        bh=xQ2g6gZJE9gyLLwv2/9i+LEllxvxHWYQsyylF5LGOLc=;
+        b=jxpHiBDQrgV7EewVLnIXFb6ets2/XCOJP1Sf+Bu/7hJzc4qvPxm4I51eHKcn6+Qcd1
+         XNJ4OyxM4p4gTikbeE5fnxfOLwWv68xRis6H9AQHBwIqUw9DDT6bmEBDqJGMCy4kuJh+
+         Kngzhdg4D7sBtZFNhTBZ3u6TIBVulbTSuQKbpm7ML/42lQcjcMRCwQYHhVjInanxOdnW
+         AqQsMzna6bfJqaJTRtxbme0ZKhJ2ouzlAoGNNP4vtlr+EMGO0seUDmBojQszfJYn4kro
+         CbOVsVsv+2l1Ck56ZqZmlt/sXvdPektGPX+DWgi+YXiijkWS/MqIXcOx+8glVv0K39GX
+         isBw==
+X-Received: by 10.194.108.232 with SMTP id hn8mr17983784wjb.154.1440882580209;
+ Sat, 29 Aug 2015 14:09:40 -0700 (PDT)
+Received: by 10.28.51.137 with HTTP; Sat, 29 Aug 2015 14:09:20 -0700 (PDT)
+In-Reply-To: <47B9DE8756F943C0A0985F41D093340F@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276794>
 
-On Sat, Aug 29, 2015 at 10:40 PM, Torsten B=C3=B6gershausen <tboegi@web=
-=2Ede> wrote:
-> On 29.08.15 16:12, Karthik Nayak wrote:
->> diff --git a/utf8.h b/utf8.h
->> index 5a9e94b..7930b44 100644
->> --- a/utf8.h
->> +++ b/utf8.h
->> @@ -55,4 +55,19 @@ int mbs_chrlen(const char **text, size_t *remaind=
-er_p, const char *encoding);
->>   */
->>  int is_hfs_dotgit(const char *path);
->>
->> +typedef enum {
->> +     ALIGN_LEFT,
->> +     ALIGN_MIDDLE,
->> +     ALIGN_RIGHT
->> +} align_type;
-> should this be called strbuf_align_type ?
+2015-08-29 4:21 GMT-06:00 Philip Oakley <philipoakley@iee.org>:
+> Should the '<' stdin redirection be shown?
 >
+> It looks (at first glance) as if this gained a double '< <' at the beginning
+> of 'ref-list', rather than being a clean indication of the redirection.
+> Perhaps change 'ref-list' to 'ref-list-file' for a slight improvement in
+> clarity - this it's only occurance, and the redirection would best match a
+> file.
 
-align_type seemed descriptive and unique enough.
+This syntax occurs in three other places in Git:
 
-> And is there a reason why the is in utf.c and not in stbuf.c ?
->
-> (I know that there is a lot of strbuf in utf8.c, but I hadn't managed=
- to send a patch
-> to move everything into strbuf.c and make utf8.c un-aware of all strb=
-ub-business)
->
+git cat-file (--batch | --batch-check) [--follow-symlinks] < <list-of-objects>
 
-This was based on Eric's suggestions.
-http://article.gmane.org/gmane.comp.version-control.git/275456
+git check-attr --stdin [-z] [-a | --all | <attr>...] < <list-of-paths>
 
-It makes sense also, since rather than acting on a strbuf, this is more=
- of just
-utilizing an strbuf to provide the result. whereas the real work is of
-alignment.
+git hash-object  --stdin-paths < <list-of-paths>
 
+So if we need to say <ref-list-file> for clarity, we should also say
+<object-list-file> and <path-list-file> for these other commands.
 
+I think the most sane thing to do is to commit this patch as-is, and
+then someone can submit a separate patch to reword all four usage
+strings for increased clarity.
 
-
---=20
-Regards,
-Karthik Nayak
+-Alex
