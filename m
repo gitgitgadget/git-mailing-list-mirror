@@ -1,112 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git checkout" resets modified files
-Date: Sat, 29 Aug 2015 00:58:01 -0700
-Message-ID: <xmqqh9nizfue.fsf@gitster.mtv.corp.google.com>
-References: <CANDob0LdQpoSfsedPK_yhNunXBvNTc9L1zKOM9h8dBUDePs0kg@mail.gmail.com>
-	<xmqqlhcuzhsu.fsf@gitster.mtv.corp.google.com>
+From: Christian Soltenborn <christian@soltenborn.de>
+Subject: Git crash on different versions, including current
+Date: Sat, 29 Aug 2015 10:41:45 +0200
+Message-ID: <55E17049.8030706@soltenborn.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Steve Heyns <notzippy@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 29 09:58:28 2015
+X-From: git-owner@vger.kernel.org Sat Aug 29 10:47:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVb1v-0007Iz-Un
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 09:58:28 +0200
+	id 1ZVbmx-00018b-4A
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 10:47:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752302AbbH2H6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Aug 2015 03:58:06 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:34529 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752261AbbH2H6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Aug 2015 03:58:04 -0400
-Received: by pabzx8 with SMTP id zx8so85629663pab.1
-        for <git@vger.kernel.org>; Sat, 29 Aug 2015 00:58:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=QVtYFs57RO/vh4/N1xHXrB8B7m/mWPUkTmyUvrGIN9U=;
-        b=EoUiJFqrWR4s2obj1ab3njZ3KHcOZgukPn1vt7GUxUQiMStUDuPxQ6b2IqCfPjIKRU
-         S4wslJXDN66Bw/D3WXnukI3grHoBBaAEg+xWy+Bu9MLDA7qQl9NUdn5YE2Tfzh5xNgJq
-         CcMZqvfHRnPvjX8kjQsSvrXaKzt1TlNXVOEF4qQF9N0Zkfl8USV4p6YpI2biiptjLgQ8
-         g4W7knwLQNPe6syYIEXNwJjkEmjicd3rPLrGQzx/VN7QFVYiMf/7m78nwGqQ3UQRsrs2
-         bQBSNnW3gPCY2ZjomTVYkSvT5f2CRjSYkg/na/p7586DVmrIe7krsYK959qx0SY/VG1C
-         4T8g==
-X-Received: by 10.66.228.71 with SMTP id sg7mr21335380pac.121.1440835083775;
-        Sat, 29 Aug 2015 00:58:03 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:8d2:f21a:caa6:b0e7])
-        by smtp.gmail.com with ESMTPSA id fx4sm7885947pbb.92.2015.08.29.00.58.01
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 29 Aug 2015 00:58:02 -0700 (PDT)
-In-Reply-To: <xmqqlhcuzhsu.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sat, 29 Aug 2015 00:15:45 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752010AbbH2Iq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Aug 2015 04:46:59 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.31.102]:35825 "EHLO
+	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751525AbbH2Iq5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Aug 2015 04:46:57 -0400
+X-Greylist: delayed 311 seconds by postgrey-1.27 at vger.kernel.org; Sat, 29 Aug 2015 04:46:57 EDT
+Received: from [95.223.81.151] (helo=[192.168.1.5])
+	by smtprelay06.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
+	(Exim 4.84)
+	(envelope-from <christian@soltenborn.de>)
+	id 1ZVbhh-00041F-So
+	for git@vger.kernel.org; Sat, 29 Aug 2015 10:41:37 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+X-Df-Sender: Y2hyaXN0aWFuQHNvbHRlbmJvcm4uZGU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276771>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi everybody,
 
-> I do not think this behaviour depends on the vintage of Git.  An
-> empty string as pathspec has always matched "everything in here"
-> AFAIR.
+today I ran into a git issue on Windows 7/64. My directory structure
+looks like this, and I wondered why the content of a dir wouldn't get added.
 
-Having said all that, I think the DWIM used by "git checkout" has
-some room for improvement, namely, its "we didn't see a double-dash;
-is it a ref or is it a pathspec?" disambiguation should become
-similar to the revision parser's.
+C:\Users\chris\git\GoogleTestExtension
+-- .git
+-- ConsoleApplication1 (new)
+----- gtest-1.7.0 dir (does not get added)
+----- stuff that has been successfully added
+-- more stuff that's already under git control
 
-Notice that
+So here's about what I did:
+- Looked at it with Git Gui, noticed that gtest-1.7.0 is a submodule
+- Deleted gtest-1.7.0/.git
+- performed git add --all . within the gtest-1.7.0 dir => crash, output
+below
+- installed git 2.5.0
+- uninstalled git 1.9.1
+- deleted lock file
+- performed git add --all . within the gtest-1.7.0 dir => crash, output
+below
 
-    $ git log ""
+I could provide the according dir for reproducing the issue (I will now
+zip it for reference) - if anybody is interested, drop me an email.
 
-will error out, saying that an empty string does not name either a
-revision or an existing path in the working tree.  I think the same
-"refusal due to ambiguity" should be in "git checkout" when the user
-says
-
-    $ git checkout ""
-
-Right now, when there is no double-dash, the code checks if the
-first token X can be DWIMmed as a ref.  It may either name an
-existing branch X, or it may be a non-existing branch name, but
-there is a single remotes/Y/X and the user is too lazy to say 'git
-checkout -t -b remotes/Y/X X' and instead said 'git checkout X'.
-
-And if the first token X cannot be DWIMmed as a ref according to the
-above logic, unlike the revision parser, we do not check it (and all
-the subsequent tokens) name existing filesystem entity.
-
-I think we really should.  With that, Steve's command line would
-have correctly diagnosed as a liely error.
-
-Of course, that still allows people to say
-
-    $ git checkout -- ""
-
-if they really mean it, but they can type
-
-    $ git checkout -- :/
-
-just as easily, so there is no big loss.
-
-After following the existing code myself, I think this is a rather
-easy low-hanging fruit for any aspiring Git hacker.  Hint, hint...
+All the best
+Christian
 
 
-> [Footnote]
->
-> *1* Checking out a branch whose name is an empty string can be asked
->     explicitly by disambiguating double-dash like this:
->
->     $ git checkout "" --
->
-> And it will be answered (correctly) with:
->
->     fatal: invalid reference
+
+Output with git 1.9.1:
+
+C:\Users\chris\git\GoogleTestExtension\ConsoleApplication1\gtest-1.7.0>git
+add --all .
+A
+This application has requested the Runtime to terminate it in an unusual
+way.
+Please contact the application's support team for more information.
+Assertion failed: item->nowildcard_len <= item->len && item->prefix <=
+item->len, file pathspec.c, line 317
+
+
+
+Output with git 2.5.0:
+
+C:\Users\chris\git\GoogleTestExtension\ConsoleApplication1\gtest-1.7.0>git
+add --all .
+
+This application has requested the Runtime to terminate it in an unusual
+way.
+Please contact the application's support team for more information.
+A s s e r t i o n   f a i l e d !
+
+ P r o g r a m :   C : \ P r o g r a m   F i l e s \ G i t \ m i n g w 6
+4 \ b i n \ g i t . e x e
+ F i l e :   p a t h s p e c . c ,   L i n e   3 1 7
+
+ E x p r e s s i o n :   i t e m - > n o w i l d c a r d _ l e n   < =
+ i t e m - > l e n   & &   i t e m - > p r e f i x   < =   i t e m - > l
+e n--
+Dylan Thomas: "An alcoholic is someone you don't like who drinks as much
+as you do."
