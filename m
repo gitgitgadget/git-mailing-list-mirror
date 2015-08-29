@@ -1,129 +1,76 @@
-From: Namhyung Kim <namhyung@gmail.com>
-Subject: [PATCH v3] stash: Add two config variables for stash show
-Date: Sun, 30 Aug 2015 00:25:57 +0900
-Message-ID: <1440861957-26413-1-git-send-email-namhyung@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 29 17:29:05 2015
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v14 03/13] utf8: add function to align a string into given
+ strbuf
+Date: Sat, 29 Aug 2015 19:10:16 +0200
+Message-ID: <55E1E778.4030400@web.de>
+References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
+ <1440857537-13968-4-git-send-email-Karthik.188@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
+	gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 29 19:10:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVi40-0004JY-Ku
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 17:29:05 +0200
+	id 1ZVjeB-0007uT-EJ
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 19:10:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752995AbbH2P27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Aug 2015 11:28:59 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:33840 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752722AbbH2P27 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Aug 2015 11:28:59 -0400
-Received: by pabzx8 with SMTP id zx8so92348283pab.1
-        for <git@vger.kernel.org>; Sat, 29 Aug 2015 08:28:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id;
-        bh=oHRaorMSdwiHIx2lp0ETtQ1Fsn+7co7N2oD8tS12mFE=;
-        b=WahLkG22zAEc6knTKqlZgAGSwajzm87UXlIp4VwU0JmGHHGi2J6oLN3SOj0Ts9AXEU
-         V1h9zwhf9V9eJmA2/cqabPgfkVq3w3q0NwKlyvn5cSved2BUHuqZyT/l62tzeWVYLGdz
-         2UmA9h+PIZHy4FO2AHpVyjethM6SurTBCv7G5fxlygYsRFHSUum1gPyfrbw6fzrin0CF
-         Rr5ebl9w7yKb4tELPtxbXGetLG5rdk4p4wBW44m43Z3WJytXuv8GyIr1el9UBQQ/82a2
-         3MvEGKLta8TCUZYJrC2aiX0dtwjxRsWp9AIrkVvl9wbIyPd/wWJBKIEEn1YabMJZygt5
-         f8qg==
-X-Received: by 10.66.234.202 with SMTP id ug10mr24316630pac.50.1440862138519;
-        Sat, 29 Aug 2015 08:28:58 -0700 (PDT)
-Received: from localhost.localdomain ([220.120.166.123])
-        by smtp.gmail.com with ESMTPSA id rg10sm8980391pbc.33.2015.08.29.08.28.57
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 29 Aug 2015 08:28:58 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0
+	id S1752839AbbH2RK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Aug 2015 13:10:26 -0400
+Received: from mout.web.de ([212.227.17.12]:53817 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752792AbbH2RKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Aug 2015 13:10:25 -0400
+Received: from birne.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MejmG-1ZKh063GPY-00OKcZ; Sat, 29 Aug 2015 19:10:18
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.2.0
+In-Reply-To: <1440857537-13968-4-git-send-email-Karthik.188@gmail.com>
+X-Provags-ID: V03:K0:U7Dqutg+qytCZxbSijO17kOHHaaHHtN0uNYaavMFcq8LqqQ3IHS
+ eZ6jIqmhqDK75mVfyo5MvvBG/MFdcF3S9sIY6FdBaK4qg2knbTiWa2J7wgjp+4xdhg+hkBe
+ h1Vr7g8jybMli4Al5v9GS3j8OqsVkivABs9wD4ERE7+EfYwgXAzyFOo91Bg3D6pp/bVXtf+
+ NFdY/cI52PgPnf+AGcTJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VKux71d2mjA=:IUgKhz73WvsNqrVA0vChpN
+ eOldXECC6d8tNdl1Pe1+JxarSM6Rw8Isj5L4ZhcqF1VAzZ5AM7XMv9RBQtdPN4Ey6vSPSQm4H
+ usygt5BgrC4BivVO+4LV7JiPgN04OostxS8nCkkiDekAOkPH4btUK1Qa8B/IhP23q7firNGGg
+ CeRQnpa5Jjld6oIKLxTVxTxQQDGTsPpmQ6afVO8GASjMk4GjGYUBWgYocvkm8ezNdtI+bTgWc
+ ybbnFzWKFK7QG0SlhbvsYYBP8CCGyIcXzGBD9eKaG0vkPCXLTTfQ0zIlznwLpwo8CVzVR9AIT
+ 3L+dOOHEfvOH6o8ZPyWSK1nYKwnST/g/vltGHkslSMDGLZRpPs3fpv28VCxvYGV6q+gSl3ety
+ v06LqyrJ4eIR+uzPIgaqtN4YDkosVSheTf4QQypcJ5L21/7B6yG4JkPFAqz6QNfTgvrrjUcPm
+ EJd5bgxScuSabfh1PwvsltBXtYeoe40eVvYttj7gNyXjcg0V8eAYNBcJnAZc/fyoGaeZ25WHD
+ Mk+J2A+Gm+JmkjxUdnO8Re+3c93MdRb3vTiCqEfSqdtRPe5z1rYO5V/rEGb4JYMcr/vyvsdTW
+ UnPxtImrIPz4d+KY2/05LQOMZUVcbX8ZrP47SHiZOTuYlAhGOCsbQjSF6+pRUqTd3K90t/MHh
+ Vx8KOLdsKTukgyxUCeG/pslGqeFsViJ0l12VcH52Uc22CeW9otVpAtkQj06xsbJcngijpxqao
+ B1ti3cRxQAslKA3BkzH65Fe9tJsa8oCLVEtkZg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276792>
 
-Some users might want to see diff (patch) output always rather than
-diffstat when [s]he runs 'git stash show'.  Although this can be done
-with adding -p option, it'd be better to provide a config option to
-control this behavior IMHO.
+On 29.08.15 16:12, Karthik Nayak wrote:
+> diff --git a/utf8.h b/utf8.h
+> index 5a9e94b..7930b44 100644
+> --- a/utf8.h
+> +++ b/utf8.h
+> @@ -55,4 +55,19 @@ int mbs_chrlen(const char **text, size_t *remainder_p, const char *encoding);
+>   */
+>  int is_hfs_dotgit(const char *path);
+>  
+> +typedef enum {
+> +	ALIGN_LEFT,
+> +	ALIGN_MIDDLE,
+> +	ALIGN_RIGHT
+> +} align_type;
+should this be called strbuf_align_type ?
 
-This patch adds two variables which control to show diffstat and patch
-output respectively.  The stash.showStat is for diffstat and default is
-true.  The stat.showPatch is for the patch output and default is false.
+And is there a reason why the is in utf.c and not in stbuf.c ?
 
-Signed-off-by: Namhyung Kim <namhyung@gmail.com>
----
- Documentation/config.txt    | 10 ++++++++++
- Documentation/git-stash.txt |  2 ++
- git-stash.sh                | 20 +++++++++++++++++++-
- 3 files changed, 31 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f5d15ff..b4c8ee1 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2567,6 +2567,16 @@ status.submoduleSummary::
- 	submodule summary' command, which shows a similar output but does
- 	not honor these settings.
- 
-+stash.showPatch::
-+	If this is set to true, the `git stash show` command without an
-+	option will show the stash in patch form.  Defaults to false.
-+	See description of 'show' command in linkgit:git-stash[1].
-+
-+stash.showStat::
-+	If this is set to true, the `git stash show` command without an
-+	option will show diffstat of the stash.  Defaults to true.
-+	See description of 'show' command in linkgit:git-stash[1].
-+
- submodule.<name>.path::
- submodule.<name>.url::
- 	The path within this project and URL for a submodule. These
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 375213f..92df596 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -95,6 +95,8 @@ show [<stash>]::
- 	shows the latest one. By default, the command shows the diffstat, but
- 	it will accept any format known to 'git diff' (e.g., `git stash show
- 	-p stash@{1}` to view the second most recent stash in patch form).
-+	You can use stash.showStat and/or stash.showPatch config variables
-+	to change the default behavior.
- 
- pop [--index] [-q|--quiet] [<stash>]::
- 
-diff --git a/git-stash.sh b/git-stash.sh
-index 1d5ba7a..c7c65e2 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -305,7 +305,25 @@ show_stash () {
- 	ALLOW_UNKNOWN_FLAGS=t
- 	assert_stash_like "$@"
- 
--	git diff ${FLAGS:---stat} $b_commit $w_commit
-+	if test -z "$FLAGS"
-+	then
-+		if test "$(git config --bool stash.showStat || echo true)" = "true"
-+		then
-+			FLAGS=--stat
-+		fi
-+
-+		if test "$(git config --bool stash.showPatch || echo false)" = "true"
-+		then
-+			FLAGS=${FLAGS}${FLAGS:+ }-p
-+		fi
-+
-+		if test -z "$FLAGS"
-+		then
-+			return 0
-+		fi
-+	fi
-+
-+	git diff ${FLAGS} $b_commit $w_commit
- }
- 
- show_help () {
--- 
-2.5.0
+(I know that there is a lot of strbuf in utf8.c, but I hadn't managed to send a patch
+to move everything into strbuf.c and make utf8.c un-aware of all strbub-business)
