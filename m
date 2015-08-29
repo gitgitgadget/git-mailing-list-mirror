@@ -1,70 +1,66 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2015, #05; Fri, 28)
-Date: Sat, 29 Aug 2015 06:15:11 +0200
-Message-ID: <CAP8UFD3-Y4T=dQmBVfRR1DEuuRZLSrUvQid8m1YttOnJc5Fj8w@mail.gmail.com>
-References: <xmqq4mjj15lm.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 29 06:15:38 2015
+From: Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH] show-ref: place angle brackets around variables in usage string
+Date: Fri, 28 Aug 2015 22:18:44 -0600
+Message-ID: <1440821924-4289-1-git-send-email-alexhenrie24@gmail.com>
+Cc: Alex Henrie <alexhenrie24@gmail.com>
+To: git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Aug 29 06:18:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVXYG-00045q-JP
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 06:15:36 +0200
+	id 1ZVXbU-0007mD-W2
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Aug 2015 06:18:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904AbbH2EPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Aug 2015 00:15:13 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:35688 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751526AbbH2EPM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Aug 2015 00:15:12 -0400
-Received: by igph8 with SMTP id h8so24644440igp.0
-        for <git@vger.kernel.org>; Fri, 28 Aug 2015 21:15:11 -0700 (PDT)
+	id S1751907AbbH2ESw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Aug 2015 00:18:52 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:34474 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751526AbbH2ESw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Aug 2015 00:18:52 -0400
+Received: by pabzx8 with SMTP id zx8so81920737pab.1
+        for <git@vger.kernel.org>; Fri, 28 Aug 2015 21:18:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=RJgRnHhrRp2cQ1AQewZpDBkkQHO0wJsaiVFBRiIBqIw=;
-        b=Ly+Kh2ns1EsncT06g6QiXHGChgsxygdGzzFUolnln4BTxL2fNgRX87dn8It03wcGxp
-         ut1e2OvG5n4mBpkumFQk4zxFwPH/Kmn74pFZ3lkLZCxoFPEouZSENMzJz6aI99csV6ES
-         bDMs1P0yOpjeM7YfEeiQgk4jwuK0CYFvqMgDGapSNGPWgzB2xXrns1oPZKgtf2f47IVc
-         IB5wKd6mwIgaPcdxcf7NRfZzHeLFzAuUzjAW997pj+kkTyEeWGcB1/oIwhfI6AAsIGdD
-         eaRyy0aC7p3ZwVrCTJJUUvFLfUTzWt2+CY9lZA1vO7xGFCldyG/Ap4hy1KUbgD9K8Bng
-         5Y5g==
-X-Received: by 10.50.59.180 with SMTP id a20mr6477922igr.31.1440821711815;
- Fri, 28 Aug 2015 21:15:11 -0700 (PDT)
-Received: by 10.79.93.131 with HTTP; Fri, 28 Aug 2015 21:15:11 -0700 (PDT)
-In-Reply-To: <xmqq4mjj15lm.fsf@gitster.mtv.corp.google.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=OLEK75fdo3FUQHKnZtOz35NIcYczP3RgcrSzI4oiI1Y=;
+        b=nWW6wJfcc1nXWX0ls+s/e1wtsZkjpUZ4UyPenP+EA5Tv4XSVvNjGBz7lHtp8kftK+3
+         TJ12L+9ekucI6LzAR6tUauWGXlGhN5p6Ix1SXvHBraTWRg8mJ6yW1s0YpbJWs5DVcGEQ
+         OLC5zitGDOOkKwcF07zxn1dXWuV8j5LDmjG23w25gJgg59aSYAHtS2l3MtE0Iez/JO4k
+         qclPXYZ4/atLddXuXqTxsRbrn6hUKG5WeNIbNreGcyvDq0jM9ysu4svC0wKPIwuHi2Tg
+         zilylZ7NLXQ50n3RQWYKP0vs+9gicf9AKzTo6dSiuG2aqJm7T1Md94U7z2oG6774Cx82
+         ZdWA==
+X-Received: by 10.68.249.36 with SMTP id yr4mr20799296pbc.18.1440821931629;
+        Fri, 28 Aug 2015 21:18:51 -0700 (PDT)
+Received: from alex-wolverine.lan ([2601:681:4d04:75d8:e8b:fdff:fecc:2734])
+        by smtp.gmail.com with ESMTPSA id gw3sm7330087pbc.46.2015.08.28.21.18.50
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 28 Aug 2015 21:18:50 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276766>
 
-> * dt/refs-bisection (2015-08-28) 5 commits
->  - bisect: make bisection refs per-worktree
->  - refs: make refs/worktree/* per-worktree
->  - SQUASH???
->  - path: optimize common dir checking
->  - refs: clean up common_list
->
->  Move the refs used during a "git bisect" session to per-worktree
->  hierarchy refs/worktree/* so that independent bisect sessions can
->  be done in different worktrees.
->
->  Will merge to 'next' after squashing the update in.
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ builtin/show-ref.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Sorry if I am missing something or repeating what myself or someone
-else like Michael already said, but in the current doc there is:
-
-       Eventually there will be no more revisions left to bisect, and
-you will have been left with the first bad kernel revision in
-       "refs/bisect/bad".
-
-If we now just use "refs/worktree/bisect/bad" instead of
-"refs/bisect/bad", it might break scripts that rely using
-"refs/bisect/bad".
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index dfbc314..131ef28 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -8,7 +8,7 @@
+ 
+ static const char * const show_ref_usage[] = {
+ 	N_("git show-ref [-q | --quiet] [--verify] [--head] [-d | --dereference] [-s | --hash[=<n>]] [--abbrev[=<n>]] [--tags] [--heads] [--] [<pattern>...]"),
+-	N_("git show-ref --exclude-existing[=pattern] < ref-list"),
++	N_("git show-ref --exclude-existing[=<pattern>] < <ref-list>"),
+ 	NULL
+ };
+ 
+-- 
+2.5.0
