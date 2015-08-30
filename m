@@ -1,235 +1,90 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v14 07/13] ref-filter: add support for %(contents:lines=X)
-Date: Sun, 30 Aug 2015 03:53:31 -0400
-Message-ID: <CAPig+cQmAkFAjUcJNJNF2gwunX6TKK+oQsd2QnmJwxLT=EEvjQ@mail.gmail.com>
-References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
-	<1440857537-13968-8-git-send-email-Karthik.188@gmail.com>
+From: Mikael Magnusson <mikachu@gmail.com>
+Subject: Re: [FEATURE REQUEST] Filter-branch extend progress with a simple
+ estimated time remaning
+Date: Sun, 30 Aug 2015 10:04:16 +0200
+Message-ID: <CAHYJk3RXtS0d7mKNExbmX==O7PiTj=2m9ik3npO5_b5HV44_QA@mail.gmail.com>
+References: <CANy2qHdngVjH_tPE6=Aao-A2JWrVb_wt2wdu4EzZDQwM6-t_=Q@mail.gmail.com>
+	<20150825171238.GB9674@sigill.intra.peff.net>
+	<xmqqh9nnz08i.fsf@gitster.dls.corp.google.com>
+	<20150825185210.GA10032@sigill.intra.peff.net>
+	<20150825185414.GA10895@sigill.intra.peff.net>
+	<CAPig+cQ1COjZuBq2YWKNdQ7zrzfvrppX-84vc9i1mJ6-yp_ZiQ@mail.gmail.com>
+	<20150826021517.GA20292@sigill.intra.peff.net>
+	<CANy2qHd_GTxr2CsjxLiNCvdwMLtEqcmURUTfFv9+t16FMEjuiw@mail.gmail.com>
+	<CANy2qHcCDkszLeOm-aJDCvkUaFFngtEy_VN+_B46K7KTQf4_Sg@mail.gmail.com>
+	<CAPig+cSspbWKUcnp6NJ1rjYyWQV8bO3ZmV7L_J7QaHRFRh3-wg@mail.gmail.com>
+	<CANy2qHfuFB6zJc0x_gDGT9MXtwQn2Jkb7v1mWyKoA8g1MjgGBA@mail.gmail.com>
+	<CAPig+cTCQa6Vev2u4V-CbU1B5BGdrSk+8bjLE2Y1YBLog5Ehnw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 30 09:53:53 2015
+Cc: Gabor Bernat <bernat@primeranks.net>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Aug 30 10:04:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVxR1-0006KA-Lk
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 09:53:52 +0200
+	id 1ZVxbL-0000yE-Or
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 10:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218AbbH3Hxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2015 03:53:33 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:36731 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751117AbbH3Hxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2015 03:53:32 -0400
-Received: by ykey204 with SMTP id y204so20539245yke.3
-        for <git@vger.kernel.org>; Sun, 30 Aug 2015 00:53:31 -0700 (PDT)
+	id S1751240AbbH3IEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2015 04:04:22 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:34948 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751309AbbH3IES (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2015 04:04:18 -0400
+Received: by qgj40 with SMTP id 40so167531qgj.2
+        for <git@vger.kernel.org>; Sun, 30 Aug 2015 01:04:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=9x8xyu7DXkwcyqProlwyY31xnPvdKskoFNX/5uBWKO0=;
-        b=CLWLaJk0DATRj/k/YA/gn6ZOmo53Z6Xcvq/6sWNXmaeNllLgfF/eSXcLE/uqaselUZ
-         6OtRRBGqizEY4qBIi4VcQgNaPtHQ1Opgy0jWNTUoVJFPNOkfzjeukVhEDU7PLJLAK6xO
-         ZHkLlFk52+g82kskBsSY34TBr3kBjma1KoTdg5BB8hnU40COC+D7Au/bvHoiiIxDNuOb
-         Pj4XUVad7CmnYbUCzUtdjyUQm24FWwpWf0KVrkQg5KR97FxdLfrDEmj6wcBFQBAU/HsZ
-         kWpEaQBO8SZlpUngvfMS4emuGM2WLHP/9cXcmAR27WOfKvoVqzs/LJAULzxyP+bxF8sy
-         9ZhA==
-X-Received: by 10.129.70.215 with SMTP id t206mr16474499ywa.4.1440921211657;
- Sun, 30 Aug 2015 00:53:31 -0700 (PDT)
-Received: by 10.37.208.78 with HTTP; Sun, 30 Aug 2015 00:53:31 -0700 (PDT)
-In-Reply-To: <1440857537-13968-8-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: UvCLLDDJtKu5riKY6uanG25AG5s
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Cbrx9TdOMUVMx+VcaBFuKpnUbzy92lSF5PfTj5KFKrs=;
+        b=Rnzr4Vqbw+6xkCYsTcl3BaWQyk7UbZo08sNhZGOQ6qAQMiH6TDlaozB597/gbhcgr+
+         /Bx+Ab6FehYrQBCub4Ellf/obg1TmgwIRRs+/lSoIvWdH1XklV4Gbt39xFdlcczgkNwU
+         kv9bDW75LEegD9bWs1HIFCd6k5Ga18vZtQqKrYcckk/5+Gg+i7+ag/myeXuBDNMXmA69
+         diQVO0bSQeg/MJKVXVUQntKAksHLqNyALg5vXEMCMYVBU5t5Y7a4lioz33KIHtRASstE
+         06DbZQpLm/0tql2AU2B6BK9hIavF8p7AbS0MMf+5GMHVYjJlpDmEgz7pMMsU00jZ4wxY
+         In9w==
+X-Received: by 10.140.233.7 with SMTP id e7mr30324936qhc.79.1440921857076;
+ Sun, 30 Aug 2015 01:04:17 -0700 (PDT)
+Received: by 10.55.20.139 with HTTP; Sun, 30 Aug 2015 01:04:16 -0700 (PDT)
+In-Reply-To: <CAPig+cTCQa6Vev2u4V-CbU1B5BGdrSk+8bjLE2Y1YBLog5Ehnw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276808>
 
-On Sat, Aug 29, 2015 at 10:12 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> In 'tag.c' we can print N lines from the annotation of the tag using
-> the '-n<num>' option. Copy code from 'tag.c' to 'ref-filter' and
-> modify it to support appending of N lines from the annotation of tags
-> to the given strbuf.
+On Sun, Aug 30, 2015 at 5:15 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> (Please don't top-post on this list.)
 >
-> Implement %(contents:lines=X) where X lines of the given object are
-> obtained.
+> On Sat, Aug 29, 2015 at 11:00 PM, Gabor Bernat <bernat@primeranks.net> wrote:
+>> Reading after it, I think the most close we can get with this is, awk
+>> 'BEGIN { print strftime("%c", 1271603087); }; and just ignore setting
+>> this value (and avoid displaying it) if that fails too. Do you agree?
 >
-> Add documentation and test for the same.
+> strftime() in awk is a GNU-ism. It doesn't exist in awk on Mac OS X or
+> FreeBSD, or even the default awk on Linux (which is mawk on Linux
+> installations I've checked).
 >
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 471d6b1..0fc7557 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -63,6 +64,11 @@ struct align {
->         unsigned int width;
->  };
->
-> +struct contents {
-> +       unsigned int lines;
-> +       struct object_id oid;
-> +};
-> +
->  #define REF_FORMATTING_STATE_INIT  { 0, NULL }
->
->  struct ref_formatting_stack {
-> @@ -80,6 +86,7 @@ struct ref_formatting_state {
->  struct atom_value {
->         const char *s;
->         struct align *align;
-> +       struct contents *contents;
+> Most portable likely would be Perl, however, that's probably too
+> heavyweight inside a loop like this, even if called only once each N
+> iterations.
 
-Same question as for 'align': Does 'contents' need to be
-heap-allocated because it must exist beyond the lifetime of
-'atom_value'? If not, making it just a plain member of 'atom_value'
-would simplify memory management (no need to free it).
+http://stackoverflow.com/questions/2445198/get-seconds-since-epoch-in-any-posix-compliant-shell
+Found this,
 
-Also, will 'align' and 'contents' ever be used at the same time? If
-not, it might make sense to place them in a 'union' (not for the
-memory saving, but to make it clear to the reader that their use is
-mutually exclusive).
+awk 'BEGIN{srand();print srand()}'
 
-More below.
+srand() in awk returns the previous seed value, and calling it without
+an argument sets it to time of day, so the above sequence should
+return seconds since the epoch, or at least something in seconds that
+is relative to a fixed point which is all that's needed in this
+thread.
 
->         void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
->         unsigned long ul; /* used for sorting when not FIELD_STR */
->  };
-> @@ -569,6 +576,61 @@ static void find_subpos(const char *buf, unsigned long sz,
->         *nonsiglen = *sig - buf;
->  }
->
-> +/*
-> + * If 'lines' is greater than 0, append that many lines from the given
-> + * object_id 'oid' to the given strbuf.
-> + */
-> +static void append_tag_lines(struct strbuf *out, const struct object_id *oid, int lines)
-> +{
-> +       int i;
-> +       unsigned long size;
-> +       enum object_type type;
-> +       char *buf, *sp, *eol;
-> +       size_t len;
-> +
-> +       buf = read_sha1_file(oid->hash, &type, &size);
-> +       if (!buf)
-> +               die_errno("unable to read object %s", oid_to_hex(oid));
-> +       if (type != OBJ_COMMIT && type != OBJ_TAG)
-> +               goto free_return;
-> +       if (!size)
-> +               die("an empty %s object %s?",
-> +                   typename(type), oid_to_hex(oid));
-> +
-> +       /* skip header */
-> +       sp = strstr(buf, "\n\n");
-> +       if (!sp)
-> +               goto free_return;
-> +
-> +       /* only take up to "lines" lines, and strip the signature from a tag */
-> +       if (type == OBJ_TAG)
-> +               size = parse_signature(buf, size);
-> +       for (i = 0, sp += 2; i < lines && sp < buf + size; i++) {
-> +               if (i)
-> +                       strbuf_addstr(out, "\n    ");
-> +               eol = memchr(sp, '\n', size - (sp - buf));
-> +               len = eol ? eol - sp : size - (sp - buf);
-> +               strbuf_add(out, sp, len);
-> +               if (!eol)
-> +                       break;
-> +               sp = eol + 1;
-> +       }
-> +free_return:
-> +       free(buf);
-> +}
-
-I understand that you want to re-use this code from
-tag.c:show_tag_lines(), but (from a very cursory read) isn't this
-duplicating logic and processing already done elsewhere in
-ref-filter.c? More about this below.
-
-> +
-> +static void contents_lines_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-> +{
-> +       struct contents *contents = (struct contents *)atomv->contents;
-
-Why is this cast needed?
-
-> +       struct strbuf s = STRBUF_INIT;
-> +
-> +       append_tag_lines(&s, &contents->oid, contents->lines);
-> +       quote_formatting(&state->stack->output, s.buf, state->quote_style);
-> +       strbuf_release(&s);
-> +
-> +       free(contents);
-> +}
-> @@ -588,7 +651,8 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
->                     strcmp(name, "contents") &&
->                     strcmp(name, "contents:subject") &&
->                     strcmp(name, "contents:body") &&
-> -                   strcmp(name, "contents:signature"))
-> +                   strcmp(name, "contents:signature") &&
-> +                   !starts_with(name, "contents:lines="))
->                         continue;
->                 if (!subpos)
->                         find_subpos(buf, sz,
-> @@ -608,6 +672,15 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
->                         v->s = xmemdupz(sigpos, siglen);
->                 else if (!strcmp(name, "contents"))
->                         v->s = xstrdup(subpos);
-> +               else if (skip_prefix(name, "contents:lines=", &valp)) {
-> +                       struct contents *contents = xmalloc(sizeof(struct contents));
-> +
-> +                       if (strtoul_ui(valp, 10, &contents->lines))
-> +                               die(_("positive width expected align:%s"), valp);
-> +                       hashcpy(contents->oid.hash, obj->sha1);
-
-The logic in append_tag_lines() which was copied from
-tag.c:show_tag_lines() goes through the effort of loading the object
-and parsing it, but hasn't the object already been loaded and parsed
-by the time you get to this point? Assuming I'm reading this
-correctly, wouldn't it make more sense to take advantage of the work
-already done loading and parsing the object rather than repeating it
-all inside append_tag_lines()?
-
-> +                       v->handler = contents_lines_handler;
-> +                       v->contents = contents;
-> +               }
->         }
->  }
-> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-> index cef7a41..0277498 100755
-> --- a/t/t6302-for-each-ref-filter.sh
-> +++ b/t/t6302-for-each-ref-filter.sh
-> @@ -166,4 +166,20 @@ test_expect_success 'nested alignment' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'check `%(contents:lines=X)`' '
-> +       cat >expect <<-\EOF &&
-> +       master three
-> +       side four
-> +       odd/spot three
-> +       double-tag Annonated doubly
-> +       four four
-> +       one one
-> +       signed-tag A signed tag message
-> +       three three
-> +       two two
-> +       EOF
-> +       git for-each-ref --format="%(refname:short) %(contents:lines=1)" >actual &&
-
-Maybe also test some edge cases, such as line=0, lines=-1 (an invalid
-value), lines=2, lines=9999999 (a value larger than the number of
-lines in any object).
-
-> +       test_cmp expect actual
-> +'
-> +
->  test_done
-> --
-> 2.5.0
+-- 
+Mikael Magnusson
