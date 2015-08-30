@@ -1,215 +1,94 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [RFC/PATCH] date: allow any format to display local time
-Date: Sun, 30 Aug 2015 14:54:50 +0100
-Message-ID: <d3b9f8f6524e45c9fc7a3e104669572c8c4ddd8a.1440942688.git.john@keeping.me.uk>
-Cc: John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 30 15:55:13 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v14 04/13] ref-filter: implement an `align` atom
+Date: Sun, 30 Aug 2015 20:27:34 +0530
+Message-ID: <CAOLa=ZRZ6RcRm6ERR=NVzng17qJx+1N8iGThuo=xQhEszJQ90w@mail.gmail.com>
+References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
+ <1440857537-13968-5-git-send-email-Karthik.188@gmail.com> <CAPig+cRHRPehkd+9PwOqpXkRUvaJa42zLtCKMEfv2W=ZJUZJzA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Aug 30 16:58:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZW34j-00068h-8Z
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 15:55:13 +0200
+	id 1ZW43f-0005lH-Tw
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 16:58:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753547AbbH3NzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2015 09:55:08 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:55285 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753537AbbH3NzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2015 09:55:07 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 24147CDA5E4;
-	Sun, 30 Aug 2015 14:55:06 +0100 (BST)
-X-Quarantine-ID: <7nf+KqsqyGnt>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_40=-0.001, URIBL_BLOCKED=0.001]
-	autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 7nf+KqsqyGnt; Sun, 30 Aug 2015 14:55:04 +0100 (BST)
-Received: from river.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 16781CDA59E;
-	Sun, 30 Aug 2015 14:54:58 +0100 (BST)
-X-Mailer: git-send-email 2.5.0.466.g9af26fa
+	id S1753525AbbH3O6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2015 10:58:06 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:34806 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753455AbbH3O6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2015 10:58:05 -0400
+Received: by obbfr1 with SMTP id fr1so76622810obb.1
+        for <git@vger.kernel.org>; Sun, 30 Aug 2015 07:58:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Bq52g3tBITfwTaTVD0GUJ9EvKKstrxWZYlWEKbpZhaU=;
+        b=e/5SxL0eMBXXJGQXMg5NfTH85OOe9WVcAePyRkDlqvEQWhcg5n6DvZzlyLhX/YJ0Ih
+         fYX6uGa5EisJXK4qR6/MXy/RPO6lEmN2Vw/IxPoGgiLQ9HbpeOoqL42FdgccWMJztGBX
+         wFR5c/JcrpSpCMgD/LiCN1MT29IPHlBVDLWKsAI2MuzcmvRoetnvTt1QYsJX/bywjbW0
+         Ud78sP8PmyXfl8kJtvh1RPy/GU4utfMW8u10rYUQCg6FI/TRUGHpgxB8oIlCsKr0wHUC
+         v2m1Xkhjx6NEG8+53QIWxU97Oax3X7cikRHOkce2HnLm+oY3+mS1/nKjSWjXEKo21XoU
+         4YoA==
+X-Received: by 10.182.171.35 with SMTP id ar3mr10694162obc.57.1440946683937;
+ Sun, 30 Aug 2015 07:58:03 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Sun, 30 Aug 2015 07:57:34 -0700 (PDT)
+In-Reply-To: <CAPig+cRHRPehkd+9PwOqpXkRUvaJa42zLtCKMEfv2W=ZJUZJzA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276821>
 
-Make DATE_LOCAL a bit flag that may be combined with the other formats.
-In order to keep date_mode_type as a true enumeration the possible
-combinations are included explicitly (except "relative local time" which
-is nonsensical).
+On Sun, Aug 30, 2015 at 8:57 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> Add documentation and tests for the same.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> index 432cea0..21c8b5f 100644
+>> --- a/ref-filter.c
+>> +++ b/ref-filter.c
+>> @@ -53,6 +54,13 @@ static struct {
+>>         { "flag" },
+>>         { "HEAD" },
+>>         { "color" },
+>> +       { "align" },
+>> +       { "end" },
+>> +};
+>> +
+>> +struct align {
+>> +       align_type position;
+>> +       unsigned int width;
+>>  };
+>>
+>>  #define REF_FORMATTING_STATE_INIT  { 0, NULL }
+>> @@ -69,6 +79,8 @@ struct ref_formatting_state {
+>>
+>>  struct atom_value {
+>>         const char *s;
+>> +       struct align *align;
+>
+> Why does 'align' need to be heap-allocated rather than just being a
+> direct member of 'atom_value'? Does 'align' need to exist beyond the
+> lifetime of its 'atom_value'? If not, making it a direct member might
+> simplify resource management (no need to free it).
+>
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-I primarily want this to make life easier in CGit (so that we can reuse
-libgit.a for formatting dates in the originator's timezone), but I think
-it makes sense to expose these options to the user in general.
+But it does, since we carry over the contents of align from atom_value to
+cb_data of ref_formatting_stack and that holds the value until we read
+the %(end)
+atom hence it seemed like a better choice to allocate it on the heap
 
- builtin/blame.c |  3 +--
- cache.h         |  9 +++++++--
- date.c          | 31 ++++++++++++++++++++++++-------
- 3 files changed, 32 insertions(+), 11 deletions(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 4db01c1..dff6934 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2575,7 +2575,7 @@ parse_done:
- 	}
- 
- 	/* The maximum width used to show the dates */
--	switch (blame_date_mode.type) {
-+	switch (blame_date_mode.type & ~DATE_LOCAL) {
- 	case DATE_RFC2822:
- 		blame_date_width = sizeof("Thu, 19 Oct 2006 16:00:04 -0700");
- 		break;
-@@ -2600,7 +2600,6 @@ parse_done:
- 		   fewer display columns. */
- 		blame_date_width = utf8_strwidth(_("4 years, 11 months ago")) + 1; /* add the null */
- 		break;
--	case DATE_LOCAL:
- 	case DATE_NORMAL:
- 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
- 		break;
-diff --git a/cache.h b/cache.h
-index 4e25271..cda5c51 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1091,12 +1091,17 @@ struct date_mode {
- 		DATE_NORMAL = 0,
- 		DATE_RELATIVE,
- 		DATE_SHORT,
--		DATE_LOCAL,
- 		DATE_ISO8601,
- 		DATE_ISO8601_STRICT,
- 		DATE_RFC2822,
- 		DATE_STRFTIME,
--		DATE_RAW
-+		DATE_RAW,
-+		DATE_LOCAL = 0x80,
-+		DATE_SHORT_LOCAL = (DATE_SHORT | DATE_LOCAL),
-+		DATE_ISO8601_LOCAL = (DATE_ISO8601 | DATE_LOCAL),
-+		DATE_ISO8601_STRICT_LOCAL = (DATE_ISO8601_STRICT | DATE_LOCAL),
-+		DATE_RFC2822_LOCAL = (DATE_RFC2822 | DATE_LOCAL),
-+		DATE_STRFTIME_LOCAL = (DATE_STRFTIME | DATE_LOCAL),
- 	} type;
- 	const char *strftime_fmt;
- };
-diff --git a/date.c b/date.c
-index 8f91569..e0e0f3b 100644
---- a/date.c
-+++ b/date.c
-@@ -163,7 +163,7 @@ void show_date_relative(unsigned long time, int tz,
- struct date_mode *date_mode_from_type(enum date_mode_type type)
- {
- 	static struct date_mode mode;
--	if (type == DATE_STRFTIME)
-+	if (type == DATE_STRFTIME || type == DATE_STRFTIME_LOCAL)
- 		die("BUG: cannot create anonymous strftime date_mode struct");
- 	mode.type = type;
- 	return &mode;
-@@ -173,6 +173,7 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- {
- 	struct tm *tm;
- 	static struct strbuf timebuf = STRBUF_INIT;
-+	enum date_mode_type type = mode->type;
- 
- 	if (mode->type == DATE_RAW) {
- 		strbuf_reset(&timebuf);
-@@ -189,8 +190,10 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- 		return timebuf.buf;
- 	}
- 
--	if (mode->type == DATE_LOCAL)
-+	if (type & DATE_LOCAL) {
- 		tz = local_tzoffset(time);
-+		type &= ~DATE_LOCAL;
-+	}
- 
- 	tm = time_to_tm(time, tz);
- 	if (!tm) {
-@@ -199,17 +202,17 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- 	}
- 
- 	strbuf_reset(&timebuf);
--	if (mode->type == DATE_SHORT)
-+	if (type == DATE_SHORT)
- 		strbuf_addf(&timebuf, "%04d-%02d-%02d", tm->tm_year + 1900,
- 				tm->tm_mon + 1, tm->tm_mday);
--	else if (mode->type == DATE_ISO8601)
-+	else if (type == DATE_ISO8601)
- 		strbuf_addf(&timebuf, "%04d-%02d-%02d %02d:%02d:%02d %+05d",
- 				tm->tm_year + 1900,
- 				tm->tm_mon + 1,
- 				tm->tm_mday,
- 				tm->tm_hour, tm->tm_min, tm->tm_sec,
- 				tz);
--	else if (mode->type == DATE_ISO8601_STRICT) {
-+	else if (type == DATE_ISO8601_STRICT) {
- 		char sign = (tz >= 0) ? '+' : '-';
- 		tz = abs(tz);
- 		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",
-@@ -218,12 +221,12 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- 				tm->tm_mday,
- 				tm->tm_hour, tm->tm_min, tm->tm_sec,
- 				sign, tz / 100, tz % 100);
--	} else if (mode->type == DATE_RFC2822)
-+	} else if (type == DATE_RFC2822)
- 		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
- 			weekday_names[tm->tm_wday], tm->tm_mday,
- 			month_names[tm->tm_mon], tm->tm_year + 1900,
- 			tm->tm_hour, tm->tm_min, tm->tm_sec, tz);
--	else if (mode->type == DATE_STRFTIME)
-+	else if (type == DATE_STRFTIME)
- 		strbuf_addftime(&timebuf, mode->strftime_fmt, tm);
- 	else
- 		strbuf_addf(&timebuf, "%.3s %.3s %d %02d:%02d:%02d %d%c%+05d",
-@@ -777,14 +780,25 @@ void parse_date_format(const char *format, struct date_mode *mode)
- 	else if (!strcmp(format, "iso8601") ||
- 		 !strcmp(format, "iso"))
- 		mode->type = DATE_ISO8601;
-+	else if (!strcmp(format, "iso8601-local") ||
-+		 !strcmp(format, "iso-local"))
-+		mode->type = DATE_ISO8601_LOCAL;
- 	else if (!strcmp(format, "iso8601-strict") ||
- 		 !strcmp(format, "iso-strict"))
- 		mode->type = DATE_ISO8601_STRICT;
-+	else if (!strcmp(format, "iso8601-strict-local") ||
-+		 !strcmp(format, "iso-strict-local"))
-+		mode->type = DATE_ISO8601_STRICT_LOCAL;
- 	else if (!strcmp(format, "rfc2822") ||
- 		 !strcmp(format, "rfc"))
- 		mode->type = DATE_RFC2822;
-+	else if (!strcmp(format, "rfc2822-local") ||
-+		 !strcmp(format, "rfc-local"))
-+		mode->type = DATE_RFC2822_LOCAL;
- 	else if (!strcmp(format, "short"))
- 		mode->type = DATE_SHORT;
-+	else if (!strcmp(format, "short-local"))
-+		mode->type = DATE_SHORT_LOCAL;
- 	else if (!strcmp(format, "local"))
- 		mode->type = DATE_LOCAL;
- 	else if (!strcmp(format, "default"))
-@@ -794,6 +808,9 @@ void parse_date_format(const char *format, struct date_mode *mode)
- 	else if (skip_prefix(format, "format:", &format)) {
- 		mode->type = DATE_STRFTIME;
- 		mode->strftime_fmt = xstrdup(format);
-+	} else if (skip_prefix(format, "format-local:", &format)) {
-+		mode->type = DATE_STRFTIME_LOCAL;
-+		mode->strftime_fmt = xstrdup(format);
- 	} else
- 		die("unknown date format %s", format);
- }
 -- 
-2.5.0.466.g9af26fa
+Regards,
+Karthik Nayak
