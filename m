@@ -1,86 +1,105 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v14 07/13] ref-filter: add support for %(contents:lines=X)
-Date: Sun, 30 Aug 2015 18:13:35 -0400
-Message-ID: <CAPig+cTYQmrFnf7p6zxNh9w6AKXth99nRu40chQtUYAkWVss=w@mail.gmail.com>
+Subject: Re: [PATCH v14 04/13] ref-filter: implement an `align` atom
+Date: Sun, 30 Aug 2015 18:56:14 -0400
+Message-ID: <CAPig+cTqmku5DGm9g1VN8s5sBgkjZTBLyGrFGjU2J099QA32wg@mail.gmail.com>
 References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
-	<1440857537-13968-8-git-send-email-Karthik.188@gmail.com>
+	<1440857537-13968-5-git-send-email-Karthik.188@gmail.com>
+	<CAPig+cRHRPehkd+9PwOqpXkRUvaJa42zLtCKMEfv2W=ZJUZJzA@mail.gmail.com>
+	<xmqq8u8sznyo.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Git List <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 00:13:43 2015
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 00:56:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWAr7-0006fI-4c
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 00:13:41 +0200
+	id 1ZWBWP-0002VM-2x
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 00:56:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752360AbbH3WNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2015 18:13:36 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:36103 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752165AbbH3WNg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2015 18:13:36 -0400
-Received: by ykey204 with SMTP id y204so29896942yke.3
-        for <git@vger.kernel.org>; Sun, 30 Aug 2015 15:13:35 -0700 (PDT)
+	id S1752138AbbH3W4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2015 18:56:16 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:34013 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751872AbbH3W4P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2015 18:56:15 -0400
+Received: by ykfw127 with SMTP id w127so11164486ykf.1
+        for <git@vger.kernel.org>; Sun, 30 Aug 2015 15:56:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=ployW3Y4T0Hq/eAE6YDp1O50vt8QvKHzvlJ0FMNr908=;
-        b=qbnU8q8i/PIvXLNk969Zda0Lw//kO8x5xP32yJR/e49yqVPA693z9y+Mr3vlY0Pq4T
-         Zqi9fieSBMAPMuiVdx7LWvZkf+3GHwH6188PK1zBr3c5uO3dqbscg78lxBkCiz2QcXEx
-         coFKb6njjmIE6oAtLWhgSrBGv1o8Wcqijhz9l82aVH5GUvOg1O7YdIJIhRSRS4hHXUhH
-         sDiye29bB+XzzvuuCNZel0q6qMK/VHu4BmfRY0urng1IFS6qxeb+21K/VDTIGyn1o2DJ
-         mOSwNoq8fLiSrRn0HyvegxOvKvuqTbZcaqJzhc07CRXyf6fVj4iBn7chufN3f1OfCHcZ
-         XcyA==
-X-Received: by 10.129.83.136 with SMTP id h130mr19336438ywb.95.1440972815670;
- Sun, 30 Aug 2015 15:13:35 -0700 (PDT)
-Received: by 10.37.36.145 with HTTP; Sun, 30 Aug 2015 15:13:35 -0700 (PDT)
-In-Reply-To: <1440857537-13968-8-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: _xuGcqtcrQu_ROLsFTvp5SolVlA
+        bh=1Icg6uddmOi5/G0qtnbGoNjZ9Q9Pv7DpBSC4KamxJRk=;
+        b=AxA8R+SewqanYcu6OVXy6Uhap82Mz26BllLoC2QkLuTBCg1PfArNOf3aJrb0Xqn/91
+         U9fYPRGZ4yH/5sD6RUjbvA2pHXvv9hj83zLgnR18I9tHj2f9picB/xnl48XLZchdWhqb
+         uJJCY2JRHnDY48XU45sASV6o+KbYNFe07Ydfj2FYM2H6mo6HBXQfOfArH9uAmvfqESYj
+         dNnnmPCKmJor7C/9bR6x4RFz8E5bDfP2EQEnyZUn+fdyydNHFxGA4/jjrcdTMCbpeOt9
+         E7eKqglnybPFRNnky2TQETgj/gl9b0UPELLuNaJWbI/3bVAqw8dK3OMSDZqK0++TdeiV
+         mMeQ==
+X-Received: by 10.170.136.17 with SMTP id d17mr18067076ykc.127.1440975375051;
+ Sun, 30 Aug 2015 15:56:15 -0700 (PDT)
+Received: by 10.37.36.145 with HTTP; Sun, 30 Aug 2015 15:56:14 -0700 (PDT)
+In-Reply-To: <xmqq8u8sznyo.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: y-LvRLqTwboqrQxXxa5hwMopeEQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276843>
 
-On Sat, Aug 29, 2015 at 10:12 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> In 'tag.c' we can print N lines from the annotation of the tag using
-> the '-n<num>' option. Copy code from 'tag.c' to 'ref-filter' and
-> modify it to support appending of N lines from the annotation of tags
-> to the given strbuf.
+On Sun, Aug 30, 2015 at 1:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> With the disclaimer that I wasn't following the quoting discussion
+>> closely: Is this condition going to be sufficient for all cases, such
+>> as an %(if:) atom? That is, if you have:
+>>
+>>     %(if:notempty)%(bloop)%(then) --option=%(bloop)%(end)
+>>
+>> isn't the intention that, %(bloop) within the %(then) section should
+>> be quoted but not the literal "--option="?
 >
-> Implement %(contents:lines=X) where X lines of the given object are
-> obtained.
+> I think you'll see that the intention of the above is to quote the
+> entirty of the result of %(if...)...%(end) if you read the previous
+> discussion.  The "quoting" is used when you say you are making --format
+> write a script in specified programming language, e.g.
 >
-> Add documentation and test for the same.
+>         for-each-ref --shell --format='
+>                 a=%(atom) b=%(if...)...%(end)
+>                 do interesting things using $a and $b here
+>         ' | sh
 >
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> @@ -608,6 +672,15 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
->                         v->s = xmemdupz(sigpos, siglen);
->                 else if (!strcmp(name, "contents"))
->                         v->s = xstrdup(subpos);
-> +               else if (skip_prefix(name, "contents:lines=", &valp)) {
-> +                       struct contents *contents = xmalloc(sizeof(struct contents));
-> +
-> +                       if (strtoul_ui(valp, 10, &contents->lines))
-> +                               die(_("positive width expected align:%s"), valp);
+> You are correct to point out in the earlier part of your message I
+> am responding to that %(align) is not special and any nested thing
+> including %(if) will uniformly trigger the same "usually each atom
+> is quoted separately, but with this opening atom, everything up to
+> the matching end atom is evaluated first and then the result is
+> quoted" logic.
 
-I forgot to mention this when I reviewed the patch earlier[1], but you
-copied this error message a bit too literally from the %(align:) atom.
+So, if I'm understanding correctly, the semantic behavior of the
+current patch seems to be more or less correct, but the implementation
+(and commit message) place perhaps too much emphasis on specializing
+quoting suppression only for %(align:), whereas it could/should be
+generalized?
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/276807
+I am a bit concerned about this code from end_atom_handler():
 
-> +                       hashcpy(contents->oid.hash, obj->sha1);
-> +                       v->handler = contents_lines_handler;
-> +                       v->contents = contents;
-> +               }
->         }
->  }
+    /*
+     * Whenever we have more than one stack element that means we
+     * are using a certain modifier atom. In that case we need to
+     * perform quote formatting.
+     */
+    if (state->stack->prev) {
+        quote_formatting(&s, current->output.buf, state->quote_style);
+        strbuf_reset(&current->output);
+        strbuf_addbuf(&current->output, &s);
+    }
+
+Aren't both the comment and the condition backward? Shouldn't quoting
+be done only for the top-most state on the stack rather than every
+state other than the top-most? That is, shouldn't the condition be
+`!state->stack->prev' as it is in append_atom()?
