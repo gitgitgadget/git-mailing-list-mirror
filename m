@@ -1,94 +1,83 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v14 04/13] ref-filter: implement an `align` atom
-Date: Sun, 30 Aug 2015 20:27:34 +0530
-Message-ID: <CAOLa=ZRZ6RcRm6ERR=NVzng17qJx+1N8iGThuo=xQhEszJQ90w@mail.gmail.com>
-References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
- <1440857537-13968-5-git-send-email-Karthik.188@gmail.com> <CAPig+cRHRPehkd+9PwOqpXkRUvaJa42zLtCKMEfv2W=ZJUZJzA@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [RFC PATCH] git-p4: add option to store files in Git LFS on import
+Date: Sun, 30 Aug 2015 17:36:42 +0100
+Message-ID: <CAE5ih7-w5ZjO=QUE45yBvwyqdqKCADczrLt7=4W8X6BR+cy4PA@mail.gmail.com>
+References: <1440764691-62254-1-git-send-email-larsxschneider@gmail.com>
+	<CAE5ih7-TfLqwye8YpmZz90AVjYGQ8m0sF6GLKnG9pjvV8cTSjw@mail.gmail.com>
+	<9951C805-DFBF-47AC-B215-B9C657D4A852@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Aug 30 16:58:13 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Users <git@vger.kernel.org>,
+	Rick Olson <technoweenie@github.com>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 30 18:36:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZW43f-0005lH-Tw
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 16:58:12 +0200
+	id 1ZW5b6-0007rd-GL
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 18:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753525AbbH3O6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2015 10:58:06 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:34806 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753455AbbH3O6F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2015 10:58:05 -0400
-Received: by obbfr1 with SMTP id fr1so76622810obb.1
-        for <git@vger.kernel.org>; Sun, 30 Aug 2015 07:58:04 -0700 (PDT)
+	id S1753564AbbH3Qgo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Aug 2015 12:36:44 -0400
+Received: from mail-oi0-f46.google.com ([209.85.218.46]:33813 "EHLO
+	mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753449AbbH3Qgn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Aug 2015 12:36:43 -0400
+Received: by oiex83 with SMTP id x83so53311355oie.1
+        for <git@vger.kernel.org>; Sun, 30 Aug 2015 09:36:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Bq52g3tBITfwTaTVD0GUJ9EvKKstrxWZYlWEKbpZhaU=;
-        b=e/5SxL0eMBXXJGQXMg5NfTH85OOe9WVcAePyRkDlqvEQWhcg5n6DvZzlyLhX/YJ0Ih
-         fYX6uGa5EisJXK4qR6/MXy/RPO6lEmN2Vw/IxPoGgiLQ9HbpeOoqL42FdgccWMJztGBX
-         wFR5c/JcrpSpCMgD/LiCN1MT29IPHlBVDLWKsAI2MuzcmvRoetnvTt1QYsJX/bywjbW0
-         Ud78sP8PmyXfl8kJtvh1RPy/GU4utfMW8u10rYUQCg6FI/TRUGHpgxB8oIlCsKr0wHUC
-         v2m1Xkhjx6NEG8+53QIWxU97Oax3X7cikRHOkce2HnLm+oY3+mS1/nKjSWjXEKo21XoU
-         4YoA==
-X-Received: by 10.182.171.35 with SMTP id ar3mr10694162obc.57.1440946683937;
- Sun, 30 Aug 2015 07:58:03 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Sun, 30 Aug 2015 07:57:34 -0700 (PDT)
-In-Reply-To: <CAPig+cRHRPehkd+9PwOqpXkRUvaJa42zLtCKMEfv2W=ZJUZJzA@mail.gmail.com>
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=aRHFU4zY7bUMVwlitHEen7L5bPqPmlIEgB19EiWKe34=;
+        b=MfJ6rZfDICDvcUgDoR6BAhYXXWrAfJCHljX7l1YgRs2tgDYl08uwzCYocsVfclIakA
+         pvI+K+KqOJbDRxU4WmNQ3QQ7OyfPT2AI8qFE9lrA1VX7HH033BG5uzPV2NosFg7oFg3d
+         2zxvI7a83S1d26Urw0UIeYcS245u+Us/2aGzQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=aRHFU4zY7bUMVwlitHEen7L5bPqPmlIEgB19EiWKe34=;
+        b=AgRMZil93K+ybfwTTLNGuSQrPS0I5/nkt1a45tN2UBgaQm+nfOkxfTJAGFzG59BjvK
+         bsw4KH/uUsvcTHDXOknQrO/JGifMoMhXv2ZnjuJ2ec4b3Ox9GyschwvH4fz1CJWX3rix
+         nbQDeCWCw3GdbQUCCWL29ncm5vzKGTtbUCvXFKEQTwwkHcLEiIGMKBvFOoVwb11t6aRl
+         jk2FrIYxdIhvHnUbEaZangG0j0PBUcJ/CVsp3MB3mk7x74ktPz6xKtjE+8k/vP4lTcdd
+         UiUo1+5y7VKfSm7cVkGVvPB5dDBxhzKRkrX+dMH+tXs+k2kUkbRhRo8EbH27RFvbXVx8
+         DX9A==
+X-Gm-Message-State: ALoCoQmXBKeV5tnuO2Xya4JHeELeDSI+2xcYQAmYzQvp76jTnlFohX6diIDLmk5hRrMpYx4VYHdN
+X-Received: by 10.202.198.139 with SMTP id w133mr4211502oif.72.1440952603048;
+ Sun, 30 Aug 2015 09:36:43 -0700 (PDT)
+Received: by 10.60.46.38 with HTTP; Sun, 30 Aug 2015 09:36:42 -0700 (PDT)
+In-Reply-To: <9951C805-DFBF-47AC-B215-B9C657D4A852@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276822>
 
-On Sun, Aug 30, 2015 at 8:57 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> Add documentation and tests for the same.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->> diff --git a/ref-filter.c b/ref-filter.c
->> index 432cea0..21c8b5f 100644
->> --- a/ref-filter.c
->> +++ b/ref-filter.c
->> @@ -53,6 +54,13 @@ static struct {
->>         { "flag" },
->>         { "HEAD" },
->>         { "color" },
->> +       { "align" },
->> +       { "end" },
->> +};
->> +
->> +struct align {
->> +       align_type position;
->> +       unsigned int width;
->>  };
->>
->>  #define REF_FORMATTING_STATE_INIT  { 0, NULL }
->> @@ -69,6 +79,8 @@ struct ref_formatting_state {
->>
->>  struct atom_value {
->>         const char *s;
->> +       struct align *align;
+On 30 August 2015 at 11:18, Lars Schneider <larsxschneider@gmail.com> w=
+rote:
+> Thanks for your feedback!
 >
-> Why does 'align' need to be heap-allocated rather than just being a
-> direct member of 'atom_value'? Does 'align' need to exist beyond the
-> lifetime of its 'atom_value'? If not, making it a direct member might
-> simplify resource management (no need to free it).
+> I like the =E2=80=9Chandle big files=E2=80=9D plugin kind of idea. Ho=
+wever, I wonder if it makes sense to put more and more stuff into git-p=
+4.py (>3000 LOC already). What do you think about splitting git-p4 into=
+ multiple files?
+
+I was wondering about that. I think for now, the simplicity of keeping
+everything in one file is worth the slight extra pain. I don't imagine
+that the big-file-handler code would be very large.
+
 >
+> Regarding Python 3:
+> Would you drop Python 2 support or do you want to support Python 2/3 =
+in parallel? I would prefer the former=E2=80=A6
 
-But it does, since we carry over the contents of align from atom_value to
-cb_data of ref_formatting_stack and that holds the value until we read
-the %(end)
-atom hence it seemed like a better choice to allocate it on the heap
-
--- 
-Regards,
-Karthik Nayak
+=46or quite some time we would need to support both; we can't just have
+a release of git that one day breaks git-p4 for people stuck on Python
+2. But it might not be that hard to support both (though converting
+all those print statements could be quite tiresome).
