@@ -1,7 +1,7 @@
 From: Karthik Nayak <karthik.188@gmail.com>
 Subject: Re: [PATCH v14 06/13] ref-filter: introduce format_ref_array_item()
-Date: Sun, 30 Aug 2015 12:09:36 +0530
-Message-ID: <CAOLa=ZTiVS=3M8ckr2Ouz_46h7zaHBcRyxqHMbhGEAt3uWNaCQ@mail.gmail.com>
+Date: Sun, 30 Aug 2015 12:19:13 +0530
+Message-ID: <CAOLa=ZQh_3aznJz80W4acLKEsFVWoxCv9CMo5uaq68JeKQ7x9Q@mail.gmail.com>
 References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
  <1440857537-13968-7-git-send-email-Karthik.188@gmail.com> <CAPig+cT2ySwYtTjv7Xe3uv35OH8Bhdyj3m_eqyJjMe_mB6Xj=w@mail.gmail.com>
 Mime-Version: 1.0
@@ -11,43 +11,43 @@ Cc: Git List <git@vger.kernel.org>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Aug 30 08:40:15 2015
+X-From: git-owner@vger.kernel.org Sun Aug 30 08:50:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVwHm-0002su-UN
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 08:40:15 +0200
+	id 1ZVwRH-0004zo-Lz
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 08:50:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751180AbbH3GkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2015 02:40:08 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:34864 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751132AbbH3GkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2015 02:40:06 -0400
-Received: by obbwr7 with SMTP id wr7so70188396obb.2
-        for <git@vger.kernel.org>; Sat, 29 Aug 2015 23:40:06 -0700 (PDT)
+	id S1751132AbbH3Gto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2015 02:49:44 -0400
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:33022 "EHLO
+	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750953AbbH3Gtn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2015 02:49:43 -0400
+Received: by oigm66 with SMTP id m66so44459751oig.0
+        for <git@vger.kernel.org>; Sat, 29 Aug 2015 23:49:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=UcVxWNxVU5bLarIQZoED7QEwrGTtKStIqC2+HFibfoc=;
-        b=PxGVFCSn8DyoGP9IWdp/2JanMdCkd7qTEq7nMj3VYDk9SyT+h2D1mlzoJaG+r5FtYm
-         Zrq1Wo66ndpBDdg2cyMXRgKATuj9uFtfYIAREBjB52HpWYIYcimkUqER2GNcVH8Wk2gv
-         67TasT3pJr/16wer+SUzh1+WHpNKpGIDErKwKEq2bYZyy8dleqbXGG1TY4JYtu9Aa3Py
-         UCxtE3OvB/qv0AHLfSE0Q8x9TgepMIsbuC0i5j7H/Ch0hV9DPx1Q+Y/FzG6um79NZ9sS
-         L/TwtG6T5p4F5YDszvGmlZHCxBMfnlznJ2bXRxbMUDE+tusDUyxRKy76tgcoESeooPyQ
-         zZVw==
-X-Received: by 10.182.196.101 with SMTP id il5mr5869obc.41.1440916806125; Sat,
- 29 Aug 2015 23:40:06 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Sat, 29 Aug 2015 23:39:36 -0700 (PDT)
+        bh=4qRJBCjTjPEHZkjGeLX5tmecfTd2DlX1cibepkx4GiA=;
+        b=o7/II4q2dlEjXg6hvLGYnFIQNumaLW54GXcBU5LsucCeOF01JlHZ2WEySlgBgtec1e
+         yldYigYFQ4dpxwv6D3OClHTbDXp2qRZvIWYbrY/KFVbvZABsDr3MBL2CK17wuDd+0Szq
+         rLZWoG1/vuCZ1umh9hoUmcbZvRY5x0cD9em/Ej6CY1kl3nefWpmp26QmjumiC1+3bQRj
+         stc2DJf3q2s87oZfWysUy9UJSTrWO9moOLZaqu0IvSnaf8tQlP95kJWfy5VfWtcA+8ue
+         l4Ws7a6JUTUWFLcIGOd+lH+Jsje+y1jzu9ly6ip3znWQiu1up/KnpYlei9nACdxtz86O
+         hLGA==
+X-Received: by 10.202.200.146 with SMTP id y140mr4571369oif.111.1440917382772;
+ Sat, 29 Aug 2015 23:49:42 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Sat, 29 Aug 2015 23:49:13 -0700 (PDT)
 In-Reply-To: <CAPig+cT2ySwYtTjv7Xe3uv35OH8Bhdyj3m_eqyJjMe_mB6Xj=w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276804>
 
 On Sun, Aug 30, 2015 at 9:12 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 > On Sat, Aug 29, 2015 at 10:12 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
@@ -62,7 +62,13 @@ On Sun, Aug 30, 2015 at 9:12 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
 > with newline done by show_ref_array_item().
 >
 
-Yeah sure.
+Thinking along these lines, it's aim was to use with printing lines,
+but since that
+is done with %(contents:lines=X) it might not be useful here, I see it
+being used with
+future branch.c printing, but maybe it would make more sense to
+introduce it there
+in that series.
 
 >> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 >> ---
@@ -99,9 +105,6 @@ Yeah sure.
 > relocated again in 6/13. If you instead place the code at the final
 > desired location in 4/13, then this patch will become less noisy.
 >
-
-Will do.
-
 > More below.
 >
 >>  static void push_stack_element(struct ref_formatting_stack **stack)
@@ -154,8 +157,13 @@ Will do.
 >> +       printf("\n");
 >
 > putchar('\n');
+>
+>> +       strbuf_release(&out);
+>>  }
+>>
+>>  /*  If no sorting option is given, use refname to sort as default */
 
-Thanks for the review.
+
 
 -- 
 Regards,
