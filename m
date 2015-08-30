@@ -1,125 +1,171 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [RFC PATCH] git-p4: add option to store files in Git LFS on import
-Date: Sun, 30 Aug 2015 12:18:29 +0200
-Message-ID: <9951C805-DFBF-47AC-B215-B9C657D4A852@gmail.com>
-References: <1440764691-62254-1-git-send-email-larsxschneider@gmail.com> <CAE5ih7-TfLqwye8YpmZz90AVjYGQ8m0sF6GLKnG9pjvV8cTSjw@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
+From: Gabor Bernat <bernat@primeranks.net>
+Subject: Add passed and estimated seconds to the filter-branch on demand via
+ --progress-eta flag
+Date: Sun, 30 Aug 2015 13:45:27 +0200
+Message-ID: <CANy2qHcz2Kk2_S29hyPf-yMe0AgjRZkd1=R33cY10sc6v91ixA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users <git@vger.kernel.org>, technoweenie@github.com
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sun Aug 30 12:18:39 2015
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Mikael Magnusson <mikachu@gmail.com>, cbailey32@bloomberg.net,
+	Lee.Carver@servicenow.com, mfwitten@gmail.com
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 30 13:45:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVzh8-0001Tu-8N
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 12:18:38 +0200
+	id 1ZW13Z-0001fv-E5
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 13:45:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753341AbbH3KSe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Aug 2015 06:18:34 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:37217 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753105AbbH3KSd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Aug 2015 06:18:33 -0400
-Received: by wicfv10 with SMTP id fv10so46229187wic.0
-        for <git@vger.kernel.org>; Sun, 30 Aug 2015 03:18:32 -0700 (PDT)
+	id S1753429AbbH3Lpt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Aug 2015 07:45:49 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:36144 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753301AbbH3Lps convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Aug 2015 07:45:48 -0400
+Received: by wicfv10 with SMTP id fv10so40147467wic.1
+        for <git@vger.kernel.org>; Sun, 30 Aug 2015 04:45:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=JFrg9/fgvCW3nLHg6QW90uSIm0VhDG9eQu8TrwIiksU=;
-        b=Dvvz/9IwA7XjLdOnCj/DHu7T3CXhkk8unhAtuoYGV02K/syeQTFjuuorAlgxm2W37E
-         bH8AXTICqChmCdivDYrLfV98mJLMbbKZTJJDuXIAuRFWkFrOYiJFg+mr+ZRsd7JgXe+0
-         EMM0j/mJY8H2qq0z82YTHfh0c0+F/+Jv0S6vbRl+JI9hOpTdoskig7Kj0zBb1jD6hp/6
-         ihakJ6ujtkwnNWbI7Q4oLNIvIoLj3LD7FztslsldNYxrBjCtwwo+0YgwBKAm1G81L6Nc
-         FZRw4qVtALNbrhgcJX6TNUMIrs9P1BoTHYSol9y3IB6b7CUpzJ6pzC1pK24Sb5aRh1dE
-         gbPQ==
-X-Received: by 10.194.90.70 with SMTP id bu6mr21062342wjb.149.1440929912690;
-        Sun, 30 Aug 2015 03:18:32 -0700 (PDT)
-Received: from farjyzgg12.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id wo2sm16745219wjb.2.2015.08.30.03.18.31
-        (version=TLS1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 30 Aug 2015 03:18:31 -0700 (PDT)
-In-Reply-To: <CAE5ih7-TfLqwye8YpmZz90AVjYGQ8m0sF6GLKnG9pjvV8cTSjw@mail.gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+        h=mime-version:sender:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=0PQywZcJzc8XbHnByMD6I3JxkoZcyi9gxqckZ8ze8Cg=;
+        b=TVhqARwu78BKBafJPbjiXwzbF76pzhpP5+kLkij4Ur4K6oPU+m5fUAktktxZvdncDV
+         iDrigWRAmfSZu+2OkP7CYJisicRuYsQCQLj/JvQqXS1tXMnjxLioXhKp9TsBGz7+RUxe
+         87GSwN/yYPF5kivXYYsr8JSjwAzisPo6SdX0i5P7DvESuaLxWlMpid6Rxap1Ly6G9y5r
+         Bku7/x4ocE4oQwcS354qt8veb3Y8M3b8VXaJY1nuYHqJTrKarUjUAEgwKVfiJXaEstaK
+         nP6IHo2M7SizbM2DXqbImELXkeKdvGyKC8MaeL6odbEqK+4FumeAC7Jbfmg9j4LNVzKE
+         K7Sw==
+X-Received: by 10.181.13.241 with SMTP id fb17mr14941108wid.13.1440935147109;
+ Sun, 30 Aug 2015 04:45:47 -0700 (PDT)
+Received: by 10.194.192.201 with HTTP; Sun, 30 Aug 2015 04:45:27 -0700 (PDT)
+X-Google-Sender-Auth: H7f5vb5SQ2XGDCTOrOPA9Lh_ro8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276817>
 
-Thanks for your feedback!=20
+Hello,
 
-I like the =93handle big files=94 plugin kind of idea. However, I wonde=
-r if it makes sense to put more and more stuff into git-p4.py (>3000 LO=
-C already). What do you think about splitting git-p4 into multiple file=
-s?
+I've submitted this first to this list as a feature request, however
+in the meantime with the help of Jeff King <peff@peff.net>, Junio C
+Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
+and Mikael Magnusson <mikachu@gmail.com> came up with solution, so now
+I submit it as a patch. Here follows a patch, I really hope I got
+right the format:
 
-Regarding Python 3:=20
-Would you drop Python 2 support or do you want to support Python 2/3 in=
- parallel? I would prefer the former=85
+=46rom 620e69d10a1bfcfcace347cbb95991d75fd23a1d Mon Sep 17 00:00:00 200=
+1
+=46rom: Gabor Bernat <gabor.bernat@gravityrd.com>
+Date: Thu, 27 Aug 2015 00:46:52 +0200
+Subject: [PATCH] Add to the git filter-branch a --progress-eta flag whi=
+ch when
+ enabled will print with the progress also the number of seconds passed=
+ since
+ started plus the number of seconds predicted until the operation finis=
+hes.
 
-- Lars
+Signed-off-by: Gabor Bernat <gabor.bernat@gravityrd.com>
+---
+ Documentation/git-filter-branch.txt |  6 ++++++
+ git-filter-branch.sh                | 29 ++++++++++++++++++++++++++++-
+ 2 files changed, 34 insertions(+), 1 deletion(-)
 
-On 30 Aug 2015, at 10:49, Luke Diamand <luke@diamand.org> wrote:
+diff --git a/Documentation/git-filter-branch.txt
+b/Documentation/git-filter-branch.txt
+index 73fd9e8..6ca9d6e 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -194,6 +194,12 @@ to other tags will be rewritten to point to the
+underlying commit.
+  directory or when there are already refs starting with
+  'refs/original/', unless forced.
 
-> On 28 August 2015 at 13:24,  <larsxschneider@gmail.com> wrote:
->> From: Lars Schneider <larsxschneider@gmail.com>
->>=20
->> I am migrating huge Perforce repositories including history to Git. =
-Some of them contain large files that would blow up the resulting Git r=
-epositories. This patch adds an option to store these files in Git LFS =
-[1] on git-p4 clone.
->=20
-> I'm a bit worried by this. LFS isn't the only way to handle large
-> files in git - there's also git annex (which I've used in a similar
-> situation) and obviously random homebrew solutions. We're going to en=
-d
-> up with git-p4 sprouting ever increasing numbers of
-> --use-XXX-if-size-exceeds options. On the other hand, having it
-> integrated into git-p4 is quite nice as it saves a lot of messing
-> around.
->=20
-> Would it be possible as a start to have (within git-p4) a generic
-> spot-big-files-and-handle-them-differently patch, and a second patch
-> to add specific LFS support? That then means that other schemes would
-> be a lot easier to add in future.
->=20
-> Some other comments inline.
->=20
->>=20
->> In order to run the unit tests you need to install the Git LFS exten=
-sion [2].
->>=20
->> Known limitations:
->> The option "use-lfs-if-size-exceeds" looks at the uncompressed file =
-size. Sometimes huge XML files are tiny if compressed. I wonder if ther=
-e is an easy way to learn about the size of a file in a git pack file. =
-I assume compressing it is the only way to know.
->>=20
->> Feedback is highly appreciated.
->>=20
->> Thank you,
->> Lars
->>=20
->>=20
->> [1] https://git-lfs.github.com/
->> [2] https://github.com/github/git-lfs/releases/
->>=20
->> Lars Schneider (1):
->>  git-p4: add option to store files in Git LFS on import
->>=20
->> Documentation/git-p4.txt |  12 ++
->> git-p4.py                |  94 ++++++++++++++--
->> t/t9822-git-p4-lfs.sh    | 277 +++++++++++++++++++++++++++++++++++++=
-++++++++++
->> 3 files changed, 374 insertions(+), 9 deletions(-)
->> create mode 100755 t/t9822-git-p4-lfs.sh
->>=20
->> --
->> 1.9.5 (Apple Git-50.3)
->=20
-> Can you switch to a newer git - this one's quite old now so if there
-> are regressions introduced later, you won't know about them!
++--progress-eta::
++ If specified will print the number of seconds elapsed and the predict=
+ed
++ count of seconds remaining until the operation is expected to finish.=
+ Note
++ that for calculating the eta the global speed up to the current point=
+ is
++ used.
++
+ <rev-list options>...::
+  Arguments for 'git rev-list'.  All positive refs included by
+  these options are rewritten.  You may also specify options
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 5b3f63d..7b565fb 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -105,6 +105,7 @@ filter_subdir=3D
+ orig_namespace=3Drefs/original/
+ force=3D
+ prune_empty=3D
++progress_eta=3D
+ remap_to_ancestor=3D
+ while :
+ do
+@@ -129,6 +130,11 @@ do
+  prune_empty=3Dt
+  continue
+  ;;
++ --progress-eta)
++ shift
++ progress_eta=3Dt
++ continue
++ ;;
+  -*)
+  ;;
+  *)
+@@ -277,9 +283,30 @@ test $commits -eq 0 && die "Found nothing to rewri=
+te"
+ # Rewrite the commits
+
+ git_filter_branch__commit_count=3D0
++
++case "$progress_eta" in
++ t)
++ start=3D$(PATH=3D`getconf PATH` awk 'BEGIN{srand();print srand()}')
++ ;;
++ '')
++ ;;
++esac
++
+ while read commit parents; do
+  git_filter_branch__commit_count=3D$(($git_filter_branch__commit_count=
++1))
+- printf "\rRewrite $commit ($git_filter_branch__commit_count/$commits)=
+"
++
++ case "$progress_eta" in
++ t)
++ now=3D$(PATH=3D`getconf PATH` awk 'BEGIN{srand();print srand()}')
++ elapsed=3D$(($now - $start))
++ remaining_second=3D$(( ($commits - $git_filter_branch__commit_count) =
+*
+$elapsed / $git_filter_branch__commit_count ))
++ progress=3D" ($elapsed seconds passed, remaining $remaining_second pr=
+edicted)"
++ ;;
++ '')
++ progress=3D""
++ esac
++
++ printf "\rRewrite $commit
+($git_filter_branch__commit_count/$commits)$progress"
+
+  case "$filter_subdir" in
+  "")
+--=20
+2.5.1.408.g14905ed.dirty
+
+Let me know if this works for adding it to the main repository,
+
+Thanks a lot,
+
+
+Bern=C3=A1t G=C3=81BOR
