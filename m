@@ -1,155 +1,125 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v14 06/13] ref-filter: introduce format_ref_array_item()
-Date: Sat, 29 Aug 2015 23:42:19 -0400
-Message-ID: <CAPig+cT2ySwYtTjv7Xe3uv35OH8Bhdyj3m_eqyJjMe_mB6Xj=w@mail.gmail.com>
-References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
-	<1440857537-13968-7-git-send-email-Karthik.188@gmail.com>
+From: Neil Brown <neil@brown.name>
+Subject: git bisect replay produces wrong result
+Date: Sun, 30 Aug 2015 06:38:54 +0200
+Message-ID: <8737z15r1d.fsf@notabene.neil.brown.name>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 30 05:42:30 2015
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 30 06:39:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVtVl-0004Dx-1n
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 05:42:29 +0200
+	id 1ZVuOv-0001sB-9A
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 06:39:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753207AbbH3DmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Aug 2015 23:42:21 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:35036 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751651AbbH3DmU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Aug 2015 23:42:20 -0400
-Received: by ykbu129 with SMTP id u129so18086244ykb.2
-        for <git@vger.kernel.org>; Sat, 29 Aug 2015 20:42:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Q3iTNfXHPLKAWFNmrMND0DtDm5a7jasqGfogPQNPE2c=;
-        b=AmwSAc75zbiXvm0/7D+AEvCrJpYm+eCqjtUoFCLe67d9GokQerBr41NXPvTwVEJnkJ
-         mP9at5YoOUqIYlBzPDVJEDNqczDa8TASazSBMBENkIpt9iKGdeVOWbhhHhIHAUvLwJ8b
-         33tGfDsY3rAtxrCCNQlKZba6kepb83kz4ivpGQHgU2ct+Z3MbSRUsixoHcv6dijGsKtG
-         uJSjVWDweGDZxsh62IAL9UXKMPuQK/Nc2p9GIyh3bM0a92ar6nCY2Vm6or/PcqLoCyxf
-         ZKF5eRdbCFfqpkE5vmb7S4KRbLfuO/fEn1fU3SR2ZtZeV9Rynf6qPUplAI1BTvoQY+0g
-         TvdQ==
-X-Received: by 10.129.83.136 with SMTP id h130mr16227736ywb.95.1440906139578;
- Sat, 29 Aug 2015 20:42:19 -0700 (PDT)
-Received: by 10.37.208.78 with HTTP; Sat, 29 Aug 2015 20:42:19 -0700 (PDT)
-In-Reply-To: <1440857537-13968-7-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: TjwamCQFjO1Vuh_VwBKC11tEUF0
+	id S1750811AbbH3EjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2015 00:39:04 -0400
+Received: from mx2.suse.de ([195.135.220.15]:47223 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750778AbbH3EjC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2015 00:39:02 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
+	by mx2.suse.de (Postfix) with ESMTP id 8EE13AC4B
+	for <git@vger.kernel.org>; Sun, 30 Aug 2015 04:39:00 +0000 (UTC)
+User-Agent: Notmuch/0.20.2 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276801>
 
-On Sat, Aug 29, 2015 at 10:12 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Create format_ref_array_item() out of show_ref_array_item(). This will
-> store the output format for the given ref_array_item into the provided
-> strbuf. Make show_ref_array_item() a wrapper around this to print the
-> given ref_array_item with linefeed.
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Perhaps you could explain why this change is a good idea, such as that
-a future patch, for <fill-in-the-blank> reason, will need the
-formatting capability of format_ref_array_item() but not the printing
-with newline done by show_ref_array_item().
 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 5d4f93d..1e6754a 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -153,6 +153,27 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
->         return at;
->  }
->
-> +static void quote_formatting(struct strbuf *s, const char *str, int quote_style)
-> +{
-> +       switch (quote_style) {
-> +       case QUOTE_NONE:
-> +               strbuf_addstr(s, str);
-> +               break;
-> +       case QUOTE_SHELL:
-> +               sq_quote_buf(s, str);
-> +               break;
-> +       case QUOTE_PERL:
-> +               perl_quote_buf(s, str);
-> +               break;
-> +       case QUOTE_PYTHON:
-> +               python_quote_buf(s, str);
-> +               break;
-> +       case QUOTE_TCL:
-> +               tcl_quote_buf(s, str);
-> +               break;
-> +       }
-> +}
+Hi,
+ the following git-bisect log - applied to a recent linux-kernel tree
+ produced different end results when I use "git bisect replay"
+ and when I just run it as a shell script.
 
-This code was already relocated once in patch 4/13, and is now being
-relocated again in 6/13. If you instead place the code at the final
-desired location in 4/13, then this patch will become less noisy.
+$ git bisect replay /tmp/log=20
+We are not bisecting.
+Bisecting: a merge base must be tested
+[2decb2682f80759f631c8332f9a2a34a02150a03] Merge git://git.kernel.org/pub/s=
+cm/linux/kernel/git/davem/net
 
-More below.
 
->  static void push_stack_element(struct ref_formatting_stack **stack)
->  {
->         struct ref_formatting_stack *s = xcalloc(1, sizeof(struct ref_formatting_stack));
-> @@ -665,27 +686,6 @@ static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_s
->         new->cb_data = atomv->align;
->  }
->
-> -static void quote_formatting(struct strbuf *s, const char *str, int quote_style)
-> -{
-> -       switch (quote_style) {
-> -       case QUOTE_NONE:
-> -               strbuf_addstr(s, str);
-> -               break;
-> -       case QUOTE_SHELL:
-> -               sq_quote_buf(s, str);
-> -               break;
-> -       case QUOTE_PERL:
-> -               perl_quote_buf(s, str);
-> -               break;
-> -       case QUOTE_PYTHON:
-> -               python_quote_buf(s, str);
-> -               break;
-> -       case QUOTE_TCL:
-> -               tcl_quote_buf(s, str);
-> -               break;
-> -       }
-> -}
-> -
->  static void append_atom(struct atom_value *v, struct ref_formatting_state *state)
->  {
->         /*
-> @@ -1478,10 +1478,17 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
->         }
->         if (state.stack->prev)
->                 die(_("format: `end` atom missing"));
-> -       final_buf = &state.stack->output;
-> -       fwrite(final_buf->buf, 1, final_buf->len, stdout);
-> +       strbuf_addbuf(out, &state.stack->output);
->         pop_stack_element(&state.stack);
-> -       putchar('\n');
-> +}
-> +
-> +void show_ref_array_item(struct ref_array_item *item, const char *format, unsigned int quote_style)
-> +{
-> +       struct strbuf out = STRBUF_INIT;
-> +       format_ref_array_item(&out, item, format, quote_style);
-> +       fwrite(out.buf, out.len, 1, stdout);
-> +       printf("\n");
+$ bash /tmp/log
+....
+Bisecting: 2 revisions left to test after this (roughly 1 step)
+[57127645d79d2e83e801f141f7d03f64accf28aa] s390/zcrypt: Introduce new SHA-5=
+12 based Pseudo Random Generator.
 
-putchar('\n');
+Is "git bisect replay" doing the wrong thing, or am I confused?
 
-> +       strbuf_release(&out);
->  }
->
->  /*  If no sorting option is given, use refname to sort as default */
+I tested on 2.5.0, and the current HEAD.
+
+Thanks,
+NeilBrown
+
+git bisect start
+# bad: [5ebe6afaf0057ac3eaeb98defd5456894b446d22] Linux 4.1-rc2
+git bisect bad 5ebe6afaf0057ac3eaeb98defd5456894b446d22
+# good: [39a8804455fb23f09157341d3ba7db6d7ae6ee76] Linux 4.0
+git bisect good 39a8804455fb23f09157341d3ba7db6d7ae6ee76
+# good: [6c373ca89399c5a3f7ef210ad8f63dc3437da345] Merge git://git.kernel.o=
+rg/pub/scm/linux/kernel/git/davem/net-next
+git bisect good 6c373ca89399c5a3f7ef210ad8f63dc3437da345
+# good: [2c33ce009ca2389dbf0535d0672214d09738e35e] Merge Linus master into =
+drm-next
+git bisect good 2c33ce009ca2389dbf0535d0672214d09738e35e
+# good: [7d2b6ef19cf0f98cef17aa5185de3631a618710a] Merge tag 'armsoc-driver=
+s' of  git://git.kernel.org/pub/scm/linux/kernel/git/arm/arm-soc
+git bisect good 7d2b6ef19cf0f98cef17aa5185de3631a618710a
+# good: [836ee4874e201a5907f9658fb2bf3527dd952d30] Merge tag 'arm64-upstrea=
+m' of git://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux
+git bisect good 836ee4874e201a5907f9658fb2bf3527dd952d30
+# good: [78d425677217b655ed36c492a070b5002832fc73] Merge tag 'platform-driv=
+ers-x86-v4.1-1' of git://git.infradead.org/users/dvhart/linux-platform-driv=
+ers-x86
+git bisect good 78d425677217b655ed36c492a070b5002832fc73
+# good: [39376ccb1968ba9f83e2a880a8bf02ad5dea44e1] Merge git://git.kernel.o=
+rg/pub/scm/linux/kernel/git/pablo/nf
+git bisect good 39376ccb1968ba9f83e2a880a8bf02ad5dea44e1
+# bad: [64887b6882de36069c18ef2d9623484d6db7cd3a] Merge branch 'for-linus-4=
+.1' of git://git.kernel.org/pub/scm/linux/kernel/git/mason/linux-btrfs
+git bisect bad 64887b6882de36069c18ef2d9623484d6db7cd3a
+# bad: [9dbbe3cfc3c208643cf0e81c8f660f43e1b4b2e8] Merge tag 'for-linus' of =
+git://git.kernel.org/pub/scm/virt/kvm/kvm
+git bisect bad 9dbbe3cfc3c208643cf0e81c8f660f43e1b4b2e8
+# bad: [dcca8de0aa597f14e31a1b38690626c9f6745fd5] Merge tag 'usb-4.1-rc2' o=
+f git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb
+git bisect bad dcca8de0aa597f14e31a1b38690626c9f6745fd5
+# bad: [3d99e3fe13d473ac4578c37f477a59b829530764] Merge branch 'stable' of =
+git://git.kernel.org/pub/scm/linux/kernel/git/cmetcalf/linux-tile
+git bisect bad 3d99e3fe13d473ac4578c37f477a59b829530764
+# good: [b7d14f3a92223c3f5e52e9f20c74cb96dc130e87] s390/mm: correct transfe=
+r of dirty & young bits in __pmd_to_pte
+git bisect good b7d14f3a92223c3f5e52e9f20c74cb96dc130e87
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJV4ojeAAoJEDnsnt1WYoG5VSMP/iRvC6tpsvNiP1AYt8ajMqqv
+EchitXOWYu1GLEurrJCF2Fj4JpQ8b1wOFykMDjvRvyBDq1wGVK1p7+VjOCt1nlza
+Wb76euc4EERC42et9o0t0r9XthSFLUMowkBP0/GVTfnB+hC98ZH1ajq4QIBUMbAW
+eYpdvuX3+BSTazOktAQYZ5YjqduQWmapLPjlThIxOGH6BV/CvNykPwxkM/QlZrGC
+7ZXAcCyMb/yxmEYv4wx4ziymCYJKxi82Yh3NlYvM4XEvk0kCKAmzDv5L594gfNfI
+5DKYh1areFjovgPXt2DgcM93gVjCCRz62DHRMzQuF8xLgdfPJ277kIkYti8X5TC2
+495OW16nAEdq1Jgj0yToc/JQMfr69jsUoSKwLieGGylHDRIGN+H5xcifqg0cfDG6
+MCFTNRMp1V5CHUnenxv+GKJqhfJaW+z50FEryppjHthC4FgpDIDlx4oK6ayNuazJ
+u3dDxEmXzkEJXb7Jh+QaJn67g2crQUtq9Y4y4S4DlzNvoWWzIJxZ3tVxzqMrKPZL
+IirNnupDrzEz1xmka2dpUAnUF1cfvCLleFpDUkLlSqQGDQa01AQAORL1aIksOjHW
+gqpLP5/FnOt+z/OKJxWprshT9K+EqY5ipSu83tkPj2AoqRQoD3xWxahcDknSO00p
+sxbdlUtcprjRALU14UWD
+=ZC2S
+-----END PGP SIGNATURE-----
+--=-=-=--
