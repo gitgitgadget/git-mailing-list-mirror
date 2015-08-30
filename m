@@ -1,8 +1,8 @@
-From: Mikael Magnusson <mikachu@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [FEATURE REQUEST] Filter-branch extend progress with a simple
  estimated time remaning
-Date: Sun, 30 Aug 2015 21:53:15 +0200
-Message-ID: <CAHYJk3TFCtD=MH_crqj=eenyY+kLx3uu9OtDReQ-XJrwy8eoEA@mail.gmail.com>
+Date: Sun, 30 Aug 2015 15:55:30 -0400
+Message-ID: <CAPig+cTYc8isW0zhtZOLAtP+Kk_j8-yGKt4uHu0THT2QG8wTXA@mail.gmail.com>
 References: <CANy2qHdngVjH_tPE6=Aao-A2JWrVb_wt2wdu4EzZDQwM6-t_=Q@mail.gmail.com>
 	<20150825171238.GB9674@sigill.intra.peff.net>
 	<xmqqh9nnz08i.fsf@gitster.dls.corp.google.com>
@@ -22,74 +22,111 @@ References: <CANy2qHdngVjH_tPE6=Aao-A2JWrVb_wt2wdu4EzZDQwM6-t_=Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
+	Mikael Magnusson <mikachu@gmail.com>,
 	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
 To: Gabor Bernat <bernat@primeranks.net>
-X-From: git-owner@vger.kernel.org Sun Aug 30 21:53:22 2015
+X-From: git-owner@vger.kernel.org Sun Aug 30 21:55:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZW8fJ-0008DG-KG
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 21:53:21 +0200
+	id 1ZW8hU-000259-6b
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 21:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753846AbbH3TxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2015 15:53:17 -0400
-Received: from mail-qg0-f65.google.com ([209.85.192.65]:36475 "EHLO
-	mail-qg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753704AbbH3TxQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2015 15:53:16 -0400
-Received: by qgp105 with SMTP id 105so508561qgp.3
-        for <git@vger.kernel.org>; Sun, 30 Aug 2015 12:53:15 -0700 (PDT)
+	id S1753824AbbH3Tzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2015 15:55:32 -0400
+Received: from mail-yk0-f176.google.com ([209.85.160.176]:34958 "EHLO
+	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753708AbbH3Tzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2015 15:55:31 -0400
+Received: by ykbu129 with SMTP id u129so28117224ykb.2
+        for <git@vger.kernel.org>; Sun, 30 Aug 2015 12:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=7qLM/biH4h4D9VjqXGqvPUYOPf7nWKmVQ/X3KvR10S4=;
-        b=WqK4XMccSgcbi0iU4KK2TECLD424XBB5+GW5tdBqWhTNZSqAjZOFKPRC47L86X5FeZ
-         68UWtJoUAXuJW8Mg+Z9agXNE0GVSVJm+NPhI+h7RQz2/nJTGwPgKFIWDl1g9Q7TV0Fe9
-         b6vtKXAYgYJORKfaeK0c/UNTA0p+zn9TQOV7WWghXLzSQJETrZIreL+PjrFqGGGPKMlc
-         7hj797z722sh3Zh77tDypJo20syMmNfTG6phEeFwn5FuXZIulnMzKnTBW0J9DFMgZOih
-         Blx1bkeo2YJ7i6OCRvIx3yQaUISp7VqAY5Xh2Z6YJ5n9aSUy7Ug9hcci77WjflM4XhBx
-         BP9w==
-X-Received: by 10.140.130.196 with SMTP id 187mr34726455qhc.58.1440964395893;
- Sun, 30 Aug 2015 12:53:15 -0700 (PDT)
-Received: by 10.55.20.139 with HTTP; Sun, 30 Aug 2015 12:53:15 -0700 (PDT)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=aiaucAVlms77f26V4nI6davQTBBz1mAHQqUh6U40tDw=;
+        b=dw6oHOlKPfEdFu1tXEk7MbgcZOedbF0jIvyLD8ogg63XqZjREXaXVDabgGXHcm2hQI
+         B47mwx3uvLywIoSp47bME8GRNxbzGrnHzNQdqdJKpXSG3wkkntVA5zbvtceto51vtt7C
+         pKSBIgYWHtavBMJZsor5PS7Lfq8LM0n7L7A0qZX+LZ4OD4MrccV8kzNsbqZLPrclvwA3
+         F1O5fkTICrYg1S4s5hW8U4Vew5FXpIrCsopZLP+TyqHZmO9RQJNSYd+/tEJXMXIODnSV
+         rNgye4upujqTzcgY9Hh/JyL1TZxNdYEuP+uLbdm9Tw5ZY4yc2vIp+D1hezinTR2tvZwx
+         4Vgw==
+X-Received: by 10.170.136.17 with SMTP id d17mr17611971ykc.127.1440964531016;
+ Sun, 30 Aug 2015 12:55:31 -0700 (PDT)
+Received: by 10.37.36.145 with HTTP; Sun, 30 Aug 2015 12:55:30 -0700 (PDT)
 In-Reply-To: <CANy2qHf-HcJVyqo83y0+CtVnNp9TzHC479Lzu+NbpCF9k=8g1A@mail.gmail.com>
+X-Google-Sender-Auth: 5A51meg0iDrS8q2tfre2G3-rXjs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276836>
 
-On Sun, Aug 30, 2015 at 6:58 PM, Gabor Bernat <bernat@primeranks.net> wrote:
+(please don't top-post on this list)
+
+On Sun, Aug 30, 2015 at 12:58 PM, Gabor Bernat <bernat@primeranks.net> wrote:
 > I would argue against the every n commit check, or at least making it
 > configurable, as in my case the speed is something between 0.01 and
 > 1.5 seconds per commit. Checking it every n commit would make it I
 > feel quite slow to adapt. But it's debatable.
 
+I'm wondering why these two decisions ("showing estimated time" and
+"frequency of the computation") should be put in the hands of the user
+in the first place.
+
+1. Why have a --progress-eta option at all as opposed to just enabling
+it unconditionally if the platform can support it ("date +%s") and if
+it can be done without impacting the overall runtime noticeably?
+
+2. Why make the user responsible for deciding how often to do the time
+check (via some configuration) as opposed to adjusting it dynamically
+based upon how quickly the operation is proceeding. That is, if the
+filter-branch operation is zipping along at 0.01 seconds per commit,
+then the time check can be done less frequently (say every 50 or 100
+commits) so that it doesn't slow the overall operation. Conversely, if
+the operation is molasses, moving at 2 seconds per commit, then doing
+the time check more frequently (perhaps after each commit) probably
+won't noticeably impact the user's perception of the operation's
+progress.
 
 
-You must have missed the previous times someone said this, but please
-don't top post on this list.
-
-
-
-Here are some timings for running the command in question 1000 times
-on my computer:
-awk 'BEGIN{srand();print srand()}'
- 0.32s user 1.20s system 65% cpu 2.332 total
-
-perl -e 'print time'
- 0.69s user 1.45s system 73% cpu 2.921 total
-
-date +%s
- 0.27s user 0.99s system 78% cpu 1.604 total
-
-and for comparison,
-/bin/true
- 0.02s user 0.26s system 24% cpu 1.127 total
-
--- 
-Mikael Magnusson
+> On 8/30/15, Junio C Hamano <gitster@pobox.com> wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>
+>>>>> Most portable likely would be Perl, however, that's probably too
+>>>>> heavyweight inside a loop like this, even if called only once each N
+>>>>> iterations.
+>>
+>> I think that is true.  Now, when it is too heavy to spawn perl,
+>> would it be light enough to spawn awk, I have to wonder.  Even if
+>> the implementation uses awk, I think the time measurement should be
+>> done only once each N iterations (e.g. every 1000 commits measure
+>> the rate and divide the remaining commits with that rate while
+>> displaying the progress; if you are chewing 100 commits per minute
+>> and have 2000 commits to go, you know it will take 20 more minutes).
+>>
+>>>> http://stackoverflow.com/questions/2445198/get-seconds-since-epoch-in-any-posix-compliant-shell
+>>>> Found this,
+>>>>
+>>>> awk 'BEGIN{srand();print srand()}'
+>>>>
+>>>> srand() in awk returns the previous seed value, and calling it without
+>>>> an argument sets it to time of day, so the above sequence should
+>>>> return seconds since the epoch, or at least something in seconds that
+>>>> is relative to a fixed point which is all that's needed in this
+>>>> thread.
+>>
+>> In practice this should work, but it makes me feel somewhat uneasy.
+>>
+>> POSIX says "Set the seed value for rand to expr or use the time of
+>> day if expr is omitted. The previous seed value shall be returned."
+>> but I do not see anything that says that "the time of day" is
+>> counted in seconds around there (which is the crucial bit for this
+>> application).
+>>
+>> http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html
+>> (4.15 Seconds since the Epoch) says "The relationship between the
+>> actual time of day and the current value for seconds since the Epoch
+>> is unspecified."
