@@ -1,83 +1,109 @@
-From: Mikael Magnusson <mikachu@gmail.com>
-Subject: Re: [FEATURE REQUEST] Filter-branch extend progress with a simple
- estimated time remaning
-Date: Sun, 30 Aug 2015 10:14:39 +0200
-Message-ID: <CAHYJk3TAUFT4qnD23ug4gw41PJH+Ncj8CKTsDJnn-PH5z3GoWA@mail.gmail.com>
-References: <CANy2qHdngVjH_tPE6=Aao-A2JWrVb_wt2wdu4EzZDQwM6-t_=Q@mail.gmail.com>
-	<20150825171238.GB9674@sigill.intra.peff.net>
-	<xmqqh9nnz08i.fsf@gitster.dls.corp.google.com>
-	<20150825185210.GA10032@sigill.intra.peff.net>
-	<20150825185414.GA10895@sigill.intra.peff.net>
-	<CAPig+cQ1COjZuBq2YWKNdQ7zrzfvrppX-84vc9i1mJ6-yp_ZiQ@mail.gmail.com>
-	<20150826021517.GA20292@sigill.intra.peff.net>
-	<CANy2qHd_GTxr2CsjxLiNCvdwMLtEqcmURUTfFv9+t16FMEjuiw@mail.gmail.com>
-	<CANy2qHcCDkszLeOm-aJDCvkUaFFngtEy_VN+_B46K7KTQf4_Sg@mail.gmail.com>
-	<CAPig+cSspbWKUcnp6NJ1rjYyWQV8bO3ZmV7L_J7QaHRFRh3-wg@mail.gmail.com>
-	<CANy2qHfuFB6zJc0x_gDGT9MXtwQn2Jkb7v1mWyKoA8g1MjgGBA@mail.gmail.com>
-	<CAPig+cTCQa6Vev2u4V-CbU1B5BGdrSk+8bjLE2Y1YBLog5Ehnw@mail.gmail.com>
-	<CAHYJk3RXtS0d7mKNExbmX==O7PiTj=2m9ik3npO5_b5HV44_QA@mail.gmail.com>
-	<CANy2qHdsd=nsg5OMyg3POaT-_H6PXwrycCSpzAQbJ9=oBmpR_w@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [RFC PATCH] git-p4: add option to store files in Git LFS on import
+Date: Sun, 30 Aug 2015 09:49:22 +0100
+Message-ID: <CAE5ih7-TfLqwye8YpmZz90AVjYGQ8m0sF6GLKnG9pjvV8cTSjw@mail.gmail.com>
+References: <1440764691-62254-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Gabor Bernat <bernat@primeranks.net>
-X-From: git-owner@vger.kernel.org Sun Aug 30 10:14:49 2015
+Content-Transfer-Encoding: 8BIT
+Cc: Git Users <git@vger.kernel.org>, technoweenie@github.com
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 30 10:49:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZVxlH-0003lL-D5
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 10:14:47 +0200
+	id 1ZVyIs-0006sZ-Fi
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 10:49:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753048AbbH3IOm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Aug 2015 04:14:42 -0400
-Received: from mail-qg0-f66.google.com ([209.85.192.66]:35145 "EHLO
-	mail-qg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752989AbbH3IOk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Aug 2015 04:14:40 -0400
-Received: by qgeb6 with SMTP id b6so5269697qge.2
-        for <git@vger.kernel.org>; Sun, 30 Aug 2015 01:14:39 -0700 (PDT)
+	id S1753354AbbH3It0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2015 04:49:26 -0400
+Received: from mail-oi0-f42.google.com ([209.85.218.42]:33143 "EHLO
+	mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752088AbbH3ItW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Aug 2015 04:49:22 -0400
+Received: by oigm66 with SMTP id m66so45039822oig.0
+        for <git@vger.kernel.org>; Sun, 30 Aug 2015 01:49:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=diamand.org; s=google;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        bh=1H8b3/49Y355VLFtcAM9wxmNzhGRh0iAImzAY7rZrQ8=;
-        b=Sz49/hWaIaQat1/WHvWS7Pj6A2fMz+A6XJ67yllEKUitlFlwxz4ZEDk8y5Zzv0jRT7
-         eH53o9FgrowAUJtCghXHA08wS1JUldNtj/Zm78KQMh8n7okazrETFE/foB51NrJBaKfj
-         51v8MyTuweJfSPZPhxOOE/LjJ+eC4XBmzLC5lN84rJOMUtBa9hZQkfg8XKLSX1hzezOp
-         UUJwYDUVbfsOwEWG2eJ8kUV2oC5qYwq0f+mhrNRsy6qyhtGZdrM2YC8QqoQ7o1BQF6X+
-         jIcNfqJGI8OypZGt0v4rrIl+9/vuM4wTDrMJbJa0bGQ4k7XIfT1+rQCTHS3nzV6rX8iP
-         PR/A==
-X-Received: by 10.140.147.85 with SMTP id 82mr30462490qht.90.1440922479730;
- Sun, 30 Aug 2015 01:14:39 -0700 (PDT)
-Received: by 10.55.20.139 with HTTP; Sun, 30 Aug 2015 01:14:39 -0700 (PDT)
-In-Reply-To: <CANy2qHdsd=nsg5OMyg3POaT-_H6PXwrycCSpzAQbJ9=oBmpR_w@mail.gmail.com>
+        bh=IXABXkorjTsEfv/E+F50P/jzEM8yo/G+fXs+5MCsx/8=;
+        b=SeLbAu+btDrcatkgSy23YHCZNL2vzJdghCcKUJJqAO2tlj7k3oOrR+QzzG9f9pGbAx
+         2AM7QP/7JeaM3LpAJwNHBp7bjxnr+G2W6qwZpQoMLMNs898WpbETSU75g6V4sPvj5f4w
+         TaKVxu4NWu4QHIUuLh3rzGuD/V1t/7O0cNr9I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IXABXkorjTsEfv/E+F50P/jzEM8yo/G+fXs+5MCsx/8=;
+        b=fmGs5m+fYJh1bPQ5E1/pUvIMn1fA1+9MPPSeeNQniqqQJ/7uIIu/xxex03ngD4oe1P
+         V/6sD2IaM9svUY7Puugy8r8CtE2VlMEtv1QqCG3etv4wDY6I64y/dXjs9CM0zmDTwjkZ
+         i6f40UhzoqvL2nQY8brwGL4OhhssE+DHdP+gZS+mHsvekGPF/i25PgQ5JLkEIGkpWGT1
+         mGjJWTBQGNCTD6vEAb9IH3jHcavmZmqLwaHqjQlyVLQNVxko3vZI4PWYof34sqA+UeiQ
+         lyCh9DvtcfIq/Y1YClKEVoRYB1ZTmBf+EZ205gCtsi8n7vPQtqAnQ5GOdHUYFhunUY5n
+         Lb1Q==
+X-Gm-Message-State: ALoCoQmx3/vB1FWClplT9Z1GJ0knvbVyMAncTtE+10sIlurPKcXytYaOvvazoS5n7S4SDFmdtzeA
+X-Received: by 10.202.175.143 with SMTP id y137mr10238290oie.22.1440924562148;
+ Sun, 30 Aug 2015 01:49:22 -0700 (PDT)
+Received: by 10.60.46.38 with HTTP; Sun, 30 Aug 2015 01:49:22 -0700 (PDT)
+In-Reply-To: <1440764691-62254-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276812>
 
-On Sun, Aug 30, 2015 at 10:11 AM, Gabor Bernat <bernat@primeranks.net> =
-wrote:
-> this can work instead of the data command for getting the time
-> elapsed, however for getting the actual date of a timestamp is not
-> possible generally; so I think I will just remove that part.
-> Bern=C3=A1t G=C3=81BOR
+On 28 August 2015 at 13:24,  <larsxschneider@gmail.com> wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> I am migrating huge Perforce repositories including history to Git. Some of them contain large files that would blow up the resulting Git repositories. This patch adds an option to store these files in Git LFS [1] on git-p4 clone.
+
+I'm a bit worried by this. LFS isn't the only way to handle large
+files in git - there's also git annex (which I've used in a similar
+situation) and obviously random homebrew solutions. We're going to end
+up with git-p4 sprouting ever increasing numbers of
+--use-XXX-if-size-exceeds options. On the other hand, having it
+integrated into git-p4 is quite nice as it saves a lot of messing
+around.
+
+Would it be possible as a start to have (within git-p4) a generic
+spot-big-files-and-handle-them-differently patch, and a second patch
+to add specific LFS support? That then means that other schemes would
+be a lot easier to add in future.
+
+Some other comments inline.
+
+>
+> In order to run the unit tests you need to install the Git LFS extension [2].
+>
+> Known limitations:
+> The option "use-lfs-if-size-exceeds" looks at the uncompressed file size. Sometimes huge XML files are tiny if compressed. I wonder if there is an easy way to learn about the size of a file in a git pack file. I assume compressing it is the only way to know.
+>
+> Feedback is highly appreciated.
+>
+> Thank you,
+> Lars
 >
 >
-> On Sun, Aug 30, 2015 at 10:04 AM, Mikael Magnusson <mikachu@gmail.com=
-> wrote:
->> On Sun, Aug 30, 2015 at 5:15 AM, Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
->>> (Please don't top-post on this list.)
+> [1] https://git-lfs.github.com/
+> [2] https://github.com/github/git-lfs/releases/
+>
+> Lars Schneider (1):
+>   git-p4: add option to store files in Git LFS on import
+>
+>  Documentation/git-p4.txt |  12 ++
+>  git-p4.py                |  94 ++++++++++++++--
+>  t/t9822-git-p4-lfs.sh    | 277 +++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 374 insertions(+), 9 deletions(-)
+>  create mode 100755 t/t9822-git-p4-lfs.sh
+>
+> --
+> 1.9.5 (Apple Git-50.3)
 
-Ah, I got caught up on the ETA part. Do note that date +%s is also a
-gnu extension and won't work everywhere.
+Can you switch to a newer git - this one's quite old now so if there
+are regressions introduced later, you won't know about them!
 
---=20
-Mikael Magnusson
+>
