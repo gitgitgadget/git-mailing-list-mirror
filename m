@@ -1,83 +1,72 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [FEATURE REQUEST] Filter-branch extend progress with a simple
- estimated time remaning
-Date: Sun, 30 Aug 2015 16:40:24 -0400
-Message-ID: <20150830204024.GA1249@flurp.local>
-References: <20150826021517.GA20292@sigill.intra.peff.net>
- <CANy2qHd_GTxr2CsjxLiNCvdwMLtEqcmURUTfFv9+t16FMEjuiw@mail.gmail.com>
- <CANy2qHcCDkszLeOm-aJDCvkUaFFngtEy_VN+_B46K7KTQf4_Sg@mail.gmail.com>
- <CAPig+cSspbWKUcnp6NJ1rjYyWQV8bO3ZmV7L_J7QaHRFRh3-wg@mail.gmail.com>
- <CANy2qHfuFB6zJc0x_gDGT9MXtwQn2Jkb7v1mWyKoA8g1MjgGBA@mail.gmail.com>
- <CAPig+cTCQa6Vev2u4V-CbU1B5BGdrSk+8bjLE2Y1YBLog5Ehnw@mail.gmail.com>
- <CAHYJk3RXtS0d7mKNExbmX==O7PiTj=2m9ik3npO5_b5HV44_QA@mail.gmail.com>
- <CAPig+cTEd_Ceei82x=bxhVZfoggixBCf27U2zHxAwOm9dAtG-g@mail.gmail.com>
- <xmqqd1y4zpjx.fsf@gitster.mtv.corp.google.com>
- <CAPig+cTf2YLWGi2swmMxdx_XpEU=GkAx11ng6VVACMX9NpA_SQ@mail.gmail.com>
+From: Jeffrey Walton <noloader@gmail.com>
+Subject: Git configure/make does not honor ARFLAGS
+Date: Sun, 30 Aug 2015 17:34:59 -0400
+Message-ID: <CAH8yC8kV77h8cRA9Qo_1FYe9sv0zgsE7yKxaX+OtpRfj9+7wog@mail.gmail.com>
+Reply-To: noloader@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mikael Magnusson <mikachu@gmail.com>,
-	Gabor Bernat <bernat@primeranks.net>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 30 22:40:53 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 30 23:35:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZW9PG-0005Fb-Kv
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 22:40:51 +0200
+	id 1ZWAG7-0000t4-R3
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Aug 2015 23:35:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751365AbbH3Ukb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2015 16:40:31 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:32894 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750974AbbH3Uka (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2015 16:40:30 -0400
-Received: by iods203 with SMTP id s203so139561939iod.0
-        for <git@vger.kernel.org>; Sun, 30 Aug 2015 13:40:30 -0700 (PDT)
+	id S1752416AbbH3VfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2015 17:35:11 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:34893 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752309AbbH3VfA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2015 17:35:00 -0400
+Received: by iog7 with SMTP id 7so16567187iog.2
+        for <git@vger.kernel.org>; Sun, 30 Aug 2015 14:34:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=8glnumysf+gIDAIoThF4Y1ll6QZUjPjkTpb15iM6QWc=;
-        b=E7JyzhBNV37NxXPKTnQu88yWV2e9dl3oSUcMxhQbsql4viO5Zfusx25e7ZRlpnM0u6
-         mtIPn9ObjtAvMube/wElCBu7enCYdNuZEfiMWKpnFmd24GM7qDmzXmWpsEXIK4LG164f
-         jDB9KVVEoDxRnNKOLTGvVfBHPENX0mQdvn6R5y8ILzq1MMBDLPYAyASON5PhVjnEjm/K
-         e1T+F+fYBDXdL2pNdsM3Ow7ciBfNy5Atp0HSUipj5RGL2cUEs2VRYJp+tsjxPKEWLi7E
-         ygVtKrudbWOaZ2vJFwSFQPliWzKekLU/zzB2XCVwStOv7b3G42lepgDs1aXsfXMaMlub
-         v7OA==
-X-Received: by 10.107.25.20 with SMTP id 20mr25572802ioz.169.1440967230045;
-        Sun, 30 Aug 2015 13:40:30 -0700 (PDT)
-Received: from flurp.local (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by smtp.gmail.com with ESMTPSA id qc6sm9080838igc.1.2015.08.30.13.40.29
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 30 Aug 2015 13:40:29 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAPig+cTf2YLWGi2swmMxdx_XpEU=GkAx11ng6VVACMX9NpA_SQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
+        bh=wn+cTI6qaJF8MRZ0YlMYVnc/41rdS5ZGy9AEtP/VW8M=;
+        b=vELOOWVSXvQmg/5HG46O1q1wIQw28NZmL0rGxwe/StFEeHNneE+LxB1/TF3EOPX5NU
+         91RfaIL+qu67sOrpLpD0LZf21yqDtmMhvY2HrjpQyFHSzhQEjsXqEM8FnvH9b1stlTAn
+         pzrp2XTAsh50DwesO07faWW7f6JBgGjRyqr5CGhhYWSzvm+wTrJ+soyknlNnxkbqBB3B
+         sNW+1G8siqBj3IUfX6bEOUx3S09wYMT9JXBJ0ApipW/fMmTw1O1JOc7Lh+Oq1t1jM3ZD
+         eImvF89MIZDnPbABQU3ozKbYS/DdkyeOy8aymHaltDL55EeRpLNtkPAWuR9o+sc9dsXJ
+         wc9Q==
+X-Received: by 10.107.16.139 with SMTP id 11mr27196475ioq.122.1440970499573;
+ Sun, 30 Aug 2015 14:34:59 -0700 (PDT)
+Received: by 10.36.123.215 with HTTP; Sun, 30 Aug 2015 14:34:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276838>
 
-On Sun, Aug 30, 2015 at 03:40:20PM -0400, Eric Sunshine wrote:
-> I suppose a viable approach might be to test once outside the loop if
-> "date +%s" is supported and print the "(%d elapsed / %d estimated
-> remaining)" annotation within the loop if it is, else not. The test
-> might look something like this:
-> 
-> echo $(date +%s) | grep -q '^[0-9][0-9]*$' 2>/dev/null && show_eta=t
+I'm working on an old OS X machine. I needed to perform:
 
-Actually, you'd also want to suppress 'date' errors via /dev/null, so
-perhaps:
+  AR=libtool
+  ARFLAGS="-static -o"
+  ...
+  make configure
+  ./configure ...
+  make
 
-  { echo $(date +%s) | grep -q '^[0-9][0-9]*$'; } 2>/dev/null && show_eta=t
+However, it appears the Makefile does not respect ARFLAGS:
 
-or something.
+    $ grep -IR '$(AR)' *
+    Makefile:    $(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $^
+    Makefile:    $(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $^
+    Makefile:    $(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $^
 
-> Platforms, such as Linux, Mac OS X, and FreeBSD, which support "date
-> +%s" would get the annotated output, whereas it would fall back
-> gracefully to the non-annotated output on platforms such as Solaris
-> (and perhaps AIX) which lack it.
+It was fixed with a quick "sed":
+
+    sed -i "" 's|$(AR) rcs|$(AR) $(ARFLAGS)|g' Makefile
+
+The Makefile might benefit from the following for users who need to
+tweak things:
+
+    ARFLAGS ?= rcs
+    ...
+
+    $(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+    ...
