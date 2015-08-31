@@ -1,110 +1,69 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/3] submodule: implement `module_name` as a builtin helper
-Date: Mon, 31 Aug 2015 18:01:40 -0400
-Message-ID: <CAPig+cT5Z0CJVok8Za=fBarQLu4WQD3TbA7Wr1aASP4neLLXRA@mail.gmail.com>
-References: <1441048767-29729-1-git-send-email-sbeller@google.com>
-	<1441048767-29729-3-git-send-email-sbeller@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] date: make "local" orthogonal to date format
+Date: Mon, 31 Aug 2015 18:05:09 -0400
+Message-ID: <20150831220508.GA31973@sigill.intra.peff.net>
+References: <20150831204444.GA4385@sigill.intra.peff.net>
+ <20150831204831.GB10338@sigill.intra.peff.net>
+ <20150831212754.GD30659@serenity.lan>
+ <20150831213336.GA11720@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Sep 01 00:02:03 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Sep 01 00:05:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWX9N-0006gh-4Y
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 00:02:01 +0200
+	id 1ZWXCY-0001IZ-NP
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 00:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178AbbHaWBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 18:01:42 -0400
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:36801 "EHLO
-	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751381AbbHaWBl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 18:01:41 -0400
-Received: by qkbp67 with SMTP id p67so19442560qkb.3
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 15:01:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=jLxxBgYCH/Qz4KftVjHY9JDV/5rzB+WJitKV7p784xA=;
-        b=aSN134IGJ3wfE96Hf279F22Lg07pL/euZlMko2mMjCQ/CS7pZktqioyXrilYzohlax
-         nI09yaNguWtbK2jthnioLZ0wkQhzcw7US/TDL3IF8CQVkqxwWD4Nijil3lZWbRMc3cso
-         zkUntncrIqz7eAGwZB1jL4L568wr2OGbjbiFL96t+clchbcJmNoxFpapyiXAYgL0vD1f
-         d7U+9qXstdwFE9duxUHnWXzFfRasordCrdwTE6seaetX/Ul8lH9qq/sRueVHc02j0LUj
-         dxGRefPbdWhgSMZa6tBdjev4TUq43tXLDSIxRwHD5XJLCfPaE3SsGxJcCQdp7eWagRVi
-         T9/Q==
-X-Received: by 10.129.83.136 with SMTP id h130mr25115094ywb.95.1441058500619;
- Mon, 31 Aug 2015 15:01:40 -0700 (PDT)
-Received: by 10.37.36.145 with HTTP; Mon, 31 Aug 2015 15:01:40 -0700 (PDT)
-In-Reply-To: <1441048767-29729-3-git-send-email-sbeller@google.com>
-X-Google-Sender-Auth: 9dqNwNraU4viYgzVwSBUIDXhomM
+	id S1752871AbbHaWFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 18:05:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52734 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752266AbbHaWFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 18:05:11 -0400
+Received: (qmail 4545 invoked by uid 102); 31 Aug 2015 22:05:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Aug 2015 17:05:11 -0500
+Received: (qmail 27989 invoked by uid 107); 31 Aug 2015 22:05:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Aug 2015 18:05:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Aug 2015 18:05:09 -0400
+Content-Disposition: inline
+In-Reply-To: <20150831213336.GA11720@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276949>
 
-On Mon, Aug 31, 2015 at 3:19 PM, Stefan Beller <sbeller@google.com> wrote:
-> This implements the helper `module_name` in C instead of shell,
-> yielding a nice performance boost.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index beaab7d..c8f7e0c 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -101,6 +104,26 @@ static int module_list(int argc, const char **argv, const char *prefix)
-> +static int module_name(int argc, const char **argv, const char *prefix)
-> +{
-> +       const char *name;
-> +       const struct submodule *sub;
-> +
-> +       if (argc != 1)
-> +               usage("git submodule--helper module_name <path>\n");
-> +
-> +       gitmodules_config();
-> +       sub = submodule_from_path(null_sha1, argv[0]);
-> +
-> +       if (!sub)
-> +               die("No submodule mapping found in .gitmodules for path '%s'", argv[0]);
+On Mon, Aug 31, 2015 at 05:33:37PM -0400, Jeff King wrote:
 
-In the original shell code, this error message went through
-eval_gettext(), so don't you want:
+> > diff --git a/date.c b/date.c
+> > index aa57cad..3aa8002 100644
+> > --- a/date.c
+> > +++ b/date.c
+> > @@ -817,9 +817,7 @@ void parse_date_format(const char *format, struct date_mode *mode)
+> >  		if (!skip_prefix(p, ":", &p))
+> >  			die("date format missing colon separator: %s", format);
+> >  		mode->strftime_fmt = xstrdup(p);
+> > -	}
+> > -
+> > -	if (*p)
+> > +	} else if (*p)
+> >  		die("unknown date-mode modifier: %s", p);
+> 
+> Yeah, that works. We could also advance "p" in the DATE_STRFTIME
+> conditional, but I think your solution is less ugly.
+> 
+> Thanks for debugging my mess.
 
-    die(_("No ..."), ...);
+By the way, I was imagining you would pick these up and add to them with
+more tests and documentation. If that's the case, please feel free to
+squash that in and keep my signoff. If not, then I can post a re-roll
+after waiting for other comments.
 
-?
-
-> +       name = sub->name;
-> +       printf("%s\n", name);
-
-Why the useless assignment to 'name'? Instead:
-
-    printf("%s\n", sub->name);
-
-> +       return 0;
-> +}
-> +
->  int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
->  {
->         if (argc < 2)
-> @@ -109,6 +132,9 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
->         if (!strcmp(argv[1], "module_list"))
->                 return module_list(argc - 1, argv + 1, prefix);
->
-> +       if (!strcmp(argv[1], "module_name"))
-> +               return module_name(argc - 2, argv + 2, prefix);
-> +
->  usage:
-> -       usage("git submodule--helper module_list\n");
-> +       usage("git submodule--helper [module_list | module_name]\n");
->  }
+-Peff
