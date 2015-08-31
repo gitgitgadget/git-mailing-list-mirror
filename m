@@ -1,97 +1,77 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH] commit: don't rewrite shared index unnecessarily
-Date: Mon, 31 Aug 2015 14:41:31 -0400
-Organization: Twitter
-Message-ID: <1441046491.25570.13.camel@twopensource.com>
-References: <1440695274-12400-1-git-send-email-dturner@twopensource.com>
-	 <CACsJy8D=KyWBYf1LW=n928rmG=9xavSaR+1G1g+F7mMTKFCpfg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 20:41:40 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] read-cache: fix indentation in read_index_from
+Date: Mon, 31 Aug 2015 11:43:29 -0700
+Message-ID: <1441046609-24181-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Aug 31 20:43:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWU1U-0002vd-AJ
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 20:41:40 +0200
+	id 1ZWU3V-0004mb-DL
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 20:43:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753880AbbHaSlg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 14:41:36 -0400
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:36071 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751701AbbHaSlf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 14:41:35 -0400
-Received: by qgeb6 with SMTP id b6so71296263qge.3
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 11:41:34 -0700 (PDT)
+	id S1752182AbbHaSnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 14:43:42 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:33975 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752102AbbHaSnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 14:43:41 -0400
+Received: by pabzx8 with SMTP id zx8so147655451pab.1
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 11:43:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=AurPdmqm6yDPLEc+FzlsOhAwo8HsdkgwXQd9dFwChsw=;
+        b=dhF69JztFtkDhDBX//rOLJSD/wONA+y0ioZ0oetbdYy3RzyYJm1CzbdNL9ntt/Abk9
+         iCLKtVz0MmgobEocceMmWISz5mFyRCyDxFXjeZ6mo8qg80LrXI0JiRCrFq/E/kLn/zcz
+         HQzHPoJPGfblunbHw0m8TEIpSFs1uPrrgxSh+h9ShxoQmJWcze6EPlVw5J2ho43/eGs9
+         zUsp8CkoK3Xdc2Cin1UFDfUUdq0WeD0v/J1/dlkxhKCkkfQCxfF+3akA9KpCFfjAY99b
+         PH9H+u6UpznxAmxMK4nGpd/qfjT2MDVyXse61BcbMXoPZJjg80l4BkLcPcuVF/BtgTm9
+         JgKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=Q1NZZwPSO+pEga5frTtI2N28kv55l6NUCcLZhGiElzo=;
-        b=i46Ien4K3Y3iXPmlheGQi34HTm3jmOaezEr/v3geMn/hFqIiZCJCdiO2YE9iLBqImy
-         kqIYHx6vBPvjW8M/hpu13Zr1tWcDKBW1bwnEIrKEcZXmTYBIBPcTzr93yAvO4b3RaQhO
-         Ybc2jpczzntlkZFIteg+TZi53Y2+NxAzWXHT5VTD8uevduYNLE/tRFLvOf0rZW+K4gae
-         Y2uyblaqlgK2KLGVorIzTJjS0uWg68P3GaKVAkGJnywB3bFKnwwC9vOKDIZZ5TyJpCiX
-         WaLZRa+8U+fSoLUXk8lL16ZgWa3pzmjqWirSLLasS6ee46WeVHj2rXjtc3ToQVOv/AjM
-         KPsw==
-X-Gm-Message-State: ALoCoQkc8EYAVYyFFtdQKC69icj/dicC+v5nsLcTIcu3ouCjluOT11CavW5fnIN5VoQDWsQ4VXqB
-X-Received: by 10.140.239.135 with SMTP id k129mr42149146qhc.55.1441046494845;
-        Mon, 31 Aug 2015 11:41:34 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id s64sm9297494qgs.33.2015.08.31.11.41.34
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 31 Aug 2015 11:41:34 -0700 (PDT)
-In-Reply-To: <CACsJy8D=KyWBYf1LW=n928rmG=9xavSaR+1G1g+F7mMTKFCpfg@mail.gmail.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=AurPdmqm6yDPLEc+FzlsOhAwo8HsdkgwXQd9dFwChsw=;
+        b=WtbvZA34Gf9B6kb5e+l8EJi6erPV71UAZKXIyEnrrNzKRmAXaEJQZ49HCmq2ZLCXnn
+         hkm7hqpcKGHE1++Z9ORfHISG4q4b/rI9MjsZdJHERl4S4lXf6qX2TFgcTOsKwdOCr2RW
+         H8zY7hd1uqY8PicDkAfi7mtIj7EliWUV6S/PaD81F0ud6JA3/E865N0J10e5B4bdUZU3
+         Fpgmwne3WSrZeysa/WaKUpMZEHJMVGuEfuiQ2EROxFu79l/mXRViNvHIS6nU+g+OEBmR
+         rESaPDEMizt9fBHNI95XIa4T+pPXJtUKVn85VmwW28AeoxQN7ZRgP2oNQ2ePSRDOf0eQ
+         3zsw==
+X-Gm-Message-State: ALoCoQnD3U8utJA1VVKotSywWDTahGNHkOaqAOlOmzAczPYgOxUw6AoVK2Vq/XL+uAYM1FYXAC7o
+X-Received: by 10.68.219.194 with SMTP id pq2mr39678462pbc.20.1441046620854;
+        Mon, 31 Aug 2015 11:43:40 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:25db:53e9:3895:b743])
+        by smtp.gmail.com with ESMTPSA id ha11sm387882pbd.65.2015.08.31.11.43.39
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 31 Aug 2015 11:43:40 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0.264.geed6e44.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276906>
 
-On Mon, 2015-08-31 at 17:02 +0700, Duy Nguyen wrote:
-> On Fri, Aug 28, 2015 at 12:07 AM, David Turner <dturner@twopensource.com> wrote:
-> > Remove a cache invalidation which would cause the shared index to be
-> > rewritten on as-is commits.
-> >
-> > When the cache-tree has changed, we need to update it.  But we don't
-> > necessarily need to update the shared index.  So setting
-> > active_cache_changed to SOMETHING_CHANGED is unnecessary.  Instead, we
-> > let update_main_cache_tree just update the CACHE_TREE_CHANGED bit.
-> >
-> > In order to test this, make test-dump-split-index not segfault on
-> > missing replace_bitmap/delete_bitmap.  This new codepath is not called
-> > now that the test passes, but is necessary to avoid a segfault when the
-> > new test is run with the old builtin/commit.c code.
-> >
-> > Signed-off-by: David Turner <dturner@twopensource.com>
-> 
-> Ack.
-> 
-> I made SOMETHING_CHANGED "1" for catching these cases (there were a
-> few on-flight topics when this series was being cooked and I was
-> afraid I could not cache all active_cache_changed sites).
-> 
-> > ---
-> >
-> > I introduced this bug last year while improving the cache-tree code.
-> > I guess I probably didn't notice that active_cache_changed wasn't a
-> > boolean.
-> 
-> So.. you did you split-index? Cool. Never heard anyone using it for
-> real. It needs the other part to improve reading/refresh side to get
-> to full potential though..
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ read-cache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I am experimenting with an "unskipped index", to reduce the cost of
-index loading and processing in sparse checkouts.  The unskipped index
-is an index on the (v3) index -- that is, it lists the byte offsets of
-all entries in the sharedindex where CE_SKIP_WORKTREE is 0.  In
-addition, there is a list of the offsets of *all* entries, which we can
-binary search in.  There's also some other metadata that I'm figuring
-out as I go along.  This might allow us to avoid loading the full shared
-index in most cases.  Or it might be a total dead end.  Not sure yet.
+diff --git a/read-cache.c b/read-cache.c
+index 89dbc08..a3df665 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1653,7 +1653,7 @@ int read_index_from(struct index_state *istate, const char *path)
+ 		die("broken index, expect %s in %s, got %s",
+ 		    sha1_to_hex(split_index->base_sha1),
+ 		    git_path("sharedindex.%s",
+-				     sha1_to_hex(split_index->base_sha1)),
++			     sha1_to_hex(split_index->base_sha1)),
+ 		    sha1_to_hex(split_index->base->sha1));
+ 	merge_base_index(istate);
+ 	check_ce_order(istate);
+-- 
+2.5.0.264.geed6e44.dirty
