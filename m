@@ -1,71 +1,81 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: git Dockerfile for ppc64le
-Date: Mon, 31 Aug 2015 16:45:26 +0200
-Organization: gmx
-Message-ID: <b066c544c6597460f4e8f0c8be7cfe73@www.dscho.org>
-References: <CAPS4ckqWociyEmph-mr3Ncz8J5genGjGPNu+sHsSviG5AKwu0A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] INSTALL: Add docs on how to use custom Python paths.
+Date: Mon, 31 Aug 2015 07:53:59 -0700
+Message-ID: <xmqqr3mjy0e0.fsf@gitster.mtv.corp.google.com>
+References: <1441027358-27245-1-git-send-email-ehsan@mozilla.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Gawade P <gawade.oefp@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 16:45:33 2015
+To: Ehsan Akhgari <ehsan@mozilla.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 16:54:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWQKz-0006Xy-9E
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 16:45:33 +0200
+	id 1ZWQTH-0005eR-Jf
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 16:54:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752993AbbHaOp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 10:45:29 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56604 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752838AbbHaOp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 10:45:28 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M7pDs-1Yk72k3F2m-00vROc; Mon, 31 Aug 2015 16:45:26
- +0200
-In-Reply-To: <CAPS4ckqWociyEmph-mr3Ncz8J5genGjGPNu+sHsSviG5AKwu0A@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:eEaZ/2oTg/5rrWH57fX9DMLAwV5mgp9nMmPiT8kAEMhGx3tgClc
- deC8Qkizx+NAVjy/SlZeqCJB4Z+tDJJ0NgbnqU/+bohbxIggkdB4U7wsGyYMgVyn3xP/RHg
- WeCLxscs3ueRn42uBA3027RWN9q5VpnFQZKrOpo7lX1ehSpj6QgRSSwbHXE40M9aneMbDcI
- FZB4dzdTkmNvSfSbKWy7g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zf+3ifAWjkc=:rARO9R/0ofqnyEYXsViFwf
- YbsW9vu1ES7g8O+3QLemz7GiTxvJjW2CQoKZBIdTqBgy689nGUyI4D0jLPf9qngznj3+dB4KJ
- LoHO65aHlvDezJT1Uv9k79bs71xe6M3TQ6noycdssA8QHd/42fDNZWiV45QVzcJV3JyeNnDVs
- YhVQ3feJlXTGJbGM18gmWIiOyz2nQHa9jS8SHg3h8rEBr73MTDd4fL1a7D/cfNmAuhy1J/G0L
- 6Ajke/MBeAQqDuZVN6cvTjbzYos/N535q1e8O56TVE8f/oqe+/ffBIBC1QQI5AW8kIM1e8viN
- JzIH0nae+d8YsKjNwmVmwVjDzXzoSTaxzOlDlVoxWFdF+Y7oKV525CGTRtXszd6+jLx8dGkgM
- nneL9HiV74DeizoRg9TTyzPV5dnmB4YGsd8coqrMReWu5EpNNF/tItY7mFY9ichZR3RAsU9xl
- kjG6gGuLteM/cZ5xbuyCTZ/WxzSoVD17aXwP9dSt/TRGfUuFuggcKETsOLf87Cvibgf+5WJbb
- BCRCMDyW+h5D5ee8+oiNyukF7EsFKo1xFm0FT/ATO2tnPjld0sfC4e+p6PBt1L3c00t6Xlbov
- LSK6Wj+iuXJsmmvD7/c7RNwiE+zicS/MtSuPKJxsZNyrXbseDheH/5vPqsT2rCHpaYqUv1Q40
- WD7p7E9bXVsv7wmlDZe1JlEg/WfPB/GFQmQ38RoLbxwawI/f0DpzU4XScj6YT8wWpdX9vK/+a
- wdDQIycOWlQLKSX7i2sfkdKdP6is5g7kYo7d/Q==
+	id S1753269AbbHaOyD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 10:54:03 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33630 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753043AbbHaOyC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 10:54:02 -0400
+Received: by padhy3 with SMTP id hy3so37173147pad.0
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 07:54:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=q0/P+afYWl0RsFtrYtfJPtKBEs0HAG7+dyHl0JJAA5E=;
+        b=dML/VQJ8uaea2qpqYGzr12Z1AitjRZ2qLklSG0knQPkk8ygUbY/J2UQqHqLRBZmjWq
+         NOzGvYoU0H/LiaAvbcoxR8PTa6pQ4ldAF96CdFdMgxrtSR197vudHwPEF8RHGSsWPN62
+         8mZLmgyJFLixlJpaCaYabVBM5okhYGFMr++iIPEB83fzWW4Qq3waQfabFg5d0FGlPuwX
+         zNZ4mDesQB+X97MRLS6vBo4kidWgWl61F7Ums41Q3xI+c1LAmMRtYY9OxL9YZqJCEm11
+         iOGZw9B9mlZl+dzm1LAXx/TGpVziNnrJQH3LR6cCCjhWq0yLPF7NVa0/oFPEkqDTFwhU
+         ERHg==
+X-Received: by 10.68.69.108 with SMTP id d12mr39273988pbu.24.1441032841287;
+        Mon, 31 Aug 2015 07:54:01 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:1937:16f4:ede1:6d38])
+        by smtp.gmail.com with ESMTPSA id le8sm14870302pbc.24.2015.08.31.07.54.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 31 Aug 2015 07:54:00 -0700 (PDT)
+In-Reply-To: <1441027358-27245-1-git-send-email-ehsan@mozilla.com> (Ehsan
+	Akhgari's message of "Mon, 31 Aug 2015 09:22:38 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276881>
 
-Hi,
+Ehsan Akhgari <ehsan@mozilla.com> writes:
 
-On 2015-08-25 06:37, Gawade P wrote:
+> Signed-off-by: Ehsan Akhgari <ehsan@mozilla.com>
+> ---
+>  INSTALL | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/INSTALL b/INSTALL
+> index ffb071e..5b7fe91 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -148,6 +148,11 @@ Issues of note:
+>  	  supported by Perforce) is needed to use the git-p4 interface
+>  	  to Perforce.
+>  
+> +	  By default, git looks for Python installed in /usr/bin/python.
+> +	  On systems with a different Python installation path, pass the
+> +	  --with-python argument to configure, or set the PYTHON_PATH
+> +	  environment variable when using make to build.
+> +
+>   - Some platform specific issues are dealt with Makefile rules,
+>     but depending on your specific installation, you may not
+>     have all the libraries/tools needed, or you may have
 
-> I have built and tested the latest version on git on multiple
-> distributions including Ubuntu 15.04 on the ppc64le architecture. I
-> have run the complete test suite and verified that there are no test
-> failures.
-> 
-> I have also written a dockerfile for this for Ubuntu 15.04 and wanted
-> to understand if there is any way I can contribute it to the git
-> community?
+Thanks for a patch, but I doubt that it is a good idea to do this.
 
-Nice! As far as I understand, you could upload this to https://hub.docker.com/ and then everybody could benefit from a simple installation (something like `docker pull GawadeP/git/ppc64le`).
-
-Ciao,
-Johannes
+The paragraph we see in the post-context of your patch is meant to
+cover it, together with 47 other platform specific locations like
+SHELL_PATH, PERL_PATH, CURLDIR, etc.
