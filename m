@@ -1,109 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Aug 2015, #05; Fri, 28)
-Date: Mon, 31 Aug 2015 13:06:53 -0700
-Message-ID: <xmqqegijusrm.fsf@gitster.mtv.corp.google.com>
-References: <xmqq4mjj15lm.fsf@gitster.mtv.corp.google.com>
-	<CAP8UFD3-Y4T=dQmBVfRR1DEuuRZLSrUvQid8m1YttOnJc5Fj8w@mail.gmail.com>
-	<xmqqzj17y16t.fsf@gitster.mtv.corp.google.com>
-	<1441045835.25570.7.camel@twopensource.com>
+Subject: Re: [PATCH] git-p4: add "--path-encoding" option
+Date: Mon, 31 Aug 2015 13:09:55 -0700
+Message-ID: <xmqqa8t7usmk.fsf@gitster.mtv.corp.google.com>
+References: <1441035616-39128-1-git-send-email-larsxschneider@gmail.com>
+	<1441035616-39128-2-git-send-email-larsxschneider@gmail.com>
+	<xmqqpp23we4d.fsf@gitster.mtv.corp.google.com>
+	<55E4A965.8040305@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 22:07:03 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: larsxschneider@gmail.com, git@vger.kernel.org, luke@diamand.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Aug 31 22:10:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWVM5-0004Hj-2V
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 22:07:01 +0200
+	id 1ZWVP1-0007GT-OV
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 22:10:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752536AbbHaUG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 16:06:56 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:34902 "EHLO
+	id S1752716AbbHaUJ7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Aug 2015 16:09:59 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:33438 "EHLO
 	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752228AbbHaUGz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 16:06:55 -0400
-Received: by pacdd16 with SMTP id dd16so149436587pac.2
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 13:06:54 -0700 (PDT)
+	with ESMTP id S1751345AbbHaUJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 16:09:57 -0400
+Received: by paczk9 with SMTP id zk9so1366737pac.0
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 13:09:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=m9qWUG8XQ5Ha9HWHupRDqZm65G2AUnbZNzjQsd5SizE=;
-        b=IvVyoLfZU4yaONIaWJFD+mMz7kso6J5Z03Tn4ncY8TuY5w7ddTD1fhaJlcVJXfwnfI
-         tGjEZ4Xj097z2QK7H/Yg3obr0Co3qMhK6Jdvqfe/uwE/+ULI1VHalY1kiCzdUV95P6nW
-         kSOOeXt1QcWkUM7n8ssX+FCYd3MYbHPb5hN/gRi0qv+yDSWH/QEEb+CGNKiAFBPc7QFS
-         vun0GVZtDClBdz5zje0HEjLIowIejQRgUhNOmm4oAzgB3fh7hyqNJzMv/ugJcC8NtNMX
-         SPyTs/6VeFvnsyC8ly232PwSHhuQkzANC8KUCiaQhyiPr8MwbXz4IEFGs7KwXcdX37Jc
-         jS6g==
-X-Received: by 10.66.227.98 with SMTP id rz2mr41077526pac.16.1441051614752;
-        Mon, 31 Aug 2015 13:06:54 -0700 (PDT)
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=GATzJVjVU1c24sjsVWp8dxbreWX3RZMiu1xyMWTUCqk=;
+        b=Zk34qje0Blis7EQFOqP+vsPpvXa5qXmWMYZXm9GHSOoy8w9V0/HZsX74sx+u3sD2N0
+         JUW4ucNZsX9P1/LRgO7N78M8FXxv3labgHMXTGjcG/zsaJ0GWmusiCvrBOqgbg/grz6P
+         t9BvgRJJUQ762MJwGrFqZ5grgMTChdu7lpAT04VB9U+QSD1arhr+pHgmhAeXjmns23mD
+         tdfJwM2S33Q+R0g5TMJ0beHxqD9CiCKnhjzKPtkM+GbywmdFC184U2SzNsTBsvaZVhMn
+         RT8aAtXr61/bQaHq66cLTW6L205wap/XuT/5fAXgkDz2UsSlmHf/UEe2VuN1zfN0XGqi
+         oU8g==
+X-Received: by 10.68.228.36 with SMTP id sf4mr10297841pbc.0.1441051797212;
+        Mon, 31 Aug 2015 13:09:57 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:1937:16f4:ede1:6d38])
-        by smtp.gmail.com with ESMTPSA id d8sm15610510pat.0.2015.08.31.13.06.53
+        by smtp.gmail.com with ESMTPSA id pf10sm15674387pac.43.2015.08.31.13.09.56
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 31 Aug 2015 13:06:53 -0700 (PDT)
-In-Reply-To: <1441045835.25570.7.camel@twopensource.com> (David Turner's
-	message of "Mon, 31 Aug 2015 14:30:35 -0400")
+        Mon, 31 Aug 2015 13:09:56 -0700 (PDT)
+In-Reply-To: <55E4A965.8040305@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Mon, 31 Aug 2015 21:22:13 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276931>
 
-David Turner <dturner@twopensource.com> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
->> Christian, thanks for raising this one.
->> 
->> I do recall the thread and I might be the somebody like Michael you
->> remember, e.g. $gmane/275105---which did mention that "git bisect"
->> would not need changing if we kept refs/bisect/.
->> 
->> What was the reason why we chose to move to refs/worktree/ again?  I
->> do not think there was an issue that we cannot keep refs/* in
->> general shared while having one (or more) subhierarchy of it per
->> worktree (otherwise we would not be using refs/worktree/*, but using
->> something outside refs/, like $GIT_DIR/worktree-refs/).  Was there an
->> objection to refs/bisect being private from aesthetics point of view
->> (i.e. forcing everything per-worktree in refs/worktree/ would prevent
->> proliferation of refs/this and refs/that that need to be private
->> case by case), ignoring the practical issue of compatibility issues
->> around existing tools?
+> On 2015-08-31 19.40, Junio C Hamano wrote:
+>> larsxschneider@gmail.com writes:
 >
-> That is correct.  IIRC, on one of these patch sets, I proposed accepting
-> both new and old refs, but you said that would be unnecessary (it might
-> have been the notes/merge one instead of this one).
+>>> +test_expect_success 'Create a repo containing cp1251 encoded paths=
+' '
+>>> +	cd "$cli" &&
+>>> +
+>>> +	FILENAME=3D"$(echo "a-=C2=A4_o-=C2=B6_u-=C2=BC.txt" | iconv -f ut=
+f-8 -t cp1252)" &&
+>>  ...
+> Using file names and iconv like this may not be portable:
+> - cp1252 may be called CP1252 (or may not be available)
 
-I suspect it was notes-merge thing, but anyway, if you asked me
-right now, I certainly would say it is not OK to drop the old
-location but I may still say it is not worth having old and new with
-funny directory symlink like thing, because refs backend thing
-cannot say "I'll follow the symbolic link refs/bisect that points
-at refs/worktrees/bisect".
+"git grep 'cp[0-9]' t/" does tell us that we refrain from using them
+and I am sure the portability worries is a big reason.  Thank you
+for pointing it out.
 
-But the reason why I say it is not worth is not because I do not
-think we need refs/bisect, but because I do not think we need
-refs/worktree/ at this point.  In other words, throwing new
-hierarchies that are private to worktree into refs/worktree/ is fine
-if we discover the need for some new hierarchies in the future, but
-being able to access the bisection points as refs/worktree/bisect is
-not necessary.  If people and tools are familiar with it being in
-refs/bisect, that location is fine.
+> - reading from stdin is not necessarily supported by iconv
 
->> I think one example of script, "gitk --bisect", does want to show
->> the DAG limited by bisect refs, but it does so using plumbing
->> without having to say refs/bisect/bad itself.  Perhaps the thinking
->> (or lack of enough of it) went that no other uses by scripts need to
->> peek directly into refs/bisect/ hierarchy?
->
-> I did a quick search on github, and did not see any scripts that said
-> "refs/bisect".
+"git grep '| iconv' t/" tells me that this is irrelevant; we already
+heavily depend on it.
 
-That's one data point, but not a very confidence-building one.
+> - creating files in CP1252 may not be supported under Mac OS
+>    (Not sure about Windows)
 
-Christian, did you see your private script break with this change,
-or as one of the larger stakeholder of "bisect" subsystem you wanted
-to proceed with caution (the latter I myself would share, actually)?
+The same as the first point, which is a good thing to worry about.
+
+> One solution could be to use ISO-8859-1, convert into UTF-8,
+> and "convert into UTF-8" one more time.
+
+I do not quite get it; do you need to do anything more than just
+replacing cp1252 with iso-8859-1 in the patch being discussed?
