@@ -1,80 +1,336 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v6 1/2] worktree: add 'for_each_worktree' function
-Date: Mon, 31 Aug 2015 14:44:34 -0400
-Organization: Twitter
-Message-ID: <1441046674.25570.15.camel@twopensource.com>
-References: <1440961839-40575-1-git-send-email-rappazzo@gmail.com>
-	 <1440961839-40575-2-git-send-email-rappazzo@gmail.com>
-	 <CAPig+cTHZrQn8LpfftcsAQhFAykgDorbR97tkcuSCFYD_ngs9g@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] date: allow any format to display local time
+Date: Mon, 31 Aug 2015 14:50:18 -0400
+Message-ID: <20150831185018.GA20555@sigill.intra.peff.net>
+References: <d3b9f8f6524e45c9fc7a3e104669572c8c4ddd8a.1440942688.git.john@keeping.me.uk>
+ <xmqqtwrfweo7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Michael Rappazzo <rappazzo@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 20:44:44 2015
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 20:50:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWU4Q-0005ai-WA
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 20:44:43 +0200
+	id 1ZWU9y-00026Z-HI
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 20:50:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754112AbbHaSoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 14:44:39 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:32807 "EHLO
-	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754089AbbHaSoi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 14:44:38 -0400
-Received: by qkdv1 with SMTP id v1so11049269qkd.0
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 11:44:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=9obdBiYvT+aV/sytAgUB6LlWaOSs0ffgwBhLZ9hkYgE=;
-        b=bX9o52S0iFQ/ucBr3PcdwRbqlFlN0tprkRP+W35q8j2NHS4E7cpTliPb2gDm/I5nGu
-         GHaFpdsr/tTyYcdIvMfVgK8gcVwl8cbkH8Jj5RFnxBn4HpMnA3hs8530R92BA+F20WZh
-         zZM1e4D3yE7f84VUi9ASwUIHzH3+eRN8UhS9TJs/NAQNxEg2+t27uByQTOTGioYvCLvs
-         gqLcczrScT0yy13uIAfjaJ8BskBdy40Xvkry/MDlCwhFoHLtAuY1EkhCavJKaa+7iKAa
-         0nzXkNadCnRWBgVSE0pJtotRXP5QJIiYOvjn4JpH4c16tcfrQaAukWDPsBgIS6pZxIg2
-         Tprg==
-X-Gm-Message-State: ALoCoQmrggTEmyyfJ11NtOAZT8SVWPgIdsYdibdyE98IqpqSqb3uqcLZq0osCt1AO7+yweDDyOuA
-X-Received: by 10.55.198.11 with SMTP id b11mr11802456qkj.53.1441046678082;
-        Mon, 31 Aug 2015 11:44:38 -0700 (PDT)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id p6sm6727656qkl.12.2015.08.31.11.44.36
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 31 Aug 2015 11:44:37 -0700 (PDT)
-In-Reply-To: <CAPig+cTHZrQn8LpfftcsAQhFAykgDorbR97tkcuSCFYD_ngs9g@mail.gmail.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1753847AbbHaSuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 14:50:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52498 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752770AbbHaSuV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 14:50:21 -0400
+Received: (qmail 13738 invoked by uid 102); 31 Aug 2015 18:50:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Aug 2015 13:50:20 -0500
+Received: (qmail 25155 invoked by uid 107); 31 Aug 2015 18:50:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Aug 2015 14:50:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Aug 2015 14:50:18 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqtwrfweo7.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276908>
 
-On Mon, 2015-08-31 at 01:11 -0400, Eric Sunshine wrote:
-> Stepping back a bit, is a for-each-foo()-style interface desirable?
-> This sort of interface imposes a good deal of complexity on callers,
-> demanding a callback function and callback data (cb_data), and is
-> generally (at least in C) more difficult to reason about than other
-> simpler interfaces. Is such complexity warranted?
-> 
-> An alternate, much simpler interface would be to have a function, say
-> get_worktrees(), return an array of 'worktree' structures to the
-> caller, which the caller would iterate over (which is a common
-> operation in C, thus easily reasoned about).
-> 
-> The one benefit of a for-each-foo()-style interface is that it's
-> possible to "exit early", thus avoiding the cost of interrogating
-> meta-data for worktrees in which the caller is not interested,
-> however, it seems unlikely that there will be so many worktrees linked
-> to a repository for this early exit to translate into any real
-> savings.
+On Mon, Aug 31, 2015 at 10:28:24AM -0700, Junio C Hamano wrote:
 
-The other benefit is that there is no need to worry about deallocating
-the list.  But that might be too minor to worry about.
+> This needs to be CC'ed to the author of a5481a6c (convert "enum
+> date_mode" into a struct, 2015-06-25), which I just did.
+
+Thanks. I'm definitely interested.
+
+> I am unhappy with the change to blame.c, and that is not because I
+> do not want "blame" to be touched.
+> 
+> The fact that this change has to touch it indicates that it is easy
+> for other new callers of date formatting code to forget masking
+> DATE_LOCAL bit like this patch does when they want to change their
+> behaviour based on the settings of date-mode.  And it would be hard
+> to catch such a subtle breakage during future reviews.
+
+Yeah, my first instinct on seeing the bitfield was that it would
+probably be much simpler to keep the enum pure, and add a bit to the
+struct. A patch in that direction is below. I think the result is that
+the using code is much cleaner, and the complexity of converting
+"foo-local" into the enum/bitfield combination is contained in
+parse_date_format. So for callers like blame:
+
+> >  	/* The maximum width used to show the dates */
+> > -	switch (blame_date_mode.type) {
+> > +	switch (blame_date_mode.type & ~DATE_LOCAL) {
+> >  	case DATE_RFC2822:
+> >  		blame_date_width = sizeof("Thu, 19 Oct 2006 16:00:04 -0700");
+> >  		break;
+
+We can get rid of this hunk, which is good.
+
+> > @@ -2600,7 +2600,6 @@ parse_done:
+> >  		   fewer display columns. */
+> >  		blame_date_width = utf8_strwidth(_("4 years, 11 months ago")) + 1; /* add the null */
+> >  		break;
+> > -	case DATE_LOCAL:
+> >  	case DATE_NORMAL:
+> >  		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
+> >  		break;
+
+This hunk stays, because there is no more DATE_LOCAL. We could keep it
+for historical compatibility, but the compiler will let us know if new
+callers arrive.
+
+There is one call-site in fast-import which uses DATE_MODE(LOCAL). In my
+patch I convert it use a real "struct date_mode", as it is not much more
+code, and is arguably more clear.
+
+> I agree that among "enum date_mode_type", DATE_LOCAL is an oddball.
+> It should be able to act as an orthogonal and independent flag with
+> at least some, like NORMAL, SHORT, etc.  Specifying DATE_LOCAL with
+> some others at the same time, however, would not make much sense,
+> would it?  What does it even mean to say time as relative under
+> DATE_LOCAL bit?
+
+I think the "relative local" thing is not _too_ bad, as John's patch
+enforces it at the user-level (it does not parse "relative-local" at
+all, and mine similarly complains).
+
+> >  	else
+> >  		strbuf_addf(&timebuf, "%.3s %.3s %d %02d:%02d:%02d %d%c%+05d",
+> 
+> What cannot be seen in the post-context of this hunk is that we
+> deliberately drop the timezone information when tweaking the
+> "normal" format to "local".  This is done only in the final else
+> clause in show_date() because the code knows that LOCAL is not an
+> independent bit.
+
+I didn't address this in my patch (except to convert the check of
+DATE_LOCAL to mode->local). I agree that we should handle it in other
+formats, too, but I think it must be format-dependent. Certainly "rfc"
+and "iso" must always show the timezone. I'd argue that "raw" probably
+should, as well. That leaves only "short" and "relative", which do not
+display the time zone in the first place. So all of the formats are
+covered, I think.
+
+> I think the original motivation is that there is no need to show the
+> timezone information when the user knows the time is shown in the
+> local timezone---after all, the --date=local option was given by her
+> in the first place.  This kind of tweaking should be made consistent
+> with other variants, now the other variants are interacting with
+> this LOCAL bit.  If we were to go forward with this patch, I think
+> we probably should remove this special casing of "showing normal
+> date in localzone, drop the zone information", as we cannot sanely
+> drop the TZ offset from the output of some of the formats and stay
+> valid (e.g RFC2822).
+
+I think I'd rather remain inconsistent between the formats (which, after
+all, do not need to show exactly the same information), then have people
+complain that "--date=local" is regressed and now shows a timezone.
+
+> > @@ -777,14 +780,25 @@ void parse_date_format(const char *format, struct date_mode *mode)
+> >  	else if (!strcmp(format, "iso8601") ||
+> >  		 !strcmp(format, "iso"))
+> >  		mode->type = DATE_ISO8601;
+> > +	else if (!strcmp(format, "iso8601-local") ||
+> > +		 !strcmp(format, "iso-local"))
+> > +		mode->type = DATE_ISO8601_LOCAL;
+
+I found the manual "-local" handling here to be a little, well...manual.
+So in the patch below I've revamped the parsing to look left-to-right
+for each component: type, local modifier, strftime format.
+
+It ends up being about the same amount of code, but has two advantages:
+
+  1. It's more flexible if we want to make more modifiers later. In
+     fact, it would be trivial to implement the current "-strict" as a
+     separate flag if we chose. I don't think there is much point in
+     doing so, but we could do something like "default-local-strict"
+     for showing the local time _with_ the timezone.
+
+  2. We can provide more specific error messages (like "relative does
+     not make sense with -local", rather than "unknown date format:
+     relative-local").
+
+But that is somewhat orthogonal to the enum thing. We could leave the
+parsing as John has it, and just set mode->local as appropriate in each
+conditional block.
+
+---
+ builtin/blame.c |  1 -
+ cache.h         |  2 +-
+ date.c          | 77 ++++++++++++++++++++++++++++++++++++++-------------------
+ fast-import.c   |  6 ++++-
+ 4 files changed, 57 insertions(+), 29 deletions(-)
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 4db01c1..6fd1a63 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2600,7 +2600,6 @@ parse_done:
+ 		   fewer display columns. */
+ 		blame_date_width = utf8_strwidth(_("4 years, 11 months ago")) + 1; /* add the null */
+ 		break;
+-	case DATE_LOCAL:
+ 	case DATE_NORMAL:
+ 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
+ 		break;
+diff --git a/cache.h b/cache.h
+index 4e25271..9a91b1d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1091,7 +1091,6 @@ struct date_mode {
+ 		DATE_NORMAL = 0,
+ 		DATE_RELATIVE,
+ 		DATE_SHORT,
+-		DATE_LOCAL,
+ 		DATE_ISO8601,
+ 		DATE_ISO8601_STRICT,
+ 		DATE_RFC2822,
+@@ -1099,6 +1098,7 @@ struct date_mode {
+ 		DATE_RAW
+ 	} type;
+ 	const char *strftime_fmt;
++	int local;
+ };
+ 
+ /*
+diff --git a/date.c b/date.c
+index 8f91569..aa57cad 100644
+--- a/date.c
++++ b/date.c
+@@ -166,6 +166,7 @@ struct date_mode *date_mode_from_type(enum date_mode_type type)
+ 	if (type == DATE_STRFTIME)
+ 		die("BUG: cannot create anonymous strftime date_mode struct");
+ 	mode.type = type;
++	mode.local = 0;
+ 	return &mode;
+ }
+ 
+@@ -189,7 +190,7 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
+ 		return timebuf.buf;
+ 	}
+ 
+-	if (mode->type == DATE_LOCAL)
++	if (mode->local)
+ 		tz = local_tzoffset(time);
+ 
+ 	tm = time_to_tm(time, tz);
+@@ -232,7 +233,7 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
+ 				tm->tm_mday,
+ 				tm->tm_hour, tm->tm_min, tm->tm_sec,
+ 				tm->tm_year + 1900,
+-				(mode->type == DATE_LOCAL) ? 0 : ' ',
++				mode->local ? 0 : ' ',
+ 				tz);
+ 	return timebuf.buf;
+ }
+@@ -770,32 +771,56 @@ int parse_date(const char *date, struct strbuf *result)
+ 	return 0;
+ }
+ 
++static enum date_mode_type parse_date_type(const char *format, const char **end)
++{
++	if (skip_prefix(format, "relative", end))
++		return DATE_RELATIVE;
++	if (skip_prefix(format, "iso8601-strict", end) ||
++	    skip_prefix(format, "iso-strict", end))
++		return DATE_ISO8601_STRICT;
++	if (skip_prefix(format, "iso8601", end) ||
++	    skip_prefix(format, "iso", end))
++		return DATE_ISO8601;
++	if (skip_prefix(format, "rfc2822", end) ||
++	    skip_prefix(format, "rfc", end))
++		return DATE_RFC2822;
++	if (skip_prefix(format, "short", end))
++		return DATE_SHORT;
++	if (skip_prefix(format, "default", end))
++		return DATE_NORMAL;
++	if (skip_prefix(format, "raw", end))
++		return DATE_RAW;
++	if (skip_prefix(format, "format", end))
++		return DATE_STRFTIME;
++
++	die("unknown date format %s", format);
++}
++
+ void parse_date_format(const char *format, struct date_mode *mode)
+ {
+-	if (!strcmp(format, "relative"))
+-		mode->type = DATE_RELATIVE;
+-	else if (!strcmp(format, "iso8601") ||
+-		 !strcmp(format, "iso"))
+-		mode->type = DATE_ISO8601;
+-	else if (!strcmp(format, "iso8601-strict") ||
+-		 !strcmp(format, "iso-strict"))
+-		mode->type = DATE_ISO8601_STRICT;
+-	else if (!strcmp(format, "rfc2822") ||
+-		 !strcmp(format, "rfc"))
+-		mode->type = DATE_RFC2822;
+-	else if (!strcmp(format, "short"))
+-		mode->type = DATE_SHORT;
+-	else if (!strcmp(format, "local"))
+-		mode->type = DATE_LOCAL;
+-	else if (!strcmp(format, "default"))
+-		mode->type = DATE_NORMAL;
+-	else if (!strcmp(format, "raw"))
+-		mode->type = DATE_RAW;
+-	else if (skip_prefix(format, "format:", &format)) {
+-		mode->type = DATE_STRFTIME;
+-		mode->strftime_fmt = xstrdup(format);
+-	} else
+-		die("unknown date format %s", format);
++	const char *p;
++
++	/* historical alias */
++	if (!strcmp(format, "local"))
++		format = "default-local";
++
++	mode->type = parse_date_type(format, &p);
++	mode->local = 0;
++
++	if (skip_prefix(p, "-local", &p)) {
++		if (mode->type == DATE_RELATIVE)
++			die("relative-local date format is nonsensical");
++		mode->local = 1;
++	}
++
++	if (mode->type == DATE_STRFTIME) {
++		if (!skip_prefix(p, ":", &p))
++			die("date format missing colon separator: %s", format);
++		mode->strftime_fmt = xstrdup(p);
++	}
++
++	if (*p)
++		die("unknown date-mode modifier: %s", p);
+ }
+ 
+ void datestamp(struct strbuf *out)
+diff --git a/fast-import.c b/fast-import.c
+index 6c7c3c9..b19a1b5 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -412,6 +412,10 @@ static void write_crash_report(const char *err)
+ 	struct branch *b;
+ 	unsigned long lu;
+ 	struct recent_command *rc;
++	struct date_mode dm;
++
++	dm.type = DATE_NORMAL;
++	dm.local = 1;
+ 
+ 	if (!rpt) {
+ 		error("can't write crash report %s: %s", loc, strerror(errno));
+@@ -424,7 +428,7 @@ static void write_crash_report(const char *err)
+ 	fprintf(rpt, "fast-import crash report:\n");
+ 	fprintf(rpt, "    fast-import process: %"PRIuMAX"\n", (uintmax_t) getpid());
+ 	fprintf(rpt, "    parent process     : %"PRIuMAX"\n", (uintmax_t) getppid());
+-	fprintf(rpt, "    at %s\n", show_date(time(NULL), 0, DATE_MODE(LOCAL)));
++	fprintf(rpt, "    at %s\n", show_date(time(NULL), 0, &dm));
+ 	fputc('\n', rpt);
+ 
+ 	fputs("fatal: ", rpt);
+-- 
+2.5.1.739.g7891f6b
