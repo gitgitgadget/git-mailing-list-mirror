@@ -1,255 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] date: make "local" orthogonal to date format
-Date: Mon, 31 Aug 2015 16:48:32 -0400
-Message-ID: <20150831204831.GB10338@sigill.intra.peff.net>
-References: <20150831204444.GA4385@sigill.intra.peff.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 2/3] submodule: implement `module_name` as a builtin helper
+Date: Mon, 31 Aug 2015 13:51:48 -0700
+Message-ID: <CAGZ79kb6Nf8Vow=ehv7zib8erOeTa5NX2Cj=b4jcdhSiDEEusQ@mail.gmail.com>
+References: <1441048767-29729-1-git-send-email-sbeller@google.com>
+	<1441048767-29729-3-git-send-email-sbeller@google.com>
+	<xmqqwpwbtcw2.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Aug 31 22:48:42 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	johannes.schindelin@gmail.com, Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 22:51:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWW0N-00005O-Lo
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 22:48:40 +0200
+	id 1ZWW3W-000310-5h
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 22:51:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753284AbbHaUsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 16:48:37 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52663 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753185AbbHaUse (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 16:48:34 -0400
-Received: (qmail 26197 invoked by uid 102); 31 Aug 2015 20:48:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Aug 2015 15:48:34 -0500
-Received: (qmail 27071 invoked by uid 107); 31 Aug 2015 20:48:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Aug 2015 16:48:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Aug 2015 16:48:32 -0400
-Content-Disposition: inline
-In-Reply-To: <20150831204444.GA4385@sigill.intra.peff.net>
+	id S1752821AbbHaUvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 16:51:50 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:35584 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752796AbbHaUvt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 16:51:49 -0400
+Received: by qkcj187 with SMTP id j187so16946442qkc.2
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 13:51:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Thf4UkQvvyhCDiSyiQ91zRGvTooKXfNSv6OZpT86lqs=;
+        b=ozfqym/mAnKXO5dz+nfLvg5NJE1U4y4P2Mz7UCtMoSM/0o+ZTUfX0hQJPm4ykwR6Ug
+         MkeYkywxzlQRIbxNdmMSKsEQDrV+uEsWTebIMr7kF3C8zyp4BM2G2kyGgmSP4jAoV2xm
+         Xve6rCkgTscVHXmFV2ZBWBpFx9+0/kBzfwWyNVQ5cV5XIEdTH8c2I345Zmq98g+/+0pv
+         qBi/KgvT618FpSyWw5bBvKUglXyxVEaJGXZ3bFSnloNLu6Mq2bBkcgwPZDPm0VdIOgdx
+         V+b2JElR5y9rikPPmFiZ8O9GWvwrLSYnEeXYS7V9ltglVRjKbWtvCXJi3/eoZI52Fl5U
+         2hBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=Thf4UkQvvyhCDiSyiQ91zRGvTooKXfNSv6OZpT86lqs=;
+        b=I5Z6DQDplCT+eRMfc+wAhGjIRqdNtrySjVRUyzbHrGNttyXieYTRrSbprz/UI0h+pL
+         pegyGvMuDmAx6RGwNIZ/MJQkuI7oCG4sKw03IRbC0ZC7Zu6gXdjDuD2UwJOcRv/m9siz
+         rVKjIprc5TifmWOHWgd6hHKzoH77mMePzlJbRglgIworeHP1K0K1ER4LzX+07DxGFPKA
+         a5EU4KDs70Nk5XRKhU1oaMJnweWXkvGEkiz9sa5+bNoYBFgZP3Z/pzEPGJCx2YIGzhr5
+         qvsA4QhnAGKJSrsgXKpntNhmH88ftm/cDtXHDHpi08vPqVXWoxNf+UzXguR1eSEPt7o5
+         vfiQ==
+X-Gm-Message-State: ALoCoQk7cGaqfYuKw4A9BH6YeEP32V04L4VvkQrT3h6VwMCOOf4trXo5NpWhAxWIRG1xm/Xovk1d
+X-Received: by 10.129.116.84 with SMTP id p81mr3531715ywc.1.1441054308649;
+ Mon, 31 Aug 2015 13:51:48 -0700 (PDT)
+Received: by 10.37.21.132 with HTTP; Mon, 31 Aug 2015 13:51:48 -0700 (PDT)
+In-Reply-To: <xmqqwpwbtcw2.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276941>
 
-Most of our "--date" modes are about the format of the date:
-which items we show and in what order. But "--date=local" is
-a bit of an oddball. It means "show the date in the normal
-format, but using the local timezone". The timezone we use
-is orthogonal to the actual format, and there is no reason
-we could not have "localized iso8601", etc.
+On Mon, Aug 31, 2015 at 1:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>>  usage:
+>> -     usage("git submodule--helper module_list\n");
+>> +     usage("git submodule--helper [module_list | module_name]\n");
+>
+> To me, the above reads as if saying:
+>
+>     The command takes one of the two subcommands at this stage,
+>     module_list that does not take any parameter, and module_name
+>     that does not take any parameter.
+>
+> which is not what you intended.
+>
+> I think that the help for individual options and arguments are
+> sufficiently given in the implementation of each subcommand
+> (e.g. module_list does its own parse_options() thing), so there is
+> no need to duplicate them here.  The only purpose of this usage serves
+> is to tell the user that the subcommand name was not understood, and
+> give the list of available subcommands.  For that, I wonder if the
+> usual single-liner "usage" is the best way to do so.
+>
+>     $ git submodule--helper frotz
+>     fatal: 'frotz' is not a valid submodule--helper subcommand, which are
+>            module_list, module_name.
+>
+> or something along that line, perhaps, may be more appropriate?
 
-This patch adds a "local" boolean field to "struct
-date_mode", and drops the DATE_LOCAL element from the
-date_mode_type enum (it's now just DATE_NORMAL plus
-local=1). The new feature is accessible to users by adding
-"-local" to any date mode (e.g., "iso-local"), and we retain
-"local" as an alias for "default-local" for backwards
-compatibility.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I wonder if anybody would be confused and try "iso-local-strict", which
-does not work with this code. If we bumped "-strict" to become a
-modifier (like "-local"), we could easily make the order
-interchangeable.
-
- Documentation/rev-list-options.txt | 21 ++++++++---
- builtin/blame.c                    |  1 -
- cache.h                            |  2 +-
- date.c                             | 77 +++++++++++++++++++++++++-------------
- 4 files changed, 67 insertions(+), 34 deletions(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index a9b808f..35dc44b 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -702,12 +702,16 @@ include::pretty-options.txt[]
- --date=(relative|local|default|iso|iso-strict|rfc|short|raw)::
- 	Only takes effect for dates shown in human-readable format, such
- 	as when using `--pretty`. `log.date` config variable sets a default
--	value for the log command's `--date` option.
-+	value for the log command's `--date` option. By default, dates
-+	are shown in the original time zone (either committer's or
-+	author's). If `-local` is appended to the format (e.g.,
-+	`iso-local`), the user's local time zone is used instead.
- +
- `--date=relative` shows dates relative to the current time,
--e.g. ``2 hours ago''.
-+e.g. ``2 hours ago''. The `-local` option cannot be used with
-+`--relative`.
- +
--`--date=local` shows timestamps in user's local time zone.
-+`--date=local` is an alias for `--date=default-local`.
- +
- `--date=iso` (or `--date=iso8601`) shows timestamps in a ISO 8601-like format.
- The differences to the strict ISO 8601 format are:
-@@ -730,10 +734,15 @@ format, often found in email messages.
- `--date=format:...` feeds the format `...` to your system `strftime`.
- Use `--date=format:%c` to show the date in your system locale's
- preferred format.  See the `strftime` manual for a complete list of
--format placeholders.
-+format placeholders. When using `-local`, the correct syntax is
-+`--date=format-local:...`.
- +
--`--date=default` shows timestamps in the original time zone
--(either committer's or author's).
-+`--date=default` is the default format, and is similar to
-+`--date=rfc2822`, with a few exceptions:
-+
-+	- there is no comma after the day-of-week
-+
-+	- the time zone is omitted when the local time zone is used
- 
- ifdef::git-rev-list[]
- --header::
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 4db01c1..6fd1a63 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2600,7 +2600,6 @@ parse_done:
- 		   fewer display columns. */
- 		blame_date_width = utf8_strwidth(_("4 years, 11 months ago")) + 1; /* add the null */
- 		break;
--	case DATE_LOCAL:
- 	case DATE_NORMAL:
- 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
- 		break;
-diff --git a/cache.h b/cache.h
-index 4e25271..9a91b1d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1091,7 +1091,6 @@ struct date_mode {
- 		DATE_NORMAL = 0,
- 		DATE_RELATIVE,
- 		DATE_SHORT,
--		DATE_LOCAL,
- 		DATE_ISO8601,
- 		DATE_ISO8601_STRICT,
- 		DATE_RFC2822,
-@@ -1099,6 +1098,7 @@ struct date_mode {
- 		DATE_RAW
- 	} type;
- 	const char *strftime_fmt;
-+	int local;
- };
- 
- /*
-diff --git a/date.c b/date.c
-index 8f91569..aa57cad 100644
---- a/date.c
-+++ b/date.c
-@@ -166,6 +166,7 @@ struct date_mode *date_mode_from_type(enum date_mode_type type)
- 	if (type == DATE_STRFTIME)
- 		die("BUG: cannot create anonymous strftime date_mode struct");
- 	mode.type = type;
-+	mode.local = 0;
- 	return &mode;
- }
- 
-@@ -189,7 +190,7 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- 		return timebuf.buf;
- 	}
- 
--	if (mode->type == DATE_LOCAL)
-+	if (mode->local)
- 		tz = local_tzoffset(time);
- 
- 	tm = time_to_tm(time, tz);
-@@ -232,7 +233,7 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- 				tm->tm_mday,
- 				tm->tm_hour, tm->tm_min, tm->tm_sec,
- 				tm->tm_year + 1900,
--				(mode->type == DATE_LOCAL) ? 0 : ' ',
-+				mode->local ? 0 : ' ',
- 				tz);
- 	return timebuf.buf;
- }
-@@ -770,32 +771,56 @@ int parse_date(const char *date, struct strbuf *result)
- 	return 0;
- }
- 
-+static enum date_mode_type parse_date_type(const char *format, const char **end)
-+{
-+	if (skip_prefix(format, "relative", end))
-+		return DATE_RELATIVE;
-+	if (skip_prefix(format, "iso8601-strict", end) ||
-+	    skip_prefix(format, "iso-strict", end))
-+		return DATE_ISO8601_STRICT;
-+	if (skip_prefix(format, "iso8601", end) ||
-+	    skip_prefix(format, "iso", end))
-+		return DATE_ISO8601;
-+	if (skip_prefix(format, "rfc2822", end) ||
-+	    skip_prefix(format, "rfc", end))
-+		return DATE_RFC2822;
-+	if (skip_prefix(format, "short", end))
-+		return DATE_SHORT;
-+	if (skip_prefix(format, "default", end))
-+		return DATE_NORMAL;
-+	if (skip_prefix(format, "raw", end))
-+		return DATE_RAW;
-+	if (skip_prefix(format, "format", end))
-+		return DATE_STRFTIME;
-+
-+	die("unknown date format %s", format);
-+}
-+
- void parse_date_format(const char *format, struct date_mode *mode)
- {
--	if (!strcmp(format, "relative"))
--		mode->type = DATE_RELATIVE;
--	else if (!strcmp(format, "iso8601") ||
--		 !strcmp(format, "iso"))
--		mode->type = DATE_ISO8601;
--	else if (!strcmp(format, "iso8601-strict") ||
--		 !strcmp(format, "iso-strict"))
--		mode->type = DATE_ISO8601_STRICT;
--	else if (!strcmp(format, "rfc2822") ||
--		 !strcmp(format, "rfc"))
--		mode->type = DATE_RFC2822;
--	else if (!strcmp(format, "short"))
--		mode->type = DATE_SHORT;
--	else if (!strcmp(format, "local"))
--		mode->type = DATE_LOCAL;
--	else if (!strcmp(format, "default"))
--		mode->type = DATE_NORMAL;
--	else if (!strcmp(format, "raw"))
--		mode->type = DATE_RAW;
--	else if (skip_prefix(format, "format:", &format)) {
--		mode->type = DATE_STRFTIME;
--		mode->strftime_fmt = xstrdup(format);
--	} else
--		die("unknown date format %s", format);
-+	const char *p;
-+
-+	/* historical alias */
-+	if (!strcmp(format, "local"))
-+		format = "default-local";
-+
-+	mode->type = parse_date_type(format, &p);
-+	mode->local = 0;
-+
-+	if (skip_prefix(p, "-local", &p)) {
-+		if (mode->type == DATE_RELATIVE)
-+			die("relative-local date format is nonsensical");
-+		mode->local = 1;
-+	}
-+
-+	if (mode->type == DATE_STRFTIME) {
-+		if (!skip_prefix(p, ":", &p))
-+			die("date format missing colon separator: %s", format);
-+		mode->strftime_fmt = xstrdup(p);
-+	}
-+
-+	if (*p)
-+		die("unknown date-mode modifier: %s", p);
- }
- 
- void datestamp(struct strbuf *out)
--- 
-2.5.1.739.g7891f6b
+As this is something that *should* not happen in the wild, (but it
+will of course),
+it sounds like a good idea to have a clear error message here. I'll send a patch
+for that. (either one on top of 3/3 to improve the message, or a
+reroll of the series,
+as you'd like)
