@@ -1,69 +1,68 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Git's inconsistent command line options
-Date: Mon, 31 Aug 2015 17:10:29 +0700
-Message-ID: <CACsJy8D3J6RhtPPtSvtWfOb8BapaX2-52M5_fE36psQPB_oQsQ@mail.gmail.com>
-References: <mrh7ck$r0g$1@ger.gmane.org> <CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
- <CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
- <CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com> <xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 1/2] dir.c: make last_exclude_matching_from_list() run til
+ the end
+Date: Mon, 31 Aug 2015 17:13:26 +0700
+Message-ID: <CACsJy8AwV9J9hs4uyZ0eCy0vFMat4dYaQy+6mVkcK7KvRw2bgg@mail.gmail.com>
+References: <1440334214-32131-1-git-send-email-pclouds@gmail.com>
+ <1440334214-32131-2-git-send-email-pclouds@gmail.com> <xmqqmvxfxgdj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Graeme Geldenhuys <graemeg@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 12:11:04 2015
+X-From: git-owner@vger.kernel.org Mon Aug 31 12:14:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWM3L-00009Y-Lm
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 12:11:04 +0200
+	id 1ZWM6C-0002aF-9l
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 12:14:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751820AbbHaKK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 06:10:59 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:32953 "EHLO
-	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751380AbbHaKK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 06:10:59 -0400
-Received: by iods203 with SMTP id s203so152587666iod.0
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 03:10:58 -0700 (PDT)
+	id S1752547AbbHaKN5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Aug 2015 06:13:57 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:34868 "EHLO
+	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752456AbbHaKN4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Aug 2015 06:13:56 -0400
+Received: by iog7 with SMTP id 7so28986877iog.2
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 03:13:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Eh5Lp0nsmtBwjdTSOkaCtAEdFVQfPQBa0KBjgILZ2kk=;
-        b=GhlZCMcRt2B9333FOuDnjOXVC7cnNYidTT/8/naVS60Rn5hKg1Cm0Ohpx9qT0jpIO/
-         Lr1djjlMAIN8+jqaV0t7poXaKrjB9V5ydVeHIvrUYCppR82W6UJDQ09Wcl5bmzTgOBfX
-         SZThdDcGyibS8C46CaWoq38eaU9bU/oPIs/juGnWSiQKpL7QZZ+yM7dL5RGgoN9suWAP
-         ilIttA3ytBlMNwzSQnJUARcOmJAqe9wyXmwMR+bq+C9bPtuvqrMUzSmGxIQ3DEZek9hD
-         mSAhAXqbgLwMeSP32dsK+Vfc0MQjd7KOe8EgOcApNqyHwmNY/qsvYuf3nE37AXtTSbNO
-         3BTQ==
-X-Received: by 10.107.9.11 with SMTP id j11mr22494916ioi.191.1441015858680;
- Mon, 31 Aug 2015 03:10:58 -0700 (PDT)
-Received: by 10.107.191.193 with HTTP; Mon, 31 Aug 2015 03:10:29 -0700 (PDT)
-In-Reply-To: <xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=24LqzPsrVKto72zR3Q+WSHnwUojZzjwunClJCQTYSvE=;
+        b=P3rxEc8owbGQKrNZFHUwZbGnOYuMv7GSa+hJ2KfGPfpiqFTOOk8hyKn816aLq710A3
+         i5KTqLYc3NgW25HQG+MC/DVrnatSfPKFc3Dg7sEcPRosraV+aWYxbhu8CHXmbj4Euhrg
+         ncknuLeOl1Lyp0mKp+HmCXtqAbBZGoi/UR+hKzGH8WqtwLvgATk6K3F/5L+2PV16nFoB
+         T5NxJyN+S1+zCdU90QhuwEri0ZTS4zyJg7j5q2KDN7W35lVbL5WhuT6vOP19iCEKaREC
+         zbPMtwMymhyxLQ1VgrNJskMbmXEKCOlxZDJ1IsRrLx/qHOP0vytJVgMy0HNIUFAO/nKE
+         CsdA==
+X-Received: by 10.107.9.11 with SMTP id j11mr22503040ioi.191.1441016035876;
+ Mon, 31 Aug 2015 03:13:55 -0700 (PDT)
+Received: by 10.107.191.193 with HTTP; Mon, 31 Aug 2015 03:13:26 -0700 (PDT)
+In-Reply-To: <xmqqmvxfxgdj.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276866>
 
-On Wed, Aug 26, 2015 at 6:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> ...
+On Wed, Aug 26, 2015 at 3:28 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
-> I do not see a good way to do such a safe transition with command
-> words approach, *unless* we are going to introduce new commands,
-> i.e. "git list-tag", "git create-tag", etc.
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>
+> Because?  Title just tells what the patch meant to do (i.e. instead
+> of returning it keeps looping), but does not say why it is a good
+> idea.  Besides, this a no-op patch and does not make it keep looping.
 
-I'm probably shot down for this. But could we go with a clean plate
-and create a new command prefix (something like git-next, git2, or
-gt...)? We could then redesign the entire UI without worrying about
-backward compatibility. At some point we can start to deprecate "git"
-and encourage to use the new command prefix only. Of course somebody
-has to go over all the commands and options to propose some consistent
-UI, then more discussions and coding so it could likely follow the
-path of pack v4..
--- 
+Because the next patch adds some post processing before returning the
+value. Having all the paths come to the same point would simplify the
+code. Will update the commit message.
+--=20
 Duy
