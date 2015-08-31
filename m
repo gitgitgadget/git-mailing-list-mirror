@@ -1,80 +1,118 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 7/8] diff.h: extend "flags" field to 64 bits because we're
- out of bits
-Date: Mon, 31 Aug 2015 17:22:37 +0700
-Message-ID: <CACsJy8BaCWgQa=1bc-_6BHQJLUk4_GsiKQchJRpFMTrxp4Np6g@mail.gmail.com>
-References: <1440205700-19749-7-git-send-email-pclouds@gmail.com>
- <1440205874-20295-1-git-send-email-pclouds@gmail.com> <xmqqy4gzz2qa.fsf@gitster.dls.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v14 04/13] ref-filter: implement an `align` atom
+Date: Mon, 31 Aug 2015 15:58:35 +0530
+Message-ID: <CAOLa=ZQ2=y88rqUuNgPvZvK+sMqbkCuC0hPUoB=5Ku6Wwk_e6g@mail.gmail.com>
+References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
+ <1440857537-13968-5-git-send-email-Karthik.188@gmail.com> <CAPig+cRHRPehkd+9PwOqpXkRUvaJa42zLtCKMEfv2W=ZJUZJzA@mail.gmail.com>
+ <xmqq8u8sznyo.fsf@gitster.mtv.corp.google.com> <CAPig+cTqmku5DGm9g1VN8s5sBgkjZTBLyGrFGjU2J099QA32wg@mail.gmail.com>
+ <CAOLa=ZSaVttejcGKwq1jzd7deLi-A4=kaJWW0zW4XdYPrsodJg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Plamen Totev <plamen.totev@abv.bg>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 12:23:14 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 12:29:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWMF7-0001kK-7v
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 12:23:13 +0200
+	id 1ZWML9-0006qj-1u
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 12:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752518AbbHaKXJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Aug 2015 06:23:09 -0400
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:38157 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752085AbbHaKXH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Aug 2015 06:23:07 -0400
-Received: by igbuu8 with SMTP id uu8so23663427igb.1
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 03:23:07 -0700 (PDT)
+	id S1751380AbbHaK3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 06:29:06 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:33060 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322AbbHaK3F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 06:29:05 -0400
+Received: by obcid8 with SMTP id id8so39132717obc.0
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 03:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=Sk4SdjzyLk79BgihiJp41kH1w9qt7Lt6jo1TShquk/s=;
-        b=oEngTYiSb62QkLb1IDb11Iy7dKSX6km0K0TTEgoHESwA6zoK7eCTFXOYhE78WoGDFE
-         ltTgeGM6ZJLc7F5HwFDrdLL6EfTsZo3pcWV1NqUQeZi+CuYG1lYpm3hJ8W2AeUrxBqW/
-         L7yOcYWJkoDpTleMkXsjGtTqw/uVg+x25Mlx81YI93FCeNK7S1FgFDds+QGccJ9muFfW
-         WCnRhBqAX85RGzjoD4ml4rTspRKeyrYlENhn0qD5LcsDbPWqe2vtU72v9dPHoZFGahq0
-         jAeB8f3A//id8JKq+8UEtjsvAEaMIWb7+a+61se5NTqpGI1ZLYqjY1RR+U4geoEWVhvE
-         AQdQ==
-X-Received: by 10.50.26.66 with SMTP id j2mr12913521igg.42.1441016587263; Mon,
- 31 Aug 2015 03:23:07 -0700 (PDT)
-Received: by 10.107.191.193 with HTTP; Mon, 31 Aug 2015 03:22:37 -0700 (PDT)
-In-Reply-To: <xmqqy4gzz2qa.fsf@gitster.dls.corp.google.com>
+         :cc:content-type;
+        bh=vwRMHJ9JBvLd5EXUb5JaVxGseIMM7mUOCiyyuCq/Khg=;
+        b=pOgDjgjLb4lTsp5skyWiM9j853BJEPf2WO9+2hwSA6dYTqLpDjbOgNYejmVUlVxv7d
+         FvusJxQTBP2CuVzFgPUOplhpX2VXrGT4MdGOLQVksctifKgGBzh+2bwzDXuNhVYDVdKa
+         kija7HRBy2WGecB3j8VsNu+IzlP++1Tz2AqtoVBUCMeBxPjka/SF4LhtcO1QwS+L82KD
+         TKjhr64KVMu4UiDOUtRjgNZRXry7cssp794wqshXKKBzGFEAdsheVXMJza6i0wFLTu7P
+         wILVBICzbN/nb+n3G+MQWIHyYFuxJcO19/PNxacWIlc6QEhjc36JP6tzMUtypU7LT+Wp
+         0bUQ==
+X-Received: by 10.60.81.69 with SMTP id y5mr7676591oex.30.1441016944630; Mon,
+ 31 Aug 2015 03:29:04 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Mon, 31 Aug 2015 03:28:35 -0700 (PDT)
+In-Reply-To: <CAOLa=ZSaVttejcGKwq1jzd7deLi-A4=kaJWW0zW4XdYPrsodJg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276870>
 
-On Wed, Aug 26, 2015 at 12:39 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+On Mon, Aug 31, 2015 at 3:44 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> On Mon, Aug 31, 2015 at 4:26 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Sun, Aug 30, 2015 at 1:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>>> With the disclaimer that I wasn't following the quoting discussion
+>>>> closely: Is this condition going to be sufficient for all cases, such
+>>>> as an %(if:) atom? That is, if you have:
+>>>>
+>>>>     %(if:notempty)%(bloop)%(then) --option=%(bloop)%(end)
+>>>>
+>>>> isn't the intention that, %(bloop) within the %(then) section should
+>>>> be quoted but not the literal "--option="?
+>>>
+>>> I think you'll see that the intention of the above is to quote the
+>>> entirty of the result of %(if...)...%(end) if you read the previous
+>>> discussion.  The "quoting" is used when you say you are making --format
+>>> write a script in specified programming language, e.g.
+>>>
+>>>         for-each-ref --shell --format='
+>>>                 a=%(atom) b=%(if...)...%(end)
+>>>                 do interesting things using $a and $b here
+>>>         ' | sh
+>>>
+>>> You are correct to point out in the earlier part of your message I
+>>> am responding to that %(align) is not special and any nested thing
+>>> including %(if) will uniformly trigger the same "usually each atom
+>>> is quoted separately, but with this opening atom, everything up to
+>>> the matching end atom is evaluated first and then the result is
+>>> quoted" logic.
+>>
+>> So, if I'm understanding correctly, the semantic behavior of the
+>> current patch seems to be more or less correct, but the implementation
+>> (and commit message) place perhaps too much emphasis on specializing
+>> quoting suppression only for %(align:), whereas it could/should be
+>> generalized?
+>>
+>> I am a bit concerned about this code from end_atom_handler():
+>>
+>>     /*
+>>      * Whenever we have more than one stack element that means we
+>>      * are using a certain modifier atom. In that case we need to
+>>      * perform quote formatting.
+>>      */
+>>     if (state->stack->prev) {
+>>         quote_formatting(&s, current->output.buf, state->quote_style);
+>>         strbuf_reset(&current->output);
+>>         strbuf_addbuf(&current->output, &s);
+>>     }
+>>
+>> Aren't both the comment and the condition backward? Shouldn't quoting
+>> be done only for the top-most state on the stack rather than every
+>> state other than the top-most? That is, shouldn't the condition be
+>> `!state->stack->prev' as it is in append_atom()?
 >
->> I renamed both "flags" and "touched_flags" fields while making this
->> patch to make sure I was aware of how these flags were manipulated
->> (besides DIFF_OPT* macros). So hopefully I didn't miss anything.
+> After seeing the example of quote usage given by Junio, yes you're right.
+> `!state->stack->prev` is the way to go.
 >
-> It is a bad taste to use user_defined_t typedef (I think it actually
-> is a standard violation), isn't it?
 
-Yeah I think you posted a patch somewhere updating CodingGuidelines abo=
-ut this..
+Also I think you mean `!state->stack->prev->prev` as we push a new
+element on the stack when an atom such as %(align) is encountered. And
+this quoting done at the end should be only for such atoms. Hence it should be
+`!state->stack->prev->prev` and not `!state->stack->prev`.
 
-> The diff-struct is not like objects where we need million copies of
-> in-core while running.  What do you need many more flags for?
-
-We already use all 32 bit flags and I need one more flag. I guess I go
-with flags because it's how we add features in diff struct. Adding a
-new field instead of extending flags could be dangerous: elsewhere
-people copy flags out to a temporary place, do something then restore.
-If it's a separate field, it's left in place and bad things could
-happen.
---=20
-Duy
+-- 
+Regards,
+Karthik Nayak
