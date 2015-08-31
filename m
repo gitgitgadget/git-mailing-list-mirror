@@ -1,68 +1,110 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 1/2] dir.c: make last_exclude_matching_from_list() run til
- the end
-Date: Mon, 31 Aug 2015 17:13:26 +0700
-Message-ID: <CACsJy8AwV9J9hs4uyZ0eCy0vFMat4dYaQy+6mVkcK7KvRw2bgg@mail.gmail.com>
-References: <1440334214-32131-1-git-send-email-pclouds@gmail.com>
- <1440334214-32131-2-git-send-email-pclouds@gmail.com> <xmqqmvxfxgdj.fsf@gitster.dls.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v14 04/13] ref-filter: implement an `align` atom
+Date: Mon, 31 Aug 2015 15:44:56 +0530
+Message-ID: <CAOLa=ZSaVttejcGKwq1jzd7deLi-A4=kaJWW0zW4XdYPrsodJg@mail.gmail.com>
+References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
+ <1440857537-13968-5-git-send-email-Karthik.188@gmail.com> <CAPig+cRHRPehkd+9PwOqpXkRUvaJa42zLtCKMEfv2W=ZJUZJzA@mail.gmail.com>
+ <xmqq8u8sznyo.fsf@gitster.mtv.corp.google.com> <CAPig+cTqmku5DGm9g1VN8s5sBgkjZTBLyGrFGjU2J099QA32wg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 12:14:01 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 12:15:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWM6C-0002aF-9l
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 12:14:00 +0200
+	id 1ZWM7e-0003iy-7U
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 12:15:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547AbbHaKN5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Aug 2015 06:13:57 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:34868 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752456AbbHaKN4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Aug 2015 06:13:56 -0400
-Received: by iog7 with SMTP id 7so28986877iog.2
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 03:13:55 -0700 (PDT)
+	id S1752483AbbHaKP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 06:15:27 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:33131 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751460AbbHaKP0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 06:15:26 -0400
+Received: by obcid8 with SMTP id id8so38927517obc.0
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 03:15:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=24LqzPsrVKto72zR3Q+WSHnwUojZzjwunClJCQTYSvE=;
-        b=P3rxEc8owbGQKrNZFHUwZbGnOYuMv7GSa+hJ2KfGPfpiqFTOOk8hyKn816aLq710A3
-         i5KTqLYc3NgW25HQG+MC/DVrnatSfPKFc3Dg7sEcPRosraV+aWYxbhu8CHXmbj4Euhrg
-         ncknuLeOl1Lyp0mKp+HmCXtqAbBZGoi/UR+hKzGH8WqtwLvgATk6K3F/5L+2PV16nFoB
-         T5NxJyN+S1+zCdU90QhuwEri0ZTS4zyJg7j5q2KDN7W35lVbL5WhuT6vOP19iCEKaREC
-         zbPMtwMymhyxLQ1VgrNJskMbmXEKCOlxZDJ1IsRrLx/qHOP0vytJVgMy0HNIUFAO/nKE
-         CsdA==
-X-Received: by 10.107.9.11 with SMTP id j11mr22503040ioi.191.1441016035876;
- Mon, 31 Aug 2015 03:13:55 -0700 (PDT)
-Received: by 10.107.191.193 with HTTP; Mon, 31 Aug 2015 03:13:26 -0700 (PDT)
-In-Reply-To: <xmqqmvxfxgdj.fsf@gitster.dls.corp.google.com>
+         :cc:content-type;
+        bh=qqP/XyKgNwOWIXD+9F53jGuQzi8iOzi9D7r7JWgRsFQ=;
+        b=EYjMIbY+N2fZWr/2B8iGnPmuGlGfGS1YCKN8Xbgqn5XYvctJ7vEF6AJPKlfQIBJ8Kw
+         Vup/kFIT4rcKah4BQ1l/qqlNJdbEGmyI49ebwPaNySRyKtQliHSFPNxbtXzq8spdUyVK
+         /BwqPq8HG4jXjVL/WOpGVstMgYkhQ14UAoh3SBT88DE4lA41BZXXXNcf5BRl69J6Ygje
+         QbGGvzqXnFCs/jKusLjUTip8LETowNvECYHX1duzJVTK5/i1yPws+geEKV/jhgz+8ROT
+         s1i4bsKC/XR4FW6KBCl4iwLrwC0bcVOj+Zl6W3pOTU6OFTE2FcdwgWxnNQfRWDSnCxDb
+         5BPw==
+X-Received: by 10.60.92.199 with SMTP id co7mr7237968oeb.37.1441016125888;
+ Mon, 31 Aug 2015 03:15:25 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Mon, 31 Aug 2015 03:14:56 -0700 (PDT)
+In-Reply-To: <CAPig+cTqmku5DGm9g1VN8s5sBgkjZTBLyGrFGjU2J099QA32wg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276867>
 
-On Wed, Aug 26, 2015 at 3:28 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+On Mon, Aug 31, 2015 at 4:26 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sun, Aug 30, 2015 at 1:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>> With the disclaimer that I wasn't following the quoting discussion
+>>> closely: Is this condition going to be sufficient for all cases, such
+>>> as an %(if:) atom? That is, if you have:
+>>>
+>>>     %(if:notempty)%(bloop)%(then) --option=%(bloop)%(end)
+>>>
+>>> isn't the intention that, %(bloop) within the %(then) section should
+>>> be quoted but not the literal "--option="?
+>>
+>> I think you'll see that the intention of the above is to quote the
+>> entirty of the result of %(if...)...%(end) if you read the previous
+>> discussion.  The "quoting" is used when you say you are making --format
+>> write a script in specified programming language, e.g.
+>>
+>>         for-each-ref --shell --format='
+>>                 a=%(atom) b=%(if...)...%(end)
+>>                 do interesting things using $a and $b here
+>>         ' | sh
+>>
+>> You are correct to point out in the earlier part of your message I
+>> am responding to that %(align) is not special and any nested thing
+>> including %(if) will uniformly trigger the same "usually each atom
+>> is quoted separately, but with this opening atom, everything up to
+>> the matching end atom is evaluated first and then the result is
+>> quoted" logic.
 >
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
+> So, if I'm understanding correctly, the semantic behavior of the
+> current patch seems to be more or less correct, but the implementation
+> (and commit message) place perhaps too much emphasis on specializing
+> quoting suppression only for %(align:), whereas it could/should be
+> generalized?
 >
-> Because?  Title just tells what the patch meant to do (i.e. instead
-> of returning it keeps looping), but does not say why it is a good
-> idea.  Besides, this a no-op patch and does not make it keep looping.
+> I am a bit concerned about this code from end_atom_handler():
+>
+>     /*
+>      * Whenever we have more than one stack element that means we
+>      * are using a certain modifier atom. In that case we need to
+>      * perform quote formatting.
+>      */
+>     if (state->stack->prev) {
+>         quote_formatting(&s, current->output.buf, state->quote_style);
+>         strbuf_reset(&current->output);
+>         strbuf_addbuf(&current->output, &s);
+>     }
+>
+> Aren't both the comment and the condition backward? Shouldn't quoting
+> be done only for the top-most state on the stack rather than every
+> state other than the top-most? That is, shouldn't the condition be
+> `!state->stack->prev' as it is in append_atom()?
 
-Because the next patch adds some post processing before returning the
-value. Having all the paths come to the same point would simplify the
-code. Will update the commit message.
---=20
-Duy
+After seeing the example of quote usage given by Junio, yes you're right.
+`!state->stack->prev` is the way to go.
+
+-- 
+Regards,
+Karthik Nayak
