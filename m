@@ -1,99 +1,88 @@
-From: Barry Warsaw <barry@python.org>
-Subject: Re: Git's inconsistent command line options
-Date: Mon, 31 Aug 2015 10:25:58 -0400
-Organization: Damn Crazy Followers of the Horn
-Message-ID: <20150831102558.1514e5f7@anarchist.wooz.org>
-References: <mrh7ck$r0g$1@ger.gmane.org>
-	<CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
-	<CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
-	<CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com>
-	<xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
-	<CACsJy8D3J6RhtPPtSvtWfOb8BapaX2-52M5_fE36psQPB_oQsQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PUB]What's cooking in git.git (Aug 2015, #05; Fri, 28)
+Date: Mon, 31 Aug 2015 08:21:30 -0700
+Message-ID: <xmqqmvx7xz45.fsf@gitster.mtv.corp.google.com>
+References: <xmqq4mjj15lm.fsf@gitster.mtv.corp.google.com>
+	<vpqzj17hpt8.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/BZV=68/I9kydytLxZRuTgrh"; protocol="application/pgp-signature"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 31 17:05:14 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Christian Couder <christian.couder@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Aug 31 17:21:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWQe1-0006bZ-6O
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 17:05:13 +0200
+	id 1ZWQtv-0004S2-DQ
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 17:21:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753127AbbHaPFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 11:05:08 -0400
-Received: from plane.gmane.org ([80.91.229.3]:54699 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752085AbbHaPFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 11:05:06 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1ZWQdr-0006SJ-P5
-	for git@vger.kernel.org; Mon, 31 Aug 2015 17:05:03 +0200
-Received: from mail.wooz.org ([216.15.33.194])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 17:05:03 +0200
-Received: from barry by mail.wooz.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 17:05:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: mail.wooz.org
-X-Newsreader: Claws Mail 3.12.0 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
+	id S1753560AbbHaPVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 11:21:35 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35382 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753516AbbHaPVd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 11:21:33 -0400
+Received: by pacdd16 with SMTP id dd16so142451142pac.2
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 08:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=WQXjZGWR9rulA07rHTmN0HunpaqmkqWjsBl17J6xxPU=;
+        b=D+Z+/TRNo7RLAFGiyMz4A2eAiUrmebXRXhgB2VLIUc5MbRCGXzhwBiRVvuaiQGOyin
+         ftrVuBw6IezNj5xB/cfX8Bl0L8OZVPkyS9JxLBv2sWzSTXu22aB0Gi80YRuxKPsX7wjt
+         hZFlXqjx678bhCB5cYFjnMjCdqgq2v1TpFXflisXSUYVw7649BMfpZSOGR+LuSZ+LLZc
+         XxL8jXOveuX8PP6uUZpoWvdol4LOoyeStH60+xDDAFXNEE5Xd4GeAw0mdQcerhH7kHOO
+         eeGoD8QB+ve5nGyQFoJpYV7S48cfaYEBw/RbaI1poMwqusJPEcrJ6GoftTN4f2ziTOgt
+         ACyQ==
+X-Received: by 10.68.138.200 with SMTP id qs8mr38941226pbb.19.1441034492477;
+        Mon, 31 Aug 2015 08:21:32 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:1937:16f4:ede1:6d38])
+        by smtp.gmail.com with ESMTPSA id v5sm14967095pdo.87.2015.08.31.08.21.31
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 31 Aug 2015 08:21:31 -0700 (PDT)
+In-Reply-To: <vpqzj17hpt8.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	31 Aug 2015 09:36:51 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276883>
 
---Sig_/BZV=68/I9kydytLxZRuTgrh
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-On Aug 31, 2015, at 05:10 PM, Duy Nguyen wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> * ad/bisect-terms (2015-08-03) 4 commits
+>>  - bisect: allow setting any user-specified in 'git bisect start'
+>>  - bisect: add 'git bisect terms' to view the current terms
+>>  - bisect: add the terms old/new
+>>  - bisect: sanity check on terms
+>>
+>>  The use of 'good/bad' in "git bisect" made it confusing to use when
+>>  hunting for a state change that is not a regression (e.g. bugfix).
+>>  The command learned 'old/new' and then allows the end user to
+>>  say e.g. "bisect start --term-old=fast --term=new=slow" to find a
+>>  performance regression.
+>>
+>>  Michael's idea to make 'good/bad' more intelligent does have
+>>  certain attractiveness ($gname/272867), and makes some of the work
+>>  on this topic a moot point.
+>>
+>>  Will hold.
+>
+> This topic has been there for a while and unless I missed a discussion,
+> nothing happened. While I agree that Michael's idea is good and makes
+> this series less useful, I think this topic also makes sense.
+>
+> I'd be in favor of merging it.
 
->I'm probably shot down for this. But could we go with a clean plate
->and create a new command prefix (something like git-next, git2, or
->gt...)? We could then redesign the entire UI without worrying about
->backward compatibility. At some point we can start to deprecate "git"
->and encourage to use the new command prefix only. Of course somebody
->has to go over all the commands and options to propose some consistent
->UI, then more discussions and coding so it could likely follow the
->path of pack v4..
+"Nothing happened" is never a good enough reason to argue for
+merging new stuff, but now you are starting a discussion here, let's
+see where it takes us to.  I am neutral myself at this moment.
 
-`git` itself could also be a thin wrapper which consulted a configuration
-variable to see which version of the ui to expose.
-
-"All problems in computer science can be solved by another level of
-indirection"
-
-Cheers,
--Barry
-
-
---Sig_/BZV=68/I9kydytLxZRuTgrh
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJV5GP2AAoJEBJutWOnSwa/HaoQAJqCws4Cg3aZDJodeZc/zd3W
-tWii3LmWB0uiOEyqWD1WKp0f4oBfLmHsm/G33eQVhd0PxieMTdTWH+kyQdkM0Ql6
-wlSUbLCu5pCgt145SsMyweQZknow3KFEkppH1oodnS2u0t7Sk9Pa6wze3AvWppYX
-gBVM9xf/RbAcdvCR3zDQb48/JeVF1aBs7Le9LBhK1KOcxZzkCyeDRVmaYGOxgdYI
-IxEKPr9dYaQh6cn7UJiUFcySuW8PdglgyEuTOtCYvA/vtjKP96iUfhEcAb1GCvZI
-MNn3CVZh2SLTgY2gtjk3u/mnZwlM4OBJlM29wyP9aCXEgTRdMGJaIcZg7K+1I0Ho
-N8RhqgG4Cz3kiEUaZtodQfXaPsnaSjvreVr2Lx40qiTZjLFLHAVL8t97qOZivEch
-Adfimw6AEutI8uY7Abyus0b0Qd/UoarKDKFHn4HuAzC8MJkPiGQRtkphXPBVw9VJ
-8ohqvZe45+JR0/EcW5AWx/I/PSpWeh62CPQ7BxFgP2t7VkBQHmCW8DHYyWbleXB8
-XZyJ+TvOX3LVKajIuKSt8wsMqpC2zj89t/cENrcBbDquvxXhdCGMAd+nNPG0rLj0
-dKFhq5YSH9/BcAq4JK8hNAnfmK61UDxgJE5O9pjuGuZpdipRue2SIdXPs04ScuYu
-uZJy23A7oEjaNcGzFOJ1
-=crSf
------END PGP SIGNATURE-----
-
---Sig_/BZV=68/I9kydytLxZRuTgrh--
+Thanks for helping -- reduction of the number of topics in stalled
+bin is always a good thing to see.
