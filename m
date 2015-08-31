@@ -1,78 +1,83 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Git crash on different versions, including current
-Date: Mon, 31 Aug 2015 15:45:16 +0200
-Organization: gmx
-Message-ID: <77acde26d3e0af558670ce430f24e21c@www.dscho.org>
-References: <55E17049.8030706@soltenborn.de>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH] INSTALL: Add docs on how to use custom Python paths.
+Date: Mon, 31 Aug 2015 15:28:35 +0100
+Message-ID: <CAE5ih7-5giLEUK3BvVcQ_2zMZiBdumDE-8LRsQxFnOZacLktTQ@mail.gmail.com>
+References: <1441027358-27245-1-git-send-email-ehsan@mozilla.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Christian Soltenborn <christian@soltenborn.de>
-X-From: git-owner@vger.kernel.org Mon Aug 31 15:45:27 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Ehsan Akhgari <ehsan@mozilla.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 16:28:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWPOo-0002AB-Ei
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 15:45:26 +0200
+	id 1ZWQ4k-00005Q-Ew
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 16:28:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753219AbbHaNpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 09:45:21 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50770 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752858AbbHaNpS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 09:45:18 -0400
-Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MPD8G-1Zan7M31wO-004UxK; Mon, 31 Aug 2015 15:45:16
- +0200
-In-Reply-To: <55E17049.8030706@soltenborn.de>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:M4yUyVVtlDDaLQpqJplNXim3A77WgUHpk54niv8bTmf7PjvBmaa
- dMC8dPT5Un/L77WU19rgAGnRBsqSyjs9blAh3gOvTmY38FoKb1Emr2PFh6Xejl85vF821of
- ZYeHVSB4ZlJrfEkVUNLr61gw50bspTgb2GQFSvFuzoA/D+2ihmr2V4J0MLQAmhsHBdFvrES
- Mhfk8FJGLIHzgYWHrM32w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SRodObm9j/I=:ab+eMvYWM8C+qUEjzoGK1Y
- ANMQaImf8RDFf9UKz9XmR7Cz2dSTWX5Z1U4MBTza8EkbDUehKPzBZv0ql0++cU+vJsl47VAkF
- JNbZeOTTPG5OPhyK/h+jnmVTDjaQ940Ydsgbg1hMLjlSyxxkbTwxjyOoCLJvcpIWZIhZM35rP
- Qq5ZL0U/iJAzyrO3FUh8oTO+7/DMRrO5QDmoKrBDg93AKv3PdgsU/KnBnATRua/ELn/Xxoqyy
- SQ5eX2h7t5atxzEDSMhsPToEriEh/jTb/c+7rxbrJ3OShgtC6kbcKW4CW3/E64zWQE8U7wbVW
- P3/3zpSVl3nmjzTlwOYl050BktTOEg1gP8wV+RzRtu4N9SMX/7dPygArd/LymqBFfGe5soG4h
- O3+qe7q+lWfB/6uXpODzpfbGMeZrSdOSvfonoDL9mSZKRxtfuxJhG1aLvRJOo8fCzy1qhXV+J
- cPMV+RSKbWNH4/QhAokW5BoSgro7u89UwRZNGaTEgjCqyGgL6TxqqsfelPCsuS9lFeUHmvZMJ
- l426Wf1QpBHwAh6/C5lDpRsaqWrBc8KHoPtUBde6om4cL0xAvd+Tdg1E9Z0uMmnj0OVml/Cyb
- Frx/OmVmCz0Naw42XbJup4OAJ79IfJ7vDiqi3UskNG6JDX9eSTZheuMbHrH/obcf2b/dEFJDd
- 6q6Zm4nYKSnKRLRtvhXSMIOq9uQhFusBXYsEfI7qVFVS5vq7pSyqCyI1iL9ZxaXlZ6Oo3lPug
- 8Kbt09cr4BQC4kJs2G8tO8DgHONl5TEt99d0Bg==
+	id S1753213AbbHaO2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 10:28:38 -0400
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:36186 "EHLO
+	mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752507AbbHaO2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 10:28:36 -0400
+Received: by oibi18 with SMTP id i18so59640187oib.3
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 07:28:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=xJRU2hIvLJDNuuaIph8LnyLOXnJ2NN4Ojt3FmyHlSRw=;
+        b=IdJA/8+XvvHUB318R8vWq21ZwZQ2QqVSt0mClzl65IOc4gG6aYC0OU3pSLet3HZucJ
+         NVShfpAXKagwxmK//qxTiYuBvysFMGe9Bz3G7lW1F4Mmo8f2F/aj3c3p6dC+KyUtQBbA
+         dZg3Q0/CXQcvHT0Z5BAWEh5XO15aMtxSHMUN0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=xJRU2hIvLJDNuuaIph8LnyLOXnJ2NN4Ojt3FmyHlSRw=;
+        b=bCx0qeVzjmP0HCly9kgFgypJ7AQm8ZqTrKsVMsQVrdH77GB0GhUK7OnFYjy5Nme169
+         HDyH6iQ6Ok5BQCyJYUbUCvqBoIG8yeXXCAuifHynjcn0vt82iaKRc3rviCFCuY4UvBRY
+         2wJ+LcGSVXYW1BuyMfsrgIEGlFANdqPhgVQDy7TmY5282Ion2P4/dtV/s9EX6pqRWsuB
+         Ty3smi99BdQJ46WQ7UvSXsGHZi7hunWD56RJq8mKFOdUemTtBhBT/1Xj9GkWg+kaBVGu
+         6mzfPCFp3t8VVG1j3/PtQIZ3V/Gxonb7p1bSMVmBj5NxbT7htfLMvVzan8L/EAlqsNDW
+         hYsQ==
+X-Gm-Message-State: ALoCoQk7CZSvK8K/03yS4AduGERGzkfYsBL5t1jCCLhk1qwopWIkSkBhI8Z7iDGm+apNb6C7+GSi
+X-Received: by 10.202.211.65 with SMTP id k62mr13149346oig.34.1441031315517;
+ Mon, 31 Aug 2015 07:28:35 -0700 (PDT)
+Received: by 10.60.46.38 with HTTP; Mon, 31 Aug 2015 07:28:35 -0700 (PDT)
+In-Reply-To: <1441027358-27245-1-git-send-email-ehsan@mozilla.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276878>
 
-Hi Christian,
+On 31 August 2015 at 14:22, Ehsan Akhgari <ehsan@mozilla.com> wrote:
+> Signed-off-by: Ehsan Akhgari <ehsan@mozilla.com>
+> ---
+>  INSTALL | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/INSTALL b/INSTALL
+> index ffb071e..5b7fe91 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -148,6 +148,11 @@ Issues of note:
+>           supported by Perforce) is needed to use the git-p4 interface
+>           to Perforce.
+>
+> +         By default, git looks for Python installed in /usr/bin/python.
+> +         On systems with a different Python installation path, pass the
+> +         --with-python argument to configure, or set the PYTHON_PATH
+> +         environment variable when using make to build.
+> +
+>   - Some platform specific issues are dealt with Makefile rules,
+>     but depending on your specific installation, you may not
+>     have all the libraries/tools needed, or you may have
 
-On 2015-08-29 10:41, Christian Soltenborn wrote:
+Looks good to me.
 
-> today I ran into a git issue on Windows 7/64. My directory structure
-> looks like this, and I wondered why the content of a dir wouldn't get added.
-> 
-> C:\Users\chris\git\GoogleTestExtension
-> -- .git
-> -- ConsoleApplication1 (new)
-> ----- gtest-1.7.0 dir (does not get added)
-> ----- stuff that has been successfully added
-> -- more stuff that's already under git control
-> 
-> So here's about what I did:
-> - Looked at it with Git Gui, noticed that gtest-1.7.0 is a submodule
-> - Deleted gtest-1.7.0/.git
-> - performed git add --all . within the gtest-1.7.0 dir => crash, output
-> below
-
-If you copy the entire `GoogleTestExtension` folder somewhere else, does the crash happen there, still? Can you share a .zip of this folder?
-
-Ciao,
-Johannes
+Thanks
+Luke
