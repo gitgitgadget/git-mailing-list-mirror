@@ -1,83 +1,69 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6 1/2] worktree: add 'for_each_worktree' function
-Date: Mon, 31 Aug 2015 15:03:05 -0400
-Message-ID: <CAPig+cTwtKgm4U64nZhRY+F5HuQvKk1RLdyAsS6sJfYp85go2A@mail.gmail.com>
-References: <1440961839-40575-1-git-send-email-rappazzo@gmail.com>
-	<1440961839-40575-2-git-send-email-rappazzo@gmail.com>
-	<CAPig+cTHZrQn8LpfftcsAQhFAykgDorbR97tkcuSCFYD_ngs9g@mail.gmail.com>
-	<1441046674.25570.15.camel@twopensource.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/9] fetch: fetch submodules in parallel
+Date: Mon, 31 Aug 2015 15:05:26 -0400
+Message-ID: <20150831190526.GD20555@sigill.intra.peff.net>
+References: <1440724495-708-1-git-send-email-sbeller@google.com>
+ <1440724495-708-8-git-send-email-sbeller@google.com>
+ <xmqqtwrfuw1n.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Rappazzo <rappazzo@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 21:03:16 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 21:05:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWUML-00050i-I7
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 21:03:13 +0200
+	id 1ZWUOc-0007FF-N5
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 21:05:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752254AbbHaTDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 15:03:08 -0400
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:34603 "EHLO
-	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751901AbbHaTDH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 15:03:07 -0400
-Received: by qkct7 with SMTP id t7so11892942qkc.1
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 12:03:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=clfDXRUq9MLY1EmQEPJuRn3/5KJtSLDyXxQuWqerUAo=;
-        b=FLH+J2JQpLjcxisnwNedId01TSlk10kYoFm+FazJLguTEvv5F5/tIezIBTBhAxtcKK
-         VFUoV0FDjcga0H+lnpQefl6PvEl8HWnjsV3TgENPn2/wbOGaD6phmJGPA1cGrcPhjQUV
-         xvO/DAdlL41pS14N914E/ygqkam6V2hGRCyrW32T69mTpjB6WIF/zl+cxton39mWVCMQ
-         w1h2QTel6t+invk5lq7S1CVbfDH5Yi9X8KZ4JNUXPorh7JDWI9A61K8939818YGPBN9o
-         K0DKEQOtPW04nYMjzx53VZEKont/pHo+C/tChs4omi08wRtdjRhXufkz9vx1nn91bsDQ
-         VO/A==
-X-Received: by 10.129.134.3 with SMTP id w3mr22254568ywf.48.1441047785749;
- Mon, 31 Aug 2015 12:03:05 -0700 (PDT)
-Received: by 10.37.36.145 with HTTP; Mon, 31 Aug 2015 12:03:05 -0700 (PDT)
-In-Reply-To: <1441046674.25570.15.camel@twopensource.com>
-X-Google-Sender-Auth: j4aAr4T128l_PIGY_EU0JczTaHM
+	id S1753830AbbHaTFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 15:05:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52532 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752327AbbHaTF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 15:05:29 -0400
+Received: (qmail 16035 invoked by uid 102); 31 Aug 2015 19:05:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Aug 2015 14:05:29 -0500
+Received: (qmail 25386 invoked by uid 107); 31 Aug 2015 19:05:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 31 Aug 2015 15:05:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Aug 2015 15:05:26 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqtwrfuw1n.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276916>
 
-On Mon, Aug 31, 2015 at 2:44 PM, David Turner <dturner@twopensource.com> wrote:
-> On Mon, 2015-08-31 at 01:11 -0400, Eric Sunshine wrote:
->> Stepping back a bit, is a for-each-foo()-style interface desirable?
->> This sort of interface imposes a good deal of complexity on callers,
->> demanding a callback function and callback data (cb_data), and is
->> generally (at least in C) more difficult to reason about than other
->> simpler interfaces. Is such complexity warranted?
->>
->> An alternate, much simpler interface would be to have a function, say
->> get_worktrees(), return an array of 'worktree' structures to the
->> caller, which the caller would iterate over (which is a common
->> operation in C, thus easily reasoned about).
->>
->> The one benefit of a for-each-foo()-style interface is that it's
->> possible to "exit early", thus avoiding the cost of interrogating
->> meta-data for worktrees in which the caller is not interested,
->> however, it seems unlikely that there will be so many worktrees linked
->> to a repository for this early exit to translate into any real
->> savings.
->
-> The other benefit is that there is no need to worry about deallocating
-> the list.  But that might be too minor to worry about.
+On Mon, Aug 31, 2015 at 11:56:04AM -0700, Junio C Hamano wrote:
 
-Probably. The burden of having to deallocate the returned array seems
-quite minor compared to the complexity of the callback function
-approach.
+> Stefan Beller <sbeller@google.com> writes:
+> 
+> > +static void destroy_output_mutex()
+> 
+> static void destroy_output_mutex(void)
 
-Also, unstated but implied with the suggestion of a get_worktrees()
-function was that there would be a corresponding free_worktrees()
-function to make cleanup easy.
+Yep. Stefan, you may want to beef up the warning flags in your
+config.mak. For reference, I use:
+
+  CFLAGS += -Wall -Werror
+  CFLAGS += -Wdeclaration-after-statement
+  CFLAGS += -Wpointer-arith
+  CFLAGS += -Wstrict-prototypes
+  CFLAGS += -Wvla
+  CFLAGS += -Wold-style-declaration
+  CFLAGS += -Wold-style-definition
+
+though note that you will need to relax some of those if compiling older
+versions of git. My complete config.mak is at:
+
+  https://github.com/peff/git/blob/meta/config/config.mak
+
+which handles this semi-automatically (it's wildly undocumented, but I'd
+be happy to explain any of it if anybody is interested).
+
+-Peff
