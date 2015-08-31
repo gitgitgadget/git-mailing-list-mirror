@@ -1,107 +1,79 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2015, #05; Fri, 28)
-Date: Mon, 31 Aug 2015 22:12:09 +0200
-Message-ID: <CAP8UFD3j8k4Wippd9_RUOYnu+5E_hsCjzbjZDpSpLVj-EUpwbw@mail.gmail.com>
-References: <xmqq4mjj15lm.fsf@gitster.mtv.corp.google.com>
-	<CAP8UFD3-Y4T=dQmBVfRR1DEuuRZLSrUvQid8m1YttOnJc5Fj8w@mail.gmail.com>
-	<xmqqzj17y16t.fsf@gitster.mtv.corp.google.com>
-	<1441045835.25570.7.camel@twopensource.com>
-	<xmqqegijusrm.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] read-cache: fix indentation in read_index_from
+Date: Mon, 31 Aug 2015 13:12:03 -0700
+Message-ID: <xmqq613vusj0.fsf@gitster.mtv.corp.google.com>
+References: <1441046609-24181-1-git-send-email-sbeller@google.com>
+	<xmqqpp23uuhk.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbQmmcJMW=07A1pyHdbViJTfseG4L-kspKEvyugTO7R4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Turner <dturner@twopensource.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 22:12:19 2015
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 22:12:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWVRB-00011C-3k
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 22:12:17 +0200
+	id 1ZWVR6-0000yY-Ag
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 22:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752224AbbHaUMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 16:12:12 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:37861 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752004AbbHaUMK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 16:12:10 -0400
-Received: by igui7 with SMTP id i7so61939581igu.0
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 13:12:09 -0700 (PDT)
+	id S1751931AbbHaUMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 16:12:07 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:33544 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751381AbbHaUMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 16:12:06 -0400
+Received: by paczk9 with SMTP id zk9so1416855pac.0
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 13:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=eRtJSI1FAeTef5y2Zo82ckTORewLtNHWvLmTLLqaAxk=;
-        b=b4VvunHukB2v/Zi/aoKtm55+n/QISqbBRoz5GDvADggRTKp8ikeNNKT3Cdg1sK/cjF
-         kbV0V/OYSH7fRVdnKfsXRAvQ7StgOLytfMW3K6oO0TO9/TfJ9vBGhyEirMUmOndek1oq
-         WWoPMxoyx+tBmmylupGUBJBCPofmBb8+9SFoHEKhv96wBzPBTHXrxvGmooEWnDk1NajI
-         WqEt221LZxnvtFJA90HZCBzvy6gArsaCbJJUQuBQwm3/qS1uBFN576zTo4my45b1Jo9Q
-         +zIO5OMApFfFZf6VUEoyd6qAX1kLn5lkQa9Jymes5GZq2gdAs74XmOFqIPrhtInXD0IJ
-         qEGA==
-X-Received: by 10.50.73.170 with SMTP id m10mr318949igv.71.1441051929590; Mon,
- 31 Aug 2015 13:12:09 -0700 (PDT)
-Received: by 10.79.93.131 with HTTP; Mon, 31 Aug 2015 13:12:09 -0700 (PDT)
-In-Reply-To: <xmqqegijusrm.fsf@gitster.mtv.corp.google.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=RGDlI7KX7jLZrEi/3rQvcxxP6hRnM2i7gs2j2KShdiY=;
+        b=b93/mFVbDNcAbzOLh4EowasvXO7GlelqQfs6I1vivJYHBcvXXkR7bWJCtomhILBDLx
+         y7b5iUbp3NkHWZSy4ZvEWwGDFGoh8pWDCqpsPhlCtmZl0Ub7zlDehPvmtRNnUfy4kVMk
+         Szt37ryHg/F3ZUlf4lhtjg+CZi6OK9Km5SY8x2lUvpksWJ6a31zzDmIhS60HFOp0LmtZ
+         qt85WUAqJbgBI1nIL2S8piFUyXW+4cEU3hhLaYWqoW6zizfwYr87rBWEaf1fZywjdpzH
+         5vB8Rgg3XyoT9hhsCBS4u3UvSMbxOX5UnJCmRdzpPNpoa3aASWoG7QMG54VS87rsb6Ru
+         tQCA==
+X-Received: by 10.68.111.165 with SMTP id ij5mr39955956pbb.59.1441051925603;
+        Mon, 31 Aug 2015 13:12:05 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:1937:16f4:ede1:6d38])
+        by smtp.gmail.com with ESMTPSA id b9sm7178190pdl.47.2015.08.31.13.12.04
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 31 Aug 2015 13:12:04 -0700 (PDT)
+In-Reply-To: <CAGZ79kbQmmcJMW=07A1pyHdbViJTfseG4L-kspKEvyugTO7R4g@mail.gmail.com>
+	(Stefan Beller's message of "Mon, 31 Aug 2015 12:34:57 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276933>
 
-On Mon, Aug 31, 2015 at 10:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> David Turner <dturner@twopensource.com> writes:
->
->>> Christian, thanks for raising this one.
->>>
->>> I do recall the thread and I might be the somebody like Michael you
->>> remember, e.g. $gmane/275105---which did mention that "git bisect"
->>> would not need changing if we kept refs/bisect/.
->>>
->>> What was the reason why we chose to move to refs/worktree/ again?  I
->>> do not think there was an issue that we cannot keep refs/* in
->>> general shared while having one (or more) subhierarchy of it per
->>> worktree (otherwise we would not be using refs/worktree/*, but using
->>> something outside refs/, like $GIT_DIR/worktree-refs/).  Was there an
->>> objection to refs/bisect being private from aesthetics point of view
->>> (i.e. forcing everything per-worktree in refs/worktree/ would prevent
->>> proliferation of refs/this and refs/that that need to be private
->>> case by case), ignoring the practical issue of compatibility issues
->>> around existing tools?
->>
->> That is correct.  IIRC, on one of these patch sets, I proposed accepting
->> both new and old refs, but you said that would be unnecessary (it might
->> have been the notes/merge one instead of this one).
->
-> I suspect it was notes-merge thing, but anyway, if you asked me
-> right now, I certainly would say it is not OK to drop the old
-> location but I may still say it is not worth having old and new with
-> funny directory symlink like thing, because refs backend thing
-> cannot say "I'll follow the symbolic link refs/bisect that points
-> at refs/worktrees/bisect".
->
-> But the reason why I say it is not worth is not because I do not
-> think we need refs/bisect, but because I do not think we need
-> refs/worktree/ at this point.  In other words, throwing new
-> hierarchies that are private to worktree into refs/worktree/ is fine
-> if we discover the need for some new hierarchies in the future, but
-> being able to access the bisection points as refs/worktree/bisect is
-> not necessary.  If people and tools are familiar with it being in
-> refs/bisect, that location is fine.
->
->>> I think one example of script, "gitk --bisect", does want to show
->>> the DAG limited by bisect refs, but it does so using plumbing
->>> without having to say refs/bisect/bad itself.  Perhaps the thinking
->>> (or lack of enough of it) went that no other uses by scripts need to
->>> peek directly into refs/bisect/ hierarchy?
->>
->> I did a quick search on github, and did not see any scripts that said
->> "refs/bisect".
->
-> That's one data point, but not a very confidence-building one.
->
-> Christian, did you see your private script break with this change,
-> or as one of the larger stakeholder of "bisect" subsystem you wanted
-> to proceed with caution (the latter I myself would share, actually)?
+Stefan Beller <sbeller@google.com> writes:
 
-Yeah, it's the latter.
+>> I'll queue it for this time, but in general, I'd prefer if people
+>> refrained from touching code only for style fixes in an area that is
+>> touched actively in topics, unless it is done inside a topic that
+>> has to touch that area of the code in order to do something more
+>> than style fixes.
+>
+> Right. :(
+>
+> The problem here is that I was looking to use read_index_from
+> in the submodule code to implement recursive actions, but as I
+> could not find documentation on how to use it, I read the code.
+> And whenever I see obvious things to fix (such as style),
+> I cannot stop myself from shooting from the hip, sending a patch.
+> I'll stop doing that.
+
+Don't stop; instead queue and keep them on your own queue, so that
+you can find a good time to send them out.
+
+A good rule-of-thumb for "good time" is when "git diff maint pu"
+does not show any overlap to the context and preimage of your
+patches.
+
+Thanks.
