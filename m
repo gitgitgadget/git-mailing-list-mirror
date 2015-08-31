@@ -1,67 +1,75 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Running interpret-trailers automatically on each commit?
-Date: Mon, 31 Aug 2015 10:12:32 +0200
-Message-ID: <vpqmvx7ho5r.fsf@anie.imag.fr>
-References: <55E07CB1.0@game-point.net>
-	<xmqqk2sf2vic.fsf@gitster.mtv.corp.google.com>
-	<55E09540.60805@game-point.net>
+Subject: Re: [PATCH v14 04/13] ref-filter: implement an `align` atom
+Date: Mon, 31 Aug 2015 10:30:11 +0200
+Message-ID: <vpq37yzhncc.fsf@anie.imag.fr>
+References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
+	<1440857537-13968-5-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeremy Morton <admin@game-point.net>
-X-From: git-owner@vger.kernel.org Mon Aug 31 10:12:46 2015
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 10:30:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWKCs-0005Fn-9q
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 10:12:46 +0200
+	id 1ZWKU4-0002dW-8F
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 10:30:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013AbbHaIMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 04:12:42 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:45030 "EHLO rominette.imag.fr"
+	id S1751998AbbHaIa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 04:30:28 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:53638 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751372AbbHaIMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 04:12:40 -0400
+	id S1750960AbbHaIa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 04:30:27 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t7V8CV8R012396
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t7V8UAHt013139
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 31 Aug 2015 10:12:32 +0200
+	Mon, 31 Aug 2015 10:30:11 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t7V8CWim009727;
-	Mon, 31 Aug 2015 10:12:32 +0200
-In-Reply-To: <55E09540.60805@game-point.net> (Jeremy Morton's message of "Fri,
-	28 Aug 2015 18:07:12 +0100")
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t7V8UBkF010162;
+	Mon, 31 Aug 2015 10:30:11 +0200
+In-Reply-To: <1440857537-13968-5-git-send-email-Karthik.188@gmail.com>
+	(Karthik Nayak's message of "Sat, 29 Aug 2015 19:42:08 +0530")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 31 Aug 2015 10:12:32 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 31 Aug 2015 10:30:11 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t7V8CV8R012396
+X-MailScanner-ID: t7V8UAHt013139
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1441613552.99549@gAQFD0WI7/QVkxXeud82Fw
+MailScanner-NULL-Check: 1441614614.24088@L3IRxOga5YKSaHBcC5LkBQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276855>
 
-Jeremy Morton <admin@game-point.net> writes:
+Hi,
 
-> Yeah but it's kind of useless to me having it on each commit on a
-> per-repo basis (and even then, only with hooks).
+Just a remark on the way iterations are going on with this series: I do
+agree that each version gets better than the previous one, which is
+good. However, I have the feeling that we're turning a simple and easy
+to review series into a monster one (reading "v14 .../13" with a
+non-trivial interdiff is a bit scary for reviewers).
 
-Please, don't top-post on this list.
+Karthik: I think you could (should?) have splitted the work again.
+You're integrating other people's idea in the series, and sometimes I
+think at some point, a better way would have been: "OK, good idea, I'll
+implement it in on top of this series" (and possibly implement it on top
+before you resend, to make sure that the series is ready to welcome the
+new feature). For example, %(contents:lines=X) is good, but could have
+waited for the next series IMHO. This way, you get a shorter series to
+converge faster (straightforward interdiff for the last iterations), and
+then reviewers can focus on the next, short, series.
 
-Actually, it seems strange to me to activate it on a per-user basis.
-Whether you add a trailer is usually a per-project policy. If you add a
-branch trailer in each of your repository, it seems likely that some
-projects you contribute to will be bothered by this.
+The opposite is Zeno paradox kind of series, where you add something new
+every time you get close to getting merged, and you actually never reach
+a stable state ;-).
 
-That said, I agree it would be nice to allow a configuration-based
-mechanism in addition to the current hook-based one we currently have.
-But no one stepped in to implement it until now ...
+That said, this particular series was a tough one for this, so I'm not
+even sure my advice would have been applicable ^^.
 
 -- 
 Matthieu Moy
