@@ -1,81 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] submodule: implement `module_name` as a builtin helper
-Date: Mon, 31 Aug 2015 13:35:09 -0700
-Message-ID: <xmqqwpwbtcw2.fsf@gitster.mtv.corp.google.com>
-References: <1441048767-29729-1-git-send-email-sbeller@google.com>
-	<1441048767-29729-3-git-send-email-sbeller@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: peff@peff.net, git@vger.kernel.org, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 22:35:18 2015
+From: larsxschneider@gmail.com
+Subject: [PATCH v2] git-p4: add "--path-encoding" option
+Date: Mon, 31 Aug 2015 22:43:52 +0200
+Message-ID: <1441053833-63790-1-git-send-email-larsxschneider@gmail.com>
+Cc: luke@diamand.org, gitster@pobox.com, tboegi@web.de,
+	Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 31 22:44:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWVnR-0005CQ-Vp
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 22:35:18 +0200
+	id 1ZWVvx-0004Ti-EZ
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 22:44:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752686AbbHaUfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 16:35:12 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:34937 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752178AbbHaUfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 16:35:11 -0400
-Received: by pacdd16 with SMTP id dd16so150082860pac.2
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 13:35:11 -0700 (PDT)
+	id S1752970AbbHaUn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 16:43:59 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:36639 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752683AbbHaUn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 16:43:58 -0400
+Received: by wibz8 with SMTP id z8so11982444wib.1
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 13:43:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=aIbllJYgXIBvWRATGeedF25wDZ2spGzqWDoBLUlseEA=;
-        b=w3W0N0P7PbpZvsNwgAIHsm8Y7uZh5ht9tsU0mdaVqAkjuMkT1h1YcK4LYGYFUPuf65
-         9JQbdeWQe0UYdhal0wYxgZzkQ0DQhQEi3pUZoA61eA0AXvgfWRGBa/ScMaCpd46IIPHg
-         aeDO7esCmqHJBkc2c+vS2qv76XsrsdFF6DjsY1mfeNcRo9NcB3wyC/k9MOBVIs6yaIX7
-         XCc5Nxu3mv5f93uVSPPenVEuPu9KJRIyEtFv/Poxa8WrCMLUwOIcgkpQNUDwpGik/O6x
-         dRZc8+iXtPDso5V1VbVL5xU2XWiHmsbXGjW4jYKp2w7hUAAkMpQ4HqSA4mS73HMekGaM
-         /jCQ==
-X-Received: by 10.68.203.42 with SMTP id kn10mr41139170pbc.43.1441053310749;
-        Mon, 31 Aug 2015 13:35:10 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:1937:16f4:ede1:6d38])
-        by smtp.gmail.com with ESMTPSA id n9sm15573970pdi.88.2015.08.31.13.35.09
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 31 Aug 2015 13:35:09 -0700 (PDT)
-In-Reply-To: <1441048767-29729-3-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 31 Aug 2015 12:19:26 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=from:to:cc:subject:date:message-id;
+        bh=RkBgInk4aW8w9dcn/PrZ9cPg3gMiCuDh0CAvqj42yPY=;
+        b=U2E06/e0Ap3VOv/mGQe5j2umKjJSpa0+fVqSRUsuxxOnfLvu53Mm5hofs/2FoeOmEt
+         kcl3Hvox1QuVvXONSooK62bagJRomKklRlOLAn6Aa2wi+/CHkKSadAFLy6ZdLJ+E8QK5
+         Hs2lqqQ4NGwu4bFmhBHqWRriHLc2yRFLIhDKtg5VSQj2XmTVwx/h/fyUDQBv7AE/CLAc
+         eTG6iwlhckx06fwpSyisXM2BTVU098apwTqN0JT+S0MJIK1Vmeo01VuuH6nqCR1QwbMh
+         j6N9gp4rNQfLWHHavuX0PxzeSMeSz1cGlz44Ly1W/sb7Ao103ZfcEyDqo7LcUYn/Vq8f
+         CQow==
+X-Received: by 10.180.81.4 with SMTP id v4mr389971wix.71.1441053837238;
+        Mon, 31 Aug 2015 13:43:57 -0700 (PDT)
+Received: from slxBook3.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id cj1sm441615wib.14.2015.08.31.13.43.55
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 31 Aug 2015 13:43:56 -0700 (PDT)
+X-Mailer: git-send-email 1.9.5 (Apple Git-50.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276936>
 
-Stefan Beller <sbeller@google.com> writes:
+From: Lars Schneider <larsxschneider@gmail.com>
 
->  usage:
-> -	usage("git submodule--helper module_list\n");
-> +	usage("git submodule--helper [module_list | module_name]\n");
+Diff to v1:
+* switch example conversions from cp1252 to iso8859-1 (thanks Torsten!)
+* fix git-p4.txt line length and double dashes (thanks Junio!)
+* remove bare UTF-8 sequence (thanks Junio!)
 
-To me, the above reads as if saying:
+As with v1, I ensured the unit test runs on OS X and Linux.
 
-    The command takes one of the two subcommands at this stage,
-    module_list that does not take any parameter, and module_name
-    that does not take any parameter.
+I noticed one weird point, though. "git ls-files" outputs the UTF-8 characters escaped on Linux and on OS X. Is there a problem with my setup or this a Git bug?
 
-which is not what you intended.
+Thanks,
+Lars
 
-I think that the help for individual options and arguments are
-sufficiently given in the implementation of each subcommand
-(e.g. module_list does its own parse_options() thing), so there is
-no need to duplicate them here.  The only purpose of this usage serves
-is to tell the user that the subcommand name was not understood, and
-give the list of available subcommands.  For that, I wonder if the
-usual single-liner "usage" is the best way to do so.
+Lars Schneider (1):
+  git-p4: add "--path-encoding" option
 
-    $ git submodule--helper frotz
-    fatal: 'frotz' is not a valid submodule--helper subcommand, which are
-           module_list, module_name.
+ Documentation/git-p4.txt        |  5 +++++
+ git-p4.py                       |  6 ++++++
+ t/t9821-git-p4-path-encoding.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 50 insertions(+)
+ create mode 100755 t/t9821-git-p4-path-encoding.sh
 
-or something along that line, perhaps, may be more appropriate?
+--
+2.5.1.1.g9071995.dirty
