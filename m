@@ -1,358 +1,168 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 3/3] submodule: implement `module_clone` as a builtin helper
-Date: Mon, 31 Aug 2015 12:19:27 -0700
-Message-ID: <1441048767-29729-4-git-send-email-sbeller@google.com>
-References: <1441048767-29729-1-git-send-email-sbeller@google.com>
-Cc: peff@peff.net, git@vger.kernel.org, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Aug 31 21:19:43 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v6 1/2] worktree: add 'for_each_worktree' function
+Date: Mon, 31 Aug 2015 15:22:15 -0400
+Message-ID: <CAPig+cTFQNcBEJ7QwsLjd1ncmxsG+uZFBkc_uyHzwBkU7a7hMQ@mail.gmail.com>
+References: <1440961839-40575-1-git-send-email-rappazzo@gmail.com>
+	<1440961839-40575-2-git-send-email-rappazzo@gmail.com>
+	<CAPig+cTHZrQn8LpfftcsAQhFAykgDorbR97tkcuSCFYD_ngs9g@mail.gmail.com>
+	<CANoM8SUoJAPBwEO=udhaR0WcUkZropEJ5G_SESnkHVtAQHxJQQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>,
+	Git List <git@vger.kernel.org>
+To: Mike Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 21:22:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWUcJ-0003Lv-17
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 21:19:43 +0200
+	id 1ZWUer-0005mE-KA
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 21:22:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754015AbbHaTTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 15:19:39 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:33186 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754000AbbHaTTe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 15:19:34 -0400
-Received: by paczk9 with SMTP id zk9so199138pac.0
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 12:19:33 -0700 (PDT)
+	id S1754330AbbHaTWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 15:22:17 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:36843 "EHLO
+	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754326AbbHaTWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 15:22:16 -0400
+Received: by qkbp67 with SMTP id p67so12693896qkb.3
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 12:22:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0c7ImAurnqZz9+PuZnkBJUA9RJ7i/B9cHdeaPhs8lwE=;
-        b=WYujHkEWboiFZpumROyl8pao176ynIZiHt57aQ5d26jMdwlDw4CD15eOShhVqom3u4
-         FCrn1AW4NmnP1SwgrHyKmHyUhm0oQIHcNnKjpCsPajeaEUU0EWq2kVe5XXS/Ksu6D8vV
-         w7JIpiZ1vBiZSz/+pOXO7OrbJAXOca++kdnKIa5pP9C0G/MZujCubkTslzdDkwYSuQ5Y
-         y2Ha+NyxbNRx4ssHFjP3nyNZyZTyrNKFKyPOf4Y3nUvjyuKHHfkys7nLWd4Ydgz+uinl
-         Xst4+CPmEz2emDZInfL1Zo9Usz9B3hdLck0k18sRF0YILPO55Ahil3PzyL+ZsgmERkVO
-         D+Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=0c7ImAurnqZz9+PuZnkBJUA9RJ7i/B9cHdeaPhs8lwE=;
-        b=ZxPTcn0Y81Mcnnb1L/XgZcvbhZ4J8elrCVbVnj4XT/OX9hO3UyyMieQ4l4Op8Gz5wk
-         WN0k/bBe5V5bUCzg3Q0hYuvkvqYY3SP59LvJyZ1LrRKal8BoU4+9ENMHLAuda9ki4lsz
-         0glp/2EckiQj5bodAeKozv40MFfxo2Yb5u6qDuBRssC2P9PU4t8W/CfAx/4lW/r9mbOE
-         c804SwFDYlWULOGJGLa8h0xZ+BaT3OhZe85sKyTr9JqgAO1qx48DwgXWnH+iAdh9eNlJ
-         5w5sqdqKMdb+T0mTQsEFf6zKjrOU383id/rkC6yQby6yUkb9eyVBwiW3QYOmUvfhhA9/
-         IMlA==
-X-Gm-Message-State: ALoCoQl1AI9zh7sTyFQfO1O20B/xJBCiG/whxXkdv9dopwhHZLtxVSbxQcIZUzkgnXkor6GLHILM
-X-Received: by 10.66.100.234 with SMTP id fb10mr35582595pab.119.1441048773716;
-        Mon, 31 Aug 2015 12:19:33 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:25db:53e9:3895:b743])
-        by smtp.gmail.com with ESMTPSA id hg3sm15421127pbb.52.2015.08.31.12.19.33
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 31 Aug 2015 12:19:33 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.264.geed6e44.dirty
-In-Reply-To: <1441048767-29729-1-git-send-email-sbeller@google.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Y+Gv7Qw410veGWJg/wMkrsrksSFTTp3UfqGgagmiWnQ=;
+        b=Sfvq90lPv04uDfypOAZeuXPqkjPW//SBIQzmSljH+QU5uq9AmNsuoHCozqPQvgq16Q
+         K1LYWouPVBkSmuEUzp3XzdSTEB+pMaZDRAM4fFgW035y9zjiZdUTIwcsAQ7t4+fObE9t
+         nsmtPb9Lz4/PbNKGhXYS+55B+l5aXUMpjKv67rqIdm4hm0BSXkoICgUJwDfV8GjzfYKm
+         L1velNSj1ZCcfZyqoCf8yeu7O1C3mx53Vao/eMqB3/tgt2tLEJzkAC6Al+n0RULCY5GI
+         s8N4Ii30bhlaboWAKsddIsEHLxXXobtfUi8USO0bqUKXppAkteIFg3v83tCX7fWOajR+
+         MWng==
+X-Received: by 10.129.83.136 with SMTP id h130mr24300244ywb.95.1441048936045;
+ Mon, 31 Aug 2015 12:22:16 -0700 (PDT)
+Received: by 10.37.36.145 with HTTP; Mon, 31 Aug 2015 12:22:15 -0700 (PDT)
+In-Reply-To: <CANoM8SUoJAPBwEO=udhaR0WcUkZropEJ5G_SESnkHVtAQHxJQQ@mail.gmail.com>
+X-Google-Sender-Auth: RINyxwHD1w2Eq32zXnxIpL5qNiA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276921>
 
-`module_clone` is part of the update command,
-which I want to convert to C next.
+On Mon, Aug 31, 2015 at 2:57 PM, Mike Rappazzo <rappazzo@gmail.com> wrote:
+> On Mon, Aug 31, 2015 at 1:11 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Sun, Aug 30, 2015 at 3:10 PM, Michael Rappazzo <rappazzo@gmail.com> wrote:
+>> Why does this iteration function specially filter out a bare main
+>> worktree? If it instead unconditionally vends the main worktree (bare
+>> or not), then the caller can make its own decision about what to do
+>> with it, thus empowering the caller, rather than imposing a (possibly)
+>> arbitrary restriction upon it.
+>>
+>> For instance, the "git worktree list" command may very well want to
+>> show the main worktree, even if bare (possibly controlled by a
+>> command-line option), annotated appropriately ("[bare]"). This may be
+>> exactly the sort of information a user wants to know, and by leaving
+>> the decision up to the caller, then the caller ("git worktree list" in
+>> this example) has the opportunity to act accordingly, whereas if
+>> for_each_worktree() filters out a bare main worktree unconditionally,
+>> then the caller ("git worktree list") will never be able to offer such
+>> an option.
+>
+> I wasn't sure that a bare repo would be considered a worktree.  I
+> don't think that it would be
+> a good idea to include it.  In the same vein that I can't checkout a
+> branch in a bare repo, it
+> figure that it shouldn't be in the list.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/submodule--helper.c | 148 +++++++++++++++++++++++++++++++++++++++++++-
- git-submodule.sh            |  80 +-----------------------
- 2 files changed, 150 insertions(+), 78 deletions(-)
+This is a mechanism vs. policy issue[1]. Low-level worker code, such
+as this iteration function, should concern itself only with the
+mechanics of retrieving and vending the worktree meta-data, and should
+not make decisions (policy) about how that information is used by the
+caller. Policy decisions (how the meta-data is used or displayed)
+should be pushed to as high a level as possible, often up to the level
+of user-interface (which is what "git worktree list" is).
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c8f7e0c..d29499c 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -8,6 +8,7 @@
- #include "submodule.h"
- #include "submodule-config.h"
- #include "string-list.h"
-+#include "run-command.h"
- 
- static const struct cache_entry **ce_entries;
- static int ce_alloc, ce_used;
-@@ -124,6 +125,147 @@ static int module_name(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static int clone_submodule(const char *path, const char *gitdir, const char *url,
-+			   const char *depth, const char *reference, int quiet)
-+{
-+	struct child_process cp;
-+	child_process_init(&cp);
-+
-+	argv_array_push(&cp.args, "clone");
-+	argv_array_push(&cp.args, "--no-checkout");
-+	if (quiet)
-+		argv_array_push(&cp.args, "--quiet");
-+	if (depth && strcmp(depth, "")) {
-+		argv_array_push(&cp.args, "--depth");
-+		argv_array_push(&cp.args, depth);
-+	}
-+	if (reference && strcmp(reference, "")) {
-+		argv_array_push(&cp.args, "--reference");
-+		argv_array_push(&cp.args, reference);
-+	}
-+	if (gitdir) {
-+		argv_array_push(&cp.args, "--separate-git-dir");
-+		argv_array_push(&cp.args, gitdir);
-+	}
-+	argv_array_push(&cp.args, url);
-+	argv_array_push(&cp.args, path);
-+
-+	cp.git_cmd = 1;
-+	cp.env = local_repo_env;
-+
-+	cp.no_stdin = 1;
-+	cp.no_stdout = 1;
-+	cp.no_stderr = 1;
-+
-+	return run_command(&cp);
-+}
-+
-+static int module_clone(int argc, const char **argv, const char *prefix)
-+{
-+	const char *path = NULL, *name = NULL, *url = NULL;
-+	const char *reference = NULL, *depth = NULL;
-+	int quiet = 0;
-+	FILE *submodule_dot_git;
-+	const char *sm_gitdir, *p;
-+	struct strbuf rel_path = STRBUF_INIT;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	struct option module_update_options[] = {
-+		OPT_STRING(0, "prefix", &alternative_path,
-+			   N_("path"),
-+			   N_("alternative anchor for relative paths")),
-+		OPT_STRING(0, "path", &path,
-+			   N_("path"),
-+			   N_("where the new submodule will be cloned to")),
-+		OPT_STRING(0, "name", &name,
-+			   N_("string"),
-+			   N_("name of the new submodule")),
-+		OPT_STRING(0, "url", &url,
-+			   N_("string"),
-+			   N_("url where to clone the submodule from")),
-+		OPT_STRING(0, "reference", &reference,
-+			   N_("string"),
-+			   N_("reference repository")),
-+		OPT_STRING(0, "depth", &depth,
-+			   N_("string"),
-+			   N_("depth for shallow clones")),
-+		OPT_END()
-+	};
-+
-+	static const char * const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper update [--prefix=<path>] [--quiet] [--remote] [-N|--no-fetch]"
-+		   "[-f|--force] [--rebase|--merge] [--reference <repository>]"
-+		   "[--depth <depth>] [--recursive] [--] [<path>...]"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, module_update_options,
-+			     git_submodule_helper_usage, 0);
-+
-+	if (getenv("GIT_QUIET"))
-+		quiet = 1;
-+
-+	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
-+	sm_gitdir = strbuf_detach(&sb, NULL);
-+
-+	if (!file_exists(sm_gitdir)) {
-+		safe_create_leading_directories_const(sm_gitdir);
-+		if (clone_submodule(path, sm_gitdir, url, depth, reference, quiet))
-+			die(N_("Clone of '%s' into submodule path '%s' failed"),
-+			    url, path);
-+	} else {
-+		safe_create_leading_directories_const(path);
-+		unlink(sm_gitdir);
-+	}
-+
-+	/* Write a .git file in the submodule to redirect to the superproject. */
-+	if (alternative_path && !strcmp(alternative_path, "")) {
-+		p = relative_path(path, alternative_path, &sb);
-+		strbuf_reset(&sb);
-+	} else
-+		p = path;
-+
-+	if (safe_create_leading_directories_const(p) < 0)
-+		die("Could not create directory '%s'", p);
-+
-+	strbuf_addf(&sb, "%s/.git", p);
-+
-+	if (safe_create_leading_directories_const(sb.buf) < 0)
-+		die(_("could not create leading directories of '%s'"), sb.buf);
-+	submodule_dot_git = fopen(sb.buf, "w");
-+	if (!submodule_dot_git)
-+		die ("Cannot open file '%s': %s", sb.buf, strerror(errno));
-+
-+	fprintf(submodule_dot_git, "gitdir: %s\n",
-+		relative_path(sm_gitdir, path, &rel_path));
-+	if (fclose(submodule_dot_git))
-+		die("Could not close file %s", sb.buf);
-+	strbuf_reset(&sb);
-+
-+	/* Redirect the worktree of the submodule in the superprojects config */
-+	if (!is_absolute_path(sm_gitdir)) {
-+		char *s = (char*)sm_gitdir;
-+		if (strbuf_getcwd(&sb))
-+			die_errno("unable to get current working directory");
-+		strbuf_addf(&sb, "/%s", sm_gitdir);
-+		sm_gitdir = strbuf_detach(&sb, NULL);
-+		free(s);
-+	}
-+
-+	if (strbuf_getcwd(&sb))
-+		die_errno("unable to get current working directory");
-+	strbuf_addf(&sb, "/%s", path);
-+
-+	p = git_pathdup_submodule(path, "config");
-+	if (!p)
-+		die("Could not get submodule directory for '%s'", path);
-+	git_config_set_in_file(p, "core.worktree",
-+			       relative_path(sb.buf, sm_gitdir, &rel_path));
-+	strbuf_release(&sb);
-+	free((char *)sm_gitdir);
-+	return 0;
-+}
-+
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- {
- 	if (argc < 2)
-@@ -135,6 +277,10 @@ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- 	if (!strcmp(argv[1], "module_name"))
- 		return module_name(argc - 2, argv + 2, prefix);
- 
-+	if (!strcmp(argv[1], "module_clone"))
-+		return module_clone(argc - 1, argv + 1, prefix);
-+
- usage:
--	usage("git submodule--helper [module_list | module_name]\n");
-+	usage("git submodule--helper [module_list | module_name | "
-+	      "module_clone]\n");
- }
-diff --git a/git-submodule.sh b/git-submodule.sh
-index e6ff38d..fb5155e 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -178,80 +178,6 @@ get_submodule_config () {
- 	printf '%s' "${value:-$default}"
- }
- 
--#
--# Clone a submodule
--#
--# $1 = submodule path
--# $2 = submodule name
--# $3 = URL to clone
--# $4 = reference repository to reuse (empty for independent)
--# $5 = depth argument for shallow clones (empty for deep)
--#
--# Prior to calling, cmd_update checks that a possibly existing
--# path is not a git repository.
--# Likewise, cmd_add checks that path does not exist at all,
--# since it is the location of a new submodule.
--#
--module_clone()
--{
--	sm_path=$1
--	name=$2
--	url=$3
--	reference="$4"
--	depth="$5"
--	quiet=
--	if test -n "$GIT_QUIET"
--	then
--		quiet=-q
--	fi
--
--	gitdir=
--	gitdir_base=
--	base_name=$(dirname "$name")
--
--	gitdir=$(git rev-parse --git-dir)
--	gitdir_base="$gitdir/modules/$base_name"
--	gitdir="$gitdir/modules/$name"
--
--	if test -d "$gitdir"
--	then
--		mkdir -p "$sm_path"
--		rm -f "$gitdir/index"
--	else
--		mkdir -p "$gitdir_base"
--		(
--			clear_local_git_env
--			git clone $quiet ${depth:+"$depth"} -n ${reference:+"$reference"} \
--				--separate-git-dir "$gitdir" "$url" "$sm_path"
--		) ||
--		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
--	fi
--
--	# We already are at the root of the work tree but cd_to_toplevel will
--	# resolve any symlinks that might be present in $PWD
--	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
--	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
--	# Remove all common leading directories after a sanity check
--	if test "${a#$b}" != "$a" || test "${b#$a}" != "$b"; then
--		die "$(eval_gettext "Gitdir '\$a' is part of the submodule path '\$b' or vice versa")"
--	fi
--	while test "${a%%/*}" = "${b%%/*}"
--	do
--		a=${a#*/}
--		b=${b#*/}
--	done
--	# Now chop off the trailing '/'s that were added in the beginning
--	a=${a%/}
--	b=${b%/}
--
--	# Turn each leading "*/" component into "../"
--	rel=$(printf '%s\n' "$b" | sed -e 's|[^/][^/]*|..|g')
--	printf '%s\n' "gitdir: $rel/$a" >"$sm_path/.git"
--
--	rel=$(printf '%s\n' "$a" | sed -e 's|[^/][^/]*|..|g')
--	(clear_local_git_env; cd "$sm_path" && GIT_WORK_TREE=. git config core.worktree "$rel/$b")
--}
--
- isnumber()
- {
- 	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
-@@ -301,7 +227,7 @@ cmd_add()
- 			shift
- 			;;
- 		--depth=*)
--			depth=$1
-+			depth="$1"
- 			;;
- 		--)
- 			shift
-@@ -412,7 +338,7 @@ Use -f if you really want to add it." >&2
- 				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
- 			fi
- 		fi
--		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" || exit
-+		git submodule--helper module_clone --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" "$reference" "$depth" || exit
- 		(
- 			clear_local_git_env
- 			cd "$sm_path" &&
-@@ -774,7 +700,7 @@ Maybe you want to use 'update --init'?")"
- 
- 		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
- 		then
--			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
-+			git submodule--helper module_clone --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
- 			cloned_modules="$cloned_modules;$name"
- 			subsha1=
- 		else
--- 
-2.5.0.264.geed6e44.dirty
+[1]: http://www.catb.org/esr/writings/taoup/html/ch01s06.html#id2877777
+
+>> Stepping back a bit, is a for-each-foo()-style interface desirable?
+>> This sort of interface imposes a good deal of complexity on callers,
+>> demanding a callback function and callback data (cb_data), and is
+>> generally (at least in C) more difficult to reason about than other
+>> simpler interfaces. Is such complexity warranted?
+>>
+>> An alternate, much simpler interface would be to have a function, say
+>> get_worktrees(), return an array of 'worktree' structures to the
+>> caller, which the caller would iterate over (which is a common
+>> operation in C, thus easily reasoned about).
+>>
+>> The one benefit of a for-each-foo()-style interface is that it's
+>> possible to "exit early", thus avoiding the cost of interrogating
+>> meta-data for worktrees in which the caller is not interested,
+>> however, it seems unlikely that there will be so many worktrees linked
+>> to a repository for this early exit to translate into any real
+>> savings.
+>
+> I am not opposed to making a simple function as you describe.  I think David was
+> looking for a callback style function.  I don't think it would be
+> terrible to keep the
+> callback and then also include the simple function to return the
+> struct array.  I like
+> the memory management of the callback better than the struct array though.
+
+We should stick with one or the other. Having both complicates the
+code unnecessarily and increases maintenance costs. I, personally,
+prefer the get_worktrees() approach for its client-side simplicity.
+With a corresponding free_worktrees() to dispose of the resources
+allocated by get_worktrees(), memory management shouldn't be much of a
+burden for callers (other than having to remember to call it).
+
+>> I may have missed some discussion in earlier rounds (or perhaps I'm
+>> too simple-minded), but I'm confused about why this logic (and most of
+>> the rest of the function) differs so much from existing logic in
+>> branch.c:find_shared_symref() and find_linked_symref() for iterating
+>> over the worktrees and gleaning information about them. That logic in
+>> branch.c seems to do a pretty good job of reporting the worktree in
+>> which a branch is already checked out, so it's not clear why the above
+>> logic takes a different (and seemingly more complex) approach.
+>
+> This is due to my unfamiliarity of the code api.  I keep trying to
+> look for the right
+> functions to use, but I miss them.  Sorry.  I will rework using those functions.
+
+The API is indeed large and complex, and it can be difficult to get a
+handle on how to accomplish various tasks. That's also a good argument
+for re-using the existing (proven) code in
+branch.c:find_shared_symref() and find_linked_symref() rather than
+re-inventing it from scratch. In its current form, the branch.c code
+doesn't look much like a general-purpose iterator function, but it
+should be possible to refactor if over the course of a few patches so
+that it does satisfy that goal.
+
+>>> +       if (!main_is_bare) {
+>>> +               strbuf_addstr(&worktree_git, "/.git");
+>>> +
+>>> +               ret = fn(worktree_path.buf, worktree_git.buf, cb_data);
+>>> +               if (ret)
+>>> +                       goto done;
+>>> +       }
+>>> +       strbuf_addstr(&worktree_git, "/worktrees");
+>>> +
+>>> +       if (is_directory(worktree_git.buf)) {
+>>
+>> As mentioned in my v2 review[1], this is_directory() invocation
+>> doesn't buy you anything. The following opendir() will either succeed
+>> or fail anyhow, so checking beforehand if 'worktree_git' is a
+>> directory is wasted work. If you eliminate is_directory(), you avoid
+>> that unnecessary work (and the rest of the code can be less deeply
+>> indented).
+>
+> For some reason, in my testing, calling opendir was giving a
+> segmentation fault regardless of how I checked the return value.
+> Including the is_directory check allowed me to avoid that.
+
+Was it the opendir() that was crashing or the closedir()? Considering
+that the closedir() incorrectly resides outside the `if (dir) {...}'
+block, rather than inside, I could easily see the closedir() crashing
+when called with NULL.
