@@ -1,107 +1,154 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v14 04/13] ref-filter: implement an `align` atom
-Date: Mon, 31 Aug 2015 19:28:35 +0200
-Message-ID: <vpqpp235pvg.fsf@anie.imag.fr>
-References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
-	<1440857537-13968-5-git-send-email-Karthik.188@gmail.com>
-	<CAPig+cRHRPehkd+9PwOqpXkRUvaJa42zLtCKMEfv2W=ZJUZJzA@mail.gmail.com>
-	<CAOLa=ZTHtps2gJb9asSzG_4NOwx_xiA7OuCzjW=BTTFfkaYoQg@mail.gmail.com>
-	<CAPig+cQF=1FPFP_7Bn2m2J+ay5ZupG25USWc9LT9SqO1=VDZvg@mail.gmail.com>
-	<CAOLa=ZS53BNNvnYv2TU6xQbEihi1GiKBaEEZ=KT6p_gDBR9Y9Q@mail.gmail.com>
-	<CAPig+cRAYeF0ZDn5FsHioZr1g4pH3Ay69_3KDb8ZF1USZxzcEg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-p4: add "--path-encoding" option
+Date: Mon, 31 Aug 2015 10:40:18 -0700
+Message-ID: <xmqqpp23we4d.fsf@gitster.mtv.corp.google.com>
+References: <1441035616-39128-1-git-send-email-larsxschneider@gmail.com>
+	<1441035616-39128-2-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 19:28:54 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, luke@diamand.org
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Mon Aug 31 19:40:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWSt3-0007ik-5K
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 19:28:53 +0200
+	id 1ZWT4K-0000kE-9X
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 19:40:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753991AbbHaR2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 13:28:49 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:59789 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753415AbbHaR2t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 13:28:49 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t7VHSWD7031037
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 31 Aug 2015 19:28:32 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t7VHSZfD021879;
-	Mon, 31 Aug 2015 19:28:35 +0200
-In-Reply-To: <CAPig+cRAYeF0ZDn5FsHioZr1g4pH3Ay69_3KDb8ZF1USZxzcEg@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 31 Aug 2015 13:16:23 -0400")
+	id S1753688AbbHaRk2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Aug 2015 13:40:28 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:36861 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753481AbbHaRk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 13:40:27 -0400
+Received: by pabpg12 with SMTP id pg12so13476103pab.3
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 10:40:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=Y/rW3Wb6L4ob41Qy+Do+Dr++Rjf5VMIjQ4YCC0Nt3L8=;
+        b=OVdggPbwjhPCw4O8GAw4fPbdjyLu+l+xuwnp5BG3WK4djlsJTm+6lKDE3QMA1kb0Ea
+         xDxYa7Fh4Cbc2Y/HQ2HmNs+wBZxtyobtSU1Bkg5BmrYSrCciMWHgl1pFXjz0X8kyWuCf
+         MoIUbtm744DZ8eDMfwG6W3fMvvd5Dh7C0PuAkyLEVK2yyCR4MvucXGZlaPvRjNGg7OEI
+         QpKmXp7BifYGxZT6W1bRatVCZCz0FaNdyQJgJA9EsCgHbz3DtRcIhRECw8dCAyntYC4U
+         EiIe+IsN/F6Ts/u3DAxmUvWaWeNzV/ROyKz8KdEAKGUR31ujtpFH+bLoU0G79ZMrgrA2
+         HLbQ==
+X-Received: by 10.68.98.5 with SMTP id ee5mr39630044pbb.95.1441042826858;
+        Mon, 31 Aug 2015 10:40:26 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:1937:16f4:ede1:6d38])
+        by smtp.gmail.com with ESMTPSA id eg2sm15455141pad.44.2015.08.31.10.40.26
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 31 Aug 2015 10:40:26 -0700 (PDT)
+In-Reply-To: <1441035616-39128-2-git-send-email-larsxschneider@gmail.com>
+	(larsxschneider@gmail.com's message of "Mon, 31 Aug 2015 17:40:16
+	+0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 31 Aug 2015 19:28:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t7VHSWD7031037
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1441646913.59527@Z207SMYAfARhXX186uuSpw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276896>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+larsxschneider@gmail.com writes:
 
-> On Mon, Aug 31, 2015 at 5:55 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> On Sun, Aug 30, 2015 at 3:10 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> On Sun, Aug 30, 2015 at 9:38 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>>> On Sun, Aug 30, 2015 at 8:57 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>>>> On Sat, Aug 29, 2015 at 10:12 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>>>>> +               } else if (!strcmp(name, "align"))
->>>>>> +                       die(_("format: incomplete use of the `align` atom"));
->>>>>
->>>>> Why does %(align) get flagged as a malformation of %(align:), whereas
->>>>> %(color) does not get flagged as a malformation of %(color:)? Why does
->>>>> one deserve special treatment but not the other?
->>>>
->>>> Didn't see that, I think its needed to add a check for both like :
->>>>
->>>> else if (!strcmp(name, "align") || !strcmp(name, "color"))
->>>>             die(_("format: improper usage of %s atom"), name);
->>>>
->>>> I had a look if any other atoms need a subvalue to operate, couldn't
->>>> find any.
->>>
->>> Hmm, I'm not convinced that either %(align) or %(color) need to be
->>> called out specially. What is the current behavior when these
->>> "malformations" or any other misspelled atoms are used? Does it error
->>> out? Does it simply ignore them and pass them through to the output
->>> unmolested?
->>
->> It just simply ignores them currently, which is kinda bad, as the user
->> is given no warning, and the atom is ineffective.
+> From: Lars Schneider <larsxschneider@gmail.com>
 >
-> Warning about unrecognized atoms may indeed be a good idea, however,
-> the current behavior isn't a huge problem since user discovers the
-> error when the output fails to match his expectation.
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>  Documentation/git-p4.txt        |  4 ++++
+>  git-p4.py                       |  6 ++++++
+>  t/t9821-git-p4-path-encoding.sh | 38 +++++++++++++++++++++++++++++++=
++++++++
+>  3 files changed, 48 insertions(+)
+>  create mode 100755 t/t9821-git-p4-path-encoding.sh
+>
+> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+> index 82aa5d6..98b6c0f 100644
+> --- a/Documentation/git-p4.txt
+> +++ b/Documentation/git-p4.txt
+> @@ -252,6 +252,10 @@ Git repository:
+>  	Use a client spec to find the list of interesting files in p4.
+>  	See the "CLIENT SPEC" section below.
+> =20
+> +----path-encoding <encoding>::
+> +	The encoding to use when reading p4 client paths. With this option
+> +	non ASCII paths are properly stored in Git. For example, the encodi=
+ng 'cp1252' is often used on Windows systems.
+> +
 
-It's a bit worse than it seems: without this change, using --format
-'%(align)%(end)' results in Git complaining about %(end) without
-matching atom, which is really confusing since you do have a %(align) (I
-got it for real while testing a preliminary version).
+This line is overly long.  Let AsciiDoc wrap it upon output and keep
+the source within a reasonable limit (see existing lines around the
+new text to see what is considered reasonable).
 
-> This behavior of ignoring unrecognized atoms predates your work,
-> doesn't it? If so, it's probably not something you need to address in
-> this series.
+Do I see too many dashes before the option name, by the way, or is
+it my e-mail client tricking my eyes?
 
-I wouldn't insist in having it in the series, but now that it's here, I
-think we can keep it (if only to shorten the interdiff for the next
-iteration).
+> diff --git a/t/t9821-git-p4-path-encoding.sh b/t/t9821-git-p4-path-en=
+coding.sh
+> new file mode 100755
+> index 0000000..f6bb79c
+> --- /dev/null
+> +++ b/t/t9821-git-p4-path-encoding.sh
+> @@ -0,0 +1,38 @@
+> +#!/bin/sh
+> +
+> +test_description=3D'Clone repositories with non ASCII paths'
+> +
+> +. ./lib-git-p4.sh
+> +
+> +test_expect_success 'start p4d' '
+> +	start_p4d
+> +'
+> +
+> +test_expect_success 'Create a repo containing cp1251 encoded paths' =
+'
+> +	cd "$cli" &&
+> +
+> +	FILENAME=3D"$(echo "a-=A4_o-=B6_u-=BC.txt" | iconv -f utf-8 -t cp12=
+52)" &&
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Hmm, we'd be better off not having a bare UTF-8 sequence in the
+source like this, especially when you already have the same thing
+backslash-escaped in the "expect" file below.  Perhaps
+
+	NAME=3D"a-\303\244_o-\303\266_u-\303\274.txt" &&
+
+	UTF8=3D$(printf "$NAME") &&
+        CP1252=3D$(printf "$NAME" | iconv -t cp1252) &&
+        echo "\"$UTF8\"" >expect &&
+
+        >"$CP1252" &&
+        p4 add "$CP1252" &&
+        ...
+
+or something along that line?
+
+> +	>"$FILENAME" &&
+> +	p4 add "$FILENAME" &&
+> +	p4 submit -d "test"
+> +'
+> +
+> +test_expect_success 'Clone repo containing cp1251 encoded paths' '
+> +	git p4 clone --destination=3D"$git" --path-encoding=3Dcp1252 //depo=
+t &&
+> +	test_when_finished cleanup_git &&
+> +	(
+> +		cd "$git" &&
+> +		git init . &&
+> +		cat >expect <<-\EOF &&
+> +		"a-\303\244_o-\303\266_u-\303\274.txt"
+> +		EOF
+> +		git ls-files >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'kill p4d' '
+> +	kill_p4d
+> +'
+> +
+> +test_done
