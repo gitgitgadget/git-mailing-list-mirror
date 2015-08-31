@@ -1,106 +1,86 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: [BUG] rebase modify/delete conflict prints wrong SHA-1
-Date: 30 Aug 2015 20:42:47 -0400
-Message-ID: <20150831004247.17480.qmail@ns.horizon.com>
-Cc: linux@horizon.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 31 02:49:51 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v14 07/13] ref-filter: add support for %(contents:lines=X)
+Date: Sun, 30 Aug 2015 21:43:44 -0700
+Message-ID: <CAOLa=ZTb0-eymVhvO5aqh94MptsAAbe=XSCR2TGG-Yea2cYu8g@mail.gmail.com>
+References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
+ <1440857537-13968-8-git-send-email-Karthik.188@gmail.com> <CAPig+cTYQmrFnf7p6zxNh9w6AKXth99nRu40chQtUYAkWVss=w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 06:44:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWDID-0003qO-Ae
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 02:49:49 +0200
+	id 1ZWGxL-0000Kz-OK
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 06:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564AbbHaAt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2015 20:49:29 -0400
-Received: from ns.horizon.com ([71.41.210.147]:48079 "HELO ns.horizon.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751433AbbHaAt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2015 20:49:28 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sun, 30 Aug 2015 20:49:28 EDT
-Received: (qmail 17481 invoked by uid 1000); 30 Aug 2015 20:42:47 -0400
+	id S1750872AbbHaEoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 00:44:14 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:34262 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750782AbbHaEoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 00:44:14 -0400
+Received: by obbfr1 with SMTP id fr1so84648043obb.1
+        for <git@vger.kernel.org>; Sun, 30 Aug 2015 21:44:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=AegwS88PFKAQlPjPsmZMRDZN8FyFS+hZz0+O253iwfU=;
+        b=XbpWv7uxh0xciKdUQr/TwiDc3AajBu/zZ+O60sjoliMnpFU7GCPafJRFjwgEfGDz7S
+         VTUbsYF3HlLdu502FMvXr4uWQ1nTTP5TMAVzu1YF7NVfYBKijcnN0G6cj7sLpTQb2uHt
+         BWPZ3Gi7ZSTFRqSVJeHHko2EgT2etk4dMfsGK95sZAndjPu8DOWXn0RjBNuIs7I+Od80
+         VMXvLYmVxLIwjo3r9Rs4eHcm7e05y67Vkn6MLJG8KJjhSJ6XUH208OXWnLLCdndnm0up
+         /d7D21TdfuVHIBKYJK4ASBVlAyQqe5sFGlTBGbW5j3ZBybZJ2uBRlJWbMR/M/1DAP9nv
+         yprw==
+X-Received: by 10.182.153.161 with SMTP id vh1mr12194892obb.34.1440996253484;
+ Sun, 30 Aug 2015 21:44:13 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Sun, 30 Aug 2015 21:43:44 -0700 (PDT)
+In-Reply-To: <CAPig+cTYQmrFnf7p6zxNh9w6AKXth99nRu40chQtUYAkWVss=w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276845>
 
-I was rebasing my local kernel patches on top of v4.2 (using Debian
-git_1:2.5.1-1_amd64), and ran into the following when one of the
-files I modified got renamed in mainline:
+On Sun, Aug 30, 2015 at 3:13 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sat, Aug 29, 2015 at 10:12 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> In 'tag.c' we can print N lines from the annotation of the tag using
+>> the '-n<num>' option. Copy code from 'tag.c' to 'ref-filter' and
+>> modify it to support appending of N lines from the annotation of tags
+>> to the given strbuf.
+>>
+>> Implement %(contents:lines=X) where X lines of the given object are
+>> obtained.
+>>
+>> Add documentation and test for the same.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> @@ -608,6 +672,15 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
+>>                         v->s = xmemdupz(sigpos, siglen);
+>>                 else if (!strcmp(name, "contents"))
+>>                         v->s = xstrdup(subpos);
+>> +               else if (skip_prefix(name, "contents:lines=", &valp)) {
+>> +                       struct contents *contents = xmalloc(sizeof(struct contents));
+>> +
+>> +                       if (strtoul_ui(valp, 10, &contents->lines))
+>> +                               die(_("positive width expected align:%s"), valp);
+>
+> I forgot to mention this when I reviewed the patch earlier[1], but you
+> copied this error message a bit too literally from the %(align:) atom.
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/276807
+>
 
-Applying: drivers/ntb/ntb_hw.c: Use prandom_u32_max()
-Using index info to reconstruct a base tree...
-A       drivers/ntb/ntb_hw.c
-Falling back to patching base and 3-way merge...
-CONFLICT (modify/delete): drivers/ntb/ntb_hw.c deleted in 0ec6a07f518304248dca177405fa607822e4933d and modified in drivers/ntb/ntb_hw.c: Use prandom_u32_max(). Version drivers/ntb/ntb_hw.c: Use prandom_u32_max() of drivers/ntb/ntb_hw.c left in tree.
-Failed to merge in the changes.
-Patch failed at 0037 drivers/ntb/ntb_hw.c: Use prandom_u32_max()
-The copy of the patch that failed is found in:
-   /usr/src/linux/.git/rebase-apply/patch
+I fixed that with your other suggestions, should have mentioned it. Thanks
 
-The problem is that 0ec6a07f518304248dca177405fa607822e4933d is *my* patch.
-And it's not the conflicting patch, either, it's some nearby patch!
-
-The file was renamed in ec110bc7cc48d7806c9b65094e6afb19452d458f
-("NTB: Move files in preparation for NTB abstraction"),
-which you can find in 4.2-rc1.
-
-It appears that there's a glitch in printing the SHA-1 in this case.
-
-
-I tried to reproduce it with the trivial case: create an initial
-commit with one file, delete it in one branch, modify it in another,
-and then rebase the second on top of the first.
-
-git rebase printed the right SHA-1.
-
-
-But if I have two commits on each branch, I get something similar:
-
-git init foo
-cd foo
-echo foo > foo
-echo bar > bar
-git add foo bar
-git commit -m "Initial commit"
-git rm foo
-git commit -m "Delete foo"
-git rm bar
-git commit -m "Delete bar"
-git checkout -b branch HEAD^^
-echo baz >> foo
-git commit -m "Edit foo" foo
-echo baz >> bar
-git commit -m "Edit bar" bar
-git rebase master
-
-First, rewinding head to replay your work on top of it...
-Applying: Edit foo
-Using index info to reconstruct a base tree...
-A       foo
-Falling back to patching base and 3-way merge...
-CONFLICT (modify/delete): foo deleted in 52e1cece1e48dc21b317d4bd671fa171c3a7abd3 and modified in Edit foo. Version Edit foo of foo left in tree.
-Failed to merge in the changes.
-Patch failed at 0001 Edit foo
-The copy of the patch that failed is found in:
-   /tmp/foo/.git/rebase-apply/patch
-
-For me, commit 52e1cece is the patch that removes bar, not foo:
-
-$ git show 52e1cece
-commit 52e1cece1e48dc21b317d4bd671fa171c3a7abd3
-Author: George Spelvin <linux@horizon.com>
-Date:   Sun Aug 30 18:59:09 2015 -0400
-
-    Delete bar
-
-diff --git a/bar b/bar
-deleted file mode 100644
-index 5716ca5..0000000
---- a/bar
-+++ /dev/null
-@@ -1 +0,0 @@
--bar
+-- 
+Regards,
+Karthik Nayak
