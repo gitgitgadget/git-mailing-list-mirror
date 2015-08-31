@@ -1,92 +1,104 @@
 From: Karthik Nayak <karthik.188@gmail.com>
 Subject: Re: [PATCH v14 00/13] Port tag.c to use ref-filter.c
-Date: Mon, 31 Aug 2015 16:39:00 +0530
-Message-ID: <CAOLa=ZQyjfkbqMR6jSujVng-h=ezK0qPqwgJWynaEcvjeO3pSQ@mail.gmail.com>
-References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com> <vpqvbbwhrxp.fsf@anie.imag.fr>
+Date: Mon, 31 Aug 2015 17:06:15 +0530
+Message-ID: <CAOLa=ZRJC5FD08Ljh=exM5GU8vzDAo2YnjQpScB8nwa9qDdTeA@mail.gmail.com>
+References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com> <vpqa8t7j4nf.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 31 13:09:34 2015
+X-From: git-owner@vger.kernel.org Mon Aug 31 13:36:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWMxy-0006Vw-Bn
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 13:09:34 +0200
+	id 1ZWNOM-0003G8-Jq
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 13:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751903AbbHaLJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 07:09:31 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:36303 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751433AbbHaLJa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 07:09:30 -0400
-Received: by obkg7 with SMTP id g7so87540572obk.3
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 04:09:29 -0700 (PDT)
+	id S1752763AbbHaLgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 07:36:46 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:35756 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322AbbHaLgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 07:36:45 -0400
+Received: by obcbp4 with SMTP id bp4so17529123obc.2
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 04:36:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=G9sH7F2KjqSlYZgVst4xeWBH/GMwaCv7FhQFOrNBbjk=;
-        b=etTfDJ1pL/c3kRox9yv5m2nvJ2BE/oQT+eu2vXVJtbhxdWl/VOIoTSQ8S3D8sfZ8LJ
-         FecCXN6te4cRVrLzDbMH7dZff0A3CKgHm2Yft4n8fgxWHuWqYQbz0EeyW0VrBCBEygc+
-         dWjaynLLU6/ud8y6uCHCcMBqwAvwlEV6lI+OPOGRuMUBapU1KWZYt+h3C7C/ZndJTbDk
-         rlXEUvjH/itD+NNmggEfltHMT1NbW9x+Q5YoEMIWGXPXt16TaI9ouZixzzFSPBwjZRNX
-         qYbmIAuoyuS260+PKAcEi9LZQJbmhAE1zmCeDR/D8O+gV7B4P7MVY/uCz5V/+egEbwzW
-         9QPQ==
-X-Received: by 10.60.50.169 with SMTP id d9mr13994018oeo.9.1441019369531; Mon,
- 31 Aug 2015 04:09:29 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Mon, 31 Aug 2015 04:09:00 -0700 (PDT)
-In-Reply-To: <vpqvbbwhrxp.fsf@anie.imag.fr>
+        bh=b15SlXdBFZDC5si9EL5Ip0uEcLDL8wHtLw/NaX9fgSU=;
+        b=Yx3Hqrs/T/OQDh+uK/sxnf3R2luR4nVt3o1BEAS5nfY+nm7awt7jtadZ/p2TnJ/TvB
+         EKfdiZbCY2v62wDV2cmSFZV2dJGpGQt7MfSFAK0gLszu3O0cwbdn1puXYyf0iXTNRXk8
+         K5LL1rRgAt+7TT4nFl9s2hgFM0yl3j+KvxdxtWdoT2kHijj5m1HKaoacA1UM4Kv/otGz
+         VPLY5ck88t666o1367MvZNUp4zwFM5QwSbiD8/dLYdhXIezTdST3E88kxWRnEpUjw+8a
+         2Jz96WqxEkN3m8Yb7Jax3i2bLy05oAWC3kaJ3qR2AefDCPVsQMub6H0a2qkayIjcaflK
+         2wTA==
+X-Received: by 10.182.81.98 with SMTP id z2mr12991095obx.70.1441021005232;
+ Mon, 31 Aug 2015 04:36:45 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Mon, 31 Aug 2015 04:36:15 -0700 (PDT)
+In-Reply-To: <vpqa8t7j4nf.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276874>
 
-On Mon, Aug 31, 2015 at 12:20 PM, Matthieu Moy
+On Mon, Aug 31, 2015 at 1:01 PM, Matthieu Moy
 <Matthieu.Moy@grenoble-inp.fr> wrote:
 > Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
->> index 06d468e..1b48b95 100644
->> --- a/Documentation/git-for-each-ref.txt
->> +++ b/Documentation/git-for-each-ref.txt
->> @@ -149,6 +149,7 @@ Its first line is `contents:subject`, where subject is the concatenation
->>  of all lines of the commit message up to the first blank line.  The next
->>  line is 'contents:body', where body is all of the lines after the first
->>  blank line.  Finally, the optional GPG signature is `contents:signature`.
->> +The first `N` lines of the object is obtained using `contents:lines=N`.
+>> * We perform quoting on each layer of nested alignment.
 >
-> "Finally" in the last line of the context is no longer accurate.
+> I do not understand why.
+>
+> For example, using the tip of karthik/exp on GitHub (on top of this
+> series, d91419b (ref-filter: adopt get_head_description() from branch.c,
+> 2015-08-23)):
+>
+> git for-each-ref --shell \
+>   --format 'x=%(if)foo%(then)%(align:10)XXX%(end)%(else) not foo %(end)'
+>
+> I'd expect an output like:
+>
+> x='XXX      '
+>
+> and instead I get:
+>
+> x=''\''XXX       '\'''
+>
+> which assigns the value 'XXX       ' (including the quotes) to $x. I do
+> not see a use-case for this (well, I could imagine one where we would
+> later call eval "$x", that seems rather far-fetched).
+>
+> I think the quoting should be:
+>
+> 1) When the stack contains only the initial element, quote individual
+>    atoms.
+>
+> 2) When the stack contains exactly two elements and encountering a %(end)
+>    or %(else), quote the entire strbuf of the 2nd level when appending to
+>    the 1st level.
+>
+> 3) When the stack contains more than two elements, perform no quoting at
+>    all. The quoting will be done later by #2.
 >
 
-Will remove that.
+Yea, That's what Eric was saying, I even made changes which sum up to
+what you're saying :)
 
->> +test_expect_success 'check `%(contents:lines=X)`' '
->> +     cat >expect <<-\EOF &&
->> +     master three
->> +     side four
->> +     odd/spot three
->> +     double-tag Annonated doubly
->> +     four four
->> +     one one
->> +     signed-tag A signed tag message
->> +     three three
->> +     two two
->> +     EOF
->> +     git for-each-ref --format="%(refname:short) %(contents:lines=1)" >actual &&
->> +     test_cmp expect actual
->> +'
+> I found a segfault while testing:
 >
-> Nit: I would find it more readable with an actual separator (anything
-> but a space) between %(refname) and %(contents).
+> $ git for-each-ref --format 'x=%(if)%(align:10)%(end)%(then)%(align:10)XXX%(end)%(else)%(end)' --shell
+> zsh: segmentation fault
 >
 
-Will add.
+I wouldn't worry about this ATM, I have made so many changes that the
+tip is barely changed to reflect those, though I'll have a look at it
+:)
 
 -- 
 Regards,
