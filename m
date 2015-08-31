@@ -1,99 +1,70 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/3] submodule: implement `module_name` as a builtin helper
-Date: Mon, 31 Aug 2015 13:51:48 -0700
-Message-ID: <CAGZ79kb6Nf8Vow=ehv7zib8erOeTa5NX2Cj=b4jcdhSiDEEusQ@mail.gmail.com>
-References: <1441048767-29729-1-git-send-email-sbeller@google.com>
-	<1441048767-29729-3-git-send-email-sbeller@google.com>
-	<xmqqwpwbtcw2.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-p4: add "--path-encoding" option
+Date: Mon, 31 Aug 2015 14:08:28 -0700
+Message-ID: <xmqqsi6ztbcj.fsf@gitster.mtv.corp.google.com>
+References: <1441053833-63790-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	johannes.schindelin@gmail.com, Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 22:51:55 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, luke@diamand.org, tboegi@web.de
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Mon Aug 31 23:08:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWW3W-000310-5h
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 22:51:54 +0200
+	id 1ZWWJf-0000d1-QU
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 23:08:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752821AbbHaUvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 16:51:50 -0400
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:35584 "EHLO
-	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752796AbbHaUvt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 16:51:49 -0400
-Received: by qkcj187 with SMTP id j187so16946442qkc.2
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 13:51:48 -0700 (PDT)
+	id S1752612AbbHaVIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 17:08:31 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:35541 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752064AbbHaVIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 17:08:30 -0400
+Received: by pacdd16 with SMTP id dd16so150864516pac.2
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 14:08:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Thf4UkQvvyhCDiSyiQ91zRGvTooKXfNSv6OZpT86lqs=;
-        b=ozfqym/mAnKXO5dz+nfLvg5NJE1U4y4P2Mz7UCtMoSM/0o+ZTUfX0hQJPm4ykwR6Ug
-         MkeYkywxzlQRIbxNdmMSKsEQDrV+uEsWTebIMr7kF3C8zyp4BM2G2kyGgmSP4jAoV2xm
-         Xve6rCkgTscVHXmFV2ZBWBpFx9+0/kBzfwWyNVQ5cV5XIEdTH8c2I345Zmq98g+/+0pv
-         qBi/KgvT618FpSyWw5bBvKUglXyxVEaJGXZ3bFSnloNLu6Mq2bBkcgwPZDPm0VdIOgdx
-         V+b2JElR5y9rikPPmFiZ8O9GWvwrLSYnEeXYS7V9ltglVRjKbWtvCXJi3/eoZI52Fl5U
-         2hBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Thf4UkQvvyhCDiSyiQ91zRGvTooKXfNSv6OZpT86lqs=;
-        b=I5Z6DQDplCT+eRMfc+wAhGjIRqdNtrySjVRUyzbHrGNttyXieYTRrSbprz/UI0h+pL
-         pegyGvMuDmAx6RGwNIZ/MJQkuI7oCG4sKw03IRbC0ZC7Zu6gXdjDuD2UwJOcRv/m9siz
-         rVKjIprc5TifmWOHWgd6hHKzoH77mMePzlJbRglgIworeHP1K0K1ER4LzX+07DxGFPKA
-         a5EU4KDs70Nk5XRKhU1oaMJnweWXkvGEkiz9sa5+bNoYBFgZP3Z/pzEPGJCx2YIGzhr5
-         qvsA4QhnAGKJSrsgXKpntNhmH88ftm/cDtXHDHpi08vPqVXWoxNf+UzXguR1eSEPt7o5
-         vfiQ==
-X-Gm-Message-State: ALoCoQk7cGaqfYuKw4A9BH6YeEP32V04L4VvkQrT3h6VwMCOOf4trXo5NpWhAxWIRG1xm/Xovk1d
-X-Received: by 10.129.116.84 with SMTP id p81mr3531715ywc.1.1441054308649;
- Mon, 31 Aug 2015 13:51:48 -0700 (PDT)
-Received: by 10.37.21.132 with HTTP; Mon, 31 Aug 2015 13:51:48 -0700 (PDT)
-In-Reply-To: <xmqqwpwbtcw2.fsf@gitster.mtv.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=tTkoFpFAGthH5jRD13n4YJ5Yq7SAEwI1Lkc+JHgCi2I=;
+        b=J8Nt32i1xuwhrHJGpoSnYh8Y6iQziECXIkA4qd9aSY7E8feDc7P4hVji9cmrU5oxuT
+         6tl/zL71QGjyVqsvT1sfRvjGgdjF0hiPPhgnm5AwEof1jpQxhXC13BvZAoBvTAGFMoBe
+         9jcbqhPXEn8duLCiUX3gxaP3UIAWPCJI0dRCUglhMIh93YMe17DPWrhyLvy4Mb27Piw5
+         0VAgRPvqKIn89Ihnm4T1kTaPD7LBBt7Ltnid7uMe7bCpNCWuZdka+D32k3uzEQox9urh
+         uUotRbYg4MwNQTRV4AUi2oD+cpfHdA/y8GPa+bvNfsIbJW4XVA1+RShH4DeHDXE5+ofQ
+         VTIg==
+X-Received: by 10.66.158.65 with SMTP id ws1mr41003741pab.18.1441055310128;
+        Mon, 31 Aug 2015 14:08:30 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:1937:16f4:ede1:6d38])
+        by smtp.gmail.com with ESMTPSA id yt2sm521044pbb.84.2015.08.31.14.08.29
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 31 Aug 2015 14:08:29 -0700 (PDT)
+In-Reply-To: <1441053833-63790-1-git-send-email-larsxschneider@gmail.com>
+	(larsxschneider@gmail.com's message of "Mon, 31 Aug 2015 22:43:52
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276942>
 
-On Mon, Aug 31, 2015 at 1:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>  usage:
->> -     usage("git submodule--helper module_list\n");
->> +     usage("git submodule--helper [module_list | module_name]\n");
->
-> To me, the above reads as if saying:
->
->     The command takes one of the two subcommands at this stage,
->     module_list that does not take any parameter, and module_name
->     that does not take any parameter.
->
-> which is not what you intended.
->
-> I think that the help for individual options and arguments are
-> sufficiently given in the implementation of each subcommand
-> (e.g. module_list does its own parse_options() thing), so there is
-> no need to duplicate them here.  The only purpose of this usage serves
-> is to tell the user that the subcommand name was not understood, and
-> give the list of available subcommands.  For that, I wonder if the
-> usual single-liner "usage" is the best way to do so.
->
->     $ git submodule--helper frotz
->     fatal: 'frotz' is not a valid submodule--helper subcommand, which are
->            module_list, module_name.
->
-> or something along that line, perhaps, may be more appropriate?
+larsxschneider@gmail.com writes:
 
-As this is something that *should* not happen in the wild, (but it
-will of course),
-it sounds like a good idea to have a clear error message here. I'll send a patch
-for that. (either one on top of 3/3 to improve the message, or a
-reroll of the series,
-as you'd like)
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> Diff to v1:
+> * switch example conversions from cp1252 to iso8859-1 (thanks Torsten!)
+> * fix git-p4.txt line length and double dashes (thanks Junio!)
+> * remove bare UTF-8 sequence (thanks Junio!)
+>
+> As with v1, I ensured the unit test runs on OS X and Linux.
+>
+> I noticed one weird point, though. "git ls-files" outputs the UTF-8 characters escaped on Linux and on OS X. Is there a problem with my setup or this a Git bug?
+
+There is no bug, there is no misconfiguration on your part.  It is
+very much deliberate, I think.  core.quotepath defaults to false.
+
+Asking is very good, but please don't do so in in-code comment.
