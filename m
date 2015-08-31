@@ -1,110 +1,96 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v14 04/13] ref-filter: implement an `align` atom
-Date: Mon, 31 Aug 2015 15:44:56 +0530
-Message-ID: <CAOLa=ZSaVttejcGKwq1jzd7deLi-A4=kaJWW0zW4XdYPrsodJg@mail.gmail.com>
-References: <1440857537-13968-1-git-send-email-Karthik.188@gmail.com>
- <1440857537-13968-5-git-send-email-Karthik.188@gmail.com> <CAPig+cRHRPehkd+9PwOqpXkRUvaJa42zLtCKMEfv2W=ZJUZJzA@mail.gmail.com>
- <xmqq8u8sznyo.fsf@gitster.mtv.corp.google.com> <CAPig+cTqmku5DGm9g1VN8s5sBgkjZTBLyGrFGjU2J099QA32wg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3] gc: save log from daemonized gc --auto and print it
+ next time
+Date: Mon, 31 Aug 2015 17:17:59 +0700
+Message-ID: <CACsJy8Dd9OCpsytFDDwh8maBfTc1wLs+UKJMPdZngiBaJgr7pA@mail.gmail.com>
+References: <CACsJy8AKbXqsuNJL7Usb-haiynDcCDQXk56WYh5PxzGU3NvaAw@mail.gmail.com>
+ <1440209546-23442-1-git-send-email-pclouds@gmail.com> <xmqqtwrnz2ar.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 12:15:31 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 12:18:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWM7e-0003iy-7U
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 12:15:30 +0200
+	id 1ZWMAc-0006J7-7P
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 12:18:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752483AbbHaKP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 06:15:27 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:33131 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751460AbbHaKP0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 06:15:26 -0400
-Received: by obcid8 with SMTP id id8so38927517obc.0
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 03:15:26 -0700 (PDT)
+	id S1752505AbbHaKSa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Aug 2015 06:18:30 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:34295 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751923AbbHaKS3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Aug 2015 06:18:29 -0400
+Received: by ioeu67 with SMTP id u67so10453794ioe.1
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 03:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=qqP/XyKgNwOWIXD+9F53jGuQzi8iOzi9D7r7JWgRsFQ=;
-        b=EYjMIbY+N2fZWr/2B8iGnPmuGlGfGS1YCKN8Xbgqn5XYvctJ7vEF6AJPKlfQIBJ8Kw
-         Vup/kFIT4rcKah4BQ1l/qqlNJdbEGmyI49ebwPaNySRyKtQliHSFPNxbtXzq8spdUyVK
-         /BwqPq8HG4jXjVL/WOpGVstMgYkhQ14UAoh3SBT88DE4lA41BZXXXNcf5BRl69J6Ygje
-         QbGGvzqXnFCs/jKusLjUTip8LETowNvECYHX1duzJVTK5/i1yPws+geEKV/jhgz+8ROT
-         s1i4bsKC/XR4FW6KBCl4iwLrwC0bcVOj+Zl6W3pOTU6OFTE2FcdwgWxnNQfRWDSnCxDb
-         5BPw==
-X-Received: by 10.60.92.199 with SMTP id co7mr7237968oeb.37.1441016125888;
- Mon, 31 Aug 2015 03:15:25 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Mon, 31 Aug 2015 03:14:56 -0700 (PDT)
-In-Reply-To: <CAPig+cTqmku5DGm9g1VN8s5sBgkjZTBLyGrFGjU2J099QA32wg@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=mv68oheHRykSudER3n+pbCrs0ZJRyszeKDlosVTClCk=;
+        b=j3sstuXwMUvFS8x8hNCvtCBwFgbOGVc0Y3WgW+MbJUVrlub4XYfJgX8S7s1O+lZoPY
+         6n6j78aFanXcGRpe33SRi9rmtHVxsoqpbblqGzfcpR8l8LlkwYcy7qtOto1hRtl/vd7l
+         kwVDxO72ehrKOihGtyAQgnR2iwh4uln+4pRXXtuKnh9fIWAWJZ8TalaZLOZx/rs2gMl9
+         eUaWrWdF5LNHhb7ba9Kmd+nDoeuD/lwlHpvl3INevGusQTKqiysTygA/ElY1saHiaQC2
+         UpaiY9KfxXFNMBWAvns21+9iPi/PbNZ8Y4YNawZaC1v3E0mkF5RkB+81eTg5kILksSMh
+         ExwA==
+X-Received: by 10.107.9.11 with SMTP id j11mr22515409ioi.191.1441016308991;
+ Mon, 31 Aug 2015 03:18:28 -0700 (PDT)
+Received: by 10.107.191.193 with HTTP; Mon, 31 Aug 2015 03:17:59 -0700 (PDT)
+In-Reply-To: <xmqqtwrnz2ar.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276868>
 
-On Mon, Aug 31, 2015 at 4:26 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sun, Aug 30, 2015 at 1:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Eric Sunshine <sunshine@sunshineco.com> writes:
->>> With the disclaimer that I wasn't following the quoting discussion
->>> closely: Is this condition going to be sufficient for all cases, such
->>> as an %(if:) atom? That is, if you have:
->>>
->>>     %(if:notempty)%(bloop)%(then) --option=%(bloop)%(end)
->>>
->>> isn't the intention that, %(bloop) within the %(then) section should
->>> be quoted but not the literal "--option="?
+On Wed, Aug 26, 2015 at 12:49 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> While commit 9f673f9 (gc: config option for running --auto in
+>> background - 2014-02-08) helps reduce some complaints about 'gc
+>> --auto' hogging the terminal, it creates another set of problems.
 >>
->> I think you'll see that the intention of the above is to quote the
->> entirty of the result of %(if...)...%(end) if you read the previous
->> discussion.  The "quoting" is used when you say you are making --format
->> write a script in specified programming language, e.g.
+>> The latest in this set is, as the result of daemonizing, stderr is
+>> closed and all warnings are lost. This warning at the end of cmd_gc(=
+)
+>> is particularly important because it tells the user how to avoid "gc
+>> --auto" running repeatedly. Because stderr is closed, the user does
+>> not know, naturally they complain about 'gc --auto' wasting CPU.
 >>
->>         for-each-ref --shell --format='
->>                 a=%(atom) b=%(if...)...%(end)
->>                 do interesting things using $a and $b here
->>         ' | sh
+>> Daemonized gc now saves stderr to $GIT_DIR/gc.log. Following gc runs
+>> will not be daemonized and gc.log printed out until the user removes
+>> gc.log.
 >>
->> You are correct to point out in the earlier part of your message I
->> am responding to that %(align) is not special and any nested thing
->> including %(if) will uniformly trigger the same "usually each atom
->> is quoted separately, but with this opening atom, everything up to
->> the matching end atom is evaluated first and then the result is
->> quoted" logic.
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>>  Let's try again. Compared to v2 [1], this version does not delete
+>>  gc.log automatically any more. The user needs to take action, then
+>>  delete gc.log to bring it background again.
 >
-> So, if I'm understanding correctly, the semantic behavior of the
-> current patch seems to be more or less correct, but the implementation
-> (and commit message) place perhaps too much emphasis on specializing
-> quoting suppression only for %(align:), whereas it could/should be
-> generalized?
+> Sounds a bit more sensible, but I wonder if it is a good idea to
+> keep going in the first place.  If the last gc run reported an
+> issue, would it make it likely that we would hit the same issue?
 >
-> I am a bit concerned about this code from end_atom_handler():
->
->     /*
->      * Whenever we have more than one stack element that means we
->      * are using a certain modifier atom. In that case we need to
->      * perform quote formatting.
->      */
->     if (state->stack->prev) {
->         quote_formatting(&s, current->output.buf, state->quote_style);
->         strbuf_reset(&current->output);
->         strbuf_addbuf(&current->output, &s);
->     }
->
-> Aren't both the comment and the condition backward? Shouldn't quoting
-> be done only for the top-most state on the stack rather than every
-> state other than the top-most? That is, shouldn't the condition be
-> `!state->stack->prev' as it is in append_atom()?
+> An alternative design I have in mind is to exit "gc --auto" with
+> success without doing anything, after giving the new warning
+> message.  What would be the pros-and-cons between this patch and
+> that alternative design?
 
-After seeing the example of quote usage given by Junio, yes you're right.
-`!state->stack->prev` is the way to go.
-
--- 
-Regards,
-Karthik Nayak
+I think the alt. design is better. If anything, keep runing may
+produce more output and probably distract the user from the real
+warning. We only want to keep doing something again if it can gain us
+something. If we succeed at steps A and B, then fail at C. Doing A and
+B again next time might be worth something in general, but given the
+context of git-gc I don't think it is.
+--=20
+Duy
