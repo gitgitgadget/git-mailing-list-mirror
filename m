@@ -1,102 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Aug 2015, #05; Fri, 28)
-Date: Mon, 31 Aug 2015 07:36:42 -0700
-Message-ID: <xmqqzj17y16t.fsf@gitster.mtv.corp.google.com>
-References: <xmqq4mjj15lm.fsf@gitster.mtv.corp.google.com>
-	<CAP8UFD3-Y4T=dQmBVfRR1DEuuRZLSrUvQid8m1YttOnJc5Fj8w@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: git Dockerfile for ppc64le
+Date: Mon, 31 Aug 2015 16:45:26 +0200
+Organization: gmx
+Message-ID: <b066c544c6597460f4e8f0c8be7cfe73@www.dscho.org>
+References: <CAPS4ckqWociyEmph-mr3Ncz8J5genGjGPNu+sHsSviG5AKwu0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>,
-	Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 16:36:54 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Gawade P <gawade.oefp@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 16:45:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWQCX-0007HV-Fd
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 16:36:49 +0200
+	id 1ZWQKz-0006Xy-9E
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 16:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752735AbbHaOgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2015 10:36:46 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:36349 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751445AbbHaOgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 10:36:45 -0400
-Received: by pabpg12 with SMTP id pg12so8772513pab.3
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 07:36:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=S36d8Lhli3N7RYuq76jxrwwSEqWFuDIC2XF1TnbNeG8=;
-        b=QTLubwSo3Stdb1GfQJf1JpeV+jSSu9jTbe/mL3+YxjKHSVHopKINecsWRnQ5TIqbEK
-         rcLzJhJJ1ndAsbbrJZSuNpRhYVfbOnWjub3ETOlYUrHx1sJ5A8BoZzusXW1ok+ShgwM1
-         eGKfgTtOFaDHibQo1PbITVnaK/To2AkjJen0xQOacLLdojCg8q5Ty6W3INGepZ1Dhb07
-         IUjDmmAqwtV7qvNMhAE+H4+KirYkipWOqTtUeGRMMbqV3iiv896Ylv1dqXQz5WyR+ZTI
-         qgA0FqvEIi6/+gADUiVQjExnrkHMRJdfTk/gCk4cyLCUomjJD6qsODxPllj17zXban5q
-         v8jQ==
-X-Received: by 10.68.178.1 with SMTP id cu1mr38349004pbc.1.1441031804725;
-        Mon, 31 Aug 2015 07:36:44 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:1937:16f4:ede1:6d38])
-        by smtp.gmail.com with ESMTPSA id s17sm14869129pdl.2.2015.08.31.07.36.43
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 31 Aug 2015 07:36:44 -0700 (PDT)
-In-Reply-To: <CAP8UFD3-Y4T=dQmBVfRR1DEuuRZLSrUvQid8m1YttOnJc5Fj8w@mail.gmail.com>
-	(Christian Couder's message of "Sat, 29 Aug 2015 06:15:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752993AbbHaOp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 10:45:29 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56604 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752838AbbHaOp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 10:45:28 -0400
+Received: from www.dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M7pDs-1Yk72k3F2m-00vROc; Mon, 31 Aug 2015 16:45:26
+ +0200
+In-Reply-To: <CAPS4ckqWociyEmph-mr3Ncz8J5genGjGPNu+sHsSviG5AKwu0A@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:eEaZ/2oTg/5rrWH57fX9DMLAwV5mgp9nMmPiT8kAEMhGx3tgClc
+ deC8Qkizx+NAVjy/SlZeqCJB4Z+tDJJ0NgbnqU/+bohbxIggkdB4U7wsGyYMgVyn3xP/RHg
+ WeCLxscs3ueRn42uBA3027RWN9q5VpnFQZKrOpo7lX1ehSpj6QgRSSwbHXE40M9aneMbDcI
+ FZB4dzdTkmNvSfSbKWy7g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zf+3ifAWjkc=:rARO9R/0ofqnyEYXsViFwf
+ YbsW9vu1ES7g8O+3QLemz7GiTxvJjW2CQoKZBIdTqBgy689nGUyI4D0jLPf9qngznj3+dB4KJ
+ LoHO65aHlvDezJT1Uv9k79bs71xe6M3TQ6noycdssA8QHd/42fDNZWiV45QVzcJV3JyeNnDVs
+ YhVQ3feJlXTGJbGM18gmWIiOyz2nQHa9jS8SHg3h8rEBr73MTDd4fL1a7D/cfNmAuhy1J/G0L
+ 6Ajke/MBeAQqDuZVN6cvTjbzYos/N535q1e8O56TVE8f/oqe+/ffBIBC1QQI5AW8kIM1e8viN
+ JzIH0nae+d8YsKjNwmVmwVjDzXzoSTaxzOlDlVoxWFdF+Y7oKV525CGTRtXszd6+jLx8dGkgM
+ nneL9HiV74DeizoRg9TTyzPV5dnmB4YGsd8coqrMReWu5EpNNF/tItY7mFY9ichZR3RAsU9xl
+ kjG6gGuLteM/cZ5xbuyCTZ/WxzSoVD17aXwP9dSt/TRGfUuFuggcKETsOLf87Cvibgf+5WJbb
+ BCRCMDyW+h5D5ee8+oiNyukF7EsFKo1xFm0FT/ATO2tnPjld0sfC4e+p6PBt1L3c00t6Xlbov
+ LSK6Wj+iuXJsmmvD7/c7RNwiE+zicS/MtSuPKJxsZNyrXbseDheH/5vPqsT2rCHpaYqUv1Q40
+ WD7p7E9bXVsv7wmlDZe1JlEg/WfPB/GFQmQ38RoLbxwawI/f0DpzU4XScj6YT8wWpdX9vK/+a
+ wdDQIycOWlQLKSX7i2sfkdKdP6is5g7kYo7d/Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276880>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi,
 
->> * dt/refs-bisection (2015-08-28) 5 commits
->>  - bisect: make bisection refs per-worktree
->>  - refs: make refs/worktree/* per-worktree
->>  - SQUASH???
->>  - path: optimize common dir checking
->>  - refs: clean up common_list
->>
->>  Move the refs used during a "git bisect" session to per-worktree
->>  hierarchy refs/worktree/* so that independent bisect sessions can
->>  be done in different worktrees.
->>
->>  Will merge to 'next' after squashing the update in.
->
-> Sorry if I am missing something or repeating what myself or someone
-> else like Michael already said, but in the current doc there is:
->
->        Eventually there will be no more revisions left to bisect, and
-> you will have been left with the first bad kernel revision in
->        "refs/bisect/bad".
->
-> If we now just use "refs/worktree/bisect/bad" instead of
-> "refs/bisect/bad", it might break scripts that rely using
-> "refs/bisect/bad".
+On 2015-08-25 06:37, Gawade P wrote:
 
-Christian, thanks for raising this one.
+> I have built and tested the latest version on git on multiple
+> distributions including Ubuntu 15.04 on the ppc64le architecture. I
+> have run the complete test suite and verified that there are no test
+> failures.
+> 
+> I have also written a dockerfile for this for Ubuntu 15.04 and wanted
+> to understand if there is any way I can contribute it to the git
+> community?
 
-I do recall the thread and I might be the somebody like Michael you
-remember, e.g. $gmane/275105---which did mention that "git bisect"
-would not need changing if we kept refs/bisect/.
+Nice! As far as I understand, you could upload this to https://hub.docker.com/ and then everybody could benefit from a simple installation (something like `docker pull GawadeP/git/ppc64le`).
 
-What was the reason why we chose to move to refs/worktree/ again?  I
-do not think there was an issue that we cannot keep refs/* in
-general shared while having one (or more) subhierarchy of it per
-worktree (otherwise we would not be using refs/worktree/*, but using
-something outside refs/, like $GIT_DIR/worktree-refs/).  Was there an
-objection to refs/bisect being private from aesthetics point of view
-(i.e. forcing everything per-worktree in refs/worktree/ would prevent
-proliferation of refs/this and refs/that that need to be private
-case by case), ignoring the practical issue of compatibility issues
-around existing tools?
-
-I think one example of script, "gitk --bisect", does want to show
-the DAG limited by bisect refs, but it does so using plumbing
-without having to say refs/bisect/bad itself.  Perhaps the thinking
-(or lack of enough of it) went that no other uses by scripts need to
-peek directly into refs/bisect/ hierarchy?
+Ciao,
+Johannes
