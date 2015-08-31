@@ -1,154 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-p4: add "--path-encoding" option
-Date: Mon, 31 Aug 2015 10:40:18 -0700
-Message-ID: <xmqqpp23we4d.fsf@gitster.mtv.corp.google.com>
-References: <1441035616-39128-1-git-send-email-larsxschneider@gmail.com>
-	<1441035616-39128-2-git-send-email-larsxschneider@gmail.com>
+Subject: Re: Running interpret-trailers automatically on each commit?
+Date: Mon, 31 Aug 2015 10:48:24 -0700
+Message-ID: <xmqqio7vwdqv.fsf@gitster.mtv.corp.google.com>
+References: <55E07CB1.0@game-point.net>
+	<xmqqk2sf2vic.fsf@gitster.mtv.corp.google.com>
+	<55E09540.60805@game-point.net> <vpqmvx7ho5r.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, luke@diamand.org
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Mon Aug 31 19:40:33 2015
+Cc: Jeremy Morton <admin@game-point.net>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Aug 31 19:48:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWT4K-0000kE-9X
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 19:40:32 +0200
+	id 1ZWTC2-0007Rm-TS
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Aug 2015 19:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753688AbbHaRk2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Aug 2015 13:40:28 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:36861 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753481AbbHaRk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2015 13:40:27 -0400
-Received: by pabpg12 with SMTP id pg12so13476103pab.3
-        for <git@vger.kernel.org>; Mon, 31 Aug 2015 10:40:26 -0700 (PDT)
+	id S1753955AbbHaRs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2015 13:48:27 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:34516 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753916AbbHaRs1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2015 13:48:27 -0400
+Received: by pabzx8 with SMTP id zx8so146312980pab.1
+        for <git@vger.kernel.org>; Mon, 31 Aug 2015 10:48:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=Y/rW3Wb6L4ob41Qy+Do+Dr++Rjf5VMIjQ4YCC0Nt3L8=;
-        b=OVdggPbwjhPCw4O8GAw4fPbdjyLu+l+xuwnp5BG3WK4djlsJTm+6lKDE3QMA1kb0Ea
-         xDxYa7Fh4Cbc2Y/HQ2HmNs+wBZxtyobtSU1Bkg5BmrYSrCciMWHgl1pFXjz0X8kyWuCf
-         MoIUbtm744DZ8eDMfwG6W3fMvvd5Dh7C0PuAkyLEVK2yyCR4MvucXGZlaPvRjNGg7OEI
-         QpKmXp7BifYGxZT6W1bRatVCZCz0FaNdyQJgJA9EsCgHbz3DtRcIhRECw8dCAyntYC4U
-         EiIe+IsN/F6Ts/u3DAxmUvWaWeNzV/ROyKz8KdEAKGUR31ujtpFH+bLoU0G79ZMrgrA2
-         HLbQ==
-X-Received: by 10.68.98.5 with SMTP id ee5mr39630044pbb.95.1441042826858;
-        Mon, 31 Aug 2015 10:40:26 -0700 (PDT)
+         :user-agent:mime-version:content-type;
+        bh=wRCXSIwZbtbkTsk8y9odWiCtlb4POtYRsBUkZkJ8Pno=;
+        b=kWUlnz1gLm3KeH3paxHq96wnGzurYqLu/mbZcpxGQ15QvQygp//nneXqh+GoJ5SLee
+         6le6PJbBr7qcCCn1iFgmM7KZ1FnJXpxbM9DtRhgx+TyDzaZMlWcXQ12jJd1XVOMl0g9v
+         h+w7UECXiSk8WixCnHdhqAxGYuOSOTwSQD2aBnYMRC+vWTO1Vh9haaAH937lrLxNaQ6A
+         2J5vXm6sQTmqgB1gr5+FOaUq1fuT6ShR7jxvu05SLaPJ5guQZE7kaQDhq5SXok8Buu5j
+         vBZ/RsEmMzgU+vwVf+EzAwYuwJLjSO9E1XVWLbXuvH6aBAqv08+bTnxAecOfEb253+ES
+         6MMw==
+X-Received: by 10.66.251.197 with SMTP id zm5mr39060492pac.157.1441043306725;
+        Mon, 31 Aug 2015 10:48:26 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:1937:16f4:ede1:6d38])
-        by smtp.gmail.com with ESMTPSA id eg2sm15455141pad.44.2015.08.31.10.40.26
+        by smtp.gmail.com with ESMTPSA id u10sm15296068pdp.85.2015.08.31.10.48.24
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 31 Aug 2015 10:40:26 -0700 (PDT)
-In-Reply-To: <1441035616-39128-2-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Mon, 31 Aug 2015 17:40:16
-	+0200")
+        Mon, 31 Aug 2015 10:48:24 -0700 (PDT)
+In-Reply-To: <vpqmvx7ho5r.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
+	31 Aug 2015 10:12:32 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276897>
 
-larsxschneider@gmail.com writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
+> Jeremy Morton <admin@game-point.net> writes:
 >
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  Documentation/git-p4.txt        |  4 ++++
->  git-p4.py                       |  6 ++++++
->  t/t9821-git-p4-path-encoding.sh | 38 +++++++++++++++++++++++++++++++=
-+++++++
->  3 files changed, 48 insertions(+)
->  create mode 100755 t/t9821-git-p4-path-encoding.sh
+>> Yeah but it's kind of useless to me having it on each commit on a
+>> per-repo basis (and even then, only with hooks).
 >
-> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-> index 82aa5d6..98b6c0f 100644
-> --- a/Documentation/git-p4.txt
-> +++ b/Documentation/git-p4.txt
-> @@ -252,6 +252,10 @@ Git repository:
->  	Use a client spec to find the list of interesting files in p4.
->  	See the "CLIENT SPEC" section below.
-> =20
-> +----path-encoding <encoding>::
-> +	The encoding to use when reading p4 client paths. With this option
-> +	non ASCII paths are properly stored in Git. For example, the encodi=
-ng 'cp1252' is often used on Windows systems.
-> +
+> Please, don't top-post on this list.
+>
+> Actually, it seems strange to me to activate it on a per-user basis.
+> Whether you add a trailer is usually a per-project policy. If you add a
+> branch trailer in each of your repository, it seems likely that some
+> projects you contribute to will be bothered by this.
+>
+> That said, I agree it would be nice to allow a configuration-based
+> mechanism in addition to the current hook-based one we currently have.
+> But no one stepped in to implement it until now ...
 
-This line is overly long.  Let AsciiDoc wrap it upon output and keep
-the source within a reasonable limit (see existing lines around the
-new text to see what is considered reasonable).
+Certanly.  A new experimental feature is shipped in 2.2 timeframe,
+so that people can gain experience with it and come up with the best
+practice in their hooks, and then laster we may fold the best
+practice into somewhere deeper in the system.
 
-Do I see too many dashes before the option name, by the way, or is
-it my e-mail client tricking my eyes?
+We are still in the early "ship an experimental feature to let
+people play with it" stage.  It is not "no one stepped in to
+implement until now", but more like "no one designed what to
+implement".
 
-> diff --git a/t/t9821-git-p4-path-encoding.sh b/t/t9821-git-p4-path-en=
-coding.sh
-> new file mode 100755
-> index 0000000..f6bb79c
-> --- /dev/null
-> +++ b/t/t9821-git-p4-path-encoding.sh
-> @@ -0,0 +1,38 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'Clone repositories with non ASCII paths'
-> +
-> +. ./lib-git-p4.sh
-> +
-> +test_expect_success 'start p4d' '
-> +	start_p4d
-> +'
-> +
-> +test_expect_success 'Create a repo containing cp1251 encoded paths' =
-'
-> +	cd "$cli" &&
-> +
-> +	FILENAME=3D"$(echo "a-=A4_o-=B6_u-=BC.txt" | iconv -f utf-8 -t cp12=
-52)" &&
-
-Hmm, we'd be better off not having a bare UTF-8 sequence in the
-source like this, especially when you already have the same thing
-backslash-escaped in the "expect" file below.  Perhaps
-
-	NAME=3D"a-\303\244_o-\303\266_u-\303\274.txt" &&
-
-	UTF8=3D$(printf "$NAME") &&
-        CP1252=3D$(printf "$NAME" | iconv -t cp1252) &&
-        echo "\"$UTF8\"" >expect &&
-
-        >"$CP1252" &&
-        p4 add "$CP1252" &&
-        ...
-
-or something along that line?
-
-> +	>"$FILENAME" &&
-> +	p4 add "$FILENAME" &&
-> +	p4 submit -d "test"
-> +'
-> +
-> +test_expect_success 'Clone repo containing cp1251 encoded paths' '
-> +	git p4 clone --destination=3D"$git" --path-encoding=3Dcp1252 //depo=
-t &&
-> +	test_when_finished cleanup_git &&
-> +	(
-> +		cd "$git" &&
-> +		git init . &&
-> +		cat >expect <<-\EOF &&
-> +		"a-\303\244_o-\303\266_u-\303\274.txt"
-> +		EOF
-> +		git ls-files >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
-> +test_expect_success 'kill p4d' '
-> +	kill_p4d
-> +'
-> +
-> +test_done
+And we still do not have a concrete design on what to implement on
+the table.  "At various points in the codebase, interpret-trailers
+is invoked with some magic parameters, depending on settings of
+unspecified set of configuration variables" is not a design.
