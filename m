@@ -1,111 +1,85 @@
-From: Barry Warsaw <barry@python.org>
-Subject: Re: Git's inconsistent command line options
-Date: Tue, 1 Sep 2015 10:19:24 -0400
-Organization: Damn Crazy Followers of the Horn
-Message-ID: <20150901101924.6c350012@anarchist.wooz.org>
-References: <mrh7ck$r0g$1@ger.gmane.org>
-	<CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
-	<CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
-	<CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com>
-	<xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
-	<CACsJy8D3J6RhtPPtSvtWfOb8BapaX2-52M5_fE36psQPB_oQsQ@mail.gmail.com>
-	<20150831102558.1514e5f7@anarchist.wooz.org>
-	<20150901092834.GA10706@gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v3] git-p4: add "--path-encoding" option
+Date: Tue, 1 Sep 2015 16:35:04 +0200
+Message-ID: <55E5B798.40108@web.de>
+References: <1441059026-66814-1-git-send-email-larsxschneider@gmail.com>
+ <1441059026-66814-2-git-send-email-larsxschneider@gmail.com>
+ <55E52BA7.6020303@web.de> <6BD3F017-37E4-4677-BCCE-D84E7031B780@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/cDbSAfmUeoFF7nLfPz=IWU5"; protocol="application/pgp-signature"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 01 16:28:13 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, luke@diamand.org, gitster@pobox.com
+To: Lars Schneider <larsxschneider@gmail.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Sep 01 16:35:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWmXh-0006u3-MN
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 16:28:10 +0200
+	id 1ZWmeb-0003jA-2S
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 16:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753385AbbIAO2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2015 10:28:03 -0400
-Received: from mail.wooz.org ([216.15.33.194]:58917 "EHLO mail.wooz.org"
+	id S1752917AbbIAOfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2015 10:35:10 -0400
+Received: from mout.web.de ([212.227.15.4]:65213 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753013AbbIAO2A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2015 10:28:00 -0400
-X-Greylist: delayed 527 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Sep 2015 10:28:00 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mail.wooz.org (Postfix) with ESMTP id E7AA710803E1
-	for <git@vger.kernel.org>; Tue,  1 Sep 2015 10:19:11 -0400 (EDT)
-Received: from mail.wooz.org ([127.0.0.1])
-	by localhost (carnies.wooz.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id uDsK6V1qQJ-U for <git@vger.kernel.org>;
-	Tue,  1 Sep 2015 10:19:07 -0400 (EDT)
-Received: from anarchist.wooz.org (anarchist.wooz.org [192.168.11.111])
-	by mail.wooz.org (Postfix) with ESMTPSA id 9D83110800E0
-	for <git@vger.kernel.org>; Tue,  1 Sep 2015 10:19:07 -0400 (EDT)
-In-Reply-To: <20150901092834.GA10706@gmail.com>
-X-Mailer: Claws Mail 3.12.0 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
+	id S1751610AbbIAOfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2015 10:35:09 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0LkhQi-1YwLN72R0e-00aUHD; Tue, 01 Sep 2015 16:35:05
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.2.0
+In-Reply-To: <6BD3F017-37E4-4677-BCCE-D84E7031B780@gmail.com>
+X-Provags-ID: V03:K0:ZqSAaWzx2Ef3doHZggwSp84DNbGSyAFqCjrsNvEngqr4JcVFALX
+ RSHjOFW+Zmhuo9aOsYRZYSodgpTFB/9dKF1+cLAf/Gwn0jWJkmyrje7kSHV9mEGhLmoFBO8
+ h75si0BZaDXsbL+iUBCA/iNS2CFmlDSCIRN68yi/sGwi4ara3Vz6cvFvvnWg+MFyL3pYojX
+ CRWVv6dHyOF1l3i0v8rlg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1BLzYUtua+c=:xqsiA0LO2M1ghixHIo0zBd
+ 5XMpuw9ujIA/78FMNGT90SYoCoR55z/3uxiNuiSQHMVd1zN74jyYv/4yHd4dSnCU9smEtfBNV
+ hX5RT3vLCTYbW5rT37R3RNyKlJRPpGVSu8cyvPSCqJBTXWCd+opYGyBNU7fVSreeTPjHleO9K
+ Gu3llUSA6d4GqnGLMAb6E7Xe+82aDC1E+fYjvuCh6hQCodHDBM86QmYQLnXb84t+Btw3KDM7N
+ kfKqBRi8ZnfXWbl9Gx8EJPGvyg/unAN7MFdbNITK0SjscSL5fTN9qyXn2nCE3p4tuvpko4/z9
+ s0iG1ttudqRLmDJpMcH99xHYk1bXM4drZ5Cd9g5QNehRlW9fWXF1WUxQCIViG6HHpXVy9WAzd
+ ofd4LatNl5lEp/FFl4C2HRLXNWdIIcSemcNnNSS3EYjgQOjk8JuGzJamTgMPDbbxsNbITfU4C
+ yoE14N9zZgXOHMsiF77smmBORh8+kxHHKMC55kLAB7vetBwdk7scmWpRIbg88uhPYk1Ao6Qu3
+ 0yuberW8R3G2zJq/TWbSA4VPDXUf3dM50KJYqFqcEFYDJZEp1rIJwWluLBRWNfDXTBPgghus3
+ hvoi0/IHMj8ro9Kr5tAuytFvWJzqOeidLrTAlmg82BAlXBTZQl42eOhfqSeIWC9xpjvMTIjdp
+ RVoyJaAZwVHTmHP1ru4ghB7dDwXHK1pGjCvK0DkQbH6wKe5U1Jig2obhWg4E8RwE0q2cwK30A
+ FdVX6BS7zHbsMBTkCdd/Y9cX8uZjkovheOVUKw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276981>
 
---Sig_/cDbSAfmUeoFF7nLfPz=IWU5
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On 2015-09-01 14.47, Lars Schneider wrote:
+>>> +test_expect_success 'Create a repo containing iso8859-1 encoded paths' '
+>>> >> +	cd "$cli" &&
+>>> >> +
+>>> >> +	ISO8859="$(printf "$UTF8_ESCAPED" | iconv -f utf-8 -t iso8859-1)" &&
+>>> >> +	>"$ISO8859" &&
+>>> >> +	p4 add "$ISO8859" &&
+>>> >> +	p4 submit -d "test commit"
+>>> >> +'
+>> > Sorry for being persistant,
+>> > but you can't create files with names that  are ISO-8859-1 encoded under Mac OS,
+>> > we end up like this:
+>> > 
+>> > a-%E4_o-%F6_u-%FC.txt
+> You are right. However, my goal is not to create a file with ISO-8859-1 characters in Mac OS. My goal is to create this file in Perforce and this approach seems to work.
+> 
+>> > 
+But this line creates a file, doesn't it ?
+>"$ISO8859" &&
 
-On Sep 01, 2015, at 02:28 AM, David Aguilar wrote:
+(I just wonder how this works on you machine )
 
->While a script writer could write, "git -c core.cliversion=3D1 ...",
->no one does that, no one wants to do that, and it just seems
->like a bad idea that's best left unexplored.
+And, may be, we could fill the file with some content, to be double-sure that
+the file name conversion works with Perforce ?
 
-Sure, no one will do that from the command line, but I don't think people
-generally change their preferences that often.  Much more likely is that
-they'll `git config` a more permanent choice for their shell usage and then
-just use straight up "git" with the new ui.  -c would be reserved for scrip=
-ts
-which hard code a particular ui.
+like
+echo content >"$ISO8859" &&
 
->Otherwise, this entire thread seems like a big non-issue.  The existing CLI
->hasn't hurt adoption...
-
-A significant factor driving git adoption is network effects.  That's highly
-motivating to overcome discomfort or confusion with the cli.  Once you've l=
-ost
-your beginner's mind, you are much less aware of the cli inconsistencies and
-disconnects from other vcses.  The latter might not affect new users whose
-only experience with vcses is git, but it presents a steeper learning curve
-for folks migrating from other tools.
-
->...and tossing a config option at it only makes it worse.  The best config=
- is
->no config.
-
-git already has no shortage of configuration options. ;)
-
-Cheers,
--Barry
-
---Sig_/cDbSAfmUeoFF7nLfPz=IWU5
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJV5bPsAAoJEBJutWOnSwa/PXEP/j650sV46+ROVoh/Xv09q3PG
-gQSBvCA96kuFTGdPXURGrxQElkhNGOjy9siyTjwwL/AOAuLoKfj1bmS2jLtT1kwe
-/v3lbbOxN73O5zHMHfjFZM/6UzjtIC8puNbZcVEujXjk5iMeV9fURaQeCG2TZUSW
-pwKTbvcsXRl0jcwz924GzyDOCZVcwtBfKo5LzFymFdJ5lyuO1H98Z/e+OBSNCnow
-FSp0iZlFwGDNisSpUfYcrRi2zEkdIVJxxU8adFkc90dXK4cv5EsANRqkCeX/kcq0
-lFNLPCdpPqcWbSt0d3z6yBZbKG+1SGlX9mN08sxFACg0n63F/G0qgElqg7Wukw4j
-I2/RG88Xrn8iI/7FJAxyAfRouBCMIcVoVVTmwAGhUpfv1+YC6/H5l+5pbknfGk1t
-qofT+YO/DAcecI4qU8pF2nOHHOvmBlnv+hdIsDdEFv5z9/cec7f/AUBRLIdlo0KB
-hylhVF+YhRVkoTZUfxjIuSzWIzUVLFsMMgmxt5jvi//kQFomuamtqCGeWHXYh87L
-mVlIeqMlrgvZPyqfkhKbwaKMKFeBeJEWprqijsMrA50RJ6CUC4GOqa/OADtY9zjE
-bQa0YhO4l9PGt8bvz2WIW+sf3f4cn8ZdLSPgR9nkZIQUs5iryrZvrqgdPE+K3ENH
-u2UJHscMxp7Ol+dh3Bv2
-=ZCty
------END PGP SIGNATURE-----
-
---Sig_/cDbSAfmUeoFF7nLfPz=IWU5--
+and test the content later ?
