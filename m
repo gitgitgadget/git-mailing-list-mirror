@@ -1,88 +1,66 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/2] pkt-line: show packets in async processes as "sideband"
-Date: Tue, 1 Sep 2015 15:31:41 -0700
-Message-ID: <CAGZ79kYoWWc34GOxyAi5WvYf=UQvt--qwEr_m+bZwKO-uVqkiw@mail.gmail.com>
-References: <20150901202215.GA17370@sigill.intra.peff.net>
-	<20150901202412.GA8020@sigill.intra.peff.net>
-	<xmqq1tehrdoa.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZKJF2epU=2gb7jFWni2tBu03dYGgttvZeW40ra=r2iiA@mail.gmail.com>
-	<20150901222639.GD7862@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/6] t6300: introduce test_date() helper
+Date: Tue, 1 Sep 2015 18:31:58 -0400
+Message-ID: <20150901223157.GE7862@sigill.intra.peff.net>
+References: <cover.1441144343.git.john@keeping.me.uk>
+ <8e869f362971a44bb1f40ca5fed98b658efaa0dd.1441144343.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 02 00:31:47 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Sep 02 00:32:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWu5i-0003i6-AR
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Sep 2015 00:31:46 +0200
+	id 1ZWu62-0003v0-6f
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Sep 2015 00:32:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751728AbbIAWbm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2015 18:31:42 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:34833 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750829AbbIAWbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2015 18:31:42 -0400
-Received: by ykax124 with SMTP id x124so5564587yka.2
-        for <git@vger.kernel.org>; Tue, 01 Sep 2015 15:31:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SIkt2VEaXQ8TmN3J/UZYVtdVcv/MJo6+g93bmso2RO4=;
-        b=P1gGk6sYLIoLs1xIUUgykmP/QQYoEQcMjNz6Bg+WTm7IEWNxkmwsU0Qe7LQrd6G+Ac
-         5ssiY98FEc5TDahKjr+t4kCLyUDTZF3vO/ri3GH0vzpkzDVhwr26IRvGpm7dTe66N1UM
-         3mY2QpKPcdT4OTgygey8RpH58JAh4EGlCLEGp0TmJv76f7qwclD+YnyWsZvt3xqt0VgR
-         SYZDXvUgLQFH3nJvoUW37KZjviiMtWU8OUgt7Kiq8wlFZRebg+Q/5BuXdJByrJc0afHH
-         dx/7p4Hzf30Hx3G0Es2IrCU4W0Tkmm5OY0Zpwp5ycgDQv5q8X/k58y8PWbfGMo74svB1
-         GwHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=SIkt2VEaXQ8TmN3J/UZYVtdVcv/MJo6+g93bmso2RO4=;
-        b=BSiIl2f8i9jPGe+0yXGwRaSE6XgBeo3T8HX2D0xI1FzPM4NUgNhaTjJdYzdM/R+Kj2
-         2yPNjHjPlbTgTqlwLL9zOdKbFYOeEvn2NVb/HgIG3zcWqrRTVLM+SmdLlL7lD5ldfBNl
-         lUfy0pac9AorfPQPlLzGD4NqnKk2NkPUw6xez7B3B1fRs1zyETNNs/VhU7iocz7nZ3P0
-         i2HWXbP3NRJsCaHAtDOMAfTVqs8LmfvjzLiWAbGLkTaikfR8mXhJDAa92tuumASFrRr2
-         9wPcdqbBcR6aNM8Qxd08pQXZuVHP2WCPSZqATXbhEJssllyNxB4eY9yEFYzE7tUQPFqk
-         hM3g==
-X-Gm-Message-State: ALoCoQnGQbNNQNznTheUrregB/ytAN8OhxPLQ9eSL5HEx4Ge2p4vxBCEYmPlWmo5c9Z7W++CmtJF
-X-Received: by 10.129.90.138 with SMTP id o132mr12623204ywb.32.1441146701576;
- Tue, 01 Sep 2015 15:31:41 -0700 (PDT)
-Received: by 10.37.21.132 with HTTP; Tue, 1 Sep 2015 15:31:41 -0700 (PDT)
-In-Reply-To: <20150901222639.GD7862@sigill.intra.peff.net>
+	id S1752164AbbIAWcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2015 18:32:01 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53400 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751180AbbIAWcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2015 18:32:00 -0400
+Received: (qmail 31270 invoked by uid 102); 1 Sep 2015 22:32:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Sep 2015 17:32:00 -0500
+Received: (qmail 6733 invoked by uid 107); 1 Sep 2015 22:32:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Sep 2015 18:32:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Sep 2015 18:31:58 -0400
+Content-Disposition: inline
+In-Reply-To: <8e869f362971a44bb1f40ca5fed98b658efaa0dd.1441144343.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277062>
 
-On Tue, Sep 1, 2015 at 3:26 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Sep 01, 2015 at 03:23:06PM -0700, Stefan Beller wrote:
->
->> > Hmm, does Stefan's thread-pool thing interact with this decision in
->> > any way?
->>
->> I do not plan to actually fetch from inside the thread pool, but each thread
->> is just a proxy for starting a new process doing the fetch and getting
->> the output
->> in order.
->
-> Ah, right, I think I misunderstood Junio's question. Yes, if we start
-> calling cmd_fetch() from inside the threads, things may get confusing.
->
-> I'll see how painful the thread storage approach would be.
+On Tue, Sep 01, 2015 at 10:55:41PM +0100, John Keeping wrote:
 
-I think that may be part of the thread pool API eventually.
+> I considered moving the test_expect_success into the helper, like with
+> test_atom earlier in the file, but it doesn't make the code much more
+> concise and we still need either to setup the output outside the test
+> case or to escape SQ inside SQ.
 
-I don't plan on relying on thread local storage, which is why I did
-not add it there,
-though I guess it can be added in there quite conveniently.
+Moving it inside also makes it harder to test_expect_failure. :)
 
->
-> -Peff
+>  test_expect_success 'Check unformatted date fields output' '
+> -	(git for-each-ref --shell --format="%(refname) %(committerdate) %(authordate)" refs/heads &&
+> -	git for-each-ref --shell --format="%(refname) %(taggerdate)" refs/tags) >actual &&
+> -	test_cmp expected actual
+> +	test_date "" "Mon Jul 3 17:18:43 2006 +0200" "Mon Jul 3 17:18:44 2006 +0200" "Mon Jul 3 17:18:45 2006 +0200"
+
+I notice we end up with rather long lines for some of these. Would:
+
+  test_date "" <<-\EOF
+  Mon Jul 3 17:18:43 2006 +0200
+  Mon Jul 3 17:18:44 2006 +0200
+  Mon Jul 3 17:18:45 2006 +0200
+  EOF
+
+be more readable?
+
+-Peff
