@@ -1,124 +1,111 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v3] git-p4: add "--path-encoding" option
-Date: Tue, 1 Sep 2015 15:42:39 +0200
-Message-ID: <523D2C52-893E-4A54-9DD1-2DDBCEA29960@gmail.com>
-References: <1441059026-66814-1-git-send-email-larsxschneider@gmail.com> <1441059026-66814-2-git-send-email-larsxschneider@gmail.com> <xmqqk2sbt5kv.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, luke@diamand.org, tboegi@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 01 15:42:49 2015
+From: Barry Warsaw <barry@python.org>
+Subject: Re: Git's inconsistent command line options
+Date: Tue, 1 Sep 2015 10:19:24 -0400
+Organization: Damn Crazy Followers of the Horn
+Message-ID: <20150901101924.6c350012@anarchist.wooz.org>
+References: <mrh7ck$r0g$1@ger.gmane.org>
+	<CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
+	<CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
+	<CAGZ79kZ6KK0qVtzrxmmsBQqmz-dgamC4f6W0zVTQLcuYi==0fw@mail.gmail.com>
+	<xmqqa8tfvsr9.fsf@gitster.dls.corp.google.com>
+	<CACsJy8D3J6RhtPPtSvtWfOb8BapaX2-52M5_fE36psQPB_oQsQ@mail.gmail.com>
+	<20150831102558.1514e5f7@anarchist.wooz.org>
+	<20150901092834.GA10706@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ boundary="Sig_/cDbSAfmUeoFF7nLfPz=IWU5"; protocol="application/pgp-signature"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 01 16:28:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWlpn-0002NR-Va
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 15:42:48 +0200
+	id 1ZWmXh-0006u3-MN
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 16:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752783AbbIANmo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Sep 2015 09:42:44 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:34477 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752238AbbIANmn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Sep 2015 09:42:43 -0400
-Received: by wicjd9 with SMTP id jd9so33729486wic.1
-        for <git@vger.kernel.org>; Tue, 01 Sep 2015 06:42:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=tCnXDxsDiVY3iDXvWF/41VC9/OnPU+k4fK+pe/QcroQ=;
-        b=kJHLpJvHKI4M031ficRwTScXkFjKV2JK9vB8SYs1dIRmiIBXM8oXI1DBg/QhmBwyez
-         tPhsJi+grMMlBm0t6lw+1kdiT2Hm4Zw3wWszQck8XdrIDHVp6cK5onDkLLhW62MZr7b5
-         GO+qSYIJAqMS/mAXvcLGzSSRhAtAVEd6uqEQR24r/rKmKvfYQwoqxTAiBdetrM5AUONs
-         bQ4k34XmVoOBXcghUBEnHvnDRrMT6KZIcNJbCPXJ0DZyuw2FsXgv4WkBVK5NVB6Hp+iH
-         Z6JggnI0XoTT/hMlFCAcD+7AE2r/ozly9LIRc+6yMHM0P/AA9yeZU1E7DfgzYSaGvIR8
-         bRhA==
-X-Received: by 10.180.208.34 with SMTP id mb2mr3672917wic.88.1441114962128;
-        Tue, 01 Sep 2015 06:42:42 -0700 (PDT)
-Received: from slxbook3.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id xs1sm27261247wjc.7.2015.09.01.06.42.40
-        (version=TLS1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 01 Sep 2015 06:42:41 -0700 (PDT)
-In-Reply-To: <xmqqk2sbt5kv.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1753385AbbIAO2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2015 10:28:03 -0400
+Received: from mail.wooz.org ([216.15.33.194]:58917 "EHLO mail.wooz.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753013AbbIAO2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2015 10:28:00 -0400
+X-Greylist: delayed 527 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Sep 2015 10:28:00 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mail.wooz.org (Postfix) with ESMTP id E7AA710803E1
+	for <git@vger.kernel.org>; Tue,  1 Sep 2015 10:19:11 -0400 (EDT)
+Received: from mail.wooz.org ([127.0.0.1])
+	by localhost (carnies.wooz.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uDsK6V1qQJ-U for <git@vger.kernel.org>;
+	Tue,  1 Sep 2015 10:19:07 -0400 (EDT)
+Received: from anarchist.wooz.org (anarchist.wooz.org [192.168.11.111])
+	by mail.wooz.org (Postfix) with ESMTPSA id 9D83110800E0
+	for <git@vger.kernel.org>; Tue,  1 Sep 2015 10:19:07 -0400 (EDT)
+In-Reply-To: <20150901092834.GA10706@gmail.com>
+X-Mailer: Claws Mail 3.12.0 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276980>
 
+--Sig_/cDbSAfmUeoFF7nLfPz=IWU5
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-On 01 Sep 2015, at 01:13, Junio C Hamano <gitster@pobox.com> wrote:
+On Sep 01, 2015, at 02:28 AM, David Aguilar wrote:
 
-> larsxschneider@gmail.com writes:
->=20
->> From: Lars Schneider <larsxschneider@gmail.com>
->>=20
->=20
-> Here is a space for you to describe what it does and why it is a
-> good idea to have it.
-How about this:
+>While a script writer could write, "git -c core.cliversion=3D1 ...",
+>no one does that, no one wants to do that, and it just seems
+>like a bad idea that's best left unexplored.
 
-Perforce keeps the encoding of a path as given by the originating OS. G=
-it expects paths encoded as UTF-8. Add an option to tell git-p4 what en=
-coding Perforce had used for the paths. This encoding is used to transc=
-ode the paths to UTF-8. As an example, Perforce on Windows uses =93cp12=
-52=94 to encode path names.=20
+Sure, no one will do that from the command line, but I don't think people
+generally change their preferences that often.  Much more likely is that
+they'll `git config` a more permanent choice for their shell usage and then
+just use straight up "git" with the new ui.  -c would be reserved for scrip=
+ts
+which hard code a particular ui.
 
+>Otherwise, this entire thread seems like a big non-issue.  The existing CLI
+>hasn't hurt adoption...
 
->=20
->> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->> ---
->> Documentation/git-p4.txt        |  5 +++++
->> git-p4.py                       |  6 ++++++
->> t/t9821-git-p4-path-encoding.sh | 38 +++++++++++++++++++++++++++++++=
-+++++++
->=20
-> I'll move this to 9822, as 9821 is taken by another git-p4 test,
-> while queuing.
-OK. I wasn=92t sure how this is handled. Just for my understanding: As =
-soon as a TC number is occupied in one of the official branches (master=
-/next/pu/maint) then the next number should be used, right?
+A significant factor driving git adoption is network effects.  That's highly
+motivating to overcome discomfort or confusion with the cli.  Once you've l=
+ost
+your beginner's mind, you are much less aware of the cli inconsistencies and
+disconnects from other vcses.  The latter might not affect new users whose
+only experience with vcses is git, but it presents a steeper learning curve
+for folks migrating from other tools.
 
->=20
->> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
->> index 82aa5d6..14bb79c 100644
->> --- a/Documentation/git-p4.txt
->> +++ b/Documentation/git-p4.txt
->> @@ -252,6 +252,11 @@ Git repository:
->> 	Use a client spec to find the list of interesting files in p4.
->> 	See the "CLIENT SPEC" section below.
->>=20
->> +--path-encoding <encoding>::
->> +	The encoding to use when reading p4 client paths. With this option
->> +	non ASCII paths are properly stored in Git. For example, the encod=
-ing
->> +	'cp1252' is often used on Windows systems.
->> +
->=20
-> Is this something that needs to be consistently given while
-> interacting with the same P4 depot (in which case you may want to
-> allow this to be given only once, record the value in the config and
-> never allow it to be updated once it is set, or something)?
-Good idea! I will add this. However, I really wonder why nobody tripped=
- over this rather obvious bug already.
+>...and tossing a config option at it only makes it worse.  The best config=
+ is
+>no config.
 
-@Luke: Can you double check my fix?
+git already has no shortage of configuration options. ;)
 
+Cheers,
+-Barry
 
-Two general questions:
+--Sig_/cDbSAfmUeoFF7nLfPz=IWU5
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
-(1) I saw that the path encoding fix is already on =93pu=94. What is mo=
-re convenient for you? Do you want to get a [PATCH v4] with one commit =
-including the changes mentioned above or do you want me to keep the v3 =
-commit and add a v4 commit on top?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-(2) Is there a CI setup for Git somewhere accessible on the Internet? H=
-ow about building and testing Git on Travis (https://travis-ci.org/git/=
-git)?
+iQIcBAEBCAAGBQJV5bPsAAoJEBJutWOnSwa/PXEP/j650sV46+ROVoh/Xv09q3PG
+gQSBvCA96kuFTGdPXURGrxQElkhNGOjy9siyTjwwL/AOAuLoKfj1bmS2jLtT1kwe
+/v3lbbOxN73O5zHMHfjFZM/6UzjtIC8puNbZcVEujXjk5iMeV9fURaQeCG2TZUSW
+pwKTbvcsXRl0jcwz924GzyDOCZVcwtBfKo5LzFymFdJ5lyuO1H98Z/e+OBSNCnow
+FSp0iZlFwGDNisSpUfYcrRi2zEkdIVJxxU8adFkc90dXK4cv5EsANRqkCeX/kcq0
+lFNLPCdpPqcWbSt0d3z6yBZbKG+1SGlX9mN08sxFACg0n63F/G0qgElqg7Wukw4j
+I2/RG88Xrn8iI/7FJAxyAfRouBCMIcVoVVTmwAGhUpfv1+YC6/H5l+5pbknfGk1t
+qofT+YO/DAcecI4qU8pF2nOHHOvmBlnv+hdIsDdEFv5z9/cec7f/AUBRLIdlo0KB
+hylhVF+YhRVkoTZUfxjIuSzWIzUVLFsMMgmxt5jvi//kQFomuamtqCGeWHXYh87L
+mVlIeqMlrgvZPyqfkhKbwaKMKFeBeJEWprqijsMrA50RJ6CUC4GOqa/OADtY9zjE
+bQa0YhO4l9PGt8bvz2WIW+sf3f4cn8ZdLSPgR9nkZIQUs5iryrZvrqgdPE+K3ENH
+u2UJHscMxp7Ol+dh3Bv2
+=ZCty
+-----END PGP SIGNATURE-----
 
-Thanks,
-Lars
+--Sig_/cDbSAfmUeoFF7nLfPz=IWU5--
