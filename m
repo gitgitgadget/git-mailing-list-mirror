@@ -1,47 +1,46 @@
 From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v2 2/6] date: make "local" orthogonal to date format
-Date: Tue,  1 Sep 2015 22:55:40 +0100
-Message-ID: <35b1313d4eb084ddc2bd70510d56e11a1d84e993.1441144343.git.john@keeping.me.uk>
+Subject: [PATCH v2 3/6] t6300: introduce test_date() helper
+Date: Tue,  1 Sep 2015 22:55:41 +0100
+Message-ID: <8e869f362971a44bb1f40ca5fed98b658efaa0dd.1441144343.git.john@keeping.me.uk>
 References: <20150901083731.GE30659@serenity.lan>
  <cover.1441144343.git.john@keeping.me.uk>
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	John Keeping <john@keeping.me.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 01 23:56:33 2015
+X-From: git-owner@vger.kernel.org Tue Sep 01 23:56:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWtXc-00060M-Pz
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 23:56:33 +0200
+	id 1ZWtXo-0006BP-Qm
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 23:56:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752214AbbIAV42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2015 17:56:28 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:33329 "EHLO
+	id S1752397AbbIAV4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2015 17:56:41 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:53922 "EHLO
 	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751380AbbIAV41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2015 17:56:27 -0400
+	with ESMTP id S1751380AbbIAV4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2015 17:56:40 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 6530FCDA56C;
-	Tue,  1 Sep 2015 22:56:27 +0100 (BST)
-X-Quarantine-ID: <lynnIEroasQ5>
+	by jackal.aluminati.org (Postfix) with ESMTP id 27E15CDA5F9;
+	Tue,  1 Sep 2015 22:56:40 +0100 (BST)
+X-Quarantine-ID: <CTykhYPkDodU>
 X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
 X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
 X-Spam-Flag: NO
-X-Spam-Score: -2.899
+X-Spam-Score: -0.199
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=no
+X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
 Received: from jackal.aluminati.org ([127.0.0.1])
 	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id lynnIEroasQ5; Tue,  1 Sep 2015 22:56:26 +0100 (BST)
+	with ESMTP id CTykhYPkDodU; Tue,  1 Sep 2015 22:56:39 +0100 (BST)
 Received: from river.lan (banza.aluminati.org [10.0.7.182])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 74542CDA5F9;
-	Tue,  1 Sep 2015 22:56:13 +0100 (BST)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 3CDD6CDA5F8;
+	Tue,  1 Sep 2015 22:56:26 +0100 (BST)
 X-Mailer: git-send-email 2.5.0.466.g9af26fa
 In-Reply-To: <cover.1441144343.git.john@keeping.me.uk>
 In-Reply-To: <cover.1441144343.git.john@keeping.me.uk>
@@ -50,223 +49,132 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277046>
 
-From: Jeff King <peff@peff.net>
+This moves the setup of the "expected" file inside the test case.  The
+helper function has the advantage that we can use SQ in the file content
+without needing to escape the quotes.
 
-Most of our "--date" modes are about the format of the date:
-which items we show and in what order. But "--date=local" is
-a bit of an oddball. It means "show the date in the normal
-format, but using the local timezone". The timezone we use
-is orthogonal to the actual format, and there is no reason
-we could not have "localized iso8601", etc.
-
-This patch adds a "local" boolean field to "struct
-date_mode", and drops the DATE_LOCAL element from the
-date_mode_type enum (it's now just DATE_NORMAL plus
-local=1). The new feature is accessible to users by adding
-"-local" to any date mode (e.g., "iso-local"), and we retain
-"local" as an alias for "default-local" for backwards
-compatibility.
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: John Keeping <john@keeping.me.uk>
 ---
-This is Jeff's original patch with my fixup for DATE_STRFTIME squashed
-in and a new change to reject "raw-local" (in both Documentation/ and
-date.c).
+I considered moving the test_expect_success into the helper, like with
+test_atom earlier in the file, but it doesn't make the code much more
+concise and we still need either to setup the output outside the test
+case or to escape SQ inside SQ.
 
- Documentation/rev-list-options.txt | 21 ++++++++---
- builtin/blame.c                    |  1 -
- cache.h                            |  2 +-
- date.c                             | 77 +++++++++++++++++++++++++-------------
- 4 files changed, 67 insertions(+), 34 deletions(-)
+ t/t6300-for-each-ref.sh | 73 ++++++++++++++-----------------------------------
+ 1 file changed, 21 insertions(+), 52 deletions(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index a9b808f..5d28133 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -702,12 +702,16 @@ include::pretty-options.txt[]
- --date=(relative|local|default|iso|iso-strict|rfc|short|raw)::
- 	Only takes effect for dates shown in human-readable format, such
- 	as when using `--pretty`. `log.date` config variable sets a default
--	value for the log command's `--date` option.
-+	value for the log command's `--date` option. By default, dates
-+	are shown in the original time zone (either committer's or
-+	author's). If `-local` is appended to the format (e.g.,
-+	`iso-local`), the user's local time zone is used instead.
- +
- `--date=relative` shows dates relative to the current time,
--e.g. ``2 hours ago''.
-+e.g. ``2 hours ago''. The `-local` option cannot be used with
-+`--raw` or `--relative`.
- +
--`--date=local` shows timestamps in user's local time zone.
-+`--date=local` is an alias for `--date=default-local`.
- +
- `--date=iso` (or `--date=iso8601`) shows timestamps in a ISO 8601-like format.
- The differences to the strict ISO 8601 format are:
-@@ -730,10 +734,15 @@ format, often found in email messages.
- `--date=format:...` feeds the format `...` to your system `strftime`.
- Use `--date=format:%c` to show the date in your system locale's
- preferred format.  See the `strftime` manual for a complete list of
--format placeholders.
-+format placeholders. When using `-local`, the correct syntax is
-+`--date=format-local:...`.
- +
--`--date=default` shows timestamps in the original time zone
--(either committer's or author's).
-+`--date=default` is the default format, and is similar to
-+`--date=rfc2822`, with a few exceptions:
-+
-+	- there is no comma after the day-of-week
-+
-+	- the time zone is omitted when the local time zone is used
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 7c9bec7..5fdb964 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -146,85 +146,54 @@ test_expect_success 'Check invalid format specifiers are errors' '
+ 	test_must_fail git for-each-ref --format="%(authordate:INVALID)" refs/heads
+ '
  
- ifdef::git-rev-list[]
- --header::
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 4db01c1..6fd1a63 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2600,7 +2600,6 @@ parse_done:
- 		   fewer display columns. */
- 		blame_date_width = utf8_strwidth(_("4 years, 11 months ago")) + 1; /* add the null */
- 		break;
--	case DATE_LOCAL:
- 	case DATE_NORMAL:
- 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
- 		break;
-diff --git a/cache.h b/cache.h
-index 4e25271..9a91b1d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1091,7 +1091,6 @@ struct date_mode {
- 		DATE_NORMAL = 0,
- 		DATE_RELATIVE,
- 		DATE_SHORT,
--		DATE_LOCAL,
- 		DATE_ISO8601,
- 		DATE_ISO8601_STRICT,
- 		DATE_RFC2822,
-@@ -1099,6 +1098,7 @@ struct date_mode {
- 		DATE_RAW
- 	} type;
- 	const char *strftime_fmt;
-+	int local;
- };
- 
- /*
-diff --git a/date.c b/date.c
-index 8f91569..f048416 100644
---- a/date.c
-+++ b/date.c
-@@ -166,6 +166,7 @@ struct date_mode *date_mode_from_type(enum date_mode_type type)
- 	if (type == DATE_STRFTIME)
- 		die("BUG: cannot create anonymous strftime date_mode struct");
- 	mode.type = type;
-+	mode.local = 0;
- 	return &mode;
- }
- 
-@@ -189,7 +190,7 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- 		return timebuf.buf;
- 	}
- 
--	if (mode->type == DATE_LOCAL)
-+	if (mode->local)
- 		tz = local_tzoffset(time);
- 
- 	tm = time_to_tm(time, tz);
-@@ -232,7 +233,7 @@ const char *show_date(unsigned long time, int tz, const struct date_mode *mode)
- 				tm->tm_mday,
- 				tm->tm_hour, tm->tm_min, tm->tm_sec,
- 				tm->tm_year + 1900,
--				(mode->type == DATE_LOCAL) ? 0 : ' ',
-+				mode->local ? 0 : ' ',
- 				tz);
- 	return timebuf.buf;
- }
-@@ -770,32 +771,56 @@ int parse_date(const char *date, struct strbuf *result)
- 	return 0;
- }
- 
-+static enum date_mode_type parse_date_type(const char *format, const char **end)
-+{
-+	if (skip_prefix(format, "relative", end))
-+		return DATE_RELATIVE;
-+	if (skip_prefix(format, "iso8601-strict", end) ||
-+	    skip_prefix(format, "iso-strict", end))
-+		return DATE_ISO8601_STRICT;
-+	if (skip_prefix(format, "iso8601", end) ||
-+	    skip_prefix(format, "iso", end))
-+		return DATE_ISO8601;
-+	if (skip_prefix(format, "rfc2822", end) ||
-+	    skip_prefix(format, "rfc", end))
-+		return DATE_RFC2822;
-+	if (skip_prefix(format, "short", end))
-+		return DATE_SHORT;
-+	if (skip_prefix(format, "default", end))
-+		return DATE_NORMAL;
-+	if (skip_prefix(format, "raw", end))
-+		return DATE_RAW;
-+	if (skip_prefix(format, "format", end))
-+		return DATE_STRFTIME;
-+
-+	die("unknown date format %s", format);
+-cat >expected <<\EOF
+-'refs/heads/master' 'Mon Jul 3 17:18:43 2006 +0200' 'Mon Jul 3 17:18:44 2006 +0200'
+-'refs/tags/testtag' 'Mon Jul 3 17:18:45 2006 +0200'
+-EOF
++test_date () {
++	f=$1
++	committer_date=$2 &&
++	author_date=$3 &&
++	tagger_date=$4 &&
++	cat >expected <<-EOF &&
++	'refs/heads/master' '$committer_date' '$author_date'
++	'refs/tags/testtag' '$tagger_date'
++	EOF
++	(
++		git for-each-ref --shell --format="%(refname) %(committerdate${f:+:$f}) %(authordate${f:+:$f})" refs/heads &&
++		git for-each-ref --shell --format="%(refname) %(taggerdate${f:+:$f})" refs/tags
++	) >actual &&
++	test_cmp expected actual
 +}
-+
- void parse_date_format(const char *format, struct date_mode *mode)
- {
--	if (!strcmp(format, "relative"))
--		mode->type = DATE_RELATIVE;
--	else if (!strcmp(format, "iso8601") ||
--		 !strcmp(format, "iso"))
--		mode->type = DATE_ISO8601;
--	else if (!strcmp(format, "iso8601-strict") ||
--		 !strcmp(format, "iso-strict"))
--		mode->type = DATE_ISO8601_STRICT;
--	else if (!strcmp(format, "rfc2822") ||
--		 !strcmp(format, "rfc"))
--		mode->type = DATE_RFC2822;
--	else if (!strcmp(format, "short"))
--		mode->type = DATE_SHORT;
--	else if (!strcmp(format, "local"))
--		mode->type = DATE_LOCAL;
--	else if (!strcmp(format, "default"))
--		mode->type = DATE_NORMAL;
--	else if (!strcmp(format, "raw"))
--		mode->type = DATE_RAW;
--	else if (skip_prefix(format, "format:", &format)) {
--		mode->type = DATE_STRFTIME;
--		mode->strftime_fmt = xstrdup(format);
--	} else
--		die("unknown date format %s", format);
-+	const char *p;
-+
-+	/* historical alias */
-+	if (!strcmp(format, "local"))
-+		format = "default-local";
-+
-+	mode->type = parse_date_type(format, &p);
-+	mode->local = 0;
-+
-+	if (skip_prefix(p, "-local", &p)) {
-+		if (mode->type == DATE_RELATIVE)
-+			die("relative-local date format is nonsensical");
-+		if (mode->type == DATE_RAW)
-+			die("raw-local date format is nonsensical");
-+		mode->local = 1;
-+	}
-+
-+	if (mode->type == DATE_STRFTIME) {
-+		if (!skip_prefix(p, ":", &p))
-+			die("date format missing colon separator: %s", format);
-+		mode->strftime_fmt = xstrdup(p);
-+	} else if (*p)
-+		die("unknown date-mode modifier: %s", p);
- }
  
- void datestamp(struct strbuf *out)
+ test_expect_success 'Check unformatted date fields output' '
+-	(git for-each-ref --shell --format="%(refname) %(committerdate) %(authordate)" refs/heads &&
+-	git for-each-ref --shell --format="%(refname) %(taggerdate)" refs/tags) >actual &&
+-	test_cmp expected actual
++	test_date "" "Mon Jul 3 17:18:43 2006 +0200" "Mon Jul 3 17:18:44 2006 +0200" "Mon Jul 3 17:18:45 2006 +0200"
+ '
+ 
+ test_expect_success 'Check format "default" formatted date fields output' '
+-	f=default &&
+-	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+-	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
+-	test_cmp expected actual
++	test_date default "Mon Jul 3 17:18:43 2006 +0200" "Mon Jul 3 17:18:44 2006 +0200" "Mon Jul 3 17:18:45 2006 +0200"
+ '
+ 
+ # Don't know how to do relative check because I can't know when this script
+ # is going to be run and can't fake the current time to git, and hence can't
+ # provide expected output.  Instead, I'll just make sure that "relative"
+ # doesn't exit in error
+-#
+-#cat >expected <<\EOF
+-#
+-#EOF
+-#
+ test_expect_success 'Check format "relative" date fields output' '
+ 	f=relative &&
+ 	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+ 	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual
+ '
+ 
+-cat >expected <<\EOF
+-'refs/heads/master' '2006-07-03' '2006-07-03'
+-'refs/tags/testtag' '2006-07-03'
+-EOF
+-
+ test_expect_success 'Check format "short" date fields output' '
+-	f=short &&
+-	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+-	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
+-	test_cmp expected actual
++	test_date short 2006-07-03 2006-07-03 2006-07-03
+ '
+ 
+-cat >expected <<\EOF
+-'refs/heads/master' 'Mon Jul 3 15:18:43 2006' 'Mon Jul 3 15:18:44 2006'
+-'refs/tags/testtag' 'Mon Jul 3 15:18:45 2006'
+-EOF
+-
+ test_expect_success 'Check format "local" date fields output' '
+-	f=local &&
+-	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+-	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
+-	test_cmp expected actual
++	test_date local "Mon Jul 3 15:18:43 2006" "Mon Jul 3 15:18:44 2006" "Mon Jul 3 15:18:45 2006"
+ '
+ 
+-cat >expected <<\EOF
+-'refs/heads/master' '2006-07-03 17:18:43 +0200' '2006-07-03 17:18:44 +0200'
+-'refs/tags/testtag' '2006-07-03 17:18:45 +0200'
+-EOF
+-
+ test_expect_success 'Check format "iso8601" date fields output' '
+-	f=iso8601 &&
+-	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+-	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
+-	test_cmp expected actual
++	test_date iso8601 "2006-07-03 17:18:43 +0200" "2006-07-03 17:18:44 +0200" "2006-07-03 17:18:45 +0200"
+ '
+ 
+-cat >expected <<\EOF
+-'refs/heads/master' 'Mon, 3 Jul 2006 17:18:43 +0200' 'Mon, 3 Jul 2006 17:18:44 +0200'
+-'refs/tags/testtag' 'Mon, 3 Jul 2006 17:18:45 +0200'
+-EOF
+-
+ test_expect_success 'Check format "rfc2822" date fields output' '
+-	f=rfc2822 &&
+-	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+-	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
+-	test_cmp expected actual
++	test_date rfc2822 "Mon, 3 Jul 2006 17:18:43 +0200" "Mon, 3 Jul 2006 17:18:44 +0200" "Mon, 3 Jul 2006 17:18:45 +0200"
+ '
+ 
+ test_expect_success 'Check format of strftime date fields' '
 -- 
 2.5.0.466.g9af26fa
