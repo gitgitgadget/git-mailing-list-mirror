@@ -1,8 +1,7 @@
-From: Barry Warsaw <barry@python.org>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: Git's inconsistent command line options
-Date: Tue, 1 Sep 2015 13:50:18 -0400
-Organization: Damn Crazy Followers of the Horn
-Message-ID: <20150901135018.70240193@limelight.wooz.org>
+Date: Tue, 1 Sep 2015 10:56:03 -0700
+Message-ID: <CAGZ79ka4+a_eyha=xCrQFBdLzgbT3ws1Jq7Q=WJw45Ob6bFFug@mail.gmail.com>
 References: <mrh7ck$r0g$1@ger.gmane.org>
 	<CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
 	<CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
@@ -13,85 +12,87 @@ References: <mrh7ck$r0g$1@ger.gmane.org>
 	<20150901092834.GA10706@gmail.com>
 	<20150901101924.6c350012@anarchist.wooz.org>
 	<xmqq37yyt7k8.fsf@gitster.mtv.corp.google.com>
+	<20150901135018.70240193@limelight.wooz.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/kN.j0rsfIxuy56XAD0Aci.t"; protocol="application/pgp-signature"
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	David Aguilar <davvid@gmail.com>,
 	Jacob Keller <jacob.keller@gmail.com>,
 	Philip Oakley <philipoakley@iee.org>,
 	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
 	Graeme Geldenhuys <graemeg@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 01 19:50:27 2015
+To: Barry Warsaw <barry@python.org>
+X-From: git-owner@vger.kernel.org Tue Sep 01 19:56:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWphS-0008AY-DW
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 19:50:26 +0200
+	id 1ZWpn1-0003cO-8t
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 19:56:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752622AbbIARuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2015 13:50:22 -0400
-Received: from mail.wooz.org ([216.15.33.194]:32971 "EHLO mail.wooz.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751546AbbIARuW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2015 13:50:22 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.wooz.org (Postfix) with ESMTP id 20AEE10803E1;
-	Tue,  1 Sep 2015 13:50:21 -0400 (EDT)
-Received: from mail.wooz.org ([127.0.0.1])
-	by localhost (carnies.wooz.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0Z4El5IB7Anf; Tue,  1 Sep 2015 13:50:20 -0400 (EDT)
-Received: from limelight.wooz.org (limelight.wooz.org [192.168.11.41])
-	by mail.wooz.org (Postfix) with ESMTPSA id E9F87108035F;
-	Tue,  1 Sep 2015 13:50:19 -0400 (EDT)
-In-Reply-To: <xmqq37yyt7k8.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Claws Mail 3.12.0 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
+	id S1752761AbbIAR4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2015 13:56:06 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:35963 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752159AbbIAR4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2015 13:56:04 -0400
+Received: by qkbp67 with SMTP id p67so52352135qkb.3
+        for <git@vger.kernel.org>; Tue, 01 Sep 2015 10:56:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=x7yXRPyHl8zAMRZZtQvZ9lmdQT/C0CD9yc4YwAYXZ7g=;
+        b=gRQeqQc1RWRu4xTUuqL1mA0fBsOMSsAWc4MsR0zjX1kFFb/UwQsBSg7bnCzd/BK8QV
+         mEH+w7XywIDTze3oZvQANmB9QmvYAP9+nAatISdLR3vlCoPmWDIltGbEWUlfrivED6CY
+         uYdrIiOldfzPrcozuygF9vIgvz+PC6IYjGIDnoKBbkbhh02LjQf/wSBrLz8ALyxRYEaM
+         rn0X431x7A1s27ZYhv7oLTzZKsRCRyrSsPHj+55yWoQnz/4SEDw5CnhDuTX+L3CtK7G4
+         NXFosovrpVA0K+ei5NmMf4ESXm+N8mfiYtB5p6JEEVK0OPbPDQ9bm0ZtkY4BiCp++EzO
+         o7tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=x7yXRPyHl8zAMRZZtQvZ9lmdQT/C0CD9yc4YwAYXZ7g=;
+        b=KN51iZo/T+OtLMA3Y2dWWJ9FealsXuuu/HCN7zEIw62xBYojOPbP1fObIY7iT268AV
+         +U0QDahShchnE7KdYl6TyF3i6AiMYgqQrYywz0FOs7kCus3qJ7g0q0/+n9kHhWaWYBl/
+         3DKki+KfPcpv5QPnXIOfqW1CyOY0Gt3zpLDx59NFYRsU9WlvNxPxwvsQd7dld+J5izVH
+         13G0SEwMVl/QAmT2idAnwXJXCtSsJBdZXmlv42REBKdOmp9yxsu3ZWqp930hDLlrYIUv
+         EzfGFLlYbZ9aSfwWz55JIJcTq7+B2or/OZD266sjAaEE96odjKE62IIhx9FZWmyo5vzz
+         1VFw==
+X-Gm-Message-State: ALoCoQnD+Toej24VHhCcO1O26BlEhlFQRHRpwrjopCLTVWP0F3kgjJ+zQN1E18mf66LcT0Ysy3Xp
+X-Received: by 10.13.218.131 with SMTP id c125mr29769602ywe.129.1441130163242;
+ Tue, 01 Sep 2015 10:56:03 -0700 (PDT)
+Received: by 10.37.21.132 with HTTP; Tue, 1 Sep 2015 10:56:03 -0700 (PDT)
+In-Reply-To: <20150901135018.70240193@limelight.wooz.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277004>
 
---Sig_/kN.j0rsfIxuy56XAD0Aci.t
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On Tue, Sep 1, 2015 at 10:50 AM, Barry Warsaw <barry@python.org> wrote:
+> On Sep 01, 2015, at 09:42 AM, Junio C Hamano wrote:
+>
+>>That way, you are forcing all the existing scripts to be updated to
+>>say "git -c ..." for _all_ invocations of Git they have, aren't you?
+>
+> No, why?  If the default value enables the current ui, then no scripts need
+> changing.  Users can enable the new ui for their own benefit at their own
+> pace.  If you eventually want to make the new ui the default, provide a
+> sufficient transition period.
+>
+> Cheers,
+> -Barry
 
-On Sep 01, 2015, at 09:42 AM, Junio C Hamano wrote:
+So say I am a user who wants to take the new command set. And as I am lazy to
+type it all the time I just do:
 
->That way, you are forcing all the existing scripts to be updated to
->say "git -c ..." for _all_ invocations of Git they have, aren't you?
+  $ git config --global command-version 2
 
-No, why?  If the default value enables the current ui, then no scripts need
-changing.  Users can enable the new ui for their own benefit at their own
-pace.  If you eventually want to make the new ui the default, provide a
-sufficient transition period.
-
-Cheers,
--Barry
-
---Sig_/kN.j0rsfIxuy56XAD0Aci.t
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJV5eVbAAoJEBJutWOnSwa/vokQAKDM/yo3VVPB/I0gTeIaICgW
-dRazCZClYOJrh8+cbRAFuHQEKl22EOF1dyJgsG2K6N74y6el0YdAFOeBoBkkJWWv
-TQbt4GBtQmNgVKxZkciKLCI1+lOnmxSFI5Lkhk1EuZJ2KEsyVOO2tWW/MU4WkSoL
-fsdedJvjPGWQdKFAH9mW3kVN6RLwdvINnqT1CqY9Dty+NnSRvLXyj7q0duhr9qaI
-x1BjTjJlw/B2siH2RE3ojI9a5kcyI0U4EiXHz/steg+/nZvE3TCf4VWfsRWjlrxt
-5UxZJi2IpPO4oDW2ECf4UIwtmHWL/W7/YbjnVqpjtO+ihsiXbgE/cjoUBzjJL1NQ
-0ZNKvJZtHickqf3MaplgwMk+kZYOsDjSdGpaoDPoA6XJV4kPOVF89cdHBEqEMMFq
-VkZs/0Hr/AUQQWGbYV+KccAcyZ+ah8n7pfXcPjP/B7yOpms++gv8yXOWpBGhvQL1
-jogwbPPRxMoKgvxIlZ9ztVPcp+igubx0h6tcwPOOjOVCriGPYxIstpqeekYLAFT5
-eHJXK6t9YZrhA8joemf/S8G9VqLUzrMy4Eotc3V1W47shmpgwqvIFWtGlB3FSJTZ
-kYe06xnFR7Sv4sjqHhsJRFh+9bAExUOhNueEBYaaLXRry8KSv12lZCZqMWjtqQl6
-HYrL8nTTFho0v7EGOpyZ
-=Nw/P
------END PGP SIGNATURE-----
-
---Sig_/kN.j0rsfIxuy56XAD0Aci.t--
+Now I have all the new fancy stuff when I type it directly into the terminal.
+But when I run one of the old scripts my coworker gave me (which is used to
+the old notion), it must adhere to the old command world. How do you now figure
+out if this is interactive or script?
