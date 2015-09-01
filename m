@@ -1,84 +1,88 @@
-From: Thomas Koch <thomas@koch.ro>
-Subject: Re: Git Deployment Multiple Existing Environments
-Date: Tue, 1 Sep 2015 10:34:11 +0200
-Message-ID: <201509011034.11257.thomas@koch.ro>
-References: <BAY180-W4617CD6AE98F64442A918BC26A0@phx.gbl>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 2/2] date: make "local" orthogonal to date format
+Date: Tue, 1 Sep 2015 09:37:31 +0100
+Message-ID: <20150901083731.GE30659@serenity.lan>
+References: <20150831204444.GA4385@sigill.intra.peff.net>
+ <20150831204831.GB10338@sigill.intra.peff.net>
+ <20150831212754.GD30659@serenity.lan>
+ <20150831213336.GA11720@sigill.intra.peff.net>
+ <20150831220508.GA31973@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Sukhwinder Singh <php_programmer_india@hotmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 01 10:34:24 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 01 10:37:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWh1L-0000Si-Kv
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 10:34:24 +0200
+	id 1ZWh4j-0002h2-BR
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 10:37:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755256AbbIAIeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2015 04:34:18 -0400
-Received: from mx1.mailbox.org ([80.241.60.212]:45855 "EHLO mx1.mailbox.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754735AbbIAIeO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2015 04:34:14 -0400
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1754637AbbIAIhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2015 04:37:48 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:44233 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754148AbbIAIhr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2015 04:37:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 3B522866007;
+	Tue,  1 Sep 2015 09:37:46 +0100 (BST)
+X-Quarantine-ID: <NXTy7qivo8Rq>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1.001
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.001 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_40=-0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id NXTy7qivo8Rq; Tue,  1 Sep 2015 09:37:45 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mx1.mailbox.org (Postfix) with ESMTPS id 5F8B742526;
-	Tue,  1 Sep 2015 10:34:13 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-Received: from smtp1.mailbox.org ([80.241.60.240])
-	by gerste.heinlein-support.de (gerste.heinlein-support.de [91.198.250.173]) (amavisd-new, port 10030)
-	with ESMTP id 5-xE7MUXR8FY; Tue,  1 Sep 2015 10:34:12 +0200 (CEST)
-User-Agent: KMail/1.13.7 (Linux/3.16.0-0.bpo.4-amd64; KDE/4.8.4; x86_64; ; )
-In-Reply-To: <BAY180-W4617CD6AE98F64442A918BC26A0@phx.gbl>
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 1E758CDA5F4;
+	Tue,  1 Sep 2015 09:37:33 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <20150831220508.GA31973@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276973>
 
-On Tuesday, September 01, 2015 09:50:45 AM Sukhwinder Singh wrote:
-> Hello,
-> I am kind of new to Git and I have a question regarding using Git for a
-> website. I have searched a lot but haven't found a solution yet. We
-> already have 3-4 environments setup on our Windows servers without Git and
-> each environment already has code which is different from each other.
+On Mon, Aug 31, 2015 at 06:05:09PM -0400, Jeff King wrote:
+> On Mon, Aug 31, 2015 at 05:33:37PM -0400, Jeff King wrote:
 > 
-> There are three environments
-> Live
-> UAT
-> Test (has the latest code)
+> > > diff --git a/date.c b/date.c
+> > > index aa57cad..3aa8002 100644
+> > > --- a/date.c
+> > > +++ b/date.c
+> > > @@ -817,9 +817,7 @@ void parse_date_format(const char *format, struct date_mode *mode)
+> > >  		if (!skip_prefix(p, ":", &p))
+> > >  			die("date format missing colon separator: %s", format);
+> > >  		mode->strftime_fmt = xstrdup(p);
+> > > -	}
+> > > -
+> > > -	if (*p)
+> > > +	} else if (*p)
+> > >  		die("unknown date-mode modifier: %s", p);
+> > 
+> > Yeah, that works. We could also advance "p" in the DATE_STRFTIME
+> > conditional, but I think your solution is less ugly.
+> > 
+> > Thanks for debugging my mess.
 > 
-> 
-> And then developers have their local copies.
-> 
-> We write and test the code locally and manually move each point from one
-> environment to other using merging software and test at each environment.
-> Now we want to use git because manually moving the code is a lengthy
-> process. Also as the developers have local copies, it is very difficult to
-> manage code.
-> 
-> Code is written locally by the team and then after testing locally it is
-> first merged with "Test" environment code, then "UAT" and then, finally
-> with "Live". So we have two concerns:
-> 
-> There is different code already existing on these environments.
-> Testing the code on each environment using the web server.
-> 
-> What is the best way to go about it? As I am new to git more details will
-> be helpful, like commands to use.
-> 
-> Thanks, 		 	   		  --
+> By the way, I was imagining you would pick these up and add to them with
+> more tests and documentation. If that's the case, please feel free to
+> squash that in and keep my signoff. If not, then I can post a re-roll
+> after waiting for other comments.
 
-There are douzends of different git deployment scripts on github from minimal 
-to multi-data-center-enterprise-grade. I wrote this one for my workplace:
+OK, I'll send them with some additions to t6300 built on top, although
+it may take a couple of days.
 
-https://github.com/comsolit/comsolit_deploy
-
-The README contains links to alternative solutions.
-
-Thomas Koch
+The other documentation improvements feel like an independent topic that
+isn't necessary for this series to graduate; I'd prefer not to block
+this waiting for those changes.
