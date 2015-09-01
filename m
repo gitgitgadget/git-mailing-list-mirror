@@ -1,77 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] git-p4: add "--path-encoding" option
-Date: Tue, 01 Sep 2015 10:35:04 -0700
-Message-ID: <xmqqmvx6rqk7.fsf@gitster.mtv.corp.google.com>
-References: <1441059026-66814-1-git-send-email-larsxschneider@gmail.com>
-	<1441059026-66814-2-git-send-email-larsxschneider@gmail.com>
-	<xmqqk2sbt5kv.fsf@gitster.mtv.corp.google.com>
-	<523D2C52-893E-4A54-9DD1-2DDBCEA29960@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t7300: fix broken && chains
+Date: Tue, 1 Sep 2015 13:36:51 -0400
+Message-ID: <20150901173650.GA5723@sigill.intra.peff.net>
+References: <1440926289-5899-1-git-send-email-erik.elfstrom@gmail.com>
+ <20150831185414.GB20555@sigill.intra.peff.net>
+ <CAMpP7NZ=K62XVkuuJHpDruBy7b2gECHrJ30L43LzdE54vTVB2A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, luke@diamand.org, tboegi@web.de
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 01 19:35:14 2015
+Cc: Git List <git@vger.kernel.org>
+To: erik =?utf-8?B?ZWxmc3Ryw7Zt?= <erik.elfstrom@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 01 19:36:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWpSk-0006Lt-9M
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 19:35:14 +0200
+	id 1ZWpUQ-0007X5-JN
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 19:36:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752611AbbIARfH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Sep 2015 13:35:07 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:36765 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751343AbbIARfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2015 13:35:06 -0400
-Received: by pacwi10 with SMTP id wi10so2360601pac.3
-        for <git@vger.kernel.org>; Tue, 01 Sep 2015 10:35:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=xXMFMahPUFpc8DLnSrv4QjY4vnvS+qP2h4mdIraEPP0=;
-        b=h05GxlWxaf0D+oUJ5x1tR0vxVndxjUuBBNAgAzPYGy3Y8vyElkGcZXVMlhyFdjS50F
-         5jVcAHa21CR5O5rTBcFKMc96gaB5VFJ9ABsj5NVqW8SBHwvrzGN7S2Qd49g3/w2k6omz
-         jUfLx9O8IMpLe6hM8gkhCCsnH/V/RpPIl4nB6GNHJnEEqf5be9StNBvGMPVQ85X3SzxP
-         Nz6/2IuCztpFUzw1Es+qostVqqS9xcqyGCl2DuTIubf9O2gyewt+pM3G/jHCKfdOXjN4
-         tRfmV1IQkFfLw8eZ9RCjQo9vkhM2TTOxgQS7rBc85avJ628V10IXCJkZGix+KjFCS+Dh
-         WpHg==
-X-Received: by 10.66.219.39 with SMTP id pl7mr48371522pac.148.1441128906154;
-        Tue, 01 Sep 2015 10:35:06 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:c585:9fe7:e0d8:e718])
-        by smtp.gmail.com with ESMTPSA id si1sm18795143pbc.72.2015.09.01.10.35.05
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 01 Sep 2015 10:35:05 -0700 (PDT)
-In-Reply-To: <523D2C52-893E-4A54-9DD1-2DDBCEA29960@gmail.com> (Lars
-	Schneider's message of "Tue, 1 Sep 2015 15:42:39 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754334AbbIARgy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Sep 2015 13:36:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53140 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752888AbbIARgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2015 13:36:53 -0400
+Received: (qmail 6026 invoked by uid 102); 1 Sep 2015 17:36:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Sep 2015 12:36:53 -0500
+Received: (qmail 2888 invoked by uid 107); 1 Sep 2015 17:36:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Sep 2015 13:36:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Sep 2015 13:36:51 -0400
+Content-Disposition: inline
+In-Reply-To: <CAMpP7NZ=K62XVkuuJHpDruBy7b2gECHrJ30L43LzdE54vTVB2A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276999>
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+On Tue, Sep 01, 2015 at 08:27:59AM +0200, erik elfstr=C3=B6m wrote:
 
-> On 01 Sep 2015, at 01:13, Junio C Hamano <gitster@pobox.com> wrote:
->
->> larsxschneider@gmail.com writes:
->>=20
->>> From: Lars Schneider <larsxschneider@gmail.com>
->>>=20
->>=20
->> Here is a space for you to describe what it does and why it is a
->> good idea to have it.
-> How about this:
->
-> Perforce keeps the encoding of a path as given by the originating
-> OS. Git expects paths encoded as UTF-8. Add an option to tell git-p4
-> what encoding Perforce had used for the paths. This encoding is used
-> to transcode the paths to UTF-8. As an example, Perforce on Windows
-> uses =E2=80=9Ccp1252=E2=80=9D to encode path names.
+>      (
+>         echo "100644 $o5 0    a"
+>         echo "100644 $o0 0    c"
+>         echo "160000 $c1 0    d"
+>     ) >expected &&
+>=20
+> I'd estimate that there are hundreds of these (see t3030 for
+> examples). I'm not sure if you care about these? As you say they are
+> not really very interesting cases.
 
-Very readable.  Does "Perforce on Windows" always use cp1252, or
-is it more correct to say "often uses" here?
+I think patches for these are OK, but no, I don't consider it a high
+priority if they are harmless (IMHO the real value of the patches is
+that it removes the noise from the output of your script, so you can
+find any cases that _do_ matter).
+
+-Peff
