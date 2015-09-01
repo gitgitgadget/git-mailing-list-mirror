@@ -1,139 +1,98 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] mailmap: update my entry with new email address
-Date: Tue, 1 Sep 2015 10:07:23 -0700
-Message-ID: <CAGZ79kbo6vq8yvs0aMcZUX54w_CF0-=_Qqeq4VTio55ie7U0Yg@mail.gmail.com>
-References: <55E5C92E.7040105@ramsayjones.plus.com>
-	<01dbb6005800a8816a5f6b9ae740dbc9@www.dscho.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] push: don't show Done with --quiet --porcelain
+Date: Tue, 01 Sep 2015 10:13:20 -0700
+Message-ID: <xmqqvbburrkf.fsf@gitster.mtv.corp.google.com>
+References: <CA+WR+g7frN4uV12dxahxZbr-5az7sj3zx2oN-Z3rKH0_Y8jqqg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Sep 01 19:07:31 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, "Larry D'Anna" <larry@elder-gods.org>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Josh Rabinowitz <joshr@joshr.com>
+X-From: git-owner@vger.kernel.org Tue Sep 01 19:13:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWp1u-0004uG-FG
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 19:07:30 +0200
+	id 1ZWp7h-0000EK-AT
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 19:13:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753477AbbIARHZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Sep 2015 13:07:25 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:35796 "EHLO
-	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753431AbbIARHY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Sep 2015 13:07:24 -0400
-Received: by qkcj187 with SMTP id j187so50339701qkc.2
-        for <git@vger.kernel.org>; Tue, 01 Sep 2015 10:07:23 -0700 (PDT)
+	id S1752335AbbIARNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2015 13:13:25 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35257 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752293AbbIARNY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2015 13:13:24 -0400
+Received: by pacfv12 with SMTP id fv12so1824309pac.2
+        for <git@vger.kernel.org>; Tue, 01 Sep 2015 10:13:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ZLESjg9Wq1Tftg6obPc9kTiqWo2xmVgqWu02FQKN1ng=;
-        b=j37/nS80daEjjbJzwqEBzX1a/M1UuIbJBTwlPrLXtndCGvr24UWGcAhzm9G3z836cn
-         ebJ7DrveUet3JAIPz/R3qJ7T11+1j8YPVj9NzofF48SZ4DkEjF//Zpf20X6zOKRW3HV4
-         RgLN+UhpR9nzCxuwUVtXoJ6+ryvGbY1DbsJIh1iOLYeSskxKeuvs5N7CyVukDVumaR96
-         n1SuApc7NEM6JcXOUgORovzIB64ZUzm7MuL91y+ovlk5BqSgNcVBeBfejhHI6BnlAzwU
-         k6BJ9ir8D4ptkF9cyKlUeMzbWC664XJIeXhsA7+8Hob8anObt+rGN5xUEH2YNbODxap8
-         ujoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ZLESjg9Wq1Tftg6obPc9kTiqWo2xmVgqWu02FQKN1ng=;
-        b=UGOZTCFz2OfY5JNwydpHcjTWwHU+TJgr5hHppKEYa2QQiABXyF8TyNb6zms7IaQ/Yn
-         y4LRIci3dRN2xDLP6n+iR3nditE1gFZpjtdsDlEzmw6lOlEG+fZ/42Io/ilAcv9cEZdu
-         EeShw3ONxlumvivSczNMZ+8i21ZF/Ndnxr0evVhK8vbQjqmRs4phLOrx7frxGnWEcCC5
-         hbeYHfyG+VhOJeX7U6w8xtezmcuJdLuBgCaHOxU38gIbGEy1mGZshp+VhYO84mN0plSH
-         1hlcyadxPaUvfA3AjSOzb1RSy8TI+szECqd2cGut+12wyLOaqnEt5+pBUAVL0O+k0iAy
-         u/qw==
-X-Gm-Message-State: ALoCoQmOpz4IP8ylKPF+A4c7UtqXn0DLjWe9WPBj3XD5QFHdTTahJ2FiWEiW3AYqpToCve7C9GPw
-X-Received: by 10.129.16.212 with SMTP id 203mr29651055ywq.142.1441127243304;
- Tue, 01 Sep 2015 10:07:23 -0700 (PDT)
-Received: by 10.37.21.132 with HTTP; Tue, 1 Sep 2015 10:07:23 -0700 (PDT)
-In-Reply-To: <01dbb6005800a8816a5f6b9ae740dbc9@www.dscho.org>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=suj4Ir1a27Kb0XbkJvsRiZ6IFAYkpPI96uhwWYtaWJM=;
+        b=TJWp7gimI68CDKZZkvc2PYQNHkCEPavpi6oJsuUp7srt/mkiXWddzd9KZSphWK5aQu
+         lROEMxO2/L8qXQ66ohShvy1JvwrV9lWaHx3iCA3nZesD4NKaLDtzLjEG6F5tqCTGtExK
+         89ILkmxGJFI7Zt6JX2cLhFVMW+jmcv5NJdZsBIQuLy95THHScpJPiwNwhq+KG6MYkgnM
+         6Sjt9+S5wzmwG0uts3+ObkknKhpVFOY+44oHR7BQqdrL4oI8xmC06N0xyfj63MZOmmWL
+         yjNeY2djL8iJegkFBGXsUR7Hw8gkpGozY7g0VUv/P7YCQP0ViLA8guxeOSKvrQlRfMie
+         fVSQ==
+X-Received: by 10.68.189.161 with SMTP id gj1mr49065917pbc.4.1441127602122;
+        Tue, 01 Sep 2015 10:13:22 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:c585:9fe7:e0d8:e718])
+        by smtp.gmail.com with ESMTPSA id p3sm18818787pdf.3.2015.09.01.10.13.21
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 01 Sep 2015 10:13:21 -0700 (PDT)
+In-Reply-To: <CA+WR+g7frN4uV12dxahxZbr-5az7sj3zx2oN-Z3rKH0_Y8jqqg@mail.gmail.com>
+	(Josh Rabinowitz's message of "Mon, 31 Aug 2015 12:40:45 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276994>
 
-On Tue, Sep 1, 2015 at 9:11 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Hi Ramsay,
+Josh Rabinowitz <joshr@joshr.com> writes:
+
+> Change so 'git push --porcelain --quiet' emits no text when there
+> is no error.  This makes the --quiet option here more consistent with
+> other git commands.
 >
-> On 2015-09-01 17:50, Ramsay Jones wrote:
+> Signed-off-by: josh rabinowitz <joshr@joshr.com>
+> ---
+
+The rationale given in 77555854 (git-push: make git push --porcelain
+print "Done", 2010-02-26) does not apply when "--quiet" is in use,
+because we do give the rejection notice to the standard output even
+under "--quiet", so the calling script can tell between the case
+where we couldn't reach the remote side (i.e. no rejection notice)
+and the case where we reached them and they rejected (i.e. they will
+tell us why the push was rejected) when "git push" reports a failure
+with its exit status.
+
+For that matter, I am not sure if this "Done" introduced by 77555854
+is really needed even when "--quiet" is not in effect.
+
+In either case, saying "Done" after talking to the remote end
+already is an established part of the output meant for Porcelain
+when "--porcelain" option is in use.  So I do not think changing it
+is a good idea.  Existing scripts that read from "--porcelain" output
+would be expecting the line to be there.
+
+>  transport.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->> diff --git a/.mailmap b/.mailmap
->> index ece2951..e5b4126 100644
->> --- a/.mailmap
->> +++ b/.mailmap
->> @@ -186,7 +186,7 @@ Philip J=C3=A4genstedt <philip@foolip.org>
->> <philip.jagenstedt@gmail.com>
->>  Philipp A. Hartmann <pah@qo.cx> <ph@sorgh.de>
->>  Philippe Bruhat <book@cpan.org>
->>  Ralf Thielow <ralf.thielow@gmail.com> <ralf.thielow@googlemail.com>
->> -Ramsay Allan Jones <ramsay@ramsay1.demon.co.uk>
->> +Ramsay Jones <ramsay@ramsayjones.plus.com> <ramsay@ramsay1.demon.co=
-=2Euk>
->>  Ren=C3=A9 Scharfe <l.s.r@web.de> <rene.scharfe@lsrfire.ath.cx>
->>  Robert Fitzsimons <robfitz@273k.net>
->>  Robert Shearman <robertshearman@gmail.com> <rob@codeweavers.com>
+> diff --git a/transport.c b/transport.c
+> index 40692f8..0021b3f 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -1209,7 +1209,7 @@ int transport_push(struct transport *transport,
+>                 transport_update_tracking_ref(transport->remote, ref, verbose);
+>         }
 >
-> The idea of the .mailmap file is to fix inconsistent names in the his=
-tory. For example, if you look e.g. at commit 6ebdee5af47df0c64354e4524=
-19015a694c25f5f, you will see that your middle name was recorded, but i=
-f you look e.g. at f84df81f654aeb0ac4582e0b3be162cba6ea5232 you will se=
-e that it was not always recorded with your changes.
-
-I would argue a mailmap file serves a dual purpose.
-The first purpose as you said is to correct inconsistent or erroneous
-names (who is sb@local.host anyway ?)
-
-The second purpose is just as Ramsay used it to map different
-identities to one person/email address.
-As Ramsay lost his access to the email, you would want to use his new
-email, say when looking for the right reviewer using git blame.
-Then even old commits (with the old email recorded) should rather
-display the new email, such that you get it right the first time.
-
->
-> Therefore I would recommend leaving the old line in place, and just *=
-adding* another one.
-
-I would recommending taking this patch specifically for the second purp=
-ose.
-
->
-> Besides, for consistency I would leave the middle name in there. Othe=
-rwise, people might be wondering why their shortlog calls bring up some=
- other name. In other words, if you add a new line, you really want to =
-use the same clear name as before.
-
-You can use the long form
-  Name1 <email2> Name2 <email2>
-in the .mailmap file to always show the Name1 and email1.
-
->
-> You actually do not even need to add a new line if you plan on submit=
-ting patches with your middle name. Remember: the main purpose of .mail=
-map is to support shortlog, i.e. appropriate grouping of patches by per=
-son (such as the two commits I mentioned above).
->
-> Ciao,
-> Johannes
->
-> P.S.: That's a major bummer on your three forced-offline weeks. I fee=
-l with ya!
-
-Sometimes I'd love to be offline for 3 weeks. But being forced to? No t=
-hanks!
-
+> -       if (porcelain && !push_ret)
+> +       if (!quiet && porcelain && !push_ret)
+>             puts("Done");
+>         else if (!quiet && !ret && !transport_refs_pushed(remote_refs))
+>             fprintf(stderr, "Everything up-to-date\n");
 > --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 2.3.2 (Apple Git-55)
