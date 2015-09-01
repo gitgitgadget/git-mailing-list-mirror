@@ -1,71 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: GSoC 2015 is over
-Date: Tue, 01 Sep 2015 18:55:04 +0200
-Message-ID: <vpq8u8qw047.fsf@anie.imag.fr>
+From: Geofrey Sanders <geofrey.sanders@gmail.com>
+Subject: Windows path handling changed between versions
+Date: Tue, 1 Sep 2015 12:55:38 -0400
+Message-ID: <CAFPYLHASH_LZ2YgQWjfPKCwq_n-9HVNotkimiQDY1Qy8_8gtwg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Paul Tan <pyokagan@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Christian Couder <christian.couder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 01 18:55:30 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 01 18:56:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZWoqG-0005Fi-UQ
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 18:55:29 +0200
+	id 1ZWoqr-0005gF-0j
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Sep 2015 18:56:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753333AbbIAQzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2015 12:55:22 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57580 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753308AbbIAQzV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2015 12:55:21 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t81Gt23X018867
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 1 Sep 2015 18:55:02 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t81Gt4Jm010626;
-	Tue, 1 Sep 2015 18:55:04 +0200
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 01 Sep 2015 18:55:03 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t81Gt23X018867
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1441731304.92954@HeOvbYVexXd5P2edr5pGkA
+	id S1753481AbbIAQ4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2015 12:56:00 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:35019 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753308AbbIAQz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2015 12:55:59 -0400
+Received: by lbpo4 with SMTP id o4so3301370lbp.2
+        for <git@vger.kernel.org>; Tue, 01 Sep 2015 09:55:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to:content-type;
+        bh=E0As6AqTyJnY3dYCYth8Ef5WQsr8ily7UdnDp4/bH8Y=;
+        b=lOmTQj61vYRaGukPpX04k5vzcQuydSn87A00wauCH5Cuonb7r3qopf1W/LcE1CAsIy
+         5m3L6GbFHEus80gvIOolbo2GeQ97K8Ta0givP56Cgo1+f3DqAWOylD49g7nsJfGgNPHm
+         LLUw/q74/eDxAocts7LkOi+QyhIjX74pYm0haQ6aTpkcmE50Ed3wEXobCC6FpWiV0Chb
+         sVzJ+hRyowsrXxunVR+g/lSUYehO94+fiZVd5ME7CpdOQ3TOQSXFk6uCYmXWqnavqozt
+         5ETaWwIDrOhult5hMj6sJORkudFdkCLGRIxQ7YWg/3dUk8VpWGhWhS+HtEpdUfV8f5hw
+         9/aw==
+X-Received: by 10.152.23.4 with SMTP id i4mr2723351laf.51.1441126557775; Tue,
+ 01 Sep 2015 09:55:57 -0700 (PDT)
+Received: by 10.112.200.134 with HTTP; Tue, 1 Sep 2015 09:55:38 -0700 (PDT)
+X-Google-Sender-Auth: S3Z_FOphpVZtQrN9u5FdOyJY_Oc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/276992>
 
-Hi,
+I recently upgraded from Windows Git 1.6.2 to 2.5.0 and found myself
+unable to rebase. Turns out paths didn't used to be case-sensitive and
+now they are, causing a number of operations to halt. A repo created
+by pointing at the directory
+    c:\core\guidewire\Dev\2.4
+would (I suppose) technically have been invalid the whole time because
+Windows reports the current path as
+    C:\core\guidewire\Dev\2.4
+, but msys Git 1.6.2 evidently made a case-insensitive path comparison
+so the discrepancy was suppressed.
 
-The Google Summer of Code 2015 is officially over. We had two students
-(Paul and Karthik), and both of them passed. 100 % success :-).
+The proximate cause of errors was
+    git rev-parse --is-inside-work-tree
+which would output 'false' even inside the working tree.
+"--is-inside-git-dir" also printed 'false' in directories where it
+should have said 'true'. I actually missed the problem in plain sight
+at first, because I created a new repo (in which everything worked as
+expected), and then did a directory diff... the worktree paths were
+different but I only noticed the names, not the case difference in the
+drive letter. More details in this SO question:
+http://stackoverflow.com/q/32280644/2835086
 
-I didn't follow closely Paul's work, but we now have C builtins for
-"pull" and "am" (both in master) instead of shell scripts. Karthik
-worked on the unification of "for-each-ref", "tag" and "branch". We
-already have more options for "for-each-ref". tag and branch are being
-ported to use the same library code as "for-each-ref" (2 patch series
-under review).
+I was able to repair my existing repos by changing the 'worktree'
+value in gitconfig - s/c/C/ did the trick - but the whole thing was a
+surprise.
 
-I consider this GSoC as a great success and a pleasant experience.
-Congratulation to Paul and Karthik, and a warm "thank you" to everybody
-who contributed: administrators, mentors, reviewers, and obviously
-Junio! (not to mention Google, who made all this possible)
+Is this a bug in the current version? Windows doesn't distinguish on
+case, so maybe applications shouldn't either.
+Was this a bug in the prior version? Maybe creating a repo with a
+worktree path that doesn't match the file system should have been an
+error from the very beginning.
+Was this user error? Maybe I did something wrong and should have known
+better, but got away with it for a while.
 
-Thanks all!
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Any feedback welcome,
+-gws
