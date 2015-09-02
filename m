@@ -1,78 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/6] Make "local" orthogonal to date format
-Date: Wed, 02 Sep 2015 13:29:08 -0700
-Message-ID: <xmqqfv2wmup7.fsf@gitster.mtv.corp.google.com>
-References: <20150901083731.GE30659@serenity.lan>
-	<cover.1441144343.git.john@keeping.me.uk>
-	<20150901224431.GA9353@sigill.intra.peff.net>
-	<20150902074826.GK30659@serenity.lan>
-	<20150902080529.GA19248@sigill.intra.peff.net>
-	<xmqq4mjcq2ac.fsf@gitster.mtv.corp.google.com>
-	<20150902194946.GL30659@serenity.lan>
-	<xmqqk2s8mvig.fsf@gitster.mtv.corp.google.com>
-	<20150902202148.GM30659@serenity.lan>
+From: larsxschneider@gmail.com
+Subject: [PATCH v5] git-p4: add config git-p4.pathEncoding
+Date: Wed,  2 Sep 2015 22:39:14 +0200
+Message-ID: <1441226355-61103-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Sep 02 22:29:16 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: luke@diamand.org, gitster@pobox.com, tboegi@web.de,
+	sunshine@sunshineco.com, Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 02 22:39:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXEeh-00078v-9b
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Sep 2015 22:29:15 +0200
+	id 1ZXEoX-0004c2-AM
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Sep 2015 22:39:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756032AbbIBU3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2015 16:29:11 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:33858 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756025AbbIBU3K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2015 16:29:10 -0400
-Received: by padhy1 with SMTP id hy1so22145090pad.1
-        for <git@vger.kernel.org>; Wed, 02 Sep 2015 13:29:09 -0700 (PDT)
+	id S1756018AbbIBUjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2015 16:39:20 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:33541 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755671AbbIBUjT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2015 16:39:19 -0400
+Received: by wicmc4 with SMTP id mc4so78317663wic.0
+        for <git@vger.kernel.org>; Wed, 02 Sep 2015 13:39:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=RjchOWnyM1Q7Dq48mJ6HgUbyZQKwqOQzhZF76DvycGE=;
-        b=YHC10DFvI1dO9qFhPTomLWKJSL2uRh/vHhxT24mAyrRmqLPEdES8UJ3jhytado49CV
-         6toyVmFHUHDcHlZ7Kb710hGmvZi+tl2vkWRo+LCSwWC28nZQ0BjGw7zY/HTxPIlDZKIY
-         1lSOFdOwIluS+yHeYbOHc6oCD9nRJgtKjQeBrdNU4Db3U0ZSdo8JT1yrECJU8V/oCMRL
-         a+Lm6TSf1IafhVSZrvU1NLxsvVLcoMIwucK1FgCvHVePMrXRafozNPtyXXbAQRKOFhrK
-         VBaUTLAB7Q4VotiISqfuKp8qbvziNwCmKPPwt7MtMHLHoUAX9eGtzCRixljQIwDFfJ80
-         3TnQ==
-X-Received: by 10.68.249.36 with SMTP id yr4mr59176510pbc.18.1441225749620;
-        Wed, 02 Sep 2015 13:29:09 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:2414:9e5f:bc96:1638])
-        by smtp.gmail.com with ESMTPSA id am4sm22610064pbd.58.2015.09.02.13.29.08
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 02 Sep 2015 13:29:09 -0700 (PDT)
-In-Reply-To: <20150902202148.GM30659@serenity.lan> (John Keeping's message of
-	"Wed, 2 Sep 2015 21:21:48 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=jbLOenvBn5zU05Pdh3BdOTtj5Ud6GH2r5h3tk2Kxq3o=;
+        b=j819Ir1CyIolTRkmpW178Jgpks1lZAqF9ohGkLNxd5ACKy930KfKx0xxTTO9hUNYjp
+         +Tm/sA3ZEkZ3vjVZDHB48HHM/dKb4qV6bDQsQ6aWe5/vLBXAJuiK8JySj2+vvkMYYvzd
+         t5R5HQ/IuYBvLQgyGU8q0KG7nQzJ0qsQ9neJRGvMIkTmtp+H2G+tLSIUb5TNtgAX6GYK
+         QxlynfOemJ0qNvLq9d9AtgAJ8Z2/PzH3cuJs2l346UoM9YkAmXkRQMdmxOBO5rAmz+5h
+         pmts5/JMX4jw8v+0vLa3ftqUUqpAiC5GewLn3RN7Es5gDfxrE+6VjVprdk1G6UgUVIQk
+         AGVg==
+X-Received: by 10.180.80.138 with SMTP id r10mr7022111wix.18.1441226358511;
+        Wed, 02 Sep 2015 13:39:18 -0700 (PDT)
+Received: from slxBook3.fritz.box (dslb-188-106-110-072.188.106.pools.vodafone-ip.de. [188.106.110.72])
+        by smtp.gmail.com with ESMTPSA id ny7sm5363001wic.11.2015.09.02.13.39.16
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 02 Sep 2015 13:39:17 -0700 (PDT)
+X-Mailer: git-send-email 1.9.5 (Apple Git-50.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277122>
 
-John Keeping <john@keeping.me.uk> writes:
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> In which case, should we just support it now?
->
-> Normally I'd suggest banning controversial options on the basis that
-> it's easier in the future to allow something that was previously banned
-> than change the meaning of an options, but in this case I can't see any
-> other meaning for these options than that described above.
+Diff to v4:
+* add verbose output
+* reword help text
+* remove comment how to generate encoded sequence
+* use ascii characters in encoded sequence where possible
+* wrap 'cd' in TC in a subshell
 
-My usual stance is the same as yours, and I agree that there is no
-other sane and useful behaviour for "relative-local" to do the same
-as "relative".
+Thanks to Eric, Torsten, and Junio for feedback!
 
-As we'll go into pre-release feature freeze soonish, we have enough
-time to add missing support to the code (the new feature won't have
-to make the upcoming 2.6 wait).
+Cheers,
+Lars
 
-Thanks.
+Lars Schneider (1):
+  git-p4: add config git-p4.pathEncoding
+
+ Documentation/git-p4.txt        |  7 +++++
+ git-p4.py                       | 11 ++++++++
+ t/t9822-git-p4-path-encoding.sh | 60 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 78 insertions(+)
+ create mode 100755 t/t9822-git-p4-path-encoding.sh
+
+--
+1.9.5 (Apple Git-50.3)
