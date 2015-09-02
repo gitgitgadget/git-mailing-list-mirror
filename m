@@ -1,104 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v15 05/13] ref-filter: implement an `align` atom
-Date: Wed, 02 Sep 2015 10:28:57 -0700
-Message-ID: <xmqqfv2wohly.fsf@gitster.mtv.corp.google.com>
-References: <1441131994-13508-1-git-send-email-Karthik.188@gmail.com>
-	<1441131994-13508-6-git-send-email-Karthik.188@gmail.com>
-	<xmqqegihrg6t.fsf@gitster.mtv.corp.google.com>
-	<CAOLa=ZQ0nyaQmvE3suT6hh0jO3s_iYxFLjSuLUY4STneMFJf9Q@mail.gmail.com>
-	<xmqqd1y0q30g.fsf@gitster.mtv.corp.google.com>
-	<CAOLa=ZQLG_HB0trodXPCb9n4x2FuH7h7-+KJYLEdNZSpd0PHsg@mail.gmail.com>
-	<xmqqy4goomdk.fsf@gitster.mtv.corp.google.com>
-	<vpqio7slpbd.fsf@anie.imag.fr>
+Subject: Re: [PATCH v2 2/6] date: make "local" orthogonal to date format
+Date: Wed, 02 Sep 2015 10:36:35 -0700
+Message-ID: <xmqq7fo8oh98.fsf@gitster.mtv.corp.google.com>
+References: <20150901083731.GE30659@serenity.lan>
+	<cover.1441144343.git.john@keeping.me.uk>
+	<35b1313d4eb084ddc2bd70510d56e11a1d84e993.1441144343.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 02 19:29:17 2015
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Karthik Nayak <karthik.188@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Sep 02 19:36:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXBqQ-0004GQ-G6
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Sep 2015 19:29:10 +0200
+	id 1ZXBxj-0000uT-DI
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Sep 2015 19:36:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755717AbbIBR3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2015 13:29:05 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:34647 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755550AbbIBR3D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2015 13:29:03 -0400
-Received: by padhy1 with SMTP id hy1so18078040pad.1
-        for <git@vger.kernel.org>; Wed, 02 Sep 2015 10:29:03 -0700 (PDT)
+	id S1754993AbbIBRgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2015 13:36:38 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:35897 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754474AbbIBRgh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2015 13:36:37 -0400
+Received: by pacwi10 with SMTP id wi10so18105049pac.3
+        for <git@vger.kernel.org>; Wed, 02 Sep 2015 10:36:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=JQwr1QmwX9gxSSmv41AMCFy3ySEVS8yYqHyAHRT1fMg=;
-        b=Qw1y56OJuMsSeqO6GiFjcroasVB8YNsXY9o0en/hVeE42u2bEpMMA+XJPTLOpN0KPG
-         pZROrAPkpz6mHslZhoheHe+Ldo9KaJW1nX+O8DUy0fJslmFAoW72DbCXMBZo8VaA5WwN
-         tLb/ukarYoe93J9WoEowzzoXr9AeCcDHgYAcyoOV1W7kve/AycFpUMi7uhM2ZgOZSUCt
-         Bnf6LqYDSnJ6v3OEK9uurknvJMHWJKsg+cNWBw54AkFdTKfQhlykDMyya7jLeKoXsEvF
-         +h4FzxIH5cVzcl7ypB+ujcY7Prrn9q77h4BxwGY4uVH/32we302CusE0ZBHt/9bMSKSH
-         9TRA==
-X-Received: by 10.68.133.167 with SMTP id pd7mr56661038pbb.23.1441214943345;
-        Wed, 02 Sep 2015 10:29:03 -0700 (PDT)
+        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type;
+        bh=3CJ9BfstNVywTEMRSTsVYE6Ur+YB9WVga+47ihiDO8w=;
+        b=vXvuyVq5ciZPPqFa/lQdr9tqkpL6IVG96mdzOpjg+sdZ1S9jbH3IB5e7zAVkkKSFfi
+         DF5qeIDqnxEL1DkSZTzTyEPzpfqaIWfl0uJxJ8mbsJyI0rQOxj6OTM7R9l4QC3l7a+tN
+         Ijkfa2103XQHU0nGVagTDE80iivitGV/e2gXSPQQnZCnBrhrsDr2d6CuLLgu/gwo0+te
+         oe3SbcebXxmNY+JfsW0MIzYcQ89lMtdX62PZt2bYt+zqsYm/0TIk6ExQPO24A/j+T5xX
+         4OnNwz9idr77zA83qrB4860Akvdkh7yPTjrnxHUtHdjPje1ZjXHVOCe5gma/CUV0GCz1
+         sTkQ==
+X-Received: by 10.66.62.163 with SMTP id z3mr57796237par.12.1441215396882;
+        Wed, 02 Sep 2015 10:36:36 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:2414:9e5f:bc96:1638])
-        by smtp.gmail.com with ESMTPSA id jd12sm18725969pbd.44.2015.09.02.10.29.02
+        by smtp.gmail.com with ESMTPSA id pf4sm22378826pdb.37.2015.09.02.10.36.36
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 02 Sep 2015 10:29:02 -0700 (PDT)
-In-Reply-To: <vpqio7slpbd.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	02 Sep 2015 19:10:46 +0200")
+        Wed, 02 Sep 2015 10:36:36 -0700 (PDT)
+In-Reply-To: <35b1313d4eb084ddc2bd70510d56e11a1d84e993.1441144343.git.john@keeping.me.uk>
+	(John Keeping's message of "Tue, 1 Sep 2015 22:55:40 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277110>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+John Keeping <john@keeping.me.uk> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>> On Wed, Sep 2, 2015 at 8:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> Karthik Nayak <karthik.188@gmail.com> writes:
->>>>
->>>>>>> +             die(_("format: `end` atom used without a supporting atom"));
->>>>>>
->>>>>> Not a show-stopper, but we may need some wordsmithing for "a
->>>>>> supporting atom" here; an end-user would not know what it is.
->>>>>
->>>>> Probably something like "format: `end` atom should only be
->>>>> used with modifier atoms".
->>>>
->>>> Between "supporting" and "modifier" I do not see much difference,
->>>> though.
->>>
->>> I don't see how we could provide a better message, as %(end) atom
->>> would be common to various atoms eventually.
->>
->> I said "not a show-stopper" without giving a suggestion exactly
->> because I didn't (and I still don't) think either you or I can come
->> up with a good wording ;-).  That is why the message was Cc'ed to
->> the list for others to comment.
->
-> I don't really have a better proposal either. What we really mean is
-> "%(end) requires an atom that requires to be paired with %(end)", but
-> that wouldn't really help. I prefer "supporting" to "modifier":
-> To me, %(color:red) can be called a "modifier" by I wouldn't call %(if)
-> a modifier. "Supporting" is vague, but less misleading to me.
->
-> Perhaps "corresponding"? (not convinced myself ...)
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index a9b808f..5d28133 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -702,12 +702,16 @@ include::pretty-options.txt[]
+>  --date=(relative|local|default|iso|iso-strict|rfc|short|raw)::
+>  	Only takes effect for dates shown in human-readable format, such
+>  	as when using `--pretty`. `log.date` config variable sets a default
+> -	value for the log command's `--date` option.
+> +	value for the log command's `--date` option. By default, dates
+> +	are shown in the original time zone (either committer's or
+> +	author's). If `-local` is appended to the format (e.g.,
+> +	`iso-local`), the user's local time zone is used instead.
+>  +
+>  `--date=relative` shows dates relative to the current time,
+> -e.g. ``2 hours ago''.
+> +e.g. ``2 hours ago''. The `-local` option cannot be used with
+> +`--raw` or `--relative`.
+>  +
+> -`--date=local` shows timestamps in user's local time zone.
+> +`--date=local` is an alias for `--date=default-local`.
+>  +
 
-Yeah, it is like an open and a close parentheses that form a
-matching pair.  "%(end) without a corresponding atom" (implying
-"that opened the environment the %(end) attempts to close")?
+This can also affect for-each-ref's "%(authordate:short)" and
+friends.  We have this rather unfortunately detailed description:
 
-We'd need to define what an atom is (or "supporting atom" for that
-matter) and explain how nesting works in the documentation anyway,
-and I'd expect we would gain definitions of a few terms we can use
-in this error message.
+    As a special case for the date-type fields, you may specify a format for
+    the date by adding one of `:default`, `:relative`, `:short`, `:local`,
+    `:iso8601`, `:rfc2822` or `:raw` to the end of the fieldname; e.g.
+    `%(taggerdate:relative)`.
+
+We would probably want to make this more vague by replacing "adding
+one of..." with "adding ':' followed by date format name (see the
+values the --date option to linkgit::git-rev-list[1] takes)" or
+something like that.
