@@ -1,93 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rerere: release lockfile in non-writing functions
-Date: Wed, 02 Sep 2015 12:43:49 -0700
-Message-ID: <xmqqpp20mwsq.fsf@gitster.mtv.corp.google.com>
-References: <20150901221409.GA23274@sigill.intra.peff.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2 0/6] Make "local" orthogonal to date format
+Date: Wed, 2 Sep 2015 20:49:46 +0100
+Message-ID: <20150902194946.GL30659@serenity.lan>
+References: <20150901083731.GE30659@serenity.lan>
+ <cover.1441144343.git.john@keeping.me.uk>
+ <20150901224431.GA9353@sigill.intra.peff.net>
+ <20150902074826.GK30659@serenity.lan>
+ <20150902080529.GA19248@sigill.intra.peff.net>
+ <xmqq4mjcq2ac.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 02 21:43:58 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 02 21:56:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXDwp-0005cw-Fq
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Sep 2015 21:43:55 +0200
+	id 1ZXE98-0004gB-7i
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Sep 2015 21:56:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932221AbbIBTnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2015 15:43:52 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:33351 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755870AbbIBTnv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2015 15:43:51 -0400
-Received: by pacex6 with SMTP id ex6so15997221pac.0
-        for <git@vger.kernel.org>; Wed, 02 Sep 2015 12:43:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=UD2jnRtK6Us6KdU/Zc+qIMIfvEMTZrY2lV/bp52WEOo=;
-        b=qFz7UfdGh+Jgch3ZAmN+Ys7KRrI/b2Px3P0h9wNF8M+07WLbeAOokpsToxEHj89/jA
-         Dxj8qZvS2M42hqGr4jl5BmftpViIECaypgClejo88qvR3ju/8oXoHIbI5ueUJL5tzDZ/
-         GNHaoQJzMecHm1dLEbwZl8GjtguJAYQx98D4ZnwJ7xXXCN1vwook37xCtkpW1LoIAAe4
-         T8IGKAX1SdBVJNjwT/zJ+cBTWqm4Er5c8xr3tQeA3JHgffJ4eFE3fEOZ21bxbQR6lJL1
-         gtZJoz08T1sjFqZu1gBxA98gRHPeVxAoY5SqI/A+3O1vucH2K/NJPKrjD4URfrhG2R1N
-         khbw==
-X-Received: by 10.68.195.231 with SMTP id ih7mr59687047pbc.26.1441223031103;
-        Wed, 02 Sep 2015 12:43:51 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:2414:9e5f:bc96:1638])
-        by smtp.gmail.com with ESMTPSA id cb6sm1995020pac.10.2015.09.02.12.43.50
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 02 Sep 2015 12:43:50 -0700 (PDT)
-In-Reply-To: <20150901221409.GA23274@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 1 Sep 2015 18:14:09 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756067AbbIBT4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2015 15:56:35 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:37021 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755200AbbIBT4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2015 15:56:34 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Sep 2015 15:56:34 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 1AD5224F4C;
+	Wed,  2 Sep 2015 20:49:54 +0100 (BST)
+X-Quarantine-ID: <1LmHU-iMh6fr>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.199
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 1LmHU-iMh6fr; Wed,  2 Sep 2015 20:49:53 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id A789B22CFC;
+	Wed,  2 Sep 2015 20:49:48 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqq4mjcq2ac.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277118>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Sep 02, 2015 at 08:16:59AM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Wed, Sep 02, 2015 at 08:48:26AM +0100, John Keeping wrote:
+> >
+> >> On Tue, Sep 01, 2015 at 06:44:31PM -0400, Jeff King wrote:
+> >> > [1] I do think the error message for "relative-local is nonsense" could
+> >> >     perhaps be more explanatory, but I couldn't come up with any better
+> >> >     wording. But if you have ideas, feel free to switch it.
+> >> 
+> >> My only suggestion would be to reuse the "unknown date format: %s"
+> >> message and avoid having a special message in this case.
+> >
+> > Heh, that was what I was trying to avoid. I wanted to avoid "I do not
+> > understand our request" and have it more like "I understand what you're
+> > _trying_ to do, but it doesn't make sense".
+> >
+> > I guess "relative dates do not depend on timezones, so -local is
+> > meaningless" would be the closest thing.
+> >
+> > I don't think it is that big a deal whichever way we go, though.
+> 
+> I somehow thought that the discussion was about raw-local, not
+> relative-local, but anyway, I think it would make more sense to
+> allow both of them.  If you define the meaning of "-local" as:
+> 
+>     Pretend that the event in question was recorded with your
+>     timezone, and show the timestamp using the specified format sans
+>     -local suffix.
+> 
+> that explains what happens for all the other formats well, and it
+> also makes sense for what would happen to raw and even relative, I
+> think.
 
-> There's a bug in builtin/am.c in which we take a lock on
-> MERGE_RR recursively. But rather than fix am.c, this patch
-> fixes the confusing interface from rerere.c that caused the
-> bug. Read on for the gory details.
->
-> The setup_rerere() function both reads the existing MERGE_RR
-> file, and takes MERGE_RR.lock. In the rerere() and
-> rerere_forget() functions, we end up in write_rr(), which
-> will then commit the lock file.
->
-> But for functions like rerere_clear() that do not write to
-> MERGE_RR, we expect the caller to have handled
-> setup_rerere(). That caller would then need to release the
-> lockfile, but it can't; the lock struct is local to
-> rerere.c.
->
-> For builtin/rerere.c, this is OK. We run a single rerere
-> operation and then exit immediately, which has the side
-> effect of rolling back the lockfile.
->
-> But in builtin/am.c, this is actively wrong. If we run "git
-> am -3 --skip", we call setup-rerere twice without releasing
-> the lock:
->
->   1. The "--skip" causes us to call am_rerere_clear(), which
->      calls setup_rerere(), but never drops the lock.
->
->   2. We then proceed to the next patch.
->
->   3. The "--3way" may cause us to call rerere() to handle
->      conflicts in that patch, but we are already holding the
->      lock. The lockfile code dies with:
->
->      BUG: prepare_tempfile_object called for active object
+The discussion about "raw-local" was in a separate subthread, I think
+we're just bikeshedding the particular error message here.
 
-Thanks.  I've been re-acquainting with the internals of rerere and
-agree with your approach to this issue.
-
-Let's merge this before -rc1.
+OTOH, I don't think there's any disagreement about what "relative-local"
+and "raw-local" would output were they supported, just whether they are
+useful.  There doesn't seem to be any harm in supporting them;
+"relative-local" will be identical to "relative" and "raw-local" will
+require preparatory code movement for the raw output.
