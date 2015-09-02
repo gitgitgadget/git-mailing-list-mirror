@@ -1,99 +1,89 @@
-From: John Keeping <john@keeping.me.uk>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2 0/6] Make "local" orthogonal to date format
-Date: Wed, 2 Sep 2015 20:49:46 +0100
-Message-ID: <20150902194946.GL30659@serenity.lan>
+Date: Wed, 02 Sep 2015 13:11:35 -0700
+Message-ID: <xmqqk2s8mvig.fsf@gitster.mtv.corp.google.com>
 References: <20150901083731.GE30659@serenity.lan>
- <cover.1441144343.git.john@keeping.me.uk>
- <20150901224431.GA9353@sigill.intra.peff.net>
- <20150902074826.GK30659@serenity.lan>
- <20150902080529.GA19248@sigill.intra.peff.net>
- <xmqq4mjcq2ac.fsf@gitster.mtv.corp.google.com>
+	<cover.1441144343.git.john@keeping.me.uk>
+	<20150901224431.GA9353@sigill.intra.peff.net>
+	<20150902074826.GK30659@serenity.lan>
+	<20150902080529.GA19248@sigill.intra.peff.net>
+	<xmqq4mjcq2ac.fsf@gitster.mtv.corp.google.com>
+	<20150902194946.GL30659@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 02 21:56:38 2015
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Sep 02 22:11:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXE98-0004gB-7i
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Sep 2015 21:56:38 +0200
+	id 1ZXENx-0005L1-Ki
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Sep 2015 22:11:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756067AbbIBT4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2015 15:56:35 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:37021 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755200AbbIBT4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2015 15:56:34 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Sep 2015 15:56:34 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 1AD5224F4C;
-	Wed,  2 Sep 2015 20:49:54 +0100 (BST)
-X-Quarantine-ID: <1LmHU-iMh6fr>
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.199
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 1LmHU-iMh6fr; Wed,  2 Sep 2015 20:49:53 +0100 (BST)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id A789B22CFC;
-	Wed,  2 Sep 2015 20:49:48 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <xmqq4mjcq2ac.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1755008AbbIBULi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2015 16:11:38 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:35307 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751931AbbIBULh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2015 16:11:37 -0400
+Received: by pacfv12 with SMTP id fv12so22023620pac.2
+        for <git@vger.kernel.org>; Wed, 02 Sep 2015 13:11:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=30hScGq32a7UGzyJQ7XbeHK5hAbs1eQ//6PZBZ5sYWU=;
+        b=p5Ggh9kgkRvAzIblj67cbp3LNi8Q6x+Q7F07it3nkMI+kOowDoCaWb8vd7+tFBTqGQ
+         z4a9UJhC8/+I7q/zfFVT7iLzGpWPClRRz1U5RrQlekMZutG6ixDePsPDsD0YYP3BYR46
+         mOyhePBOMPdQV4S36za2MctFvuo1D6l0zBjaTuCPYp8jJsOlMAwyPm2vkRWES3Jx5mOu
+         glHwYEhM5P1f9NnmIcyZRGW0pY2AYPSr6nPE9GdXRNIwqbu1J/H4hfxrvDwMbdJT4tQa
+         1NaCz6c3fKpO8fJVpSWCmvfUGWek6QMUqiCyZuPiTzcCAmKhDs3j05E4k0LCiSnaTXCX
+         LHpg==
+X-Received: by 10.68.233.134 with SMTP id tw6mr60909016pbc.22.1441224697302;
+        Wed, 02 Sep 2015 13:11:37 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:2414:9e5f:bc96:1638])
+        by smtp.gmail.com with ESMTPSA id pi4sm22629137pdb.60.2015.09.02.13.11.36
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 02 Sep 2015 13:11:36 -0700 (PDT)
+In-Reply-To: <20150902194946.GL30659@serenity.lan> (John Keeping's message of
+	"Wed, 2 Sep 2015 20:49:46 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277119>
 
-On Wed, Sep 02, 2015 at 08:16:59AM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Wed, Sep 02, 2015 at 08:48:26AM +0100, John Keeping wrote:
-> >
-> >> On Tue, Sep 01, 2015 at 06:44:31PM -0400, Jeff King wrote:
-> >> > [1] I do think the error message for "relative-local is nonsense" could
-> >> >     perhaps be more explanatory, but I couldn't come up with any better
-> >> >     wording. But if you have ideas, feel free to switch it.
-> >> 
-> >> My only suggestion would be to reuse the "unknown date format: %s"
-> >> message and avoid having a special message in this case.
-> >
-> > Heh, that was what I was trying to avoid. I wanted to avoid "I do not
-> > understand our request" and have it more like "I understand what you're
-> > _trying_ to do, but it doesn't make sense".
-> >
-> > I guess "relative dates do not depend on timezones, so -local is
-> > meaningless" would be the closest thing.
-> >
-> > I don't think it is that big a deal whichever way we go, though.
-> 
-> I somehow thought that the discussion was about raw-local, not
-> relative-local, but anyway, I think it would make more sense to
-> allow both of them.  If you define the meaning of "-local" as:
-> 
->     Pretend that the event in question was recorded with your
->     timezone, and show the timestamp using the specified format sans
->     -local suffix.
-> 
-> that explains what happens for all the other formats well, and it
-> also makes sense for what would happen to raw and even relative, I
-> think.
+John Keeping <john@keeping.me.uk> writes:
 
-The discussion about "raw-local" was in a separate subthread, I think
-we're just bikeshedding the particular error message here.
+> On Wed, Sep 02, 2015 at 08:16:59AM -0700, Junio C Hamano wrote:
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > I guess "relative dates do not depend on timezones, so -local is
+>> > meaningless" would be the closest thing.
+>
+> The discussion about "raw-local" was in a separate subthread, I think
+> we're just bikeshedding the particular error message here.
 
-OTOH, I don't think there's any disagreement about what "relative-local"
-and "raw-local" would output were they supported, just whether they are
-useful.  There doesn't seem to be any harm in supporting them;
-"relative-local" will be identical to "relative" and "raw-local" will
-require preparatory code movement for the raw output.
+OK.
+
+> OTOH, I don't think there's any disagreement about what "relative-local"
+> and "raw-local" would output were they supported, just whether they are
+> useful.  There doesn't seem to be any harm in supporting them;
+> "relative-local" will be identical to "relative" and "raw-local" will
+> require preparatory code movement for the raw output.
+
+Sure.
+
+Bikeshedding further, while Peff's message "-local is meaningless"
+is a correct statement of the fact, I do not think it explains well
+why we chose to error out instead of giving the most natural result
+(i.e. exactly the same as 'relative').
+
+Perhaps stating "relative-local is not supported" without saying why
+would be better.  "Because it is meaningless, we refuse to support
+the option." is a very strong statement that tells aspiring future
+Git hackers not to attempt to add a support for it, which is
+probably a wrong message to send.
