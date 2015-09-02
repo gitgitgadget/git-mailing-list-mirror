@@ -1,87 +1,64 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GSoC 2015 is over
-Date: Thu, 3 Sep 2015 00:46:54 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1509030042100.16897@s15462909.onlinehome-server.info>
-References: <vpq8u8qw047.fsf@anie.imag.fr> <CACRoPnTrvD2NFQopg2rJB_PSZv0tawRjiuVi8vK+YN0OyFh-sg@mail.gmail.com>
+Subject: Re: [git-for-windows] Re: Git for Windows 2.5.1 is out
+Date: Thu, 3 Sep 2015 01:16:30 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1509030114560.16897@s15462909.onlinehome-server.info>
+References: <44a7997123f03bb4d5f47724befd8417@www.dscho.org> <b294f2d7-5e76-4c49-8033-5e0001b79e52@googlegroups.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>, Karthik Nayak <karthik.188@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Christian Couder <christian.couder@gmail.com>,
-	Stefan Beller <sbeller@google.com>
-To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 03 00:47:13 2015
+Cc: git-for-windows <git-for-windows@googlegroups.com>,
+	git@vger.kernel.org
+To: Aaron Bird <ajbird4@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 03 01:16:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXGoC-0007DE-Oz
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 00:47:13 +0200
+	id 1ZXHGf-0006BT-MM
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 01:16:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754069AbbIBWrA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2015 18:47:00 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64073 "EHLO mout.gmx.net"
+	id S1754544AbbIBXQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2015 19:16:34 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59736 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753213AbbIBWq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2015 18:46:58 -0400
+	id S1754044AbbIBXQd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2015 19:16:33 -0400
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0MHXXo-1ZYMCJ1oke-003PsO;
- Thu, 03 Sep 2015 00:46:55 +0200
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LmbZb-1Yx7AT36AN-00aH5B;
+ Thu, 03 Sep 2015 01:16:30 +0200
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <CACRoPnTrvD2NFQopg2rJB_PSZv0tawRjiuVi8vK+YN0OyFh-sg@mail.gmail.com>
+In-Reply-To: <b294f2d7-5e76-4c49-8033-5e0001b79e52@googlegroups.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:M5AIhphOUjZWDEpd0YMIV3Y9FjiOxe7VvBZXplEv44r4bwKTWPC
- Zi4TkSVFDNIC3OZL4VQ/CsvHMSkx3UG2EBriGS1uzkuqO1vDymG1pzau0jUE+e3dC71YJ1Z
- pErV8YdcxXltmP6N7Kmv+DK9traz3X9s1Hh7/xgyR2dz+bWprCkEosTwgBJpWpDBP6ZcnQM
- x+0g0he/c7HAC06YfPG1A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:osbayzfEJ+I=:ALGIlQhRGGjXdx1HH79M1t
- lsjX84jK5BMEg5JjoEiP2e0xAlaQaGZoWu8yOGmwigPGKfRUn3uxEBZXgj7D6Qdsx0FQjKeh5
- 45LYRsX64FtumQgEx++C/NgB+JlZy46v7c2PjcnSTcBqcPxbUNIYyJMpV6u9BPvDIsRsdAv5I
- IJFercv+5y0DI8jCV2/npm/ywbCtVxASpiTbq7gyP8mgKKjFEth4nlWWRIRKUbqd0ahdi/EGr
- nEADlWLXRM7FBumYggYpUcJj9HCB+TIqsJYojp7BLAF82v9s3CpV8+X5V78uERuSdh5Ri5eSq
- hPg34NFQjNwxndRwRxDmqdxxj6FkDfGlGYNwnaks4QveMstz1z7JRKR5l3oPZm09WZFLDQnGh
- fr71WYAEBB6RA8dIAdk0eUHbKECTrda9mNCILuJdl9ShBC6K1JLDcWr/AXXChZrgaxUsiBBzi
- 8AYZX3y/RN+/OORchZusLhtxla1XwBEfDhtu7+gwGb9dp6OjwUXTdvdZX00jc1m6S7yV9yY4O
- v5ol46A/6An1fhCrSlpagqGHyLDIqBfCs+qFfx5oe20bFvrENtNn6U+EzDQdRI3huUHtTTK/y
- pSiXKWmWWK/exNNFPIHOjopeineUWCFc8/po5oA4sxeAIF3XXx8onF4yFz4jlDwW/gTM4HmjX
- fQg8zIpk6SdX4xdXQtb2ig9bHpY1EpvJi0g9bqFHvp3uXOIoqoATcMeR7HEwKzFrnWgCvvcgN
- 9cXB9b7xCbAgPXKQI9ZuNYmXDod4e+u1aDkT5w==
+X-Provags-ID: V03:K0:m1wz1JGc6DSX9OPU4K5iG3JhLA/oRxa0XFjkIGBFClpfTu1Yte7
+ l//VccMFEHzs5gpAib6ohOy1NnS1dcRXjy4Ia+sfKHVFfYYa9ey8iE4f7aW6Z/HlkOKA57x
+ P53f5cDc0IBSbkBHHu3FMieGlIBE+N6v8nLmxjIdlU3LrfejKpJFwV4hYdnas4lVhxfTRFI
+ DWDq7FDizdgeFUFmV5eXA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:teOvtgXmLLs=:ixpW3kW9Dw2ZppctCbW1wd
+ g3m1T4LOKTyrFc/oxgh7o3N7m18hUUcwOsoY1ibIMg3EICJ28jGn5x2s3aEDG3RxB90PjQoZE
+ Uo9sYvlP7UR2yNsK31Bf3JFYj+jbnkzbwniv7+3kgkam3WTWJaow0fl0USeEhCqGbR277/XOM
+ urcZVsScqbFgrI0a4HLrVH98C8tMRyucYObwHLiI2RQiMxPAH4pl80dtWwLfBJ0zsZeS3rxVo
+ 966ZfahMe0xa9A95J+fjoCPPmo5Q+9k56ONdHCbS6/BOmQ8wLLB/8RAvK/z3Oy6M8kDvPHBhy
+ Nk9FyB0PdgJF9r1aqa5NmT1feAWof6AJWb8O5RwXHkfk+YVOv76tZjHGtliaOK3bk3YNeDt96
+ wSo/E2K9ekosm/gCLi5ytmcBzuhpuq9XcsOpjxzBVbJA3YlFYKlnqV0ZqawVfao2Nr/Fk8zL9
+ q4MaiWhmcgmcdmD5c8ieISHsTWLSbBdQ1EFVT1ABoKuHURAD83SZd+/hJ6dtR4+j/Was1L94H
+ u67GxoAobfdlpyCd/uX4D61XDRi+gN4UoiI19E8Hzt76p3eKPRmo0EJOdty8N6P1mnVLkUsR3
+ 64Bon0XJa2N1S3G7nhUbe+Wd/T/HXl4QTa6V3knfaeK95eTEuTrdAw5BXdKtyn0RnAy63P1x5
+ AZVMYgs+R98AAV6JUbmDMvzwIWOeZXbxn65PeaVbt06GuCh+tCbzK0vAZdinuLpLKecFrMuL2
+ 6pJTLX5EHbcC624b6E9fYKLLzlQBCMLfPE9WyQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277135>
 
-Hi,
+On Wed, 2 Sep 2015, Aaron Bird wrote:
 
-On Wed, 2 Sep 2015, Paul Tan wrote:
+> I am running windows 8.1.  Every time I try and open git Bash I get an 
+> unexpected kernal mode trap error and computer instantly shuts down.
 
-> On Wed, Sep 2, 2015 at 12:55 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
-> > I consider this GSoC as a great success and a pleasant experience.
-> > Congratulation to Paul and Karthik, and a warm "thank you" to everybody
-> > who contributed: administrators, mentors, reviewers, and obviously
-> > Junio! (not to mention Google, who made all this possible)
-> >
-> > Thanks all!
-> 
-> Thanks!
-
-Well, with so many thankyous going on, who am I to hide behind a rock?
-
-Seriously again, Paul, it is so good to have you. I have mentored GSoC
-students before and it is no secret that I had to take a (partially
-forced) break. This summer was really excellent for me because I could be
-lazy ;-)
-
-What strikes me as particularly pleasant is that you are really
-responsive and I personally feel that your project has not only been
-successful but will benefit many, many Windows users once 2.6.0 comes out
-(the performance boost will be noticeable, I am sure).
-
-So here is a hearfelt: well done!
+For lurkers, Aaron also reported this bug at
+https://github.com/git-for-windows/git/issues/348 and we are eagerly
+waiting for his feedback.
 
 Ciao,
-Dscho
+Johannes
