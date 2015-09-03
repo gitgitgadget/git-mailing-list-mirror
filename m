@@ -1,125 +1,131 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] pack-protocol: document newline behavior in push commands
-Date: Thu, 3 Sep 2015 04:02:05 -0400
-Message-ID: <20150903080205.GA20182@sigill.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] graph.c: visual difference on subsequent series
+Date: Thu, 3 Sep 2015 10:04:03 +0200
+Message-ID: <55E7FEF3.2020400@drmicha.warpmail.net>
+References: <1415626412-573-1-git-send-email-anarcat@koumbit.org>
+ <87twspe6ix.fsf@marcos.anarc.at>
+ <xmqqegjticd7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dave Borowitz <dborowitz@google.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 03 10:02:18 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Antoine_Beaupr=c3=a9?= <anarcat@koumbit.org>
+X-From: git-owner@vger.kernel.org Thu Sep 03 10:04:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXPTN-0002MS-9Q
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 10:02:17 +0200
+	id 1ZXPVI-0003ok-0e
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 10:04:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454AbbICICL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2015 04:02:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54254 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750889AbbICICI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2015 04:02:08 -0400
-Received: (qmail 9858 invoked by uid 102); 3 Sep 2015 08:02:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Sep 2015 03:02:08 -0500
-Received: (qmail 8612 invoked by uid 107); 3 Sep 2015 08:02:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 03 Sep 2015 04:02:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Sep 2015 04:02:05 -0400
-Content-Disposition: inline
+	id S1751335AbbICIEK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Sep 2015 04:04:10 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:37948 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751151AbbICIEG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Sep 2015 04:04:06 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3154E20435
+	for <git@vger.kernel.org>; Thu,  3 Sep 2015 04:04:05 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 03 Sep 2015 04:04:05 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=WIJkBhfZmdJKWDH87xZimmyUD4g=; b=YhuvX1
+	o9dmQ60Wt8Nehyj4uw5Ao3ZdKjZlkLE5yQ/i4X+2zlGU/lWXC2I21X2yN1BzZ1cb
+	NNtrofLsMe1QWMdMHKzAql9HTZkAocEDf1koqoKH7zzEsPuKKrt9FNLVKC+wgS08
+	Dr1R7rgqSlvskuuUFgHTa8usl72aatnPIL/WI=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=WIJkBhfZmdJKWDH
+	87xZimmyUD4g=; b=aGIF/+2NT0mA2535WaPgrkA5r8fU5gDGS65uFvnjsTzk3vy
+	PB2aeFAMunZJe5/CKXhoRTRf3i6sxYPie+zPLpFpGOAf9lZs8R+MDfZ0oZrmbgGo
+	EZNrDo5pvremyklJ9D6jMr4I8/LCq2jFhk7LY0JkbwIIZ+gzHavhwerTVuyM=
+X-Sasl-enc: 80pYr9/1EPuemfd2YiRgvvKx/pUogmkGkIXejU8jwZyD 1441267444
+Received: from localhost.localdomain (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 76A316800E2;
+	Thu,  3 Sep 2015 04:04:04 -0400 (EDT)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <xmqqegjticd7.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277183>
 
-Our pack-protocol spec indicates that a pushing client
-should send ref update commands like:
+Junio C Hamano venit, vidit, dixit 27.07.2015 22:17:
+> Antoine Beaupr=C3=A9 <anarcat@koumbit.org> writes:
+>=20
+>> Any reason why this patch wasn't included / reviewed?
+>> ...
+>>> This patch is similar than the one provided by Milton Soares Filho =
+in
+>>> 1382734287.31768.1.git.send.email.milton.soares.filho@gmail.com but=
+ was
+>>> implemented independently and uses the 'o' character instead of 'x'=
+=2E
+>=20
+> The reason why Milton's patch was not taken after discussion [*1*]
+> was not because its implementation was poor, but its design was not
+> good.  By overriding '*' '<' or '>' with x, it made it impossible to
+> distinguish a root on the left side branch and a root on the right
+> side branch.
+>=20
+> Is the design of your independent implementation the same except
+> that 'o' is used instead of 'x'?  Independent implementation does
+> not make the same design magically better, if that is the case ;-)
 
-  $old_sha1 $new_sha1 $ref\n
+Interestingly, the patch to the tests lists * to o changes only, no < o=
+r
+> to o.
 
-with each ref update in its own pktline, with a trailing
-newline. However, git itself does not follow this behavior;
-it omits the trailing newline.
+The reason is simply that the patch doesn't change anything for left no=
+r
+right commits. I would say that is the best compromise since it does no=
+t
+change the overall layout, provides more information by default and doe=
+s
+not override information that is requested specifically.
 
-For the most part the distinction is harmless. The
-`receive-pack` on the other end will call
-`packet_read_line`, which strips off the newline if it is
-there, and we are fine either way.
+If we want to put more information into log --graph simultaneously we
+should really go beyond ASCII and look at how tig does it, e.g. using
+unicode characters.
 
-Things are more complicated for the initial ref, which also
-has capabilities. The spec says to send:
-
-  $old_sha1 $new_sha1 $ref\0 $caps\n
-
-which is also OK by the current `receive-pack code (the
-newline is at the end of the packet, so we still strip it).
-
-As an aside, it would _not_ be OK to send:
-
-  $old_sha1 $new_sha1 $ref\n\0 $caps\n
-
-The spec does not allow that and receive-pack would reject
-it, but it is perhaps a mistake that a naive client
-implementation might make.
-
-So what is in the current spec is quite reasonable, and
-simply follows the normal rules for pkt-line framing (we say
-LF, but it really is optional). But it does not document
-how git actually behaves.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-+cc Junio, Dave, and Shawn, as this is somewhat related to the
-discussion in
-http://thread.gmane.org/gmane.comp.version-control.git/273175/focus=273444
-
-I happened to be looking into some protocol stuff recently and noticed
-that we do not follow the spec here (but interestingly, libgit2 does!).
-
-Frankly, this feels a bit like a step backwards to me. I am tempted to
-suggest instead that git start sending the newlines, but I'm not sure
-it's worth any potential fallout.
-
-I'm also tempted to scrap this and say it just falls under the rule
-that every PKT-LINE is "sender SHOULD include LF" and "receiver MUST NOT
-complain about missing LF" (which does appear earlier in the document,
-though in a different context). Or maybe we should write out that rule
-explicitly and drop the "LF" from all parts of the grammar (which is
-what the thread above advocates).
-
- Documentation/technical/pack-protocol.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index 4064fc7..9ce53b4 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -469,8 +469,8 @@ references.
- 
-   shallow           =  PKT-LINE("shallow" SP obj-id LF)
- 
--  command-list      =  PKT-LINE(command NUL capability-list LF)
--		       *PKT-LINE(command LF)
-+  command-list      =  PKT-LINE(command NUL capability-list)
-+		       *PKT-LINE(command)
- 		       flush-pkt
- 
-   command           =  create / delete / update
-@@ -586,8 +586,8 @@ An example client/server communication might look like this:
-    S: 003f74730d410fcb6603ace96f1dc55ea6196122532d refs/heads/team\n
-    S: 0000
- 
--   C: 003e7d1665144a3a975c05f1f43902ddaf084e784dbe 74730d410fcb6603ace96f1dc55ea6196122532d refs/heads/debug\n
--   C: 003e74730d410fcb6603ace96f1dc55ea6196122532d 5a3f6be755bbb7deae50065988cbfa1ffa9ab68a refs/heads/master\n
-+   C: 003e7d1665144a3a975c05f1f43902ddaf084e784dbe 74730d410fcb6603ace96f1dc55ea6196122532d refs/heads/debug
-+   C: 003e74730d410fcb6603ace96f1dc55ea6196122532d 5a3f6be755bbb7deae50065988cbfa1ffa9ab68a refs/heads/master
-    C: 0000
-    C: [PACKDATA]
- 
--- 
-2.5.1.812.ge796bff
+> If the design is different, please explain how your patch solves the
+> issue with Milton's design in your log message.
+>=20
+> For example, you could use the column arrangement to solve it, e.g.
+>=20
+> History sequence A: a1 -- a2 -- a3 (root-commit)
+> History sequence B: b1 -- b2 -- b3 (root-commit)
+>=20
+>     $ git log --graph --oneline A B
+>     * a1
+>     * a2
+>     * a3
+>       * b1
+>       * b2
+>       * b3
+>=20
+>     $ git log --graph --oneline --left-right A...B
+>     < a1
+>     < a2
+>     < a3
+>       > b1
+>       > b2
+>       > b3
+>=20
+> I am not saying that the above would be the only way to do so; there
+> may be other ways to solve the issue.
+>=20
+> [Reference]
+>=20
+> *1* http://thread.gmane.org/gmane.comp.version-control.git/236708/foc=
+us=3D236843
+>=20
