@@ -1,82 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/4] git-p4: add optional type specifier to gitConfig reader
-Date: Thu, 03 Sep 2015 13:18:51 -0700
-Message-ID: <xmqqmvx3i7dg.fsf@gitster.mtv.corp.google.com>
-References: <1441298148-63885-1-git-send-email-larsxschneider@gmail.com>
-	<1441298148-63885-2-git-send-email-larsxschneider@gmail.com>
-	<55E8A5C2.9090500@diamand.org>
-	<A76D6BC6-E0AD-48F4-AE33-80BD0803BFA3@gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v2 2/4] git-p4: add gitConfigInt reader
+Date: Thu, 03 Sep 2015 21:20:55 +0100
+Message-ID: <55E8ABA7.7080207@diamand.org>
+References: <1441298148-63885-1-git-send-email-larsxschneider@gmail.com> <1441298148-63885-3-git-send-email-larsxschneider@gmail.com> <55E8A647.90903@diamand.org> <FFEA6EC7-5663-4AE1-9E59-6AF89E731DB7@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 03 22:18:58 2015
+X-From: git-owner@vger.kernel.org Thu Sep 03 22:20:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXayH-0000vp-Oc
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 22:18:58 +0200
+	id 1ZXb0E-0002bM-2E
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 22:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026AbbICUSy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Sep 2015 16:18:54 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:36283 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750987AbbICUSx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2015 16:18:53 -0400
-Received: by pacwi10 with SMTP id wi10so624314pac.3
-        for <git@vger.kernel.org>; Thu, 03 Sep 2015 13:18:53 -0700 (PDT)
+	id S1751093AbbICUUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2015 16:20:54 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:33050 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750708AbbICUUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2015 16:20:53 -0400
+Received: by wiclk2 with SMTP id lk2so2202836wic.0
+        for <git@vger.kernel.org>; Thu, 03 Sep 2015 13:20:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=i+W9qAo+s05kTZMledHLdjynhRaXlTaU4QVVNDReiPU=;
-        b=tnTCA4sC3t1qANiFYEVThEqvsVbWz2UWo8rO5BlB0e50S8poV6AShHW6OfILxoUNHT
-         Xl753OXPOAV4PcNRABqjBOwDEjpL3GtUg5CntR/hAMjS9eQUTLS7K/I3aOJqeT/MiswG
-         3ZSGMQozU2dC6HbH+7M44YYVXmd9wJ0z+qLofrZdln6WdMFRBzZ6poHW17cRGKtSLhGx
-         HIQuoReqBPQWgd8Z73Hjms7K8MCi0+/Kifp8aJOfaehhT7pi5g6zd898/ytzhvvMzc65
-         XXzAvnSO6ru15nepjyZPFHuqnbDEpeXlRoQJcGaIMASUJsp0Dj2EsPST4FntfMpLuBRQ
-         ECyA==
-X-Received: by 10.68.175.3 with SMTP id bw3mr70800848pbc.106.1441311533192;
-        Thu, 03 Sep 2015 13:18:53 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:71da:b56c:f873:e611])
-        by smtp.gmail.com with ESMTPSA id ll8sm26428853pab.39.2015.09.03.13.18.52
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 03 Sep 2015 13:18:52 -0700 (PDT)
-In-Reply-To: <A76D6BC6-E0AD-48F4-AE33-80BD0803BFA3@gmail.com> (Lars
-	Schneider's message of "Thu, 3 Sep 2015 22:14:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=VGJye3E7GL6QQ7xIF1H6ReLUbjruzd2iypGIR/pr9u0=;
+        b=B25zqTPhOzPSSPOIZa3MkFdkaq02gSDkAl46c+hiJhwPvp7xSvRN+F5ueGoe6yJcU3
+         jVmQbif2YO0JaFUL18naqE4LTcH8FLjfjaDH07fJfpfiIToS2+6tt2mr61QiaaH0EFS/
+         qTPdos/o87+OrTBnCVMko5c8wMaET+Jn6uTH4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=VGJye3E7GL6QQ7xIF1H6ReLUbjruzd2iypGIR/pr9u0=;
+        b=CgZ0PZ6IzayC/QtDECB2hkii3uD8s7gWXk4pZBoMUtJxhkITD2hg5h0cC0ZRXYiQLe
+         fWOf9GGf8SWc5k4PBx8JxiRhlLF1rZeCJVt7iEhOqNPSlctu7QmUDbvD6mG6AeC8QwQ5
+         Ag6rQwzfih5WJkjgv1mnn+7yJJAI6/lH6WNeugg2wkQ7t5q4N1uJdxe+IhXKmOOiE3ac
+         Q6KO+6fhdnx1ilotJOA9AIOEh7p8wRMoiFvwi3NO6r26F5ZIVwmsbH+gxHnWxVoAz10T
+         PQNtiz/24/eMJgaS6xpeP140vq2IpdN0Xwx9iApD6i93VqbCOiJCdEieoagxxWjj39Nm
+         4CGw==
+X-Gm-Message-State: ALoCoQkOpz54TV/dWcqZrZS2kmG+aEPd/UOi3ue0JjOy0beR4B/GA503vdNaJMjCcm80yLrOt5B6
+X-Received: by 10.180.39.136 with SMTP id p8mr1738563wik.92.1441311652500;
+        Thu, 03 Sep 2015 13:20:52 -0700 (PDT)
+Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
+        by smtp.gmail.com with ESMTPSA id en5sm38239wib.18.2015.09.03.13.20.51
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 03 Sep 2015 13:20:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <FFEA6EC7-5663-4AE1-9E59-6AF89E731DB7@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277255>
 
-Lars Schneider <larsxschneider@gmail.com> writes:
-
-> On 03 Sep 2015, at 21:55, Luke Diamand <luke@diamand.org> wrote:
+On 03/09/15 21:17, Lars Schneider wrote:
+>
+> On 03 Sep 2015, at 21:57, Luke Diamand <luke@diamand.org> wrote:
 >
 >> On 03/09/15 17:35, larsxschneider@gmail.com wrote:
 >>> From: Lars Schneider <larsxschneider@gmail.com>
->>>=20
->>=20
->> I think this commit may need some explanation!
->
-> The functions =E2=80=9CgitConfig=E2=80=9D and =E2=80=9CgitConfigBool=E2=
-=80=9D are almost
-> identical. Make =E2=80=9CgitConfig=E2=80=9D more generic by adding an=
- optional type
-> specifier. Use the type specifier =E2=80=9C=E2=80=94bool=E2=80=9D wit=
-h =E2=80=9CgitConfig=E2=80=9D to
-> implement =E2=80=9CgitConfigBool. This prepares the implementation of=
- other
-> type specifiers such as =E2=80=9C=E2=80=94int=E2=80=9D.
+>>>
+>>
+>> Explanation?
+> Add a git config reader for integer variables. Please note that the git config implementation automatically supports k, m, and g suffixes.
 
-OK.
+Sorry, I should have been clearer. The commit needs a comment to say 
+both what it's doing ("adding a git config int reader") and why.
 
-> OK?
+c.f. Documentation/SubmittingChanges.
 
-Not really ;-).  The point of Luke's message is that all of the
-above belong to the log message, I think.
+Luke
