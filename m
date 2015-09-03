@@ -1,60 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 42/43] refs: add LMDB refs backend
-Date: Thu, 03 Sep 2015 16:16:09 -0700
-Message-ID: <xmqqbndjgkli.fsf@gitster.mtv.corp.google.com>
-References: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
-	<1441245313-11907-43-git-send-email-dturner@twopensource.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv5 3/3] submodule: Reimplement `module_clone` shell
+ function in C
+Date: Thu, 3 Sep 2015 19:17:50 -0400
+Message-ID: <CAPig+cTjXxo+iD7wkwrmHNQVDDYnqqHPEpVHNdVKCrYohb6adw@mail.gmail.com>
+References: <1441230146-26921-1-git-send-email-sbeller@google.com>
+	<1441230146-26921-4-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 01:16:17 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Sep 04 01:18:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXdjr-0002Rn-Oe
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 01:16:16 +0200
+	id 1ZXdlU-0003zK-0p
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 01:17:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757525AbbICXQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2015 19:16:12 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:35445 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753306AbbICXQL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2015 19:16:11 -0400
-Received: by pacfv12 with SMTP id fv12so4390272pac.2
-        for <git@vger.kernel.org>; Thu, 03 Sep 2015 16:16:11 -0700 (PDT)
+	id S1757110AbbICXRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2015 19:17:52 -0400
+Received: from mail-yk0-f177.google.com ([209.85.160.177]:34683 "EHLO
+	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751093AbbICXRv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2015 19:17:51 -0400
+Received: by ykdg206 with SMTP id g206so5077066ykd.1
+        for <git@vger.kernel.org>; Thu, 03 Sep 2015 16:17:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=OZlvT2jLIWTBozWbaGvzc1vr9f5ax0L+fX7Zg9+9KVc=;
-        b=LtYmJN+k/DN8ptR21YWsyhwq8QQrkFvHUTmF1Y6AmakJ5q/LsKcxqc03O5lMyr6eli
-         sratPihw4cYT+cEfGKj6QiF7QS4ORleaaCu3Ubk2bDoF7JpPSKjUN8mGzLVxLCyjmu3e
-         +iicHT8q5S2G3hRRr25BD0zYw4+8aZqnI7Oo1kGzipDH0OF0oBDEdVUZofh0ry+wKm8f
-         s63Y0py5khBt9YjdhPRtjH6IFj9tqfj+fDkGzc3zHDd5dIAEOKNHUStyiVKeYmdMvIHd
-         gaMLvn4imgJW+zX2ZpK4W1R3Y1Ss99EWTM2Bs2ax2gncM5xI2T35NXyDZGdfpEe8+/P5
-         h7jA==
-X-Received: by 10.68.133.167 with SMTP id pd7mr1005072pbb.23.1441322171188;
-        Thu, 03 Sep 2015 16:16:11 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:71da:b56c:f873:e611])
-        by smtp.gmail.com with ESMTPSA id u5sm218155pdr.63.2015.09.03.16.16.10
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 03 Sep 2015 16:16:10 -0700 (PDT)
-In-Reply-To: <1441245313-11907-43-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Wed, 2 Sep 2015 21:55:12 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=oETXB+c/sXxCbEzAi4mF8YJXswRT7UaI9UT1C02nMLE=;
+        b=rPo78T8QUpgdnQhOrUc/mSUW9ZcaUEBp55kKwADxkuhcaytypG6c4H7AKc9mEhoFtt
+         YplnviO2g7hqS3Im0LLFIAvo2yG19dgr/KYypRejW9vZ41dfKberL7rfgIpmTzutvNnx
+         Y8lUAmWeNcG/oKePz+Hsr2YAAmWgLO8IpxxCIL2ACeHqPJknM7dxYz7bB+qV0Eyi8AnV
+         ZkgEiMZnjrmX2lKjDtAFMXqGyDx20cg754VjOY9QldWeyggebIfLsmIMI20fc1uewCsd
+         gm/Y4ETr/gNx9izFafeqcXkUFGE7nElmsAIzLfRpksPC2seyQEOD/jgzykT5Iro0mZJo
+         cvYA==
+X-Received: by 10.13.201.130 with SMTP id l124mr575101ywd.39.1441322271036;
+ Thu, 03 Sep 2015 16:17:51 -0700 (PDT)
+Received: by 10.37.36.145 with HTTP; Thu, 3 Sep 2015 16:17:50 -0700 (PDT)
+In-Reply-To: <1441230146-26921-4-git-send-email-sbeller@google.com>
+X-Google-Sender-Auth: 2dNvzRP85cwumB_wNqdWClOpJN4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277281>
 
-David Turner <dturner@twopensource.com> writes:
+On Wed, Sep 2, 2015 at 5:42 PM, Stefan Beller <sbeller@google.com> wrote:
+> This reimplements the helper function `module_clone` in shell
+> in C as `clone`. This functionality is needed for converting
+> `git submodule update` later on, which we want to add threading
+> to.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> +static int module_clone(int argc, const char **argv, const char *prefix)
+> +{
+> +       /* Write a .git file in the submodule to redirect to the superproject. */
+> +       if (safe_create_leading_directories_const(path) < 0)
+> +               die(_("could not create directory '%s'"), path);
+> +
+> +       if (path && *path)
+> +               strbuf_addf(&sb, "%s/.git", path);
+> +       else
+> +               strbuf_addf(&sb, ".git");
 
-> Add a database backend for refs using LMDB.  This backend runs git
-> for-each-ref about 30% faster than the files backend with fully-packed
-> refs on a repo with ~120k refs.
+Minor: strbuf_addstr(...);
 
-Nice ;-)
+> +       if (safe_create_leading_directories_const(sb.buf) < 0)
+> +               die(_("could not create leading directories of '%s'"), sb.buf);
+> +       submodule_dot_git = fopen(sb.buf, "w");
+> +       if (!submodule_dot_git)
+> +               die_errno(_("cannot open file '%s'"), sb.buf);
+> +}
