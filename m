@@ -1,180 +1,114 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 33/43] refs.c: make struct ref_transaction generic
-Date: Wed,  2 Sep 2015 21:55:03 -0400
-Message-ID: <1441245313-11907-34-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 27/43] refs.c: move should_autocreate_reflog to common code
+Date: Wed,  2 Sep 2015 21:54:57 -0400
+Message-ID: <1441245313-11907-28-git-send-email-dturner@twopensource.com>
 References: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>,
-	David Turner <dturner@twitter.com>
+Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Sep 03 03:57:00 2015
+X-From: git-owner@vger.kernel.org Thu Sep 03 03:57:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXJlr-0006tn-Gz
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 03:56:59 +0200
+	id 1ZXJly-0006yC-GY
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 03:57:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932422AbbICB4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2015 21:56:54 -0400
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:34471 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932389AbbICB4Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2015 21:56:16 -0400
-Received: by qgez77 with SMTP id z77so18754094qge.1
-        for <git@vger.kernel.org>; Wed, 02 Sep 2015 18:56:16 -0700 (PDT)
+	id S932373AbbICB4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2015 21:56:07 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:34998 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932367AbbICB4C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2015 21:56:02 -0400
+Received: by qkcj187 with SMTP id j187so15701352qkc.2
+        for <git@vger.kernel.org>; Wed, 02 Sep 2015 18:56:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=IqxlKZs60BjOWHFaVmOI5lASnuWR0L4VbfVNf81Py2I=;
-        b=MwpBMCPxPn/AdHrejfUttkkY8TDipKYJmCusbzkPlE8CdTCgQMw4HhvUBujCehG4vP
-         V/2LzlW4IStBc3bhOBiG22GGPZP9WBTyfN2XHRH2unBjH0FaPCpx16C/qmiJnLhdj6EK
-         iEu9TrWYhkZYgzF3mI/2C6Dqu0m1+V/QAi4LMvdBYZBKSVp+PJ9c+HSosvQPrIuyNvFY
-         K9vEseT1X+yGPYTIaccTVSg0ipmVO4dru7cZkphwRPfoWQrVDB7SzBSlrt2a8ffI9cmg
-         lQlly31tCdIzwnKcr00mPqslm2D06mvZtTeBAI7isjte3zRD4ona+JxXxWPsn1hHND32
-         jXpg==
-X-Gm-Message-State: ALoCoQkmB3L+pIVm7Gf+kMM+1GRz7lGbWDR+YRTcMfMeqDuMDd9kwiot1GILjATtcWWZvEOMCY+v
-X-Received: by 10.140.34.33 with SMTP id k30mr2336122qgk.56.1441245376239;
-        Wed, 02 Sep 2015 18:56:16 -0700 (PDT)
+        bh=E28EZKJyeA5NoOxJxRClQZS7vyaH0M1UBaZQYYliNTI=;
+        b=RGYtYliowyaNBXZM0tgj9nSaTXSB7+IamJtma7VnbqcwSrNDcClVzapE6BEIyGeign
+         el89I+armOaTIryjVkIzjRqEFE+SBWa4EZgS9lLPVwBl2yLj/4mpZNqHP04Kui5cSXKh
+         pbwdOyCKE9NEWo9IJxa5pyDJmvmLSAjIx89win6XNJ87ZVQg5eQ+qQ3h+0+0wQK0IL6P
+         DiT/83tGAgZhp5TRmDyWAZVBU65SKtXWkzVVr+j4Przp25IYS5OZ/AbcbKl1+Blx3l3W
+         zzCxyPQY0dDuZkYRQXHgW48IGku+oVWHVq/i1xqtpEyIhm+U4d30hrxTyovkWOpDYIjC
+         fZlA==
+X-Gm-Message-State: ALoCoQlaOUAdua5y68z3JtLCvnJZqdgxpjYpxi40YT3k29v/ILOoDCf1KfYyNqhJSnETroNxbx3/
+X-Received: by 10.55.48.67 with SMTP id w64mr34316208qkw.32.1441245362212;
+        Wed, 02 Sep 2015 18:56:02 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id 95sm11108155qgt.12.2015.09.02.18.56.15
+        by smtp.gmail.com with ESMTPSA id 95sm11108155qgt.12.2015.09.02.18.56.01
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 02 Sep 2015 18:56:15 -0700 (PDT)
+        Wed, 02 Sep 2015 18:56:01 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 In-Reply-To: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277165>
 
-Alternate ref backends might need different data for transactions.  Make
-struct ref_transaction an empty struct, and let backends define their
-own structs which extend it.
-
-Signed-off-by: David Turner <dturner@twitter.com>
+Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs-be-files.c | 20 +++++++++++++-------
- refs.h          |  8 ++++++--
- 2 files changed, 19 insertions(+), 9 deletions(-)
+ refs-be-files.c | 10 ----------
+ refs.c          | 10 ++++++++++
+ refs.h          |  2 ++
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/refs-be-files.c b/refs-be-files.c
-index acf35b5..af99666 100644
+index 657b58f..3138624 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -3202,7 +3202,8 @@ enum ref_transaction_state {
-  * consist of checks and updates to multiple references, carried out
-  * as atomically as possible.  This structure is opaque to callers.
-  */
--struct ref_transaction {
-+struct files_ref_transaction {
-+	struct ref_transaction base;
- 	struct ref_update **updates;
- 	size_t alloc;
- 	size_t nr;
-@@ -3213,13 +3214,15 @@ static struct ref_transaction *files_transaction_begin(struct strbuf *err)
- {
- 	assert(err);
- 
--	return xcalloc(1, sizeof(struct ref_transaction));
-+	return xcalloc(1, sizeof(struct files_ref_transaction));
- }
- 
--static void files_transaction_free(struct ref_transaction *transaction)
-+static void files_transaction_free(struct ref_transaction *trans)
- {
- 	int i;
- 
-+	struct files_ref_transaction *transaction = (struct files_ref_transaction *)trans;
-+
- 	if (!transaction)
- 		return;
- 
-@@ -3231,7 +3234,7 @@ static void files_transaction_free(struct ref_transaction *transaction)
- 	free(transaction);
- }
- 
--static struct ref_update *add_update(struct ref_transaction *transaction,
-+static struct ref_update *add_update(struct files_ref_transaction *transaction,
- 				     const char *refname)
- {
- 	size_t len = strlen(refname);
-@@ -3243,7 +3246,7 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
- 	return update;
- }
- 
--static int files_transaction_update(struct ref_transaction *transaction,
-+static int files_transaction_update(struct ref_transaction *trans,
- 				  const char *refname,
- 				  const unsigned char *new_sha1,
- 				  const unsigned char *old_sha1,
-@@ -3251,6 +3254,7 @@ static int files_transaction_update(struct ref_transaction *transaction,
- 				  struct strbuf *err)
- {
- 	struct ref_update *update;
-+	struct files_ref_transaction *transaction = (struct files_ref_transaction *)trans;
- 
- 	assert(err);
- 
-@@ -3334,10 +3338,11 @@ static int ref_update_reject_duplicates(struct string_list *refnames,
+@@ -2616,16 +2616,6 @@ static int commit_ref(struct ref_lock *lock)
  	return 0;
  }
  
--static int files_transaction_commit(struct ref_transaction *transaction,
-+static int files_transaction_commit(struct ref_transaction *trans,
- 				  struct strbuf *err)
- {
- 	int ret = 0, i;
-+	struct files_ref_transaction *transaction = (struct files_ref_transaction *)trans;
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
- 	struct string_list refs_to_delete = STRING_LIST_INIT_NODUP;
-@@ -3501,10 +3506,11 @@ static int ref_present(const char *refname,
- 	return string_list_has_string(affected_refnames, refname);
+-static int should_autocreate_reflog(const char *refname)
+-{
+-	if (!log_all_ref_updates)
+-		return 0;
+-	return starts_with(refname, "refs/heads/") ||
+-		starts_with(refname, "refs/remotes/") ||
+-		starts_with(refname, "refs/notes/") ||
+-		!strcmp(refname, "HEAD");
+-}
+-
+ static int files_verify_refname_available(const char *newname,
+ 					  struct string_list *extra,
+ 					  struct string_list *skip,
+diff --git a/refs.c b/refs.c
+index 77aa51d..a9e6ca1 100644
+--- a/refs.c
++++ b/refs.c
+@@ -685,6 +685,16 @@ char *resolve_refdup(const char *refname, int resolve_flags,
+ 						  sha1, flags));
  }
  
--static int files_initial_transaction_commit(struct ref_transaction *transaction,
-+static int files_initial_transaction_commit(struct ref_transaction *trans,
- 					    struct strbuf *err)
- {
- 	int ret = 0, i;
-+	struct files_ref_transaction *transaction = (struct files_ref_transaction *)trans;
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
- 	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
++int should_autocreate_reflog(const char *refname)
++{
++	if (!log_all_ref_updates)
++		return 0;
++	return starts_with(refname, "refs/heads/") ||
++		starts_with(refname, "refs/remotes/") ||
++		starts_with(refname, "refs/notes/") ||
++		!strcmp(refname, "HEAD");
++}
++
+ /*
+  * How to handle various characters in refnames:
+  * 0: An acceptable character for refs
 diff --git a/refs.h b/refs.h
-index 3134a28..e64d3c4 100644
+index 0eab5e2..7204a56 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -130,7 +130,7 @@ extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
-  *
-  * Calling sequence
-  * ----------------
-- * - Allocate and initialize a `struct ref_transaction` by calling
-+ * - Allocate and initialize a transaction by calling
-  *   `ref_transaction_begin()`.
-  *
-  * - List intended ref updates by calling functions like
-@@ -156,7 +156,10 @@ extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
-  * The message is appended to err without first clearing err.
-  * err will not be '\n' terminated.
-  */
--struct ref_transaction;
+@@ -58,6 +58,8 @@ extern const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ extern char *resolve_refdup(const char *refname, int resolve_flags,
+ 			    unsigned char *sha1, int *flags);
+ 
++extern int should_autocreate_reflog(const char *refname);
 +
-+struct ref_transaction {
-+	/* ref backends should extend this */
-+};
- 
- /*
-  * Bit values set in the flags argument passed to each_ref_fn():
-@@ -622,6 +625,7 @@ typedef int (*create_reflog_fn)(const char *refname, int force_create, struct st
- typedef int (*delete_reflog_fn)(const char *refname);
- 
- /* resolution functions */
-+typedef void (*ref_transaction_free_fn)(struct ref_transaction *transaction);
- typedef const char *(*resolve_ref_unsafe_fn)(const char *ref,
- 					     int resolve_flags,
- 					     unsigned char *sha1, int *flags);
+ extern int read_ref_full(const char *refname, int resolve_flags,
+ 			 unsigned char *sha1, int *flags);
+ extern int read_ref(const char *refname, unsigned char *sha1);
 -- 
 2.0.4.315.gad8727a-twtrsrc
