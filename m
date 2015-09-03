@@ -1,71 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git dockerfile.
-Date: Thu, 03 Sep 2015 08:59:52 -0700
-Message-ID: <xmqq1tefmr2f.fsf@gitster.mtv.corp.google.com>
-References: <CAAhzzTbvS_FewTC9Dz2XzOMXeKe405qHhvAGtcsVjXLK0kOehg@mail.gmail.com>
-	<CAAhzzTbtEr3NnJtXS4zrFmo8+Hm-2qt32XV=3UfWpZP+KFT2OQ@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v15 05/13] ref-filter: implement an `align` atom
+Date: Thu, 3 Sep 2015 21:31:04 +0530
+Message-ID: <CAOLa=ZT=VEHWokfdBdRPsNj8VgBkyvV7GdacPaRgnMZOQ-G4qg@mail.gmail.com>
+References: <1441131994-13508-1-git-send-email-Karthik.188@gmail.com>
+ <1441131994-13508-6-git-send-email-Karthik.188@gmail.com> <CAPig+cRfYow-wBvorX44E4ROH=nvQdS=3zBaEVVbQZf86JFELw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Gawade P <gawade.oefp@gmail.com>
-To: Atul Sowani <sowani@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 03 18:00:22 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Sep 03 18:01:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXWvs-0002zg-KY
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 18:00:13 +0200
+	id 1ZXWxN-0005k7-Ci
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 18:01:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932986AbbICP7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2015 11:59:55 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:34354 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932992AbbICP7y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2015 11:59:54 -0400
-Received: by padfa1 with SMTP id fa1so8256099pad.1
-        for <git@vger.kernel.org>; Thu, 03 Sep 2015 08:59:53 -0700 (PDT)
+	id S933272AbbICQBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2015 12:01:36 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:36615 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932771AbbICQBe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2015 12:01:34 -0400
+Received: by obqa2 with SMTP id a2so36237399obq.3
+        for <git@vger.kernel.org>; Thu, 03 Sep 2015 09:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=HcNc4SRkiGyFLqOA5kqfIad7+HVgi9SvHmGAu8m+gbA=;
-        b=CLGO6nvjME1rjxux0poQHWNlpJ9w2mc0x++uxvpsv5EfOc0yOtiDpm+hg4PWzynOcy
-         ksNtmT+jJ4JeuogDc7so7LJT5yqeSLBIToM8zN3E4G9KDI3shrkp7ml9RrgVydt0Jh7Y
-         XbKPWdK+crSY+Pb+6edt11B7/G9qZUS7JEU3w4kPTzxErAvTEcdIC71G/o06SJp+D3KJ
-         j7rNR+1S4fekcKd84susjUTX3lSJo6zZzjEMG/T2o8NqgaBhugaGi+Nmi0MMPjmEDhu6
-         R+5fQ/cskOaZuCE/ihBkZP52h1hLIU1Tx3BaFejcbRF3D3jkD/BtBhtZhuAD4y/xRFos
-         KShg==
-X-Received: by 10.66.142.166 with SMTP id rx6mr68579643pab.25.1441295993494;
-        Thu, 03 Sep 2015 08:59:53 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:71da:b56c:f873:e611])
-        by smtp.gmail.com with ESMTPSA id gh5sm25702209pbc.87.2015.09.03.08.59.52
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 03 Sep 2015 08:59:52 -0700 (PDT)
-In-Reply-To: <CAAhzzTbtEr3NnJtXS4zrFmo8+Hm-2qt32XV=3UfWpZP+KFT2OQ@mail.gmail.com>
-	(Atul Sowani's message of "Thu, 3 Sep 2015 13:55:24 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=pCmV1/j4wYFNyZjoYgv9tCvVnxkOg8i+LZk9RLv6eUc=;
+        b=URDFcqPvTdaVQqjzB1HXi7Nwm9GgJ6bH4F0weArmYxJRQ3qaaUIeteb6OBCvpHgukx
+         JaH96FoxyI4uRvWVilk7zTlB2LTgWlKaLCAcO2SZ2NE6aTNk/vpx8rR9WKhBczNarqqw
+         nDFzxcZHhds5+vVSd5ULpdjNqqnAtY4P5vIgSwxXQKUyn+Myi6o61oIXIqL/wTTdgqX8
+         wdxZ5lMi6uAsGTsanvT6ta/Ny9cABlPcOgaJt/wco6L+/ttj7pJ+8ZzE0sUTnoGZPtsk
+         95etC8ZnWkViGGIA8bsr5kdXi+eMlh5fFqyJx4lglcEsBbcoIHMciKefQKIJLuBiGme/
+         BW4w==
+X-Received: by 10.182.81.98 with SMTP id z2mr26375562obx.70.1441296093961;
+ Thu, 03 Sep 2015 09:01:33 -0700 (PDT)
+Received: by 10.182.59.102 with HTTP; Thu, 3 Sep 2015 09:01:04 -0700 (PDT)
+In-Reply-To: <CAPig+cRfYow-wBvorX44E4ROH=nvQdS=3zBaEVVbQZf86JFELw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277215>
 
-Atul Sowani <sowani@gmail.com> writes:
-
-> Hello!
+On Thu, Sep 3, 2015 at 7:42 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Sep 1, 2015 at 2:26 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Implement an `align` atom which left-, middle-, or right-aligns the
+>> content between %(align:..) and %(end).
 >
-> Any help/pointers/advise regarding my request about dockerfile?
+> Spell this either %(align:) or %(align:...) with three dots, not two.
+> I, personally, think %(align:) is sufficient.
+>
 
-[jc: "Gawade P" Cc'ed.]
+Will change.
 
-Perhaps you can learn to ask the list archive ;-)
+>> It is followed by `:<width>,<position>`, where the `<position>` is
+>> either left, right or middle and `<width>` is the size of the area
+>> into which the content will be placed. If the content between
+>> %(align:) and %(end) is more than the width then no alignment is
+>> performed. e.g. to align a refname atom to the middle with a total
+>> width of 40 we can do: --format="%(align:middle,40)%(refname)%(end)".
+>>
+>> We have an `at_end` function for each element of the stack which is to
+>> be called when the `end` atom is encountered. Using this we implement
+>> the aling_handler() for the `align` atom, this aligns the final strbuf
+>> by calling `strbuf_utf8_align()` from utf8.c.
+>>
+>> Ensure that quote formatting is performed on the whole of
+>> %(align)...%(end) rather than individual atoms inside.  We skip quote
+>
+> Add colon: %(align:)
+>
 
-Going to http://news.gmane.org/gmane.comp.version-control.git/
-and then asking for "dockerfile" in the search box at the bottom
-finds
+Okay.
 
-http://article.gmane.org/gmane.comp.version-control.git/276504/match=dockerfile
+>> formatting for individual atoms when the current stack element is
+>> handling an %(align) atom and perform quote formatting at the end when
+>
+> %(align:)
+>
 
-Clicking on the "Subject:" line there would show the article in
-context.
+will do.
+
+>> we encounter the %(end) atom.
+>>
+>> Add documentation and tests for the same.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+>> index e49d578..cac3128 100644
+>> --- a/Documentation/git-for-each-ref.txt
+>> +++ b/Documentation/git-for-each-ref.txt
+>> @@ -127,6 +127,15 @@ color::
+>>         Change output color.  Followed by `:<colorname>`, where names
+>>         are described in `color.branch.*`.
+>>
+>> +align::
+>> +       Left-, middle-, or right-align the content between %(align:..)
+>
+> %(align:)
+>
+
+noted.
+
+>> +       and %(end). Followed by `:<width>,<position>`, where the
+>> +       `<position>` is either left, right or middle and `<width>` is
+>> +       the total length of the content with alignment. If the
+>> +       contents length is more than the width then no alignment is
+>> +       performed. If used with '--quote' everything in between
+>> +       %(align:..)  and %(end) is quoted.
+>
+> %(align:)
+> Also drop the extra space before "and": s/\s+and/ and/
+>
+
+Noted, thanks for the review.
+
+-- 
+Regards,
+Karthik Nayak
