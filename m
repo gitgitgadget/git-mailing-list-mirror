@@ -1,90 +1,94 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [RFC PATCH] git-p4: add option to store files in Git LFS on import
-Date: Thu, 3 Sep 2015 11:40:20 +0200
-Message-ID: <1D65DD68-EE3F-4C87-9B5F-E436BA13704E@gmail.com>
-References: <1440764691-62254-1-git-send-email-larsxschneider@gmail.com> <CAE5ih7-TfLqwye8YpmZz90AVjYGQ8m0sF6GLKnG9pjvV8cTSjw@mail.gmail.com> <9951C805-DFBF-47AC-B215-B9C657D4A852@gmail.com> <CAE5ih7-w5ZjO=QUE45yBvwyqdqKCADczrLt7=4W8X6BR+cy4PA@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Thu Sep 03 11:40:28 2015
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: GSoC 2015 is over
+Date: Thu, 3 Sep 2015 11:49:58 +0200
+Message-ID: <CAP8UFD0+6ETC4D2+x=bMn-2TNexJhYDW39Z1_DtvWjQGET8pyg@mail.gmail.com>
+References: <vpq8u8qw047.fsf@anie.imag.fr>
+	<CACRoPnTrvD2NFQopg2rJB_PSZv0tawRjiuVi8vK+YN0OyFh-sg@mail.gmail.com>
+	<alpine.DEB.1.00.1509030042100.16897@s15462909.onlinehome-server.info>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Paul Tan <pyokagan@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>, Karthik Nayak <karthik.188@gmail.com>,
+	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Sep 03 11:50:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXR0N-0000i0-Vl
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 11:40:28 +0200
+	id 1ZXR9e-0007U0-Vp
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 11:50:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753007AbbICJkY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Sep 2015 05:40:24 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:36556 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752810AbbICJkY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Sep 2015 05:40:24 -0400
-Received: by wibz8 with SMTP id z8so92373329wib.1
-        for <git@vger.kernel.org>; Thu, 03 Sep 2015 02:40:23 -0700 (PDT)
+	id S1753677AbbICJt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2015 05:49:59 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:36656 "EHLO
+	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752612AbbICJt7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2015 05:49:59 -0400
+Received: by ioii196 with SMTP id i196so51428472ioi.3
+        for <git@vger.kernel.org>; Thu, 03 Sep 2015 02:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=+2QXrr2XT1RdF+E54PNBr+TK2aygW70+8ODe322auIQ=;
-        b=WWouPtp3ozH4T3REzz8ZznKr7aOkNi1ivCwxI9m0AstizKOAv8LwFPCPQyLbz8UziE
-         gtbxl423KjgHHyyrsBj7kCFDvDNZVHxfveD3InZDf70RqPoRuupLMRDuRx6yB+0B55vt
-         OZRHzr5D81QhkrIa0FeumB0Ejnei6Giy9wYQZkMKwuaauiyasX8BgkbmwM/z89Q/GzPb
-         qQp73WRZFBitm94HqX0GttwTrIemrjd05IVLEhXKXm8/nvxKlG3iYlw0a5fRsrNNA5uu
-         WgKS2vVMuXQvstGi6UXwiadCT8kiKkv/dhzw7eLd2uzP/Cn0voF8SxetRJx8cPpD4Gsd
-         cb4Q==
-X-Received: by 10.180.37.201 with SMTP id a9mr12883452wik.83.1441273222924;
-        Thu, 03 Sep 2015 02:40:22 -0700 (PDT)
-Received: from slxbook3.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id hn2sm36821863wjc.45.2015.09.03.02.40.22
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 03 Sep 2015 02:40:22 -0700 (PDT)
-In-Reply-To: <CAE5ih7-w5ZjO=QUE45yBvwyqdqKCADczrLt7=4W8X6BR+cy4PA@mail.gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=W9Ak1Hqj54Z37Nhf6B0017stBBAasD15afKCPzW8gd4=;
+        b=lPiKb6Xc9lBtlNFnGBdjNoO3ezUqKesazZyHH+RxKuZEvsRMTk6fpQT03uhBauNMIj
+         pam1VE1qXMXY3gbjebf7YZWMv3Ab/vCKuSdk/1Jw324oX4bTIXcwzPzb2tfViF3dlKa7
+         T4SRU+CPYXHbSgAijgg466fnJKWElkYsJFOdPXDp+s95KrjS7Qy5bjDjVfxY4gEY29T4
+         8i28N39yAOic48UcZI3LYflGHqE921HXKlE+jB/ntw54X3PNshEVHYcmivT/QiAkDjFG
+         uJNCsFr2pqOCkuXCjom7LcFXIMNDiEq6e5M3HjUfIhC9VR3WUKt22Wb/3IPaKkRqpMOi
+         aFKg==
+X-Received: by 10.107.14.84 with SMTP id 81mr49163075ioo.195.1441273798473;
+ Thu, 03 Sep 2015 02:49:58 -0700 (PDT)
+Received: by 10.79.93.131 with HTTP; Thu, 3 Sep 2015 02:49:58 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.1509030042100.16897@s15462909.onlinehome-server.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277193>
 
+Hi,
 
-On 30 Aug 2015, at 18:36, Luke Diamand <luke@diamand.org> wrote:
+On Thu, Sep 3, 2015 at 12:46 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 2 Sep 2015, Paul Tan wrote:
+>
+>> On Wed, Sep 2, 2015 at 12:55 AM, Matthieu Moy
+>> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> > I consider this GSoC as a great success and a pleasant experience.
+>> > Congratulation to Paul and Karthik, and a warm "thank you" to everybody
+>> > who contributed: administrators, mentors, reviewers, and obviously
+>> > Junio! (not to mention Google, who made all this possible)
+>> >
+>> > Thanks all!
+>>
+>> Thanks!
+>
+> Well, with so many thankyous going on, who am I to hide behind a rock?
 
-> On 30 August 2015 at 11:18, Lars Schneider <larsxschneider@gmail.com>=
- wrote:
->> Thanks for your feedback!
->>=20
->> I like the =93handle big files=94 plugin kind of idea. However, I wo=
-nder if it makes sense to put more and more stuff into git-p4.py (>3000=
- LOC already). What do you think about splitting git-p4 into multiple f=
-iles?
->=20
-> I was wondering about that. I think for now, the simplicity of keepin=
-g
-> everything in one file is worth the slight extra pain. I don't imagin=
-e
-> that the big-file-handler code would be very large.
-OK.
+Yeah, not to hide behind a rock myself either, I will say that I agree
+Karthik's GSoC has been a great success, thanks to everyone involved
+especially Karthik who has been very responsive and very persistant,
+Matthieu who has been a great co-mentor, a great reviewer and a great
+admin, and Eric, Michael and Junio who have been great reviewers of
+Karthik's work.
 
->=20
->>=20
->> Regarding Python 3:
->> Would you drop Python 2 support or do you want to support Python 2/3=
- in parallel? I would prefer the former=85
->=20
-> For quite some time we would need to support both; we can't just have
-> a release of git that one day breaks git-p4 for people stuck on Pytho=
-n
-> 2. But it might not be that hard to support both (though converting
-> all those print statements could be quite tiresome).
-Agreed. However supporting both versions increases code complexity as w=
-ell as testing effort. Would a compromise like the following work? We f=
-ork =93git-p4.py=94 to =93git-p4-python2.py=94 and just apply important=
- bug fixes to that file. All new development happens on a Python 3 only=
- git-p4.py.=20
+I also feel very lucky to be the Git project mentor who will go to the
+GSoC mentor summit on November 6 & 7. Thanks!
 
-Cheers,
-Lars
+By the way while in the Bay Area from October 31 to November 14 it
+would be nice for me to meet some Git developers living there. As Peff
+suggested we could even have a mini GitTogether if enough developers
+are interested. It doesn't need to be big. It could be just a lunch or
+diner. Tell me if you are interested. We will see depending on the
+number of people interested what we can do.
+
+Thanks,
+Christian.
