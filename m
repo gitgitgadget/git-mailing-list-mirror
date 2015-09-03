@@ -1,89 +1,65 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v2 1/4] git-p4: add optional type specifier to gitConfig reader
-Date: Thu, 3 Sep 2015 22:53:47 +0200
-Message-ID: <6FAAE139-9010-4C68-AA97-2739E9A09564@gmail.com>
-References: <1441298148-63885-1-git-send-email-larsxschneider@gmail.com> <1441298148-63885-2-git-send-email-larsxschneider@gmail.com> <55E8A5C2.9090500@diamand.org> <A76D6BC6-E0AD-48F4-AE33-80BD0803BFA3@gmail.com> <xmqqmvx3i7dg.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 03 22:53:56 2015
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: glibc mutex deadlock in signal handler
+Date: Thu, 03 Sep 2015 22:55:52 +0200
+Message-ID: <87y4gn5ijr.fsf@igel.home>
+References: <s5hfv2vn4wq.wl-tiwai@suse.de>
+	<xmqqvbbrjrs9.fsf@gitster.mtv.corp.google.com>
+	<s5h7fo7wb3e.wl-tiwai@suse.de>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Takashi Iwai <tiwai@suse.de>
+X-From: git-owner@vger.kernel.org Thu Sep 03 22:56:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXbW6-0004bN-OS
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 22:53:55 +0200
+	id 1ZXbYE-0006Pb-Jv
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 22:56:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757167AbbICUxv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Sep 2015 16:53:51 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:35358 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755593AbbICUxu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Sep 2015 16:53:50 -0400
-Received: by wicge5 with SMTP id ge5so794580wic.0
-        for <git@vger.kernel.org>; Thu, 03 Sep 2015 13:53:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Lx2uuPdhZ1jUDh9wtdZp6wZtGkxmxhrZTlfih0QD4/w=;
-        b=h5fL68ULx5EV+mZpCoYMD2LIdlhhTD+7Wsk/JTuk1oJxHJ6drtYk8X+K0tejSpw/cP
-         ZDHVsuSUudYvdhNP3XJeIsLrqoJnMXD8ywNTdoBLhEYpMMt5RAyx+rj///aUA0wiX7v5
-         24iDRmSglvmN7BReiSPPkBNi1g+B59UnR4OrztWqwU52GwnmOMO7py/b3wOQWo53CS0q
-         HLaEksfnin9L3VleZsSO5HeZmMpVn5p9yQ6sPb1UOWar/OR7KAYUP2Ogmn2tcyOSPSPn
-         VL/wyIOplhPE76F9kq5k/SlqDS79i2uonqLjc59BEmaQasyoVtmZufpEpOOFDBkyc8cn
-         GGbA==
-X-Received: by 10.180.106.66 with SMTP id gs2mr309710wib.14.1441313629226;
-        Thu, 03 Sep 2015 13:53:49 -0700 (PDT)
-Received: from slxbook3.fritz.box (dslb-092-078-130-241.092.078.pools.vodafone-ip.de. [92.78.130.241])
-        by smtp.gmail.com with ESMTPSA id lj2sm301556wic.1.2015.09.03.13.53.48
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 03 Sep 2015 13:53:48 -0700 (PDT)
-In-Reply-To: <xmqqmvx3i7dg.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1757380AbbICU4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2015 16:56:00 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:44554 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757335AbbICUz6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2015 16:55:58 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3n6ZDB4s03z3hhp3;
+	Thu,  3 Sep 2015 22:55:54 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3n6ZDB1qS5zvhL7;
+	Thu,  3 Sep 2015 22:55:54 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id M6MrGrSEj8ep; Thu,  3 Sep 2015 22:55:52 +0200 (CEST)
+X-Auth-Info: 453sJxAbU1oFna9nuDFvEkZ+hyAfTjNZDaQUNQQk8O4T03tA0ZHMQw9m0d2SUEPj
+Received: from igel.home (ppp-93-104-184-128.dynamic.mnet-online.de [93.104.184.128])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Thu,  3 Sep 2015 22:55:52 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 607032C3D8D; Thu,  3 Sep 2015 22:55:52 +0200 (CEST)
+X-Yow: ..  My pants just went on a wild rampage through
+ a Long Island Bowling Alley!!
+In-Reply-To: <s5h7fo7wb3e.wl-tiwai@suse.de> (Takashi Iwai's message of "Thu,
+	03 Sep 2015 21:34:45 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277258>
 
+See
+<http://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_04_03>
+for the complete list of functions you may safely call from a signal
+handler.
 
-On 03 Sep 2015, at 22:18, Junio C Hamano <gitster@pobox.com> wrote:
+Andreas.
 
-> Lars Schneider <larsxschneider@gmail.com> writes:
->=20
->> On 03 Sep 2015, at 21:55, Luke Diamand <luke@diamand.org> wrote:
->>=20
->>> On 03/09/15 17:35, larsxschneider@gmail.com wrote:
->>>> From: Lars Schneider <larsxschneider@gmail.com>
->>>>=20
->>>=20
->>> I think this commit may need some explanation!
->>=20
->> The functions =93gitConfig=94 and =93gitConfigBool=94 are almost
->> identical. Make =93gitConfig=94 more generic by adding an optional t=
-ype
->> specifier. Use the type specifier =93=97bool=94 with =93gitConfig=94=
- to
->> implement =93gitConfigBool. This prepares the implementation of othe=
-r
->> type specifiers such as =93=97int=94.
->=20
-> OK.
->=20
->> OK?
->=20
-> Not really ;-).  The point of Luke's message is that all of the
-> above belong to the log message, I think.
-Right, it is my intention to add this as commit message. I just wanted =
-to check upfront if the message is what he expects.
-
-That leads me to a general question:
-In case I agree with a reviewer. What is the more appropriate action? A=
- response like the one above or a new role that includes the change rig=
-ht away? I don=92t want to spam the list with lots of tiny changes=85
-
-Thanks!
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
