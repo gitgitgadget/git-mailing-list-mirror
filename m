@@ -1,132 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6] git-p4: add config git-p4.pathEncoding
-Date: Thu, 03 Sep 2015 10:03:05 -0700
-Message-ID: <xmqqa8t3l9km.fsf@gitster.mtv.corp.google.com>
-References: <1441271647-67824-1-git-send-email-larsxschneider@gmail.com>
-	<1441271647-67824-2-git-send-email-larsxschneider@gmail.com>
+From: John Medema <john.medema@uniteddrugs.com>
+Subject: Feature Request: enhance Git-GUI's Checkout Branch screen
+Date: Thu, 3 Sep 2015 10:08:24 -0700
+Message-ID: <CALsXy+0FN1A-E-GF-chPrOpZSt-Wg8afL8BReqaUnBHDj=3NXA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, luke@diamand.org, tboegi@web.de,
-	sunshine@sunshineco.com, remi.galan-alfonso@ensimag.grenoble-inp.fr
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Thu Sep 03 19:03:16 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, SysAdmin <sysadmin@uniteddrugs.com>,
+	IT Dev2 <john.kobinski@uniteddrugs.com>
+X-From: git-owner@vger.kernel.org Thu Sep 03 19:08:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXXus-0006ic-2J
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 19:03:14 +0200
+	id 1ZXY0G-0002zI-Iz
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 19:08:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932465AbbICRDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2015 13:03:09 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:34223 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932409AbbICRDH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2015 13:03:07 -0400
-Received: by padfa1 with SMTP id fa1so9752204pad.1
-        for <git@vger.kernel.org>; Thu, 03 Sep 2015 10:03:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=QJFKegAHuFIrB+EOlOONgrJDNQAbgk9wkXaaGerTsqk=;
-        b=VENFa+K+Wdg8zGrqLOLj+4ZMsNMqE/oZabh17hDgs4wl87z80PRlAP5rFZF23YrJ8W
-         MMRsVtQ9CdFhz1Cws78Hi6DgVCxD5yjKy1GIai/QDZse0FZ7PYvs2Za8gw6lebxyaPON
-         bvsm5++p6XVWqng7gg+9QaPjhcQY55lIdb5IWNQQZmhB7ZAxb6cxI9rmZTQ4XWfuEXHp
-         mSrp+B/KviiAjPQFx3o1QqgniIrdgGvv60oOIc7fggbK1lNtj20Bmli07c6JmP1eeszM
-         F6uFu7wN4ObtrUK8p30JQle10lVyZ0vh4ZT0o04QboEam68Sbfa+D94k9L3nT1Bmnz0E
-         WzDw==
-X-Received: by 10.68.131.138 with SMTP id om10mr69822467pbb.3.1441299787158;
-        Thu, 03 Sep 2015 10:03:07 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:71da:b56c:f873:e611])
-        by smtp.gmail.com with ESMTPSA id wj8sm25945389pab.3.2015.09.03.10.03.06
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 03 Sep 2015 10:03:06 -0700 (PDT)
-In-Reply-To: <1441271647-67824-2-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Thu, 3 Sep 2015 11:14:07
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754851AbbICRIp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Sep 2015 13:08:45 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:36554 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754322AbbICRIo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Sep 2015 13:08:44 -0400
+Received: by ioii196 with SMTP id i196so65575491ioi.3
+        for <git@vger.kernel.org>; Thu, 03 Sep 2015 10:08:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=9KvYVvhUUaPPZy0LsizsDB6xQ8KtxC9Bzjx+s6thQkQ=;
+        b=WmDwyY468EnKFnHa1nfq1Q509KpRgm1vOEa7f8CF5trEOsHEdRzbcMecieT8FiekA6
+         wJa/Ww302MZubaEL5LKIgmx07akPL2wHeVojEUwywhoPy3iwExEwKY00/cBDoJPgoEFY
+         MWNtvY4C9IDa9YXixrVZQcqD9ZiuqoSOiJcTTXgzA3mXSEt4rsJAYIka5RV2ErpBRhI8
+         AoBj8uGc2+75qPT4LFIpqL0H1l07mYPlU60hJKc3Bey6Z2p+6KfHHbn/zdvj633rY9rl
+         +pQfdJj8BmQMYVP5kWvbSW+FEgBwANUbEFCXROBERr82eoagEmViOQ11iuv+iKa8/hvV
+         6auA==
+X-Gm-Message-State: ALoCoQk8zV6kdC+HpdKcIMXzCHOMVo4z/QuS69qD17YHCTEkU8fz4ghjiSIQkLLwy7ysP2+/iOAAjLzd5cWwcfN637xI17+WyrGVOb/tBgJX8qGK8gp75BArO0hGoE/Vu/uWvfNqI4Sx
+X-Received: by 10.107.6.21 with SMTP id 21mr155845iog.9.1441300123827; Thu, 03
+ Sep 2015 10:08:43 -0700 (PDT)
+Received: by 10.107.135.155 with HTTP; Thu, 3 Sep 2015 10:08:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277233>
 
-larsxschneider@gmail.com writes:
+Git gurus, throw this one on your to-do list:
 
-> +test_expect_success 'Clone repo containing iso8859-1 encoded paths without git-p4.pathEncoding' '
-> +	git p4 clone --destination="$git" //depot &&
-> +	test_when_finished cleanup_git &&
-> +	(
-> +		cd "$git" &&
-> +		UTF8="$(printf "$UTF8_ESCAPED")" &&
-> +		echo $UTF8 >expect &&
-> +		git -c core.quotepath=false ls-files >actual &&
-> +		test_must_fail test_cmp expect actual
+This is a feature request to enhance the Git GUI to make it easier to
+checkout non-existing branches that exist upstream. Apologies if this
+is not the correct place for feature requests.
 
-I am not sure what this test wants to do.  It is not inconceivable
-that future versions of "git p4 clone" becomes more intelligent to
-detect the need for git-p4.pathEncoding and set it, so the only
-effect to insist the comparison fails is to block future advance in
-that direction.
+Scenario: Upstream repo has 4 branches - master, develop, maint, test.
+Local repo has only a master branch. In the command line, to switch to
+a local copy of the test branch, it is a simple "git checkout test".
+The git command automatically realizes your requested branch doesn't
+exist but origin does have a branch named test, so it a) creates a
+local branch off of origin/develop, b) sets the appropriate pull link,
+and c) sets the appropriate push link. In effect, the git command line
+hides the fact that the user doesn't know the branch doesn't exist and
+creates it as the user was expecting it to exist as. The Git GUI has
+no shortcut like this.
 
-Besides, "test_must_fail test_cmp" looks like a strange thing to
-say.  "! test_cmp expect actual" perhaps.
+=46or reference, from the man page for git-checkout:
+"If <branch> is not found but there does exist a tracking branch in
+exactly one remote (call it <remote>) with a matching name, treat as
+equivalent to "git checkout -b <branch> --track <remote>/<branch>".
 
-Even better, expect that "expect" and "actual" becomes the same, but
-mark the test itself to expect failure, to say "it ought to work
-this way in the ideal world, but we know the system currently does
-not pass this test".
+Currently, in order to checkout a non-existing branch in the GUI you
+must go to the Branch Menu, click Create, select the "Tracking Branch"
+radio, select the branch, then go back up and name the branch the
+exact same name (to ease new user confusion). For a new user who just
+wants a copy of the remote branch, it is very unintuitive to create a
+new branch.
 
-I'm tempted to suggest squashing the following in.  Thoughts?
+=46ortunately, you already have some explicit warning messages after th=
+e
+Checkout Branch screen if the user intuitively tries to checkout the
+tracking branch, but even then a new user rarely realizes what they
+have gotten themselves into. At best, they know that they must find
+help (just for trying to checkout a branch).
+
+In order to implement this feature effectively, I suggest that the
+Checkout Branch screen be modified in one of two ways (exclusive):
+
+Option A:
+Merge the Local and Tracking Branch lists into one box keeping their
+entries separate by their full name ("master" and "origin/master"). If
+a user selects a remote branch, ask the user whether to create the
+local branch or move to the detached HEAD state (current
+functionality).
+
+Option B (preferred):
+Keep the Local and Tracking Branch lists separate (as they are now),
+and keep the Tracking Branch list as-is. However, on the Local Branch
+screen, select include the existing branches in normal font but also
+include potential local branches based off of the remote in italics
+(or greyed-out, or asterisked, etc). Selecting an italicized entry
+creates the new branch from the tracking branch, without user
+interaction.
 
 
- t/t9822-git-p4-path-encoding.sh | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+Thanks,
 
-diff --git a/t/t9822-git-p4-path-encoding.sh b/t/t9822-git-p4-path-encoding.sh
-index e507ad7..2d652d89 100755
---- a/t/t9822-git-p4-path-encoding.sh
-+++ b/t/t9822-git-p4-path-encoding.sh
-@@ -21,15 +21,15 @@ test_expect_success 'Create a repo containing iso8859-1 encoded paths' '
- 	)
- '
- 
--test_expect_success 'Clone repo containing iso8859-1 encoded paths without git-p4.pathEncoding' '
-+test_expect_failure 'Clone auto-detects depot with iso8859-1 paths' '
- 	git p4 clone --destination="$git" //depot &&
- 	test_when_finished cleanup_git &&
- 	(
- 		cd "$git" &&
- 		UTF8="$(printf "$UTF8_ESCAPED")" &&
--		echo $UTF8 >expect &&
-+		echo "$UTF8" >expect &&
- 		git -c core.quotepath=false ls-files >actual &&
--		test_must_fail test_cmp expect actual
-+		test_cmp expect actual
- 	)
- '
- 
-@@ -39,16 +39,15 @@ test_expect_success 'Clone repo containing iso8859-1 encoded paths with git-p4.p
- 	(
- 		cd "$git" &&
- 		git init . &&
--		test_config git-p4.pathEncoding iso8859-1 &&
-+		git config git-p4.pathEncoding iso8859-1 &&
- 		git p4 clone --use-client-spec --destination="$git" //depot &&
- 		UTF8="$(printf "$UTF8_ESCAPED")" &&
--		echo $UTF8 >expect &&
-+		echo "$UTF8" >expect &&
- 		git -c core.quotepath=false ls-files >actual &&
- 		test_cmp expect actual &&
--		cat >expect <<-\EOF &&
--		content123
--		EOF
--		cat $UTF8 >actual &&
-+
-+		echo content123 >expect &&
-+		cat "$UTF8" >actual &&
- 		test_cmp expect actual
- 	)
- '
+John Medema
+Systems Administrator
+United Drugs, a Subsidiary of AAP (American Associated Pharmacies)
+john.medema@uniteddrugs.com
+7243 N 16th Street, Phoenix, AZ 85020
+Office:  602-678-1179 x126
+=46ax:  602-639-4631
+
+--=20
+HIPAA NOTICE:  It is against United Drugs=E2=80=99 policy to receive or=
+ send=20
+un-encrypted or non-secured email correspondence containing Protected=20
+Health Information (PHI) as defined by HIPAA law.
+=20
+Please use fax or phone for correspondence containing PHI.
+
+--=20
+This email message is for the sole use of the intended recipient(s) and=
+ may=20
+contain confidential and privileged information. Any unauthorized revie=
+w,=20
+use, disclosure or distribution is prohibited. If you are not the inten=
+ded=20
+recipient, contact the sender by reply email, and destroy all copies of=
+ the=20
+original message.=20
