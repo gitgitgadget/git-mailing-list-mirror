@@ -1,85 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Remove perl dependant commands if NO_PERL is set
-Date: Thu, 03 Sep 2015 12:11:57 -0700
-Message-ID: <xmqq7fo7jp1e.fsf@gitster.mtv.corp.google.com>
-References: <1441298147-83601-1-git-send-email-garga@FreeBSD.org>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv5 1/3] submodule: Reimplement `module_list` shell function
+ in C
+Date: Thu, 3 Sep 2015 12:18:51 -0700
+Message-ID: <CAGZ79kb5_VJwJoBpvUdVMC43qvJThKa1utQFO68HjM1sciZ6-w@mail.gmail.com>
+References: <1441230146-26921-1-git-send-email-sbeller@google.com>
+	<1441230146-26921-2-git-send-email-sbeller@google.com>
+	<xmqqio7rjppv.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: garga@FreeBSD.org
-X-From: git-owner@vger.kernel.org Thu Sep 03 21:12:04 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 03 21:18:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXZvY-0004aa-H7
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 21:12:04 +0200
+	id 1ZXa2C-0001wX-58
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 21:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754025AbbICTMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2015 15:12:00 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:35454 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751920AbbICTL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2015 15:11:59 -0400
-Received: by pacfv12 with SMTP id fv12so56124934pac.2
-        for <git@vger.kernel.org>; Thu, 03 Sep 2015 12:11:58 -0700 (PDT)
+	id S1753052AbbICTSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2015 15:18:53 -0400
+Received: from mail-yk0-f177.google.com ([209.85.160.177]:33257 "EHLO
+	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751592AbbICTSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2015 15:18:52 -0400
+Received: by ykei199 with SMTP id i199so53864438yke.0
+        for <git@vger.kernel.org>; Thu, 03 Sep 2015 12:18:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=HdJ2XVxZOkOJn83Xnd7tBNlUYIdweB3C55X75qpnK2s=;
-        b=buBcVnojSBEY3vNawUvNnfgI+U+kQknWjOsh3OsdumLl1ygHRBM0q7R8Duw/zlzHVg
-         Xoz2ft/ojVvuZZZWfDd2JeUamC1e6j3s90QpWDHpKCRwGwLvHJw5IS5NHbb4gqVhBuk+
-         UJocyxrqan4H9vBvKum/HZ3deRaSlbdjH9e+Ja5dP7lEgdLYG/4gL8Bbe+1kZ6Q6oUdh
-         Agp3l/q57tM4dXswl8HbS4H5cq/rY3N1VMeh8aUSx4MSE4XgoTIwoI7ixxer0hEj10nl
-         h/759QIyg3ukqy3vv1HTfiIWoQwigDZSp3ppUdXKg+F9hH9eW+TCh1bMHCxbt0o87mUK
-         pAFg==
-X-Received: by 10.66.100.234 with SMTP id fb10mr66550836pab.119.1441307518758;
-        Thu, 03 Sep 2015 12:11:58 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:71da:b56c:f873:e611])
-        by smtp.gmail.com with ESMTPSA id cs6sm11898829pdb.40.2015.09.03.12.11.58
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 03 Sep 2015 12:11:58 -0700 (PDT)
-In-Reply-To: <1441298147-83601-1-git-send-email-garga@FreeBSD.org>
-	(garga@freebsd.org's message of "Thu, 3 Sep 2015 13:35:47 -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=M1xKFlwE4NvSaGHqo9Zc1CZLv7rPUy7f/lir1vkkX5s=;
+        b=ikQQ1fdwltJ0+ErR35RnbqA06kED5m/8B5ylSAHKmNd7CNAFMax//vQVRztv4RgoUI
+         MftMQqjMP2SrEEv8ofgF3sN9vt3wLk8wW4Fy/LWfb44CddKzLDG960a8aTbSU/TeX5Ni
+         gK5LEWKvw5peLm3pMKEso94MbeoNKAafzruFegFqOBZ80nJRM6Gka/z0sRN897NZyRV2
+         +VM4A/5xefxoA514SnnPiCqlZZJzHTXvSxpunkDIXnqNbW03U4h9t/oQhrrPvVFdNgD9
+         raavOCWLfGJ/yANcpNhMgeT2cmT7cFc0MLlFj6HfIY9dJPl3WUTs1uPO/OXp8/ZtTwKd
+         ZkdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=M1xKFlwE4NvSaGHqo9Zc1CZLv7rPUy7f/lir1vkkX5s=;
+        b=A6W1hFTwcX0tMaEd99yEn/SgUhc1YIH2IK6V6Qw7mOCDag1eqJHhPPpvNrqjppt9uW
+         aS5jDkIAz6yFJVKBJTYH76pGM2EGrj0/DZbCkPDf+njOToaOvSqu43uwa/8Yn9OvFqJX
+         0QFkUi03aPLtlEgCD3gyUSZ66krvNNSpifYdEMYvtrxCvzdg2/uZRW0GExfwB6CqhkQq
+         b3usGHa28iIUxvTYtycCufnvcluB2AryoSu/24BuOBo8u+FNsRyUhi/Hd+LiR5YnI2Dw
+         5l1EJiEdj5TIwahiL57aJORNvkvilEbTjZWDqH6ck0ryRPc10UFRwy0j1LqpenVppiGq
+         Cenw==
+X-Gm-Message-State: ALoCoQmn4eKcPHUGOuNZiR3KNnvKuOknihBwqLDnTv9CwFka10RHqONUlwRJHIguwkN85JzVHbqA
+X-Received: by 10.170.198.198 with SMTP id p189mr12666122yke.56.1441307931720;
+ Thu, 03 Sep 2015 12:18:51 -0700 (PDT)
+Received: by 10.37.21.132 with HTTP; Thu, 3 Sep 2015 12:18:51 -0700 (PDT)
+In-Reply-To: <xmqqio7rjppv.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277241>
 
-garga@FreeBSD.org writes:
-
-> From: Renato Botelho <garga@FreeBSD.org>
+On Thu, Sep 3, 2015 at 11:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> git-submodule and git-request-pull are written in sh but use perl
-> internally. Add them to be replaced by unimplemented.sh when NO_PERL
-> flag is set
-> ---
+> It is customary to use X_alloc, X_nr for an array X_something that
+> is managed by ALLOC_GROW(), I think.  I'd also suggest wrapping
+> these in a struct and passing it between module_list_compute() and
+> its callers.
 
-Missing sign-off.
+I did not take the suggestion as a strong suggestion at the time, but the
+looking at resulting squash proposal it looks way better.
 
-You also may want to hold off the "git-submodule" bit, as I expect
-http://thread.gmane.org/gmane.comp.version-control.git/277128/focus=277129
-would be one of the first changes to be in 'master' after the
-upcoming release 2.6 (that is, it is likely that perl dependency
-would be removed in 2.7).
+> I may have said this already, but unlike tree entries, the index
+> entries will never be a directory.  S_ISDIR() check here is
+> meaningless [*1*].
 
->  Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Right. I was too focused on the other bug, of checking S_ISGITLINK after
+the pathspec matching, that I overlooked the ISDIR again. :(
+
+>> +int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+>> +{
+>> +     int i;
+>> +     if (argc < 2)
+>> +             die(_("fatal: submodule--helper subcommand must be "
+>> +                   "called with a subcommand"));
+>> +
+>> +     for (i = 0; i < ARRAY_SIZE(commands); i++)
+>> +             if (!strcmp(argv[1], commands[i].cmd))
+>> +                     return commands[i].fn(argc - 1, argv + 1, prefix);
+>> +
+>> +     die(_("fatal: '%s' is not a valid submodule--helper "
+>> +           "subcommand"), argv[1]);
+>> +}
 >
-> diff --git a/Makefile b/Makefile
-> index e326fa0..4dae0ec 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1795,7 +1795,7 @@ git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
->  	chmod +x $@+ && \
->  	mv $@+ $@
->  else # NO_PERL
-> -$(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
-> +$(SCRIPT_PERL_GEN) git-instaweb git-submodule git-request-pull: % : unimplemented.sh
->  	$(QUIET_GEN)$(RM) $@ $@+ && \
->  	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
->  	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
+> Nice and clean code structure.  I like it ;-).
+
+It took a good while of discussion and reviews to arrive at
+that structure eventually.
+
+The squash proposal looks good to me.
