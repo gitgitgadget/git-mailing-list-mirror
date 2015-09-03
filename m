@@ -1,93 +1,125 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [RFC PATCH] git-p4: add option to store files in Git LFS on import
-Date: Thu, 3 Sep 2015 11:07:19 +0100
-Message-ID: <CAE5ih79Zjg7Rk0OQ0VkTc+KGJ26dEk_iyOWWhT2qSGePRTDqog@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [RFC PATCH] git-p4: add option to store files in Git LFS on
+ import
+Date: Thu, 3 Sep 2015 11:12:39 +0100
+Message-ID: <20150903101239.GP30659@serenity.lan>
 References: <1440764691-62254-1-git-send-email-larsxschneider@gmail.com>
-	<CAE5ih7-TfLqwye8YpmZz90AVjYGQ8m0sF6GLKnG9pjvV8cTSjw@mail.gmail.com>
-	<9951C805-DFBF-47AC-B215-B9C657D4A852@gmail.com>
-	<CAE5ih7-w5ZjO=QUE45yBvwyqdqKCADczrLt7=4W8X6BR+cy4PA@mail.gmail.com>
-	<1D65DD68-EE3F-4C87-9B5F-E436BA13704E@gmail.com>
+ <CAE5ih7-TfLqwye8YpmZz90AVjYGQ8m0sF6GLKnG9pjvV8cTSjw@mail.gmail.com>
+ <9951C805-DFBF-47AC-B215-B9C657D4A852@gmail.com>
+ <CAE5ih7-w5ZjO=QUE45yBvwyqdqKCADczrLt7=4W8X6BR+cy4PA@mail.gmail.com>
+ <1D65DD68-EE3F-4C87-9B5F-E436BA13704E@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users <git@vger.kernel.org>
+Cc: Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>
 To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 03 12:07:40 2015
+X-From: git-owner@vger.kernel.org Thu Sep 03 12:13:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXRQe-0002gn-1a
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 12:07:36 +0200
+	id 1ZXRVv-0006Tw-Ad
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 12:13:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753955AbbICKHX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Sep 2015 06:07:23 -0400
-Received: from mail-oi0-f50.google.com ([209.85.218.50]:36045 "EHLO
-	mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753087AbbICKHU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Sep 2015 06:07:20 -0400
-Received: by oibi136 with SMTP id i136so24648111oib.3
-        for <git@vger.kernel.org>; Thu, 03 Sep 2015 03:07:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=9iCRCBTqqmR4ADhdsJa3+0xzAwJGpVe6CHE1jNVgCgs=;
-        b=IXzYC7L8z/4713tNuu3zltWurdebLlx8KglGSiyJ0VYeSZDnhoQGqWNqQw1vA0Z/UC
-         o4EmPos8gj84M+8IeUq7e2vCZ8aP8wUceyLr/vpPJGCtxJSW+xIs32aehSERWwWXXebS
-         PNFYd7+VeoaepVDGeXLOF2zze3avvjyUHAn9c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9iCRCBTqqmR4ADhdsJa3+0xzAwJGpVe6CHE1jNVgCgs=;
-        b=WcHaKp2eG2uOpbrEtUwYFCevJ9SEGCgFcrNcKBEa/7AEaC/K4YC6fwXOPeLI+78z//
-         VnxuHEzoAJagArD5+DI+qyUB72BNqZeeUK5KHyfZB93EhtB45zzRRZ1VnlgbSwliDyhX
-         4poZlsB8gt/ER0PGnj4X8P9iSm/lJEqgU7ODDo+uxZccl5tCulMpXReXQIeenTJZxKXx
-         DoHQ4nhLRiosXgBUjHpyyajEf6Zi9X+DVqpQxhRLMbb6Sv+l9BJGVtRvqoBx7h3P1jsW
-         up6QNVea+OKHn74fmfyYoA3eqRdrFsoVRbraDJ+81h8HyxUGrCSROU+g75yH0Ab2PhaY
-         tGCw==
-X-Gm-Message-State: ALoCoQlYZfllNWYcQIXhvqgINKffYU/JFaVfcFfMuWDPN8G3m/FciyZljNTSr09bogslkyeiNneb
-X-Received: by 10.202.79.11 with SMTP id d11mr7719065oib.113.1441274839373;
- Thu, 03 Sep 2015 03:07:19 -0700 (PDT)
-Received: by 10.60.46.38 with HTTP; Thu, 3 Sep 2015 03:07:19 -0700 (PDT)
+	id S1753708AbbICKMy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Sep 2015 06:12:54 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:59069 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752416AbbICKMx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Sep 2015 06:12:53 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id EBF3ACDA61C;
+	Thu,  3 Sep 2015 11:12:52 +0100 (BST)
+X-Quarantine-ID: <Z1oaoPblZwsH>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1.5
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.5 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_05=-0.5] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Z1oaoPblZwsH; Thu,  3 Sep 2015 11:12:49 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id B25C2CDA5EB;
+	Thu,  3 Sep 2015 11:12:41 +0100 (BST)
+Content-Disposition: inline
 In-Reply-To: <1D65DD68-EE3F-4C87-9B5F-E436BA13704E@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277196>
 
->>>
->>> Regarding Python 3:
->>> Would you drop Python 2 support or do you want to support Python 2/=
-3 in parallel? I would prefer the former=E2=80=A6
->>
->> For quite some time we would need to support both; we can't just hav=
+On Thu, Sep 03, 2015 at 11:40:20AM +0200, Lars Schneider wrote:
+>=20
+> On 30 Aug 2015, at 18:36, Luke Diamand <luke@diamand.org> wrote:
+>=20
+> > On 30 August 2015 at 11:18, Lars Schneider <larsxschneider@gmail.co=
+m> wrote:
+> >> Thanks for your feedback!
+> >>=20
+> >> I like the =E2=80=9Chandle big files=E2=80=9D plugin kind of idea.=
+ However, I
+> >> wonder if it makes sense to put more and more stuff into git-p4.py
+> >> (>3000 LOC already). What do you think about splitting git-p4 into
+> >> multiple files?
+> >=20
+> > I was wondering about that. I think for now, the simplicity of keep=
+ing
+> > everything in one file is worth the slight extra pain. I don't imag=
+ine
+> > that the big-file-handler code would be very large.
+> OK.
+>=20
+> >=20
+> >>=20
+> >> Regarding Python 3:
+> >> Would you drop Python 2 support or do you want to support Python
+> >> 2/3 in parallel? I would prefer the former=E2=80=A6
+> >=20
+> > For quite some time we would need to support both; we can't just ha=
+ve
+> > a release of git that one day breaks git-p4 for people stuck on Pyt=
+hon
+> > 2. But it might not be that hard to support both (though converting
+> > all those print statements could be quite tiresome).
+> Agreed. However supporting both versions increases code complexity as
+> well as testing effort. Would a compromise like the following work? W=
 e
->> a release of git that one day breaks git-p4 for people stuck on Pyth=
-on
->> 2. But it might not be that hard to support both (though converting
->> all those print statements could be quite tiresome).
-> Agreed. However supporting both versions increases code complexity as=
- well as testing effort. Would a compromise like the following work? We=
- fork =E2=80=9Cgit-p4.py=E2=80=9D to =E2=80=9Cgit-p4-python2.py=E2=80=9D=
- and just apply important bug fixes to that file. All new development h=
-appens on a Python 3 only git-p4.py.
+> fork =E2=80=9Cgit-p4.py=E2=80=9D to =E2=80=9Cgit-p4-python2.py=E2=80=9D=
+ and just apply important bug
+> fixes to that file. All new development happens on a Python 3 only
+> git-p4.py.=20
 
-I'm not a python expert, but I think we're quite a way from that point
-anyway. I think we'd want to run 2to3 on it and make it work - at that
-point it should work on both python 2.7 (and earlier? I don't know)
-and python 3.x. By the time that's done, we may well find that we
-_can_ just drop python2 support, or fork, as you suggest.
+Documentation/CodingGuidelines currently says:
 
-Running 2to3 also includes adding test cases for all the code that is
-in there that's not currently covered so that end-users don't find out
-the hard way that we've missed bits. That's why I think it's a fairly
-long-term goal.
+ - As a minimum, we aim to be compatible with Python 2.6 and 2.7.
 
-Regardless, I think we'd want to have a wider discussion about the
-best way forward, and there doesn't seem much point having that
-discussion now when there's no actual code!
+ - Where required libraries do not restrict us to Python 2, we try to
+   also be compatible with Python 3.1 and later.
+
+That was added in commit 9ef43dd (CodingGuidelines: add Python coding
+guidelines, 2013-01-30), which gives the following rationale in the
+commit message:
+
+ - Advocating Python 3 support in all scripts is currently unrealistic
+   because:
+
+     - 'p4 -G' provides output in a format that is very hard to use wit=
+h
+       Python 3 (and its documentation claims Python 3 is unsupported).
+
+Has that changed?
+
+I also found a message describing why the output is hard to use with
+Python 3:
+
+ 	http://permalink.gmane.org/gmane.comp.version-control.git/213316
+
+If that problem can be solved, I don't think it would be difficult to
+support 2.6+ and 3.x with a single file.
