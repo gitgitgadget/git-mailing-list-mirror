@@ -1,188 +1,94 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 10/43] refs.c: move warn_if_dangling_symref* to the common code
-Date: Wed,  2 Sep 2015 21:54:40 -0400
-Message-ID: <1441245313-11907-11-git-send-email-dturner@twopensource.com>
+Subject: Re: [PATCH 24/43] refs.h: document make refname_is_safe and add it
+ to header
+Date: Wed, 02 Sep 2015 22:06:16 -0400
+Organization: Twitter
+Message-ID: <1441245976.25570.24.camel@twopensource.com>
 References: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	David Turner <dturner@twitter.com>
-To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Sep 03 03:58:13 2015
+	 <1441245313-11907-25-git-send-email-dturner@twopensource.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: mhagger@alum.mit.edu
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 03 04:06:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXJn3-0007fH-2h
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 03:58:13 +0200
+	id 1ZXJvB-00048K-Qm
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 04:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932439AbbICB54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2015 21:57:56 -0400
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:34658 "EHLO
-	mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756298AbbICBzg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2015 21:55:36 -0400
-Received: by qkfq186 with SMTP id q186so15070983qkf.1
-        for <git@vger.kernel.org>; Wed, 02 Sep 2015 18:55:36 -0700 (PDT)
+	id S1755730AbbICCGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2015 22:06:18 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:36372 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755112AbbICCGS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2015 22:06:18 -0400
+Received: by qgx61 with SMTP id 61so18777929qgx.3
+        for <git@vger.kernel.org>; Wed, 02 Sep 2015 19:06:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=65HgnHqHaxRvjHnnTz9G18BMeZ6Lw/8TMEgrNl891L0=;
-        b=RAnz7+76hK5ECHvnsSPPdFp41+pm8TlGyvYOEC5ARaJYVNeX5wAuNfCFNPbQ8R3CRE
-         xytAvI9VAbpEAaB1wBHfP17eP9Q3ZHoyi7fgeE8xLDjRBwVs9/4VTl4qf3iJGsNVkir5
-         uoJLxdRMmy++0QpXhW1QPDeEGGS2JFK2PxNyv48f1dw6dr5yn7VTDzaPv32k0pTT5pEs
-         xug2OzqHHXdsdkqyURmiC4XOV1Jundr86BdY+D/Apo2znnbPdJq98x9lNEW1QLF4vhFq
-         Z+m6CC78e9n7HHVaKjV1FakwFXZUaOknZ5lBucVYfxJD3+f2vieh+XQl2G6ZwwVvtfdu
-         t/XA==
-X-Gm-Message-State: ALoCoQkX/C5s4kI8mv7MGUFzlhUsE0h16GNN7vdtecBZ6upgU9WGQpGN280f8Q6joxHqJ3RGZh2K
-X-Received: by 10.55.192.130 with SMTP id v2mr33428295qkv.82.1441245336203;
-        Wed, 02 Sep 2015 18:55:36 -0700 (PDT)
-Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id 95sm11108155qgt.12.2015.09.02.18.55.35
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 02 Sep 2015 18:55:35 -0700 (PDT)
-X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
-In-Reply-To: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=lzc1bGp7NEwIaBhaNJlBszOwlT2sxOO7NJA8Tfwfvp0=;
+        b=CLIu7FRJs7GWA9sUQQdAkKafXxhk32SqWyvU6bYK4hAMc6qcGDhlvx6DI/QegBMRPJ
+         5TnuJ/OUGwuX1yUHEMv2p/i16Nfu29fxL2z1g3uRZqI4PoxwWCIqypKH4FC0Yl9tmTdt
+         X98g9+gAe4tJSniCUi8wuvpid2tXEPCuzAEgmUiV2DbeMfDOM41f3pc8d5yNVNJsB5nM
+         IeT3wWYWhULl9JYIuEaDzNcv6fnENJDBWxCalqzPAznFiJ354N0brQQgOWMnQtmP5rni
+         OoHLJ8gdtTaAW+5dnsBr/f9hjtN+QUiLinXoWPnvoyXkqpvX8bxCb50wcX8tUGJJZSng
+         GYuw==
+X-Gm-Message-State: ALoCoQkGKII01j/pdpgam7aXjbPMAuFcWr+9X9DGagQH9wgv98WG1ld0t3FT83s1dSK6uAC5Z1vM
+X-Received: by 10.140.237.73 with SMTP id i70mr65836440qhc.37.1441245977566;
+        Wed, 02 Sep 2015 19:06:17 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id f10sm13918005qhc.12.2015.09.02.19.06.16
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 02 Sep 2015 19:06:17 -0700 (PDT)
+In-Reply-To: <1441245313-11907-25-git-send-email-dturner@twopensource.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277180>
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+And, of course, as soon as I send these, I notice the bad signoff on
+about half of them, including this one :(  Those probably got screwed up
+when I ended up losing my entire repo once when a test went wrong.
 
-These functions do not use any backend specific code so we move
-them to the common code.
+Anyway, I went ahead and fixed them in my local version, so next rev
+they'll be fine.
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: David Turner <dturner@twitter.com>
----
- refs-be-files.c | 52 ----------------------------------------------------
- refs.c          | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 52 insertions(+), 52 deletions(-)
-
-diff --git a/refs-be-files.c b/refs-be-files.c
-index 4f0e3c7..9c0dd5c 100644
---- a/refs-be-files.c
-+++ b/refs-be-files.c
-@@ -1953,58 +1953,6 @@ int peel_ref(const char *refname, unsigned char *sha1)
- 	return peel_object(base, sha1);
- }
- 
--struct warn_if_dangling_data {
--	FILE *fp;
--	const char *refname;
--	const struct string_list *refnames;
--	const char *msg_fmt;
--};
--
--static int warn_if_dangling_symref(const char *refname, const struct object_id *oid,
--				   int flags, void *cb_data)
--{
--	struct warn_if_dangling_data *d = cb_data;
--	const char *resolves_to;
--	struct object_id junk;
--
--	if (!(flags & REF_ISSYMREF))
--		return 0;
--
--	resolves_to = resolve_ref_unsafe(refname, 0, junk.hash, NULL);
--	if (!resolves_to
--	    || (d->refname
--		? strcmp(resolves_to, d->refname)
--		: !string_list_has_string(d->refnames, resolves_to))) {
--		return 0;
--	}
--
--	fprintf(d->fp, d->msg_fmt, refname);
--	fputc('\n', d->fp);
--	return 0;
--}
--
--void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
--{
--	struct warn_if_dangling_data data;
--
--	data.fp = fp;
--	data.refname = refname;
--	data.refnames = NULL;
--	data.msg_fmt = msg_fmt;
--	for_each_rawref(warn_if_dangling_symref, &data);
--}
--
--void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames)
--{
--	struct warn_if_dangling_data data;
--
--	data.fp = fp;
--	data.refname = NULL;
--	data.refnames = refnames;
--	data.msg_fmt = msg_fmt;
--	for_each_rawref(warn_if_dangling_symref, &data);
--}
--
- /*
-  * Call fn for each reference in the specified ref_cache, omitting
-  * references not in the containing_dir of base.  fn is called for all
-diff --git a/refs.c b/refs.c
-index 310b7f5..24d5e28 100644
---- a/refs.c
-+++ b/refs.c
-@@ -581,3 +581,55 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
- 	free(short_name);
- 	return xstrdup(refname);
- }
-+
-+struct warn_if_dangling_data {
-+	FILE *fp;
-+	const char *refname;
-+	const struct string_list *refnames;
-+	const char *msg_fmt;
-+};
-+
-+static int warn_if_dangling_symref(const char *refname, const struct object_id *oid,
-+				   int flags, void *cb_data)
-+{
-+	struct warn_if_dangling_data *d = cb_data;
-+	const char *resolves_to;
-+	struct object_id junk;
-+
-+	if (!(flags & REF_ISSYMREF))
-+		return 0;
-+
-+	resolves_to = resolve_ref_unsafe(refname, 0, junk.hash, NULL);
-+	if (!resolves_to
-+	    || (d->refname
-+		? strcmp(resolves_to, d->refname)
-+		: !string_list_has_string(d->refnames, resolves_to))) {
-+		return 0;
-+	}
-+
-+	fprintf(d->fp, d->msg_fmt, refname);
-+	fputc('\n', d->fp);
-+	return 0;
-+}
-+
-+void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
-+{
-+	struct warn_if_dangling_data data;
-+
-+	data.fp = fp;
-+	data.refname = refname;
-+	data.refnames = NULL;
-+	data.msg_fmt = msg_fmt;
-+	for_each_rawref(warn_if_dangling_symref, &data);
-+}
-+
-+void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames)
-+{
-+	struct warn_if_dangling_data data;
-+
-+	data.fp = fp;
-+	data.refname = NULL;
-+	data.refnames = refnames;
-+	data.msg_fmt = msg_fmt;
-+	for_each_rawref(warn_if_dangling_symref, &data);
-+}
--- 
-2.0.4.315.gad8727a-twtrsrc
+On Wed, 2015-09-02 at 21:54 -0400, David Turner wrote:
+> This function might be used by other refs backends
+> 
+> Signed-off-by: David Turner <dturner@twitter.com>
+> ---
+>  refs.h | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/refs.h b/refs.h
+> index 5542587..359e166 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -259,6 +259,17 @@ int verify_refname_available(const char *newname, struct string_list *extra,
+>  			     struct string_list *skip, struct strbuf *err);
+>  
+>  /*
+> + * Check if a refname is safe.
+> + * For refs that start with "refs/" we consider it safe as long they do
+> + * not try to resolve to outside of refs/.
+> + *
+> + * For all other refs we only consider them safe iff they only contain
+> + * upper case characters and '_' (like "HEAD" AND "MERGE_HEAD", and not like
+> + * "config").
+> + */
+> +int refname_is_safe(const char *refname);
+> +
+> +/*
+>   * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
+>   * REF_NODEREF: act on the ref directly, instead of dereferencing
+>   *              symbolic references.
