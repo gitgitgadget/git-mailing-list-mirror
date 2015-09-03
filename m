@@ -1,64 +1,97 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: git bash bug: ipython doesn't work
-Date: Thu, 03 Sep 2015 23:37:35 +0200
-Organization: gmx
-Message-ID: <242aacb77f9ecd6763d022702d6e5e89@dscho.org>
-References: <loom.20150903T185421-732@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sergey Chipiga <chipiga86@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 03 23:37:45 2015
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH v3 00/11] Make "local" orthogonal to date format
+Date: Thu,  3 Sep 2015 22:48:50 +0100
+Message-ID: <cover.1441316394.git.john@keeping.me.uk>
+References: <cover.1441144343.git.john@keeping.me.uk>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 03 23:49:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXcCW-00079z-CG
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 23:37:44 +0200
+	id 1ZXcNg-0008Di-1B
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 23:49:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757580AbbICVhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2015 17:37:40 -0400
-Received: from mout.gmx.net ([212.227.17.20]:64439 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756947AbbICVhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2015 17:37:39 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LcmN9-1YrMox0Lot-00kBgH; Thu, 03 Sep 2015 23:37:36
- +0200
-In-Reply-To: <loom.20150903T185421-732@post.gmane.org>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:BOZogn5+g4uzfWmHqphTEGHP0WnW0kN7Myw6bvrsF4WHD9rajCF
- 7APtR6fEtTULjQ6WE6ayJ+GfIog5fP8g0WGjjJYqXBJukR2wxbMLaGmn6RrNo5oHlZu2MZK
- p4juUB2j6b8nf8AU7pex3FmsCxwfa6hydqO2qdz55DcLYoqNhzvl9oIOgw0gsGJMUVtiAVr
- ghI23BzYFBVhLlJSUpJXA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:TbmJayCBGQI=:QP/Fp6Ufl2HAcAecfbEF3t
- UEg/h3nNqE9I31o4w1r/Pucbvx7qUnyRUJfMZIsM7ialNz2CW+kwzkAILHuEDS1igCX0BSZph
- j17d6O+6ovdlDc5wVpMazX3XZvxRgE7dM7LSvk71DcGqJNPpJPlRlXQWvMuCTmswLoY9d/i1M
- wzArzWj7kW5W9qvqvM2IQx63YlEZSmiWtobvcjwe9o33c7DJ9a8UDLRt+KLLE30hPSgOODpVc
- /qDNMuCSLu76YyWtHWH2/fEDSr3OFJcZVkA1QrE3q7SfPQZDkIO+6XhP7CTjq2Ory2MRJXESM
- 5yFlKN/kUs9GBr1GR2UUJj+rskZGQqLcZkMFDMTmPMyhO0/XHUA/UU+a7i4vacijJNPt1RTUI
- y1/3KJvJ1kQSrpUi5vLufJIIQz12CANJoyweJTLDoQSDtdIurnsfEdXC/CWxRlMdGmHGTh0qZ
- UoEt+eGK1SwtnQPXE6DYnjZ+ehYgw+xwWcjHC8HFFaz/fYAIeWpGmla1encmb6qfesOuHY7sR
- BAMu6TUPXsnS9fuN7iXoGdJypEoZlWASTSv3G6Fsin8i5qmpqCVUhZj/G6G/jY9fN07wdCb+R
- 6Bss0ot56ijTa91yIUpPbObXxv3qQRwVRV6vHckSo6Q+T7+0Jm69VZysUGJ4/my8GglmIfsmw
- Lk4teOdO450/p9tWv2jg/Fmqjq8uSIF14tkNWHUqn5WrlJZoktUwtmW5GC7qgKz88nmC8XHXz
- K9cMx37PaUpClKxl1nziByB0nmDdu10I7HVcMw==
+	id S1751972AbbICVtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2015 17:49:10 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:36466 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751093AbbICVtJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2015 17:49:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id D97F7CDA5E5;
+	Thu,  3 Sep 2015 22:49:08 +0100 (BST)
+X-Quarantine-ID: <Wog0oOhPtkv1>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_40=-0.001, URIBL_BLOCKED=0.001]
+	autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Wog0oOhPtkv1; Thu,  3 Sep 2015 22:49:06 +0100 (BST)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id DEA6A866007;
+	Thu,  3 Sep 2015 22:48:53 +0100 (BST)
+X-Mailer: git-send-email 2.5.0.466.g9af26fa
+In-Reply-To: <cover.1441144343.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277261>
 
-Hi Sergey,
+Since version 2 there are four new preparatory patches which remove
+lists of date formats from documentation in favour of referring to the
+detailed list in git-rev-list(1) or git-log(1) (both generated from
+Documentation/rev-list-options.txt) depending on whether the page in
+question is plumbing/porcelain.
 
-On 2015-09-03 18:56, Sergey Chipiga wrote:
-> I downloaded git for windows v2.5.1. And in git bash I can't launch ipython.
-> I suppose it forwards stdout somethere.
+I've also reordered the test cleanup patches earlier so that the test
+for "--date=raw" is added before the new patch that moves "local"
+processing before the "raw" case.  The tests also now wrap long lines
+and a missing "&&" has been added.
 
-I replied in the ticket you opened on GitHub: https://github.com/git-for-windows/git/issues/352
+In patch 7 (date: check for "local" before anything else), we no longer
+reject "relative-local" and "raw-local" now prints the user's local
+timezone offset.  The error message for invalid formats that are
+prefixed with a valid format name is now the same as that if there is no
+valid prefix.
 
-Ciao,
-Johannes
+Jeff King (2):
+  fast-import: switch crash-report date to iso8601
+  date: make "local" orthogonal to date format
+
+John Keeping (9):
+  Documentation/blame-options: don't list date formats
+  Documentation/config: don't list date formats
+  Documentation/git-for-each-ref: don't list date formats
+  Documentation/rev-list: don't list date formats
+  t6300: introduce test_date() helper
+  t6300: add test for "raw" date format
+  date: check for "local" before anything else
+  t6300: make UTC and local dates different
+  t6300: add tests for "-local" date formats
+
+ Documentation/blame-options.txt    |   5 +-
+ Documentation/config.txt           |   4 +-
+ Documentation/git-for-each-ref.txt |   5 +-
+ Documentation/git-rev-list.txt     |   2 +-
+ Documentation/rev-list-options.txt |  23 ++++--
+ builtin/blame.c                    |   1 -
+ cache.h                            |   2 +-
+ date.c                             |  74 ++++++++++-------
+ fast-import.c                      |   2 +-
+ t/t6300-for-each-ref.sh            | 162 ++++++++++++++++++++++---------------
+ 10 files changed, 166 insertions(+), 114 deletions(-)
+
+-- 
+2.5.0.466.g9af26fa
