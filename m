@@ -1,123 +1,130 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 31/43] initdb: move safe_create_dir into common code
-Date: Wed,  2 Sep 2015 21:55:01 -0400
-Message-ID: <1441245313-11907-32-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 37/43] refs: move some defines from refs-be-files.c to refs.h
+Date: Wed,  2 Sep 2015 21:55:07 -0400
+Message-ID: <1441245313-11907-38-git-send-email-dturner@twopensource.com>
 References: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Sep 03 03:56:22 2015
+X-From: git-owner@vger.kernel.org Thu Sep 03 03:56:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXJlF-0006Td-EM
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 03:56:21 +0200
+	id 1ZXJlN-0006a7-Lz
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 03:56:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932395AbbICB4R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2015 21:56:17 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:33830 "EHLO
-	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932383AbbICB4P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2015 21:56:15 -0400
-Received: by qkfq186 with SMTP id q186so15075858qkf.1
-        for <git@vger.kernel.org>; Wed, 02 Sep 2015 18:56:14 -0700 (PDT)
+	id S932405AbbICB4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2015 21:56:25 -0400
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:36327 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932397AbbICB4V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2015 21:56:21 -0400
+Received: by qgx61 with SMTP id 61so18643939qgx.3
+        for <git@vger.kernel.org>; Wed, 02 Sep 2015 18:56:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=MUyy//7Aue0EJS65XsAaWwh47gB2Jz3TyAuAfwGCoJ8=;
-        b=GMF+cxIb46cn17N9VTh4/BWWNbMRdQbX6+iXcWP35YK5NSM0qkVC4xkaLy+dF0VIsW
-         mrEbTijmZ5z2gPpJPMJCOk/0JLMnAhvoxtLWUvQ0RyxUh6MVo7lzqZDvalN2NuqI6oiz
-         7votG/JiY06ggRsYN3oCWYAlNzlg/geYjzEplfXbElqwWX1NQNdWzJDQp+UN05sbrYUl
-         +8IjQdGkuxPXZg8wEqzzdPRfk+fDYoz4HkKQLt1m8bNEl1UnvmkAPwyduFUxlCOeUN8u
-         nCjqcREG06jE/sh/FFVc3EaT+YiOQyaGLYd6Kwl9UdguIPJLIaPGlsESVvDaO8FYR4mQ
-         XzRQ==
-X-Gm-Message-State: ALoCoQl9ol+GH8z0h0c1vT5iGbXZN4R7H3dtbyCXvmUPsuaZMTwrqw1a+vqMenFMpEwvMwir5yTK
-X-Received: by 10.55.24.8 with SMTP id j8mr34025818qkh.93.1441245374283;
-        Wed, 02 Sep 2015 18:56:14 -0700 (PDT)
+        bh=9BDR0JnLTVcgbEK6rI93RCGAbnvKRWlU+yVy3EyvjUc=;
+        b=TL2CQ9her87raLjEa8lGek4ij+QxM800HkpZSo+agzT5IXgL8brDlHJ8qimhnKA0O0
+         Cvup6vjT9C3Kbd671QNP0otNR5NApXnCNqmQOZ1q2AT9WovsMOo6+cQUPrWxfyUKQsJk
+         3RtHOcS2xnvEwF8RFt5dWX8Ry4eZ00CvkekS6Gk4PxPca0H5OiMNTocZNoUouTvvcZqY
+         Y6DL/dfZmISqf2MJPbKwfEwSjplQsX1rJgH1ruuBiqbDL3g6bxHMvEN0y0wZT8V4c3L3
+         RBebbd4cjd6dsnQrdz2oVTdXfM5F61CxS3zjoHOWOdhd2L92p29vzEDnnmQKRxLMv3bO
+         P67w==
+X-Gm-Message-State: ALoCoQlgt6J7Ksax32cRtprEOa/sSKEQao4mFxwjMcgX8iaKB5hiP87aVe1vrWTXIso/6eyzadto
+X-Received: by 10.140.202.204 with SMTP id x195mr18485079qha.7.1441245380549;
+        Wed, 02 Sep 2015 18:56:20 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id 95sm11108155qgt.12.2015.09.02.18.56.13
+        by smtp.gmail.com with ESMTPSA id 95sm11108155qgt.12.2015.09.02.18.56.19
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 02 Sep 2015 18:56:13 -0700 (PDT)
+        Wed, 02 Sep 2015 18:56:19 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 In-Reply-To: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277153>
 
-In a moment, we'll create initdb functions for ref backends, and code
-from initdb that calls this function needs to move into the files
-backend.  So this function needs to be public.
+This allows them to be used by other ref backends.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- builtin/init-db.c | 12 ------------
- cache.h           |  5 +++++
- path.c            | 12 ++++++++++++
- 3 files changed, 17 insertions(+), 12 deletions(-)
+ refs-be-files.c | 24 ------------------------
+ refs.h          | 24 ++++++++++++++++++++++++
+ 2 files changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 04caee1..06f8cca 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -25,18 +25,6 @@ static int init_shared_repository = -1;
- static const char *init_db_template_dir;
- static const char *git_link;
+diff --git a/refs-be-files.c b/refs-be-files.c
+index 71c39ca..ec7ec8d 100644
+--- a/refs-be-files.c
++++ b/refs-be-files.c
+@@ -14,30 +14,6 @@ struct ref_lock {
+ };
  
--static void safe_create_dir(const char *dir, int share)
--{
--	if (mkdir(dir, 0777) < 0) {
--		if (errno != EEXIST) {
--			perror(dir);
--			exit(1);
--		}
--	}
--	else if (share && adjust_shared_perm(dir))
--		die(_("Could not make %s writable by group"), dir);
--}
+ /*
+- * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
+- * refs (i.e., because the reference is about to be deleted anyway).
+- */
+-#define REF_DELETING	0x02
 -
- static void copy_templates_1(char *path, int baselen,
- 			     char *template, int template_baselen,
- 			     DIR *dir)
-diff --git a/cache.h b/cache.h
-index 98b13a8..a9669de 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1717,4 +1717,9 @@ void stat_validity_update(struct stat_validity *sv, int fd);
- int versioncmp(const char *s1, const char *s2);
- void sleep_millisec(int millisec);
+-/*
+- * Used as a flag in ref_update::flags when a loose ref is being
+- * pruned.
+- */
+-#define REF_ISPRUNING	0x04
+-
+-/*
+- * Used as a flag in ref_update::flags when the reference should be
+- * updated to new_sha1.
+- */
+-#define REF_HAVE_NEW	0x08
+-
+-/*
+- * Used as a flag in ref_update::flags when old_sha1 should be
+- * checked.
+- */
+-#define REF_HAVE_OLD	0x10
+-
+-/*
+  * Used as a flag in ref_update::flags when the lockfile needs to be
+  * committed.
+  */
+diff --git a/refs.h b/refs.h
+index fd461e9..e5ef8a3 100644
+--- a/refs.h
++++ b/refs.h
+@@ -193,6 +193,30 @@ struct ref_transaction {
+ #define DO_FOR_EACH_PER_WORKTREE_ONLY 0x02
  
-+/*
-+ * Create a directory and (if share is nonzero) adjust its permissions
-+ * according to the shared_repository setting.
+ /*
++ * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
++ * refs (i.e., because the reference is about to be deleted anyway).
 + */
-+void safe_create_dir(const char *dir, int share);
- #endif /* CACHE_H */
-diff --git a/path.c b/path.c
-index 82d9097..25d3941 100644
---- a/path.c
-+++ b/path.c
-@@ -726,6 +726,18 @@ int adjust_shared_perm(const char *path)
- 	return 0;
- }
- 
-+void safe_create_dir(const char *dir, int share)
-+{
-+	if (mkdir(dir, 0777) < 0) {
-+		if (errno != EEXIST) {
-+			perror(dir);
-+			exit(1);
-+		}
-+	}
-+	else if (share && adjust_shared_perm(dir))
-+		die(_("Could not make %s writable by group"), dir);
-+}
++#define REF_DELETING	0x02
 +
- static int have_same_root(const char *path1, const char *path2)
- {
- 	int is_abs1, is_abs2;
++/*
++ * Used as a flag in ref_update::flags when a loose ref is being
++ * pruned.
++ */
++#define REF_ISPRUNING	0x04
++
++/*
++ * Used as a flag in ref_update::flags when the reference should be
++ * updated to new_sha1.
++ */
++#define REF_HAVE_NEW	0x08
++
++/*
++ * Used as a flag in ref_update::flags when old_sha1 should be
++ * checked.
++ */
++#define REF_HAVE_OLD	0x10
++
++/*
+  * The signature for the callback function for the for_each_*()
+  * functions below.  The memory pointed to by the refname and sha1
+  * arguments is only guaranteed to be valid for the duration of a
 -- 
 2.0.4.315.gad8727a-twtrsrc
