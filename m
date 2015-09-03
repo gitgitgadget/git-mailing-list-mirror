@@ -1,181 +1,181 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 38/43] refs: make some files backend functions public
-Date: Wed,  2 Sep 2015 21:55:08 -0400
-Message-ID: <1441245313-11907-39-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 32/43] refs.c: add method for initializing refs db
+Date: Wed,  2 Sep 2015 21:55:02 -0400
+Message-ID: <1441245313-11907-33-git-send-email-dturner@twopensource.com>
 References: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Sep 03 03:56:56 2015
+X-From: git-owner@vger.kernel.org Thu Sep 03 03:57:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXJlm-0006qa-NF
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 03:56:55 +0200
+	id 1ZXJlq-0006tn-Tg
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Sep 2015 03:56:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932418AbbICB4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2015 21:56:46 -0400
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:36335 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932391AbbICB4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2015 21:56:22 -0400
-Received: by qgx61 with SMTP id 61so18644126qgx.3
-        for <git@vger.kernel.org>; Wed, 02 Sep 2015 18:56:21 -0700 (PDT)
+	id S932424AbbICB4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2015 21:56:55 -0400
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:33773 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932194AbbICB4P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2015 21:56:15 -0400
+Received: by qgev79 with SMTP id v79so18601543qge.0
+        for <git@vger.kernel.org>; Wed, 02 Sep 2015 18:56:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=nzNwwQ4+IIUUdMEXwwQ16LRMXHDv2b4BNGBvxe5vEVc=;
-        b=W7kGjaCE+RPx7RF4Xw78D9krtrdixjceM6CveLOiCDQgA15PEB5UCbLi9493zEsjM2
-         dgqpjdREWWeCxI1SDF2XHvEHZkg+pW9Nl2Hl67OrahMElw+7fvC6RYkp6Wmmxj9bEvVA
-         mHv3jXKNU1zbh93/lcRV3gg2q9nzo4Rhmos7u45XM6CbFLHsjfkwFvMo3FfG1z/YHAwi
-         Xb90hQ8q2qvYQInd+T3r/+8KyU/Jg9W3DgZBEpo37g/1TQI3u5iSWQJC5wtLUxfo0FnD
-         ZnGPr5qu2CPsYbWkBEL6Xsqxfdzd5OZWJmgncyiQv+xlLNUPjU/U2P7BCZFtIm5dvlF0
-         qSwg==
-X-Gm-Message-State: ALoCoQnSIGpzPpA5gJVaWGM4r2V9TSjQAgVySa1hDY0lprr6wANgVUC3md6sI/7B/DdgLiDSjV1D
-X-Received: by 10.140.94.66 with SMTP id f60mr2308779qge.29.1441245381415;
-        Wed, 02 Sep 2015 18:56:21 -0700 (PDT)
+        bh=2k/jVehpDrC018CgM75NnzgIpJe9eA6a4BcloEgwjZ8=;
+        b=BPrNiUt9Nke++hWFafQvlRp+uyqniOxbb21Wa1qRVLDIBMNmdHB/FIdsTXye16Fk5B
+         hAb5oDpHvHVbQtWMPhy2lTnthGqbfn0ePwrViN4ny0s4CazA18+o2vpukm9y+/gJHR2m
+         p7mjdNJ3DOB7PRej2+LwR6T26xiewuaDLhMdAKXTFI5TwlDnZvQc+76FnvIhIktsgeEa
+         vt6M8Qk/5+x7Bge3rF/m2Mmvxs1xs+gtCsYZ/MsIaO/U/n8SAwEJLXuXOZ8H7xAggq5W
+         U2HGGUQZU63IwN6qlygP28GiJ55f9M1LB8v9CAMZeIEztSDQN9nfnfMKpT2gu+Qnysd1
+         gsxw==
+X-Gm-Message-State: ALoCoQlYhQf/KxKDk0xcJQ4y/MiBi478t3spH4fTdfPmwMKgfuPSq2gJgi/n8teMk1vy5CFE2zLS
+X-Received: by 10.140.86.70 with SMTP id o64mr2308100qgd.52.1441245375087;
+        Wed, 02 Sep 2015 18:56:15 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id 95sm11108155qgt.12.2015.09.02.18.56.20
+        by smtp.gmail.com with ESMTPSA id 95sm11108155qgt.12.2015.09.02.18.56.14
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 02 Sep 2015 18:56:20 -0700 (PDT)
+        Wed, 02 Sep 2015 18:56:14 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4.315.gad8727a-twtrsrc
 In-Reply-To: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277163>
 
-Because HEAD and stash are per-worktree, other backends need to
-go through the files backend to manage these refs and their reflogs.
-
-To enable this, we make some files backend functions public.
+Alternate refs backends might not need refs/heads and so on, so we make
+ref db initialization part of the backend.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs-be-files.c | 34 +++++++++++++++++++++-------------
- refs.h          | 20 ++++++++++++++++++++
- 2 files changed, 41 insertions(+), 13 deletions(-)
+ builtin/init-db.c | 14 ++++----------
+ refs-be-files.c   | 17 +++++++++++++++++
+ refs.c            |  5 +++++
+ refs.h            |  4 ++++
+ 4 files changed, 30 insertions(+), 10 deletions(-)
 
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 06f8cca..0ce2baf 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -196,6 +196,7 @@ static int create_default_files(const char *template_path)
+ 	char junk[2];
+ 	int reinit;
+ 	int filemode;
++	struct strbuf err = STRBUF_INIT;
+ 
+ 	if (len > sizeof(path)-50)
+ 		die(_("insane git directory %s"), git_dir);
+@@ -204,13 +205,6 @@ static int create_default_files(const char *template_path)
+ 	if (len && path[len-1] != '/')
+ 		path[len++] = '/';
+ 
+-	/*
+-	 * Create .git/refs/{heads,tags}
+-	 */
+-	safe_create_dir(git_path("refs"), 1);
+-	safe_create_dir(git_path("refs/heads"), 1);
+-	safe_create_dir(git_path("refs/tags"), 1);
+-
+ 	/* Just look for `init.templatedir` */
+ 	git_config(git_init_db_config, NULL);
+ 
+@@ -233,11 +227,11 @@ static int create_default_files(const char *template_path)
+ 	 */
+ 	if (shared_repository) {
+ 		adjust_shared_perm(get_git_dir());
+-		adjust_shared_perm(git_path("refs"));
+-		adjust_shared_perm(git_path("refs/heads"));
+-		adjust_shared_perm(git_path("refs/tags"));
+ 	}
+ 
++	if (refs_initdb(&err, shared_repository))
++		die("failed to set up refs db: %s", err.buf);
++
+ 	/*
+ 	 * Create the default symlink from ".git/HEAD" to the "master"
+ 	 * branch, if it does not exist yet.
 diff --git a/refs-be-files.c b/refs-be-files.c
-index ec7ec8d..7c9473f 100644
+index c49d44e..acf35b5 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -2710,6 +2710,14 @@ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
- 			 const unsigned char *new_sha1, const char *msg,
- 			 int flags, struct strbuf *err)
- {
-+	return files_log_ref_write(refname, old_sha1, new_sha1, msg, flags,
-+				   err);
+@@ -3722,10 +3722,27 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 	return -1;
+ }
+ 
++static int files_initdb(struct strbuf *err, int shared)
++{
++	/*
++	 * Create .git/refs/{heads,tags}
++	 */
++	safe_create_dir(git_path("refs"), 1);
++	safe_create_dir(git_path("refs/heads"), 1);
++	safe_create_dir(git_path("refs/tags"), 1);
++	if (shared) {
++		adjust_shared_perm(git_path("refs"));
++		adjust_shared_perm(git_path("refs/heads"));
++		adjust_shared_perm(git_path("refs/tags"));
++	}
++	return 0;
 +}
 +
-+int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
-+			const unsigned char *new_sha1, const char *msg,
-+			int flags, struct strbuf *err)
+ struct ref_be refs_be_files = {
+ 	NULL,
+ 	"files",
+ 	NULL,
++	files_initdb,
+ 	files_transaction_begin,
+ 	files_transaction_update,
+ 	files_transaction_create,
+diff --git a/refs.c b/refs.c
+index 002d24d..72dd66c 100644
+--- a/refs.c
++++ b/refs.c
+@@ -995,6 +995,11 @@ enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
+ }
+ 
+ /* backend functions */
++int refs_initdb(struct strbuf *err, int shared)
 +{
- 	struct strbuf sb = STRBUF_INIT;
- 	int ret = log_ref_write_1(refname, old_sha1, new_sha1, msg, &sb, flags,
- 				  err);
-@@ -2885,7 +2893,7 @@ static int files_create_symref(struct ref_transaction *trans,
- 	return 0;
- }
- 
--static int files_reflog_exists(const char *refname)
-+int files_reflog_exists(const char *refname)
++	return the_refs_backend->initdb(err, shared);
++}
++
+ struct ref_transaction *ref_transaction_begin(struct strbuf *err)
  {
- 	struct stat st;
- 
-@@ -2893,7 +2901,7 @@ static int files_reflog_exists(const char *refname)
- 		S_ISREG(st.st_mode);
- }
- 
--static int files_delete_reflog(const char *refname)
-+int files_delete_reflog(const char *refname)
- {
- 	return remove_path(git_path("logs/%s", refname));
- }
-@@ -2937,9 +2945,9 @@ static char *find_beginning_of_line(char *bob, char *scan)
- 	return scan;
- }
- 
--static int files_for_each_reflog_ent_reverse(const char *refname,
--					     each_reflog_ent_fn fn,
--					     void *cb_data)
-+int files_for_each_reflog_ent_reverse(const char *refname,
-+				      each_reflog_ent_fn fn,
-+				      void *cb_data)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	FILE *logfp;
-@@ -3041,8 +3049,8 @@ static int files_for_each_reflog_ent_reverse(const char *refname,
- 	return ret;
- }
- 
--static int files_for_each_reflog_ent(const char *refname,
--				     each_reflog_ent_fn fn, void *cb_data)
-+int files_for_each_reflog_ent(const char *refname,
-+			      each_reflog_ent_fn fn, void *cb_data)
- {
- 	FILE *logfp;
- 	struct strbuf sb = STRBUF_INIT;
-@@ -3583,12 +3591,12 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 	return 0;
- }
- 
--static int files_reflog_expire(const char *refname, const unsigned char *sha1,
--		 unsigned int flags,
--		 reflog_expiry_prepare_fn prepare_fn,
--		 reflog_expiry_should_prune_fn should_prune_fn,
--		 reflog_expiry_cleanup_fn cleanup_fn,
--		 void *policy_cb_data)
-+int files_reflog_expire(const char *refname, const unsigned char *sha1,
-+			unsigned int flags,
-+			reflog_expiry_prepare_fn prepare_fn,
-+			reflog_expiry_should_prune_fn should_prune_fn,
-+			reflog_expiry_cleanup_fn cleanup_fn,
-+			void *policy_cb_data)
- {
- 	static struct lock_file reflog_lock;
- 	struct expire_reflog_cb cb;
+ 	return the_refs_backend->transaction_begin(err);
 diff --git a/refs.h b/refs.h
-index e5ef8a3..91d30b5 100644
+index da97a14..3134a28 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -570,6 +570,10 @@ enum ref_type ref_type(const char *refname);
+@@ -68,6 +68,8 @@ extern int ref_exists(const char *refname);
  
- int copy_reflog_msg(char *buf, const char *msg);
+ extern int is_branch(const char *refname);
  
-+int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
-+			const unsigned char *new_sha1, const char *msg,
-+			int flags, struct strbuf *err);
-+
- enum expire_reflog_flags {
- 	EXPIRE_REFLOGS_DRY_RUN = 1 << 0,
- 	EXPIRE_REFLOGS_UPDATE_REF = 1 << 1,
-@@ -603,6 +607,22 @@ typedef int reflog_expiry_should_prune_fn(unsigned char *osha1,
- 					  const char *message, void *cb_data);
- typedef void reflog_expiry_cleanup_fn(void *cb_data);
- 
-+int files_reflog_expire(const char *refname, const unsigned char *sha1,
-+			unsigned int flags,
-+			reflog_expiry_prepare_fn prepare_fn,
-+			reflog_expiry_should_prune_fn should_prune_fn,
-+			reflog_expiry_cleanup_fn cleanup_fn,
-+			void *policy_cb_data);
-+
-+int files_for_each_reflog_ent(const char *refname,
-+			      each_reflog_ent_fn fn, void *cb_data);
-+
-+int files_for_each_reflog_ent_reverse(const char *refname,
-+				      each_reflog_ent_fn fn, void *cb_data);
-+
-+int files_delete_reflog(const char *refname);
-+int files_reflog_exists(const char *refname);
++extern int refs_initdb(struct strbuf *err, int shared);
 +
  /*
-  * Expire reflog entries for the specified reference. sha1 is the old
-  * value of the reference. flags is a combination of the constants in
+  * If refname is a non-symbolic reference that refers to a tag object,
+  * and the tag can be (recursively) dereferenced to a non-tag object,
+@@ -587,6 +589,7 @@ extern int reflog_expire(const char *refname, const unsigned char *sha1,
+ 
+ /* refs backends */
+ typedef void (*ref_backend_init_fn)(void *data);
++typedef int (*ref_backend_initdb_fn)(struct strbuf *err, int shared);
+ typedef struct ref_transaction *(*ref_transaction_begin_fn)(struct strbuf *err);
+ typedef int (*ref_transaction_update_fn)(struct ref_transaction *transaction,
+ 		const char *refname, const unsigned char *new_sha1,
+@@ -653,6 +656,7 @@ struct ref_be {
+ 	struct ref_be *next;
+ 	const char *name;
+ 	ref_backend_init_fn init_backend;
++	ref_backend_initdb_fn initdb;
+ 	ref_transaction_begin_fn transaction_begin;
+ 	ref_transaction_update_fn transaction_update;
+ 	ref_transaction_create_fn transaction_create;
 -- 
 2.0.4.315.gad8727a-twtrsrc
