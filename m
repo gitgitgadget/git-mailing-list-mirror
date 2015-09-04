@@ -1,94 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] test_when_finished in subshells
-Date: Fri, 04 Sep 2015 11:43:15 -0700
-Message-ID: <xmqqfv2uf2kc.fsf@gitster.mtv.corp.google.com>
-References: <54923cf9cc5a66bf9034051b3c2f930fa7ef88a4.1441388803.git.john@keeping.me.uk>
+From: Phil Susi <psusi@ubuntu.com>
+Subject: Re: Compare two diffs on the command line?
+Date: Fri, 4 Sep 2015 15:23:40 -0400
+Message-ID: <55E9EFBC.3000800@ubuntu.com>
+References: <55E9DC44.90303@ubuntu.com>
+ <CAPc5daVvXNWdAwiNKnQT45p03msTBEyBUq7y+ggRq0e95=_bAQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Sep 04 20:43:23 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 04 21:24:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXvxJ-0008QT-Hf
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 20:43:21 +0200
+	id 1ZXwae-0003cB-Pb
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 21:24:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759534AbbIDSnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2015 14:43:17 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:35102 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754065AbbIDSnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2015 14:43:17 -0400
-Received: by pacfv12 with SMTP id fv12so32333419pac.2
-        for <git@vger.kernel.org>; Fri, 04 Sep 2015 11:43:16 -0700 (PDT)
+	id S933069AbbIDTX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2015 15:23:57 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:33706 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758222AbbIDTX4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2015 15:23:56 -0400
+Received: by ykei199 with SMTP id i199so30625149yke.0
+        for <git@vger.kernel.org>; Fri, 04 Sep 2015 12:23:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=PhM2vXMUaO5zl04+nNIQcTsSPqNfj4oRMSN8i4ZSQgY=;
-        b=e/211uF0IhI9LJkyxTEKwQEgzqgBk2xf2e4hZacdDj+zhmvzQXXcbpm9i63axxtElv
-         AKel/UakEooZ/yisYBTWtzA2ifaW3NWwTEdIX+BPYdEWm6UdHdIhY+ljWFZ1BP6gipfa
-         c4Bq7V+jvh96JYXQCygq05fDGF4HR7+tzpwfhjK2tItKUIK65VMhsgS/Tk9pLiaNFvES
-         Ylrip393FtCu/qG2zHgZ6ViBDOKWX0yDKe5PfOUi/P6frqIoLoLYhRNHsJ5+p/bEfYXO
-         3D909L9GIZu6AdipmXQc+l1o0cQhkyfi3fXAc9RHSOWWUInxGnK+GEeh6pca45OzYHZf
-         scAQ==
-X-Received: by 10.68.191.232 with SMTP id hb8mr11152853pbc.122.1441392196775;
-        Fri, 04 Sep 2015 11:43:16 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:2198:98f:3bb3:46bb])
-        by smtp.gmail.com with ESMTPSA id qe3sm3304129pbc.73.2015.09.04.11.43.15
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Fri, 04 Sep 2015 11:43:15 -0700 (PDT)
-In-Reply-To: <54923cf9cc5a66bf9034051b3c2f930fa7ef88a4.1441388803.git.john@keeping.me.uk>
-	(John Keeping's message of "Fri, 4 Sep 2015 18:58:45 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=sender:subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type:content-transfer-encoding;
+        bh=xCE7hchWkd3gtgLDzWmLYnTRIv0GpuhzIFRzqpGhCK8=;
+        b=j4BEvklk42EjzCTzqZzNFMZyhuqw7mosMEtxHYER785HGrsqUONHdlFr7rJ9iJPd2N
+         ebf+HlIB3hkJaq1p8gK8GevPUsh6bHrOqfu88cIStcZ9CEAfHjbFwrjlCdpsGLvZdjXS
+         2/MAn6DTqpvi48dnYLxMLk2W8IrqgoVy9CCoT5ggy5tf/E9wBPJfkCRJomMBrAx24CzD
+         h0tiqw+XDYM05RDBbttWX5Kdu6UESx47TmkTw6UvLglicksnHI5dLgrjXsEKR97EIKDU
+         SsaJrsyPtQ+A4K1s7EL/plP6EUrAyLcdHnKrm8GyhAVwBEFY7e2TYVLR+f8zczbXoCeS
+         JNag==
+X-Received: by 10.170.149.132 with SMTP id q126mr6252503ykc.18.1441394635657;
+        Fri, 04 Sep 2015 12:23:55 -0700 (PDT)
+Received: from [10.1.1.200] (fl-67-77-88-12.sta.embarqhsd.net. [67.77.88.12])
+        by smtp.googlemail.com with ESMTPSA id s66sm3064413ywe.49.2015.09.04.12.23.54
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 04 Sep 2015 12:23:54 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+In-Reply-To: <CAPc5daVvXNWdAwiNKnQT45p03msTBEyBUq7y+ggRq0e95=_bAQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277331>
 
-John Keeping <john@keeping.me.uk> writes:
-
-> All are harmless at the moment and t7610 and t5801 can be fixed by
-> moving the test_when_finished call out of the subshell relatively
-> easily.
+On 9/4/2015 2:10 PM, Junio C Hamano wrote:
+> On Fri, Sep 4, 2015 at 11:00 AM, Phil Susi <psusi@ubuntu.com> wrote:
+>> If you have a commit that exists on two branches, in gitk you can mark one,
+>> then select the other and choose to compare the two.  This results in a diff
+>> of the two diffs, rather than a diff between the two trees, which include
+>> many other changes that have nothing to do with either commit.
 >
-> t7800 (in its final test) calls test_config in a subshell which has cd'd
-> into a submodule.
->
-> Is this something worth worrying about, or is it sufficiently rare that
-> we can live with the current behaviour?
+> I think you are looking for the interdiff(1) tool.
 
-Fixing the instances you found is good, obviously ;-).  Thanks for
-working on this.
-
-Even though the proposed detection is BASH-ism, I think it would not
-hurt other shells (they obviously do not help you catch bugs, but
-they would not misbehave as long as you make sure BASH_SUBSHELL is
-either unset or set to 0 at the beginning of the test), and the only
-impact to them would be a invocation of (often built-in) 'test'
-utility, whose performance impact should be miniscule.
-
-I'll wait for opinion from others, of course.
-
->
-> [0] http://article.gmane.org/gmane.comp.version-control.git/277199
->
-> -- >8 --
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index e8d3c0f..d29cd7b 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -722,6 +722,8 @@ test_seq () {
->  # what went wrong.
->  
->  test_when_finished () {
-> +	test "${BASH_SUBSHELL-0}" = 0 ||
-> +	error "bug in test script: test_when_finished does nothing in a subshell"
->  	test_cleanup="{ $*
->  		} && (exit \"\$eval_ret\"); eval_ret=\$?; $test_cleanup"
->  }
+Yes, that is how I would do it before git... I was thinking there would 
+be a git way of doing it, especially since it is there in gitk.
