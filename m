@@ -1,65 +1,130 @@
-From: Phil Susi <psusi@ubuntu.com>
-Subject: Re: Compare two diffs on the command line?
-Date: Fri, 4 Sep 2015 15:23:40 -0400
-Message-ID: <55E9EFBC.3000800@ubuntu.com>
-References: <55E9DC44.90303@ubuntu.com>
- <CAPc5daVvXNWdAwiNKnQT45p03msTBEyBUq7y+ggRq0e95=_bAQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] filter-branch: add passed/remaining seconds on progress
+Date: Fri, 4 Sep 2015 16:15:15 -0400
+Message-ID: <CAPig+cRh-7BDOoumLxyh6_tNspL3ANq_wCE5f_VoQt6UwUFckQ@mail.gmail.com>
+References: <1441379798-15453-1-git-send-email-bernat@primeranks.net>
+	<xmqqk2s6f2zj.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?R8OhYm9yIEJlcm7DoXQ=?= <bernat@primeranks.net>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Mikael Magnusson <mikachu@gmail.com>, cbailey32@bloomberg.net,
+	Lee.Carver@servicenow.com, Michael Witten <mfwitten@gmail.com>,
+	Gabor Bernat <gabor.bernat@gravityrd.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 21:24:01 2015
+X-From: git-owner@vger.kernel.org Fri Sep 04 22:15:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXwae-0003cB-Pb
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 21:24:01 +0200
+	id 1ZXxOM-0007qf-Fd
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 22:15:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933069AbbIDTX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2015 15:23:57 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:33706 "EHLO
+	id S1760557AbbIDUPR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Sep 2015 16:15:17 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:33734 "EHLO
 	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758222AbbIDTX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2015 15:23:56 -0400
-Received: by ykei199 with SMTP id i199so30625149yke.0
-        for <git@vger.kernel.org>; Fri, 04 Sep 2015 12:23:55 -0700 (PDT)
+	with ESMTP id S1760063AbbIDUPQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Sep 2015 16:15:16 -0400
+Received: by ykei199 with SMTP id i199so31878357yke.0
+        for <git@vger.kernel.org>; Fri, 04 Sep 2015 13:15:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=xCE7hchWkd3gtgLDzWmLYnTRIv0GpuhzIFRzqpGhCK8=;
-        b=j4BEvklk42EjzCTzqZzNFMZyhuqw7mosMEtxHYER785HGrsqUONHdlFr7rJ9iJPd2N
-         ebf+HlIB3hkJaq1p8gK8GevPUsh6bHrOqfu88cIStcZ9CEAfHjbFwrjlCdpsGLvZdjXS
-         2/MAn6DTqpvi48dnYLxMLk2W8IrqgoVy9CCoT5ggy5tf/E9wBPJfkCRJomMBrAx24CzD
-         h0tiqw+XDYM05RDBbttWX5Kdu6UESx47TmkTw6UvLglicksnHI5dLgrjXsEKR97EIKDU
-         SsaJrsyPtQ+A4K1s7EL/plP6EUrAyLcdHnKrm8GyhAVwBEFY7e2TYVLR+f8zczbXoCeS
-         JNag==
-X-Received: by 10.170.149.132 with SMTP id q126mr6252503ykc.18.1441394635657;
-        Fri, 04 Sep 2015 12:23:55 -0700 (PDT)
-Received: from [10.1.1.200] (fl-67-77-88-12.sta.embarqhsd.net. [67.77.88.12])
-        by smtp.googlemail.com with ESMTPSA id s66sm3064413ywe.49.2015.09.04.12.23.54
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 Sep 2015 12:23:54 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-In-Reply-To: <CAPc5daVvXNWdAwiNKnQT45p03msTBEyBUq7y+ggRq0e95=_bAQ@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=wIs/DP2HiUz7kNzw2dBFoxDZLnH1Xp1VUGwQTD48peU=;
+        b=vOcbvVGYOirl6ZAvnSvqri3MgekofunoQyMFfJVtvvhoV3z3PqCFBIy/bFRbgmJgU8
+         DIpU8EedcPeK4q2/amD1+paGzuV11TPHs+DB3FEr1eLjbyjDNJgZE78cKMx2XuYqqYgL
+         st7LhLvR5iS2pvhVdKV4yq/h2OxlnPdp9xW9vvJHteEbZGPEL6E7MtY4z9hqm9Ei7rja
+         1gG9M3c53eBm1npNWS/JZ82Vej+woTaLslRHzUasIMVfdiJ9PVyfh6vUdUNtRsKnJ4qN
+         tnE3HdgclwJY0G4F/qGOgOmQHz4A8khnQ35i64ZM+wy4xuYxsk5dH0vDwARAbM0Ozdhy
+         XTyg==
+X-Received: by 10.170.81.5 with SMTP id x5mr6371701ykx.82.1441397715673; Fri,
+ 04 Sep 2015 13:15:15 -0700 (PDT)
+Received: by 10.37.36.145 with HTTP; Fri, 4 Sep 2015 13:15:15 -0700 (PDT)
+In-Reply-To: <xmqqk2s6f2zj.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: yRgARP4O_3eK8evPPhDN88Y1Nu4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277332>
 
-On 9/4/2015 2:10 PM, Junio C Hamano wrote:
-> On Fri, Sep 4, 2015 at 11:00 AM, Phil Susi <psusi@ubuntu.com> wrote:
->> If you have a commit that exists on two branches, in gitk you can mark one,
->> then select the other and choose to compare the two.  This results in a diff
->> of the two diffs, rather than a diff between the two trees, which include
->> many other changes that have nothing to do with either commit.
+On Fri, Sep 4, 2015 at 2:34 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> G=C3=A1bor Bern=C3=A1t <bernat@primeranks.net> writes:
+>> +echo $(date +%s) | grep -q '^[0-9]+$';  2>/dev/null && show_seconds=
+=3Dt
 >
-> I think you are looking for the interdiff(1) tool.
+> That is very strange construct.  I think you meant to say something
+> like
+>
+>         if date '+%s' 2>/dev/null | grep -q '^[0-9][0-9]*$'
+>         then
+>                 show_seconds=3Dt
+>         else
+>                 show_seconds=3D
+>         fi
 
-Yes, that is how I would do it before git... I was thinking there would 
-be a git way of doing it, especially since it is there in gitk.
+The final format suggested[1] for this test was:
+
+    { echo $(date +%s) | grep -q '^[0-9][0-9]*$'; } 2>/dev/null &&
+        show_eta=3Dt
+
+> A handful of points:
+>
+>  * "echo $(any-command)" is suspect, unless you are trying to let
+>    the shell munge output from any-command, which is not the case.
+
+Primarily my fault. I don't know what I was thinking when suggesting th=
+at.
+
+>  * "grep" without -E (or "egrep") takes BRE, which "+" (one or more)
+>    is not part of.
+
+This seems to have mutated from the suggested form.
+
+>  * That semicolon is a syntax error.  I think whoever suggested you
+>    to use it meant to squelch possible errors from "date" that does
+>    not understand the "%s" format.
+
+This also mutated. The suggested form wanted to suppress errors from
+'date' if it complained about "%s", and from 'grep'. In retrospect,
+applying it to 'grep' is questionable. I was recalling this warning
+from the Autoconf manual[2]:
+
+    Some of the options required by Posix are not portable in
+    practice. Don't use =E2=80=98grep -q=E2=80=99 to suppress output, b=
+ecause many
+    grep implementations (e.g., Solaris) do not support -q. Don't use
+    =E2=80=98grep -s=E2=80=99 to suppress output either, because Posix =
+says -s does
+    not suppress output, only some error messages; also, the -s
+    option of traditional grep behaved like -q does in most modern
+    implementations. Instead, redirect the standard output and
+    standard error (in case the file doesn't exist) of grep to
+    /dev/null. Check the exit status of grep to determine whether it
+    found a match.
+
+however, Git tests use 'grep -q' heavily, so perhaps we don't worry abo=
+ut that.
+
+>  * I do not think you are clearing show_seconds to empty anywhere,
+>    so an environment variable the user may have when s/he starts
+>    filter-branch will seep through and confuse you.
+
+The empty assignment was implied in my example, but I should have been
+more explicit and shown a more complete snippet:
+
+    show_eta=3D
+    ...
+    { echo $(date +%s) | grep -q '^[0-9][0-9]*$'; } 2>/dev/null &&
+        show_eta=3Dt
+
+The suggested 'if' form has the attribute of being clearer.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/276531/focu=
+s=3D276837
+[2]: https://www.gnu.org/software/autoconf/manual/autoconf.html#grep
