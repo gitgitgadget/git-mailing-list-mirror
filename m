@@ -1,102 +1,100 @@
-From: "Rustad, Mark D" <mark.d.rustad@intel.com>
-Subject: Re: git grep broken in Fedora 21 update?
-Date: Fri, 4 Sep 2015 16:18:39 +0000
-Message-ID: <B27266ED-9A9F-4127-8166-8AC235492B93@intel.com>
-References: <9CAA4751-D295-4ACE-8ED6-720D728D24EA@intel.com>
- <20150904140345.GA28675@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_5939BD9E-47BC-42F4-86CA-4F64AD9BB75D";
-	protocol="application/pgp-signature"; micalg=pgp-sha256
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 04 18:19:09 2015
+From: John Keeping <john@keeping.me.uk>
+Subject: [RFC] test_when_finished in subshells
+Date: Fri,  4 Sep 2015 18:58:45 +0100
+Message-ID: <54923cf9cc5a66bf9034051b3c2f930fa7ef88a4.1441388803.git.john@keeping.me.uk>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 04 19:58:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXthk-00032i-5u
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 18:19:08 +0200
+	id 1ZXvGF-0001xs-Jx
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 19:58:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932596AbbIDQTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2015 12:19:04 -0400
-Received: from mga03.intel.com ([134.134.136.65]:6816 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932473AbbIDQTC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2015 12:19:02 -0400
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga103.jf.intel.com with ESMTP; 04 Sep 2015 09:18:40 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.17,470,1437462000"; 
-   d="asc'?scan'208";a="798354365"
-Received: from orsmsx103.amr.corp.intel.com ([10.22.225.130])
-  by fmsmga002.fm.intel.com with ESMTP; 04 Sep 2015 09:18:40 -0700
-Received: from orsmsx154.amr.corp.intel.com (10.22.226.12) by
- ORSMSX103.amr.corp.intel.com (10.22.225.130) with Microsoft SMTP Server (TLS)
- id 14.3.224.2; Fri, 4 Sep 2015 09:18:40 -0700
-Received: from orsmsx101.amr.corp.intel.com ([169.254.8.229]) by
- ORSMSX154.amr.corp.intel.com ([169.254.11.4]) with mapi id 14.03.0224.002;
- Fri, 4 Sep 2015 09:18:40 -0700
-Thread-Topic: git grep broken in Fedora 21 update?
-Thread-Index: AQHQ5qVK0he0Hk/ldka5r3SxtdrWqZ4s3RSAgAAlsAA=
-In-Reply-To: <20150904140345.GA28675@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.176.101]
+	id S1759426AbbIDR6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2015 13:58:47 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:58648 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753601AbbIDR6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2015 13:58:46 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 266A9CDA5BB;
+	Fri,  4 Sep 2015 18:58:46 +0100 (BST)
+X-Quarantine-ID: <07zMh7SWTJiA>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 07zMh7SWTJiA; Fri,  4 Sep 2015 18:58:45 +0100 (BST)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 4BA41CDA605;
+	Fri,  4 Sep 2015 18:58:34 +0100 (BST)
+X-Mailer: git-send-email 2.5.0.466.g9af26fa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277323>
 
---Apple-Mail=_5939BD9E-47BC-42F4-86CA-4F64AD9BB75D
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+A recent thread [0] made me realise that using test_when_finished in a
+subshell is likely to be a bug, since the change to $test_cleanup will
+be lost when the subshell exits.
 
-> On Sep 4, 2015, at 7:03 AM, Jeff King <peff@peff.net> wrote:
->=20
-> Is it possible that git _is_ producing the hit, but it is getting =
-eaten
-> by the pager or something like that? Does "git --no-pager grep
-> enter_lplu" produce the same results?
+There is no POSIX way to detect that we are in a subshell ($$ and $PPID
+are specified to remain unchanged), but we can detect it on Bash and
+gracefully fall back to disabling the test on other shells, which is
+what the patch below does.
 
-Well what do you know. Adding --no-pager gave me the right results. I =
-wonder if the output isn't getting flushed to the pipe or something. In =
-any case, I can add --no-pager to the alias I normally use and I'll be =
-happy. The root cause will just gnaw at me for a while...
+There are three tests currently in master that fail with this patch (at
+least on my system):
 
-Hmm. Doing git grep enter_lplu | cat - also worked.
+	Test Summary Report
+	-------------------
+	t7610-mergetool.sh                               (Wstat: 256 Tests: 18 Failed: 1)
+	  Failed test:  7
+	  Non-zero exit status: 1
+	t7800-difftool.sh                                (Wstat: 256 Tests: 56 Failed: 1)
+	  Failed test:  56
+	  Non-zero exit status: 1
+	t5801-remote-helpers.sh                          (Wstat: 256 Tests: 30 Failed: 1)
+	  Failed test:  27
+	  Non-zero exit status: 1
 
---
-Mark Rustad, Networking Division, Intel Corporation
+All are harmless at the moment and t7610 and t5801 can be fixed by
+moving the test_when_finished call out of the subshell relatively
+easily.
 
+t7800 (in its final test) calls test_config in a subshell which has cd'd
+into a submodule.
 
---Apple-Mail=_5939BD9E-47BC-42F4-86CA-4F64AD9BB75D
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Message signed with OpenPGP using GPGMail
+Is this something worth worrying about, or is it sufficiently rare that
+we can live with the current behaviour?
 
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
+[0] http://article.gmane.org/gmane.comp.version-control.git/277199
 
-iQIcBAEBCAAGBQJV6cRfAAoJEDwO/+eO4+5uvccP/jwqA8SusOsiymOPWWfLNPkD
-lPx2ZCRnRXNWBW2NWwNfbL7oijFKvxND8+tUiPKNMGviXjjpIvAmsxo2gOYiiwfA
-tx57DaPlKJSYZuvg9Vu9Q6Ot8EtglqvXbWaR4L/3kAqteW54N6iwXnrWcVLCIWs6
-heQ7UHwy6pN/XcPxrr+J0zKHFNjtL0P2OLXPv+9ncDw95VjHD8HDtCObGHS88Mw4
-qbKgINEY4AJLUe6mD5wdohhNXnW/yMUNVVQpSASZy5WQvbJ+0xR6X8tI5bRFLjCc
-GLyEewi+RARAwRxkAz6kEJixsi1tVgE8ULNUDoofPX/AbX90b0LYTRAkz0QiU1zL
-I8YidnX9lLVYuGftTCzbjfrqluQADcur6FDn0I0kUu/kNYQR78zAmO/l6XP2nDSv
-2NLWkXLul+39GSLqiicVxlwoB7O206l/kIUzdkcVyQMDkH6SuSthOPqeQxDNeSrX
-nxqOZueVOixugJnEjxwBSlpzRhwHZArBj4jVgKX71kAbL8Jo2dWOIqwUCY01d9M7
-vwZe2/W5LRBK8SBQa52eHzz5BRZKxElOL5KrbJEZjMwDx9CDUUmKCsyFNfLncKEX
-i1Unjx2fH/b9J2LD+TtCmZ6L7BHeR1CPZTAcSY2ywVyACF8As/FtiededyNwxVgF
-TlzBZkUVht/0jLAFbzQf
-=qASe
------END PGP SIGNATURE-----
-
---Apple-Mail=_5939BD9E-47BC-42F4-86CA-4F64AD9BB75D--
+-- >8 --
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index e8d3c0f..d29cd7b 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -722,6 +722,8 @@ test_seq () {
+ # what went wrong.
+ 
+ test_when_finished () {
++	test "${BASH_SUBSHELL-0}" = 0 ||
++	error "bug in test script: test_when_finished does nothing in a subshell"
+ 	test_cleanup="{ $*
+ 		} && (exit \"\$eval_ret\"); eval_ret=\$?; $test_cleanup"
+ }
+-- 
+2.5.0.466.g9af26fa
