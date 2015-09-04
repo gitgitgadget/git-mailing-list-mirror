@@ -1,77 +1,55 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v15 05/13] ref-filter: implement an `align` atom
-Date: Fri, 4 Sep 2015 23:32:13 +0530
-Message-ID: <CAOLa=ZTx_CG_RrHHDLadWmx5UvuE9GMaf4nwcWr880vQ-eM3Pg@mail.gmail.com>
-References: <1441131994-13508-1-git-send-email-Karthik.188@gmail.com>
- <1441131994-13508-6-git-send-email-Karthik.188@gmail.com> <CAPig+cRfYow-wBvorX44E4ROH=nvQdS=3zBaEVVbQZf86JFELw@mail.gmail.com>
- <xmqqtwrblbdy.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Compare two diffs on the command line?
+Date: Fri, 4 Sep 2015 11:10:11 -0700
+Message-ID: <CAPc5daVvXNWdAwiNKnQT45p03msTBEyBUq7y+ggRq0e95=_bAQ@mail.gmail.com>
+References: <55E9DC44.90303@ubuntu.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 20:02:49 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Phil Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Fri Sep 04 20:10:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXvK4-0005Zp-9E
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 20:02:48 +0200
+	id 1ZXvRc-0004CZ-QS
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 20:10:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760133AbbIDSCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2015 14:02:44 -0400
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:33256 "EHLO
-	mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753583AbbIDSCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2015 14:02:43 -0400
-Received: by oixx17 with SMTP id x17so16331678oix.0
-        for <git@vger.kernel.org>; Fri, 04 Sep 2015 11:02:43 -0700 (PDT)
+	id S1759653AbbIDSKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2015 14:10:32 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:37490 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759208AbbIDSKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2015 14:10:32 -0400
+Received: by igbni9 with SMTP id ni9so19704544igb.0
+        for <git@vger.kernel.org>; Fri, 04 Sep 2015 11:10:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=/3mvMt239uxWjXbB0w36J3k1onH8FSolUA1l36RsI6Q=;
-        b=d/mshS4CMuVQXrjEXMZmNIKRd+c6TSRpY5jnmDCfXnx9bMiiMkuXJPTpkMjfCJ3P+A
-         FgzFdIK4iJGaxn2jn4w1wZu3L/IAn82aE5cs1+2WZ17V3Sq34CROe99JBlsfSUJAhvyL
-         MQaj9sfZHECxz9L8eAWgVVYpclVzKX8Lgp5esJRIQW1XOCGJUiKSWKFN/P4/js0zEiKu
-         impanipibRfanhZbsAPJQMYaVP3yfwD19yDB/RUbDVIWD7/XZ1+TWfW7gEmVPX68OS77
-         d9emKSMZFobCA2dK99gt9V1FX7iirUf4FsgGTbDBdWdQCnNIrPSg9btqE4WFFICDydsX
-         sPiw==
-X-Received: by 10.202.92.65 with SMTP id q62mr4237632oib.11.1441389762945;
- Fri, 04 Sep 2015 11:02:42 -0700 (PDT)
-Received: by 10.182.59.102 with HTTP; Fri, 4 Sep 2015 11:02:13 -0700 (PDT)
-In-Reply-To: <xmqqtwrblbdy.fsf@gitster.mtv.corp.google.com>
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=3nA1WBz2ZVwH/ZWpxXjTPCj4d2UGMRBCnt2cYLXhuQM=;
+        b=BWFGa2/aSJAUFFwLEj7XwMWvCV5kJxC20vSaMwXQP6LHSIyk+lWEacDsv55QI0couP
+         djSznhqlmRIlNhgIc1Q/N0BTIuNjuWEl+Ht4ZWixvYAmfzHWFTGOL06XLF15c6CJ/43R
+         Xdbn9nDt9lTeui5AMfmUxdr+17mUeFQMRX+R28jx33Sf7GDTSCfHEz+baTb0EFvdgfIO
+         tiXIkB+hwGqgYjhgx71g5oKo4ZYC2cD7zs14N5D7pHgFARdfHN9qjOwm+AsBjphuI/Zl
+         lDDCBCtauUlqjuo7SqmuCr6WTvjXii9XSazeQktMTWSiRTD8gCN3yZU30/FLGR17LOKn
+         kLZQ==
+X-Received: by 10.50.33.68 with SMTP id p4mr6044408igi.60.1441390231542; Fri,
+ 04 Sep 2015 11:10:31 -0700 (PDT)
+Received: by 10.36.79.69 with HTTP; Fri, 4 Sep 2015 11:10:11 -0700 (PDT)
+In-Reply-To: <55E9DC44.90303@ubuntu.com>
+X-Google-Sender-Auth: bZqc0SfFyZTAUvGYo5gtt9lI2j4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277326>
 
-On Thu, Sep 3, 2015 at 9:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> On Tue, Sep 1, 2015 at 2:26 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>> Implement an `align` atom which left-, middle-, or right-aligns the
->>> content between %(align:..) and %(end).
->>
->> Spell this either %(align:) or %(align:...) with three dots, not two.
->> I, personally, think %(align:) is sufficient.
->
-> I agree with you that double-dot does not signal "some things are
-> ellided here" to a usual reader.
->
-> I actually think consistent use of %(align:...) is needed, simply
-> because my knee-jerk reaction to "%(align:)" was "huh?  where does
-> the need for the trailing colon come from?", not "ah, you try to
-> imply that there must be something more by having just a colon
-> there".
->
+On Fri, Sep 4, 2015 at 11:00 AM, Phil Susi <psusi@ubuntu.com> wrote:
+> If you have a commit that exists on two branches, in gitk you can mark one,
+> then select the other and choose to compare the two.  This results in a diff
+> of the two diffs, rather than a diff between the two trees, which include
+> many other changes that have nothing to do with either commit.
 
-Yeah, it makes more sense to keep the triple dot.
-
--- 
-Regards,
-Karthik Nayak
+I think you are looking for the interdiff(1) tool.
