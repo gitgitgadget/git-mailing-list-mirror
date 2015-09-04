@@ -1,153 +1,150 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] git_connect: clear GIT_* environment for ssh
-Date: Fri, 4 Sep 2015 18:40:08 -0400
-Message-ID: <20150904224008.GA11164@sigill.intra.peff.net>
-References: <CAOxFTcx9E_FtYD_Jn3+S3j-rwGO+hJSVXUC2S5ZBB6der7dUuw@mail.gmail.com>
- <20150904125448.GA25501@sigill.intra.peff.net>
- <xmqqpp1yf3qe.fsf@gitster.mtv.corp.google.com>
- <20150904214454.GA18320@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] remote: add get-url subcommand
+Date: Fri, 04 Sep 2015 15:40:58 -0700
+Message-ID: <xmqqwpw5erk5.fsf@gitster.mtv.corp.google.com>
+References: <1438364321-14646-1-git-send-email-mathstuf@gmail.com>
+	<1441377024-23832-1-git-send-email-mathstuf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 05 00:40:24 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Ben Boeckel <mathstuf@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 05 00:41:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXzeb-0005bE-Be
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 00:40:17 +0200
+	id 1ZXzfN-0006Nz-TE
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 00:41:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933907AbbIDWkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2015 18:40:12 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55254 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932848AbbIDWkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2015 18:40:11 -0400
-Received: (qmail 1245 invoked by uid 102); 4 Sep 2015 22:40:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Sep 2015 17:40:10 -0500
-Received: (qmail 29925 invoked by uid 107); 4 Sep 2015 22:40:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Sep 2015 18:40:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Sep 2015 18:40:08 -0400
-Content-Disposition: inline
-In-Reply-To: <20150904214454.GA18320@sigill.intra.peff.net>
+	id S933916AbbIDWlB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2015 18:41:01 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:34239 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932848AbbIDWlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2015 18:41:00 -0400
+Received: by padhy16 with SMTP id hy16so34170102pad.1
+        for <git@vger.kernel.org>; Fri, 04 Sep 2015 15:41:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Y12Td0Iq0mlxONRRu9WT0IFyPMwvREI32c+1+YqekjA=;
+        b=F1SE81cRZhqWzVGmhYt19CJJUc4cAALGzOsr2t0O+al+Otf7XW1g+fFXU9IuOrmEuY
+         Zf62A5NNdJ4hP6B1Uvc7TVxcD3Nfffpqqrn7FERFZszxYA4VY3nQKhxCD/45elSJOF+J
+         sHxx6WRyX1b+EUEcpZWm+8BjGwSmGUEeby+WV2BlyutJU3PROQmW9BmSW46Aww6+yCMi
+         l2aJrcpgCrtUih1VB5fyxtJaNNVJ2pHgWw0vJwdyxla/FCrpE/qgvwrWjAqJCa3McI+Z
+         20WkH/QKvp15lGXtTBlmMkG90XbenA+k4W65++6n5Lyo+E8lRqf+speQkJP1u+JCIV3R
+         bUDw==
+X-Received: by 10.68.143.70 with SMTP id sc6mr13043805pbb.87.1441406460048;
+        Fri, 04 Sep 2015 15:41:00 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:2198:98f:3bb3:46bb])
+        by smtp.gmail.com with ESMTPSA id j1sm3673743pde.48.2015.09.04.15.40.59
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Fri, 04 Sep 2015 15:40:59 -0700 (PDT)
+In-Reply-To: <1441377024-23832-1-git-send-email-mathstuf@gmail.com> (Ben
+	Boeckel's message of "Fri, 4 Sep 2015 10:30:24 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277346>
 
-On Fri, Sep 04, 2015 at 05:44:54PM -0400, Jeff King wrote:
+Ben Boeckel <mathstuf@gmail.com> writes:
 
-> > Just to make sure I got you correctly, you are saying that "we
-> > propagate, but that is not correct. We should stop doing so", right?
-> 
-> Exactly. We do not propagate config over git:// or http:// (because we
-> do not share our environment). Nor do we do so over same-machine
-> connections (because we explicitly clean the environment). So ssh:// is
-> the odd duck.
+> +	url_nr = 0;
+> +	if (push_mode) {
+> +		url = remote->pushurl;
+> +		url_nr = remote->pushurl_nr;
+> +	}
+> +
+> +	/* Fall back to the fetch URL if no push URLs are set. */
+> +	if (!url_nr) {
+> +		url = remote->url;
+> +		url_nr = remote->url_nr;
+> +	}
 
-So here is the patch I would propose. I'm fairly certain it will solve
-Giuseppe's problem, though I think there is something else odd going on
-here that I don't understand. I'm worried that we're papering over
-another regression. Giuseppe, if you can still find time to do that
-bisect, it would be helpful.
+While the code does the right thing, the comment and the logic
+looked somewhat on the side of funny than cute.  url_nr would be
+zero when we are asking for fetch URL, and it would be zero also
+when we are asking for push URL but there is no push URL defined.
+So this statement covers both cases, but "Fall back to" talks only
+about the case where the user asked for push URL.
 
--- >8 --
-Subject: git_connect: clear GIT_* environment for ssh
+> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> index 7a8499c..2cfd3cb 100755
+> --- a/t/t5505-remote.sh
+> +++ b/t/t5505-remote.sh
+> @@ -919,6 +919,18 @@ test_expect_success 'new remote' '
+>  	cmp expect actual
+>  '
+>  
+> +test_expect_success 'get-url on new remote' '
+> +	echo foo >expect &&
+> +	git remote get-url someremote >actual &&
+> +	cmp expect actual &&
+> +	git remote get-url --all someremote >actual &&
+> +	cmp expect actual &&
+> +	git remote get-url --push someremote >actual &&
+> +	cmp expect actual &&
+> +	git remote get-url --push --all someremote >actual &&
+> +	cmp expect actual
+> +'
 
-When we "switch" to another local repository to run the server
-side of a fetch or push, we must clear the variables in
-local_repo_env so that our local $GIT_DIR, etc, do not
-pollute the upload-pack or receive-pack that is executing in
-the "remote" repository.
+In the pre-context of this hunk, I can see that you inherited this
+habit from existing tests, but breakage can be made easier to see
+if you used test_cmp instead of cmp.
 
-We have never done so for ssh connections. For the most
-part, nobody has noticed because ssh will not pass unknown
-environment variables by default. However, it is not out of
-the question for a user to configure ssh to pass along GIT_*
-variables using SendEnv/AcceptEnv.
+> @@ -961,6 +973,24 @@ test_expect_success 'remote set-url --push zot' '
+>  	cmp expect actual
+>  '
+>  
+> +test_expect_success 'get-url with different urls' '
+> +	echo baz >expect &&
+> +	echo "YYY" >>expect &&
+> +	echo baz >>expect &&
+> +	echo "YYY" >>expect &&
+> +	echo zot >>expect &&
+> +	echo "YYY" >>expect &&
+> +	echo zot >>expect &&
+> +	git remote get-url someremote >actual &&
+> +	echo "YYY" >>actual &&
+> +	git remote get-url --all someremote >>actual &&
+> +	echo "YYY" >>actual &&
+> +	git remote get-url --push someremote >>actual &&
+> +	echo "YYY" >>actual &&
+> +	git remote get-url --push --all someremote >>actual &&
+> +	cmp expect actual
+> +'
 
-We can demonstrate the problem by using "git -c" on a local
-command and seeing its impact on a remote repository.  This
-config ends up in $GIT_CONFIG_PARAMETERS. In the local case,
-the config has no impact, but in the ssh transport, it does
-(our test script has a fake ssh that passes through all
-environment variables; this isn't normal, but does simulate
-one possible setup).
+I am not sure what these YYY are about. Is this an attempt to make
+it easier to see which of the output from four logically separate
+tests are broken?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- connect.c                     |  4 ++--
- t/t5507-remote-environment.sh | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+), 2 deletions(-)
- create mode 100755 t/t5507-remote-environment.sh
+I am wondering if something along this line might be easier to read
+and maintain:
 
-diff --git a/connect.c b/connect.c
-index c0144d8..962f990 100644
---- a/connect.c
-+++ b/connect.c
-@@ -721,6 +721,8 @@ struct child_process *git_connect(int fd[2], const char *url,
- 		strbuf_addch(&cmd, ' ');
- 		sq_quote_buf(&cmd, path);
- 
-+		/* remove repo-local variables from the environment */
-+		conn->env = local_repo_env;
- 		conn->in = conn->out = -1;
- 		if (protocol == PROTO_SSH) {
- 			const char *ssh;
-@@ -778,8 +780,6 @@ struct child_process *git_connect(int fd[2], const char *url,
- 			}
- 			argv_array_push(&conn->args, ssh_host);
- 		} else {
--			/* remove repo-local variables from the environment */
--			conn->env = local_repo_env;
- 			conn->use_shell = 1;
- 		}
- 		argv_array_push(&conn->args, cmd.buf);
-diff --git a/t/t5507-remote-environment.sh b/t/t5507-remote-environment.sh
-new file mode 100755
-index 0000000..e614929
---- /dev/null
-+++ b/t/t5507-remote-environment.sh
-@@ -0,0 +1,34 @@
-+#!/bin/sh
-+
-+test_description='check environment showed to remote side of transports'
-+. ./test-lib.sh
-+
-+test_expect_success 'set up "remote" push situation' '
-+	test_commit one &&
-+	git config push.default current &&
-+	git init remote
-+'
-+
-+test_expect_success 'set up fake ssh' '
-+	GIT_SSH_COMMAND="f() {
-+		cd \"\$TRASH_DIRECTORY\" &&
-+		eval \"\$2\"
-+	}; f" &&
-+	export GIT_SSH_COMMAND &&
-+	export TRASH_DIRECTORY
-+'
-+
-+# due to receive.denyCurrentBranch=true
-+test_expect_success 'confirm default push fails' '
-+	test_must_fail git push remote
-+'
-+
-+test_expect_success 'config does not travel over same-machine push' '
-+	test_must_fail git -c receive.denyCurrentBranch=false push remote
-+'
-+
-+test_expect_success 'config does not travel over ssh push' '
-+	test_must_fail git -c receive.denyCurrentBranch=false push host:remote
-+'
-+
-+test_done
--- 
-2.5.1.812.ge796bff
+	get_url_test () {
+		cat >expect &&
+		test_expect_success "get-url $*" '
+	                git remote get-url $* >actual &&
+	                test_cmp expect actual
+		'
+	}
+
+	echo baz | get_url_test someremote
+	echo baz | get_url_test --all someremote
+
+Then later when you have more than one pushURL to someremote, you
+would do something like:
+
+	get_url_test --all --push someremote <<\-EOF
+	foo
+        aaa
+        EOF
+
+This comment applies to the remainder of this patch that has YYY
+sprinkled all over it.
+
+Thanks.
