@@ -1,124 +1,86 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: More builtin git-am issues..
-Date: Fri, 4 Sep 2015 16:47:10 -0700
-Message-ID: <CA+55aFzN4SnenchxPScn61_apzitGAPtoYEd49iLZPxgK0KQGw@mail.gmail.com>
+Subject: Re: More builtin git-am issues..
+Date: Fri, 4 Sep 2015 16:52:42 -0700
+Message-ID: <CA+55aFw2bnhSQYk4FaHfp4ED0Y611NWyQs05TMQtFj=2As1=nA@mail.gmail.com>
+References: <CA+55aFzN4SnenchxPScn61_apzitGAPtoYEd49iLZPxgK0KQGw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>, Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 05 01:47:28 2015
+X-From: git-owner@vger.kernel.org Sat Sep 05 01:52:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZY0ha-0001uH-3C
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 01:47:26 +0200
+	id 1ZY0mk-000735-KS
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 01:52:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934130AbbIDXrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2015 19:47:12 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:34225 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934125AbbIDXrL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2015 19:47:11 -0400
-Received: by iofb144 with SMTP id b144so40588919iof.1
-        for <git@vger.kernel.org>; Fri, 04 Sep 2015 16:47:10 -0700 (PDT)
+	id S1760790AbbIDXwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2015 19:52:44 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:34047 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760785AbbIDXwm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2015 19:52:42 -0400
+Received: by iofb144 with SMTP id b144so40665609iof.1
+        for <git@vger.kernel.org>; Fri, 04 Sep 2015 16:52:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
-        bh=5Ss6l3FWpB2jLruoGiB/3sYWTDSD2aa4x1/yDG2CPGc=;
-        b=Wca6bzd7poWgaMheD6iTrZW2NqPVh0GrvhF6Qw5WAc4bYn9bMVeMRxfmNA7fnnUlRu
-         drCPnpbIqCxkypq6NleJNa41EyBVV1p5QLmxIBIAAUll8KTqG28tNM76FXNyKFS+yjRc
-         IkBOAkLlOwPpayMk3FcyEL7qZd9A6lTFx9stpASC2NxQ2mCRjEITOKfvw/cnl6E51iD+
-         4TW4xthtKAtTJz/DlWcp3FGKVqoXqkJuNH4Z1U+HsvQe9nP/dPAL2JQjFuC8YDNOBlnm
-         4G/FLg0LzASeqKw4NWYUc4wPMp/SXCao5RFUEAOegtVPwuVQM8mrZ+zxsS6HywxyjSkp
-         njWQ==
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=/+ly6334nn6Viy53MIxCai5vIUVbFXHg51TqJoMwOz0=;
+        b=qy6lLSA32FawHIgyuj4YqC3PkssroZay3dlrt5ac44MEOzEKmtzYqhe1aDkEf2Lk1c
+         96lJ2KXM28oOmjZ9lEDVLZRXQUpgsiHzCSPromEce2RcBSXCEnOoTZ5D2j5gHRDOqfFE
+         csxpE0qyqSAf2rEBmCG3nMNupVXuN99D6AJ/qnk7drPj75vDXJn6dt5nmda8YjC329ij
+         Mtc+oxtKrOWCRNLaEZwCNYgRqWUrPhz4Vps6fWzAWsPvfP1HbtjV67KLZlv6DStmBR2q
+         hDpMzQb9q0POmQoLz1++576auHVsXFUSTlikYTqygx6w9gXtJAcSIW97H/cYLiLdKaEK
+         JHGQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linux-foundation.org; s=google;
-        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
-        bh=5Ss6l3FWpB2jLruoGiB/3sYWTDSD2aa4x1/yDG2CPGc=;
-        b=GSDnmdivzJpRDZS+RijHCpk7iJE/P4vJ7xEe1A+sI4EAh42cH5uSJeEJj7aVHR1TUw
-         N9oAnp+JFIUG/X+ZD65A6S9VlXbklY3IIeKENBF95ipkKKLNBs5gji06G5s2nzGF+aJo
-         eFxDj0Y2edzDfDRZ8roCmExnjq8TjgxER4AT0=
-X-Received: by 10.107.15.170 with SMTP id 42mr8928553iop.137.1441410430463;
- Fri, 04 Sep 2015 16:47:10 -0700 (PDT)
-Received: by 10.36.124.195 with HTTP; Fri, 4 Sep 2015 16:47:10 -0700 (PDT)
-X-Google-Sender-Auth: GEmtUSam1FskRc_FYHj_OOzIbUQ
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=/+ly6334nn6Viy53MIxCai5vIUVbFXHg51TqJoMwOz0=;
+        b=CIFsqnLgxEBHxQYzuteEPKzYqkq2VT3u9feBp/DYr2wRUDSQCr/4N7sMnsfNPfhV7v
+         6rOm9TBaz5pop9dN+kQc/3LZMsXKUCqOrPA2ryWK1u+M9TB54OvNwC/Ury+zRJT98C/G
+         PPMB1QysnwKG0/1IDk6lLX6IZ+Pg7B7rXnCgA=
+X-Received: by 10.107.11.223 with SMTP id 92mr11509324iol.186.1441410762376;
+ Fri, 04 Sep 2015 16:52:42 -0700 (PDT)
+Received: by 10.36.124.195 with HTTP; Fri, 4 Sep 2015 16:52:42 -0700 (PDT)
+In-Reply-To: <CA+55aFzN4SnenchxPScn61_apzitGAPtoYEd49iLZPxgK0KQGw@mail.gmail.com>
+X-Google-Sender-Auth: GLnS3dxjtcJKsHYiw1nz1qFQlaY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277349>
 
-Ok, this may not be new either, but I'm trying to be careful when
-using "git am" these days, because I know it got rewritten.
+On Fri, Sep 4, 2015 at 4:47 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> I *think* it's this part:
+>
+>                 if (!(found_rfc2822 ||
+>                       is_cherry_picked_from_line(buf + i, k - i - 1)))
+>                         return 0;
+>
+> which basically returns 0 for _any_ line in the footer that doesn't
+> match the found_rfc2822 format.
 
-And I _think_ the whitespace handling for adding sign-offs got scrogged.
+Confirmed. I hacked up a version that just doesn't do that check at
+all, and it works fine (but obviously only on well-formatted emails
+that really do have a sign-off).
 
-I just applied the usual patch-bomb from Andrew, and several of the
-commits (but not all) end up looking like this:
+So I think that logic should basically be extended to saying
 
-    Cc: <stable@vger.kernel.org> [3.15+]
-    Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+ - if any line in the last chunk has a "Signed-off-by:", set a flag.
 
-    Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+ - at the end of the loop, if that flag wasn't set, return 0.
 
-note the extraneous whitespace line between Andrew's sign-off and mine.
+Instead of that thing that basically returns zero immediately when it
+sees a line it doesn't like.
 
-What's odd is that the emails I'm applying literally don't have that
-extra empty line, so it's git that somehow decides to add it.  Only
-for a few cases, though.
+I'm in the middle of my merge window, so I'm not going to get around
+to writing a patch until that's over. Hopefully somebody will step up
+in the meantime. Hint, hint.
 
-The pattern *seems* to be that git now looks at the *first* line of
-the sign-off block and decides that "this is a sign-off block if that
-first line has a sign-ff on it, ie this is fine:
-
-    Signed-off-by: Andrea Arcangeli <aarcange@redhat.com>
-    Cc: Pavel Emelyanov <xemul@parallels.com>
-    Cc: Dave Hansen <dave.hansen@intel.com>
-    Cc: Linus Torvalds <torvalds@linux-foundation.org>
-    Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-    Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-
-but the failing cases have a comment by Andrew:
-
-    [akpm@linux-foundation.org: coding-style fixes]
-    Signed-off-by: Tang Chen <tangchen@cn.fujitsu.com>
-    Cc: Xishi Qiu <qiuxishi@huawei.com>
-    Cc: Yasuaki Ishimatsu <isimatu.yasuaki@jp.fujitsu.com>
-    Cc: Kamezawa Hiroyuki <kamezawa.hiroyu@jp.fujitsu.com>
-    Cc: Taku Izumi <izumi.taku@jp.fujitsu.com>
-    Cc: Gu Zheng <guz.fnst@cn.fujitsu.com>
-    Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
-    Cc: Vlastimil Babka <vbabka@suse.cz>
-    Cc: Mel Gorman <mgorman@techsingularity.net>
-    Cc: David Rientjes <rientjes@google.com>
-    Cc: <stable@vger.kernel.org>        [4.2.x]
-    Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-
-    Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-
-ie that "[akpm@linux-foundation.org: coding-style fixes]" makes git am
-now decide that the previous block of text was not a sign-off block,
-so it adds an empty line before adding my sign-off. But very obviously
-it *was* a sign-off block.
-
-Maybe this isn't new at all, and it's just that I notice because I'm
-looking for "git am" oddities.  Something is clearly wrong in
-"has_conforming_footer()".
-
-I *think* it's this part:
-
-                if (!(found_rfc2822 ||
-                      is_cherry_picked_from_line(buf + i, k - i - 1)))
-                        return 0;
-
-which basically returns 0 for _any_ line in the footer that doesn't
-match the found_rfc2822 format.
-
-I really think that if we find any "Signed-off-by:" in that last
-chunk, we should not add a whitespace.
-
-Comments?
-
-                    Linus
+                   Linus
