@@ -1,93 +1,88 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v2 1/4] git-p4: add optional type specifier to gitConfig reader
-Date: Fri, 4 Sep 2015 09:49:16 +0200
-Message-ID: <BD5C97C8-DA84-4DC2-8745-893510F1D4ED@gmail.com>
-References: <1441298148-63885-1-git-send-email-larsxschneider@gmail.com> <1441298148-63885-2-git-send-email-larsxschneider@gmail.com> <55E8A5C2.9090500@diamand.org> <A76D6BC6-E0AD-48F4-AE33-80BD0803BFA3@gmail.com> <xmqqmvx3i7dg.fsf@gitster.mtv.corp.google.com> <6FAAE139-9010-4C68-AA97-2739E9A09564@gmail.com> <xmqqio7ri40h.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 09:49:23 2015
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: determine name of tag used for checkout when multiple tags exist?
+Date: Fri, 4 Sep 2015 08:54:00 +0100
+Message-ID: <20150904075400.GA27660@serenity.lan>
+References: <CAL3By-8odLE53iBiNATgiCcnK4Ef5uBeH7E6EMB1K7P-oX0oAQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jesse Hopkins <jesse.hops@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 04 09:54:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZXlkQ-0006xw-GF
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 09:49:22 +0200
+	id 1ZXlpB-0002Ps-PY
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Sep 2015 09:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756693AbbIDHtT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Sep 2015 03:49:19 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:37269 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755456AbbIDHtS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Sep 2015 03:49:18 -0400
-Received: by wicfx3 with SMTP id fx3so8712469wic.0
-        for <git@vger.kernel.org>; Fri, 04 Sep 2015 00:49:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=+FLbCLSyIT1aYmJ3yV5xLxMumkpDDqfNpRkhmgV5ajs=;
-        b=0Eh15JyF0O8CInBQcS0ar8YdU9/qaHh6ZKLOUh1Gj31L28sZeJjyUjVe7+06ajmBN8
-         LDpCVTuUFn/ZzCLKNM1W3LDkIVjleNjHDfTrAtTGJ4lX4U32GGcAcg3QryuRiX+P/TuH
-         CuyjH8hHfaX6nDKE3fjS1RR/XCJoqSccKgyTGy5VM9SgIInKJKUCmf6sXcN5LdJgf3aL
-         weUfHm4ez9NA2jnK/qRqebiBBzEY8UU8LJIPpH9MRNuK3+pH2RGCpJPhXJtnbbVcJQYo
-         TaA35wwyJXKYDmvu9rlGke9L4fWbioMojEHN5fg6of0CFcYYedRTs8+yB/Njwdf4R5mg
-         Ka+A==
-X-Received: by 10.180.211.11 with SMTP id my11mr4581373wic.51.1441352957282;
-        Fri, 04 Sep 2015 00:49:17 -0700 (PDT)
-Received: from slxbook3.fritz.box (dslb-094-223-088-076.094.223.pools.vodafone-ip.de. [94.223.88.76])
-        by smtp.gmail.com with ESMTPSA id fz5sm2713744wic.18.2015.09.04.00.49.16
-        (version=TLS1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 04 Sep 2015 00:49:16 -0700 (PDT)
-In-Reply-To: <xmqqio7ri40h.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1756767AbbIDHyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2015 03:54:12 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:34294 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751490AbbIDHyL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2015 03:54:11 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 537E6CDA55E;
+	Fri,  4 Sep 2015 08:54:11 +0100 (BST)
+X-Quarantine-ID: <9xnyh3yOesBc>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 9xnyh3yOesBc; Fri,  4 Sep 2015 08:54:10 +0100 (BST)
+Received: from serenity.lan (griffin.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id BCF9FCDA5D1;
+	Fri,  4 Sep 2015 08:54:05 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <CAL3By-8odLE53iBiNATgiCcnK4Ef5uBeH7E6EMB1K7P-oX0oAQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277292>
 
+On Thu, Sep 03, 2015 at 08:53:16PM -0600, Jesse Hopkins wrote:
+> Looking for suggestions on how to determine the tag that was used to
+> checkout a git repo to its associated commit, particularly in the case
+> where multiple tags might point to the same commit.
+> 
+> I've had a look at git-name-rev and git-describe, and both seem useful so
+> long as there's only one tag pointing to the commit of interest.  However,
+> I'm still coming up to speed on their behavior in the multiple tag case
+> (mainly by experimentation).
+> 
+> It seems to me that when checking out to a tag, Git does not record the
+> *name* of the tag anywhere, but rather sets HEAD to the de-referenced
+> commit SHA-1.  As far as I can tell, it is not possible to recover the
+> original name of the tag in the case of multiple tags on the same commit.
+> Is my conclusion correct?
+> 
+> The reason I ask is that we have a build environment where it is likely
+> that multiple tags will get set by various groups in our main 'truth' Git
+> repo.  We are using some scripting that would like to know the *name* of
+> the tag used for checkout (this has been working well for us so far as long
+> as we checkout against branches).
+> 
+> Is there perhaps some other means of doing a checkout to tag that DOES
+> record the name of the tag?  If not, I imagine we might need some external
+> means to record the checked out tag, which is not out of the question.
 
-On 03 Sep 2015, at 23:31, Junio C Hamano <gitster@pobox.com> wrote:
+Have you considered looking in the reflog?
 
-> Lars Schneider <larsxschneider@gmail.com> writes:
->=20
->> In case I agree with a reviewer. What is the more appropriate action=
-?
->> A response like the one above or a new role that includes the change
->> right away? I don=92t want to spam the list with lots of tiny change=
-s=85
->=20
-> Responding to review comment like you did with "will do" is
-> perfectly fine.
->=20
-> When you do think you will (eventually) want to send an updated
-> patch, there are things other than "will do" that you can say.  "I
-> understand what you said, but I am not sure how exactly to make this
-> better.  Perhaps lend me a help?" is good, too.
->=20
-> An explanation, followed by "ok?", in response to "it is unclear
-> what you are doing here" (commenting on code) or to "I cannot
-> understand what this is trying to say" (commenting on log message),
-> is problematic because your intention becomes ambiguous.
->=20
-> The reviewers are rarely saying "I do not understand; educate me."
-> but "I do not understand, and it is likely many others don't, too.
-> Make it more easily understandable." is what they mean.
->=20
-> An explanation with "ok?" can be taken as a sign that you mistook
-> the review comment as "educate me".
->=20
-> 	What I meant was ....  Do you think commenting the code here
-> 	with the above description is good enough?  Or do you think
-> 	of a way to restructure the code itself to be more self
-> 	evident?
->=20
-> or something like that may be a way to avoid the ambiguity.
->=20
-> Thanks.
+When I checkout a tag, "git reflog -1" gives something like:
 
-Thank you for the explanation! :-)
+	989d251 HEAD@{0}: checkout: moving from master to v0.9.2
+
+Since whitespace isn't permitted in tag names you can do something like:
+
+	tag=$(git reflog -1)
+	tag=${tag##* }
+	git cat-file tag "$tag" >/dev/null 2>&1 || echo "not a tag!"
