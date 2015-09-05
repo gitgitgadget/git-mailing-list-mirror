@@ -1,77 +1,61 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] Makefile: fix MAKEFLAGS tests with multiple flags
-Date: Sat,  5 Sep 2015 13:22:10 +0100
-Message-ID: <5c25f77717582a8f38a089da343b4cd2d6af345d.1441455709.git.john@keeping.me.uk>
-Cc: John Keeping <john@keeping.me.uk>
+From: sigo <spam@sigo.pl>
+Subject: Standardization of messages - dot after the sentence
+Date: Sat, 5 Sep 2015 14:22:18 +0200
+Message-ID: <CALx9kCVwpOvBfTxBi8gn7MBajEbuMLGP_HAJ0TW3XGzmUE0=QA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 05 14:22:12 2015
+X-From: git-owner@vger.kernel.org Sat Sep 05 14:22:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYCTz-0001jk-3D
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 14:22:11 +0200
+	id 1ZYCUB-0001xz-Rm
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 14:22:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752464AbbIEMWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2015 08:22:07 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:43484 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751366AbbIEMWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2015 08:22:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id DF480CDA609;
-	Sat,  5 Sep 2015 13:22:03 +0100 (BST)
-X-Quarantine-ID: <EJsOkwFbuRFK>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.199
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id EJsOkwFbuRFK; Sat,  5 Sep 2015 13:22:02 +0100 (BST)
-Received: from river.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id EFB54CDA510;
-	Sat,  5 Sep 2015 13:21:56 +0100 (BST)
-X-Mailer: git-send-email 2.5.0.466.g9af26fa
+	id S1752472AbbIEMWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2015 08:22:20 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:36697 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751346AbbIEMWT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2015 08:22:19 -0400
+Received: by ioii196 with SMTP id i196so49526663ioi.3
+        for <git@vger.kernel.org>; Sat, 05 Sep 2015 05:22:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=4brKd54Ujs+eRZ2KQ1prg6QlyGdRzc7N8IeMm1lbHuA=;
+        b=fPmHTM1ookLMa/j3rSd2C2051CaeV7ZC1aFnMN/9eA32aCm8OJA8bQYQYU1kJMIofP
+         PI+XuAgGXsfwIVmdEPePa1ppQn0+eo7/OFmz6pWpT4WBPM7IbFXX7WWrxtcLs0wruxsv
+         U2WhSGE8I1EB/+q9lItnybMmrKR8twRQTGWQ0RjSgrXO9Q80AU2f+Qemy2BAV6BQt5Pf
+         O2M7VHQJUb82u6wrVEkgMmbnPU7zqPGFjsn7Zkz6jU1Zpf5vjsrWxg/CLBwdepHj9M4t
+         FmZ1Ldx2Lw/VH2i8Czo7ily58ZUNNUPvb4WPH2NLsqUOiS1skMM34i+gohEmM90Gn9Id
+         5Vsw==
+X-Received: by 10.107.30.13 with SMTP id e13mr15337791ioe.57.1441455739199;
+        Sat, 05 Sep 2015 05:22:19 -0700 (PDT)
+Received: from mail-io0-f170.google.com (mail-io0-f170.google.com. [209.85.223.170])
+        by smtp.gmail.com with ESMTPSA id b78sm3490234ioe.2.2015.09.05.05.22.18
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 05 Sep 2015 05:22:19 -0700 (PDT)
+Received: by iofh134 with SMTP id h134so49689238iof.0
+        for <git@vger.kernel.org>; Sat, 05 Sep 2015 05:22:18 -0700 (PDT)
+X-Received: by 10.107.160.82 with SMTP id j79mr6142750ioe.18.1441455738735;
+ Sat, 05 Sep 2015 05:22:18 -0700 (PDT)
+Received: by 10.79.38.199 with HTTP; Sat, 5 Sep 2015 05:22:18 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277368>
 
-findstring is defined as $(findstring FIND,IN) so if multiple flags are
-set these tests do the wrong thing unless $(MAKEFLAGS) is the second
-argument.
+I've found really "little bug" with dots in the git output.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+$ git push
+Everything up-to-date
 
-diff --git a/Makefile b/Makefile
-index 34101e2..a556be6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1463,13 +1463,13 @@ endif
- QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
- QUIET_SUBDIR1  =
- 
--ifneq ($(findstring $(MAKEFLAGS),w),w)
-+ifneq ($(findstring w,$(MAKEFLAGS)),w)
- PRINT_DIR = --no-print-directory
- else # "make -w"
- NO_SUBDIR = :
- endif
- 
--ifneq ($(findstring $(MAKEFLAGS),s),s)
-+ifneq ($(findstring s,$(MAKEFLAGS)),s)
- ifndef V
- 	QUIET_CC       = @echo '   ' CC $@;
- 	QUIET_AR       = @echo '   ' AR $@;
--- 
-2.5.0.466.g9af26fa
+git pull
+Already up-to-date.
+
+Could all phrases contain dots? :)
