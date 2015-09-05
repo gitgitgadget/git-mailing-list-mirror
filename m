@@ -1,87 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: glibc mutex deadlock in signal handler
-Date: Sat, 5 Sep 2015 04:59:34 -0400
-Message-ID: <20150905085934.GA31358@sigill.intra.peff.net>
-References: <s5hfv2vn4wq.wl-tiwai@suse.de>
- <xmqqvbbrjrs9.fsf@gitster.mtv.corp.google.com>
- <s5h7fo7wb3e.wl-tiwai@suse.de>
- <87y4gn5ijr.fsf@igel.home>
- <s5hy4gmvii2.wl-tiwai@suse.de>
- <20150904092355.GA524@sigill.intra.peff.net>
- <xmqq7fo5g85x.fsf@gitster.mtv.corp.google.com>
+From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+Subject: Re: [L10N] Kickoff of translation for Git 2.6.0 round 1
+Date: Sat, 05 Sep 2015 12:02 +0200
+Message-ID: <2019620.IQg8023dli@cayenne>
+References: <CANYiYbEVU7A2w999jqLQ=V35WM0WTo--RHJHW7Ocw0FfsmqmLg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Takashi Iwai <tiwai@suse.de>,
-	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 05 11:00:12 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alexander Shopov <ash@kambanaria.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 05 12:02:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZY9KS-0001uQ-1K
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 11:00:08 +0200
+	id 1ZYAIz-00025x-OD
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 12:02:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750919AbbIEI7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2015 04:59:41 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55375 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750838AbbIEI7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2015 04:59:37 -0400
-Received: (qmail 16839 invoked by uid 102); 5 Sep 2015 08:59:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 05 Sep 2015 03:59:37 -0500
-Received: (qmail 1216 invoked by uid 107); 5 Sep 2015 08:59:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 05 Sep 2015 04:59:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Sep 2015 04:59:34 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq7fo5g85x.fsf@gitster.mtv.corp.google.com>
+	id S1750810AbbIEKCV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Sep 2015 06:02:21 -0400
+Received: from smtpfb1-g21.free.fr ([212.27.42.9]:56968 "EHLO
+	smtpfb1-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750756AbbIEKCT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Sep 2015 06:02:19 -0400
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 7215978016F
+	for <git@vger.kernel.org>; Sat,  5 Sep 2015 12:02:15 +0200 (CEST)
+Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:86a6:c8ff:fe05:d3e0])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 384409400B7;
+	Sat,  5 Sep 2015 12:02:01 +0200 (CEST)
+User-Agent: KMail/4.14.1 (Linux/4.2.0-rc6jna; KDE/4.14.2; x86_64; ; )
+In-Reply-To: <CANYiYbEVU7A2w999jqLQ=V35WM0WTo--RHJHW7Ocw0FfsmqmLg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277366>
 
-On Fri, Sep 04, 2015 at 02:56:58PM -0700, Junio C Hamano wrote:
+Le samedi 5 septembre 2015, 10:17:54 Jiang Xin a =C3=A9crit :
+> Hi,
+>=20
+> Git v2.6.0-rc0 has been released, and it's time to start new round of=
+ git
+> l10n. This time there are 123 updated messages need to be translated =
+since
+> last update:
+>=20
+>     l10n: git.pot: v2.6.0 round 1 (123 new, 41 removed)
+>=20
+>     Generate po/git.pot from v2.6.0-rc0-24-gec371ff for git v2.6.0 l1=
+0n
+>     round 1.
+>=20
+>     Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+>=20
+> You can get it from the usual place:
+>=20
+>     https://github.com/git-l10n/git-po/
+>=20
+> As how to update your XX.po and help to translate Git, please see
+> "Updating a XX.po file" and other sections in =E2=80=9Cpo/README" fil=
+e.
+>=20
+> --
+> Jiang Xin
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Perhaps we should reconsider whether f4c3edc (vreportf: avoid
-> > intermediate buffer, 2015-08-11) is a good idea.  Note that snprintf is
-> > not on the list of safe functions, but I imagine that in practice it is
-> > fine. Though just avoiding error()/warning() in signal handlers might be
-> > a more practical solution anyway.
-> 
-> I had exactly the same thought when I read the initial report here.
-> 
-> I wish we can just do "if (in_signal) return;" at the beginning of
-> vreportf(), but we would not want a global variable there, so... ;-)
 
-Why not? I mean, sure it's gross. But it actually seems like a pretty
-simple fix that doesn't have to hurt other callers (or involve passing
-an "in_signal" through the stack). We could even fallback to snprintf()
-into a fixed-sized buffer, or some other degraded mode.
+Some new strings are not consistent with the actual set.
 
-> Further, I briefly hoped that avoiding error/warning in the signal
-> handler codepath would allow us to be more lax around allocations,
-> but I suspect that it unfortunately would not help us that much, as
-> we may be calling these functions in low memory situations.
+=46or instance, in the "Could not ..." strings were all with capitals, =
+and some=20
+new ones are not. Last time, I remarked strings which were almost exact=
+ly the=20
+same (only difference was a final dot, if I remember). Some help string=
+s were=20
+mixing different styles.
 
-I'm not sure the low-memory thing isn't a red herring. Sure, we call
-die() when malloc fails. But only with a tiny string. Something like the
-robust_buf patch I posted would handle that just fine.
+Some strings may be difficult to translate in some languages. We need a=
+ first=20
+set of commits to correct these errors, before updating the translation=
+s. In a=20
+longer term, a style/i18n guideline and checker would be very useful.
 
-The real danger of signal handlers is that you don't get to say "oh,
-malloc failed, so let's fallback to some degraded mode". You just get
-deadlocked in a futex and never return. :)
+My two cents.
 
-> So let's queue Takashi's patch as-is for now and look at other
-> signal codepaths.
-
-Sounds like a good first step, unless we are going to do refactoring
-that Takashi's patch could take advantage of (either a global in_signal,
-or some register_cleanup() infrastructure).
-
--Peff
+Jean-Noel
