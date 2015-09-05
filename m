@@ -1,109 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: More builtin git-am issues..
-Date: Fri, 04 Sep 2015 18:06:43 -0700
-Message-ID: <xmqqd1xxekt8.fsf@gitster.mtv.corp.google.com>
+Date: Fri, 4 Sep 2015 18:20:37 -0700
+Message-ID: <CA+55aFwcv+iXnUtMhZrtx9hFrJ_xjfxvoinLmKTyEfLwrDoJvQ@mail.gmail.com>
 References: <CA+55aFzN4SnenchxPScn61_apzitGAPtoYEd49iLZPxgK0KQGw@mail.gmail.com>
+	<xmqqd1xxekt8.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Paul Tan <pyokagan@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Sep 05 03:10:21 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 05 03:20:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZY1zo-0005ME-Me
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 03:10:21 +0200
+	id 1ZY2A6-0006u5-7u
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 03:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935009AbbIEBHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2015 21:07:32 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:35448 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934974AbbIEBGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2015 21:06:45 -0400
-Received: by pacfv12 with SMTP id fv12so39624712pac.2
-        for <git@vger.kernel.org>; Fri, 04 Sep 2015 18:06:44 -0700 (PDT)
+	id S932956AbbIEBUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2015 21:20:39 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:36440 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932489AbbIEBUi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2015 21:20:38 -0400
+Received: by ioii196 with SMTP id i196so41563798ioi.3
+        for <git@vger.kernel.org>; Fri, 04 Sep 2015 18:20:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=nldSBwZml5Mh9ydT1KX4JX9NB+kvX1POvO1z8q8Qh6c=;
-        b=0Gw06VzBd1PhCPofZhY9SpzIu0T210gT0zSWLvOGbqMNGQTR9uA2TdufVFZNd+FLiv
-         n5r4dwekZqnDJvPvzFU8gN+Wn+wLaCg9r5ZdpJ880MN3QNM6TI9Ghssk0mY+Iq6SOGED
-         drCaBxvCOsg6s8Ecp/IjcTkuq9wCDufEZARIOkqH41kGt+Y9HpC97xF8+rxk4UgYYNN1
-         s1ND+ad/YYpKTbDi2e5i9XZ5mzLVChodyGVmbXC0YIPf2FAoyMlyEEdGGcftIjznAEtr
-         ZvyfzbPUQUi7NXtn4CCekOu6xIATyUDH6MFGsFExaiy3c8jYuu5eH39jqbZ9LSs7r7M2
-         YzYw==
-X-Received: by 10.66.122.4 with SMTP id lo4mr14520020pab.1.1441415204851;
-        Fri, 04 Sep 2015 18:06:44 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:20fa:dab1:6d64:e4c9])
-        by smtp.gmail.com with ESMTPSA id fi5sm3894640pdb.5.2015.09.04.18.06.43
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Fri, 04 Sep 2015 18:06:44 -0700 (PDT)
-In-Reply-To: <CA+55aFzN4SnenchxPScn61_apzitGAPtoYEd49iLZPxgK0KQGw@mail.gmail.com>
-	(Linus Torvalds's message of "Fri, 4 Sep 2015 16:47:10 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=5PLG3QEWIsinAR2vRTiyl88eNk7MuZgIaApqiRxYHOY=;
+        b=lb7yMANl1vHNuv9awIaGuUAZ46LYDgX0pV27trRwR2rVb81aOHbULb3MuN8HjjwmzI
+         tMf16PjTjLIpn6fKcSB1RbdUcmxX6FXKzEBX8N2jqNWUyC0UXYn5C8+tcnZDpGbjT7vx
+         wpF0NhDC2xh/JZKBlOuxhoE/A4XC5h5JXryXOm7KF9/dKiD2y4SxzvS1jiROBEZnCrCR
+         qWXz7FsHxiOyMNtm2OTOy/vaPKoIe8AtQlYLiUd0f9ql0g+txWzm3BiGXwPXpZm4u1VJ
+         YlzWz0yeJXLkXQz8Fn0OEB4Qdjjf5ggQ1VfOBjuiaDlyYqrjIEsvpitVVSqFvtyVIZ/E
+         sy2A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=5PLG3QEWIsinAR2vRTiyl88eNk7MuZgIaApqiRxYHOY=;
+        b=f+9bx5MftjC9ejsvDQja5WzR6hSmypp0HcjDUpeqf4KBZRn7qgyFnqcyAlI0XffV/F
+         zskg9DdBjCknytjotbymD2tkKUQw0Jse/TCJIaEEyeLodAZo7YXd9IyBQliVhMtcxOCc
+         yJ9U9gC5AgY1yjWopD+MODAfRIzj8rb12dGEo=
+X-Received: by 10.107.11.223 with SMTP id 92mr12034013iol.186.1441416037861;
+ Fri, 04 Sep 2015 18:20:37 -0700 (PDT)
+Received: by 10.36.124.195 with HTTP; Fri, 4 Sep 2015 18:20:37 -0700 (PDT)
+In-Reply-To: <xmqqd1xxekt8.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: -_52k09GcB-6xyg7-dT_Vp3zYT8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277356>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> but the failing cases have a comment by Andrew:
+On Fri, Sep 4, 2015 at 6:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->     [akpm@linux-foundation.org: coding-style fixes]
->     Signed-off-by: Tang Chen <tangchen@cn.fujitsu.com>
->     Cc: Xishi Qiu <qiuxishi@huawei.com>
->     Cc: Yasuaki Ishimatsu <isimatu.yasuaki@jp.fujitsu.com>
->     Cc: Kamezawa Hiroyuki <kamezawa.hiroyu@jp.fujitsu.com>
->     Cc: Taku Izumi <izumi.taku@jp.fujitsu.com>
->     Cc: Gu Zheng <guz.fnst@cn.fujitsu.com>
->     Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
->     Cc: Vlastimil Babka <vbabka@suse.cz>
->     Cc: Mel Gorman <mgorman@techsingularity.net>
->     Cc: David Rientjes <rientjes@google.com>
->     Cc: <stable@vger.kernel.org>        [4.2.x]
->     Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
->
->     Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
->
-> ie that "[akpm@linux-foundation.org: coding-style fixes]" makes git am
-> now decide that the previous block of text was not a sign-off block,
-> so it adds an empty line before adding my sign-off. But very obviously
-> it *was* a sign-off block.
+> that rule would still not think this is a signature block, but at
+> that point, do we really want to consider such a block of text a
+> signature block?
 
-Ahh, OK, scratch what I said earlier.  The user intended this to be
-sign-off block, but the convention append_signoff() was taught from
-very earlier days is that the sign-off block must consist of block
-of text all of which look like rfc2822 "keyword: value" header lines,
-and the comment thing makes it a non-conforming header.
+So exactly why are you arguing for these rules that are known to break
+in real life, that I gave actual examples for existing, and that I
+also gave an actual example for not just giving a false negative, but
+also a false positive?
 
-Perhaps
+I'm also pretty sure that what you are arguing for is a regression.
 
-    A block of text at the end of the existing text could be a
-    signature block.  If all its lines that are rfc2822-like are at
-    its end, then it is a sign-off block.  Otherwise it is not.
+Now, as mentioned, it may well be true that we've had this odd
+behavior before, and it's not a real regression - I may just have
+picked up on this problem because I've been more careful. Maybe I
+didn't notice these problems before.
 
-would allow the leading non-signature lines in the above example.
+But looking at the old git-am.sh script, it does simply seem to look
+for that '^Signed-off-by:' pattern. It did
 
-If the comment line (which I would say should have been separated by
-a blank line from the signature block if only to make it easier to
-read the whole thing) were in the middle, e.g.
+              ADD_SIGNOFF=$(
+                  test "$LAST_SIGNED_OFF_BY" = "$SIGNOFF" || {
+                  test '' = "$LAST_SIGNED_OFF_BY" && echo
+                  echo "$SIGNOFF"
+              })
 
->     Signed-off-by: Tang Chen <tangchen@cn.fujitsu.com>
->     Cc: Xishi Qiu <qiuxishi@huawei.com>
->     Cc: Yasuaki Ishimatsu <isimatu.yasuaki@jp.fujitsu.com>
->     Cc: Vlastimil Babka <vbabka@suse.cz>
->     Cc: Mel Gorman <mgorman@techsingularity.net>
->     [akpm@linux-foundation.org: coding-style fixes]
->     Cc: David Rientjes <rientjes@google.com>
->     Cc: <stable@vger.kernel.org>        [4.2.x]
->     Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+which seems to literally just check the last sign-off line it found.
+If it matches the new sign-off, it doesn't do anything (and doesn't
+add the new one either), and if it doesn't exist at all (so it's
+empty) it adds teh empty line.
 
-that rule would still not think this is a signature block, but at
-that point, do we really want to consider such a block of text a
-signature block?
+Quite frankly, that not only worked for a long time, it's simply less
+ambiguous than your made up rule.
+
+It's very simple. "if you find a sign-off in the commit message, don't
+add an new empty line before the new signoff".
+
+Much better than "every line in the last set of lines must match some
+weak format that isn't even true, and is too non-specific anyway".
+
+                Linus
