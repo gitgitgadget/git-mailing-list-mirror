@@ -1,64 +1,113 @@
-From: Pedro Rodrigues <prodrigues1990@gmail.com>
-Subject: Bug? push --recurse-submodules=on-demandd not really recursive
-Date: Sat, 05 Sep 2015 09:31:03 +0100
-Message-ID: <1441441863.2246.0@smtp.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] test_when_finished in subshells
+Date: Sat, 5 Sep 2015 04:54:30 -0400
+Message-ID: <20150905085429.GB25039@sigill.intra.peff.net>
+References: <54923cf9cc5a66bf9034051b3c2f930fa7ef88a4.1441388803.git.john@keeping.me.uk>
+ <xmqqfv2uf2kc.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 05 10:31:42 2015
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 05 10:54:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZY8st-0000Cp-UP
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 10:31:40 +0200
+	id 1ZY9FQ-0005Oc-Tv
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 10:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750883AbbIEIbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2015 04:31:20 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:35532 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750830AbbIEIbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2015 04:31:17 -0400
-Received: by pacfv12 with SMTP id fv12so47190711pac.2
-        for <git@vger.kernel.org>; Sat, 05 Sep 2015 01:31:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:subject:to:message-id:mime-version:content-type;
-        bh=T52OSQ2cEXZAHR2BYjvtN4zxTHJxF8F7f8rBgEUpU0Y=;
-        b=Kz1RPb3qvsF3dZFqtrApfrz/qiXi1IxzanWm3m3i0hilc0+KHK6T5vI+8+QGK/Tx7E
-         igIuVZlw/6DbAHDZjTZrfppbbacRyG7hjtmkkGuCkvLKvuNDVN0RWoYqTmHgnPk1DWvu
-         G1TVkps+3SrQKXSgRiwnEA6trEWd6qsK3Yc2QVgUjbyl0boza07IhBxpqryrji0dVcNu
-         SlROwjIaQxX5khC33WUaJj1P4ny+8wz3j5wUFmypn1ABoX0Qmf94LGMTMZT/U4RTZrWa
-         fCM/u1jvNlKKG1E/+ch1EqWhGSRAd/z02RCXmQP5Wuxsjp++gt+lQuSpZRbY9DJZOfd4
-         lqqw==
-X-Received: by 10.68.109.34 with SMTP id hp2mr18238278pbb.52.1441441877003;
-        Sat, 05 Sep 2015 01:31:17 -0700 (PDT)
-Received: from [192.168.0.16] ([197.148.37.177])
-        by smtp.gmail.com with ESMTPSA id sb2sm5015169pbc.32.2015.09.05.01.31.12
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 05 Sep 2015 01:31:16 -0700 (PDT)
-X-Mailer: geary/0.8.3
+	id S1750936AbbIEIyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2015 04:54:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55369 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750838AbbIEIyd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2015 04:54:33 -0400
+Received: (qmail 16398 invoked by uid 102); 5 Sep 2015 08:54:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 05 Sep 2015 03:54:33 -0500
+Received: (qmail 1182 invoked by uid 107); 5 Sep 2015 08:54:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 05 Sep 2015 04:54:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Sep 2015 04:54:30 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqfv2uf2kc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277364>
 
-Yesterday I was discussing this in on G+, which lead me to conclude 
-this is actually a bug (or, at least, a very good improvement).
+On Fri, Sep 04, 2015 at 11:43:15AM -0700, Junio C Hamano wrote:
 
-When you run push --recurse-submodules=on-demand, according to the push 
-manpage you would expect any submodule commit missing on it's default 
-remote to be pushed aswell. But this only works for the submodules of 
-the repo you run it in, it does not work in nested submodules (hence 
-not being recursive at all).
+> > t7800 (in its final test) calls test_config in a subshell which has cd'd
+> > into a submodule.
+> >
+> > Is this something worth worrying about, or is it sufficiently rare that
+> > we can live with the current behaviour?
+> 
+> Fixing the instances you found is good, obviously ;-).  Thanks for
+> working on this.
+> 
+> Even though the proposed detection is BASH-ism, I think it would not
+> hurt other shells (they obviously do not help you catch bugs, but
+> they would not misbehave as long as you make sure BASH_SUBSHELL is
+> either unset or set to 0 at the beginning of the test), and the only
+> impact to them would be a invocation of (often built-in) 'test'
+> utility, whose performance impact should be miniscule.
+> 
+> I'll wait for opinion from others, of course.
 
-I could (with my very little understanding of C) confirm this in the 
-source code, and the boils down to the function push_submodule on file 
-transport.c explicitly calling push without any params, where I would 
-expect it to call with --recurse-submodules=on-demand when done so on 
-the parent repo (and then it will actually be trully recursive).
+I like it. In general I'm in favor of any lint-like fixes (whether for
+the tests or the C code itself) as long as:
 
-Any thoughts?
+  1. they don't create false positive noise
+
+  2. they don't require extra effort at each call-site
+
+  3. they don't have a performance impact
+
+And I think this passes all three. Of course it would be nice if the new
+check ran on all shells, but even this seems like a strict improvement.
+
+And I couldn't come up with anything better. I thought we might be able
+to use a canary trap, like this:
+
+  trap canary QUIT
+  echo outside
+  trap
+  echo inside
+  (trap)
+
+Because traps are reset inside a subshell, the first "trap" without
+arguments should print a string with "canary" in it, and the second
+should print nothing.
+
+Except that it isn't remotely how it works in practice. :) Bash leaves
+the trap in place inside the subshell. And while dash does the right
+thing, any attempt to actually _look_ at the output will put us in a
+subshell. So:
+
+  case "$(trap)" in
+  *canary*) ... not in a subshell ...
+  *) ... in a subshell ...
+  esac
+
+doesn't work; the trap report inside backticks is always empty (despite
+there being an explicit example in the POSIX manpage for trap of using
+$(trap) to get the value for a later eval).
+
+It looks like if we use the EXIT trap rather than a signal, bash _does_
+do the right thing (which kind of makes sense, I guess). So rather than
+a custom canary, we could use our regular EXIT handler as the canary.
+But I couldn't find a way to work around dash's issue.
+
+Looks like there was even some discussion in 2010:
+
+  http://www.spinics.net/lists/dash/msg00331.html
+
+but my dash 0.5.7 remains broken. Oh, well.
+
+-Peff
