@@ -1,191 +1,92 @@
-From: Rudy Matela <rudy@matela.com.br>
-Subject: [PATCH] tag: support mixing --sort=<spec> and -n
-Date: Sat, 5 Sep 2015 18:52:02 +0100
-Message-ID: <20150905175202.GC7050@zero.home>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 0/5] disallow test_when_finished in subshells
+Date: Sat, 5 Sep 2015 18:57:56 +0100
+Message-ID: <20150905175756.GE27660@serenity.lan>
+References: <20150905085429.GB25039@sigill.intra.peff.net>
+ <cover.1441458341.git.john@keeping.me.uk>
+ <CAPc5daUsd8KD77EfF-SBwwOKn0hNPvYXo8UmY-sHBg9S4vUQXg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 05 19:52:27 2015
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 05 19:58:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYHda-0003Vg-GP
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 19:52:26 +0200
+	id 1ZYHjE-0000eT-Gd
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 19:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591AbbIERwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2015 13:52:09 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:37955 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752487AbbIERwG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2015 13:52:06 -0400
-Received: by wiclk2 with SMTP id lk2so45813542wic.1
-        for <git@vger.kernel.org>; Sat, 05 Sep 2015 10:52:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=fyjnVh0cVP7ySCA9A1pYhakB6OKwTd7u46J6AD/RI+w=;
-        b=0RGML88kfYkEClll9SHTsorJcXz0ogujCvIJUqgNG6c5p47eif57Ip2NKIWe4iB7EO
-         3aFMVPLyeXjcR4n7ZQqUM4MIkj6Afi8FAx773KkqLnpelP0bIWbyXvxJPs0ovYikh7rM
-         Ra/O4WA0afpbaaLNIoZKn0nGlSb61zmwPghKfdObA8kDtZmXB7SLdorBCXcYGzIHEJfE
-         4rj9q9C90jLzd2SAXMfascORsxGS6psPduMgtjXvdsoDhQhu6Q3cF+q0UtBN1yXqZF9l
-         5AUYmXbpERofOIkHQwbUirScF0uRURhQ55FxxzF75OAnH4r1YEpIjH/uOn8oPpCjhKBH
-         bEAA==
-X-Received: by 10.194.93.3 with SMTP id cq3mr19250963wjb.20.1441475524880;
-        Sat, 05 Sep 2015 10:52:04 -0700 (PDT)
-Received: from zero.home (host86-191-157-159.range86-191.btcentralplus.com. [86.191.157.159])
-        by smtp.gmail.com with ESMTPSA id k12sm11027333wjw.4.2015.09.05.10.52.04
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 05 Sep 2015 10:52:04 -0700 (PDT)
+	id S1752487AbbIER6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2015 13:58:14 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:52386 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752102AbbIER6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2015 13:58:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 0AD02CDA548;
+	Sat,  5 Sep 2015 18:58:12 +0100 (BST)
+X-Quarantine-ID: <C+p0QG4btIUk>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1.001
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.001 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_40=-0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id C+p0QG4btIUk; Sat,  5 Sep 2015 18:58:11 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id E0959CDA510;
+	Sat,  5 Sep 2015 18:57:58 +0100 (BST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.23+102 (2ca89bed6448) (2014-03-12)
+In-Reply-To: <CAPc5daUsd8KD77EfF-SBwwOKn0hNPvYXo8UmY-sHBg9S4vUQXg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277393>
 
+On Sat, Sep 05, 2015 at 10:36:29AM -0700, Junio C Hamano wrote:
+> On Sat, Sep 5, 2015 at 6:12 AM, John Keeping <john@keeping.me.uk> wrote:
+> >
+> > I don't think it's worth trying to clear $BASH_SUBSHELL before the tests
+> > start because to do so we have to reliably detect that we're not running
+> > under Bash, and if we don't trust people not to set $BASH_SUBSHELL why
+> > do we trust them not to set $BASH?
+> 
+> I am not worried about evil people who do funny things to deliberately break
+> other people's arrangement. I am more worried about stupid people (e.g. those
+> who export CDPATH).
+> 
+> In bash a stupid person may attempt to export BASH_SUBSHELL and then
+> have a script that runs our test suite, setting SHELL_PATH to point at a
+> non-bash while building Git and running the tests under a non-bash shell. I
+> am hesitant to believe that we will know the variable will never leak through
+> to the test via environment.
+> 
+> Isn't it just the matter of resetting the variable regardless of $BASH
+> (and ignoring
+> a possible refusal to do so under bash) at the beginning of the test, or do you
+> really have to rely on the value of $BASH and do things differently?
 
-Allow -n and --sort=version:refname to be used together
-instead of failing with:
+Bash doesn't refuse to set it, it lets you update the value; I did think
+that it wouldn't update it if the user had overridden the value, but it
+looks like that was only because I had unset it first.  It seems that
+the variable is magic (autoincrementing in subshells and can only be set
+to integer values) but if you unset it then it becomes a normal
+variable.
 
-  fatal: --sort and -n are incompatible
+I'm wary of relying on that behaviour being unchanged across all
+versions of bash, so I'd prefer to avoid writing the variable if running
+under bash.
 
-Signed-off-by: Rudy Matela <rudy@matela.com.br>
----
- builtin/tag.c | 64 ++++++++++++++++++++++++++++++++---------------------------
- 1 file changed, 35 insertions(+), 29 deletions(-)
-
-diff --git a/builtin/tag.c b/builtin/tag.c
-index cccca99..cdcb373 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -176,13 +176,19 @@ static enum contains_result contains(struct commit *candidate,
- 	return contains_test(candidate, want);
- }
- 
--static void show_tag_lines(const struct object_id *oid, int lines)
-+static char *get_tag_lines(const struct object_id *oid, int lines)
- {
- 	int i;
- 	unsigned long size;
- 	enum object_type type;
- 	char *buf, *sp, *eol;
- 	size_t len;
-+	struct strbuf sb;
-+
-+	if (!lines)
-+		return NULL;
-+
-+	strbuf_init(&sb,0);
- 
- 	buf = read_sha1_file(oid->hash, &type, &size);
- 	if (!buf)
-@@ -203,20 +209,21 @@ static void show_tag_lines(const struct object_id *oid, int lines)
- 		size = parse_signature(buf, size);
- 	for (i = 0, sp += 2; i < lines && sp < buf + size; i++) {
- 		if (i)
--			printf("\n    ");
-+			strbuf_addstr(&sb,"\n    ");
- 		eol = memchr(sp, '\n', size - (sp - buf));
- 		len = eol ? eol - sp : size - (sp - buf);
--		fwrite(sp, len, 1, stdout);
-+		strbuf_add(&sb, sp, len);
- 		if (!eol)
- 			break;
- 		sp = eol + 1;
- 	}
- free_return:
- 	free(buf);
-+	return strbuf_detach(&sb, NULL);
- }
- 
--static int show_reference(const char *refname, const struct object_id *oid,
--			  int flag, void *cb_data)
-+static int get_reference_and_tag_lines(const char *refname, const struct object_id *oid,
-+				       int flag, void *cb_data)
- {
- 	struct tag_filter *filter = cb_data;
- 
-@@ -234,16 +241,8 @@ static int show_reference(const char *refname, const struct object_id *oid,
- 		if (points_at.nr && !match_points_at(refname, oid->hash))
- 			return 0;
- 
--		if (!filter->lines) {
--			if (filter->sort)
--				string_list_append(&filter->tags, refname);
--			else
--				printf("%s\n", refname);
--			return 0;
--		}
--		printf("%-15s ", refname);
--		show_tag_lines(oid, filter->lines);
--		putchar('\n');
-+		string_list_append(&filter->tags, refname)->util =
-+			get_tag_lines(oid, filter->lines);
- 	}
- 
- 	return 0;
-@@ -260,6 +259,7 @@ static int list_tags(const char **patterns, int lines,
- 		     struct commit_list *with_commit, int sort)
- {
- 	struct tag_filter filter;
-+	int i;
- 
- 	filter.patterns = patterns;
- 	filter.lines = lines;
-@@ -268,20 +268,28 @@ static int list_tags(const char **patterns, int lines,
- 	memset(&filter.tags, 0, sizeof(filter.tags));
- 	filter.tags.strdup_strings = 1;
- 
--	for_each_tag_ref(show_reference, (void *)&filter);
--	if (sort) {
--		int i;
--		if ((sort & SORT_MASK) == VERCMP_SORT)
--			qsort(filter.tags.items, filter.tags.nr,
--			      sizeof(struct string_list_item), sort_by_version);
--		if (sort & REVERSE_SORT)
--			for (i = filter.tags.nr - 1; i >= 0; i--)
-+	for_each_tag_ref(get_reference_and_tag_lines, (void *)&filter);
-+	if ((sort & SORT_MASK) == VERCMP_SORT)
-+		qsort(filter.tags.items, filter.tags.nr,
-+		      sizeof(struct string_list_item), sort_by_version);
-+	if (sort & REVERSE_SORT)
-+		for (i = filter.tags.nr - 1; i >= 0; i--)
-+			if (lines)
-+				printf("%-15s %s\n",
-+					filter.tags.items[i].string,
-+					(char*)filter.tags.items[i].util);
-+			else
- 				printf("%s\n", filter.tags.items[i].string);
--		else
--			for (i = 0; i < filter.tags.nr; i++)
-+	else
-+		for (i = 0; i < filter.tags.nr; i++)
-+			if (lines)
-+				printf("%-15s %s\n",
-+					filter.tags.items[i].string,
-+					(char*)filter.tags.items[i].util);
-+			else
- 				printf("%s\n", filter.tags.items[i].string);
--		string_list_clear(&filter.tags, 0);
--	}
-+	string_list_clear(&filter.tags, 1);
-+
- 	return 0;
- }
- 
-@@ -665,8 +673,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			copts.padding = 2;
- 			run_column_filter(colopts, &copts);
- 		}
--		if (lines != -1 && tag_sort)
--			die(_("--sort and -n are incompatible"));
- 		ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, tag_sort);
- 		if (column_active(colopts))
- 			stop_column_filter();
--- 
-2.5.0
+We do already have t/lib-bash.sh which has an optimization to avoid
+exec'ing bash if "$BASH" is set, which will break in the same way if
+someone exports BASH and then runs t9902 or t9903 under non-bash.
