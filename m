@@ -1,131 +1,67 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: [PATCHv1 2/2] git-p4: work with a detached head
-Date: Sat,  5 Sep 2015 15:02:18 +0100
-Message-ID: <1441461738-25066-3-git-send-email-luke@diamand.org>
-References: <1441461738-25066-1-git-send-email-luke@diamand.org>
-Cc: Luke Diamand <luke@diamand.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 05 16:02:45 2015
+From: Jesse Hopkins <jesse.hops@gmail.com>
+Subject: Re: determine name of tag used for checkout when multiple tags exist?
+Date: Sat, 5 Sep 2015 08:23:03 -0600
+Message-ID: <CAL3By-9e2ZjShFxMKoLfc_q0LFvB51m15Z8Ydp8b8fGNdcUp_A@mail.gmail.com>
+References: <CAL3By-8odLE53iBiNATgiCcnK4Ef5uBeH7E6EMB1K7P-oX0oAQ@mail.gmail.com>
+	<20150904075400.GA27660@serenity.lan>
+	<CAL3By-8ieAQPyR9k63_T5Fa9ZnAY8qSNZUpr_=fxebEcN=Zi7g@mail.gmail.com>
+	<CAL3By-8cgAz1Jau3NO0kkHAVwvy3hPMMUn=xwUtY78TE5WE9vw@mail.gmail.com>
+	<20150904111915.GB27660@serenity.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sat Sep 05 16:23:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYE3F-0004KV-BG
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 16:02:41 +0200
+	id 1ZYEN3-00070l-QF
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 16:23:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753268AbbIEOCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2015 10:02:37 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:33862 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753256AbbIEOCe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2015 10:02:34 -0400
-Received: by wicfx3 with SMTP id fx3so47183608wic.1
-        for <git@vger.kernel.org>; Sat, 05 Sep 2015 07:02:31 -0700 (PDT)
+	id S1752592AbbIEOXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2015 10:23:06 -0400
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:33604 "EHLO
+	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751514AbbIEOXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2015 10:23:04 -0400
+Received: by oixx17 with SMTP id x17so25704920oix.0
+        for <git@vger.kernel.org>; Sat, 05 Sep 2015 07:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=E7NC+Xwsywmyp/anQQCXtqnLA2hLTw7uo/dUi/OpTBI=;
-        b=bMA6MuFuw4xfoycWK4zGAM9XEO63EnXabFzwrMZ5d8oNZZYU0nLncA+IHYKYeF8BUZ
-         lDmX3L8CNsHErHgA1SHVhmC0QwP9IM/sXJrziTXL2VZwfsmRZ0VMxkmPLjzhctS9WfHk
-         VZYbtpPI2OgQ0BWG6Qz8u3hzHPGmSChG4Dbug=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=E7NC+Xwsywmyp/anQQCXtqnLA2hLTw7uo/dUi/OpTBI=;
-        b=Mqjffs1H2+kUXUw39ik+lD+zyzCfMoMXN8eZbUIl27wDEBH2VXBjoIQ+5+2BOmkces
-         4MK5G4/2FEBBt1XVFXNL5wK9IioDOcAnanRqRSuUSFq9maGXnekPP7Wb+dfPXcZeFrGs
-         wpBkdB/Mj690e9NF1Jcqg14a0Kz2po5rUlaVop/U4wxr2ONhXSGQ0MeJLH/77mO7QHe3
-         3mRzPNnWQ4TFjWAun/97nxrigNb3cfPHNZismH337LfQy3iQZR1i01RcqqTvJg7YYMku
-         3Oxgk4gK7Fh1UwprIsh3Z1yodFopYigCj/8Cgsr236FC3c8KUMsrpIdtDHPUI9YX9FGC
-         07lw==
-X-Gm-Message-State: ALoCoQn2J4/xlz9p5hgeTVzn10pMW37rg2/st/rUcBTX7qWwwdXkulO0uouQHibWQT4SY+rR7Jn0
-X-Received: by 10.180.87.198 with SMTP id ba6mr10720969wib.39.1441461751725;
-        Sat, 05 Sep 2015 07:02:31 -0700 (PDT)
-Received: from lgd-kipper.local.diamand.org (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
-        by smtp.gmail.com with ESMTPSA id fs8sm10225413wib.0.2015.09.05.07.02.30
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 05 Sep 2015 07:02:31 -0700 (PDT)
-X-Mailer: git-send-email 2.6.0.rc0.133.ga438a11.dirty
-In-Reply-To: <1441461738-25066-1-git-send-email-luke@diamand.org>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+NzvHWPzxacFPQ0S/BSSMnxXcU40+iOq4XyvxzEn5i0=;
+        b=CoUZWl/7jq0c1+2xuiqWdT/vesJprQiGn8PB+Dzkx6+dKBL5ccCTtCLHYic15v5xq2
+         hVHxTg1nsgoLUX+h0Rzz6N/AT5ENdyuW0z6kpIkXCxT2oDmbrI4jzfHgzxvnV0IP5KQO
+         ZxuMqQpjQzJ5mEtz1hg6ZsAPf1CRLhjHd8DzEuw6cZqND0u8eNS46UDo5NPLtXPk70Zn
+         sh7CVHtX3Wv6JXe4PRMAIFOcmSLkU4iKhtxh3k6ScqCeHSSf5VXZIZaMFHN+VF16trSG
+         rRlES34R1o+5MfiwQGtV50nmUMtwkFl9eM5MrPBRlQuj81thzX0OM2Z1nuTYEi2U83h9
+         Dazg==
+X-Received: by 10.202.204.208 with SMTP id c199mr7437767oig.12.1441462983139;
+ Sat, 05 Sep 2015 07:23:03 -0700 (PDT)
+Received: by 10.202.1.199 with HTTP; Sat, 5 Sep 2015 07:23:03 -0700 (PDT)
+In-Reply-To: <20150904111915.GB27660@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277383>
 
-When submitting, git-p4 finds the current branch in
-order to know if it is allowed to submit (configuration
-"git-p4.allowSubmit").
+On Fri, Sep 4, 2015 at 5:19 AM, John Keeping <john@keeping.me.uk> wrote:
 
-On a detached head, detecting the branch would fail, and
-git-p4 would report a cryptic error.
+> I think it would be a reasonable enhancement to include the branch name
+> in the reflog message if "-b" is given to "git clone", but I'm not aware
+> of any (formal) policy on the format of reflog messages so relying on
+> any particular message may not be 100% reliable across Git upgrades.
 
-This change teaches git-p4 to recognise a detached head and
-submit successfully.
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- git-p4.py               | 18 ++++++++++++------
- t/t9800-git-p4-basic.sh |  2 +-
- 2 files changed, 13 insertions(+), 7 deletions(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index 2677c89..a22ae01 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1651,8 +1651,8 @@ class P4Submit(Command, P4UserMap):
-     def run(self, args):
-         if len(args) == 0:
-             self.master = currentGitBranch()
--            if len(self.master) == 0 or not gitBranchExists("refs/heads/%s" % self.master):
--                die("Detecting current git branch failed!")
-+            if self.master == "undefined":
-+                self.master = None
-         elif len(args) == 1:
-             self.master = args[0]
-             if not branchExists(self.master):
-@@ -1660,9 +1660,10 @@ class P4Submit(Command, P4UserMap):
-         else:
-             return False
- 
--        allowSubmit = gitConfig("git-p4.allowSubmit")
--        if len(allowSubmit) > 0 and not self.master in allowSubmit.split(","):
--            die("%s is not in git-p4.allowSubmit" % self.master)
-+        if self.master:
-+            allowSubmit = gitConfig("git-p4.allowSubmit")
-+            if len(allowSubmit) > 0 and not self.master in allowSubmit.split(","):
-+                die("%s is not in git-p4.allowSubmit" % self.master)
- 
-         [upstream, settings] = findUpstreamBranchPoint()
-         self.depotPath = settings['depot-paths'][0]
-@@ -1730,7 +1731,12 @@ class P4Submit(Command, P4UserMap):
-         self.check()
- 
-         commits = []
--        for line in read_pipe_lines(["git", "rev-list", "--no-merges", "%s..%s" % (self.origin, self.master)]):
-+        if self.master:
-+            commitish = self.master
-+        else:
-+            commitish = 'HEAD'
-+
-+        for line in read_pipe_lines(["git", "rev-list", "--no-merges", "%s..%s" % (self.origin, commitish)]):
-             commits.append(line.strip())
-         commits.reverse()
- 
-diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
-index 114b19f..0730f18 100755
---- a/t/t9800-git-p4-basic.sh
-+++ b/t/t9800-git-p4-basic.sh
-@@ -241,7 +241,7 @@ test_expect_success 'unresolvable host in P4PORT should display error' '
- 	)
- '
- 
--test_expect_failure 'submit from detached head' '
-+test_expect_success 'submit from detached head' '
- 	test_when_finished cleanup_git &&
- 	git p4 clone --dest="$git" //depot &&
- 	(
--- 
-2.6.0.rc0.133.ga438a11.dirty
+Thanks for posting my dropped message.  Apparently the gmail Android
+app doesn't do plain text.  I understand that parsing the reflog
+message may not be future-proof, but I'm going to go for it.  I think
+that will be more reliable than trying to track the tag name
+externally.  Having the reflog message show up for a "-b" clone would
+be helpful, but it will be easy enough for me to clone HEAD, then
+immediately checkout the tag of interest.  Thanks again for the
+suggestion, would've never thought use the reflog.
