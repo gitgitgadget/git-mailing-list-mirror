@@ -1,130 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: More builtin git-am issues..
-Date: Sat, 05 Sep 2015 09:57:31 -0700
-Message-ID: <xmqq7fo4dcsk.fsf@gitster.mtv.corp.google.com>
-References: <CA+55aFzN4SnenchxPScn61_apzitGAPtoYEd49iLZPxgK0KQGw@mail.gmail.com>
-	<CA+55aFw2bnhSQYk4FaHfp4ED0Y611NWyQs05TMQtFj=2As1=nA@mail.gmail.com>
-	<xmqqh9n9ele4.fsf@gitster.mtv.corp.google.com>
-	<55EA9A13.2050108@kdbg.org>
-	<20150905080325.GA25039@sigill.intra.peff.net>
-	<xmqqk2s4deyo.fsf@gitster.mtv.corp.google.com>
-	<xmqqbndgddy0.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 0/5] disallow test_when_finished in subshells
+Date: Sat, 5 Sep 2015 10:36:29 -0700
+Message-ID: <CAPc5daUsd8KD77EfF-SBwwOKn0hNPvYXo8UmY-sHBg9S4vUQXg@mail.gmail.com>
+References: <20150905085429.GB25039@sigill.intra.peff.net> <cover.1441458341.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Paul Tan <pyokagan@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Sep 05 18:57:38 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sat Sep 05 19:37:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYGmX-0001yp-Cn
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 18:57:37 +0200
+	id 1ZYHOv-0005yc-C2
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 19:37:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752855AbbIEQ5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2015 12:57:34 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:36805 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751353AbbIEQ5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2015 12:57:33 -0400
-Received: by pacwi10 with SMTP id wi10so53428300pac.3
-        for <git@vger.kernel.org>; Sat, 05 Sep 2015 09:57:33 -0700 (PDT)
+	id S1752459AbbIERgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2015 13:36:51 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:32997 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752102AbbIERgt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2015 13:36:49 -0400
+Received: by iofh134 with SMTP id h134so54040776iof.0
+        for <git@vger.kernel.org>; Sat, 05 Sep 2015 10:36:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=GZGYaMX72BCFnw5yNh9MnzAB85TvhwdJwi2pl/ilzcQ=;
-        b=KejPBKdEjzAhAjyU5HV8PzMuuHBeWJI/bjza684oaTj3KNSZmrR9tdTS3EHzvyILN4
-         F9JwQvR3Sz+QcGK1/tiMe/CVHHB1k6I9/Kgn90RjLq3OFvZsCMsTFoxoqKmaaqi3Rhyg
-         QsoNkd/7Q2OO8ozLskq6tcpB3m2saUguVMp/ixoCuzShpho8Ypi9QNn8E2iGvhhS8UlI
-         ZbxAV3/KrqrZmJVBZPrBJdI7NM3krJOugfhKK39aCwmNAy8zPKOfEVHX5oTfBWzRxlQY
-         lRUC/4qYrVrxoa6MXNF7fQJBQa+Qtrt1outzebuRP0EUGzNYGUoDajQbLkt5OYMPyVx/
-         e+ZA==
-X-Received: by 10.68.249.66 with SMTP id ys2mr23134595pbc.82.1441472252999;
-        Sat, 05 Sep 2015 09:57:32 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:20fa:dab1:6d64:e4c9])
-        by smtp.gmail.com with ESMTPSA id rt6sm6357976pbb.62.2015.09.05.09.57.32
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Sat, 05 Sep 2015 09:57:32 -0700 (PDT)
-In-Reply-To: <xmqqbndgddy0.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sat, 05 Sep 2015 09:32:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=miiYpFnUDg4lfYTrAQNVy5F5n6qTtKcnpQHyeTWTurc=;
+        b=BvZpwPPVGo9sD8jGPKWXZwK1Tn2VhstR7V7kPqpCW9LNoLtQbvJSZ8lWO4n/yD6hI9
+         78z61uz38vsQSXEwvzg1NrtbTuy+rIYIINn3NTjsrzwHCu0UVslS1Wp+CF+znp1xFsK+
+         jP79hE+W2eU67yTW+pBsktxra6q1K9+FzPG5Db0oaph/lPsbFCApxrxre+d8PWmhWXUO
+         wiuGxtGQmY8FYlZTIZgES1MEffNzpEvwgFr/FN146B5RXl9IIBy//PdTR/m0qppIDZ9B
+         bWpjq/Splw36gXSnDOhtoL4/Rrj1P4GLiX6Kp92uIpJkvRurcgpcGWklLSGoChwrObT/
+         PLtg==
+X-Received: by 10.107.155.78 with SMTP id d75mr17277789ioe.44.1441474608803;
+ Sat, 05 Sep 2015 10:36:48 -0700 (PDT)
+Received: by 10.36.79.69 with HTTP; Sat, 5 Sep 2015 10:36:29 -0700 (PDT)
+In-Reply-To: <cover.1441458341.git.john@keeping.me.uk>
+X-Google-Sender-Auth: Xt3_Dbzzxrtk9K5cj0XcpVGmaMY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277391>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> And a quick attempt without even compilation testing has flaws as
-> expected X-<.
+On Sat, Sep 5, 2015 at 6:12 AM, John Keeping <john@keeping.me.uk> wrote:
 >
-> Second attempt.
+> I don't think it's worth trying to clear $BASH_SUBSHELL before the tests
+> start because to do so we have to reliably detect that we're not running
+> under Bash, and if we don't trust people not to set $BASH_SUBSHELL why
+> do we trust them not to set $BASH?
 
-... and I forget the de-dup logic.  The third attempt.
+I am not worried about evil people who do funny things to deliberately break
+other people's arrangement. I am more worried about stupid people (e.g. those
+who export CDPATH).
 
- builtin/am.c | 32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+In bash a stupid person may attempt to export BASH_SUBSHELL and then
+have a script that runs our test suite, setting SHELL_PATH to point at a
+non-bash while building Git and running the tests under a non-bash shell. I
+am hesitant to believe that we will know the variable will never leak through
+to the test via environment.
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 83b3d86..30ffdde 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1207,6 +1207,34 @@ static void NORETURN die_user_resolve(const struct am_state *state)
- 	exit(128);
- }
- 
-+static void am_signoff(struct strbuf *sb)
-+{
-+	char *cp;
-+	struct strbuf mine = STRBUF_INIT;
-+
-+	/* Does it end with our own sign-off? */
-+	strbuf_addf(&mine, "%s%s\n",
-+		    sign_off_header,
-+		    fmt_name(getenv("GIT_COMMITTER_NAME"),
-+			     getenv("GIT_COMMITTER_EMAIL")));
-+	if (mine.len < sb->len &&
-+	    !strcmp(mine.buf, sb->buf + sb->len - mine.len))
-+		goto exit; /* no need to duplicate */
-+
-+	/* Does it have any Signed-off-by: in the text */
-+	for (cp = sb->buf;
-+	     cp && *cp && (cp = strstr(cp, sign_off_header)) != NULL;
-+	     cp = strchr(cp, '\n')) {
-+		if (sb->buf == cp || cp[-1] == '\n')
-+			break;
-+	}
-+	if (!cp)
-+		strbuf_addch(sb, '\n');
-+	strbuf_addbuf(sb, &mine);
-+exit:
-+	strbuf_release(&mine);
-+}
-+
- /**
-  * Appends signoff to the "msg" field of the am_state.
-  */
-@@ -1215,7 +1243,7 @@ static void am_append_signoff(struct am_state *state)
- 	struct strbuf sb = STRBUF_INIT;
- 
- 	strbuf_attach(&sb, state->msg, state->msg_len, state->msg_len);
--	append_signoff(&sb, 0, 0);
-+	am_signoff(&sb);
- 	state->msg = strbuf_detach(&sb, &state->msg_len);
- }
- 
-@@ -1319,7 +1347,7 @@ static int parse_mail(struct am_state *state, const char *mail)
- 	stripspace(&msg, 0);
- 
- 	if (state->signoff)
--		append_signoff(&msg, 0, 0);
-+		am_signoff(&msg);
- 
- 	assert(!state->author_name);
- 	state->author_name = strbuf_detach(&author_name, NULL);
+Isn't it just the matter of resetting the variable regardless of $BASH
+(and ignoring
+a possible refusal to do so under bash) at the beginning of the test, or do you
+really have to rely on the value of $BASH and do things differently?
