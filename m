@@ -1,162 +1,128 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v16 14/14] tag.c: implement '--merged' and '--no-merged' options
-Date: Sun,  6 Sep 2015 00:22:15 +0530
-Message-ID: <1441479135-5285-15-git-send-email-Karthik.188@gmail.com>
-References: <1441479135-5285-1-git-send-email-Karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 05 20:53:15 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: More builtin git-am issues..
+Date: Sat, 05 Sep 2015 12:39:13 -0700
+Message-ID: <xmqqsi6sbqqm.fsf@gitster.mtv.corp.google.com>
+References: <CA+55aFzN4SnenchxPScn61_apzitGAPtoYEd49iLZPxgK0KQGw@mail.gmail.com>
+	<CA+55aFw2bnhSQYk4FaHfp4ED0Y611NWyQs05TMQtFj=2As1=nA@mail.gmail.com>
+	<xmqqh9n9ele4.fsf@gitster.mtv.corp.google.com>
+	<55EA9A13.2050108@kdbg.org>
+	<20150905080325.GA25039@sigill.intra.peff.net>
+	<xmqqk2s4deyo.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Paul Tan <pyokagan@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 05 21:39:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYIaP-0002bk-N6
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 20:53:14 +0200
+	id 1ZYJJF-0004gi-J9
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 21:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753245AbbIESxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2015 14:53:07 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:35132 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751815AbbIESwm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2015 14:52:42 -0400
-Received: by pacfv12 with SMTP id fv12so56116662pac.2
-        for <git@vger.kernel.org>; Sat, 05 Sep 2015 11:52:42 -0700 (PDT)
+	id S1752082AbbIETjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2015 15:39:17 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:35653 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751645AbbIETjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2015 15:39:15 -0400
+Received: by pacfv12 with SMTP id fv12so56710126pac.2
+        for <git@vger.kernel.org>; Sat, 05 Sep 2015 12:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uniwyC9tP0/X3Y5Aalmz/sdkXqm42LnKd9MRPOTEIb8=;
-        b=YGDBIxtrCLW7cL+VlqNxukSz3QTqff1tL8Kpqmiccy7G2CmNKgwMzrhaHQQi6lnZ9+
-         2lCPiS2H7m8b2cVHEd7t9pPTkkik5dtp/4Uks0gaIXyi8K6uvmGZCacQkpe6GeMKYPFA
-         WBfat8fgm+smJlVr8Txq+5ElPv466WdTgIIjGLFyij2x0+aquK1ceBreLuSJpVmMutWW
-         lM0xrDYWgz9OTW6GX8W7dqwsKAf0e6OeVfXpcRmVeobNCcLoFrB2pE+Uf2nBlfUyS/1H
-         wdzieh/67R4nyHSsIjPzhFMUZ/pjWa/y02cxl53fWyGwnjR/5NwEXmLFjOuLbMG3kCWH
-         RRQQ==
-X-Received: by 10.66.65.234 with SMTP id a10mr23946111pat.2.1441479162298;
-        Sat, 05 Sep 2015 11:52:42 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id ch3sm6583639pbb.18.2015.09.05.11.52.39
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 05 Sep 2015 11:52:41 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1441479135-5285-1-git-send-email-Karthik.188@gmail.com>
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version:content-type;
+        bh=eHN4isElRLTQeEPUJ3Zb0lXaU4tJaQ0f8SKsa68ZGAg=;
+        b=cOQwSnTw1PfoEB5KarXx3xBoNRr6vPpyYGEvIX8mF9aCGlr7KiJVgZbJz7C88leBPX
+         L9avLTi6xb6GK7qKWdnLCWHUNm/amDEkgPkJcoy8XcFkBJYiDJWrwIFRF8TALMGeryBX
+         LaYT2KhF+yUL6OrTESpm6Kz8tSmEqZoZt1jAzch6JD2dBjpzeouEH6J9mgw/6c1ulEhL
+         YoY6QO4SnwCi/XlFYQQaK5+xvGidzK8ozYWQZVjR+x9fWKqkln+EoExnRiuqLGaAVI9v
+         Oox1JA7Oo0I7xizjjZ6ZSjGDLZIyowBeC8xct9gBfwqB2HEidPsXxaA2J3OjaJiMJI0u
+         KwVw==
+X-Received: by 10.67.10.101 with SMTP id dz5mr3668802pad.13.1441481954880;
+        Sat, 05 Sep 2015 12:39:14 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:20fa:dab1:6d64:e4c9])
+        by smtp.gmail.com with ESMTPSA id uv5sm6662956pbc.12.2015.09.05.12.39.13
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Sat, 05 Sep 2015 12:39:14 -0700 (PDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277409>
 
-Use 'ref-filter' APIs to implement the '--merged' and '--no-merged'
-options into 'tag.c'. The '--merged' option lets the user to only list
-tags merged into the named commit. The '--no-merged' option lets the
-user to only list tags not merged into the named commit.  If no object
-is provided it assumes HEAD as the object.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Add documentation and tests for the same.
+> To salvage "interpret-trailers" needs a lot more, as we are
+> realizing that the definition that led to its external design does
+> not match the way users use footers in the real world.  This affects
+> the internal data representation and the whole thing needs to be
+> rethought.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-tag.txt |  7 ++++++-
- builtin/tag.c             |  6 +++++-
- t/t7004-tag.sh            | 27 +++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+), 2 deletions(-)
+Note that I am not saying that you personally did any bad job while
+working on the interpret-trailers topic.  We collectively designed
+its feature based on a much narrower definition of what the trailer
+block is than what is used in the real world in practice, so we do
+not have a good way to locate an existing entry that is not a (key,
+value), no matter what the syntax to denote which is key and which
+is value is, insert a new entry that is not a (key, value), or
+remove an existing entry that is not a (key, value), all of which
+will be necessary to mutate trailer blocks people use in the real
+life.
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 0c7f4e6..3803bf7 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 'git tag' -d <tagname>...
- 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
- 	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
--	[--format=<format>] [<pattern>...]
-+	[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]
- 'git tag' -v <tagname>...
- 
- DESCRIPTION
-@@ -165,6 +165,11 @@ This option is only applicable when listing tags without annotation lines.
- 	that of linkgit:git-for-each-ref[1].  When unspecified,
- 	defaults to `%(refname:short)`.
- 
-+--[no-]merged [<commit>]::
-+	Only list tags whose tips are reachable, or not reachable
-+	if '--no-merged' is used, from the specified commit ('HEAD'
-+	if not specified).
-+
- CONFIGURATION
- -------------
- By default, 'git tag' in sign-with-default mode (-s) will use your
-diff --git a/builtin/tag.c b/builtin/tag.c
-index f9c56ac..f55dfda 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -23,7 +23,7 @@ static const char * const git_tag_usage[] = {
- 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> [<head>]"),
- 	N_("git tag -d <tagname>..."),
- 	N_("git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>]"
--		"\n\t\t[--format=<format>] [<pattern>...]"),
-+		"\n\t\t[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]"),
- 	N_("git tag -v <tagname>..."),
- 	NULL
- };
-@@ -358,6 +358,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
- 		OPT_CONTAINS(&filter.with_commit, N_("print only tags that contain the commit")),
- 		OPT_WITH(&filter.with_commit, N_("print only tags that contain the commit")),
-+		OPT_MERGED(&filter, N_("print only tags that are merged")),
-+		OPT_NO_MERGED(&filter, N_("print only tags that are not merged")),
- 		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
- 			     N_("field name to sort on"), &parse_opt_ref_sorting),
- 		{
-@@ -416,6 +418,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		die(_("--contains option is only allowed with -l."));
- 	if (filter.points_at.nr)
- 		die(_("--points-at option is only allowed with -l."));
-+	if (filter.merge_commit)
-+		die(_("--merged and --no-merged option are only allowed with -l"));
- 	if (cmdmode == 'd')
- 		return for_each_tag_name(argv, delete_tag);
- 	if (cmdmode == 'v')
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 8987fb1..3dd2f51 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1531,4 +1531,31 @@ test_expect_success '--format should list tags as per format given' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'setup --merged test tags' '
-+	git tag mergetest-1 HEAD~2 &&
-+	git tag mergetest-2 HEAD~1 &&
-+	git tag mergetest-3 HEAD
-+'
-+
-+test_expect_success '--merged cannot be used in non-list mode' '
-+	test_must_fail git tag --merged=mergetest-2 foo
-+'
-+
-+test_expect_success '--merged shows merged tags' '
-+	cat >expect <<-\EOF &&
-+	mergetest-1
-+	mergetest-2
-+	EOF
-+	git tag -l --merged=mergetest-2 mergetest-* >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--no-merged show unmerged tags' '
-+	cat >expect <<-\EOF &&
-+	mergetest-3
-+	EOF
-+	git tag -l --no-merged=mergetest-2 mergetest-* >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.5.1
+I think a good way forward would be to go like this:
+
+ * a helper function that starts from a flat <buf, len> (or a
+   strbuf) and identifies the end of the body of the message,
+   i.e. find "^---$", "^Conflicts:$", etc. and skip blank lines
+   backwards.  That is what ignore_non_trailer() in commit.c does,
+   and that can be shared across everybody that mutates a log
+   message.
+
+ * a helper function that takes the result of the above as a flat
+   <buf, len> (or a strbuf) and identifies the beginning of a
+   trailer block.  That may be just the matter of scanning backwards
+   from the end of the trailer block ignore_non_trailer() identified
+   for the first blank line, as I agree with Linus's "So quite
+   frankly, at that point if git doesn't recognize it as a sign-off
+   block, I don't think it's a big deal" in the thread.
+
+   Not having that and not calling that function can reintroduce the
+   recent "interpret-trailers corner case" bug Matthieu brought up.
+
+With these, everybody except interpret-trailers that mutates a log
+message can add a new signoff consistently.  And then, building on
+these, "interpret-trailers" can be written like this:
+
+ (1) starting from a flat <buf, len> (or a strbuf), using the above
+     helpers, identify the parts of the log message that is the
+     trailer block (and you will know what is before and what is
+     after the trailer block).
+
+ (2) keep the part before the trailer block and the part after the
+     trailer block (this could be empty) in one strbuf each; we do
+     not want to mutate these parts, and it is pointless to split
+     them further into individual lines.
+
+ (3) express the lines in the trailer block in a richer data
+     structure that is easier to manipulate (i.e. reorder the lines,
+     insert, delete, etc.) and work on it.
+
+ (4) when manipulation of the trailer block is finished, reconstruct
+     the resulting message by concatenating the "before trailer"
+     part, "trailer" part, and "after trailer" part.
+
+As to the exact design of "a richer data structure" and the
+manipulation we may want on the trailer, I currently do not have a
+strong "it should be this way" opinion yet, but after looking at
+various examples Linus gave us in the discussion, my gut feelig is
+that it would be best to keep the operation simple and generic,
+e.g. "find a line that matches this regexp and replace it with this
+line", "insert this line at the end", "delete all lines that match
+this regexp", etc.
