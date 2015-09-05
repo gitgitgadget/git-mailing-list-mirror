@@ -1,88 +1,216 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Draft of Git Rev News edition 7
-Date: Sat, 5 Sep 2015 23:04:05 +0200
-Message-ID: <CAP8UFD06wykJeVYZwUZWOZz1Qe-HvXNY8-sd5dmnjsZnDXGsMQ@mail.gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] tag: support mixing --sort=<spec> and -n
+Date: Sat, 5 Sep 2015 15:25:36 -0700
+Message-ID: <CA+P7+xo=4mC0fKkbtL+fkMXGxdUNcdUGUYHdaJ58MF9jVUUziw@mail.gmail.com>
+References: <20150905175202.GC7050@zero.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	Nicola Paolucci <npaolucci@atlassian.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	karthik nayak <karthik.188@gmail.com>,
-	Paul Tan <pyokagan@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	David Turner <dturner@twopensource.com>,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Johan Herland <johan@herland.net>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schauer <josch@debian.org>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Luke Diamand <
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 05 23:04:20 2015
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Rudy Matela <rudy@matela.com.br>
+X-From: git-owner@vger.kernel.org Sun Sep 06 00:26:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYKdG-0001Mm-Uu
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 23:04:19 +0200
+	id 1ZYLuf-0004Du-SQ
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Sep 2015 00:26:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752310AbbIEVEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2015 17:04:11 -0400
-Received: from mail-lb0-f194.google.com ([209.85.217.194]:34502 "EHLO
-	mail-lb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751525AbbIEVEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2015 17:04:08 -0400
-Received: by lbnt2 with SMTP id t2so3103499lbn.1
-        for <git@vger.kernel.org>; Sat, 05 Sep 2015 14:04:05 -0700 (PDT)
+	id S1753262AbbIEWZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2015 18:25:58 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:36388 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753193AbbIEWZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2015 18:25:56 -0400
+Received: by igcrk20 with SMTP id rk20so33793155igc.1
+        for <git@vger.kernel.org>; Sat, 05 Sep 2015 15:25:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=d9pUOQzN7pWQYoIIQcEmkdwZrXtM9Vb2rENcLX3yXX0=;
-        b=Axsh2fOSpzdndV9SxEoRdU8hPSKz21gTEGCX7g/hjkqf/DBKOgXaHZ/fzRf6lt/SDk
-         i3rnffB4vO3sP0I/RRg1nEhXXsZyD6xdHCMLMl1mNAh7KAk1LrK8Kp0xREkIInUVTgi2
-         8WV4TYYaNrsx9sMWw6NSx1HWU3/Hr+9Ud8ek3Roj9HEKM9nDbDnGaXZxwGTYlj0/Ts+i
-         sp4PwczUa+tIbQNkhmAzUEDkqylTpLcNXn2m0Y/97PH6fl5kW7GdyrT7jRofQfodahEj
-         llxQzVW0R2Nmbb+fYZyj5jTlj1/M2oeXOtdws/GIeoDx27qPAo9p13FZ3clb3wBV8OkQ
-         l6wQ==
-X-Received: by 10.152.7.106 with SMTP id i10mr10072666laa.114.1441487045600;
- Sat, 05 Sep 2015 14:04:05 -0700 (PDT)
-Received: by 10.25.135.7 with HTTP; Sat, 5 Sep 2015 14:04:05 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=wPlZSDlHIyATR/j8ou8FbSPqc4LAQv5I91whG81e4r4=;
+        b=Ri3zYqzekSAwaolBrmNQYtDBZNHON37irHvs8BSuUZQTupKb0wsTRyFwIK8CSd1x9e
+         tGyEGPwn8vF6GG3ZKJs+LoST/MVf7QnmuL85iBPgsDOYETIMMd1y2rOCtUywSPZi1sBI
+         V+C3os16qji2MbJ/2XsqQjyd2iM+Dv3HThfRuDGWZhZ8lMQpFQfIwnfvR14NFlkxnSnc
+         7meI71CzlNDVmNSOZvXITSdoUzrHhEO/kTRKupiZJ4+Q7R9ByQQwzp9i+RGPqItLk8jk
+         JY3DRtid9Yc6bBTJfl4+5ntVDra4nOw3HPi+CqcosPo7lLAzYjpl9zBBIbZgs7iMTXnp
+         3fdw==
+X-Received: by 10.50.3.66 with SMTP id a2mr19573051iga.92.1441491955958; Sat,
+ 05 Sep 2015 15:25:55 -0700 (PDT)
+Received: by 10.107.5.203 with HTTP; Sat, 5 Sep 2015 15:25:36 -0700 (PDT)
+In-Reply-To: <20150905175202.GC7050@zero.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277412>
 
-Hi,
+On Sat, Sep 5, 2015 at 10:52 AM, Rudy Matela <rudy@matela.com.br> wrote:
+>
+> Allow -n and --sort=version:refname to be used together
+> instead of failing with:
+>
+>   fatal: --sort and -n are incompatible
+>
+> Signed-off-by: Rudy Matela <rudy@matela.com.br>
 
-A draft of Git Rev News edition 7 is available here:
+Nice! I've been wondering about this one for a while. Especially since
+implementing tag.sort configuration which made -n not work at all.
 
-https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-7.md
+Note that it may be worth rebasing this on top of Karthik's part tag
+to use ref-filter series, since I think there will be plenty of merge
+conflicts there...
 
-Everyone is welcome to contribute in any section, like Matthieu
-already did, either by editing the above page on GitHub and sending a
-pull request, or by commenting on this GitHub issue:
+I also suggest adding some tests for this, as sort and -n didn't even
+have a test before, but now we could add a test that shows it works.
 
-https://github.com/git/git.github.io/issues/94
+> ---
+>  builtin/tag.c | 64 ++++++++++++++++++++++++++++++++---------------------------
+>  1 file changed, 35 insertions(+), 29 deletions(-)
+>
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> index cccca99..cdcb373 100644
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -176,13 +176,19 @@ static enum contains_result contains(struct commit *candidate,
+>         return contains_test(candidate, want);
+>  }
+>
+> -static void show_tag_lines(const struct object_id *oid, int lines)
+> +static char *get_tag_lines(const struct object_id *oid, int lines)
+>  {
+>         int i;
+>         unsigned long size;
+>         enum object_type type;
+>         char *buf, *sp, *eol;
+>         size_t len;
+> +       struct strbuf sb;
+> +
+> +       if (!lines)
+> +               return NULL;
+> +
+> +       strbuf_init(&sb,0);
+>
+>         buf = read_sha1_file(oid->hash, &type, &size);
+>         if (!buf)
+> @@ -203,20 +209,21 @@ static void show_tag_lines(const struct object_id *oid, int lines)
+>                 size = parse_signature(buf, size);
+>         for (i = 0, sp += 2; i < lines && sp < buf + size; i++) {
+>                 if (i)
+> -                       printf("\n    ");
+> +                       strbuf_addstr(&sb,"\n    ");
+>                 eol = memchr(sp, '\n', size - (sp - buf));
+>                 len = eol ? eol - sp : size - (sp - buf);
+> -               fwrite(sp, len, 1, stdout);
+> +               strbuf_add(&sb, sp, len);
+>                 if (!eol)
+>                         break;
+>                 sp = eol + 1;
+>         }
+>  free_return:
+>         free(buf);
+> +       return strbuf_detach(&sb, NULL);
+>  }
+>
+> -static int show_reference(const char *refname, const struct object_id *oid,
+> -                         int flag, void *cb_data)
+> +static int get_reference_and_tag_lines(const char *refname, const struct object_id *oid,
+> +                                      int flag, void *cb_data)
+>  {
+>         struct tag_filter *filter = cb_data;
+>
+> @@ -234,16 +241,8 @@ static int show_reference(const char *refname, const struct object_id *oid,
+>                 if (points_at.nr && !match_points_at(refname, oid->hash))
+>                         return 0;
+>
+> -               if (!filter->lines) {
+> -                       if (filter->sort)
+> -                               string_list_append(&filter->tags, refname);
+> -                       else
+> -                               printf("%s\n", refname);
+> -                       return 0;
+> -               }
+> -               printf("%-15s ", refname);
+> -               show_tag_lines(oid, filter->lines);
+> -               putchar('\n');
+> +               string_list_append(&filter->tags, refname)->util =
+> +                       get_tag_lines(oid, filter->lines);
+>         }
+>
+>         return 0;
+> @@ -260,6 +259,7 @@ static int list_tags(const char **patterns, int lines,
+>                      struct commit_list *with_commit, int sort)
+>  {
+>         struct tag_filter filter;
+> +       int i;
+>
+>         filter.patterns = patterns;
+>         filter.lines = lines;
+> @@ -268,20 +268,28 @@ static int list_tags(const char **patterns, int lines,
+>         memset(&filter.tags, 0, sizeof(filter.tags));
+>         filter.tags.strdup_strings = 1;
+>
+> -       for_each_tag_ref(show_reference, (void *)&filter);
+> -       if (sort) {
+> -               int i;
+> -               if ((sort & SORT_MASK) == VERCMP_SORT)
+> -                       qsort(filter.tags.items, filter.tags.nr,
+> -                             sizeof(struct string_list_item), sort_by_version);
+> -               if (sort & REVERSE_SORT)
+> -                       for (i = filter.tags.nr - 1; i >= 0; i--)
+> +       for_each_tag_ref(get_reference_and_tag_lines, (void *)&filter);
+> +       if ((sort & SORT_MASK) == VERCMP_SORT)
+> +               qsort(filter.tags.items, filter.tags.nr,
+> +                     sizeof(struct string_list_item), sort_by_version);
 
-You can also reply to this email.
+Nice. So we store the items and sort  by the lines.
 
-I tried to cc everyone who appears in this edition but maybe I missed
-some people, sorry about that.
+> +       if (sort & REVERSE_SORT)
+> +               for (i = filter.tags.nr - 1; i >= 0; i--)
+> +                       if (lines)
+> +                               printf("%-15s %s\n",
+> +                                       filter.tags.items[i].string,
+> +                                       (char*)filter.tags.items[i].util);
+> +                       else
+>                                 printf("%s\n", filter.tags.items[i].string);
+> -               else
+> -                       for (i = 0; i < filter.tags.nr; i++)
+> +       else
+> +               for (i = 0; i < filter.tags.nr; i++)
+> +                       if (lines)
+> +                               printf("%-15s %s\n",
+> +                                       filter.tags.items[i].string,
+> +                                       (char*)filter.tags.items[i].util);
 
-Thomas, Nicola and myself plan to publish this edition on Wednesday
-the 9th of September.
+I see we print them here (or above depending on whether we reverse sort or not..
 
-Thanks,
-Christian.
+Nice! I would maybe suggest if we can rename util to something else so
+it is more clear? Maybe I am not understanding why it has to be named
+such.
+
+> +                       else
+>                                 printf("%s\n", filter.tags.items[i].string);
+> -               string_list_clear(&filter.tags, 0);
+> -       }
+> +       string_list_clear(&filter.tags, 1);
+> +
+>         return 0;
+>  }
+>
+> @@ -665,8 +673,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>                         copts.padding = 2;
+>                         run_column_filter(colopts, &copts);
+>                 }
+> -               if (lines != -1 && tag_sort)
+> -                       die(_("--sort and -n are incompatible"));
+>                 ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, tag_sort);
+>                 if (column_active(colopts))
+>                         stop_column_filter();
+> --
+> 2.5.0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
