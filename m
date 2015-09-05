@@ -1,45 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v16 05/14] ref-filter: introduce match_atom_name()
-Date: Sun,  6 Sep 2015 00:22:06 +0530
-Message-ID: <1441479135-5285-6-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v16 07/14] ref-filter: add option to filter out tags, branches and remotes
+Date: Sun,  6 Sep 2015 00:22:08 +0530
+Message-ID: <1441479135-5285-8-git-send-email-Karthik.188@gmail.com>
 References: <1441479135-5285-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 05 20:52:44 2015
+X-From: git-owner@vger.kernel.org Sat Sep 05 20:52:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYIZv-000291-DL
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 20:52:43 +0200
+	id 1ZYIa4-0002Ha-9p
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Sep 2015 20:52:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752604AbbIESwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2015 14:52:41 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:35958 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751815AbbIESwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2015 14:52:19 -0400
-Received: by pacwi10 with SMTP id wi10so54946523pac.3
-        for <git@vger.kernel.org>; Sat, 05 Sep 2015 11:52:19 -0700 (PDT)
+	id S1752763AbbIESwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2015 14:52:47 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:33663 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751881AbbIESwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2015 14:52:25 -0400
+Received: by pacex6 with SMTP id ex6so55055770pac.0
+        for <git@vger.kernel.org>; Sat, 05 Sep 2015 11:52:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OayUcJ4AtMYQfCIWYQHnv88802RoqOLw1MR+cgkN0Kc=;
-        b=vrIqJgFrdgwPnDuGueMGG9ouTbCUdj16QsX81wNvks8bZSpfXXQHaEt/le8wo5/hPs
-         uns+p5r82GdewwQQPkxBaoNX6S3nPyMpL0vLoKbxyPip7YzTRmuacrd3eL1+MLLp22p6
-         CddNBQjwiGyuPNPoItnHuknfsa2eZnW8DUwvJZTgp9wSFJ5+kppStgxg3TZwe/JL8hWd
-         U47+a1lo86xRsY5m9/NJfC/XO8cOhOXNIlhFvooJHe/+oKpCfv+64gXmGkB7Mo9W4Tp6
-         Q3lpiC7huH2NyewyusJdpbsp0XeBdU4lmyKa4q7Pa1Lmyt1gPCx48x2AGrL3JXjFRwfn
-         XbwA==
-X-Received: by 10.66.248.162 with SMTP id yn2mr24094122pac.85.1441479139420;
-        Sat, 05 Sep 2015 11:52:19 -0700 (PDT)
+        bh=u/UTTA355hkGhN32Pxg+4Ksul1LToZx4vjcHlIXcbVg=;
+        b=FzteWGe2/kWs5ArWGhpOkZnNPRrLBMx1xuEurDLULkYawvjQdLDtzNKe/5gMuSOdWl
+         fEIYrN/mVuCXTzA1bfwtYTrueDU2qnXbFMuCTPHedv8XXDsBART2jtLBvA54NRyZDoyL
+         rB697nujfSOyvu8OUquQjVZ88GXM2APWf649WcUlw7OUBqjsjcA7cBQjG5Ozp/xvmXhP
+         yHKHtnf8ZlvDhzmnJbUNr0ZoXLawFgJTcbT4LwP1KnjKJDcZ4ilKgrIlsmlY0kQjVCUa
+         YBYdO6CvYF9QNDJBUxULuexf64wzp6bxt9QuCcCFXXqeYGOs2MCwL5enkFKZNsKjqcB3
+         Jwvg==
+X-Received: by 10.66.101.39 with SMTP id fd7mr23412566pab.3.1441479144754;
+        Sat, 05 Sep 2015 11:52:24 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id ch3sm6583639pbb.18.2015.09.05.11.52.17
+        by smtp.gmail.com with ESMTPSA id ch3sm6583639pbb.18.2015.09.05.11.52.22
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 05 Sep 2015 11:52:18 -0700 (PDT)
+        Sat, 05 Sep 2015 11:52:24 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.1
 In-Reply-To: <1441479135-5285-1-git-send-email-Karthik.188@gmail.com>
@@ -47,86 +46,207 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277400>
 
-Introduce match_atom_name() which helps in checking if a particular
-atom is the atom we're looking for and if it has a value attached to
-it or not.
+From: Karthik Nayak <karthik.188@gmail.com>
 
-Use it instead of starts_with() for checking the value of %(color:...)
-atom. Write a test for the same.
+Add a function called 'for_each_fullref_in()' to refs.{c,h} which
+iterates through each ref for the given path without trimming the path
+and also accounting for broken refs, if mentioned.
+
+Add 'filter_ref_kind()' in ref-filter.c to check the kind of ref being
+handled and return the kind to 'ref_filter_handler()', where we
+discard refs which we do not need and assign the kind to needed refs.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Thanks-to: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- ref-filter.c                   | 23 +++++++++++++++++++++--
- t/t6302-for-each-ref-filter.sh |  4 ++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
+ ref-filter.c | 65 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ ref-filter.h | 13 ++++++++++--
+ refs.c       |  9 +++++++++
+ refs.h       |  1 +
+ 4 files changed, 81 insertions(+), 7 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index a993216..e99c342 100644
+index 6c9ef08..c7a8cf0 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -189,6 +189,22 @@ static void pop_stack_element(struct ref_formatting_stack **stack)
- 	*stack = prev;
+@@ -1192,6 +1192,34 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
+ 	return ref;
  }
  
-+static int match_atom_name(const char *name, const char *atom_name, const char **val)
++static int filter_ref_kind(struct ref_filter *filter, const char *refname)
 +{
-+	const char *body;
++	unsigned int i;
 +
-+	if (!skip_prefix(name, atom_name, &body))
-+		return 0; /* doesn't even begin with "atom_name" */
-+	if (!body[0] || !body[1]) {
-+		*val = NULL; /* %(atom_name) and no customization */
-+		return 1;
++	static struct {
++		const char *prefix;
++		unsigned int kind;
++	} ref_kind[] = {
++		{ "refs/heads/" , FILTER_REFS_BRANCHES },
++		{ "refs/remotes/" , FILTER_REFS_REMOTES },
++		{ "refs/tags/", FILTER_REFS_TAGS}
++	};
++
++	if (filter->kind == FILTER_REFS_BRANCHES ||
++	    filter->kind == FILTER_REFS_REMOTES ||
++	    filter->kind == FILTER_REFS_TAGS)
++		return filter->kind;
++	else if (!strcmp(refname, "HEAD"))
++		return FILTER_REFS_DETACHED_HEAD;
++
++	for (i = 0; i < ARRAY_SIZE(ref_kind); i++) {
++		if (starts_with(refname, ref_kind[i].prefix))
++			return ref_kind[i].kind;
 +	}
-+	if (body[0] != ':')
-+		return 0; /* "atom_namefoo" is not "atom_name" or "atom_name:..." */
-+	*val = body + 1; /* "atomname:val" */
-+	return 1;
++
++	return FILTER_REFS_OTHERS;
 +}
 +
  /*
-  * In a format string, find the next occurrence of %(atom).
-  */
-@@ -687,6 +703,7 @@ static void populate_value(struct ref_array_item *ref)
- 		int deref = 0;
- 		const char *refname;
- 		const char *formatp;
-+		const char *valp;
- 		struct branch *branch = NULL;
+  * A call-back given to for_each_ref().  Filter refs and keep them for
+  * later object processing.
+@@ -1202,6 +1230,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	struct ref_filter *filter = ref_cbdata->filter;
+ 	struct ref_array_item *ref;
+ 	struct commit *commit = NULL;
++	unsigned int kind;
  
- 		v->handler = append_atom;
-@@ -721,10 +738,12 @@ static void populate_value(struct ref_array_item *ref)
- 			refname = branch_get_push(branch, NULL);
- 			if (!refname)
- 				continue;
--		} else if (starts_with(name, "color:")) {
-+		} else if (match_atom_name(name, "color", &valp)) {
- 			char color[COLOR_MAXLEN] = "";
+ 	if (flag & REF_BAD_NAME) {
+ 		warning("ignoring ref with broken name %s", refname);
+@@ -1213,6 +1242,11 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 		return 0;
+ 	}
  
--			if (color_parse(name + 6, color) < 0)
-+			if (!valp)
-+				die(_("expected format: %%(color:<color>)"));
-+			if (color_parse(valp, color) < 0)
- 				die(_("unable to parse format"));
- 			v->s = xstrdup(color);
- 			continue;
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index 505a360..c4f0378 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -81,4 +81,8 @@ test_expect_success 'filtering with --contains' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '%(color) must fail' '
-+	test_must_fail git for-each-ref --format="%(color)%(refname)"
-+'
++	/* Obtain the current ref kind from filter_ref_kind() and ignore unwanted refs. */
++	kind = filter_ref_kind(filter, refname);
++	if (!(kind & filter->kind))
++		return 0;
 +
- test_done
+ 	if (*filter->name_patterns && !match_name_as_path(filter->name_patterns, refname))
+ 		return 0;
+ 
+@@ -1244,6 +1278,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 
+ 	REALLOC_ARRAY(ref_cbdata->array->items, ref_cbdata->array->nr + 1);
+ 	ref_cbdata->array->items[ref_cbdata->array->nr++] = ref;
++	ref->kind = kind;
+ 	return 0;
+ }
+ 
+@@ -1320,17 +1355,37 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+ {
+ 	struct ref_filter_cbdata ref_cbdata;
+ 	int ret = 0;
++	unsigned int broken = 0;
+ 
+ 	ref_cbdata.array = array;
+ 	ref_cbdata.filter = filter;
+ 
++	if (type & FILTER_REFS_INCLUDE_BROKEN)
++		broken = 1;
++	filter->kind = type & FILTER_REFS_KIND_MASK;
++
+ 	/*  Simple per-ref filtering */
+-	if (type & (FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN))
+-		ret = for_each_rawref(ref_filter_handler, &ref_cbdata);
+-	else if (type & FILTER_REFS_ALL)
+-		ret = for_each_ref(ref_filter_handler, &ref_cbdata);
+-	else if (type)
++	if (!filter->kind)
+ 		die("filter_refs: invalid type");
++	else {
++		/*
++		 * For common cases where we need only branches or remotes or tags,
++		 * we only iterate through those refs. If a mix of refs is needed,
++		 * we iterate over all refs and filter out required refs with the help
++		 * of filter_ref_kind().
++		 */
++		if (filter->kind == FILTER_REFS_BRANCHES)
++			ret = for_each_fullref_in("refs/heads/", ref_filter_handler, &ref_cbdata, broken);
++		else if (filter->kind == FILTER_REFS_REMOTES)
++			ret = for_each_fullref_in("refs/remotes/", ref_filter_handler, &ref_cbdata, broken);
++		else if (filter->kind == FILTER_REFS_TAGS)
++			ret = for_each_fullref_in("refs/tags/", ref_filter_handler, &ref_cbdata, broken);
++		else if (filter->kind & FILTER_REFS_ALL)
++			ret = for_each_fullref_in("", ref_filter_handler, &ref_cbdata, broken);
++		if (!ret && (filter->kind & FILTER_REFS_DETACHED_HEAD))
++			head_ref(ref_filter_handler, &ref_cbdata);
++	}
++
+ 
+ 	/*  Filters that need revision walking */
+ 	if (filter->merge_commit)
+diff --git a/ref-filter.h b/ref-filter.h
+index 45026d0..0913ba9 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -13,8 +13,15 @@
+ #define QUOTE_PYTHON 4
+ #define QUOTE_TCL 8
+ 
+-#define FILTER_REFS_INCLUDE_BROKEN 0x1
+-#define FILTER_REFS_ALL 0x2
++#define FILTER_REFS_INCLUDE_BROKEN 0x0001
++#define FILTER_REFS_TAGS           0x0002
++#define FILTER_REFS_BRANCHES       0x0004
++#define FILTER_REFS_REMOTES        0x0008
++#define FILTER_REFS_OTHERS         0x0010
++#define FILTER_REFS_ALL            (FILTER_REFS_TAGS | FILTER_REFS_BRANCHES | \
++				    FILTER_REFS_REMOTES | FILTER_REFS_OTHERS)
++#define FILTER_REFS_DETACHED_HEAD  0x0020
++#define FILTER_REFS_KIND_MASK      (FILTER_REFS_ALL | FILTER_REFS_DETACHED_HEAD)
+ 
+ struct atom_value;
+ 
+@@ -27,6 +34,7 @@ struct ref_sorting {
+ struct ref_array_item {
+ 	unsigned char objectname[20];
+ 	int flag;
++	unsigned int kind;
+ 	const char *symref;
+ 	struct commit *commit;
+ 	struct atom_value *value;
+@@ -51,6 +59,7 @@ struct ref_filter {
+ 	struct commit *merge_commit;
+ 
+ 	unsigned int with_commit_tag_algo : 1;
++	unsigned int kind;
+ };
+ 
+ struct ref_filter_cbdata {
+diff --git a/refs.c b/refs.c
+index 4e15f60..a9469c2 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2108,6 +2108,15 @@ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
+ 	return do_for_each_ref(&ref_cache, prefix, fn, strlen(prefix), 0, cb_data);
+ }
+ 
++int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsigned int broken)
++{
++	unsigned int flag = 0;
++
++	if (broken)
++		flag = DO_FOR_EACH_INCLUDE_BROKEN;
++	return do_for_each_ref(&ref_cache, prefix, fn, 0, flag, cb_data);
++}
++
+ int for_each_ref_in_submodule(const char *submodule, const char *prefix,
+ 		each_ref_fn fn, void *cb_data)
+ {
+diff --git a/refs.h b/refs.h
+index e9a5f32..6d30c98 100644
+--- a/refs.h
++++ b/refs.h
+@@ -173,6 +173,7 @@ typedef int each_ref_fn(const char *refname,
+ extern int head_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
++extern int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsigned int broken);
+ extern int for_each_tag_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_branch_ref(each_ref_fn fn, void *cb_data);
+ extern int for_each_remote_ref(each_ref_fn fn, void *cb_data);
 -- 
 2.5.1
