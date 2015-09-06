@@ -1,179 +1,144 @@
-From: Paul Tan <pyokagan@gmail.com>
-Subject: Re: [PATCH] am: match --signoff to the original scripted version
-Date: Sun, 6 Sep 2015 17:04:13 +0800
-Message-ID: <CACRoPnTUzeF=RUVv_0+2Ej422Vh-NH+KpYaKH0VKNmGbuVQ_8g@mail.gmail.com>
-References: <CA+55aFzN4SnenchxPScn61_apzitGAPtoYEd49iLZPxgK0KQGw@mail.gmail.com>
-	<xmqqio7ob0xw.fsf@gitster.mtv.corp.google.com>
+From: Gabor Bernat <bernat@primeranks.net>
+Subject: Re: [PATCH] filter-branch: add passed/remaining seconds on progress
+Date: Sun, 6 Sep 2015 11:49:38 +0200
+Message-ID: <CANy2qHfHmydkn6BtoDFy0bOfrvRe03L+EO+ofjD5D3wDLdjW=A@mail.gmail.com>
+References: <1441379798-15453-1-git-send-email-bernat@primeranks.net>
+ <xmqqk2s6f2zj.fsf@gitster.mtv.corp.google.com> <CAPig+cRh-7BDOoumLxyh6_tNspL3ANq_wCE5f_VoQt6UwUFckQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 06 11:04:41 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Mikael Magnusson <mikachu@gmail.com>, cbailey32@bloomberg.net,
+	Lee.Carver@servicenow.com, Michael Witten <mfwitten@gmail.com>,
+	Gabor Bernat <gabor.bernat@gravityrd.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Sep 06 11:50:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYVsN-0002sK-79
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Sep 2015 11:04:39 +0200
+	id 1ZYWaW-0006lv-MU
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Sep 2015 11:50:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751037AbbIFJES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Sep 2015 05:04:18 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:34603 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750897AbbIFJEP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Sep 2015 05:04:15 -0400
-Received: by lbbmp1 with SMTP id mp1so27444513lbb.1
-        for <git@vger.kernel.org>; Sun, 06 Sep 2015 02:04:13 -0700 (PDT)
+	id S1751287AbbIFJuA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Sep 2015 05:50:00 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:33457 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751177AbbIFJt6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Sep 2015 05:49:58 -0400
+Received: by wiclk2 with SMTP id lk2so60247749wic.0
+        for <git@vger.kernel.org>; Sun, 06 Sep 2015 02:49:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DbeXH4K6xYGKE09tjtVLOpQbiAu4EZ+qbMRXIlSFovk=;
-        b=DQmGDz6et7caBya8YGSSyIEN385HTzRrCOgRZY+qULs5hoxiLarHK72YOEYB3J2iL8
-         cwC6VrQbd3QKbPaqiGLNUL0AGvMICHCT2vl+/hSYU9QMfOOg0i7qC7GMBfrpI2M14nBq
-         wwO0pLgb/aUmBPgdxUrbl3WxLTMdJ9oE77w/AVpcq256mua3lDBzzsQ/V2KpGwesnDXY
-         /L2UjXA320bjHVtG0dZdwaNsh1L5TDV3MAHbO5uiYcG0UTahncsO8dOTKofJc3tlVLCL
-         HLPRYECKSdqtz5dJcVMCTQMMF+X61VMxyK9EQv0O+BV0OKpiiZova9YCxTJtCNtLV63f
-         93wg==
-X-Received: by 10.152.5.68 with SMTP id q4mr11908929laq.66.1441530253222; Sun,
- 06 Sep 2015 02:04:13 -0700 (PDT)
-Received: by 10.112.62.196 with HTTP; Sun, 6 Sep 2015 02:04:13 -0700 (PDT)
-In-Reply-To: <xmqqio7ob0xw.fsf@gitster.mtv.corp.google.com>
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=Qe14/6bMj0qI2S7UZUGL86rwldcgekb2iUneEDyBtYA=;
+        b=YETv1adCreVGzLUZNakyaBBdyRMgsR1KdgUFyxiszqNUibeYViOyEow61M1dOnjrUU
+         aSdZKICMh30NJclYfUVstXCyNmlihmXFVCeS5srfPPtVStDgZ1/zMuhuvdo+MRHWIFQv
+         tUByjdsQ6JmTANnDpjWolm9bP1F7DPxjD1K9WDddYa4dUx40/7xm6ZS/1Ccx40DwYI1t
+         VT7eCCd1aAfrwXplqINEqezXAG7B+oRmYWFgoIzUDG9WzM0QQhSZQuWxp1IcxsZi70Ic
+         CY/jXFOexDqzmECRT/FpAAjqiH0666Cc2cnptN5gzE5JbODQOZ2uGZSQpDtbEuw6UAwk
+         W6Ig==
+X-Received: by 10.194.246.199 with SMTP id xy7mr17271954wjc.61.1441532997583;
+ Sun, 06 Sep 2015 02:49:57 -0700 (PDT)
+Received: by 10.194.72.134 with HTTP; Sun, 6 Sep 2015 02:49:38 -0700 (PDT)
+In-Reply-To: <CAPig+cRh-7BDOoumLxyh6_tNspL3ANq_wCE5f_VoQt6UwUFckQ@mail.gmail.com>
+X-Google-Sender-Auth: nmOJBwvrj4CY4dpE2sRU2EmrbDU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277419>
 
-Hi,
-
-Thanks for handling this.
-
-On Sun, Sep 6, 2015 at 12:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Linus noticed that the recently reimplementated "git am -s" defines
-
-s/reimplementated/reimplemented/ ?
-
-> the trailer block too rigidly, resulting an unnecessary blank line
-
-s/resulting an/resulting in an/ ?
-
-> between the existing sign-offs and his new sign-off.  An e-mail
-> submission sent to Linus in real life ends with mixture of sign-offs
-> and commentaries, e.g.
+On Fri, Sep 4, 2015 at 10:15 PM, Eric Sunshine <sunshine@sunshineco.com=
+> wrote:
+> On Fri, Sep 4, 2015 at 2:34 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>> G=C3=A1bor Bern=C3=A1t <bernat@primeranks.net> writes:
+>>> +echo $(date +%s) | grep -q '^[0-9]+$';  2>/dev/null && show_second=
+s=3Dt
+>>
+>> That is very strange construct.  I think you meant to say something
+>> like
+>>
+>>         if date '+%s' 2>/dev/null | grep -q '^[0-9][0-9]*$'
+>>         then
+>>                 show_seconds=3Dt
+>>         else
+>>                 show_seconds=3D
+>>         fi
 >
->         title here
+> The final format suggested[1] for this test was:
 >
->         message here
+>     { echo $(date +%s) | grep -q '^[0-9][0-9]*$'; } 2>/dev/null &&
+>         show_eta=3Dt
 >
->         Signed-off-by: Original Author <original@auth.or>
->         [rv: tweaked frotz and nitfol]
->         Signed-off-by: Re Viewer <rv@ew.er>
->         Signed-off-by: Other Reviewer <other@rev.ewer>
->         ---
->         patch here
+>> A handful of points:
+>>
+>>  * "echo $(any-command)" is suspect, unless you are trying to let
+>>    the shell munge output from any-command, which is not the case.
 >
-> Because the reimplementation reused append_signoff() helper that is
-> used by other codepaths, which is unaware that people intermix such
-> comments with their sign-offs in the trailer block, such a message
-> was judged to end with a non-trailer, resulting in an extra blank
+> Primarily my fault. I don't know what I was thinking when suggesting =
+that.
 
-s/extra blank/extra blank line/ ?
+Yes, the initial construct was different, willing to make this change.
 
-> before adding a new sign-off.
 >
-> The original scripted version of "git am" used a lot looser
-> definition, i.e. "if and only if there is no line that begins with
-> Signed-off-by:, add a blank line before adding a new sign-off".  For
-> the upcoming release, stop using the append_signoff() in "git am"
-> and reimplement the looser definition used by the scripted version
-> to use only in "git am" to fix this regression in "am" while
-> avoiding new regressions to other users of append_signoff().
+>>  * "grep" without -E (or "egrep") takes BRE, which "+" (one or more)
+>>    is not part of.
 >
-> In the longer term, we should look into loosening append_signoff()
-> so that other codepaths that add a new sign-off behave the same way
-> as "git am -s", but that is a task for post-release.
+> This seems to have mutated from the suggested form.
 >
-> Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin/am.c  | 31 +++++++++++++++++++++++++++++--
->  t/t4150-am.sh | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 77 insertions(+), 2 deletions(-)
+>>  * That semicolon is a syntax error.  I think whoever suggested you
+>>    to use it meant to squelch possible errors from "date" that does
+>>    not understand the "%s" format.
 >
-> diff --git a/builtin/am.c b/builtin/am.c
-> index 634f7a7..e7828e5 100644
-> --- a/builtin/am.c
-> +++ b/builtin/am.c
-> @@ -1191,6 +1191,33 @@ static void NORETURN die_user_resolve(const struct am_state *state)
->         exit(128);
->  }
+> This also mutated. The suggested form wanted to suppress errors from
+> 'date' if it complained about "%s", and from 'grep'. In retrospect,
+> applying it to 'grep' is questionable. I was recalling this warning
+> from the Autoconf manual[2]:
 >
-> +static void am_signoff(struct strbuf *sb)
-> +{
+>     Some of the options required by Posix are not portable in
+>     practice. Don't use =E2=80=98grep -q=E2=80=99 to suppress output,=
+ because many
+>     grep implementations (e.g., Solaris) do not support -q. Don't use
+>     =E2=80=98grep -s=E2=80=99 to suppress output either, because Posi=
+x says -s does
+>     not suppress output, only some error messages; also, the -s
+>     option of traditional grep behaved like -q does in most modern
+>     implementations. Instead, redirect the standard output and
+>     standard error (in case the file doesn't exist) of grep to
+>     /dev/null. Check the exit status of grep to determine whether it
+>     found a match.
+>
+> however, Git tests use 'grep -q' heavily, so perhaps we don't worry a=
+bout that.
 
-Hmm, okay, but now we have two similarly named functions am_signoff()
-and am_append_signoff() which both do nearly similar things, the only
-difference being am_signoff() operates on a strbuf while
-am_append_signoff() operates on the "msg" char* field in the am_state,
-which seems a bit iffy to me. I wonder if the logic could be
-implemented in am_append_signoff() instead so we have only one
-function?
+So we should keep it as it is.
 
-> +       char *cp;
-> +       struct strbuf mine = STRBUF_INIT;
-> +
-> +       /* Does it end with our own sign-off? */
-> +       strbuf_addf(&mine, "\n%s%s\n",
-> +                   sign_off_header,
-> +                   fmt_name(getenv("GIT_COMMITTER_NAME"),
-> +                            getenv("GIT_COMMITTER_EMAIL")));
-
-Maybe use git_committer_info() here?
-
-> +       if (mine.len < sb->len &&
-> +           !strcmp(mine.buf, sb->buf + sb->len - mine.len))
-
-Perhaps use ends_with()?
-
-> +               goto exit; /* no need to duplicate */
-> +
-> +       /* Does it have any Signed-off-by: in the text */
-> +       for (cp = sb->buf;
-> +            cp && *cp && (cp = strstr(cp, sign_off_header)) != NULL;
-> +            cp = strchr(cp, '\n')) {
-> +               if (sb->buf == cp || cp[-1] == '\n')
-> +                       break;
-> +       }
-> +
-> +       strbuf_addstr(sb, mine.buf + !!cp);
-> +exit:
-> +       strbuf_release(&mine);
-> +}
-> +
->  /**
->   * Appends signoff to the "msg" field of the am_state.
->   */
-> @@ -1199,7 +1226,7 @@ static void am_append_signoff(struct am_state *state)
->         struct strbuf sb = STRBUF_INIT;
 >
->         strbuf_attach(&sb, state->msg, state->msg_len, state->msg_len);
-> -       append_signoff(&sb, 0, 0);
-> +       am_signoff(&sb);
->         state->msg = strbuf_detach(&sb, &state->msg_len);
->  }
+>>  * I do not think you are clearing show_seconds to empty anywhere,
+>>    so an environment variable the user may have when s/he starts
+>>    filter-branch will seep through and confuse you.
 >
-> @@ -1303,7 +1330,7 @@ static int parse_mail(struct am_state *state, const char *mail)
->         stripspace(&msg, 0);
+> The empty assignment was implied in my example, but I should have bee=
+n
+> more explicit and shown a more complete snippet:
 >
->         if (state->signoff)
-> -               append_signoff(&msg, 0, 0);
-> +               am_signoff(&msg);
+>     show_eta=3D
+>     ...
+>     { echo $(date +%s) | grep -q '^[0-9][0-9]*$'; } 2>/dev/null &&
+>         show_eta=3Dt
 >
->         assert(!state->author_name);
->         state->author_name = strbuf_detach(&author_name, NULL);
+> The suggested 'if' form has the attribute of being clearer.
 
-Thanks again,
-Paul
+My bad, sorry for that. Will amend.
+
+>
+> [1]: http://thread.gmane.org/gmane.comp.version-control.git/276531/fo=
+cus=3D276837
+> [2]: https://www.gnu.org/software/autoconf/manual/autoconf.html#grep
+
+Any other pain points, or this construction will satisfy everybody?
