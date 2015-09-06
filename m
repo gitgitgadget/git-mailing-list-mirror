@@ -1,110 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] am: match --signoff to the original scripted version
-Date: Sun, 06 Sep 2015 10:24:12 -0700
-Message-ID: <xmqqd1xvbgw3.fsf@gitster.mtv.corp.google.com>
+Date: Sun, 06 Sep 2015 10:39:06 -0700
+Message-ID: <xmqq8u8jbg79.fsf@gitster.mtv.corp.google.com>
 References: <CA+55aFzN4SnenchxPScn61_apzitGAPtoYEd49iLZPxgK0KQGw@mail.gmail.com>
 	<xmqqio7ob0xw.fsf@gitster.mtv.corp.google.com>
-	<CACRoPnTUzeF=RUVv_0+2Ej422Vh-NH+KpYaKH0VKNmGbuVQ_8g@mail.gmail.com>
+	<CACRoPnQvNowZGbqvRLuhS8cC1EaTQX3vsyaESSQVXpuRToWLOQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Git Mailing List <git@vger.kernel.org>
 To: Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 06 19:24:24 2015
+X-From: git-owner@vger.kernel.org Sun Sep 06 19:39:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYdfv-0001GZ-Ow
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Sep 2015 19:24:20 +0200
+	id 1ZYduh-0007nE-O0
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Sep 2015 19:39:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697AbbIFRYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Sep 2015 13:24:16 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:36665 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751173AbbIFRYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Sep 2015 13:24:15 -0400
-Received: by padbj2 with SMTP id bj2so335930pad.3
-        for <git@vger.kernel.org>; Sun, 06 Sep 2015 10:24:14 -0700 (PDT)
+	id S1752657AbbIFRjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Sep 2015 13:39:11 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:36801 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752091AbbIFRjJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Sep 2015 13:39:09 -0400
+Received: by padbj2 with SMTP id bj2so520728pad.3
+        for <git@vger.kernel.org>; Sun, 06 Sep 2015 10:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=UrGiyeYzhIBnKtsFocq+sAW1syKsZcCSdoVWQaJn+W0=;
-        b=AujXwQ4yqSkOOE3a3/F067f/3c0n8LnH1s/AojyEJC1llvm5ZU8SntIxH3GmV9H126
-         Jc+cezN5d+H+FouXV3yWhLSxL7x5RGUBqh1D4E9Qr078Cy6O/qqne5RKW0/7noxFMCwP
-         D7WnnG+QGaBvfvGxBLn5TVsTOMN/ewJCMJamLn/0vLfcufF6+Meb4KO/f0drTI2hc2Km
-         gL4sIDQtVRqnv/AdYybbUz0QJOMk2J2IjqzfMg1413+gGP3YlpmWSjUBhbTIeazUWDGD
-         kw6zUKOGe2UDpo7zL+r19HwZEWwLAYi6xtqdawPZ3UN8CvCI7p9YyDx9rjSR17ruKjcf
-         y6Uw==
-X-Received: by 10.68.224.162 with SMTP id rd2mr35603810pbc.33.1441560254696;
-        Sun, 06 Sep 2015 10:24:14 -0700 (PDT)
+        bh=x9cK8K5EQMsxahDzurW8PurhXexQpgp4pYdOuuGv3oY=;
+        b=q276UoIm/PmrRujsZn8r+uqlgZMpmVu/B60urqxc1vfGHtuSRdzJ3Vt40BFs+Q7MBv
+         fIltyc3lPp29AktivtCihqI2fW/h2zUUar0F4wC/VOicnkgs7L7KwPvS5Es4m/wD2Xtf
+         S+7tH0T6RWQD4WigD9lxE9arV8zLqrp3GRrRMFsD35UagQVhv1uJwvnLgBiRJunxTxWR
+         lZGlmaVjSJAsnn8ideub7r0rL0WJM5ba20/QU/hDVehpOiqfUzklDtogL5UwjBcAQw/G
+         6xT+Tim4iHiNlrFBdJKuvJCKCVW97JabhJhif/CseUS+CFjpxM8lAlFgUXB5MLnRE0o2
+         yWew==
+X-Received: by 10.66.163.161 with SMTP id yj1mr35852003pab.34.1441561149057;
+        Sun, 06 Sep 2015 10:39:09 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:91db:290:be53:1b89])
-        by smtp.gmail.com with ESMTPSA id o7sm9155625pdr.25.2015.09.06.10.24.13
+        by smtp.gmail.com with ESMTPSA id im2sm9180196pbc.34.2015.09.06.10.39.07
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Sun, 06 Sep 2015 10:24:14 -0700 (PDT)
-In-Reply-To: <CACRoPnTUzeF=RUVv_0+2Ej422Vh-NH+KpYaKH0VKNmGbuVQ_8g@mail.gmail.com>
-	(Paul Tan's message of "Sun, 6 Sep 2015 17:04:13 +0800")
+        Sun, 06 Sep 2015 10:39:07 -0700 (PDT)
+In-Reply-To: <CACRoPnQvNowZGbqvRLuhS8cC1EaTQX3vsyaESSQVXpuRToWLOQ@mail.gmail.com>
+	(Paul Tan's message of "Sun, 6 Sep 2015 22:21:09 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277432>
 
 Paul Tan <pyokagan@gmail.com> writes:
 
-> s/reimplementated/reimplemented/ ?
-> s/resulting an/resulting in an/ ?
-> s/extra blank/extra blank line/ ?
-
-Thanks.
-
->> +static void am_signoff(struct strbuf *sb)
->> +{
+>> +       /* Does it have any Signed-off-by: in the text */
+>> +       for (cp = sb->buf;
+>> +            cp && *cp && (cp = strstr(cp, sign_off_header)) != NULL;
+>> +            cp = strchr(cp, '\n')) {
+>> +               if (sb->buf == cp || cp[-1] == '\n')
+>> +                       break;
+>> +       }
+>> +
+>> +       strbuf_addstr(sb, mine.buf + !!cp);
 >
-> Hmm, okay, but now we have two similarly named functions am_signoff()
-> and am_append_signoff() which both do nearly similar things, the only
-> difference being am_signoff() operates on a strbuf while
-> am_append_signoff() operates on the "msg" char* field in the am_state,
-> which seems a bit iffy to me.
-
-I do recall advising you not to overuse strbuf in am_state, and
-specifically not to use strbuf for a field like author_name, and the
-criteria to tell why a field should not be a strbuf in am_state is
-if the code used its strbuf-ness only because it is initially read
-with strbuf_read_file(), but afterwards it is necessary to use the
-field as a strbuf because the field is not modified later and is not
-passed to a helper function that takes a strbuf.
-
-I think the final code ended up following that piece of advice a bit
-too aggressively.  The <msg, msg_len> pair in am_state did need to
-be modified with sign-off, and it was done by passing it as a strbuf
-to append_signoff() in the code we are fixing here; keeping msg
-field that you wrote as a strbuf in the original would have made
-am_append_signoff() unnecessary.
-
-But this patch you are commenting on is purely for regression fix,
-and I didn't want to change other things like data representation at
-the same time.
-
->> +       /* Does it end with our own sign-off? */
->> +       strbuf_addf(&mine, "\n%s%s\n",
->> +                   sign_off_header,
->> +                   fmt_name(getenv("GIT_COMMITTER_NAME"),
->> +                            getenv("GIT_COMMITTER_EMAIL")));
+> To add on, I wonder if the above "add a blank line if there is no
+> Signed-off-by: at the beginning of a line" logic could be expressed
+> more succinctly like this:
 >
-> Maybe use git_committer_info() here?
-
-Perhaps, but I wanted to make sure I am doing the same thing as the
-codepath of sequencer.c::append_signoff(), which the original ended
-up calling.  git_committer_info() does way more than that, no?
-
->> +       if (mine.len < sb->len &&
->> +           !strcmp(mine.buf, sb->buf + sb->len - mine.len))
+>     if (!starts_with(sb->buf, "Signed-off-by: ") &&
+>         !strstr(sb->buf, "\nSigned-off-by: "))
+>         strbuf_addch(sb, '\n');
 >
-> Perhaps use ends_with()?
+>     strbuf_addstr(sb, mine.buf + 1);
 
-This caller already _knows_ how long the sb->buf string is; it is
-pointless to have ends_with() run strlen() on it.
+That may be more obvious, but I wanted to reuse the existing
+sign_off_header[]; there is no variant that has a leading "end of
+previous line".
+
+I actually think it is not an uncommon thing to ask "Give me the
+first occurrence of the string NEEDLE that appears at the beginning
+of lines in BUF", so the right way to address the "is it more
+readable" question would probably be to have a helper function to do
+just that, and use it here and other places that answer that
+question by themselves due to lack of such a helper.
