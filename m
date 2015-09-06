@@ -1,164 +1,71 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v16 06/14] ref-filter: implement an `align` atom
-Date: Sun, 6 Sep 2015 16:10:34 -0400
-Message-ID: <CAPig+cS28v552BZ63PTKrchYc4M-GYMhhEyfcHXW89vqvYhcOQ@mail.gmail.com>
-References: <1441479135-5285-1-git-send-email-Karthik.188@gmail.com>
-	<1441479135-5285-7-git-send-email-Karthik.188@gmail.com>
+From: <samsung02@samsungmobileonlineteamm.onmicrosoft.com>
+Subject: Important Notice!
+Date: Mon, 7 Sep 2015 01:59:24 +0530
+Message-ID: <SIXPR02MB0799398AD057A8A523D5AD25B8550@SIXPR02MB0799.apcprd02.prod.outlook.com>
+Reply-To: <samsungawdcenter14@outlook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 06 22:10:43 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 06 22:29:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYgGu-0007EX-36
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Sep 2015 22:10:40 +0200
+	id 1ZYgZa-0001KO-I8
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Sep 2015 22:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752519AbbIFUKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Sep 2015 16:10:36 -0400
-Received: from mail-yk0-f182.google.com ([209.85.160.182]:34559 "EHLO
-	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752208AbbIFUKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Sep 2015 16:10:35 -0400
-Received: by ykdg206 with SMTP id g206so64407928ykd.1
-        for <git@vger.kernel.org>; Sun, 06 Sep 2015 13:10:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ppL+0zJjTS1f4HwSKFYBwC6+LpNgejkd+FiEx23p3n8=;
-        b=wBtAlTtxQNxYiCSl/Vr99lKDAzTVuuw+c5R4AOjMNsC0zHC/HsmvDL7N3XlV5K8ren
-         qNH+dYONOjAgnVIUaPxJe91IybXnt/SyrbseIQG9kvtgnJpERubYpQcitIIoOpKMIDM0
-         8QK0ldMTWIX813prLeslGLulxY5vf46H/lMsK8hdWyU9MTALNiJwVyib3iFTCCakR+GL
-         5UvqzJIY/hfgUidLhh+ybxLx4tmwvAK/hr8qIlTHEpqIGd3jou2Qs55FYcaNTWn/NPcX
-         VVQ0i/q5CGHK56jlh5IRwT6dTWWB3bS4ZAisXrXH8RPrnsLRuO4OdB5ekHNiflqHEmhL
-         XuRQ==
-X-Received: by 10.129.134.3 with SMTP id w3mr16272996ywf.48.1441570234549;
- Sun, 06 Sep 2015 13:10:34 -0700 (PDT)
-Received: by 10.37.36.145 with HTTP; Sun, 6 Sep 2015 13:10:34 -0700 (PDT)
-In-Reply-To: <1441479135-5285-7-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: oW8xA43jPH_SE361TIep9theqwM
+	id S1752881AbbIFU3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Sep 2015 16:29:55 -0400
+Received: from mail-pu1apc01hn0208.outbound.protection.outlook.com ([104.47.126.208]:10204
+	"EHLO APC01-PU1-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752561AbbIFU3y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Sep 2015 16:29:54 -0400
+Authentication-Results: spf=none (sender IP is ) smtp.mailfrom=<>; 
+Received: from [100.66.33.251] (116.202.32.135) by
+ SIXPR02MB0799.apcprd02.prod.outlook.com (10.160.242.144) with Microsoft SMTP
+ Server (TLS) id 15.1.262.15; Sun, 6 Sep 2015 20:29:38 +0000
+Content-Description: Mail message body
+X-Originating-IP: [116.202.32.135]
+X-ClientProxiedBy: HKXPR03CA0059.apcprd03.prod.outlook.com (10.141.129.49) To
+ SIXPR02MB0799.apcprd02.prod.outlook.com (25.160.242.144)
+X-Microsoft-Exchange-Diagnostics: 1;SIXPR02MB0799;2:o5EPEqd1shZ2UuVouYKRt7YeGztB0hQe4D7oHUx3/FrfD1sSOu1mEDrJc4PrKafPKdoivHv5vQjq7xdoFRvFef311wW8DEUYirec2dnuhZ0TPgaUxARRdcXhxbq7kVJ2zAflUghJtIetdacUeFJvkob0bovzT5YuiOviIXqZRVo=;3:WmVH/I5KmVqnxHD7955QONXQSTMuOrMPkha5O+EDPnd7fWtCWNUieAVe6gH14pZry/1U11noyxSwuqimdmEyBcMnHiuzc4JVdynVB1Yb9HnBFevNbHAiBBstUtxbE1whPGPBBJDKynGZz0gBgHeqqw==;25:KgxG5FQ+ijyFxFqbuf1akQm+0HQiZnTCaC+Y58Wl0y7wCyC+CzXGqEq1IxFRDCyr2FvVrtySH2UPNaXUkbLgeH2xiQJEiXlqBRa1SIsSXd/4gsandsTjSwsHu9emOx+zC5stsFKnuOJtZWhTPFhNB30LvJT9Ns7y51QTUW2lRFuKBBWE3lzQjhvxfUohvh/w5ZMP53rVYiVvfnXwLrCXg1Ybvai4rf4eOX2M8Z2VfRJZObWIV28TT2NZ/LtmRlJmFhP4a/+AW3FzaME3tex1NQ==;4:e62U9WTgLUCmoXGHrZfpnftYElDqhVHQr4XFPv9mRMLIOAAfPqOueiH8bHWpQPOoOoUVBNid0YnhgbuDEeOmZN3CjVXH1JoxFc2ZXoXcZvXNleaiwvR18OOttfN602t85IQrHc
+ GvDdEZ2SmigrVPrC18ydTVYMuqr13rdhU9EwBlVZim0VKEOBM7muooJER0jj5qMa4mXCNxVb5wk+YCdS88Ntp6Hr4J6hC8AQzU 
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:SIXPR02MB0799;
+X-Microsoft-Antispam-PRVS: <SIXPR02MB079987C76ADC26E5A3E983A8B8550@SIXPR02MB0799.apcprd02.prod.outlook.com>
+X-Exchange-Antispam-Report-Test: UriScan:;
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(601004)(8121501046)(5005006)(3002001);SRVR:SIXPR02MB0799;BCL:0;PCL:0;RULEID:;SRVR:SIXPR02MB0799;
+X-Forefront-PRVS: 06911FE69E
+X-Forefront-Antispam-Report: SFV:SPM;SFS:(10019020)(6009001)(6049001)(199003)(189002)(87976001)(4001540100001)(97736004)(40100003)(81156007)(76576001)(86442001)(46102003)(54356999)(64872006)(250100001)(86152002)(50986999)(122386002)(109986003)(74316001)(89136004)(42186005)(77156002)(62966003)(558084003)(19580405001)(64706001)(5004730100002)(50466002)(5001860100001)(107886002)(226693001)(77096005)(5001920100001)(5001960100002)(53806999)(229853001)(86902001)(5001830100001)(105586002)(19580395003)(43066003)(42382002)(68736005)(47776003)(53256004)(5007970100001)(33656002)(110136002)(23756003)(4001450100002)(66066001)(101416001)(78352002)(189998001)(17643785005)(106356001)(7099028)(88516004)(7059030)(48574002)(397714005);DIR:OUT;SFP:1501;SCL:5;SRVR:SIXPR02MB0799;H:[100.66.33.251];FPR:;SPF:None;
+ PTR:InfoNoRecords;A:0;MX:0;LANG:en;
+Received-SPF: None (protection.outlook.com: [100.66.33.251] does not designate
+ permitted sender hosts)
+X-Microsoft-Exchange-Diagnostics: =?iso-8859-1?Q?1;SIXPR02MB0799;23:rPvG4K4gga/o08mW3JkYkI1kNI4y/L/HrblgCMG?=
+ =?iso-8859-1?Q?fQKSajaoAP0K+jkqM/v6kHyj9SdkcyT0cLggRtOaPni0x80US/g+LWzd9k?=
+ =?iso-8859-1?Q?HAfhUFyVuu7TNSaF/qGXllAvRVSgrJlYsn3WCjOisy2IdeZI7mAXItR8Ux?=
+ =?iso-8859-1?Q?V3okNaNk/IHhoMvMj928YtWApWwc07tzTKlTlZOJjPzLxPJboSKlvJ+8gZ?=
+ =?iso-8859-1?Q?YIkCLW4hpITz7HqlOto/ukwqquxD38aDvyjpmKPnFa3izrXpU1dZlmsr9w?=
+ =?iso-8859-1?Q?vlNV/R0ahvK7Zz/KmuNV4YJLa9JMQWeXfQp3rV5Qej2MMJT082Dohb0sLa?=
+ =?iso-8859-1?Q?6e4604OGn+sFglfW++u5YM3DyZgXFFCIW+9w8LG65lpBgQ0tcqBBPT4HKz?=
+ =?iso-8859-1?Q?JU9ek7hWubxKwj6M0C1/LXN5kcsXEXvBYX76TwUVk04MPNF3q6keTTgLQo?=
+ =?iso-8859-1?Q?p+KSmCVlPOzpywTK9wQwIt8x1hJcLyly/da0f1sCywqfB3g5Mi2jmXv0NB?=
+ =?iso-8859-1?Q?5cWiv5FrQVRcv3LxeHZogUhA3x4emqO5+3AIros9IR344tqAYbM+paN+g/?=
+ =?iso-8859-1?Q?WpX8alrpf7cwWQwxXUlYzg4j8tcQxHxiDaeEQf88wfnIVs/F5NxC4avnH/?=
+ =?iso-8859-1?Q?wt0b 
+X-Microsoft-Exchange-Diagnostics: 1;SIXPR02MB0799;5:OhUlFXQsCHbEb+d/7lot9qjnd94WcOaflQv4++adSWiPUxE0wAcxnZPlXW2ToQ6gVVB8hKKoOaZ8nrybXM7HcVWUPw2/GdSKi4vVg7LcdY30Y+TG7HYhg3I0C0zroPEHfNdnOwe2UnpGz2q59L4mbw==;24:NC0C0NtGaKaBQnz8CR3/WOOmai2Ry7FmnI8SiaVzYngVoY/QME6XlDq4eJY/sjGs9PE55LL6Wz/k0LvDPL0LwQ==;20:o3z8lCxVqC1wHtXjaq9z7dnQDf92LY87PUGWPaT1ZYKCsgOn2Rovt/udiUJLeqMr8NeyOCQDrNExrjJKc0lgYg==
+SpamDiagnosticOutput: 1:22
+SpamDiagnosticMetadata: 00000000%2D0000%2D0000%2D0000%2D000000000000
+X-OriginatorOrg: samsungmobileonlineteamm.onmicrosoft.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2015 20:29:38.2572
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SIXPR02MB0799
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277439>
 
-On Sat, Sep 5, 2015 at 2:52 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Implement an `align` atom which left-, middle-, or right-aligns the
-> content between %(align:...) and %(end).
->
-> It is followed by `:<width>,<position>`, where the `<position>` is
-> either left, right or middle and `<width>` is the size of the area
-> into which the content will be placed. If the content between
-> %(align:...) and %(end) is more than the width then no alignment is
-> performed. e.g. to align a refname atom to the middle with a total
-> width of 40 we can do: --format="%(align:middle,40)%(refname)%(end)".
->
-> We introduce an `at_end` function for each element of the stack which
-> is to be called when the `end` atom is encountered. Using this we
-> implement end_align_handler() for the `align` atom, this aligns the
-> final strbuf by calling `strbuf_utf8_align()` from utf8.c.
->
-> Ensure that quote formatting is performed on the whole of
-> %(align:...)...%(end) rather than individual atoms inside. We skip
-> quote formatting for individual atoms when the current stack element
-> is handling an %(align:...) atom and perform quote formatting at the
-> end when we encounter the %(end) atom of the second element of then
-> stack.
->
-> Add documentation and tests for the same.
->
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index e49d578..b23412d 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -127,6 +127,16 @@ color::
-> +align::
-> +       Left-, middle-, or right-align the content between %(align:...)
-> +       and %(end). Followed by `:<width>,<position>`, where the
-> +       `<position>` is either left, right or middle and `<width>` is
-> +       the total length of the content with alignment. If the
-
-This should mention that <position> is optional and default to "left"
-if omitted.
-
-> +       contents length is more than the width then no alignment is
-> +       performed. If used with '--quote' everything in between
-> +       %(align:...) and %(end) is quoted, but if nested then only the
-> +       topmost level performs quoting.
-> diff --git a/ref-filter.c b/ref-filter.c
-> index e99c342..6c9ef08 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -773,6 +837,50 @@ static void populate_value(struct ref_array_item *ref)
->                         else
->                                 v->s = " ";
->                         continue;
-> +               } else if (match_atom_name(name, "align", &valp)) {
-> +                       struct align *align = &v->u.align;
-> +                       struct strbuf **s;
-> +
-> +                       if (!valp)
-> +                               die(_("expected format: %%(align:<width>, <position>)"));
-
-I'm pretty sure this parsing code won't deal well with a space after
-the comma, so the space should be dropped from the diagnostic message
-advising the user of the correct format: s/, /,/
-
-> +                       /*
-> +                        * TODO: Implement a function similar to strbuf_split_str()
-> +                        * which would strip the terminator at the end.
-
-"...which would omit the separator from the end of each value."
-
-> +                        */
-> +                       s = strbuf_split_str(valp, ',', 0);
-> +
-> +                       /* If the position is given trim the ',' from the first strbuf */
-> +                       if (s[1])
-> +                               strbuf_setlen(s[0], s[0]->len - 1);
-> +                       if (s[2])
-> +                               die(_("align:<width>,<position> followed by garbage: %s"), s[2]->buf);
-
-If <position> is omitted, strbuf_split_str("42", ...) will return the
-array ["42", NULL] which won't have an element [2], which means this
-code will access beyond end-of-array. (This is another good argument
-for looping over s[] as Junio suggested rather than assuming these
-fixed yet optional positions. It can be hard to get it right.)
-
-> +                       if (strtoul_ui(s[0]->buf, 10, &align->width))
-> +                               die(_("positive width expected align:%s"), s[0]->buf);
-> +
-> +                       /*
-> +                        * TODO: Implement a more general check, so that the values
-> +                        * do not always have to be in a specific order.
-> +                        */
-> +                       if (!s[1])
-> +                               align->position = ALIGN_LEFT;
-> +                       else if (!strcmp(s[1]->buf, "left"))
-> +                               align->position = ALIGN_LEFT;
-> +                       else if (!strcmp(s[1]->buf, "right"))
-> +                               align->position = ALIGN_RIGHT;
-> +                       else if (!strcmp(s[1]->buf, "middle"))
-> +                               align->position = ALIGN_MIDDLE;
-> +                       else
-> +                               die(_("improper format entered align:%s"), s[1]->buf);
-> +
-> +                       strbuf_list_free(s);
-> +
-> +                       v->handler = align_atom_handler;
-> +                       continue;
-> +               } else if (!strcmp(name, "end")) {
-> +                       v->handler = end_atom_handler;
-> +                       continue;
->                 } else
->                         continue;
+CONRATULATION YOU HAVE WON 500.000.00GBP FROM SAMSUNG MOBILE DRAW CONTACT FOR CLIAMS VIA:(samsungawdcenter14@outlook.com) WITH YOUR NAME: MOB: ADD: OCCP:
