@@ -1,56 +1,63 @@
-From: Olaf Hering <olaf@aepfle.de>
-Subject: bash completion lacks options
-Date: Mon, 7 Sep 2015 17:07:58 +0200
-Message-ID: <20150907150757.GA6720@aepfle.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: bash completion lacks options
+Date: Mon, 7 Sep 2015 17:34:09 +0200
+Message-ID: <CACBZZX4aZo_hn07Pho2GtBVNWm7WHLbV6xSi_r-BjW97QWNqEg@mail.gmail.com>
+References: <20150907150757.GA6720@aepfle.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 07 17:08:07 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Olaf Hering <olaf@aepfle.de>
+X-From: git-owner@vger.kernel.org Mon Sep 07 17:34:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYy1e-0005nq-6H
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Sep 2015 17:08:06 +0200
+	id 1ZYyRF-0006N6-CK
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Sep 2015 17:34:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662AbbIGPID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2015 11:08:03 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.217]:28654 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752632AbbIGPIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2015 11:08:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1441638478; l=448;
-	s=domk; d=aepfle.de;
-	h=Content-Disposition:Content-Type:MIME-Version:Subject:To:From:Date;
-	bh=HvGqPWt2/GHdCmyKFf2ccJiBgA9QNsJx0AspcnH4lPE=;
-	b=jhxTQL3GTZpdW7NYuVBAVZkytY3HO7oLVDh2K9eVJhEu9nsD4FXwGiOMtLHh09JtLYD
-	hE9eEfrswabCLu7RX5QD6iuElY6/5ZgaLv1quYYJ08tdUFmjb+n66zQPvGaXIR1FX9HoZ
-	S6sFDM/lic25ePqJKanGqC5pUmmcbJjsJPA=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWtqWFmrC5F/k8792bHikQ==
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box (aftr-185-17-204-139.dynamic.mnet-online.de [185.17.204.139])
-	by smtp.strato.de (RZmta 37.12 DYNA|AUTH)
-	with ESMTPSA id 307164r87F7wHYN
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-	(Client did not present a certificate)
-	for <git@vger.kernel.org>;
-	Mon, 7 Sep 2015 17:07:58 +0200 (CEST)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id 251A15084E; Mon,  7 Sep 2015 17:07:58 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (6503)
+	id S1752794AbbIGPe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2015 11:34:29 -0400
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:34045 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750818AbbIGPe3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2015 11:34:29 -0400
+Received: by qgez77 with SMTP id z77so64459590qge.1
+        for <git@vger.kernel.org>; Mon, 07 Sep 2015 08:34:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=oWi4cAfiLNaJ8Lx8Wzus0AkReaFw8oDVezvCLI4A1oA=;
+        b=l59XX7GUn17WFVdz3gGYErY/EAIJf0nFvScoQHmB5ZOxAeSF1RfJgilnVo8oeKYt+o
+         X2LSpcjUQ6Br5CCzAsMISNFLjnLbt+lSForZADm1eXFfua203ZQ29Gx2Tht5fyIb6t3c
+         DR5AaaEOlVoT8Szg0iy/wGkHOWFJeDMXBGuU+d29irg5IGBW9sTiDNMzt0foDsQ0n3C9
+         73Hd2Hs9rDfQlbb3F/NwdMVx0zYkdrYWR6YcO456XgS2+jW21aJpoPogVJTY+S+HZyh/
+         I7HCLH+pqgMldInjfHVnsuKLB0CHEYGUuXeFFbs1OF66rDnWXTxeAS69vrSXfLRXicIc
+         ZUZQ==
+X-Received: by 10.140.83.202 with SMTP id j68mr8439015qgd.46.1441640068543;
+ Mon, 07 Sep 2015 08:34:28 -0700 (PDT)
+Received: by 10.55.24.209 with HTTP; Mon, 7 Sep 2015 08:34:09 -0700 (PDT)
+In-Reply-To: <20150907150757.GA6720@aepfle.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277466>
 
-"git send-email --f<tab>" lacks --find-renames and others. Is the list
-of possible options maintained manually? Perhaps this should be
-automated by placing the long strings in an ELF section, then filling
-variables like $__git_format_patch_options from such ELF section.
-An example how this was done in libguestfs is here (see daemon/daemon.h):
-https://github.com/libguestfs/libguestfs/commit/0306c98d319d189281af3c15101c8d343e400f13
+On Mon, Sep 7, 2015 at 5:07 PM, Olaf Hering <olaf@aepfle.de> wrote:
+> "git send-email --f<tab>" lacks --find-renames and others. Is the list
+> of possible options maintained manually?
 
-Olaf
+Yes, see contrib/completion/git-completion.bash.
+
+There's no code for send-email there, you (or someone) could submit a patch! :)
+
+> Perhaps this should be
+> automated by placing the long strings in an ELF section, then filling
+> variables like $__git_format_patch_options from such ELF section.
+> An example how this was done in libguestfs is here (see daemon/daemon.h):
+> https://github.com/libguestfs/libguestfs/commit/0306c98d319d189281af3c15101c8d343e400f13
+
+This is an interesting approach, but wouldn't help with git-send-email
+in particular, it's a Perl script, so there's no ELF section to parse.
