@@ -1,80 +1,156 @@
-From: Levin Du <zslevin@gmail.com>
-Subject: Re: Questions about git-push for huge repositories
-Date: Mon, 7 Sep 2015 11:51:52 +0800
-Message-ID: <CAN6cQGNGP+n3L=tuRCymOTWFCnFNsq-tFHkaNm+W=o726mjmmw@mail.gmail.com>
-References: <CAN6cQGPcGpaXUGu_7aaeJtMbruMocte-5po97vG5r39f=YdTZQ@mail.gmail.com>
-	<xmqq4mj7bfsf.fsf@gitster.mtv.corp.google.com>
-	<CAN6cQGMf089ERn2kZbFpHJ6vyJ4BnjCm-m-E+hQsduH55XFvKw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v16 00/14] port tag.c to use ref-filter APIs
+Date: Sun, 06 Sep 2015 23:33:36 -0700
+Message-ID: <xmqqh9n6agcf.fsf@gitster.mtv.corp.google.com>
+References: <1441479135-5285-1-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 07 05:51:59 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+	Matthieu.Moy@grenoble-inp.fr
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 07 08:33:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYnTK-0007gk-D1
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Sep 2015 05:51:58 +0200
+	id 1ZYpzt-0002pz-0c
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Sep 2015 08:33:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753549AbbIGDvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Sep 2015 23:51:54 -0400
-Received: from mail-vk0-f53.google.com ([209.85.213.53]:32840 "EHLO
-	mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751240AbbIGDvx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Sep 2015 23:51:53 -0400
-Received: by vkbf67 with SMTP id f67so36910584vkb.0
-        for <git@vger.kernel.org>; Sun, 06 Sep 2015 20:51:52 -0700 (PDT)
+	id S1753246AbbIGGdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2015 02:33:41 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:34850 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751062AbbIGGdk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2015 02:33:40 -0400
+Received: by pacfv12 with SMTP id fv12so89429897pac.2
+        for <git@vger.kernel.org>; Sun, 06 Sep 2015 23:33:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=yVRRbkbtmSI3B1OGEmOfAtIIqctr6fpLJGCjnwpVdS8=;
-        b=IyGPIVHF2kvf+XukQ6dAhzXSsRLSPqPNjVtKF0UIgACub+LsZY/dz4fc5Q7A10z7iM
-         Ie+jhkFmLuKnCtxCFdRdk46kgy3iTNvOXjz5aQE1eNyVROnVrx71GVhor356WL9AIZJG
-         KjHVLPS3svK8lFNbAKUSlDoihcIacMSmV/ZfeJ72Ch8ZTIw7U/Fq5qgR3vpLhbMXDNb/
-         esRMpq4KZG3vA+4O8ZUVvMF2uE5rN2IvmduOZCqGrk7blEhHH1O6ZhNE8XRts19LzR9q
-         EOT/U12+Mdxjklt3OqInIf83STWfdmRwiKxaWUwU82MD7QHTDjBvdLaL7kof+i9Vg1Ly
-         uQOA==
-X-Received: by 10.52.97.106 with SMTP id dz10mr22982607vdb.66.1441597912204;
- Sun, 06 Sep 2015 20:51:52 -0700 (PDT)
-Received: by 10.103.85.138 with HTTP; Sun, 6 Sep 2015 20:51:52 -0700 (PDT)
-In-Reply-To: <CAN6cQGMf089ERn2kZbFpHJ6vyJ4BnjCm-m-E+hQsduH55XFvKw@mail.gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=yeB6eNJ/B7Vo0ZIffxetRx9TY6Zt4v1BZqquCahOyKQ=;
+        b=LiLbwXExr6tQCuhPiuLkEqqCv0TQsr+OPNpHRGizVMKv5SzPioqEuX/K0mE/mAzdKH
+         a6e+iD3U+cdrDzjZtnOBtsrWrwwoiRNRaS7UjxrLyvbhRNZlJp6rrEmF1WKoyYPoT8I9
+         UhWsHIcUuc8PwGR/1r2H49v6mRgSDl7XhUc0LkkB0Iy6g4dGYWy0ojuNfAr1aFQBb2rM
+         keWNBpLXqPIucA5HONaloZoz2h1zNDgoTqWncGFQn6SXQjnf1frIsGlXbQwVLPA6STRD
+         8k5yCTxNVZJGjjJnWAePQ96dGF6Kd5LsVhZ6BaqmYgKnimqORDFm1kM+POLQl5r5cOiS
+         wm1g==
+X-Received: by 10.66.253.170 with SMTP id ab10mr42414046pad.135.1441607619925;
+        Sun, 06 Sep 2015 23:33:39 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:751a:a433:a60b:dba1])
+        by smtp.gmail.com with ESMTPSA id q3sm10614668pdg.89.2015.09.06.23.33.37
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Sun, 06 Sep 2015 23:33:37 -0700 (PDT)
+In-Reply-To: <1441479135-5285-1-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Sun, 6 Sep 2015 00:22:01 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277445>
 
-I try to use 'git replace --graft' to work aroud this. Here's the process:
-  cd A
-  fetch ../B master:master_b
-  git replace --graft master_b master_a
-  # now master_b's parent is master_a
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-  # do a filter-branch to make the stone solid
-  git filter-branch --tag-name-filter cat -- master_a..master_b
+> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> index d039f40..c5154bb 100644
+> --- a/Documentation/git-for-each-ref.txt
+> +++ b/Documentation/git-for-each-ref.txt
+> @@ -128,13 +128,14 @@ color::
+>  	are described in `color.branch.*`.
+>  
+>  align::
+> -	Left-, middle-, or right-align the content between %(align:..)
+> +	Left-, middle-, or right-align the content between %(align:...)
+>  	and %(end). Followed by `:<width>,<position>`, where the
+>  	`<position>` is either left, right or middle and `<width>` is
+>  	the total length of the content with alignment. If the
+>  	contents length is more than the width then no alignment is
+>  	performed. If used with '--quote' everything in between
+> -	%(align:..)  and %(end) is quoted.
+> +	%(align:...) and %(end) is quoted, but if nested then only the
+> +	topmost level performs quoting.
 
-  # prune all the old refs and do gc
-  git replace -d <origin_commit_of_master_b>
-  git update-ref -d refs/original/refs/heads/master_b
-  git reflog expire --expire=now --all
-  git gc --prune=now --aggressive
+I am not sure if the description of quote belongs to "align".  Isn't
+the general rule at the endgame when there are more opening things
+that would buffer its effect up to the corresponding %(end):
 
-And I'd like to make master_b look orphan, so using 'git replace' again:
-   git replace --graft master_b
-   git log master_b
-   # only show one commit, fine
-   git push /path/to/public/A master_b
-   # small amount of data pushed
-   du -hs  /path/to/public/A
-   # 6.2 GiB
+ - Some atoms like %(align) and %(if) always require a matching
+   %(end).  We call them "opening atoms" and sometimes denote them
+   as %($open).
 
-All are fine, except when I want to push the replace ref:
-   git push /path/to/public/A 'refs/replace/*'
+ - When a scripting language specific quoting is in effect, except
+   for opening atoms, replacement from every %(atom) is quoted when
+   and only when it appears at the top-level (that is, when it
+   appears outside %($open)...%(end)).
 
-It pushes 6 GiB data again.
+ - When a scripting language specific quoting is in effect,
+   everything between a top-level opening atom and its matching
+   %(end) is evaluated according to the semantics of the opening
+   atom and its result is quoted.
 
-So right now, 'git replace --graft master_b' needs to run by users
-if they need a tidy history view.
+To put the third item above in a different way, a matching
+%($open)...  %(end) pair behaves as if it is a single normal atom,
+from the point of view of the quoting rule.  All top-level atoms are
+invidivually quoted, whether they are normal atoms or open/end pairs.
+And that rule is not limited to %(align).
+
+I am flexible with the terminology, but the point is that I think
+the quoting rules are better be specified _outside_ the description
+of a particular atom, but as a general rule.
+
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> index 9fa1400..f55dfda 100644
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -43,8 +43,8 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, con
+>  
+>  	if (!format) {
+>  		if (filter->lines)
+> -			format = to_free = xstrfmt("%%(align:15,left)%%(refname:short)%%(end) %%(contents:lines=%d)",
+> -						   filter->lines);
+> +			format = to_free = xstrfmt("%%(align:15,left)%%(refname:short)%%(end) "
+> +						   "%%(contents:lines=%d)", filter->lines);
+
+This line still looks overlong.  Would it help to stop spelling this
+as a double "a = b = overlong expression" assignment?
+
+>  	/*
+>  	 * Perform quote formatting when the stack element is that of
+> -	 * a modifier atom and right above the first stack element.
+> +	 * a supporting atom. If nested then perform quote formatting
+> +	 * only on the topmost supporting atom.
+>  	 */
+>  	if (!state->stack->prev->prev) {
+>  		quote_formatting(&s, current->output.buf, state->quote_style);
+> @@ -261,6 +262,22 @@ static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
+>  	pop_stack_element(&state->stack);
+>  }
+>  
+> +static int match_atom_name(const char *name, const char *atom_name, const char **val)
+> +{
+> +	const char *body;
+> +
+> +	if (!skip_prefix(name, atom_name, &body))
+> +		return 0; /* doesn't even begin with "atom_name" */
+> +	if (!body[0] || !body[1]) {
+> +		*val = NULL; /* %(atom_name) and no customization */
+> +		return 1;
+> +	}
+
+This if condition is puzzling.  !body[0] would mean the name was
+exactly atom_name, which is what you want to catch.
+
+But the other part does not make any sense to me.  what does
+(body[0] != '\0' && !body[1]) mean?  atom_name asked for was "align"
+and name was "aligna"?  That is not "%(align) and no customization".
+
+> +	if (body[0] != ':')
+> +		return 0; /* "atom_namefoo" is not "atom_name" or "atom_name:..." */
+
+This one makes sense to me.
+
+> +	*val = body + 1; /* "atomname:val" */
+
+Spell that "atom_name:val" perhaps?
