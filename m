@@ -1,102 +1,109 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Re: [PATCH v1 0/2] contrib/subtree: make it respect spaces in a
- repository path
-Date: Mon, 7 Sep 2015 14:05:54 +0300
-Message-ID: <20150907110554.GA482@dell-note>
-References: <cover.1441404851.git.Alex.Crezoff@gmail.com>
- <xmqqoahheqax.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Bug: git-upload-pack will return successfully even when it can't read
+ all references
+Date: Mon, 7 Sep 2015 14:11:15 +0200
+Message-ID: <CACBZZX6ZYDEPrQorg=pVh734ua+x55SYoKKvSZ_h0GQaR=m+8w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 07 13:06:09 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?RHV5IE5ndXnhu4Vu?= <pclouds@gmail.com>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 07 14:11:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYuFO-0004tu-Vr
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Sep 2015 13:06:03 +0200
+	id 1ZYvGu-0007iK-9W
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Sep 2015 14:11:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750906AbbIGLF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2015 07:05:59 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:33463 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750839AbbIGLF5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2015 07:05:57 -0400
-Received: by lamp12 with SMTP id p12so48798192lam.0
-        for <git@vger.kernel.org>; Mon, 07 Sep 2015 04:05:56 -0700 (PDT)
+	id S1751236AbbIGMLh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2015 08:11:37 -0400
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:35210 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750885AbbIGMLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2015 08:11:35 -0400
+Received: by qgt47 with SMTP id 47so60825146qgt.2
+        for <git@vger.kernel.org>; Mon, 07 Sep 2015 05:11:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=9xGGO8DWuoqU99mzU6w2WDVsfQNcYO4K7qRiqHkgJ+M=;
-        b=0PnKpwqGkZ0FLgRu+l1itTMWaFAI8D7xPKbnGg9UfZf2IgHUAxYC7etuDU/9PJiBLS
-         iT+G8hW/I3UbkAROuiBoB38CwH2RAWSFwHn9ueyw6wqYj/NRiOhNBHo/fyl2HENuuSmF
-         bDpOoLZ7tJjGaETuUV5Yq0yccd1Bbjqo8jXZB/tZYilSRmCxgvkdhQ2EN2r80XHNvkzm
-         np3kMG2sUO+vOMvFIo/s1e8l6PTTO9yzuAswG6URzvMTFv7ALDsBqhUX2MPeuQoXZU6/
-         x7gcfDsKJpfRdsFPseqbnhdTXF0zRuvRH839uofSYQd6j2WsIqH08PhC2+CSloIU6rh/
-         wAUQ==
-X-Received: by 10.112.55.105 with SMTP id r9mr16555129lbp.89.1441623956439;
-        Mon, 07 Sep 2015 04:05:56 -0700 (PDT)
-Received: from localhost ([213.108.22.197])
-        by smtp.gmail.com with ESMTPSA id j1sm2976086lbc.15.2015.09.07.04.05.55
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Sep 2015 04:05:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqoahheqax.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=GOLUeBIadJL0wGBqAIrgmlZUYHNvRhLsDxdVPBM4PK4=;
+        b=YgsZcDWqtuIym+x2UwIWTbMkdV4rOFmoP4lfybvyhlFd+vGVQAvTszEfyhwRrcywlb
+         WOSxpOkgNfBgFeDXw/f/vtsXCAVwuNHwxl0Sg/+XoLuBT1HrNMUAY18NRXh9fhlXjs5L
+         D4D3nah6kiQNHG8JrU+kh7b16LTG1mErOB7MiIjrUAb72FwFavQYTh36f/ggdqdfr9Gd
+         pv9lMHFntGF8KpfkH24doUDYCp9O2XYylkd+KhMU9sXIWfAYySJHBnoVe2lHya8C6mBE
+         pDLlr+fm/Y2O1+opSJaI48+hzci7Rpu6usK86UAPKndWoGiKDsnbhl6dfE9z/A/39y05
+         D9pQ==
+X-Received: by 10.140.41.5 with SMTP id y5mr25513251qgy.61.1441627894793; Mon,
+ 07 Sep 2015 05:11:34 -0700 (PDT)
+Received: by 10.55.24.209 with HTTP; Mon, 7 Sep 2015 05:11:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277449>
 
-On Fri, Sep 04, 2015 at 04:08:06PM -0700, Junio C Hamano wrote:
-> Alexey Shumkin <alex.crezoff@gmail.com> writes:
-> 
-> > Some repositories may have spaces in their paths. Currently `git-subtree`
-> > raises an error in such cases.
-> > Also, `git-subtree` currently does not have tests for its 'push' command.
-> > Following patches are to fix these statements.
-> >
-> > Alexey Shumkin (2):
-> >   t7900-subtree: test the "space in a subdirectory name" case
-> >   contrib/subtree: respect spaces in a repository path
-> 
-> Doesn't this order break bisection?  It seems that you turn "subdir"
-> to "sub dir" in existing tests, and I understand that the whole
-> point of this series is that such a change will expose that the tool
-> is broken, making tests fail.
-It seems I have to reword commit messages to avoid such an interpretation.
-Because, the first commit does not break anything. It is to change the
-tests for `git-subtree` "to show" that `git-subtree`s already tested
-commands (almost) work correctly if there are spaces in paths (except
---rejoin-msg issue).
-And the second commit adds missing tests and the fix.
-Should I add/commit the breaking test first and then commit the fix?
-> 
-> Also, if you feel up to it, it might be a good idea to clean t7900
-> test up to the current best practice before doing any other changes
-> as a pure preparatory clean-up patch.
-> 
-> Namely, using cd outside a subshell of the tests to move around is a
-> bad thing to do, and you are adding more instance of it in this
-> series.  If one test with such a cd to go down fails before it has a
-> chance to come back up (or go up and then fail to come back down),
-> the later tests will be left in an unexpected place.
-I understand this issue with "cd" (I've just followed the existing t7900
-tests "code style").
-> 
-> >  contrib/subtree/git-subtree.sh     |   4 +-
-> >  contrib/subtree/t/t7900-subtree.sh | 194 +++++++++++++++++++++++--------------
-> >  2 files changed, 124 insertions(+), 74 deletions(-)
-> 
-> Thanks.
+We have a process to back up our Git repositories at work, this
+started alerting because it wasn't getting the same refs as the
+remote.
 
--- 
-Alexey Shumkin
-E-mail: Alex.Crezoff@gmail.com
-ICQ: 118001447
-Jabber (GoogleTalk): Alex.Crezoff@gmail.com
-Skype: crezoff
+This turned out to be a pretty trivial filesystem error.
+refs/heads/master wasn't readable by the backup process, but some
+other stuff in refs/heads and objects/* was.
+
+But I think it's a bug that if we ssh to the remote end, and
+git-upload-pack can't read certain refs in refs/heads/ that we don't
+return an error.
+
+This simple shellscript reproduces the issue:
+
+    rm -rf /tmp/repo /tmp/repo-checkout
+    git init /tmp/repo
+    cd /tmp/repo
+    touch foo
+    git add foo
+    git commit -m"foo"
+    git checkout -b branch
+    git checkout master
+    git show-ref
+    chmod 000 .git/refs/heads/master
+    git show-ref
+    cd /tmp
+    git clone repo repo-checkout
+    echo "Status code of clone: $?"
+    cd repo-checkout
+    git show-ref
+
+After running this you get:
+
+    $ (cd /tmp/repo-checkout && echo -n | strace
+/tmp/avar/bin/git-upload-pack /tmp/repo 2>&1 | grep -e EACCES)
+    open("refs/heads/master", O_RDONLY)     = -1 EACCES (Permission denied)
+    open("refs/heads/master", O_RDONLY)     = -1 EACCES (Permission denied)
+    open("refs/heads/master", O_RDONLY)     = -1 EACCES (Permission denied)
+
+And "git fetch" will return 0.
+
+We fail to call get refs/heads/master in head_ref_namespaced() called
+by upload_pack(). I was going to see if I could patch it to return an
+error, but that code seems very far removed from any error checking.
+
+This isn't only an issue with git-upload-pack, e.g. show-ref itself
+has the same issue:
+
+    $ chmod 600 .git/refs/heads/master
+    $ git show-ref; echo $?
+    e7255c8fcabc6e15f57cd984f9f117870052c1a0 refs/heads/branch
+    e7255c8fcabc6e15f57cd984f9f117870052c1a0 refs/heads/master
+    0
+    $ chmod 000 .git/refs/heads/master
+    $ git show-ref; echo $?
+    e7255c8fcabc6e15f57cd984f9f117870052c1a0 refs/heads/branch
+    0
+
+I wanted to check if this was a regression and got as far back as
+v1.4.3 with the same behavior before the commands wouldn't work
+anymore due to changes in the git config parsing code.
