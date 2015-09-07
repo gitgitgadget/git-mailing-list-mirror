@@ -1,88 +1,406 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/5] enter_repo: avoid duplicating logic, use is_git_directory() instead
-Date: Mon, 07 Sep 2015 09:33:36 -0700
-Message-ID: <xmqq8u8i9okf.fsf@gitster.mtv.corp.google.com>
-References: <20150715132552.GA28574@lanh>
-	<1440204002-7638-1-git-send-email-pclouds@gmail.com>
-	<1440204002-7638-3-git-send-email-pclouds@gmail.com>
+From: KES <kes-kes@yandex.ua>
+Subject: Improving auto conflict resolving while merge
+Date: Mon, 07 Sep 2015 20:15:46 +0300
+Message-ID: <856611441646146@web13j.yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, bjornar@snoksrud.no
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 07 18:33:49 2015
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: =?koi8-r?B?5dfHxc7JyiDrz87Yy8/X?= <kes-kes@yandex.ua>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 07 19:23:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZYzMZ-000728-JM
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Sep 2015 18:33:47 +0200
+	id 1ZZ08i-0008JL-6e
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Sep 2015 19:23:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753742AbbIGQdm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Sep 2015 12:33:42 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:34454 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753681AbbIGQdi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2015 12:33:38 -0400
-Received: by padhy16 with SMTP id hy16so98421895pad.1
-        for <git@vger.kernel.org>; Mon, 07 Sep 2015 09:33:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=Fz+gZJxawLYBLbunJ80qZZzWxQ0SDPI7SJjgKw/W/bs=;
-        b=zbAI8taVr7sS/mVTk15/PshbDwLN7wz95Sqkw79GGd9AfZDDpcMcqJC88fmoSv31tx
-         /dxnIwFUESmoEJ/vUKP4jL4QQn4n0MFtf6LGMBoZk5hF7LOJh3CJkekUzU4gTmjZ2zHa
-         pXyjOnHi5FXDtqT82c16ww23Q7CgMpDlA3m/toPJ2RstTb2T23CVya7lKw5pdBheaSGF
-         C6Za+cd487TrmztbA6E5YAC0cwqmNN28hj/K7B1rSkyCdHrnqqfAqn8JkKgNca74bw9c
-         GC5FeqN8acOE9vCy+MAbYHNYPXbuuc3FYYl0SC4N6Jt3lJGol6hbTt++Qm8IJP8J6pCk
-         WPqg==
-X-Received: by 10.66.190.135 with SMTP id gq7mr21890063pac.65.1441643617863;
-        Mon, 07 Sep 2015 09:33:37 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:751a:a433:a60b:dba1])
-        by smtp.gmail.com with ESMTPSA id bc10sm340384pbd.14.2015.09.07.09.33.36
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Mon, 07 Sep 2015 09:33:37 -0700 (PDT)
-In-Reply-To: <1440204002-7638-3-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 22
- Aug 2015 07:39:59 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754031AbbIGRXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2015 13:23:30 -0400
+Received: from forward15j.cmail.yandex.net ([5.255.227.179]:50217 "EHLO
+	forward15j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751331AbbIGRX3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Sep 2015 13:23:29 -0400
+X-Greylist: delayed 459 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Sep 2015 13:23:28 EDT
+Received: from web13j.yandex.ru (web13j.yandex.ru [5.45.198.54])
+	by forward15j.cmail.yandex.net (Yandex) with ESMTP id 0BC0E211EA
+	for <git@vger.kernel.org>; Mon,  7 Sep 2015 20:15:47 +0300 (MSK)
+Received: from 127.0.0.1 (localhost [127.0.0.1])
+	by web13j.yandex.ru (Yandex) with ESMTP id 8E953D403A1;
+	Mon,  7 Sep 2015 20:15:47 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1441646147; bh=9QIfmK6CPsaLVxqSqkecWr5R3PtaCFoXCvO3NMlosfs=;
+	h=From:To:Cc:Subject:Date;
+	b=McoPYUztwuijjlOktkWtdXnCWwGn/w1aKNMiM7oDSCCBo68wQN45RnCqPn0x1GdA5
+	 dUYmSITr0p+CoKA9HuXIH5VdxIDRQm31WYobNFGR7Ee3h6XPZJtNpcoKpiX651hYVz
+	 X94spJvzm1Tdy63qs21QHUHSHgN1SfuQbASgktF4=
+Received: by web13j.yandex.ru with HTTP;
+	Mon, 07 Sep 2015 20:15:46 +0300
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277470>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Hi.
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
+**To not apply big patches, I will supply links to public repository
 
-The cover letter talks about "local clone", and in this entire
-series, I saw new tests only for the local case, but doesn't this
-and the next change also affect the case where a Git daemon or a
-upload-pack process is serving the remote repository?
+Lets start
 
-And if so, how is that case affected?
+1. git clone https://github.com/KES777/Plack
 
->  path.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/path.c b/path.c
-> index a536ee3..7340e11 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -441,8 +441,7 @@ const char *enter_repo(const char *path, int stri=
-ct)
->  	else if (chdir(path))
->  		return NULL;
-> =20
-> -	if (access("objects", X_OK) =3D=3D 0 && access("refs", X_OK) =3D=3D=
- 0 &&
-> -	    validate_headref("HEAD") =3D=3D 0) {
-> +	if (is_git_directory(".")) {
->  		set_git_dir(".");
->  		check_repository_format();
->  		return path;
+2. git show ed485bf75a6
+
+Nothing interesting. Usual merge conflict while merge branch 'feature/doc_contribute' to 'master'
+
+But I was interested by this part:
+
+   my $app = sub {
+       my $env =  shift;
+ 
++<<<<<<< HEAD
++=======
++  my $app = sub {
++      my $env =  shift;
++
++>>>>>>> master
+
+I know that some code were cherry picked(??) by maintainer from by branch. Ans this is the part which are same in master and branch.
+So I not expect conflict here. I start to dig.
+
+I compare Log4perl.pm files from branch and master 
+3. git checkout feature/doc_contribution
+4. cd lib/Plack/Middleware
+5. git diff d095870 Log4perl.pm
+
+I see that both master and branch has same resulting changes:
+@@ -36,10 +35,10 @@ __END__
+ 
+ =head1 NAME
+ 
+-Plack::Middleware::Log4perl - Uses Log::Log4perl to configure logger
++Plack::Middleware::Log4perl - Uses Log::Log4perl to configure psgix.logger
+ 
+ =head1 SYNOPSIS
+-
++  # How to use logger in your app
+   my $app = sub {
+       my $env =  shift;
+ 
+@@ -53,18 +52,25 @@ Plack::Middleware::Log4perl - Uses Log::Log4perl to configure logger
+
+But this part of code were edited in both branches too:
+
+The branch were started at this commit: 0a5ff8427
+
+6. git diff 0a5ff8427
+
+@@ -35,14 +35,28 @@ __END__
+ 
+ =head1 NAME
+ 
+-Plack::Middleware::Log4perl - Uses Log::Log4perl to configure logger
++Plack::Middleware::Log4perl - Uses Log::Log4perl to configure psgix.logger
+ 
+ =head1 SYNOPSIS
++  # How to use logger in your app
++  my $app = sub {
++      my $env =  shift;
+ 
+-  use Log::Log4perl;
++      $env->{'psgix.logger'}({ level => 'error', message => 'Hi' });
++
++      return [
++          '200',
++          [ 'Content-Type' => 'text/plain' ],
++          [ "Hello World" ],
++      ];
++  };
+
+7. git checkout master 
+8. git diff 0a5ff8427
+
+@@ -39,28 +40,41 @@ Plack::Middleware::Log4perl - Uses Log::Log4perl to configure logger
+ 
+ =head1 SYNOPSIS
+ 
+-  use Log::Log4perl;
++  my $app = sub {
++      my $env =  shift;
++
++      $env->{'psgix.logger'}({ level => 'error', message => 'Hi' });
++
++      return [
++          '200',
++          [ 'Content-Type' => 'text/plain' ],
++          [ "Hello World" ],
++      ];
++  };
++
+
+I repeat for emphasis. In the resulting file we have same code and not expect conflict.
+
+At this point I have same changes on master and branch.
+master head is d095870
+branch head is a3db36a
+fork point is 0a5ff84
+
+Comparing step-by-step 
+(A)   git diff 0a5ff84..d095870
+(B)   git diff 0a5ff84..a3db36a
+Find patches which apply to same lines
+ =head1 SYNOPSIS
+ 
+-  use Log::Log4perl;
++  my $app = sub {
++      my $env =  shift;
++
++      $env->{'psgix.logger'}({ level => 'error', message => 'Hi' });
++
++      return [
++          '200',
++          [ 'Content-Type' => 'text/plain' ],
++          [ "Hello World" ],
++      ];
++  };
++
+
+ =head1 SYNOPSIS
++  # How to use logger in your app
++  my $app = sub {
++      my $env =  shift;
+ 
+-  use Log::Log4perl;
++      $env->{'psgix.logger'}({ level => 'error', message => 'Hi' });
++
++      return [
++          '200',
++          [ 'Content-Type' => 'text/plain' ],
++          [ "Hello World" ],
++      ];
++  };
+
+And check with 
+(C)  git diff a3db36a..d095870
+ =head1 SYNOPSIS
+-  # How to use logger in your app
++
+   my $app = sub {
+       my $env =  shift;
+ 
+(D) So this merge conflict (the result of `git checkout master; git merge feature/doc_contribution`)
+@@@ -36,13 -35,13 +36,19 @@@ __END_
+  
+  =head1 NAME
+  
+- Plack::Middleware::Log4perl - Uses Log::Log4perl to configure logger
++ Plack::Middleware::Log4perl - Uses Log::Log4perl to configure psgix.logger
+  
+  =head1 SYNOPSIS
++   # How to use logger in your app
++   my $app = sub {
++       my $env =  shift;
+  
+++<<<<<<< HEAD
+ +  my $app = sub {
+ +      my $env =  shift;
+ +
+++=======
+++>>>>>>> feature/doc_contribution
+        $env->{'psgix.logger'}({ level => 'error', message => 'Hi' });
+  
+        return [
+
+can be simplified to:
+
+@@@ -36,13 -35,13 +36,19 @@@ __END_
+  
+  =head1 NAME
+  
+- Plack::Middleware::Log4perl - Uses Log::Log4perl to configure logger
++ Plack::Middleware::Log4perl - Uses Log::Log4perl to configure psgix.logger
+  
+  =head1 SYNOPSIS
++   # How to use logger in your app
+    my $app = sub {
+        my $env =  shift;
+  
+
+NEXT
+Next merge conflict seems this:
+(A)
++  };
++
+ 
++  # Use your own Log4perl configuration
++  use Log::Log4perl;
+   Log::Log4perl::init('/path/to/log4perl.conf');
+
+(B)
++  };
+ 
++
++  # Initialization. Case#1
++  use Log::Log4perl;
+   Log::Log4perl::init('/path/to/log4perl.conf');
+
+Comparing to (C)
+@@ -53,18 +52,25 @@
+   };
+ 
+ 
+-  # Use your own Log4perl configuration
++  # Initialization. Case#1
+   use Log::Log4perl;
+   Log::Log4perl::init('/path/to/log4perl.conf');
+
+So current merge conflict (D) 
+@@@ -51,20 -50,27 +57,33 @@@
+            [ "Hello World" ],
+        ];
+    };
+++<<<<<<< HEAD
+ +
+ +
+ +  # Use your own Log4perl configuration
+++=======
++ 
++ 
++   # Initialization. Case#1
+++>>>>>>> feature/doc_contribution
+    use Log::Log4perl;
+    Log::Log4perl::init('/path/to/log4perl.conf');
+
+Can be simplified to: (E) 
+@@@ -51,20 -50,27 +57,33 @@@
+            [ "Hello World" ],
+        ];
+    };
+
+
+++<<<<<<< HEAD
+ +  # Use your own Log4perl configuration
+++=======
++   # Initialization. Case#1
+++>>>>>>> feature/doc_contribution
+    use Log::Log4perl;
+    Log::Log4perl::init('/path/to/log4perl.conf');
+
+NOTICE: in (C) only two lines are different.
+
+NEXT
+(A)
+-  # Or let middleware to configure log4perl
+-  enable "Log4perl", category => "plack", conf => '/path/to/log.conf';
++  # Configure with Log4perl middleware options
++  builder {
++      enable "Log4perl", category => "plack", conf => '/path/to/log4perl.conf';
++      $app;
++  }
+
+(B)
+-  # Or let middleware to configure log4perl
+-  enable "Log4perl", category => "plack", conf => '/path/to/log.conf';
++
++  # Initialization. Case#2
++  # Let middleware to configure log4perl
++  builder {
++      enable "Log4perl", category => "plack", conf => '/path/to/log4perl.conf';
++      $app;
++  }
+
+(C)
+
+
+-  # Configure with Log4perl middleware options
++  # Initialization. Case#2
++  # Let middleware to configure log4perl
+   builder {
+       enable "Log4perl", category => "plack", conf => '/path/to/log4perl.conf';
+       $app;
+
+
+(D)
+  
+++<<<<<<< HEAD
+ +  # Configure with Log4perl middleware options
+++=======
++ 
++   # Initialization. Case#2
++   # Let middleware to configure log4perl
+++>>>>>>> feature/doc_contribution
+    builder {
+        enable "Log4perl", category => "plack", conf => '/path/to/log4perl.conf';
+        $app;
+
+->(E) Notice, that in (C) one line is deleted and two added
+++<<<<<<< HEAD
+ +  # Configure with Log4perl middleware options
+++=======
++   # Initialization. Case#2
++   # Let middleware to configure log4perl
+++>>>>>>> feature/doc_contribution
+    builder {
+        enable "Log4perl", category => "plack", conf => '/path/to/log4perl.conf';
+        $app;
+
+
+NEXT
+(A)
+ =head1 DESCRIPTION
+ 
+ Log4perl is a L<Plack::Middleware> component that allows you to use
+-L<Log::Log4perl> to configure the logging object, C<psgix.logger>.
++L<Log::Log4perl> to configure the logging object C<psgix.logger> for a
++given category.
+ 
+ =head1 CONFIGURATION
+
+(B)
+ =head1 DESCRIPTION
+ 
+-Log4perl is a L<Plack::Middleware> component that allows you to use
+-L<Log::Log4perl> to configure the logging object, C<psgix.logger>.
++Log4perl is a L<Plack::Middleware> component that initialize the logging object
++C<psgix.logger> by L<Log::Log4perl> logger with giving C<category>.
+ 
+ =head1 CONFIGURATION
+
+(C)
+@@ -72,9 +78,8 @@
+ 
+ =head1 DESCRIPTION
+ 
+-Log4perl is a L<Plack::Middleware> component that allows you to use
+-L<Log::Log4perl> to configure the logging object C<psgix.logger> for a
+-given category.
++Log4perl is a L<Plack::Middleware> component that initialize the logging object
++C<psgix.logger> by L<Log::Log4perl> logger with giving C<category>.
+ 
+ =head1 CONFIGURATION
+
+(D)
+@@@ -72,9 -78,8 +91,14 @@@
+  
+  =head1 DESCRIPTION
+  
+++<<<<<<< HEAD
+ +Log4perl is a L<Plack::Middleware> component that allows you to use
+ +L<Log::Log4perl> to configure the logging object C<psgix.logger> for a
+ +given category.
+++=======
++ Log4perl is a L<Plack::Middleware> component that initialize the logging object
++ C<psgix.logger> by L<Log::Log4perl> logger with giving C<category>.
+++>>>>>>> feature/doc_contribution
+  
+  =head1 CONFIGURATION
+  
+
+In this example (E) is same as (D)
+
+
+
+Feel free to ask how steps are done if you are not clear with mine explanation.
