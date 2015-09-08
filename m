@@ -1,76 +1,90 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] filter-branch: add passed/remaining seconds on progress
-Date: Tue, 8 Sep 2015 17:44:38 -0400
-Message-ID: <20150908214437.GB24159@sigill.intra.peff.net>
-References: <1441379798-15453-1-git-send-email-bernat@primeranks.net>
- <1441633928-18035-1-git-send-email-bernat@primeranks.net>
- <CAPig+cRRMUhWwxAgVHKpMMne7XiOuYGTi_zgQMB=A+XNGUzLqQ@mail.gmail.com>
- <xmqqsi6o95r7.fsf@gitster.mtv.corp.google.com>
+Subject: Re: Questions about git-push for huge repositories
+Date: Tue, 8 Sep 2015 17:54:57 -0400
+Message-ID: <20150908215457.GC24159@sigill.intra.peff.net>
+References: <CAN6cQGPcGpaXUGu_7aaeJtMbruMocte-5po97vG5r39f=YdTZQ@mail.gmail.com>
+ <xmqq4mj7bfsf.fsf@gitster.mtv.corp.google.com>
+ <CAN6cQGMf089ERn2kZbFpHJ6vyJ4BnjCm-m-E+hQsduH55XFvKw@mail.gmail.com>
+ <CAN6cQGNGP+n3L=tuRCymOTWFCnFNsq-tFHkaNm+W=o726mjmmw@mail.gmail.com>
+ <CAN6cQGOO540FV9bTQPks+1nHS1xO10Rv8iNzAj8-cBihQ4_kEw@mail.gmail.com>
+ <20150908054432.GC26331@sigill.intra.peff.net>
+ <xmqq4mj493cp.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	=?utf-8?B?R8OhYm9yIEJlcm7DoXQ=?= <bernat@primeranks.net>,
-	Git List <git@vger.kernel.org>,
-	Mikael Magnusson <mikachu@gmail.com>, cbailey32@bloomberg.net,
-	Lee.Carver@servicenow.com, Michael Witten <mfwitten@gmail.com>,
-	Gabor Bernat <gabor.bernat@gravityrd.com>
+Cc: Levin Du <zslevin@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 23:44:45 2015
+X-From: git-owner@vger.kernel.org Tue Sep 08 23:55:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZQh2-0000qE-5y
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 23:44:44 +0200
+	id 1ZZQr4-0004br-S7
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 23:55:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752673AbbIHVom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2015 17:44:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56460 "HELO cloud.peff.net"
+	id S1752402AbbIHVzB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2015 17:55:01 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56477 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752147AbbIHVok (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2015 17:44:40 -0400
-Received: (qmail 17293 invoked by uid 102); 8 Sep 2015 21:44:40 -0000
+	id S1752026AbbIHVzA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2015 17:55:00 -0400
+Received: (qmail 18394 invoked by uid 102); 8 Sep 2015 21:54:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Sep 2015 16:44:40 -0500
-Received: (qmail 25758 invoked by uid 107); 8 Sep 2015 21:44:47 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Sep 2015 16:54:59 -0500
+Received: (qmail 25889 invoked by uid 107); 8 Sep 2015 21:55:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Sep 2015 17:44:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Sep 2015 17:44:38 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Sep 2015 17:55:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Sep 2015 17:54:57 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqsi6o95r7.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq4mj493cp.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277526>
 
-On Tue, Sep 08, 2015 at 10:32:12AM -0700, Junio C Hamano wrote:
+On Tue, Sep 08, 2015 at 11:24:06AM -0700, Junio C Hamano wrote:
 
-> Also git_filter_branch__commit_count is now used only inside this
-> function, so it is easier to follow to increment it here.
+> Jeff King <peff@peff.net> writes:
 > 
-> I suspect that the variable has this unwieldy name for historic
-> reasons, perhaps an attempt to avoid name clashes with the end user
-> script, but it has many variables (e.g. $commits, $ref, etc.) that
-> are way too generic and that I can see no attempt of name clash
-> avoidance, so renaming it to $total_commits or something _might_
-> make some sense.
+> > If you turn on reachability bitmaps, git _will_ do the thorough set
+> > difference, because it becomes much cheaper to do so. E.g., try:
+> >
+> >     git repack -adb
+> >
+> > in repo A to build a single pack with bitmaps enabled. Then a subsequent
+> > push should send only a single object (the new commit).
+> 
+> Hmph, A has the tip of B, and has a new commit B hasn't seen but A
+> knows that new commit's tree matches the tree of the tip of B.
+> 
+> Wouldn't --thin transfer from A to B know to send only that new
+> commit object without sending anything below the tree in such a
+> case, even without the bitmap?
 
-I briefly wondered if it had the opposite reason; could it have a
-well-defined name because it is meant to be a public value the
-user-defined shell snippets can access?
+I started to write about that in my analysis, but it gets confusing
+quickly. There are actually many tip trees, because A and B also share
+all of their tags. We do not mark every blob of every tip tree as a
+preferred base, because it is expensive to do so (and it just clogs our
+object array).  Plus this only helps in the narrow circumstance that we
+have the exact same tree as the tip (and not, say, the same tree as
+master^, which I think it would be unreasonable to expect git to find).
 
-But it is not documented, and I can imagine that "the current count" is
-not really useful without "total number of commits", so in practice I
-doubt anybody's filter branch script is relying on it.
+But if we do:
 
-And looking through the history turns up d5b0c97 (git-filter-branch:
-avoid collisions with variables in eval'ed commands, 2009-03-25), which
-seems fairly clear. :)
+  (cd ../B && git tag | git tag -d)
 
-The original name was "i", which I think is probably too short. Calling
-it something meaningful but longer than one character is probably
-sufficient.
+to delete all of the other tips besides master, leaving only the one
+that we know has the same tree, I'd expect git to figure it out.
+
+Certainly I would not expect it to save all of the delta compression,
+in the sense that we may throw away on-disk delta bases to older objects
+(because we don't realize the other side has those older objects). But I
+would have thought before we even hit that phase, adding those objects
+as "preferred bases" would have marked them as "do not send" in the
+first place.
+
+There is code in have_duplicate_entry() to handle this. I wonder why it
+doesn't kick in.
 
 -Peff
