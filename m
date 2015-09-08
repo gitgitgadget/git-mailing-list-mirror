@@ -1,60 +1,72 @@
-From: Raymond Jennings <shentino@gmail.com>
-Subject: Bug in default commit hook (improperly forbidding a single blank line
- at EOF)
-Date: Mon, 7 Sep 2015 18:37:29 -0700
-Message-ID: <55EE3BD9.7020707@gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v3 0/5] git-p4: add support for large file systems
+Date: Tue, 8 Sep 2015 05:25:33 +0100
+Message-ID: <CAE5ih7_9CfGw51Aw8J8d2m=s3Z9sf8LV9p84SynrpCW4k0Vbxg@mail.gmail.com>
+References: <1441628478-86503-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 08 03:37:52 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 08 06:25:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZ7r0-0000A0-Md
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 03:37:47 +0200
+	id 1ZZATg-0003vG-Lu
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 06:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202AbbIHBhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2015 21:37:33 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:35687 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751564AbbIHBhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2015 21:37:32 -0400
-Received: by pacfv12 with SMTP id fv12so111383905pac.2
-        for <git@vger.kernel.org>; Mon, 07 Sep 2015 18:37:31 -0700 (PDT)
+	id S1751194AbbIHEZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2015 00:25:35 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:36320 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751076AbbIHEZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2015 00:25:33 -0400
+Received: by obqa2 with SMTP id a2so73953296obq.3
+        for <git@vger.kernel.org>; Mon, 07 Sep 2015 21:25:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        bh=o86HaCZCAcF7aSQkvn4exIAN4TuyJSfGz5UDm8/29R4=;
-        b=lU+snauWrMWpMHTOuH1f2rD1whDL2zqFoRjn9ilhFx8/3ljYBNNYbvtAxvaWGZJOZL
-         tdmD+sYCYRZQqkv6xfIhwWBJ+IQoXyBe38jEl5V/63phxZ7Q3UMh+FR910VMMQhnqE4r
-         /Agn36FWi2eMZLt6rpYb7TNeSqiUXlygXImDF+ADlJLxzwCVUoBuv84ATJJ4vR4LPHcK
-         SckudOuzHa5nEQF/cq67mxOjGmhR7x/HGaV5f8NaO0qn+/Np6ZXoEZdVEBqNmuo118HF
-         z8xXOMx2GOp8v/LPjuw50mlDAucMGI5gImUgdCgHkiHdUMySq77Y4XbKFDw6ohWOjR7R
-         B9AQ==
-X-Received: by 10.68.111.3 with SMTP id ie3mr52664036pbb.63.1441676251649;
-        Mon, 07 Sep 2015 18:37:31 -0700 (PDT)
-Received: from [192.168.1.3] ([104.36.236.78])
-        by smtp.gmail.com with ESMTPSA id tq6sm1172707pbc.57.2015.09.07.18.37.30
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Sep 2015 18:37:31 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=nf9AcluvY3ODqKmX2i5BIeeuWzEHf6VzJ2wMIPr1VyU=;
+        b=EB0+Uv3zq6ZaBQtpsX73NhKsrkgG53AdagFsq4wkz9yEDeq8moOQA9qwbJDId5IAJB
+         wR9w8z8QR2Oj22oW/QznaWOmsPVrFA1z4xE0hvQ5rXPh58oT16l8QUEfcdI7H/+PtqvF
+         IOChcJsAnScgA/PlsnVkvwbaGLJo4D4XwVM3U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=nf9AcluvY3ODqKmX2i5BIeeuWzEHf6VzJ2wMIPr1VyU=;
+        b=InCuw6AD8oX+l6yRApnatAUrrqRS6KywSiRjAnKiIuCqmIuB6Tqqy8YhGx9a06j1M0
+         dHiOJZzED0FSToA8Jtrga8o4/MgWFGT8SpYb2pfJ8VM4NP7VJNYmdMNhaDG6xxKC7K7i
+         T/PIaUMAhaGQC0Bail4qAdugtekGm/O/Ff5xHnbjFm5T7PdGlzSdWRYq6qt2wOW0fIj4
+         HHKjwE7R/5lmjjynlSAlkuD7y6nXHKJKvZDRjJNXCtA0kVzUXhmFctl5arXbwEF6wb1A
+         SkWOuwJjhkZargox1W+ox6ZQX7fS44jSbtI0LMyhhHZV73KAdJy8RDtk1TVCSFOaCLY6
+         kWlw==
+X-Gm-Message-State: ALoCoQkYdf+2YEcscr3RmkdnOsTfiGD8hH2kvuW06sU/QIz9lWgIoeL5uO+VU42h139tcH5DwlI+
+X-Received: by 10.60.67.105 with SMTP id m9mr18394222oet.68.1441686333195;
+ Mon, 07 Sep 2015 21:25:33 -0700 (PDT)
+Received: by 10.60.46.38 with HTTP; Mon, 7 Sep 2015 21:25:33 -0700 (PDT)
+In-Reply-To: <1441628478-86503-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277483>
 
-Please see https://bugs.gentoo.org/show_bug.cgi?id=559920 for further 
-details.
+On 7 September 2015 at 13:21,  <larsxschneider@gmail.com> wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> One thing I don't like about the current implementation is that I don't see a
+> way to test the "git-p4.pushLargeFiles" config. I could start a git lfs server
+> locally but that seems a bit too much, no?
 
-Files *should* have a single blank line at the end, because a line 
-should always have a newline at the end.
+Perhaps add a trivial large-file derived class that just does enough
+to show that it's all working. Then the final bit of pushing the large
+files to LFS would remain forever untested, but it would be small
+enough and simple enough not to be a real problem. If it ever broke,
+it would indicate that either the trivial test class was a bit too
+trivial, or that the abstraction was not abstract enough and there's
+too much common-code in the derived classes.
 
-Adding a newline to the end of a file whose last line doesn't have one 
-should be legal...as long as you don't create empty lines at the end.
+Luke
