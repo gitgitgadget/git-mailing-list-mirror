@@ -1,73 +1,83 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: Conditionally define vars to improve portability
-Date: Tue, 8 Sep 2015 13:09:15 -0700
-Message-ID: <CA+P7+xopnAfmKNfL=p5wrqfLx5CENcBoFkdZ1swLe+3PchcONQ@mail.gmail.com>
-References: <81961DE1-FA30-4E55-8818-9FCA3BC59B81@FreeBSD.org>
- <20150908063034.GF26331@sigill.intra.peff.net> <xmqqvbbk7n8r.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git_connect: clarify conn->use_shell flag
+Date: Tue, 8 Sep 2015 17:40:19 -0400
+Message-ID: <20150908214019.GA24159@sigill.intra.peff.net>
+References: <CAOxFTcx9E_FtYD_Jn3+S3j-rwGO+hJSVXUC2S5ZBB6der7dUuw@mail.gmail.com>
+ <20150904125448.GA25501@sigill.intra.peff.net>
+ <xmqqpp1yf3qe.fsf@gitster.mtv.corp.google.com>
+ <20150904214454.GA18320@sigill.intra.peff.net>
+ <20150904224008.GA11164@sigill.intra.peff.net>
+ <CAOxFTcz9dZRQVnVnt+GtzAiu+GBi7CPE17d7rGo3H0v56MMAZQ@mail.gmail.com>
+ <20150908083314.GB2991@sigill.intra.peff.net>
+ <xmqqwpw096dq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Renato Botelho <garga@freebsd.org>,
+Content-Type: text/plain; charset=utf-8
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
 	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 22:09:48 2015
+X-From: git-owner@vger.kernel.org Tue Sep 08 23:40:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZPD2-0000Xm-Hb
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 22:09:40 +0200
+	id 1ZZQct-0006i3-GO
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 23:40:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751912AbbIHUJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2015 16:09:37 -0400
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:35628 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751674AbbIHUJf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2015 16:09:35 -0400
-Received: by igbkq10 with SMTP id kq10so83389264igb.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2015 13:09:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=RrxoEFZ9BXyFfuPpzjAhf0bM34avr5aQ6wHXEV+9emw=;
-        b=032g3onS2Q0iGHKH6IsTkwEnKNzXGi9wHVDDIxfxfDOLYUzz2yRGRcynqLRlwvHZ74
-         cjKP2WDhBAX73n8XOP7W25zyHP6aPJeai/ULk6XnFziLNZ4DCrXHs4YP4iFRTKTjZi/X
-         TnNm9KYxWi12ZMN1Cno6OmgekK+ZAc/lcviHn8bdpTsbEvC6q6R4a2KSG0P7Mjze0yRP
-         Uvi3osldlxB1F4l+n35O2u1CGfj8nKh0aDuS2DqMdpfagoVGdscCz75rektsetqeMzyo
-         N+55w1p60NnJu8jtALOmQ+z3p+jeOA9f8Q4JaWh6ZIe+VPODfNsmydChWvOFEsGSEyeP
-         vMfQ==
-X-Received: by 10.50.78.161 with SMTP id c1mr45234502igx.35.1441742975035;
- Tue, 08 Sep 2015 13:09:35 -0700 (PDT)
-Received: by 10.107.5.203 with HTTP; Tue, 8 Sep 2015 13:09:15 -0700 (PDT)
-In-Reply-To: <xmqqvbbk7n8r.fsf@gitster.mtv.corp.google.com>
+	id S1753928AbbIHVkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2015 17:40:23 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56449 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752460AbbIHVkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2015 17:40:22 -0400
+Received: (qmail 16911 invoked by uid 102); 8 Sep 2015 21:40:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Sep 2015 16:40:22 -0500
+Received: (qmail 25698 invoked by uid 107); 8 Sep 2015 21:40:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Sep 2015 17:40:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Sep 2015 17:40:19 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqwpw096dq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277524>
 
-On Tue, Sep 8, 2015 at 11:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Common things like CC are not so problematic, but more problematic
-> are various Git build customization in our Makefile that can be left
-> behind from a previous build.  It is easier for users to forget, as
-> a "GIT_FOO=NoThanks; export GIT_FOO" that was run previously in the
-> same shell does not leave trace once the shell exits, compared to
-> other avenues of customization including config.mak and explicit
-> command line settings given to the 'make' utility (i.e. can be seen
-> in 'history' as a single entry, without having to trace the sequence
-> of 'GIT_FOO=NoThanks', 'export GIT_FOO' and possible 'unset GIT_FOO'
-> to find what was in effect when 'make' was run).  So from that point
-> of view, if you encourage users to be less explicit by keeping them
-> in the environment, you are making it easier for the users to hurt
-> themselves.
+On Tue, Sep 08, 2015 at 10:18:41AM -0700, Junio C Hamano wrote:
 
-It should be noted that a common idiom is also "VARIABLE=VALUE Make"
-where we set the variable in the environment before running the
-command. This would begin working if you allow the =? setting of
-variables.
+> > To make the flow easier to follow, let's just set
+> > conn->use_shell when we're setting up the "conn" struct, and
+> > unset it (with a comment) in the historical GIT_SSH case.
+> 
+> Makes perfect sense.  I think another thing that falls into the same
+> class wrt readability is 'putty'; if the code does putty=0 at the
+> beginning of "various flavours of SSH", and sets it only when it
+> checks with "various flavours of plink" when GIT_SSH_COMMAND is not
+> set, the logic would be even clearer, I suspect.
 
-That being said, since "make VARIABLE=VALUE" already works, and is
-really just as easy to type as above, I think I prefer your argument
-overall. We shouldn't encourage people to use the environment, and
-instead use config.mak or other methods which are far more explicit.
+Yeah, I think so.
+
+> > Note that for clarity we leave "use_shell" on in the case
+> > that we fall back to our default "ssh" This looks like a
+> > behavior change, but in practice run-command.c optimizes
+> > shell invocations without metacharacters into a straight
+> > execve anyway.
+> 
+> Hmm, interesting.  I am not sure if that has to be the way, though.
+> Wouldn't the resulting code become simpler if you do not do that?
+
+Heh, I originally wrote it that way, and waffled between sending one or
+the other.
+
+> That is, is is what I have in mind on top of your patch.  Did I
+> break something?
+> 
+>  connect.c | 17 ++++++++---------
+>  1 file changed, 8 insertions(+), 9 deletions(-)
+
+I think both changes are correct, and the result looks nice to read.
+Feel free to squash them in as you apply.
+
+-Peff
