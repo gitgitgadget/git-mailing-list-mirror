@@ -1,72 +1,101 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v3 0/5] git-p4: add support for large file systems
-Date: Tue, 8 Sep 2015 05:25:33 +0100
-Message-ID: <CAE5ih7_9CfGw51Aw8J8d2m=s3Z9sf8LV9p84SynrpCW4k0Vbxg@mail.gmail.com>
-References: <1441628478-86503-1-git-send-email-larsxschneider@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug in default commit hook (improperly forbidding a single blank
+ line at EOF)
+Date: Tue, 8 Sep 2015 00:55:04 -0400
+Message-ID: <20150908045504.GA26331@sigill.intra.peff.net>
+References: <55EE3BD9.7020707@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 06:25:55 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Raymond Jennings <shentino@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 08 06:55:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZATg-0003vG-Lu
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 06:25:53 +0200
+	id 1ZZAw5-0001E1-AO
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 06:55:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751194AbbIHEZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2015 00:25:35 -0400
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:36320 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751076AbbIHEZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2015 00:25:33 -0400
-Received: by obqa2 with SMTP id a2so73953296obq.3
-        for <git@vger.kernel.org>; Mon, 07 Sep 2015 21:25:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nf9AcluvY3ODqKmX2i5BIeeuWzEHf6VzJ2wMIPr1VyU=;
-        b=EB0+Uv3zq6ZaBQtpsX73NhKsrkgG53AdagFsq4wkz9yEDeq8moOQA9qwbJDId5IAJB
-         wR9w8z8QR2Oj22oW/QznaWOmsPVrFA1z4xE0hvQ5rXPh58oT16l8QUEfcdI7H/+PtqvF
-         IOChcJsAnScgA/PlsnVkvwbaGLJo4D4XwVM3U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=nf9AcluvY3ODqKmX2i5BIeeuWzEHf6VzJ2wMIPr1VyU=;
-        b=InCuw6AD8oX+l6yRApnatAUrrqRS6KywSiRjAnKiIuCqmIuB6Tqqy8YhGx9a06j1M0
-         dHiOJZzED0FSToA8Jtrga8o4/MgWFGT8SpYb2pfJ8VM4NP7VJNYmdMNhaDG6xxKC7K7i
-         T/PIaUMAhaGQC0Bail4qAdugtekGm/O/Ff5xHnbjFm5T7PdGlzSdWRYq6qt2wOW0fIj4
-         HHKjwE7R/5lmjjynlSAlkuD7y6nXHKJKvZDRjJNXCtA0kVzUXhmFctl5arXbwEF6wb1A
-         SkWOuwJjhkZargox1W+ox6ZQX7fS44jSbtI0LMyhhHZV73KAdJy8RDtk1TVCSFOaCLY6
-         kWlw==
-X-Gm-Message-State: ALoCoQkYdf+2YEcscr3RmkdnOsTfiGD8hH2kvuW06sU/QIz9lWgIoeL5uO+VU42h139tcH5DwlI+
-X-Received: by 10.60.67.105 with SMTP id m9mr18394222oet.68.1441686333195;
- Mon, 07 Sep 2015 21:25:33 -0700 (PDT)
-Received: by 10.60.46.38 with HTTP; Mon, 7 Sep 2015 21:25:33 -0700 (PDT)
-In-Reply-To: <1441628478-86503-1-git-send-email-larsxschneider@gmail.com>
+	id S1751455AbbIHEzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2015 00:55:09 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56094 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751306AbbIHEzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2015 00:55:07 -0400
+Received: (qmail 10650 invoked by uid 102); 8 Sep 2015 04:55:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Sep 2015 23:55:07 -0500
+Received: (qmail 19015 invoked by uid 107); 8 Sep 2015 04:55:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 08 Sep 2015 00:55:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Sep 2015 00:55:04 -0400
+Content-Disposition: inline
+In-Reply-To: <55EE3BD9.7020707@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277484>
 
-On 7 September 2015 at 13:21,  <larsxschneider@gmail.com> wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
->
-> One thing I don't like about the current implementation is that I don't see a
-> way to test the "git-p4.pushLargeFiles" config. I could start a git lfs server
-> locally but that seems a bit too much, no?
+On Mon, Sep 07, 2015 at 06:37:29PM -0700, Raymond Jennings wrote:
 
-Perhaps add a trivial large-file derived class that just does enough
-to show that it's all working. Then the final bit of pushing the large
-files to LFS would remain forever untested, but it would be small
-enough and simple enough not to be a real problem. If it ever broke,
-it would indicate that either the trivial test class was a bit too
-trivial, or that the abstraction was not abstract enough and there's
-too much common-code in the derived classes.
+> Please see https://bugs.gentoo.org/show_bug.cgi?id=559920 for further
+> details.
+> 
+> Files *should* have a single blank line at the end, because a line should
+> always have a newline at the end.
 
-Luke
+I'm not sure I follow. Lines should have a newline at the end, but there
+is no need to start a _new_ blank line. So a file with zero bytes has no
+lines (and no newline).
+
+A file that contains a single line, like "one\n", has each line end in a
+newline, and the file ends in a newline. There is no blank line.
+
+A file like "one\n\n" has two lines: one with text, and a blank line at
+the end.
+
+Can you clarify (preferably by showing a byte sequence of the file in
+question) what file you are feeding to the hook, what output you get,
+and what output you expect?
+
+> Adding a newline to the end of a file whose last line doesn't have one
+> should be legal...as long as you don't create empty lines at the end.
+
+If you mean turning "foo" (a file with no newline!) into "foo\n", I
+agree that is legal, and does not create an empty blank line at the end.
+But I don't think the hook complains about that.
+
+E.g., we can create a sequence of file content:
+
+  git init
+
+  echo -n one >file
+  git add file
+  git commit -m 'no newline'
+
+  echo >>file
+  git add file
+  git commit -m 'complete line'
+
+  echo >>file
+  git add file
+  git commit -m 'add a blank line'
+
+and run "log --check", which runs the same code that the pre-commit hook
+does:
+
+  git log --check
+
+Git complains only about the final, which looks right to me. If you want
+to redefine git's idea of which whitespace is worth complaining about,
+try:
+
+  git config core.whitespace -blank-at-eof
+
+See the description of core.whitespace in "git help config" for the
+complete list.  You can also set it per-file using gitattributes. See
+"git help attributes", section "Checking whitespace errors".
+
+-Peff
