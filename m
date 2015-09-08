@@ -1,98 +1,60 @@
-From: Levin Du <zslevin@gmail.com>
-Subject: Re: Questions about git-push for huge repositories
-Date: Tue, 8 Sep 2015 09:30:09 +0800
-Message-ID: <CAN6cQGOO540FV9bTQPks+1nHS1xO10Rv8iNzAj8-cBihQ4_kEw@mail.gmail.com>
-References: <CAN6cQGPcGpaXUGu_7aaeJtMbruMocte-5po97vG5r39f=YdTZQ@mail.gmail.com>
-	<xmqq4mj7bfsf.fsf@gitster.mtv.corp.google.com>
-	<CAN6cQGMf089ERn2kZbFpHJ6vyJ4BnjCm-m-E+hQsduH55XFvKw@mail.gmail.com>
-	<CAN6cQGNGP+n3L=tuRCymOTWFCnFNsq-tFHkaNm+W=o726mjmmw@mail.gmail.com>
+From: Raymond Jennings <shentino@gmail.com>
+Subject: Bug in default commit hook (improperly forbidding a single blank line
+ at EOF)
+Date: Mon, 7 Sep 2015 18:37:29 -0700
+Message-ID: <55EE3BD9.7020707@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 03:30:20 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 08 03:37:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZ7jn-0000hG-8c
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 03:30:19 +0200
+	id 1ZZ7r0-0000A0-Md
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 03:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752102AbbIHBaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2015 21:30:12 -0400
-Received: from mail-yk0-f182.google.com ([209.85.160.182]:35381 "EHLO
-	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751314AbbIHBaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2015 21:30:10 -0400
-Received: by ykdu9 with SMTP id u9so21896158ykd.2
-        for <git@vger.kernel.org>; Mon, 07 Sep 2015 18:30:10 -0700 (PDT)
+	id S1752202AbbIHBhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2015 21:37:33 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35687 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751564AbbIHBhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2015 21:37:32 -0400
+Received: by pacfv12 with SMTP id fv12so111383905pac.2
+        for <git@vger.kernel.org>; Mon, 07 Sep 2015 18:37:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SsRVOsKJXqwnj+X7cqI//NEbLiXxMZZB3fftGUX0h7I=;
-        b=noyJ41XBvTqTnzkFVHBo73bsHZmCNR07xsYzJKy+1kE/4gHa0ElZ23QY/UZ4BmoS0u
-         34GJI/qRl5Z9NrHyeZfNOOFW1Z0J1WvpIv/HrlwNliDuVykN9OdI9lWreoLAhlUeVt1/
-         yUFcg7ap9MTJZ+Md26sD9lBDFN+Kmb4bYfyDNJQvoG2lufTcSjm8Mgr0CqfSA6wEXYvX
-         Out600y3S379NQpR2XSfP41Vv2Au9xj1z5+jLzOr3GkDwPB7aP5DUj4M2fovIYeWqBTn
-         1MP4oVYoe/SlJCUUapHFvv5+kE5YKWS/cQXQYBIBkpK+yjNdDcBIBsHVAxdVdWTBtEVG
-         s6YA==
-X-Received: by 10.129.138.129 with SMTP id a123mr17647322ywg.29.1441675810035;
- Mon, 07 Sep 2015 18:30:10 -0700 (PDT)
-Received: by 10.103.85.138 with HTTP; Mon, 7 Sep 2015 18:30:09 -0700 (PDT)
-In-Reply-To: <CAN6cQGNGP+n3L=tuRCymOTWFCnFNsq-tFHkaNm+W=o726mjmmw@mail.gmail.com>
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=o86HaCZCAcF7aSQkvn4exIAN4TuyJSfGz5UDm8/29R4=;
+        b=lU+snauWrMWpMHTOuH1f2rD1whDL2zqFoRjn9ilhFx8/3ljYBNNYbvtAxvaWGZJOZL
+         tdmD+sYCYRZQqkv6xfIhwWBJ+IQoXyBe38jEl5V/63phxZ7Q3UMh+FR910VMMQhnqE4r
+         /Agn36FWi2eMZLt6rpYb7TNeSqiUXlygXImDF+ADlJLxzwCVUoBuv84ATJJ4vR4LPHcK
+         SckudOuzHa5nEQF/cq67mxOjGmhR7x/HGaV5f8NaO0qn+/Np6ZXoEZdVEBqNmuo118HF
+         z8xXOMx2GOp8v/LPjuw50mlDAucMGI5gImUgdCgHkiHdUMySq77Y4XbKFDw6ohWOjR7R
+         B9AQ==
+X-Received: by 10.68.111.3 with SMTP id ie3mr52664036pbb.63.1441676251649;
+        Mon, 07 Sep 2015 18:37:31 -0700 (PDT)
+Received: from [192.168.1.3] ([104.36.236.78])
+        by smtp.gmail.com with ESMTPSA id tq6sm1172707pbc.57.2015.09.07.18.37.30
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 07 Sep 2015 18:37:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277482>
 
-I consider 'git push' need further optimization.
+Please see https://bugs.gentoo.org/show_bug.cgi?id=559920 for further 
+details.
 
-Take kernel source code for example:
+Files *should* have a single blank line at the end, because a line 
+should always have a newline at the end.
 
-# Clone the kernel to A and B
-$ git --version
-git version 2.3.2
-$ git clone --bare  ../kernel/ A
-$ git clone --bare  ../kernel/ B
-
-# Create the orphan commit and check
-$ cd A
-$ git branch test
-Switched to a new branch 'test'
-$ git replace --graft test
-$ git rev-parse test
-cbbae6741c60c9e09f87521e3a79810abd6a2fda
-$ git rev-parse test^{tree}
-929bdce0b48ca6079ad281a9d8ba24de3e49881a
-$ git rev-parse replace/cbbae6741c60c9e09f87521e3a79810abd6a2fda
-82d3e9ce1ca062c219f1209c5291ccd5603e5302
-$ git rev-parse 82d3e9ce1ca062c219f1209c5291ccd5603e5302^{tree}
-929bdce0b48ca6079ad281a9d8ba24de3e49881a
-$ git log --pretty=oneline 82d3e9ce1ca062c219f1209c5291ccd5603e5302 | wc -l
-1
-
-We can see that commit 82d3e9ce1ca062c219f1209c5291ccd5603e5302 (root commit)
-is meant to replace for commit cbbae6741c60c9e09f87521e3a79810abd6a2fda .
-They both contain the same tree 929bdce0b48ca6079ad281a9d8ba24de3e49881a .
-
-$ du -hs ../B
-1.6G ../B
-$ git push ../B 'refs/replace/*'
-Counting objects: 51216, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (48963/48963), done.
-Writing objects: 100% (51216/51216), 139.61 MiB | 17.88 MiB/s, done.
-Total 51216 (delta 3647), reused 34580 (delta 1641)
-To ../B
-* [new branch]
-refs/replace/cbbae6741c60c9e09f87521e3a79810abd6a2fda ->
-refs/replace/cbbae6741c60c9e09f87521e3a79810abd6a2fda
-$ du -hs ../B
-1.7G ../B
-
-It takes some time for 'git push' to compress the objects and B has
-finally increased 0.1G,
-which is for the newly commit whose tree is already in the repository.
+Adding a newline to the end of a file whose last line doesn't have one 
+should be legal...as long as you don't create empty lines at the end.
