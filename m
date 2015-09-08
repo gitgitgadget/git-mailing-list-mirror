@@ -1,187 +1,73 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv6 0/3] submodule--helper: Have some refactoring only patches first
-Date: Tue,  8 Sep 2015 11:57:42 -0700
-Message-ID: <1441738665-29493-1-git-send-email-sbeller@google.com>
-Cc: sunshine@sunshineco.com, git@vger.kernel.org, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de, peff@peff.net,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Sep 08 20:58:50 2015
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: Conditionally define vars to improve portability
+Date: Tue, 8 Sep 2015 13:09:15 -0700
+Message-ID: <CA+P7+xopnAfmKNfL=p5wrqfLx5CENcBoFkdZ1swLe+3PchcONQ@mail.gmail.com>
+References: <81961DE1-FA30-4E55-8818-9FCA3BC59B81@FreeBSD.org>
+ <20150908063034.GF26331@sigill.intra.peff.net> <xmqqvbbk7n8r.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Renato Botelho <garga@freebsd.org>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 08 22:09:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZO5d-0003bQ-Uf
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 20:57:58 +0200
+	id 1ZZPD2-0000Xm-Hb
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 22:09:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751407AbbIHS5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2015 14:57:52 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:33609 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750911AbbIHS5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2015 14:57:51 -0400
-Received: by pacex6 with SMTP id ex6so131492947pac.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2015 11:57:51 -0700 (PDT)
+	id S1751912AbbIHUJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2015 16:09:37 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:35628 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751674AbbIHUJf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2015 16:09:35 -0400
+Received: by igbkq10 with SMTP id kq10so83389264igb.0
+        for <git@vger.kernel.org>; Tue, 08 Sep 2015 13:09:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=gIhiXWFibs2OGvxEYx6X2qUMeomoS1cueoKbIiBamjY=;
-        b=Y6mE7wn71/LG+SWDGqxR4QzCqPdI3WSxPHLdS+HAeC29/WFZ2O2L6SlVEXVrmcK2LY
-         jiIQIKE89ID5zstF+7mx/idaCGLMTlL7WJiS5IVRJ7eE/2sp5855vlRrcTXBUsMqgc0q
-         NNGd5FhDBHCRWVOQ92gslNcvR4eMTb1S/9x8C7D1aX0VXY/2HxxgAv6Le2Nijc4xAvwj
-         TXOGpFnPMc3rPeZ6uEwsnzpAT2NFTwVwc2oP3UqLEdU+8ick+qKTxQs2wqBkyvgUgGQj
-         MI7rJyxD3UDRejRbszAKyN+o0bYBZ6SQfv3c3NoX1OIx/v2iiXdHkSkL7LUNMFoITVs8
-         rUIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=gIhiXWFibs2OGvxEYx6X2qUMeomoS1cueoKbIiBamjY=;
-        b=N9x61AF5iQOZEjLJvevuotYOgxQlGAItcMJMUj0+sXsma9a00LCjb79zyp4HkOSLUQ
-         2fO5uPP9PugSMiXZht0FDwfNUcRrC1UlUEXPgOs5XsNLoyLidO0Xb2QmA5xiDzOKZudp
-         MGBmu0pgpYXLeGhGTxHh1KJ1T0HATS6G+wXuRm8iKS0NMyC6ofVOjs4XL0q9wGYyxWaU
-         zGe3JLnaie0FMJ3WWLWNpQtXoh9LW54jKBld+YG/A00dTwOAIYJNdXb1dL4m9n7K6nhp
-         UgwSnUwb2wVZfwOxSkKsQKUgDEdwGf/UKkREHPZVZ2/Qo1e+C271eCK5rXFhEbRtXjhw
-         DHMw==
-X-Gm-Message-State: ALoCoQkCVCAuTyT8RDREjdgQfK2pW1moQ9rmisyQzMKXQjG80KGpT5XBs98/gaTBUed46wa7PALR
-X-Received: by 10.66.165.5 with SMTP id yu5mr3871927pab.109.1441738670901;
-        Tue, 08 Sep 2015 11:57:50 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:b8c0:c175:ec61:d891])
-        by smtp.gmail.com with ESMTPSA id u1sm4265753pbz.56.2015.09.08.11.57.50
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 08 Sep 2015 11:57:50 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.256.g89f8063.dirty
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=RrxoEFZ9BXyFfuPpzjAhf0bM34avr5aQ6wHXEV+9emw=;
+        b=032g3onS2Q0iGHKH6IsTkwEnKNzXGi9wHVDDIxfxfDOLYUzz2yRGRcynqLRlwvHZ74
+         cjKP2WDhBAX73n8XOP7W25zyHP6aPJeai/ULk6XnFziLNZ4DCrXHs4YP4iFRTKTjZi/X
+         TnNm9KYxWi12ZMN1Cno6OmgekK+ZAc/lcviHn8bdpTsbEvC6q6R4a2KSG0P7Mjze0yRP
+         Uvi3osldlxB1F4l+n35O2u1CGfj8nKh0aDuS2DqMdpfagoVGdscCz75rektsetqeMzyo
+         N+55w1p60NnJu8jtALOmQ+z3p+jeOA9f8Q4JaWh6ZIe+VPODfNsmydChWvOFEsGSEyeP
+         vMfQ==
+X-Received: by 10.50.78.161 with SMTP id c1mr45234502igx.35.1441742975035;
+ Tue, 08 Sep 2015 13:09:35 -0700 (PDT)
+Received: by 10.107.5.203 with HTTP; Tue, 8 Sep 2015 13:09:15 -0700 (PDT)
+In-Reply-To: <xmqqvbbk7n8r.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277523>
 
-Added suggestions from Eric and Junio. Interdiff to v5 below.
+On Tue, Sep 8, 2015 at 11:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Common things like CC are not so problematic, but more problematic
+> are various Git build customization in our Makefile that can be left
+> behind from a previous build.  It is easier for users to forget, as
+> a "GIT_FOO=NoThanks; export GIT_FOO" that was run previously in the
+> same shell does not leave trace once the shell exits, compared to
+> other avenues of customization including config.mak and explicit
+> command line settings given to the 'make' utility (i.e. can be seen
+> in 'history' as a single entry, without having to trace the sequence
+> of 'GIT_FOO=NoThanks', 'export GIT_FOO' and possible 'unset GIT_FOO'
+> to find what was in effect when 'make' was run).  So from that point
+> of view, if you encourage users to be less explicit by keeping them
+> in the environment, you are making it easier for the users to hurt
+> themselves.
 
-Stefan Beller (3):
-  submodule: Reimplement `module_list` shell function in C
-  submodule: Reimplement `module_name` shell function in C
-  submodule: Reimplement `module_clone` shell function in C
+It should be noted that a common idiom is also "VARIABLE=VALUE Make"
+where we set the variable in the environment before running the
+command. This would begin working if you allow the =? setting of
+variables.
 
- .gitignore                  |   1 +
- Makefile                    |   1 +
- builtin.h                   |   1 +
- builtin/submodule--helper.c | 282 ++++++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh            | 164 +++-----------------------
- git.c                       |   1 +
- 6 files changed, 301 insertions(+), 149 deletions(-)
- create mode 100644 builtin/submodule--helper.c
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4e30d8e..f4c3eff 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -10,12 +10,16 @@
- #include "string-list.h"
- #include "run-command.h"
- 
--static const struct cache_entry **ce_entries;
--static int ce_alloc, ce_used;
-+struct module_list {
-+	const struct cache_entry **entries;
-+	int alloc, nr;
-+};
-+#define MODULE_LIST_INIT { NULL, 0, 0 }
- 
- static int module_list_compute(int argc, const char **argv,
--				const char *prefix,
--				struct pathspec *pathspec)
-+			       const char *prefix,
-+			       struct pathspec *pathspec,
-+			       struct module_list *list)
- {
- 	int i, result = 0;
- 	char *max_prefix, *ps_matched = NULL;
-@@ -40,12 +44,11 @@ static int module_list_compute(int argc, const char **argv,
- 
- 		if (!S_ISGITLINK(ce->ce_mode) ||
- 		    !match_pathspec(pathspec, ce->name, ce_namelen(ce),
--				    max_prefix_len, ps_matched,
--				    S_ISGITLINK(ce->ce_mode) | S_ISDIR(ce->ce_mode)))
-+				    max_prefix_len, ps_matched, 1))
- 			continue;
- 
--		ALLOC_GROW(ce_entries, ce_used + 1, ce_alloc);
--		ce_entries[ce_used++] = ce;
-+		ALLOC_GROW(list->entries, list->nr + 1, list->alloc);
-+		list->entries[list->nr++] = ce;
- 		while (i + 1 < active_nr &&
- 		       !strcmp(ce->name, active_cache[i + 1]->name))
- 			/*
-@@ -68,6 +71,7 @@ static int module_list(int argc, const char **argv, const char *prefix)
- {
- 	int i;
- 	struct pathspec pathspec;
-+	struct module_list list = MODULE_LIST_INIT;
- 
- 	struct option module_list_options[] = {
- 		OPT_STRING(0, "prefix", &prefix,
-@@ -84,13 +88,13 @@ static int module_list(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, module_list_options,
- 			     git_submodule_helper_usage, 0);
- 
--	if (module_list_compute(argc, argv, prefix, &pathspec) < 0) {
-+	if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0) {
- 		printf("#unmatched\n");
- 		return 1;
- 	}
- 
--	for (i = 0; i < ce_used; i++) {
--		const struct cache_entry *ce = ce_entries[i];
-+	for (i = 0; i < list.nr; i++) {
-+		const struct cache_entry *ce = list.entries[i];
- 
- 		if (ce_stage(ce))
- 			printf("%06o %s U\t", ce->ce_mode, sha1_to_hex(null_sha1));
-@@ -142,10 +146,7 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
- 
- 	cp.git_cmd = 1;
- 	cp.env = local_repo_env;
--
- 	cp.no_stdin = 1;
--	cp.no_stdout = 1;
--	cp.no_stderr = 1;
- 
- 	return run_command(&cp);
- }
-@@ -206,8 +207,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 		if (safe_create_leading_directories_const(path) < 0)
- 			die(_("could not create directory '%s'"), path);
- 		strbuf_addf(&sb, "%s/index", sm_gitdir);
--		if (unlink(sb.buf) < 0)
--			die_errno(_("failed to delete '%s'"), sm_gitdir);
-+		unlink_or_warn(sb.buf);
- 		strbuf_reset(&sb);
- 	}
- 
-@@ -218,7 +218,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	if (path && *path)
- 		strbuf_addf(&sb, "%s/.git", path);
- 	else
--		strbuf_addf(&sb, ".git");
-+		strbuf_addstr(&sb, ".git");
- 
- 	if (safe_create_leading_directories_const(sb.buf) < 0)
- 		die(_("could not create leading directories of '%s'"), sb.buf);
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 7cfdc2c..8b0eb9a 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -227,7 +227,7 @@ cmd_add()
- 			shift
- 			;;
- 		--depth=*)
--			depth="$1"
-+			depth=$1
- 			;;
- 		--)
- 			shift
-
--- 
-2.5.0.256.g89f8063.dirty
+That being said, since "make VARIABLE=VALUE" already works, and is
+really just as easy to type as above, I think I prefer your argument
+overall. We shouldn't encourage people to use the environment, and
+instead use config.mak or other methods which are far more explicit.
