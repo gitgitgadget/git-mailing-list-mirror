@@ -1,97 +1,96 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] filter-branch: add passed/remaining seconds on progress
-Date: Tue, 8 Sep 2015 13:59:17 -0400
-Message-ID: <CAPig+cS7ObsWjqbLytCKp1PGF+224TYhC734dNa_HXYQ7p+GgQ@mail.gmail.com>
-References: <1441379798-15453-1-git-send-email-bernat@primeranks.net>
-	<1441633928-18035-1-git-send-email-bernat@primeranks.net>
-	<CAPig+cRRMUhWwxAgVHKpMMne7XiOuYGTi_zgQMB=A+XNGUzLqQ@mail.gmail.com>
-	<xmqqsi6o95r7.fsf@gitster.mtv.corp.google.com>
+From: Johnny Sheeley <jsheeley@fanatics.com>
+Subject: Re: Issue with Orphaned Files After Aborted Rebase
+Date: Tue, 8 Sep 2015 18:00:49 +0000
+Message-ID: <A76F042CD5DF4D49AA84893E036EB052B9859DC4@JXFQ-EXCH001.footballfanatics.wh>
+References: <A76F042CD5DF4D49AA84893E036EB052B9859D93@JXFQ-EXCH001.footballfanatics.wh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=Windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?R8OhYm9yIEJlcm7DoXQ=?= <bernat@primeranks.net>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Mikael Magnusson <mikachu@gmail.com>, cbailey32@bloomberg.net,
-	Lee.Carver@servicenow.com, Michael Witten <mfwitten@gmail.com>,
-	Gabor Bernat <gabor.bernat@gravityrd.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 19:59:31 2015
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 08 20:01:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZNB3-0004dG-Bp
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 19:59:29 +0200
+	id 1ZZNCS-0006AL-4X
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Sep 2015 20:00:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753406AbbIHR7U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Sep 2015 13:59:20 -0400
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:33969 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752626AbbIHR7T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Sep 2015 13:59:19 -0400
-Received: by ykdg206 with SMTP id g206so130671529ykd.1
-        for <git@vger.kernel.org>; Tue, 08 Sep 2015 10:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=YrOkSMG20kHMqfJxiecjCbEenDrD0J0pzqpXVfl90uQ=;
-        b=zgBrLFxsn/r87sC6tfiBTNJhCNPB1CHSswUdaOjKXC/V/zj+An16/o/3I47Af99+nw
-         nI8c4AE+2OoJQm9TePOn4w1bABUwiCuSHUCb7fOuP90RYDwpzubusabTUJhbnThU0XpD
-         FsLrXUN14rNB8Qe6+C7ktI+b+ovdTLeWAjD91lDdh0bZboLlE8j1y/ljmwlC4sYxkgUZ
-         zZD2uDIAhSd6KVyj7BePaasGZDzw9mW6Zn0b4VvFe6RT48UrVmx9mfCUXzdtzIZnaNIW
-         AMkjRK4sUkNZqMuLBKIwbo0uV8MPRkaAYG7OsG2Zj918Q1HYv1bGtrJ/zQkMnGZxa1yV
-         XBdQ==
-X-Received: by 10.170.119.140 with SMTP id l134mr30564949ykb.69.1441735157921;
- Tue, 08 Sep 2015 10:59:17 -0700 (PDT)
-Received: by 10.37.36.145 with HTTP; Tue, 8 Sep 2015 10:59:17 -0700 (PDT)
-In-Reply-To: <xmqqsi6o95r7.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: wNDnusSeXev61SPZLV4w0XzoVAw
+	id S1752626AbbIHSAx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Sep 2015 14:00:53 -0400
+Received: from smtp2.footballfanatics.com ([74.11.145.241]:56141 "EHLO
+	smtp2.footballfanatics.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751674AbbIHSAw convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 8 Sep 2015 14:00:52 -0400
+Received: from smtp.footballfanatics.com (jxfq-exhb001.footballfanatics.wh [10.143.0.20])
+	by smtp2.footballfanatics.com (Postfix) with ESMTP id 1526553C26
+	for <git@vger.kernel.org>; Tue,  8 Sep 2015 14:00:51 -0400 (EDT)
+Received: from JXFQ-EXCH001.footballfanatics.wh ([fe80::6119:3eef:e35d:3447])
+ by JXFQ-EXHB001.footballfanatics.wh ([::1]) with mapi id 14.03.0174.001; Tue,
+ 8 Sep 2015 14:00:50 -0400
+Thread-Topic: Issue with Orphaned Files After Aborted Rebase
+Thread-Index: AQHQ6l5EAmHvunMbQkSLp3SbkDGmM54yuY6A
+In-Reply-To: <A76F042CD5DF4D49AA84893E036EB052B9859D93@JXFQ-EXCH001.footballfanatics.wh>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.143.89.152]
+x-kse-antivirus-interceptor-info: scan successful
+x-kse-antivirus-info: Clean
+Content-ID: <F5FD5BBD2530204FB56554469E78D545@fanatics.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277509>
 
-On Tue, Sep 8, 2015 at 1:32 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> On Mon, Sep 7, 2015 at 9:52 AM, G=C3=A1bor Bern=C3=A1t <bernat@prime=
-ranks.net> wrote:
->>...
->>>  # Rewrite the commits
->>> +report_progress ()
->>> +{
->>> +if test -n "$progress"
->>> +then
->>
->> Indent code within the function...
->
-> Also git_filter_branch__commit_count is now used only inside this
-> function, so it is easier to follow to increment it here.
+I began a rebase, and was unable to add two files that appeared as chan=
+ged
+(1). When I aborted this rebase, these two files were left in my tree,
+showing as changed, and did not respond to checkout =8B(2), reset(3), o=
+r
+stash(4).
 
-Make sense.
+My expectation would be that after a rebase =8Babort, the tree would be
+returned to the original state pre-rebase.
+My expectation for checkout and reset is that the tree would be returne=
+d
+to its state based on the last commit.
+My expectation for stash is that the files would be stashed and thus
+changes would be reverted.
 
->>> +printf "\rRewrite $commit ($git_filter_branch__commit_count/$commi=
-ts)$progress"
->>
->> The "\r" causes this status line to be overwritten each time through=
-,
->> and since the processed commit count always increases, we know that
->> the original (without ETA) will never leave junk at the end of the
->> line. However, with estimated seconds also being displayed, does thi=
-s
->> still hold?
->
-> Good point.
-> Perhaps like this squashed in?
->
-> -printf "\rRewrite $commit ($git_filter_branch__commit_count/$commits=
-)$progress"
-> +       printf "\rRewrite $commit ($git_filter_branch__commit_count/$=
-commits)$progress            "
+Have I done something wrong/missed something?
 
-Yes, for an expedient "fix", this is what I had in mind, although I
-would also have added an equal number of backspaces (\b) following the
-spaces, as a minor aesthetic improvement.
+=46or reference, feature/RED-599-Bundling was created from feature/fana=
+tics.
+I=B9ll be keeping this repository in this state in case I can provide a=
+ny
+additional useful information.
+
+Thanks,
+Johnny
+
+(1)
+https://gist.github.com/sheeley/537f6562e762b288cef8#file-orphaned-txt-=
+L1-L
+159
+(2)
+https://gist.github.com/sheeley/537f6562e762b288cef8#file-orphaned-txt-=
+L160
+-L186
+(3)
+https://gist.github.com/sheeley/537f6562e762b288cef8#file-orphaned-txt-=
+L187
+-L201
+(4)
+https://gist.github.com/sheeley/537f6562e762b288cef8#file-orphaned-txt-=
+L187
+-L201
+
+Information contained in this e-mail message is confidential. This e-ma=
+il message is intended only for the personal use of the recipient(s) na=
+med above. If you are not an intended recipient, do not read, distribut=
+e or reproduce this transmission (including any attachments). If you ha=
+ve received this email in error, please immediately notify the sender b=
+y email reply and delete the original message.
