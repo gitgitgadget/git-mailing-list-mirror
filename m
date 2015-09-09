@@ -1,74 +1,99 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] am --skip/--abort: merge HEAD/ORIG_HEAD tree into index
-Date: Wed, 09 Sep 2015 13:45:00 +0200
-Organization: gmx
-Message-ID: <1da3956b12c7d20fcd90ebffea9c8f68@dscho.org>
-References: <0000014fb15e897e-4f1178b9-69d9-4015-808b-e073c134281c-000000@eu-west-1.amazonses.com>
+From: larsxschneider@gmail.com
+Subject: [PATCH v4 1/5] git-p4: add optional type specifier to gitConfig reader
+Date: Wed,  9 Sep 2015 13:59:06 +0200
+Message-ID: <1441799950-54633-2-git-send-email-larsxschneider@gmail.com>
+References: <1441799950-54633-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 09 13:45:18 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: luke@diamand.org, Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 09 13:59:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZdoK-0004Bz-RX
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 13:45:09 +0200
+	id 1ZZe2O-0001L2-En
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 13:59:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754118AbbIILpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Sep 2015 07:45:05 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59379 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753905AbbIILpE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2015 07:45:04 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MPlsg-1ZVlvC35nu-0053cs; Wed, 09 Sep 2015 13:45:00
- +0200
-In-Reply-To: <0000014fb15e897e-4f1178b9-69d9-4015-808b-e073c134281c-000000@eu-west-1.amazonses.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:cLt468K2uNaZR1Dv0xSlZPRYSll0FvSzYkKIk+L6fuhxxYknY+4
- FfajbowwSc006HN2N8PiqEGEiLukXnQtbGZBXGnte/hJoCIycClfdaczvK4qR8IXZUYnKlM
- SHCF/xktWzmqjM24KjkFHX7HJ6J4U1QQs9TW+2iP9yz1g+iPIfdROnQcxEdXNc98luT27QA
- JAVDLilpr77NHFRI0J25Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:53JcRqbyGlg=:HsHLmty+DV6NuyEN+Hw9qx
- f6XVIh86d09H4rx5cwl/9YxGnN6/7rc/0IkUPgJ3sOc53ZX//jPraG7m5DhOgWzyes5Lz/8hl
- 3Pz9MjngMeT6cBBPUKWifsOOaSMe/1Gfmu3H9fEsHAFfy3Si/PVFSmy3edXSZGRJswamXlLay
- jwDkDVfzwL61AyUzBBeMTGQmWVampYRjBbUwTawgZQS+aAqwjGYHH2kM8a99cvWk/WkXB8+lJ
- bMPNGuZezwU9M90GzjaozcfBO4Ff7F0a/11be/drG3x6cfmfk+8DqLMVGbfMHR4dk1ZnNkMD4
- 69QQ+/U36JMaeQE/hC/+aoNHD28aJTCmdw8H57ImSptOb/m/J25oY6n86nNTf1xK1W7ci6sCi
- ibIV9HExTyviSAp7eO8nD8x3fK0lOYQCObzKcXzxhB1M0WjkfNbfn7xg0i8fcuPm0xLtYevLG
- ugM9XObeRsHBB5mRHyTDWDbrNcqigYTptLa5KZ/QeNRHHIuKbTvOyMfmlCRC9t/0ktdJLuZiv
- Zn5JbwDDGQ637GLbOx3hC37FWPQ61N68FmQSfNpq4uSZMvNluAh9I2m3nALFfohYePVeGWUoj
- PSX+wmeH63sJPM115CHeVY6TNoVOXy2H3BfM9DR4C8fSOvuQWGlWswoHDaUOXacFTU/eyDC9y
- D61i8ebOj+Y7zH4gSDK8eBg7EBVRnGLKWDVZXGQtPU1ZcFAlKuaIWwf0ayt+r5YPjozWz4zsd
- XuOaSwWrYLh4fiP7Uh4gKjPV9hzdtgtdCQEUKQ==
+	id S1753100AbbIIL7V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2015 07:59:21 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:37764 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752281AbbIIL7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Sep 2015 07:59:14 -0400
+Received: by wicfx3 with SMTP id fx3so18846725wic.0
+        for <git@vger.kernel.org>; Wed, 09 Sep 2015 04:59:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=JLkXMGqyh+wNw6CtiX72g8vn/ZuGiSz5nWKGSCKfZRw=;
+        b=pEVrSGPLZSzJdmzUyR4KRtIRJDJ+ucED/lXG6AOXTGycvMKnWrbEJ7b7dgfzy1DZG0
+         NGVZj3/gAouXj+8yZPrspTQwhuxatsGooXKTmYAuC0jH8pTAs2J2V9UnGCa0LxEPAP9F
+         n2xx42PAAyJ7McpWh1u7Ac8u78pDjsBJ/3SbPHq2kkt7TKYe6TqPDgvM3+KXC7lmL3CD
+         uWDTsfZwXjpnVjABe3XB4JAw0Qn2AyalSBqpb+fQzktkSuP1PV7OMSFTIHcXk/d5tb47
+         cZ23NJzUB3j+NxvD55i7VFgVncW0nGKauWIK+VjnhoFugplyYw+Ths9u6GCT7QbO7725
+         hP1w==
+X-Received: by 10.180.82.98 with SMTP id h2mr52099700wiy.37.1441799953501;
+        Wed, 09 Sep 2015 04:59:13 -0700 (PDT)
+Received: from slxBook3.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id u1sm3498338wiz.22.2015.09.09.04.59.12
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 09 Sep 2015 04:59:12 -0700 (PDT)
+X-Mailer: git-send-email 2.5.1
+In-Reply-To: <1441799950-54633-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277547>
 
-Hi Junio,
+=46rom: Lars Schneider <larsxschneider@gmail.com>
 
-On 2015-09-09 11:10, Johannes Schindelin wrote:
-> This is a backport of the corresponding patch to the builtin am in 2.6:
-> 3ecc704 (am --skip/--abort: merge HEAD/ORIG_HEAD tree into index,
-> 2015-08-19).
-> 
-> Reportedly, it can make a huge difference on Windows, in one case a `git
-> rebase --skip` took 1m40s without, and 5s with, this patch.
-> 
-> Reported-and-suggested-by: Kim Gybels <kim.gybels@engilico.com>
-> Original report: https://github.com/git-for-windows/git/issues/365
-> Acked-by: Paul Tan <pyokagan@gmail.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  contrib/examples/git-am.sh | 2 +-
+The functions =E2=80=9CgitConfig=E2=80=9D and =E2=80=9CgitConfigBool=E2=
+=80=9D are almost identical. Make =E2=80=9CgitConfig=E2=80=9D more gene=
+ric by adding an optional type specifier. Use the type specifier =E2=80=
+=9C=E2=80=94bool=E2=80=9D with =E2=80=9CgitConfig=E2=80=9D to implement=
+ =E2=80=9CgitConfigBool. This prepares the implementation of other type=
+ specifiers such as =E2=80=9C=E2=80=94int=E2=80=9D.
 
-Of course this should be `git-am.sh` in the 2.5.x branch... Could you adjust that on your side?
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ git-p4.py | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-Thanks,
-Dscho
+diff --git a/git-p4.py b/git-p4.py
+index 073f87b..c139cab 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -604,9 +604,12 @@ def gitBranchExists(branch):
+=20
+ _gitConfig =3D {}
+=20
+-def gitConfig(key):
++def gitConfig(key, typeSpecifier=3DNone):
+     if not _gitConfig.has_key(key):
+-        cmd =3D [ "git", "config", key ]
++        cmd =3D [ "git", "config" ]
++        if typeSpecifier:
++            cmd +=3D [ typeSpecifier ]
++        cmd +=3D [ key ]
+         s =3D read_pipe(cmd, ignore_error=3DTrue)
+         _gitConfig[key] =3D s.strip()
+     return _gitConfig[key]
+@@ -617,10 +620,7 @@ def gitConfigBool(key):
+        in the config."""
+=20
+     if not _gitConfig.has_key(key):
+-        cmd =3D [ "git", "config", "--bool", key ]
+-        s =3D read_pipe(cmd, ignore_error=3DTrue)
+-        v =3D s.strip()
+-        _gitConfig[key] =3D v =3D=3D "true"
++        _gitConfig[key] =3D gitConfig(key, '--bool') =3D=3D "true"
+     return _gitConfig[key]
+=20
+ def gitConfigList(key):
+--=20
+2.5.1
