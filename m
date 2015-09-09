@@ -1,70 +1,76 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] am --skip/--abort: merge HEAD/ORIG_HEAD tree into index
-Date: Wed, 9 Sep 2015 09:10:07 +0000
-Message-ID: <0000014fb15e897e-4f1178b9-69d9-4015-808b-e073c134281c-000000@eu-west-1.amazonses.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 7
+Date: Wed, 9 Sep 2015 11:30:35 +0200
+Message-ID: <CAP8UFD2ozoCjV6HzszmB03bCPRMb3aoegObUAkMYfMRvcu0v_A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 09 11:29:00 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <npaolucci@atlassian.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	karthik nayak <karthik.188@gmail.com>,
+	Paul Tan <pyokagan@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	David Turner <dturner@twopensource.com>,
+	Ronnie Sahlberg <sahlberg@google.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Johan Herland <johan@herland.net>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schauer <josch@debian.org>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Luke Diamand <
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 09 11:31:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZbgG-0003Qo-Lb
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 11:28:41 +0200
+	id 1ZZbiy-0006Qy-PY
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 11:31:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752369AbbIIJ2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Sep 2015 05:28:32 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:45966
-	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751626AbbIIJ2b (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2015 05:28:31 -0400
-X-Greylist: delayed 1101 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Sep 2015 05:28:30 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1441789807;
-	h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=YHlOps/yimGeU57K/jEngYOdfAl4PVpfzp40JBavDY0=;
-	b=YwQ/xn+TkZrMcud/Mh1A4yrzitxbyD+n+qErgWEiHxWzm1nloI+iE+0z7yySQwxI
-	oA9cmPSTx6KRjqAOmyBYrSP5MrK7T8sETePrGaKjvoq4QxFJICenay1y0Kg5l5sUHua
-	llii3GPkiPzTrpDYZPliVtmFd0CPWPnkfVXCN/bw=
-X-SES-Outgoing: 2015.09.09-54.240.7.12
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+	id S1754432AbbIIJas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Sep 2015 05:30:48 -0400
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:36425 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753966AbbIIJah (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Sep 2015 05:30:37 -0400
+Received: by lbcao8 with SMTP id ao8so2329457lbc.3
+        for <git@vger.kernel.org>; Wed, 09 Sep 2015 02:30:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=AgL8N19qvHQI2aqtZ+2clhMpGEbkC9IBhCJ///IQK+c=;
+        b=JQSE06rq4bChaVIi4PdBB2bxad81GCr8UZm9htTZ4WnVREdsZL3WTd8R5WjDPB/rTH
+         sIfX3eLm3dcswMXAkemHc/Jq13QWIGuwFTpntsEzCxWR0GvLevNgOGyZUoH38n6VwAzs
+         O8qhjDX+Y+OimA3crMsMCVzc62wDbWfE02ng74ex88xe4KScUqjJdL3QE6therUVcPOK
+         h9Ni6ULKRfPVMVeSUEUOlBZ3M1B88H030gVObWttCVVHIIhotMqIVw0RwbgpcE27P8xz
+         RzXsvoJ2X7rrQCUi7rhCEYwy+hAPR6hnIsLysjxDeJ9QxhmjhVP/ze08A2lmvRs3Fy6K
+         0DKw==
+X-Received: by 10.112.17.70 with SMTP id m6mr27620620lbd.113.1441791035848;
+ Wed, 09 Sep 2015 02:30:35 -0700 (PDT)
+Received: by 10.25.161.78 with HTTP; Wed, 9 Sep 2015 02:30:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277543>
 
-This is a backport of the corresponding patch to the builtin am in 2.6:
-3ecc704 (am --skip/--abort: merge HEAD/ORIG_HEAD tree into index,
-2015-08-19).
+Hi everyone,
 
-Reportedly, it can make a huge difference on Windows, in one case a `git
-rebase --skip` took 1m40s without, and 5s with, this patch.
+I'm happy announce that the 7th edition of Git Rev News is now published:
 
-Reported-and-suggested-by: Kim Gybels <kim.gybels@engilico.com>
-Original report: https://github.com/git-for-windows/git/issues/365
-Acked-by: Paul Tan <pyokagan@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- contrib/examples/git-am.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+https://git.github.io/rev_news/2015/09/09/edition-7/
 
-diff --git a/contrib/examples/git-am.sh b/contrib/examples/git-am.sh
-index 3b77028..dd539f1 100755
---- a/contrib/examples/git-am.sh
-+++ b/contrib/examples/git-am.sh
-@@ -512,7 +512,7 @@ then
- 		git read-tree --reset -u $head_tree $head_tree &&
- 		index_tree=$(git write-tree) &&
- 		git read-tree -m -u $index_tree $head_tree
--		git read-tree $head_tree
-+		git read-tree -m $head_tree
- 		;;
- 	,t)
- 		if test -f "$dotest/rebasing"
+Thanks a lot to all the contributors!
 
---
-https://github.com/git/git/pull/173
+Enjoy,
+Christian, Thomas and Nicola.
