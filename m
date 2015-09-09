@@ -1,7 +1,7 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: Git's inconsistent command line options
-Date: Wed, 9 Sep 2015 11:42:41 +0200
-Message-ID: <55EFFF11.8000500@drmicha.warpmail.net>
+Date: Wed, 9 Sep 2015 11:42:54 +0200
+Message-ID: <55EFFF1E.1050409@drmicha.warpmail.net>
 References: <mrh7ck$r0g$1@ger.gmane.org>
  <CAPc5daUdVQSAhrig046qGopVuxCDagZg3v9bwXOaC3SvC2MRnw@mail.gmail.com>
  <CA+P7+xrYugueYYrrJV0pduAHCg7CLknE_0QYcU8mO6idntz=VA@mail.gmail.com>
@@ -10,120 +10,117 @@ References: <mrh7ck$r0g$1@ger.gmane.org>
  <CACsJy8D3J6RhtPPtSvtWfOb8BapaX2-52M5_fE36psQPB_oQsQ@mail.gmail.com>
  <20150831102558.1514e5f7@anarchist.wooz.org>
  <20150901092834.GA10706@gmail.com>
+ <20150901101924.6c350012@anarchist.wooz.org>
+ <xmqq37yyt7k8.fsf@gitster.mtv.corp.google.com>
+ <20150901135018.70240193@limelight.wooz.org>
+ <CAGZ79ka4+a_eyha=xCrQFBdLzgbT3ws1Jq7Q=WJw45Ob6bFFug@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	David Aguilar <davvid@gmail.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
 	Philip Oakley <philipoakley@iee.org>,
 	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
 	Graeme Geldenhuys <graemeg@gmail.com>
-To: David Aguilar <davvid@gmail.com>, Barry Warsaw <barry@python.org>
-X-From: git-owner@vger.kernel.org Wed Sep 09 11:42:50 2015
+To: Stefan Beller <sbeller@google.com>,
+	Barry Warsaw <barry@python.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 09 11:43:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZbtx-0000eS-J7
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 11:42:49 +0200
+	id 1ZZbu9-0000pw-SS
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 11:43:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626AbbIIJmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Sep 2015 05:42:46 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:34331 "EHLO
+	id S1752102AbbIIJm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Sep 2015 05:42:59 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:48213 "EHLO
 	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751886AbbIIJmo (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2015 05:42:44 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 0899620C28
-	for <git@vger.kernel.org>; Wed,  9 Sep 2015 05:42:44 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1751495AbbIIJm5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2015 05:42:57 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 0D39120828
+	for <git@vger.kernel.org>; Wed,  9 Sep 2015 05:42:57 -0400 (EDT)
 Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 09 Sep 2015 05:42:44 -0400
+  by compute5.internal (MEProxy); Wed, 09 Sep 2015 05:42:57 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=fJYH0+q9ArXc18l3+OCnGuEzOuM=; b=cJD+K7
-	KRqi+LJatlGTqziyjakTFz2Jh6xoeOaPzRo5PsoVWu5dXvu2osZyUvGF6v4+LXap
-	ShwvEEftHigzyeTGoC8vs4Uo3EJTqer2VIZzLuoglGdWwAPg1A/h44uNCVj56q4W
-	ZKkDZkZ6QHhsrSw4lEToaCGu7NOkWkqESZrn4=
+	:x-sasl-enc; s=mesmtp; bh=nqifKbiGALoCTDoyBvEpDauezyc=; b=i06A1C
+	mbs786HweAPbJd9I1gIVyZmJ+XUXlN2VL2uiKLJGZzyss+Sy40Mec7NtaDm7Ej2Q
+	peilPdqYT2NobjpSjIXYoPJm2H3DGzyDmlJxp2LTlYv74l9m/agjijEzKeoHzxGQ
+	LKIJDHwVzfIkkZkbMMp8i1JauaC7luIvc2ElU=
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=fJYH0+q9ArXc18l
-	3+OCnGuEzOuM=; b=cZ1+w3P30u+QN3gNlmMnoEQWTJArpl4AoHTlVDO9drSOsvz
-	ZwMD+XRrSlMEzhgWN3gklnavTj1kmKlAW4q5RMt1hHyO1jPNnMDngURYrPvlpu4S
-	CoWyHHRztfqlqsu1Hznfcd6EIsbCS0wKT2F0bVCoeSikZEIbiV+XQc8YlGjU=
-X-Sasl-enc: KforORhD1uDY4CW7si5Cxe4fQKLiSr5lMGMMTUno44KF 1441791763
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=nqifKbiGALoCTDo
+	yBvEpDauezyc=; b=c/qg54rSyWWi8TW9+s9O652k+W3ecKpk53pCnYdCCnrlOTT
+	wcA/pMAc0+klmBRwwDBEDySzT96tByQSz/Bk0ePh8QU7j/nWlKp2gVQBEcc/ashb
+	zLfcRZanCBLCH0V6VIlY2QKetRVR8W6tbEYq2CjAKAGvaiFi99Cr744eSKYY=
+X-Sasl-enc: Np5+fFjleURAfSQuxNEaunKPAXe2FNAGfdAlOXIhJHnP 1441791776
 Received: from localhost.localdomain (dickson.math.uni-hannover.de [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id C70B9680119;
-	Wed,  9 Sep 2015 05:42:42 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 97C5068013A;
+	Wed,  9 Sep 2015 05:42:55 -0400 (EDT)
 X-Enigmail-Draft-Status: N1110
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.1.0
-In-Reply-To: <20150901092834.GA10706@gmail.com>
+In-Reply-To: <CAGZ79ka4+a_eyha=xCrQFBdLzgbT3ws1Jq7Q=WJw45Ob6bFFug@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277545>
 
-David Aguilar venit, vidit, dixit 01.09.2015 11:28:
-> On Mon, Aug 31, 2015 at 10:25:58AM -0400, Barry Warsaw wrote:
->> On Aug 31, 2015, at 05:10 PM, Duy Nguyen wrote:
+Stefan Beller venit, vidit, dixit 01.09.2015 19:56:
+> On Tue, Sep 1, 2015 at 10:50 AM, Barry Warsaw <barry@python.org> wrote:
+>> On Sep 01, 2015, at 09:42 AM, Junio C Hamano wrote:
 >>
->>> I'm probably shot down for this. But could we go with a clean plate
->>> and create a new command prefix (something like git-next, git2, or
->>> gt...)? We could then redesign the entire UI without worrying about
->>> backward compatibility. At some point we can start to deprecate "git"
->>> and encourage to use the new command prefix only. Of course somebody
->>> has to go over all the commands and options to propose some consistent
->>> UI, then more discussions and coding so it could likely follow the
->>> path of pack v4..
+>>> That way, you are forcing all the existing scripts to be updated to
+>>> say "git -c ..." for _all_ invocations of Git they have, aren't you?
 >>
->> `git` itself could also be a thin wrapper which consulted a configuration
->> variable to see which version of the ui to expose.
+>> No, why?  If the default value enables the current ui, then no scripts need
+>> changing.  Users can enable the new ui for their own benefit at their own
+>> pace.  If you eventually want to make the new ui the default, provide a
+>> sufficient transition period.
 >>
->> "All problems in computer science can be solved by another level of
->> indirection"
+>> Cheers,
+>> -Barry
 > 
-> Except for poor performance, simplicity, and bad ideas.
+> So say I am a user who wants to take the new command set. And as I am lazy to
+> type it all the time I just do:
 > 
-> The Git project does not break backwards compatibility.
-> Let's let Python3 serve as a good lesson on why not to do that! ;-p
+>   $ git config --global command-version 2
 > 
-> While a script writer could write, "git -c core.cliversion=1 ...",
-> no one does that, no one wants to do that, and it just seems
-> like a bad idea that's best left unexplored.
-> 
-> The only idea in this thread that's user-friendly would be a new
-> Git that still supported the entirety of the existing,
-> perfectly-good CLI interface and *also* accepted some new
-> "consistent" user interface.
+> Now I have all the new fancy stuff when I type it directly into the terminal.
+> But when I run one of the old scripts my coworker gave me (which is used to
+> the old notion), it must adhere to the old command world. How do you now figure
+> out if this is interactive or script?
 
-Give it a break. If Git had a perfectly-good CLI interface we didn't
-have any complaints. But we have many well-founded complaints about
-inconsistencies, such as short-options (-n), subsubcommands etc.
+You can't. We have that exact same problem already with the recent
+option-overriding config bloat. It needs to be solved sooner or later
+anyways, by introducing some sort of "mode" (interactive vs. scripting),
+since while in principle we have a separation between porcelain and
+plumbing commands, we don't have, say, a plumbing version of "git tag"
+and take that as an excuse^Wreason for any change to the porcelain
+command "git tag". (You can freely interchange the roles here.)
 
-> Otherwise, this entire thread seems like a big non-issue.
-> The existing CLI hasn't hurt adoption, and tossing a config
-> option at it only makes it worse.  The best config is no config.
+Really, that porcelain-plumbing separation that's often mentioned is
+more wishful thinking than actual reality, at least no complete reality,
+or else we wouldn't even have any backward compatibility problem to
+solve here.
 
-I certainly agree with you on that. Unfortunately, we've seen quite an
-increase of config options whose sole purpose is changing default
-options for some commands.
+So, UI rework or not, we should think about making that promise real: a
+clear separation between a stable scripting interface and an evolving
+user interface. Two possible ways are:
 
-> There really are ony a few corner cases that would need to be
-> tweaked to support --named-subcommands style, and after that is
-> done, is Git really that much easier to use?
-> 
-> Maybe a little bit, but not enough that warrants breaking
-> existing scripts IMO.
-> ---
-> David
+- separate commands, such as git-log vs. git-rev-list
+- separate modes for the same commands
 
-Well, it may actually hurt to reach some substantial improvements. It
-may actually be worth it if it ends constant suffering from how it is
-now. Those are the points that we have to weigh carefully. Simply
-resisting change won't take us anywhere.
+We use both of them ("interactive" detection for some default settings),
+but partially only.
 
 Michael
