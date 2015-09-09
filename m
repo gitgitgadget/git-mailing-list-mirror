@@ -1,97 +1,100 @@
-From: =?UTF-8?B?Um9iZXJ0IE1hY2jDocSNZWs=?= <lighthunt.net@gmail.com>
-Subject: Re: Bug report: GIT PRO/Branches chapter
-Date: Wed, 9 Sep 2015 15:16:38 +0700
-Message-ID: <CACwN7xFU4yFeh=RPmPk4kwKBL5WjTB7pBY8RFFFNgf+k-a_Q4w@mail.gmail.com>
-References: <CACwN7xFG0RrCZCZiUb=h-x2svV3B6Q1U5b3=3x6r08ZZM3mPmg@mail.gmail.com>
- <9039e46ed0bc66aec7b30c24183acdb0@dscho.org>
+From: Dov Grobgeld <dov.grobgeld@gmail.com>
+Subject: Re: Seeing git history of file including merge changes
+Date: Wed, 9 Sep 2015 11:26:47 +0300
+Message-ID: <CA++fsGHPEMhfENx-35=_9_k7mH98TU8NkHO0pYLC2aSxUKWvyg@mail.gmail.com>
+References: <CA++fsGE-R1XpHxAVRZvOEAAwNr1XdTudGbwE4GYvg-E5L9kqEQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Sep 09 10:17:21 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 09 10:27:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZaZ9-0001J5-ET
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 10:17:15 +0200
+	id 1ZZaig-0002LO-IG
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 10:27:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752369AbbIIIRL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2015 04:17:11 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:36417 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323AbbIIIRI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2015 04:17:08 -0400
-Received: by ykcf206 with SMTP id f206so3571107ykc.3
-        for <git@vger.kernel.org>; Wed, 09 Sep 2015 01:17:08 -0700 (PDT)
+	id S1751925AbbIII0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Sep 2015 04:26:52 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:38051 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751597AbbIII0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Sep 2015 04:26:48 -0400
+Received: by wiclk2 with SMTP id lk2so12379069wic.1
+        for <git@vger.kernel.org>; Wed, 09 Sep 2015 01:26:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=3p0qB+1KLun0cIPtjTjJJbGOsyZSy3aR0lEuE4yFhag=;
-        b=l5sjq8xBQMyKAhNkVcLgEfsBMaHLfU5tDV3XYdoQywWhDPrY6u1vERZjoi9E8elKBb
-         9Av0SCbkekayCHaZUo2Vu57ydB1npVRMpmfiphg9OwQ+E7VhYbXZj2T8dmK5iMdKeNVe
-         3HyLWaz9IH3uJ6TG+s3JhaJWlxQcZ+AJNgnGBqeFqq9KjXHljlwncffKLPV8U0ZcaWHv
-         1Umjs/uFT07xoIOU2+rofyTgWZ5UaKu7PmSadcwex6Mo3dZK5Z4Hw1UP6rYS6hWr+ikx
-         QK16utyVWzD3XW0wt08iU8xUlYgESuIaI5s/TbEr0Ptwy3kGFPDHw1o4nSKm05WVFAKH
-         keUw==
-X-Received: by 10.129.27.15 with SMTP id b15mr25458565ywb.162.1441786628073;
- Wed, 09 Sep 2015 01:17:08 -0700 (PDT)
-Received: by 10.31.147.15 with HTTP; Wed, 9 Sep 2015 01:16:38 -0700 (PDT)
-In-Reply-To: <9039e46ed0bc66aec7b30c24183acdb0@dscho.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=XHBbUHAqJWHvvnGm5ZzF064yeTYPzyhMkpbFBb0HARA=;
+        b=gDWHDqZ5yFn9MJs1xIPHRBwLQ+JGv9I9Nzk+aD9JVUs1a4ANrflEfR03P1OEAs/APC
+         pDIJTDnjJE5WaDfY10veKuTpe3HpUEWM8/V9OVlAdXTYetuMhUpw9ifUIJ31ZH4wW+FF
+         hojECF7oXRWiCQLmiE1TdVYUq4QY06to6t9+qizKs8HJwCSdl/LlOqBFLwfQFES/YuMh
+         AaGtn9D4f93FAyF9NxR9N54kt7wOuINHIt3pFpPR/WqB2ZMO5rZOLiMAiFYl3880zqwf
+         /4L/8ja16W5riNbaknIOEES8M2v/mZYR632sMo0CLrIlKdoBCyagdQ7W0fmwxoB8nKX5
+         LLyA==
+X-Received: by 10.180.73.244 with SMTP id o20mr53582950wiv.31.1441787207098;
+ Wed, 09 Sep 2015 01:26:47 -0700 (PDT)
+Received: by 10.28.0.6 with HTTP; Wed, 9 Sep 2015 01:26:47 -0700 (PDT)
+In-Reply-To: <CA++fsGE-R1XpHxAVRZvOEAAwNr1XdTudGbwE4GYvg-E5L9kqEQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277536>
 
-Hi Johannes,
+I asked the following question on StackOverflow a while ago, but did
+not receive any answers so I'll try here.
 
-Sorry, I am new to git, I have just followed instructions at
-https://git-scm.com/community which says:
+We have git repository where a file was changed on a topic branch and
+this branch was then merged back into the main branch. Due to various
+reasons the merge was made wrongly and as a result the changes were
+not accepted during the merge. The following image shows what
+happened:
 
-Mailing List
-Questions or comments for the Git community can be sent to the mailing
-list by using the email address git@vger.kernel.org. Bug reports
-should be sent to this mailing list.
+               -----
+              (  H  )
+               -----
+                 ^
+                 |
+                 |
+               -----
+              (  M  )
+               -----^
+                 ^   \
+                 |    \  -Delta
+                 |     \
+                 |     -----
+                 |    (  B  )
+                 |     -----
+                 |    ^
+                 |   /  +Delta
+               -----/
+              (  A  )
+               -----
 
-The last sentence is made with BOLD font and I assumed that this
-applies to the book as well as it is hosted on this domain (so what
-other bugs are they talking about BTW?)
 
-I'll have a look to github*/issues as you've suggested.
+The file was changed in commit B and the changes were undone in commit M.
 
-Thanks,
-Robert
+My problem is how to view the changes to the file between a specific
+commit, e.g. B and another commit in its "downstream", e.g. H.
 
+If you do
 
-On Wed, Sep 9, 2015 at 3:08 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> Hi Robert,
->
-> On 2015-09-09 08:11, Robert Mach=C3=A1=C4=8Dek wrote:
->
->> Just reading this chapter:
->> https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
->>
->> I believe that: Figure 3-9. Divergent history
->> (https://git-scm.com/book/en/v2/book/03-git-branching/images/advance=
--master.png)
->> does not show the final "2 branch situation" as described in the
->> example in this chapter.
->
-> I guess you want to report it here:
->
->     https://github.com/progit/progit2/issues
->
-> (as suggested by the link on the left side of the page you referred t=
-o, where it says: "The source of this book is hosted on GitHub. Patches=
-, suggestions and comments are welcome.")
->
-> You might want to search the tickets first, though, to make sure that=
- it has not been reported before (or even already addressed).
->
-> Ciao,
-> Johannes
+    git log -u B..H
+
+you won't see any changes, as the changes due to M are suppressed. You
+can see potential changes by doing:
+
+    git log -u --full-history B..H
+
+which will show you that there was a merge commit, but it still won't
+show you the diff between B and M.
+
+So is there a way of seeing all changes made to a file including those
+made by a merge commit?
+
+Thanks!
+
+Dov
