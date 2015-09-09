@@ -1,80 +1,97 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: =?UTF-8?B?Um9iZXJ0IE1hY2jDocSNZWs=?= <lighthunt.net@gmail.com>
 Subject: Re: Bug report: GIT PRO/Branches chapter
-Date: Wed, 09 Sep 2015 10:08:10 +0200
-Organization: gmx
-Message-ID: <9039e46ed0bc66aec7b30c24183acdb0@dscho.org>
+Date: Wed, 9 Sep 2015 15:16:38 +0700
+Message-ID: <CACwN7xFU4yFeh=RPmPk4kwKBL5WjTB7pBY8RFFFNgf+k-a_Q4w@mail.gmail.com>
 References: <CACwN7xFG0RrCZCZiUb=h-x2svV3B6Q1U5b3=3x6r08ZZM3mPmg@mail.gmail.com>
+ <9039e46ed0bc66aec7b30c24183acdb0@dscho.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Robert_Mach=C3=A1=C4=8Dek?= <lighthunt.net@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 09 10:08:29 2015
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Sep 09 10:17:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZaQW-00011a-PA
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 10:08:21 +0200
+	id 1ZZaZ9-0001J5-ET
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 10:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752791AbbIIIIR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2015 04:08:17 -0400
-Received: from mout.gmx.net ([212.227.15.19]:51145 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751597AbbIIIIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2015 04:08:13 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LzblK-1YdcNd0yGY-014hvM; Wed, 09 Sep 2015 10:08:11
- +0200
-In-Reply-To: <CACwN7xFG0RrCZCZiUb=h-x2svV3B6Q1U5b3=3x6r08ZZM3mPmg@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:qTrIoCnVpX1UPHFAYpFdAAkQAd7tQJsyKygfk8nOWUDP7Eob9m/
- 5YfA7kM6HqviqjAnXM2/Azdpge7mfMzCrfqdQoQak79Rnnj90EeogOsBYK+adPRPC/gzQZS
- u2/xMiftDhLOPvloHAETuz1Fuqrv8n72cnDUgg7BTXAbiBHY+HaUamveY5SNymk3/+J2v5p
- z3OIyjddP+h503ABnoHqA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6LQf0xAlak0=:mP8VoZtOhsBI4uuZOAd24R
- MHa2PnkVNICg4f9VOgo/GsLsSoVAqDszgDFrZgRPIjKs79UR9cHvfOXXr9U90YOV2E/XezozK
- bFeJ6GksXpzVq0LigtGGkbeeWrI5+ZaDAJbXozUaaqkMn8k0+P7DBhDot5lTZMBIFae8CS8JA
- k8lXqDpscFqENKK4CpHJsKfepwqPAdRsHbMNrKtm6nlyUw+Q1WvF3LjqcHWm01KlymkdKsIXX
- W81uiHdt5WU6cE0EAJak78dfGUflq6b0W40iEA9jevMGHlpoMmBqmV2ELr4I8+YeQRhK2hSa4
- FUaOfTQRWLAiCY3nd1sLbwZfkAdPEytAj+PD582pbxoP+B0wRyRUfZYwd0rR+hUdtwJOGPRiS
- dyE2fQ96dLfQIKQM9KJbhqfURni+RQXe+OCSZin1rq11ZVGy+02znbqM+3opWNYytPZ3/88Va
- GrY2Kldeb/qZ32FYckoaaDtyHeZ6/VYHsugXEj92urqmJ3aghasn9KZdvdUr1BatIuX4rIOdV
- ZPNQDXYQWZ9S7vjCFf41iltPXtVNOOOgc8M26kapXM7YtQY+hNHpqJjsHxjSg4pBxDGxe8KYV
- T5GDAB+2eEOPRSc/ngxR9Bk3r3Mk64p0Dig0b9ZbWabqctGJWihAl0xkweLqhvHj6n//Zvqp9
- 0ExhKQmTX+HVK2r+sOcIGCQbKmyAevlrqVbKisy6bUBXl2m4tDcVQ+JvJxVJxk10R6EXcQcS5
- Z/z43KAhlw/1ZNh4WvSkrs+E698X5jF4BHKwpw==
+	id S1752369AbbIIIRL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2015 04:17:11 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:36417 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751323AbbIIIRI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2015 04:17:08 -0400
+Received: by ykcf206 with SMTP id f206so3571107ykc.3
+        for <git@vger.kernel.org>; Wed, 09 Sep 2015 01:17:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=3p0qB+1KLun0cIPtjTjJJbGOsyZSy3aR0lEuE4yFhag=;
+        b=l5sjq8xBQMyKAhNkVcLgEfsBMaHLfU5tDV3XYdoQywWhDPrY6u1vERZjoi9E8elKBb
+         9Av0SCbkekayCHaZUo2Vu57ydB1npVRMpmfiphg9OwQ+E7VhYbXZj2T8dmK5iMdKeNVe
+         3HyLWaz9IH3uJ6TG+s3JhaJWlxQcZ+AJNgnGBqeFqq9KjXHljlwncffKLPV8U0ZcaWHv
+         1Umjs/uFT07xoIOU2+rofyTgWZ5UaKu7PmSadcwex6Mo3dZK5Z4Hw1UP6rYS6hWr+ikx
+         QK16utyVWzD3XW0wt08iU8xUlYgESuIaI5s/TbEr0Ptwy3kGFPDHw1o4nSKm05WVFAKH
+         keUw==
+X-Received: by 10.129.27.15 with SMTP id b15mr25458565ywb.162.1441786628073;
+ Wed, 09 Sep 2015 01:17:08 -0700 (PDT)
+Received: by 10.31.147.15 with HTTP; Wed, 9 Sep 2015 01:16:38 -0700 (PDT)
+In-Reply-To: <9039e46ed0bc66aec7b30c24183acdb0@dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277535>
 
-Hi Robert,
+Hi Johannes,
 
-On 2015-09-09 08:11, Robert Mach=C3=A1=C4=8Dek wrote:
+Sorry, I am new to git, I have just followed instructions at
+https://git-scm.com/community which says:
 
-> Just reading this chapter:
-> https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
->=20
-> I believe that: Figure 3-9. Divergent history
-> (https://git-scm.com/book/en/v2/book/03-git-branching/images/advance-=
-master.png)
-> does not show the final "2 branch situation" as described in the
-> example in this chapter.
+Mailing List
+Questions or comments for the Git community can be sent to the mailing
+list by using the email address git@vger.kernel.org. Bug reports
+should be sent to this mailing list.
 
-I guess you want to report it here:
+The last sentence is made with BOLD font and I assumed that this
+applies to the book as well as it is hosted on this domain (so what
+other bugs are they talking about BTW?)
 
-    https://github.com/progit/progit2/issues
+I'll have a look to github*/issues as you've suggested.
 
-(as suggested by the link on the left side of the page you referred to,=
- where it says: "The source of this book is hosted on GitHub. Patches, =
-suggestions and comments are welcome.")
+Thanks,
+Robert
 
-You might want to search the tickets first, though, to make sure that i=
-t has not been reported before (or even already addressed).
 
-Ciao,
-Johannes
+On Wed, Sep 9, 2015 at 3:08 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Hi Robert,
+>
+> On 2015-09-09 08:11, Robert Mach=C3=A1=C4=8Dek wrote:
+>
+>> Just reading this chapter:
+>> https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
+>>
+>> I believe that: Figure 3-9. Divergent history
+>> (https://git-scm.com/book/en/v2/book/03-git-branching/images/advance=
+-master.png)
+>> does not show the final "2 branch situation" as described in the
+>> example in this chapter.
+>
+> I guess you want to report it here:
+>
+>     https://github.com/progit/progit2/issues
+>
+> (as suggested by the link on the left side of the page you referred t=
+o, where it says: "The source of this book is hosted on GitHub. Patches=
+, suggestions and comments are welcome.")
+>
+> You might want to search the tickets first, though, to make sure that=
+ it has not been reported before (or even already addressed).
+>
+> Ciao,
+> Johannes
