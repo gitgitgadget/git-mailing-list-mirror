@@ -1,65 +1,90 @@
-From: =?UTF-8?B?Um9iZXJ0IE1hY2jDocSNZWs=?= <lighthunt.net@gmail.com>
-Subject: Bug report: GIT PRO/Branches chapter
-Date: Wed, 9 Sep 2015 13:11:46 +0700
-Message-ID: <CACwN7xFG0RrCZCZiUb=h-x2svV3B6Q1U5b3=3x6r08ZZM3mPmg@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Standardization of messages - dot after the sentence
+Date: Wed, 9 Sep 2015 09:41:02 +0200
+Message-ID: <55EFE28E.1060601@drmicha.warpmail.net>
+References: <CALx9kCVwpOvBfTxBi8gn7MBajEbuMLGP_HAJ0TW3XGzmUE0=QA@mail.gmail.com>
+ <55ED3973.2020304@drmicha.warpmail.net>
+ <xmqqh9n493q3.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 09 08:14:37 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: sigo <spam@sigo.pl>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 09 09:41:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZYeS-0004KL-H0
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 08:14:36 +0200
+	id 1ZZa0F-0007UA-Qj
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 09:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754012AbbIIGNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Sep 2015 02:13:43 -0400
-Received: from mail-yk0-f182.google.com ([209.85.160.182]:34423 "EHLO
-	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752955AbbIIGMQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2015 02:12:16 -0400
-Received: by ykdg206 with SMTP id g206so37209ykd.1
-        for <git@vger.kernel.org>; Tue, 08 Sep 2015 23:12:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=kjo/b8vlp943tswBrl1KL1my9KvFUCpozb7HwqYHoUw=;
-        b=NOrwQgG7XxkF4MmDXO2+/EZ931FZxkW6SLdXqGb6f+vzy99xtf1V3Z10pD/Z6CHWkm
-         7f+vUrU066icPdyxEI6YaKfyNwd+w8l38SF7eAsZV8x8H80C28Xa80oYRDUNof2WO+qy
-         WcvjFvIL/JRVsE+rPWm7wmJo/ZjIXh/ZWUfOfm/wpSLy7MdipazM3NCyDgM56ZURSeuP
-         ypfJmIQh00JlzXKUWK42qqSCjtNGOEKwAotmw938wCs3X2r1vihWgBQuhjd6p0wenYk0
-         aZafepndkWvayNZafPoIpQUlBvyaRaP6C/I35ito07ZgWBK6HldBLI9VmgHnlIS8XWzG
-         QvYg==
-X-Received: by 10.170.228.193 with SMTP id u184mr3905920ykf.0.1441779135767;
- Tue, 08 Sep 2015 23:12:15 -0700 (PDT)
-Received: by 10.31.147.15 with HTTP; Tue, 8 Sep 2015 23:11:46 -0700 (PDT)
+	id S1752986AbbIIHlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Sep 2015 03:41:09 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55318 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751342AbbIIHlH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2015 03:41:07 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 17E00215F3
+	for <git@vger.kernel.org>; Wed,  9 Sep 2015 03:41:06 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 09 Sep 2015 03:41:06 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=rhcSJP6x/vC2bJrsIFluB4fWqXo=; b=kDf83X
+	EIRqf984yDoW8KEpjFTlbhf6W/iVCmHLkKS4oNDY15EJYuU+ktr3bK60WHLrPWG2
+	VFgU5SJhvIkNAA8fkGNqFSyxcGOwN/IJ2qcFvePH9KFpvvezK1yncN4J74ksGI8L
+	Vj3SCRVeeOEHD6vyDG5/dfo+a8F9hV+CfycWE=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=rhcSJP6x/vC2bJr
+	sIFluB4fWqXo=; b=JS6tcMnFslsFsKEoDL2QEuWaYKWyxuc0dqLJrzLdSMVtbUY
+	xYQ9f6Tk0QwCEm4QRJi8KKNX9NEqYyi8TjGh5pFky0pXiWZSq1IWB8+mG1y5yAfL
+	l6LeYscssHa1bEpohC5H4pJT+wpTFqYQyq9f3qcEmo3l0RjAA4CTKqefSZP4=
+X-Sasl-enc: Xayh43jtJhzxsfkovnbXd0AOY+yZpwI9wGeVe/njQctY 1441784465
+Received: from localhost.localdomain (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 6DC32C00285;
+	Wed,  9 Sep 2015 03:41:05 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <xmqqh9n493q3.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277532>
 
-Hi,
+Junio C Hamano venit, vidit, dixit 08.09.2015 20:16:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> sigo venit, vidit, dixit 05.09.2015 14:22:
+>>> I've found really "little bug" with dots in the git output.
+>>>
+>>> $ git push
+>>> Everything up-to-date
+>>>
+>>> git pull
+>>> Already up-to-date.
+>>>
+>>> Could all phrases contain dots? :)
+>>>
+>>
+>> In this case, also both messages mean the same but are phrased
+>> differently, which is suboptimal in more than one way.
+> 
+> I do not particularly care between these two commands, but I think
+> "git pull" says the same "Already up-to-date" in two situations that
+> are two quite different ones.  That ambiguity bothers me a lot more.
 
-Just reading this chapter:
-https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
+I think both are bad in the same way:
 
-I believe that: Figure 3-9. Divergent history
-(https://git-scm.com/book/en/v2/book/03-git-branching/images/advance-master.png)
-does not show the final "2 branch situation" as described in the
-example in this chapter. On the picture, the master and testing branch
-do not point to correct commit hashes in the picture. I was thinking
-for a while why they are swapped and the only conclusion I made is
-that it's simply a bug in the picture as it also does not correspond
-to the correct git log output in the chapter.
+If a user sees two different messages she rightfully assumes there is a
+difference. If she sees two same messages she righfully assumes there is
+no difference.
 
-$ git log --oneline --decorate --graph --all
-* c2b9e (HEAD, master) made other changes
-| * 87ab2 (testing) made a change
+Besides: l10n...
 
-I suggest to fix the picture or clarify the reason in the chapter.
-
-Hope it helps,
-Robert
+Michael
