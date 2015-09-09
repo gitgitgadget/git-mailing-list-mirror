@@ -1,76 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv1 2/2] git-p4: work with a detached head
-Date: Wed, 09 Sep 2015 14:52:13 -0700
-Message-ID: <xmqqfv2n5khe.fsf@gitster.mtv.corp.google.com>
-References: <1441461738-25066-1-git-send-email-luke@diamand.org>
-	<1441461738-25066-3-git-send-email-luke@diamand.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Wed Sep 09 23:52:40 2015
+From: Vitali Lovich <vlovich@gmail.com>
+Subject: --progress option for git submodule update?
+Date: Wed, 09 Sep 2015 15:52:53 -0700
+Message-ID: <88E7FC00-9A87-4E20-89D8-4BF5997F7B07@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.0 \(3083\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 10 01:08:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZZnI0-00084L-GK
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Sep 2015 23:52:24 +0200
+	id 1ZZoTh-0001ii-Pi
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 01:08:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202AbbIIVwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Sep 2015 17:52:21 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:36573 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751870AbbIIVwU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2015 17:52:20 -0400
-Received: by padhk3 with SMTP id hk3so21557823pad.3
-        for <git@vger.kernel.org>; Wed, 09 Sep 2015 14:52:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=YhuEID2vVnqjauujv+c3kN69qHw6FJYsAjwUCdjU2vo=;
-        b=p44yBu6UI4+kkB0SuQoWsjrAnJDtEvY1EKPWyN3SW84Nytfyp1UOSRY3Ro4PLnw8ea
-         xIuIyvRjJVSREDEgYZiap7iGCGEikEUN28iZrLluoR2SNY9M8bOzUPesX7NkqG/ebTqt
-         tspl4gDNvm5zfuxg+yM7nAovdKOAnCUEbMqeISnRnx4lHsyplDI/uxWlGID6ygJPcbJu
-         sslbKOQ3iqOXNb6XFZbly/jZ61uNLjfN+p4dcnZ5aYlgIEBRMgaPa9Wfv2ryJWIkl2/b
-         8TEF2ctEuckC2X8viv+yMPm4xzapHlpmnGmdYJkYXrDFhS3M8Ujv0YZBFT+ktZZtdm+1
-         qy3g==
-X-Received: by 10.66.55.66 with SMTP id q2mr65863339pap.94.1441835539582;
-        Wed, 09 Sep 2015 14:52:19 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:31c8:2790:408d:8446])
-        by smtp.gmail.com with ESMTPSA id gq7sm8109916pac.5.2015.09.09.14.52.18
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Wed, 09 Sep 2015 14:52:18 -0700 (PDT)
-In-Reply-To: <1441461738-25066-3-git-send-email-luke@diamand.org> (Luke
-	Diamand's message of "Sat, 5 Sep 2015 15:02:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753549AbbIIXIO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2015 19:08:14 -0400
+Received: from mail-out6.apple.com ([17.151.62.28]:62615 "EHLO
+	mail-in6.apple.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753486AbbIIXII convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2015 19:08:08 -0400
+X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Sep 2015 19:08:08 EDT
+Received: from relay6.apple.com (relay6.apple.com [17.128.113.90])
+	by mail-in6.apple.com (Apple Secure Mail Relay) with SMTP id BB.FB.24160.548B0F55; Wed,  9 Sep 2015 15:52:53 -0700 (PDT)
+X-AuditID: 11973e15-f79cb6d000005e60-b5-55f0b845be4c
+Received: from marigold.apple.com (marigold.apple.com [17.128.115.132])
+	(using TLS with cipher RC4-MD5 (128/128 bits))
+	(Client did not present a certificate)
+	by relay6.apple.com (Apple SCV relay) with SMTP id 16.9F.11987.548B0F55; Wed,  9 Sep 2015 15:52:53 -0700 (PDT)
+Received: from vldesktop.apple.com ([17.214.197.172])
+ by marigold.apple.com (Oracle Communications Messaging Server 7.0.5.30.0 64bit
+ (built Oct 22 2013)) with ESMTPSA id <0NUF00KGGM84LW30@marigold.apple.com> for
+ git@vger.kernel.org; Wed, 09 Sep 2015 15:52:53 -0700 (PDT)
+X-Mailer: Apple Mail (2.3083)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprGLMWRmVeSWpSXmKPExsUi2FAYpeu640OoQV+LpUXXlW4mB0aPz5vk
+	AhijuGxSUnMyy1KL9O0SuDLmvGlhLtjEVnF+6Sm2BsaprF2MnBwSAiYSp9Y0MkLYYhIX7q1n
+	62Lk4hAS2MsosX7hI0aYoimr7jBCJCYxScy6fZcNJCEkMIVJouODA4gtLCAhsfLGYXYQm01A
+	XeJL60wgm4ODGcieMiUXJMwsoC3x5N0FVohyE4nrRyeAzecVsJFY8n8+mM0ioCpxZP1CJhBb
+	REBc4u3xmewQNXoSzRsngI2UEJCVmLYtHuQcCYGrrBJTpx9jmcAoOAth2ywk22Yh6V7AyLyK
+	USg3MTNHNzPPTC+xoCAnVS85P3cTIyggp9uJ7mA8s8rqEKMAB6MSD29D2ftQIdbEsuLK3EOM
+	0hwsSuK8n8o/hAoJpCeWpGanphakFsUXleakFh9iZOLglGpgZNhmu+4A34ottTcrNXiShG45
+	WFV83hr2cl36y2c2tud53zIq7hUz+bPUT/H8yah7ZTr/vtpclmVYzJR0/sajqXzy/9x1m2um
+	CAQefZq5has+1m7l1yirk6E+j78VRbLY+rKc3Cd3b8k3vfr0PX8shPsCPbnThFZcsHf+69uQ
+	wbXRcmNRS2moEktxRqKhFnNRcSIAnGTTwykCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkluLIzCtJLcpLzFFi42IRbChu0XXd8SHU4N97M4uuK91MDowenzfJ
+	BTBGcdmkpOZklqUW6dslcGXMedPCXLCJreL80lNsDYxTWbsYOTkkBEwkpqy6wwhhi0lcuLee
+	rYuRi0NIYBKTxKzbd9lAEkICU5gkOj44gNjCAhISK28cZgex2QTUJb60zgSyOTiYgewpU3JB
+	wswC2hJP3l1ghSg3kbh+dALYfF4BG4kl/+eD2SwCqhJH1i9kArFFBMQl3h6fyQ5RoyfRvHEC
+	2EgJAVmJadviJzDyzUJYMAvJgllIGhYwMq9iFChKzUmsNNNLLCjISdVLzs/dxAgOoMKoHYwN
+	y60OMQpwMCrx8DaUvQ8VYk0sK67MPcQowcGsJMKbtv1DqBBvSmJlVWpRfnxRaU5q8SFGaQ4W
+	JXHeBpFXoUIC6YklqdmpqQWpRTBZJg5OqQZG1Rrpn6HTJj0x53f//IVhyzTRR/fj/+78PVVA
+	g+HV2aLfKu8qw7/u1whutlEKeL/kSuWs5dOdTDSPrYw9dajmxPs76fXRTMu9Zrw6Hpl0bG/v
+	ukOLHGcV3WKJsOFa6li07s76yKfLk05E7TkQWvXqYdeGJ0cqumaYH2Ff7/vIepbY/679Zl4b
+	7ZRYijMSDbWYi4oTAab1H0UcAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277568>
 
-Luke Diamand <luke@diamand.org> writes:
+Hi,
 
->      def run(self, args):
->          if len(args) == 0:
->              self.master = currentGitBranch()
-> -            if len(self.master) == 0 or not gitBranchExists("refs/heads/%s" % self.master):
-> -                die("Detecting current git branch failed!")
-> +            if self.master == "undefined":
-> +                self.master = None
+Git submodule doesn=E2=80=99t have a --progress option like regular clo=
+ne/fetch does.  This means that it can hang a long time without output =
+as it=E2=80=99s transferring data, particularly for large repositories.
+This is problematic in automation scenarios where there can be upper-bo=
+unds on how long a process may run without any output (to protect again=
+st processes hanging for long periods of time without forward progress)=
+=2E
 
-The comparison with textual "undefined" smelled fishy and I ended up
-looking at the implementation of currentGitBranch().
+I=E2=80=99m sure this has been asked for before but having this option =
+would be really nice for automation system (like buildbot) to take adva=
+ntage of.  The only alternative is a hacky solution to clone locally fi=
+rst with the =E2=80=94progress option
+& then somehow set up the submodule to use the local clone as a referen=
+ce.
 
-    def currentGitBranch():
-        return read_pipe("git name-rev HEAD").split(" ")[1].strip()
-
-Yuck.  I know it is not entirely the fault of this patch, but
-shouldn't it be reading from
-
-    $ git symbolic-ref HEAD
-
-and catch the error "fatal: ref HEAD is not a symbolic ref" and use
-it as a signal to tell that the HEAD is detached?
+Thanks,
+Vitali
