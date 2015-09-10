@@ -1,98 +1,119 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: storing cover letter of a patch series?
-Date: Thu, 10 Sep 2015 21:09:25 +0100
-Organization: OPDS
-Message-ID: <A20C476954134C53B0D256D644B1CCC2@PhilipOakley>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com> <xmqqh9n241el.fsf@gitster.mtv.corp.google.com> <CA+P7+xq9P2NHqQe-y+2n38ZvbR74UxR0Rik=btgy=JtEoZbX2A@mail.gmail.com> <xmqqvbbi2jy5.fsf@gitster.mtv.corp.google.com> <CA+P7+xodgeu6Vo+Rt57_iFycxkEnNjxP-TTOfY8DdXwzeVKbZg@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Josh Rabinowitz <joshr@joshr.com>
+Subject: Re: [PATCH] push: don't show Done with --quiet --porcelain
+Date: Thu, 10 Sep 2015 16:23:07 -0400
+Message-ID: <CA+WR+g6mU9=izqskNzMYEQc=OJN2rvz9AjGpJ4XB-sMZXoVxwA@mail.gmail.com>
+References: <CA+WR+g7frN4uV12dxahxZbr-5az7sj3zx2oN-Z3rKH0_Y8jqqg@mail.gmail.com>
+ <xmqqvbburrkf.fsf@gitster.mtv.corp.google.com> <CA+WR+g7V0Rez_oug5P_LDmafQKXqnDHDNN_vk=-1Sbj3-754DQ@mail.gmail.com>
+ <xmqqbndhg8un.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>
-To: "Jacob Keller" <jacob.keller@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 22:09:25 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, "Larry D'Anna" <larry@elder-gods.org>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 10 22:23:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za89m-0000EG-N3
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 22:09:19 +0200
+	id 1Za8NX-00066r-Ve
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 22:23:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752439AbbIJUJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2015 16:09:15 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:60535 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752083AbbIJUJO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2015 16:09:14 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2CDMgBD4vFVPDkqFlxdGQEBgwiBPYMmgy9tvV0EBAKBU00BAQEBAQEHAQEBAUE/QQECAoNYBQEBAQEDCAEBGRUeAQEhCwIDBQIBAxUDAgIFIQICFAEECBIGBwMUBgESCAIBAgMBCIgAAxa4FoZYiD8NhQ+BIoVRhHuCT4FaEQFRgnAvgRQFlVYBgRWJd5UphzyCcxyBVT0zgnSDCoEMgT8BAQE
-X-IPAS-Result: A2CDMgBD4vFVPDkqFlxdGQEBgwiBPYMmgy9tvV0EBAKBU00BAQEBAQEHAQEBAUE/QQECAoNYBQEBAQEDCAEBGRUeAQEhCwIDBQIBAxUDAgIFIQICFAEECBIGBwMUBgESCAIBAgMBCIgAAxa4FoZYiD8NhQ+BIoVRhHuCT4FaEQFRgnAvgRQFlVYBgRWJd5UphzyCcxyBVT0zgnSDCoEMgT8BAQE
-X-IronPort-AV: E=Sophos;i="5.17,506,1437433200"; 
-   d="scan'208";a="609490107"
-Received: from host-92-22-42-57.as13285.net (HELO PhilipOakley) ([92.22.42.57])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 10 Sep 2015 21:09:11 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1750877AbbIJUX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 16:23:28 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:36505 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750736AbbIJUX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2015 16:23:27 -0400
+Received: by igcrk20 with SMTP id rk20so26119637igc.1
+        for <git@vger.kernel.org>; Thu, 10 Sep 2015 13:23:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=7ujYJAzRfxKJgZCPQ9l4ezJNv8SX9tFlAG5jn17Z7mQ=;
+        b=c8FqbChkO+X00710l+TJg1zXwXaaXQS7S6VkM88ZaaNktPD0ue8slGXisfeKzM7Iuf
+         PkPCptN5oKGZhzCGBWqJVaNmelGG2QM2EptumL2H//XyfCPPO7DBlTTnKJTdSrq/8kOq
+         OZGSv7e3tYftZhhCoMBbqxnMcIoZhMk1XXFC5DaCHpVq7pDZCelGSVnt4PC9OQjr/PxF
+         nNAQNHciMsAIlmDH+RQw9gHIWk6SH0xqhVPCLfRaNFLZ1cCkRRd9kBoSz8zVSTAOR3El
+         exTg7doAsVgyi6Sr/5oqrkNDpdfOnCpToSCQCMIgfD45yBDeZtJqClXctiOgNPebipkz
+         BGOg==
+X-Received: by 10.50.62.112 with SMTP id x16mr9426047igr.23.1441916606528;
+ Thu, 10 Sep 2015 13:23:26 -0700 (PDT)
+Received: by 10.64.86.78 with HTTP; Thu, 10 Sep 2015 13:23:07 -0700 (PDT)
+In-Reply-To: <xmqqbndhg8un.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: ab_wGHuT5T7Zl-sHvW1colvdc-M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277633>
 
-From: "Jacob Keller" <jacob.keller@gmail.com>
-> On Thu, Sep 10, 2015 at 11:44 AM, Junio C Hamano <gitster@pobox.com> 
-> wrote:
->> Jacob Keller <jacob.keller@gmail.com> writes:
->>
->>> I hadn't thought of separating the cover letter from git-send-email.
->>> That would be suitable for me.
->>
->> Yeah, I said this number of times over time, and I said it once
->> recently in another thread, but I think it was a mistake to allow
->> git-send-email to drive format-patch.  It may appear that it will
->> make things convenient in the perfect world where no user makes
->> mistakes, but people are not perfect in real life.  Expecting them
->> to be is being naive.
->>
+Hello, Junio and other recipients:
+
+Thanks for your response.
+
+It just seems very very unlikely that anyone would be depending on a
+non-error from git pull --porcelain --quiet' to producing  the "Done"
+string. In my case, it's something I didn't expect and wanted to
+suppress. (I've automated the use of that command and wished that the
+only output would be errors - which is what it's documented to do --
+see below)
+
+>From a consistency standpoint, it doesn't make sense to have a --quiet
+option output "Done" when there is no error.
+
+If decisions are made that almost no output can ever be changed (which
+is what your opinion seems to be leaning towards) then the code is
+largely stuck in the present.
+
+It just seems insane to be stuck with the current behavior of 'git
+push --porcelain --quiet' printing out "Done" -- especially since the
+current behavior is in conflict with the docs (at least from 2.3.2):
+
+  from 'man git-push':
+       -q, --quiet
+           Suppress all output, including the listing of updated refs, unless
+           an error occurs. Progress is not reported to the standard error
+           stream.
+
+In any case, thanks again for the response and for your additional
+consideration.
+
+Best,
+ Josh
+
+On Fri, Sep 4, 2015 at 5:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Josh Rabinowitz <joshr@joshr.com> writes:
 >
-> Yep. I didn't even know cover-letter was an option of format-patch
-> only thought it was in send-email.
+>> Hi Junio and other recipients:
+>>
+>> Junio, thanks for your response. I think you may have misunderstood my
+>> patch though (or I am misunderstanding your responses), because it
+>> seems we are actually in agreement.
+>>
+>> 1) My original patch is to make 'git push --porcelain --quiet' not
+>> emit 'Done' when there is no error. It would continue to emit "Done"
+>> when using 'git push --porcelain' without an error.
+>>
+>> 2) In your first paragraph, you seem to state that while printing
+>> "Done" is advantageous when using 'git push --porcelain' without
+>> --quiet, the "Done" output isn't needed when --quiet is used. This
+>> appears to agree with my patch's intent.
+>>
+>> 3) in your second paragraph, you seem to agree with me again, that
+>> "Done" is not needed when "git push --porcelain --quiet" is use
+>>
+>> 4) Then in your third paragraph, you say that you don't want to remove
+>> the "Done" output when using "git push --porcelain" without --quiet --
+>> which my patch preserves (again, it would only remove the "Done" text
+>> when 'git push --porcelain' is used with --quiet and there is no
+>> error.)
+>>
+>> In summary, I think we are in agreement that this patch is probably
+>> acceptable. Look forward to reading comments.
 >
-Actually, the one feature I'd like (I think) is to be able to join 
-together the empty commit mechanism and the cover letter mechanism 
-within format patch so that:
-
-* the empty commit message would detected and automatically become the 
-[0/N] in the patch series (without need to say --cover-letter)
-
-* the cover letter would still have some 'template' markings to say "*** 
-insert what's changed here***" or smilar (with option to exclude them).
-
-That way, when starting a series / branch, the first item would be to 
-add the explanatory 'empty commit' that states the requirements of what 
-one hopes to achieve (a key cover letter content), which is then 
-followed by commits that move toward that goal.
-
-The series can then be rebased as the user develops the code, and that 
-cover note can be edited as required during the rebase.
-
-When it comes time to show it to the list, the format patch will *know* 
-from the empty commit that it is the [0/N] cover letter and 
-(perhaps -option) add the appropriate markers ready for editing.
-
-The user edits the cover letter with the extra 'what's changed' / 
-interdiff / whatever, and sends. sendmail barfs if the user hasn't 
-edited the markers.
-
-This could also work with the sendmail patch formating (though I've 
-never used that workflow) as now the cover letter becomes automatic for 
-the upstream.
-
-Philip 
+> I think your 4. misinterprets what I meant to say.
+>
+> Even if we agree 1 thru 3, changing the output, with or without
+> "--quiet", is an unwelcome thing to do to existing scripts.
