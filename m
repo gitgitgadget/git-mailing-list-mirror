@@ -1,124 +1,92 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: storing cover letter of a patch series?
-Date: Thu, 10 Sep 2015 12:02:02 -0600
-Message-ID: <18979417.pyyHNUINeQ@mfick1-lnx>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com> <xmqqh9n241el.fsf@gitster.mtv.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v17 13/14] tag.c: implement '--format' option
+Date: Thu, 10 Sep 2015 23:34:42 +0530
+Message-ID: <CAOLa=ZQeFSZtLHK_sZMTHpdw_UTL_yk=Nrmu-4vC0vy2_hR7mw@mail.gmail.com>
+References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
+ <1441902169-9891-2-git-send-email-Karthik.188@gmail.com> <xmqq8u8e40l2.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.keller@gmail.com>, Git List <git@vger.kernel.org>, repo-discuss@googlegroups.com
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: repo-discuss+bncBCF6VG7K3QDRBHMLY6XQKGQEOVXGRII@googlegroups.com Thu Sep 10 20:02:32 2015
-Return-path: <repo-discuss+bncBCF6VG7K3QDRBHMLY6XQKGQEOVXGRII@googlegroups.com>
-Envelope-to: gcvr-repo-discuss@m.gmane.org
-Received: from mail-pd0-f190.google.com ([209.85.192.190])
+X-From: git-owner@vger.kernel.org Thu Sep 10 20:05:19 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <repo-discuss+bncBCF6VG7K3QDRBHMLY6XQKGQEOVXGRII@googlegroups.com>)
-	id 1Za6Ai-00005O-7U
-	for gcvr-repo-discuss@m.gmane.org; Thu, 10 Sep 2015 20:02:08 +0200
-Received: by pdkh16 with SMTP id h16sf8591046pdk.1
-        for <gcvr-repo-discuss@m.gmane.org>; Thu, 10 Sep 2015 11:02:07 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Za6Dm-0003BO-97
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 20:05:18 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751955AbbIJSFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 14:05:14 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:33721 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819AbbIJSFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2015 14:05:13 -0400
+Received: by obbbh8 with SMTP id bh8so41385719obb.0
+        for <git@vger.kernel.org>; Thu, 10 Sep 2015 11:05:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:date:message-id:user-agent:in-reply-to
-         :references:mime-version:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=YjwvD9sEBT4aplRsQ7x2yiAvBIux1lJQKGt66ml0ab0=;
-        b=wrECsJo2agJYEU2Lf9YdfOdnCj5PfyzcKCMA7fESEJeB/4Rs5UfR4eOCXzYXaIgVJ5
-         KKPGJ2v2eO3OD8nDcDsh3DtG8eeaZ5IZQOr/jjq7fg7gq2oAwGtsin92hvZH/MZm6NNU
-         96Jcqynr2jbZIQEOq4uan+0XF62ZSOS1Zc+L5/Chj+1dqKo3+MA5rTp9KbENkn8x2hZa
-         TCga9j83kO71udDd56AHpd4CngY5i34Ct2hQZ/sO0O3KR1vJgVfzZUJmTnVdd+AwnkWJ
-         NpOZBAaE6JJ+2wWYZdNw1ksDOnrJ5v6dLCW3rWURIvhYP6/GGYuLNVTNfvWr6AURIGhi
-         rCBw==
-X-Received: by 10.140.19.85 with SMTP id 79mr270008qgg.22.1441908127443;
-        Thu, 10 Sep 2015 11:02:07 -0700 (PDT)
-X-BeenThere: repo-discuss@googlegroups.com
-Received: by 10.140.35.179 with SMTP id n48ls1032493qgn.82.gmail; Thu, 10 Sep
- 2015 11:02:05 -0700 (PDT)
-X-Received: by 10.129.154.212 with SMTP id r203mr36639723ywg.12.1441908125006;
-        Thu, 10 Sep 2015 11:02:05 -0700 (PDT)
-Received: from smtp.codeaurora.org (smtp.codeaurora.org. [198.145.29.96])
-        by gmr-mx.google.com with ESMTPS id lp10si1299137pab.1.2015.09.10.11.02.04
-        for <repo-discuss@googlegroups.com>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Sep 2015 11:02:04 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of mfick@codeaurora.org designates 198.145.29.96 as permitted sender) client-ip=198.145.29.96;
-Received: from smtp.codeaurora.org (localhost [127.0.0.1])
-	by smtp.codeaurora.org (Postfix) with ESMTP id 9F959140EC0;
-	Thu, 10 Sep 2015 18:02:04 +0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 486)
-	id 91EDD140EC4; Thu, 10 Sep 2015 18:02:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	pdx-caf-smtp.dmz.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.1
-Received: from mfick1-lnx.localnet (unknown [129.46.10.103])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: mfick@smtp.codeaurora.org)
-	by smtp.codeaurora.org (Postfix) with ESMTPSA id 3BF29140EC0;
-	Thu, 10 Sep 2015 18:02:04 +0000 (UTC)
-User-Agent: KMail/4.8.5 (Linux/3.2.0-75-generic; KDE/4.8.5; x86_64; ; )
-In-Reply-To: <xmqqh9n241el.fsf@gitster.mtv.corp.google.com>
-X-Virus-Scanned: ClamAV using ClamSMTP
-X-Original-Sender: mfick@codeaurora.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: best guess record for domain of mfick@codeaurora.org designates
- 198.145.29.96 as permitted sender) smtp.mailfrom=mfick@codeaurora.org
-Precedence: list
-Mailing-list: list repo-discuss@googlegroups.com; contact repo-discuss+owners@googlegroups.com
-List-ID: <repo-discuss.googlegroups.com>
-X-Spam-Checked-In-Group: repo-discuss@googlegroups.com
-X-Google-Group-Id: 540870184241
-List-Post: <http://groups.google.com/group/repo-discuss/post>, <mailto:repo-discuss@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:repo-discuss+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/repo-discuss
-Sender: repo-discuss@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/repo-discuss/subscribe>, <mailto:repo-discuss+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+540870184241+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/repo-discuss/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277618>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=evsICZLXpcfo1mOSMMRpAoi8mbgJgcZEaBSaOkEim+k=;
+        b=kngM9jHe5n/xr48PYafp+X9DLCu+iQulCFi/QP0ok18+Nyp2NTrVMIhV6QStuzGtHa
+         8ItIEJ9VgHlmR4+6vWfupvpvlI1Z5+G3Ly4x0OloFw0HHMSk6EocNBSWHGvJYIpRR9kN
+         ghprGH9gIujl8g5eY9lQ9cRLUmZl114xymiuP6yL6jmdmYeeunUTqgDXrJCPw4Lnochn
+         oZtKqbszG6TEqSbUXFhfqukt6SoJF5toSikx50A13L8L1UTMMrIKt/9Ct1E08cRjlIOf
+         H/3ScCHWgFy3pCWE6vY+kO16uH7ScHFaSGflV5T5e+N3buFTiwZbAfUmcF2EqQbQGfmq
+         5CdQ==
+X-Received: by 10.182.81.98 with SMTP id z2mr33775417obx.70.1441908312071;
+ Thu, 10 Sep 2015 11:05:12 -0700 (PDT)
+Received: by 10.182.59.15 with HTTP; Thu, 10 Sep 2015 11:04:42 -0700 (PDT)
+In-Reply-To: <xmqq8u8e40l2.fsf@gitster.mtv.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277619>
 
-+repo-discuss@googlegroups.com (to hit Gerrit developers 
-also)
+On Thu, Sep 10, 2015 at 11:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> -static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
+>> +static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
+>>  {
+>>       struct ref_array array;
+>> -     char *format, *to_free = NULL;
+>> +     char *to_free = NULL;
+>>       int i;
+>
+> format is const char * while to_free is non-const char * here.
+>
+>> @@ -41,12 +41,14 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
+>>       if (filter->lines == -1)
+>>               filter->lines = 0;
+>>
+>> +     if (!format) {
+>> +             if (filter->lines) {
+>> +                     format = xstrfmt("%s %%(contents:lines=%d)",
+>> +                                      "%(align:15)%%(refname:short)%%(end)", filter->lines);
+>
+> Hmmm, did this even pass tests and if so how?  What are these double
+> %% doing before refname and end?  Perhaps we do not have enough test
+> coverage?
+>
 
-On Thursday, September 10, 2015 09:28:52 AM Jacob Keller 
-<jacob.keller@gmail.com> wrote:
-> does anyone know of any tricks for storing a cover letter
-> for a patch series inside of git somehow? I'd guess the
-> only obvious way currently is to store it at the top of
-> the series as an empty commit.. but this doesn't get
-> emailed as the cover letter...
-...
-> I really think it should be possible to store something
-> somehow as a blob that could be looked up later.
+Seems like I didn't run the tests here, will change this.
 
+>> +                     to_free = format;
+>
+> This assignment discards constness.
+>
+> Take the result of xstrfmt() to to_free (which is a non-const
+> pointer) and then assigning it to format (which is a const pointer)
+> would work it around.
 
-On Thursday, September 10, 2015 10:41:54 AM Junio C Hamano 
-wrote:
-> 
-> I think "should" is too strong here.  Yes, you could
-> implement that way.  It is debatable if it is better, or
-> a flat file kept in a directory (my-topic/ in the example
-> above) across rerolls is more flexible, lightweight and
-> with less mental burden to the users. --
-
-As a Gerrit developer and user, I would like a way to 
-see/review cover letters in Gerrit.  We have had many 
-internal proposals, most based on git notes, but we have 
-also used the empty commit trick.  It would be nice if there 
-were some standard git way to do this so that Gerrit and 
-other tools could benefit from this standard.  I am not 
-suggesting that git need to be modified to do this, but 
-rather that at least some convention be established.
-
--Martin
-
+Yeah!
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
-
--- 
+Regards,
+Karthik Nayak
