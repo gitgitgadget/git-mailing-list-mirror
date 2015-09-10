@@ -1,89 +1,108 @@
-From: Jacob Keller <jacob.keller@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: storing cover letter of a patch series?
-Date: Thu, 10 Sep 2015 11:38:42 -0700
-Message-ID: <CA+P7+xp9bMeQF2TvNoGTcL4H5Ap0vHcDhJ0o4WCpaAJaFmQmeA@mail.gmail.com>
+Date: Thu, 10 Sep 2015 11:39:49 -0700
+Message-ID: <xmqqzj0u2k5m.fsf@gitster.mtv.corp.google.com>
 References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
- <xmqqh9n241el.fsf@gitster.mtv.corp.google.com> <18979417.pyyHNUINeQ@mfick1-lnx>
+	<xmqqh9n241el.fsf@gitster.mtv.corp.google.com>
+	<18979417.pyyHNUINeQ@mfick1-lnx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	repo-discuss@googlegroups.com
+Content-Type: text/plain
+Cc: Jacob Keller <jacob.keller@gmail.com>,
+	Git List <git@vger.kernel.org>, repo-discuss@googlegroups.com
 To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Thu Sep 10 20:39:30 2015
+X-From: git-owner@vger.kernel.org Thu Sep 10 20:40:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za6kX-0002c9-0o
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 20:39:09 +0200
+	id 1Za6lN-0003Nn-3h
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 20:40:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126AbbIJSjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2015 14:39:04 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:34902 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753045AbbIJSjD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2015 14:39:03 -0400
-Received: by ioiz6 with SMTP id z6so71421062ioi.2
-        for <git@vger.kernel.org>; Thu, 10 Sep 2015 11:39:02 -0700 (PDT)
+	id S1752791AbbIJSjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 14:39:53 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:33241 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752078AbbIJSjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2015 14:39:51 -0400
+Received: by pacex6 with SMTP id ex6so50365213pac.0
+        for <git@vger.kernel.org>; Thu, 10 Sep 2015 11:39:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=GdcRwa7lBNvjuJrUIH7eHbahRzvWqQvhHZ/suxsZ3+I=;
-        b=ymLnqKpmugD5h/+VtLv4vZMXdWP8USkJlAzfKJ79qqruK0T+JTiWOiY/c/9f1nqRQo
-         Kb3yWi6Vnmb4AsMaTSjE7inBVBUx9NdE0vtaYuiamIbDQvS6OAJ/OvJbc2Ot9dFlzn+b
-         T8bHlnKeSrAAAPGPHJ08SK6H5eWdgMHiJ//Sls+8JZ9r8tHhhmuewMwIVNb/s9SuhJVo
-         tORhWPneVqfmA4aptYe/fkQplKnEv64FYD9W6p7bCM7Li+dun0uX3KSrMeAemGZSYIax
-         B1L3qA9/abee8i3HYvIaTw+uxSoNnmTrpYcr0zGw97b5BnOn4W08wMhvCnGVokNPEPAS
-         F2kw==
-X-Received: by 10.107.166.201 with SMTP id p192mr30046765ioe.0.1441910342062;
- Thu, 10 Sep 2015 11:39:02 -0700 (PDT)
-Received: by 10.107.132.155 with HTTP; Thu, 10 Sep 2015 11:38:42 -0700 (PDT)
-In-Reply-To: <18979417.pyyHNUINeQ@mfick1-lnx>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=ee1pWtC/C6B9x5m+ueJInAbw/uBcU+29rIMzulZmR6s=;
+        b=EjGtxUCBBnHs4ZwvjgSNTk3YJun/OOLqI9wFbU/OPXjr6vI351CkaBf6zoxXJAT+4w
+         Js9v76s1vqDSob3xWjltG9rpQg5Bmz5LD2ATCy6wSqLY46Jez7JDk3bqz8Uu605lLeXL
+         Uxxal+nS0tM+nhXOXH+p08/474J4lUWrlirSFfKCAXpdALLd+eK4w2coeFstu909I5tb
+         UPk6TeS4v5DxeBWcJbaI+hCZMw24HnkoDFsSFuO1pUt5eEHsWx90Xl6xyrfpFEV00zus
+         B82GBj2ubF2Jqm9Y3UwTHBLcRuHjC3THntPRmsGTGz63mnP3mgdcPqwia5KUA7e+2xPA
+         rG/A==
+X-Received: by 10.68.175.3 with SMTP id bw3mr85492960pbc.106.1441910390977;
+        Thu, 10 Sep 2015 11:39:50 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:8419:5a5:3940:dfa0])
+        by smtp.gmail.com with ESMTPSA id hz5sm13361545pbb.39.2015.09.10.11.39.50
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 10 Sep 2015 11:39:50 -0700 (PDT)
+In-Reply-To: <18979417.pyyHNUINeQ@mfick1-lnx> (Martin Fick's message of "Thu,
+	10 Sep 2015 12:02:02 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277624>
 
-On Thu, Sep 10, 2015 at 11:02 AM, Martin Fick <mfick@codeaurora.org> wrote:
-> On Thursday, September 10, 2015 10:41:54 AM Junio C Hamano
-> wrote:
->>
->> I think "should" is too strong here.  Yes, you could
->> implement that way.  It is debatable if it is better, or
->> a flat file kept in a directory (my-topic/ in the example
->> above) across rerolls is more flexible, lightweight and
->> with less mental burden to the users. --
->
-> As a Gerrit developer and user, I would like a way to
-> see/review cover letters in Gerrit.  We have had many
-> internal proposals, most based on git notes, but we have
-> also used the empty commit trick.  It would be nice if there
-> were some standard git way to do this so that Gerrit and
-> other tools could benefit from this standard.  I am not
-> suggesting that git need to be modified to do this, but
+Martin Fick <mfick@codeaurora.org> writes:
+
+> As a Gerrit developer and user, I would like a way to 
+> see/review cover letters in Gerrit.  We have had many 
+> internal proposals, most based on git notes, but we have 
+> also used the empty commit trick.  It would be nice if there 
+> were some standard git way to do this so that Gerrit and 
+> other tools could benefit from this standard.  I am not 
+> suggesting that git need to be modified to do this, but 
 > rather that at least some convention be established.
->
-> -Martin
->
 
-Having used gerrit, this would be useful as well. The "empty commit
-message" thing sort of works, but has issues.
+Some of what you would write in the cover letter is not meant for
+anywhere in the permanent history (e.g. description of what changed
+since the previous reroll), but some other would be a concise
+summary of what the entire series is about, and it would be nice if
+it can be made part of the permanent record.
 
-I don't know if this could be solved for gerrit at all without
-modification to git, since you'd need something that can be sent to
-the gerrit server and received by the client.
+The problem with "empty commit trick" is that it is a commit whose
+sole purpose is to describe the series, and its presence makes it
+clear where the series ends, but the topology does not tell where
+the series begins, so it is an unsatisifactory half-measure.
 
-Some form of git-notes might work, ie: a git-notes on the first
-commit, stored in some "standard" refs/notes/cover or similar.. but
-this would depend on implementation of a standard way to share notes.
+Ideally, I would think that you want that information when the
+series is fully cooked and gets merged to a more permanent place in
+the log message of the merge commit.  At that point, where the
+series started may become more clear from the topology (i.e. the set
+difference X^..X for the resulting merge is what got merged).  One
+possible "hacky" convention could be
 
-One alternative as well is to use a --no-ff merge commit which forces
-the merge between the base and the tip of the series and contains the
-contents.. but I don't believe gerrit really works well with merge
-commits.
+ - Developers keep rerolling with the "empty commit with cover
+   letter material at the tip".  topic@{upstream}..topic~1 are the
+   real changes, topic~0 is an empty "cover letter material".
 
-But again, Junio's solution will work great for emails workflow, which
-is my primary usage.
+ - When the series is fully cooked, a new "git merge" option notices
+   that the topic is structured in a "strange" way, uncaps its tip
+   commit and merges the remainder of the series and adds the cover
+   letter material when presenting the editor to record the merge
+   commit.  That is
+
+	$ git merge --cover-at-tip topic
+
+   would work roughly by doing the following:
+
+    - verify that "git rev-parse topic^^{tree} topic^{tree}" shows that
+      they record the same tree; otherwise it will error out, saying
+      the tip is not a pure cover.
+
+    - verify that "git rev-list ..topic^" shows that there is
+      something to merge after the tip is removed; otherwise it will
+      error out, saying that there is nothing to merge.
+
+    - run "git merge --no-ff --edit topic^1" but with the log
+      message of topic^{commit} in the editor's template.
