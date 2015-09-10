@@ -1,79 +1,66 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: storing cover letter of a patch series?
-Date: Thu, 10 Sep 2015 23:20:55 +0100
-Organization: OPDS
-Message-ID: <A29E37E55E524B9FACB67EC05486A178@PhilipOakley>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com> <74514591d4cd502eee06cde3e099e656@dscho.org> <CA+P7+xrH6v7AVaH_su2X3xx7qs_uws-r-DozzYELm_O8g+oN9A@mail.gmail.com> <5f1102c0fcdb3530148ae7a6a18bd0a7@dscho.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <johannes.schindelin@gmx.de>,
-	"Jacob Keller" <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 11 00:20:00 2015
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 0/2] rebase: support --no-autostash
+Date: Thu, 10 Sep 2015 23:30:50 +0100
+Message-ID: <cover.1441924193.git.john@keeping.me.uk>
+References: <55F1EE67.3090401@thequod.de>
+Cc: Daniel Hahler <genml+git-2014@thequod.de>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 11 00:30:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaACC-0005iY-4d
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 00:19:56 +0200
+	id 1ZaAMm-0000DE-FF
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 00:30:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751064AbbIJWTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2015 18:19:51 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:42303 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750764AbbIJWTv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2015 18:19:51 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BDIwBlAfJVPDkqFlxdGQEBgwhUaYdCt3CFbQQEAoFUTQEBAQEBAQcBAQEBQAE/QQECAoNYBQEBAQEDCAEBLh4BASELAgMFAgEDFQMJJRQBBBoGBwMUBgESCAIBAgMBiAgDFgm+Wo0xAQEIAgEbBIZzhHuCT4FaEQFRgx+BFAWNMIgmAYEVg3SiaIRkPTOCdIMKgQyBPwEBAQ
-X-IPAS-Result: A2BDIwBlAfJVPDkqFlxdGQEBgwhUaYdCt3CFbQQEAoFUTQEBAQEBAQcBAQEBQAE/QQECAoNYBQEBAQEDCAEBLh4BASELAgMFAgEDFQMJJRQBBBoGBwMUBgESCAIBAgMBiAgDFgm+Wo0xAQEIAgEbBIZzhHuCT4FaEQFRgx+BFAWNMIgmAYEVg3SiaIRkPTOCdIMKgQyBPwEBAQ
-X-IronPort-AV: E=Sophos;i="5.17,507,1437433200"; 
-   d="scan'208";a="798663224"
-Received: from host-92-22-42-57.as13285.net (HELO PhilipOakley) ([92.22.42.57])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 10 Sep 2015 23:19:49 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751677AbbIJWas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 18:30:48 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:48263 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751196AbbIJWar (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2015 18:30:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id DF57686601C;
+	Thu, 10 Sep 2015 23:30:46 +0100 (BST)
+X-Quarantine-ID: <HWtvjoNLuuUa>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id HWtvjoNLuuUa; Thu, 10 Sep 2015 23:30:46 +0100 (BST)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 9555FCDA5E5;
+	Thu, 10 Sep 2015 23:30:38 +0100 (BST)
+X-Mailer: git-send-email 2.6.0.rc0.162.gb2d3693
+In-Reply-To: <55F1EE67.3090401@thequod.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277645>
 
-From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
-> On 2015-09-10 23:00, Jacob Keller wrote:
->> On Thu, Sep 10, 2015 at 11:58 AM, Johannes Schindelin
->> <johannes.schindelin@gmx.de> wrote:
->>>
->>> On 2015-09-10 18:28, Jacob Keller wrote:
->>>
->>>> does anyone know of any tricks for storing a cover letter for a 
->>>> patch
->>>> series inside of git somehow?
->>>
->>> It is not stored as a blob, but I use `git 
->>> branch --edit-description` to write the cover letter for patch 
->>> series when I expect a couple of iterations.
->>
->> Does this (or can it?) get used by send-email or format-patch's
->> --cover-letter? This sounds like exactly what I want.
->
-> Yes, format-patch picks it up if you say `--cover-letter`.
->
+The first patch is the fix so that git-rebase supports the
+--no-autostash option that it's documentation claims it does.
 
-I didn't know that. It doesn't appear to be mentioned in the man pages.
+The second is a slight tweak to the documentation to make it consistent
+with the remainder of the file.
 
-IIUC https://github.com/git/git/blob/master/builtin/log.c#L971 suggests 
-that it is a deliberate extra inclusion, rather than being part of the 
-shortlog and diffstat mentioned in the manual 
-https://github.com/git/git/blob/master/Documentation/git-format-patch.txt#L216
+John Keeping (2):
+  rebase: support --no-autostash
+  Documentation/git-rebase: fix --no-autostash formatting
 
-Sounds like it may be a worthwhile doc patch.
---
-Philip 
+ Documentation/git-rebase.txt |  3 ++-
+ git-rebase.sh                |  5 ++++-
+ t/t3420-rebase-autostash.sh  | 10 ++++++++++
+ 3 files changed, 16 insertions(+), 2 deletions(-)
+
+-- 
+2.6.0.rc0.162.gb2d3693
