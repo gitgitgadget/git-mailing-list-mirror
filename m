@@ -1,78 +1,60 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: storing cover letter of a patch series?
-Date: Thu, 10 Sep 2015 23:21:19 +0200
-Organization: gmx
-Message-ID: <5f1102c0fcdb3530148ae7a6a18bd0a7@dscho.org>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
- <74514591d4cd502eee06cde3e099e656@dscho.org>
- <CA+P7+xrH6v7AVaH_su2X3xx7qs_uws-r-DozzYELm_O8g+oN9A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 23:21:47 2015
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH v8 0/2] Submodule object path
+Date: Fri, 11 Sep 2015 00:57:09 +0300
+Message-ID: <1441922231-18270-1-git-send-email-max@max630.net>
+References: <1438725925-3689-1-git-send-email-max@max630.net>
+Cc: Max Kirillov <max@max630.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>, Duy Nguyen <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 00:05:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za9Hv-0005bj-0l
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 23:21:47 +0200
+	id 1Za9xZ-0007IL-Qo
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 00:04:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751157AbbIJVVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2015 17:21:24 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54229 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750943AbbIJVVX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2015 17:21:23 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MAQXq-1ZU4kc1qUU-00BdF6; Thu, 10 Sep 2015 23:21:20
- +0200
-In-Reply-To: <CA+P7+xrH6v7AVaH_su2X3xx7qs_uws-r-DozzYELm_O8g+oN9A@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:juJmAcaL2O/mY1vWvRWoZvZsXnQ+N/sdUUk06+mibEUEs6KZBKS
- WdkjF2TmTYUf02dEeCD5p70m6tumr9exUeXKHnl5sr+vRvYS2DPAiTK2qYcpMl6Lo6dZ8lx
- gtCPC1mE7QNveKF6LQgbmUda9wDsQQj11afGXBpRMEMItM/IdeWt376UO4Qss5CXSJQM7Ud
- DXGJOKokxTJjhP9VH5Xyw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6wheXa3ig7U=:Gq002V1CSTe2ypcJgRk+bD
- Lb36BKaU8eLgK7SA3um7ZelEdFNS36YGp1r93dg9o0ECmbk3C/KxQM+Drs4yIczsYFGlUSKOn
- fPS5XpvJDKc03sp5oBHjP70MtmCKnW7IbEPwyKMG87tlI3V17SU0XLVMo003/ioMPcHaoYDKr
- OuiJ3DEzuy438mwD3GViM4G0TSC8WuixGDpYZLlmyWgsGC+vYqKFk5EuILzBgLi/alY7oC3dy
- VHCHsCa4VBmcldSY5SUQk/akCSSSHptvuam/dujNTTKVghSsad70Ag4f1OgZGnFuiNw3fUWku
- wYmg1NJJpdybXec1fRRtfj+Y6F2cfUB4ST5YBcYp5acIYFCNzf2qgXJ/ezt6Z7ODomx1YG6Tw
- HaD2EkPyeD+vGvoQLBedESEcPGUfVIPGp6YaqZjfpm1Nk8C/sV2AEs5Rtq6IhSXuvcBfDei+3
- AqbOs8nat+EobDQSLP363cZ9QLQnA+77JlcMdrIknMnUO0H7VTI8LaHPkooWJ75mYh1QXha2L
- TgVWZ9NW2f41p7o+DDKjPpg5k53W6NFS9bvrRHgrQEPhglCnNU7s7qnKE0gwfgGQgxFBRrSjA
- zqvbImeqtvV15hXpHMtQgSV72NKYyx0QgOWEnkYYk+YvSTnI2hbUfmImk619Y7yJpUCMnR+q4
- Gtfl+UutHXjerjGHdg49icVyxhRkR6j76S4pFU3lYXgX30Cqri0JX9HdYmDyD0MOC67p9mPxa
- Zt7QJ5JqcDEehW1ejtTMHPfkltAAcBScamnN4Q==
+	id S1751279AbbIJWEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 18:04:45 -0400
+Received: from p3plsmtpa07-02.prod.phx3.secureserver.net ([173.201.192.231]:37497
+	"EHLO p3plsmtpa07-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751202AbbIJWEp (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2015 18:04:45 -0400
+X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Sep 2015 18:04:45 EDT
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa07-02.prod.phx3.secureserver.net with 
+	id FZxT1r00H5B68XE01ZxawM; Thu, 10 Sep 2015 14:57:37 -0700
+X-Mailer: git-send-email 2.3.4.2801.g3d0809b
+In-Reply-To: <1438725925-3689-1-git-send-email-max@max630.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277641>
 
-Hi Jake,
+* Rebased to recent master (v2.6.0-rc0).
+* Use git_pathdup_submodule() instead of git_path_submodule()
+* There are more conflicts in pu with [1], not sure
+  what should I do about it.
+* Style fixes as Stefan suggested
 
-On 2015-09-10 23:00, Jacob Keller wrote:
-> On Thu, Sep 10, 2015 at 11:58 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
->>
->> On 2015-09-10 18:28, Jacob Keller wrote:
->>
->>> does anyone know of any tricks for storing a cover letter for a patch
->>> series inside of git somehow?
->>
->> It is not stored as a blob, but I use `git branch --edit-description` to write the cover letter for patch series when I expect a couple of iterations.
-> 
-> Does this (or can it?) get used by send-email or format-patch's
-> --cover-letter? This sounds like exactly what I want.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/276628
 
-Yes, format-patch picks it up if you say `--cover-letter`.
+Max Kirillov (2):
+  submodule refactor: use git_pathdup_submodule() in add_submodule_odb()
+  path: implement common_dir handling in git_pathdup_submodule()
 
-Ciao,
-Johannes
+ cache.h                          |  1 +
+ path.c                           | 22 ++++++++++++++++++----
+ setup.c                          | 17 ++++++++++++-----
+ submodule.c                      | 30 ++++++++++++------------------
+ t/t7410-submodule-checkout-to.sh | 10 ++++++++++
+ 5 files changed, 53 insertions(+), 27 deletions(-)
 
-P.S.: Please do cut down the quoted text to the part you are actually responding to. Bottom-posting is not much better than top-posting...
+-- 
+2.3.4.2801.g3d0809b
