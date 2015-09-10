@@ -1,101 +1,67 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Announcing Git for Windows 2.5.2
-Date: Thu, 10 Sep 2015 22:47:27 +0200
-Organization: gmx
-Message-ID: <84e270410b18c9684fd4c8a98d309a07@dscho.org>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: storing cover letter of a patch series?
+Date: Thu, 10 Sep 2015 14:00:02 -0700
+Message-ID: <CA+P7+xrH6v7AVaH_su2X3xx7qs_uws-r-DozzYELm_O8g+oN9A@mail.gmail.com>
+References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
+ <74514591d4cd502eee06cde3e099e656@dscho.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git for Windows Mailing List <git-for-windows@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 10 22:47:41 2015
+Cc: Git List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Sep 10 23:00:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za8kp-0004m4-7R
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 22:47:35 +0200
+	id 1Za8xI-0000nT-Qm
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 23:00:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751069AbbIJUrb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2015 16:47:31 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57765 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750764AbbIJUra (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2015 16:47:30 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MBaDy-1ZSxD428wA-00ATxg; Thu, 10 Sep 2015 22:47:28
- +0200
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:QXipy79q8DluejQaedlwBiYlAFw0NTzqZ7AP3tutjFMhZggYTcX
- 6EJKRr/+DhKZVCVDzAM1sJhNr96PfHfKVaARe+T7RWazoPXTxzDJ1YhehzsphCvyPF2d3gJ
- LQI9KVRTdhiVJTGVBEpmMEyFvUJhRZ0fiffnZittJhxgPhE9shOEy00PK5FcZp4vZMxf2/T
- hy4kK65egGMtEKo7xM2pQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mDCi4N0fxAo=:asjwD3Av+B5UJPuyPPPc3U
- lmB6sPFYNp0wOazW/QaoaeaKbkqRyBneH+i6A+1k77aXgNdNNQ64KRyfeNeW4e3PndJwFs4Rm
- AVTqNi9Fc8ut5aCqd0JQajqq7g/VCN/dp6JKj6Zjx7RbqjbMSOenesayBpRmpOhiH/Klr6uUY
- yLWlySn2kt4zzRoWwqcyycJNPz0t6xLgTfWxWKvbivG+wKjK981F8q82IJ7Q4DIuW+ksrkuMQ
- tHrpnzrhowbiDym3pT6p2wppVMk3uqgFVySm46NDLuZKg9M+ggMr5AaJ0KNMgk/u/wHhctjSs
- 3akjvzdFJXn4z28HNHIqseQyVH7LdjKju72YMNwLYHwngJ570BLoB+XaCDVLrbRAeC6HtrPb/
- KHp4NIXFs1/CuyB9ps/3i7OzBZAZ0GCEb0nPiQ/vt4Up9lFDV4X/jHdFPtDkZ8PmgQKrKCTwo
- E3wi/TzE9nAL2EV7Jfx/TuVnHirPSD0oUxdu3pImrTkdM6wtATDiZOVdssTG6JkCD7UG0yhfx
- VBdt7nv8mAM8jtOAJx3CuUJKdRSoa7NwpaiyMdOF4tKtqHl2PYbbBTXGTT/Wos2Cx2IGWjEoo
- ydWo+p3Z5L+1TmwI37mlrdf2GEXXn6mzSJIF1hcfNBdYCvYezqQMd/dQJwmrEGf4inrgBAPaB
- K21dSSwwABoka4qMqDeSH4rXtgrAgRvhanJ6hb7zfmvC0/eXhmWUAuxQnRKZboLAJirkWoDHS
- yFAz9m04mxeBwJterPYL0TzAwXXUNv1aFoTTbg==
+	id S1751007AbbIJVAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 17:00:24 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:33899 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750877AbbIJVAX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2015 17:00:23 -0400
+Received: by iofb144 with SMTP id b144so76535517iof.1
+        for <git@vger.kernel.org>; Thu, 10 Sep 2015 14:00:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=3k/G0jvnvyj/WwasT1VCCCabTcqiVYAPMvD8i5DKvj0=;
+        b=c0iSnnLrhq57QyqI1CtYO5NAommH7z3f2GfqJ9dDJwv8V8ec24dGCtDbvrJ0e8YhJ6
+         eg6OgFbsW3UY/eWWT8JcyWkXQEfaPiJMu12GdxwSasc5jtqZbjrY1CHiDFnuBoHIgrPK
+         BONOU5TiIhp1RhhqoYHFjowhlLs0au3NpORAumeB2gpVxLHE0IzETzDrY2OfAJberXpV
+         COCiGJIHU8Pkf47tqLdh1AOi94R7lNK90phT5wsDZc4LD0JL61qVAgjQQWp62lsvtVtq
+         oBxId40s1J92nkK5w4uQds9rZxM3Z+SJm5UwVxoU0Pb2+BcwMtodBN1qAl6Rbezvinn3
+         ADcw==
+X-Received: by 10.107.14.202 with SMTP id 193mr64723267ioo.146.1441918821929;
+ Thu, 10 Sep 2015 14:00:21 -0700 (PDT)
+Received: by 10.107.132.155 with HTTP; Thu, 10 Sep 2015 14:00:02 -0700 (PDT)
+In-Reply-To: <74514591d4cd502eee06cde3e099e656@dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277636>
 
-Dear Git users,
+On Thu, Sep 10, 2015 at 11:58 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> Hi Jake,
+>
+> On 2015-09-10 18:28, Jacob Keller wrote:
+>
+>> does anyone know of any tricks for storing a cover letter for a patch
+>> series inside of git somehow?
+>
+> It is not stored as a blob, but I use `git branch --edit-description` to write the cover letter for patch series when I expect a couple of iterations.
+>
+> Ciao,
+> Dscho
 
-it is my pleasure to announce Git for Windows 2.5.2. The installers and=
- portable versions can be downloaded from our home page at https://git-=
-for-windows.github.io/.
+Does this (or can it?) get used by send-email or format-patch's
+--cover-letter? This sounds like exactly what I want.
 
-We have been quite busy, lots of contributions (mostly bug reports, but=
- also the occasional Pull Request). Thank you all! The changes since Gi=
-t for Windows 2.5.1 are:
-
-New Features
-
-  =E2=80=A2 Comes with Git 2.5.2
-
-  =E2=80=A2 Alternates can now point to UNC paths, i.e. network drives.
-
-Bug fixes
-
-  =E2=80=A2 The MSys2 runtime was taught not to look hard for groups, s=
-peeding up
-    Git Bash's startup time.
-
-  =E2=80=A2 A work around was added for issues when installing 32-bit G=
-it for
-    Windows on 64-bit Windows 10.
-
-  =E2=80=A2 The installer no longer freezes when there are interactive =
-commands
-    in the user's .profile.
-
-  =E2=80=A2 git rebase --skip was speeded up again.
-
-  =E2=80=A2 The redirector in /bin/bash.exe now adjusts the PATH enviro=
-nment
-    variable correctly (i.e. so that Git's executables are found) befor=
-e
-    launching the real Bash, even when called without --login.
-
-  =E2=80=A2 When installing Git for Windows to a location whose path is=
- longer
-    than usual, Git commands no longer trigger occasional Bad address
-    errors.
-
-  =E2=80=A2 Git no longer asks for a DVD to be inserted again when one =
-has been
-    ejected from the D: drive.
-
-Ciao,
-Johannes
+Regards,
+Jake
