@@ -1,119 +1,217 @@
-From: Josh Rabinowitz <joshr@joshr.com>
-Subject: Re: [PATCH] push: don't show Done with --quiet --porcelain
-Date: Thu, 10 Sep 2015 16:23:07 -0400
-Message-ID: <CA+WR+g6mU9=izqskNzMYEQc=OJN2rvz9AjGpJ4XB-sMZXoVxwA@mail.gmail.com>
-References: <CA+WR+g7frN4uV12dxahxZbr-5az7sj3zx2oN-Z3rKH0_Y8jqqg@mail.gmail.com>
- <xmqqvbburrkf.fsf@gitster.mtv.corp.google.com> <CA+WR+g7V0Rez_oug5P_LDmafQKXqnDHDNN_vk=-1Sbj3-754DQ@mail.gmail.com>
- <xmqqbndhg8un.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v2.5.2, v2.4.9, v2.3.9 and v2.2.3
+Date: Thu, 10 Sep 2015 13:24:52 -0700
+Message-ID: <xmqqa8su2faj.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, "Larry D'Anna" <larry@elder-gods.org>,
-	Tay Ray Chuan <rctay89@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 22:23:39 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Thu Sep 10 22:25:11 2015
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za8NX-00066r-Ve
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 22:23:32 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Za8P6-0007hS-2t
+	for glk-linux-kernel-3@plane.gmane.org; Thu, 10 Sep 2015 22:25:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750877AbbIJUX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2015 16:23:28 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:36505 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736AbbIJUX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2015 16:23:27 -0400
-Received: by igcrk20 with SMTP id rk20so26119637igc.1
-        for <git@vger.kernel.org>; Thu, 10 Sep 2015 13:23:26 -0700 (PDT)
+	id S1751092AbbIJUY5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 10 Sep 2015 16:24:57 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36595 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750943AbbIJUYy (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 10 Sep 2015 16:24:54 -0400
+Received: by padhk3 with SMTP id hk3so52142798pad.3;
+        Thu, 10 Sep 2015 13:24:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=7ujYJAzRfxKJgZCPQ9l4ezJNv8SX9tFlAG5jn17Z7mQ=;
-        b=c8FqbChkO+X00710l+TJg1zXwXaaXQS7S6VkM88ZaaNktPD0ue8slGXisfeKzM7Iuf
-         PkPCptN5oKGZhzCGBWqJVaNmelGG2QM2EptumL2H//XyfCPPO7DBlTTnKJTdSrq/8kOq
-         OZGSv7e3tYftZhhCoMBbqxnMcIoZhMk1XXFC5DaCHpVq7pDZCelGSVnt4PC9OQjr/PxF
-         nNAQNHciMsAIlmDH+RQw9gHIWk6SH0xqhVPCLfRaNFLZ1cCkRRd9kBoSz8zVSTAOR3El
-         exTg7doAsVgyi6Sr/5oqrkNDpdfOnCpToSCQCMIgfD45yBDeZtJqClXctiOgNPebipkz
-         BGOg==
-X-Received: by 10.50.62.112 with SMTP id x16mr9426047igr.23.1441916606528;
- Thu, 10 Sep 2015 13:23:26 -0700 (PDT)
-Received: by 10.64.86.78 with HTTP; Thu, 10 Sep 2015 13:23:07 -0700 (PDT)
-In-Reply-To: <xmqqbndhg8un.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: ab_wGHuT5T7Zl-sHvW1colvdc-M
-Sender: git-owner@vger.kernel.org
+        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=wLDEbbx3WxJYXuq6SUcMj+1dyiJj13htpZUCg8FhV7w=;
+        b=n4AzINJafTNWpA05j7v8/56FIV2kEsVCUiJwfrVQwpU0tiNX0DBHkjp6/wnkXlpccR
+         43ndnUpsejmaGvJFkjT0ULleUISZrROGTW7o7+rnQfwmfwAzNBDUi7DQGAiOwNbji5KZ
+         bm2tyU8DQ2WQzRo2T2uYTLz2ad3Eyn/M+7nZeC819LZTE6keju/1MQVPUjvuXAxODLIn
+         uh2SzECpDr0hXStgiD15b9llYFldPfCTzo0VTLcNRVTqj5XaOBa0/GQI0ri269Um1j62
+         4heEmZa2/7wYoUV2DRcfewXPdPm0+5R2gsiMzKsquRVo9A9X7OkgEfxM/Da+tdXOHIod
+         2LkA==
+X-Received: by 10.66.255.42 with SMTP id an10mr76441992pad.107.1441916694274;
+        Thu, 10 Sep 2015 13:24:54 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:8419:5a5:3940:dfa0])
+        by smtp.gmail.com with ESMTPSA id fk8sm13673253pab.33.2015.09.10.13.24.53
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 10 Sep 2015 13:24:53 -0700 (PDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277633>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277634>
 
-Hello, Junio and other recipients:
+The latest maintenance release Git v2.5.2 is now available at the
+usual places, together with updates to older maintenance tracks,
+v2.4.9, v2.3.9 and v2.2.3.  These updates to older tracks are to
+plug buffer overflows due to fixed-sized buffers used to store
+pathnames in a handful of codepaths (kudos to Peff).
 
-Thanks for your response.
+The maintenance release 2.5.2 for the current maintenance track also
+contains other fixes that was recently made on the 'master' front.
 
-It just seems very very unlikely that anyone would be depending on a
-non-error from git pull --porcelain --quiet' to producing  the "Done"
-string. In my case, it's something I didn't expect and wanted to
-suppress. (I've automated the use of that command and wished that the
-only output would be errors - which is what it's documented to do --
-see below)
+The tarballs are found at:
 
->From a consistency standpoint, it doesn't make sense to have a --quiet
-option output "Done" when there is no error.
+    https://www.kernel.org/pub/software/scm/git/
 
-If decisions are made that almost no output can ever be changed (which
-is what your opinion seems to be leaning towards) then the code is
-largely stuck in the present.
+The following public repositories all have a copy of the 'v2.5.2'
+tag and the 'maint' branch that the tag points at:
 
-It just seems insane to be stuck with the current behavior of 'git
-push --porcelain --quiet' printing out "Done" -- especially since the
-current behavior is in conflict with the docs (at least from 2.3.2):
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
 
-  from 'man git-push':
-       -q, --quiet
-           Suppress all output, including the listing of updated refs, unless
-           an error occurs. Progress is not reported to the standard error
-           stream.
+----------------------------------------------------------------
 
-In any case, thanks again for the response and for your additional
-consideration.
+Git v2.5.2 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Best,
- Josh
+=46ixes since v2.5.1
+------------------
 
-On Fri, Sep 4, 2015 at 5:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Josh Rabinowitz <joshr@joshr.com> writes:
->
->> Hi Junio and other recipients:
->>
->> Junio, thanks for your response. I think you may have misunderstood my
->> patch though (or I am misunderstanding your responses), because it
->> seems we are actually in agreement.
->>
->> 1) My original patch is to make 'git push --porcelain --quiet' not
->> emit 'Done' when there is no error. It would continue to emit "Done"
->> when using 'git push --porcelain' without an error.
->>
->> 2) In your first paragraph, you seem to state that while printing
->> "Done" is advantageous when using 'git push --porcelain' without
->> --quiet, the "Done" output isn't needed when --quiet is used. This
->> appears to agree with my patch's intent.
->>
->> 3) in your second paragraph, you seem to agree with me again, that
->> "Done" is not needed when "git push --porcelain --quiet" is use
->>
->> 4) Then in your third paragraph, you say that you don't want to remove
->> the "Done" output when using "git push --porcelain" without --quiet --
->> which my patch preserves (again, it would only remove the "Done" text
->> when 'git push --porcelain' is used with --quiet and there is no
->> error.)
->>
->> In summary, I think we are in agreement that this patch is probably
->> acceptable. Look forward to reading comments.
->
-> I think your 4. misinterprets what I meant to say.
->
-> Even if we agree 1 thru 3, changing the output, with or without
-> "--quiet", is an unwelcome thing to do to existing scripts.
+ * "git init empty && git -C empty log" said "bad default revision 'HEA=
+D'",
+   which was found to be a bit confusing to new users.
+
+ * The "interpret-trailers" helper mistook a multi-paragraph title of
+   a commit log message with a colon in it as the end of the trailer
+   block.
+
+ * When re-priming the cache-tree opportunistically while committing
+   the in-core index as-is, we mistakenly invalidated the in-core
+   index too aggressively, causing the experimental split-index code
+   to unnecessarily rewrite the on-disk index file(s).
+
+ * "git archive" did not use zip64 extension when creating an archive
+   with more than 64k entries, which nobody should need, right ;-)?
+
+ * The code in "multiple-worktree" support that attempted to recover
+   from an inconsistent state updated an incorrect file.
+
+ * "git rev-list" does not take "--notes" option, but did not complain
+   when one is given.
+
+ * Because the configuration system does not allow "alias.0foo" and
+   "pager.0foo" as the configuration key, the user cannot use '0foo'
+   as a custom command name anyway, but "git 0foo" tried to look these
+   keys up and emitted useless warnings before saying '0foo is not a
+   git command'.  These warning messages have been squelched.
+
+ * We recently rewrote one of the build scripts in Perl, which made it
+   necessary to have Perl to build Git.  Reduced Perl dependency by
+   rewriting it again using sed.
+
+ * t1509 test that requires a dedicated VM environment had some
+   bitrot, which has been corrected.
+
+ * strbuf_read() used to have one extra iteration (and an unnecessary
+   strbuf_grow() of 8kB), which was eliminated.
+
+ * The codepath to produce error messages had a hard-coded limit to
+   the size of the message, primarily to avoid memory allocation while
+   calling die().
+
+ * When trying to see that an object does not exist, a state errno
+   leaked from our "first try to open a packfile with O_NOATIME and
+   then if it fails retry without it" logic on a system that refuses
+   O_NOATIME.  This confused us and caused us to die, saying that the
+   packfile is unreadable, when we should have just reported that the
+   object does not exist in that packfile to the caller.
+
+ * An off-by-one error made "git remote" to mishandle a remote with a
+   single letter nickname.
+
+ * A handful of codepaths that used to use fixed-sized arrays to hold
+   pathnames have been corrected to use strbuf and other mechanisms to
+   allow longer pathnames without fearing overflows.
+
+Also contains typofixes, documentation updates and trivial code
+clean-ups.
+
+----------------------------------------------------------------
+
+Changes since v2.5.1 are as follows:
+
+Andreas Schwab (1):
+      Documentation/config: fix inconsistent label on gc.*.reflogExpire=
+Unreachable
+
+Christian Couder (3):
+      trailer: ignore first line of message
+      trailer: retitle a test and correct an in-comment message
+      trailer: support multiline title
+
+Clemens Buchacher (1):
+      git_open_noatime: return with errno=3D0 on success
+
+David Turner (1):
+      commit: don't rewrite shared index unnecessarily
+
+Eric Sunshine (1):
+      generate-cmdlist: re-implement as shell script
+
+Erik Elfstr=C3=B6m (1):
+      t7300: fix broken && chains
+
+Jeff King (9):
+      vreportf: report to arbitrary filehandles
+      vreportf: avoid intermediate buffer
+      config: silence warnings for command names with invalid keys
+      rev-list: make it obvious that we do not support notes
+      log: diagnose empty HEAD more clearly
+      verify_absent: allow filenames longer than PATH_MAX
+      notes: use a strbuf in add_non_note
+      read_info_alternates: handle paths larger than PATH_MAX
+      show-branch: use a strbuf for reflog descriptions
+
+Jim Hill (1):
+      strbuf_read(): skip unnecessary strbuf_grow() at eof
+
+Johannes Sixt (1):
+      t2019: skip test requiring '*' in a file name non Windows
+
+Junio C Hamano (5):
+      ps_matched: xcalloc() takes nmemb and then element size
+      Git 2.2.3
+      Git 2.3.9
+      Git 2.4.9
+      Git 2.5.2
+
+Michael Haggerty (4):
+      get_remote_group(): handle remotes with single-character names
+      get_remote_group(): rename local variable "space" to "wordlen"
+      get_remote_group(): eliminate superfluous call to strcspn()
+      get_remote_group(): use skip_prefix()
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
+      setup: update the right file in multiple checkouts
+
+Patrick Steinhardt (2):
+      tests: fix broken && chains in t1509-root-worktree
+      tests: fix cleanup after tests in t1509-root-worktree
+
+Philip Oakley (1):
+      po/README: Update directions for l10n contributors
+
+Ren=C3=A9 Scharfe (3):
+      t5004: test ZIP archives with many entries
+      archive-zip: use a local variable to store the creator version
+      archive-zip: support more than 65535 entries
+
+SZEDER G=C3=A1bor (2):
+      t3020: fix typo in test description
+      wt-status: move #include "pathspec.h" to the header
+
+Sven Strickroth (1):
+      config: close config file handle in case of error
