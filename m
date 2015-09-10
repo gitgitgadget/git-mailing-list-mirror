@@ -1,118 +1,86 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v17 05/14] ref-filter: introduce match_atom_name()
-Date: Thu, 10 Sep 2015 22:30:46 +0530
-Message-ID: <CAOLa=ZQM77+EzbHbY24nvu=hgNCa9MJ3wyz1XhFjk+3HdDd_Hg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v17 08/14] ref-filter: add support for %(contents:lines=X)
+Date: Thu, 10 Sep 2015 10:14:24 -0700
+Message-ID: <xmqqtwr242of.fsf@gitster.mtv.corp.google.com>
 References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
- <1441900110-4015-6-git-send-email-Karthik.188@gmail.com> <xmqq37ym5i2u.fsf@gitster.mtv.corp.google.com>
+	<1441900110-4015-9-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 19:01:37 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+	Matthieu.Moy@grenoble-inp.fr
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 10 19:14:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za5Dv-000096-BT
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 19:01:23 +0200
+	id 1Za5Qd-0004sY-Nh
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 19:14:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752465AbbIJRBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2015 13:01:19 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:34011 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751489AbbIJRBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2015 13:01:18 -0400
-Received: by obbda8 with SMTP id da8so39797429obb.1
-        for <git@vger.kernel.org>; Thu, 10 Sep 2015 10:01:18 -0700 (PDT)
+	id S1754282AbbIJRO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 13:14:28 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:36075 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753332AbbIJRO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2015 13:14:27 -0400
+Received: by padhk3 with SMTP id hk3so48160495pad.3
+        for <git@vger.kernel.org>; Thu, 10 Sep 2015 10:14:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nJcSV4HzpbnAI7TuvH1LPfKkC+VAkUSJZmFveLjgZoE=;
-        b=Mf5lUEOdxqN0zE4y+dF62lxY/TsW1568Zo6vnTxQbc0tZ9q2kjbbt/s7rcV9kM2jud
-         iNW9EGpWb3/RROgCY0e31vlfIo9NL9FsF10kPxDyMABDCZP1uH7vOKgStCWVox+4o/Jv
-         J4iUUg1cHJxi5PW3io3zBASt6V1nqIyo34Rnj1b39xxr6ae4iHZPvHm3wlzgiRT+YrZe
-         zbvuechKEfKh06T2xs8Zge6aWpc4Sd8HR4dASHkEkzyd8gUYrRBpuG5K85aSmduZSnNY
-         kdhgla9hveW8DxF+PxGrYkv4jTiWDAznuOLO+7Yp1vfr2CYFMmxXrmrtedBW3NApPWNh
-         6TEg==
-X-Received: by 10.60.159.166 with SMTP id xd6mr16875345oeb.1.1441904476834;
- Thu, 10 Sep 2015 10:01:16 -0700 (PDT)
-Received: by 10.182.231.166 with HTTP; Thu, 10 Sep 2015 10:00:46 -0700 (PDT)
-In-Reply-To: <xmqq37ym5i2u.fsf@gitster.mtv.corp.google.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=vxwH3+BSbRXPwOp7Rq+a/ENOM3x0WQ64n8SgqJg1fbw=;
+        b=L6KBKNikXcy+zFeuQ1elZ305SxD2kE871wLeUK9cWZWNTjYT+FOVV6M7UkBTq2rZ1/
+         vQ41lszUMfYmWgub7bJBLJ3x9RWGkHXbSJHjVABXZQ1F4/1T7CZr8hedZo4Huzakfob7
+         3YwrWSueUP9pAPOr2O5L43Mkb0l9iAJ7jlgKU/XGakxCfC7UxsC4JSE+IlZpq0hvE09V
+         4p5HCW+WkP8IzIl1BK03SM36KRDdXEpoOGL5iy5NDDnecNnWsTE5Pis7HIspjRM1xt7r
+         cT/6EWIAnrssRyp6T5+4pVM7fukP/OuckcmqzBQ/Sg2Ferk1Mw6w8OE3QMl7EGj7hgrj
+         j1QQ==
+X-Received: by 10.66.164.98 with SMTP id yp2mr74547635pab.58.1441905266312;
+        Thu, 10 Sep 2015 10:14:26 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:8419:5a5:3940:dfa0])
+        by smtp.gmail.com with ESMTPSA id sl7sm13077087pbc.54.2015.09.10.10.14.25
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Thu, 10 Sep 2015 10:14:25 -0700 (PDT)
+In-Reply-To: <1441900110-4015-9-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Thu, 10 Sep 2015 21:18:24 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277608>
 
-On Thu, Sep 10, 2015 at 10:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Introduce match_atom_name() which helps in checking if a particular
->> atom is the atom we're looking for and if it has a value attached to
->> it or not.
->>
->> Use it instead of starts_with() for checking the value of %(color:...)
->> atom. Write a test for the same.
->>
->> Mentored-by: Christian Couder <christian.couder@gmail.com>
->> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
->> Thanks-to: Junio C Hamano <gitster@pobox.com>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  ref-filter.c                   | 23 +++++++++++++++++++++--
->>  t/t6302-for-each-ref-filter.sh |  4 ++++
->>  2 files changed, 25 insertions(+), 2 deletions(-)
->>
->> diff --git a/ref-filter.c b/ref-filter.c
->> index a993216..70d36fe 100644
->> --- a/ref-filter.c
->> +++ b/ref-filter.c
->> @@ -189,6 +189,22 @@ static void pop_stack_element(struct ref_formatting_stack **stack)
->>       *stack = prev;
->>  }
->>
->> +static int match_atom_name(const char *name, const char *atom_name, const char **val)
->> +{
->> +     const char *body;
->> +
->> +     if (!skip_prefix(name, atom_name, &body))
->> +             return 0; /* doesn't even begin with "atom_name" */
->> +     if (!body[0] || !body[1]) {
->> +             *val = NULL; /* %(atom_name) and no customization */
->
-> Why do we check body[1] here?  I do not understand why you are not
-> checking !body[0] alone nothing else in this if condition.
->
-> For (atom_name="align", name="aligna"), should the function say that
-> "%(aligna)" is an "%(align)" with no customization?
->
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-The check was for checking if there is anything after the colon,
-Matthieu's modified version seems better though.
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 7d2732a..b098b16 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -56,6 +56,7 @@ static struct {
+>  	{ "color" },
+>  	{ "align" },
+>  	{ "end" },
+> +	{ "contents:lines" },
 
->
-> Why use the helper only for this one?  Aren't existing calls to
-> starts_with() in the same if/else if/... cascade all potential bugs
-> that the new helper function is meant to help fixing?  For example,
-> the very fist one in the cascade:
->
->         if (starts_with(name, "refname"))
->                 refname = ref->refname;
->
-> is correct *ONLY* when name is "refname" or "refname:" followed by
-> something, and it should skip "refnamex" when such a new atom is
-> added to valid_atom[] list, i.e. a bug waiting to happen.  I think
-> the new helper is designed to prevent such a bug from happening.
->
+Do we even need "contents:lines" and existing other "contents:blah"
+in this list in the first place?  If they are needed, group them
+together, not append at the end.
 
-Yes definitely, but it would work with only refname, whereas
-the color atom had no check before this patch, I didn't want to introduce
-those patches in this series.
+I wonder how this code sensibly can parse "%(contents:lines=6)".
+After splitting the format string at %( and closing ), the code
+calls parse_ref_filter_atom() and the rule that helper function uses
+to figure out the atom-name proper (which is to be checked against
+the valid_atom[] array) is to find the first colon, so
 
--- 
-Regards,
-Karthik Nayak
+    %(contents:lines=6)
+
+would cause "contents:lines=6" to be fed parse_ref_filter_atom(),
+it cheks if "contents" is in the valid_atom[] array (it is), and
+stores the whole thing in used_atom[].
+
+So in that sense, match_atom_name() would do the right thing, but
+that would make any reader of this code realize that she never saw
+"contents:lines" entry in valid_atom[] array being used during this
+process.
