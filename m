@@ -1,84 +1,98 @@
-From: Filip Gospodinov <filip.gospodinov@monetas.net>
-Subject: git submodule ignores --git-dir
-Date: Thu, 10 Sep 2015 22:06:21 +0200
-Message-ID: <55F1E2BD.3030103@monetas.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: storing cover letter of a patch series?
+Date: Thu, 10 Sep 2015 21:09:25 +0100
+Organization: OPDS
+Message-ID: <A20C476954134C53B0D256D644B1CCC2@PhilipOakley>
+References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com> <xmqqh9n241el.fsf@gitster.mtv.corp.google.com> <CA+P7+xq9P2NHqQe-y+2n38ZvbR74UxR0Rik=btgy=JtEoZbX2A@mail.gmail.com> <xmqqvbbi2jy5.fsf@gitster.mtv.corp.google.com> <CA+P7+xodgeu6Vo+Rt57_iFycxkEnNjxP-TTOfY8DdXwzeVKbZg@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 10 22:08:23 2015
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Jacob Keller" <jacob.keller@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 10 22:09:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za88r-0007hs-4M
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 22:08:21 +0200
+	id 1Za89m-0000EG-N3
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 22:09:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752217AbbIJUIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2015 16:08:18 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:34718 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751536AbbIJUIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2015 16:08:16 -0400
-Received: by wicfx3 with SMTP id fx3so41144194wic.1
-        for <git@vger.kernel.org>; Thu, 10 Sep 2015 13:08:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:message-id:date:user-agent
-         :mime-version:content-type:content-transfer-encoding;
-        bh=EobfO7IxceY7Usl9BXyg8S7wHMf7wDfufEyqu+rZWDg=;
-        b=lcFBd+YSq3z1x+JcALqEDzcCRHA0kYuXLXDgODNI+Zp4/urQqt818s3crcmvA2IYLQ
-         rsZ6FHAvh60TsCyW+NYpqxorDbHOAiPaoMtielqtlT1YHEitIrI3tuCcQtJJzIAvsDRL
-         2OftniR+txoviI92GGcs9ji4gzz6sUBDXzxiSJJBl6MgdyCBjgjYT669qoYTuNkeO3Zl
-         mGNxVM5Hs2Uic5AJtYNKxXrriN3PZdCeZcMYcY74iOSNEmXE1vnEtrGvNUoqw7xENNN7
-         uoEfyVvmgiFSdPknDFoWzys6fEP4T9pWVeb0pHcrWcmBFYrk8QSACYgD6gNcf4sQSqww
-         +VRg==
-X-Gm-Message-State: ALoCoQnnls9SdrjieGkFjFeAyODun0w3WjIvYkSqWv6BSxi4xRvY7cOxdLtGlG/Sr8ja88a2aowi
-X-Received: by 10.194.60.243 with SMTP id k19mr73634763wjr.8.1441915695762;
-        Thu, 10 Sep 2015 13:08:15 -0700 (PDT)
-Received: from [192.168.0.101] (80-218-115-88.dclient.hispeed.ch. [80.218.115.88])
-        by smtp.googlemail.com with ESMTPSA id eu2sm11008103wic.8.2015.09.10.13.08.10
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Sep 2015 13:08:15 -0700 (PDT)
-X-Google-Original-From: Filip Gospodinov <filip@monetas.net>
-X-Enigmail-Draft-Status: N0010
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
+	id S1752439AbbIJUJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 16:09:15 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:60535 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752083AbbIJUJO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2015 16:09:14 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2CDMgBD4vFVPDkqFlxdGQEBgwiBPYMmgy9tvV0EBAKBU00BAQEBAQEHAQEBAUE/QQECAoNYBQEBAQEDCAEBGRUeAQEhCwIDBQIBAxUDAgIFIQICFAEECBIGBwMUBgESCAIBAgMBCIgAAxa4FoZYiD8NhQ+BIoVRhHuCT4FaEQFRgnAvgRQFlVYBgRWJd5UphzyCcxyBVT0zgnSDCoEMgT8BAQE
+X-IPAS-Result: A2CDMgBD4vFVPDkqFlxdGQEBgwiBPYMmgy9tvV0EBAKBU00BAQEBAQEHAQEBAUE/QQECAoNYBQEBAQEDCAEBGRUeAQEhCwIDBQIBAxUDAgIFIQICFAEECBIGBwMUBgESCAIBAgMBCIgAAxa4FoZYiD8NhQ+BIoVRhHuCT4FaEQFRgnAvgRQFlVYBgRWJd5UphzyCcxyBVT0zgnSDCoEMgT8BAQE
+X-IronPort-AV: E=Sophos;i="5.17,506,1437433200"; 
+   d="scan'208";a="609490107"
+Received: from host-92-22-42-57.as13285.net (HELO PhilipOakley) ([92.22.42.57])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 10 Sep 2015 21:09:11 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277632>
 
-Hi!
+From: "Jacob Keller" <jacob.keller@gmail.com>
+> On Thu, Sep 10, 2015 at 11:44 AM, Junio C Hamano <gitster@pobox.com> 
+> wrote:
+>> Jacob Keller <jacob.keller@gmail.com> writes:
+>>
+>>> I hadn't thought of separating the cover letter from git-send-email.
+>>> That would be suitable for me.
+>>
+>> Yeah, I said this number of times over time, and I said it once
+>> recently in another thread, but I think it was a mistake to allow
+>> git-send-email to drive format-patch.  It may appear that it will
+>> make things convenient in the perfect world where no user makes
+>> mistakes, but people are not perfect in real life.  Expecting them
+>> to be is being naive.
+>>
+>
+> Yep. I didn't even know cover-letter was an option of format-patch
+> only thought it was in send-email.
+>
+Actually, the one feature I'd like (I think) is to be able to join 
+together the empty commit mechanism and the cover letter mechanism 
+within format patch so that:
 
-I use the `--git-dir` flag in some scripts such that I don't need to `cd` back
-and forth. Recently, I've discovered that `--git-dir` does not seem to work
-correctly for `git submodule`. Here is a short snippet to reproduce that behavior:
+* the empty commit message would detected and automatically become the 
+[0/N] in the patch series (without need to say --cover-letter)
 
-mkdir repo1 subm
-(cd subm; git init; git commit -m 1 --allow-empty)
-(cd repo1; git init; git submodule add ../subm subm; git commit -m "add subm")
-git clone repo1 repo2
-git --git-dir=$PWD/repo2/.git submodule update --init
+* the cover letter would still have some 'template' markings to say "*** 
+insert what's changed here***" or smilar (with option to exclude them).
 
+That way, when starting a series / branch, the first item would be to 
+add the explanatory 'empty commit' that states the requirements of what 
+one hopes to achieve (a key cover letter content), which is then 
+followed by commits that move toward that goal.
 
-which errors with the following output:
+The series can then be rebased as the user develops the code, and that 
+cover note can be edited as required during the rebase.
 
-No submodule mapping found in .gitmodules for path 'subm'
+When it comes time to show it to the list, the format patch will *know* 
+from the empty commit that it is the [0/N] cover letter and 
+(perhaps -option) add the appropriate markers ready for editing.
 
-But this works:
-cd repo2; git --git-dir=$PWD/.git submodule update --init
+The user edits the cover letter with the extra 'what's changed' / 
+interdiff / whatever, and sends. sendmail barfs if the user hasn't 
+edited the markers.
 
+This could also work with the sendmail patch formating (though I've 
+never used that workflow) as now the cover letter becomes automatic for 
+the upstream.
 
-I know that for this particular use case I can just use `git clone --recursive`
-and that other use cases can be worked around by using `cd`. Still, I wonder if
-the behavior I discovered is a bug or if it's expected.
-
-git --version
-git version 2.5.1
-
-Thanks you!
-Filip
+Philip 
