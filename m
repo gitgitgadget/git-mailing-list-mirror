@@ -1,45 +1,45 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v17 06/14] ref-filter: implement an `align` atom
-Date: Thu, 10 Sep 2015 21:18:22 +0530
-Message-ID: <1441900110-4015-7-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v17 04/14] ref-filter: introduce handler function for each atom
+Date: Thu, 10 Sep 2015 21:18:20 +0530
+Message-ID: <1441900110-4015-5-git-send-email-Karthik.188@gmail.com>
 References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 10 17:49:01 2015
+X-From: git-owner@vger.kernel.org Thu Sep 10 17:48:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za45j-0005C6-UM
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 17:48:52 +0200
+	id 1Za45Y-00053k-Mx
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 17:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753786AbbIJPsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2015 11:48:43 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:35606 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753696AbbIJPsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2015 11:48:40 -0400
-Received: by pacfv12 with SMTP id fv12so47328983pac.2
-        for <git@vger.kernel.org>; Thu, 10 Sep 2015 08:48:39 -0700 (PDT)
+	id S1753634AbbIJPsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 11:48:37 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:33235 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751489AbbIJPse (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2015 11:48:34 -0400
+Received: by pacex6 with SMTP id ex6so46668798pac.0
+        for <git@vger.kernel.org>; Thu, 10 Sep 2015 08:48:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=d/zfoUmk/aOZf9up6STyrXqXGKBcjAvuVjpqwky403I=;
-        b=tkAt6bsnHKbdTIYFuZnGL3CVvu6/0uo4EC9yv1r4tiLMLDRW8Az/bIUUaded81ZByH
-         BZGtNTfRhRRlsND1Otr7Sy5YnjX3HF0Teb/KG4TPF6PDdHb4mcSdFNVQWKrNRnFe7wmQ
-         RqFK1XXLACZNxgyKnvKAzsnP3B0YFdhw+xxliBBvrBS2ZGnTdWXmDGHiMFl0+UGfDhK6
-         t11TsBRaEWCi0Jkn5mlmzBIOwbG6IupyJKzX9xN97jv21m0hfSXKL7SPxhW3S0ifACG4
-         fGCt5S8w2YegNN+tlvm34ELy5r6k1qI/8tEQNg1Cqt4863z3hA7WquB8nutDEPfJxqXv
-         a1nA==
-X-Received: by 10.68.230.33 with SMTP id sv1mr85797386pbc.160.1441900119609;
-        Thu, 10 Sep 2015 08:48:39 -0700 (PDT)
+        bh=Zw9qM+FhOFKMYOV/iagWpwaSsStqQG54cfRrYkrvf50=;
+        b=d2498uBvqjXX2oRiir08ZJpHJRY+TiSjViHkr7r3P22mVWY5TN99J8GAjkQ4nnpH7K
+         JvWu6uZ+FyIFt7kNxk9H/mx7RwKUv7CVHtNUHetppm74qYm1oVFer57jKqP9CrVUMUYQ
+         l9U16GqKyQyH29Xiulb2Mbb8tdoreEA/5geBpAvy2QGLmPrvt2g9pQUYz7R6KCjbtSU4
+         wzjTH1k2AKdjT++xMmpMY1FP1tDwdxieyquceCYdQT6T/FVbPNpmmPbaZzGpcCqA7knp
+         qsV5iOrv3NVY7a9QfJq+lxW8LI3EDscswncCkQFi2QvKN485TK3R01pZg3MX0L7IsiFr
+         PKRw==
+X-Received: by 10.66.139.133 with SMTP id qy5mr75351889pab.44.1441900114199;
+        Thu, 10 Sep 2015 08:48:34 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id ts1sm12738918pbc.74.2015.09.10.08.48.36
+        by smtp.gmail.com with ESMTPSA id ts1sm12738918pbc.74.2015.09.10.08.48.32
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 10 Sep 2015 08:48:38 -0700 (PDT)
+        Thu, 10 Sep 2015 08:48:33 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.1
 In-Reply-To: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
@@ -47,324 +47,113 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277588>
 
-Implement an `align` atom which left-, middle-, or right-aligns the
-content between %(align:...) and %(end).
+Introduce a handler function for each atom, which is called when the
+atom is processed in show_ref_array_item().
 
-The "align:" is followed by `<width>` and `<position>` in any order
-separated by a comma, where the `<position>` is either left, right or
-middle, default being left and `<width>` is the total length of the
-content with alignment. If the contents length is more than the width
-then no alignment is performed.  e.g. to align a refname atom to the
-middle with a total width of 40 we can do:
---format="%(align:middle,40)%(refname)%(end)".
-
-We introduce an `at_end` function for each element of the stack which
-is to be called when the `end` atom is encountered. Using this we
-implement end_align_handler() for the `align` atom, this aligns the
-final strbuf by calling `strbuf_utf8_align()` from utf8.c.
-
-Ensure that quote formatting is performed on the whole of
-%(align:...)...%(end) rather than individual atoms inside. We skip
-quote formatting for individual atoms when the current stack element
-is handling an %(align:...) atom and perform quote formatting at the
-end when we encounter the %(end) atom of the second element of then
-stack.
-
-Add documentation and tests for the same.
+In this context make append_atom() as the default handler function and
+extract quote_formatting() out of append_atom(). Bump this to the top.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  11 ++++
- ref-filter.c                       | 109 ++++++++++++++++++++++++++++++++++++-
- t/t6302-for-each-ref-filter.sh     |  82 ++++++++++++++++++++++++++++
- 3 files changed, 201 insertions(+), 1 deletion(-)
+ ref-filter.c | 54 ++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 30 insertions(+), 24 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index e49d578..3a271bf 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -127,6 +127,17 @@ color::
- 	Change output color.  Followed by `:<colorname>`, where names
- 	are described in `color.branch.*`.
- 
-+align::
-+	Left-, middle-, or right-align the content between
-+	%(align:...) and %(end). The "align:" is followed by `<width>`
-+	and `<position>` in any order separated by a comma, where the
-+	`<position>` is either left, right or middle, default being
-+	left and `<width>` is the total length of the content with
-+	alignment. If the contents length is more than the width then
-+	no alignment is performed. If used with '--quote' everything
-+	in between %(align:...) and %(end) is quoted, but if nested
-+	then only the topmost level performs quoting.
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
 diff --git a/ref-filter.c b/ref-filter.c
-index 70d36fe..b8f719c 100644
+index 432cea0..a993216 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -10,6 +10,7 @@
- #include "quote.h"
- #include "ref-filter.h"
- #include "revision.h"
-+#include "utf8.h"
- 
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
- 
-@@ -53,13 +54,22 @@ static struct {
- 	{ "flag" },
- 	{ "HEAD" },
- 	{ "color" },
-+	{ "align" },
-+	{ "end" },
- };
- 
- #define REF_FORMATTING_STATE_INIT  { 0, NULL }
- 
-+struct align {
-+	align_type position;
-+	unsigned int width;
-+};
-+
- struct ref_formatting_stack {
- 	struct ref_formatting_stack *prev;
- 	struct strbuf output;
-+	void (*at_end)(struct ref_formatting_stack *stack);
-+	void *at_end_data;
- };
- 
- struct ref_formatting_state {
-@@ -69,6 +79,9 @@ struct ref_formatting_state {
+@@ -69,6 +69,7 @@ struct ref_formatting_state {
  
  struct atom_value {
  	const char *s;
-+	union {
-+		struct align align;
-+	} u;
- 	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
++	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
  	unsigned long ul; /* used for sorting when not FIELD_STR */
  };
-@@ -165,7 +178,16 @@ static void quote_formatting(struct strbuf *s, const char *str, int quote_style)
  
- static void append_atom(struct atom_value *v, struct ref_formatting_state *state)
- {
--	quote_formatting(&state->stack->output, v->s, state->quote_style);
-+	/*
-+	 * Quote formatting is only done when the stack has a single
-+	 * element. Otherwise quote formatting is done on the
-+	 * element's entire output strbuf when the %(end) atom is
-+	 * encountered.
-+	 */
-+	if (!state->stack->prev)
-+		quote_formatting(&state->stack->output, v->s, state->quote_style);
-+	else
-+		strbuf_addstr(&state->stack->output, v->s);
+@@ -141,6 +142,32 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+ 	return at;
  }
  
- static void push_stack_element(struct ref_formatting_stack **stack)
-@@ -189,6 +211,48 @@ static void pop_stack_element(struct ref_formatting_stack **stack)
- 	*stack = prev;
- }
- 
-+static void end_align_handler(struct ref_formatting_stack *stack)
++static void quote_formatting(struct strbuf *s, const char *str, int quote_style)
 +{
-+	struct align *align = (struct align *)stack->at_end_data;
-+	struct strbuf s = STRBUF_INIT;
-+
-+	strbuf_utf8_align(&s, align->position, align->width, stack->output.buf);
-+	strbuf_swap(&stack->output, &s);
-+	strbuf_release(&s);
-+}
-+
-+static void align_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-+{
-+	struct ref_formatting_stack *new;
-+
-+	push_stack_element(&state->stack);
-+	new = state->stack;
-+	new->at_end = end_align_handler;
-+	new->at_end_data = &atomv->u.align;
-+}
-+
-+static void end_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
-+{
-+	struct ref_formatting_stack *current = state->stack;
-+	struct strbuf s = STRBUF_INIT;
-+
-+	if (!current->at_end)
-+		die(_("format: %%(end) atom used without corresponding atom"));
-+	current->at_end(current);
-+
-+	/*
-+	 * Perform quote formatting when the stack element is that of
-+	 * a supporting atom. If nested then perform quote formatting
-+	 * only on the topmost supporting atom.
-+	 */
-+	if (!state->stack->prev->prev) {
-+		quote_formatting(&s, current->output.buf, state->quote_style);
-+		strbuf_swap(&current->output, &s);
++	switch (quote_style) {
++	case QUOTE_NONE:
++		strbuf_addstr(s, str);
++		break;
++	case QUOTE_SHELL:
++		sq_quote_buf(s, str);
++		break;
++	case QUOTE_PERL:
++		perl_quote_buf(s, str);
++		break;
++	case QUOTE_PYTHON:
++		python_quote_buf(s, str);
++		break;
++	case QUOTE_TCL:
++		tcl_quote_buf(s, str);
++		break;
 +	}
-+	strbuf_release(&s);
-+	pop_stack_element(&state->stack);
 +}
 +
- static int match_atom_name(const char *name, const char *atom_name, const char **val)
++static void append_atom(struct atom_value *v, struct ref_formatting_state *state)
++{
++	quote_formatting(&state->stack->output, v->s, state->quote_style);
++}
++
+ static void push_stack_element(struct ref_formatting_stack **stack)
  {
- 	const char *body;
-@@ -773,6 +837,47 @@ static void populate_value(struct ref_array_item *ref)
- 			else
- 				v->s = " ";
- 			continue;
-+		} else if (match_atom_name(name, "align", &valp)) {
-+			struct align *align = &v->u.align;
-+			struct strbuf **s, **to_free;
-+			int width = -1;
-+
-+			if (!valp)
-+				die(_("expected format: %%(align:<width>,<position>)"));
-+
-+			/*
-+			 * TODO: Implement a function similar to strbuf_split_str()
-+			 * which would omit the separator from the end of each value.
-+			 */
-+			s = to_free = strbuf_split_str(valp, ',', 0);
-+
-+			align->position = ALIGN_LEFT;
-+
-+			while (*s) {
-+				if (s[1])
-+					strbuf_setlen(s[0], s[0]->len - 1);
-+				if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
-+					;
-+				else if (!strcmp(s[0]->buf, "left"))
-+					align->position = ALIGN_LEFT;
-+				else if (!strcmp(s[0]->buf, "right"))
-+					align->position = ALIGN_RIGHT;
-+				else if (!strcmp(s[0]->buf, "middle"))
-+					align->position = ALIGN_MIDDLE;
-+				else
-+					die(_("improper format entered align:%s"), s[0]->buf);
-+				s++;
-+			}
-+
-+			if (width < 0)
-+				die(_("positive width expected with the %%(align) atom"));
-+			align->width = width;
-+			strbuf_list_free(to_free);
-+			v->handler = align_atom_handler;
-+			continue;
-+		} else if (!strcmp(name, "end")) {
-+			v->handler = end_atom_handler;
-+			continue;
- 		} else
- 			continue;
+ 	struct ref_formatting_stack *s = xcalloc(1, sizeof(struct ref_formatting_stack));
+@@ -662,6 +689,8 @@ static void populate_value(struct ref_array_item *ref)
+ 		const char *formatp;
+ 		struct branch *branch = NULL;
  
-@@ -1347,6 +1452,8 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- 		resetv.s = color;
- 		append_atom(&resetv, &state);
++		v->handler = append_atom;
++
+ 		if (*name == '*') {
+ 			deref = 1;
+ 			name++;
+@@ -1228,29 +1257,6 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
+ 	qsort(array->items, array->nr, sizeof(struct ref_array_item *), compare_refs);
+ }
+ 
+-static void append_atom(struct atom_value *v, struct ref_formatting_state *state)
+-{
+-	struct strbuf *s = &state->stack->output;
+-
+-	switch (state->quote_style) {
+-	case QUOTE_NONE:
+-		strbuf_addstr(s, v->s);
+-		break;
+-	case QUOTE_SHELL:
+-		sq_quote_buf(s, v->s);
+-		break;
+-	case QUOTE_PERL:
+-		perl_quote_buf(s, v->s);
+-		break;
+-	case QUOTE_PYTHON:
+-		python_quote_buf(s, v->s);
+-		break;
+-	case QUOTE_TCL:
+-		tcl_quote_buf(s, v->s);
+-		break;
+-	}
+-}
+-
+ static int hex1(char ch)
+ {
+ 	if ('0' <= ch && ch <= '9')
+@@ -1307,7 +1313,7 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ 		if (cp < sp)
+ 			append_literal(cp, sp, &state);
+ 		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
+-		append_atom(atomv, &state);
++		atomv->handler(atomv, &state);
  	}
-+	if (state.stack->prev)
-+		die(_("format: %%(end) atom missing"));
- 	final_buf = &state.stack->output;
- 	fwrite(final_buf->buf, 1, final_buf->len, stdout);
- 	pop_stack_element(&state.stack);
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index c4f0378..f596035 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -85,4 +85,86 @@ test_expect_success '%(color) must fail' '
- 	test_must_fail git for-each-ref --format="%(color)%(refname)"
- '
- 
-+test_expect_success 'left alignment is default' '
-+	cat >expect <<-\EOF &&
-+	refname is refs/heads/master  |refs/heads/master
-+	refname is refs/heads/side    |refs/heads/side
-+	refname is refs/odd/spot      |refs/odd/spot
-+	refname is refs/tags/double-tag|refs/tags/double-tag
-+	refname is refs/tags/four     |refs/tags/four
-+	refname is refs/tags/one      |refs/tags/one
-+	refname is refs/tags/signed-tag|refs/tags/signed-tag
-+	refname is refs/tags/three    |refs/tags/three
-+	refname is refs/tags/two      |refs/tags/two
-+	EOF
-+	git for-each-ref --format="%(align:30)refname is %(refname)%(end)|%(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'middle alignment' '
-+	cat >expect <<-\EOF &&
-+	| refname is refs/heads/master |refs/heads/master
-+	|  refname is refs/heads/side  |refs/heads/side
-+	|   refname is refs/odd/spot   |refs/odd/spot
-+	|refname is refs/tags/double-tag|refs/tags/double-tag
-+	|  refname is refs/tags/four   |refs/tags/four
-+	|   refname is refs/tags/one   |refs/tags/one
-+	|refname is refs/tags/signed-tag|refs/tags/signed-tag
-+	|  refname is refs/tags/three  |refs/tags/three
-+	|   refname is refs/tags/two   |refs/tags/two
-+	EOF
-+	git for-each-ref --format="|%(align:middle,30)refname is %(refname)%(end)|%(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'right alignment' '
-+	cat >expect <<-\EOF &&
-+	|  refname is refs/heads/master|refs/heads/master
-+	|    refname is refs/heads/side|refs/heads/side
-+	|      refname is refs/odd/spot|refs/odd/spot
-+	|refname is refs/tags/double-tag|refs/tags/double-tag
-+	|     refname is refs/tags/four|refs/tags/four
-+	|      refname is refs/tags/one|refs/tags/one
-+	|refname is refs/tags/signed-tag|refs/tags/signed-tag
-+	|    refname is refs/tags/three|refs/tags/three
-+	|      refname is refs/tags/two|refs/tags/two
-+	EOF
-+	git for-each-ref --format="|%(align:30,right)refname is %(refname)%(end)|%(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
-+# Individual atoms inside %(align:...) and %(end) must not be quoted.
-+
-+test_expect_success 'alignment with format quote' "
-+	cat >expect <<-\EOF &&
-+	|'      '\''master| A U Thor'\''      '|
-+	|'       '\''side| A U Thor'\''       '|
-+	|'     '\''odd/spot| A U Thor'\''     '|
-+	|'        '\''double-tag| '\''        '|
-+	|'       '\''four| A U Thor'\''       '|
-+	|'       '\''one| A U Thor'\''        '|
-+	|'        '\''signed-tag| '\''        '|
-+	|'      '\''three| A U Thor'\''       '|
-+	|'       '\''two| A U Thor'\''        '|
-+	EOF
-+	git for-each-ref --shell --format=\"|%(align:30,middle)'%(refname:short)| %(authorname)'%(end)|\" >actual &&
-+	test_cmp expect actual
-+"
-+
-+test_expect_success 'nested alignment with quote formatting' "
-+	cat >expect <<-\EOF &&
-+	|'         master               '|
-+	|'           side               '|
-+	|'       odd/spot               '|
-+	|'     double-tag               '|
-+	|'           four               '|
-+	|'            one               '|
-+	|'     signed-tag               '|
-+	|'          three               '|
-+	|'            two               '|
-+	EOF
-+	git for-each-ref --shell --format='|%(align:30,left)%(align:15,right)%(refname:short)%(end)%(end)|' >actual &&
-+	test_cmp expect actual
-+"
-+
- test_done
+ 	if (*cp) {
+ 		sp = cp + strlen(cp);
 -- 
 2.5.1
