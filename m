@@ -1,217 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v2.5.2, v2.4.9, v2.3.9 and v2.2.3
-Date: Thu, 10 Sep 2015 13:24:52 -0700
-Message-ID: <xmqqa8su2faj.fsf@gitster.mtv.corp.google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Announcing Git for Windows 2.5.2
+Date: Thu, 10 Sep 2015 22:47:27 +0200
+Organization: gmx
+Message-ID: <84e270410b18c9684fd4c8a98d309a07@dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Thu Sep 10 22:25:11 2015
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+To: Git for Windows Mailing List <git-for-windows@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 10 22:47:41 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Za8P6-0007hS-2t
-	for glk-linux-kernel-3@plane.gmane.org; Thu, 10 Sep 2015 22:25:08 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Za8kp-0004m4-7R
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 22:47:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751092AbbIJUY5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 10 Sep 2015 16:24:57 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:36595 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750943AbbIJUYy (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 10 Sep 2015 16:24:54 -0400
-Received: by padhk3 with SMTP id hk3so52142798pad.3;
-        Thu, 10 Sep 2015 13:24:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        bh=wLDEbbx3WxJYXuq6SUcMj+1dyiJj13htpZUCg8FhV7w=;
-        b=n4AzINJafTNWpA05j7v8/56FIV2kEsVCUiJwfrVQwpU0tiNX0DBHkjp6/wnkXlpccR
-         43ndnUpsejmaGvJFkjT0ULleUISZrROGTW7o7+rnQfwmfwAzNBDUi7DQGAiOwNbji5KZ
-         bm2tyU8DQ2WQzRo2T2uYTLz2ad3Eyn/M+7nZeC819LZTE6keju/1MQVPUjvuXAxODLIn
-         uh2SzECpDr0hXStgiD15b9llYFldPfCTzo0VTLcNRVTqj5XaOBa0/GQI0ri269Um1j62
-         4heEmZa2/7wYoUV2DRcfewXPdPm0+5R2gsiMzKsquRVo9A9X7OkgEfxM/Da+tdXOHIod
-         2LkA==
-X-Received: by 10.66.255.42 with SMTP id an10mr76441992pad.107.1441916694274;
-        Thu, 10 Sep 2015 13:24:54 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:8419:5a5:3940:dfa0])
-        by smtp.gmail.com with ESMTPSA id fk8sm13673253pab.33.2015.09.10.13.24.53
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 10 Sep 2015 13:24:53 -0700 (PDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751069AbbIJUrb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2015 16:47:31 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57765 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750764AbbIJUra (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2015 16:47:30 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MBaDy-1ZSxD428wA-00ATxg; Thu, 10 Sep 2015 22:47:28
+ +0200
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:QXipy79q8DluejQaedlwBiYlAFw0NTzqZ7AP3tutjFMhZggYTcX
+ 6EJKRr/+DhKZVCVDzAM1sJhNr96PfHfKVaARe+T7RWazoPXTxzDJ1YhehzsphCvyPF2d3gJ
+ LQI9KVRTdhiVJTGVBEpmMEyFvUJhRZ0fiffnZittJhxgPhE9shOEy00PK5FcZp4vZMxf2/T
+ hy4kK65egGMtEKo7xM2pQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mDCi4N0fxAo=:asjwD3Av+B5UJPuyPPPc3U
+ lmB6sPFYNp0wOazW/QaoaeaKbkqRyBneH+i6A+1k77aXgNdNNQ64KRyfeNeW4e3PndJwFs4Rm
+ AVTqNi9Fc8ut5aCqd0JQajqq7g/VCN/dp6JKj6Zjx7RbqjbMSOenesayBpRmpOhiH/Klr6uUY
+ yLWlySn2kt4zzRoWwqcyycJNPz0t6xLgTfWxWKvbivG+wKjK981F8q82IJ7Q4DIuW+ksrkuMQ
+ tHrpnzrhowbiDym3pT6p2wppVMk3uqgFVySm46NDLuZKg9M+ggMr5AaJ0KNMgk/u/wHhctjSs
+ 3akjvzdFJXn4z28HNHIqseQyVH7LdjKju72YMNwLYHwngJ570BLoB+XaCDVLrbRAeC6HtrPb/
+ KHp4NIXFs1/CuyB9ps/3i7OzBZAZ0GCEb0nPiQ/vt4Up9lFDV4X/jHdFPtDkZ8PmgQKrKCTwo
+ E3wi/TzE9nAL2EV7Jfx/TuVnHirPSD0oUxdu3pImrTkdM6wtATDiZOVdssTG6JkCD7UG0yhfx
+ VBdt7nv8mAM8jtOAJx3CuUJKdRSoa7NwpaiyMdOF4tKtqHl2PYbbBTXGTT/Wos2Cx2IGWjEoo
+ ydWo+p3Z5L+1TmwI37mlrdf2GEXXn6mzSJIF1hcfNBdYCvYezqQMd/dQJwmrEGf4inrgBAPaB
+ K21dSSwwABoka4qMqDeSH4rXtgrAgRvhanJ6hb7zfmvC0/eXhmWUAuxQnRKZboLAJirkWoDHS
+ yFAz9m04mxeBwJterPYL0TzAwXXUNv1aFoTTbg==
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277634>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277635>
 
-The latest maintenance release Git v2.5.2 is now available at the
-usual places, together with updates to older maintenance tracks,
-v2.4.9, v2.3.9 and v2.2.3.  These updates to older tracks are to
-plug buffer overflows due to fixed-sized buffers used to store
-pathnames in a handful of codepaths (kudos to Peff).
+Dear Git users,
 
-The maintenance release 2.5.2 for the current maintenance track also
-contains other fixes that was recently made on the 'master' front.
+it is my pleasure to announce Git for Windows 2.5.2. The installers and=
+ portable versions can be downloaded from our home page at https://git-=
+for-windows.github.io/.
 
-The tarballs are found at:
+We have been quite busy, lots of contributions (mostly bug reports, but=
+ also the occasional Pull Request). Thank you all! The changes since Gi=
+t for Windows 2.5.1 are:
 
-    https://www.kernel.org/pub/software/scm/git/
+New Features
 
-The following public repositories all have a copy of the 'v2.5.2'
-tag and the 'maint' branch that the tag points at:
+  =E2=80=A2 Comes with Git 2.5.2
 
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+  =E2=80=A2 Alternates can now point to UNC paths, i.e. network drives.
 
-----------------------------------------------------------------
+Bug fixes
 
-Git v2.5.2 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+  =E2=80=A2 The MSys2 runtime was taught not to look hard for groups, s=
+peeding up
+    Git Bash's startup time.
 
-=46ixes since v2.5.1
-------------------
+  =E2=80=A2 A work around was added for issues when installing 32-bit G=
+it for
+    Windows on 64-bit Windows 10.
 
- * "git init empty && git -C empty log" said "bad default revision 'HEA=
-D'",
-   which was found to be a bit confusing to new users.
+  =E2=80=A2 The installer no longer freezes when there are interactive =
+commands
+    in the user's .profile.
 
- * The "interpret-trailers" helper mistook a multi-paragraph title of
-   a commit log message with a colon in it as the end of the trailer
-   block.
+  =E2=80=A2 git rebase --skip was speeded up again.
 
- * When re-priming the cache-tree opportunistically while committing
-   the in-core index as-is, we mistakenly invalidated the in-core
-   index too aggressively, causing the experimental split-index code
-   to unnecessarily rewrite the on-disk index file(s).
+  =E2=80=A2 The redirector in /bin/bash.exe now adjusts the PATH enviro=
+nment
+    variable correctly (i.e. so that Git's executables are found) befor=
+e
+    launching the real Bash, even when called without --login.
 
- * "git archive" did not use zip64 extension when creating an archive
-   with more than 64k entries, which nobody should need, right ;-)?
+  =E2=80=A2 When installing Git for Windows to a location whose path is=
+ longer
+    than usual, Git commands no longer trigger occasional Bad address
+    errors.
 
- * The code in "multiple-worktree" support that attempted to recover
-   from an inconsistent state updated an incorrect file.
+  =E2=80=A2 Git no longer asks for a DVD to be inserted again when one =
+has been
+    ejected from the D: drive.
 
- * "git rev-list" does not take "--notes" option, but did not complain
-   when one is given.
-
- * Because the configuration system does not allow "alias.0foo" and
-   "pager.0foo" as the configuration key, the user cannot use '0foo'
-   as a custom command name anyway, but "git 0foo" tried to look these
-   keys up and emitted useless warnings before saying '0foo is not a
-   git command'.  These warning messages have been squelched.
-
- * We recently rewrote one of the build scripts in Perl, which made it
-   necessary to have Perl to build Git.  Reduced Perl dependency by
-   rewriting it again using sed.
-
- * t1509 test that requires a dedicated VM environment had some
-   bitrot, which has been corrected.
-
- * strbuf_read() used to have one extra iteration (and an unnecessary
-   strbuf_grow() of 8kB), which was eliminated.
-
- * The codepath to produce error messages had a hard-coded limit to
-   the size of the message, primarily to avoid memory allocation while
-   calling die().
-
- * When trying to see that an object does not exist, a state errno
-   leaked from our "first try to open a packfile with O_NOATIME and
-   then if it fails retry without it" logic on a system that refuses
-   O_NOATIME.  This confused us and caused us to die, saying that the
-   packfile is unreadable, when we should have just reported that the
-   object does not exist in that packfile to the caller.
-
- * An off-by-one error made "git remote" to mishandle a remote with a
-   single letter nickname.
-
- * A handful of codepaths that used to use fixed-sized arrays to hold
-   pathnames have been corrected to use strbuf and other mechanisms to
-   allow longer pathnames without fearing overflows.
-
-Also contains typofixes, documentation updates and trivial code
-clean-ups.
-
-----------------------------------------------------------------
-
-Changes since v2.5.1 are as follows:
-
-Andreas Schwab (1):
-      Documentation/config: fix inconsistent label on gc.*.reflogExpire=
-Unreachable
-
-Christian Couder (3):
-      trailer: ignore first line of message
-      trailer: retitle a test and correct an in-comment message
-      trailer: support multiline title
-
-Clemens Buchacher (1):
-      git_open_noatime: return with errno=3D0 on success
-
-David Turner (1):
-      commit: don't rewrite shared index unnecessarily
-
-Eric Sunshine (1):
-      generate-cmdlist: re-implement as shell script
-
-Erik Elfstr=C3=B6m (1):
-      t7300: fix broken && chains
-
-Jeff King (9):
-      vreportf: report to arbitrary filehandles
-      vreportf: avoid intermediate buffer
-      config: silence warnings for command names with invalid keys
-      rev-list: make it obvious that we do not support notes
-      log: diagnose empty HEAD more clearly
-      verify_absent: allow filenames longer than PATH_MAX
-      notes: use a strbuf in add_non_note
-      read_info_alternates: handle paths larger than PATH_MAX
-      show-branch: use a strbuf for reflog descriptions
-
-Jim Hill (1):
-      strbuf_read(): skip unnecessary strbuf_grow() at eof
-
-Johannes Sixt (1):
-      t2019: skip test requiring '*' in a file name non Windows
-
-Junio C Hamano (5):
-      ps_matched: xcalloc() takes nmemb and then element size
-      Git 2.2.3
-      Git 2.3.9
-      Git 2.4.9
-      Git 2.5.2
-
-Michael Haggerty (4):
-      get_remote_group(): handle remotes with single-character names
-      get_remote_group(): rename local variable "space" to "wordlen"
-      get_remote_group(): eliminate superfluous call to strcspn()
-      get_remote_group(): use skip_prefix()
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
-      setup: update the right file in multiple checkouts
-
-Patrick Steinhardt (2):
-      tests: fix broken && chains in t1509-root-worktree
-      tests: fix cleanup after tests in t1509-root-worktree
-
-Philip Oakley (1):
-      po/README: Update directions for l10n contributors
-
-Ren=C3=A9 Scharfe (3):
-      t5004: test ZIP archives with many entries
-      archive-zip: use a local variable to store the creator version
-      archive-zip: support more than 65535 entries
-
-SZEDER G=C3=A1bor (2):
-      t3020: fix typo in test description
-      wt-status: move #include "pathspec.h" to the header
-
-Sven Strickroth (1):
-      config: close config file handle in case of error
+Ciao,
+Johannes
