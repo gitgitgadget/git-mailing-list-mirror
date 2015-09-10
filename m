@@ -1,71 +1,142 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: storing cover letter of a patch series?
-Date: Thu, 10 Sep 2015 09:28:52 -0700
-Message-ID: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v17 05/14] ref-filter: introduce match_atom_name()
+Date: Thu, 10 Sep 2015 18:49:14 +0200
+Message-ID: <vpqbndap6d1.fsf@scolette.imag.fr>
+References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
+	<1441900110-4015-6-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 10 18:29:40 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 10 18:49:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za4ir-0002UZ-4h
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 18:29:17 +0200
+	id 1Za52Z-0005Pz-FA
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 18:49:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130AbbIJQ3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2015 12:29:13 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34359 "EHLO
-	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751707AbbIJQ3M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2015 12:29:12 -0400
-Received: by iofb144 with SMTP id b144so67523981iof.1
-        for <git@vger.kernel.org>; Thu, 10 Sep 2015 09:29:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=brE+QhBLDcYZ7M0i45G85ZP0cjhglsolU9Ceky8fb+w=;
-        b=VqOVex20RjX7ad+2PqgvGw+jWZkym6aAuo3bG42M4TBV9AvDdJbayoyViI2REKQ8N5
-         LgjRaMSFLCcFhyQTmIKF/ek590RyLM5hMnbkCyCI9Hui2OrYUbGU9jlb+bzE2QFW9crq
-         LCxDRP/jdyXXuu2bKNOuyU4umdDwTP+avmzddwORkXe2ITJzSxvY2HefJWpCy5hTtGIi
-         Jc7lk1G/cbT8i0z5hLt4dop0fDQL5qGXRFjKxzVLrZQT/LJ9AwI5Q0otGBABOBzGuu5W
-         rtCzFS5zHBK1BVyXi6VKqzRjHQUAGOnw7GpmldVL9d5zRrJXkyecNLKEFtaAziNv9XX1
-         7c+A==
-X-Received: by 10.107.166.201 with SMTP id p192mr28911618ioe.0.1441902551656;
- Thu, 10 Sep 2015 09:29:11 -0700 (PDT)
-Received: by 10.107.132.155 with HTTP; Thu, 10 Sep 2015 09:28:52 -0700 (PDT)
+	id S1751760AbbIJQt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 12:49:26 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43615 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750970AbbIJQtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2015 12:49:24 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t8AGnCIP032633
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 10 Sep 2015 18:49:12 +0200
+Received: from scolette (scolette.imag.fr [129.88.43.86])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8AGnEKM025105;
+	Thu, 10 Sep 2015 18:49:14 +0200
+In-Reply-To: <1441900110-4015-6-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Thu, 10 Sep 2015 21:18:21 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 10 Sep 2015 18:49:12 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t8AGnCIP032633
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1442508552.92757@MfGRuYPB1l5DteizCVhOQQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277601>
 
-Hey,
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-does anyone know of any tricks for storing a cover letter for a patch
-series inside of git somehow? I'd guess the only obvious way currently
-is to store it at the top of the series as an empty commit.. but this
-doesn't get emailed *as* the cover letter...
+> Introduce match_atom_name() which helps in checking if a particular
+> atom is the atom we're looking for and if it has a value attached to
+> it or not.
+>
+> Use it instead of starts_with() for checking the value of %(color:...)
+> atom. Write a test for the same.
+>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+> Thanks-to: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  ref-filter.c                   | 23 +++++++++++++++++++++--
+>  t/t6302-for-each-ref-filter.sh |  4 ++++
+>  2 files changed, 25 insertions(+), 2 deletions(-)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index a993216..70d36fe 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -189,6 +189,22 @@ static void pop_stack_element(struct ref_formatting_stack **stack)
+>  	*stack = prev;
+>  }
+>  
+> +static int match_atom_name(const char *name, const char *atom_name, const char **val)
+> +{
+> +	const char *body;
+> +
+> +	if (!skip_prefix(name, atom_name, &body))
+> +		return 0; /* doesn't even begin with "atom_name" */
+> +	if (!body[0] || !body[1]) {
+> +		*val = NULL; /* %(atom_name) and no customization */
 
-Is there some other way? Would others be interested in such a feature?
+The logic is still hard to follow. If I read correctly, this function
+accepts "%(colorX)" the same ways as "%(color)" here. I first thought it
+was a bug, but it doesn't seem to be since %(colorX) would have been
+rejected earlier.
 
-I get very annoyed when I've written a nice long patch cover letter in
-vim before an email and then realize I should fix something else up,
-or accidentally cancel it because I didn't use the write "To:" address
-or something..
+It would be a bug if colorX was actually a valid atom name though: you
+would be returning 1 for match_atom_name(name, "color") when
+name=="colorX". So, I would say this "we can accept one extra character
+because some earlier code rejected it before" is too hard to follow for
+reviwers and too fragile.
 
-I really think it should be possible to store something somehow as a
-blob that could be looked up later. Even if this was a slightly more
-manual process that would be helpful to store the message inside git
-itself.
+OTOH, you are now accepting %(atom:) as a synonym to %(atom), and it's
+not clear whether this is a deliberate decition.
 
-In addition, this would help re-rolls since it would mean if I go back
-to a topic and re-roll it I can just update the message. If it were
-properly stored in my local history that would also mean I could see
-revisions on it.
+> +		return 1;
+> +	}
+> +	if (body[0] != ':')
+> +		return 0; /* "atom_namefoo" is not "atom_name" or "atom_name:..." */
+> +	*val = body + 1; /* "atom_name:val" */
+> +	return 1;
+> +}
 
-Any thoughts on how to do this?
+Reversing the logic like this would be better IMHO:
 
-Regards,
-Jake
+static int match_atom_name(const char *name, const char *atom_name, const char **val)
+{
+        const char *body;
+	if (!skip_prefix(name, atom_name, &body)) {
+		/* doesn't even begin with "atom_name" */
+		return 0;
+	}
+	if (!body[0]) {
+		/* "atom_name" and no customization */
+                *val = NULL;
+                return 1;
+	}
+	if (body[0] != ':')
+		/* "atom_namefoo" is not "atom_name" or "atom_name:..." */
+		return 0;
+	if (!body[1]) {
+		/* "atom_name:" */
+		*val = NULL;
+		return 1;
+	}
+	/* "atom_name:... */
+	*val = body + 1;
+	return 1;
+}
+
+=> each case appears very clearly, and we check body[0] != ':' before
+testing !body[1], so %(colorX) is rejected before noticing the '\0'
+after the 'X'.
+
+"atom_name:" appears explicitly. If we want to reject it, we know which
+code to change.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
