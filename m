@@ -1,113 +1,79 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH v8 1/2] submodule refactor: use git_pathdup_submodule() in add_submodule_odb()
-Date: Fri, 11 Sep 2015 00:57:10 +0300
-Message-ID: <1441922231-18270-2-git-send-email-max@max630.net>
-References: <1441922231-18270-1-git-send-email-max@max630.net>
-Cc: Max Kirillov <max@max630.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>, Duy Nguyen <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Sep 11 00:05:11 2015
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: storing cover letter of a patch series?
+Date: Thu, 10 Sep 2015 23:20:55 +0100
+Organization: OPDS
+Message-ID: <A29E37E55E524B9FACB67EC05486A178@PhilipOakley>
+References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com> <74514591d4cd502eee06cde3e099e656@dscho.org> <CA+P7+xrH6v7AVaH_su2X3xx7qs_uws-r-DozzYELm_O8g+oN9A@mail.gmail.com> <5f1102c0fcdb3530148ae7a6a18bd0a7@dscho.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <johannes.schindelin@gmx.de>,
+	"Jacob Keller" <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 00:20:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za9xa-0007IL-EG
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 00:04:50 +0200
+	id 1ZaACC-0005iY-4d
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 00:19:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbbIJWEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2015 18:04:48 -0400
-Received: from p3plsmtpa07-02.prod.phx3.secureserver.net ([173.201.192.231]:37497
-	"EHLO p3plsmtpa07-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751202AbbIJWEr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2015 18:04:47 -0400
-X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Sep 2015 18:04:45 EDT
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa07-02.prod.phx3.secureserver.net with 
-	id FZxT1r00H5B68XE01Zxdwk; Thu, 10 Sep 2015 14:57:39 -0700
-X-Mailer: git-send-email 2.3.4.2801.g3d0809b
-In-Reply-To: <1441922231-18270-1-git-send-email-max@max630.net>
+	id S1751064AbbIJWTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 18:19:51 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:42303 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750764AbbIJWTv (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2015 18:19:51 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2BDIwBlAfJVPDkqFlxdGQEBgwhUaYdCt3CFbQQEAoFUTQEBAQEBAQcBAQEBQAE/QQECAoNYBQEBAQEDCAEBLh4BASELAgMFAgEDFQMJJRQBBBoGBwMUBgESCAIBAgMBiAgDFgm+Wo0xAQEIAgEbBIZzhHuCT4FaEQFRgx+BFAWNMIgmAYEVg3SiaIRkPTOCdIMKgQyBPwEBAQ
+X-IPAS-Result: A2BDIwBlAfJVPDkqFlxdGQEBgwhUaYdCt3CFbQQEAoFUTQEBAQEBAQcBAQEBQAE/QQECAoNYBQEBAQEDCAEBLh4BASELAgMFAgEDFQMJJRQBBBoGBwMUBgESCAIBAgMBiAgDFgm+Wo0xAQEIAgEbBIZzhHuCT4FaEQFRgx+BFAWNMIgmAYEVg3SiaIRkPTOCdIMKgQyBPwEBAQ
+X-IronPort-AV: E=Sophos;i="5.17,507,1437433200"; 
+   d="scan'208";a="798663224"
+Received: from host-92-22-42-57.as13285.net (HELO PhilipOakley) ([92.22.42.57])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 10 Sep 2015 23:19:49 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277644>
 
-Functions which directly operate submodule's object database do not handle the
-case when the submodule is linked worktree (which are introduced in
-c7b3a3d2fe). Instead of fixing the path calculation use already existing
-git_pathdup_submodule() function without changing overall behavior. Then it
-will be possible to modify only that function whenever we need to change real
-location of submodule's repository content.
+From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
+> On 2015-09-10 23:00, Jacob Keller wrote:
+>> On Thu, Sep 10, 2015 at 11:58 AM, Johannes Schindelin
+>> <johannes.schindelin@gmx.de> wrote:
+>>>
+>>> On 2015-09-10 18:28, Jacob Keller wrote:
+>>>
+>>>> does anyone know of any tricks for storing a cover letter for a 
+>>>> patch
+>>>> series inside of git somehow?
+>>>
+>>> It is not stored as a blob, but I use `git 
+>>> branch --edit-description` to write the cover letter for patch 
+>>> series when I expect a couple of iterations.
+>>
+>> Does this (or can it?) get used by send-email or format-patch's
+>> --cover-letter? This sounds like exactly what I want.
+>
+> Yes, format-patch picks it up if you say `--cover-letter`.
+>
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
- submodule.c | 30 ++++++++++++------------------
- 1 file changed, 12 insertions(+), 18 deletions(-)
+I didn't know that. It doesn't appear to be mentioned in the man pages.
 
-diff --git a/submodule.c b/submodule.c
-index 245ed4d..7340069 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -119,43 +119,37 @@ void stage_updated_gitmodules(void)
- 
- static int add_submodule_odb(const char *path)
- {
--	struct strbuf objects_directory = STRBUF_INIT;
- 	struct alternate_object_database *alt_odb;
-+	char *objects_directory;
- 	int ret = 0;
--	const char *git_dir;
- 
--	strbuf_addf(&objects_directory, "%s/.git", path);
--	git_dir = read_gitfile(objects_directory.buf);
--	if (git_dir) {
--		strbuf_reset(&objects_directory);
--		strbuf_addstr(&objects_directory, git_dir);
--	}
--	strbuf_addstr(&objects_directory, "/objects/");
--	if (!is_directory(objects_directory.buf)) {
-+	objects_directory = git_pathdup_submodule(path, "objects/");
-+	if (!is_directory(objects_directory)) {
- 		ret = -1;
- 		goto done;
- 	}
-+
- 	/* avoid adding it twice */
- 	for (alt_odb = alt_odb_list; alt_odb; alt_odb = alt_odb->next)
--		if (alt_odb->name - alt_odb->base == objects_directory.len &&
--				!strncmp(alt_odb->base, objects_directory.buf,
--					objects_directory.len))
-+		if (alt_odb->name - alt_odb->base == strlen(objects_directory) &&
-+				!strcmp(alt_odb->base, objects_directory))
- 			goto done;
- 
--	alt_odb = xmalloc(objects_directory.len + 42 + sizeof(*alt_odb));
-+	alt_odb = xmalloc(strlen(objects_directory) + 42 + sizeof(*alt_odb));
- 	alt_odb->next = alt_odb_list;
--	strcpy(alt_odb->base, objects_directory.buf);
--	alt_odb->name = alt_odb->base + objects_directory.len;
-+	strcpy(alt_odb->base, objects_directory);
-+	alt_odb->name = alt_odb->base + strlen(objects_directory);
- 	alt_odb->name[2] = '/';
- 	alt_odb->name[40] = '\0';
- 	alt_odb->name[41] = '\0';
- 	alt_odb_list = alt_odb;
- 
- 	/* add possible alternates from the submodule */
--	read_info_alternates(objects_directory.buf, 0);
-+	read_info_alternates(objects_directory, 0);
- 	prepare_alt_odb();
- done:
--	strbuf_release(&objects_directory);
-+	free(objects_directory);
-+
- 	return ret;
- }
- 
--- 
-2.3.4.2801.g3d0809b
+IIUC https://github.com/git/git/blob/master/builtin/log.c#L971 suggests 
+that it is a deliberate extra inclusion, rather than being part of the 
+shortlog and diffstat mentioned in the manual 
+https://github.com/git/git/blob/master/Documentation/git-format-patch.txt#L216
+
+Sounds like it may be a worthwhile doc patch.
+--
+Philip 
