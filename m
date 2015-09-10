@@ -1,105 +1,104 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCHv1 0/2] git-p4: work on a detached head
-Date: Thu, 10 Sep 2015 13:23:58 +0100
-Message-ID: <CAE5ih78sVaPQ_=v5ceTZjV+iJCQOy=R_Z_trOHYUPrEMHn5zzQ@mail.gmail.com>
-References: <1441461738-25066-1-git-send-email-luke@diamand.org>
-	<6B07CAFE-6A10-481A-9D15-0DBFF6AB0B11@gmail.com>
-	<CA+P7+xqZ+MOMN6so1AVSbQdHjuWp+48jQw8gp8cxE0CaYc8Ldw@mail.gmail.com>
-	<CA+P7+xqTGR4EfQGmOyvB=hS5YNS1hnhddFRqdjXp+DiTSbMdRQ@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] git-svn: parse authors file more leniently
+Date: Thu, 10 Sep 2015 14:32:13 +0200
+Message-ID: <03f07c11135aef9e04a26e5b1018d726ba2fab5d.1441887195.git.git@drmicha.warpmail.net>
+References: <5613050.3arVUQYvEz@granit>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 14:24:19 2015
+Cc: Eric Wong <normalperson@yhbt.net>,
+	=?UTF-8?q?Till=20Sch=C3=A4fer?= <till2.schaefer@tu-dortmund.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 10 14:32:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Za0ta-0000Zc-5D
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 14:24:06 +0200
+	id 1Za11f-0008PU-58
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Sep 2015 14:32:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752067AbbIJMYB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2015 08:24:01 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:34720 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751536AbbIJMX7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2015 08:23:59 -0400
-Received: by obbda8 with SMTP id da8so32768529obb.1
-        for <git@vger.kernel.org>; Thu, 10 Sep 2015 05:23:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=9kbm6AfjoCad4uQreLplcaynbFTp8OffdbqtsHCv2ig=;
-        b=B9JwR3YReHrrHlUhuusLJogU4v+1bCm9bauDDK0Q1Wlh4Ea17Pgv+dw97dFCDgU2eb
-         25RUoOKmGLmEiccDeBW5RXNQOHBRLGxbg3jpdUhCX/VEPS5rqTYEYnoZ5bYY2Y13qncM
-         bsc3k5tIGP/dH1GmYTSqz0E4ANbMdAGMtrtVA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9kbm6AfjoCad4uQreLplcaynbFTp8OffdbqtsHCv2ig=;
-        b=ArZPBzZGQoXPCh7Hcv14CdFMwwCjFCCrUc4eomuZP+0vpnK7d/OrhehbSkBMjGHWBh
-         OTaIsQB6b1j6CDDKFICRE3XjUEanIqdqQHYE8g/BLVOhU12iHNyHIj2SExQLL6ECVgpa
-         dO9QWNSJFHrOe5WdXvwXXjrxMgAZwNZ6Dy3Wp+NfXeiUwH6QPf3F1zvkanOdWeiL+lxS
-         cTaq48Hbspd8l+6Bkyno+84NoYtutQ3PA3m0vdOYw3lTCJtBeDhNnrMcWwQsDqPyuIal
-         CCmEBL/+bUyVFjLTFRQkqM38PT1eetmMzowNTwBCOS0AZrIyAJp1R2iIiSbfdvZ/14tB
-         DwRA==
-X-Gm-Message-State: ALoCoQlt/s7tOHQhp6jQ9UP/vCT9kyHf1Q7b3SUviao1o+RAt97rRt051jL73ZN8yH623gFg4651
-X-Received: by 10.60.175.71 with SMTP id by7mr24145652oec.58.1441887838795;
- Thu, 10 Sep 2015 05:23:58 -0700 (PDT)
-Received: by 10.60.46.38 with HTTP; Thu, 10 Sep 2015 05:23:58 -0700 (PDT)
-In-Reply-To: <CA+P7+xqTGR4EfQGmOyvB=hS5YNS1hnhddFRqdjXp+DiTSbMdRQ@mail.gmail.com>
+	id S1754031AbbIJMcU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2015 08:32:20 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:57869 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753426AbbIJMcQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2015 08:32:16 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 8CCFE212B5
+	for <git@vger.kernel.org>; Thu, 10 Sep 2015 08:32:15 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute3.internal (MEProxy); Thu, 10 Sep 2015 08:32:15 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=WmZQUjrxMOiwoAEHOP1xXQrlR1g=; b=R275fr
+	BWL7UqETyXuS7Q9O48V6A+omIXuZtTaE04I7yJ6UgW1ad8tDC9rz/845dx0g7+Hu
+	lOe0/9EE2rjEZDKno8nzL0XC/8T3C/9UOa5Tav/zNkCpiN3MfqEVPr57DfKJjDbj
+	947fa5rMLMlXKYTB6k+rZhDZiXbTCRUzVy8bs=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=WmZQUjrxMOiwoAE
+	HOP1xXQrlR1g=; b=A7/sTtjvkJdhnvqZ6x6X2Ekc63nZ5IUZykuwV4e3+Ws9GM+
+	+Ae2OoJyHo//PGKOQDPvaCnM15Yn6A2GfZ+NbfuTsxDcqL48GshyY8F4nO3XicOv
+	fjY4VlIuorOZIOl60bIRTPNdVUGvQB909RSzKTmqY2TXqkuqBEuYQpCvuiGk=
+X-Sasl-enc: L7gydxFEn+G9xUwhwhlTEXxgSzsr/JbeIaLtBc96IVl3 1441888335
+Received: from localhost (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 1025468006C;
+	Thu, 10 Sep 2015 08:32:14 -0400 (EDT)
+X-Mailer: git-send-email 2.6.0.rc0.178.g4177fa5
+In-Reply-To: <5613050.3arVUQYvEz@granit>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277580>
 
-On 10 September 2015 at 02:59, Jacob Keller <jacob.keller@gmail.com> wr=
-ote:
-> On Wed, Sep 9, 2015 at 6:57 PM, Jacob Keller <jacob.keller@gmail.com>=
- wrote:
->> On Wed, Sep 9, 2015 at 5:03 AM, Lars Schneider <larsxschneider@gmail=
-=2Ecom> wrote:
->>> I wanted to play with the patch and apply it to my source but the p=
-rocess is really complicated for me. I wonder if you can give me a few =
-recommendations how to work efficiently with email patches. I don=E2=80=
-=99t want to start a flame-war about what email client is =E2=80=9Crigh=
-t", I am just curious how you work and what clients, scripts, or tricks=
- you use :-)
->>>
->>> Usually I use Apple Mail. I experimented with mutt but it was not d=
-ramatically more convenient.
->>>
->>> Thanks,
->>> Lars
->>
->> Generally, any client which lets you save patches as mbox format. Th=
-en
->> you can feed the file via git-am
->>
->> I don't know what clients make this easy. I normally use Evolution,
->> which has as "save as mbox" option. It's possible Apple Mail does to=
-o.
->>
->> Regards,
->> Jake
->
-> For the record, you can use "show original" from GMail, and save that
-> file as well, I believe. I don't know about Apple Mail specifically,
-> however.
+Currently, git-svn parses an authors file using the perl regex
 
-I also don't use Apple Mail, but it must surely have a way to get the
-original email text. Save that and then do:
+/^(.+?|\(no author\))\s*=3D\s*(.+?)\s*<(.+)>\s*$/
 
-$ git am /path/to/saved-file
+in order to extract svn user name, real name and e-mail.
+This does not match an empty e-mail field like "<>". On the other hand,
+the output of an authors-prog is parsed with the perl regex
 
+/^\s*(.+?)\s*<(.*)>\s*$/
 
-At least, that's what I do.
+in order to extract real name and e-mail.
 
-Luke
+So, specifying a trivial file grep such as
+
+grep "$1" /tmp/authors | head -n 1 | cut -d'=3D' -f2 | cut -c'2-'
+
+as the authors prog gives different results compared to specifying
+/tmp/authors as the authors file directly.
+
+Instead, make git svn uses the perl regex
+
+/^(.+?|\(no author\))\s*=3D\s*(.+?)\s*<(.*)>\s*$/
+
+for parsing the authors file so that the same (slightly more lenient)
+regex is used in both cases.
+
+Reported-by: Till Sch=C3=A4fer <till2.schaefer@tu-dortmund.de>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ git-svn.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 36f7240..fa5f253 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1924,7 +1924,7 @@ sub load_authors {
+ 	my $log =3D $cmd eq 'log';
+ 	while (<$authors>) {
+ 		chomp;
+-		next unless /^(.+?|\(no author\))\s*=3D\s*(.+?)\s*<(.+)>\s*$/;
++		next unless /^(.+?|\(no author\))\s*=3D\s*(.+?)\s*<(.*)>\s*$/;
+ 		my ($user, $name, $email) =3D ($1, $2, $3);
+ 		if ($log) {
+ 			$Git::SVN::Log::rusers{"$name <$email>"} =3D $user;
+--=20
+2.6.0.rc0.178.g4177fa5
