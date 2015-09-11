@@ -1,122 +1,95 @@
-From: Josef Kufner <josef@kufner.cz>
-Subject: [PATCH] Pass graph width to pretty formatting, so '%>|' can work properly
-Date: Fri, 11 Sep 2015 15:47:40 +0200
-Message-ID: <1441979260-1494-1-git-send-email-josef@kufner.cz>
-Cc: Josef Kufner <josef@kufner.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 11 17:12:35 2015
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: git submodule ignores --git-dir
+Date: Fri, 11 Sep 2015 17:15:52 +0200
+Message-ID: <55F2F028.7070505@web.de>
+References: <55F1E2AB.3020507@monetas.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Filip Gospodinov <filip.gospodinov@monetas.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 11 17:16:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaQ05-00015E-0c
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 17:12:29 +0200
+	id 1ZaQ3Z-0004jn-MB
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 17:16:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752657AbbIKPMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 11:12:24 -0400
-Received: from ip-94-112-209-113.net.upcbroadband.cz ([94.112.209.113]:43086
-	"EHLO delfinek.frozen-doe.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751553AbbIKPMX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Sep 2015 11:12:23 -0400
-X-Greylist: delayed 5062 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Sep 2015 11:12:23 EDT
-Received: by delfinek.frozen-doe.net (Postfix, from userid 1000)
-	id EB23CC53B25; Fri, 11 Sep 2015 15:47:53 +0200 (CEST)
-X-Mailer: git-send-email 2.5.1
+	id S1752796AbbIKPQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2015 11:16:01 -0400
+Received: from mout.web.de ([212.227.15.3]:56986 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752073AbbIKPP7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2015 11:15:59 -0400
+Received: from [192.168.178.41] ([79.211.114.8]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0McWbQ-1ZIkg90nMe-00HhcX; Fri, 11 Sep 2015 17:15:57
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+In-Reply-To: <55F1E2AB.3020507@monetas.net>
+X-Provags-ID: V03:K0:PhH+k0+C0svAEOvZuF8GHaqAivMVD9BY7PJGbi+OPkK/+ZoXs2j
+ H2DUMK0pgH3puHv18EQLnJnbDfEX5i+UI8CZkT7jxAcxQ+tAGHvoovp9EkhvrdCUkazp3ob
+ rtlpRQ9O3tWZL3KikXx2V7hxQwnLEoT5+jk8seBglNGfemwMwaRieJ4nDBOFV2dGFOyKDLn
+ 9A8IiqOnzXHkNbW2MhTKw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UwXOTXYIUPg=:0OusChSLUXFRW9RpKn2zA2
+ ACtIUi0EqnrBNwstfkFAZkzuXKg4f1L8steLWBJpWBcci6QFyYzn3/ktsHat2rAiVoLz29NKL
+ Yri3D1p/46VRfhizsIlnsdG5c2QRCmjHgSEsCxvCLxuRM7XazJha0yFILghu/tWIwkKWdacih
+ CLslYGMfpvXuQ8OVjzjo8WxrEr8pvdzrx81Qa4az3MHoycM/d0vUK7CSemPhmHMjvfGvAaXFs
+ mb3l/mpCQxDZXPuIVIbV7baAwmhLlRhnF0VA+CJOiFc5zZJaJfDGmr7CQot3O37zsCFbzkZ0e
+ lmi150hiwkyd9p35nvILeemlkiUcQZwOfjMJNk2uHRDN+fTADIwTZzFkCKwGBfO16/wNZl/Bp
+ dIObgvZgGLZgHKO/IdGmQAS70+6iZ79nPWQ2m34+stRPS8nXAU3LBNWSaNJ0puEy9S19/QKgN
+ JSmzaXrsQ6EhVy3ao/7RYaXQApE3ZQ+kuDABA09EUKvyfnlKE9ivWc8EJZE4n9ESsz9zN/svN
+ z/wO18MRbDNTlTfrC5DSBT8E6sZEtNGw/8hTZvYSaM3G5j8ZvyxeP9cIdEZr0KmMtEFY+lb3N
+ pmMgl1EopUIkIvALYXT6JhnvT3NmO7DhuIBO8tZnK38XQIbwQwEsblLQACXyfpa42xIscQb4D
+ /fvtRClo9zif9fVcNEhYI7GjOjAEU/0fs87UpaVq52GjBM1po8mSk5yefXoh2VQRZI3lTu6IY
+ caXQ5U9SIQRxUpLI/V+pVDSqefBoQy/DQb4rsA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277668>
 
-Pass graph width to pretty formatting function, so it can handle
-'%>|(N)' paddings correctly when --graph option is used.
+Am 10.09.2015 um 22:06 schrieb Filip Gospodinov:
+> Hi!
+>
+> I use the `--git-dir` flag in some scripts such that I don't need to `cd` back
+> and forth. Recently, I've discovered that `--git-dir` does not seem to work
+> correctly for `git submodule`. Here is a short snippet to reproduce that behavior:
+>
+> mkdir repo1 subm
+> (cd subm; git init; git commit -m 1 --allow-empty)
+> (cd repo1; git init; git submodule add ../subm subm; git commit -m "add subm")
+> git clone repo1 repo2
+> git --git-dir=$PWD/repo2/.git submodule update --init
+>
+>
+> which errors with the following output:
+>
+> No submodule mapping found in .gitmodules for path 'subm'
+>
+> But this works:
+> cd repo2; git --git-dir=$PWD/.git submodule update --init
 
-Example:
-  git log --all --graph --pretty='format: [%>|(20)%h] %ar%d'
+Thanks for your report containing a nice recipe to reproduce your issue!
 
-  All commit hashes should be aligned at 20th column from edge of the
-  terminal, not from the edge of the graph.
+> I know that for this particular use case I can just use `git clone --recursive`
+> and that other use cases can be worked around by using `cd`. Still, I wonder if
+> the behavior I discovered is a bug or if it's expected.
 
-Signed-off-by: Josef Kufner <josef@kufner.cz>
----
- commit.h   | 1 +
- graph.c    | 7 +++++++
- graph.h    | 5 +++++
- log-tree.c | 2 ++
- pretty.c   | 1 +
- 5 files changed, 16 insertions(+)
+I don't think this is a bug. The git submodule command needs a work tree
+to read the .gitmodules file from, that's while it fails when using
+--git-dir from outside the work tree. But I admit that the error message
+"No submodule mapping found in .gitmodules for path ..." could be improved
+to clearly state that the .gitmodules file wasn't found.
 
-diff --git a/commit.h b/commit.h
-index 5d58be0..0a9a707 100644
---- a/commit.h
-+++ b/commit.h
-@@ -160,6 +160,7 @@ struct pretty_print_context {
- 	 * should not be counted on by callers.
- 	 */
- 	struct string_list in_body_headers;
-+	int graph_width;
- };
- 
- struct userformat_want {
-diff --git a/graph.c b/graph.c
-index c25a09a..4802411 100644
---- a/graph.c
-+++ b/graph.c
-@@ -671,6 +671,13 @@ static void graph_output_padding_line(struct git_graph *graph,
- 	graph_pad_horizontally(graph, sb, graph->num_new_columns * 2);
- }
- 
-+
-+int graph_width(struct git_graph *graph)
-+{
-+	return graph->width;
-+}
-+
-+
- static void graph_output_skip_line(struct git_graph *graph, struct strbuf *sb)
- {
- 	/*
-diff --git a/graph.h b/graph.h
-index 0be62bd..3f48c19 100644
---- a/graph.h
-+++ b/graph.h
-@@ -68,6 +68,11 @@ int graph_next_line(struct git_graph *graph, struct strbuf *sb);
- 
- 
- /*
-+ * Return current width of the graph in on-screen characters.
-+ */
-+int graph_width(struct git_graph *graph);
-+
-+/*
-  * graph_show_*: helper functions for printing to stdout
-  */
- 
-diff --git a/log-tree.c b/log-tree.c
-index 7b1b57a..08fd5b6 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -686,6 +686,8 @@ void show_log(struct rev_info *opt)
- 	ctx.output_encoding = get_log_output_encoding();
- 	if (opt->from_ident.mail_begin && opt->from_ident.name_begin)
- 		ctx.from_ident = &opt->from_ident;
-+	if (opt->graph)
-+		ctx.graph_width = graph_width(opt->graph);
- 	pretty_print_commit(&ctx, commit, &msgbuf);
- 
- 	if (opt->add_signoff)
-diff --git a/pretty.c b/pretty.c
-index 151c2ae..f1cf9e2 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1297,6 +1297,7 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
- 		if (!start)
- 			start = sb->buf;
- 		occupied = utf8_strnwidth(start, -1, 1);
-+		occupied += c->pretty_ctx->graph_width;
- 		padding = (-padding) - occupied;
- 	}
- 	while (1) {
--- 
-2.5.1
+Unfortunately trying to show git the right work tree:
+
+$ git --git-dir=$PWD/repo2/.git --work-tree=$PWD/repo2 submodule update --init
+
+Didn't work as I expected it to either:
+
+fatal: /home/Sledge/libexec/git-core/git-submodule cannot be used without a working tree.
+
+So you'll have to cd into the repo for now.
