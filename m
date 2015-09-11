@@ -1,281 +1,568 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v17 08/14] ref-filter: add support for %(contents:lines=X)
-Date: Fri, 11 Sep 2015 20:34:16 +0530
-Message-ID: <1441983856-540-1-git-send-email-Karthik.188@gmail.com>
-References: <1441900110-4015-9-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v17 12/14] tag.c: use 'ref-filter' APIs
+Date: Fri, 11 Sep 2015 20:36:16 +0530
+Message-ID: <1441983976-680-1-git-send-email-Karthik.188@gmail.com>
+References: <1441902169-9891-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 11 17:04:25 2015
+X-From: git-owner@vger.kernel.org Fri Sep 11 17:06:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaPs7-0000on-53
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 17:04:15 +0200
+	id 1ZaPu8-00031h-Dz
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 17:06:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073AbbIKPEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 11:04:10 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:34616 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751539AbbIKPEJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2015 11:04:09 -0400
-Received: by padhy16 with SMTP id hy16so77294431pad.1
-        for <git@vger.kernel.org>; Fri, 11 Sep 2015 08:04:08 -0700 (PDT)
+	id S1753228AbbIKPGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2015 11:06:13 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35088 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753016AbbIKPGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2015 11:06:08 -0400
+Received: by pacfv12 with SMTP id fv12so78766623pac.2
+        for <git@vger.kernel.org>; Fri, 11 Sep 2015 08:06:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WKek7uk85UH+DbPPoHX4HUfbWml0BqbSchO0PoQspa0=;
-        b=qhnm6AQM6K5yzD1b93B99qg7uGoMCvCfekj3sol7u6fgr+8weEx2Sa508fAxgbndxT
-         UAhO3ngeRnyN7QAmZsUkRwHGDv2R1tXBxp/p23yRpiDu2KQKAXaAI/vXIneH2Asq86IC
-         +RwDYL9nj0GlzNlYQ1dHIQl+VFmEYp1Ahv3c54lcOaN/ZxTK9afusZt5SErHpUQAf4/8
-         QZMImzkMDfdt/et3N2VewAlF/BZXwXX0qrYNvKogb0L4Vd7+HuD6gxzUWdQLn/gMcTzb
-         2vh56Wdq+DRrF9bTz8pgloNjMl0lXuwzx/Zhgw61TxRsU41jByX6TzPc2ALUfTq2nJbe
-         7vaw==
-X-Received: by 10.68.68.134 with SMTP id w6mr24682477pbt.61.1441983848444;
-        Fri, 11 Sep 2015 08:04:08 -0700 (PDT)
+        bh=xzj/EOs3NWOfqsS8fU5XctAga5A2WSIvQpj42o/Payk=;
+        b=SknumwBr6HUD3jZQrH+9fGBfnrNVc6Alud41HVYh/0W45so0xvvQuNgOVUT1j8ljSz
+         wr6rAflgt6HqQQtDdJjH7VZ6t5HJWHrSk6xTw76p8sbx7lEzqDO5tR1Z8NElw2eaqFqd
+         Oop/aVv0E2+h+xMByF1kVuZTEcEZj0lMXHtw9FchA5+7eDCSBAPkosXtMXA0KI5isUm/
+         dCohPOlkuedIwyI0JzPKJC5u5ygeHxqY29k91yMuaTOGrNMa5nlcad5Dyk7PNDHynpUG
+         B23D8GhT5aDphNP/+jGoFkLaQPXNLGYIu4SIHvVuSsovvOJIS05+/saH2wI1tnEORkGA
+         142Q==
+X-Received: by 10.66.144.165 with SMTP id sn5mr89194213pab.122.1441983965890;
+        Fri, 11 Sep 2015 08:06:05 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id oa5sm909302pbb.41.2015.09.11.08.04.05
+        by smtp.gmail.com with ESMTPSA id yt9sm888628pac.32.2015.09.11.08.06.03
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 11 Sep 2015 08:04:07 -0700 (PDT)
+        Fri, 11 Sep 2015 08:06:05 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1441900110-4015-9-git-send-email-Karthik.188@gmail.com>
+In-Reply-To: <1441902169-9891-1-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277664>
 
-In 'tag.c' we can print N lines from the annotation of the tag using
-the '-n<num>' option. Copy code from 'tag.c' to 'ref-filter' and
-modify it to support appending of N lines from the annotation of tags
-to the given strbuf.
+From: Karthik Nayak <karthik.188@gmail.com>
 
-Implement %(contents:lines=X) where X lines of the given object are
-obtained.
+Make 'tag.c' use 'ref-filter' APIs for iterating through refs, sorting
+and printing of refs. This removes most of the code used in 'tag.c'
+replacing it with calls to the 'ref-filter' library.
 
-While we're at it, remove unused "contents:<suboption>" atoms from
-the `valid_atom` array.
+Make 'tag.c' use the 'filter_refs()' function provided by 'ref-filter'
+to filter out tags based on the options set.
 
-Add documentation and test for the same.
+For printing tags we use 'show_ref_array_item()' function provided by
+'ref-filter'.
+
+We improve the sorting option provided by 'tag.c' by using the sorting
+options provided by 'ref-filter'. This causes the test 'invalid sort
+parameter on command line' in t7004 to fail, as 'ref-filter' throws an
+error for all sorting fields which are incorrect. The test is changed
+to reflect the same.
+
+Modify documentation for the same.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  3 ++-
- builtin/tag.c                      |  4 +++
- ref-filter.c                       | 47 +++++++++++++++++++++++++++++++---
- ref-filter.h                       |  3 ++-
- t/t6302-for-each-ref-filter.sh     | 52 ++++++++++++++++++++++++++++++++++++++
- 5 files changed, 103 insertions(+), 6 deletions(-)
+ Documentation/git-tag.txt |  16 ++-
+ builtin/tag.c             | 345 ++++++----------------------------------------
+ t/t7004-tag.sh            |   8 +-
+ 3 files changed, 53 insertions(+), 316 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 3a271bf..324ad2c 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -150,7 +150,8 @@ The complete message in a commit and tag object is `contents`.
- Its first line is `contents:subject`, where subject is the concatenation
- of all lines of the commit message up to the first blank line.  The next
- line is 'contents:body', where body is all of the lines after the first
--blank line.  Finally, the optional GPG signature is `contents:signature`.
-+blank line.  The optional GPG signature is `contents:signature`.  The
-+first `N` lines of the message is obtained using `contents:lines=N`.
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 84f6496..3ac4a96 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	<tagname> [<commit> | <object>]
+ 'git tag' -d <tagname>...
+ 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
+-	[--column[=<options>] | --no-column] [--create-reflog] [<pattern>...]
++	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>] [<pattern>...]
+ 'git tag' -v <tagname>...
  
- For sorting purposes, fields with numeric values sort in numeric
- order (`objectsize`, `authordate`, `committerdate`, `taggerdate`).
+ DESCRIPTION
+@@ -94,14 +94,16 @@ OPTIONS
+ 	using fnmatch(3)).  Multiple patterns may be given; if any of
+ 	them matches, the tag is shown.
+ 
+---sort=<type>::
+-	Sort in a specific order. Supported type is "refname"
+-	(lexicographic order), "version:refname" or "v:refname" (tag
++--sort=<key>::
++	Sort based on the key given.  Prefix `-` to sort in
++	descending order of the value. You may use the --sort=<key> option
++	multiple times, in which case the last key becomes the primary
++	key. Also supports "version:refname" or "v:refname" (tag
+ 	names are treated as versions). The "version:refname" sort
+ 	order can also be affected by the
+-	"versionsort.prereleaseSuffix" configuration variable. Prepend
+-	"-" to reverse sort order. When this option is not given, the
+-	sort order defaults to the value configured for the 'tag.sort'
++	"versionsort.prereleaseSuffix" configuration variable.
++	The keys supported are the same as those in `git for-each-ref`.
++	Sort order defaults to the value configured for the 'tag.sort'
+ 	variable if it exists, or lexicographic order otherwise. See
+ 	linkgit:git-config[1].
+ 
 diff --git a/builtin/tag.c b/builtin/tag.c
-index 471d6b1..b0bc1c5 100644
+index fe66f7b..977a18c 100644
 --- a/builtin/tag.c
 +++ b/builtin/tag.c
-@@ -185,6 +185,10 @@ static enum contains_result contains(struct commit *candidate,
- 	return contains_test(candidate, want);
- }
- 
-+/*
-+ * Currently modified and used in ref-filter as append_lines(), will
-+ * eventually be removed as we port tag.c to use ref-filter APIs.
-+ */
- static void show_tag_lines(const struct object_id *oid, int lines)
- {
- 	int i;
-diff --git a/ref-filter.c b/ref-filter.c
-index f046d82..32aab37 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -45,9 +45,6 @@ static struct {
- 	{ "subject" },
- 	{ "body" },
- 	{ "contents" },
--	{ "contents:subject" },
--	{ "contents:body" },
--	{ "contents:signature" },
- 	{ "upstream" },
- 	{ "push" },
- 	{ "symref" },
-@@ -65,6 +62,11 @@ struct align {
- 	unsigned int width;
+@@ -28,278 +28,35 @@ static const char * const git_tag_usage[] = {
+ 	NULL
  };
  
-+struct contents {
-+	unsigned int lines;
-+	struct object_id oid;
-+};
-+
- struct ref_formatting_stack {
- 	struct ref_formatting_stack *prev;
- 	struct strbuf output;
-@@ -81,6 +83,7 @@ struct atom_value {
- 	const char *s;
- 	union {
- 		struct align align;
-+		struct contents contents;
- 	} u;
- 	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
- 	unsigned long ul; /* used for sorting when not FIELD_STR */
-@@ -643,6 +646,30 @@ static void find_subpos(const char *buf, unsigned long sz,
- 	*nonsiglen = *sig - buf;
- }
+-#define STRCMP_SORT     0	/* must be zero */
+-#define VERCMP_SORT     1
+-#define SORT_MASK       0x7fff
+-#define REVERSE_SORT    0x8000
+-
+-static int tag_sort;
+-
+ static unsigned int colopts;
  
-+/*
-+ * If 'lines' is greater than 0, append that many lines from the given
-+ * 'buf' of length 'size' to the given strbuf.
-+ */
-+static void append_lines(struct strbuf *out, const char *buf, unsigned long size, int lines)
-+{
+-static int match_pattern(const char **patterns, const char *ref)
+-{
+-	/* no pattern means match everything */
+-	if (!*patterns)
+-		return 1;
+-	for (; *patterns; patterns++)
+-		if (!wildmatch(*patterns, ref, 0, NULL))
+-			return 1;
+-	return 0;
+-}
+-
+-/*
+- * This is currently duplicated in ref-filter.c, and will eventually be
+- * removed as we port tag.c to use the ref-filter APIs.
+- */
+-static const unsigned char *match_points_at(const char *refname,
+-					    const unsigned char *sha1,
+-					    struct sha1_array *points_at)
+-{
+-	const unsigned char *tagged_sha1 = NULL;
+-	struct object *obj;
+-
+-	if (sha1_array_lookup(points_at, sha1) >= 0)
+-		return sha1;
+-	obj = parse_object(sha1);
+-	if (!obj)
+-		die(_("malformed object at '%s'"), refname);
+-	if (obj->type == OBJ_TAG)
+-		tagged_sha1 = ((struct tag *)obj)->tagged->sha1;
+-	if (tagged_sha1 && sha1_array_lookup(points_at, tagged_sha1) >= 0)
+-		return tagged_sha1;
+-	return NULL;
+-}
+-
+-static int in_commit_list(const struct commit_list *want, struct commit *c)
+-{
+-	for (; want; want = want->next)
+-		if (!hashcmp(want->item->object.sha1, c->object.sha1))
+-			return 1;
+-	return 0;
+-}
+-
+-/*
+- * The entire code segment for supporting the --contains option has been
+- * copied over to ref-filter.{c,h}. This will be deleted evetually when
+- * we port tag.c to use ref-filter APIs.
+- */
+-enum contains_result {
+-	CONTAINS_UNKNOWN = -1,
+-	CONTAINS_NO = 0,
+-	CONTAINS_YES = 1
+-};
+-
+-/*
+- * Test whether the candidate or one of its parents is contained in the list.
+- * Do not recurse to find out, though, but return -1 if inconclusive.
+- */
+-static enum contains_result contains_test(struct commit *candidate,
+-			    const struct commit_list *want)
+-{
+-	/* was it previously marked as containing a want commit? */
+-	if (candidate->object.flags & TMP_MARK)
+-		return 1;
+-	/* or marked as not possibly containing a want commit? */
+-	if (candidate->object.flags & UNINTERESTING)
+-		return 0;
+-	/* or are we it? */
+-	if (in_commit_list(want, candidate)) {
+-		candidate->object.flags |= TMP_MARK;
+-		return 1;
+-	}
+-
+-	if (parse_commit(candidate) < 0)
+-		return 0;
+-
+-	return -1;
+-}
+-
+-/*
+- * Mimicking the real stack, this stack lives on the heap, avoiding stack
+- * overflows.
+- *
+- * At each recursion step, the stack items points to the commits whose
+- * ancestors are to be inspected.
+- */
+-struct stack {
+-	int nr, alloc;
+-	struct stack_entry {
+-		struct commit *commit;
+-		struct commit_list *parents;
+-	} *stack;
+-};
+-
+-static void push_to_stack(struct commit *candidate, struct stack *stack)
+-{
+-	int index = stack->nr++;
+-	ALLOC_GROW(stack->stack, stack->nr, stack->alloc);
+-	stack->stack[index].commit = candidate;
+-	stack->stack[index].parents = candidate->parents;
+-}
+-
+-static enum contains_result contains(struct commit *candidate,
+-		const struct commit_list *want)
+-{
+-	struct stack stack = { 0, 0, NULL };
+-	int result = contains_test(candidate, want);
+-
+-	if (result != CONTAINS_UNKNOWN)
+-		return result;
+-
+-	push_to_stack(candidate, &stack);
+-	while (stack.nr) {
+-		struct stack_entry *entry = &stack.stack[stack.nr - 1];
+-		struct commit *commit = entry->commit;
+-		struct commit_list *parents = entry->parents;
+-
+-		if (!parents) {
+-			commit->object.flags |= UNINTERESTING;
+-			stack.nr--;
+-		}
+-		/*
+-		 * If we just popped the stack, parents->item has been marked,
+-		 * therefore contains_test will return a meaningful 0 or 1.
+-		 */
+-		else switch (contains_test(parents->item, want)) {
+-		case CONTAINS_YES:
+-			commit->object.flags |= TMP_MARK;
+-			stack.nr--;
+-			break;
+-		case CONTAINS_NO:
+-			entry->parents = parents->next;
+-			break;
+-		case CONTAINS_UNKNOWN:
+-			push_to_stack(parents->item, &stack);
+-			break;
+-		}
+-	}
+-	free(stack.stack);
+-	return contains_test(candidate, want);
+-}
+-
+-/*
+- * Currently modified and used in ref-filter as append_lines(), will
+- * eventually be removed as we port tag.c to use ref-filter APIs.
+- */
+-static void show_tag_lines(const struct object_id *oid, int lines)
+-{
+-	int i;
+-	unsigned long size;
+-	enum object_type type;
+-	char *buf, *sp, *eol;
+-	size_t len;
+-
+-	buf = read_sha1_file(oid->hash, &type, &size);
+-	if (!buf)
+-		die_errno("unable to read object %s", oid_to_hex(oid));
+-	if (type != OBJ_COMMIT && type != OBJ_TAG)
+-		goto free_return;
+-	if (!size)
+-		die("an empty %s object %s?",
+-		    typename(type), oid_to_hex(oid));
+-
+-	/* skip header */
+-	sp = strstr(buf, "\n\n");
+-	if (!sp)
+-		goto free_return;
+-
+-	/* only take up to "lines" lines, and strip the signature from a tag */
+-	if (type == OBJ_TAG)
+-		size = parse_signature(buf, size);
+-	for (i = 0, sp += 2; i < lines && sp < buf + size; i++) {
+-		if (i)
+-			printf("\n    ");
+-		eol = memchr(sp, '\n', size - (sp - buf));
+-		len = eol ? eol - sp : size - (sp - buf);
+-		fwrite(sp, len, 1, stdout);
+-		if (!eol)
+-			break;
+-		sp = eol + 1;
+-	}
+-free_return:
+-	free(buf);
+-}
+-
+-static void ref_array_append(struct ref_array *array, const char *refname)
+-{
+-	size_t len = strlen(refname);
+-	struct ref_array_item *ref = xcalloc(1, sizeof(struct ref_array_item) + len + 1);
+-	memcpy(ref->refname, refname, len);
+-	ref->refname[len] = '\0';
+-	REALLOC_ARRAY(array->items, array->nr + 1);
+-	array->items[array->nr++] = ref;
+-}
+-
+-static int show_reference(const char *refname, const struct object_id *oid,
+-			  int flag, void *cb_data)
+-{
+-	struct ref_filter_cbdata *data = cb_data;
+-	struct ref_array *array = data->array;
+-	struct ref_filter *filter = data->filter;
+-
+-	if (match_pattern(filter->name_patterns, refname)) {
+-		if (filter->with_commit) {
+-			struct commit *commit;
+-
+-			commit = lookup_commit_reference_gently(oid->hash, 1);
+-			if (!commit)
+-				return 0;
+-			if (!contains(commit, filter->with_commit))
+-				return 0;
+-		}
+-
+-		if (filter->points_at.nr && !match_points_at(refname, oid->hash, &filter->points_at))
+-			return 0;
+-
+-		if (!filter->lines) {
+-			if (tag_sort)
+-				ref_array_append(array, refname);
+-			else
+-				printf("%s\n", refname);
+-			return 0;
+-		}
+-		printf("%-15s ", refname);
+-		show_tag_lines(oid, filter->lines);
+-		putchar('\n');
+-	}
+-
+-	return 0;
+-}
+-
+-static int sort_by_version(const void *a_, const void *b_)
+-{
+-	const struct ref_array_item *a = *((struct ref_array_item **)a_);
+-	const struct ref_array_item *b = *((struct ref_array_item **)b_);
+-	return versioncmp(a->refname, b->refname);
+-}
+-
+-static int list_tags(struct ref_filter *filter, int sort)
++static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
+ {
+ 	struct ref_array array;
+-	struct ref_filter_cbdata data;
++	char *format, *to_free = NULL;
 +	int i;
-+	const char *sp, *eol;
-+	size_t len;
+ 
+ 	memset(&array, 0, sizeof(array));
+-	data.array = &array;
+-	data.filter = filter;
+ 
+ 	if (filter->lines == -1)
+ 		filter->lines = 0;
+ 
+-	for_each_tag_ref(show_reference, &data);
+-	if (sort) {
+-		int i;
+-		if ((sort & SORT_MASK) == VERCMP_SORT)
+-			qsort(array.items, array.nr,
+-			      sizeof(struct ref_array_item *), sort_by_version);
+-		if (sort & REVERSE_SORT)
+-			for (i = array.nr - 1; i >= 0; i--)
+-				printf("%s\n", array.items[i]->refname);
+-		else
+-			for (i = 0; i < array.nr; i++)
+-				printf("%s\n", array.items[i]->refname);
+-		ref_array_clear(&array);
+-	}
++	if (filter->lines) {
++		to_free = xstrfmt("%s %%(contents:lines=%d)",
++				 "%(align:15)%(refname:short)%(end)", filter->lines);
++		format = to_free;
++	} else
++		format = "%(refname:short)";
 +
-+	sp = buf;
++	verify_ref_format(format);
++	filter_refs(&array, filter, FILTER_REFS_TAGS);
++	ref_array_sort(sorting, &array);
 +
-+	for (i = 0; i < lines && sp < buf + size; i++) {
-+		if (i)
-+			strbuf_addstr(out, "\n    ");
-+		eol = memchr(sp, '\n', size - (sp - buf));
-+		len = eol ? eol - sp : size - (sp - buf);
-+		strbuf_add(out, sp, len);
-+		if (!eol)
-+			break;
-+		sp = eol + 1;
-+	}
-+}
++	for (i = 0; i < array.nr; i++)
++		show_ref_array_item(array.items[i], format, 0);
++	ref_array_clear(&array);
++	free(to_free);
 +
- /* See grab_values */
- static void grab_sub_body_contents(struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
- {
-@@ -653,6 +680,7 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		const char *name = used_atom[i];
- 		struct atom_value *v = &val[i];
-+		const char *valp = NULL;
- 		if (!!deref != (*name == '*'))
- 			continue;
- 		if (deref)
-@@ -662,7 +690,8 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
- 		    strcmp(name, "contents") &&
- 		    strcmp(name, "contents:subject") &&
- 		    strcmp(name, "contents:body") &&
--		    strcmp(name, "contents:signature"))
-+		    strcmp(name, "contents:signature") &&
-+		    !starts_with(name, "contents:lines="))
- 			continue;
- 		if (!subpos)
- 			find_subpos(buf, sz,
-@@ -682,6 +711,16 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
- 			v->s = xmemdupz(sigpos, siglen);
- 		else if (!strcmp(name, "contents"))
- 			v->s = xstrdup(subpos);
-+		else if (skip_prefix(name, "contents:lines=", &valp)) {
-+			struct strbuf s = STRBUF_INIT;
-+			const char *contents_end = bodylen + bodypos - siglen;
-+
-+			if (strtoul_ui(valp, 10, &v->u.contents.lines))
-+				die(_("positive value expected contents:lines=%s"), valp);
-+			/*  Size is the length of the message after removing the signature */
-+			append_lines(&s, subpos, contents_end - subpos, v->u.contents.lines);
-+			v->s = strbuf_detach(&s, NULL);
-+		}
- 	}
+ 	return 0;
  }
  
-diff --git a/ref-filter.h b/ref-filter.h
-index 0913ba9..ab76b22 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -59,7 +59,8 @@ struct ref_filter {
- 	struct commit *merge_commit;
+@@ -366,35 +123,26 @@ static const char tag_template_nocleanup[] =
+ 	"Lines starting with '%c' will be kept; you may remove them"
+ 	" yourself if you want to.\n");
  
- 	unsigned int with_commit_tag_algo : 1;
--	unsigned int kind;
-+	unsigned int kind,
-+		lines;
- };
+-/*
+- * Parse a sort string, and return 0 if parsed successfully. Will return
+- * non-zero when the sort string does not parse into a known type. If var is
+- * given, the error message becomes a warning and includes information about
+- * the configuration value.
+- */
+-static int parse_sort_string(const char *var, const char *arg, int *sort)
++/* Parse arg given and add it the ref_sorting array */
++static int parse_sorting_string(const char *arg, struct ref_sorting **sorting_tail)
+ {
+-	int type = 0, flags = 0;
+-
+-	if (skip_prefix(arg, "-", &arg))
+-		flags |= REVERSE_SORT;
++	struct ref_sorting *s;
++	int len;
  
- struct ref_filter_cbdata {
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index f596035..bab1f28 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -167,4 +167,56 @@ test_expect_success 'nested alignment with quote formatting' "
- 	test_cmp expect actual
- "
+-	if (skip_prefix(arg, "version:", &arg) || skip_prefix(arg, "v:", &arg))
+-		type = VERCMP_SORT;
+-	else
+-		type = STRCMP_SORT;
++	s = xcalloc(1, sizeof(*s));
++	s->next = *sorting_tail;
++	*sorting_tail = s;
  
-+test_expect_success 'check `%(contents:lines=1)`' '
-+	cat >expect <<-\EOF &&
-+	master |three
-+	side |four
-+	odd/spot |three
-+	double-tag |Annonated doubly
-+	four |four
-+	one |one
-+	signed-tag |A signed tag message
-+	three |three
-+	two |two
-+	EOF
-+	git for-each-ref --format="%(refname:short) |%(contents:lines=1)" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'check `%(contents:lines=0)`' '
-+	cat >expect <<-\EOF &&
-+	master |
-+	side |
-+	odd/spot |
-+	double-tag |
-+	four |
-+	one |
-+	signed-tag |
-+	three |
-+	two |
-+	EOF
-+	git for-each-ref --format="%(refname:short) |%(contents:lines=0)" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'check `%(contents:lines=99999)`' '
-+	cat >expect <<-\EOF &&
-+	master |three
-+	side |four
-+	odd/spot |three
-+	double-tag |Annonated doubly
-+	four |four
-+	one |one
-+	signed-tag |A signed tag message
-+	three |three
-+	two |two
-+	EOF
-+	git for-each-ref --format="%(refname:short) |%(contents:lines=99999)" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '`%(contents:lines=-1)` should fail' '
-+	test_must_fail git for-each-ref --format="%(refname:short) |%(contents:lines=-1)"
-+'
-+
- test_done
+-	if (strcmp(arg, "refname")) {
+-		if (!var)
+-			return error(_("unsupported sort specification '%s'"), arg);
+-		else {
+-			warning(_("unsupported sort specification '%s' in variable '%s'"),
+-				var, arg);
+-			return -1;
+-		}
++	if (*arg == '-') {
++		s->reverse = 1;
++		arg++;
+ 	}
++	if (skip_prefix(arg, "version:", &arg) ||
++	    skip_prefix(arg, "v:", &arg))
++		s->version = 1;
+ 
+-	*sort = (type | flags);
++	len = strlen(arg);
++	s->atom = parse_ref_filter_atom(arg, arg+len);
+ 
+ 	return 0;
+ }
+@@ -402,11 +150,12 @@ static int parse_sort_string(const char *var, const char *arg, int *sort)
+ static int git_tag_config(const char *var, const char *value, void *cb)
+ {
+ 	int status;
++	struct ref_sorting **sorting_tail = (struct ref_sorting **)cb;
+ 
+ 	if (!strcmp(var, "tag.sort")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		parse_sort_string(var, value, &tag_sort);
++		parse_sorting_string(value, sorting_tail);
+ 		return 0;
+ 	}
+ 
+@@ -564,13 +313,6 @@ static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
+ 	return check_refname_format(sb->buf, 0);
+ }
+ 
+-static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
+-{
+-	int *sort = opt->value;
+-
+-	return parse_sort_string(NULL, arg, sort);
+-}
+-
+ int cmd_tag(int argc, const char **argv, const char *prefix)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -587,6 +329,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	struct ref_transaction *transaction;
+ 	struct strbuf err = STRBUF_INIT;
+ 	struct ref_filter filter;
++	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
+ 	struct option options[] = {
+ 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
+ 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
+@@ -613,10 +356,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
+ 		OPT_CONTAINS(&filter.with_commit, N_("print only tags that contain the commit")),
+ 		OPT_WITH(&filter.with_commit, N_("print only tags that contain the commit")),
+-		{
+-			OPTION_CALLBACK, 0, "sort", &tag_sort, N_("type"), N_("sort tags"),
+-			PARSE_OPT_NONEG, parse_opt_sort
+-		},
++		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
++			     N_("field name to sort on"), &parse_opt_ref_sorting),
+ 		{
+ 			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
+ 			N_("print only tags of the object"), 0, parse_opt_object_name
+@@ -624,7 +365,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
+-	git_config(git_tag_config, NULL);
++	git_config(git_tag_config, sorting_tail);
+ 
+ 	memset(&opt, 0, sizeof(opt));
+ 	memset(&filter, 0, sizeof(filter));
+@@ -650,6 +391,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 			die(_("--column and -n are incompatible"));
+ 		colopts = 0;
+ 	}
++	if (!sorting)
++		sorting = ref_default_sorting();
+ 	if (cmdmode == 'l') {
+ 		int ret;
+ 		if (column_active(colopts)) {
+@@ -658,10 +401,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 			copts.padding = 2;
+ 			run_column_filter(colopts, &copts);
+ 		}
+-		if (filter.lines != -1 && tag_sort)
+-			die(_("--sort and -n are incompatible"));
+ 		filter.name_patterns = argv;
+-		ret = list_tags(&filter, tag_sort);
++		ret = list_tags(&filter, sorting);
+ 		if (column_active(colopts))
+ 			stop_column_filter();
+ 		return ret;
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index d31788c..84153ef 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1462,13 +1462,7 @@ test_expect_success 'invalid sort parameter on command line' '
+ 
+ test_expect_success 'invalid sort parameter in configuratoin' '
+ 	git config tag.sort "v:notvalid" &&
+-	git tag -l "foo*" >actual &&
+-	cat >expect <<-\EOF &&
+-	foo1.10
+-	foo1.3
+-	foo1.6
+-	EOF
+-	test_cmp expect actual
++	test_must_fail git tag -l "foo*"
+ '
+ 
+ test_expect_success 'version sort with prerelease reordering' '
 -- 
 2.5.1
