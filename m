@@ -1,73 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bloom filters for have/want negotiation
-Date: Fri, 11 Sep 2015 14:42:02 -0700
-Message-ID: <xmqqfv2kzl91.fsf@gitster.mtv.corp.google.com>
-References: <55F343F5.6010903@alum.mit.edu>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v7 2/3] worktree: move/refactor find_shared_symref from branch.c
+Date: Fri, 11 Sep 2015 17:43:25 -0400
+Message-ID: <CANoM8SUGmb=fSFqF4DTuW2F5oPVaim-=SP76rqwwqtzcsNQf=g@mail.gmail.com>
+References: <1441402769-35897-1-git-send-email-rappazzo@gmail.com>
+ <1441402769-35897-3-git-send-email-rappazzo@gmail.com> <xmqqk2rx0w54.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git discussion list <git@vger.kernel.org>,
-	Wilhelm Bierbaum <bierbaum@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Sep 11 23:42:13 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	David Turner <dturner@twopensource.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 23:43:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaW5C-0000Jb-TA
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 23:42:11 +0200
+	id 1ZaW6n-0002Zc-I9
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 23:43:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753978AbbIKVmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 17:42:06 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:36144 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752853AbbIKVmF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2015 17:42:05 -0400
-Received: by padhk3 with SMTP id hk3so85178848pad.3
-        for <git@vger.kernel.org>; Fri, 11 Sep 2015 14:42:04 -0700 (PDT)
+	id S1753976AbbIKVnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2015 17:43:46 -0400
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:33016 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752820AbbIKVnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2015 17:43:45 -0400
+Received: by vkgd64 with SMTP id d64so32947956vkg.0
+        for <git@vger.kernel.org>; Fri, 11 Sep 2015 14:43:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=axW3taykmlEYi/DaahCA0j/OYWsdWPsqcZTfsqAKclw=;
-        b=siXU1YyQ8w4tf/MZ2tP/TJRB9Xm3MGtGE9Jttq0apeqQvFIIyWlCpzQ22GNjALAOMC
-         31QfvQDfiHJh+9MUawdloudfQIaveeZZdtHFNZpqy4ty1vaR1jdh7aMX6Kiy2fnVDHES
-         DKdZgFemtHEBLJAuVJ4l5KnVtjmv2OQSFus6O/L/0b3wF4podUvCfFRl7/hbI/+PJldq
-         rgJZb09szGfsee5iGcA5uJJIAxYZHFEmsoU2z6Z+B+blAJqedfoWf/CQOHs8+GC+5jm7
-         92gGmnrBp4W9L1eN1XJmEvGw2d96WOGIJACkaGXY1AZGcLIRNs3zKFG7a8xjj72IFi8b
-         xwXA==
-X-Received: by 10.67.15.36 with SMTP id fl4mr2027827pad.152.1442007724032;
-        Fri, 11 Sep 2015 14:42:04 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:7504:ea92:c75a:a933])
-        by smtp.gmail.com with ESMTPSA id ok4sm2136222pbb.65.2015.09.11.14.42.03
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 11 Sep 2015 14:42:03 -0700 (PDT)
-In-Reply-To: <55F343F5.6010903@alum.mit.edu> (Michael Haggerty's message of
-	"Fri, 11 Sep 2015 23:13:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HBmEfRyF6B0db8AaN0LZcSiIIE0Ukr19c79rxBSGYbA=;
+        b=Wz0iNFk3hMEm4nDECIZnWDLMOvlIFIg+yWXhxOvnMXgvK7nPZfRPXAfeQsANZep1ir
+         K9f42sROIH2n5IaaTgyuzAUKZKGkNOKKMcbK1oFXODzMJ7xaW3QXz34tiajdyIr5eO1V
+         g6euTfnP8pYnbztSaPjGTCuP7u4vZuqdaCghKGs0EcW3uTRhr1SeY2wc8vZJ7siBaKZz
+         idI6cUyCue7all1rc8fmkwx5Wxk6q3VX1Vl7v8DDnjqFz9hs3d7a3LfJE+uEA01TN8Lc
+         zw1O9PMRqvj3mh2QIX4KSX194bN80lxSKElqnMq9O043ZpFp/mSc158Jl+RQBXLeprPJ
+         EEng==
+X-Received: by 10.31.149.143 with SMTP id x137mr563925vkd.17.1442007824491;
+ Fri, 11 Sep 2015 14:43:44 -0700 (PDT)
+Received: by 10.103.80.201 with HTTP; Fri, 11 Sep 2015 14:43:25 -0700 (PDT)
+In-Reply-To: <xmqqk2rx0w54.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277699>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Fri, Sep 11, 2015 at 12:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Michael Rappazzo <rappazzo@gmail.com> writes:
+>
+>> The code formerly in branch.c was largely the basis of the
+>> get_worktree_list implementation is now moved to worktree.c,
+>> and the find_shared_symref implementation has been refactored
+>> to use get_worktree_list
+>>
+>
+> Copying the bulk of the function in 1/3 and then removing the
+> original here made it somewhat hard to compare what got changed in
+> the implementation.
+>
+> I _think_ the code structure in the end result is more or less
+> right, though.
 
-> 1. The server advertises the references that it has in the way that it
-> is currently done.
-> 2. The client advertises the objects that it has (or some subset of
-> them; see below) via a Bloom filter.
-> 3. The server sends the client the packfile that results from assuming
-> that the Bloom filter is giving correct answers. (This might mean that
-> too few objects are sent to the client.)
-
-Wouldn't this end up sending objects the server has (perhaps
-reachable from a branch that is not advertised to the client) that
-is not reachable from the tips the client asked upon a false hit?
-If so, that has security ramifications for servers who restrict what
-you can download based on who you are (and which branches are
-supposed to be visible to you).
-
-Using bloom filter (perhaps invertible ones) to identify what the
-receiving end lacks is certainly an intriguing approach, though.
+Should I squash these first two commits together in the next series?
