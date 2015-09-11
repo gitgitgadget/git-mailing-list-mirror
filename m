@@ -1,53 +1,53 @@
 From: Karthik Nayak <karthik.188@gmail.com>
 Subject: [PATCH v17 06/14] ref-filter: implement an `align` atom
-Date: Fri, 11 Sep 2015 20:31:59 +0530
-Message-ID: <1441983719-32733-1-git-send-email-Karthik.188@gmail.com>
-References: <1441900110-4015-6-git-send-email-Karthik.188@gmail.com>
+Date: Fri, 11 Sep 2015 20:33:07 +0530
+Message-ID: <1441983787-407-1-git-send-email-Karthik.188@gmail.com>
+References: <1441900110-4015-7-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
 	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 11 17:02:02 2015
+X-From: git-owner@vger.kernel.org Fri Sep 11 17:03:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaPpu-0006uL-K9
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 17:01:59 +0200
+	id 1ZaPr2-000862-Ix
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 17:03:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753157AbbIKPBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 11:01:54 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:33088 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752794AbbIKPBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2015 11:01:53 -0400
-Received: by pacex6 with SMTP id ex6so77485748pac.0
-        for <git@vger.kernel.org>; Fri, 11 Sep 2015 08:01:53 -0700 (PDT)
+	id S1752396AbbIKPDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2015 11:03:03 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:35545 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751514AbbIKPDC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2015 11:03:02 -0400
+Received: by pacfv12 with SMTP id fv12so78690780pac.2
+        for <git@vger.kernel.org>; Fri, 11 Sep 2015 08:03:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
         bh=G0iJ9tb5IeBWSYJM6yF8gF3bBaGUNNalVvr6GEO76Jk=;
-        b=C5M29eA20qdk2ANI4Cej7Bf05dGdKel027r7kRNYmUVXMVaqjc8w0XWpwJQV5rJzBW
-         PieGHM82tE1lKbnPdwmIHvhlKG+nxizf8mywka6b3GCA/CjIDkpGTc7qHcz83JoHVwsy
-         SFdZVGJBjQUgTmxXN10HsO1ibff8vDAOzk84FpsDbr0Yk6ur0PwpvXJbVfs9BlgBS7hF
-         zTslistQMypdpJizWEdDzZi7A4oyQWdkptJ9rHNFAuxjOQqgEuK66C05mS/NapGR/0BF
-         HrnTR0WZcZwNGyoEr5Mf1kS09zQKJUqogvlmOrEizbI0jty1CZi3lgP4RPAcvhD9WAEU
-         eTOg==
-X-Received: by 10.66.157.137 with SMTP id wm9mr38654809pab.30.1441983711825;
-        Fri, 11 Sep 2015 08:01:51 -0700 (PDT)
+        b=UvJ+5akkJMlrRgIW2klFZUJO/oJVeAVPDJ+udfbyOYCzcx37lPoUsYefydw/XwauDy
+         Y5NCIyhNLjwez/iW53XguRzYTpke3GuADToqmImw5zle0vAoqygeYrAQ7cYZFwG3q3Q4
+         gSfXlvqMdhFBH7mI1YY0i3iAy4lQ17gSJ9V/6d/6SENEB2V5oxy1hvurp3dLBN0W/vMC
+         lcT7nUNok7HpMp2CZSj2tPaDKEqWuqibMaadq0ZI/jCTUBJ0VG91S/C4Rjvc8ZUhA2pM
+         unZaj9wWt+DogCCNxSypD18mAfAHjKW65hcVK+DiXnGNB/uCM08EYGNYymC5ctTpzcg+
+         nCFg==
+X-Received: by 10.68.57.143 with SMTP id i15mr97388566pbq.104.1441983779769;
+        Fri, 11 Sep 2015 08:02:59 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id le8sm916023pbc.24.2015.09.11.08.01.48
+        by smtp.gmail.com with ESMTPSA id df1sm923188pbb.21.2015.09.11.08.02.57
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 11 Sep 2015 08:01:50 -0700 (PDT)
+        Fri, 11 Sep 2015 08:02:59 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1441900110-4015-6-git-send-email-Karthik.188@gmail.com>
+In-Reply-To: <1441900110-4015-7-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277662>
 
 Implement an `align` atom which left-, middle-, or right-aligns the
 content between %(align:...) and %(end).
