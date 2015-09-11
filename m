@@ -1,79 +1,122 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v17 00/14] port tag.c to use ref-filter APIs
-Date: Fri, 11 Sep 2015 20:38:16 +0530
-Message-ID: <CAOLa=ZQppSg0-kc5nCfRYfHMoD5ehTTOigKz48G01vn1Mn=FTw@mail.gmail.com>
-References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com> <vpqr3m6nrf9.fsf@scolette.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Sep 11 17:08:53 2015
+From: Josef Kufner <josef@kufner.cz>
+Subject: [PATCH] Pass graph width to pretty formatting, so '%>|' can work properly
+Date: Fri, 11 Sep 2015 15:47:40 +0200
+Message-ID: <1441979260-1494-1-git-send-email-josef@kufner.cz>
+Cc: Josef Kufner <josef@kufner.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 11 17:12:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaPwZ-0005lF-V3
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 17:08:52 +0200
+	id 1ZaQ05-00015E-0c
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 17:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752227AbbIKPIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 11:08:47 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:35363 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751907AbbIKPIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2015 11:08:47 -0400
-Received: by obbzf10 with SMTP id zf10so7324000obb.2
-        for <git@vger.kernel.org>; Fri, 11 Sep 2015 08:08:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=mh/AxWNMTZo+xYXYRwPw3dF+rMAp12JGAE8plIBOo2o=;
-        b=0h3Ee1BjASP6D+6wF1Wmj3Z8qg+4PskjV1+f0STUXBr7ovbDaJ+Cx1C/s0FjNYR4N9
-         qusnjBZi9LJSpwE/KZI7gQEKOo5qvXPG/HckuAdSDtWNxtqbEM92HiDGqS+g+CHhY1hf
-         6rm+wWeiwUTgPoVJR13OFmTM0LoTmbDgogjS8Pv0f2X3S3fQSde6ZrNJp2B35oK8f+Ti
-         zDG8QWHRoRYv1nA9YdYuaxfUtTyOk0fKTCaHvW3SclP859LYACvunb//oDlyOz3il/sg
-         3v1Kk39X2AIO+DOK6fmeS5tdAvm0PlZS0X2wbaZQstpEAzJ0hD2tyL7/DQG+Lg/s41+D
-         5Nmg==
-X-Received: by 10.182.214.105 with SMTP id nz9mr159092obc.41.1441984126272;
- Fri, 11 Sep 2015 08:08:46 -0700 (PDT)
-Received: by 10.182.59.15 with HTTP; Fri, 11 Sep 2015 08:08:16 -0700 (PDT)
-In-Reply-To: <vpqr3m6nrf9.fsf@scolette.imag.fr>
+	id S1752657AbbIKPMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2015 11:12:24 -0400
+Received: from ip-94-112-209-113.net.upcbroadband.cz ([94.112.209.113]:43086
+	"EHLO delfinek.frozen-doe.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751553AbbIKPMX (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Sep 2015 11:12:23 -0400
+X-Greylist: delayed 5062 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Sep 2015 11:12:23 EDT
+Received: by delfinek.frozen-doe.net (Postfix, from userid 1000)
+	id EB23CC53B25; Fri, 11 Sep 2015 15:47:53 +0200 (CEST)
+X-Mailer: git-send-email 2.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277667>
 
-On Thu, Sep 10, 2015 at 10:27 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> This is part of the series of unifying the code used by
->> "git tag -l, git branch -l, git for-each-ref".
->>
->> The previous version can be found here (version 16):
->> article.gmane.org/gmane.comp.version-control.git/277394
->>
->> Changes in this version:
->> * The arguments of the %(align) atom are interchangeable.
->> * Small grammatical changes.
->> * Small changes in the tests to reflect changes in the align
->> atom code.
->
-> Clearly, we're almost there. I did a few minor remarks. I suggest
-> (admitedly, Eric suggested of-list to suggest ;-) ) that you reply to
-> them by re-sending only individual patches that changed (replying to the
-> original patch) so that we can check the new patches individually. I
-> think we can do the finishing touches for each patch in a subthread of
-> this patch.
->
+Pass graph width to pretty formatting function, so it can handle
+'%>|(N)' paddings correctly when --graph option is used.
 
-I replied with suggested changes by you and Junio.
-Let me know if any other changes to be made :)
+Example:
+  git log --all --graph --pretty='format: [%>|(20)%h] %ar%d'
 
+  All commit hashes should be aligned at 20th column from edge of the
+  terminal, not from the edge of the graph.
+
+Signed-off-by: Josef Kufner <josef@kufner.cz>
+---
+ commit.h   | 1 +
+ graph.c    | 7 +++++++
+ graph.h    | 5 +++++
+ log-tree.c | 2 ++
+ pretty.c   | 1 +
+ 5 files changed, 16 insertions(+)
+
+diff --git a/commit.h b/commit.h
+index 5d58be0..0a9a707 100644
+--- a/commit.h
++++ b/commit.h
+@@ -160,6 +160,7 @@ struct pretty_print_context {
+ 	 * should not be counted on by callers.
+ 	 */
+ 	struct string_list in_body_headers;
++	int graph_width;
+ };
+ 
+ struct userformat_want {
+diff --git a/graph.c b/graph.c
+index c25a09a..4802411 100644
+--- a/graph.c
++++ b/graph.c
+@@ -671,6 +671,13 @@ static void graph_output_padding_line(struct git_graph *graph,
+ 	graph_pad_horizontally(graph, sb, graph->num_new_columns * 2);
+ }
+ 
++
++int graph_width(struct git_graph *graph)
++{
++	return graph->width;
++}
++
++
+ static void graph_output_skip_line(struct git_graph *graph, struct strbuf *sb)
+ {
+ 	/*
+diff --git a/graph.h b/graph.h
+index 0be62bd..3f48c19 100644
+--- a/graph.h
++++ b/graph.h
+@@ -68,6 +68,11 @@ int graph_next_line(struct git_graph *graph, struct strbuf *sb);
+ 
+ 
+ /*
++ * Return current width of the graph in on-screen characters.
++ */
++int graph_width(struct git_graph *graph);
++
++/*
+  * graph_show_*: helper functions for printing to stdout
+  */
+ 
+diff --git a/log-tree.c b/log-tree.c
+index 7b1b57a..08fd5b6 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -686,6 +686,8 @@ void show_log(struct rev_info *opt)
+ 	ctx.output_encoding = get_log_output_encoding();
+ 	if (opt->from_ident.mail_begin && opt->from_ident.name_begin)
+ 		ctx.from_ident = &opt->from_ident;
++	if (opt->graph)
++		ctx.graph_width = graph_width(opt->graph);
+ 	pretty_print_commit(&ctx, commit, &msgbuf);
+ 
+ 	if (opt->add_signoff)
+diff --git a/pretty.c b/pretty.c
+index 151c2ae..f1cf9e2 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1297,6 +1297,7 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+ 		if (!start)
+ 			start = sb->buf;
+ 		occupied = utf8_strnwidth(start, -1, 1);
++		occupied += c->pretty_ctx->graph_width;
+ 		padding = (-padding) - occupied;
+ 	}
+ 	while (1) {
 -- 
-Regards,
-Karthik Nayak
+2.5.1
