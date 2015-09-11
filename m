@@ -1,97 +1,104 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] Makefile: use SHELL_PATH when running generate-cmdlist.sh
-Date: Thu, 10 Sep 2015 20:35:07 -0400
-Message-ID: <CAPig+cTQqVxo7qmFCu2h98+g2hrXogN785Wv1GRssHBtSm8VLA@mail.gmail.com>
-References: <1441928227-830-1-git-send-email-asedeno@mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 0/2] Submodule object path
+Date: Thu, 10 Sep 2015 18:10:13 -0700
+Message-ID: <xmqqoah9222y.fsf@gitster.mtv.corp.google.com>
+References: <1438725925-3689-1-git-send-email-max@max630.net>
+	<1441922231-18270-1-git-send-email-max@max630.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-X-From: git-owner@vger.kernel.org Fri Sep 11 02:35:49 2015
+Content-Type: text/plain
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, Duy Nguyen <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Fri Sep 11 03:10:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaCJe-0000SO-Cb
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 02:35:46 +0200
+	id 1ZaCrT-0002hN-OO
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 03:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbbIKAfI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2015 20:35:08 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:35173 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066AbbIKAfH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2015 20:35:07 -0400
-Received: by ykdu9 with SMTP id u9so76703315ykd.2
-        for <git@vger.kernel.org>; Thu, 10 Sep 2015 17:35:07 -0700 (PDT)
+	id S1751069AbbIKBKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2015 21:10:17 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:33266 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750827AbbIKBKP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2015 21:10:15 -0400
+Received: by pacex6 with SMTP id ex6so58520132pac.0
+        for <git@vger.kernel.org>; Thu, 10 Sep 2015 18:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=VaeR7ykk/eOWSWS1Bvmho8I8EloYJz378X/W9SeKohM=;
-        b=VvaEBWCy5yAi5NFZMrOQOJUzZ5BqQLDYDe212vaZ7tS/oe9WJ3wEkTK7Jls/GG4Sva
-         eZCE+lqJnPjo/f9kfIbxg75TOux60eiMrn7bnsXyFmJSAqPvWrZvOeU1m0aQAzq88W9e
-         H/pN1tZwcWQ3b+5Kb3l8WWDantBLhElthLaPudyzsvKWvRfyzRYYYex5uD98IiwZ0TL7
-         6YvqioPXvCKw15wLovTlmglLmoCdM4Gf7uYk7PnqUYFG9/t2HeZ/PAttIwZZquj8/9Ds
-         hJcGIxqq/608TVOPm1fWMafiHM893q5dOlVBGHt85iF5oNEMkpD4QLK+hKihOJAqgjVc
-         o/IQ==
-X-Received: by 10.129.70.215 with SMTP id t206mr51084878ywa.4.1441931707050;
- Thu, 10 Sep 2015 17:35:07 -0700 (PDT)
-Received: by 10.37.36.145 with HTTP; Thu, 10 Sep 2015 17:35:07 -0700 (PDT)
-In-Reply-To: <1441928227-830-1-git-send-email-asedeno@mit.edu>
-X-Google-Sender-Auth: 4y6fO_hzCAbJRo6ozzUDxOmA2UI
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=dvCTcV4JH+3EVdyBbmjcIRAZoyo9cTr9stlKq+1HHYA=;
+        b=RDTGCP03ZRY+CftAVQXLLjgDAXgQOzOzAeWbDTrurdADV/aNW7BFJp7VbqZFtxfBFn
+         1C995TqxTviZ4c3QMg/r/VvuHWqkNOG8kEhKjv3yZTQQY7ZpRgYxeYlxCUpFpagPhbiv
+         y9pQom5N4tJ18rkBVoX8+1KMzc++9iwIKtw4uJByNalDToA+txgYP1v3zTqV5k1zl4DA
+         xq31ilg/w9x2pPZmwvqBVmCBz73j+uxHXoXAYsR4uak+JB8/JD6AuYWIKX0uV88nZHAi
+         zyHivBnHOhitdwyoW8TD6limsNkUO+4M5qF42xPKlb8fSCu5RCFWemoquZKcsZs+pWcf
+         cPlw==
+X-Received: by 10.66.189.194 with SMTP id gk2mr81288168pac.4.1441933815155;
+        Thu, 10 Sep 2015 18:10:15 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:7504:ea92:c75a:a933])
+        by smtp.gmail.com with ESMTPSA id nv2sm14269735pbb.83.2015.09.10.18.10.14
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 10 Sep 2015 18:10:14 -0700 (PDT)
+In-Reply-To: <1441922231-18270-1-git-send-email-max@max630.net> (Max
+	Kirillov's message of "Fri, 11 Sep 2015 00:57:09 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277650>
 
-On Thu, Sep 10, 2015 at 7:37 PM, Alejandro R. Sede=C3=B1o <asedeno@mit.=
-edu> wrote:
-> Some /bin/sh implementations can't deal with $() arithmetic and comma=
-nd
-> substitution. If we already have a better shell on hand, we should us=
-e it.
+Max Kirillov <max@max630.net> writes:
+
+> * There are more conflicts in pu with [1], not sure
+>   what should I do about it.
 >
-> Fixes the build on SunOS, probably others.
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/276628
 
-Makes sense. 527ec39^:generate-cmdlist.sh didn't use either of these
-features, whereas 82aec45:generate-cmdlist.sh does, and older
-(pre-POSIX) shells lacked these features. Thanks.
+I do not think conflicts got any worse than before.  Between the
+result of merging this round and the previous one to 'pu', the only
+difference in path.c that conflicts with [1] I see is essentially a
+no-op (the diff attached at the end of this essage).
 
-I'd probably re-word the commit message slightly to mention $(())
-arithmetic expansion, not $(), and to state specifically $(...)
-command substitution since saying only "command substitution" is
-ambiguous considering that backtick `...` command substitution long
-predates POSIX. Perhaps like this:
+When I push the updated 'pu' out, could you please check
 
-    Non-POSIX shells, such as /bin/sh on SunOS, do not support
-    $((...)) arithmetic expansion or $(...) command substitution
-    needed by generate-cmdlist.sh. Therefore, use the POSIX shell
-    $(SHELL_PATH) when running generate-cmdlist.sh.
+    $ git log --oneline --first-parent origin/master..origin/pu
 
-Other than that:
+to find the place your topic is merged (I am planning to make it
+"3af7cd6 Merge branch 'mk/submodule-gitdir-path' into pu", but
+please do not rely on the exact commit object name; I may have to
+redo the integration if I find some breakages caused by this or any
+other topic), and then eyeballing (call that merge $m) output of
 
-Acked-by: Eric Sunshine <sunshine@sunshineco.com>
+    $ git diff $m^ $m
 
-> Signed-off-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
-> ---
-> diff --git a/Makefile b/Makefile
-> index ce0cfe2..6301cc8 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1699,7 +1699,7 @@ $(BUILT_INS): git$X
->  common-cmds.h: generate-cmdlist.sh command-list.txt
->
->  common-cmds.h: $(wildcard Documentation/git-*.txt)
-> -       $(QUIET_GEN)./generate-cmdlist.sh command-list.txt >$@+ && mv=
- $@+ $@
-> +       $(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh command-list.=
-txt >$@+ && mv $@+ $@
->
->  SCRIPT_DEFINES =3D $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
->         $(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_=
-PATH_SQ):\
-> --
-> 2.5.2
+to see if there is anything I screwed up?
+
+Thanks.
+
+
+diff --git a/path.c b/path.c
+index 776d8f0..2725bc3 100644
+--- a/path.c
++++ b/path.c
+@@ -466,11 +466,11 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
+ 
+ 	strbuf_vaddf(buf, fmt, args);
+ 
+-	if (get_common_dir_noenv(&git_submodule_common_dir, git_submodule_dir.buf)) {
++	if (get_common_dir_noenv(&git_submodule_common_dir, git_submodule_dir.buf))
+ 		update_common_dir(buf, git_submodule_dir.len, git_submodule_common_dir.buf);
+-	}
+ 
+ 	strbuf_cleanup_path(buf);
++
+ 	strbuf_release(&git_submodule_dir);
+ 	strbuf_release(&git_submodule_common_dir);
+ }
