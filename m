@@ -1,94 +1,109 @@
-From: Josef Kufner <josef@kufner.cz>
-Subject: Re: [PATCH] Pass graph width to pretty formatting, so '%>|' can work
- properly
-Date: Fri, 11 Sep 2015 19:52:36 +0200
-Message-ID: <55F314E4.40408@kufner.cz>
-References: <1441979260-1494-1-git-send-email-josef@kufner.cz>
- <xmqq1te428xl.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v17 00/14] port tag.c to use ref-filter APIs
+Date: Fri, 11 Sep 2015 11:05:17 -0700
+Message-ID: <xmqqwpvwzvaa.fsf@gitster.mtv.corp.google.com>
+References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
+	<vpqr3m6nrf9.fsf@scolette.imag.fr>
+	<CAOLa=ZQppSg0-kc5nCfRYfHMoD5ehTTOigKz48G01vn1Mn=FTw@mail.gmail.com>
+	<CAPig+cTmnOz899k_xySb1Q-SeFctOrs6fnJJN=qc731nXmXwkw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="cCG1PUvA0qsgBlQ7gBjQc5VRW5vKipXs8"
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 11 20:01:30 2015
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 20:05:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaSda-0002Pc-BF
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 20:01:26 +0200
+	id 1ZaShQ-0006xT-Ll
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 20:05:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753740AbbIKSBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 14:01:19 -0400
-Received: from max.feld.cvut.cz ([147.32.192.36]:49338 "EHLO max.feld.cvut.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753693AbbIKSBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2015 14:01:18 -0400
-X-Greylist: delayed 514 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Sep 2015 14:01:17 EDT
-Received: from localhost (unknown [192.168.200.7])
-	by max.feld.cvut.cz (Postfix) with ESMTP id ED8EB19F4A6C;
-	Fri, 11 Sep 2015 19:52:41 +0200 (CEST)
-X-Virus-Scanned: IMAP STYX AMAVIS
-Received: from max.feld.cvut.cz ([192.168.200.1])
-	by localhost (styx.feld.cvut.cz [192.168.200.7]) (amavisd-new, port 10044)
-	with ESMTP id Ia5hxySfpEAz; Fri, 11 Sep 2015 19:52:40 +0200 (CEST)
-Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 94BDC19F4A69;
-	Fri, 11 Sep 2015 19:52:39 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Icedove/38.1.0
-In-Reply-To: <xmqq1te428xl.fsf@gitster.mtv.corp.google.com>
+	id S1751514AbbIKSFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2015 14:05:20 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35857 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751017AbbIKSFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2015 14:05:19 -0400
+Received: by padhk3 with SMTP id hk3so81008719pad.3
+        for <git@vger.kernel.org>; Fri, 11 Sep 2015 11:05:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=s+4au2RjPYTDNDnOym+Q3pehMx/b5JfgCM69vVWZy0M=;
+        b=sRng0idMl05XKeIb1AyZQGWELkfOB9uXqltM8TFOX7fxVhLaJcBu3IPER3d9j+jlKt
+         3Hcv+9P/ymuTPHmE17dKAO6fY+lkyNFp57vz1v1cc0llUT+4wtqu3dTOOshAET9nXknx
+         NTTFcP5SQZwpY5bb83B386NudiOY13fjGPrIXTLEnFhgjedUITaiJ5Pn2TyxW3S0K7+g
+         tycKPfv4sz513AhW0TXx09Sz++o7JOYowV+dalZhBfXWAqhqY17EtjvJQKAjAOfm0g9G
+         Qb56RVVEnSGWlzONt/Xe+EpfKDvZLmu8NqwVmMs7zJ4NCKd5X+eAE3yU/xbrl3b5l/NQ
+         QiLg==
+X-Received: by 10.68.69.70 with SMTP id c6mr239906pbu.28.1441994719247;
+        Fri, 11 Sep 2015 11:05:19 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:7504:ea92:c75a:a933])
+        by smtp.gmail.com with ESMTPSA id iv2sm1541704pbd.88.2015.09.11.11.05.17
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 11 Sep 2015 11:05:18 -0700 (PDT)
+In-Reply-To: <CAPig+cTmnOz899k_xySb1Q-SeFctOrs6fnJJN=qc731nXmXwkw@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 11 Sep 2015 13:30:07 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277687>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---cCG1PUvA0qsgBlQ7gBjQc5VRW5vKipXs8
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Ok, there are the two tests (see the second e-mail). It should cover two
-cases where something may go wrong.
+> In addition to a link to the previous round and an interdiff, it would
+> be helpful to reviewers for you to annotate each patch (in the
+> commentary are below the "---" line after your sign-off) with a
+> description of the changes in that patch since the previous round in
+> order to focus the reviewer's attention (where it needs to be) on the
+> latest changes.
 
-
-Junio C Hamano wrote, on 11.9.2015 18:54:
-> This "feels" correct ;-), but let me summon Duy who did the %><
-> padding at around a5752342 (pretty: support padding placeholders, %<
-> %> and %><, 2013-04-19) for an extra set of eyes.
->=20
-> Care to add a test or two while at it?
->=20
-> Thanks. =20
->=20
+I may have got confused by seeing the same v17 (if they were marked
+as v18 or v17bis, it would have been easier to make sure I didn't
+miss anything), but here is the difference between what I had last
+night and what I queued.  The removal of !body[1] and flipping the
+order of to_free/format are not seen because I already had a local
+fix-up SQUASH??? commits queued in the yesterday's batch.
 
 
---cCG1PUvA0qsgBlQ7gBjQc5VRW5vKipXs8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+$ git diff --stat -p kn/for-each-tag@{4.hours} kn/for-each-tag
+ ref-filter.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJV8xTkAAoJEN5YZWvcKoxvZbEP/RmZGnycwfzDZYwkSbRhHR3v
-wKgk8D7KdWM9HECpVlB+9EVLAXkGBpXCWDGAt9X9op8egDtJJi5+07SEgSLgRq7q
-Yx6zh8gAfs8yGfrvU/AqZkdXFsUCH7Xbyo6dqK0SUFmjapd8zVfkG2gsebljr7r5
-eXmGZm5pIwGEX/DK5nGJFJ8WBiilTPYSAZAcPS9ebhrwERz68CI5toHadsG+7v/2
-NIFRnFo3uknrIJOZdOZKzufLDtZ4vz2gMu0XrRzsPZVWuKtDiVK1Hh4kWP0xfiOq
-jqZoW3ibOpu2+Lp+q3eVGADn1ZJY9MegfYAar2CHnzVTT8nUzOJTg6YKhTmBIpfC
-DZWHoFGeP8LheW+GWPJB09Xw/sfAJeiMuxJxoEau6nYDMyXwW60fsvxYkEknHeiI
-JQ9Mqn71I45x4z0SK8X3C5D9lW+Jr6diaCDABAHIm/7tPl/wH771flMhgX0T+iqJ
-uaQenCol+kHkCs8rTp8FCWh6BdIdX/HDTLGwtEZqG71R4JuL/4rARs9af/k7U85N
-HhfB/DTxB2LhrhFMzHYAf9odIwSG58gZ4NJOQDvr733WHHqn50beZpdHgTpn5MFu
-KniYjQa8u5/0tPNFqASHCvNjQxN53sH19yzrHUoNXP3VhU1crPqO7yzMGCvXhdBC
-kuHmN5dtTRSV1qGz4tPO
-=cL8V
------END PGP SIGNATURE-----
-
---cCG1PUvA0qsgBlQ7gBjQc5VRW5vKipXs8--
+diff --git a/ref-filter.c b/ref-filter.c
+index 226e94d..fd839ac 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -47,9 +47,6 @@ static struct {
+ 	{ "subject" },
+ 	{ "body" },
+ 	{ "contents" },
+-	{ "contents:subject" },
+-	{ "contents:body" },
+-	{ "contents:signature" },
+ 	{ "upstream" },
+ 	{ "push" },
+ 	{ "symref" },
+@@ -58,7 +55,6 @@ static struct {
+ 	{ "color" },
+ 	{ "align" },
+ 	{ "end" },
+-	{ "contents:lines" },
+ };
+ 
+ #define REF_FORMATTING_STATE_INIT  { 0, NULL }
+@@ -899,6 +895,7 @@ static void populate_value(struct ref_array_item *ref)
+ 			align->position = ALIGN_LEFT;
+ 
+ 			while (*s) {
++				/*  Strip trailing comma */
+ 				if (s[1])
+ 					strbuf_setlen(s[0], s[0]->len - 1);
+ 				if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
