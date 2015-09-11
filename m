@@ -1,123 +1,82 @@
-From: Josef Kufner <josef@kufner.cz>
-Subject: [PATCH 1/3] pretty: Pass graph width to pretty formatting for use in '%>|(N)'
-Date: Sat, 12 Sep 2015 01:25:11 +0200
-Message-ID: <1442013913-2970-1-git-send-email-josef@kufner.cz>
-References: <xmqqk2rwzlhi.fsf@gitster.mtv.corp.google.com>
-Cc: git@vger.kernel.org, josef@kufner.cz, sunshine@sunshineco.com
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Sep 12 01:25:41 2015
+From: Vitali Lovich <vlovich@gmail.com>
+Subject: Re: --progress option for git submodule update?
+Date: Fri, 11 Sep 2015 16:34:21 -0700
+Message-ID: <8B026E5E-5303-45EC-984D-3F944DB6F2DB@gmail.com>
+References: <88E7FC00-9A87-4E20-89D8-4BF5997F7B07@gmail.com>
+ <CAGZ79kYRYqVE35_i5+DvqOj7G6LvhBQgsQok5gabLY6x20F80w@mail.gmail.com>
+ <68DDAE70-85F2-4873-BDBD-373985A49815@gmail.com>
+ <CAGZ79kbH+917v6pmCC3w4rovEVarHp+w1tYthMwkMU2hrq=VdQ@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.0 \(3083\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Sep 12 01:34:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaXhL-0007ZK-QN
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 01:25:40 +0200
+	id 1ZaXpr-0003EE-Fu
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 01:34:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754420AbbIKXZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 19:25:30 -0400
-Received: from ip-94-112-209-113.net.upcbroadband.cz ([94.112.209.113]:41422
-	"EHLO delfinek.frozen-doe.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754002AbbIKXZ3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Sep 2015 19:25:29 -0400
-Received: by delfinek.frozen-doe.net (Postfix, from userid 1000)
-	id 55544C53B3B; Sat, 12 Sep 2015 01:25:26 +0200 (CEST)
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <xmqqk2rwzlhi.fsf@gitster.mtv.corp.google.com>
+	id S1754083AbbIKXeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2015 19:34:23 -0400
+Received: from mail-out4.apple.com ([17.151.62.26]:49448 "EHLO
+	mail-in4.apple.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752691AbbIKXeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2015 19:34:22 -0400
+Received: from relay6.apple.com (relay6.apple.com [17.128.113.90])
+	by mail-in4.apple.com (Apple Secure Mail Relay) with SMTP id 70.12.13836.8F463F55; Fri, 11 Sep 2015 16:34:16 -0700 (PDT)
+X-AuditID: 11973e12-f79f96d00000360c-40-55f364f80c4b
+Received: from marigold.apple.com (marigold.apple.com [17.128.115.132])
+	(using TLS with cipher RC4-MD5 (128/128 bits))
+	(Client did not present a certificate)
+	by relay6.apple.com (Apple SCV relay) with SMTP id 53.48.22881.8F463F55; Fri, 11 Sep 2015 16:34:16 -0700 (PDT)
+Received: from vldesktop.apple.com ([17.214.197.172])
+ by marigold.apple.com (Oracle Communications Messaging Server 7.0.5.30.0 64bit
+ (built Oct 22 2013)) with ESMTPSA id <0NUJ006Q9DH4L910@marigold.apple.com> for
+ git@vger.kernel.org; Fri, 11 Sep 2015 16:34:16 -0700 (PDT)
+In-reply-to: <CAGZ79kbH+917v6pmCC3w4rovEVarHp+w1tYthMwkMU2hrq=VdQ@mail.gmail.com>
+X-Mailer: Apple Mail (2.3083)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFLMWRmVeSWpSXmKPExsUi2FAYpfsj5XOowYGNBhZdV7qZHBg9Pm+S
+	C2CM4rJJSc3JLEst0rdL4Mq4uGslY8F3loqe/e+ZGhi/MXcxcnBICJhIvJxe28XICWSKSVy4
+	t54NxBYS2Mso8f6tN0zJpyPSXYxcQOFJTBI93y5A1UxhkrjSxwFiCwtISKy8cZgdxGYW0JJY
+	v/M4E4jNK6An0bxxAjtEjYXE8U3HmUFsNgF1iS+tM8HinALBEvtXnwSLswioSjw4PYcVYo6+
+	xIf+JjYIW15i85q3zBAzbSQ2TDjMCnHQX0aJjSsegBWJCKhJzFw1mw3iaFmJadviQWokBH6y
+	Skw/M5V1AqPILCT3zUJy3ywkOxYwMq9iFMpNzMzRzcwz0UssKMhJ1UvOz93ECArs6XZCOxhP
+	rbI6xCjAwajEw2uh+ilUiDWxrLgy9xCjNAeLkjjvdgOgkEB6YklqdmpqQWpRfFFpTmrxIUYm
+	Dk6pBsbK5UmSEjMOCL7PjPR1SVm4J2UJ/4wdNpOX7Y38z9u3UThC6Y5t/wrvG+UTe0+6z1ad
+	0rJGNKrC8nV48TPDRZG2psceLnw6/+nx+Y6G31Ra56urWBw7I3/Z4HxH1K/ABZcvLtv/vPB4
+	K//FUqfVW39c1lTn8lupE8ZzlD3YdJ8k6+eFvNOYZrorsRRnJBpqMRcVJwIAOO+Sok0CAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPLMWRmVeSWpSXmKPExsUi2FDcovsj5XOoweeNuhZdV7qZHBg9Pm+S
+	C2CM4rJJSc3JLEst0rdL4Mq4uGslY8F3loqe/e+ZGhi/MXcxcnBICJhIfDoi3cXICWSKSVy4
+	t56ti5GLQ0hgEpNEz7cLbCAJIYEpTBJX+jhAbGEBCYmVNw6zg9jMAloS63ceZwKxeQX0JJo3
+	TmCHqLGQOL7pODOIzSagLvGldSZYnFMgWGL/6pNgcRYBVYkHp+ewQszRl/jQ38QGYctLbF7z
+	lhlipo3EhgmHWSEO+ssosXHFA7AiEQE1iZmrZrNBPCArMW1b/ARGwVlITpqF5KRZSMYuYGRe
+	xShQlJqTWGmml1hQkJOql5yfu4kRHIyFUTsYG5ZbHWIU4GBU4uG1UP0UKsSaWFZcmXuIUYKD
+	WUmEt1j4c6gQb0piZVVqUX58UWlOavEhRmkOFiVx3gaRV6FCAumJJanZqakFqUUwWSYOTqkG
+	xsKfF4rvd7+ZqHv/lCP3gePv3lyT+P80S80ha0+HiriQsbjK7sb3bfae/fMPPJ7uWdl0eodn
+	jVzh5Adve3pUUiLXBj5TD428ui/l35xQg6SDF5v0HikuatvdKsQob3ap7xUbz1XNfcYsxje3
+	f5nomn34fMk2dt/dct7fql3WxDqtmLTqxTOJC0osxRmJhlrMRcWJAEq2FRVCAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277711>
 
-Pass graph width to pretty formatting, so N in '%>|(N)' includes columns
-consumed by graph rendered when --graph option is in use.
+& then do a git submodule init?
 
-Example:
-  git log --all --graph --pretty='format: [%>|(20)%h] %ar%d'
-
-  All commit hashes should be aligned at 20th column from edge of the
-  terminal, not from the edge of the graph.
-
-Signed-off-by: Josef Kufner <josef@kufner.cz>
----
- commit.h   | 1 +
- graph.c    | 7 +++++++
- graph.h    | 5 +++++
- log-tree.c | 2 ++
- pretty.c   | 1 +
- 5 files changed, 16 insertions(+)
-
-diff --git a/commit.h b/commit.h
-index 5d58be0..0a9a707 100644
---- a/commit.h
-+++ b/commit.h
-@@ -160,6 +160,7 @@ struct pretty_print_context {
- 	 * should not be counted on by callers.
- 	 */
- 	struct string_list in_body_headers;
-+	int graph_width;
- };
- 
- struct userformat_want {
-diff --git a/graph.c b/graph.c
-index c25a09a..4802411 100644
---- a/graph.c
-+++ b/graph.c
-@@ -671,6 +671,13 @@ static void graph_output_padding_line(struct git_graph *graph,
- 	graph_pad_horizontally(graph, sb, graph->num_new_columns * 2);
- }
- 
-+
-+int graph_width(struct git_graph *graph)
-+{
-+	return graph->width;
-+}
-+
-+
- static void graph_output_skip_line(struct git_graph *graph, struct strbuf *sb)
- {
- 	/*
-diff --git a/graph.h b/graph.h
-index 0be62bd..3f48c19 100644
---- a/graph.h
-+++ b/graph.h
-@@ -68,6 +68,11 @@ int graph_next_line(struct git_graph *graph, struct strbuf *sb);
- 
- 
- /*
-+ * Return current width of the graph in on-screen characters.
-+ */
-+int graph_width(struct git_graph *graph);
-+
-+/*
-  * graph_show_*: helper functions for printing to stdout
-  */
- 
-diff --git a/log-tree.c b/log-tree.c
-index 7b1b57a..08fd5b6 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -686,6 +686,8 @@ void show_log(struct rev_info *opt)
- 	ctx.output_encoding = get_log_output_encoding();
- 	if (opt->from_ident.mail_begin && opt->from_ident.name_begin)
- 		ctx.from_ident = &opt->from_ident;
-+	if (opt->graph)
-+		ctx.graph_width = graph_width(opt->graph);
- 	pretty_print_commit(&ctx, commit, &msgbuf);
- 
- 	if (opt->add_signoff)
-diff --git a/pretty.c b/pretty.c
-index 151c2ae..f1cf9e2 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1297,6 +1297,7 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
- 		if (!start)
- 			start = sb->buf;
- 		occupied = utf8_strnwidth(start, -1, 1);
-+		occupied += c->pretty_ctx->graph_width;
- 		padding = (-padding) - occupied;
- 	}
- 	while (1) {
--- 
-2.5.1
+> On Sep 11, 2015, at 4:05 PM, Stefan Beller <sbeller@google.com> wrote:
+> 
+> On Wed, Sep 9, 2015 at 8:06 PM, Vitali Lovich <vlovich@gmail.com> wrote:
+>>> Doh! I see what you're missing now after rereading the email closely.
+>>> You can add a --quiet option,
+>>> but --verbose or --progress just errors out, but you want that as a
+>>> possible argument for git clone
+>>> inside the git submodule update code.
+>> Yes exactly.
+> 
+> Instead of cloning with submodules, you could also clone only the
+> superproject and then do a git fetch --recuse-submodules=yes -v
+> instead soonish.
