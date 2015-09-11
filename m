@@ -1,84 +1,104 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: storing cover letter of a patch series?
-Date: Fri, 11 Sep 2015 20:30:04 +1200
-Message-ID: <CAFOYHZB3dKgi3rERHXuWynTjYQu+iPVdbWqmtoD+irYopfoRCg@mail.gmail.com>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] git-svn: parse authors file more leniently
+Date: Fri, 11 Sep 2015 10:36:55 +0200
+Message-ID: <55F292A7.1030809@drmicha.warpmail.net>
+References: <5613050.3arVUQYvEz@granit>
+ <03f07c11135aef9e04a26e5b1018d726ba2fab5d.1441887195.git.git@drmicha.warpmail.net>
+ <20150910180810.GA22112@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Simon Glass <sjg@chromium.org>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 11 10:30:19 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?Q?Till_Sch=c3=a4fer?= <till2.schaefer@tu-dortmund.de>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Sep 11 10:37:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaJio-0008EN-2G
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 10:30:14 +0200
+	id 1ZaJpY-0006m8-TD
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 10:37:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751916AbbIKIaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 04:30:07 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:37241 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751352AbbIKIaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2015 04:30:05 -0400
-Received: by igbni9 with SMTP id ni9so34161988igb.0
-        for <git@vger.kernel.org>; Fri, 11 Sep 2015 01:30:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=khIZxEv2unpncn4LtR8OmSdWBYjjqINuTEhUHQYOjsM=;
-        b=XkJRlowCKMX2AuR4P5ogdBmJWAZAXKXyiw8nnMcfogEQ6/bP1IkEwi8FZUts3pjmYZ
-         +IqVdTf/c7OPMTRmtq5bPaoF0ZV+2pEMbVR9DupedteLSc+vUH3nUEtaH9ra8fKb72YM
-         fYWlc8uDiANFU/8O2QZPQOvXNObZjdeLrwtcfaJzt39U2LNJQFzvwDby4b7fIJmQiv/e
-         YHbnZDyQS/nj1UQBqQzHmYeP/hTtqe/W3wBUcq98renQLeRfQ0YLqhXh8BSwzr2cTsyM
-         J3UVYgPgGQt7k43TB81nU7uK4ZIUvbPEr04IhkUfZvTM2UtcxRgkpgqg4TU57NoGdY0l
-         gWhA==
-X-Received: by 10.50.143.42 with SMTP id sb10mr915270igb.49.1441960204131;
- Fri, 11 Sep 2015 01:30:04 -0700 (PDT)
-Received: by 10.79.109.71 with HTTP; Fri, 11 Sep 2015 01:30:04 -0700 (PDT)
-In-Reply-To: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
+	id S1751388AbbIKIhA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Sep 2015 04:37:00 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:37757 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751170AbbIKIg6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Sep 2015 04:36:58 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 658B22049C
+	for <git@vger.kernel.org>; Fri, 11 Sep 2015 04:36:57 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute5.internal (MEProxy); Fri, 11 Sep 2015 04:36:57 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=vBk85gHfPwotIRyjOROQy/CwWr4=; b=P+pa0E
+	mOjoidaaiRqyNWYBPtDunZFzJGPk17VxZ7OMpMF43oTcPUi6pcVbL2BKsU/AV0TA
+	FN/4+hnkC5uDpz1SgaF+DQHzOmW6X/HR2Xh23Dk7+glzcx7o2w1fNfyQbTsj6OsD
+	eALq6OSd5dCwa2zI4+RakHmpPvZjRU9DffCkM=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=vBk85gHfPwotIRy
+	jOROQy/CwWr4=; b=Hv20EM9fdfdrtbWheKTrfSv/UjdVbS1ioFTuVP77rQvi0b6
+	bn+zYEe9iXNQQG0BWmtcrEQm1jucgMPVLp+QTMSAI0EHm4WDe3WnyrEWX06oK/Nc
+	IpfV61/dyZF8J13y8kSO0A3oTL0EMZRHQduZQlVq6sQU2xspzEgtC/3bDSUY=
+X-Sasl-enc: 279vi5e7+0lY3I///87CNEWETNT0ZieNVs3xA9HfmLYG 1441960617
+Received: from localhost.localdomain (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id C273FC00287;
+	Fri, 11 Sep 2015 04:36:56 -0400 (EDT)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <20150910180810.GA22112@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277654>
 
-On Fri, Sep 11, 2015 at 4:28 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> Hey,
->
-> does anyone know of any tricks for storing a cover letter for a patch
-> series inside of git somehow? I'd guess the only obvious way currently
-> is to store it at the top of the series as an empty commit.. but this
-> doesn't get emailed *as* the cover letter...
->
-> Is there some other way? Would others be interested in such a feature?
->
-> I get very annoyed when I've written a nice long patch cover letter in
-> vim before an email and then realize I should fix something else up,
-> or accidentally cancel it because I didn't use the write "To:" address
-> or something..
->
-> I really think it should be possible to store something somehow as a
-> blob that could be looked up later. Even if this was a slightly more
-> manual process that would be helpful to store the message inside git
-> itself.
->
-> In addition, this would help re-rolls since it would mean if I go back
-> to a topic and re-roll it I can just update the message. If it were
-> properly stored in my local history that would also mean I could see
-> revisions on it.
->
-> Any thoughts on how to do this?
->
+Eric Wong venit, vidit, dixit 10.09.2015 20:08:
+> Michael J Gruber <git@drmicha.warpmail.net> wrote:
+>> Instead, make git svn uses the perl regex
+>>
+>> /^(.+?|\(no author\))\s*=3D\s*(.+?)\s*<(.*)>\s*$/
+>>
+>> for parsing the authors file so that the same (slightly more lenient=
+)
+>> regex is used in both cases.
+>>
+>> Reported-by: Till Sch=C3=A4fer <till2.schaefer@tu-dortmund.de>
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>=20
+> Thanks.
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+>=20
+> And pushed to master of git://bogomips.org/git-svn
+> (commit f7c6de0ea1bd5722a1181c6279676c6831b38a34)
+>=20
+> By the way, I also had some other patches sitting around for you.
+> Did you ever have time to revisit them?  (I haven't)
+>=20
+>       t/lib-httpd: load mod_unixd
+>       t/lib-git-svn: check same httpd module dirs as lib-httpd
+>=20
 
-A bit of a plug for patman[1] which the u-boot project uses (although
-there's nothing u-boot specific about it). It lets you put the cover
-letter and other meta information in the commit messages as you go
-then will extract that information and generate a cover letter and
-clean patches. As of fairly recently it's also installable as a
-standalone application.
+Also "from me".
 
---
-[1] - http://git.denx.de/?p=u-boot.git;a=blob;f=tools/patman/README
+Short answer: No
+
+If I remember correctly, they were correct bit not complete in the sens=
+e
+that on a standard Fedora install (with newer apache), svn tests still
+wouldn't run over http. But I/we learned that those tests were simply
+run over local file protocol instead when svn over http didn't work. On
+a standard debian install (which apparantly has non-standard, thus
+downwards compatible apache config) everything was fine with or without
+those patches.
+
+I still plan to look at them when I find time. (I'll be retiring
+sometime between 20 and 30 years from now, so there's hope.)
+
+Michael
