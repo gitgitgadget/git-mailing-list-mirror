@@ -1,114 +1,145 @@
-From: Josef Kufner <josef@kufner.cz>
-Subject: Re: [PATCH] Add tests for "Pass graph width to pretty formatting, so
- '%>|' can work properly"
-Date: Fri, 11 Sep 2015 22:25:30 +0200
-Message-ID: <55F338BA.6070201@kufner.cz>
-References: <xmqq1te428xl.fsf@gitster.mtv.corp.google.com>
- <1441993845-25778-1-git-send-email-josef@kufner.cz>
- <CAPig+cRkSRSC0eaBencw8cFrd64sUBQE44aSJ0T2WyPg2JTFCw@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Bloom filters for have/want negotiation
+Date: Fri, 11 Sep 2015 23:13:25 +0200
+Message-ID: <55F343F5.6010903@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="2J6Fuv7cTos4MT5lhq7wxhN44GKmf1oSr"
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Sep 11 22:26:04 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: Wilhelm Bierbaum <bierbaum@gmail.com>, Jeff King <peff@peff.net>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 11 23:13:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaUtD-0001TU-Nu
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 22:25:44 +0200
+	id 1ZaVdh-0004jF-JN
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 23:13:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753740AbbIKUZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 16:25:39 -0400
-Received: from max.feld.cvut.cz ([147.32.192.36]:42105 "EHLO max.feld.cvut.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752660AbbIKUZi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2015 16:25:38 -0400
-Received: from localhost (unknown [192.168.200.7])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 51F2519F4BE0;
-	Fri, 11 Sep 2015 22:25:37 +0200 (CEST)
-X-Virus-Scanned: IMAP STYX AMAVIS
-Received: from max.feld.cvut.cz ([192.168.200.1])
-	by localhost (styx.feld.cvut.cz [192.168.200.7]) (amavisd-new, port 10044)
-	with ESMTP id P5Rcr32Y45yP; Fri, 11 Sep 2015 22:25:35 +0200 (CEST)
-Received: from imap.feld.cvut.cz (imap.feld.cvut.cz [147.32.192.34])
-	by max.feld.cvut.cz (Postfix) with ESMTP id 5A86119F4BD9;
-	Fri, 11 Sep 2015 22:25:35 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:38.0) Gecko/20100101
- Icedove/38.1.0
-In-Reply-To: <CAPig+cRkSRSC0eaBencw8cFrd64sUBQE44aSJ0T2WyPg2JTFCw@mail.gmail.com>
+	id S1753922AbbIKVNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2015 17:13:41 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:62632 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752890AbbIKVNl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Sep 2015 17:13:41 -0400
+X-AuditID: 1207440d-f79136d00000402c-64-55f343f70cb9
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 65.84.16428.7F343F55; Fri, 11 Sep 2015 17:13:27 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC96DD6.dip0.t-ipconnect.de [79.201.109.214])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t8BLDPrv015150
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 11 Sep 2015 17:13:26 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrFIsWRmVeSWpSXmKPExsUixO6iqPvd+XOowcVF4hZTn81it+i60s1k
+	8aOlh9mB2WPnrLvsHs969zB6fN4kF8AcxW2TlFhSFpyZnqdvl8Cd8a7rF2vBA6WKUzuOMjYw
+	/pXuYuTkkBAwkTi84wg7hC0mceHeerYuRi4OIYHLjBIX+h8xQTgXmCTajs5nAaniFdCWWLtu
+	JhuIzSKgKrGrfREziM0moCuxqKeZCcQWFQiSWLH8BSNEvaDEyZlPwHpFgGp2PbsK1sss4CJx
+	9eIGsM3CAgYSK9//ZYeIq0v8mXeJGcKWl2jeOpt5AiPfLCSjZiEpm4WkbAEj8ypGucSc0lzd
+	3MTMnOLUZN3i5MS8vNQiXSO93MwSvdSU0k2MkHDk3cH4f53MIUYBDkYlHl4L1U+hQqyJZcWV
+	uYcYJTmYlER5TRw+hwrxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4S0WBsrxpiRWVqUW5cOkpDlY
+	lMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4jzkBNQoWpaanVqRl5pQgpJk4OEGGc0mJFKfm
+	paQWJZaWZMSDYi++GBh9ICkeoL2rQdp5iwsSc4GiEK2nGBWlxHl3gyQEQBIZpXlwY2FJ5hWj
+	ONCXwrxfQap4gAkKrvsV0GAmoMHviz+BDC5JREhJNTDWicpf1oudGXLMtNLjpcKzp3L1h+ZN
+	vmhQWzH72oXGz2Fyjyre8h0R0HvXcUlcNvqTnN78zb5ystGimw91K665tPZ0+rm/i3/wNUo1
+	r2vpu25zu6MqZU1YvPCGUlb3IzECDnUOrmErM04s5L9//qTzd+apN1y2Nryf0p70 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277696>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---2J6Fuv7cTos4MT5lhq7wxhN44GKmf1oSr
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+I have been thinking about Wilhelm Bierbaum's talk at the last GitMerge
+conference [1] in which he describes a scheme for using Bloom filters to
+make the initial reference advertisement less expensive.
 
-Eric Sunshine wrote, on 11.9.2015 21:37:
-> On Fri, Sep 11, 2015 at 1:50 PM, Josef Kufner <josef@kufner.cz> wrote:
->> ---
->=20
-> Missing sign-off. Or is this intended to be concatenated with the
-> patch you sent earlier?
+In his scheme (if I understand correctly) the client starts off the
+conversation by passing the server a Bloom filter that indicates what
+(refname, SHA-1) pairs the client already has. This makes it unnecessary
+for the server to advertise those references, thereby reducing the cost
+of incremental fetches dramatically if the server has very many references.
 
-Just forgot to add it. Fixed patch on the way.
+Because Bloom filters have false positives, this scheme is not 100%
+reliable. Therefore I don't think we would want Git to depend on it.
 
+But it got me thinking about how the client could use a Bloom filter in
+a later stage of the negotiation, when telling the server what objects
+it already has, while preserving 100% reliability.
 
->> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-format=
-s.sh
->> index 7398605..3358837 100755
->> --- a/t/t4205-log-pretty-formats.sh
->> +++ b/t/t4205-log-pretty-formats.sh
->> @@ -319,6 +319,18 @@ EOF
->>         test_cmp expected actual
->>  '
->>
->> +# Note: Space between 'message' and 'two' should be in the same colum=
-n as in previous test.
->> +test_expect_success 'right alignment formatting at the nth column wit=
-h --graph. i18n.logOutputEncoding' '
->> +       git -c i18n.logOutputEncoding=3D$test_encoding log --graph --p=
-retty=3D"tformat:%h %>|(40)%s" >actual &&
->> +       qz_to_tab_space <<EOF | iconv -f utf-8 -t $test_encoding >expe=
-cted &&
->=20
-> You don't seem to be taking advantage of qz_to_tab_space's
-> transliteration of Q to tab and Z to space, so s/qz_to_tab_space/cat/
-> would make the code clearer.
+The idea is to use connectivity information to correct mistakes caused
+by reliance on the Bloom-filter:
 
-I've copied another test which tests the padding without --graph and
-added it to test the new case. I have no idea what qz_to_tab_space can
-do. If you wish some clean up, it should be done on older tests too :)
+1. The server advertises the references that it has in the way that it
+is currently done.
+2. The client advertises the objects that it has (or some subset of
+them; see below) via a Bloom filter.
+3. The server sends the client the packfile that results from assuming
+that the Bloom filter is giving correct answers. (This might mean that
+too few objects are sent to the client.)
+4. The client does a connectivity check on the packfile. If any objects
+are missing, it asks the server for them via a reliable
+(non-Bloom-filter-based) request.
 
+How would one construct the Bloom filter for step 2? (Remember that a
+properly-configured Bloom filter requires about 5 bits of space per
+value stored for each factor of 0.1 in the false-positive rate. So, for
+example, to store 5000 values with a 1% false-positive rate, the Bloom
+filter would need to be approximately 5000 * 10 bits = 6.2 kB in size.)
 
---2J6Fuv7cTos4MT5lhq7wxhN44GKmf1oSr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Here are some possible schemes:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+* Record *all* objects in the Bloom filter. The Git repo has
+approximately 200k objects, so, supposing that we could live with a 10%
+false-positive rate (see below), the Bloom filter would need to be about
+125 kB.
 
-iQIcBAEBCAAGBQJV8zi9AAoJEN5YZWvcKoxvKX8P/1vsrkst9qDm0H98+muaishk
-8tfy5jfOpYn1/wOUR7AO72bbz3GYbxjVdzdLSMCMctEuG2HqQMtJSPREL98mTvbR
-ODxIY8ZO+Uo65HSbwYdms8APUEDxAYijkpaD/z5EACCuxd/dOm28blbZuNycnokk
-eoLM5+mbZYaUIW6AyqeKTBMd7gkGzUA5aPXOL3c4s50G+8o31P66HyyKc2rW9wUp
-d2ALV8ZLzrKniWHvh0i88xJCnkzxKohCYwmmpWzvFOGVOKBtv/NuvKRhMY0LYmkA
-tNSmQL3qSfyWnO7z3N2mh3wNwcyIrZM1jnokRf34shYEqImaDND/IQTmBA7B5Ywc
-ZdzhnjhtRvk5YPG+ReYz5uqpPjMf/QqvZJvpa3nG/zg8WK+K4Eh3cvWg6VTM4CQZ
-nSVKtOom13l8gja1RzEktKaCX1IEPiXarnNyZW405fvbb41lefoSjPE74Cue4Mzh
-MPA7wOl3dC4jl+wH7X3+7TAVOvWYdO90KvAyCaKjwX9Sh22UhAjmj/TZHj6XqaIO
-3VYfUhF1V90DIKBpv5CA9UAgnB+x2f8ZFG7R9Tjs4yYcMIsVVGPMgvul84m9qAVN
-dVjhiUdOC2gU75CarmRmwtzAD/p0YQF9RBYo1huPYmczMJ0l+hQNdA6cN+J1pl3a
-qYRptzWbRFDqVpmnfx41
-=5in6
------END PGP SIGNATURE-----
+* Record all commit objects in the Bloom filter. For the Git repo that
+is about 40k commits, so for a 10% error rate the Bloom filter would
+have to be about 25 kB.
 
---2J6Fuv7cTos4MT5lhq7wxhN44GKmf1oSr--
+* Record some subset of commits; for example, all unique branch and tag
+tips, the peeled tags, plus some sparse subsets of commits deeper in the
+history. The ls-remote for the Git repo lists 1730 unique SHA-1s, so,
+supposing we choose 10x that number with a 1% error rate, the Bloom
+filter would be about 20 kB.
+
+* Record only the branch and tag tips and peeled tags. Please note that
+for situations where the client has fetched from the server before and
+still has the remote-tracking references from that fetch, this scheme
+might work surprisingly well. For the Git repository, with a 1% error
+rate, this would be about 2 kB.
+
+For the first two schemes, we could tolerate a pretty high error rate
+because the server could perform additional consistency checks to reduce
+the error rate. For example, if the Bloom filter reports that the client
+has commit X, but that the client does *not* have a parent of X, then
+the server can assume that the check of X was a false positive and
+discard it. Such consistency checks would not be possible with the third
+or fourth schemes, so I have chosen lower false-positive rates for those
+schemes.
+
+Additional points:
+
+* The client can decide what to include in the Bloom filter. For
+example, if it has done a recent fetch from the server, it might want to
+send only the remote-tracking branch tips. But if it has never fetched
+from this server before, it might want to send all commits.
+
+* A Bloom filter could be computed at repack time rather than at each
+fetch. On fetch, the precomputed Bloom filters could be loaded, any
+loose objects added to it, and the result sent to the server.
+
+I don't have a gut feeling about the cost of this phase of the
+negotiation, so I don't know whether this would be a net savings, let
+alone one that is worth the added complexity. But I wanted to document
+the idea in case somebody thinks it has promise. (I have no plans to
+pursue it.)
+
+Michael
+
+[1] http://git-merge.com/videos/scaling-git-at-twitter-wilhelm-bierbaum.html
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
