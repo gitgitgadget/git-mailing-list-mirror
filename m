@@ -1,186 +1,79 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v17 13/14] tag.c: implement '--format' option
-Date: Fri, 11 Sep 2015 20:36:46 +0530
-Message-ID: <1441984006-792-1-git-send-email-Karthik.188@gmail.com>
-References: <1441902169-9891-2-git-send-email-Karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 11 17:06:47 2015
+Subject: Re: [PATCH v17 00/14] port tag.c to use ref-filter APIs
+Date: Fri, 11 Sep 2015 20:38:16 +0530
+Message-ID: <CAOLa=ZQppSg0-kc5nCfRYfHMoD5ehTTOigKz48G01vn1Mn=FTw@mail.gmail.com>
+References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com> <vpqr3m6nrf9.fsf@scolette.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Sep 11 17:08:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaPuR-0003Gr-T5
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 17:06:40 +0200
+	id 1ZaPwZ-0005lF-V3
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Sep 2015 17:08:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753284AbbIKPGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 11:06:37 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:34587 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753271AbbIKPGg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2015 11:06:36 -0400
-Received: by padhy16 with SMTP id hy16so77350647pad.1
-        for <git@vger.kernel.org>; Fri, 11 Sep 2015 08:06:36 -0700 (PDT)
+	id S1752227AbbIKPIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2015 11:08:47 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:35363 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751907AbbIKPIr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2015 11:08:47 -0400
+Received: by obbzf10 with SMTP id zf10so7324000obb.2
+        for <git@vger.kernel.org>; Fri, 11 Sep 2015 08:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Rcry5668jOIY6sBw0xUtzlZu2qCkeEyCMNEp3v8ANFo=;
-        b=nemv7deOPJ1ACIj3xMdWsQnDrSw7hsw0Ejxn4ORtVsPBrDLpUTlEW1w+8oVj4g7aAK
-         waInKvfUtnziO8VEc4Q5ilf637MyiI7BhKVbM+345OJbxDUS0cYj8CAYVCBmGJsYSb/x
-         XnMdGlyWWOheRglgAVwSk5aHq91eZ7X+Sj+OXDGVyBOcspvtkFLAfGI7SslqfdcCdRk0
-         A3Z7T1i8YHu3zxRbiCm2cwCz+Bx0mYtmlAmioKTglLXKCHtQiTeAaiAVemoPA9Y6J7Od
-         OzFnbvyzyTlXvGcvtUpC7+rPg11a+hC9dOR+GM7h0l7LHDX8frqCvy+8ZefIo3CFO2oM
-         4ilg==
-X-Received: by 10.66.102.41 with SMTP id fl9mr86509795pab.93.1441983995590;
-        Fri, 11 Sep 2015 08:06:35 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id tz1sm908976pbc.50.2015.09.11.08.06.33
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 11 Sep 2015 08:06:35 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1441902169-9891-2-git-send-email-Karthik.188@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=mh/AxWNMTZo+xYXYRwPw3dF+rMAp12JGAE8plIBOo2o=;
+        b=0h3Ee1BjASP6D+6wF1Wmj3Z8qg+4PskjV1+f0STUXBr7ovbDaJ+Cx1C/s0FjNYR4N9
+         qusnjBZi9LJSpwE/KZI7gQEKOo5qvXPG/HckuAdSDtWNxtqbEM92HiDGqS+g+CHhY1hf
+         6rm+wWeiwUTgPoVJR13OFmTM0LoTmbDgogjS8Pv0f2X3S3fQSde6ZrNJp2B35oK8f+Ti
+         zDG8QWHRoRYv1nA9YdYuaxfUtTyOk0fKTCaHvW3SclP859LYACvunb//oDlyOz3il/sg
+         3v1Kk39X2AIO+DOK6fmeS5tdAvm0PlZS0X2wbaZQstpEAzJ0hD2tyL7/DQG+Lg/s41+D
+         5Nmg==
+X-Received: by 10.182.214.105 with SMTP id nz9mr159092obc.41.1441984126272;
+ Fri, 11 Sep 2015 08:08:46 -0700 (PDT)
+Received: by 10.182.59.15 with HTTP; Fri, 11 Sep 2015 08:08:16 -0700 (PDT)
+In-Reply-To: <vpqr3m6nrf9.fsf@scolette.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277666>
 
-Implement the '--format' option provided by 'ref-filter'.
-This lets the user list tags as per desired format similar
-to the implementation in 'git for-each-ref'.
+On Thu, Sep 10, 2015 at 10:27 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> This is part of the series of unifying the code used by
+>> "git tag -l, git branch -l, git for-each-ref".
+>>
+>> The previous version can be found here (version 16):
+>> article.gmane.org/gmane.comp.version-control.git/277394
+>>
+>> Changes in this version:
+>> * The arguments of the %(align) atom are interchangeable.
+>> * Small grammatical changes.
+>> * Small changes in the tests to reflect changes in the align
+>> atom code.
+>
+> Clearly, we're almost there. I did a few minor remarks. I suggest
+> (admitedly, Eric suggested of-list to suggest ;-) ) that you reply to
+> them by re-sending only individual patches that changed (replying to the
+> original patch) so that we can check the new patches individually. I
+> think we can do the finishing touches for each patch in a subthread of
+> this patch.
+>
 
-Add tests and documentation for the same.
+I replied with suggested changes by you and Junio.
+Let me know if any other changes to be made :)
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-tag.txt |  8 +++++++-
- builtin/tag.c             | 24 ++++++++++++++----------
- t/t7004-tag.sh            | 12 ++++++++++++
- 3 files changed, 33 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 3ac4a96..0c7f4e6 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -13,7 +13,8 @@ SYNOPSIS
- 	<tagname> [<commit> | <object>]
- 'git tag' -d <tagname>...
- 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
--	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>] [<pattern>...]
-+	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
-+	[--format=<format>] [<pattern>...]
- 'git tag' -v <tagname>...
- 
- DESCRIPTION
-@@ -158,6 +159,11 @@ This option is only applicable when listing tags without annotation lines.
- 	The object that the new tag will refer to, usually a commit.
- 	Defaults to HEAD.
- 
-+<format>::
-+	A string that interpolates `%(fieldname)` from the object
-+	pointed at by a ref being shown.  The format is the same as
-+	that of linkgit:git-for-each-ref[1].  When unspecified,
-+	defaults to `%(refname:short)`.
- 
- CONFIGURATION
- -------------
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 977a18c..91c17b7 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -23,17 +23,17 @@ static const char * const git_tag_usage[] = {
- 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] <tagname> [<head>]"),
- 	N_("git tag -d <tagname>..."),
- 	N_("git tag -l [-n[<num>]] [--contains <commit>] [--points-at <object>]"
--		"\n\t\t[<pattern>...]"),
-+		"\n\t\t[--format=<format>] [<pattern>...]"),
- 	N_("git tag -v <tagname>..."),
- 	NULL
- };
- 
- static unsigned int colopts;
- 
--static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
-+static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, const char *format)
- {
- 	struct ref_array array;
--	char *format, *to_free = NULL;
-+	char *to_free = NULL;
- 	int i;
- 
- 	memset(&array, 0, sizeof(array));
-@@ -41,12 +41,14 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting)
- 	if (filter->lines == -1)
- 		filter->lines = 0;
- 
--	if (filter->lines) {
--		to_free = xstrfmt("%s %%(contents:lines=%d)",
--				 "%(align:15)%(refname:short)%(end)", filter->lines);
--		format = to_free;
--	} else
--		format = "%(refname:short)";
-+	if (!format) {
-+		if (filter->lines) {
-+			to_free = xstrfmt("%s %%(contents:lines=%d)",
-+					  "%(align:15)%(refname:short)%(end)", filter->lines);
-+			format = to_free;
-+		} else
-+			format = "%(refname:short)";
-+	}
- 
- 	verify_ref_format(format);
- 	filter_refs(&array, filter, FILTER_REFS_TAGS);
-@@ -330,6 +332,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct strbuf err = STRBUF_INIT;
- 	struct ref_filter filter;
- 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
-+	const char *format = NULL;
- 	struct option options[] = {
- 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
- 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
-@@ -362,6 +365,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
- 			N_("print only tags of the object"), 0, parse_opt_object_name
- 		},
-+		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
- 		OPT_END()
- 	};
- 
-@@ -402,7 +406,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			run_column_filter(colopts, &copts);
- 		}
- 		filter.name_patterns = argv;
--		ret = list_tags(&filter, sorting);
-+		ret = list_tags(&filter, sorting, format);
- 		if (column_active(colopts))
- 			stop_column_filter();
- 		return ret;
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 84153ef..8987fb1 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1519,4 +1519,16 @@ EOF"
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--format should list tags as per format given' '
-+	cat >expect <<-\EOF &&
-+	refname : refs/tags/foo1.10
-+	refname : refs/tags/foo1.3
-+	refname : refs/tags/foo1.6
-+	refname : refs/tags/foo1.6-rc1
-+	refname : refs/tags/foo1.6-rc2
-+	EOF
-+	git tag -l --format="refname : %(refname)" "foo*" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
 -- 
-2.5.1
+Regards,
+Karthik Nayak
