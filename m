@@ -1,76 +1,69 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: error opening
-Date: Sat, 12 Sep 2015 11:56:52 +0200
+Subject: Re: v2.5.2 installation on Windows 10
+Date: Sat, 12 Sep 2015 11:57:44 +0200
 Organization: gmx
-Message-ID: <ace58f6b47c9c7096f8f30a4472433e8@dscho.org>
-References: <CAF2U6N0HzgWK-4D2Ednt46u_R+eL2-2C9g9GpczyAvj+pKv-EQ@mail.gmail.com>
- <loom.20150911T232244-141@post.gmane.org>
+Message-ID: <a64946ac120a98fc1058bd194153cd0b@dscho.org>
+References: <loom.20150911T181145-207@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Adrian Ang <adrian.c.ang@gmail.com>,
-	Renato Akaboci <renato.akaboci@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 11:57:03 2015
+To: Long <gimmely@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 12 11:57:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZahYL-0005P2-BE
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 11:57:01 +0200
+	id 1ZahZB-0006ZP-Mf
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 11:57:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754479AbbILJ45 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2015 05:56:57 -0400
-Received: from mout.gmx.net ([212.227.17.21]:62815 "EHLO mout.gmx.net"
+	id S1754541AbbILJ5s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2015 05:57:48 -0400
+Received: from mout.gmx.net ([212.227.15.18]:63922 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754023AbbILJ44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2015 05:56:56 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M8axL-1YeSGc2AJX-00wAKG; Sat, 12 Sep 2015 11:56:53
+	id S1754095AbbILJ5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2015 05:57:47 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Lmqxo-1Z0FoT1vJc-00h9ho; Sat, 12 Sep 2015 11:57:45
  +0200
-In-Reply-To: <loom.20150911T232244-141@post.gmane.org>
+In-Reply-To: <loom.20150911T181145-207@post.gmane.org>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:MPpoYFbzfQIq7wPKVRCkD08uusVN98bASuUCwj3bpGTFWfukSgW
- j0If8uWUNULCwc9tbP3zTn2MmZepAJAXgjbe3viqTUmYh4bHWU5/JWgCAd00kveeD/FZwkg
- 0ZurBI7RRUwihDEZLKXWHVHSgdj1TxU1asI78py/X7qADudiQhSqYzSfK/2kjnotpkWtRRh
- vePHVFprfQfGUJE08AlpA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4jVPcT31Mwk=:e5BoTdhYibcL63wkXCsoXE
- pOR0UN8Mqavy+Djer+DOymeJ3aDGADaeBLN5Bvwpk73xbXVxpQTpHiRPVn7PzWYdGrrOCyJtZ
- odpm4DK5ZzvycxHDJo0TER0fsY57Ipf9ter4XPezqmht3QDpm/r1irKrfo91GyJudMFahqxLZ
- tHGA5HgZ+rKmkvVsDjorrROSmbwamZEngfr4QK89ojCDvx+czOkmael1fhbJmo0jLpDqz2QZg
- hykv7Evyz8MVCTPsy3fh2hUuV7vruLpgHytgglZ0nR2Ey8eFiwxivnP9GXwerxg+qo0rttMfG
- zEGBp0Z9nt8SZ3zJhAtcA0uaC/0Jeuop1KKfhACAbg1/4mCYt8HN4u7uTfPsTpyzAA/9sdGie
- AFyjdLd1AM4hlYq6+E5GOoKwP+XH4pMwBuQw6zB9AhfStfPzdrbba/sFtxnpvTqxhs2XSsay6
- P54aQBnIuPymwmr2OohTn8aq/SdYrkvvJ3+IkbeQRuhRalktvWkXlhNXpB7xEk80UtwT6hy29
- QJUQcZEut9VJXuKVLpnyc31ODJTr8BZfJlrDIskgFQ/00ufdq8kMFBi0ANS5GdJGziSDhweBr
- 5IbxpW10ENQdOgbjkSdhF7jGM3GOin4j8dg+qQZZ/YTGt1sNv0wc1nr5jAkocgr9D75XBxpnW
- ZeShQVKYop214DrjwWGVg2VQ+GhZWGWPjjOaBrFPsJ48enaEuz49r/TflsPhyzhxEP7Z6zuww
- XVR4OP1H1iwKoG36jGYy+iz0fo9gPXMnRQSxeA==
+X-Provags-ID: V03:K0:cXjb6Et4FVLM1O98mIi4/00pFJ/zskKDUpduRBtQqra9HBZdXyp
+ ndYiqbOUCNGvFB4RHVCxEHegFcpy2QezbPTSUxxORmzwEv5vFMCYMG1SX93y8e+UG1LrHBW
+ Fp6JTS+j0kEhmR7Q0GJZWI8n4hSza6F4E5W19ttNgMmo1a/styoSJgxvwJqXRUsgXnneITO
+ 7+AqhSeuVny31ovcUeMGw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Pr363DNBY34=:dK8RU+P6Py9NhaEFjUCujf
+ HeH1ubua02How/933A9CNGKpWCQ6/snOpk1iDi37H6q401VTeMmiciid8/bsf1E/UzcnXKAuN
+ azPM2apcQ1qpSr0wJ8327q+OYhJNCU2Nm/zFBnBiHF+52+8Ep2TljqqLuOUcW1RH9s9D97S5k
+ 3nxmShnIgU2cga6g/negahCjV2AyVJ1PD1Y8hfpcAW54ScWZ6VKk6QKTpl3fFrS5VcoAQuDxz
+ fQeByTllUKMNRZX/Fe2ZAIoGw3aMQkLl3juaBAhP/UzvQ2O4GJ6UHTbIMfe/lTk9Wg2iuvSbK
+ XmC38wXrDxjH8+2pfXvNgUxUX60/jwutAB/zeUpyw39P9FdnKCOkObNKU7BrkjsvwQKCS5TXa
+ hTBoBS1tpFTIdEbHttbKMByCmwDb5k7ems4tJfcpURDjxUHl4R0Qtq7d+T9q5vU+y0rdC5lQB
+ bulFDPjS23DHVLaudjlv9adPxPap+ISp5iJejpJPx1dA+NnpIYZHZnOeXNDpGWb4p5KkC4cQU
+ i8PSfbbxq9Sd2AAz9Kpo0w0ZFFWekqn9kEch7OuJh/pNDl181M7s1mStjwPoWWMavmF5VXIvk
+ 3LDMo9cabSc3Ud/2LdUDo6yROUmhlUHd2AoTw+6lKCZzkHpFXzoXvHrypRrHV8F0jNM/Rd0CA
+ Ti7wFaWQRuXZ0qGoyM72VkHhW8VC9/nEE6IFIdLlTP5RPyN4fPjUqXVGpC/EIaeI5MZCq8Vgp
+ 1ZuVNJltHL4H4AiPedHTHZetU/neNi60t5zjvQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277720>
 
-Hi Adrian,
+Hi Long,
 
-please note that Renato never got your mail (you should always use repl=
-y-to-all). I re-Cc:ed him, please do not forget to reply-to-all next ti=
-me.
-
-On 2015-09-11 23:33, Adrian Ang wrote:
-> Renato Akaboci <renato.akaboci <at> gmail.com> writes:
->>
->> I=C2=B4m in trouble just after installation of my Git for Windows.
->> I get a box with error saying:
->>
->> couldn=C2=B4t read file "C:\Program
->> Files\Git\cmd\mingw64\libexec\git-core\git-gui": no such file or
->> directory
+On 2015-09-11 18:13, Long wrote:
+> Installation of 64bit could complete, but running Git GUI always prom=
+pt the
+> error below:
 >=20
-> I'm having the exact same problem.=20
+> Couldn=E2=80=99t read file =E2=80=9CC:\Program
+> Files\Git\cmd\mingw64\libexec\git-core\git-gui=E2=80=9D: no such file=
+ or
+> directory
+
 
 Please see the corresponding ticket: https://github.com/git-for-windows=
 /git/issues/376
