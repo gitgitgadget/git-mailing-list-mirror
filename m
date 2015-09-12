@@ -1,119 +1,150 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bloom filters for have/want negotiation
-Date: Sat, 12 Sep 2015 12:01:42 -0700
-Message-ID: <xmqqtwqzxy09.fsf@gitster.mtv.corp.google.com>
-References: <55F343F5.6010903@alum.mit.edu>
-	<CAJo=hJstD8c2RPUAj2OznFSCuyJsKFmvymsQMHOPhGdaqPgyvg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] fetch: fetch submodules in parallel
+Date: Sat, 12 Sep 2015 12:11:45 -0700
+Message-ID: <xmqqpp1nxxji.fsf@gitster.mtv.corp.google.com>
+References: <1442012994-20374-1-git-send-email-sbeller@google.com>
+	<1442012994-20374-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>,
-	Wilhelm Bierbaum <bierbaum@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Sep 12 21:01:50 2015
+Cc: git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	vlovich@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sat Sep 12 21:12:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zaq3a-0004HE-5P
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 21:01:50 +0200
+	id 1ZaqDg-0002Go-NW
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 21:12:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754085AbbILTBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2015 15:01:45 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:36391 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753303AbbILTBo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2015 15:01:44 -0400
-Received: by padhk3 with SMTP id hk3so104290985pad.3
-        for <git@vger.kernel.org>; Sat, 12 Sep 2015 12:01:44 -0700 (PDT)
+	id S1752004AbbILTLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2015 15:11:48 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:34304 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566AbbILTLr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2015 15:11:47 -0400
+Received: by padhy16 with SMTP id hy16so104543275pad.1
+        for <git@vger.kernel.org>; Sat, 12 Sep 2015 12:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=nVsSSg4Xo1vI7qIq5nw4Pm12A5JovwSc9VqC8Aoe6Rs=;
-        b=w4LYWhJhjJPwtsLpHdFc8HqF6mxyd/itAHstBrz/nMLkDPtpALS73JG/yWR/EEI6MI
-         tkJYjXRErvm5Qk+RxIhCFbLoCaV2RdEwWYb10XJlpBRjXPYkx6UdJo7x+eQZJ8XPe5AS
-         65CWVdAH6qe4/ECP5Zdh3YKZudFdMeMxi7iAnG93ai5GOuCoi/O7KyA4j03GafxBUb/z
-         GcQbGLLQg8g2pBQ9HVeqET2eodyGgcMmjR8SOKrJ79M/HIsR7wtIXTC4h/JjM542TV1P
-         mlYefO1e/FFG8fTDxsr1VwjsEpu2VgaVLLh0R+fADN1+ss2KsFbjXShrOrxkZB9cnKmw
-         uHTw==
-X-Received: by 10.69.2.227 with SMTP id br3mr13230936pbd.9.1442084503934;
-        Sat, 12 Sep 2015 12:01:43 -0700 (PDT)
+        bh=fEoBvqz6RRuNeBQLNjInOQykR02iTKSo7aJCGfBlqNk=;
+        b=Koy8BP8auzb8H2gOv2BwjxKHKHKzuA9nUH1YAzCpx58KO04OOJ8sJhFrX7+tk3cl8O
+         wCmaMkaKJR+MotHa/5Zr9roWP5S2vxfzU1yDsG+iGe1JyDs0pGxKXX19NMRheko2InXC
+         1f/Iv0RhdxgyIgnek+qWwnUAJPlWnAl19kB40l98b/wuMUyIf6+pgIzjGb0CJzzKaMAg
+         PMJcVCGjpLFJFUin14BE+gCC+GleQ0k6NuW7YEtUxjuxxtXbBpwSk4VsUudZmf/NUfBW
+         pcQ03cT8F/emtiItNmWnlMTn6ZGpFP8K4rAzZqPP3kX/E62H5amSO8u+D5bv4e+nm7d5
+         3LNA==
+X-Received: by 10.68.69.70 with SMTP id c6mr13243178pbu.28.1442085106795;
+        Sat, 12 Sep 2015 12:11:46 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:b563:b427:39df:b23])
-        by smtp.gmail.com with ESMTPSA id sl7sm7171170pbc.54.2015.09.12.12.01.42
+        by smtp.gmail.com with ESMTPSA id jd12sm7206836pbd.44.2015.09.12.12.11.45
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 12 Sep 2015 12:01:43 -0700 (PDT)
-In-Reply-To: <CAJo=hJstD8c2RPUAj2OznFSCuyJsKFmvymsQMHOPhGdaqPgyvg@mail.gmail.com>
-	(Shawn Pearce's message of "Fri, 11 Sep 2015 22:16:54 -0700")
+        Sat, 12 Sep 2015 12:11:46 -0700 (PDT)
+In-Reply-To: <1442012994-20374-3-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Fri, 11 Sep 2015 16:09:54 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277733>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> The worst case is due to a bug in the negotiation. With nothing
-> common, the client just goes on forever until it reaches roots
-> (something is wrong with MAX_IN_VAIN). We saw 56,318 have lines ... a
-> 2.6 MiB section. But smart HTTP gzips, so this may be only 1.3 MiB on
-> the wire.
+> diff --git a/run-command.c b/run-command.c
+> index 28e1d55..b8ff67b 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -852,3 +852,147 @@ int capture_command(struct child_process *cmd, struct strbuf *buf, size_t hint)
+>  	close(cmd->out);
+>  	return finish_command(cmd);
+>  }
+> +
+> +int run_processes_async(int n, get_next_task fn, void *data)
+> +{
+> +	int i, wait_status;
+> +	pid_t pid;
+> +
+> +	/* no more tasks. Also set when aborting early. */
+> +	int all_tasks_started = 0;
+> +	int nr_processes = 0;
+> +	int child_in_foreground = 0;
+> +	struct timeval timeout;
+> +	struct child_process *children = xcalloc(n, sizeof(*children));
+> +	char *slots = xcalloc(n, sizeof(*slots));
+> +	struct strbuf *err = xcalloc(n, sizeof(*err));
+> +	fd_set fdset;
+> +	int maxfd;
+> +	struct strbuf finished_children = STRBUF_INIT;
+> +	int flags;
+> +	for (i = 0; i < n; i++)
+> +		strbuf_init(&err[i], 0);
+> +
+> +	while (!all_tasks_started || nr_processes > 0) {
+> +		/* Start new processes. */
+> +		while (!all_tasks_started && nr_processes < n) {
+> +			for (i = 0; i < n; i++)
+> +				if (!slots[i])
+> +					break; /* found an empty slot */
+> +			if (i == n)
+> +				die("BUG: bookkeeping is hard");
+> +
+> +			if (fn(data, &children[i], &err[i])) {
+> +				all_tasks_started = 1;
+> +				break;
+> +			}
+> +			if (start_command(&children[i]))
+> +				die(_("Could not start child process"));
+> +			flags = fcntl(children[i].err, F_GETFL);
+> +			fcntl(children[i].err, F_SETFL, flags | O_NONBLOCK);
 
-This one is interesting.
+This function in run-command.c looks as if it is a generic helper to
+be called by anybody, but it seems to only care about the standard
+error and not the standard output stream, which means potential
+users that do not dup them together cannot use it.  Is that a big
+downside, or is it sufficient to document the API to say that
+children must do so?  I offhand do not think the latter is
+unreasonable, but that may be only because I haven't thought things
+through.
 
-> But average/worst doesn't tell the entire picture. Bucketing requests
-> by have lines gives us more:
->
->   %req | have_lines
->   -----|-----------
->   100%   56,318
->    99%       88
->    98%       52
->    97%       35
->    96%       31
->    95%       26
+> +			nr_processes++;
+> +			slots[i] = 1;
+> +		}
+> +
+> +		/* prepare data for select call */
+> +		FD_ZERO(&fdset);
+> +		maxfd = 0;
+> +		for (i = 0; i < n; i++) {
+> +			if (!slots[i])
+> +				continue;
+> +			FD_SET(children[i].err, &fdset);
+> +			if (children[i].err > maxfd)
+> +				maxfd = children[i].err;
+> +		}
+> +		timeout.tv_sec = 0;
+> +		timeout.tv_usec = 500000;
+> +
+> +		i = select(maxfd + 1, &fdset, NULL, NULL, &timeout);
 
-So is this.  From this observation, at least for your audience, it
-is expected that we would usually not need a very long back and
-forth session to discover where the history diverges.
+I thought we try to use poll() and on systems with only select we
+allow compat/ to emulate in our code.
 
-But that is kind of expected.  Because the current protocol, in
-which the upload-pack speaks first and advertises all tips it has,
-allows the fetcher to omit what is known to be common very early and
-to concentrate on sending the "have"s from the branches the fetcher
-has worked on since the last time it fetched.  The amount of "have"s
-needed is expected to be small in an "everybody meets at the same
-central place and pushes into and fetches out of there" workflow,
-because the amount of work done by a single fetcher since the last
-fetch will by definition be a lot smaller than what happened in the
-central meeting place.
+> +		if (i < 0) {
+> +			if (errno == EINTR)
+> +				/* A signal was caught; try again */
+> +				continue;
+> +			else if (errno == ENOMEM)
+> +				die_errno("BUG: keeping track of fds is hard");
+> +			else if (errno == EINVAL)
+> +				die_errno("BUG: invalid arguments to select");
+> +			else if (errno == EBADF)
+> +				die_errno("BUG: keeping track of fds is hard");
+> +			else
+> +				die_errno("Unknown error with select");
 
-I wonder how flipping the "who speaks first" would affect that
-equation, though.
-
-> Ergo, if this is all working correctly on smart HTTP, clients can
-> fetch from a server they already "know" with decent efficiency, and
-> smaller than your 2 KiB Bloom filter estimate for git.git at 1% error
-> rate.
-
-Isn't this part a bit of oranges and apples comparison?  If I
-understand the motivation of Michael's looking into Bloom filter or
-some other techniques correctly, it is to find a way to address the
-initial advertisement from the sender.  Your analysis is about the
-amount of "have", which is an orthogonal issue.
-
-> I do wonder if we are stuffing the pipe deep enough with multi_ack on
-> Internet links. Git doesn't need very long to walk 16 commits,
-> certainly less than the 200 ms RTT a user might have talking to a
-> server on the other side of the US. It is possible both sides are
-> spending most of their time waiting for data transfer of the batches
-> in flight.
-
-Yes, this is a very useful insight.  An experiment or two with
-larger amount of data in flight may be an interesting thing to try.
-Do we still have the deadlock possibility caused by our implicit
-reliance on the fact that a single batch was expected to fit in a
-pipe buffer, by the way, or have we addressed that issue already?
+I doubt that the later part of elseif cascade adds any value.  You
+will see errno printed anyway.
