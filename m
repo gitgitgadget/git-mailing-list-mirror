@@ -1,82 +1,84 @@
-From: Vitali Lovich <vlovich@gmail.com>
-Subject: Re: --progress option for git submodule update?
-Date: Fri, 11 Sep 2015 16:34:21 -0700
-Message-ID: <8B026E5E-5303-45EC-984D-3F944DB6F2DB@gmail.com>
-References: <88E7FC00-9A87-4E20-89D8-4BF5997F7B07@gmail.com>
- <CAGZ79kYRYqVE35_i5+DvqOj7G6LvhBQgsQok5gabLY6x20F80w@mail.gmail.com>
- <68DDAE70-85F2-4873-BDBD-373985A49815@gmail.com>
- <CAGZ79kbH+917v6pmCC3w4rovEVarHp+w1tYthMwkMU2hrq=VdQ@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.0 \(3083\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 01:34:28 2015
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v7 2/3] worktree: move/refactor find_shared_symref from branch.c
+Date: Fri, 11 Sep 2015 22:33:34 -0400
+Message-ID: <CANoM8SUhxLAUUAuH1PNRX-Fg09nNWzk2fX1TrggD5XDThaYc4w@mail.gmail.com>
+References: <1441402769-35897-1-git-send-email-rappazzo@gmail.com>
+ <1441402769-35897-3-git-send-email-rappazzo@gmail.com> <xmqqk2rx0w54.fsf@gitster.mtv.corp.google.com>
+ <CANoM8SUGmb=fSFqF4DTuW2F5oPVaim-=SP76rqwwqtzcsNQf=g@mail.gmail.com>
+ <xmqqbnd8zks9.fsf@gitster.mtv.corp.google.com> <CAPig+cQ4BUbS0ZQ=NoDO9JZmWYRzX0vhoi-W9ahg3yaWM+pKQw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat Sep 12 04:50:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaXpr-0003EE-Fu
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 01:34:27 +0200
+	id 1ZaatA-0005na-F4
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 04:50:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754083AbbIKXeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2015 19:34:23 -0400
-Received: from mail-out4.apple.com ([17.151.62.26]:49448 "EHLO
-	mail-in4.apple.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752691AbbIKXeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2015 19:34:22 -0400
-Received: from relay6.apple.com (relay6.apple.com [17.128.113.90])
-	by mail-in4.apple.com (Apple Secure Mail Relay) with SMTP id 70.12.13836.8F463F55; Fri, 11 Sep 2015 16:34:16 -0700 (PDT)
-X-AuditID: 11973e12-f79f96d00000360c-40-55f364f80c4b
-Received: from marigold.apple.com (marigold.apple.com [17.128.115.132])
-	(using TLS with cipher RC4-MD5 (128/128 bits))
-	(Client did not present a certificate)
-	by relay6.apple.com (Apple SCV relay) with SMTP id 53.48.22881.8F463F55; Fri, 11 Sep 2015 16:34:16 -0700 (PDT)
-Received: from vldesktop.apple.com ([17.214.197.172])
- by marigold.apple.com (Oracle Communications Messaging Server 7.0.5.30.0 64bit
- (built Oct 22 2013)) with ESMTPSA id <0NUJ006Q9DH4L910@marigold.apple.com> for
- git@vger.kernel.org; Fri, 11 Sep 2015 16:34:16 -0700 (PDT)
-In-reply-to: <CAGZ79kbH+917v6pmCC3w4rovEVarHp+w1tYthMwkMU2hrq=VdQ@mail.gmail.com>
-X-Mailer: Apple Mail (2.3083)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFLMWRmVeSWpSXmKPExsUi2FAYpfsj5XOowYGNBhZdV7qZHBg9Pm+S
-	C2CM4rJJSc3JLEst0rdL4Mq4uGslY8F3loqe/e+ZGhi/MXcxcnBICJhIvJxe28XICWSKSVy4
-	t54NxBYS2Mso8f6tN0zJpyPSXYxcQOFJTBI93y5A1UxhkrjSxwFiCwtISKy8cZgdxGYW0JJY
-	v/M4E4jNK6An0bxxAjtEjYXE8U3HmUFsNgF1iS+tM8HinALBEvtXnwSLswioSjw4PYcVYo6+
-	xIf+JjYIW15i85q3zBAzbSQ2TDjMCnHQX0aJjSsegBWJCKhJzFw1mw3iaFmJadviQWokBH6y
-	Skw/M5V1AqPILCT3zUJy3ywkOxYwMq9iFMpNzMzRzcwz0UssKMhJ1UvOz93ECArs6XZCOxhP
-	rbI6xCjAwajEw2uh+ilUiDWxrLgy9xCjNAeLkjjvdgOgkEB6YklqdmpqQWpRfFFpTmrxIUYm
-	Dk6pBsbK5UmSEjMOCL7PjPR1SVm4J2UJ/4wdNpOX7Y38z9u3UThC6Y5t/wrvG+UTe0+6z1ad
-	0rJGNKrC8nV48TPDRZG2psceLnw6/+nx+Y6G31Ra56urWBw7I3/Z4HxH1K/ABZcvLtv/vPB4
-	K//FUqfVW39c1lTn8lupE8ZzlD3YdJ8k6+eFvNOYZrorsRRnJBpqMRcVJwIAOO+Sok0CAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPLMWRmVeSWpSXmKPExsUi2FDcovsj5XOoweeNuhZdV7qZHBg9Pm+S
-	C2CM4rJJSc3JLEst0rdL4Mq4uGslY8F3loqe/e+ZGhi/MXcxcnBICJhIfDoi3cXICWSKSVy4
-	t56ti5GLQ0hgEpNEz7cLbCAJIYEpTBJX+jhAbGEBCYmVNw6zg9jMAloS63ceZwKxeQX0JJo3
-	TmCHqLGQOL7pODOIzSagLvGldSZYnFMgWGL/6pNgcRYBVYkHp+ewQszRl/jQ38QGYctLbF7z
-	lhlipo3EhgmHWSEO+ssosXHFA7AiEQE1iZmrZrNBPCArMW1b/ARGwVlITpqF5KRZSMYuYGRe
-	xShQlJqTWGmml1hQkJOql5yfu4kRHIyFUTsYG5ZbHWIU4GBU4uG1UP0UKsSaWFZcmXuIUYKD
-	WUmEt1j4c6gQb0piZVVqUX58UWlOavEhRmkOFiVx3gaRV6FCAumJJanZqakFqUUwWSYOTqkG
-	xsKfF4rvd7+ZqHv/lCP3gePv3lyT+P80S80ha0+HiriQsbjK7sb3bfae/fMPPJ7uWdl0eodn
-	jVzh5Adve3pUUiLXBj5TD428ui/l35xQg6SDF5v0HikuatvdKsQob3ap7xUbz1XNfcYsxje3
-	f5nomn34fMk2dt/dct7fql3WxDqtmLTqxTOJC0osxRmJhlrMRcWJAEq2FRVCAgAA
+	id S1754215AbbILCmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2015 22:42:14 -0400
+Received: from mail-vk0-f46.google.com ([209.85.213.46]:35993 "EHLO
+	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753984AbbILCmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2015 22:42:13 -0400
+Received: by vkfp126 with SMTP id p126so34714565vkf.3
+        for <git@vger.kernel.org>; Fri, 11 Sep 2015 19:42:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ivnP/EgfnR+NdJWre4aRouo8UQ+2YHd8uD+bcfQjK8A=;
+        b=PfhhMQg3IoULejh5mlWQ6VePRmt2hmn79YTglXYt2tZC6ZwaOXKrRLBFTzd1K88fw2
+         l5JAozRMZmm4D1PeSZebl6IVnabcPyQIezSRiiq9qqyd4NGCOyhRqYZiqZAgytL+qUFm
+         OuWXnXyk/3Ydx1pjTn+u52Upc1dPml3n5aJKu5HLdpL4wywFFnL78xU5+7jyE66Y0vE7
+         S+2jczuphHXPkQkwE/XVH5R0Cc0TSTBuXqvdi5xpfcAsqGmIvGVwo+GqFv8fGWajJGRq
+         xZzQb+EzKlpjGNxLBCxK1ZcrS2mDfeNS66eBOLad5w0Hze1Vru742s0ymvyYYawb5Neb
+         Nj1g==
+X-Received: by 10.31.56.79 with SMTP id f76mr1341364vka.16.1442025233792; Fri,
+ 11 Sep 2015 19:33:53 -0700 (PDT)
+Received: by 10.103.80.201 with HTTP; Fri, 11 Sep 2015 19:33:34 -0700 (PDT)
+In-Reply-To: <CAPig+cQ4BUbS0ZQ=NoDO9JZmWYRzX0vhoi-W9ahg3yaWM+pKQw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277712>
 
-& then do a git submodule init?
+On Fri, Sep 11, 2015 at 7:10 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, Sep 11, 2015 at 5:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Thanks for bringing this up. I haven't found a sufficient block of
+> time yet to review these patches, however, I had the same thought upon
+> a quick initial read, and is how I was hoping to see the patch series
+> constructed based upon my earlier two reviews suggesting refactoring
+> the existing branch.c functions into a new get_worktrees(). There are
+> at least a couple important reasons for taking this approach.
+>
+> First, it keeps the "blame" trail intact, the full context of which
+> can be helpful to someone trying to understand why the code is the way
+> it is. The current approach of having get_worktree_list() materialize
+> out of thin air (even though it may have been patterned after existing
+> code) doesn't give the same benefit.
+>
+> Second, it's easier for reviewers to understand and check the code for
+> correctness if it mutates to the final form in small increments than
+> it is to have get_worktrees() come into existence fully matured.
+>
+> A final minor comment: Since all three branch.c functions,
+> die_if_checked_out(), find_shared_symref(), and find_linked_symref(),
+> ought to be moved to top-level worktree.c, I'd probably have patch 1
+> do the relocation (with no functional changes), and subsequent patches
+> refactor the moved code into a general purpose get_worktrees(). The
+> final patch would then implement "git worktrees list".
 
-> On Sep 11, 2015, at 4:05 PM, Stefan Beller <sbeller@google.com> wrote:
-> 
-> On Wed, Sep 9, 2015 at 8:06 PM, Vitali Lovich <vlovich@gmail.com> wrote:
->>> Doh! I see what you're missing now after rereading the email closely.
->>> You can add a --quiet option,
->>> but --verbose or --progress just errors out, but you want that as a
->>> possible argument for git clone
->>> inside the git submodule update code.
->> Yes exactly.
-> 
-> Instead of cloning with submodules, you could also clone only the
-> superproject and then do a git fetch --recuse-submodules=yes -v
-> instead soonish.
+I like the way this history works out, and I have reworked the history
+to follow this idea.  The only thing
+I didn't do was move the die_if_checked_out() function from branch.c,
+as I feel that this function is more
+of a branch feature than a worktree feature.
