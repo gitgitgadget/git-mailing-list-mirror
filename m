@@ -1,85 +1,104 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: [PATCH] Documentation/config: fix formatting for branch.*.rebase and
- pull.rebase
-Date: Sat, 12 Sep 2015 16:26:53 +0200
-Message-ID: <87zj0r4ssy.fsf@igel.home>
+From: Long <gimmely@gmail.com>
+Subject: Re: v2.5.2 installation on Windows 10
+Date: Sat, 12 Sep 2015 14:35:33 +0000 (UTC)
+Message-ID: <loom.20150912T162911-432@post.gmane.org>
+References: <loom.20150911T181145-207@post.gmane.org> <a64946ac120a98fc1058bd194153cd0b@dscho.org> <01a501d0ed50$48b19ab0$da14d010$@gmail.com> <9fdf16cff4e2468a3a013ac2f13ac060@dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 12 16:27:35 2015
+X-From: git-owner@vger.kernel.org Sat Sep 12 16:36:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zalm7-0002qA-Pa
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 16:27:32 +0200
+	id 1ZaluZ-0005Om-8M
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 16:36:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752045AbbILO1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2015 10:27:01 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:54909 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751185AbbILO1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2015 10:27:00 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3nCx9C6SzZz3hjQ4
-	for <git@vger.kernel.org>; Sat, 12 Sep 2015 16:26:55 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3nCx9C2Nxbzvk93
-	for <git@vger.kernel.org>; Sat, 12 Sep 2015 16:26:55 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id chnZzcv3C1-z for <git@vger.kernel.org>;
-	Sat, 12 Sep 2015 16:26:54 +0200 (CEST)
-X-Auth-Info: 8+op4HUFfE2QSWNf0RlrFd1osvY8Tvb16x9MP7UDM9IWHlcPvog1DXKvIm0DwyQq
-Received: from igel.home (host-188-174-212-64.customer.m-online.net [188.174.212.64])
-	by mail.mnet-online.de (Postfix) with ESMTPA
-	for <git@vger.kernel.org>; Sat, 12 Sep 2015 16:26:54 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id F27082C1B3D; Sat, 12 Sep 2015 16:26:53 +0200 (CEST)
-X-Yow: I request a weekend in Havana with Phil Silvers!
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+	id S1752139AbbILOft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2015 10:35:49 -0400
+Received: from plane.gmane.org ([80.91.229.3]:59393 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751185AbbILOfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2015 10:35:48 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Zalu6-0004op-ER
+	for git@vger.kernel.org; Sat, 12 Sep 2015 16:35:46 +0200
+Received: from c-50-182-235-108.hsd1.nj.comcast.net ([50.182.235.108])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 12 Sep 2015 16:35:46 +0200
+Received: from gimmely by c-50-182-235-108.hsd1.nj.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 12 Sep 2015 16:35:46 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 50.182.235.108 (Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277727>
 
-Don't format the second paragraph as a literal block.
+Hi Johannes,
 
-Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
----
- Documentation/config.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Johannes Schindelin <johannes.schindelin <at> gmx.de> writes:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0c351b9..e0bd703 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -865,7 +865,7 @@ branch.<name>.rebase::
- 	instead of merging the default branch from the default remote when
- 	"git pull" is run. See "pull.rebase" for doing this in a non
- 	branch-specific manner.
--+
-+	+
- 	When preserve, also pass `--preserve-merges` along to 'git rebase'
- 	so that locally committed merge commits will not be flattened
- 	by running 'git pull'.
-@@ -2137,7 +2137,7 @@ pull.rebase::
- 	of merging the default branch from the default remote when "git
- 	pull" is run. See "branch.<name>.rebase" for setting this on a
- 	per-branch basis.
--+
-+	+
- 	When preserve, also pass `--preserve-merges` along to 'git rebase'
- 	so that locally committed merge commits will not be flattened
- 	by running 'git pull'.
--- 
-2.5.2
+> 
+> Hi Long,
+> 
+> On 2015-09-12 13:43, Long Yang wrote:
+> 
+> > Thanks for the email to confirm the bug.
+> 
+> Of course! Thank you for taking the time to report it.
+> 
+> > To answer your question first, I found only the Community page at
+> > http://www.git-scm.com/, as I was looking for a forum-kind of page to
+> > see if someone had reported the same problem I had.  Then I tried to
+> > send a couple of emails to the mailing list, git <at> vger.kernel.org, as
+> > instructed on the Community page.  But none of my emails was
+> > delivered.  At the end, I post my case via gmane.
+> 
+> Thank you, I think I will open a Pull Request to that Community page to
+suggest going the GitHub issues route
+> in case of Windows-specific bugs.
+> 
+> > In short, I still don't know how to successfully report a bug for Git.
+> >  Should I/users use GitHub?
+> 
+> If the bug in question is a Windows-specific bug, or if you do not know
+whether it is a Windows-specific bug,
+> then yes, please submit it to our GitHub issue tracker, as described in
+the "Contribute" section of our
+> home page: http://git-for-windows.github.io/#contribute
+> 
+> If you already know that the bug in question affects more than just
+Windows users, please report it to the Git
+> mailing list, as you have done. (You will need to send plain-text
+messages, as the Git mailing list rejects
+> HTML mails.)
+> 
+
+I guess my emails were rejected due to HTML, as I'm using Outlook with HTML
+default.
+
+I'll try to follow the instructions on reporting bugs going forward.
+
+> Ciao,
+> Johannes
+> 
+
+"Another" issue I'm seeing now is that, as I mentioned in a follow-up post
+to another person's on this problem, Git commands are not showing in Windows
+Explorer (via right-click).  I've installed TortoiseGit and seen the
+same/similar "issue" with its commands too.  Especially, TortoiseGit doesn't
+show a command to create a repository, which I don't know is with Git or the
+communication between Git v2.5.2 and TortoiseGit.
 
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Long
