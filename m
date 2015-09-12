@@ -1,116 +1,82 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Git Deployment using existing multiple environments
-Date: Sat, 12 Sep 2015 12:55:46 +0200
+Subject: RE: v2.5.2 installation on Windows 10
+Date: Sat, 12 Sep 2015 13:56:29 +0200
 Organization: gmx
-Message-ID: <8797177dd247d4ef903603cbe6c57d7d@dscho.org>
-References: <BAY180-W16B5F49FFD3614D666B232C25F0@phx.gbl>
+Message-ID: <9fdf16cff4e2468a3a013ac2f13ac060@dscho.org>
+References: <loom.20150911T181145-207@post.gmane.org>
+ <a64946ac120a98fc1058bd194153cd0b@dscho.org>
+ <01a501d0ed50$48b19ab0$da14d010$@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Sukhwinder Singh <php_programmer_india@hotmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 12:55:55 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Long Yang <gimmely@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 12 13:56:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaiTK-00024y-FE
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 12:55:54 +0200
+	id 1ZajQ6-0001QI-CD
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 13:56:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754474AbbILKzu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2015 06:55:50 -0400
-Received: from mout.gmx.net ([212.227.17.22]:63774 "EHLO mout.gmx.net"
+	id S1754508AbbILL4d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2015 07:56:33 -0400
+Received: from mout.gmx.net ([212.227.17.20]:64664 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751325AbbILKzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2015 06:55:49 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MfAog-1ZHZ3Q2rIw-00Or1m; Sat, 12 Sep 2015 12:55:46
+	id S1754488AbbILL4c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2015 07:56:32 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LzbXq-1YXVRU0E78-014kV2; Sat, 12 Sep 2015 13:56:30
  +0200
-In-Reply-To: <BAY180-W16B5F49FFD3614D666B232C25F0@phx.gbl>
+In-Reply-To: <01a501d0ed50$48b19ab0$da14d010$@gmail.com>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:TQnxfK9xGfczqtFtRwkDxYrMiEAPbcDlODFwpmkOgEQVvttHQQw
- vZKlx8kXM52UxS5sR/4SX5amnDPl6jFRxsKQVBs44hgLFcn3Nea4o+xeoRalE1gZ3aLd0s1
- gsJDxp2Dds1GGGkfzeK0haVL//SJMVGpzPxJMGcBCHwZj78VoaoOJX1wOgdb5Rc8vqDOPrw
- gLcOPAtnWr7jVYxNDdO3g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vzuPiaMdKjU=:FU/L9//aIGW5aqnySrx/Dn
- KMbssGDRjI28kDpgjBTjBPNfAo3B9fRKu5nmO7t23taedjtGM2IK28fME++x3J5zgr/+3iS0j
- wl9VuNQ08MWk46QU9sgcPPzw+H2IsmCtnXZ2KSGEGos5OtajCXHeXXCK/rF/V7c1O6FsoDafi
- OzdkK93jK+7UI0CRn1/8oJeTeWBbQHVhLJif9KIHASHNgDFvwvp2pNhVFRRDiDL7KqFI1/udI
- n8EaxAT0rj6ALNYU/PJbij0KcUyF9ueYtHhi4CcE7ZAHIKbk8+mfwhR+9F86lBlGVWwg+jM+t
- 42hphLZD9SugRVSKUAbHVG628NkdzQARVAg3q+bZo+FEvNiCrm55HkUyUJTg3b8TLyJV8EMGC
- BVxUAUjLPk0zIIkS1AqhRUaaVbDUAiuigdCoD9swR/H8DawJhAb9YG/APQh0fepTRLU6OsoT5
- qyk/js1g6J5JI269xeeMrNehxeBBq4p43hRY7uGQHmw21wLVfuDkl8fsTLfuUGfehwEwbMjZl
- eff1V2BN527zVvfImWBPAKaXWmrCnoFtokYmPhwzymc5lS2O3sOBhKI3ruzXFgy407ygNgh81
- aIHZa4S2xJxNdu+u/3ifgmyOEk7FOqLAG6t46zIbZD9WdFWB0Eaao3d0MW+tB1inJ4NrqA+Hd
- H82ZvOjtzaQlXQx5EYx0tYjjhC19EfepgzXAtNW9VL9Tl8Fosy6RigYtTsLOqT1LmqU9C2yOs
- v8XAD9iIInkND0Fdhy0OqyVQnc1gJ6Crug3JqQ==
+X-Provags-ID: V03:K0:CFw1fDz+Ktn4VVfmcbPKVGvszBRNIaI0pFcGbus1L6UpYBmoQ3Z
+ UWwKcQtBvlKYFOHkd9wJL6eW7qs8BCcfS5q+pD9Cy7jwZS/fhTiL56ZywOUTBawwxj1Mh/C
+ 4L3bMm7TpqvHO3ioQ46LOt7zDUieqtXonDfmT34Bmq1H/mcotdfSGgnQs/zTgD6NMtzYVkI
+ WI6Dy1+JD4PNYXQ4sZOvw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ccFaT5MEOK0=:DLWu6r4/k8NTq8PXSrlbV7
+ 4a+RH2137i8biIjmEyAfbsWT5HWs186HwiOCkqvHFeG4Hy18LSKlTJWtEnuZNv/JCoJe4JoTU
+ s7fJEOt1SUJkTFFMxTRPmN50ddikrgH2VCBQSbXDzZia03knQQLMxhRwfMKX3WJEQomxx8AKX
+ MHX+9yYXQeKPRbNfF36pedwwaToypUneizRNnc1q0Nf5h84r3oCtRlnsDSpVlSB9uZZ2Kn9VW
+ nLWffqmcWQgS5KW/nIvAruBtqZwCatk5OHbc95eqGqtdtCy5nQkc5Q80Qlx4DYIba30VK9bCZ
+ 6HefcILldL0ieUQC4s3K9T/IrRvU90gi0urGCgiqhtpUuWbHtRNSI9UXBjivYTI1t/C7BcMeG
+ hPYe4iSiDx+wjtVb8q9DpQKiJixYofL3TvzHvnZ/UKkYVBX3JZwdQMDp6QeP/zbuIP1ssk1CI
+ hb/HcUHU7c3bjGaO78N5kyTzzTfypAgSJaigVcrgMTSKmdZdvBZXArrdSlZp68vu/qbdbuR3x
+ dj4HekMxFINuRxtxgDyhvM4G6mIcc4kRGWs1ALm8PRlPQZ1tP3Js6Wu+gjPdjG3B6kXU6gN2V
+ DXHRywrs3fSfC950WF37VT1oRfV5MOWP9SMDyB3fgEsWBkxp18Our1gfVogahpABOT2gXJQwY
+ KhDZoTfeelUkG5+Nm0tFXzpxDMRhZKxGTxbQPsFodmWGfrlwde6jzupxLNPmvQaJUcF5xDqYc
+ uS8nk85c4xAzO/s5IvMIso4gEnVPC6cTxMKA4g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277725>
 
-Hi,
+Hi Long,
 
-On 2015-09-12 08:31, Sukhwinder Singh wrote:
+On 2015-09-12 13:43, Long Yang wrote:
 
-> We already have 3-4 environments setup on our Windows servers without=
- Git
-> and each environment already has code which is different from each
-> other.
->=20
-> There are three environments
-> Live
-> UAT
-> Test (has the latest code)
->=20
->=20
-> And then developers have their local copies.
->=20
-> We write and test the code locally and manually move each point from
-> one environment to other using merging software and test at each
-> environment.
-> Now we want to use git because manually moving the code is a lengthy
-> process. Also as the developers have local copies, it is very
-> difficult to manage code.
->=20
-> Code is written locally by the team and then after testing locally it
-> is first merged with "Test" environment code, then "UAT" and then,
-> finally with "Live".
-> So we have two concerns:
->=20
-> There is different code already existing on these environments.
-> Testing the code on each environment using the web server.
->=20
-> What is the best way to go about it?=C2=A0As I am new to git more det=
-ails
-> will be helpful, like commands to use.
+> Thanks for the email to confirm the bug.
 
-It seems you are not only looking for commands to use, but for a proper=
- workflow in which Git supports your work best.
+Of course! Thank you for taking the time to report it.
 
-The key is to define the roles in your flow first, and then identify th=
-e optimal commands.
+> To answer your question first, I found only the Community page at
+> http://www.git-scm.com/, as I was looking for a forum-kind of page to
+> see if someone had reported the same problem I had.  Then I tried to
+> send a couple of emails to the mailing list, git@vger.kernel.org, as
+> instructed on the Community page.  But none of my emails was
+> delivered.  At the end, I post my case via gmane.
 
-In your case, I figure that there are three "merge lords" or "merge lad=
-ies", one for "Test", one for "UAT", one for "Live". And each of them n=
-eeds to be notified when changes are ready to be merged, then merge the=
- changes.
+Thank you, I think I will open a Pull Request to that Community page to suggest going the GitHub issues route in case of Windows-specific bugs.
 
-If I was walking in your shoes, I would set up four repositories that e=
-ach are owned by one of the "merge lords/ladies", or the developers, re=
-spectively. The code would move from one to the next repository, trigge=
-red by a notification, then being pulled into the environment, then tes=
-ted, and if everything is okay, pushed into the next repository.
+> In short, I still don't know how to successfully report a bug for Git.
+>  Should I/users use GitHub?
 
-(Actually, you could do without the repository corresponding to the "Li=
-ve" version, but it would be a nice record.)
+If the bug in question is a Windows-specific bug, or if you do not know whether it is a Windows-specific bug, then yes, please submit it to our GitHub issue tracker, as described in the "Contribute" section of our home page: http://git-for-windows.github.io/#contribute
 
-However, this is just one possible suggestion. I would highly recommend=
- buying and reading the book "Git for Teams", as it has extensive cover=
-age of different work flows, their strengths and their weaknesses.
+If you already know that the bug in question affects more than just Windows users, please report it to the Git mailing list, as you have done. (You will need to send plain-text messages, as the Git mailing list rejects HTML mails.)
 
 Ciao,
 Johannes
