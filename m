@@ -1,87 +1,50 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v17 00/14] port tag.c to use ref-filter APIs
-Date: Sat, 12 Sep 2015 11:14:19 +0200
-Message-ID: <vpq7fnwvw2c.fsf@anie.imag.fr>
-References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
-	<vpqr3m6nrf9.fsf@scolette.imag.fr>
-	<CAOLa=ZQppSg0-kc5nCfRYfHMoD5ehTTOigKz48G01vn1Mn=FTw@mail.gmail.com>
+From: Diaoul <diaoulael@gmail.com>
+Subject: Re: v2.5.2 installation on Windows 10
+Date: Sat, 12 Sep 2015 09:34:09 +0000 (UTC)
+Message-ID: <loom.20150912T113250-202@post.gmane.org>
+References: <loom.20150911T181145-207@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 11:14:49 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 12 11:55:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZagtU-0006Vw-Lh
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 11:14:49 +0200
+	id 1ZahWd-000340-NL
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 11:55:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753936AbbILJOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2015 05:14:34 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52401 "EHLO shiva.imag.fr"
+	id S1754507AbbILJzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2015 05:55:08 -0400
+Received: from plane.gmane.org ([80.91.229.3]:49680 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751315AbbILJOd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2015 05:14:33 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t8C9EIre008226
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sat, 12 Sep 2015 11:14:19 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8C9EJLo022818;
-	Sat, 12 Sep 2015 11:14:19 +0200
-In-Reply-To: <CAOLa=ZQppSg0-kc5nCfRYfHMoD5ehTTOigKz48G01vn1Mn=FTw@mail.gmail.com>
-	(Karthik Nayak's message of "Fri, 11 Sep 2015 20:38:16 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 12 Sep 2015 11:14:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t8C9EIre008226
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1442654062.0559@yNd5QcQQQ/lxhQWa0Na62w
+	id S1754448AbbILJzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2015 05:55:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ZahWQ-0002pe-S8
+	for git@vger.kernel.org; Sat, 12 Sep 2015 11:55:03 +0200
+Received: from static-5-51-3-145.ftth.abo.bbox.fr ([5.51.3.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 12 Sep 2015 11:55:02 +0200
+Received: from diaoulael by static-5-51-3-145.ftth.abo.bbox.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 12 Sep 2015 11:55:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 5.51.3.145 (Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277717>
+X-Spam-Report: 6.0 points;
+ *  3.2 RCVD_ILLEGAL_IP Received: contains illegal IP address
+ *  2.8 BASE64_LENGTH_79_INF BODY: BASE64_LENGTH_79_INF
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277718>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
-
-> On Thu, Sep 10, 2015 at 10:27 PM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>> This is part of the series of unifying the code used by
->>> "git tag -l, git branch -l, git for-each-ref".
->>>
->>> The previous version can be found here (version 16):
->>> article.gmane.org/gmane.comp.version-control.git/277394
->>>
->>> Changes in this version:
->>> * The arguments of the %(align) atom are interchangeable.
->>> * Small grammatical changes.
->>> * Small changes in the tests to reflect changes in the align
->>> atom code.
->>
->> Clearly, we're almost there. I did a few minor remarks. I suggest
->> (admitedly, Eric suggested of-list to suggest ;-) ) that you reply to
->> them by re-sending only individual patches that changed (replying to the
->> original patch) so that we can check the new patches individually. I
->> think we can do the finishing touches for each patch in a subthread of
->> this patch.
->>
->
-> I replied with suggested changes by you and Junio.
-> Let me know if any other changes to be made :)
-
-I went through the patches you resent, it all looks good to me.
-
-If I read correctly, Junio already applied it to pu.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+SSBjYW4gY29uZmlybSB0aGlzIG9uIHRoZSBzYW1lIHNldHVwIChXMTAgNjRiaXQgZ2l0IDIuNS4yKQoKTG9uZyA8Z2ltbWVseSA8YXQ+IGdtYWlsLmNvbT4gd3JpdGVzOgoKPiAKPiBJbnN0YWxsYXRpb24gb2YgNjRiaXQgY291bGQgY29tcGxldGUsIGJ1dCBydW5uaW5nIEdpdCBHVUkgYWx3YXlzIHByb21wdCB0aGUKPiBlcnJvciBiZWxvdzoKPiAKPiBDb3VsZG7igJl0IHJlYWQgZmlsZSDigJxDOlxQcm9ncmFtCj4gRmlsZXNcR2l0XGNtZFxtaW5ndzY0XGxpYmV4ZWNcZ2l0LWNvcmVcZ2l0LWd1aeKAnTogbm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeQoKCg==
