@@ -1,71 +1,93 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [git-for-windows] Re: Announcing Git for Windows 2.5.2
-Date: Sun, 13 Sep 2015 00:59:57 +0200
-Organization: gmx
-Message-ID: <1cb185f44de326813a71579a92bc49cf@dscho.org>
-References: <84e270410b18c9684fd4c8a98d309a07@dscho.org>
- <6bc6a3c3-b9d2-4433-ab84-98ec6a77b2cc@googlegroups.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] doc: show usage of branch description
+Date: Sat, 12 Sep 2015 16:44:46 -0700
+Message-ID: <CA+P7+xqh0e+2aMZf8i-1hBc0fMgaz0UjVdboLv+L9+rBYBR85w@mail.gmail.com>
+References: <74514591d4cd502eee06cde3e099e656@dscho.org> <1442098288-3316-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git-for-windows <git-for-windows@googlegroups.com>,
-	git@vger.kernel.org
-To: Marko Palola <mpa2@aikoja.fi>
-X-From: git-owner@vger.kernel.org Sun Sep 13 01:00:10 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sun Sep 13 01:45:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZatmD-0000ic-Db
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 01:00:09 +0200
+	id 1ZauTr-000089-27
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 01:45:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752356AbbILXAD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2015 19:00:03 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51564 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751915AbbILXAB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2015 19:00:01 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Mhej1-1ZFoFw0Pat-00MpYa; Sun, 13 Sep 2015 00:59:59
- +0200
-In-Reply-To: <6bc6a3c3-b9d2-4433-ab84-98ec6a77b2cc@googlegroups.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:4Qbio8Nm1Yh4wWhTx/DScrqe/bQHIwEhFuPkOkrvRqn+cX7k0Fk
- 08SoNxX4u0i+BNPreOejQ0wNJF/qJIZ4S1BZIvudu1tMep2x4HVb7iqBS4D5BQMQ7lSsHjZ
- nQfHODjSr+hvnwRIw1/IicZq24rlAn0UlhXdrICYNWjPSBJyMvoQHkQPZm2wdH4DURrBs75
- Wgui31LkkajW06gdbt9mA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:J/EW/KV3YgY=:lqhIGwb4sCPULiPfbDCfdz
- 83GBa8uXs//kSffkXHPzHr3gOlWtdKtktVNjfkJPuWeraUVwxGJfquBpICxHMlEs0wVyBAD0A
- dMIMnfP47xJI018OoSbSiu1qSR5stct60ke0dUvqnsZyKJ9DImJrRGVNJW7WCsZpMIZCjT6NE
- 3FULGGwLgLVKIMAUJPvuK5i4LkP5ti26gnTHMPEekze17kVl1Htjm+ilklbh7261NsIxyYeb0
- PZhrwvJ84Lw271A1SBL9XOz3dps5xKLawTMBNH7z86CD+7QpmgM3+Pn+eNOfw+LDkEwNWZ+Sf
- 7sH+gXgtjalT19TNZDxL22kYm+CFsZejFEBpQFr82zI4BpHMbpAQ2rRn0CGIDWwSOK6IZ+wIG
- B2MhnJVKJ3AWJE78sicL4+ycU7fNl4VuGDmJomcLc19LNxTDNdJhXg7M4/oDR6r8JwKmXrWb9
- VS2Xb4nz9rBE7bkWlFMBxLUxlFPywG1et7BGuqG9c8Tqut7n/4pxLaufuIn3IIEufvH0mTu5M
- bGDiBj/eGP1GzOBizjGIY89irGqr9fEaBJHmIQowPOUuWBjhXACg3WP5iRXH3oyjYucQuadr0
- veWmDtLXR0J+89z/5KmgWv//9FwuHJ/rJkeoA9BJ93KIAZ/ZwyXEFliwfCxbyZJ7R2vILbbTF
- ChDd2ANp7Ng8XRhT63rZ4qY3scGJw2KsCcklBkwuEviIuuzTPCyY3eVxKyBYtmO3lJK5OlOcP
- ITyBlOTlBK+GfzS/SF//uDPvtlcV/D4Bottplg==
+	id S1754802AbbILXpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2015 19:45:08 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:34148 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751679AbbILXpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2015 19:45:07 -0400
+Received: by igcpb10 with SMTP id pb10so68213186igc.1
+        for <git@vger.kernel.org>; Sat, 12 Sep 2015 16:45:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=CWDKsxSTOdZwJ61CloEwHyjy70n9UdyHVzyzHYljSjw=;
+        b=bR1k7yqfCwnp1nD2Aj0FRcyTD0cNM3bilrY70+IT0Cj+58HM4MYFVujSkBVvKgGHMn
+         AiT5rKO233uJBwxqaw2HzZOsTifHJpnu3D4+W4GXpBHQhgzTc63kp/LIyk7RJ8Muiucw
+         QbgY9arPrEJm0+trs2yEqNOpqsmHwPZD5VV03NZ7RzsnUMInAdWjkctIie0L8JUHZJHL
+         MAJpEJxPahQgP8lnYfIV6JLgtJeKeKYbdvmkEuyRQTfz4Un28mKL7Hh9b2HTozoFI10C
+         +3RRhbbL5jXNt3+JaUGvt/oPWUDh825pFfu2J+sQIxYI1Y9dg/6jGKcXAn5gRWjhGm7X
+         aU3g==
+X-Received: by 10.50.107.68 with SMTP id ha4mr7564203igb.35.1442101505946;
+ Sat, 12 Sep 2015 16:45:05 -0700 (PDT)
+Received: by 10.107.132.155 with HTTP; Sat, 12 Sep 2015 16:44:46 -0700 (PDT)
+In-Reply-To: <1442098288-3316-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277741>
 
-Hi Marko,
+Hi,
 
-On 2015-09-12 20:46, Marko Palola wrote:
+On Sat, Sep 12, 2015 at 3:51 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> The branch description will be included in 'git format-patch
+> --cover-letter' and in 'git pull-request' emails. Tell the reader.
+>
+> While here, clarify that the description may be a multi-line
+> explanation of the purpose of the branch's patch series.
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> ---
+>
+> This is a short doc patch to follow up $gmane/277628 where Johannes
+> Schindelin noted this otherwise undocumented feature.
+>
 
-> I have some problems with 2.5.2 and 2.5.1 and bitdefender scanner.
-> but I can use v2.5.0 
+Thanks for this.
 
-We have had plenty of reports since the start of the Git for Windows project in 2007. None of them have turned out to be true viruses, all of them were caused by flawed virus scanners.
+>
+>  Documentation/git-branch.txt       | 3 ++-
+>  Documentation/git-format-patch.txt | 2 +-
+>  Documentation/git-request-pull.txt | 3 ++-
+>  3 files changed, 5 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> index a67138a..79ad1c7 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> @@ -197,7 +197,8 @@ start-point is either a local or remote-tracking branch.
+>
+>  --edit-description::
+>         Open an editor and edit the text to explain what the branch is
+> -       for, to be used by various other commands (e.g. `request-pull`).
+> +       for, to be used by various other commands (e.g. `format-patch`
+> +       and `request-pull`). Multi-line explanations may be used.
+>
 
-Further, I build these executables and installers on a trusted machine that is used exclusively for the development and maintenance of Git for Windows.
+Are these the only locations? Just want to make sure while we're updating it.
 
-So I am inclined to dismiss *any* such report, especially when it comes with no concrete evidence that there is indeed a virus present.
+Otherwise, for what it's worth...
 
-Ciao,
-Johannes
+Acked-by: Jacob Keller <jacob.keller@gmail.com>
+
+Regards,
+Jake
