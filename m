@@ -1,96 +1,116 @@
-From: Julian Andres Klode <jak@debian.org>
-Subject: Re: [PATCH] hooks/update: Add a hooks.denyunsignedtags option
-Date: Sat, 12 Sep 2015 12:40:32 +0200
-Message-ID: <20150912123905.GA15958@debian.org>
-References: <1442054253-15780-1-git-send-email-jak@debian.org>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Git Deployment using existing multiple environments
+Date: Sat, 12 Sep 2015 12:55:46 +0200
+Organization: gmx
+Message-ID: <8797177dd247d4ef903603cbe6c57d7d@dscho.org>
+References: <BAY180-W16B5F49FFD3614D666B232C25F0@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: bdwalton@gmail.com, davvid@gmail.com, hvoigt@hvoigt.net,
-	johnflux@gmail.com, gitster@pobox.com, madcoder@debian.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 12 12:40:43 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sukhwinder Singh <php_programmer_india@hotmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 12 12:55:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZaiEc-0006AG-4n
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 12:40:42 +0200
+	id 1ZaiTK-00024y-FE
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Sep 2015 12:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754269AbbILKkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2015 06:40:37 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:35084 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750929AbbILKkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2015 06:40:36 -0400
-Received: by wicge5 with SMTP id ge5so89106119wic.0
-        for <git@vger.kernel.org>; Sat, 12 Sep 2015 03:40:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mail-followup-to
-         :references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=M9WOE3JTh5bjRk9Rglmu7wPaQOWGs8lHVKZYHTtohI8=;
-        b=qLfHYEryrF+Ggy1kyFRYZEJ9R4O4g5GZ+nwRL3Rgrbjl1cfsZpITQ4IHUAIse7OWxo
-         cVeVeRlGKotID25TZP9bQp0EHnavPk7u417/+OvVcnq7CcfBGymhjGYGLb5mHxIw1VvS
-         gGLPyn9KtPALv2pPyC4zM6Q3ZmTHQdaYTrM+U/fwJmDd5hoHQm4/wB1m8YApXMBrMfWI
-         mIZavLR8+6CgsXr9rWAffRJc7k/3RvdUdAyXB9gPk1NXztSEQJm4VWXinsF2OmZ47spe
-         uIlqIfrmO4p6Sj5fYV46GGttPuOmrAvMmLb1rvfvPIQIllrHoSEPUS4LqBGc0dW1/vGF
-         R8ew==
-X-Received: by 10.194.204.198 with SMTP id la6mr6611898wjc.20.1442054434762;
-        Sat, 12 Sep 2015 03:40:34 -0700 (PDT)
-Received: from jak-x230 (p54B926B6.dip0.t-ipconnect.de. [84.185.38.182])
-        by smtp.gmail.com with ESMTPSA id ej5sm4893024wjd.22.2015.09.12.03.40.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 Sep 2015 03:40:34 -0700 (PDT)
-Mail-Followup-To: Julian Andres Klode <jak@debian.org>, git@vger.kernel.org,
-	bdwalton@gmail.com, davvid@gmail.com, hvoigt@hvoigt.net,
-	johnflux@gmail.com, gitster@pobox.com, madcoder@debian.org
-Content-Disposition: inline
-In-Reply-To: <1442054253-15780-1-git-send-email-jak@debian.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1754474AbbILKzu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2015 06:55:50 -0400
+Received: from mout.gmx.net ([212.227.17.22]:63774 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751325AbbILKzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2015 06:55:49 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MfAog-1ZHZ3Q2rIw-00Or1m; Sat, 12 Sep 2015 12:55:46
+ +0200
+In-Reply-To: <BAY180-W16B5F49FFD3614D666B232C25F0@phx.gbl>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:TQnxfK9xGfczqtFtRwkDxYrMiEAPbcDlODFwpmkOgEQVvttHQQw
+ vZKlx8kXM52UxS5sR/4SX5amnDPl6jFRxsKQVBs44hgLFcn3Nea4o+xeoRalE1gZ3aLd0s1
+ gsJDxp2Dds1GGGkfzeK0haVL//SJMVGpzPxJMGcBCHwZj78VoaoOJX1wOgdb5Rc8vqDOPrw
+ gLcOPAtnWr7jVYxNDdO3g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vzuPiaMdKjU=:FU/L9//aIGW5aqnySrx/Dn
+ KMbssGDRjI28kDpgjBTjBPNfAo3B9fRKu5nmO7t23taedjtGM2IK28fME++x3J5zgr/+3iS0j
+ wl9VuNQ08MWk46QU9sgcPPzw+H2IsmCtnXZ2KSGEGos5OtajCXHeXXCK/rF/V7c1O6FsoDafi
+ OzdkK93jK+7UI0CRn1/8oJeTeWBbQHVhLJif9KIHASHNgDFvwvp2pNhVFRRDiDL7KqFI1/udI
+ n8EaxAT0rj6ALNYU/PJbij0KcUyF9ueYtHhi4CcE7ZAHIKbk8+mfwhR+9F86lBlGVWwg+jM+t
+ 42hphLZD9SugRVSKUAbHVG628NkdzQARVAg3q+bZo+FEvNiCrm55HkUyUJTg3b8TLyJV8EMGC
+ BVxUAUjLPk0zIIkS1AqhRUaaVbDUAiuigdCoD9swR/H8DawJhAb9YG/APQh0fepTRLU6OsoT5
+ qyk/js1g6J5JI269xeeMrNehxeBBq4p43hRY7uGQHmw21wLVfuDkl8fsTLfuUGfehwEwbMjZl
+ eff1V2BN527zVvfImWBPAKaXWmrCnoFtokYmPhwzymc5lS2O3sOBhKI3ruzXFgy407ygNgh81
+ aIHZa4S2xJxNdu+u/3ifgmyOEk7FOqLAG6t46zIbZD9WdFWB0Eaao3d0MW+tB1inJ4NrqA+Hd
+ H82ZvOjtzaQlXQx5EYx0tYjjhC19EfepgzXAtNW9VL9Tl8Fosy6RigYtTsLOqT1LmqU9C2yOs
+ v8XAD9iIInkND0Fdhy0OqyVQnc1gJ6Crug3JqQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277724>
 
-On Sat, Sep 12, 2015 at 12:37:33PM +0200, Julian Andres Klode wrote:
-> Introduce an option to deny unsigned tags from entering
-> a repository. This is useful in teams where members forget
-> to sign their release tags.
-> 
-> It does not actually check whether the signature is actually
-> complete or valid, it just checks for the beginning of a
-> signature, as further checks would be too involved.
-> 
-> This effectively also denies un-annotated tags, as those
-> are unsigned by definition.
-> 
-> Signed-off-by: Julian Andres Klode <jak@debian.org>
-> ---
->  templates/hooks--update.sample | 14 +++++++++++++-
->  1 file changed, 13 insertions(+), 1 deletion(-)
-> 
-[...]
-> @@ -86,6 +90,14 @@ case "$refname","$newrev_type" in
->  		;;
->  	refs/tags/*,tag)
->  		# annotated tag
-> +		if [ "$denyunsignedtag" != "true" ] || git cat-file -p $newrev | grep -q 'BEGIN PGP SIGNATURE'; then
-> +			:
-> +		else
-> +			echo "*** Tag '$refname' is unsigned"
-> +			echo "*** Unsigned tags are not allowed in this repository." >&2
-> +	                exit 1
+Hi,
 
-There are some accidental space characters in front of that, this is fixed locally
-already. Sorry.
+On 2015-09-12 08:31, Sukhwinder Singh wrote:
 
--- 
-Julian Andres Klode  - Debian Developer, Ubuntu Member
+> We already have 3-4 environments setup on our Windows servers without=
+ Git
+> and each environment already has code which is different from each
+> other.
+>=20
+> There are three environments
+> Live
+> UAT
+> Test (has the latest code)
+>=20
+>=20
+> And then developers have their local copies.
+>=20
+> We write and test the code locally and manually move each point from
+> one environment to other using merging software and test at each
+> environment.
+> Now we want to use git because manually moving the code is a lengthy
+> process. Also as the developers have local copies, it is very
+> difficult to manage code.
+>=20
+> Code is written locally by the team and then after testing locally it
+> is first merged with "Test" environment code, then "UAT" and then,
+> finally with "Live".
+> So we have two concerns:
+>=20
+> There is different code already existing on these environments.
+> Testing the code on each environment using the web server.
+>=20
+> What is the best way to go about it?=C2=A0As I am new to git more det=
+ails
+> will be helpful, like commands to use.
 
-See http://wiki.debian.org/JulianAndresKlode and http://jak-linux.org/.
+It seems you are not only looking for commands to use, but for a proper=
+ workflow in which Git supports your work best.
 
-Be friendly, do not top-post, and follow RFC 1855 "Netiquette".
-    - If you don't I might ignore you.
+The key is to define the roles in your flow first, and then identify th=
+e optimal commands.
+
+In your case, I figure that there are three "merge lords" or "merge lad=
+ies", one for "Test", one for "UAT", one for "Live". And each of them n=
+eeds to be notified when changes are ready to be merged, then merge the=
+ changes.
+
+If I was walking in your shoes, I would set up four repositories that e=
+ach are owned by one of the "merge lords/ladies", or the developers, re=
+spectively. The code would move from one to the next repository, trigge=
+red by a notification, then being pulled into the environment, then tes=
+ted, and if everything is okay, pushed into the next repository.
+
+(Actually, you could do without the repository corresponding to the "Li=
+ve" version, but it would be a nice record.)
+
+However, this is just one possible suggestion. I would highly recommend=
+ buying and reading the book "Git for Teams", as it has extensive cover=
+age of different work flows, their strengths and their weaknesses.
+
+Ciao,
+Johannes
