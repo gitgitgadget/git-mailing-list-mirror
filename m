@@ -1,86 +1,94 @@
-From: Jeffrey Walton <noloader@gmail.com>
-Subject: Re: Git configure/make does not honor ARFLAGS
-Date: Sun, 13 Sep 2015 14:37:11 -0400
-Message-ID: <CAH8yC8nNUMCfgzd2sb1PUxjTPEuPaqe3XtW-yyi=X3+c3_im7g@mail.gmail.com>
-References: <CAH8yC8kV77h8cRA9Qo_1FYe9sv0zgsE7yKxaX+OtpRfj9+7wog@mail.gmail.com>
-	<20150913101727.GB26562@sigill.intra.peff.net>
-	<CAPig+cQV-kaDDdBH+QZXsSjDHjP2CUYDXp3WKSBtgguVmLvofg@mail.gmail.com>
-Reply-To: noloader@gmail.com
+From: Christoffer Haglund <christoffer.haglund@gmail.com>
+Subject: No negotiation for repos on HTTP servers?
+Date: Sun, 13 Sep 2015 21:31:54 +0200
+Message-ID: <CAGHtn=oXUa2=n2aMWQKndDSfGZ2bPm-dxZ7jin7QOx8dRxp3Kw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Sep 13 20:37:26 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 13 21:32:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbC9R-0006wr-3m
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 20:37:21 +0200
+	id 1ZbD0g-0004wP-9E
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 21:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754388AbbIMShO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2015 14:37:14 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:36717 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753550AbbIMShN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2015 14:37:13 -0400
-Received: by ioii196 with SMTP id i196so145167675ioi.3
-        for <git@vger.kernel.org>; Sun, 13 Sep 2015 11:37:12 -0700 (PDT)
+	id S1754669AbbIMTb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2015 15:31:56 -0400
+Received: from mail-qg0-f44.google.com ([209.85.192.44]:34483 "EHLO
+	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753866AbbIMTbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2015 15:31:55 -0400
+Received: by qgez77 with SMTP id z77so100694017qge.1
+        for <git@vger.kernel.org>; Sun, 13 Sep 2015 12:31:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=MMm4F4Ss7HjqBsX2QtP+3knboPGriyq8ZJctao7PnHA=;
-        b=JYKuJ+w+j/sBt1bJjUtHaUYMJUvn/w1hrGYLR0fIFNw4y+OCxM7M42yFILthg+4ti6
-         ZazaMlfKx6O3k+Z8Kb3Xs8dUw+iqhLfTMMFqMfmxmumeRVyMRbzKRPMrXmAw63IDkFGH
-         cOzxwf4VCLOOnHJJ8mM2MWYiVHK8eb5F2eEY1z85BqnJzT4i0Z+vpK9OjwokiqJOkeHL
-         gPiOVFej7hWl3UHVxotdKwiQCYQSIDm6ZwG9GlQZX9MN4ontTe4wxld54G/uz0l53pnF
-         zPjfRjsydCFHR5x9t6oqnxlpOEB8XffVeeFWGSTNvDqt0DAH7HMLnm1RGxPK3eHGJN1O
-         2lvw==
-X-Received: by 10.107.9.194 with SMTP id 63mr21487671ioj.122.1442169431977;
- Sun, 13 Sep 2015 11:37:11 -0700 (PDT)
-Received: by 10.36.123.131 with HTTP; Sun, 13 Sep 2015 11:37:11 -0700 (PDT)
-In-Reply-To: <CAPig+cQV-kaDDdBH+QZXsSjDHjP2CUYDXp3WKSBtgguVmLvofg@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=LOCRHQLbpnpX2mPPZqSC+lNgEBkWxHAX3oRVXmFXPfQ=;
+        b=T2vi1ZSJ3fbUCHfkEwWdt4ryNr8czkBQcurR7jtp+vpTf9sI8F2eRb1UGk+chArL3t
+         vyzmvPHil5OJDpcdwQwd5U3r1ViGpfXgELXdkF94Kc/XKOa6tcC9mmh9Bf3ltXJsrMVo
+         WdsChRm7+3q62gh3t7SlwKgb7DxtmEKRzGgM40nFTRqp36C0wcJRP6nSEu6vAzkBoZdT
+         O31dk/KZDmeT5+WpXsJCJ8/n1UY8eShn5/Ec3/yWR+QTIjgg5dumN55OSSnG3UVMTA8D
+         2qvK+MBvMUj7cOUTlBupMnuxuoWQ/n/McVXJFweMC1UDOUrLF2hY3YHelWizT9wTSoeh
+         pZgg==
+X-Received: by 10.140.196.193 with SMTP id r184mr670638qha.77.1442172714325;
+ Sun, 13 Sep 2015 12:31:54 -0700 (PDT)
+Received: by 10.55.160.15 with HTTP; Sun, 13 Sep 2015 12:31:54 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277793>
 
-On Sun, Sep 13, 2015 at 1:11 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sun, Sep 13, 2015 at 6:17 AM, Jeff King <peff@peff.net> wrote:
->> On Sun, Aug 30, 2015 at 05:34:59PM -0400, Jeffrey Walton wrote:
->>> I'm working on an old OS X machine. I needed to perform:
->>>
->>>   AR=libtool
->>>   ARFLAGS="-static -o"
->>>   ...
->>>   make configure
->>>   ./configure ...
->>>   make
->>
->> Hrm. Your "$(AR)" is not really "ar" then, is it? It has been a long
->> time since I played with libtool, but what is the reason that you are
->> calling libtool and not "ar" in the first place. Is it that you do not
->> have "ar" at all, and libtool performs some other procedure? If so, is
->> there a more ar-compatible wrapper that can be used?
->
-> This isn't GNU's libtool. It's Apple's libtool, an entirely different
-> beast, which is an 'ar' replacement and is needed when linking
-> Universal binaries containing code for more than one architecture,
-> such as 'ppc' and 'i386', so the same executable can run on multiple
-> architectures. This tool dates all the way back to at least NextStep
-> 3.1 when NeXT ported NextStep to Intel hardware (i486) from NeXT
-> computers (m68k). The name "Universal" is an Apple invention, but back
-> in the NeXT days, they were called Multi-Architecture Binaries (MAB)
-> or, colloquially, just FAT (for "fat"); there was a corresponding
-> "lipo" command (short for "liposuction") to "thin" out "fat" binaries.
-> NeXT's libtool predates GNU's libtool by a few years: May 1993 vs.
-> July 1997, respectively. When an attempt is made to use 'ar' on
-> Universal object files, it errors out saying that it can't be used
-> with such files and recommends 'libtool' instead.
+Hi,
 
-Thanks Eric. You did a much better job than I would have done.
+I wonder if I've hit a bug in git, or perhaps in libcurl.
 
-JW
+Our team that use git repos hosted on a number of different
+environments, including HTTP servers using Kerberos or NTLM to
+authenticate users. Command-line git needs explicit credentials to
+work against these repos, while Visual Studio (i.e. libgit2) does not.
+The other day I noticed that when I give null credentials (i.e. empty
+username and password) normal command-line git works beautifully,
+authenticating as the currently signed-in user.
+
+I digged around a bit and found a potential bug in how libcurl is
+used; when using CURLAUTH_ANY, no handshaking will actually be done
+unless a user name is specified - even if it's a fake one.
+
+This is consistent with the documentation for curl itself,
+http://curl.haxx.se/docs/manpage.html#--negotiate , however I see no
+mention of this quirk in the libcurl API documentation.
+
+The fix I'm using locally is quite straightforward:
+
+
+diff --git a/http.c b/http.c
+index 9dce380..f62f6b6 100644
+--- a/http.c
++++ b/http.c
+@@ -668,6 +668,10 @@ struct active_request_slot *get_active_slot(void)
+ #endif
+        if (http_auth.password)
+                init_curl_http_auth(slot->curl);
++#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
++       else
++               curl_easy_setopt(slot->curl, CURLOPT_USERNAME, "");
++#endif
+        return slot;
+ }
+
+
+As far as I can tell this works fine against NTLM and Kerberos HTTP
+servers, and has no effect on servers allowing anonymous access.
+
+Against a server using Basic authentication the patch will cause git
+to fire off a redundant 'GET' with the empty username before asking
+the user for credentials. I'm not sure if that could cause problems
+for other users, I would expect that anyone working against a server
+with Basic authentication uses stored credentials anyway :-)
+
+But perhaps there is some other case I've not considered?
+
+  // Christoffer
