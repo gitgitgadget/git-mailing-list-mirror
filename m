@@ -1,72 +1,79 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/5] enter_repo: avoid duplicating logic, use
- is_git_directory() instead
-Date: Sun, 13 Sep 2015 07:49:37 +0700
-Message-ID: <CACsJy8CD+cNdM5EppcStJViRA7yPpyAHyUX=ct4LEK6RCrJrFw@mail.gmail.com>
-References: <20150715132552.GA28574@lanh> <1440204002-7638-1-git-send-email-pclouds@gmail.com>
- <1440204002-7638-3-git-send-email-pclouds@gmail.com> <xmqq8u8i9okf.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v3 1/5] path.c: delete an extra space
+Date: Sun, 13 Sep 2015 08:02:24 +0700
+Message-ID: <1442106148-22895-2-git-send-email-pclouds@gmail.com>
+References: <1440204002-7638-1-git-send-email-pclouds@gmail.com>
+ <1442106148-22895-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, bjornar@snoksrud.no
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 13 02:50:44 2015
+Cc: Junio C Hamano <gitster@pobox.com>, bjornar@snoksrud.no,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 13 03:02:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZavVC-0005i3-PI
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 02:50:43 +0200
+	id 1Zavgb-0006Ws-5C
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 03:02:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754884AbbIMAuI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2015 20:50:08 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:33338 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754827AbbIMAuH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Sep 2015 20:50:07 -0400
-Received: by iofh134 with SMTP id h134so133768146iof.0
-        for <git@vger.kernel.org>; Sat, 12 Sep 2015 17:50:06 -0700 (PDT)
+	id S1754991AbbIMBCW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2015 21:02:22 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:33090 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754968AbbIMBCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2015 21:02:16 -0400
+Received: by pacex6 with SMTP id ex6so108930068pac.0
+        for <git@vger.kernel.org>; Sat, 12 Sep 2015 18:02:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=dh3jS4SRLG6Hhm17smMDKiGUxzfNEL5LqC2laOR0WgI=;
-        b=elTpkFmrRZr4h1V21DH3rcXWtnh/24vv5HSr9gGceHoRWlDK/sTDd5xYgntUpHucPH
-         jsB9z9Thw4tmx9G+VKPPvL3KGvtzzc6AkkSucbAhSGJRUV9tJ+fjNNiXmgbNFr2DJ2oM
-         Mn5q6KmYD0D5dUUDd7kaQIFgmTV+JrW5Af0aliuJLmz2axI3Lv4r3DX5qgWlGPfP8Hfb
-         qGakI0tLaE3GcXExWluVpIMJTVv7aW5esnDnzFueV/j+YbJ2lSBBkfndeRGl0FWGeUFk
-         vDO+UKb+sw+bDCqRSD8FQZwAONo3vkl7jZJcgJfJV3mMD3iNC2lLNO0gvQWs3UzW+VYk
-         RC2g==
-X-Received: by 10.107.131.134 with SMTP id n6mr13802576ioi.192.1442105406680;
- Sat, 12 Sep 2015 17:50:06 -0700 (PDT)
-Received: by 10.107.19.227 with HTTP; Sat, 12 Sep 2015 17:49:37 -0700 (PDT)
-In-Reply-To: <xmqq8u8i9okf.fsf@gitster.mtv.corp.google.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=misWsALusl9s+QalsfA/upwdf4KY4fAWJiehwOKu8YA=;
+        b=YSJ0nCA0dbEwgnRd78rmX5U5NIw1bM5yo49qsAUyPdJ2TaP+3Sqwp4KrCqQkxt+zag
+         EQtFG5YNCouUJzIb3WjeB9lMc1DfVi8x44it2XOpi3zkJW5otqUnsX/5e+GkTfIRSF40
+         xXbTGmxhWS2Qdd4Et0OFnIu6YzxsBH9vZ/sBH+bwPWDw+CyXZxqirM0pVABWQQvfjWzN
+         +cvYMC2Qm/Oso09lvcfBaDK/Bx04mvIyY0I3IlBvF2W6ppH2hRmTYbj6vJ93QjTJKdap
+         Cuz4qxTds7UQbxMThmusxSkZSMDnO4EQ1M2qJAVUMxr2OjdbXs6FyD4MWt9M/lRozj/d
+         qHHw==
+X-Received: by 10.68.135.232 with SMTP id pv8mr16125967pbb.103.1442106135944;
+        Sat, 12 Sep 2015 18:02:15 -0700 (PDT)
+Received: from lanh ([171.233.230.25])
+        by smtp.gmail.com with ESMTPSA id qe6sm7923143pbb.90.2015.09.12.18.02.13
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 12 Sep 2015 18:02:15 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 13 Sep 2015 08:02:34 +0700
+X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
+In-Reply-To: <1442106148-22895-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277743>
 
-On Mon, Sep 7, 2015 at 11:33 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->
-> The cover letter talks about "local clone", and in this entire
-> series, I saw new tests only for the local case, but doesn't this
-> and the next change also affect the case where a Git daemon or a
-> upload-pack process is serving the remote repository?
->
-> And if so, how is that case affected?
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ path.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-People who serve .git-dir repos should not be affected (I think we
-have enough test cases covering that). People can serve .git-file
-repos as well, which is sort of tested in the local clone test case
-because upload-pack is involved for providing remote refs, I think.
---
-Duy
+diff --git a/path.c b/path.c
+index 95acbaf..a536ee3 100644
+--- a/path.c
++++ b/path.c
+@@ -431,7 +431,7 @@ const char *enter_repo(const char *path, int strict=
+)
+ 		}
+ 		if (!suffix[i])
+ 			return NULL;
+-		gitfile =3D read_gitfile(used_path) ;
++		gitfile =3D read_gitfile(used_path);
+ 		if (gitfile)
+ 			strcpy(used_path, gitfile);
+ 		if (chdir(used_path))
+--=20
+2.3.0.rc1.137.g477eb31
