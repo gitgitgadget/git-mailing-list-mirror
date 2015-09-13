@@ -1,84 +1,136 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 3/8] branch: roll show_detached HEAD into regular ref_list
-Date: Sun, 13 Sep 2015 14:31:21 -0400
-Message-ID: <CAPig+cR42jzxeeqpVh2sMojSCVD7Xg4RF6TDfTeg0y10o-2TLQ@mail.gmail.com>
-References: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
-	<1442129035-31386-4-git-send-email-Karthik.188@gmail.com>
-	<vpqa8sqv7p1.fsf@anie.imag.fr>
-	<CAPig+cTzEQ=+FKa2j2RbfHv_NP35_vPDq1NZCeek8LX9fJF3aQ@mail.gmail.com>
+From: Phillip Sz <phillip.szelat@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: translate 123 new messages
+Date: Sun, 13 Sep 2015 20:35:34 +0200
+Message-ID: <55F5C1F6.8000808@gmail.com>
+References: <1441985744-882-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Sep 13 20:31:48 2015
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="HfAtuXaeuRFuNL7FoUGmHf9oTBSwIN4Sg"
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
+To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 13 20:35:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbC43-0008Lg-Bj
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 20:31:47 +0200
+	id 1ZbC7y-00051W-9H
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 20:35:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754097AbbIMSbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2015 14:31:22 -0400
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:36709 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753550AbbIMSbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2015 14:31:22 -0400
-Received: by ykdt18 with SMTP id t18so114358269ykd.3
-        for <git@vger.kernel.org>; Sun, 13 Sep 2015 11:31:21 -0700 (PDT)
+	id S1753985AbbIMSfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2015 14:35:45 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:33885 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753550AbbIMSfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2015 14:35:44 -0400
+Received: by wicfx3 with SMTP id fx3so115076279wic.1
+        for <git@vger.kernel.org>; Sun, 13 Sep 2015 11:35:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=7S/bYJhTEHucmJkpH9+31RYwtv3+cWpRu7a5KbADBvE=;
-        b=I6g0DD+SJmhW7LosjfO/DECWc/iMrLExTK+9fcd99IqjAxwutePKfg7+KO9oBVjTgE
-         ouC204IMB3lQUHUy6zUtNG9yUCw3gg4B+3wu+lFgnNQRnPIRCWGl8AWSDEHSq66PZjqC
-         FZL0SRd15T7pIdqMRKpHP9M2c0J1wzb87nT5QhtaIsxMO1OjZBKDaYaQI8IIgjzmUkIL
-         ZM71UXU50sgQUFFxwRojh51kQW9fSRh1tYF7hlSEJ7n/n20ukSPc/9qj0m4N0g3TpsgA
-         i9k9Wsfeojc2KXkOZIB2iIQa+ZXERyJIAnRHBNtOOvm9fazeRj66n4wLAED5adclkFzi
-         njsA==
-X-Received: by 10.170.123.83 with SMTP id p80mr9869655ykb.127.1442169081520;
- Sun, 13 Sep 2015 11:31:21 -0700 (PDT)
-Received: by 10.37.36.145 with HTTP; Sun, 13 Sep 2015 11:31:21 -0700 (PDT)
-In-Reply-To: <CAPig+cTzEQ=+FKa2j2RbfHv_NP35_vPDq1NZCeek8LX9fJF3aQ@mail.gmail.com>
-X-Google-Sender-Auth: LCfolEFV8QzWcvhFpuyEq3F7pAs
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type;
+        bh=iHnjtQqqw1u/ehL+vRMTEucCpoyTzvoHE0GpGgK+jIA=;
+        b=C4EA8SDzpVzgN23AfoiQIcXgQaMC+bFtvqEds9tM+aHD3zfVJLlcJ3djPhDI7CfjlC
+         4PzfIwrpyPvom4C2EIE+lY9TiloMoDL9hdfkb8xjEgSgwedK0LZVq//xVPOvs0tO/NDw
+         xW7uwIOHSIrj4F68mhcTKwYM/PqQCjq0CxImSNKovYE1m+6Q4Mo5lEVTWN5Et4s4rE8C
+         y4abdcz8La1lholfaYOpux1XF7gwY69Tl0mwmngqa1SEQHejJACJCoUiQSoNfBujORbu
+         pqJulsRK82HBIO3JpN6Hu6SYd71fisTsHv5sURDlBDHziOMm3kFneRP/8leUxDJQmyUB
+         mLPA==
+X-Received: by 10.180.91.6 with SMTP id ca6mr17761408wib.47.1442169343354;
+        Sun, 13 Sep 2015 11:35:43 -0700 (PDT)
+Received: from [192.168.178.84] (i59F45008.versanet.de. [89.244.80.8])
+        by smtp.googlemail.com with ESMTPSA id xw2sm11470233wjc.12.2015.09.13.11.35.41
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 13 Sep 2015 11:35:42 -0700 (PDT)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+In-Reply-To: <1441985744-882-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277790>
 
-On Sun, Sep 13, 2015 at 12:46 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sun, Sep 13, 2015 at 8:12 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>> @@ -679,15 +682,20 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
->>>       if (verbose)
->>>               maxwidth = calc_maxwidth(&ref_list, strlen(remote_prefix));
->>>
->>> -     qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
->>> +     index = ref_list.index;
->>> +
->>> +     /* Print detached HEAD before sorting and printing the rest */
->>> +     if (detached && (ref_list.list[index - 1].kind == REF_DETACHED_HEAD) &&
->>> +         !strcmp(ref_list.list[index - 1].name, head)) {
->>> +             print_ref_item(&ref_list.list[index - 1], maxwidth, verbose, abbrev,
->>> +                            1, remote_prefix);
->>> +             index -= 1;
->>> +     }
->>
->> I think Eric already mentionned it, but I don't remember the conclusion
->> and can't find it in the archives. Wouldn't it be cleaner to actually
->> remove the detached head from the array (do "ref_list.index -= 1"
->> instead of "index -= 1", and possibly free() what needs to be freed?
->
-> I think Michael Haggerty mentioned something along those lines...
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--HfAtuXaeuRFuNL7FoUGmHf9oTBSwIN4Sg
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Specifically, I think you're referring to [1] (?).
+Hi,
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/276363/focus=276676
+Just some comments:
+
+>  #: advice.c:103
+> -#, fuzzy
+>  msgid "Please, commit your changes before you can merge."
+> -msgstr "Bitte gebe die Versionsbeschreibung f=C3=BCr deine =C3=84nderu=
+ngen ein."
+> +msgstr "Bitte committen Sie Ihre =C3=84nderungen, bevor Sie \"merge\" =
+ausf=C3=BChren."
+
+I think this translation slightly changes the content, have you done
+this intentionally?
+
+What about "Bitte committen Sie Ihre =C3=84nderungen, bevor Sie den Merge=
+
+ausf=C3=BChren."?
+
+>  #: wt-status.c:1105
+> -#, fuzzy
+>  msgid "No commands done."
+> -msgstr "Keine Commits geparst."
+> +msgstr "Keine Kommandos ausgef=C3=BChrt."
+>=20
+
+Are you sure about this? "done" could also mean something like "erledigt"=
+=2E
+
+>  #: builtin/am.c:923
+> -#, fuzzy
+>  msgid "invalid timezone offset"
+> -msgstr "Ung=C3=BCltige Option: %s"
+> +msgstr "Ung=C3=BCltiger Offset in Zeitzone"
+> =20
+
+"Ung=C3=BCltiger Offset in der Zeitzone" reads better.
+
+>  #: common-cmds.h:18
+> -#, fuzzy
+>  msgid "Use binary search to find the commit that introduced a bug"
+> -msgstr ""
+> -"=C3=BCber eine Bin=C3=A4rsuche die =C3=84nderungen finden, die einen =
+Fehler verursacht haben"
+> +msgstr "Bin=C3=A4rsuche verwenden, um den Commit finden, der einen Feh=
+ler "
+> +"verursacht hat"
+>=20
+
+"Bin=C3=A4rsuche verwenden, um den Commit zu finden, der einen Fehler
+verursacht hat"
+
+The rest is fine. Thanks.
+
+Phillip
+
+
+--HfAtuXaeuRFuNL7FoUGmHf9oTBSwIN4Sg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJV9cH9AAoJEJIt6Cqh4sVSd2sH/jg9EReBxQXIukMYxyoDOP6o
+TRbIpiSUy7ZkHIFHCV7zujgjNiTU7326YcxPyoH1NmCKjvE4EQenLzPHD1jh6vLE
+XPWqrkc+uKm9qihLrPC1dEWIgzsnmbOzkjXLHqSlxjix6jELBVhRkmlhtuJ3+y3C
+SBZqjCgjnH4PDv+DrIudPJHynKC8IIsxOZoOaQ8QyOfW8iok+qsWL63jG7YnzU6n
+UvCtullhtvoP1TZwyLnGcDRUZnK604HGo90RKve4YpcwedBS1zxBK3ctjMjpH44f
+64JP3OMexJ1FWvkUUgjnMKPBKU4l3zj+tZQA01wFkbfop5GARu2Y6i1No0NXLuc=
+=0XFd
+-----END PGP SIGNATURE-----
+
+--HfAtuXaeuRFuNL7FoUGmHf9oTBSwIN4Sg--
