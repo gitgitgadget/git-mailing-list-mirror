@@ -1,178 +1,145 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v4 0/8] port the filtering part of branch.c to use ref-filter APIs
-Date: Sun, 13 Sep 2015 12:53:47 +0530
-Message-ID: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v4 2/8] branch: bump get_head_description() to the top
+Date: Sun, 13 Sep 2015 12:53:49 +0530
+Message-ID: <1442129035-31386-3-git-send-email-Karthik.188@gmail.com>
+References: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 13 09:23:56 2015
+X-From: git-owner@vger.kernel.org Sun Sep 13 09:24:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zb1dj-0002fB-IF
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 09:23:55 +0200
+	id 1Zb1dt-0002uR-Kh
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 09:24:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887AbbIMHXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2015 03:23:49 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:34289 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751413AbbIMHXs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2015 03:23:48 -0400
-Received: by padhy16 with SMTP id hy16so113322288pad.1
-        for <git@vger.kernel.org>; Sun, 13 Sep 2015 00:23:47 -0700 (PDT)
+	id S1751396AbbIMHXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2015 03:23:54 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:36100 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751928AbbIMHXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2015 03:23:53 -0400
+Received: by padhk3 with SMTP id hk3so113213732pad.3
+        for <git@vger.kernel.org>; Sun, 13 Sep 2015 00:23:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=Rk/B883DlWxQVzqf/0tGka3GdiR72Oao1rrv4zJP+Uw=;
-        b=0BalERV8BiW7fL4BOuJ4T+XE9XYZN1LhmvqrXvKl4YGrKzx5fMFSaN6WELCVkfZe+I
-         R3JQGwnJqSHbjkjo2iRE7EBG+2y42uGx4/iIphZQbZ+uAK9sODFRg9ZBnGQwdlUpsKis
-         QjjBkRv11UQRwij96DBa0geJJzXuCYX/Mxl7ANp1Urs8nvsuUG5dZzqRbIFzrTWelTs/
-         QRyZj6pFBzk7lQgPYY4mx5T0qeJDrmUaaXahYb5f2Xnq3d0ZntjaMI5YThg6WXAU7f+V
-         IANOic5Dxb1ZvWBdWoronMVCD6dtcF9kSc/zpNdQ4U2ehE+hEghFeiNruIfd+5SnUOKF
-         JK1g==
-X-Received: by 10.68.111.3 with SMTP id ie3mr19594580pbb.63.1442129027750;
-        Sun, 13 Sep 2015 00:23:47 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=6wIbDE4hX1auiwSwaAxrI36IYV1orklJ85Lr+smr7Ps=;
+        b=RBqNJm0vy8pfIZzpaEkYJSsHSx7ZojlD/0HVPgxl2I9xQZeP/VXTIGb2JZjdmwSlRi
+         hyPrbik75gl0i8l/L+W8btnzj9ha6vf2HfIpfBQvCfIqbb2pbI7d2QijOA4qreUEbkoj
+         0QO2yNIDKugm4VPtLU47hM+3euMLTwPNzD6zcLHI+VP3wszLkSGE5btn1HpZXu1o0jTG
+         xm3J0eTKrWKIZLRBbGGjdHoREQfTqBhBpz9KimJCAHf+FCNiR6mmQDEvnmY/DBHUC1eT
+         UnadIYdC8DmAQlF1alsbZ4kroGcz/rofOPBVECWFU9iR6MgnxA4dKEapPtCJ+rzP35gk
+         CI9g==
+X-Received: by 10.66.235.4 with SMTP id ui4mr19279265pac.119.1442129032726;
+        Sun, 13 Sep 2015 00:23:52 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id g5sm7688014pat.21.2015.09.13.00.23.45
+        by smtp.gmail.com with ESMTPSA id g5sm7688014pat.21.2015.09.13.00.23.50
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 13 Sep 2015 00:23:47 -0700 (PDT)
+        Sun, 13 Sep 2015 00:23:52 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.1
+In-Reply-To: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277762>
 
-This makes branch.c use the ref-filter APIs for filtering of
-refs for 'git branch -l'. This is part of the series of unification
-of code of 'git branch -l, git tag -l and git for-each-ref'.
+This is a preperatory patch for 'roll show_detached HEAD into regular
+ref_list'. This patch moves get_head_description() to the top so that
+it can be used in print_ref_item().
 
-The previous version can be found here:
-http://thread.gmane.org/gmane.comp.version-control.git/276377
+Based-on-patch-by: Jeff King <peff@peff.net>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ builtin/branch.c | 62 ++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
 
-The changes in this version are:
-[7/8]: Change the tests check for stdout and stderr. (check interdiff)
-
-Karthik Nayak (8):
-  branch: refactor width computation
-  branch: bump get_head_description() to the top
-  branch: roll show_detached HEAD into regular ref_list
-  branch: move 'current' check down to the presentation layer
-  branch: drop non-commit error reporting
-  branch.c: use 'ref-filter' data structures
-  branch.c: use 'ref-filter' APIs
-  branch: add '--points-at' option
-
- Documentation/git-branch.txt |  13 +-
- builtin/branch.c             | 506 +++++++++++++------------------------------
- ref-filter.c                 |   4 +-
- ref-filter.h                 |   8 +-
- t/t1430-bad-ref-name.sh      |  31 ++-
- t/t3203-branch-output.sh     |  20 ++
- 6 files changed, 216 insertions(+), 366 deletions(-)
-
-interdiff:
-
-diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
-index db3627e..070cf06 100755
---- a/t/t1430-bad-ref-name.sh
-+++ b/t/t1430-bad-ref-name.sh
-@@ -38,18 +38,20 @@ test_expect_success 'fast-import: fail on invalid branch name "bad[branch]name"'
- 	test_must_fail git fast-import <input
- '
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 28a10d6..193296a 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -497,6 +497,37 @@ static void add_verbose_info(struct strbuf *out, struct ref_item *item,
+ 	strbuf_release(&subject);
+ }
  
--test_expect_success 'git branch shows badly named ref' '
-+test_expect_success 'git branch shows badly named ref as warning' '
- 	cp .git/refs/heads/master .git/refs/heads/broken...ref &&
- 	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
--	git branch 2>output &&
--	grep -e "broken\.\.\.ref" output
-+	git branch >output 2>error &&
-+	grep -e "broken\.\.\.ref" error &&
-+	! grep -e "broken\.\.\.ref" output
- '
++static char *get_head_description(void)
++{
++	struct strbuf desc = STRBUF_INIT;
++	struct wt_status_state state;
++	memset(&state, 0, sizeof(state));
++	wt_status_get_state(&state, 1);
++	if (state.rebase_in_progress ||
++	    state.rebase_interactive_in_progress)
++		strbuf_addf(&desc, _("(no branch, rebasing %s)"),
++			    state.branch);
++	else if (state.bisect_in_progress)
++		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
++			    state.branch);
++	else if (state.detached_from) {
++		/* TRANSLATORS: make sure these match _("HEAD detached at ")
++		   and _("HEAD detached from ") in wt-status.c */
++		if (state.detached_at)
++			strbuf_addf(&desc, _("(HEAD detached at %s)"),
++				state.detached_from);
++		else
++			strbuf_addf(&desc, _("(HEAD detached from %s)"),
++				state.detached_from);
++	}
++	else
++		strbuf_addstr(&desc, _("(no branch)"));
++	free(state.branch);
++	free(state.onto);
++	free(state.detached_from);
++	return strbuf_detach(&desc, NULL);
++}
++
+ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ 			   int abbrev, int current, const char *remote_prefix)
+ {
+@@ -570,37 +601,6 @@ static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
+ 	return max;
+ }
  
- test_expect_success 'branch -d can delete badly named ref' '
- 	cp .git/refs/heads/master .git/refs/heads/broken...ref &&
- 	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
- 	git branch -d broken...ref &&
--	git branch >output &&
-+	git branch >output 2>error &&
-+	! grep -e "broken\.\.\.ref" error &&
- 	! grep -e "broken\.\.\.ref" output
- '
- 
-@@ -57,7 +59,8 @@ test_expect_success 'branch -D can delete badly named ref' '
- 	cp .git/refs/heads/master .git/refs/heads/broken...ref &&
- 	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
- 	git branch -D broken...ref &&
--	ngit branch >output &&
-+	git branch >output 2>error &&
-+	! grep -e "broken\.\.\.ref" error &&
- 	! grep -e "broken\.\.\.ref" output
- '
- 
-@@ -85,7 +88,8 @@ test_expect_success 'branch -D cannot delete absolute path' '
- test_expect_success 'git branch cannot create a badly named ref' '
- 	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
- 	test_must_fail git branch broken...ref &&
--	git branch >output &&
-+	git branch >output 2>error &&
-+	! grep -e "broken\.\.\.ref" error &&
- 	! grep -e "broken\.\.\.ref" output
- '
- 
-@@ -95,7 +99,8 @@ test_expect_success 'branch -m cannot rename to a bad ref name' '
- 	git branch goodref &&
- 	test_must_fail git branch -m goodref broken...ref &&
- 	test_cmp_rev master goodref &&
--	git branch >output &&
-+	git branch >output 2>error &&
-+	! grep -e "broken\.\.\.ref" error &&
- 	! grep -e "broken\.\.\.ref" output
- '
- 
-@@ -104,14 +109,16 @@ test_expect_failure 'branch -m can rename from a bad ref name' '
- 	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
- 	git branch -m broken...ref renamed &&
- 	test_cmp_rev master renamed &&
--	git branch >output &&
-+	git branch >output 2>error &&
-+	! grep -e "broken\.\.\.ref" error &&
- 	! grep -e "broken\.\.\.ref" output
- '
- 
- test_expect_success 'push cannot create a badly named ref' '
- 	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
- 	test_must_fail git push "file://$(pwd)" HEAD:refs/heads/broken...ref &&
--	git branch >output &&
-+	git branch >output 2>error &&
-+	! grep -e "broken\.\.\.ref" error &&
- 	! grep -e "broken\.\.\.ref" output
- '
- 
-@@ -131,7 +138,8 @@ test_expect_failure 'push --mirror can delete badly named ref' '
- 		cp .git/refs/heads/master .git/refs/heads/broken...ref
- 	) &&
- 	git -C src push --mirror "file://$top/dest" &&
--	git -C dest branch >output &&
-+	git -C dest branch >output 2>error &&
-+	! grep -e "broken\.\.\.ref" error
- 	! grep -e "broken\.\.\.ref" output
- '
- 
-@@ -159,7 +167,8 @@ test_expect_success 'update-ref -d can delete broken name' '
- 	cp .git/refs/heads/master .git/refs/heads/broken...ref &&
- 	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
- 	git update-ref -d refs/heads/broken...ref &&
--	git branch >output &&
-+	git branch >output 2>error &&
-+	! grep -e "broken\.\.\.ref" error &&
- 	! grep -e "broken\.\.\.ref" output
- '
-
+-static char *get_head_description(void)
+-{
+-	struct strbuf desc = STRBUF_INIT;
+-	struct wt_status_state state;
+-	memset(&state, 0, sizeof(state));
+-	wt_status_get_state(&state, 1);
+-	if (state.rebase_in_progress ||
+-	    state.rebase_interactive_in_progress)
+-		strbuf_addf(&desc, _("(no branch, rebasing %s)"),
+-			    state.branch);
+-	else if (state.bisect_in_progress)
+-		strbuf_addf(&desc, _("(no branch, bisect started on %s)"),
+-			    state.branch);
+-	else if (state.detached_from) {
+-		/* TRANSLATORS: make sure these match _("HEAD detached at ")
+-		   and _("HEAD detached from ") in wt-status.c */
+-		if (state.detached_at)
+-			strbuf_addf(&desc, _("(HEAD detached at %s)"),
+-				state.detached_from);
+-		else
+-			strbuf_addf(&desc, _("(HEAD detached from %s)"),
+-				state.detached_from);
+-	}
+-	else
+-		strbuf_addstr(&desc, _("(no branch)"));
+-	free(state.branch);
+-	free(state.onto);
+-	free(state.detached_from);
+-	return strbuf_detach(&desc, NULL);
+-}
+-
+ static void show_detached(struct ref_list *ref_list, int maxwidth)
+ {
+ 	struct commit *head_commit = lookup_commit_reference_gently(head_sha1, 1);
 -- 
 2.5.1
