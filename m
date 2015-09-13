@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 4/5] clone: allow --local from a linked checkout
-Date: Sun, 13 Sep 2015 08:02:27 +0700
-Message-ID: <1442106148-22895-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 3/5] enter_repo: allow .git files in strict mode
+Date: Sun, 13 Sep 2015 08:02:26 +0700
+Message-ID: <1442106148-22895-4-git-send-email-pclouds@gmail.com>
 References: <1440204002-7638-1-git-send-email-pclouds@gmail.com>
  <1442106148-22895-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -18,83 +18,76 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zavgk-0006lM-IP
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 03:02:38 +0200
+	id 1Zavgj-0006lM-23
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 03:02:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755038AbbIMBCd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2015 21:02:33 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:34191 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754802AbbIMBCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2015 21:02:31 -0400
-Received: by padhy16 with SMTP id hy16so108622777pad.1
-        for <git@vger.kernel.org>; Sat, 12 Sep 2015 18:02:31 -0700 (PDT)
+	id S1755028AbbIMBC2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2015 21:02:28 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35274 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755007AbbIMBC0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2015 21:02:26 -0400
+Received: by pacfv12 with SMTP id fv12so110680448pac.2
+        for <git@vger.kernel.org>; Sat, 12 Sep 2015 18:02:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=2GmJrN8tsE46KlcD01Ss8DYu0x7eqI0VNtRAdWs3qtk=;
-        b=dxlbMH+xJIymy47j1m6OBUz4zI+K36xoGfZ1PFpZNbtbTMFOkUJZuXtpGyDSs4pX+x
-         YwA2PS2kbr9fiuAcg275BE8JCLA8Z39MsSn2SlJ6m6i50ChP/hlwWS3QI9ywFvRNtz9n
-         fdnqbNeHBhsQ9d2OUSqxKNntiecBA2MjJjAKT71GQsAS2Le3rJezr6bMmKdkTF5DvXv7
-         ejofnupIyAek/2+WNP0KKtWmeFMy3fKiPbtbH5wNSv6DBOswU2yUesjYok/dHvVzJ6xS
-         B/uJHCJD81GyHz9bpy1AxlHQhZhumczIrrFpjrQ4zkIwhkBDiPak7oli0SiaL2wUnlfJ
-         0z4A==
-X-Received: by 10.68.69.40 with SMTP id b8mr16346416pbu.84.1442106151462;
-        Sat, 12 Sep 2015 18:02:31 -0700 (PDT)
+        bh=hchHqz4p4mCxuXXr3JH2oSPviPWXQUnPonhEpFEBU5A=;
+        b=Wxww7ePI/4LJlUBZGrQD3IDz00OcZnMnOQpYZ1g7AXl9ZYS6XrftRE0BohSW88KOxk
+         oWMIgcxlcY4qcRSbYbk7sHE5+9T/eNWkbZ+VFQNaE5toX4z9kCszy8lUjvyKE2wQES4u
+         JjWXfdpvP9HVXlSAIpe4czVy3oS2WmTK7cqSkoFzeozZmdBjn+dUjS6L2Xf/NaqIecg5
+         gv9UR4OZFuSZRhRw1HdDaCj5ARy8Tv6BIL8cPlODyI0g2j6QQiZ5b+SJSzDSEreWysaB
+         /JChlXSZjMURoTaI/Txk0/w3OXbfSbWZ+yxhnMgsPzetkGUReOsOoLir3j+a7WhL3Qrj
+         oXhg==
+X-Received: by 10.68.249.36 with SMTP id yr4mr16033857pbc.18.1442106146327;
+        Sat, 12 Sep 2015 18:02:26 -0700 (PDT)
 Received: from lanh ([171.233.230.25])
-        by smtp.gmail.com with ESMTPSA id fm5sm7958043pbb.60.2015.09.12.18.02.28
+        by smtp.gmail.com with ESMTPSA id sl7sm7964605pbc.54.2015.09.12.18.02.23
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 Sep 2015 18:02:30 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 13 Sep 2015 08:02:50 +0700
+        Sat, 12 Sep 2015 18:02:25 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 13 Sep 2015 08:02:45 +0700
 X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
 In-Reply-To: <1442106148-22895-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277747>
 
-Noticed-by: Bj=C3=B8rnar Snoksrud <snoksrud@gmail.com>
+Strict mode is about not guessing where .git is. If the user points to =
+a
+=2Egit file, we know exactly where the target .git dir will be.
+
+This is needed even in local clone case because transport.c code uses
+upload-pack for fetching remote refs.
+
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/clone.c         | 6 ++++--
- t/t2025-worktree-add.sh | 5 +++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ path.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 578da85..39d4adf 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -424,8 +424,10 @@ static void clone_local(const char *src_repo, cons=
-t char *dest_repo)
- 	} else {
- 		struct strbuf src =3D STRBUF_INIT;
- 		struct strbuf dest =3D STRBUF_INIT;
--		strbuf_addf(&src, "%s/objects", src_repo);
--		strbuf_addf(&dest, "%s/objects", dest_repo);
-+		get_common_dir(&src, src_repo);
-+		get_common_dir(&dest, dest_repo);
-+		strbuf_addstr(&src, "/objects");
-+		strbuf_addstr(&dest, "/objects");
- 		copy_or_link_directory(&src, &dest, src_repo, src.len);
- 		strbuf_release(&src);
- 		strbuf_release(&dest);
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index 8267411..3694174 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -193,4 +193,9 @@ test_expect_success '"add" -B/--detach mutually exc=
-lusive' '
- 	test_must_fail git worktree add -B poodle --detach bamboo master
- '
+diff --git a/path.c b/path.c
+index 7340e11..32d4ca6 100644
+--- a/path.c
++++ b/path.c
+@@ -438,8 +438,13 @@ const char *enter_repo(const char *path, int stric=
+t)
+ 			return NULL;
+ 		path =3D validated_path;
+ 	}
+-	else if (chdir(path))
+-		return NULL;
++	else {
++		const char *gitfile =3D read_gitfile(used_path);
++		if (gitfile)
++			path =3D gitfile;
++		if (chdir(path))
++			return NULL;
++	}
 =20
-+test_expect_success 'local clone from linked checkout' '
-+	git clone --local here here-clone &&
-+	( cd here-clone && git fsck )
-+'
-+
- test_done
+ 	if (is_git_directory(".")) {
+ 		set_git_dir(".");
 --=20
 2.3.0.rc1.137.g477eb31
