@@ -1,45 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
 Subject: [PATCH v4 6/8] branch.c: use 'ref-filter' data structures
-Date: Sun, 13 Sep 2015 12:53:53 +0530
-Message-ID: <1442129035-31386-7-git-send-email-Karthik.188@gmail.com>
+Date: Sun, 13 Sep 2015 12:53:54 +0530
+Message-ID: <1442129035-31386-8-git-send-email-Karthik.188@gmail.com>
 References: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 13 09:24:15 2015
+X-From: git-owner@vger.kernel.org Sun Sep 13 09:24:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zb1e1-00037Q-3J
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 09:24:13 +0200
+	id 1Zb1eQ-0003em-BD
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 09:24:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752089AbbIMHYG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2015 03:24:06 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:36164 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751999AbbIMHYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2015 03:24:03 -0400
-Received: by padhk3 with SMTP id hk3so113215546pad.3
-        for <git@vger.kernel.org>; Sun, 13 Sep 2015 00:24:02 -0700 (PDT)
+	id S1752099AbbIMHYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2015 03:24:33 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35172 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751585AbbIMHYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2015 03:24:32 -0400
+Received: by pacfv12 with SMTP id fv12so115564662pac.2
+        for <git@vger.kernel.org>; Sun, 13 Sep 2015 00:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=B7aq201q2RqYa2PdrrjomevbPHncpqcsFyojLq7Xu3c=;
-        b=BzT5J15puWBybPOYVtywHvGXu6nNyRpJZxO0sdiiTgrxFg3qKrbaMf4gyT4SvF6vyr
-         umVgfftAjSmnbrTzL3WX1biRHDp3rPXQiFZMIOWGfyfPpNszphyf8NMn43ub+hTDbIUp
-         YKx819UV8VDEbiC44gcsVJC0JsRJwE1oAyfQB95EE2s1OqsahwfnDPZHVX4kRReVAztm
-         MQ7LVE9LcFnAsZl5zr6KduwY5O4qg1OrXjUKNzgjTjZlRFeFRFxP/xk6R60a0M3g+JYy
-         sDpgBtT0CW3ktHTsvTNOA9oZ15Oeibv4qwKxoFrGIfrp2FOv2gb1nGsXmXW2TJfa7vuy
-         PJMg==
-X-Received: by 10.67.3.3 with SMTP id bs3mr19292273pad.121.1442129042510;
-        Sun, 13 Sep 2015 00:24:02 -0700 (PDT)
+        bh=yAOhCfY66Sgs0xn11sP0wGf4dc7hNVXq0Xc9zPfxFXo=;
+        b=XnuOrbda082lM/qN/KGUGqhAi50nrEY7cHXr0G9VMQMYnTBf+07iTYK7IAMcUS7eUV
+         6t4LitHKPeu3nTPjQMMKyDZ7ksFHn6JrMosSgqK8piuZop16p8PcFYo1MM6iaLxGdUBR
+         zykqJ2sse+lXZDUtE99tI9H53Islvzn2Kvtij6DIgzmDk+eD/i/2M8IgCVCRmIkNeiVA
+         iQuiT60GGODdlFf3AYWFgA06HoyI9A4Hfp9vxn0mkUzCkBZ3G/RWk93rWmcy70VsAfZq
+         1R4EH8d1kS3JkEZFYHPhb8R3xXowqolxasEZ9DS9TZWFJapdqMSoOAW7xKKriiZXbkKv
+         j+wQ==
+X-Received: by 10.68.233.5 with SMTP id ts5mr19364378pbc.58.1442129072388;
+        Sun, 13 Sep 2015 00:24:32 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id g5sm7688014pat.21.2015.09.13.00.24.00
+        by smtp.gmail.com with ESMTPSA id g5sm7688014pat.21.2015.09.13.00.24.30
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 13 Sep 2015 00:24:02 -0700 (PDT)
+        Sun, 13 Sep 2015 00:24:31 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.1
 In-Reply-To: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
@@ -47,733 +46,495 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277767>
 
-Make 'branch.c' use 'ref-filter' data structures and make changes to
-support the new data structures. This is a part of the process of
-porting 'branch.c' to use 'ref-filter' APIs.
+Make 'branch.c' use 'ref-filter' APIs for iterating through refs
+sorting. This removes most of the code used in 'branch.c' replacing it
+with calls to the 'ref-filter' library.
 
-This is a temporary step before porting 'branch.c' to use 'ref-filter'
-completely. As this is a temporary step, most of the code introduced
-here will be removed when 'branch.c' is ported over to use
-'ref-filter' APIs.
+Make 'branch.c' use the 'filter_refs()' function provided by 'ref-filter'
+to filter out tags based on the options set.
 
-Make 'free_array_item()' of ref-filter.c a non static function. This
-is used to free memory allocated to a detached head ref, before we
-print other refs.
+We provide a sorting option provided for 'branch.c' by using the sorting
+options provided by 'ref-filter'.
+
+Also remove the 'ignore' variable from ref_array_item as it was
+previously used for the '--merged' option and now that is handled by
+ref-filter.
+
+The test t1430 'git branch shows badly named ref' has been changed to
+check the stderr for the warning regarding the broken ref. This is
+done as ref-filter throws a warning for broken refs rather than
+directly printing them.
+
+Modify documentation and add tests for the same.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/branch.c | 328 ++++++++++++++++++++++---------------------------------
- ref-filter.c     |   2 +-
- ref-filter.h     |   9 +-
- 3 files changed, 141 insertions(+), 198 deletions(-)
+ Documentation/git-branch.txt |   9 +-
+ builtin/branch.c             | 213 +++++++------------------------------------
+ ref-filter.c                 |   2 +-
+ ref-filter.h                 |   1 -
+ t/t1430-bad-ref-name.sh      |  19 ++--
+ t/t3203-branch-output.sh     |  11 +++
+ 6 files changed, 65 insertions(+), 190 deletions(-)
 
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index a67138a..897cd81 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ 'git branch' [--color[=<when>] | --no-color] [-r | -a]
+ 	[--list] [-v [--abbrev=<length> | --no-abbrev]]
+ 	[--column[=<options>] | --no-column]
+-	[(--merged | --no-merged | --contains) [<commit>]] [<pattern>...]
++	[(--merged | --no-merged | --contains) [<commit>]] [--sort=<key>] [<pattern>...]
+ 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+ 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+ 'git branch' --unset-upstream [<branchname>]
+@@ -229,6 +229,13 @@ start-point is either a local or remote-tracking branch.
+ 	The new name for an existing branch. The same restrictions as for
+ 	<branchname> apply.
+ 
++--sort=<key>::
++	Sort based on the key given. Prefix `-` to sort in descending
++	order of the value. You may use the --sort=<key> option
++	multiple times, in which case the last key becomes the primary
++	key. The keys supported are the same as those in `git
++	for-each-ref`. Sort order defaults to sorting based on branch
++	type.
+ 
+ Examples
+ --------
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 8b9da60..5cb7ef0 100644
+index 5cb7ef0..e0aa44c 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -19,6 +19,7 @@
- #include "column.h"
- #include "utf8.h"
- #include "wt-status.h"
-+#include "ref-filter.h"
- 
- static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] [-r | -a] [--merged | --no-merged]"),
-@@ -28,10 +29,6 @@ static const char * const builtin_branch_usage[] = {
- 	NULL
- };
- 
--#define REF_LOCAL_BRANCH    0x01
--#define REF_REMOTE_BRANCH   0x02
--#define REF_DETACHED_HEAD   0x04
--
- static const char *head;
- static unsigned char head_sha1[20];
- 
-@@ -53,13 +50,6 @@ enum color_branch {
- 	BRANCH_COLOR_UPSTREAM = 5
- };
- 
--static enum merge_filter {
--	NO_FILTER = 0,
--	SHOW_NOT_MERGED,
--	SHOW_MERGED
--} merge_filter;
--static unsigned char merge_filter_ref[20];
--
- static struct string_list output = STRING_LIST_INIT_DUP;
- static unsigned int colopts;
- 
-@@ -122,7 +112,7 @@ static int branch_merged(int kind, const char *name,
- 	void *reference_name_to_free = NULL;
- 	int merged;
- 
--	if (kind == REF_LOCAL_BRANCH) {
-+	if (kind == FILTER_REFS_BRANCHES) {
- 		struct branch *branch = branch_get(name);
- 		const char *upstream = branch_get_upstream(branch, NULL);
- 		unsigned char sha1[20];
-@@ -200,14 +190,14 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 	struct strbuf bname = STRBUF_INIT;
- 
- 	switch (kinds) {
--	case REF_REMOTE_BRANCH:
-+	case FILTER_REFS_REMOTES:
- 		fmt = "refs/remotes/%s";
- 		/* For subsequent UI messages */
- 		remote_branch = 1;
- 
- 		force = 1;
- 		break;
--	case REF_LOCAL_BRANCH:
-+	case FILTER_REFS_BRANCHES:
- 		fmt = "refs/heads/%s";
- 		break;
- 	default:
-@@ -224,7 +214,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 		int flags = 0;
- 
- 		strbuf_branchname(&bname, argv[i]);
--		if (kinds == REF_LOCAL_BRANCH && !strcmp(head, bname.buf)) {
-+		if (kinds == FILTER_REFS_BRANCHES && !strcmp(head, bname.buf)) {
- 			error(_("Cannot delete the branch '%s' "
- 			      "which you are currently on."), bname.buf);
- 			ret = 1;
-@@ -280,22 +270,6 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+@@ -270,125 +270,6 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
  	return(ret);
  }
  
--struct ref_item {
--	char *name;
--	char *dest;
--	unsigned int kind;
--	struct commit *commit;
--	int ignore;
--};
--
--struct ref_list {
--	struct rev_info revs;
--	int index, alloc, verbose, abbrev;
--	struct ref_item *list;
--	struct commit_list *with_commit;
--	int kinds;
--};
--
- static char *resolve_symref(const char *src, const char *prefix)
- {
- 	unsigned char sha1[20];
-@@ -310,11 +284,6 @@ static char *resolve_symref(const char *src, const char *prefix)
- 	return xstrdup(dst);
- }
- 
--struct append_ref_cb {
--	struct ref_list *ref_list;
--	const char **pattern;
--};
--
- static int match_patterns(const char **pattern, const char *refname)
- {
- 	if (!*pattern)
-@@ -327,11 +296,29 @@ static int match_patterns(const char **pattern, const char *refname)
- 	return 0;
- }
- 
-+/*
-+ * Allocate memory for a new ref_array_item and insert that into the
-+ * given ref_array. Doesn't take the objectname unlike
-+ * new_ref_array_item(). This is a temporary function which will be
-+ * removed when we port branch.c to use ref-filter APIs.
-+ */
-+static struct ref_array_item *ref_array_append(struct ref_array *array, const char *refname)
-+{
-+	size_t len = strlen(refname);
-+	struct ref_array_item *ref = xcalloc(1, sizeof(struct ref_array_item) + len + 1);
-+	memcpy(ref->refname, refname, len);
-+	ref->refname[len] = '\0';
-+	REALLOC_ARRAY(array->items, array->nr + 1);
-+	array->items[array->nr++] = ref;
-+	return ref;
-+}
-+
- static int append_ref(const char *refname, const struct object_id *oid, int flags, void *cb_data)
- {
--	struct append_ref_cb *cb = (struct append_ref_cb *)(cb_data);
--	struct ref_list *ref_list = cb->ref_list;
--	struct ref_item *newitem;
-+	struct ref_filter_cbdata *cb = (struct ref_filter_cbdata *)(cb_data);
-+	struct ref_filter *filter = cb->filter;
-+	struct ref_array *array = cb->array;
-+	struct ref_array_item *item;
- 	struct commit *commit;
- 	int kind, i;
- 	const char *prefix, *orig_refname = refname;
-@@ -340,8 +327,8 @@ static int append_ref(const char *refname, const struct object_id *oid, int flag
- 		int kind;
- 		const char *prefix;
- 	} ref_kind[] = {
--		{ REF_LOCAL_BRANCH, "refs/heads/" },
--		{ REF_REMOTE_BRANCH, "refs/remotes/" },
-+		{ FILTER_REFS_BRANCHES, "refs/heads/" },
-+		{ FILTER_REFS_REMOTES, "refs/remotes/" },
- 	};
- 
- 	/* Detect kind */
-@@ -354,65 +341,52 @@ static int append_ref(const char *refname, const struct object_id *oid, int flag
- 	}
- 	if (ARRAY_SIZE(ref_kind) <= i) {
- 		if (!strcmp(refname, "HEAD"))
--			kind = REF_DETACHED_HEAD;
-+			kind = FILTER_REFS_DETACHED_HEAD;
- 		else
- 			return 0;
- 	}
- 
- 	/* Don't add types the caller doesn't want */
--	if ((kind & ref_list->kinds) == 0)
-+	if ((kind & filter->kind) == 0)
- 		return 0;
- 
--	if (!match_patterns(cb->pattern, refname))
-+	if (!match_patterns(filter->name_patterns, refname))
- 		return 0;
- 
- 	commit = NULL;
--	if (ref_list->verbose || ref_list->with_commit || merge_filter != NO_FILTER) {
-+	if (filter->verbose || filter->with_commit || filter->merge != REF_FILTER_MERGED_NONE) {
- 		commit = lookup_commit_reference_gently(oid->hash, 1);
- 		if (!commit)
- 			return 0;
- 
- 		/* Filter with with_commit if specified */
--		if (!is_descendant_of(commit, ref_list->with_commit))
-+		if (!is_descendant_of(commit, filter->with_commit))
- 			return 0;
- 
--		if (merge_filter != NO_FILTER)
--			add_pending_object(&ref_list->revs,
-+		if (filter->merge != REF_FILTER_MERGED_NONE)
-+			add_pending_object(array->revs,
- 					   (struct object *)commit, refname);
- 	}
- 
--	ALLOC_GROW(ref_list->list, ref_list->index + 1, ref_list->alloc);
-+	item = ref_array_append(array, refname);
- 
- 	/* Record the new item */
--	newitem = &(ref_list->list[ref_list->index++]);
--	newitem->name = xstrdup(refname);
--	newitem->kind = kind;
--	newitem->commit = commit;
--	newitem->dest = resolve_symref(orig_refname, prefix);
--	newitem->ignore = 0;
-+	item->kind = kind;
-+	item->commit = commit;
-+	item->symref = resolve_symref(orig_refname, prefix);
-+	item->ignore = 0;
- 
- 	return 0;
- }
- 
--static void free_ref_list(struct ref_list *ref_list)
+-static char *resolve_symref(const char *src, const char *prefix)
 -{
--	int i;
+-	unsigned char sha1[20];
+-	int flag;
+-	const char *dst;
 -
--	for (i = 0; i < ref_list->index; i++) {
--		free(ref_list->list[i].name);
--		free(ref_list->list[i].dest);
--	}
--	free(ref_list->list);
+-	dst = resolve_ref_unsafe(src, 0, sha1, &flag);
+-	if (!(dst && (flag & REF_ISSYMREF)))
+-		return NULL;
+-	if (prefix)
+-		skip_prefix(dst, prefix, &dst);
+-	return xstrdup(dst);
 -}
 -
- static int ref_cmp(const void *r1, const void *r2)
- {
--	struct ref_item *c1 = (struct ref_item *)(r1);
--	struct ref_item *c2 = (struct ref_item *)(r2);
-+	struct ref_array_item *c1 = *((struct ref_array_item **)r1);
-+	struct ref_array_item *c2 = *((struct ref_array_item **)r2);
- 
- 	if (c1->kind != c2->kind)
- 		return c1->kind - c2->kind;
--	return strcmp(c1->name, c2->name);
-+	return strcmp(c1->refname, c2->refname);
- }
- 
+-static int match_patterns(const char **pattern, const char *refname)
+-{
+-	if (!*pattern)
+-		return 1; /* no pattern always matches */
+-	while (*pattern) {
+-		if (!wildmatch(*pattern, refname, 0, NULL))
+-			return 1;
+-		pattern++;
+-	}
+-	return 0;
+-}
+-
+-/*
+- * Allocate memory for a new ref_array_item and insert that into the
+- * given ref_array. Doesn't take the objectname unlike
+- * new_ref_array_item(). This is a temporary function which will be
+- * removed when we port branch.c to use ref-filter APIs.
+- */
+-static struct ref_array_item *ref_array_append(struct ref_array *array, const char *refname)
+-{
+-	size_t len = strlen(refname);
+-	struct ref_array_item *ref = xcalloc(1, sizeof(struct ref_array_item) + len + 1);
+-	memcpy(ref->refname, refname, len);
+-	ref->refname[len] = '\0';
+-	REALLOC_ARRAY(array->items, array->nr + 1);
+-	array->items[array->nr++] = ref;
+-	return ref;
+-}
+-
+-static int append_ref(const char *refname, const struct object_id *oid, int flags, void *cb_data)
+-{
+-	struct ref_filter_cbdata *cb = (struct ref_filter_cbdata *)(cb_data);
+-	struct ref_filter *filter = cb->filter;
+-	struct ref_array *array = cb->array;
+-	struct ref_array_item *item;
+-	struct commit *commit;
+-	int kind, i;
+-	const char *prefix, *orig_refname = refname;
+-
+-	static struct {
+-		int kind;
+-		const char *prefix;
+-	} ref_kind[] = {
+-		{ FILTER_REFS_BRANCHES, "refs/heads/" },
+-		{ FILTER_REFS_REMOTES, "refs/remotes/" },
+-	};
+-
+-	/* Detect kind */
+-	for (i = 0; i < ARRAY_SIZE(ref_kind); i++) {
+-		prefix = ref_kind[i].prefix;
+-		if (skip_prefix(refname, prefix, &refname)) {
+-			kind = ref_kind[i].kind;
+-			break;
+-		}
+-	}
+-	if (ARRAY_SIZE(ref_kind) <= i) {
+-		if (!strcmp(refname, "HEAD"))
+-			kind = FILTER_REFS_DETACHED_HEAD;
+-		else
+-			return 0;
+-	}
+-
+-	/* Don't add types the caller doesn't want */
+-	if ((kind & filter->kind) == 0)
+-		return 0;
+-
+-	if (!match_patterns(filter->name_patterns, refname))
+-		return 0;
+-
+-	commit = NULL;
+-	if (filter->verbose || filter->with_commit || filter->merge != REF_FILTER_MERGED_NONE) {
+-		commit = lookup_commit_reference_gently(oid->hash, 1);
+-		if (!commit)
+-			return 0;
+-
+-		/* Filter with with_commit if specified */
+-		if (!is_descendant_of(commit, filter->with_commit))
+-			return 0;
+-
+-		if (filter->merge != REF_FILTER_MERGED_NONE)
+-			add_pending_object(array->revs,
+-					   (struct object *)commit, refname);
+-	}
+-
+-	item = ref_array_append(array, refname);
+-
+-	/* Record the new item */
+-	item->kind = kind;
+-	item->commit = commit;
+-	item->symref = resolve_symref(orig_refname, prefix);
+-	item->ignore = 0;
+-
+-	return 0;
+-}
+-
+-static int ref_cmp(const void *r1, const void *r2)
+-{
+-	struct ref_array_item *c1 = *((struct ref_array_item **)r1);
+-	struct ref_array_item *c2 = *((struct ref_array_item **)r2);
+-
+-	if (c1->kind != c2->kind)
+-		return c1->kind - c2->kind;
+-	return strcmp(c1->refname, c2->refname);
+-}
+-
  static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
-@@ -477,8 +451,8 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
- 	free(ref);
+ 		int show_upstream_ref)
+ {
+@@ -452,7 +333,7 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
  }
  
--static void add_verbose_info(struct strbuf *out, struct ref_item *item,
--			     int verbose, int abbrev)
-+static void add_verbose_info(struct strbuf *out, struct ref_array_item *item,
-+			     struct ref_filter *filter)
+ static void add_verbose_info(struct strbuf *out, struct ref_array_item *item,
+-			     struct ref_filter *filter)
++			     struct ref_filter *filter, const char *refname)
  {
  	struct strbuf subject = STRBUF_INIT, stat = STRBUF_INIT;
  	const char *sub = _(" **** invalid ref ****");
-@@ -489,11 +463,11 @@ static void add_verbose_info(struct strbuf *out, struct ref_item *item,
- 		sub = subject.buf;
+@@ -464,7 +345,7 @@ static void add_verbose_info(struct strbuf *out, struct ref_array_item *item,
  	}
  
--	if (item->kind == REF_LOCAL_BRANCH)
--		fill_tracking_info(&stat, item->name, verbose > 1);
-+	if (item->kind == FILTER_REFS_BRANCHES)
-+		fill_tracking_info(&stat, item->refname, filter->verbose > 1);
+ 	if (item->kind == FILTER_REFS_BRANCHES)
+-		fill_tracking_info(&stat, item->refname, filter->verbose > 1);
++		fill_tracking_info(&stat, refname, filter->verbose > 1);
  
  	strbuf_addf(out, " %s %s%s",
--		find_unique_abbrev(item->commit->object.sha1, abbrev),
-+		find_unique_abbrev(item->commit->object.sha1, filter->abbrev),
- 		stat.buf, sub);
- 	strbuf_release(&stat);
- 	strbuf_release(&subject);
-@@ -530,32 +504,32 @@ static char *get_head_description(void)
+ 		find_unique_abbrev(item->commit->object.sha1, filter->abbrev),
+@@ -504,8 +385,8 @@ static char *get_head_description(void)
  	return strbuf_detach(&desc, NULL);
  }
  
--static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
--			   int abbrev, int detached, const char *remote_prefix)
-+static void print_ref_item(struct ref_array_item *item, int maxwidth,
-+			   struct ref_filter *filter, const char *remote_prefix)
+-static void print_ref_item(struct ref_array_item *item, int maxwidth,
+-			   struct ref_filter *filter, const char *remote_prefix)
++static void format_and_print_ref_item(struct ref_array_item *item, int maxwidth,
++				      struct ref_filter *filter, const char *remote_prefix)
  {
  	char c;
  	int current = 0;
- 	int color;
- 	struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
- 	const char *prefix = "";
--	const char *desc = item->name;
-+	const char *desc = item->refname;
+@@ -515,17 +396,16 @@ static void print_ref_item(struct ref_array_item *item, int maxwidth,
+ 	const char *desc = item->refname;
  	char *to_free = NULL;
  
- 	if (item->ignore)
- 		return;
- 
+-	if (item->ignore)
+-		return;
+-
  	switch (item->kind) {
--	case REF_LOCAL_BRANCH:
--		if (!detached && !strcmp(item->name, head))
-+	case FILTER_REFS_BRANCHES:
-+		if (!filter->detached && !strcmp(item->refname, head))
+ 	case FILTER_REFS_BRANCHES:
+-		if (!filter->detached && !strcmp(item->refname, head))
++		skip_prefix(desc, "refs/heads/", &desc);
++		if (!filter->detached && !strcmp(desc, head))
  			current = 1;
  		else
  			color = BRANCH_COLOR_LOCAL;
  		break;
--	case REF_REMOTE_BRANCH:
-+	case FILTER_REFS_REMOTES:
+ 	case FILTER_REFS_REMOTES:
++		skip_prefix(desc, "refs/remotes/", &desc);
  		color = BRANCH_COLOR_REMOTE;
  		prefix = remote_prefix;
  		break;
--	case REF_DETACHED_HEAD:
-+	case FILTER_REFS_DETACHED_HEAD:
- 		desc = to_free = get_head_description();
- 		current = 1;
- 		break;
-@@ -571,7 +545,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 	}
- 
- 	strbuf_addf(&name, "%s%s", prefix, desc);
--	if (verbose) {
-+	if (filter->verbose) {
- 		int utf8_compensation = strlen(name.buf) - utf8_strwidth(name.buf);
- 		strbuf_addf(&out, "%c %s%-*s%s", c, branch_get_color(color),
- 			    maxwidth + utf8_compensation, name.buf,
-@@ -580,13 +554,13 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+@@ -554,11 +434,13 @@ static void print_ref_item(struct ref_array_item *item, int maxwidth,
  		strbuf_addf(&out, "%c %s%s%s", c, branch_get_color(color),
  			    name.buf, branch_get_color(BRANCH_COLOR_RESET));
  
--	if (item->dest)
--		strbuf_addf(&out, " -> %s", item->dest);
--	else if (verbose)
-+	if (item->symref)
-+		strbuf_addf(&out, " -> %s", item->symref);
-+	else if (filter->verbose)
+-	if (item->symref)
+-		strbuf_addf(&out, " -> %s", item->symref);
++	if (item->symref) {
++		skip_prefix(item->symref, "refs/remotes/", &desc);
++		strbuf_addf(&out, " -> %s", desc);
++	}
+ 	else if (filter->verbose)
  		/* " f7c0c00 [ahead 58, behind 197] vcs-svn: drop obj_pool.h" */
--		add_verbose_info(&out, item, verbose, abbrev);
-+		add_verbose_info(&out, item, filter);
+-		add_verbose_info(&out, item, filter);
++		add_verbose_info(&out, item, filter, desc);
  	if (column_active(colopts)) {
--		assert(!verbose && "--column and --verbose are incompatible");
-+		assert(!filter->verbose && "--column and --verbose are incompatible");
+ 		assert(!filter->verbose && "--column and --verbose are incompatible");
  		string_list_append(&output, out.buf);
- 	} else {
- 		printf("%s\n", out.buf);
-@@ -596,17 +570,17 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 	free(to_free);
- }
- 
--static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
-+static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
- {
+@@ -575,11 +457,13 @@ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
  	int i, max = 0;
--	for (i = 0; i < refs->index; i++) {
--		struct ref_item *it = &refs->list[i];
-+	for (i = 0; i < refs->nr; i++) {
-+		struct ref_array_item *it = refs->items[i];
+ 	for (i = 0; i < refs->nr; i++) {
+ 		struct ref_array_item *it = refs->items[i];
++		const char *desc = it->refname;
  		int w;
  
- 		if (it->ignore)
- 			continue;
--		w = utf8_strwidth(it->name);
--		if (it->kind == REF_REMOTE_BRANCH)
-+		w = utf8_strwidth(it->refname);
-+		if (it->kind == FILTER_REFS_REMOTES)
+-		if (it->ignore)
+-			continue;
+-		w = utf8_strwidth(it->refname);
++		skip_prefix(it->refname, "refs/heads/", &desc);
++		skip_prefix(it->refname, "refs/remotes/", &desc);
++		w = utf8_strwidth(desc);
++
+ 		if (it->kind == FILTER_REFS_REMOTES)
  			w += remote_bonus;
  		if (w > max)
- 			max = w;
-@@ -614,90 +588,80 @@ static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
+@@ -588,14 +472,14 @@ static int calc_maxwidth(struct ref_array *refs, int remote_bonus)
  	return max;
  }
  
--static void print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit, const char **pattern)
-+static void print_ref_list(struct ref_filter *filter)
+-static void print_ref_list(struct ref_filter *filter)
++static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting)
  {
--	int i, index;
--	struct append_ref_cb cb;
--	struct ref_list ref_list;
-+	int i;
-+	struct ref_array array;
-+	struct ref_filter_cbdata data;
+ 	int i;
+ 	struct ref_array array;
+-	struct ref_filter_cbdata data;
  	int maxwidth = 0;
  	const char *remote_prefix = "";
-+	struct rev_info revs;
+-	struct rev_info revs;
++	struct ref_sorting def_sorting;
++	const char *sort_type = "type";
  
  	/*
  	 * If we are listing more than just remote branches,
- 	 * then remote branches will have a "remotes/" prefix.
- 	 * We need to account for this in the width.
- 	 */
--	if (kinds != REF_REMOTE_BRANCH)
-+	if (filter->kind != FILTER_REFS_REMOTES)
+@@ -606,60 +490,30 @@ static void print_ref_list(struct ref_filter *filter)
  		remote_prefix = "remotes/";
  
--	memset(&ref_list, 0, sizeof(ref_list));
--	ref_list.kinds = kinds;
--	ref_list.verbose = verbose;
--	ref_list.abbrev = abbrev;
--	ref_list.with_commit = with_commit;
--	if (merge_filter != NO_FILTER)
--		init_revisions(&ref_list.revs, NULL);
--	cb.ref_list = &ref_list;
--	cb.pattern = pattern;
-+	memset(&array, 0, sizeof(array));
-+	if (filter->merge != REF_FILTER_MERGED_NONE)
-+		init_revisions(&revs, NULL);
-+
-+	data.array = &array;
-+	data.filter = filter;
-+	array.revs = &revs;
-+
- 	/*
- 	 * First we obtain all regular branch refs and if the HEAD is
- 	 * detached then we insert that ref to the end of the ref_fist
- 	 * so that it can be printed and removed first.
- 	 */
--	for_each_rawref(append_ref, &cb);
--	if (detached)
--		head_ref(append_ref, &cb);
-+	for_each_rawref(append_ref, &data);
-+	if (filter->detached)
-+		head_ref(append_ref, &data);
- 	/*
- 	 * The following implementation is currently duplicated in ref-filter. It
- 	 * will eventually be removed when we port branch.c to use ref-filter APIs.
- 	 */
--	if (merge_filter != NO_FILTER) {
--		struct commit *filter;
--		filter = lookup_commit_reference_gently(merge_filter_ref, 0);
--		if (!filter)
--			die(_("object '%s' does not point to a commit"),
--			    sha1_to_hex(merge_filter_ref));
+ 	memset(&array, 0, sizeof(array));
+-	if (filter->merge != REF_FILTER_MERGED_NONE)
+-		init_revisions(&revs, NULL);
 -
--		filter->object.flags |= UNINTERESTING;
--		add_pending_object(&ref_list.revs,
--				   (struct object *) filter, "");
--		ref_list.revs.limited = 1;
--
--		if (prepare_revision_walk(&ref_list.revs))
-+	if (filter->merge != REF_FILTER_MERGED_NONE) {
-+		filter->merge_commit->object.flags |= UNINTERESTING;
-+		add_pending_object(&revs, &filter->merge_commit->object, "");
-+		revs.limited = 1;
-+
-+		if (prepare_revision_walk(&revs))
- 			die(_("revision walk setup failed"));
+-	data.array = &array;
+-	data.filter = filter;
+-	array.revs = &revs;
  
--		for (i = 0; i < ref_list.index; i++) {
--			struct ref_item *item = &ref_list.list[i];
-+		for (i = 0; i < array.nr; i++) {
-+			struct ref_array_item *item = array.items[i];
- 			struct commit *commit = item->commit;
- 			int is_merged = !!(commit->object.flags & UNINTERESTING);
--			item->ignore = is_merged != (merge_filter == SHOW_MERGED);
-+			item->ignore = is_merged != (filter->merge == REF_FILTER_MERGED_INCLUDE);
- 		}
- 
--		for (i = 0; i < ref_list.index; i++) {
--			struct ref_item *item = &ref_list.list[i];
-+		for (i = 0; i < array.nr; i++) {
-+			struct ref_array_item *item = array.items[i];
- 			clear_commit_marks(item->commit, ALL_REV_FLAGS);
- 		}
--		clear_commit_marks(filter, ALL_REV_FLAGS);
-+		clear_commit_marks(filter->merge_commit, ALL_REV_FLAGS);
- 	}
--	if (verbose)
--		maxwidth = calc_maxwidth(&ref_list, strlen(remote_prefix));
+-	/*
+-	 * First we obtain all regular branch refs and if the HEAD is
+-	 * detached then we insert that ref to the end of the ref_fist
+-	 * so that it can be printed and removed first.
+-	 */
+-	for_each_rawref(append_ref, &data);
+-	if (filter->detached)
+-		head_ref(append_ref, &data);
+-	/*
+-	 * The following implementation is currently duplicated in ref-filter. It
+-	 * will eventually be removed when we port branch.c to use ref-filter APIs.
+-	 */
+-	if (filter->merge != REF_FILTER_MERGED_NONE) {
+-		filter->merge_commit->object.flags |= UNINTERESTING;
+-		add_pending_object(&revs, &filter->merge_commit->object, "");
+-		revs.limited = 1;
 -
--	index = ref_list.index;
-+	if (filter->verbose)
-+		maxwidth = calc_maxwidth(&array, strlen(remote_prefix));
+-		if (prepare_revision_walk(&revs))
+-			die(_("revision walk setup failed"));
+-
+-		for (i = 0; i < array.nr; i++) {
+-			struct ref_array_item *item = array.items[i];
+-			struct commit *commit = item->commit;
+-			int is_merged = !!(commit->object.flags & UNINTERESTING);
+-			item->ignore = is_merged != (filter->merge == REF_FILTER_MERGED_INCLUDE);
+-		}
++	verify_ref_format("%(refname)%(symref)");
++	filter_refs(&array, filter, filter->kind | FILTER_REFS_INCLUDE_BROKEN);
+ 
+-		for (i = 0; i < array.nr; i++) {
+-			struct ref_array_item *item = array.items[i];
+-			clear_commit_marks(item->commit, ALL_REV_FLAGS);
+-		}
+-		clear_commit_marks(filter->merge_commit, ALL_REV_FLAGS);
+-	}
+ 	if (filter->verbose)
+ 		maxwidth = calc_maxwidth(&array, strlen(remote_prefix));
  
  	/* Print detached HEAD before sorting and printing the rest */
--	if (detached) {
--		print_ref_item(&ref_list.list[index - 1], maxwidth, verbose, abbrev,
--			       detached, remote_prefix);
--		index -= 1;
-+	if (filter->kind & FILTER_REFS_DETACHED_HEAD) {
-+		print_ref_item(array.items[array.nr - 1], maxwidth, filter, remote_prefix);
-+		free_array_item(array.items[array.nr - 1]);
-+		array.nr--;
+ 	if (filter->kind & FILTER_REFS_DETACHED_HEAD) {
+-		print_ref_item(array.items[array.nr - 1], maxwidth, filter, remote_prefix);
++		format_and_print_ref_item(array.items[array.nr - 1], maxwidth, filter, remote_prefix);
+ 		free_array_item(array.items[array.nr - 1]);
+ 		array.nr--;
  	}
  
--	qsort(ref_list.list, index, sizeof(struct ref_item), ref_cmp);
-+	qsort(array.items, array.nr, sizeof(struct ref_array_item *), ref_cmp);
+-	qsort(array.items, array.nr, sizeof(struct ref_array_item *), ref_cmp);
++	if (!sorting) {
++		def_sorting.next = NULL;
++		def_sorting.atom = parse_ref_filter_atom(sort_type,
++							 sort_type + strlen(sort_type));
++		sorting = &def_sorting;
++	}
++	ref_array_sort(sorting, &array);
  
--	for (i = 0; i < index; i++)
--		print_ref_item(&ref_list.list[i], maxwidth, verbose,
--			       abbrev, detached, remote_prefix);
-+	for (i = 0; i < array.nr; i++)
-+		print_ref_item(array.items[i], maxwidth, filter, remote_prefix);
+ 	for (i = 0; i < array.nr; i++)
+-		print_ref_item(array.items[i], maxwidth, filter, remote_prefix);
++		format_and_print_ref_item(array.items[i], maxwidth, filter, remote_prefix);
  
--	free_ref_list(&ref_list);
-+	ref_array_clear(&array);
+ 	ref_array_clear(&array);
  }
- 
- static void rename_branch(const char *oldname, const char *newname, int force)
-@@ -753,24 +717,6 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 	strbuf_release(&newsection);
- }
- 
--/*
-- * This function is duplicated in ref-filter. It will eventually be removed
-- * when we port branch.c to use ref-filter APIs.
-- */
--static int opt_parse_merge_filter(const struct option *opt, const char *arg, int unset)
--{
--	merge_filter = ((opt->long_name[0] == 'n')
--			? SHOW_NOT_MERGED
--			: SHOW_MERGED);
--	if (unset)
--		merge_filter = SHOW_NOT_MERGED; /* b/c for --no-merged */
--	if (!arg)
--		arg = "HEAD";
--	if (get_sha1(arg, merge_filter_ref))
--		die(_("malformed object name %s"), arg);
--	return 0;
--}
--
- static const char edit_description[] = "BRANCH_DESCRIPTION";
- 
- static int edit_branch_description(const char *branch_name)
-@@ -810,17 +756,15 @@ static int edit_branch_description(const char *branch_name)
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
- 	int delete = 0, rename = 0, force = 0, list = 0;
--	int verbose = 0, abbrev = -1, detached = 0;
- 	int reflog = 0, edit_description = 0;
- 	int quiet = 0, unset_upstream = 0;
+@@ -761,6 +615,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
  	const char *new_upstream = NULL;
  	enum branch_track track;
--	int kinds = REF_LOCAL_BRANCH;
--	struct commit_list *with_commit = NULL;
-+	struct ref_filter filter;
+ 	struct ref_filter filter;
++	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
  
  	struct option options[] = {
  		OPT_GROUP(N_("Generic options")),
--		OPT__VERBOSE(&verbose,
-+		OPT__VERBOSE(&filter.verbose,
- 			N_("show hash and subject, give twice for upstream branch")),
- 		OPT__QUIET(&quiet, N_("suppress informational messages")),
- 		OPT_SET_INT('t', "track",  &track, N_("set up tracking mode (see git-pull(1))"),
-@@ -830,15 +774,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_STRING('u', "set-upstream-to", &new_upstream, "upstream", "change the upstream info"),
- 		OPT_BOOL(0, "unset-upstream", &unset_upstream, "Unset the upstream info"),
- 		OPT__COLOR(&branch_use_color, N_("use colored output")),
--		OPT_SET_INT('r', "remotes",     &kinds, N_("act on remote-tracking branches"),
--			REF_REMOTE_BRANCH),
--		OPT_CONTAINS(&with_commit, N_("print only branches that contain the commit")),
--		OPT_WITH(&with_commit, N_("print only branches that contain the commit")),
--		OPT__ABBREV(&abbrev),
-+		OPT_SET_INT('r', "remotes",     &filter.kind, N_("act on remote-tracking branches"),
-+			FILTER_REFS_REMOTES),
-+		OPT_CONTAINS(&filter.with_commit, N_("print only branches that contain the commit")),
-+		OPT_WITH(&filter.with_commit, N_("print only branches that contain the commit")),
-+		OPT__ABBREV(&filter.abbrev),
- 
- 		OPT_GROUP(N_("Specific git-branch actions:")),
--		OPT_SET_INT('a', "all", &kinds, N_("list both remote-tracking and local branches"),
--			REF_REMOTE_BRANCH | REF_LOCAL_BRANCH),
-+		OPT_SET_INT('a', "all", &filter.kind, N_("list both remote-tracking and local branches"),
-+			FILTER_REFS_REMOTES | FILTER_REFS_BRANCHES),
- 		OPT_BIT('d', "delete", &delete, N_("delete fully merged branch"), 1),
- 		OPT_BIT('D', NULL, &delete, N_("delete branch (even if not merged)"), 2),
- 		OPT_BIT('m', "move", &rename, N_("move/rename a branch and its reflog"), 1),
-@@ -848,22 +792,16 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "edit-description", &edit_description,
- 			 N_("edit the description for the branch")),
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion")),
--		{
--			OPTION_CALLBACK, 0, "no-merged", &merge_filter_ref,
--			N_("commit"), N_("print only not merged branches"),
--			PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
--			opt_parse_merge_filter, (intptr_t) "HEAD",
--		},
--		{
--			OPTION_CALLBACK, 0, "merged", &merge_filter_ref,
--			N_("commit"), N_("print only merged branches"),
--			PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
--			opt_parse_merge_filter, (intptr_t) "HEAD",
--		},
-+		OPT_MERGED(&filter, N_("print only branches that are merged")),
-+		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
+@@ -795,6 +650,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_MERGED(&filter, N_("print only branches that are merged")),
+ 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
  		OPT_COLUMN(0, "column", &colopts, N_("list branches in columns")),
++		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
++			     N_("field name to sort on"), &parse_opt_ref_sorting),
  		OPT_END(),
  	};
  
-+	memset(&filter, 0, sizeof(filter));
-+	filter.kind = FILTER_REFS_BRANCHES;
-+	filter.abbrev = -1;
-+
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(builtin_branch_usage, options);
- 
-@@ -875,11 +813,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (!head)
- 		die(_("Failed to resolve HEAD as a valid ref."));
- 	if (!strcmp(head, "HEAD"))
--		detached = 1;
-+		filter.detached = 1;
- 	else if (!skip_prefix(head, "refs/heads/", &head))
- 		die(_("HEAD not found below refs/heads!"));
--	hashcpy(merge_filter_ref, head_sha1);
--
- 
- 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
- 			     0);
-@@ -887,17 +823,17 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (!delete && !rename && !edit_description && !new_upstream && !unset_upstream && argc == 0)
- 		list = 1;
- 
--	if (with_commit || merge_filter != NO_FILTER)
-+	if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE)
- 		list = 1;
- 
- 	if (!!delete + !!rename + !!new_upstream +
- 	    list + unset_upstream > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
--	if (abbrev == -1)
--		abbrev = DEFAULT_ABBREV;
-+	if (filter.abbrev == -1)
-+		filter.abbrev = DEFAULT_ABBREV;
- 	finalize_colopts(&colopts, -1);
--	if (verbose) {
-+	if (filter.verbose) {
- 		if (explicitly_enable_column(colopts))
- 			die(_("--column and --verbose are incompatible"));
- 		colopts = 0;
-@@ -911,13 +847,13 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (delete) {
- 		if (!argc)
- 			die(_("branch name required"));
--		return delete_branches(argc, argv, delete > 1, kinds, quiet);
-+		return delete_branches(argc, argv, delete > 1, filter.kind, quiet);
- 	} else if (list) {
- 		/*  git branch --local also shows HEAD when it is detached */
--		if (kinds & REF_LOCAL_BRANCH)
--			kinds |= REF_DETACHED_HEAD;
--		print_ref_list(kinds, detached, verbose, abbrev,
--					 with_commit, argv);
-+		if ((filter.kind & FILTER_REFS_BRANCHES) && filter.detached)
-+			filter.kind |= FILTER_REFS_DETACHED_HEAD;
-+		filter.name_patterns = argv;
-+		print_ref_list(&filter);
+@@ -853,7 +710,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if ((filter.kind & FILTER_REFS_BRANCHES) && filter.detached)
+ 			filter.kind |= FILTER_REFS_DETACHED_HEAD;
+ 		filter.name_patterns = argv;
+-		print_ref_list(&filter);
++		print_ref_list(&filter, sorting);
  		print_columns(&output, colopts, NULL);
  		string_list_clear(&output, 0);
  		return 0;
-@@ -927,7 +863,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		struct strbuf branch_ref = STRBUF_INIT;
- 
- 		if (!argc) {
--			if (detached)
-+			if (filter.detached)
- 				die(_("Cannot give description to detached HEAD"));
- 			branch_name = head;
- 		} else if (argc == 1)
-@@ -1015,7 +951,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		if (!branch)
- 			die(_("no such branch '%s'"), argv[0]);
- 
--		if (kinds != REF_LOCAL_BRANCH)
-+		if (filter.kind != FILTER_REFS_BRANCHES)
- 			die(_("-a and -r options to 'git branch' do not make sense with a branch name"));
- 
- 		if (track == BRANCH_TRACK_OVERRIDE)
 diff --git a/ref-filter.c b/ref-filter.c
-index fd839ac..c059d87 100644
+index c059d87..c536aea 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1356,7 +1356,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
- }
- 
- /*  Free memory allocated for a ref_array_item */
--static void free_array_item(struct ref_array_item *item)
-+void free_array_item(struct ref_array_item *item)
- {
- 	free((char *)item->symref);
- 	free(item);
+@@ -1331,7 +1331,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	 * obtain the commit using the 'oid' available and discard all
+ 	 * non-commits early. The actual filtering is done later.
+ 	 */
+-	if (filter->merge_commit || filter->with_commit) {
++	if (filter->merge_commit || filter->with_commit || filter->verbose) {
+ 		commit = lookup_commit_reference_gently(oid->hash, 1);
+ 		if (!commit)
+ 			return 0;
 diff --git a/ref-filter.h b/ref-filter.h
-index a5cfa5e..56980a3 100644
+index 56980a3..9316031 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -36,6 +36,7 @@ struct ref_array_item {
+@@ -36,7 +36,6 @@ struct ref_array_item {
  	unsigned char objectname[20];
  	int flag;
  	unsigned int kind;
-+	int ignore : 1; /* To be removed in the next patch */
+-	int ignore : 1; /* To be removed in the next patch */
  	const char *symref;
  	struct commit *commit;
  	struct atom_value *value;
-@@ -45,6 +46,7 @@ struct ref_array_item {
- struct ref_array {
- 	int nr, alloc;
- 	struct ref_array_item **items;
-+	struct rev_info *revs;
- };
+diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
+index 16d0b8b..dacc186 100755
+--- a/t/t1430-bad-ref-name.sh
++++ b/t/t1430-bad-ref-name.sh
+@@ -38,11 +38,12 @@ test_expect_success 'fast-import: fail on invalid branch name "bad[branch]name"'
+ 	test_must_fail git fast-import <input
+ '
  
- struct ref_filter {
-@@ -60,9 +62,12 @@ struct ref_filter {
- 	struct commit *merge_commit;
+-test_expect_success 'git branch shows badly named ref' '
++test_expect_success 'git branch shows badly named ref as warning' '
+ 	cp .git/refs/heads/master .git/refs/heads/broken...ref &&
+ 	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
+-	git branch >output &&
+-	grep -e "broken\.\.\.ref" output
++	git branch >output 2>error &&
++	grep -e "broken\.\.\.ref" error &&
++	! grep -e "broken\.\.\.ref" output
+ '
  
- 	unsigned int with_commit_tag_algo : 1,
--		match_as_path : 1;
-+		match_as_path : 1,
-+		detached : 1;
- 	unsigned int kind,
- 		lines;
-+	int abbrev,
-+		verbose;
- };
+ test_expect_success 'branch -d can delete badly named ref' '
+@@ -95,8 +96,8 @@ test_expect_success 'branch -m cannot rename to a bad ref name' '
+ 	git branch goodref &&
+ 	test_must_fail git branch -m goodref broken...ref &&
+ 	test_cmp_rev master goodref &&
+-	git branch >output &&
+-	! grep -e "broken\.\.\.ref" output
++	git branch >output 2>error &&
++	! grep -e "broken\.\.\.ref" error
+ '
  
- struct ref_filter_cbdata {
-@@ -86,6 +91,8 @@ struct ref_filter_cbdata {
-  * filtered refs in the ref_array structure.
-  */
- int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int type);
-+/*  Clear memory allocated to a ref_array_item */
-+void free_array_item(struct ref_array_item *item);
- /*  Clear all memory allocated to ref_array */
- void ref_array_clear(struct ref_array *array);
- /*  Parse format string and sort specifiers */
+ test_expect_failure 'branch -m can rename from a bad ref name' '
+@@ -104,8 +105,8 @@ test_expect_failure 'branch -m can rename from a bad ref name' '
+ 	test_when_finished "rm -f .git/refs/heads/broken...ref" &&
+ 	git branch -m broken...ref renamed &&
+ 	test_cmp_rev master renamed &&
+-	git branch >output &&
+-	! grep -e "broken\.\.\.ref" output
++	git branch >output 2>error &&
++	! grep -e "broken\.\.\.ref" error
+ '
+ 
+ test_expect_success 'push cannot create a badly named ref' '
+@@ -131,8 +132,8 @@ test_expect_failure 'push --mirror can delete badly named ref' '
+ 		cp .git/refs/heads/master .git/refs/heads/broken...ref
+ 	) &&
+ 	git -C src push --mirror "file://$top/dest" &&
+-	git -C dest branch >output &&
+-	! grep -e "broken\.\.\.ref" output
++	git -C dest branch >output 2>error &&
++	! grep -e "broken\.\.\.ref" error
+ '
+ 
+ test_expect_success 'rev-parse skips symref pointing to broken name' '
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index f51d0f3..53d166d 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -143,4 +143,15 @@ EOF
+ 	test_i18ncmp expect actual
+ '
+ 
++test_expect_success 'git branch `--sort` option' '
++	cat >expect <<-\EOF &&
++	* (HEAD detached from fromtag)
++	  branch-two
++	  branch-one
++	  master
++	EOF
++	git branch --sort=objectsize >actual &&
++	test_i18ncmp expect actual
++'
++
+ test_done
 -- 
 2.5.1
