@@ -1,264 +1,86 @@
-From: =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: translate 123 new messages
-Date: Sun, 13 Sep 2015 20:37:02 +0200
-Message-ID: <55F5C24E.3000101@gmail.com>
-References: <1441985744-882-1-git-send-email-ralf.thielow@gmail.com>
+From: Jeffrey Walton <noloader@gmail.com>
+Subject: Re: Git configure/make does not honor ARFLAGS
+Date: Sun, 13 Sep 2015 14:37:11 -0400
+Message-ID: <CAH8yC8nNUMCfgzd2sb1PUxjTPEuPaqe3XtW-yyi=X3+c3_im7g@mail.gmail.com>
+References: <CAH8yC8kV77h8cRA9Qo_1FYe9sv0zgsE7yKxaX+OtpRfj9+7wog@mail.gmail.com>
+	<20150913101727.GB26562@sigill.intra.peff.net>
+	<CAPig+cQV-kaDDdBH+QZXsSjDHjP2CUYDXp3WKSBtgguVmLvofg@mail.gmail.com>
+Reply-To: noloader@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	phillip.szelat@gmail.com, magnus.goerlitz@googlemail.com
-To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 13 20:37:15 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Sep 13 20:37:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbC9K-0006o8-Jr
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 20:37:15 +0200
+	id 1ZbC9R-0006wr-3m
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Sep 2015 20:37:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754049AbbIMShH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Sep 2015 14:37:07 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:33498 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753550AbbIMShG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2015 14:37:06 -0400
-Received: by wiclk2 with SMTP id lk2so115610692wic.0
-        for <git@vger.kernel.org>; Sun, 13 Sep 2015 11:37:04 -0700 (PDT)
+	id S1754388AbbIMShO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2015 14:37:14 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:36717 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753550AbbIMShN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2015 14:37:13 -0400
+Received: by ioii196 with SMTP id i196so145167675ioi.3
+        for <git@vger.kernel.org>; Sun, 13 Sep 2015 11:37:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=uIshXaZlVshEk4ZkfxVSpN3lzta5fPq3TpR3EI6rbTA=;
-        b=hqh9vyeRgPNn7zzP9yFfNwGNgflsimcDdg1Pw/Ykof/LYyZ8vghUTHpM57TL2x1i/6
-         VAxkYpSmnywI7nWycekCVekx/VOMjaYBcQcNOO3WoPUB3LNKKO4fvYQnFR/g7wipkXvM
-         Nc57dZPo3cdVbRuuYVyvrhdWtQLaRrJADeokiwMH3IjT9B03b2CC5jcYrnYO+t0ckFHY
-         WcasrzEGi89YGHXrgSymhX4VHkwBYndREKJHYohoGVNCaFwWtzt4SePKG3Onf9hJVyfv
-         zRiii7M2oXFzoi0JlSIhjL+u3LSNIYL8sOCAZH7sZpaX30MYE6n9iThgpwGyLD7BiMK4
-         KwSg==
-X-Received: by 10.194.60.243 with SMTP id k19mr20377568wjr.8.1442169424401;
-        Sun, 13 Sep 2015 11:37:04 -0700 (PDT)
-Received: from ?IPv6:2a02:8108:2bc0:1154:5555:45f6:e25b:ea5e? ([2a02:8108:2bc0:1154:5555:45f6:e25b:ea5e])
-        by smtp.googlemail.com with ESMTPSA id fx2sm10206657wib.24.2015.09.13.11.37.03
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 13 Sep 2015 11:37:03 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-In-Reply-To: <1441985744-882-1-git-send-email-ralf.thielow@gmail.com>
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=MMm4F4Ss7HjqBsX2QtP+3knboPGriyq8ZJctao7PnHA=;
+        b=JYKuJ+w+j/sBt1bJjUtHaUYMJUvn/w1hrGYLR0fIFNw4y+OCxM7M42yFILthg+4ti6
+         ZazaMlfKx6O3k+Z8Kb3Xs8dUw+iqhLfTMMFqMfmxmumeRVyMRbzKRPMrXmAw63IDkFGH
+         cOzxwf4VCLOOnHJJ8mM2MWYiVHK8eb5F2eEY1z85BqnJzT4i0Z+vpK9OjwokiqJOkeHL
+         gPiOVFej7hWl3UHVxotdKwiQCYQSIDm6ZwG9GlQZX9MN4ontTe4wxld54G/uz0l53pnF
+         zPjfRjsydCFHR5x9t6oqnxlpOEB8XffVeeFWGSTNvDqt0DAH7HMLnm1RGxPK3eHGJN1O
+         2lvw==
+X-Received: by 10.107.9.194 with SMTP id 63mr21487671ioj.122.1442169431977;
+ Sun, 13 Sep 2015 11:37:11 -0700 (PDT)
+Received: by 10.36.123.131 with HTTP; Sun, 13 Sep 2015 11:37:11 -0700 (PDT)
+In-Reply-To: <CAPig+cQV-kaDDdBH+QZXsSjDHjP2CUYDXp3WKSBtgguVmLvofg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277792>
 
-Hi Ralf,
-
-thanks for your work!
-I have only a few things to add:
-
-
-one little typo:
-
-> @@ -1228,20 +1227,19 @@ msgstr[1] ""
->   msgid "  (use \"git pull\" to merge the remote branch into yours)\n=
-"
->   msgstr ""
->   "  (benutzen Sie \"git pull\", um Ihren Branch mit dem Remote-Branc=
-h "
->   "zusammenzuf=C3=BChren)\n"
+On Sun, Sep 13, 2015 at 1:11 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sun, Sep 13, 2015 at 6:17 AM, Jeff King <peff@peff.net> wrote:
+>> On Sun, Aug 30, 2015 at 05:34:59PM -0400, Jeffrey Walton wrote:
+>>> I'm working on an old OS X machine. I needed to perform:
+>>>
+>>>   AR=libtool
+>>>   ARFLAGS="-static -o"
+>>>   ...
+>>>   make configure
+>>>   ./configure ...
+>>>   make
+>>
+>> Hrm. Your "$(AR)" is not really "ar" then, is it? It has been a long
+>> time since I played with libtool, but what is the reason that you are
+>> calling libtool and not "ar" in the first place. Is it that you do not
+>> have "ar" at all, and libtool performs some other procedure? If so, is
+>> there a more ar-compatible wrapper that can be used?
 >
->   #: revision.c:2198
-> -#, fuzzy
->   msgid "your current branch appears to be broken"
-> -msgstr "Sie sind auf einem Branch, der noch geboren wird"
-> +msgstr "Ihr aktuell Branch scheint fehlerhaft zu sein."
->
->   #: revision.c:2201
-> -#, fuzzy, c-format
-> +#, c-format
->   msgid "your current branch '%s' does not have any commits yet"
-> -msgstr "Branch '%s' zeigt auf keinen Commit"
-> +msgstr "Ihr aktueller Branch '%s' hat noch keine Commits."
->
->   #: revision.c:2395
->   msgid "--first-parent is incompatible with --bisect"
->   msgstr "Die Optionen --first-parent und --bisect sind inkompatibel.=
-"
->
->   #: run-command.c:83
+> This isn't GNU's libtool. It's Apple's libtool, an entirely different
+> beast, which is an 'ar' replacement and is needed when linking
+> Universal binaries containing code for more than one architecture,
+> such as 'ppc' and 'i386', so the same executable can run on multiple
+> architectures. This tool dates all the way back to at least NextStep
+> 3.1 when NeXT ported NextStep to Intel hardware (i486) from NeXT
+> computers (m68k). The name "Universal" is an Apple invention, but back
+> in the NeXT days, they were called Multi-Architecture Binaries (MAB)
+> or, colloquially, just FAT (for "fat"); there was a corresponding
+> "lipo" command (short for "liposuction") to "thin" out "fat" binaries.
+> NeXT's libtool predates GNU's libtool by a few years: May 1993 vs.
+> July 1997, respectively. When an attempt is made to use 'ar' on
+> Universal object files, it errors out saying that it can't be used
+> with such files and recommends 'libtool' instead.
 
+Thanks Eric. You did a much better job than I would have done.
 
-Should be: "Ihr aktueller Branch scheint fehlerhaft zu sein."
-
-And here:
-
-> @@ -1896,44 +1894,41 @@ msgstr "  (benutzen Sie \"git am --skip\", um=
- diesen Patch auszulassen)"
->   msgid "  (use \"git am --abort\" to restore the original branch)"
->   msgstr ""
->   "  (benutzen Sie \"git am --abort\", um den urspr=C3=BCnglichen Bra=
-nch "
->   "wiederherzustellen)"
->
->   #: wt-status.c:1105
-> -#, fuzzy
->   msgid "No commands done."
-> -msgstr "Keine Commits geparst."
-> +msgstr "Keine Kommandos ausgef=C3=BChrt."
->
->   #: wt-status.c:1108
->   #, c-format
->   msgid "Last command done (%d command done):"
->   msgid_plural "Last commands done (%d commands done):"
-> -msgstr[0] ""
-> -msgstr[1] ""
-> +msgstr[0] "Letztes Kommando ausgef=C3=BChrt (%d Kommandos ausgef=C3=BC=
-hrt):"
-> +msgstr[1] "Letzte Kommandos ausgef=C3=BChrt (%d Kommandos ausgef=C3=BC=
-hrt):"
->
->   #: wt-status.c:1119
->   #, c-format
-
-in the first version the singular "command" is used:
-[0] ... (%d Kommando ausgef=C3=BChrt):
-
-
-Should be the same here:
-
->   #: wt-status.c:1127
->   #, c-format
->   msgid "Next command to do (%d remaining command):"
->   msgid_plural "Next commands to do (%d remaining commands):"
-> -msgstr[0] ""
-> -msgstr[1] ""
-> +msgstr[0] "N=C3=A4chstes auszuf=C3=BChrendes Kommando (%d Kommandos =
-verbleibend):"
-> +msgstr[1] "N=C3=A4chste auszuf=C3=BChrende Kommandos (%d Kommandos v=
-erbleibend):"
->
-
-[0] ... (%d Kommando verbleibend)
-
-
-Maybe leave the apostrophes in this message since it is not in the=20
-english version (?):
-
-> @@ -2504,15 +2494,15 @@ msgstr "auf leere Historie anwenden"
->   #: builtin/am.c:1684 builtin/commit.c:1752 builtin/merge.c:829
->   #: builtin/merge.c:854
->   msgid "failed to write commit object"
->   msgstr "Fehler beim Schreiben des Commit-Objektes."
->
->   #: builtin/am.c:1716 builtin/am.c:1720
-> -#, fuzzy, c-format
-> +#, c-format
->   msgid "cannot resume: %s does not exist."
-> -msgstr "Branch '%s' existiert nicht"
-> +msgstr "Kann nicht fortsetzen: '%s' existiert nicht"
->
->   #: builtin/am.c:1736
->   msgid "cannot be interactive without stdin connected to a terminal.=
-"
->   msgstr ""
->   "Kann nicht interaktiv sein, ohne dass die Standard-Eingabe mit ein=
-em "
->   "Terminal verbunden ist."
-
-"Kann nicht fortsetzen: %s existiert nicht"
-
-
-This:
-
->
->   #: builtin/am.c:2194
-> -#, fuzzy
->   msgid "git am [options] [(<mbox>|<Maildir>)...]"
-> -msgstr "git merge [<Optionen>] [<Commit>...]"
-> +msgstr "git am [Optionen] [(<mbox>|<E-Mail-Verzeichnis>)...]"
->
->   #: builtin/am.c:2195
-> -#, fuzzy
->   msgid "git am [options] (--continue | --skip | --abort)"
-> -msgstr "versuchen Sie \"git cherry-pick (--continue | --quit | --abo=
-rt)\""
-> +msgstr "git am [Optionen] (--continue | --quit | --abort)"
->
-
-
-should be:
-"git am [Optionen] (--continue | --skip | --abort)"
-
-(--skip instead of --quit)
-
-
-
-One little typo here:
-
-> @@ -9289,19 +9270,18 @@ msgstr "Die Option --delete ist inkompatibel =
-mit --all, --mirror und --tags."
->
->   #: builtin/push.c:581
->   msgid "--delete doesn't make sense without any refs"
->   msgstr "Die Option --delete kann nur mit Referenzen verwendet werde=
-n."
->
->   #: builtin/read-tree.c:37
-> -#, fuzzy
->   msgid ""
->   "git read-tree [(-m [--trivial] [--aggressive] | --reset | --prefix=
-=3D<prefix>) "
->   "[-u [--exclude-per-directory=3D<gitignore>] | -i]] [--no-sparse-ch=
-eckout] [--"
->   "index-output=3D<file>] (--empty | <tree-ish1> [<tree-ish2> [<tree-=
-ish3>]])"
->   msgstr ""
-> -"git read-tree [[-m [--trivial] [--aggressive] | --reset | --prefix=3D=
-<Pr=C3=A4fix>] "
-> +"git read-tree [([-m [--trivial] [--aggressive] | --reset | --prefix=
-=3D<Pr=C3=A4fix>) "
->   "[-u [--exclude-per-directory=3D<gitignore>] | -i]] [--no-sparse-ch=
-eckout] [--"
->   "index-output=3D<Datei>] (--empty | <Commit-Referenz1> [<Commit-Ref=
-erenz2> "
->   "[<Commit-Referenz3>]])"
->
->   #: builtin/read-tree.c:110
->   msgid "write resulting index to <file>"
-
-
-[([-m [--trivial] should be [(-m [--trivial]
-
-
-> @@ -11246,16 +11226,15 @@ msgstr "mit anderen zusammenarbeiten (siehe=
- auch: git help workflows)"
->
->   #: common-cmds.h:17
->   msgid "Add file contents to the index"
->   msgstr "Dateiinhalte zum Commit vormerken"
->
->   #: common-cmds.h:18
-> -#, fuzzy
->   msgid "Use binary search to find the commit that introduced a bug"
-> -msgstr ""
-> -"=C3=BCber eine Bin=C3=A4rsuche die =C3=84nderungen finden, die eine=
-n Fehler verursacht haben"
-> +msgstr "Bin=C3=A4rsuche verwenden, um den Commit finden, der einen F=
-ehler "
-> +"verursacht hat"
->
->   #: common-cmds.h:19
->   msgid "List, create, or delete branches"
->   msgstr "Branches anzeigen, erstellen oder entfernen"
->
->   #: common-cmds.h:20
-
-=2E.., um den Commit zu finden, ...
-
-
-Everything else looks great!
-
-Kind regards,
-Matthias
+JW
