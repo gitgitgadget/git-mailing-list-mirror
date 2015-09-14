@@ -1,90 +1,136 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH v7] git-p4: improve path encoding verbose output
-Date: Mon, 14 Sep 2015 19:10:40 +0200
-Message-ID: <1442250640-93838-2-git-send-email-larsxschneider@gmail.com>
-References: <1442250640-93838-1-git-send-email-larsxschneider@gmail.com>
-Cc: luke@diamand.org, Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 14 19:10:50 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] dir.c: don't exclude whole dir prematurely if neg pattern may match
+Date: Mon, 14 Sep 2015 10:15:11 -0700
+Message-ID: <xmqqd1xkylb4.fsf@gitster.mtv.corp.google.com>
+References: <1440334214-32131-1-git-send-email-pclouds@gmail.com>
+	<1442107141-24265-1-git-send-email-pclouds@gmail.com>
+	<1442107141-24265-3-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 14 19:15:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbXHG-0000nx-82
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 19:10:50 +0200
+	id 1ZbXLc-0006Sw-Nd
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 19:15:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754661AbbINRKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Sep 2015 13:10:46 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:38249 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753927AbbINRKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Sep 2015 13:10:45 -0400
-Received: by wiclk2 with SMTP id lk2so141831703wic.1
-        for <git@vger.kernel.org>; Mon, 14 Sep 2015 10:10:43 -0700 (PDT)
+	id S1753642AbbINRPO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Sep 2015 13:15:14 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:33390 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752262AbbINRPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2015 13:15:13 -0400
+Received: by pacex6 with SMTP id ex6so149578723pac.0
+        for <git@vger.kernel.org>; Mon, 14 Sep 2015 10:15:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yoT3up79CfbUp+pev7EgdFvJyAeVILemUg34GpKGvXs=;
-        b=QwKiGS7UObUwHWDQSuu22gW8mcKNFGmFmfyNMn/xtzZtx3kxZoFFRQ4SvVaM6RlrCn
-         4X5EdoceUZ73RCqxI5uc+3YgyjMiNaU0XejDjr1Ov/v9xEf5PaYfkhFims6oa6o03Uw0
-         stKNDnMVffRFgoiB3GIOb+xqyFMejG4yRcSayvWMcBUEadCUe/UHgYJIXeGDjD7RsEQ3
-         OzNdEKlnz1KNhLGWe6W620vk23eWEmw826BQsEaaw+00gkt9OGKpl4xTm6MHDU+YzbYN
-         G1LjELHUKCE1Ddyfb4WzXkwqAKBkZaQVDbvkdRvxEnPphil53Gy3PAhkhD+l6aHjVhDp
-         ndGw==
-X-Received: by 10.180.104.68 with SMTP id gc4mr27760231wib.78.1442250643815;
-        Mon, 14 Sep 2015 10:10:43 -0700 (PDT)
-Received: from slxBook3.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id qc4sm2276533wjc.33.2015.09.14.10.10.42
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 14 Sep 2015 10:10:43 -0700 (PDT)
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1442250640-93838-1-git-send-email-larsxschneider@gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=e/OGjfvpvNdqCG42alv2gLKkDnXoUWXgJALRXDDlGpo=;
+        b=WAJ+MnTuyfjM/H53SQ6zeqft9pxYHtnWaAP2qEX0/tm7j1g2Fg8kl+g9m57yMf3dEe
+         /gy9VUvmHeI26KUyREJ8rl4nNHeSPqTRzAG3K66fZQd7akXICwix1y0TlveDiZ4CRUQf
+         mUv8E+EP+ysLy/EXczztOHOw725NGSnGuLQUqc2S7OIv+r5PFwz3F49MHDKF0g1H4jrH
+         WDMSrjlmSJi4W/o1mfPOY+/r0B7+ZP8Mx4sK9oQP6XsscgXwH7vQ2sRD4uvQVdYT2y+r
+         R0Jf7NooSkLgz9vwRX2MhnHf13VuGa9w2pBKtRPQVvkiAs8OOSqIbSpLzGmMqUnwCidt
+         igXw==
+X-Received: by 10.68.69.70 with SMTP id c6mr37104897pbu.28.1442250912893;
+        Mon, 14 Sep 2015 10:15:12 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:611e:bac9:b978:992c])
+        by smtp.gmail.com with ESMTPSA id rz9sm17262336pbb.61.2015.09.14.10.15.12
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 14 Sep 2015 10:15:12 -0700 (PDT)
+In-Reply-To: <1442107141-24265-3-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 13
+ Sep 2015 08:19:01 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277843>
 
-From: Lars Schneider <larsxschneider@gmail.com>
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-If a path with non-ASCII characters is detected then print always the
-encoding and the encoded string in verbose mode.
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.tx=
+t
+> index 473623d..889a72a 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -82,12 +82,9 @@ PATTERN FORMAT
+> =20
+>   - An optional prefix "`!`" which negates the pattern; any
+>     matching file excluded by a previous pattern will become
+> +   included again. It is possible to re-include a file if a parent
+> +   directory of that file is excluded, with restrictions. See sectio=
+n
+> +   NOTES for detail.
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- git-p4.py | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+Sounds like a very useful thing.
 
-diff --git a/git-p4.py b/git-p4.py
-index d45cf2b..da25d3f 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2220,16 +2220,15 @@ class P4Sync(Command, P4UserMap):
-             text = regexp.sub(r'$\1$', text)
-             contents = [ text ]
- 
--        if gitConfig("git-p4.pathEncoding"):
--            relPath = relPath.decode(gitConfig("git-p4.pathEncoding")).encode('utf8', 'replace')
--        elif self.verbose:
--            try:
--                relPath.decode('ascii')
--            except:
--                print (
--                    "Path with Non-ASCII characters detected and no path encoding defined. "
--                    "Please check the encoding: %s" % relPath
--                )
-+        try:
-+            relPath.decode('ascii')
-+        except:
-+            encoding = 'utf8'
-+            if gitConfig('git-p4.pathEncoding'):
-+                encoding = gitConfig('git-p4.pathEncoding')
-+                relPath = relPath.decode(encoding).encode('utf8', 'replace')
-+            if self.verbose:
-+                print 'Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, relPath)
- 
-         self.gitStream.write("M %s inline %s\n" % (git_mode, relPath))
- 
--- 
-2.5.1
+>   - If the pattern ends with a slash, it is removed for the
+>     purpose of the following description, but it would only find
+> @@ -141,6 +138,18 @@ not tracked by Git remain untracked.
+>  To stop tracking a file that is currently tracked, use
+>  'git rm --cached'.
+> =20
+> +To re-include a file when its parent directory is excluded, the
+> +following conditions must be met:
+> +
+> + - The directory part in the re-include rules must be literal (i.e. =
+no
+> +   wildcards)
+> +
+> + - The rules to exclude the parent directory must not end with a
+> +   trailing slash.
+> +
+> + - The rules to exclude the parent directory must have at least one
+> +   slash.
+> +
+
+In this bulletted list, don't the readers also need to be told that
+having "/abc" in .gitignore (but not "!/abc/anything" in .gitignore)
+and "!foo" in abc/.gitignore would not cause us to descend into
+"/abc" just to examine "abc/.gitignore" with pessimistic assumption
+that there might be some exclusion in there?
+
+> diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-ot=
+hers-exclude.sh
+> index 3fc484e..9de49a6 100755
+> --- a/t/t3001-ls-files-others-exclude.sh
+> +++ b/t/t3001-ls-files-others-exclude.sh
+> @@ -305,4 +305,24 @@ test_expect_success 'ls-files with "**" patterns=
+ and no slashes' '
+>  	test_cmp expect actual
+>  '
+> =20
+> +test_expect_success 'negative patterns' '
+> +	git init reinclude &&
+> +	(
+> +		cd reinclude &&
+> +		cat >.gitignore <<-\EOF &&
+> +		/foo
+> +		!foo/bar/bar
+> +		EOF
+> +		mkdir -p foo/bar &&
+> +		touch abc foo/def foo/bar/ghi foo/bar/bar &&
+> +		git ls-files -o --exclude-standard >../actual &&
+> +		cat >../expected <<-\EOF &&
+> +		.gitignore
+> +		abc
+> +		foo/bar/bar
+> +		EOF
+> +		test_cmp ../expected ../actual
+> +	)
+> +'
+
+And another test here may want to explicitly ensure that we are not
+overly pessimising the ignore processing, so that later changes will
+not break it, I think.  Or do we already have such a case covered by
+an existing test?
+
+Thanks.
