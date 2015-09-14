@@ -1,131 +1,130 @@
-From: Stefan Beller <sbeller@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 2/2] fetch: fetch submodules in parallel
-Date: Mon, 14 Sep 2015 10:47:31 -0700
-Message-ID: <CAGZ79kZUdyLJzTiFXSgSezrPdG-aGgYJm6juAtpq8A_Je5JAfw@mail.gmail.com>
+Date: Mon, 14 Sep 2015 10:55:09 -0700
+Message-ID: <20150914175509.GJ8165@google.com>
 References: <1442012994-20374-1-git-send-email-sbeller@google.com>
-	<1442012994-20374-3-git-send-email-sbeller@google.com>
-	<xmqqpp1nxxji.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kaBvVWT1OPMxUAU9N2oaC5TT5wwWew5jS0k_o5J10sKfA@mail.gmail.com>
-	<20150914171736.GA1548@sigill.intra.peff.net>
+ <1442012994-20374-3-git-send-email-sbeller@google.com>
+ <xmqqpp1nxxji.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kaBvVWT1OPMxUAU9N2oaC5TT5wwWew5jS0k_o5J10sKfA@mail.gmail.com>
+ <20150914171736.GA1548@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmail.com>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
 	Vitali Lovich <vlovich@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 14 19:47:38 2015
+X-From: git-owner@vger.kernel.org Mon Sep 14 19:55:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbXqr-0003nM-5h
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 19:47:37 +0200
+	id 1ZbXyQ-0004co-V2
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 19:55:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbbINRrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Sep 2015 13:47:33 -0400
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:36700 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751465AbbINRrc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Sep 2015 13:47:32 -0400
-Received: by ykdt18 with SMTP id t18so140165287ykd.3
-        for <git@vger.kernel.org>; Mon, 14 Sep 2015 10:47:31 -0700 (PDT)
+	id S1752011AbbINRzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2015 13:55:15 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:35904 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751235AbbINRzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2015 13:55:13 -0400
+Received: by padhk3 with SMTP id hk3so149916632pad.3
+        for <git@vger.kernel.org>; Mon, 14 Sep 2015 10:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=kNqsyxqZ18G8zzUyDtoKR7Masku7a4jL2vqw89TGO2E=;
-        b=AVuID4aVtJENV2Np5mhK9vhoK/8Qz9qwf6Xp68NHUq551oIlkmut2y0Ha4N+fehAqC
-         qMIbnsFM6bNynoeCq7L4DlZ7HGPa5QUpj0Ng6dVkGF9itLJxD5D+Bgzx9LRPZ1qaj79j
-         iYml2OZ2kOphLR2aewh9DFfcp2r3q2YxZW+BMZdpLQR/wL3Po99YHYcivnkIjJuffoav
-         RENZoeMtKlUP9PH8rAmLwPdml11ideCqsTKTtSYtqrmzAVM/02/5jw4UXiGzHBI5HWQk
-         5/8PVkKxXVx0TwRNacDYt751xM1zwe0rGwmjPNYnTYUA3jHuuWjv/uK7VMns1tUa3UrS
-         iQDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=kNqsyxqZ18G8zzUyDtoKR7Masku7a4jL2vqw89TGO2E=;
-        b=M/jVKvFxwY5Z2zvCjTZn//rBOBiLS9ExluWwJD1EFfOBpiZwh07n227rXl9wizsEvV
-         XeBZZ3Jsd/vMwsLIzpb/8U4aoOLLuLlUy1RtFXj9V42W7BcJuh5Yx6nP9ypNKuiGx+7M
-         /VrrouVVEbqNrWN+Bn/eP+62hg6+eCj4P3r4TxqgMaU5FhN04eXX5QA9QZPoaDBCGGyP
-         yZjYKQRyfCpD1EWpMw/677Vk0W9alIGPPscHBqo+TyHmF/TaIC5hSL+lr4uV70KWgwJ4
-         E1XE9ikYp9QtP7fHUNbQ5SMQeEG6BZ5KjjNDa+qmMz9CanSyJrVGWtKpblH5qkjn0fAi
-         lLMw==
-X-Gm-Message-State: ALoCoQlk4dRzzenteOQQsOMD2GsQzuKxM0VXsTO9yIBfTkxcpxHkiTRIbVsVn5U+cHAfHbNkxSoO
-X-Received: by 10.13.222.1 with SMTP id h1mr15672463ywe.174.1442252851399;
- Mon, 14 Sep 2015 10:47:31 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Mon, 14 Sep 2015 10:47:31 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=k91jG0yUU9HNxr1BPNE3KzuGQvnPSYZ/3dyUJq+ZVok=;
+        b=V6RlBe5koUNK4uyP1SrgxT4EzCLovBWh/SYTwA3ovHHrGyVhzXNdMUow6FR+8p4Hwk
+         TKXF6RE4Sla2IeyAv+bvGJWhtFjyiy0D2cLdi/qzWDjRhf/B22s6of5ybeeTLC32bN/b
+         Roixr762umj5vojWv18ifLHriH+jgD45ui46atw7e5cbszS9gPhh4ss2sf/A1yxQr102
+         e36CBLRIH17cemkIMNL+pNOSVblLawLPUANCTfDT3RQGevH9BGOuAL/gPbjRA/nFLKSB
+         4MeFWgoRvt0PMirR/ME7y6bNvVS0ys68T3a7XmeVJl8mzSj2Unnnnr0E4tZwnG8oyl12
+         qHNg==
+X-Received: by 10.66.100.168 with SMTP id ez8mr36738285pab.142.1442253312553;
+        Mon, 14 Sep 2015 10:55:12 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:8439:59df:4be8:314e])
+        by smtp.gmail.com with ESMTPSA id qe3sm17371934pbc.73.2015.09.14.10.55.11
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 14 Sep 2015 10:55:11 -0700 (PDT)
+Content-Disposition: inline
 In-Reply-To: <20150914171736.GA1548@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277853>
 
-On Mon, Sep 14, 2015 at 10:17 AM, Jeff King <peff@peff.net> wrote:
+Jeff King wrote:
 > On Mon, Sep 14, 2015 at 09:46:58AM -0700, Stefan Beller wrote:
->
+
 >> I tried implementing a buffering solution for both stdout and stderr,
 >> but that doesn't really workout well if you consider interleaved output
->> on the pipes as we cannot accurately replay that later on. To do that
->> we would need to store the timing information of the channels, at least
->> the relative order of it like:
->>
->>   (stdout, First comes text to stdout),
->>   (stderr, interrupted by text in stderr)
->>   (stdout, but stdout doesn't bother, blasting more text)
->>   (stderr, continues to interrupt)
->>
->> obtaining the information is inherently racy, as all we can do is
->> polling/reading from both stdout/err as fast as possible but without
->> proper synchronization mechanisms we cannot be sure.
->
+>> on the pipes as we cannot accurately replay that later on.
+[...]
+>> obtaining the information is inherently racy
+[...]
 > I don't think you need exact timing information.  This is no different
 > than running the commands themselves, with stdout and stderr writing to
 > a pty that your terminal emulator will then read() from. If the program
 > produces intermingled stdout/stderr that clogs up the terminal, that is
 > its problem.
->
-> The only difference is that we're going to save it and later replay it
-> all very quickly.  So I think it would be sufficient just to retain the
-> original order.
->
->> I will add documentation explaining why the async output case
->> will only deal with one channel. I chose stderr as that's already
->> available and needed in this use case.
->
-> I suspect you could just set child->stdout_to_stderr in this case, and
-> then you get your ordering for free. But probably in the general case
-> people would want to run inspection commands that produce a useful
-> stdout.
->
-> To handle multiple channels, I think you could just do a linked list of
-> buffers rather than a single strbuf. Like:
 
-I will have no problem coding such a thing in a user program,
-but how do you obtain this non racily from the child using the posix
-API?
+The difference is that when stdout and stderr write to a pty, they write
+to the same pty.  That is, suppose a child process does
 
-The poll/select command may return more than one fd ready, so
-then you don't know the ordering in which you would need to replay
-it. This may introduce subtle bugs?
+	write(1, "A\n", 2);
+	write(2, "B\n", 1);
+	write(1, "C\n", 2);
 
-So I'd rather come up with a solution buffering 2 channels once we need it,
-keeping the stdout_to_stderr as a requirement for now.
+Then the output that should be echoed to the terminal is
 
->
->   struct io_chunk {
->         int channel;
->         char *buf;
->         size_t len;
->         struct io_chunk *next;
->   };
->
-> and just keep appending chunks to the list (and to dump them, just walk
-> the list, writing each to the appropriate channel descriptor).
->
-> -Peff
+	A
+	B
+	C
+
+Now the parent might do
+
+	for (;;) {
+		int n = select(...);
+		... do stuff ...
+	}
+
+If all three writes happen during the "do stuff" step, then *if* the
+child's stdout and stderr went to different pipes, all the parent sees
+is
+
+	child's stdout: A\nC\n
+	child's stderr: B\n
+
+There is not sufficient information to recover the original output
+order.  (Linux provides a pipe2(..., O_DIRECT) that almost provides
+sufficient information --- it tells you
+
+	child's stdout: "A\n", "C\n"
+	child's stderr: "B\n"
+
+but still doesn't give information about ordering.)
+
+That's probably okay: in most git commands, stderr shows a combination
+of diagnostic output and progress information and stdout shows the
+actual result, so interleaving between the two is not too common.
+
+One can imagine a "git grep --recurse-submodules" that wants to run a
+grep in each submodule and combine their output in some appropriate
+way.  It's not clear what order is best for that use case: stderr
+(errors, plus progress in some imaginary future) at the beginning to
+show the story of how output was generated before the output?  stderr
+at the end so errors are not hidden way up on the screen?  Some kind
+of interleaving that pays attention to the format of stdout?
+
+That is more complicated than the "fetch --recurse-submodules" case
+that Stefan is currently tackling, so it seems wise to me to punt for
+now.
+
+Thanks and hope that helps,
+Jonathan
