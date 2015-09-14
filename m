@@ -1,100 +1,87 @@
-From: Sukhwinder Singh <php_programmer_india@hotmail.com>
-Subject: RE: Git Deployment using existing multiple environments
-Date: Mon, 14 Sep 2015 11:25:39 +0530
-Message-ID: <BAY180-W55A5095CC7E1322EA80876C25D0@phx.gbl>
-References: <BAY180-W16B5F49FFD3614D666B232C25F0@phx.gbl>,<8797177dd247d4ef903603cbe6c57d7d@dscho.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] strtoul_ui: actually report error in case of negative input
+Date: Mon, 14 Sep 2015 08:30:54 +0200
+Message-ID: <vpqr3m1seap.fsf@anie.imag.fr>
+References: <1442181636-27821-1-git-send-email-max@max630.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 14 07:55:49 2015
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Mon Sep 14 08:31:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbMjx-0004xL-Nx
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 07:55:46 +0200
+	id 1ZbNIO-0004KR-Ks
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 08:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751368AbbINFzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Sep 2015 01:55:40 -0400
-Received: from bay004-omc4s19.hotmail.com ([65.54.190.221]:64333 "EHLO
-	BAY004-OMC4S19.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751223AbbINFzj convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Sep 2015 01:55:39 -0400
-Received: from BAY180-W55 ([65.54.190.199]) by BAY004-OMC4S19.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.23008);
-	 Sun, 13 Sep 2015 22:55:39 -0700
-X-TMN: [+zTamQWUVSWhjyJALi9fYUGCp2+iv8Am]
-X-Originating-Email: [php_programmer_india@hotmail.com]
-Importance: Normal
-In-Reply-To: <8797177dd247d4ef903603cbe6c57d7d@dscho.org>
-X-OriginalArrivalTime: 14 Sep 2015 05:55:39.0736 (UTC) FILETIME=[FBF2CD80:01D0EEB1]
+	id S1751852AbbINGbQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2015 02:31:16 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50913 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751528AbbINGbQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2015 02:31:16 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t8E6UrLG008007
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 14 Sep 2015 08:30:54 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8E6UsAQ013707;
+	Mon, 14 Sep 2015 08:30:54 +0200
+In-Reply-To: <1442181636-27821-1-git-send-email-max@max630.net> (Max
+	Kirillov's message of "Mon, 14 Sep 2015 01:00:36 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 14 Sep 2015 08:30:57 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t8E6UrLG008007
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1442817059.18898@OepLEFx/5GpkDaMLMTZXdQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277809>
 
-Thank you for the reply. Let's say I do setup three different repositories then how can we move work from one repository to the other. For example, from Test Environment to UAT. If there are any links that you can provide me that I can check, it'll be great. 
+Max Kirillov <max@max630.net> writes:
 
-Regards,
-Sukhwinder Singh
+> If s == "-1" and CPU is i386, then none of the checks is triggered, including
+> the last "(unsigned int) ul != ul", because ul == 2**32 - 1, which fits into
+> "unsigned int".
 
-----------------------------------------
-> Date: Sat, 12 Sep 2015 12:55:46 +0200
-> From: johannes.schindelin@gmx.de
-> To: php_programmer_india@hotmail.com
-> CC: git@vger.kernel.org
-> Subject: Re: Git Deployment using existing multiple environments
->
-> Hi,
->
-> On 2015-09-12 08:31, Sukhwinder Singh wrote:
->
->> We already have 3-4 environments setup on our Windows servers without Git
->> and each environment already has code which is different from each
->> other.
->>
->> There are three environments
->> Live
->> UAT
->> Test (has the latest code)
->>
->>
->> And then developers have their local copies.
->>
->> We write and test the code locally and manually move each point from
->> one environment to other using merging software and test at each
->> environment.
->> Now we want to use git because manually moving the code is a lengthy
->> process. Also as the developers have local copies, it is very
->> difficult to manage code.
->>
->> Code is written locally by the team and then after testing locally it
->> is first merged with "Test" environment code, then "UAT" and then,
->> finally with "Live".
->> So we have two concerns:
->>
->> There is different code already existing on these environments.
->> Testing the code on each environment using the web server.
->>
->> What is the best way to go about it? As I am new to git more details
->> will be helpful, like commands to use.
->
-> It seems you are not only looking for commands to use, but for a proper workflow in which Git supports your work best.
->
-> The key is to define the roles in your flow first, and then identify the optimal commands.
->
-> In your case, I figure that there are three "merge lords" or "merge ladies", one for "Test", one for "UAT", one for "Live". And each of them needs to be notified when changes are ready to be merged, then merge the changes.
->
-> If I was walking in your shoes, I would set up four repositories that each are owned by one of the "merge lords/ladies", or the developers, respectively. The code would move from one to the next repository, triggered by a notification, then being pulled into the environment, then tested, and if everything is okay, pushed into the next repository.
->
-> (Actually, you could do without the repository corresponding to the "Live" version, but it would be a nice record.)
->
-> However, this is just one possible suggestion. I would highly recommend buying and reading the book "Git for Teams", as it has extensive coverage of different work flows, their strengths and their weaknesses.
->
-> Ciao,
-> Johannes
- 		 	   		  
+Thanks for noticing and reporting.
+
+> Fix it by changing the last check to trigger earlier, as soon as it
+> becomes bigger than INT_MAX.
+
+What if the value is actually greater than INT_MAX? The function is
+returning an unsigned long (64 bits on 64bits architectures), and your
+version is restricting it to integers smaller than 2^31, right?
+
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -815,7 +815,7 @@ static inline int strtoul_ui(char const *s, int base, unsigned int *result)
+>  
+>  	errno = 0;
+>  	ul = strtoul(s, &p, base);
+> -	if (errno || *p || p == s || (unsigned int) ul != ul)
+> +	if (errno || *p || p == s || ul > (unsigned long) INT_MAX)
+
+I think you at least want to use LONG_MAX and drop the cast here
+(untested, and beware of my advices when given before coffee).
+That would restrict to values smaller than 2^63, and I guess no one is
+interested in the interval ]2^63, 2^64].
+
+The other option would be to look for a leading '-' before calling
+strtoul.
+
+(Actually, this makes me wonder why strtoul happily returns a big
+positive when fed with the string "-1", but we can't change it)
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
