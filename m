@@ -1,135 +1,116 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] doc: show usage of branch description
-Date: Mon, 14 Sep 2015 13:01:00 +0100
-Organization: OPDS
-Message-ID: <DDA818BA5B3749C8953193DEC3682293@PhilipOakley>
-References: <74514591d4cd502eee06cde3e099e656@dscho.org> <1442098288-3316-1-git-send-email-philipoakley@iee.org> <CA+P7+xqh0e+2aMZf8i-1hBc0fMgaz0UjVdboLv+L9+rBYBR85w@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v7 1/3] worktree: add top-level worktree.c
+Date: Mon, 14 Sep 2015 08:20:02 -0400
+Message-ID: <CANoM8SWP9YrZoUx5w9Do18uZf=5RrCV_ShvyaPQF4=9-vuFVbg@mail.gmail.com>
+References: <1441402769-35897-1-git-send-email-rappazzo@gmail.com>
+ <1441402769-35897-2-git-send-email-rappazzo@gmail.com> <CAPig+cQRx-uKZnnx2O0pG34HkcEdg1GbGNFd9PHdw+m0O3aJEA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <johannes.schindelin@gmx.de>
-To: "Jacob Keller" <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 14 14:00:03 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Sep 14 14:20:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbSQU-0003Q6-Bn
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 14:00:02 +0200
+	id 1ZbSkL-0000Jy-Vj
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 14:20:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751549AbbINL76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Sep 2015 07:59:58 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:42144 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751208AbbINL75 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Sep 2015 07:59:57 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2AyCgBftvZVPDopFlxdGQGDCVRpgyqEHLd+hW8EAQMBAYE0TQEBAQEBAQcBAQEBQAEkG4QeBQEBAQECAQgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBAgSBgcDFAYTCAIBAgMBiAgDCgwJtg6GWIgrDYRtLIEihVGEfYJQgWsBAVCCcC+BFAWVVwGBF4N1hgSDf5EwhzyEZT0ziT6BPwEBAQ
-X-IPAS-Result: A2AyCgBftvZVPDopFlxdGQGDCVRpgyqEHLd+hW8EAQMBAYE0TQEBAQEBAQcBAQEBQAEkG4QeBQEBAQECAQgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBAgSBgcDFAYTCAIBAgMBiAgDCgwJtg6GWIgrDYRtLIEihVGEfYJQgWsBAVCCcC+BFAWVVwGBF4N1hgSDf5EwhzyEZT0ziT6BPwEBAQ
-X-IronPort-AV: E=Sophos;i="5.17,527,1437433200"; 
-   d="scan'208";a="609685869"
-Received: from host-92-22-41-58.as13285.net (HELO PhilipOakley) ([92.22.41.58])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 14 Sep 2015 12:59:54 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753672AbbINMUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2015 08:20:24 -0400
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:33578 "EHLO
+	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752912AbbINMUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2015 08:20:23 -0400
+Received: by vkgd64 with SMTP id d64so57767159vkg.0
+        for <git@vger.kernel.org>; Mon, 14 Sep 2015 05:20:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=M0EGZRzYwNKMG1M5+4aC9dIs01tLs2Jqu13BqQqAa48=;
+        b=IJlQ34La5mYHpwnf4t/zcB9Yk8iBROXFUcUNuKf8YlLjZ8TCKivS9VBvBdfFczOGiV
+         nMpU84YU1O2ZMo1niq7UNZZNe/aeKCsbyVwDIacedSy172L1QjjZ/gA3xkv3PIVACdGj
+         lFL1XIy/soPu69wcvpMAKjG/uda1tVxtSa9+cAwbl7yMO4TVVgWTMGamhzFHUJ9cs8oG
+         AIN4wRQ9IjipaQXA8T3QStdmtrLYQwRTT3kjNTfNAmeA/oRIg+1Miva2mOJbtX8MpWU5
+         4chEQW57qndOr1DDLw4b9LOTLOccPtT4hARFK8zFiBogurw5jjE6QTqlHOxS1fjyarKy
+         6LZA==
+X-Received: by 10.31.47.210 with SMTP id v201mr12520026vkv.126.1442233222223;
+ Mon, 14 Sep 2015 05:20:22 -0700 (PDT)
+Received: by 10.103.80.201 with HTTP; Mon, 14 Sep 2015 05:20:02 -0700 (PDT)
+In-Reply-To: <CAPig+cQRx-uKZnnx2O0pG34HkcEdg1GbGNFd9PHdw+m0O3aJEA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277817>
 
-From: "Jacob Keller" <jacob.keller@gmail.com>
-> Hi,
+On Sat, Sep 12, 2015 at 10:39 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> I realize that this is modeled closely after existing code in
+> branch.c, but, with the exception of parsing the ref file and
+> constructing a worktree structure, the main worktree case (id == NULL)
+> is entirely disjoint from the linked worktree case (id != NULL). This
+> suggests strongly that get_worktree() should be split into two
+> functions, one for the main worktree and one for linked worktrees,
+> which would make the code easier to understand. You might call the
+> functions get_main_worktree() and get_linked_worktree(id) (or perhaps
+> drop "linked" from the latter name).
+
+I originally wrote it like that, but I felt that the code looked like
+it was mostly duplicated in the functions.
+I can give it a relook.
+
+>> +
+>> +struct worktree_list *get_worktree_list()
 >
-> On Sat, Sep 12, 2015 at 3:51 PM, Philip Oakley <philipoakley@iee.org> 
-> wrote:
->> The branch description will be included in 'git format-patch
->> --cover-letter' and in 'git pull-request' emails. Tell the reader.
->>
->> While here, clarify that the description may be a multi-line
->> explanation of the purpose of the branch's patch series.
->>
->> Signed-off-by: Philip Oakley <philipoakley@iee.org>
->> ---
->>
->> This is a short doc patch to follow up $gmane/277628 where Johannes
->> Schindelin noted this otherwise undocumented feature.
->>
+> Can we be more concise and call this get_worktrees()?
 >
-> Thanks for this.
+
+I prefer 'get_worktree_list' because I also added the 'get_worktree'
+function, and I wanted to differentiate
+the function names.
+
+>> diff --git a/worktree.h b/worktree.h
+>> new file mode 100644
+>> index 0000000..2bc0ab8
+>> --- /dev/null
+>> +++ b/worktree.h
+>> @@ -0,0 +1,48 @@
+>> +#ifndef WORKTREE_H
+>> +#define WORKTREE_H
+>> +
+>> +struct worktree {
+>> +       char *path;
+>> +       char *git_dir;
+>> +       char *head_ref;
+>> +       unsigned char head_sha1[20];
+>> +       int is_detached;
+>> +       int is_bare;
+>> +};
+>> +
+>> +struct worktree_list {
+>> +       struct worktree *worktree;
+>> +       struct worktree_list *next;
+>> +};
 >
->>
->>  Documentation/git-branch.txt       | 3 ++-
->>  Documentation/git-format-patch.txt | 2 +-
->>  Documentation/git-request-pull.txt | 3 ++-
->>  3 files changed, 5 insertions(+), 3 deletions(-)
->>
->> diff --git a/Documentation/git-branch.txt 
->> b/Documentation/git-branch.txt
->> index a67138a..79ad1c7 100644
->> --- a/Documentation/git-branch.txt
->> +++ b/Documentation/git-branch.txt
->> @@ -197,7 +197,8 @@ start-point is either a local or remote-tracking 
->> branch.
->>
->>  --edit-description::
->>         Open an editor and edit the text to explain what the branch 
->> is
->> -       for, to be used by various other commands (e.g. 
->> `request-pull`).
->> +       for, to be used by various other commands (e.g. 
->> `format-patch`
->> +       and `request-pull`). Multi-line explanations may be used.
->>
+> I don't care too strongly, but an alternate approach (which I probably
+> would have taken) would be to have get_worktrees() simply return an
+> array of 'struct worktree' objects, hence no need for the additional
+> 'struct worktree_list'. The slight complication with this approach,
+> though, is that get_worktrees() either also needs to return the length
+> of the array, or the array should end with some sort of end-of-array
+> sentinel. An obvious sentinel would be path==NULL or git_dir==NULL or
+> all of the above.
 >
-> Are these the only locations? Just want to make sure while we're 
-> updating it.
-
-Searching for 'description' has many hits so it's not easy to be really 
-sure. I had thought I'd asked an SO question ($SO/q/6866838) about 
-branch descriptions many years ago, whose answers indicated it was 
-little used, but actually I'd asked about the repo description (doh) 
-which AFAICT is only used by gitweb.
-
-A bit more delving found http://stackoverflow.com/a/8858853/717355 which 
-suggests `git merge` would use it, but with no mention in the `git 
-merge --help` man page. A link to the `git fmt-merge-msg` ("for internal 
-use by scripts") finally provides the extra:
-
-merge.branchdesc
-
-In addition to branch names, populate the log message with the branch 
-description text associated with them. Defaults to false.
-
-However, that config key isn't listed in `git config --help` man page, 
-so that capability is a bit buried. (note the default!)
-
-
-
-It still means that my patch is incomplete in its aim to bring out these 
-possible broader usages.
-
-
-I haven't yet looked at the mail archives to see if there is more around 
-the time of those introductions.
-
+> Client iteration is just about the same with the array approach as
+> with the linked-list approach.
 >
-> Otherwise, for what it's worth...
->
-> Acked-by: Jacob Keller <jacob.keller@gmail.com>
->
-For the future, it would also be nice to allow some use within `git 
-branch` for a `--show[-full]-description` option such that when branch 
-info is being given (-a, -l, etc), then the descriptions for the local 
-branches (which may have descriptions) are displayed, either as a single 
-first line, or as a full multi-line description. But that's coding & 
-review for the future. 
+
+I can't see what benefit this would provide.  I would sooner change
+the returned list into
+an array-backed list struct.  Alternatively, I think adding a
+list_head pointer to this structure
+could benefit client code.
