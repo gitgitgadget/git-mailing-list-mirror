@@ -1,85 +1,81 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] doc: show usage of branch description
-Date: Mon, 14 Sep 2015 14:24:09 +0100
-Organization: OPDS
-Message-ID: <114A566297E948AFA2962DB352AD46A8@PhilipOakley>
-References: <74514591d4cd502eee06cde3e099e656@dscho.org> <1442098288-3316-1-git-send-email-philipoakley@iee.org> <CA+P7+xqh0e+2aMZf8i-1hBc0fMgaz0UjVdboLv+L9+rBYBR85w@mail.gmail.com> <DDA818BA5B3749C8953193DEC3682293@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: larsxschneider@gmail.com
+Subject: [PATCH v5 0/7] git-p4: add support for large file systems
+Date: Mon, 14 Sep 2015 15:26:27 +0200
+Message-ID: <1442237194-49624-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <johannes.schindelin@gmx.de>
-To: "Philip Oakley" <philipoakley@iee.org>,
-	"Jacob Keller" <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 14 15:24:25 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: gitster@pobox.com, luke@diamand.org,
+	Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 14 15:26:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbTk9-0008Pp-2k
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 15:24:25 +0200
+	id 1ZbTmO-0002Po-Ul
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 15:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751942AbbINNYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Sep 2015 09:24:21 -0400
-Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:38112 "EHLO
-	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751127AbbINNYU (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Sep 2015 09:24:20 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2CyKwAWyvZVPDopFlxdGQEBAYMHVFsOgyqEHLd+hW8EAQMBAYE2TQEBAQEBAQcBAQEBQAE/QQECAoNYBQEBAQECAQgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBAgSBgcDFAYBEggCAQIDAYgIAwoMCbV/hliIMQ2EbQEBCAIBH4EihVGEfYJQgj2CcC+BFAWVVwGBF4N1hgSDf5Ewhm5OhGU9M4NQKIQEgwEBAQE
-X-IPAS-Result: A2CyKwAWyvZVPDopFlxdGQEBAYMHVFsOgyqEHLd+hW8EAQMBAYE2TQEBAQEBAQcBAQEBQAE/QQECAoNYBQEBAQECAQgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBAgSBgcDFAYBEggCAQIDAYgIAwoMCbV/hliIMQ2EbQEBCAIBH4EihVGEfYJQgj2CcC+BFAWVVwGBF4N1hgSDf5Ewhm5OhGU9M4NQKIQEgwEBAQE
-X-IronPort-AV: E=Sophos;i="5.17,528,1437433200"; 
-   d="scan'208";a="248162923"
-Received: from host-92-22-41-58.as13285.net (HELO PhilipOakley) ([92.22.41.58])
-  by out1.ip07ir2.opaltelecom.net with SMTP; 14 Sep 2015 14:23:44 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753629AbbINN0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2015 09:26:40 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:36277 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406AbbINN0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2015 09:26:39 -0400
+Received: by wicgb1 with SMTP id gb1so141850592wic.1
+        for <git@vger.kernel.org>; Mon, 14 Sep 2015 06:26:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=aAqhG44xtSlvMB92IwzgX46Oly9ZgmrTUKi0QUpBuco=;
+        b=ZsDNtcUi+AhAbbSdvMCRmCHMa/plUXE3xt1OTiEPOoJU8HT93Hn1tsZmYGF1y/6Htw
+         TVUdGZcWKZQSmC8ZELfsVvVps1NtymqZdmcMIvqpvpCIqiqjzsedVTwUjwO/aP9n6e2o
+         cDqNxtxva35N8TfR4TIUJ3b/6HP86u4AZxHTqK+KK2FQmpAAHpM1kkZZiJKnvoHihjmv
+         f3VXZTFLwU6tUs/c+KQ8KgX+cRuh5XEnIHr0PdYBx2gVnriibW/ZK+zTU4UHU7rDgsbz
+         4A0jN2rnF9vbfWLE12MbEmsJpjksKyeWqphmzGshHYxHMYDT/G0SGPK42gFNiriGvBQy
+         yz0A==
+X-Received: by 10.180.103.70 with SMTP id fu6mr27134223wib.9.1442237197227;
+        Mon, 14 Sep 2015 06:26:37 -0700 (PDT)
+Received: from slxBook3.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id xt1sm12578013wjb.32.2015.09.14.06.26.35
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 14 Sep 2015 06:26:36 -0700 (PDT)
+X-Mailer: git-send-email 2.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277820>
 
-From: "Philip Oakley" <philipoakley@iee.org>
-> From: "Jacob Keller" <jacob.keller@gmail.com>
->> Hi,
->>
->> On Sat, Sep 12, 2015 at 3:51 PM, Philip Oakley <philipoakley@iee.org> 
->> wrote:
->>> The branch description will be included in 'git format-patch
->>> --cover-letter' and in 'git pull-request' emails. Tell the reader.
-[...]
->> Are these the only locations? Just want to make sure while we're 
->> updating it.
->
-> A bit more delving found http://stackoverflow.com/a/8858853/717355 
-> which suggests `git merge` would use it, but with no mention in the 
-> `git merge --help` man page. A link to the `git fmt-merge-msg` ("for 
-> internal use by scripts") finally provides the extra:
->
-> merge.branchdesc
->
-> In addition to branch names, populate the log message with the branch 
-> description text associated with them. Defaults to false.
->
-> However, that config key isn't listed in `git config --help` man page, 
-> so that capability is a bit buried. (note the default!)
+From: Lars Schneider <larsxschneider@gmail.com>
 
-This is incorrect. It was fixed in fc0aa39 (Documentation: include 
-'merge.branchdesc' for merge and config as well, 2015-05-27), but my 
-local docs hadn't included it.
+Diff to v4:
+* Add streaming progress in verbose mode.
+* Add check for free disk space.
+* Remove the limitation that no .gitattribues must be present.
+* Refactor large file system classes. The base implementation does not assume a ".gitattributes mechanism" anymore.
+* Throw error if the large file system is used with 'git p4 submit'. Add warning in the docs, too.
 
->
-> It still means that my patch is incomplete in its aim to bring out 
-> these possible broader usages.
->
-i.e. mentioning 'merge' as a command that uses the branch description, 
-and noting it within the merge pages.
+Thanks to Junio and Luke feedback!
+
+Lars Schneider (7):
+  git-p4: add optional type specifier to gitConfig reader
+  git-p4: add gitConfigInt reader
+  git-p4: return an empty list if a list config has no values
+  git-p4: add file streaming progress in verbose mode
+  git-p4: check free space during streaming
+  git-p4: add support for large file systems
+  git-p4: add Git LFS backend for large file system
+
+ Documentation/git-p4.txt   |  32 +++++
+ git-p4.py                  | 279 ++++++++++++++++++++++++++++++++++++++++---
+ t/t9823-git-p4-mock-lfs.sh |  96 +++++++++++++++
+ t/t9824-git-p4-git-lfs.sh  | 288 +++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 678 insertions(+), 17 deletions(-)
+ create mode 100755 t/t9823-git-p4-mock-lfs.sh
+ create mode 100755 t/t9824-git-p4-git-lfs.sh
+
+--
+2.5.1
