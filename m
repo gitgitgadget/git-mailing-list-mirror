@@ -1,96 +1,135 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/5] enter_repo: avoid duplicating logic, use
- is_git_directory() instead
-Date: Mon, 14 Sep 2015 18:57:54 +0700
-Message-ID: <CACsJy8D+3o-SKq-MAC1+KzRzMjcU6GUij1OokLWznfZ8V7zUmA@mail.gmail.com>
-References: <20150715132552.GA28574@lanh> <1440204002-7638-1-git-send-email-pclouds@gmail.com>
- <1440204002-7638-3-git-send-email-pclouds@gmail.com> <xmqq8u8i9okf.fsf@gitster.mtv.corp.google.com>
- <CACsJy8CD+cNdM5EppcStJViRA7yPpyAHyUX=ct4LEK6RCrJrFw@mail.gmail.com> <xmqqlhcbxh7l.fsf@gitster.mtv.corp.google.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] doc: show usage of branch description
+Date: Mon, 14 Sep 2015 13:01:00 +0100
+Organization: OPDS
+Message-ID: <DDA818BA5B3749C8953193DEC3682293@PhilipOakley>
+References: <74514591d4cd502eee06cde3e099e656@dscho.org> <1442098288-3316-1-git-send-email-philipoakley@iee.org> <CA+P7+xqh0e+2aMZf8i-1hBc0fMgaz0UjVdboLv+L9+rBYBR85w@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, bjornar@snoksrud.no
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 14 13:58:30 2015
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "GitList" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>
+To: "Jacob Keller" <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 14 14:00:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbSOy-0001m9-GL
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 13:58:28 +0200
+	id 1ZbSQU-0003Q6-Bn
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 14:00:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753464AbbINL6Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Sep 2015 07:58:24 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:33456 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752555AbbINL6X convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Sep 2015 07:58:23 -0400
-Received: by iofh134 with SMTP id h134so162623486iof.0
-        for <git@vger.kernel.org>; Mon, 14 Sep 2015 04:58:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=BrAbkFQ+gKLby90/lSI4+5iJnTFVtXVOeLQA5GI0MZk=;
-        b=YgiOmZ+tLsybNnl5KoW5HR3yijGejOckP7GQhJKSjeMPiMI6gOlIRBCtwiCqF09iT6
-         XQlBPQ2saagiidIOLSZYaN03La5HAQ5Ar+fBlVkjucWUkkgBozzXpw5R4jt6ligWEBqr
-         IpxCJsT2WZDpcqzR9T5p13erK2lviogh6j6jnRqXQFS82uQVTNoNnJ3SLzHyF6cPL47q
-         95FKnitstZEfvd+AaWMxZxU8xTsV5WIv8jij+bhC99D2yPmFgbUslESFLIGqMxjop9Y1
-         2yFDqAwys7B14Kz3LkVr3H1QtOwn8Lh19VlZLBeAjsPguSvNJRUdayjF+qrhk5ssaIVV
-         oNOw==
-X-Received: by 10.107.9.212 with SMTP id 81mr22776371ioj.191.1442231903346;
- Mon, 14 Sep 2015 04:58:23 -0700 (PDT)
-Received: by 10.107.19.227 with HTTP; Mon, 14 Sep 2015 04:57:54 -0700 (PDT)
-In-Reply-To: <xmqqlhcbxh7l.fsf@gitster.mtv.corp.google.com>
+	id S1751549AbbINL76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2015 07:59:58 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:42144 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751208AbbINL75 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Sep 2015 07:59:57 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2AyCgBftvZVPDopFlxdGQGDCVRpgyqEHLd+hW8EAQMBAYE0TQEBAQEBAQcBAQEBQAEkG4QeBQEBAQECAQgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBAgSBgcDFAYTCAIBAgMBiAgDCgwJtg6GWIgrDYRtLIEihVGEfYJQgWsBAVCCcC+BFAWVVwGBF4N1hgSDf5EwhzyEZT0ziT6BPwEBAQ
+X-IPAS-Result: A2AyCgBftvZVPDopFlxdGQGDCVRpgyqEHLd+hW8EAQMBAYE0TQEBAQEBAQcBAQEBQAEkG4QeBQEBAQECAQgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBAgSBgcDFAYTCAIBAgMBiAgDCgwJtg6GWIgrDYRtLIEihVGEfYJQgWsBAVCCcC+BFAWVVwGBF4N1hgSDf5EwhzyEZT0ziT6BPwEBAQ
+X-IronPort-AV: E=Sophos;i="5.17,527,1437433200"; 
+   d="scan'208";a="609685869"
+Received: from host-92-22-41-58.as13285.net (HELO PhilipOakley) ([92.22.41.58])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 14 Sep 2015 12:59:54 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277816>
 
-On Sun, Sep 13, 2015 at 8:04 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Duy Nguyen <pclouds@gmail.com> writes:
+From: "Jacob Keller" <jacob.keller@gmail.com>
+> Hi,
 >
->> On Mon, Sep 7, 2015 at 11:33 PM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writ=
-es:
->>>
->>>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@=
-gmail.com>
->>>> ---
->>>
->>> The cover letter talks about "local clone", and in this entire
->>> series, I saw new tests only for the local case, but doesn't this
->>> and the next change also affect the case where a Git daemon or a
->>> upload-pack process is serving the remote repository?
->>>
->>> And if so, how is that case affected?
+> On Sat, Sep 12, 2015 at 3:51 PM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>> The branch description will be included in 'git format-patch
+>> --cover-letter' and in 'git pull-request' emails. Tell the reader.
 >>
->> People who serve .git-dir repos should not be affected (I think we
->> have enough test cases covering that). People can serve .git-file
->> repos as well, which is sort of tested in the local clone test case
->> because upload-pack is involved for providing remote refs, I think.
+>> While here, clarify that the description may be a multi-line
+>> explanation of the purpose of the branch's patch series.
+>>
+>> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+>> ---
+>>
+>> This is a short doc patch to follow up $gmane/277628 where Johannes
+>> Schindelin noted this otherwise undocumented feature.
+>>
 >
-> Unfortunately, the above is still not unclear to me.
+> Thanks for this.
 >
-> Was serving from a linked repository working without these five
-> patches, i.e. was the local case the only one that was broken and
-> needed fixing with these five patches?  If so, the log message
-> should mention that (i.e. "remote case was working OK but local was
-> broken because ...; change this and that to make local one work as
-> well").  If the remote case also was broken and fixed by these five
-> patches, then that is also worth mentioning the same way.
+>>
+>>  Documentation/git-branch.txt       | 3 ++-
+>>  Documentation/git-format-patch.txt | 2 +-
+>>  Documentation/git-request-pull.txt | 3 ++-
+>>  3 files changed, 5 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/Documentation/git-branch.txt 
+>> b/Documentation/git-branch.txt
+>> index a67138a..79ad1c7 100644
+>> --- a/Documentation/git-branch.txt
+>> +++ b/Documentation/git-branch.txt
+>> @@ -197,7 +197,8 @@ start-point is either a local or remote-tracking 
+>> branch.
+>>
+>>  --edit-description::
+>>         Open an editor and edit the text to explain what the branch 
+>> is
+>> -       for, to be used by various other commands (e.g. 
+>> `request-pull`).
+>> +       for, to be used by various other commands (e.g. 
+>> `format-patch`
+>> +       and `request-pull`). Multi-line explanations may be used.
+>>
 >
-> I didn't ask you to explain it to me in the first place in a
-> response.  The review comment pointed out that the proposed log
-> message was unclear and those who will be reading "git log" output
-> need clearer description.
+> Are these the only locations? Just want to make sure while we're 
+> updating it.
 
-I know. I sent the re-roll before receiving this. I think I still
-haven't mentioned the impact on remote case. Another update coming,
-maybe next weekend.
---=20
-Duy
+Searching for 'description' has many hits so it's not easy to be really 
+sure. I had thought I'd asked an SO question ($SO/q/6866838) about 
+branch descriptions many years ago, whose answers indicated it was 
+little used, but actually I'd asked about the repo description (doh) 
+which AFAICT is only used by gitweb.
+
+A bit more delving found http://stackoverflow.com/a/8858853/717355 which 
+suggests `git merge` would use it, but with no mention in the `git 
+merge --help` man page. A link to the `git fmt-merge-msg` ("for internal 
+use by scripts") finally provides the extra:
+
+merge.branchdesc
+
+In addition to branch names, populate the log message with the branch 
+description text associated with them. Defaults to false.
+
+However, that config key isn't listed in `git config --help` man page, 
+so that capability is a bit buried. (note the default!)
+
+
+
+It still means that my patch is incomplete in its aim to bring out these 
+possible broader usages.
+
+
+I haven't yet looked at the mail archives to see if there is more around 
+the time of those introductions.
+
+>
+> Otherwise, for what it's worth...
+>
+> Acked-by: Jacob Keller <jacob.keller@gmail.com>
+>
+For the future, it would also be nice to allow some use within `git 
+branch` for a `--show[-full]-description` option such that when branch 
+info is being given (-a, -l, etc), then the descriptions for the local 
+branches (which may have descriptions) are displayed, either as a single 
+first line, or as a full multi-line description. But that's coding & 
+review for the future. 
