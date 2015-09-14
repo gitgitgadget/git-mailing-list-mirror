@@ -1,103 +1,85 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2] fetch: fetch submodules in parallel
-Date: Mon, 14 Sep 2015 14:50:51 -0700
-Message-ID: <1442267451-2527-2-git-send-email-sbeller@google.com>
+Subject: [PATCHv2] fetch submodules in parallel
+Date: Mon, 14 Sep 2015 14:50:50 -0700
+Message-ID: <1442267451-2527-1-git-send-email-sbeller@google.com>
 References: <20150914180759.GA11920@sigill.intra.peff.net>
- <1442267451-2527-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, git@vger.kernel.org, jrnieder@gmail.com,
 	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
 	vlovich@gmail.com, Stefan Beller <sbeller@google.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Sep 14 23:51:08 2015
+X-From: git-owner@vger.kernel.org Mon Sep 14 23:51:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbbeU-00061w-UT
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 23:51:07 +0200
+	id 1ZbbeT-00061w-Pu
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 23:51:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752148AbbINVvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Sep 2015 17:51:00 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:36296 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752107AbbINVu6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Sep 2015 17:50:58 -0400
-Received: by padhk3 with SMTP id hk3so154586917pad.3
-        for <git@vger.kernel.org>; Mon, 14 Sep 2015 14:50:57 -0700 (PDT)
+	id S1752142AbbINVu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2015 17:50:59 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:32939 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751981AbbINVu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2015 17:50:57 -0400
+Received: by pacex6 with SMTP id ex6so155076884pac.0
+        for <git@vger.kernel.org>; Mon, 14 Sep 2015 14:50:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gFy3TDdOehWo2aIY0QdryJklQ4d/JLGR9QxYaSg8wJk=;
-        b=heGkzcGiPSyuwBUVQWpAUcJvfLcmvB3S7HVOpm1DuOug8+2jXKUaJJjvSe7gYyL9TG
-         8bARfWg4c5PyH14zvUJEtEeE3vAgfQGwxYRBG0t/ybqNA4Dd2E4POc/EcAV4QN8tX5hs
-         IYklzA304lYQ+uH42TK0CjtNXUf8vrUWJOTB+UfefCz54ndjgoAACHlHTlkcSLHQXIII
-         drGemrfyNrPXki1AcCQRvHpsi+CcO2Uo8OST4ut06cS7l0mFYH0qSZNi5I+t4kPKugwR
-         8b++6th6nUMzzbXyu+JBI3WGfnmTI9H322EwXALxL6c5gwUKeYr4WFc+MlU80I8psta5
-         ajcA==
+        bh=oHKki1KnWdX7qL+SIyGA5pXM698uNxU8m1Z1pWTpx+c=;
+        b=DGiPjBb3eQ38crGJAKaUUBxjdn/Yx2yfkFEMGJpPIbk43qfjA/BL9m05Gqcarc8m1Q
+         c/7+YxpvZCODc6s77aWr5/STRZ1MNVwuLYH15UhZE2RfBNWpI0Rm/25CvxKBbNePXPc8
+         JrvPgDPgvykY31hDocgb0qRzBb74DAIu3pkuTKh6Z3UtTpuT/sLtYOsEKNqbZYu2mzrI
+         UDsOlX6vKwEfIsbyH0fvt74Ms+nnF+9+ozotG/YaMcCvd7iXVzGMTbD80MfJ7PccxxYs
+         Da/R7FPsMLPcbd9S//iIG0ZiMH+LlLIl5eCfEqaCLb7+3IFHBBqb13mTpNJHczG8NNAo
+         x4Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gFy3TDdOehWo2aIY0QdryJklQ4d/JLGR9QxYaSg8wJk=;
-        b=Al8iKenXCL6PCOA4rq91VmXEnuiDErVauM04mU+Q5lzKn3d/TZ1oCXZPikfuajm1PZ
-         bOyVy6ul0bOeZ+/9wNdMoif6M4Xl3odLTKnBH6EeWEMr0qzt+UdGSdkIObwJY6VIKZ43
-         4fuSTMkwdn6x8y9LOEAwJzqyHSEygArRL8Cit1IkOF7CQoZqsuK8JnBm2/zjnH3BWFzs
-         S+pvixTCS4fDWB8McMfGi0dlDlCuNlX9v1vM1aGR5/PClfx2tA1BHNMgNOVeGQtuzmak
-         /cBqsoI8TanoTwMbk3zS9vBdmzQml3J5mpX84QVwDW3Ci38SAQA9zInwNWz9Tn/FI9af
-         E1+w==
-X-Gm-Message-State: ALoCoQlBsFB+4KjxRCbvgKjGYJxNlOLCLQ11fqyz/VyJ2o9i1UqAWPfuc4WYLheexKjEntyLhvbp
-X-Received: by 10.66.191.232 with SMTP id hb8mr39475296pac.22.1442267457711;
-        Mon, 14 Sep 2015 14:50:57 -0700 (PDT)
+        bh=oHKki1KnWdX7qL+SIyGA5pXM698uNxU8m1Z1pWTpx+c=;
+        b=mfKVtUrbX5/E/y3saY8Qnve3HbcYEzG+xMrFcGeB7fMsUtcBTk4IurVjcTP47U0Lwi
+         JLAclk7buDOZbxQyhaNckB8hdFgESzUe93kFu/TwZjW9L7nok0gPMUmNBcMTcnv/3evz
+         t69seawwRyzeABL3wJQI6u2aQEdtmzOktXIg9GWox2boMDPQ6Hc8V4e3mCDdsXMHSZ7h
+         3vuTdU3MkNwWmRkjmVGRs7tpaHJYoOwxXQ+q5usZoxmq6M0HylcumXi65jN39TJBh4sf
+         M4MlpiW3WX9LKwboIrS6v2nnC9MKZzISZnFs+2OUk+/JCEDX8RGGydoEvSacUyA5RULP
+         n2kg==
+X-Gm-Message-State: ALoCoQnBTdPiI/X83KoWgDvtVMJV5/1Usv3rKpK1Ab2eJgQSr5ihhmUj2QynXuXZwt/1qs6nOQ2N
+X-Received: by 10.66.157.137 with SMTP id wm9mr40064891pab.30.1442267456379;
+        Mon, 14 Sep 2015 14:50:56 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:6c13:6ad3:5771:36ec])
-        by smtp.gmail.com with ESMTPSA id fx4sm17959962pbb.92.2015.09.14.14.50.56
+        by smtp.gmail.com with ESMTPSA id fu4sm17991556pbb.59.2015.09.14.14.50.55
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 14 Sep 2015 14:50:57 -0700 (PDT)
+        Mon, 14 Sep 2015 14:50:55 -0700 (PDT)
 X-Mailer: git-send-email 2.6.0.rc0.131.gf624c3d
-In-Reply-To: <1442267451-2527-1-git-send-email-sbeller@google.com>
+In-Reply-To: <20150914180759.GA11920@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277867>
 
-If we run external commands in parallel we cannot pipe the output directly
-to the our stdout/err as it would mix up. So each process's output will
-flow through a pipe, which we buffer. One subprocess can be directly
-piped to out stdout/err for a low latency feedback to the user.
+This replaces the last patch of the "Parallel git submodule fetching"
+series. Changes:
 
-Example:
-Let's assume we have 5 submodules A,B,C,D,E and each fetch takes a
-different amount of time as the different submodules vary in size, then
-the output of fetches in sequential order might look like this:
+* have correct return code in submodule fetching when one submodule fails
+* use poll instead of select now
+* broke down into more smaller functions instead of one giant.
+  (I think it is an improvement, but I wouldn't be surprised if someone objects)
+* closed memory leaks
+* document the need for stdout_to_stderr
 
- time -->
- output: |---A---|   |-B-|   |----C-----------|   |-D-|   |-E-|
+I don't deem it RFC-ish any more but good to go.
 
-When we schedule these submodules into maximal two parallel processes,
-a schedule and sample output over time may look like this:
+Any feedback welcome!
+Thanks,
+Stefan
 
-thread 1: |---A---|   |-D-|   |-E-|
 
-thread 2: |-B-|   |----C-----------|
+Stefan Beller (1):
+  fetch: fetch submodules in parallel
 
-output:   |---A---|B|------C-------|DE
-
-So A will be perceived as it would run normally in the single child
-version. As B has finished by the time A is done, we can dump its whole
-progress buffer on stderr, such that it looks like it finished in no time.
-Once that is done, C is determined to be the visible child and its progress
-will be reported in real time.
-
-So this way of output is really good for human consumption,
-as it only changes the timing, not the actual output.
-
-For machine consumption the output needs to be prepared in
-the tasks, by either having a prefix per line or per block
-to indicate whose tasks output is displayed.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
  Documentation/fetch-options.txt |   7 +
  builtin/fetch.c                 |   6 +-
  builtin/pull.c                  |   6 +
@@ -112,88 +94,49 @@ Signed-off-by: Stefan Beller <sbeller@google.com>
  test-run-command.c              |  24 ++++
  12 files changed, 490 insertions(+), 59 deletions(-)
 
+Interdiff to RFCv1:
+
 diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 45583d8..6b109f6 100644
+index d432f98..6b109f6 100644
 --- a/Documentation/fetch-options.txt
 +++ b/Documentation/fetch-options.txt
-@@ -100,6 +100,13 @@ ifndef::git-pull[]
- 	reference to a commit that isn't already in the local submodule
- 	clone.
- 
-+-j::
-+--jobs=<n>::
-+	Number of parallel children to be used for fetching submodules.
-+	Each will fetch from different submodules, such that fetching many
-+	submodules will be faster. By default submodules will be fetched
+@@ -105,7 +105,7 @@ ifndef::git-pull[]
+ 	Number of parallel children to be used for fetching submodules.
+ 	Each will fetch from different submodules, such that fetching many
+ 	submodules will be faster. By default submodules will be fetched
+-	one at a time
 +	one at a time.
-+
+ 
  --no-recurse-submodules::
  	Disable recursive fetching of submodules (this has the same effect as
- 	using the '--recurse-submodules=no' option).
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index ee1f1a9..f28eac6 100644
+index a1520bb..f28eac6 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -37,6 +37,7 @@ static int prune = -1; /* unspecified */
- static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
- static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
- static int tags = TAGS_DEFAULT, unshallow, update_shallow;
-+static int max_children = 1;
- static const char *depth;
- static const char *upload_pack;
- static struct strbuf default_rla = STRBUF_INIT;
-@@ -99,6 +100,8 @@ static struct option builtin_fetch_options[] = {
- 		    N_("fetch all tags and associated objects"), TAGS_SET),
+@@ -101,7 +101,7 @@ static struct option builtin_fetch_options[] = {
  	OPT_SET_INT('n', NULL, &tags,
  		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
-+	OPT_INTEGER('j', "jobs", &max_children,
+ 	OPT_INTEGER('j', "jobs", &max_children,
+-		    N_("number of threads used for fetching")),
 +		    N_("number of submodules fetched in parallel")),
  	OPT_BOOL('p', "prune", &prune,
  		 N_("prune remote-tracking branches no longer on remote")),
  	{ OPTION_CALLBACK, 0, "recurse-submodules", NULL, N_("on-demand"),
-@@ -1217,7 +1220,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		result = fetch_populated_submodules(&options,
- 						    submodule_prefix,
- 						    recurse_submodules,
--						    verbosity < 0);
-+						    verbosity < 0,
-+						    max_children);
- 		argv_array_clear(&options);
- 	}
- 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index 722a83c..f0af196 100644
+index bc117e9..f0af196 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -94,6 +94,7 @@ static int opt_force;
- static char *opt_tags;
- static char *opt_prune;
- static char *opt_recurse_submodules;
-+static char *max_children;
- static int opt_dry_run;
- static char *opt_keep;
- static char *opt_depth;
-@@ -177,6 +178,9 @@ static struct option pull_options[] = {
- 		N_("on-demand"),
+@@ -179,7 +179,7 @@ static struct option pull_options[] = {
  		N_("control recursive fetching of submodules"),
  		PARSE_OPT_OPTARG),
-+	OPT_PASSTHRU('j', "jobs", &max_children, N_("n"),
+ 	OPT_PASSTHRU('j', "jobs", &max_children, N_("n"),
+-		N_("number of threads used for fetching submodules"),
 +		N_("number of submodules pulled in parallel"),
-+		PARSE_OPT_OPTARG),
+ 		PARSE_OPT_OPTARG),
  	OPT_BOOL(0, "dry-run", &opt_dry_run,
  		N_("dry run")),
- 	OPT_PASSTHRU('k', "keep", &opt_keep, NULL,
-@@ -524,6 +528,8 @@ static int run_fetch(const char *repo, const char **refspecs)
- 		argv_array_push(&args, opt_prune);
- 	if (opt_recurse_submodules)
- 		argv_array_push(&args, opt_recurse_submodules);
-+	if (max_children)
-+		argv_array_push(&args, max_children);
- 	if (opt_dry_run)
- 		argv_array_push(&args, "--dry-run");
- 	if (opt_keep)
 diff --git a/run-command.c b/run-command.c
-index 28e1d55..6f6f9fb 100644
+index b8ff67b..6f6f9fb 100644
 --- a/run-command.c
 +++ b/run-command.c
 @@ -232,6 +232,35 @@ static inline void set_cloexec(int fd)
@@ -265,13 +208,15 @@ index 28e1d55..6f6f9fb 100644
  	}
  
  	clear_child_for_cleanup(pid);
-@@ -852,3 +862,227 @@ int capture_command(struct child_process *cmd, struct strbuf *buf, size_t hint)
- 	close(cmd->out);
+@@ -853,146 +863,226 @@ int capture_command(struct child_process *cmd, struct strbuf *buf, size_t hint)
  	return finish_command(cmd);
  }
-+
+ 
+-int run_processes_async(int n, get_next_task fn, void *data)
 +static void unblock_fd(int fd)
-+{
+ {
+-	int i, wait_status;
+-	pid_t pid;
 +	int flags = fcntl(fd, F_GETFL);
 +	if (flags < 0) {
 +		warning("Could not get file status flags, "
@@ -284,7 +229,42 @@ index 28e1d55..6f6f9fb 100644
 +		return;
 +	}
 +}
-+
+ 
+-	/* no more tasks. Also set when aborting early. */
+-	int all_tasks_started = 0;
+-	int nr_processes = 0;
+-	int child_in_foreground = 0;
+-	struct timeval timeout;
+-	struct child_process *children = xcalloc(n, sizeof(*children));
+-	char *slots = xcalloc(n, sizeof(*slots));
+-	struct strbuf *err = xcalloc(n, sizeof(*err));
+-	fd_set fdset;
+-	int maxfd;
+-	struct strbuf finished_children = STRBUF_INIT;
+-	int flags;
+-	for (i = 0; i < n; i++)
+-		strbuf_init(&err[i], 0);
+-
+-	while (!all_tasks_started || nr_processes > 0) {
+-		/* Start new processes. */
+-		while (!all_tasks_started && nr_processes < n) {
+-			for (i = 0; i < n; i++)
+-				if (!slots[i])
+-					break; /* found an empty slot */
+-			if (i == n)
+-				die("BUG: bookkeeping is hard");
+-
+-			if (fn(data, &children[i], &err[i])) {
+-				all_tasks_started = 1;
+-				break;
+-			}
+-			if (start_command(&children[i]))
+-				die(_("Could not start child process"));
+-			flags = fcntl(children[i].err, F_GETFL);
+-			fcntl(children[i].err, F_SETFL, flags | O_NONBLOCK);
+-			nr_processes++;
+-			slots[i] = 1;
+-		}
 +struct parallel_processes {
 +	int max_number_processes;
 +	void *data;
@@ -344,7 +324,16 @@ index 28e1d55..6f6f9fb 100644
 +	free(pp->err);
 +	strbuf_release(&pp->finished_children);
 +}
-+
+ 
+-		/* prepare data for select call */
+-		FD_ZERO(&fdset);
+-		maxfd = 0;
+-		for (i = 0; i < n; i++) {
+-			if (!slots[i])
+-				continue;
+-			FD_SET(children[i].err, &fdset);
+-			if (children[i].err > maxfd)
+-				maxfd = children[i].err;
 +static void run_processes_parallel_start_new(struct parallel_processes *pp)
 +{
 +	int i;
@@ -360,10 +349,25 @@ index 28e1d55..6f6f9fb 100644
 +		if (pp->fn(pp->data, &pp->children[i], &pp->err[i])) {
 +			pp->all_tasks_started = 1;
 +			break;
-+		}
+ 		}
+-		timeout.tv_sec = 0;
+-		timeout.tv_usec = 500000;
 +		if (start_command(&pp->children[i]))
 +			pp->fn_err(pp->data, &pp->children[i], &pp->err[i]);
-+
+ 
+-		i = select(maxfd + 1, &fdset, NULL, NULL, &timeout);
+-		if (i < 0) {
+-			if (errno == EINTR)
+-				/* A signal was caught; try again */
+-				continue;
+-			else if (errno == ENOMEM)
+-				die_errno("BUG: keeping track of fds is hard");
+-			else if (errno == EINVAL)
+-				die_errno("BUG: invalid arguments to select");
+-			else if (errno == EBADF)
+-				die_errno("BUG: keeping track of fds is hard");
+-			else
+-				die_errno("Unknown error with select");
 +		unblock_fd(pp->children[i].err);
 +
 +		pp->nr_processes++;
@@ -383,9 +387,20 @@ index 28e1d55..6f6f9fb 100644
 +		else {
 +			run_processes_parallel_cleanup(pp);
 +			die_errno("poll");
-+		}
+ 		}
 +	}
-+
+ 
+-		/* Buffer output from all pipes. */
+-		for (i = 0; i < n; i++) {
+-			if (!slots[i])
+-				continue;
+-			if (FD_ISSET(children[i].err, &fdset))
+-				strbuf_read_noblock(&err[i], children[i].err, 0);
+-			if (child_in_foreground == i) {
+-				fputs(err[i].buf, stderr);
+-				strbuf_reset(&err[i]);
+-				fflush(stderr);
+-			}
 +	/* Buffer output from all pipes. */
 +	for (i = 0; i < pp->max_number_processes; i++) {
 +		if (!pp->slots[i])
@@ -395,11 +410,31 @@ index 28e1d55..6f6f9fb 100644
 +		if (pp->foreground_child == i) {
 +			fputs(pp->err[i].buf, stderr);
 +			strbuf_reset(&pp->err[i]);
-+		}
+ 		}
 +	}
 +	return 0;
 +}
-+
+ 
+-		/* Collect finished child processes. */
+-		while (nr_processes > 0) {
+-			pid = waitpid(-1, &wait_status, WNOHANG);
+-			if (pid == 0)
+-				/* no child finished */
+-				break;
+-
+-			if (pid < 0) {
+-				if (errno == EINTR)
+-					break; /* just try again  next time */
+-				if (errno == EINVAL || errno == ECHILD)
+-					die_errno("wait");
+-			} else {
+-				/* Find the finished child. */
+-				for (i = 0; i < n; i++)
+-					if (slots[i] && pid == children[i].pid)
+-						break;
+-				if (i == n)
+-					/* waitpid returned another process id which
+-					 * we are not waiting on, so ignore it*/
 +
 +static void run_processes_parallel_collect_finished(struct parallel_processes *pp)
 +{
@@ -422,7 +457,8 @@ index 28e1d55..6f6f9fb 100644
 +			/* Find the finished child. */
 +			for (i = 0; i < pp->max_number_processes; i++)
 +				if (pp->slots[i] && pid == pp->children[i].pid)
-+					break;
+ 					break;
+-			}
 +			if (i == pp->max_number_processes)
 +				/*
 +				 * waitpid returned another process id
@@ -431,21 +467,51 @@ index 28e1d55..6f6f9fb 100644
 +				return;
 +		}
 +		strbuf_read_noblock(&pp->err[i], pp->children[i].err, 0);
-+
+ 
+-			strbuf_read_noblock(&err[i], children[i].err, 0);
+-			argv_array_clear(&children[i].args);
+-			argv_array_clear(&children[i].env_array);
 +		if (determine_return_value(wait_status, &code, &errno,
 +					   pp->children[i].argv[0]) < 0)
 +			error("waitpid is confused (%s)",
 +			      pp->children[i].argv[0]);
-+
+ 
+-			slots[i] = 0;
+-			nr_processes--;
 +		pp->fn_exit(pp->data, &pp->children[i], code);
-+
+ 
+-			if (i != child_in_foreground) {
+-				strbuf_addbuf(&finished_children, &err[i]);
+-				strbuf_reset(&err[i]);
+-			} else {
+-				fputs(err[i].buf, stderr);
+-				strbuf_reset(&err[i]);
 +		argv_array_clear(&pp->children[i].args);
 +		argv_array_clear(&pp->children[i].env_array);
-+
+ 
+-				/* Output all other finished child processes */
+-				fputs(finished_children.buf, stderr);
+-				strbuf_reset(&finished_children);
 +		pp->nr_processes--;
 +		pp->slots[i] = 0;
 +		pp->pfd[i].fd = -1;
-+
+ 
+-				/*
+-				 * Pick next process to output live.
+-				 * There can be no active process if n==1
+-				 * NEEDSWORK:
+-				 * For now we pick it randomly by doing a round
+-				 * robin. Later we may want to pick the one with
+-				 * the most output or the longest or shortest
+-				 * running process time.
+-				 */
+-				for (i = 0; i < n; i++)
+-					if (slots[(child_in_foreground + i) % n])
+-						break;
+-				child_in_foreground = (child_in_foreground + i) % n;
+-				fputs(err[child_in_foreground].buf, stderr);
+-				strbuf_reset(&err[child_in_foreground]);
+-			}
 +		if (i != pp->foreground_child) {
 +			strbuf_addbuf(&pp->finished_children, &pp->err[i]);
 +			strbuf_reset(&pp->err[i]);
@@ -471,8 +537,8 @@ index 28e1d55..6f6f9fb 100644
 +			pp->foreground_child = (pp->foreground_child + i) % n;
 +			fputs(pp->err[pp->foreground_child].buf, stderr);
 +			strbuf_reset(&pp->err[pp->foreground_child]);
-+		}
-+	}
+ 		}
+ 	}
 +}
 +
 +int run_processes_parallel(int n, void *data,
@@ -491,29 +557,33 @@ index 28e1d55..6f6f9fb 100644
 +	}
 +	run_processes_parallel_cleanup(&pp);
 +
-+	return 0;
-+}
+ 	return 0;
+ }
 diff --git a/run-command.h b/run-command.h
-index 5b4425a..0487f71 100644
+index 8f53ad6..0487f71 100644
 --- a/run-command.h
 +++ b/run-command.h
-@@ -119,4 +119,40 @@ struct async {
- int start_async(struct async *async);
+@@ -120,32 +120,39 @@ int start_async(struct async *async);
  int finish_async(struct async *async);
  
-+/**
+ /**
+- * Return 0 if the next child is ready to run.
+- * This callback takes care to initialize the child process and preload the
+- * out and error channel. The preloading of these outpout channels is useful
+- * if you want to have a message printed directly before the output of the
+- * child process.
 + * This callback should initialize the child process and preload the
 + * error channel. The preloading of is useful if you want to have a message
 + * printed directly before the output of the child process.
 + * You MUST set stdout_to_stderr.
-+ *
+  *
 + * Return 0 if the next child is ready to run.
-+ * Return != 0 if there are no more tasks to be processed.
-+ */
-+typedef int (*get_next_task)(void *data,
-+			     struct child_process *cp,
-+			     struct strbuf *err);
-+
+  * Return != 0 if there are no more tasks to be processed.
+  */
+ typedef int (*get_next_task)(void *data,
+ 			     struct child_process *cp,
+ 			     struct strbuf *err);
+ 
 +typedef void (*handle_child_starting_failure)(void *data,
 +					      struct child_process *cp,
 +					      struct strbuf *err);
@@ -522,106 +592,48 @@ index 5b4425a..0487f71 100644
 +					  struct child_process *cp,
 +					  int result);
 +
-+/**
+ /**
+- * Runs up to n processes at the same time. Whenever a process can
+- * be started, the callback `get_next_task` is called to obtain the
+- * data fed to the child process.
 + * Runs up to n processes at the same time. Whenever a process can be
 + * started, the callback `get_next_task` is called to obtain the data
 + * fed to the child process.
-+ *
-+ * The children started via this function run in parallel and their output
+  *
+  * The children started via this function run in parallel and their output
+- * to both stdout and stderr is buffered, while one of the children will
+- * directly output to stdout/stderr.
+- *
+- * This leads to a problem with output from processes which put out to
+- * stdout/err alternatingly as the buffering will not be able to replay
+- * the
 + * to stderr is buffered, while one of the children will directly output
 + * to stderr.
-+ */
-+
+  */
+ 
+-int run_processes_async(int n, get_next_task fn, void *data);
 +int run_processes_parallel(int n, void *data,
 +			   get_next_task fn,
 +			   handle_child_starting_failure,
 +			   handle_child_return_value);
-+
+ 
  #endif
-diff --git a/strbuf.c b/strbuf.c
-index cce5eed..7f866c3 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -384,6 +384,37 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
- 	return sb->len - oldlen;
- }
- 
-+ssize_t strbuf_read_noblock(struct strbuf *sb, int fd, size_t hint)
-+{
-+	size_t oldlen = sb->len;
-+	size_t oldalloc = sb->alloc;
-+
-+	strbuf_grow(sb, hint ? hint : 8192);
-+	for (;;) {
-+		ssize_t cnt;
-+
-+		cnt = read(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
-+		if (cnt < 0) {
-+			if (errno == EINTR)
-+				continue;
-+			if (errno == EAGAIN)
-+				break;
-+			if (oldalloc == 0)
-+				strbuf_release(sb);
-+			else
-+				strbuf_setlen(sb, oldlen);
-+			return -1;
-+		}
-+		if (!cnt)
-+			break;
-+		sb->len += cnt;
-+		strbuf_grow(sb, 8192);
-+	}
-+
-+	sb->buf[sb->len] = '\0';
-+	return sb->len - oldlen;
-+}
-+
- #define STRBUF_MAXLINK (2*PATH_MAX)
- 
- int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
-diff --git a/strbuf.h b/strbuf.h
-index aef2794..7ea462b 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -365,6 +365,7 @@ extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
-  * any partial read is undone.
-  */
- extern ssize_t strbuf_read(struct strbuf *, int fd, size_t hint);
-+extern ssize_t strbuf_read_noblock(struct strbuf *, int fd, size_t hint);
- 
- /**
-  * Read the contents of a file, specified by its path. The third argument
 diff --git a/submodule.c b/submodule.c
-index 1d64e57..a0e06e8 100644
+index 6d757c6..a0e06e8 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -12,6 +12,7 @@
- #include "sha1-array.h"
- #include "argv-array.h"
- #include "blob.h"
-+#include "thread-utils.h"
- 
- static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
- static struct string_list changed_submodule_paths;
-@@ -615,37 +616,79 @@ static void calculate_changed_submodule_paths(void)
- 	initialized_fetch_ref_tips = 0;
- }
- 
-+struct submodule_parallel_fetch {
-+	int count;
-+	struct argv_array args;
-+	const char *work_tree;
-+	const char *prefix;
-+	int command_line_option;
-+	int quiet;
+@@ -623,17 +623,32 @@ struct submodule_parallel_fetch {
+ 	const char *prefix;
+ 	int command_line_option;
+ 	int quiet;
 +	int result;
-+};
+ };
+-#define SPF_INIT {0, ARGV_ARRAY_INIT, NULL}
 +#define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0}
-+
-+int get_next_submodule(void *data, struct child_process *cp,
-+		       struct strbuf *err);
-+
+ 
+ int get_next_submodule(void *data, struct child_process *cp,
+ 		       struct strbuf *err);
+ 
 +void handle_submodule_fetch_start_err(void *data, struct child_process *cp, struct strbuf *err)
 +{
 +	struct submodule_parallel_fetch *spf = data;
@@ -638,265 +650,103 @@ index 1d64e57..a0e06e8 100644
 +
  int fetch_populated_submodules(const struct argv_array *options,
  			       const char *prefix, int command_line_option,
--			       int quiet)
-+			       int quiet, int max_parallel_jobs)
+ 			       int quiet, int max_parallel_jobs)
  {
 -	int i, result = 0;
--	struct child_process cp = CHILD_PROCESS_INIT;
--	struct argv_array argv = ARGV_ARRAY_INIT;
--	const char *work_tree = get_git_work_tree();
--	if (!work_tree)
 +	int i;
-+	struct submodule_parallel_fetch spf = SPF_INIT;
-+	spf.work_tree = get_git_work_tree();
-+	spf.command_line_option = command_line_option;
-+	spf.quiet = quiet;
-+	spf.prefix = prefix;
-+	if (!spf.work_tree)
- 		goto out;
- 
- 	if (read_cache() < 0)
- 		die("index file corrupt");
- 
--	argv_array_push(&argv, "fetch");
-+	argv_array_push(&spf.args, "fetch");
- 	for (i = 0; i < options->argc; i++)
--		argv_array_push(&argv, options->argv[i]);
--	argv_array_push(&argv, "--recurse-submodules-default");
-+		argv_array_push(&spf.args, options->argv[i]);
-+	argv_array_push(&spf.args, "--recurse-submodules-default");
+ 	struct submodule_parallel_fetch spf = SPF_INIT;
+ 	spf.work_tree = get_git_work_tree();
+ 	spf.command_line_option = command_line_option;
+@@ -652,12 +667,15 @@ int fetch_populated_submodules(const struct argv_array *options,
  	/* default value, "--submodule-prefix" and its value are added later */
  
--	cp.env = local_repo_env;
--	cp.git_cmd = 1;
--	cp.no_stdin = 1;
--
  	calculate_changed_submodule_paths();
+-	run_processes_async(max_parallel_jobs, get_next_submodule, &spf);
 +	run_processes_parallel(max_parallel_jobs, &spf,
 +			       get_next_submodule,
 +			       handle_submodule_fetch_start_err,
 +			       handle_submodule_fetch_finish);
-+
-+	argv_array_clear(&spf.args);
-+out:
-+	string_list_clear(&changed_submodule_paths, 1);
-+	return spf.result;
-+}
-+
-+int get_next_submodule(void *data, struct child_process *cp,
-+		       struct strbuf *err)
-+{
-+	int ret = 0;
-+	struct submodule_parallel_fetch *spf = data;
  
--	for (i = 0; i < active_nr; i++) {
-+	for ( ; spf->count < active_nr; spf->count++) {
- 		struct strbuf submodule_path = STRBUF_INIT;
- 		struct strbuf submodule_git_dir = STRBUF_INIT;
- 		struct strbuf submodule_prefix = STRBUF_INIT;
--		const struct cache_entry *ce = active_cache[i];
-+		const struct cache_entry *ce = active_cache[spf->count];
- 		const char *git_dir, *default_argv;
- 		const struct submodule *submodule;
- 
-@@ -657,7 +700,7 @@ int fetch_populated_submodules(const struct argv_array *options,
- 			submodule = submodule_from_name(null_sha1, ce->name);
- 
- 		default_argv = "yes";
--		if (command_line_option == RECURSE_SUBMODULES_DEFAULT) {
-+		if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
- 			if (submodule &&
- 			    submodule->fetch_recurse !=
- 						RECURSE_SUBMODULES_NONE) {
-@@ -680,40 +723,46 @@ int fetch_populated_submodules(const struct argv_array *options,
- 					default_argv = "on-demand";
- 				}
- 			}
--		} else if (command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
-+		} else if (spf->command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
- 			if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
- 				continue;
- 			default_argv = "on-demand";
- 		}
- 
--		strbuf_addf(&submodule_path, "%s/%s", work_tree, ce->name);
-+		strbuf_addf(&submodule_path, "%s/%s", spf->work_tree, ce->name);
- 		strbuf_addf(&submodule_git_dir, "%s/.git", submodule_path.buf);
--		strbuf_addf(&submodule_prefix, "%s%s/", prefix, ce->name);
-+		strbuf_addf(&submodule_prefix, "%s%s/", spf->prefix, ce->name);
- 		git_dir = read_gitfile(submodule_git_dir.buf);
- 		if (!git_dir)
- 			git_dir = submodule_git_dir.buf;
- 		if (is_directory(git_dir)) {
--			if (!quiet)
--				fprintf(stderr, "Fetching submodule %s%s\n", prefix, ce->name);
--			cp.dir = submodule_path.buf;
--			argv_array_push(&argv, default_argv);
--			argv_array_push(&argv, "--submodule-prefix");
--			argv_array_push(&argv, submodule_prefix.buf);
--			cp.argv = argv.argv;
--			if (run_command(&cp))
--				result = 1;
--			argv_array_pop(&argv);
--			argv_array_pop(&argv);
--			argv_array_pop(&argv);
-+			child_process_init(cp);
-+			cp->dir = strbuf_detach(&submodule_path, NULL);
-+			cp->git_cmd = 1;
-+			cp->no_stdout = 1;
-+			cp->no_stdin = 1;
-+			cp->stdout_to_stderr = 1;
-+			cp->err = -1;
-+			cp->env = local_repo_env;
-+			if (!spf->quiet)
-+				strbuf_addf(err, "Fetching submodule %s%s\n",
-+					    spf->prefix, ce->name);
-+			argv_array_init(&cp->args);
-+			argv_array_pushv(&cp->args, spf->args.argv);
-+			argv_array_push(&cp->args, default_argv);
-+			argv_array_push(&cp->args, "--submodule-prefix");
-+			argv_array_push(&cp->args, submodule_prefix.buf);
-+			ret = 1;
- 		}
- 		strbuf_release(&submodule_path);
- 		strbuf_release(&submodule_git_dir);
- 		strbuf_release(&submodule_prefix);
-+		if (ret) {
-+			spf->count++;
-+			return 0;
-+		}
- 	}
--	argv_array_clear(&argv);
--out:
--	string_list_clear(&changed_submodule_paths, 1);
+ 	argv_array_clear(&spf.args);
+ out:
+ 	string_list_clear(&changed_submodule_paths, 1);
 -	return result;
-+	return 1;
++	return spf.result;
  }
  
- unsigned is_submodule_modified(const char *path, int ignore_untracked)
-diff --git a/submodule.h b/submodule.h
-index 5507c3d..cbc0003 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -31,7 +31,7 @@ void set_config_fetch_recurse_submodules(int value);
- void check_for_new_submodule_commits(unsigned char new_sha1[20]);
- int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
--			       int quiet);
-+			       int quiet, int max_parallel_jobs);
- unsigned is_submodule_modified(const char *path, int ignore_untracked);
- int submodule_uses_gitfile(const char *path);
- int ok_to_remove_submodule(const char *path);
+ int get_next_submodule(void *data, struct child_process *cp,
 diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 9acf628..37c89b9 100755
+index 0970fb0..37c89b9 100755
 --- a/t/t0061-run-command.sh
 +++ b/t/t0061-run-command.sh
-@@ -47,4 +47,24 @@ test_expect_success POSIXPERM,SANITY 'unreadable directory in PATH' '
+@@ -48,18 +48,22 @@ test_expect_success POSIXPERM,SANITY 'unreadable directory in PATH' '
+ '
+ 
+ cat >expect <<-EOF
+-Now running instance 0
+-Hello World
+-Now running instance 1
+-Hello World
+-Now running instance 2
+-Hello World
+-Now running instance 3
+-Hello World
++preloaded output of a child
++Hello
++World
++preloaded output of a child
++Hello
++World
++preloaded output of a child
++Hello
++World
++preloaded output of a child
++Hello
++World
+ EOF
+ 
+ test_expect_success 'run_command runs in parallel' '
+-	test-run-command run-command-async sh -c "echo Hello World >&2;" 2>actual &&
++	test-run-command run-command-async sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
  	test_cmp expect actual
  '
  
-+cat >expect <<-EOF
-+preloaded output of a child
-+Hello
-+World
-+preloaded output of a child
-+Hello
-+World
-+preloaded output of a child
-+Hello
-+World
-+preloaded output of a child
-+Hello
-+World
-+EOF
-+
-+test_expect_success 'run_command runs in parallel' '
-+	test-run-command run-command-async sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 17759b1..1b4ce69 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -71,6 +71,16 @@ test_expect_success "fetch --recurse-submodules recurses into submodules" '
- 	test_i18ncmp expect.err actual.err
- '
- 
-+test_expect_success "fetch --recurse-submodules -j2 has the same output behaviour" '
-+	add_upstream_commit &&
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules -j2 2>../actual.err
-+	) &&
-+	test_must_be_empty actual.out &&
-+	test_i18ncmp expect.err actual.err
-+'
-+
- test_expect_success "fetch alone only fetches superproject" '
- 	add_upstream_commit &&
- 	(
-@@ -140,6 +150,15 @@ test_expect_success "--quiet propagates to submodules" '
- 	! test -s actual.err
- '
- 
-+test_expect_success "--quiet propagates to parallel submodules" '
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules -j 2 --quiet  >../actual.out 2>../actual.err
-+	) &&
-+	! test -s actual.out &&
-+	! test -s actual.err
-+'
-+
- test_expect_success "--dry-run propagates to submodules" '
- 	add_upstream_commit &&
- 	(
 diff --git a/test-run-command.c b/test-run-command.c
-index 89c7de2..71fd3ca 100644
+index 4817f6e..71fd3ca 100644
 --- a/test-run-command.c
 +++ b/test-run-command.c
-@@ -10,9 +10,29 @@
- 
- #include "git-compat-util.h"
- #include "run-command.h"
-+#include "argv-array.h"
-+#include "strbuf.h"
- #include <string.h>
+@@ -16,9 +16,9 @@
  #include <errno.h>
  
-+static int number_callbacks;
+ static int number_callbacks;
+-int run_processes_async_next(void *data,
+-			     struct child_process *cp,
+-			     struct strbuf *err)
 +int parallel_next(void *data,
 +		  struct child_process *cp,
 +		  struct strbuf *err)
-+{
-+	struct child_process *d = data;
-+	if (number_callbacks >= 4)
-+		return 1;
-+
-+	argv_array_pushv(&cp->args, d->argv);
-+	cp->stdout_to_stderr = 1;
-+	cp->no_stdin = 1;
-+	cp->err = -1;
-+	strbuf_addf(err, "preloaded output of a child\n");
-+	number_callbacks++;
-+	return 0;
-+}
-+
- int main(int argc, char **argv)
  {
- 	struct child_process proc = CHILD_PROCESS_INIT;
-@@ -30,6 +50,10 @@ int main(int argc, char **argv)
- 	if (!strcmp(argv[1], "run-command"))
+ 	struct child_process *d = data;
+ 	if (number_callbacks >= 4)
+@@ -28,7 +28,7 @@ int run_processes_async_next(void *data,
+ 	cp->stdout_to_stderr = 1;
+ 	cp->no_stdin = 1;
+ 	cp->err = -1;
+-	strbuf_addf(err, "Now running instance %d\n", number_callbacks);
++	strbuf_addf(err, "preloaded output of a child\n");
+ 	number_callbacks++;
+ 	return 0;
+ }
+@@ -51,7 +51,8 @@ int main(int argc, char **argv)
  		exit(run_command(&proc));
  
-+	if (!strcmp(argv[1], "run-command-async"))
+ 	if (!strcmp(argv[1], "run-command-async"))
+-		exit(run_processes_async(4, run_processes_async_next, &proc));
 +		exit(run_processes_parallel(4, &proc, parallel_next,
 +					 NULL, NULL));
-+
+ 
  	fprintf(stderr, "check usage\n");
  	return 1;
- }
+
 -- 
 2.6.0.rc0.131.gf624c3d
