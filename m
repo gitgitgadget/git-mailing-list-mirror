@@ -1,91 +1,69 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Bloom filters for have/want negotiation
-Date: Mon, 14 Sep 2015 05:40:53 +0200
-Message-ID: <55F641C5.2020007@alum.mit.edu>
-References: <55F343F5.6010903@alum.mit.edu> <CAJo=hJstD8c2RPUAj2OznFSCuyJsKFmvymsQMHOPhGdaqPgyvg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git configure/make does not honor ARFLAGS
+Date: Mon, 14 Sep 2015 00:30:16 -0400
+Message-ID: <20150914043016.GA10167@sigill.intra.peff.net>
+References: <CAH8yC8kV77h8cRA9Qo_1FYe9sv0zgsE7yKxaX+OtpRfj9+7wog@mail.gmail.com>
+ <20150913101727.GB26562@sigill.intra.peff.net>
+ <CAPig+cQV-kaDDdBH+QZXsSjDHjP2CUYDXp3WKSBtgguVmLvofg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: git discussion list <git@vger.kernel.org>,
-	Wilhelm Bierbaum <bierbaum@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Sep 14 05:41:20 2015
+Cc: Jeffrey Walton <noloader@gmail.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Sep 14 06:30:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbKdq-0005G9-P7
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 05:41:19 +0200
+	id 1ZbLPM-0007fS-DO
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Sep 2015 06:30:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753318AbbINDk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2015 23:40:58 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:53793 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751926AbbINDk5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Sep 2015 23:40:57 -0400
-X-AuditID: 1207440d-f79136d00000402c-bf-55f641c858e7
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 3C.85.16428.8C146F55; Sun, 13 Sep 2015 23:40:56 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC96A58.dip0.t-ipconnect.de [79.201.106.88])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t8E3essh027253
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 13 Sep 2015 23:40:55 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <CAJo=hJstD8c2RPUAj2OznFSCuyJsKFmvymsQMHOPhGdaqPgyvg@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsUixO6iqHvC8VuowYRZshZTn81it+i60s1k
-	8aOlh9li/qGJrA4sHjtn3WX3eNa7h9Hjz/k9rB6fN8kFsERx2yQllpQFZ6bn6dslcGec3T+R
-	veAqd8W5FZ4NjPM5uxg5OCQETCQ+fhXoYuQEMsUkLtxbz9bFyMUhJHCZUaJ3fQMzhHOeSeL3
-	jm4WkCpeAW2JD2sOgNksAqoSXzZvZQex2QR0JRb1NDOB2KICQRIrlr9ghKgXlDg58wlYvYiA
-	msT2Cz2sIDazQIXEwXVzwOqFgY74sGoy2BwhgQKJtXf3gsU5BQIl7u3byAhRry7xZ94lZghb
-	XqJ562zmCYwCs5CsmIWkbBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdI30cjNL9FJT
-	SjcxQsKZdwfj/3UyhxgFOBiVeHhP3PkaKsSaWFZcmXuIUZKDSUmUt/AHUIgvKT+lMiOxOCO+
-	qDQntfgQowQHs5IIb4D1t1Ah3pTEyqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwH
-	h5IE7wIHoEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UJzGFwMjFSTFA7T3EEg7
-	b3FBYi5QFKL1FKMux5rZ99cyCbHk5eelSonz9oAUCYAUZZTmwa2AJa9XjOJAHwvz3gGp4gEm
-	PrhJr4CWMAEteV/8CWRJSSJCSqqBMfHXhUXpxb41V+LbjAuee1hPfiDJ1HguaOGmPdvZtCd/
-	bZYVP/JPOC+lPL/Z6S3/tN8J/fKH3EoYT60ovcr+2W/dbqd9Qv27K7b6na0qnWIQ 
+	id S1750982AbbINEaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2015 00:30:20 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58569 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750832AbbINEaT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2015 00:30:19 -0400
+Received: (qmail 21555 invoked by uid 102); 14 Sep 2015 04:30:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 13 Sep 2015 23:30:19 -0500
+Received: (qmail 23254 invoked by uid 107); 14 Sep 2015 04:30:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Sep 2015 00:30:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Sep 2015 00:30:16 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQV-kaDDdBH+QZXsSjDHjP2CUYDXp3WKSBtgguVmLvofg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277803>
 
-On 09/12/2015 07:16 AM, Shawn Pearce wrote:
-> On Fri, Sep 11, 2015 at 2:13 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> I have been thinking about Wilhelm Bierbaum's talk at the last GitMerge
->> conference [1] in which he describes a scheme for using Bloom filters to
->> make the initial reference advertisement less expensive.
-> ...
->> But it got me thinking about how the client could use a Bloom filter in
->> a later stage of the negotiation, when telling the server what objects
->> it already has, while preserving 100% reliability.
-> ...
->> I don't have a gut feeling about the cost of this phase of the
->> negotiation, so I don't know whether this would be a net savings, let
->> alone one that is worth the added complexity. But I wanted to document
->> the idea in case somebody thinks it has promise. (I have no plans to
->> pursue it.)
+On Sun, Sep 13, 2015 at 01:11:46PM -0400, Eric Sunshine wrote:
+
+> > Hrm. Your "$(AR)" is not really "ar" then, is it? It has been a long
+> > time since I played with libtool, but what is the reason that you are
+> > calling libtool and not "ar" in the first place. Is it that you do not
+> > have "ar" at all, and libtool performs some other procedure? If so, is
+> > there a more ar-compatible wrapper that can be used?
 > 
-> Maybe I can help... it just so happens that I have Git servers at
-> $DAY_JOB instrumented in the smart HTTP negotiate code. They do "many"
-> fetch requests. :)
-> [...]
-> 
-> Ergo, if this is all working correctly on smart HTTP, clients can
-> fetch from a server they already "know" with decent efficiency, and
-> smaller than your 2 KiB Bloom filter estimate for git.git at 1% error
-> rate.
+> This isn't GNU's libtool. It's Apple's libtool, an entirely different
+> beast, which is an 'ar' replacement and is needed when linking
+> Universal binaries containing code for more than one architecture,
+> such as 'ppc' and 'i386', so the same executable can run on multiple
+> architectures. This tool dates all the way back to at least NextStep
+> 3.1 when NeXT ported NextStep to Intel hardware (i486) from NeXT
+> computers (m68k). The name "Universal" is an Apple invention, but back
+> in the NeXT days, they were called Multi-Architecture Binaries (MAB)
+> or, colloquially, just FAT (for "fat"); there was a corresponding
+> "lipo" command (short for "liposuction") to "thin" out "fat" binaries.
+> NeXT's libtool predates GNU's libtool by a few years: May 1993 vs.
+> July 1997, respectively. When an attempt is made to use 'ar' on
+> Universal object files, it errors out saying that it can't be used
+> with such files and recommends 'libtool' instead.
 
-Thanks for the awesome data, Shawn. Your data do indeed seem to prove
-that there would be no benefit to using Bloom filters in this part of
-the negotiation.
+Ah, OK. Today I learned something. :)
 
-Michael
+Jeffrey, can you produce a tested patch which works for you?
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+-Peff
