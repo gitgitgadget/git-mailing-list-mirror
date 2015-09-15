@@ -1,79 +1,105 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 35/67] upload-archive: convert sprintf to strbuf
-Date: Tue, 15 Sep 2015 11:51:05 -0400
-Message-ID: <20150915155104.GI29753@sigill.intra.peff.net>
+Subject: [PATCH 36/67] remote-ext: simplify git pkt-line generation
+Date: Tue, 15 Sep 2015 11:52:10 -0400
+Message-ID: <20150915155210.GJ29753@sigill.intra.peff.net>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 17:51:33 2015
+X-From: git-owner@vger.kernel.org Tue Sep 15 17:52:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbsVx-0005LX-27
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 17:51:25 +0200
+	id 1ZbsWp-0006TO-2q
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 17:52:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754772AbbIOPvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 11:51:09 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59373 "HELO cloud.peff.net"
+	id S1752845AbbIOPwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2015 11:52:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59376 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753700AbbIOPvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 11:51:07 -0400
-Received: (qmail 12666 invoked by uid 102); 15 Sep 2015 15:51:07 -0000
+	id S1752234AbbIOPwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2015 11:52:12 -0400
+Received: (qmail 12768 invoked by uid 102); 15 Sep 2015 15:52:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 10:51:07 -0500
-Received: (qmail 7410 invoked by uid 107); 15 Sep 2015 15:51:16 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 10:52:12 -0500
+Received: (qmail 7426 invoked by uid 107); 15 Sep 2015 15:52:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 11:51:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 11:51:05 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 11:52:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 11:52:10 -0400
 Content-Disposition: inline
 In-Reply-To: <20150915152125.GA27504@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277937>
 
-When we report an error to the client, we format it into a
-fixed-size buffer using vsprintf(). This can't actually
-overflow in practice, since we only format a very tame
-subset of strings (mostly strerror() output). However, it's
-hard to tell immediately, so let's just use a strbuf so
-readers do not have to wonder.
+We format a pkt-line into a heap buffer, which requires
+manual computation of the required size. We can just use a
+strbuf instead, which handles this for us, and lets us drop
+some bare sprintf calls.
 
-We do add an allocation here, but the performance is not
-important; the next step is to call die() anyway.
+Note that we _could_ also use a fixed-size buffer here, as
+we are limited by 16-bit pkt-line limit. But we'd still have
+to worry about the length computation in that case, and the
+allocation overhead is not important here.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/upload-archive.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ builtin/remote-ext.c | 32 +++++++++-----------------------
+ 1 file changed, 9 insertions(+), 23 deletions(-)
 
-diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-index 32ab94c..dbfe14f 100644
---- a/builtin/upload-archive.c
-+++ b/builtin/upload-archive.c
-@@ -49,15 +49,14 @@ int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
- __attribute__((format (printf, 1, 2)))
- static void error_clnt(const char *fmt, ...)
+diff --git a/builtin/remote-ext.c b/builtin/remote-ext.c
+index 3b8c22c..1d991d9 100644
+--- a/builtin/remote-ext.c
++++ b/builtin/remote-ext.c
+@@ -142,36 +142,22 @@ static const char **parse_argv(const char *arg, const char *service)
+ static void send_git_request(int stdin_fd, const char *serv, const char *repo,
+ 	const char *vhost)
  {
--	char buf[1024];
-+	struct strbuf buf = STRBUF_INIT;
- 	va_list params;
--	int len;
+-	size_t bufferspace;
+-	size_t wpos = 0;
+-	char *buffer;
++	struct strbuf buffer = STRBUF_INIT;
  
- 	va_start(params, fmt);
--	len = vsprintf(buf, fmt, params);
-+	strbuf_vaddf(&buf, fmt, params);
- 	va_end(params);
--	send_sideband(1, 3, buf, len, LARGE_PACKET_MAX);
--	die("sent error to the client: %s", buf);
-+	send_sideband(1, 3, buf.buf, buf.len, LARGE_PACKET_MAX);
-+	die("sent error to the client: %s", buf.buf);
+-	/*
+-	 * Request needs 12 bytes extra if there is vhost (xxxx \0host=\0) and
+-	 * 6 bytes extra (xxxx \0) if there is no vhost.
+-	 */
++	/* Generate packet with a dummy size header */
++	strbuf_addf(&buffer, "0000%s %s%c", serv, repo, 0);
+ 	if (vhost)
+-		bufferspace = strlen(serv) + strlen(repo) + strlen(vhost) + 12;
+-	else
+-		bufferspace = strlen(serv) + strlen(repo) + 6;
++		strbuf_addf(&buffer, "host=%s%c", vhost, 0);
+ 
+-	if (bufferspace > 0xFFFF)
++	/* Now go back and fill in the size */
++	if (buffer.len > 0xFFFF)
+ 		die("Request too large to send");
+-	buffer = xmalloc(bufferspace);
+-
+-	/* Make the packet. */
+-	wpos = sprintf(buffer, "%04x%s %s%c", (unsigned)bufferspace,
+-		serv, repo, 0);
+-
+-	/* Add vhost if any. */
+-	if (vhost)
+-		sprintf(buffer + wpos, "host=%s%c", vhost, 0);
++	xsnprintf(buffer.buf, buffer.alloc, "%04x", (unsigned)buffer.len);
+ 
+-	/* Send the request */
+-	if (write_in_full(stdin_fd, buffer, bufferspace) < 0)
++	if (write_in_full(stdin_fd, buffer.buf, buffer.len) < 0)
+ 		die_errno("Failed to send request");
+ 
+-	free(buffer);
++	strbuf_release(&buffer);
  }
  
- static ssize_t process_input(int child_fd, int band)
+ static int run_child(const char *arg, const char *service)
 -- 
 2.6.0.rc2.408.ga2926b9
