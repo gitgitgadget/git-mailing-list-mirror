@@ -1,123 +1,118 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] strtoul_ui: actually report error in case of negative input
-Date: Tue, 15 Sep 2015 08:50:03 +0200
-Message-ID: <vpq4miwfa78.fsf@anie.imag.fr>
-References: <1442181636-27821-1-git-send-email-max@max630.net>
-	<vpqr3m1seap.fsf@anie.imag.fr> <20150914202647.GA7806@wheezy.local>
+From: Sukhwinder Singh <php_programmer_india@hotmail.com>
+Subject: RE: Git Deployment using existing multiple environments
+Date: Tue, 15 Sep 2015 12:20:36 +0530
+Message-ID: <BAY180-W38D1FC3FD9892A6D147968C25C0@phx.gbl>
+References: <BAY180-W16B5F49FFD3614D666B232C25F0@phx.gbl>
+ <8797177dd247d4ef903603cbe6c57d7d@dscho.org>,<BAY180-W55A5095CC7E1322EA80876C25D0@phx.gbl>,<CA+P7+xq0ZPOAOONA9x9x_CYt1yf5J4Qcr5oQdQsbtu3iH3ehmw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Tue Sep 15 08:50:30 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 15 08:50:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zbk4N-0000Ua-Hc
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 08:50:23 +0200
+	id 1Zbk4g-0000tB-9u
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 08:50:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981AbbIOGuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 02:50:18 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47754 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751549AbbIOGuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 02:50:17 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t8F6o2XE003528
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 15 Sep 2015 08:50:03 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8F6o3lI005811;
-	Tue, 15 Sep 2015 08:50:03 +0200
-In-Reply-To: <20150914202647.GA7806@wheezy.local> (Max Kirillov's message of
-	"Mon, 14 Sep 2015 23:26:47 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 15 Sep 2015 08:50:03 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t8F6o2XE003528
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1442904606.9204@cSFEKp5yyRkVHqMXWa4VXQ
+	id S1751901AbbIOGui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2015 02:50:38 -0400
+Received: from bay004-omc1s9.hotmail.com ([65.54.190.20]:60625 "EHLO
+	BAY004-OMC1S9.hotmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750698AbbIOGuh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Sep 2015 02:50:37 -0400
+Received: from BAY180-W38 ([65.54.190.59]) by BAY004-OMC1S9.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.23008);
+	 Mon, 14 Sep 2015 23:50:37 -0700
+X-TMN: [HYDVN88Ldeou+a9vaG7Rjbe2qZNIkDs1]
+X-Originating-Email: [php_programmer_india@hotmail.com]
+Importance: Normal
+In-Reply-To: <CA+P7+xq0ZPOAOONA9x9x_CYt1yf5J4Qcr5oQdQsbtu3iH3ehmw@mail.gmail.com>
+X-OriginalArrivalTime: 15 Sep 2015 06:50:37.0184 (UTC) FILETIME=[D3CB3000:01D0EF82]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277889>
 
-[ Cc-ing Michael Haggerty who wrote the numparse module ]
+Thank you very much for the detailed reply. There is going to be just one person who'll manage all the moving of the code. On approval he'll move code from one environment to other on our own servers (right now it is being done by manual merging). Development team is not that big right now. They'll be committing all new code to the git repository we have setup up at github using all over test environment code. And the person handling the code at our server will move code from one environment to other by USING Git and not by manual merge.
 
-Max Kirillov <max@max630.net> writes:
+Now lets say we set up a repository at github which has the latest code (all test code)., Now at each of our own servers we already have existing code, that is Test, UAT and Live. For example, first he'll pull code from github to our Test Server and then move branches to UAT and then to Live. Can it work? If it can work then can I please get some some example commands or the procedure to set it up? Time is a bit of problem right now or I would have read book suggested by Johannes. I have searched on the internet but couldn't find any similar case.
 
-> On Mon, Sep 14, 2015 at 08:30:54AM +0200, Matthieu Moy wrote:
->>> Fix it by changing the last check to trigger earlier, as soon as it
->>> becomes bigger than INT_MAX.
->> 
->> What if the value is actually greater than INT_MAX? The function is
->> returning an unsigned long (64 bits on 64bits architectures), and your
->> version is restricting it to integers smaller than 2^31, right?
+Regards,
+Sukhwinder Singh
+
+----------------------------------------
+> From: jacob.keller@gmail.com
+> Date: Mon, 14 Sep 2015 01:32:39 -0700
+> Subject: Re: Git Deployment using existing multiple environments
+> To: php_programmer_india@hotmail.com
+> CC: johannes.schindelin@gmx.de; git@vger.kernel.org
 >
-> the return type of the function is "int", so this is not
-> going to work anyway.
-
-Not just the return type (which is the error status), but also the type
-of the result argument indeed. It's not clear to me whether this is
-intentional (09f2825 (git-grep: don't use sscanf, 2007-03-12) introduced
-it, the commit message doesn't help). I first read strtoul_ui as
-"strtoul with a better UI (user interface)", but maybe the name was
-meant to say "a fuction that uses strtoul and returns an ui (unsigned
-int)".
-
-I think it would be better to just return a long to avoid needless
-limitations, but changing the argument to "long" would interfer with
-in-flight topics. Not worth the trouble.
-
-One potential issue with your patch is that you're forbidding the
-interval [2^31, 2^32[ which was previously allowed, both on 32 and 64
-bits. I'm not sure whether we have a use for this in the codebase.
-
-This alternative patch is rather ugly to, but I think it is less
-limiting and does not have the "large negative wrapped to positive"
-issue:
-
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -814,6 +814,9 @@ static inline int strtoul_ui(char const *s, int base, unsigned int *result)
-        char *p;
- 
-        errno = 0;
-+       /* negative values would be accepted by strtoul */
-+       if (strchr(s, '-'))
-+               return -1;
-        ul = strtoul(s, &p, base);
-        if (errno || *p || p == s || (unsigned int) ul != ul)
-                return -1;
-
-What do you think?
-
-> As I mentioned, some negative values are still accepted
-> as coresponding mod 2**32 positive numbers (-3221225472 as
-> 1073741824), so there really is room for improvement, but it
-> cannot be accomplished just by examining strtoul output.
-
-On 64 bits architectures, it's not as bad: you need to go really far in
-the negatives to wrap to positive values.
-
-> I saw in the list archives an attempt to abandon the
-> function in favor of more accurate parser [1], but seems
-> like it did not make it into the project.
+> On Sun, Sep 13, 2015 at 10:55 PM, Sukhwinder Singh
+> <php_programmer_india@hotmail.com> wrote:
+>> Thank you for the reply. Let's say I do setup three different repositories then how can we move work from one repository to the other. For example, from Test Environment to UAT. If there are any links that you can provide me that I can check, it'll be great.
+>>
+>> Regards,
+>> Sukhwinder Singh
+>>
 >
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/265635
-
-I went through the thread quickly, my understanding is that there were
-more work to do, but no objection to merging.
-
-Michael, any plan to resurect the topic?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Generally speaking there are two ways of moving work from one
+> repository to another. The first is the "pull" where you request data
+> from a remote repository and then merge that data into your own. This
+> is what you're doing when you perform a clone, a fetch, or a pull.
+> It's what everyone does all the time when working with a local copy of
+> a "trusted" remote repository. It can also be done between two
+> "trusted" remotes, if your workflow is more distributed. (ie: more
+> than one "official" source).
+>
+> The second form of moving work is the "push" where you upload your
+> work into another repository. This is most commonly used when the
+> workflow is "centralized". By that I mean there is a single
+> authoritative repository. Or when you are moving your own work on a
+> local machine into a remotely accessible machine for others to pull
+> from.
+>
+> As Johannes said above, you really need to determine the work flow and
+> team style you want before you can really understand the best way to
+> setup repositories. For example, if you setup using a distributed
+> chain of command, you can have one person be the "maintainer" of each
+> given trusted repository. Then, maintainers can pull (or
+> equivalent-ly, pull-request) between each other. This is generally how
+> a project would work when using github. One person is the maintainer,
+> then a developer "forks" the project, makes some changes, then
+> requests that the maintainer pull these changes. The maintainer has
+> final say and will perform the final merge in cases of conflict. In
+> addition, maintainer is the one who says "this is ok to go into this
+> repository".
+>
+> You can also instead opt to use a single centralized repository. Thus,
+> developers would work on code and get it ready to submit, and then
+> simply perform a push. If the push requires a merge git will tell the
+> user to update. There are many tools such as server side hooks in
+> order to enforce various behaviors.
+>
+> This flow generally doesn't use sole maintainers, as each developer
+> has access to push directly. It may work well for smaller teams or for
+> dedicated teams who don't change developers often.
+>
+> A lot comes down to how your team is structured. Do you have one
+> person who's job can be to maintain the repository? Do you have
+> several developers who don't want to be the sole owner? Is your team
+> willing to function much more distributed?
+>
+> In the end, it's generally always a good idea to designate at least
+> one repository as the "authority" so that everyone knows where to look
+> for release tags and other such data.
+>
+> Myself, I would say that I prefer to use the pull-request model so
+> that code gets more review, as "push" based models tend not to do
+> review. (Exception: Gerrit, but this uses "git push" on the command
+> line to do something very much not like a push)
+>
+> Regards,
+> Jake
+ 		 	   		  
