@@ -1,82 +1,71 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH 22/67] entry.c: convert strcpy to xsnprintf
-Date: Tue, 15 Sep 2015 20:01:01 +0100
-Message-ID: <55F86AED.4090500@ramsayjones.plus.com>
-References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915154012.GV29753@sigill.intra.peff.net>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: What's cooking in git.git (Sep 2015, #03; Mon, 14)
+Date: Tue, 15 Sep 2015 20:08:42 +0100
+Organization: OPDS
+Message-ID: <16A99EC6028D41FFB0D36D4A1945B113@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 21:01:04 2015
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 15 21:08:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbvTQ-00028Z-PG
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 21:01:01 +0200
+	id 1Zbvb1-00036m-Kn
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 21:08:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751806AbbIOTA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 15:00:56 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:34609 "EHLO
-	avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751074AbbIOTA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 15:00:56 -0400
-Received: from [10.0.2.15] ([81.174.177.104])
-	by avasout08 with smtp
-	id HX0t1r0042FXpih01X0urD; Tue, 15 Sep 2015 20:00:54 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=bI7rW6KZ c=1 sm=1 tr=0
- a=IMS4QkGEsjO3VZZSAZDX8w==:117 a=IMS4QkGEsjO3VZZSAZDX8w==:17 a=0Bzu9jTXAAAA:8
- a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=HGauzE_4p_s7H721VuMA:9
- a=QiFCt2cmwI4qtEZt:21 a=p9rD5CMmF9tA8pZz:21 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-In-Reply-To: <20150915154012.GV29753@sigill.intra.peff.net>
+	id S1752074AbbIOTIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2015 15:08:46 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:36608 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752041AbbIOTIo (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Sep 2015 15:08:44 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2DVDwA2bPhVPALNYAJdGQEBgwcBgT2GWW24AYV+BASBRU0BAQEBAQEHAQEBAUEkG4QeFAEBLh4BASwCCAIBAxUMOQEEGgYHAxoBEggCAQIDAYghrg+OaY1vhnOEfYE9hm+BFAWNMYUDgygBgRqNNZVNg2yCLQwBR4FkPTOKKgEBAQ
+X-IPAS-Result: A2DVDwA2bPhVPALNYAJdGQEBgwcBgT2GWW24AYV+BASBRU0BAQEBAQEHAQEBAUEkG4QeFAEBLh4BASwCCAIBAxUMOQEEGgYHAxoBEggCAQIDAYghrg+OaY1vhnOEfYE9hm+BFAWNMYUDgygBgRqNNZVNg2yCLQwBR4FkPTOKKgEBAQ
+X-IronPort-AV: E=Sophos;i="5.17,536,1437433200"; 
+   d="scan'208";a="559202345"
+Received: from host-2-96-205-2.as13285.net (HELO PhilipOakley) ([2.96.205.2])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 15 Sep 2015 20:08:41 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277979>
 
-
-
-On 15/09/15 16:40, Jeff King wrote:
-> This particular conversion is non-obvious, because nobody
-> has passed our function the length of the destination
-> buffer. However, the interface to checkout_entry specifies
-> that the buffer must be at least TEMPORARY_FILENAME_LENGTH
-> bytes long, so we can check that (meaning the existing code
-> was not buggy, but merely worrisome to somebody reading it).
+Oops..
+From: "Philip Oakley" <philipoakley@iee.org>
+>> [New Topics]
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  entry.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/entry.c b/entry.c
-> index 1eda8e9..582c400 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -96,8 +96,8 @@ static int open_output_fd(char *path, const struct cache_entry *ce, int to_tempf
->  {
->  	int symlink = (ce->ce_mode & S_IFMT) != S_IFREG;
->  	if (to_tempfile) {
-> -		strcpy(path, symlink
-> -		       ? ".merge_link_XXXXXX" : ".merge_file_XXXXXX");
-> +		xsnprintf(path, TEMPORARY_FILENAME_LENGTH, "%s",
-> +			  symlink ? ".merge_link_XXXXXX" : ".merge_file_XXXXXX");
->  		return mkstemp(path);
->  	} else {
->  		return create_file(path, !symlink ? ce->ce_mode : 0666);
+>> * po/doc-branch-desc (2015-09-14) 1 commit
+>>  (merged to 'next' on 2015-09-14 at 4934a96)
+>> + doc: show usage of branch description
+>>
+>> The branch descriptions that are set with "git
+>> branch --edit-description"
+>> option were used in many places but they weren't clearly documented.
+>>
+>> Will merge to 'master'.
+>>
+> Thanks.
+> Shall I just rework/resend the V2 patch-up ($gmane/277829) that also
+> links to 'merge's' usage as a fresh patch (would be tonight UK)?
 
-Hmm, I was going to suggest strlcpy() again. However, if you expect an overflow to
-occur, then xsnprintf() will at least bring it to your attention!  Checking for overflow
-with strlcpy() is not rocket science either, and I guess we could add xstrlcpy() ... :-D
+I now see that the full V2 patch is already there at 4934a96.
+I'd mistakenly just compared your note to the slightly fuller V2 commit
+message and in the morning rush hadn't had time to check.
 
-dunno.
+Sorry for the noise.
 
-ATB,
-Ramsay Jones
+Philip
