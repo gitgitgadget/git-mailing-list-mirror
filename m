@@ -1,147 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [Feature Request] git blame showing only revisions from git
- rev-list --first-parent
-Date: Tue, 15 Sep 2015 06:05:39 -0400
-Message-ID: <20150915100538.GA21831@sigill.intra.peff.net>
-References: <CA+nPnMx1tkwTRckUjhg6LD055n-jzYDTKsH2sz-0PXPfJiy_tA@mail.gmail.com>
- <20150911140133.GA14311@sigill.intra.peff.net>
- <xmqqa8ss29tq.fsf@gitster.mtv.corp.google.com>
- <xmqqsi6kzsgc.fsf@gitster.mtv.corp.google.com>
- <20150912033054.GA30431@sigill.intra.peff.net>
- <xmqqy4gcxcp4.fsf@gitster.mtv.corp.google.com>
- <20150913100728.GA26562@sigill.intra.peff.net>
- <CAPc5daUcwCferagupF+iy3gxxorfMyEMn0oFMRWBNjc0=2r4og@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stephen Connolly <stephen.alan.connolly@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 15 12:05:49 2015
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v2 1/2] git-p4: add test case for "Translation of file content failed" error
+Date: Tue, 15 Sep 2015 16:49:44 +0200
+Message-ID: <EA7A521F-1E7B-4169-A0EA-65F16904EE92@gmail.com>
+References: <1442249728-89494-1-git-send-email-larsxschneider@gmail.com> <1442249728-89494-2-git-send-email-larsxschneider@gmail.com> <55F7A12D.9020603@web.de>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, luke@diamand.org
+To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Sep 15 16:49:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zbn7T-0006Jw-LE
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 12:05:48 +0200
+	id 1ZbrYQ-0006ML-Ob
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 16:49:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751652AbbIOKFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 06:05:43 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59178 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750698AbbIOKFm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 06:05:42 -0400
-Received: (qmail 23984 invoked by uid 102); 15 Sep 2015 10:05:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 05:05:42 -0500
-Received: (qmail 4731 invoked by uid 107); 15 Sep 2015 10:05:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 06:05:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 06:05:39 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPc5daUcwCferagupF+iy3gxxorfMyEMn0oFMRWBNjc0=2r4og@mail.gmail.com>
+	id S1753623AbbIOOtu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Sep 2015 10:49:50 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:34414 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753184AbbIOOts convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Sep 2015 10:49:48 -0400
+Received: by wicfx3 with SMTP id fx3so32473148wic.1
+        for <git@vger.kernel.org>; Tue, 15 Sep 2015 07:49:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Z0BCYiys5axQDwVb0pSFtdnCt2fWcmT7HJAvD9Qq46s=;
+        b=bWWUr34GQaRy7CthZHet0flnr8plA1k4Yvk2iJqntS1gGz1iwiN/kqLWDWFIUYH/4a
+         1EJGLkeU1KP7YbYvpG/oG/+Ew7y/OvUHNmjI1sirPUE0V2N65rebnkVO7XYRuWZ//qHb
+         7F8mfBto0eadIEPT4IKWj6L6Mwy/TmdsgnBW5cHJ64oqfUuZViML2xt8HP3n/AaTB3h/
+         Je74ajhu95mSOJBmWNwSyAZojPIKTcb/HegXbrYiXQ1lgwgdscYriTLhCq6E8Dg/P1F8
+         OaaF1esUm0dPRCX8WrWdOjm6CG76df5Tqv08y/nrK5bIXWixo4mAp1ElOwyTfRk8GSbG
+         t7Lg==
+X-Received: by 10.180.86.232 with SMTP id s8mr8272878wiz.27.1442328587086;
+        Tue, 15 Sep 2015 07:49:47 -0700 (PDT)
+Received: from slxbook3.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id gt4sm20303932wib.21.2015.09.15.07.49.46
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 15 Sep 2015 07:49:46 -0700 (PDT)
+In-Reply-To: <55F7A12D.9020603@web.de>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277900>
 
-On Sun, Sep 13, 2015 at 10:19:33PM -0700, Junio C Hamano wrote:
 
-> For that matter, I am not sure how "blame A..B" with first-parent &
-> reverse should behave when A is not an ancestor on the first-parent
-> chain. Wouldn't we try to find a cut-point on the first-parent chain by
-> traversing first-parent chain from B and painting them as positive,
-> while traversing _all_ parents from B and painting them as negative,
-> until the traversal intersect? And wouldn't we discover at least two
-> children (one positive and one negative) for the cut point we discover
-> by that traversal? That cut point would be the (fake) latest state the
-> blame traversal starts at, and then we try to use the first (fake) parent
-> that in real life is the first child (which we do not have a good definition
-> for). And at that point a simple panda brain explodes ;-)
-> 
-> We might end up doing the right thing even in that case, but I haven't
-> convinced myself about that (yet).  If the change were limited to "blame",
-> the change may be much less problematic.
+On 15 Sep 2015, at 06:40, Torsten B=F6gershausen <tboegi@web.de> wrote:
 
-Good point.
+> On 09/14/2015 06:55 PM, larsxschneider@gmail.com wrote:
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>=20
+>> A P4 repository can get into a state where it contains a file with
+>> type UTF-16 that does not contain a valid UTF-16 BOM. If git-p4
+>> attempts to retrieve the file then the process crashes with a
+>> "Translation of file content failed" error.
+>>=20
+>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>> ---
+>>  t/t9824-git-p4-handle-utf16-without-bom.sh | 47 +++++++++++++++++++=
++++++++++++
+>>  1 file changed, 47 insertions(+)
+>>  create mode 100755 t/t9824-git-p4-handle-utf16-without-bom.sh
+>>=20
+>> diff --git a/t/t9824-git-p4-handle-utf16-without-bom.sh b/t/t9824-gi=
+t-p4-handle-utf16-without-bom.sh
+>> new file mode 100755
+>> index 0000000..fa8043b
+>> --- /dev/null
+>> +++ b/t/t9824-git-p4-handle-utf16-without-bom.sh
+>> @@ -0,0 +1,47 @@
+>> +#!/bin/sh
+>> +
+>> +test_description=3D'git p4 handle UTF-16 without BOM'
+>> +
+>> +. ./lib-git-p4.sh
+>> +
+>> +UTF16=3D"\\x97\\x0\\x97\\x0"
+>> +
+>> +test_expect_success 'start p4d' '
+>> +	start_p4d
+>> +'
+>> +
+>> +test_expect_success 'init depot with UTF-16 encoded file and artifi=
+cially remove BOM' '
+>> +	(
+>> +		cd "$cli" &&
+>> +		echo "file1 -text" > .gitattributes &&
+> Please no space between '>' and the filename,
+> (this is our coding standard, and the same further down)
+Correct! Sorry, I still need to get used to this style. Thanks for the =
+reminder!
 
-It seems like nobody is actually that interested in what "blame
---first-parent --reverse" does in the first place, though, and there's
-no reason for its complexity to hold up vanilla --first-parent. So what
-do you think of:
+>=20
+>> +		perl -e "printf \"$UTF16\"" >file1 &&
+> Ehh, do we need perl here ?
+> This will invoke a process-fork, which costs time and cpu load.
+> The following works for me:
+> printf '\227\000\227\000' >file1
+I agree this is better.
 
--- >8 --
-Subject: [PATCH] blame: handle --first-parent
+Both issues will be fixed v3.
 
-The revision.c options-parser will parse "--first-parent"
-for us, but the blame code does not actually respect it, as
-we simply iterate over the whole list returned by
-first_scapegoat(). We can fix this by returning a
-truncated parent list.
-
-Note that we could technically also do so by limiting the
-return value of num_scapegoats(), but that is less robust.
-We would rely on nobody ever looking at the "next" pointer
-from the returned list.
-
-Combining "--reverse" with "--first-parent" is more
-complicated, and will probably involve cooperation from
-revision.c. Since the desired semantics are not even clear,
-let's punt on this for now, but explicitly disallow it to
-avoid confusing users (this is not really a regression,
-since it did something nonsensical before).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/blame.c     | 11 ++++++++++-
- t/annotate-tests.sh |  4 ++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 4db01c1..ae4301c 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1366,8 +1366,15 @@ static void pass_whole_blame(struct scoreboard *sb,
-  */
- static struct commit_list *first_scapegoat(struct rev_info *revs, struct commit *commit)
- {
--	if (!reverse)
-+	if (!reverse) {
-+		if (revs->first_parent_only &&
-+		    commit->parents &&
-+		    commit->parents->next) {
-+			free_commit_list(commit->parents->next);
-+			commit->parents->next = NULL;
-+		}
- 		return commit->parents;
-+	}
- 	return lookup_decoration(&revs->children, &commit->object);
- }
- 
-@@ -2680,6 +2687,8 @@ parse_done:
- 	}
- 	else if (contents_from)
- 		die("--contents and --children do not blend well.");
-+	else if (revs.first_parent_only)
-+		die("combining --first-parent and --reverse is not supported");
- 	else {
- 		final_commit_name = prepare_initial(&sb);
- 		sb.commits.compare = compare_commits_by_reverse_commit_date;
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index f5c0175..b1673b3 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -111,6 +111,10 @@ test_expect_success 'blame 2 authors + 2 merged-in authors' '
- 	check_count A 2 B 1 B1 2 B2 1
- '
- 
-+test_expect_success 'blame --first-parent blames merge for branch1' '
-+	check_count --first-parent A 2 B 1 "A U Thor" 2 B2 1
-+'
-+
- test_expect_success 'blame ancestor' '
- 	check_count -h master A 2 B 2
- '
--- 
-2.6.0.rc2.408.ga2926b9
+Thanks!
