@@ -1,149 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 44/67] enter_repo: convert fixed-size buffers to strbufs
-Date: Tue, 15 Sep 2015 11:59:13 -0400
-Message-ID: <20150915155913.GR29753@sigill.intra.peff.net>
-References: <20150915152125.GA27504@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 17:59:22 2015
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v7] git-p4: improve path encoding verbose output
+Date: Tue, 15 Sep 2015 17:59:16 +0200
+Message-ID: <46B8F08C-F4A4-43D0-9798-D663F1C5F4BA@gmail.com>
+References: <1442250640-93838-1-git-send-email-larsxschneider@gmail.com> <1442250640-93838-2-git-send-email-larsxschneider@gmail.com> <55F7C93D.1080309@diamand.org>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Tue Sep 15 17:59:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zbsdc-0006bm-O3
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 17:59:21 +0200
+	id 1Zbsdi-0006ln-DK
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 17:59:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753589AbbIOP7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 11:59:16 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59410 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752367AbbIOP7P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 11:59:15 -0400
-Received: (qmail 13430 invoked by uid 102); 15 Sep 2015 15:59:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 10:59:15 -0500
-Received: (qmail 7632 invoked by uid 107); 15 Sep 2015 15:59:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 11:59:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 11:59:13 -0400
-Content-Disposition: inline
-In-Reply-To: <20150915152125.GA27504@sigill.intra.peff.net>
+	id S1753641AbbIOP7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2015 11:59:21 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:35702 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753232AbbIOP7U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Sep 2015 11:59:20 -0400
+Received: by wicge5 with SMTP id ge5so35654768wic.0
+        for <git@vger.kernel.org>; Tue, 15 Sep 2015 08:59:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=tOrPZNl/WCXUeopucm6wOfZnhttTCTRE4Ixae2NWV9E=;
+        b=NipsLZ2uXnVEbCAFC8d6ueiEZG0mbeUEAlURBhJdS5SHY7bM1I7THt6H2244AZ9B13
+         Gft8xylML7jCf1lWpWrSJ/wPz4znSHTV4vfSeux6soYpvC8huEb5cBRluz7ubdUE9ELF
+         QCBjNI1wecFFX6wVoTkYrecALAxmmduzfmEm7UyUR2QQB/HvdcfVGexDToqVXUaJ+m+J
+         beEhFszrXIYv6WZQBJ9ocgtLrg8Yf1ytr5OpRDOejvA71rbOYiIsXjoG5hufJWV7A4wl
+         H42KXSNqG8Yolrv01WKsshaHBfDRV/gjx9a5C6HpLPIHKVo7pqBZ67nLkrPgIu4VavjN
+         YBHg==
+X-Received: by 10.181.13.166 with SMTP id ez6mr8999274wid.24.1442332758574;
+        Tue, 15 Sep 2015 08:59:18 -0700 (PDT)
+Received: from slxbook3.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id jw9sm21786160wjb.28.2015.09.15.08.59.17
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 15 Sep 2015 08:59:18 -0700 (PDT)
+In-Reply-To: <55F7C93D.1080309@diamand.org>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277948>
 
-We use two PATH_MAX-sized buffers to represent the repo
-path, and must make sure not to overflow them. We do take
-care to check the lengths, but the logic is rather hard to
-follow, as we use several magic numbers (e.g., "PATH_MAX -
-10"). And in fact you _can_ overflow the buffer if you have
-a ".git" file with an extremely long path in it.
 
-By switching to strbufs, these problems all go away. We do,
-however, retain the check that the initial input we get is
-no larger than PATH_MAX. This function is an entry point for
-untrusted repo names from the network, and it's a good idea
-to keep a sanity check (both to avoid allocating arbitrary
-amounts of memory, and also as a layer of defense against
-any downstream users of the names).
+On 15 Sep 2015, at 09:31, Luke Diamand <luke@diamand.org> wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- path.c | 57 +++++++++++++++++++++++++++++----------------------------
- 1 file changed, 29 insertions(+), 28 deletions(-)
+> On 14/09/15 18:10, larsxschneider@gmail.com wrote:
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>> 
+>> If a path with non-ASCII characters is detected then print always the
+> 
+> s/print always/print/
+I will fix it.
 
-diff --git a/path.c b/path.c
-index 46a4d27..60e0390 100644
---- a/path.c
-+++ b/path.c
-@@ -391,8 +391,8 @@ return_null:
-  */
- const char *enter_repo(const char *path, int strict)
- {
--	static char used_path[PATH_MAX];
--	static char validated_path[PATH_MAX];
-+	static struct strbuf validated_path = STRBUF_INIT;
-+	static struct strbuf used_path = STRBUF_INIT;
- 
- 	if (!path)
- 		return NULL;
-@@ -407,46 +407,47 @@ const char *enter_repo(const char *path, int strict)
- 		while ((1 < len) && (path[len-1] == '/'))
- 			len--;
- 
-+		/*
-+		 * We can handle arbitrary-sized buffers, but this remains as a
-+		 * sanity check on untrusted input.
-+		 */
- 		if (PATH_MAX <= len)
- 			return NULL;
--		strncpy(used_path, path, len); used_path[len] = 0 ;
--		strcpy(validated_path, used_path);
- 
--		if (used_path[0] == '~') {
--			char *newpath = expand_user_path(used_path);
--			if (!newpath || (PATH_MAX - 10 < strlen(newpath))) {
--				free(newpath);
-+		strbuf_reset(&used_path);
-+		strbuf_reset(&validated_path);
-+		strbuf_add(&used_path, path, len);
-+		strbuf_add(&validated_path, path, len);
-+
-+		if (used_path.buf[0] == '~') {
-+			char *newpath = expand_user_path(used_path.buf);
-+			if (!newpath)
- 				return NULL;
--			}
--			/*
--			 * Copy back into the static buffer. A pity
--			 * since newpath was not bounded, but other
--			 * branches of the if are limited by PATH_MAX
--			 * anyway.
--			 */
--			strcpy(used_path, newpath); free(newpath);
-+			strbuf_attach(&used_path, newpath, strlen(newpath),
-+				      strlen(newpath));
- 		}
--		else if (PATH_MAX - 10 < len)
--			return NULL;
--		len = strlen(used_path);
- 		for (i = 0; suffix[i]; i++) {
- 			struct stat st;
--			strcpy(used_path + len, suffix[i]);
--			if (!stat(used_path, &st) &&
-+			size_t baselen = used_path.len;
-+			strbuf_addstr(&used_path, suffix[i]);
-+			if (!stat(used_path.buf, &st) &&
- 			    (S_ISREG(st.st_mode) ||
--			    (S_ISDIR(st.st_mode) && is_git_directory(used_path)))) {
--				strcat(validated_path, suffix[i]);
-+			    (S_ISDIR(st.st_mode) && is_git_directory(used_path.buf)))) {
-+				strbuf_addstr(&validated_path, suffix[i]);
- 				break;
- 			}
-+			strbuf_setlen(&used_path, baselen);
- 		}
- 		if (!suffix[i])
- 			return NULL;
--		gitfile = read_gitfile(used_path) ;
--		if (gitfile)
--			strcpy(used_path, gitfile);
--		if (chdir(used_path))
-+		gitfile = read_gitfile(used_path.buf) ;
-+		if (gitfile) {
-+			strbuf_reset(&used_path);
-+			strbuf_addstr(&used_path, gitfile);
-+		}
-+		if (chdir(used_path.buf))
- 			return NULL;
--		path = validated_path;
-+		path = validated_path.buf;
- 	}
- 	else if (chdir(path))
- 		return NULL;
--- 
-2.6.0.rc2.408.ga2926b9
+> 
+> 
+>> encoding and the encoded string in verbose mode.
+>> 
+>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>> ---
+>>  git-p4.py | 19 +++++++++----------
+>>  1 file changed, 9 insertions(+), 10 deletions(-)
+>> 
+>> diff --git a/git-p4.py b/git-p4.py
+>> index d45cf2b..da25d3f 100755
+>> --- a/git-p4.py
+>> +++ b/git-p4.py
+>> @@ -2220,16 +2220,15 @@ class P4Sync(Command, P4UserMap):
+>>              text = regexp.sub(r'$\1$', text)
+>>              contents = [ text ]
+>> 
+>> -        if gitConfig("git-p4.pathEncoding"):
+>> -            relPath = relPath.decode(gitConfig("git-p4.pathEncoding")).encode('utf8', 'replace')
+>> -        elif self.verbose:
+>> -            try:
+>> -                relPath.decode('ascii')
+>> -            except:
+>> -                print (
+>> -                    "Path with Non-ASCII characters detected and no path encoding defined. "
+>> -                    "Please check the encoding: %s" % relPath
+>> -                )
+>> +        try:
+>> +            relPath.decode('ascii')
+>> +        except:
+>> +            encoding = 'utf8'
+>> +            if gitConfig('git-p4.pathEncoding'):
+>> +                encoding = gitConfig('git-p4.pathEncoding')
+> 
+> It would be better to query this once at startup. Otherwise we're potentially forking "git config" twice per file which on a large repo could become significant. Make it an instance variable perhaps?
+solved in other email
+
+> 
+>> +                relPath = relPath.decode(encoding).encode('utf8', 'replace')
+>> +            if self.verbose:
+>> +                print 'Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, relPath)
+>> 
+>>          self.gitStream.write("M %s inline %s\n" % (git_mode, relPath))
+
+Thanks!
