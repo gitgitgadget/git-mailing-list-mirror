@@ -1,120 +1,78 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 27/67] config: use xstrfmt in normalize_value
-Date: Tue, 15 Sep 2015 11:45:58 -0400
-Message-ID: <20150915154558.GA29753@sigill.intra.peff.net>
+Subject: [PATCH 28/67] fetch: replace static buffer with xstrfmt
+Date: Tue, 15 Sep 2015 11:46:31 -0400
+Message-ID: <20150915154631.GB29753@sigill.intra.peff.net>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 17:46:18 2015
+X-From: git-owner@vger.kernel.org Tue Sep 15 17:46:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbsQw-00084W-H7
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 17:46:14 +0200
+	id 1ZbsRM-0000Al-Uy
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 17:46:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754367AbbIOPqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 11:46:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59349 "HELO cloud.peff.net"
+	id S1754454AbbIOPqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2015 11:46:36 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59352 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754340AbbIOPqA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 11:46:00 -0400
-Received: (qmail 12188 invoked by uid 102); 15 Sep 2015 15:46:00 -0000
+	id S1754428AbbIOPqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2015 11:46:33 -0400
+Received: (qmail 12253 invoked by uid 102); 15 Sep 2015 15:46:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 10:46:00 -0500
-Received: (qmail 7260 invoked by uid 107); 15 Sep 2015 15:46:09 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 10:46:33 -0500
+Received: (qmail 7276 invoked by uid 107); 15 Sep 2015 15:46:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 11:46:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 11:45:58 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 11:46:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 11:46:31 -0400
 Content-Disposition: inline
 In-Reply-To: <20150915152125.GA27504@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277930>
 
-We xmalloc a fixed-size buffer and sprintf into it; this is
-OK because the size of our formatting types is finite, but
-that's not immediately clear to a reader auditing sprintf
-calls. Let's switch to xstrfmt, which is shorter and
-obviously correct.
+We parse the INFINITE_DEPTH constant into a static,
+fixed-size buffer using sprintf. This buffer is sufficiently
+large for the current constant, but it's a suspicious
+pattern, as the constant is defined far away, and it's not
+immediately obvious that 12 bytes are large enough to hold
+it.
 
-Note that just dropping the common xmalloc here causes gcc
-to complain with -Wmaybe-uninitialized. That's because if
-"types" does not match any of our known types, we never
-write anything into the "normalized" pointer. With the
-current code, gcc doesn't notice because we always return a
-valid pointer (just one which might point to uninitialized
-data, but the compiler doesn't know that). In other words,
-the current code is potentially buggy if new types are added
-without updating this spot.
-
-So let's take this opportunity to clean up the function a
-bit more. We can drop the "normalized" pointer entirely, and
-just return directly from each code path. And then add an
-assertion at the end in case we haven't covered any cases.
+We can just use xstrfmt here, which gets rid of any question
+of the buffer size. It also removes any concerns with object
+lifetime, which means we do not have to wonder why this
+buffer deep within a conditional is marked "static" (we
+never free our newly allocated result, of course, but that's
+OK; it's global that lasts the lifetime of the whole program
+anyway).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/config.c | 34 +++++++++++++---------------------
- 1 file changed, 13 insertions(+), 21 deletions(-)
+ builtin/fetch.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 71acc44..adc7727 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -246,8 +246,6 @@ free_strings:
- 
- static char *normalize_value(const char *key, const char *value)
- {
--	char *normalized;
--
- 	if (!value)
- 		return NULL;
- 
-@@ -258,27 +256,21 @@ static char *normalize_value(const char *key, const char *value)
- 		 * "~/foobar/" in the config file, and to expand the ~
- 		 * when retrieving the value.
- 		 */
--		normalized = xstrdup(value);
--	else {
--		normalized = xmalloc(64);
--		if (types == TYPE_INT) {
--			int64_t v = git_config_int64(key, value);
--			sprintf(normalized, "%"PRId64, v);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 9a3869f..4703725 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1156,11 +1156,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 			die(_("--depth and --unshallow cannot be used together"));
+ 		else if (!is_repository_shallow())
+ 			die(_("--unshallow on a complete repository does not make sense"));
+-		else {
+-			static char inf_depth[12];
+-			sprintf(inf_depth, "%d", INFINITE_DEPTH);
+-			depth = inf_depth;
 -		}
--		else if (types == TYPE_BOOL)
--			sprintf(normalized, "%s",
--				git_config_bool(key, value) ? "true" : "false");
--		else if (types == TYPE_BOOL_OR_INT) {
--			int is_bool, v;
--			v = git_config_bool_or_int(key, value, &is_bool);
--			if (!is_bool)
--				sprintf(normalized, "%d", v);
--			else
--				sprintf(normalized, "%s", v ? "true" : "false");
--		}
-+		return xstrdup(value);
-+	if (types == TYPE_INT)
-+		return xstrfmt("%"PRId64, git_config_int64(key, value));
-+	if (types == TYPE_BOOL)
-+		return xstrdup(git_config_bool(key, value) ?  "true" : "false");
-+	if (types == TYPE_BOOL_OR_INT) {
-+		int is_bool, v;
-+		v = git_config_bool_or_int(key, value, &is_bool);
-+		if (!is_bool)
-+			return xstrfmt("%d", v);
 +		else
-+			return xstrdup(v ? "true" : "false");
++			depth = xstrfmt("%d", INFINITE_DEPTH);
  	}
  
--	return normalized;
-+	die("BUG: cannot normalize type %d", types);
- }
- 
- static int get_color_found;
+ 	/* no need to be strict, transport_set_option() will validate it again */
 -- 
 2.6.0.rc2.408.ga2926b9
