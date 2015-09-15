@@ -1,106 +1,161 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 47/67] diagnose_invalid_index_path: use strbuf to avoid
- strcpy/strcat
-Date: Tue, 15 Sep 2015 12:01:48 -0400
-Message-ID: <20150915160148.GU29753@sigill.intra.peff.net>
+Subject: [PATCH 48/67] fetch-pack: use argv_array for index-pack /
+ unpack-objects
+Date: Tue, 15 Sep 2015 12:02:24 -0400
+Message-ID: <20150915160224.GV29753@sigill.intra.peff.net>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 18:02:06 2015
+X-From: git-owner@vger.kernel.org Tue Sep 15 18:02:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zbsg7-0001Vz-FB
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 18:01:55 +0200
+	id 1Zbsgo-0002PR-Pl
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 18:02:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754156AbbIOQBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 12:01:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59423 "HELO cloud.peff.net"
+	id S1754373AbbIOQC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2015 12:02:29 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59426 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753087AbbIOQBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 12:01:51 -0400
-Received: (qmail 13708 invoked by uid 102); 15 Sep 2015 16:01:50 -0000
+	id S1754299AbbIOQC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2015 12:02:27 -0400
+Received: (qmail 13774 invoked by uid 102); 15 Sep 2015 16:02:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 11:01:50 -0500
-Received: (qmail 7708 invoked by uid 107); 15 Sep 2015 16:01:59 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 11:02:26 -0500
+Received: (qmail 7724 invoked by uid 107); 15 Sep 2015 16:02:36 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 12:01:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 12:01:48 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 12:02:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 12:02:24 -0400
 Content-Disposition: inline
 In-Reply-To: <20150915152125.GA27504@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277952>
 
-We dynamically allocate a buffer and then strcpy and strcat
-into it. This isn't buggy, but we'd prefer to avoid these
-suspicious functions.
+This cleans up a magic number that must be kept in sync with
+the rest of the code (the number of argv slots). It also
+lets us drop some fixed buffers and an sprintf (since we
+can now use argv_array_pushf).
 
-This would be a good candidate for converstion to xstrfmt,
-but we need to record the length for dealing with index
-entries. A strbuf handles that for us.
+We do still have to keep one fixed buffer for calling
+gethostname, but at least now the size computations for it
+are much simpler.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- sha1_name.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ fetch-pack.c | 56 +++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 27 insertions(+), 29 deletions(-)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index ed42f79..0f14ea2 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1293,8 +1293,7 @@ static void diagnose_invalid_index_path(int stage,
- 	const struct cache_entry *ce;
- 	int pos;
- 	unsigned namelen = strlen(filename);
--	unsigned fullnamelen;
--	char *fullname;
-+	struct strbuf fullname = STRBUF_INIT;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 820251a..2dabee9 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -681,11 +681,10 @@ static int get_pack(struct fetch_pack_args *args,
+ 		    int xd[2], char **pack_lockfile)
+ {
+ 	struct async demux;
+-	const char *argv[22];
+-	char keep_arg[256];
+-	char hdr_arg[256];
+-	const char **av, *cmd_name;
+ 	int do_keep = args->keep_pack;
++	const char *cmd_name;
++	struct pack_header header;
++	int pass_header = 0;
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+ 	int ret;
  
- 	if (!prefix)
- 		prefix = "";
-@@ -1314,21 +1313,19 @@ static void diagnose_invalid_index_path(int stage,
+@@ -705,17 +704,11 @@ static int get_pack(struct fetch_pack_args *args,
+ 	else
+ 		demux.out = xd[0];
+ 
+-	cmd.argv = argv;
+-	av = argv;
+-	*hdr_arg = 0;
+ 	if (!args->keep_pack && unpack_limit) {
+-		struct pack_header header;
+ 
+ 		if (read_pack_header(demux.out, &header))
+ 			die("protocol error: bad pack header");
+-		snprintf(hdr_arg, sizeof(hdr_arg),
+-			 "--pack_header=%"PRIu32",%"PRIu32,
+-			 ntohl(header.hdr_version), ntohl(header.hdr_entries));
++		pass_header = 1;
+ 		if (ntohl(header.hdr_entries) < unpack_limit)
+ 			do_keep = 0;
+ 		else
+@@ -723,44 +716,49 @@ static int get_pack(struct fetch_pack_args *args,
  	}
  
- 	/* Confusion between relative and absolute filenames? */
--	fullnamelen = namelen + strlen(prefix);
--	fullname = xmalloc(fullnamelen + 1);
--	strcpy(fullname, prefix);
--	strcat(fullname, filename);
--	pos = cache_name_pos(fullname, fullnamelen);
-+	strbuf_addstr(&fullname, prefix);
-+	strbuf_addstr(&fullname, filename);
-+	pos = cache_name_pos(fullname.buf, fullname.len);
- 	if (pos < 0)
- 		pos = -pos - 1;
- 	if (pos < active_nr) {
- 		ce = active_cache[pos];
--		if (ce_namelen(ce) == fullnamelen &&
--		    !memcmp(ce->name, fullname, fullnamelen))
-+		if (ce_namelen(ce) == fullname.len &&
-+		    !memcmp(ce->name, fullname.buf, fullname.len))
- 			die("Path '%s' is in the index, but not '%s'.\n"
- 			    "Did you mean ':%d:%s' aka ':%d:./%s'?",
--			    fullname, filename,
--			    ce_stage(ce), fullname,
-+			    fullname.buf, filename,
-+			    ce_stage(ce), fullname.buf,
- 			    ce_stage(ce), filename);
+ 	if (alternate_shallow_file) {
+-		*av++ = "--shallow-file";
+-		*av++ = alternate_shallow_file;
++		argv_array_push(&cmd.args, "--shallow-file");
++		argv_array_push(&cmd.args, alternate_shallow_file);
  	}
  
-@@ -1338,7 +1335,7 @@ static void diagnose_invalid_index_path(int stage,
- 		die("Path '%s' does not exist (neither on disk nor in the index).",
- 		    filename);
+ 	if (do_keep) {
+ 		if (pack_lockfile)
+ 			cmd.out = -1;
+-		*av++ = cmd_name = "index-pack";
+-		*av++ = "--stdin";
++		cmd_name = "index-pack";
++		argv_array_push(&cmd.args, cmd_name);
++		argv_array_push(&cmd.args, "--stdin");
+ 		if (!args->quiet && !args->no_progress)
+-			*av++ = "-v";
++			argv_array_push(&cmd.args, "-v");
+ 		if (args->use_thin_pack)
+-			*av++ = "--fix-thin";
++			argv_array_push(&cmd.args, "--fix-thin");
+ 		if (args->lock_pack || unpack_limit) {
+-			int s = sprintf(keep_arg,
+-					"--keep=fetch-pack %"PRIuMAX " on ", (uintmax_t) getpid());
+-			if (gethostname(keep_arg + s, sizeof(keep_arg) - s))
+-				strcpy(keep_arg + s, "localhost");
+-			*av++ = keep_arg;
++			char hostname[256];
++			if (gethostname(hostname, sizeof(hostname)))
++				xsnprintf(hostname, sizeof(hostname), "localhost");
++			argv_array_pushf(&cmd.args,
++					"--keep=fetch-pack %"PRIuMAX " on %s",
++					(uintmax_t)getpid(), hostname);
+ 		}
+ 		if (args->check_self_contained_and_connected)
+-			*av++ = "--check-self-contained-and-connected";
++			argv_array_push(&cmd.args, "--check-self-contained-and-connected");
+ 	}
+ 	else {
+-		*av++ = cmd_name = "unpack-objects";
++		cmd_name = "unpack-objects";
++		argv_array_push(&cmd.args, cmd_name);
+ 		if (args->quiet || args->no_progress)
+-			*av++ = "-q";
++			argv_array_push(&cmd.args, "-q");
+ 		args->check_self_contained_and_connected = 0;
+ 	}
+-	if (*hdr_arg)
+-		*av++ = hdr_arg;
++
++	if (pass_header)
++		argv_array_pushf(&cmd.args, "--pack_header=%"PRIu32",%"PRIu32,
++				 ntohl(header.hdr_version),
++				 ntohl(header.hdr_entries));
+ 	if (fetch_fsck_objects >= 0
+ 	    ? fetch_fsck_objects
+ 	    : transfer_fsck_objects >= 0
+ 	    ? transfer_fsck_objects
+ 	    : 0)
+-		*av++ = "--strict";
+-	*av++ = NULL;
++		argv_array_push(&cmd.args, "--strict");
  
--	free(fullname);
-+	strbuf_release(&fullname);
- }
- 
- 
+ 	cmd.in = demux.out;
+ 	cmd.git_cmd = 1;
 -- 
 2.6.0.rc2.408.ga2926b9
