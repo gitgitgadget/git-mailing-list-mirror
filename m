@@ -1,171 +1,92 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 10/67] mailsplit: make PATH_MAX buffers dynamic
-Date: Tue, 15 Sep 2015 11:28:07 -0400
-Message-ID: <20150915152806.GJ29753@sigill.intra.peff.net>
+Subject: [PATCH 11/67] trace: use strbuf for quote_crnl output
+Date: Tue, 15 Sep 2015 11:28:43 -0400
+Message-ID: <20150915152843.GK29753@sigill.intra.peff.net>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 17:28:42 2015
+X-From: git-owner@vger.kernel.org Tue Sep 15 17:29:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zbs9x-00043d-2u
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 17:28:41 +0200
+	id 1ZbsAV-0004ju-99
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 17:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753201AbbIOP2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 11:28:36 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59294 "HELO cloud.peff.net"
+	id S1753219AbbIOP2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2015 11:28:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59297 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753049AbbIOP2J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 11:28:09 -0400
-Received: (qmail 11285 invoked by uid 102); 15 Sep 2015 15:28:09 -0000
+	id S1752614AbbIOP2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2015 11:28:45 -0400
+Received: (qmail 11325 invoked by uid 102); 15 Sep 2015 15:28:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 10:28:09 -0500
-Received: (qmail 6886 invoked by uid 107); 15 Sep 2015 15:28:18 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 10:28:45 -0500
+Received: (qmail 6905 invoked by uid 107); 15 Sep 2015 15:28:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 11:28:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 11:28:07 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 11:28:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 11:28:43 -0400
 Content-Disposition: inline
 In-Reply-To: <20150915152125.GA27504@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277912>
 
-There are several static PATH_MAX-sized buffers in
-mailsplit, along with some questionable uses of sprintf.
-These are not really of security interest, as local
-mailsplit pathnames are not typically under control of an
-attacker.  But it does not hurt to be careful, and as a
-bonus we lift some limits for systems with too-small
-PATH_MAX varibles.
+When we output GIT_TRACE_SETUP paths, we quote any
+meta-characters. But our buffer to hold the result is only
+PATH_MAX bytes, and we could double the size of the input
+path (if every character needs quoted). We could use a
+2*PATH_MAX buffer, if we assume the input will never be more
+than PATH_MAX. But it's easier still to just switch to a
+strbuf and not worry about whether the input can exceed
+PATH_MAX or not.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/mailsplit.c | 46 +++++++++++++++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ trace.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-index 9de06e3..fb0bc08 100644
---- a/builtin/mailsplit.c
-+++ b/builtin/mailsplit.c
-@@ -98,30 +98,37 @@ static int populate_maildir_list(struct string_list *list, const char *path)
+diff --git a/trace.c b/trace.c
+index 7393926..0c06d71 100644
+--- a/trace.c
++++ b/trace.c
+@@ -277,25 +277,25 @@ void trace_performance_fl(const char *file, int line, uint64_t nanos,
+ 
+ static const char *quote_crnl(const char *path)
  {
- 	DIR *dir;
- 	struct dirent *dent;
--	char name[PATH_MAX];
-+	struct strbuf name = STRBUF_INIT;
- 	char *subs[] = { "cur", "new", NULL };
- 	char **sub;
-+	int ret = -1;
+-	static char new_path[PATH_MAX];
++	static struct strbuf new_path = STRBUF_INIT;
+ 	const char *p2 = path;
+-	char *p1 = new_path;
  
- 	for (sub = subs; *sub; ++sub) {
--		snprintf(name, sizeof(name), "%s/%s", path, *sub);
--		if ((dir = opendir(name)) == NULL) {
-+		strbuf_reset(&name);
-+		strbuf_addf(&name, "%s/%s", path, *sub);
-+		if ((dir = opendir(name.buf)) == NULL) {
- 			if (errno == ENOENT)
- 				continue;
--			error("cannot opendir %s (%s)", name, strerror(errno));
--			return -1;
-+			error("cannot opendir %s (%s)", name.buf, strerror(errno));
-+			goto out;
- 		}
+ 	if (!path)
+ 		return NULL;
  
- 		while ((dent = readdir(dir)) != NULL) {
- 			if (dent->d_name[0] == '.')
- 				continue;
--			snprintf(name, sizeof(name), "%s/%s", *sub, dent->d_name);
--			string_list_insert(list, name);
-+			strbuf_reset(&name);
-+			strbuf_addf(&name, "%s/%s", *sub, dent->d_name);
-+			string_list_insert(list, name.buf);
- 		}
- 
- 		closedir(dir);
- 	}
- 
--	return 0;
-+	ret = 0;
++	strbuf_reset(&new_path);
 +
-+out:
-+	strbuf_release(&name);
-+	return ret;
+ 	while (*p2) {
+ 		switch (*p2) {
+-		case '\\': *p1++ = '\\'; *p1++ = '\\'; break;
+-		case '\n': *p1++ = '\\'; *p1++ = 'n'; break;
+-		case '\r': *p1++ = '\\'; *p1++ = 'r'; break;
++		case '\\': strbuf_addstr(&new_path, "\\\\"); break;
++		case '\n': strbuf_addstr(&new_path, "\\n"); break;
++		case '\r': strbuf_addstr(&new_path, "\\r"); break;
+ 		default:
+-			*p1++ = *p2;
++			strbuf_addch(&new_path, *p2);
+ 		}
+ 		p2++;
+ 	}
+-	*p1 = '\0';
+-	return new_path;
++	return new_path.buf;
  }
  
- static int maildir_filename_cmp(const char *a, const char *b)
-@@ -148,8 +155,7 @@ static int maildir_filename_cmp(const char *a, const char *b)
- static int split_maildir(const char *maildir, const char *dir,
- 	int nr_prec, int skip)
- {
--	char file[PATH_MAX];
--	char name[PATH_MAX];
-+	struct strbuf file = STRBUF_INIT;
- 	FILE *f = NULL;
- 	int ret = -1;
- 	int i;
-@@ -161,20 +167,25 @@ static int split_maildir(const char *maildir, const char *dir,
- 		goto out;
- 
- 	for (i = 0; i < list.nr; i++) {
--		snprintf(file, sizeof(file), "%s/%s", maildir, list.items[i].string);
--		f = fopen(file, "r");
-+		char *name;
-+
-+		strbuf_reset(&file);
-+		strbuf_addf(&file, "%s/%s", maildir, list.items[i].string);
-+
-+		f = fopen(file.buf, "r");
- 		if (!f) {
--			error("cannot open mail %s (%s)", file, strerror(errno));
-+			error("cannot open mail %s (%s)", file.buf, strerror(errno));
- 			goto out;
- 		}
- 
- 		if (strbuf_getwholeline(&buf, f, '\n')) {
--			error("cannot read mail %s (%s)", file, strerror(errno));
-+			error("cannot read mail %s (%s)", file.buf, strerror(errno));
- 			goto out;
- 		}
- 
--		sprintf(name, "%s/%0*d", dir, nr_prec, ++skip);
-+		name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
- 		split_one(f, name, 1);
-+		free(name);
- 
- 		fclose(f);
- 		f = NULL;
-@@ -184,6 +195,7 @@ static int split_maildir(const char *maildir, const char *dir,
- out:
- 	if (f)
- 		fclose(f);
-+	strbuf_release(&file);
- 	string_list_clear(&list, 1);
- 	return ret;
- }
-@@ -191,7 +203,6 @@ out:
- static int split_mbox(const char *file, const char *dir, int allow_bare,
- 		      int nr_prec, int skip)
- {
--	char name[PATH_MAX];
- 	int ret = -1;
- 	int peek;
- 
-@@ -218,8 +229,9 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
- 	}
- 
- 	while (!file_done) {
--		sprintf(name, "%s/%0*d", dir, nr_prec, ++skip);
-+		char *name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
- 		file_done = split_one(f, name, allow_bare);
-+		free(name);
- 	}
- 
- 	if (f != stdin)
+ /* FIXME: move prefix to startup_info struct and get rid of this arg */
 -- 
 2.6.0.rc2.408.ga2926b9
