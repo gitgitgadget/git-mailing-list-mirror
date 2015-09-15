@@ -1,83 +1,84 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: [PATCH 15/67] convert trivial sprintf / strcpy calls to xsnprintf
-Date: Tue, 15 Sep 2015 20:15:26 +0100
-Message-ID: <55F86E4E.3030002@ramsayjones.plus.com>
+Date: Tue, 15 Sep 2015 13:38:42 -0700
+Message-ID: <CAGZ79kb5qWnOnJGY8JR3Z9UqT2xp390A6-LvNudBk=e3N2W41Q@mail.gmail.com>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915153637.GO29753@sigill.intra.peff.net>
- <55F8643D.6040800@ramsayjones.plus.com>
- <20150915184211.GA31939@sigill.intra.peff.net>
+	<20150915153637.GO29753@sigill.intra.peff.net>
+	<55F8643D.6040800@ramsayjones.plus.com>
+	<20150915184211.GA31939@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Sep 15 21:15:37 2015
+X-From: git-owner@vger.kernel.org Tue Sep 15 22:38:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbvhU-0002Ks-KU
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 21:15:32 +0200
+	id 1Zbx04-00087b-Lx
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 22:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752060AbbIOTP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 15:15:28 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:37453 "EHLO
-	avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751721AbbIOTP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 15:15:28 -0400
-Received: from [10.0.2.15] ([81.174.177.104])
-	by avasout08 with smtp
-	id HXFP1r0082FXpih01XFQSK; Tue, 15 Sep 2015 20:15:25 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=bI7rW6KZ c=1 sm=1 tr=0
- a=IMS4QkGEsjO3VZZSAZDX8w==:117 a=IMS4QkGEsjO3VZZSAZDX8w==:17 a=0Bzu9jTXAAAA:8
- a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=RjNhV3nleeL-PidxTMAA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
+	id S1751697AbbIOUio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2015 16:38:44 -0400
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:34240 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751663AbbIOUin (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2015 16:38:43 -0400
+Received: by ykdg206 with SMTP id g206so198512805ykd.1
+        for <git@vger.kernel.org>; Tue, 15 Sep 2015 13:38:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=NcqCEsIIPb8KdPSSYE/P2fiYqrdby+TXlODWUC78wws=;
+        b=Cu5w4EkUA8izEQ8UK5S41BiLjpQEnbtfXBH7c36EYYwsnjnPG004AKAtze1TXbf96c
+         HBIJoYkwFGkZVgbEO8rk9j/oYBJyPG3iXNYI1ILTTD7vu2IawksJDaGnccx8awMfPPng
+         wR0Ka0KgH44DmZfxpfzwt8R1PvTaM9EAWmdHpoqm9odhwrnbuqA6tweBJorddYEtFtHi
+         8cpGiNYyxsCBx+Hz3VK57vSD52inthm7g0wqKXH1lpFg8C7ME7n1Y04rllD+ofkfMRvM
+         HHU0xycou6LR1mO5cLU/FJBicfpKrcGTL2lThFMqfmuLuZbPNCBdVHyisrin3nWqmqHl
+         gAEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=NcqCEsIIPb8KdPSSYE/P2fiYqrdby+TXlODWUC78wws=;
+        b=Po3gLErPFYj9I6j/A8dhFCXgPaeMEY3S2VbE6PBXFZD5gKgfPK7aNDL4U5WVz8TmUO
+         ek+G6ta0vd/QomN64Qf/Tu5UxSB1QuU9wNcEQipJJWPFPmh+wAiRnjV7U5EERaRj48Zq
+         eH4/vcUrPXkEu+RVd3jGDgBRfk7uQETvFJHDcCWfJGYi8TWQ1JyX+23x5/CGMnAMencg
+         WyjtcbCevUG/05GVxuEHnVpDxhGIis2PGnH83OUkR1GYJCaXDaOfBh0GOGbl5j3u8ZbZ
+         yAaL/V8+YhSTLZBd7zaEJw0BWegP1DPTJVGnnD20l2wEG93uJgQi7SndPwJjQaUhenXG
+         JPlA==
+X-Gm-Message-State: ALoCoQnr7daVe/4CIe0nSytRvGIDlbxkXa/1NUd1y30/E+nnuSFyKyjCwt+3cgXV9+UR5Qubq9Ij
+X-Received: by 10.170.198.198 with SMTP id p189mr24345579yke.56.1442349522686;
+ Tue, 15 Sep 2015 13:38:42 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Tue, 15 Sep 2015 13:38:42 -0700 (PDT)
 In-Reply-To: <20150915184211.GA31939@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277983>
 
+On Tue, Sep 15, 2015 at 11:42 AM, Jeff King <peff@peff.net> wrote:
+> That misses the "assert" behavior of xsnprintf.
 
+When I saw the first patches of this series, I like them.
 
-On 15/09/15 19:42, Jeff King wrote:
-> On Tue, Sep 15, 2015 at 07:32:29PM +0100, Ramsay Jones wrote:
->
->>> diff --git a/archive-tar.c b/archive-tar.c
->>> index b6b30bb..d543f93 100644
->>> --- a/archive-tar.c
->>> +++ b/archive-tar.c
->>> @@ -301,7 +301,7 @@ static int write_global_extended_header(struct archiver_args *args)
->>>  	memset(&header, 0, sizeof(header));
->>>  	*header.typeflag = TYPEFLAG_GLOBAL_HEADER;
->>>  	mode = 0100666;
->>> -	strcpy(header.name, "pax_global_header");
->>> +	xsnprintf(header.name, sizeof(header.name), "pax_global_header");
->> How about using strlcpy() instead? Thus:
->>
->> -	strcpy(header.name, "pax_global_header");
->> +	strlcpy(header.name, "pax_global_header", sizeof(header.name));
->>
->> Ditto for other similar (strcpy->xsnprintf) hunks below.
-> That misses the "assert" behavior of xsnprintf. We are preventing
-> overflow here, but also truncation. What should happen if
-> "pax_global_header" does not fit in header.name? I think complaining
-> loudly and immediately is the most helpful thing, because it is surely a
-> programming error.
->
-> We could make xstrlcpy(), of course, but I don't see much point when
-> xsnprintf does the same thing (and more).
+Some off topic thoughts:
 
-Heh, I just sent an email about patch 22/67 which says similar things. I don't feel
-too strongly, either way, but I have a slight preference for the use of [x]strlcpy()
-in these cases.
+Having an "assert" behavior is not a good user experience though
+and should be fixed. To fix it we need stack traces. And the git
+version. And telling the user to send it to the mailing list.
 
-I have to stop at patch #22 for now.
+I wonder if we want to include a trace where possible (i.e.
+when compiled with gcc or other precompiler conditions)
+into these assertive behaviors.
+I'd guess we have an assertive behavior if die("BUG:...") is called,
+so maybe we can just check inside of die if we want to print
+a stack trace additionally ?
 
-ATB,
-Ramsay Jones
+In my dream world we would have a similar mechanism as in
+the kernel, a "BUG:..." will be automatically sent to some
+collection agency via UDP.
