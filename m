@@ -1,79 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 08/67] add reentrant variants of sha1_to_hex and
- find_unique_abbrev
-Date: Tue, 15 Sep 2015 13:50:27 -0400
-Message-ID: <20150915175027.GA31091@sigill.intra.peff.net>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 04/67] fsck: don't fsck alternates for connectivity-only
+ check
+Date: Tue, 15 Sep 2015 19:55:19 +0200
+Organization: gmx
+Message-ID: <f536d3d011ff1943c3cfcf90c9dce664@dscho.org>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915152629.GH29753@sigill.intra.peff.net>
- <55F84D9B.90004@ramsayjones.plus.com>
+ <20150915152428.GD29753@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Tue Sep 15 19:50:35 2015
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 15 19:55:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZbuNG-0001Yp-Tp
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 19:50:35 +0200
+	id 1ZbuSA-0007eY-Qh
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Sep 2015 19:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751633AbbIORub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 13:50:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59521 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751601AbbIORua (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 13:50:30 -0400
-Received: (qmail 20002 invoked by uid 102); 15 Sep 2015 17:50:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 12:50:29 -0500
-Received: (qmail 8529 invoked by uid 107); 15 Sep 2015 17:50:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 15 Sep 2015 13:50:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Sep 2015 13:50:27 -0400
-Content-Disposition: inline
-In-Reply-To: <55F84D9B.90004@ramsayjones.plus.com>
+	id S1752169AbbIORze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2015 13:55:34 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52366 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751844AbbIORzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2015 13:55:33 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LsCdj-1Yc8MZ3vPL-013swq; Tue, 15 Sep 2015 19:55:20
+ +0200
+In-Reply-To: <20150915152428.GD29753@sigill.intra.peff.net>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:RuvTvZeDVaMfTG/fXYU0JfjMH+T2+yPwGZ+tieb7ICVm30OdGmJ
+ eIsB9DWoZRdWFJRPqNGd1VRvQIX0S6qLjEr2Esf7DyruLjlVzwZsWYeS/CnkH/GvaTl3WAW
+ +EdeHksW19f18m6RpimIZFblw2ODn94LfFBYeFDhD6A6egHqd9ZRoYjDHaNGPVrVA4KBaRt
+ 6grqHxb8gqj/u+xEfuhRw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0koVOJHAwYQ=:NkHc4FGZKXOxJSvmUwACg9
+ 4h5OeyLi50lyyPZnGPzo44z4zBYjz6MRNGKMzJEzYfFlMVyyL0B2XRJB8kQ/XIX+YxDCwemZL
+ V5YwjZJKW4U19ZHUx7y2IlfvDFfa8gurmJvi7wBBGCs9TCN6JqzcSmh4RQOl1DgmjXCNp7EyD
+ QmTplmqMXnGSd5F4w2coTkEMh3Gl4uRkGIMQ4WfNBGG3X/YrziGrqiZIE0U4i23M7KpBkig5a
+ TuKHhipUxBPCjY5ddsaF6SCXGLmIliQ2/+8lOe5AeYFmoc7e33CpzchZXJw7FBFhBrfNb2n6N
+ 3wZfC4uUv22ebTHb8nz6SaVZuXK9LjGUTY91kGvhPq+ZUc9zGy/t1ZiAgHGO3Tt84aJVxMp86
+ ehW/fUaGGSMqzj3kHiibaFbMDTM0MLApjrx7FYjs+lDSxXW+oS4O2qgpeh55EkEvY422BHj6C
+ KsP+bwBofUixt/s8brr0p0w6tsvyRVjBRNUymQ3YQXiiZ5msGN2ijpY3bwrfBpn8AX5dwpFrc
+ 2C8DgY8yB0fcwfTHvi4giRuFuqctHp8RSaEKxwPgG8TSJH06QgWMHcejxsmYvFih1JLNzslFe
+ OFRUgZJafyhIiHCjI9XwVCbWg/Jj7iUkzAt+SHQ2pybcPpkoJxyabinWS5CRFbydfFLxFI8dQ
+ 1wSdHObI/Ghc2HVoQtqikAS37Wx0HRYfTO3VLygisH8RKBlu/sk8oA7DlYW0dH+Q5QyhHvjik
+ sADt1DdS01mk9vhFgKAu50cmGm77K8gW+PwyxA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277975>
 
-On Tue, Sep 15, 2015 at 05:55:55PM +0100, Ramsay Jones wrote:
+Hi Peff,
 
-> On 15/09/15 16:26, Jeff King wrote:
-> > The sha1_to_hex and find_unique_abbrev functions always
-> > write into reusable static buffers. There are a few problems
-> > with this:
-> >
-> >   - future calls overwrite our result. This is especially
-> >     annoying with find_unique_abbrev, which does not have a
-> >     ring of buffers, so you cannot even printf() a result
-> >     that has two abbreviated sha1s.
-> >
-> >   - if you want to put the result into another buffer, we
-> >     often strcpy, which looks suspicious when auditing for
-> >     overflows.
-> >
-> > This patch introduces sha1_to_hex_to and find_unique_abbrev_to,
-> > which write into a user-provided buffer. Of course this is
-> > just punting on the overflow-auditing, as the buffer
-> > obviously needs to be GIT_SHA1_HEXSZ + 1 bytes. But it is
-> > much easier to audit, since that is a well-known size.
+On 2015-09-15 17:24, Jeff King wrote:
+> Commit 02976bf (fsck: introduce `git fsck --connectivity-only`,
+> 2015-06-22) recently gave fsck an option to perform only a
+> subset of the checks, by skipping the fsck_object_dir()
+> call. However, it does so only for the local object
+> directory, and we still do expensive checks on any alternate
+> repos. We should skip them in this case, too.
 > 
-> Hmm, I haven't read any other patches yet (including those which use these
-> new '_to' functions), but I can't help feeling they should be named something
-> like 'sha1_to_hex_str()' and 'find_unique_abbrev_str()' instead.  i.e. I don't get
-> the '_to' thing - not that I'm any good at naming things ...
+> Signed-off-by: Jeff King <peff@peff.net>
 
-I meant it as a contrast with their original. sha1_to_hex() formats into
-an internal buffer and returns it. But sha1_to_hex_to() formats "to" a
-buffer of your choice.
+ACK!
 
-I'm happy to switch the names to something else, but I don't think
-_str() conveys the difference. If I were starting from scratch, I would
-probably have just called my variant sha1_to_hex(), and called the
-original sha1_to_hex_unsafe(). :)
-
--Peff
+Sorry for missing this spot.
+Dscho
