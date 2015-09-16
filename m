@@ -1,94 +1,71 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH 1/2] notes: don't expand qualified refs in expand_notes_ref
-Date: Wed, 16 Sep 2015 15:06:33 -0700
-Message-ID: <1442441194-5506-2-git-send-email-jacob.e.keller@intel.com>
-References: <1442441194-5506-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Mike Hommey <mh@glandium.org>, Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 17 00:06:57 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 66/67] use strbuf_complete to conditionally append slash
+Date: Wed, 16 Sep 2015 15:18:59 -0700
+Message-ID: <xmqq8u86m2i4.fsf@gitster.mtv.corp.google.com>
+References: <20150915152125.GA27504@sigill.intra.peff.net>
+	<20150915161619.GN29753@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 17 00:19:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcKqu-0000HA-Jp
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 00:06:56 +0200
+	id 1ZcL2h-0006Q7-RQ
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 00:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753967AbbIPWGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 18:06:48 -0400
-Received: from mga03.intel.com ([134.134.136.65]:14404 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753832AbbIPWGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 18:06:41 -0400
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga103.jf.intel.com with ESMTP; 16 Sep 2015 15:06:37 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.17,542,1437462000"; 
-   d="scan'208";a="646257359"
-Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.123])
-  by orsmga003.jf.intel.com with ESMTP; 16 Sep 2015 15:06:37 -0700
-X-Mailer: git-send-email 2.6.0.rc2.248.g5b5be23
-In-Reply-To: <1442441194-5506-1-git-send-email-jacob.e.keller@intel.com>
+	id S1752377AbbIPWTD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 18:19:03 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:32910 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752002AbbIPWTC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 18:19:02 -0400
+Received: by pacex6 with SMTP id ex6so347542pac.0
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 15:19:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Io81EivnHW98MyzDCfcs3j1n0s5yHpJ7OSKQzLwqwaU=;
+        b=PSD4ttgHAxC4+nVoVGr7cTWpkO5jfPlp3wYTnRKdgudfaA1Zhia/gi6z02FDm7Me4S
+         aPjdqjirnjElN9h8hczszu6rJGn0d6lexESUre1tswg+ckaLMTEvlYJgiQMyevRMh6aP
+         NpAL6NnA5U4M1f7q581LHRYaIjRI6UH/yHxhQQYY7MzSJsDs5uWb8YUzK9U9p1lOSzk1
+         tU60mP4HMYfASGVagJu4zI2ybF23csuTdBJpXBxDRd6oproKBkRKfvN8j6DyLq4Z29V5
+         YFDdDQZ3pH5ITex2x+hkLMXvVcpnHYXnKlr+i/5k9yrskqz41CP5GjbCUwkOdVpMX5MB
+         o7dQ==
+X-Received: by 10.68.65.3 with SMTP id t3mr64525947pbs.127.1442441941205;
+        Wed, 16 Sep 2015 15:19:01 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:150c:7d53:9693:493e])
+        by smtp.gmail.com with ESMTPSA id co4sm83517pbb.91.2015.09.16.15.19.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Sep 2015 15:19:00 -0700 (PDT)
+In-Reply-To: <20150915161619.GN29753@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 15 Sep 2015 12:16:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278079>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Jeff King <peff@peff.net> writes:
 
-The documentation for --refs says that it will treat unqualified refs as
-under refs/notes. Current behavior is to prefix refs/notes to all
-strings that do not start with refs/notes or notes/, resulting in
-performing actions on refs such as "refs/notes/refs/foo/bar" instead of
-attempting to perform actions on "refs/foo/bar". A future patch will
-introduce the idea of performing non-writable actions to refs outside of
-refs/notes. Change the behavior of expand_notes_ref to leave qualified
-refs under refs/* alone.
+> diff --git a/imap-send.c b/imap-send.c
+> index 01aa227..f5d2b06 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -1412,8 +1412,7 @@ static CURL *setup_curl(struct imap_server_conf *srvc)
+>  	curl_easy_setopt(curl, CURLOPT_PASSWORD, server.pass);
+>  
+>  	strbuf_addstr(&path, server.host);
+> -	if (!path.len || path.buf[path.len - 1] != '/')
+> -		strbuf_addch(&path, '/');
+> +	strbuf_complete(&path, '/');
+>  	strbuf_addstr(&path, server.folder);
 
-In addition, fix git notes merge <ref> to prevent merges from refs which
-are not under refs/notes, in a similar way to how we already check note
-refs in init_notes_check. This is required in order to keep current
-tests passing without change. A future patch will change the behavior of
-git notes merge so that it can merge from a ref outside of refs/notes.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- builtin/notes.c | 4 ++++
- notes.c         | 4 ++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 6371d536d164..0f55d38983f0 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -810,6 +810,10 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	o.local_ref = default_notes_ref();
- 	strbuf_addstr(&remote_ref, argv[0]);
- 	expand_notes_ref(&remote_ref);
-+	if (!starts_with(remote_ref.buf, "refs/notes"))
-+		die("Refusing to merge notes from %s (outside of refs/notes/)",
-+		    remote_ref.buf);
-+
- 	o.remote_ref = remote_ref.buf;
- 
- 	t = init_notes_check("merge", NOTES_INIT_WRITABLE);
-diff --git a/notes.c b/notes.c
-index 6ef347ca3ac4..d49168fb3f01 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1296,8 +1296,8 @@ int copy_note(struct notes_tree *t,
- 
- void expand_notes_ref(struct strbuf *sb)
- {
--	if (starts_with(sb->buf, "refs/notes/"))
--		return; /* we're happy */
-+	if (starts_with(sb->buf, "refs/"))
-+		return; /* fully qualified, so we're happy */
- 	else if (starts_with(sb->buf, "notes/"))
- 		strbuf_insert(sb, 0, "refs/", 5);
- 	else
--- 
-2.6.0.rc2.248.g5b5be23
+Is this conversion correct?  This seems to me that the caller wants
+to create an IMAP folder name immediately under the root hierarchy
+and wants to have the leading slash in the result.
