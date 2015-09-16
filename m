@@ -1,88 +1,135 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 10/67] mailsplit: make PATH_MAX buffers dynamic
-Date: Wed, 16 Sep 2015 06:14:18 -0400
-Message-ID: <20150916101418.GD13966@sigill.intra.peff.net>
+Date: Wed, 16 Sep 2015 06:25:24 -0400
+Message-ID: <20150916102524.GA28002@sigill.intra.peff.net>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
  <20150915152806.GJ29753@sigill.intra.peff.net>
  <CAPig+cQ+TvT2_ZrbbYFQOdjDNs+b-ADJb+EbKVTP-HaCghjCow@mail.gmail.com>
+ <20150916101418.GD13966@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Git List <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 12:17:41 2015
+X-From: git-owner@vger.kernel.org Wed Sep 16 12:25:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zc9mW-0005jX-OM
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 12:17:41 +0200
+	id 1Zc9uI-0006xp-VY
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 12:25:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754091AbbIPKOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 06:14:30 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59843 "HELO cloud.peff.net"
+	id S1754750AbbIPKZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 06:25:35 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59847 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752709AbbIPKO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 06:14:27 -0400
-Received: (qmail 15182 invoked by uid 102); 16 Sep 2015 10:14:27 -0000
+	id S1754533AbbIPKZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 06:25:33 -0400
+Received: (qmail 15928 invoked by uid 102); 16 Sep 2015 10:25:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 05:14:27 -0500
-Received: (qmail 16473 invoked by uid 107); 16 Sep 2015 10:14:30 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 05:25:33 -0500
+Received: (qmail 16576 invoked by uid 107); 16 Sep 2015 10:25:36 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 06:14:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 06:14:18 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 06:25:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 06:25:24 -0400
 Content-Disposition: inline
-In-Reply-To: <CAPig+cQ+TvT2_ZrbbYFQOdjDNs+b-ADJb+EbKVTP-HaCghjCow@mail.gmail.com>
+In-Reply-To: <20150916101418.GD13966@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278015>
 
-On Tue, Sep 15, 2015 at 08:51:26PM -0400, Eric Sunshine wrote:
+On Wed, Sep 16, 2015 at 06:14:18AM -0400, Jeff King wrote:
 
-> >                 if (strbuf_getwholeline(&buf, f, '\n')) {
-> > -                       error("cannot read mail %s (%s)", file, strerror(errno));
-> > +                       error("cannot read mail %s (%s)", file.buf, strerror(errno));
-> >                         goto out;
-> >                 }
-> >
-> > -               sprintf(name, "%s/%0*d", dir, nr_prec, ++skip);
-> > +               name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
-> >                 split_one(f, name, 1);
-> > +               free(name);
-> 
-> Hmm, why does 'file' become a strbuf which is re-used each time
-> through the loop, but 'name' is treated differently and gets
-> re-allocated upon each iteration? Why doesn't 'name' deserve the same
-> treatment as 'file'?
+> I guess we could get away with always calling free() right before
+> assigning (the equivalent of strbuf_reset()), and then rely on exiting
+> the loop to "out" to do the final free. And then the result (versus the
+> original code, not my patch) would look like:
 
-My thinking was rather the other way around: why doesn't "file" get the
-same treatment as "name"?
+And here is the whole patch converted to that style. I'm planning to go
+with this, as the resulting diff is much smaller and much more clear
+that we are touching only the allocations.
 
-I generally prefer xstrfmt to strbufs in these patches for two reasons:
+I _hope_ the result is pretty easy to understand. There is some subtlety
+to the loop assumptions:
 
-  1. The result has fewer lines.
+ - on entering, the pointer is NULL or an allocated buffer to be
+   recycled; either way, free() is OK
 
-  2. The variable switches from an array to a pointer, so accessing it
-     doesn't change. Whereas with a strbuf, you have to s/foo/foo.buf/
-     wherever it is accessed.
+ - on leaving, the pointer is either NULL (if we never ran the loop) or
+   a buffer to be freed. The free() at the end is necessary to handle
+   this.
 
-We can do that easily with "name"; we allocate it, use it, and free it.
-But the lifetime of "file" crosses the "goto out" boundaries, and so
-it's simplest to clean it up in the "out" section. Doing that correctly
-with a bare pointer is tricky (you have to re-NULL it every time you
-free the old value), whereas the strbuf's invariants make it trivial.
+That is not too complicated, but it is not an idiom we use elsewhere
+(whereas recycled strbufs are). I can switch the whole thing to strbufs
+if that's the direction we want to go.
 
-I guess we could get away with always calling free() right before
-assigning (the equivalent of strbuf_reset()), and then rely on exiting
-the loop to "out" to do the final free. And then the result (versus the
-original code, not my patch) would look like:
+-- >8 --
+Subject: [PATCH] mailsplit: make PATH_MAX buffers dynamic
+
+There are several static PATH_MAX-sized buffers in
+mailsplit, along with some questionable uses of sprintf.
+These are not really of security interest, as local
+mailsplit pathnames are not typically under control of an
+attacker, and you could generally only overflow a few
+numbers at the end of a path that approaches PATH_MAX (a
+longer path would choke mailsplit long before). But it does
+not hurt to be careful, and as a bonus we lift some limits
+for systems with too-small PATH_MAX varibles.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/mailsplit.c | 34 +++++++++++++++++++++++-----------
+ 1 file changed, 23 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-index 9de06e3..a82dd0d 100644
+index 9de06e3..104277a 100644
 --- a/builtin/mailsplit.c
 +++ b/builtin/mailsplit.c
+@@ -98,30 +98,37 @@ static int populate_maildir_list(struct string_list *list, const char *path)
+ {
+ 	DIR *dir;
+ 	struct dirent *dent;
+-	char name[PATH_MAX];
++	char *name = NULL;
+ 	char *subs[] = { "cur", "new", NULL };
+ 	char **sub;
++	int ret = -1;
+ 
+ 	for (sub = subs; *sub; ++sub) {
+-		snprintf(name, sizeof(name), "%s/%s", path, *sub);
++		free(name);
++		name = xstrfmt("%s/%s", path, *sub);
+ 		if ((dir = opendir(name)) == NULL) {
+ 			if (errno == ENOENT)
+ 				continue;
+ 			error("cannot opendir %s (%s)", name, strerror(errno));
+-			return -1;
++			goto out;
+ 		}
+ 
+ 		while ((dent = readdir(dir)) != NULL) {
+ 			if (dent->d_name[0] == '.')
+ 				continue;
+-			snprintf(name, sizeof(name), "%s/%s", *sub, dent->d_name);
++			free(name);
++			name = xstrfmt("%s/%s", *sub, dent->d_name);
+ 			string_list_insert(list, name);
+ 		}
+ 
+ 		closedir(dir);
+ 	}
+ 
+-	return 0;
++	ret = 0;
++
++out:
++	free(name);
++	return ret;
+ }
+ 
+ static int maildir_filename_cmp(const char *a, const char *b)
 @@ -148,8 +155,7 @@ static int maildir_filename_cmp(const char *a, const char *b)
  static int split_maildir(const char *maildir, const char *dir,
  	int nr_prec, int skip)
@@ -125,12 +172,24 @@ index 9de06e3..a82dd0d 100644
  	string_list_clear(&list, 1);
  	return ret;
  }
-
-which is not so bad.
-
-Of course this is more allocations per loop than using a strbuf. I doubt
-it matters in practice (we are about to fopen() and read into a strbuf,
-after all!), but we could also follow the opposite direction and use
-strbufs for both.
-
--Peff
+@@ -191,7 +203,6 @@ out:
+ static int split_mbox(const char *file, const char *dir, int allow_bare,
+ 		      int nr_prec, int skip)
+ {
+-	char name[PATH_MAX];
+ 	int ret = -1;
+ 	int peek;
+ 
+@@ -218,8 +229,9 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
+ 	}
+ 
+ 	while (!file_done) {
+-		sprintf(name, "%s/%0*d", dir, nr_prec, ++skip);
++		char *name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
+ 		file_done = split_one(f, name, allow_bare);
++		free(name);
+ 	}
+ 
+ 	if (f != stdin)
+-- 
+2.6.0.rc2.408.ga2926b9
