@@ -1,65 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 04/67] fsck: don't fsck alternates for connectivity-only
- check
-Date: Wed, 16 Sep 2015 16:00:59 -0400
-Message-ID: <20150916200059.GA3161@sigill.intra.peff.net>
-References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915152428.GD29753@sigill.intra.peff.net>
- <f536d3d011ff1943c3cfcf90c9dce664@dscho.org>
- <xmqqtwquqlz2.fsf@gitster.mtv.corp.google.com>
- <20150916181237.GB17381@sigill.intra.peff.net>
- <xmqqwpvqp49e.fsf@gitster.mtv.corp.google.com>
- <CAPig+cRtQG9km2xT_h8D02jUC_FLnp_QzBaX-+N7Bw01a1v5sg@mail.gmail.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: git rebase -i failing due to phantom index.lock
+Date: Wed, 16 Sep 2015 22:08:27 +0200
+Message-ID: <CAOxFTcwTOJjRnA=7gR4GP2u0bsDCRv+j8PEw0c8Nv-nVVrynTQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 22:01:22 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 16 22:08:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcItJ-0004Zz-6E
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 22:01:17 +0200
+	id 1ZcJ0f-0004r0-Hh
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 22:08:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753974AbbIPUBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 16:01:09 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60300 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753907AbbIPUBI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 16:01:08 -0400
-Received: (qmail 23416 invoked by uid 102); 16 Sep 2015 20:01:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 15:01:07 -0500
-Received: (qmail 22709 invoked by uid 107); 16 Sep 2015 20:01:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 16:01:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 16:00:59 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPig+cRtQG9km2xT_h8D02jUC_FLnp_QzBaX-+N7Bw01a1v5sg@mail.gmail.com>
+	id S1752435AbbIPUIt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Sep 2015 16:08:49 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:38422 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752002AbbIPUIs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Sep 2015 16:08:48 -0400
+Received: by wiclk2 with SMTP id lk2so541692wic.1
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 13:08:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Vj0QeSwxLuJwIPh8+lHrc3lT3/T/nRWEVlIp7EeVaS8=;
+        b=u25OYZD/I+Db4KlRh8OTuY6mHlqam6RpFL42M4XuRfWIEN9qs7Gbki20VKVbY8tasK
+         FEgVuJZIvnCWIiHZKFLEsJ8zkmiVILufEt68hiBTj7D2mipTqopsqYavs3Vu9a0Vzs66
+         3aFzHqgWJWfj7kVkHlynoixSJFQsGjjUKBpWpLnWxHqJ22KV9Jvz3A6C4fta4f/RGRJs
+         DESZ5x3rQ9W4glOwv4kwY/ucAFDbB39cGuHdAx8vIeHsortzNDmTP4XMjfUKqbETt50z
+         3ElLqIGoDrogEr/ArODbPAn8AkqwcauCh46j8PaFmssLm/uSA+TWad58E4yxh/cqy04G
+         oBYQ==
+X-Received: by 10.194.110.132 with SMTP id ia4mr25343234wjb.103.1442434126777;
+ Wed, 16 Sep 2015 13:08:46 -0700 (PDT)
+Received: by 10.194.101.100 with HTTP; Wed, 16 Sep 2015 13:08:27 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278058>
 
-On Wed, Sep 16, 2015 at 03:14:24PM -0400, Eric Sunshine wrote:
+Hello all,
 
-> On Wed, Sep 16, 2015 at 3:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Jeff King <peff@peff.net> writes:
-> >
-> >> Speaking of which, how do you want the next round of patches? I'm
-> >> hesitant to spam the list with 67 patches again, when only a fraction
-> >> have changed (and for all but the _to/_r thing, I've posted my changes
-> >> already).
-> >
-> > Cannot tell yet, as I am only halfway thru myself.
-> 
-> I'm also only about halfway through, plus trying dealing with other topics...
+I've recently started to note an issue with git rebase -i failing with
+alarming frequency, especially on one of my repositories, claiming
+that index.lock could not be created because it exists, even though it
+doesn't and nothing else seems to be locking the index. The rebase
+bombs more usually during the initial checkout than during any other
+of the steps.
 
-OK, I will hold back a resend for a few days, then.
+The problem is somewhat randomly reproducible, as it doesn't happen
+100% of the time. It also seems to happen more consistently with more
+recent git versions, or at least with my custom built git than with
+the distro-shipped one.
 
--Peff
+A somewhat problematic git bisect has allowed me to identify commit
+03b86647722f11ccc321cd7279aa49b811d17cc2 as the first bad commit.
+
+The problem has all signs of a timing issue, which I'm having problems
+isolating, although simply providing a timeout on the index lock calls
+seems to fix it. Making git stall instead of die on error allowed me
+to obtain this backtrace which I suspect will not be particularly
+useful:
+
+#0 0x00000000004c4666 in unable_to_lock_message
+(path=3Dpath@entry=3D0x1bad940 ".git/index", err=3D<optimized out>,
+buf=3Dbuf@entry=3D0x7ffd3b990900) at lockfile.c:158
+#1 0x00000000004c46c6 in unable_to_lock_die (path=3Dpath@entry=3D0x1bad=
+940
+".git/index", err=3D<optimized out>) at lockfile.c:167
+#2 0x00000000004c480b in hold_lock_file_for_update_timeout
+(lk=3Dlk@entry=3D0x1bd7be0, path=3D0x1bad940 ".git/index", flags=3D<opt=
+imized
+out>, timeout_ms=3Dtimeout_ms@entry=3D0) at lockfile.c:177
+#3 0x00000000004e6e2a in hold_lock_file_for_update (flags=3D1,
+path=3D<optimized out>, lk=3D0x1bd7be0) at lockfile.h:165
+#4 hold_locked_index (lk=3Dlk@entry=3D0x1bd7be0,
+die_on_error=3Ddie_on_error@entry=3D1) at read-cache.c:1411
+#5 0x0000000000420cb0 in merge_working_tree (old=3D0x7ffd3b990a20,
+old=3D0x7ffd3b990a20, new=3D0x7ffd3b990a00, new=3D0x7ffd3b990a00,
+writeout_error=3D0x7ffd3b9909c0, opts=3D0x7ffd3b992a31)
+at builtin/checkout.c:471
+#6 switch_branches (new=3D0x7ffd3b990a00, opts=3D0x7ffd3b992a31) at
+builtin/checkout.c:826
+#7 checkout_branch (new=3D0x7ffd3b990a00, opts=3D0x7ffd3b992a31) at
+builtin/checkout.c:1123
+#8 cmd_checkout (argc=3D<optimized out>, argv=3D<optimized out>,
+prefix=3D<optimized out>) at builtin/checkout.c:1273
+#9 0x0000000000405e7e in run_builtin (argv=3D0x7ffd3b992480, argc=3D2,
+p=3D0x7acab0 <commands+336>) at git.c:350
+#10 handle_builtin (argc=3D2, argv=3D0x7ffd3b992480) at git.c:535
+#11 0x0000000000405021 in run_argv (argv=3D0x7ffd3b9922d8,
+argcp=3D0x7ffd3b9922bc) at git.c:581
+#12 main (argc=3D2, av=3D<optimized out>) at git.c:689
+
+Additional information: I have the bash git prompt enabled, I do not
+have anything else accessing that repository at the same time, and the
+repository is =E2=80=9Cspread out=E2=80=9D across multiple workdirs cre=
+ated with git
+new-workdir, each with a different branch checked out. It is also
+usually accessed under a symlink (cd ~/shortcut/repo/branch rather
+than ~/full/path/to/repo/branch). Running Debian unstable with Linux
+4.1.0 on an SSD-backed ext4 partition mounted with data=3Dordered. I
+can't thnk of any other detail that might be even just remotely
+involved in this odd issue. Any suggestions on how to debug it are
+welcome.
+
+Best regards,
+
+--=20
+Giuseppe "Oblomov" Bilotta
