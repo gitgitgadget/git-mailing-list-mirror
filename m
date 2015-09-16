@@ -1,101 +1,136 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 07/67] strbuf: make strbuf_complete_line more generic
-Date: Wed, 16 Sep 2015 05:57:41 -0400
-Message-ID: <20150916095740.GC13966@sigill.intra.peff.net>
+Subject: Re: [PATCH 10/67] mailsplit: make PATH_MAX buffers dynamic
+Date: Wed, 16 Sep 2015 06:14:18 -0400
+Message-ID: <20150916101418.GD13966@sigill.intra.peff.net>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915152528.GG29753@sigill.intra.peff.net>
- <CAPig+cT9piy2dGx6jbcQNyzY5kQ1XgaEB_mYNUOYBUCJ5wAc_w@mail.gmail.com>
- <xmqqoah3tap6.fsf@gitster.mtv.corp.google.com>
+ <20150915152806.GJ29753@sigill.intra.peff.net>
+ <CAPig+cQ+TvT2_ZrbbYFQOdjDNs+b-ADJb+EbKVTP-HaCghjCow@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 11:57:54 2015
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Sep 16 12:17:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zc9TN-0008Um-R8
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 11:57:54 +0200
+	id 1Zc9mW-0005jX-OM
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 12:17:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752423AbbIPJ5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 05:57:50 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59837 "HELO cloud.peff.net"
+	id S1754091AbbIPKOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 06:14:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59843 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751480AbbIPJ5t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 05:57:49 -0400
-Received: (qmail 14097 invoked by uid 102); 16 Sep 2015 09:57:49 -0000
+	id S1752709AbbIPKO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 06:14:27 -0400
+Received: (qmail 15182 invoked by uid 102); 16 Sep 2015 10:14:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 04:57:49 -0500
-Received: (qmail 16421 invoked by uid 107); 16 Sep 2015 09:57:52 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 05:14:27 -0500
+Received: (qmail 16473 invoked by uid 107); 16 Sep 2015 10:14:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 05:57:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 05:57:41 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 06:14:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 06:14:18 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqoah3tap6.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAPig+cQ+TvT2_ZrbbYFQOdjDNs+b-ADJb+EbKVTP-HaCghjCow@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278014>
 
-On Tue, Sep 15, 2015 at 06:27:49PM -0700, Junio C Hamano wrote:
+On Tue, Sep 15, 2015 at 08:51:26PM -0400, Eric Sunshine wrote:
 
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> 
-> >> +static inline void strbuf_complete(struct strbuf *sb, char term)
-> >> +{
-> >> +       if (sb->len && sb->buf[sb->len - 1] != term)
-> >> +               strbuf_addch(sb, term);
-> >> +}
+> >                 if (strbuf_getwholeline(&buf, f, '\n')) {
+> > -                       error("cannot read mail %s (%s)", file, strerror(errno));
+> > +                       error("cannot read mail %s (%s)", file.buf, strerror(errno));
+> >                         goto out;
+> >                 }
 > >
-> > Hmm, so this only adds 'term' if not already present *and* if 'sb' is
-> > not empty, which doesn't seem to match the documentation which says
-> > that it "ensures" termination.
-> [...]
-> So to these two plausible and different set of callers that would be
-> helped by this function, the behaviour Peff gives it would match
-> what the callers want better than your version.
+> > -               sprintf(name, "%s/%0*d", dir, nr_prec, ++skip);
+> > +               name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
+> >                 split_one(f, name, 1);
+> > +               free(name);
+> 
+> Hmm, why does 'file' become a strbuf which is re-used each time
+> through the loop, but 'name' is treated differently and gets
+> re-allocated upon each iteration? Why doesn't 'name' deserve the same
+> treatment as 'file'?
 
-Right. I think what the function is doing is the right thing (and
-certainly it matches what the callers I'm changing are doing already
-:) ).
+My thinking was rather the other way around: why doesn't "file" get the
+same treatment as "name"?
 
-But I agree the docstring is extremely misleading. I've changed it to:
+I generally prefer xstrfmt to strbufs in these patches for two reasons:
 
-diff --git a/strbuf.h b/strbuf.h
-index aef2794..43f27c3 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -491,10 +491,21 @@ extern void strbuf_add_lines(struct strbuf *sb, const char *prefix, const char *
-  */
- extern void strbuf_addstr_xml_quoted(struct strbuf *sb, const char *s);
- 
-+/**
-+ * "Complete" the contents of `sb` by ensuring that either it ends with the
-+ * character `term`, or it is empty.  This can be used, for example,
-+ * to ensure that text ends with a newline, but without creating an empty
-+ * blank line if there is no content in the first place.
-+ */
-+static inline void strbuf_complete(struct strbuf *sb, char term)
-+{
-+	if (sb->len && sb->buf[sb->len - 1] != term)
-+		strbuf_addch(sb, term);
-+}
-+
- static inline void strbuf_complete_line(struct strbuf *sb)
+  1. The result has fewer lines.
+
+  2. The variable switches from an array to a pointer, so accessing it
+     doesn't change. Whereas with a strbuf, you have to s/foo/foo.buf/
+     wherever it is accessed.
+
+We can do that easily with "name"; we allocate it, use it, and free it.
+But the lifetime of "file" crosses the "goto out" boundaries, and so
+it's simplest to clean it up in the "out" section. Doing that correctly
+with a bare pointer is tricky (you have to re-NULL it every time you
+free the old value), whereas the strbuf's invariants make it trivial.
+
+I guess we could get away with always calling free() right before
+assigning (the equivalent of strbuf_reset()), and then rely on exiting
+the loop to "out" to do the final free. And then the result (versus the
+original code, not my patch) would look like:
+
+diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
+index 9de06e3..a82dd0d 100644
+--- a/builtin/mailsplit.c
++++ b/builtin/mailsplit.c
+@@ -148,8 +155,7 @@ static int maildir_filename_cmp(const char *a, const char *b)
+ static int split_maildir(const char *maildir, const char *dir,
+ 	int nr_prec, int skip)
  {
--	if (sb->len && sb->buf[sb->len - 1] != '\n')
--		strbuf_addch(sb, '\n');
-+	strbuf_complete(sb, '\n');
- }
+-	char file[PATH_MAX];
+-	char name[PATH_MAX];
++	char *file = NULL;
+ 	FILE *f = NULL;
+ 	int ret = -1;
+ 	int i;
+@@ -161,7 +167,11 @@ static int split_maildir(const char *maildir, const char *dir,
+ 		goto out;
  
- extern int strbuf_branchname(struct strbuf *sb, const char *name);
+ 	for (i = 0; i < list.nr; i++) {
+-		snprintf(file, sizeof(file), "%s/%s", maildir, list.items[i].string);
++		char *name;
++
++		free(file);
++		file = xstrfmt("%s/%s", maildir, list.items[i].string);
++
+ 		f = fopen(file, "r");
+ 		if (!f) {
+ 			error("cannot open mail %s (%s)", file, strerror(errno));
+@@ -173,8 +183,9 @@ static int split_maildir(const char *maildir, const char *dir,
+ 			goto out;
+ 		}
+ 
+-		sprintf(name, "%s/%0*d", dir, nr_prec, ++skip);
++		name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
+ 		split_one(f, name, 1);
++		free(name);
+ 
+ 		fclose(f);
+ 		f = NULL;
+@@ -184,6 +195,7 @@ static int split_maildir(const char *maildir, const char *dir,
+ out:
+ 	if (f)
+ 		fclose(f);
++	free(file);
+ 	string_list_clear(&list, 1);
+ 	return ret;
+ }
 
+which is not so bad.
 
-It may be that we will not find other uses beyond completing slash and
-newline, but at least this version should not actively mislead anybody.
+Of course this is more allocations per loop than using a strbuf. I doubt
+it matters in practice (we are about to fopen() and read into a strbuf,
+after all!), but we could also follow the opposite direction and use
+strbufs for both.
 
 -Peff
