@@ -1,98 +1,104 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 3/8] branch: roll show_detached HEAD into regular ref_list
-Date: Wed, 16 Sep 2015 11:53:15 +0530
-Message-ID: <CAOLa=ZQ51+TKvOiJvWa-emmJJGirAqkr9m0a_7BrQ2UbiSJdjA@mail.gmail.com>
-References: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
- <1442129035-31386-4-git-send-email-Karthik.188@gmail.com> <xmqqzj0ovlno.fsf@gitster.mtv.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: "Medium" log format: change proposal for author != committer
+Date: Tue, 15 Sep 2015 23:54:10 -0700
+Message-ID: <CA+P7+xqhJKGmxC=35bRvdKSj=nKRhfH9SqhR9ryrcBDknH-Y=w@mail.gmail.com>
+References: <robbat2-20150915T214920-375711965Z@orbis-terrarum.net> <xmqq8u87t9jb.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 08:23:58 2015
+X-From: git-owner@vger.kernel.org Wed Sep 16 08:54:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zc68J-0004ai-Ow
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 08:23:56 +0200
+	id 1Zc6bz-0001hZ-7h
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 08:54:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069AbbIPGXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 02:23:46 -0400
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:36366 "EHLO
-	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751648AbbIPGXp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 02:23:45 -0400
-Received: by vkfp126 with SMTP id p126so94408461vkf.3
-        for <git@vger.kernel.org>; Tue, 15 Sep 2015 23:23:45 -0700 (PDT)
+	id S1751917AbbIPGyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 02:54:31 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:34371 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751579AbbIPGya (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 02:54:30 -0400
+Received: by igcpb10 with SMTP id pb10so29583478igc.1
+        for <git@vger.kernel.org>; Tue, 15 Sep 2015 23:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=b99yaOYWeYp2eiSW8oX1k1jNrm4NOAr/LGr0GIjD2KA=;
-        b=qwmTt3+x+LglHVKd6mMkcvuqLL9VLnAJsKMm2iBBnijFpIRTAkTcHZk2XRXlkS/li/
-         fNRhK6lenWyBarknBUo/veLqcosURLIMPDQkL/TzKYc8tG9oy02dWdrxNrYQU/q/gY1A
-         3KbsnLEfapY+JACurHUg9gNAOcJGZJhnCbJ6sJaR6AcxWMT1H0vFBVeRGvJGszylorHF
-         jn53Nyn9MiGmmLeIxG/vOWdOH9eCIkUgOUGB5W9Qg0f3wB1eKxmDh/xrlxYB1zuOnqey
-         /ok+22qfr9jvkmMquw69C8yFw2bs4SFq4eiIFDNb7+zBqqQJK9qfMcjUxDAroUIOzERh
-         kKtQ==
-X-Received: by 10.31.149.143 with SMTP id x137mr26430684vkd.17.1442384625127;
- Tue, 15 Sep 2015 23:23:45 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Tue, 15 Sep 2015 23:23:15 -0700 (PDT)
-In-Reply-To: <xmqqzj0ovlno.fsf@gitster.mtv.corp.google.com>
+        bh=XI+dAYgfrH9zAHcayCklvnF8rG/ya77PQ95tz37HF4k=;
+        b=NP6opRaxenbrPvV/pJDWNXDTKiELNHsi1VHJRbWTzg0CV3MmdsbF23TwwjlixdmxL0
+         edlRAs6xiHEFWzG4EMlvSQnUf9V4k4Wm7dcecxTGSCpOPNxuqw9j4Iw7eJI2NPWSv2V5
+         kfRlXdNoA/JKjFZponYRIMDrAigC9y6D6hXVS1WwB6KGufvQMuTrMYp6bxO5dGsPuKcY
+         j0vnleDLadNVZZOg1eDZqBzwQcDW+q8/mRWdRJ8D8jjUlP4NRwa2QPcNxqiQ9CdM5E89
+         W5E6joXYGBNk/iPqTbshZiVQyGZmwlw8Vo7+9Vo4aPlg4goXjgtHjHAeX4IPwwhSo7CV
+         AZrg==
+X-Received: by 10.50.178.145 with SMTP id cy17mr13337810igc.92.1442386469940;
+ Tue, 15 Sep 2015 23:54:29 -0700 (PDT)
+Received: by 10.107.132.155 with HTTP; Tue, 15 Sep 2015 23:54:10 -0700 (PDT)
+In-Reply-To: <xmqq8u87t9jb.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278005>
 
-On Tue, Sep 15, 2015 at 1:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
+On Tue, Sep 15, 2015 at 6:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->> +     /*
->> +      * First we obtain all regular branch refs and if the HEAD is
->> +      * detached then we insert that ref to the end of the ref_fist
->> +      * so that it can be printed and removed first.
->> +      */
->>       for_each_rawref(append_ref, &cb);
->> +     if (detached)
->> +             head_ref(append_ref, &cb);
->> +     index = ref_list.index;
->> +
->> +     /* Print detached HEAD before sorting and printing the rest */
->> +     if (detached && (ref_list.list[index - 1].kind == REF_DETACHED_HEAD) &&
->> +         !strcmp(ref_list.list[index - 1].name, head)) {
->> +             print_ref_item(&ref_list.list[index - 1], maxwidth, verbose, abbrev,
->> +                            1, remote_prefix);
->> +             index -= 1;
->> +     }
->>
->> +     qsort(ref_list.list, index, sizeof(struct ref_item), ref_cmp);
+>  * Enhance the "--pretty=format:" thing so that the current set of
+>    hardcoded --pretty=medium,short,... formats and your modified
+>    "medium" can be expressed as a custom format string.
 >
-> This looks somewhat strange.  Wouldn't it be more consistent to
-> teach ref_cmp that HEAD sorts where in the collection of refs (I
-> presume that kind is checked first and then name, so if you give
-> REF_DETACHED_HEAD a low number than others, it would automatically
-> give you the ordering you want) without all of the above special
-> casing?
+>  * Introduce a configuration mechanism to allow users to define new
+>    short-hand, e.g. if you have this in your $HOME/.gitconfig:
+>
+>         [pretty "robin"]
+>                 format = "commit %H%nAuthor: %an <%ae>%n..."
+>
 
-Thats nice, we could do that, something like this perhaps:
+Afiak there is already support for this.. from "git help config":
 
-    qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
+pretty.<name>
+Alias for a --pretty= format string, as specified in git-log(1). Any
+aliases defined here can be used just as the built-in pretty formats
+could. For example, running git config pretty.changelog "format:* %H
+%s" would cause the invocation git log --pretty=changelog to be
+equivalent to running git log "--pretty=format:* %H %s". Note that an
+alias with the same name as a built-in format will be silently
+ignored.
 
-    for (i = 0; i < ref_list.index; i++) {
-        int current = !detached && (ref_list.list[i].kind ==
-REF_LOCAL_BRANCH) &&
-            !strcmp(ref_list.list[i].name, head);
-        /*  If detached the first ref_item is the current ref */
-        if (detached && i == 0)
-            current = 1;
-        print_ref_item(&ref_list.list[i], maxwidth, verbose,
-                   abbrev, current, remote_prefix);
-    }
+>    and run "git log --pretty=robin", it would behave as if you said
+>    "git log --pretty="format:commit %H%nAuthor: %an <%ae>%n...".
+>
 
--- 
+So this should already be supported... but to support "robinsformat"
+we'd need to be able to "show committer only if different from
+author"... Not sure how that would work.
+
+>  * (optional) Replace the hardcoded implementations of pretty
+>    formats with short-hand names like "medium", "short", etc. with a
+>    built-in set of pretty.$name.format using the configuration
+>    mechanism.  But we need to make sure this does not hurt
+>    performance for common cases.
+>
+
+This part obviously hasn't been done, I don't know if any particular
+format is not expressable today by the pretty syntax or not..
+
+But at least configuration does work. I use it as part of displaying the
+
+Fixes: <sha1> ("name")
+
+used by the upstream kernel for marking bug fixes of known commits.
+
+Thus the only real thing would be implementing a % modifier which
+allows showing commiter if it's not the same as author. (or vise
+versa) Ideally we could take work from the ref-filter library and the
+proposed "%if" stuff but I don't tihnk this was actually implemented
+yet, and I don't know if that would even work in the pretty modifiers.
+
 Regards,
-Karthik Nayak
+Jake
