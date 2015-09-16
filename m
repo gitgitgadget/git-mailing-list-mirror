@@ -1,69 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Sep 2015, #03; Mon, 14)
-Date: Wed, 16 Sep 2015 09:04:28 -0700
-Message-ID: <xmqqio7as643.fsf@gitster.mtv.corp.google.com>
-References: <16A99EC6028D41FFB0D36D4A1945B113@PhilipOakley>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-svn: cat-file memory usage
+Date: Wed, 16 Sep 2015 12:31:47 -0400
+Message-ID: <20150916163146.GA28401@sigill.intra.peff.net>
+References: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9CB@mail.accesssoftek.com>
+ <20150916115642.GA5104@sigill.intra.peff.net>
+ <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9CD@mail.accesssoftek.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Git List" <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Wed Sep 16 18:04:35 2015
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Victor Leschuk <vleschuk@accesssoftek.com>
+X-From: git-owner@vger.kernel.org Wed Sep 16 18:32:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcFCE-0001h8-HY
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 18:04:34 +0200
+	id 1ZcFd2-0000Lr-O5
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 18:32:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752826AbbIPQEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 12:04:30 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:34140 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752145AbbIPQEa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 12:04:30 -0400
-Received: by padhy16 with SMTP id hy16so213051871pad.1
-        for <git@vger.kernel.org>; Wed, 16 Sep 2015 09:04:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=OqeC5Bt1dsFgSeeUvEbRh2zSEkwWr7ud0iQDnIAfITg=;
-        b=zFPrwRQd4NP7x9NyWApP1acq4ksQWmjgwKjT2uZ6LnX9OwwoT8VFywsJpR+WbFphOJ
-         +DQMXJG1rlQHe+o3Yd9nb95n9PZO7B61QjOc902xnbU8QbaIkMOM2b2O2uqNHxaxgzMf
-         D7yujwI84Vvs/UevAWk2/6dTucjko8Sjwfy5Hi7lGuZ3aU8sZmPV2qBDRuZQJ+eN61ef
-         Wh4hhQmWBfltR2kQ7E2elj/Go3Ef/yIhTvQC44Tsr+Sh4C1wHtz03uJTp1hGt6eGmxwC
-         izqJxAqJReftCtbMdwAST/9qj+lL5Ttz6U3KEleANm/8PkPxLlKQX95FfKtl1RS/JGTP
-         x1FA==
-X-Received: by 10.67.1.106 with SMTP id bf10mr61461093pad.74.1442419469657;
-        Wed, 16 Sep 2015 09:04:29 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:150c:7d53:9693:493e])
-        by smtp.gmail.com with ESMTPSA id xd10sm28767253pab.25.2015.09.16.09.04.28
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 16 Sep 2015 09:04:28 -0700 (PDT)
-In-Reply-To: <16A99EC6028D41FFB0D36D4A1945B113@PhilipOakley> (Philip Oakley's
-	message of "Tue, 15 Sep 2015 20:08:42 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754437AbbIPQcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 12:32:10 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60047 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752984AbbIPQbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 12:31:55 -0400
+Received: (qmail 10415 invoked by uid 102); 16 Sep 2015 16:31:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 11:31:55 -0500
+Received: (qmail 19401 invoked by uid 107); 16 Sep 2015 16:31:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 12:31:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 12:31:47 -0400
+Content-Disposition: inline
+In-Reply-To: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9CD@mail.accesssoftek.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278035>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+On Wed, Sep 16, 2015 at 06:40:23AM -0700, Victor Leschuk wrote:
 
-> Oops..
-> ...
->> Shall I just rework/resend the V2 patch-up ($gmane/277829) that also
->> links to 'merge's' usage as a fresh patch (would be tonight UK)?
->
-> I now see that the full V2 patch is already there at 4934a96.
+> Unfortunately using patch didn't change the situation. I will run some
+> tests with alternate allocators (looking at jemalloc and tcmalloc). As
+> for alternate tools: as far as I understood svn2git calls 'git svn'
+> itself. So I assume it can't fix the memory usage or speed up clone
+> process... Correct me if I'm wrong.
 
-OK.  I was wondering what I missed.  4934a96^2 is a copy of your v2.
+I think there are actually several tools calling themselves svn2git.
+There was a C tool once upon a time, but it looks fairly inactive, and
+the top search hit for svn2git does turn up a git-svn wrapper. Like I
+said, I am not very up on the current state of affairs.
 
-> I'd mistakenly just compared your note to the slightly fuller V2 commit
-> message and in the morning rush hadn't had time to check.
->
-> Sorry for the noise.
+> Btw, what do you think of getting rid of batch mode for clone/fetch in
+> perl code. It really hardly has any impact on performance but reduces
+> memory usage a lot.
 
-Thanks for being careful.
+I'd worry there are other cases where it does impact performance (e.g.,
+perhaps smaller blobs), but I don't know enough about the git-svn
+internals to say much more.
+
+-Peff
