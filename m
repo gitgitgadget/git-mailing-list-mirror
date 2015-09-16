@@ -1,94 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 46/67] write_loose_object: convert to strbuf
-Date: Wed, 16 Sep 2015 17:39:52 -0400
-Message-ID: <20150916213952.GB19658@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 52/67] use sha1_to_hex_to() instead of strcpy
+Date: Wed, 16 Sep 2015 14:51:13 -0700
+Message-ID: <xmqq1tdyowxa.fsf@gitster.mtv.corp.google.com>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915160044.GT29753@sigill.intra.peff.net>
- <xmqq613aoy02.fsf@gitster.mtv.corp.google.com>
+	<20150915160535.GZ29753@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 23:40:13 2015
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 16 23:51:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcKR0-0002xi-42
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 23:40:10 +0200
+	id 1ZcKbn-0007jD-Rc
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 23:51:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753632AbbIPVkD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 17:40:03 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60405 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753619AbbIPVkA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 17:40:00 -0400
-Received: (qmail 29130 invoked by uid 102); 16 Sep 2015 21:40:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 16:40:00 -0500
-Received: (qmail 24054 invoked by uid 107); 16 Sep 2015 21:40:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 17:40:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 17:39:52 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq613aoy02.fsf@gitster.mtv.corp.google.com>
+	id S1752352AbbIPVvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 17:51:15 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33988 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751965AbbIPVvP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 17:51:15 -0400
+Received: by padhy16 with SMTP id hy16so220211324pad.1
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 14:51:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=VcZaeHOPDMpTYDOZ60Q2+n+/YOf3/ZEUY00RZ4yVCb4=;
+        b=Au/UJ02wtt327/EnGFrbYz6VhZ8JIt9ntj3LYB9NogSh4QYOyghr1Xe5m8/fWnVB8a
+         zMqNapX1MBFQPvPDvKJ3xt5lmFPBTlvoMza6v/UOpXxNSo/TEMqa+X1YsppUNl0giYKW
+         rFL8wFK9rvWo78H0VbVX/4KfsqvRz9uJ1+sgHP9s8bsAC+4wa3rFetUink/FVE+wFQKs
+         oQBe2tYtxBsV0iN0XrGUKTh1D17LWQbbaBeRs/eYYsTCJp3PT3DNuK5ZZRpZT0ingOHg
+         FP591IOBQs5mCNkpAVUdsMToeUz1rK3vgoszGFThK7XGlD8mvaivbDzAYpinHlNDyAOV
+         bXBw==
+X-Received: by 10.68.218.65 with SMTP id pe1mr63791892pbc.2.1442440274548;
+        Wed, 16 Sep 2015 14:51:14 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:150c:7d53:9693:493e])
+        by smtp.gmail.com with ESMTPSA id yk5sm31959pab.31.2015.09.16.14.51.13
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Sep 2015 14:51:13 -0700 (PDT)
+In-Reply-To: <20150915160535.GZ29753@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 15 Sep 2015 12:05:35 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278073>
 
-On Wed, Sep 16, 2015 at 02:27:57PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > -	memcpy(buffer, filename, dirlen);
-> > -	strcpy(buffer + dirlen, "tmp_obj_XXXXXX");
-> > -	fd = git_mkstemp_mode(buffer, 0444);
-> > +	strbuf_reset(tmp);
-> > +	strbuf_add(tmp, filename, dirlen);
-> > +	strbuf_addstr(tmp, "tmp_obj_XXXXXX");
-> > +	fd = git_mkstemp_mode(tmp->buf, 0444);
-> >  	if (fd < 0 && dirlen && errno == ENOENT) {
-> > -		/* Make sure the directory exists */
-> > -		memcpy(buffer, filename, dirlen);
-> > -		buffer[dirlen-1] = 0;
-> > -		if (mkdir(buffer, 0777) && errno != EEXIST)
-> > +		/*
-> > +		 * Make sure the directory exists; note that mkstemp will have
-> > +		 * put a NUL in our buffer, so we have to rewrite the path,
-> > +		 * rather than just chomping the length.
-> > +		 */
-> > +		strbuf_reset(tmp);
-> > +		strbuf_add(tmp, filename, dirlen - 1);
-> > +		if (mkdir(tmp->buf, 0777) && errno != EEXIST)
-> >  			return -1;
-> 
-> I had to read the patch three times before understanding what the
-> business with NUL in this comment is about.
-> 
-> The old code was doing the same thing, i.e. instead of attempting to
-> reuse the early part of buffer[] it copied the early part of
-> filename[] there again, exactly for the same reason, but it didn't
-> even explain why the copy was necessary.  Now the new code explains
-> why strbuf_setlen() is not used here pretty nicely.
+> diff --git a/builtin/merge-index.c b/builtin/merge-index.c
+> index 1d66111..4ed0a83 100644
+> --- a/builtin/merge-index.c
+> +++ b/builtin/merge-index.c
+> @@ -9,7 +9,7 @@ static int merge_entry(int pos, const char *path)
+>  {
+>  	int found;
+>  	const char *arguments[] = { pgm, "", "", "", path, "", "", "", NULL };
+> -	char hexbuf[4][60];
+> +	char hexbuf[4][GIT_SHA1_HEXSZ + 1];
+>  	char ownbuf[4][60];
 
-Exactly (I found this out the hard way by trying to clean that up, and
-learned something new about mkstemp).
+So you saved 19*4 = 76 bytes at runtime?
 
-Mentioning the NUL is probably unnecessarily confusing. That is what our
-gitmkstemp does, but mkstemp(3) says "undefined" on my system (POSIX
-does not mention it at all, but the NUL seems like a reasonable safety
-in case any callers ignore the return value).
-
-I've updated this to:
-
-       /*
-        * Make sure the directory exists; note that the contents
-        * of the buffer are undefined after mkstemp returns an
-        * error, so we have to rewrite the whole buffer from
-        * scratch.
-        */
-
--Peff
+Looks good ;-).
