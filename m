@@ -1,85 +1,66 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: translate 2 messages
-Date: Wed, 16 Sep 2015 19:33:37 +0200
-Message-ID: <1442424817-10972-1-git-send-email-ralf.thielow@gmail.com>
-Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
-	magnus.goerlitz@googlemail.com,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 16 19:33:54 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [Feature Request] git blame showing only revisions from git
+ rev-list --first-parent
+Date: Wed, 16 Sep 2015 13:37:04 -0400
+Message-ID: <20150916173704.GA2727@sigill.intra.peff.net>
+References: <CA+nPnMx1tkwTRckUjhg6LD055n-jzYDTKsH2sz-0PXPfJiy_tA@mail.gmail.com>
+ <20150911140133.GA14311@sigill.intra.peff.net>
+ <xmqqa8ss29tq.fsf@gitster.mtv.corp.google.com>
+ <xmqqsi6kzsgc.fsf@gitster.mtv.corp.google.com>
+ <20150912033054.GA30431@sigill.intra.peff.net>
+ <xmqqy4gcxcp4.fsf@gitster.mtv.corp.google.com>
+ <20150913100728.GA26562@sigill.intra.peff.net>
+ <CAPc5daUcwCferagupF+iy3gxxorfMyEMn0oFMRWBNjc0=2r4og@mail.gmail.com>
+ <20150915100538.GA21831@sigill.intra.peff.net>
+ <xmqqwpvrtbbh.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Stephen Connolly <stephen.alan.connolly@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 16 19:37:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcGaf-00062T-Ht
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 19:33:53 +0200
+	id 1ZcGe0-0001e9-RV
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 19:37:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752738AbbIPRdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 13:33:49 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:34338 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752648AbbIPRds (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 13:33:48 -0400
-Received: by wicfx3 with SMTP id fx3so83714360wic.1
-        for <git@vger.kernel.org>; Wed, 16 Sep 2015 10:33:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=7Y5gghemEeZ88zvQ3wgFvCtlQ9FGGowdOi45Zzsy+DY=;
-        b=FJtAM/iEv8ONUyzNpKuqRQItZ2hE3sGecxQA0GFu3eUbciiLqyaaEcjaXbz8KWDqRh
-         5C8iY+OodIB+GTszQgn7bXdg2gHJRPcTu8z5+kWXUryXhfZBo3J/G7z1oTxOWFypXEHL
-         ej+zGKYDGeo+1mxpFfMbPZlVrDEQn6EPzn02Si74bFrMQ5N+TyGimbDdaiPpIQgeBYxI
-         nUxOBfsgJ5JTNBYlMxt1kWXkOpV2kGKG97+quLEbE/axBDcJ8NtQ8xahfRX/h2M5n4Im
-         jKgl0xCnjFcbnlafQahgu5NCgtEzbQU+WyOQdrPvAFnzfaKLVW//EunVv24x9f43VCiB
-         zwsA==
-X-Received: by 10.194.110.37 with SMTP id hx5mr54351685wjb.149.1442424827574;
-        Wed, 16 Sep 2015 10:33:47 -0700 (PDT)
-Received: from localhost (cable-62-117-27-190.cust.telecolumbus.net. [62.117.27.190])
-        by smtp.gmail.com with ESMTPSA id bq7sm27597595wjc.31.2015.09.16.10.33.46
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 16 Sep 2015 10:33:46 -0700 (PDT)
-X-Mailer: git-send-email 2.6.0.rc1.199.g678474c
+	id S1752935AbbIPRhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 13:37:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60129 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752524AbbIPRhN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 13:37:13 -0400
+Received: (qmail 14523 invoked by uid 102); 16 Sep 2015 17:37:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 12:37:13 -0500
+Received: (qmail 20254 invoked by uid 107); 16 Sep 2015 17:37:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 13:37:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 13:37:04 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqwpvrtbbh.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278039>
 
-Translate 2 messages came from git.pot update in e447091
-(l10n: git.pot: v2.6.0 round 2 (3 improvements)).
+On Tue, Sep 15, 2015 at 06:14:26PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- po/de.po | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+> Jeff King <peff@peff.net> writes:
+> 
+> > It seems like nobody is actually that interested in what "blame
+> > --first-parent --reverse" does in the first place, though, and there's
+> > no reason for its complexity to hold up vanilla --first-parent. So what
+> > do you think of:
+> 
+> I like the part that explicitly disables the combination of the two
+> ;-)
 
-diff --git a/po/de.po b/po/de.po
-index e5b523d..c9b4d16 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -10530,9 +10530,8 @@ msgstr ""
- "hash[=<n>]] [--abbrev[=<n>]] [--tags] [--heads] [--] [<Muster>...] "
- 
- #: builtin/show-ref.c:11
--#, fuzzy
- msgid "git show-ref --exclude-existing[=<pattern>] < <ref-list>"
--msgstr "git show-ref --exclude-existing[=Muster] < ref-list"
-+msgstr "git show-ref --exclude-existing[=<Muster>] < <Referenzliste>"
- 
- #: builtin/show-ref.c:170
- msgid "only show tags (can be combined with heads)"
-@@ -10761,9 +10760,8 @@ msgid "replace the tag if exists"
- msgstr "das Tag ersetzen, wenn es existiert"
- 
- #: builtin/tag.c:609 builtin/update-ref.c:368
--#, fuzzy
- msgid "create a reflog"
--msgstr "create_reflog"
-+msgstr "Reflog erstellen"
- 
- #: builtin/tag.c:611
- msgid "Tag listing options"
--- 
-2.6.0.rc1.199.g678474c
+Meaning you didn't like the other part, or that you'll pick up the patch
+as-is? :)
+
+-Peff
