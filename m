@@ -1,117 +1,95 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: git rebase -i failing due to phantom index.lock
-Date: Wed, 16 Sep 2015 22:08:27 +0200
-Message-ID: <CAOxFTcwTOJjRnA=7gR4GP2u0bsDCRv+j8PEw0c8Nv-nVVrynTQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 36/67] remote-ext: simplify git pkt-line generation
+Date: Wed, 16 Sep 2015 13:18:03 -0700
+Message-ID: <xmqqfv2ep18k.fsf@gitster.mtv.corp.google.com>
+References: <20150915152125.GA27504@sigill.intra.peff.net>
+	<20150915155210.GJ29753@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 16 22:08:54 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 16 22:18:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcJ0f-0004r0-Hh
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 22:08:53 +0200
+	id 1ZcJ9i-0007VB-98
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 22:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752435AbbIPUIt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Sep 2015 16:08:49 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:38422 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752002AbbIPUIs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Sep 2015 16:08:48 -0400
-Received: by wiclk2 with SMTP id lk2so541692wic.1
-        for <git@vger.kernel.org>; Wed, 16 Sep 2015 13:08:46 -0700 (PDT)
+	id S1752663AbbIPUSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 16:18:07 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:32936 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751830AbbIPUSG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 16:18:06 -0400
+Received: by pacex6 with SMTP id ex6so218696944pac.0
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 13:18:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Vj0QeSwxLuJwIPh8+lHrc3lT3/T/nRWEVlIp7EeVaS8=;
-        b=u25OYZD/I+Db4KlRh8OTuY6mHlqam6RpFL42M4XuRfWIEN9qs7Gbki20VKVbY8tasK
-         FEgVuJZIvnCWIiHZKFLEsJ8zkmiVILufEt68hiBTj7D2mipTqopsqYavs3Vu9a0Vzs66
-         3aFzHqgWJWfj7kVkHlynoixSJFQsGjjUKBpWpLnWxHqJ22KV9Jvz3A6C4fta4f/RGRJs
-         DESZ5x3rQ9W4glOwv4kwY/ucAFDbB39cGuHdAx8vIeHsortzNDmTP4XMjfUKqbETt50z
-         3ElLqIGoDrogEr/ArODbPAn8AkqwcauCh46j8PaFmssLm/uSA+TWad58E4yxh/cqy04G
-         oBYQ==
-X-Received: by 10.194.110.132 with SMTP id ia4mr25343234wjb.103.1442434126777;
- Wed, 16 Sep 2015 13:08:46 -0700 (PDT)
-Received: by 10.194.101.100 with HTTP; Wed, 16 Sep 2015 13:08:27 -0700 (PDT)
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=BQVzXLItNxfwN2c6L64wUsVKvR4CI3rhwC1xXlCrQU0=;
+        b=NcjaYqZ0xAdQExBbm7JhBTg5V7/IC+vJQ2H9d0JmCUer8TcOLi5ZGq3Jr4SSQtEE5u
+         tjKOrVsWF34yWmyBvKiAyZ15cdXo9vTM/X4NJFmf/rQRHBGQsUn367RFDB9Hou33Kbhn
+         IaAYr2co0eBh2w00QNZxXf3Zh5k2M8aAYxGCM58jyrImc5lGpTyyEUVqGIe3R81oLNOS
+         Dhx+fZGO+ybMkIT9Tp7S3t68VvgA+v625fQdqbM4r7nk6i3bHTnsrwu6AY9+f6v4bmJG
+         0stWoksBcTZZDwPe3Z2tUSFI7/nM4j6zYKPWbyeHLfe6fdxtNe8MKayvhHR1a4HSwFT4
+         22yQ==
+X-Received: by 10.68.109.97 with SMTP id hr1mr62946786pbb.110.1442434685670;
+        Wed, 16 Sep 2015 13:18:05 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:150c:7d53:9693:493e])
+        by smtp.gmail.com with ESMTPSA id l16sm11875423pbq.22.2015.09.16.13.18.04
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Sep 2015 13:18:04 -0700 (PDT)
+In-Reply-To: <20150915155210.GJ29753@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 15 Sep 2015 11:52:10 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278059>
 
-Hello all,
+Jeff King <peff@peff.net> writes:
 
-I've recently started to note an issue with git rebase -i failing with
-alarming frequency, especially on one of my repositories, claiming
-that index.lock could not be created because it exists, even though it
-doesn't and nothing else seems to be locking the index. The rebase
-bombs more usually during the initial checkout than during any other
-of the steps.
+>  static void send_git_request(int stdin_fd, const char *serv, const char *repo,
+>  	const char *vhost)
+>  {
+> -	size_t bufferspace;
+> -	size_t wpos = 0;
+> -	char *buffer;
+> +	struct strbuf buffer = STRBUF_INIT;
+>  
+> -	/*
+> -	 * Request needs 12 bytes extra if there is vhost (xxxx \0host=\0) and
+> -	 * 6 bytes extra (xxxx \0) if there is no vhost.
+> -	 */
+> +	/* Generate packet with a dummy size header */
+> +	strbuf_addf(&buffer, "0000%s %s%c", serv, repo, 0);
+>  	if (vhost)
+> -		bufferspace = strlen(serv) + strlen(repo) + strlen(vhost) + 12;
+> -	else
+> -		bufferspace = strlen(serv) + strlen(repo) + 6;
+> +		strbuf_addf(&buffer, "host=%s%c", vhost, 0);
+>  
+> -	if (bufferspace > 0xFFFF)
 
-The problem is somewhat randomly reproducible, as it doesn't happen
-100% of the time. It also seems to happen more consistently with more
-recent git versions, or at least with my custom built git than with
-the distro-shipped one.
+> +	/* Now go back and fill in the size */
+> +	if (buffer.len > 0xFFFF)
+>  		die("Request too large to send");
+> +	xsnprintf(buffer.buf, buffer.alloc, "%04x", (unsigned)buffer.len);
 
-A somewhat problematic git bisect has allowed me to identify commit
-03b86647722f11ccc321cd7279aa49b811d17cc2 as the first bad commit.
+So we now write "0000something something\0host=something" into the buffer
+and then try to overwrite the first four bytes?  Does this xsnprintf()
+stop after writing the four hexadecimal, or does it clobber the first
+byte of the payload (i.e. copy of serv[0]) by a NUL termination?
 
-The problem has all signs of a timing issue, which I'm having problems
-isolating, although simply providing a timeout on the index lock calls
-seems to fix it. Making git stall instead of die on error allowed me
-to obtain this backtrace which I suspect will not be particularly
-useful:
-
-#0 0x00000000004c4666 in unable_to_lock_message
-(path=3Dpath@entry=3D0x1bad940 ".git/index", err=3D<optimized out>,
-buf=3Dbuf@entry=3D0x7ffd3b990900) at lockfile.c:158
-#1 0x00000000004c46c6 in unable_to_lock_die (path=3Dpath@entry=3D0x1bad=
-940
-".git/index", err=3D<optimized out>) at lockfile.c:167
-#2 0x00000000004c480b in hold_lock_file_for_update_timeout
-(lk=3Dlk@entry=3D0x1bd7be0, path=3D0x1bad940 ".git/index", flags=3D<opt=
-imized
-out>, timeout_ms=3Dtimeout_ms@entry=3D0) at lockfile.c:177
-#3 0x00000000004e6e2a in hold_lock_file_for_update (flags=3D1,
-path=3D<optimized out>, lk=3D0x1bd7be0) at lockfile.h:165
-#4 hold_locked_index (lk=3Dlk@entry=3D0x1bd7be0,
-die_on_error=3Ddie_on_error@entry=3D1) at read-cache.c:1411
-#5 0x0000000000420cb0 in merge_working_tree (old=3D0x7ffd3b990a20,
-old=3D0x7ffd3b990a20, new=3D0x7ffd3b990a00, new=3D0x7ffd3b990a00,
-writeout_error=3D0x7ffd3b9909c0, opts=3D0x7ffd3b992a31)
-at builtin/checkout.c:471
-#6 switch_branches (new=3D0x7ffd3b990a00, opts=3D0x7ffd3b992a31) at
-builtin/checkout.c:826
-#7 checkout_branch (new=3D0x7ffd3b990a00, opts=3D0x7ffd3b992a31) at
-builtin/checkout.c:1123
-#8 cmd_checkout (argc=3D<optimized out>, argv=3D<optimized out>,
-prefix=3D<optimized out>) at builtin/checkout.c:1273
-#9 0x0000000000405e7e in run_builtin (argv=3D0x7ffd3b992480, argc=3D2,
-p=3D0x7acab0 <commands+336>) at git.c:350
-#10 handle_builtin (argc=3D2, argv=3D0x7ffd3b992480) at git.c:535
-#11 0x0000000000405021 in run_argv (argv=3D0x7ffd3b9922d8,
-argcp=3D0x7ffd3b9922bc) at git.c:581
-#12 main (argc=3D2, av=3D<optimized out>) at git.c:689
-
-Additional information: I have the bash git prompt enabled, I do not
-have anything else accessing that repository at the same time, and the
-repository is =E2=80=9Cspread out=E2=80=9D across multiple workdirs cre=
-ated with git
-new-workdir, each with a different branch checked out. It is also
-usually accessed under a symlink (cd ~/shortcut/repo/branch rather
-than ~/full/path/to/repo/branch). Running Debian unstable with Linux
-4.1.0 on an SSD-backed ext4 partition mounted with data=3Dordered. I
-can't thnk of any other detail that might be even just remotely
-involved in this odd issue. Any suggestions on how to debug it are
-welcome.
-
-Best regards,
-
---=20
-Giuseppe "Oblomov" Bilotta
+>  
+> +	if (write_in_full(stdin_fd, buffer.buf, buffer.len) < 0)
+>  		die_errno("Failed to send request");
+>  
+> +	strbuf_release(&buffer);
+>  }
+>  
+>  static int run_child(const char *arg, const char *service)
