@@ -1,195 +1,134 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 10/67] mailsplit: make PATH_MAX buffers dynamic
-Date: Wed, 16 Sep 2015 06:25:24 -0400
-Message-ID: <20150916102524.GA28002@sigill.intra.peff.net>
+Subject: Re: [PATCH 11/67] trace: use strbuf for quote_crnl output
+Date: Wed, 16 Sep 2015 06:31:14 -0400
+Message-ID: <20150916103114.GE13966@sigill.intra.peff.net>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915152806.GJ29753@sigill.intra.peff.net>
- <CAPig+cQ+TvT2_ZrbbYFQOdjDNs+b-ADJb+EbKVTP-HaCghjCow@mail.gmail.com>
- <20150916101418.GD13966@sigill.intra.peff.net>
+ <20150915152843.GK29753@sigill.intra.peff.net>
+ <CAPig+cS3WFg1JtN7WU-SFSbT3a2L3o7wiZr8OMGJ5E3As00q3w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Git List <git@vger.kernel.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 12:25:45 2015
+X-From: git-owner@vger.kernel.org Wed Sep 16 12:31:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zc9uI-0006xp-VY
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 12:25:43 +0200
+	id 1Zc9zs-0005or-J7
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 12:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754750AbbIPKZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 06:25:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59847 "HELO cloud.peff.net"
+	id S1754175AbbIPKbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 06:31:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59853 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754533AbbIPKZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 06:25:33 -0400
-Received: (qmail 15928 invoked by uid 102); 16 Sep 2015 10:25:33 -0000
+	id S1753861AbbIPKbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 06:31:23 -0400
+Received: (qmail 16598 invoked by uid 102); 16 Sep 2015 10:31:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 05:25:33 -0500
-Received: (qmail 16576 invoked by uid 107); 16 Sep 2015 10:25:36 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 05:31:24 -0500
+Received: (qmail 16606 invoked by uid 107); 16 Sep 2015 10:31:26 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 06:25:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 06:25:24 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 06:31:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 06:31:14 -0400
 Content-Disposition: inline
-In-Reply-To: <20150916101418.GD13966@sigill.intra.peff.net>
+In-Reply-To: <CAPig+cS3WFg1JtN7WU-SFSbT3a2L3o7wiZr8OMGJ5E3As00q3w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278016>
 
-On Wed, Sep 16, 2015 at 06:14:18AM -0400, Jeff King wrote:
+On Tue, Sep 15, 2015 at 08:55:58PM -0400, Eric Sunshine wrote:
 
-> I guess we could get away with always calling free() right before
-> assigning (the equivalent of strbuf_reset()), and then rely on exiting
-> the loop to "out" to do the final free. And then the result (versus the
-> original code, not my patch) would look like:
+> On Tue, Sep 15, 2015 at 11:28 AM, Jeff King <peff@peff.net> wrote:
+> > When we output GIT_TRACE_SETUP paths, we quote any
+> > meta-characters. But our buffer to hold the result is only
+> > PATH_MAX bytes, and we could double the size of the input
+> > path (if every character needs quoted). We could use a
+> 
+> s/quoted/to be &/ ...or... s/quoted/quoting/
 
-And here is the whole patch converted to that style. I'm planning to go
-with this, as the resulting diff is much smaller and much more clear
-that we are touching only the allocations.
+Thanks, fixed.
 
-I _hope_ the result is pretty easy to understand. There is some subtlety
-to the loop assumptions:
+> >  static const char *quote_crnl(const char *path)
+> >  {
+> > -       static char new_path[PATH_MAX];
+> > +       static struct strbuf new_path = STRBUF_INIT;
+> >         const char *p2 = path;
+> > -       char *p1 = new_path;
+> 
+> It's a little sad that this leaves a variable named 'p2' when there is
+> no corresponding 'p1'. Would this deserve a cleanup patch which
+> renames 'p2' to 'p' or do we not care enough?
 
- - on entering, the pointer is NULL or an allocated buffer to be
-   recycled; either way, free() is OK
-
- - on leaving, the pointer is either NULL (if we never ran the loop) or
-   a buffer to be freed. The free() at the end is necessary to handle
-   this.
-
-That is not too complicated, but it is not an idiom we use elsewhere
-(whereas recycled strbufs are). I can switch the whole thing to strbufs
-if that's the direction we want to go.
+Yeah, you're right. The original had symmetry in p1 and p2, in that it
+moved them forward together. Now that symmetry is gone, and I wonder if
+the simplest cleanup is to just drop "p2" altogether and advance the
+"path" source pointer? Like this:
 
 -- >8 --
-Subject: [PATCH] mailsplit: make PATH_MAX buffers dynamic
+Subject: [PATCH] trace: use strbuf for quote_crnl output
 
-There are several static PATH_MAX-sized buffers in
-mailsplit, along with some questionable uses of sprintf.
-These are not really of security interest, as local
-mailsplit pathnames are not typically under control of an
-attacker, and you could generally only overflow a few
-numbers at the end of a path that approaches PATH_MAX (a
-longer path would choke mailsplit long before). But it does
-not hurt to be careful, and as a bonus we lift some limits
-for systems with too-small PATH_MAX varibles.
+When we output GIT_TRACE_SETUP paths, we quote any
+meta-characters. But our buffer to hold the result is only
+PATH_MAX bytes, and we could double the size of the input
+path (if every character needs quoting). We could use a
+2*PATH_MAX buffer, if we assume the input will never be more
+than PATH_MAX. But it's easier still to just switch to a
+strbuf and not worry about whether the input can exceed
+PATH_MAX or not.
+
+The original copied the "p2" pointer to "p1", advancing
+both. Since this gets rid of "p1", let's also drop "p2",
+whose name is now confusing. We can just advance the
+original "path" pointer.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/mailsplit.c | 34 +++++++++++++++++++++++-----------
- 1 file changed, 23 insertions(+), 11 deletions(-)
+ trace.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-index 9de06e3..104277a 100644
---- a/builtin/mailsplit.c
-+++ b/builtin/mailsplit.c
-@@ -98,30 +98,37 @@ static int populate_maildir_list(struct string_list *list, const char *path)
+diff --git a/trace.c b/trace.c
+index 7393926..4aeea60 100644
+--- a/trace.c
++++ b/trace.c
+@@ -277,25 +277,24 @@ void trace_performance_fl(const char *file, int line, uint64_t nanos,
+ 
+ static const char *quote_crnl(const char *path)
  {
- 	DIR *dir;
- 	struct dirent *dent;
--	char name[PATH_MAX];
-+	char *name = NULL;
- 	char *subs[] = { "cur", "new", NULL };
- 	char **sub;
-+	int ret = -1;
+-	static char new_path[PATH_MAX];
+-	const char *p2 = path;
+-	char *p1 = new_path;
++	static struct strbuf new_path = STRBUF_INIT;
  
- 	for (sub = subs; *sub; ++sub) {
--		snprintf(name, sizeof(name), "%s/%s", path, *sub);
-+		free(name);
-+		name = xstrfmt("%s/%s", path, *sub);
- 		if ((dir = opendir(name)) == NULL) {
- 			if (errno == ENOENT)
- 				continue;
- 			error("cannot opendir %s (%s)", name, strerror(errno));
--			return -1;
-+			goto out;
- 		}
+ 	if (!path)
+ 		return NULL;
  
- 		while ((dent = readdir(dir)) != NULL) {
- 			if (dent->d_name[0] == '.')
- 				continue;
--			snprintf(name, sizeof(name), "%s/%s", *sub, dent->d_name);
-+			free(name);
-+			name = xstrfmt("%s/%s", *sub, dent->d_name);
- 			string_list_insert(list, name);
- 		}
- 
- 		closedir(dir);
- 	}
- 
--	return 0;
-+	ret = 0;
+-	while (*p2) {
+-		switch (*p2) {
+-		case '\\': *p1++ = '\\'; *p1++ = '\\'; break;
+-		case '\n': *p1++ = '\\'; *p1++ = 'n'; break;
+-		case '\r': *p1++ = '\\'; *p1++ = 'r'; break;
++	strbuf_reset(&new_path);
 +
-+out:
-+	free(name);
-+	return ret;
++	while (*path) {
++		switch (*path) {
++		case '\\': strbuf_addstr(&new_path, "\\\\"); break;
++		case '\n': strbuf_addstr(&new_path, "\\n"); break;
++		case '\r': strbuf_addstr(&new_path, "\\r"); break;
+ 		default:
+-			*p1++ = *p2;
++			strbuf_addch(&new_path, *path);
+ 		}
+-		p2++;
++		path++;
+ 	}
+-	*p1 = '\0';
+-	return new_path;
++	return new_path.buf;
  }
  
- static int maildir_filename_cmp(const char *a, const char *b)
-@@ -148,8 +155,7 @@ static int maildir_filename_cmp(const char *a, const char *b)
- static int split_maildir(const char *maildir, const char *dir,
- 	int nr_prec, int skip)
- {
--	char file[PATH_MAX];
--	char name[PATH_MAX];
-+	char *file = NULL;
- 	FILE *f = NULL;
- 	int ret = -1;
- 	int i;
-@@ -161,7 +167,11 @@ static int split_maildir(const char *maildir, const char *dir,
- 		goto out;
- 
- 	for (i = 0; i < list.nr; i++) {
--		snprintf(file, sizeof(file), "%s/%s", maildir, list.items[i].string);
-+		char *name;
-+
-+		free(file);
-+		file = xstrfmt("%s/%s", maildir, list.items[i].string);
-+
- 		f = fopen(file, "r");
- 		if (!f) {
- 			error("cannot open mail %s (%s)", file, strerror(errno));
-@@ -173,8 +183,9 @@ static int split_maildir(const char *maildir, const char *dir,
- 			goto out;
- 		}
- 
--		sprintf(name, "%s/%0*d", dir, nr_prec, ++skip);
-+		name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
- 		split_one(f, name, 1);
-+		free(name);
- 
- 		fclose(f);
- 		f = NULL;
-@@ -184,6 +195,7 @@ static int split_maildir(const char *maildir, const char *dir,
- out:
- 	if (f)
- 		fclose(f);
-+	free(file);
- 	string_list_clear(&list, 1);
- 	return ret;
- }
-@@ -191,7 +203,6 @@ out:
- static int split_mbox(const char *file, const char *dir, int allow_bare,
- 		      int nr_prec, int skip)
- {
--	char name[PATH_MAX];
- 	int ret = -1;
- 	int peek;
- 
-@@ -218,8 +229,9 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
- 	}
- 
- 	while (!file_done) {
--		sprintf(name, "%s/%0*d", dir, nr_prec, ++skip);
-+		char *name = xstrfmt("%s/%0*d", dir, nr_prec, ++skip);
- 		file_done = split_one(f, name, allow_bare);
-+		free(name);
- 	}
- 
- 	if (f != stdin)
+ /* FIXME: move prefix to startup_info struct and get rid of this arg */
 -- 
 2.6.0.rc2.408.ga2926b9
