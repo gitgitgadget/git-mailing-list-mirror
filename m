@@ -1,93 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 15/67] convert trivial sprintf / strcpy calls to xsnprintf
-Date: Wed, 16 Sep 2015 16:35:30 -0400
-Message-ID: <20150916203530.GD3915@sigill.intra.peff.net>
-References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915153637.GO29753@sigill.intra.peff.net>
- <CAPig+cR9n=hT3F-0uDbJT_Z9REe83-kFKR5XB6pVrHRe0Z14eA@mail.gmail.com>
- <20150916094814.GB13966@sigill.intra.peff.net>
- <xmqqh9muql2c.fsf@gitster.mtv.corp.google.com>
- <20150916185256.GA2654@sigill.intra.peff.net>
- <xmqq1tdyqj2l.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kb=dR3omuf1ji8AK9Dh0VCW8pWJ-twWkXXHdDV96RA2QA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v7 1/3] worktree: add top-level worktree.c
+Date: Wed, 16 Sep 2015 16:42:15 -0400
+Message-ID: <CAPig+cQ9QpGUZCaZXG3avChVdpXGoKXbKAc9vYUCFWMSUE-B4g@mail.gmail.com>
+References: <1441402769-35897-1-git-send-email-rappazzo@gmail.com>
+	<1441402769-35897-2-git-send-email-rappazzo@gmail.com>
+	<CAPig+cQRx-uKZnnx2O0pG34HkcEdg1GbGNFd9PHdw+m0O3aJEA@mail.gmail.com>
+	<CANoM8SWP9YrZoUx5w9Do18uZf=5RrCV_ShvyaPQF4=9-vuFVbg@mail.gmail.com>
+	<xmqqwpvsx5ie.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Mike Rappazzo <rappazzo@gmail.com>,
+	David Turner <dturner@twopensource.com>,
 	Git List <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 22:35:45 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 16 22:42:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcJQd-0002Ix-8j
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 22:35:43 +0200
+	id 1ZcJX8-0001cY-Om
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 22:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818AbbIPUfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 16:35:39 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60334 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752791AbbIPUfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 16:35:38 -0400
-Received: (qmail 25071 invoked by uid 102); 16 Sep 2015 20:35:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 15:35:38 -0500
-Received: (qmail 23097 invoked by uid 107); 16 Sep 2015 20:35:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 16:35:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 16:35:30 -0400
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kb=dR3omuf1ji8AK9Dh0VCW8pWJ-twWkXXHdDV96RA2QA@mail.gmail.com>
+	id S1752740AbbIPUmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 16:42:18 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:35301 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752652AbbIPUmR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 16:42:17 -0400
+Received: by qgt47 with SMTP id 47so182525014qgt.2
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 13:42:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=T/s6Af2C6XgLrcZ53oxV9uApppThHkhowNwhOxSb8NY=;
+        b=lB/5s0w9bE8W6QK+VRXdpPXk7+AupCzaHeUGrUmOVR5j7yMF6rwHb7ab4fRCy/BaOI
+         egjnSM13G0QOXeMNe5f4YpaletgfHygVcrivfpsRWJzlzCvu8qxO/FcnxuUVDaX2V57K
+         ZZn595NMrCLbxlSCCaUMCyjukLcOvBGHhe3gP2sDPd5a4puuCqvIiM6s/bCNG59apETw
+         ffU4WuWUNdW3l3JqzKX9KxQJBujPN/4xpGx/HJ+fjGuUc5qGAycxZ9Iifd1+3Wvo1+K5
+         32241JIBXcC8uv/Vczm9zadzE0V3i/0OursMHz2fQ/5Sa3uypk4gjmMUanjnR7AdWbar
+         e4LQ==
+X-Received: by 10.140.93.68 with SMTP id c62mr45976748qge.54.1442436136071;
+ Wed, 16 Sep 2015 13:42:16 -0700 (PDT)
+Received: by 10.55.180.130 with HTTP; Wed, 16 Sep 2015 13:42:15 -0700 (PDT)
+In-Reply-To: <xmqqwpvsx5ie.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: LTeOhgozhxQDHRYqyBYk__9_cAc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278065>
 
-On Wed, Sep 16, 2015 at 12:19:10PM -0700, Stefan Beller wrote:
+On Mon, Sep 14, 2015 at 1:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Mike Rappazzo <rappazzo@gmail.com> writes:
+>> On Sat, Sep 12, 2015 at 10:39 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>>> +struct worktree_list *get_worktree_list()
+>>>
+>>> Can we be more concise and call this get_worktrees()?
+>>
+>> I prefer 'get_worktree_list' because I also added the 'get_worktree'
+>> function, and I wanted to differentiate
+>> the function names.
+>
+> I'd say that plural can be differentiating enough; it probably is a
+> matter of taste.  How often do external callers want to call
+> get_worktree() and not get_worktrees()?
 
-> > That will make future readers wonder "Is this a typo, and if it is,
-> > which index is a mistake I can fix?" and may lead to an unnecessary
-> > confusion.  I do not want to see a correctly written
-> >
-> >         xsnprintf(ownbuf[stage], sizeof(ownbuf[0]), "%o", ...);
-> >
-> > turned into
-> >
-> >         xsnprintf(ownbuf[0], sizeof(ownbuf[0]), "%o", ...);
-> >
-> > out of such a confusion.
-> 
-> So we could just not use the bracket notation, but the pointer then?
-> 
->     xsnprintf(ownbuf[stage], sizeof(*ownbuf), "%o", ...);
+The shorter name, get_worktrees(), also has the minor benefit of
+concision, similar to the way we use short variable names (i, j, n, p,
+s) to help reveal and (often) make code structure obvious at a glance;
+whereas long, noisy, wordy names tend to obscure code structure.
 
-IMHO that is even more confusing, as I expect sizeof(*ownbuf) to
-generally be dereferencing a pointer to a struct, and we would be
-writing to "ownbuf". There's not anything _wrong_ with what you've
-written, it's just using a syntax that in my mind generally applies to a
-different idiom, and I'd wonder if the writer got it wrong.
+The "_list" suffix doesn't add any value over the shorter pluralizing
+"s"; in fact, it may be (very, very slightly) detrimental in implying
+too strongly that the return value must be a linked list.
 
-> IMHO that would reasonably well tell you that we just care about the
-> size of one element there.
-> 
-> A funny thought:
-> 
->      xsnprintf(ownbuf[stage], sizeof(ownbuf[-1]), "%o", ...);
-> 
-> should work as well as any reader would question the sanity
-> of a negative index.
+>>>> +struct worktree {
+>>>> +       char *path;
+>>>> +       char *git_dir;
+>>>> +       char *head_ref;
+>>>> +       unsigned char head_sha1[20];
+>>>> +       int is_detached;
+>>>> +       int is_bare;
+>>>> +};
+>>>> +
+>>>> +struct worktree_list {
+>>>> +       struct worktree *worktree;
+>>>> +       struct worktree_list *next;
+>>>> +};
+>>>
+>>> I don't care too strongly, but an alternate approach (which I probably
+>>> would have taken) would be to have get_worktrees() simply return an
+>>> array of 'struct worktree' objects, hence no need for the additional
+>>> 'struct worktree_list'.
+>
+> I do not think we are using this to hold thousands of worktree
+> objects in core.  Adding "struct worktree *next" pointer to the
+> worktree object itself would probably be sufficient for the need of
+> codepaths that want to enumerate and iterate over them and that
+> would be another way to lose the extra structure.
 
-I'm not sure what the standard would have to say on that, as the
-expression invokes undefined behavior (but of course we're not really
-using the expression, only asking for the size). I tried to find any
-mention of non-constant indices with sizeof() in the standard, but
-couldn't.
-
-I think at this point I'm inclined to switch it back to the original
-sizeof(ownbuf[stage]), and we can deal with this if and when any
-compiler actually complains.
-
--Peff
+I was more concerned with the inherent (and, in this case,
+unnecessary) complexity of a linked list. Being able to drop the extra
+'worktree_list' structure was just an added benefit of moving to the
+simpler array approach.
