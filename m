@@ -1,70 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Feature Request] git blame showing only revisions from git rev-list --first-parent
-Date: Tue, 15 Sep 2015 18:14:26 -0700
-Message-ID: <xmqqwpvrtbbh.fsf@gitster.mtv.corp.google.com>
-References: <CA+nPnMx1tkwTRckUjhg6LD055n-jzYDTKsH2sz-0PXPfJiy_tA@mail.gmail.com>
-	<20150911140133.GA14311@sigill.intra.peff.net>
-	<xmqqa8ss29tq.fsf@gitster.mtv.corp.google.com>
-	<xmqqsi6kzsgc.fsf@gitster.mtv.corp.google.com>
-	<20150912033054.GA30431@sigill.intra.peff.net>
-	<xmqqy4gcxcp4.fsf@gitster.mtv.corp.google.com>
-	<20150913100728.GA26562@sigill.intra.peff.net>
-	<CAPc5daUcwCferagupF+iy3gxxorfMyEMn0oFMRWBNjc0=2r4og@mail.gmail.com>
-	<20150915100538.GA21831@sigill.intra.peff.net>
+Subject: Re: [PATCH] strtoul_ui: actually report error in case of negative input
+Date: Tue, 15 Sep 2015 18:17:03 -0700
+Message-ID: <xmqqsi6ftb74.fsf@gitster.mtv.corp.google.com>
+References: <1442181636-27821-1-git-send-email-max@max630.net>
+	<vpqr3m1seap.fsf@anie.imag.fr> <20150914202647.GA7806@wheezy.local>
+	<vpq4miwfa78.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Stephen Connolly <stephen.alan.connolly@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 16 03:14:46 2015
+Cc: Max Kirillov <max@max630.net>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 16 03:17:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zc1J7-0001Cn-PF
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 03:14:46 +0200
+	id 1Zc1LT-0004Ps-JE
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 03:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752634AbbIPBOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2015 21:14:40 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:33913 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751806AbbIPBO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2015 21:14:28 -0400
-Received: by padhy16 with SMTP id hy16so191971950pad.1
-        for <git@vger.kernel.org>; Tue, 15 Sep 2015 18:14:28 -0700 (PDT)
+	id S1752167AbbIPBRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2015 21:17:07 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33584 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751942AbbIPBRF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2015 21:17:05 -0400
+Received: by pacex6 with SMTP id ex6so192399540pac.0
+        for <git@vger.kernel.org>; Tue, 15 Sep 2015 18:17:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=lkU5BpXC62YvLcV02LhoDK0en267J0jEaGGzmEAqNRs=;
-        b=M/kM+wvSb18wQ2VAJ96oEk90Jx7w2Hug733Tg+hVW94nMaNSP2NQJhaEoPbDIG01Q8
-         XJ+7+VvnEfHL8JrVW8NWTr3D/koWx3X0V6KhqYNFi1j5bUintqKk9ZzZa9o/NYfqh+0m
-         q/3ZIP3YJ3BDY+zrIWByxe4i4KJTfSHSeYQkEmJKJZnCs3yb5xBlOFQKZ2Oq6rr/X0rz
-         AGdv6P0E0yRbEp3ixdYajGCHPZtSAEmSx/6OOC6AzdQDDMRzEb5oQO+e30AQgxofbUl2
-         vByZCTnpEWPmRieKeXsryGlp0Jl3l2kKtA6TWZWeEtUgzP9rYryxhwpWxnSYtaVnJjq9
-         z/KQ==
-X-Received: by 10.66.157.72 with SMTP id wk8mr52965633pab.132.1442366068285;
-        Tue, 15 Sep 2015 18:14:28 -0700 (PDT)
+        bh=fASBMpiol0eaNnSEO1WXLDfUzElo2hDJ+qrpz0xZZMw=;
+        b=XxqiRJcnKZsUX6slUb91W16p7JadoIFP+J/wya/XeJYeixUkL4V2yd14ohNEpG8bRC
+         Sx2fRTWpu4mAF1HYX4Vm0dTsB2/lCSFPRhr1LdOFL59uUqtke6mvwGq/vmiGrZ5BIZj/
+         i8d0SMEXU3e5flrgLLrsjBtQ80YolEe5OMzjeAXcA4N1xITJb3x3c3539lWMVGnvlzHg
+         pnySPaD8R8aeDOWdfZUO5KU1eEFNM8PhbByE1H23eBzYXRoqnhfwsCu+n21Vaz5WYgaR
+         ZJ/4+gpxWQhvcC4XwxTIZWnSB7l5q8/Dpg+34XRsJ+1fF6E0uuht0TaIHhrVECNG0muL
+         o9hA==
+X-Received: by 10.68.194.73 with SMTP id hu9mr54862070pbc.146.1442366225369;
+        Tue, 15 Sep 2015 18:17:05 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:150c:7d53:9693:493e])
-        by smtp.gmail.com with ESMTPSA id x6sm24350090pbt.3.2015.09.15.18.14.27
+        by smtp.gmail.com with ESMTPSA id gx11sm24281490pbd.82.2015.09.15.18.17.04
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 15 Sep 2015 18:14:27 -0700 (PDT)
-In-Reply-To: <20150915100538.GA21831@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 15 Sep 2015 06:05:39 -0400")
+        Tue, 15 Sep 2015 18:17:04 -0700 (PDT)
+In-Reply-To: <vpq4miwfa78.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	15 Sep 2015 08:50:03 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/277991>
 
-Jeff King <peff@peff.net> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> It seems like nobody is actually that interested in what "blame
-> --first-parent --reverse" does in the first place, though, and there's
-> no reason for its complexity to hold up vanilla --first-parent. So what
-> do you think of:
+> Not just the return type (which is the error status), but also the type
+> of the result argument indeed. It's not clear to me whether this is
+> intentional (09f2825 (git-grep: don't use sscanf, 2007-03-12) introduced
+> it, the commit message doesn't help). I first read strtoul_ui as
+> "strtoul with a better UI (user interface)", but maybe the name was
+> meant to say "a fuction that uses strtoul and returns an ui (unsigned
+> int)".
 
-I like the part that explicitly disables the combination of the two
-;-)
+Just for this part.  Yes, ui does not mean user interface but "we
+are grabbing an unsigned int and as its internal implementation we
+happen to use strtoul" is where the name comes from.
+
+> I went through the thread quickly, my understanding is that there were
+> more work to do, but no objection to merging.
+
+Yes, there were some in-flight topics that interfered with it and
+the topic quickly went stale without getting rerolled.  There wasn't
+any fundamental issue with the topic itself.
