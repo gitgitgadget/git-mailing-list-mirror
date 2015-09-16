@@ -1,83 +1,83 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Big path on git add file [windows bug]
-Date: Wed, 16 Sep 2015 11:40:22 +0200
-Organization: gmx
-Message-ID: <01b34f993289e7dcef5c6fef3d855372@dscho.org>
-References: <CAMg53oum4s2HE5A-H4g-3N8akOm4KetHM6ntUqRPnygLRALwpw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 15/67] convert trivial sprintf / strcpy calls to xsnprintf
+Date: Wed, 16 Sep 2015 05:45:17 -0400
+Message-ID: <20150916094517.GA13966@sigill.intra.peff.net>
+References: <20150915152125.GA27504@sigill.intra.peff.net>
+ <20150915153637.GO29753@sigill.intra.peff.net>
+ <55F8643D.6040800@ramsayjones.plus.com>
+ <20150915184211.GA31939@sigill.intra.peff.net>
+ <CAGZ79kb5qWnOnJGY8JR3Z9UqT2xp390A6-LvNudBk=e3N2W41Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alexey Kasyanchuk <degitx@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 11:40:34 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Sep 16 11:45:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zc9CX-0004zw-E1
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 11:40:29 +0200
+	id 1Zc9HP-0002ZU-59
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 11:45:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752559AbbIPJkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 05:40:25 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52978 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752216AbbIPJkY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 05:40:24 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LnwxU-1YwSjO24hk-00g2YV; Wed, 16 Sep 2015 11:40:22
- +0200
-In-Reply-To: <CAMg53oum4s2HE5A-H4g-3N8akOm4KetHM6ntUqRPnygLRALwpw@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:QVVLvRt3PTHJptyxRHui67ajY/j6S9/N6/8oH4efMQKVAPgtG5M
- lVNnCYS4Sqac+9AlmdkTSBP0qK5r/rzXPK/Oh3yP79ywDFVcAC8Cv0O3rNOHMSgK/Eajemv
- E052roXcL5zf3FJejo3LQc1VQjzj3Sbzcu6izSOIdbl7/QjC0XCkR6iORlSOkXlnOaojtVw
- ARKDSVkQ5DVi7L33DpdNg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:baVWSI0sAvs=:SnT1qoghKZRA/EnaYVaKpm
- n2232t/famD5cR9D88ab2oUAC7FIWjmiQsa0n6XvRQtUnoBS6u/Q4ctvv5Pb1xxnFPWB6bGts
- BVhvYyHZ+SakBlrrI4DknijogufsGrWy/uNLCrJSVn3Ysg1dgIZwSbE0P5hXIcAa6vc+bOKrL
- +ruTieH0fn9o9JG1GLvUqjKKD9CKAZLe5l9IYlytQvQcBTJMoyfDG9UP9qi3EFyav+Zju7T2O
- ugsrfUUeXzjdHmnx53Qu2RgL0pyzUikQPEi9NoA4lJnF7javD/Tb3XI+VydsCocymHRsMG/1F
- l9N2UTGG8I0gIutq+cXLr2Bt1zddaIgwdCNPXm4IKE5+IOEHzuZURvfTc0qCd8foubHjfelD1
- 2jOepGavhkk7IfoejmKEmSp9tCytaZKp/0Fx8m+4AEcyZ5/+BEo+pNzZzMVC6B7AaCQnpO9cL
- gGI/JX3idj6zQwmsfpkJyVR91ABE13VQBPBDOeUyxhx5TlFCyW/0zLkI9Iz7SIRJ7ufumakd8
- OPzOJUF/OW0U+yASBpEbi6uUWf97OMuVl7gXYUG79XslKeXgvLFHaB8vRmJ5uMD6QNuddbCuN
- frBg1VZeL37lIgqmpBdpvZ0xY/NMu9giOaqyVZnZx36tdAeWUxKwerMZr/GCjiZoSXV4lP3V7
- +A3+BJzRBcmaC+UWU6WHTFRgv/sqH3c1ePlsRkBaiSZOJb5mm3yIBKZnSpA5hRq7GLEoWj5x9
- rFLDMRyogddYYifZD3SI8fwRo7mOEOYDDEtEKw==
+	id S1751945AbbIPJp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 05:45:27 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59827 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751480AbbIPJp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 05:45:26 -0400
+Received: (qmail 13006 invoked by uid 102); 16 Sep 2015 09:45:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 04:45:26 -0500
+Received: (qmail 16366 invoked by uid 107); 16 Sep 2015 09:45:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 05:45:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 05:45:17 -0400
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kb5qWnOnJGY8JR3Z9UqT2xp390A6-LvNudBk=e3N2W41Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278011>
 
-Hi Alexey,
+On Tue, Sep 15, 2015 at 01:38:42PM -0700, Stefan Beller wrote:
 
-On 2015-09-16 10:01, Alexey Kasyanchuk wrote:
-> I tried add one of node.js module to git project. But add operation failed:
+> Some off topic thoughts:
 > 
-> libgit2 returned: Invalid path for filesystem
-> 'E:/Projects/vsteams/node_modules/gulp-imagemin/node_modules/imagemin/node_modules/imagemin-gifsicle/node_modules/gifsicle/node_modules/bin-build/node_modules/decompress/node_modules/decompress-tar/node_modules/strip-dirs/node_modules/is-natural-number/is-natural-number-cjs.js':
-> Data area passed to a system call is too small.
+> Having an "assert" behavior is not a good user experience though
+> and should be fixed. To fix it we need stack traces. And the git
+> version. And telling the user to send it to the mailing list.
 
-It is indeed too small for normal operations (MAX_PATH is somewhere around 248). However, as far as I know, libgit2 has internal code to convert the path into a form that the Win32 API can handle.
+Yes, any assert (or die("BUG")) should generally result in a code change
+to make it never happen again.
 
-> Is this windows problem or problem with libgit2 realization on windows
-> (windows 7 by the way)? It looked like problem with big system path
-> (276 symbols). May be some sulution for this?
+I have been tempted to replace our die("BUG") calls with a BUG() macro,
+so that we can do more fancy things (even if it is just adding
+__FILE__:__LINE__ and a message to contact the list).
 
-Yes, there is a sulution for this. But it is unclear whether you have that already or not because you were a little parsimonious with information. For example, I have no idea which libgit2 version you use, in which context, what program you use to call libgit2, etc.
+> I wonder if we want to include a trace where possible (i.e.
+> when compiled with gcc or other precompiler conditions)
+> into these assertive behaviors.
 
-So I am left guessing, which is a little bit inefficient.
+That would be nice. I took a look at this back in April:
 
-In any case, the work-around for the issue you described is in https://github.com/libgit2/libgit2/commit/cceae9a25d0bed8b00f4981e051d5f380ef54401 which is part of v0.22.1.
+  http://thread.gmane.org/gmane.comp.version-control.git/267643/focus=267755
 
-> Version: Git-2.5.2.2-64-bit
+but I think I convinced myself that we are better off relying on people
+running gdb. If we do anything, it should be to make doing so easier.
 
-No, that is not the correct version. This looks like the current Git for Windows version, but the error you reported is clearly a libgit2 error message. And that Git for Windows version contains no libgit2 at all.
+> I'd guess we have an assertive behavior if die("BUG:...") is called,
+> so maybe we can just check inside of die if we want to print
+> a stack trace additionally ?
 
-Please clarify. You might want to err on the side of verbosity to avoid unnecessary back-and-forth.
+I guess we could look for starts_with(fmt, "BUG: ") in die(). I think it
+would be a bit less gross to convert those calls to a BUG() macro (we
+can't get accurate __LINE__ information without it, though in practice
+the die messages are usually unique enough to be helpful).
 
-Ciao,
-Johannes
+I think a core file is even more useful than a backtrace. Having BUG()
+call abort() would be even more useful, I think.
+
+-Peff
