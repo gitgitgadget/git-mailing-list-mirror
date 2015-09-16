@@ -1,117 +1,66 @@
-From: Phillip Sz <phillip.szelat@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: translate 2 messages
-Date: Wed, 16 Sep 2015 20:19:57 +0200
-Message-ID: <55F9B2CD.8040500@gmail.com>
-References: <1442424817-10972-1-git-send-email-ralf.thielow@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 15/67] convert trivial sprintf / strcpy calls to xsnprintf
+Date: Wed, 16 Sep 2015 11:20:18 -0700
+Message-ID: <xmqqlhc6ql99.fsf@gitster.mtv.corp.google.com>
+References: <20150915152125.GA27504@sigill.intra.peff.net>
+	<20150915153637.GO29753@sigill.intra.peff.net>
+	<55F8643D.6040800@ramsayjones.plus.com>
+	<20150915184211.GA31939@sigill.intra.peff.net>
+	<CAGZ79kb5qWnOnJGY8JR3Z9UqT2xp390A6-LvNudBk=e3N2W41Q@mail.gmail.com>
+	<20150916094517.GA13966@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="I5KPGgqlbJ559v5a3fkmvJTK0SC9AI0fN"
-Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
-To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 16 20:20:24 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 16 20:20:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcHJZ-00025Q-NG
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 20:20:18 +0200
+	id 1ZcHJk-0002Iq-BS
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 20:20:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754003AbbIPSUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 14:20:12 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:33170 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753512AbbIPSUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 14:20:09 -0400
-Received: by wiclk2 with SMTP id lk2so85483440wic.0
-        for <git@vger.kernel.org>; Wed, 16 Sep 2015 11:20:08 -0700 (PDT)
+	id S1754011AbbIPSUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 14:20:22 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:33975 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753512AbbIPSUU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 14:20:20 -0400
+Received: by padhy16 with SMTP id hy16so215945636pad.1
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 11:20:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type;
-        bh=0J3Az/HA6J6ieGZAJWJC1Qm6Opx5t9kDz8fVhC6MI+M=;
-        b=K/EEdbnp/Qnz+zaA4kMa5GG70qFus8btbhWYTpsc/QQ1i73jFWukv9dTTsRnxnSLMC
-         jZoG9ohwXSFsscF9enAXhALBGMe2ZdxxaetVZzTsGPiQJuhG1cooRbKEENMFNloKvNz4
-         3MHnc2ZByeoVCnYo8PUnGkRXVlBYa9c+aYZskp07q12RVzH+crAsb4IogItmiv1zdhLO
-         RsbX+cGImUh0axy5rZTMa4AC4Mgd/9MCNVw/db/bhAGGxN2a11a3O8iiqMGLNYO5klXM
-         mN9oFltGCaANKuXzs5h6C+XEi638IujTdTN/VHGBifM6/enGV1Fawi3lEIvl9xfa0Cpy
-         YcZw==
-X-Received: by 10.194.221.4 with SMTP id qa4mr25213093wjc.145.1442427608174;
-        Wed, 16 Sep 2015 11:20:08 -0700 (PDT)
-Received: from [192.168.178.84] (i59F45C99.versanet.de. [89.244.92.153])
-        by smtp.googlemail.com with ESMTPSA id t7sm5787353wib.1.2015.09.16.11.20.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Sep 2015 11:20:07 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-In-Reply-To: <1442424817-10972-1-git-send-email-ralf.thielow@gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=DjS96t4qzx2XpH6GzXQL1GKJ5I+3Rg+x9eQOcnjT3D8=;
+        b=VMuAs18LOiVulDlDhNypZMSVfd4JAV0wB2ST1GxWMfzuzy6+8bcghaq/Wihv132e5A
+         FZe0gwlFVENsjPCvujOi1aRf+44fjNtMSVi6l+Em2KNq8Gli0Il5G5/EHrKNzL56uBSe
+         D0CL2+B4ftRIjJIY8Jhr8Hx7qyL/Z6tOzo+Ow65+lWEP3uBTnrCBxPJUWIHq/gbXpgFL
+         U8e2EKXzsMxcW6o9Gz7YKSyh3IwjETtSJ1sj2tkK2hGCNA9pd/ERbg9i8J6aeQ56i6Dt
+         GKIDkv/+LqGXFqFtEWWxsGquCVUbWFcysT8W4sEu0ppwpf1jI8y7fE/7TdettdYGHOpc
+         1K8g==
+X-Received: by 10.68.230.33 with SMTP id sv1mr63389542pbc.160.1442427620087;
+        Wed, 16 Sep 2015 11:20:20 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:150c:7d53:9693:493e])
+        by smtp.gmail.com with ESMTPSA id xv12sm29234636pac.38.2015.09.16.11.20.19
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Sep 2015 11:20:19 -0700 (PDT)
+In-Reply-To: <20150916094517.GA13966@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 16 Sep 2015 05:45:17 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278044>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---I5KPGgqlbJ559v5a3fkmvJTK0SC9AI0fN
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: quoted-printable
+Jeff King <peff@peff.net> writes:
 
-Acked-by: Phillip Sz <phillip.szelat@gmail.com>
+> I think a core file is even more useful than a backtrace. Having BUG()
+> call abort() would be even more useful, I think.
 
-> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
-> ---
->  po/de.po | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
->=20
-> diff --git a/po/de.po b/po/de.po
-> index e5b523d..c9b4d16 100644
-> --- a/po/de.po
-> +++ b/po/de.po
-> @@ -10530,9 +10530,8 @@ msgstr ""
->  "hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags] [--heads] [--] [<Muster>...=
-] "
-> =20
->  #: builtin/show-ref.c:11
-> -#, fuzzy
->  msgid "git show-ref --exclude-existing[=3D<pattern>] < <ref-list>"
-> -msgstr "git show-ref --exclude-existing[=3DMuster] < ref-list"
-> +msgstr "git show-ref --exclude-existing[=3D<Muster>] < <Referenzliste>=
-"
-> =20
->  #: builtin/show-ref.c:170
->  msgid "only show tags (can be combined with heads)"
-> @@ -10761,9 +10760,8 @@ msgid "replace the tag if exists"
->  msgstr "das Tag ersetzen, wenn es existiert"
-> =20
->  #: builtin/tag.c:609 builtin/update-ref.c:368
-> -#, fuzzy
->  msgid "create a reflog"
-> -msgstr "create_reflog"
-> +msgstr "Reflog erstellen"
-> =20
->  #: builtin/tag.c:611
->  msgid "Tag listing options"
->=20
-
-
-
---I5KPGgqlbJ559v5a3fkmvJTK0SC9AI0fN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJV+bLWAAoJEJIt6Cqh4sVStDYH/0DQb/m24eEPkYBiHTFEzf0b
-nl6SCjqlEIlNKfUi7w8jbPXyT/VwvkBfC8thlzoV/XyDKACeWdzVOZDx5RrVlKLh
-kGXSBy9B3ITZlJgAqDSHtDSYMFUJgQJYhQDnm1L5Py1kgqH8GnOM9LDSpyEukzoE
-sgIBlPVmPSQrieEGgZ4uw7TVZhZu/dYjBR41bdEWHsUFgEGwXwi8+7rKmNBUT2HR
-dG8k57W2Aaw5OEZ0FDmOS7qHWmNsGmm81ThlvufEp+nBJGfhjUO08Hg0Uk3I/MNM
-cf2iH+55g7VTy9E2oXQIVf8fIHvvL2OZvgrDu3XeZjguJet6E3ckHbtTLzvcdk4=
-=DCSq
------END PGP SIGNATURE-----
-
---I5KPGgqlbJ559v5a3fkmvJTK0SC9AI0fN--
+Sounds like a plan ;-)
+Thanks.
