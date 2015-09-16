@@ -1,450 +1,137 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v5 6/7] git-p4: add support for large file systems
-Date: Wed, 16 Sep 2015 09:36:46 +0100
-Message-ID: <55F92A1E.1090002@diamand.org>
-References: <1442237194-49624-1-git-send-email-larsxschneider@gmail.com> <1442237194-49624-7-git-send-email-larsxschneider@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v4] gc: save log from daemonized gc --auto and print it
+ next time
+Date: Wed, 16 Sep 2015 11:28:38 +0200
+Message-ID: <55F93646.9050709@alum.mit.edu>
+References: <1440209546-23442-1-git-send-email-pclouds@gmail.com>	<1442108202-25746-1-git-send-email-pclouds@gmail.com>	<xmqq8u88ykv4.fsf@gitster.mtv.corp.google.com> <xmqq1te0ykaj.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com
-To: larsxschneider@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 16 10:37:14 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 16 11:35:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zc8DE-0008ST-DO
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 10:37:08 +0200
+	id 1Zc983-00084T-CV
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 11:35:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752786AbbIPIhC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 04:37:02 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:33574 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752750AbbIPIgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 04:36:53 -0400
-Received: by wiclk2 with SMTP id lk2so61951818wic.0
-        for <git@vger.kernel.org>; Wed, 16 Sep 2015 01:36:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=oV8HDrAaMSCQ9iEItFncD5ds38sH8FWT4FNVmF2GQcA=;
-        b=e3yM8VVsH9jDakH0/SWxDsxpVuT1O2/RPyPsDZAMhDshx9XMLkrcf3qNrkPPPGXIhx
-         FJfEvkcqlSgSW2/o/6wEUOsYkmgO+vtu2yNQRKjtI3O6X2GzSM7Eo1kl9h5BGpMEBnNF
-         IrwBcRfoyLW5THfe30oKBYAt7x9ePjc/2zLDM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=oV8HDrAaMSCQ9iEItFncD5ds38sH8FWT4FNVmF2GQcA=;
-        b=bwldIxhkoSaSWYg3KaMbXdX94BiWo9lVsxvbn+iNUIqIny4jcB77SnDHJJC4lKCRlE
-         XxKJgscCy08ix9Kvn2cja4/Rbw2RMzr+oGzZDrzCEXo/7vVgb7v5LEUS6rRtznDrs3Ut
-         KV3PX/v87aMz5UFcDnWLbHQD1cqxInEHTw/CTMML13bWR1iDEGpomMhjWnX0uNf3uof0
-         eXI/1Dm4XKvKlj4mVSxlew744uNbxhoAb4knK/T/Ge3xe0OU0g153lQnYsda6JJsofFJ
-         0bERe3+WFYscfWgDZs6n/GO0gCmTZAgBPF153wzRze1eA1hCm9B9zI7ynlasHpu3uZx0
-         QraQ==
-X-Gm-Message-State: ALoCoQnRA1oUNbHfTwacp/wrpbR0I2KtFiqEj7FubmN3Y9k+bE5EjPuIPviKJogV3uFwshw+4aQc
-X-Received: by 10.194.242.202 with SMTP id ws10mr18926205wjc.47.1442392611833;
-        Wed, 16 Sep 2015 01:36:51 -0700 (PDT)
-Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
-        by smtp.gmail.com with ESMTPSA id fs2sm3223084wib.12.2015.09.16.01.36.45
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Sep 2015 01:36:51 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <1442237194-49624-7-git-send-email-larsxschneider@gmail.com>
+	id S1752087AbbIPJfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 05:35:47 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:43509 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751112AbbIPJfp (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Sep 2015 05:35:45 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Sep 2015 05:35:45 EDT
+X-AuditID: 12074411-f797e6d000007df3-30-55f93648dbb0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 36.89.32243.84639F55; Wed, 16 Sep 2015 05:28:40 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC96A76.dip0.t-ipconnect.de [79.201.106.118])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t8G9Scnw023661
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 16 Sep 2015 05:28:39 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <xmqq1te0ykaj.fsf@gitster.mtv.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRmVeSWpSXmKPExsUixO6iqOth9jPUYH+/ucXaZ3eYLLqudDNZ
+	NPReYbbonvKW0eLMm0ZGB1aPnbPusntcvKTssfiBl8fnTXIBLFHcNkmJJWXBmel5+nYJ3BkN
+	F8+zFnRKVCz5Np+1gXGNcBcjJ4eEgInEu6+rGCFsMYkL99azdTFycQgJXGaUuDx3DpRzgUli
+	8csWNpAqXgFtield/SwgNouAqsSzqV1gcTYBXYlFPc1MILaoQJDEiuUvGCHqBSVOznzCAjJI
+	RKCFUeLtthvsIA6zwExGiYuvjrKCVAkLhEus+n2UBWLdVUaJDWcPA1VxcHAKWEvM3GkEYjIL
+	qEusnycEUs4sIC/RvHU28wRGgVlIdsxCqJqFpGoBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzU
+	Il1TvdzMEr3UlNJNjJDAFtzBOOOk3CFGAQ5GJR5eh5c/QoVYE8uKK3MPMUpyMCmJ8v42+Rkq
+	xJeUn1KZkVicEV9UmpNafIhRgoNZSYQ3UgEox5uSWFmVWpQPk5LmYFES5+Vbou4nJJCeWJKa
+	nZpakFoEk5Xh4FCS4A03BWoULEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB8VqfDEw
+	WkFSPEB7uUHaeYsLEnOBohCtpxgVpcR5DUASAiCJjNI8uLGwdPWKURzoS2HefpAqHmCqg+t+
+	BTSYCWiwe+o3kMEliQgpqQZGDkmOXwfFlrPwaq5bUGT3VPztPRZF/v2CZ89Na3K8NWHS5SeJ
+	0fcfLqy+ebTf5OiOpDbx13Pe/lGubgp9JntlknJYidunl+wvjj+6fqlVNGPlv9gb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278009>
 
-On 14/09/15 14:26, larsxschneider@gmail.com wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
->
-> Perforce repositories can contain large (binary) files. Migrating these
-> repositories to Git generates very large local clones. External storage
-> systems such as Git LFS [1], Git Fat [2], Git Media [3], git-annex [4]
-> try to address this problem.
->
-> Add a generic mechanism to detect large files based on extension,
-> uncompressed size, and/or compressed size.
+On 09/14/2015 07:37 PM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Thanks, will queue.
+> 
+> Ehh, I spoke a bit too early.
+> 
+>>> diff --git a/builtin/gc.c b/builtin/gc.c
+>>> index bcc75d9..2c3aaeb 100644
+>>> --- a/builtin/gc.c
+>>> +++ b/builtin/gc.c
+>>> @@ -43,9 +43,20 @@ static struct argv_array prune_worktrees = ARGV_ARRAY_INIT;
+>>>  static struct argv_array rerere = ARGV_ARRAY_INIT;
+>>>  
+>>>  static char *pidfile;
+>>> +static struct strbuf log_filename = STRBUF_INIT;
+>>> +static int daemonized;
+>>>  
+>>>  static void remove_pidfile(void)
+>>>  {
+>>> +	if (daemonized && log_filename.len) {
+>>> +		struct stat st;
+>>> +
+>>> +		close(2);
+>>> +		if (stat(log_filename.buf, &st) ||
+>>> +		    !st.st_size ||
+>>> +		    rename(log_filename.buf, git_path("gc.log")))
+>>> +			unlink(log_filename.buf);
+>>> +	}
+> 
+> Unfortuantely we cannot queue this as-is, as we let the tempfile API
+> to automatically manage the pidfile since ebebeaea (gc: use tempfile
+> module to handle gc.pid file, 2015-08-10), and you cannot piggy-back
+> the log file finalization to this function that no longer exists.
+> 
+> Besides, it is obviously wrong to remove this log file in a function
+> whose name is remove_pidfile() ;-)
+> 
+> Adding a new function to tempfile API that puts the file to a final
+> place if it is non-empty and otherwise remove it, and using that to
+> create this "gc.log" file, would be the cleanest from the point of
+> view of _this_ codepath.  I however do not know if that is too
+> specific for the need of this codepath or "leave it if non-empty,
+> but otherwise remove as it is uninteresting" is fairly common thing
+> we would want and it is a good addition to the API set.
+> 
+> Michael, what do you think?
 
-Looks excellent! I've got a small few comments (below) and I need to 
-come back and have another look through if that's OK.
+I'm not sure what behavior you want. At one point you say "puts the file
+to a final place if it is non-empty" but later you say "leave it if
+non-empty". Should the file be written directly, or should it be written
+to a lockfile and renamed into place only when complete?
 
-Thanks!
-Luke
+Technically I don't see a problem implementing either behavior. POSIX
+allows [1] calls to stat() and rename() from a signal handler. There is
+a minor technical difficulty that commit_lock_file() allocates memory
+via get_locked_file_path(), but this would be surmountable by
+pre-allocating the memory for the locked file path and storing it in the
+lock_file object.
 
->
-> [1] https://git-lfs.github.com/
-> [2] https://github.com/jedbrown/git-fat
-> [3] https://github.com/alebedev/git-media
-> [4] https://git-annex.branchable.com/
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->   Documentation/git-p4.txt   |  32 +++++++++++
->   git-p4.py                  | 139 +++++++++++++++++++++++++++++++++++++++++----
->   t/t9823-git-p4-mock-lfs.sh |  96 +++++++++++++++++++++++++++++++
->   3 files changed, 257 insertions(+), 10 deletions(-)
->   create mode 100755 t/t9823-git-p4-mock-lfs.sh
->
-> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-> index 82aa5d6..3f21e95 100644
-> --- a/Documentation/git-p4.txt
-> +++ b/Documentation/git-p4.txt
-> @@ -510,6 +510,38 @@ git-p4.useClientSpec::
->   	option '--use-client-spec'.  See the "CLIENT SPEC" section above.
->   	This variable is a boolean, not the name of a p4 client.
->
-> +git-p4.largeFileSystem::
-> +	Specify the system that is used for large (binary) files. Please note
-> +	that large file systems do not support the 'git p4 submit' command.
+This doesn't seem like a common thing to want (as in, this might be the
+only caller), but it probably makes sense to build it into the
+tempfile/lockfile API nevertheless, because implementing it externally
+would require a lot of other code to be duplicated.
 
-Why is that? Is it just that you haven't implemented support, or is it 
-fundamentally impossible?
+Another possibility that might work (maybe without requiring changes to
+tempfile/lockfile): don't worry about deleting the log file if it is
+empty, but make observers treat an empty log file the same as an absent one.
 
-> +	Only Git LFS [1] is implemented right now. Download
-> +	and install the Git LFS command line extension to use this option
-> +	and configure it like this:
-> ++
-> +-------------
-> +git config       git-p4.largeFileSystem GitLFS
-> +-------------
-> ++
-> +	[1] https://git-lfs.github.com/
-> +
-> +git-p4.largeFileExtensions::
-> +	All files matching a file extension in the list will be processed
-> +	by the large file system. Do not prefix the extensions with '.'.
-> +
-> +git-p4.largeFileThreshold::
-> +	All files with an uncompressed size exceeding the threshold will be
-> +	processed by the large file system. By default the threshold is
-> +	defined in bytes. Add the suffix k, m, or g to change the unit.
-> +
-> +git-p4.largeFileCompressedThreshold::
-> +	All files with a compressed size exceeding the threshold will be
-> +	processed by the large file system. This option might slow down
-> +	your clone/sync process. By default the threshold is defined in
-> +	bytes. Add the suffix k, m, or g to change the unit.
-> +
-> +git-p4.pushLargeFiles::
-> +	Boolean variable which defines if large files are automatically
-> +	pushed to a server.
-> +
->   Submit variables
->   ~~~~~~~~~~~~~~~~
->   git-p4.detectRenames::
-> diff --git a/git-p4.py b/git-p4.py
-> index b465356..bfe71b5 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -22,6 +22,8 @@ import platform
->   import re
->   import shutil
->   import stat
-> +import zipfile
-> +import zlib
->
->   try:
->       from subprocess import CalledProcessError
-> @@ -932,6 +934,111 @@ def wildcard_present(path):
->       m = re.search("[*#@%]", path)
->       return m is not None
->
-> +class LargeFileSystem(object):
-> +    """Base class for large file system support."""
-> +
-> +    def __init__(self, writeToGitStream):
-> +        self.largeFiles = set()
-> +        self.writeToGitStream = writeToGitStream
-> +
-> +    def generatePointer(self, cloneDestination, contentFile):
-> +        """Return the content of a pointer file that is stored in Git instead of
-> +           the actual content."""
-> +        assert False, "Method 'generatePointer' required in " + self.__class__.__name__
-> +
-> +    def pushFile(self, localLargeFile):
-> +        """Push the actual content which is not stored in the Git repository to
-> +           a server."""
-> +        assert False, "Method 'pushFile' required in " + self.__class__.__name__
-> +
-> +    def hasLargeFileExtension(self, relPath):
-> +        return reduce(
-> +            lambda a, b: a or b,
-> +            [relPath.endswith('.' + e) for e in gitConfigList('git-p4.largeFileExtensions')],
-> +            False
-> +        )
-> +
-> +    def generateTempFile(self, contents):
-> +        contentFile = tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=False)
-> +        for d in contents:
-> +            contentFile.write(d)
-> +        contentFile.flush()
-> +        contentFile.close()
+Michael
 
-close() should flush() automatically I would have thought.
+[1]
+http://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_04_03
 
-> +        return contentFile.name
-> +
-> +    def exceedsLargeFileThreshold(self, relPath, contents):
-> +        if gitConfigInt('git-p4.largeFileThreshold'):
-> +            contentsSize = sum(len(d) for d in contents)
-> +            if contentsSize > gitConfigInt('git-p4.largeFileThreshold'):
-> +                return True
-> +        if gitConfigInt('git-p4.largeFileCompressedThreshold'):
-> +            contentsSize = sum(len(d) for d in contents)
-> +            if contentsSize <= gitConfigInt('git-p4.largeFileCompressedThreshold'):
-> +                return False
-> +            contentTempFile = self.generateTempFile(contents)
-> +            compressedContentFile = tempfile.NamedTemporaryFile(prefix='git-p4-large-file', delete=False)
-> +            zf = zipfile.ZipFile(compressedContentFile.name, mode='w')
-> +            zf.write(contentTempFile, compress_type=zipfile.ZIP_DEFLATED)
-> +            zf.close()
-> +            compressedContentsSize = zf.infolist()[0].compress_size
-> +            os.remove(contentTempFile)
-> +            os.remove(compressedContentFile.name)
-> +            if compressedContentsSize > gitConfigInt('git-p4.largeFileCompressedThreshold'):
-> +                return True
-> +        return False
-> +
-> +    def addLargeFile(self, relPath):
-> +        self.largeFiles.add(relPath)
-> +
-> +    def removeLargeFile(self, relPath):
-> +        self.largeFiles.remove(relPath)
-> +
-> +    def isLargeFile(self, relPath):
-> +        return relPath in self.largeFiles
-> +
-> +    def processContent(self, cloneDestination, git_mode, relPath, contents):
-> +        """Processes the content of git fast import. This method decides if a
-> +           file is stored in the large file system and handles all necessary
-> +           steps."""
-> +        if self.exceedsLargeFileThreshold(relPath, contents) or self.hasLargeFileExtension(relPath):
-> +            contentTempFile = self.generateTempFile(contents)
-> +            (git_mode, contents, localLargeFile) = self.generatePointer(cloneDestination, contentTempFile)
-> +
-> +            # Move temp file to final location in large file system
-> +            largeFileDir = os.path.dirname(localLargeFile)
-> +            if not os.path.isdir(largeFileDir):
-> +                os.makedirs(largeFileDir)
-> +            shutil.move(contentTempFile, localLargeFile)
-> +            self.addLargeFile(relPath)
-> +            if gitConfigBool('git-p4.pushLargeFiles'):
-> +                self.pushFile(localLargeFile)
-> +            if verbose:
-> +                sys.stderr.write("%s moved to large file system (%s)\n" % (relPath, localLargeFile))
-> +        return (git_mode, contents)
-> +
-> +class MockLFS(LargeFileSystem):
-> +    """Mock large file system for testing."""
-> +
-> +    def generatePointer(self, cloneDestination, contentFile):
-> +        """The pointer content is the original content prefixed with "pointer-".
-> +           The local filename of the large file storage is derived from the file content.
-> +           """
-> +        with open(contentFile, 'r') as f:
-> +            content = next(f)
-> +            gitMode = '100644'
-> +            pointerContents = 'pointer-' + content
-> +            localLargeFile = os.path.join(cloneDestination, '.git', 'mock-storage', 'local', content[:-1])
-> +            return (gitMode, pointerContents, localLargeFile)
-> +
-> +    def pushFile(self, localLargeFile):
-> +        """The remote filename of the large file storage is the same as the local
-> +           one but in a different directory.
-> +           """
-> +        remotePath = os.path.join(os.path.dirname(localLargeFile), '..', 'remote')
-> +        if not os.path.exists(remotePath):
-> +            os.makedirs(remotePath)
-> +        shutil.copyfile(localLargeFile, os.path.join(remotePath, os.path.basename(localLargeFile)))
-> +
->   class Command:
->       def __init__(self):
->           self.usage = "usage: %prog [options]"
-> @@ -1105,6 +1212,9 @@ class P4Submit(Command, P4UserMap):
->           self.p4HasMoveCommand = p4_has_move_command()
->           self.branch = None
->
-> +        if gitConfig('git-p4.largeFileSystem'):
-> +            die("Large file system not supported for git-p4 submit command. Please remove it from config.")
-> +
->       def check(self):
->           if len(p4CmdList("opened ...")) > 0:
->               die("You have files opened with perforce! Close them before starting the sync.")
-> @@ -2057,6 +2167,12 @@ class P4Sync(Command, P4UserMap):
->                   lambda git_mode, relPath, contents: self.writeToGitStream(git_mode, relPath, contents)
->               )
->
-> +        if gitConfig('git-p4.largeFileSystem'):
-> +            largeFileSystemConstructor = globals()[gitConfig('git-p4.largeFileSystem')]
-> +            self.largeFileSystem = largeFileSystemConstructor(
-> +                lambda git_mode, relPath, contents: self.writeToGitStream(git_mode, relPath, contents)
-> +            )
-> +
->           if gitConfig("git-p4.syncFromOrigin") == "false":
->               self.syncWithOrigin = False
->
-> @@ -2176,6 +2292,13 @@ class P4Sync(Command, P4UserMap):
->
->           return branches
->
-> +    def writeToGitStream(self, gitMode, relPath, contents):
-> +        self.gitStream.write('M %s inline %s\n' % (gitMode, relPath))
-> +        self.gitStream.write('data %d\n' % sum(len(d) for d in contents))
-> +        for d in contents:
-> +            self.gitStream.write(d)
-> +        self.gitStream.write('\n')
-> +
->       # output one file from the P4 stream
->       # - helper for streamP4Files
->
-> @@ -2246,17 +2369,10 @@ class P4Sync(Command, P4UserMap):
->               text = regexp.sub(r'$\1$', text)
->               contents = [ text ]
->
-> -        self.gitStream.write("M %s inline %s\n" % (git_mode, relPath))
-> +        if self.largeFileSystem:
-> +            (git_mode, contents) = self.largeFileSystem.processContent(self.cloneDestination, git_mode, relPath, contents)
->
-> -        # total length...
-> -        length = 0
-> -        for d in contents:
-> -            length = length + len(d)
-> -
-> -        self.gitStream.write("data %d\n" % length)
-> -        for d in contents:
-> -            self.gitStream.write(d)
-> -        self.gitStream.write("\n")
-> +        self.writeToGitStream(git_mode, relPath, contents)
->
->       def streamOneP4Deletion(self, file):
->           relPath = self.stripRepoPath(file['path'], self.branchPrefixes)
-> @@ -2265,6 +2381,9 @@ class P4Sync(Command, P4UserMap):
->               sys.stdout.flush()
->           self.gitStream.write("D %s\n" % relPath)
->
-> +        if self.largeFileSystem and self.largeFileSystem.isLargeFile(relPath):
-> +            self.largeFileSystem.removeLargeFile(relPath)
-> +
->       # handle another chunk of streaming data
->       def streamP4FilesCb(self, marshalled):
->
-> diff --git a/t/t9823-git-p4-mock-lfs.sh b/t/t9823-git-p4-mock-lfs.sh
-> new file mode 100755
-> index 0000000..8582857
-> --- /dev/null
-> +++ b/t/t9823-git-p4-mock-lfs.sh
-> @@ -0,0 +1,96 @@
-> +#!/bin/sh
-> +
-> +test_description='Clone repositories and store files in Mock LFS'
-> +
-> +. ./lib-git-p4.sh
-> +
-> +test_file_in_mock () {
-> +	FILE="$1"
-Missing &&
-Plus the next few lines
-
-> +	CONTENT="$2"
-> +	LOCAL_STORAGE=".git/mock-storage/local/$CONTENT"
-> +	SERVER_STORAGE=".git/mock-storage/remote/$CONTENT"
-> +	echo "pointer-$CONTENT" >expect_pointer
-> +	echo "$CONTENT" >expect_content
-> +	test_path_is_file "$FILE" &&
-> +	test_path_is_file "$LOCAL_STORAGE" &&
-> +	test_path_is_file "$SERVER_STORAGE" &&
-> +	test_cmp expect_pointer "$FILE" &&
-> +	test_cmp expect_content "$LOCAL_STORAGE" &&
-> +	test_cmp expect_content "$SERVER_STORAGE"
-> +}
-> +
-> +test_file_count_in_dir () {
-> +	DIR="$1"
-> +	EXPECTED_COUNT="$2"
-> +	find "$DIR" -type f >actual
-> +	test_line_count = $EXPECTED_COUNT actual
-> +}
-> +
-> +test_expect_success 'start p4d' '
-> +	start_p4d
-> +'
-> +
-> +test_expect_success 'Create repo with binary files' '
-> +	client_view "//depot/... //client/..." &&
-> +	(
-> +		cd "$cli" &&
-> +
-> +		echo "content 1 txt 23 bytes" >file1.txt &&
-> +		p4 add file1.txt &&
-> +		echo "content 2-3 bin 25 bytes" >file2.dat &&
-> +		p4 add file2.dat &&
-> +		p4 submit -d "Add text and binary file" &&
-> +
-> +		mkdir "path with spaces" &&
-> +		echo "content 2-3 bin 25 bytes" >"path with spaces/file3.bin" &&
-
-Nice putting spaces in the path!
-
-> +		p4 add "path with spaces/file3.bin" &&
-> +		p4 submit -d "Add another binary file with same content and spaces in path" &&
-> +
-> +		echo "content 4 bin 26 bytes XX" >file4.bin &&
-> +		p4 add file4.bin &&
-> +		p4 submit -d "Add another binary file with different content"
-> +	)
-> +'
-> +
-> +test_expect_success 'Store files in Mock based on size (>24 bytes)' '
-> +	client_view "//depot/... //client/..." &&
-> +	test_when_finished cleanup_git &&
-> +	(
-> +		cd "$git" &&
-> +		git init . &&
-> +		git config git-p4.useClientSpec true &&
-> +		git config git-p4.largeFileSystem MockLFS &&
-> +		git config git-p4.largeFileThreshold 24 &&
-> +		git config git-p4.pushLargeFiles True &&
-> +		git p4 clone --destination="$git" //depot@all &&
-> +
-> +		test_file_in_mock file2.dat "content 2-3 bin 25 bytes" &&
-> +		test_file_in_mock "path with spaces/file3.bin" "content 2-3 bin 25 bytes" &&
-> +		test_file_in_mock file4.bin "content 4 bin 26 bytes XX" &&
-> +
-> +		test_file_count_in_dir ".git/mock-storage/local" 2 &&
-> +		test_file_count_in_dir ".git/mock-storage/remote" 2
-> +	)
-> +'
-> +
-> +test_expect_success 'Run git p4 submit in repo configured with large file system' '
-> +	client_view "//depot/... //client/..." &&
-> +	test_when_finished cleanup_git &&
-> +	(
-> +		cd "$git" &&
-> +		git init . &&
-> +		git config git-p4.useClientSpec true &&
-> +		git config git-p4.largeFileSystem MockLFS &&
-> +		git config git-p4.largeFileThreshold 24 &&
-> +		git config git-p4.pushLargeFiles True &&
-> +		git p4 clone --destination="$git" //depot@all &&
-> +
-> +		test_must_fail git p4 submit
-
-No test for deletion, does that matter?
-
-
-
-> +	)
-> +'
-> +
-> +test_expect_success 'kill p4d' '
-> +	kill_p4d
-> +'
-> +
-> +test_done
->
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
