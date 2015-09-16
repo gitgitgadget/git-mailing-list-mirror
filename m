@@ -1,66 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 66/67] use strbuf_complete to conditionally append slash
-Date: Wed, 16 Sep 2015 18:57:01 -0400
-Message-ID: <20150916225700.GA26015@sigill.intra.peff.net>
-References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915161619.GN29753@sigill.intra.peff.net>
- <xmqq8u86m2i4.fsf@gitster.mtv.corp.google.com>
- <20150916223901.GA24945@sigill.intra.peff.net>
- <xmqqpp1ikm9x.fsf@gitster.mtv.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 1/2] notes: don't expand qualified refs in expand_notes_ref
+Date: Wed, 16 Sep 2015 16:00:39 -0700
+Message-ID: <CA+P7+xp1aSWJJ5VpAOa6Pje9Qp2sWTjj742xfh5nVJDcD9vCFA@mail.gmail.com>
+References: <1442441194-5506-1-git-send-email-jacob.e.keller@intel.com>
+ <1442441194-5506-2-git-send-email-jacob.e.keller@intel.com> <xmqqzj0mkn7r.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	Git List <git@vger.kernel.org>, Mike Hommey <mh@glandium.org>,
+	Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 00:57:18 2015
+X-From: git-owner@vger.kernel.org Thu Sep 17 01:01:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcLdd-00022R-EO
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 00:57:17 +0200
+	id 1ZcLhI-0006ks-Tz
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 01:01:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498AbbIPW5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 18:57:10 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60476 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752328AbbIPW5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 18:57:09 -0400
-Received: (qmail 1654 invoked by uid 102); 16 Sep 2015 22:57:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 17:57:09 -0500
-Received: (qmail 25219 invoked by uid 107); 16 Sep 2015 22:57:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 18:57:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 18:57:01 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqpp1ikm9x.fsf@gitster.mtv.corp.google.com>
+	id S1752885AbbIPXBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 19:01:00 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:32922 "EHLO
+	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752826AbbIPXA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 19:00:59 -0400
+Received: by iofh134 with SMTP id h134so4029402iof.0
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 16:00:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=FFBrqn4ABuMI5Ll64ELNGJl3rk7zAODJdnIKpdZi5mk=;
+        b=a/ehkNKcu1D3sIbPgS+j4nfm+Y2YAM+P1bnJNI/obP0LgPiZEbTb/S40kapD8beizZ
+         hJLadAP46RNvsu46q1eYrpIpOWjvfcVamq9CtBoZOKHSy/uSpeeKxCInnejSRvWMZRCF
+         pnpOCKcPNQy1tJ7EVGUjv2FpSFPQXAABKPR83irfcc19+trxlziKNLNXjnmhiiHZuLds
+         sRZj+0S9DXqaD4JgfI3dcJrgHKAKJeBS8bIBt7iSJcCrJBrDZ8SwdW5OOiz4ZUTSnJIR
+         z31V+vrmmBXau9JfLsX3EAn5yHxBlC9mvgfmG3/ko7mKxeWDfmKXzrwuI27Ds8jQDLXS
+         +KEw==
+X-Received: by 10.107.166.201 with SMTP id p192mr1157799ioe.0.1442444458788;
+ Wed, 16 Sep 2015 16:00:58 -0700 (PDT)
+Received: by 10.107.132.155 with HTTP; Wed, 16 Sep 2015 16:00:39 -0700 (PDT)
+In-Reply-To: <xmqqzj0mkn7r.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278086>
 
-On Wed, Sep 16, 2015 at 03:54:50PM -0700, Junio C Hamano wrote:
+On Wed, Sep 16, 2015 at 3:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.e.keller@intel.com> writes:
+>
+>> From: Jacob Keller <jacob.keller@gmail.com>
+>>
+>> The documentation for --refs says that it will treat unqualified refs as
+>> under refs/notes. Current behavior is to prefix refs/notes to all
+>> strings that do not start with refs/notes or notes/, resulting in
+>> performing actions on refs such as "refs/notes/refs/foo/bar" instead of
+>> attempting to perform actions on "refs/foo/bar".
+>
+> That actually sounds like a sensible thing to do, if you replace
+> 'foo' with 'heads', for example, i.e. refs/notes/refs/heads/bar is a
+> notes about commits reachable from the branch whose name is 'bar'.
+>
+> So given "refs/heads/bar", which is unqualified in the context of
+> talking about references that hold notes trees, the current
+> behaviour to turn it into "refs/notes/refs/heads/bar" is very
+> sensible, I would think.
+>
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> Is this conversion correct?  This seems to me that the caller wants
-> >> to create an IMAP folder name immediately under the root hierarchy
-> >> and wants to have the leading slash in the result.
-> >
-> > Ugh, you're right. This is the "other" style Eric mentioned earlier.
-> >
-> > This looks like the only one in the patch (there are many that did not
-> > check buf.len at all, but if we assume they were not invoking undefined
-> > behavior before, then they are fine under the new code).
-> 
-> Yes, I should have said that earlier to save one roundtrip.
-> 
-> Thanks for working on this.
+The end goal is to allow refs inside "refs/remote-notes/".. it seems
+really weird that other fully qualified refs don't get "expanded" in
+the same way as notes, and documentation does not make it explicit
+that this is how it would work. I think that users who actually want
+this behavior are already free to say "refs/notes/refs/heads/bar"...
+that wouldn't change..
 
-For my re-roll, I've just omitted changing that caller. I think we can
-leave it as-is; it is not worth trying to introduce a new helper for the
-one site.
+How would you propose allowing merging from "refs/remote-notes/<remote>/bar"?
 
--Peff
+We could easily just hard-code acceptance of refs/remote-notes/ as
+well as refs/notes... But that felt weird to me...
+
+But honestly I don't really care how it is done as long as we can "git
+notes show", "git notes list" on refs/remote-notes/<origin>/commits
+(or similar, remote-notes may not be the actual location if someone
+came up with a better name?)
+
+How would you propose we allow that?
+
+If we keep the current behavior of "expand_notes_ref" then we
+absolutely can't because use of "--ref" will auto expand
+"refs/remote-notes/<origin>/commits" into
+"refs/notes/refs/remote-notes/<origin>/commits" which wouldn't work...
+
+Regards,
+Jake
