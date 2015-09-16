@@ -1,79 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 08/67] add reentrant variants of sha1_to_hex and
- find_unique_abbrev
-Date: Wed, 16 Sep 2015 13:23:47 -0400
-Message-ID: <20150916172347.GA2234@sigill.intra.peff.net>
-References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915152629.GH29753@sigill.intra.peff.net>
- <55F84D9B.90004@ramsayjones.plus.com>
- <20150915175027.GA31091@sigill.intra.peff.net>
- <xmqqh9mvtai5.fsf@gitster.mtv.corp.google.com>
- <c62ef479c559cb040628fc4ede5b151b@dscho.org>
- <20150916103350.GF13966@sigill.intra.peff.net>
- <xmqq613as399.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 19:24:01 2015
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: translate 2 messages
+Date: Wed, 16 Sep 2015 19:33:37 +0200
+Message-ID: <1442424817-10972-1-git-send-email-ralf.thielow@gmail.com>
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
+	magnus.goerlitz@googlemail.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 16 19:33:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcGR6-0002kO-CW
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 19:24:00 +0200
+	id 1ZcGaf-00062T-Ht
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 19:33:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752784AbbIPRX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 13:23:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60104 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752636AbbIPRXz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 13:23:55 -0400
-Received: (qmail 13412 invoked by uid 102); 16 Sep 2015 17:23:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 12:23:55 -0500
-Received: (qmail 20053 invoked by uid 107); 16 Sep 2015 17:23:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 13:23:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 13:23:47 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq613as399.fsf@gitster.mtv.corp.google.com>
+	id S1752738AbbIPRdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 13:33:49 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:34338 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752648AbbIPRds (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 13:33:48 -0400
+Received: by wicfx3 with SMTP id fx3so83714360wic.1
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 10:33:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=7Y5gghemEeZ88zvQ3wgFvCtlQ9FGGowdOi45Zzsy+DY=;
+        b=FJtAM/iEv8ONUyzNpKuqRQItZ2hE3sGecxQA0GFu3eUbciiLqyaaEcjaXbz8KWDqRh
+         5C8iY+OodIB+GTszQgn7bXdg2gHJRPcTu8z5+kWXUryXhfZBo3J/G7z1oTxOWFypXEHL
+         ej+zGKYDGeo+1mxpFfMbPZlVrDEQn6EPzn02Si74bFrMQ5N+TyGimbDdaiPpIQgeBYxI
+         nUxOBfsgJ5JTNBYlMxt1kWXkOpV2kGKG97+quLEbE/axBDcJ8NtQ8xahfRX/h2M5n4Im
+         jKgl0xCnjFcbnlafQahgu5NCgtEzbQU+WyOQdrPvAFnzfaKLVW//EunVv24x9f43VCiB
+         zwsA==
+X-Received: by 10.194.110.37 with SMTP id hx5mr54351685wjb.149.1442424827574;
+        Wed, 16 Sep 2015 10:33:47 -0700 (PDT)
+Received: from localhost (cable-62-117-27-190.cust.telecolumbus.net. [62.117.27.190])
+        by smtp.gmail.com with ESMTPSA id bq7sm27597595wjc.31.2015.09.16.10.33.46
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Sep 2015 10:33:46 -0700 (PDT)
+X-Mailer: git-send-email 2.6.0.rc1.199.g678474c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278038>
 
-On Wed, Sep 16, 2015 at 10:06:10AM -0700, Junio C Hamano wrote:
+Translate 2 messages came from git.pot update in e447091
+(l10n: git.pot: v2.6.0 round 2 (3 improvements)).
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Wed, Sep 16, 2015 at 10:15:02AM +0200, Johannes Schindelin wrote:
-> >
-> >> Maybe we should stick to the established practice of the many, many
-> >> reentrant POSIX functions following the *_r() naming convention? I.e.
-> >> the reentrant version of localtime() is called localtime_r(), the
-> >> reentrant version of random() is called random_r() etc.
-> >> 
-> >> So I could see myself not needing an explanation if I had read
-> >> sha1_to_hex_r(...).
-> >
-> > I like this suggestion. By itself, the "_r" does not communicate as much
-> > as "_to" to me, but as long as the reader knows the "_r" idiom, it
-> > communicates much more.
-> >
-> > I'll switch to this unless there is any objection.
-> 
-> Fine by me.  Thanks.
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-I started on this, but realized something interesting as I was updating
-the docstrings. sha1_to_hex_r is truly reentrant. But
-find_unique_abbrev_r is not, as it calls has_sha1_file(), which touches
-lots of global data for the object lookup.
-
-I think it's probably OK, as long as I don't make the claim that it is
-truly reentrant.
-
--Peff
+diff --git a/po/de.po b/po/de.po
+index e5b523d..c9b4d16 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -10530,9 +10530,8 @@ msgstr ""
+ "hash[=<n>]] [--abbrev[=<n>]] [--tags] [--heads] [--] [<Muster>...] "
+ 
+ #: builtin/show-ref.c:11
+-#, fuzzy
+ msgid "git show-ref --exclude-existing[=<pattern>] < <ref-list>"
+-msgstr "git show-ref --exclude-existing[=Muster] < ref-list"
++msgstr "git show-ref --exclude-existing[=<Muster>] < <Referenzliste>"
+ 
+ #: builtin/show-ref.c:170
+ msgid "only show tags (can be combined with heads)"
+@@ -10761,9 +10760,8 @@ msgid "replace the tag if exists"
+ msgstr "das Tag ersetzen, wenn es existiert"
+ 
+ #: builtin/tag.c:609 builtin/update-ref.c:368
+-#, fuzzy
+ msgid "create a reflog"
+-msgstr "create_reflog"
++msgstr "Reflog erstellen"
+ 
+ #: builtin/tag.c:611
+ msgid "Tag listing options"
+-- 
+2.6.0.rc1.199.g678474c
