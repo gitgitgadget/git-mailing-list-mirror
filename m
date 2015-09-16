@@ -1,113 +1,93 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v7 1/3] worktree: add top-level worktree.c
-Date: Wed, 16 Sep 2015 16:32:40 -0400
-Message-ID: <CAPig+cRPbFw8oTQ63rPtp1cyKms9zi0QkZNvkOWZoxb+mnpZrA@mail.gmail.com>
-References: <1441402769-35897-1-git-send-email-rappazzo@gmail.com>
-	<1441402769-35897-2-git-send-email-rappazzo@gmail.com>
-	<CAPig+cQRx-uKZnnx2O0pG34HkcEdg1GbGNFd9PHdw+m0O3aJEA@mail.gmail.com>
-	<CANoM8SWP9YrZoUx5w9Do18uZf=5RrCV_ShvyaPQF4=9-vuFVbg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 15/67] convert trivial sprintf / strcpy calls to xsnprintf
+Date: Wed, 16 Sep 2015 16:35:30 -0400
+Message-ID: <20150916203530.GD3915@sigill.intra.peff.net>
+References: <20150915152125.GA27504@sigill.intra.peff.net>
+ <20150915153637.GO29753@sigill.intra.peff.net>
+ <CAPig+cR9n=hT3F-0uDbJT_Z9REe83-kFKR5XB6pVrHRe0Z14eA@mail.gmail.com>
+ <20150916094814.GB13966@sigill.intra.peff.net>
+ <xmqqh9muql2c.fsf@gitster.mtv.corp.google.com>
+ <20150916185256.GA2654@sigill.intra.peff.net>
+ <xmqq1tdyqj2l.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kb=dR3omuf1ji8AK9Dh0VCW8pWJ-twWkXXHdDV96RA2QA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
 	Git List <git@vger.kernel.org>
-To: Mike Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 22:32:50 2015
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Sep 16 22:35:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcJNn-0007Ed-0n
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 22:32:47 +0200
+	id 1ZcJQd-0002Ix-8j
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Sep 2015 22:35:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752563AbbIPUcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 16:32:42 -0400
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:36776 "EHLO
-	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752418AbbIPUcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 16:32:41 -0400
-Received: by vkfp126 with SMTP id p126so109009107vkf.3
-        for <git@vger.kernel.org>; Wed, 16 Sep 2015 13:32:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=1G4GsM7zI5dyDf7PJncy11e/knFlNZxTefDgI1F2MUY=;
-        b=Zke4eBJgKjZNG9/MiewC1OQ9en599KCKB+UxSK4itQUE4aKp4+aIxqhKF8Xv7CDbrh
-         eJW0ufM6LBAY7QpYBzXZ68aHLTTsIaprJYfpmVIXRZ03m8c9wcYtrXplx6+oUWsNqxWP
-         Za5SGuSXhI7QvD9bR0DrNOGWjeMHS/glBieNgz8B23r2aB9YADshoJSo4b9GeJ32M1cR
-         n9U/mP9OaRYTSS5XZdUqx0CWwEK6jwS6Ctn2Z37malw0LmfcQZ3DGwHiT7HjxglLF7H4
-         1HM2ynh9cbYhfdX0ASA1iQCmp2FE2YlFYqrW1pW3T6elMFpkjzPA7Myfzjlj0+ZEpCmI
-         6H2A==
-X-Received: by 10.31.6.20 with SMTP id 20mr31468664vkg.151.1442435560956; Wed,
- 16 Sep 2015 13:32:40 -0700 (PDT)
-Received: by 10.31.224.68 with HTTP; Wed, 16 Sep 2015 13:32:40 -0700 (PDT)
-In-Reply-To: <CANoM8SWP9YrZoUx5w9Do18uZf=5RrCV_ShvyaPQF4=9-vuFVbg@mail.gmail.com>
-X-Google-Sender-Auth: leG_PkarNm6xrD9FBo9c2PYrngY
+	id S1752818AbbIPUfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 16:35:39 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60334 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752791AbbIPUfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 16:35:38 -0400
+Received: (qmail 25071 invoked by uid 102); 16 Sep 2015 20:35:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 15:35:38 -0500
+Received: (qmail 23097 invoked by uid 107); 16 Sep 2015 20:35:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 16 Sep 2015 16:35:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Sep 2015 16:35:30 -0400
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kb=dR3omuf1ji8AK9Dh0VCW8pWJ-twWkXXHdDV96RA2QA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278064>
 
-On Mon, Sep 14, 2015 at 8:20 AM, Mike Rappazzo <rappazzo@gmail.com> wrote:
-> On Sat, Sep 12, 2015 at 10:39 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> +struct worktree {
->>> +       char *path;
->>> +       char *git_dir;
->>> +       char *head_ref;
->>> +       unsigned char head_sha1[20];
->>> +       int is_detached;
->>> +       int is_bare;
->>> +};
->>> +
->>> +struct worktree_list {
->>> +       struct worktree *worktree;
->>> +       struct worktree_list *next;
->>> +};
->>
->> I don't care too strongly, but an alternate approach (which I probably
->> would have taken) would be to have get_worktrees() simply return an
->> array of 'struct worktree' objects, hence no need for the additional
->> 'struct worktree_list'. The slight complication with this approach,
->> though, is that get_worktrees() either also needs to return the length
->> of the array, or the array should end with some sort of end-of-array
->> sentinel. An obvious sentinel would be path==NULL or git_dir==NULL or
->> all of the above.
->>
->> Client iteration is just about the same with the array approach as
->> with the linked-list approach.
->
-> I can't see what benefit this would provide.  I would sooner change
-> the returned list into
-> an array-backed list struct.  Alternatively, I think adding a
-> list_head pointer to this structure
-> could benefit client code.
+On Wed, Sep 16, 2015 at 12:19:10PM -0700, Stefan Beller wrote:
 
-The benefit is a reduction in complexity, which is an important goal.
-Linked lists are inherently more complex than arrays, requiring extra
-effort, and especially extra care, to manage the head, each "next"
-pointer (and possibly a tail pointer). Arrays are used often in Git,
-thus are familiar in this code-base, and Git has decent support for
-making their management relatively painless. Your suggestions of
-changing into "an array-backed list structure" or "adding list_head
-pointer" increase complexity, rather than reduce it.
+> > That will make future readers wonder "Is this a typo, and if it is,
+> > which index is a mistake I can fix?" and may lead to an unnecessary
+> > confusion.  I do not want to see a correctly written
+> >
+> >         xsnprintf(ownbuf[stage], sizeof(ownbuf[0]), "%o", ...);
+> >
+> > turned into
+> >
+> >         xsnprintf(ownbuf[0], sizeof(ownbuf[0]), "%o", ...);
+> >
+> > out of such a confusion.
+> 
+> So we could just not use the bracket notation, but the pointer then?
+> 
+>     xsnprintf(ownbuf[stage], sizeof(*ownbuf), "%o", ...);
 
-Aside from the complexity issue, arrays allow random access, whereas
-linked lists allow only sequential access. While this limitation may
-not impact your current, planned use of get_worktrees(), it places a
-potentially unnecessary restriction on future clients.
+IMHO that is even more confusing, as I expect sizeof(*ownbuf) to
+generally be dereferencing a pointer to a struct, and we would be
+writing to "ownbuf". There's not anything _wrong_ with what you've
+written, it's just using a syntax that in my mind generally applies to a
+different idiom, and I'd wonder if the writer got it wrong.
 
-And, as noted, client iteration is at least as convenient with arrays,
-if not moreso, due to the reduction in noise ("p++" rather than "p =
-p->next").
+> IMHO that would reasonably well tell you that we just care about the
+> size of one element there.
+> 
+> A funny thought:
+> 
+>      xsnprintf(ownbuf[stage], sizeof(ownbuf[-1]), "%o", ...);
+> 
+> should work as well as any reader would question the sanity
+> of a negative index.
 
-    struct worktree *p;
-    for (p = get_worktrees(); p->path; p++)
-        blarp(p);
+I'm not sure what the standard would have to say on that, as the
+expression invokes undefined behavior (but of course we're not really
+using the expression, only asking for the size). I tried to find any
+mention of non-constant indices with sizeof() in the standard, but
+couldn't.
 
-There are cases where linked lists are an obvious win, but this
-doesn't seem to be such a case. On the other hand, there are obvious
-benefits to making this an array, such as reduced complexity and
-removal of the sequential-access-only restriction.
+I think at this point I'm inclined to switch it back to the original
+sizeof(ownbuf[stage]), and we can deal with this if and when any
+compiler actually complains.
+
+-Peff
