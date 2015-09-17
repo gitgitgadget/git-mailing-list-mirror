@@ -1,256 +1,140 @@
-From: Ben Boeckel <mathstuf@gmail.com>
-Subject: [PATCH v6] remote: add get-url subcommand
-Date: Wed, 16 Sep 2015 20:19:16 -0400
-Message-ID: <1442449156-11995-1-git-send-email-mathstuf@gmail.com>
-References: <1438364321-14646-1-git-send-email-mathstuf@gmail.com>
-Cc: git@vger.kernel.org, Ben Boeckel <mathstuf@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 17 02:19:28 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 01/10] strbuf: Add strbuf_read_noblock
+Date: Wed, 16 Sep 2015 18:38:59 -0700
+Message-ID: <1442453948-9885-2-git-send-email-sbeller@google.com>
+References: <1442453948-9885-1-git-send-email-sbeller@google.com>
+Cc: peff@peff.net, gitster@pobox.com, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	vlovich@gmail.com, Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 17 03:39:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcMv9-0000NM-9N
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 02:19:27 +0200
+	id 1ZcOAS-0005uk-1O
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 03:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752793AbbIQATX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 20:19:23 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:36497 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752577AbbIQATW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 20:19:22 -0400
-Received: by ioii196 with SMTP id i196so5247650ioi.3
-        for <git@vger.kernel.org>; Wed, 16 Sep 2015 17:19:21 -0700 (PDT)
+	id S1753017AbbIQBjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 21:39:16 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:34359 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752854AbbIQBjO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 21:39:14 -0400
+Received: by padhy16 with SMTP id hy16so4687635pad.1
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 18:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QbRR8u+LPd4NneWuPvws60PCBuuiCGTslOMnfSOEYXc=;
-        b=NGt2cBukJ0DRPCDz2UeAjVBvKul5tcDssa45f4z+Uproo2OtflA89p6CEp1ym2BpK8
-         oeNtLWgylCB4UPMcaabAqXWcMa9Dmy6+KvF1WjTVsXRDmA1M7wYwWvcQQHawqFGa2CKC
-         yur0VIlJZmLphNo4XXx2/H7/qKatsxzTQZUFHKzsoTHDgQm3xS/gMB9JujwTQx1oBLYk
-         OA7Y8acuAw0XXr81idfVrIQveH4NyJAJ+JCoMCTQ+MCL+uYWyYezesi2d1YcEY1VL4QS
-         Gw/ruEzfvOg5eWwShEyodCz20qsM+Zy+pbTiz10iy48KXpZ/374Wyv75ECLpV5/Jum4h
-         lv2w==
-X-Received: by 10.107.6.21 with SMTP id 21mr1369693iog.9.1442449161667;
-        Wed, 16 Sep 2015 17:19:21 -0700 (PDT)
-Received: from localhost (146.sub-70-209-139.myvzw.com. [70.209.139.146])
-        by smtp.gmail.com with ESMTPSA id m25sm182716iod.32.2015.09.16.17.19.20
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Sep 2015 17:19:20 -0700 (PDT)
-X-Mailer: git-send-email 2.5.2
-In-Reply-To: <1438364321-14646-1-git-send-email-mathstuf@gmail.com>
+        bh=iKxXJmyPgeMbSX8TrSbBiw4UcfsOOn8N4UbxKbBwYVE=;
+        b=IRXDHyBg4bJFAOZZY6l2uvua8B9YjT5/Pk9XfYFS3odDg7heQlEUeA1qOgCWrmB+fi
+         3I2KOrY3slXT7AMG9rq+qpXhu9DVUY//lqrOS88rsC8TsLz2oFEufSYATpdgiw/ZVyBN
+         hiNB6DUxkIsAKVPog689+HNSzPAOCmLJpS9PJM6Ubnbyo3vO2kCp/ZKJC52/CKJ6jjea
+         Sbqqq3/C0YGwPhqouPq3laWnBFtisJDUAuHXfWAeaB+swsGb4yusWNUdD0MiCGtoxLgn
+         mBzDWIo/f9yAzuqB1aLTqGHdYrf/iuuh64Z2bSHFuNL3JiV6PmUXkn55XqxvXgzzE2Y0
+         jedQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=iKxXJmyPgeMbSX8TrSbBiw4UcfsOOn8N4UbxKbBwYVE=;
+        b=V10e4/JgCSisMW4NfhS/rAuKOVjR5SgJvWLVXIIrUEK76nr0zaq6P6eIllKqoGqevq
+         2QR8RCu+rrIWOkYPnnlR8+UdjK0eJqePhiyaKP996/rIs963YqdSDVHq452mA/cx1/M8
+         Rp/RTC6Wnqy3kw+gz+NO9Tb7iwDc8PCVkU5kITWxSkn34u4tZCJvYeHmw5HurPPiC5gj
+         kmA3pALAGmxwQHbI5IjNcZS4vHQDvoTw9FwlggRUaUOG8r/0q1USnvDGFjhWcTluAHsR
+         QO/tCDsrR/nmvG3yax6WAu/ZcXDIGNlzO9Cm28E2RUdGg4kwbpvP7tooJtbng+KfRt79
+         /1JA==
+X-Gm-Message-State: ALoCoQmgNcihr7OHYKyZIsGW97N8ps3kcT2jQlXY4gCLnadjrNuWj0K9Lv/mqmj07stWv8ZP958F
+X-Received: by 10.66.144.165 with SMTP id sn5mr67815033pab.122.1442453954108;
+        Wed, 16 Sep 2015 18:39:14 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:bde9:6711:470f:789])
+        by smtp.gmail.com with ESMTPSA id qy5sm581741pbb.16.2015.09.16.18.39.13
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Sep 2015 18:39:13 -0700 (PDT)
+X-Mailer: git-send-email 2.6.0.rc0.131.gf624c3d
+In-Reply-To: <1442453948-9885-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278091>
 
-Expanding `insteadOf` is a part of ls-remote --url and there is no way
-to expand `pushInsteadOf` as well. Add a get-url subcommand to be able
-to query both as well as a way to get all configured urls.
+We need to read from pipes without blocking in a later patch.
 
-Signed-off-by: Ben Boeckel <mathstuf@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/git-remote.txt | 10 ++++++++
- builtin/remote.c             | 59 ++++++++++++++++++++++++++++++++++++++++++++
- t/t5505-remote.sh            | 37 +++++++++++++++++++++++++++
- 3 files changed, 106 insertions(+)
+ strbuf.c | 25 +++++++++++++++++++++++--
+ strbuf.h |  6 ++++++
+ 2 files changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 4c6d6de..3c9bf45 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -15,6 +15,7 @@ SYNOPSIS
- 'git remote remove' <name>
- 'git remote set-head' <name> (-a | --auto | -d | --delete | <branch>)
- 'git remote set-branches' [--add] <name> <branch>...
-+'git remote get-url' [--push] [--all] <name>
- 'git remote set-url' [--push] <name> <newurl> [<oldurl>]
- 'git remote set-url --add' [--push] <name> <newurl>
- 'git remote set-url --delete' [--push] <name> <url>
-@@ -131,6 +132,15 @@ The named branches will be interpreted as if specified with the
- With `--add`, instead of replacing the list of currently tracked
- branches, adds to that list.
- 
-+'get-url'::
-+
-+Retrieves the URLs for a remote. Configurations for `insteadOf` and
-+`pushInsteadOf` are expanded here. By default, only the first URL is listed.
-++
-+With '--push', push URLs are queried rather than fetch URLs.
-++
-+With '--all', all URLs for the remote will be listed.
-+
- 'set-url'::
- 
- Changes URLs for the remote. Sets first URL for remote <name> that matches
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 181668d..e4c3ea1 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -18,6 +18,7 @@ static const char * const builtin_remote_usage[] = {
- 	N_("git remote prune [-n | --dry-run] <name>"),
- 	N_("git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]"),
- 	N_("git remote set-branches [--add] <name> <branch>..."),
-+	N_("git remote get-url [--push] [--all] <name>"),
- 	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
- 	N_("git remote set-url --add <name> <newurl>"),
- 	N_("git remote set-url --delete <name> <url>"),
-@@ -65,6 +66,11 @@ static const char * const builtin_remote_update_usage[] = {
- 	NULL
- };
- 
-+static const char * const builtin_remote_geturl_usage[] = {
-+	N_("git remote get-url [--push] [--all] <name>"),
-+	NULL
-+};
-+
- static const char * const builtin_remote_seturl_usage[] = {
- 	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
- 	N_("git remote set-url --add <name> <newurl>"),
-@@ -1467,6 +1473,57 @@ static int set_branches(int argc, const char **argv)
- 	return set_remote_branches(argv[0], argv + 1, add_mode);
+diff --git a/strbuf.c b/strbuf.c
+index cce5eed..4130ee2 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -357,7 +357,10 @@ size_t strbuf_fread(struct strbuf *sb, size_t size, FILE *f)
+ 	return res;
  }
  
-+static int get_url(int argc, const char **argv)
-+{
-+	int i, push_mode = 0, all_mode = 0;
-+	const char *remotename = NULL;
-+	struct remote *remote;
-+	const char **url;
-+	int url_nr;
-+	struct option options[] = {
-+		OPT_BOOL('\0', "push", &push_mode,
-+			 N_("query push URLs rather than fetch URLs")),
-+		OPT_BOOL('\0', "all", &all_mode,
-+			 N_("return all URLs")),
-+		OPT_END()
-+	};
-+	argc = parse_options(argc, argv, NULL, options, builtin_remote_geturl_usage, 0);
+-ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
++#define IGNORE_EAGAIN (1)
 +
-+	if (argc != 1)
-+		usage_with_options(builtin_remote_geturl_usage, options);
-+
-+	remotename = argv[0];
-+
-+	if (!remote_is_configured(remotename))
-+		die(_("No such remote '%s'"), remotename);
-+	remote = remote_get(remotename);
-+
-+	url_nr = 0;
-+	if (push_mode) {
-+		url = remote->pushurl;
-+		url_nr = remote->pushurl_nr;
-+	}
-+	/* else fetch mode */
-+
-+	/* Use the fetch URL when no push URLs were found or requested. */
-+	if (!url_nr) {
-+		url = remote->url;
-+		url_nr = remote->url_nr;
-+	}
-+
-+	if (!url_nr)
-+		die(_("no URLs configured for remote '%s'"), remotename);
-+
-+	if (all_mode) {
-+		for (i = 0; i < url_nr; i++)
-+			printf_ln("%s", url[i]);
-+	} else {
-+		printf_ln("%s", *url);
-+	}
-+
-+	return 0;
-+}
-+
- static int set_url(int argc, const char **argv)
++static ssize_t strbuf_read_internal(struct strbuf *sb, int fd,
++				    size_t hint, int flags)
  {
- 	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
-@@ -1576,6 +1633,8 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
- 		result = set_head(argc, argv);
- 	else if (!strcmp(argv[0], "set-branches"))
- 		result = set_branches(argc, argv);
-+	else if (!strcmp(argv[0], "get-url"))
-+		result = get_url(argc, argv);
- 	else if (!strcmp(argv[0], "set-url"))
- 		result = set_url(argc, argv);
- 	else if (!strcmp(argv[0], "show"))
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 7a8499c..9a55389 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -919,6 +919,19 @@ test_expect_success 'new remote' '
- 	cmp expect actual
- '
+ 	size_t oldlen = sb->len;
+ 	size_t oldalloc = sb->alloc;
+@@ -366,8 +369,16 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
+ 	for (;;) {
+ 		ssize_t cnt;
  
-+get_url_test () {
-+	cat >expect &&
-+	git remote get-url $* >actual &&
-+	test_cmp expect actual
+-		cnt = xread(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
++		cnt = read(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
+ 		if (cnt < 0) {
++			if (errno == EINTR)
++				continue;
++			if (errno == EAGAIN) {
++				if (flags & IGNORE_EAGAIN)
++					break;
++				else
++					continue;
++			}
+ 			if (oldalloc == 0)
+ 				strbuf_release(sb);
+ 			else
+@@ -384,6 +395,16 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
+ 	return sb->len - oldlen;
+ }
+ 
++ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
++{
++	return strbuf_read_internal(sb, fd, hint, 0);
 +}
 +
-+test_expect_success 'get-url on new remote' '
-+	echo foo | get_url_test someremote &&
-+	echo foo | get_url_test --all someremote &&
-+	echo foo | get_url_test --push someremote &&
-+	echo foo | get_url_test --push --all someremote
-+'
++ssize_t strbuf_read_noblock(struct strbuf *sb, int fd, size_t hint)
++{
++	return strbuf_read_internal(sb, fd, hint, IGNORE_EAGAIN);
++}
 +
- test_expect_success 'remote set-url bar' '
- 	git remote set-url someremote bar &&
- 	echo bar >expect &&
-@@ -961,6 +974,13 @@ test_expect_success 'remote set-url --push zot' '
- 	cmp expect actual
- '
+ #define STRBUF_MAXLINK (2*PATH_MAX)
  
-+test_expect_success 'get-url with different urls' '
-+	echo baz | get_url_test someremote &&
-+	echo baz | get_url_test --all someremote &&
-+	echo zot | get_url_test --push someremote &&
-+	echo zot | get_url_test --push --all someremote
-+'
-+
- test_expect_success 'remote set-url --push qux zot' '
- 	git remote set-url --push someremote qux zot &&
- 	echo qux >expect &&
-@@ -995,6 +1015,14 @@ test_expect_success 'remote set-url --push --add aaa' '
- 	cmp expect actual
- '
+ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
+diff --git a/strbuf.h b/strbuf.h
+index aef2794..23ca7aa 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -367,6 +367,12 @@ extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
+ extern ssize_t strbuf_read(struct strbuf *, int fd, size_t hint);
  
-+test_expect_success 'get-url on multi push remote' '
-+	echo foo | get_url_test --push someremote &&
-+	get_url_test --push --all someremote <<-\EOF
-+	foo
-+	aaa
-+	EOF
-+'
+ /**
++ * Same as strbuf_read, just returns non-blockingly by ignoring EAGAIN.
++ * The fd must have set O_NONBLOCK.
++ */
++extern ssize_t strbuf_read_noblock(struct strbuf *, int fd, size_t hint);
 +
- test_expect_success 'remote set-url --push bar aaa' '
- 	git remote set-url --push someremote bar aaa &&
- 	echo foo >expect &&
-@@ -1039,6 +1067,14 @@ test_expect_success 'remote set-url --add bbb' '
- 	cmp expect actual
- '
- 
-+test_expect_success 'get-url on multi fetch remote' '
-+	echo baz | get_url_test someremote &&
-+	get_url_test --all someremote <<-\EOF
-+	baz
-+	bbb
-+	EOF
-+'
-+
- test_expect_success 'remote set-url --delete .*' '
- 	test_must_fail git remote set-url --delete someremote .\* &&
- 	echo "YYY" >expect &&
-@@ -1108,6 +1144,7 @@ test_extra_arg rename origin newname
- test_extra_arg remove origin
- test_extra_arg set-head origin master
- # set-branches takes any number of args
-+test_extra_arg get-url origin newurl
- test_extra_arg set-url origin newurl oldurl
- # show takes any number of args
- # prune takes any number of args
++/**
+  * Read the contents of a file, specified by its path. The third argument
+  * can be used to give a hint about the file size, to avoid reallocs.
+  */
 -- 
-2.5.2
+2.6.0.rc0.131.gf624c3d
