@@ -1,106 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] strtoul_ui: reject negative values
-Date: Thu, 17 Sep 2015 18:28:33 +0200
-Message-ID: <1442507313-13028-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <xmqqpp1hj9yu.fsf@gitster.mtv.corp.google.com>
-Cc: git@vger.kernel.org, max@max630.net,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 17 18:28:52 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 01/10] strbuf: Add strbuf_read_noblock
+Date: Thu, 17 Sep 2015 12:30:12 -0400
+Message-ID: <20150917163012.GB25837@sigill.intra.peff.net>
+References: <1442453948-9885-1-git-send-email-sbeller@google.com>
+ <1442453948-9885-2-git-send-email-sbeller@google.com>
+ <xmqqtwqtja6j.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	jrnieder@gmail.com, johannes.schindelin@gmail.com,
+	Jens.Lehmann@web.de, vlovich@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 17 18:30:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zcc3G-0007cc-Pw
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 18:28:51 +0200
+	id 1Zcc4k-00014M-IO
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 18:30:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752471AbbIQQ2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 12:28:47 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42301 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752015AbbIQQ2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 12:28:46 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8HGSXZ3019450
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 17 Sep 2015 18:28:33 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8HGSaRK028666;
-	Thu, 17 Sep 2015 18:28:36 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1Zcc31-0003cA-Sb; Thu, 17 Sep 2015 18:28:35 +0200
-X-Mailer: git-send-email 2.5.0.402.g8854c44
-In-Reply-To: <xmqqpp1hj9yu.fsf@gitster.mtv.corp.google.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 17 Sep 2015 18:28:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t8HGSXZ3019450
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1443112116.37196@pEoya2MJRFUiUDEd/B223g
+	id S1752316AbbIQQaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 12:30:16 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60889 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751984AbbIQQaP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 12:30:15 -0400
+Received: (qmail 9475 invoked by uid 102); 17 Sep 2015 16:30:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Sep 2015 11:30:14 -0500
+Received: (qmail 31742 invoked by uid 107); 17 Sep 2015 16:30:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Sep 2015 12:30:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Sep 2015 12:30:12 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqtwqtja6j.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278132>
 
-strtoul_ui uses strtoul to get a long unsigned, then checks that casting
-to unsigned does not lose information and return the casted value.
+On Thu, Sep 17, 2015 at 09:13:40AM -0700, Junio C Hamano wrote:
 
-On 64 bits architecture, checking that the cast does not change the value
-catches most errors, but when sizeof(int) == sizeof(long) (e.g. i386),
-the check does nothing. Unfortunately, strtoul silently accepts negative
-values, and as a result strtoul_ui("-1", ...) raised no error.
+> And your new caller that does O_NONBLOCK wants to do more than
+> looping upon EWOULDBLOCK.  It certainly would not want us to loop
+> here.
+> 
+> So I wonder if you can just O_NONBLOCK the fd and use the usual
+> strbuf_read(), i.e. without any change in this patch, and update
+> xread() to _unconditionally_ return when read(2) says EAGAIN or
+> EWOULDBLOCK.
+> 
+> What would that break?
 
-This patch catches negative values before it's too late, i.e. before
-calling strtoul.
+Certainly anybody who does not realize their descriptor is O_NONBLOCK
+and is using the spinning for correctness. I tend to think that such
+sites are wrong, though, and would benefit from us realizing they are
+spinning.
 
-Reported-by: Max Kirillov <max@max630.net>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Junio C Hamano <gitster@pobox.com> writes:
+But I think you can't quite get away with leaving strbuf_read untouched
+in this case. On error, it wants to restore the original value of the
+strbuf before the strbuf_read call. Which means that we throw away
+anything read into the strbuf before we get EAGAIN, and the caller never
+gets to see it.
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> This patch catches negative values before it's too late, i.e. before
->> calling strtoul. We still silently accept very large integers that wrap
->> to a valid "unsigned int".
->
-> Is the last statement correct?  A very large long uint that wrap to
-> uint would not fit in long uint and you would get ERANGE, no?
+So I think we would probably want to treat EAGAIN specially: return -1
+to signal to the caller but _don't_ truncate the strbuf.
 
-Indeed. strtoul happily accepts negative values, but not overly large
-ones.
+Arguably we should actually return the number of bytes we _did_ read,
+but then caller cannot easily tell the difference between EOF and
+EAGAIN.
 
-I removed the sentence from the message. Actually, I think we are now
-accepting exactly the right interval of values.
-
->> It should be merged before Kartik's series (or inserted at the start
->> of the series) so that we get the fix before the test breakage.
->
-> Which one of his series?
-
-kn/for-each-tag, which uses strtoul_ui for align:<num> and
-content:lines=<num>.
-
- git-compat-util.h | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f649e81..1df82fa 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -814,6 +814,9 @@ static inline int strtoul_ui(char const *s, int base, unsigned int *result)
- 	char *p;
- 
- 	errno = 0;
-+	/* negative values would be accepted by strtoul */
-+	if (strchr(s, '-'))
-+		return -1;
- 	ul = strtoul(s, &p, base);
- 	if (errno || *p || p == s || (unsigned int) ul != ul)
- 		return -1;
--- 
-2.5.0.402.g8854c44
+-Peff
