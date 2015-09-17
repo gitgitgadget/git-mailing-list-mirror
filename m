@@ -1,64 +1,73 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: On a personal note
-Date: Thu, 17 Sep 2015 20:29:10 +0700
-Message-ID: <CACsJy8AcK8hAkMowA0t5SusJDTYZDWZCFN5JDs2f-puZcJAfhg@mail.gmail.com>
-References: <alpine.DEB.1.00.1509031156510.29350@s15462909.onlinehome-server.info>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v4 3/8] branch: roll show_detached HEAD into regular ref_list
+Date: Thu, 17 Sep 2015 16:18:42 +0200
+Message-ID: <vpqpp1hqgcd.fsf@anie.imag.fr>
+References: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
+	<1442129035-31386-4-git-send-email-Karthik.188@gmail.com>
+	<xmqqzj0ovlno.fsf@gitster.mtv.corp.google.com>
+	<CAOLa=ZQ51+TKvOiJvWa-emmJJGirAqkr9m0a_7BrQ2UbiSJdjA@mail.gmail.com>
+	<CAOLa=ZQxounTiJk0t+zB2-7=UQa8oL+uJ9EQpTkWL7kYFHjxwQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git-for-windows@googlegroups.com,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Sep 17 15:29:46 2015
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 17 16:19:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcZFw-0002td-N6
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 15:29:45 +0200
+	id 1Zca1Z-0007a9-4Z
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 16:18:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190AbbIQN3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 09:29:40 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:32918 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792AbbIQN3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 09:29:40 -0400
-Received: by iofh134 with SMTP id h134so21624375iof.0
-        for <git@vger.kernel.org>; Thu, 17 Sep 2015 06:29:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=veqnrfklcrDxQ7fqJKPBZ2ZmGxsINgAnb2oJHc2BIHc=;
-        b=oFnPiYOi6EuoQuQZirHyFSu4bFZr5OHPZt/asAvyitjrsxkawbqlLmkQuEC1yvHDow
-         GMdHYzHClQ1pSYShfh7zqsjjMQ1RM5e89NQvqmfpNUcBotkG5c+L1V3W/ib3/rcEKXOC
-         xUytXfgn56RwSHNyob0RsfulRgSoPxsRVWzPrLPc/58D1VlT5tDiPqOu3TG95iVM2XBU
-         09YA/Nvh1yE4OeywmV8aupSuFs+QY0pUJRaiKwxqggEBgA+1EM2lQ+Rgz5tjYpSb9SPv
-         Ltdp3Hco33SGfKl9jue2Edky0OLlPjNDcQO0qU/WfGTFBbO0RxyHR+sHK8AxznkIIuQC
-         mTsg==
-X-Received: by 10.107.131.134 with SMTP id n6mr6078387ioi.192.1442496579423;
- Thu, 17 Sep 2015 06:29:39 -0700 (PDT)
-Received: by 10.107.19.227 with HTTP; Thu, 17 Sep 2015 06:29:10 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1509031156510.29350@s15462909.onlinehome-server.info>
+	id S1751634AbbIQOSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 10:18:51 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38862 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751175AbbIQOSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 10:18:50 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8HEIetK028036
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 17 Sep 2015 16:18:40 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8HEIgXu026064;
+	Thu, 17 Sep 2015 16:18:42 +0200
+In-Reply-To: <CAOLa=ZQxounTiJk0t+zB2-7=UQa8oL+uJ9EQpTkWL7kYFHjxwQ@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 17 Sep 2015 15:17:06 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 17 Sep 2015 16:18:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t8HEIetK028036
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1443104323.89981@gEQdkmCNW1Xqz6K9LpOi0A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278116>
 
-On Thu, Sep 3, 2015 at 5:00 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hey all,
->
-> yes, it is true: since mid-August I am working for Microsoft. Over a
-> year ago, I got into contact with the Visual Studio Online group at
-> Microsoft, of which I am now a happy member. A large part of my mission
-> is to improve the experience of Git for Windows. This is very exciting
-> to me: I finally can focus pretty much full time on something that I
-> could only address in my spare time previously.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Is upstreaming msysgit-specific patches in the roadmap? It would be
-very nice to have everything in one tree (or at least keep the two
-trees as close as possible).
+> So either we could introduce a new atom for sorting something like
+> `branch_sort` which uses the FILTER_REFS_(DETACHED_HEAD | BRANCHES |
+> REMOTES)
+
+I don't think you need a new atom. You can just change the sorting
+function to consider that detached HEAD is always first, and when
+comparing two non-detached-HEAD branches, use the atom supplied by the
+user.
+
+That would mean the detached HEAD would be displayed first regardless of
+--sort (which is the case right now).
+
+Introducing a new atom would mean that "git branch --sort authorname"
+would not use this new atom, hence the HEAD would be sorted like the
+others. I don't know if this is good or bad.
+
 -- 
-Duy
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
