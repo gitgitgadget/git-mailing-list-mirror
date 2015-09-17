@@ -1,109 +1,95 @@
-From: Remi Pommarel <repk@triplefau.lt>
-Subject: [PATCH] Makefile: Change library order for static linking
-Date: Thu, 17 Sep 2015 23:12:12 +0200
-Message-ID: <1442524332-10180-1-git-send-email-repk@triplefau.lt>
-Cc: Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Remi Pommarel <repk@triplefau.lt>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 17 21:14:43 2015
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: On a personal note
+Date: Thu, 17 Sep 2015 20:54:49 +0200
+Organization: gmx
+Message-ID: <a6ea2cc0231a0fc311b45b8d6edbd305@dscho.org>
+References: <alpine.DEB.1.00.1509031156510.29350@s15462909.onlinehome-server.info>
+ <CACsJy8AcK8hAkMowA0t5SusJDTYZDWZCFN5JDs2f-puZcJAfhg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git-for-windows@googlegroups.com,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 17 21:15:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zcedm-0004kF-KN
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 21:14:43 +0200
+	id 1Zcee6-0005Co-Gv
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 21:15:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751339AbbIQTOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 15:14:37 -0400
-Received: from slow1-d.mail.gandi.net ([217.70.178.86]:48785 "EHLO
-	slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751104AbbIQTOg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 15:14:36 -0400
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-	by slow1-d.mail.gandi.net (Postfix) with ESMTP id 68B9B4F618D
-	for <git@vger.kernel.org>; Thu, 17 Sep 2015 21:13:23 +0200 (CEST)
-Received: from mfilter18-d.gandi.net (mfilter18-d.gandi.net [217.70.178.146])
-	by relay2-d.mail.gandi.net (Postfix) with ESMTP id 22745C5A44;
-	Thu, 17 Sep 2015 21:13:21 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter18-d.gandi.net
-Received: from relay2-d.mail.gandi.net ([IPv6:::ffff:217.70.183.194])
-	by mfilter18-d.gandi.net (mfilter18-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id zTSQfPeWcQUk; Thu, 17 Sep 2015 21:13:19 +0200 (CEST)
-X-Originating-IP: 81.57.43.44
-Received: from localhost (mon75-1-81-57-43-44.fbx.proxad.net [81.57.43.44])
-	(Authenticated sender: repk@triplefau.lt)
-	by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 75BA3C5A42;
-	Thu, 17 Sep 2015 21:13:18 +0200 (CEST)
-X-Mailer: git-send-email 2.0.1
+	id S1751488AbbIQTO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 15:14:58 -0400
+Received: from mout-xforward.gmx.net ([82.165.159.40]:51194 "EHLO
+	mout-xforward.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104AbbIQTO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 15:14:56 -0400
+X-Greylist: delayed 1204 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2015 15:14:56 EDT
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LcVOE-1YvN9Q1afm-00jq6s; Thu, 17 Sep 2015 20:54:50
+ +0200
+In-Reply-To: <CACsJy8AcK8hAkMowA0t5SusJDTYZDWZCFN5JDs2f-puZcJAfhg@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:ZR//JXfDHg/NPkdIojg2tRPQDrO+Rr7LTgJGT6oe8nTMsMvThBa
+ P9uit1k+7c2ZwNX1EQ4CcWSPF17gDWE1bqAUutvNDLUDE82qPBRufkXhm/PUH9dYanVAvWE
+ IFbdH6qPe1Uu8FortqGJ5ZDrA7BdtR/3yURUkcEz4KtqOgtdnD7BzecE+GhGiEC0bp1vWH5
+ TbBjs19/w4L2Jy8MKRe6w==
+X-UI-Out-Filterresults: junk:10;V01:K0:6F5GPpf8zOM=:82qlSLAzdsFF4dUXqmHu1ZkR
+ 2+dMF/BD72wdQ3CRqxsdzeEej6jgwCkjqaH5M2pEk5PDn0n29WABmYIQdhLeEv/UKD0lK7iD0
+ qLlbYKWnHmmCI30JFBfK8nbpF1EKlREa8ABixZZuWtPandzdbJtf0UvSGbj1Edl6V50BWcfZI
+ FwunJ1y1ple75ajU9CrO0rdwOlrVuuVIqHt7uWH0deLFmkfRNfUsbEa2tMNt8YH2kCNHxR1mf
+ seGiGlEcXCdEM6cR4ePTBTh6rbIugT2/ekPaJ7H5UUKxUL2ByYodhB8T+yPATMEzMZ0edGBJk
+ JiQazYbYXCC+XDokHHnYET2f2/X3CfM1fderbnpHRTzl/W7EXuMjQKJvIIDaejFwM6HY4x1zh
+ CgzJcFM3jrXkZ8U7YsW37U9JFPC98UZYkGBUycNmM9izECpfomT956eOEcF3ow4g7ki/2dg2y
+ AxBL6M6sWqF3oUkq6nozfYK/IRwBIlssQ56gJlKPsFC2ikN/zwybcBTGDgPwnuN5B2jLhdRWr
+ B2Jd4GfP5/eBh2koTdyt+N9kXztt6FZCCBbqufzxFyWjGVGzfkY7dfGJRYL+fYE8nYG4NI2Xe
+ tTmTVftNXH2Xu8iLLuvgfvgIr4p1PZcBXoE5tQT/rO560G2z2bAjt9R8wzSyysRkYT3l5Frzh
+ feeet1jXYygKcMitpEmnlpbK9nZsvKmSHO01Epc5OY+aKNDUHpg9hwMJ+MDtItRBcxywvfHIK
+ lsII5gOxDPK2tgsClweQrufNTBVckHGhIXPQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278160>
 
-For static linking especially library order while linking is important. For
-example libssl contains symbol from libcrypto so the farmer should be linked
-before the latter. The global link order should be libcurl then libssl then
-libcrypto then libintl and finally zlib.
+Hi Duy,
 
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
----
- Makefile | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+On 2015-09-17 15:29, Duy Nguyen wrote:
+> On Thu, Sep 3, 2015 at 5:00 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>>
+>> yes, it is true: since mid-August I am working for Microsoft. Over a
+>> year ago, I got into contact with the Visual Studio Online group at
+>> Microsoft, of which I am now a happy member. A large part of my mission
+>> is to improve the experience of Git for Windows. This is very exciting
+>> to me: I finally can focus pretty much full time on something that I
+>> could only address in my spare time previously.
+> 
+> Is upstreaming msysgit-specific patches in the roadmap? It would be
+> very nice to have everything in one tree (or at least keep the two
+> trees as close as possible).
 
-diff --git a/Makefile b/Makefile
-index 81ac5bb..26a483a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1030,7 +1030,6 @@ ifdef HAVE_ALLOCA_H
- endif
- 
- IMAP_SEND_BUILDDEPS =
--IMAP_SEND_LDFLAGS = $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
- 
- ifdef NO_CURL
- 	BASIC_CFLAGS += -DNO_CURL
-@@ -1087,6 +1086,7 @@ else
- 		endif
- 	endif
- endif
-+IMAP_SEND_LDFLAGS += $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
- 
- ifdef ZLIB_PATH
- 	BASIC_CFLAGS += -I$(ZLIB_PATH)/include
-@@ -1117,7 +1117,7 @@ ifdef NO_OPENSSL
- 	LIB_4_CRYPTO =
- else
- ifdef NEEDS_SSL_WITH_CRYPTO
--	LIB_4_CRYPTO = $(OPENSSL_LINK) -lcrypto -lssl
-+	LIB_4_CRYPTO = $(OPENSSL_LINK) -lssl -lcrypto
- else
- 	LIB_4_CRYPTO = $(OPENSSL_LINK) -lcrypto
- endif
-@@ -1972,10 +1972,10 @@ git-imap-send$X: imap-send.o $(IMAP_SEND_BUILDDEPS) GIT-LDFLAGS $(GITLIBS)
- 
- git-http-fetch$X: http.o http-walker.o http-fetch.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
--		$(LIBS) $(CURL_LIBCURL)
-+		$(CURL_LIBCURL) $(LIBS)
- git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
--		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-+		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
- 
- git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAGS $(GITLIBS) $(VCSSVN_LIB)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS) \
-@@ -1989,7 +1989,7 @@ $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
- 
- $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
--		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-+		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
- 
- $(LIB_FILE): $(LIB_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $^
--- 
-2.0.1
+Please strike that name "msysgit" from your memory. Just remember "Git for Windows". (The name "msysgit" *never* referred to "Git for Windows", but only to the development environment used to generate Git for Windows 1.x). Please. Thank you.
+
+And yes, the roadmap is pretty clear from the GitHub tickets, e.g. this one:
+
+https://github.com/git-for-windows/git/issues/285
+
+Please note that I held off this week for three reasons:
+
+1) I was submitting patches to the MSys2 and Cygwin upstream first,
+
+2) I was busy fixing e.g. that bug where home directories containing non-ASCII characters were handled incorrectly (and generally trying to keep the tickets in https://github.com/git-for-windows/git under something similar to control), and
+
+3) what with Peff's and Stefan's huge patch series, I did not want to overload Junio.
+
+Please note that I already started submitting patches, though:
+
+http://thread.gmane.org/gmane.comp.version-control.git/277542
+http://article.gmane.org/gmane.comp.version-control.git/277731
+
+Ciao,
+Dscho
