@@ -1,87 +1,109 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4 3/8] branch: roll show_detached HEAD into regular ref_list
-Date: Thu, 17 Sep 2015 19:08:38 +0200
-Message-ID: <vpqmvwlm0rt.fsf@anie.imag.fr>
-References: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
-	<1442129035-31386-4-git-send-email-Karthik.188@gmail.com>
-	<xmqqzj0ovlno.fsf@gitster.mtv.corp.google.com>
-	<CAOLa=ZQ51+TKvOiJvWa-emmJJGirAqkr9m0a_7BrQ2UbiSJdjA@mail.gmail.com>
-	<CAOLa=ZQxounTiJk0t+zB2-7=UQa8oL+uJ9EQpTkWL7kYFHjxwQ@mail.gmail.com>
-	<vpqpp1hqgcd.fsf@anie.imag.fr>
-	<xmqqh9mtkrg0.fsf@gitster.mtv.corp.google.com>
-	<vpqio79oxva.fsf@anie.imag.fr>
-	<xmqqeghxj8i1.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 01/10] strbuf: Add strbuf_read_noblock
+Date: Thu, 17 Sep 2015 13:13:08 -0400
+Message-ID: <20150917171308.GA28046@sigill.intra.peff.net>
+References: <1442453948-9885-1-git-send-email-sbeller@google.com>
+ <1442453948-9885-2-git-send-email-sbeller@google.com>
+ <xmqqtwqtja6j.fsf@gitster.mtv.corp.google.com>
+ <20150917163012.GB25837@sigill.intra.peff.net>
+ <xmqq6139j84n.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	jrnieder@gmail.com, johannes.schindelin@gmail.com,
+	Jens.Lehmann@web.de, vlovich@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 19:08:54 2015
+X-From: git-owner@vger.kernel.org Thu Sep 17 19:13:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zccg0-0001ii-Pr
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 19:08:53 +0200
+	id 1ZcckL-0007ri-KX
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 19:13:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751908AbbIQRIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 13:08:49 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42988 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751418AbbIQRIs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 13:08:48 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8HH8aHb023925
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 17 Sep 2015 19:08:36 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8HH8cKV029125;
-	Thu, 17 Sep 2015 19:08:38 +0200
-In-Reply-To: <xmqqeghxj8i1.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 17 Sep 2015 09:49:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 17 Sep 2015 19:08:36 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t8HH8aHb023925
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1443114516.85145@b5DhSBCBZFlpw+fLzF1Byw
+	id S1751800AbbIQRNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 13:13:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60962 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751604AbbIQRNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 13:13:11 -0400
+Received: (qmail 12174 invoked by uid 102); 17 Sep 2015 17:13:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Sep 2015 12:13:11 -0500
+Received: (qmail 32529 invoked by uid 107); 17 Sep 2015 17:13:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 17 Sep 2015 13:13:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Sep 2015 13:13:08 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq6139j84n.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278145>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Sep 17, 2015 at 09:58:00AM -0700, Junio C Hamano wrote:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> But that's still workable: struct ref_sorting could contain a flag
->> "head_first" that would be set by ref_default_sorting() and only it, and
->> then read by cmp_ref_sorting.
->
-> Hmm, I am still puzzled.  "refname" atom would expand to things like
-> "HEAD", "refs/heads/master", etc., so I still do not see a need for
-> head_first option at all.  "HEAD" will sort before "refs/anything"
-> always, no?
+> > Certainly anybody who does not realize their descriptor is O_NONBLOCK
+> > and is using the spinning for correctness. I tend to think that such
+> > sites are wrong, though, and would benefit from us realizing they are
+> > spinning.
+> 
+> With or without O_NONBLOCK, not looping around xread() _and_ relying
+> on the spinning for "correctness" means the caller is not getting
+> correctness anyway, I think, because xread() does return a short
+> read, and we deliberately and explicitly do so since 0b6806b9
+> (xread, xwrite: limit size of IO to 8MB, 2013-08-20).
 
-Ah, you mean, the alphabetic order on refname already sorts HEAD first
-because other refs will start with "refs/"? So, there's no need for any
-special case at all indeed. Nothing to teach compare_refs, it's already
-doing it.
+I think they have to loop for correctness, but they may do this:
 
-However, just relying on this seems a bit fragile to me: if we ever
-allow listing e.g. FETCH_HEAD as a reference, then we would get
+  if (xread(fd, buf, len) < 0)
+	die_errno("OMG, an error!");
 
-  FETCH_HEAD
-* (HEAD detached at ...)
-  master
+which is not correct if "fd" is unknowingly non-blocking. As Stefan
+mentioned, we do not set O_NONBLOCK ourselves very much, but I wonder if
+we could inherit it from the environment in some cases.
 
-which seems weird to me. But we can decide "if sorting on refname, then
-HEAD always comes first anyway".
+The spinning behavior is not great, but does mean that we spin and
+continue rather than bailing with an error.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> > But I think you can't quite get away with leaving strbuf_read untouched
+> > in this case. On error, it wants to restore the original value of the
+> > strbuf before the strbuf_read call. Which means that we throw away
+> > anything read into the strbuf before we get EAGAIN, and the caller never
+> > gets to see it.
+> 
+> I agree we need to teach strbuf_read() that xread() is now nicer on
+> O_NONBLOCK; perhaps like this?
+> 
+>  strbuf.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/strbuf.c b/strbuf.c
+> index cce5eed..49104d7 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -368,6 +368,8 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
+>  
+>  		cnt = xread(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
+>  		if (cnt < 0) {
+> +			if (errno == EAGAIN || errno == EWOULDBLOCK)
+> +				break;
+>  			if (oldalloc == 0)
+>  				strbuf_release(sb);
+>  			else
+
+If we get EAGAIN on the first read, this will return "0", and I think we
+end up in the "was it EOF, or EAGAIN?" situation I mentioned earlier.
+If we reset errno to "0" at the top of the function, we could get around
+one problem, but it still makes an annoying interface: the caller has to
+check errno for any 0-return to figure out if it was really EOF, or just
+EAGAIN.
+
+If we return -1, though, we have a similar annoyance. If the caller
+notices a -1 return value and finds EAGAIN, they still may need to check
+sb->len to see if they made forward progress and have data they should
+be dealing with.
+
+-Peff
