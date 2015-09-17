@@ -1,7 +1,7 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 08/10] git submodule update: cmd_update_recursive
-Date: Wed, 16 Sep 2015 18:39:06 -0700
-Message-ID: <1442453948-9885-9-git-send-email-sbeller@google.com>
+Subject: [PATCH 06/10] git submodule update: Redirect any output to stderr
+Date: Wed, 16 Sep 2015 18:39:04 -0700
+Message-ID: <1442453948-9885-7-git-send-email-sbeller@google.com>
 References: <1442453948-9885-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, gitster@pobox.com, jrnieder@gmail.com,
 	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
@@ -13,124 +13,81 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcOAo-0006Ku-C5
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 03:39:42 +0200
+	id 1ZcOAp-0006Ku-3V
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 03:39:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753284AbbIQBjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 21:39:36 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:36785 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753176AbbIQBjX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 21:39:23 -0400
-Received: by padhk3 with SMTP id hk3so4582420pad.3
-        for <git@vger.kernel.org>; Wed, 16 Sep 2015 18:39:22 -0700 (PDT)
+	id S1753298AbbIQBjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 21:39:40 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33358 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753156AbbIQBjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 21:39:20 -0400
+Received: by pacex6 with SMTP id ex6so4761959pac.0
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 18:39:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0qtwT9c9HELpQseOlcAlPf8s4/0uWn2O0eL7f2ml9nQ=;
-        b=Y0SlEiHOrHwxKIfIoLe9xd/01es2GR3P7HI3LrAMip/70/vRAIQb9/9Jo7onMHhuWF
-         wpIbmMdZ4ozLfrGpEM4AP47vg0cYGIcmYTzyu/hK+/m4nM+7eOXdmNWjwOfnmidLBm0B
-         v7c4+0FS1LyQWGAXaGWE/A7rYulVCLQjUGgHd5ca1DCtKe5iqehpoJMUP3jYhqJ9RtYi
-         M9j6pvwBVMblpPzcmXyGVWi5blyd+nLnqLyYeBSSrD6/HjuhyDXo4qZ97DPXABHv52Ez
-         LkgkIVCEgFU5Q4quLfLxDt/onE6LOBMKJIEb12KmDDfj5UUwstNcc5BLe/jv9pTlxpos
-         XTOw==
+        bh=2PPOmbc+plnS7+6vMB9bpQvVmmsGtGwZqVwun/QUtb8=;
+        b=nuCkE9PkTHeWQI6c0gMNyBZfxtU+BTBJXE455/GkhLfUQ028Ae+MOwxvy2Kfim2ITk
+         Gm0Ig56WNGEIWAo0fVeZ/AxWTR5ET3k+aGvsaR7HCOQOt951JNOIdjSQ7TH7U1IHSGVa
+         bePDs6w63AguHsQ+v1gLoetdi739ImM1wUJ/kNnZYQZnSCH8vX6IotUqQFaO1qUy7ZQp
+         BihKq628P2Jkr/npIjy+QdLRcbLWINlfQg2IVSIm1nnPIgJwDrXLcEgC1wKL/6nTEDjd
+         3Tcrxg7TkOmsvFKB7E1/ZMqng766LVa5z+gLBoWCyKNqHbIYT0bC5j+e9vPnuZyt0GkC
+         LkMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0qtwT9c9HELpQseOlcAlPf8s4/0uWn2O0eL7f2ml9nQ=;
-        b=j2Ik1EXaEaLJ/VF742LztEngj1tngQbu9yDnMN1uAP1+SxY0wJ+ctOiMR3wxTlX1iV
-         0vVN/dNGoNMP/rnYH4eJcrjLgOQCJL96iQXfF1+Ef8VClgVhT/BcTrA2HX1VnlQTn2Hd
-         Fw8ik50eqq7JiCOjWG5AewbLwPoABBkC4QoeytJmmCUwQ9LX+yix7w2LZc6/+5iswdh+
-         gif2zaO7ekuk+qkrGndAlUBIUl3ngDnIaBpwTe9UFUTQfMgEMWgjmnFng6x2ypPXe1is
-         qULdbvtibszOivfDQwO8191xGCvtXJEvbi7N3GIRZJe8uKBnML+mTU7+3Kp1EBijJqIJ
-         jDlQ==
-X-Gm-Message-State: ALoCoQmyR+SHjZxKdlXFLoOa8suU0Nvk/XMBdzG2zMGIt+K3uRJv6690a+LV/+HUSVxaBC+h/D9D
-X-Received: by 10.68.69.79 with SMTP id c15mr13714963pbu.90.1442453962646;
-        Wed, 16 Sep 2015 18:39:22 -0700 (PDT)
+        bh=2PPOmbc+plnS7+6vMB9bpQvVmmsGtGwZqVwun/QUtb8=;
+        b=JYBruADHzBX7HpBfuV+1Sdy+95feVqmHnQzu2cHUEGu7e3GJ3Q8DkdeAtIegbZY16N
+         6B6KvCvQQuPCvylhlwdmN4GSg/4RjIHfuvt/sdxG67qDGU6RT3RiTBUEwiDxFglO4yUj
+         POrxWDY+vJiQDts6sbfo8r34Lywc8NnMSGYQD4fzEghBJAuzWqlydd/C9/3KDeEbrbY5
+         gsZ8Y6b09vKQKde3i3dGf146L10PXUd55SNUU/I2e4P4xRBDoZ+oMp4pf3xAml7gWr5v
+         YmR75RWS/8krI4zqaQ92SC2O6qlOA8+3itfydJPvPLOqRqvqnxPSHmFWv44ih3HKwh9U
+         J40Q==
+X-Gm-Message-State: ALoCoQknH36qd2bhZnRtn1M6zuAXa21qiHHcad9d4GrUremMSaxUQv0DS0mk51PGkxfQ0v2EV+vc
+X-Received: by 10.66.253.170 with SMTP id ab10mr66381798pad.135.1442453960257;
+        Wed, 16 Sep 2015 18:39:20 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:bde9:6711:470f:789])
-        by smtp.gmail.com with ESMTPSA id lc9sm562479pbc.52.2015.09.16.18.39.21
+        by smtp.gmail.com with ESMTPSA id dh1sm564059pbd.49.2015.09.16.18.39.19
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 16 Sep 2015 18:39:22 -0700 (PDT)
+        Wed, 16 Sep 2015 18:39:19 -0700 (PDT)
 X-Mailer: git-send-email 2.6.0.rc0.131.gf624c3d
 In-Reply-To: <1442453948-9885-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278100>
 
-split the recursion part out to its own function
+There are no tests, which fail by this.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- git-submodule.sh | 47 ++++++++++++++++++++++++++---------------------
- 1 file changed, 26 insertions(+), 21 deletions(-)
+ git-submodule.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 3ccb0b6..52c2967 100755
+index 8b0eb9a..7ef3247 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -582,6 +582,31 @@ cmd_deinit()
- 	done
- }
+@@ -663,7 +663,7 @@ cmd_update()
+ 		die_if_unmatched "$mode"
+ 		if test "$stage" = U
+ 		then
+-			echo >&2 "Skipping unmerged submodule $prefix$sm_path"
++			say >&2 "Skipping unmerged submodule $prefix$sm_path"
+ 			continue
+ 		fi
+ 		name=$(git submodule--helper name "$sm_path") || exit
+@@ -684,7 +684,7 @@ cmd_update()
  
-+
-+cmd_update_recursive()
-+{
-+	if test -n "$recursive"
-+	then
-+		(
-+			prefix="$prefix$sm_path/"
-+			clear_local_git_env
-+			cd "$sm_path" &&
-+			eval cmd_update
-+		)
-+		res=$?
-+		if test $res -gt 0
-+		then
-+			die_msg="$(eval_gettext "Failed to recurse into submodule path '\$displaypath'")"
-+			if test $res -eq 1
-+			then
-+				err="${err};$die_msg"
-+			else
-+				die_with_status $res "$die_msg"
-+			fi
-+		fi
-+	fi
-+}
-+
- #
- # Update each submodule path to correct revision, using clone and checkout as needed
- #
-@@ -790,27 +815,7 @@ Maybe you want to use 'update --init'?")"
- 			fi
+ 		if test "$update_module" = "none"
+ 		then
+-			echo "Skipping submodule '$displaypath'"
++			say >&2 "Skipping submodule '$displaypath'"
+ 			continue
  		fi
  
--		if test -n "$recursive"
--		then
--			(
--				prefix="$prefix$sm_path/"
--				clear_local_git_env
--				cd "$sm_path" &&
--				eval cmd_update
--			)
--			res=$?
--			if test $res -gt 0
--			then
--				die_msg="$(eval_gettext "Failed to recurse into submodule path '\$displaypath'")"
--				if test $res -eq 1
--				then
--					err="${err};$die_msg"
--					continue
--				else
--					die_with_status $res "$die_msg"
--				fi
--			fi
--		fi
-+		cmd_update_recursive
- 	done
- 
- 	if test -n "$err"
 -- 
 2.6.0.rc0.131.gf624c3d
