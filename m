@@ -1,91 +1,109 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 3/8] branch: roll show_detached HEAD into regular ref_list
-Date: Thu, 17 Sep 2015 23:55:58 +0530
-Message-ID: <CAOLa=ZTn+arYr1HHA3CH+E2Sd7z9-ry=7D-QRSUM98kSKKcXdg@mail.gmail.com>
-References: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
- <1442129035-31386-4-git-send-email-Karthik.188@gmail.com> <xmqqzj0ovlno.fsf@gitster.mtv.corp.google.com>
- <CAOLa=ZQ51+TKvOiJvWa-emmJJGirAqkr9m0a_7BrQ2UbiSJdjA@mail.gmail.com>
- <CAOLa=ZQxounTiJk0t+zB2-7=UQa8oL+uJ9EQpTkWL7kYFHjxwQ@mail.gmail.com>
- <vpqpp1hqgcd.fsf@anie.imag.fr> <xmqqh9mtkrg0.fsf@gitster.mtv.corp.google.com>
- <vpqio79oxva.fsf@anie.imag.fr> <xmqqeghxj8i1.fsf@gitster.mtv.corp.google.com> <vpqmvwlm0rt.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Sep 17 20:26:37 2015
+From: Remi Pommarel <repk@triplefau.lt>
+Subject: [PATCH] Makefile: Change library order for static linking
+Date: Thu, 17 Sep 2015 23:12:12 +0200
+Message-ID: <1442524332-10180-1-git-send-email-repk@triplefau.lt>
+Cc: Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Remi Pommarel <repk@triplefau.lt>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 17 21:14:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcdtB-00020L-OC
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 20:26:34 +0200
+	id 1Zcedm-0004kF-KN
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 21:14:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855AbbIQS03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 14:26:29 -0400
-Received: from mail-vk0-f54.google.com ([209.85.213.54]:35833 "EHLO
-	mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751175AbbIQS03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 14:26:29 -0400
-Received: by vkao3 with SMTP id o3so16194879vka.2
-        for <git@vger.kernel.org>; Thu, 17 Sep 2015 11:26:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=iL+bR0mimA23Fu8mShn4e8qXSYlqz7EVf8suP4fTEC0=;
-        b=EcWXRtV/0U2TTF9ebAF1yzGnEbuVo/izSynKvlWiDyoG4sJ2hvwlCfXwYkZ/kzJbSp
-         Tl46G9er/Yb0HMUUIj8C7EcWfrG6VzHtsNC2YVPx8/6Q7S5VOb8OLMc5A38R1t4OtgQC
-         F+skzRocqmxNac8qRjXfn4nFj1hhusy1ndbYVN2i8XSpH7h0wLC9aq3/6hAVKuvbKOG9
-         /6TUfc2nnLD3/I8rbFwmMS07olzXqJAaB1Ln7ichY7Qdh12BlC42nZ74qCzpS6vamPcU
-         sEyKaW3tqdDAKjXMJDy/gIDPQsy5ZTulK0utDWT+ta3ub3EsLM7GVOnGmXRN6WtZPs4P
-         b7rA==
-X-Received: by 10.31.21.149 with SMTP id 143mr607978vkv.79.1442514388056; Thu,
- 17 Sep 2015 11:26:28 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Thu, 17 Sep 2015 11:25:58 -0700 (PDT)
-In-Reply-To: <vpqmvwlm0rt.fsf@anie.imag.fr>
+	id S1751339AbbIQTOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 15:14:37 -0400
+Received: from slow1-d.mail.gandi.net ([217.70.178.86]:48785 "EHLO
+	slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104AbbIQTOg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 15:14:36 -0400
+Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
+	by slow1-d.mail.gandi.net (Postfix) with ESMTP id 68B9B4F618D
+	for <git@vger.kernel.org>; Thu, 17 Sep 2015 21:13:23 +0200 (CEST)
+Received: from mfilter18-d.gandi.net (mfilter18-d.gandi.net [217.70.178.146])
+	by relay2-d.mail.gandi.net (Postfix) with ESMTP id 22745C5A44;
+	Thu, 17 Sep 2015 21:13:21 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter18-d.gandi.net
+Received: from relay2-d.mail.gandi.net ([IPv6:::ffff:217.70.183.194])
+	by mfilter18-d.gandi.net (mfilter18-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id zTSQfPeWcQUk; Thu, 17 Sep 2015 21:13:19 +0200 (CEST)
+X-Originating-IP: 81.57.43.44
+Received: from localhost (mon75-1-81-57-43-44.fbx.proxad.net [81.57.43.44])
+	(Authenticated sender: repk@triplefau.lt)
+	by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 75BA3C5A42;
+	Thu, 17 Sep 2015 21:13:18 +0200 (CEST)
+X-Mailer: git-send-email 2.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278159>
 
-On Thu, Sep 17, 2015 at 10:38 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->>
->>> But that's still workable: struct ref_sorting could contain a flag
->>> "head_first" that would be set by ref_default_sorting() and only it, and
->>> then read by cmp_ref_sorting.
->>
->> Hmm, I am still puzzled.  "refname" atom would expand to things like
->> "HEAD", "refs/heads/master", etc., so I still do not see a need for
->> head_first option at all.  "HEAD" will sort before "refs/anything"
->> always, no?
->
-> Ah, you mean, the alphabetic order on refname already sorts HEAD first
-> because other refs will start with "refs/"? So, there's no need for any
-> special case at all indeed. Nothing to teach compare_refs, it's already
-> doing it.
->
-> However, just relying on this seems a bit fragile to me: if we ever
-> allow listing e.g. FETCH_HEAD as a reference, then we would get
->
->   FETCH_HEAD
-> * (HEAD detached at ...)
->   master
->
-> which seems weird to me. But we can decide "if sorting on refname, then
-> HEAD always comes first anyway".
+For static linking especially library order while linking is important. For
+example libssl contains symbol from libcrypto so the farmer should be linked
+before the latter. The global link order should be libcurl then libssl then
+libcrypto then libintl and finally zlib.
 
-Thanks for explaining what I had in mind, Seems like the confusion is sorted,
-I have nothing more to add to this discussion. Junio is right, sorting
-by "refname"
-would indeed work, I was just thinking along the lines of what you're ;)
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+---
+ Makefile | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index 81ac5bb..26a483a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1030,7 +1030,6 @@ ifdef HAVE_ALLOCA_H
+ endif
+ 
+ IMAP_SEND_BUILDDEPS =
+-IMAP_SEND_LDFLAGS = $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+ 
+ ifdef NO_CURL
+ 	BASIC_CFLAGS += -DNO_CURL
+@@ -1087,6 +1086,7 @@ else
+ 		endif
+ 	endif
+ endif
++IMAP_SEND_LDFLAGS += $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+ 
+ ifdef ZLIB_PATH
+ 	BASIC_CFLAGS += -I$(ZLIB_PATH)/include
+@@ -1117,7 +1117,7 @@ ifdef NO_OPENSSL
+ 	LIB_4_CRYPTO =
+ else
+ ifdef NEEDS_SSL_WITH_CRYPTO
+-	LIB_4_CRYPTO = $(OPENSSL_LINK) -lcrypto -lssl
++	LIB_4_CRYPTO = $(OPENSSL_LINK) -lssl -lcrypto
+ else
+ 	LIB_4_CRYPTO = $(OPENSSL_LINK) -lcrypto
+ endif
+@@ -1972,10 +1972,10 @@ git-imap-send$X: imap-send.o $(IMAP_SEND_BUILDDEPS) GIT-LDFLAGS $(GITLIBS)
+ 
+ git-http-fetch$X: http.o http-walker.o http-fetch.o GIT-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(CURL_LIBCURL)
++		$(CURL_LIBCURL) $(LIBS)
+ git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
++		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
+ 
+ git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAGS $(GITLIBS) $(VCSSVN_LIB)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS) \
+@@ -1989,7 +1989,7 @@ $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
+ 
+ $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
++		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
+ 
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $^
 -- 
-Regards,
-Karthik Nayak
+2.0.1
