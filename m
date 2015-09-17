@@ -1,67 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 01/10] strbuf: Add strbuf_read_noblock
-Date: Thu, 17 Sep 2015 09:44:19 -0700
-Message-ID: <CAPc5daVY=t27wkX2x7DSfObwxZuv37VYxi1XD-RKiS1mv4=6KA@mail.gmail.com>
-References: <1442453948-9885-1-git-send-email-sbeller@google.com>
- <1442453948-9885-2-git-send-email-sbeller@google.com> <xmqqtwqtja6j.fsf@gitster.mtv.corp.google.com>
- <20150917163012.GB25837@sigill.intra.peff.net>
+Subject: Re: [PATCH v4 3/8] branch: roll show_detached HEAD into regular ref_list
+Date: Thu, 17 Sep 2015 09:49:58 -0700
+Message-ID: <xmqqeghxj8i1.fsf@gitster.mtv.corp.google.com>
+References: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
+	<1442129035-31386-4-git-send-email-Karthik.188@gmail.com>
+	<xmqqzj0ovlno.fsf@gitster.mtv.corp.google.com>
+	<CAOLa=ZQ51+TKvOiJvWa-emmJJGirAqkr9m0a_7BrQ2UbiSJdjA@mail.gmail.com>
+	<CAOLa=ZQxounTiJk0t+zB2-7=UQa8oL+uJ9EQpTkWL7kYFHjxwQ@mail.gmail.com>
+	<vpqpp1hqgcd.fsf@anie.imag.fr>
+	<xmqqh9mtkrg0.fsf@gitster.mtv.corp.google.com>
+	<vpqio79oxva.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Vitali Lovich <vlovich@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 17 18:44:46 2015
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Sep 17 18:50:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZccIf-00034D-2U
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 18:44:45 +0200
+	id 1ZccNp-0001Mt-Gy
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 18:50:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752122AbbIQQok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 12:44:40 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:33539 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752032AbbIQQok (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 12:44:40 -0400
-Received: by igbkq10 with SMTP id kq10so16859605igb.0
-        for <git@vger.kernel.org>; Thu, 17 Sep 2015 09:44:39 -0700 (PDT)
+	id S1751630AbbIQQuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 12:50:00 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35331 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751190AbbIQQuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 12:50:00 -0400
+Received: by pacfv12 with SMTP id fv12so24720850pac.2
+        for <git@vger.kernel.org>; Thu, 17 Sep 2015 09:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=xfu2yey5zNAs4CofEHslJYopSFyrs3i9UdV/nV4jLMY=;
-        b=mq/l5EHgNb23V1qs0Gf/v0NoAV1plX1MkFnA9chSF+vt9LIxGCZ0kSFpokqDPuGjZl
-         jPN985D9jxMqqi8yOjI2uM97R0sAVmQNwAGERMzEjnkHL5Jc9RGTkxipEYr0uZHNNThM
-         ydCaVBQT4uZhJYZUsPFKWAMsC2EqSIboavlJGrxME+NwezB+rIK8Qd4Pbn/5UyeKroKW
-         Sztj3e2ZoqZhfkxST8MTtiKXlJqJeeDsQN6mFFnqAbb7Jr70z5OrTNGYwFjwImS1MCB1
-         g7XNiN3IAGdR18udsI38VtsXW2nqGay/kJO11+ZPozC+76zdLRh9Do+mErlsyepUoId8
-         CXew==
-X-Received: by 10.50.117.100 with SMTP id kd4mr7584706igb.75.1442508279239;
- Thu, 17 Sep 2015 09:44:39 -0700 (PDT)
-Received: by 10.36.79.69 with HTTP; Thu, 17 Sep 2015 09:44:19 -0700 (PDT)
-In-Reply-To: <20150917163012.GB25837@sigill.intra.peff.net>
-X-Google-Sender-Auth: dzu-nNeTdefd_YGCB7-hwgla6_4
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=q3HpH7s/qt9XVmX9gFxcM/j4AVbANl6D7MCv/fUi2pI=;
+        b=OlaOL6NcxxYlpIKWjCRDoNDVvjMXl36Kcl7BVrmmO78rBdKGRarK+j4qcGMV94e5Mf
+         8ujkdT+DwJ3khwX3WDOlNBcJN1YhldBvG3Hi6GDTX2g7b8jj06tQGaehleSkMn6IQBMB
+         p2NgT0JGJUGBYweGp4AjFiF9QhgeDhhuTmZvm/IpzgpuJnN7KJcs+Oeli8Np7ocy/R6K
+         SRljmjguEnIwJ+sl1AtCw0ppkypUAt/+mlqZyVjRs6QQLLO5EIzBSp+huCA6eidGqf5B
+         +OgkatCNHIGFDk5eD3fDCcA0MRgLMn1Th6fbSQargohLuUzoelWKN/mj1BQ7rbS27/U8
+         Lh6A==
+X-Received: by 10.68.244.137 with SMTP id xg9mr187662pbc.27.1442508599661;
+        Thu, 17 Sep 2015 09:49:59 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:25ac:307e:6383:2d03])
+        by smtp.gmail.com with ESMTPSA id uy4sm4383378pbc.69.2015.09.17.09.49.58
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 17 Sep 2015 09:49:58 -0700 (PDT)
+In-Reply-To: <vpqio79oxva.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	17 Sep 2015 17:43:05 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278136>
 
-On Thu, Sep 17, 2015 at 9:30 AM, Jeff King <peff@peff.net> wrote:
->
-> So I think we would probably want to treat EAGAIN specially: return -1
-> to signal to the caller but _don't_ truncate the strbuf.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Yeah, "don't truncate" is needed.
+> But that's still workable: struct ref_sorting could contain a flag
+> "head_first" that would be set by ref_default_sorting() and only it, and
+> then read by cmp_ref_sorting.
 
-> Arguably we should actually return the number of bytes we _did_ read,
-> but then caller cannot easily tell the difference between EOF and
-> EAGAIN.
-
-Why can't it check errno==EAGAIN/EWOULDBLOCK?
+Hmm, I am still puzzled.  "refname" atom would expand to things like
+"HEAD", "refs/heads/master", etc., so I still do not see a need for
+head_first option at all.  "HEAD" will sort before "refs/anything"
+always, no?
