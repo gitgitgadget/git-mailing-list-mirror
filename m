@@ -1,96 +1,81 @@
-From: Robert Strobl <robert.strobl@surialabs.com>
-Subject: Bug after removing a local branch and restore the remote branch during a rebase
-Date: Thu, 17 Sep 2015 18:12:14 +0800
-Message-ID: <CF93B86B-8CCF-483D-918A-47C910CEE8BA@surialabs.com>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Alastair McGowan-Douglas <altreus@altre.us>
+Subject: git status -u is mildly astonishing
+Date: Thu, 17 Sep 2015 10:44:30 +0100
+Organization: OpusVL
+Message-ID: <20150917104430.5dd73ae1@dev-05>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 17 12:12:34 2015
+X-From: git-owner@vger.kernel.org Thu Sep 17 12:28:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcWB6-0006XI-9L
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 12:12:32 +0200
+	id 1ZcWQI-0008Mj-9f
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 12:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbbIQKMX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Sep 2015 06:12:23 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:33662 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751087AbbIQKMW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Sep 2015 06:12:22 -0400
-Received: by wiclk2 with SMTP id lk2so16934728wic.0
-        for <git@vger.kernel.org>; Thu, 17 Sep 2015 03:12:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-type:content-transfer-encoding
-         :subject:message-id:date:to:mime-version;
-        bh=/yE3RhcvkbH960DhpAIe1jdORf9jzoKun19LnhWcnRI=;
-        b=VwEJ0RUXCiQ7U4drxjg9MdNtM8pavrmeNJLQVPafbjE9OUoPaEVlZDqZNtxE3txCmg
-         ONcEH9QBiPkgB85E65QZyi1wLejTB69peYDCuHKlY9pHpKyzd3yZLLleElbhJq5vHi34
-         l63uv0mDH5Tgnqog/eCKeO6i1BwlR7IDm9yNGyJAYDDfa5m1eooI+34P1CidxP/ed/j/
-         B8LD7sDtZXSapESLxWq40/P5m6Fy20Dj3W5HGiEbgyCPsSUV/Mbtsn45tAtev/tdIg0I
-         xCYRezV21B+ZeGXCJbALspgk+IYPDz9h/IHBmn18Nx7Zx0qtmksvHJw3Urpd4Llge3bl
-         pYnA==
-X-Gm-Message-State: ALoCoQl+ZqvLwPxCdMNvHYC1mkf4ac49cxD6ZbKdmdCtmPq3ZzgeeX5D4VDwepgehe14udzqMFAR
-X-Received: by 10.180.10.197 with SMTP id k5mr12760361wib.22.1442484741285;
-        Thu, 17 Sep 2015 03:12:21 -0700 (PDT)
-Received: from [192.168.0.9] (pjc-132-106.tm.net.my. [210.186.132.106])
-        by smtp.gmail.com with ESMTPSA id fs9sm9205702wic.24.2015.09.17.03.12.19
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 17 Sep 2015 03:12:20 -0700 (PDT)
-X-Mailer: Apple Mail (2.2104)
+	id S1751484AbbIQK2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 06:28:09 -0400
+Received: from msa.mail.opusvl.net ([82.211.96.143]:55298 "EHLO
+	msa.mail.opusvl.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751387AbbIQK2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 06:28:08 -0400
+X-Greylist: delayed 2610 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2015 06:28:08 EDT
+Received: from [213.131.188.212] (helo=smtp.rug-01.opusvl.net)
+	by msa.mail.opusvl.net with esmtp (Exim 4.69)
+	(envelope-from <altreus@altre.us>)
+	id 1ZcVRo-0000oL-JN
+	for git@vger.kernel.org; Thu, 17 Sep 2015 10:25:44 +0100
+Received: from dev-05.rug-01.opusvl.net ([10.10.4.104]:38917 helo=dev-05)
+	by smtp.rug-01.opusvl.net with esmtp (Exim 4.71)
+	(envelope-from <altreus@altre.us>)
+	id 1ZcVjx-0004kJ-RW
+	for git@vger.kernel.org; Thu, 17 Sep 2015 10:44:30 +0100
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+X-SA-Exim-Connect-IP: 10.10.4.104
+X-SA-Exim-Mail-From: altreus@altre.us
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
+	spamd-01.rug-01.opusvl.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	URIBL_BLOCKED autolearn=ham version=3.3.2
+X-SA-Exim-Version: 4.2.1 (built Mon, 22 Mar 2010 06:26:47 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.rug-01.opusvl.net)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278105>
 
-It might be an unusual workflow, however it leads to a bug:
+Hi list,
 
-git checkout feature_branch
-git rebase master
+Today I found what I thought was a bug in git status:
 
-# a couple of conflicts occur, which I don=E2=80=99t want to fix. there=
- is an updated version on origin
-# so I=E2=80=99d like to go with that one
+https://paste.fedoraproject.org/268333/42480833/
 
-git add .
-git stash
-git checkout master
-git branch -D feature_branch
-git pull
-git checkout feature_branch
-git status
+It seemed that the argument to -u was being ignored. It turns out that
+'no' was not actually being considered an argument to -u in the first
+place.
 
-# On branch feature_branch
-# You are currently rebasing branch =E2=80=98feature_branch' on '195269=
-d'.
-#  (all conflicts fixed: run "git rebase --continue")
+The documentation supports this:
 
-# nothing to commit, working directory clean
+       -u[<mode>], --untracked-files[=<mode>]
+           Show untracked files.
 
-# It still thinks that I=E2=80=99m rebasing the branch, so let=E2=80=99=
-s try:
+There is no space here, but it is not obvious that it is *important*
+that there is no space here.
 
-git rebase =E2=80=94abort
+The usage string implies that -- is used to disambiguate path specs
+from option arguments
 
-# On branch feature_branch
-# Your branch and =E2=80=98origin/feature_branch' have diverged,
-# and have 104 and 77 different commits each, respectively.
-#  (use "git pull" to merge the remote branch into yours)
-# nothing to commit, working directory clean
+    git status [<options>...] [--] [<pathspec>...]
 
-I=E2=80=99m aware that I should have aborted the rebase and then fetch =
-the remote branch.
-However, I still think that when I delete a local branch, it should als=
-o abort the rebase that is attached to it.
+Therefore I would argue that -u is behaving differently from other
+arguments (especially when considered across all git subcommands) by
+only accepting its argument when not separated by a space. This at
+least should be explicitly documented, but, preferably, should be
+consistent with other arguments and use the -- token as the separator.
 
-I hope you find that useful. If it makes sense, I would be happy writin=
-g a patch for it :)
-
-Cheers,
-Robert
+-Altreus
