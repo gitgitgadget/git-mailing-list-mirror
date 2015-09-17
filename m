@@ -1,84 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 66/67] use strbuf_complete to conditionally append slash
-Date: Thu, 17 Sep 2015 08:45:14 -0700
-Message-ID: <xmqq37ydkq2d.fsf@gitster.mtv.corp.google.com>
-References: <20150915152125.GA27504@sigill.intra.peff.net>
-	<20150915161619.GN29753@sigill.intra.peff.net>
-	<xmqq8u86m2i4.fsf@gitster.mtv.corp.google.com>
-	<20150916223901.GA24945@sigill.intra.peff.net>
-	<xmqqpp1ikm9x.fsf@gitster.mtv.corp.google.com>
-	<20150916225700.GA26015@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 17 17:45:26 2015
+From: Phillip Sz <phillip.szelat@gmail.com>
+Subject: [PATCH] l10n: de.po: better language for 2 strings
+Date: Thu, 17 Sep 2015 17:50:32 +0200
+Message-ID: <1442505032-11578-1-git-send-email-phillip.szelat@gmail.com>
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com,
+	ralf.thielow@gmail.com, Phillip Sz <phillip.szelat@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 17 17:50:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcbNE-00047h-Db
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 17:45:24 +0200
+	id 1ZcbSL-0002TB-HM
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 17:50:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbbIQPpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 11:45:18 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:34140 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751630AbbIQPpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 11:45:17 -0400
-Received: by padhy16 with SMTP id hy16so23093994pad.1
-        for <git@vger.kernel.org>; Thu, 17 Sep 2015 08:45:16 -0700 (PDT)
+	id S1751710AbbIQPuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 11:50:37 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:33653 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751121AbbIQPug (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 11:50:36 -0400
+Received: by wiclk2 with SMTP id lk2so30004502wic.0
+        for <git@vger.kernel.org>; Thu, 17 Sep 2015 08:50:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=TR+9HqOa0KXdORZefpF0r+90x5bW3xKR+x/PRZRU1YM=;
-        b=n0xCNf2o3aZ7OpHS9oKJfxYeqANsI8OcvzHyRq6BDxiOEia6vLwGY/TW8imaIdpmAs
-         BYqIH44wVXVyFJWHWstqxzLXvvxe55dHg3+GlSlg8K5PdfNzueW+EDEhWJ9YOotmMQaY
-         cI58u/QHIvQ76YrFbR8g+f/WU31WQmJaOGwaO5CnlxPWd8GOKDj7Xt1KiUiumDrSpWlk
-         kGVcu0Vq9gCG9E6rM7m4dq1uwfN5GPysVdJF+V/+vgeQz2Jkf+m/Pg5sa7FzpNWkLsIm
-         ZcumEyXY3+gwC8FO+P2TV2PCUCUcUdsv4JLn4iXg5BQUZflO++/4BpOC4ixhzNYS4tCp
-         D2rw==
-X-Received: by 10.66.97.73 with SMTP id dy9mr4675884pab.115.1442504716589;
-        Thu, 17 Sep 2015 08:45:16 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:25ac:307e:6383:2d03])
-        by smtp.gmail.com with ESMTPSA id jv5sm4167531pbc.47.2015.09.17.08.45.14
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 17 Sep 2015 08:45:15 -0700 (PDT)
-In-Reply-To: <20150916225700.GA26015@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 16 Sep 2015 18:57:01 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=from:to:cc:subject:date:message-id;
+        bh=LC2uEcmGXQNzZPubuvbtXm2h6q6oiKKO9mftwX0Jeak=;
+        b=iY4eAagtOB7ogqTAKXCMb+3kXFII8jT+cXWNPXm6rIeBNec2+IskUVNCiCzHu1ywB2
+         XSLRs7SGb+gTttrE3lsr16Uj4PBSE6mrSG2ucz7uhKFoTWAB4Xzp/OMKUHhFf1yd8E66
+         3oVq15yyFkq9CoaVM1AizkTFTCqldIhE8iD9jEVvdPCYdsyfouDYDp56mWbTqdb229li
+         kB7z7Jr0OliORYlcoSwoNomIAPcyaCrCMc+UZPz6LADheCRi9ssx8/LF5Jm45ArreHCQ
+         i6hJOH/+gR/v0Z2/7cB+asOWXkxxTcNTwXAbe7NQCSG7vngMem7H2JjJpaheA/QvPHea
+         Eg5g==
+X-Received: by 10.194.86.161 with SMTP id q1mr66577986wjz.18.1442505035868;
+        Thu, 17 Sep 2015 08:50:35 -0700 (PDT)
+Received: from arch.fritz.box (i577ABECB.versanet.de. [87.122.190.203])
+        by smtp.gmail.com with ESMTPSA id bs8sm4043040wjc.47.2015.09.17.08.50.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 17 Sep 2015 08:50:35 -0700 (PDT)
+X-Mailer: git-send-email 2.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278126>
 
-Jeff King <peff@peff.net> writes:
+just 2 strings I think we could translate better.
 
-> On Wed, Sep 16, 2015 at 03:54:50PM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> >> Is this conversion correct?  This seems to me that the caller wants
->> >> to create an IMAP folder name immediately under the root hierarchy
->> >> and wants to have the leading slash in the result.
->> >
->> > Ugh, you're right. This is the "other" style Eric mentioned earlier.
->> >
->> > This looks like the only one in the patch (there are many that did not
->> > check buf.len at all, but if we assume they were not invoking undefined
->> > behavior before, then they are fine under the new code).
->> 
->> Yes, I should have said that earlier to save one roundtrip.
->> 
->> Thanks for working on this.
->
-> For my re-roll, I've just omitted changing that caller. I think we can
-> leave it as-is; it is not worth trying to introduce a new helper for the
-> one site.
+Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
+---
+ po/de.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Yup, I think the decision is sensible.
-
-Thanks.
+diff --git a/po/de.po b/po/de.po
+index 6ed3509..2f54093 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -10785,7 +10785,7 @@ msgid ""
+ "it will be removed. Please do not use it anymore."
+ msgstr ""
+ "Die -b/--binary Option hat seit Langem keinen Effekt und wird\n"
+-"entfernt. Bitte nicht mehr verwenden."
++"entfernt. Bitte verwenden Sie diese nicht mehr."
+ 
+ #: git-am.sh:507
+ #, sh-format
+@@ -10795,7 +10795,7 @@ msgstr ""
+ 
+ #: git-am.sh:512
+ msgid "Please make up your mind. --skip or --abort?"
+-msgstr "Bitte werden Sie sich klar. --skip oder --abort?"
++msgstr "Bitte entscheiden Sie sich. --skip oder --abort?"
+ 
+ #: git-am.sh:560
+ #, sh-format
+-- 
+2.5.2
