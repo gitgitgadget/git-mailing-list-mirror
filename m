@@ -1,100 +1,256 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 00/43] refs lmdb backend
-Date: Wed, 16 Sep 2015 20:09:12 -0400
-Organization: Twitter
-Message-ID: <1442448552.5140.3.camel@twopensource.com>
-References: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
-	 <xmqqfv2vgkve.fsf@gitster.mtv.corp.google.com>
-	 <1441382482.25570.33.camel@twopensource.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 02:09:21 2015
+From: Ben Boeckel <mathstuf@gmail.com>
+Subject: [PATCH v6] remote: add get-url subcommand
+Date: Wed, 16 Sep 2015 20:19:16 -0400
+Message-ID: <1442449156-11995-1-git-send-email-mathstuf@gmail.com>
+References: <1438364321-14646-1-git-send-email-mathstuf@gmail.com>
+Cc: git@vger.kernel.org, Ben Boeckel <mathstuf@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Sep 17 02:19:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcMlL-0004zb-3M
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 02:09:19 +0200
+	id 1ZcMv9-0000NM-9N
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 02:19:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753029AbbIQAJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2015 20:09:16 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:33700 "EHLO
-	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752935AbbIQAJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2015 20:09:15 -0400
-Received: by qkdw123 with SMTP id w123so843346qkd.0
-        for <git@vger.kernel.org>; Wed, 16 Sep 2015 17:09:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=oyh/b+DzEozbjPF6aQyvheif9e5lqAtKTr7g7WJqLsw=;
-        b=EzVJCf+ggrGHfF01UTUjylQvm9iEWLaXdXYwTuSZwd8WN66VeWH+aUik6xQ0C1n8go
-         F984oTyfiC6wtRg7s5pMxG8wDIV63ZDw3An6Fd9IRYtJE8zec9MDrNVMJ0E6H0sq9Kwo
-         444xyevFalgEKy/XZIIpAzttK+93yJBbmpscXnrUHuZU57+wVRQu4YKF7yiDWvCQgjem
-         daP7uE4GJdO+Y99QRcw0nkJx7A2iZ5N6DAAHT87mi3ychodjA/24bf8Kb1VnhSUDsIMm
-         e6Lm99fUeUKAy+7FBx2nFJHR6hIuFVLXNGL2WMgFA9SUCz3VZ2Eun8rSDEbwFGCPBJay
-         wQQQ==
-X-Gm-Message-State: ALoCoQkhW7O9uIIwOmG78hWjseydVN9ufeMHZrFI8k2U91joX4Tux7qJyoosnLKqheqFiHYkhlD9
-X-Received: by 10.55.221.79 with SMTP id n76mr45794051qki.62.1442448554180;
-        Wed, 16 Sep 2015 17:09:14 -0700 (PDT)
-Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id k64sm174952qhk.2.2015.09.16.17.09.12
+	id S1752793AbbIQATX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2015 20:19:23 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:36497 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752577AbbIQATW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2015 20:19:22 -0400
+Received: by ioii196 with SMTP id i196so5247650ioi.3
+        for <git@vger.kernel.org>; Wed, 16 Sep 2015 17:19:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=QbRR8u+LPd4NneWuPvws60PCBuuiCGTslOMnfSOEYXc=;
+        b=NGt2cBukJ0DRPCDz2UeAjVBvKul5tcDssa45f4z+Uproo2OtflA89p6CEp1ym2BpK8
+         oeNtLWgylCB4UPMcaabAqXWcMa9Dmy6+KvF1WjTVsXRDmA1M7wYwWvcQQHawqFGa2CKC
+         yur0VIlJZmLphNo4XXx2/H7/qKatsxzTQZUFHKzsoTHDgQm3xS/gMB9JujwTQx1oBLYk
+         OA7Y8acuAw0XXr81idfVrIQveH4NyJAJ+JCoMCTQ+MCL+uYWyYezesi2d1YcEY1VL4QS
+         Gw/ruEzfvOg5eWwShEyodCz20qsM+Zy+pbTiz10iy48KXpZ/374Wyv75ECLpV5/Jum4h
+         lv2w==
+X-Received: by 10.107.6.21 with SMTP id 21mr1369693iog.9.1442449161667;
+        Wed, 16 Sep 2015 17:19:21 -0700 (PDT)
+Received: from localhost (146.sub-70-209-139.myvzw.com. [70.209.139.146])
+        by smtp.gmail.com with ESMTPSA id m25sm182716iod.32.2015.09.16.17.19.20
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Sep 2015 17:09:13 -0700 (PDT)
-In-Reply-To: <1441382482.25570.33.camel@twopensource.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+        Wed, 16 Sep 2015 17:19:20 -0700 (PDT)
+X-Mailer: git-send-email 2.5.2
+In-Reply-To: <1438364321-14646-1-git-send-email-mathstuf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278090>
 
-On Fri, 2015-09-04 at 12:01 -0400, David Turner wrote:
-> On Thu, 2015-09-03 at 16:10 -0700, Junio C Hamano wrote:
-> > David Turner <dturner@twopensource.com> writes:
-> > 
-> > > I think I've broken about all of the standalone stuff out, so here's
-> > > the main enchilada.
-> > >
-> > > This series depends on at least the following topics in pu:
-> > > dt/refs-bisection
-> > > dt/refs-pseudo
-> > > dt/reflog-tests
-> > > kn/for-each-tag (patch 21 and corresponding bits of 42 depend on this;
-> > > we could skip them, but I wanted this to apply on top of pu)
-> > >
-> > > As before, I tested by hacking the test suite to run under the lmdb
-> > > backend and changing a few dozen tests.  The remaiing failures are
-> > > documented in Documentation/technical/refs-be-lmdb.txt, except for one
-> > > in t1404 where this version gives a different error message (but still
-> > > an error).
-> > >
-> > > As Jeff King suggested last time I sent this around, I've made the
-> > > reflog format slightly more efficient.  Now it stores shas in a binary
-> > > format, and only uses a header entry if there are no real entries.
-> > >
-> > > Also, now per-worktree refs live in the filesystem.
-> > >
-> > > I've also made a number of fixes to memory leaks, formatting,
-> > > factoring, etc.
-> > >
-> > > As Michael Haggerty suggested, I'm now using struct ref_transaction as
-> > > a base struct for the ref transaction structs.
-> > >
-> > > Looking forward to reviews.
-> > 
-> > [03/43] seems to be missing
-> 
-> I just attempted to re-send it, but I still don't see it on gmane.
-> Perhaps this is because it is greater than some size limit?  It's about
-> 265k.  I've attached a gzipped version to this email.  
+Expanding `insteadOf` is a part of ls-remote --url and there is no way
+to expand `pushInsteadOf` as well. Add a get-url subcommand to be able
+to query both as well as a way to get all configured urls.
 
-Just wanted to send a ping on this series.  I know it's a big set of
-changes to review.  Let me know if there's anything else I can do to
-help here.
+Signed-off-by: Ben Boeckel <mathstuf@gmail.com>
+---
+ Documentation/git-remote.txt | 10 ++++++++
+ builtin/remote.c             | 59 ++++++++++++++++++++++++++++++++++++++++++++
+ t/t5505-remote.sh            | 37 +++++++++++++++++++++++++++
+ 3 files changed, 106 insertions(+)
+
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 4c6d6de..3c9bf45 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -15,6 +15,7 @@ SYNOPSIS
+ 'git remote remove' <name>
+ 'git remote set-head' <name> (-a | --auto | -d | --delete | <branch>)
+ 'git remote set-branches' [--add] <name> <branch>...
++'git remote get-url' [--push] [--all] <name>
+ 'git remote set-url' [--push] <name> <newurl> [<oldurl>]
+ 'git remote set-url --add' [--push] <name> <newurl>
+ 'git remote set-url --delete' [--push] <name> <url>
+@@ -131,6 +132,15 @@ The named branches will be interpreted as if specified with the
+ With `--add`, instead of replacing the list of currently tracked
+ branches, adds to that list.
+ 
++'get-url'::
++
++Retrieves the URLs for a remote. Configurations for `insteadOf` and
++`pushInsteadOf` are expanded here. By default, only the first URL is listed.
+++
++With '--push', push URLs are queried rather than fetch URLs.
+++
++With '--all', all URLs for the remote will be listed.
++
+ 'set-url'::
+ 
+ Changes URLs for the remote. Sets first URL for remote <name> that matches
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 181668d..e4c3ea1 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -18,6 +18,7 @@ static const char * const builtin_remote_usage[] = {
+ 	N_("git remote prune [-n | --dry-run] <name>"),
+ 	N_("git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)...]"),
+ 	N_("git remote set-branches [--add] <name> <branch>..."),
++	N_("git remote get-url [--push] [--all] <name>"),
+ 	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
+ 	N_("git remote set-url --add <name> <newurl>"),
+ 	N_("git remote set-url --delete <name> <url>"),
+@@ -65,6 +66,11 @@ static const char * const builtin_remote_update_usage[] = {
+ 	NULL
+ };
+ 
++static const char * const builtin_remote_geturl_usage[] = {
++	N_("git remote get-url [--push] [--all] <name>"),
++	NULL
++};
++
+ static const char * const builtin_remote_seturl_usage[] = {
+ 	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
+ 	N_("git remote set-url --add <name> <newurl>"),
+@@ -1467,6 +1473,57 @@ static int set_branches(int argc, const char **argv)
+ 	return set_remote_branches(argv[0], argv + 1, add_mode);
+ }
+ 
++static int get_url(int argc, const char **argv)
++{
++	int i, push_mode = 0, all_mode = 0;
++	const char *remotename = NULL;
++	struct remote *remote;
++	const char **url;
++	int url_nr;
++	struct option options[] = {
++		OPT_BOOL('\0', "push", &push_mode,
++			 N_("query push URLs rather than fetch URLs")),
++		OPT_BOOL('\0', "all", &all_mode,
++			 N_("return all URLs")),
++		OPT_END()
++	};
++	argc = parse_options(argc, argv, NULL, options, builtin_remote_geturl_usage, 0);
++
++	if (argc != 1)
++		usage_with_options(builtin_remote_geturl_usage, options);
++
++	remotename = argv[0];
++
++	if (!remote_is_configured(remotename))
++		die(_("No such remote '%s'"), remotename);
++	remote = remote_get(remotename);
++
++	url_nr = 0;
++	if (push_mode) {
++		url = remote->pushurl;
++		url_nr = remote->pushurl_nr;
++	}
++	/* else fetch mode */
++
++	/* Use the fetch URL when no push URLs were found or requested. */
++	if (!url_nr) {
++		url = remote->url;
++		url_nr = remote->url_nr;
++	}
++
++	if (!url_nr)
++		die(_("no URLs configured for remote '%s'"), remotename);
++
++	if (all_mode) {
++		for (i = 0; i < url_nr; i++)
++			printf_ln("%s", url[i]);
++	} else {
++		printf_ln("%s", *url);
++	}
++
++	return 0;
++}
++
+ static int set_url(int argc, const char **argv)
+ {
+ 	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
+@@ -1576,6 +1633,8 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
+ 		result = set_head(argc, argv);
+ 	else if (!strcmp(argv[0], "set-branches"))
+ 		result = set_branches(argc, argv);
++	else if (!strcmp(argv[0], "get-url"))
++		result = get_url(argc, argv);
+ 	else if (!strcmp(argv[0], "set-url"))
+ 		result = set_url(argc, argv);
+ 	else if (!strcmp(argv[0], "show"))
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 7a8499c..9a55389 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -919,6 +919,19 @@ test_expect_success 'new remote' '
+ 	cmp expect actual
+ '
+ 
++get_url_test () {
++	cat >expect &&
++	git remote get-url $* >actual &&
++	test_cmp expect actual
++}
++
++test_expect_success 'get-url on new remote' '
++	echo foo | get_url_test someremote &&
++	echo foo | get_url_test --all someremote &&
++	echo foo | get_url_test --push someremote &&
++	echo foo | get_url_test --push --all someremote
++'
++
+ test_expect_success 'remote set-url bar' '
+ 	git remote set-url someremote bar &&
+ 	echo bar >expect &&
+@@ -961,6 +974,13 @@ test_expect_success 'remote set-url --push zot' '
+ 	cmp expect actual
+ '
+ 
++test_expect_success 'get-url with different urls' '
++	echo baz | get_url_test someremote &&
++	echo baz | get_url_test --all someremote &&
++	echo zot | get_url_test --push someremote &&
++	echo zot | get_url_test --push --all someremote
++'
++
+ test_expect_success 'remote set-url --push qux zot' '
+ 	git remote set-url --push someremote qux zot &&
+ 	echo qux >expect &&
+@@ -995,6 +1015,14 @@ test_expect_success 'remote set-url --push --add aaa' '
+ 	cmp expect actual
+ '
+ 
++test_expect_success 'get-url on multi push remote' '
++	echo foo | get_url_test --push someremote &&
++	get_url_test --push --all someremote <<-\EOF
++	foo
++	aaa
++	EOF
++'
++
+ test_expect_success 'remote set-url --push bar aaa' '
+ 	git remote set-url --push someremote bar aaa &&
+ 	echo foo >expect &&
+@@ -1039,6 +1067,14 @@ test_expect_success 'remote set-url --add bbb' '
+ 	cmp expect actual
+ '
+ 
++test_expect_success 'get-url on multi fetch remote' '
++	echo baz | get_url_test someremote &&
++	get_url_test --all someremote <<-\EOF
++	baz
++	bbb
++	EOF
++'
++
+ test_expect_success 'remote set-url --delete .*' '
+ 	test_must_fail git remote set-url --delete someremote .\* &&
+ 	echo "YYY" >expect &&
+@@ -1108,6 +1144,7 @@ test_extra_arg rename origin newname
+ test_extra_arg remove origin
+ test_extra_arg set-head origin master
+ # set-branches takes any number of args
++test_extra_arg get-url origin newurl
+ test_extra_arg set-url origin newurl oldurl
+ # show takes any number of args
+ # prune takes any number of args
+-- 
+2.5.2
