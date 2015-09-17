@@ -1,101 +1,95 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4] gc: save log from daemonized gc --auto and print it
- next time
-Date: Thu, 17 Sep 2015 20:08:25 +0700
-Message-ID: <CACsJy8CMFkGRCXuMiRme=B9ijq6ydWGPz0vyb8QoEzf4Ty3FDQ@mail.gmail.com>
-References: <1440209546-23442-1-git-send-email-pclouds@gmail.com>
- <1442108202-25746-1-git-send-email-pclouds@gmail.com> <xmqq8u88ykv4.fsf@gitster.mtv.corp.google.com>
- <xmqq1te0ykaj.fsf@gitster.mtv.corp.google.com> <55F93646.9050709@alum.mit.edu>
- <xmqqmvwms6b1.fsf@gitster.mtv.corp.google.com>
+Subject: Re: Unable to create temporary file '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR':
+ Permission denied
+Date: Thu, 17 Sep 2015 20:18:21 +0700
+Message-ID: <CACsJy8BAOXWt2aVge7W8Mk9v0HbHHGkSQFwySeioam9r+n6z_Q@mail.gmail.com>
+References: <1440157010.1759.83.camel@transmode.se> <CACsJy8DEDgsG4C4KvuGop_=_wOvcOUZ644NiaQJef67rFNYmgg@mail.gmail.com>
+ <1442245035.10125.18.camel@transmode.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 15:09:06 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+X-From: git-owner@vger.kernel.org Thu Sep 17 15:19:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcYvs-0004EI-LX
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 15:09:01 +0200
+	id 1ZcZ5U-0006lR-FD
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 15:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751819AbbIQNI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 09:08:56 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:36556 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751059AbbIQNIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 09:08:55 -0400
-Received: by ioii196 with SMTP id i196so20872297ioi.3
-        for <git@vger.kernel.org>; Thu, 17 Sep 2015 06:08:54 -0700 (PDT)
+	id S1752439AbbIQNSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 09:18:53 -0400
+Received: from mail-ig0-f178.google.com ([209.85.213.178]:33333 "EHLO
+	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751967AbbIQNSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 09:18:51 -0400
+Received: by igbkq10 with SMTP id kq10so12069219igb.0
+        for <git@vger.kernel.org>; Thu, 17 Sep 2015 06:18:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=LvbCGAjEATqTZR4Y+vox2J47mYEl9tm6I5H4MDNwVwA=;
-        b=036BRI0cOA9JZEP3OGubSo4k1n8EZGlv2uy3zeo9rYqJYhvq5SNZwaM41+VQ/jRdUW
-         nCmgTzrNVO92EfbNQc67Ak0wjErmE+6bbyERxdjuuuMSGouG5VYGvdhusYZiNBgVyvhf
-         5tA0RbNdN3yreEAaC+xFlIxMKrmM75+hvoC9HAX+sdwweDYfnYVgHmAfCNywdhc7RBy4
-         uCr/Y62Z0c/XCG300tKLJ+eHqITObqleLGb26FzD9cIeZ9HMDgDFhnxqXPxH7JZo7eb9
-         SmLvTMSob4+FQxlKPIdlBDonInZArlhuHIyFefT9071ifPKIHH0sc1xEErYelMUbvIW7
-         kjXQ==
-X-Received: by 10.107.9.212 with SMTP id 81mr5774241ioj.191.1442495334500;
- Thu, 17 Sep 2015 06:08:54 -0700 (PDT)
-Received: by 10.107.19.227 with HTTP; Thu, 17 Sep 2015 06:08:25 -0700 (PDT)
-In-Reply-To: <xmqqmvwms6b1.fsf@gitster.mtv.corp.google.com>
+        bh=hR//35mR8LU/Cncoz8Tb/1R6B1YBlRDta9/XxctW/6s=;
+        b=G5vsCC3L+p+tXb1WkrdwQ7Gmeu1xI9uMTpsT3awpVbxbMf+MSn+uAXSg9PudSZxQWV
+         cb+8wBIqDVigWTiy+noZysG82ID6bvt0DIhpaAyFqyItOQh2CVH06QHf8JCUDah4nnH7
+         C5r5LZWEiT9cT+3nL/CKhk4+8p13/v2lJgkLBBdRqkJ9uCUUYTxYQ9dzi3N4LKVxu8eU
+         1grEn6JYipyDXPrmMQShvVFB9KpjYgdKhxF3x9hXIVOWwM2F/X3/w0JQP2Q+CQOxsZjI
+         YtETWw75xnTavLwORJ1X4+aAm6LRP2chvcLzSQNiL8GCecPdPZe+Q+xc614d+XN17Erw
+         Z0cw==
+X-Received: by 10.50.147.100 with SMTP id tj4mr6358295igb.65.1442495930769;
+ Thu, 17 Sep 2015 06:18:50 -0700 (PDT)
+Received: by 10.107.19.227 with HTTP; Thu, 17 Sep 2015 06:18:21 -0700 (PDT)
+In-Reply-To: <1442245035.10125.18.camel@transmode.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278113>
 
-On Wed, Sep 16, 2015 at 11:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->
->> I'm not sure what behavior you want. At one point you say "puts the file
->> to a final place if it is non-empty" but later you say "leave it if
->> non-empty". Should the file be written directly, or should it be written
->> to a lockfile and renamed into place only when complete?
->
-> I do not think we care that deeply either way, as we do not want to
-> run multiple auto-gc's at the same time in the first place.  So either
-> one of the following is perfectly fine:
->
->  * We open the final destination directly, but with O_CREAT|O_EXCL,
->    which as a side effect also detects the simultanous execution
->    [*1*].  We do not do any "finalizing rename" if we go this route.
->    When we are done, close it and remove it if we did not write
->    anything, or leave it there if we did write something.
->
->  * We open a lockfile the usual way.  When we are done, close it and
->    and remove it if we did not write anything, or finalize it by
->    renaming it if we did write something.
->
-> I think Duy's code wants to do the latter.
-
-We do keep another lock before coming to opening this log file. So
-once we get here we already know nobody else will be opening the log
-file. We can simply open it the normal way, then make sure we clean it
-up at atexit().
-
->> This doesn't seem like a common thing to want (as in, this might be the
->> only caller), but it probably makes sense to build it into the
->> tempfile/lockfile API nevertheless, because implementing it externally
->> would require a lot of other code to be duplicated.
+On Mon, Sep 14, 2015 at 10:37 PM, Joakim Tjernlund
+<joakim.tjernlund@transmode.se> wrote:
+> On Mon, 2015-08-31 at 16:56 +0700, Duy Nguyen wrote:
+>> On Fri, Aug 21, 2015 at 6:36 PM, Joakim Tjernlund
+>> <joakim.tjernlund@transmode.se> wrote:
+>> > I cannot push:
+>> > # > git push origin
+>> > Login for jocke@git.transmode.se
+>> > Password:
+>> > Counting objects: 7, done.
+>> > Delta compression using up to 4 threads.
+>> > Compressing objects: 100% (7/7), done.
+>> > Writing objects: 100% (7/7), 13.73 KiB | 0 bytes/s, done.
+>> > Total 7 (delta 4), reused 0 (delta 0)
+>> > fatal: Unable to create temporary file '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR': Permission
+>> > denied
+>> > fatal: The remote end hung up unexpectedly
+>> > fatal: The remote end hung up unexpectedly
 >>
->> Another possibility that might work (maybe without requiring changes to
->> tempfile/lockfile): don't worry about deleting the log file if it is
->> empty, but make observers treat an empty log file the same as an absent one.
+>> Noted. Will try to fix (but probably not fast). At first I thought
+>> this was an old bug, but that old bug [1] is in the fetch/clone path,
+>> not push. Not sure if the same approach can be reused here (i.e.avoid
+>> temp files altoghether).
+>>
+>> [1] b790e0f (upload-pack: send shallow info over stdin to pack-objects
+>> - 2014-03-11)
 >
-> Probably your "don't remove and check for emptiness" approach would
-> be the simpler of the two, but I think we can go either way.
+> Noticed I had forgotten to reply ...
+>
+> An even simpler fix would be to have an tmp dir within the repo, aka:
+>  /var/git/tmv3-target-overlay.git/tmp/shallow_Un8ZOR
+> This would cover all cases when one must create a tmp file
 
-People have complained to me about stray files in $GIT_DIR, so it's
-probably best that we delete empty/useless files. Although we could
-delete empty files at the beginning of the next gc instead of at
-atexit(). Let me try it out and see which is simplest.
+Sorry for my silence. I intend to put these temp files in $TMPDIR by
+resurrecting (part of) this patch [1]. Maybe tomorrow.
+
+But if you build your own, you can put them in $GIT_DIR/tmp by
+replacing "shallow_XXXXXX" in setup_temporary_shallow() in shallow.c
+with "tmp/shallow_XXXX". You need to create the directory "tmp" in
+advance though, or do
+"safe_create_leading_directories_const(git_path("tmp/shallow_XXXXX"));"
+before xmkstemp()
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/242787
 -- 
 Duy
