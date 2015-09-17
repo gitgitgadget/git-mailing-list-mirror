@@ -1,102 +1,131 @@
-From: Stefan Beller <sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 01/10] strbuf: Add strbuf_read_noblock
-Date: Thu, 17 Sep 2015 10:53:06 -0700
-Message-ID: <CAGZ79kYKD6e=JmeFgbqHRmDAb1W3jraBayWHjA=-D+SXzubULw@mail.gmail.com>
+Date: Thu, 17 Sep 2015 10:54:39 -0700
+Message-ID: <xmqqoah1hqxs.fsf@gitster.mtv.corp.google.com>
 References: <1442453948-9885-1-git-send-email-sbeller@google.com>
 	<1442453948-9885-2-git-send-email-sbeller@google.com>
 	<xmqqtwqtja6j.fsf@gitster.mtv.corp.google.com>
 	<20150917163012.GB25837@sigill.intra.peff.net>
 	<xmqq6139j84n.fsf@gitster.mtv.corp.google.com>
 	<20150917171308.GA28046@sigill.intra.peff.net>
-	<CAGZ79kaZOyqwbf+BpG2oPBBt5zj3=q-abk+F-HdkZPL3GzTzsw@mail.gmail.com>
-	<20150917173536.GA28987@sigill.intra.peff.net>
-	<CAGZ79kYnZr3nb_5n-5J0vCMi7xb91y-OkrAEq8-uH2PvzmkSmA@mail.gmail.com>
-	<20150917175008.GA29601@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Vitali Lovich <vlovich@gmail.com>
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	jrnieder@gmail.com, johannes.schindelin@gmail.com,
+	Jens.Lehmann@web.de, vlovich@gmail.com
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 17 19:53:22 2015
+X-From: git-owner@vger.kernel.org Thu Sep 17 19:54:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcdN1-0005GY-Qo
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 19:53:20 +0200
+	id 1ZcdOU-0007Mq-IW
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 19:54:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752210AbbIQRxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 13:53:11 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:33207 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752010AbbIQRxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 13:53:07 -0400
-Received: by ykft14 with SMTP id t14so24417865ykf.0
-        for <git@vger.kernel.org>; Thu, 17 Sep 2015 10:53:07 -0700 (PDT)
+	id S1751630AbbIQRym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 13:54:42 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:33734 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751059AbbIQRyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 13:54:41 -0400
+Received: by pacex6 with SMTP id ex6so25833921pac.0
+        for <git@vger.kernel.org>; Thu, 17 Sep 2015 10:54:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=tu343qs8QgWiULUNPRIU2Y7xgeCIB9b867C6JHXCrRQ=;
-        b=f8H/2ulZ8MDNDcw5Ns/8pbtI83qhZ/ap0iQIhqW+2BsiDn+Rz8wSyKmW56OKS88x+o
-         yOhWNsPyE4MVwvSYhhBK3gTRg2OiJAr8o4Gh+AU+xZ/hhnzkS1yO2+tZTNy2E1JUR2g4
-         zDhuhOGi4qQ9Hce9Sn/1+/z/SXp3RtlQk3zUq1cipOJBM+UwE3Gftl+pmSHJ6LnajzpS
-         9Tohz0pWvQvgA+RaGX/agtYlm2hjaglwp5kgCWDR2lYwWBJvMSPMhlSRacw362FF/4Gf
-         R7eQ7w836pezS+Z8zCm3y6JzDTW6mVDJ1UqobWhdVgAiUu8TXcp98IknJB8eniD2xXUA
-         MMiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=tu343qs8QgWiULUNPRIU2Y7xgeCIB9b867C6JHXCrRQ=;
-        b=LkEgScIZjNaXTU2vqVDczI9X+Vmmk2a5a8rXxxHywtIygYZUC7PoFLH66pB7zh0j2P
-         JwaFRCuqnn8kQ0s7AsUBIxi07WewZQhoQvur7Hvi6/7+lp/6M8vw2S09QXk1f73Qc417
-         4Slnruc+WqwqJXb9ZDj62w7v14zZChq3S84mJcIwn8hbCq5da3iB0ibi3nlbSDW3MPna
-         fibnOLi62wE6PSjgS6SQwMx73r/5XV2nXYezp77a2YjpUBY9G8ZalGcb8sBLXW0DQxtw
-         LWp1mG+fyLQEyDPeNDyiM5dpavQ7QxSUwUyQ6KidgKB1MxIbwIKQfWkgkbjASHgCMs+T
-         KkuQ==
-X-Gm-Message-State: ALoCoQmWjS4udFJPCL02RN2DFgtgXWcMuKkrO2oIkds1PfPDaDbAEk+b3CH/A1v2ul8DBgfEPXGS
-X-Received: by 10.170.196.201 with SMTP id n192mr509766yke.16.1442512386799;
- Thu, 17 Sep 2015 10:53:06 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Thu, 17 Sep 2015 10:53:06 -0700 (PDT)
-In-Reply-To: <20150917175008.GA29601@sigill.intra.peff.net>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=RKvQWfUhy4u6FI7hOqVpalW1b0i1Qj7RYXJ42eFcnnI=;
+        b=fI/O0brrmH3bHbo+/bhdm7TUb2xU10yPi0Aq5oGXW2QB4+b/198CwjkLQe58ySfSr1
+         4rbVvUFsTvEnOyxt+C0T3mdB3zCXL+phpiAIupR7Mdeq+GPa7/fL7ng569K5zOkyJJh5
+         97TO8W9yHBmNILOmm+R1cOmbZYIGLC1FEUZ2F6AAWGL4gJYK8xSP9+2wzuA/MOV/F0r6
+         6dyUiP1TpPt9hTwCSXkMNvTounXu7haQgZOUJpBhXtjp3XP9NlCTtrTWnaqZEwCBL+mM
+         UFyKc2azKuuavl869zga4sRQ7kdavqg663XVs2/wbBSZwuyoeMnfzD96zXfi64dyeqAy
+         KvSg==
+X-Received: by 10.68.234.200 with SMTP id ug8mr749685pbc.13.1442512480797;
+        Thu, 17 Sep 2015 10:54:40 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:25ac:307e:6383:2d03])
+        by smtp.gmail.com with ESMTPSA id a2sm4594370pas.47.2015.09.17.10.54.39
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 17 Sep 2015 10:54:40 -0700 (PDT)
+In-Reply-To: <20150917171308.GA28046@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 17 Sep 2015 13:13:08 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278154>
 
-On Thu, Sep 17, 2015 at 10:50 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Sep 17, 2015 at 10:45:40AM -0700, Stefan Beller wrote:
+Jeff King <peff@peff.net> writes:
+
+> I think they have to loop for correctness, but they may do this:
 >
->> > You _can_ loop on read until you hit EAGAIN, but I think in general you
->> > shouldn't; if you get a lot of input on this fd, you'll starve all of
->> > the other descriptors you're polling.  You're better off to read a
->> > finite amount from each descriptor, and then check again who is ready to
->> > read.
->>
->> That's what I do with the current implementation. Except it's not as clear and
->> concise as I patched it into the strbuf_read.
+>   if (xread(fd, buf, len) < 0)
+> 	die_errno("OMG, an error!");
 >
-> Is it? I thought the implementation you posted bumped the existing
-> strbuf_read to strbuf_buf_internal, including the loop. So as long as we
-> are not getting EAGAIN, it will keep reading forever.
+> which is not correct if "fd" is unknowingly non-blocking.
+> ...
+> The spinning behavior is not great, but does mean that we spin and
+> continue rather than bailing with an error.
 
-You'll get EAGAIN pretty fast though, as all you do is reading as fast
-as you can.
+OK, that is a problem (I just read through "git grep xread -- \*.c".
+There aren't that many codepaths that read from a fd that we didn't
+open ourselves, but there indeed are some.
 
-> Actually not quite
-> true, as any read shorter than 8192 bytes will cause us to jump out of
-> the loop, too, but if we assume that the caller is feeding us data
-> faster than we can read it, we'll never exit strbuf_read_nonblock() and
-> serve any of the other descriptors.
+So it seems that we would want a xread() that spins to help such
+codepaths, and xread_nonblock() that gives a short-read upon
+EWOULDBLOCK.  They can share a helper function, of course.
 
-I see the difference now. That makes sense.
-
+> If we reset errno to "0" at the top of the function, we could get around
+> one problem, but it still makes an annoying interface: the caller has to
+> check errno for any 0-return to figure out if it was really EOF, or just
+> EAGAIN.
 >
-> -Peff
+> If we return -1, though, we have a similar annoyance. If the caller
+> notices a -1 return value and finds EAGAIN, they still may need to check
+> sb->len to see if they made forward progress and have data they should
+> be dealing with.
+
+OK.  Trying to repurpose strbuf_read() for non-blocking FD was a
+silly idea to begin with, as it wants to read thru to the EOF, and
+setting FD explicitly to O_NONBLOCK is a sign that the caller wants
+to grab as much as possible and does not want to wait for the EOF.
+
+So assuming we want strbuf_read_nonblock(), what interface do we
+want from it?  We could:
+
+ * Have it grab as much as possible into sb as long as it does not
+   block?
+
+ * Have it grab reasonably large amount into sb, and not blocking is
+   an absolute requirement, but the function is not required to read
+   everything that is available on the FD (i.e. the caller is
+   expected to loop)?
+
+If we choose the latter, then your "EAGAIN? EOF?" becomes easier,
+no?  We only have to do a single call to xread(), and then we:
+
+ - get EAGAIN or EWOULDBLOCK; leave sb as-is, set errno==EAGAIN and
+   return -1.
+
+ - get something (in which case that is not an EOF yet); append to
+   sb, return the number of bytes.
+
+ - get EOF; leave sb as-is, return 0.
+
+
+ssize_t strbuf_read_nonblock(struct strbuf *sb, int fd, size_t hint)
+{
+	strbuf_grow(sb, hint ? hint : 8192);
+	ssize_t want = sb->alloc - sb->len - 1;
+	ssize_t got = xread_nonblock(fd, sb->buf + sb->len, want);
+	if (got < 0) {
+		if (errno == EWOULDBLOCK)
+			errno = EAGAIN; /* make life easier for the caller */
+		return got;
+	}
+	sb->len += got;
+	sb->buf[sb->len] = '\0';
+	return got;
+}
