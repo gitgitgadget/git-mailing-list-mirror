@@ -1,84 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: Change library order for static linking
-Date: Thu, 17 Sep 2015 15:08:25 -0700
-Message-ID: <xmqq7fnoitra.fsf@gitster.mtv.corp.google.com>
-References: <1442524332-10180-1-git-send-email-repk@triplefau.lt>
-	<xmqqfv2cj03t.fsf@gitster.mtv.corp.google.com>
-	<20150917212016.GF606@cruxbox>
+Subject: Re: [PATCH v17 14/14] tag.c: implement '--merged' and '--no-merged' options
+Date: Thu, 17 Sep 2015 15:09:19 -0700
+Message-ID: <xmqq37ycitps.fsf@gitster.mtv.corp.google.com>
+References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
+	<1441902169-9891-3-git-send-email-Karthik.188@gmail.com>
+	<20150917213619.GI17201@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>,
-	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-To: Remi Pommarel <repk@triplefau.lt>
-X-From: git-owner@vger.kernel.org Fri Sep 18 00:08:37 2015
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri Sep 18 00:09:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZchM1-0000f1-2W
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 00:08:33 +0200
+	id 1ZchMv-00029F-F2
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 00:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751929AbbIQWI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 18:08:28 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:33178 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751855AbbIQWI1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 18:08:27 -0400
-Received: by pacex6 with SMTP id ex6so30666032pac.0
-        for <git@vger.kernel.org>; Thu, 17 Sep 2015 15:08:26 -0700 (PDT)
+	id S1752032AbbIQWJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 18:09:25 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:34886 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751849AbbIQWJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 18:09:24 -0400
+Received: by pacfv12 with SMTP id fv12so30934300pac.2
+        for <git@vger.kernel.org>; Thu, 17 Sep 2015 15:09:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=BH7nj358QdsTzcz7VStSPoaBXoX33JQ1sNuDDmcVRBg=;
-        b=JONBSo+V/Z5KYoVjBCo5o4mRwUTOaRqce2ymz795Bnnvfq8Q6bMHPuxCR1dCsF4L/J
-         2tIw8o4uhRfvEdfiFTCPPktZJK30PrE1Ie6MtENHi3zB/Seg9eVm1Jlzaxe4IX42MF9L
-         JbXVV06BCRfgnjJNCig6sxZI2mj38glU0gEa/G7pvqtiwXiZSKYHmY7gf13xzJBPbkbP
-         AK/iLDOG7eE8i34Mzt18vFC9CXHNdjakWYQNYw9iZQW8pMY0Lboo7pdLt2OhykctvPql
-         DPmHjvnSoPsd8INPi3kk6DR8VedofnkK4lH9i0lC9jIurwTIHe4fxvflFbRoNvKqwBks
-         7lrw==
-X-Received: by 10.68.94.3 with SMTP id cy3mr2801734pbb.113.1442527706811;
-        Thu, 17 Sep 2015 15:08:26 -0700 (PDT)
+        bh=sfNFGFdMqTca3DC0IMWlaZv7B1ATGVy0aCLiJgdLc/k=;
+        b=Kxpil0dj8wKrJcGqVv0b/DgJE9saG58jZfrXZ9vFA/9KLJzP576DQFXGzfUqadUE/B
+         7xuYBeqh/8Pc/RlNxQQNMkbxq7QbTGA/IsMDV4+CeqH+23kcA9pc3YYxKJkMq4fc6KSO
+         ATpvUJKa+JcfOdLxgXFGyWPrcd0quYj38tQxTwqd7DpTlsYJzK8yU7KfWIi0IQpmURkD
+         daGBv7g3KDnNyMBF7mp3WQ9ejXv47XLPPvwsmZZWaNhE9WNYED4on21RbRsZ5kCCYcu5
+         41N7YIq1bRFZH3DwttGK/8C3gEw21ZlJFNtI4vxzm9iWbPJvGMhH9xTeas4FnpD0cZSO
+         1VyA==
+X-Received: by 10.68.239.202 with SMTP id vu10mr2871865pbc.135.1442527764395;
+        Thu, 17 Sep 2015 15:09:24 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:25ac:307e:6383:2d03])
-        by smtp.gmail.com with ESMTPSA id je5sm5170090pbd.79.2015.09.17.15.08.26
+        by smtp.gmail.com with ESMTPSA id un2sm5204332pac.28.2015.09.17.15.09.22
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 17 Sep 2015 15:08:26 -0700 (PDT)
-In-Reply-To: <20150917212016.GF606@cruxbox> (Remi Pommarel's message of "Thu,
-	17 Sep 2015 23:20:16 +0200")
+        Thu, 17 Sep 2015 15:09:23 -0700 (PDT)
+In-Reply-To: <20150917213619.GI17201@serenity.lan> (John Keeping's message of
+	"Thu, 17 Sep 2015 22:36:19 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278173>
 
-Remi Pommarel <repk@triplefau.lt> writes:
+John Keeping <john@keeping.me.uk> writes:
 
-> On Thu, Sep 17, 2015 at 12:51:18PM -0700, Junio C Hamano wrote:
->> IIRC historically the division between ssl and crypto was messy.
->> Especially, I am not sure if the change to NEEDS_SSL_WITH_CRYPTO
->> in this patch is correct for platforms that require that macro
->> defined.
+>> +--[no-]merged [<commit>]::
 >
-> I think it is correct as anywhere else in Makefile the order is ssl
-> first then crypto (from Makefile:1047):
+> We prefer to write --[no-]* as:
+>
+> 	--option::
+> 	--no-option::
+>
+> although this may be the first instance that we see this combination
+> with an argument.
+>
+> I also found the "[<commit>]" syntax confusing and had to go and figure
+> out what PARSE_OPT_LASTARG_DEFAULT does; I wonder if it's worth
+> appending something like the following to the help for this option:
+>
+> 	The `commit` may be omitted if this is the final argument.
 
-IIRC, NEEDS_SSL_WITH_CRYPTO was invented for people whose platform
-needed that to be different
-
-597c9cc5 (Flatten tools/ directory to make build procedure simpler.,
-2005-09-07) has this bit:
-
-    +ifdef NEEDS_SSL_WITH_CRYPTO
-    +       LIB_4_CRYPTO = -lcrypto -lssl
-    +else
-    +       LIB_4_CRYPTO = -lcrypto
-    +endif
-
-That is, for most people, linking with -lcrypto was sufficient, but
-some people needed to grab things from -lssl when they need to do
-so, because things in -lcrypto referred to what was only in -lssl.
-
-Are you on such a platform?  If so can you test these both ways and
-make sure you are not breaking things for those on such a platform?
+"may be omitted" must be followed by a description of what happens
+when omitted (i.e. "defaults to ...").
