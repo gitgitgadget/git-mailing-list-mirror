@@ -1,138 +1,68 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 01/10] strbuf: Add strbuf_read_noblock
-Date: Thu, 17 Sep 2015 10:20:55 -0700
-Message-ID: <CAGZ79kY3ueSqVofLmo7jiRQv6R7rXmFvkoj5KouiXi+__h8_GQ@mail.gmail.com>
-References: <1442453948-9885-1-git-send-email-sbeller@google.com>
-	<1442453948-9885-2-git-send-email-sbeller@google.com>
-	<xmqqtwqtja6j.fsf@gitster.mtv.corp.google.com>
-	<20150917163012.GB25837@sigill.intra.peff.net>
-	<xmqq6139j84n.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 3/8] branch: roll show_detached HEAD into regular ref_list
+Date: Thu, 17 Sep 2015 10:21:32 -0700
+Message-ID: <xmqqwpvphsgz.fsf@gitster.mtv.corp.google.com>
+References: <1442129035-31386-1-git-send-email-Karthik.188@gmail.com>
+	<1442129035-31386-4-git-send-email-Karthik.188@gmail.com>
+	<xmqqzj0ovlno.fsf@gitster.mtv.corp.google.com>
+	<CAOLa=ZQ51+TKvOiJvWa-emmJJGirAqkr9m0a_7BrQ2UbiSJdjA@mail.gmail.com>
+	<CAOLa=ZQxounTiJk0t+zB2-7=UQa8oL+uJ9EQpTkWL7kYFHjxwQ@mail.gmail.com>
+	<vpqpp1hqgcd.fsf@anie.imag.fr>
+	<xmqqh9mtkrg0.fsf@gitster.mtv.corp.google.com>
+	<vpqio79oxva.fsf@anie.imag.fr>
+	<xmqqeghxj8i1.fsf@gitster.mtv.corp.google.com>
+	<vpqmvwlm0rt.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Vitali Lovich <vlovich@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 19:21:10 2015
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Sep 17 19:21:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zccrs-0002L2-K4
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 19:21:08 +0200
+	id 1ZccsM-00036N-M4
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Sep 2015 19:21:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752103AbbIQRVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2015 13:21:00 -0400
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:36605 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbbIQRU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2015 13:20:56 -0400
-Received: by ykdt18 with SMTP id t18so23413614ykd.3
-        for <git@vger.kernel.org>; Thu, 17 Sep 2015 10:20:55 -0700 (PDT)
+	id S1752023AbbIQRVe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2015 13:21:34 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:36744 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751854AbbIQRVe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2015 13:21:34 -0400
+Received: by padhk3 with SMTP id hk3so24846415pad.3
+        for <git@vger.kernel.org>; Thu, 17 Sep 2015 10:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1gMCO4Y62N7kBH8TvWV8NmOB1i/61M8wDnphlMIt8h0=;
-        b=DoSAiq4oelzU94ACxm1xbYJMmJJAVwqHD+hlbscL7O9atBo4jEjcHKrt0NdZd+L4zC
-         ewD6Y9bAO8ZHrKi4Di7WFFh6oLYLuHF3DmWKsxyTR0MKFilI/9WYE2VhRCcoO3Y7zGDn
-         wHvBW1IvmKcHqab0GE+CxIWW/koqRSGSDhIyg/wlUcV/E/+gaslE483Ty2vB5BZfCBVT
-         /8panwDESK7tk3Q4ehNgr2B14bmmvjCRq7YUNCclvqak6963Yzse/VNGobWkehNTtFFG
-         RCx4Xv5fCjlRhSb7M4qGZkhNW5BTHPiZ1SDx88kh2bZhnBNHn2sssDxkrZCfeL0rSI7J
-         qBgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=1gMCO4Y62N7kBH8TvWV8NmOB1i/61M8wDnphlMIt8h0=;
-        b=dEpCC+Q5akuLGcR6LSvyEX4dRTrz69/DdxtOiEs8lN2IPknpZeEy17hfxwpFRFWKYA
-         DsN1xA1rVUXuJs7uOPEmtVe8Y871p//d1XqFxdGekOHKvR6QVlwDQYLQECQVni2rWRq0
-         V0vNpG1m+HOtxmbYYdicnH4HtubxtP/Rlj/4HaU7bMEgcvfUYsfkXISl+iJS5u+VH6yt
-         Bz+mWS5BeL1St8nJj6EtWyhDeCMqtxDfGJjRCsyxjBL2vn2/A+MdCBFt0zQmtr9qBqq6
-         NI+F4OezarwK0dzMRbcClrkH4uEZIvkpYXCYTzf7RsVZlHe5HMmhVK6xsMb5htseo3Jm
-         g4yg==
-X-Gm-Message-State: ALoCoQk2kLfjDU66TPKGZYHPW7rzfz9cpyjygVet3bHeGt9qaloEsFfEIAJ52tri68qyb9MU/W4V
-X-Received: by 10.129.90.214 with SMTP id o205mr356199ywb.32.1442510455597;
- Thu, 17 Sep 2015 10:20:55 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Thu, 17 Sep 2015 10:20:55 -0700 (PDT)
-In-Reply-To: <xmqq6139j84n.fsf@gitster.mtv.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=4ZBKQvWZRN5C4ZVbHhigMp8iJGT4v3LcV7nLbUAIp9Q=;
+        b=yZhdh0rRB26++opvEBvc7MNJiNFE3j0leIMR/uTk///eAyhaf+UawPUC3bNeJQjLj7
+         bTC/QP5pyz8sgCrN4XX2GwH63SZxa746GZxIM35vRkOucEbsSmaOyy2DkO3qBOFsD288
+         E/zz14jyspo7iE8213H3EQGbaAgr1l8i59c4Oz9YsP4pTrdf4OaUpxnLsMiXySWtVdho
+         s56oM8VAF2bVhzSc1z2oEQN3ylrCTZbL346iXUmcRDtYQuhyxFWLp8pV2xJlwpUWycSu
+         xVZ21dIUR2Lw6zAfXG9RS+oncD5kh/1xJ42690pDGOeIe5kuEh/7SU8ukXcbjnU3lpD+
+         CKIw==
+X-Received: by 10.68.244.34 with SMTP id xd2mr533658pbc.50.1442510493609;
+        Thu, 17 Sep 2015 10:21:33 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:25ac:307e:6383:2d03])
+        by smtp.gmail.com with ESMTPSA id ki3sm4517823pbc.9.2015.09.17.10.21.32
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 17 Sep 2015 10:21:32 -0700 (PDT)
+In-Reply-To: <vpqmvwlm0rt.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	17 Sep 2015 19:08:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278147>
 
-On Thu, Sep 17, 2015 at 9:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> On Thu, Sep 17, 2015 at 09:13:40AM -0700, Junio C Hamano wrote:
->>
->>> And your new caller that does O_NONBLOCK wants to do more than
->>> looping upon EWOULDBLOCK.  It certainly would not want us to loop
->>> here.
->>>
->>> So I wonder if you can just O_NONBLOCK the fd and use the usual
->>> strbuf_read(), i.e. without any change in this patch, and update
->>> xread() to _unconditionally_ return when read(2) says EAGAIN or
->>> EWOULDBLOCK.
->>>
->>> What would that break?
->>
->> Certainly anybody who does not realize their descriptor is O_NONBLOCK
->> and is using the spinning for correctness. I tend to think that such
->> sites are wrong, though, and would benefit from us realizing they are
->> spinning.
->
-> With or without O_NONBLOCK, not looping around xread() _and_ relying
-> on the spinning for "correctness" means the caller is not getting
-> correctness anyway, I think, because xread() does return a short
-> read, and we deliberately and explicitly do so since 0b6806b9
-> (xread, xwrite: limit size of IO to 8MB, 2013-08-20).
->
->> But I think you can't quite get away with leaving strbuf_read untouched
->> in this case. On error, it wants to restore the original value of the
->> strbuf before the strbuf_read call. Which means that we throw away
->> anything read into the strbuf before we get EAGAIN, and the caller never
->> gets to see it.
->
-> I agree we need to teach strbuf_read() that xread() is now nicer on
-> O_NONBLOCK; perhaps like this?
->
->  strbuf.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/strbuf.c b/strbuf.c
-> index cce5eed..49104d7 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -368,6 +368,8 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
->
->                 cnt = xread(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
->                 if (cnt < 0) {
-> +                       if (errno == EAGAIN || errno == EWOULDBLOCK)
-> +                               break;
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-This would need xread to behave differently too. (if EAGAIN, return)
+> ... But we can decide "if sorting on refname, then
+> HEAD always comes first anyway".
 
-Looking at xread to answer: "Why did we have a spinning loop in case of
-EAGAIN in the first place?" I ended up with 1c15afb9343b (2005-12-19,
-xread/xwrite:
-do not worry about EINTR at calling sites.)
-
-There we had lots of EAGAIN checks sprinkled through the code base, so we had
-non blocking IO back then?
-
-I think I chose to not use xread, as it contradicts everything we want
-in the non
-blocking case. We want to ignore any operations with a recoverable error (EAGAIN
-and EINTR) and keep going with the rest of the program. In the blocking case
-(as it is used currently) we can just have the checks from xread moved to
-strbuf_read.
-
->                         if (oldalloc == 0)
->                                 strbuf_release(sb);
->                         else
+Sure.
