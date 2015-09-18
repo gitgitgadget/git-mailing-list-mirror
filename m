@@ -1,85 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v17 14/14] tag.c: implement '--merged' and '--no-merged' options
-Date: Fri, 18 Sep 2015 09:10:08 +0200
-Message-ID: <vpqoah0kxtb.fsf@anie.imag.fr>
-References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
-	<1441902169-9891-3-git-send-email-Karthik.188@gmail.com>
-	<20150917213619.GI17201@serenity.lan>
-	<xmqq37ycitps.fsf@gitster.mtv.corp.google.com>
+From: Remi Pommarel <repk@triplefau.lt>
+Subject: Re: [PATCH] Makefile: Change library order for static linking
+Date: Fri, 18 Sep 2015 09:17:14 +0200
+Message-ID: <20150918071525.GA482@cruxbox>
+References: <1442524332-10180-1-git-send-email-repk@triplefau.lt>
+ <xmqqfv2cj03t.fsf@gitster.mtv.corp.google.com>
+ <20150917212016.GF606@cruxbox>
+ <xmqq7fnoitra.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: John Keeping <john@keeping.me.uk>,
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>,
+	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 18 09:10:57 2015
+X-From: git-owner@vger.kernel.org Fri Sep 18 09:17:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zcpos-0005Da-L5
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 09:10:55 +0200
+	id 1Zcpv9-0005mh-UI
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 09:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755AbbIRHKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 03:10:50 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:52952 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751915AbbIRHKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 03:10:50 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8I7A8pq019959
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 18 Sep 2015 09:10:08 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8I7A8Xl004922;
-	Fri, 18 Sep 2015 09:10:08 +0200
-In-Reply-To: <xmqq37ycitps.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 17 Sep 2015 15:09:19 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 18 Sep 2015 09:10:08 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t8I7A8pq019959
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1443165010.06409@WgjKNqaS3IXFYbXfGrbQ9g
+	id S1752556AbbIRHRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 03:17:20 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:43513 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752009AbbIRHRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 03:17:19 -0400
+Received: from mfilter22-d.gandi.net (mfilter22-d.gandi.net [217.70.178.150])
+	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 7FCD917242A;
+	Fri, 18 Sep 2015 09:17:17 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter22-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
+	by mfilter22-d.gandi.net (mfilter22-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id KnpQgIDs90n4; Fri, 18 Sep 2015 09:17:16 +0200 (CEST)
+X-Originating-IP: 81.57.43.44
+Received: from localhost (mon75-1-81-57-43-44.fbx.proxad.net [81.57.43.44])
+	(Authenticated sender: repk@triplefau.lt)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 8B983173A1E;
+	Fri, 18 Sep 2015 09:17:15 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <xmqq7fnoitra.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278181>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Sep 17, 2015 at 03:08:25PM -0700, Junio C Hamano wrote:
+> That is, for most people, linking with -lcrypto was sufficient, but
+> some people needed to grab things from -lssl when they need to do
+> so, because things in -lcrypto referred to what was only in -lssl.
 
-> John Keeping <john@keeping.me.uk> writes:
->
->>> +--[no-]merged [<commit>]::
->>
->> We prefer to write --[no-]* as:
->>
->> 	--option::
->> 	--no-option::
->>
->> although this may be the first instance that we see this combination
->> with an argument.
->>
->> I also found the "[<commit>]" syntax confusing and had to go and figure
->> out what PARSE_OPT_LASTARG_DEFAULT does; I wonder if it's worth
->> appending something like the following to the help for this option:
->>
->> 	The `commit` may be omitted if this is the final argument.
->
-> "may be omitted" must be followed by a description of what happens
-> when omitted (i.e. "defaults to ...").
+Oh I see what you mean, I misinterpreted what NEEDS_SSL_WITH_CRYPTO
+does.
 
-Then:
+The problem on static compiled target is that libcurl.a got linked with
+libssl symbols. The proper variable I should have used is
+NEEDS_SSL_WITH_CURL. But this variable is not setted on Linux and not
+configurable, this is why I wrongly used NEEDS_SSL_WITH_CRYPTO.
 
-The `commit` may be omitted and defaults to HEAD if this is the final
-argument.
+I see several ways to fix static compilation:
 
-Sounds good to me.
+	1) Make NEED_SSL_WITH_CURL overridable by configure (the same
+	way NEEDS_SSL_WITH_CRYPTO is). Then static target should run
+	"NEED_SSL_WITH_CURL=YesPlease ./configure"
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+	2) Make configure know that static compilation is asked (ie
+	./configure --static) and automatically set NEED_SSL_WITH_CURL.
+
+	3) Use "curl-config --static-libs" to fill CURL_LIBCURL in
+	Makefile when ones use "./configure --static".
