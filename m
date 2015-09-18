@@ -1,99 +1,100 @@
-From: Tuomo Tanskanen <tuomo@tanskanen.org>
-Subject: BUG: git_work_tree issue with git alias and scripting
-Date: Fri, 18 Sep 2015 11:09:31 +0300
-Message-ID: <CAE_UwRqMnmgDEUjcuxNDXgx_D3MTFxNRTgA9xGB1OvK6_d-bMw@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v17 14/14] tag.c: implement '--merged' and '--no-merged'
+ options
+Date: Fri, 18 Sep 2015 09:42:08 +0100
+Message-ID: <20150918084208.GJ17201@serenity.lan>
+References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
+ <1441902169-9891-3-git-send-email-Karthik.188@gmail.com>
+ <20150917213619.GI17201@serenity.lan>
+ <xmqq37ycitps.fsf@gitster.mtv.corp.google.com>
+ <vpqoah0kxtb.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 18 10:10:39 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Sep 18 10:43:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zcqkd-0001Uf-64
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 10:10:36 +0200
+	id 1ZcrG4-0003rx-Tv
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 10:43:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751777AbbIRIKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 04:10:18 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:34180 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751068AbbIRIKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 04:10:11 -0400
-Received: by wicfx3 with SMTP id fx3so53598887wic.1
-        for <git@vger.kernel.org>; Fri, 18 Sep 2015 01:10:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:content-type;
-        bh=R9yOlTe+AqYduxABVRqNax6o0MV2jkjqtF7/5RY6YKs=;
-        b=X7J4ponvy5NxEThD41iAFtbKvcv72AkZ4Wc+eV8ziF2+Z8CHdNi1K9vG/4ENyvBu+z
-         EY97D/KXLw8/DYCqfkfV0P3D8fugbO/DxaJ0O5X4204gvCZd3olPcwBC7qGSznBYJRmX
-         oX2Kq4jUROwGzy0MUGN3A/abCGcQPDJzpXyuW1zML4I50T7F0Roq8tMyzT07FZSiP4BN
-         Oz/DEB8fKRHvq1RQ5HprBSA8fNbyEV9cOAW0xhhASdQo6q+yzF9FJsBkEKfQE5zODoln
-         BlwxYurKj09/EOe6SXVn+3aJCQ/sR+oa0HsEm/CYtzBa1YZyVJBfh9gcSiWkdl4yQ188
-         AX8A==
-X-Received: by 10.180.74.47 with SMTP id q15mr14857907wiv.73.1442563810733;
- Fri, 18 Sep 2015 01:10:10 -0700 (PDT)
-Received: by 10.28.127.131 with HTTP; Fri, 18 Sep 2015 01:09:31 -0700 (PDT)
-X-Google-Sender-Auth: 1SAlLRQL-jvPU_UW7qwJ1IlkCB0
+	id S1751006AbbIRIma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 04:42:30 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:57510 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750740AbbIRIm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 04:42:26 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id D9526CDA5C6;
+	Fri, 18 Sep 2015 09:42:25 +0100 (BST)
+X-Quarantine-ID: <LFtO9hMupRuj>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.199
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id LFtO9hMupRuj; Fri, 18 Sep 2015 09:42:24 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id DFE1DCDA600;
+	Fri, 18 Sep 2015 09:42:10 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <vpqoah0kxtb.fsf@anie.imag.fr>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278184>
 
-Hello,
+On Fri, Sep 18, 2015 at 09:10:08AM +0200, Matthieu Moy wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > John Keeping <john@keeping.me.uk> writes:
+> >
+> >>> +--[no-]merged [<commit>]::
+> >>
+> >> We prefer to write --[no-]* as:
+> >>
+> >> 	--option::
+> >> 	--no-option::
+> >>
+> >> although this may be the first instance that we see this combination
+> >> with an argument.
+> >>
+> >> I also found the "[<commit>]" syntax confusing and had to go and figure
+> >> out what PARSE_OPT_LASTARG_DEFAULT does; I wonder if it's worth
+> >> appending something like the following to the help for this option:
+> >>
+> >> 	The `commit` may be omitted if this is the final argument.
+> >
+> > "may be omitted" must be followed by a description of what happens
+> > when omitted (i.e. "defaults to ...").
+> 
+> Then:
+> 
+> The `commit` may be omitted and defaults to HEAD if this is the final
+> argument.
 
-Attached is a simple script exposing a possible bug when git alias is
-combined with git commands in script. It should be pretty self-explanatory.
-Check what it does and execute it. On my Linux and OSX, both with git 2.5.1
-behave the same, ie. git add fails even the file "test" is in $PWD.
+I find that slightly confusing, although that might just be me.  It's
+slightly longer, but I would write:
 
-Summary: $GIT_WORK_TREE persists in env, and then some git commands operate
-on repo in $PWD (like git log), while some others (like git add) operate on
-repo in $GIT_WORK_TREE, making it inconsistent and results in very
-unexpected results.
+	The `commit` may be omitted if this is the final argument, in
+	which case it defaults to `HEAD`.
 
-Cheers, Tuomo
+I also had a look at git-branch(1), which has similar `--merged` and
+`--no-merged` options and says:
 
+	Only list branches whose tips are reachable from the specified
+	commit (HEAD if not specified).  Implies `--list`.
 
----
-#!/bin/sh
-
-# setup a test repo
-mkdir bar
-cd bar
-git init
-echo "test" > bar
-git add bar
-git commit -m "test commit in bar"
-echo "adding this will fail later on" > test
-cd ..
-
-# setup a repo with an alias and script alias will execute
-mkdir foo
-cd foo
-git init
-
-cat >foo.sh <<EOF
-#!/bin/sh -x
-cd $PWD/../bar
-env | egrep "^(GIT_WORK_TREE|PWD)"
-echo "Git log works (bar log shows up):"
-git log --oneline | head -1
-echo "Git add does not (tries to add files in GIT_WORK_TREE=foo, while
-PWD=bar):"
-git add test
-EOF
-chmod 755 foo.sh
-
-cat >>.git/config <<EOF
-[alias]
-  foo = !$PWD/foo.sh
-EOF
-
-git add foo.sh
-git commit -m "committing foo.sh"
-
-# run test via alias
-git foo
+The two options are listed separately in that case.
