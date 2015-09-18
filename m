@@ -1,311 +1,107 @@
-From: Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH v8 1/4] worktree: add top-level worktree.c
-Date: Fri, 18 Sep 2015 09:30:24 -0400
-Message-ID: <1442583027-47653-2-git-send-email-rappazzo@gmail.com>
-References: <1442583027-47653-1-git-send-email-rappazzo@gmail.com>
-Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
-To: gitster@pobox.com, sunshine@sunshineco.com,
-	dturner@twopensource.com
-X-From: git-owner@vger.kernel.org Fri Sep 18 15:31:37 2015
+From: Phillip Sz <phillip.szelat@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: better language for 2 strings
+Date: Fri, 18 Sep 2015 16:43:46 +0200
+Message-ID: <55FC2322.1030901@gmail.com>
+References: <1442505032-11578-1-git-send-email-phillip.szelat@gmail.com>
+ <20150918084808.GA10616@ralf-ubuntu>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="AdToPqqAJmH2fONANnlW0PBhp3J83XAnS"
+Cc: git@vger.kernel.org, tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com,
+	sbeller@google.com
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 18 16:53:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zcvl7-0005xq-QJ
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 15:31:26 +0200
+	id 1Zcx29-0004YF-Db
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 16:53:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751800AbbIRNbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 09:31:07 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:33836 "EHLO
-	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751527AbbIRNbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 09:31:05 -0400
-Received: by qkfq186 with SMTP id q186so19281389qkf.1
-        for <git@vger.kernel.org>; Fri, 18 Sep 2015 06:31:05 -0700 (PDT)
+	id S1754216AbbIROxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 10:53:00 -0400
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:35595 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751984AbbIROn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 10:43:56 -0400
+Received: by wicge5 with SMTP id ge5so35935562wic.0
+        for <git@vger.kernel.org>; Fri, 18 Sep 2015 07:43:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cwBdItzOEnt66TY2V02U2f4M3/ZxWUH48/0MAtq+zuY=;
-        b=IGDEE2yGW/QTIuNY1gK0hALCucDSlEzSCaAWs9UtsZu3jUyC0m6jbJMcJfVEJR9zjJ
-         D8iAOZ3eEFRn2gYsp364K0p+0kS35BXqeWNK5knEe73LaLDZCKe9dGdFb+5seDnPWOm5
-         sJWYAitJBib+gxQ2jFmlbJPXFCoj2vq5bKxtqXAGYnzJyDTkrgRk5ZPKNTjkc1ff1OnT
-         7AZokVF72AeIxj0QjiMk5SnWE59ugmFCsk+PynJ1Crfp5xnZooUPSn6Oytvf3VUnHtB0
-         7aZzkqhXeLICYuhVQ8RUXsR/EFaMp8sMuzYDM7B6we60ZwH/oOFOsH61kgYs3ptkUCwS
-         tX9w==
-X-Received: by 10.55.54.75 with SMTP id d72mr6447627qka.52.1442583064774;
-        Fri, 18 Sep 2015 06:31:04 -0700 (PDT)
-Received: from localhost.localdomain (109.sub-70-199-70.myvzw.com. [70.199.70.109])
-        by smtp.gmail.com with ESMTPSA id i19sm3586051qkh.13.2015.09.18.06.31.03
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 18 Sep 2015 06:31:04 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0
-In-Reply-To: <1442583027-47653-1-git-send-email-rappazzo@gmail.com>
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-type;
+        bh=ge+YLUQmg28dlAKXT7Zu1sbt1yqPn6X5UhPogvuKWoU=;
+        b=EfdrYsUXK+vDTyTwG2xGAQwbt33LYoF4XTTBEj+CwMpEx1NB/apgjSsMCJGZkd1Un5
+         m7zt8g8KFjVEhA/vYnbBiJXccdJxHyb3MGlR47hzno8uBMzl+g9S6HbdvrXAe6r2r+9T
+         RYrevYWQJsdDcS8MiJsW1U13/UdV3CocSoc0E1tkZWBC8Uvo3xwgm+YEuRyHqd98c8k+
+         BJttqkIQOn93B58ckSGqtwzzBruzRBnkfiPVM6SEn7izi7QfFeY5M3P80mXtFOmwjRNE
+         J7Z1+P1DQYGmxgVzUFNSMK5ixETlLS0oDGkoyJYWvVd9ew2O7H+D+Vwsk9J9TQfOCfM1
+         Iypw==
+X-Received: by 10.194.48.81 with SMTP id j17mr7459909wjn.81.1442587434033;
+        Fri, 18 Sep 2015 07:43:54 -0700 (PDT)
+Received: from [192.168.178.84] (i577AB33D.versanet.de. [87.122.179.61])
+        by smtp.googlemail.com with ESMTPSA id gl4sm9223758wjb.29.2015.09.18.07.43.52
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Sep 2015 07:43:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+In-Reply-To: <20150918084808.GA10616@ralf-ubuntu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278195>
 
-worktree.c contains functions to work with and get information from
-worktrees.  This introduction moves functions related to worktrees
-from branch.c into worktree.c
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--AdToPqqAJmH2fONANnlW0PBhp3J83XAnS
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
----
- Makefile        |  1 +
- branch.c        | 79 +-----------------------------------------------------
- branch.h        |  8 ------
- builtin/notes.c |  1 +
- worktree.c      | 82 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- worktree.h      | 12 +++++++++
- 6 files changed, 97 insertions(+), 86 deletions(-)
- create mode 100644 worktree.c
- create mode 100644 worktree.h
+Hi,
 
-diff --git a/Makefile b/Makefile
-index 8d5df7e..f4ee2d2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -807,6 +807,7 @@ LIB_OBJS += version.o
- LIB_OBJS += versioncmp.o
- LIB_OBJS += walker.o
- LIB_OBJS += wildmatch.o
-+LIB_OBJS += worktree.o
- LIB_OBJS += wrapper.o
- LIB_OBJS += write_or_die.o
- LIB_OBJS += ws.o
-diff --git a/branch.c b/branch.c
-index d013374..77d7f2a 100644
---- a/branch.c
-+++ b/branch.c
-@@ -4,6 +4,7 @@
- #include "refs.h"
- #include "remote.h"
- #include "commit.h"
-+#include "worktree.h"
- 
- struct tracking {
- 	struct refspec spec;
-@@ -311,84 +312,6 @@ void remove_branch_state(void)
- 	unlink(git_path_squash_msg());
- }
- 
--static char *find_linked_symref(const char *symref, const char *branch,
--				const char *id)
--{
--	struct strbuf sb = STRBUF_INIT;
--	struct strbuf path = STRBUF_INIT;
--	struct strbuf gitdir = STRBUF_INIT;
--	char *existing = NULL;
--
--	/*
--	 * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside
--	 * $GIT_DIR so resolve_ref_unsafe() won't work (it uses
--	 * git_path). Parse the ref ourselves.
--	 */
--	if (id)
--		strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, symref);
--	else
--		strbuf_addf(&path, "%s/%s", get_git_common_dir(), symref);
--
--	if (!strbuf_readlink(&sb, path.buf, 0)) {
--		if (!starts_with(sb.buf, "refs/") ||
--		    check_refname_format(sb.buf, 0))
--			goto done;
--	} else if (strbuf_read_file(&sb, path.buf, 0) >= 0 &&
--	    starts_with(sb.buf, "ref:")) {
--		strbuf_remove(&sb, 0, strlen("ref:"));
--		strbuf_trim(&sb);
--	} else
--		goto done;
--	if (strcmp(sb.buf, branch))
--		goto done;
--	if (id) {
--		strbuf_reset(&path);
--		strbuf_addf(&path, "%s/worktrees/%s/gitdir", get_git_common_dir(), id);
--		if (strbuf_read_file(&gitdir, path.buf, 0) <= 0)
--			goto done;
--		strbuf_rtrim(&gitdir);
--	} else
--		strbuf_addstr(&gitdir, get_git_common_dir());
--	strbuf_strip_suffix(&gitdir, ".git");
--
--	existing = strbuf_detach(&gitdir, NULL);
--done:
--	strbuf_release(&path);
--	strbuf_release(&sb);
--	strbuf_release(&gitdir);
--
--	return existing;
--}
--
--char *find_shared_symref(const char *symref, const char *target)
--{
--	struct strbuf path = STRBUF_INIT;
--	DIR *dir;
--	struct dirent *d;
--	char *existing;
--
--	if ((existing = find_linked_symref(symref, target, NULL)))
--		return existing;
--
--	strbuf_addf(&path, "%s/worktrees", get_git_common_dir());
--	dir = opendir(path.buf);
--	strbuf_release(&path);
--	if (!dir)
--		return NULL;
--
--	while ((d = readdir(dir)) != NULL) {
--		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
--			continue;
--		existing = find_linked_symref(symref, target, d->d_name);
--		if (existing)
--			goto done;
--	}
--done:
--	closedir(dir);
--
--	return existing;
--}
--
- void die_if_checked_out(const char *branch)
- {
- 	char *existing;
-diff --git a/branch.h b/branch.h
-index d3446ed..58aa45f 100644
---- a/branch.h
-+++ b/branch.h
-@@ -59,12 +59,4 @@ extern int read_branch_desc(struct strbuf *, const char *branch_name);
-  */
- extern void die_if_checked_out(const char *branch);
- 
--/*
-- * Check if a per-worktree symref points to a ref in the main worktree
-- * or any linked worktree, and return the path to the exising worktree
-- * if it is.  Returns NULL if there is no existing ref.  The caller is
-- * responsible for freeing the returned path.
-- */
--extern char *find_shared_symref(const char *symref, const char *target);
--
- #endif
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 3608c64..8b30334 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -20,6 +20,7 @@
- #include "notes-merge.h"
- #include "notes-utils.h"
- #include "branch.h"
-+#include "worktree.h"
- 
- static const char * const git_notes_usage[] = {
- 	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
-diff --git a/worktree.c b/worktree.c
-new file mode 100644
-index 0000000..10e1496
---- /dev/null
-+++ b/worktree.c
-@@ -0,0 +1,82 @@
-+#include "cache.h"
-+#include "refs.h"
-+#include "strbuf.h"
-+#include "worktree.h"
-+
-+static char *find_linked_symref(const char *symref, const char *branch,
-+				const char *id)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	struct strbuf path = STRBUF_INIT;
-+	struct strbuf gitdir = STRBUF_INIT;
-+	char *existing = NULL;
-+
-+	/*
-+	 * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside
-+	 * $GIT_DIR so resolve_ref_unsafe() won't work (it uses
-+	 * git_path). Parse the ref ourselves.
-+	 */
-+	if (id)
-+		strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, symref);
-+	else
-+		strbuf_addf(&path, "%s/%s", get_git_common_dir(), symref);
-+
-+	if (!strbuf_readlink(&sb, path.buf, 0)) {
-+		if (!starts_with(sb.buf, "refs/") ||
-+		    check_refname_format(sb.buf, 0))
-+			goto done;
-+	} else if (strbuf_read_file(&sb, path.buf, 0) >= 0 &&
-+	    starts_with(sb.buf, "ref:")) {
-+		strbuf_remove(&sb, 0, strlen("ref:"));
-+		strbuf_trim(&sb);
-+	} else
-+		goto done;
-+	if (strcmp(sb.buf, branch))
-+		goto done;
-+	if (id) {
-+		strbuf_reset(&path);
-+		strbuf_addf(&path, "%s/worktrees/%s/gitdir", get_git_common_dir(), id);
-+		if (strbuf_read_file(&gitdir, path.buf, 0) <= 0)
-+			goto done;
-+		strbuf_rtrim(&gitdir);
-+	} else
-+		strbuf_addstr(&gitdir, get_git_common_dir());
-+	strbuf_strip_suffix(&gitdir, ".git");
-+
-+	existing = strbuf_detach(&gitdir, NULL);
-+done:
-+	strbuf_release(&path);
-+	strbuf_release(&sb);
-+	strbuf_release(&gitdir);
-+
-+	return existing;
-+}
-+
-+char *find_shared_symref(const char *symref, const char *target)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	DIR *dir;
-+	struct dirent *d;
-+	char *existing;
-+
-+	if ((existing = find_linked_symref(symref, target, NULL)))
-+		return existing;
-+
-+	strbuf_addf(&path, "%s/worktrees", get_git_common_dir());
-+	dir = opendir(path.buf);
-+	strbuf_release(&path);
-+	if (!dir)
-+		return NULL;
-+
-+	while ((d = readdir(dir)) != NULL) {
-+		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
-+			continue;
-+		existing = find_linked_symref(symref, target, d->d_name);
-+		if (existing)
-+			goto done;
-+	}
-+done:
-+	closedir(dir);
-+
-+	return existing;
-+}
-diff --git a/worktree.h b/worktree.h
-new file mode 100644
-index 0000000..71b1409
---- /dev/null
-+++ b/worktree.h
-@@ -0,0 +1,12 @@
-+#ifndef WORKTREE_H
-+#define WORKTREE_H
-+
-+/*
-+ * Check if a per-worktree symref points to a ref in the main worktree
-+ * or any linked worktree, and return the path to the exising worktree
-+ * if it is.  Returns NULL if there is no existing ref.  The caller is
-+ * responsible for freeing the returned path.
-+ */
-+extern char *find_shared_symref(const char *symref, const char *target);
-+
-+#endif
--- 
-2.5.0
+>>  #: git-am.sh:512
+>>  msgid "Please make up your mind. --skip or --abort?"
+>> -msgstr "Bitte werden Sie sich klar. --skip oder --abort?"
+>> +msgstr "Bitte entscheiden Sie sich. --skip oder --abort?"
+>> =20
+>=20
+> This string has been removed in 40147ec (l10n: de.po: translate 123
+> new messages), so I've updated the commit accordingly.
+>=20
+
+Thanks, a lot!
+
+> From: Phillip Sz <phillip.szelat@gmail.com>
+> Date: Thu, 17 Sep 2015 17:50:32 +0200
+> Subject: [PATCH] l10n: de.po: better language for one string
+>=20
+> Just one string I think we could translate better.
+>=20
+> Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+
+Phillip
+
+
+
+--AdToPqqAJmH2fONANnlW0PBhp3J83XAnS
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJV/CMnAAoJEJIt6Cqh4sVSMFwH/1LYbk/+mZ7Zg2whWYwdeq4X
+gYXrhOCUvi4qIs33aX8l89AMnJqeT57kK2aGQyimouHy1Moy/jqdegzZSsskglec
+exSHKDXNf1QuN6LJ3pVgtzdPPaVzOKb9AyEfm1OP9hsvF0nbfxOBfl2BSS6iKkGl
+Fs2oy9P/7k4qQ/3/jvphLdWykZQycfF7Dx8LlrD2+9+Ybx+BASFT7XxQjuyBGG/Y
+BKGCQBx73alO79ajAsLdbL0mJ04+OyHtlmR5wclhUA3BrIPZx59ajJHPH8asIpDs
+fnyA2l2MQqwPMmKZWYkWMcKsOR5itOaF5BxoxI7MYEGiA45vCpWAa8Y8Mb3WZuo=
+=H7+I
+-----END PGP SIGNATURE-----
+
+--AdToPqqAJmH2fONANnlW0PBhp3J83XAnS--
