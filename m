@@ -1,107 +1,77 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Announcing Git for Windows 2.5.3
-Date: Fri, 18 Sep 2015 21:46:32 +0200
-Organization: gmx
-Message-ID: <3143d9c98b472ca9eb6dfc2e36f1d3a9@dscho.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git for Windows Mailing List <git-for-windows@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 18 21:46:47 2015
+From: Brian Norris <computersforpeace@gmail.com>
+Subject: [PATCH] send-email: fix uninitialized var warning for $smtp_auth
+Date: Fri, 18 Sep 2015 15:12:50 -0700
+Message-ID: <1442614370-39880-1-git-send-email-computersforpeace@gmail.com>
+Cc: Brian Norris <computersforpeace@gmail.com>,
+	Jan Viktorin <viktorin@rehivetech.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 19 00:13:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zd1cK-0004ad-NP
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 21:46:45 +0200
+	id 1Zd3uh-0005CY-2d
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Sep 2015 00:13:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753907AbbIRTqh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Sep 2015 15:46:37 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52049 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752962AbbIRTqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 15:46:35 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MHrk1-1ZZzsK33L3-003bQw; Fri, 18 Sep 2015 21:46:33
- +0200
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:filNf3tuKLZsx3g2l5jjp7DZe7m5pAeHPYy6WRHZXi158WMdofD
- OEBtCDA9HA24k0FZ6Gji5MZqaedL6voUbSHcB1JkjsJCo8lP8xshFps8rFp0TGRRs5dvLVk
- j25XFv2oQ2Uuqw4ug7rwBMMyRlCqbYLJh7xcgBcKTWq4HX9h0fzIsjFj3sg4mtR2b1p1J/W
- 2cshgAULJq7EyBYKWMIwA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OXCvxuZV/ag=:QhXMDJHcK5GX78FuG0C5DE
- +nkvcXebYtOt5nVYNk1PjArmmIWI2mZEAJlUxmdLGJj5lpzsLk0QIv7Lb5Y170QLloei75qga
- Xh0WDmyyKRVoMOd+d+OcFgjRoG+PT86FAX7+pZBSFhGHwKoIoJgqjiSI38V8kN99JdYxuwmSn
- Q2AoC641Nc2v3Rbytjsgtrccrk+ut3IuAjm1JS9+g4j8QuYQAl+vnSQbF7xctIZko9pBHX0rS
- UbXgqJ1V1d1Iy5P+D7du9U2zM2yBtdp8V5tSisjPsJxYS853hQpcWGWdIIdK9thvRzmenydqs
- m/uet+6uH5Syq9LT4WM6ixYr9KT32OsZkBRwlTrxDYt/JvhRyDiegKYY5UqgKas3PXzUgPpqc
- Zm17GGLv4i4ofLWskCzhcjixBCaCJeYZJxJVi1haWLKPY5MIR1JhfCqSflD+C18zCmwHocBy/
- 0YKKMfbyEG/4Dl4wDbaHQDNdc6yQelbxQReNt7P/jYka+eA+XjQQWeo6t8NXmvLZdBOHZCgap
- ld9I1nvpK2KALXR4CWa+vsvewhhr7lZka4yaC844FV3xf/Gl/jWFWKgUR3PjnjG9DPMfeVAOg
- DzrodKFA/dpSuJ44eShwNATJIeNK2a1vN68AFuCzXkbA9rO3kRJLNIO/+xotVFDeVp8TrukOh
- Wtqld1GueJ5O4hFZJGmSLKL2N4INQMsgV1/Rd4I2rw1cmO1jt3WlLJDnKi3fVocVQw1DQmBj1
- RwxFACnZtwhxjYt6keR+d9+o6kmSvZZIdMM9kw==
+	id S1754623AbbIRWNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 18:13:45 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:36100 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754480AbbIRWNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 18:13:45 -0400
+Received: by padhk3 with SMTP id hk3so61274259pad.3
+        for <git@vger.kernel.org>; Fri, 18 Sep 2015 15:13:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=rQprs//46gPaRAbh4ici2PW3DAUG0T6mEEXF3qcsyGU=;
+        b=UJqE8ZSjHmzxYXQ2QoeIbjge9zYWwCo8yydRljabOgqTLaWUudYoJ3wIg9FBxGVuT9
+         Qjstps0xVyqV1R0Xeqk/tICvx22/GJDMHTVVLrNxpBwhnbW4bTjVi/W8H/cqTi0fqvyU
+         Ef2R+TFzi6eI3aF51Vcr5/hceWRYwqQPJrF37zd9WQjQk5Df4RGdwMLSElR+fyO6j1Hr
+         n7sFQ3flPb1hHZVBOXCP2FbUbcQ4AFTmGwKEY9SX1MgyeWzJGnvj1IGHkqS170gK7LCx
+         gyltJ1viZeX4K92Fkf85/4VYjH5Q4VQ98DGWRy4Yww13HHF6RYnw9F02FGs3x4dPIF3q
+         DSUg==
+X-Received: by 10.66.119.202 with SMTP id kw10mr9611788pab.38.1442614424807;
+        Fri, 18 Sep 2015 15:13:44 -0700 (PDT)
+Received: from ban.mtv.corp.google.com ([172.22.64.120])
+        by smtp.gmail.com with ESMTPSA id b7sm10828222pbu.20.2015.09.18.15.13.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 18 Sep 2015 15:13:44 -0700 (PDT)
+X-Mailer: git-send-email 2.6.0.rc0.131.gf624c3d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278223>
 
-Dear Git users,
+On the latest version of git-send-email, I see this error just before
+running SMTP auth (I didn't provide any --smtp-auth= parameter):
 
-it is my pleasure to announce that Git for Windows 2.5.3 can be downloa=
-ded from https://git-for-windows.github.io/.
+  Use of uninitialized value $smtp_auth in pattern match (m//) at /usr/local/google/home/briannorris/git/git/git-send-email.perl line 1139.
 
-I would like to take this opportunity to thank everybody who contribute=
-s to this project (and you will see below that there have been quite a =
-few changes since release 2 of version 2.5.3 this past Sunday), in part=
-icular Matthias A=C3=9Fhauer and @nalla for tireless testing and contri=
-buting patches.
+Signed-off-by: Brian Norris <computersforpeace@gmail.com>
+Cc: Jan Viktorin <viktorin@rehivetech.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+---
+ git-send-email.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Changes since Git-2.5.2(2) (September 13th 2015)
-
-New Features
-
-  =E2=80=A2 Comes with Git 2.5.3.
-  =E2=80=A2 Includes git flow.
-  =E2=80=A2 By configuring `git config core.editor notepad`, users can =
-now use
-    notepad.exe as their default editor. Configuring `git config
-    format.commitMessageColumns 72` will be picked up by the notepad
-    wrapper and line-wrap the commit message after the user edited it.
-  =E2=80=A2 The Subversion bindings for use with git svn were upgraded =
-to
-    version 1.9.1.
-  =E2=80=A2 Some interactive console programs, e.g. psql.exe, now work =
-in
-    mintty thanks to pre-configured aliases.
-  =E2=80=A2 The mechanism to diff .pdf, .doc and .docx files known from=
- Git for
-    Windows 1.x has been ported to Git for Windows 2.x.
-  =E2=80=A2 Git can now access IPv6-only hosts via HTTP/HTTPS.
-
-Bug fixes
-
-  =E2=80=A2 The .vimrc in the home directory is now allowed to have DOS=
- line
-    endings.
-  =E2=80=A2 The README.portable file of the portable Git mentions the n=
-eed to
-    run post-install.bat when the archive was extracted manually.
-  =E2=80=A2 Home directories for user names with non-ASCII characters a=
-re
-    handled correctly now.
-  =E2=80=A2 The documentation no longer shows plain-text linkgit:... "l=
-inks"
-    but proper hyperlinks instead.
-  =E2=80=A2 The mtab link is written to /etc/mtab again, as it should.
-  =E2=80=A2 When run inside the PowerShell, Git no longer gets confused=
- when
-    the current directory's path and what is recorded in the file
-    system differs in case (e.g. "GIT/" vs "Git/").
-
-Ciao,
-Johannes
+diff --git a/git-send-email.perl b/git-send-email.perl
+index c5a3f766f7fd..e3ff44b4d0cd 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1136,7 +1136,7 @@ sub smtp_auth_maybe {
+ 
+ 	# Check mechanism naming as defined in:
+ 	# https://tools.ietf.org/html/rfc4422#page-8
+-	if ($smtp_auth !~ /^(\b[A-Z0-9-_]{1,20}\s*)*$/) {
++	if ($smtp_auth && $smtp_auth !~ /^(\b[A-Z0-9-_]{1,20}\s*)*$/) {
+ 		die "invalid smtp auth: '${smtp_auth}'";
+ 	}
+ 
+-- 
+2.6.0.rc0.131.gf624c3d
