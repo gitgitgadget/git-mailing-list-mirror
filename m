@@ -1,100 +1,99 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v17 14/14] tag.c: implement '--merged' and '--no-merged'
- options
-Date: Fri, 18 Sep 2015 09:42:08 +0100
-Message-ID: <20150918084208.GJ17201@serenity.lan>
-References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
- <1441902169-9891-3-git-send-email-Karthik.188@gmail.com>
- <20150917213619.GI17201@serenity.lan>
- <xmqq37ycitps.fsf@gitster.mtv.corp.google.com>
- <vpqoah0kxtb.fsf@anie.imag.fr>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: better language for 2 strings
+Date: Fri, 18 Sep 2015 10:48:08 +0200
+Message-ID: <20150918084808.GA10616@ralf-ubuntu>
+References: <1442505032-11578-1-git-send-email-phillip.szelat@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Sep 18 10:43:06 2015
+Cc: git@vger.kernel.org, tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
+To: Phillip Sz <phillip.szelat@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 18 10:48:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcrG4-0003rx-Tv
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 10:43:05 +0200
+	id 1ZcrLB-00032l-P4
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 10:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbbIRIma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 04:42:30 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:57510 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750740AbbIRIm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 04:42:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id D9526CDA5C6;
-	Fri, 18 Sep 2015 09:42:25 +0100 (BST)
-X-Quarantine-ID: <LFtO9hMupRuj>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.199
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id LFtO9hMupRuj; Fri, 18 Sep 2015 09:42:24 +0100 (BST)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id DFE1DCDA600;
-	Fri, 18 Sep 2015 09:42:10 +0100 (BST)
+	id S1752884AbbIRIsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 04:48:14 -0400
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:37661 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752828AbbIRIsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 04:48:11 -0400
+Received: by wicfx3 with SMTP id fx3so21738217wic.0
+        for <git@vger.kernel.org>; Fri, 18 Sep 2015 01:48:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=P8wT30T0U82QVvVKtxhVShGQGUnQmO0Eq6QzM7oD1iI=;
+        b=HH55pumjMarztA3q4+O1DKY2Fvtu4VZp17mhrGGI9YMQjZFLI/l/TgI9+FXI7qoDpF
+         olPygzYs9bUctnrdOtii3i0FAq8sFPkX7yQsV7Toj6rnr3X8L+LWULoqDhYFlZkXLZhx
+         r8yeCIVGIAXvv5j5cuKyDFOZva8vLYxJUqgMRheK2wScq7zwugmTUuHIWkVLFDT2J3yC
+         vaxhTKxwsWl865kphBvmbvvX0zPYcO9BN973r0VOEyLIyQz0Cv98XVNAc4ajbO4t15c3
+         fpNQTX93GnlZ9JFdjmYFnbXexCdauPd2O5o9KclQJ/fuA+pVd4zDUrJ2RJCpxXjPhYeU
+         Ppxg==
+X-Received: by 10.194.86.161 with SMTP id q1mr6084091wjz.18.1442566090251;
+        Fri, 18 Sep 2015 01:48:10 -0700 (PDT)
+Received: from localhost (cable-94-139-2-197.cust.telecolumbus.net. [94.139.2.197])
+        by smtp.gmail.com with ESMTPSA id z2sm14363997wij.1.2015.09.18.01.48.09
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Fri, 18 Sep 2015 01:48:09 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <vpqoah0kxtb.fsf@anie.imag.fr>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <1442505032-11578-1-git-send-email-phillip.szelat@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278185>
 
-On Fri, Sep 18, 2015 at 09:10:08AM +0200, Matthieu Moy wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+Phillip Sz <phillip.szelat@gmail.com> wrote:
+> just 2 strings I think we could translate better.
+
+Thanks!
+
 > 
-> > John Keeping <john@keeping.me.uk> writes:
-> >
-> >>> +--[no-]merged [<commit>]::
-> >>
-> >> We prefer to write --[no-]* as:
-> >>
-> >> 	--option::
-> >> 	--no-option::
-> >>
-> >> although this may be the first instance that we see this combination
-> >> with an argument.
-> >>
-> >> I also found the "[<commit>]" syntax confusing and had to go and figure
-> >> out what PARSE_OPT_LASTARG_DEFAULT does; I wonder if it's worth
-> >> appending something like the following to the help for this option:
-> >>
-> >> 	The `commit` may be omitted if this is the final argument.
-> >
-> > "may be omitted" must be followed by a description of what happens
-> > when omitted (i.e. "defaults to ...").
+> Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
+> ---
+>  po/de.po | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> Then:
-> 
-> The `commit` may be omitted and defaults to HEAD if this is the final
-> argument.
+>  #: git-am.sh:512
+>  msgid "Please make up your mind. --skip or --abort?"
+> -msgstr "Bitte werden Sie sich klar. --skip oder --abort?"
+> +msgstr "Bitte entscheiden Sie sich. --skip oder --abort?"
+>  
 
-I find that slightly confusing, although that might just be me.  It's
-slightly longer, but I would write:
+This string has been removed in 40147ec (l10n: de.po: translate 123
+new messages), so I've updated the commit accordingly.
 
-	The `commit` may be omitted if this is the final argument, in
-	which case it defaults to `HEAD`.
+-- >% --
+From: Phillip Sz <phillip.szelat@gmail.com>
+Date: Thu, 17 Sep 2015 17:50:32 +0200
+Subject: [PATCH] l10n: de.po: better language for one string
 
-I also had a look at git-branch(1), which has similar `--merged` and
-`--no-merged` options and says:
+Just one string I think we could translate better.
 
-	Only list branches whose tips are reachable from the specified
-	commit (HEAD if not specified).  Implies `--list`.
+Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The two options are listed separately in that case.
+diff --git a/po/de.po b/po/de.po
+index c9b4d16..c682aaf 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -2733,7 +2733,7 @@ msgid ""
+ "it will be removed. Please do not use it anymore."
+ msgstr ""
+ "Die -b/--binary Option hat seit Langem keinen Effekt und wird\n"
+-"entfernt. Bitte nicht mehr verwenden."
++"entfernt. Bitte verwenden Sie diese nicht mehr."
+ 
+ #: builtin/am.c:2329
+ msgid "failed to read the index"
