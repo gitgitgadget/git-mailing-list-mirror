@@ -1,67 +1,143 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 54/67] color: add overflow checks for parsing colors
-Date: Fri, 18 Sep 2015 15:01:16 -0400
-Message-ID: <20150918190116.GA3932@sigill.intra.peff.net>
-References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915160703.GB29753@sigill.intra.peff.net>
- <CAPig+cQUwsDfL-epJYy+4xoG2-GfDfhb3mH=7WAzYbsea-sXDA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [BUG?] HEAD detached at HEAD
+Date: Fri, 18 Sep 2015 21:09:04 +0200
+Message-ID: <vpqlhc3h7e7.fsf@anie.imag.fr>
+References: <vpqk2rnirz0.fsf@anie.imag.fr>
+	<CA+P7+xoeXiZd=WU460Xfjthe0U5BnAV69_KNKW39p10ZGLHx7g@mail.gmail.com>
+	<vpqeghviqu1.fsf@anie.imag.fr>
+	<CAGZ79kZxAwMvv6UoZLBd2wTOdj1DFWKQqSPBYL449KSokA8DQQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Sep 18 21:01:35 2015
+Content-Type: text/plain
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	git <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Sep 18 21:09:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zd0uR-0007gS-H0
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 21:01:23 +0200
+	id 1Zd12P-0004Qk-5v
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 21:09:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752035AbbIRTBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 15:01:19 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33298 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751659AbbIRTBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 15:01:18 -0400
-Received: (qmail 18744 invoked by uid 102); 18 Sep 2015 19:01:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Sep 2015 14:01:18 -0500
-Received: (qmail 10599 invoked by uid 107); 18 Sep 2015 19:01:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Sep 2015 15:01:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Sep 2015 15:01:16 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQUwsDfL-epJYy+4xoG2-GfDfhb3mH=7WAzYbsea-sXDA@mail.gmail.com>
+	id S1752550AbbIRTJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 15:09:16 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:53633 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751422AbbIRTJO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 15:09:14 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t8IJ92YF027823
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 18 Sep 2015 21:09:02 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8IJ947s018049;
+	Fri, 18 Sep 2015 21:09:04 +0200
+In-Reply-To: <CAGZ79kZxAwMvv6UoZLBd2wTOdj1DFWKQqSPBYL449KSokA8DQQ@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 18 Sep 2015 10:32:09 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 18 Sep 2015 21:09:02 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t8IJ92YF027823
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1443208147.18493@IhZ9q6fHVWdfBkI55pCsUw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278216>
 
-On Fri, Sep 18, 2015 at 02:54:11PM -0400, Eric Sunshine wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> > @@ -224,12 +227,18 @@ int color_parse_mem(const char *value, int value_len, char *dst)
-> >                         goto bad;
-> >         }
-> >
-> > +#define OUT(x) do { \
-> > +       if (dst == end) \
-> > +               die("BUG: color parsing ran out of space"); \
-> > +       *dst++ = (x); \
-> > +} while(0)
-> 
-> Hmm, can we have an #undef OUT before the #define OUT(...), or choose
-> a less conflict-likely name? In particular, I'm thinking about
-> preprocessor namespace pollution arising from sources out of our
-> control, such as was the case with 414382f (ewah/bitmap: silence
-> warning about MASK macro redefinition, 2015-06-03).
+> On Fri, Sep 18, 2015 at 10:23 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Jacob Keller <jacob.keller@gmail.com> writes:
+>>
+>>> On Fri, Sep 18, 2015 at 9:59 AM, Matthieu Moy
+>>> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>>> I'm getting it even if there's a tag and/or a branch pointing to the
+>>>> same commit.
+>>>>
+>>>> Any idea what's going on?
+>>>
+>>> Any chance you accidentally made a branch or tag named HEAD?
+>>
+>> Nice try ;-), but no:
+>
+> I was playing around with origin/master and origin/pu and
+> I cannot reproduce this bug.
 
-Sure. I wouldn't think any headers would be dumb enough to define
-something as short and common as OUT. But then I would have said the
-same about MASK. ;)
+I investigated a bit more. The root of the problem is "git checkout
+--detach" and the reflog. Here's a reproduction script:
 
-I added an #undef, and I added an #undef at the end of the function, as
-well (to clean up after ourselves).
 
--Peff
+rm -fr test-repo
+git init test-repo
+cd test-repo
+echo foo>bar; git add bar; git commit -m "foo"
+echo boz>bar; git add bar; git commit -m "boz"
+git checkout --detach
+git status
+git branch
+rm -fr .git/logs/
+git status
+git branch
+
+The end of the output is:
+
+  + git checkout --detach
+  + git status
+  HEAD detached at HEAD
+  nothing to commit, working directory clean
+  + git branch
+  * (HEAD detached at HEAD)
+    master
+  + rm -fr .git/logs/
+  + git status
+  Not currently on any branch.
+  nothing to commit, working directory clean
+  + git branch
+  * (no branch)
+    master
+
+If one replaces "git checkout --detach" with "git checkout HEAD^0", then
+the output is the one I expected:
+
+  HEAD detached at cb39b20
+
+The guilty line in the reflog is:
+
+  checkout: moving from master to HEAD
+
+One possible fix is to resolve HEAD when encountering it in the reflog,
+like this:
+
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1319,6 +1319,13 @@ static int grab_1st_switch(unsigned char *osha1, unsigned char *nsha1,
+        hashcpy(cb->nsha1, nsha1);
+        for (end = target; *end && *end != '\n'; end++)
+                ;
++       if (!memcmp(target, "HEAD", end - target)) {
++               /* Don't say "HEAD detached at HEAD" */
++               unsigned char head[GIT_SHA1_RAWSZ];
++               get_sha1("HEAD", head);
++               strbuf_addstr(&cb->buf, find_unique_abbrev(head, DEFAULT_ABBREV));
++               return 1;
++       }
+        strbuf_add(&cb->buf, target, end - target);
+        return 1;
+ }
+
+What do you think?
+
+Shall I turn this into a proper patch?
+
+Thanks,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
