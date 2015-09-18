@@ -1,87 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/3] Documentation: use 'keyid' consistantly, not 'key-id'
-Date: Fri, 18 Sep 2015 17:01:48 +0200
-Message-ID: <1442588510-7379-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <20150917174306.GA29171@sigill.intra.peff.net>
- <1442588510-7379-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: git@vger.kernel.org, Alastair McGowan-Douglas <altreus@altre.us>,
-	Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Sep 18 17:16:17 2015
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v17 14/14] tag.c: implement '--merged' and '--no-merged' options
+Date: Fri, 18 Sep 2015 17:19:42 +0200
+Message-ID: <vpq8u83kb5d.fsf@anie.imag.fr>
+References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
+	<1441902169-9891-3-git-send-email-Karthik.188@gmail.com>
+	<20150917213619.GI17201@serenity.lan>
+	<xmqq37ycitps.fsf@gitster.mtv.corp.google.com>
+	<vpqoah0kxtb.fsf@anie.imag.fr> <20150918084208.GJ17201@serenity.lan>
+	<CAOLa=ZQmGD2vo1B2K21-f_2RZRXduFt4VNKq2Pp9B_5bO=8=+w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: John Keeping <john@keeping.me.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 18 17:20:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcxOO-00042L-18
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 17:16:04 +0200
+	id 1ZcxSk-0002BK-43
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 17:20:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754530AbbIRPPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 11:15:30 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:36098 "EHLO rominette.imag.fr"
+	id S1754619AbbIRPUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 11:20:21 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50235 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754731AbbIRPCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 11:02:03 -0400
+	id S1754417AbbIRPUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 11:20:19 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8IF1qDp031167
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t8IFJeHm027229
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 18 Sep 2015 17:01:52 +0200
+	Fri, 18 Sep 2015 17:19:40 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8IF1sk2014910;
-	Fri, 18 Sep 2015 17:01:54 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1ZcxAg-00023Q-Q4; Fri, 18 Sep 2015 17:01:54 +0200
-X-Mailer: git-send-email 2.5.0.402.g8854c44
-In-Reply-To: <1442588510-7379-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 18 Sep 2015 17:01:53 +0200 (CEST)
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8IFJgYN015278;
+	Fri, 18 Sep 2015 17:19:42 +0200
+In-Reply-To: <CAOLa=ZQmGD2vo1B2K21-f_2RZRXduFt4VNKq2Pp9B_5bO=8=+w@mail.gmail.com>
+	(Karthik Nayak's message of "Fri, 18 Sep 2015 20:40:35 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 18 Sep 2015 17:19:40 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t8IF1qDp031167
+X-MailScanner-ID: t8IFJeHm027229
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1443193314.18006@CQcQxrsxNnqNwYhCAe9DQA
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1443194381.27905@zJAK2xGIgd/c+TzDhzYllQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278201>
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/git-cherry-pick.txt | 4 ++--
- Documentation/git-revert.txt      | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index 1147c71..83b3cc2 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -101,8 +101,8 @@ effect to your index in a row.
- --signoff::
- 	Add Signed-off-by line at the end of the commit message.
- 
---S[<key-id>]::
----gpg-sign[=<key-id>]::
-+-S[<keyid>]::
-+--gpg-sign[=<keyid>]::
- 	GPG-sign commits.
- 
- --ff::
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index cceb5f2..6388089 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -80,8 +80,8 @@ more details.
- This is useful when reverting more than one commits'
- effect to your index in a row.
- 
---S[<key-id>]::
----gpg-sign[=<key-id>]::
-+-S[<keyid>]::
-+--gpg-sign[=<keyid>]::
- 	GPG-sign commits.
- 
- -s::
+> Not sure this is much of a problem with regards to "--[no-]merged"
+> I mean isn't the square brackets self-explanatory?
+
+Well, usually --no-foo means "cancel the effect of --foo", ie. "git
+command --foo --no-foo" is equivalent to "git command".
+
+Here, --no-merged=some-ref does not _cancel_ the effect but introduce a
+new behavior that was not the default. So it may make sense to explain
+this more clearly.
+
 -- 
-2.5.0.402.g8854c44
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
