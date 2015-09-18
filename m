@@ -1,107 +1,74 @@
-From: Phillip Sz <phillip.szelat@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: better language for 2 strings
-Date: Fri, 18 Sep 2015 16:43:46 +0200
-Message-ID: <55FC2322.1030901@gmail.com>
-References: <1442505032-11578-1-git-send-email-phillip.szelat@gmail.com>
- <20150918084808.GA10616@ralf-ubuntu>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="AdToPqqAJmH2fONANnlW0PBhp3J83XAnS"
-Cc: git@vger.kernel.org, tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com,
-	sbeller@google.com
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 18 16:53:11 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/3] Documentation/grep: fix documentation of -O
+Date: Fri, 18 Sep 2015 17:01:49 +0200
+Message-ID: <1442588510-7379-3-git-send-email-Matthieu.Moy@imag.fr>
+References: <20150917174306.GA29171@sigill.intra.peff.net>
+ <1442588510-7379-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, Alastair McGowan-Douglas <altreus@altre.us>,
+	Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Sep 18 17:09:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zcx29-0004YF-Db
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 16:53:05 +0200
+	id 1ZcxIG-0003BI-3M
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 17:09:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216AbbIROxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 10:53:00 -0400
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:35595 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751984AbbIROn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 10:43:56 -0400
-Received: by wicge5 with SMTP id ge5so35935562wic.0
-        for <git@vger.kernel.org>; Fri, 18 Sep 2015 07:43:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type;
-        bh=ge+YLUQmg28dlAKXT7Zu1sbt1yqPn6X5UhPogvuKWoU=;
-        b=EfdrYsUXK+vDTyTwG2xGAQwbt33LYoF4XTTBEj+CwMpEx1NB/apgjSsMCJGZkd1Un5
-         m7zt8g8KFjVEhA/vYnbBiJXccdJxHyb3MGlR47hzno8uBMzl+g9S6HbdvrXAe6r2r+9T
-         RYrevYWQJsdDcS8MiJsW1U13/UdV3CocSoc0E1tkZWBC8Uvo3xwgm+YEuRyHqd98c8k+
-         BJttqkIQOn93B58ckSGqtwzzBruzRBnkfiPVM6SEn7izi7QfFeY5M3P80mXtFOmwjRNE
-         J7Z1+P1DQYGmxgVzUFNSMK5ixETlLS0oDGkoyJYWvVd9ew2O7H+D+Vwsk9J9TQfOCfM1
-         Iypw==
-X-Received: by 10.194.48.81 with SMTP id j17mr7459909wjn.81.1442587434033;
-        Fri, 18 Sep 2015 07:43:54 -0700 (PDT)
-Received: from [192.168.178.84] (i577AB33D.versanet.de. [87.122.179.61])
-        by smtp.googlemail.com with ESMTPSA id gl4sm9223758wjb.29.2015.09.18.07.43.52
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Sep 2015 07:43:52 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-In-Reply-To: <20150918084808.GA10616@ralf-ubuntu>
+	id S1754426AbbIRPJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 11:09:20 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:49784 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754842AbbIRPCM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 11:02:12 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t8IF1uUH023913
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 18 Sep 2015 17:01:56 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8IF1v40014913;
+	Fri, 18 Sep 2015 17:01:57 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1ZcxAj-00023e-Gn; Fri, 18 Sep 2015 17:01:57 +0200
+X-Mailer: git-send-email 2.5.0.402.g8854c44
+In-Reply-To: <1442588510-7379-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 18 Sep 2015 17:01:56 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t8IF1uUH023913
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1443193317.24726@keiO8pNYupKN97SYoxuIBA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278196>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---AdToPqqAJmH2fONANnlW0PBhp3J83XAnS
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+Since the argument of -O, --open-file-in-pager is optional, it must be
+stuck to the command. Reflect this in the documentation.
 
-Hi,
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git-grep.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
->>  #: git-am.sh:512
->>  msgid "Please make up your mind. --skip or --abort?"
->> -msgstr "Bitte werden Sie sich klar. --skip oder --abort?"
->> +msgstr "Bitte entscheiden Sie sich. --skip oder --abort?"
->> =20
->=20
-> This string has been removed in 40147ec (l10n: de.po: translate 123
-> new messages), so I've updated the commit accordingly.
->=20
-
-Thanks, a lot!
-
-> From: Phillip Sz <phillip.szelat@gmail.com>
-> Date: Thu, 17 Sep 2015 17:50:32 +0200
-> Subject: [PATCH] l10n: de.po: better language for one string
->=20
-> Just one string I think we could translate better.
->=20
-> Signed-off-by: Phillip Sz <phillip.szelat@gmail.com>
-> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
-
-Phillip
-
-
-
---AdToPqqAJmH2fONANnlW0PBhp3J83XAnS
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJV/CMnAAoJEJIt6Cqh4sVSMFwH/1LYbk/+mZ7Zg2whWYwdeq4X
-gYXrhOCUvi4qIs33aX8l89AMnJqeT57kK2aGQyimouHy1Moy/jqdegzZSsskglec
-exSHKDXNf1QuN6LJ3pVgtzdPPaVzOKb9AyEfm1OP9hsvF0nbfxOBfl2BSS6iKkGl
-Fs2oy9P/7k4qQ/3/jvphLdWykZQycfF7Dx8LlrD2+9+Ybx+BASFT7XxQjuyBGG/Y
-BKGCQBx73alO79ajAsLdbL0mJ04+OyHtlmR5wclhUA3BrIPZx59ajJHPH8asIpDs
-fnyA2l2MQqwPMmKZWYkWMcKsOR5itOaF5BxoxI7MYEGiA45vCpWAa8Y8Mb3WZuo=
-=H7+I
------END PGP SIGNATURE-----
-
---AdToPqqAJmH2fONANnlW0PBhp3J83XAnS--
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 31811f1..1c07c7f 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -160,8 +160,8 @@ OPTIONS
+ 	For better compatibility with 'git diff', `--name-only` is a
+ 	synonym for `--files-with-matches`.
+ 
+--O [<pager>]::
+---open-files-in-pager [<pager>]::
++-O[<pager>]::
++--open-files-in-pager[=<pager>]::
+ 	Open the matching files in the pager (not the output of 'grep').
+ 	If the pager happens to be "less" or "vi", and the user
+ 	specified only one pattern, the first file is positioned at
+-- 
+2.5.0.402.g8854c44
