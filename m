@@ -1,73 +1,83 @@
-From: Remi Pommarel <repk@triplefau.lt>
-Subject: Re: [PATCH] Makefile: Change library order for static linking
-Date: Fri, 18 Sep 2015 09:17:14 +0200
-Message-ID: <20150918071525.GA482@cruxbox>
-References: <1442524332-10180-1-git-send-email-repk@triplefau.lt>
- <xmqqfv2cj03t.fsf@gitster.mtv.corp.google.com>
- <20150917212016.GF606@cruxbox>
- <xmqq7fnoitra.fsf@gitster.mtv.corp.google.com>
+From: Tuomo Tanskanen <tuomo@tanskanen.org>
+Subject: BUG: git_work_tree issue with git alias and scripting
+Date: Fri, 18 Sep 2015 10:33:44 +0300
+Message-ID: <CAE_UwRp7LB0E636u9cOEisMgJi3xApAVPPH_T2Hpkm43DS5F0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>,
-	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 18 09:17:30 2015
+Content-Type: multipart/mixed; boundary=f46d043c06e08e6a720520008f84
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 18 09:34:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zcpv9-0005mh-UI
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 09:17:24 +0200
+	id 1ZcqBi-0004Il-0z
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 09:34:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752556AbbIRHRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 03:17:20 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:43513 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009AbbIRHRT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 03:17:19 -0400
-Received: from mfilter22-d.gandi.net (mfilter22-d.gandi.net [217.70.178.150])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 7FCD917242A;
-	Fri, 18 Sep 2015 09:17:17 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter22-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
-	by mfilter22-d.gandi.net (mfilter22-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id KnpQgIDs90n4; Fri, 18 Sep 2015 09:17:16 +0200 (CEST)
-X-Originating-IP: 81.57.43.44
-Received: from localhost (mon75-1-81-57-43-44.fbx.proxad.net [81.57.43.44])
-	(Authenticated sender: repk@triplefau.lt)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 8B983173A1E;
-	Fri, 18 Sep 2015 09:17:15 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <xmqq7fnoitra.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753046AbbIRHeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 03:34:25 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:36280 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752918AbbIRHeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 03:34:25 -0400
+Received: by wicgb1 with SMTP id gb1so20205792wic.1
+        for <git@vger.kernel.org>; Fri, 18 Sep 2015 00:34:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to:content-type;
+        bh=u1KaDvNwjR2jMI3g7GBkwEJ7jGB5dfUI4RzJP+WpWas=;
+        b=XEJif95cvlIUCJwyPBvz1PkBnWcCuIx/d0t4mz1kWEoQ8BiTxE1Ync4BaY9FsMcMwT
+         z1hLCrKfy8osw/dEJ+mXtLAVFQjlzhwbMpJY7xMNGN22ZKTU5vwwmtcWPbWfOTUH3Fny
+         yI+/2F9hJPA3lOj6EPBDAA/GupYCYBc1MBDBQHzcc7C4BtgJ5eD77ftiXzGMMhRh5Uvj
+         NLQP+azgIOQLx9twU+fsHCQL1GxOBZId1Wc05wz1DH3TDUEjVxD+ulBilcGQfcl2oHcj
+         R5zJ4vZGGiHKNGCsA3rZPPXmGWrtI48WUkHHj9zCelkTe59rkIzWFROayUuYO0xA5l8/
+         98Hg==
+X-Received: by 10.180.84.163 with SMTP id a3mr36956352wiz.34.1442561664108;
+ Fri, 18 Sep 2015 00:34:24 -0700 (PDT)
+Received: by 10.28.127.131 with HTTP; Fri, 18 Sep 2015 00:33:44 -0700 (PDT)
+X-Google-Sender-Auth: BcPEphbC2xYG5-6O3gp7vNNYFAo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278182>
 
-On Thu, Sep 17, 2015 at 03:08:25PM -0700, Junio C Hamano wrote:
-> That is, for most people, linking with -lcrypto was sufficient, but
-> some people needed to grab things from -lssl when they need to do
-> so, because things in -lcrypto referred to what was only in -lssl.
+--f46d043c06e08e6a720520008f84
+Content-Type: text/plain; charset=UTF-8
 
-Oh I see what you mean, I misinterpreted what NEEDS_SSL_WITH_CRYPTO
-does.
+Hello,
 
-The problem on static compiled target is that libcurl.a got linked with
-libssl symbols. The proper variable I should have used is
-NEEDS_SSL_WITH_CURL. But this variable is not setted on Linux and not
-configurable, this is why I wrongly used NEEDS_SSL_WITH_CRYPTO.
+Attached is a simple script exposing a possible bug when git alias is
+combined with git commands in script. It should be pretty self-explanatory.
+Check what it does and execute it. On my Linux and OSX, both with git 2.5.1
+behave the same, ie. git add fails even the file "test" is in $PWD.
 
-I see several ways to fix static compilation:
+Summary: $GIT_WORK_TREE persists in env, and then some git commands operate
+on repo in $PWD (like git log), while some others (like git add) operate on
+repo in $GIT_WORK_TREE, making it inconsistent and results in very
+unexpected results.
 
-	1) Make NEED_SSL_WITH_CURL overridable by configure (the same
-	way NEEDS_SSL_WITH_CRYPTO is). Then static target should run
-	"NEED_SSL_WITH_CURL=YesPlease ./configure"
+Cheers, Tuomo
 
-	2) Make configure know that static compilation is asked (ie
-	./configure --static) and automatically set NEED_SSL_WITH_CURL.
+--f46d043c06e08e6a720520008f84
+Content-Type: application/x-sh; name="gitbug.sh"
+Content-Disposition: attachment; filename="gitbug.sh"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_iepbxrkn0
 
-	3) Use "curl-config --static-libs" to fill CURL_LIBCURL in
-	Makefile when ones use "./configure --static".
+IyEvYmluL3NoCgojIHNldHVwIHNlY29uZGFyeSBnaXQKbWtkaXIgYmFyCmNkIGJhcgpnaXQgaW5p
+dAplY2hvICJ0ZXN0IiA+IGJhcgpnaXQgYWRkIGJhcgpnaXQgY29tbWl0IC1tICJ0ZXN0IGNvbW1p
+dCBpbiBiYXIiCmVjaG8gImFkZGluZyB0aGlzIHdpbGwgZmFpbCBsYXRlciBvbiIgPiB0ZXN0CmNk
+IC4uCgojIHNldHVwIHByaW1hcnkgZ2l0IHdpdGggYWxpYXMgYW5kIHNjcmlwdCB0aGF0IGFsaWFz
+IHdpbGwgZXhlY3V0ZQpta2RpciBmb28KY2QgZm9vCmdpdCBpbml0CgpjYXQgPmZvby5zaCA8PEVP
+RgojIS9iaW4vc2ggLXgKY2QgJFBXRC8uLi9iYXIKZW52IHwgZWdyZXAgIl4oR0lUX1dPUktfVFJF
+RXxQV0QpIgplY2hvICJHaXQgbG9nIHdvcmtzIChiYXIgbG9nIHNob3dzIHVwKToiCmdpdCBsb2cg
+LS1vbmVsaW5lIHwgaGVhZCAtMQplY2hvICJHaXQgYWRkIGRvZXMgbm90ICh0cmllcyB0byBhZGQg
+ZmlsZXMgaW4gZm9vLCB3aGlsZSBQV0QgaXMgaW4gYmFyKToiCmdpdCBhZGQgdGVzdApFT0YKY2ht
+b2QgNzU1IGZvby5zaAoKY2F0ID4+LmdpdC9jb25maWcgPDxFT0YKW2FsaWFzXQogIGZvbyA9ICEk
+UFdEL2Zvby5zaApFT0YKCmdpdCBhZGQgZm9vLnNoCmdpdCBjb21taXQgLW0gImNvbW1pdHRpbmcg
+Zm9vLnNoIgoKIyB0ZXN0IGNhc2U6IHVzaW5nIGFsaWFzLCBjZCBpbnRvIGFub3RoZXIgZ2l0IHRy
+ZWUsIGFuZCB0cnkgdG8gZG8gZ2l0IG9wZXJhdGlvbiBvbiBUSEFUIGRpcgojIEdJVF9XT1JLX1RS
+RUUgZ2V0cyBzZXQgdXAgaW50byAiZm9vIiwgYW5kIHdoaWxlIFBXRCBpcyBpbiAiYmFyIiwgc29t
+ZSBnaXQgb3BzIGRvIHdvcmsgb24gV1JPTkcgVFJFRSEKZ2l0IGZvbwoK
+--f46d043c06e08e6a720520008f84--
