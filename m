@@ -1,82 +1,61 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
+From: Brian Norris <computersforpeace@gmail.com>
 Subject: Re: [PATCH] send-email: fix uninitialized var warning for $smtp_auth
-Date: Fri, 18 Sep 2015 18:47:20 -0400
-Message-ID: <CAPig+cR+W0Kt2y+vspS5dF6FHU=XLWZXJR46r7Rv4JP4gNiKTA@mail.gmail.com>
+Date: Fri, 18 Sep 2015 15:50:09 -0700
+Message-ID: <20150918225009.GA46959@google.com>
 References: <1442614370-39880-1-git-send-email-computersforpeace@gmail.com>
-	<20150918222524.GA22410@flurp.local>
-	<20150918224242.GA45466@google.com>
+ <20150918222524.GA22410@flurp.local>
+ <20150918224242.GA45466@google.com>
+ <CAPig+cR+W0Kt2y+vspS5dF6FHU=XLWZXJR46r7Rv4JP4gNiKTA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>,
 	Jan Viktorin <viktorin@rehivetech.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Brian Norris <computersforpeace@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 19 00:47:46 2015
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat Sep 19 00:50:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zd4RW-0001CS-2o
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Sep 2015 00:47:46 +0200
+	id 1Zd4Tz-0005Zo-T4
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Sep 2015 00:50:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754346AbbIRWrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 18:47:21 -0400
-Received: from mail-vk0-f54.google.com ([209.85.213.54]:33509 "EHLO
-	mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753799AbbIRWrV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 18:47:21 -0400
-Received: by vkgd64 with SMTP id d64so38388009vkg.0
-        for <git@vger.kernel.org>; Fri, 18 Sep 2015 15:47:20 -0700 (PDT)
+	id S1751853AbbIRWuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 18:50:13 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35779 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751310AbbIRWuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 18:50:12 -0400
+Received: by pacfv12 with SMTP id fv12so62990224pac.2
+        for <git@vger.kernel.org>; Fri, 18 Sep 2015 15:50:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=WVIUS/2hJnfr3masM+VCF7NspDZVS8D022dNJcY2jVc=;
-        b=zdTsvkZR7saCz0ZUfkswSDbohb5utxzVy91Q+dS6PCGVULxCUSzQMO6pRjq6UvAAw7
-         hXo9odD4ofFvYg8K+8UT8k3/tUdG/1bTLfj2MLKR0bs0hodG0OiJky1P3vMxGmIY6skA
-         0cm+/3mU7V4dpbrcGGkIneK7rAUAZtean+WGa4xdF5atR9qNwwNubMbb7zBbwRTpP/bx
-         Ovn2/HSYOAHvbr0widLf0gQwBshecE7b/PlFDRX95uS1hXDl31QvrNrxQLp2EfyCzI1B
-         HorKp5EYsDN9x1nJSnQaYkPBmVWrlHQhXLCE58itQIYQ1ZhCpYnbtA+9kE3cd6q1xowP
-         GtzQ==
-X-Received: by 10.31.11.202 with SMTP id 193mr5268607vkl.84.1442616440338;
- Fri, 18 Sep 2015 15:47:20 -0700 (PDT)
-Received: by 10.31.224.68 with HTTP; Fri, 18 Sep 2015 15:47:20 -0700 (PDT)
-In-Reply-To: <20150918224242.GA45466@google.com>
-X-Google-Sender-Auth: UGmL-DmcoosZ0YQe2v8pbp-vEuw
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=dusMSHxQ8bkxjB/6HNUCdjrNwtdtG5mOhKLeUoMuAPY=;
+        b=pJM2Rgs3xbNPJKv2eOAUBhsMUMe+w7w2cxjMTYnBr/ZfsRowStcNlTPgGmSbUl2/PF
+         TZBuFvWLwyLAEDd0fjaVS3V4PDzz5Ity1zx1LoibTDKaRg2EC/YwPaK40EyboWYMcPYa
+         X3pohhMu3nGGzp+Yry7Z49Y/TNAvMdE8xMyj1YsOeaA8I3SN9JYpevA986+VPsi5U4oz
+         nyJueGJ8GfxVImdf3atCOl1nLE8xJstBF4FWJJFW3WhWGMdQ+v0ROahqPx8y0EMHTwrS
+         XUtbFPiivPxYdckuqCV5049pFH+WzbR2RA3jLshWGHKNyd/qc71J7ZzxgZqdbQIicAPT
+         Rifw==
+X-Received: by 10.68.233.200 with SMTP id ty8mr9783988pbc.80.1442616611630;
+        Fri, 18 Sep 2015 15:50:11 -0700 (PDT)
+Received: from google.com ([2620:0:1000:1301:a098:188d:dd8b:3b19])
+        by smtp.gmail.com with ESMTPSA id si1sm10885593pbc.72.2015.09.18.15.50.10
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Fri, 18 Sep 2015 15:50:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAPig+cR+W0Kt2y+vspS5dF6FHU=XLWZXJR46r7Rv4JP4gNiKTA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278227>
 
-On Fri, Sep 18, 2015 at 6:42 PM, Brian Norris
-<computersforpeace@gmail.com> wrote:
-> On Fri, Sep 18, 2015 at 06:25:24PM -0400, Eric Sunshine wrote:
->> Thanks, makes sense. I wonder if moving the check to the point where
->> $smtp_auth is actually used (despite the noisier diff) would be cleaner,
->
-> By moving the patch into the sub-subroutine (is this a lambda? I'm not
-> too familiar with my perl), I think you change the order of the checks.
-> So, previously, initial password auth would happen after the
-> $smtp_auth format check. With your patch, it comes first.
->
-> My patch:
->
->   $ git send-email --smtp-auth="@" ...
->   ...
->   Send this email? ([y]es|[n]o|[q]uit|[a]ll): y
->   invalid smtp auth: '@' at ./git-send-email.perl line 1140.
->
-> Your patch:
->
->   $ git send-email --smtp-auth="@" ...
->   ...
->   Send this email? ([y]es|[n]o|[q]uit|[a]ll): y
->   Password for xxxx:
->   invalid smtp auth: '@' at ./git-send-email.perl line 1155.
->
-> Seems like the former is a little better, so you don't have to waste
-> time with your password too many times.
+On Fri, Sep 18, 2015 at 06:47:20PM -0400, Eric Sunshine wrote:
+> Makes sense (again). Thanks for the explanation.
 
-Makes sense (again). Thanks for the explanation.
+No problem. Thanks for the review.
