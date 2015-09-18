@@ -1,66 +1,124 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 57/67] receive-pack: simplify keep_arg computation
-Date: Fri, 18 Sep 2015 14:49:55 -0400
-Message-ID: <20150918184954.GA1589@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 54/67] color: add overflow checks for parsing colors
+Date: Fri, 18 Sep 2015 14:54:11 -0400
+Message-ID: <CAPig+cQUwsDfL-epJYy+4xoG2-GfDfhb3mH=7WAzYbsea-sXDA@mail.gmail.com>
 References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915161050.GE29753@sigill.intra.peff.net>
- <CAPig+cQbVhksrS1T3tep570Rxj9KxX3HmWAYY2SzqoAg35w-EQ@mail.gmail.com>
+	<20150915160703.GB29753@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Sep 18 20:50:04 2015
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 18 20:54:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zd0jT-0005mP-CN
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 20:50:03 +0200
+	id 1Zd0nf-0004wA-BY
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 20:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752998AbbIRSt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 14:49:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33288 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752633AbbIRSt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 14:49:58 -0400
-Received: (qmail 18276 invoked by uid 102); 18 Sep 2015 18:49:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Sep 2015 13:49:58 -0500
-Received: (qmail 10503 invoked by uid 107); 18 Sep 2015 18:50:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 18 Sep 2015 14:50:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Sep 2015 14:49:55 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQbVhksrS1T3tep570Rxj9KxX3HmWAYY2SzqoAg35w-EQ@mail.gmail.com>
+	id S1752342AbbIRSyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 14:54:15 -0400
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:32830 "EHLO
+	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750790AbbIRSyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 14:54:12 -0400
+Received: by vkgd64 with SMTP id d64so35465891vkg.0
+        for <git@vger.kernel.org>; Fri, 18 Sep 2015 11:54:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=JlulN6G0//bDVHf5i1aaR+TvWFiEq8pp6MKHbd6ji7E=;
+        b=Y0KyBT4pTUF78wyd8pGYhhbN6jKdRPc3yp3JVniwVHTH5v4lobQ7uGsfRHQp8hXzhu
+         rvc1KTDAV7OTm96wyg76FUcyfA7P8QOX/m2yXtBBdXgZvKcwAmxKhkAQSD2OWEBin7OE
+         xEguCW7EZFRDMBi9xj1llbI3y2L0PofZZwRNRe3I/LovttRyGIQpdmoPANsKbKUwWxmn
+         1UU2oao18J/loE/AdVnH70eb/W6sHUlkfbZr6OxBipLuALbY0CqCgaL5+6Q/pC2hPGRh
+         UYdztaAm9dSOyi3OqDb2kWl3HSbZL/RHmUwsN0g0IBlBbJbZb6l+cOQC0JuswNAhNKie
+         ePIg==
+X-Received: by 10.31.56.193 with SMTP id f184mr4447489vka.115.1442602451309;
+ Fri, 18 Sep 2015 11:54:11 -0700 (PDT)
+Received: by 10.31.224.68 with HTTP; Fri, 18 Sep 2015 11:54:11 -0700 (PDT)
+In-Reply-To: <20150915160703.GB29753@sigill.intra.peff.net>
+X-Google-Sender-Auth: n9ZIKYGkbsiKCxDNuE-hzxSubBA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278214>
 
-On Fri, Sep 18, 2015 at 02:43:56PM -0400, Eric Sunshine wrote:
+On Tue, Sep 15, 2015 at 12:07 PM, Jeff King <peff@peff.net> wrote:
+> Our color parsing is designed to never exceed COLOR_MAXLEN
+> bytes. But the relationship between that hand-computed
+> number and the parsing code is not at all obvious, and we
+> merely hope that it has been computed correctly for all
+> cases.
+>
+> Let's mark the expected "end" pointer for the destination
+> buffer and make sure that we do not exceed it.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> @@ -224,12 +227,18 @@ int color_parse_mem(const char *value, int value_len, char *dst)
+>                         goto bad;
+>         }
+>
+> +#define OUT(x) do { \
+> +       if (dst == end) \
+> +               die("BUG: color parsing ran out of space"); \
+> +       *dst++ = (x); \
+> +} while(0)
 
-> On Tue, Sep 15, 2015 at 12:10 PM, Jeff King <peff@peff.net> wrote:
-> > To generate "--keep=receive-pack $pid on $host", we write
-> > progressively into a single buffer, which requires keeping
-> > track of how much we've written so far. But since the result
-> > is destined to go into our argv array, we can simply use
-> > argv_array_pushf.
-> >
-> > Unfortunately we still have to have a static buffer for the
-> 
-> s/static/fixed-size/ maybe?
+Hmm, can we have an #undef OUT before the #define OUT(...), or choose
+a less conflict-likely name? In particular, I'm thinking about
+preprocessor namespace pollution arising from sources out of our
+control, such as was the case with 414382f (ewah/bitmap: silence
+warning about MASK macro redefinition, 2015-06-03).
 
-Thanks, will change.
-
-The term "static buffer overflow" seems stuck in my head (and you can
-find references via google), even though it does not make sense at all.
-In C terms, a stack buffer is really an "auto", but I guess "auto buffer
-overflow" does not have as nice a ring to it.
-
-I agree that "fixed-size" is a lot less confusing, and corrected several
-such cases before sent out the series. I guess I missed one (I'll grep
-for others).
-
--Peff
+> +
+>         if (attr || !color_empty(&fg) || !color_empty(&bg)) {
+>                 int sep = 0;
+>                 int i;
+>
+> -               *dst++ = '\033';
+> -               *dst++ = '[';
+> +               OUT('\033');
+> +               OUT('[');
+>
+>                 for (i = 0; attr; i++) {
+>                         unsigned bit = (1 << i);
+> @@ -237,24 +246,24 @@ int color_parse_mem(const char *value, int value_len, char *dst)
+>                                 continue;
+>                         attr &= ~bit;
+>                         if (sep++)
+> -                               *dst++ = ';';
+> -                       dst += sprintf(dst, "%d", i);
+> +                               OUT(';');
+> +                       dst += xsnprintf(dst, end - dst, "%d", i);
+>                 }
+>                 if (!color_empty(&fg)) {
+>                         if (sep++)
+> -                               *dst++ = ';';
+> +                               OUT(';');
+>                         /* foreground colors are all in the 3x range */
+> -                       dst = color_output(dst, &fg, '3');
+> +                       dst = color_output(dst, end - dst, &fg, '3');
+>                 }
+>                 if (!color_empty(&bg)) {
+>                         if (sep++)
+> -                               *dst++ = ';';
+> +                               OUT(';');
+>                         /* background colors are all in the 4x range */
+> -                       dst = color_output(dst, &bg, '4');
+> +                       dst = color_output(dst, end - dst, &bg, '4');
+>                 }
+> -               *dst++ = 'm';
+> +               OUT('m');
+>         }
+> -       *dst = 0;
+> +       OUT(0);
+>         return 0;
+>  bad:
+>         return error(_("invalid color value: %.*s"), value_len, value);
+> --
+> 2.6.0.rc2.408.ga2926b9
