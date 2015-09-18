@@ -1,72 +1,84 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git status -u is mildly astonishing
-Date: Fri, 18 Sep 2015 08:52:05 +0200
-Message-ID: <vpq6138md7u.fsf@anie.imag.fr>
-References: <20150917104430.5dd73ae1@dev-05> <vpqd1xhqfxg.fsf@anie.imag.fr>
-	<20150917174306.GA29171@sigill.intra.peff.net>
+Subject: Re: [PATCH v17 14/14] tag.c: implement '--merged' and '--no-merged' options
+Date: Fri, 18 Sep 2015 09:10:08 +0200
+Message-ID: <vpqoah0kxtb.fsf@anie.imag.fr>
+References: <1441900110-4015-1-git-send-email-Karthik.188@gmail.com>
+	<1441902169-9891-3-git-send-email-Karthik.188@gmail.com>
+	<20150917213619.GI17201@serenity.lan>
+	<xmqq37ycitps.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Alastair McGowan-Douglas <altreus@altre.us>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 18 08:52:29 2015
+Cc: John Keeping <john@keeping.me.uk>,
+	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 18 09:10:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZcpWw-0004vF-G4
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 08:52:22 +0200
+	id 1Zcpos-0005Da-L5
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Sep 2015 09:10:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751976AbbIRGwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2015 02:52:18 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:52558 "EHLO rominette.imag.fr"
+	id S1752755AbbIRHKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2015 03:10:50 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:52952 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751433AbbIRGwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2015 02:52:18 -0400
+	id S1751915AbbIRHKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2015 03:10:50 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8I6q5or017330
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8I7A8pq019959
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 18 Sep 2015 08:52:05 +0200
+	Fri, 18 Sep 2015 09:10:08 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8I6q5Oi004492;
-	Fri, 18 Sep 2015 08:52:05 +0200
-In-Reply-To: <20150917174306.GA29171@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 17 Sep 2015 13:43:07 -0400")
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8I7A8Xl004922;
+	Fri, 18 Sep 2015 09:10:08 +0200
+In-Reply-To: <xmqq37ycitps.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 17 Sep 2015 15:09:19 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 18 Sep 2015 08:52:06 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 18 Sep 2015 09:10:08 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t8I6q5or017330
+X-MailScanner-ID: t8I7A8pq019959
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1443163927.30501@TuCGaAj017goYfXFR4LCCw
+MailScanner-NULL-Check: 1443165010.06409@WgjKNqaS3IXFYbXfGrbQ9g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278180>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, Sep 17, 2015 at 04:27:39PM +0200, Matthieu Moy wrote:
+> John Keeping <john@keeping.me.uk> writes:
 >
->> > Therefore I would argue that -u is behaving differently from other
->> > arguments (especially when considered across all git subcommands)
->> 
->> This is because you have options with non-optional argument in mind, or
->> options that have no short version.
->> 
->> If I grep the source correctly, the only options accepting a short
->> version and an optional string argument are "{merge,am,commit,revert}
->> -S", "grep -O" and "status -u", which behave consistantly.
+>>> +--[no-]merged [<commit>]::
+>>
+>> We prefer to write --[no-]* as:
+>>
+>> 	--option::
+>> 	--no-option::
+>>
+>> although this may be the first instance that we see this combination
+>> with an argument.
+>>
+>> I also found the "[<commit>]" syntax confusing and had to go and figure
+>> out what PARSE_OPT_LASTARG_DEFAULT does; I wonder if it's worth
+>> appending something like the following to the help for this option:
+>>
+>> 	The `commit` may be omitted if this is the final argument.
 >
-> Exactly. This is covered in gitcli(7)*, but I wonder if it is worth
-> calling attention to this behavior specifically in the documentation of
-> those options.
+> "may be omitted" must be followed by a description of what happens
+> when omitted (i.e. "defaults to ...").
 
-I think it does make sense to say it explicitly in the doc for each
-option. There are not many, and even though I think Git is doing the
-right thing, I also have to admit that it's confusing.
+Then:
+
+The `commit` may be omitted and defaults to HEAD if this is the final
+argument.
+
+Sounds good to me.
 
 -- 
 Matthieu Moy
