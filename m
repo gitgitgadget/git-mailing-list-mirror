@@ -1,104 +1,207 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Unable to create temporary file
- '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR': Permission denied
-Date: Sat, 19 Sep 2015 09:13:23 +0200
-Organization: gmx
-Message-ID: <b80246c46079167db6f90ee70de4368b@dscho.org>
-References: <1440157010.1759.83.camel@transmode.se>
- <CACsJy8DEDgsG4C4KvuGop_=_wOvcOUZ644NiaQJef67rFNYmgg@mail.gmail.com>
- <1442245035.10125.18.camel@transmode.se>
- <CACsJy8BAOXWt2aVge7W8Mk9v0HbHHGkSQFwySeioam9r+n6z_Q@mail.gmail.com>
- <1442508864.21964.26.camel@transmode.se>
- <CACsJy8DFpLLtc7+Mix1d=Hy8h-duUqt4Y8WYsRL1nEryizoeww@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Joakim Tjernlund <joakim.tjernlund@transmode.se>,
-	git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 19 09:13:34 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2 1/3] Documentation: use 'keyid' consistently, not 'key-id'
+Date: Sat, 19 Sep 2015 09:47:48 +0200
+Message-ID: <1442648870-22511-2-git-send-email-Matthieu.Moy@imag.fr>
+References: <1442588510-7379-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1442648870-22511-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: git@vger.kernel.org, Alastair McGowan-Douglas <altreus@altre.us>,
+	Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Sep 19 09:48:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZdCKy-0003uZ-V2
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Sep 2015 09:13:33 +0200
+	id 1ZdCsm-0008NY-1S
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Sep 2015 09:48:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753848AbbISHN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Sep 2015 03:13:28 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55464 "EHLO mout.gmx.net"
+	id S1754627AbbISHsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Sep 2015 03:48:10 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:60973 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751842AbbISHN1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Sep 2015 03:13:27 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M4002-1Yn9kN0Jd4-00rZFn; Sat, 19 Sep 2015 09:13:25
- +0200
-In-Reply-To: <CACsJy8DFpLLtc7+Mix1d=Hy8h-duUqt4Y8WYsRL1nEryizoeww@mail.gmail.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:xrqYVjp2E2j8WbjY+AJi5IXAs8BqPrMBotXH1SbJr4+XW9yEPE3
- VrhDprDDPx29+2BDHZlHb5QoVEePkDxiD8FrTFIIi/Ne345AaDpwlPXaQzoNx/a/RVkkAlX
- rQ9NnyZhJuDEw9b+qdmL4Y9F/QjdHgX941Sp2quT8e+OdJSee9SfamJAJcznvHdeLsn+gyU
- pLLgFm2pa7y4etyt5vBIw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:M1JCNaUq/h0=:Kints/m8iKN0ExcHrGU+HE
- 69H2RgAveeK3C347khZqjXCkQLUyqdU5hz36LryeKWymoCRVDlB0Xw/BgVdbfpWSQ8vyvAbYh
- uPeVBBn95fXHVhe0PAI5XYPdn57t4C0BW3BdjiiBvvuUtMmpJzcl4FM8KkryzR6oqR0LVXvRL
- NWRPXh1/eL1DV2ldF0XVmzMITI+zuQ0WBlBGRzlSUKoSDvkFgK1WzLkQ9sPNgdzI7A5MiRYAR
- 6prjyOUZJ2a5M+4Ey+iGyCTBdQ/1NXEQHWfpyd9Tim5HqI+1KDn2RmhbZ+lJNvRtoqEDcoSeZ
- ITZT6f//k98ZtQ6tKtXFo7Q3EzqeEbk7HM2qOvzJQFDUwjXZnHvLZhF5qJUUYW7HEYfm8gbaG
- fem8P0j0m5S7LQdPMDqxcLpCLYHYpIY3X3FEkxB2gH9c3XnDxRPpP6Sg+yfJNtfFydM+oRiy3
- 6V6TOyyPjuGGVkuwAYFTAwoY9910oC2HxRK1ZwVvj+64VhP+PXNo2Lfssp/TmEogbDrDz0iak
- J7D0F4xakpaWHL3t0ndDJbssSODVH7TjPlNAPvr8+//kopQlBsSIfLKUFuhtAHlmRvkwnAI/O
- F2k55t+T+HvI6NyOkN4SAVs7NNk2MG6HHpsU4n+mhjYllLYYIR2JiTeG20/OMo7mg9c962hur
- tZ9UUOVDi2Fpyg6urrAlz1WxB2PcIWJLtRxcmZSQpuT+5XYuCInhww8GY2iZmvwOFXoR2UHsl
- IWUaeeu4ECxG4DjDTMwcfHccPk5yANzHlbh6wA==
+	id S1753271AbbISHsH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Sep 2015 03:48:07 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t8J7lqVg004100
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sat, 19 Sep 2015 09:47:53 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8J7lrjt023788;
+	Sat, 19 Sep 2015 09:47:53 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1ZdCsD-0005va-DL; Sat, 19 Sep 2015 09:47:53 +0200
+X-Mailer: git-send-email 2.5.0.402.g8854c44
+In-Reply-To: <1442648870-22511-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 19 Sep 2015 09:47:53 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t8J7lqVg004100
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1443253674.35944@vUkm+18h9t7el/Q/aKjEcw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278233>
 
-Hi Duy,
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/git-cherry-pick.txt |  6 +++---
+ Documentation/git-commit.txt      |  2 +-
+ Documentation/git-merge.txt       |  2 +-
+ Documentation/git-revert.txt      |  6 +++---
+ Documentation/git-tag.txt         | 18 +++++++++---------
+ 5 files changed, 17 insertions(+), 17 deletions(-)
 
-On 2015-09-19 04:21, Duy Nguyen wrote:
-> On Thu, Sep 17, 2015 at 11:54 PM, Joakim Tjernlund
-> <joakim.tjernlund@transmode.se> wrote:
->> On Thu, 2015-09-17 at 20:18 +0700, Duy Nguyen wrote:
->>> On Mon, Sep 14, 2015 at 10:37 PM, Joakim Tjernlund
->>> <joakim.tjernlund@transmode.se> wrote:
->>> > On Mon, 2015-08-31 at 16:56 +0700, Duy Nguyen wrote:
->>> > > On Fri, Aug 21, 2015 at 6:36 PM, Joakim Tjernlund
->>> > > <joakim.tjernlund@transmode.se> wrote:
->>> > > > I cannot push:
->>> > > > # > git push origin
->>> > > > Login for jocke@git.transmode.se
->>> > > > Password:
->>> > > > Counting objects: 7, done.
->>> > > > Delta compression using up to 4 threads.
->>> > > > Compressing objects: 100% (7/7), done.
->>> > > > Writing objects: 100% (7/7), 13.73 KiB | 0 bytes/s, done.
->>> > > > Total 7 (delta 4), reused 0 (delta 0)
->>> > > > fatal: Unable to create temporary file '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR': Permission
->>> > > > denied
-> 
-> I'm about to do it, but now I'm not sure if I should move
-> shallow_XXXXXX out of $GIT_DIR. It will not be the only command that
-> may write to $GIT_DIR. "git gc --auto" (which can be triggered at the
-> server side at push time) can write $GIT_DIR/gc.pid (and soon,
-> gc.log). Even if you disable gc --auto and run it periodically (with
-> cron or something), it will write gc.pid.
-> 
-> Is it really necessary to remove write access in $GIT_DIR? Do we (git
-> devs) have some guidelines about things in $GIT_DIR?
-
-IMO it makes little sense to remove write access from users who you want to push.
-
-They need to write objects to the directory, after all, and update refs.
-
-This problem sounds more like the doing of an overzealous sysadmin to me than a careful one who researched diligently what locations require write access for the intended operations.
-
-Personally, I see little sense in bending over to try to support such an intentionally tampered setup.
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index 1147c71..66ab297 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff]
+-		  [-S[<key-id>]] <commit>...
++		  [-S[<keyid>]] <commit>...
+ 'git cherry-pick' --continue
+ 'git cherry-pick' --quit
+ 'git cherry-pick' --abort
+@@ -101,8 +101,8 @@ effect to your index in a row.
+ --signoff::
+ 	Add Signed-off-by line at the end of the commit message.
+ 
+--S[<key-id>]::
+---gpg-sign[=<key-id>]::
++-S[<keyid>]::
++--gpg-sign[=<keyid>]::
+ 	GPG-sign commits.
+ 
+ --ff::
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 904dafa..51c63d6 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+ 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+ 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+-	   [-i | -o] [-S[<key-id>]] [--] [<file>...]
++	   [-i | -o] [-S[<keyid>]] [--] [<file>...]
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index a62d672..98bf7b1 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+-	[-s <strategy>] [-X <strategy-option>] [-S[<key-id>]]
++	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+ 	[--[no-]rerere-autoupdate] [-m <msg>] [<commit>...]
+ 'git merge' <msg> HEAD <commit>...
+ 'git merge' --abort
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index cceb5f2..9eb83f0 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -8,7 +8,7 @@ git-revert - Revert some existing commits
+ SYNOPSIS
+ --------
+ [verse]
+-'git revert' [--[no-]edit] [-n] [-m parent-number] [-s] [-S[<key-id>]] <commit>...
++'git revert' [--[no-]edit] [-n] [-m parent-number] [-s] [-S[<keyid>]] <commit>...
+ 'git revert' --continue
+ 'git revert' --quit
+ 'git revert' --abort
+@@ -80,8 +80,8 @@ more details.
+ This is useful when reverting more than one commits'
+ effect to your index in a row.
+ 
+--S[<key-id>]::
+---gpg-sign[=<key-id>]::
++-S[<keyid>]::
++--gpg-sign[=<keyid>]::
+ 	GPG-sign commits.
+ 
+ -s::
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 84f6496..08b4dfb 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -9,7 +9,7 @@ git-tag - Create, list, delete or verify a tag object signed with GPG
+ SYNOPSIS
+ --------
+ [verse]
+-'git tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]
++'git tag' [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>]
+ 	<tagname> [<commit> | <object>]
+ 'git tag' -d <tagname>...
+ 'git tag' [-n[<num>]] -l [--contains <commit>] [--points-at <object>]
+@@ -24,19 +24,19 @@ to delete, list or verify tags.
+ 
+ Unless `-f` is given, the named tag must not yet exist.
+ 
+-If one of `-a`, `-s`, or `-u <key-id>` is passed, the command
++If one of `-a`, `-s`, or `-u <keyid>` is passed, the command
+ creates a 'tag' object, and requires a tag message.  Unless
+ `-m <msg>` or `-F <file>` is given, an editor is started for the user to type
+ in the tag message.
+ 
+-If `-m <msg>` or `-F <file>` is given and `-a`, `-s`, and `-u <key-id>`
++If `-m <msg>` or `-F <file>` is given and `-a`, `-s`, and `-u <keyid>`
+ are absent, `-a` is implied.
+ 
+ Otherwise just a tag reference for the SHA-1 object name of the commit object is
+ created (i.e. a lightweight tag).
+ 
+ A GnuPG signed tag object will be created when `-s` or `-u
+-<key-id>` is used.  When `-u <key-id>` is not used, the
++<keyid>` is used.  When `-u <keyid>` is not used, the
+ committer identity for the current user is used to find the
+ GnuPG key for signing. 	The configuration variable `gpg.program`
+ is used to specify custom GnuPG binary.
+@@ -63,8 +63,8 @@ OPTIONS
+ --sign::
+ 	Make a GPG-signed tag, using the default e-mail address's key.
+ 
+--u <key-id>::
+---local-user=<key-id>::
++-u <keyid>::
++--local-user=<keyid>::
+ 	Make a GPG-signed tag, using the given key.
+ 
+ -f::
+@@ -125,14 +125,14 @@ This option is only applicable when listing tags without annotation lines.
+ 	Use the given tag message (instead of prompting).
+ 	If multiple `-m` options are given, their values are
+ 	concatenated as separate paragraphs.
+-	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
++	Implies `-a` if none of `-a`, `-s`, or `-u <keyid>`
+ 	is given.
+ 
+ -F <file>::
+ --file=<file>::
+ 	Take the tag message from the given file.  Use '-' to
+ 	read the message from the standard input.
+-	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
++	Implies `-a` if none of `-a`, `-s`, or `-u <keyid>`
+ 	is given.
+ 
+ --cleanup=<mode>::
+@@ -166,7 +166,7 @@ it in the repository configuration as follows:
+ 
+ -------------------------------------
+ [user]
+-    signingKey = <gpg-key-id>
++    signingKey = <gpg-keyid>
+ -------------------------------------
+ 
+ 
+-- 
+2.5.0.402.g8854c44
