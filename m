@@ -1,206 +1,104 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [Alt. PATCH v5] gc: save log from daemonized gc --auto and print it next time
-Date: Sat, 19 Sep 2015 12:14:25 +0700
-Message-ID: <1442639665-25692-1-git-send-email-pclouds@gmail.com>
-References: <1442108202-25746-1-git-send-email-pclouds@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Unable to create temporary file
+ '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR': Permission denied
+Date: Sat, 19 Sep 2015 09:13:23 +0200
+Organization: gmx
+Message-ID: <b80246c46079167db6f90ee70de4368b@dscho.org>
+References: <1440157010.1759.83.camel@transmode.se>
+ <CACsJy8DEDgsG4C4KvuGop_=_wOvcOUZ644NiaQJef67rFNYmgg@mail.gmail.com>
+ <1442245035.10125.18.camel@transmode.se>
+ <CACsJy8BAOXWt2aVge7W8Mk9v0HbHHGkSQFwySeioam9r+n6z_Q@mail.gmail.com>
+ <1442508864.21964.26.camel@transmode.se>
+ <CACsJy8DFpLLtc7+Mix1d=Hy8h-duUqt4Y8WYsRL1nEryizoeww@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 19 07:14:14 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Joakim Tjernlund <joakim.tjernlund@transmode.se>,
+	git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 19 09:13:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZdATV-0003nG-Cx
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Sep 2015 07:14:13 +0200
+	id 1ZdCKy-0003uZ-V2
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Sep 2015 09:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751796AbbISFOI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Sep 2015 01:14:08 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:33845 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751343AbbISFOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Sep 2015 01:14:07 -0400
-Received: by padhy16 with SMTP id hy16so68132227pad.1
-        for <git@vger.kernel.org>; Fri, 18 Sep 2015 22:14:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=4FCGndHzZr86hgXmu1a8UOcN/4WPLLwvwAF8Of+9xSU=;
-        b=ErUeC7dJ7CWcuS/zYGoBF4+2ECFuF49qgPYCe2DyEXZHpKwI1TXgAOH0wy/m0UQ+5f
-         dP+9qYfVjTJ95TnOIv2JJ7BHKOwEVC0J3AWjHgNe+f2rdR7IpCPqESu5DLR+Hs1swYBw
-         fbZeL1vhVfFZ4WIsdTZtgz6HDKoMVBjrAwHoSLPKMX0Xjr5ZRiUBDWkncM2p7OtEfiA9
-         1fTfn6PUc+twc8FUJp3H6uvRHS7h1z6bfBpc7v1IXaHcldsrHAB1D+44SnCABs7RZKwD
-         mvHJFAQs7WZKu9MdFItNKgZ9+u32xev0yaAIuRWoFDLpMqpR8E/4TNVCNlgh+S7qLeu9
-         n7ug==
-X-Received: by 10.66.235.67 with SMTP id uk3mr1964235pac.100.1442639645805;
-        Fri, 18 Sep 2015 22:14:05 -0700 (PDT)
-Received: from lanh ([171.232.94.243])
-        by smtp.gmail.com with ESMTPSA id uy4sm11988901pbc.69.2015.09.18.22.14.02
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Sep 2015 22:14:05 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 19 Sep 2015 12:14:32 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <1442108202-25746-1-git-send-email-pclouds@gmail.com>
+	id S1753848AbbISHN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Sep 2015 03:13:28 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55464 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751842AbbISHN1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Sep 2015 03:13:27 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M4002-1Yn9kN0Jd4-00rZFn; Sat, 19 Sep 2015 09:13:25
+ +0200
+In-Reply-To: <CACsJy8DFpLLtc7+Mix1d=Hy8h-duUqt4Y8WYsRL1nEryizoeww@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:xrqYVjp2E2j8WbjY+AJi5IXAs8BqPrMBotXH1SbJr4+XW9yEPE3
+ VrhDprDDPx29+2BDHZlHb5QoVEePkDxiD8FrTFIIi/Ne345AaDpwlPXaQzoNx/a/RVkkAlX
+ rQ9NnyZhJuDEw9b+qdmL4Y9F/QjdHgX941Sp2quT8e+OdJSee9SfamJAJcznvHdeLsn+gyU
+ pLLgFm2pa7y4etyt5vBIw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:M1JCNaUq/h0=:Kints/m8iKN0ExcHrGU+HE
+ 69H2RgAveeK3C347khZqjXCkQLUyqdU5hz36LryeKWymoCRVDlB0Xw/BgVdbfpWSQ8vyvAbYh
+ uPeVBBn95fXHVhe0PAI5XYPdn57t4C0BW3BdjiiBvvuUtMmpJzcl4FM8KkryzR6oqR0LVXvRL
+ NWRPXh1/eL1DV2ldF0XVmzMITI+zuQ0WBlBGRzlSUKoSDvkFgK1WzLkQ9sPNgdzI7A5MiRYAR
+ 6prjyOUZJ2a5M+4Ey+iGyCTBdQ/1NXEQHWfpyd9Tim5HqI+1KDn2RmhbZ+lJNvRtoqEDcoSeZ
+ ITZT6f//k98ZtQ6tKtXFo7Q3EzqeEbk7HM2qOvzJQFDUwjXZnHvLZhF5qJUUYW7HEYfm8gbaG
+ fem8P0j0m5S7LQdPMDqxcLpCLYHYpIY3X3FEkxB2gH9c3XnDxRPpP6Sg+yfJNtfFydM+oRiy3
+ 6V6TOyyPjuGGVkuwAYFTAwoY9910oC2HxRK1ZwVvj+64VhP+PXNo2Lfssp/TmEogbDrDz0iak
+ J7D0F4xakpaWHL3t0ndDJbssSODVH7TjPlNAPvr8+//kopQlBsSIfLKUFuhtAHlmRvkwnAI/O
+ F2k55t+T+HvI6NyOkN4SAVs7NNk2MG6HHpsU4n+mhjYllLYYIR2JiTeG20/OMo7mg9c962hur
+ tZ9UUOVDi2Fpyg6urrAlz1WxB2PcIWJLtRxcmZSQpuT+5XYuCInhww8GY2iZmvwOFXoR2UHsl
+ IWUaeeu4ECxG4DjDTMwcfHccPk5yANzHlbh6wA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278232>
 
-While commit 9f673f9 (gc: config option for running --auto in
-background - 2014-02-08) helps reduce some complaints about 'gc
---auto' hogging the terminal, it creates another set of problems.
+Hi Duy,
 
-The latest in this set is, as the result of daemonizing, stderr is
-closed and all warnings are lost. This warning at the end of cmd_gc()
-is particularly important because it tells the user how to avoid "gc
---auto" running repeatedly. Because stderr is closed, the user does
-not know, naturally they complain about 'gc --auto' wasting CPU.
+On 2015-09-19 04:21, Duy Nguyen wrote:
+> On Thu, Sep 17, 2015 at 11:54 PM, Joakim Tjernlund
+> <joakim.tjernlund@transmode.se> wrote:
+>> On Thu, 2015-09-17 at 20:18 +0700, Duy Nguyen wrote:
+>>> On Mon, Sep 14, 2015 at 10:37 PM, Joakim Tjernlund
+>>> <joakim.tjernlund@transmode.se> wrote:
+>>> > On Mon, 2015-08-31 at 16:56 +0700, Duy Nguyen wrote:
+>>> > > On Fri, Aug 21, 2015 at 6:36 PM, Joakim Tjernlund
+>>> > > <joakim.tjernlund@transmode.se> wrote:
+>>> > > > I cannot push:
+>>> > > > # > git push origin
+>>> > > > Login for jocke@git.transmode.se
+>>> > > > Password:
+>>> > > > Counting objects: 7, done.
+>>> > > > Delta compression using up to 4 threads.
+>>> > > > Compressing objects: 100% (7/7), done.
+>>> > > > Writing objects: 100% (7/7), 13.73 KiB | 0 bytes/s, done.
+>>> > > > Total 7 (delta 4), reused 0 (delta 0)
+>>> > > > fatal: Unable to create temporary file '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR': Permission
+>>> > > > denied
+> 
+> I'm about to do it, but now I'm not sure if I should move
+> shallow_XXXXXX out of $GIT_DIR. It will not be the only command that
+> may write to $GIT_DIR. "git gc --auto" (which can be triggered at the
+> server side at push time) can write $GIT_DIR/gc.pid (and soon,
+> gc.log). Even if you disable gc --auto and run it periodically (with
+> cron or something), it will write gc.pid.
+> 
+> Is it really necessary to remove write access in $GIT_DIR? Do we (git
+> devs) have some guidelines about things in $GIT_DIR?
 
-Daemonized gc now saves stderr to $GIT_DIR/gc.log. Following gc --auto
-will not run and gc.log printed out until the user removes gc.log.
+IMO it makes little sense to remove write access from users who you want to push.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- The lock-based version has an advantage that the following gc runs
- will never see partial gc.log. But it requires some more hook at
- atexit() and maybe signal handler.
-=20
- This version avoids that, and gc.log can be kept even if gc is
- SIGKILL'd (unlikely because gc itself does not do anything that can
- upset the kernel), but then it's racy.
+They need to write objects to the directory, after all, and update refs.
 
- I think I perfer the lock-based version.
+This problem sounds more like the doing of an overzealous sysadmin to me than a careful one who researched diligently what locations require write access for the intended operations.
 
- builtin/gc.c | 66 ++++++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++++-
- 1 file changed, 65 insertions(+), 1 deletion(-)
+Personally, I see little sense in bending over to try to support such an intentionally tampered setup.
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index bcc75d9..3d42ef7 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -43,6 +43,8 @@ static struct argv_array prune_worktrees =3D ARGV_ARR=
-AY_INIT;
- static struct argv_array rerere =3D ARGV_ARRAY_INIT;
-=20
- static char *pidfile;
-+static struct strbuf log_filename =3D STRBUF_INIT;
-+static int daemonized;
-=20
- static void remove_pidfile(void)
- {
-@@ -253,6 +255,41 @@ static const char *lock_repo_for_gc(int force, pid=
-_t* ret_pid)
- 	return NULL;
- }
-=20
-+static int report_last_gc_error(void)
-+{
-+	struct strbuf sb =3D STRBUF_INIT;
-+	int ret;
-+
-+	if (!access(git_path("gc.pid"), R_OK))
-+		/*
-+		 * Either background gc is still running, or we have a stale
-+		 * gc.pid.
-+		 *
-+		 * If the former, it's not the right time to look at gc.log
-+		 * yet. We'll exit shortly after lock_repo_for_gc().
-+		 *
-+		 * If the latter, we'll run gc --auto one more time. But
-+		 * because gc.log is appended, the old log (if exists) won't
-+		 * be lost. One extra gc run is not that big a deal to avoid.
-+		 */
-+		return 0;
-+
-+	ret =3D strbuf_read_file(&sb, git_path("gc.log"), 0);
-+	if (ret > 0)
-+		return error(_("The last gc run reported the following. "
-+			       "Please correct the root cause\n"
-+			       "and remove %s. Automatic cleanup will not "
-+			       "be performed\n"
-+			       "until the file is removed.\n\n"
-+			       "%s"),
-+			     git_path("gc.log"), sb.buf);
-+	else if (!ret)
-+		/* racy, but in the worst case we waste one more gc run */
-+		unlink(git_path("gc.log"));
-+	strbuf_release(&sb);
-+	return 0;
-+}
-+
- static int gc_before_repack(void)
- {
- 	if (pack_refs && run_command_v_opt(pack_refs_cmd.argv, RUN_GIT_CMD))
-@@ -330,13 +367,16 @@ int cmd_gc(int argc, const char **argv, const cha=
-r *prefix)
- 			fprintf(stderr, _("See \"git help gc\" for manual housekeeping.\n")=
-);
- 		}
- 		if (detach_auto) {
-+			if (report_last_gc_error())
-+				return -1;
-+
- 			if (gc_before_repack())
- 				return -1;
- 			/*
- 			 * failure to daemonize is ok, we'll continue
- 			 * in foreground
- 			 */
--			daemonize();
-+			daemonized =3D !daemonize();
- 		}
- 	} else
- 		add_repack_all_option();
-@@ -349,6 +389,18 @@ int cmd_gc(int argc, const char **argv, const char=
- *prefix)
- 		    name, (uintmax_t)pid);
- 	}
-=20
-+	if (daemonized) {
-+		int fd;
-+
-+		strbuf_git_path(&log_filename, "gc.log");
-+		fd =3D open(log_filename.buf, O_WRONLY | O_CREAT | O_APPEND, 0644);
-+		if (fd >=3D 0) {
-+			dup2(fd, 2);
-+			close(fd);
-+		} else
-+			strbuf_release(&log_filename);
-+	}
-+
- 	if (gc_before_repack())
- 		return -1;
-=20
-@@ -376,6 +428,17 @@ int cmd_gc(int argc, const char **argv, const char=
- *prefix)
- 		warning(_("There are too many unreachable loose objects; "
- 			"run 'git prune' to remove them."));
-=20
-+	/*
-+	 * Opportunistic cleanup in the good case (which most likely
-+	 * produce empty gc.log), otherwise empty gc.log will be
-+	 * deleted at the next auto gc run.
-+	 */
-+	if (daemonized && log_filename.len) {
-+		struct stat st;
-+
-+		fflush(stderr);
-+		if (!stat(log_filename.buf, &st) && !st.st_size)
-+			unlink(log_filename.buf);
-+	}
- 	return 0;
- }
---=20
-2.3.0.rc1.137.g477eb31
+Ciao,
+Dscho
