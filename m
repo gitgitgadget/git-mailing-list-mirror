@@ -1,63 +1,45 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/3] Clarify the documentation of options with
- optional arguments
-Date: Sat, 19 Sep 2015 06:50:43 -0400
-Message-ID: <20150919105043.GA23464@sigill.intra.peff.net>
-References: <1442588510-7379-1-git-send-email-Matthieu.Moy@imag.fr>
- <1442648870-22511-1-git-send-email-Matthieu.Moy@imag.fr>
+From: =?UTF-8?B?5oi45bO26YGU5ZOJ?= <t.t.mc1192.sf@gmail.com>
+Subject: (unknown)
+Date: Sat, 19 Sep 2015 19:58:15 +0900
+Message-ID: <CAJms-NC8WJPjeW1K2zjqE7RpUx6UZa7eeGpFZmP8ocFOMSV-Lw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	Alastair McGowan-Douglas <altreus@altre.us>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sat Sep 19 12:50:55 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 19 12:58:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZdFjK-0001wX-CI
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Sep 2015 12:50:54 +0200
+	id 1ZdFqs-0006GO-5h
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Sep 2015 12:58:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981AbbISKur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Sep 2015 06:50:47 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33530 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750811AbbISKuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Sep 2015 06:50:46 -0400
-Received: (qmail 25151 invoked by uid 102); 19 Sep 2015 10:50:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 19 Sep 2015 05:50:47 -0500
-Received: (qmail 15744 invoked by uid 107); 19 Sep 2015 10:50:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 19 Sep 2015 06:50:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 19 Sep 2015 06:50:43 -0400
-Content-Disposition: inline
-In-Reply-To: <1442648870-22511-1-git-send-email-Matthieu.Moy@imag.fr>
+	id S1752246AbbISK6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Sep 2015 06:58:16 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:35381 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750811AbbISK6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Sep 2015 06:58:15 -0400
+Received: by obbzf10 with SMTP id zf10so54243217obb.2
+        for <git@vger.kernel.org>; Sat, 19 Sep 2015 03:58:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=a67+Xn2ScPIinix0jYfRqCmskGmMpaGSAycuaim21OI=;
+        b=xnt9zSI9OuOjKx3Ylz5+7W1kqoIYol0yXNg9b/7zIJc6ZKZU7i5KqhtKoeXsHSSXX7
+         P8NQE2RnUkMpmchdmaqbUKKrVkZfK+eZnYfbjRIFlQLZYCudEPbg7mDOxq/NuY7BMzIr
+         iHtLh32/qKaXv/Cd1luJ3dyj1ketvcxav3msZTpRvElGH8SXaIftk1cPCFhkh55JclWd
+         7KIfEc/iJkwdcpbKz/kOdDemKok5twBaJqtf8wVTjKE7pBoXXlr86gRMpOX1J7G5eFRa
+         kaolucWp1gK4sKZ/cMXAT9dWP6JfDetut+5zjdnRsUx23mCbD+ZkUPNyp6365JOuTgLs
+         Az/w==
+X-Received: by 10.182.144.233 with SMTP id sp9mr6723396obb.9.1442660295270;
+ Sat, 19 Sep 2015 03:58:15 -0700 (PDT)
+Received: by 10.60.67.71 with HTTP; Sat, 19 Sep 2015 03:58:15 -0700 (PDT)
+Subject: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278239>
 
-On Sat, Sep 19, 2015 at 09:47:47AM +0200, Matthieu Moy wrote:
-
-> Changes since v2:
-> 
-> * Typo in commit message
-> 
-> * key-id -> keyid in more places. Not so important, but we had cases
->   where SYNOPSYS was saying key-id and the full doc keyid, let's make
->   it more uniform (and more grep-able).
-> 
-> * Document what --sign-commit and --open-in-pager do when the optional
->   argument is not specified.
-> 
-> Matthieu Moy (3):
->   Documentation: use 'keyid' consistently, not 'key-id'
->   Documentation/grep: fix documentation of -O
->   Documentation: explain optional arguments better
-
-This all looks good to me.
-
--Peff
+subscribe git
