@@ -1,208 +1,172 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v5 3/8] branch: roll show_detached HEAD into regular ref_list
-Date: Sun, 20 Sep 2015 23:40:22 +0530
-Message-ID: <1442772627-25421-4-git-send-email-Karthik.188@gmail.com>
-References: <1442772627-25421-1-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH v5 0/8] port the filtering part of branch.c to use ref-filter APIs
+Date: Sun, 20 Sep 2015 23:40:19 +0530
+Message-ID: <1442772627-25421-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 20 20:10:34 2015
+X-From: git-owner@vger.kernel.org Sun Sep 20 20:10:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zdj4K-0006dC-OE
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Sep 2015 20:10:33 +0200
+	id 1Zdj4D-0006Vf-91
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Sep 2015 20:10:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755306AbbITSK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Sep 2015 14:10:29 -0400
-Received: from mail-pa0-f65.google.com ([209.85.220.65]:36376 "EHLO
-	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755258AbbITSK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Sep 2015 14:10:26 -0400
-Received: by pacik9 with SMTP id ik9so11665701pac.3
-        for <git@vger.kernel.org>; Sun, 20 Sep 2015 11:10:26 -0700 (PDT)
+	id S1755241AbbITSKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Sep 2015 14:10:20 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:34472 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755219AbbITSKT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Sep 2015 14:10:19 -0400
+Received: by pary6 with SMTP id y6so11621670par.1
+        for <git@vger.kernel.org>; Sun, 20 Sep 2015 11:10:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GO/qSjETXTY1tif+IVNNgxpJTz/CJUBDulbvH+BxJZU=;
-        b=rK3KAEw08arcCBgUtCGvuiPPEwwcB5HzwwOFj/BaYTXh7q7LPXvCcMM8lby3yYp0rN
-         5c2O2yFp3B074mOYPrXcPvrDeKkbniqVu0fPZoP3lHcXcVp2MLACVUFkB6ET/a3Z+DSh
-         2R9rJ2hIpKH6o/5ZKna6lIBhL5gMAOrOPQuVKP8fdPRXBzkbtixjl6nsDLC0l2Gncnx3
-         mbxMHPK+1xIFf1KGOpUtKaDFqy8YBDdjHOGNXg2PzqvS03p0lCvG8wqMJxl8Nvi4GvNY
-         Ehpsxr2C+DEMSnS+zDh+GXMRXY3fQQPQbkDHWFqY3pgmbM/zVBnUB8YToQw5kDB9LieL
-         zItg==
-X-Received: by 10.68.201.232 with SMTP id kd8mr19536730pbc.102.1442772626347;
-        Sun, 20 Sep 2015 11:10:26 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=TEo2eneCY1JOhqTryleqnDPo5rQBIVL4PJRJ0rfy928=;
+        b=kcpugBiKymrZzWvfCH6nasjPuWjQPDnXTXcDQS9htae9fAVV77h1n52lyeN/2dOtLj
+         lZG5Dc8qQa8tFSgGbusW4BMRI20nJRlcEf03XmrC+in1eazdxuh7ytlTjoXfmNn6YDV7
+         7JKPaJnOwXLHck32feA4I9OJWPHjcS96CcS95jS0OnD2XqdlAp44F2DjZhRnwOuCNzy1
+         nXRNtb8lInPtPqvwaFDBtK0zVhMJj3VHLsIWkOUpcAi+hUfMpGMvg1/IefNCLIq040sO
+         sbjjjE8fVAiSuG2H+dzrczSU/SC3QYZemQEKpQjs4DSuCvTeu9zIwF7TLHqEe+Jc2djX
+         8+tg==
+X-Received: by 10.68.135.136 with SMTP id ps8mr19728804pbb.123.1442772618994;
+        Sun, 20 Sep 2015 11:10:18 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id qr5sm20037916pbb.26.2015.09.20.11.10.24
+        by smtp.gmail.com with ESMTPSA id qr5sm20037916pbb.26.2015.09.20.11.10.16
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 20 Sep 2015 11:10:25 -0700 (PDT)
+        Sun, 20 Sep 2015 11:10:18 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1442772627-25421-1-git-send-email-Karthik.188@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278253>
 
-Remove show_detached() and make detached HEAD to be rolled into
-regular ref_list by adding REF_DETACHED_HEAD as a kind of branch and
-supporting the same in append_ref(). This eliminates the need for an
-extra function and helps in easier porting of branch.c to use
-ref-filter APIs.
+This is part of porting 'branch -l' to use ref-filter APIs
 
-Before show_detached() used to check if the HEAD branch satisfies the
-'--contains' option, now that is taken care by append_ref().
+The previous version of this series (v4) can be found here:
+thread.gmane.org/gmane.comp.version-control.git/277761
 
-Based-on-patch-by: Jeff King <peff@peff.net>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- builtin/branch.c | 61 ++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 33 insertions(+), 28 deletions(-)
+Changes in this version include:
+* Now we sort by 'refname' by default, this eliminates the need
+for attaching the detached head at the end of the array and printing
+it initially.
+* Fix broken tests.
+
+Karthik Nayak (8):
+  branch: refactor width computation
+  branch: bump get_head_description() to the top
+  branch: roll show_detached HEAD into regular ref_list
+  branch: move 'current' check down to the presentation layer
+  branch: drop non-commit error reporting
+  branch.c: use 'ref-filter' data structures
+  branch.c: use 'ref-filter' APIs
+  branch: add '--points-at' option
+
+ Documentation/git-branch.txt |  13 +-
+ builtin/branch.c             | 501 +++++++++++++------------------------------
+ ref-filter.c                 |   2 +-
+ ref-filter.h                 |   6 +-
+ t/t1430-bad-ref-name.sh      |  31 ++-
+ t/t3203-branch-output.sh     |  20 ++
+ 6 files changed, 207 insertions(+), 366 deletions(-)
+
+Interdiff:
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 772cc3b..572ba21 100644
+index 32a0d11..9065c70 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -28,8 +28,9 @@ static const char * const builtin_branch_usage[] = {
- 	NULL
- };
+@@ -480,7 +480,7 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	int maxwidth = 0;
+ 	const char *remote_prefix = "";
+ 	struct ref_sorting def_sorting;
+-	const char *sort_type = "type";
++	const char *sort_type = "refname";
  
--#define REF_LOCAL_BRANCH    0x01
--#define REF_REMOTE_BRANCH   0x02
-+#define REF_DETACHED_HEAD   0x01
-+#define REF_LOCAL_BRANCH    0x02
-+#define REF_REMOTE_BRANCH   0x04
- 
- static const char *head;
- static unsigned char head_sha1[20];
-@@ -352,8 +353,12 @@ static int append_ref(const char *refname, const struct object_id *oid, int flag
- 			break;
- 		}
- 	}
--	if (ARRAY_SIZE(ref_kind) <= i)
--		return 0;
-+	if (ARRAY_SIZE(ref_kind) <= i) {
-+		if (!strcmp(refname, "HEAD"))
-+			kind = REF_DETACHED_HEAD;
-+		else
-+			return 0;
-+	}
- 
- 	/* Don't add types the caller doesn't want */
- 	if ((kind & ref_list->kinds) == 0)
-@@ -535,6 +540,8 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 	int color;
- 	struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
- 	const char *prefix = "";
-+	const char *desc = item->name;
-+	char *to_free = NULL;
- 
- 	if (item->ignore)
- 		return;
-@@ -547,6 +554,10 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 		color = BRANCH_COLOR_REMOTE;
- 		prefix = remote_prefix;
- 		break;
-+	case REF_DETACHED_HEAD:
-+		color = BRANCH_COLOR_CURRENT;
-+		desc = to_free = get_head_description();
-+		break;
- 	default:
- 		color = BRANCH_COLOR_PLAIN;
- 		break;
-@@ -558,7 +569,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 		color = BRANCH_COLOR_CURRENT;
- 	}
- 
--	strbuf_addf(&name, "%s%s", prefix, item->name);
-+	strbuf_addf(&name, "%s%s", prefix, desc);
- 	if (verbose) {
- 		int utf8_compensation = strlen(name.buf) - utf8_strwidth(name.buf);
- 		strbuf_addf(&out, "%c %s%-*s%s", c, branch_get_color(color),
-@@ -581,6 +592,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 	}
- 	strbuf_release(&name);
- 	strbuf_release(&out);
-+	free(to_free);
- }
- 
- static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
-@@ -601,22 +613,6 @@ static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
- 	return max;
- }
- 
--static void show_detached(struct ref_list *ref_list, int maxwidth)
--{
--	struct commit *head_commit = lookup_commit_reference_gently(head_sha1, 1);
--
--	if (head_commit && is_descendant_of(head_commit, ref_list->with_commit)) {
--		struct ref_item item;
--		item.name = get_head_description();
--		item.kind = REF_LOCAL_BRANCH;
--		item.dest = NULL;
--		item.commit = head_commit;
--		item.ignore = 0;
--		print_ref_item(&item, maxwidth, ref_list->verbose, ref_list->abbrev, 1, "");
--		free(item.name);
--	}
--}
--
- static int print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit, const char **pattern)
- {
- 	int i;
-@@ -643,7 +639,14 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 	cb.ref_list = &ref_list;
- 	cb.pattern = pattern;
- 	cb.ret = 0;
-+	/*
-+	 * First we obtain all regular branch refs and if the HEAD is
-+	 * detached then we insert that ref to the end of the ref_fist
-+	 * so that it can be printed and removed first.
-+	 */
- 	for_each_rawref(append_ref, &cb);
-+	if (detached)
-+		head_ref(append_ref, &cb);
  	/*
- 	 * The following implementation is currently duplicated in ref-filter. It
- 	 * will eventually be removed when we port branch.c to use ref-filter APIs.
-@@ -681,14 +684,12 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
+ 	 * If we are listing more than just remote branches,
+@@ -498,13 +498,6 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	if (filter->verbose)
+ 		maxwidth = calc_maxwidth(&array, strlen(remote_prefix));
  
- 	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
- 
--	detached = (detached && (kinds & REF_LOCAL_BRANCH));
--	if (detached && match_patterns(pattern, "HEAD"))
--		show_detached(&ref_list, maxwidth);
+-	/* Print detached HEAD before sorting and printing the rest */
+-	if (filter->kind & FILTER_REFS_DETACHED_HEAD) {
+-		format_and_print_ref_item(array.items[array.nr - 1], maxwidth, filter, remote_prefix);
+-		free_array_item(array.items[array.nr - 1]);
+-		array.nr--;
+-	}
 -
- 	for (i = 0; i < ref_list.index; i++) {
--		int current = !detached &&
--			(ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
-+		int current = !detached && (ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
- 			!strcmp(ref_list.list[i].name, head);
-+		/*  If detached the first ref_item is the current ref */
-+		if (detached && i == 0)
-+			current = 1;
- 		print_ref_item(&ref_list.list[i], maxwidth, verbose,
- 			       abbrev, current, remote_prefix);
- 	}
-@@ -914,7 +915,11 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 			die(_("branch name required"));
- 		return delete_branches(argc, argv, delete > 1, kinds, quiet);
- 	} else if (list) {
--		int ret = print_ref_list(kinds, detached, verbose, abbrev,
-+		int ret;
-+		/*  git branch --local also shows HEAD when it is detached */
-+		if (kinds & REF_LOCAL_BRANCH)
-+			kinds |= REF_DETACHED_HEAD;
-+		ret = print_ref_list(kinds, detached, verbose, abbrev,
- 					 with_commit, argv);
- 		print_columns(&output, colopts, NULL);
- 		string_list_clear(&output, 0);
+ 	if (!sorting) {
+ 		def_sorting.next = NULL;
+ 		def_sorting.atom = parse_ref_filter_atom(sort_type,
+diff --git a/ref-filter.c b/ref-filter.c
+index c536aea..dbd8fce 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1356,7 +1356,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ }
+ 
+ /*  Free memory allocated for a ref_array_item */
+-void free_array_item(struct ref_array_item *item)
++static void free_array_item(struct ref_array_item *item)
+ {
+ 	free((char *)item->symref);
+ 	free(item);
+diff --git a/ref-filter.h b/ref-filter.h
+index 9316031..14d435e 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -90,8 +90,6 @@ struct ref_filter_cbdata {
+  * filtered refs in the ref_array structure.
+  */
+ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int type);
+-/*  Clear memory allocated to a ref_array_item */
+-void free_array_item(struct ref_array_item *item);
+ /*  Clear all memory allocated to ref_array */
+ void ref_array_clear(struct ref_array *array);
+ /*  Parse format string and sort specifiers */
+diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
+index 070cf06..c465abe 100755
+--- a/t/t1430-bad-ref-name.sh
++++ b/t/t1430-bad-ref-name.sh
+@@ -139,7 +139,7 @@ test_expect_failure 'push --mirror can delete badly named ref' '
+ 	) &&
+ 	git -C src push --mirror "file://$top/dest" &&
+ 	git -C dest branch >output 2>error &&
+-	! grep -e "broken\.\.\.ref" error
++	! grep -e "broken\.\.\.ref" error &&
+ 	! grep -e "broken\.\.\.ref" output
+ '
+ 
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index c819f3e..f1ae5ff 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -145,8 +145,8 @@ EOF
+ 
+ test_expect_success 'git branch `--sort` option' '
+ 	cat >expect <<-\EOF &&
+-	* (HEAD detached from fromtag)
+ 	  branch-two
++	* (HEAD detached from fromtag)
+ 	  branch-one
+ 	  master
+ 	EOF
+@@ -156,8 +156,8 @@ test_expect_success 'git branch `--sort` option' '
+ 
+ test_expect_success 'git branch --points-at option' '
+ 	cat >expect <<-\EOF &&
+-	  master
+ 	  branch-one
++	  master
+ 	EOF
+ 	git branch --points-at=branch-one >actual &&
+ 	test_cmp expect actual
+
 -- 
 2.5.1
