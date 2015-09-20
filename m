@@ -1,101 +1,72 @@
 From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v5 6/7] git-p4: add support for large file systems
-Date: Sun, 20 Sep 2015 23:26:24 +0200
-Message-ID: <107A7A4A-1B2C-4280-A66E-A4B3BED13AE0@gmail.com>
-References: <1442237194-49624-1-git-send-email-larsxschneider@gmail.com> <1442237194-49624-7-git-send-email-larsxschneider@gmail.com> <55F92A1E.1090002@diamand.org> <5329966D-1A0C-42A1-9099-AC449D50AA52@gmail.com> <xmqqzj0ms85n.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v3 1/2] git-p4: add test case for "Translation of file content failed" error
+Date: Sun, 20 Sep 2015 23:34:23 +0200
+Message-ID: <4DB8A17D-A670-4E84-8FA8-9B05F2DCE1CB@gmail.com>
+References: <1442766131-45017-1-git-send-email-larsxschneider@gmail.com> <1442766131-45017-2-git-send-email-larsxschneider@gmail.com> <CAPig+cThcNa2Xg6GDkNKKeOMOzApTi_FQfQz_KRAbF8-PWY5Eg@mail.gmail.com>
 Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Diamand <luke@diamand.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 20 23:26:57 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
+	=?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Sep 20 23:34:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zdm8L-0000bp-TL
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Sep 2015 23:26:54 +0200
+	id 1ZdmFj-0004ka-F3
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Sep 2015 23:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755311AbbITV02 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Sep 2015 17:26:28 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:36409 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751404AbbITV02 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Sep 2015 17:26:28 -0400
-Received: by wicgb1 with SMTP id gb1so91337001wic.1
-        for <git@vger.kernel.org>; Sun, 20 Sep 2015 14:26:26 -0700 (PDT)
+	id S1755455AbbITVe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Sep 2015 17:34:27 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:37285 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755417AbbITVe1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Sep 2015 17:34:27 -0400
+Received: by wicfx3 with SMTP id fx3so88129138wic.0
+        for <git@vger.kernel.org>; Sun, 20 Sep 2015 14:34:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=content-type:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=osaL8VXgVhNPaMYjrhNkfMWgCNlNOKF6gMja7AXT3Xs=;
-        b=HJEssh1PWBzhQxDYnzlE7dDepHtY2eIwl1UwoSsxp7/ouTRYBjnfpawQhj2X2we0O0
-         a+aALPtl34F3kPSzcGqFso2TtTflLdNsSGNpYGCTc8Uza8dkYnSbM6a55QDTmzQ/AspN
-         7N+eIEBduLoCDmVcFEVcElmkerWdYhekpbCZbF+1qXP5gLWegL2ELN5wW9azjTprddWG
-         ihqDh1VwCVrlvpl4nZicfzHLuEm9ZFH8o6iydVhJEe/ZHpcYwyqlc2JT1obb9qSiMPXn
-         07CoMf8GKv0vXFFMgjdUM354CYnvAXWhlfWDLxKs4KpyyY0mNhvUmYEGkONrwQGp/0Gs
-         KFHg==
-X-Received: by 10.180.87.198 with SMTP id ba6mr10504197wib.39.1442784386582;
-        Sun, 20 Sep 2015 14:26:26 -0700 (PDT)
+        bh=upMxOxpydtxsLWofe7k6VWkn7y+SpQZuP4YT3Wz793s=;
+        b=DkxHsklacGCTY77d9QcFtwsXdPUiubZKAnaRXsze3PEQSlVWITHywRVv2nDN7sUhI/
+         jk9Dfcg7aDAIJ3twA8FAyP6bOrXsTKpUWhN0SZn3BjSzOn0pHT5HFcJcLAoQE369VKYG
+         oRAhhhlDiRoFOb4luACf+zEAAhPWsQ/YKRgRl25z9mOMot0DZOlkJFm+UzQgdzCylMrb
+         NHvN16or7lFdF+QBj7GwM9ABBWF5C+T5H80eZt+67mfWh3vb5n1+ulqMbzL1X1wH5usW
+         0Ei3Z+72hqrrlKT8DYm37Y+9eiLjnmmp/Kw6KV2z87awL5EDTE/5B/hfHPkzUhQ/dOMu
+         kWWA==
+X-Received: by 10.194.117.39 with SMTP id kb7mr18658481wjb.129.1442784865928;
+        Sun, 20 Sep 2015 14:34:25 -0700 (PDT)
 Received: from slxbook3.fritz.box (dslb-188-106-098-135.188.106.pools.vodafone-ip.de. [188.106.98.135])
-        by smtp.gmail.com with ESMTPSA id s16sm10098963wik.13.2015.09.20.14.26.25
+        by smtp.gmail.com with ESMTPSA id lf10sm20745841wjb.23.2015.09.20.14.34.24
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 20 Sep 2015 14:26:25 -0700 (PDT)
-In-Reply-To: <xmqqzj0ms85n.fsf@gitster.mtv.corp.google.com>
+        Sun, 20 Sep 2015 14:34:25 -0700 (PDT)
+In-Reply-To: <CAPig+cThcNa2Xg6GDkNKKeOMOzApTi_FQfQz_KRAbF8-PWY5Eg@mail.gmail.com>
 X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278272>
 
 
-On 16 Sep 2015, at 17:20, Junio C Hamano <gitster@pobox.com> wrote:
+On 20 Sep 2015, at 23:16, Eric Sunshine <sunshine@sunshineco.com> wrote:
 
-> Lars Schneider <larsxschneider@gmail.com> writes:
->=20
->>>> +git-p4.largeFileSystem::
->>>> +	Specify the system that is used for large (binary) files. Please=
- note
->>>> +	that large file systems do not support the 'git p4 submit' comma=
-nd.
->>>=20
->>> Why is that? Is it just that you haven't implemented support, or
->>> is it fundamentally impossible?
->>=20
->> If we detect LFS files only by file extension then we could make
->> it work. But then we must not use any git-p4 settings. We would
->> need to rely only on the =93.gitattributes=94 file that is stored in
->> the P4 repository. My implementation also looks at the file size
->> and decides on a individual file basis if a file is stored in
->> LFS. That means all clients need the same file size threshold.
->>=20
->> Junio explained the problem in the v4 thread:
->>> ...
->=20
-> Hmm, I am not sure if Luke's question was answered with the above,
-> and I do not think I explained anything, either.  I did point out
-> that with _your_ code I didn't see how "submit" would not work, but
-> that is quite different from the problem being fundamentally not
-> solvable.
+> On Sun, Sep 20, 2015 at 12:22 PM,  <larsxschneider@gmail.com> wrote:
+>> A P4 repository can get into a state where it contains a file with
+>> type UTF-16 that does not contain a valid UTF-16 BOM. If git-p4
+>> attempts to retrieve the file then the process crashes with a
+>> "Translation of file content failed" error.
+> 
+> Hmm, are these tests going to succeed only after patch 2/2 is applied?
+> If so, the order of these patches is backward since you want each
+> patch to be able to stand on its own and not introduce any sort of
+> breakage.
+Yes, these tests succeed only after 2/2. I think I saw this approach somewhere in the Git history. I thought it would ease the reviewing process: show the problem in the first commit, fix it in a subsequent commit.
+However, I understand your point as 1/2 would break the build.
 
-OK, to answer Luke=92s question after some thoughts: I think it is poss=
-ible but I haven=92t implemented it.
-
-I see one issue right away:
-Some large file systems depend on gitattributes filters (e.g. Git-LFS).=
- Git-p4 would need to run the filters on clone/sync/submit. Right now t=
-his does not happen and the user sees the raw LFS pointer files in the =
-Git repository instead of the content after the initial git-p4 clone (t=
-he Git-LFS test cases shows this). This is no problem for a git-p4 one =
-time usage as you usually upload the created Git repo to some Git serve=
-r. Nevertheless, I was not able to find a quick and easy way to fix thi=
-s. Anyone an idea?
-
-If we get these filters working then we could create a new large file s=
-ystem similar to =93Git-LFS=94. Instead of pointing to large files on a=
- =93Git-LFS=94 server we could point right to their P4 location. That w=
-ould be pretty neat.
+What is the preferred way by the Git community? Combine patch and test in one commit or a patch commit followed by a test commit? I would prefer to have everything in one commit.
 
 - Lars
