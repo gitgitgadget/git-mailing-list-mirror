@@ -1,82 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 56/67] avoid sprintf and strcpy with flex arrays
-Date: Mon, 21 Sep 2015 13:19:18 -0400
-Message-ID: <20150921171918.GA29964@sigill.intra.peff.net>
-References: <20150915152125.GA27504@sigill.intra.peff.net>
- <20150915160956.GD29753@sigill.intra.peff.net>
- <CAPig+cSL3W58TSYEAFz3twvxt_brB=kY=LEwX6m5RhBsg6VV6g@mail.gmail.com>
- <20150921151521.GA25286@sigill.intra.peff.net>
- <CAPig+cQwGHNPUG2MB2v5XXTQ+RP5L5J_EU4=nawzLjCN89s1ZQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG?] HEAD detached at HEAD
+Date: Mon, 21 Sep 2015 10:20:13 -0700
+Message-ID: <xmqq8u7zbsfm.fsf@gitster.mtv.corp.google.com>
+References: <vpqk2rnirz0.fsf@anie.imag.fr>
+	<CA+P7+xoeXiZd=WU460Xfjthe0U5BnAV69_KNKW39p10ZGLHx7g@mail.gmail.com>
+	<vpqeghviqu1.fsf@anie.imag.fr>
+	<CAGZ79kZxAwMvv6UoZLBd2wTOdj1DFWKQqSPBYL449KSokA8DQQ@mail.gmail.com>
+	<vpqlhc3h7e7.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Sep 21 19:19:35 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Sep 21 19:20:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ze4kY-0000Yp-8v
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 19:19:34 +0200
+	id 1Ze4lK-0001ef-TB
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 19:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757116AbbIURTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2015 13:19:22 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34008 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757064AbbIURTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2015 13:19:21 -0400
-Received: (qmail 23698 invoked by uid 102); 21 Sep 2015 17:19:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Sep 2015 12:19:20 -0500
-Received: (qmail 28657 invoked by uid 107); 21 Sep 2015 17:19:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Sep 2015 13:19:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Sep 2015 13:19:18 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQwGHNPUG2MB2v5XXTQ+RP5L5J_EU4=nawzLjCN89s1ZQ@mail.gmail.com>
+	id S1757190AbbIURUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2015 13:20:17 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:35257 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752355AbbIURUP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2015 13:20:15 -0400
+Received: by pacfv12 with SMTP id fv12so124408417pac.2
+        for <git@vger.kernel.org>; Mon, 21 Sep 2015 10:20:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=vVqdH5S3cDzTrM2wVATd48MAPH8k9Nc9+2+82SF9OTA=;
+        b=q7QK32d5qMtP1zAuk2tTJw8lNfvkbOs+jaPJygrak8ydOv5hfHq2ADeJBHedAo8Iwl
+         HLNR9OcsXcp1J2QrsJm7e7k/8PeriCy0X7HgFse3X5/mmrUjyJ+VFumzHFuUo1kBh/dR
+         l6GdQfQpQAd0b7Gi/EkrbQZXB2NtNW5e9pwmIVoOdbyxC+4ZZEApbtvvGr/3ZFDmUC2z
+         8z1iK8xqALVXNCwE5/NUfySsB8Y99Q43mr96Stn3VY8SIGuys0HPsnRnRFVG/ZYIGj65
+         fBl9oArkSSAfgqjGzhnLk/JVS4+VAer+Sja6JOY+F1dzzx7VxuWrAWscy4KaXCw3MPkx
+         g4fg==
+X-Received: by 10.66.141.165 with SMTP id rp5mr2544425pab.127.1442856015116;
+        Mon, 21 Sep 2015 10:20:15 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:89f8:25c:a9fe:f701])
+        by smtp.gmail.com with ESMTPSA id xv1sm25587977pbb.25.2015.09.21.10.20.14
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Mon, 21 Sep 2015 10:20:14 -0700 (PDT)
+In-Reply-To: <vpqlhc3h7e7.fsf@anie.imag.fr> (Matthieu Moy's message of "Fri,
+	18 Sep 2015 21:09:04 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278316>
 
-On Mon, Sep 21, 2015 at 01:11:09PM -0400, Eric Sunshine wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> >> > -       p = xcalloc(1, sizeof(*p) + strlen(tmp_file) + 2);
-> >> > -       strcpy(p->pack_name, tmp_file);
-> >> > +       namelen = strlen(tmp_file) + 2;
-> >>
-> >> You mentioned this specially in the commit message, but from a brief
-> >> read of the code, it's still not obvious (to me) why this is +2 rather
-> >> than +1. Since you're touching the code anyhow, perhaps add an in-code
-> >> comment explaining it?
-> >
-> > To be honest, I'm not sure what's going on with the "+ 2" here.
-> >
-> > In many cases with packed_git we allocate with "foo.idx" and want to be
-> > able to later write "foo.pack" into the same buffer. But here we are
-> > putting in a tmpfile name. This comes from 8455e48, but I don't see any
-> > clue there. I wonder if the "+2" was simply cargo-culted from other
-> > instances.
-> 
-> Ah, ok. I guess I misunderstood the commit message to mean or imply
-> that the +2 was correct and sensible and well-understood.
+> I investigated a bit more. The root of the problem is "git checkout
+> --detach" and the reflog. Here's a reproduction script:
+> ...
+> If one replaces "git checkout --detach" with "git checkout HEAD^0", then
+> the output is the one I expected:
+>
+>   HEAD detached at cb39b20
+>
+> The guilty line in the reflog is:
+>
+>   checkout: moving from master to HEAD
 
-I think it was more that I looked at other instances of packed_git, and
-realized they could not be safely converted. I think "struct
-alternate_object_database" has similar problems.
-
--Peff
-
-PS As I mentioned earlier, I did end up adding a FLEX_ALLOC() macro in
-   another series that builds on top of this. I haven't posted it yet,
-   but check out:
-
-     https://github.com/peff/git/commit/ba491c527572c763286b4b9519aef3c30482c2d1
-
-   and
-
-     https://github.com/peff/git/commit/d88444d5ba00bd875ef5291dca3b71dd046186dc
-
-   if you are curious.
+Yeah, that sounds broken.  --detach should write the same reflog entry
+as "git checkout HEAD^0".
