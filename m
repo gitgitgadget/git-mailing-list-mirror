@@ -1,113 +1,183 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: git-p4: nicodeDecodeError in ./t9822-git-p4-path-encoding.sh
-Date: Mon, 21 Sep 2015 08:01:54 +0100
-Message-ID: <55FFAB62.8050106@diamand.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [BUG?] HEAD detached at HEAD
+Date: Mon, 21 Sep 2015 09:31:51 +0200
+Message-ID: <55FFB267.3040106@drmicha.warpmail.net>
+References: <vpqk2rnirz0.fsf@anie.imag.fr>
+ <CA+P7+xoeXiZd=WU460Xfjthe0U5BnAV69_KNKW39p10ZGLHx7g@mail.gmail.com>
+ <vpqeghviqu1.fsf@anie.imag.fr>
+ <CAGZ79kZxAwMvv6UoZLBd2wTOdj1DFWKQqSPBYL449KSokA8DQQ@mail.gmail.com>
+ <vpqlhc3h7e7.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 21 09:02:28 2015
+Cc: Jacob Keller <jacob.keller@gmail.com>, git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Sep 21 09:32:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zdv7L-0005zH-EL
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 09:02:27 +0200
+	id 1ZdvZw-0003K3-2W
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 09:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbbIUHB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2015 03:01:57 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:33696 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751332AbbIUHB5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2015 03:01:57 -0400
-Received: by wiclk2 with SMTP id lk2so131963511wic.0
-        for <git@vger.kernel.org>; Mon, 21 Sep 2015 00:01:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        bh=Ts1NPx6b/8iZnwD2pop23U4IB4f126kwEeTCO83YwJ4=;
-        b=fJYgsDqjTricpNqb55a5erMfWURGm55joYCM3hI+sOUR9Ico7aKVjnT4mzkm0q13/9
-         JsJTiSxnDcF31K3XDiQRv0evUdJfpnISfor0hrkPnAHtGE8MkOeu2Xh4jNCundzIDexr
-         DJm68PmxsJdsQHRW6zDfOaV/U8aa0vt6LBgN0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:content-type:content-transfer-encoding;
-        bh=Ts1NPx6b/8iZnwD2pop23U4IB4f126kwEeTCO83YwJ4=;
-        b=fMhEkLqhNxGnNHsu7NTvr4AIHy5eYxCj8CC6G+vVkpIB53nbiPnwuMtaRHMwtN+EC5
-         X+wqQGq1mY9tzoIw33fujkhU3mZ8r4Gukzrh07wyMX+hw163TXvFduioVSBtLm24YmSF
-         NpnGeeiuBEVk6ke/Ep6YOIr3ubn6l3Zv9eyY01ND6dc5tL4lfyP3ET8tFP/4tYduVRHW
-         9qJiBWfmtNPxHkVJPVunCyKrGO+3loFpIKIZImkI0tmLbwv6tfjcIbZc/4Iy7O9A3FOp
-         +s49UMbvf1pKX7C/zXy5xCZ4Rt0DKLVVSla5FUQKMwWkiEVpfIBWD96+8CP7v/bEU46p
-         O1/Q==
-X-Gm-Message-State: ALoCoQkQ6jdgM3nsrHo+QLBwRaex4I2SPkcO107v83Z2dSudu/nmDntSnDI2G4DO2VrcAgSzE/DP
-X-Received: by 10.194.190.75 with SMTP id go11mr20428780wjc.80.1442818915748;
-        Mon, 21 Sep 2015 00:01:55 -0700 (PDT)
-Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
-        by smtp.gmail.com with ESMTPSA id o10sm11862712wia.4.2015.09.21.00.01.53
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 21 Sep 2015 00:01:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+	id S1756026AbbIUHbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2015 03:31:55 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:51216 "EHLO
+	out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752625AbbIUHby (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Sep 2015 03:31:54 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9F93620AB0
+	for <git@vger.kernel.org>; Mon, 21 Sep 2015 03:31:53 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute5.internal (MEProxy); Mon, 21 Sep 2015 03:31:53 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=XrAaBYUBVapc5naZkZJqqTpMXq4=; b=RRkJi5
+	EfTdk0wgxXd5lF+IPHkiYYuicVN13PAL3c7e8UPk2AdkFIEvXCznlXaEsGm0/i8Q
+	12VDkO1z5T7HxPSBJ8H2VESek4bBZfZpSXIn3Gp6mamHy/I3mjK0u+mA2EgEur4D
+	Gc4kFYt90fsxdBdqCP0M3MMzDLKDhMu/FE9rE=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=XrAaBYUBVapc5na
+	ZkZJqqTpMXq4=; b=Z009x7hxLgLahX+DEHWbeA9KaWh8DgEv0J/TYW90gWpi8TU
+	IJ2UnZ5JofNXtcm5WDoCdOBvbrIeVbUG0/IJP2XFN+1sCQ92y4y6jRm/uY+81b0o
+	mRlnQWElHiqcs5vvcJ3VK+dxtTwMKyy6EQFlIo4uQIRhWfPaDsNlJJtTM3VI=
+X-Sasl-enc: 09nzAJDoVswSdq5JF6InzYQfBpyv8h5ZVzjGlMsTVlaq 1442820713
+Received: from localhost.localdomain (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id CF80E68015E;
+	Mon, 21 Sep 2015 03:31:52 -0400 (EDT)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
+In-Reply-To: <vpqlhc3h7e7.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278281>
 
-Lars,
+Matthieu Moy venit, vidit, dixit 18.09.2015 21:09:
+> Stefan Beller <sbeller@google.com> writes:
+> 
+>> On Fri, Sep 18, 2015 at 10:23 AM, Matthieu Moy
+>> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>> Jacob Keller <jacob.keller@gmail.com> writes:
+>>>
+>>>> On Fri, Sep 18, 2015 at 9:59 AM, Matthieu Moy
+>>>> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>>>> I'm getting it even if there's a tag and/or a branch pointing to the
+>>>>> same commit.
+>>>>>
+>>>>> Any idea what's going on?
+>>>>
+>>>> Any chance you accidentally made a branch or tag named HEAD?
+>>>
+>>> Nice try ;-), but no:
+>>
+>> I was playing around with origin/master and origin/pu and
+>> I cannot reproduce this bug.
+> 
+> I investigated a bit more. The root of the problem is "git checkout
+> --detach" and the reflog. Here's a reproduction script:
+> 
+> 
+> rm -fr test-repo
+> git init test-repo
+> cd test-repo
+> echo foo>bar; git add bar; git commit -m "foo"
+> echo boz>bar; git add bar; git commit -m "boz"
+> git checkout --detach
+> git status
+> git branch
+> rm -fr .git/logs/
+> git status
+> git branch
+> 
+> The end of the output is:
+> 
+>   + git checkout --detach
+>   + git status
+>   HEAD detached at HEAD
+>   nothing to commit, working directory clean
+>   + git branch
+>   * (HEAD detached at HEAD)
+>     master
+>   + rm -fr .git/logs/
+>   + git status
+>   Not currently on any branch.
+>   nothing to commit, working directory clean
+>   + git branch
+>   * (no branch)
+>     master
+> 
+> If one replaces "git checkout --detach" with "git checkout HEAD^0", then
+> the output is the one I expected:
+> 
+>   HEAD detached at cb39b20
+> 
+> The guilty line in the reflog is:
+> 
+>   checkout: moving from master to HEAD
+> 
+> One possible fix is to resolve HEAD when encountering it in the reflog,
+> like this:
+> 
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1319,6 +1319,13 @@ static int grab_1st_switch(unsigned char *osha1, unsigned char *nsha1,
+>         hashcpy(cb->nsha1, nsha1);
+>         for (end = target; *end && *end != '\n'; end++)
+>                 ;
+> +       if (!memcmp(target, "HEAD", end - target)) {
+> +               /* Don't say "HEAD detached at HEAD" */
+> +               unsigned char head[GIT_SHA1_RAWSZ];
+> +               get_sha1("HEAD", head);
+> +               strbuf_addstr(&cb->buf, find_unique_abbrev(head, DEFAULT_ABBREV));
+> +               return 1;
+> +       }
+>         strbuf_add(&cb->buf, target, end - target);
+>         return 1;
+>  }
+> 
+> What do you think?
+> 
+> Shall I turn this into a proper patch?
+> 
+> Thanks,
+> 
 
-When I run t9822-git-p4-path-encoding.sh, the last test fails (it's 
-supposed to pass) with the following backtrace.
+Thanks for finding the root cause.
 
-This is with 'next' at 3dd15c02a81a280c83c8d5e32c6cb71a64177ca6.
+I think, though, that the reflog is wrong:
 
-Any ideas as to what I'm doing wrong?
+"git checkout --detach" should be equivalent to "git checkout HEAD^0",
+shouldn't it? It becomes clearer with branches:
 
-Thanks,
-Luke
+git co --detach master
+git reflog
+3b9153c HEAD@{0}: checkout: moving from master to master
 
+I think that information ("moving ... to master") is misleading at best,
+if not wrong (depending on how you read the reflog). In any case you
+cannot distinguish a regular branch checkout (i.e. branch switching)
+from a "--detach" checkout in the reflog, which is bad.
 
-Reinitialized existing Git repository in /home/lgd/git/git/t/trash 
-directory.t9822-git-p4-path-encoding/git/.git/
-Importing from //depot into /home/lgd/git/git/t/trash 
-directory.t9822-git-p4-path-encoding/git
-Reinitialized existing Git repository in /home/lgd/git/git/t/trash 
-directory.t9822-git-p4-path-encoding/git/.git/
-Doing initial import of //depot/ from revision #head into 
-refs/remotes/p4/master
-fast-import failed: warning: Not updating refs/remotes/p4/master (new 
-tip 66187e3e728015e083d9a4779d3c76cb8f30f835 does not contain 
-1427162f1aaf3fa13dbbecabcab525605bdd0ab8)
-git-fast-import statistics:
----------------------------------------------------------------------
-Alloc'd objects:       5000
-Total objects:            3 (         0 duplicates                  )
-       blobs  :            1 (         0 duplicates          0 deltas of 
-          0 attempts)
-       trees  :            1 (         0 duplicates          0 deltas of 
-          1 attempts)
-       commits:            1 (         0 duplicates          0 deltas of 
-          0 attempts)
-       tags   :            0 (         0 duplicates          0 deltas of 
-          0 attempts)
-Total branches:           1 (         1 loads     )
-       marks:           1024 (         1 unique    )
-       atoms:              1
-Memory total:          2344 KiB
-        pools:          2110 KiB
-      objects:           234 KiB
----------------------------------------------------------------------
-pack_report: getpagesize()            =       4096
-pack_report: core.packedGitWindowSize = 1073741824
-pack_report: core.packedGitLimit      = 8589934592
-pack_report: pack_used_ctr            =          4
-pack_report: pack_mmap_calls          =          2
-pack_report: pack_open_windows        =          2 /          2
-pack_report: pack_mapped              =        517 /        517
----------------------------------------------------------------------
+The same happens when you "git checkout origin/next" and you get
+--detach kicking in automatically. It looks like a regular branch checkout.
 
-not ok 4 - Clone repo containing iso8859-1 encoded paths with 
-git-p4.pathEncoding
+So, maybe we should really fix the reflog, e.g. by amending the
+information there?
+
+status/branch figure out that they're in the detached case even without
+the help from reflog, and your patch is correct as long as we don't
+commit on top of the fork point. But as soon as we do that, resolving
+"HEAD" will not give you the fork point, and the output of "detached
+from..." will be incorrect (based on my reading of the patch and my
+memory of the workings, no compile test yet, sorry).
+
+Michael
