@@ -1,279 +1,68 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v3 2/2] dir.c: don't exclude whole dir prematurely if neg pattern may match
-Date: Mon, 21 Sep 2015 16:56:15 +0700
-Message-ID: <1442829375-1926-3-git-send-email-pclouds@gmail.com>
-References: <1442106945-24080-1-git-send-email-pclouds@gmail.com>
- <1442829375-1926-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+From: larsxschneider@gmail.com
+Subject: [PATCH v4 0/2] git-p4: handle "Translation of file content failed"
+Date: Mon, 21 Sep 2015 12:01:39 +0200
+Message-ID: <1442829701-2347-1-git-send-email-larsxschneider@gmail.com>
+Cc: luke@diamand.org, sunshine@sunshineco.com, tboegi@web.de,
+	Lars Schneider <larsxschneider@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 21 11:56:22 2015
+X-From: git-owner@vger.kernel.org Mon Sep 21 12:01:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zdxpa-0005oJ-Kk
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 11:56:19 +0200
+	id 1Zdxuv-0004K3-9O
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 12:01:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756457AbbIUJ4I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Sep 2015 05:56:08 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:36538 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755753AbbIUJ4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2015 05:56:07 -0400
-Received: by padbj2 with SMTP id bj2so3023236pad.3
-        for <git@vger.kernel.org>; Mon, 21 Sep 2015 02:56:06 -0700 (PDT)
+	id S1753052AbbIUKBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2015 06:01:45 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:38623 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752839AbbIUKBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2015 06:01:44 -0400
+Received: by wiclk2 with SMTP id lk2so103761926wic.1
+        for <git@vger.kernel.org>; Mon, 21 Sep 2015 03:01:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=cJvp4BKieDlzQmWhjVNkOt7+uos3yRLTYNv9DFo1oKg=;
-        b=ox6g5QS5wXkJ4cOZwJqpz7dUIWOzNi3Tehe55iCjPDtWNHpRP7pUvUBX2OT+5GUgQX
-         AUCeW3I+BHy8/eMGggRVWCBVmn06eqdc1Ivv7jTSonS82er0cC3Lf7lvCI0qmSILjSZ2
-         xDLI32AIhRJjmTarcpkcPVDhw3gNP0XO5KUXAI/3Q0d2yTv4DjjuNFoi2WD0wYbznS3D
-         LaX30Oc/Bp1EpUmIfnYTi67r59K4jIf2JvkSak06DcZcLHyZendsyvnxpgIm/UKgKlf6
-         g+psX5NNhjSSelOD5My5/NUEYev4X8PPkz7rV8nHtT7KKse7jsVXygyWUaV8PLYKrYeW
-         eOYA==
-X-Received: by 10.68.57.238 with SMTP id l14mr23952974pbq.150.1442829366799;
-        Mon, 21 Sep 2015 02:56:06 -0700 (PDT)
-Received: from lanh ([171.233.227.16])
-        by smtp.gmail.com with ESMTPSA id qn5sm18620926pbc.74.2015.09.21.02.56.03
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Sep 2015 02:56:06 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 21 Sep 2015 16:56:35 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <1442829375-1926-1-git-send-email-pclouds@gmail.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=V5enkPv6rCzacFqeO20Qm+LJfywQWADPhoq+OxDX11w=;
+        b=lPdebb8QPxkulwGJaDYzvAUHdJU/G3pyXCw9p828XBMRGcQBxri0y+JJ2COEjDre6r
+         DdjqnjcVKOuxqf0aAvPOotExPZJJFZwiLd5eyOPBxQK91TRH6vT36GuqfPCdY53ewUF4
+         z/fRvOSGyT2s2Fh+V21QpWZFNfHNxq9QpwyQ0fNqtAOdqwDH9boM0f9uZJzrd4XTKe1h
+         3pGivjXZ3PdDP7+wilTiyHfbC68Or6gB0ACmLsmnmdGb0RGyhXxwmZgW6GISKU8sSIkO
+         6zrk0cQy5ABgNggpUR0VOZ53MXgCAU3ANLZKkFb/+aUDxgiugKWXCyR2Mh0/IoAyg7DI
+         Is+Q==
+X-Received: by 10.194.2.243 with SMTP id 19mr15096457wjx.140.1442829703306;
+        Mon, 21 Sep 2015 03:01:43 -0700 (PDT)
+Received: from slxBook3.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id kb9sm23192082wjb.49.2015.09.21.03.01.42
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 21 Sep 2015 03:01:42 -0700 (PDT)
+X-Mailer: git-send-email 2.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278295>
 
-If there is a pattern "!foo/bar", this patch makes it not exclude "foo"
-right away. This gives us a chance to examine "foo" and re-include
-"foo/bar".
+From: Lars Schneider <larsxschneider@gmail.com>
 
-In order for it to detect that the directory under examination should
-not be excluded right away, in other words it is a parent directory of =
-a
-negative pattern, the "directory path" of the negative pattern must be
-literal. Patterns like "!f?o/bar" can't stop "foo" from being excluded.
+diff to v3:
+* replace non portable "sed -i" call in test case (thanks Luke and Torsten!)
+* use "test_expect_failure" in the first commit that adds the test case, flip it to "test_expect_success" in subsequent commit (thanks Eric and Luke!)
+* rename test case from t9824... to t9825... to avoid clashes with "git-p4: add Git LFS backend for large file system" patch
 
-Basename matching (i.e. "no slashes in the pattern") or must-be-dir
-matching (i.e. "trailing slash in the pattern") does not work well with
-this. For example, if we descend in "foo" and are examining "foo/abc",
-current code for "foo/" pattern will check if path "foo/abc", not "foo"=
-,
-is a directory. The same problem with basename matching. These may need
-big code reorg to make it work.
+Cheers,
+Lars
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/gitignore.txt        | 23 ++++++++++--
- dir.c                              | 76 ++++++++++++++++++++++++++++++=
-+++++++-
- t/t3001-ls-files-others-exclude.sh | 25 +++++++++++++
- 3 files changed, 118 insertions(+), 6 deletions(-)
+Lars Schneider (2):
+  git-p4: add test case for "Translation of file content failed" error
+  git-p4: handle "Translation of file content failed"
 
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 473623d..79a1948 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -82,12 +82,12 @@ PATTERN FORMAT
-=20
-  - An optional prefix "`!`" which negates the pattern; any
-    matching file excluded by a previous pattern will become
--   included again. It is not possible to re-include a file if a parent
--   directory of that file is excluded. Git doesn't list excluded
--   directories for performance reasons, so any patterns on contained
--   files have no effect, no matter where they are defined.
-+   included again.
-    Put a backslash ("`\`") in front of the first "`!`" for patterns
-    that begin with a literal "`!`", for example, "`\!important!.txt`".
-+   It is possible to re-include a file if a parent directory of that
-+   file is excluded if certain conditions are met. See section NOTES
-+   for detail.
-=20
-  - If the pattern ends with a slash, it is removed for the
-    purpose of the following description, but it would only find
-@@ -141,6 +141,21 @@ not tracked by Git remain untracked.
- To stop tracking a file that is currently tracked, use
- 'git rm --cached'.
-=20
-+To re-include files or directories when their parent directory is
-+excluded, the following conditions must be met:
-+
-+ - The rules to exclude a directory and re-include a subset back must
-+   be in the same .gitignore file.
-+
-+ - The directory part in the re-include rules must be literal (i.e. no
-+   wildcards)
-+
-+ - The rules to exclude the parent directory must not end with a
-+   trailing slash.
-+
-+ - The rules to exclude the parent directory must have at least one
-+   slash.
-+
- EXAMPLES
- --------
-=20
-diff --git a/dir.c b/dir.c
-index 3a7630a..a1f711c 100644
---- a/dir.c
-+++ b/dir.c
-@@ -882,6 +882,25 @@ int match_pathname(const char *pathname, int pathl=
-en,
- 		 */
- 		if (!patternlen && !namelen)
- 			return 1;
-+		/*
-+		 * This can happen when we ignore some exclude rules
-+		 * on directories in other to see if negative rules
-+		 * may match. E.g.
-+		 *
-+		 * /abc
-+		 * !/abc/def/ghi
-+		 *
-+		 * The pattern of interest is "/abc". On the first
-+		 * try, we should match path "abc" with this pattern
-+		 * in the "if" statement right above, but the caller
-+		 * ignores it.
-+		 *
-+		 * On the second try with paths within "abc",
-+		 * e.g. "abc/xyz", we come here and try to match it
-+		 * with "/abc".
-+		 */
-+		if (!patternlen && namelen && *name =3D=3D '/')
-+			return 1;
- 	}
-=20
- 	return fnmatch_icase_mem(pattern, patternlen,
-@@ -890,6 +909,48 @@ int match_pathname(const char *pathname, int pathl=
-en,
- }
-=20
- /*
-+ * Return non-zero if pathname is a directory and an ancestor of the
-+ * literal path in a (negative) pattern. This is used to keep
-+ * descending in "foo" and "foo/bar" when the pattern is
-+ * "!foo/bar/.gitignore". "foo/notbar" will not be descended however.
-+ */
-+static int match_neg_path(const char *pathname, int pathlen, int *dtyp=
-e,
-+			  const char *base, int baselen,
-+			  const char *pattern, int prefix, int patternlen,
-+			  int flags)
-+{
-+	assert((flags & EXC_FLAG_NEGATIVE) && !(flags & EXC_FLAG_NODIR));
-+
-+	if (*dtype =3D=3D DT_UNKNOWN)
-+		*dtype =3D get_dtype(NULL, pathname, pathlen);
-+	if (*dtype !=3D DT_DIR)
-+		return 0;
-+
-+	if (*pattern =3D=3D '/') {
-+		pattern++;
-+		patternlen--;
-+		prefix--;
-+	}
-+
-+	if (baselen) {
-+		if (((pathlen < baselen && base[pathlen] =3D=3D '/') ||
-+		     pathlen =3D=3D baselen) &&
-+		    !strncmp_icase(pathname, base, pathlen))
-+			return 1;
-+		pathname +=3D baselen + 1;
-+		pathlen  -=3D baselen + 1;
-+	}
-+
-+
-+	if (prefix &&
-+	    ((pathlen < prefix && pattern[pathlen] =3D=3D '/') &&
-+	     !strncmp_icase(pathname, pattern, pathlen)))
-+		return 1;
-+
-+	return 0;
-+}
-+
-+/*
-  * Scan the given exclude list in reverse to see whether pathname
-  * should be ignored.  The first match (i.e. the last on the list), if
-  * any, determines the fate.  Returns the exclude_list element which
-@@ -902,7 +963,7 @@ static struct exclude *last_exclude_matching_from_l=
-ist(const char *pathname,
- 						       struct exclude_list *el)
- {
- 	struct exclude *exc =3D NULL; /* undecided */
--	int i;
-+	int i, matched_negative_path =3D 0;
-=20
- 	if (!el->nr)
- 		return NULL;	/* undefined */
-@@ -937,7 +998,18 @@ static struct exclude *last_exclude_matching_from_=
-list(const char *pathname,
- 			exc =3D x;
- 			break;
- 		}
--	}
-+
-+		if ((x->flags & EXC_FLAG_NEGATIVE) && !matched_negative_path &&
-+		    match_neg_path(pathname, pathlen, dtype, x->base,
-+				   x->baselen ? x->baselen - 1 : 0,
-+				   exclude, prefix, x->patternlen, x->flags))
-+			matched_negative_path =3D 1;
-+	}
-+	if (exc &&
-+	    !(exc->flags & EXC_FLAG_NEGATIVE) &&
-+	    !(exc->flags & EXC_FLAG_NODIR) &&
-+	    matched_negative_path)
-+		exc =3D NULL;
- 	return exc;
- }
-=20
-diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-othe=
-rs-exclude.sh
-index 3fc484e..da257c0 100755
---- a/t/t3001-ls-files-others-exclude.sh
-+++ b/t/t3001-ls-files-others-exclude.sh
-@@ -305,4 +305,29 @@ test_expect_success 'ls-files with "**" patterns a=
-nd no slashes' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'negative patterns' '
-+	git init reinclude &&
-+	(
-+		cd reinclude &&
-+		cat >.gitignore <<-\EOF &&
-+		/fooo
-+		/foo
-+		!foo/bar/bar
-+		EOF
-+		mkdir fooo &&
-+		cat >fooo/.gitignore <<-\EOF &&
-+		!/*
-+		EOF
-+		mkdir -p foo/bar &&
-+		touch abc foo/def foo/bar/ghi foo/bar/bar &&
-+		git ls-files -o --exclude-standard >../actual &&
-+		cat >../expected <<-\EOF &&
-+		.gitignore
-+		abc
-+		foo/bar/bar
-+		EOF
-+		test_cmp ../expected ../actual
-+	)
-+'
-+
- test_done
---=20
-2.3.0.rc1.137.g477eb31
+ git-p4.py                                  | 27 +++++++++-------
+ t/t9825-git-p4-handle-utf16-without-bom.sh | 50 ++++++++++++++++++++++++++++++
+ 2 files changed, 66 insertions(+), 11 deletions(-)
+ create mode 100755 t/t9825-git-p4-handle-utf16-without-bom.sh
+
+--
+2.5.1
