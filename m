@@ -1,89 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [BUG?] HEAD detached at HEAD
-Date: Mon, 21 Sep 2015 09:42:40 +0200
-Message-ID: <vpqk2rkcj67.fsf@anie.imag.fr>
-References: <vpqk2rnirz0.fsf@anie.imag.fr>
-	<CA+P7+xoeXiZd=WU460Xfjthe0U5BnAV69_KNKW39p10ZGLHx7g@mail.gmail.com>
-	<vpqeghviqu1.fsf@anie.imag.fr>
-	<CAGZ79kZxAwMvv6UoZLBd2wTOdj1DFWKQqSPBYL449KSokA8DQQ@mail.gmail.com>
-	<vpqlhc3h7e7.fsf@anie.imag.fr> <55FFB267.3040106@drmicha.warpmail.net>
-	<55FFB43B.5080002@drmicha.warpmail.net>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v3 1/2] git-p4: add test case for "Translation of file
+ content failed" error
+Date: Mon, 21 Sep 2015 08:47:32 +0100
+Message-ID: <55FFB614.7000908@diamand.org>
+References: <1442766131-45017-1-git-send-email-larsxschneider@gmail.com>	<1442766131-45017-2-git-send-email-larsxschneider@gmail.com>	<CAPig+cThcNa2Xg6GDkNKKeOMOzApTi_FQfQz_KRAbF8-PWY5Eg@mail.gmail.com>	<4DB8A17D-A670-4E84-8FA8-9B05F2DCE1CB@gmail.com> <CAPig+cSFbYzLi8daS55B_sdvDPW4q6yOC5Hm75+Rmr-s1aFRHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	git <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Sep 21 09:42:56 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: Eric Sunshine <sunshine@sunshineco.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 21 09:47:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZdvkV-0000VJ-S5
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 09:42:56 +0200
+	id 1ZdvpG-00079S-OI
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 09:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756075AbbIUHmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2015 03:42:52 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:33957 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756009AbbIUHmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2015 03:42:51 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t8L7gduY016418
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 21 Sep 2015 09:42:39 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8L7gevr016787;
-	Mon, 21 Sep 2015 09:42:40 +0200
-In-Reply-To: <55FFB43B.5080002@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Mon, 21 Sep 2015 09:39:39 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 21 Sep 2015 09:42:40 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t8L7gduY016418
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1443426164.67317@jBuhbxeDz8SBQPwEnDSP0A
+	id S1755991AbbIUHrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2015 03:47:36 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:35596 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755863AbbIUHre (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2015 03:47:34 -0400
+Received: by wicge5 with SMTP id ge5so103305891wic.0
+        for <git@vger.kernel.org>; Mon, 21 Sep 2015 00:47:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=COrbmYWwFWsDLS3xNnfRYIZUOWFMLYIx77cV1o+guKk=;
+        b=ZaBXSOrjKXriGdhEaMaOT9QZIiNXGupSXYuCFA5+jpopkufRVSfTwfnbEvTDpWs7xc
+         5yxs1L2K8ECXHPNqinqf4W5Hngawz51ecGLP+iydJ0v2MZ599BDDZPa8VXOm32aZUSRV
+         YElq3OWa5wtvXbCV27odlMgbRm68rt6MqPcFY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=COrbmYWwFWsDLS3xNnfRYIZUOWFMLYIx77cV1o+guKk=;
+        b=macPHs/81byuovUPWd/d885fA45RPIRz/M7FoLN7o3VeXMUN9KWGS8hLVS7zru0IcH
+         jlz22VuYOnjjelZB4k2FtWEg6DgDJXDkF04LYnX0QN5GEpu+VEL2MQEK3qkYgFgNbyn2
+         /SbecFGrYFqzCyAxGGj1Ly36fajtUSifA9aySFFfcMi9IBTIdgvQSmnPtPJlYv9fzL5F
+         tHV2WeH+ffOHxkzw0iaexj/orum2kgpURnXZmAW15W11euZm6OPVkyx/XiPqGCK00//A
+         UwLOyyQz4zoEQSzcVcfvoQAFd9+aWf44ZVkhH/AHKn3ASE1LA0h9hNdBxhf2bNDTsG3j
+         Cbmg==
+X-Gm-Message-State: ALoCoQn377uNwnL07TdqJbAAuAqukgxnP3UJfWoFeOrBJvIgNUg+u2btUfJ6gkaNPr8okQgJVwRT
+X-Received: by 10.180.12.241 with SMTP id b17mr12819632wic.55.1442821653229;
+        Mon, 21 Sep 2015 00:47:33 -0700 (PDT)
+Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
+        by smtp.gmail.com with ESMTPSA id ja14sm1135903wic.7.2015.09.21.00.47.32
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Sep 2015 00:47:32 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <CAPig+cSFbYzLi8daS55B_sdvDPW4q6yOC5Hm75+Rmr-s1aFRHw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278284>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
-
-> ... in addition to my previous reply, looking at more context:
+On 20/09/15 23:29, Eric Sunshine wrote:
+> On Sun, Sep 20, 2015 at 5:34 PM, Lars Schneider
+> <larsxschneider@gmail.com> wrote:
 >
->>> --- a/wt-status.c
->>> +++ b/wt-status.c
->>> @@ -1319,6 +1319,13 @@ static int grab_1st_switch(unsigned char *osha1, unsigned char *nsha1,
->>>         hashcpy(cb->nsha1, nsha1);
->>>         for (end = target; *end && *end != '\n'; end++)
->>>                 ;
->>> +       if (!memcmp(target, "HEAD", end - target)) {
->>> +               /* Don't say "HEAD detached at HEAD" */
->>> +               unsigned char head[GIT_SHA1_RAWSZ];
->>> +               get_sha1("HEAD", head);
->>> +               strbuf_addstr(&cb->buf, find_unique_abbrev(head, DEFAULT_ABBREV));
->>> +               return 1;
->>> +       }
->>>         strbuf_add(&cb->buf, target, end - target);
->>>         return 1;
->>>  }
->>>
->>> What do you think?
+>> What is the preferred way by the Git community? Combine patch and
+>> test in one commit or a patch commit followed by a test commit? I
+>> would prefer to have everything in one commit.
 >
-> I think we should return (the hex repr. of) nsha1 instead of resolving
-> HEAD at its current state. That should solve the present problem (and
-> leave the more difficult reflog issue for the future).
+> If the tests are in a separate patch, Junio seems to prefer adding
+> them after the problem is fixes; the idea being that tests are added
+> to ensure that some future change doesn't break the feature, as
+> opposed to showing that your patch fixes a bug.
+>
+> Whether or not to combine the fix with the new tests often depends
+> upon the length of the patches and how easy or hard it is to review
+> them. In this case, the fix itself is fairly short, but the tests are
+> slightly lengthy, so there may not be a clear cut answer. As a
+> reviewer, I tend to prefer smaller patches, however, this situation
+> doesn't demand it, so use your best judgment.
 
-Indeed, resolving HEAD to its current state is wrong. I'll submit a
-proper patch soon.
+I think in the past we have a test added that demonstrates the problem, 
+with "test_expect_failure", followed by the fix, which also flips the 
+test to "test_expect_success".
 
-Thanks,
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Luke
