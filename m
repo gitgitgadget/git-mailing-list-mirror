@@ -1,76 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: default remote branch
-Date: Mon, 21 Sep 2015 10:16:49 -0700
-Message-ID: <xmqqd1xbbsla.fsf@gitster.mtv.corp.google.com>
-References: <CAByu6UUxsWu5RVar=8uKJw3kZpxjawqbwABgNREjJ3g3mGDwVA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 56/67] avoid sprintf and strcpy with flex arrays
+Date: Mon, 21 Sep 2015 13:19:18 -0400
+Message-ID: <20150921171918.GA29964@sigill.intra.peff.net>
+References: <20150915152125.GA27504@sigill.intra.peff.net>
+ <20150915160956.GD29753@sigill.intra.peff.net>
+ <CAPig+cSL3W58TSYEAFz3twvxt_brB=kY=LEwX6m5RhBsg6VV6g@mail.gmail.com>
+ <20150921151521.GA25286@sigill.intra.peff.net>
+ <CAPig+cQwGHNPUG2MB2v5XXTQ+RP5L5J_EU4=nawzLjCN89s1ZQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Thibault Kruse <tibokruse@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 21 19:16:59 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Sep 21 19:19:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ze4i0-0005dc-3v
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 19:16:56 +0200
+	id 1Ze4kY-0000Yp-8v
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 19:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932867AbbIURQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2015 13:16:52 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35389 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751903AbbIURQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2015 13:16:51 -0400
-Received: by pacfv12 with SMTP id fv12so124335720pac.2
-        for <git@vger.kernel.org>; Mon, 21 Sep 2015 10:16:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=nV3eDyJKJB7BSo/ljKT4TyiCQI7mvIFqgtemqhiG96Y=;
-        b=gyFgYB64C3FhPnq5js/UJcuIa7lce8XUGtTkuI+9vKlRmO7b4NfdK6PFUu2BdH/Gv3
-         b1t1WXf0bnsoHRV+mgmVYP7lUYWn2XbzFA+F9bQNHpSoLAMRrEPOxcgyMGyq8SsaKyoA
-         hN3Sk6NabpJizzeHqjPhdLw+SvJIb3cuo/nkTsD+rUR1lsrNN21ChUZewvz8yVDnYAS+
-         iPKx9Of89pPJrukD0dfmKp+xItahWBqvaXAqYkwaCFPKaxRIWvi70WjA7RS6xvcjeBQf
-         vkaroLF6u7SNa+bEvZoMdj6+29V+gRyQ9BvrVDwFrzneHSwUd4373wCVsVe/VGIkdtij
-         uRXQ==
-X-Received: by 10.66.186.141 with SMTP id fk13mr25609339pac.7.1442855810869;
-        Mon, 21 Sep 2015 10:16:50 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:89f8:25c:a9fe:f701])
-        by smtp.gmail.com with ESMTPSA id yq2sm25539286pbb.39.2015.09.21.10.16.49
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Mon, 21 Sep 2015 10:16:50 -0700 (PDT)
-In-Reply-To: <CAByu6UUxsWu5RVar=8uKJw3kZpxjawqbwABgNREjJ3g3mGDwVA@mail.gmail.com>
-	(Thibault Kruse's message of "Fri, 18 Sep 2015 11:50:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1757116AbbIURTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2015 13:19:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34008 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757064AbbIURTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2015 13:19:21 -0400
+Received: (qmail 23698 invoked by uid 102); 21 Sep 2015 17:19:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Sep 2015 12:19:20 -0500
+Received: (qmail 28657 invoked by uid 107); 21 Sep 2015 17:19:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 21 Sep 2015 13:19:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Sep 2015 13:19:18 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQwGHNPUG2MB2v5XXTQ+RP5L5J_EU4=nawzLjCN89s1ZQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278315>
 
-Thibault Kruse <tibokruse@googlemail.com> writes:
+On Mon, Sep 21, 2015 at 01:11:09PM -0400, Eric Sunshine wrote:
 
-> Also, I tried finding out whether I can use the
-> .git/refs/remotes/<remote>/HEAD to check the default branch without
-> accessing the remote. However, I find this file is not updated with a
-> git fetch, nor created when missing.
+> >> > -       p = xcalloc(1, sizeof(*p) + strlen(tmp_file) + 2);
+> >> > -       strcpy(p->pack_name, tmp_file);
+> >> > +       namelen = strlen(tmp_file) + 2;
+> >>
+> >> You mentioned this specially in the commit message, but from a brief
+> >> read of the code, it's still not obvious (to me) why this is +2 rather
+> >> than +1. Since you're touching the code anyhow, perhaps add an in-code
+> >> comment explaining it?
+> >
+> > To be honest, I'm not sure what's going on with the "+ 2" here.
+> >
+> > In many cases with packed_git we allocate with "foo.idx" and want to be
+> > able to later write "foo.pack" into the same buffer. But here we are
+> > putting in a tmpfile name. This comes from 8455e48, but I don't see any
+> > clue there. I wonder if the "+2" was simply cargo-culted from other
+> > instances.
+> 
+> Ah, ok. I guess I misunderstood the commit message to mean or imply
+> that the +2 was correct and sensible and well-understood.
 
-That is more or less deliberate.  Which one of the branches to
-consider the primary one becomes a local decision after you clone.
-If that was a good choice may be debatable, but that is how existing
-users expect things to work.
+I think it was more that I looked at other instances of packed_git, and
+realized they could not be safely converted. I think "struct
+alternate_object_database" has similar problems.
 
-> So is there a sane way to get the last know default branch without
-> accessing the remote?
+-Peff
 
-"The last known" is not updated, due to "where remotes/origin/HEAD
-points at is a local matter" design; there is nothing that locally
-stores the information you are asking for, so there is no offline
-way to answer that question.
+PS As I mentioned earlier, I did end up adding a FLEX_ALLOC() macro in
+   another series that builds on top of this. I haven't posted it yet,
+   but check out:
 
-An early part of the protocol exchange "git clone" does carry that
-information, but I do not think there is a command to ask that to
-the remote.  A logical place to add it would be a new option to "git
-ls-remote", I would think.
+     https://github.com/peff/git/commit/ba491c527572c763286b4b9519aef3c30482c2d1
+
+   and
+
+     https://github.com/peff/git/commit/d88444d5ba00bd875ef5291dca3b71dd046186dc
+
+   if you are curious.
