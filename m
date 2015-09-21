@@ -1,90 +1,151 @@
 From: Luke Diamand <luke@diamand.org>
 Subject: Re: [PATCH v3 1/2] git-p4: add test case for "Translation of file
  content failed" error
-Date: Mon, 21 Sep 2015 08:47:32 +0100
-Message-ID: <55FFB614.7000908@diamand.org>
-References: <1442766131-45017-1-git-send-email-larsxschneider@gmail.com>	<1442766131-45017-2-git-send-email-larsxschneider@gmail.com>	<CAPig+cThcNa2Xg6GDkNKKeOMOzApTi_FQfQz_KRAbF8-PWY5Eg@mail.gmail.com>	<4DB8A17D-A670-4E84-8FA8-9B05F2DCE1CB@gmail.com> <CAPig+cSFbYzLi8daS55B_sdvDPW4q6yOC5Hm75+Rmr-s1aFRHw@mail.gmail.com>
+Date: Mon, 21 Sep 2015 08:49:21 +0100
+Message-ID: <55FFB681.50500@diamand.org>
+References: <1442766131-45017-1-git-send-email-larsxschneider@gmail.com> <1442766131-45017-2-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-To: Eric Sunshine <sunshine@sunshineco.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 21 09:47:51 2015
+Cc: tboegi@web.de
+To: larsxschneider@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 21 09:49:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZdvpG-00079S-OI
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 09:47:51 +0200
+	id 1Zdvqp-0001D5-6M
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Sep 2015 09:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755991AbbIUHrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2015 03:47:36 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:35596 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755863AbbIUHre (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2015 03:47:34 -0400
-Received: by wicge5 with SMTP id ge5so103305891wic.0
-        for <git@vger.kernel.org>; Mon, 21 Sep 2015 00:47:33 -0700 (PDT)
+	id S1755276AbbIUHtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2015 03:49:23 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:34959 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753475AbbIUHtW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2015 03:49:22 -0400
+Received: by wicge5 with SMTP id ge5so103368391wic.0
+        for <git@vger.kernel.org>; Mon, 21 Sep 2015 00:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=diamand.org; s=google;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=COrbmYWwFWsDLS3xNnfRYIZUOWFMLYIx77cV1o+guKk=;
-        b=ZaBXSOrjKXriGdhEaMaOT9QZIiNXGupSXYuCFA5+jpopkufRVSfTwfnbEvTDpWs7xc
-         5yxs1L2K8ECXHPNqinqf4W5Hngawz51ecGLP+iydJ0v2MZ599BDDZPa8VXOm32aZUSRV
-         YElq3OWa5wtvXbCV27odlMgbRm68rt6MqPcFY=
+        bh=xTyRinCCuWav0zDtF7+T8XuXwGzjcCo2gH9+RqpwQAU=;
+        b=MzbW/fLuVoDpBbAbNKHD/LJcUXshz331h3AC7j9HZMioV82h1uLKmJdfevM+SeO4Hc
+         aMZCjgNZp5Rk2cE0mgtT2YbvxGKf+abAtZwq8IFcQtSMWDHUkljsDKekSq7ytRpaJnEO
+         CmkHNLW86PrCiME2jXx9kwosPXtcsgVu8CVT4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
          :cc:subject:references:in-reply-to:content-type
          :content-transfer-encoding;
-        bh=COrbmYWwFWsDLS3xNnfRYIZUOWFMLYIx77cV1o+guKk=;
-        b=macPHs/81byuovUPWd/d885fA45RPIRz/M7FoLN7o3VeXMUN9KWGS8hLVS7zru0IcH
-         jlz22VuYOnjjelZB4k2FtWEg6DgDJXDkF04LYnX0QN5GEpu+VEL2MQEK3qkYgFgNbyn2
-         /SbecFGrYFqzCyAxGGj1Ly36fajtUSifA9aySFFfcMi9IBTIdgvQSmnPtPJlYv9fzL5F
-         tHV2WeH+ffOHxkzw0iaexj/orum2kgpURnXZmAW15W11euZm6OPVkyx/XiPqGCK00//A
-         UwLOyyQz4zoEQSzcVcfvoQAFd9+aWf44ZVkhH/AHKn3ASE1LA0h9hNdBxhf2bNDTsG3j
-         Cbmg==
-X-Gm-Message-State: ALoCoQn377uNwnL07TdqJbAAuAqukgxnP3UJfWoFeOrBJvIgNUg+u2btUfJ6gkaNPr8okQgJVwRT
-X-Received: by 10.180.12.241 with SMTP id b17mr12819632wic.55.1442821653229;
-        Mon, 21 Sep 2015 00:47:33 -0700 (PDT)
+        bh=xTyRinCCuWav0zDtF7+T8XuXwGzjcCo2gH9+RqpwQAU=;
+        b=gK/G65CigZipVYdnunwGNwgnhGX3fR5BQPgTU5rtJysHhr1o5TxKflsJXciaM+FNDz
+         GRIG/2EjF0ILXE+9kcuKOQkrA4t3/iV7H63Ah8FolDMkZ46LK2IprKJNcx/AnqGyjfWu
+         /+WEzW6PwtP0QWzMds7u0//77JyncmZdqegg+AI3lW8qF7kPPIPNDuCLD3IsANAlH93h
+         TGovNfUOd/oCHYv3BvNo+U8yu/iCiI0FUELnwKMF8hbDLlmBW1XGUV8AhQEnJrIEz+tF
+         1HNCtxOKFjO3SnzoibJE4RwjFdPItUSY5JbBdX4t/IEpSATyz7PmJM/p2xOWeAhiBCDI
+         dPhw==
+X-Gm-Message-State: ALoCoQnJrgbI9vi+t+T9ixAcv63QEQw8JyXLG2qLKpvwJ5FRIWbmQ2XtkBvW02UF0MTJsIoQu6iR
+X-Received: by 10.194.175.104 with SMTP id bz8mr21409610wjc.42.1442821761281;
+        Mon, 21 Sep 2015 00:49:21 -0700 (PDT)
 Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
-        by smtp.gmail.com with ESMTPSA id ja14sm1135903wic.7.2015.09.21.00.47.32
+        by smtp.gmail.com with ESMTPSA id lh3sm22626100wjc.44.2015.09.21.00.49.20
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Sep 2015 00:47:32 -0700 (PDT)
+        Mon, 21 Sep 2015 00:49:20 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <CAPig+cSFbYzLi8daS55B_sdvDPW4q6yOC5Hm75+Rmr-s1aFRHw@mail.gmail.com>
+In-Reply-To: <1442766131-45017-2-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278285>
 
-On 20/09/15 23:29, Eric Sunshine wrote:
-> On Sun, Sep 20, 2015 at 5:34 PM, Lars Schneider
-> <larsxschneider@gmail.com> wrote:
->
->> What is the preferred way by the Git community? Combine patch and
->> test in one commit or a patch commit followed by a test commit? I
->> would prefer to have everything in one commit.
->
-> If the tests are in a separate patch, Junio seems to prefer adding
-> them after the problem is fixes; the idea being that tests are added
-> to ensure that some future change doesn't break the feature, as
-> opposed to showing that your patch fixes a bug.
->
-> Whether or not to combine the fix with the new tests often depends
-> upon the length of the patches and how easy or hard it is to review
-> them. In this case, the fix itself is fairly short, but the tests are
-> slightly lengthy, so there may not be a clear cut answer. As a
-> reviewer, I tend to prefer smaller patches, however, this situation
-> doesn't demand it, so use your best judgment.
+On 20/09/15 17:22, larsxschneider@gmail.com wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
 
-I think in the past we have a test added that demonstrates the problem, 
-with "test_expect_failure", followed by the fix, which also flips the 
-test to "test_expect_success".
+When I run this, I get errors reported on the sed usage:
+
+t9824-git-p4-handle-utf16-without-bom.sh:25: error: sed -i is not 
+portable:             sed -i.bak "$ d" depot/file1,v &&
+t9824-git-p4-handle-utf16-without-bom.sh:25: error: sed -i is not 
+portable:             sed -i.bak "$ d" depot/file1,v &&
+
 
 Luke
+
+
+>
+> A P4 repository can get into a state where it contains a file with
+> type UTF-16 that does not contain a valid UTF-16 BOM. If git-p4
+> attempts to retrieve the file then the process crashes with a
+> "Translation of file content failed" error.
+>
+> More info here: http://answers.perforce.com/articles/KB/3117
+>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>   t/t9824-git-p4-handle-utf16-without-bom.sh | 49 ++++++++++++++++++++++++++++++
+>   1 file changed, 49 insertions(+)
+>   create mode 100755 t/t9824-git-p4-handle-utf16-without-bom.sh
+>
+> diff --git a/t/t9824-git-p4-handle-utf16-without-bom.sh b/t/t9824-git-p4-handle-utf16-without-bom.sh
+> new file mode 100755
+> index 0000000..517f6da
+> --- /dev/null
+> +++ b/t/t9824-git-p4-handle-utf16-without-bom.sh
+> @@ -0,0 +1,49 @@
+> +#!/bin/sh
+> +
+> +test_description='git p4 handling of UTF-16 files without BOM'
+> +
+> +. ./lib-git-p4.sh
+> +
+> +UTF16="\227\000\227\000"
+> +
+> +test_expect_success 'start p4d' '
+> +	start_p4d
+> +'
+> +
+> +test_expect_success 'init depot with UTF-16 encoded file and artificially remove BOM' '
+> +	(
+> +		cd "$cli" &&
+> +		printf "$UTF16" >file1 &&
+> +		p4 add -t utf16 file1 &&
+> +		p4 submit -d "file1"
+> +	) &&
+> +
+> +	(
+> +		cd "db" &&
+> +		p4d -jc &&
+> +		# P4D automatically adds a BOM. Remove it here to make the file invalid.
+> +		sed -i.bak "$ d" depot/file1,v &&
+
+This line is the problem I think.
+
+
+> +		printf "@$UTF16@" >>depot/file1,v &&
+> +		p4d -jrF checkpoint.1
+> +	)
+> +'
+> +
+> +test_expect_success 'clone depot with invalid UTF-16 file in verbose mode' '
+> +	git p4 clone --dest="$git" --verbose //depot &&
+> +	test_when_finished cleanup_git &&
+> +	(
+> +		cd "$git" &&
+> +		printf "$UTF16" >expect &&
+> +		test_cmp_bin expect file1
+> +	)
+> +'
+> +
+> +test_expect_failure 'clone depot with invalid UTF-16 file in non-verbose mode' '
+> +	git p4 clone --dest="$git" //depot
+> +'
+> +
+> +test_expect_success 'kill p4d' '
+> +	kill_p4d
+> +'
+> +
+> +test_done
+>
