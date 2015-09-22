@@ -1,78 +1,82 @@
-From: Josh Boyer <jwboyer@gmail.com>
-Subject: Re: Specifying N revisions after the initial commit
-Date: Tue, 22 Sep 2015 15:10:42 -0400
-Message-ID: <CA+5PVA6YWJizRjseeJ4EpRya0Mpyrv3DoNsB3=Gi=dOiAoDfHg@mail.gmail.com>
-References: <CA+5PVA40x8bxW63X+b77FDO8btRBaVOg=fq+ZyX=bdJ+uEm9gA@mail.gmail.com>
-	<20150922214037.b6b48059f051fcd4060a5a85@domain007.com>
+From: Michael Blume <blume.mike@gmail.com>
+Subject: Re: [PATCH v4 1/2] git-p4: add test case for "Translation of file
+ content failed" error
+Date: Tue, 22 Sep 2015 12:11:11 -0700
+Message-ID: <CAO2U3QgehMcBrDUtChLLrn5VrH4jLE0CF5xDSShY72yycLryCg@mail.gmail.com>
+References: <1442829701-2347-1-git-send-email-larsxschneider@gmail.com>
+ <1442829701-2347-2-git-send-email-larsxschneider@gmail.com>
+ <xmqqio73abl0.fsf@gitster.mtv.corp.google.com> <E47DE9F0-6017-4E96-AC29-E6C60C4D85CB@gmail.com>
+ <CAPig+cRV-RCdcmAHG+bRL6_yYYNCRqQPQ+v3KCXwC81StGKibg@mail.gmail.com>
+ <xmqqbncv6yym.fsf@gitster.mtv.corp.google.com> <9F835973-7045-4AA7-A0B0-D3D3C6F25D73@gmail.com>
+ <xmqq8u7y5toe.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Konstantin Khomoutov <kostix+git@007spb.ru>
-X-From: git-owner@vger.kernel.org Tue Sep 22 21:10:53 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Luke Diamand <luke@diamand.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 22 21:11:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeSxm-0004lw-Ox
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 21:10:51 +0200
+	id 1ZeSyk-0005mg-Hn
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 21:11:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759533AbbIVTKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2015 15:10:45 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:36714 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759286AbbIVTKn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2015 15:10:43 -0400
-Received: by ioii196 with SMTP id i196so24283456ioi.3
-        for <git@vger.kernel.org>; Tue, 22 Sep 2015 12:10:42 -0700 (PDT)
+	id S934544AbbIVTLe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Sep 2015 15:11:34 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:36504 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934362AbbIVTLb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Sep 2015 15:11:31 -0400
+Received: by igcrk20 with SMTP id rk20so87131226igc.1
+        for <git@vger.kernel.org>; Tue, 22 Sep 2015 12:11:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=hOfdyMvga8X0l2vRdk7SZUjmP92YQxBRElh8flGltBM=;
-        b=Yfv9eZ1J1xjJjH7S1S28HtbZaaUn+9mqxSZzR3ecbt6Ij+SJfoHGWHjR/h8leI+3ck
-         nY43rSrFENwcM73Swc7Rn4bKuHm/NTnZG/zon+Fyt7xvWy99aIflv+C9EtHD7SjA8xfg
-         Jm5bbhwBQJs2bW8fjm11EY70gHQbQpJQSnqXTfoROx6ArUo+HhsxYiuuAFi2XIc5OE3G
-         ZdL7idgHZ9CEUk7yY91kuydUfaxVCVRA4yeJjiDBIauC32R9I1F8xakDbVLqqs5S+47w
-         n0hRw4OL+8WV7uIwAKFljeXAtUwEJBWD6+nAPTHinXm8XotKpPkORW4DsyZmh5S9rT72
-         QPMA==
-X-Received: by 10.107.29.70 with SMTP id d67mr33707836iod.27.1442949042709;
- Tue, 22 Sep 2015 12:10:42 -0700 (PDT)
-Received: by 10.64.132.167 with HTTP; Tue, 22 Sep 2015 12:10:42 -0700 (PDT)
-In-Reply-To: <20150922214037.b6b48059f051fcd4060a5a85@domain007.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=Oyf/wKFGZgHDjLeAVOyK1px363aoPh2zi+TUWJVsLbw=;
+        b=QokTggMeFGxyPFgtusHTkXQ9aPbe0mMjTGoXWnd2YCpPp0l6L2ysAJFsMZsbgew7ll
+         EFoeLEW5lZ5DvshE92Ft4wTcUpyprwpYRm3mTcQTDVDDvusD9GJ7sb1ne2AdWutnNGc3
+         SCJ/BaleJFdW1z3g1Fx/TkSvocacqdpc58xbprSP+4V+8oNdvlF3sxmqLWVSmMbeSLPb
+         iGkbRTUEAoIsY0SL3sw8bn7HFk9vUsnuebO1y/we+Oshnbwdx11rL8isF3wXSbO5gUhK
+         wwKQeV7pJFxhObMioc2UdqDM3waGN1JxvGaQlKQll2Ff6m8PuV/0ZY0Rzj/Wct7AJEdY
+         lE6Q==
+X-Received: by 10.50.17.4 with SMTP id k4mr19468337igd.34.1442949090858; Tue,
+ 22 Sep 2015 12:11:30 -0700 (PDT)
+Received: by 10.64.87.234 with HTTP; Tue, 22 Sep 2015 12:11:11 -0700 (PDT)
+In-Reply-To: <xmqq8u7y5toe.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278419>
 
-On Tue, Sep 22, 2015 at 2:40 PM, Konstantin Khomoutov
-<kostix+git@007spb.ru> wrote:
-> On Tue, 22 Sep 2015 14:32:19 -0400
-> Josh Boyer <jwboyer@gmail.com> wrote:
+I'm seeing test failures
+
+non-executable tests: t9825-git-p4-handle-utf16-without-bom.sh
+
+ls -l shows that all the other tests are executable but t9825 isn't.
+
+On Tue, Sep 22, 2015 at 9:02 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Lars Schneider <larsxschneider@gmail.com> writes:
 >
->> Please CC me as I'm not subscribed.
->>
->> I was hoping someone could help me with the revision shorthand to get
->> the commit sha of a commit N commits after the initial commit.
+>> This works.
 >
-> What happens if right after the initial commit, there have been five
-> branches created -- with no common commits except for the initial one?
+> OK, and thanks; as I don't do perforce, the squash was without any
+> testing.
 >
-> That's the core limitation of the data model Git uses (and arguably any
-> other DVCS system): all commits form a directed acyclic graph.
-> The "directed" in that construct means that child commits contain a
-> link to their parent commit (or commits) but not vice-versa.
-
-Hm.  It has been so long since I've looked at the underlying model and
-git has proven to be so flexible on such a variety of things that I
-guess I forgot it was constructed through a DAG.  The --reverse
-parameter to git-log and git-rev-parse had left me hopeful.
-
-> Hence, given any particular commit, you're able to trace all of its
-> ancestry, but the reverse is not possible.
-
-That makes sense.  I suppose I will have to resort to parsing output
-of git-rev-list or something.  Thanks for the reminder.
-
-josh
+>> Do we need the =E2=80=9C-e=E2=80=9D option?
+>
+> In syntactic sense, no, but our codebase tends to prefer to have
+> one, because it is easier to spot which ones are the instructions if
+> you consistently have "-e" even when you give only one.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
