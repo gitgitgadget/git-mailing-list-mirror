@@ -1,198 +1,134 @@
-From: Victor Leschuk <vleschuk@accesssoftek.com>
-Subject: RE: [PATCH] git-svn: make batch mode optional for git-cat-file
-Date: Tue, 22 Sep 2015 03:47:45 -0700
-Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9D8@mail.accesssoftek.com>
-References: <1442843498-22908-1-git-send-email-vleschuk@accesssoftek.com>,<xmqqeghraauu.fsf@gitster.mtv.corp.google.com>,<6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9D6@mail.accesssoftek.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] notes: don't expand qualified refs in expand_notes_ref
+Date: Tue, 22 Sep 2015 07:17:01 -0700
+Message-ID: <xmqqsi665yjm.fsf@gitster.mtv.corp.google.com>
+References: <1442441194-5506-1-git-send-email-jacob.e.keller@intel.com>
+	<1442441194-5506-2-git-send-email-jacob.e.keller@intel.com>
+	<xmqqzj0mkn7r.fsf@gitster.mtv.corp.google.com>
+	<CA+P7+xpv_0Sf94FqMKJa0v0pSSEWXPRD2KQ0kmNBKC=2hrunhw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 12:50:40 2015
+Content-Type: text/plain
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	Git List <git@vger.kernel.org>, Mike Hommey <mh@glandium.org>,
+	Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 22 16:17:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeL9j-0004Nf-D5
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 12:50:39 +0200
+	id 1ZeONd-0005Hz-J8
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 16:17:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757637AbbIVKuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2015 06:50:35 -0400
-Received: from mail.accesssoftek.com ([12.202.173.171]:30575 "EHLO
-	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757419AbbIVKue convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Sep 2015 06:50:34 -0400
-Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
- ([172.16.0.71]) with mapi; Tue, 22 Sep 2015 03:50:16 -0700
-Thread-Topic: [PATCH] git-svn: make batch mode optional for git-cat-file
-Thread-Index: AdD0m8bdz5rcP1t/TkOXjv/23qOXjgAG49gfABsxw48=
-In-Reply-To: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9D6@mail.accesssoftek.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1758060AbbIVORI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2015 10:17:08 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:35588 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754520AbbIVORF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2015 10:17:05 -0400
+Received: by pacfv12 with SMTP id fv12so10767511pac.2
+        for <git@vger.kernel.org>; Tue, 22 Sep 2015 07:17:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=ZvuR3HKoEGKkZ2q9Y4QMffRQNbsXLUh9lJtmcXzGSsY=;
+        b=HNrQt0/0tSBPbe5Zjb6CzTntjmSDl10Dm+Shjm/AK1IHwynzoVgQEJRPasaPAU8El0
+         B4r8cVjZH1G2xM8X07ovGPKt05XxrPJanxJT7PwWq4bIiTqAR0lEBUANdtP3FRs7jAqv
+         mRvjTW+SlAROCofpsr5YbmwU0R8wlELacOKWCPxL/o5/pH2CEfKiUJZBwV/yMkTAsVTO
+         v7I5d3qGy1Pt9hHfU5+WqvaaFGVIXyPd7jg4/ffskWLxd/T5wpcKVRgZ9ew/pDoTP7GN
+         4geRddZgMxCO6cvMwA3kMQCH18EA9BeChof12eHw98Us9eaywaovDo+IPC5T6HBoFNir
+         SXnQ==
+X-Received: by 10.68.215.73 with SMTP id og9mr31369913pbc.122.1442931424922;
+        Tue, 22 Sep 2015 07:17:04 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:89f8:25c:a9fe:f701])
+        by smtp.gmail.com with ESMTPSA id bh5sm2698707pbc.5.2015.09.22.07.17.02
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Tue, 22 Sep 2015 07:17:03 -0700 (PDT)
+In-Reply-To: <CA+P7+xpv_0Sf94FqMKJa0v0pSSEWXPRD2KQ0kmNBKC=2hrunhw@mail.gmail.com>
+	(Jacob Keller's message of "Mon, 21 Sep 2015 23:50:05 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278391>
 
-As for your remark regarding the option naming: 
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-> An option whose name begins with no- looks somewhat strange.  You
-can even say --no-no-cat-file-batch from the command line, I
-suspect.
+> I never got any better suggestion on how to allow the behavior
+> desired, which is to enable merging from a non-notes location, in
+> order to provide a standard location for remote notes, ie:
+> refs/remote-notes/<remote>/<ref>
 
-We already do have some of these: 'no-metadata', 'no-checkout', 'no-auth-cache'. So I was just following the existing convention. Do you think we need to change it and stick with --catch-file-batch=1/--cat-file-batch=0 ?
+Step back a bit and think again.  I think you are blinded by your
+refs/remote-notes/*.
 
---
-Best Regards,
-Victor
-________________________________________
-From: Victor Leschuk
-Sent: Monday, September 21, 2015 3:03 PM
-To: Junio C Hamano
-Cc: git@vger.kernel.org
-Subject: RE: [PATCH] git-svn: make batch mode optional for git-cat-file
+It is fine to wish that
 
-Hello Junio,
+    $ notes merge refs/notes/commits refs/remote-notes/origin/commits
 
-thanks for your review. First of all I'd like to apologize for sending the patch without description. Actually I was in a hurry and sent it by accident: I planned to edit the mail before sending...
+to work, but you shouldn't force your users to use remote-tracking
+refs in the first place.  Your users should be allowed to do this as
+well:
 
-Here is the detailed description:
+    $ fetch origin refs/notes/commits
+    $ THEIRS=$(git rev-parse FETCH_HEAD)
+    $ notes merge refs/notes/commits $THEIRS
 
-Last week we had a quick discussion in this mailing list: http://thread.gmane.org/gmane.comp.version-control.git/278021 .
+We need to realize that "notes merge" involves two notes trees and
+they are of different nature.  The notes tree you are merging into
+and recording the result (the destination), which will be a local
+note, and the other notes tree you obtained from elsewhere and
+update that local note with (the source).
 
-The thing is that git-cat-file keeps growing during work when running in "batch" mode. See the figure attached: it is for cloning a rather small repo (1 hour to clone about ~14000 revisions). However the clone of a large repo (~280000 revisions) took about 2 weeks and git-cat-file has outgrown the parent perl process several times (git-cat-file - ~3-4Gb, perl - 400Mb).
+The current code before your patch limits the allowed pair of notes
+trees by insisting that both appear as the tips of refs somewhere in
+refs/notes/*.  For allowing to merge from outside refs/notes/, you
+need to loosen the location the latter notes tree, the one to update
+your local notes tree with, can come from.  But that does not mean
+you would want to loosen the location where the resulting notes tree
+can go.
 
-What was done:
- * I have run it under valgrind and mtrace and haven't found any memory leaks
- * Found the source of most number of memory reallocations (batch_object_write() function (strbuf_expand -> realloc)) - tried to make the streambuf object static and avoid reallocs - didn't help
- * Tried preloading other allocators than standard glibc - no significant difference
+I think the proposed patch conflates them, and that conflation does
+not help anything.  The rule of that function used to be "It must
+come from refs/notes/ and nowhere else".  That made sense in the old
+world order where both must be from refs/notes/, and the rule still
+makes sense in the new world order for the destination of the merge.
 
-After that I replaced the batch mode with separate cat-file calls for each blob and it didn't have any impact on clone performance on real code repositories. However I created a fake test repo with large number of small files (~10 bytes each): here is how I created it https://bitbucket.org/vleschuk/svngenrepo
+The new rule of that function after the proposed patch says "It must
+come from either refs/notes or refs/ somewhere".  This does not make
+sense for the destination because it is too loose (and we didn't see
+any justification why loosening it is a good idea), and it does not
+make sense for the source because it still is too tight.  It should
+be able to take anything get_sha1() understands (including $THEIRS
+in the above example).
 
-And on this artificial test repo it really slowed down the process. So I decided to suggest to make the batch mode optional to let the user "tune" the process and created a patch for this.
+In addition you might also want to allow additional DWIMs from X to
+refs/remote-notes/*/X as well as from X to refs/notes/X, but that is
+secondary and should be done as a follow-up "nice to have" change,
+because both "notes/remote-notes/origin/commits" and "notes/commits"
+would be understood by get_sha1() already, and it is questinable if
+it is a good idea to introduce special DWIMs that kick in only when
+the commands are talking about notes in the first place (an equally
+questionable alternative is to teach get_sha1() about refs/notes/*
+and refs/remote-notes/*/*, which will make the disambiguation noisy
+in the normal non-notes codepath---my knee-jerk reaction is to
+suggest not to go there, either).
 
-As for your code-style notes, I agree with them, will adjust the code.
+In any case, to get us closer to that endgame, change in the
+proposed patch does not help.  It tries to cover two different cases
+with a logic that is not a good match to either.  You need to have
+two separate helpers to interpret the source and the destination.
 
---
-Best Regards,
-Victor
-________________________________________
-From: Junio C Hamano [jch2355@gmail.com] On Behalf Of Junio C Hamano [gitster@pobox.com]
-Sent: Monday, September 21, 2015 11:25 AM
-To: Victor Leschuk
-Cc: git@vger.kernel.org; Victor Leschuk
-Subject: Re: [PATCH] git-svn: make batch mode optional for git-cat-file
-
-Victor Leschuk <vleschuk@gmail.com> writes:
-
-> Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
-> ---
-
-Before the S-o-b line is a good place to explain why this is a good
-change to have.  Please use it.
-
->  git-svn.perl |  1 +
->  perl/Git.pm  | 41 ++++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 41 insertions(+), 1 deletion(-)
->
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 36f7240..b793c26 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -139,6 +139,7 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
->               'use-log-author' => \$Git::SVN::_use_log_author,
->               'add-author-from' => \$Git::SVN::_add_author_from,
->               'localtime' => \$Git::SVN::_localtime,
-> +             'no-cat-file-batch' => sub { $Git::no_cat_file_batch = 1; },
-
-An option whose name begins with no- looks somewhat strange.  You
-can even say --no-no-cat-file-batch from the command line, I
-suspect.
-
-Why not give an option 'cat-file-batch' that sets the variable
-$Git::cat_file_batch to false, and initialize the variable to true
-to keep existing users who do not pass the option happy?
-
->               %remote_opts );
->
->  my ($_trunk, @_tags, @_branches, $_stdlayout);
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> index 19ef081..69e5293 100644
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -107,6 +107,7 @@ use Fcntl qw(SEEK_SET SEEK_CUR);
->  use Time::Local qw(timegm);
->  }
->
-> +our $no_cat_file_batch = 0;
->
->  =head1 CONSTRUCTORS
->
-> @@ -1012,6 +1013,10 @@ returns the number of bytes printed.
->  =cut
->
->  sub cat_blob {
-> +     (1 == $no_cat_file_batch) ? _cat_blob_cmd(@_) : _cat_blob_batch(@_);
-
-Discard "1 ==" here.  You are clearly using the variable as a
-boolean, so writing this as
-
-        $cat_file_batch ? _cat_blob_batch(@_) : _cat_blob_cmd(@_);
-
-or better yet
-
-        if ($cat_file_batch) {
-                _cat_blob_batch(@_);
-        } else {
-                _cat_blob_cmd(@_);
-        }
-
-would be more natural.
-
-> +}
-> +
-> +sub _cat_blob_batch {
->       my ($self, $sha1, $fh) = @_;
->
->       $self->_open_cat_blob_if_needed();
-> @@ -1072,7 +1077,7 @@ sub cat_blob {
->  sub _open_cat_blob_if_needed {
->       my ($self) = @_;
->
-> -     return if defined($self->{cat_blob_pid});
-> +     return if ( defined($self->{cat_blob_pid}) || 1 == $no_cat_file_batch );
-
-Likewise.
-
-        return if (!$cat_file_batch);
-        return if defined($self->{cat_blob_pid});
-
-> +sub _cat_blob_cmd {
-> +     my ($self, $sha1, $fh) = @_;
-> +...
-
-The biggest thing that is missing from this patch is the explanation
-of why this is a good thing to do.  The batch interface was invented
-because people found that it was wasteful to spawn a new cat-file
-process every time the contents of a blob is needed and wanted to
-avoid it, and this new feature gives the user a way to tell Git to
-do things in a "wasteful" way, so there must be a reason why the
-user would want to use the "wasteful" way, perhaps work around some
-other issue.  Without explaining that in the documentation what that
-issue is, i.e. telling users who reads "git svn --help" when and why
-the option might help them, nobody would use the feature to benefit
-from it.
-
-I wonder if "cat-file --batch" is leaky and bloats after running for
-a while.  If that is the case, I have to wonder if "never do batch"
-like this patch does is a sensible way forward.  Instead, "recycle
-and renew the process after running it for N requests" (and ideally
-auto-adjust that N without being told by the user) might be a better
-way to do what you are trying to achieve, but as I already said, I
-cannot read the motivation behind this change that is not explained,
-so...
+Calls expand_notes_ref() made on a command line argument that
+specifies the source (which I think is similar to what the other
+recent topic calls "read-only") should be made to calls to a more
+lenient version (and you can start with get_sha1() for that purpose
+without introducing your own DWIMs in the first step), while leaving
+calls to expand_notes_ref() for destination and the implementation
+of expand_notes_ref() itself unmolested, so that we can keep the
+safety in expands_notes_ref() that makes sure that the destination
+of a local operation is under refs/notes/*.
