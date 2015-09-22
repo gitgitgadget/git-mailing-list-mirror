@@ -1,45 +1,82 @@
-From: Victor Leschuk <vleschuk@accesssoftek.com>
-Subject: git-svn: Why not use git-fast-import?
-Date: Tue, 22 Sep 2015 02:12:59 -0700
-Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9D7@mail.accesssoftek.com>
+From: Ray Chen <oldsharp@gmail.com>
+Subject: Re: Small mistakes in translation
+Date: Tue, 22 Sep 2015 18:01:50 +0800 (CST)
+Message-ID: <alpine.DEB.2.20.1509221748520.8738@jagger>
+References: <loom.20150922T104305-736@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 22 11:13:13 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Przemys=C5=82aw_Skrzyniarz?= <hilarus@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 22 12:02:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeJdQ-0001dJ-43
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 11:13:12 +0200
+	id 1ZeKOi-0002iZ-5T
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 12:02:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933065AbbIVJNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2015 05:13:06 -0400
-Received: from mail.accesssoftek.com ([12.202.173.171]:27454 "EHLO
-	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932549AbbIVJNB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Sep 2015 05:13:01 -0400
-Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
- ([172.16.0.71]) with mapi; Tue, 22 Sep 2015 02:12:59 -0700
-Thread-Topic: git-svn: Why not use git-fast-import?
-Thread-Index: AQHQ9RbfVaqu2IDY5ESLqI/geiDN4w==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S932657AbbIVKB7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Sep 2015 06:01:59 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:36531 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757829AbbIVKB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2015 06:01:57 -0400
+Received: by pacgz1 with SMTP id gz1so2641130pac.3
+        for <git@vger.kernel.org>; Tue, 22 Sep 2015 03:01:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=bU1KFLvIlME71fgHME0HIwLVy4S578EKp/NcX41rQK0=;
+        b=0sYreQdiS/6xS1RMOVpMjdzdwv1AWSDxb9Yf0t/442ijsk7oESzYOhTX8hPMIPg7qH
+         HO2ndkLPGYjsjcdZKUHTn3OeYcHdgGmjDLc1TuOn9VhTYq4fvQNLjCz7VlljVWc/RLJH
+         kbKwZuJ1zyXu4J+XjkyxJrQTA7wv1rAuGru1wDflu7JqHT+quDzs2MyeI7qfRNCqxI9R
+         EDJtGyC8rLP7Pj/yCM4uvZpb8FJAWd4VAgnV1PW3NzcdH3D7Pvxtroq3SunYsQpHWFmg
+         4GwVJFvrPLHR+ZemB46xqn8+76JbbZpTLeLXXzVmg64iQzVIeC8tbALUQE6e1bIx2meI
+         EPQA==
+X-Received: by 10.68.226.134 with SMTP id rs6mr30740496pbc.11.1442916116760;
+        Tue, 22 Sep 2015 03:01:56 -0700 (PDT)
+Received: from 127.0.0.1 (li83-216.members.linode.com. [74.207.241.216])
+        by smtp.gmail.com with ESMTPSA id kw10sm1331378pbc.25.2015.09.22.03.01.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Sep 2015 03:01:55 -0700 (PDT)
+In-Reply-To: <loom.20150922T104305-736@post.gmane.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278385>
 
-Hello all, 
+On Tue, 22 Sep 2015, Przemys=C5=82aw Skrzyniarz wrote:
 
-I've been playing with git-svn for some time already and as it seems to me there are two most important problems which make it hard to use in production for large repositories. Very low speed and large memory footprint of synchronization with SVN repos (I am talking about clone and fetch operations mostly). I was wondering why the git-fast-import is not used for these purposes? Are there any serious limitations which make it impossible?
+> Hi,
+>=20
+> On page =3D>
+> https://git-scm.com/book/pl/v1/Rozproszony-Git-Rozproszone-przep%C5%8=
+2ywy-pracy
+> < I found typographical error in first line (Is: powala =3D> Should b=
+e:
+> pozwala) in third part of text entitle "Przep=C5=82yw pracy z osob=C4=
+=85 integruj=C4=85c=C4=85
+> zmiany".
+> And next line, it means third line at the bottom - of text entitle "P=
+rzep=C5=82yw
+> pracy z osob=C4=85 integruj=C4=85c=C4=85 zmiany" - is better to use "=
+z" instead "do" (place
+> in line - cit.: "... uprawnienia do odczytu do repozytorium innych os=
+=C3=B3b w
+> zespole ...")
 
-I have found several alternative solutions which use git-fast-import but they all do only the initial import of a repo. I have looked through the documentation and didn't see why fast-import can't be used to sync an existing repo after the import. Am I missing something?
+The issues you found should better be reported to the progit community
+on GitHub: https://github.com/progit/progit
 
-Thanks in advance for clarification.
+Besides, the progit book 2nd version has already been released.  Please
+check https://progit.org/translations to see how to start translation i=
+n new
+languages.
+
+Cheers,
+Ray
