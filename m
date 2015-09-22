@@ -1,106 +1,231 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv3 02/13] xread: poll on non blocking fds
-Date: Tue, 22 Sep 2015 10:38:54 -0700
-Message-ID: <CAGZ79kaJmy4EijFuLCXOzPbi3EoqSwarFj3_3r+ghUwVA+88Mg@mail.gmail.com>
-References: <1442875159-13027-1-git-send-email-sbeller@google.com>
-	<1442875159-13027-3-git-send-email-sbeller@google.com>
-	<CAPig+cQKOEYYR3j-uEeFzF3-qAfqq4SdQrH8LPmSP0VmAOCtzw@mail.gmail.com>
-	<xmqqh9mm5tus.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 2/4] worktree: refactor find_linked_symref function
+Date: Tue, 22 Sep 2015 10:44:22 -0700
+Message-ID: <xmqqmvwe4adl.fsf@gitster.mtv.corp.google.com>
+References: <1442583027-47653-1-git-send-email-rappazzo@gmail.com>
+	<1442583027-47653-3-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Vitali Lovich <vlovich@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 19:39:14 2015
+Content-Type: text/plain
+Cc: sunshine@sunshineco.com, dturner@twopensource.com,
+	git@vger.kernel.org
+To: Michael Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 22 19:44:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeRX7-0000Tq-9Y
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 19:39:13 +0200
+	id 1ZeRcE-0005wz-21
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 19:44:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758553AbbIVRjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2015 13:39:08 -0400
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:34024 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753072AbbIVRjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2015 13:39:07 -0400
-Received: by ykdg206 with SMTP id g206so16897643ykd.1
-        for <git@vger.kernel.org>; Tue, 22 Sep 2015 10:38:55 -0700 (PDT)
+	id S1757961AbbIVRoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2015 13:44:25 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36564 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752380AbbIVRoY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2015 13:44:24 -0400
+Received: by pacgz1 with SMTP id gz1so12440264pac.3
+        for <git@vger.kernel.org>; Tue, 22 Sep 2015 10:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1yVb2d9yxwCC5KCH9ltQ6Uw2DJWU8yOyxTcFFSaoUyE=;
-        b=otJizDery8wodb/TfwkL/dzJnOFta01WS6GTBuZhioP90mQFEV6s3OOBPT4e/I/uNN
-         NKuQ+M5nf7jkofhkiTfUv7rhEfsqoQayqIQUXWDftzEA/6/musie3Bq2SMEshCWkO9qu
-         u9D2DbBMbEPVKePy3HpWcxT0S6x8uIs/VvjlOhtpgL/edq7vcGsum3/qzC+BU1dU8iNp
-         LgMVkQwdbPccFi78lsFMX0i//AvUTwKOr0I2gVsJo9JsBcnngvSukuIG7xOIorxsBoKo
-         yZCcoPUbFn08cJpMxG1nTsK2JippoZcx2zMJlvL+A/WI3vY0TXh52mh9Rztd1GJ9XeCY
-         jB5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=1yVb2d9yxwCC5KCH9ltQ6Uw2DJWU8yOyxTcFFSaoUyE=;
-        b=f0JaQgEH/OvX1S9LEJPmsuKKF8rLAxZLdm00B2+sQa1XwnZUsdVYPt4TPHMJZcyeVl
-         Hj7pGfRrBzW2X+/zPmvezvflMb2XYqAfEohjuFw8OU7P3B6hOK0NOFUZYweE1mrtZU7K
-         phxaRYarjHrWyRQ8syc0WHX0Tou9k1KSgwcBwN1xExs/tZ6rAn4zXUbrVuCLcHEiWMKx
-         u6F6OygZeTb5+DEVyGsts3j4fBb7HByaM3C1syYfprGhcVkxtbgG8BFBAs2riATRZxXY
-         8xO6OubLOo+u0PwmT4zoXLytQrMLTFYPGIdSTJf2aljCXCSrVe1NnmGkVWQnwtERX1bg
-         UTdA==
-X-Gm-Message-State: ALoCoQlOzrUyg47sW0Sgv09UW3ePyH7JtX0FBiqMAld43Cf301SI04YCzh0sOAPQsQ+m07eD15J2
-X-Received: by 10.170.210.65 with SMTP id b62mr20952388ykf.10.1442943534996;
- Tue, 22 Sep 2015 10:38:54 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Tue, 22 Sep 2015 10:38:54 -0700 (PDT)
-In-Reply-To: <xmqqh9mm5tus.fsf@gitster.mtv.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=rBL3MMhiQ9XRRv7meuWYpIhddM9YpYoZ1xJvQ+saNFw=;
+        b=lMzgfh+GgVHbS6E5rkx8EvKXq3fboWA3G46fedUu+9Q5vQza1tvnREOExcp8DL/uSD
+         cJbdGpqrYi5E3P8pvXy9Pzgejs9X3611CpHWsrKRULsr6TNsQbmVfhm13sc07HrHNlOm
+         faquTs/wl0T7ySeT9HaAEU54Z6ps8UHgm5YlIdjjAK5v16fQk11lbK+VMMse4kT3Ht6k
+         Blj10C7Dx1/O8GHGyJBpN2J9IBp/GqYx3EOOTj+uMolpw1CsQQe9YUdpVD6AzsUTeKZC
+         7F9NY3I8wR7te+bxwcdqwsDjHb9OAbR4pmtCeKlmjIrGPMp0QBpBt6zfblOswLKxTepa
+         hknw==
+X-Received: by 10.68.242.42 with SMTP id wn10mr32818331pbc.77.1442943863716;
+        Tue, 22 Sep 2015 10:44:23 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:fd7e:7071:2eda:9c63])
+        by smtp.gmail.com with ESMTPSA id un2sm3452848pac.28.2015.09.22.10.44.22
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Tue, 22 Sep 2015 10:44:23 -0700 (PDT)
+In-Reply-To: <1442583027-47653-3-git-send-email-rappazzo@gmail.com> (Michael
+	Rappazzo's message of "Fri, 18 Sep 2015 09:30:25 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278405>
 
-On Tue, Sep 22, 2015 at 8:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+Michael Rappazzo <rappazzo@gmail.com> writes:
+
+> Refactoring will help transition this code to provide additional useful
+> worktree functions.
 >
->>>         while (1) {
->>>                 nr = read(fd, buf, len);
->>> -               if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
->>> -                       continue;
->>> +               if (nr < 0) {
->>> +                       if (errno == EINTR)
->>> +                               continue;
->>> +                       if (errno == EAGAIN || errno == EWOULDBLOCK) {
->>> +                               struct pollfd pfd;
->>> +                               int i;
->>> +                               pfd.events = POLLIN;
->>> +                               pfd.fd = fd;
->>> +                               i = poll(&pfd, 1, 100);
->>
->> Why is this poll() using a timeout? Isn't that still a busy wait of
->> sorts (even if less aggressive)?
+> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+> ---
+>  worktree.c | 86 ++++++++++++++++++++++++++++++++++++++++++++++----------------
+>  1 file changed, 64 insertions(+), 22 deletions(-)
 >
+> diff --git a/worktree.c b/worktree.c
+> index 10e1496..5c75875 100644
+> --- a/worktree.c
+> +++ b/worktree.c
+> @@ -3,6 +3,60 @@
+>  #include "strbuf.h"
+>  #include "worktree.h"
+>  
+> +/*
+> + * read 'path_to_ref' into 'ref'.  Also if is_detached is not NULL,
+> + * set is_detached to 1 if the ref is detatched.
 
-True. Maybe we could have just a warning for now?
+set is_detached to 1 (0) if the ref is detatched (is not detached).
 
-    if (errno == EAGAIN) {
-        warning("Using xread with a non blocking fd");
-        continue; /* preserve previous behavior */
-    }
+> + *
+> + * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside $GIT_DIR so
+> + * for linked worktrees, `resolve_ref_unsafe()` won't work (it uses
+> + * git_path). Parse the ref ourselves.
+> + *
+> + * return -1 if the ref is not a proper ref, 0 otherwise (success)
+> + */
+> +static int parse_ref(char *path_to_ref, struct strbuf *ref, int *is_detached)
+> +{
+> +	if (is_detached)
+> +		*is_detached = 0;
+> +	if (!strbuf_readlink(ref, path_to_ref, 0)) {
+> +		if (!starts_with(ref->buf, "refs/")
+> +				|| check_refname_format(ref->buf, 0))
 
-I think I am going to drop this patch off the main series and spin it out
-as an extra patch as the discussion is a bit unclear to me at the moment
-where we're heading.
+Don't try to be creative with the format and stick to the original.
 
-> Good point.  If we _were_ to have this kind of "hiding issues under
-> the rug and continuing without issues" approach, I do not think we
-> would need timeout for this poll(2).  The caller accepted that it is
-> willing to wait until we read up to len (which is capped, though) by
-> not calling the nonblocking variant.
+	if (!starts_with(ref->buf, "refs/") ||
+	    check_refname_format(ref->buf, 0))
+
+> +			return -1;
+> +
+
+This blank makes a strange code by making the "return -1" have no
+blank above and one blank below.
+
+> +	} else if (strbuf_read_file(ref, path_to_ref, 0) >= 0) {
+> +		if (starts_with(ref->buf, "ref:")) {
+> +			strbuf_remove(ref, 0, strlen("ref:"));
+> +			strbuf_trim(ref);
+> +			if (check_refname_format(ref->buf, 0))
+> +				return -1;
+> +		} else if (is_detached)
+> +			*is_detached = 1;
+
+Minor: I have a suspicion that this would be easier to follow:
+
+		if (!starts_with(...)) {
+			if (is_detached)
+				*is_detached = 1;
+		} else {
+                	strbuf_remove(...);
+                        strbuf_trim(...);
+                        if (check_refname_format(...))
+				return -1;
+		}
+
+> +	}
+
+What should happen when strbuf_read_file() above fails?  Would it be
+a bug (i.e. the caller shouldn't have called us in the first place
+with such a broken ref), would it be a repository inconsistency
+(i.e. it is worth warning and stop the caller from doing further
+damage), or is it OK to silently succeed?
+
+> +	return 0;
+> +}
+> +
+> +static char *find_main_symref(const char *symref, const char *branch)
+> +{
+> +	struct strbuf sb = STRBUF_INIT;
+> +	struct strbuf path = STRBUF_INIT;
+> +	struct strbuf gitdir = STRBUF_INIT;
+> +	char *existing = NULL;
+> +
+> +	strbuf_addf(&path, "%s/%s", get_git_common_dir(), symref);
+> +	if (parse_ref(path.buf, &sb, NULL) == -1)
+> +		goto done;
+
+I know you described it to "return -1 on an error", but as a general
+style, for a function that signals a success by returning 0 and
+negative on error (or on various kinds of errors), it is easier to
+follow if you followed a more common pattern:
+
+	if (parse_ref(...) < 0)
+        	goto done;
+
+> +	if (strcmp(sb.buf, branch))
+> +		goto done;
+> +	strbuf_addstr(&gitdir, get_git_common_dir());
+> +	strbuf_strip_suffix(&gitdir, ".git");
+> +	existing = strbuf_detach(&gitdir, NULL);
+> +done:
+> +	strbuf_release(&path);
+> +	strbuf_release(&sb);
+> +	strbuf_release(&gitdir);
+> +
+> +	return existing;
+> +}
+> +
+>  static char *find_linked_symref(const char *symref, const char *branch,
+>  				const char *id)
+>  {
+> @@ -11,36 +65,24 @@ static char *find_linked_symref(const char *symref, const char *branch,
+>  	struct strbuf gitdir = STRBUF_INIT;
+>  	char *existing = NULL;
+>  
+> +	if (!id)
+> +		goto done;
+
+A caller that calls this function with id==NULL would always get a
+no-op.  Is that what the caller intended, or should it have called
+the new find_main_symref() instead?  I'd imagine it is the latter,
+in which case
+
+	if (!id)
+        	die("BUG");
+
+is more appropriate.  On the other hand, if you are trying to keep
+the old interface to allow id==NULL to mean "get the information for
+the primary one", I'd expect this to call find_main_symref() for the
+(old-style) callers.
+
+In either case, this "no id? no-op" looks funny.
+
+>  	/*
+>  	 * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside
+>  	 * $GIT_DIR so resolve_ref_unsafe() won't work (it uses
+>  	 * git_path). Parse the ref ourselves.
+>  	 */
+
+You moved this comment to parse_ref(), which is a more appropriate
+home for it.  Perhaps you want to remove this copy from here?
+
+> -	if (id)
+> -		strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, symref);
+> -	else
+> -		strbuf_addf(&path, "%s/%s", get_git_common_dir(), symref);
+> +	strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, symref);
+>  
+> -	if (!strbuf_readlink(&sb, path.buf, 0)) {
+> -		if (!starts_with(sb.buf, "refs/") ||
+> -		    check_refname_format(sb.buf, 0))
+> -			goto done;
+> -	} else if (strbuf_read_file(&sb, path.buf, 0) >= 0 &&
+> -	    starts_with(sb.buf, "ref:")) {
+> -		strbuf_remove(&sb, 0, strlen("ref:"));
+> -		strbuf_trim(&sb);
+> -	} else
+> +	if (parse_ref(path.buf, &sb, NULL) == -1)
+>  		goto done;
+
+Same comment as in find_main_symref() applies here.
+
+I can see the value of splitting out parse_ref() into a separate
+function, but it is not immediately obvious how it would be an
+overall win to duplicate major parts of the logic that used to be
+shared for "primary" and "linked" cases in a single function into
+two separate, simpler and similar functions at this point in the
+series (note that I did not say "it clearly made it worse").
+Perhaps reviews on the callers will help us answer that.
+
+Thanks.
