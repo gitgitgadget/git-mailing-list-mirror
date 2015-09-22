@@ -1,153 +1,115 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 1/2] notes: don't expand qualified refs in expand_notes_ref
-Date: Tue, 22 Sep 2015 08:26:42 -0700
-Message-ID: <CA+P7+xr_rXtxpuV0SpyB0ysXz0zi=ZWTRHt+TANzOqVN5g=n-g@mail.gmail.com>
-References: <1442441194-5506-1-git-send-email-jacob.e.keller@intel.com>
- <1442441194-5506-2-git-send-email-jacob.e.keller@intel.com>
- <xmqqzj0mkn7r.fsf@gitster.mtv.corp.google.com> <CA+P7+xpv_0Sf94FqMKJa0v0pSSEWXPRD2KQ0kmNBKC=2hrunhw@mail.gmail.com>
- <xmqqsi665yjm.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv3 09/13] submodule config: keep update strategy around
+Date: Tue, 22 Sep 2015 08:50:12 -0700
+Message-ID: <CAGZ79kYmz9+V8CUQhr3QsRdUkzi7ofMPK=qdXkW=o-+CToU1kw@mail.gmail.com>
+References: <1442875159-13027-1-git-send-email-sbeller@google.com>
+	<1442875159-13027-10-git-send-email-sbeller@google.com>
+	<CAPig+cRGBSYbt6FsRwNR2TYz7vD650f3=KH_c87h27SaVCUTcQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Git List <git@vger.kernel.org>, Mike Hommey <mh@glandium.org>,
-	Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 17:27:10 2015
+Cc: Git List <git@vger.kernel.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Vitali Lovich <vlovich@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Sep 22 17:50:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZePTJ-00050m-7q
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 17:27:09 +0200
+	id 1ZePpp-0004U7-Hk
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 17:50:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756047AbbIVP1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2015 11:27:04 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:34304 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752470AbbIVP1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2015 11:27:03 -0400
-Received: by iofb144 with SMTP id b144so18113749iof.1
-        for <git@vger.kernel.org>; Tue, 22 Sep 2015 08:27:01 -0700 (PDT)
+	id S1758303AbbIVPuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2015 11:50:18 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:36286 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758184AbbIVPuN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2015 11:50:13 -0400
+Received: by ykdt18 with SMTP id t18so13439067ykd.3
+        for <git@vger.kernel.org>; Tue, 22 Sep 2015 08:50:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=MqDnMOvNefuVkPkXbIoXJblXr7u49jSPHdlLcgZoXCk=;
-        b=pxzoZeVMAXYD2lx3Sc7EGldYtdrduhIFDkpQDjU7EuWW+goyHzSSzq9NPBmsXU3ntj
-         0nhm97b+AVaz4L1HpMvGIxP/eOkXll7OJ5ZlA5XBWPzmDjDy7IEb4zAkS3m8Qd7LZF2p
-         4w4aGroJNThLvuq4NlAblOCNtu6kUMlkpfNMZ3XVXBYjjYsOr2/Je8LgjT9/TEIgXy5B
-         6spJRaaXKQXMuLyxAHxiYwEeTy03Z0iJ56Fb2EWNdADEJuT+OFgJagMIL+ARkm3s1QBj
-         1C7p9IlFaGtAr6bf48C4oNuPwgiUEkso8DEE6oFYlYljtQ0GXWw3fV/HUziV5zOxjY+s
-         fMTQ==
-X-Received: by 10.107.133.151 with SMTP id p23mr39689313ioi.71.1442935621466;
- Tue, 22 Sep 2015 08:27:01 -0700 (PDT)
-Received: by 10.107.132.155 with HTTP; Tue, 22 Sep 2015 08:26:42 -0700 (PDT)
-In-Reply-To: <xmqqsi665yjm.fsf@gitster.mtv.corp.google.com>
+        bh=jfI9havdrgQiw6ZXAvD/ePHpHEh540euWaY/bfWfeFE=;
+        b=cNytWvo8JZ/gKL72bkgoZXLNcay1pvj7wgzaZnT1o4p+kV5pSEXT/61A7RIDKZT1I8
+         KLoZ3/hA6i3ZkRMpTwc65YyAWYFqISrN8bjjiAt1wqG2a/0gz9F8be3UVW4o9cgziF4u
+         oHQ7ElcuVabyy4431xuyE9yeGbQeZd23hp3EXiUzimAwwuscdRJUrD6Mt7Ysf/QIi9Qr
+         jITlGSMnyLT86zo26YZ2/ECUwsR1M6SinaGUnmUJ+aLduYQDrhkbgVjqijj01cGbv65H
+         hNuaG7O/h3jjvvhahBLw4BAiYfy9f4Es1p+ctf7jkBKn05/Z7b8KSxbI0nYZzJ6PtlZ/
+         AuCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=jfI9havdrgQiw6ZXAvD/ePHpHEh540euWaY/bfWfeFE=;
+        b=il99LjXpjAQiEv47zbsD3gCnYYUXJk5VIpUAT5hXvByJEQWJrxyG8icgEXgdiKyrWF
+         P6MizXAqKeourVwgd6H0O8Jrl9TusMYZwNVsZtCbHv1uHsIPZoxIzA5eisONiIxwYcFc
+         UM2tnSdj3xENrCCFWWT114/2eVizO31voWanS4V01aCzur9lR4MhfNvbuokLcqgtLwl5
+         u5knyOf1R4JBIfEotq1h3wkCoaoPCozCd0XvP+Ua+lmIo+m7fBJYlt9CFL9OKr+ikDCK
+         UEK//rZ3RseNh4QPG8YT5nobN0FDO6izC8hKP7HJvij6wm0q3fXcRchWlCL+xUK2Xb4P
+         8PHA==
+X-Gm-Message-State: ALoCoQnuA0nA+ozmM/Q5cJcFE0AD4pCCRiw6s8xGcM7OV0f9vQCyNYHIv7qpPXkDdag3CT32ZoGd
+X-Received: by 10.13.211.135 with SMTP id v129mr5011769ywd.129.1442937012183;
+ Tue, 22 Sep 2015 08:50:12 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Tue, 22 Sep 2015 08:50:12 -0700 (PDT)
+In-Reply-To: <CAPig+cRGBSYbt6FsRwNR2TYz7vD650f3=KH_c87h27SaVCUTcQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278394>
 
-On Tue, Sep 22, 2015 at 7:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> The current code before your patch limits the allowed pair of notes
-> trees by insisting that both appear as the tips of refs somewhere in
-> refs/notes/*.  For allowing to merge from outside refs/notes/, you
-> need to loosen the location the latter notes tree, the one to update
-> your local notes tree with, can come from.  But that does not mean
-> you would want to loosen the location where the resulting notes tree
-> can go.
+On Mon, Sep 21, 2015 at 5:56 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Sep 21, 2015 at 6:39 PM, Stefan Beller <sbeller@google.com> wrote:
+>> We need the submodule update strategies in a later patch.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>> diff --git a/submodule-config.c b/submodule-config.c
+>> @@ -326,6 +327,21 @@ static int parse_config(const char *var, const char *value, void *data)
+>>                 free((void *) submodule->url);
+>>                 strbuf_addstr(&url, value);
+>>                 submodule->url = strbuf_detach(&url, NULL);
+>> +       } else if (!strcmp(item.buf, "update")) {
+>> +               struct strbuf update = STRBUF_INIT;
+>> +               if (!value) {
+>> +                       ret = config_error_nonbool(var);
+>> +                       goto release_return;
+>> +               }
+>> +               if (!me->overwrite && submodule->update != NULL) {
+>> +                       warn_multiple_config(me->commit_sha1, submodule->name,
+>> +                                       "update");
+>> +                       goto release_return;
+>> +               }
+>> +
+>> +               free((void *) submodule->update);
+>> +               strbuf_addstr(&update, value);
+>> +               submodule->update = strbuf_detach(&update, NULL);
+>>         }
+>>
+>>  release_return:
+>
+> Why the complicated logic flow? Also, why is strbuf 'update' needed?
 
-I do not loosen where the written location can go. My patch series
-sort of does the opposite of where you suggest. I change
-expand_notes_ref to be more "loose" but not still keep the current
-checks in place which ensure that refs outside of refs/notes don't
-write to them.
+To be honest, I just copied it from above, where the url is read using
+the exact same workflow. In the reroll I'll fix both.
 
 >
-> I think the proposed patch conflates them, and that conflation does
-> not help anything.  The rule of that function used to be "It must
-> come from refs/notes/ and nowhere else".  That made sense in the old
-> world order where both must be from refs/notes/, and the rule still
-> makes sense in the new world order for the destination of the merge.
+> I'd have expected to see something simpler, such as:
 >
-
-Yes, I don't change the destination rule, though I do change how we
-can "DWIM" so that "attempting" to merge into "refs/balagrg/foo" does
-not actually merge into "refs/notes/refs/balagrg/foo". I think this is
-sane.
-
-The actual "init_notes_check" code prevents merging into refs outside
-of refs/notes/*
-
-I think it's incredibly confusing that other DWIM's do not expand
-"refs/*" into "refs/something/refs/*"
-
-> The new rule of that function after the proposed patch says "It must
-> come from either refs/notes or refs/ somewhere".  This does not make
-> sense for the destination because it is too loose (and we didn't see
-> any justification why loosening it is a good idea), and it does not
-> make sense for the source because it still is too tight.  It should
-> be able to take anything get_sha1() understands (including $THEIRS
-> in the above example).
-
-Agreed, we should use something more expansive for the non-write
-operations. I still think the proposed change to expand_notes_refs
-would be good... but that's because I find it incredibly confusing.
-Apparently we disagree on that.
-
->
-> In addition you might also want to allow additional DWIMs from X to
-> refs/remote-notes/*/X as well as from X to refs/notes/X, but that is
-> secondary and should be done as a follow-up "nice to have" change,
-> because both "notes/remote-notes/origin/commits" and "notes/commits"
-> would be understood by get_sha1() already, and it is questinable if
-> it is a good idea to introduce special DWIMs that kick in only when
-> the commands are talking about notes in the first place (an equally
-> questionable alternative is to teach get_sha1() about refs/notes/*
-> and refs/remote-notes/*/*, which will make the disambiguation noisy
-> in the normal non-notes codepath---my knee-jerk reaction is to
-> suggest not to go there, either).
-
-The DWIM's I suggest are "foo" -> "refs/notes/foo", "notes/foo" ->
-"refs/notes/foo", as these already work, in addition to "<origin>/foo"
--> "refs/remote-notes/<origin>/foo" and "<origin>/notes/foo" ->
-"refs/remote-notes/<origin>/foo" Obviously only kicking in for notes
-references.
-
->
-> In any case, to get us closer to that endgame, change in the
-> proposed patch does not help.  It tries to cover two different cases
-> with a logic that is not a good match to either.  You need to have
-> two separate helpers to interpret the source and the destination.
->
-
-My patch does the opposite of your suggestion: Loosen expand_notes_ref
-while keeping the same overall restrictions, which has the same result
-if being considered a little backward.
-
-> Calls expand_notes_ref() made on a command line argument that
-> specifies the source (which I think is similar to what the other
-> recent topic calls "read-only") should be made to calls to a more
-> lenient version (and you can start with get_sha1() for that purpose
-> without introducing your own DWIMs in the first step), while leaving
-> calls to expand_notes_ref() for destination and the implementation
-> of expand_notes_ref() itself unmolested, so that we can keep the
-> safety in expands_notes_ref() that makes sure that the destination
-> of a local operation is under refs/notes/*.
-
-expand_notes_ref doesn't actually provide the safety net. You can
-bypass this entirely by using the command line, at least for the
-non-write operations. In addition, documentation says "non qualified
-refs will be expanded" which usually means "refs/*" will be left
-alone, but in this case "refs/*" outside of refs/notes will be
-expanded.
-
-Even with just this patch the only difference is an attempt to use
-refs/foo/bad *won't* expand into "refs/notes/refs/foo/bar" which is an
-expansion I find incredibly confusing to begin with.
-
-Regards,
-Jake
+>     } else if (!strcmp(item.buf, "update")) {
+>         if (!value)
+>             ret = config_error_nonbool(var);
+>         else if (!me->overwrite && ...)
+>             warn_multiple_config(...);
+>         else {
+>             free((void *)submodule->update);
+>             submodule->update = xstrdup(value);
+>         }
+>     }
