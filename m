@@ -1,117 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] notes: don't expand qualified refs in expand_notes_ref
-Date: Tue, 22 Sep 2015 11:37:57 -0700
-Message-ID: <xmqqa8se47wa.fsf@gitster.mtv.corp.google.com>
-References: <1442441194-5506-1-git-send-email-jacob.e.keller@intel.com>
-	<1442441194-5506-2-git-send-email-jacob.e.keller@intel.com>
-	<xmqqzj0mkn7r.fsf@gitster.mtv.corp.google.com>
-	<CA+P7+xpv_0Sf94FqMKJa0v0pSSEWXPRD2KQ0kmNBKC=2hrunhw@mail.gmail.com>
-	<xmqqsi665yjm.fsf@gitster.mtv.corp.google.com>
-	<CA+P7+xrwM44tMHMW+dEJx_tMtcMVEQELNq=J=rqs1uQ+feuZqQ@mail.gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCHv3 02/13] xread: poll on non blocking fds
+Date: Tue, 22 Sep 2015 20:40:06 +0200
+Message-ID: <5601A086.5060104@web.de>
+References: <1442875159-13027-1-git-send-email-sbeller@google.com>
+ <1442875159-13027-3-git-send-email-sbeller@google.com>
+ <xmqq37y78gzt.fsf@gitster.mtv.corp.google.com> <5600DF2D.9010202@web.de>
+ <CA+P7+xozmsT4mZsBdvSQkGx4Wk-bOE1h-vAbRG_LAL5A-MAwTw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Git List <git@vger.kernel.org>, Mike Hommey <mh@glandium.org>,
-	Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 20:38:23 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Vitali Lovich <vlovich@gmail.com>
+To: Jacob Keller <jacob.keller@gmail.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Sep 22 20:40:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeSSM-00040u-4X
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 20:38:22 +0200
+	id 1ZeSUP-0006Kn-Hd
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 20:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758942AbbIVSiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2015 14:38:13 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:36414 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752885AbbIVSiK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2015 14:38:10 -0400
-Received: by pablk4 with SMTP id lk4so706650pab.3
-        for <git@vger.kernel.org>; Tue, 22 Sep 2015 11:37:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=JoJikk9yFcKW7cR/XCApct4XVeMxjSVxr/pLer9v1Uw=;
-        b=Vq65BUkSQwDblGHAEi7roHnjAr3tEBP19HQK4NDK0AszcO9pSlaS0mK839ySA3pdG5
-         +LnuXE1TkBObnqVPZTfd9mnl4PnIMIn8/++7WGVQRCQGLp1UoH1opqH84DJF6ZNFrDrz
-         1O7TIs/CIbkA1Dk02HGfvuy/Z6qKusq1DGbWIiFUsfnfA4h2vnuCBRsvda27pv3dolKD
-         1zad+mPPpsf8EKidOx9BESh0Pktuei9yO30jB8dRF5np7WC1UUL7btlKIclmHTPY0HZ5
-         3H7IZMrUe3qyyTIrXHYXBpc7cSVOLiOUMThl/2Ntw3TETtxkwb06Vy8XFl0ixyCBG1Rl
-         Y3tA==
-X-Received: by 10.68.88.130 with SMTP id bg2mr32301214pbb.129.1442947079353;
-        Tue, 22 Sep 2015 11:37:59 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:fd7e:7071:2eda:9c63])
-        by smtp.gmail.com with ESMTPSA id yi8sm3622152pab.22.2015.09.22.11.37.58
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Tue, 22 Sep 2015 11:37:58 -0700 (PDT)
-In-Reply-To: <CA+P7+xrwM44tMHMW+dEJx_tMtcMVEQELNq=J=rqs1uQ+feuZqQ@mail.gmail.com>
-	(Jacob Keller's message of "Tue, 22 Sep 2015 10:54:12 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S934230AbbIVSkX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Sep 2015 14:40:23 -0400
+Received: from mout.web.de ([212.227.17.12]:49866 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932151AbbIVSkV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2015 14:40:21 -0400
+Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb102) with
+ ESMTPSA (Nemesis) id 0Ls91n-1ahXfd0xvr-013vxe; Tue, 22 Sep 2015 20:40:14
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.2.0
+In-Reply-To: <CA+P7+xozmsT4mZsBdvSQkGx4Wk-bOE1h-vAbRG_LAL5A-MAwTw@mail.gmail.com>
+X-Provags-ID: V03:K0:xSYPDrcwGvpqOhoPvF/VQWfeREiYHj/CM2cl1H32AvBltHZNms2
+ o7e7AyqTgeTutW5GTTPzeFWbHFDDVghKHiozrnf52Hm+w2Xm9UFGsR2UZAiGJM48mERJ3y7
+ 9bUTA07/oIezUHEp2lcqPhv4OnjMJ4hhBwtSMjCPmJ7+TNGHAA3Pu21Z+bYyK0B4A/9QaCU
+ lVGt3+Y5KkZ/JJ1ESLsog==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:U2o8FJfDnQs=:3P33r66zQh2kvSFNLOU0MX
+ BjJpecvsiEyUzihCLQyjslZtPrvQerz12JMMv0zQm0a2W27qHgCtxaWpoipMBmg4fz1wwcwcr
+ 0NkC5SGJkEKtcQJ+jJqFZDp6SPoMfBcEG/dPumUbmpHoOFGwFY9N8IX4i6v8cUfGG/YSW2+mY
+ tH1SSD/RjivyxH4MiAct1WwmtZ8HVIbZi1/QMgtJ2M9BgMAoi9t4cdd7KVhHS4ePZ7jKAQLaj
+ 5SeiPVI4aSgF8DoKRRoYCGMTFLNa1m2rt0Pch0WJ/jtH+RbdHQAXVWyRUc4nDxbSzaBI+0Z00
+ tY4gKv/wf6THGbieV0zVgLiHGqxCpmjuqXnCyFlG+PmtYCAPN1ViFsm3dGFe4gShgdI3ul6zt
+ GQZXL8eDfIOMka0U57UYR+bWsOAGQQ/uIcR4unyo4Yk//k6vMvfLFKPZLfj9bQMuwM8nqy6wX
+ DT2z1Fe4Bqj9cdtDZgpiGLpQPtgVKaikuhNlAqjzJ+SzJjCpu8DoF2f9qh1LqqtYdxYdOi5P2
+ n95jrW/3q1Bbf33TYtJ75WNRk4QBKlw+0dp2mSEUY/7NxHBUnYnuopCFXCtF7hE0sxlWHqh0b
+ Ip1oC3A5AUjm5vlfobjrSGRr/tfrllNg9JKzwIzX0G6QwHte0Nd0ijlviTSw6l20a7KrXSYkp
+ KFfrW8w+w0IeYGT9EIOa3CyV2Z5N9TPJlpk+ye8e8bNdpjiM4X8/fIBG9PMxFkJZZUuiPGoaS
+ FspGtd71bQPd918Hx9aRVreV1bi8Y8uuMx5rCQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278412>
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On 22.09.15 08:23, Jacob Keller wrote:
+> On Mon, Sep 21, 2015 at 9:55 PM, Torsten B=C3=B6gershausen <tboegi@we=
+b.de> wrote:
+>> But in any case I suggest to  xread() as it is, and not to change th=
+e
+>> functionality
+>> behind the back of the users.
+>>
+>>
+>=20
+> I don't think this patch actually changes behavior as it stands now. =
+I
+> think Junio's suggestion does. Personally, I'd prefer some sort of
+> warning when you use xread and get EAGAIN or EWOULDBLOCK. I'd rather
+> see it somehow warn so that we can find the bug (since we really
+> really shouldn't be calling xread with a blocking socket, especially
+> if we have xread_noblock or similar as in this series.
+>=20
+> Not sure if we really want to handle that, but I know we don't want t=
+o
+> change external behavior of xread... I think that polling is better
+> than the current "spinning" behavior.
+>=20
+> Regards,
+> Jake
+Oh sorry for my comment, I mis-read the whole thing completely.
 
-> The other issue here is that expand_notes_ref is called on the --ref
-> argument waaay before the current code even decides if the operation
-> is "read" or "write". Thus we'd have to break this out and handle
-> things very differently.
-
-I think you hit the right nail here.  The handling of --ref argument
-is what you need to adjust to the new world order.
-
-And "safety" is a red herring.  Those who are used to run
-
-	git log --notes=refs/heads/master
-
-and relies on it to refer to refs/notes/refs/heads/master must
-continue to be able to do so.  Changing expand_notes_ref() the
-way the proposed patch does will break them, won't it?  "safety"
-is not the only (or even the primary) requirement, but the
-correctness must also be kept.
-
-> It seems like a lot more heavy lifting to change the entire flow of
-> how we decide when to expand "--ref" for "read" operations vs "write"
-> operations.
->
-> That is, git notes list.
->
-> It's easy to change behavior of git notes merge as it handles its
-> argument for where to merge from separately, but it's not so easy to
-> change git notes show...
-
-Yes, exactly.
-
-I am _more than_ OK to see that read-only accesses to the notes tree
-allowed anything under refs/ (like the proposed patch did) and also
-a raw 40-hex object name in the endgame, but I really would not want
-to see "we meant well and attempted to enhance 'notes merge' but we
-ended up regressing the behaviour of unrelated operations all of a
-sudden".
-
-If you cannot do your change without breaking the existing users,
-then you at least need a sound transition plan.  But I am not sure
-yet if you have to break the world (yet).  Let me think aloud a bit
-more.
-
-There aren't all that many callers of expand_notes_ref().
-
-My preference is to leave that function as-is, especially keep the
-behaviour of the caller in revision.c that handles --show-notes=
-(and --notes= that is its synonym) the same as before.
-
-All the other callers are only reachable from the codepath that
-originates from cmd_notes(), if I am reading the code correctly, and
-that can be enhanced without breaking the existing users.  One
-obvious way to do so would be to make "--ref" to keep the call to
-expand_notes_ref(), and add another "--notes-rawref" or whatever
-option that does not restrict it to "refs/notes", but there may be
-other ways.
+And yes, a warning would be better than a poll()
