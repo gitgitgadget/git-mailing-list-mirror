@@ -1,88 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 1/3] worktree: add top-level worktree.c
-Date: Mon, 21 Sep 2015 18:17:16 -0700
-Message-ID: <xmqq7fnj6yn7.fsf@gitster.mtv.corp.google.com>
-References: <1441402769-35897-1-git-send-email-rappazzo@gmail.com>
-	<1441402769-35897-2-git-send-email-rappazzo@gmail.com>
-	<CAPig+cQRx-uKZnnx2O0pG34HkcEdg1GbGNFd9PHdw+m0O3aJEA@mail.gmail.com>
-	<CANoM8SWP9YrZoUx5w9Do18uZf=5RrCV_ShvyaPQF4=9-vuFVbg@mail.gmail.com>
-	<CAPig+cRPbFw8oTQ63rPtp1cyKms9zi0QkZNvkOWZoxb+mnpZrA@mail.gmail.com>
-	<CANoM8SWV0r9sHUTk3Rfu=psZLKmnjD19Dn_atCuDmc=41420-w@mail.gmail.com>
-	<CAPig+cQjhoVhQtP4_ZYTyLX3-GBXRx2eKM8Yv1=i=pSg=ZuM=Q@mail.gmail.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCHv3 02/13] xread: poll on non blocking fds
+Date: Tue, 22 Sep 2015 06:55:09 +0200
+Message-ID: <5600DF2D.9010202@web.de>
+References: <1442875159-13027-1-git-send-email-sbeller@google.com>	<1442875159-13027-3-git-send-email-sbeller@google.com> <xmqq37y78gzt.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Mike Rappazzo <rappazzo@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 03:17:30 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jacob.keller@gmail.com, peff@peff.net,
+	jrnieder@gmail.com, johannes.schindelin@gmail.com,
+	Jens.Lehmann@web.de, vlovich@gmail.com
+To: Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Sep 22 06:55:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeCD1-0005qE-Ki
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 03:17:27 +0200
+	id 1ZeFcN-0000kF-Ri
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 06:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757576AbbIVBRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2015 21:17:21 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:35317 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752852AbbIVBRT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2015 21:17:19 -0400
-Received: by pacfv12 with SMTP id fv12so134475719pac.2
-        for <git@vger.kernel.org>; Mon, 21 Sep 2015 18:17:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=mUOWRHtb4yNwLGhu13Pf9wtaDCCM006yUG53eLURp6c=;
-        b=mPW0AXQOHAtunx7YMmqciU050hfvcs9r/AqaFK+KipNxw+bMJip8o1B2fS4O64HGJN
-         p+3LoQlYxCxws0yk5NgKQyN+GPiDOJiqXyzJHF+ulcgZFfGKah/gB1L+roAwzcCmHjaG
-         x7IeCwmCzJ1rrg+XH7OJkLxyytQJHF8xvEIaBRkN1PKIT2X8xT5u9uy0pJeSI5PEVxEc
-         tpmu4uSg3dbi3Oev0CX5f6zEs+0p3wGikQpjV/FoWSxrjpYRttvAsox2B0IayyaPUcFd
-         w6BAF3QEWxtdHxgPc+YWJ5DkuROJgMvhjLeTt1FuPOTyS0t7fC64AGMLmrr0qgpJ15Wx
-         MTfg==
-X-Received: by 10.66.139.196 with SMTP id ra4mr28483784pab.88.1442884638934;
-        Mon, 21 Sep 2015 18:17:18 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:89f8:25c:a9fe:f701])
-        by smtp.gmail.com with ESMTPSA id xi1sm27080882pac.48.2015.09.21.18.17.17
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Mon, 21 Sep 2015 18:17:17 -0700 (PDT)
-In-Reply-To: <CAPig+cQjhoVhQtP4_ZYTyLX3-GBXRx2eKM8Yv1=i=pSg=ZuM=Q@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 21 Sep 2015 21:05:34 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753873AbbIVEzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2015 00:55:47 -0400
+Received: from mout.web.de ([212.227.17.12]:59275 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752985AbbIVEzq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2015 00:55:46 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0LudP2-1adfwI1agi-00zoLt; Tue, 22 Sep 2015 06:55:38
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <xmqq37y78gzt.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:rYDp8EAbTiXRItSbOxeDA+XtXTlwSg4FGMuTySt38EV9CsQ2nVn
+ yfHjAVHhXdtmULGOhw6zrsH3BWau7oRNqgy6t/GH9taVWYQJcQqNKKVpNC6855R5+QJ47ER
+ NMh/ef/E0fqPFpcqeLlbkH3xNsAsg2B1Z6xpqJj6gv7c0Uwz0Sb+wB6SiNc9+ma6nJYGwGB
+ jcYU1oUpqvjwMVwu7RKfA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UVujr770SCA=:T70p2cDJa0mKRU+2lpsu90
+ XQs0eWi0MGpKHzBfWvOmFwoEr9hirW+B/pypdP2D6M3/5TpdjyBLFhlTCcRDU21V85+Lj4op0
+ kftKCYG0RkhD+nkupYffUvOlDjrnMsyhDIn0LgjEM1yro7PwN5lKidLNRnC+VxRo5mj0cQRCV
+ v5ZsX69I69+WhJVlAP/FIv1gfJsOr8f96lTRyolypcNvM7Df15ZO8n7IISadPIttHInL66twd
+ EchFIBNGvZhJf8zd27tSJrzShhvD/NUGCewTaey3d0XUuJdeBFKpR76qQebHsymSzdsggOgrp
+ Cy6T87ib6i8N1jBfzz1OaBrHmUBrUgSPLhUKw7uo9rIdOgednxWkS7/pEpsnzRl9N3OewtbE7
+ 9qatyqNohen/6NWCts2qy8wSBTwnLDhPb42pGFT8RkYDz4+NYkjqmdpSxQgGHqyGI4f6ye9OH
+ PtGJWVh/WMCVIK9LO3I1/N4YTod9GbB79WkXjgj7hnM3FMB9iJwpchiJ7533urhrcP+Xm7h1s
+ m+q+g+fhMUpCyr3oHZGNldbJhzwAuHOtVe50ALe2TeX/xXKc2oksGxc43wNCuBTe+5fUFASqF
+ Np319BGJE1V1/EfBiDLmCwTbhv70pqMjP+fFW6vVQSkaP7s4xAy0mIFBz5qRWEqMUuq1amR8a
+ mEdHZUeUjtOsMc5QIF3dxm3fY82fzt2q3X9Q2nBMl8VKw9NrGSsBezfh3CG/9423vvdROLzPo
+ aRW7a0pW2g+D+TV+lPpuaxtxKvRSDyvaDE3vIw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278375>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On 09/22/2015 01:55 AM, Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> So if we get an EAGAIN or EWOULDBLOCK error the fd must be nonblocking.
+>> As the intend of xread is to read as much as possible either until the
+>> fd is EOF or an actual error occurs, we can ease the feeder of the fd
+>> by not spinning the whole time, but rather wait for it politely by not
+>> busy waiting.
+> As you said in the cover letter, this does look questionable.  It is
+> sweeping the problem under the rug (the hard-coded 100ms is a good
+> clue to tell that).  If the caller does want us to read thru to the
+> end, then we would need to make it easier for such a caller to stop
+> marking the file descriptor to be non-blocking, but this does not do
+> anything to help that.  An alternative might be to automatically
+> turn nonblocking off temporarily once we get EAGAIN (and turn it on
+> again before leaving); that would be an approach to make it
+> unnecessary to fix the caller (which has its own set of problems,
+> though).
+Wouldn'  that function be somewhat mis-named and/or mis-behaved?
+read_in_full_with_hard_coded_timeout_and_fix_O_NONBLOCK()
+could make sure that the user of this function knows what's going on
+under the hood.
 
-> Making the last entry a NULL means get_worktrees() would have to
-> return an array of pointers rather than an array of structures, which
-> is more syntactically noisy, and complex since it's harder to reason
-> about pointer-to-pointer. In my mind, at least, the simplicity of the
-> array of structures approach (even with the slight ugliness of the
-> dummy sentinel) outweighs the complexity of the array-of-pointers
-> approach.
+More seriously, if someone calls xread() with a non-blocking socket,
+the caller wants to return and does want to his own timeout handling.
 
-Hmph, I think the bog-standard way in our code is an array of
-pointers.  An array of structures have a few downsides:
+If we want to have a timeouted read(), we can call it
 
- - You have to copy a lot when you do realloc(3);
+xread_timout(int fd, voxread(int fd, void *buf, size_t len, int timeout)
 
- - You have to move a lot when you insert a new element;
+(Or something similar) to make clear that there is an underlying
+timeout handling.
+Another option could be to name the function
 
- - Individual structure cannot be pointed at by a pointer sensibly.
-   Passing &worktree[4] to a function that expects "struct worktree *"
-   is unsafe unless you are sure nobody is mucking with the worktree[]
-   array.
+read_in_full_timeout().
 
-For the read-only operation "worktree list", the last one may not
-matter much because you would build all the elements before doing
-anything else, but once you want to run this inside a library and
-maintain the in-core forest of worktrees that are in sync with what
-your running process does (i.e. create a new or destroy an existing
-worktree), it may become problematic.
+But in any case I suggest to  xread() as it is, and not to change the 
+functionality
+behind the back of the users.
