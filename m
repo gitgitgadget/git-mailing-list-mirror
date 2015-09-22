@@ -1,231 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 2/4] worktree: refactor find_linked_symref function
-Date: Tue, 22 Sep 2015 10:44:22 -0700
-Message-ID: <xmqqmvwe4adl.fsf@gitster.mtv.corp.google.com>
-References: <1442583027-47653-1-git-send-email-rappazzo@gmail.com>
-	<1442583027-47653-3-git-send-email-rappazzo@gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 1/2] notes: don't expand qualified refs in expand_notes_ref
+Date: Tue, 22 Sep 2015 10:54:12 -0700
+Message-ID: <CA+P7+xrwM44tMHMW+dEJx_tMtcMVEQELNq=J=rqs1uQ+feuZqQ@mail.gmail.com>
+References: <1442441194-5506-1-git-send-email-jacob.e.keller@intel.com>
+ <1442441194-5506-2-git-send-email-jacob.e.keller@intel.com>
+ <xmqqzj0mkn7r.fsf@gitster.mtv.corp.google.com> <CA+P7+xpv_0Sf94FqMKJa0v0pSSEWXPRD2KQ0kmNBKC=2hrunhw@mail.gmail.com>
+ <xmqqsi665yjm.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: sunshine@sunshineco.com, dturner@twopensource.com,
-	git@vger.kernel.org
-To: Michael Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 19:44:31 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	Git List <git@vger.kernel.org>, Mike Hommey <mh@glandium.org>,
+	Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 22 19:54:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeRcE-0005wz-21
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 19:44:30 +0200
+	id 1ZeRmC-0008RO-AL
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 19:54:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757961AbbIVRoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2015 13:44:25 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:36564 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752380AbbIVRoY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2015 13:44:24 -0400
-Received: by pacgz1 with SMTP id gz1so12440264pac.3
-        for <git@vger.kernel.org>; Tue, 22 Sep 2015 10:44:23 -0700 (PDT)
+	id S1759466AbbIVRye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2015 13:54:34 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:36581 "EHLO
+	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759400AbbIVRyd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2015 13:54:33 -0400
+Received: by ioii196 with SMTP id i196so22228513ioi.3
+        for <git@vger.kernel.org>; Tue, 22 Sep 2015 10:54:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=rBL3MMhiQ9XRRv7meuWYpIhddM9YpYoZ1xJvQ+saNFw=;
-        b=lMzgfh+GgVHbS6E5rkx8EvKXq3fboWA3G46fedUu+9Q5vQza1tvnREOExcp8DL/uSD
-         cJbdGpqrYi5E3P8pvXy9Pzgejs9X3611CpHWsrKRULsr6TNsQbmVfhm13sc07HrHNlOm
-         faquTs/wl0T7ySeT9HaAEU54Z6ps8UHgm5YlIdjjAK5v16fQk11lbK+VMMse4kT3Ht6k
-         Blj10C7Dx1/O8GHGyJBpN2J9IBp/GqYx3EOOTj+uMolpw1CsQQe9YUdpVD6AzsUTeKZC
-         7F9NY3I8wR7te+bxwcdqwsDjHb9OAbR4pmtCeKlmjIrGPMp0QBpBt6zfblOswLKxTepa
-         hknw==
-X-Received: by 10.68.242.42 with SMTP id wn10mr32818331pbc.77.1442943863716;
-        Tue, 22 Sep 2015 10:44:23 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:fd7e:7071:2eda:9c63])
-        by smtp.gmail.com with ESMTPSA id un2sm3452848pac.28.2015.09.22.10.44.22
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Tue, 22 Sep 2015 10:44:23 -0700 (PDT)
-In-Reply-To: <1442583027-47653-3-git-send-email-rappazzo@gmail.com> (Michael
-	Rappazzo's message of "Fri, 18 Sep 2015 09:30:25 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0nOVIceaUAmMv1dCwmfH3X19a88KI4tEMsam8RsD06E=;
+        b=QNiz8nzMJcf7SCxBSF8s1dHYGHuTseQ92F0gdxLnDeRz/ZF5URChr2sjvpfIeMQb0X
+         gluYngixJEVG8tGUzYCrUAXFsiN1Buoavw4eVyoxBqumjRz+NeK4a3bpMFZWxcclFo9R
+         ozIuzlql+9NXt4BQ6xf8MS8MVce3ArO5GXXwbxSPo4227Zn2ruaY/XA6au9x7kJh6j27
+         2TXmFcb+ST3pThrHBiCuXy7Lq4OlXd9Lyg8o8NRganR2arDpWAEgU4NYYUvLFRU1JjIr
+         N/d8qiyQKJyAk5nkiQbTe6ryzb4LqQbctdAW6eHtEDI42upvhzXYqJkvN4dndM5ytF7y
+         DJBw==
+X-Received: by 10.107.133.151 with SMTP id p23mr40720350ioi.71.1442944472227;
+ Tue, 22 Sep 2015 10:54:32 -0700 (PDT)
+Received: by 10.107.132.155 with HTTP; Tue, 22 Sep 2015 10:54:12 -0700 (PDT)
+In-Reply-To: <xmqqsi665yjm.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278406>
 
-Michael Rappazzo <rappazzo@gmail.com> writes:
+On Tue, Sep 22, 2015 at 7:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Calls expand_notes_ref() made on a command line argument that
+> specifies the source (which I think is similar to what the other
+> recent topic calls "read-only") should be made to calls to a more
+> lenient version (and you can start with get_sha1() for that purpose
+> without introducing your own DWIMs in the first step), while leaving
+> calls to expand_notes_ref() for destination and the implementation
+> of expand_notes_ref() itself unmolested, so that we can keep the
+> safety in expands_notes_ref() that makes sure that the destination
+> of a local operation is under refs/notes/*.
 
-> Refactoring will help transition this code to provide additional useful
-> worktree functions.
->
-> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
-> ---
->  worktree.c | 86 ++++++++++++++++++++++++++++++++++++++++++++++----------------
->  1 file changed, 64 insertions(+), 22 deletions(-)
->
-> diff --git a/worktree.c b/worktree.c
-> index 10e1496..5c75875 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -3,6 +3,60 @@
->  #include "strbuf.h"
->  #include "worktree.h"
->  
-> +/*
-> + * read 'path_to_ref' into 'ref'.  Also if is_detached is not NULL,
-> + * set is_detached to 1 if the ref is detatched.
+The other issue here is that expand_notes_ref is called on the --ref
+argument waaay before the current code even decides if the operation
+is "read" or "write". Thus we'd have to break this out and handle
+things very differently.
 
-set is_detached to 1 (0) if the ref is detatched (is not detached).
+I don't believe expand_notes_ref() is actually providing any safety.
+That is all done by init_notes_check. Note that passing the
+environment variable bypasses the expand_notes_ref entirely, though I
+think we did use it as part of the refs configuration.
 
-> + *
-> + * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside $GIT_DIR so
-> + * for linked worktrees, `resolve_ref_unsafe()` won't work (it uses
-> + * git_path). Parse the ref ourselves.
-> + *
-> + * return -1 if the ref is not a proper ref, 0 otherwise (success)
-> + */
-> +static int parse_ref(char *path_to_ref, struct strbuf *ref, int *is_detached)
-> +{
-> +	if (is_detached)
-> +		*is_detached = 0;
-> +	if (!strbuf_readlink(ref, path_to_ref, 0)) {
-> +		if (!starts_with(ref->buf, "refs/")
-> +				|| check_refname_format(ref->buf, 0))
+It seems like a lot more heavy lifting to change the entire flow of
+how we decide when to expand "--ref" for "read" operations vs "write"
+operations.
 
-Don't try to be creative with the format and stick to the original.
+That is, git notes list.
 
-	if (!starts_with(ref->buf, "refs/") ||
-	    check_refname_format(ref->buf, 0))
+It's easy to change behavior of git notes merge as it handles its
+argument for where to merge from separately, but it's not so easy to
+change git notes show...
 
-> +			return -1;
-> +
-
-This blank makes a strange code by making the "return -1" have no
-blank above and one blank below.
-
-> +	} else if (strbuf_read_file(ref, path_to_ref, 0) >= 0) {
-> +		if (starts_with(ref->buf, "ref:")) {
-> +			strbuf_remove(ref, 0, strlen("ref:"));
-> +			strbuf_trim(ref);
-> +			if (check_refname_format(ref->buf, 0))
-> +				return -1;
-> +		} else if (is_detached)
-> +			*is_detached = 1;
-
-Minor: I have a suspicion that this would be easier to follow:
-
-		if (!starts_with(...)) {
-			if (is_detached)
-				*is_detached = 1;
-		} else {
-                	strbuf_remove(...);
-                        strbuf_trim(...);
-                        if (check_refname_format(...))
-				return -1;
-		}
-
-> +	}
-
-What should happen when strbuf_read_file() above fails?  Would it be
-a bug (i.e. the caller shouldn't have called us in the first place
-with such a broken ref), would it be a repository inconsistency
-(i.e. it is worth warning and stop the caller from doing further
-damage), or is it OK to silently succeed?
-
-> +	return 0;
-> +}
-> +
-> +static char *find_main_symref(const char *symref, const char *branch)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +	struct strbuf path = STRBUF_INIT;
-> +	struct strbuf gitdir = STRBUF_INIT;
-> +	char *existing = NULL;
-> +
-> +	strbuf_addf(&path, "%s/%s", get_git_common_dir(), symref);
-> +	if (parse_ref(path.buf, &sb, NULL) == -1)
-> +		goto done;
-
-I know you described it to "return -1 on an error", but as a general
-style, for a function that signals a success by returning 0 and
-negative on error (or on various kinds of errors), it is easier to
-follow if you followed a more common pattern:
-
-	if (parse_ref(...) < 0)
-        	goto done;
-
-> +	if (strcmp(sb.buf, branch))
-> +		goto done;
-> +	strbuf_addstr(&gitdir, get_git_common_dir());
-> +	strbuf_strip_suffix(&gitdir, ".git");
-> +	existing = strbuf_detach(&gitdir, NULL);
-> +done:
-> +	strbuf_release(&path);
-> +	strbuf_release(&sb);
-> +	strbuf_release(&gitdir);
-> +
-> +	return existing;
-> +}
-> +
->  static char *find_linked_symref(const char *symref, const char *branch,
->  				const char *id)
->  {
-> @@ -11,36 +65,24 @@ static char *find_linked_symref(const char *symref, const char *branch,
->  	struct strbuf gitdir = STRBUF_INIT;
->  	char *existing = NULL;
->  
-> +	if (!id)
-> +		goto done;
-
-A caller that calls this function with id==NULL would always get a
-no-op.  Is that what the caller intended, or should it have called
-the new find_main_symref() instead?  I'd imagine it is the latter,
-in which case
-
-	if (!id)
-        	die("BUG");
-
-is more appropriate.  On the other hand, if you are trying to keep
-the old interface to allow id==NULL to mean "get the information for
-the primary one", I'd expect this to call find_main_symref() for the
-(old-style) callers.
-
-In either case, this "no id? no-op" looks funny.
-
->  	/*
->  	 * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside
->  	 * $GIT_DIR so resolve_ref_unsafe() won't work (it uses
->  	 * git_path). Parse the ref ourselves.
->  	 */
-
-You moved this comment to parse_ref(), which is a more appropriate
-home for it.  Perhaps you want to remove this copy from here?
-
-> -	if (id)
-> -		strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, symref);
-> -	else
-> -		strbuf_addf(&path, "%s/%s", get_git_common_dir(), symref);
-> +	strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, symref);
->  
-> -	if (!strbuf_readlink(&sb, path.buf, 0)) {
-> -		if (!starts_with(sb.buf, "refs/") ||
-> -		    check_refname_format(sb.buf, 0))
-> -			goto done;
-> -	} else if (strbuf_read_file(&sb, path.buf, 0) >= 0 &&
-> -	    starts_with(sb.buf, "ref:")) {
-> -		strbuf_remove(&sb, 0, strlen("ref:"));
-> -		strbuf_trim(&sb);
-> -	} else
-> +	if (parse_ref(path.buf, &sb, NULL) == -1)
->  		goto done;
-
-Same comment as in find_main_symref() applies here.
-
-I can see the value of splitting out parse_ref() into a separate
-function, but it is not immediately obvious how it would be an
-overall win to duplicate major parts of the logic that used to be
-shared for "primary" and "linked" cases in a single function into
-two separate, simpler and similar functions at this point in the
-series (note that I did not say "it clearly made it worse").
-Perhaps reviews on the callers will help us answer that.
-
-Thanks.
+Regards,
+Jake
