@@ -1,106 +1,142 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v2] notes: correct documentation of DWIMery for notes references
-Date: Tue, 22 Sep 2015 15:15:03 -0700
-Message-ID: <1442960103-22515-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Mike Hommey <mh@glandium.org>, Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 23 00:15:17 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 06/13] run-command: add an asynchronous parallel child processor
+Date: Tue, 22 Sep 2015 15:23:04 -0700
+Message-ID: <xmqq4mim14c7.fsf@gitster.mtv.corp.google.com>
+References: <1442875159-13027-1-git-send-email-sbeller@google.com>
+	<1442875159-13027-7-git-send-email-sbeller@google.com>
+	<xmqqfv276z1q.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbUkUSAP+muhYxTwHZdD+ojJYXjogZfRXs0PemEdcqfbA@mail.gmail.com>
+	<xmqqtwqm2puk.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kYwMrpU-gW6FsbH1W4TRPisZH9GJoyZ6hoimXdxz4HCYQ@mail.gmail.com>
+	<xmqqh9mm1690.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZFoTUugFdOuikOBUbg0DG+TJ3tNTuZaCs7WSaa2r7=Bg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Vitali Lovich <vlovich@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 00:23:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeVqE-0000Z2-JD
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 00:15:14 +0200
+	id 1ZeVxy-0000lS-6v
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 00:23:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759654AbbIVWPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2015 18:15:08 -0400
-Received: from mga09.intel.com ([134.134.136.24]:60681 "EHLO mga09.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759478AbbIVWPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2015 18:15:07 -0400
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga102.jf.intel.com with ESMTP; 22 Sep 2015 15:15:05 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.17,574,1437462000"; 
-   d="scan'208";a="566532678"
-Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.123])
-  by FMSMGA003.fm.intel.com with ESMTP; 22 Sep 2015 15:15:05 -0700
-X-Mailer: git-send-email 2.6.0.rc3.238.gc07a1e8
+	id S934926AbbIVWXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2015 18:23:09 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36444 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752467AbbIVWXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2015 18:23:07 -0400
+Received: by pacbt3 with SMTP id bt3so2749686pac.3
+        for <git@vger.kernel.org>; Tue, 22 Sep 2015 15:23:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=prpltViq26Ldlvre6WKOLtDNOI/+cv2+Q/8zutGHeus=;
+        b=flLVoIAcw2VCuVRUG+FG+jDkZVHiN5BYqNmKIeDFSW825Jmy+kQm1672OX6iNltncz
+         euCQKo0SeeoWbdDU2wgZRcHyJmCRHRQsHF05fqf9ixXyQUsGtB9NenhfpDLjOmlYqY3j
+         QpGLvzyf2o6JSIMROYFH5iC2BJdSW7Ewy79qX3KB3qdTxL6/QrweZ2O/YlsYzPd7xaI+
+         XYsLaKdWT2W5igUVj/PbBHOZKqEWmfISOIZfadA3rsJGF4E9K0l0e4kuxXmesTMZbwrC
+         CLQXPPaejF0reBDMfS8N7Nla0EUoX1+I41Oddp81Tx0yRNuth/N3Xo8S6VJvhywfxC+J
+         GwjQ==
+X-Received: by 10.66.100.225 with SMTP id fb1mr528038pab.138.1442960587343;
+        Tue, 22 Sep 2015 15:23:07 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:fd7e:7071:2eda:9c63])
+        by smtp.gmail.com with ESMTPSA id j16sm4171755pbq.23.2015.09.22.15.23.05
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Tue, 22 Sep 2015 15:23:05 -0700 (PDT)
+In-Reply-To: <CAGZ79kZFoTUugFdOuikOBUbg0DG+TJ3tNTuZaCs7WSaa2r7=Bg@mail.gmail.com>
+	(Stefan Beller's message of "Tue, 22 Sep 2015 14:54:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278446>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Stefan Beller <sbeller@google.com> writes:
 
-expand_notes_ref is used by --ref from git-notes(1) and --notes from the
-git log to find the full refname of a notes reference. Previously the
-documentation of these options was not clear about what sorts of
-expansions would be performed. Fix the documentation to clearly and
-accurately describe the behavior of the expansions.
+> On Tue, Sep 22, 2015 at 2:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Stefan Beller <sbeller@google.com> writes:
+>>
+>>> On Tue, Sep 22, 2015 at 12:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> Stefan Beller <sbeller@google.com> writes:
+>>>>
+>>>>> So how would you find out when we are done?
+>>>>
+>>>>         while (1) {
+>>>>                 if (we have available slot)
+>>>>                         ask to start a new one;
+>>>>                 if (nobody is running anymore)
+>>>>                         break;
+>>>>                 collect the output from running ones;
+>>>>                 drain the output from the foreground one;
+>>>>                 cull the finished process;
+>>>>         }
+>>>>
+>>>
+>>> Personally I do not like the break; in the middle of
+>>> the loop, but that's personal preference, I'd guess.
+>>> I'll also move the condition for (we have available slot)
+>>> back inside the called function.
+>>>
+>>> So I am thinking about using this in the reroll instead:
+>>>
+>>>     run_processes_parallel_start_as_needed(&pp);
+>>>     while (pp.nr_processes > 0) {
+>>>         run_processes_parallel_buffer_stderr(&pp);
+>>>         run_processes_parallel_output(&pp);
+>>>         run_processes_parallel_collect_finished(&pp);
+>>>         run_processes_parallel_start_as_needed(&pp);
+>>>     }
+>>
+>> If you truly think the latter is easier to follow its logic (with
+>> the duplicated call to the same function only to avoid break that
+>> makes it clear why we are quitting the loop,
+>
+> I dislike having the call twice, too.
+> ...
+>> and without the
+>> explicit "start only if we can afford to"), then I have to say that
+>> our design tastes are fundamentally incompatible.
+> ...
+> I'll think about that.
 
-Add a test for this expansion when using git notes get-ref in order to
-prevent future patches from changing this behavior.
+Don't waste too much time on it ;-)  This is largely a taste thing,
+and taste is very hard to reason about, understand, teach and learn.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- Documentation/git-notes.txt      | 4 +++-
- Documentation/pretty-options.txt | 5 +++--
- t/t3301-notes.sh                 | 6 ++++++
- 3 files changed, 12 insertions(+), 3 deletions(-)
+Having said that, if I can pick one thing that I foresee to be
+problematic the most (aside from these overlong names of the
+functions that are private and do not need such long names), it is
+that "start as many without giving any control to the caller"
+interface.  I wrote "start *a* new one" in the outline above for a
+reason.
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index a9a916f360ec..8de349968a3b 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -162,7 +162,9 @@ OPTIONS
- --ref <ref>::
- 	Manipulate the notes tree in <ref>.  This overrides
- 	'GIT_NOTES_REF' and the "core.notesRef" configuration.  The ref
--	is taken to be in `refs/notes/` if it is not qualified.
-+	specifies the full refname when it begins with `refs/notes/`; when it
-+	begins with `notes/`, `refs/` and otherwise `refs/notes/` is prefixed
-+	to form a full name of the ref.
- 
- --ignore-missing::
- 	Do not consider it an error to request removing notes from an
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index 8d6c5cec4c5e..4b659ac1a6a6 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -55,8 +55,9 @@ By default, the notes shown are from the notes refs listed in the
- environment overrides). See linkgit:git-config[1] for more details.
- +
- With an optional '<ref>' argument, show this notes ref instead of the
--default notes ref(s). The ref is taken to be in `refs/notes/` if it
--is not qualified.
-+default notes ref(s). The ref specifies the full refname when it begins
-+with `refs/notes/`; when it begins with `notes/`, `refs/` and otherwise
-+`refs/notes/` is prefixed to form a full name of the ref.
- +
- Multiple --notes options can be combined to control which notes are
- being displayed. Examples: "--notes=foo" will show only notes from
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 06b45847c147..2d200fdf36c6 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -1132,6 +1132,12 @@ test_expect_success 'git notes copy diagnoses too many or too few parameters' '
- 	test_must_fail git notes copy one two three
- '
- 
-+test_expect_success 'git notes get-ref expands refs/heads/master to refs/notes/refs/heads/master' '
-+	test_unconfig core.notesRef &&
-+	sane_unset GIT_NOTES_REF &&
-+	test "$(git notes --ref=refs/heads/master get-ref)" = "refs/notes/refs/heads/master"
-+'
-+
- test_expect_success 'git notes get-ref (no overrides)' '
- 	test_unconfig core.notesRef &&
- 	sane_unset GIT_NOTES_REF &&
--- 
-2.6.0.rc3.238.gc07a1e8
+Even if you want to utilize a moderate number of processes, say 16,
+working at the steady state, I suspect that we would find it
+suboptimal from perceived latency point of view, if we spin up 16
+processes all at once at the very beginning before we start to
+collect output from the designated foreground process and relay its
+first line of output.  We may want to be able to tweak the caller to
+spin up just a few first and let the loop ramp up to the full blast
+gradually so that we can give an early feedback to the end user.
+That is not something easy to arrange with "start as many without
+giving control to the caller" interface.  We probably will discover
+other kinds of scheduling issues once we get familiar with this
+machinery and would find need for finer grained control.
+
+And I consider such a ramp-up logic shouldn't be hidden inside the
+"start_as_needed()" helper function---it is the way how the calling
+loop wants its processes started, and I'd prefer to have the logic
+visible in the caller's loop.
+
+But that is also largely a "taste" thing.
