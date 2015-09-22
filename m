@@ -1,80 +1,108 @@
-From: Josh Boyer <jwboyer@gmail.com>
-Subject: Re: Specifying N revisions after the initial commit
-Date: Tue, 22 Sep 2015 16:11:23 -0400
-Message-ID: <CA+5PVA6zUXGs2R-MOoj5sBxwUqM7HP=tx-0WZJzPf71MsjH9MA@mail.gmail.com>
-References: <CA+5PVA40x8bxW63X+b77FDO8btRBaVOg=fq+ZyX=bdJ+uEm9gA@mail.gmail.com>
-	<20150922214037.b6b48059f051fcd4060a5a85@domain007.com>
-	<CA+5PVA6YWJizRjseeJ4EpRya0Mpyrv3DoNsB3=Gi=dOiAoDfHg@mail.gmail.com>
-	<xmqqpp1a2pql.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Konstantin Khomoutov <kostix+git@007spb.ru>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 22:11:49 2015
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH] notes: document behavior of --ref and --notes DWIMery
+Date: Tue, 22 Sep 2015 13:24:36 -0700
+Message-ID: <1442953476-24537-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Mike Hommey <mh@glandium.org>, Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 22 22:24:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeTui-0001gp-D6
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 22:11:44 +0200
+	id 1ZeU7M-0007Cc-4L
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 22:24:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934628AbbIVUL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2015 16:11:27 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:35940 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933591AbbIVULY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2015 16:11:24 -0400
-Received: by ioii196 with SMTP id i196so25866283ioi.3
-        for <git@vger.kernel.org>; Tue, 22 Sep 2015 13:11:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/85UIO7boY8vs9jYeGhPjCapkidmz/rjj/bvGEiRVKc=;
-        b=GEWG6tvRnS3pBVWkEuKFtPg02yqwpWO+AfetCl7ELZG/HNsyV58b8kfL7hq0PFhR4R
-         BVq5K5UjjMWzB2lrVZvjhVi2JCcLMVm86aMrKpgjcYWzYqu8VRIXYathegtfsn3zycVu
-         jN6ZK/IzEG0CeZ+tua6qPg2yR3WPo6f/z4/2VRU4yK0QiDFHE0TIFMCqI0VdkY77YUIg
-         O3orlX8cMOpHtWFxImfHayIJV1lXlyix2Cp2ABElshwCPRFdae584VuXgr6QmRbCkXug
-         GAchKBHjH5UrFfAXGccakGYCmNMLjDv+s0MnJ55fZtNaynNYGh9ANDcja14vZePE6jyL
-         w9pg==
-X-Received: by 10.107.11.154 with SMTP id 26mr38069975iol.105.1442952684065;
- Tue, 22 Sep 2015 13:11:24 -0700 (PDT)
-Received: by 10.64.132.167 with HTTP; Tue, 22 Sep 2015 13:11:23 -0700 (PDT)
-In-Reply-To: <xmqqpp1a2pql.fsf@gitster.mtv.corp.google.com>
+	id S934569AbbIVUYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2015 16:24:44 -0400
+Received: from mga09.intel.com ([134.134.136.24]:1614 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934567AbbIVUYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2015 16:24:43 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga102.jf.intel.com with ESMTP; 22 Sep 2015 13:24:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.17,574,1437462000"; 
+   d="scan'208";a="795053076"
+Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.123])
+  by fmsmga001.fm.intel.com with ESMTP; 22 Sep 2015 13:24:42 -0700
+X-Mailer: git-send-email 2.6.0.rc3.238.gc07a1e8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278430>
 
-On Tue, Sep 22, 2015 at 3:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Josh Boyer <jwboyer@gmail.com> writes:
->
->> On Tue, Sep 22, 2015 at 2:40 PM, Konstantin Khomoutov
->> ...
->>> Hence, given any particular commit, you're able to trace all of its
->>> ancestry, but the reverse is not possible.
->>
->> That makes sense.  I suppose I will have to resort to parsing output
->> of git-rev-list or something.  Thanks for the reminder.
->
-> I think Konstantin explained why it fundamentally does not make
-> sense to ask "which one is the Nth one after the root".  I am not
-> sure how running rev-list and count its output would help, unless
-> you are now solving a different problem (perhaps "find all the ones
-> that are Nth after some root", which does have an answer).
+From: Jacob Keller <jacob.keller@gmail.com>
 
-Oh, context would help, yes.  In the case of the tree I'm parsing, I
-know for a fact that the commit history is entirely linear and will
-(should) always remain so.  E.g.
+The --notes and --ref parameter for selecting which notes ref to operate
+on are based off of expand_notes_ref functionality. The documentation
+mentioned that an unqualified ref argument would be taken as under
+`refs/notes/`. However, this does not clearly indicate that
+`refs/heads/master` will expand to `refs/notes/refs/heads/master`, so
+document this behavior.
 
-A - B - C - D - E - F ... {N}
+Add a further test for the expected behavior of git notes --ref
+refs/heads/master get-ref as well, to ensure future patches do not break
+this assumption.
 
-So yes, finding e.g. the second commit after the root is complicated
-for something resembling anything like a typical git repo, but this
-isn't like that.  In other words, I can cheat.  Or at least I'm pretty
-sure I can cheat :).
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ Documentation/git-notes.txt      | 4 +++-
+ Documentation/pretty-options.txt | 5 +++--
+ t/t3301-notes.sh                 | 6 ++++++
+ 3 files changed, 12 insertions(+), 3 deletions(-)
 
-josh
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index a9a916f360ec..2ed9c16a1aac 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -162,7 +162,9 @@ OPTIONS
+ --ref <ref>::
+ 	Manipulate the notes tree in <ref>.  This overrides
+ 	'GIT_NOTES_REF' and the "core.notesRef" configuration.  The ref
+-	is taken to be in `refs/notes/` if it is not qualified.
++	is taken to be in `refs/notes/` even if it is qualified under some
++	other location; in other words, `refs/heads/master` will be expanded
++	to `refs/notes/refs/heads/master`.
+ 
+ --ignore-missing::
+ 	Do not consider it an error to request removing notes from an
+diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+index 8d6c5cec4c5e..abcb787e7149 100644
+--- a/Documentation/pretty-options.txt
++++ b/Documentation/pretty-options.txt
+@@ -55,8 +55,9 @@ By default, the notes shown are from the notes refs listed in the
+ environment overrides). See linkgit:git-config[1] for more details.
+ +
+ With an optional '<ref>' argument, show this notes ref instead of the
+-default notes ref(s). The ref is taken to be in `refs/notes/` if it
+-is not qualified.
++default notes ref(s). The ref is taken to be in `refs/notes/` even if it is
++qualified under some other location; in other words, `refs/heads/master`
++will be expanded to `refs/notes/refs/heads/master`.
+ +
+ Multiple --notes options can be combined to control which notes are
+ being displayed. Examples: "--notes=foo" will show only notes from
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 06b45847c147..2d200fdf36c6 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -1132,6 +1132,12 @@ test_expect_success 'git notes copy diagnoses too many or too few parameters' '
+ 	test_must_fail git notes copy one two three
+ '
+ 
++test_expect_success 'git notes get-ref expands refs/heads/master to refs/notes/refs/heads/master' '
++	test_unconfig core.notesRef &&
++	sane_unset GIT_NOTES_REF &&
++	test "$(git notes --ref=refs/heads/master get-ref)" = "refs/notes/refs/heads/master"
++'
++
+ test_expect_success 'git notes get-ref (no overrides)' '
+ 	test_unconfig core.notesRef &&
+ 	sane_unset GIT_NOTES_REF &&
+-- 
+2.6.0.rc3.238.gc07a1e8
