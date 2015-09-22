@@ -1,88 +1,181 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v7 2/3] worktree: move/refactor find_shared_symref from branch.c
-Date: Mon, 21 Sep 2015 21:07:31 -0400
-Message-ID: <CAPig+cQ6pH=NzUybg-y_0-=9BoHQNJf8Kx+fos=d+PkB97gcwg@mail.gmail.com>
-References: <1441402769-35897-1-git-send-email-rappazzo@gmail.com>
-	<1441402769-35897-3-git-send-email-rappazzo@gmail.com>
-	<CAPig+cT6JLzPPpJKPxAZGGduEQTRzwa57pHtGOJjPYPxCwJV=w@mail.gmail.com>
-	<CANoM8SVJr_B83vU43MFmDiL8phRcTqG3=5krk9iquuH3w5dN_Q@mail.gmail.com>
-	<CAPig+cTP_Vgtm=D1ESrPMs=r44OpGNUdEBjYMQgnQrtG-WsiaQ@mail.gmail.com>
-	<CANoM8SUTOgqOsPxO1NYgjPbwSkC=odeRKfbMtds65CZitSqxsA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 06/13] run-command: add an asynchronous parallel child processor
+Date: Mon, 21 Sep 2015 18:08:33 -0700
+Message-ID: <xmqqfv276z1q.fsf@gitster.mtv.corp.google.com>
+References: <1442875159-13027-1-git-send-email-sbeller@google.com>
+	<1442875159-13027-7-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>,
-	Git List <git@vger.kernel.org>
-To: Mike Rappazzo <rappazzo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 03:07:38 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, jacob.keller@gmail.com, peff@peff.net,
+	jrnieder@gmail.com, johannes.schindelin@gmail.com,
+	Jens.Lehmann@web.de, vlovich@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Sep 22 03:08:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeC3V-0000GW-Mf
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 03:07:38 +0200
+	id 1ZeC4W-0001lM-3S
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Sep 2015 03:08:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757432AbbIVBHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2015 21:07:33 -0400
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:34382 "EHLO
-	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756290AbbIVBHc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2015 21:07:32 -0400
-Received: by vkhf67 with SMTP id f67so76521565vkh.1
-        for <git@vger.kernel.org>; Mon, 21 Sep 2015 18:07:32 -0700 (PDT)
+	id S1757486AbbIVBIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2015 21:08:35 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:34236 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754284AbbIVBIf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2015 21:08:35 -0400
+Received: by padhy16 with SMTP id hy16so131574854pad.1
+        for <git@vger.kernel.org>; Mon, 21 Sep 2015 18:08:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=qaDPjVnsYgRMlthRWy2d3rLWVoItObdhCToG0c2bd6k=;
-        b=pRZ14wFYOT0SqPqNqAqINZYvO0Wtk8hJNbrvXwXXVKX/ICorl7RAFeq6lMHS3dIupO
-         sAfqjhc8QiTbc4WzvoAuOGBhsYn0rgG1jtvNnoIoMX+CrK/bADc48mNbdT4ErzC0rkLc
-         kMXUvSynWJdmlM5SLhX+UPYHU9U8TUBn99M9Gx3gKwqCZYISI2xwz8SN2qGjdgnz+OHp
-         WQrh8HckJ7DsTw8WiOux/xKnlNyqePPNjmh954QG/K7BlMVDLbfUefcEScruHr1sZ0NL
-         5Ulj/rzR8esU9tW6/1oDEHpXZHbDKqfWv3S9q8F+TAkiYY7Z2pH9+yAcWH4TCDX3WHTJ
-         JlJA==
-X-Received: by 10.31.178.3 with SMTP id b3mr7525053vkf.19.1442884052021; Mon,
- 21 Sep 2015 18:07:32 -0700 (PDT)
-Received: by 10.31.224.68 with HTTP; Mon, 21 Sep 2015 18:07:31 -0700 (PDT)
-In-Reply-To: <CANoM8SUTOgqOsPxO1NYgjPbwSkC=odeRKfbMtds65CZitSqxsA@mail.gmail.com>
-X-Google-Sender-Auth: 7GlzHD-pj1o0C7usoeXczwX3tFM
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=iX8sq9Ru1PU0ZD41L6SsnnMpKcbFIvhd+8s8ZVjE2EI=;
+        b=DaHh2fFVbufHxbHrTKzI96nlB+i1RSOtqCMBXEiEi/2lLnsM8YSc2Ru+m8ZFrJbrkl
+         s7hUvpuA+twgrgh1kcvKdEYixBQxvhn/Azt/mbwLatJPsBK1LuFdDqWQL62C0Yo1yrPz
+         4EhrownCiW62WKH+EKqoqRTNovgXfCoNMC7AnuH2Sq4iaW/y7hF/v0B7p6qZp9ORcgJi
+         sxH1z+24PqBv0OkvtQ4Bnyt/LDVA7t7GPCcSTA0QSDifgcGL5CzJ3ZepWQFAV9i8unHH
+         zSoyNZ/+eqedaGxn6fzjrsfbyEq5ubMbU3OYVBmNfTPAlsIGmsmpEyBzSyHxzSOUTOdW
+         ad0g==
+X-Received: by 10.66.235.226 with SMTP id up2mr28482953pac.89.1442884114549;
+        Mon, 21 Sep 2015 18:08:34 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:89f8:25c:a9fe:f701])
+        by smtp.gmail.com with ESMTPSA id ox2sm26851959pbb.87.2015.09.21.18.08.33
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Mon, 21 Sep 2015 18:08:33 -0700 (PDT)
+In-Reply-To: <1442875159-13027-7-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 21 Sep 2015 15:39:12 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278372>
 
-On Wed, Sep 16, 2015 at 5:36 PM, Mike Rappazzo <rappazzo@gmail.com> wrote:
-> On Wed, Sep 16, 2015 at 5:09 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Mon, Sep 14, 2015 at 1:44 PM, Mike Rappazzo <rappazzo@gmail.com> wrote:
->>> On Sat, Sep 12, 2015 at 11:19 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>>> The original code in branch.c, which this patch removes, did not need
->>>> to make a special case of HEAD, so it's not immediately clear why this
->>>> replacement code does so. This is the sort of issue which argues in
->>>> favor of mutating the existing code (slowly) over the course of
->>>> several patches into the final form, rather than having the final form
->>>> come into existence out of thin air. When the changes are made
->>>> incrementally, it is easier for reviewers to understand why such
->>>> modifications are needed, which (hopefully) should lead to fewer
->>>> questions such as this one.
->>>
->>> I reversed the the check here; it is intended to check if the symref
->>> is _not_ the head, since the head
->>> ref has already been parsed.  This is used in notes.c to find
->>> "NOTES_MERGE_REF".
->>
->> I'm probably being dense, but I still don't understand why the code
->> now needs a special case for HEAD, whereas the original didn't. But,
->> my denseness my be indicative of this change not being well-described
->> (or described at all) by the commit message. Hopefully, when this is
->> refactored into finer changes, the purpose will become clear.
->
-> The special case for HEAD is because the HEAD is already included in
-> the worktree struct.  This block is intended to save from re-parsing.
-> If you think the code would be easier to read, the HEAD check could be
-> removed, and the ref will just be parsed always.
+Stefan Beller <sbeller@google.com> writes:
 
-I'm unable to judge whether the code would be easier to read since I
-still don't understand the purpose of the special case. (But, as
-noted, it may just be that I'm being dense, though not intentionally.)
+> +void default_start_failure(void *data,
+> +			   struct child_process *cp,
+> +			   struct strbuf *err)
+> +{
+> +	int i;
+> +	struct strbuf sb = STRBUF_INIT;
+> +
+> +	for (i = 0; cp->argv[i]; i++)
+> +		strbuf_addf(&sb, "%s ", cp->argv[i]);
+> +	die_errno("Starting a child failed:\n%s", sb.buf);
+
+Do we want that trailing SP after the last element of argv[]?
+Same question applies to the one in "return-value".
+
+> +static void run_processes_parallel_init(struct parallel_processes *pp,
+> +					int n, void *data,
+> +					get_next_task_fn get_next_task,
+> +					start_failure_fn start_failure,
+> +					return_value_fn return_value)
+> +{
+> +	int i;
+> +
+> +	if (n < 1)
+> +		n = online_cpus();
+> +
+> +	pp->max_processes = n;
+> +	pp->data = data;
+> +	if (!get_next_task)
+> +		die("BUG: you need to specify a get_next_task function");
+> +	pp->get_next_task = get_next_task;
+> +
+> +	pp->start_failure = start_failure ? start_failure : default_start_failure;
+> +	pp->return_value = return_value ? return_value : default_return_value;
+
+I would actually have expected that leaving these to NULL will just
+skip pp->fn calls, instead of a "default implementation", but a pair
+of very simple default implementation would not hrtut.
+
+> +static void run_processes_parallel_cleanup(struct parallel_processes *pp)
+> +{
+> +	int i;
+
+Have a blank between the decl block and the first stmt here (and
+elsewhere, too---which you got correct in the function above)?
+
+> +	for (i = 0; i < pp->max_processes; i++)
+> +		strbuf_release(&pp->children[i].err);
+
+> +static void run_processes_parallel_start_one(struct parallel_processes *pp)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < pp->max_processes; i++)
+> +		if (!pp->children[i].in_use)
+> +			break;
+> +	if (i == pp->max_processes)
+> +		die("BUG: bookkeeping is hard");
+
+Mental note: the caller is responsible for not calling this when all
+slots are taken.
+
+> +	if (!pp->get_next_task(pp->data,
+> +			       &pp->children[i].process,
+> +			       &pp->children[i].err)) {
+> +		pp->all_tasks_started = 1;
+> +		return;
+> +	}
+
+Mental note: but it is OK to call this if get_next_task() previously
+said "no more task".
+
+The above two shows a slight discrepancy (nothing earth-breaking).
+
+I have this suspicion that the all-tasks-started bit may turn out to
+be a big mistake that we may later regret.  Don't we want to allow
+pp->more_task() to say "no more task to run at this moment" implying
+"but please do ask me later, because I may have found more to do by
+the time you ask me again"?
+
+That is one of the reasons why I do not think the "very top level is
+a bulleted list" organization is a good idea in general.  A good
+scheduling decision can seldom be made in isolation without taking
+global picture into account.
+
+> +static void run_processes_parallel_collect_finished(struct parallel_processes *pp)
+> +{
+> +	int i = 0;
+> +	pid_t pid;
+> +	int wait_status, code;
+> +	int n = pp->max_processes;
+> +
+> +	while (pp->nr_processes > 0) {
+> +		pid = waitpid(-1, &wait_status, WNOHANG);
+> +		if (pid == 0)
+> +			return;
+> +
+> +		if (pid < 0)
+> +			die_errno("wait");
+> +
+> +		for (i = 0; i < pp->max_processes; i++)
+> +			if (pp->children[i].in_use &&
+> +			    pid == pp->children[i].process.pid)
+> +				break;
+> +		if (i == pp->max_processes)
+> +			/*
+> +			 * waitpid returned another process id
+> +			 * which we are not waiting for.
+> +			 */
+> +			return;
+
+If we culled a child process that this machinery is not in charge
+of, waitpid() in other places that wants to see that child will not
+see it.  Perhaps such a situation might even warrant an error() or
+BUG()?  Do we want a "NEEDSWORK: Is this a bug?" comment here at
+least?
+
+> +		if (strbuf_read_once(&pp->children[i].err,
+> +				     pp->children[i].process.err, 0) < 0 &&
+> +		    errno != EAGAIN)
+> +			die_errno("strbuf_read_once");
+
+Don't we want to read thru to the end here?  The reason read_once()
+did not read thru to the end may not have anything to do with
+NONBLOCK (e.g. xread_nonblock() caps len, and it does not loop).
