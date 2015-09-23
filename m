@@ -1,100 +1,136 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 06/14] run-command: add an asynchronous parallel child processor
-Date: Wed, 23 Sep 2015 07:59:36 -0700
-Message-ID: <xmqq6131yyef.fsf@gitster.mtv.corp.google.com>
-References: <1442972732-12118-1-git-send-email-sbeller@google.com>
-	<1442972732-12118-7-git-send-email-sbeller@google.com>
-	<xmqqa8sdzl6a.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH] worktree: don't use C99 feature
+Date: Wed, 23 Sep 2015 08:01:25 -0700
+Message-ID: <xmqq1tdpyybe.fsf@gitster.mtv.corp.google.com>
+References: <56027FDC.1070905@ramsayjones.plus.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
-	jacob.keller@gmail.com, peff@peff.net, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	vlovich@gmail.com, sunshine@sunshineco.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 16:59:48 2015
+Cc: GIT Mailing-list <git@vger.kernel.org>, rappazzo@gmail.com
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 17:01:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZelWK-00007A-8T
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 16:59:44 +0200
+	id 1ZelY4-0002E2-Vz
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 17:01:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755006AbbIWO7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 10:59:39 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35157 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754733AbbIWO7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2015 10:59:38 -0400
-Received: by pacfv12 with SMTP id fv12so43390375pac.2
-        for <git@vger.kernel.org>; Wed, 23 Sep 2015 07:59:38 -0700 (PDT)
+	id S1755170AbbIWPB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 11:01:28 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33303 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754784AbbIWPB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 11:01:27 -0400
+Received: by pacex6 with SMTP id ex6so42860559pac.0
+        for <git@vger.kernel.org>; Wed, 23 Sep 2015 08:01:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=tAQHnQjYdtZzGp9DEWcf5xNJHfDKHXA7DrZEJSaEdFk=;
-        b=JrCE7gKSn4vOddbFbY9y0A2123SWglok6KaAGkspM6HhkCs3rHdn7bk08S6FuNgdvH
-         Xz1df9Cug6YtxSqYZqenN6oAhCQfv/ujyROPcg1sK2CQX84S/fjt8692mszcw18SCIgW
-         rH25dqovwWOy/IuuSv0b9OidqqlxbIoPK6wtK2ZCyl8yq9rDvh0XWBst8x50jRspEf7T
-         29xHCMkDtvcFuJi+2wYY42V1WTG2HNoWkrtPHQG8jCJ/qHGStXjg1VveS1rzKIOZ67Fq
-         udxnaoIJDXBVy+Emi83wnESxCRVF7goJudaMf8hIrpemQ456iDSNs0jzH3BKnXYJdoPn
-         FV9Q==
-X-Received: by 10.66.219.102 with SMTP id pn6mr37867672pac.80.1443020378344;
-        Wed, 23 Sep 2015 07:59:38 -0700 (PDT)
+        bh=5YL+qURl3HaNR75PzPu1uhhlVmccVwHfbjKxF0ISfRU=;
+        b=LWaBQYPiPsvRkX5o21LSsfAHAfGbkJH1V6nctAG3yzaj3PjOP6lKzRMxDwkv4LWnqM
+         ex/uHtNOk43/c38BWLQrPDSXtcb9qnTiWEhcSp2lJkvAZjpr4MPeDBos7eHOCYq5SI7p
+         jHBvSG0pXVARdFmhFoIDg36rUhIh0w23QhGpAXUOWzHk3p0o/r5H7d1Nhe8zgCBb0Rkh
+         xkdXlQTQpZ1FSl1prZCztLhMWpeC9nUyJyUQQwicJaKW2/njTuE+XieVXjT3TAkfWtA3
+         6pFVoy97iCsCo+bCZ8c9EKAcLXvjkHqikHTJwH7wShfx2RBr5Ca0UbLhguq95P0rrP2a
+         bTrg==
+X-Received: by 10.68.130.71 with SMTP id oc7mr38158864pbb.29.1443020487134;
+        Wed, 23 Sep 2015 08:01:27 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:fd7e:7071:2eda:9c63])
-        by smtp.gmail.com with ESMTPSA id eu2sm8490570pbc.48.2015.09.23.07.59.37
+        by smtp.gmail.com with ESMTPSA id fu4sm8482024pbb.59.2015.09.23.08.01.26
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Wed, 23 Sep 2015 07:59:37 -0700 (PDT)
-In-Reply-To: <xmqqa8sdzl6a.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 22 Sep 2015 23:47:41 -0700")
+        Wed, 23 Sep 2015 08:01:26 -0700 (PDT)
+In-Reply-To: <56027FDC.1070905@ramsayjones.plus.com> (Ramsay Jones's message
+	of "Wed, 23 Sep 2015 11:33:00 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278487>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> Stefan Beller <sbeller@google.com> writes:
+> Commits 9c0b9f6 ("worktree: add 'list' command", 18-09-2015) and
+> 40ca3d3 ("worktree: add functions to get worktree details", 18-08-2015)
+> both introduce the use of a C99 feature (declare the loop control
+> variable in the loop header initializer section).
 >
->> +static void pp_buffer_stderr(struct parallel_processes *pp)
->> +{
->> +	int i;
->> +
->> +	while ((i = poll(pp->pfd, pp->max_processes, 100)) < 0) {
->> +		if (errno == EINTR)
->> +			continue;
->> +		pp_cleanup(pp);
->> +		die_errno("poll");
->> +	}
->> +
->> +	/* Buffer output from all pipes. */
->> +	for (i = 0; i < pp->max_processes; i++) {
->> +		if (pp->children[i].in_use &&
->> +		    pp->pfd[i].revents & POLLIN)
->> +			if (strbuf_read_once(&pp->children[i].err,
->> +					     pp->children[i].process.err, 0) < 0)
->> +				if (errno != EAGAIN)
->> +					die_errno("read");
->> +	}
->> +}
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
 >
-> I think it is a good thing that the caller is passing the whole pp
-> to this function.  One thing you may want to consider is to adjust
-> the poll(2) timeout longer when the process slots are full.
-> ...
-> But that falls into performance tuning that
-> can and should be left to a later follow-up patch after we get the
-> basic machinery right.
+> Hi Junio,
+>
+> The pu branch doesn't build for me. Do you have -std=c99 set somewhere?
+>
+> Could you please squash the relevant parts of this patch (or something
+> like it) into the two commits mentioned above.
+>
+> Thanks!
 
-Just to make sure there is no misunderstanding, just like I prefer
-"start one" over "start as many as possible" in order to give
-scheduling decision to the calling loop, I would expect that such a
-follow-up performance tuning would be done by adding another field
-to pp tht lets the caller of this function, the overall scheduling
-loop, to tweak the timeout used, without this function making the
-decision locallly.
+Oh, this is embarrassing, as I do recall noticing this during the
+review (in my MUA before running "git am") but somehow it slipped my
+mind.
 
-Thanks.
+Thanks for catching.
+
+
+
+> ATB,
+> Ramsay Jones
+>
+>  builtin/worktree.c | 6 +++---
+>  worktree.c         | 7 +++++--
+>  2 files changed, 8 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index e6e36ac..b318c39 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -415,16 +415,16 @@ static int list(int ac, const char **av, const char *prefix)
+>          usage_with_options(worktree_usage, options);
+>      else {
+>          struct worktree **worktrees = get_worktrees();
+> -        int path_maxlen = 0;
+> +        int i, path_maxlen = 0;
+>  
+>          if (!porcelain) {
+> -            for (int i = 0; worktrees[i]; i++) {
+> +            for (i = 0; worktrees[i]; i++) {
+>                  int len = strlen(worktrees[i]->path);
+>                  if (len > path_maxlen)
+>                      path_maxlen = len;
+>              }
+>          }
+> -        for (int i = 0; worktrees[i]; i++) {
+> +        for (i = 0; worktrees[i]; i++) {
+>              if (porcelain)
+>                  show_worktree_porcelain(worktrees[i]);
+>              else
+> diff --git a/worktree.c b/worktree.c
+> index 41c229e..d17b5b6 100644
+> --- a/worktree.c
+> +++ b/worktree.c
+> @@ -5,7 +5,9 @@
+>  
+>  void free_worktrees(struct worktree **worktrees)
+>  {
+> -    for (int i = 0; worktrees[i]; i++) {
+> +    int i;
+> +
+> +    for (i = 0; worktrees[i]; i++) {
+>          free(worktrees[i]->path);
+>          free(worktrees[i]->git_dir);
+>          free(worktrees[i]->head_ref);
+> @@ -207,8 +209,9 @@ char *find_shared_symref(const char *symref, const char *target)
+>      struct strbuf sb = STRBUF_INIT;
+>      struct worktree **worktrees = get_worktrees();
+>      int symref_is_head = !strcmp("HEAD", symref);
+> +    int i;
+>  
+> -    for (int i = 0; worktrees[i]; i++) {
+> +    for (i = 0; worktrees[i]; i++) {
+>          if (!symref_is_head) {
+>              strbuf_reset(&path);
+>              strbuf_reset(&sb);
