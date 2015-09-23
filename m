@@ -1,78 +1,177 @@
-From: Gabor Bernat <bernat@primeranks.net>
-Subject: Re: [PATCH] filter-branch: add passed/remaining seconds on progress
-Date: Wed, 23 Sep 2015 22:48:55 +0200
-Message-ID: <CANy2qHciYR_=QeEYi-RNG3ay6+ZQk04FUwX1cY+Lf5c-cSJRHQ@mail.gmail.com>
-References: <1441379798-15453-1-git-send-email-bernat@primeranks.net>
- <1441633928-18035-1-git-send-email-bernat@primeranks.net> <CAPig+cRRMUhWwxAgVHKpMMne7XiOuYGTi_zgQMB=A+XNGUzLqQ@mail.gmail.com>
- <xmqqsi6o95r7.fsf@gitster.mtv.corp.google.com> <CAPig+cS7ObsWjqbLytCKp1PGF+224TYhC734dNa_HXYQ7p+GgQ@mail.gmail.com>
- <xmqq6133a6tf.fsf@gitster.mtv.corp.google.com> <CAPig+cRnVzRoyKOzPSJZd4JK_hB+_CBn0kjg4yYv=wWb-5vf7w@mail.gmail.com>
- <CALYJoz3xoiB2pVT+r0Nz+EYdE91WX6ypdmieMs1uubg=Vs4bog@mail.gmail.com>
- <CANy2qHcy=UD8xBeGVqGuEHVAgEvCSejt4LXk=vtpfQGSRkTg7g@mail.gmail.com> <xmqqzj0e4eu6.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 5/8] branch: drop non-commit error reporting
+Date: Wed, 23 Sep 2015 14:44:08 -0700
+Message-ID: <xmqqio70x13r.fsf@gitster.mtv.corp.google.com>
+References: <1443031873-25280-1-git-send-email-Karthik.188@gmail.com>
+	<1443031873-25280-6-git-send-email-Karthik.188@gmail.com>
+	<xmqqfv25x80c.fsf@gitster.mtv.corp.google.com>
+	<vpq6130ucbh.fsf@grenoble-inp.fr>
+	<xmqqr3lox4kc.fsf@gitster.mtv.corp.google.com>
+	<xmqqmvwcx45g.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?R8OhYm9yIEJlcm7DoXQ=?= <gabor.bernat@gravityrd.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Mikael Magnusson <mikachu@gmail.com>, cbailey32@bloomberg.net,
-	Lee.Carver@servicenow.com, Michael Witten <mfwitten@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 22:49:22 2015
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 23 23:44:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zeqyd-0004d0-R8
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 22:49:20 +0200
+	id 1Zerpp-0008Gc-AO
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 23:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755303AbbIWUtR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Sep 2015 16:49:17 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:33040 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755012AbbIWUtQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Sep 2015 16:49:16 -0400
-Received: by wiclk2 with SMTP id lk2so1683024wic.0
-        for <git@vger.kernel.org>; Wed, 23 Sep 2015 13:49:15 -0700 (PDT)
+	id S932337AbbIWVoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 17:44:12 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33638 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932128AbbIWVoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 17:44:11 -0400
+Received: by pacex6 with SMTP id ex6so51438551pac.0
+        for <git@vger.kernel.org>; Wed, 23 Sep 2015 14:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=uskxv6nayuOj1XdjY3JMcqorG+Oor00X7u84IE2NtYA=;
-        b=ZjVP7oudYHt5suJjgRy8AywlGjwK8zgvtomxNqXAQqiqDFmtKz0Me+zOxwQ+tOnHIG
-         k8YlbsAP3fUn2DUZgAeuQOQgP0MtU6gsonxwLEchaprIM+tvkPmWiea0HqyFWJsq1Ibp
-         ChHE+lzw/9D/fvlLwF9Mtw+et2Pn76Ovt3br25GQqK8RfkozmCWulgKDJUhFMSZ3Qdof
-         45ZtmLX8nhk55HcWLdjYxaUTlcjur3CZKGrE8YF1OBz6R2UG4Zs6UAsUyBsbpctHn46M
-         7mHmlJ7GbX6XuGYY8uuWd+jznDTH/kKV4FV/zRUHaBqyCMdK+BDRIKC8v8FKjhDHrWhk
-         5eGA==
-X-Received: by 10.194.91.193 with SMTP id cg1mr44101076wjb.88.1443041355022;
- Wed, 23 Sep 2015 13:49:15 -0700 (PDT)
-Received: by 10.194.72.134 with HTTP; Wed, 23 Sep 2015 13:48:55 -0700 (PDT)
-In-Reply-To: <xmqqzj0e4eu6.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: GQdtVdwwdb4Hh5BSCYkjZUY6G-4
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=r5wtDiXFvX2RexI/XBl2ABvgvLczyuHNa8zZsVe2HC8=;
+        b=K/l5IZRA1QRNlk+LZDaECsR9ZCNs3wXI4scNzBwPmJGI6HW+dGk0TDj88F7al63cz+
+         4u87Sqtu4/2VxZA0/I+ewautSyCHCKTzOtDC1mXh6ltzG5Qsm96chBArBSaScTkd5Gd8
+         kd8vYaL5ZvwOtEgERi8nf2Q1tpoZEOmKYv08wbi04WNeWjK600yUM0NWJrpHNaD5c/Eh
+         iryjbyW6cPIZcYzAaYu+1D5oTaHASj+Dr2DOZzqzSCLMfKG9w+iyS7RHu81w1moa3f/6
+         5ibRN2vSGCBFEphZXdK7KdnMm2LWi4/9fiobM1NZIRKg1JtmMZsvcmKP6/VtxczzkjZF
+         ItyA==
+X-Received: by 10.68.219.194 with SMTP id pq2mr39103642pbc.20.1443044650689;
+        Wed, 23 Sep 2015 14:44:10 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:a07c:76d3:22e9:4d3d])
+        by smtp.gmail.com with ESMTPSA id rb8sm9773631pab.14.2015.09.23.14.44.08
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Wed, 23 Sep 2015 14:44:09 -0700 (PDT)
+In-Reply-To: <xmqqmvwcx45g.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 23 Sep 2015 13:38:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278516>
 
-On Tue, Sep 22, 2015 at 6:08 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Gabor Bernat <bernat@primeranks.net> writes:
->
->> On Mon, Sep 21, 2015 at 11:24 PM, G=C3=A1bor Bern=C3=A1t
->> ...
->>> Agreed, :) did not abandoned this, just got caught up with many stu=
-ff.
->>> Thanks for the help,
->>
->> So do I need to do anything else with this? :)
->
-> If you can fetch from me to see if the output from
->
->     git log -p origin/master..71400d97b12a
->
-> looks sensible, that would be good.  There are two commits.
->
-> Thanks.
-I can sign this off as good and sensible. Nice work, thanks :)
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Perhaps something like this (not even compile tested as both of my
+> worktrees are doing something else)....
+
+This time with a few additional tests.
+
+-- >8 --
+Subject: [PATCH] fsck: exit with non-zero when problems are found
+
+After finding some problems (e.g. a ref refs/heads/X points at an
+object that is not a commit) and issuing an error message, the
+program failed to signal the fact that it found an error by a
+non-zero exit status.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/fsck.c  | 18 ++++++++++++++----
+ t/t1450-fsck.sh | 22 +++++++++++++++++++++-
+ 2 files changed, 35 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 4e8e2ee..63ab0bb 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -35,6 +35,7 @@ static int show_dangling = 1;
+ #define ERROR_OBJECT 01
+ #define ERROR_REACHABLE 02
+ #define ERROR_PACK 04
++#define ERROR_REFS 010
+ 
+ #ifdef NO_D_INO_IN_DIRENT
+ #define SORT_DIRENT 0
+@@ -495,8 +496,10 @@ static int fsck_handle_ref(const char *refname, const struct object_id *oid,
+ 		/* We'll continue with the rest despite the error.. */
+ 		return 0;
+ 	}
+-	if (obj->type != OBJ_COMMIT && is_branch(refname))
++	if (obj->type != OBJ_COMMIT && is_branch(refname)) {
+ 		error("%s: not a commit", refname);
++		errors_found |= ERROR_REFS;
++	}
+ 	default_refs++;
+ 	obj->used = 1;
+ 	mark_object_reachable(obj);
+@@ -559,17 +562,23 @@ static int fsck_head_link(void)
+ 		fprintf(stderr, "Checking HEAD link\n");
+ 
+ 	head_points_at = resolve_ref_unsafe("HEAD", 0, head_oid.hash, &flag);
+-	if (!head_points_at)
++	if (!head_points_at) {
++		errors_found |= ERROR_REFS;
+ 		return error("Invalid HEAD");
++	}
+ 	if (!strcmp(head_points_at, "HEAD"))
+ 		/* detached HEAD */
+ 		null_is_error = 1;
+-	else if (!starts_with(head_points_at, "refs/heads/"))
++	else if (!starts_with(head_points_at, "refs/heads/")) {
++		errors_found |= ERROR_REFS;
+ 		return error("HEAD points to something strange (%s)",
+ 			     head_points_at);
++	}
+ 	if (is_null_oid(&head_oid)) {
+-		if (null_is_error)
++		if (null_is_error) {
++			errors_found |= ERROR_REFS;
+ 			return error("HEAD: detached HEAD points at nothing");
++		}
+ 		fprintf(stderr, "notice: HEAD points to an unborn branch (%s)\n",
+ 			head_points_at + 11);
+ 	}
+@@ -589,6 +598,7 @@ static int fsck_cache_tree(struct cache_tree *it)
+ 		if (!obj) {
+ 			error("%s: invalid sha1 pointer in cache-tree",
+ 			      sha1_to_hex(it->sha1));
++			errors_found |= ERROR_REFS;
+ 			return 1;
+ 		}
+ 		obj->used = 1;
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index cfb32b6..0ad04da 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -77,11 +77,31 @@ test_expect_success 'object with bad sha1' '
+ test_expect_success 'branch pointing to non-commit' '
+ 	git rev-parse HEAD^{tree} >.git/refs/heads/invalid &&
+ 	test_when_finished "git update-ref -d refs/heads/invalid" &&
+-	git fsck 2>out &&
++	test_must_fail git fsck 2>out &&
+ 	cat out &&
+ 	grep "not a commit" out
+ '
+ 
++test_expect_success 'HEAD link pointing at a funny object' '
++	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
++	mv .git/HEAD .git/SAVED_HEAD &&
++	echo 0000000000000000000000000000000000000000 >.git/HEAD &&
++	# avoid corrupt/broken HEAD from interfering with repo discovery
++	test_must_fail env GIT_DIR=.git git fsck 2>out &&
++	cat out &&
++	grep "detached HEAD points" out
++'
++
++test_expect_success 'HEAD link pointing at a funny place' '
++	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
++	mv .git/HEAD .git/SAVED_HEAD &&
++	echo "ref: refs/funny/place" >.git/HEAD &&
++	# avoid corrupt/broken HEAD from interfering with repo discovery
++	test_must_fail env GIT_DIR=.git git fsck 2>out &&
++	cat out &&
++	grep "HEAD points to something strange" out
++'
++
+ test_expect_success 'email without @ is okay' '
+ 	git cat-file commit HEAD >basis &&
+ 	sed "s/@/AT/" basis >okay &&
+-- 
+2.6.0-rc3-173-gf6e0645
