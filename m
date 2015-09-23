@@ -1,117 +1,115 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] worktree: don't use C99 feature
-Date: Wed, 23 Sep 2015 11:33:00 +0100
-Message-ID: <56027FDC.1070905@ramsayjones.plus.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Unable to create temporary file
+ '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR': Permission denied
+Date: Wed, 23 Sep 2015 13:10:35 +0200
+Organization: gmx
+Message-ID: <5f56381a3cf5a5ccf6a1e4e3ea48f516@dscho.org>
+References: <1440157010.1759.83.camel@transmode.se>
+ <CACsJy8DEDgsG4C4KvuGop_=_wOvcOUZ644NiaQJef67rFNYmgg@mail.gmail.com>
+ <1442245035.10125.18.camel@transmode.se>
+ <CACsJy8BAOXWt2aVge7W8Mk9v0HbHHGkSQFwySeioam9r+n6z_Q@mail.gmail.com>
+ <1442508864.21964.26.camel@transmode.se>
+ <CACsJy8DFpLLtc7+Mix1d=Hy8h-duUqt4Y8WYsRL1nEryizoeww@mail.gmail.com>
+ <xmqqpp1bbtvz.fsf@gitster.mtv.corp.google.com>
+ <1442855328.29498.30.camel@transmode.se>
+ <37ca95b3fef79e348fb5ba68cd21c590@dscho.org>
+ <1442955525.29498.94.camel@transmode.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>, rappazzo@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 12:33:24 2015
+Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com
+To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+X-From: git-owner@vger.kernel.org Wed Sep 23 13:10:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZehMW-0002u3-QD
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 12:33:21 +0200
+	id 1Zehwl-0002Bb-5B
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 13:10:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754150AbbIWKdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 06:33:06 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:58282 "EHLO
-	avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753450AbbIWKdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2015 06:33:05 -0400
-Received: from [10.0.2.15] ([81.174.177.104])
-	by avasout08 with smtp
-	id LaZ01r0072FXpih01aZ1rd; Wed, 23 Sep 2015 11:33:02 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=bI7rW6KZ c=1 sm=1 tr=0
- a=IMS4QkGEsjO3VZZSAZDX8w==:117 a=IMS4QkGEsjO3VZZSAZDX8w==:17 a=0Bzu9jTXAAAA:8
- a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=UtjujdMcXWndgBvFfTAA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
+	id S1753467AbbIWLKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 07:10:42 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56974 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752638AbbIWLKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 07:10:41 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Lk8CY-1aFPXT3FMI-00c5Oi; Wed, 23 Sep 2015 13:10:37
+ +0200
+In-Reply-To: <1442955525.29498.94.camel@transmode.se>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:nqgKNkJYfpTLX/VPDKYJnLjuJBH1SDMi6k2xo964+sPygHx8ogA
+ eJ3pLCV24FRLkbaC+gOzDZqserXYJf/ku+CB4n1ornk5u1ZK9I7L+a7lK5Uh47MoR6dvABg
+ /yz3G+df/D1HpPu0rjK146OG1JHctTnAzrI3iyAQ9eP2KG5YkgFgAqgt0EpJe/AdsfJkyV9
+ rows2p0JoGtIpnJj0aCyg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vJOeP/JCQP0=:4n5jHom6Bn+aidMNBsUl8q
+ Tn9ztVaB8mAeeNEnDE2KUNXGkldJSf1J6/+Oeb/5qWRaVyAoeecK/Zym3CP/oxK5w50k3/HP+
+ 4heAYYjsas5KYD85YkeQW5InJGOE4O9Mkn/7h/jmYfX70R0fonEg40koLdnqlv+sZWYJMh7oQ
+ N6ktSfT2wgQNIrYDcn9ZWQVk415rgKesm6hf9zGly9IUDNiLDHAKRLvvmc05c3tTnnnj47sjw
+ 3pUw9GlZovoYk5vTOPxfQ97yF8ynmrx4pqcN3F25fMDi8+0FKhQ0MwEhfDpGM1Bd9CVN9ePHv
+ t39wPfHrZgtdd0P118MJh9rAdcWrNL+GInx34qo1HpgDEWIpKE9vIs4YDW2InN48R7L4wf0LS
+ dhQe5neggdwEz4gfh0uLjAirzEIYbf8TYUWpf12kqdLFNZySWHYwrx/mYMGsPRO3d866zoWbT
+ GFeUxKeoTxMHwT78wga1foAN5c8+WMmwEvlaBMvKzhe9OcsAzktT0DEPk2a4FJw0+8WlsUj5o
+ MJaTweY0rnjz2lsNTsW27TaAEZl6nim20g/rNmNt2VL1AMMy7jTQJxKMiPZKlJcRnCcItNiLs
+ ukG69zjbwShKwX40NqvZ0/Qs3mnAA+7qHbe/hVHatbj3I1adn//MzQOgFVktsqOtXU0X0hux7
+ EwGhOvGEqxLEpj6FXx/kyjfXALu2ZMDzMx/AgBkCCzVIh01/Xel7oA+JrYjF+H/ej+4ZJ7hVg
+ cA8ryiLDLc4VzUgDD0/7za9z3jbe8xkVLHIYrg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278481>
 
+Hi Joakim,
 
-Commits 9c0b9f6 ("worktree: add 'list' command", 18-09-2015) and
-40ca3d3 ("worktree: add functions to get worktree details", 18-08-2015)
-both introduce the use of a C99 feature (declare the loop control
-variable in the loop header initializer section).
+On 2015-09-22 22:58, Joakim Tjernlund wrote:
+> On Tue, 2015-09-22 at 22:00 +0200, Johannes Schindelin wrote:
+>>
+>> The reason should be easy to understand: Git's concept is based on the idea that you have full control over
+>> your repository. Other repositories you might only have read access.
+> 
+> Yes and some repos I only have partial write access to(config, hooks
+> etc. might be readonly)
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+The partial write access idea is definitely not part of the original idea of Git, and your use case is actually the first I heard of.
 
-Hi Junio,
+The original idea was really that you either own your repository, or you do not. And that includes the repositories that can be accessed publicly: you own them or you don't.
 
-The pu branch doesn't build for me. Do you have -std=c99 set somewhere?
+Now, I know that in particular in some corporate setups, there needs to be a permission system in place that disallows certain users from doing certain things (such as editing the config).
 
-Could you please squash the relevant parts of this patch (or something
-like it) into the two commits mentioned above.
+The Git solution is to set up a server, usually with SSH, and allow users to push and fetch from the repositories, but nothing else (i.e. no shell access), then set up hooks to implement the permission system.
 
-Thanks!
+This is much less error prone than partially locking down a repository on some network drive because the file system structure simply does not reflect the permission structure. That is where all your troubles come from.
 
-ATB,
-Ramsay Jones
+>> But this idea you have, to somehow introduce fine-grained levels of control, this idea would imply that all
+>> of a sudden Git is no longer free to write to its files as it likes. And as far as Git is concerned,
+>> everything inside .git/ *are* its files.
+> 
+> This does not compute for me, files inside git are git's files, I only
+> think that not all users
+> to a repo should have the same (write) access.
 
- builtin/worktree.c | 6 +++---
- worktree.c         | 7 +++++--
- 2 files changed, 8 insertions(+), 5 deletions(-)
+But then it is your duty to tell *Git* what it can and what it cannot do. Typically via those hooks I mentioned.
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index e6e36ac..b318c39 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -415,16 +415,16 @@ static int list(int ac, const char **av, const char *prefix)
-         usage_with_options(worktree_usage, options);
-     else {
-         struct worktree **worktrees = get_worktrees();
--        int path_maxlen = 0;
-+        int i, path_maxlen = 0;
- 
-         if (!porcelain) {
--            for (int i = 0; worktrees[i]; i++) {
-+            for (i = 0; worktrees[i]; i++) {
-                 int len = strlen(worktrees[i]->path);
-                 if (len > path_maxlen)
-                     path_maxlen = len;
-             }
-         }
--        for (int i = 0; worktrees[i]; i++) {
-+        for (i = 0; worktrees[i]; i++) {
-             if (porcelain)
-                 show_worktree_porcelain(worktrees[i]);
-             else
-diff --git a/worktree.c b/worktree.c
-index 41c229e..d17b5b6 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -5,7 +5,9 @@
- 
- void free_worktrees(struct worktree **worktrees)
- {
--    for (int i = 0; worktrees[i]; i++) {
-+    int i;
-+
-+    for (i = 0; worktrees[i]; i++) {
-         free(worktrees[i]->path);
-         free(worktrees[i]->git_dir);
-         free(worktrees[i]->head_ref);
-@@ -207,8 +209,9 @@ char *find_shared_symref(const char *symref, const char *target)
-     struct strbuf sb = STRBUF_INIT;
-     struct worktree **worktrees = get_worktrees();
-     int symref_is_head = !strcmp("HEAD", symref);
-+    int i;
- 
--    for (int i = 0; worktrees[i]; i++) {
-+    for (i = 0; worktrees[i]; i++) {
-         if (!symref_is_head) {
-             strbuf_reset(&path);
-             strbuf_reset(&sb);
--- 
-2.5.0
+> A .git/tmp/ would make housekeeping easier, you would know that every
+> file under .git
+> should be there and if you find something you don't recognize you would react.
+
+No, it would actually make it harder. I seem to recall that there was some problem with renaming a file unless it was already in the same directory as the destination. If all files were to be written to .git/tmp/ first...
+
+>> If you need to exert more control in a specific repository, you simply make it accessible only as a non-file-system remote
+>> (where only `git`, `git-receive-pack` and `git-upload-pack` are allowed to be executed) and define hooks
+>> that can accept or deny on a *much* finer level than file system permissions ever could, after all.
+> 
+> Even if I did go through this hassle, I would prefer if temporary data
+> were put somewhere else
+> than .git/ as I think mixing config/persistent data with temporary
+> data in the same directory is something
+> that should be avoided.
+
+Sure, I understand what you ask for. It's just that Git worked in a different direction for 10 years now ;-)
+
+Ciao,
+Johannes
