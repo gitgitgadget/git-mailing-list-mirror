@@ -1,130 +1,138 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v6 5/8] branch: drop non-commit error reporting
-Date: Wed, 23 Sep 2015 22:10:10 +0200
-Message-ID: <vpq6130ucbh.fsf@grenoble-inp.fr>
-References: <1443031873-25280-1-git-send-email-Karthik.188@gmail.com>
-	<1443031873-25280-6-git-send-email-Karthik.188@gmail.com>
-	<xmqqfv25x80c.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 12/14] git submodule update: cmd_update_clone
+Date: Wed, 23 Sep 2015 13:13:02 -0700
+Message-ID: <xmqqy4fwx5bl.fsf@gitster.mtv.corp.google.com>
+References: <1442972732-12118-1-git-send-email-sbeller@google.com>
+	<1442972732-12118-13-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 22:10:38 2015
+Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
+	jacob.keller@gmail.com, peff@peff.net, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	vlovich@gmail.com, sunshine@sunshineco.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 22:13:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeqN8-0000QM-Cv
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 22:10:34 +0200
+	id 1ZeqPe-0003UX-Q4
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 22:13:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753168AbbIWUKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 16:10:25 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:37227 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753084AbbIWUKY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2015 16:10:24 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8NKA773013981
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 23 Sep 2015 22:10:07 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8NKAAoF010575;
-	Wed, 23 Sep 2015 22:10:10 +0200
-In-Reply-To: <xmqqfv25x80c.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 23 Sep 2015 12:14:59 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 23 Sep 2015 22:10:08 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t8NKA773013981
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1443643809.90868@Jj128J6uNXdzBmR+61k94w
+	id S1753728AbbIWUNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 16:13:06 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:36445 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752637AbbIWUNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 16:13:05 -0400
+Received: by pablk4 with SMTP id lk4so2167626pab.3
+        for <git@vger.kernel.org>; Wed, 23 Sep 2015 13:13:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=6NcWAdvl2Ml+KHL3s3KV2+dvy1M95HI9OMpxDpVoTco=;
+        b=oGrCN0x0Q50C7zBw4TTgtn8szRYJgNmElTh4T+owdDpGhfOnNpNnhA2VOkfNb7/bkm
+         WgJCEYPRAbhF+jfo6IMguak+5dC0GnoIEEbzAyWKxE2TYrAWMR/OmmlVn9zEDWaz9HPV
+         LmZBrIeGTmuQm8/30c5n76uGUA67OiyV2S8FQZiIYd3gErnjXHV0c3RJJds/08e8k7Am
+         8dNImPRWOqr/FMcmloL0PB8nuCLhhxXj32YxpHUXqs+ICeFkrQuKPMdQFE0AYmzi6RAY
+         c7LK/zBx22c4bUDKbTb3uijnhY7GGwHbE1ZqmC1Jvirrz2+OSIAFVzg4v4osOHX18XyO
+         TJFA==
+X-Received: by 10.68.137.202 with SMTP id qk10mr39622360pbb.30.1443039183953;
+        Wed, 23 Sep 2015 13:13:03 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:a07c:76d3:22e9:4d3d])
+        by smtp.gmail.com with ESMTPSA id fb1sm528392pab.9.2015.09.23.13.13.03
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Wed, 23 Sep 2015 13:13:03 -0700 (PDT)
+In-Reply-To: <1442972732-12118-13-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 22 Sep 2015 18:45:30 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278511>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> Split the cloning part out to its own function,
+> this allow us in a later patch to convert cmd_update in C.
 >
->> Remove the error reporting variable to make the code easier to port
->> over to using ref-filter APIs.
->>
->> This also removes the error from being displayed. As branch.c will use
->> ref-filter APIs in the following patches, the error checking becomes
->> redundant with the error reporting system found in the ref-filter
->> (ref-filter.c:1336).
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+
+It appears that this is not just a refactor and loses the logic
+around $cloned_modules variable that seems to avoid doing the same
+thing twice.  An explanation on the reason why it no longer is
+necessary in the proposed log message would be nice.
+
+Thanks.
+
+
+>  git-submodule.sh | 31 ++++++++++++++++++++-----------
+>  1 file changed, 20 insertions(+), 11 deletions(-)
 >
-> Hmm, do you mean these lines by the above reference?
->
-> 	if (filter->merge_commit || filter->with_commit) {
-> 		commit = lookup_commit_reference_gently(oid->hash, 1);
-> 		if (!commit)
-> 			return 0;
-
-Note: the test becomes
-
-      if (filter->merge_commit || filter->with_commit || filter->verbose) {
-
-When the code starts using ref-filter, so the condition of the if
-becomes the same as it is here. Not related to your concern, but I was
-worried about "verbose" being used on one side but not the other, and
-it's actually OK.
-
-> That is "silently return ignoring it if it is not a commit", i.e.  I
-> do not think that deserves to be called error REPORTING system.
->
-> Do you really understand what the error message you are removing is
-> trying to diagnose?  A branch ref must not point at a blob or any
-> non-commit object, and if we find such a branch ref, we report it as
-> error.
-
-More precisely: if we find such a branch ref and we're used with an
-option that requires us to lookup the commit, then we report it as an
-error.
-
-To be sure, I tried:
-
-  echo ee0f5eeeae36cd1b5a346a1e2ae5c8cb841cd5da > .git/refs/heads/broken
-
-where the sha1 is the one of a blob.
-
-$ git branch   
-  broken
-* master
-$ git branch -v
-error: branch 'broken' does not point at a commit
-* master 5cc76d7 foo
-error: some refs could not be read
-
-After the series, I get:
-
-$ git branch
-  broken
-* master
-$ git branch -v
-* master 5cc76d7 foo
-
-So I agree with Junio that the commit message is not sufficient: there
-is a behavioral change. I'm OK with it, but the commit message shouldn't
-claim that there isn't.
-
-Porting to ref-filter drops the commit before we get an opportunity to
-complain, so we stop complaining because it's not worth the trouble.
-
-BTW, this looks like an fsck bug:
-
-$ git fsck --strict
-Checking object directories: 100% (256/256), done.
-error: refs/heads/broken: not a commit
-$ echo $?
-0
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index ea3260e..7f11158 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -607,6 +607,24 @@ cmd_update_recursive()
+>  	fi
+>  }
+>  
+> +cmd_update_clone()
+> +{
+> +	command="git checkout $subforce -q"
+> +	die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$displaypath'")"
+> +	say_msg="$(eval_gettext "Submodule path '\$displaypath': checked out '\$sha1'")"
+> +
+> +	git submodule--helper clone ${GIT_QUIET:+--quiet} ${prefix:+--prefix "$prefix"} --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
+> +
+> +	if (clear_local_git_env; cd "$sm_path" && $command "$sha1")
+> +	then
+> +		say "$say_msg"
+> +	else
+> +		err="${err};$die_msg"
+> +		return
+> +	fi
+> +	cmd_update_recursive
+> +}
+> +
+>  #
+>  # Update each submodule path to correct revision, using clone and checkout as needed
+>  #
+> @@ -680,7 +698,6 @@ cmd_update()
+>  		cmd_init "--" "$@" || return
+>  	fi
+>  
+> -	cloned_modules=
+>  	git submodule--helper list --prefix "$wt_prefix" "$@" | {
+>  	err=
+>  	while read mode sha1 stage sm_path
+> @@ -725,9 +742,8 @@ Maybe you want to use 'update --init'?")"
+>  
+>  		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
+>  		then
+> -			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
+> -			cloned_modules="$cloned_modules;$name"
+> -			subsha1=
+> +			cmd_update_clone
+> +			continue
+>  		else
+>  			subsha1=$(clear_local_git_env; cd "$sm_path" &&
+>  				git rev-parse --verify HEAD) ||
+> @@ -767,13 +783,6 @@ Maybe you want to use 'update --init'?")"
+>  				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
+>  			fi
+>  
+> -			# Is this something we just cloned?
+> -			case ";$cloned_modules;" in
+> -			*";$name;"*)
+> -				# then there is no local change to integrate
+> -				update_module=checkout ;;
+> -			esac
+> -
+>  			must_die_on_failure=
+>  			case "$update_module" in
+>  			checkout)
