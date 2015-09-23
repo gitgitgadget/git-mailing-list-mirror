@@ -1,77 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 06/14] run-command: add an asynchronous parallel child processor
-Date: Wed, 23 Sep 2015 12:47:36 -0700
-Message-ID: <xmqq37y4yl2f.fsf@gitster.mtv.corp.google.com>
-References: <1442972732-12118-1-git-send-email-sbeller@google.com>
-	<1442972732-12118-7-git-send-email-sbeller@google.com>
-	<xmqqeghpzm0y.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYaqFRPfRORbknTyez5u0d6_BD0d5wBtAnjSkb4sUBUBA@mail.gmail.com>
-	<xmqqlhbxxbai.fsf@gitster.mtv.corp.google.com>
-	<xmqq7fnhx74i.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79ka8MAKKSzXQbA+ARFynkSzB36C-4v_a5JBKooUoWsgqRA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v6 5/8] branch: drop non-commit error reporting
+Date: Wed, 23 Sep 2015 22:10:10 +0200
+Message-ID: <vpq6130ucbh.fsf@grenoble-inp.fr>
+References: <1443031873-25280-1-git-send-email-Karthik.188@gmail.com>
+	<1443031873-25280-6-git-send-email-Karthik.188@gmail.com>
+	<xmqqfv25x80c.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Vitali Lovich <vlovich@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 21:47:47 2015
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 22:10:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zeq11-0007PG-AX
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 21:47:43 +0200
+	id 1ZeqN8-0000QM-Cv
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 22:10:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753200AbbIWTri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 15:47:38 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:36112 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752052AbbIWTri (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2015 15:47:38 -0400
-Received: by pablk4 with SMTP id lk4so1648823pab.3
-        for <git@vger.kernel.org>; Wed, 23 Sep 2015 12:47:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=j92XiOJEtMcwnRken+EXK1ReNl7Nlxo44b/fL5C2F3w=;
-        b=Rv7+rg749OzACvPQUGO1f3esfu7BL3mLvnPsMPtk2qbOESyWgRmA4zto/xeY8gE2IG
-         SGmIjk1C+jwMv1QAjDnfgRwddBw5TXVcoi5I6rtrsq7MUh2rdCjqgfBdmfz1Sxma4Deq
-         R+q6F77qhB6SIL7fDDsnDeszkan2txmdp/nRp0JYJN5xr+l5I2z8UIeMo2YbWmqb+Vmr
-         IDegjdULFkAeYOePtM6FuxE4C3/7M2lJLg0YVj09jT5Gjx0DXalEfwl6BbjsBeuVfaR5
-         h9soP1ETjanmTYFhnGrxj+7udxJmy8TMM2iosY/GYGgsiIv8aqXs3fn30lT5EcozimwN
-         2k2A==
-X-Received: by 10.68.57.137 with SMTP id i9mr38643543pbq.101.1443037657645;
-        Wed, 23 Sep 2015 12:47:37 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:a07c:76d3:22e9:4d3d])
-        by smtp.gmail.com with ESMTPSA id lc9sm9430885pbc.52.2015.09.23.12.47.36
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Wed, 23 Sep 2015 12:47:36 -0700 (PDT)
-In-Reply-To: <CAGZ79ka8MAKKSzXQbA+ARFynkSzB36C-4v_a5JBKooUoWsgqRA@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 23 Sep 2015 12:39:53 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753168AbbIWUKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 16:10:25 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:37227 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753084AbbIWUKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 16:10:24 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8NKA773013981
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 23 Sep 2015 22:10:07 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8NKAAoF010575;
+	Wed, 23 Sep 2015 22:10:10 +0200
+In-Reply-To: <xmqqfv25x80c.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 23 Sep 2015 12:14:59 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 23 Sep 2015 22:10:08 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t8NKA773013981
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1443643809.90868@Jj128J6uNXdzBmR+61k94w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278510>
 
-Stefan Beller <sbeller@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I can confirm this now.
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
->     git fetch --recurse-submodules=yes -j 400
+>> Remove the error reporting variable to make the code easier to port
+>> over to using ref-filter APIs.
+>>
+>> This also removes the error from being displayed. As branch.c will use
+>> ref-filter APIs in the following patches, the error checking becomes
+>> redundant with the error reporting system found in the ref-filter
+>> (ref-filter.c:1336).
 >
-> in an submodule-ified Android tree takes very long to start putting out useful
-> information, but if I hardcode the SPAWN_CAP to 4 it looks pretty amazing
-> fast.
+> Hmm, do you mean these lines by the above reference?
+>
+> 	if (filter->merge_commit || filter->with_commit) {
+> 		commit = lookup_commit_reference_gently(oid->hash, 1);
+> 		if (!commit)
+> 			return 0;
 
-Nice to hear that parallel fetching does work ;-)
+Note: the test becomes
+
+      if (filter->merge_commit || filter->with_commit || filter->verbose) {
+
+When the code starts using ref-filter, so the condition of the if
+becomes the same as it is here. Not related to your concern, but I was
+worried about "verbose" being used on one side but not the other, and
+it's actually OK.
+
+> That is "silently return ignoring it if it is not a commit", i.e.  I
+> do not think that deserves to be called error REPORTING system.
+>
+> Do you really understand what the error message you are removing is
+> trying to diagnose?  A branch ref must not point at a blob or any
+> non-commit object, and if we find such a branch ref, we report it as
+> error.
+
+More precisely: if we find such a branch ref and we're used with an
+option that requires us to lookup the commit, then we report it as an
+error.
+
+To be sure, I tried:
+
+  echo ee0f5eeeae36cd1b5a346a1e2ae5c8cb841cd5da > .git/refs/heads/broken
+
+where the sha1 is the one of a blob.
+
+$ git branch   
+  broken
+* master
+$ git branch -v
+error: branch 'broken' does not point at a commit
+* master 5cc76d7 foo
+error: some refs could not be read
+
+After the series, I get:
+
+$ git branch
+  broken
+* master
+$ git branch -v
+* master 5cc76d7 foo
+
+So I agree with Junio that the commit message is not sufficient: there
+is a behavioral change. I'm OK with it, but the commit message shouldn't
+claim that there isn't.
+
+Porting to ref-filter drops the commit before we get an opportunity to
+complain, so we stop complaining because it's not worth the trouble.
+
+BTW, this looks like an fsck bug:
+
+$ git fsck --strict
+Checking object directories: 100% (256/256), done.
+error: refs/heads/broken: not a commit
+$ echo $?
+0
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
