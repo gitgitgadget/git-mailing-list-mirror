@@ -1,63 +1,76 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: git-p4: t9819 failing
-Date: Wed, 23 Sep 2015 10:27:36 +0100
-Message-ID: <CAE5ih79t+62XUKsj9cnkJCCv4WPhUgQZQ6hF39Nx0ky+WFi-sw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: git-p4: t9819 failing
+Date: Wed, 23 Sep 2015 12:27:45 +0200
+Message-ID: <954B65C2-1CF8-4F63-B2DE-F15200553046@gmail.com>
+References: <CAE5ih79t+62XUKsj9cnkJCCv4WPhUgQZQ6hF39Nx0ky+WFi-sw@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 Cc: Git Users <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 11:27:44 2015
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed Sep 23 12:27:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZegL1-0006pg-PJ
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 11:27:44 +0200
+	id 1ZehHG-0005Td-HX
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 12:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753616AbbIWJ1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 05:27:39 -0400
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:33563 "EHLO
-	mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753158AbbIWJ1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2015 05:27:37 -0400
-Received: by oixx17 with SMTP id x17so20356383oix.0
-        for <git@vger.kernel.org>; Wed, 23 Sep 2015 02:27:36 -0700 (PDT)
+	id S1753430AbbIWK1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 06:27:50 -0400
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:38556 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753421AbbIWK1t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Sep 2015 06:27:49 -0400
+Received: by wiclk2 with SMTP id lk2so62273235wic.1
+        for <git@vger.kernel.org>; Wed, 23 Sep 2015 03:27:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=6gJtDIRZc5IjlmQUpcUnlhe9uNT+dlY7Vm9qmG3HDI0=;
-        b=WSlx5pmL35xGN96JZ54Zo20yop/yIKMjRF6tyM4HutN5mMSx2bbsEjhb5JA8zKHJg0
-         LT6/2/AsxTwzk3Wf60t368oc9TQuq2l7jofjebc1FOcYs+NbFAKuGenU8S4P5nnU0vCx
-         Mc9MC1lQVFVjMYu2lNLMpRz2g7hh9EH2zl/4k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=6gJtDIRZc5IjlmQUpcUnlhe9uNT+dlY7Vm9qmG3HDI0=;
-        b=WHqT/T3BlVU9YtnZV8e/LQ4kgUpsZfNb24pS7oOoX9haTpnloQBcJhsRiZ1e/nQBCe
-         EJ+Eg6GMzCSPpTUMFlLbbnEhoBpevBMu9tbYUt6oXTucvQbsQm75hHefepVAFsspGisk
-         0kDWjKtlMozvhr417AxKZ6uN7ZylIx2eTDCSZU4L701W3hIijDITklA9w1bYrbzy/Y+a
-         cbPUykFj91PIgM44jYvM8qHOJ4FxKeW2yJaGm1kTgNzypYDJLR3r8ut25Wtn23fUSVyD
-         DPzFmSlCGePYRhh+z2pmdGsaJnHn0ZYASrWu24Pk/TSD38yJcu8gWSgqO27rZ6MuEk4A
-         Jozw==
-X-Gm-Message-State: ALoCoQmzspMrKKcIRoGd4C7JfKjrbvLmrGTUYVisXsrYuOj2YVdT31TqNDZKJAC51do4q16oDlpt
-X-Received: by 10.202.175.88 with SMTP id y85mr17777472oie.22.1443000456774;
- Wed, 23 Sep 2015 02:27:36 -0700 (PDT)
-Received: by 10.60.46.38 with HTTP; Wed, 23 Sep 2015 02:27:36 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=OPBoRXZT8XaCij+VBgo6Wf3S796WYCWEwWOnyZSW3xQ=;
+        b=F6lnB3whjZ4UJjy9Y2CO+93HLdLPNIY1ndjoi8pwSobIBhusfxA5BfDajJtUqk3F5d
+         8D+uVnOL39N4b6ukJuU5RlFLj+iIGK76hWgJm57liu9qEe+gEelmBXwGSGMxOPpfq3G3
+         W3aKOaQNfqoeNNoxNII1g3eyycRZRdW7dke4nJCER63D6oH6QDVXTqmBLQnnXEWjgD17
+         0tv29ftQPaEfKJZeoI7n4KyU9ZbEgvoFj/jtwZEcYuEOclDlrwBNGic33t2au2mEj03x
+         QML00Kb3jxjigjpExX/uqEaWCcIQS9lG6GeN6ikoBIkxwaOjS138Yrc7+9XzjaJK61k5
+         t7/w==
+X-Received: by 10.195.11.101 with SMTP id eh5mr35409780wjd.59.1443004067924;
+        Wed, 23 Sep 2015 03:27:47 -0700 (PDT)
+Received: from slxbook3.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id nf15sm7818561wic.22.2015.09.23.03.27.47
+        (version=TLS1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 23 Sep 2015 03:27:47 -0700 (PDT)
+In-Reply-To: <CAE5ih79t+62XUKsj9cnkJCCv4WPhUgQZQ6hF39Nx0ky+WFi-sw@mail.gmail.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278479>
 
-Lars,
 
-I just noticed that your change "git-p4: honor core.ignorecase when
-using P4 client specs" seems to break t9819.
+On 23 Sep 2015, at 11:27, Luke Diamand <luke@diamand.org> wrote:
 
-I suspect that the problem is just that t9819 needs to be updated to
-reflect your change - do you have any thoughts on that?
+> Lars,
+> 
+> I just noticed that your change "git-p4: honor core.ignorecase when
+> using P4 client specs" seems to break t9819.
+> 
+> I suspect that the problem is just that t9819 needs to be updated to
+> reflect your change - do you have any thoughts on that?
+> 
+> Thanks!
+> Luke
 
-Thanks!
-Luke
+What OS and what commit do you use for testing? Here is what I got on my machine:
+
+Ubuntu, next (c07a1e8) -> OK
+Ubuntu, maint (ee6ad5f) -> OK
+
+OS X, next (c07a1e8) -> broken
+OS X, maint (ee6ad5f) -> broken
+
+Thanks,
+Lars
