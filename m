@@ -1,96 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 06/14] run-command: add an asynchronous parallel child processor
-Date: Tue, 22 Sep 2015 23:47:41 -0700
-Message-ID: <xmqqa8sdzl6a.fsf@gitster.mtv.corp.google.com>
-References: <1442972732-12118-1-git-send-email-sbeller@google.com>
-	<1442972732-12118-7-git-send-email-sbeller@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
-	jacob.keller@gmail.com, peff@peff.net, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	vlovich@gmail.com, sunshine@sunshineco.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 08:47:49 2015
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v4 1/2] git-p4: add test case for "Translation of file content failed" error
+Date: Wed, 23 Sep 2015 09:34:37 +0200
+Message-ID: <3E330347-0F89-4E6F-8663-694AD3A559CC@gmail.com>
+References: <1442829701-2347-1-git-send-email-larsxschneider@gmail.com> <1442829701-2347-2-git-send-email-larsxschneider@gmail.com> <xmqqio73abl0.fsf@gitster.mtv.corp.google.com> <E47DE9F0-6017-4E96-AC29-E6C60C4D85CB@gmail.com> <CAPig+cRV-RCdcmAHG+bRL6_yYYNCRqQPQ+v3KCXwC81StGKibg@mail.gmail.com> <xmqqbncv6yym.fsf@gitster.mtv.corp.google.com> <9F835973-7045-4AA7-A0B0-D3D3C6F25D73@gmail.com> <xmqq8u7y5toe.fsf@gitster.mtv.corp.google.com> <CAO2U3QgehMcBrDUtChLLrn5VrH4jLE0CF5xDSShY72yycLryCg@mail.gmail.com> <CAPc5daXm9sBGAgrqz12d5a=zhR3PUXbFpPvOkBCoNQcQVhyOhw@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Luke Diamand <luke@diamand.org>,
+	=?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 09:34:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZedqG-0004Gy-7x
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 08:47:48 +0200
+	id 1ZeeZh-00048U-Fy
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 09:34:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbbIWGro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 02:47:44 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:34668 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750900AbbIWGrn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2015 02:47:43 -0400
-Received: by padhy16 with SMTP id hy16so32204067pad.1
-        for <git@vger.kernel.org>; Tue, 22 Sep 2015 23:47:42 -0700 (PDT)
+	id S1752075AbbIWHel convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Sep 2015 03:34:41 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:37781 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751723AbbIWHek convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Sep 2015 03:34:40 -0400
+Received: by wicfx3 with SMTP id fx3so55907639wic.0
+        for <git@vger.kernel.org>; Wed, 23 Sep 2015 00:34:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=uhrKU/PI9HgvmrNJSAU9cdEjDqScpAwkBDYSWt1fBvM=;
-        b=ejWrDsvBIDyMSj64+CjO/o1RvWfQhCcKZRfRivRGfIACa+FebZmOfRfcyjl6VGKJPT
-         AVLwtIcSgF8D80viyXnaUNJXWufoGRqx2aXDSHz0bVWeax1cZu+UC/Q/rsf4B95j+sPn
-         P8V/mcsqRZ4XFm+UqJzG4rydUXT88kT+3F1PGRbabTEagcJIVs4Tvq4GZw8XR405DqLX
-         grDsvj46hlOIu/P3TeisfcA/9jfYlAq1DxsVO+FzQrk375xfGenyexgjEInH+sPpYIGh
-         nffvP1wGrDJKXXX6sIj1fvHr0ktWtLnUA3c/qB22P7NNboiTVAuI3d8zTM8GTA4AJwsB
-         pVkA==
-X-Received: by 10.68.197.97 with SMTP id it1mr35974485pbc.4.1442990862860;
-        Tue, 22 Sep 2015 23:47:42 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:fd7e:7071:2eda:9c63])
-        by smtp.gmail.com with ESMTPSA id xa4sm1788753pac.28.2015.09.22.23.47.41
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Tue, 22 Sep 2015 23:47:42 -0700 (PDT)
-In-Reply-To: <1442972732-12118-7-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Tue, 22 Sep 2015 18:45:24 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gmkQxixazplDop8upPSdA1hT/zjx5UVx6oHgyNJ+aIk=;
+        b=RFAzbyt0ZDzMi1+n4LhkOlXQ2+wui17RYuaLQbWFsoEBgIp1Vc8GydBICCt7w27br2
+         NfgAQpHFLGw8Bb6727kpDF9KIrawQveDlRGeXDRcLlTfdG2SzM1qq9oar19k6A3HNE1L
+         c1lkw85j0k2hmAIklLb4+Oy4bmlIW+8GsRxKbaQ9MmjGSFfBwd4u+ztI65XW/H/dhWUo
+         dsB8m0wMksNkR6osvKtMdFfwZAiIlobGt5zlOxE9t8NNDDCxZOZa5hxRhxIvgfnuMqX1
+         KZid+g1LgW0olYwf0vQXeGjSOKrR/mC0lCQ6e9L2WnMikSuhBLrnSM6j8r5Hc6p/dhLr
+         tULQ==
+X-Received: by 10.194.178.196 with SMTP id da4mr40051513wjc.41.1442993679067;
+        Wed, 23 Sep 2015 00:34:39 -0700 (PDT)
+Received: from [10.146.248.63] ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id r9sm5748291wjz.35.2015.09.23.00.34.38
+        (version=TLS1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 23 Sep 2015 00:34:38 -0700 (PDT)
+In-Reply-To: <CAPc5daXm9sBGAgrqz12d5a=zhR3PUXbFpPvOkBCoNQcQVhyOhw@mail.gmail.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278472>
 
-Stefan Beller <sbeller@google.com> writes:
+Thanks a lot for taking care of this!
 
-> +static void pp_buffer_stderr(struct parallel_processes *pp)
-> +{
-> +	int i;
-> +
-> +	while ((i = poll(pp->pfd, pp->max_processes, 100)) < 0) {
-> +		if (errno == EINTR)
-> +			continue;
-> +		pp_cleanup(pp);
-> +		die_errno("poll");
-> +	}
-> +
-> +	/* Buffer output from all pipes. */
-> +	for (i = 0; i < pp->max_processes; i++) {
-> +		if (pp->children[i].in_use &&
-> +		    pp->pfd[i].revents & POLLIN)
-> +			if (strbuf_read_once(&pp->children[i].err,
-> +					     pp->children[i].process.err, 0) < 0)
-> +				if (errno != EAGAIN)
-> +					die_errno("read");
-> +	}
-> +}
+- Lars
 
-I think it is a good thing that the caller is passing the whole pp
-to this function.  One thing you may want to consider is to adjust
-the poll(2) timeout longer when the process slots are full.
+On 22 Sep 2015, at 21:17, Junio C Hamano <gitster@pobox.com> wrote:
 
-There is nothing you can gain by returning early due to timeout
-without doing anything from this function when you know you cannot
-start a new process (here, I am assuming that your poll(2) would be
-unblocked for a disconnect when one of the processes exits, letting
-you return and letting the caller call collect_finished(), which in
-turn would allow us to make some progress).
-
-On the other hand, during the early ramp-up period, you may want to
-use a shorter poll(2) timeout to give the caller a chance to spawn
-more processes sooner.  But that falls into performance tuning that
-can and should be left to a later follow-up patch after we get the
-basic machinery right.
+> Yup, this was privately reported and I just squashed a fix in right n=
+ow ;-)
+>=20
+> Thanks. "cd t && make test-lint" would have caught it.
+>=20
+> On Tue, Sep 22, 2015 at 12:11 PM, Michael Blume <blume.mike@gmail.com=
+> wrote:
+>> I'm seeing test failures
+>>=20
+>> non-executable tests: t9825-git-p4-handle-utf16-without-bom.sh
+>>=20
+>> ls -l shows that all the other tests are executable but t9825 isn't.
+>>=20
+>> On Tue, Sep 22, 2015 at 9:02 AM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>> Lars Schneider <larsxschneider@gmail.com> writes:
+>>>=20
+>>>> This works.
+>>>=20
+>>> OK, and thanks; as I don't do perforce, the squash was without any
+>>> testing.
+>>>=20
+>>>> Do we need the =93-e=94 option?
+>>>=20
+>>> In syntactic sense, no, but our codebase tends to prefer to have
+>>> one, because it is easier to spot which ones are the instructions i=
+f
+>>> you consistently have "-e" even when you give only one.
+>>> --
+>>> To unsubscribe from this list: send the line "unsubscribe git" in
+>>> the body of a message to majordomo@vger.kernel.org
+>>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
