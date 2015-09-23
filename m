@@ -1,138 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 12/14] git submodule update: cmd_update_clone
-Date: Wed, 23 Sep 2015 13:13:02 -0700
-Message-ID: <xmqqy4fwx5bl.fsf@gitster.mtv.corp.google.com>
-References: <1442972732-12118-1-git-send-email-sbeller@google.com>
-	<1442972732-12118-13-git-send-email-sbeller@google.com>
+Subject: Re: [PATCH v6 5/8] branch: drop non-commit error reporting
+Date: Wed, 23 Sep 2015 13:29:23 -0700
+Message-ID: <xmqqr3lox4kc.fsf@gitster.mtv.corp.google.com>
+References: <1443031873-25280-1-git-send-email-Karthik.188@gmail.com>
+	<1443031873-25280-6-git-send-email-Karthik.188@gmail.com>
+	<xmqqfv25x80c.fsf@gitster.mtv.corp.google.com>
+	<vpq6130ucbh.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
-	jacob.keller@gmail.com, peff@peff.net, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	vlovich@gmail.com, sunshine@sunshineco.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 22:13:12 2015
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 23 22:29:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeqPe-0003UX-Q4
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 22:13:11 +0200
+	id 1ZeqfS-0005wq-B5
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 22:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753728AbbIWUNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 16:13:06 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:36445 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752637AbbIWUNF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2015 16:13:05 -0400
-Received: by pablk4 with SMTP id lk4so2167626pab.3
-        for <git@vger.kernel.org>; Wed, 23 Sep 2015 13:13:04 -0700 (PDT)
+	id S1754425AbbIWU30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 16:29:26 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:36192 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752637AbbIWU3Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 16:29:25 -0400
+Received: by pacgz1 with SMTP id gz1so222616pac.3
+        for <git@vger.kernel.org>; Wed, 23 Sep 2015 13:29:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=6NcWAdvl2Ml+KHL3s3KV2+dvy1M95HI9OMpxDpVoTco=;
-        b=oGrCN0x0Q50C7zBw4TTgtn8szRYJgNmElTh4T+owdDpGhfOnNpNnhA2VOkfNb7/bkm
-         WgJCEYPRAbhF+jfo6IMguak+5dC0GnoIEEbzAyWKxE2TYrAWMR/OmmlVn9zEDWaz9HPV
-         LmZBrIeGTmuQm8/30c5n76uGUA67OiyV2S8FQZiIYd3gErnjXHV0c3RJJds/08e8k7Am
-         8dNImPRWOqr/FMcmloL0PB8nuCLhhxXj32YxpHUXqs+ICeFkrQuKPMdQFE0AYmzi6RAY
-         c7LK/zBx22c4bUDKbTb3uijnhY7GGwHbE1ZqmC1Jvirrz2+OSIAFVzg4v4osOHX18XyO
-         TJFA==
-X-Received: by 10.68.137.202 with SMTP id qk10mr39622360pbb.30.1443039183953;
-        Wed, 23 Sep 2015 13:13:03 -0700 (PDT)
+        bh=SnVgXbjCccUDZWW8/G3FWCSw7dqRz9NjO/VYQd/3AYI=;
+        b=e64YAjVobs+vY4HY5KhbpNxqrdeMGr6ygBBPZSPWH0tMX5kWKip65X1sv73erKfVla
+         zYAqQoaKJQ+QO+7Lw68CdZbIWPK3tPwJeN4c3L2TcF9In6HcQNn/YvkTskddkywK1f+K
+         7FlCl9VkNw3gk1UXEwNSG5YKgFjt5fy+CPesHA+AGNE9uIA75cTzZRZDAcx+OvZgAclp
+         aG01R1oqL8LlbRZTscYsyuvySWAsn0UBmhE2VTd1D4yr/PvHx9nAMDd7UJgDuhpTXhG6
+         cpk73vW1X62wmTZGI1xVvW7+KZJWLNGnoJv3GKcLBcBGSa9kiISg8v3eJWatQCwYhgKu
+         +vhg==
+X-Received: by 10.68.65.70 with SMTP id v6mr39974534pbs.23.1443040164817;
+        Wed, 23 Sep 2015 13:29:24 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:a07c:76d3:22e9:4d3d])
-        by smtp.gmail.com with ESMTPSA id fb1sm528392pab.9.2015.09.23.13.13.03
+        by smtp.gmail.com with ESMTPSA id hn1sm9545109pbb.44.2015.09.23.13.29.23
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Wed, 23 Sep 2015 13:13:03 -0700 (PDT)
-In-Reply-To: <1442972732-12118-13-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Tue, 22 Sep 2015 18:45:30 -0700")
+        Wed, 23 Sep 2015 13:29:23 -0700 (PDT)
+In-Reply-To: <vpq6130ucbh.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+	"Wed, 23 Sep 2015 22:10:10 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278512>
 
-Stefan Beller <sbeller@google.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Split the cloning part out to its own function,
-> this allow us in a later patch to convert cmd_update in C.
+> More precisely: if we find such a branch ref and we're used with an
+> option that requires us to lookup the commit, then we report it as an
+> error.
+> ...
+> So I agree with Junio that the commit message is not sufficient: there
+> is a behavioral change. I'm OK with it, but the commit message shouldn't
+> claim that there isn't.
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+> Porting to ref-filter drops the commit before we get an opportunity to
+> complain, so we stop complaining because it's not worth the trouble.
 
-It appears that this is not just a refactor and loses the logic
-around $cloned_modules variable that seems to avoid doing the same
-thing twice.  An explanation on the reason why it no longer is
-necessary in the proposed log message would be nice.
+I share the same conclusion.  It may be an unfortunate fallout but
+giving the diagnosis was not really the job for this codepath in the
+first place.
 
-Thanks.
+If it were, then I would have said we should fix it to keep the
+behaviour, even if the fix is involved, and that is why I would not
+necessarily agree with "not worth the trouble".
 
-
->  git-submodule.sh | 31 ++++++++++++++++++++-----------
->  1 file changed, 20 insertions(+), 11 deletions(-)
+> BTW, this looks like an fsck bug:
 >
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index ea3260e..7f11158 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -607,6 +607,24 @@ cmd_update_recursive()
->  	fi
->  }
->  
-> +cmd_update_clone()
-> +{
-> +	command="git checkout $subforce -q"
-> +	die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$displaypath'")"
-> +	say_msg="$(eval_gettext "Submodule path '\$displaypath': checked out '\$sha1'")"
-> +
-> +	git submodule--helper clone ${GIT_QUIET:+--quiet} ${prefix:+--prefix "$prefix"} --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
-> +
-> +	if (clear_local_git_env; cd "$sm_path" && $command "$sha1")
-> +	then
-> +		say "$say_msg"
-> +	else
-> +		err="${err};$die_msg"
-> +		return
-> +	fi
-> +	cmd_update_recursive
-> +}
-> +
->  #
->  # Update each submodule path to correct revision, using clone and checkout as needed
->  #
-> @@ -680,7 +698,6 @@ cmd_update()
->  		cmd_init "--" "$@" || return
->  	fi
->  
-> -	cloned_modules=
->  	git submodule--helper list --prefix "$wt_prefix" "$@" | {
->  	err=
->  	while read mode sha1 stage sm_path
-> @@ -725,9 +742,8 @@ Maybe you want to use 'update --init'?")"
->  
->  		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
->  		then
-> -			git submodule--helper clone ${GIT_QUIET:+--quiet} --prefix "$prefix" --path "$sm_path" --name "$name" --url "$url" "$reference" "$depth" || exit
-> -			cloned_modules="$cloned_modules;$name"
-> -			subsha1=
-> +			cmd_update_clone
-> +			continue
->  		else
->  			subsha1=$(clear_local_git_env; cd "$sm_path" &&
->  				git rev-parse --verify HEAD) ||
-> @@ -767,13 +783,6 @@ Maybe you want to use 'update --init'?")"
->  				die "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'")"
->  			fi
->  
-> -			# Is this something we just cloned?
-> -			case ";$cloned_modules;" in
-> -			*";$name;"*)
-> -				# then there is no local change to integrate
-> -				update_module=checkout ;;
-> -			esac
-> -
->  			must_die_on_failure=
->  			case "$update_module" in
->  			checkout)
+> $ git fsck --strict
+> Checking object directories: 100% (256/256), done.
+> error: refs/heads/broken: not a commit
+> $ echo $?
+> 0
+
+Interesting.  Perhaps leave it as a MicroProject for GSoC next year?
+;-)
