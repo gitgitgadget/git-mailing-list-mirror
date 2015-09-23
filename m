@@ -1,76 +1,102 @@
-From: Unknown <unknown@unknown.invalid>
-Subject: Quick Loan
-Date: Thu, 24 Sep 2015 04:46:22 +0530
-Message-ID: <SG2PR02MB1102F5059D2080963DB26D2AB8440@SG2PR02MB1102.apcprd02.prod.outlook.com>
-Reply-To: <mohamendmalik@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: t5561 failing after make PROFILE=GEN
+Date: Wed, 23 Sep 2015 19:24:43 -0400
+Message-ID: <20150923232443.GA21755@sigill.intra.peff.net>
+References: <5601E283.2030507@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 01:16:42 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Thu Sep 24 01:24:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZetHC-0003a9-45
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 01:16:38 +0200
+	id 1ZetP9-000696-Mq
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 01:24:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755914AbbIWXQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 19:16:33 -0400
-Received: from mail-pu1apc01hn0247.outbound.protection.outlook.com ([104.47.126.247]:14137
-	"EHLO APC01-PU1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755037AbbIWXQc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Sep 2015 19:16:32 -0400
-Authentication-Results: spf=none (sender IP is ) smtp.mailfrom=<>; 
-Received: from [100.64.189.129] (116.203.74.246) by
- SG2PR02MB1102.apcprd02.prod.outlook.com (10.169.53.12) with Microsoft SMTP
- Server (TLS) id 15.1.274.16; Wed, 23 Sep 2015 23:16:26 +0000
-Content-Description: Mail message body
-From: <>
-X-Originating-IP: [116.203.74.246]
-X-ClientProxiedBy: SIXPR04CA0046.apcprd04.prod.outlook.com (25.162.171.36) To
- SG2PR02MB1102.apcprd02.prod.outlook.com (25.169.53.12)
-X-Microsoft-Exchange-Diagnostics: 1;SG2PR02MB1102;2:oUBHVbnKliUTE3x2H8kywxd+3NCeuohGRhudiIF03mU+0uBR1TgOkGq+Mbhry5WUuyCy4S0c50+xgkl+bQQjazX+BHr32lIe4ChYO4boidcLMS5VbyAR56rcrZYtqfJCS9Rhdxy6MQV1xa4OcxTxKtyLSls1NRFzlZcR73ZYO1c=;3:dDoIPLHgigi12un1jQO4ajICCwhVlENHxds0RAae8f3nh7trTDBBuU0GIjWESKitwvkjrub/MtWce0ZbpgLsFYk9ergc/oEJOuj9F4OEzsjMqPYshHi0KfUqnGIOIi7GqwYeAup2wEUAWCv3Bj8ajw==;25:1sqOWN91WJSNTwkuRRmVbcRiV93mTPaF6cN4zNiHph0Bw3dbbdCcOrwOuQpTlLMFDSjd+Lk7AHsucrNao9+5o4t3YEcpi8rZHtSozYpiY4hZO/apQR7p4RPztHIYRx9ZNFce3T0o35AG/+sIa9YGHygRG9/SltBZSILKvtwfZGoOJzF4TjIgfyWttOBspbZuiAg6FIwtTYUPS9Qxx8JefpUEyD26KI7wgVMnbbIyqVuhsKfG5K1TOU66wt4K6DMqcUg+OFAHAycJMq8YkCtWng==
-X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:SG2PR02MB1102;
-X-Microsoft-Antispam-PRVS: <SG2PR02MB11023A98CAC3FEBB05374D06B8440@SG2PR02MB1102.apcprd02.prod.outlook.com>
-X-Exchange-Antispam-Report-Test: UriScan:;
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(601004)(2401047)(520078)(5005006)(8121501046)(3002001);SRVR:SG2PR02MB1102;BCL:0;PCL:0;RULEID:;SRVR:SG2PR02MB1102;
-X-Microsoft-Exchange-Diagnostics: 1;SG2PR02MB1102;4:GaF2oyc5SpY/4TPMfvAqMxiCANpi1yFDkcbaS+b42BTven6EKJgnA0AcuFi5XZLHCXS+OJstAaOcJe2KnaWzcfc7cp1hktWQRM0TctbKtJcoL9TAXiD9P6NqwacqVIkPfMXsc2rcrJ+SG7i+PfLiOhFiNeSmD4CXAaumO6jeBKR7pX2s59FkMSgmM+NOCwky8EJjPWqRbRaU0LuMD3/4hAE0oYqVAoLRve7W2+2ns5d8rUPKprHOre8aH81SG88FVp6XFoGSWhkPw4EJ+FojL+DNjF+u67ChSBig3RBS6qZx0G6YJte/oSca8zjJ5/K8q0jQM2XhToU9PjwJf+S1qpc8OAJqHxG1sIkZ21zN8AM=
-X-Forefront-PRVS: 07083FF734
-X-Forefront-Antispam-Report: SFV:SPM;SFS:(10009020)(6009001)(6049001)(35000200001)(189002)(199003)(42382002)(46552002)(86152002)(86362001)(109986003)(5004730100002)(85782001)(68736005)(5007970100001)(43066003)(46102003)(78352002)(77096005)(87976001)(101416001)(19580395003)(76576001)(23756003)(5001860100001)(5001830100001)(81156007)(4001600100001)(97736004)(4001540100001)(19580405001)(250100001)(221733001)(4001450100002)(40100003)(122386002)(558084003)(107886002)(33656002)(229853001)(77156002)(62966003)(74316001)(106356001)(42186005)(105586002)(53256004)(66066001)(64706001)(50466002)(54356999)(47776003)(5001960100002)(53806999)(110136002)(189998001)(5005630100001)(50986999)(5005620100006);DIR:OUT;SFP:1501;SCL:9;SRVR:SG2PR02MB1102;H:[100.64.189.129];FPR:;SPF:None;PTR:InfoNoRecords;MX:0;A:0;L
- ANG:en;
-Received-SPF: None (protection.outlook.com: [100.64.189.129] does not
- designate permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?iso-8859-1?Q?1;SG2PR02MB1102;23:mNIrh66sKSW8q0KHlR2vGiPZ1AFNYuRJ1FNdWYY?=
- =?iso-8859-1?Q?OGGmzYE2HtG8RP/fCLF0X2cjEi+Pa77y1YPYmt6noAW6B9Nl+N6/EIbktP?=
- =?iso-8859-1?Q?FrwHMzTXSAxFaXE6Z62GoW1K0RtXobninjQp1xmNf7g2teUko3sxIS3UP7?=
- =?iso-8859-1?Q?d9drzWFwtlH99iSgSQNCknzknxj8hR4WLPdHXma4McbqXJQf+M0b1JI9C2?=
- =?iso-8859-1?Q?4X3yOvYh1V0OowjTY6IZMBVhmiqEcsDiY8YGA3/OYHA7HKKXCDPq6TQD0P?=
- =?iso-8859-1?Q?vSaBtYiDB/HnlbqRfve74/wN+2sqmaz5lsUu2xheXULsj//N5FjpnKhx7s?=
- =?iso-8859-1?Q?NkjTNK57tP5xvp+bSFwUv21fvwKKKF0NhAamjxF9RY1dRIuuhS9uZHLfmI?=
- =?iso-8859-1?Q?pyTBnUh0B2lc3ApKvBOr2E/1+jHz2NjOFj1h2DKHMODyUTcCWTP/Zgrn7I?=
- =?iso-8859-1?Q?M8IMVpukSyNrHY9AnXW+iKQ8M52kgr+3GM5BobGJaETicO+JVtJvmOzjxA?=
- =?iso-8859-1?Q?7GvjxUxlYEBPrfQUHZU3orlQb0/V+5VDrKgTtSLNNiY7ILhwAD4NwSZxTk?=
- =?iso-8859-1?Q?zCBNmENi4NyhyFO7LOxmkPid07hNf4KlMVxDC6TsY9wZ7Ultasf0m2goLX?=
- =?iso-8859-1?Q?DTnr 
-X-Microsoft-Exchange-Diagnostics: 1;SG2PR02MB1102;5:VicnlaHUHz7Fe25+olQ7FE9vV9t4Wm9gbddkgYPdg1IP6Qf9YRZcf9az/GPgnk6q3cbb633W+H0zUKu1UdqCMUrp16bNVOf33NnWfeW1wnPoM3XoCxy8GJVHEGQuM7qDWHyvKW/jhKKnVR2Ull3gPw==;24:nDnjmbz7TsxhXIDEe+5VBdGKaRHRJR7Q4woAxzKbHTdoB0TJQll9wTTfYQbOzL6JjktGtP0toalOWluPpTEhjg==;20:6bWCeFFGzzJ56OdB5S73/DOKWX5cPwxTCXEAh9RjqQkFR90r8iHnzGirYVxO4FiByxbW3aoYIzaetASTq+tjew==
-SpamDiagnosticOutput: 1:22
-SpamDiagnosticMetadata: 00000000%2D0000%2D0000%2D0000%2D000000000000
-X-OriginatorOrg: Ld533.onmicrosoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2015 23:16:26.3507
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR02MB1102
+	id S1756138AbbIWXYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 19:24:47 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35458 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755014AbbIWXYq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 19:24:46 -0400
+Received: (qmail 13778 invoked by uid 102); 23 Sep 2015 23:24:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Sep 2015 18:24:46 -0500
+Received: (qmail 20897 invoked by uid 107); 23 Sep 2015 23:24:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Sep 2015 19:24:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Sep 2015 19:24:43 -0400
+Content-Disposition: inline
+In-Reply-To: <5601E283.2030507@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278521>
 
-Get access to short term loans no credit check, short term loans no credit check unemployed, quick short term loans no credit check and short term cash loans no credit check without delay through online application with 100% approval.
+On Wed, Sep 23, 2015 at 01:21:39AM +0200, Stephan Beyer wrote:
 
-loan@gmx.us
+> I noticed that t5561 fails on my machine when compiling with
+> "make PROFILE=GEN". Luckily, the reason seems to be the test only,
+> not the tool it is testing.
+> 
+> I tracked it down that far that log_div() (defined in
+> t/t5561-http-backend.sh but used in t/t556x_common) appends
+> the given text to the access.log *before* the last GET log entry
+> is written.
 
-mohamendmalik@gmail.com
+Yes, I have run into this before. I _think_ I've also seen it once in a
+non-profile build. Which would make sense, if it is simply racy but the
+race usually goes the right way, and something about the profile build
+upsets that.
+
+But I also can't get it to fail when running t5561 in a loop, so I may
+have been mistaken (and it fails to consistently with PRORILE=GEN). And
+it does seem to be mostly related to the log-flushing behavior of
+apache, and I can't imagine how we would be affecting that.
+
+It's nothing in the environment; if you have a profile build and run "cd
+t && ./t5561-*", it will still fail. So it's something about the build.
+I'd guess it would be that git-http-backend is taking extra time after
+the session is over to write out the profile data, and that apache
+delays writing the log entry until it is done.
+
+Aha. That seems to be it. If I add
+
+diff --git a/http-backend.c b/http-backend.c
+index bac40ef..88610b4 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -699,5 +699,6 @@ int main(int argc, char **argv)
+ 					   max_request_buffer);
+ 
+ 	cmd->imp(cmd_arg);
++	sleep(1);
+ 	return 0;
+ }
+
+then it fails for me even without a profile build.
+
+> Replacing the log_div() implementation by "return 0" and removing
+> the implied output solves the problem without breaking any test
+> functionality. (For more clarity, the log_div() calls and definitions
+> should be removed.) I refrained from sending this trivial patch
+> because I am not sure if this is the right way to cope with the issue.
+
+I'd agree that the tests would be OK (albeit a little less readable) if
+we drop the log_div. My initial worry was that we we were papering over
+a real problem, but I don't think we are. Touching the apache logfile
+ourselves is inherently racy. We know the _client_ has finished talking
+to the server, but we don't know when the server side of the CGI has
+exited.
+
+And this isn't anything to do with git's behavior, but just the test
+script. So I think dropping the log_div is probably our best bet. We may
+want to keep the existing "expected" file with the "###" lines as
+comments, and then simply strip them out when comparing to the actual
+output (so the test script remains readable).
+
+-Peff
