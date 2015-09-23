@@ -1,115 +1,102 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Unable to create temporary file
- '/var/git/tmv3-target-overlay.git/shallow_Un8ZOR': Permission denied
-Date: Wed, 23 Sep 2015 13:10:35 +0200
-Organization: gmx
-Message-ID: <5f56381a3cf5a5ccf6a1e4e3ea48f516@dscho.org>
-References: <1440157010.1759.83.camel@transmode.se>
- <CACsJy8DEDgsG4C4KvuGop_=_wOvcOUZ644NiaQJef67rFNYmgg@mail.gmail.com>
- <1442245035.10125.18.camel@transmode.se>
- <CACsJy8BAOXWt2aVge7W8Mk9v0HbHHGkSQFwySeioam9r+n6z_Q@mail.gmail.com>
- <1442508864.21964.26.camel@transmode.se>
- <CACsJy8DFpLLtc7+Mix1d=Hy8h-duUqt4Y8WYsRL1nEryizoeww@mail.gmail.com>
- <xmqqpp1bbtvz.fsf@gitster.mtv.corp.google.com>
- <1442855328.29498.30.camel@transmode.se>
- <37ca95b3fef79e348fb5ba68cd21c590@dscho.org>
- <1442955525.29498.94.camel@transmode.se>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: git-p4: t9819 failing
+Date: Wed, 23 Sep 2015 12:11:05 +0100
+Message-ID: <CAE5ih78x+jnW3+4d5q5dJidt4LXWV=hMgJTEfsC2dUBLout1Aw@mail.gmail.com>
+References: <CAE5ih79t+62XUKsj9cnkJCCv4WPhUgQZQ6hF39Nx0ky+WFi-sw@mail.gmail.com>
+	<954B65C2-1CF8-4F63-B2DE-F15200553046@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com
-To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-X-From: git-owner@vger.kernel.org Wed Sep 23 13:10:50 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 13:11:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zehwl-0002Bb-5B
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 13:10:47 +0200
+	id 1ZehxA-0002dB-Vk
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 13:11:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467AbbIWLKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 07:10:42 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56974 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752638AbbIWLKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2015 07:10:41 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lk8CY-1aFPXT3FMI-00c5Oi; Wed, 23 Sep 2015 13:10:37
- +0200
-In-Reply-To: <1442955525.29498.94.camel@transmode.se>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:nqgKNkJYfpTLX/VPDKYJnLjuJBH1SDMi6k2xo964+sPygHx8ogA
- eJ3pLCV24FRLkbaC+gOzDZqserXYJf/ku+CB4n1ornk5u1ZK9I7L+a7lK5Uh47MoR6dvABg
- /yz3G+df/D1HpPu0rjK146OG1JHctTnAzrI3iyAQ9eP2KG5YkgFgAqgt0EpJe/AdsfJkyV9
- rows2p0JoGtIpnJj0aCyg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vJOeP/JCQP0=:4n5jHom6Bn+aidMNBsUl8q
- Tn9ztVaB8mAeeNEnDE2KUNXGkldJSf1J6/+Oeb/5qWRaVyAoeecK/Zym3CP/oxK5w50k3/HP+
- 4heAYYjsas5KYD85YkeQW5InJGOE4O9Mkn/7h/jmYfX70R0fonEg40koLdnqlv+sZWYJMh7oQ
- N6ktSfT2wgQNIrYDcn9ZWQVk415rgKesm6hf9zGly9IUDNiLDHAKRLvvmc05c3tTnnnj47sjw
- 3pUw9GlZovoYk5vTOPxfQ97yF8ynmrx4pqcN3F25fMDi8+0FKhQ0MwEhfDpGM1Bd9CVN9ePHv
- t39wPfHrZgtdd0P118MJh9rAdcWrNL+GInx34qo1HpgDEWIpKE9vIs4YDW2InN48R7L4wf0LS
- dhQe5neggdwEz4gfh0uLjAirzEIYbf8TYUWpf12kqdLFNZySWHYwrx/mYMGsPRO3d866zoWbT
- GFeUxKeoTxMHwT78wga1foAN5c8+WMmwEvlaBMvKzhe9OcsAzktT0DEPk2a4FJw0+8WlsUj5o
- MJaTweY0rnjz2lsNTsW27TaAEZl6nim20g/rNmNt2VL1AMMy7jTQJxKMiPZKlJcRnCcItNiLs
- ukG69zjbwShKwX40NqvZ0/Qs3mnAA+7qHbe/hVHatbj3I1adn//MzQOgFVktsqOtXU0X0hux7
- EwGhOvGEqxLEpj6FXx/kyjfXALu2ZMDzMx/AgBkCCzVIh01/Xel7oA+JrYjF+H/ej+4ZJ7hVg
- cA8ryiLDLc4VzUgDD0/7za9z3jbe8xkVLHIYrg==
+	id S1753494AbbIWLLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 07:11:08 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:35125 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752638AbbIWLLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 07:11:07 -0400
+Received: by obbzf10 with SMTP id zf10so30038584obb.2
+        for <git@vger.kernel.org>; Wed, 23 Sep 2015 04:11:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=EOi55XQB/y5DRpMKcn3RI9QVGXTlj831hkzlpet3TQE=;
+        b=MVIGMXXTK0w3nxsDa/FgbHkrzdPJHu9EuJ0b+EoKv8zpe9UQexBj5h018cE9kP9/5z
+         5+6mKEh9bGfZr1NnflVMFIzwNYazhix5mlblkRwzXpyI85gd6ElG4yriRNB8oZP8EwJM
+         nIYLTm4MuO39YDLTAcyZYsbSaA5Q6qxCWcaKo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=EOi55XQB/y5DRpMKcn3RI9QVGXTlj831hkzlpet3TQE=;
+        b=OBJ74jL6Nx/NwP6bJk13dXNKXDCFFzktp79VWkMsbDV8C0ucVHUMSxP+WpCtHrPRFY
+         Xe4dOhVcODWsJWt0Rq4HVfQVyyqQm8w4h6fypBv5DNNdKyLFjtKNPzDABUUuO5a+/4EJ
+         ugsil4o3IqR8uqrcrcrVNtYVrK3kx3OK/h+ihYK8WGqGdt9lA0o8UU7Mv/cU7HnLK4LC
+         D7Io7oHQiq4uSTzWG7R1SG5CFzCO88PlKnV0NS0iuleYacv9icrXXE7ZKLY/QCVqoDV1
+         6D4VDqRjpxuVzLI7f9Z2kjhf6+o5ujbZo7hqxo77Wn7/EWt5b6a/Ex6SICEj3VWiPCx3
+         OegQ==
+X-Gm-Message-State: ALoCoQmkbvmLiQUqu04i+FBw+qogiSSE36/BitM/UmFgp0VQLvupl5yu2j9QCKBt8s4Ga3OOn+fB
+X-Received: by 10.60.67.105 with SMTP id m9mr19421266oet.68.1443006665894;
+ Wed, 23 Sep 2015 04:11:05 -0700 (PDT)
+Received: by 10.60.46.38 with HTTP; Wed, 23 Sep 2015 04:11:05 -0700 (PDT)
+In-Reply-To: <954B65C2-1CF8-4F63-B2DE-F15200553046@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278482>
 
-Hi Joakim,
-
-On 2015-09-22 22:58, Joakim Tjernlund wrote:
-> On Tue, 2015-09-22 at 22:00 +0200, Johannes Schindelin wrote:
+On 23 September 2015 at 11:27, Lars Schneider <larsxschneider@gmail.com> wrote:
+>
+> On 23 Sep 2015, at 11:27, Luke Diamand <luke@diamand.org> wrote:
+>
+>> Lars,
 >>
->> The reason should be easy to understand: Git's concept is based on the idea that you have full control over
->> your repository. Other repositories you might only have read access.
-> 
-> Yes and some repos I only have partial write access to(config, hooks
-> etc. might be readonly)
+>> I just noticed that your change "git-p4: honor core.ignorecase when
+>> using P4 client specs" seems to break t9819.
+>>
+>> I suspect that the problem is just that t9819 needs to be updated to
+>> reflect your change - do you have any thoughts on that?
+>>
+>> Thanks!
+>> Luke
+>
+> What OS and what commit do you use for testing? Here is what I got on my machine:
+>
+> Ubuntu, next (c07a1e8) -> OK
+> Ubuntu, maint (ee6ad5f) -> OK
+>
+> OS X, next (c07a1e8) -> broken
+> OS X, maint (ee6ad5f) -> broken
 
-The partial write access idea is definitely not part of the original idea of Git, and your use case is actually the first I heard of.
+The next branch is good:
+c07a1e8 Merge branch 'bb/remote-get-url' into next
 
-The original idea was really that you either own your repository, or you do not. And that includes the repositories that can be accessed publicly: you own them or you don't.
+The pu branch isn't:
+f44e3df Merge branch 'jk/notes-dwim-doc' into pu
 
-Now, I know that in particular in some corporate setups, there needs to be a permission system in place that disallows certain users from doing certain things (such as editing the config).
+This is on Debian.
 
-The Git solution is to set up a server, usually with SSH, and allow users to push and fetch from the repositories, but nothing else (i.e. no shell access), then set up hooks to implement the permission system.
+Actually I think the problem may be in calcDiskFree().
 
-This is much less error prone than partially locking down a repository on some network drive because the file system structure simply does not reflect the permission structure. That is where all your troubles come from.
+Here's the last bit of the crash dump from git-p4 I get:
 
->> But this idea you have, to somehow introduce fine-grained levels of control, this idea would imply that all
->> of a sudden Git is no longer free to write to its files as it likes. And as far as Git is concerned,
->> everything inside .git/ *are* its files.
-> 
-> This does not compute for me, files inside git are git's files, I only
-> think that not all users
-> to a repo should have the same (write) access.
+  File "/home/ldiamand/git/git/git-p4", line 2580, in streamP4FilesCbSelf
+    self.streamP4FilesCb(entry)
+  File "/home/ldiamand/git/git/git-p4", line 2497, in streamP4FilesCb
+    required_bytes = int((4 * int(self.stream_file["fileSize"])) -
+calcDiskFree(self.cloneDestination))
+  File "/home/ldiamand/git/git/git-p4", line 116, in calcDiskFree
+    st = os.statvfs(dirname)
+OSError: [Errno 2] No such file or directory: 'lc'
 
-But then it is your duty to tell *Git* what it can and what it cannot do. Typically via those hooks I mentioned.
-
-> A .git/tmp/ would make housekeeping easier, you would know that every
-> file under .git
-> should be there and if you find something you don't recognize you would react.
-
-No, it would actually make it harder. I seem to recall that there was some problem with renaming a file unless it was already in the same directory as the destination. If all files were to be written to .git/tmp/ first...
-
->> If you need to exert more control in a specific repository, you simply make it accessible only as a non-file-system remote
->> (where only `git`, `git-receive-pack` and `git-upload-pack` are allowed to be executed) and define hooks
->> that can accept or deny on a *much* finer level than file system permissions ever could, after all.
-> 
-> Even if I did go through this hassle, I would prefer if temporary data
-> were put somewhere else
-> than .git/ as I think mixing config/persistent data with temporary
-> data in the same directory is something
-> that should be avoided.
-
-Sure, I understand what you ask for. It's just that Git worked in a different direction for 10 years now ;-)
-
-Ciao,
-Johannes
+Luke
