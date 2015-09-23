@@ -1,74 +1,80 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: t5561 failing after make PROFILE=GEN
-Date: Wed, 23 Sep 2015 01:21:39 +0200
-Message-ID: <5601E283.2030507@gmx.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: make batch mode optional for git-cat-file
+Date: Wed, 23 Sep 2015 00:13:50 +0000
+Message-ID: <20150923001350.GA22266@dcvr.yhbt.net>
+References: <1442843498-22908-1-git-send-email-vleschuk@accesssoftek.com>
+ <xmqqeghraauu.fsf@gitster.mtv.corp.google.com>
+ <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9D6@mail.accesssoftek.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 23 01:23:31 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Victor Leschuk <vleschuk@accesssoftek.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 02:13:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZeWuI-00071H-2Q
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 01:23:30 +0200
+	id 1ZeXh6-0003Jz-3N
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Sep 2015 02:13:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759696AbbIVXXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2015 19:23:23 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58701 "EHLO mout.gmx.net"
+	id S935076AbbIWANv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2015 20:13:51 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:47274 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759619AbbIVXXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2015 19:23:21 -0400
-Received: from [192.168.178.43] ([88.71.191.237]) by mail.gmx.com (mrgmx101)
- with ESMTPSA (Nemesis) id 0Lat5o-1aOYxE0GpE-00kNBY for <git@vger.kernel.org>;
- Wed, 23 Sep 2015 01:23:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.7.0
-X-Provags-ID: V03:K0:RuTR8dPggpN/TiO0AXPVQ16wgUBr8UEEsqMv9lZFPlJjsdWZ6cG
- pKaevFqyLCpYez2mkgwgLlLksWpiLUMQDTX4k5pv8SrjwXDdPGppgRNCMHT0A86/mXVwbdh
- x6ZzCwttZCOMsVtRlbTcrRGSS6t2sYprIdRyBZGd3ve9+mArbCkxIaAkJHR27BCESSp5qKe
- CLc6A8hLMy7l/4Q3NqCVg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hcu2T8cF1Ug=:0OyNb38nfUnOIgZ2T3AUIq
- ExpppBdssNq6Vab/xyQpuvdRqKjgY9EuX6TL9Ep7ec4QhZdwiyGOUhQr0uW2Ph2My+97AMwxg
- pd5B8XT7DSHvQ890FmLayaG3pfKogykq7TnP/z0Lr7NcCNbdRdbfMXK+HbeeipEk2dFk2cYGL
- REJhBkhqlLXNhgE7K8OUW81xvaJFHKLZvmT5C4jVqhEzXskQ3xC1+VmjHI/4dmJalN1cyhvIN
- 0FskqhKcZT+zeRXK8Q0gt5tBFe/zxE85QDKNw2T3syx7NfmZ8PZLBIUpe5IcZilJNjuF7gVtC
- uAJn+fWuywMNL0Pg7L+50ZJx4AWF7Jspr2QydeF6xyYqJHKwA7HZJTaSqta6wO9UfH1dbGJ2C
- Xk6WFV3LfS0ccyYm8vpGonw416lEQM30th25S1uY4Otb21KQarfaOMeVEqWEMXJl8GmCluIXt
- 8NcwxOzDdD/wXivWmcdQTORSIDll2PHyeTpySRdWLGRkWLbIf1Cs4WY6lIKiH4erPFlLtWKNo
- 0eMxJIjYF6JZ4T0gz7OsphNGzrsA3T2mcXYRQjwNe4lZkUF/Xx4fefNiR8pV5kkfp08WtmdNo
- am90dYCcLsWwGjvJEOCnW2meEL3C2xg7oAYJvCCvlatd7MTMhzYHHULUCng2b1ZVRFK/ibmPm
- 4gdpeod3Pceb3XUQ0Tx9cag4n9qp4fk+BQdeilE1ON3CIsFOFn8dvP5i5RchAxNcUJb7o0lqr
- 25BKjdzpFEbxG0NAlMo7D1Q2dTKxBbv75Hmqww==
+	id S934802AbbIWANu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2015 20:13:50 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4368A1FE1C;
+	Wed, 23 Sep 2015 00:13:50 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9D6@mail.accesssoftek.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278448>
 
-Hi,
+Victor Leschuk <vleschuk@accesssoftek.com> wrote:
+> The thing is that git-cat-file keeps growing during work when running
+> in "batch" mode. See the figure attached: it is for cloning a rather
+> small repo (1 hour to clone about ~14000 revisions). However the clone
+> of a large repo (~280000 revisions) took about 2 weeks and
+> git-cat-file has outgrown the parent perl process several times
+> (git-cat-file - ~3-4Gb, perl - 400Mb).
 
-I noticed that t5561 fails on my machine when compiling with
-"make PROFILE=GEN". Luckily, the reason seems to be the test only,
-not the tool it is testing.
+Ugh, that sucks.
+Even the 400Mb size of Perl annoys me greatly and I'd work
+on fixing it if I had more time.
 
-I tracked it down that far that log_div() (defined in
-t/t5561-http-backend.sh but used in t/t556x_common) appends
-the given text to the access.log *before* the last GET log entry
-is written.
+But I'm completely against adding this parameter to git-svn.
+git-svn is not the only "cat-file --batch" user, so this option is
+only hiding problems.
 
-The test code does it right (as far as I managed to look over it),
-so this is maybe some odd flushing behavior of the web server?
-On the other hand, the problem only occurs with PROFILE=GEN
-but the web server should be independent of the Git compile-time
-configuration, right? Looks weird to me but I did not dig deep.
+The best choice is to figure out why cat-file is wasting memory.
 
-Replacing the log_div() implementation by "return 0" and removing
-the implied output solves the problem without breaking any test
-functionality. (For more clarity, the log_div() calls and definitions
-should be removed.) I refrained from sending this trivial patch
-because I am not sure if this is the right way to cope with the issue.
+Disclaimer: I'm no expert on parts of git written in C,
+but perhaps the alloc.c interface is why memory keeps growing.
 
-Best
-  Stephan
+> What was done:
+>  * I have run it under valgrind and mtrace and haven't found any memory leaks
+>  * Found the source of most number of memory reallocations (batch_object_write() function (strbuf_expand -> realloc)) - tried to make the streambuf object static and avoid reallocs - didn't help
+>  * Tried preloading other allocators than standard glibc - no significant difference
+
+A few more questions:
+
+* What is the largest file that existed in that repo?
+
+* Did you try "MALLOC_MMAP_THRESHOLD_" with glibc?
+
+  Perhaps setting that to 131072 will help, that'll force releasing
+  larger chunks than that; but it might be moot if alloc.c is
+  getting in the way.
+
+If alloc.c is the culprit, I would consider to transparently restart
+"cat-file --batch" once it grows to a certain size or after a certain
+number of requests are made to it.
+
+We can probably do this inside "git cat-file" itself without
+changing any callers by calling execve.
