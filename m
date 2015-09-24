@@ -1,174 +1,125 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 3/4] mark_reachable_objects(): optionally collect broken refs
-Date: Thu, 24 Sep 2015 11:13:52 +0200
+Subject: [PATCH 4/4] gc: remove broken refs
+Date: Thu, 24 Sep 2015 11:14:02 +0200
 Organization: gmx
-Message-ID: <bcceeae4c8f7f690502651dd6cc537b2f4918fac.1443085919.git.johannes.schindelin@gmx.de>
+Message-ID: <8855bae256311446dffd221ab33c1163eb104c4a.1443085919.git.johannes.schindelin@gmx.de>
 References: <cover.1443085919.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 24 11:14:11 2015
+X-From: git-owner@vger.kernel.org Thu Sep 24 11:14:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zf2bK-0004Ko-20
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 11:14:02 +0200
+	id 1Zf2bW-0004c9-Gj
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 11:14:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753146AbbIXJN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 05:13:59 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61607 "EHLO mout.gmx.net"
+	id S1753169AbbIXJOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 05:14:09 -0400
+Received: from mout.gmx.net ([212.227.17.20]:65362 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753115AbbIXJN5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 05:13:57 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MZkic-1ZzRXD2u6A-00LXQN; Thu, 24 Sep 2015 11:13:53
+	id S1753130AbbIXJOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 05:14:07 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LeBPM-1aUXFH00ui-00psr3; Thu, 24 Sep 2015 11:14:03
  +0200
 In-Reply-To: <cover.1443085919.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:wMaYg8uKmxKdJ1rDy9f9OsyO0XcM02hdyVt1UVtukaH5EV94wmO
- 6TKblqBr4HsrYEooZ7SkO50AHCOCfztac/qF9QS/X4QWCDaRX94iaZeS45o7QVA04c4pvo7
- OJvF+H1+AP4A56TShZWiDQzhWt2+J0GGc98hpaTlSA+AfX8t9x0qHOWew3REMDdm/jReVIr
- wm7WG3ppv8pzRJ+k/Iprw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IjCXOddRIbU=:kTyNnLeMcGcnKBFid7g5hx
- uZ3mxVspUlSidXUxOBbS7g/tTRhftdQMgk1ful1tMt6VJyCff7crJKt4JqYGEt5OawWvMaJAN
- xgilDuHTEZvVBruUha947lPWG9GB1X7JzYyKHmXkU4Auv6Z9A4warPg5t1LX8DepL4UTRDMjK
- Xzlq/aSIk+CMOIv8jR9eZa+q9ce+FH0Yq/mzMq0/q6ediddmWOeeE3dJfs9nUPuA+d5HSnvJJ
- Ytp/tt75+/CNLVBFKPJWfKSmTeh+CxA1lTHUqgioK0Gg/5wdnpcsPzuWv6RzDHlrlqEG8dmil
- F3NAKjV9NdkdSwvn9L7YyrxMvryvEdRb3AilMTRpamPIfd/0WzucPGAgKLkx6EOuCP7sNQZh2
- NAmklxsEmaO+sXRILuxpqGQCEb/q2vr7wwQED1INn5sM6yFkfSvN6NiLIU4c2h/6qaPWB5v3X
- 7GrDyV22DoHjesZPP679uV6W8sPgY3+saUO/724ovDszt6p4VBARi0IyklcuAQQXVxRjaNxNi
- 1tLho2znoRSmUgFaVm5FxUhBPa28h2Az3Tw+HcstI1us6xRd1NjN9qRzAMFKc6BepR90JCfmI
- uc9I4U5gOy5+j2YU5BK4IUPYGj4kI68Js25HSHPvWwjardkXBdWrP9E6foqdClrTwYPD4BHQA
- KRRrbKSP85VC5YvHICPmJHogOV0Dn9u+zhppXYIo3vSZ1eM0JuVjyClL3dnRTZFvbguibdr58
- jzhMIWLA23uHsqyhzD57rNd6NVX80xkKB4YCTQ==
+X-Provags-ID: V03:K0:dXY9QfDuhDnAms6mQmMZeBQrR9nOp74eGRMHHp98cEhSoJg12Nk
+ Kwtt1CMKumEXXUeXIs7+mCHgeQN4TFcB3TbAgC6MWvKY9hBoahy+nWnqiZIIKOq/BGxMYAS
+ UyovZASS8Oq/KonVBcxytYnLpvpynA9MabXXI4n/fVaLCVLGskhX+X6Kh5CjQCT716XmjZd
+ nTJ9KJczCxJNrFXfdOcJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AiPDOgv4SRQ=:fqlG0qCXGsqKL/9XGWnECy
+ 7n91grBYQMft1y+AmwVnzutM7GgUKBRyn7iB5QUlWqUcMgttcRS2huzCY4jAFtqGXjrRe2Cba
+ /M1cRYCig3rClrCWQ0j7hR4Qdbi7i0zSuUfPIzNJCbIUKYok/9LfkWBK/+yvj8KE+HRujwcIY
+ 5l6v4HKzPcCIRhC7VrIcpz8ao6hQKymCCWGY+KLf43TfFgg6VuD05+OBk0gWUVXMPM3oj04fz
+ jLJTZHhtV0/Lwvw+kN6QehsUddXbJrjk+mWvxR4DWX0+PEgXFijEyQ4mRWMa//2eDS2GI7WqF
+ J4ueCq5lzjzeFZBV5GYedBdcxGozeXSfPdZOxiMFC/2Bmio73qJz1VFdnWS77VQ8H61aSofPi
+ ApR/r6xgtNh5PpB6WRNS6raBDldzrI0Kx3Lixf5PtKNyjcQxbb1hbaGj9UoMHmTg8FCMFUkDx
+ H8P/Uw8UtR5ixlSEYq96bLt+ryNAmkioXbzYdMtU0KPYbCC1d/KNYvdBDLCWaSFaGD7rqI1hJ
+ k74yE0t0NsKVWqywzZMPMkHuQX9xktzJVnfguKIcC/g5fn0KL6Vh3esAINqHVpG2ImJknbq1q
+ jXwBrodmQ8yPrax/EMrDvKo/PxdpwHIgTxiakFp+hcNj2KI9HJABAxYm0ax3Kq31ZagALZNf9
+ HQFfNPV/9Maco7pEXhfhxhCatD/CJntmqjddrtIEAdDI6yp5i1eFpXF5bLj+0bVyA05aXltPC
+ a48GCJer3ywqu3oz/WZBS60QrvRcsNRUKWcGCw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278542>
 
-The behavior of `mark_reachable_objects()` without this patch is that it
-dies if it encounters a broken ref. This is sometimes undesirable, e.g.
-when garbage collecting in a repository with a stale remote HEAD.
+When encountering broken refs, such as a stale remote HEAD (which can
+happen if the active branch was renamed in the remote), it is more
+helpful to remove those refs than to exit with an error.
 
-So let's introduce an optional parameter to collect such broken refs. The
-behavior of the function is unchanged if that parameter is `NULL`.
+This fixes https://github.com/git-for-windows/git/issues/423
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/prune.c  |  2 +-
- builtin/reflog.c |  2 +-
- reachable.c      | 26 ++++++++++++++++++++------
- reachable.h      |  3 ++-
- 4 files changed, 24 insertions(+), 9 deletions(-)
+ builtin/prune.c | 12 +++++++++++-
+ t/t6500-gc.sh   |  2 +-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/prune.c b/builtin/prune.c
-index 10b03d3..d6f664f 100644
+index d6f664f..1a30f65 100644
 --- a/builtin/prune.c
 +++ b/builtin/prune.c
-@@ -136,7 +136,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+@@ -6,6 +6,7 @@
+ #include "reachable.h"
+ #include "parse-options.h"
+ #include "progress.h"
++#include "refs.h"
+ 
+ static const char * const prune_usage[] = {
+ 	N_("git prune [-n] [-v] [--expire <time>] [--] [<head>...]"),
+@@ -100,6 +101,7 @@ static void remove_temporary_files(const char *path)
+ int cmd_prune(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
++	struct string_list broken_refs = STRING_LIST_INIT_DUP;
+ 	struct progress *progress = NULL;
+ 	const struct option options[] = {
+ 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
+@@ -110,6 +112,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 	char *s;
++	int i;
+ 
+ 	expire = ULONG_MAX;
+ 	save_commit_buffer = 0;
+@@ -136,7 +139,14 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
  	if (show_progress)
  		progress = start_progress_delay(_("Checking connectivity"), 0, 0, 2);
  
--	mark_reachable_objects(&revs, 1, expire, progress);
-+	mark_reachable_objects(&revs, 1, expire, progress, NULL);
+-	mark_reachable_objects(&revs, 1, expire, progress, NULL);
++	revs.ignore_missing = 1;
++	mark_reachable_objects(&revs, 1, expire, progress, &broken_refs);
++	for (i = 0; i < broken_refs.nr; i++) {
++		char *path = broken_refs.items[i].string;
++		printf("Removing stale ref %s\n", path);
++		if (!show_only && delete_ref(path, NULL, REF_NODEREF))
++			die("Could not remove stale ref %s", path);
++	}
  	stop_progress(&progress);
  	for_each_loose_file_in_objdir(get_object_directory(), prune_object,
  				      prune_cruft, prune_subdir, NULL);
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index f96ca2a..cb8758a 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -583,7 +583,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 		init_revisions(&cb.cmd.revs, prefix);
- 		if (flags & EXPIRE_REFLOGS_VERBOSE)
- 			printf("Marking reachable objects...");
--		mark_reachable_objects(&cb.cmd.revs, 0, 0, NULL);
-+		mark_reachable_objects(&cb.cmd.revs, 0, 0, NULL, NULL);
- 		if (flags & EXPIRE_REFLOGS_VERBOSE)
- 			putchar('\n');
- 	}
-diff --git a/reachable.c b/reachable.c
-index 9cff25b..1fc7ada 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -15,6 +15,11 @@ struct connectivity_progress {
- 	unsigned long count;
- };
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index b736774..0ae4271 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -30,7 +30,7 @@ test_expect_success 'gc -h with invalid configuration' '
+ 	test_i18ngrep "[Uu]sage" broken/usage
+ '
  
-+struct add_one_data {
-+	struct rev_info *revs;
-+	struct string_list *broken_refs;
-+};
-+
- static void update_progress(struct connectivity_progress *cp)
- {
- 	cp->count++;
-@@ -25,10 +30,14 @@ static void update_progress(struct connectivity_progress *cp)
- static int add_one_ref(const char *path, const struct object_id *oid,
- 		       int flag, void *cb_data)
- {
--	struct object *object = parse_object_or_die(oid->hash, path);
--	struct rev_info *revs = (struct rev_info *)cb_data;
-+	struct add_one_data *data = (struct add_one_data *)cb_data;
-+	struct object *object = data->broken_refs ? parse_object(oid->hash) :
-+		parse_object_or_die(oid->hash, path);
- 
--	add_pending_object(revs, object, "");
-+	if (!object)
-+		string_list_append(data->broken_refs, path);
-+	else
-+		add_pending_object(data->revs, object, "");
- 
- 	return 0;
- }
-@@ -153,9 +162,11 @@ int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
- 
- void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
- 			    unsigned long mark_recent,
--			    struct progress *progress)
-+			    struct progress *progress,
-+			    struct string_list *broken_refs)
- {
- 	struct connectivity_progress cp;
-+	struct add_one_data data;
- 
- 	/*
- 	 * Set up revision parsing, and mark us as being interested
-@@ -168,11 +179,14 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
- 	/* Add all refs from the index file */
- 	add_index_objects_to_pending(revs, 0);
- 
-+	data.revs = revs;
-+	data.broken_refs = broken_refs;
-+
- 	/* Add all external refs */
--	for_each_ref(add_one_ref, revs);
-+	for_each_ref(add_one_ref, &data);
- 
- 	/* detached HEAD is not included in the list above */
--	head_ref(add_one_ref, revs);
-+	head_ref(add_one_ref, &data);
- 
- 	/* Add all reflog info */
- 	if (mark_reflog)
-diff --git a/reachable.h b/reachable.h
-index d23efc3..39de1c7 100644
---- a/reachable.h
-+++ b/reachable.h
-@@ -5,6 +5,7 @@ struct progress;
- extern int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
- 						  unsigned long timestamp);
- extern void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
--				   unsigned long mark_recent, struct progress *);
-+				   unsigned long mark_recent, struct progress *,
-+				   struct string_list *broken_refs);
- 
- #endif
+-test_expect_failure 'gc removes broken refs/remotes/<name>/HEAD' '
++test_expect_success 'gc removes broken refs/remotes/<name>/HEAD' '
+ 	git init remote &&
+ 	(
+ 		cd remote &&
 -- 
 2.5.2.windows.2
