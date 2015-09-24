@@ -1,76 +1,181 @@
-From: Unknown <unknown@unknown.invalid>
-Subject: Quick Loan
-Date: Thu, 24 Sep 2015 05:15:38 +0530
-Message-ID: <HK2PR01MB0769D8A62EE7910D69152C1AB8440@HK2PR01MB0769.apcprd01.prod.exchangelabs.com>
-Reply-To: <mohamendmalik@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 01:46:00 2015
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH] t5561: get rid of racy appending to logfile
+Date: Thu, 24 Sep 2015 02:20:17 +0200
+Message-ID: <1443054017-8312-1-git-send-email-s-beyer@gmx.net>
+References: <20150923232443.GA21755@sigill.intra.peff.net>
+Cc: Jeff King <peff@peff.net>,
+	Tarmigan Casebolt <tarmigan+git@gmail.com>,
+	Stephan Beyer <s-beyer@gmx.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 24 02:22:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zetja-0000T0-Eu
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 01:45:58 +0200
+	id 1ZeuIi-00074V-UO
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 02:22:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932100AbbIWXpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 19:45:50 -0400
-Received: from mail-sg2apc01hn0200.outbound.protection.outlook.com ([104.47.125.200]:17328
-	"EHLO APC01-SG2-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756001AbbIWXps convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Sep 2015 19:45:48 -0400
-Authentication-Results: spf=none (sender IP is ) smtp.mailfrom=<>; 
-Received: from [100.64.189.129] (116.203.74.246) by
- HK2PR01MB0769.apcprd01.prod.exchangelabs.com (10.165.54.147) with Microsoft
- SMTP Server (TLS) id 15.1.274.16; Wed, 23 Sep 2015 23:45:42 +0000
-Content-Description: Mail message body
-From: <>
-X-Originating-IP: [116.203.74.246]
-X-ClientProxiedBy: HKXPR03CA0024.apcprd03.prod.outlook.com (10.141.129.14) To
- HK2PR01MB0769.apcprd01.prod.exchangelabs.com (25.165.54.147)
-X-Microsoft-Exchange-Diagnostics: 1;HK2PR01MB0769;2:XTe58KZQU3fzRDmsaWZI3oh7Tmq+Qa/GTtlrMk1aJ3nKtCHO/cCbHnPo2MWQGpWtdnsBJH9mJM4fo9sP1b1l4xfZABkK1Lf91AcItvzFpEeCWT+Jer2VTrpuJMgGH9VYSAnZ6VUGeAhoPsYvu2TG5R1M4NRGoEvGxQ9f5YwTGxo=;3:Bw80mE5vC9cjlve/hL7M2tw8F+MHr/Ooted8loj1nTuEQBEaswJpwLjrUtMOD0XCd9Torm4Wkz+5TyicntFdQLa7ULMi9vcxFr5mJ9rNYPYWdilfedy3Wtrs9wgDmt/AefQyijdlgKAhtfdR1DlCHw==;25:6EebommGHTyFivSzs4jc+6/iZef39pN33nLRdvRMSVsAnjgNzv2fjmH0N+HJGJ50z+i6HuV+s8oPRJ8ht+IX7xtprUdqHZ71ncmiqy6GE0DjXKtYYcG3TG2yxDmerJPD8z1i6SW8v6CNgJrEdqbjPuxu42GAVUzXlmTRTfrmaE99cqhkvPxJod/TZYi6A21p8pEQpDsNqrwAbLRWR973OJLKcuPnGaRVrVdwP4liTOyAPgzIE688bDiqmIeLV7X17XYRLfdc38YSDpIh7qzctQ==
-X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:HK2PR01MB0769;
-X-Microsoft-Antispam-PRVS: <HK2PR01MB07694B51B864D916232CF6F3B8440@HK2PR01MB0769.apcprd01.prod.exchangelabs.com>
-X-Exchange-Antispam-Report-Test: UriScan:;
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(601004)(2401047)(520078)(8121501046)(5005006)(3002001);SRVR:HK2PR01MB0769;BCL:0;PCL:0;RULEID:;SRVR:HK2PR01MB0769;
-X-Microsoft-Exchange-Diagnostics: 1;HK2PR01MB0769;4:fCxOjsF1ujLBCftlUL3D96U924Za72hK0uWAz3yuu5z6hcKfnK8sdXlEksIh5wzY4iH1EvHr3TFvbh407GJeBzzIShEO/W0RiOYGYUt1Wm+UpTDS6dPwpjtAqKij6vb3VLQybpX9YFsE17Y+YYJmFYaMVBlQwXyXPYluVO6xe/xydoSVCl1NObLEzdOPeIhdonPQoVccuoH9mehkmlhJpyxGnuqoZcVA2XGS/PM0sKSGXPzeAncRYJD8urw9F8JpZJfmn680Da2+kn97AkBt579Lz01RsxeaHBxDlWnCEZuzXyFiSbJxrcU7343OipzU3Fx4WrMcxUtsLxkyqSJEDnuTyH1XChrj3PvIwNKtW4U=
-X-Forefront-PRVS: 07083FF734
-X-Forefront-Antispam-Report: SFV:SPM;SFS:(10009020)(6049001)(6009001)(35000200001)(189002)(199003)(122386002)(77096005)(87976001)(66066001)(558084003)(86362001)(110136002)(105586002)(23756003)(47776003)(101416001)(4001600100001)(5001960100002)(43066003)(78352002)(64706001)(5001830100001)(229853001)(81156007)(85782001)(68736005)(42382002)(46102003)(107886002)(106356001)(5005630100001)(250100001)(77156002)(50466002)(19580405001)(189998001)(5001860100001)(86152002)(5001920100001)(62966003)(4001450100002)(46552002)(74316001)(50986999)(54356999)(5004730100002)(109986003)(221733001)(4001540100001)(42186005)(53256004)(40100003)(53806999)(5007970100001)(97736004)(33656002)(19580395003)(5005620100006);DIR:OUT;SFP:1501;SCL:9;SRVR:HK2PR01MB0769;H:[100.64.189.129];FPR:;SPF:None;PTR:InfoNoRecords;MX:0;
- A:0;LANG:en;
-Received-SPF: None (protection.outlook.com: [100.64.189.129] does not
- designate permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?iso-8859-1?Q?1;HK2PR01MB0769;23:9IhvDECD2BqRo/JgeZqAQSbWzhwMkIbojV3C6bS?=
- =?iso-8859-1?Q?nqLhDQ+okOQrha2KdOjo5P/rrKij2ZVM8tsE7k56yeX2wnbt0aTyrG+82j?=
- =?iso-8859-1?Q?8IE2mDVPnvLeGfEgfrmzTv2W8TGcEyisynLjY2gDPDBCp4yrlIXAN+rCK5?=
- =?iso-8859-1?Q?VkM8mhpeJf7y2+khmpvKQ1nTZyZI41yNPtu2rgqScHPwH7wPGMEI0rsJHX?=
- =?iso-8859-1?Q?Q9xpJeTg63QcFBQecph8nwNgKBeEbxuvmqK7qfNS7SA4IPJSEO8lLKyTC3?=
- =?iso-8859-1?Q?6fOvOU/zWbwhgTyJpofMLQxykgtFu6aRvAZPckgYznI7Mi6IbD0JI4QU1W?=
- =?iso-8859-1?Q?bpmGhD+gzL714N0/yi2Q/A3RprYJtHMpr2fQZNiHRds2qFWwXyseLVe0C3?=
- =?iso-8859-1?Q?IyYG8dsqFjoabo62VczIthJTcP1e+9anEU14CI3A7jziYScgsN+Ghnjb1n?=
- =?iso-8859-1?Q?sTdZEkYm76//Bvs5lSneKc2Wz5NWUNxoznFqJo/YmxQA7N2qIwm6L7RM6n?=
- =?iso-8859-1?Q?1lr/W1xc9sQdwKgDYjVhvFHLYBOfGKYQyU8EK0XWqXkWAKbirrZpmXF9Lh?=
- =?iso-8859-1?Q?/jws2HKiJTIEvIj14VfEk2UsXtjonIR81jfFcE2/EjGQAdBf/nvQuzl1Aw?=
- =?iso-8859-1?Q?CPJX 
-X-Microsoft-Exchange-Diagnostics: 1;HK2PR01MB0769;5:3eQ/E8U0chCR7mjXcNLq+Z5xsxSObaP7bznJpmCAhP2gS9yOEfanEZx6aKlD3SLPeWkeVqCAmqtZjb1En77oxPUTkoQHSKwiv9eCYFih/lWnf+Sy5cJHgw1KeK0hh2pZ+4qH5OJDJwRZOLFJi7k2QA==;24:5vtZKPtuF580b6417U0YZowH8CKVvduA65c8dAXMIuNQgPVI/3rsseVruuNr7ykPCUSE5JaOVVXcGzD7cxNojQ==;20:5eCAO9im54WGZB3rT5YhwakOaNNGQe4v4kDKDUrsamIvbdB30/j2l/OVDNlHtaE3lKdfPYcXv0/yxbuki6ttXA==
-SpamDiagnosticOutput: 1:22
-SpamDiagnosticMetadata: 00000000%2D0000%2D0000%2D0000%2D000000000000
-X-OriginatorOrg: Lender754.onmicrosoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2015 23:45:42.7647
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR01MB0769
+	id S932080AbbIXAWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 20:22:12 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49286 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755578AbbIXAWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 20:22:12 -0400
+Received: from fermat.fritz.box ([92.76.227.98]) by mail.gmx.com (mrgmx101)
+ with ESMTPSA (Nemesis) id 0MAloF-1Zp7h62IGJ-00Bs4A; Thu, 24 Sep 2015 02:22:07
+ +0200
+X-Mailer: git-send-email 2.6.0.rc3.dirty
+In-Reply-To: <20150923232443.GA21755@sigill.intra.peff.net>
+X-Provags-ID: V03:K0:aW95iOMkFIiIJvqazIZjpwnVyVRLP6fWAOQMZhR/e49aMGWckzX
+ X5T2wrlIvKouyYPhsAQJi9a8GBqLzTMWLxCQYzGvfPmnYTdux8YA7Yt/OV0QkYLTnB/I7kG
+ HFWziQcYmUKWbxIu8fltds2ZrI3ALzhOepl4iMM6syJzwb3FpCsadO0rEpvT1KOgYJnGuyb
+ rZXLQYIlXPz89PmNNhdNg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Mk3dp4L8xc8=:QFpUamcTmay11UNKn3M+g0
+ 34seJszCpTgHPqTDoNNJSAaR15fhPUpqrbtd6W9sKGzCNFpDP6nSFdXt28DV7LJl1iL8kEJhn
+ a8tuJOs40TbmtoJolmjC9Xka7gDyZFfKO3Cm9Kp/D1PlX7dx7VsK2OlT5F4fp9+c1rDejI2RF
+ LbhtOqvUqFu7PNr2Sh9zDzyBM21Iluc9rsWn92ElVwSr8S7K/EN34kzzdOeHb9j3nXM1jbhsR
+ ODl7GAgylgodHETWqUNKcTkXcZgXHqjDS7eg8wNEdm8oQOy/z9Cp06tSnXw4YMJGY16ButKIk
+ cHs6uSqHOB9aLPkvCLDNz7NDtZtqig/eW7QKxy+zrSmoo2iaw0dGrVF4YIw9poQECI0T/aVl2
+ xSREcc7aJBC9ysXb9UlnlN5gxSg4V6uLMMDmIYPHZ2svgtPI8601xNAr3lLC51MkS0LEpLyXN
+ jvS+xD3FnCLCxIoSockKxR+D62zDxkDwy+4uInekTs+pFNZYri9IcYCV5yhR2sRiLarra06uG
+ fuguigoVZr4EpYLa1g0G7SRUevd2AQZOHdKWBrv75GnafJVAsH5AzJfUJBCCov7da36NJP4Rb
+ lMnCSnKqkcOit2ueYkpng4tff4TFTG7itpj0T+b7ujJ/kFlQxaHC9kfsjoi57kPEvOFNDxdeW
+ wA7CE3GZZferl5eWoHaSsD+AK7jtRa1Wq2qR5mKilKkznU2tOcBDITk5gWp7fwHFMokPJZwcp
+ abdWP5Bmk0j56UhE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278524>
 
-Get access to short term loans no credit check, short term loans no credit check unemployed, quick short term loans no credit check and short term cash loans no credit check without delay through online application with 100% approval.
+The definition of log_div() appended information to the web server's
+logfile to make the test more readable. However, it could happen that
+this information is written before the web server writes its log line
+(this consistently happens with a PROFILE=GEN build), and hence the
+test failed.
 
-loan@gmx.us
+To get rid of this behavior, the logfile is not touched at all. This
+commit removes log_div() and its calls. The readability-improving
+information is kept in the test but filtered out before comparing
+it to the actual logfile.
 
-mohamendmalik@gmail.com
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
+ t/t5560-http-backend-noserver.sh |  4 ----
+ t/t5561-http-backend.sh          |  8 +-------
+ t/t556x_common                   | 12 ------------
+ 3 files changed, 1 insertion(+), 23 deletions(-)
+
+diff --git a/t/t5560-http-backend-noserver.sh b/t/t5560-http-backend-noserver.sh
+index aa73eea..9fafcf1 100755
+--- a/t/t5560-http-backend-noserver.sh
++++ b/t/t5560-http-backend-noserver.sh
+@@ -44,10 +44,6 @@ POST() {
+ 	test_cmp exp act
+ }
+ 
+-log_div() {
+-	return 0
+-}
+-
+ . "$TEST_DIRECTORY"/t556x_common
+ 
+ expect_aliased() {
+diff --git a/t/t5561-http-backend.sh b/t/t5561-http-backend.sh
+index 19afe96..b870410 100755
+--- a/t/t5561-http-backend.sh
++++ b/t/t5561-http-backend.sh
+@@ -29,15 +29,9 @@ POST() {
+ 	test_cmp exp act
+ }
+ 
+-log_div() {
+-	echo >>"$HTTPD_ROOT_PATH"/access.log
+-	echo "###  $1" >>"$HTTPD_ROOT_PATH"/access.log
+-	echo "###" >>"$HTTPD_ROOT_PATH"/access.log
+-}
+-
+ . "$TEST_DIRECTORY"/t556x_common
+ 
+-cat >exp <<EOF
++grep -e '^[GP]' >exp <<EOF
+ 
+ ###  refs/heads/master
+ ###
+diff --git a/t/t556x_common b/t/t556x_common
+index 82926cf..359fcfe 100755
+--- a/t/t556x_common
++++ b/t/t556x_common
+@@ -52,21 +52,17 @@ get_static_files() {
+ SMART=smart
+ GIT_HTTP_EXPORT_ALL=1 && export GIT_HTTP_EXPORT_ALL
+ test_expect_success 'direct refs/heads/master not found' '
+-	log_div "refs/heads/master" &&
+ 	GET refs/heads/master "404 Not Found"
+ '
+ test_expect_success 'static file is ok' '
+-	log_div "getanyfile default" &&
+ 	get_static_files "200 OK"
+ '
+ SMART=smart_noexport
+ unset GIT_HTTP_EXPORT_ALL
+ test_expect_success 'no export by default' '
+-	log_div "no git-daemon-export-ok" &&
+ 	get_static_files "404 Not Found"
+ '
+ test_expect_success 'export if git-daemon-export-ok' '
+-	log_div "git-daemon-export-ok" &&
+         (cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ 	 touch git-daemon-export-ok
+ 	) &&
+@@ -75,47 +71,39 @@ test_expect_success 'export if git-daemon-export-ok' '
+ SMART=smart
+ GIT_HTTP_EXPORT_ALL=1 && export GIT_HTTP_EXPORT_ALL
+ test_expect_success 'static file if http.getanyfile true is ok' '
+-	log_div "getanyfile true" &&
+ 	config http.getanyfile true &&
+ 	get_static_files "200 OK"
+ '
+ test_expect_success 'static file if http.getanyfile false fails' '
+-	log_div "getanyfile false" &&
+ 	config http.getanyfile false &&
+ 	get_static_files "403 Forbidden"
+ '
+ 
+ test_expect_success 'http.uploadpack default enabled' '
+-	log_div "uploadpack default" &&
+ 	GET info/refs?service=git-upload-pack "200 OK"  &&
+ 	POST git-upload-pack 0000 "200 OK"
+ '
+ test_expect_success 'http.uploadpack true' '
+-	log_div "uploadpack true" &&
+ 	config http.uploadpack true &&
+ 	GET info/refs?service=git-upload-pack "200 OK" &&
+ 	POST git-upload-pack 0000 "200 OK"
+ '
+ test_expect_success 'http.uploadpack false' '
+-	log_div "uploadpack false" &&
+ 	config http.uploadpack false &&
+ 	GET info/refs?service=git-upload-pack "403 Forbidden" &&
+ 	POST git-upload-pack 0000 "403 Forbidden"
+ '
+ 
+ test_expect_success 'http.receivepack default disabled' '
+-	log_div "receivepack default" &&
+ 	GET info/refs?service=git-receive-pack "403 Forbidden"  &&
+ 	POST git-receive-pack 0000 "403 Forbidden"
+ '
+ test_expect_success 'http.receivepack true' '
+-	log_div "receivepack true" &&
+ 	config http.receivepack true &&
+ 	GET info/refs?service=git-receive-pack "200 OK" &&
+ 	POST git-receive-pack 0000 "200 OK"
+ '
+ test_expect_success 'http.receivepack false' '
+-	log_div "receivepack false" &&
+ 	config http.receivepack false &&
+ 	GET info/refs?service=git-receive-pack "403 Forbidden" &&
+ 	POST git-receive-pack 0000 "403 Forbidden"
+-- 
+2.6.0.rc3.dirty
