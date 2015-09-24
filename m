@@ -1,80 +1,464 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 18/68] find_short_object_filename: convert sprintf to
- xsnprintf
-Date: Thu, 24 Sep 2015 17:06:44 -0400
-Message-ID: <20150924210644.GO30946@sigill.intra.peff.net>
+Subject: [PATCH 15/68] convert trivial sprintf / strcpy calls to xsnprintf
+Date: Thu, 24 Sep 2015 17:06:08 -0400
+Message-ID: <20150924210608.GL30946@sigill.intra.peff.net>
 References: <20150924210225.GA23624@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 23:06:59 2015
+X-From: git-owner@vger.kernel.org Thu Sep 24 23:06:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfDjD-0001Ak-FJ
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:06:56 +0200
+	id 1ZfDis-0001Ak-JB
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:06:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752539AbbIXVGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 17:06:47 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35942 "HELO cloud.peff.net"
+	id S1754312AbbIXVGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 17:06:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35929 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752322AbbIXVGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 17:06:46 -0400
-Received: (qmail 11907 invoked by uid 102); 24 Sep 2015 21:06:46 -0000
+	id S1754281AbbIXVGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 17:06:11 -0400
+Received: (qmail 11851 invoked by uid 102); 24 Sep 2015 21:06:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:06:46 -0500
-Received: (qmail 29085 invoked by uid 107); 24 Sep 2015 21:06:58 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:06:11 -0500
+Received: (qmail 29005 invoked by uid 107); 24 Sep 2015 21:06:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:06:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:06:44 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:06:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:06:08 -0400
 Content-Disposition: inline
 In-Reply-To: <20150924210225.GA23624@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278574>
 
-We use sprintf() to format some hex data into a buffer. The
-buffer is clearly long enough, and using snprintf here is
-not necessary. And in fact, it does not really make anything
-easier to audit, as the size we feed to snprintf accounts
-for the magic extra 42 bytes found in each alt->name field
-of struct alternate_object_database (which is there exactly
-to do this formatting).
+We sometimes sprintf into fixed-size buffers when we know
+that the buffer is large enough to fit the input (either
+because it's a constant, or because it's numeric input that
+is bounded in size). Likewise with strcpy of constant
+strings.
 
-Still, it is nice to remove an sprintf call and replace it
-with an xsnprintf and explanatory comment, which makes it
-easier to audit the code base for overflows.
+However, these sites make it hard to audit sprintf and
+strcpy calls for buffer overflows, as a reader has to
+cross-reference the size of the array with the input. Let's
+use xsnprintf instead, which communicates to a reader that
+we don't expect this to overflow (and catches the mistake in
+case we do).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- sha1_name.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ archive-tar.c             |  2 +-
+ builtin/gc.c              |  2 +-
+ builtin/init-db.c         | 11 ++++++-----
+ builtin/ls-tree.c         |  9 +++++----
+ builtin/merge-index.c     |  2 +-
+ builtin/merge-recursive.c |  2 +-
+ builtin/read-tree.c       |  2 +-
+ builtin/unpack-file.c     |  2 +-
+ compat/mingw.c            |  8 +++++---
+ compat/winansi.c          |  2 +-
+ connect.c                 |  2 +-
+ convert.c                 |  3 ++-
+ daemon.c                  |  4 ++--
+ diff.c                    | 12 ++++++------
+ http-push.c               |  2 +-
+ http.c                    |  6 +++---
+ ll-merge.c                | 12 ++++++------
+ refs.c                    |  8 ++++----
+ sideband.c                |  4 ++--
+ strbuf.c                  |  4 ++--
+ 20 files changed, 52 insertions(+), 47 deletions(-)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index c58b477..80753b6 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -96,11 +96,15 @@ static void find_short_object_filename(int len, const char *hex_pfx, struct disa
- 	}
- 	fakeent->next = alt_odb_list;
+diff --git a/archive-tar.c b/archive-tar.c
+index b6b30bb..d543f93 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -301,7 +301,7 @@ static int write_global_extended_header(struct archiver_args *args)
+ 	memset(&header, 0, sizeof(header));
+ 	*header.typeflag = TYPEFLAG_GLOBAL_HEADER;
+ 	mode = 0100666;
+-	strcpy(header.name, "pax_global_header");
++	xsnprintf(header.name, sizeof(header.name), "pax_global_header");
+ 	prepare_header(args, &header, mode, ext_header.len);
+ 	write_blocked(&header, sizeof(header));
+ 	write_blocked(ext_header.buf, ext_header.len);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 0ad8d30..57584bc 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -194,7 +194,7 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+ 		return NULL;
  
--	sprintf(hex, "%.2s", hex_pfx);
-+	xsnprintf(hex, sizeof(hex), "%.2s", hex_pfx);
- 	for (alt = fakeent; alt && !ds->ambiguous; alt = alt->next) {
- 		struct dirent *de;
- 		DIR *dir;
--		sprintf(alt->name, "%.2s/", hex_pfx);
-+		/*
-+		 * every alt_odb struct has 42 extra bytes after the base
-+		 * for exactly this purpose
-+		 */
-+		xsnprintf(alt->name, 42, "%.2s/", hex_pfx);
- 		dir = opendir(alt->base);
- 		if (!dir)
- 			continue;
+ 	if (gethostname(my_host, sizeof(my_host)))
+-		strcpy(my_host, "unknown");
++		xsnprintf(my_host, sizeof(my_host), "unknown");
+ 
+ 	pidfile_path = git_pathdup("gc.pid");
+ 	fd = hold_lock_file_for_update(&lock, pidfile_path,
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 69323e1..e7d0e31 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -262,7 +262,8 @@ static int create_default_files(const char *template_path)
+ 	}
+ 
+ 	/* This forces creation of new config file */
+-	sprintf(repo_version_string, "%d", GIT_REPO_VERSION);
++	xsnprintf(repo_version_string, sizeof(repo_version_string),
++		  "%d", GIT_REPO_VERSION);
+ 	git_config_set("core.repositoryformatversion", repo_version_string);
+ 
+ 	path[len] = 0;
+@@ -414,13 +415,13 @@ int init_db(const char *template_dir, unsigned int flags)
+ 		 */
+ 		if (shared_repository < 0)
+ 			/* force to the mode value */
+-			sprintf(buf, "0%o", -shared_repository);
++			xsnprintf(buf, sizeof(buf), "0%o", -shared_repository);
+ 		else if (shared_repository == PERM_GROUP)
+-			sprintf(buf, "%d", OLD_PERM_GROUP);
++			xsnprintf(buf, sizeof(buf), "%d", OLD_PERM_GROUP);
+ 		else if (shared_repository == PERM_EVERYBODY)
+-			sprintf(buf, "%d", OLD_PERM_EVERYBODY);
++			xsnprintf(buf, sizeof(buf), "%d", OLD_PERM_EVERYBODY);
+ 		else
+-			die("oops");
++			die("BUG: invalid value for shared_repository");
+ 		git_config_set("core.sharedrepository", buf);
+ 		git_config_set("receive.denyNonFastforwards", "true");
+ 	}
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 3b04a0f..0e30d86 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -96,12 +96,13 @@ static int show_tree(const unsigned char *sha1, struct strbuf *base,
+ 			if (!strcmp(type, blob_type)) {
+ 				unsigned long size;
+ 				if (sha1_object_info(sha1, &size) == OBJ_BAD)
+-					strcpy(size_text, "BAD");
++					xsnprintf(size_text, sizeof(size_text),
++						  "BAD");
+ 				else
+-					snprintf(size_text, sizeof(size_text),
+-						 "%lu", size);
++					xsnprintf(size_text, sizeof(size_text),
++						  "%lu", size);
+ 			} else
+-				strcpy(size_text, "-");
++				xsnprintf(size_text, sizeof(size_text), "-");
+ 			printf("%06o %s %s %7s\t", mode, type,
+ 			       find_unique_abbrev(sha1, abbrev),
+ 			       size_text);
+diff --git a/builtin/merge-index.c b/builtin/merge-index.c
+index 1a1eafa..1d66111 100644
+--- a/builtin/merge-index.c
++++ b/builtin/merge-index.c
+@@ -23,7 +23,7 @@ static int merge_entry(int pos, const char *path)
+ 			break;
+ 		found++;
+ 		strcpy(hexbuf[stage], sha1_to_hex(ce->sha1));
+-		sprintf(ownbuf[stage], "%o", ce->ce_mode);
++		xsnprintf(ownbuf[stage], sizeof(ownbuf[stage]), "%o", ce->ce_mode);
+ 		arguments[stage] = hexbuf[stage];
+ 		arguments[stage + 4] = ownbuf[stage];
+ 	} while (++pos < active_nr);
+diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+index a90f28f..491efd5 100644
+--- a/builtin/merge-recursive.c
++++ b/builtin/merge-recursive.c
+@@ -14,7 +14,7 @@ static const char *better_branch_name(const char *branch)
+ 
+ 	if (strlen(branch) != 40)
+ 		return branch;
+-	sprintf(githead_env, "GITHEAD_%s", branch);
++	xsnprintf(githead_env, sizeof(githead_env), "GITHEAD_%s", branch);
+ 	name = getenv(githead_env);
+ 	return name ? name : branch;
+ }
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index 2379e11..8c693e7 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -90,7 +90,7 @@ static int debug_merge(const struct cache_entry * const *stages,
+ 	debug_stage("index", stages[0], o);
+ 	for (i = 1; i <= o->merge_size; i++) {
+ 		char buf[24];
+-		sprintf(buf, "ent#%d", i);
++		xsnprintf(buf, sizeof(buf), "ent#%d", i);
+ 		debug_stage(buf, stages[i], o);
+ 	}
+ 	return 0;
+diff --git a/builtin/unpack-file.c b/builtin/unpack-file.c
+index 1920029..6fc6bcd 100644
+--- a/builtin/unpack-file.c
++++ b/builtin/unpack-file.c
+@@ -12,7 +12,7 @@ static char *create_temp_file(unsigned char *sha1)
+ 	if (!buf || type != OBJ_BLOB)
+ 		die("unable to read blob object %s", sha1_to_hex(sha1));
+ 
+-	strcpy(path, ".merge_file_XXXXXX");
++	xsnprintf(path, sizeof(path), ".merge_file_XXXXXX");
+ 	fd = xmkstemp(path);
+ 	if (write_in_full(fd, buf, size) != size)
+ 		die_errno("unable to write temp-file");
+diff --git a/compat/mingw.c b/compat/mingw.c
+index f74da23..a168800 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2133,9 +2133,11 @@ int uname(struct utsname *buf)
+ {
+ 	DWORD v = GetVersion();
+ 	memset(buf, 0, sizeof(*buf));
+-	strcpy(buf->sysname, "Windows");
+-	sprintf(buf->release, "%u.%u", v & 0xff, (v >> 8) & 0xff);
++	xsnprintf(buf->sysname, sizeof(buf->sysname), "Windows");
++	xsnprintf(buf->release, sizeof(buf->release),
++		 "%u.%u", v & 0xff, (v >> 8) & 0xff);
+ 	/* assuming NT variants only.. */
+-	sprintf(buf->version, "%u", (v >> 16) & 0x7fff);
++	xsnprintf(buf->version, sizeof(buf->version),
++		  "%u", (v >> 16) & 0x7fff);
+ 	return 0;
+ }
+diff --git a/compat/winansi.c b/compat/winansi.c
+index efc5bb3..ceff55b 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -539,7 +539,7 @@ void winansi_init(void)
+ 		return;
+ 
+ 	/* create a named pipe to communicate with the console thread */
+-	sprintf(name, "\\\\.\\pipe\\winansi%lu", GetCurrentProcessId());
++	xsnprintf(name, sizeof(name), "\\\\.\\pipe\\winansi%lu", GetCurrentProcessId());
+ 	hwrite = CreateNamedPipe(name, PIPE_ACCESS_OUTBOUND,
+ 		PIPE_TYPE_BYTE | PIPE_WAIT, 1, BUFFER_SIZE, 0, 0, NULL);
+ 	if (hwrite == INVALID_HANDLE_VALUE)
+diff --git a/connect.c b/connect.c
+index c0144d8..1d5c5e0 100644
+--- a/connect.c
++++ b/connect.c
+@@ -332,7 +332,7 @@ static const char *ai_name(const struct addrinfo *ai)
+ 	static char addr[NI_MAXHOST];
+ 	if (getnameinfo(ai->ai_addr, ai->ai_addrlen, addr, sizeof(addr), NULL, 0,
+ 			NI_NUMERICHOST) != 0)
+-		strcpy(addr, "(unknown)");
++		xsnprintf(addr, sizeof(addr), "(unknown)");
+ 
+ 	return addr;
+ }
+diff --git a/convert.c b/convert.c
+index f3bd3e9..814e814 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1289,7 +1289,8 @@ static struct stream_filter *ident_filter(const unsigned char *sha1)
+ {
+ 	struct ident_filter *ident = xmalloc(sizeof(*ident));
+ 
+-	sprintf(ident->ident, ": %s $", sha1_to_hex(sha1));
++	xsnprintf(ident->ident, sizeof(ident->ident),
++		  ": %s $", sha1_to_hex(sha1));
+ 	strbuf_init(&ident->left, 0);
+ 	ident->filter.vtbl = &ident_vtbl;
+ 	ident->state = 0;
+diff --git a/daemon.c b/daemon.c
+index f9eb296..5218a3f 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -901,7 +901,7 @@ static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
+ 		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, len);
+ 		break;
+ 	default:
+-		strcpy(ip, "<unknown>");
++		xsnprintf(ip, sizeof(ip), "<unknown>");
+ 	}
+ 	return ip;
+ }
+@@ -916,7 +916,7 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
+ 	int gai;
+ 	long flags;
+ 
+-	sprintf(pbuf, "%d", listen_port);
++	xsnprintf(pbuf, sizeof(pbuf), "%d", listen_port);
+ 	memset(&hints, 0, sizeof(hints));
+ 	hints.ai_family = AF_UNSPEC;
+ 	hints.ai_socktype = SOCK_STREAM;
+diff --git a/diff.c b/diff.c
+index 08508f6..788e371 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2880,7 +2880,7 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ 	temp->name = get_tempfile_path(&temp->tempfile);
+ 	strcpy(temp->hex, sha1_to_hex(sha1));
+ 	temp->hex[40] = 0;
+-	sprintf(temp->mode, "%06o", mode);
++	xsnprintf(temp->mode, sizeof(temp->mode), "%06o", mode);
+ 	strbuf_release(&buf);
+ 	strbuf_release(&template);
+ 	free(path_dup);
+@@ -2897,8 +2897,8 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
+ 		 * a '+' entry produces this for file-1.
+ 		 */
+ 		temp->name = "/dev/null";
+-		strcpy(temp->hex, ".");
+-		strcpy(temp->mode, ".");
++		xsnprintf(temp->hex, sizeof(temp->hex), ".");
++		xsnprintf(temp->mode, sizeof(temp->mode), ".");
+ 		return temp;
+ 	}
+ 
+@@ -2935,7 +2935,7 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
+ 			 * !(one->sha1_valid), as long as
+ 			 * DIFF_FILE_VALID(one).
+ 			 */
+-			sprintf(temp->mode, "%06o", one->mode);
++			xsnprintf(temp->mode, sizeof(temp->mode), "%06o", one->mode);
+ 		}
+ 		return temp;
+ 	}
+@@ -4081,9 +4081,9 @@ const char *diff_unique_abbrev(const unsigned char *sha1, int len)
+ 	if (abblen < 37) {
+ 		static char hex[41];
+ 		if (len < abblen && abblen <= len + 2)
+-			sprintf(hex, "%s%.*s", abbrev, len+3-abblen, "..");
++			xsnprintf(hex, sizeof(hex), "%s%.*s", abbrev, len+3-abblen, "..");
+ 		else
+-			sprintf(hex, "%s...", abbrev);
++			xsnprintf(hex, sizeof(hex), "%s...", abbrev);
+ 		return hex;
+ 	}
+ 	return sha1_to_hex(sha1);
+diff --git a/http-push.c b/http-push.c
+index c98dad2..154e67b 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -881,7 +881,7 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
+ 	strbuf_addf(&out_buffer.buf, LOCK_REQUEST, escaped);
+ 	free(escaped);
+ 
+-	sprintf(timeout_header, "Timeout: Second-%ld", timeout);
++	xsnprintf(timeout_header, sizeof(timeout_header), "Timeout: Second-%ld", timeout);
+ 	dav_headers = curl_slist_append(dav_headers, timeout_header);
+ 	dav_headers = curl_slist_append(dav_headers, "Content-Type: text/xml");
+ 
+diff --git a/http.c b/http.c
+index 9dce380..7b02259 100644
+--- a/http.c
++++ b/http.c
+@@ -1104,7 +1104,7 @@ static void write_accept_language(struct strbuf *buf)
+ 		     decimal_places++, max_q *= 10)
+ 			;
+ 
+-		sprintf(q_format, ";q=0.%%0%dd", decimal_places);
++		xsnprintf(q_format, sizeof(q_format), ";q=0.%%0%dd", decimal_places);
+ 
+ 		strbuf_addstr(buf, "Accept-Language: ");
+ 
+@@ -1601,7 +1601,7 @@ struct http_pack_request *new_http_pack_request(
+ 			fprintf(stderr,
+ 				"Resuming fetch of pack %s at byte %ld\n",
+ 				sha1_to_hex(target->sha1), prev_posn);
+-		sprintf(range, "Range: bytes=%ld-", prev_posn);
++		xsnprintf(range, sizeof(range), "Range: bytes=%ld-", prev_posn);
+ 		preq->range_header = curl_slist_append(NULL, range);
+ 		curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER,
+ 			preq->range_header);
+@@ -1761,7 +1761,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 			fprintf(stderr,
+ 				"Resuming fetch of object %s at byte %ld\n",
+ 				hex, prev_posn);
+-		sprintf(range, "Range: bytes=%ld-", prev_posn);
++		xsnprintf(range, sizeof(range), "Range: bytes=%ld-", prev_posn);
+ 		range_header = curl_slist_append(range_header, range);
+ 		curl_easy_setopt(freq->slot->curl,
+ 				 CURLOPT_HTTPHEADER, range_header);
+diff --git a/ll-merge.c b/ll-merge.c
+index fc3c049..56f73b3 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -142,11 +142,11 @@ static struct ll_merge_driver ll_merge_drv[] = {
+ 	{ "union", "built-in union merge", ll_union_merge },
+ };
+ 
+-static void create_temp(mmfile_t *src, char *path)
++static void create_temp(mmfile_t *src, char *path, size_t len)
+ {
+ 	int fd;
+ 
+-	strcpy(path, ".merge_file_XXXXXX");
++	xsnprintf(path, len, ".merge_file_XXXXXX");
+ 	fd = xmkstemp(path);
+ 	if (write_in_full(fd, src->ptr, src->size) != src->size)
+ 		die_errno("unable to write temp-file");
+@@ -187,10 +187,10 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 
+ 	result->ptr = NULL;
+ 	result->size = 0;
+-	create_temp(orig, temp[0]);
+-	create_temp(src1, temp[1]);
+-	create_temp(src2, temp[2]);
+-	sprintf(temp[3], "%d", marker_size);
++	create_temp(orig, temp[0], sizeof(temp[0]));
++	create_temp(src1, temp[1], sizeof(temp[1]));
++	create_temp(src2, temp[2], sizeof(temp[2]));
++	xsnprintf(temp[3], sizeof(temp[3]), "%d", marker_size);
+ 
+ 	strbuf_expand(&cmd, fn->cmdline, strbuf_expand_dict_cb, &dict);
+ 
+diff --git a/refs.c b/refs.c
+index 4e15f60..d5c8b2f 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3326,10 +3326,10 @@ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
+ 	msglen = msg ? strlen(msg) : 0;
+ 	maxlen = strlen(committer) + msglen + 100;
+ 	logrec = xmalloc(maxlen);
+-	len = sprintf(logrec, "%s %s %s\n",
+-		      sha1_to_hex(old_sha1),
+-		      sha1_to_hex(new_sha1),
+-		      committer);
++	len = xsnprintf(logrec, maxlen, "%s %s %s\n",
++			sha1_to_hex(old_sha1),
++			sha1_to_hex(new_sha1),
++			committer);
+ 	if (msglen)
+ 		len += copy_msg(logrec + len - 1, msg) - 1;
+ 
+diff --git a/sideband.c b/sideband.c
+index 7f9dc22..fde8adc 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -137,11 +137,11 @@ ssize_t send_sideband(int fd, int band, const char *data, ssize_t sz, int packet
+ 		if (packet_max - 5 < n)
+ 			n = packet_max - 5;
+ 		if (0 <= band) {
+-			sprintf(hdr, "%04x", n + 5);
++			xsnprintf(hdr, sizeof(hdr), "%04x", n + 5);
+ 			hdr[4] = band;
+ 			write_or_die(fd, hdr, 5);
+ 		} else {
+-			sprintf(hdr, "%04x", n + 4);
++			xsnprintf(hdr, sizeof(hdr), "%04x", n + 4);
+ 			write_or_die(fd, hdr, 4);
+ 		}
+ 		write_or_die(fd, p, n);
+diff --git a/strbuf.c b/strbuf.c
+index f3c44fb..107c45d 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -245,8 +245,8 @@ void strbuf_add_commented_lines(struct strbuf *out, const char *buf, size_t size
+ 	static char prefix2[2];
+ 
+ 	if (prefix1[0] != comment_line_char) {
+-		sprintf(prefix1, "%c ", comment_line_char);
+-		sprintf(prefix2, "%c", comment_line_char);
++		xsnprintf(prefix1, sizeof(prefix1), "%c ", comment_line_char);
++		xsnprintf(prefix2, sizeof(prefix2), "%c", comment_line_char);
+ 	}
+ 	add_lines(out, prefix1, prefix2, buf, size);
+ }
 -- 
 2.6.0.rc3.454.g204ad51
