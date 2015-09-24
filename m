@@ -1,168 +1,226 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv5] Another squash on run-command: add an asynchronous parallel child processor
-Date: Wed, 23 Sep 2015 19:17:47 -0700
-Message-ID: <xmqqzj0cv9v8.fsf@gitster.mtv.corp.google.com>
-References: <xmqqpp19xbpz.fsf@gitster.mtv.corp.google.com>
-	<1443051711-15322-1-git-send-email-sbeller@google.com>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Subject: Re: [PATCH v8 4/4] worktree: add 'list' command
+Date: Wed, 23 Sep 2015 22:58:53 -0400
+Message-ID: <CANoM8SX28TPt_U8v9HO4yo=M46-JKn5S11DrhZ0-EdrjkDT3EQ@mail.gmail.com>
+References: <1442583027-47653-1-git-send-email-rappazzo@gmail.com>
+ <1442583027-47653-5-git-send-email-rappazzo@gmail.com> <xmqq37y644x7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
-	jacob.keller@gmail.com, peff@peff.net, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	vlovich@gmail.com, sunshine@sunshineco.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Sep 24 04:17:55 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	David Turner <dturner@twopensource.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 24 04:59:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zew6d-0006cL-6J
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 04:17:55 +0200
+	id 1Zewkh-00054k-S9
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 04:59:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932492AbbIXCRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 22:17:50 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:33929 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932269AbbIXCRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2015 22:17:49 -0400
-Received: by padhy16 with SMTP id hy16so57659048pad.1
-        for <git@vger.kernel.org>; Wed, 23 Sep 2015 19:17:49 -0700 (PDT)
+	id S932250AbbIXC7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 22:59:15 -0400
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:32945 "EHLO
+	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932166AbbIXC7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 22:59:14 -0400
+Received: by vkgd64 with SMTP id d64so40018213vkg.0
+        for <git@vger.kernel.org>; Wed, 23 Sep 2015 19:59:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=web7Z+9IDL9pwZ5BgWA06/UtrOaMQUJDDzu1LkTplZ8=;
-        b=jbs628Sg1fGtj0a2pDFiMuGEH4iYL6flPkmNdsN1HoHpkGS8uGdA/wC2PejRvhvQOj
-         akOHhP3T/mZZ68as+dOrZXOD70TxZrcbcWHS33BMu4INFtjQrPHkWa+Q5a0VCnTRh7HN
-         npd5UrZ5g2xvApKS+wEUFRIJItT+Zht1FOcWNfSJlAfETy8h1N7kxJuQ7Md5rXko7/fd
-         0ZJKzzUNtUaHOd5uakD7uowHQa890LOpgMwl+mSDisBmVNEaA6PlbsrSMGhCDDj5SEIq
-         rPz5W+xtI9Toq5tuBpR68XBfN5+C1fA9O5TpZfRtkarGvVJw5pmfN0hAth1AhJC7teQO
-         v2tw==
-X-Received: by 10.66.164.132 with SMTP id yq4mr41972207pab.8.1443061068959;
-        Wed, 23 Sep 2015 19:17:48 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:a07c:76d3:22e9:4d3d])
-        by smtp.gmail.com with ESMTPSA id cs5sm10420178pbc.15.2015.09.23.19.17.47
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Wed, 23 Sep 2015 19:17:47 -0700 (PDT)
-In-Reply-To: <1443051711-15322-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Wed, 23 Sep 2015 16:41:51 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qdAvy4qeUM8m/lO4newNc5MDoywzQjqp1M9LuE2NZaY=;
+        b=RXiVX7kin/QN3Ar1UvA+ivvIAQmbDnfwVM4KwZ6yu34SJPY2Ap5CmlaxGuMG53SWS7
+         5I6LEu+d2YuoC/k8yaA4bKej4dVX7rrn2gwDlQz0yZtnPm11AuVEvHmxrJr/+QR1drCu
+         9ndvjb52D6km94sR91oFEKXxyBJHxOG1bs1ijJmcIwu5CDfCilMN3WjNO7J0qb/CXdy5
+         1roYV3pgxnMGheFeX6eA0fxmYfXKEVAyTep3IDe/XgIT9potH53V1tig+Qfh0mfFLc5n
+         zdX6KKspGALt/lcyY/VYLr6aS3dXPhzdxaQy7UTKYJWzWaypMq7tkF+jHS1dU/oykUAQ
+         tu8w==
+X-Received: by 10.31.155.2 with SMTP id d2mr24538564vke.55.1443063552811; Wed,
+ 23 Sep 2015 19:59:12 -0700 (PDT)
+Received: by 10.103.80.201 with HTTP; Wed, 23 Sep 2015 19:58:53 -0700 (PDT)
+In-Reply-To: <xmqq37y644x7.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278529>
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, Sep 22, 2015 at 3:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Michael Rappazzo <rappazzo@gmail.com> writes:
+>
+>>
+>> +--porcelain::
+>> +     With `list`, output in an easy-to-parse format for scripts.
+>> +     This format will remain stable across Git versions and regardless of user
+>> +     configuration.
+>
+> ... and exactly what does it output?  That would be the first
+> question a reader of this documentation would ask.
+>
 
-> I agree the commit 7087c5f3 (SQUASH??? on top of run-command: add an
-> asynchronous parallel child processor) makes sense; I arrived at the same
-> patch after adding in the feedback.
+I will add that description.  I have mostly followed what Eric
+suggested in the v7 series for a porcelain format.  Does the porcelain
+format restrict additive changes?  That is, is it OK for a future
+patch to add another field in the format, as long as it doesn't alter
+the other values?  Is the format that I have used here acceptable
+(assuming the changes proposed below are made)?
 
-I dunno.  As I said, while a small part of that commit is necessary
-to be squashed into [6/14] (i.e. the "failed to start" bugfix and
-redefinition of the return value of start_one()), the remainder of
-the commit is primarily to illustrate possible future enhancements
-that the basic structure of your code must support, so that we can
-get the fundamentals right.  Each of the actual "possible future
-enhancements" may or may not be a good idea and there is nothing
-that back it up.  In such a vacuum, I'd prefer to leave them simple
-and avoid starting performance tuning prematurely.
+>
+>> @@ -93,6 +106,7 @@ OPTIONS
+>>  --expire <time>::
+>>       With `prune`, only expire unused working trees older than <time>.
+>>
+>> +
+>
+> ?
+>
+>> diff --git a/builtin/worktree.c b/builtin/worktree.c
+>> index 71bb770..e6e36ac 100644
+>> --- a/builtin/worktree.c
+>> +++ b/builtin/worktree.c
+>> @@ -8,10 +8,13 @@
+>>  #include "run-command.h"
+>>  #include "sigchain.h"
+>>  #include "refs.h"
+>> +#include "utf8.h"
+>> +#include "worktree.h"
+>>
+>>  static const char * const worktree_usage[] = {
+>>       N_("git worktree add [<options>] <path> <branch>"),
+>>       N_("git worktree prune [<options>]"),
+>> +     N_("git worktree list [<options>]"),
+>>       NULL
+>>  };
+>>
+>> @@ -359,6 +362,79 @@ static int add(int ac, const char **av, const char *prefix)
+>>       return add_worktree(path, branch, &opts);
+>>  }
+>>
+>> +static void show_worktree_porcelain(struct worktree *worktree)
+>> +{
+>> +     struct strbuf sb = STRBUF_INIT;
+>> +
+>> +     strbuf_addf(&sb, "worktree %s\n", worktree->path);
+>> +     if (worktree->is_bare)
+>> +             strbuf_addstr(&sb, "bare");
+>> +     else {
+>> +             if (worktree->is_detached)
+>> +                     strbuf_addf(&sb, "detached at %s", find_unique_abbrev(worktree->head_sha1, DEFAULT_ABBREV));
+>> +             else
+>> +                     strbuf_addf(&sb, "branch %s", shorten_unambiguous_ref(worktree->head_ref, 0));
+>> +     }
+>
+> Writing the above like this:
+>
+>         if (worktree->is_bare)
+>                 ...
+>         else if (worktree->is_detached)
+>                 ...
+>         else
+>                 ...
+>
+> would make it a lot more clear that there are three cases.
+>
+> Also, I doubt --porcelain output wants shorten or abbrev.
+>
+> Human-readability is not a goal.  Reproducibility is.  When you run
+> "worktree list" today and save the output, you want the output from
+> "worktree list" taken tomorrow to exactly match it, even after
+> creating many objects and tags with conflicting names with branches,
+> as long as you didn't change their HEADs in the meantime.
+>
+>> +
+>> +     printf("%s\n\n", sb.buf);
+>> +
+>> +     strbuf_release(&sb);
+>
+> I am not sure what the point of use of a strbuf is in this function,
+> though.  Two printf's for each case (one for the common "worktree
+> %s", the other inside if/elseif/else cascade) should be sufficient.
+>
+>> +static void show_worktree(struct worktree *worktree, int path_maxlen)
+>> +{
+>> +     struct strbuf sb = STRBUF_INIT;
+>> +
+>
+> Remove this blank line.  You are still declaring variables.
+>
+>> +     int cur_len = strlen(worktree->path);
+>> +     int utf8_adj = cur_len - utf8_strwidth(worktree->path);
+>
+> Have a blank line here, instead, as now you start your statements.
+>
+>> +     strbuf_addf(&sb, "%-*s ", 1 + path_maxlen + utf8_adj, worktree->path);
+>> +     if (worktree->is_bare)
+>> +             strbuf_addstr(&sb, "(bare)");
+>> +     else {
+>> +             strbuf_addf(&sb, "%s ", find_unique_abbrev(worktree->head_sha1, DEFAULT_ABBREV));
+>
+> Personally I am not a big fan of the the alignment and use of
+> utf8_strwidth(), but by using find_unique_abbrev() here, you are
+> breaking the alignment, aren't you?  " [branchname]" that follows
+> the commit object name would not start at the same column, when
+> you have many objects that default-abbrev is not enough to uniquely
+> identify them.
+>
+> And it can easily be fixed by computing the unique-abbrev length for
+> all the non-bare worktree's HEADs in the same loop you computed
+> path_maxlen() in the caller, passing that to this function, and use
+> that as mininum abbrev length when computing the unique-abbrev.
+>
 
-One thing that is sort-of backed up already by your "cap to 4"
-experiment is that some sort of slow-start ramping up is far better
-than letting thundering herd stampede, so I am OK if we kept that
-SPAWN_CAP part of the commit.
+I only intended for the path to be right padded, since paths can vary
+in length so widely.  I found it much easier to read with the path
+right-padded.  I think that doing a full column align isn't the best
+looking output in this case.  I tried to model this output after `git
+branch -vv`.  I didn't notice if that does a full align if the
+shortened refs are differently sized.  I will try it out, and see if
+it makes a significant visual impact.
 
-But even then, we do not know if tying that cap to online_cpu() is a
-good idea.  Neither of us have a good argument backed by data on it.
+>> +             if (!worktree->is_detached)
+>> +                     strbuf_addf(&sb, "[%s]", shorten_unambiguous_ref(worktree->head_ref, 0));
+>> +             else
+>> +                     strbuf_addstr(&sb, "(detached HEAD)");
+>> +     }
+>> +     printf("%s\n", sb.buf);
+>
+>
+>> diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
+>> new file mode 100755
+>> index 0000000..b68dfb4
+>> --- /dev/null
+>> +++ b/t/t2027-worktree-list.sh
+>> @@ -0,0 +1,86 @@
+>> +#!/bin/sh
+>> +
+>> +test_description='test git worktree list'
+>> +
+>> +. ./test-lib.sh
+>> +
+>> +test_expect_success 'setup' '
+>> +     test_commit init
+>> +'
+>> +
+>> +test_expect_success '"list" all worktrees from main' '
+>> +     echo "$(git rev-parse --show-toplevel)       $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
+>
+> Are the number of SPs here significant and if so in what way?  Does
+> it depend on your environment or will there always be six of them?
+> Either way feels like an indication of a problem.
 
-It is tempting to imagine, when you have N cores on an otherwise
-idle box, the setting of SPAWN_CAP shouldn't make much difference to
-how well the first child process makes its initial progress as long
-as it does not exceed the number of idle cores N-1 you have at hand.
+The number of spaces is significant in this case, but it should not be
+platform dependent.  It is just the padding for the different worktree
+paths.
 
-But that assumes that the task is CPU bound and you have infinite
-memory bandwidth.  Once the task needs a lot of disk bandwidth to
-make its initial progress, which certainly is the case for fetch,
-the first child that is spawned together with (SPAWN_CAP-1) other
-processes would be competing for the shared resource, and having
-more online_cpus() would not help you.
+>
+>> +     git worktree add --detach here master &&
+>> +     test_when_finished "rm -rf here && git worktree prune" &&
+>
+> Aren't these two the other way around?  When "add" fails in the
+> middle, you would want it to be removed to proceed to the next test
+> without leaving 'here' in the list of worktrees, no?
 
-If we are not doing analysis that takes into such factors (and it is
-way too premature for us to be tuning), even "online_cpu() - 1" is
-unnecessarily too complex than a hardcoded small number (say, "2",
-or even "1").
-
-The same thing can be said for the output_timeout selection.  "Do
-not get stuck for too long until we have fully ramped up.  Do not
-spin too frequently when there is no more room for a new child" was
-something I came up out of thin air as an example of something we
-might want to do, and I did write such a code in that commit, but
-that was primarily done so that you can clearly see that a better
-design would be to allow the caller, i.e. the scheduling loop,
-specify output_timeout to buffer_stderr(), and to keep the latter a
-"dumb" helper that can be controlled by a more smart caller (as
-opposed to hiding such a logic in buffer_stderr() and have a "dumb"
-driver call it).  The actual output_timeout computation logic is not
-well thought out---it may even turn out to be that we are better off
-if we lengthened the timeout before we have fully ramped up, to
-encourage the first process to produce some output before we give
-chance to other new processes to be spawned in the later round.
-
-So for that change, while I think adding that parameter to
-buffer_stderr() is something we would want to keep, I'd prefer to
-keep the caller simpler by always passing a hardcoded 100 in the
-initial version, before we start tuning.  And I do not think we want
-to start tuning before building a solid foundation to tune.
-
-In short, if I were amending that SQUASH??? commit, I'd probably be
-making it do less, not more, than what it does, something along the
-line of the attached.
-
- run-command.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
-
-diff --git a/run-command.c b/run-command.c
-index b6d8b39..829b6fe 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1108,20 +1108,19 @@ static void pp_collect_finished(struct parallel_processes *pp)
- }
- 
- 
--#define SPAWN_CAP (pp.max_processes + 1) /* spawn as many as possible */
--
- int run_processes_parallel(int n, void *data,
- 			   get_next_task_fn get_next_task,
- 			   start_failure_fn start_failure,
- 			   return_value_fn return_value)
- {
- 	struct parallel_processes pp;
--	pp_init(&pp, n, data, get_next_task, start_failure, return_value);
- 
-+	pp_init(&pp, n, data, get_next_task, start_failure, return_value);
- 	while (1) {
--		int no_more_task, cnt, output_timeout;
-+		int no_more_task, cnt, output_timeout = 100;
-+		int spawn_cap = 2;
- 
--		for (cnt = SPAWN_CAP, no_more_task = 0;
-+		for (cnt = spawn_cap, no_more_task = 0;
- 		     cnt && pp.nr_processes < pp.max_processes;
- 		     cnt--) {
- 			if (!pp_start_one(&pp)) {
-@@ -1132,12 +1131,6 @@ int run_processes_parallel(int n, void *data,
- 
- 		if (no_more_task && !pp.nr_processes)
- 			break;
--		if (!cnt)
--			output_timeout = 50;
--		else if (pp.nr_processes < pp.max_processes)
--			output_timeout = 100;
--		else
--			output_timeout = 1000;
- 		pp_buffer_stderr(&pp, output_timeout);
- 
- 		pp_output(&pp);
+Sure, I'll switch it.
