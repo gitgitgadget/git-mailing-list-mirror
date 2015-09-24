@@ -1,161 +1,140 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 49/68] fetch-pack: use argv_array for index-pack /
- unpack-objects
-Date: Thu, 24 Sep 2015 17:07:54 -0400
-Message-ID: <20150924210753.GT30946@sigill.intra.peff.net>
+Subject: [PATCH 47/68] write_loose_object: convert to strbuf
+Date: Thu, 24 Sep 2015 17:07:49 -0400
+Message-ID: <20150924210749.GR30946@sigill.intra.peff.net>
 References: <20150924210225.GA23624@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 23:08:14 2015
+X-From: git-owner@vger.kernel.org Thu Sep 24 23:08:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfDkR-00028o-9G
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:08:12 +0200
+	id 1ZfDkZ-00028o-71
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754329AbbIXVH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 17:07:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36005 "HELO cloud.peff.net"
+	id S1754368AbbIXVIF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 17:08:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36003 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754172AbbIXVH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 17:07:56 -0400
-Received: (qmail 12094 invoked by uid 102); 24 Sep 2015 21:07:56 -0000
+	id S1754060AbbIXVHw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 17:07:52 -0400
+Received: (qmail 12088 invoked by uid 102); 24 Sep 2015 21:07:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:07:56 -0500
-Received: (qmail 29398 invoked by uid 107); 24 Sep 2015 21:08:08 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:07:52 -0500
+Received: (qmail 29392 invoked by uid 107); 24 Sep 2015 21:08:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:08:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:07:54 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:08:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:07:49 -0400
 Content-Disposition: inline
 In-Reply-To: <20150924210225.GA23624@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278598>
 
-This cleans up a magic number that must be kept in sync with
-the rest of the code (the number of argv slots). It also
-lets us drop some fixed buffers and an sprintf (since we
-can now use argv_array_pushf).
+When creating a loose object tempfile, we use a fixed
+PATH_MAX-sized buffer, and strcpy directly into it. This
+isn't buggy, because we do a rough check of the size, but
+there's no verification that our guesstimate of the required
+space is enough (in fact, it's several bytes too big for the
+current naming scheme).
 
-We do still have to keep one fixed buffer for calling
-gethostname, but at least now the size computations for it
-are much simpler.
+Let's switch to a strbuf, which makes this much easier to
+verify. The allocation overhead should be negligible, since
+we are replacing a static buffer with a static strbuf, and
+we'll only need to allocate on the first call.
+
+While we're here, we can also document a subtle interaction
+with mkstemp that would be easy to overlook.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- fetch-pack.c | 56 +++++++++++++++++++++++++++-----------------------------
- 1 file changed, 27 insertions(+), 29 deletions(-)
+ sha1_file.c | 42 ++++++++++++++++++++++--------------------
+ 1 file changed, 22 insertions(+), 20 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 820251a..2dabee9 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -681,11 +681,10 @@ static int get_pack(struct fetch_pack_args *args,
- 		    int xd[2], char **pack_lockfile)
+diff --git a/sha1_file.c b/sha1_file.c
+index c26fdcb..4211af1 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3011,29 +3011,31 @@ static inline int directory_size(const char *filename)
+  * We want to avoid cross-directory filename renames, because those
+  * can have problems on various filesystems (FAT, NFS, Coda).
+  */
+-static int create_tmpfile(char *buffer, size_t bufsiz, const char *filename)
++static int create_tmpfile(struct strbuf *tmp, const char *filename)
  {
- 	struct async demux;
--	const char *argv[22];
--	char keep_arg[256];
--	char hdr_arg[256];
--	const char **av, *cmd_name;
- 	int do_keep = args->keep_pack;
-+	const char *cmd_name;
-+	struct pack_header header;
-+	int pass_header = 0;
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	int ret;
+ 	int fd, dirlen = directory_size(filename);
  
-@@ -705,17 +704,11 @@ static int get_pack(struct fetch_pack_args *args,
- 	else
- 		demux.out = xd[0];
+-	if (dirlen + 20 > bufsiz) {
+-		errno = ENAMETOOLONG;
+-		return -1;
+-	}
+-	memcpy(buffer, filename, dirlen);
+-	strcpy(buffer + dirlen, "tmp_obj_XXXXXX");
+-	fd = git_mkstemp_mode(buffer, 0444);
++	strbuf_reset(tmp);
++	strbuf_add(tmp, filename, dirlen);
++	strbuf_addstr(tmp, "tmp_obj_XXXXXX");
++	fd = git_mkstemp_mode(tmp->buf, 0444);
+ 	if (fd < 0 && dirlen && errno == ENOENT) {
+-		/* Make sure the directory exists */
+-		memcpy(buffer, filename, dirlen);
+-		buffer[dirlen-1] = 0;
+-		if (mkdir(buffer, 0777) && errno != EEXIST)
++		/*
++		 * Make sure the directory exists; note that the contents
++		 * of the buffer are undefined after mkstemp returns an
++		 * error, so we have to rewrite the whole buffer from
++		 * scratch.
++		 */
++		strbuf_reset(tmp);
++		strbuf_add(tmp, filename, dirlen - 1);
++		if (mkdir(tmp->buf, 0777) && errno != EEXIST)
+ 			return -1;
+-		if (adjust_shared_perm(buffer))
++		if (adjust_shared_perm(tmp->buf))
+ 			return -1;
  
--	cmd.argv = argv;
--	av = argv;
--	*hdr_arg = 0;
- 	if (!args->keep_pack && unpack_limit) {
--		struct pack_header header;
+ 		/* Try again */
+-		strcpy(buffer + dirlen - 1, "/tmp_obj_XXXXXX");
+-		fd = git_mkstemp_mode(buffer, 0444);
++		strbuf_addstr(tmp, "/tmp_obj_XXXXXX");
++		fd = git_mkstemp_mode(tmp->buf, 0444);
+ 	}
+ 	return fd;
+ }
+@@ -3046,10 +3048,10 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 	git_zstream stream;
+ 	git_SHA_CTX c;
+ 	unsigned char parano_sha1[20];
+-	static char tmp_file[PATH_MAX];
++	static struct strbuf tmp_file = STRBUF_INIT;
+ 	const char *filename = sha1_file_name(sha1);
  
- 		if (read_pack_header(demux.out, &header))
- 			die("protocol error: bad pack header");
--		snprintf(hdr_arg, sizeof(hdr_arg),
--			 "--pack_header=%"PRIu32",%"PRIu32,
--			 ntohl(header.hdr_version), ntohl(header.hdr_entries));
-+		pass_header = 1;
- 		if (ntohl(header.hdr_entries) < unpack_limit)
- 			do_keep = 0;
- 		else
-@@ -723,44 +716,49 @@ static int get_pack(struct fetch_pack_args *args,
+-	fd = create_tmpfile(tmp_file, sizeof(tmp_file), filename);
++	fd = create_tmpfile(&tmp_file, filename);
+ 	if (fd < 0) {
+ 		if (errno == EACCES)
+ 			return error("insufficient permission for adding an object to repository database %s", get_object_directory());
+@@ -3098,12 +3100,12 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 		struct utimbuf utb;
+ 		utb.actime = mtime;
+ 		utb.modtime = mtime;
+-		if (utime(tmp_file, &utb) < 0)
++		if (utime(tmp_file.buf, &utb) < 0)
+ 			warning("failed utime() on %s: %s",
+-				tmp_file, strerror(errno));
++				tmp_file.buf, strerror(errno));
  	}
  
- 	if (alternate_shallow_file) {
--		*av++ = "--shallow-file";
--		*av++ = alternate_shallow_file;
-+		argv_array_push(&cmd.args, "--shallow-file");
-+		argv_array_push(&cmd.args, alternate_shallow_file);
- 	}
+-	return finalize_object_file(tmp_file, filename);
++	return finalize_object_file(tmp_file.buf, filename);
+ }
  
- 	if (do_keep) {
- 		if (pack_lockfile)
- 			cmd.out = -1;
--		*av++ = cmd_name = "index-pack";
--		*av++ = "--stdin";
-+		cmd_name = "index-pack";
-+		argv_array_push(&cmd.args, cmd_name);
-+		argv_array_push(&cmd.args, "--stdin");
- 		if (!args->quiet && !args->no_progress)
--			*av++ = "-v";
-+			argv_array_push(&cmd.args, "-v");
- 		if (args->use_thin_pack)
--			*av++ = "--fix-thin";
-+			argv_array_push(&cmd.args, "--fix-thin");
- 		if (args->lock_pack || unpack_limit) {
--			int s = sprintf(keep_arg,
--					"--keep=fetch-pack %"PRIuMAX " on ", (uintmax_t) getpid());
--			if (gethostname(keep_arg + s, sizeof(keep_arg) - s))
--				strcpy(keep_arg + s, "localhost");
--			*av++ = keep_arg;
-+			char hostname[256];
-+			if (gethostname(hostname, sizeof(hostname)))
-+				xsnprintf(hostname, sizeof(hostname), "localhost");
-+			argv_array_pushf(&cmd.args,
-+					"--keep=fetch-pack %"PRIuMAX " on %s",
-+					(uintmax_t)getpid(), hostname);
- 		}
- 		if (args->check_self_contained_and_connected)
--			*av++ = "--check-self-contained-and-connected";
-+			argv_array_push(&cmd.args, "--check-self-contained-and-connected");
- 	}
- 	else {
--		*av++ = cmd_name = "unpack-objects";
-+		cmd_name = "unpack-objects";
-+		argv_array_push(&cmd.args, cmd_name);
- 		if (args->quiet || args->no_progress)
--			*av++ = "-q";
-+			argv_array_push(&cmd.args, "-q");
- 		args->check_self_contained_and_connected = 0;
- 	}
--	if (*hdr_arg)
--		*av++ = hdr_arg;
-+
-+	if (pass_header)
-+		argv_array_pushf(&cmd.args, "--pack_header=%"PRIu32",%"PRIu32,
-+				 ntohl(header.hdr_version),
-+				 ntohl(header.hdr_entries));
- 	if (fetch_fsck_objects >= 0
- 	    ? fetch_fsck_objects
- 	    : transfer_fsck_objects >= 0
- 	    ? transfer_fsck_objects
- 	    : 0)
--		*av++ = "--strict";
--	*av++ = NULL;
-+		argv_array_push(&cmd.args, "--strict");
- 
- 	cmd.in = demux.out;
- 	cmd.git_cmd = 1;
+ static int freshen_loose_object(const unsigned char *sha1)
 -- 
 2.6.0.rc3.454.g204ad51
