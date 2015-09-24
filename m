@@ -1,106 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 63/68] convert strncpy to memcpy
-Date: Thu, 24 Sep 2015 17:08:26 -0400
-Message-ID: <20150924210826.GH30946@sigill.intra.peff.net>
+Subject: [PATCH 68/68] name-rev: use strip_suffix to avoid magic numbers
+Date: Thu, 24 Sep 2015 17:08:37 -0400
+Message-ID: <20150924210837.GM30946@sigill.intra.peff.net>
 References: <20150924210225.GA23624@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 23:08:59 2015
+X-From: git-owner@vger.kernel.org Thu Sep 24 23:09:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfDlC-00032s-32
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:08:58 +0200
+	id 1ZfDlI-00032s-NA
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754509AbbIXVId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 17:08:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36043 "HELO cloud.peff.net"
+	id S1754530AbbIXVIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 17:08:43 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36057 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754290AbbIXVI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 17:08:28 -0400
-Received: (qmail 12202 invoked by uid 102); 24 Sep 2015 21:08:28 -0000
+	id S1754495AbbIXVIk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 17:08:40 -0400
+Received: (qmail 12228 invoked by uid 102); 24 Sep 2015 21:08:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:08:28 -0500
-Received: (qmail 29570 invoked by uid 107); 24 Sep 2015 21:08:40 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:08:39 -0500
+Received: (qmail 29652 invoked by uid 107); 24 Sep 2015 21:08:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:08:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:08:26 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:08:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:08:37 -0400
 Content-Disposition: inline
 In-Reply-To: <20150924210225.GA23624@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278608>
 
-strncpy is known to be a confusing function because of its
-termination semantics.  These calls are all correct, but it
-takes some examination to see why. In particular, every one
-of them expects to copy up to the length limit, and then
-makes some arrangement for terminating the result.
-
-We can just use memcpy, along with noting explicitly how the
-result is terminated (if it is not already obvious). That
-should make it more clear to a reader that we are doing the
-right thing.
+The manual size computations here are correct, but using
+strip_suffix makes that obvious, and hopefully communicates
+the intent of the code more clearly.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/help.c | 4 ++--
- fast-import.c  | 2 +-
- tag.c          | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ builtin/name-rev.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index e1650ab..1cd0c1e 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -176,7 +176,7 @@ static void add_man_viewer(const char *name)
- 	while (*p)
- 		p = &((*p)->next);
- 	*p = xcalloc(1, (sizeof(**p) + len + 1));
--	strncpy((*p)->name, name, len);
-+	memcpy((*p)->name, name, len); /* NUL-terminated by xcalloc */
- }
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 8a3a0cd..0377fc1 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -55,16 +55,15 @@ copy_data:
+ 			parents;
+ 			parents = parents->next, parent_number++) {
+ 		if (parent_number > 1) {
+-			int len = strlen(tip_name);
++			size_t len;
+ 			char *new_name;
  
- static int supported_man_viewer(const char *name, size_t len)
-@@ -192,7 +192,7 @@ static void do_add_man_viewer_info(const char *name,
- {
- 	struct man_viewer_info_list *new = xcalloc(1, sizeof(*new) + len + 1);
+-			if (len > 2 && !strcmp(tip_name + len - 2, "^0"))
+-				len -= 2;
++			strip_suffix(tip_name, "^0", &len);
+ 			if (generation > 0)
+-				new_name = xstrfmt("%.*s~%d^%d", len, tip_name,
++				new_name = xstrfmt("%.*s~%d^%d", (int)len, tip_name,
+ 						   generation, parent_number);
+ 			else
+-				new_name = xstrfmt("%.*s^%d", len, tip_name,
++				new_name = xstrfmt("%.*s^%d", (int)len, tip_name,
+ 						   parent_number);
  
--	strncpy(new->name, name, len);
-+	memcpy(new->name, name, len); /* NUL-terminated by xcalloc */
- 	new->info = xstrdup(value);
- 	new->next = man_viewer_info_list;
- 	man_viewer_info_list = new;
-diff --git a/fast-import.c b/fast-import.c
-index cf6d8bc..4d01efc 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -703,7 +703,7 @@ static struct atom_str *to_atom(const char *s, unsigned short len)
- 
- 	c = pool_alloc(sizeof(struct atom_str) + len + 1);
- 	c->str_len = len;
--	strncpy(c->str_dat, s, len);
-+	memcpy(c->str_dat, s, len);
- 	c->str_dat[len] = 0;
- 	c->next_atom = atom_table[hc];
- 	atom_table[hc] = c;
-diff --git a/tag.c b/tag.c
-index 5b0ac62..5b2a06d 100644
---- a/tag.c
-+++ b/tag.c
-@@ -82,7 +82,7 @@ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
- 	nl = memchr(bufptr, '\n', tail - bufptr);
- 	if (!nl || sizeof(type) <= (nl - bufptr))
- 		return -1;
--	strncpy(type, bufptr, nl - bufptr);
-+	memcpy(type, bufptr, nl - bufptr);
- 	type[nl - bufptr] = '\0';
- 	bufptr = nl + 1;
- 
+ 			name_rev(parents->item, new_name, 0,
 -- 
 2.6.0.rc3.454.g204ad51
