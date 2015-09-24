@@ -1,87 +1,79 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: t5561 failing after make PROFILE=GEN
-Date: Wed, 23 Sep 2015 21:41:35 -0400
-Message-ID: <20150924014135.GA6442@sigill.intra.peff.net>
-References: <5601E283.2030507@gmx.net>
- <20150923232443.GA21755@sigill.intra.peff.net>
- <56034232.6030100@gmx.net>
+Subject: Re: [PATCH] t5561: get rid of racy appending to logfile
+Date: Wed, 23 Sep 2015 21:45:41 -0400
+Message-ID: <20150924014541.GB6442@sigill.intra.peff.net>
+References: <20150923232443.GA21755@sigill.intra.peff.net>
+ <1443054017-8312-1-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Tarmigan Casebolt <tarmigan+git@gmail.com>
 To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Sep 24 03:41:44 2015
+X-From: git-owner@vger.kernel.org Thu Sep 24 03:45:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZevXb-0006Gr-05
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 03:41:43 +0200
+	id 1ZevbY-0002dP-C9
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 03:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932208AbbIXBli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2015 21:41:38 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35496 "HELO cloud.peff.net"
+	id S932227AbbIXBpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2015 21:45:44 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35501 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932095AbbIXBlh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2015 21:41:37 -0400
-Received: (qmail 25344 invoked by uid 102); 24 Sep 2015 01:41:37 -0000
+	id S932095AbbIXBpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2015 21:45:43 -0400
+Received: (qmail 25709 invoked by uid 102); 24 Sep 2015 01:45:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Sep 2015 20:41:37 -0500
-Received: (qmail 21759 invoked by uid 107); 24 Sep 2015 01:41:49 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Sep 2015 20:45:43 -0500
+Received: (qmail 21785 invoked by uid 107); 24 Sep 2015 01:45:55 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Sep 2015 21:41:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Sep 2015 21:41:35 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 23 Sep 2015 21:45:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Sep 2015 21:45:41 -0400
 Content-Disposition: inline
-In-Reply-To: <56034232.6030100@gmx.net>
+In-Reply-To: <1443054017-8312-1-git-send-email-s-beyer@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278527>
 
-On Thu, Sep 24, 2015 at 02:22:10AM +0200, Stephan Beyer wrote:
+On Thu, Sep 24, 2015 at 02:20:17AM +0200, Stephan Beyer wrote:
 
-> I only checked for profile builds and first tried to bisect the issue,
-> which went terribly wrong because using older Git commits (unluckily I
-> can't say now how far you should go back in history), the test failed or
-> succeeded randomly. So it always found different (and always unrelated)
-> commits using "git bisect run".
-> However, in the latest versions, it *always* fails for a profile build
-> (and *never* for a non-profile build, at least here).
+> The definition of log_div() appended information to the web server's
+> logfile to make the test more readable. However, it could happen that
+> this information is written before the web server writes its log line
+> (this consistently happens with a PROFILE=GEN build), and hence the
+> test failed.
+
+I don't know if you want to add more detail here or not, but I believe
+the race is based on the amount of time between git-http-backend
+finishes serving the request, and when the process exits. We run
+log_div() as soon as the first is done, but Apache waits for the latter
+to flush out the logfile. And PROFILE=GEN lengthens that time.
+
+> To get rid of this behavior, the logfile is not touched at all. This
+> commit removes log_div() and its calls. The readability-improving
+> information is kept in the test but filtered out before comparing
+> it to the actual logfile.
 > 
-> Maybe this needs some more investigation?
+> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+> ---
+>  t/t5560-http-backend-noserver.sh |  4 ----
+>  t/t5561-http-backend.sh          |  8 +-------
+>  t/t556x_common                   | 12 ------------
+>  3 files changed, 1 insertion(+), 23 deletions(-)
 
-I don't think so. The tests have always been pretty solid, but I think
-the profile-build code was broken for a long while.
+This looks good to me.
 
-> Hmm, but why is the profile build of http-backend "slower"? (Or am I
-> getting it wrong?)
+I'd have written the grep as:
 
-Remember that there are two phases to the profile build: first we build
-with profile-recording on, run the tests, and then build the optimized
-version with the output written during the test-run. And it's this first
-build that is failing the tests. I don't know exactly how the
-profile-recording is implemented, but I imagine that it records counters
-as it runs, and then after we call exit() it dumps the counters to a
-file.
+> -cat >exp <<EOF
+> +grep -e '^[GP]' >exp <<EOF
 
-So the profile-generation version probably _is_ slower overall, but it
-is really the pause between exit() and the process actually ending that
-is the problem here (because the client thinks we are done and proceeds,
-but apache is waiting for the CGI to exit).
+grep '^[^#]' >exp <<EOF
 
-> > Touching the apache logfile ourselves is inherently racy.
-> 
-> It would not be racy if we started/stopped apache before/after each test
-> (and only append to the logfile after each apache shutdown). But that
-> would slow it down a lot.
-
-True, though that would be really slow (it may also still be racy; I
-don't know if Apache would flush out the log if it gets a shutdown
-signal or not).
-
-> That's a very good idea. (I just sent a patch with a possible realization.)
-
-Thanks, I'll give it a look.
+to exclude blank lines and comments, but I doubt it matters in practice
+(I cannot imagine any line except GET or POST here).
 
 -Peff
