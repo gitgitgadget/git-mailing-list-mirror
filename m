@@ -1,147 +1,190 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v6b 5/8] branch: drop non-commit error reporting
-Date: Thu, 24 Sep 2015 23:39:08 +0530
-Message-ID: <1443118148-3470-1-git-send-email-Karthik.188@gmail.com>
-References: <1443031873-25280-1-git-send-email-Karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 20:09:09 2015
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH] t5561: get rid of racy appending to logfile
+Date: Thu, 24 Sep 2015 20:12:22 +0200
+Message-ID: <1443118342-3856-1-git-send-email-s-beyer@gmx.net>
+References: <20150924014541.GB6442@sigill.intra.peff.net>
+Cc: git@vger.kernel.org, Tarmigan Casebolt <tarmigan+git@gmail.com>,
+	Stephan Beyer <s-beyer@gmx.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 24 20:14:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfAx8-0003Jh-Rt
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 20:09:07 +0200
+	id 1ZfB2D-0001J6-VB
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 20:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756062AbbIXSJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 14:09:00 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:35247 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755436AbbIXSI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 14:08:59 -0400
-Received: by pacfv12 with SMTP id fv12so80878524pac.2
-        for <git@vger.kernel.org>; Thu, 24 Sep 2015 11:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8muf7bAA6aK+Sp5IKq3F5Usf8qaiFJMFdrCOFLttLJs=;
-        b=i42ezK49gMwV8cjQ+kCNQQk6PyZ4hem981g9zmeH0IxAlO5DmzT0NcLpEa/GEe66Zg
-         t2m3ezIKYzBRmUhs1r4SrCr7/6b4YLShU2z/d4N9P1qawpqkkOJNB70kn+TVPA3Yw1GL
-         ZKqUfvmFmG8uf6EBu/E578oKJq5qb9+zLDum49s6/1o+AQUpqNcRzls14L42ne7aS4xY
-         ZT4eMVUxdsq8DNbBZV4aXnO7j8LN86jwiyJSRD4gK4Jlpw2fe6XpJ0wLHBiK/1W6sEzP
-         fA/tXufPHeczb2lRxVUN5VsRa5jP7m8u/9jXRG3N2t58K4CQnENfAzN46v51aJYJfkwv
-         41VQ==
-X-Received: by 10.66.163.228 with SMTP id yl4mr1244821pab.112.1443118139502;
-        Thu, 24 Sep 2015 11:08:59 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id xv12sm14857504pac.38.2015.09.24.11.08.56
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 24 Sep 2015 11:08:58 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1443031873-25280-1-git-send-email-Karthik.188@gmail.com>
+	id S1757228AbbIXSOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 14:14:17 -0400
+Received: from mout.gmx.net ([212.227.15.19]:65264 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756774AbbIXSOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 14:14:15 -0400
+Received: from fermat.fritz.box ([92.76.227.98]) by mail.gmx.com (mrgmx003)
+ with ESMTPSA (Nemesis) id 0MQ33z-1ZkNxX3aJ1-005G3C; Thu, 24 Sep 2015 20:14:12
+ +0200
+X-Mailer: git-send-email 2.6.0.rc3.dirty
+In-Reply-To: <20150924014541.GB6442@sigill.intra.peff.net>
+X-Provags-ID: V03:K0:x+CvT7el7LwII8XTZDIJQZOs0LGUT4N2Nj7Htqkxky31Auah/Xw
+ 4iKviCFkwayt/jBugSHPO/Z5KXO4uPQhNtVlbBD9AefvDTJb1N2jEyOrOieKe7xVvLAqDAe
+ FkqG0F4mrl0wjw7gDGBjwmrnedbszQei3wlBoK/5S9obeX9Fcds4EyKU3hzGOSpyjSARWIb
+ kfq2i/TuKJPfvhWyeIXhA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UaqPXZVLzU0=:uIcD8WlkaNglV4pWahlIRa
+ 59oisiK/NmD5XbIQamIgGZfx3fP9ETyawCta6POr6A+dF8cF6RrM5JBj3zT7GgNwNGhyn76H+
+ e8GoqGk2XyEPJqT6ZWAA+2ohBZphej/NXDd4qnFZ2ginw7FPBf29nv3/3RkWNnI/aKVq5vGl8
+ VuwDsTPx1ABStkvUWHhL2aLDSuHA9twCh7tSK+ZFUcuTzO1kz6Ti40wZHMrsPRTQUWx6IsA64
+ aYmKeCKVjAiJnmbqQ83Vt+EvjHzyykzSLeB56b54lov41rVZnAz5oN+8reL8elpeqwapNUpVq
+ NV7dth0BIMVFg29Vj4SH4r84wDnmu5Hd5ZMpparAaPPe77AS7dkovLB0vKaCcpkwRnQ2pum//
+ RM2H5gsIMrdIr2xYIfDD5EHgBwGm8uy9GiwNdBu/qClSHS73z1kvZmZyufS9dmUsQbLdkm6Bz
+ 95MwGzVPNWRh/m4DX5R26wGfHzcSbqmarwbFfsohMh+VdXruIJjkimAeLP7vkD9ijEPoComyC
+ 9lC7nVU6ZJ++6XUqVNrFANcw5DUz06xtPueApSMVBob0hslaLJe1oPOl+kJxnY/qlkzFWG5nF
+ /GCIIUUjshOZR9NCewqYaFrN6cNKz+JIMfgDv0ZHFAk4K2hqlSM/vSxh5Kun2z6gBCyEypvQE
+ MqaiuYdtnUTKYwOLk1PTgSGZ+Yf40yaBZgc627257Yq5WK6majsN6qAO+lOQowUNd1QPQAOcd
+ 43UBIuN6oD3xb2o/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278552>
 
-Remove the error "branch '%s' does not point at a commit" in
-apppend_ref() which reports branch refs which do not point to
-commits. Also remove the error "some refs could not be read" in
-print_ref_list() which is triggered as a consequence of the first
-error.
+The definition of log_div() appended information to the web server's
+logfile to make the test more readable. However, log_div() was called
+right after a request is served (which is done by git-http-backend);
+the web server waits for the git-http-backend process to exit before
+it writes to the log file. When the duration between serving a request
+and exiting was long, the log_div() output was written before the last
+request's log, and the test failed. (This duration could become
+especially long for PROFILE=GEN builds.)
 
-This seems to be the wrong codepath whose purpose is not to diagnose
-and report a repository corruption. If we care about such a repository
-corruption, we should report it from fsck instead.
+To get rid of this behavior, we should not change the logfile at all.
+This commit removes log_div() and its calls. The additional information
+is kept in the test (for readability reasons) but filtered out before
+comparing it to the actual logfile.
 
-This also helps in a smooth port of branch.c to use ref-filter APIs
-over the following patches. On the other hand, ref-filter ignores refs
-which do not point at commits silently.
-
-Based-on-patch-by: Jeff King <peff@peff.net>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
- builtin/branch.c | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ Okay Peff, I added the information to the commit message (in my own
+ words). Past tense for the situation before the patch, present tense
+ for the situation after (hope that's right but should not be too
+ important).
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 1a664ed..ebc3742 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -313,7 +313,6 @@ static char *resolve_symref(const char *src, const char *prefix)
- struct append_ref_cb {
- 	struct ref_list *ref_list;
- 	const char **pattern;
--	int ret;
- };
- 
- static int match_patterns(const char **pattern, const char *refname)
-@@ -370,10 +369,8 @@ static int append_ref(const char *refname, const struct object_id *oid, int flag
- 	commit = NULL;
- 	if (ref_list->verbose || ref_list->with_commit || merge_filter != NO_FILTER) {
- 		commit = lookup_commit_reference_gently(oid->hash, 1);
--		if (!commit) {
--			cb->ret = error(_("branch '%s' does not point at a commit"), refname);
-+		if (!commit)
- 			return 0;
--		}
- 
- 		/* Filter with with_commit if specified */
- 		if (!is_descendant_of(commit, ref_list->with_commit))
-@@ -617,7 +614,7 @@ static int calc_maxwidth(struct ref_list *refs, int remote_bonus)
- 	return max;
+ I also used your proposed grep line because it is probably more robust.
+
+ t/t5560-http-backend-noserver.sh |  4 ----
+ t/t5561-http-backend.sh          |  8 +-------
+ t/t556x_common                   | 12 ------------
+ 3 files changed, 1 insertion(+), 23 deletions(-)
+
+diff --git a/t/t5560-http-backend-noserver.sh b/t/t5560-http-backend-noserver.sh
+index aa73eea..9fafcf1 100755
+--- a/t/t5560-http-backend-noserver.sh
++++ b/t/t5560-http-backend-noserver.sh
+@@ -44,10 +44,6 @@ POST() {
+ 	test_cmp exp act
  }
  
--static int print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit, const char **pattern)
-+static void print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit, const char **pattern)
- {
- 	int i;
- 	struct append_ref_cb cb;
-@@ -642,7 +639,6 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 		init_revisions(&ref_list.revs, NULL);
- 	cb.ref_list = &ref_list;
- 	cb.pattern = pattern;
--	cb.ret = 0;
- 	/*
- 	 * First we obtain all regular branch refs and if the HEAD is
- 	 * detached then we insert that ref to the end of the ref_fist
-@@ -693,11 +689,6 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 			       abbrev, detached, remote_prefix);
+-log_div() {
+-	return 0
+-}
+-
+ . "$TEST_DIRECTORY"/t556x_common
  
- 	free_ref_list(&ref_list);
--
--	if (cb.ret)
--		error(_("some refs could not be read"));
--
--	return cb.ret;
+ expect_aliased() {
+diff --git a/t/t5561-http-backend.sh b/t/t5561-http-backend.sh
+index 19afe96..73dcb29 100755
+--- a/t/t5561-http-backend.sh
++++ b/t/t5561-http-backend.sh
+@@ -29,15 +29,9 @@ POST() {
+ 	test_cmp exp act
  }
  
- static void rename_branch(const char *oldname, const char *newname, int force)
-@@ -913,15 +904,14 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 			die(_("branch name required"));
- 		return delete_branches(argc, argv, delete > 1, kinds, quiet);
- 	} else if (list) {
--		int ret;
- 		/*  git branch --local also shows HEAD when it is detached */
- 		if (kinds & REF_LOCAL_BRANCH)
- 			kinds |= REF_DETACHED_HEAD;
--		ret = print_ref_list(kinds, detached, verbose, abbrev,
-+		print_ref_list(kinds, detached, verbose, abbrev,
- 					 with_commit, argv);
- 		print_columns(&output, colopts, NULL);
- 		string_list_clear(&output, 0);
--		return ret;
-+		return 0;
- 	}
- 	else if (edit_description) {
- 		const char *branch_name;
+-log_div() {
+-	echo >>"$HTTPD_ROOT_PATH"/access.log
+-	echo "###  $1" >>"$HTTPD_ROOT_PATH"/access.log
+-	echo "###" >>"$HTTPD_ROOT_PATH"/access.log
+-}
+-
+ . "$TEST_DIRECTORY"/t556x_common
+ 
+-cat >exp <<EOF
++grep '^[^#]' >exp <<EOF
+ 
+ ###  refs/heads/master
+ ###
+diff --git a/t/t556x_common b/t/t556x_common
+index 82926cf..359fcfe 100755
+--- a/t/t556x_common
++++ b/t/t556x_common
+@@ -52,21 +52,17 @@ get_static_files() {
+ SMART=smart
+ GIT_HTTP_EXPORT_ALL=1 && export GIT_HTTP_EXPORT_ALL
+ test_expect_success 'direct refs/heads/master not found' '
+-	log_div "refs/heads/master" &&
+ 	GET refs/heads/master "404 Not Found"
+ '
+ test_expect_success 'static file is ok' '
+-	log_div "getanyfile default" &&
+ 	get_static_files "200 OK"
+ '
+ SMART=smart_noexport
+ unset GIT_HTTP_EXPORT_ALL
+ test_expect_success 'no export by default' '
+-	log_div "no git-daemon-export-ok" &&
+ 	get_static_files "404 Not Found"
+ '
+ test_expect_success 'export if git-daemon-export-ok' '
+-	log_div "git-daemon-export-ok" &&
+         (cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ 	 touch git-daemon-export-ok
+ 	) &&
+@@ -75,47 +71,39 @@ test_expect_success 'export if git-daemon-export-ok' '
+ SMART=smart
+ GIT_HTTP_EXPORT_ALL=1 && export GIT_HTTP_EXPORT_ALL
+ test_expect_success 'static file if http.getanyfile true is ok' '
+-	log_div "getanyfile true" &&
+ 	config http.getanyfile true &&
+ 	get_static_files "200 OK"
+ '
+ test_expect_success 'static file if http.getanyfile false fails' '
+-	log_div "getanyfile false" &&
+ 	config http.getanyfile false &&
+ 	get_static_files "403 Forbidden"
+ '
+ 
+ test_expect_success 'http.uploadpack default enabled' '
+-	log_div "uploadpack default" &&
+ 	GET info/refs?service=git-upload-pack "200 OK"  &&
+ 	POST git-upload-pack 0000 "200 OK"
+ '
+ test_expect_success 'http.uploadpack true' '
+-	log_div "uploadpack true" &&
+ 	config http.uploadpack true &&
+ 	GET info/refs?service=git-upload-pack "200 OK" &&
+ 	POST git-upload-pack 0000 "200 OK"
+ '
+ test_expect_success 'http.uploadpack false' '
+-	log_div "uploadpack false" &&
+ 	config http.uploadpack false &&
+ 	GET info/refs?service=git-upload-pack "403 Forbidden" &&
+ 	POST git-upload-pack 0000 "403 Forbidden"
+ '
+ 
+ test_expect_success 'http.receivepack default disabled' '
+-	log_div "receivepack default" &&
+ 	GET info/refs?service=git-receive-pack "403 Forbidden"  &&
+ 	POST git-receive-pack 0000 "403 Forbidden"
+ '
+ test_expect_success 'http.receivepack true' '
+-	log_div "receivepack true" &&
+ 	config http.receivepack true &&
+ 	GET info/refs?service=git-receive-pack "200 OK" &&
+ 	POST git-receive-pack 0000 "200 OK"
+ '
+ test_expect_success 'http.receivepack false' '
+-	log_div "receivepack false" &&
+ 	config http.receivepack false &&
+ 	GET info/refs?service=git-receive-pack "403 Forbidden" &&
+ 	POST git-receive-pack 0000 "403 Forbidden"
 -- 
-2.5.1
+2.6.0.rc3.dirty
