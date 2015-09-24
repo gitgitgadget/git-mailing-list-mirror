@@ -1,80 +1,80 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 0/4] Fix gc failure when a remote HEAD goes stale
-Date: Thu, 24 Sep 2015 11:13:24 +0200
+Subject: [PATCH 2/4] pack-objects: do not get distracted by stale refs
+Date: Thu, 24 Sep 2015 11:13:44 +0200
 Organization: gmx
-Message-ID: <cover.1443085919.git.johannes.schindelin@gmx.de>
+Message-ID: <a3a883ce9d7a8bf4220beb640caca5bed0f7d492.1443085919.git.johannes.schindelin@gmx.de>
+References: <cover.1443085919.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 24 11:13:44 2015
+X-From: git-owner@vger.kernel.org Thu Sep 24 11:13:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zf2ay-0003vx-OA
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 11:13:41 +0200
+	id 1Zf2bG-0004Hf-1t
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 11:13:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752924AbbIXJNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 05:13:36 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49197 "EHLO mout.gmx.net"
+	id S1753108AbbIXJNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 05:13:50 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49782 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752908AbbIXJNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 05:13:35 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MYg42-1a9IuN0EoU-00VTzZ; Thu, 24 Sep 2015 11:13:25
+	id S1753047AbbIXJNt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 05:13:49 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Lyi0B-1ajBYU1acx-016C6D; Thu, 24 Sep 2015 11:13:45
  +0200
+In-Reply-To: <cover.1443085919.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:Py2LbFrITD7kiLrmrcj7V3HTs9giEu1Iffif/5idlWKcw4VtZTl
- Vui8ZS68YYkVIYuo9PIdkCI20bx28j44f8eCd8SU/jnTDkQrK4/VsmELTNr0u8SBTjkgpMS
- +DOMzmpl85c8Iv+ejKJsqi6xNWxIaBs8gFR4TDMZSENGTPuuD5RtqwkwnMNirQ5Sy/xgkMe
- 8tQpTv1NLMZlpYlHTomsw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:S1CcGH8nnVY=:M58VAYQRsqC5YGk7Z3wsEH
- RuWI8qBrF2YR7O6oBhNNlVZ63O448RwGU1nqkkbbZKCRj78pGzszc/IZThHyiFzidUsXTX1vE
- HWHpmOHyyLVTCBXNx3vkEG7OCmZWNPZ1xj/6ijXHXdl/542PaJm450ohxkNm3tiMZ2mkUlJmh
- BFlQmSVG9GPxVZsezwE45kjhtA6NxSsbUfWwBHZsQigu90lEybsflS2kJaC8Bo0wdnf/05FRm
- 0jBcwgVZyTNwT2jaq0Y54Cq9L2d9lI5mQS/bDx0Xg9t24Pf1ktF4GFYnA00kAD7apk7xyJR6h
- /aRXpoinByu5TgOZDgBSJNHMP7WqBf9MTbXmn1PWhOTo+iNavuam5M5di1Q2gSt2q7Yhqm3eL
- vNv7HaDyrXvHhswCLUsXjmHBHrptNwg1EP76+HjVfD10dbqvSCDIBkkiGhL5GjsQ4EE36WbY9
- TO0RGlz1S8G+tGOP2dJQO4qBTAd57bXa1uCpcmOxhHTUEQ+uf+gPPbeA9LJwFfnorqVkfKA+u
- ++SHWaMlzRfq6Ma2KLGYuCoEgrtbPbfwREbiko/k6oeKON19G1abnGV/0L/2cRixcLzXyeIww
- 1lkRPBHfg+tNEfEGVy1hXYVaQ9M/8CkhK6Yya3hgOOhoKbOqRuaMem9K48LfwlD0hEcPl/biK
- RnXOqZmkSVqPqTq0NlYzDjZEf+KoPRA2lMf3zhtf/+f+OPZT6LXZ4Y40bsQpVQCSc9PA3Beci
- ShsmPrKI+hyAfjAtybbHR4ai4VKVCn50MYuyXQ==
+X-Provags-ID: V03:K0:/LblwjSNVQ7FbgdjFjZyrPM7MrX1Zt4YeZfV4pCXdle37j6kcXI
+ SH8A6thImh9lDC/tpPjO+MzjMz703OjTC4rF6ENqnV1dsHbVNuCqGSMpN9nEeygs7cRN7pw
+ yiAjQCVF0UIbVtVMOpdnCZvc6b3S5P1wtiR999OuUYVZfQErOOveIqt3gLU7yV5oMJHbyvl
+ UYyMlV0r7ionjhxEBVRXg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BCof+jw5Its=:fxU0+C12e7Cv49I5pBUK6q
+ dYuCVX6D+18IO0d6hdEWELYcv0UTQPJGR/HRtExqtKjL+AhXl7e7RONbFU68T0uCpic1FVj09
+ 8phQP59tukcTQ7U6ZW7/NnMJs7/VPjAz3hevlXNpYegYg7ISANxTIinpmYrVWs53AIQ9k1lfX
+ N7ug8ZM/yzKZcS+wT4DTolfLY8BiFen5TGUWI8X+hJHh8wKblt6UEqp00n8myZpSKm9coX2hv
+ kY1UoEqFVkGYqASAv1QgR7RhrcBrWK9vT+FYeletNHVuLoPcvfYYK8qf3nqpAm/Lw5J77f6/h
+ 4j0NWNN5kU4e1emZsV529E1hXk1xx4dZji4FSF0RFQBC96iXCOy3wLbEJKBQ7bIe/0tO2ausR
+ 03p856lKOh12TEvBexOov5HOX2OUG8UeAvGDbLTuqJyoXkUwZ/mJAkxZ4VF7YOl9lJj71OL8M
+ Y8iUKj0ZOEDSgPic8irEK+dOFvuWt/fxyvnLb3+vM45/KpGH6s5EYuJj9sonXW3wYsSamOwyi
+ ATM5w17EVkxrmcGkocGVmgi/WFONFjaF6I57Kpt6Rr1vGKu/coX0+/3mAHuBen+LSKJ1foF/5
+ B5zWZ/L68tqsy8hMsEafmMgRJ1UgqP/f7QefLqAHBGznaZsavf0Jl10t/n/qO7nP5rkMQ+tA3
+ 8IW2Zr1Xoqfl4mdkB44QBS4WEa650Sg0n9Flu2UPNgvzTaXtHLIYEZc14sOvnU7YZJuOnPEFj
+ AsAcQ2MtLl0nBPX0Zga74xdLxqiKu9ICnqeHNA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278539>
 
-There has been a report in the Git for Windows project that gc fails
-sometimes: https://github.com/git-for-windows/git/issues/423
+It is quite possible for, say, a remote HEAD to become stale, e.g. when
+the default branch was renamed.
 
-It turns out that there are cases when a remote HEAD can go stale and
-it is not the user's fault at all. It can happen, for example, if the
-active branch in the remote repository gets renamed.
+We should still be able to pack our objects when such a thing happens;
+simply ignore invalid refs (because they cannot matter for the packing
+process anyway).
 
-Git's garbage collector should handle this gracefully. The best this
-developer could come up with, is to simply ignore and delete the
-now-broken refs.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/pack-objects.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-
-Johannes Schindelin (4):
-  gc: demonstrate failure with stale remote HEAD
-  pack-objects: do not get distracted by stale refs
-  mark_reachable_objects(): optionally collect broken refs
-  gc: remove broken refs
-
- builtin/pack-objects.c |  1 +
- builtin/prune.c        | 12 +++++++++++-
- builtin/reflog.c       |  2 +-
- reachable.c            | 26 ++++++++++++++++++++------
- reachable.h            |  3 ++-
- t/t6500-gc.sh          | 15 +++++++++++++++
- 6 files changed, 50 insertions(+), 9 deletions(-)
-
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 1c63f8f..ef2f794 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2499,6 +2499,7 @@ static void get_object_list(int ac, const char **av)
+ 	int flags = 0;
+ 
+ 	init_revisions(&revs, NULL);
++	revs.ignore_missing = 1;
+ 	save_commit_buffer = 0;
+ 	setup_revisions(ac, av, &revs, NULL);
+ 
 -- 
 2.5.2.windows.2
