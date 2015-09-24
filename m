@@ -1,117 +1,153 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 50/68] http-push: use an argv_array for setup_revisions
-Date: Thu, 24 Sep 2015 17:07:56 -0400
-Message-ID: <20150924210756.GU30946@sigill.intra.peff.net>
+Subject: [PATCH 66/68] fsck: use for_each_loose_file_in_objdir
+Date: Thu, 24 Sep 2015 17:08:33 -0400
+Message-ID: <20150924210832.GK30946@sigill.intra.peff.net>
 References: <20150924210225.GA23624@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 23:09:11 2015
+X-From: git-owner@vger.kernel.org Thu Sep 24 23:09:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfDlO-00032s-GY
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:09:11 +0200
+	id 1ZfDlJ-00032s-Q2
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:09:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754364AbbIXVIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 17:08:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36010 "HELO cloud.peff.net"
+	id S1754322AbbIXVIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 17:08:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36052 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754065AbbIXVH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 17:07:58 -0400
-Received: (qmail 12102 invoked by uid 102); 24 Sep 2015 21:07:58 -0000
+	id S1754484AbbIXVIf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 17:08:35 -0400
+Received: (qmail 12219 invoked by uid 102); 24 Sep 2015 21:08:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:07:58 -0500
-Received: (qmail 29401 invoked by uid 107); 24 Sep 2015 21:08:10 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:08:35 -0500
+Received: (qmail 29631 invoked by uid 107); 24 Sep 2015 21:08:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:08:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:07:56 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:08:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:08:33 -0400
 Content-Disposition: inline
 In-Reply-To: <20150924210225.GA23624@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278612>
 
-This drops the magic number for the fixed-size argv arrays,
-so we do not have to wonder if we are overflowing it. We can
-also drop some confusing sha1_to_hex memory allocation
-(which seems to predate the ring of buffers allowing
-multiple calls), and get rid of an unchecked sprintf call.
+Since 27e1e22 (prune: factor out loose-object directory
+traversal, 2014-10-15), we now have a generic callback
+system for iterating over the loose object directories. This
+is used by prune, count-objects, etc.
+
+We did not convert git-fsck at the time because it
+implemented an inode-sorting scheme that was not part of the
+generic code. Now that the inode-sorting code is gone, we
+can reuse the generic code.  The result is shorter,
+hopefully more readable, and drops some unchecked sprintf
+calls.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- http-push.c | 32 ++++++++++----------------------
- 1 file changed, 10 insertions(+), 22 deletions(-)
+ builtin/fsck.c | 69 ++++++++++++++++++++--------------------------------------
+ 1 file changed, 23 insertions(+), 46 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index e501c28..43a9036 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -10,6 +10,7 @@
- #include "remote.h"
- #include "list-objects.h"
- #include "sigchain.h"
-+#include "argv-array.h"
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 73c3596..2fe6a31 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -365,45 +365,6 @@ static int fsck_obj_buffer(const unsigned char *sha1, enum object_type type,
+ 	return fsck_obj(obj);
+ }
  
- #ifdef EXPAT_NEEDS_XMLPARSE_H
- #include <xmlparse.h>
-@@ -1856,9 +1857,7 @@ int main(int argc, char **argv)
- 	new_refs = 0;
- 	for (ref = remote_refs; ref; ref = ref->next) {
- 		char old_hex[60], *new_hex;
--		const char *commit_argv[5];
--		int commit_argc;
--		char *new_sha1_hex, *old_sha1_hex;
-+		struct argv_array commit_argv = ARGV_ARRAY_INIT;
- 
- 		if (!ref->peer_ref)
- 			continue;
-@@ -1937,27 +1936,15 @@ int main(int argc, char **argv)
- 		}
- 
- 		/* Set up revision info for this refspec */
--		commit_argc = 3;
--		new_sha1_hex = xstrdup(sha1_to_hex(ref->new_sha1));
--		old_sha1_hex = NULL;
--		commit_argv[1] = "--objects";
--		commit_argv[2] = new_sha1_hex;
--		if (!push_all && !is_null_sha1(ref->old_sha1)) {
--			old_sha1_hex = xmalloc(42);
--			sprintf(old_sha1_hex, "^%s",
--				sha1_to_hex(ref->old_sha1));
--			commit_argv[3] = old_sha1_hex;
--			commit_argc++;
+-static inline int is_loose_object_file(struct dirent *de,
+-				       char *name, unsigned char *sha1)
+-{
+-	if (strlen(de->d_name) != 38)
+-		return 0;
+-	memcpy(name + 2, de->d_name, 39);
+-	return !get_sha1_hex(name, sha1);
+-}
+-
+-static void fsck_dir(int i, char *path)
+-{
+-	DIR *dir = opendir(path);
+-	struct dirent *de;
+-	char name[100];
+-
+-	if (!dir)
+-		return;
+-
+-	if (verbose)
+-		fprintf(stderr, "Checking directory %s\n", path);
+-
+-	sprintf(name, "%02x", i);
+-	while ((de = readdir(dir)) != NULL) {
+-		unsigned char sha1[20];
+-
+-		if (is_dot_or_dotdot(de->d_name))
+-			continue;
+-		if (is_loose_object_file(de, name, sha1)) {
+-			if (fsck_sha1(sha1))
+-				errors_found |= ERROR_OBJECT;
+-			continue;
 -		}
--		commit_argv[commit_argc] = NULL;
-+		argv_array_push(&commit_argv, ""); /* ignored */
-+		argv_array_push(&commit_argv, "--objects");
-+		argv_array_push(&commit_argv, sha1_to_hex(ref->new_sha1));
-+		if (!push_all && !is_null_sha1(ref->old_sha1))
-+			argv_array_pushf(&commit_argv, "^%s",
-+					 sha1_to_hex(ref->old_sha1));
- 		init_revisions(&revs, setup_git_directory());
--		setup_revisions(commit_argc, commit_argv, &revs, NULL);
-+		setup_revisions(commit_argv.argc, commit_argv.argv, &revs, NULL);
- 		revs.edge_hint = 0; /* just in case */
--		free(new_sha1_hex);
--		if (old_sha1_hex) {
--			free(old_sha1_hex);
--			commit_argv[1] = NULL;
--		}
+-		if (starts_with(de->d_name, "tmp_obj_"))
+-			continue;
+-		fprintf(stderr, "bad sha1 file: %s/%s\n", path, de->d_name);
+-	}
+-	closedir(dir);
+-}
+-
+ static int default_refs;
  
- 		/* Generate a list of objects that need to be pushed */
- 		pushing = 0;
-@@ -1986,6 +1973,7 @@ int main(int argc, char **argv)
- 			printf("%s %s\n", !rc ? "ok" : "error", ref->name);
- 		unlock_remote(ref_lock);
- 		check_locks();
-+		argv_array_clear(&commit_argv);
+ static void fsck_handle_reflog_sha1(const char *refname, unsigned char *sha1)
+@@ -491,9 +452,28 @@ static void get_default_heads(void)
  	}
+ }
  
- 	/* Update remote server info if appropriate */
++static int fsck_loose(const unsigned char *sha1, const char *path, void *data)
++{
++	if (fsck_sha1(sha1))
++		errors_found |= ERROR_OBJECT;
++	return 0;
++}
++
++static int fsck_cruft(const char *basename, const char *path, void *data)
++{
++	if (!starts_with(basename, "tmp_obj_"))
++		fprintf(stderr, "bad sha1 file: %s\n", path);
++	return 0;
++}
++
++static int fsck_subdir(int nr, const char *path, void *progress)
++{
++	display_progress(progress, nr + 1);
++	return 0;
++}
++
+ static void fsck_object_dir(const char *path)
+ {
+-	int i;
+ 	struct progress *progress = NULL;
+ 
+ 	if (verbose)
+@@ -501,12 +481,9 @@ static void fsck_object_dir(const char *path)
+ 
+ 	if (show_progress)
+ 		progress = start_progress(_("Checking object directories"), 256);
+-	for (i = 0; i < 256; i++) {
+-		static char dir[4096];
+-		sprintf(dir, "%s/%02x", path, i);
+-		fsck_dir(i, dir);
+-		display_progress(progress, i+1);
+-	}
++
++	for_each_loose_file_in_objdir(path, fsck_loose, fsck_cruft, fsck_subdir,
++				      progress);
+ 	stop_progress(&progress);
+ }
+ 
 -- 
 2.6.0.rc3.454.g204ad51
