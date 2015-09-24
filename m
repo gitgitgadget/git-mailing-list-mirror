@@ -1,135 +1,116 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 16/68] archive-tar: use xsnprintf for trivial formatting
-Date: Thu, 24 Sep 2015 17:06:24 -0400
-Message-ID: <20150924210624.GM30946@sigill.intra.peff.net>
+Subject: [PATCH 23/68] add_packed_git: convert strcpy into xsnprintf
+Date: Thu, 24 Sep 2015 17:06:55 -0400
+Message-ID: <20150924210655.GT30946@sigill.intra.peff.net>
 References: <20150924210225.GA23624@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 23:06:59 2015
+X-From: git-owner@vger.kernel.org Thu Sep 24 23:07:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfDj9-0001Ak-FJ
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:06:52 +0200
+	id 1ZfDjN-0001Ak-WE
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:07:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752487AbbIXVG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 17:06:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35936 "HELO cloud.peff.net"
+	id S1752873AbbIXVHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 17:07:00 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35954 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752032AbbIXVG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 17:06:26 -0400
-Received: (qmail 11895 invoked by uid 102); 24 Sep 2015 21:06:26 -0000
+	id S1751802AbbIXVG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 17:06:58 -0400
+Received: (qmail 11933 invoked by uid 102); 24 Sep 2015 21:06:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:06:26 -0500
-Received: (qmail 29047 invoked by uid 107); 24 Sep 2015 21:06:38 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:06:58 -0500
+Received: (qmail 29151 invoked by uid 107); 24 Sep 2015 21:07:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:06:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:06:24 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:07:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:06:55 -0400
 Content-Disposition: inline
 In-Reply-To: <20150924210225.GA23624@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278578>
 
-When we generate tar headers, we sprintf() values directly
-into a struct with the fixed-size header values. For the
-most part this is fine, as we are formatting small values
-(e.g., the octal format of "mode & 0x7777" is of fixed
-length). But it's still a good idea to use xsnprintf here.
-It communicates to readers what our expectation is, and it
-provides a run-time check that we are not overflowing the
-buffers.
+We have the path "foo.idx", and we create a buffer big
+enough to hold "foo.pack" and "foo.keep", and then strcpy
+straight into it. This isn't a bug (we have enough space),
+but it's very hard to tell from the strcpy that this is so.
 
-The one exception here is the mtime, which comes from the
-epoch time of the commit we are archiving. For sane values,
-this fits into the 12-byte value allocated in the header.
-But since git can handle 64-bit times, if I claim to be a
-visitor from the year 10,000 AD, I can overflow the buffer.
-This turns out to be harmless, as we simply overflow into
-the chksum field, which is then overwritten.
-
-This case is also best as an xsnprintf. It should never come
-up, short of extremely malformed dates, and in that case we
-are probably better off dying than silently truncating the
-date value (and we cannot expand the size of the buffer,
-since it is dictated by the ustar format). Our friends in
-the year 5138 (when we legitimately flip to a 12-digit
-epoch) can deal with that problem then.
+Let's instead use strip_suffix to take off the ".idx",
+record the size of our allocation, and use xsnprintf to make
+sure we don't violate our assumptions.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- archive-tar.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ cache.h     |  2 +-
+ sha1_file.c | 21 +++++++++++++--------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index d543f93..501ca97 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -167,21 +167,21 @@ static void prepare_header(struct archiver_args *args,
- 			   struct ustar_header *header,
- 			   unsigned int mode, unsigned long size)
- {
--	sprintf(header->mode, "%07o", mode & 07777);
--	sprintf(header->size, "%011lo", S_ISREG(mode) ? size : 0);
--	sprintf(header->mtime, "%011lo", (unsigned long) args->time);
-+	xsnprintf(header->mode, sizeof(header->mode), "%07o", mode & 07777);
-+	xsnprintf(header->size, sizeof(header->size), "%011lo", S_ISREG(mode) ? size : 0);
-+	xsnprintf(header->mtime, sizeof(header->mtime), "%011lo", (unsigned long) args->time);
+diff --git a/cache.h b/cache.h
+index 030b880..d206d64 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1309,7 +1309,7 @@ extern void close_pack_windows(struct packed_git *);
+ extern void unuse_pack(struct pack_window **);
+ extern void free_pack_by_name(const char *);
+ extern void clear_delta_base_cache(void);
+-extern struct packed_git *add_packed_git(const char *, int, int);
++extern struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
  
--	sprintf(header->uid, "%07o", 0);
--	sprintf(header->gid, "%07o", 0);
-+	xsnprintf(header->uid, sizeof(header->uid), "%07o", 0);
-+	xsnprintf(header->gid, sizeof(header->gid), "%07o", 0);
- 	strlcpy(header->uname, "root", sizeof(header->uname));
- 	strlcpy(header->gname, "root", sizeof(header->gname));
--	sprintf(header->devmajor, "%07o", 0);
--	sprintf(header->devminor, "%07o", 0);
-+	xsnprintf(header->devmajor, sizeof(header->devmajor), "%07o", 0);
-+	xsnprintf(header->devminor, sizeof(header->devminor), "%07o", 0);
- 
- 	memcpy(header->magic, "ustar", 6);
- 	memcpy(header->version, "00", 2);
- 
--	sprintf(header->chksum, "%07o", ustar_header_chksum(header));
-+	snprintf(header->chksum, sizeof(header->chksum), "%07o", ustar_header_chksum(header));
+ /*
+  * Return the SHA-1 of the nth object within the specified packfile.
+diff --git a/sha1_file.c b/sha1_file.c
+index f106091..592226e 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1146,11 +1146,12 @@ static void try_to_free_pack_memory(size_t size)
+ 	release_pack_memory(size);
  }
  
- static int write_extended_header(struct archiver_args *args,
-@@ -193,7 +193,7 @@ static int write_extended_header(struct archiver_args *args,
- 	memset(&header, 0, sizeof(header));
- 	*header.typeflag = TYPEFLAG_EXT_HEADER;
- 	mode = 0100666;
--	sprintf(header.name, "%s.paxheader", sha1_to_hex(sha1));
-+	xsnprintf(header.name, sizeof(header.name), "%s.paxheader", sha1_to_hex(sha1));
- 	prepare_header(args, &header, mode, size);
- 	write_blocked(&header, sizeof(header));
- 	write_blocked(buffer, size);
-@@ -235,8 +235,8 @@ static int write_tar_entry(struct archiver_args *args,
- 			memcpy(header.prefix, path, plen);
- 			memcpy(header.name, path + plen + 1, rest);
- 		} else {
--			sprintf(header.name, "%s.data",
--				sha1_to_hex(sha1));
-+			xsnprintf(header.name, sizeof(header.name), "%s.data",
-+				  sha1_to_hex(sha1));
- 			strbuf_append_ext_header(&ext_header, "path",
- 						 path, pathlen);
- 		}
-@@ -259,8 +259,8 @@ static int write_tar_entry(struct archiver_args *args,
+-struct packed_git *add_packed_git(const char *path, int path_len, int local)
++struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
+ {
+ 	static int have_set_try_to_free_routine;
+ 	struct stat st;
+-	struct packed_git *p = alloc_packed_git(path_len + 2);
++	size_t alloc;
++	struct packed_git *p;
  
- 	if (S_ISLNK(mode)) {
- 		if (size > sizeof(header.linkname)) {
--			sprintf(header.linkname, "see %s.paxheader",
--			        sha1_to_hex(sha1));
-+			xsnprintf(header.linkname, sizeof(header.linkname),
-+				  "see %s.paxheader", sha1_to_hex(sha1));
- 			strbuf_append_ext_header(&ext_header, "linkpath",
- 			                         buffer, size);
- 		} else
+ 	if (!have_set_try_to_free_routine) {
+ 		have_set_try_to_free_routine = 1;
+@@ -1161,18 +1162,22 @@ struct packed_git *add_packed_git(const char *path, int path_len, int local)
+ 	 * Make sure a corresponding .pack file exists and that
+ 	 * the index looks sane.
+ 	 */
+-	path_len -= strlen(".idx");
+-	if (path_len < 1) {
+-		free(p);
++	if (!strip_suffix_mem(path, &path_len, ".idx"))
+ 		return NULL;
+-	}
++
++	/*
++	 * ".pack" is long enough to hold any suffix we're adding (and
++	 * the use xsnprintf double-checks that)
++	 */
++	alloc = path_len + strlen(".pack") + 1;
++	p = alloc_packed_git(alloc);
+ 	memcpy(p->pack_name, path, path_len);
+ 
+-	strcpy(p->pack_name + path_len, ".keep");
++	xsnprintf(p->pack_name + path_len, alloc - path_len, ".keep");
+ 	if (!access(p->pack_name, F_OK))
+ 		p->pack_keep = 1;
+ 
+-	strcpy(p->pack_name + path_len, ".pack");
++	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
+ 	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
+ 		free(p);
+ 		return NULL;
 -- 
 2.6.0.rc3.454.g204ad51
