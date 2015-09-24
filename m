@@ -1,93 +1,116 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 44/68] merge-recursive: convert malloc / strcpy to strbuf
-Date: Thu, 24 Sep 2015 17:07:43 -0400
-Message-ID: <20150924210742.GO30946@sigill.intra.peff.net>
+Subject: [PATCH 40/68] sha1_get_pack_name: use a strbuf
+Date: Thu, 24 Sep 2015 17:07:34 -0400
+Message-ID: <20150924210733.GK30946@sigill.intra.peff.net>
 References: <20150924210225.GA23624@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 23:09:29 2015
+X-From: git-owner@vger.kernel.org Thu Sep 24 23:09:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfDle-0003gu-FI
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:09:26 +0200
+	id 1ZfDlp-0003uA-Uw
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:09:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754547AbbIXVJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 17:09:16 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36000 "HELO cloud.peff.net"
+	id S1753807AbbIXVHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 17:07:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35992 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753744AbbIXVHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 17:07:45 -0400
-Received: (qmail 12079 invoked by uid 102); 24 Sep 2015 21:07:45 -0000
+	id S1753523AbbIXVHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 17:07:36 -0400
+Received: (qmail 12061 invoked by uid 102); 24 Sep 2015 21:07:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:07:45 -0500
-Received: (qmail 29383 invoked by uid 107); 24 Sep 2015 21:07:57 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:07:36 -0500
+Received: (qmail 29345 invoked by uid 107); 24 Sep 2015 21:07:48 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:07:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:07:43 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:07:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:07:34 -0400
 Content-Disposition: inline
 In-Reply-To: <20150924210225.GA23624@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278620>
 
-This would be a fairly routine use of xstrfmt, except that
-we need to remember the length of the result to pass to
-cache_name_pos. So just use a strbuf, which makes this
-simple.
+We do some manual memory computation here, and there's no
+check that our 60 is not overflowed by the raw sprintf (it
+isn't, because the "which" parameter is never longer than
+"pack"). We can simplify this greatly with a strbuf.
 
-As a bonus, this gets rid of confusing references to
-"pathlen+1". The "1" is for the trailing slash we added, but
-that is automatically accounted for in the strbuf's len
-parameter.
+Technically the end result is not identical, as the original
+took care not to rewrite the object directory on each call
+for performance reasons.  We could do that here, too (by
+saving the baselen and resetting to it), but it's not worth
+the complexity; this function is not called a lot (generally
+once per packfile that we open).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- merge-recursive.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ sha1_file.c | 39 ++++++++++-----------------------------
+ 1 file changed, 10 insertions(+), 29 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 44d85be..a5e74d8 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -630,25 +630,24 @@ static char *unique_path(struct merge_options *o, const char *path, const char *
- 
- static int dir_in_way(const char *path, int check_working_copy)
+diff --git a/sha1_file.c b/sha1_file.c
+index 2be1afd..c26fdcb 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -208,44 +208,25 @@ const char *sha1_file_name(const unsigned char *sha1)
+  * provided by the caller.  which should be "pack" or "idx".
+  */
+ static char *sha1_get_pack_name(const unsigned char *sha1,
+-				char **name, char **base, const char *which)
++				struct strbuf *buf,
++				const char *which)
  {
--	int pos, pathlen = strlen(path);
--	char *dirpath = xmalloc(pathlen + 2);
-+	int pos;
-+	struct strbuf dirpath = STRBUF_INIT;
- 	struct stat st;
- 
--	strcpy(dirpath, path);
--	dirpath[pathlen] = '/';
--	dirpath[pathlen+1] = '\0';
-+	strbuf_addstr(&dirpath, path);
-+	strbuf_addch(&dirpath, '/');
- 
--	pos = cache_name_pos(dirpath, pathlen+1);
-+	pos = cache_name_pos(dirpath.buf, dirpath.len);
- 
- 	if (pos < 0)
- 		pos = -1 - pos;
- 	if (pos < active_nr &&
--	    !strncmp(dirpath, active_cache[pos]->name, pathlen+1)) {
--		free(dirpath);
-+	    !strncmp(dirpath.buf, active_cache[pos]->name, dirpath.len)) {
-+		strbuf_release(&dirpath);
- 		return 1;
- 	}
- 
--	free(dirpath);
-+	strbuf_release(&dirpath);
- 	return check_working_copy && !lstat(path, &st) && S_ISDIR(st.st_mode);
+-	static const char hex[] = "0123456789abcdef";
+-	char *buf;
+-	int i;
+-
+-	if (!*base) {
+-		const char *sha1_file_directory = get_object_directory();
+-		int len = strlen(sha1_file_directory);
+-		*base = xmalloc(len + 60);
+-		sprintf(*base, "%s/pack/pack-1234567890123456789012345678901234567890.%s",
+-			sha1_file_directory, which);
+-		*name = *base + len + 11;
+-	}
+-
+-	buf = *name;
+-
+-	for (i = 0; i < 20; i++) {
+-		unsigned int val = *sha1++;
+-		*buf++ = hex[val >> 4];
+-		*buf++ = hex[val & 0xf];
+-	}
+-
+-	return *base;
++	strbuf_reset(buf);
++	strbuf_addf(buf, "%s/pack/pack-%s.%s", get_object_directory(),
++		    sha1_to_hex(sha1), which);
++	return buf->buf;
  }
  
+ char *sha1_pack_name(const unsigned char *sha1)
+ {
+-	static char *name, *base;
+-
+-	return sha1_get_pack_name(sha1, &name, &base, "pack");
++	static struct strbuf buf = STRBUF_INIT;
++	return sha1_get_pack_name(sha1, &buf, "pack");
+ }
+ 
+ char *sha1_pack_index_name(const unsigned char *sha1)
+ {
+-	static char *name, *base;
+-
+-	return sha1_get_pack_name(sha1, &name, &base, "idx");
++	static struct strbuf buf = STRBUF_INIT;
++	return sha1_get_pack_name(sha1, &buf, "idx");
+ }
+ 
+ struct alternate_object_database *alt_odb_list;
 -- 
 2.6.0.rc3.454.g204ad51
