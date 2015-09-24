@@ -1,253 +1,120 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 26/68] replace trivial malloc + sprintf / strcpy calls with
- xstrfmt
-Date: Thu, 24 Sep 2015 17:07:03 -0400
-Message-ID: <20150924210702.GW30946@sigill.intra.peff.net>
+Subject: [PATCH 27/68] config: use xstrfmt in normalize_value
+Date: Thu, 24 Sep 2015 17:07:05 -0400
+Message-ID: <20150924210705.GX30946@sigill.intra.peff.net>
 References: <20150924210225.GA23624@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 23:07:20 2015
+X-From: git-owner@vger.kernel.org Thu Sep 24 23:07:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfDjY-0001n6-Tb
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:07:17 +0200
+	id 1ZfDjf-0001wh-AE
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:07:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190AbbIXVHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 17:07:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35964 "HELO cloud.peff.net"
+	id S1753345AbbIXVHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 17:07:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35965 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752930AbbIXVHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 17:07:05 -0400
-Received: (qmail 11952 invoked by uid 102); 24 Sep 2015 21:07:05 -0000
+	id S1753076AbbIXVHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 17:07:07 -0400
+Received: (qmail 11955 invoked by uid 102); 24 Sep 2015 21:07:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:07:05 -0500
-Received: (qmail 29199 invoked by uid 107); 24 Sep 2015 21:07:17 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 16:07:07 -0500
+Received: (qmail 29215 invoked by uid 107); 24 Sep 2015 21:07:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:07:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:07:03 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 24 Sep 2015 17:07:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2015 17:07:05 -0400
 Content-Disposition: inline
 In-Reply-To: <20150924210225.GA23624@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278585>
 
-It's a common pattern to do:
+We xmalloc a fixed-size buffer and sprintf into it; this is
+OK because the size of our formatting types is finite, but
+that's not immediately clear to a reader auditing sprintf
+calls. Let's switch to xstrfmt, which is shorter and
+obviously correct.
 
-  foo = xmalloc(strlen(one) + strlen(two) + 1 + 1);
-  sprintf(foo, "%s %s", one, two);
+Note that just dropping the common xmalloc here causes gcc
+to complain with -Wmaybe-uninitialized. That's because if
+"types" does not match any of our known types, we never
+write anything into the "normalized" pointer. With the
+current code, gcc doesn't notice because we always return a
+valid pointer (just one which might point to uninitialized
+data, but the compiler doesn't know that). In other words,
+the current code is potentially buggy if new types are added
+without updating this spot.
 
-(or possibly some variant with strcpy()s or a more
-complicated length computation).  We can switch these to use
-xstrfmt, which is shorter, involves less error-prone manual
-computation, and removes many sprintf and strcpy calls which
-make it harder to audit the code for real buffer overflows.
+So let's take this opportunity to clean up the function a
+bit more. We can drop the "normalized" pointer entirely, and
+just return directly from each code path. And then add an
+assertion at the end in case we haven't covered any cases.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/apply.c     |  5 +----
- builtin/ls-remote.c |  8 ++------
- builtin/name-rev.c  | 13 +++++--------
- environment.c       |  7 ++-----
- imap-send.c         |  5 ++---
- reflog-walk.c       |  7 +++----
- remote.c            |  7 +------
- setup.c             | 12 +++---------
- unpack-trees.c      |  4 +---
- 9 files changed, 20 insertions(+), 48 deletions(-)
+ builtin/config.c | 34 +++++++++++++---------------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 4aa53f7..094a20f 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -698,10 +698,7 @@ static char *find_name_common(const char *line, const char *def,
- 	}
+diff --git a/builtin/config.c b/builtin/config.c
+index 71acc44..adc7727 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -246,8 +246,6 @@ free_strings:
  
- 	if (root) {
--		char *ret = xmalloc(root_len + len + 1);
--		strcpy(ret, root);
--		memcpy(ret + root_len, start, len);
--		ret[root_len + len] = '\0';
-+		char *ret = xstrfmt("%s%.*s", root, len, start);
- 		return squash_slash(ret);
- 	}
+ static char *normalize_value(const char *key, const char *value)
+ {
+-	char *normalized;
+-
+ 	if (!value)
+ 		return NULL;
  
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 4554dbc..5b6d679 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -93,12 +93,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	if (argv[i]) {
- 		int j;
- 		pattern = xcalloc(argc - i + 1, sizeof(const char *));
--		for (j = i; j < argc; j++) {
--			int len = strlen(argv[j]);
--			char *p = xmalloc(len + 3);
--			sprintf(p, "*/%s", argv[j]);
--			pattern[j - i] = p;
+@@ -258,27 +256,21 @@ static char *normalize_value(const char *key, const char *value)
+ 		 * "~/foobar/" in the config file, and to expand the ~
+ 		 * when retrieving the value.
+ 		 */
+-		normalized = xstrdup(value);
+-	else {
+-		normalized = xmalloc(64);
+-		if (types == TYPE_INT) {
+-			int64_t v = git_config_int64(key, value);
+-			sprintf(normalized, "%"PRId64, v);
 -		}
-+		for (j = i; j < argc; j++)
-+			pattern[j - i] = xstrfmt("*/%s", argv[j]);
- 	}
- 	remote = remote_get(dest);
- 	if (!remote) {
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 248a3eb..8a3a0cd 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -56,19 +56,16 @@ copy_data:
- 			parents = parents->next, parent_number++) {
- 		if (parent_number > 1) {
- 			int len = strlen(tip_name);
--			char *new_name = xmalloc(len +
--				1 + decimal_length(generation) +  /* ~<n> */
--				1 + 2 +				  /* ^NN */
--				1);
-+			char *new_name;
- 
- 			if (len > 2 && !strcmp(tip_name + len - 2, "^0"))
- 				len -= 2;
- 			if (generation > 0)
--				sprintf(new_name, "%.*s~%d^%d", len, tip_name,
--						generation, parent_number);
-+				new_name = xstrfmt("%.*s~%d^%d", len, tip_name,
-+						   generation, parent_number);
- 			else
--				sprintf(new_name, "%.*s^%d", len, tip_name,
--						parent_number);
-+				new_name = xstrfmt("%.*s^%d", len, tip_name,
-+						   parent_number);
- 
- 			name_rev(parents->item, new_name, 0,
- 				distance + MERGE_TRAVERSAL_WEIGHT, 0);
-diff --git a/environment.c b/environment.c
-index a533aed..c5b65f5 100644
---- a/environment.c
-+++ b/environment.c
-@@ -143,11 +143,8 @@ static char *git_path_from_env(const char *envvar, const char *git_dir,
- 			       const char *path, int *fromenv)
- {
- 	const char *value = getenv(envvar);
--	if (!value) {
--		char *buf = xmalloc(strlen(git_dir) + strlen(path) + 2);
--		sprintf(buf, "%s/%s", git_dir, path);
--		return buf;
--	}
-+	if (!value)
-+		return xstrfmt("%s/%s", git_dir, path);
- 	if (fromenv)
- 		*fromenv = 1;
- 	return xstrdup(value);
-diff --git a/imap-send.c b/imap-send.c
-index 37ac4aa..e9faaea 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -889,9 +889,8 @@ static char *cram(const char *challenge_64, const char *user, const char *pass)
+-		else if (types == TYPE_BOOL)
+-			sprintf(normalized, "%s",
+-				git_config_bool(key, value) ? "true" : "false");
+-		else if (types == TYPE_BOOL_OR_INT) {
+-			int is_bool, v;
+-			v = git_config_bool_or_int(key, value, &is_bool);
+-			if (!is_bool)
+-				sprintf(normalized, "%d", v);
+-			else
+-				sprintf(normalized, "%s", v ? "true" : "false");
+-		}
++		return xstrdup(value);
++	if (types == TYPE_INT)
++		return xstrfmt("%"PRId64, git_config_int64(key, value));
++	if (types == TYPE_BOOL)
++		return xstrdup(git_config_bool(key, value) ?  "true" : "false");
++	if (types == TYPE_BOOL_OR_INT) {
++		int is_bool, v;
++		v = git_config_bool_or_int(key, value, &is_bool);
++		if (!is_bool)
++			return xstrfmt("%d", v);
++		else
++			return xstrdup(v ? "true" : "false");
  	}
  
- 	/* response: "<user> <digest in hex>" */
--	resp_len = strlen(user) + 1 + strlen(hex) + 1;
--	response = xmalloc(resp_len);
--	sprintf(response, "%s %s", user, hex);
-+	response = xstrfmt("%s %s", user, hex);
-+	resp_len = strlen(response) + 1;
- 
- 	response_64 = xmalloc(ENCODED_SIZE(resp_len) + 1);
- 	encoded_len = EVP_EncodeBlock((unsigned char *)response_64,
-diff --git a/reflog-walk.c b/reflog-walk.c
-index f8e743a..85b8a54 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -56,12 +56,11 @@ static struct complete_reflogs *read_complete_reflog(const char *ref)
- 		}
- 	}
- 	if (reflogs->nr == 0) {
--		int len = strlen(ref);
--		char *refname = xmalloc(len + 12);
--		sprintf(refname, "refs/%s", ref);
-+		char *refname = xstrfmt("refs/%s", ref);
- 		for_each_reflog_ent(refname, read_one_reflog, reflogs);
- 		if (reflogs->nr == 0) {
--			sprintf(refname, "refs/heads/%s", ref);
-+			free(refname);
-+			refname = xstrfmt("refs/heads/%s", ref);
- 			for_each_reflog_ent(refname, read_one_reflog, reflogs);
- 		}
- 		free(refname);
-diff --git a/remote.c b/remote.c
-index 26504b7..5ab0f7f 100644
---- a/remote.c
-+++ b/remote.c
-@@ -65,7 +65,6 @@ static int valid_remote(const struct remote *remote)
- static const char *alias_url(const char *url, struct rewrites *r)
- {
- 	int i, j;
--	char *ret;
- 	struct counted_string *longest;
- 	int longest_i;
- 
-@@ -86,11 +85,7 @@ static const char *alias_url(const char *url, struct rewrites *r)
- 	if (!longest)
- 		return url;
- 
--	ret = xmalloc(r->rewrite[longest_i]->baselen +
--		     (strlen(url) - longest->len) + 1);
--	strcpy(ret, r->rewrite[longest_i]->base);
--	strcpy(ret + r->rewrite[longest_i]->baselen, url + longest->len);
--	return ret;
-+	return xstrfmt("%s%s", r->rewrite[longest_i]->base, url + longest->len);
+-	return normalized;
++	die("BUG: cannot normalize type %d", types);
  }
  
- static void add_push_refspec(struct remote *remote, const char *ref)
-diff --git a/setup.c b/setup.c
-index a17c51e..2b64cbb 100644
---- a/setup.c
-+++ b/setup.c
-@@ -99,10 +99,7 @@ char *prefix_path_gently(const char *prefix, int len,
- 			return NULL;
- 		}
- 	} else {
--		sanitized = xmalloc(len + strlen(path) + 1);
--		if (len)
--			memcpy(sanitized, prefix, len);
--		strcpy(sanitized + len, path);
-+		sanitized = xstrfmt("%.*s%s", len, prefix, path);
- 		if (remaining_prefix)
- 			*remaining_prefix = len;
- 		if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix)) {
-@@ -468,11 +465,8 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
- 
- 	if (!is_absolute_path(dir) && (slash = strrchr(path, '/'))) {
- 		size_t pathlen = slash+1 - path;
--		size_t dirlen = pathlen + len - 8;
--		dir = xmalloc(dirlen + 1);
--		strncpy(dir, path, pathlen);
--		strncpy(dir + pathlen, buf + 8, len - 8);
--		dir[dirlen] = '\0';
-+		dir = xstrfmt("%.*s%.*s", (int)pathlen, path,
-+			      (int)(len - 8), buf + 8);
- 		free(buf);
- 		buf = dir;
- 	}
-diff --git a/unpack-trees.c b/unpack-trees.c
-index f932e80..8e2032f 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1350,9 +1350,7 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
- 	 * Then we need to make sure that we do not lose a locally
- 	 * present file that is not ignored.
- 	 */
--	pathbuf = xmalloc(namelen + 2);
--	memcpy(pathbuf, ce->name, namelen);
--	strcpy(pathbuf+namelen, "/");
-+	pathbuf = xstrfmt("%.*s/", namelen, ce->name);
- 
- 	memset(&d, 0, sizeof(d));
- 	if (o->dir)
+ static int get_color_found;
 -- 
 2.6.0.rc3.454.g204ad51
