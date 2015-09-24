@@ -1,89 +1,95 @@
-From: Jack Adrian Zappa <adrianh.bsc@gmail.com>
-Subject: Re: diff not finding difference
-Date: Thu, 24 Sep 2015 17:12:18 -0400
-Message-ID: <CAKepmaihyVS3hiAS4bZUfvt-r0ZWycPRkWnokaS7Gx2hEnjT3w@mail.gmail.com>
-References: <CAKepmajSPgGK-DqR3Bxf2Xqxj2Gz0MazRNxM6wsVcSiBQsoE4Q@mail.gmail.com>
-	<CAKepmajegSMO91YZOe+P_BH2kzzR=RMqCE94XRQSfZzOVYKt6A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git-mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 24 23:12:33 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 2/2] SQUASH for "fetch_populated_submodules: use new parallel job processing"
+Date: Thu, 24 Sep 2015 14:13:06 -0700
+Message-ID: <1443129187-18572-2-git-send-email-sbeller@google.com>
+References: <xmqqzj0cv9v8.fsf@gitster.mtv.corp.google.com>
+ <1443129187-18572-1-git-send-email-sbeller@google.com>
+Cc: ramsay@ramsayjones.plus.com, jacob.keller@gmail.com, peff@peff.net,
+	jrnieder@gmail.com, johannes.schindelin@gmail.com,
+	Jens.Lehmann@web.de, vlovich@gmail.com, ericsunshine@gmail.com,
+	Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Sep 24 23:13:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfDoX-0006pe-AI
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:12:25 +0200
+	id 1ZfDpd-00083d-9U
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Sep 2015 23:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753394AbbIXVMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 17:12:21 -0400
-Received: from mail-la0-f52.google.com ([209.85.215.52]:34735 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752918AbbIXVMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 17:12:20 -0400
-Received: by lacdq2 with SMTP id dq2so22879436lac.1
-        for <git@vger.kernel.org>; Thu, 24 Sep 2015 14:12:18 -0700 (PDT)
+	id S1753958AbbIXVNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 17:13:22 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35654 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753870AbbIXVNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 17:13:17 -0400
+Received: by pacfv12 with SMTP id fv12so84819768pac.2
+        for <git@vger.kernel.org>; Thu, 24 Sep 2015 14:13:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=MGj7z4FBg/z1iZyEZVqtWZqSm2WtMWy9v4fLkGuwZ/k=;
-        b=Q1xNpxBoMKOEKctryCQ6JjWgsS96vwA/FUD7nHhu6L5M31eyuGq4AI4drLyn3lUIrn
-         7699zqlsZpWudBdr1DcNrMTAUMtLvqcQl9NAGX5hbvYWs0SA3StU+jSOSwvCOKG0foJ9
-         dFr7aLbLCP8J/tGHB3NlHYsyUtlh9UID8GQRIZNtXLYyGgwwhjBC+mia5b5BDH1xs+Og
-         QUuQ1SSi3mSvlLq3ZvzUaiLLmOgwoGqetB9oCsN0QopXISy2Czj6DgzqdQsofKwKFnA+
-         1XFtA2itS5ZVPMQ6HVWq5zOayIzWpePnYqS4Jgq4yI0DclceZtRagyNSvAA2O/ADRNLm
-         twAg==
-X-Received: by 10.112.17.34 with SMTP id l2mr513537lbd.117.1443129138802; Thu,
- 24 Sep 2015 14:12:18 -0700 (PDT)
-Received: by 10.25.139.130 with HTTP; Thu, 24 Sep 2015 14:12:18 -0700 (PDT)
-In-Reply-To: <CAKepmajegSMO91YZOe+P_BH2kzzR=RMqCE94XRQSfZzOVYKt6A@mail.gmail.com>
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=zUFqUXvwipatyi2vmhk1+ZJeM19zzaR6BUK9IeCfUFI=;
+        b=oleq0rKUauTUFlmAHwyqpORs84GE10yTli8pmtI9vPbzy9xngLa/RHVU2nWBuWg77t
+         qLvoFEJRskrgWQCSK4VpXSuStjAnn9FkPkmnZN9ZVrhAiCMau7z2p/Qk0FIOH6T0GJu+
+         YfJXy4lqHKfCvAYWZf655Q25ALpmlTr0YZnABaSdX0dQn/1WqlFQfBQteLIBJbzOE3RZ
+         geX/lcEg/R/zYrbctm4fxo55p6SdfWCkpMWbabAEVoXJLKm4m5rkPo0fBV2kKBfJ2LHa
+         2TCgWb17uBgcdprGbc8QpUmMC60BAPbZd0j9nhh4iGhMNvPi7hRsAiAJRn+TuC5VCReD
+         C3yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=zUFqUXvwipatyi2vmhk1+ZJeM19zzaR6BUK9IeCfUFI=;
+        b=C9Os52Pb7RgitttPZLtuDvf18cFOE21l1cslWp0FZgWw6mJv7qSWAD0u7Qx0nfobsk
+         AuGH7CD9tmU3lGBCScHUN5TlfsqkPmL3E3XfNhXGulJ9rRPmnAye7bjvSyeMvCUBrpNZ
+         YJr0sGh0K3GvJrQc9UttmDb8Qfd/h/aXsWYlUo7gqKESCffwd21O+hU5i5NRLPUs1SS9
+         y//SaH6Sa95q8TPmEb85VvSepRhr2QoDKu0pH3mcW7SgJot4pd/16Ngnj5GGzirm4SSk
+         b4J0gXl3It54jaa4QH7mPNvZrgr/B6a+/U9m8A3mJv+dDfs/5+SbMEcWpD1ElYDlPLnD
+         eJxQ==
+X-Gm-Message-State: ALoCoQn/lXdJw3HoaLyKJr2Gc8/JE5L3gd2feSw8L37CaGxH018Qx5Ldiu/VWJxlI4OYK9SOGiDI
+X-Received: by 10.68.95.3 with SMTP id dg3mr2196684pbb.35.1443129197252;
+        Thu, 24 Sep 2015 14:13:17 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:85b5:1b05:2b7d:c74a])
+        by smtp.gmail.com with ESMTPSA id su3sm128301pbc.83.2015.09.24.14.13.16
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 24 Sep 2015 14:13:16 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0.273.g6fa2560.dirty
+In-Reply-To: <1443129187-18572-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278630>
 
-On Thu, Sep 24, 2015 at 5:09 PM, Jack Adrian Zappa
-<adrianh.bsc@gmail.com> wrote:
-> This is a weird one:
->
-> [file-1 begin]
->
-> abcd efg hijklmnop
->
-> [file-1 end]
->
-> [file-2 begin]
->
-> blah blah blah
-> /////////////////////////////////////////////////////////////////////////////////
-> abdc boo ya!
->
-> [file-2 end]
->
-> Do a diff between these and it won't find any difference.
->
-> Same with the following two lines, each in a different file:
-> sabc fed ghi jkl
-> abc def ghi jkl
->
-> I first noticed this on the command line git and then in VS2013.  The
-> original problem was like my first example.  The files were much
-> longer, but all that git would see is the addition of the line of
-> ////..., but not the removal of the original line.
->
-> I've tried some other simple file changes with similar results.
-> Something seems to be definitely broken in git diff. :(
->
-> Command line version of git is 1.9.5 msysgit.0.
->
->
-> A
+This fixes the function signature in the first user of the async run processor.
 
-BTW, I've upgraded to git version 2.5.3.windows.1 and the problem
-still persists.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-
-A
+diff --git a/submodule.c b/submodule.c
+index d7c7a6e..2c4396b 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -630,13 +630,15 @@ struct submodule_parallel_fetch {
+ int get_next_submodule(void *data, struct child_process *cp,
+ 		       struct strbuf *err);
+ 
+-void handle_submodule_fetch_start_err(void *data, struct child_process *cp, struct strbuf *err)
++void handle_submodule_fetch_start_err(void *data, struct child_process *cp,
++				      struct strbuf *err)
+ {
+ 	struct submodule_parallel_fetch *spf = data;
+ 	spf->result = 1;
+ }
+ 
+-void handle_submodule_fetch_finish( void *data, struct child_process *cp, int retvalue)
++void handle_submodule_fetch_finish(void *data, struct child_process *cp,
++				   struct strbuf *err, int retvalue)
+ {
+ 	struct submodule_parallel_fetch *spf = data;
+ 
+-- 
+2.5.0.273.g6fa2560.dirty
