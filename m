@@ -1,84 +1,108 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5561: get rid of racy appending to logfile
-Date: Fri, 25 Sep 2015 08:50:07 -0700
-Message-ID: <xmqqbncq5wi8.fsf@gitster.mtv.corp.google.com>
-References: <20150924014541.GB6442@sigill.intra.peff.net>
-	<1443118342-3856-1-git-send-email-s-beyer@gmx.net>
+Subject: Re: [PATCH v6b 5/8] branch: drop non-commit error reporting
+Date: Fri, 25 Sep 2015 09:00:41 -0700
+Message-ID: <xmqq4mii5w0m.fsf@gitster.mtv.corp.google.com>
+References: <1443031873-25280-1-git-send-email-Karthik.188@gmail.com>
+	<1443118148-3470-1-git-send-email-Karthik.188@gmail.com>
+	<vpqk2rfm4ag.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Tarmigan Casebolt <tarmigan+git@gmail.com>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Sep 25 17:50:20 2015
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Sep 25 18:00:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfVGJ-0001Df-Vk
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Sep 2015 17:50:16 +0200
+	id 1ZfVQX-0007tM-9D
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Sep 2015 18:00:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932287AbbIYPuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Sep 2015 11:50:10 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:34311 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932221AbbIYPuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Sep 2015 11:50:09 -0400
-Received: by padhy16 with SMTP id hy16so109255421pad.1
-        for <git@vger.kernel.org>; Fri, 25 Sep 2015 08:50:08 -0700 (PDT)
+	id S932440AbbIYQAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Sep 2015 12:00:45 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:36655 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932218AbbIYQAn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Sep 2015 12:00:43 -0400
+Received: by pablk4 with SMTP id lk4so12543772pab.3
+        for <git@vger.kernel.org>; Fri, 25 Sep 2015 09:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=lDCMI9CBvpcvn40Afjh2uZZHwKrdGUE26imCrw6EdVw=;
-        b=KNZYlF6IBlgCLqVRVHkuF8bMrYdH60awxPrmD1sURrCO/kj5xXIyP+rsyfRxoGlKn4
-         Uk6qDiGIHZYP3rhgj9jy+jZHnoYB+1Y2dqjpVY7aRe42xdJvgdyzWkhyngIjm7aHubBJ
-         3+FULiK8pDwjb9uZzRLZmq8bfudHmUzL1yJdbCpcMG0eQMaxsZnXjYJvVNTM7ZuM/9Wp
-         AFNGvf4VjwRO4R+u/QXrI14dco3Y1JMGsr0pDhGZ77cqaB2A1Er3r54MOAyDzEFsP4qU
-         5z9LjLeyicWXO3GN9CDxdOa4G5LGFJqA5iBl0DXOXPi0v2Ie5d7J2SNkYALNt8xsMo2F
-         +8vw==
-X-Received: by 10.66.141.111 with SMTP id rn15mr8106435pab.118.1443196208770;
-        Fri, 25 Sep 2015 08:50:08 -0700 (PDT)
+        bh=qnaakOYjo5zNS0VXApmuAi5ilkFJrEVOtWl+q8R5Kjw=;
+        b=ntPbUQM7Y6nfKRf8QPcoIek9LMv9cBtTaghG2f8TpvJB1uekqhjMlF8PsbxCtc1ww+
+         ZBatbpwm2bNaB6ojaI/OurJx7f5RVkgAsSN/1RKfa+0Mhk76NMmHlBaDd8S7nn9FhfRV
+         maV+b43KoMkUfjdwrv2ToggvAnhNaInkp4oyp1xcHQK3YZBJxNXoNUEHLF2A0qzeke4Z
+         iNP9jWaNDx/JUcVxcJdCiKFXBBRRGzDjfsjTqpQFY0Rm5XRXz/IiUThGNZGuEGypVoPO
+         W3j6G6ntRXFYsgY60MjR9bqGXKybNruuD04z9yeZvahukAMTOd93EMVOG6FaTjEQvRon
+         eg1Q==
+X-Received: by 10.68.218.137 with SMTP id pg9mr8333358pbc.160.1443196842806;
+        Fri, 25 Sep 2015 09:00:42 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:913:2c8:148a:1d8e])
-        by smtp.gmail.com with ESMTPSA id ey17sm4640306pac.26.2015.09.25.08.50.07
+        by smtp.gmail.com with ESMTPSA id pi9sm4629557pbb.96.2015.09.25.09.00.41
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Fri, 25 Sep 2015 08:50:08 -0700 (PDT)
-In-Reply-To: <1443118342-3856-1-git-send-email-s-beyer@gmx.net> (Stephan
-	Beyer's message of "Thu, 24 Sep 2015 20:12:22 +0200")
+        Fri, 25 Sep 2015 09:00:41 -0700 (PDT)
+In-Reply-To: <vpqk2rfm4ag.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+	"Fri, 25 Sep 2015 07:55:19 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278664>
 
-Stephan Beyer <s-beyer@gmx.net> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> The definition of log_div() appended information to the web server's
-> logfile to make the test more readable. However, log_div() was called
-> right after a request is served (which is done by git-http-backend);
-> the web server waits for the git-http-backend process to exit before
-> it writes to the log file. When the duration between serving a request
-> and exiting was long, the log_div() output was written before the last
-> request's log, and the test failed. (This duration could become
-> especially long for PROFILE=GEN builds.)
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> To get rid of this behavior, we should not change the logfile at all.
-> This commit removes log_div() and its calls. The additional information
-> is kept in the test (for readability reasons) but filtered out before
-> comparing it to the actual logfile.
+>> Remove the error "branch '%s' does not point at a commit" in
+>> apppend_ref() which reports branch refs which do not point to
+>> commits. Also remove the error "some refs could not be read" in
+>> print_ref_list() which is triggered as a consequence of the first
+>> error.
+>>
+>> This seems to be the wrong codepath whose purpose is not to diagnose
+>> and report a repository corruption. If we care about such a repository
+>> corruption, we should report it from fsck instead.
 >
-> Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
-> ---
->  Okay Peff, I added the information to the commit message (in my own
->  words). Past tense for the situation before the patch, present tense
->  for the situation after (hope that's right but should not be too
->  important).
+> (We actually already report it from fsck indeed)
 >
->  I also used your proposed grep line because it is probably more robust.
+>> This also helps in a smooth port of branch.c to use ref-filter APIs
+>> over the following patches. On the other hand, ref-filter ignores refs
+>> which do not point at commits silently.
+>
+> Seems much better. Thanks,
 
-Thanks, both.  
+Yes, it seems that I can just replace 5/8 with this and the
+remainder can stay as they are.
 
-I vaguely recall this test mysteriously failing a few times during
-the past several years for me.  Thanks for digging to the bottom of
-the problem.  Both the diagnosis and fix look very sensible.
+While I was trying to address your "actually already report", I
+spotted a typo and then found that the early part of the second
+paragraph is a bit hard, so here is what I ended up with.
+
+    branch: drop non-commit error reporting
+    
+    Remove the error "branch '%s' does not point at a commit" in
+    append_ref(), which reports branch refs which do not point to
+    commits.  Also remove the error "some refs could not be read" in
+    print_ref_list() which is triggered as a consequence of the first
+    error.
+    
+    The purpose of these codepaths is not to diagnose and report a
+    repository corruption.  If we care about such a corruption, we
+    should report it from fsck instead, which we already do.
+    
+    This also helps in a smooth port of branch.c to use ref-filter APIs
+    over the following patches. On the other hand, ref-filter ignores refs
+    which do not point at commits silently.
+    
+    Based-on-patch-by: Jeff King <peff@peff.net>
+    Helped-by: Junio C Hamano <gitster@pobox.com>
+    Mentored-by: Christian Couder <christian.couder@gmail.com>
+    Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+    Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+Thanks.
