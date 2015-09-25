@@ -1,111 +1,96 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6b 5/8] branch: drop non-commit error reporting
-Date: Sat, 26 Sep 2015 00:07:15 +0530
-Message-ID: <CAOLa=ZRi+x_GUoETK4fQc57=UnDFbCzZoswAZxoxHo2BYrQXmg@mail.gmail.com>
-References: <1443031873-25280-1-git-send-email-Karthik.188@gmail.com>
- <1443118148-3470-1-git-send-email-Karthik.188@gmail.com> <vpqk2rfm4ag.fsf@grenoble-inp.fr>
- <xmqq4mii5w0m.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH v1] Add Travis CI support
+Date: Fri, 25 Sep 2015 14:52:27 -0400
+Message-ID: <20150925185227.GA15190@sigill.intra.peff.net>
+References: <1443131004-39284-1-git-send-email-larsxschneider@gmail.com>
+ <xmqqeghnuy8t.fsf@gitster.mtv.corp.google.com>
+ <20150925162615.GF8417@sigill.intra.peff.net>
+ <xmqqa8sa4ak4.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: larsxschneider@gmail.com, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 25 20:37:51 2015
+X-From: git-owner@vger.kernel.org Fri Sep 25 20:52:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfXsU-0008MJ-FE
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Sep 2015 20:37:50 +0200
+	id 1ZfY6k-0006fM-QR
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Sep 2015 20:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932934AbbIYShq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Sep 2015 14:37:46 -0400
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:34019 "EHLO
-	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932832AbbIYShp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Sep 2015 14:37:45 -0400
-Received: by vkhf67 with SMTP id f67so61399457vkh.1
-        for <git@vger.kernel.org>; Fri, 25 Sep 2015 11:37:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=6lfrJjbt3uvdfhu2wQdrmI3IVg1lE163A8RHtoh3wHo=;
-        b=W2WxDOYw1xJ15zLNuJ1wCcpoibgCPQ9TWpJA4YqnZSCk0OIgl1Ey55tczEVu5b92bG
-         xD+HsNIfUI3nyCyT09Yp50JrjXLhe8W4g6amvcaSphSip+ACfsrubOQVKXqRe+xp6iqY
-         dSubJjoYOm2l7Ht++wn0uY0+gR5u3zKemxcgHf/nBxftEWYlDLX5jve511dFpPefBA5e
-         9IGk6eFD/t56GT3S+25FJxeLB4mMQhTlkJ6uqN+fY6Oa5XcED+pUKcqIXG3xBiQpv2Ez
-         5WbYXL6hFSJpgtoniASb0p5YpMJtj9oqh86tbYKHnDSej1opdZFu3kKfzULZTGky5Wic
-         gnxA==
-X-Received: by 10.31.142.73 with SMTP id q70mr4129166vkd.13.1443206264618;
- Fri, 25 Sep 2015 11:37:44 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Fri, 25 Sep 2015 11:37:15 -0700 (PDT)
-In-Reply-To: <xmqq4mii5w0m.fsf@gitster.mtv.corp.google.com>
+	id S932896AbbIYSwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Sep 2015 14:52:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36528 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932786AbbIYSwa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Sep 2015 14:52:30 -0400
+Received: (qmail 31651 invoked by uid 102); 25 Sep 2015 18:52:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 25 Sep 2015 13:52:29 -0500
+Received: (qmail 6623 invoked by uid 107); 25 Sep 2015 18:52:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 25 Sep 2015 14:52:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Sep 2015 14:52:27 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqa8sa4ak4.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278674>
 
-On Fri, Sep 25, 2015 at 9:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>> Remove the error "branch '%s' does not point at a commit" in
->>> apppend_ref() which reports branch refs which do not point to
->>> commits. Also remove the error "some refs could not be read" in
->>> print_ref_list() which is triggered as a consequence of the first
->>> error.
->>>
->>> This seems to be the wrong codepath whose purpose is not to diagnose
->>> and report a repository corruption. If we care about such a repository
->>> corruption, we should report it from fsck instead.
->>
->> (We actually already report it from fsck indeed)
->>
->>> This also helps in a smooth port of branch.c to use ref-filter APIs
->>> over the following patches. On the other hand, ref-filter ignores refs
->>> which do not point at commits silently.
->>
->> Seems much better. Thanks,
->
-> Yes, it seems that I can just replace 5/8 with this and the
-> remainder can stay as they are.
->
-> While I was trying to address your "actually already report", I
-> spotted a typo and then found that the early part of the second
-> paragraph is a bit hard, so here is what I ended up with.
->
->     branch: drop non-commit error reporting
->
->     Remove the error "branch '%s' does not point at a commit" in
->     append_ref(), which reports branch refs which do not point to
->     commits.  Also remove the error "some refs could not be read" in
->     print_ref_list() which is triggered as a consequence of the first
->     error.
->
->     The purpose of these codepaths is not to diagnose and report a
->     repository corruption.  If we care about such a corruption, we
->     should report it from fsck instead, which we already do.
->
->     This also helps in a smooth port of branch.c to use ref-filter APIs
->     over the following patches. On the other hand, ref-filter ignores refs
->     which do not point at commits silently.
->
->     Based-on-patch-by: Jeff King <peff@peff.net>
->     Helped-by: Junio C Hamano <gitster@pobox.com>
->     Mentored-by: Christian Couder <christian.couder@gmail.com>
->     Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
->     Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> Thanks.
+On Fri, Sep 25, 2015 at 11:29:31AM -0700, Junio C Hamano wrote:
 
-Looks good to me, thanks :)
+> When I finally complain to the hosting site that it is deliberately
+> rejecting the fix that would rob them the illicit revenue source, it
+> does not help the hosting site to keep copies of push certificates
+> when it wants to refute such a complaint.  "We publish all push
+> certificates and there is no record that gitster already tried to
+> fix the issue" has to be taken with faith in that scenario.
 
--- 
-Regards,
-Karthik Nayak
+Right. Your earlier examples showed non-repudiation by the original
+signer (the hosting site says "you definite pushed this to us, and here
+is the signature to prove it, so you cannot deny it"). But in this
+example, it is going the other way: the pusher wants the hosting site to
+admit to an action.
+
+To do that, the hosting site would have to re-sign the push cert to say
+"we got this, it is published", and return the receipt to the original
+pusher, who can then use it as proof of the event. Or alternatively, it
+could be signed by a third-party notary.
+
+I don't think it is all that interesting an avenue to pursue, though. If
+you say "I have this update and the hosting site is not providing it to
+people", people are not that interested in whether the hosting site is
+being laggy, malicious, or whatever. They are interested in getting your
+update. :)
+
+So the more general problem is "I want to make sure I have Junio's
+latest push, and I do not want to trust anything else". For that, you
+could publish expiring certs (so you can fool me for up to, say, a week,
+but after that I consider the old certs to be garbage either way). Or
+you could do something clever with a quorum (e.g., N of K hosting sites
+say there is no update, so there probably isn't one).
+
+But I think all of that is outside of git's scope. Git provides the
+signed ref-state in the form of a push cert. Since it's a small-ish blob
+of data, you can use any external mechanism you want to decide on the
+correct value of it.
+
+> >  So I wonder if it would be
+> > helpful to have a microformat that the client would use to look at this.
+> > E.g., it would fetch the cert tree, then confirm that the current ref
+> > values match the latest cert.
+> 
+> Yeah, that is one possibility.  Just a single flat file that
+> concatenates all the push cert in the received order would do as an
+> export format, too ;-)
+
+I agree that's a more logical format, in a sense; it really is a linear
+log. It's just that the receive-pack code already creates a blob for us,
+so it's cheap to reference that in tree (and then fetching it is cheap,
+too). IOW, git is much better at adding files to trees than it is at
+appending to files. :)
+
+-Peff
