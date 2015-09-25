@@ -1,9 +1,11 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Another squash on run-command: add an asynchronous parallel child processor
-Date: Thu, 24 Sep 2015 18:08:36 -0700
-Message-ID: <xmqq4mijuwyz.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 1/2] SQUASH???
+Date: Thu, 24 Sep 2015 18:09:44 -0700
+Message-ID: <xmqqwpvfticn.fsf@gitster.mtv.corp.google.com>
 References: <xmqqzj0cv9v8.fsf@gitster.mtv.corp.google.com>
 	<1443129187-18572-1-git-send-email-sbeller@google.com>
+	<1443129187-18572-3-git-send-email-sbeller@google.com>
+	<xmqqa8sbuxu0.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
@@ -11,88 +13,184 @@ Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
 	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
 	vlovich@gmail.com, ericsunshine@gmail.com
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Sep 25 03:09:02 2015
+X-From: git-owner@vger.kernel.org Fri Sep 25 03:09:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfHVT-0002MV-Ql
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Sep 2015 03:09:00 +0200
+	id 1ZfHWI-0003TB-S5
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Sep 2015 03:09:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbbIYBIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2015 21:08:39 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:36213 "EHLO
+	id S1752376AbbIYBJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2015 21:09:47 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:35505 "EHLO
 	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752854AbbIYBIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2015 21:08:38 -0400
-Received: by pacgz1 with SMTP id gz1so6109193pac.3
-        for <git@vger.kernel.org>; Thu, 24 Sep 2015 18:08:37 -0700 (PDT)
+	with ESMTP id S1751280AbbIYBJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2015 21:09:46 -0400
+Received: by pacfv12 with SMTP id fv12so90104490pac.2
+        for <git@vger.kernel.org>; Thu, 24 Sep 2015 18:09:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=/Mji3XeyU6F7cxUki+Uzp5zDPuDVIPXt55IaRxJZfDQ=;
-        b=rdqUwqdNI7VycJUi4asijkLMOXCZiaSMvlAp2MsKRCxAVsO3XHfIehg9vnFaJ4rTfF
-         yu/FsH6Do64y++tGQFCX0sh+uTOSorjSIvHqdWxtkc17Qxc5C+E9KdBy2jOZCIrLk0K2
-         u49LyOaQAFjbjqT3hnTHtRt086FETtudNIe/VEr6/S5GDRn1g4oa+CCbMnaqvwtGIhlJ
-         ONYBFAJ0QWZ/KN+j0wr05iOnulEhmzBMe6/pClWHx+k9hQ97o3pxY1VDPeBV97//wvgB
-         QtZUJe4BS2Lu0Np7prIGQhhHEVQPWUEz8YM8yrU6211FrWSZ3ZTT9rlyOo6Os3bROZY+
-         FlCA==
-X-Received: by 10.68.68.167 with SMTP id x7mr3374676pbt.140.1443143317873;
-        Thu, 24 Sep 2015 18:08:37 -0700 (PDT)
+        bh=+zFuMbb7oMOxWIJfZZ0U6MJBY/8PHlRJnOsPHrYVK3k=;
+        b=ipqNy4Z2vkAp91lULjWJ3C0t26RG7xqFF28tYDzBiXC8M5YqT0vp4WG1pM82pFdngG
+         8s1dNvmYXv2QO8L7DwbkyQShQpoNIUO6QTuc+A5FA4a41b5OEQ4cnJVy1JSi9plzM9NN
+         op670G2+oBe0oN1YmO8n92LrB4dn1kXUhyDyO/GSigRCnms+dLGgw5yaW/aC19OQGZIV
+         JRjDz20SQYa8WRlfpsz/ANyaLDRxTrUWujvvCHg7i0f/QNs5VEXngZl6vT4/522GYhTt
+         dwh0M7LnajANBjNMt4AtCvDVA9I+cI+90y3mWF5H73PAQ+6u6Mj0u5qqO7YNSKDw2UC0
+         b6qQ==
+X-Received: by 10.68.88.69 with SMTP id be5mr3348384pbb.105.1443143385932;
+        Thu, 24 Sep 2015 18:09:45 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:9c11:78a0:634d:a891])
-        by smtp.gmail.com with ESMTPSA id y5sm678896pbt.77.2015.09.24.18.08.36
+        by smtp.gmail.com with ESMTPSA id xm9sm701420pbc.32.2015.09.24.18.09.45
         (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Thu, 24 Sep 2015 18:08:37 -0700 (PDT)
-In-Reply-To: <1443129187-18572-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Thu, 24 Sep 2015 14:13:05 -0700")
+        Thu, 24 Sep 2015 18:09:45 -0700 (PDT)
+In-Reply-To: <xmqqa8sbuxu0.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 24 Sep 2015 17:49:59 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278644>
 
-Stefan Beller <sbeller@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->  * If you do not die() in start_failure_fn or return_value_fn, you
->    don't want to write to stderr directly as you would destroy the fine
->    ordering of the processes output. So make the err strbuf available in
->    both these functions, and make sure the strbuf is appended to the
->    buffered output in both cases.
+> I think that is a sensible change.  Don't we want the same for the
+> other failure handler, though.  Capture any message from it and
+> append it to the output of the process that just finished, or
+> something?
 
-Another thing I noticed after re-reading the above is that we shared
-the thinking that dying in these is _the_ normal thing to do and
-continuing is an advanced and/or wierd setting.
+Ah, that is already done.  Scratch that "don't we want" part.
 
-And I think it is wrong.  Suppose after spawning 15 tasks and while
-they are still running, you start the 16th one and it fails to stop.
-If your start-failure called die() to kill the controller, what
-happens to the 15 tasks that are already running?
-
-I think two sensible choices that start-failure and return-value can
-make are
-
- (1) This one task failed, but that is OK.  Please let the other
-     tasks run [*1*].
-
- (2) There is something seriously wrong with the whole world and I
-     declare an emergency.  Please kill the other ones and exit.
-
-Dying in these callbacks do not achieve neither.  Perhaps make these
-two functions return bool (or enum if you already know a third
-sensible option, but otherwise bool is fine and the person who
-discovers the need for the third will turn it into enum) to signal
-which one of these two behaviours it wants?
-
-And the default handlers should stop dying, of course.
-
-
-[Footnote]
-
-*1* Because start-failure gets pp, it can even leave a note in it to
-    ask the next invocation of get-next to retry it if it chooses
-    to.  At this point in the design cycle, all we need to do is to
-    make sure that kind of advanced usage is possible with this
-    parallel-run-command API.
+>
+> By the way, I understand that these two are solely for early review
+> and I'll be getting them as either new patches or part of updated
+> patches in the next reroll (i.e. you are not expecting me to split
+> these apart and do "rebase -i" for you to the last-posted version).
+> Asking only to make sure we are on the same wavelength.
+>
+> Thanks.
+>
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  run-command.c | 43 ++++++++++++++++++++++++++++++-------------
+>>  run-command.h |  1 +
+>>  2 files changed, 31 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/run-command.c b/run-command.c
+>> index 494e1f8..0d22291 100644
+>> --- a/run-command.c
+>> +++ b/run-command.c
+>> @@ -907,6 +907,7 @@ void default_start_failure(void *data,
+>>  
+>>  void default_return_value(void *data,
+>>  			  struct child_process *cp,
+>> +			  struct strbuf *err,
+>>  			  int result)
+>>  {
+>>  	int i;
+>> @@ -977,7 +978,7 @@ static void set_nonblocking(int fd)
+>>  			"output will be degraded");
+>>  }
+>>  
+>> -/* returns 1 if a process was started, 0 otherwise */
+>> +/* return 0 if get_next_task() ran out of things to do, non-zero otherwise */
+>>  static int pp_start_one(struct parallel_processes *pp)
+>>  {
+>>  	int i;
+>> @@ -991,26 +992,30 @@ static int pp_start_one(struct parallel_processes *pp)
+>>  	if (!pp->get_next_task(pp->data,
+>>  			       &pp->children[i].process,
+>>  			       &pp->children[i].err))
+>> -		return 1;
+>> +		return 0;
+>>  
+>> -	if (start_command(&pp->children[i].process))
+>> +	if (start_command(&pp->children[i].process)) {
+>>  		pp->start_failure(pp->data,
+>>  				  &pp->children[i].process,
+>>  				  &pp->children[i].err);
+>> +		strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
+>> +		strbuf_reset(&pp->children[i].err);
+>> +		return -1;
+>> +	}
+>>  
+>>  	set_nonblocking(pp->children[i].process.err);
+>>  
+>>  	pp->nr_processes++;
+>>  	pp->children[i].in_use = 1;
+>>  	pp->pfd[i].fd = pp->children[i].process.err;
+>> -	return 0;
+>> +	return 1;
+>>  }
+>>  
+>> -static void pp_buffer_stderr(struct parallel_processes *pp)
+>> +static void pp_buffer_stderr(struct parallel_processes *pp, int output_timeout)
+>>  {
+>>  	int i;
+>>  
+>> -	while ((i = poll(pp->pfd, pp->max_processes, 100)) < 0) {
+>> +	while ((i = poll(pp->pfd, pp->max_processes, output_timeout)) < 0) {
+>>  		if (errno == EINTR)
+>>  			continue;
+>>  		pp_cleanup(pp);
+>> @@ -1069,7 +1074,8 @@ static void pp_collect_finished(struct parallel_processes *pp)
+>>  			error("waitpid is confused (%s)",
+>>  			      pp->children[i].process.argv[0]);
+>>  
+>> -		pp->return_value(pp->data, &pp->children[i].process, code);
+>> +		pp->return_value(pp->data, &pp->children[i].process,
+>> +				 &pp->children[i].err, code);
+>>  
+>>  		argv_array_clear(&pp->children[i].process.args);
+>>  		argv_array_clear(&pp->children[i].process.env_array);
+>> @@ -1111,15 +1117,26 @@ int run_processes_parallel(int n, void *data,
+>>  			   return_value_fn return_value)
+>>  {
+>>  	struct parallel_processes pp;
+>> -	pp_init(&pp, n, data, get_next_task, start_failure, return_value);
+>>  
+>> +	pp_init(&pp, n, data, get_next_task, start_failure, return_value);
+>>  	while (1) {
+>> -		while (pp.nr_processes < pp.max_processes &&
+>> -		       !pp_start_one(&pp))
+>> -			; /* nothing */
+>> -		if (!pp.nr_processes)
+>> +		int no_more_task, cnt;
+>> +		int output_timeout = 100;
+>> +		int spawn_cap = 4;
+>> +
+>> +		for (cnt = spawn_cap, no_more_task = 0;
+>> +		     cnt && pp.nr_processes < pp.max_processes;
+>> +		     cnt--) {
+>> +			if (!pp_start_one(&pp)) {
+>> +				no_more_task = 1;
+>> +				break;
+>> +			}
+>> +		}
+>> +
+>> +		if (no_more_task && !pp.nr_processes)
+>>  			break;
+>> -		pp_buffer_stderr(&pp);
+>> +		pp_buffer_stderr(&pp, output_timeout);
+>> +
+>>  		pp_output(&pp);
+>>  		pp_collect_finished(&pp);
+>>  	}
+>> diff --git a/run-command.h b/run-command.h
+>> index 3807fd1..f7035cb 100644
+>> --- a/run-command.h
+>> +++ b/run-command.h
+>> @@ -138,6 +138,7 @@ typedef void (*start_failure_fn)(void *data,
+>>  
+>>  typedef void (*return_value_fn)(void *data,
+>>  				struct child_process *cp,
+>> +				struct strbuf *err,
+>>  				int result);
+>>  
+>>  /**
