@@ -1,106 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: David Turner <dturner@twopensource.com>
 Subject: Re: [PATCH 20/43] refs-be-files.c: add methods for the ref iterators
-Date: Fri, 25 Sep 2015 13:54:59 -0700
-Message-ID: <xmqqeghm2p98.fsf@gitster.mtv.corp.google.com>
+Date: Fri, 25 Sep 2015 17:28:53 -0400
+Organization: Twitter
+Message-ID: <1443216533.8657.8.camel@twopensource.com>
 References: <1441245313-11907-1-git-send-email-dturner@twopensource.com>
-	<1441245313-11907-21-git-send-email-dturner@twopensource.com>
+	 <1441245313-11907-21-git-send-email-dturner@twopensource.com>
+	 <xmqqeghm2p98.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu,
 	David Turner <dturner@twitter.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Sep 25 22:55:10 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 25 23:29:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zfa1N-0002ML-Mh
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Sep 2015 22:55:10 +0200
+	id 1ZfaY9-00061n-8a
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Sep 2015 23:29:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756921AbbIYUzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Sep 2015 16:55:03 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:33421 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755366AbbIYUzC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Sep 2015 16:55:02 -0400
-Received: by pacex6 with SMTP id ex6so115416735pac.0
-        for <git@vger.kernel.org>; Fri, 25 Sep 2015 13:55:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=rw7LMiRYubyp9Ai2Gpz/MVswdpDz+BE6xCpjlTmEX94=;
-        b=EUgcrLXGOJgnQtWFh8LYDsTTnUY+HZw0K3M6nbuvcCujufOv80JbnmappWcGtP3gFC
-         sOSqIcvgA4w+Simksei/D8keZSgU73ZGoPm6fyFwyb0NRth2fur7tKZ7FimE/jjl+5Py
-         fDXgKV+QRGVuDbMQDjzP+PG7hrUCW5+jVimHKQSt7TIdIRpADn9z33qK4aaAxN+qsyIB
-         sXpMOkH6T+Bln70CYTI1VGvi6e7ClIjw+zujwT+1UyLldAT9GqYSfEuMNaOHaPS3MTTY
-         OjnjsEOkamL3+V9iNKi/lR1p1UDcHovzUAKHmhF2ApUYMzYy4qGhX0M+AcSKOtjtAqiU
-         TwAQ==
-X-Received: by 10.68.205.231 with SMTP id lj7mr10039103pbc.36.1443214501278;
-        Fri, 25 Sep 2015 13:55:01 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:913:2c8:148a:1d8e])
-        by smtp.gmail.com with ESMTPSA id tz8sm5495453pab.34.2015.09.25.13.55.00
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Fri, 25 Sep 2015 13:55:00 -0700 (PDT)
-In-Reply-To: <1441245313-11907-21-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Wed, 2 Sep 2015 21:54:50 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S933224AbbIYV25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Sep 2015 17:28:57 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:35836 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757021AbbIYV24 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Sep 2015 17:28:56 -0400
+Received: by qkap81 with SMTP id p81so47727214qka.2
+        for <git@vger.kernel.org>; Fri, 25 Sep 2015 14:28:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=FSY1+VoE1vzLiOQVHilLmEVXUjb7q1cLXWkYYP3qIQs=;
+        b=HDhpxoTWIdknv7iS9tEYOSjinwd4Zb1SNovWedXZHGiPEr0T9WYVmg5cgVEx2cdNAO
+         4Hu79fZFzsDztidz/S7z7haFkg8LuHXuxYgPh6SYpvJBGBeT1UYekkf0EOpAFeK2Ln2/
+         qIu6r8Bins3vwr09RDXRDqHd+2pKEneyXwcbv9ixXHal2uCEcyCgZ6Sr9tJI7sDLkTJD
+         1IPenBA8TSAQCtBH1Ylw2RdY8nJbJqF/UxyNsAbGWq0dNHc2K6wRvgHQBphRX2/cw/ND
+         AkrnRVVdA6vwHfHwdOIWLOXE9+QQzjCXdzMLG7SNlBY29QbYn+HRsukA/b7B8jyk+Q3U
+         S4tA==
+X-Gm-Message-State: ALoCoQnDfakfI+MoXNprZAHsJYQE6NjEqK2dzx7fEQM04pd2btB6bJfJEihzFMt9XW9Ao+cUoQuP
+X-Received: by 10.55.204.66 with SMTP id r63mr8811522qki.10.1443216535530;
+        Fri, 25 Sep 2015 14:28:55 -0700 (PDT)
+Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
+        by smtp.gmail.com with ESMTPSA id k5sm2246960qkl.15.2015.09.25.14.28.54
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 25 Sep 2015 14:28:54 -0700 (PDT)
+In-Reply-To: <xmqqeghm2p98.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278681>
 
-Up to high-teens in this 43 patch series, the changes all looked
-"separate filesystem backend specific part from refs.c to
-refs-be-files.c" without other questionable changes, but I have to
-give up at this step for now, as conflicts between the patch and the
-current codebase is getting a bit too much to manually adjust the
-patch only to make sure there is no funnies other than a straight
-rename of static functions going on.
+On Fri, 2015-09-25 at 13:54 -0700, Junio C Hamano wrote:
+> Up to high-teens in this 43 patch series, the changes all looked
+> "separate filesystem backend specific part from refs.c to
+> refs-be-files.c" without other questionable changes, but I have to
+> give up at this step for now, as conflicts between the patch and the
+> current codebase is getting a bit too much to manually adjust the
+> patch only to make sure there is no funnies other than a straight
+> rename of static functions going on.
 
-We seem to have added a few more iterators in refs.c that would need
-to be also wrapped as methods, so this step would need to be redone.
+Unfortunately, as long as there continue to be changes to refs.c, this
+will continue to be an issue.   I can rebase, fix the conflicts, and
+re-send.
 
-Regarding [03/43], it is a straight rename without any content
-change, so you probably could have done "format-patch -M".  But that
-original commit, if I am not mistaken, left an empty ref.c instead
-of removing, which was somewhat funny (and Makefile still expects
-refs.o can be produced from refs.c).
+Later, you say
 
-The other side of the same coin is that [04/43] expects an empty
-refs.c to be in the original; it should be creating a new file
-instead.
+> * Pick 'next', 'jch' and 'pu' as the starting point, attempted to
 
-Just for future reference to others, what I did was:
+Do you mean that you merged these branches together, or that you tried
+each of the three?  Which would you like me to rebase on?
 
- * looked at the gzipped patch and made sure the preimage of refs.c
-   and the postimage of refs-be-files.c were identical.
+> We seem to have added a few more iterators in refs.c that would need
+> to be also wrapped as methods, so this step would need to be redone.
 
- * started from the tip of current master, merged the topics
-   mentioned in the message with the gzipped patch to it, and called
-   the result $BASE0.
+Will fix in the re-roll.
 
- * applied 01/43 and 02/43 on $BASE0.
+> Regarding [03/43], it is a straight rename without any content
+> change, so you probably could have done "format-patch -M".  But that
+> original commit, if I am not mistaken, left an empty ref.c instead
+> of removing, which was somewhat funny (and Makefile still expects
+> refs.o can be produced from refs.c).
+> 
+> The other side of the same coin is that [04/43] expects an empty
+> refs.c to be in the original; it should be creating a new file
+> instead.
 
- * then manually moved refs.c to refs-be-files.c and told git about
-   them, and applied changes to Makefile in 03/43, and committed the
-   result.
+This was intentional.  Ronnie Sahlberg's original version of this patch
+simply removed refs.c (without changing Makefile), which broke the
+build.  I didn't like that.  So instead I simply left an empty file. 
 
- * adjusted 04/43 to expect refs.c to be missing and applied it.
-
- * continued to apply from 05/43 thru until I get a conflict that
-   I feel uncomfortable to adjust myself.
-
- * "git format-patch --stdout -M $BASE0.. >./+dt0".
-
- * Pick 'next', 'jch' and 'pu' as the starting point, attempted to
-   run "git am ./+dt0" (with success).  At least, by adjusting for
-   03/43 and 04/43 and recording 03/43 as a rename in "./+dt0", the
-   early parts of these attempts were survivable ;-).  Then
-   attempted to apply 20/43 on top of the result, all of which
-   unfortunately left a conflict that I feel uncomfortable to adjust
-   myself.
-
-Thanks.
+It looks like you would prefer that 03/43 move refs.c and update
+Makefile, then have 04/43 create a new file and update Makefile again.
+I'll do that instead.
