@@ -1,122 +1,134 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: git-p4: t9819 failing
-Date: Fri, 25 Sep 2015 11:29:37 +0200
-Message-ID: <AFE58E7F-88FA-4DF8-9372-B2B0D1E0E2AC@gmail.com>
-References: <CAE5ih79t+62XUKsj9cnkJCCv4WPhUgQZQ6hF39Nx0ky+WFi-sw@mail.gmail.com> <954B65C2-1CF8-4F63-B2DE-F15200553046@gmail.com> <CAE5ih78x+jnW3+4d5q5dJidt4LXWV=hMgJTEfsC2dUBLout1Aw@mail.gmail.com> <F37BA8D8-6845-4C47-BBE2-3313685FD16F@gmail.com> <CAE5ih78m9RbD=s_12ckA+yzRP=fuiruF=kasUSFZEjUZZA21UQ@mail.gmail.com> <CAE5ih7-f3V2YSWW7FO-MxB6BPu7WjB93jDDFs5mKkzz2wDX0yA@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Users <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Fri Sep 25 11:30:03 2015
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Fwd: diff not finding difference
+Date: Fri, 25 Sep 2015 12:11:33 +0200
+Organization: gmx
+Message-ID: <8abeb16d123a602ee11dab3f93dab51e@dscho.org>
+References: <CAKepmajSPgGK-DqR3Bxf2Xqxj2Gz0MazRNxM6wsVcSiBQsoE4Q@mail.gmail.com>
+ <CAKepmajegSMO91YZOe+P_BH2kzzR=RMqCE94XRQSfZzOVYKt6A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git-mailing-list <git@vger.kernel.org>
+To: Jack Adrian Zappa <adrianh.bsc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 25 12:11:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZfPKH-0006Bf-Ce
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Sep 2015 11:29:58 +0200
+	id 1ZfPyg-0003p4-8J
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Sep 2015 12:11:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756018AbbIYJ3n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Sep 2015 05:29:43 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:36332 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756010AbbIYJ3l convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Sep 2015 05:29:41 -0400
-Received: by wicgb1 with SMTP id gb1so12156504wic.1
-        for <git@vger.kernel.org>; Fri, 25 Sep 2015 02:29:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=wVMcXEj8oAT50poQ9ETNjvQCqctZ0Nkdgr+g3TGfwBE=;
-        b=DXIFiTtv/gi50ObvC6Gt3Q8NyERY5nHsWRBDBUYiwZTBX0AbESWyMZ0QBQw39ZwsLb
-         np+K441Xf51bRYbvCdDOFs3VAygIVin2ieC7FLhixfEedpYBsszCNMpOFGjsIKsPVwCK
-         dqKToIKyQr6h1zplJ8o5wsn8j4GObvWf9cTzuf/4SQNXdvYyRHIsC4SgPFwuetlkZ254
-         VT6rfUCATcoR0pfuP1coGgsAZO9/S0hsQeP7uduhFqb/xLeIYBLmzU9kXRJwULg+HNpw
-         W431tqPudfJKwaLjC9tMM+PgThi2iKqjjjYr0S+ZT/mAMAAip2K87wPTwRhQT7oohwXM
-         ihJA==
-X-Received: by 10.180.8.232 with SMTP id u8mr2387192wia.10.1443173380129;
-        Fri, 25 Sep 2015 02:29:40 -0700 (PDT)
-Received: from slxbook3.fritz.box (dslb-188-102-071-165.188.102.pools.vodafone-ip.de. [188.102.71.165])
-        by smtp.gmail.com with ESMTPSA id ex17sm2274645wid.23.2015.09.25.02.29.39
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 25 Sep 2015 02:29:39 -0700 (PDT)
-In-Reply-To: <CAE5ih7-f3V2YSWW7FO-MxB6BPu7WjB93jDDFs5mKkzz2wDX0yA@mail.gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1752460AbbIYKLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Sep 2015 06:11:38 -0400
+Received: from mout.gmx.net ([212.227.15.15]:62265 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752277AbbIYKLg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Sep 2015 06:11:36 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MVNDK-1aBwOe00ti-00Ym99; Fri, 25 Sep 2015 12:11:34
+ +0200
+In-Reply-To: <CAKepmajegSMO91YZOe+P_BH2kzzR=RMqCE94XRQSfZzOVYKt6A@mail.gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:P5gBYJm0Jllrx/XQbvbe6b24RvN1U3274NZXk0eLQd8vxraGnn4
+ ymFZ6YMTKCbuZt5Zb3vua4H5sMzBwxHPE5l910dwt3H/A7DTm37chZYtAGquOjn0YYtU2tw
+ XJPhF4zC26qcAVxDOh+R01rzTua0/c0ti+oZkMNJiqhtoNOUm17acWSKwtCZGFQpx5UArRf
+ S3aliQwIHn3D4FafPSKmQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0dezhgqkkiM=:7M3iHFmRIzS0o2TSnSYdVy
+ M7fw7sHguhHOmoz4zZW/AKKfJ7JRLwncgxKcbLlcUbS+gPuHJJGBHOZU4CgyYM9LT5/gue/Tr
+ wP/cyo/oOb3pSGFcSyK3c+7jdpYeDvjbNFQKhX6D4HTwTbgBOW5mRti/5JFL7rUJgIZywf6Yo
+ jIl8alwCCP7JfN8jaxiU+k76UUg91GqEMqzBP8jHvFlT+MtQT7Dzb0lKsUbFdlDX6jx3DvP43
+ W4kJuPMn7DMKSq7UtyM5RnEqtWqcfMpP2/oSalrSbr5zO5fD8vAcHptaBZe94TwZR0jxkl1Qs
+ uEG2YJJdXeypKN3lDVFScIb59c51X2/WX/DP4XGgnX1oNQQHUyc1JRfZ+TnqOjH2LB50iMNsd
+ bhyuOlKOXI9FEGPcM7OQLNlFIitmrZv4C3QfrLAzkgaFTJQXAID0PmX35OLE4eoIX9oJxY3p0
+ 0COaA+rv9dXebMWZ4un8dssPuz4tzYW1MUYHq5LEJeslGwEbak5RV0zkldLs7hruTql2M/Jvi
+ LJPATec/1G6nI+O4kqzfF8ihXJhGJsNBsu/FBmE3st4kIS0EecWkg4yN1JVksexjALQnkzcel
+ PN75uRzv4xd6CUO5JIc/APWgOJyiPzd7cSj2l69LEPITZHmZ0weGkiMbOI+OM3FCdbfllRqxa
+ zTB0yGF9ZldVpH4sD91BTJl93NzkNHGvK1KR7DI272KvLVmO2CSw3qk4xv90rnh/hSRKJE2X5
+ 5IBa2b2Y22+DUevZT2Zt1/7mzk0/UtuFImMMQA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278656>
 
-Good catch. The case-handling test is actually fine. There was a bug in=
- my implementation!
+Hi Jack Adrian,
 
-If you do this:
-git p4 clone //depot/something/...
+On 2015-09-24 23:09, Jack Adrian Zappa wrote:
+> This is a weird one:
+> 
+> [file-1 begin]
+> 
+> abcd efg hijklmnop
+> 
+> [file-1 end]
+> 
+> [file-2 begin]
+> 
+> blah blah blah
+> /////////////////////////////////////////////////////////////////////////////////
+> abdc boo ya!
+> 
+> [file-2 end]
+> 
+> Do a diff between these and it won't find any difference.
+> 
+> Same with the following two lines, each in a different file:
+> sabc fed ghi jkl
+> abc def ghi jkl
+> 
+> I first noticed this on the command line git and then in VS2013.  The
+> original problem was like my first example.  The files were much
+> longer, but all that git would see is the addition of the line of
+> ////..., but not the removal of the original line.
+> 
+> I've tried some other simple file changes with similar results.
+> Something seems to be definitely broken in git diff. :(
 
-Then git p4 generates a directory =93something=94 and clones into that =
-(similar to Git). Since I set =93cloneDirectory=94 to the current worki=
-ng directory that logic never kicked in. Therefore the depot was cloned=
- into the current working directory instead of a new directory =93somet=
-hing=94 and the test broke.
+You might want to show your exact command-line invocation, i.e. the full information. I suspect that you missed the fact that `git diff a b` does not compare the file a to the file b, but instead it compares both a and b to what is recorded in the index. With one quirk: if the files a and b are not even recorded in the index, `git diff` will output nothing.
 
-Thanks,
-Lars
+Now, the really confusing part for you was probably that your `file-2` *was* recorded in the index (maybe you made a backup copy with the extra file extension `.bak` or some such, and then called `git diff my-file.bak my-file` where `my-file` *actually is tracked by Git* but `my-file.bak` is not).
 
-On 24 Sep 2015, at 22:29, Luke Diamand <luke@diamand.org> wrote:
+But `git diff` has so nice features that I wanted to use it myself to compare files or directories. That is why I introduced the `--no-index` option, years ago. And so I suspect that you called
 
-> OK, slight correction there - it now doesn't crash getting the disk
-> usage, but I think it still needs to be updated following the other
-> changes to case-handling.
->=20
-> Luke
->=20
-> On 24 September 2015 at 08:45, Luke Diamand <luke@diamand.org> wrote:
->> On 23 September 2015 at 13:28, Lars Schneider <larsxschneider@gmail.=
-com> wrote:
->>>=20
->>>> Here's the last bit of the crash dump from git-p4 I get:
->>>>=20
->>>> File "/home/ldiamand/git/git/git-p4", line 2580, in streamP4FilesC=
-bSelf
->>>>   self.streamP4FilesCb(entry)
->>>> File "/home/ldiamand/git/git/git-p4", line 2497, in streamP4FilesC=
-b
->>>>   required_bytes =3D int((4 * int(self.stream_file["fileSize"])) -
->>>> calcDiskFree(self.cloneDestination))
->>>> File "/home/ldiamand/git/git/git-p4", line 116, in calcDiskFree
->>>>   st =3D os.statvfs(dirname)
->>>> OSError: [Errno 2] No such file or directory: 'lc'
->>>>=20
->>>> Luke
->>> Confirmed. What do you think about this fix?
->>=20
->> Works for me!
->>=20
->>=20
->>=20
->>>=20
->>> Thank you,
->>> Lars
->>>=20
->>> ---
->>> git-p4.py | 1 +
->>> 1 file changed, 1 insertion(+)
->>>=20
->>> diff --git a/git-p4.py b/git-p4.py
->>> index 1d1bb87..66c0a4e 100755
->>> --- a/git-p4.py
->>> +++ b/git-p4.py
->>> @@ -3478,6 +3478,7 @@ class P4Clone(P4Sync):
->>>=20
->>>         print "Importing from %s into %s" % (', '.join(depotPaths),=
- self.cloneDestination)
->>>=20
->>> +        self.cloneDestination =3D os.path.abspath(self.cloneDestin=
-ation)
->>>         if not os.path.exists(self.cloneDestination):
->>>             os.makedirs(self.cloneDestination)
->>>         chdir(self.cloneDestination)
->>> --
+    git diff file-1 file-2
+
+when you actually wanted to call
+
+    git diff --no-index file-1 file-2
+
+Here is my shell session to verify that `git diff` works as designed:
+
+```
+me@work $ cat >file-1
+
+abcd efg hijklmnop
+
+me@work $ cat >file-2
+
+blah blah blah
+/////////////////////////////////////////////////////////////////////////////////
+abdc boo ya!
+
+me@work $ git diff --no-index file-1 file-2
+diff --git a/file-1 b/file-2
+index 80ea2bc..f7fd7eb 100644
+--- a/file-1
++++ b/file-2
+@@ -1,3 +1,5 @@
+
+-abcd efg hijklmnop
++blah blah blah
++/////////////////////////////////////////////////////////////////////////////////
++abdc boo ya!
+
+me@work $
+```
+
+Please note that I ended the file contents for both `cat` calls [*1*] with a `Ctrl+D` which you cannot see in the pasted lines.
+
+Ciao,
+Johannes
+
+Footnote *1*: Can you believe that I wanted to make that pun for at least ten years now?
