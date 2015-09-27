@@ -1,69 +1,80 @@
-From: Andrey Loskutov <loskutov@gmx.de>
-Subject: Re: Single brackets matching in .gitignore rules
-Date: Sun, 27 Sep 2015 18:35:11 +0200
-Message-ID: <2578959.p0AHc2Ulk9@pinguin>
-References: <2606743.RipZrg6Xoz@pinguin> <m2oagotf1d.fsf@linux-m68k.org>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] builtin/apply.c: make a file local symbol static
+Date: Sun, 27 Sep 2015 19:33:46 +0100
+Message-ID: <5608368A.4010607@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
-Cc: git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Sep 27 18:35:42 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 27 20:34:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZgEv4-0007ZP-5J
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Sep 2015 18:35:22 +0200
+	id 1ZgGlt-0003Cj-HD
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Sep 2015 20:34:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751038AbbI0QfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Sep 2015 12:35:16 -0400
-Received: from mout.gmx.net ([212.227.15.15]:54299 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750865AbbI0QfP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Sep 2015 12:35:15 -0400
-Received: from pinguin.localnet ([79.247.98.244]) by mail.gmx.com (mrgmx002)
- with ESMTPSA (Nemesis) id 0MPDeK-1Zkcd547ns-004OuB; Sun, 27 Sep 2015 18:35:12
- +0200
-User-Agent: KMail/4.14.9 (Linux/4.1.7-100.fc21.x86_64; KDE/4.14.9; x86_64; ; )
-In-Reply-To: <m2oagotf1d.fsf@linux-m68k.org>
-X-Provags-ID: V03:K0:DOgSL6yeQvzvoen2tnPyMhCz/W5qhtQWv/0uPCms54Rhiq809CC
- iyqngRh/iZTd25svSNi7pKzmGxqVy4Q0Wua6boVFpBkJ0OQSeTiC547/kMAfCVDiFjaNtUt
- aXKPOZv5ktVCS9yvOmnjwmospt53fDqwAntUOjzHdQBQ8jXbQDQeLbxbGja5yyFcpPoLPer
- e1o6yn+jSvfV+SrZec7rg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9acAADywglg=:0Cu75y/3JR2aSpu4ehAFwG
- RYSpKRS1aIvXC2++zqCh3i+mx3N6N1Wl8jbjDElNXZmnk6XO9II+nE17R4RgbgvyOcgwuWd2w
- T/ubO7ObAUEhdCD810Wgl1IarsgLteH0N1B7SbXKmoD2lB7q89a2J5iXz/JCD0lLQ+uIT/jiH
- 7/CpnowmZbl4ug8hhZdzU+1fvezdh4YizL3Syuo5Nz51uH12jt4rNQtQHsKqoscphp7OyfL1y
- e/RA12OGWdD9n+ax7IlRZcR+pbdMU7cmqc4KTj+n09n/4CDENPZyGtSrKSofshrEUahHcU1/i
- aX//b9Q/JVxos57t/vYRKRllRP6QzbhC9TCAP0VaCBGlImvhlA2X7EsLXX0VUwDFfxyeOn3ul
- 4rXhUsi47ImnPrH6OUWBCQthaRggZW/KThHfVhGYz6gjmB8O6FN9qcFm3IHARpgDu1k1ryPwn
- IHUGP4DfdZS9ZKVNMgrR62DT/KK3SMoXuuJWqf9GtMw9w2g12fXJpWlqK/h8VwGzO49+7XWWB
- cVl2LNBhbM9Ys+mKG18TaKyV/p6/LhRH7rne1lAVbxskiql4U+jyOpCZCaoniO0ZVlYZ0ezo2
- QVvesgMLY1wXcExRna1bjcUKCGMPYKC92CtdNSq5PkGVP7AvGHcQnForM/IxxiBtsdlejdA27
- tc3DrYdBvPnwnwgUpjMCAfGLgGbBXwiaN/1Zwtbuo0sjYFAYuaFDPtdrZNXvUv/ZjlfPkU4BH
- FBAuVEqX9U2VW33iMZs2M+jR9/1HvGI1c+nWGA==
+	id S1752046AbbI0Sdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Sep 2015 14:33:55 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:56838 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751846AbbI0Sdy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Sep 2015 14:33:54 -0400
+Received: from [10.0.2.15] ([81.174.177.104])
+	by avasout07 with smtp
+	id NJZm1r0012FXpih01JZnqX; Sun, 27 Sep 2015 19:33:52 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=JN/GyJ+b c=1 sm=1 tr=0
+ a=IMS4QkGEsjO3VZZSAZDX8w==:117 a=IMS4QkGEsjO3VZZSAZDX8w==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=6dFJbPxCmTPggXJKGdgA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278710>
 
-On Sunday 27 September 2015 10:58 Andreas Schwab wrote:
-> 
-> ] by itself is not special in a glob.
-> 
-> Andreas.
-> 
 
-OK, this would explain the current state: once Git sees opened bracket, it always tries to parse the glob pattern and if this fails (if the bracket is not closed), the ignore rule does not match anything. This does not happen for closing bracket and therefore the difference in behavior.
+Commit dddaaab62 ("apply: convert root string to strbuf", 24-09-2015)
+converted a <char *str, int len> combination of variables into a
+single 'struct strbuf' variable. In doing so, it unintentionally
+increased the visibility of the variable. In order to reduce the
+visibility to file local, add the static keyword to the declaration
+of the 'root' symbol.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+
+Hi Jeff,
+
+If you need to re-roll your 'jk/war-on-sprintf' series, could you
+please squash this into the relevant patch.
 
 Thanks!
 
-P.S.
-In case anyone is interested, here is the path for JGit: https://git.eclipse.org/r/#/c/56773/4
+ATB,
+Ramsay Jones
 
+ builtin/apply.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 5dc908a..ec49658 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -77,7 +77,7 @@ static enum ws_ignore {
+ 
+ 
+ static const char *patch_input_file;
+-struct strbuf root = STRBUF_INIT;
++static struct strbuf root = STRBUF_INIT;
+ static int read_stdin = 1;
+ static int options;
+ 
 -- 
-Kind regards,
-google.com/+AndreyLoskutov
+2.5.0
