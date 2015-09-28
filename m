@@ -1,108 +1,155 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] ls-remote.txt: delete unsupported option
-Date: Mon, 28 Sep 2015 19:30:17 +0700
-Message-ID: <1443443417-20235-1-git-send-email-pclouds@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH/RFC] read-cache: fix file time comparisons with different
+ precisions
+Date: Mon, 28 Sep 2015 14:52:38 +0200
+Organization: gmx
+Message-ID: <763be6c1331ac57cf7dee3636d82f994@dscho.org>
+References: <5605D88A.20104@gmail.com> <560918F8.1080905@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 28 14:30:01 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 28 14:52:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZgXZB-0003sj-3i
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Sep 2015 14:30:01 +0200
+	id 1ZgXvD-0005pb-4l
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Sep 2015 14:52:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757157AbbI1M34 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Sep 2015 08:29:56 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:32785 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756727AbbI1M3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2015 08:29:55 -0400
-Received: by pacex6 with SMTP id ex6so173730335pac.0
-        for <git@vger.kernel.org>; Mon, 28 Sep 2015 05:29:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=gvXS08AMSCThvyND83HMEhGYOzKxifhH9RTRvai8fdQ=;
-        b=v64m0EZnLvD8qulrt6KYArLIs4+Zo9jzmL2zylGB9CTjmM73C9jjBytqg3bonSsP7h
-         nLiG85FyPHuS7d6fXy+181VO1hwWGCwxXGZ1rhu2c1GG8wRrMV3/qeNCxtx6wySfadz9
-         tK0KIBOQ8IMbnV2mXzm1g2Kr3o5Yl+wlP2d1g5RL3AXo5GGc0wmg38hm84MoLM84M7fo
-         3CgYwrAQgFvU+2WoSsSG8btz54yymT2NHInTG75G9phPelq5vbX5RwvMqZo5Sldh/8Wy
-         n6gcQ8qjbS83CkO6mtD1zsyZoyrr0AkaID62Wz3DgyEoAr2pPDPLP+R/bgXcrHxyC5+8
-         EX+w==
-X-Received: by 10.68.129.198 with SMTP id ny6mr26457543pbb.42.1443443395352;
-        Mon, 28 Sep 2015 05:29:55 -0700 (PDT)
-Received: from lanh ([171.232.94.118])
-        by smtp.gmail.com with ESMTPSA id on5sm6194171pbb.65.2015.09.28.05.29.52
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Sep 2015 05:29:54 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 28 Sep 2015 19:30:30 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
+	id S932931AbbI1Mwn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2015 08:52:43 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64282 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932884AbbI1Mwm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2015 08:52:42 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MEccf-1ZrDAc0H85-00Fhzn; Mon, 28 Sep 2015 14:52:39
+ +0200
+In-Reply-To: <560918F8.1080905@gmail.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:xLmY591O77GsY0PzC6WWaYkKAeNH6In1OJBP15sJ1oyvVFtt3i6
+ nsGVyT4ijRp4F6pF8Jpd4fSyHfVDF7BUW5DnSMqWyCGKAlP7ogjqdqDx+J7hd4/5e6fRNEH
+ VkAMF2peiUUbQJ05+xlGPx4KNGLSB85I7Aqh19AuRbl4cdIA2+4XlPP1Gh4iFISLTnrcVfx
+ lxhl41+T/5kjQw5aNyFRA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FW476KauCcs=:lTs4b72C2bm+V2ZbnPj8AQ
+ i9YNjeeQ7cgRBFeuLHIPVxHBePqEfMkyJr6qqA9XouQ+/bS/E0VSRyWYYrK+mCNBSfcyXfkCk
+ WONqCWeATggSgiBAqZ/anR4A/3fW+sM/DzYq2lTkoZY2Ih2FPxFo5EP5fZ7vRjUIR2/VbVqMl
+ e8NDLSi43FLH3KKtObWZYC5NfgKnm3opxcrTo25lkdlMTWKmHhU3f0+OiTf6keIpeBfuk8Tpn
+ WbvLAQ+NgPJI5X4X2ltr/1QWawXzxo7cCGwVTXiXgcJLYtAsXqxVJdH2XCZnoZfqSK+cET4fx
+ g3Jrk/UCb0PJjzoQZMYcj96MtNqB+pv5yn1z7ePae90FradZfu5xzSlIFk3zIiJcGtN7EG3F9
+ jfKGbFo9kOjt8yjZto2Wxg9Qq6GIpsXzlcVfYItPWKryRruNU1pHGriEkXElu7cscs3XRWodx
+ /EDbusORIKb+o33qvk8841ZMQcn8nfMIzOMdD9Z+lAfhtVICXDZgyNQdVbbMZOjxG789LTvP2
+ Rvgt8w+0BwR4wWJ4qxuCj36gzaio8bmtZFPxRtYHCYZSuATOjUdgDwn3H4oOL77i7QS2gF3+R
+ 5AHxJMSIrM12O5VRHHQtjnEfzE5D2GDwH619FIUOS/VhgmZm29GM5fALFjiHZcEz2//eTgDbL
+ JTHZa30wTqymlOJrD8fRMlAankSVIydfGros0YUIgycWQ0hpFfM6X4/vaDdSK57oAO6PjzZTy
+ +6tQXn1045NC0x80W1M4w/stfJbjVArgMYdhNQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278715>
 
--u <exec> has never been supported, but it was mentioned since
-0a2bb55 (git ls-remote: make usage string match manpage -
-2008-11-11). Nobody has complained about it for seven years, it's
-probably safe to say nobody cares. So let's remove "-u" in documents
-instead of adding code to support it.
+Hi Karsten,
 
-While at there, fix --upload-pack syntax too.
+On 2015-09-28 12:39, Karsten Blees wrote:
+> Different git variants record file times in the index with different
+> precisions, according to their capabilities. E.g. git compiled with NO_NSEC
+> records seconds only, JGit records the mtime in milliseconds, but leaves
+> ctime blank (because ctime is unavailable in Java).
+> 
+> This causes performance issues in git compiled with USE_NSEC, because index
+> entries with such 'incomplete' timestamps are considered dirty, triggering
+> unnecessary content checks.
+> 
+> Add a file time comparison function that auto-detects the precision based
+> on the number of trailing 0 digits, and compares with the lower precision
+> of both values. This initial version supports the known precisions seconds
+> (git + NO_NSEC), milliseconds (JGit) and nanoseconds (git + USE_NSEC), but
+> can be easily extended to e.g. microseconds.
+> 
+> Use the new comparison function in both dirty and racy checks. As a side
+> effect, this fixes racy detection in USE_NSEC-enabled git with
+> core.checkStat=minimal, as the coreStat setting now affects racy checks as
+> well.
+> 
+> Finally, do not check ctime if ctime.sec is 0 (as recorded by JGit).
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git-ls-remote.txt | 3 +--
- builtin/ls-remote.c             | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+Great analysis, and nice patch. I would like to offer one suggestion in addition:
 
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-rem=
-ote.txt
-index 2e22915..d510c05 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -9,7 +9,7 @@ git-ls-remote - List references in a remote repository
- SYNOPSIS
- --------
- [verse]
--'git ls-remote' [--heads] [--tags]  [-u <exec> | --upload-pack <exec>]
-+'git ls-remote' [--heads] [--tags]  [--upload-pack=3D<exec>]
- 	      [--exit-code] <repository> [<refs>...]
-=20
- DESCRIPTION
-@@ -29,7 +29,6 @@ OPTIONS
- 	both, references stored in refs/heads and refs/tags are
- 	displayed.
-=20
---u <exec>::
- --upload-pack=3D<exec>::
- 	Specify the full path of 'git-upload-pack' on the remote
- 	host. This allows listing references from repositories accessed via
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 4554dbc..5e9d545 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -4,7 +4,7 @@
- #include "remote.h"
-=20
- static const char ls_remote_usage[] =3D
--"git ls-remote [--heads] [--tags]  [-u <exec> | --upload-pack <exec>]\=
-n"
-+"git ls-remote [--heads] [--tags]  [--upload-pack=3D<exec>]\n"
- "                     [-q | --quiet] [--exit-code] [--get-url] [<repos=
-itory> [<refs>...]]";
-=20
- /*
---=20
-2.3.0.rc1.137.g477eb31
+> diff --git a/read-cache.c b/read-cache.c
+> index 87204a5..3a4e6cd 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -99,23 +99,50 @@ void fill_stat_data(struct stat_data *sd, struct stat *st)
+>  	sd->sd_size = st->st_size;
+>  }
+>  
+> +/*
+> + * Compares two file times. Returns 0 if equal, <0 if t1 < t2, >0 if t1 > t2.
+> + * Auto-detects precision based on trailing 0 digits. Compares seconds only if
+> + * core.checkStat=minimal.
+> + */
+> +static inline int cmp_filetime(uint32_t t1_sec, uint32_t t1_nsec,
+> +			       uint32_t t2_sec, uint32_t t2_nsec) {
+> +#ifdef USE_NSEC
+> +	/*
+> +	 * Compare seconds and return result if different, or checkStat=mimimal,
+> +	 * or one of the time stamps has second precision only (nsec == 0).
+> +	 */
+> +	int diff = t1_sec - t2_sec;
+> +	if (diff || !check_stat || !t1_nsec || !t2_nsec)
+> +		return diff;
+> +
+> +	/*
+> +	 * Check if one of the time stamps has millisecond precision only (i.e.
+> +	 * the trailing 6 digits are 0). First check the trailing 6 bits so that
+> +	 * we only do (slower) modulo division if necessary.
+> +	 */
+> +	if ((!(t1_nsec & 0x3f) && !(t1_nsec % 1000000)) ||
+> +	    (!(t2_nsec & 0x3f) && !(t2_nsec % 1000000)))
+> +		/* Compare milliseconds. */
+> +		return (t1_nsec - t2_nsec) / 1000000;
+> +
+> +	/* Compare nanoseconds */
+> +	return t1_nsec - t2_nsec;
+> +#else
+> +	return t1_sec - t2_sec;
+> +#endif
+> +}
+
+As this affects only setups where the same repository is accessed via clients with different precision, would it make sense to hide this behind a config option? I.e. something like
+
+static int cmp_filetime_precise(uint32_t t1_sec, uint32_t t1_nsec,
+			        uint32_t t2_sec, uint32_t t2_nsec)
+{
+#ifdef USE_NSEC
+	return t1_sec != t2_sec ? t1_sec - t2_sec : t1_nsec - t2_nsec;
+#else
+	return t1_sec - t2_sec;
+#endif
+}
+
+static int cmp_filetime_mixed(uint32_t t1_sec, uint32_t t1_nsec,
+			      uint32_t t2_sec, uint32_t t2_nsec)
+{
+#ifdef USE_NSEC
+	... detect lower precision and compare with lower precision only...
+#else
+	return t1_sec - t2_sec;
+#endif
+}
+
+static (int *)cmp_filetime(uint32_t t1_sec, uint32_t t1_nsec,
+			   uint32_t t2_sec, uint32_t t2_nsec)
+	= cmp_filetime_precise;
+
+... modify cmp_filetime_precise if core.mixedTimeSpec = true...
+
+Otherwise there would be that little loop-hole where (nsec % 1000) == 0 *by chance* and we assume the timestamps to be identical even if they are not.
+
+Ciao,
+Dscho
