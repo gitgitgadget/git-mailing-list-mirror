@@ -1,309 +1,324 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 13/43] refs.c: move check_refname_format to the common code
-Date: Mon, 28 Sep 2015 18:01:48 -0400
-Message-ID: <1443477738-32023-14-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v2 18/43] refs-be-files.c: add a backend method structure with transaction functions
+Date: Mon, 28 Sep 2015 18:01:53 -0400
+Message-ID: <1443477738-32023-19-git-send-email-dturner@twopensource.com>
 References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Sep 29 00:03:20 2015
+X-From: git-owner@vger.kernel.org Tue Sep 29 00:03:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZggVy-0000gL-G3
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 00:03:18 +0200
+	id 1ZggW5-0000rV-Lq
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 00:03:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754161AbbI1WDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2015 18:03:12 -0400
-Received: from mail-qk0-f170.google.com ([209.85.220.170]:36329 "EHLO
-	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754100AbbI1WDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2015 18:03:11 -0400
-Received: by qkcf65 with SMTP id f65so74206699qkc.3
-        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:03:09 -0700 (PDT)
+	id S1754263AbbI1WDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2015 18:03:18 -0400
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:33766 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754219AbbI1WDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2015 18:03:15 -0400
+Received: by qgev79 with SMTP id v79so133376242qge.0
+        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:03:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=DYA0buHIpnDCFDDaSiOa75fv+yQrFzH3cDrTNc1qDp8=;
-        b=PE/FrSXl1eoh6KQv8E3285c2EB2SozzBkum9ht4Sk6TNTGe2r9C+otz5vyR4CpZZzR
-         dCez8rozzu5UjtKNMOpRgBT6eYQ0lOMcwSUHPcuPgHl2nCKcquPUPahIHwJ6gdcar6Q1
-         NcVkcSI7fPUSxQ427sahEHALJTSqpN6yKDo2Ah3x8aAdCAMbCVPEY8R9uQMZdToI6w/V
-         3i/zSkiv98vSDLxBlZZ93RZkt8r8m6WYD8fctr+x6MqEym/j4VHcNidjDf7GlI6FFRKh
-         LFyTJP2KPuA+a2IHr4hIPJwYdwSjM9M46w51eJxXg1IHTrWn6NokmeismPic5I7yv6Ym
-         yE2g==
-X-Gm-Message-State: ALoCoQlZlVj47zidU4VR2ijEJied/M5YsnwXJh6sVij5IO0V/CwsM+de5rr9l+njkCGY2/zP4GHJ
-X-Received: by 10.55.56.129 with SMTP id f123mr24309258qka.79.1443477789740;
-        Mon, 28 Sep 2015 15:03:09 -0700 (PDT)
+        bh=o4r7wZs61OfIS/lp787+QFbW7KlqR+sQ4NariN2mg+A=;
+        b=h1PNsGpZlgGNE0An/HzK5IdstSOTy8LCAGMdxkApWk0wsXnVizRbYwzSC4hwKmsHU1
+         4dKiU40noYeHfqhayftwLY8oSIPELX7q7MrpPM94fhnsglOKTQXzVipBQuDVKjoZZyAe
+         uxbcbCdEhemyjaNtoUZYD/XYmEoMCAVVYEL2jp8piDed1l0ZO7YJJpcKDrKlaLf0Hzw2
+         pu/0tmk5rVd001ksHhHZnNubebe2ey+K+9SV+gQKY9nTaolcPzvW8YQ77YM2YbhCIIdq
+         HLiSVYqsLHOlKELjYM3Y9GBwPa6nmXC1cpuurAhMQ6k1ONICJthdZ8+yvs30Uo6By606
+         PeTg==
+X-Gm-Message-State: ALoCoQkeUVYg83DrqZ0AFhWMZJaFMqCtnk8Ocp/ccTxyzBrXA9gMHCPfcyLGEPn6zST3aUKUZlk/
+X-Received: by 10.140.33.201 with SMTP id j67mr25762888qgj.49.1443477794920;
+        Mon, 28 Sep 2015 15:03:14 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.03.08
+        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.03.13
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 28 Sep 2015 15:03:08 -0700 (PDT)
+        Mon, 28 Sep 2015 15:03:14 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278763>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
 
-This function does not contain any backend specific code so we
-move it to the common code.
+Add a ref structure for backend methods. Start by adding method pointers
+for the transaction functions.
+
+Add a function set_refs_backend to switch between backends. The files
+based backend is the default.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs-be-files.c | 109 --------------------------------------------------------
- refs.c          | 109 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 109 insertions(+), 109 deletions(-)
+ refs-be-files.c | 62 +++++++++++++++++++++++++++-------------------
+ refs.c          | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs.h          | 36 +++++++++++++++++++++++++++
+ 3 files changed, 150 insertions(+), 25 deletions(-)
 
 diff --git a/refs-be-files.c b/refs-be-files.c
-index e3f7b1d..f920b65 100644
+index 05a4b88..6e6f092 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -14,27 +14,6 @@ struct ref_lock {
+@@ -3310,14 +3310,14 @@ struct ref_transaction {
+ 	enum ref_transaction_state state;
  };
  
- /*
-- * How to handle various characters in refnames:
-- * 0: An acceptable character for refs
-- * 1: End-of-component
-- * 2: ., look for a preceding . to reject .. in refs
-- * 3: {, look for a preceding @ to reject @{ in refs
-- * 4: A bad character: ASCII control characters, and
-- *    ":", "?", "[", "\", "^", "~", SP, or TAB
-- * 5: *, reject unless REFNAME_REFSPEC_PATTERN is set
-- */
--static unsigned char refname_disposition[256] = {
--	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
--	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
--	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 1,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
--};
--
--/*
-  * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
-  * refs (i.e., because the reference is about to be deleted anyway).
-  */
-@@ -69,94 +48,6 @@ static unsigned char refname_disposition[256] = {
-  * value to ref_update::flags
-  */
+-struct ref_transaction *ref_transaction_begin(struct strbuf *err)
++static struct ref_transaction *files_transaction_begin(struct strbuf *err)
+ {
+ 	assert(err);
  
--/*
-- * Try to read one refname component from the front of refname.
-- * Return the length of the component found, or -1 if the component is
-- * not legal.  It is legal if it is something reasonable to have under
-- * ".git/refs/"; We do not like it if:
-- *
-- * - any path component of it begins with ".", or
-- * - it has double dots "..", or
-- * - it has ASCII control characters, or
-- * - it has ":", "?", "[", "\", "^", "~", SP, or TAB anywhere, or
-- * - it has "*" anywhere unless REFNAME_REFSPEC_PATTERN is set, or
-- * - it ends with a "/", or
-- * - it ends with ".lock", or
-- * - it contains a "@{" portion
-- */
--static int check_refname_component(const char *refname, int *flags)
--{
--	const char *cp;
--	char last = '\0';
--
--	for (cp = refname; ; cp++) {
--		int ch = *cp & 255;
--		unsigned char disp = refname_disposition[ch];
--		switch (disp) {
--		case 1:
--			goto out;
--		case 2:
--			if (last == '.')
--				return -1; /* Refname contains "..". */
--			break;
--		case 3:
--			if (last == '@')
--				return -1; /* Refname contains "@{". */
--			break;
--		case 4:
--			return -1;
--		case 5:
--			if (!(*flags & REFNAME_REFSPEC_PATTERN))
--				return -1; /* refspec can't be a pattern */
--
--			/*
--			 * Unset the pattern flag so that we only accept
--			 * a single asterisk for one side of refspec.
--			 */
--			*flags &= ~ REFNAME_REFSPEC_PATTERN;
--			break;
--		}
--		last = ch;
--	}
--out:
--	if (cp == refname)
--		return 0; /* Component has zero length. */
--	if (refname[0] == '.')
--		return -1; /* Component starts with '.'. */
--	if (cp - refname >= LOCK_SUFFIX_LEN &&
--	    !memcmp(cp - LOCK_SUFFIX_LEN, LOCK_SUFFIX, LOCK_SUFFIX_LEN))
--		return -1; /* Refname ends with ".lock". */
--	return cp - refname;
--}
--
--int check_refname_format(const char *refname, int flags)
--{
--	int component_len, component_count = 0;
--
--	if (!strcmp(refname, "@"))
--		/* Refname is a single character '@'. */
--		return -1;
--
--	while (1) {
--		/* We are at the start of a path component. */
--		component_len = check_refname_component(refname, &flags);
--		if (component_len <= 0)
--			return -1;
--
--		component_count++;
--		if (refname[component_len] == '\0')
--			break;
--		/* Skip to next component. */
--		refname += component_len + 1;
--	}
--
--	if (refname[component_len - 1] == '.')
--		return -1; /* Refname ends with '.'. */
--	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
--		return -1; /* Refname has only one component. */
--	return 0;
--}
--
- struct ref_entry;
+ 	return xcalloc(1, sizeof(struct ref_transaction));
+ }
  
- /*
-diff --git a/refs.c b/refs.c
-index 039e5c0..e9cc2d4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -658,3 +658,112 @@ char *resolve_refdup(const char *refname, int resolve_flags,
- 	return xstrdup_or_null(resolve_ref_unsafe(refname, resolve_flags,
- 						  sha1, flags));
+-void ref_transaction_free(struct ref_transaction *transaction)
++static void files_transaction_free(struct ref_transaction *transaction)
+ {
+ 	int i;
+ 
+@@ -3344,12 +3344,12 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
+ 	return update;
+ }
+ 
+-int ref_transaction_update(struct ref_transaction *transaction,
+-			   const char *refname,
+-			   const unsigned char *new_sha1,
+-			   const unsigned char *old_sha1,
+-			   unsigned int flags, const char *msg,
+-			   struct strbuf *err)
++static int files_transaction_update(struct ref_transaction *transaction,
++				  const char *refname,
++				  const unsigned char *new_sha1,
++				  const unsigned char *old_sha1,
++				  unsigned int flags, const char *msg,
++				  struct strbuf *err)
+ {
+ 	struct ref_update *update;
+ 
+@@ -3380,11 +3380,11 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 	return 0;
+ }
+ 
+-int ref_transaction_create(struct ref_transaction *transaction,
+-			   const char *refname,
+-			   const unsigned char *new_sha1,
+-			   unsigned int flags, const char *msg,
+-			   struct strbuf *err)
++static int files_transaction_create(struct ref_transaction *transaction,
++				  const char *refname,
++				  const unsigned char *new_sha1,
++				  unsigned int flags, const char *msg,
++				  struct strbuf *err)
+ {
+ 	if (!new_sha1 || is_null_sha1(new_sha1))
+ 		die("BUG: create called without valid new_sha1");
+@@ -3392,11 +3392,11 @@ int ref_transaction_create(struct ref_transaction *transaction,
+ 				      null_sha1, flags, msg, err);
+ }
+ 
+-int ref_transaction_delete(struct ref_transaction *transaction,
+-			   const char *refname,
+-			   const unsigned char *old_sha1,
+-			   unsigned int flags, const char *msg,
+-			   struct strbuf *err)
++static int files_transaction_delete(struct ref_transaction *transaction,
++				  const char *refname,
++				  const unsigned char *old_sha1,
++				  unsigned int flags, const char *msg,
++				  struct strbuf *err)
+ {
+ 	if (old_sha1 && is_null_sha1(old_sha1))
+ 		die("BUG: delete called with old_sha1 set to zeros");
+@@ -3405,11 +3405,11 @@ int ref_transaction_delete(struct ref_transaction *transaction,
+ 				      flags, msg, err);
+ }
+ 
+-int ref_transaction_verify(struct ref_transaction *transaction,
+-			   const char *refname,
+-			   const unsigned char *old_sha1,
+-			   unsigned int flags,
+-			   struct strbuf *err)
++int files_transaction_verify(struct ref_transaction *transaction,
++			     const char *refname,
++			     const unsigned char *old_sha1,
++			     unsigned int flags,
++			     struct strbuf *err)
+ {
+ 	if (!old_sha1)
+ 		die("BUG: verify called with old_sha1 set to NULL");
+@@ -3435,8 +3435,8 @@ static int ref_update_reject_duplicates(struct string_list *refnames,
+ 	return 0;
+ }
+ 
+-int ref_transaction_commit(struct ref_transaction *transaction,
+-			   struct strbuf *err)
++static int files_transaction_commit(struct ref_transaction *transaction,
++				  struct strbuf *err)
+ {
+ 	int ret = 0, i;
+ 	int n = transaction->nr;
+@@ -3822,3 +3822,15 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 	unlock_ref(lock);
+ 	return -1;
  }
 +
++struct ref_be refs_be_files = {
++	NULL,
++	"files",
++	files_transaction_begin,
++	files_transaction_update,
++	files_transaction_create,
++	files_transaction_delete,
++	files_transaction_verify,
++	files_transaction_commit,
++	files_transaction_free,
++};
+diff --git a/refs.c b/refs.c
+index 0f4e19a..98aa357 100644
+--- a/refs.c
++++ b/refs.c
+@@ -4,6 +4,29 @@
+ #include "cache.h"
+ #include "refs.h"
+ #include "lockfile.h"
 +/*
-+ * How to handle various characters in refnames:
-+ * 0: An acceptable character for refs
-+ * 1: End-of-component
-+ * 2: ., look for a preceding . to reject .. in refs
-+ * 3: {, look for a preceding @ to reject @{ in refs
-+ * 4: A bad character: ASCII control characters, and
-+ *    ":", "?", "[", "\", "^", "~", SP, or TAB
-+ * 5: *, reject unless REFNAME_REFSPEC_PATTERN is set
++ * We always have a files backend and it is the default.
 + */
-+static unsigned char refname_disposition[256] = {
-+	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-+	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-+	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 1,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
++struct ref_be *the_refs_backend = &refs_be_files;
++/*
++ * List of all available backends
++ */
++struct ref_be *refs_backends = &refs_be_files;
++
++/*
++ * This function is used to switch to an alternate backend.
++ */
++int set_refs_backend(const char *name)
++{
++	struct ref_be *be;
++
++	for (be = refs_backends; be; be = be->next)
++		if (!strcmp(be->name, name)) {
++			the_refs_backend = be;
++			return 0;
++		}
++	return 1;
++}
+ 
+ static int is_per_worktree_ref(const char *refname)
+ {
+@@ -877,3 +900,57 @@ int head_ref_namespaced(each_ref_fn fn, void *cb_data)
+ 
+ 	return ret;
+ }
++
++
++/* backend functions */
++struct ref_transaction *ref_transaction_begin(struct strbuf *err)
++{
++	return the_refs_backend->transaction_begin(err);
++}
++
++
++int ref_transaction_update(struct ref_transaction *transaction,
++			   const char *refname, const unsigned char *new_sha1,
++			   const unsigned char *old_sha1, unsigned int flags,
++			   const char *msg, struct strbuf *err)
++{
++	return the_refs_backend->transaction_update(transaction,
++			refname, new_sha1, old_sha1, flags, msg, err);
++}
++
++int ref_transaction_create(struct ref_transaction *transaction,
++			   const char *refname, const unsigned char *new_sha1,
++			   unsigned int flags, const char *msg,
++			   struct strbuf *err)
++{
++	return the_refs_backend->transaction_create(transaction,
++			refname, new_sha1, flags, msg, err);
++}
++int ref_transaction_delete(struct ref_transaction *transaction,
++			   const char *refname, const unsigned char *old_sha1,
++			   unsigned int flags, const char *msg,
++			   struct strbuf *err)
++{
++	return the_refs_backend->transaction_delete(transaction,
++			refname, old_sha1, flags, msg, err);
++}
++
++int ref_transaction_verify(struct ref_transaction *transaction,
++			   const char *refname, const unsigned char *old_sha1,
++			   unsigned int flags,
++			   struct strbuf *err)
++{
++	return the_refs_backend->transaction_verify(transaction,
++			refname, old_sha1, flags, err);
++}
++
++int ref_transaction_commit(struct ref_transaction *transaction,
++			   struct strbuf *err)
++{
++	return the_refs_backend->transaction_commit(transaction, err);
++}
++
++void ref_transaction_free(struct ref_transaction *transaction)
++{
++	return the_refs_backend->transaction_free(transaction);
++}
+diff --git a/refs.h b/refs.h
+index 729bc3c..a1db3ef 100644
+--- a/refs.h
++++ b/refs.h
+@@ -530,4 +530,40 @@ extern int reflog_expire(const char *refname, const unsigned char *sha1,
+ 			 reflog_expiry_cleanup_fn cleanup_fn,
+ 			 void *policy_cb_data);
+ 
++/* refs backends */
++typedef struct ref_transaction *(*ref_transaction_begin_fn)(struct strbuf *err);
++typedef int (*ref_transaction_update_fn)(struct ref_transaction *transaction,
++		const char *refname, const unsigned char *new_sha1,
++		const unsigned char *old_sha1, unsigned int flags,
++		const char *msg, struct strbuf *err);
++typedef int (*ref_transaction_create_fn)(
++		struct ref_transaction *transaction,
++		const char *refname, const unsigned char *new_sha1,
++		unsigned int flags, const char *msg, struct strbuf *err);
++typedef int (*ref_transaction_delete_fn)(struct ref_transaction *transaction,
++		const char *refname, const unsigned char *old_sha1,
++		unsigned int flags, const char *msg, struct strbuf *err);
++typedef int (*ref_transaction_verify_fn)(struct ref_transaction *transaction,
++		const char *refname, const unsigned char *old_sha1,
++		unsigned int flags, struct strbuf *err);
++typedef int (*ref_transaction_commit_fn)(struct ref_transaction *transaction,
++				     struct strbuf *err);
++typedef void (*ref_transaction_free_fn)(struct ref_transaction *transaction);
++
++struct ref_be {
++	struct ref_be *next;
++	const char *name;
++	ref_transaction_begin_fn transaction_begin;
++	ref_transaction_update_fn transaction_update;
++	ref_transaction_create_fn transaction_create;
++	ref_transaction_delete_fn transaction_delete;
++	ref_transaction_verify_fn transaction_verify;
++	ref_transaction_commit_fn transaction_commit;
++	ref_transaction_free_fn transaction_free;
 +};
 +
-+/*
-+ * Try to read one refname component from the front of refname.
-+ * Return the length of the component found, or -1 if the component is
-+ * not legal.  It is legal if it is something reasonable to have under
-+ * ".git/refs/"; We do not like it if:
-+ *
-+ * - any path component of it begins with ".", or
-+ * - it has double dots "..", or
-+ * - it has ASCII control characters, or
-+ * - it has ":", "?", "[", "\", "^", "~", SP, or TAB anywhere, or
-+ * - it has "*" anywhere unless REFNAME_REFSPEC_PATTERN is set, or
-+ * - it ends with a "/", or
-+ * - it ends with ".lock", or
-+ * - it contains a "@{" portion
-+ */
-+static int check_refname_component(const char *refname, int *flags)
-+{
-+	const char *cp;
-+	char last = '\0';
 +
-+	for (cp = refname; ; cp++) {
-+		int ch = *cp & 255;
-+		unsigned char disp = refname_disposition[ch];
-+		switch (disp) {
-+		case 1:
-+			goto out;
-+		case 2:
-+			if (last == '.')
-+				return -1; /* Refname contains "..". */
-+			break;
-+		case 3:
-+			if (last == '@')
-+				return -1; /* Refname contains "@{". */
-+			break;
-+		case 4:
-+			return -1;
-+		case 5:
-+			if (!(*flags & REFNAME_REFSPEC_PATTERN))
-+				return -1; /* refspec can't be a pattern */
++extern struct ref_be refs_be_files;
++int set_refs_backend(const char *name);
 +
-+			/*
-+			 * Unset the pattern flag so that we only accept
-+			 * a single asterisk for one side of refspec.
-+			 */
-+			*flags &= ~ REFNAME_REFSPEC_PATTERN;
-+			break;
-+		}
-+		last = ch;
-+	}
-+out:
-+	if (cp == refname)
-+		return 0; /* Component has zero length. */
-+	if (refname[0] == '.')
-+		return -1; /* Component starts with '.'. */
-+	if (cp - refname >= LOCK_SUFFIX_LEN &&
-+	    !memcmp(cp - LOCK_SUFFIX_LEN, LOCK_SUFFIX, LOCK_SUFFIX_LEN))
-+		return -1; /* Refname ends with ".lock". */
-+	return cp - refname;
-+}
-+
-+int check_refname_format(const char *refname, int flags)
-+{
-+	int component_len, component_count = 0;
-+
-+	if (!strcmp(refname, "@"))
-+		/* Refname is a single character '@'. */
-+		return -1;
-+
-+	while (1) {
-+		/* We are at the start of a path component. */
-+		component_len = check_refname_component(refname, &flags);
-+		if (component_len <= 0)
-+			return -1;
-+
-+		component_count++;
-+		if (refname[component_len] == '\0')
-+			break;
-+		/* Skip to next component. */
-+		refname += component_len + 1;
-+	}
-+
-+	if (refname[component_len - 1] == '.')
-+		return -1; /* Refname ends with '.'. */
-+	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
-+		return -1; /* Refname has only one component. */
-+	return 0;
-+}
+ #endif /* REFS_H */
 -- 
 2.4.2.644.g97b850b-twtrsrc
