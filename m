@@ -1,7 +1,7 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 11/43] refs.c: move read_ref, read_ref_full and ref_exists to the common code
-Date: Mon, 28 Sep 2015 18:01:46 -0400
-Message-ID: <1443477738-32023-12-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v2 14/43] refs.c: move is_branch to the common code
+Date: Mon, 28 Sep 2015 18:01:49 -0400
+Message-ID: <1443477738-32023-15-git-send-email-dturner@twopensource.com>
 References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	David Turner <dturner@twopensource.com>
@@ -12,109 +12,80 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZggXX-0002gh-0D
+	id 1ZggXX-0002gh-JF
 	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 00:04:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754133AbbI1WDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754961AbbI1WEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2015 18:04:52 -0400
+Received: from mail-qk0-f169.google.com ([209.85.220.169]:34995 "EHLO
+	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753961AbbI1WDL (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 28 Sep 2015 18:03:11 -0400
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:35837 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754032AbbI1WDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2015 18:03:08 -0400
-Received: by qgt47 with SMTP id 47so133554779qgt.2
-        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:03:07 -0700 (PDT)
+Received: by qkap81 with SMTP id p81so74441194qka.2
+        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:03:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FFF1h6sFuYgiEDhw7qUbcR4C9dsueojDFTApDxJJti4=;
-        b=azOk6McGrHw+M6hl9E/dz0edmkiRQW9mycADHIET0B0rET9zf5rwj4c0Obizws2XXj
-         JmwWBRcoS8LQ3T0h0kx88B2JC3ZU/ijr0Z/CzBOT/lMXikU9kdf9dgU+nTDuTTbUEZ8E
-         LXXu4wVMUFy4JEhu0WN+GwhW3+xZ9gDcGOElGgZZ9y12XS3PJ7XQtVfpxqJoNNU+CaHK
-         7whQhjkkzYh1lC+UMbc8ICVFcV7o4cfzFfKywpCiA7X9ErmdsZ4M2Ox32AYr5L/1jnLh
-         eWtnZlpFz4B/nw321k92940E205SVcZCumjj69G2bUwt6ls0OjKcI6O+uzXzll2O3yzc
-         3r9w==
-X-Gm-Message-State: ALoCoQmO858tM7nBC//kElJe/GJI7XnUUZzvs9i664QiRmfd8mpBDtiOpgQfzXDvhb5KfueONBoS
-X-Received: by 10.140.29.164 with SMTP id b33mr25675397qgb.37.1443477787651;
-        Mon, 28 Sep 2015 15:03:07 -0700 (PDT)
+        bh=gKv3mpgyx5u7PWUd1qlXM79CHyzamyrpDvY3z+L5rVs=;
+        b=TwxD9FV2vvROn1h/Ge+JFebp3JHCQojsVS8NHSOonoMWFxr5c0fo1HvDRaIv/bHSxc
+         k7wKXfNWMHq8YoZ9bjad953a1HTbfRMW6XSj1BAbA93yXj1jlULUz6uD5gjj/+WbYCaL
+         NPU0IycXTdY9x4RL8Hdn96cHaEIA2Toij52zRpxKazT+JK6DY4tVFONcKlrSHqeMz3JX
+         /Hhsv0CRpGLE+Uwrhat48d2uWwoIQmJsaOxEBbyyn79YHOC6x9wGdSdADR0TaTtEQ3ab
+         PsyOnN3ptVaztVNUA2+vRumeGmur94uUhSZQ9Mh2tHQWV3qfujmEteiZiCzigPYtkZzc
+         DcEA==
+X-Gm-Message-State: ALoCoQmbhIeyQer0ppdzNwGniTD0slyQstBtUzl3kCpyNDKMY01FC8GcyDvQfK2nvOA+1uhp4HA3
+X-Received: by 10.55.212.217 with SMTP id s86mr20536010qks.77.1443477790861;
+        Mon, 28 Sep 2015 15:03:10 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.03.06
+        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.03.09
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 28 Sep 2015 15:03:06 -0700 (PDT)
+        Mon, 28 Sep 2015 15:03:10 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278791>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
-
-These functions do not depend on the backend implementation so we
-move them to the common code.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs-be-files.c | 18 ------------------
- refs.c          | 18 ++++++++++++++++++
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ refs-be-files.c | 5 -----
+ refs.c          | 5 +++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/refs-be-files.c b/refs-be-files.c
-index 2495d42..d46474a 100644
+index f920b65..58ff453 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -1803,24 +1803,6 @@ struct ref_filter {
- 	void *cb_data;
- };
+@@ -2969,11 +2969,6 @@ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
+ 	return ret;
+ }
  
--int read_ref_full(const char *refname, int resolve_flags, unsigned char *sha1, int *flags)
+-int is_branch(const char *refname)
 -{
--	if (resolve_ref_unsafe(refname, resolve_flags, sha1, flags))
--		return 0;
--	return -1;
+-	return !strcmp(refname, "HEAD") || starts_with(refname, "refs/heads/");
 -}
 -
--int read_ref(const char *refname, unsigned char *sha1)
--{
--	return read_ref_full(refname, RESOLVE_REF_READING, sha1, NULL);
--}
--
--int ref_exists(const char *refname)
--{
--	unsigned char sha1[20];
--	return !!resolve_ref_unsafe(refname, RESOLVE_REF_READING, sha1, NULL);
--}
--
- static int filter_refs(const char *refname, const struct object_id *oid,
- 			   int flags, void *data)
- {
+ /*
+  * Write sha1 into the open lockfile, then close the lockfile. On
+  * errors, rollback the lockfile, fill in *err and
 diff --git a/refs.c b/refs.c
-index 24d5e28..242f66d 100644
+index e9cc2d4..bc8750c 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -633,3 +633,21 @@ void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_li
- 	data.msg_fmt = msg_fmt;
- 	for_each_rawref(warn_if_dangling_symref, &data);
+@@ -767,3 +767,8 @@ int check_refname_format(const char *refname, int flags)
+ 		return -1; /* Refname has only one component. */
+ 	return 0;
  }
 +
-+int read_ref_full(const char *refname, int resolve_flags, unsigned char *sha1, int *flags)
++int is_branch(const char *refname)
 +{
-+	if (resolve_ref_unsafe(refname, resolve_flags, sha1, flags))
-+		return 0;
-+	return -1;
-+}
-+
-+int read_ref(const char *refname, unsigned char *sha1)
-+{
-+	return read_ref_full(refname, RESOLVE_REF_READING, sha1, NULL);
-+}
-+
-+int ref_exists(const char *refname)
-+{
-+	unsigned char sha1[20];
-+	return !!resolve_ref_unsafe(refname, RESOLVE_REF_READING, sha1, NULL);
++	return !strcmp(refname, "HEAD") || starts_with(refname, "refs/heads/");
 +}
 -- 
 2.4.2.644.g97b850b-twtrsrc
