@@ -1,87 +1,65 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v4 6/6] clone: better error when --reference is a linked checkout
-Date: Mon, 28 Sep 2015 20:06:16 +0700
-Message-ID: <1443445576-29526-7-git-send-email-pclouds@gmail.com>
-References: <1442106148-22895-1-git-send-email-pclouds@gmail.com>
- <1443445576-29526-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Single brackets matching in .gitignore rules
+Date: Mon, 28 Sep 2015 20:15:53 +0700
+Message-ID: <CACsJy8DiTevhSnkkab-kfvpibitoUMHdjC2UdGT244JwLRxqWQ@mail.gmail.com>
+References: <2606743.RipZrg6Xoz@pinguin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, bjornar@snoksrud.no,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 28 15:06:59 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andrey Loskutov <loskutov@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Sep 28 15:16:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZgY8u-00068E-Hg
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Sep 2015 15:06:56 +0200
+	id 1ZgYIA-0000uG-25
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Sep 2015 15:16:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933717AbbI1NGv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Sep 2015 09:06:51 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:36015 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933585AbbI1NGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2015 09:06:50 -0400
-Received: by pablk4 with SMTP id lk4so77594195pab.3
-        for <git@vger.kernel.org>; Mon, 28 Sep 2015 06:06:50 -0700 (PDT)
+	id S933482AbbI1NQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2015 09:16:24 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:36799 "EHLO
+	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754876AbbI1NQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2015 09:16:23 -0400
+Received: by ioii196 with SMTP id i196so174894798ioi.3
+        for <git@vger.kernel.org>; Mon, 28 Sep 2015 06:16:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=0DZIfJWsiCyOFS4K1C9W4Mgs82fwUvUqqi2G5yo7MEI=;
-        b=0E9TrWyUY5coxORUPnXV637/eW1O/BqV7Xg77VhCNpWCGybhosSyffar0MRbedDK7S
-         gXPmU1nDU5pZdbOrMYKH4Q/EqIfxs5HJQLbYudiVuC2xW7nxbhFJIFe92i4BfLbLCaj0
-         2aVsIXu5XP2sGGJ0ZoYzxU4Oi4QdGPMxHPxEva/b2gSpxiamndtdQwFrU0vPILxBkDdL
-         S2yyT5QVdjvVjvu7ZD4qfrUsP8Vs4ul5BvlHjQB4J8ABPpuMfTbz9lAExo4zT1lWouKh
-         P4Id6lL7QlAE0dt8zi1Om0HzjcAyNz7TXJG4WUqc6IU/6hpaVOv3kR5j4KjCp8wEQncT
-         xjOA==
-X-Received: by 10.68.96.197 with SMTP id du5mr26392157pbb.32.1443445610030;
-        Mon, 28 Sep 2015 06:06:50 -0700 (PDT)
-Received: from lanh ([171.232.94.118])
-        by smtp.gmail.com with ESMTPSA id hq8sm19537828pad.35.2015.09.28.06.06.47
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Sep 2015 06:06:49 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 28 Sep 2015 20:07:24 +0700
-X-Mailer: git-send-email 2.3.0.rc1.137.g477eb31
-In-Reply-To: <1443445576-29526-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=+C+O56xD4nyKyBKy9WnlbGZYAgHlyxBWI5tz4NO+ris=;
+        b=cH6k663Pb7yskrx51s8x2zYOmGtuE+qS6Oq2RX4zGhdo/FiW/IoCJVoK8VtlEGicmg
+         Eiz7SYONDpVtMCmU9MbtXEUE+l57Ov0HZgANegfns7bNCUuaAqvtiA2wJaeoNQnvvS2F
+         1PpwcUWTJ8A5ceyvagT3XYb1b8/jL9pkM8hnfKLJLglvhxZcSuoRKG5ezq0NZda5nTiy
+         L94+Xwud8VLoRceUbcgEfCEReAa1AS76gm2cVRQi59qIn02GWLSf2jA4jTeR3z7UhXSk
+         TkgxwQyi79x0O+6e5SXUxtYLViKGJ5uV6imROWy3RJiWtucx4PeeMzs3eZs41ZTR9uS1
+         nJSg==
+X-Received: by 10.107.131.134 with SMTP id n6mr18552072ioi.192.1443446183269;
+ Mon, 28 Sep 2015 06:16:23 -0700 (PDT)
+Received: by 10.107.19.227 with HTTP; Mon, 28 Sep 2015 06:15:53 -0700 (PDT)
+In-Reply-To: <2606743.RipZrg6Xoz@pinguin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278723>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/clone.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+On Sun, Sep 27, 2015 at 5:01 AM, Andrey Loskutov <loskutov@gmx.de> wrote:
+> ...
+> Anyway, it would be nice to hear what should be the "right" way to interpret the tables above.
+>
+> BTW the only official documentation I found about ignore rules:
+>
+> https://www.kernel.org/pub/software/scm/git/docs/gitignore.html
+> http://man7.org/linux/man-pages/man3/fnmatch.3.html
+> http://man7.org/linux/man-pages/man7/glob.7.html
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 39d4adf..3e14491 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -294,9 +294,14 @@ static int add_one_reference(struct string_list_it=
-em *item, void *cb_data)
- 		char *ref_git_git =3D mkpathdup("%s/.git", ref_git);
- 		free(ref_git);
- 		ref_git =3D ref_git_git;
--	} else if (!is_directory(mkpath("%s/objects", ref_git)))
-+	} else if (!is_directory(mkpath("%s/objects", ref_git))) {
-+		struct strbuf sb =3D STRBUF_INIT;
-+		if (get_common_dir(&sb, ref_git))
-+			die(_("reference repository '%s' as a linked checkout is not suppor=
-ted yet."),
-+			    item->string);
- 		die(_("reference repository '%s' is not a local repository."),
- 		    item->string);
-+	}
-=20
- 	if (!access(mkpath("%s/shallow", ref_git), F_OK))
- 		die(_("reference repository '%s' is shallow"), item->string);
---=20
-2.3.0.rc1.137.g477eb31
+This is already answered. I just want to add that C Git has stopped
+using system fnmatch for some time (part of the reason is system
+fnmatch behaves differently in corner cases). If you don't mind C,
+have a look at dowild() in wildmatch.c, or t/t3070-wildmatch.sh for
+some corner cases (but your cases aren't there, may be worth adding
+too)
+--
+Duy
