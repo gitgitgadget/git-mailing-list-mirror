@@ -1,340 +1,212 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 05/43] refs.c: move update_ref to refs.c
-Date: Mon, 28 Sep 2015 18:01:40 -0400
-Message-ID: <1443477738-32023-6-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v2 01/43] refs.c: create a public version of verify_refname_available
+Date: Mon, 28 Sep 2015 18:01:36 -0400
+Message-ID: <1443477738-32023-2-git-send-email-dturner@twopensource.com>
 References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Sep 29 00:05:27 2015
+X-From: git-owner@vger.kernel.org Tue Sep 29 00:05:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZggY1-0003FJ-Qf
+	id 1ZggY2-0003FJ-Je
 	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 00:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754993AbbI1WFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2015 18:05:13 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:33596 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753790AbbI1WDC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2015 18:03:02 -0400
-Received: by qgev79 with SMTP id v79so133372011qge.0
-        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:03:01 -0700 (PDT)
+	id S1753752AbbI1WC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2015 18:02:59 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:33649 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753253AbbI1WC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2015 18:02:57 -0400
+Received: by qkas79 with SMTP id s79so9401174qka.0
+        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:02:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=j6yiseqsnPf5Xlcl2vNCMFhgrpZ/AF/hsQelYwuLjF4=;
-        b=fsZ7QsbZxY0mtia36ocYkYBoBRjSnSk9oGtXv+c6p6yvlErrQWR6P81zalVZehpxIQ
-         HMUJANfC/9Eiec44in2QAXrKCNWmjMtQr7+BS0Br6NIicaHkS/9oJYdrEDFGfxdWz9mc
-         66lXEjUuwTicLzF7zAOU9n23DB67BapfUvV+prMwlv+A2PHCUDnJKPg7hjO1znC8YSt+
-         VdRJdkJQ4FBhqxX2Lx1YEn6QJ3PcxcVveQT35xM2Tnmg+cSJAw3UzkJDCU8ZP2RKclQY
-         5xI/VIi1jEb6kzRy5070wPEzKjuHveG4UKXNl0cZ2+Cvs9P68rQNIACRlfueRQ82pn80
-         aYMg==
-X-Gm-Message-State: ALoCoQkNZmTs7jQTedGiqs5ShXRWHkRKmElb551u4RarCzefO/FplAA/ep5Ic8TfahMj3lyolr3l
-X-Received: by 10.140.33.225 with SMTP id j88mr25331471qgj.30.1443477781326;
-        Mon, 28 Sep 2015 15:03:01 -0700 (PDT)
+        bh=7bxPkkPG0vKB+6GWDzRrOpI6SYpUmtWA3HKsF/SHb3A=;
+        b=J562NqrLKdlrZtRYmxG/J8p3OS03DNyg1itcE98mL8D2HS+KRLMIDWQ84E/CF5fsBF
+         Lefj88imj0Y5nWFhfRcZhAuoJGcYMlPFHE8rlk+cMOa3GRkSqDztqWvYJnDZpH/AVclN
+         giMAaJaI98AxTCot53pJ/r3tXbvd+8mtlKUnPQMVt9q5TjLAy4ytrUmkV/h38p8A0QpR
+         fvHyezOdUvwjFsiP7wk8yjzz/LESk7PZS+VpxvgoN5bsLJUncSycLoJHA1pyJfssiTjM
+         MZg1w1qzVtKuHESn6PPOhUQKIKO11oacWPAfdoC5lpsmHTW4lcSlY87MsOyyZzFBZeaA
+         9dKg==
+X-Gm-Message-State: ALoCoQna4Imi2Np8vtglXQSZiGNAXMp4l9goGmlb6XTivqYCu2VFR4179TCFRABoJghBy+MyIOZp
+X-Received: by 10.55.198.77 with SMTP id b74mr15685706qkj.8.1443477777043;
+        Mon, 28 Sep 2015 15:02:57 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.03.00
+        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.02.56
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 28 Sep 2015 15:03:00 -0700 (PDT)
+        Mon, 28 Sep 2015 15:02:56 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278798>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
 
-Move update_ref() to the refs.c file since this function does not
-contain any backend specific code.  Move the ref classifier functions
-as well, since update_ref depends on them.
-
-Based on Ronnie Sahlberg's patch
+Create a public version of verify_refname_available that backends can
+provide.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs-be-files.c | 117 +-------------------------------------------------------
- refs.c          | 115 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 116 insertions(+), 116 deletions(-)
+ refs.c | 51 +++++++++++++++++++++++++++++----------------------
+ refs.h | 17 +++++++++++++++++
+ 2 files changed, 46 insertions(+), 22 deletions(-)
 
-diff --git a/refs-be-files.c b/refs-be-files.c
-index 2741cc5..2e8079e 100644
---- a/refs-be-files.c
-+++ b/refs-be-files.c
-@@ -2687,8 +2687,6 @@ struct pack_refs_cb_data {
- 	struct ref_to_prune *ref_to_prune;
- };
- 
--static int is_per_worktree_ref(const char *refname);
--
- /*
-  * An each_ref_entry_fn that is run over loose references only.  If
-  * the loose reference can be packed, add an entry in the packed ref
-@@ -2703,7 +2701,7 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
- 	int is_tag_ref = starts_with(entry->name, "refs/tags/");
- 
- 	/* Do not pack per-worktree refs: */
--	if (is_per_worktree_ref(entry->name))
-+	if (ref_type(entry->name) == REF_TYPE_PER_WORKTREE)
- 		return 0;
- 
- 	/* ALWAYS pack tags */
-@@ -2891,77 +2889,6 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
- 	return 0;
- }
- 
--static int is_per_worktree_ref(const char *refname)
--{
--	return !strcmp(refname, "HEAD") ||
--		starts_with(refname, "refs/bisect/");
--}
--
--static int is_pseudoref_syntax(const char *refname)
--{
--	const char *c;
--
--	for (c = refname; *c; c++) {
--		if (!isupper(*c) && *c != '-' && *c != '_')
--			return 0;
--	}
--
--	return 1;
--}
--
--enum ref_type ref_type(const char *refname)
--{
--	if (is_per_worktree_ref(refname))
--		return REF_TYPE_PER_WORKTREE;
--	if (is_pseudoref_syntax(refname))
--		return REF_TYPE_PSEUDOREF;
--       return REF_TYPE_NORMAL;
--}
--
--static int write_pseudoref(const char *pseudoref, const unsigned char *sha1,
--			   const unsigned char *old_sha1, struct strbuf *err)
--{
--	const char *filename;
--	int fd;
--	static struct lock_file lock;
--	struct strbuf buf = STRBUF_INIT;
--	int ret = -1;
--
--	strbuf_addf(&buf, "%s\n", sha1_to_hex(sha1));
--
--	filename = git_path("%s", pseudoref);
--	fd = hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
--	if (fd < 0) {
--		strbuf_addf(err, "Could not open '%s' for writing: %s",
--			    filename, strerror(errno));
--		return -1;
--	}
--
--	if (old_sha1) {
--		unsigned char actual_old_sha1[20];
--
--		if (read_ref(pseudoref, actual_old_sha1))
--			die("could not read ref '%s'", pseudoref);
--		if (hashcmp(actual_old_sha1, old_sha1)) {
--			strbuf_addf(err, "Unexpected sha1 when writing %s", pseudoref);
--			rollback_lock_file(&lock);
--			goto done;
--		}
--	}
--
--	if (write_in_full(fd, buf.buf, buf.len) != buf.len) {
--		strbuf_addf(err, "Could not write to '%s'", filename);
--		rollback_lock_file(&lock);
--		goto done;
--	}
--
--	commit_lock_file(&lock);
--	ret = 0;
--done:
--	strbuf_release(&buf);
--	return ret;
--}
--
- static int delete_pseudoref(const char *pseudoref, const unsigned char *old_sha1)
- {
- 	static struct lock_file lock;
-@@ -4110,48 +4037,6 @@ int ref_transaction_verify(struct ref_transaction *transaction,
- 				      flags, NULL, err);
- }
- 
--int update_ref(const char *msg, const char *refname,
--	       const unsigned char *new_sha1, const unsigned char *old_sha1,
--	       unsigned int flags, enum action_on_err onerr)
--{
--	struct ref_transaction *t = NULL;
--	struct strbuf err = STRBUF_INIT;
--	int ret = 0;
--
--	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
--		ret = write_pseudoref(refname, new_sha1, old_sha1, &err);
--	} else {
--		t = ref_transaction_begin(&err);
--		if (!t ||
--		    ref_transaction_update(t, refname, new_sha1, old_sha1,
--					   flags, msg, &err) ||
--		    ref_transaction_commit(t, &err)) {
--			ret = 1;
--			ref_transaction_free(t);
--		}
--	}
--	if (ret) {
--		const char *str = "update_ref failed for ref '%s': %s";
--
--		switch (onerr) {
--		case UPDATE_REFS_MSG_ON_ERR:
--			error(str, refname, err.buf);
--			break;
--		case UPDATE_REFS_DIE_ON_ERR:
--			die(str, refname, err.buf);
--			break;
--		case UPDATE_REFS_QUIET_ON_ERR:
--			break;
--		}
--		strbuf_release(&err);
--		return 1;
--	}
--	strbuf_release(&err);
--	if (t)
--		ref_transaction_free(t);
--	return 0;
--}
--
- static int ref_update_reject_duplicates(struct string_list *refnames,
- 					struct strbuf *err)
- {
 diff --git a/refs.c b/refs.c
-index 77492ff..2d10708 100644
+index 132eff5..ce551e9 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1,3 +1,118 @@
- /*
-  * Common refs code for all backends.
+@@ -279,7 +279,7 @@ struct ref_dir {
+  * presence of an empty subdirectory does not block the creation of a
+  * similarly-named reference.  (The fact that reference names with the
+  * same leading components can conflict *with each other* is a
+- * separate issue that is regulated by verify_refname_available().)
++ * separate issue that is regulated by verify_refname_available_dir().)
+  *
+  * Please note that the name field contains the fully-qualified
+  * reference (or subdirectory) name.  Space could be saved by only
+@@ -911,11 +911,11 @@ static int nonmatching_ref_fn(struct ref_entry *entry, void *vdata)
+  *
+  * extras and skip must be sorted.
   */
-+#include "cache.h"
-+#include "refs.h"
-+#include "lockfile.h"
-+
-+static int is_per_worktree_ref(const char *refname)
+-static int verify_refname_available(const char *refname,
+-				    const struct string_list *extras,
+-				    const struct string_list *skip,
+-				    struct ref_dir *dir,
+-				    struct strbuf *err)
++static int verify_refname_available_dir(const char *refname,
++					const struct string_list *extras,
++					const struct string_list *skip,
++					struct ref_dir *dir,
++					struct strbuf *err)
+ {
+ 	const char *slash;
+ 	int pos;
+@@ -2464,9 +2464,12 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 		 */
+ 		strbuf_git_path(&orig_ref_file, "%s", orig_refname);
+ 		if (remove_empty_directories(&orig_ref_file)) {
++			struct ref_dir *loose_refs;
++			loose_refs = get_loose_refs(&ref_cache);
+ 			last_errno = errno;
+-			if (!verify_refname_available(orig_refname, extras, skip,
+-						      get_loose_refs(&ref_cache), err))
++			if (!verify_refname_available_dir(orig_refname, extras,
++							  skip, loose_refs,
++							  err))
+ 				strbuf_addf(err, "there are still refs under '%s'",
+ 					    orig_refname);
+ 			goto error_return;
+@@ -2479,8 +2482,9 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	if (!refname) {
+ 		last_errno = errno;
+ 		if (last_errno != ENOTDIR ||
+-		    !verify_refname_available(orig_refname, extras, skip,
+-					      get_loose_refs(&ref_cache), err))
++		    !verify_refname_available_dir(orig_refname, extras, skip,
++						  get_loose_refs(&ref_cache),
++						  err))
+ 			strbuf_addf(err, "unable to resolve reference %s: %s",
+ 				    orig_refname, strerror(last_errno));
+ 
+@@ -2493,8 +2497,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	 * our refname.
+ 	 */
+ 	if (is_null_oid(&lock->old_oid) &&
+-	    verify_refname_available(refname, extras, skip,
+-				     get_packed_refs(&ref_cache), err)) {
++	    verify_refname_available_dir(refname, extras, skip,
++					 get_packed_refs(&ref_cache), err)) {
+ 		last_errno = ENOTDIR;
+ 		goto error_return;
+ 	}
+@@ -3127,10 +3131,7 @@ static int rename_ref_available(const char *oldname, const char *newname)
+ 	int ret;
+ 
+ 	string_list_insert(&skip, oldname);
+-	ret = !verify_refname_available(newname, NULL, &skip,
+-					get_packed_refs(&ref_cache), &err)
+-		&& !verify_refname_available(newname, NULL, &skip,
+-					     get_loose_refs(&ref_cache), &err);
++	ret = !verify_refname_available(newname, NULL, &skip, &err);
+ 	if (!ret)
+ 		error("%s", err.buf);
+ 
+@@ -3299,6 +3300,17 @@ static int should_autocreate_reflog(const char *refname)
+ 		!strcmp(refname, "HEAD");
+ }
+ 
++int verify_refname_available(const char *newname, struct string_list *extra,
++			     struct string_list *skip, struct strbuf *err)
 +{
-+	return !strcmp(refname, "HEAD") ||
-+		starts_with(refname, "refs/bisect/");
++	struct ref_dir *packed_refs = get_packed_refs(&ref_cache);
++	struct ref_dir *loose_refs = get_loose_refs(&ref_cache);
++	return verify_refname_available_dir(newname, extra, skip,
++					    packed_refs, err) ||
++		verify_refname_available_dir(newname, extra, skip,
++					     loose_refs, err);
 +}
 +
-+static int is_pseudoref_syntax(const char *refname)
-+{
-+	const char *c;
+ /*
+  * Create a reflog for a ref.  If force_create = 0, the reflog will
+  * only be created for certain refs (those for which
+@@ -4334,8 +4346,6 @@ static int ref_present(const char *refname,
+ int initial_ref_transaction_commit(struct ref_transaction *transaction,
+ 				   struct strbuf *err)
+ {
+-	struct ref_dir *loose_refs = get_loose_refs(&ref_cache);
+-	struct ref_dir *packed_refs = get_packed_refs(&ref_cache);
+ 	int ret = 0, i;
+ 	int n = transaction->nr;
+ 	struct ref_update **updates = transaction->updates;
+@@ -4378,10 +4388,7 @@ int initial_ref_transaction_commit(struct ref_transaction *transaction,
+ 			die("BUG: initial ref transaction with old_sha1 set");
+ 		if (verify_refname_available(update->refname,
+ 					     &affected_refnames, NULL,
+-					     loose_refs, err) ||
+-		    verify_refname_available(update->refname,
+-					     &affected_refnames, NULL,
+-					     packed_refs, err)) {
++					     err)) {
+ 			ret = TRANSACTION_NAME_CONFLICT;
+ 			goto cleanup;
+ 		}
+diff --git a/refs.h b/refs.h
+index 6d30c98..79ea220 100644
+--- a/refs.h
++++ b/refs.h
+@@ -218,6 +218,23 @@ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct st
+ int pack_refs(unsigned int flags);
+ 
+ /*
++ * Return true iff a reference named refname could be created without
++ * conflicting with the name of an existing reference.  If
++ * skip is non-NULL, ignore potential conflicts with refs in skip
++ * (e.g., because they are scheduled for deletion in the same
++ * operation).
++ *
++ * Two reference names conflict if one of them exactly matches the
++ * leading components of the other; e.g., "foo/bar" conflicts with
++ * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
++ * "foo/barbados".
++ *
++ * skip must be sorted.
++ */
++int verify_refname_available(const char *newname, struct string_list *extra,
++			     struct string_list *skip, struct strbuf *err);
 +
-+	for (c = refname; *c; c++) {
-+		if (!isupper(*c) && *c != '-' && *c != '_')
-+			return 0;
-+	}
-+
-+	return 1;
-+}
-+
-+enum ref_type ref_type(const char *refname)
-+{
-+	if (is_per_worktree_ref(refname))
-+		return REF_TYPE_PER_WORKTREE;
-+	if (is_pseudoref_syntax(refname))
-+		return REF_TYPE_PSEUDOREF;
-+       return REF_TYPE_NORMAL;
-+}
-+
-+static int write_pseudoref(const char *pseudoref, const unsigned char *sha1,
-+			   const unsigned char *old_sha1, struct strbuf *err)
-+{
-+	const char *filename;
-+	int fd;
-+	static struct lock_file lock;
-+	struct strbuf buf = STRBUF_INIT;
-+	int ret = -1;
-+
-+	strbuf_addf(&buf, "%s\n", sha1_to_hex(sha1));
-+
-+	filename = git_path("%s", pseudoref);
-+	fd = hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
-+	if (fd < 0) {
-+		strbuf_addf(err, "Could not open '%s' for writing: %s",
-+			    filename, strerror(errno));
-+		return -1;
-+	}
-+
-+	if (old_sha1) {
-+		unsigned char actual_old_sha1[20];
-+		read_ref(pseudoref, actual_old_sha1);
-+		if (hashcmp(actual_old_sha1, old_sha1)) {
-+			strbuf_addf(err, "Unexpected sha1 when writing %s", pseudoref);
-+			rollback_lock_file(&lock);
-+			goto done;
-+		}
-+	}
-+
-+	if (write_in_full(fd, buf.buf, buf.len) != buf.len) {
-+		strbuf_addf(err, "Could not write to '%s'", filename);
-+		rollback_lock_file(&lock);
-+		goto done;
-+	}
-+
-+	commit_lock_file(&lock);
-+	ret = 0;
-+done:
-+	strbuf_release(&buf);
-+	return ret;
-+}
-+
-+int update_ref(const char *msg, const char *refname,
-+	       const unsigned char *new_sha1, const unsigned char *old_sha1,
-+	       unsigned int flags, enum action_on_err onerr)
-+{
-+	struct ref_transaction *t = NULL;
-+	struct strbuf err = STRBUF_INIT;
-+	int ret = 0;
-+
-+	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
-+		ret = write_pseudoref(refname, new_sha1, old_sha1, &err);
-+	} else {
-+		t = ref_transaction_begin(&err);
-+		if (!t ||
-+		    ref_transaction_update(t, refname, new_sha1, old_sha1,
-+					   flags, msg, &err) ||
-+		    ref_transaction_commit(t, &err)) {
-+			ret = 1;
-+			ref_transaction_free(t);
-+		}
-+	}
-+
-+	if (ret) {
-+		const char *str = "update_ref failed for ref '%s': %s";
-+
-+		switch (onerr) {
-+		case UPDATE_REFS_MSG_ON_ERR:
-+			error(str, refname, err.buf);
-+			break;
-+		case UPDATE_REFS_DIE_ON_ERR:
-+			die(str, refname, err.buf);
-+			break;
-+		case UPDATE_REFS_QUIET_ON_ERR:
-+			break;
-+		}
-+		strbuf_release(&err);
-+		return 1;
-+	}
-+	strbuf_release(&err);
-+	if (t)
-+		ref_transaction_free(t);
-+	return 0;
-+}
++/*
+  * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
+  * REF_NODEREF: act on the ref directly, instead of dereferencing
+  *              symbolic references.
 -- 
 2.4.2.644.g97b850b-twtrsrc
