@@ -1,68 +1,90 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: Why not git reset --hard <path>?
-Date: Mon, 28 Sep 2015 17:36:01 -0400
-Message-ID: <20150928213601.GA4071@thunk.org>
-References: <20150928203449.29024.qmail@ns.horizon.com>
- <xmqq612ucm3p.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xoTHFL_KU+qBz1KwytxqNTxf1JkjXK7_Ej79uLLnCWD8g@mail.gmail.com>
- <xmqqvbaub5s4.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jacob Keller <jacob.keller@gmail.com>,
-	George Spelvin <linux@horizon.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 28 23:36:13 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v2 03/43] refs-be-files.c: rename refs to refs-be-files
+Date: Mon, 28 Sep 2015 18:01:38 -0400
+Message-ID: <1443477738-32023-4-git-send-email-dturner@twopensource.com>
+References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org, mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Tue Sep 29 00:03:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zgg5l-0003fQ-5b
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Sep 2015 23:36:13 +0200
+	id 1ZggVp-0000Zd-LO
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 00:03:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753608AbbI1VgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2015 17:36:07 -0400
-Received: from imap.thunk.org ([74.207.234.97]:47820 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753176AbbI1VgE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2015 17:36:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=175R7uryrzr2ttazlax+UR7bBziUhxQBLhWjXeDVtGw=;
-	b=tTJUOdPD+DFrCG5ImjMHfC9DCHdc7c5xXE1jPoypdh7Y959vwqlgVNyEOwPvseEPWdk0Ng+ZBnYNFA9GLnXIGIIU0kyUzxg402BtInK0+E4mYKEhhE9JZ8BrrR0YR6LHf7R/AZ1D+i8gDBcZDl8qABlMewo5mXkoVrEa/PMYVow=;
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.84)
-	(envelope-from <tytso@thunk.org>)
-	id 1Zgg5Z-0000Ol-PU; Mon, 28 Sep 2015 21:36:01 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id 44D0F82CEF0; Mon, 28 Sep 2015 17:36:01 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqvbaub5s4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1753929AbbI1WDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2015 18:03:03 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:34444 "EHLO
+	mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753253AbbI1WDA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2015 18:03:00 -0400
+Received: by qkfq186 with SMTP id q186so74133337qkf.1
+        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:02:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=B7IAkExvSvfoKSrGL+3ErbpYyyFB7IFSquPZsCqStLI=;
+        b=jNOSgT2032q8v6jLhxsc2ZW/KDJbAyNy7HPy6yIZ1AorEO/29l6TcpQh/NgG406Tli
+         D2iijrtNyP3fSTuEQ1wPNPmmol3FI0WlWbOTXxDfQNvBGz8dGmzNLVroIiD9pT0pKgAo
+         5SCu8WJUxeOncxWabCR6uhlncky1jrQ+SRhw6ifn2K6DKyTDW7xSyPC4JFZh1kccgBTw
+         JduMmaqn0QT8U2WSA604yjFoe2cS522GlcIIiSmgSCKq3t+JjUK9vZ12T7rOq+S6H82E
+         csns6kBrt6Ba2UmCjo15Z1Uf/7fyaf4HhGXYh4UTD57GslWu8VOGzjb4Wd1w17OxWH0l
+         2Dlw==
+X-Gm-Message-State: ALoCoQlMCKMKuJj5mv0EdwTQ72YXDnNxRZbLa0EEY845a6S+mH+Q1N+RPeXL9I05CRGo98aqJtVu
+X-Received: by 10.55.20.164 with SMTP id 36mr21600902qku.54.1443477779295;
+        Mon, 28 Sep 2015 15:02:59 -0700 (PDT)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
+        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.02.58
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 28 Sep 2015 15:02:58 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
+In-Reply-To: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278755>
 
-I personally have in my .gitconfig:
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-[alias]
-	revert-file = checkout HEAD --
+Rename refs.c to refs-be-files.c to indicate that this file now
+holds the implementation for the files based refs backend.
+A smaller portion of the code in this file is backend agnostic and will
+be moved to a a new refs.c file that will hold all the common refs code
+that is shared across all backends.
 
-I'm not sure revert-file is the best name, but it's what I've used
-because I've been contaminated by the concept/naming of "p4 revert",
-which I do use a fair amount to undo local edits for one or more files
-when I've been forced to use perforce or perforce-like systems.  Given
-that it confuses the concept of how "git revert" works, maybe
-something like "git unedit <pathspec>" would work better.
+A second reason for first moving all the code to the new file and then
+move the backend agnostic code back to refs.c instead of the other way
+around is because the code that will eventually remain in this new
+refs-be-files.c file is so entangled that it would then be very
+difficult to break the split up into small independent patches/chunks.
 
-Given though it's so easy to address this with a single line in a
-user's .gitconfig, I guess the question is whether it's worthwhile to
-make a change that would be visible to all users, and perhaps more
-importantly, all new users to git.
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ Makefile                  | 2 +-
+ refs.c => refs-be-files.c | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename refs.c => refs-be-files.c (100%)
 
-	     	     	     	      - Ted
+diff --git a/Makefile b/Makefile
+index 46d0ca7..19036de 100644
+--- a/Makefile
++++ b/Makefile
+@@ -766,7 +766,7 @@ LIB_OBJS += quote.o
+ LIB_OBJS += reachable.o
+ LIB_OBJS += read-cache.o
+ LIB_OBJS += reflog-walk.o
+-LIB_OBJS += refs.o
++LIB_OBJS += refs-be-files.o
+ LIB_OBJS += ref-filter.o
+ LIB_OBJS += remote.o
+ LIB_OBJS += replace_object.o
+diff --git a/refs.c b/refs-be-files.c
+similarity index 100%
+rename from refs.c
+rename to refs-be-files.c
+-- 
+2.4.2.644.g97b850b-twtrsrc
