@@ -1,97 +1,109 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 15/43] refs.c: move prettify_refname to the common code
-Date: Mon, 28 Sep 2015 18:01:50 -0400
-Message-ID: <1443477738-32023-16-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v2 17/43] refs.c: move head_ref_namespaced to the common code
+Date: Mon, 28 Sep 2015 18:01:52 -0400
+Message-ID: <1443477738-32023-18-git-send-email-dturner@twopensource.com>
 References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Sep 29 00:04:45 2015
+X-From: git-owner@vger.kernel.org Tue Sep 29 00:04:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZggXM-0002OE-2P
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 00:04:44 +0200
+	id 1ZggXR-0002Y7-Fq
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 00:04:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754200AbbI1WDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754946AbbI1WEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2015 18:04:43 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:35011 "EHLO
+	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754172AbbI1WDO (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 28 Sep 2015 18:03:14 -0400
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:33727 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754032AbbI1WDM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2015 18:03:12 -0400
-Received: by qgev79 with SMTP id v79so133375286qge.0
-        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:03:12 -0700 (PDT)
+Received: by qkap81 with SMTP id p81so74441596qka.2
+        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:03:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=190n8IeTlsE673ijpAGcHEadnW68krBr+/ceGD7dqQU=;
-        b=LfKQUQZ6OYZY4ogP51NDLrgaa6GWCNRzwuK4Dt85xVWiGEUOqwhjlQm2pgtyrFw0qQ
-         WB4lDvwDBePodbT5Ztm5VMz916Br4ha5c7hgIjtntRFNBJjoPBnGKgoxes5kzdPBXqdq
-         6RD2ft0ajqVef54scomkQIPcI+97GXdJ3H3m1E1/5Jq1oqhMvQSc7qzVf3ejcD5+UNGj
-         Bz1wkDMP6iDUKBsfVgRFQKYzcLnSrJAzOgegsnNu4/NLW9i7jDE0k64Zn33GV3CeAPdx
-         yOgW11OcQ/A9DRw8fuqhMoaLPb3JbCld0MwMZ2/rsOGbLbZfUOqu9YKp5JWKFeg7ayIK
-         X2oA==
-X-Gm-Message-State: ALoCoQnJlLYA7hJ22dmgLQpa8ra+MwAO96tnfXcDb0v65SampHrA6AHlWx+8/hEVIF+J+ebEYtZe
-X-Received: by 10.140.133.71 with SMTP id 68mr26560328qhf.85.1443477791922;
-        Mon, 28 Sep 2015 15:03:11 -0700 (PDT)
+        bh=vIzpuvTQzx+6IhRzi5HnQqY//1WjsvF3gmsNpW9WMnk=;
+        b=ByjbAxZ4xVAIk/PJu+LZSLhydmal1u53NnLYow10naq9hgqAMqDfU2gfP8q813JCis
+         sTDx/Y4uk5i0IIojuVF6YADgdpXFvIXm/4ozN2qFpJ1Xb1cCL0qw1A+lH0RhpL/9vbz8
+         SeZVr9v2xDECV2XBYjuWKQI6gSmKePwKRkSnNE1zRXr/nFqHgvlFBGIDgq0nzmnifFa0
+         nE1Wy22Pfq5/JiC4RTPnrDVM+qN1qZaQn3yqaoRhIHV5GF3Cnonmn7FMPZGuMjVRcwaj
+         R4pwWppCufTgWJVRVrLmV+vIB8T9JX14GsiZBfVPnvFYGJ5PPRHZEEHJiDziRB/Hr9Yk
+         4ggQ==
+X-Gm-Message-State: ALoCoQk/hUpSj/6m+2Y1q+/EweexPsLL7/1necZ9imBJwQnnwDOQ6JEPuHiEqj/SkOjZujEtF5S0
+X-Received: by 10.55.23.9 with SMTP id i9mr25926791qkh.22.1443477793775;
+        Mon, 28 Sep 2015 15:03:13 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.03.10
+        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.03.13
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 28 Sep 2015 15:03:11 -0700 (PDT)
+        Mon, 28 Sep 2015 15:03:13 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278788>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs-be-files.c | 9 ---------
- refs.c          | 9 +++++++++
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ refs-be-files.c | 15 ---------------
+ refs.c          | 15 +++++++++++++++
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/refs-be-files.c b/refs-be-files.c
-index 58ff453..9c27851 100644
+index 5a7e406..05a4b88 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -2064,15 +2064,6 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
- 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+@@ -1951,21 +1951,6 @@ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
+ 			       strlen(git_replace_ref_base), 0, cb_data);
  }
  
--const char *prettify_refname(const char *name)
+-int head_ref_namespaced(each_ref_fn fn, void *cb_data)
 -{
--	return name + (
--		starts_with(name, "refs/heads/") ? 11 :
--		starts_with(name, "refs/tags/") ? 10 :
--		starts_with(name, "refs/remotes/") ? 13 :
--		0);
+-	struct strbuf buf = STRBUF_INIT;
+-	int ret = 0;
+-	struct object_id oid;
+-	int flag;
+-
+-	strbuf_addf(&buf, "%sHEAD", get_git_namespace());
+-	if (!read_ref_full(buf.buf, RESOLVE_REF_READING, oid.hash, &flag))
+-		ret = fn(buf.buf, &oid, flag, cb_data);
+-	strbuf_release(&buf);
+-
+-	return ret;
 -}
 -
- static void unlock_ref(struct ref_lock *lock)
+ int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
  {
- 	/* Do not free lock->lk -- atexit() still looks at them */
+ 	struct strbuf buf = STRBUF_INIT;
 diff --git a/refs.c b/refs.c
-index bc8750c..44ee4f4 100644
+index 7714dad..0f4e19a 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -772,3 +772,12 @@ int is_branch(const char *refname)
+@@ -862,3 +862,18 @@ int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *c
  {
- 	return !strcmp(refname, "HEAD") || starts_with(refname, "refs/heads/");
+ 	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
  }
 +
-+const char *prettify_refname(const char *name)
++int head_ref_namespaced(each_ref_fn fn, void *cb_data)
 +{
-+	return name + (
-+		starts_with(name, "refs/heads/") ? 11 :
-+		starts_with(name, "refs/tags/") ? 10 :
-+		starts_with(name, "refs/remotes/") ? 13 :
-+		0);
++	struct strbuf buf = STRBUF_INIT;
++	int ret = 0;
++	struct object_id oid;
++	int flag;
++
++	strbuf_addf(&buf, "%sHEAD", get_git_namespace());
++	if (!read_ref_full(buf.buf, RESOLVE_REF_READING, oid.hash, &flag))
++		ret = fn(buf.buf, &oid, flag, cb_data);
++	strbuf_release(&buf);
++
++	return ret;
 +}
 -- 
 2.4.2.644.g97b850b-twtrsrc
