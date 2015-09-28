@@ -1,324 +1,157 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2 18/43] refs-be-files.c: add a backend method structure with transaction functions
-Date: Mon, 28 Sep 2015 18:01:53 -0400
-Message-ID: <1443477738-32023-19-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v2 25/43] refs.c: move copy_msg to the common code
+Date: Mon, 28 Sep 2015 18:02:00 -0400
+Message-ID: <1443477738-32023-26-git-send-email-dturner@twopensource.com>
 References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	David Turner <dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Sep 29 00:03:28 2015
+X-From: git-owner@vger.kernel.org Tue Sep 29 00:03:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZggW5-0000rV-Lq
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 00:03:26 +0200
+	id 1ZggWD-0000zo-5K
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 00:03:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754263AbbI1WDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2015 18:03:18 -0400
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:33766 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754219AbbI1WDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2015 18:03:15 -0400
-Received: by qgev79 with SMTP id v79so133376242qge.0
-        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:03:15 -0700 (PDT)
+	id S1754448AbbI1WDY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2015 18:03:24 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:34073 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754233AbbI1WDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2015 18:03:22 -0400
+Received: by qgez77 with SMTP id z77so134282869qge.1
+        for <git@vger.kernel.org>; Mon, 28 Sep 2015 15:03:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=o4r7wZs61OfIS/lp787+QFbW7KlqR+sQ4NariN2mg+A=;
-        b=h1PNsGpZlgGNE0An/HzK5IdstSOTy8LCAGMdxkApWk0wsXnVizRbYwzSC4hwKmsHU1
-         4dKiU40noYeHfqhayftwLY8oSIPELX7q7MrpPM94fhnsglOKTQXzVipBQuDVKjoZZyAe
-         uxbcbCdEhemyjaNtoUZYD/XYmEoMCAVVYEL2jp8piDed1l0ZO7YJJpcKDrKlaLf0Hzw2
-         pu/0tmk5rVd001ksHhHZnNubebe2ey+K+9SV+gQKY9nTaolcPzvW8YQ77YM2YbhCIIdq
-         HLiSVYqsLHOlKELjYM3Y9GBwPa6nmXC1cpuurAhMQ6k1ONICJthdZ8+yvs30Uo6By606
-         PeTg==
-X-Gm-Message-State: ALoCoQkeUVYg83DrqZ0AFhWMZJaFMqCtnk8Ocp/ccTxyzBrXA9gMHCPfcyLGEPn6zST3aUKUZlk/
-X-Received: by 10.140.33.201 with SMTP id j67mr25762888qgj.49.1443477794920;
-        Mon, 28 Sep 2015 15:03:14 -0700 (PDT)
+        bh=6fhiUAfEOxSKMlLgn3/bcB6TBxf49ti7TujOukA9c8Y=;
+        b=H8rRzQD+pfw86Egk0BAs73tT/8KhIT+PNNJLLC2s+IXU3AyiIJVF+ajoscV2kZsHj7
+         3Kfz7QLQ4ACvjjErKb222Zz8qgjrlfvcmglIJX+GiODzEZXjKu7lRz7xJ7xsvVMbYCs2
+         coyP+3as4ocjVMUiI5+Ky7kROF8PBYxX4Hbg7r2w00l6XI83vS8uHp4+dnA2CdYRm8SN
+         z+kVdmB6V5ynXe+KkJFLnuO8qZI7ReBNOUaqZWa/9IfX3l1CworljUAP1KgYs9Ihqwmy
+         0YcLeTBEfAPOIG3yaNEIagVQCbNEtiPWSXtqcPY/PFi9koUEpqXAqk5wH0zRWLmQUppg
+         OnRg==
+X-Gm-Message-State: ALoCoQlj9i0mFz8b/ZpFokRbwIMQZcpmhQLY18f1kGYdWU8cR/vwaHSkpVoyiZ5lnCIltz4GBTxx
+X-Received: by 10.140.237.212 with SMTP id i203mr26655873qhc.97.1443477802149;
+        Mon, 28 Sep 2015 15:03:22 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.03.13
+        by smtp.gmail.com with ESMTPSA id 128sm7949979qhe.9.2015.09.28.15.03.21
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 28 Sep 2015 15:03:14 -0700 (PDT)
+        Mon, 28 Sep 2015 15:03:21 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278764>
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+Rename copy_msg to copy_reflog_msg and make it public.
 
-Add a ref structure for backend methods. Start by adding method pointers
-for the transaction functions.
-
-Add a function set_refs_backend to switch between backends. The files
-based backend is the default.
-
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs-be-files.c | 62 +++++++++++++++++++++++++++-------------------
- refs.c          | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- refs.h          | 36 +++++++++++++++++++++++++++
- 3 files changed, 150 insertions(+), 25 deletions(-)
+ refs-be-files.c | 28 +---------------------------
+ refs.c          | 26 ++++++++++++++++++++++++++
+ refs.h          |  2 ++
+ 3 files changed, 29 insertions(+), 27 deletions(-)
 
 diff --git a/refs-be-files.c b/refs-be-files.c
-index 05a4b88..6e6f092 100644
+index bb5a3ad..8898e86 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -3310,14 +3310,14 @@ struct ref_transaction {
- 	enum ref_transaction_state state;
- };
- 
--struct ref_transaction *ref_transaction_begin(struct strbuf *err)
-+static struct ref_transaction *files_transaction_begin(struct strbuf *err)
- {
- 	assert(err);
- 
- 	return xcalloc(1, sizeof(struct ref_transaction));
- }
- 
--void ref_transaction_free(struct ref_transaction *transaction)
-+static void files_transaction_free(struct ref_transaction *transaction)
- {
- 	int i;
- 
-@@ -3344,12 +3344,12 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
- 	return update;
- }
- 
--int ref_transaction_update(struct ref_transaction *transaction,
--			   const char *refname,
--			   const unsigned char *new_sha1,
--			   const unsigned char *old_sha1,
--			   unsigned int flags, const char *msg,
--			   struct strbuf *err)
-+static int files_transaction_update(struct ref_transaction *transaction,
-+				  const char *refname,
-+				  const unsigned char *new_sha1,
-+				  const unsigned char *old_sha1,
-+				  unsigned int flags, const char *msg,
-+				  struct strbuf *err)
- {
- 	struct ref_update *update;
- 
-@@ -3380,11 +3380,11 @@ int ref_transaction_update(struct ref_transaction *transaction,
+@@ -2684,32 +2684,6 @@ static int commit_ref(struct ref_lock *lock)
  	return 0;
  }
  
--int ref_transaction_create(struct ref_transaction *transaction,
--			   const char *refname,
--			   const unsigned char *new_sha1,
--			   unsigned int flags, const char *msg,
--			   struct strbuf *err)
-+static int files_transaction_create(struct ref_transaction *transaction,
-+				  const char *refname,
-+				  const unsigned char *new_sha1,
-+				  unsigned int flags, const char *msg,
-+				  struct strbuf *err)
+-/*
+- * copy the reflog message msg to buf, which has been allocated sufficiently
+- * large, while cleaning up the whitespaces.  Especially, convert LF to space,
+- * because reflog file is one line per entry.
+- */
+-static int copy_msg(char *buf, const char *msg)
+-{
+-	char *cp = buf;
+-	char c;
+-	int wasspace = 1;
+-
+-	*cp++ = '\t';
+-	while ((c = *msg++)) {
+-		if (wasspace && isspace(c))
+-			continue;
+-		wasspace = isspace(c);
+-		if (wasspace)
+-			c = ' ';
+-		*cp++ = c;
+-	}
+-	while (buf < cp && isspace(cp[-1]))
+-		cp--;
+-	*cp++ = '\n';
+-	return cp - buf;
+-}
+-
+ static int should_autocreate_reflog(const char *refname)
  {
- 	if (!new_sha1 || is_null_sha1(new_sha1))
- 		die("BUG: create called without valid new_sha1");
-@@ -3392,11 +3392,11 @@ int ref_transaction_create(struct ref_transaction *transaction,
- 				      null_sha1, flags, msg, err);
- }
+ 	if (!log_all_ref_updates)
+@@ -2806,7 +2780,7 @@ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
+ 			sha1_to_hex(new_sha1),
+ 			committer);
+ 	if (msglen)
+-		len += copy_msg(logrec + len - 1, msg) - 1;
++		len += copy_reflog_msg(logrec + len - 1, msg) - 1;
  
--int ref_transaction_delete(struct ref_transaction *transaction,
--			   const char *refname,
--			   const unsigned char *old_sha1,
--			   unsigned int flags, const char *msg,
--			   struct strbuf *err)
-+static int files_transaction_delete(struct ref_transaction *transaction,
-+				  const char *refname,
-+				  const unsigned char *old_sha1,
-+				  unsigned int flags, const char *msg,
-+				  struct strbuf *err)
- {
- 	if (old_sha1 && is_null_sha1(old_sha1))
- 		die("BUG: delete called with old_sha1 set to zeros");
-@@ -3405,11 +3405,11 @@ int ref_transaction_delete(struct ref_transaction *transaction,
- 				      flags, msg, err);
- }
- 
--int ref_transaction_verify(struct ref_transaction *transaction,
--			   const char *refname,
--			   const unsigned char *old_sha1,
--			   unsigned int flags,
--			   struct strbuf *err)
-+int files_transaction_verify(struct ref_transaction *transaction,
-+			     const char *refname,
-+			     const unsigned char *old_sha1,
-+			     unsigned int flags,
-+			     struct strbuf *err)
- {
- 	if (!old_sha1)
- 		die("BUG: verify called with old_sha1 set to NULL");
-@@ -3435,8 +3435,8 @@ static int ref_update_reject_duplicates(struct string_list *refnames,
- 	return 0;
- }
- 
--int ref_transaction_commit(struct ref_transaction *transaction,
--			   struct strbuf *err)
-+static int files_transaction_commit(struct ref_transaction *transaction,
-+				  struct strbuf *err)
- {
- 	int ret = 0, i;
- 	int n = transaction->nr;
-@@ -3822,3 +3822,15 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- 	unlock_ref(lock);
- 	return -1;
- }
-+
-+struct ref_be refs_be_files = {
-+	NULL,
-+	"files",
-+	files_transaction_begin,
-+	files_transaction_update,
-+	files_transaction_create,
-+	files_transaction_delete,
-+	files_transaction_verify,
-+	files_transaction_commit,
-+	files_transaction_free,
-+};
+ 	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
+ 	free(logrec);
 diff --git a/refs.c b/refs.c
-index 0f4e19a..98aa357 100644
+index aa49db5..db650b6 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -4,6 +4,29 @@
- #include "cache.h"
- #include "refs.h"
- #include "lockfile.h"
-+/*
-+ * We always have a files backend and it is the default.
-+ */
-+struct ref_be *the_refs_backend = &refs_be_files;
-+/*
-+ * List of all available backends
-+ */
-+struct ref_be *refs_backends = &refs_be_files;
-+
-+/*
-+ * This function is used to switch to an alternate backend.
-+ */
-+int set_refs_backend(const char *name)
-+{
-+	struct ref_be *be;
-+
-+	for (be = refs_backends; be; be = be->next)
-+		if (!strcmp(be->name, name)) {
-+			the_refs_backend = be;
-+			return 0;
-+		}
-+	return 1;
-+}
- 
- static int is_per_worktree_ref(const char *refname)
- {
-@@ -877,3 +900,57 @@ int head_ref_namespaced(each_ref_fn fn, void *cb_data)
- 
- 	return ret;
+@@ -886,6 +886,32 @@ int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *c
+ 	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
  }
-+
-+
-+/* backend functions */
-+struct ref_transaction *ref_transaction_begin(struct strbuf *err)
+ 
++/*
++ * copy the reflog message msg to buf, which has been allocated sufficiently
++ * large, while cleaning up the whitespaces.  Especially, convert LF to space,
++ * because reflog file is one line per entry.
++ */
++int copy_reflog_msg(char *buf, const char *msg)
 +{
-+	return the_refs_backend->transaction_begin(err);
++	char *cp = buf;
++	char c;
++	int wasspace = 1;
++
++	*cp++ = '\t';
++	while ((c = *msg++)) {
++		if (wasspace && isspace(c))
++			continue;
++		wasspace = isspace(c);
++		if (wasspace)
++			c = ' ';
++		*cp++ = c;
++	}
++	while (buf < cp && isspace(cp[-1]))
++		cp--;
++	*cp++ = '\n';
++	return cp - buf;
 +}
 +
-+
-+int ref_transaction_update(struct ref_transaction *transaction,
-+			   const char *refname, const unsigned char *new_sha1,
-+			   const unsigned char *old_sha1, unsigned int flags,
-+			   const char *msg, struct strbuf *err)
-+{
-+	return the_refs_backend->transaction_update(transaction,
-+			refname, new_sha1, old_sha1, flags, msg, err);
-+}
-+
-+int ref_transaction_create(struct ref_transaction *transaction,
-+			   const char *refname, const unsigned char *new_sha1,
-+			   unsigned int flags, const char *msg,
-+			   struct strbuf *err)
-+{
-+	return the_refs_backend->transaction_create(transaction,
-+			refname, new_sha1, flags, msg, err);
-+}
-+int ref_transaction_delete(struct ref_transaction *transaction,
-+			   const char *refname, const unsigned char *old_sha1,
-+			   unsigned int flags, const char *msg,
-+			   struct strbuf *err)
-+{
-+	return the_refs_backend->transaction_delete(transaction,
-+			refname, old_sha1, flags, msg, err);
-+}
-+
-+int ref_transaction_verify(struct ref_transaction *transaction,
-+			   const char *refname, const unsigned char *old_sha1,
-+			   unsigned int flags,
-+			   struct strbuf *err)
-+{
-+	return the_refs_backend->transaction_verify(transaction,
-+			refname, old_sha1, flags, err);
-+}
-+
-+int ref_transaction_commit(struct ref_transaction *transaction,
-+			   struct strbuf *err)
-+{
-+	return the_refs_backend->transaction_commit(transaction, err);
-+}
-+
-+void ref_transaction_free(struct ref_transaction *transaction)
-+{
-+	return the_refs_backend->transaction_free(transaction);
-+}
+ int head_ref_namespaced(each_ref_fn fn, void *cb_data)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
 diff --git a/refs.h b/refs.h
-index 729bc3c..a1db3ef 100644
+index db60bfe..c224f0e 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -530,4 +530,40 @@ extern int reflog_expire(const char *refname, const unsigned char *sha1,
- 			 reflog_expiry_cleanup_fn cleanup_fn,
- 			 void *policy_cb_data);
+@@ -508,6 +508,8 @@ enum ref_type {
  
-+/* refs backends */
-+typedef struct ref_transaction *(*ref_transaction_begin_fn)(struct strbuf *err);
-+typedef int (*ref_transaction_update_fn)(struct ref_transaction *transaction,
-+		const char *refname, const unsigned char *new_sha1,
-+		const unsigned char *old_sha1, unsigned int flags,
-+		const char *msg, struct strbuf *err);
-+typedef int (*ref_transaction_create_fn)(
-+		struct ref_transaction *transaction,
-+		const char *refname, const unsigned char *new_sha1,
-+		unsigned int flags, const char *msg, struct strbuf *err);
-+typedef int (*ref_transaction_delete_fn)(struct ref_transaction *transaction,
-+		const char *refname, const unsigned char *old_sha1,
-+		unsigned int flags, const char *msg, struct strbuf *err);
-+typedef int (*ref_transaction_verify_fn)(struct ref_transaction *transaction,
-+		const char *refname, const unsigned char *old_sha1,
-+		unsigned int flags, struct strbuf *err);
-+typedef int (*ref_transaction_commit_fn)(struct ref_transaction *transaction,
-+				     struct strbuf *err);
-+typedef void (*ref_transaction_free_fn)(struct ref_transaction *transaction);
+ enum ref_type ref_type(const char *refname);
+ 
++int copy_reflog_msg(char *buf, const char *msg);
 +
-+struct ref_be {
-+	struct ref_be *next;
-+	const char *name;
-+	ref_transaction_begin_fn transaction_begin;
-+	ref_transaction_update_fn transaction_update;
-+	ref_transaction_create_fn transaction_create;
-+	ref_transaction_delete_fn transaction_delete;
-+	ref_transaction_verify_fn transaction_verify;
-+	ref_transaction_commit_fn transaction_commit;
-+	ref_transaction_free_fn transaction_free;
-+};
-+
-+
-+extern struct ref_be refs_be_files;
-+int set_refs_backend(const char *name);
-+
- #endif /* REFS_H */
+ enum expire_reflog_flags {
+ 	EXPIRE_REFLOGS_DRY_RUN = 1 << 0,
+ 	EXPIRE_REFLOGS_UPDATE_REF = 1 << 1,
 -- 
 2.4.2.644.g97b850b-twtrsrc
