@@ -1,143 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/4] gc: remove broken symrefs
-Date: Mon, 28 Sep 2015 11:41:25 -0700
-Message-ID: <xmqqpp12croq.fsf@gitster.mtv.corp.google.com>
-References: <xmqqr3lnuzqu.fsf@gitster.mtv.corp.google.com>
-	<cover.1443448748.git.johannes.schindelin@gmx.de>
-	<fb29b39adf14a702c5127d722d86647a3dc9c891.1443448748.git.johannes.schindelin@gmx.de>
+Subject: Re: [RFC/PATCH v1] Add Travis CI support
+Date: Mon, 28 Sep 2015 11:47:08 -0700
+Message-ID: <xmqqlhbqcrf7.fsf@gitster.mtv.corp.google.com>
+References: <1443131004-39284-1-git-send-email-larsxschneider@gmail.com>
+	<xmqqeghnuy8t.fsf@gitster.mtv.corp.google.com>
+	<1443150875.3042.3.camel@kaarsemaker.net>
+	<699c08632232180166145f70c7f16645@dscho.org>
+	<CAE5ih7_f8qy9WvmgRUR6-qFwB4WFhZ6Qr5iOpE0YxqJH8AsZyw@mail.gmail.com>
+	<vpq7fnc83ki.fsf@grenoble-inp.fr> <vpq4mie1m3n.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 28 20:41:35 2015
+Cc: Luke Diamand <luke@diamand.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Sep 28 20:47:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZgdMi-0000vh-76
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Sep 2015 20:41:32 +0200
+	id 1ZgdSF-0000eV-Ji
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Sep 2015 20:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750850AbbI1Sl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2015 14:41:28 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:34242 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750727AbbI1Sl1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2015 14:41:27 -0400
-Received: by padhy16 with SMTP id hy16so181400911pad.1
-        for <git@vger.kernel.org>; Mon, 28 Sep 2015 11:41:26 -0700 (PDT)
+	id S1751177AbbI1SrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2015 14:47:11 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:34746 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750895AbbI1SrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2015 14:47:10 -0400
+Received: by padhy16 with SMTP id hy16so181513084pad.1
+        for <git@vger.kernel.org>; Mon, 28 Sep 2015 11:47:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=zAY71wf/3asRZi9pEeQ+ZfUiAG71oUKcxRuXMJCJrTo=;
-        b=cvdKBpBt6gUj1QNzj78JbKToULFQpee6BpAv/y9+bcAdV5j92Pzh51C4odlIMDmqjz
-         BRw5Hjj8SnSI1KUw0K5FwXMmSL1CU3fHTGHrFqxot1jwLKx6UHuhX5JJuiMMolqeGUaW
-         o2/K97Ir4VROKO/3/I9kOsh18zkbZKsAFHE7X4unfP7PdKqvy/zePqQRZClzRW7cDr10
-         ncbMMqODJC/p98oZpW6IK3w4+7snkD14avmkrnxbBgzu88ujwnpHbi4m3ImFyaHrdcfO
-         wWtPJMmHbMj2SR2UnRFoC4LDSe14lCcOfpQf2+f2WqRbc9X0NrnOG9ykoupTr2cljooo
-         oIiQ==
-X-Received: by 10.68.100.226 with SMTP id fb2mr28470853pbb.92.1443465686697;
-        Mon, 28 Sep 2015 11:41:26 -0700 (PDT)
+        bh=ieMDuomVuSVbvtF6dWbzton7Y/cOAi76rmYe9UCFyq4=;
+        b=HsXmIrF69pigS3jtpLF19L7tGPznKNcJc3cTx8bybFr9jlPcuNvI5E21nNKjW2IYYY
+         +MFxWu+LALggnTbC+NRbWbYzVPUfD/7bb6xXV6HGhFmS5t8+kiSR9YYdLQAdKjsTFO0P
+         jrkhJCC/jcY/QxQYMTQ3woaKS6oOeqkrUw1eQKWdrxt3oZbz9QewB7wrjVkfnKJLWbqQ
+         lt6d/IZv0o2SHRNWomiXQ0EQ3Mu+va9sucTkCW5KMcrm2fwhsGIcBXorMe2gL74/aJLL
+         HGJHqllGGRa/yW9RRPEuD9lZeQhcKLGVGwsaMuMJ6y/4TpXsXZ3QTDpv5vaMPLnbFo6F
+         wxTw==
+X-Received: by 10.67.5.202 with SMTP id co10mr11940212pad.68.1443466030157;
+        Mon, 28 Sep 2015 11:47:10 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:66:24f2:2685:8011])
-        by smtp.gmail.com with ESMTPSA id ol3sm6878411pbb.49.2015.09.28.11.41.25
+        by smtp.gmail.com with ESMTPSA id ja4sm20782989pbb.19.2015.09.28.11.47.09
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 28 Sep 2015 11:41:25 -0700 (PDT)
-In-Reply-To: <fb29b39adf14a702c5127d722d86647a3dc9c891.1443448748.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Mon, 28 Sep 2015 16:02:08 +0200")
+        Mon, 28 Sep 2015 11:47:09 -0700 (PDT)
+In-Reply-To: <vpq4mie1m3n.fsf@grenoble-inp.fr> (Matthieu Moy's message of
+	"Mon, 28 Sep 2015 19:37:32 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278742>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> When encountering broken symrefs, such as a stale remote HEAD (which can
-> happen if the active branch was renamed in the remote), it is more
-> helpful to remove those symrefs than to exit with an error.
+> It probably makes sense to do the later in the case of Git, so that
+> Junio doesn't get spammed when pushing topic branches to
+> https://github.com/gitster/git.
 
-I think this depends on the perspective.  One side of me says that a
-remote HEAD that points at refs/remotes/origin/topic that no longer
-exists is still giving me a valuable information and it should take
-a conscious action by the user to remove it, or evne better to
-repoint it to a more useful place.  And from that point of view,
-removing is not all that helpful.  Keeping them and not allowing
-them to exit with an error would be a real improvement.
-
-On the other hand, I can certainly understand a view that considers
-that such a dangling symbolic ref is merely a cruft like any other
-cruft, and "gc" is all about removing cruft.
-
-It just feels to me that this is a bit more valuable than other
-kinds of cruft, but maybe it is just me.
-
-
-
->
-> This fixes https://github.com/git-for-windows/git/issues/423
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/prune.c | 12 +++++++++++-
->  t/t6500-gc.sh   |  2 +-
->  2 files changed, 12 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/prune.c b/builtin/prune.c
-> index d6f664f..337b12a 100644
-> --- a/builtin/prune.c
-> +++ b/builtin/prune.c
-> @@ -6,6 +6,7 @@
->  #include "reachable.h"
->  #include "parse-options.h"
->  #include "progress.h"
-> +#include "refs.h"
->  
->  static const char * const prune_usage[] = {
->  	N_("git prune [-n] [-v] [--expire <time>] [--] [<head>...]"),
-> @@ -100,6 +101,7 @@ static void remove_temporary_files(const char *path)
->  int cmd_prune(int argc, const char **argv, const char *prefix)
->  {
->  	struct rev_info revs;
-> +	struct string_list broken_symrefs = STRING_LIST_INIT_DUP;
->  	struct progress *progress = NULL;
->  	const struct option options[] = {
->  		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
-> @@ -110,6 +112,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
->  		OPT_END()
->  	};
->  	char *s;
-> +	int i;
->  
->  	expire = ULONG_MAX;
->  	save_commit_buffer = 0;
-> @@ -136,7 +139,14 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
->  	if (show_progress)
->  		progress = start_progress_delay(_("Checking connectivity"), 0, 0, 2);
->  
-> -	mark_reachable_objects(&revs, 1, expire, progress, NULL);
-> +	revs.ignore_missing = 1;
-> +	mark_reachable_objects(&revs, 1, expire, progress, &broken_symrefs);
-> +	for (i = 0; i < broken_symrefs.nr; i++) {
-> +		char *path = broken_symrefs.items[i].string;
-> +		printf("Removing stale ref %s\n", path);
-> +		if (!show_only && delete_ref(path, NULL, REF_NODEREF))
-> +			die("Could not remove stale ref %s", path);
-> +	}
->  	stop_progress(&progress);
->  	for_each_loose_file_in_objdir(get_object_directory(), prune_object,
->  				      prune_cruft, prune_subdir, NULL);
-> diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-> index b736774..0ae4271 100755
-> --- a/t/t6500-gc.sh
-> +++ b/t/t6500-gc.sh
-> @@ -30,7 +30,7 @@ test_expect_success 'gc -h with invalid configuration' '
->  	test_i18ngrep "[Uu]sage" broken/usage
->  '
->  
-> -test_expect_failure 'gc removes broken refs/remotes/<name>/HEAD' '
-> +test_expect_success 'gc removes broken refs/remotes/<name>/HEAD' '
->  	git init remote &&
->  	(
->  		cd remote &&
+I won't enable it on github.com:gitster/git anyway, so I do not
+think that is a concern.  I thought what people are talking about
+was to add it on github.com:git/git, but have I been misreading the
+thread?  I do not even own the latter repository (I only can push
+into it).
