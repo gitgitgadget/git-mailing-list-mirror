@@ -1,112 +1,540 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Announcing Git for Windows 2.6.0
-Date: Tue, 29 Sep 2015 23:03:28 +0200
-Organization: gmx
-Message-ID: <3dba113ea1ed82a6e5e745a3d69dceaa@dscho.org>
+From: Michael Blume <blume.mike@gmail.com>
+Subject: Re: [PATCH 41/68] init: use strbufs to store paths
+Date: Tue, 29 Sep 2015 16:50:39 -0700
+Message-ID: <CAO2U3QjunOPoAbGSRjAmCwfk-TnoMveXOJhpb351eh1a_3Xp3A@mail.gmail.com>
+References: <20150924210225.GA23624@sigill.intra.peff.net> <20150924210736.GL30946@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git for Windows Mailing List <git-for-windows@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 29 23:03:39 2015
+Cc: Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 30 01:51:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zh23m-0006uw-0s
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 23:03:38 +0200
+	id 1Zh4fq-0003LA-GR
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 01:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546AbbI2VDd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Sep 2015 17:03:33 -0400
-Received: from mout.gmx.net ([212.227.15.18]:61221 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752302AbbI2VDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Sep 2015 17:03:32 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LkOeR-1aDbzP1LY3-00cMlK; Tue, 29 Sep 2015 23:03:28
- +0200
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:vWMIThhSoeSydiTjd0aFZUEpfwF+ybODaNVZi7LF0GHLBfzWb5v
- 48EhEB/9iAqtYiQLyx2rxnwkKf3clVPFKDpXWgv6p3EbgRgOIxQq7iz9S06LzKIM16YbFT0
- ezhi3UcrUjyL8Ox/9gRivEzaIB9jQrook5OLc/lssvBVqhKXcfiDGxeXl9tJMDNH/yrPvQQ
- oYI8T35zWvreM8oIcoY7Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3FmwUC0DzXw=:1XmP+fJQlo86eLRV6/BsdA
- BqLrfebGorxaznLNXWBbTKAyOcjlWJ/86/XY/S9n1xzpdSQfFh2oJiGCktI3rXhxy2O9oFl3p
- cAvy5gUG4bQrIzuxEy6YZ19omRjRBv7egJRQcoRY6s0GUeEMlY8iZSpx/yEs2BhQGRrV0T7MW
- +eRyZekaDxMCNollpwmoXDEQYtMztecHUUZaoYST47loysplPBy33lWI2Di9EGvxJgLtz3dLp
- /5MG8zKpeqMmOG6XNbrxKlQKzzQXbWrArP41nPbKDxteoPyJI7L+TZOVP4cJvO/IR9ZgptU96
- nsQkFPxsk+M2rr1pm9HMjXw8mxU7BqyxADa0AQQJcVMgA8/oJ3jzRgDLztviNl5UHHD+f7Eax
- Nz29dMjz6ENGcH+gL6psusnyoWGLugZbjOMoV91sOs5Mvv5EKh9FXpIgpqAgwCI3oSt2ksVn5
- Y7LMvpDRpXKIaE161EYcFcZgW3E4clmHdw3aAhzyUX0/oF8kFaKdx0de9sxDxfdvI5Vsop7b1
- 1de9bV0kHhXaZWwnUpLN41tWEnSzXPUckv3JijlSPmpq5xYmZHoIp3iVkbooIULrN7rLLMDXL
- tJ9R2Bea5cyxvAQfdSt18B1NpFSIL+ybr0biOzg39J106Yv/JbSQEY1Ds9NNuEWo9pMcDTkfD
- Rm6anpmf+ofpDFpg/Qyg3oPLOmL4Br4n1wsrdhbPz26jy38bBL5Ndv6YMp3aCjmQXvoxpLngT
- Vi0okiEoSZFAXte0ftBigc3yB7D1O595Irqa2ZbyKO1GNh0LbstQx/zIREkN9nZtdpKft2Fh 
+	id S1751084AbbI2XvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Sep 2015 19:51:01 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:34347 "EHLO
+	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750864AbbI2Xu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Sep 2015 19:50:59 -0400
+Received: by iofb144 with SMTP id b144so29562352iof.1
+        for <git@vger.kernel.org>; Tue, 29 Sep 2015 16:50:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=HkwfPor6RKcy2uGfmVBIOq2WMEAx34wDVaHEVxO2I1Q=;
+        b=kz6hw+cOnQuJfoz4QZMlq8g2AKsvLkiqzoFahfMoElcBqF+YHfeTm+a4YAp5FbR6pX
+         WPtxnqXComyj8O6le4RqBSrMc1AJBUdZItNx5o6LZlQrn/mRUBlClUh4bEI3HGjDLS+m
+         Hywzm5rRC/EiwHArp04kHfEHsSyxiPW5fMfsusAna6T11Dfhfkyae+lPX6dI819YiTrg
+         1cHna9VHHr+MZ7bVc7d0bvxxACtoBV2GOjeWYtaLYT1QaOl7Q3cO/G3cWQY1GZUMH1/b
+         yGVNi0L7vs2T9qTXC2Fg5fk+IHtBJ8jpv0uUtDrPzV6Ak4NuO9LCHnHJIbRSh1dv/yih
+         cwQg==
+X-Received: by 10.107.169.145 with SMTP id f17mr1569852ioj.104.1443570658919;
+ Tue, 29 Sep 2015 16:50:58 -0700 (PDT)
+Received: by 10.64.87.234 with HTTP; Tue, 29 Sep 2015 16:50:39 -0700 (PDT)
+In-Reply-To: <20150924210736.GL30946@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278836>
 
-Dear Git users,
+On Thu, Sep 24, 2015 at 2:07 PM, Jeff King <peff@peff.net> wrote:
+> The init code predates strbufs, and uses PATH_MAX-sized
+> buffers along with many manual checks on intermediate sizes
+> (some of which make magic assumptions, such as that init
+> will not create a path inside .git longer than 50
+> characters).
+>
+> We can simplify this greatly by using strbufs, which drops
+> some hard-to-verify strcpy calls.  Note that we need to
+> update probe_utf8_pathname_composition, too, as it assumes
+> we are passing a buffer large enough to append its probe
+> filenames (it now just takes a strbuf, which also gets rid
+> of the confusing "len" parameter, which was not the length of
+> "path" but rather the offset to start writing).
+>
+> Some of the conversion makes new calls to git_path_buf.
+> While we're in the area, let's also convert existing calls
+> to git_path to the safer git_path_buf (our existing calls
+> were passed to pretty tame functions, and so were not a
+> problem, but it's easy to be consistent and safe here).
+>
+> Note that we had an explicit test that "git init" rejects
+> long template directories. This comes from 32d1776 (init: Do
+> not segfault on big GIT_TEMPLATE_DIR environment variable,
+> 2009-04-18). We can drop the test_must_fail here, as we now
+> accept this and need only confirm that we don't segfault,
+> which was the original point of the test.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/init-db.c        | 174 ++++++++++++++++++++---------------------------
+>  compat/precompose_utf8.c |  12 ++--
+>  compat/precompose_utf8.h |   2 +-
+>  git-compat-util.h        |   2 +-
+>  t/t0001-init.sh          |   4 +-
+>  5 files changed, 87 insertions(+), 107 deletions(-)
+>
+> diff --git a/builtin/init-db.c b/builtin/init-db.c
+> index e7d0e31..cf6a3c8 100644
+> --- a/builtin/init-db.c
+> +++ b/builtin/init-db.c
+> @@ -36,10 +36,11 @@ static void safe_create_dir(const char *dir, int share)
+>                 die(_("Could not make %s writable by group"), dir);
+>  }
+>
+> -static void copy_templates_1(char *path, int baselen,
+> -                            char *template, int template_baselen,
+> +static void copy_templates_1(struct strbuf *path, struct strbuf *template,
+>                              DIR *dir)
+>  {
+> +       size_t path_baselen = path->len;
+> +       size_t template_baselen = template->len;
+>         struct dirent *de;
+>
+>         /* Note: if ".git/hooks" file exists in the repository being
+> @@ -49,77 +50,64 @@ static void copy_templates_1(char *path, int baselen,
+>          * with the way the namespace under .git/ is organized, should
+>          * be really carefully chosen.
+>          */
+> -       safe_create_dir(path, 1);
+> +       safe_create_dir(path->buf, 1);
+>         while ((de = readdir(dir)) != NULL) {
+>                 struct stat st_git, st_template;
+> -               int namelen;
+>                 int exists = 0;
+>
+> +               strbuf_setlen(path, path_baselen);
+> +               strbuf_setlen(template, template_baselen);
+> +
+>                 if (de->d_name[0] == '.')
+>                         continue;
+> -               namelen = strlen(de->d_name);
+> -               if ((PATH_MAX <= baselen + namelen) ||
+> -                   (PATH_MAX <= template_baselen + namelen))
+> -                       die(_("insanely long template name %s"), de->d_name);
+> -               memcpy(path + baselen, de->d_name, namelen+1);
+> -               memcpy(template + template_baselen, de->d_name, namelen+1);
+> -               if (lstat(path, &st_git)) {
+> +               strbuf_addstr(path, de->d_name);
+> +               strbuf_addstr(template, de->d_name);
+> +               if (lstat(path->buf, &st_git)) {
+>                         if (errno != ENOENT)
+> -                               die_errno(_("cannot stat '%s'"), path);
+> +                               die_errno(_("cannot stat '%s'"), path->buf);
+>                 }
+>                 else
+>                         exists = 1;
+>
+> -               if (lstat(template, &st_template))
+> -                       die_errno(_("cannot stat template '%s'"), template);
+> +               if (lstat(template->buf, &st_template))
+> +                       die_errno(_("cannot stat template '%s'"), template->buf);
+>
+>                 if (S_ISDIR(st_template.st_mode)) {
+> -                       DIR *subdir = opendir(template);
+> -                       int baselen_sub = baselen + namelen;
+> -                       int template_baselen_sub = template_baselen + namelen;
+> +                       DIR *subdir = opendir(template->buf);
+>                         if (!subdir)
+> -                               die_errno(_("cannot opendir '%s'"), template);
+> -                       path[baselen_sub++] =
+> -                               template[template_baselen_sub++] = '/';
+> -                       path[baselen_sub] =
+> -                               template[template_baselen_sub] = 0;
+> -                       copy_templates_1(path, baselen_sub,
+> -                                        template, template_baselen_sub,
+> -                                        subdir);
+> +                               die_errno(_("cannot opendir '%s'"), template->buf);
+> +                       strbuf_addch(path, '/');
+> +                       strbuf_addch(template, '/');
+> +                       copy_templates_1(path, template, subdir);
+>                         closedir(subdir);
+>                 }
+>                 else if (exists)
+>                         continue;
+>                 else if (S_ISLNK(st_template.st_mode)) {
+> -                       char lnk[256];
+> -                       int len;
+> -                       len = readlink(template, lnk, sizeof(lnk));
+> -                       if (len < 0)
+> -                               die_errno(_("cannot readlink '%s'"), template);
+> -                       if (sizeof(lnk) <= len)
+> -                               die(_("insanely long symlink %s"), template);
+> -                       lnk[len] = 0;
+> -                       if (symlink(lnk, path))
+> -                               die_errno(_("cannot symlink '%s' '%s'"), lnk, path);
+> +                       struct strbuf lnk = STRBUF_INIT;
+> +                       if (strbuf_readlink(&lnk, template->buf, 0) < 0)
+> +                               die_errno(_("cannot readlink '%s'"), template->buf);
+> +                       if (symlink(lnk.buf, path->buf))
+> +                               die_errno(_("cannot symlink '%s' '%s'"),
+> +                                         lnk.buf, path->buf);
+> +                       strbuf_release(&lnk);
+>                 }
+>                 else if (S_ISREG(st_template.st_mode)) {
+> -                       if (copy_file(path, template, st_template.st_mode))
+> -                               die_errno(_("cannot copy '%s' to '%s'"), template,
+> -                                         path);
+> +                       if (copy_file(path->buf, template->buf, st_template.st_mode))
+> +                               die_errno(_("cannot copy '%s' to '%s'"),
+> +                                         template->buf, path->buf);
+>                 }
+>                 else
+> -                       error(_("ignoring template %s"), template);
+> +                       error(_("ignoring template %s"), template->buf);
+>         }
+>  }
+>
+>  static void copy_templates(const char *template_dir)
+>  {
+> -       char path[PATH_MAX];
+> -       char template_path[PATH_MAX];
+> -       int template_len;
+> +       struct strbuf path = STRBUF_INIT;
+> +       struct strbuf template_path = STRBUF_INIT;
+> +       size_t template_len;
+>         DIR *dir;
+> -       const char *git_dir = get_git_dir();
+> -       int len = strlen(git_dir);
+>         char *to_free = NULL;
+>
+>         if (!template_dir)
+> @@ -132,26 +120,23 @@ static void copy_templates(const char *template_dir)
+>                 free(to_free);
+>                 return;
+>         }
+> -       template_len = strlen(template_dir);
+> -       if (PATH_MAX <= (template_len+strlen("/config")))
+> -               die(_("insanely long template path %s"), template_dir);
+> -       strcpy(template_path, template_dir);
+> -       if (template_path[template_len-1] != '/') {
+> -               template_path[template_len++] = '/';
+> -               template_path[template_len] = 0;
+> -       }
+> -       dir = opendir(template_path);
+> +
+> +       strbuf_addstr(&template_path, template_dir);
+> +       strbuf_complete(&template_path, '/');
+> +       template_len = template_path.len;
+> +
+> +       dir = opendir(template_path.buf);
+>         if (!dir) {
+>                 warning(_("templates not found %s"), template_dir);
+>                 goto free_return;
+>         }
+>
+>         /* Make sure that template is from the correct vintage */
+> -       strcpy(template_path + template_len, "config");
+> +       strbuf_addstr(&template_path, "config");
+>         repository_format_version = 0;
+>         git_config_from_file(check_repository_format_version,
+> -                            template_path, NULL);
+> -       template_path[template_len] = 0;
+> +                            template_path.buf, NULL);
+> +       strbuf_setlen(&template_path, template_len);
+>
+>         if (repository_format_version &&
+>             repository_format_version != GIT_REPO_VERSION) {
+> @@ -162,17 +147,15 @@ static void copy_templates(const char *template_dir)
+>                 goto close_free_return;
+>         }
+>
+> -       memcpy(path, git_dir, len);
+> -       if (len && path[len - 1] != '/')
+> -               path[len++] = '/';
+> -       path[len] = 0;
+> -       copy_templates_1(path, len,
+> -                        template_path, template_len,
+> -                        dir);
+> +       strbuf_addstr(&path, get_git_dir());
+> +       strbuf_complete(&path, '/');
+> +       copy_templates_1(&path, &template_path, dir);
+>  close_free_return:
+>         closedir(dir);
+>  free_return:
+>         free(to_free);
+> +       strbuf_release(&path);
+> +       strbuf_release(&template_path);
+>  }
+>
+>  static int git_init_db_config(const char *k, const char *v, void *cb)
+> @@ -199,28 +182,20 @@ static int needs_work_tree_config(const char *git_dir, const char *work_tree)
+>
+>  static int create_default_files(const char *template_path)
+>  {
+> -       const char *git_dir = get_git_dir();
+> -       unsigned len = strlen(git_dir);
+> -       static char path[PATH_MAX];
+>         struct stat st1;
+> +       struct strbuf buf = STRBUF_INIT;
+> +       char *path;
+>         char repo_version_string[10];
+>         char junk[2];
+>         int reinit;
+>         int filemode;
+>
+> -       if (len > sizeof(path)-50)
+> -               die(_("insane git directory %s"), git_dir);
+> -       memcpy(path, git_dir, len);
+> -
+> -       if (len && path[len-1] != '/')
+> -               path[len++] = '/';
+> -
+>         /*
+>          * Create .git/refs/{heads,tags}
+>          */
+> -       safe_create_dir(git_path("refs"), 1);
+> -       safe_create_dir(git_path("refs/heads"), 1);
+> -       safe_create_dir(git_path("refs/tags"), 1);
+> +       safe_create_dir(git_path_buf(&buf, "refs"), 1);
+> +       safe_create_dir(git_path_buf(&buf, "refs/heads"), 1);
+> +       safe_create_dir(git_path_buf(&buf, "refs/tags"), 1);
+>
+>         /* Just look for `init.templatedir` */
+>         git_config(git_init_db_config, NULL);
+> @@ -244,16 +219,16 @@ static int create_default_files(const char *template_path)
+>          */
+>         if (shared_repository) {
+>                 adjust_shared_perm(get_git_dir());
+> -               adjust_shared_perm(git_path("refs"));
+> -               adjust_shared_perm(git_path("refs/heads"));
+> -               adjust_shared_perm(git_path("refs/tags"));
+> +               adjust_shared_perm(git_path_buf(&buf, "refs"));
+> +               adjust_shared_perm(git_path_buf(&buf, "refs/heads"));
+> +               adjust_shared_perm(git_path_buf(&buf, "refs/tags"));
+>         }
+>
+>         /*
+>          * Create the default symlink from ".git/HEAD" to the "master"
+>          * branch, if it does not exist yet.
+>          */
+> -       strcpy(path + len, "HEAD");
+> +       path = git_path_buf(&buf, "HEAD");
+>         reinit = (!access(path, R_OK)
+>                   || readlink(path, junk, sizeof(junk)-1) != -1);
+>         if (!reinit) {
+> @@ -266,10 +241,8 @@ static int create_default_files(const char *template_path)
+>                   "%d", GIT_REPO_VERSION);
+>         git_config_set("core.repositoryformatversion", repo_version_string);
+>
+> -       path[len] = 0;
+> -       strcpy(path + len, "config");
+> -
+>         /* Check filemode trustability */
+> +       path = git_path_buf(&buf, "config");
+>         filemode = TEST_FILEMODE;
+>         if (TEST_FILEMODE && !lstat(path, &st1)) {
+>                 struct stat st2;
+> @@ -290,14 +263,13 @@ static int create_default_files(const char *template_path)
+>                 /* allow template config file to override the default */
+>                 if (log_all_ref_updates == -1)
+>                     git_config_set("core.logallrefupdates", "true");
+> -               if (needs_work_tree_config(git_dir, work_tree))
+> +               if (needs_work_tree_config(get_git_dir(), work_tree))
+>                         git_config_set("core.worktree", work_tree);
+>         }
+>
+>         if (!reinit) {
+>                 /* Check if symlink is supported in the work tree */
+> -               path[len] = 0;
+> -               strcpy(path + len, "tXXXXXX");
+> +               path = git_path_buf(&buf, "tXXXXXX");
+>                 if (!close(xmkstemp(path)) &&
+>                     !unlink(path) &&
+>                     !symlink("testing", path) &&
+> @@ -308,31 +280,35 @@ static int create_default_files(const char *template_path)
+>                         git_config_set("core.symlinks", "false");
+>
+>                 /* Check if the filesystem is case-insensitive */
+> -               path[len] = 0;
+> -               strcpy(path + len, "CoNfIg");
+> +               path = git_path_buf(&buf, "CoNfIg");
+>                 if (!access(path, F_OK))
+>                         git_config_set("core.ignorecase", "true");
+> -               probe_utf8_pathname_composition(path, len);
+> +               probe_utf8_pathname_composition(path);
+>         }
+>
+> +       strbuf_release(&buf);
+>         return reinit;
+>  }
+>
+>  static void create_object_directory(void)
+>  {
+> -       const char *object_directory = get_object_directory();
+> -       int len = strlen(object_directory);
+> -       char *path = xmalloc(len + 40);
+> +       struct strbuf path = STRBUF_INIT;
+> +       size_t baselen;
+> +
+> +       strbuf_addstr(&path, get_object_directory());
+> +       baselen = path.len;
+> +
+> +       safe_create_dir(path.buf, 1);
+>
+> -       memcpy(path, object_directory, len);
+> +       strbuf_setlen(&path, baselen);
+> +       strbuf_addstr(&path, "/pack");
+> +       safe_create_dir(path.buf, 1);
+>
+> -       safe_create_dir(object_directory, 1);
+> -       strcpy(path+len, "/pack");
+> -       safe_create_dir(path, 1);
+> -       strcpy(path+len, "/info");
+> -       safe_create_dir(path, 1);
+> +       strbuf_setlen(&path, baselen);
+> +       strbuf_addstr(&path, "/info");
+> +       safe_create_dir(path.buf, 1);
+>
+> -       free(path);
+> +       strbuf_release(&path);
+>  }
+>
+>  int set_git_dir_init(const char *git_dir, const char *real_git_dir,
+> diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+> index 95fe849..b4dd3c7 100644
+> --- a/compat/precompose_utf8.c
+> +++ b/compat/precompose_utf8.c
+> @@ -36,24 +36,28 @@ static size_t has_non_ascii(const char *s, size_t maxlen, size_t *strlen_c)
+>  }
+>
+>
+> -void probe_utf8_pathname_composition(char *path, int len)
+> +void probe_utf8_pathname_composition(struct strbuf *path)
+>  {
+>         static const char *auml_nfc = "\xc3\xa4";
+>         static const char *auml_nfd = "\x61\xcc\x88";
+> +       size_t baselen = path->len;
+>         int output_fd;
+>         if (precomposed_unicode != -1)
+>                 return; /* We found it defined in the global config, respect it */
+> -       strcpy(path + len, auml_nfc);
+> +       strbuf_addstr(path, auml_nfc);
+>         output_fd = open(path, O_CREAT|O_EXCL|O_RDWR, 0600);
+>         if (output_fd >= 0) {
+>                 close(output_fd);
+> -               strcpy(path + len, auml_nfd);
+> +               strbuf_setlen(path, baselen);
+> +               strbuf_addstr(path, auml_nfd);
+>                 precomposed_unicode = access(path, R_OK) ? 0 : 1;
+>                 git_config_set("core.precomposeunicode", precomposed_unicode ? "true" : "false");
+> -               strcpy(path + len, auml_nfc);
+> +               strbuf_setlen(path, baselen);
+> +               strbuf_addstr(path, auml_nfc);
+>                 if (unlink(path))
+>                         die_errno(_("failed to unlink '%s'"), path);
+>         }
+> +       strbuf_setlen(path, baselen);
+>  }
+>
+>
+> diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
+> index 3b73585..7fc7be5 100644
+> --- a/compat/precompose_utf8.h
+> +++ b/compat/precompose_utf8.h
+> @@ -27,7 +27,7 @@ typedef struct {
+>  } PREC_DIR;
+>
+>  void precompose_argv(int argc, const char **argv);
+> -void probe_utf8_pathname_composition(char *, int);
+> +void probe_utf8_pathname_composition(struct strbuf *path);
+>
+>  PREC_DIR *precompose_utf8_opendir(const char *dirname);
+>  struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *dirp);
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 348b9dc..712de7f 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -229,7 +229,7 @@ typedef unsigned long uintptr_t;
+>  #else
+>  #define precompose_str(in,i_nfd2nfc)
+>  #define precompose_argv(c,v)
+> -#define probe_utf8_pathname_composition(a,b)
+> +#define probe_utf8_pathname_composition(p)
+>  #endif
+>
+>  #ifdef MKDIR_WO_TRAILING_SLASH
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index 7de8d85..f91bbcf 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -202,8 +202,8 @@ test_expect_success 'init honors global core.sharedRepository' '
+>         x$(git config -f shared-honor-global/.git/config core.sharedRepository)
+>  '
+>
+> -test_expect_success 'init rejects insanely long --template' '
+> -       test_must_fail git init --template=$(printf "x%09999dx" 1) test
+> +test_expect_success 'init allows insanely long --template' '
+> +       git init --template=$(printf "x%09999dx" 1) test
+>  '
+>
+>  test_expect_success 'init creates a new directory' '
+> --
+> 2.6.0.rc3.454.g204ad51
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-it is my pleasure to announce that Git for Windows 2.6.0 is available (=
-see https://git-for-windows.github.io/ for details and download links).
+I see compile errors on my mac:
 
-Thank you, contributors!
+First a whole bunch of
 
-Changes since Git for Windows 2.5.3 (September 18th 2015)
+./compat/precompose_utf8.h:30:45: warning: declaration of 'struct
+strbuf' will not be visible outside of this function [-Wvisibility]
+void probe_utf8_pathname_composition(struct strbuf *path);
+                                            ^
+1 warning generated.
+    CC trace.o
+In file included from trace.c:25:
+In file included from ./cache.h:4:
+In file included from ./git-compat-util.h:228:
 
-New Features
+and then
 
-  =E2=80=A2 Comes with Git 2.6.0
-  =E2=80=A2 The WhoUses.exe tool to determine which process holds a loc=
-k on a
-    given file (which was shipped with Git for Windows 1.x) gets
-    installed alongside Git for Windows again.
-  =E2=80=A2 The values CurrentVersion, InstallPath and LibexecPath are =
-added to
-    the HKEY_LOCAL_MACHINE\Software\GitForWindows registry key to help
-    third-party add-ons to find us.
-  =E2=80=A2 When fetching or pushing with Git without a console, we now=
- fall
-    back to Git GUI's askpass helper to ask for pass phrases.
-  =E2=80=A2 When run through <INSTALL_PATH>\cmd\git.exe, Git will find =
-tools in
-    $HOME/bin now.
-
-Bug Fixes
-
-  =E2=80=A2 The portable version avoids DLL search path problems even w=
-hen
-    installed into a FAT filesystem.
-  =E2=80=A2 Configuring notepad as editor without configuring a width f=
-or
-    commit messages no longer triggers an error message.
-  =E2=80=A2 When using Windows' default console for Git Bash, the .sh f=
-ile
-    associations work again.
-  =E2=80=A2 Portable Git's README is now clearer about the need to run
-    post-install.bat when unpacking manually.
-  =E2=80=A2 We use the winpty trick now to run ipython interactively, t=
-oo.
-  =E2=80=A2 When the environment variable HOME is not set, we now fall =
-back
-    correctly to use HOMEDRIVE and HOMEPATH.
-  =E2=80=A2 The home directory is now set correctly when running as the=
- SYSTEM
-    user.
-  =E2=80=A2 The environment variable GIT_WORK_TREE may now differ in lo=
-wer/
-    upper case with the Git's idea of the current working directory.
-  =E2=80=A2 Running git clone --dissociate ... no longer locks the pack=
- files
-    during the repacking phase.
-  =E2=80=A2 Upstream cURL fixes for NTLM proxy issues ("Unknown SSL err=
-or")
-    were backported.
-
-Ciao,
-Johannes
+compat/precompose_utf8.c:39:6: error: conflicting types for
+'probe_utf8_pathname_composition'
+void probe_utf8_pathname_composition(struct strbuf *path)
+     ^
+compat/precompose_utf8.h:30:6: note: previous declaration is here
+void probe_utf8_pathname_composition(struct strbuf *path);
+     ^
+compat/precompose_utf8.c:48:19: warning: incompatible pointer types
+passing 'struct strbuf *' to parameter of type 'const char *'
+[-Wincompatible-pointer-types]
+        output_fd = open(path, O_CREAT|O_EXCL|O_RDWR, 0600);
+                         ^~~~
+/usr/include/sys/fcntl.h:470:22: note: passing argument to parameter here
+int     open(const char *, int, ...) __DARWIN_ALIAS_C(open);
+                         ^
+compat/precompose_utf8.c:53:32: warning: incompatible pointer types
+passing 'struct strbuf *' to parameter of type 'const char *'
+[-Wincompatible-pointer-types]
+                precomposed_unicode = access(path, R_OK) ? 0 : 1;
+                                             ^~~~
+/usr/include/unistd.h:425:25: note: passing argument to parameter here
+int      access(const char *, int);
+                            ^
+compat/precompose_utf8.c:57:14: warning: incompatible pointer types
+passing 'struct strbuf *' to parameter of type 'const char *'
+[-Wincompatible-pointer-types]
+                if (unlink(path))
+                           ^~~~
+/usr/include/unistd.h:488:25: note: passing argument to parameter here
+int      unlink(const char *);
+                            ^
+compat/precompose_utf8.c:58:42: warning: format specifies type 'char
+*' but the argument has type 'struct strbuf *' [-Wformat]
+                        die_errno(_("failed to unlink '%s'"), path);
+                                                       ~~     ^~~~
+5 warnings and 1 error generated.
+make: *** [compat/precompose_utf8.o] Error 1
