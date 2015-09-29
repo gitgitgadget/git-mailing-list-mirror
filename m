@@ -1,74 +1,68 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: Why not git reset --hard <path>?
-Date: Tue, 29 Sep 2015 00:06:41 -0700
-Message-ID: <CA+P7+xrzmDHyseGaJFkyUGUi=Uep0LLhPdZDeo3NeBBmXJTZWw@mail.gmail.com>
-References: <20150928203449.29024.qmail@ns.horizon.com> <xmqq612ucm3p.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xoTHFL_KU+qBz1KwytxqNTxf1JkjXK7_Ej79uLLnCWD8g@mail.gmail.com> <xmqqvbaub5s4.fsf@gitster.mtv.corp.google.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH/RFC] read-cache: fix file time comparisons with different
+ precisions
+Date: Tue, 29 Sep 2015 12:23:37 +0200
+Message-ID: <560A66A9.2010606@gmail.com>
+References: <5605D88A.20104@gmail.com> <560918F8.1080905@gmail.com> <763be6c1331ac57cf7dee3636d82f994@dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: George Spelvin <linux@horizon.com>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 29 09:07:09 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Sep 29 12:23:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zgp0G-00053L-1K
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 09:07:08 +0200
+	id 1Zgs4V-0003ja-Jz
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Sep 2015 12:23:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755467AbbI2HHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Sep 2015 03:07:04 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:33608 "EHLO
-	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755304AbbI2HHC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Sep 2015 03:07:02 -0400
-Received: by iofh134 with SMTP id h134so898524iof.0
-        for <git@vger.kernel.org>; Tue, 29 Sep 2015 00:07:01 -0700 (PDT)
+	id S934041AbbI2KXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Sep 2015 06:23:41 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:34449 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756227AbbI2KXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Sep 2015 06:23:39 -0400
+Received: by wicfx3 with SMTP id fx3so143083751wic.1
+        for <git@vger.kernel.org>; Tue, 29 Sep 2015 03:23:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Yd4KfY1rag6sv+G8TQuWMkgoMz9LXMMT3r+zWCt/ZoA=;
-        b=MmJurvfX6cijxF1lkQ3bA6zODpOZp2hXSZ+tktjKa1m3CEF5FNZh9slyVeGvP4xwj3
-         0826oKtXGTjqFYvxa5s7hSd1JzaGF5w2I3BToJDxSkYhO/lHUtjesyVisHGc6yXkhYVp
-         aAiVQvRAPsMRyBooRbmDJhRk6Z4BOOLb7eQlMEbelWa1/BAKiQPohjJTochWqoD63k4F
-         a3auKuaoO0PDl63Wvgc4zr8SXYT+q3TwHRS5rlVvRweqOLUYNspbArMUKCpUHk4vI6qm
-         HVBtJkBbWIYxg6FXKc6mVlxxs9aWittId0/73htIEkZSySuXpFRextjWqIdE5OZluoSt
-         yE2Q==
-X-Received: by 10.107.166.201 with SMTP id p192mr28597002ioe.0.1443510421181;
- Tue, 29 Sep 2015 00:07:01 -0700 (PDT)
-Received: by 10.107.132.155 with HTTP; Tue, 29 Sep 2015 00:06:41 -0700 (PDT)
-In-Reply-To: <xmqqvbaub5s4.fsf@gitster.mtv.corp.google.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=n/pXi/wAhGY1+OoMpQfd1FT8DC7ChjdSKH+Q8Q8qv9M=;
+        b=vluGyZ8LHT+sbP7MHTrhGklrictqlbzDqz2LWi7OyBysmHPOEXRTfpKHVXR+7hAPFd
+         IfIHfq/TdGtYU/kUc6A/fhzSF1b1z7AymB9LiFSetAbZzyyoULlBFcEWBw7Cacyi6c5f
+         3vOzLxt/xtST684j9xpzDEcwphODK/TLQLKPfNB5u0ylewjnKZaZF3xppjuFtjGYn5YM
+         OVnY45TYpVLLcyLK3Aej678zudN/qNDmr11ki5+2WnzPBlkREf09NE+W4XnhY/sDrcU1
+         OC+V4KMgvcDjvQ1S+bPt9J8Ud04gWOUTPB12Phexrr0SR7PuTz/FRKiRlSuXyg6rCA68
+         lqow==
+X-Received: by 10.180.230.197 with SMTP id ta5mr23084720wic.26.1443522217800;
+        Tue, 29 Sep 2015 03:23:37 -0700 (PDT)
+Received: from [10.1.116.51] (ns.dcon.de. [77.244.111.149])
+        by smtp.googlemail.com with ESMTPSA id lm3sm23079358wjc.39.2015.09.29.03.23.36
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Sep 2015 03:23:36 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.3.0
+In-Reply-To: <763be6c1331ac57cf7dee3636d82f994@dscho.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278817>
 
-On Mon, Sep 28, 2015 at 2:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I agree with you if we limit the scope to "reset --hard" that does
-> not mention any commit on the command line (or says "HEAD").
->
-> However, for things like:
->
->     $ git reset --hard HEAD^ Makefile
->     $ git reset --hard HEAD@{4.hours.ago} Makefile
->
-> I do not think "reset --hard" is a good match.  Conceptually, you
-> are grabbing what was stored in a given commit and checking that out
-> to your current workspace (that is, the index and the working tree).
->
+Am 28.09.2015 um 14:52 schrieb Johannes Schindelin:
+> Otherwise there would be that little loop-hole where (nsec % 1000) == 0 *by chance* and we assume the timestamps to be identical even if they are not.
 
-Agreed. I just get used to thinking about using it against HEAD. it's
-just weird to me that something which sometimes switches branches is
-also the thing to grab a version of a file.
+Yeah, but in this case the file would be racy, as racy-checks use
+the same comparison now.
 
-reset hard really would be weird in this case, because you really
-don't know if the user meant "rewind the history, but keep everything
-*except* that listed file..
+IMO change detection is so fundamental that it should Just Work,
+without having a plethora of config options that we need to explain
+to end users.
 
-That makes sense now that I think about it. Thanks.
+If that means that once in a million cases we need an extra content
+check to revalidate such falsely racy entries, that's fine with me.
 
-Regards,
-Jake
+Cheers,
+Karsten
