@@ -1,128 +1,95 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] Provide a dirname() function when NO_LIBGEN_H=YesPlease
-Date: Wed, 30 Sep 2015 16:50:34 +0200
-Organization: gmx
-Message-ID: <25a2598e756959f55f06ae6b4dc6f448e3b6b127.1443624188.git.johannes.schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email.perl: Fixed sending of many/huge changes/patches
+Date: Wed, 30 Sep 2015 10:51:25 -0700
+Message-ID: <xmqqr3lf94o2.fsf@gitster.mtv.corp.google.com>
+References: <1443597969-3962-1-git-send-email-polynomial-c@gentoo.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 30 16:50:46 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, juston.h.li@gmail.com,
+	Stefan Agner <stefan@agner.ch>
+To: Lars Wendler <polynomial-c@gentoo.org>
+X-From: git-owner@vger.kernel.org Wed Sep 30 19:51:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhIiS-0005aG-QE
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 16:50:45 +0200
+	id 1ZhLXj-0001vn-01
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 19:51:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753259AbbI3Ouk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Sep 2015 10:50:40 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54252 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752277AbbI3Oui (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Sep 2015 10:50:38 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MfBsk-1a0TDd0DwQ-00OpHe; Wed, 30 Sep 2015 16:50:35
- +0200
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:Vkmwx1wAwZFfcpRV1ZHoVEqosapvknrmOi2A720koLEgSBBnE8a
- E3A90CcHanepVsto87dsQNmgeZDsdtGj6KV3YKRUBak6CGtQsaQm090/SNaU1Sho0EUhlrQ
- YOhNLBbL3WIGHUHP759cSDXNDz2bv81Tli6EhKlL0h1t5sVHlxzUhJIx9kukDxj+ueuamDP
- lFzn0bEdpApzFX51SXtHg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1BXwAiKTHZc=:xSn9qZ+lBOicxedZU6JEJb
- 2mihQ4Xl3Ssv3Mme9nVQv2nQdXzzTB3j08hyDCkefIe6/afclSrLmF4/WVABPIN6UZUZpNKpf
- uKDDpWoAaDnaYsrWE4nigEImAVnoMz76ijuB6T/vSOugwDYz8hgCWjzxyKRshQheAujPWrpgf
- 7GGBmqHrjoBU1GsEwSYRbZC0xQf4Ub3iqwegh4OVTZCA2qRF+iTmsgaSIpukQ+HkS+zAXI8SG
- yOjAupvu218/euzp3q4aARpHN6favSswla5wirKnJ1TriFHGTVRPGbPJmIu07IbJPJ3NEW74y
- Yd5M4y5I0J3jDGtmR6zD4SG+oUd8zMzvYIDyYgJB2S8qzeEc40yiz/wvYR2cNz1GBTQDxW5lv
- Y4D/V323bZ6aHXjAeyCvyHbBAHANvzH7lwJ5ZPzBrXBHRtkv3V5xDaqzAV+lxDIdLVPkT4L8J
- IHu1vDXw6nkivvkEg1mF60UnBQ0AVReVxn4Dz8ShZt8bCX+aZRW6B9RMudzeIa/z8ZNFUChez
- NRBQLYSk6n0I6O5JQLhBv/lu/uHzc/UzvTa9PYd3Ck/jSy0Dk423AT3Uokzn1WXSNcis5BzEj
- Sk38Q544J3ppTUWE3xl0r0kzJLgoJ6PDeuLFl+EkmpdFY2eFZPIwwI9h8oY3PsBcvS/11FEhf
- c27/cx+NuCzgUBHz+v1GRIgwUUe8I/3/OXC2L/4nuPtSOifxuJwNK1HGiVn+vgfHd8RTS3vu9
- q6qda9fLJOWb0uvVRhZWwJP5Tg+VZARcZa/MHKi+3EuI4P9MN5SpNjiDP6oQXFxSp7j6+F7k 
+	id S932994AbbI3Rvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Sep 2015 13:51:47 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35767 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932610AbbI3Rva (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Sep 2015 13:51:30 -0400
+Received: by pacfv12 with SMTP id fv12so48011773pac.2
+        for <git@vger.kernel.org>; Wed, 30 Sep 2015 10:51:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=tp32tNhA+5yNz8zSvaw4GPFqt/k6h9CriHT99Dax+wg=;
+        b=nTtAiQ2ZW7uVapXcR6eTWGCIPAIwK/Z1pxeGAYf/eLe6ENYrtscFPwRHPv/2o6q6fd
+         QBf9cRlmft5kP0nUXMFS2w4klVTwFrEoq5okJXHBlP7Uq9yf9Q4vUmCrBRhvboFbwnSI
+         7kDRrbzyR7PzsU2VRtpnnMLHEX9/TadFG6L0/cDDWlu+nwMJv3V6XH2sjdifGnmp5KHo
+         k8larV2ldYx7ITvKMQLWkOKoBgfboOSxmP3LOGFraNtizS+/y/cY7icandPgVp3I9JQQ
+         DWB0lu/LL/WO/kjLr9194S0gVVt8dc+hoYTldI30LNHaP8TcIfrv6KfrdFEdjVvmfDKj
+         ATBw==
+X-Received: by 10.68.237.196 with SMTP id ve4mr6351390pbc.98.1443635490192;
+        Wed, 30 Sep 2015 10:51:30 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:2c4a:a656:af73:8140])
+        by smtp.gmail.com with ESMTPSA id uq5sm1411379pac.19.2015.09.30.10.51.28
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Wed, 30 Sep 2015 10:51:28 -0700 (PDT)
+In-Reply-To: <1443597969-3962-1-git-send-email-polynomial-c@gentoo.org> (Lars
+	Wendler's message of "Wed, 30 Sep 2015 09:26:09 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278848>
 
-When there is no `libgen.h` to our disposal, we miss the `dirname()`
-function.
+Lars Wendler <polynomial-c@gentoo.org> writes:
 
-So far, we only had one user of that function: credential-cache--daemon
-(which was only compiled when Unix sockets are available, anyway). But
-now we also have `builtin/am.c` as user, so we need it.
+> It seems to me that there is a size limit, after cutting down the patch
+> to ~16K, sending started to work. I cut it twice, once by removing lines
+> from the head and once from the bottom, in both cases at the size of
+> around 16K I could send the patch.
+>
+> See also original report:
+> http://permalink.gmane.org/gmane.comp.version-control.git/274569
+>
+> Reported-by: Juston Li <juston.h.li@gmail.com>
+> Tested-by: Markos Chandras <hwoarang@gentoo.org>
+> Signed-off-by: Lars Wendler <polynomial-c@gentoo.org>
+> ---
+>  git-send-email.perl | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index e3ff44b..e907e0ea 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1365,7 +1365,11 @@ Message-Id: $message_id
+>  		$smtp->mail( $raw_from ) or die $smtp->message;
+>  		$smtp->to( @recipients ) or die $smtp->message;
+>  		$smtp->data or die $smtp->message;
+> -		$smtp->datasend("$header\n$message") or die $smtp->message;
+> +		$smtp->datasend("$header\n") or die $smtp->message;
+> +		my @lines = split /^/, $message;
+> +		foreach my $line (@lines) {
+> +			$smtp->datasend("$line") or die $smtp->message;
+> +		}
 
-Since `dirname()` is a sibling of `basename()`, we simply put our very
-own `gitdirname()` implementation next to `gitbasename()` and use it
-if `NO_LIBGEN_H` has been set.
+Thanks.  One and a half comments.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+ * If 16k is the limit, and smtp payload line limit is much much
+   shorter than that, is it sensible to send data line by line?
 
-	I stumbled over the compile warning when upgrading Git for Windows
-	to 2.6.0. There was a left-over NO_LIBGEN_H=YesPlease (which we
-	no longer need in Git for Windows 2.x), but it did point to the
-	fact that we use `dirname()` in builtin/am.c now, so we better
-	have a fall-back implementation for platforms without libgen.h.
+ * Has this been reported to Net::Cmd::datasend() upstream?
 
-	I tested this implementation a bit, but I still would appreciate
-	a few eye-balls to go over it.
-
- compat/basename.c | 26 ++++++++++++++++++++++++++
- git-compat-util.h |  2 ++
- 2 files changed, 28 insertions(+)
-
-diff --git a/compat/basename.c b/compat/basename.c
-index d8f8a3c..10dba38 100644
---- a/compat/basename.c
-+++ b/compat/basename.c
-@@ -13,3 +13,29 @@ char *gitbasename (char *path)
- 	}
- 	return (char *)base;
- }
-+
-+char *gitdirname(char *path)
-+{
-+	char *p = path, *slash, c;
-+
-+	/* Skip over the disk name in MSDOS pathnames. */
-+	if (has_dos_drive_prefix(p))
-+		p += 2;
-+	/* POSIX.1-2001 says dirname("/") should return "/" */
-+	slash = is_dir_sep(*p) ? ++p : NULL;
-+	while ((c = *(p++)))
-+		if (is_dir_sep(c)) {
-+			char *tentative = p - 1;
-+
-+			/* POSIX.1-2001 says to ignore trailing slashes */
-+			while (is_dir_sep(*p))
-+				p++;
-+			if (*p)
-+				slash = tentative;
-+		}
-+
-+	if (!slash)
-+		return ".";
-+	*slash = '\0';
-+	return path;
-+}
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f649e81..8b01aa5 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -253,6 +253,8 @@ struct itimerval {
- #else
- #define basename gitbasename
- extern char *gitbasename(char *);
-+#define dirname gitdirname
-+extern char *gitdirname(char *);
- #endif
- 
- #ifndef NO_ICONV
--- 
-2.5.3.windows.1.3.gc322723
+>  		$smtp->dataend() or die $smtp->message;
+>  		$smtp->code =~ /250|200/ or die "Failed to send $subject\n".$smtp->message;
+>  	}
