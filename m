@@ -1,72 +1,71 @@
-From: Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH] gitk: add missing accelerators
-Date: Wed, 30 Sep 2015 21:50:11 +0200
-Message-ID: <1443642611-11827-1-git-send-email-dev+git@drbeat.li>
-Cc: Beat Bolli <dev+git@drbeat.li>, Paul Mackerras <paulus@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 30 21:50:28 2015
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] rebase: accept indented comments (fixes regression)
+Date: Wed, 30 Sep 2015 21:50:37 +0200
+Message-ID: <vpqh9mbhek2.fsf@grenoble-inp.fr>
+References: <1443600661-19391-1-git-send-email-Matthieu.Moy@imag.fr>
+	<xmqqd1wz9402.fsf@gitster.mtv.corp.google.com>
+	<xmqqy4fn7m2s.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Galan =?iso-8859-1?Q?R=E9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 30 21:50:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhNOV-0004zt-O5
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 21:50:28 +0200
+	id 1ZhNOs-0005MH-MX
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 21:50:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932442AbbI3TuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Sep 2015 15:50:24 -0400
-Received: from mx1.2b3w.ch ([92.42.186.250]:60244 "EHLO mx1.2b3w.ch"
+	id S932544AbbI3Tur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Sep 2015 15:50:47 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:46299 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932581AbbI3TuW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Sep 2015 15:50:22 -0400
-Received: from mx1.2b3w.ch (localhost [127.0.0.1])
-	by mx1.2b3w.ch (Postfix) with ESMTP id BB14AC3448;
-	Wed, 30 Sep 2015 21:50:18 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.2
-Received: from drbeat.li (178-241-153-5.dyn.cable.fcom.ch [5.153.241.178])
-	by mx1.2b3w.ch (Postfix) with ESMTPSA id 9B51BC3447;
-	Wed, 30 Sep 2015 21:50:18 +0200 (CEST)
-Received: by drbeat.li (Postfix, from userid 1000)
-	id 70D801FDF2; Wed, 30 Sep 2015 21:50:18 +0200 (CEST)
-X-Mailer: git-send-email 2.6.0
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S932257AbbI3Tuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Sep 2015 15:50:46 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8UJoY4g029498
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 30 Sep 2015 21:50:34 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8UJobFD017212;
+	Wed, 30 Sep 2015 21:50:37 +0200
+In-Reply-To: <xmqqy4fn7m2s.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 30 Sep 2015 12:18:19 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 30 Sep 2015 21:50:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t8UJoY4g029498
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1444247438.23606@d6Vn+PdDTLUpLIhOGXfgaQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278864>
 
-In d99b4b0de27a ("gitk: Accelerators for the main menu", 2015-09-09),
-accelerators were added to allow efficient keyboard navigation. One
-instance of the strings "Edit view..." and "Delete view" were left
-without the ampersand.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Add the missing ampersand characters to unbreak our international
-users.
+> +		pick|p|drop|d|reword|r|edit|e|squash|s|fixup|f)
+> +			if ! check_commit_sha "${rest%% *}" "$lineno" "$1"
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-Cc: Paul Mackerras <paulus@samba.org>
----
- gitk-git/gitk | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This does not pass my "tabs" test, as it parses the sha1 out of the line
+assuming it's separated with a space. It's used in other places of the
+code, but tabs still seem to work more or less by chance (they are not
+parsed properly by transform_todo_ids, but then they are understood by
+do_next).
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 2028b55..fcc606e 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -12452,8 +12452,8 @@ if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd ne {}} {
-     set viewchanged(1) 0
-     set vdatemode(1) 0
-     addviewmenu 1
--    .bar.view entryconf [mca "Edit view..."] -state normal
--    .bar.view entryconf [mca "Delete view"] -state normal
-+    .bar.view entryconf [mca "&Edit view..."] -state normal
-+    .bar.view entryconf [mca "&Delete view"] -state normal
- }
- 
- if {[info exists permviews]} {
+I changed it to
+
+	while read -r command sha1 rest
+
+which is a bit more lazy.
+
 -- 
-2.6.0
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
