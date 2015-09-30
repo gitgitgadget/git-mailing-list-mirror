@@ -1,71 +1,106 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] rebase: accept indented comments (fixes regression)
-Date: Wed, 30 Sep 2015 21:50:37 +0200
-Message-ID: <vpqh9mbhek2.fsf@grenoble-inp.fr>
-References: <1443600661-19391-1-git-send-email-Matthieu.Moy@imag.fr>
-	<xmqqd1wz9402.fsf@gitster.mtv.corp.google.com>
-	<xmqqy4fn7m2s.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 41/68] init: use strbufs to store paths
+Date: Wed, 30 Sep 2015 13:00:56 -0700
+Message-ID: <xmqqh9mb7k3r.fsf@gitster.mtv.corp.google.com>
+References: <20150924210225.GA23624@sigill.intra.peff.net>
+	<20150924210736.GL30946@sigill.intra.peff.net>
+	<CAO2U3QjunOPoAbGSRjAmCwfk-TnoMveXOJhpb351eh1a_3Xp3A@mail.gmail.com>
+	<20150930002347.GA23406@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Galan =?iso-8859-1?Q?R=E9mi?= 
-	<remi.galan-alfonso@ensimag.grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 30 21:50:57 2015
+Cc: Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 30 22:01:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhNOs-0005MH-MX
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 21:50:51 +0200
+	id 1ZhNYm-00060d-Me
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 22:01:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932544AbbI3Tur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Sep 2015 15:50:47 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:46299 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932257AbbI3Tuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Sep 2015 15:50:46 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t8UJoY4g029498
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 30 Sep 2015 21:50:34 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t8UJobFD017212;
-	Wed, 30 Sep 2015 21:50:37 +0200
-In-Reply-To: <xmqqy4fn7m2s.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 30 Sep 2015 12:18:19 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 30 Sep 2015 21:50:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t8UJoY4g029498
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1444247438.23606@d6Vn+PdDTLUpLIhOGXfgaQ
+	id S932760AbbI3UA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Sep 2015 16:00:59 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:34165 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932442AbbI3UA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Sep 2015 16:00:58 -0400
+Received: by padhy16 with SMTP id hy16so49820082pad.1
+        for <git@vger.kernel.org>; Wed, 30 Sep 2015 13:00:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=TXbiuv1XaxXairEtd+0/+lO25NoEf+offaW5saFXnRM=;
+        b=z3mSvZS0DgPqDOj9F9v72ivjVKuYf17P+XjT2SeWlg8JzLIOAw0/SvZDMnERDdTb5n
+         PO8Ghf4eRafKECcwMs841FIJXpGA3WNtWY8dSsr5AMb9pj6dvSXhyb0s5e5mFZgUAZSJ
+         nYXn3LTv8cUF6K+mTUAe86IteAjyEJCfdTdRPdtt15jrYYiULgPjxb3xmSbSY/tZYsd8
+         wJtn0buPUXwgOElqkzW/1qJaIzNL/ykeWV+OjA9L+Yw0XWRkWj+5lsamnKcZfb+MMzYz
+         3fDsWdoczKl5dSzes5EPSLT9S1WrcACxgT7BBmqMUyVGPDElyJNneW+UM9+xN/lYN9NG
+         Fp3w==
+X-Received: by 10.68.243.99 with SMTP id wx3mr6963799pbc.33.1443643257672;
+        Wed, 30 Sep 2015 13:00:57 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:2c4a:a656:af73:8140])
+        by smtp.gmail.com with ESMTPSA id z13sm2245686pas.34.2015.09.30.13.00.56
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 30 Sep 2015 13:00:56 -0700 (PDT)
+In-Reply-To: <20150930002347.GA23406@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 29 Sep 2015 20:23:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278865>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> +		pick|p|drop|d|reword|r|edit|e|squash|s|fixup|f)
-> +			if ! check_commit_sha "${rest%% *}" "$lineno" "$1"
+> On Tue, Sep 29, 2015 at 04:50:39PM -0700, Michael Blume wrote:
+>
+>> I see compile errors on my mac:
+>> 
+>> First a whole bunch of
+>> 
+>> ./compat/precompose_utf8.h:30:45: warning: declaration of 'struct
+>> strbuf' will not be visible outside of this function [-Wvisibility]
+>> void probe_utf8_pathname_composition(struct strbuf *path);
+>
+> Wow, my patch isn't even close to reasonable. I didn't realize because
+> we do not compile this code at all for non-Mac platforms. Sorry.
 
-This does not pass my "tabs" test, as it parses the sha1 out of the line
-assuming it's separated with a space. It's used in other places of the
-code, but tabs still seem to work more or less by chance (they are not
-parsed properly by transform_todo_ids, but then they are understood by
-do_next).
+Perhaps the way we completely stub out the platform specific helpers
+contributes to this kind of gotchas?  I am wondering how much additional
+safety we would gain if we start doing something like this.
 
-I changed it to
+Two things to note:
 
-	while read -r command sha1 rest
+ * "struct strbuf" needs to be visible when the compiler sees this
+   part, which is an indication of the same issue shown in the above
+   error message, is not addressed.
 
-which is a bit more lazy.
+ * precompose_str() does not seem to be defined or used, hence
+   removed.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+ git-compat-util.h | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 712de7f..6710ff7 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -227,9 +227,11 @@ typedef unsigned long uintptr_t;
+ #ifdef PRECOMPOSE_UNICODE
+ #include "compat/precompose_utf8.h"
+ #else
+-#define precompose_str(in,i_nfd2nfc)
+-#define precompose_argv(c,v)
+-#define probe_utf8_pathname_composition(p)
++static inline void precompose_argv(int, const char **);
++static inline void probe_utf8_pathname_composition(struct strbuf *buf)
++{
++	; /* no-op */
++}
+ #endif
+ 
+ #ifdef MKDIR_WO_TRAILING_SLASH
