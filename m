@@ -1,158 +1,66 @@
-From: Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH] rebase: accept indented comments (fixes regression)
-Date: Wed, 30 Sep 2015 11:58:52 +0200 (CEST)
-Message-ID: <310795808.1397218.1443607132172.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-References: <1443600661-19391-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Peter Vasil <peter.vasil@posteo.de>
+Subject: gitk crashes with german translation
+Date: Wed, 30 Sep 2015 09:58:14 +0000 (UTC)
+Message-ID: <loom.20150930T115122-885@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 30 11:57:10 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 30 12:03:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhE8L-0007E0-O2
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 11:57:10 +0200
+	id 1ZhEEo-0004k6-UH
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 12:03:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756018AbbI3J46 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Sep 2015 05:56:58 -0400
-Received: from zm-etu-ensimag-1.grenet.fr ([130.190.244.117]:57415 "EHLO
-	zm-etu-ensimag-1.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755983AbbI3J44 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Sep 2015 05:56:56 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id D00142279;
-	Wed, 30 Sep 2015 11:56:51 +0200 (CEST)
-Received: from zm-smtpout-1.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-1.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9kfLd9WSfrRi; Wed, 30 Sep 2015 11:56:51 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-1.grenet.fr (Postfix) with ESMTP id B870A21F8;
-	Wed, 30 Sep 2015 11:56:51 +0200 (CEST)
-In-Reply-To: <1443600661-19391-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Originating-IP: [130.190.242.136]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF41 (Linux)/8.0.9_GA_6191)
-Thread-Topic: rebase: accept indented comments (fixes regression)
-Thread-Index: vfJpqAM/CQi3sRgUK7NIfkI1tiL6ag==
+	id S1755886AbbI3KDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Sep 2015 06:03:39 -0400
+Received: from plane.gmane.org ([80.91.229.3]:54889 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932200AbbI3KAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Sep 2015 06:00:10 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ZhEB9-0001QT-EB
+	for git@vger.kernel.org; Wed, 30 Sep 2015 12:00:04 +0200
+Received: from 46.231.181.198 ([46.231.181.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 30 Sep 2015 12:00:03 +0200
+Received: from peter.vasil by 46.231.181.198 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 30 Sep 2015 12:00:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 46.231.181.198 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.42 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278844>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
-> With Git <2.0.6, 'git rebase' used to accept lines starting with
-> whitespaces followed with '#' as a comment. This was broken by
-> 804098b (git rebase -i: add static check for commands and SHA-1,
-> 2015-06-29), which introduced additional checks on the TODO-list usin=
-g
-> "git stripspaces" which only strips comments starting at the first
-> column.
->
-> Whether it's a good thing to accept indented comments is
-> debatable (other commands like "git commit" do not accept them), but =
-we
-> already accepted them in the past, and some people and scripts rely o=
-n
-> this behavior. Also, a line starting with space followed by a '#' can=
-not
-> have any meaning other than being a comment, hence it doesn't harm to
-> accept them as comments.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Hi list,
 
-Thank you for the patch, and sorry for the introduced regression.
+When I try to run "gitk --all" on Mac with German language settings I get
+the following error:
 
-R=C3=A9mi
+Error in startup script: bad menu entry index "Ansicht bearbeiten ..."
+    while executing
+".bar.view entryconf [mca "Edit view..."] -state normal"
+    invoked from within
+"if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd ne {}} {
+    # create a view for the files/dirs specified on the command line
+    se..."
+    (file "/usr/local/bin/gitk" line 12442)
 
-> ---
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> >> I know you alluded to preprocess what is fed to stripspace, but I
-> >> wonder if we can remove the misguided call to stripspace in the
-> >> first place and do something like the attached instead.
-> >>
-> >> git-rebase--interactive.sh | 3 +--
-> >> 1 file changed, 1 insertion(+), 2 deletions(-)
-> >>
-> >> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.=
-sh
-> >> index f01637b..a64f77a 100644
-> >> --- a/git-rebase--interactive.sh
-> >> +++ b/git-rebase--interactive.sh
-> >> @@ -886,7 +886,6 @@ check_commit_sha () {
-> >> # from the todolist in stdin
-> >> check_bad_cmd_and_sha () {
-> >> retval=3D0
-> >> - git stripspace --strip-comments |
-> >> (
-> >> while read -r line
-> >> do
-> >> @@ -896,7 +895,7 @@ check_bad_cmd_and_sha () {
-> >> sha1=3D$2
-> >>
-> >> case $command in
-> >> - ''|noop|x|"exec")
-> >> + '#'*|''|noop|x|"exec")
-> >> # Doesn't expect a SHA-1
-> >> ;;
-> >> pick|p|drop|d|reword|r|edit|e|squash|s|fixup|f)
-> >
-> > Nah, that would not work, as I misread the "split only at SP" manua=
-l
-> > parsing of $line.
->
-> OK, let's go for the solution I seem to be able to get right even wit=
-h
-> low cafeine ;-).
->
-> git-rebase--interactive.sh | 3 +++
-> t/t3404-rebase-interactive.sh | 10 ++++++++++
-> 2 files changed, 13 insertions(+)
->
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index f01637b..55adf78 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -886,6 +886,9 @@ check_commit_sha () {
-> # from the todolist in stdin
-> check_bad_cmd_and_sha () {
-> retval=3D0
-> + # git rebase -i accepts comments preceeded by spaces, while
-> + # stripspace does not.
-> + sed 's/^[[:space:]]*//' |
-> git stripspace --strip-comments |
-> (
-> while read -r line
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interacti=
-ve.sh
-> index d26e3f5..ac5bac3 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1227,6 +1227,16 @@ test_expect_success 'static check of bad comma=
-nd' '
-> test C =3D $(git cat-file commit HEAD^ | sed -ne \$p)
-> '
->
-> +test_expect_success 'indented comments are accepted' '
-> + rebase_setup_and_clean indented-comment &&
-> + write_script add-indent.sh <<-\EOF &&
-> + printf "\n \t # comment\n" >>$1
-> + EOF
-> + test_set_editor "$(pwd)/add-indent.sh" &&
-> + git rebase -i HEAD^ &&
-> + test E =3D $(git cat-file commit HEAD | sed -ne \$p)
-> +'
-> +
-> cat >expect <<EOF
-> Warning: the SHA-1 is missing or isn't a commit in the following line=
-:
-> - edit XXXXXXX False commit
-> --
-> 2.6.0.rc2.24.g231a9a1.dirty
+I use git version 2.6.0
+
+If I remove the folder with translations in order to use the english version,
+ gitk does not crash.
+
+Cheers,
+Peter
