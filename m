@@ -1,9 +1,9 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/8] run-command: add an asynchronous parallel child processor
-Date: Tue, 29 Sep 2015 20:12:31 -0700
-Message-ID: <xmqqa8s4a9cw.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 5/8] sigchain: add command to pop all common signals
+Date: Tue, 29 Sep 2015 22:23:21 -0700
+Message-ID: <xmqq37xwa3au.fsf@gitster.mtv.corp.google.com>
 References: <1443482046-25569-1-git-send-email-sbeller@google.com>
-	<1443482046-25569-7-git-send-email-sbeller@google.com>
+	<1443482046-25569-6-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
@@ -11,156 +11,96 @@ Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
 	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
 	ericsunshine@gmail.com
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Sep 30 05:12:40 2015
+X-From: git-owner@vger.kernel.org Wed Sep 30 07:23:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zh7ot-0001lH-6k
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 05:12:39 +0200
+	id 1Zh9rW-0003VU-34
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Sep 2015 07:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752256AbbI3DMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Sep 2015 23:12:35 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:34789 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751263AbbI3DMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Sep 2015 23:12:34 -0400
-Received: by padhy16 with SMTP id hy16so25060923pad.1
-        for <git@vger.kernel.org>; Tue, 29 Sep 2015 20:12:34 -0700 (PDT)
+	id S1753432AbbI3FXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Sep 2015 01:23:25 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:32879 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753416AbbI3FXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Sep 2015 01:23:24 -0400
+Received: by pacex6 with SMTP id ex6so28734914pac.0
+        for <git@vger.kernel.org>; Tue, 29 Sep 2015 22:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=cxm6ZFc1seuiQ3b/bQx674/3MJ7abdht6Cz0Fc+z4o4=;
-        b=NsjAcWtPZtsnfBegv/4GskUWzlwz823rb6aax6H0tc+mpYjkJmpjRxFohMpThh8WsX
-         v7aDx/eVig6aa9MxiThzONBcAPHf1Mx4Mx2lDzMkeBV6R63DVlLm5RwVboLZBBgACCNK
-         hbVf0HPlyh9xZYkssDPCuUfch7YGUdIlKcTu4VH3Fa54Z2TrTtyJSVioJmw+rIEtURnj
-         RIvYUPlT9QMref69yOj+S65uj1B5J6O2R/TriaLvHJYQUZLRo9W1x2XSSbuOrjAiVAqL
-         Ild8QRF3Taincw4Wc2WzWziSxDutNHLrk9Fww4QP0LUEUJRp1hBD6bV0q4gZTMOXu0GC
-         PNWQ==
-X-Received: by 10.68.100.36 with SMTP id ev4mr1822651pbb.119.1443582753901;
-        Tue, 29 Sep 2015 20:12:33 -0700 (PDT)
+        bh=7NfYGSIFCzyPIgGW6sOX8hld3mtvUIsM/6oQ6fQuf6M=;
+        b=hUP8oAD/OPQlM1NM9jc6z0aHo72TvjFnPe5UQnFegLmwTlvglTrT6crHKqGkfxp2GA
+         2+NBturHrlP/sXqXAzl+WeneChv2t8CM4JizwJQNum4dWiL37O1DbwI4i0Vsi0V1wTcM
+         1R+2D6k/rnVt0/mJ72eUPs9/91T5+nqS1YOCOWiwlSrd/NFxP+ggzR0qdcJreKTV15vO
+         QfKEU9u/GshmphfZomu3oQRTHcBBxvMc/jYOD5EosVvqaXvQKhpOo0nz7tez21h0AupX
+         2r5kurZ0BXdwfqakRnrYgfxdi/hlVP4kbMtCHZRfuEko5icB9I0p3/xu/xhg5J4HyKbf
+         DqFg==
+X-Received: by 10.68.204.37 with SMTP id kv5mr2510223pbc.64.1443590603638;
+        Tue, 29 Sep 2015 22:23:23 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:2c4a:a656:af73:8140])
-        by smtp.gmail.com with ESMTPSA id rb8sm28235016pbb.63.2015.09.29.20.12.32
+        by smtp.gmail.com with ESMTPSA id eg5sm29019517pac.30.2015.09.29.22.23.22
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 29 Sep 2015 20:12:32 -0700 (PDT)
-In-Reply-To: <1443482046-25569-7-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 28 Sep 2015 16:14:04 -0700")
+        Tue, 29 Sep 2015 22:23:22 -0700 (PDT)
+In-Reply-To: <1443482046-25569-6-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 28 Sep 2015 16:14:03 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278839>
 
 Stefan Beller <sbeller@google.com> writes:
 
-> +	while (1) {
-> +		int i;
-> +		int output_timeout = 100;
-> +		int spawn_cap = 4;
+> The new method removes all common signal handlers that were installed
+> by sigchain_push.
+>
+> CC: Jeff King <peff@peff.net>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  sigchain.c | 9 +++++++++
+>  sigchain.h | 1 +
+>  2 files changed, 10 insertions(+)
+
+Sounds like a good idea, as you need to clean them all up if you did
+push_common() and ended up not receiving any signal.
+
+This is merely pure aesthetics, but I somehow thought that ordering
+them in the reverse as listed in push_common() might make more
+sense, though.
+
+Thanks.
+
+>
+> diff --git a/sigchain.c b/sigchain.c
+> index faa375d..9262307 100644
+> --- a/sigchain.c
+> +++ b/sigchain.c
+> @@ -50,3 +50,12 @@ void sigchain_push_common(sigchain_fun f)
+>  	sigchain_push(SIGQUIT, f);
+>  	sigchain_push(SIGPIPE, f);
+>  }
 > +
-> +		if (!no_more_task) {
-> +			for (i = 0; i < spawn_cap; i++) {
-> +				int code;
-> +				if (pp->nr_processes == pp->max_processes)
-> +					break;
-> +
-> +				code = pp_start_one(pp);
-> +				if (!code)
-> +					continue;
-> +				if (code < 0) {
-> +					pp->shutdown = 1;
-> +					kill_children(pp, SIGTERM);
-> +				}
-> +				no_more_task = 1;
-> +				break;
-> +			}
-> +		}
-> +		if (no_more_task && !pp->nr_processes)
-> +			break;
-
-I may have comments on other parts of this patch, but I noticed this
-a bit hard to read while reading the end result.
-
-Losing the outer "if (!no_more_task)" and replacing the above with
-
-	for (no_more_task = 0, i = 0;
-             !no_more_task && i < spawn_cap;
-             i++) {
-        	... do things that may or may not set
-                ... no_more_task
-	}
-	if (no_more_task && ...)
-        	break;
-
-would make it clear that regardless of spawn_cap, no_more_task is
-honored.
-
-Also I think that having the outer "if (!no_more_task)" and not
-having "no_more_task = 0" after each iteration is buggy.  Even when
-next_task() told start_one() that it does not have more tasks for
-now, as long as there are running processes, it is entirely plausible
-that next call to next_task() can return "now we have some more task
-to do".
-
-Although I think it would make it unsightly, if you want to have the
-large indentation that protects the spawn_cap loop from getting
-entered, the condition would be 
-
-	if (!pp->shutdown) {
-		for (... spawn_cap loop ...) {
-                	...
-		}
-	}
-
-That structure could make sense.  But even then I would probably
-write it more like
-
-	...
-	int spawn_cap = 4;
-
-	pp = pp_init(...);
-        while (1) {
-        	int no_more_task = 0;
-
-                for (i = 0;
-                     !no_more_task && !pp->shutdown && i < spawn_cap;
-                     i++) {
-			...
-                        code = start_one();
-                        ... set no_more_task to 1 as needed
-                        ... set pp->shutdown to 1 as needed
-		}
-                if (no_more_task && !pp->nr_processes)
-			break;
-		buffer_stderr(...);
-                output(...);
-                collect(...);
-	}
-
-That is, you need to have two independent conditions that tell you
-not to spawn any new task:
-
- (1) You called start_one() repeatedly and next_task() said "nothing
-     more for now", so you know calling start_one() one more time
-     without changing other conditions (like draining output from
-     running processes and culling finished ones) will not help.
-
-     Letting other parts of the application that uses this scheduler
-     loop (i.e. drain output, cull finished process, etc.) may
-     change the situation and you _do_ need to call start_one() when
-     the next_task() merely said "nothing more for now".
-
-     That is what no_more_task controls.
-
- (2) The application said "I want the system to be gracefully shut
-     down".  next_task() may also have said "nothing more for now"
-     and you may have set no_more_task in response to it, but unlike
-     (1) above, draining and culling must be done only to shut the
-     system down, the application does not want new processes to be
-     added.  You do not want to enter the spawn_cap loop when it
-     happens.
-
-     That is what pp->shutdown controls.
+> +void sigchain_pop_common(void)
+> +{
+> +	sigchain_pop(SIGINT);
+> +	sigchain_pop(SIGHUP);
+> +	sigchain_pop(SIGTERM);
+> +	sigchain_pop(SIGQUIT);
+> +	sigchain_pop(SIGPIPE);
+> +}
+> diff --git a/sigchain.h b/sigchain.h
+> index 618083b..138b20f 100644
+> --- a/sigchain.h
+> +++ b/sigchain.h
+> @@ -7,5 +7,6 @@ int sigchain_push(int sig, sigchain_fun f);
+>  int sigchain_pop(int sig);
+>  
+>  void sigchain_push_common(sigchain_fun f);
+> +void sigchain_pop_common(void);
+>  
+>  #endif /* SIGCHAIN_H */
