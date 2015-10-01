@@ -1,8 +1,8 @@
 From: Max Kirillov <max@max630.net>
-Subject: [PATCH/RFC 0/2] close packs files when they are not needed
-Date: Thu,  1 Oct 2015 06:29:21 +0300
-Message-ID: <1443670163-31193-1-git-send-email-max@max630.net>
-References: <xmqqlhbn7ky1.fsf@gitster.mtv.corp.google.com>
+Subject: [PATCH/RFC 1/2] sha1_file: close all pack files after running
+Date: Thu,  1 Oct 2015 06:29:22 +0300
+Message-ID: <1443670163-31193-2-git-send-email-max@max630.net>
+References: <1443670163-31193-1-git-send-email-max@max630.net>
 Cc: Max Kirillov <max@max630.net>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	git@vger.kernel.org
@@ -13,48 +13,134 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhUZc-0001TF-DO
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 05:30:24 +0200
+	id 1ZhUZd-0001TF-03
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 05:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755246AbbJAD3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Sep 2015 23:29:49 -0400
+	id S1755291AbbJAD34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Sep 2015 23:29:56 -0400
 Received: from p3plsmtpa07-09.prod.phx3.secureserver.net ([173.201.192.238]:54471
 	"EHLO p3plsmtpa07-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755159AbbJAD3s (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Sep 2015 23:29:48 -0400
+	by vger.kernel.org with ESMTP id S1755242AbbJAD3t (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Sep 2015 23:29:49 -0400
 Received: from wheezy.local ([82.181.81.240])
 	by p3plsmtpa07-09.prod.phx3.secureserver.net with 
-	id PfVh1r0055B68XE01fVmsM; Wed, 30 Sep 2015 20:29:47 -0700
+	id PfVh1r0055B68XE01fVosV; Wed, 30 Sep 2015 20:29:49 -0700
 X-Mailer: git-send-email 2.3.4.2801.g3d0809b
-In-Reply-To: <xmqqlhbn7ky1.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1443670163-31193-1-git-send-email-max@max630.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278883>
 
-> The right approach may to have a helper in sha1_file.c that closes
-> and cleans up _all_ packs, and call it from here, instead of having
-> builtin/clone.c even know about implementation details such as
-> packed_git is a linked list, etc. 
+When a builtin has done its job, but waits for pager or not waited
+by its caller and still hanging it keeps pack files opened.
+This can cause a number of issues, for example on Windows git gc
+cannot remove the packs.
 
-Like this?
+Fix this by explicitly closing all pack files and unmapping memory
+from the packs after running builtin. Do not die() if the memory region
+is still used though, just print a warning, because failure to close
+a file should not prevent the currently running program from finishing
+its task.
 
-Note I did not test it to actually work for the current
-code. Trying now what I could do with lsof, just to be sure
-myself, but probably its use not appropriate for the
-project.
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+ cache.h     |  1 +
+ git.c       |  2 ++
+ sha1_file.c | 32 +++++++++++++++++++++++++++++---
+ 3 files changed, 32 insertions(+), 3 deletions(-)
 
-Max Kirillov (2):
-  sha1_file: close all pack files after running
-  sha1_file: set packfile to O_CLOEXEC at open
-
- builtin/pack-objects.c |  2 +-
- cache.h                |  3 +-
- git.c                  |  2 ++
- pack-bitmap.c          |  2 +-
- sha1_file.c            | 80 +++++++++++++++++++++++++++++++++++---------------
- 5 files changed, 63 insertions(+), 26 deletions(-)
-
+diff --git a/cache.h b/cache.h
+index 79066e5..153bc46 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1279,6 +1279,7 @@ extern void unuse_pack(struct pack_window **);
+ extern void free_pack_by_name(const char *);
+ extern void clear_delta_base_cache(void);
+ extern struct packed_git *add_packed_git(const char *, int, int);
++extern void close_all_packs(void);
+ 
+ /*
+  * Return the SHA-1 of the nth object within the specified packfile.
+diff --git a/git.c b/git.c
+index 5feba41..ad34680 100644
+--- a/git.c
++++ b/git.c
+@@ -1,4 +1,5 @@
+ #include "builtin.h"
++#include "cache.h"
+ #include "exec_cmd.h"
+ #include "help.h"
+ #include "run-command.h"
+@@ -348,6 +349,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+ 	trace_argv_printf(argv, "trace: built-in: git");
+ 
+ 	status = p->fn(argc, argv, prefix);
++	close_all_packs();
+ 	if (status)
+ 		return status;
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index 08302f5..62f1dad 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -773,20 +773,28 @@ void *xmmap(void *start, size_t length,
+ 	return ret;
+ }
+ 
+-void close_pack_windows(struct packed_git *p)
++static int close_pack_windows_nodie(struct packed_git *p)
+ {
+ 	while (p->windows) {
+ 		struct pack_window *w = p->windows;
+ 
+ 		if (w->inuse_cnt)
+-			die("pack '%s' still has open windows to it",
+-			    p->pack_name);
++			return 1;
++
+ 		munmap(w->base, w->len);
+ 		pack_mapped -= w->len;
+ 		pack_open_windows--;
+ 		p->windows = w->next;
+ 		free(w);
+ 	}
++
++	return 0;
++}
++
++void close_pack_windows(struct packed_git *p)
++{
++	if (close_pack_windows_nodie(p))
++		die("pack '%s' still has open windows to it", p->pack_name);
+ }
+ 
+ /*
+@@ -866,6 +874,24 @@ static int close_one_pack(void)
+ 	return 0;
+ }
+ 
++void close_all_packs(void)
++{
++	struct packed_git *p = NULL;
++
++	for (p = packed_git; p; p = p->next) {
++		if (close_pack_windows_nodie(p))
++			warning("pack '%s' still has open windows to it", p->pack_name);
++
++		if (p->pack_fd != -1) {
++			if (close(p->pack_fd) != 0)
++				warning("close(%s) failed: %d", p->pack_name, errno);
++			p->pack_fd = -1;
++		}
++
++		close_pack_index(p);
++	}
++}
++
+ void unuse_pack(struct pack_window **w_cursor)
+ {
+ 	struct pack_window *w = *w_cursor;
 -- 
 2.3.4.2801.g3d0809b
