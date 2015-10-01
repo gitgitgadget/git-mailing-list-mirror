@@ -1,88 +1,104 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] notes: allow merging from arbitrary references
-Date: Thu, 1 Oct 2015 15:51:19 -0700
-Message-ID: <CA+P7+xp6XtsZ3jCN91+2Mt4Ad0VxRvd3Ra3yAWHktpYW2Ho7uw@mail.gmail.com>
-References: <1443739165-17526-1-git-send-email-jacob.e.keller@intel.com>
+From: Stefan Agner <stefan@agner.ch>
+Subject: Re: [PATCH] git-send-email.perl: Fixed sending of many/huge
+ changes/patches
+Date: Thu, 01 Oct 2015 16:43:56 -0700
+Message-ID: <ddfab710e6ee78f6890b92d5b8af3bee@agner.ch>
+References: <1443597969-3962-1-git-send-email-polynomial-c@gentoo.org>
+ <xmqqr3lf94o2.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Mike Hommey <mh@glandium.org>,
-	Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Fri Oct 02 00:51:45 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Lars Wendler <polynomial-c@gentoo.org>, git@vger.kernel.org,
+	juston.h.li@gmail.com, Junio C Hamano <jch2355@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 02 01:44:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhmhU-0005I0-JU
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 00:51:44 +0200
+	id 1ZhnWq-00027o-Sj
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 01:44:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348AbbJAWvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2015 18:51:40 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:34733 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751236AbbJAWvj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2015 18:51:39 -0400
-Received: by iow1 with SMTP id 1so65466741iow.1
-        for <git@vger.kernel.org>; Thu, 01 Oct 2015 15:51:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hUKg6VWB83AZSaGSXptrHNOmFF663gMMldRP4V+WoR8=;
-        b=MHqxb2SczNP8LaiQkYz45eGXXl6WDYQzGCEUN7kW9TKj4PSkF7+hjdRFzPZXo6OD+f
-         Yu+qEQD9PJdPFsdsaGTPzGyn/IpLvaWYy+Ecl/XmnT8XnDnkmtEfux5aFqj8PAp+9xys
-         Oc06bkWU2/DZyYPMqkOJlzvtO1BB/6errvWiRKpMn8FUYPPL5zp2m8ijwXV7L2wnHbGZ
-         xEZEFp3WQ5EOHpqfHerNwteWsdRAx7v64RdoybzS9zNl/HROOJuf0ZqjVBbyqhZZEdIt
-         lMJ9YT7EI59G3FA9QB+qSuyX3czARnjDh1FYLoAIKHNkmDFf0/DwqTScrM80uCY73ll9
-         KWmg==
-X-Received: by 10.107.166.201 with SMTP id p192mr16509491ioe.0.1443739898640;
- Thu, 01 Oct 2015 15:51:38 -0700 (PDT)
-Received: by 10.107.132.155 with HTTP; Thu, 1 Oct 2015 15:51:19 -0700 (PDT)
-In-Reply-To: <1443739165-17526-1-git-send-email-jacob.e.keller@intel.com>
+	id S1751085AbbJAXoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2015 19:44:44 -0400
+Received: from mail.kmu-office.ch ([178.209.48.109]:42946 "EHLO
+	mail.kmu-office.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750805AbbJAXon (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2015 19:44:43 -0400
+Received: from webmail.kmu-office.ch (unknown [178.209.48.103])
+	by mail.kmu-office.ch (Postfix) with ESMTPSA id 679AB5C11EB;
+	Fri,  2 Oct 2015 01:43:18 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=agner.ch; s=dkim;
+	t=1443742998; bh=XSc+KHx9+24CUbhKhDFjX8e99Vu6AaYIC+emNhTthp8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Sj3KoOLO6SyPgI9BXcPei7g7QY/I1C/Sz1q1kvzJ9aumA+oOWH8YMUTDgQFRMAyCP
+	 2zeyV7VkJvuDwaoIUDB6zCNssyVGMU+oSPlvx9uFWFTShGZSoGuxUNiiUrRB5ZPyhf
+	 jXCBaAy/Y5Gdk/JtSrUzAyyCdd7Bw4y3vhyWpzDA=
+In-Reply-To: <xmqqr3lf94o2.fsf@gitster.mtv.corp.google.com>
+X-Sender: stefan@agner.ch
+User-Agent: Roundcube Webmail/1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278905>
 
-On Thu, Oct 1, 2015 at 3:39 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
-> From: Jacob Keller <jacob.keller@gmail.com>
->
-> Create a new expansion function, expand_loose_notes_ref which will
-> expand any ref using get_sha1, but falls back to expand_notes_ref if
-> this fails. The contents of the strbuf will be either the hex string of
-> the sha1, or the expanded notes ref. It is expected to be re-expanded
-> using get_sha1 inside the notes merge machinery, and there is no real
-> error checking provided at this layer.
->
-> Since we now support merging from non-notes refs, remove the test case
-> associated with that behavior. Add a test case for merging from a
-> non-notes ref.
->
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
+On 2015-09-30 10:51, Junio C Hamano wrote:
+> Lars Wendler <polynomial-c@gentoo.org> writes:
+> 
+>> It seems to me that there is a size limit, after cutting down the patch
+>> to ~16K, sending started to work. I cut it twice, once by removing lines
+>> from the head and once from the bottom, in both cases at the size of
+>> around 16K I could send the patch.
+>>
+>> See also original report:
+>> http://permalink.gmane.org/gmane.comp.version-control.git/274569
+>>
+>> Reported-by: Juston Li <juston.h.li@gmail.com>
+>> Tested-by: Markos Chandras <hwoarang@gentoo.org>
+>> Signed-off-by: Lars Wendler <polynomial-c@gentoo.org>
+>> ---
+>>  git-send-email.perl | 6 +++++-
+>>  1 file changed, 5 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/git-send-email.perl b/git-send-email.perl
+>> index e3ff44b..e907e0ea 100755
+>> --- a/git-send-email.perl
+>> +++ b/git-send-email.perl
+>> @@ -1365,7 +1365,11 @@ Message-Id: $message_id
+>>  		$smtp->mail( $raw_from ) or die $smtp->message;
+>>  		$smtp->to( @recipients ) or die $smtp->message;
+>>  		$smtp->data or die $smtp->message;
+>> -		$smtp->datasend("$header\n$message") or die $smtp->message;
+>> +		$smtp->datasend("$header\n") or die $smtp->message;
+>> +		my @lines = split /^/, $message;
+>> +		foreach my $line (@lines) {
+>> +			$smtp->datasend("$line") or die $smtp->message;
+>> +		}
+> 
 
-I haven't yet figured out how to handle showing of notes on non-notes
-refs, since the core notes command uses expand_notes_ref very early on
-in the flow before we even know what kind of command we're using. I
-think this will take a larger structural change to get right.
+Hi,
 
-For merges it's pretty straight forward. This patch may seem weird,
-but it's expected that the internal notes machinery will (re)expand
-the remote_ref again and properly error out if it doesn't exist. We
-need this since merging from a notes ref that doesn't exist isn't
-considered an error today (it just falls back to using an empty ref).
+> Thanks.  One and a half comments.
+> 
+>  * If 16k is the limit, and smtp payload line limit is much much
+>    shorter than that, is it sensible to send data line by line?
 
-Note that this does have some weird consequences, in that if you typo
-a reference name such as refs/foo/bar which doesn't exist, then it
-will be expanded into refs/notes/refs/foo/bar, which I am not sure is
-the best approach, but otherwise things such as "x" don't properly
-expand... I think in practice this will always result in the "empty"
-notes ref being used for the source of the merge, so it may not be a
-big deal.
+It was a easy and quick way which popped into my mind. The 16k limit has
+been evaluated just by trying out some patch sizes, not sure whether
+that is really right and where that really comes from. I guess before
+using this as split size one would need to understand what causes that
+limit actually...
 
-Regards,
-Jake
+>  * Has this been reported to Net::Cmd::datasend() upstream?
+
+Not by me. I also have to admit that I am not a perl hacker at all...
+
+--
+Stefan
+
+> 
+>>  		$smtp->dataend() or die $smtp->message;
+>>  		$smtp->code =~ /250|200/ or die "Failed to send $subject\n".$smtp->message;
+>>  	}
