@@ -1,68 +1,152 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/2] status: don't say 'HEAD detached at HEAD'
-Date: Thu, 01 Oct 2015 18:53:24 +0200
-Message-ID: <vpq8u7mbke3.fsf@grenoble-inp.fr>
-References: <1443366822-1753-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1443366822-1753-2-git-send-email-Matthieu.Moy@imag.fr>
-	<560D154F.9000809@drmicha.warpmail.net>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] submodule-parallel-fetch: make some file local symbols static
+Date: Thu, 1 Oct 2015 10:05:11 -0700
+Message-ID: <CAGZ79kZzLtK7+rHRG_misaa9=fWF+oyeryBa+kbD3F+EB=3LMQ@mail.gmail.com>
+References: <560D20E2.4060601@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Oct 01 18:53:40 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <stefanbeller@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Thu Oct 01 19:05:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zhh6w-0002r0-2Z
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 18:53:38 +0200
+	id 1ZhhIF-0005Zo-2b
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 19:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752261AbbJAQxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2015 12:53:34 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41237 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750923AbbJAQxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2015 12:53:33 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t91GrMPR016669
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 1 Oct 2015 18:53:22 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t91GrOSX004775;
-	Thu, 1 Oct 2015 18:53:24 +0200
-In-Reply-To: <560D154F.9000809@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Thu, 1 Oct 2015 13:13:19 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 01 Oct 2015 18:53:22 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t91GrMPR016669
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1444323203.93581@pHiPZtKCKPYvdY7q4faaeA
+	id S1752716AbbJARFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2015 13:05:13 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:34500 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752058AbbJARFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2015 13:05:12 -0400
+Received: by ykdg206 with SMTP id g206so84319846ykd.1
+        for <git@vger.kernel.org>; Thu, 01 Oct 2015 10:05:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=kcvQB+x7Lix952pPh+rkRdJmHUtV8k+x6DFzx+9Rv5Q=;
+        b=dX9K8lKe/NW9WX3JtOfdbfrM5LixUikIX2Yh2X4Us7AxdqDcdrCA6P+KNO7YtYJqrM
+         rtGATfjZcDwVHOJW0cSenPNhCJkzYVRQOS2nvNsLaJE4Wy6wvGE7idre61uOzOUXLXR5
+         OcQe5CiwKDzTZN6/0LysdAVzd6dYgesC2g0QGqMLNIZJWmglJW2XCmF2GyCGxDG5sJGf
+         vH42fwa99bRyAbC8x7YLqCcX6E7Y6TIZHF6/A+6VVDAPAW48wROTEc0UDBIlN8yuhcLy
+         MXrBl8EhuopTm+JX/lQuAjUwMedu3vhd/te0dnpqvGH7VbHCtdYUg+NxNWDA9QtUjA4W
+         l8/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=kcvQB+x7Lix952pPh+rkRdJmHUtV8k+x6DFzx+9Rv5Q=;
+        b=bbX2hoVyuCP8dnXwZhi9xqqZhNoHoie/ZTQeIncc+5Vkp6LXz1NJkYbMETESgbjLzE
+         tEJxaDZ/E/jhxSkYRUEk94pNRK06JnzLgMT/U9TkTdwsEKG4wcpvdLgwmeDVJWqqm0VU
+         T7SI3Nac59dAFr/Xsqq2hRQY3SpDz1EsHC4voXXZt+yDBFJ9BTKOvf/m3VnMeO6cqouU
+         R6GwJp2ZFcsnOwjN6IVIIF0t+Yy4E5CThSAlf4NvRWmfdyAT8zznqzUT1HcT2iiAy7iJ
+         N2E/FRow5neCUxLQIA+mO3VDIFooV3q3OeV4JPUnexRyTlAI6Vtw3ILjmUpbQZxoMdY/
+         Urcg==
+X-Gm-Message-State: ALoCoQn10Ub9q5vpgZV1FYbV1zvfKMDl4usKxvCybcL0Pwua1kFoDYEYoSIApasmoprEHSY3RiIe
+X-Received: by 10.170.190.133 with SMTP id h127mr9124820yke.115.1443719111072;
+ Thu, 01 Oct 2015 10:05:11 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Thu, 1 Oct 2015 10:05:11 -0700 (PDT)
+In-Reply-To: <560D20E2.4060601@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278895>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Thu, Oct 1, 2015 at 5:02 AM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+> Commits 0fc1fdb0 ("fetch_populated_submodules: use new parallel job
+> processing", 28-09-2015) and 60f24f52 ("run-command: add an asynchronous
+> parallel child processor", 28-09-2015) both introduce external symbols
+> which only require file scope visibility. In order to reduce the
+> visibility, apply the static keyword to their declarations.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Stefan,
+>
+> No, despite the same subject, this is not the same patch that I sent
+> you last week! :-D
+>
+> Could you please squash parts of this into the patches corresponding
+> to the above mentioned commits.
 
-> Junio will also want your s-o-by, though ;)
+I am sorry for the need to send this second patch. :(
 
-Argh, sorry. I normally have an alias to do this for me, but my
-git-send-email is temporarily broken and I forget to sign-off
-explicitly.
+>
+> Thanks!
+>
+> BTW, I would once again suggest that you could move the definition of
+> get_next_submodule() to be above/before fetch_populated_submodules()
+> so that you can remove the forward declaration.
+>
+> ATB,
+> Ramsay Jones
+>
+>  run-command.c | 2 +-
+>  submodule.c   | 8 ++++----
+>  2 files changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/run-command.c b/run-command.c
+> index 341b23b..347d22e 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -865,7 +865,7 @@ int capture_command(struct child_process *cmd, struct strbuf *buf, size_t hint)
+>         return finish_command(cmd);
+>  }
+>
+> -struct parallel_processes {
+> +static struct parallel_processes {
 
-I see that Junio already queued the patches in pu.
+will pickup in a reroll
 
-In case it matters, both patches are
+>         void *data;
+>
+>         int max_processes;
+> diff --git a/submodule.c b/submodule.c
+> index bd6e208..638efb5 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -622,8 +622,8 @@ struct submodule_parallel_fetch {
+>  };
+>  #define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0}
+>
+> -int get_next_submodule(void *data, struct child_process *cp,
+> -                      struct strbuf *err);
+> +static int get_next_submodule(void *data, struct child_process *cp,
+> +                             struct strbuf *err);
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+I thought I had this in yesterdays reroll (v6). Oh you're referring to
+the version
+from the 28th (I forgot to label them v5 I suppose).
 
-and I can resend if needed.
+I will also get rid of the forward declaration.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>
+>  static int fetch_start_failure(void *data, struct child_process *cp,
+>                                struct strbuf *err)
+> @@ -682,8 +682,8 @@ out:
+>         return spf.result;
+>  }
+>
+> -int get_next_submodule(void *data, struct child_process *cp,
+> -                      struct strbuf *err)
+> +static int get_next_submodule(void *data, struct child_process *cp,
+> +                             struct strbuf *err)
+>  {
+>         int ret = 0;
+>         struct submodule_parallel_fetch *spf = data;
+> --
+> 2.6.0
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
