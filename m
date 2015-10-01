@@ -1,60 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git 2.6.0 apply --cached failed
-Date: Wed, 30 Sep 2015 22:57:46 -0700
-Message-ID: <xmqqzj035dwl.fsf@gitster.mtv.corp.google.com>
-References: <CAHtLG6TxAZsd54g+_eH2R3M=5oZ65V5cJ-0kkBt4vjbga+h9rQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 01 07:57:55 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v3 1/2] rebase-i: explicitly accept tab as separator in commands
+Date: Thu,  1 Oct 2015 10:18:41 +0200
+Message-ID: <1443687522-14311-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <xmqq8u7n7ikl.fsf@gitster.mtv.corp.google.com>
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?Galan=20R=C3=A9mi?= 
+	<remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Oct 01 10:19:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhWsN-0007W0-5v
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 07:57:55 +0200
+	id 1ZhZ53-0006B5-Rf
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 10:19:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755568AbbJAF5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2015 01:57:51 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:36334 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755565AbbJAF5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2015 01:57:48 -0400
-Received: by pablk4 with SMTP id lk4so63232087pab.3
-        for <git@vger.kernel.org>; Wed, 30 Sep 2015 22:57:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=/Ca9QdKZgaA7Q6rj4+AO/Zdu64zIGskz24IZunK46Ig=;
-        b=hVDg3DzXTW7rnsttRN5Ru8c39T/B3kAVEJpZ8fMwGhBB/hmqRfhJ+0GGYyOpVjKn/O
-         3uTLG7ZACTWMQt8DWRQ+niVv87yIcD4RGtYKxugOLaruLN3f6ErlmxKp+cdiypQBRwzj
-         i4GyqWaZ9+zRgt3seaVpolGXsu2I/M90L5GO4lHQAINYV0S4Fu9XweII/b2QJAA/9Bp3
-         nnBs1lg1voSzMR5qoRS4vDQm88h/oD70MrN243IwbYbzSuL4scGa1VbCXCIAdL8uVwUf
-         3A4xnTn1BqDoyGbGCl9zCXQLqGCDnjMXdd/DtoEsd4oaWxNe19IFCQfGX1ACiIYBOR0+
-         612Q==
-X-Received: by 10.68.202.66 with SMTP id kg2mr9723342pbc.81.1443679068153;
-        Wed, 30 Sep 2015 22:57:48 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:b504:7e09:d70d:e9ec])
-        by smtp.gmail.com with ESMTPSA id on5sm4112269pbb.65.2015.09.30.22.57.47
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 30 Sep 2015 22:57:47 -0700 (PDT)
-In-Reply-To: <CAHtLG6TxAZsd54g+_eH2R3M=5oZ65V5cJ-0kkBt4vjbga+h9rQ@mail.gmail.com>
-	(=?utf-8?B?IuS5memFuOmLsCIncw==?= message of "Thu, 1 Oct 2015 13:38:17
- +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756188AbbJAIS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2015 04:18:59 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56119 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751740AbbJAIS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2015 04:18:57 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t918IktN032219
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 1 Oct 2015 10:18:46 +0200
+Received: from estrop.imag.fr (estrop.imag.fr [129.88.7.56])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t918Ilnw025607;
+	Thu, 1 Oct 2015 10:18:47 +0200
+Received: from moy by estrop.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1ZhZ4h-0003nH-Jq; Thu, 01 Oct 2015 10:18:47 +0200
+X-Mailer: git-send-email 2.5.0.402.g8854c44
+In-Reply-To: <xmqq8u7n7ikl.fsf@gitster.mtv.corp.google.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 01 Oct 2015 10:18:47 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t918IktN032219
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1444292331.75636@Mi+nK3oxU53Qlh15FPIdRw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278889>
 
-It probably is this one:
+The git-rebase-todo is parsed several times with different parsers. In
+principle, the user input is normalized by transform_todo_ids and
+further parsing can be stricter.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/270370/focus=270501
+In case the user wrote
 
-Older Git was loose and did not notice it, but the second hunk of
-your patch is judged to be broken, with no added or deleted line
-whatsoever, by the latest version.
+pick deadbeef<TAB>commit message
+
+the parser of transform_todo_ids was considering the sha1 to be
+"deadbeef<TAB>commit", and was leaving the tab in the transformed sheet.
+In practice, this went unnoticed since the actual command interpretation
+was done later in do_next which did accept the tab as a separator.
+
+Make it explicit in the code of transform_todo_ids that tabs are
+accepted. This way, code that mimicks it will also accept tabs as
+separator.
+
+A similar construct appears in skip_unnecessary_picks, but this one
+comes after transform_todo_ids, hence reads the normalized format, so it
+needs not be changed.
+
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+This is new in v3.
+
+ git-rebase--interactive.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index f01637b..0d77429 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -729,8 +729,8 @@ transform_todo_ids () {
+ 			# that do not have a SHA-1 at the beginning of $rest.
+ 			;;
+ 		*)
+-			sha1=$(git rev-parse --verify --quiet "$@" ${rest%% *}) &&
+-			rest="$sha1 ${rest#* }"
++			sha1=$(git rev-parse --verify --quiet "$@" ${rest%%[	 ]*}) &&
++			rest="$sha1 ${rest#*[	 ]}"
+ 			;;
+ 		esac
+ 		printf '%s\n' "$command${rest:+ }$rest"
+-- 
+2.5.0.402.g8854c44
