@@ -1,93 +1,121 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Convenient shortcut to push delete current branch?
-Date: Thu, 1 Oct 2015 13:37:13 -0500
-Message-ID: <CAHd499C7r+Xd1+4Sn5WdXrEHv5yp0=jbnMUvLBHHJ-1s1sJ4gQ@mail.gmail.com>
-References: <CAHd499C3n8DGuhxwajQbFrH+Fr8zHRA7sVjhG3yfSD5kKPSZsA@mail.gmail.com>
-	<CA+P7+xpWXoNiK67xCepoChr8rqX-Z5EcNb-Bs3xhC+Uot2ruYg@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] submodule-parallel-fetch: make some file local symbols
+ static
+Date: Thu, 1 Oct 2015 19:43:46 +0100
+Message-ID: <560D7EE2.8060403@ramsayjones.plus.com>
+References: <560D20E2.4060601@ramsayjones.plus.com>
+ <CAGZ79kZzLtK7+rHRG_misaa9=fWF+oyeryBa+kbD3F+EB=3LMQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 01 20:37:25 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Beller <stefanbeller@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Oct 01 20:43:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhijK-0002y7-Sz
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 20:37:23 +0200
+	id 1Zhipe-0001Er-HT
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 20:43:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753015AbbJAShP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2015 14:37:15 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:37606 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923AbbJAShO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2015 14:37:14 -0400
-Received: by igbni9 with SMTP id ni9so1164383igb.0
-        for <git@vger.kernel.org>; Thu, 01 Oct 2015 11:37:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=lrJ8mAXe2UhZb8HmyIKV0Y2+vSLMfy5TcyDwomYFEA8=;
-        b=QiMowaCQR4lveRAShXblhdSGmzO6a8YB18D0MiKpKC+4abCKcb/gfPOiW4ieolIMrv
-         tZzlsbyFFCzQEwJzTmiyt61fSpi2EyiIMaUsFI+xUJ9h99EGusvHlqhcnB3tNOq8qBTw
-         Ira3OxZHDlkhLpd26K4A61My1aUneWB57+PVx0bZq9ZF0ik2vI7V+Ixk7ZOJyXo3UdxX
-         ZGjiuTSBFo0Vk3piWruAOJ7NdgjgWRXXELAG/++n0LdftRkwHfLaFseljnxRYwSamSxC
-         A2VliFCVigxDsS5d+WvU+99ftFDn+T/0e8MEVHDx3L4QURCtuypBALLca//+4BxnH6Zp
-         brMg==
-X-Received: by 10.50.136.129 with SMTP id qa1mr326446igb.91.1443724633904;
- Thu, 01 Oct 2015 11:37:13 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.36.83.147 with HTTP; Thu, 1 Oct 2015 11:37:13 -0700 (PDT)
-In-Reply-To: <CA+P7+xpWXoNiK67xCepoChr8rqX-Z5EcNb-Bs3xhC+Uot2ruYg@mail.gmail.com>
-X-Google-Sender-Auth: fRDy6wKZ2MJRTV-Epj_6EGaTlbo
+	id S1754758AbbJASnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2015 14:43:50 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:52962 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753170AbbJASnu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2015 14:43:50 -0400
+Received: from [10.0.2.15] ([81.174.177.104])
+	by avasout07 with smtp
+	id Pujl1r0062FXpih01ujm1n; Thu, 01 Oct 2015 19:43:48 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=JN/GyJ+b c=1 sm=1 tr=0
+ a=IMS4QkGEsjO3VZZSAZDX8w==:117 a=IMS4QkGEsjO3VZZSAZDX8w==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=WuZyreSN4SEoYiQLqSAA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+In-Reply-To: <CAGZ79kZzLtK7+rHRG_misaa9=fWF+oyeryBa+kbD3F+EB=3LMQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278900>
 
-On Thu, Oct 1, 2015 at 1:22 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Thu, Oct 1, 2015 at 9:43 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
->> For convenient pushing of current branch, git supports this syntax:
+
+
+On 01/10/15 18:05, Stefan Beller wrote:
+> On Thu, Oct 1, 2015 at 5:02 AM, Ramsay Jones
+> <ramsay@ramsayjones.plus.com> wrote:
 >>
->> $ git push origin HEAD
+[snip]
+
+>> diff --git a/run-command.c b/run-command.c
+>> index 341b23b..347d22e 100644
+>> --- a/run-command.c
+>> +++ b/run-command.c
+>> @@ -865,7 +865,7 @@ int capture_command(struct child_process *cmd, struct strbuf *buf, size_t hint)
+>>         return finish_command(cmd);
+>>  }
 >>
->> This will push your current branch up. However, is there such a
->> shortcut for *deleting* the branch? The only goal here is to avoid
->> having to type the branch name in the push command. Normally I rely on
->> tab completion but we have tons of branches, all which start with some
->> prefix mixed with numbers, so it becomes cumbersome to rely on tab
->> completion. Ideally I'd like to be able to do:
+>> -struct parallel_processes {
+>> +static struct parallel_processes {
+> 
+> will pickup in a reroll
+
+Thanks
+
+> 
+>>         void *data;
 >>
->> $ git push --delete origin HEAD
->> $ git push origin :HEAD
+>>         int max_processes;
+>> diff --git a/submodule.c b/submodule.c
+>> index bd6e208..638efb5 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -622,8 +622,8 @@ struct submodule_parallel_fetch {
+>>  };
+>>  #define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0}
 >>
->> Is there a syntax like this available?
->
-> You can do
->
-> git push origin:<branchname>
->
-> but I don't believe HEAD is supported. It might be valuable to extend
-> push to have a --delete option which would maybe be useful for those
-> who didn't learn the full refspec syntax.
+>> -int get_next_submodule(void *data, struct child_process *cp,
+>> -                      struct strbuf *err);
+>> +static int get_next_submodule(void *data, struct child_process *cp,
+>> +                             struct strbuf *err);
+> 
+> I thought I had this in yesterdays reroll (v6). Oh you're referring to
+> the version
+> from the 28th (I forgot to label them v5 I suppose).
 
-Push already has a --delete option.
+Ah! I thought I'd seen it on the list. (I thought I was going crazy) ;-)
+Sorry, my fault. I just assumed that today's pu branch would have your
+latest patches - I didn't actually check that.
 
-> I don't think git push origin :HEAD makes too much sense, since that's
-> on the remote side of a refspec, and you want it interpreted
-> locally... I suppose it makes sense somewhat, but other refspecs with
-> HEAD on the remote side of the refspec don't really make sense, where
-> as HEAD always makes sense on the local side of the refspec.
+Note that the first hunk, above, is actually new (I hadn't noticed it
+before).
 
-HEAD makes sense on the remote side if you think of it like an alias:
+> 
+> I will also get rid of the forward declaration.
 
-HEAD -> branch-name -> SHA1
+Thanks!
 
-HEAD simply points to branch-name. It makes sense for git to assume
-that we should never do anything with real HEAD ref on the remote
-side, and instead treat it as a substitution for the remote name. My
-assumption may not be correct, but at the very least it should be a
-niche case.
+ATB,
+Ramsay Jones
+
+> 
+>>
+>>  static int fetch_start_failure(void *data, struct child_process *cp,
+>>                                struct strbuf *err)
+>> @@ -682,8 +682,8 @@ out:
+>>         return spf.result;
+>>  }
+>>
+>> -int get_next_submodule(void *data, struct child_process *cp,
+>> -                      struct strbuf *err)
+>> +static int get_next_submodule(void *data, struct child_process *cp,
+>> +                             struct strbuf *err)
+>>  {
+>>         int ret = 0;
+>>         struct submodule_parallel_fetch *spf = data;
+>> --
