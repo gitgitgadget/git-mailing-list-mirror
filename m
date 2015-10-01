@@ -1,49 +1,61 @@
-From: =?UTF-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
-Subject: message not appear in mailing list
-Date: Thu, 1 Oct 2015 11:47:50 +0800
-Message-ID: <CAHtLG6RwaXVuM2k4W1hWOnVzUjtQpr0irQkSC0VrdAOPe+bnFw@mail.gmail.com>
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH] clone --dissociate: avoid locking pack files
+Date: Thu, 1 Oct 2015 07:39:36 +0300
+Message-ID: <20151001043936.GB26154@wheezy.local>
+References: <682991036f1e8e974ed8ecd7d20dbcc6fb86c344.1443469464.git.johannes.schindelin@gmx.de>
+ <20150930192814.GA26154@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 01 05:47:57 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 01 06:39:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhUqa-0002Hn-Js
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 05:47:56 +0200
+	id 1ZhVek-0004Lp-TA
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 06:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755365AbbJADrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Sep 2015 23:47:52 -0400
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:34111 "EHLO
-	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755006AbbJADrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Sep 2015 23:47:51 -0400
-Received: by vkat63 with SMTP id t63so32011690vka.1
-        for <git@vger.kernel.org>; Wed, 30 Sep 2015 20:47:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=sAS0KvmfuV2FF2t/Wj7x/n5ZfXARof3QPF2M6KJxLaw=;
-        b=Hs7BhF4NMx/e9FMFu6nfA2FZhSfyTzipLst5rINB8veUfHeJDmeegTupazmKs0xyE/
-         FBUNOuYifMu6qYcYNXCEfKO9FpPW+iC92m9CjM21XeddBTFu4OMVkmDcFbp69umuXT7r
-         aIfTXJdmDo/rvUk12rT3WOEPcfBgh/7uE0CMBsXCxXYHp8RC6pAqxPtKC7nPW57iIJJV
-         3JP+euv4mjDrYscPHn73I6o59owahcnb1yJTiH19F4yUCh+reo7okvCsMfXQSuUmsNSM
-         jXeJstXidePTuLbhIzbx/stYYDPfMOjN2J9Xh6vHv2NZkhsEEwauiOo9CUigUPJlJL7y
-         t+YQ==
-X-Received: by 10.31.16.41 with SMTP id g41mr5316217vki.158.1443671270058;
- Wed, 30 Sep 2015 20:47:50 -0700 (PDT)
-Received: by 10.31.9.133 with HTTP; Wed, 30 Sep 2015 20:47:50 -0700 (PDT)
+	id S1751058AbbJAEjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2015 00:39:43 -0400
+Received: from p3plsmtpa08-07.prod.phx3.secureserver.net ([173.201.193.108]:52598
+	"EHLO p3plsmtpa08-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750834AbbJAEjm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Oct 2015 00:39:42 -0400
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa08-07.prod.phx3.secureserver.net with 
+	id Pgfd1r00E5B68XE01gfg07; Wed, 30 Sep 2015 21:39:41 -0700
+Content-Disposition: inline
+In-Reply-To: <20150930192814.GA26154@wheezy.local>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278886>
 
-Hi,
+On Wed, Sep 30, 2015 at 10:28:14PM +0300, Max Kirillov wrote:
+> On Mon, Sep 28, 2015 at 09:44:57PM +0200, Johannes Schindelin wrote:
+>> -	if (option_dissociate)
+>> +	if (option_dissociate) {
+>> +		struct packed_git *p;
+>> +
+>> +		for (p = packed_git; p; p = p->next) {
+>> +			close_pack_windows(p);
+>> +			close_pack_index(p);
+>> +		}
+>>  		dissociate_from_references();
+>> +	}
 
-Why the message not appear in mailing list for many hours?
-There is no reject reply message. I sent the mail in plain text with a
-tarball attachment.
-http://dir.gmane.org/gmane.comp.version-control.git
+> This does not seem to close handles to the pack files
+> themseves, does Windows still allow removing the files? I
+> probably did not tried that, because I started from handles,
+> and discovered mapped files only later.
+
+Apparently, pack file is closed just after mapping if it's
+smaller than core.packedGitWindowSize. Could it be the
+reason that this patch worked in you test case?
+
+-- 
+Max
