@@ -1,60 +1,68 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Convenient shortcut to push delete current branch?
-Date: Thu, 1 Oct 2015 11:43:18 -0500
-Message-ID: <CAHd499C3n8DGuhxwajQbFrH+Fr8zHRA7sVjhG3yfSD5kKPSZsA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 2/2] status: don't say 'HEAD detached at HEAD'
+Date: Thu, 01 Oct 2015 18:53:24 +0200
+Message-ID: <vpq8u7mbke3.fsf@grenoble-inp.fr>
+References: <1443366822-1753-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1443366822-1753-2-git-send-email-Matthieu.Moy@imag.fr>
+	<560D154F.9000809@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 01 18:43:25 2015
+Content-Type: text/plain
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Oct 01 18:53:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zhgx2-00019N-59
-	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 18:43:24 +0200
+	id 1Zhh6w-0002r0-2Z
+	for gcvg-git-2@plane.gmane.org; Thu, 01 Oct 2015 18:53:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756715AbbJAQnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2015 12:43:19 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:36556 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752058AbbJAQnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2015 12:43:19 -0400
-Received: by ioii196 with SMTP id i196so91768579ioi.3
-        for <git@vger.kernel.org>; Thu, 01 Oct 2015 09:43:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=HfWZT7Ge3k7juzHmLvwBxqGhSmJwidkhUQWNT88uc7A=;
-        b=TdCt+g0TaMMwv6PGwwmHoACWJvFgecQTKB911qQ1wzdlaKGD7GjDVN4k2nml6JFVKq
-         133trh3tNx2oTo81j8ieSJqtS9Lo7CTMKly51BNnDot3z7FkxefqAhdADDZDAee8n1l/
-         HC7JWUN0reyWUYIoZ8cSJXCYqb6fCTMk2LuHByZAEDtEovCXp3JeAduYeQmI2nOsw777
-         LSt9QzPv3CzFEeXJvHISQvo9GjD6F2rENwwIYBRWM3h7i5cklDSm+iuvZ0lQSKs+qsGY
-         HOyk53rqtBURUvde2cW0+E9r+CTFUJKh74KdVrKe+V1gOc0OoPJ+weKvy1jgp2QMZrRs
-         vmqg==
-X-Received: by 10.107.159.198 with SMTP id i189mr11648689ioe.59.1443717798535;
- Thu, 01 Oct 2015 09:43:18 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.36.83.147 with HTTP; Thu, 1 Oct 2015 09:43:18 -0700 (PDT)
-X-Google-Sender-Auth: Fh3OJsTc4rJYnKPn43CwR7ytn_M
+	id S1752261AbbJAQxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2015 12:53:34 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41237 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750923AbbJAQxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2015 12:53:33 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t91GrMPR016669
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 1 Oct 2015 18:53:22 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t91GrOSX004775;
+	Thu, 1 Oct 2015 18:53:24 +0200
+In-Reply-To: <560D154F.9000809@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Thu, 1 Oct 2015 13:13:19 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 01 Oct 2015 18:53:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t91GrMPR016669
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1444323203.93581@pHiPZtKCKPYvdY7q4faaeA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278894>
 
-For convenient pushing of current branch, git supports this syntax:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-$ git push origin HEAD
+> Junio will also want your s-o-by, though ;)
 
-This will push your current branch up. However, is there such a
-shortcut for *deleting* the branch? The only goal here is to avoid
-having to type the branch name in the push command. Normally I rely on
-tab completion but we have tons of branches, all which start with some
-prefix mixed with numbers, so it becomes cumbersome to rely on tab
-completion. Ideally I'd like to be able to do:
+Argh, sorry. I normally have an alias to do this for me, but my
+git-send-email is temporarily broken and I forget to sign-off
+explicitly.
 
-$ git push --delete origin HEAD
-$ git push origin :HEAD
+I see that Junio already queued the patches in pu.
 
-Is there a syntax like this available?
+In case it matters, both patches are
+
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+
+and I can resend if needed.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
