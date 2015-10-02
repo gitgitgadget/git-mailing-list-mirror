@@ -1,45 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 4/9] ref-filter: modify "%(objectname:short)" to take length
-Date: Fri,  2 Oct 2015 23:09:01 +0530
-Message-ID: <1443807546-5985-5-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH 3/9] ref-filter: add support for %(path) atom
+Date: Fri,  2 Oct 2015 23:09:00 +0530
+Message-ID: <1443807546-5985-4-git-send-email-Karthik.188@gmail.com>
 References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
 Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
+	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 02 19:39:40 2015
+X-From: git-owner@vger.kernel.org Fri Oct 02 19:39:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zi4Iy-00040e-ST
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 19:39:37 +0200
+	id 1Zi4Iy-00040e-9a
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 19:39:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753761AbbJBRjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2015 13:39:23 -0400
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:33649 "EHLO
-	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753801AbbJBRjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2015 13:39:20 -0400
-Received: by padew5 with SMTP id ew5so12560628pad.0
-        for <git@vger.kernel.org>; Fri, 02 Oct 2015 10:39:20 -0700 (PDT)
+	id S1754075AbbJBRjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2015 13:39:18 -0400
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:36617 "EHLO
+	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753239AbbJBRjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2015 13:39:17 -0400
+Received: by pacik9 with SMTP id ik9so12566267pac.3
+        for <git@vger.kernel.org>; Fri, 02 Oct 2015 10:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tVSc3gJLTCJUeGlCiBpqCOkuPz8l6c0ob1c6LirVJqI=;
-        b=MtXjr/ql3kIt1rgwNS6d8vx/rj9kTkKL3u0e5DHuoIMLFIh8CyNtqfzKGD/1p9OYHm
-         1vAwbdXb4zRhScTo2QRVrINcgaOkLPgjwDWgVDlGIi790HUJEXxgrR2maxqkxtP+PQ04
-         K3zkd+LHtHFwUkSfQbhVs8ynvFNmbPSdL4NN3XkLlSuzjMRy1tKR3as1ZD5aMSjara7y
-         lWQ8myRofpL/OqfOOrIiKLKTb1qjJwPqpOpk2aIlBXFzWmdUZ3GkS5RyvV1vdhp6PM4t
-         ruRAEmrfQ0EatdKD7ATuMwJW2qeVoIXpaT3uUDPylIYe4rLofm6RKrgl1mD10MTQWgoE
-         WGYw==
-X-Received: by 10.68.57.175 with SMTP id j15mr21390186pbq.34.1443807560471;
-        Fri, 02 Oct 2015 10:39:20 -0700 (PDT)
+        bh=4sNaYCLT6pw5+Ul6/MEOf4YHWAfT0JoJh9k8V2bjAsA=;
+        b=LACdDjwWRCwUYm3Q4KbR9uF+mJD8jLaJy114g/DZnQ7vx7WIgySL8q878FlDVvf8zA
+         zOdCvo+qDAcNZqfelJuAyc5+ARFm+fgld7WC8m4ud+WCWEyH9M7MeHev6wFdngKZE+n4
+         AUZ2f7f0cnlLgaYcv/Jh0r8hlMZNT1W3AIibMvUmR/DKPsGt19YS2y943vGK2BySsZtj
+         rb42YfCM8KGOTH/Esy8xoyshmVJmIBFNMsyJfv6PK5Ncww95cPo6n3PU4DS8Ksr84Kbf
+         8iNvrci+JGThqgV/iuILrOEUO+SieQnAiER7CAb0u45BjAzJrlCJ96D5iMTOFCnDbk0B
+         LZgw==
+X-Received: by 10.66.150.161 with SMTP id uj1mr11160505pab.148.1443807556618;
+        Fri, 02 Oct 2015 10:39:16 -0700 (PDT)
 Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id pq1sm12993384pbb.91.2015.10.02.10.39.16
+        by smtp.gmail.com with ESMTPSA id pq1sm12993384pbb.91.2015.10.02.10.39.13
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 02 Oct 2015 10:39:20 -0700 (PDT)
+        Fri, 02 Oct 2015 10:39:16 -0700 (PDT)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.6.0
 In-Reply-To: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
@@ -47,118 +46,124 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278929>
 
-Add support for %(objectname:short,<length>) which would print the
-abbreviated unique objectname of given length. When no length is
-specified 7 is used. The minimum length is 4.
+This adds %(path) and %(path:short) atoms. The %(path) atom will print
+the path of the given ref, while %(path:short) will only print the
+subdirectory of the given ref.
 
 Add tests and documentation for the same.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  2 ++
- ref-filter.c                       | 39 ++++++++++++++++++++++++++++++--------
- t/t6300-for-each-ref.sh            | 22 +++++++++++++++++++++
- 3 files changed, 55 insertions(+), 8 deletions(-)
+ Documentation/git-for-each-ref.txt |  5 +++++
+ ref-filter.c                       | 17 +++++++++++++++++
+ t/t6302-for-each-ref-filter.sh     | 39 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 61 insertions(+)
 
 diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 6a476ba..5097915 100644
+index 5c12c2f..6a476ba 100644
 --- a/Documentation/git-for-each-ref.txt
 +++ b/Documentation/git-for-each-ref.txt
-@@ -103,6 +103,8 @@ objectsize::
- objectname::
- 	The object name (aka SHA-1).
- 	For a non-ambiguous abbreviation of the object name append `:short`.
-+	The length can be explicitly specified by appending either
-+	`:short,<length>` or `:<length>,short`.  Minimum length is 4.
+@@ -145,6 +145,11 @@ if::
+ 	compare the value between the %(if:...) and %(then) atoms with the
+ 	given string.
  
- upstream::
- 	The name of a local ref which can be considered ``upstream''
++path::
++	The path of the given ref. For a shortened version listing
++	only the name of the directory the ref is under append
++	`:short`.
++
+ In addition to the above, for commit and tag objects, the header
+ field names (`tree`, `parent`, `object`, `type`, and `tag`) can
+ be used to specify the value in the header field.
 diff --git a/ref-filter.c b/ref-filter.c
-index b0e86ae..223daeb 100644
+index da7723b..b0e86ae 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -454,14 +454,37 @@ static void *get_obj(const unsigned char *sha1, struct object **obj, unsigned lo
- static int grab_objectname(const char *name, const unsigned char *sha1,
- 			    struct atom_value *v)
- {
--	if (!strcmp(name, "objectname")) {
--		char *s = xmalloc(41);
--		strcpy(s, sha1_to_hex(sha1));
--		v->s = s;
--		return 1;
--	}
--	if (!strcmp(name, "objectname:short")) {
--		v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
-+	const char *p;
+@@ -58,6 +58,7 @@ static struct {
+ 	{ "if" },
+ 	{ "then" },
+ 	{ "else" },
++	{ "path" },
+ };
+ 
+ #define REF_FORMATTING_STATE_INIT  { 0, NULL }
+@@ -1042,6 +1043,22 @@ static void populate_value(struct ref_array_item *ref)
+ 		} else if (!strcmp(name, "else")) {
+ 			v->handler = else_atom_handler;
+ 			continue;
++		} else if (match_atom_name(name, "path", &valp)) {
++			const char *sp, *ep;
 +
-+	if (match_atom_name(name, "objectname", &p)) {
-+		struct strbuf **s, **to_free;
-+		int length = DEFAULT_ABBREV;
++			if (ref->kind & FILTER_REFS_DETACHED_HEAD)
++				continue;
 +
-+		/*  No arguments given, copy the entire objectname */
-+		if (!p) {
-+			char *s = xmalloc(41);
-+			strcpy(s, sha1_to_hex(sha1));
-+			v->s = s;
-+		} else {
-+			s = to_free = strbuf_split_str(p, ',', 0);
-+			while (*s) {
-+				/*  Strip trailing comma */
-+				if (s[1])
-+					strbuf_setlen(s[0], s[0]->len - 1);
-+				if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&length))
-+					;
-+				/*  The `short` argument uses the default length */
-+				else if (!strcmp("short", s[0]->buf))
-+					;
-+				else
-+					die(_("format: unknown option entered with objectname:%s"), s[0]->buf);
-+				s++;
-+			}
-+			if (length < MINIMUM_ABBREV)
-+				length = MINIMUM_ABBREV;
-+			v->s = xstrdup(find_unique_abbrev(sha1, length));
-+			free(to_free);
-+		}
- 		return 1;
- 	}
- 	return 0;
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 7c9bec7..7f675d2 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -385,6 +385,28 @@ test_expect_success 'Check short objectname format' '
- 	test_cmp expected actual
++			sp = strchr(ref->refname, '/');
++			ep = strchr(++sp, '/');
++
++			if (!valp)
++				sp = ref->refname;
++			else if (strcmp(valp, "short"))
++				die(_("format: invalid value given path:%s"), valp);
++
++			v->s = xstrndup(sp, ep - sp);
++			continue;
+ 		} else
+ 			continue;
+ 
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index d7f7a18..5557657 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -312,6 +312,7 @@ test_expect_success 'check %(if:equals=<string>)' '
+ 	test_cmp expect actual
  '
  
-+cat >expected <<EOF
-+$(git rev-parse --short=1 HEAD)
-+EOF
 +
-+test_expect_success 'Check objectname:short format when size is less than MINIMUM_ABBREV' '
-+	git for-each-ref --format="%(objectname:short,1)" refs/heads >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+$(git rev-parse --short=10 HEAD)
-+EOF
-+
-+test_expect_success 'Check objectname:short format' '
-+	git for-each-ref --format="%(objectname:short,10)" refs/heads >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'Check objectname:short format for invalid input' '
-+	test_must_fail git for-each-ref --format="%(objectname:short,-1)" refs/heads
-+'
-+
- test_expect_success 'Check for invalid refname format' '
- 	test_must_fail git for-each-ref --format="%(refname:INVALID)"
+ test_expect_success 'check %(if:notequals=<string>)' '
+ 	git for-each-ref --format="%(if:notequals=master)%(refname:short)%(then)Not master%(else)Found master%(end)" refs/heads/ >actual &&
+ 	cat >expect <<-\EOF &&
+@@ -321,4 +322,42 @@ test_expect_success 'check %(if:notequals=<string>)' '
+ 	test_cmp expect actual
  '
+ 
++test_expect_success 'check %(path)' '
++	git for-each-ref --format="%(path)" >actual &&
++	cat >expect <<-\EOF &&
++	refs/heads
++	refs/heads
++	refs/odd
++	refs/tags
++	refs/tags
++	refs/tags
++	refs/tags
++	refs/tags
++	refs/tags
++	refs/tags
++	refs/tags
++	refs/tags
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'check %(path:short)' '
++	git for-each-ref --format="%(path:short)" >actual &&
++	cat >expect <<-\EOF &&
++	heads
++	heads
++	odd
++	tags
++	tags
++	tags
++	tags
++	tags
++	tags
++	tags
++	tags
++	tags
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.6.0
