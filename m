@@ -1,110 +1,80 @@
-From: Mike Rappazzo <rappazzo@gmail.com>
-Subject: Re: Convenient shortcut to push delete current branch?
-Date: Fri, 2 Oct 2015 09:33:50 -0400
-Message-ID: <CANoM8SWkunV5Z1w9CsqfK2fGmrnghC2HdL5hZBDU7WkXz4aB6w@mail.gmail.com>
-References: <CAHd499C3n8DGuhxwajQbFrH+Fr8zHRA7sVjhG3yfSD5kKPSZsA@mail.gmail.com>
- <CA+P7+xpWXoNiK67xCepoChr8rqX-Z5EcNb-Bs3xhC+Uot2ruYg@mail.gmail.com> <CAHd499C7r+Xd1+4Sn5WdXrEHv5yp0=jbnMUvLBHHJ-1s1sJ4gQ@mail.gmail.com>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: can't install on OS X
+Date: Fri, 2 Oct 2015 09:41:49 -0400 (EDT)
+Message-ID: <136388305.2086780.1443793308932.JavaMail.zimbra@genarts.com>
+References: <560E2936.6020101@prodsyse.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.keller@gmail.com>, Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 02 15:34:20 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Spencer Graves <spencer.graves@prodsyse.com>
+X-From: git-owner@vger.kernel.org Fri Oct 02 15:48:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zi0Ta-0006PK-F6
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 15:34:18 +0200
+	id 1Zi0hV-0003Z4-SG
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 15:48:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753029AbbJBNeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2015 09:34:13 -0400
-Received: from mail-vk0-f44.google.com ([209.85.213.44]:36273 "EHLO
-	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752068AbbJBNeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2015 09:34:11 -0400
-Received: by vkfp126 with SMTP id p126so59825075vkf.3
-        for <git@vger.kernel.org>; Fri, 02 Oct 2015 06:34:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=sWdp62CzTHyl2sX6q2MvQq7LGP3pSCBb1vJye7MFdEo=;
-        b=BCEPFaWakODHneMtWAduAKfHKjwzVSuMJkOAmz0q3z1GjlFeKzjwoYG2LslxZK1EzK
-         QdPicUaM+brJx2twAoJVR7zTCIkPphxppadELvNTUE7kgV8uqA8zZdLhArxG5joerGw2
-         143XzXl8Sr1SdgDUhE7yCEMmrEuyY6PmwazzLOansrgTPaQwojdAjjwzfbBn/jntHjpY
-         Kjb6AlUqnk6pWN338eF9dTSzfs8c/nZtmTM/T3N8d8p4teHux1D8g2fAtHF4GOQ3OAKk
-         KKfKJu0OrDz80Yo0FUr+gEFA1w3T7giMGxl+mx8FozO4YD34mg0iStxDjyzbaPqrKNxl
-         MtKg==
-X-Received: by 10.31.2.193 with SMTP id 184mr9210401vkc.126.1443792850231;
- Fri, 02 Oct 2015 06:34:10 -0700 (PDT)
-Received: by 10.103.80.201 with HTTP; Fri, 2 Oct 2015 06:33:50 -0700 (PDT)
-In-Reply-To: <CAHd499C7r+Xd1+4Sn5WdXrEHv5yp0=jbnMUvLBHHJ-1s1sJ4gQ@mail.gmail.com>
+	id S1753326AbbJBNsf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2015 09:48:35 -0400
+Received: from hq.genarts.com ([173.9.65.1]:14181 "EHLO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753256AbbJBNsd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2015 09:48:33 -0400
+X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Oct 2015 09:48:33 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 4DB30BE1171;
+	Fri,  2 Oct 2015 09:41:54 -0400 (EDT)
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 3r0OgsyUws6g; Fri,  2 Oct 2015 09:41:49 -0400 (EDT)
+Received: from localhost (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 65894BE117E;
+	Fri,  2 Oct 2015 09:41:49 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id KT7bLe2QmxBx; Fri,  2 Oct 2015 09:41:49 -0400 (EDT)
+Received: from mail.hq.genarts.com (localhost [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 443CEBE1171;
+	Fri,  2 Oct 2015 09:41:49 -0400 (EDT)
+In-Reply-To: <2000572217.2086743.1443793295009.JavaMail.zimbra@genarts.com>
+X-Mailer: Zimbra 8.5.1_GA_3056 (ZimbraWebClient - GC45 (Mac)/8.5.1_GA_3056)
+Thread-Topic: can't install on OS X
+Thread-Index: +aqTZn36s6HWeOgKgpthVjb3Kpci0w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278922>
 
-On Thu, Oct 1, 2015 at 2:37 PM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
-> On Thu, Oct 1, 2015 at 1:22 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> On Thu, Oct 1, 2015 at 9:43 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
->>> For convenient pushing of current branch, git supports this syntax:
->>>
->>> $ git push origin HEAD
->>>
->>> This will push your current branch up. However, is there such a
->>> shortcut for *deleting* the branch? The only goal here is to avoid
->>> having to type the branch name in the push command. Normally I rely on
->>> tab completion but we have tons of branches, all which start with some
->>> prefix mixed with numbers, so it becomes cumbersome to rely on tab
->>> completion. Ideally I'd like to be able to do:
->>>
->>> $ git push --delete origin HEAD
->>> $ git push origin :HEAD
->>>
->>> Is there a syntax like this available?
->>
->> You can do
->>
->> git push origin:<branchname>
->>
->> but I don't believe HEAD is supported. It might be valuable to extend
->> push to have a --delete option which would maybe be useful for those
->> who didn't learn the full refspec syntax.
+----- Original Message -----
+> From: "Spencer Graves" <spencer.graves@prodsyse.com>
+> Sent: Friday, October 2, 2015 2:50:30 AM
+> Subject: can't install on OS X
 >
-> Push already has a --delete option.
->
+> I downloaded "git-2.5.3-intel-universal-mavericks.dmg" per
+> instructions.  When I tried to install it, I first had trouble because
+> it wasn't from the Mac App Store nor an "identified developer".
 
-I could see adding an option for --delete-upstream that would use the
-upstream remote and ref of the current branch (if they exist).
-External to git you could script this from the config (completely
-untested):
+You can also right click on the installer and select "Open" for a very similar dialog, but one that gives you the opportunity to run the installer anyway.
 
-    if branch=$(git symbolic-ref --short HEAD); then
-        if remote=$(git config branch.$branch.remote); then
-            if remote_ref=$(git config branch.$branch.merge); then
-                git push $remote --delete $remote_ref
-            fi
-        fi
-    fi
+> "README.txt" says I need "sudo mv /usr/bin/git /usr/bin/git-system".  I
+> tried that and got, "mv: rename /usr/bin/git to /usr/bin/git-system:
+> Operation not permitted" (after entering my password).  [My directory
+> now includes "/usr/local/git", and "/usr/bin" includes git,
+> git-cvsserver, git-receive-pack, git-shell, git-upload-archive, and
+> git-upload-pack.]
+> 
+> Suggestions?
 
->> I don't think git push origin :HEAD makes too much sense, since that's
->> on the remote side of a refspec, and you want it interpreted
->> locally... I suppose it makes sense somewhat, but other refspecs with
->> HEAD on the remote side of the refspec don't really make sense, where
->> as HEAD always makes sense on the local side of the refspec.
->
-> HEAD makes sense on the remote side if you think of it like an alias:
->
-> HEAD -> branch-name -> SHA1
->
-> HEAD simply points to branch-name. It makes sense for git to assume
-> that we should never do anything with real HEAD ref on the remote
-> side, and instead treat it as a substitution for the remote name. My
-> assumption may not be correct, but at the very least it should be a
-> niche case.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Sounds like you're running afoul of El Capitan's new System Integrity Protection (SIP) [1].  The git commands you're seeing there are probably Apple's thin wrappers that are mostly meant to provide instructions on installing XCode, but SIP is stopping you from modifying the /usr directory (ah, Apple's Infinite Wisdom).  There are discussions about working around SIP in the Apple forums [2] and Homebrew has some hints as well [3].
+
+[1] https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html
+[2] https://forums.developer.apple.com/thread/3981
+[3] https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/El_Capitan_and_Homebrew.md#if-usrlocal-does-not-exist
+
+HTH,
+Stephen
