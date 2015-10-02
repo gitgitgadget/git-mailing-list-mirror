@@ -1,74 +1,182 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH/RFC 1/2] sha1_file: close all pack files after running
-Date: Fri, 02 Oct 2015 12:13:40 +0200
-Organization: gmx
-Message-ID: <763ac2b63d56d250e5e1a27f490f79db@dscho.org>
-References: <1443670163-31193-1-git-send-email-max@max630.net>
- <1443670163-31193-2-git-send-email-max@max630.net>
- <33b74e875c7298f67640f5850e88c152@dscho.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Fri Oct 02 12:13:54 2015
+From: Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH v9 2/5] worktree: refactor find_linked_symref function
+Date: Fri,  2 Oct 2015 07:55:32 -0400
+Message-ID: <1443786935-81131-3-git-send-email-rappazzo@gmail.com>
+References: <1443786935-81131-1-git-send-email-rappazzo@gmail.com>
+Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
+To: gitster@pobox.com, sunshine@sunshineco.com,
+	dturner@twopensource.com
+X-From: git-owner@vger.kernel.org Fri Oct 02 13:56:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhxLd-0007rx-Db
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 12:13:53 +0200
+	id 1Zhywj-00027e-S2
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 13:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbbJBKNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2015 06:13:49 -0400
-Received: from mout.gmx.net ([212.227.17.22]:60479 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750709AbbJBKNs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2015 06:13:48 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Lu7ty-1ag0kz0yjG-011QJn; Fri, 02 Oct 2015 12:13:43
- +0200
-In-Reply-To: <33b74e875c7298f67640f5850e88c152@dscho.org>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:2SY3w+aXs2AT6rTUwwb3hXDj78krMeVD68xrhf5wHE+DykLXONp
- NpJsbuFXC1nZLJ4DaPXutQc0NT7LAdprWsWkPZmH1q5jxLA8yC59NNs5yDr7QSAayeJmWr5
- YOZHMi9sFWaturj7pRe96yxtZijxHgR0FL2UN715VhfcPuqoVrLupE+kH4yy7PxuNmTkVGk
- rcgC8IqLAr/E2q2RPZn5Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NbJ0f9Cc1Lw=:CbxF5XANVnO8Q9kmyZn/tY
- SHg4dFRltJReF4hapcW9HQHPcttjmEHvh5x4pC+nuDWaqg+9z0ARHFbNt0UEPMaQavaYPtTTM
- 0eERsXwMqRx1kD1cjww6lcu7X2PeypCkwVk4bti156yRqeDEftf9WBc/0YrgRE5iluyfPf3eO
- k6DL09FGrPCC6UvbXK4Dm4J/iqaZpcdO23hp7Zo6WwGsxio70Fao4MsyxL94SfoXiXkfgLwk6
- 3Eo+4esTxg5OQRf0aQzzTPrFx3/DIaN8x49YlYMixiQ7eLddVfKI59Bmkpn6gkHd1JVt3GjjO
- r0oZ+iCVMPIVMI6SSAgAqVuYgcOwfn7Q8JfB+zBnL60nEA272oW5OOJn7zPpsJLF+BuU5dJJ9
- l8tfGhKsIrF/Z6X1Jk8uXE15SE2/UPuqsV7kLEjWVcUkLVSYe4HU7xA9iHEN97QTjoNJLQT5X
- +841sG5+2BA68cDRX7PRc/3+BVftnjEx7wdLgTzfiyrmP5UPbOvOWMb8NDhK/tT7cifv9tWTF
- v1iudAClmS37PIJWtocHc3rKLJ0CiGjuF5Wqkh5lAzJdYp+J2sXH04HxhaKO4zGBOh23pDpqr
- 6pIbqDJ/o3/yrboyCmOqQgNdNa1UQuu19Vtm0HdBqkScuwlxLfmcfOvcfvsuM64QWBrVpx+pT
- 1Hu88aTzV5qPBd8OCXNxLZpMapEs/BWAcQspBzuFx6rFfRQoClCrGOKtpu3VckfNpR8w5aVsh
- yblSKfLMmPrb9rcWLGrBo3REU9koVynPqyc3L/1VQeTdJd6YRHMxv/Ed9HFTjxT7LZbw+FYR 
+	id S1752075AbbJBL4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2015 07:56:10 -0400
+Received: from mail-yk0-f178.google.com ([209.85.160.178]:35083 "EHLO
+	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751944AbbJBLzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2015 07:55:47 -0400
+Received: by ykdz138 with SMTP id z138so107729424ykd.2
+        for <git@vger.kernel.org>; Fri, 02 Oct 2015 04:55:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=AQvi/EanrDtZS+OpwRYTD4XG4J39Vf1Bq6wjDlFj1qE=;
+        b=y1Z0e7/UPkyOuOftDWHw29aEiM7KS3SGwzzJuDnTURnrFpLlqlAlFKQa8MJEovIxOI
+         SidC9Q0fPw2iHbXdj5Ge0flxSpqLChwnAaybEJ5GrBtwVoi+itOXr7yyTwpYutCsYw8Z
+         HyCMXjsnY5EnqkSAZUZtgv3MNmcY2f7Aw36FsQtcy1WLoDg3gCdOjzzQhOY+JurdOau/
+         DIAat9CfQRabc9xPqh8HNgEvoo4VHjSeBFvkyEaa7jUGY9xbgvv2HtDtgwV7by5toB11
+         cqi4BqsWeHcpBgnsr2OVKZjwAwiFMwcY7dNCLn3N9yThOfGD1GXvdl/qlsBegSRo8R2N
+         4BTw==
+X-Received: by 10.170.225.68 with SMTP id r65mr13062004ykf.58.1443786946523;
+        Fri, 02 Oct 2015 04:55:46 -0700 (PDT)
+Received: from localhost.localdomain (113.sub-70-208-69.myvzw.com. [70.208.69.113])
+        by smtp.gmail.com with ESMTPSA id v4sm7550431ywf.5.2015.10.02.04.55.45
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 02 Oct 2015 04:55:46 -0700 (PDT)
+X-Mailer: git-send-email 2.6.0
+In-Reply-To: <1443786935-81131-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278913>
 
-Hi Max,
+Refactoring will help transition this code to provide additional useful
+worktree functions.
 
-On 2015-10-02 12:05, Johannes Schindelin wrote:
+Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+---
+ worktree.c | 94 ++++++++++++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 67 insertions(+), 27 deletions(-)
 
-> On 2015-10-01 05:29, Max Kirillov wrote:
->> When a builtin has done its job, but waits for pager or not waited
->> by its caller and still hanging it keeps pack files opened.
->> This can cause a number of issues, for example on Windows git gc
->> cannot remove the packs.
-
-Could you do me another favor? It seems that you want to work on this, so I will step back (I have to take off for the weekend very soon anyway, so I am really glad that you take care of it). But I would really love to see the line
-
-This fixes https://github.com/git-for-windows/git/issues/446
-
-in the commit message, as this will keep the connection between the fix and the original report.
-
-Thanks,
-Dscho
+diff --git a/worktree.c b/worktree.c
+index 10e1496..c049947 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -3,6 +3,62 @@
+ #include "strbuf.h"
+ #include "worktree.h"
+ 
++/*
++ * read 'path_to_ref' into 'ref'.  Also if is_detached is not NULL,
++ * set is_detached to 1 (0) if the ref is detatched (is not detached).
++ *
++ * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside $GIT_DIR so
++ * for linked worktrees, `resolve_ref_unsafe()` won't work (it uses
++ * git_path). Parse the ref ourselves.
++ *
++ * return -1 if the ref is not a proper ref, 0 otherwise (success)
++ */
++static int parse_ref(char *path_to_ref, struct strbuf *ref, int *is_detached)
++{
++	if (is_detached)
++		*is_detached = 0;
++	if (!strbuf_readlink(ref, path_to_ref, 0))
++		if (!starts_with(ref->buf, "refs/") ||
++				check_refname_format(ref->buf, 0))
++			return -1;
++	else if (strbuf_read_file(ref, path_to_ref, 0) >= 0) {
++		if (!starts_with(ref->buf, "ref:"))
++			if (is_detached)
++				*is_detached = 1;
++		else {
++			strbuf_remove(ref, 0, strlen("ref:"));
++			strbuf_trim(ref);
++			if (check_refname_format(ref->buf, 0))
++				return -1;
++		}
++	} else
++		return -1;
++	return 0;
++}
++
++static char *find_main_symref(const char *symref, const char *branch)
++{
++	struct strbuf sb = STRBUF_INIT;
++	struct strbuf path = STRBUF_INIT;
++	struct strbuf gitdir = STRBUF_INIT;
++	char *existing = NULL;
++
++	strbuf_addf(&path, "%s/%s", get_git_common_dir(), symref);
++	if (parse_ref(path.buf, &sb, NULL) < 0)
++		goto done;
++	if (strcmp(sb.buf, branch))
++		goto done;
++	strbuf_addstr(&gitdir, get_git_common_dir());
++	strbuf_strip_suffix(&gitdir, ".git");
++	existing = strbuf_detach(&gitdir, NULL);
++done:
++	strbuf_release(&path);
++	strbuf_release(&sb);
++	strbuf_release(&gitdir);
++
++	return existing;
++}
++
+ static char *find_linked_symref(const char *symref, const char *branch,
+ 				const char *id)
+ {
+@@ -11,36 +67,20 @@ static char *find_linked_symref(const char *symref, const char *branch,
+ 	struct strbuf gitdir = STRBUF_INIT;
+ 	char *existing = NULL;
+ 
+-	/*
+-	 * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside
+-	 * $GIT_DIR so resolve_ref_unsafe() won't work (it uses
+-	 * git_path). Parse the ref ourselves.
+-	 */
+-	if (id)
+-		strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, symref);
+-	else
+-		strbuf_addf(&path, "%s/%s", get_git_common_dir(), symref);
++	if (!id)
++		die("Missing linked worktree name");
+ 
+-	if (!strbuf_readlink(&sb, path.buf, 0)) {
+-		if (!starts_with(sb.buf, "refs/") ||
+-		    check_refname_format(sb.buf, 0))
+-			goto done;
+-	} else if (strbuf_read_file(&sb, path.buf, 0) >= 0 &&
+-	    starts_with(sb.buf, "ref:")) {
+-		strbuf_remove(&sb, 0, strlen("ref:"));
+-		strbuf_trim(&sb);
+-	} else
++	strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, symref);
++
++	if (parse_ref(path.buf, &sb, NULL) < 0)
+ 		goto done;
+ 	if (strcmp(sb.buf, branch))
+ 		goto done;
+-	if (id) {
+-		strbuf_reset(&path);
+-		strbuf_addf(&path, "%s/worktrees/%s/gitdir", get_git_common_dir(), id);
+-		if (strbuf_read_file(&gitdir, path.buf, 0) <= 0)
+-			goto done;
+-		strbuf_rtrim(&gitdir);
+-	} else
+-		strbuf_addstr(&gitdir, get_git_common_dir());
++	strbuf_reset(&path);
++	strbuf_addf(&path, "%s/worktrees/%s/gitdir", get_git_common_dir(), id);
++	if (strbuf_read_file(&gitdir, path.buf, 0) <= 0)
++		goto done;
++	strbuf_rtrim(&gitdir);
+ 	strbuf_strip_suffix(&gitdir, ".git");
+ 
+ 	existing = strbuf_detach(&gitdir, NULL);
+@@ -59,7 +99,7 @@ char *find_shared_symref(const char *symref, const char *target)
+ 	struct dirent *d;
+ 	char *existing;
+ 
+-	if ((existing = find_linked_symref(symref, target, NULL)))
++	if ((existing = find_main_symref(symref, target)))
+ 		return existing;
+ 
+ 	strbuf_addf(&path, "%s/worktrees", get_git_common_dir());
+-- 
+2.6.0
