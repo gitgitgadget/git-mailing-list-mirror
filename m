@@ -1,128 +1,165 @@
-From: Spencer Graves <spencer.graves@prodsyse.com>
-Subject: Re: can't install on OS X
-Date: Fri, 2 Oct 2015 14:06:07 -0500
-Message-ID: <560ED59F.7040604@prodsyse.com>
-References: <560E2936.6020101@prodsyse.com>
- <136388305.2086780.1443793308932.JavaMail.zimbra@genarts.com>
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH/RFC 1/2] sha1_file: close all pack files after running
+Date: Fri, 2 Oct 2015 22:06:46 +0300
+Message-ID: <20151002190646.GC26154@wheezy.local>
+References: <1443670163-31193-1-git-send-email-max@max630.net>
+ <1443670163-31193-2-git-send-email-max@max630.net>
+ <33b74e875c7298f67640f5850e88c152@dscho.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Fri Oct 02 21:06:24 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Max Kirillov <max@max630.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Oct 02 21:06:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zi5ew-0001aY-4S
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 21:06:22 +0200
+	id 1Zi5fU-0002Bq-FU
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 21:06:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750847AbbJBTGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2015 15:06:12 -0400
-Received: from cuda.garlic.com ([216.139.0.68]:33224 "EHLO Cuda.garlic.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750818AbbJBTGL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2015 15:06:11 -0400
-X-ASG-Debug-ID: 1443812769-089ede16d16a3f50001-QuoKaX
-Received: from nake.garlic.com (nake.garlic.com [216.139.50.102]) by Cuda.garlic.com with ESMTP id t3RDcIxduRxeiJF7; Fri, 02 Oct 2015 12:06:09 -0700 (PDT)
-X-Barracuda-Envelope-From: spencer.graves@prodsyse.com
-X-Barracuda-Apparent-Source-IP: 216.139.50.102
-Received: from cpe-75-87-186-149.kc.res.rr.com ([75.87.186.149] helo=Spencer-Bryce-Gravess-MacBook-Pro.local)
-	by nake.garlic.com with esmtpsa (UNKNOWN:AES128-SHA:128)
-	(Exim 4.76)
-	(envelope-from <spencer.graves@prodsyse.com>)
-	id 1Zi5ej-0000XB-27; Fri, 02 Oct 2015 12:06:09 -0700
-X-ASG-Orig-Subj: Re: can't install on OS X
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:38.0)
- Gecko/20100101 Thunderbird/38.3.0
-In-Reply-To: <136388305.2086780.1443793308932.JavaMail.zimbra@genarts.com>
-X-Barracuda-Connect: nake.garlic.com[216.139.50.102]
-X-Barracuda-Start-Time: 1443812769
-X-Barracuda-URL: https://cuda.garlic.com:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at garlic.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score: 0.00
-X-Barracuda-Spam-Status: No, SCORE=0.00 using per-user scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=5.0 KILL_LEVEL=1000.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.23126
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
+	id S1750892AbbJBTGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2015 15:06:52 -0400
+Received: from p3plsmtpa09-02.prod.phx3.secureserver.net ([173.201.193.231]:42806
+	"EHLO p3plsmtpa09-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750818AbbJBTGv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Oct 2015 15:06:51 -0400
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa09-02.prod.phx3.secureserver.net with 
+	id QK6n1r00A5B68XE01K6qNy; Fri, 02 Oct 2015 12:06:51 -0700
+Content-Disposition: inline
+In-Reply-To: <33b74e875c7298f67640f5850e88c152@dscho.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278942>
 
+On Fri, Oct 02, 2015 at 12:05:55PM +0200, Johannes Schindelin wrote:
+> Hi Max,
+> 
+> On 2015-10-01 05:29, Max Kirillov wrote:
+>> When a builtin has done its job, but waits for pager or not waited
+>> by its caller and still hanging it keeps pack files opened.
+>> This can cause a number of issues, for example on Windows git gc
+>> cannot remove the packs.
+> 
+> I did not experience that issue. In any case, closing the
+> packs after the builtin function has returned might not
+> change anything anyway because we are about to `exit()`
+> and that's that.
 
+Steps to reproduce:
+1. install the latest git-for-windows, 2.6.0.windows.1
+2. run the script in the end of message
+3. remember the directory name, press the enter as it asks
+4. in the less scrool down
 
-On 10/2/2015 8:41 AM, Stephen Bash wrote:
-> ----- Original Message -----
->> From: "Spencer Graves" <spencer.graves@prodsyse.com>
->> Sent: Friday, October 2, 2015 2:50:30 AM
->> Subject: can't install on OS X
->>
->> I downloaded "git-2.5.3-intel-universal-mavericks.dmg" per
->> instructions.  When I tried to install it, I first had trouble because
->> it wasn't from the Mac App Store nor an "identified developer".
-> You can also right click on the installer and select "Open" for a very similar dialog, but one that gives you the opportunity to run the installer anyway.
->
->> "README.txt" says I need "sudo mv /usr/bin/git /usr/bin/git-system".  I
->> tried that and got, "mv: rename /usr/bin/git to /usr/bin/git-system:
->> Operation not permitted" (after entering my password).  [My directory
->> now includes "/usr/local/git", and "/usr/bin" includes git,
->> git-cvsserver, git-receive-pack, git-shell, git-upload-archive, and
->> git-upload-pack.]
->>
->> Suggestions?
-> Sounds like you're running afoul of El Capitan's new System Integrity Protection (SIP) [1].  The git commands you're seeing there are probably Apple's thin wrappers that are mostly meant to provide instructions on installing XCode, but SIP is stopping you from modifying the /usr directory (ah, Apple's Infinite Wisdom).  There are discussions about working around SIP in the Apple forums [2] and Homebrew has some hints as well [3].
->
-> [1] https://developer.apple.com/library/prerelease/mac/releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_11.html
-> [2] https://forums.developer.apple.com/thread/3981
-> [3] https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/El_Capitan_and_Homebrew.md#if-usrlocal-does-not-exist
+Then inspect the processes git.exe and less.exe with Process
+Explorer of something you find convenient. Both processes
+should have opened the pack file, and git.exe should have it
+mapped (I found it in the "View"->"Lower Pane views"->"Dlls").
 
+Then, if you run another bash window, cd to the repository
+and run "git repack -a -d", it should print:
 
-Thanks.  That helped.  I will summarize here what seemed to work for me 
-(skipping the wailing, gnashing of teeth, Apple tech support, etc.):
+----
+$ git repack -a -d
+Counting objects: 3001, done.
+Compressing objects: 100% (1003/1003), done.
+Writing objects: 100% (3001/3001), done.
+Total 3001 (delta 997), reused 3001 (delta 997)
+Unlink of file '.git/objects/pack/pack-e1b0e3ac01ff8d79a77648de3370f49b93c58a8b.pack' failed. Should I try again? (y/n)
+----
 
+I would like the git gc to succeed, because I run it as a
+scheduled task nightly and feel a bit annoyed by the opened
+windows which wait for me to say yes (after exiting pager).
 
-[step 1] download and install "git-2.5.3-intel-universal-mavericks.dmg" 
-as normal, ending with "Install successful".  Confirm that git is still 
-not properly installed. Shut down or restart.
+So, the fix is needed approximately in that place, after
+running any builtin command.
 
+For your case, I think, the same close_all_packs() should be
+invoked before the repacking.
 
-[step 2]  Boot into the Recovery partition by holding down <cmd>+R while 
-power on and boot.
+> The convention in Git seems to call things _gently rather
+> than _nodie:
 
+Thanks, will change it if the idea is welcomed.
 
-[step 3] Utilities > Terminal
+>> -void close_pack_windows(struct packed_git *p)
+>> +static int close_pack_windows_nodie(struct packed_git *p)
+>>  {
+>>  	while (p->windows) {
+>>  		struct pack_window *w = p->windows;
+>>  
+>>  		if (w->inuse_cnt)
+>> -			die("pack '%s' still has open windows to it",
+>> -			    p->pack_name);
+>> +			return 1;
+>> +
+>>  		munmap(w->base, w->len);
+>>  		pack_mapped -= w->len;
+>>  		pack_open_windows--;
+>>  		p->windows = w->next;
+>>  		free(w);
+>>  	}
+>> +
+>> +	return 0;
+>> +}
+> 
+> And while we're at it, why not teach that function a new
+> parameter `int close_pack_fd`?
 
+I think "close windows" should close windows, if it also
+closes pack fd probably should be another name. But current
+code seems quite logical. Close the packs, and run closing
+windows from it.
 
-[step 4] $ scrutil disable
+> There is another problem: when we cannot close the pack
+> window, we cannot really continue, can we?
 
+Yes we can, unlocking of the window is not needed for the
+current process to do what it intended to do, it would just
+interfere with concurrent git gc.
 
-[step 5] Restart normally > Terminal > sudo mv /usr/git /usr/bin/git-system
+For the clone case probably die would be appropriate. If you
+feel like it worth complicating the code we might search for
+some solution.
 
+-- 
+Max
 
-[step 6] Shut down and reboot into the Recovery partition as above.
+The script:
+--------- ./t-windows-pack-close.sh ---------
+#!/bin/sh
 
+set -e
 
-[step 7] Utilities > Terminal
+TEST_DIR=`mktemp -d`
 
+t_git() {
+    git --work-tree="$TEST_DIR" --git-dir="$TEST_DIR/.git" "$@"
+}
 
-[step 8] $ scrutil enable
+t_git init
 
+for i in $(seq 1000)
+do
+    echo "commit$i" >"$TEST_DIR/commit.$i"
+    t_git add "commit.$i"
+    t_git commit -m "commit$i" -q
+done
 
-[step 9] Restart normally ...
+t_git repack
 
+pack_path=$(find "$TEST_DIR/.git/objects/pack" -name "pack-.pack")
 
-*** Git now seems to be installed.  I'm still having trouble getting it 
-to work properly with a private GitHub repository.  However, RStudio 
-recognizes git, and I've confirmed that /usr/bin includes a subdirectory 
-git-system and NOT simply git.  My problems now seem to be GitHub and 
-RStudio issues.  Thanks again for your help.  I hope this summary might 
-help others.  Spencer Graves
+echo "dir: $TEST_DIR"
+echo press enter to start git log
+read
 
-> HTH,
-> Stephen
->
+t_git -c core.packedGitWindowSize=100 log
+-----------------------------
