@@ -1,133 +1,70 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH/RFC 1/2] sha1_file: close all pack files after running
-Date: Fri, 02 Oct 2015 12:05:55 +0200
+Subject: Re: [PATCH/RFC 2/2] sha1_file: set packfile to O_CLOEXEC at open
+Date: Fri, 02 Oct 2015 12:08:24 +0200
 Organization: gmx
-Message-ID: <33b74e875c7298f67640f5850e88c152@dscho.org>
+Message-ID: <16e4ef29524283f51b2fa00e536cf153@dscho.org>
 References: <1443670163-31193-1-git-send-email-max@max630.net>
- <1443670163-31193-2-git-send-email-max@max630.net>
+ <1443670163-31193-3-git-send-email-max@max630.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Fri Oct 02 12:06:21 2015
+X-From: git-owner@vger.kernel.org Fri Oct 02 12:08:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhxEK-00005G-4j
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 12:06:20 +0200
+	id 1ZhxGa-0002Xq-3L
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 12:08:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbbJBKGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2015 06:06:14 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51790 "EHLO mout.gmx.net"
+	id S1752005AbbJBKIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2015 06:08:35 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59184 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751829AbbJBKGI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2015 06:06:08 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MT60g-1a6f7T0Y3a-00SAbL; Fri, 02 Oct 2015 12:05:57
+	id S1751919AbbJBKId (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2015 06:08:33 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MK17F-1Zh7me39Of-001P8X; Fri, 02 Oct 2015 12:08:25
  +0200
-In-Reply-To: <1443670163-31193-2-git-send-email-max@max630.net>
+In-Reply-To: <1443670163-31193-3-git-send-email-max@max630.net>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:cU1I7eBsR6z6xRhtt0UDD18MOdbNdelMB8yT8Jpz4nAINDXBUu7
- RCUAO+WqsF43zfHVF+4iJkaO4lOYuCrUeGxPk3Mzye8JXfaHaVS1DznzRK5pyafHJxk/5fv
- kLT5OGen9Q4GZEmRJ5tWj6Ykr+g7FBtgBHiRxHDS8qcheuO5EkSXIW5Oc8shUKJwMqlSlqO
- k2SvYZc6/h3hQqV4YF8jg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7SOAbrv4mR0=:AvpQntPB6wsls2DVdStsZc
- /vLfo+/uIBBV3GKVSGn/pX4JMKAZfS0edJ764ixdbllmGkJ1PoR7+YaQ3GXyAxFRBN8UlkTwG
- jCkzzH32UTidacO7KzSPN8KT2skOfwtLn+G5Q4/W3LsPyIYCQ8uCzXR/n6/9YCjdmpNlxLmpi
- wxJq8TjxmlqWcz0Q/ibc9cS25JwIM1323QWiQXnnDPI8MudXSYmkTyAX2aZqIc35VMV3UtABR
- 7TBr9dFIh4ooc3+lAHuLw38saF6tqlrxbMGBYb6TF7C5lmbqARUDK3TG/TYFiNCvU4r183ujX
- VDQpr1GQ+tYLtXnAkcs74RMWrafPlw8Hz+ox6KFssELx4HgJd9CneK0Pjss6XunrZE1tCLgK+
- vLYblUnRXkDCSCbKWI9ZPOsaWygqTzq6WJ2/SqtAFsT64oVQtHpDZe+EXLoLOzBqiIJZ4Bgxl
- 0KY32vMbtvNwIrSEFt7TjktynZwAL2bKM5YkhuqD0SmXSjmFNqcJ8mtzPpUz8H0ad7NjZY/Bc
- 99IWBuGqY9TwrJLlEqD7P/+/hGQQGpnLMx5HR0giqkMJKkRyGW098We3cNA2nKhQ+a4SFxAhO
- 7JuQGxXruL6UmaNY8EXrwU86l8JPW/FysaAcphAErKMgmMLVGkwYX+N1LotH3n3SdZY28dk+A
- TgzxDPylFHuPNZXIuRpUSUdy4fzZmOzkdyoaP+dJgUi7L0d9y4BIQWlrs3t/kuL93KgaCsakX
- Fg0mzIhLQdlkQSOtgRdq7eAm5cJyq0PieciUM2nQGISNvXydyrrrphXdJWobbacjdi9UDe5W 
+X-Provags-ID: V03:K0:2tiQiVlDTo1pw2RqyMCqnSFGqs7Oj/+jgB5dhNJcAUdYTS39vaP
+ cv4L+y/VrpJ2n06/sjf5O3yHkyM0+nIfqV1vW/o/g8zOjcz72Vye4ucdwSEGwAUnoJgfnlp
+ gQA9fDQBa7ZPgQcHhFnAKiRhXzZK/ThryToNWUQvU392bBszr2mda7J+9UWPeIv0JGuEXkm
+ LwwEoT6FTE6VUobW+eMzQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:08NqgkmxLtQ=:7Y0W16DjxcGr0nybmjlXMX
+ 8rXtiPyNoH9z4F3iGzttq9VtHQnP5QQYQoQX6mDZt7hHVF6j1we4iV6zGIu3cxv6iq7Nd2EpY
+ c79BiOopgQMkxsJS+sTcNrP7mb4PtL1Ddg2775wyL6QITqiXVcCjijtxlXzf1wVSMtG4QiNL7
+ 09uJb4ioAIefqObe61KrxmUYjQWRku23rg1DRfIU3M0/Xi4oIJQILUgR9iSH0HzADH5yrNMVu
+ W+ABqf+xRHSl+VZTVU136OO5YfoqrVLM5EXPJnvD7gZtv31Vm+N9RrD9wavCnucZ5rC64v4oK
+ yMre1Z9lGQEyq6Ey9bQM03R5D3qFiIu0klGdZkgC/onxMtQlS5yijXgdrpiixVWNsX6b8mQFs
+ 7DCKqJQ9Me9I+7f043G97MJm3MqAteXYE7vm09qmerOp94ljMWoTGYCOxLO9gL0l5uHvTy8rr
+ cUZM2RBVOSNUICPsuGOEKKc/MJdAgxdrpj142Jh4Vg4HlLbMjgBCvm3X/fQeHTz+LboQQVRPy
+ 6J/ncEErxeJuxg4BlUB98xeMfpAeEA19eIlb26SKQa91fBk4Dhyp9CzYyo54dfJdaxUUPCGVb
+ NVYJ8H34JK7mcmyB6FU3Hr1ioZ9a7Ws7nccaM2/hdGBmslk894lks0FxmV1SZuCy4qJ8PWnfc
+ N3cEzV3PK+YnccjC9Qm/lWdGNBHYUp/P5eZS6ZyJqdGD3jwp7e0rkeJjm3vkmBBfxWHtaGAWZ
+ YrV++LXgRZbJ8qmgYus7e495BdjRIaaDzQT1vgwe9QS3VIR4ZNeqnvBb2HhXxWdf0kGyFoh3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278911>
 
 Hi Max,
 
 On 2015-10-01 05:29, Max Kirillov wrote:
-> When a builtin has done its job, but waits for pager or not waited
-> by its caller and still hanging it keeps pack files opened.
-> This can cause a number of issues, for example on Windows git gc
-> cannot remove the packs.
+> Windows does not support setting O_CLOEXEC by fcntl,
+> but there is an open flag O_NOINHERIT which results in same
+> behaviour. Use it in git_open_noatime() and also bring
+> setting O_CLOEXEC there also to make it consistent. Rename
+> the function to git_open_noatime_cloexec(), to avoid confusion.
 
-I did not experience that issue. In any case, closing the packs after the builtin function has returned might not change anything anyway because we are about to `exit()` and that's that.
+Which problem does this solve? I am actually suspecting that this will rather cause problems because now `exec()`ing children might cause bogus file descriptors to be still held on.
 
-So I would like to skip this:
-
-> diff --git a/git.c b/git.c
-> index 5feba41..ad34680 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -348,6 +349,7 @@ static int run_builtin(struct cmd_struct *p, int
-> argc, const char **argv)
->  	trace_argv_printf(argv, "trace: built-in: git");
->  
->  	status = p->fn(argc, argv, prefix);
-> +	close_all_packs();
->  	if (status)
->  		return status;
->  
-
-Also, I would move the new declaration directly before `close_pack_windows()`:
-
-> diff --git a/cache.h b/cache.h
-> index 79066e5..153bc46 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1279,6 +1279,7 @@ extern void unuse_pack(struct pack_window **);
->  extern void free_pack_by_name(const char *);
->  extern void clear_delta_base_cache(void);
->  extern struct packed_git *add_packed_git(const char *, int, int);
-> +extern void close_all_packs(void);
->  
->  /*
->   * Return the SHA-1 of the nth object within the specified packfile.
-
-The convention in Git seems to call things _gently rather than _nodie:
-
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 08302f5..62f1dad 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -773,20 +773,28 @@ void *xmmap(void *start, size_t length,
->  	return ret;
->  }
->  
-> -void close_pack_windows(struct packed_git *p)
-> +static int close_pack_windows_nodie(struct packed_git *p)
->  {
->  	while (p->windows) {
->  		struct pack_window *w = p->windows;
->  
->  		if (w->inuse_cnt)
-> -			die("pack '%s' still has open windows to it",
-> -			    p->pack_name);
-> +			return 1;
-> +
->  		munmap(w->base, w->len);
->  		pack_mapped -= w->len;
->  		pack_open_windows--;
->  		p->windows = w->next;
->  		free(w);
->  	}
-> +
-> +	return 0;
-> +}
-
-And while we're at it, why not teach that function a new parameter `int close_pack_fd`?
-
-There is another problem: when we cannot close the pack window, we cannot really continue, can we? Because if we do, we *still* have the lock, and we'll just fail later, most likely with an unhelpful error message because we do not know where the pack closing failed. I do not think that the warning really helps...
+So I would recommend to drop this patch. It is not needed to fix the reported bug.
 
 Ciao,
 Dscho
