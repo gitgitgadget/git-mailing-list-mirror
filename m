@@ -1,85 +1,77 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH 41/68] init: use strbufs to store paths
-Date: Fri, 02 Oct 2015 08:00:24 +0200
-Message-ID: <560E1D78.1040805@web.de>
-References: <20150924210225.GA23624@sigill.intra.peff.net> <20150924210736.GL30946@sigill.intra.peff.net> <CAO2U3QjunOPoAbGSRjAmCwfk-TnoMveXOJhpb351eh1a_3Xp3A@mail.gmail.com> <20150930002347.GA23406@sigill.intra.peff.net> <xmqqh9mb7k3r.fsf@gitster.mtv.corp.google.com> <20151001025119.GA31565@sigill.intra.peff.net>
+From: Spencer Graves <spencer.graves@prodsyse.com>
+Subject: can't install on OS X
+Date: Fri, 2 Oct 2015 01:50:30 -0500
+Message-ID: <560E2936.6020101@prodsyse.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Michael Blume <blume.mike@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 02 08:01:27 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 02 09:10:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZhtPJ-0004yW-B9
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 08:01:25 +0200
+	id 1ZhuU6-0000ay-FZ
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 09:10:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751479AbbJBGBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2015 02:01:16 -0400
-Received: from mout.web.de ([212.227.17.11]:60844 "EHLO mout.web.de"
+	id S1751733AbbJBHKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2015 03:10:22 -0400
+Received: from cuda.garlic.com ([216.139.0.68]:54488 "EHLO Cuda.garlic.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751285AbbJBGBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2015 02:01:14 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0LqDUa-1aLbsK3TsW-00dnMc; Fri, 02 Oct 2015 08:01:09
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <20151001025119.GA31565@sigill.intra.peff.net>
-X-Provags-ID: V03:K0:VwIw28Rvx0Qkn5QIqtrPEbqH4eXsvQflno8owUIZHzggfT2hTED
- MC3nGSsmD/eT0NUjGVE/S4MjQMk+y8re3jzIIesnIFOqEmQovIzZYA6LSQs2fJHD4a2Kn6h
- hZi72MSMIZ8VyLoxUeYxKxzSwOF6MJkRoMbC0MueWqMI99FdnPGhiHqBHfNTcPt7lOkvSTu
- HaHFNl94wGU2+LDbXsjbg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jKwtiDh2QOg=:Z7fcVHTJErQHObtrBOGSqX
- myFtkVOa6wug63fsjVRAtbHaYVaX/GKa/frrY98enoBMGpNVzzWEzec5ZtoetRohz/BuAT7EB
- 4PCWHAesw1HfVRPeCnFmhUdiR8VbKk9ku3z4DBZAHNpF5M1eLaeJzjL4EdOb3EuJXsJbG2Q5O
- NlOb4/jao+Un1o1O4hKYkNBvzbJZ1/NfDGDol5OuYe8JNktmW+ACIYyMvTBImQibyN+e3JDb7
- zLkAqzgUaMyCI63r1a2IjZkwQMe7p7G/uqB6oe3LD8NzXQekgHwxtkzsmxOuEORhAU7H4DDW2
- 8a8h9ln83xfAERPImSST+65iCIDw96TAzjNnQljRCDAgPG1seTGhpK0oJiOekHLDwJcNpaJDN
- sCaoLZ6QTbVhWlIbwAeIGe3Hih5wQRNKzR0b7jngTa96YTqIvRVK4/Jntdwu9TrMnHN+aHxGG
- Jg4syfonmcZmvy/pIUsq1SGxi3wppe2AOhqD4tkIo2wb3/VRzOUZPVfKIfF80jnLHaFD+Sn+g
- 8CFGqLPcx5FMwhRf0380yNoiZMKLL/n9vOd0fowjCz3T01pRR4biveO4zEHzLplHGjl0kEV4E
- cLUsDw80iYk9gtn43Nokr33TI/K7oy0rFoSvOjCxN9XnDiP+6elKvfbWa12Swa4cKGr+8G52P
- p2GajCVHEzEwrPb1sfIW0itpK4cdu9ADPyYJd5Kw+5FgnhPI0vwvyiMMbSduZ6rnxiJZnRIIH
- fn308IPHwM4E5ey1Y54Qx9PYtzbH5degvZZdFkBMF3snLAB9ZC1ODASI4/3dvI+MFC6p19+d 
+	id S1750979AbbJBHKV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2015 03:10:21 -0400
+X-Greylist: delayed 1187 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Oct 2015 03:10:20 EDT
+X-ASG-Debug-ID: 1443768631-089ede16d1609360001-QuoKaX
+Received: from nake.garlic.com (nake.garlic.com [216.139.50.102]) by Cuda.garlic.com with ESMTP id zIvYEieAhHHuF1uT for <git@vger.kernel.org>; Thu, 01 Oct 2015 23:50:31 -0700 (PDT)
+X-Barracuda-Envelope-From: spencer.graves@prodsyse.com
+X-Barracuda-Apparent-Source-IP: 216.139.50.102
+Received: from cpe-75-87-186-149.kc.res.rr.com ([75.87.186.149] helo=Spencer-Bryce-Gravess-MacBook-Pro.local)
+	by nake.garlic.com with esmtpsa (UNKNOWN:AES128-SHA:128)
+	(Exim 4.76)
+	(envelope-from <spencer.graves@prodsyse.com>)
+	id 1ZhuAp-0007RW-Gr
+	for git@vger.kernel.org; Thu, 01 Oct 2015 23:50:31 -0700
+X-ASG-Orig-Subj: can't install on OS X
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:38.0)
+ Gecko/20100101 Thunderbird/38.2.0
+X-Barracuda-Connect: nake.garlic.com[216.139.50.102]
+X-Barracuda-Start-Time: 1443768631
+X-Barracuda-URL: https://cuda.garlic.com:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at garlic.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 0.00
+X-Barracuda-Spam-Status: No, SCORE=0.00 using per-user scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=5.0 KILL_LEVEL=1000.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.23108
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278909>
 
-On 10/01/2015 04:51 AM, Jeff King wrote:
-> On Wed, Sep 30, 2015 at 01:00:56PM -0700, Junio C Hamano wrote:
->
->>> Wow, my patch isn't even close to reasonable. I didn't realize because
->>> we do not compile this code at all for non-Mac platforms. Sorry.
->> Perhaps the way we completely stub out the platform specific helpers
->> contributes to this kind of gotchas?  I am wondering how much additional
->> safety we would gain if we start doing something like this.
-> I think it is an improvement, but it does not solve all of the problems.
-> I also botched the implementation of probe_utf8_pathname_composition,
-> and that does not get compiled on most platforms (though we _could_
-> compile it and just never call it).
->
-> -Peff
->
-Peff, are you planing a re-roll ?
-Or. Junio, do you plan to fix it ?
-Or should I send a patch on top of pu ?
+What's the procedure for installing Git under OS X 10.11?
 
-The compilation can be tested under Linux like this:
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 7486a7e..6d09bd0 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -13,6 +13,9 @@ ifdef MSVC
-         uname_O := Windows
-  endif
+I downloaded "git-2.5.3-intel-universal-mavericks.dmg" per 
+instructions.  When I tried to install it, I first had trouble because 
+it wasn't from the Mac App Store nor an "identified developer".  I 
+ultimately found "System Preferences" > "Security & Privacy" > "Click 
+the lock to make changes" > entered password > AND clicked to "Allow 
+apps downloaded from: Anywhere".  Then the install appeared to run and  
+proclaimed, "The installation was successful."  However, git is not 
+listed under "Applications", and RStudio says, "Git was not detected on 
+the system path."
 
-+COMPAT_OBJS += compat/precompose_utf8.o
-+BASIC_CFLAGS += -DPRECOMPOSE_UNICODE
-+
+
+"README.txt" says I need "sudo mv /usr/bin/git /usr/bin/git-system".  I 
+tried that and got, "mv: rename /usr/bin/git to /usr/bin/git-system: 
+Operation not permitted" (after entering my password).  [My directory 
+now includes "/usr/local/git", and "/usr/bin" includes git, 
+git-cvsserver, git-receive-pack, git-shell, git-upload-archive, and 
+git-upload-pack.]
+
+
+Suggestions?  Thanks, Spencer Graves
