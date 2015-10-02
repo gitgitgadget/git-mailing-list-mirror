@@ -1,179 +1,215 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 2/9] ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
-Date: Fri,  2 Oct 2015 23:08:59 +0530
-Message-ID: <1443807546-5985-3-git-send-email-Karthik.188@gmail.com>
-References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	gitster@pobox.com, Karthik Nayak <Karthik.188@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 02 19:41:34 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG?] applypatch-msg hook no-longer thinks stdin is a tty
+Date: Fri, 02 Oct 2015 10:43:55 -0700
+Message-ID: <xmqqr3ld5fok.fsf@gitster.mtv.corp.google.com>
+References: <CAFOYHZArBv=2E_YonCqOSC4mWk9=xkbG9FyB+zNFFAqmUBUKHA@mail.gmail.com>
+	<xmqqvbap5kbr.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Chris Packham <judge.packham@gmail.com>,
+	Paul Tan <pyokagan@gmail.com>
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 02 19:44:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zi4Ko-0005y6-Fy
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 19:41:30 +0200
+	id 1Zi4NM-0000G3-2y
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 19:44:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752706AbbJBRlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2015 13:41:24 -0400
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:36587 "EHLO
-	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754024AbbJBRjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2015 13:39:13 -0400
-Received: by pacik9 with SMTP id ik9so12566088pac.3
-        for <git@vger.kernel.org>; Fri, 02 Oct 2015 10:39:13 -0700 (PDT)
+	id S1751919AbbJBRoD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2015 13:44:03 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:34549 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752568AbbJBRoB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2015 13:44:01 -0400
+Received: by padhy16 with SMTP id hy16so112172135pad.1
+        for <git@vger.kernel.org>; Fri, 02 Oct 2015 10:44:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=m52Or2XZ/e2Ha8bJ1v2mzK0oLapqOOXUaibUIZ/Q12s=;
-        b=LFEfAimbYAQbu+u+2+JgManGSrRsQwXgyXx+nguGeCxwB0jort/t5aqwtfgJ+5ynlC
-         TSVmBwtXm3+Jn/pOmCyX6hC886eoZcItEcAcJL/qudIf4b6SpkXMAUX5vVekWhD8F+xC
-         Fo/iAXyMCohSyMsP84dpjVOW03tYEQziupiwfo/j7F+khcKOzyxLaueZa0vt87QUaoJX
-         zlGGbmoZl7EUM7NHMn0WWjhuGbVv1Qfpi5pssDnpQxJHBZWk4Vd/p83ciuddThxbvTT7
-         FD18/2UWEyfs1TE/qMk9z/psp0L5JvyIRdgyWj/ttlTyDlfp7QdCU4zatsTwDr78qatg
-         5ZIg==
-X-Received: by 10.66.97.73 with SMTP id dy9mr21474808pab.115.1443807552877;
-        Fri, 02 Oct 2015 10:39:12 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id pq1sm12993384pbb.91.2015.10.02.10.39.10
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 02 Oct 2015 10:39:12 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.6.0
-In-Reply-To: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=Mvb7/OjrQRN7G1Ea9Fgumj5fza8dR4QxIcdQZ1HajpY=;
+        b=OPwNFGYSn1RPlGk2xOBsNNhyh+JRb5u2dwsT23FyoVf2qFjuuBbs7fWnumREQirPhh
+         GM3Eok+bH39VppQkisXEuhW9RDndOKOO/uO0f6jY6J7kX4qotw/seIdjtB51HDtSHi0A
+         e3OxS+a5gvDtpjstf34b1VoxGnbGf0TbfxCagUsFRD6F+2lxjqBcjdpKQ6VtIMx7ZP2Z
+         c0fprqGvsceAacaQ5prhA1B5Ti9JbTnC2IST+DvHNP+9HbB8BcPn6pc7l8Lph3JQ0Cce
+         YrwtcB67/IU3a9MzUmmDazbcuTYo7XGoKxIV9eFAGngGqopudkaxin73PXl54oNCoN3Y
+         H3ZA==
+X-Received: by 10.68.68.197 with SMTP id y5mr21216796pbt.88.1443807840649;
+        Fri, 02 Oct 2015 10:44:00 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:5831:5c0e:ce5f:86ea])
+        by smtp.gmail.com with ESMTPSA id tj2sm13147541pab.4.2015.10.02.10.43.58
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 02 Oct 2015 10:43:58 -0700 (PDT)
+In-Reply-To: <xmqqvbap5kbr.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 02 Oct 2015 09:03:36 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278936>
 
-Implement %(if:equals=<string>) wherein the if condition is only
-satisfied if the value obtained between the %(if:...) and %(then) atom
-is the same as the given '<string>'.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Similarly, implement (if:notequals=<string>) wherein the if condition
-is only satisfied if the value obtained between the %(if:...) and
-%(then) atom is differnt from the given '<string>'.
+> Chris Packham <judge.packham@gmail.com> writes:
+>
+>> As of git 2.6 this has stopped working and stdin always fails the tty
+>> check.
+>
+> We now run that hook thru run_hook_ve(), which closes the standard
+> input (as the hook is not reading anything).  Perhaps you can check
+> if your output is connected to the tty instead?
 
-Add tests and Documentation for the same.
+s|closes the standard input|opens the standard input for /dev/null|;
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-for-each-ref.txt |  4 +++-
- ref-filter.c                       | 28 ++++++++++++++++++++++++----
- t/t6302-for-each-ref-filter.sh     | 18 ++++++++++++++++++
- 3 files changed, 45 insertions(+), 5 deletions(-)
+Having said that, here are some further thoughts:
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 768a512..5c12c2f 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -141,7 +141,9 @@ if::
- 	If there is an atom with value or string literal after the
- 	%(if) then everything after the %(then) is printed, else if
- 	the %(else) atom is used, then everything after %(else) is
--	printed.
-+	printed. Append ":equals=<string>" or ":notequals=<string>" to
-+	compare the value between the %(if:...) and %(then) atoms with the
-+	given string.
- 
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
-diff --git a/ref-filter.c b/ref-filter.c
-index 93b07f5..da7723b 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -73,6 +73,8 @@ struct contents {
- };
- 
- struct if_then_else {
-+	const char *if_equals,
-+		*not_equals;
- 	unsigned int if_atom : 1,
- 		then_atom : 1,
- 		else_atom : 1,
-@@ -277,8 +279,16 @@ static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_stat
+ * Hooks run via run_hook_ve() and run_hook_le() have their standard
+   input connected to /dev/null even before these functions were
+   introduced at ae98a008 (Move run_hook() from builtin-commit.c
+   into run-command.c (libgit), 2009-01-16).  The commit
+   consolidated the code to run hooks in "checkout", "commit", "gc",
+   and "merge", all of which run their hooks with their standard
+   input reading from /dev/null.
+
+ * Later at dfa7a6c5 (clone: run post-checkout hook when checking
+   out, 2009-03-03) "git clone" learned to run post-checkout hook
+   the same way.
+
+ * "receive-pack" (which accepts and processes an incoming "git
+   push") has pre-receive and post-receive hooks, and they do get
+   invoked with their standard input open, but they are connected to
+   a pipe to be fed with the information about the push from
+   "receive-pack" process.
+
+ * "post-rewrite" hooks, invoked by "rebase" and "commit", does get
+   invoked with its standard input open, but it is fed with the
+   information about the original and the rewritten commit.
+
+So in that sense, "am", primarily because it was implemented as a
+script, was an oddball.  It should have been connecting the standard
+input to /dev/null in order to be consistent with others, but it did
+not even bother to do so.
+
+We _could_ leave the standard input connected to the original
+process's standard input only for the specific hook by doing
+something along the lines of the attached, but I am not sure if it
+is a good change.  Given that the majority of existing hooks are
+spawned with their standard input connected to /dev/null (and also
+after scanning the output from "git hooks --help", I did not find
+any that would want to read from the standard input of the original
+process that spawns it), I tend to consider that the change in 2.6
+done as part of rewriting "am" in C is a bugfix, even though an
+unintended one, to make things more consistent.
+
+Besides "consistency", a hook that tried to read from "am"'s
+standard input would have been incorrect in the first place, as it
+is a normal mode of operation to feed one or more patch e-mails from
+the standard input of "git am", i.e.
+
+	$ git am <mbox
+
+If you want to go interactive from the hook, you'd have to open and
+interact with /dev/tty yourself in your hook anyway.
+
+ builtin/am.c  |  8 +++++++-
+ run-command.c | 30 ++++++++++++++++++++++++++----
+ run-command.h |  9 +++++++++
+ 3 files changed, 42 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/am.c b/builtin/am.c
+index 4f77e07..3d160d9 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -510,9 +510,15 @@ static void am_destroy(const struct am_state *state)
+ static int run_applypatch_msg_hook(struct am_state *state)
  {
- 	struct ref_formatting_stack *new;
- 	struct if_then_else *if_then_else = xcalloc(sizeof(struct if_then_else), 1);
-+	const char *valp;
+ 	int ret;
++	struct child_process custom = CHILD_PROCESS_INIT;
  
- 	if_then_else->if_atom = 1;
-+	if (skip_prefix(atomv->s, "equals=", &valp))
-+		if_then_else->if_equals = valp;
-+	else if (skip_prefix(atomv->s, "notequals=", &valp))
-+		if_then_else->not_equals = valp;
-+	else if (atomv->s[0])
-+		die(_("format: unknown format if:%s"), atomv->s);
+ 	assert(state->msg);
+-	ret = run_hook_le(NULL, "applypatch-msg", am_path(state, "final-commit"), NULL);
 +
- 	push_stack_element(&state->stack);
- 	new = state->stack;
- 	new->at_end = if_then_else_handler;
-@@ -302,11 +312,19 @@ static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_st
- 	if (!if_then_else)
- 		die(_("format: %%(then) atom used without an %%(if) atom"));
- 	if_then_else->then_atom = 1;
++	custom.env = NULL;
++	custom.no_stdin = 0;
++	custom.stdout_to_stderr = 1;
 +
- 	/*
--	 * If there exists non-empty string between the 'if' and
--	 * 'then' atom then the 'if' condition is satisfied.
-+	 * If the 'equals' or 'notequals' attribute is used then
-+	 * perform the required comparison. If not, only non-empty
-+	 * strings satisfy the 'if' condition.
- 	 */
--	if (cur->output.len && !is_empty(cur->output.buf))
-+	if (if_then_else->if_equals) {
-+		if (!strcmp(if_then_else->if_equals, cur->output.buf))
-+			if_then_else->condition_satisfied = 1;
-+	} else 	if (if_then_else->not_equals) {
-+		if (strcmp(if_then_else->not_equals, cur->output.buf))
-+			if_then_else->condition_satisfied = 1;
-+	} else if (cur->output.len && !is_empty(cur->output.buf))
- 		if_then_else->condition_satisfied = 1;
- 	strbuf_reset(&cur->output);
++	ret = run_hook_le_opt(&custom, "applypatch-msg", am_path(state, "final-commit"), NULL);
+ 
+ 	if (!ret) {
+ 		free(state->msg);
+diff --git a/run-command.c b/run-command.c
+index 3277cf7..dee86df 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -793,7 +793,7 @@ const char *find_hook(const char *name)
+ 	return path.buf;
  }
-@@ -1013,8 +1031,10 @@ static void populate_value(struct ref_array_item *ref)
- 		} else if (!strcmp(name, "end")) {
- 			v->handler = end_atom_handler;
- 			continue;
--		} else if (!strcmp(name, "if")) {
-+		} else if (match_atom_name(name, "if", &valp)) {
- 			v->handler = if_atom_handler;
-+			if (valp)
-+				v->s = xstrdup(valp);
- 			continue;
- 		} else if (!strcmp(name, "then")) {
- 			v->handler = then_atom_handler;
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index 7ce1cc4..d7f7a18 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -303,4 +303,22 @@ test_expect_success 'check %(if)...%(then)...%(else)...%(end) atoms' '
- 	test_cmp expect actual
- '
  
-+test_expect_success 'check %(if:equals=<string>)' '
-+	git for-each-ref --format="%(if:equals=master)%(refname:short)%(then)Found master%(else)Not master%(end)" refs/heads/ >actual &&
-+	cat >expect <<-\EOF &&
-+	Found master
-+	Not master
-+	EOF
-+	test_cmp expect actual
-+'
+-int run_hook_ve(const char *const *env, const char *name, va_list args)
++int run_hook_ve_opt(struct child_process *custom, const char *name, va_list args)
+ {
+ 	struct child_process hook = CHILD_PROCESS_INIT;
+ 	const char *p;
+@@ -805,13 +805,35 @@ int run_hook_ve(const char *const *env, const char *name, va_list args)
+ 	argv_array_push(&hook.args, p);
+ 	while ((p = va_arg(args, const char *)))
+ 		argv_array_push(&hook.args, p);
+-	hook.env = env;
+-	hook.no_stdin = 1;
+-	hook.stdout_to_stderr = 1;
++	hook.env = custom->env;
++	hook.no_stdin = custom->no_stdin;
++	hook.stdout_to_stderr = custom->stdout_to_stderr;
+ 
+ 	return run_command(&hook);
+ }
+ 
++int run_hook_ve(const char *const *env, const char *name, va_list args)
++{
++	struct child_process custom = CHILD_PROCESS_INIT;
 +
-+test_expect_success 'check %(if:notequals=<string>)' '
-+	git for-each-ref --format="%(if:notequals=master)%(refname:short)%(then)Not master%(else)Found master%(end)" refs/heads/ >actual &&
-+	cat >expect <<-\EOF &&
-+	Found master
-+	Not master
-+	EOF
-+	test_cmp expect actual
-+'
++	custom.env = env;
++	custom.no_stdin = 1;
++	custom.stdout_to_stderr = 1;
++	return run_hook_ve_opt(&custom, name, args);
++}
 +
- test_done
--- 
-2.6.0
++int run_hook_le_opt(struct child_process *custom, const char *name, ...)
++{
++	va_list args;
++	int ret;
++
++	va_start(args, name);
++	ret = run_hook_ve_opt(custom, name, args);
++	va_end(args);
++
++	return ret;
++}
++
+ int run_hook_le(const char *const *env, const char *name, ...)
+ {
+ 	va_list args;
+diff --git a/run-command.h b/run-command.h
+index 5b4425a..33a0d72 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -62,6 +62,15 @@ LAST_ARG_MUST_BE_NULL
+ extern int run_hook_le(const char *const *env, const char *name, ...);
+ extern int run_hook_ve(const char *const *env, const char *name, va_list args);
+ 
++/*
++ * Same as above, but env, no_stdin and stdout_to_stderr are copied from
++ * custom to the child_process structure that spawns the hook.
++ */
++LAST_ARG_MUST_BE_NULL
++extern int run_hook_le_opt(struct child_process *custom, const char *name, ...);
++extern int run_hook_ve_opt(struct child_process *custom, const char *name, va_list args);
++
++
+ #define RUN_COMMAND_NO_STDIN 1
+ #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
+ #define RUN_COMMAND_STDOUT_TO_STDERR 4
