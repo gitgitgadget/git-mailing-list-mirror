@@ -1,72 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 42/43] refs: add LMDB refs backend
-Date: Fri, 02 Oct 2015 14:35:26 -0700
-Message-ID: <xmqq1tdd3qe9.fsf@gitster.mtv.corp.google.com>
-References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
-	<1443477738-32023-43-git-send-email-dturner@twopensource.com>
+From: Felipe Micaroni Lalli <micaroni@walltime.info>
+Subject: Git feature request: mark a commit as minor
+Date: Fri, 2 Oct 2015 18:38:46 -0300
+Organization: Walltime
+Message-ID: <560EF966.3000501@walltime.info>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Oct 02 23:35:38 2015
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="fLRHqCuSBg43u4MF7h7SSSh1fWxuXMetQ"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 02 23:39:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zi7zI-0004SW-FY
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 23:35:32 +0200
+	id 1Zi82a-000805-Dn
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 23:38:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751297AbbJBVf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2015 17:35:28 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:33096 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750991AbbJBVf1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2015 17:35:27 -0400
-Received: by pacex6 with SMTP id ex6so116845332pac.0
-        for <git@vger.kernel.org>; Fri, 02 Oct 2015 14:35:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+	id S1751550AbbJBViw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2015 17:38:52 -0400
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:35005 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751076AbbJBViv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2015 17:38:51 -0400
+Received: by qgt47 with SMTP id 47so106321886qgt.2
+        for <git@vger.kernel.org>; Fri, 02 Oct 2015 14:38:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:to:from:subject:organization:message-id:date
          :user-agent:mime-version:content-type;
-        bh=P791ue1cTnRTGvF26xD8UELb6ZehuEq8aSJs+XjVJ9w=;
-        b=ZPubrYAvvduTHPjm/vJ8NXNh97SFYmnrkhkW1ki1BnKI7QUqMN1yzUP8oP+dD6UeLt
-         zrtb2UadGE2uBgjmfDdpmYbZ0DWMFBvGAu5UCxrxv3lVM+pRBWkiBh1a1oHKgBjIxMcf
-         EXiaVUuhnJxqI6SiIZ/hS85arfqiIur+VZcF6aUCsjzSEdwylja+yY7Wi21n9D5SiaQg
-         Geu6SjmyYhuLi5cHHqAFwBKmLDT46I4aFOrkfV8Jsd28XKMyN4fFZGe3WX4xWqWXx/Wg
-         SJaeE1YqNi9ZUvIcILxYyu6Hb5y7ueD/c4AtKM0kI8YC3OaawPSRKqNdHUh8NBnSySLo
-         vp+g==
-X-Received: by 10.66.221.104 with SMTP id qd8mr23144476pac.155.1443821727325;
-        Fri, 02 Oct 2015 14:35:27 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:5831:5c0e:ce5f:86ea])
-        by smtp.gmail.com with ESMTPSA id jw6sm13639384pbb.86.2015.10.02.14.35.26
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 02 Oct 2015 14:35:26 -0700 (PDT)
-In-Reply-To: <1443477738-32023-43-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Mon, 28 Sep 2015 18:02:17 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        bh=+V/cnjYZJzEyr7KbHoWCYKtRZJ4zpnwYALC4fwiv+wM=;
+        b=iTxzWiG9OySlEmhbAvD4lLvIQfbTuVo6KvsPifntQKyw/kZiSwvcNdyfn8EX5TBR22
+         M+RDR4yWI15/R7itHTt/iOKK9ekQXtFpODvd2sO9PSQiIJQnE2+siZlBJ/c4k5kj+UAk
+         2ddC4ylCzRQCzUwKgp0N7T1zJv7PuddePUYXECzsHaLAEwQcwA2/5eHZfpvRucDsxnMl
+         /XfXXnKRahdHH5ntPisoV0OmmIc5p9ciKIJ21H6V6O1uJCtn9Pm8/2Jop1+Z+wtjTKZF
+         PToafuiQp23EevmJTqsP8jNs7h6+nf5PveSg283rzSiL2e7JX0Jw3lJj0I/cLcnhDA1a
+         4/WA==
+X-Gm-Message-State: ALoCoQlEEVzsIe4cSz80+elbCH3FqdRFthzHHqlaVMqU1leb2qVkdcvEko/Ct9nShm/OFP2cTvx2
+X-Received: by 10.140.218.138 with SMTP id o132mr24674076qhb.101.1443821930918;
+        Fri, 02 Oct 2015 14:38:50 -0700 (PDT)
+Received: from [192.168.1.56] ([179.110.8.33])
+        by smtp.googlemail.com with ESMTPSA id 19sm5470559qgo.41.2015.10.02.14.38.48
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Oct 2015 14:38:49 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278952>
 
-David Turner <dturner@twopensource.com> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--fLRHqCuSBg43u4MF7h7SSSh1fWxuXMetQ
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> diff --git a/refs-be-lmdb.c b/refs-be-lmdb.c
-> new file mode 100644
-> index 0000000..99cbd29
-> --- /dev/null
-> +++ b/refs-be-lmdb.c
-> @@ -0,0 +1,2003 @@
-> +/*
-> + ...
-> + */
-> +#include <lmdb.h>
-> +#include <sys/uio.h>
-> +#include "cache.h"
+A minor change (also called "cosmetic") usually is a typo fix, doc
+improvement, a little code refactoring that don't change the behavior etc=
+=2E
 
-"git-compat-util.h" (or "cache.h", because it is well known and
-includes "git-compat-util.h" as the first thing before doing
-anything else) must be the first file included in any of our C
-files, unless it is a platform specific compat/ object.
+In Wikipedia we can mark an edition as "minor".
+
+It would be nice to have an argument like "--minor" in git-commit to
+mark the commit as minor. Also, filter in git-log (like --hide-minor) to
+hide the minor changes. The git-log could be optimized to show minor
+commits more discreetly.
+
+
+
+Thank you.
+
+
+--fLRHqCuSBg43u4MF7h7SSSh1fWxuXMetQ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJWDvlmAAoJEEwK/M/tXN4UQdoQAJM9OWrttnMBgyyrT4H96qKH
+5/HExOgmYHfPldzFrFF2UKR4QWsV//sStikIO1tEIzJkOnatep5TpbsKE2RRtQLt
+XI9wnFkLwmRCqgIX+SVmWcF5888BArxGjN//jRjVSvynfPNxmFyvST4TpyOWZTNS
+YjmFiqVSFk7n/Qi0jWYm62imbAYpJoNDYC8Oujem3ewfvJnkVYNIB0iRHK4Hofb4
+AO+V+UynBHdjAZllsrACssT/A8ImoMp7T5J/5cvV6ZSGLrQFQl6XWjhV/cXQ+4tX
+ect96pNCkLi1YVKPJbTxF0p/E/N4cjW8Il0IU60qf2puMVNxpif+Xc60eGhN910g
++Wih8sL//D+OvPxaVb5kZEiBgTw7d/vxyonvLFzHhe4tBUkqHin/XdfoSXtllztb
+FfnVE0A/mwtJ8Y575R39TFq7wRLL0sJv1j0mp6+zxjMulwqfbj7hlktLJNLP1Vrh
+CKs4cn9PX+c+rNpCSFVDOVAi0dP9GqF3mINoi/H9ggYp/oBNxcR8GVt/x7cPJ8kC
+2jqe2cFUOIUBIX7eiWFY3HFbKtoeSaamKsyUl5iXVaxJCnVSvaDZCIUZS7KV1Mku
+WBGbxqvw4JF5D2QzkvR63gQLF8cb+G+HgqNiw/FkK01IzLwkzVNQzen+uREi/UaW
+EnJlh2zrTS5Ed8x9Vdv5
+=0K/o
+-----END PGP SIGNATURE-----
+
+--fLRHqCuSBg43u4MF7h7SSSh1fWxuXMetQ--
