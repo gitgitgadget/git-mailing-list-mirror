@@ -1,69 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule-parallel-fetch: make some file local symbols static
-Date: Fri, 02 Oct 2015 10:45:30 -0700
-Message-ID: <xmqqmvw15flx.fsf@gitster.mtv.corp.google.com>
-References: <560D20E2.4060601@ramsayjones.plus.com>
-	<CAGZ79kZzLtK7+rHRG_misaa9=fWF+oyeryBa+kbD3F+EB=3LMQ@mail.gmail.com>
-	<560D7EE2.8060403@ramsayjones.plus.com>
+Subject: Re: [PATCHv6 0/8] fetch submodules in parallel
+Date: Fri, 02 Oct 2015 11:48:18 -0700
+Message-ID: <xmqqeghd5cp9.fsf@gitster.mtv.corp.google.com>
+References: <1443664456-1307-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>,
-	Stefan Beller <stefanbeller@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Fri Oct 02 19:45:37 2015
+Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
+	jacob.keller@gmail.com, peff@peff.net, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	ericsunshine@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Oct 02 20:48:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zi4On-0001nl-24
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 19:45:37 +0200
+	id 1Zi5Nc-0008RF-Oc
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 20:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752897AbbJBRpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2015 13:45:33 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:35181 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752613AbbJBRpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2015 13:45:32 -0400
-Received: by pacfv12 with SMTP id fv12so114438342pac.2
-        for <git@vger.kernel.org>; Fri, 02 Oct 2015 10:45:32 -0700 (PDT)
+	id S1753930AbbJBSsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2015 14:48:22 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35892 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753737AbbJBSsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2015 14:48:20 -0400
+Received: by pablk4 with SMTP id lk4so112772708pab.3
+        for <git@vger.kernel.org>; Fri, 02 Oct 2015 11:48:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=gb9Kz4VH5UECceQJr9ZDfSP7NrKFYz+O6UL2m34pr50=;
-        b=zeCYPG//o7iJTu0rVqGh0aphnFthtHrv95kKN7L7U4kFMQ8ho2FZpgUH8BDg7PvM20
-         aFotY8m9XeAl0rVf+y/cZHqJJ1GW/ZmSRH4GteIK1nzBK1hMvlLoFcBXpAiWKg4y1ZlT
-         FWaUWPQUoPvI/GeEl32sdp+m6vJF9IGlK1ptmxCARWyNLmKc9Zyy9EKYRA6EXLPNplYl
-         3/7A5szJV7tdazaA0n3jaI/TsY997Z76uUwnkVGJZ32Xoi/+6acjIBucmZ9CniaVjznD
-         4+ebV6DVq8jYBVTp/8Ng3RbLA8tOjeRF4kePTt386gHa2DV3RD2zKUvEPIYebr8O7frA
-         xQBg==
-X-Received: by 10.68.218.137 with SMTP id pg9mr21729816pbc.160.1443807932146;
-        Fri, 02 Oct 2015 10:45:32 -0700 (PDT)
+        bh=5+YCLffxcJsSZpLa2Z0B13vKo6LRiuvZgt2+dXRFHgg=;
+        b=co3AfC9dHJ2JgoG6Hcs/HOHpPNtqbrw0+URG5f1Q0dndiOnmF0653+/6kFXya6yrw8
+         GhJJBRfzIHsCQZvOYaJkRhziczHiJ1Gc6V2RrQulNJjCeJMVkab4X4I7Iq4vR0zMD40Q
+         B1547SNRr6Iuse24faSS9SzngGGFMORG9QRsPM4l2KZbXhmJDFpA8uyzCzKyPgVRUffu
+         fOyYSimuweyvtpR4desk/gvmJCCuWxty1CQv11RPLuKnhEeR+aUB+zMJGjoFwvriMPBi
+         4OMhzPvwsbVmbdysY/+Cuumxvop+xL4Uv2Lk/ohEwRtpG36ucap9lq/fbGHUXES9cia8
+         bDjw==
+X-Received: by 10.68.139.194 with SMTP id ra2mr22219875pbb.6.1443811700550;
+        Fri, 02 Oct 2015 11:48:20 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:5831:5c0e:ce5f:86ea])
-        by smtp.gmail.com with ESMTPSA id tk4sm13102113pab.45.2015.10.02.10.45.31
+        by smtp.gmail.com with ESMTPSA id li11sm13329564pab.43.2015.10.02.11.48.19
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 02 Oct 2015 10:45:31 -0700 (PDT)
-In-Reply-To: <560D7EE2.8060403@ramsayjones.plus.com> (Ramsay Jones's message
-	of "Thu, 1 Oct 2015 19:43:46 +0100")
+        Fri, 02 Oct 2015 11:48:19 -0700 (PDT)
+In-Reply-To: <1443664456-1307-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Wed, 30 Sep 2015 18:54:08 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278938>
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
->> I thought I had this in yesterdays reroll (v6). Oh you're referring to
->> the version
->> from the 28th (I forgot to label them v5 I suppose).
->
-> Ah! I thought I'd seen it on the list. (I thought I was going crazy) ;-)
-> Sorry, my fault. I just assumed that today's pu branch would have your
-> latest patches - I didn't actually check that.
+> * renamed return_value_fn to task_finished_fn
 
-Sometimes I take a one-day vacation ;-)
+It made interdiff noisier but I think it gives us a good end result.
+
+> * the main loop of the parallel processing was first adapted to Junios suggestion,
+>   but Jonathan pointed out more improvements.  We can get rid of `no_more_task`
+>   completely as `if (!pp->nr_processes)` as the exit condition is sufficient.
+>   (pp->nr_processes is modified only when starting or reaping a child, so we will
+>   capture the whole output of each subprocess even in case of a quick shutdown)
+
+Interesting.  The original motivation for "no-more-task" check was
+that even when we are no longer running anything (i.e. everybody
+finished) we may get a new task from next_task(), and the condition
+to "break" out of the loop could be placed anywhere in that loop
+(e.g. after we wait and cull the finished tasks, or even in the
+outermost while(1) condition).
+
+But you can take advantage of the specific placement of the check;
+it is after the part that spawns new tasks and before the part that
+culls the existing tasks, so not having any running task at that
+point is sufficient condition.
+
+Will replace what was queued.
 
 Thanks.
