@@ -1,357 +1,312 @@
 From: Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH v9 5/5] worktree: add 'list' command
-Date: Fri,  2 Oct 2015 07:55:35 -0400
-Message-ID: <1443786935-81131-6-git-send-email-rappazzo@gmail.com>
+Subject: [PATCH v9 1/5] worktree: add top-level worktree.c
+Date: Fri,  2 Oct 2015 07:55:31 -0400
+Message-ID: <1443786935-81131-2-git-send-email-rappazzo@gmail.com>
 References: <1443786935-81131-1-git-send-email-rappazzo@gmail.com>
 Cc: git@vger.kernel.org, Michael Rappazzo <rappazzo@gmail.com>
 To: gitster@pobox.com, sunshine@sunshineco.com,
 	dturner@twopensource.com
-X-From: git-owner@vger.kernel.org Fri Oct 02 13:56:25 2015
+X-From: git-owner@vger.kernel.org Fri Oct 02 13:56:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zhywq-00027e-6l
-	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 13:56:24 +0200
+	id 1Zhyx1-0002Ou-ES
+	for gcvg-git-2@plane.gmane.org; Fri, 02 Oct 2015 13:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752111AbbJBL4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2015 07:56:12 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:33351 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752006AbbJBLzv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2015 07:55:51 -0400
-Received: by ykft14 with SMTP id t14so107993545ykf.0
-        for <git@vger.kernel.org>; Fri, 02 Oct 2015 04:55:50 -0700 (PDT)
+	id S1752055AbbJBL4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2015 07:56:09 -0400
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:35069 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751941AbbJBLzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2015 07:55:45 -0400
+Received: by ykdz138 with SMTP id z138so107729003ykd.2
+        for <git@vger.kernel.org>; Fri, 02 Oct 2015 04:55:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9I2sAt1HASEyyI0OjJ2fgYm5z2Rlay0Mjf3GxTmQu+w=;
-        b=p5viKwJlFNijjcM0taMG2fjm1WBys5AVk+wqeXDYt4T1N3fPJT2Qx6JG2Wyz/YWbiK
-         3U/wmtvmgHeDV2tagaT5grlor3msaZadZIVhMryYr3/DR3jzLGrbA8bUhWwrj4fTqnd1
-         dGMZkwfTXwzDzver4rinJ7o+kQfpgnVXkXexvDRONRDelS+Y7dQcIIaBZytWjLWOHVFO
-         nTMyrnlnonis79m1q4oKlYqaCqzqjsgsz357rpSiOvd1KgG5HkQi0AerAZ33EIlpe/dL
-         YWeNzzDauBL9wcflUR9ah7M35AHTVV2trG1n4QuU0JZo6Xka/2TM4jO1v/9VVSYN3BX8
-         7xZw==
-X-Received: by 10.170.141.215 with SMTP id i206mr11860069ykc.51.1443786950645;
-        Fri, 02 Oct 2015 04:55:50 -0700 (PDT)
+        bh=E5qzCT58xMNKDeDdjWeARezClfUOG+/LlcUOWfkfRec=;
+        b=eXlm5x1LSIdkBPYxvdvLp0x5GSB/mgkIkWLVfdHtPfRamjUD+y5xMOWOgvbUorpEnV
+         fSfO+od74AllzR0Q9x0fWAElH1b5yfEbcdWROi8ZrKPyzivrIKLn8sSWq0mv/U1PA5tr
+         1IZ3Izfyu4iZKh5AQB0omNxVoBGiXDi9Egi9BqKEpF8WzFIXl0z/YBeMyYolL9nWQH6i
+         xIlVJOsBesTLvrLtwFHPWE1FlmiZaG+uSqieHr5Mlb8DDRbA37EIQJpI6f4jMAXzGOav
+         ryrMFOkBXY7Ss3eHBd/3OUNuhJ6x1zOyVmmI1CH/19A+Ro/Gk6k0lqYDupHcAImOKasv
+         Cq4Q==
+X-Received: by 10.13.213.138 with SMTP id x132mr13055139ywd.107.1443786945235;
+        Fri, 02 Oct 2015 04:55:45 -0700 (PDT)
 Received: from localhost.localdomain (113.sub-70-208-69.myvzw.com. [70.208.69.113])
-        by smtp.gmail.com with ESMTPSA id v4sm7550431ywf.5.2015.10.02.04.55.49
+        by smtp.gmail.com with ESMTPSA id v4sm7550431ywf.5.2015.10.02.04.55.43
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 02 Oct 2015 04:55:50 -0700 (PDT)
+        Fri, 02 Oct 2015 04:55:44 -0700 (PDT)
 X-Mailer: git-send-email 2.6.0
 In-Reply-To: <1443786935-81131-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278917>
 
-'git worktree list' iterates through the worktree list, and outputs
-details of the worktree including the path to the worktree, the currently
-checked out revision and branch, and if the work tree is bare.  There is
-also porcelain format option available.
+worktree.c contains functions to work with and get information from
+worktrees.  This introduction moves functions related to worktrees
+from branch.c into worktree.c
 
 Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
 ---
- Documentation/git-worktree.txt | 49 ++++++++++++++++++++++-
- builtin/worktree.c             | 82 ++++++++++++++++++++++++++++++++++++++
- t/t2027-worktree-list.sh       | 89 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 219 insertions(+), 1 deletion(-)
- create mode 100755 t/t2027-worktree-list.sh
+ Makefile        |  1 +
+ branch.c        | 79 +-----------------------------------------------------
+ branch.h        |  8 ------
+ builtin/notes.c |  2 +-
+ worktree.c      | 82 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ worktree.h      | 12 +++++++++
+ 6 files changed, 97 insertions(+), 87 deletions(-)
+ create mode 100644 worktree.c
+ create mode 100644 worktree.h
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index fb68156..5b9ad04 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -11,6 +11,7 @@ SYNOPSIS
- [verse]
- 'git worktree add' [-f] [--detach] [-b <new-branch>] <path> [<branch>]
- 'git worktree prune' [-n] [-v] [--expire <expire>]
-+'git worktree list' [--porcelain]
- 
- DESCRIPTION
- -----------
-@@ -59,6 +60,13 @@ prune::
- 
- Prune working tree information in $GIT_DIR/worktrees.
- 
-+list::
-+
-+List details of each worktree.  The main worktree is listed first, followed by
-+each of the linked worktrees.  The output details include if the worktree is
-+bare, the revision currently checked out, and the branch currently checked out
-+(or 'detached HEAD' if none).
-+
- OPTIONS
- -------
- 
-@@ -86,6 +94,11 @@ OPTIONS
- 	With `prune`, do not remove anything; just report what it would
- 	remove.
- 
-+--porcelain::
-+	With `list`, output in an easy-to-parse format for scripts.
-+	This format will remain stable across Git versions and regardless of user
-+	configuration.  See below for details.
-+
- -v::
- --verbose::
- 	With `prune`, report all removals.
-@@ -134,6 +147,41 @@ to `/path/main/.git/worktrees/test-next` then a file named
- `test-next` entry from being pruned.  See
- linkgit:gitrepository-layout[5] for details.
- 
-+LIST OUTPUT FORMAT
-+------------------
-+The worktree list command has two output formats.  The default format shows the
-+details on a single line with columns.  For example:
-+
-+------------
-+S git worktree list
-+/path/to/bare-source            (bare)
-+/path/to/linked-worktree        abcd1234 [master]
-+/path/to/other-linked-worktree  1234abc  (detached HEAD)
-+------------
-+
-+Porcelain Format
-+~~~~~~~~~~~~~~~~
-+The porcelain format has a line per attribute.  Attributes are listed with a
-+label and value separated by a single space.  Boolean attributes (like 'bare'
-+and 'detached') are listed as a label only, and are only present if and only
-+if the value is true.  An empty line indicates the end of a worktree.  For
-+example:
-+
-+------------
-+S git worktree list --porcelain
-+worktree /path/to/bare-source
-+bare
-+
-+worktree /path/to/linked-worktree
-+HEAD abcd1234abcd1234abcd1234abcd1234abcd1234
-+branch refs/heads/master
-+
-+worktree /path/to/other-linked-worktree
-+HEAD 1234abc1234abc1234abc1234abc1234abc1234a
-+detached
-+
-+------------
-+
- EXAMPLES
- --------
- You are in the middle of a refactoring session and your boss comes in and
-@@ -167,7 +215,6 @@ performed manually, such as:
- - `remove` to remove a linked working tree and its administrative files (and
-   warn if the working tree is dirty)
- - `mv` to move or rename a working tree and update its administrative files
--- `list` to list linked working trees
- - `lock` to prevent automatic pruning of administrative files (for instance,
-   for a working tree on a portable device)
- 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 71bb770..268f9bf 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -8,10 +8,13 @@
- #include "run-command.h"
- #include "sigchain.h"
+diff --git a/Makefile b/Makefile
+index 8d5df7e..f4ee2d2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -807,6 +807,7 @@ LIB_OBJS += version.o
+ LIB_OBJS += versioncmp.o
+ LIB_OBJS += walker.o
+ LIB_OBJS += wildmatch.o
++LIB_OBJS += worktree.o
+ LIB_OBJS += wrapper.o
+ LIB_OBJS += write_or_die.o
+ LIB_OBJS += ws.o
+diff --git a/branch.c b/branch.c
+index d013374..77d7f2a 100644
+--- a/branch.c
++++ b/branch.c
+@@ -4,6 +4,7 @@
  #include "refs.h"
-+#include "utf8.h"
+ #include "remote.h"
+ #include "commit.h"
 +#include "worktree.h"
  
- static const char * const worktree_usage[] = {
- 	N_("git worktree add [<options>] <path> <branch>"),
- 	N_("git worktree prune [<options>]"),
-+	N_("git worktree list [<options>]"),
- 	NULL
- };
- 
-@@ -359,6 +362,83 @@ static int add(int ac, const char **av, const char *prefix)
- 	return add_worktree(path, branch, &opts);
+ struct tracking {
+ 	struct refspec spec;
+@@ -311,84 +312,6 @@ void remove_branch_state(void)
+ 	unlink(git_path_squash_msg());
  }
  
-+static void show_worktree_porcelain(struct worktree *worktree)
-+{
-+	printf("worktree %s\n", worktree->path);
-+	if (worktree->is_bare)
-+		printf("bare\n");
-+	else {
-+		printf("HEAD %s\n", sha1_to_hex(worktree->head_sha1));
-+		if (worktree->is_detached)
-+			printf("detached\n");
-+		else
-+			printf("branch %s\n", worktree->head_ref);
-+	}
-+	printf("\n");
-+}
-+static void show_worktree(
-+		struct worktree *worktree, int path_maxlen, int abbrev_len)
+-static char *find_linked_symref(const char *symref, const char *branch,
+-				const char *id)
+-{
+-	struct strbuf sb = STRBUF_INIT;
+-	struct strbuf path = STRBUF_INIT;
+-	struct strbuf gitdir = STRBUF_INIT;
+-	char *existing = NULL;
+-
+-	/*
+-	 * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside
+-	 * $GIT_DIR so resolve_ref_unsafe() won't work (it uses
+-	 * git_path). Parse the ref ourselves.
+-	 */
+-	if (id)
+-		strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, symref);
+-	else
+-		strbuf_addf(&path, "%s/%s", get_git_common_dir(), symref);
+-
+-	if (!strbuf_readlink(&sb, path.buf, 0)) {
+-		if (!starts_with(sb.buf, "refs/") ||
+-		    check_refname_format(sb.buf, 0))
+-			goto done;
+-	} else if (strbuf_read_file(&sb, path.buf, 0) >= 0 &&
+-	    starts_with(sb.buf, "ref:")) {
+-		strbuf_remove(&sb, 0, strlen("ref:"));
+-		strbuf_trim(&sb);
+-	} else
+-		goto done;
+-	if (strcmp(sb.buf, branch))
+-		goto done;
+-	if (id) {
+-		strbuf_reset(&path);
+-		strbuf_addf(&path, "%s/worktrees/%s/gitdir", get_git_common_dir(), id);
+-		if (strbuf_read_file(&gitdir, path.buf, 0) <= 0)
+-			goto done;
+-		strbuf_rtrim(&gitdir);
+-	} else
+-		strbuf_addstr(&gitdir, get_git_common_dir());
+-	strbuf_strip_suffix(&gitdir, ".git");
+-
+-	existing = strbuf_detach(&gitdir, NULL);
+-done:
+-	strbuf_release(&path);
+-	strbuf_release(&sb);
+-	strbuf_release(&gitdir);
+-
+-	return existing;
+-}
+-
+-char *find_shared_symref(const char *symref, const char *target)
+-{
+-	struct strbuf path = STRBUF_INIT;
+-	DIR *dir;
+-	struct dirent *d;
+-	char *existing;
+-
+-	if ((existing = find_linked_symref(symref, target, NULL)))
+-		return existing;
+-
+-	strbuf_addf(&path, "%s/worktrees", get_git_common_dir());
+-	dir = opendir(path.buf);
+-	strbuf_release(&path);
+-	if (!dir)
+-		return NULL;
+-
+-	while ((d = readdir(dir)) != NULL) {
+-		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
+-			continue;
+-		existing = find_linked_symref(symref, target, d->d_name);
+-		if (existing)
+-			goto done;
+-	}
+-done:
+-	closedir(dir);
+-
+-	return existing;
+-}
+-
+ void die_if_checked_out(const char *branch)
+ {
+ 	char *existing;
+diff --git a/branch.h b/branch.h
+index d3446ed..58aa45f 100644
+--- a/branch.h
++++ b/branch.h
+@@ -59,12 +59,4 @@ extern int read_branch_desc(struct strbuf *, const char *branch_name);
+  */
+ extern void die_if_checked_out(const char *branch);
+ 
+-/*
+- * Check if a per-worktree symref points to a ref in the main worktree
+- * or any linked worktree, and return the path to the exising worktree
+- * if it is.  Returns NULL if there is no existing ref.  The caller is
+- * responsible for freeing the returned path.
+- */
+-extern char *find_shared_symref(const char *symref, const char *target);
+-
+ #endif
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 3608c64..13c0af9 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -19,7 +19,7 @@
+ #include "string-list.h"
+ #include "notes-merge.h"
+ #include "notes-utils.h"
+-#include "branch.h"
++#include "worktree.h"
+ 
+ static const char * const git_notes_usage[] = {
+ 	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
+diff --git a/worktree.c b/worktree.c
+new file mode 100644
+index 0000000..10e1496
+--- /dev/null
++++ b/worktree.c
+@@ -0,0 +1,82 @@
++#include "cache.h"
++#include "refs.h"
++#include "strbuf.h"
++#include "worktree.h"
++
++static char *find_linked_symref(const char *symref, const char *branch,
++				const char *id)
 +{
 +	struct strbuf sb = STRBUF_INIT;
-+	int cur_path_len = strlen(worktree->path);
-+	int path_adj = cur_path_len - utf8_strwidth(worktree->path);
++	struct strbuf path = STRBUF_INIT;
++	struct strbuf gitdir = STRBUF_INIT;
++	char *existing = NULL;
 +
-+	strbuf_addf(&sb, "%-*s ", 1 + path_maxlen + path_adj, worktree->path);
-+	if (worktree->is_bare)
-+		strbuf_addstr(&sb, "(bare)");
-+	else {
-+		strbuf_addf(&sb, "%-*s ", abbrev_len,
-+				find_unique_abbrev(worktree->head_sha1, DEFAULT_ABBREV));
-+		if (!worktree->is_detached)
-+			strbuf_addf(&sb, "[%s]", shorten_unambiguous_ref(worktree->head_ref, 0));
-+		else
-+			strbuf_addstr(&sb, "(detached HEAD)");
-+	}
-+	printf("%s\n", sb.buf);
++	/*
++	 * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside
++	 * $GIT_DIR so resolve_ref_unsafe() won't work (it uses
++	 * git_path). Parse the ref ourselves.
++	 */
++	if (id)
++		strbuf_addf(&path, "%s/worktrees/%s/%s", get_git_common_dir(), id, symref);
++	else
++		strbuf_addf(&path, "%s/%s", get_git_common_dir(), symref);
 +
++	if (!strbuf_readlink(&sb, path.buf, 0)) {
++		if (!starts_with(sb.buf, "refs/") ||
++		    check_refname_format(sb.buf, 0))
++			goto done;
++	} else if (strbuf_read_file(&sb, path.buf, 0) >= 0 &&
++	    starts_with(sb.buf, "ref:")) {
++		strbuf_remove(&sb, 0, strlen("ref:"));
++		strbuf_trim(&sb);
++	} else
++		goto done;
++	if (strcmp(sb.buf, branch))
++		goto done;
++	if (id) {
++		strbuf_reset(&path);
++		strbuf_addf(&path, "%s/worktrees/%s/gitdir", get_git_common_dir(), id);
++		if (strbuf_read_file(&gitdir, path.buf, 0) <= 0)
++			goto done;
++		strbuf_rtrim(&gitdir);
++	} else
++		strbuf_addstr(&gitdir, get_git_common_dir());
++	strbuf_strip_suffix(&gitdir, ".git");
++
++	existing = strbuf_detach(&gitdir, NULL);
++done:
++	strbuf_release(&path);
 +	strbuf_release(&sb);
++	strbuf_release(&gitdir);
++
++	return existing;
 +}
 +
-+static int list(int ac, const char **av, const char *prefix)
++char *find_shared_symref(const char *symref, const char *target)
 +{
-+	int porcelain = 0;
++	struct strbuf path = STRBUF_INIT;
++	DIR *dir;
++	struct dirent *d;
++	char *existing;
 +
-+	struct option options[] = {
-+		OPT_BOOL(0, "porcelain", &porcelain, N_("machine-readable output")),
-+		OPT_END()
-+	};
++	if ((existing = find_linked_symref(symref, target, NULL)))
++		return existing;
 +
-+	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
-+	if (ac)
-+		usage_with_options(worktree_usage, options);
-+	else {
-+		struct worktree **worktrees = get_worktrees();
-+		int path_maxlen = 0;
-+		int abbrev = 0;
-+		int i;
++	strbuf_addf(&path, "%s/worktrees", get_git_common_dir());
++	dir = opendir(path.buf);
++	strbuf_release(&path);
++	if (!dir)
++		return NULL;
 +
-+		if (!porcelain) {
-+			for (i = 0; worktrees[i]; i++) {
-+				int path_len = strlen(worktrees[i]->path);
-+				if (path_len > path_maxlen)
-+					path_maxlen = path_len;
-+				int sha1_len = strlen(
-+						find_unique_abbrev(worktrees[i]->head_sha1, DEFAULT_ABBREV));
-+				if (sha1_len > abbrev)
-+					abbrev = sha1_len;
-+			}
-+		}
-+		for (i = 0; worktrees[i]; i++) {
-+			if (porcelain)
-+				show_worktree_porcelain(worktrees[i]);
-+			else
-+				show_worktree(worktrees[i], path_maxlen, abbrev);
-+		}
-+		free_worktrees(worktrees);
++	while ((d = readdir(dir)) != NULL) {
++		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
++			continue;
++		existing = find_linked_symref(symref, target, d->d_name);
++		if (existing)
++			goto done;
 +	}
-+	return 0;
++done:
++	closedir(dir);
++
++	return existing;
 +}
-+
- int cmd_worktree(int ac, const char **av, const char *prefix)
- {
- 	struct option options[] = {
-@@ -371,5 +451,7 @@ int cmd_worktree(int ac, const char **av, const char *prefix)
- 		return add(ac - 1, av + 1, prefix);
- 	if (!strcmp(av[1], "prune"))
- 		return prune(ac - 1, av + 1, prefix);
-+	if (!strcmp(av[1], "list"))
-+		return list(ac - 1, av + 1, prefix);
- 	usage_with_options(worktree_usage, options);
- }
-diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
-new file mode 100755
-index 0000000..75ebb1b
+diff --git a/worktree.h b/worktree.h
+new file mode 100644
+index 0000000..71b1409
 --- /dev/null
-+++ b/t/t2027-worktree-list.sh
-@@ -0,0 +1,89 @@
-+#!/bin/sh
++++ b/worktree.h
+@@ -0,0 +1,12 @@
++#ifndef WORKTREE_H
++#define WORKTREE_H
 +
-+test_description='test git worktree list'
++/*
++ * Check if a per-worktree symref points to a ref in the main worktree
++ * or any linked worktree, and return the path to the exising worktree
++ * if it is.  Returns NULL if there is no existing ref.  The caller is
++ * responsible for freeing the returned path.
++ */
++extern char *find_shared_symref(const char *symref, const char *target);
 +
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit init
-+'
-+
-+test_expect_success '"list" all worktrees from main' '
-+	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
-+	test_when_finished "rm -rf here && git worktree prune" &&
-+	git worktree add --detach here master &&
-+	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
-+	git worktree list | sed "s/  */ /g" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '"list" all worktrees from linked' '
-+	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
-+	test_when_finished "rm -rf here && git worktree prune" &&
-+	git worktree add --detach here master &&
-+	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
-+	git -C here worktree list | sed "s/  */ /g" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '"list" all worktrees --porcelain' '
-+	echo "worktree $(git rev-parse --show-toplevel)" >expect &&
-+	echo "HEAD $(git rev-parse HEAD)" >>expect &&
-+	echo "branch $(git symbolic-ref HEAD)" >>expect &&
-+	echo >>expect &&
-+	test_when_finished "rm -rf here && git worktree prune" &&
-+	git worktree add --detach here master &&
-+	echo "worktree $(git -C here rev-parse --show-toplevel)" >>expect &&
-+	echo "HEAD $(git rev-parse HEAD)" >>expect &&
-+	echo "detached" >>expect &&
-+	echo >>expect &&
-+	git worktree list --porcelain >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'bare repo setup' '
-+	git init --bare bare1 &&
-+	echo "data" >file1 &&
-+	git add file1 &&
-+	git commit -m"File1: add data" &&
-+	git push bare1 master &&
-+	git reset --hard HEAD^
-+'
-+
-+test_expect_success '"list" all worktrees from bare main' '
-+	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
-+	git -C bare1 worktree add --detach ../there master &&
-+	echo "$(pwd)/bare1 (bare)" >expect &&
-+	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
-+	git -C bare1 worktree list | sed "s/  */ /g" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '"list" all worktrees --porcelain from bare main' '
-+	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
-+	git -C bare1 worktree add --detach ../there master &&
-+	echo "worktree $(pwd)/bare1" >expect &&
-+	echo "bare" >>expect &&
-+	echo >>expect &&
-+	echo "worktree $(git -C there rev-parse --show-toplevel)" >>expect &&
-+	echo "HEAD $(git -C there rev-parse HEAD)" >>expect &&
-+	echo "detached" >>expect &&
-+	echo >>expect &&
-+	git -C bare1 worktree list --porcelain >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '"list" all worktrees from linked with a bare main' '
-+	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
-+	git -C bare1 worktree add --detach ../there master &&
-+	echo "$(pwd)/bare1 (bare)" >expect &&
-+	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
-+	git -C there worktree list | sed "s/  */ /g" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'bare repo cleanup' '
-+	rm -rf bare1
-+'
-+
-+test_done
++#endif
 -- 
 2.6.0
