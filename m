@@ -1,136 +1,108 @@
-From: Ray Donnelly <mingw.android@gmail.com>
-Subject: Re: [PATCH 1/2] test-path-utils.c: remove incorrect assumption
-Date: Sat, 3 Oct 2015 16:38:47 +0100
-Message-ID: <CAOYw7dvYvgXWNi=kFdB0kXP0BjGTmcY-dG6mkaKU93LdV4i5HQ@mail.gmail.com>
-References: <CAOYw7dubGJ=m5+EnjGy7jTQxR+b0uBmyG138KEQ5rzX2K7WcgA@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v8 0/7] git-p4: add support for large file systems
+Date: Sat, 3 Oct 2015 17:27:33 +0100
+Message-ID: <CAE5ih78tsDe-RAUOEjrGMBJU0sage37V1sL9QLPZhRQhb5GUCA@mail.gmail.com>
+References: <1443254104-14966-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=047d7b450d548502b00521351373
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Ray Donnelly <mingw.android@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 03 17:38:58 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 03 18:27:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZiOth-00088N-Ur
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 17:38:54 +0200
+	id 1ZiPex-0000sv-E6
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 18:27:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752102AbbJCPit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Oct 2015 11:38:49 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:34559 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751960AbbJCPis (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2015 11:38:48 -0400
-Received: by obbda8 with SMTP id da8so102013409obb.1
-        for <git@vger.kernel.org>; Sat, 03 Oct 2015 08:38:48 -0700 (PDT)
+	id S1752496AbbJCQ1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Oct 2015 12:27:34 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:35345 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752204AbbJCQ1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2015 12:27:33 -0400
+Received: by obbzf10 with SMTP id zf10so102434674obb.2
+        for <git@vger.kernel.org>; Sat, 03 Oct 2015 09:27:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=diamand.org; s=google;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=mhfDv/GDTWEMGqTlQodTeTmEmlh2ZajC3Svy6IXs/Sg=;
-        b=eJhdMv7yIK2//1Uon1y/gjlFxS74QqNzEUFj59idyz4B8K5QqGm+JvONL99Tpw8qSN
-         W+vNcwNwk2y+XxfXE0tmZ4lLPpPN7589PYO3nw3Xq3WKTnifb3Aatj9/LlBuTqXkewIC
-         wnX+eamPCTxJyO2UiBHYuJQMKqd4157fVCOtqj6fR3SbqVKFJk5TKcbGvGqcGcinTIhH
-         jJAhqSB3Gjwy1K9nK7slVkMZfBOs4qKxtOZu4Tmm0BHncSTo8lEPFJO7twAM/Z7RKqIQ
-         bDfDEfEsGLfEMEfnqPPkuASdNoYHvDt3Jj3bqnDhAA1FWGqaYZ5vpes7DskvqpkN4fJV
-         RpNw==
-X-Received: by 10.60.141.130 with SMTP id ro2mr4005987oeb.9.1443886728005;
- Sat, 03 Oct 2015 08:38:48 -0700 (PDT)
-Received: by 10.202.15.21 with HTTP; Sat, 3 Oct 2015 08:38:47 -0700 (PDT)
-In-Reply-To: <CAOYw7dubGJ=m5+EnjGy7jTQxR+b0uBmyG138KEQ5rzX2K7WcgA@mail.gmail.com>
+        bh=r8eBiLW1aZYTZcVyLm1jYqlvkWHxI7XDcRunVoui1yU=;
+        b=BStv8Mhvj20ZvsM0nS21djGLfAcaTRJKsBAyP2VbLoIihESH0Yp4ukBFMNgS5c4dtr
+         0Y3rdZ0uFspaH6F89bDqL8ELIIXiVAzvrJulx4DTWrxY4Eq+QBM4OU6tVUgSyRQ2auiZ
+         VTxqz4YUfYOTNOlbZG2gvdmWjJFAnjycwwQ44=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=r8eBiLW1aZYTZcVyLm1jYqlvkWHxI7XDcRunVoui1yU=;
+        b=N9VFoVDk0ACJ3bT2b2PAWz9tos2cw4ZA5DCOAcI5fI1oR9OiwfhgYCkB8bFE0fSrUU
+         rMrMrBp7x1tYFen1HhnQ8TKqrlmOTsyfz4e2hLwrlKw3H4MXy1BEl+b7RxTskN4FLWmB
+         SfNsX6p8xHmz2+WFlQD+yYmR7h0t8aSgKU7lmTpjeViSyLxI5Ay4jsygauuJTPvGPv/0
+         5T6BQlo3+nyRtgsOia4gfYyxtxzLt4ml4k8vCUH2+K7NRwNnXuuD/isEGt+meu99YoFd
+         ZzRHTisFPo2BHlUbMEoiRr+rpbCiXmOAS69vds6M5VBZhJxqV2vTYASXW1bWz3OQCLiL
+         Ih/w==
+X-Gm-Message-State: ALoCoQnBeVcTpj6h8k6Gzx5LiqYQhT0Tz4aA1Ixq7WE98M/NGUtnfQd6zMhHzEjkcQBIcr47wX8O
+X-Received: by 10.182.221.134 with SMTP id qe6mr12235548obc.56.1443889653087;
+ Sat, 03 Oct 2015 09:27:33 -0700 (PDT)
+Received: by 10.60.46.38 with HTTP; Sat, 3 Oct 2015 09:27:33 -0700 (PDT)
+In-Reply-To: <1443254104-14966-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278973>
 
---047d7b450d548502b00521351373
-Content-Type: text/plain; charset=UTF-8
+On 26 September 2015 at 08:54,  <larsxschneider@gmail.com> wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> diff to v7:
+> * fix commit message line length (thanks Junio)
+> * fix sync command for large file system support (thanks Luke!)
+> * add test case for sync command
+> * rename git-p4.pushLargeFiles to git-p4.largeFilePush for consistency with
+>   other git-p4.largeFile* configs
+> * fix relative path handling for clone operation which caused a crash in the
+>   disk space check and t9819 (thanks Luke!)
+> * use test_path_is_missing instead of !test_path_is_file (thanks Luke!)
+>
+> The patch is again based on maint (ee6ad5f) as patches v1-v6 before.
 
-I'm going to have to attach this as a file, git-send-email isn't
-working for me; apologies.
 
-On Sat, Oct 3, 2015 at 1:44 PM, Ray Donnelly <mingw.android@gmail.com> wrote:
-> In normalize_ceiling_entry(), we test that normalized paths end with
-> slash, *unless* the path to be normalized was already the root
-> directory.
+All looks good to me, Ack.
+
+One tiny thing perhaps Junio could comment on: the git commit message
+for 75abe9fa5b39980de27dfc33dd5b4f4b5926f34c, "git-p4: add optional
+type specifier to gitConfig reader" uses what looks like UTF-8 encoded
+left and right quotes, rather than regular ASCII quotes ("). I don't
+know if that matters.
+
+Thanks,
+Luke
+
+
 >
-> However, normalize_path_copy() does not even enforce this condition.
+> Cheers,
+> Lars
 >
-> Even worse: on Windows, the root directory gets translated into a
-> Windows directory by the Bash before being passed to `git.exe` (or
-> `test-path-utils.exe`), which means that we cannot even know whether
-> the path that was passed to us was the root directory to begin with.
+> Lars Schneider (7):
+>   git-p4: add optional type specifier to gitConfig reader
+>   git-p4: add gitConfigInt reader
+>   git-p4: return an empty list if a list config has no values
+>   git-p4: add file streaming progress in verbose mode
+>   git-p4: check free space during streaming
+>   git-p4: add support for large file systems
+>   git-p4: add Git LFS backend for large file system
 >
-> This issue has already caused endless hours of trying to "fix" the
-> MSYS2 runtime, only to break other things due to MSYS2 ensuring that
-> the converted path maintains the same state as the input path with
-> respect to any final '/'.
+>  Documentation/git-p4.txt   |  32 +++++
+>  git-p4.py                  | 270 +++++++++++++++++++++++++++++++++++++++---
+>  t/t9823-git-p4-mock-lfs.sh | 192 ++++++++++++++++++++++++++++++
+>  t/t9824-git-p4-git-lfs.sh  | 288 +++++++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 766 insertions(+), 16 deletions(-)
+>  create mode 100755 t/t9823-git-p4-mock-lfs.sh
+>  create mode 100755 t/t9824-git-p4-git-lfs.sh
 >
-> So let's just forget about this test. It is non-essential to Git's
-> operation, anyway.
->
-> Ack-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Ray Donnelly <mingw.android@gmail.com>
-> ---
->  test-path-utils.c | 2 --
->  1 file changed, 2 deletions(-)
->
-> diff --git a/test-path-utils.c b/test-path-utils.c
-> index 3dd3744..c67bf65 100644
-> --- a/test-path-utils.c
-> +++ b/test-path-utils.c
-> @@ -21,8 +21,6 @@ static int normalize_ceiling_entry(struct
-> string_list_item *item, void *unused)
->   if (normalize_path_copy(buf, ceil) < 0)
->   die("Path \"%s\" could not be normalized", ceil);
->   len = strlen(buf);
-> - if (len > 1 && buf[len-1] == '/')
-> - die("Normalized path \"%s\" ended with slash", buf);
->   free(item->string);
->   item->string = xstrdup(buf);
->   return 1;
 > --
-> 2.5.2
-
---047d7b450d548502b00521351373
-Content-Type: application/octet-stream; 
-	name="0001-test-path-utils.c-remove-incorrect-assumption.patch"
-Content-Disposition: attachment; 
-	filename="0001-test-path-utils.c-remove-incorrect-assumption.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_ifb8vidt0
-
-RnJvbSAzZGVlYTEyZGQ4NTA2Zjg4ZmRhZWFiY2MzMzY4M2Y4MWI3NWExM2ZhIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBSYXkgRG9ubmVsbHkgPG1pbmd3LmFuZHJvaWRAZ21haWwuY29t
-PgpEYXRlOiBUaHUsIDEgT2N0IDIwMTUgMjA6MDQ6MTcgKzAxMDAKU3ViamVjdDogW1BBVENIIDEv
-Ml0gdGVzdC1wYXRoLXV0aWxzLmM6IHJlbW92ZSBpbmNvcnJlY3QgYXNzdW1wdGlvbgoKSW4gbm9y
-bWFsaXplX2NlaWxpbmdfZW50cnkoKSwgd2UgdGVzdCB0aGF0IG5vcm1hbGl6ZWQgcGF0aHMgZW5k
-IHdpdGgKc2xhc2gsICp1bmxlc3MqIHRoZSBwYXRoIHRvIGJlIG5vcm1hbGl6ZWQgd2FzIGFscmVh
-ZHkgdGhlIHJvb3QKZGlyZWN0b3J5LgoKSG93ZXZlciwgbm9ybWFsaXplX3BhdGhfY29weSgpIGRv
-ZXMgbm90IGV2ZW4gZW5mb3JjZSB0aGlzIGNvbmRpdGlvbi4KCkV2ZW4gd29yc2U6IG9uIFdpbmRv
-d3MsIHRoZSByb290IGRpcmVjdG9yeSBnZXRzIHRyYW5zbGF0ZWQgaW50byBhCldpbmRvd3MgZGly
-ZWN0b3J5IGJ5IHRoZSBCYXNoIGJlZm9yZSBiZWluZyBwYXNzZWQgdG8gYGdpdC5leGVgIChvcgpg
-dGVzdC1wYXRoLXV0aWxzLmV4ZWApLCB3aGljaCBtZWFucyB0aGF0IHdlIGNhbm5vdCBldmVuIGtu
-b3cgd2hldGhlcgp0aGUgcGF0aCB0aGF0IHdhcyBwYXNzZWQgdG8gdXMgd2FzIHRoZSByb290IGRp
-cmVjdG9yeSB0byBiZWdpbiB3aXRoLgoKVGhpcyBpc3N1ZSBoYXMgYWxyZWFkeSBjYXVzZWQgZW5k
-bGVzcyBob3VycyBvZiB0cnlpbmcgdG8gImZpeCIgdGhlCk1TWVMyIHJ1bnRpbWUsIG9ubHkgdG8g
-YnJlYWsgb3RoZXIgdGhpbmdzIGR1ZSB0byBNU1lTMiBlbnN1cmluZyB0aGF0CnRoZSBjb252ZXJ0
-ZWQgcGF0aCBtYWludGFpbnMgdGhlIHNhbWUgc3RhdGUgYXMgdGhlIGlucHV0IHBhdGggd2l0aApy
-ZXNwZWN0IHRvIGFueSBmaW5hbCAnLycuCgpTbyBsZXQncyBqdXN0IGZvcmdldCBhYm91dCB0aGlz
-IHRlc3QuIEl0IGlzIG5vbi1lc3NlbnRpYWwgdG8gR2l0J3MKb3BlcmF0aW9uLCBhbnl3YXkuCgpB
-Y2stYnk6IEpvaGFubmVzIFNjaGluZGVsaW4gPGpvaGFubmVzLnNjaGluZGVsaW5AZ214LmRlPgpT
-aWduZWQtb2ZmLWJ5OiBSYXkgRG9ubmVsbHkgPG1pbmd3LmFuZHJvaWRAZ21haWwuY29tPgotLS0K
-IHRlc3QtcGF0aC11dGlscy5jIHwgMiAtLQogMSBmaWxlIGNoYW5nZWQsIDIgZGVsZXRpb25zKC0p
-CgpkaWZmIC0tZ2l0IGEvdGVzdC1wYXRoLXV0aWxzLmMgYi90ZXN0LXBhdGgtdXRpbHMuYwppbmRl
-eCAzZGQzNzQ0Li5jNjdiZjY1IDEwMDY0NAotLS0gYS90ZXN0LXBhdGgtdXRpbHMuYworKysgYi90
-ZXN0LXBhdGgtdXRpbHMuYwpAQCAtMjEsOCArMjEsNiBAQCBzdGF0aWMgaW50IG5vcm1hbGl6ZV9j
-ZWlsaW5nX2VudHJ5KHN0cnVjdCBzdHJpbmdfbGlzdF9pdGVtICppdGVtLCB2b2lkICp1bnVzZWQp
-CiAJaWYgKG5vcm1hbGl6ZV9wYXRoX2NvcHkoYnVmLCBjZWlsKSA8IDApCiAJCWRpZSgiUGF0aCBc
-IiVzXCIgY291bGQgbm90IGJlIG5vcm1hbGl6ZWQiLCBjZWlsKTsKIAlsZW4gPSBzdHJsZW4oYnVm
-KTsKLQlpZiAobGVuID4gMSAmJiBidWZbbGVuLTFdID09ICcvJykKLQkJZGllKCJOb3JtYWxpemVk
-IHBhdGggXCIlc1wiIGVuZGVkIHdpdGggc2xhc2giLCBidWYpOwogCWZyZWUoaXRlbS0+c3RyaW5n
-KTsKIAlpdGVtLT5zdHJpbmcgPSB4c3RyZHVwKGJ1Zik7CiAJcmV0dXJuIDE7Ci0tIAoyLjUuMgoK
---047d7b450d548502b00521351373--
+> 2.5.1
+>
