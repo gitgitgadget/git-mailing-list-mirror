@@ -1,83 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 0/7] git-p4: add support for large file systems
-Date: Sat, 03 Oct 2015 10:23:39 -0700
-Message-ID: <xmqqd1wv3lyc.fsf@gitster.mtv.corp.google.com>
-References: <1443254104-14966-1-git-send-email-larsxschneider@gmail.com>
-	<CAE5ih78tsDe-RAUOEjrGMBJU0sage37V1sL9QLPZhRQhb5GUCA@mail.gmail.com>
-	<xmqqh9m73m7z.fsf@gitster.mtv.corp.google.com>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH v2 43/43] refs: tests for db backend
+Date: Sat, 3 Oct 2015 19:39:31 +0200
+Message-ID: <20151003173930.GA25904@spirit>
+References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
+ <1443477738-32023-44-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sat Oct 03 19:23:49 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sat Oct 03 19:45:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZiQXD-0001pD-6V
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 19:23:47 +0200
+	id 1ZiQs1-000893-4M
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 19:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750834AbbJCRXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Oct 2015 13:23:43 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:35809 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750745AbbJCRXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2015 13:23:42 -0400
-Received: by pacfv12 with SMTP id fv12so137788868pac.2
-        for <git@vger.kernel.org>; Sat, 03 Oct 2015 10:23:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=XsG8NN20u5G6qhETdUafmCDiEY9gBsYpu37OC8tswv8=;
-        b=gbgVA97LW5esRZj+ZbUwhnyVwqOY8TucLBYhlae0WU1LQAF8/WJ8wNhEa7OYdlvDyT
-         DJqxsW45cF4IN4eleQ7/btJqrU77tIU1xN4IIHJ9Ub6j/23IPkDUw0Jp7GxGy9S4manR
-         Z21A5tl4J7U07/vnFsNLEDXoBSS3GKevxyJKSuvLbc6a0YWJxqnmx27poIQIwOVQyp4H
-         QsYFbgKJst8sEtBvox578PtFqAZfEFZKqZJE/+JlGvrNmbidrvfA4I8fwHOHQXYx7nX3
-         w+UDAaAAc/qWw9ldlmP+S4mxseHd8v/2BUXuD5u2olyZrPFnU+RmXDR8FFp2JiUeOvJL
-         AJIw==
-X-Received: by 10.68.68.143 with SMTP id w15mr28201829pbt.56.1443893021715;
-        Sat, 03 Oct 2015 10:23:41 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:6403:45be:a5c3:ebf3])
-        by smtp.gmail.com with ESMTPSA id gi4sm18478197pbc.4.2015.10.03.10.23.39
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 03 Oct 2015 10:23:40 -0700 (PDT)
-In-Reply-To: <xmqqh9m73m7z.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sat, 03 Oct 2015 10:17:52 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1750952AbbJCRpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Oct 2015 13:45:10 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:35088 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750879AbbJCRpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2015 13:45:09 -0400
+Received: by wicge5 with SMTP id ge5so70447774wic.0
+        for <git@vger.kernel.org>; Sat, 03 Oct 2015 10:45:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=NpPo84l80QVZdJCKVYGS7tg34UzSOIBMeUSY8xngx6M=;
+        b=NQYX1vTckWKY3g/poc4ciYLka6ZBf3+LqWQvlyO8o/cH2YqJByrpmCLDo7+SrblsRV
+         6gXJ/gi+nqP0+ZfuGXO/ax8GeetjbTEXvle2h6jmljyHiSzccpRkGtQzqu0DUjnuNCC1
+         ksgaiip0WAsIskRjyt1YYTlJQvfaaSS3Zvt0MBObCQQPm+IlayBF69txOiOV9+Xmqtvd
+         itA2U8wViZjlO9t/tsbVEaEFKNPhIfIqQv3yomofPC8RpuZsxldVE2xjQaTPPptBINq7
+         7od8PktN+SD73jkTkWEdI7LtpYMyf0zT3Seax47qhMiyBtdfvLP75vF46GfB+ZpiW6dh
+         aRmw==
+X-Gm-Message-State: ALoCoQlq1a9ObTf+FoZjhalKmS67l3MnJfT/OurjSSnFHwwd1lCo2IH6D1dFXWmhs9r2B1oHAlRl
+X-Received: by 10.180.75.176 with SMTP id d16mr3679834wiw.75.1443894308470;
+        Sat, 03 Oct 2015 10:45:08 -0700 (PDT)
+Received: from spirit ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id p1sm5154686wif.7.2015.10.03.10.45.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 03 Oct 2015 10:45:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1443477738-32023-44-git-send-email-dturner@twopensource.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278980>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Sep 28, 2015 at 06:02:18PM -0400, David Turner wrote:
+> Add tests for the database backend.
+> 
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  t/t1460-refs-be-db.sh        | 1103 ++++++++++++++++++++++++++++++++++++++++++
+>  t/t1470-refs-be-db-reflog.sh |  353 ++++++++++++++
+>  2 files changed, 1456 insertions(+)
+>  create mode 100755 t/t1460-refs-be-db.sh
+>  create mode 100755 t/t1470-refs-be-db-reflog.sh
 
-> Luke Diamand <luke@diamand.org> writes:
->
->> All looks good to me, Ack.
->>
->> One tiny thing perhaps Junio could comment on: the git commit message
->> for 75abe9fa5b39980de27dfc33dd5b4f4b5926f34c, "git-p4: add optional
->> type specifier to gitConfig reader" uses what looks like UTF-8 encoded
->> left and right quotes, rather than regular ASCII quotes ("). I don't
->> know if that matters.
->
-> Yeah, I noticed them, too.  In general, I'd prefer to avoid these
-> pretty-quotes myself, as they typically do not add much information
-> (unless nesting matters, which is usually not the case in the log
-> message, or something) and the primary effect of them is to force us
-> to step outside ASCII, which causes editors and pagers to misalign
-> for some people.
->
-> But it is not too huge an issue that it is worth to go back and fix
-> them, either.
+These break 'make test' on builds without the db backend. Maybe squash
+in something like the following:
 
-Well, I looked at it again and it also replaced double-dash before
-option names like --bool and --int with something funny (are these
-em-dashes?), which is a more serious bogosity than pretty quotes, so
-I ended up amending the message for that commit after all.
+diff --git a/t/t1460-refs-be-db.sh b/t/t1460-refs-be-db.sh
+index f13b0f0..c8222ed 100755
+--- a/t/t1460-refs-be-db.sh
++++ b/t/t1460-refs-be-db.sh
+@@ -9,6 +9,11 @@ test_description='Test lmdb refs backend'
+ TEST_NO_CREATE_REPO=1
+ . ./test-lib.sh
+ 
++if ! test -e ../../test-refs-be-lmdb; then
++	skip_all="Skipping lmdb refs backend tests, lmdb backend not built"
++	test_done
++fi
++
+ raw_ref() {
+ 	test-refs-be-lmdb "$1"
+ }
+diff --git a/t/t1470-refs-be-db-reflog.sh b/t/t1470-refs-be-db-reflog.sh
+index 99a705d..2538a58 100755
+--- a/t/t1470-refs-be-db-reflog.sh
++++ b/t/t1470-refs-be-db-reflog.sh
+@@ -8,6 +8,11 @@ test_description='Test prune and reflog expiration'
+ TEST_NO_CREATE_REPO=1
+ . ./test-lib.sh
+ 
++if ! test -e ../../test-refs-be-lmdb; then
++	skip_all="Skipping lmdb refs backend tests, lmdb backend not built"
++	test_done
++fi
++
+ raw_reflog() {
+ 	cat .git/logs/$1 2>/dev/null || test-refs-be-lmdb -l "$1"
+ }
 
-Thanks.
+
+Also, test 18 in t1460 is broken:
+expecting success: 
+    git symbolic-ref refs/heads/self refs/heads/self &&
+        test_when_finished "delete_ref refs/heads/self" &&
+            test_must_fail git update-ref -d refs/heads/self
+
+test_must_fail: command succeeded: git update-ref -d refs/heads/self
+not ok 18 - update-ref -d is not confused by self-reference
+#   
+#       git symbolic-ref refs/heads/self refs/heads/self &&
+#       test_when_finished "delete_ref refs/heads/self" &&
+#       test_must_fail git update-ref -d refs/heads/self
+#   
+
+-- 
+Dennis Kaarsemaker <dennis@kaarsemaker.net>
+http://twitter.com/seveas
