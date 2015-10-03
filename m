@@ -1,84 +1,96 @@
 From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2 01/43] refs.c: create a public version of
- verify_refname_available
-Date: Sat, 3 Oct 2015 23:07:01 +0200
-Message-ID: <56104375.3030904@web.de>
-References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
- <1443477738-32023-2-git-send-email-dturner@twopensource.com>
- <560F6172.3040404@web.de> <1443891000.7753.4.camel@twopensource.com>
+Subject: Re: [PATCH 41/68] init: use strbufs to store paths
+Date: Sat, 3 Oct 2015 23:12:13 +0200
+Message-ID: <561044AD.8010803@web.de>
+References: <20150924210225.GA23624@sigill.intra.peff.net>
+ <20150924210736.GL30946@sigill.intra.peff.net>
+ <CAO2U3QjunOPoAbGSRjAmCwfk-TnoMveXOJhpb351eh1a_3Xp3A@mail.gmail.com>
+ <20150930002347.GA23406@sigill.intra.peff.net> <560F6E98.8030305@web.de>
+ <xmqqtwq73nbj.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu,
-	Ronnie Sahlberg <sahlberg@google.com>
-To: David Turner <dturner@twopensource.com>,
+Cc: Jeff King <peff@peff.net>, Michael Blume <blume.mike@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Oct 03 23:07:16 2015
+X-From: git-owner@vger.kernel.org Sat Oct 03 23:12:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZiU1T-00022O-5s
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 23:07:15 +0200
+	id 1ZiU6S-0007HH-UP
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 23:12:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750921AbbJCVHI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Oct 2015 17:07:08 -0400
-Received: from mout.web.de ([212.227.15.14]:61394 "EHLO mout.web.de"
+	id S1750941AbbJCVMV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Oct 2015 17:12:21 -0400
+Received: from mout.web.de ([212.227.15.4]:52362 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750788AbbJCVHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2015 17:07:07 -0400
+	id S1750844AbbJCVMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2015 17:12:20 -0400
 Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0Ll30X-1aJCHT0iv7-00aqNu; Sat, 03 Oct 2015 23:07:02
+ ESMTPSA (Nemesis) id 0MVGow-1a8K2b2uB4-00Yeir; Sat, 03 Oct 2015 23:12:15
  +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
  Gecko/20100101 Thunderbird/38.2.0
-In-Reply-To: <1443891000.7753.4.camel@twopensource.com>
-X-Provags-ID: V03:K0:YgZZX2tPRcQdCuofEi9QSgL720nMuylYdeXL6C0+Qz0hp19Yjy4
- TQuKFdTmWmCXcIk33rsuqiF+L60Gxm31vT54ttR8Dt5eLT2fYvG1kwonlr0c2yOH3ebbGzS
- qAXcnatJQN4oShnBrJttieymlteKUQABHQZkrvDW8dGfxOqxfMvKBmd99qtQSM5Fe37bndM
- VgU/bc32jY+CoUgpYbspw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LgtYB0hmcDs=:Lu7k4lIbQzm06hOl2iIw1T
- r/MOE36Q1wr1fKmvE29VF9HSxeBd1D1dweX53N6rN6HZhJ/malNtkPL7GxMesKXQCNdhvSuhX
- U7X5O4VqCMifRTzcPA/trrxQ/XSiOdt5cN1e0DVCm2B3aEG4Hza6JWjX//9NHpUv53DUg2G2P
- Sck17m+mVJB+z1QG9O8sXnIVArfOcM7i6ztsb6cOEE4X9gySv2hThwcRG/WoYv9gDFcpzGNM0
- g6ReJSgL3BS9Fu+X7oIOVejDy9onQc49otSmn0hOco+e04e0VKvGGcn9BppR3+U9CUSXJ1IfN
- w/QXbb1CjReTNVf8Xw+X9evnxaaLhbaPE5qh6U+n901vLJ/EkkpZEOjMhLMyLQIry6ftbjKec
- d9tWkP7loWfUN5YIEsxn/oP1EJReWWOj+NAMYNOKngLk5JvDbQLIIZ6GIrjFfJmb2qKK3yhb2
- UXZszfQdnc1J5x7w54xWJF7/6w508ugQ+0D1I0EwssBWRffo8T8PBJrz/FyQ2xaeX4QeQhoRd
- NG30gMm2ovN/fTZRBmywbQFMbogcdytY+TSNaLQeOiS4/JGo7KzSYvn5U+5f0xwCw+vRHM9wo
- xJyz95TLEE1XTr3Mstz+O1ZiGs9ezzT4dwTpxsdZuYxZymJ7GGyHxpPxi4fi5l3jyOx9uGGEg
- 3qZXrBuFiZTpZlHX1VbFNolnYWI7hg4N/DxEYftF5Rlg4S5c0sZPNYykBLY7cU8PtyaRKnK7+
- HGl5I2uigy+S6gcQvyYHI6szwD+54C/CpADfC9pHgXdPMi6cUd0Q5hSedtx3qJxR+hiQ+/Od 
+In-Reply-To: <xmqqtwq73nbj.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:OXel9b5mlPy3tcwNpx/fNarLQNfz3SDzUxSH0pUAxtcS0Yc3fRf
+ 2S2wMtYI3QAsNloUikv3nIOZvyJXmHFfUQFOMjbkQg6G/fty/Hp1KUtp38PfBzAVRZSbnFy
+ eo4j934gZ3fFmpC+OFcTX2O8YLGlnefAdhqVbMxMixY4TwDAati9C0WZrz3Bv8jzKFaPy5k
+ rvc/m4VBMGeMtEBBM4wHg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tXLkiKfl8Jo=:eBd0THcCVfQjdddDPvzcoJ
+ 5sOdct5MTU8QSKjnyNcVZD4ZJzDrwqT4kX4/QFc2Y+jj/xZ1lHKEcr01GsQLYwD2n5jYJEdxg
+ bSaGJuPygZtxvsexxUnLrivILbhomjCiuy72cs3pT0VKIvASf6pQa5Gzaa5tatiz8T/N/u584
+ ssql/uFOaeMVi3HUWvue7tgUkmzKo9arWKr52G2t3QinQM0puJDSWFnY7YeEcD086lKqZ0nrc
+ eHklrO46PfYR5TruMV20dBSWvkEDLM4vs4RI9eDG/6EKNd6RXT1GCi9QEO5BoXv9VCivkf14x
+ 2YeqV3NwJuIjAjz6l+2GcfEoAYQqkZMI2cGRjSHPmnUJAfgxQKFqwpHgrntYGTX/ADjbSu0tV
+ T9NpAwxRh/sPqJP9aCu7nKiFv4k9Abwtet3UACO6/QnJBEws2KdWsGffDBX1aFph9wIhCdCqT
+ IyRszMifMDNXQUdX6BIAE4WjDWhue3DicTQkAIIuXCwFuZlj7h76Db7oRcc44jCwtHWFKUFEX
+ hgN2f2qJSwzidgIlEeHPkmtB7DTGomqpTjC0TbkzsocSs7icMpUr/GPzSw5GxfrG25LiQtNDc
+ KEXV88hRjNWyYNERxdduEtpuSKjeC/S7oPPpTh6mYfefBtUM2uq/IsWqy9PGIsMUZC75Fnt2y
+ umO09ArVBU0XDUCYDiTNo1uADPEHKcObYuuGpq6jqnu+S1y31+jmhK1/S4bDa9QOpVZiWrMVp
+ wXmHoFQTWZXaoitYxZB3JRfI9A3W4UEXaZxQh1iGuiJZhe1eEgQXMfi6Fq0C2X27qUVPTrfY 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278986>
 
-On 03.10.15 18:50, David Turner wrote:
-> On Sat, 2015-10-03 at 07:02 +0200, Torsten B=C3=B6gershausen wrote:
->> On 29.09.15 00:01, David Turner wrote:
+On 03.10.15 18:54, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+>> On 30.09.15 02:23, Jeff King wrote:
+>>> On Tue, Sep 29, 2015 at 04:50:39PM -0700, Michael Blume wrote:
 >>>
->> (Not sure if this is the right thread to report on)
+>>>> I see compile errors on my mac:
+>>>>
 >>
->> In file included from builtin/commit.c:20:
->> ./refs.h:695:16: warning: redefinition of typedef 'ref_transaction_f=
-ree_fn' is a C11 feature
->>       [-Wtypedef-redefinition]
->> typedef void (*ref_transaction_free_fn)(struct ref_transaction *tran=
-saction);
->>                ^
+>> This is my attempt, passing the test, but not fully polished.
 >=20
+> Thanks.
 >=20
-> Fixed, thanks.
+>> diff --git a/builtin/init-db.c b/builtin/init-db.c
+>> index 89f2c05..60b559c 100644
+>> --- a/builtin/init-db.c
+>> +++ b/builtin/init-db.c
+>> @@ -276,7 +276,9 @@ static int create_default_files(const char *temp=
+late_path)
+>>  		path =3D git_path_buf(&buf, "CoNfIg");
+>>  		if (!access(path, F_OK))
+>>  			git_config_set("core.ignorecase", "true");
+>> -		probe_utf8_pathname_composition(path);
+>> +		/* Probe utf-8 normalization withou mangling CoNfIG */
+>> +		path =3D git_path_buf(&buf, "config");
+>> +		probe_utf8_pathname_composition(path, strlen(path));
 >=20
-> What compiler flag did you turn on to see that warning?
-Mac OS X, 10.9:
+> Hmph, Peff's quick-fix passed the original "CoNfIg" in &buf directly
+> to probe_utf8_pathname_composition() without changing its signature.
+True, ( I was thinking that the test did only work on case insensitive =
+=46S).
+We can skip that change.
 
- gcc --version
-Configured with: --prefix=3D/Library/Developer/CommandLineTools/usr --w=
-ith-gxx-include-dir=3D/usr/include/c++/4.2.1
-Apple LLVM version 6.0 (clang-600.0.57) (based on LLVM 3.5svn)
-Target: x86_64-apple-darwin13.4.0
-Thread model: posix
+Beside that, I later realized, that a better signature could be:
++void probe_utf8_pathname_composition(const char *path, size_t len)
+
+I can send a proper patch the next days.
