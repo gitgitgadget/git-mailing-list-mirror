@@ -1,117 +1,62 @@
-From: Jos van den Oever <jos@vandenoever.info>
-Subject: git svn pushing to wrong branch
-Date: Sat, 03 Oct 2015 12:58:58 +0200
-Message-ID: <1678505.kvedRta3XZ@joga>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 6/9] ref-filter: introduce format_ref_array_item()
+Date: Sat, 03 Oct 2015 14:02:58 +0200
+Message-ID: <vpqoagg9n2l.fsf@grenoble-inp.fr>
+References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
+	<1443807546-5985-7-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="nextPart36125116.8g1cQr7p54"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 03 13:08:18 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 03 14:03:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZiKfm-00066I-HV
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 13:08:14 +0200
+	id 1ZiLXA-00070o-Jq
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 14:03:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752020AbbJCLIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Oct 2015 07:08:09 -0400
-Received: from mailgw-02.dd24.net ([193.46.215.43]:46458 "EHLO
-	mailgw-02.dd24.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751973AbbJCLII (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2015 07:08:08 -0400
-X-Greylist: delayed 545 seconds by postgrey-1.27 at vger.kernel.org; Sat, 03 Oct 2015 07:08:08 EDT
-Received: from mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-02.live.igb.homer.key-systems.net [192.168.1.27])
-	by mailgw-02.dd24.net (Postfix) with ESMTP id C708A5FC44
-	for <git@vger.kernel.org>; Sat,  3 Oct 2015 10:59:00 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at
-	mailpolicy-02.live.igb.homer.key-systems.net
-Received: from mailgw-02.dd24.net ([192.168.1.36])
-	by mailpolicy-01.live.igb.homer.key-systems.net (mailpolicy-02.live.igb.homer.key-systems.net [192.168.1.25]) (amavisd-new, port 10236)
-	with ESMTP id CYW8fsu6Xnoj for <git@vger.kernel.org>;
-	Sat,  3 Oct 2015 10:58:59 +0000 (UTC)
-Received: from localhost (ip913586c5.adsl-surfen.hetnet.nl [145.53.134.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by mailgw-02.dd24.net (Postfix) with ESMTPSA
-	for <git@vger.kernel.org>; Sat,  3 Oct 2015 10:58:58 +0000 (UTC)
-User-Agent: KMail/4.14.3 (Linux/4.0.4; KDE/4.14.3; x86_64; ; )
+	id S1752339AbbJCMDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Oct 2015 08:03:15 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53127 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752242AbbJCMDN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2015 08:03:13 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t93C2vZO005729
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sat, 3 Oct 2015 14:02:57 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t93C2wEC003271;
+	Sat, 3 Oct 2015 14:02:58 +0200
+In-Reply-To: <1443807546-5985-7-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Fri, 2 Oct 2015 23:09:03 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 03 Oct 2015 14:02:57 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t93C2vZO005729
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1444478582.2808@7qbwagHzem8UZYhXHLOG8g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278968>
 
-This is a multi-part message in MIME format.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
---nextPart36125116.8g1cQr7p54
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+> Introduce format_ref_array_item() which will output the details of a
+> given ref_array_item as per the given format and quote_style to the
+> given strbuf.
 
-Hello dear gitters,
+Why do you need it in this series and you could do without for tag?
 
-I've been trying to use git-svn to work with branches. When I merge branch A 
-into branch B, and then do a dcommit, the change is not pushed to branch B. 
-I've attached a bash script that demonstrates the issue. I've tested with svn 
-1.9 and git 2.5.
+Going through PATCH 8/9, I guess there's something related to --column,
+but tag also has --column so I'm puzzled.
 
-The problem goes away when the merge is done with --no-ff.
-
-Best regards,
-Jos van den Oever
---nextPart36125116.8g1cQr7p54
-Content-Disposition: attachment; filename="mergetest.sh"
-Content-Transfer-Encoding: 7Bit
-Content-Type: application/x-shellscript; name="mergetest.sh"
-
-#!/usr/bin/env bash
-set -o errexit
-set -o nounset
-set -o pipefail
-
-
-TESTDIR=/tmp/svntest
-SVNREPODIR=$TESTDIR/svn
-SVN_URI=file://$SVNREPODIR/test
-
-cd $TESTDIR
-
-rm -rf $SVNREPODIR test
-
-svnadmin create $SVNREPODIR
-svn mkdir --parents $SVN_URI/trunk $SVN_URI/branches $SVN_URI/tags -m 'Create branches.'
-
-git svn clone -s $SVN_URI
-cd test
-
-# create and checkout a new branch v1.2
-svn copy $SVN_URI/trunk $SVN_URI/branches/v1.2 -m 'Create branch v1.2.'
-git svn fetch --all
-git checkout origin/v1.2 -b v1.2
-
-# add a new file to branch v1.2
-echo -e 1\\n2\\n3 > test.txt
-git add test.txt
-git commit test.txt -m 'Add test.txt'
-git svn dcommit --merge
-
-# create and checkout a new branch v1.2_issue-1
-svn copy $SVN_URI/branches/v1.2 $SVN_URI/branches/v1.2_issue-1 -m 'Create branch v1.2_issue-1'
-git svn fetch --all
-git checkout origin/v1.2_issue-1 -b v1.2_issue-1
-
-# do work in branch v1.2_issue-1
-echo -e 4\\n5 >> test.txt
-git commit test.txt -m 'Extend test.txt'
-git svn dcommit
-
-# merge branch v1.2_issue-1 into v1.2
-git checkout v1.2
-git merge v1.2_issue-1
-
-# error! the change is pushed to v1.2_issue-1 instead of v1.2
-git svn dcommit
-svn log $SVN_URI
-
---nextPart36125116.8g1cQr7p54--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
