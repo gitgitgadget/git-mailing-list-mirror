@@ -1,69 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] test-path-utils.c: remove incorrect assumption
-Date: Sat, 03 Oct 2015 10:13:15 -0700
-Message-ID: <xmqqlhbj3mfo.fsf@gitster.mtv.corp.google.com>
-References: <CAOYw7dubGJ=m5+EnjGy7jTQxR+b0uBmyG138KEQ5rzX2K7WcgA@mail.gmail.com>
+Subject: Re: [PATCH v8 0/7] git-p4: add support for large file systems
+Date: Sat, 03 Oct 2015 10:17:52 -0700
+Message-ID: <xmqqh9m73m7z.fsf@gitster.mtv.corp.google.com>
+References: <1443254104-14966-1-git-send-email-larsxschneider@gmail.com>
+	<CAE5ih78tsDe-RAUOEjrGMBJU0sage37V1sL9QLPZhRQhb5GUCA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Ray Donnelly <mingw.android@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 03 19:13:22 2015
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Sat Oct 03 19:18:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZiQN7-0007Od-W7
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 19:13:22 +0200
+	id 1ZiQRb-0003tN-Ru
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 19:18:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750847AbbJCRNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Oct 2015 13:13:17 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:36505 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750750AbbJCRNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2015 13:13:17 -0400
-Received: by pablk4 with SMTP id lk4so134153213pab.3
-        for <git@vger.kernel.org>; Sat, 03 Oct 2015 10:13:16 -0700 (PDT)
+	id S1750779AbbJCRR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Oct 2015 13:17:56 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:32874 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750733AbbJCRRz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2015 13:17:55 -0400
+Received: by pacex6 with SMTP id ex6so135199464pac.0
+        for <git@vger.kernel.org>; Sat, 03 Oct 2015 10:17:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=0LxLq4C6O2xvK+8Lw5Gppa0v3LjU10YR0mZtANVAvto=;
-        b=g/18Jj+qITshXJj6cxtdEzT21zBsQMq5qdNlW49J2VZIU9UaS8vAgnwoZSA4YApe9d
-         jGlM/GiGluj3Pq+TgiV/rJMc1jinFtnjlVOU+TXT8pHNgHJdVrV+/UEviycmN5CXoCV/
-         dcsYqg2vepXyerL32sZ/O45e6a9VztsRpwI3NO0RaO2mmDZFENeyMLb5VVi/zC+X0FEx
-         OUguDnpHD/mG33W0Bh9dPPqmG+DzHtuH9fODGiQOczIt5xp/7fEYEiqVBqjzJ/kBsrL4
-         nr0BLgv6+xOuk+bRT4VR3X7kqpQnLcAMJ9DnF6fEQfIigMu2qACD9zpf2eCn8tSiWukf
-         FuVA==
-X-Received: by 10.66.102.7 with SMTP id fk7mr27951136pab.119.1443892396525;
-        Sat, 03 Oct 2015 10:13:16 -0700 (PDT)
+        bh=8ccjEVBLY3zw0H0ceerpehplpb+9J00MMAT8jhGhSd4=;
+        b=BEkiiFrchy3ldodrsg61F7hJneOmr430quA/CP72YBf0+KMRT275CB2sK2+DVt+OkI
+         ZHYmBqOallsfsYjp87Ml+XpESnrb4WAqxR653Vedus9XG42r3x/Iux6HN0S/EUNQWrVp
+         KkzTgTFjRGf/vyiox7RUgETKHXWGDzJKHnIopn5hyKtkhZ0miflGSKLU4qf5jKfOw3tX
+         dJOShuRWi+tNOpnWwxxFVI1o5F8p0sdW1LXb3n2UQmANSh4lk3+TvdzGp5CKFFsQJHM8
+         SWlubdvoJMw8+h0/hdBMydBxlRICc81BieXKYJ0i6aka0710IxarnhChMdzjFBlNEMEc
+         vO3w==
+X-Received: by 10.68.219.169 with SMTP id pp9mr28532596pbc.115.1443892674900;
+        Sat, 03 Oct 2015 10:17:54 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:6403:45be:a5c3:ebf3])
-        by smtp.gmail.com with ESMTPSA id ce3sm18408649pbb.35.2015.10.03.10.13.15
+        by smtp.gmail.com with ESMTPSA id fk8sm18523381pab.33.2015.10.03.10.17.52
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 03 Oct 2015 10:13:16 -0700 (PDT)
-In-Reply-To: <CAOYw7dubGJ=m5+EnjGy7jTQxR+b0uBmyG138KEQ5rzX2K7WcgA@mail.gmail.com>
-	(Ray Donnelly's message of "Sat, 3 Oct 2015 13:44:43 +0100")
+        Sat, 03 Oct 2015 10:17:52 -0700 (PDT)
+In-Reply-To: <CAE5ih78tsDe-RAUOEjrGMBJU0sage37V1sL9QLPZhRQhb5GUCA@mail.gmail.com>
+	(Luke Diamand's message of "Sat, 3 Oct 2015 17:27:33 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278978>
 
-Ray Donnelly <mingw.android@gmail.com> writes:
+Luke Diamand <luke@diamand.org> writes:
 
-> In normalize_ceiling_entry(), we test that normalized paths end with
-> slash, *unless* the path to be normalized was already the root
-> directory.
+> On 26 September 2015 at 08:54,  <larsxschneider@gmail.com> wrote:
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>
+>> diff to v7:
+>> * fix commit message line length (thanks Junio)
+>> * fix sync command for large file system support (thanks Luke!)
+>> * add test case for sync command
+>> * rename git-p4.pushLargeFiles to git-p4.largeFilePush for consistency with
+>>   other git-p4.largeFile* configs
+>> * fix relative path handling for clone operation which caused a crash in the
+>>   disk space check and t9819 (thanks Luke!)
+>> * use test_path_is_missing instead of !test_path_is_file (thanks Luke!)
+>>
+>> The patch is again based on maint (ee6ad5f) as patches v1-v6 before.
 >
-> However, normalize_path_copy() does not even enforce this condition.
+>
+> All looks good to me, Ack.
+>
+> One tiny thing perhaps Junio could comment on: the git commit message
+> for 75abe9fa5b39980de27dfc33dd5b4f4b5926f34c, "git-p4: add optional
+> type specifier to gitConfig reader" uses what looks like UTF-8 encoded
+> left and right quotes, rather than regular ASCII quotes ("). I don't
+> know if that matters.
 
-Perhaps the real issue to be addressed is the above, and your patch
-is killing a coalmine canary?
+Yeah, I noticed them, too.  In general, I'd prefer to avoid these
+pretty-quotes myself, as they typically do not add much information
+(unless nesting matters, which is usually not the case in the log
+message, or something) and the primary effect of them is to force us
+to step outside ASCII, which causes editors and pagers to misalign
+for some people.
 
-Some callers of this function in real code (i.e. not the one you are
-removing the check) do seem to depend on that condition, e.g. the
-codepath in clone that leads to add_to_alternates_file() wants to
-make sure it does not add an duplicate, so it may end up not noticing
-/foo/bar and /foo/bar/ are the same thing, no?  There may be others.
+But it is not too huge an issue that it is worth to go back and fix
+them, either.
+
+Thanks.
