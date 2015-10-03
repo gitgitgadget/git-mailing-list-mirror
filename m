@@ -1,124 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/9] ref-filter: implement %(if), %(then), and %(else) atoms
-Date: Sat, 03 Oct 2015 10:01:15 -0700
-Message-ID: <xmqqpp0v3mzo.fsf@gitster.mtv.corp.google.com>
-References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
-	<1443807546-5985-2-git-send-email-Karthik.188@gmail.com>
-	<vpq8u7kb89o.fsf@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] test-path-utils.c: remove incorrect assumption
+Date: Sat, 03 Oct 2015 10:13:15 -0700
+Message-ID: <xmqqlhbj3mfo.fsf@gitster.mtv.corp.google.com>
+References: <CAOYw7dubGJ=m5+EnjGy7jTQxR+b0uBmyG138KEQ5rzX2K7WcgA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sat Oct 03 19:01:23 2015
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Ray Donnelly <mingw.android@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 03 19:13:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZiQBV-0003F2-RZ
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 19:01:22 +0200
+	id 1ZiQN7-0007Od-W7
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 19:13:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750844AbbJCRBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Oct 2015 13:01:18 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:36154 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750750AbbJCRBR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2015 13:01:17 -0400
-Received: by pablk4 with SMTP id lk4so133995272pab.3
-        for <git@vger.kernel.org>; Sat, 03 Oct 2015 10:01:17 -0700 (PDT)
+	id S1750847AbbJCRNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Oct 2015 13:13:17 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:36505 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750750AbbJCRNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2015 13:13:17 -0400
+Received: by pablk4 with SMTP id lk4so134153213pab.3
+        for <git@vger.kernel.org>; Sat, 03 Oct 2015 10:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=InGD/XO9Z2jMN8yqboQ4Q2QM0HO400qeCoukM+q6aNw=;
-        b=ZKIspVxRdWViwGMCNuXKfQL9bg1cCWu0VNtbhVMR0T/o6zKMfDBT9SGpSFn7Hmwc7L
-         YS3cFcZ7HgsmzyI8pYyVr/3QQoPx8Fey/rsTvGSPNaTKb082lL8kDqqoy5gX81z8qPAK
-         6CauVqCvwwiEEBiEij33ZuUEJH4Qwc61oxR3cOnHg1GcE2YXPPd/7Wpc2MF3P2fxYE4V
-         qY6NIp0sHiOsD3mJjY6BAZwdgaLrgy59kFn76DYphsTTedI4PH6EEz745gEEe7UJ8jw2
-         qXEZwQ5sKUf2TklJkztklU6c9SSY++LRENFEZuuQJiCsQJTvSXz8gEs92U9GO+YyTfYy
-         PtcA==
-X-Received: by 10.68.135.136 with SMTP id ps8mr27789774pbb.123.1443891676867;
-        Sat, 03 Oct 2015 10:01:16 -0700 (PDT)
+        bh=0LxLq4C6O2xvK+8Lw5Gppa0v3LjU10YR0mZtANVAvto=;
+        b=g/18Jj+qITshXJj6cxtdEzT21zBsQMq5qdNlW49J2VZIU9UaS8vAgnwoZSA4YApe9d
+         jGlM/GiGluj3Pq+TgiV/rJMc1jinFtnjlVOU+TXT8pHNgHJdVrV+/UEviycmN5CXoCV/
+         dcsYqg2vepXyerL32sZ/O45e6a9VztsRpwI3NO0RaO2mmDZFENeyMLb5VVi/zC+X0FEx
+         OUguDnpHD/mG33W0Bh9dPPqmG+DzHtuH9fODGiQOczIt5xp/7fEYEiqVBqjzJ/kBsrL4
+         nr0BLgv6+xOuk+bRT4VR3X7kqpQnLcAMJ9DnF6fEQfIigMu2qACD9zpf2eCn8tSiWukf
+         FuVA==
+X-Received: by 10.66.102.7 with SMTP id fk7mr27951136pab.119.1443892396525;
+        Sat, 03 Oct 2015 10:13:16 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:6403:45be:a5c3:ebf3])
-        by smtp.gmail.com with ESMTPSA id ol3sm18352390pbb.49.2015.10.03.10.01.15
+        by smtp.gmail.com with ESMTPSA id ce3sm18408649pbb.35.2015.10.03.10.13.15
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 03 Oct 2015 10:01:16 -0700 (PDT)
-In-Reply-To: <vpq8u7kb89o.fsf@grenoble-inp.fr> (Matthieu Moy's message of
-	"Sat, 03 Oct 2015 11:39:47 +0200")
+        Sat, 03 Oct 2015 10:13:16 -0700 (PDT)
+In-Reply-To: <CAOYw7dubGJ=m5+EnjGy7jTQxR+b0uBmyG138KEQ5rzX2K7WcgA@mail.gmail.com>
+	(Ray Donnelly's message of "Sat, 3 Oct 2015 13:44:43 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278977>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Ray Donnelly <mingw.android@gmail.com> writes:
 
-> My take on it:
+> In normalize_ceiling_entry(), we test that normalized paths end with
+> slash, *unless* the path to be normalized was already the root
+> directory.
 >
-> Implement %(if), %(then) and %(else) atoms. Used as
-> %(if)...%(then)...%(end) or %(if)...%(then)...%(else)...%(end). If the
-> format string between %(if) and %(then) expands to an empty string, or
-> to only whitespaces, then the string following %(then) is printed.
-> Otherwise, the string following %(else), if any, is printed.
->
->> +When a scripting language specific quoting is in effect,
->
-> This may not be immediately clear to the reader. I'd add explicitly:
->
-> When a scripting language specific quoting is in effect (i.e. one of
-> `--shell`, `--perl`, `--python`, `--tcl` is used), ...
+> However, normalize_path_copy() does not even enforce this condition.
 
-I found all the suggestions very good, except that the distinction
-between "expands to" and "is printed" bothers me a bit, as they want
-to mean exactly the same thing (imagine this whole thing were inside
-another %(if)...%(then)).
+Perhaps the real issue to be addressed is the above, and your patch
+is killing a coalmine canary?
 
->>  EXAMPLES
->>  --------
->
-> This is just the context of the patch, but I read it as a hint that we
-> could add some examples with complex --format usage to illustrate the
-> theory above.
-
-Yes ;-)
-
->> +static int is_empty(const char * s){
->
-> char * s -> char *s
-
-Also "{" must sit alone on the next line.
-
->> +static void then_atom_handler(struct atom_value *atomv, struct
->> ref_formatting_state *state)
->> +{
->> +	struct ref_formatting_stack *cur = state->stack;
->> +	struct if_then_else *if_then_else = (struct if_then_else *)cur->at_end_data;
->> +
->> +	if (!if_then_else)
->> +		die(_("format: %%(then) atom used without an %%(if) atom"));
->
-> You've just casted at_end_data to if_then_else. if_then_else being not
-> NULL does not mean that it is properly typed. It can be the at_end_data
-> of another opening atom. What happens if you use
-> %(align)foo%(then)bar%(end)?
->
-> One way to be safer would be to check that cur->at_end does point to
-> if_then_else_handler.
-
-Good eyes.  Thanks.
-
-> So, while parsing the %(else)...%(end), the stack contains both the
-> %(then)...%(else) part, and the %(else)...%(end).
->
-> I'm wondering if we can simplify this. We already know if the condition
-> is satisfied, and if it's not, we can just drop the %(then) part right
-> now, and write to the top of the stack normally (the %(end) atom will
-> only have to pop the string normally). But if the condition is not
-> satisfied, we need to preserve the %(then) part and need to do something
-> about the %(else).
-
-Good suggestion.
-
-Thanks.
+Some callers of this function in real code (i.e. not the one you are
+removing the check) do seem to depend on that condition, e.g. the
+codepath in clone that leads to add_to_alternates_file() wants to
+make sure it does not add an duplicate, so it may end up not noticing
+/foo/bar and /foo/bar/ are the same thing, no?  There may be others.
