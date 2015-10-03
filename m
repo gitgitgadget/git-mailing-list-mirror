@@ -1,127 +1,84 @@
-From: Felipe Micaroni Lalli <micaroni@walltime.info>
-Subject: Re: Git feature request: mark a commit as minor
-Date: Sat, 3 Oct 2015 16:52:45 -0300
-Organization: Walltime
-Message-ID: <5610320D.30806@walltime.info>
-References: <560EF966.3000501@walltime.info>
- <20151003181222.GA2024@paksenarrion.iveqy.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v2 01/43] refs.c: create a public version of
+ verify_refname_available
+Date: Sat, 3 Oct 2015 23:07:01 +0200
+Message-ID: <56104375.3030904@web.de>
+References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
+ <1443477738-32023-2-git-send-email-dturner@twopensource.com>
+ <560F6172.3040404@web.de> <1443891000.7753.4.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="gk0GtqleQ25bCHTd96hqsmQKsJX3iIGSL"
-Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Sat Oct 03 21:52:55 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: David Turner <dturner@twopensource.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Oct 03 23:07:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZiSrW-0002Mb-Ha
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 21:52:54 +0200
+	id 1ZiU1T-00022O-5s
+	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 23:07:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751089AbbJCTwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Oct 2015 15:52:50 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:35338 "EHLO
-	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750879AbbJCTwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2015 15:52:49 -0400
-Received: by qkap81 with SMTP id p81so56029365qka.2
-        for <git@vger.kernel.org>; Sat, 03 Oct 2015 12:52:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:organization
-         :message-id:date:user-agent:mime-version:in-reply-to:content-type;
-        bh=X3OArK7UWh4BDzyiVWGwVH7Yier0znGJaEWzUauLPbY=;
-        b=kv2E7JG/JzvviomlTvdtnANjzzDf3UMIo/vsUXaJqePPvWV9VbrIHk1CwArpMPBTT8
-         BGMu11osVhfaPrmgCSOVEIEjYoZy+90Rh/kRtF9gMoonuKHPnXuu25UQnrfa6L+16bcx
-         /4cQj5pvlPItzeN5+ny6EUWHmtqcJTSHot+W4KyBPQSu9zC7jP47h5Cn3fmMzczWiOxQ
-         nHIoGDNg75XRGTmHYXDLSio8VJVVebUUDX1tRO1AJxrvOAGbWWRaFTx5OPTawxmWYZjd
-         RGOTj3ToE6plmgrdrV6Fk2issW6saq1TfbC0xdlOCao5L4UBDfhXqFLDukUy4akvMwiX
-         3mDA==
-X-Gm-Message-State: ALoCoQmuj1thBA0I22T+3qS30Fg+XAscuDTTMEiywaSfzjNSDDAcOfnAqMzQZtFATsL+PjALnUHJ
-X-Received: by 10.55.21.144 with SMTP id 16mr9251755qkv.28.1443901968472;
-        Sat, 03 Oct 2015 12:52:48 -0700 (PDT)
-Received: from [192.168.1.56] ([179.110.8.33])
-        by smtp.googlemail.com with ESMTPSA id a73sm7485634qkj.27.2015.10.03.12.52.46
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Oct 2015 12:52:47 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-In-Reply-To: <20151003181222.GA2024@paksenarrion.iveqy.com>
+	id S1750921AbbJCVHI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Oct 2015 17:07:08 -0400
+Received: from mout.web.de ([212.227.15.14]:61394 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750788AbbJCVHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2015 17:07:07 -0400
+Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0Ll30X-1aJCHT0iv7-00aqNu; Sat, 03 Oct 2015 23:07:02
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.2.0
+In-Reply-To: <1443891000.7753.4.camel@twopensource.com>
+X-Provags-ID: V03:K0:YgZZX2tPRcQdCuofEi9QSgL720nMuylYdeXL6C0+Qz0hp19Yjy4
+ TQuKFdTmWmCXcIk33rsuqiF+L60Gxm31vT54ttR8Dt5eLT2fYvG1kwonlr0c2yOH3ebbGzS
+ qAXcnatJQN4oShnBrJttieymlteKUQABHQZkrvDW8dGfxOqxfMvKBmd99qtQSM5Fe37bndM
+ VgU/bc32jY+CoUgpYbspw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LgtYB0hmcDs=:Lu7k4lIbQzm06hOl2iIw1T
+ r/MOE36Q1wr1fKmvE29VF9HSxeBd1D1dweX53N6rN6HZhJ/malNtkPL7GxMesKXQCNdhvSuhX
+ U7X5O4VqCMifRTzcPA/trrxQ/XSiOdt5cN1e0DVCm2B3aEG4Hza6JWjX//9NHpUv53DUg2G2P
+ Sck17m+mVJB+z1QG9O8sXnIVArfOcM7i6ztsb6cOEE4X9gySv2hThwcRG/WoYv9gDFcpzGNM0
+ g6ReJSgL3BS9Fu+X7oIOVejDy9onQc49otSmn0hOco+e04e0VKvGGcn9BppR3+U9CUSXJ1IfN
+ w/QXbb1CjReTNVf8Xw+X9evnxaaLhbaPE5qh6U+n901vLJ/EkkpZEOjMhLMyLQIry6ftbjKec
+ d9tWkP7loWfUN5YIEsxn/oP1EJReWWOj+NAMYNOKngLk5JvDbQLIIZ6GIrjFfJmb2qKK3yhb2
+ UXZszfQdnc1J5x7w54xWJF7/6w508ugQ+0D1I0EwssBWRffo8T8PBJrz/FyQ2xaeX4QeQhoRd
+ NG30gMm2ovN/fTZRBmywbQFMbogcdytY+TSNaLQeOiS4/JGo7KzSYvn5U+5f0xwCw+vRHM9wo
+ xJyz95TLEE1XTr3Mstz+O1ZiGs9ezzT4dwTpxsdZuYxZymJ7GGyHxpPxi4fi5l3jyOx9uGGEg
+ 3qZXrBuFiZTpZlHX1VbFNolnYWI7hg4N/DxEYftF5Rlg4S5c0sZPNYykBLY7cU8PtyaRKnK7+
+ HGl5I2uigy+S6gcQvyYHI6szwD+54C/CpADfC9pHgXdPMi6cUd0Q5hSedtx3qJxR+hiQ+/Od 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278985>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---gk0GtqleQ25bCHTd96hqsmQKsJX3iIGSL
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
-
-You are right. It could be useful to fix old commits (already pushed)
-but it could encourage bad practices. Minor changes should be avoided,
-it is an exception, not a rule.
-
-Thank you Fredrik.
-
-
-On 03/10/2015 15:12, Fredrik Gustafsson wrote:
-> On Fri, Oct 02, 2015 at 06:38:46PM -0300, Felipe Micaroni Lalli wrote:
->> A minor change (also called "cosmetic") usually is a typo fix, doc
->> improvement, a little code refactoring that don't change the behavior =
-etc.
+On 03.10.15 18:50, David Turner wrote:
+> On Sat, 2015-10-03 at 07:02 +0200, Torsten B=C3=B6gershausen wrote:
+>> On 29.09.15 00:01, David Turner wrote:
+>>>
+>> (Not sure if this is the right thread to report on)
 >>
->> In Wikipedia we can mark an edition as "minor".
->>
->> It would be nice to have an argument like "--minor" in git-commit to
->> mark the commit as minor. Also, filter in git-log (like --hide-minor) =
-to
->> hide the minor changes. The git-log could be optimized to show minor
->> commits more discreetly.
+>> In file included from builtin/commit.c:20:
+>> ./refs.h:695:16: warning: redefinition of typedef 'ref_transaction_f=
+ree_fn' is a C11 feature
+>>       [-Wtypedef-redefinition]
+>> typedef void (*ref_transaction_free_fn)(struct ref_transaction *tran=
+saction);
+>>                ^
 >=20
-> I can see your problem and implement your suggest is a solution that
-> would work. However since this is a common problem, git already has a
-> solution, that is the interactive rebase.
 >=20
-> You can read a discussion about when to use merge and rebase here:
-> http://www.mail-archive.com/dri-devel@lists.sourceforge.net/msg39091.ht=
-ml
+> Fixed, thanks.
 >=20
-> This work method make the "minor" commits to go away. There shouldn't b=
-e
-> any minor, or "fixup" commits in your history (of course there's
-> exception).
->=20
-> Minor things should be caught in your code review process and then
-> fixed, rebased and the merged again.
->=20
-> Or do I miss a usecase here?
->=20
+> What compiler flag did you turn on to see that warning?
+Mac OS X, 10.9:
 
-
---gk0GtqleQ25bCHTd96hqsmQKsJX3iIGSL
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJWEDINAAoJEEwK/M/tXN4UNGwP/AnHq8owqCMBjZBDeA1AAqRg
-1Usq6f5SkwtGa0uAiCGE8uTDPf7oyX0u27w10alhgcVgh7OuR0K5/E1mb19I8koF
-uiD68XNUEeOlf4Lg7L63ZagcWGKmhJegat1S9FmBRbQzBKqZdFte0OANxT5WKt++
-TE+ncG2G6kirlERczYhUQYP68qEaP4rUnTydgUUYpgcqB6tr0H5DBIDq/xs/oZCS
-bEZOMzrYS0jOxGyrp7wyUY5sfuYo3hdiww/hJan9peQKBwq9vTcAPe4lSGTdwKiQ
-U/Wpvu5riZOM08iPoBUnEXanAFa9tAhgVkiOi1ZRxgx7mYLG5BYKE8TPFvyAEsYL
-ZlHX4A15fU8ALI6Q3ehfifYd4x6VjI2B6Ox/7rwGjvV0qf4jhtZ+hEECloOfiPo2
-x2j68DJ+sUYuQNSirkWpCTF8lDJoF121bsEncaBCW9nUxIYKQQv2a8TaR3VZPA90
-Lod1tL5M8xvSnNyle4Wvoh3rZYdkPHCIrkXXuBar91CSHqEu3GnPdmx64/xjNEV7
-hmYmekIx/Ua8AKBqOszX4LzBslJBeNoHW00oCY1/PJLifFsK9mqiZENvvED5wC9Z
-i6gPTCEQJ0R7snnE04s28km97Q+57rYL0Mz9AyRY3Hev2cfexkHI5NhUp22WY89b
-KaXTMHjdLzeb5fuvCxW1
-=bMlR
------END PGP SIGNATURE-----
-
---gk0GtqleQ25bCHTd96hqsmQKsJX3iIGSL--
+ gcc --version
+Configured with: --prefix=3D/Library/Developer/CommandLineTools/usr --w=
+ith-gxx-include-dir=3D/usr/include/c++/4.2.1
+Apple LLVM version 6.0 (clang-600.0.57) (based on LLVM 3.5svn)
+Target: x86_64-apple-darwin13.4.0
+Thread model: posix
