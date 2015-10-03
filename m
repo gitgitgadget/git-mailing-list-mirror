@@ -1,96 +1,94 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 41/68] init: use strbufs to store paths
-Date: Sat, 3 Oct 2015 23:12:13 +0200
-Message-ID: <561044AD.8010803@web.de>
-References: <20150924210225.GA23624@sigill.intra.peff.net>
- <20150924210736.GL30946@sigill.intra.peff.net>
- <CAO2U3QjunOPoAbGSRjAmCwfk-TnoMveXOJhpb351eh1a_3Xp3A@mail.gmail.com>
- <20150930002347.GA23406@sigill.intra.peff.net> <560F6E98.8030305@web.de>
- <xmqqtwq73nbj.fsf@gitster.mtv.corp.google.com>
+From: Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [RFC/PATCH v1] Add Travis CI support
+Date: Sat, 3 Oct 2015 23:23:52 +0100
+Message-ID: <CAFY1edZSNKepx_+2U=C-raOBiVK3Zh2r_Y_NO2-RtbhH_n-tdg@mail.gmail.com>
+References: <1443131004-39284-1-git-send-email-larsxschneider@gmail.com>
+	<xmqqeghnuy8t.fsf@gitster.mtv.corp.google.com>
+	<1443150875.3042.3.camel@kaarsemaker.net>
+	<699c08632232180166145f70c7f16645@dscho.org>
+	<CAE5ih7_f8qy9WvmgRUR6-qFwB4WFhZ6Qr5iOpE0YxqJH8AsZyw@mail.gmail.com>
+	<vpq7fnc83ki.fsf@grenoble-inp.fr>
+	<vpq4mie1m3n.fsf@grenoble-inp.fr>
+	<xmqqlhbqcrf7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Michael Blume <blume.mike@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Oct 03 23:12:29 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Luke Diamand <luke@diamand.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Oct 04 00:24:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZiU6S-0007HH-UP
-	for gcvg-git-2@plane.gmane.org; Sat, 03 Oct 2015 23:12:25 +0200
+	id 1ZiVEC-0003Vz-Je
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Oct 2015 00:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750941AbbJCVMV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Oct 2015 17:12:21 -0400
-Received: from mout.web.de ([212.227.15.4]:52362 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750844AbbJCVMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2015 17:12:20 -0400
-Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0MVGow-1a8K2b2uB4-00Yeir; Sat, 03 Oct 2015 23:12:15
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.2.0
-In-Reply-To: <xmqqtwq73nbj.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:OXel9b5mlPy3tcwNpx/fNarLQNfz3SDzUxSH0pUAxtcS0Yc3fRf
- 2S2wMtYI3QAsNloUikv3nIOZvyJXmHFfUQFOMjbkQg6G/fty/Hp1KUtp38PfBzAVRZSbnFy
- eo4j934gZ3fFmpC+OFcTX2O8YLGlnefAdhqVbMxMixY4TwDAati9C0WZrz3Bv8jzKFaPy5k
- rvc/m4VBMGeMtEBBM4wHg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tXLkiKfl8Jo=:eBd0THcCVfQjdddDPvzcoJ
- 5sOdct5MTU8QSKjnyNcVZD4ZJzDrwqT4kX4/QFc2Y+jj/xZ1lHKEcr01GsQLYwD2n5jYJEdxg
- bSaGJuPygZtxvsexxUnLrivILbhomjCiuy72cs3pT0VKIvASf6pQa5Gzaa5tatiz8T/N/u584
- ssql/uFOaeMVi3HUWvue7tgUkmzKo9arWKr52G2t3QinQM0puJDSWFnY7YeEcD086lKqZ0nrc
- eHklrO46PfYR5TruMV20dBSWvkEDLM4vs4RI9eDG/6EKNd6RXT1GCi9QEO5BoXv9VCivkf14x
- 2YeqV3NwJuIjAjz6l+2GcfEoAYQqkZMI2cGRjSHPmnUJAfgxQKFqwpHgrntYGTX/ADjbSu0tV
- T9NpAwxRh/sPqJP9aCu7nKiFv4k9Abwtet3UACO6/QnJBEws2KdWsGffDBX1aFph9wIhCdCqT
- IyRszMifMDNXQUdX6BIAE4WjDWhue3DicTQkAIIuXCwFuZlj7h76Db7oRcc44jCwtHWFKUFEX
- hgN2f2qJSwzidgIlEeHPkmtB7DTGomqpTjC0TbkzsocSs7icMpUr/GPzSw5GxfrG25LiQtNDc
- KEXV88hRjNWyYNERxdduEtpuSKjeC/S7oPPpTh6mYfefBtUM2uq/IsWqy9PGIsMUZC75Fnt2y
- umO09ArVBU0XDUCYDiTNo1uADPEHKcObYuuGpq6jqnu+S1y31+jmhK1/S4bDa9QOpVZiWrMVp
- wXmHoFQTWZXaoitYxZB3JRfI9A3W4UEXaZxQh1iGuiJZhe1eEgQXMfi6Fq0C2X27qUVPTrfY 
+	id S1751004AbbJCWXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Oct 2015 18:23:54 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:35746 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750949AbbJCWXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2015 18:23:53 -0400
+Received: by igbkq10 with SMTP id kq10so38951566igb.0
+        for <git@vger.kernel.org>; Sat, 03 Oct 2015 15:23:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=l5vYwlx8gblkhzcka1aY7rE5clTJnfGcY7xsQjJINpI=;
+        b=faDRMYZ1Qe1uh6CLnDCrDnJzLPhJw3pns7yxus2WniTs7vRh0PWw/NV2a2qMrXLZUu
+         b2N+TokZO/xP6nYqMW4eoFdNFZUg/gyC3Plh99D7Vhn5VxrFsEVa4rSKfmHO06iReXQ5
+         m1VSMdHhAAIuHP0/fmNKp7mNz4RQoiHA03RT7pnmO2WqNbaDT7qXHE9bZT5FOTGyEZPd
+         bnOsPQJSL8E+VQz/J0Wgu8PwbOXeQVjgR1hpu1HtuSJTmzncXcJwe9q6ILlumfeRl0bK
+         LAbtwAf5TXbNwfJH/ggZib34L1WNChzp9QQuI8pQn+XYQSYfvn6eCXrYS7ioAX7i+1o0
+         pqwg==
+X-Received: by 10.50.73.138 with SMTP id l10mr3900785igv.53.1443911032548;
+ Sat, 03 Oct 2015 15:23:52 -0700 (PDT)
+Received: by 10.79.12.215 with HTTP; Sat, 3 Oct 2015 15:23:52 -0700 (PDT)
+In-Reply-To: <xmqqlhbqcrf7.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278987>
 
-On 03.10.15 18:54, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->> On 30.09.15 02:23, Jeff King wrote:
->>> On Tue, Sep 29, 2015 at 04:50:39PM -0700, Michael Blume wrote:
->>>
->>>> I see compile errors on my mac:
->>>>
->>
->> This is my attempt, passing the test, but not fully polished.
->=20
-> Thanks.
->=20
->> diff --git a/builtin/init-db.c b/builtin/init-db.c
->> index 89f2c05..60b559c 100644
->> --- a/builtin/init-db.c
->> +++ b/builtin/init-db.c
->> @@ -276,7 +276,9 @@ static int create_default_files(const char *temp=
-late_path)
->>  		path =3D git_path_buf(&buf, "CoNfIg");
->>  		if (!access(path, F_OK))
->>  			git_config_set("core.ignorecase", "true");
->> -		probe_utf8_pathname_composition(path);
->> +		/* Probe utf-8 normalization withou mangling CoNfIG */
->> +		path =3D git_path_buf(&buf, "config");
->> +		probe_utf8_pathname_composition(path, strlen(path));
->=20
-> Hmph, Peff's quick-fix passed the original "CoNfIg" in &buf directly
-> to probe_utf8_pathname_composition() without changing its signature.
-True, ( I was thinking that the test did only work on case insensitive =
-=46S).
-We can skip that change.
+On 28 September 2015 at 19:47, Junio C Hamano <gitster@pobox.com> wrote:
+> I won't enable it on github.com:gitster/git anyway, so I do not
+> think that is a concern.  I thought what people are talking about
+> was to add it on github.com:git/git, but have I been misreading the
+> thread?  I do not even own the latter repository (I only can push
+> into it).
 
-Beside that, I later realized, that a better signature could be:
-+void probe_utf8_pathname_composition(const char *path, size_t len)
+I was momentarily surprised to hear that Junio doesn't own github.com/git/git
+but I had a quick look at the github.com/git organisation, and it turns
+out that Peff and Scott Chacon are the current owners - so at the
+moment I think they're the only ones who could switch on the GitHub
+webhook to hit Travis.
 
-I can send a proper patch the next days.
+For what it's worth, I'd love to see Travis CI - or any form of CI -
+running for the core Git project. It doesn't require giving write
+access to Travis, and beyond the good reasons given by Lars,
+I'm also personally interested because it opens up the possibility
+of some useful enhancements to the submitGit flow - so that you
+can't send email to the list without knowing you've broken tests
+first.
+
+Regarding Luke's concerns about excess emails coming from CI,
+default Travis behaviour is for emails to be sent to the committer and
+author, but only if they have write access to the repository the commit
+was pushed to:
+
+http://docs.travis-ci.com/user/notifications/#How-is-the-build-email-receiver-determined%3F
+
+If Travis emails do become problematic, you can disable them
+completely by adding 2 lines of config to the .travis.yml:
+
+http://docs.travis-ci.com/user/notifications/#Email-notifications
+
+Given this, enabling Travis CI for git/git seems pretty low risk,
+are there any strong objections to it happening?
