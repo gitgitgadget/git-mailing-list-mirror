@@ -1,77 +1,90 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH v2 3/4] git-p4: Fix t9815 git-p4-submit-fail test case on
- OS X
-Date: Sun, 4 Oct 2015 16:18:23 -0400
-Message-ID: <20151004201823.GA8366@padd.com>
-References: <1443981977-64604-1-git-send-email-larsxschneider@gmail.com>
- <1443981977-64604-4-git-send-email-larsxschneider@gmail.com>
- <xmqqegha1oj6.fsf@gitster.mtv.corp.google.com>
- <90C13A5C-AB19-4E5C-A317-15B3D182444D@gmail.com>
+From: Ray Donnelly <mingw.android@gmail.com>
+Subject: Re: [PATCH 1/2] test-path-utils.c: remove incorrect assumption
+Date: Mon, 5 Oct 2015 00:36:16 +0100
+Message-ID: <CAOYw7duDLWYpu+NK2t2+hV3rtU=dK3eQ6R11mfwLKbQQowbWuQ@mail.gmail.com>
+References: <CAOYw7dubGJ=m5+EnjGy7jTQxR+b0uBmyG138KEQ5rzX2K7WcgA@mail.gmail.com>
+	<xmqqlhbj3mfo.fsf@gitster.mtv.corp.google.com>
+	<CAOYw7dv4iPQ4cq4Ab1ZeThrp=u51T5v387a1Y8QPO-yj=fyMcg@mail.gmail.com>
+	<xmqqwpv21rej.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Users <git@vger.kernel.org>,
-	Luke Diamand <luke@diamand.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 04 22:28:01 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 01:36:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zipt2-0005rV-Oh
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Oct 2015 22:28:01 +0200
+	id 1ZispK-0004vK-Fr
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 01:36:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751747AbbJDU14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Oct 2015 16:27:56 -0400
-Received: from honk.padd.com ([162.221.205.100]:47911 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751649AbbJDU14 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Oct 2015 16:27:56 -0400
-X-Greylist: delayed 570 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 Oct 2015 16:27:55 EDT
-Received: from arf.padd.com (unknown [50.111.75.71])
-	by honk.padd.com (Postfix) with ESMTPSA id EEA654C003E;
-	Sun,  4 Oct 2015 13:18:24 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 5D4D123152; Sun,  4 Oct 2015 16:18:23 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <90C13A5C-AB19-4E5C-A317-15B3D182444D@gmail.com>
+	id S1751961AbbJDXgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Oct 2015 19:36:17 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:34514 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751943AbbJDXgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Oct 2015 19:36:17 -0400
+Received: by obbda8 with SMTP id da8so116937645obb.1
+        for <git@vger.kernel.org>; Sun, 04 Oct 2015 16:36:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=yZbUGBKA5oRnXJxArxxLggEN9/J42eJfkrILEszLzqU=;
+        b=LdLS8f/AUiZ++No4f5sTC/TJjYy59EzUKKnaku0EYxAt7J+MnV/VzZ/cmcv4njDCnf
+         Apa2Zk2+HLr7EFXxXp6tT4xcUasl5dSe3RKViSDpsdH5/m25xnAmL3d+L3FbLJnkfXfg
+         JbwMtO8SzO5L8b7L2IFq7qmH/N7lE4MEX5GllBHhwTEDX/V6CA78BFIwZYLRTYQCY6Et
+         TmXj0MKgTK+MYLEE2YHmFhJ94v8AorJj8DaakN/gUZm4n6OvCLTqp3kxhD7QOfkHm4ph
+         g+spqN3ymd9G8/owHA6PVoCIh7BS2rYKgbotyL15hn4wPKq5OpwEafOMSQU0dMYYlM9/
+         bW1g==
+X-Received: by 10.60.79.226 with SMTP id m2mr16156467oex.20.1444001776512;
+ Sun, 04 Oct 2015 16:36:16 -0700 (PDT)
+Received: by 10.202.15.21 with HTTP; Sun, 4 Oct 2015 16:36:16 -0700 (PDT)
+In-Reply-To: <xmqqwpv21rej.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279026>
 
-larsxschneider@gmail.com wrote on Sun, 04 Oct 2015 11:44 -0700:
-> 
-> On 04 Oct 2015, at 11:23, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> > larsxschneider@gmail.com writes:
-> > 
-> >> +		if test_have_prereq CYGWIN; then
-> >> +			: # NOOP
-> >> +		elif test_have_prereq DARWIN; then
-> >> +			stat -f %Sp text | egrep ^-r-- &&
-> >> +			stat -f %Sp text+x | egrep ^-r-x
-> >> +		else
-> >> 			stat --format=%A text | egrep ^-r-- &&
-> >> 			stat --format=%A text+x | egrep ^-r-x
-> >> 		fi
-> > 
-> > Not a new problem but why do we need "stat" here?
-> > 
-> > Shouldn't "test -r", "! test -x", and their usual friends be
-> > sufficient for the purpose of the test and are more portable?
-> 
-> Good question. The stat call was introduced with df9c545 by Pete Wyckoff.
-> @Pete, @Luke: Are you aware of any particular reason for stat?
+On Sun, Oct 4, 2015 at 6:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ray Donnelly <mingw.android@gmail.com> writes:
+>
+>>> Some callers of this function in real code (i.e. not the one you are
+>>> removing the check) do seem to depend on that condition, e.g. the
+>>> codepath in clone that leads to add_to_alternates_file() wants to
+>>> make sure it does not add an duplicate, so it may end up not noticing
+>>> /foo/bar and /foo/bar/ are the same thing, no?  There may be others.
+>>
+>> Enforcing that normalize_path_copy() removes any trailing '/' (apart
+>> from the root directory) breaks other things that assume it doesn't
+>> mess with trailing '/'s, for example filtering in ls-tree. Any
+>> suggestions for what to do about this? Would a flag be appropriate as
+>> to whether to do this part or not? Though I'll admit I don't like the
+>> idea of adding flags to modify the behavior of something that's meant
+>> to "normalize" something. Alternatively, I could go through all the
+>> breakages and try to fix them up?
+>
+> I agree with you that "normalize" should "normalize".  Making sure
+> that all the callers expect the same kind of normalization would be
+> a lot of work but I do think that is the best approach in the long
+> run.  Thanks for the ls-tree example, by the way, did you find it by
+> code inspection?  I do not think it is reasonable to expect the test
+> coverage for this to be 100%, so the "try to fix them up" would have
+> to involve a lot of manual work both in fixing and reviewing,
+> unfortunately.
 
-I think you could do this all with test. The key is to make
-sure the files are readable, not writable, and either executable
-or not. Cygwin and darwin oddities were not on my radar 3 years ago.
+For the ls-tree failure, I ran "make test" to see how much fell out.
+I'm not familiar with the code-base yet, so I figured that at least
+investigating the changes needed to make the test-suite pass would be
+a good entry point to reading the code; I will study it at the same
+time to try and get my bearings.
 
-See also 4cea4d6 (git p4 test: use test_chmod for cygwin,
-2013-01-26) for the description I wrote about what this test is
-trying to verify.
-
-		-- Pete
+>
+> The first step of the "best approach" would be to make a note on
+> normalize_path_copy() by adding a NEEDSWORK: comment to describe the
+> situation.
+>
+> Thanks.
