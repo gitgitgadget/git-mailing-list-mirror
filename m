@@ -1,104 +1,270 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [RFC/PATCH v1] Add Travis CI support
-Date: Sun, 04 Oct 2015 14:51:22 +0200
-Organization: gmx
-Message-ID: <e8f26179dc4f590073efc8a2f1bf23d2@dscho.org>
-References: <1443131004-39284-1-git-send-email-larsxschneider@gmail.com>
- <xmqqeghnuy8t.fsf@gitster.mtv.corp.google.com>
- <1443150875.3042.3.camel@kaarsemaker.net>
- <699c08632232180166145f70c7f16645@dscho.org>
- <CAE5ih7_f8qy9WvmgRUR6-qFwB4WFhZ6Qr5iOpE0YxqJH8AsZyw@mail.gmail.com>
- <vpq7fnc83ki.fsf@grenoble-inp.fr> <vpq4mie1m3n.fsf@grenoble-inp.fr>
- <xmqqlhbqcrf7.fsf@gitster.mtv.corp.google.com>
- <CAFY1edZSNKepx_+2U=C-raOBiVK3Zh2r_Y_NO2-RtbhH_n-tdg@mail.gmail.com>
- <CAPc5daXkn=C-D5RQCw2w+JrHn7XZA6X-P4F-PugRe-S4Z2RO0g@mail.gmail.com>
- <xmqq612n2z3d.fsf@gitster.mtv.corp.google.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 1/9] ref-filter: implement %(if), %(then), and %(else) atoms
+Date: Sun, 4 Oct 2015 19:29:23 +0530
+Message-ID: <CAOLa=ZRXvz+sAtMOmreri7QUCfwrusDQKNme4ke_8uaTkAoqiQ@mail.gmail.com>
+References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
+ <1443807546-5985-2-git-send-email-Karthik.188@gmail.com> <vpq8u7kb89o.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Roberto Tyley <roberto.tyley@gmail.com>, Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Luke Diamand <luke@diamand.org>,
-	Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 04 14:51:43 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Oct 04 16:00:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZiilS-00004r-05
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Oct 2015 14:51:42 +0200
+	id 1Zijq6-0000Um-KK
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Oct 2015 16:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751544AbbJDMvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Oct 2015 08:51:36 -0400
-Received: from mout.gmx.net ([212.227.17.20]:58050 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751412AbbJDMvf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Oct 2015 08:51:35 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MKu9E-1ZiilD0OyO-0000iH; Sun, 04 Oct 2015 14:51:27
- +0200
-In-Reply-To: <xmqq612n2z3d.fsf@gitster.mtv.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:AwaXHPbnV5YgnYVgbwMPJj25cuUGdihbKexk1pADQS0E4+TkLd/
- DB0Fo1MTm1Ov/LgRXYSYsIQ2+VeCw/KylOa+34EZrraSYVeASZsc36IELIZroDFOx4ek11T
- a3D24u7k289WgC3wHjT2/90L3H5H9Wdob46Zxt7gh3J025HaEwhWYVHwneBO34etomYNw0g
- OfCGUwAKoPuhKDNM+UiaA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zhoUn3ocZAc=:ha+UeQ02W5dP0ufgTofnXB
- vMy6r4ZU9jEs2NIKwwGVDS/N330MokFmzWZc/BTkypYF6fwwO1GMqM1wI1DiG13jz1nyJykuD
- JHLc2touClIbZg+2nrgnLnTeHd4P/0ZDnl+b/pQCB6hysiF4c9XgSm+n9+69D1/wGY6kyssSH
- d668bsoroBJod6ZgcznN4au69WjvItyC7timFYCr67NsK7ZF5MvR9jW9m7bjE5zzhgGEY6nga
- HqdBYFxVB7E/5Cm3lPGjP7w6jlCmmvdhK+6XuRx6sKWTpSTJyb9mvL8C24HZ+DCmNAXV8Mhma
- fcgDbeHChUI8Kcp8+JdgfIESFdO2kJ/ekiTYFiS8CyW4YpB3EsUXOg26JTeFOIfeT+wPL0RhO
- sUkMwow7YK/1cI54CyBXAB37nOh9RMpBhj3Y9kcQ00FadiPVP9SxTCLS7VBixd7smzNxBCtDF
- c90lqSG5vPipHRZorG/6y3VF7jKBQVV+fmt3kxbvEb4NBZVtxuAs9ZkblbrthKRI2Nv1xuVDy
- MCT8RuxY8Fpa17WzM9jHv//1wa0CVY+OT3ir2kxqudGtAYIuFn+iiipEprRG8pf4X7Z7XW9v8
- zku5MJoeLWqr5yFDYEcv+tT1hDQtDcz9Q6pzuo0drvKiA1M7RPb2SlVNbNBBFZNURjHwfPgHC
- tvcDxtnUEBhsxVxY1SJmPD8qLwf7EoLhc9PQXpgcJ6pN67+n2ucjCj0ubjAWKem/eygGT4A3v
- JxDQ5FEsRVWXwX97LjOCF46LenZ1xAPV3uJNo0Z50BK0gGuGpuWhW1JoPbhRG7Jt0a3psPzg 
+	id S1751501AbbJDN7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Oct 2015 09:59:54 -0400
+Received: from mail-vk0-f46.google.com ([209.85.213.46]:33554 "EHLO
+	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479AbbJDN7x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Oct 2015 09:59:53 -0400
+Received: by vkgd64 with SMTP id d64so83315347vkg.0
+        for <git@vger.kernel.org>; Sun, 04 Oct 2015 06:59:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Zts4ofOfGFyTIa2NMOrawK6fn3rHMUfww2K1ImfqraQ=;
+        b=VG3edfaV3LeDs/tL4R1T+aq9Qh2oQxTnAuwg3+2wgOEy8gYVozgLPdoSCMmvAESsVX
+         uajNP5cEf3wKM4wE5FyxaS3pB0Vz6z3slkZXQ8Ty0ntEULh6fDQyJIinNfrtfN+2bv4d
+         fInOHnIqzqmNr1p0RW2LKWFLM1K04WQ0aEXnHDj9BeRQczrl/e9TWyHkAkJRHfgfsSIQ
+         u2m/N2aXcHhjsGJeoS9vp+o8KvSS2nFCVrfqDoEhLlwI/YXjPY67JgGfkW+LVJ4+/Fef
+         uLNGn5DsN2HTflCrPB/JyiabNFfhOOotlZ8lqifaXhPG47DpIHCOAh8bh/ERcEjzUyfH
+         gllQ==
+X-Received: by 10.31.50.214 with SMTP id y205mr16405003vky.77.1443967192466;
+ Sun, 04 Oct 2015 06:59:52 -0700 (PDT)
+Received: by 10.103.23.193 with HTTP; Sun, 4 Oct 2015 06:59:23 -0700 (PDT)
+In-Reply-To: <vpq8u7kb89o.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278999>
 
-Hi Junio,
+On Sat, Oct 3, 2015 at 3:09 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> Implement %(if), %(then) and %(else) atoms. Used as
+>> %(if)..%(then)..%(end) or %(if)..%(then)..%(else)..%(end).
+>
+> I prefer ... to .., which often means "interval" as in HEAD^^..HEAD.
+>
 
-On 2015-10-04 03:37, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> On Sat, Oct 3, 2015 at 3:23 PM, Roberto Tyley <roberto.tyley@gmail.com> wrote:
->>>
->>> Given this, enabling Travis CI for git/git seems pretty low risk,
->>> are there any strong objections to it happening?
->>
->> I still don't see a reason why git/git needs to be the one that is
->> used, when somebody
->> so interested (and I seem to see very many of them in the thread) can
->> sacrifice his or
->> her own fork and enable it him or herself.
-> 
-> To state it a bit differently.
-> 
-> If somebody says "I've been maintaining a clone of git/git with
-> Travis webhooks enabled and as the result caught this many glitches
-> during the past two months without any ill side effect.
+Seems good, will change.
 
-Heh... given that Travis CI requires that .travis.yml file, nobody can really say that they have been using Travis CI *before* you add that file to `master`. If you make successful testing with Travis a *precondition* before adding that file, it is kinda asking for the impossible.
+>> If there is an atom with value or string literal after the %(if)
+>
+> I find this explanation hard to read, and ambiguous: what does "atom
+> with value" mean?
+>
+>> then everything after the %(then) is printed, else if the %(else) atom
+>> is used, then everything after %(else) is printed. If the string
+>> contains only whitespaces, then it is not considered.
+>
+> "the string" is ambiguous again. I guess it's "what's between %(if) and
+> %(then)", but it could be clearer. And it's not clear what "not
+> considered" means.
+>
+> My take on it:
+>
+> Implement %(if), %(then) and %(else) atoms. Used as
+> %(if)...%(then)...%(end) or %(if)...%(then)...%(else)...%(end). If the
+> format string between %(if) and %(then) expands to an empty string, or
+> to only whitespaces, then the string following %(then) is printed.
+> Otherwise, the string following %(else), if any, is printed.
+>
 
-Now, I like Travis, even if I have used Jenkins previously (came as part of my previous day-job). And my experience with Jenkins (in the form of BuildHive) was pretty positive: it *did* catch a couple of breakages. Even with my Git fork.
+This (the one you sent again after Junio's suggestion, looks better),
+I'll use this thanks.
 
-But I agree with basically everybody who chimed in and said that the biggest bang for the buck would be made by enabling it on https://github.com/git/git.
+>> +When a scripting language specific quoting is in effect,
+>
+> This may not be immediately clear to the reader. I'd add explicitly:
+>
+> When a scripting language specific quoting is in effect (i.e. one of
+> `--shell`, `--perl`, `--python`, `--tcl` is used), ...
+>
 
-The only cost I see is for that `.travis.yml` file to live in Git's source code. Small price to pay, if you ask me. If you do not want to use it yourself, that is fine. But I would like to ask for it to be included so that those of us who do want to benefit from Travis' testing are not precluded from doing so [*1*].
+Makes sense.
 
-As far as I can tell, the patch is fine as-is. Although I would put the `before_script` commands into some file inside `contrib/`.
+>>  EXAMPLES
+>>  --------
+>
+> This is just the context of the patch, but I read it as a hint that we
+> could add some examples with complex --format usage to illustrate the
+> theory above.
+>
 
-Thanks,
-Dscho
+I was thinking about adding :
 
-Footnote *1*: of course it would be possible to manually rebase the patch, or to set up a scripted version of that. That is very cumbersome, though, and the benefit would obviously be substantially diminished.
+An example to show the usage of %(if)...%(then)...%(else)...%(end).
+This prefixes the current branch with a star.
+
+------------
+#!/bin/sh
+
+git for-each-ref --format="%(if)%(HEAD)%(then)* %(else)
+%(end)%(refname:short)" refs/heads/
+------------
+
+
+An example to show the usage of %(if)...%(then)...%(end).
+This adds a red color to authorname, if present
+
+------------
+#!/bin/sh
+
+git for-each-ref
+--format="%(refname)%(if)%(authorname)%(then)%(color:red)%(end)
+%(authorname)"
+------------
+
+>> +     if (if_then_else->condition_satisfied && if_then_else->else_atom) {
+> // cs && else
+>> +             strbuf_reset(&cur->output);
+>> +             pop_stack_element(&cur);
+>> +     } else if (if_then_else->else_atom) {
+> // !cs && else
+>> +             strbuf_swap(&cur->output, &prev->output);
+>> +             strbuf_reset(&cur->output);
+>> +             pop_stack_element(&cur);
+>> +     } else if (!if_then_else->condition_satisfied)
+> // !cs && !else
+>> +             strbuf_reset(&cur->output);
+>
+> This if/else if/else if looks hard to read to me. I had to add the
+> comments above as a note to myself to get the actual full condition for
+> 3 branches.
+>
+> The reasoning would be clearer to me as:
+>
+> if (if_then_else->else_atom) {
+>         /*
+>          * There is an %(else) atom: we need to drop one state from the
+>          * stack, either the %(else) branch if the condition is satisfied, or
+>          * the %(then) branch if it isn't.
+>          */
+>         if (if_then_else->condition_satisfied) {
+>                 strbuf_reset(&cur->output);
+>                 pop_stack_element(&cur);
+>         } else {
+>                 strbuf_swap(&cur->output, &prev->output);
+>                 strbuf_reset(&cur->output);
+>                 pop_stack_element(&cur);
+>         }
+> } else if (if_then_else->condition_satisfied)
+>         /*
+>          * No %(else) atom: just drop the %(then) branch if the
+>          * condition is not satisfied.
+>          */
+>         strbuf_reset(&cur->output);
+>
+
+This looks neater thanks.
+
+>> +static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
+>> +{
+>> +     struct ref_formatting_stack *new;
+>> +     struct if_then_else *if_then_else = xcalloc(sizeof(struct if_then_else), 1);
+>> +
+>> +     if_then_else->if_atom = 1;
+>
+> Do you ever use this "if_atom"? It doesn't seem so in the current patch,
+> and it seems like a tautology to me: if you have a struct if_then_else,
+> then you have seen the %(if).
+>
+
+Yea I'll remove that.
+
+>> +static int is_empty(const char * s){
+>
+> char * s -> char *s
+>
+
+will do.
+
+>> +static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
+>> +{
+>> +     struct ref_formatting_stack *cur = state->stack;
+>> +     struct if_then_else *if_then_else = (struct if_then_else *)cur->at_end_data;
+>> +
+>> +     if (!if_then_else)
+>> +             die(_("format: %%(then) atom used without an %%(if) atom"));
+>
+> You've just casted at_end_data to if_then_else. if_then_else being not
+> NULL does not mean that it is properly typed. It can be the at_end_data
+> of another opening atom. What happens if you use
+> %(align)foo%(then)bar%(end)?
+>
+
+Nice catch, didn't see that possibility.
+
+> One way to be safer would be to check that cur->at_end does point to
+> if_then_else_handler. Or add information to struct ref_formatting_stack
+> (a Boolean is_if_then_else or an enum).
+>
+
+Checking cur->at_end with if_then_else_handler seems good to me.
+
+> Also, you need to check that if_then_else->then_atom is not 1.
+>
+
+Ah! multiple usage of the same atom.
+
+>> +static void else_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
+>> +{
+>> +     struct ref_formatting_stack *prev = state->stack;
+>> +     struct if_then_else *if_then_else = (struct if_then_else *)state->stack->at_end_data;
+>> +
+>> +     if (!if_then_else)
+>> +             die(_("format: %%(else) atom used without an %%(if) atom"));
+>
+> Same as above, I guess (not tested) %(align)...%(else) is accepted.
+>
+
+Will change.
+
+>> +     if (!if_then_else->then_atom)
+>> +             die(_("format: %%(else) atom used without a %%(then) atom"));
+>> +     if_then_else->else_atom = 1;
+>> +     push_stack_element(&state->stack);
+>
+> So, while parsing the %(else)...%(end), the stack contains both the
+> %(then)...%(else) part, and the %(else)...%(end).
+>
+> I'm wondering if we can simplify this. We already know if the condition
+> is satisfied, and if it's not, we can just drop the %(then) part right
+> now, and write to the top of the stack normally (the %(end) atom will
+> only have to pop the string normally). But if the condition is not
+> satisfied, we need to preserve the %(then) part and need to do something
+> about the %(else).
+>
+
+I wanted to do something like this the problem is append_atom() and
+append_literal()
+would need to be informed about which part to ignore, and this moves
+the code's logic
+from the current handlers to append_atom() and append_literal(). Which I didn't
+think was a nice way of doing this.
+
+>> -     current->at_end(current);
+>> +     current->at_end(&state->stack);
+>> +
+>> +     /*  Stack may have been popped, hence reset the current pointer */
+>
+> I'd say explicitly "... may have been popped within at_end, hence ..."
+>
+
+Will do.
+
+-- 
+Regards,
+Karthik Nayak
