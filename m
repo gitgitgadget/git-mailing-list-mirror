@@ -1,270 +1,77 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 1/9] ref-filter: implement %(if), %(then), and %(else) atoms
-Date: Sun, 4 Oct 2015 19:29:23 +0530
-Message-ID: <CAOLa=ZRXvz+sAtMOmreri7QUCfwrusDQKNme4ke_8uaTkAoqiQ@mail.gmail.com>
-References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
- <1443807546-5985-2-git-send-email-Karthik.188@gmail.com> <vpq8u7kb89o.fsf@grenoble-inp.fr>
+From: Ray Donnelly <mingw.android@gmail.com>
+Subject: Re: [PATCH 1/2] test-path-utils.c: remove incorrect assumption
+Date: Sun, 4 Oct 2015 15:51:22 +0100
+Message-ID: <CAOYw7dv4iPQ4cq4Ab1ZeThrp=u51T5v387a1Y8QPO-yj=fyMcg@mail.gmail.com>
+References: <CAOYw7dubGJ=m5+EnjGy7jTQxR+b0uBmyG138KEQ5rzX2K7WcgA@mail.gmail.com>
+	<xmqqlhbj3mfo.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Oct 04 16:00:35 2015
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 04 16:51:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zijq6-0000Um-KK
-	for gcvg-git-2@plane.gmane.org; Sun, 04 Oct 2015 16:00:35 +0200
+	id 1Zikdl-0006U8-FP
+	for gcvg-git-2@plane.gmane.org; Sun, 04 Oct 2015 16:51:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751501AbbJDN7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Oct 2015 09:59:54 -0400
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:33554 "EHLO
-	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbbJDN7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Oct 2015 09:59:53 -0400
-Received: by vkgd64 with SMTP id d64so83315347vkg.0
-        for <git@vger.kernel.org>; Sun, 04 Oct 2015 06:59:52 -0700 (PDT)
+	id S1751514AbbJDOvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Oct 2015 10:51:23 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:36504 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751446AbbJDOvX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Oct 2015 10:51:23 -0400
+Received: by obcgx8 with SMTP id gx8so112182013obc.3
+        for <git@vger.kernel.org>; Sun, 04 Oct 2015 07:51:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=Zts4ofOfGFyTIa2NMOrawK6fn3rHMUfww2K1ImfqraQ=;
-        b=VG3edfaV3LeDs/tL4R1T+aq9Qh2oQxTnAuwg3+2wgOEy8gYVozgLPdoSCMmvAESsVX
-         uajNP5cEf3wKM4wE5FyxaS3pB0Vz6z3slkZXQ8Ty0ntEULh6fDQyJIinNfrtfN+2bv4d
-         fInOHnIqzqmNr1p0RW2LKWFLM1K04WQ0aEXnHDj9BeRQczrl/e9TWyHkAkJRHfgfsSIQ
-         u2m/N2aXcHhjsGJeoS9vp+o8KvSS2nFCVrfqDoEhLlwI/YXjPY67JgGfkW+LVJ4+/Fef
-         uLNGn5DsN2HTflCrPB/JyiabNFfhOOotlZ8lqifaXhPG47DpIHCOAh8bh/ERcEjzUyfH
-         gllQ==
-X-Received: by 10.31.50.214 with SMTP id y205mr16405003vky.77.1443967192466;
- Sun, 04 Oct 2015 06:59:52 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Sun, 4 Oct 2015 06:59:23 -0700 (PDT)
-In-Reply-To: <vpq8u7kb89o.fsf@grenoble-inp.fr>
+        bh=DRu1g1Q8JKnmUtk0xAj5OUqrFcWTE+z/jgg0+l+Ue2k=;
+        b=SDm6ucVkibALwq3qo63d4hCdXU+Zjzxg+UG9yTVxnQupTMb2anoB5X5WMYjBt0IyIB
+         FgqvvYAcim6NKJAymQjJc4T3V6LEON8rRCg2pDFCHM3Hr7kUFl41v81G/82NPxld+dna
+         4xthu+JoNBkvFlGbY5KvE6OWI3sJl83cyhSLrz8641cPMEGM3xOIfdhfCHodeC8qnhcf
+         pDfOE7tmU7xw10YOLrtfIrKemUuJLoyZHvJfsHrbQ2gG7SfrxFuRZ2WfN74bdmdUskDv
+         BWObFD5Y+/NP8Sem6KxvosBtOwTgUztO/sMgtseiT8DDhwpbx1iFlUzwI/6K7yX4Nebt
+         mIFA==
+X-Received: by 10.182.205.200 with SMTP id li8mr15402163obc.18.1443970282508;
+ Sun, 04 Oct 2015 07:51:22 -0700 (PDT)
+Received: by 10.202.15.21 with HTTP; Sun, 4 Oct 2015 07:51:22 -0700 (PDT)
+In-Reply-To: <xmqqlhbj3mfo.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/278999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279000>
 
-On Sat, Oct 3, 2015 at 3:09 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
+On Sat, Oct 3, 2015 at 6:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ray Donnelly <mingw.android@gmail.com> writes:
 >
->> Implement %(if), %(then) and %(else) atoms. Used as
->> %(if)..%(then)..%(end) or %(if)..%(then)..%(else)..%(end).
+>> In normalize_ceiling_entry(), we test that normalized paths end with
+>> slash, *unless* the path to be normalized was already the root
+>> directory.
+>>
+>> However, normalize_path_copy() does not even enforce this condition.
 >
-> I prefer ... to .., which often means "interval" as in HEAD^^..HEAD.
+> Perhaps the real issue to be addressed is the above, and your patch
+> is killing a coalmine canary?
 >
-
-Seems good, will change.
-
->> If there is an atom with value or string literal after the %(if)
+> Some callers of this function in real code (i.e. not the one you are
+> removing the check) do seem to depend on that condition, e.g. the
+> codepath in clone that leads to add_to_alternates_file() wants to
+> make sure it does not add an duplicate, so it may end up not noticing
+> /foo/bar and /foo/bar/ are the same thing, no?  There may be others.
 >
-> I find this explanation hard to read, and ambiguous: what does "atom
-> with value" mean?
->
->> then everything after the %(then) is printed, else if the %(else) atom
->> is used, then everything after %(else) is printed. If the string
->> contains only whitespaces, then it is not considered.
->
-> "the string" is ambiguous again. I guess it's "what's between %(if) and
-> %(then)", but it could be clearer. And it's not clear what "not
-> considered" means.
->
-> My take on it:
->
-> Implement %(if), %(then) and %(else) atoms. Used as
-> %(if)...%(then)...%(end) or %(if)...%(then)...%(else)...%(end). If the
-> format string between %(if) and %(then) expands to an empty string, or
-> to only whitespaces, then the string following %(then) is printed.
-> Otherwise, the string following %(else), if any, is printed.
 >
 
-This (the one you sent again after Junio's suggestion, looks better),
-I'll use this thanks.
-
->> +When a scripting language specific quoting is in effect,
->
-> This may not be immediately clear to the reader. I'd add explicitly:
->
-> When a scripting language specific quoting is in effect (i.e. one of
-> `--shell`, `--perl`, `--python`, `--tcl` is used), ...
->
-
-Makes sense.
-
->>  EXAMPLES
->>  --------
->
-> This is just the context of the patch, but I read it as a hint that we
-> could add some examples with complex --format usage to illustrate the
-> theory above.
->
-
-I was thinking about adding :
-
-An example to show the usage of %(if)...%(then)...%(else)...%(end).
-This prefixes the current branch with a star.
-
-------------
-#!/bin/sh
-
-git for-each-ref --format="%(if)%(HEAD)%(then)* %(else)
-%(end)%(refname:short)" refs/heads/
-------------
-
-
-An example to show the usage of %(if)...%(then)...%(end).
-This adds a red color to authorname, if present
-
-------------
-#!/bin/sh
-
-git for-each-ref
---format="%(refname)%(if)%(authorname)%(then)%(color:red)%(end)
-%(authorname)"
-------------
-
->> +     if (if_then_else->condition_satisfied && if_then_else->else_atom) {
-> // cs && else
->> +             strbuf_reset(&cur->output);
->> +             pop_stack_element(&cur);
->> +     } else if (if_then_else->else_atom) {
-> // !cs && else
->> +             strbuf_swap(&cur->output, &prev->output);
->> +             strbuf_reset(&cur->output);
->> +             pop_stack_element(&cur);
->> +     } else if (!if_then_else->condition_satisfied)
-> // !cs && !else
->> +             strbuf_reset(&cur->output);
->
-> This if/else if/else if looks hard to read to me. I had to add the
-> comments above as a note to myself to get the actual full condition for
-> 3 branches.
->
-> The reasoning would be clearer to me as:
->
-> if (if_then_else->else_atom) {
->         /*
->          * There is an %(else) atom: we need to drop one state from the
->          * stack, either the %(else) branch if the condition is satisfied, or
->          * the %(then) branch if it isn't.
->          */
->         if (if_then_else->condition_satisfied) {
->                 strbuf_reset(&cur->output);
->                 pop_stack_element(&cur);
->         } else {
->                 strbuf_swap(&cur->output, &prev->output);
->                 strbuf_reset(&cur->output);
->                 pop_stack_element(&cur);
->         }
-> } else if (if_then_else->condition_satisfied)
->         /*
->          * No %(else) atom: just drop the %(then) branch if the
->          * condition is not satisfied.
->          */
->         strbuf_reset(&cur->output);
->
-
-This looks neater thanks.
-
->> +static void if_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
->> +{
->> +     struct ref_formatting_stack *new;
->> +     struct if_then_else *if_then_else = xcalloc(sizeof(struct if_then_else), 1);
->> +
->> +     if_then_else->if_atom = 1;
->
-> Do you ever use this "if_atom"? It doesn't seem so in the current patch,
-> and it seems like a tautology to me: if you have a struct if_then_else,
-> then you have seen the %(if).
->
-
-Yea I'll remove that.
-
->> +static int is_empty(const char * s){
->
-> char * s -> char *s
->
-
-will do.
-
->> +static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
->> +{
->> +     struct ref_formatting_stack *cur = state->stack;
->> +     struct if_then_else *if_then_else = (struct if_then_else *)cur->at_end_data;
->> +
->> +     if (!if_then_else)
->> +             die(_("format: %%(then) atom used without an %%(if) atom"));
->
-> You've just casted at_end_data to if_then_else. if_then_else being not
-> NULL does not mean that it is properly typed. It can be the at_end_data
-> of another opening atom. What happens if you use
-> %(align)foo%(then)bar%(end)?
->
-
-Nice catch, didn't see that possibility.
-
-> One way to be safer would be to check that cur->at_end does point to
-> if_then_else_handler. Or add information to struct ref_formatting_stack
-> (a Boolean is_if_then_else or an enum).
->
-
-Checking cur->at_end with if_then_else_handler seems good to me.
-
-> Also, you need to check that if_then_else->then_atom is not 1.
->
-
-Ah! multiple usage of the same atom.
-
->> +static void else_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
->> +{
->> +     struct ref_formatting_stack *prev = state->stack;
->> +     struct if_then_else *if_then_else = (struct if_then_else *)state->stack->at_end_data;
->> +
->> +     if (!if_then_else)
->> +             die(_("format: %%(else) atom used without an %%(if) atom"));
->
-> Same as above, I guess (not tested) %(align)...%(else) is accepted.
->
-
-Will change.
-
->> +     if (!if_then_else->then_atom)
->> +             die(_("format: %%(else) atom used without a %%(then) atom"));
->> +     if_then_else->else_atom = 1;
->> +     push_stack_element(&state->stack);
->
-> So, while parsing the %(else)...%(end), the stack contains both the
-> %(then)...%(else) part, and the %(else)...%(end).
->
-> I'm wondering if we can simplify this. We already know if the condition
-> is satisfied, and if it's not, we can just drop the %(then) part right
-> now, and write to the top of the stack normally (the %(end) atom will
-> only have to pop the string normally). But if the condition is not
-> satisfied, we need to preserve the %(then) part and need to do something
-> about the %(else).
->
-
-I wanted to do something like this the problem is append_atom() and
-append_literal()
-would need to be informed about which part to ignore, and this moves
-the code's logic
-from the current handlers to append_atom() and append_literal(). Which I didn't
-think was a nice way of doing this.
-
->> -     current->at_end(current);
->> +     current->at_end(&state->stack);
->> +
->> +     /*  Stack may have been popped, hence reset the current pointer */
->
-> I'd say explicitly "... may have been popped within at_end, hence ..."
->
-
-Will do.
-
--- 
-Regards,
-Karthik Nayak
+Enforcing that normalize_path_copy() removes any trailing '/' (apart
+from the root directory) breaks other things that assume it doesn't
+mess with trailing '/'s, for example filtering in ls-tree. Any
+suggestions for what to do about this? Would a flag be appropriate as
+to whether to do this part or not? Though I'll admit I don't like the
+idea of adding flags to modify the behavior of something that's meant
+to "normalize" something. Alternatively, I could go through all the
+breakages and try to fix them up?
