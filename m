@@ -1,107 +1,76 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 37/43] refs: move some defines from refs-be-files.c
- to refs.h
-Date: Mon, 05 Oct 2015 10:57:34 +0200
-Message-ID: <56123B7E.4030808@alum.mit.edu>
-References: <1443477738-32023-1-git-send-email-dturner@twopensource.com> <1443477738-32023-38-git-send-email-dturner@twopensource.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH/RFC 1/2] sha1_file: close all pack files after running
+Date: Mon, 05 Oct 2015 11:03:19 +0200
+Organization: gmx
+Message-ID: <2588666fce6a367fa46cf2501a78fe76@dscho.org>
+References: <1443670163-31193-1-git-send-email-max@max630.net>
+ <1443670163-31193-2-git-send-email-max@max630.net>
+ <33b74e875c7298f67640f5850e88c152@dscho.org>
+ <763ac2b63d56d250e5e1a27f490f79db@dscho.org>
+ <20151002192148.GD26154@wheezy.local>
+ <21bd1c9c394a421bc06c6fa1837f16b6@dscho.org>
+ <20151005045748.GF26154@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 05 10:57:56 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Mon Oct 05 11:03:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zj1al-0006KL-Cs
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 10:57:55 +0200
+	id 1Zj1gD-0002Qs-Bi
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 11:03:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752296AbbJEI5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 04:57:51 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:46426 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751816AbbJEI5v (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2015 04:57:51 -0400
-X-AuditID: 1207440f-f79df6d000007c0f-28-56123b7f8d3c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 6A.E9.31759.F7B32165; Mon,  5 Oct 2015 04:57:35 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC96E0C.dip0.t-ipconnect.de [79.201.110.12])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t958vYip001395
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 5 Oct 2015 04:57:35 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1443477738-32023-38-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrDIsWRmVeSWpSXmKPExsUixO6iqFtvLRRmsOGoocX8TScYLbqudDM5
-	MHkseH6f3ePzJrkApihum6TEkrLgzPQ8fbsE7ox9Z5azFZzgrWjd8JK9gfEFVxcjJ4eEgInE
-	jz3b2SBsMYkL99YD2VwcQgKXGSXuvV3JDOGcY5LYuuIWUIaDg1dAW6JhYhJIA4uAqsTvNYvA
-	mtkEdCUW9TQzgdiiAkESK5a/YASxeQUEJU7OfMICYosIOEhc3nWUGcQWFgiT+HOslRFifhuj
-	xOTZ18EaOAW8JOZfPwVWxCygJ7Hj+i9WCFteonnrbOYJjPyzkMydhaRsFpKyBYzMqxjlEnNK
-	c3VzEzNzilOTdYuTE/PyUot0TfRyM0v0UlNKNzFCQpJ/B2PXeplDjAIcjEo8vAfiBcOEWBPL
-	iitzDzFKcjApifLW6giFCfEl5adUZiQWZ8QXleakFh9ilOBgVhLhfWUGlONNSaysSi3Kh0lJ
-	c7AoifOqL1H3ExJITyxJzU5NLUgtgsnKcHAoSfA6WwE1ChalpqdWpGXmlCCkmTg4QYZzSYkU
-	p+alpBYllpZkxINiMr4YGJUgKR6gvekg7bzFBYm5QFGI1lOMilLivGIgCQGQREZpHtxYWKJ5
-	xSgO9KUwryBIFQ8wScF1vwIazAQ0uF8ebHBJIkJKqoFxEe/rP8/z99avV3obY8mpyaZRxfRc
-	YVYOS/HvAKEAjnOaydnZucbrtwcX5cleVX346uTMPIuCGbJbV+xOnPvwV93yjeJr0hedLGXR
-	mj+rNu6k6JMd5XJHJ7kKFfW0Bpp2FTxcIKUQPNl5neuZzbt7pr4Q5wr+/ebs7TVa 
+	id S1751769AbbJEJD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 05:03:29 -0400
+Received: from mout.gmx.net ([212.227.17.20]:54619 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751462AbbJEJD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 05:03:28 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MQMBU-1aCkHW0ez6-00Tpko; Mon, 05 Oct 2015 11:03:22
+ +0200
+In-Reply-To: <20151005045748.GF26154@wheezy.local>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:Dq+92c9oGm516gOD+T7tftRfXKZwwlKUyZ4CcU1/rwfDZ4hXQ64
+ Kp16fUiWbIg2uIrIuuZ9K4hXwtv5ubW8aMhM7VTZAln0H5cVGH40bP4L+KKbEhYyZMwBLOI
+ DYBSCxoKmhUgCF/Iow6YU4aitTAlVWmCQwlTjfTj3E45O3W73AYds6RryDP/GAsk7c+GS5r
+ SUVmDJc07EJ5l6QYnwNig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZyRxfoNMXgU=:lRIc4yzQo33Sz9kGD8/x8n
+ 68xx1u2QPOnA7F9gsKjnDmVb0zagvqc3QqYyWoOduMxyE158aCWNqn0x4s5tar1Rq8fZRmWHB
+ Y7CIQ81lMCss6MKlBC5aN9dzsQ4zJFzOidA64eqLml8AoVPHHYfCh2ZhzwQGyj+mrdW2lc4N3
+ 78tAffeIJKk9Mj2iL58hx/2fNCz9nrEVLQrSETnNsxCKbh/LtZ3lns09F8N2hKuhc0fnAzsCy
+ /+8Lqwi5OOg9lJvs1m9tR/GvyXNzeJWqR186V+Y/c/dlL+UI+j5UyqM+9/RBMYPHMAhWk+EgP
+ udMSNcS1tNSPdjX/eF3XnwFsnHA5twWq09DpzhG0ghObIDozog5nQ5Mgbo+NjQ+KyMMnC2Qs6
+ XY5f2zRY9KxUgE2+HEwlD6x4zOXWe1E/7N6i+ROLOcoz/CtRRXMweKnggRcdhQ9K9sMyqLX5q
+ x+4R0pFfsKdy0SLA1JmbQt3sZPuI6KwCl1NZSzjK7P8afc51194CjVLEiyabS04R9j5GgCmue
+ jMhBj6TdXfRitM14Nqf+5DCqdVJJ7MAzQjFAPQ1qHyWMCjCXa1bhoSYs313U+K8Q5Xdpkg96P
+ PKShjvufU4o6K1S4Kp7fpqRGrNjRAowTPvV7Q8hRf96jZU91E8gu7vZSctkWD6SA0NXtLElLA
+ wKMPV6bHifS07qv3bYLpNXG2ExFd+ebMU0/1URVxCZsdoWIgpKrcqUha9gs2V75soW11GvQ60
+ LgNNisIhHdXJCKppL7ChMBcgp8lFnen0yjDH8VdQwpRYPR6PyVdKLPdxGAxGM3hmunSmng9A 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279050>
 
-On 09/29/2015 12:02 AM, David Turner wrote:
-> This allows them to be used by other ref backends.
+Hi Max,
+
+On 2015-10-05 06:57, Max Kirillov wrote:
+> On Sun, Oct 04, 2015 at 04:53:30PM +0200, Johannes Schindelin wrote:
+>> I guess then we would need two different patches for the
+>> two different fixes, at least.
+>>
+>> So now I am unsure how to proceed: I do not want to step
+>> on your toes, but I also want to see my use case fixed and
+>> I want to move forward on this. At the moment, it looks as
+>> if we are at an impasse.
 > 
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
->  refs-be-files.c | 24 ------------------------
->  refs.h          | 24 ++++++++++++++++++++++++
->  2 files changed, 24 insertions(+), 24 deletions(-)
-> 
-> diff --git a/refs-be-files.c b/refs-be-files.c
-> index 3bcfab3..2727943 100644
-> --- a/refs-be-files.c
-> +++ b/refs-be-files.c
-> @@ -14,30 +14,6 @@ struct ref_lock {
->  };
->  
->  /*
-> - * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
-> - * refs (i.e., because the reference is about to be deleted anyway).
-> - */
-> -#define REF_DELETING	0x02
-> [...]
-> diff --git a/refs.h b/refs.h
-> index 823983b..d8ae9af 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -193,6 +193,30 @@ struct ref_transaction {
->  #define DO_FOR_EACH_PER_WORKTREE_ONLY 0x02
->  
->  /*
-> + * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
-> + * refs (i.e., because the reference is about to be deleted anyway).
-> + */
-> +#define REF_DELETING	0x02
-> [...]
+> Just continue with your patches then. I do not hurry.
 
-The fact that these constants might be used by multiple reference
-backends is not a reason to put them in the ref API's public interface.
-We don't want random code using these contants, right?
-
-Maybe there should be a new file pair, refs-be-shared.{c,h}, for
-"protected" constants and functions for the internal use of the
-reference backends. In fact, maybe `struct ref_be` and the associated
-typedefs could even be moved there.
-
-Probably some of the functions that you have made public earlier in this
-series could also go into the "protected" area.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Okay!
+Johannes
