@@ -1,63 +1,62 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Remi Pommarel <repk@triplefau.lt>
 Subject: Re: [PATCH v3 1/1] Makefile: make curl-config path configurable
-Date: Mon, 5 Oct 2015 14:11:07 -0700
-Message-ID: <20151005211107.GF11993@google.com>
+Date: Mon, 5 Oct 2015 23:19:49 +0200
+Message-ID: <20151005211949.GD386@cruxbox>
 References: <1444077159-3268-1-git-send-email-repk@triplefau.lt>
  <20151005204909.GE11993@google.com>
  <20151005210545.GC386@cruxbox>
+ <20151005211107.GF11993@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>
-To: Remi Pommarel <repk@triplefau.lt>
-X-From: git-owner@vger.kernel.org Mon Oct 05 23:11:18 2015
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 23:19:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjD2S-0000N6-02
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 23:11:16 +0200
+	id 1ZjDAj-0007VI-2H
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 23:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751837AbbJEVLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 17:11:12 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:36382 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498AbbJEVLK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 17:11:10 -0400
-Received: by pablk4 with SMTP id lk4so186333780pab.3
-        for <git@vger.kernel.org>; Mon, 05 Oct 2015 14:11:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=W/L0Ts7SsP3Rnf68J6QiT+PnxdaeMcuSuFhfCQi+Ow0=;
-        b=NMsbtuBGj8NCKZzPlTzfXX1BAC7zdByU/Lt9aZPYRLyQnIszlg8hlIXvnAKCIhTqri
-         dH34nCANNeil/VinYzzV7oBGGxyhbaq/sOXe+3gGM2zlCDsm+hV/00gERC3Y2VVtoczE
-         BJfklgHkuaWj9l2Xp37oKcC/YKPynEddPIr8ngkBotvHFRya6ROGPoYq+bnmvI+Hymw6
-         R+YMbnunWHdckMosVytQSb/G4o2GC2K7IFwqjdRa0QfKxIuJso7mWpblPP94q+1A9D/B
-         4kHvpfXw8Kl/t2v0ZDBgcjIjaHwpYfL/nLJ6EyBtxK3BjZ5FF29JcIo1hPTarDzohybg
-         ujiw==
-X-Received: by 10.68.57.197 with SMTP id k5mr42114034pbq.142.1444079470222;
-        Mon, 05 Oct 2015 14:11:10 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:201e:549b:492b:2feb])
-        by smtp.gmail.com with ESMTPSA id ip1sm29355805pbc.30.2015.10.05.14.11.09
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 05 Oct 2015 14:11:09 -0700 (PDT)
+	id S1751712AbbJEVTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 17:19:45 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:54391 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751403AbbJEVTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 17:19:44 -0400
+Received: from mfilter16-d.gandi.net (mfilter16-d.gandi.net [217.70.178.144])
+	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 764EE172070;
+	Mon,  5 Oct 2015 23:19:42 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter16-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
+	by mfilter16-d.gandi.net (mfilter16-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id Twb-fEqSOAAb; Mon,  5 Oct 2015 23:19:41 +0200 (CEST)
+X-Originating-IP: 81.57.43.44
+Received: from localhost (mon75-1-81-57-43-44.fbx.proxad.net [81.57.43.44])
+	(Authenticated sender: repk@triplefau.lt)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id AE91F17208C;
+	Mon,  5 Oct 2015 23:19:40 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20151005210545.GC386@cruxbox>
+In-Reply-To: <20151005211107.GF11993@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279098>
 
-Remi Pommarel wrote:
+On Mon, Oct 05, 2015 at 02:11:07PM -0700, Jonathan Nieder wrote:
+> Remi Pommarel wrote:
+> 
+> > Do I need to resend a v4 patch with these modifications ? I am not sure
+> > about the correct workflow here.
+> 
+> If you like the changes, you can ask Junio to squash them in.
+> 
+> If you don't like them, that's also fine and you can just say so.
 
-> Do I need to resend a v4 patch with these modifications ? I am not sure
-> about the correct workflow here.
+These modifications are very fine with me and can be squash in.
 
-If you like the changes, you can ask Junio to squash them in.
-
-If you don't like them, that's also fine and you can just say so.
+Thanks a lot.
