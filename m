@@ -1,90 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 43/43] refs: tests for db backend
-Date: Mon, 05 Oct 2015 09:56:51 -0700
-Message-ID: <xmqqh9m5z224.fsf@gitster.mtv.corp.google.com>
-References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
-	<1443477738-32023-44-git-send-email-dturner@twopensource.com>
-	<20151003173930.GA25904@spirit>
+Subject: Re: [PATCH v5 2/3] path: optimize common dir checking
+Date: Mon, 05 Oct 2015 10:22:05 -0700
+Message-ID: <xmqqd1wtz0w2.fsf@gitster.mtv.corp.google.com>
+References: <1441073591-639-1-git-send-email-dturner@twopensource.com>
+	<1441073591-639-3-git-send-email-dturner@twopensource.com>
+	<5611E7B1.3090001@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	mhagger@alum.mit.edu
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Mon Oct 05 18:56:58 2015
+	Christian Couder <christian.couder@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Oct 05 19:22:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zj94M-0005JN-B2
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 18:56:58 +0200
+	id 1Zj9TE-0001pG-Lj
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 19:22:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751914AbbJEQ4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 12:56:54 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:36099 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751371AbbJEQ4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 12:56:53 -0400
-Received: by pablk4 with SMTP id lk4so181065530pab.3
-        for <git@vger.kernel.org>; Mon, 05 Oct 2015 09:56:52 -0700 (PDT)
+	id S1751926AbbJERWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 13:22:09 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:35644 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713AbbJERWI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 13:22:08 -0400
+Received: by pacfv12 with SMTP id fv12so186148200pac.2
+        for <git@vger.kernel.org>; Mon, 05 Oct 2015 10:22:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=Hj1fjQgFf7rs9bmaxu04b+GTqAO01j37277AKmSf2Xw=;
-        b=bAuvZ6FhtbzhOusdCqUSwu2QAc6J2lH/J3lh/rImgqpheGRA4KNrNCaM6rq8EqWjXq
-         wV/IuSbEyhwRET9F3zyIl3MePpoTUUWdr+oCN712XhEV+z8a3bMMwsj7l5OSAiiweEmf
-         JGVQmW+B/cnhnLdnU4BwATzhwKYl38XM4/HRhNOBweI6yNlNsCv0Iu5F2RXnepx9aSRS
-         XE4zwCnCY1DrJgo2ZW9miGLQkv4M5bZu/ofMawpnwa8nJgx0PNpBvrgQoRtehRnKI6+z
-         LLrYJ0D2oLkuexRwXlH02jImr+Cqc9UDflp/HoEL8ni6Na2noE47uNhbI8xgh7mNgrss
-         E8Qg==
-X-Received: by 10.69.25.1 with SMTP id im1mr40657406pbd.102.1444064212721;
-        Mon, 05 Oct 2015 09:56:52 -0700 (PDT)
+        bh=ajDGN7U6PKYbrZkd2V9qFdZIpQhWf4dmcauKc0i4gZ8=;
+        b=piXxR2ohQeyHAP0wFYDMl8gbWlO0dQwDGGba+bsvsGQu4NGZLwO6Wwb8piuErS40mN
+         +ZfmHU9VJbDDS5R+hn/F5Wc/knt+ZxfZkDQHCNR4Q8MXUvgXSt0AT9NOnkvEZWTUK/mq
+         lpAZP6l+xwnJhbrRP/CbdYAGN7Vc1YyggyEo2K/6WvXB0MMMtAkS+BEMRkDCNHdgQ5u+
+         riuxQ52qnAJeYNIF5FDtoip6OnSmC1/MabmA0tICFrUp3+hwb/wUz1jO6jXvbjQwNI/i
+         r65SjPwnKUrQvTZScCCzpm1ZYuYieg0dEYp4+nBKL+D9MBatWWFnAO9EWPZ3JPGx0ddh
+         DUoQ==
+X-Received: by 10.66.217.138 with SMTP id oy10mr40765195pac.149.1444065727092;
+        Mon, 05 Oct 2015 10:22:07 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:60e8:cc09:ddf4:4eed])
-        by smtp.gmail.com with ESMTPSA id u1sm28607056pbz.56.2015.10.05.09.56.51
+        by smtp.gmail.com with ESMTPSA id gw3sm28722638pbc.46.2015.10.05.10.22.05
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 05 Oct 2015 09:56:51 -0700 (PDT)
-In-Reply-To: <20151003173930.GA25904@spirit> (Dennis Kaarsemaker's message of
-	"Sat, 3 Oct 2015 19:39:31 +0200")
+        Mon, 05 Oct 2015 10:22:06 -0700 (PDT)
+In-Reply-To: <5611E7B1.3090001@alum.mit.edu> (Michael Haggerty's message of
+	"Mon, 05 Oct 2015 05:00:01 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279061>
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> On Mon, Sep 28, 2015 at 06:02:18PM -0400, David Turner wrote:
->> Add tests for the database backend.
->> 
->> Signed-off-by: David Turner <dturner@twopensource.com>
->> ---
->>  t/t1460-refs-be-db.sh        | 1103 ++++++++++++++++++++++++++++++++++++++++++
->>  t/t1470-refs-be-db-reflog.sh |  353 ++++++++++++++
->>  2 files changed, 1456 insertions(+)
->>  create mode 100755 t/t1460-refs-be-db.sh
->>  create mode 100755 t/t1470-refs-be-db-reflog.sh
+> For this particular application, where we only have 19 strings to store,
+> I suppose we could tolerate the use of approximately 64k of RAM to store
+> 174 characters worth of strings *if* it would bring us big time savings.
+> But I think we need some evidence of the time savings.
 >
-> These break 'make test' on builds without the db backend. Maybe squash
-> in something like the following:
->
-> diff --git a/t/t1460-refs-be-db.sh b/t/t1460-refs-be-db.sh
-> index f13b0f0..c8222ed 100755
-> --- a/t/t1460-refs-be-db.sh
-> +++ b/t/t1460-refs-be-db.sh
-> @@ -9,6 +9,11 @@ test_description='Test lmdb refs backend'
->  TEST_NO_CREATE_REPO=1
->  . ./test-lib.sh
->  
-> +if ! test -e ../../test-refs-be-lmdb; then
-> +	skip_all="Skipping lmdb refs backend tests, lmdb backend not built"
-> +	test_done
-> +fi
+> If this lookup is really a bottleneck, I bet there are other
+> alternatives that are just as fast as this trie and use less code,
+> especially given that there are only 19 strings that need checking.
 
-The idea is sound, but $TRASH_DIRECTORY (i.e. $(cwd) there) is not
-necessarily two subdirectories down from the build repository root
-(cf. --root=<there> parameter to the test scripts), so you need to
-account for that.
-
-Thanks.
+Very good point.  I agree that we need to know that the dumb linear
+scan in the original is on the bottleneck and that any replacement
+is an improvement.
