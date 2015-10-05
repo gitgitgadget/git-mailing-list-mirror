@@ -1,138 +1,91 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 01/43] refs.c: create a public version of verify_refname_available
-Date: Mon, 05 Oct 2015 06:29:24 +0200
-Message-ID: <5611FCA4.9030809@alum.mit.edu>
-References: <1443477738-32023-1-git-send-email-dturner@twopensource.com> <1443477738-32023-2-git-send-email-dturner@twopensource.com>
+Subject: Re: [PATCH v2 02/43] refs: make repack_without_refs and is_branch
+ public
+Date: Mon, 05 Oct 2015 06:34:33 +0200
+Message-ID: <5611FDD9.1050405@alum.mit.edu>
+References: <1443477738-32023-1-git-send-email-dturner@twopensource.com> <1443477738-32023-3-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 05 06:36:45 2015
+X-From: git-owner@vger.kernel.org Mon Oct 05 06:42:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZixVy-000651-3f
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 06:36:42 +0200
+	id 1ZixbU-00038l-PL
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 06:42:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbbJEEgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 00:36:38 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:45250 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750793AbbJEEgh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2015 00:36:37 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Oct 2015 00:36:37 EDT
-X-AuditID: 1207440f-f79df6d000007c0f-84-5611fca69186
+	id S1751008AbbJEElw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 00:41:52 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:60974 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750793AbbJEElw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2015 00:41:52 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Oct 2015 00:41:52 EDT
+X-AuditID: 1207440c-f79e16d000002a6e-64-5611fddb7b7b
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 92.F6.31759.6ACF1165; Mon,  5 Oct 2015 00:29:26 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id A9.EC.10862.BDDF1165; Mon,  5 Oct 2015 00:34:35 -0400 (EDT)
 Received: from [192.168.69.130] (p4FC96E0C.dip0.t-ipconnect.de [79.201.110.12])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t954TOAA022556
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t954YYTE022796
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 5 Oct 2015 00:29:25 -0400
+	Mon, 5 Oct 2015 00:34:35 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1443477738-32023-2-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqLvsj2CYweGpHBbzN51gtOi60s1k
-	8W9CjQOzx4JNpR4Lnt9n9/i8SS6AOYrbJimxpCw4Mz1P3y6BO6Pp2xO2gtuSFS927WBuYJwn
-	0sXIySEhYCLx+/saRghbTOLCvfVsILaQwGVGib5rjl2MXED2OSaJtaeb2UESvALaEv1Hp7KC
-	2CwCqhLPz75iBrHZBHQlFvU0M4HYogJBEiuWv2CEqBeUODnzCQuILSLgIHF511GwemYBTYlN
-	G16AzREWiJT4s6KZBWJZK6PEgWUbwIo4BTwlTm46zgrRoCex4/ovKFteYvvbOcwTGAVmIdkx
-	C0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpmujlZpbopaaUbmKEhC7/Dsau9TKH
-	GAU4GJV4eA/EC4YJsSaWFVfmHmKU5GBSEuUNVQMK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuH9
-	/g4ox5uSWFmVWpQPk5LmYFES51Vfou4nJJCeWJKanZpakFoEk5Xh4FCS4D33G6hRsCg1PbUi
-	LTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhSr8cXAaAVJ8QDtfQjSzltckJgLFIVoPcWoKCXO
-	2w2SEABJZJTmwY2FJaRXjOJAXwrzNoJU8QCTGVz3K6DBTECDFxjygQwuSURISTUwWjp93S1+
-	t4Yhy3mawd333/13hDoVzH2dFS7Qpb5vscyBJUvexzx0fLKr68qC3Pt6c04cnbn3tsWWw6Hv
-	Xqg21W/93BkbHMRWKrQlvul/g3MpN8/75++zTuv151++YvHgg9SaD9YnM6yOHRHq 
+In-Reply-To: <1443477738-32023-3-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqHv7r2CYQfNNS4v5m04wWnRd6Way
+	+DehxoHZY8GmUo8Fz++ze3zeJBfAHMVtk5RYUhacmZ6nb5fAnTH12HLWgiecFbNuv2JtYHzL
+	3sXIySEhYCKx7/wMNghbTOLCvfVANheHkMBlRokTC1qgnHNMEjNOHmABqeIV0JaYuf0OM4jN
+	IqAq8WfGQVYQm01AV2JRTzMTiC0qECSxYvkLRoh6QYmTM5+A9YoIOEhc3nUUrJdZQFNi04YX
+	YL3CAsESdztbmCGWtTJKHGqbCVbEKeAp0bz2PFSDnsSO679YIWx5ie1v5zBPYBSYhWTHLCRl
+	s5CULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6iXm1mil5pSuokRErw8Oxi/rZM5xCjA
+	wajEwyuRJBgmxJpYVlyZe4hRkoNJSZQ3VA0oxJeUn1KZkVicEV9UmpNafIhRgoNZSYT3+zug
+	HG9KYmVValE+TEqag0VJnFd1ibqfkEB6YklqdmpqQWoRTFaGg0NJgrf7D1CjYFFqempFWmZO
+	CUKaiYMTZDiXlEhxal5KalFiaUlGPCha44uB8QqS4gHaOxGknbe4IDEXKArReopRUUqctwIk
+	IQCSyCjNgxsLS0mvGMWBvhTmzQep4gGmM7juV0CDmYAGLzDkAxlckoiQkmpglJuh+36mjIRZ
+	meGJ3zPErFv2sH7aoyHtsiL19ybB5K1fU9a1PpIS5sirMxOunFqRVHn9mcCNJ5yiC2cuWvs3
+	R89iSuqzJeIax/cbzNeL/c+mP1HalLP9wwe/ptMp0+1ff19YWCcz9X1yc6dWo+Wr 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279035>
 
 On 09/29/2015 12:01 AM, David Turner wrote:
-> From: Ronnie Sahlberg <sahlberg@google.com>
-> 
-> Create a public version of verify_refname_available that backends can
-> provide.
-> 
 > Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 > Signed-off-by: David Turner <dturner@twopensource.com>
 > ---
->  refs.c | 51 +++++++++++++++++++++++++++++----------------------
->  refs.h | 17 +++++++++++++++++
->  2 files changed, 46 insertions(+), 22 deletions(-)
+>  refs.c |  9 +--------
+>  refs.h | 13 +++++++++++++
+>  2 files changed, 14 insertions(+), 8 deletions(-)
 > 
 > diff --git a/refs.c b/refs.c
-> index 132eff5..ce551e9 100644
+> index ce551e9..2741cc5 100644
 > --- a/refs.c
 > +++ b/refs.c
-> @@ -279,7 +279,7 @@ struct ref_dir {
->   * presence of an empty subdirectory does not block the creation of a
->   * similarly-named reference.  (The fact that reference names with the
->   * same leading components can conflict *with each other* is a
-> - * separate issue that is regulated by verify_refname_available().)
-> + * separate issue that is regulated by verify_refname_available_dir().)
->   *
->   * Please note that the name field contains the fully-qualified
->   * reference (or subdirectory) name.  Space could be saved by only
-> @@ -911,11 +911,11 @@ static int nonmatching_ref_fn(struct ref_entry *entry, void *vdata)
->   *
->   * extras and skip must be sorted.
->   */
-> -static int verify_refname_available(const char *refname,
-> -				    const struct string_list *extras,
-> -				    const struct string_list *skip,
-> -				    struct ref_dir *dir,
-> -				    struct strbuf *err)
-> +static int verify_refname_available_dir(const char *refname,
-> +					const struct string_list *extras,
-> +					const struct string_list *skip,
-> +					struct ref_dir *dir,
-> +					struct strbuf *err)
->  {
->  	const char *slash;
->  	int pos;
-> [...]
-> diff --git a/refs.h b/refs.h
-> index 6d30c98..79ea220 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -218,6 +218,23 @@ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct st
->  int pack_refs(unsigned int flags);
+> @@ -2826,14 +2826,7 @@ int pack_refs(unsigned int flags)
+>  	return 0;
+>  }
 >  
->  /*
-> + * Return true iff a reference named refname could be created without
-> + * conflicting with the name of an existing reference.  If
-> + * skip is non-NULL, ignore potential conflicts with refs in skip
-> + * (e.g., because they are scheduled for deletion in the same
-> + * operation).
-> + *
-> + * Two reference names conflict if one of them exactly matches the
-> + * leading components of the other; e.g., "foo/bar" conflicts with
-> + * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
-> + * "foo/barbados".
-> + *
-> + * skip must be sorted.
-> + */
+> -/*
+> - * Rewrite the packed-refs file, omitting any refs listed in
+> - * 'refnames'. On error, leave packed-refs unchanged, write an error
+> - * message to 'err', and return a nonzero value.
+> - *
+> - * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
+> - */
+> -static int repack_without_refs(struct string_list *refnames, struct strbuf *err)
+> +int repack_without_refs(struct string_list *refnames, struct strbuf *err)
 
-This comment is approximately a copy of the comment for
-verify_refname_available_dir(). It seems unnecessary to keep both of
-them (and is also a small maintenance burden). I suggest you shorten the
-comment at verify_refname_available_dir() and make it refer to the
-comment for this function for the details.
+I looked for the corresponding change to remove `static` from
+is_branch(). Apparently that function already had external linkage, even
+though it was not listed in the header file. As a convenience to readers
+you might note that peculiarity in the commit message.
 
-> +int verify_refname_available(const char *newname, struct string_list *extra,
-> +			     struct string_list *skip, struct strbuf *err);
-> +
-> +/*
->   * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
->   * REF_NODEREF: act on the ref directly, instead of dereferencing
->   *              symbolic references.
-> 
+> [...]
 
 Michael
 
