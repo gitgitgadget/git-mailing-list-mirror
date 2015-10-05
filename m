@@ -1,69 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 2/3] path: optimize common dir checking
-Date: Mon, 05 Oct 2015 10:22:05 -0700
-Message-ID: <xmqqd1wtz0w2.fsf@gitster.mtv.corp.google.com>
-References: <1441073591-639-1-git-send-email-dturner@twopensource.com>
-	<1441073591-639-3-git-send-email-dturner@twopensource.com>
-	<5611E7B1.3090001@alum.mit.edu>
+Subject: Re: [PATCH v2 18/43] refs-be-files.c: add a backend method structure with transaction functions
+Date: Mon, 05 Oct 2015 10:25:11 -0700
+Message-ID: <xmqq8u7hz0qw.fsf@gitster.mtv.corp.google.com>
+References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
+	<1443477738-32023-19-git-send-email-dturner@twopensource.com>
+	<56122EB6.2020501@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	Christian Couder <christian.couder@gmail.com>
+	Ronnie Sahlberg <sahlberg@google.com>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Oct 05 19:22:41 2015
+X-From: git-owner@vger.kernel.org Mon Oct 05 19:25:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zj9TE-0001pG-Lj
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 19:22:41 +0200
+	id 1Zj9Vq-0004CB-44
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 19:25:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751926AbbJERWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 13:22:09 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35644 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713AbbJERWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 13:22:08 -0400
-Received: by pacfv12 with SMTP id fv12so186148200pac.2
-        for <git@vger.kernel.org>; Mon, 05 Oct 2015 10:22:07 -0700 (PDT)
+	id S1751342AbbJERZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 13:25:16 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35271 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751070AbbJERZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 13:25:14 -0400
+Received: by pacfv12 with SMTP id fv12so186216201pac.2
+        for <git@vger.kernel.org>; Mon, 05 Oct 2015 10:25:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=ajDGN7U6PKYbrZkd2V9qFdZIpQhWf4dmcauKc0i4gZ8=;
-        b=piXxR2ohQeyHAP0wFYDMl8gbWlO0dQwDGGba+bsvsGQu4NGZLwO6Wwb8piuErS40mN
-         +ZfmHU9VJbDDS5R+hn/F5Wc/knt+ZxfZkDQHCNR4Q8MXUvgXSt0AT9NOnkvEZWTUK/mq
-         lpAZP6l+xwnJhbrRP/CbdYAGN7Vc1YyggyEo2K/6WvXB0MMMtAkS+BEMRkDCNHdgQ5u+
-         riuxQ52qnAJeYNIF5FDtoip6OnSmC1/MabmA0tICFrUp3+hwb/wUz1jO6jXvbjQwNI/i
-         r65SjPwnKUrQvTZScCCzpm1ZYuYieg0dEYp4+nBKL+D9MBatWWFnAO9EWPZ3JPGx0ddh
-         DUoQ==
-X-Received: by 10.66.217.138 with SMTP id oy10mr40765195pac.149.1444065727092;
-        Mon, 05 Oct 2015 10:22:07 -0700 (PDT)
+        bh=/2IutLATwOscDnSSFUHPA9+dYnMvIjAvm7rsV/TB1cA=;
+        b=GGGlizvOB8VDx6NCcXH2y4RbAO3BiP3gkmuAvuN+cq59+QhSxmGRVzStYB7XnV/Oyo
+         6zW+pZtTfKzz8JfwsNm3rOM5b7r1Y5rAXtbM/QHsh/kBovIYNft3KNa5NAupKGgZcWb/
+         AmFjyv8TErlaF8dYg98bkcNxLjyv3Uzue9TPcpC6HqV1VuhoPvTwLKpwnPSZchzkAHVf
+         nlrw60wDKX46fS3QnS1a9zOtiXCR32Xgf81XjijPHCIil0sYzWpQHRddMygvTpItLDL7
+         d2WVQlIVmgmUm9pePrVSK6d5dpNR8e28G6z/xG5edbNRuHGrWrCMMsxMOyLJn61824lC
+         3KtQ==
+X-Received: by 10.66.222.70 with SMTP id qk6mr41855542pac.68.1444065914228;
+        Mon, 05 Oct 2015 10:25:14 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:60e8:cc09:ddf4:4eed])
-        by smtp.gmail.com with ESMTPSA id gw3sm28722638pbc.46.2015.10.05.10.22.05
+        by smtp.gmail.com with ESMTPSA id pc8sm28749850pbc.27.2015.10.05.10.25.12
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 05 Oct 2015 10:22:06 -0700 (PDT)
-In-Reply-To: <5611E7B1.3090001@alum.mit.edu> (Michael Haggerty's message of
-	"Mon, 05 Oct 2015 05:00:01 +0200")
+        Mon, 05 Oct 2015 10:25:12 -0700 (PDT)
+In-Reply-To: <56122EB6.2020501@alum.mit.edu> (Michael Haggerty's message of
+	"Mon, 05 Oct 2015 10:03:02 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279062>
 
 Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> For this particular application, where we only have 19 strings to store,
-> I suppose we could tolerate the use of approximately 64k of RAM to store
-> 174 characters worth of strings *if* it would bring us big time savings.
-> But I think we need some evidence of the time savings.
+>> +/* refs backends */
+>> +typedef struct ref_transaction *(*ref_transaction_begin_fn)(struct strbuf *err);
 >
-> If this lookup is really a bottleneck, I bet there are other
-> alternatives that are just as fast as this trie and use less code,
-> especially given that there are only 19 strings that need checking.
+> Hmmm, I thought our convention was to define typedefs for functions
+> themselves, not for the pointer-to-function; e.g.,
+>
+>     typedef struct ref_transaction *ref_transaction_begin_fn(struct
+> strbuf *err);
+>
+> (which would require `struct ref_be` to be changed to
+>
+>         ref_transaction_begin_fn *transaction_begin;
+>
+> etc.) But now as I grep through the code it looks like both conventions
+> are used. So never mind :-)
 
-Very good point.  I agree that we need to know that the dumb linear
-scan in the original is on the bottleneck and that any replacement
-is an improvement.
+Well spotted.  My recollection is the same and we do prefer the
+latter (I think all early function typedefs by Linus were done that
+way).  It would be better to correct existing mistakes we added over
+time and certainly not add more of them in new code.
+
+Thanks.
