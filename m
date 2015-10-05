@@ -1,76 +1,75 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH/RFC 1/2] sha1_file: close all pack files after running
-Date: Mon, 05 Oct 2015 11:03:19 +0200
-Organization: gmx
-Message-ID: <2588666fce6a367fa46cf2501a78fe76@dscho.org>
-References: <1443670163-31193-1-git-send-email-max@max630.net>
- <1443670163-31193-2-git-send-email-max@max630.net>
- <33b74e875c7298f67640f5850e88c152@dscho.org>
- <763ac2b63d56d250e5e1a27f490f79db@dscho.org>
- <20151002192148.GD26154@wheezy.local>
- <21bd1c9c394a421bc06c6fa1837f16b6@dscho.org>
- <20151005045748.GF26154@wheezy.local>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 38/43] refs: make some files backend functions public
+Date: Mon, 05 Oct 2015 11:03:31 +0200
+Message-ID: <56123CE3.9070909@alum.mit.edu>
+References: <1443477738-32023-1-git-send-email-dturner@twopensource.com> <1443477738-32023-39-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Mon Oct 05 11:03:36 2015
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 05 11:03:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zj1gD-0002Qs-Bi
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 11:03:33 +0200
+	id 1Zj1gK-0002Xz-1i
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 11:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769AbbJEJD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 05:03:29 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54619 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751462AbbJEJD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 05:03:28 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MQMBU-1aCkHW0ez6-00Tpko; Mon, 05 Oct 2015 11:03:22
- +0200
-In-Reply-To: <20151005045748.GF26154@wheezy.local>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:Dq+92c9oGm516gOD+T7tftRfXKZwwlKUyZ4CcU1/rwfDZ4hXQ64
- Kp16fUiWbIg2uIrIuuZ9K4hXwtv5ubW8aMhM7VTZAln0H5cVGH40bP4L+KKbEhYyZMwBLOI
- DYBSCxoKmhUgCF/Iow6YU4aitTAlVWmCQwlTjfTj3E45O3W73AYds6RryDP/GAsk7c+GS5r
- SUVmDJc07EJ5l6QYnwNig==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZyRxfoNMXgU=:lRIc4yzQo33Sz9kGD8/x8n
- 68xx1u2QPOnA7F9gsKjnDmVb0zagvqc3QqYyWoOduMxyE158aCWNqn0x4s5tar1Rq8fZRmWHB
- Y7CIQ81lMCss6MKlBC5aN9dzsQ4zJFzOidA64eqLml8AoVPHHYfCh2ZhzwQGyj+mrdW2lc4N3
- 78tAffeIJKk9Mj2iL58hx/2fNCz9nrEVLQrSETnNsxCKbh/LtZ3lns09F8N2hKuhc0fnAzsCy
- /+8Lqwi5OOg9lJvs1m9tR/GvyXNzeJWqR186V+Y/c/dlL+UI+j5UyqM+9/RBMYPHMAhWk+EgP
- udMSNcS1tNSPdjX/eF3XnwFsnHA5twWq09DpzhG0ghObIDozog5nQ5Mgbo+NjQ+KyMMnC2Qs6
- XY5f2zRY9KxUgE2+HEwlD6x4zOXWe1E/7N6i+ROLOcoz/CtRRXMweKnggRcdhQ9K9sMyqLX5q
- x+4R0pFfsKdy0SLA1JmbQt3sZPuI6KwCl1NZSzjK7P8afc51194CjVLEiyabS04R9j5GgCmue
- jMhBj6TdXfRitM14Nqf+5DCqdVJJ7MAzQjFAPQ1qHyWMCjCXa1bhoSYs313U+K8Q5Xdpkg96P
- PKShjvufU4o6K1S4Kp7fpqRGrNjRAowTPvV7Q8hRf96jZU91E8gu7vZSctkWD6SA0NXtLElLA
- wKMPV6bHifS07qv3bYLpNXG2ExFd+ebMU0/1URVxCZsdoWIgpKrcqUha9gs2V75soW11GvQ60
- LgNNisIhHdXJCKppL7ChMBcgp8lFnen0yjDH8VdQwpRYPR6PyVdKLPdxGAxGM3hmunSmng9A 
+	id S1751963AbbJEJDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 05:03:35 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:54115 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751816AbbJEJDe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2015 05:03:34 -0400
+X-AuditID: 1207440e-f79516d0000012b3-6c-56123ce5f654
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id A2.77.04787.5EC32165; Mon,  5 Oct 2015 05:03:33 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC96E0C.dip0.t-ipconnect.de [79.201.110.12])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t9593VaA001661
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 5 Oct 2015 05:03:32 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <1443477738-32023-39-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkleLIzCtJLcpLzFFi42IRYndR1H1qIxRmsG6mnMX8TScYLbqudDM5
+	MHkseH6f3ePzJrkApihum6TEkrLgzPQ8fbsE7oyvtx4wFTSxVWy4Np+tgfElSxcjJ4eEgInE
+	xosNTBC2mMSFe+vZuhi5OIQELjNK/Ho1lR3COcck0bzrAVgHr4C2xKZJW9hAbBYBVYljk96C
+	xdkEdCUW9TSDTRIVCJJYsfwFI0S9oMTJmU/AakQEHCQu7zrKDGILC/hIdK16A7WgjVGiedpq
+	VpAEp4CXxP6Gv2ANzAJ6Ejuu/2KFsOUltr+dwzyBkX8WkrmzkJTNQlK2gJF5FaNcYk5prm5u
+	YmZOcWqybnFyYl5eapGusV5uZoleakrpJkZIUPLtYGxfL3OIUYCDUYmH90C8YJgQa2JZcWXu
+	IUZJDiYlUd5aHaEwIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8r8yAcrwpiZVVqUX5MClpDhYl
+	cV61Jep+QgLpiSWp2ampBalFMFkZDg4lCV5za6BGwaLU9NSKtMycEoQ0EwcnyHAuKZHi1LyU
+	1KLE0pKMeFBUxhcD4xIkxQO0d5EVyN7igsRcoChE6ylGXY4FP26vZRJiycvPS5US5+UC2SEA
+	UpRRmge3ApaCXjGKA30szOsEUsUDTF9wk14BLWECWtIvD7akJBEhJdXAuPrNn6MZ88rMN1vn
+	7O1gVF8RrH3+scm8MwmXF/gXZ1/2WJtm+Vkn40EOU/+iXI8pnJqScld6JnV3LutmXvPC8opK
+	8t3rxvf36n4yPfxCl/XCJ/ZXV55/XGeWOZvXZ6P8zbBtBwouBHwvXa5RHFD9oXPX 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279051>
 
-Hi Max,
-
-On 2015-10-05 06:57, Max Kirillov wrote:
-> On Sun, Oct 04, 2015 at 04:53:30PM +0200, Johannes Schindelin wrote:
->> I guess then we would need two different patches for the
->> two different fixes, at least.
->>
->> So now I am unsure how to proceed: I do not want to step
->> on your toes, but I also want to see my use case fixed and
->> I want to move forward on this. At the moment, it looks as
->> if we are at an impasse.
+On 09/29/2015 12:02 AM, David Turner wrote:
+> Because HEAD and stash are per-worktree, other backends need to
+> go through the files backend to manage these refs and their reflogs.
 > 
-> Just continue with your patches then. I do not hurry.
+> To enable this, we make some files backend functions public.
 
-Okay!
-Johannes
+I have a bad feeling about this change.
+
+Naively I would expect a reference backend that cannot handle its own
+(e.g.) stash to instantiate internally a files backend object and to
+delegate stash-related calls to that object. That way neither class's
+interface has to be changed.
+
+Here you are adding a separate interface to the files backend. That
+seems like a more complicated and less flexible design. But I'm open to
+be persuaded otherwise...
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
