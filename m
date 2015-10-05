@@ -1,84 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v2.6.1, v2.5.4, v2.4.10 and v2.3.10
-Date: Mon, 05 Oct 2015 13:43:54 -0700
-Message-ID: <xmqqmvvxxcz9.fsf@gitster.mtv.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 1/1] Makefile: make curl-config path configurable
+Date: Mon, 5 Oct 2015 13:49:09 -0700
+Message-ID: <20151005204909.GE11993@google.com>
+References: <1444077159-3268-1-git-send-email-repk@triplefau.lt>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Mon Oct 05 22:44:10 2015
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>
+To: Remi Pommarel <repk@triplefau.lt>
+X-From: git-owner@vger.kernel.org Mon Oct 05 22:49:36 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1ZjCcC-0002zl-Rh
-	for glk-linux-kernel-3@plane.gmane.org; Mon, 05 Oct 2015 22:44:09 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1ZjChS-0007aD-Ut
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 22:49:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166AbbJEUn6 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 5 Oct 2015 16:43:58 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:36470 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751871AbbJEUn4 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 5 Oct 2015 16:43:56 -0400
-Received: by pablk4 with SMTP id lk4so185779435pab.3;
-        Mon, 05 Oct 2015 13:43:56 -0700 (PDT)
+	id S1752467AbbJEUtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 16:49:14 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:32896 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751871AbbJEUtM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 16:49:12 -0400
+Received: by pacex6 with SMTP id ex6so186958139pac.0
+        for <git@vger.kernel.org>; Mon, 05 Oct 2015 13:49:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
-         :content-type;
-        bh=Tl/xUf6PQ76boT5XF3n+8JauHI1hYRJBhc6tCYW4Zlc=;
-        b=CDRZhUgE/mwkqjgFgN2lsySAVfinySuG/ohuKMH1j1HcpF9ecQ/WNvXgC3QYoTXOp8
-         yJ8GJXQBaTcuLTvaWNzQmxtJeS96Qtsb+Mr5KO+vh202kq67edc8LHxeavlCdRWjAH7u
-         to4nJF47K1nPKY7nSc9jHV9BQ28NG5o++G9q7YAq5aNuVm047qK40zuAr+SsEaheBpLS
-         SAOou11lBWdVh25WPOI+E8s9j6+UqCzej94RlngeLYrLcc9rimikwIRgnprl72vpM5WQ
-         PsJOPbH7xkp4PEEbHa3CkQdQmoK/k3Ftv3Gr8liuD+G8FjP2XgA7cNKBrZ7X03fvOEFh
-         NX8w==
-X-Received: by 10.66.124.229 with SMTP id ml5mr41889701pab.77.1444077836138;
-        Mon, 05 Oct 2015 13:43:56 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:60e8:cc09:ddf4:4eed])
-        by smtp.gmail.com with ESMTPSA id sl7sm29248456pbc.54.2015.10.05.13.43.55
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=f92IH1ufNH+rr73f+PdGDRyCvz43FPKxB6/+3FL4JaY=;
+        b=N5est8JtKd6MAmTU7pQQR8ZiQkbSbmrWwWMp3oaqeu/qQIn7ht3A9D8kcQvw809o/Q
+         CfUPwJSdalZbpw9lQfF74ZDamn+oa1jTbqGqE7kLhBtWXDIV1z34YsuzMPtOCSmpt3Te
+         nDi4X8g8O0xtSRRrcKTmPY3D/Gl6FiMs3/C0RbFjlOfZ5NEZUejc76FJ+LAHXZChhKJo
+         EFX43SghAsLZD3+kMpbFsmpAsqgrUC2i01F+iEfKRW/UJAixTE3eumN4qlVOIoejTWFY
+         lPHQBCHPlnB9sTx36r67zawAv8iIDZKHfxwakrcB8aw1w5jLkzoYgETOfz4OXVZEShA8
+         wMFQ==
+X-Received: by 10.66.164.132 with SMTP id yq4mr42779652pab.8.1444078152042;
+        Mon, 05 Oct 2015 13:49:12 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:201e:549b:492b:2feb])
+        by smtp.gmail.com with ESMTPSA id uc1sm29437708pab.20.2015.10.05.13.49.11
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 05 Oct 2015 13:43:55 -0700 (PDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-Sender: linux-kernel-owner@vger.kernel.org
+        Mon, 05 Oct 2015 13:49:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1444077159-3268-1-git-send-email-repk@triplefau.lt>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279091>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279092>
 
-The latest maintenance release Git v2.6.1, together with releases
-for older maintenance tracks, are now available at the usual places.
+Remi Pommarel wrote:
 
-The tarballs are found at:
+> Signed-off-by: Remi Pommarel <repk@triplefau.lt>
 
-    https://www.kernel.org/pub/software/scm/git/
+For what it's worth, with or without the tweaks below,
 
-The following public repositories all have a copy of the
-abovementioned tags:
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = git://git.sourceforge.jp/gitroot/git-core/git.git
-  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url = https://github.com/gitster/git
+[...]
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -39,6 +39,10 @@ all::
+>  # Define CURLDIR=/foo/bar if your curl header and library files are in
+>  # /foo/bar/include and /foo/bar/lib directories.
+>  #
+> +# Define CURL_CONFIG to curl's configuration program that gives informations
+> +# about the library (ie curl's version, cflags, ...) . If not set it defaults
+> +# to 'curl-config'.
 
-Fixes contained in these releases are as follows:
+Extra spaces, some wording tweaks:
 
- * xdiff code we use to generate diffs is not prepared to handle
-   extremely large files.  It uses "int" in many places, which can
-   overflow if we have a very large number of lines or even bytes in
-   our input files, for example.  Cap the input size to somewhere
-   around 1GB for now.
-
- * Some protocols (like git-remote-ext) can execute arbitrary code
-   found in the URL.  The URLs that submodules use may come from
-   arbitrary sources (e.g., .gitmodules files in a remote
-   repository), and can hurt those who blindly enable recursive
-   fetch.  Restrict the allowed protocols to well known and safe
-   ones.
-
-Kudos to Blake Burkhart and Jeff King for working on these fixes.
+s/gives informations about the library/prints information about the library/
+s/(ie curl's version, cflags, .../) /(e.g., its version number)/
+s/If not set it defaults to/The default is/
 
 Thanks.
+
+diff --git i/Makefile w/Makefile
+index 5a94434..4a870a4 100644
+--- i/Makefile
++++ w/Makefile
+@@ -39,9 +39,8 @@ all::
+ # Define CURLDIR=/foo/bar if your curl header and library files are in
+ # /foo/bar/include and /foo/bar/lib directories.
+ #
+-# Define CURL_CONFIG to curl's configuration program that gives informations
+-# about the library (ie curl's version, cflags, ...) . If not set it defaults
+-# to 'curl-config'.
++# Define CURL_CONFIG to curl's configuration program that prints information
++# about the library (e.g., its version number).  The default is 'curl-config'.
+ #
+ # Define NO_EXPAT if you do not have expat installed.  git-http-push is
+ # not built, and you cannot push using http:// and https:// transports (dumb).
