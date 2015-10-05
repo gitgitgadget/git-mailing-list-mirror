@@ -1,80 +1,124 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: git rev-list --all --reflog does not include worktree references
-Date: Mon, 05 Oct 2015 21:08:19 +0200
-Message-ID: <87io6l16cc.fsf@igel.home>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Remi Pommarel <repk@triplefau.lt>
+Subject: [PATCH v2 1/1] Makefile: make curl-config path configurable
+Date: Mon,  5 Oct 2015 21:20:58 +0200
+Message-ID: <1444072858-24399-1-git-send-email-repk@triplefau.lt>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Remi Pommarel <repk@triplefau.lt>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 05 21:08:28 2015
+X-From: git-owner@vger.kernel.org Mon Oct 05 21:21:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjB7b-0006f3-T3
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 21:08:28 +0200
+	id 1ZjBK4-0000gu-MB
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 21:21:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751131AbbJETIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 15:08:23 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:57042 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750798AbbJETIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 15:08:22 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3nVBKK1zRGz3hj2R
-	for <git@vger.kernel.org>; Mon,  5 Oct 2015 21:08:21 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3nVBKK1d3lzvh2Z
-	for <git@vger.kernel.org>; Mon,  5 Oct 2015 21:08:21 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id R9Q0qNZQXeQ1 for <git@vger.kernel.org>;
-	Mon,  5 Oct 2015 21:08:20 +0200 (CEST)
-X-Auth-Info: 6G8gHK2WDxBOg4qUGTXhuco2n8/NXGobbCeJmDBwbYQLEUnnsnhmqLYGMGE9wv4o
-Received: from igel.home (host-188-174-206-190.customer.m-online.net [188.174.206.190])
-	by mail.mnet-online.de (Postfix) with ESMTPA
-	for <git@vger.kernel.org>; Mon,  5 Oct 2015 21:08:19 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id A51B72C415D; Mon,  5 Oct 2015 21:08:19 +0200 (CEST)
-X-Yow: I have seen these EGG EXTENDERS in my Supermarket..
- ..  I have read the INSTRUCTIONS...
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+	id S1752076AbbJETVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 15:21:16 -0400
+Received: from relay3-d.mail.gandi.net ([217.70.183.195]:52255 "EHLO
+	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751837AbbJETVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 15:21:14 -0400
+Received: from mfilter47-d.gandi.net (mfilter47-d.gandi.net [217.70.178.178])
+	by relay3-d.mail.gandi.net (Postfix) with ESMTP id AF6B3A80B9;
+	Mon,  5 Oct 2015 21:21:12 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter47-d.gandi.net
+Received: from relay3-d.mail.gandi.net ([IPv6:::ffff:217.70.183.195])
+	by mfilter47-d.gandi.net (mfilter47-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id Jf-jZ6OtabQ0; Mon,  5 Oct 2015 21:21:11 +0200 (CEST)
+X-Originating-IP: 81.57.43.44
+Received: from localhost (unknown [81.57.43.44])
+	(Authenticated sender: repk@triplefau.lt)
+	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 62282A80AB;
+	Mon,  5 Oct 2015 21:21:10 +0200 (CEST)
+X-Mailer: git-send-email 2.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279068>
 
-When running git rev-list --all --reflog in the main worktree it doesn't
-include commits only referenced by the worktrees, neither HEAD nor its
-reflog.
+There are situations, ie during cross compilation, where curl-config program
+is not present in the PATH.
 
-$ git init test
-$ cd test
-# add some commits
-$ touch 1; git add 1; git commit -m 1
-$ touch 2; git add 2; git commit -m 2
-# add new worktree
-$ git worktree add ../test2 master^{}
-$ cd ../test2
-# add more commits
-$ touch 3; git add 3; git commit -m 3
-$ touch 4; git add 4; git commit -m 4
-# create an unreferenced commit
-$ git checkout @^
-# both commands should give the same number of commits
-$ git rev-list --reflog | wc -l
-4
-$ git -C ../test rev-list --all --reflog | wc -l
-2
+Make the makefile use a configurable curl-config program passed through
+CURL_CONFIG variable which can be set through config.mak.
 
-IIUC this will cause git gc to prune references from worktrees too
-early.
+Also make this variable tunable through use of autoconf/configure. Configure
+will set CURL_CONFIG variable in config.mak.autogen to whatever value has been
+passed to ac_cv_prog_CURL_CONFIG.
 
-Andreas.
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+---
+ Makefile     |  9 +++++++--
+ configure.ac | 13 +++++++++++++
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index ce0cfe2..59528b4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -39,6 +39,10 @@ all::
+ # Define CURLDIR=/foo/bar if your curl header and library files are in
+ # /foo/bar/include and /foo/bar/lib directories.
+ #
++# Define CURL_CONFIG to curl's configuration program that gives informations
++# about the library (ie curl's version, cflags, ...) . If not set it defaults
++# to 'curl-config'.
++#
+ # Define NO_EXPAT if you do not have expat installed.  git-http-push is
+ # not built, and you cannot push using http:// and https:// transports (dumb).
+ #
+@@ -374,6 +378,7 @@ LDFLAGS =
+ ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+ STRIP ?= strip
++CURL_CONFIG = curl-config
+ 
+ # Among the variables below, these:
+ #   gitexecdir
+@@ -1059,13 +1064,13 @@ else
+ 	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
+ 	PROGRAM_OBJS += http-fetch.o
+ 	PROGRAMS += $(REMOTE_CURL_NAMES)
+-	curl_check := $(shell (echo 070908; curl-config --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
++	curl_check := $(shell (echo 070908; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
+ 	ifeq "$(curl_check)" "070908"
+ 		ifndef NO_EXPAT
+ 			PROGRAM_OBJS += http-push.o
+ 		endif
+ 	endif
+-	curl_check := $(shell (echo 072200; curl-config --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
++	curl_check := $(shell (echo 072200; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
+ 	ifeq "$(curl_check)" "072200"
+ 		USE_CURL_FOR_IMAP_SEND = YesPlease
+ 	endif
+diff --git a/configure.ac b/configure.ac
+index 14012fa..01b07ad 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -525,6 +525,19 @@ GIT_UNSTASH_FLAGS($CURLDIR)
+ 
+ GIT_CONF_SUBST([NO_CURL])
+ 
++if test -z "$NO_CURL"; then
++
++AC_CHECK_PROG([CURL_CONFIG], [curl-config],
++[curl-config],
++[no])
++
++if test $CURL_CONFIG != no; then
++    GIT_CONF_SUBST([CURL_CONFIG])
++fi
++
++fi
++
++
+ #
+ # Define NO_EXPAT if you do not have expat installed.  git-http-push is
+ # not built, and you cannot push using http:// and https:// transports.
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+2.0.1
