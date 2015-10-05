@@ -1,83 +1,79 @@
-From: "Golarits, Zsigmond (Nokia - HU/Budapest)" 
-	<zsigmond.golarits@nokia.com>
-Subject: RE: Question - List current hashs of branches
-Date: Mon, 5 Oct 2015 07:29:16 +0000
-Message-ID: <0F7E16B8B216214784C1BD8596C189CA0917BB7C@DEMUMBX012.nsn-intra.net>
-References: <0F7E16B8B216214784C1BD8596C189CA09176151@DEMUMBX012.nsn-intra.net>
- <CAPc5daX3Vch61Rb0=Htfx2uJcuCxyznnWFQ54uqhpATFG3KL8g@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 6/9] ref-filter: introduce format_ref_array_item()
+Date: Mon, 5 Oct 2015 13:19:13 +0530
+Message-ID: <CAOLa=ZTMf9i=+9Rgi9oO==vr_JGtG3J9DvQWk18Zx-yd5_35XA@mail.gmail.com>
+References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
+ <1443807546-5985-7-git-send-email-Karthik.188@gmail.com> <vpqoagg9n2l.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: EXT Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 09:29:56 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Oct 05 09:50:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zj0Db-000709-Vx
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 09:29:56 +0200
+	id 1Zj0XJ-0007qe-EI
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 09:50:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751709AbbJEH3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 03:29:40 -0400
-Received: from demumfd001.nsn-inter.net ([93.183.12.32]:40020 "EHLO
-	demumfd001.nsn-inter.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751336AbbJEH33 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 03:29:29 -0400
-Received: from demuprx017.emea.nsn-intra.net ([10.150.129.56])
-	by demumfd001.nsn-inter.net (8.15.2/8.15.2) with ESMTPS id t957THi6015329
-	(version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Mon, 5 Oct 2015 07:29:18 GMT
-Received: from DEMUHTC002.nsn-intra.net ([10.159.42.33])
-	by demuprx017.emea.nsn-intra.net (8.12.11.20060308/8.12.11) with ESMTP id t957THYx027603
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Mon, 5 Oct 2015 09:29:17 +0200
-Received: from DEMUHTC012.nsn-intra.net (10.159.42.43) by
- DEMUHTC002.nsn-intra.net (10.159.42.33) with Microsoft SMTP Server (TLS) id
- 14.3.248.2; Mon, 5 Oct 2015 09:29:16 +0200
-Received: from DEMUMBX012.nsn-intra.net ([169.254.12.36]) by
- DEMUHTC012.nsn-intra.net ([10.159.42.43]) with mapi id 14.03.0248.002; Mon, 5
- Oct 2015 09:29:16 +0200
-Thread-Topic: Question - List current hashs of branches
-Thread-Index: AdD9Q886fA2ByuenQwWse3cKmFOmBv//354A//vsbWA=
-In-Reply-To: <CAPc5daX3Vch61Rb0=Htfx2uJcuCxyznnWFQ54uqhpATFG3KL8g@mail.gmail.com>
-Accept-Language: hu-HU, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.159.42.125]
-X-purgate-type: clean
-X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
-X-purgate: clean
-X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
-X-purgate-size: 1668
-X-purgate-ID: 151667::1444030158-0000047E-7C368156/0/0
+	id S1751864AbbJEHto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 03:49:44 -0400
+Received: from mail-vk0-f41.google.com ([209.85.213.41]:32833 "EHLO
+	mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751988AbbJEHtn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 03:49:43 -0400
+Received: by vkgd64 with SMTP id d64so91528340vkg.0
+        for <git@vger.kernel.org>; Mon, 05 Oct 2015 00:49:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=P1kP/r4Nl61t+NFEdyrhbXp7vFIGn14NNiOOAX/BW1M=;
+        b=HFNoM3IFDHGb6Ud7XBWdrj0v4HwmkAIKtKRRRClwIUlCLaSscwLhEW1P2zt+w9vzD7
+         0312wYy84hkDuQJYnWZ89eGf1TurvSBeFvt0LyZu/tbVk7R2MwX0+AVVP/MkDfSXiX95
+         GEMs47WkbP39H0EnZGBEV2mG3RdqfPM0wC9x81xT9OhjQqIlwc3nds8pXDvAX+TqpBuG
+         2mtve3CZtIBrzTwCi/pjCqrqAuBBJnXuN5pwc8CTbOuK4ekcA76dvFfNaEvgGDf+m5GZ
+         KAGfB9xdoNeBsp40BrLjtUXoddVwTjyb08dv+BGxwkPq8CguUMqwusrGw1LWpGR8sob6
+         UQSw==
+X-Received: by 10.31.173.136 with SMTP id w130mr16539987vke.72.1444031382272;
+ Mon, 05 Oct 2015 00:49:42 -0700 (PDT)
+Received: by 10.103.23.193 with HTTP; Mon, 5 Oct 2015 00:49:13 -0700 (PDT)
+In-Reply-To: <vpqoagg9n2l.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279040>
 
-SGVsbG8sDQoNClRoYW5rcywgZm9yIFlSIHJlcGx5IQ0KSSdkIGxpa2UgYW55IHNvbHV0aW9uOg0K
-ICAtIHRoZSBjb21taXQgaGFzaCBvZiBhIGNob3NlbiBsb2NhbCBvciByZW1vdGUgYnJhbmNoICAg
-ICAgICAgICAgT1INCiAgLSBhIGxpc3Qgb2YgZWFjaCBjb21taXQgaGFzaGVzIG9mIGFsbCBsb2Nh
-bCBvci9hbmQgcmVtb3RlIGJyYW5jaGVzLg0KDQpJJ2QgbGlrZSB0byB3cml0ZSBhIHRvb2wgdG8g
-Y2hlY2sgbW9yZSBicmFuY2hlcyBpbiBtb3JlIHJlcG9zLCBpZiB0aGV5IGFyZSB1cCB0byBkYXRl
-IG9yIHRoZXJlIGhhcyBiZWVuIGEgbmV3IHJlbW90ZSBjb21taXQNCihvciBtYXliZSBJIGRpZCBs
-b2NhbCBjb21taXQgbm90IHB1c2hlZCkuDQpXZSB1c3VhbGx5IHdvcmtzIHBhcmFsbGVsIGluIG1v
-cmUgYnJhbmNoZXMgaW4gbW9yZSByZXBvc2l0b3JpZXMuDQoNCkJyDQpac2lnbW9uZA0KDQotLS0t
-LU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogamNoMjM1NUBnbWFpbC5jb20gW21haWx0bzpq
-Y2gyMzU1QGdtYWlsLmNvbV0gT24gQmVoYWxmIE9mIEVYVCBKdW5pbyBDIEhhbWFubw0KU2VudDog
-RnJpZGF5LCBPY3RvYmVyIDAyLCAyMDE1IDg6NTkgUE0NClRvOiBHb2xhcml0cywgWnNpZ21vbmQg
-KE5va2lhIC0gSFUvQnVkYXBlc3QpDQpDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0KU3ViamVjdDog
-UmU6IFF1ZXN0aW9uIC0gTGlzdCBjdXJyZW50IGhhc2hzIG9mIGJyYW5jaGVzDQoNCmZvci1lYWNo
-LXJlZiAmIGxzLXJlbW90ZT8NCg0KT24gRnJpLCBPY3QgMiwgMjAxNSBhdCAxMTo1NCBBTSwgR29s
-YXJpdHMsIFpzaWdtb25kIChOb2tpYSAtDQpIVS9CdWRhcGVzdCkgPHpzaWdtb25kLmdvbGFyaXRz
-QG5va2lhLmNvbT4gd3JvdGU6DQo+IEhlbGxvLA0KPg0KPiBIb3cgY2FuIEkgZ2V0IHRoZSBjdXJy
-ZW50IGNvbW1pdC1oYXNoZXMgb2YgdGhlIHJlbW90ZSBhbmQgbG9jYWwgYnJhbmNoZXMgd2l0aG91
-dCBjaGVjayB0aGVtIG91dD8NCj4NCj4gQnIsDQo+IFpzaWdtb25kIEdvbGFyaXRzDQo+IC0tDQo+
-IFRvIHVuc3Vic2NyaWJlIGZyb20gdGhpcyBsaXN0OiBzZW5kIHRoZSBsaW5lICJ1bnN1YnNjcmli
-ZSBnaXQiIGluDQo+IHRoZSBib2R5IG9mIGEgbWVzc2FnZSB0byBtYWpvcmRvbW9Admdlci5rZXJu
-ZWwub3JnDQo+IE1vcmUgbWFqb3Jkb21vIGluZm8gYXQgIGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcv
-bWFqb3Jkb21vLWluZm8uaHRtbA0K
+On Sat, Oct 3, 2015 at 5:32 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> Introduce format_ref_array_item() which will output the details of a
+>> given ref_array_item as per the given format and quote_style to the
+>> given strbuf.
+>
+> Why do you need it in this series and you could do without for tag?
+>
+> Going through PATCH 8/9, I guess there's something related to --column,
+> but tag also has --column so I'm puzzled.
+>
+
+The problem is with colors which tag.c doesn't use by default.
+Here we need to print colors only if we're printing to a tty which supports
+colors. which does not play well with the implementation of --column as
+done in tag.c. Where, If I'm not wrong the --column option captures all
+output, formats it and then prints it to stdout. Hence when using colors, we're
+told that the printing isn't done to a tty which supports colors, hence we lose
+out on colors.
+
+I was trying something where we have a variable which knows when the column
+option is used and hence explicitly lets us use colors, but seemed like a mess.
+This was a clean of going about it.
+
+-- 
+Regards,
+Karthik Nayak
