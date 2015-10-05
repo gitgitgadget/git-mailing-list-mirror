@@ -1,87 +1,87 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/9] ref-filter: add support for %(path) atom
-Date: Mon, 05 Oct 2015 08:40:05 +0200
-Message-ID: <vpqbncd6coq.fsf@grenoble-inp.fr>
-References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
-	<1443807546-5985-4-git-send-email-Karthik.188@gmail.com>
-	<vpqwpv49so7.fsf@grenoble-inp.fr>
-	<CAOLa=ZSdM34_J+gb_=K4-9fgNsMfseAYxUYGm_ncWZstcW+SYw@mail.gmail.com>
-	<vpqfv1q5xop.fsf@grenoble-inp.fr>
-	<xmqq1tda1njq.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [RFC/PATCH v1] Add Travis CI support
+Date: Mon, 05 Oct 2015 08:54:17 +0200
+Message-ID: <vpq4mi56c12.fsf@grenoble-inp.fr>
+References: <1443131004-39284-1-git-send-email-larsxschneider@gmail.com>
+	<xmqqeghnuy8t.fsf@gitster.mtv.corp.google.com>
+	<1443150875.3042.3.camel@kaarsemaker.net>
+	<699c08632232180166145f70c7f16645@dscho.org>
+	<CAE5ih7_f8qy9WvmgRUR6-qFwB4WFhZ6Qr5iOpE0YxqJH8AsZyw@mail.gmail.com>
+	<vpq7fnc83ki.fsf@grenoble-inp.fr> <vpq4mie1m3n.fsf@grenoble-inp.fr>
+	<xmqqlhbqcrf7.fsf@gitster.mtv.corp.google.com>
+	<CAFY1edZSNKepx_+2U=C-raOBiVK3Zh2r_Y_NO2-RtbhH_n-tdg@mail.gmail.com>
+	<CAPc5daXkn=C-D5RQCw2w+JrHn7XZA6X-P4F-PugRe-S4Z2RO0g@mail.gmail.com>
+	<vpq1tdb83nt.fsf@grenoble-inp.fr>
+	<xmqqmvvy1q83.fsf@gitster.mtv.corp.google.com>
+	<1443981968.3520.5.camel@kaarsemaker.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 08:40:25 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Roberto Tyley <roberto.tyley@gmail.com>,
+	Jeff King <peff@peff.net>, Luke Diamand <luke@diamand.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Mon Oct 05 08:54:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZizRg-0005gP-Jp
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 08:40:24 +0200
+	id 1ZizfW-0002QL-1M
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 08:54:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752053AbbJEGkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 02:40:20 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39365 "EHLO shiva.imag.fr"
+	id S1752067AbbJEGyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 02:54:33 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39648 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751693AbbJEGkT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 02:40:19 -0400
+	id S1751978AbbJEGyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 02:54:32 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t956e5ij025682
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t956sHUY029640
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 5 Oct 2015 08:40:05 +0200
+	Mon, 5 Oct 2015 08:54:17 +0200
 Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t956e5fH023455;
-	Mon, 5 Oct 2015 08:40:05 +0200
-In-Reply-To: <xmqq1tda1njq.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 04 Oct 2015 11:44:25 -0700")
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t956sH3q023811;
+	Mon, 5 Oct 2015 08:54:17 +0200
+In-Reply-To: <1443981968.3520.5.camel@kaarsemaker.net> (Dennis Kaarsemaker's
+	message of "Sun, 04 Oct 2015 20:06:08 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 05 Oct 2015 08:40:06 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 05 Oct 2015 08:54:17 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t956e5ij025682
+X-MailScanner-ID: t956sHUY029640
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1444632009.35694@tMsab4COfHgRdolXpPAUBw
+MailScanner-NULL-Check: 1444632860.69521@elQoVBACxcalll5iPBp98g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279038>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->>>>> This adds %(path) and %(path:short) atoms. The %(path) atom will print
->>>>> the path of the given ref, while %(path:short) will only print the
->>>>> subdirectory of the given ref.
->>>>
->>>> What does "path" mean in this context? How is it different from
->>>> %(refname)?
->>>>
->>>> I found the answer below, but I could not guess from the doc and commit
->>>> message. Actually, I'm not sure %(path) is the right name. If you want
->>>> the "file/directory" analogy, then %(dirname) would be better.
->>>>
->>>
->>> Noted will change.
+> On zo, 2015-10-04 at 10:46 -0700, Junio C Hamano wrote:
+>> One final question.  Which configuration file does the CI use when
+>> running a PR-initiated test?  The one already in the repository
+>> i.e. the target of the proposed pull, or the one that is possibly
+>> updated by the PR?
 >>
->> Note: I don't completely like %(dirname) either. I'm convinced it's
->> better than %(path), but there may be a better option.
+>> I am wondering if that can be an avenue for a possible mischief.
 >
-> Is that a derived form of the refname, just like %(refname:short)
-> that is 'master' for a ref whose %(refname) is 'refs/heads/master'
-> is a derived form of %(refname), and ":short" is what tells the
-> formatting machinery what kind of derivation is desired?
->
-> If so would %(refname:dir) & %(refname:base) be more in line with
-> the overall structure?
+> The latter. And it can, as it can enable notifications.
 
-Yes, indeed much better. It's still about the refnames, so a specialized
-version of %(refname) makes much more sense than a new atom.
+OK, so an attacker can send emails (by faking one of the repository
+owner's identity on a commit, and then submitting a pull-request for
+this commit). But such attacker could already send emails via GitHub to
+all repository watchers (not just owners) by sending pull-requests. Or
+by using his mailer.
+
+Other than that, Travis-CI uses a container-based infrastructure to
+ensure clean and independent builds. So, an attacker could trigger a
+build doing "rm -fr /" or whatever without impacting other builds.
 
 -- 
 Matthieu Moy
