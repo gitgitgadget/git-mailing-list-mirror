@@ -1,124 +1,122 @@
-From: Remi Pommarel <repk@triplefau.lt>
-Subject: [PATCH v3 1/1] Makefile: make curl-config path configurable
-Date: Mon,  5 Oct 2015 22:32:39 +0200
-Message-ID: <1444077159-3268-1-git-send-email-repk@triplefau.lt>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Remi Pommarel <repk@triplefau.lt>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 05 22:32:55 2015
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2 3/4] Add a function to release all packs
+Date: Mon, 05 Oct 2015 22:33:06 +0200
+Organization: gmx
+Message-ID: <78d0edaeb0f707da24ea08f4bb8517f9ad5be775.1444076827.git.johannes.schindelin@gmx.de>
+References: <682991036f1e8e974ed8ecd7d20dbcc6fb86c344.1443469464.git.johannes.schindelin@gmx.de>
+ <cover.1444076827.git.johannes.schindelin@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Max Kirillov <max@max630.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 22:33:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjCRJ-0001fE-7Q
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 22:32:53 +0200
+	id 1ZjCRr-00027l-Eg
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 22:33:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbbJEUcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 16:32:48 -0400
-Received: from relay5-d.mail.gandi.net ([217.70.183.197]:41169 "EHLO
-	relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750892AbbJEUcs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 16:32:48 -0400
-Received: from mfilter31-d.gandi.net (mfilter31-d.gandi.net [217.70.178.162])
-	by relay5-d.mail.gandi.net (Postfix) with ESMTP id BE22941C062;
-	Mon,  5 Oct 2015 22:32:45 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter31-d.gandi.net
-Received: from relay5-d.mail.gandi.net ([IPv6:::ffff:217.70.183.197])
-	by mfilter31-d.gandi.net (mfilter31-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id 7cRsy4AfjRTu; Mon,  5 Oct 2015 22:32:44 +0200 (CEST)
-X-Originating-IP: 81.57.43.44
-Received: from localhost (mon75-1-81-57-43-44.fbx.proxad.net [81.57.43.44])
-	(Authenticated sender: repk@triplefau.lt)
-	by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id 8351C41C060;
-	Mon,  5 Oct 2015 22:32:43 +0200 (CEST)
-X-Mailer: git-send-email 2.0.1
+	id S1752136AbbJEUdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 16:33:18 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50368 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751647AbbJEUdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 16:33:14 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MYsEZ-1a4s4W4AMN-00VjiH; Mon, 05 Oct 2015 22:33:08
+ +0200
+In-Reply-To: <cover.1444076827.git.johannes.schindelin@gmx.de>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:Fevd/0ganAmYVsaxx++MZcfTRGisGpK+Bg8rC1jAhKdViRzLJUs
+ JQMj+IuRXZY9wJ2057Iw2j3laK1un6kBJntYjUVqr9DICj0s0bKOXv4cSaP/6ImrOwekIZ0
+ /43B/GU7XuiMkCMCQVe9Y2Ywy/j6kZviLaRSfyhbcIl0kFnfu6lThz/Uom7yfayF6WJPT2J
+ U25gxXhkrUNPRx7VTch0w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hhQwKTNQooM=:xadxR0RdbYX3fQkSrp2yMi
+ YgLPy5c1qP1RDn25N9pl2Oc/uaOpp9s+39akWR//hzmHoP3TEQJtc4okOgAeAI9AZsvUGoDMi
+ Q0Zeb6DHnnZPxkTII/lvWUCv8MSadyg2BKnoJWzGq6vApfU7GT2O0dam2q7Yt03inBe/lNTSw
+ /rOaJDEmwAvgwSXQO6Qed5MFfQ5sJ88QjLywYLC8nZXao6T08SlXRYEqrGO9firrRwuCHoHOp
+ qjmCuLpTjQWkuPXh/rBWmOXAhvHlxGkJO2jqRj3zm53KEoKuhoj+mYEadUZPxd9oT6c4tJ+Q2
+ 7DP9QZOjzL91uctwztZJv1ScHmZAeFmj/7tpXRBvNXMeBC1mk9hQhtKzERaiYi6zH0YsOQnK7
+ xhJOO5FqCoyQ0S8spLKBjTmm/xnhU0OB6XmW98yyPOzqMBO6Pu5IP9/Xe6ORO4VUe0aSvebvT
+ xYQY8KiQExYt9P19SHWdUYcYOIEKkUkxKQpwTIIsmpDlWMh+nnpscvq7Ln511WydTldv7D69h
+ j8aNXuNbcwLcXeHbpVHAkqhbZnSdEO69slYvfCvgpSJqu2c7CNbfGnVPYIdjmg3rpYLcLGPxJ
+ m/AQ4Km/c5hc/Mt8Xng8PpeVebJ6gqZJmZaR/Uxy7QHTSiWN2+Ucnqu1qiIhiF/zBmwxWSZQI
+ p1pUk9hoWhnJuTMBUnSdEN7eQejMgDf6AgmaJKQpSQmrWsc5b44zlMC0gaukza5wo3rzMLLMY
+ QFGEEKfm3G8G2/3rwJ8CgHe3CzeeHUoH8f8PLl+Rbq3TCJAQGAt69CFA+Xifc2KBVDN28q9/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279084>
 
-There are situations, e.g. during cross compilation, where curl-config
-program is not present in the PATH.
+On Windows, files that are in use cannot be removed or renamed. That
+means that we have to release pack files when we are about to, say,
+repack them. Let's introduce a convenient function to close them
+pack files.
 
-Make the makefile use a configurable curl-config program passed through
-CURL_CONFIG variable which can be set through config.mak.
+While at it, we consolidate the close windows/close fd/close index
+stanza in `free_pack_by_name()` into the `close_pack()` function that
+is used by the new `close_all_packs()` function to avoid repeated code.
 
-Also make this variable tunable through use of autoconf/configure. Configure
-will set CURL_CONFIG variable in config.mak.autogen to whatever value has been
-passed to ac_cv_prog_CURL_CONFIG.
-
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile     |  9 +++++++--
- configure.ac | 13 +++++++++++++
- 2 files changed, 20 insertions(+), 2 deletions(-)
+ cache.h     |  1 +
+ sha1_file.c | 20 +++++++++++++++++---
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index ce0cfe2..3cba678 100644
---- a/Makefile
-+++ b/Makefile
-@@ -39,6 +39,10 @@ all::
- # Define CURLDIR=/foo/bar if your curl header and library files are in
- # /foo/bar/include and /foo/bar/lib directories.
- #
-+# Define CURL_CONFIG to curl's configuration program that gives informations
-+# about the library (ie curl's version, cflags, ...) . If not set it defaults
-+# to 'curl-config'.
-+#
- # Define NO_EXPAT if you do not have expat installed.  git-http-push is
- # not built, and you cannot push using http:// and https:// transports (dumb).
- #
-@@ -425,6 +429,7 @@ TCL_PATH = tclsh
- TCLTK_PATH = wish
- XGETTEXT = xgettext
- MSGFMT = msgfmt
-+CURL_CONFIG = curl-config
- PTHREAD_LIBS = -lpthread
- PTHREAD_CFLAGS =
- GCOV = gcov
-@@ -1059,13 +1064,13 @@ else
- 	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
- 	PROGRAM_OBJS += http-fetch.o
- 	PROGRAMS += $(REMOTE_CURL_NAMES)
--	curl_check := $(shell (echo 070908; curl-config --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
-+	curl_check := $(shell (echo 070908; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
- 	ifeq "$(curl_check)" "070908"
- 		ifndef NO_EXPAT
- 			PROGRAM_OBJS += http-push.o
- 		endif
- 	endif
--	curl_check := $(shell (echo 072200; curl-config --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
-+	curl_check := $(shell (echo 072200; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
- 	ifeq "$(curl_check)" "072200"
- 		USE_CURL_FOR_IMAP_SEND = YesPlease
- 	endif
-diff --git a/configure.ac b/configure.ac
-index 14012fa..01b07ad 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -525,6 +525,19 @@ GIT_UNSTASH_FLAGS($CURLDIR)
+diff --git a/cache.h b/cache.h
+index 752031e..57f6a74 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1275,6 +1275,7 @@ extern void close_pack_index(struct packed_git *);
  
- GIT_CONF_SUBST([NO_CURL])
+ extern unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
+ extern void close_pack_windows(struct packed_git *);
++extern void close_all_packs(void);
+ extern void unuse_pack(struct pack_window **);
+ extern void free_pack_by_name(const char *);
+ extern void clear_delta_base_cache(void);
+diff --git a/sha1_file.c b/sha1_file.c
+index 8c3c913..fe823fe 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -798,6 +798,22 @@ static int close_pack_fd(struct packed_git *p)
+ 	return 1;
+ }
  
-+if test -z "$NO_CURL"; then
++static void close_pack(struct packed_git *p)
++{
++	close_pack_windows(p);
++	close_pack_fd(p);
++	close_pack_index(p);
++}
 +
-+AC_CHECK_PROG([CURL_CONFIG], [curl-config],
-+[curl-config],
-+[no])
++void close_all_packs(void)
++{
++	struct packed_git *p;
 +
-+if test $CURL_CONFIG != no; then
-+    GIT_CONF_SUBST([CURL_CONFIG])
-+fi
-+
-+fi
++	for (p = packed_git; p; p = p->next)
++		close_pack(p);
++}
 +
 +
- #
- # Define NO_EXPAT if you do not have expat installed.  git-http-push is
- # not built, and you cannot push using http:// and https:// transports.
+ /*
+  * The LRU pack is the one with the oldest MRU window, preferring packs
+  * with no used windows, or the oldest mtime if it has no windows allocated.
+@@ -906,9 +922,7 @@ void free_pack_by_name(const char *pack_name)
+ 		p = *pp;
+ 		if (strcmp(pack_name, p->pack_name) == 0) {
+ 			clear_delta_base_cache();
+-			close_pack_windows(p);
+-			close_pack_fd(p);
+-			close_pack_index(p);
++			close_pack(p);
+ 			free(p->bad_object_sha1);
+ 			*pp = p->next;
+ 			if (last_found_pack == p)
 -- 
-2.0.1
+2.5.3.windows.1.3.gc322723
