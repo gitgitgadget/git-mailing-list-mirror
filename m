@@ -1,90 +1,113 @@
-From: Ray Donnelly <mingw.android@gmail.com>
-Subject: Re: [PATCH 1/2] test-path-utils.c: remove incorrect assumption
-Date: Mon, 5 Oct 2015 00:36:16 +0100
-Message-ID: <CAOYw7duDLWYpu+NK2t2+hV3rtU=dK3eQ6R11mfwLKbQQowbWuQ@mail.gmail.com>
-References: <CAOYw7dubGJ=m5+EnjGy7jTQxR+b0uBmyG138KEQ5rzX2K7WcgA@mail.gmail.com>
-	<xmqqlhbj3mfo.fsf@gitster.mtv.corp.google.com>
-	<CAOYw7dv4iPQ4cq4Ab1ZeThrp=u51T5v387a1Y8QPO-yj=fyMcg@mail.gmail.com>
-	<xmqqwpv21rej.fsf@gitster.mtv.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v5 2/3] path: optimize common dir checking
+Date: Mon, 05 Oct 2015 05:00:01 +0200
+Message-ID: <5611E7B1.3090001@alum.mit.edu>
+References: <1441073591-639-1-git-send-email-dturner@twopensource.com> <1441073591-639-3-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 01:36:23 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 05:07:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZispK-0004vK-Fr
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 01:36:22 +0200
+	id 1Ziw7P-0003AN-9Y
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 05:07:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751961AbbJDXgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Oct 2015 19:36:17 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:34514 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751943AbbJDXgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Oct 2015 19:36:17 -0400
-Received: by obbda8 with SMTP id da8so116937645obb.1
-        for <git@vger.kernel.org>; Sun, 04 Oct 2015 16:36:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=yZbUGBKA5oRnXJxArxxLggEN9/J42eJfkrILEszLzqU=;
-        b=LdLS8f/AUiZ++No4f5sTC/TJjYy59EzUKKnaku0EYxAt7J+MnV/VzZ/cmcv4njDCnf
-         Apa2Zk2+HLr7EFXxXp6tT4xcUasl5dSe3RKViSDpsdH5/m25xnAmL3d+L3FbLJnkfXfg
-         JbwMtO8SzO5L8b7L2IFq7qmH/N7lE4MEX5GllBHhwTEDX/V6CA78BFIwZYLRTYQCY6Et
-         TmXj0MKgTK+MYLEE2YHmFhJ94v8AorJj8DaakN/gUZm4n6OvCLTqp3kxhD7QOfkHm4ph
-         g+spqN3ymd9G8/owHA6PVoCIh7BS2rYKgbotyL15hn4wPKq5OpwEafOMSQU0dMYYlM9/
-         bW1g==
-X-Received: by 10.60.79.226 with SMTP id m2mr16156467oex.20.1444001776512;
- Sun, 04 Oct 2015 16:36:16 -0700 (PDT)
-Received: by 10.202.15.21 with HTTP; Sun, 4 Oct 2015 16:36:16 -0700 (PDT)
-In-Reply-To: <xmqqwpv21rej.fsf@gitster.mtv.corp.google.com>
+	id S1751959AbbJEDHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Oct 2015 23:07:08 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:44846 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751495AbbJEDHH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Oct 2015 23:07:07 -0400
+X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 Oct 2015 23:07:07 EDT
+X-AuditID: 1207440f-f79df6d000007c0f-97-5611e7b4be3a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 95.26.31759.4B7E1165; Sun,  4 Oct 2015 23:00:04 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC96E0C.dip0.t-ipconnect.de [79.201.110.12])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t953028K018696
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 4 Oct 2015 23:00:03 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <1441073591-639-3-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqLvluWCYwdGVXBa3Z7YwW8zfdILR
+	outKN5NFQ+8VZgcWj52z7rJ7XLyk7LHg+X12j8+b5AJYorhtkhJLyoIz0/P07RK4M75/ucte
+	sE6s4sbJHpYGxmahLkYODgkBE4nr/xO7GDmBTDGJC/fWs3UxcnEICVxmlLjR9pMdwjnHJPHy
+	wlwWkAZeAW2J6wusQRpYBFQlVsx/ygRiswnoSizqaQazRQWCJFYsf8EIYvMKCEqcnPmEBcQW
+	EaiQWPH1HjuIzSygJnFoySOwGmEBO4lL935BLW5klNj3/ApYA6eAu0TD7ZvMEA16Ejuu/2KF
+	sOUlmrfOZp7AKDALyY5ZSMpmISlbwMi8ilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXRC83s0Qv
+	NaV0EyMknPl3MHatlznEKMDBqMTDeyBeMEyINbGsuDL3EKMkB5OSKG+oGlCILyk/pTIjsTgj
+	vqg0J7X4EKMEB7OSCO/rx0A53pTEyqrUonyYlDQHi5I4r/oSdT8hgfTEktTs1NSC1CKYrAwH
+	h5IE76NnQI2CRanpqRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoEiNLwbGKkiKB2ivBUg7
+	b3FBYi5QFKL1FKOilDjvDZCEAEgiozQPbiwsSb1iFAf6Uph3E0gVDzDBwXW/AhrMBDR4gSEf
+	yOCSRISUVAPjhgTLo0ZPrl89Y9i9vv7beeYjfJt1XOz/ON6u3/HjXdjmnK8Hy6Nv2UpOjt7L
+	eI+h4h+LvyHD22d7WsXmGTs4hax69VxX4MjD8qmzEjKPK4YE5h0ou3+o9+Vm1xu8 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279028>
 
-On Sun, Oct 4, 2015 at 6:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ray Donnelly <mingw.android@gmail.com> writes:
->
->>> Some callers of this function in real code (i.e. not the one you are
->>> removing the check) do seem to depend on that condition, e.g. the
->>> codepath in clone that leads to add_to_alternates_file() wants to
->>> make sure it does not add an duplicate, so it may end up not noticing
->>> /foo/bar and /foo/bar/ are the same thing, no?  There may be others.
->>
->> Enforcing that normalize_path_copy() removes any trailing '/' (apart
->> from the root directory) breaks other things that assume it doesn't
->> mess with trailing '/'s, for example filtering in ls-tree. Any
->> suggestions for what to do about this? Would a flag be appropriate as
->> to whether to do this part or not? Though I'll admit I don't like the
->> idea of adding flags to modify the behavior of something that's meant
->> to "normalize" something. Alternatively, I could go through all the
->> breakages and try to fix them up?
->
-> I agree with you that "normalize" should "normalize".  Making sure
-> that all the callers expect the same kind of normalization would be
-> a lot of work but I do think that is the best approach in the long
-> run.  Thanks for the ls-tree example, by the way, did you find it by
-> code inspection?  I do not think it is reasonable to expect the test
-> coverage for this to be 100%, so the "try to fix them up" would have
-> to involve a lot of manual work both in fixing and reviewing,
-> unfortunately.
+On 09/01/2015 04:13 AM, David Turner wrote:
+> Instead of a linear search over common_list to check whether
+> a path is common, use a trie.  The trie search operates on
+> path prefixes, and handles excludes.
 
-For the ls-tree failure, I ran "make test" to see how much fell out.
-I'm not familiar with the code-base yet, so I figured that at least
-investigating the changes needed to make the test-suite pass would be
-a good entry point to reading the code; I will study it at the same
-time to try and get my bearings.
+Here I am, coming late to the discussion as usual. Sorry for that.
 
->
-> The first step of the "best approach" would be to make a note on
-> normalize_path_copy() by adding a NEEDSWORK: comment to describe the
-> situation.
->
-> Thanks.
+I dug into this code yesterday and got all nerd-tingly and started
+refactoring and optimizing it. But after I slept on it I realized that
+I'm a bit hazy on its justification. A trie is a beautiful data
+structure and all, but have there been any benchmarks showing (1) that
+this lookup is a bottleneck and (2) that the trie is an improvement on
+something simpler, like, say, a sorted string_list? Or is there a
+realistic hope that the trie might be generally useful for other purposes?
+
+The latter seems unlikely, at least with the current implementation,
+because it is very wasteful of space. It allocates one or two (usually
+two) `struct trie` for every single string that is added to it. Each
+`struct trie` contains an array of 256 pointers and usually needs two
+malloc calls to instantiate. So *each entry* stored in the trie costs
+something like 4 kilobytes on a 64-bit system, plus usually 4 calls to
+malloc. The large memory footprint, in turn, will cause access
+non-locality and might impact the lookup performance. So it is pretty
+clear that the current code would be unusable for a large number of strings.
+
+For this particular application, where we only have 19 strings to store,
+I suppose we could tolerate the use of approximately 64k of RAM to store
+174 characters worth of strings *if* it would bring us big time savings.
+But I think we need some evidence of the time savings.
+
+If this lookup is really a bottleneck, I bet there are other
+alternatives that are just as fast as this trie and use less code,
+especially given that there are only 19 strings that need checking.
+
+With respect to the implementation, it looks correct to me. I would make
+the following three suggestions:
+
+* Please document that the `contents` field of `struct trie` is not
+NUL-terminated, because that would otherwise be a common assumption. (It
+is clearly not NUL-terminated because of the way it is initialized using
+xmalloc and memcpy in make_trie_node() and because of the way its length
+is adjusted in add_to_trie().)
+* But in add_to_trie(), you set `contents` using xstrdup(), which *does*
+NUL-terminate the string. It would be more consistent to set it using
+xmalloc and memcpy here.
+* Please use size_t instead of int for indexing into strings, at least
+in the trie_find() function, where the input is likely to be under the
+control of users.
+
+If we expected to use the trie for other purposes, then I would suggest
+a raft of other improvements. Ask me if you are interested.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
