@@ -1,137 +1,103 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 18/43] refs-be-files.c: add a backend method structure
- with transaction functions
-Date: Mon, 05 Oct 2015 10:03:02 +0200
-Message-ID: <56122EB6.2020501@alum.mit.edu>
-References: <1443477738-32023-1-git-send-email-dturner@twopensource.com> <1443477738-32023-19-git-send-email-dturner@twopensource.com>
+Subject: Re: [PATCH v2 22/43] refs-be-files.c: add do_for_each_per_worktree_ref
+Date: Mon, 05 Oct 2015 10:19:05 +0200
+Message-ID: <56123279.4060605@alum.mit.edu>
+References: <1443477738-32023-1-git-send-email-dturner@twopensource.com> <1443477738-32023-23-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: Ronnie Sahlberg <sahlberg@google.com>
+Content-Transfer-Encoding: 7bit
 To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 05 10:10:17 2015
+X-From: git-owner@vger.kernel.org Mon Oct 05 10:19:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zj0qf-00087M-2s
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 10:10:17 +0200
+	id 1Zj0zO-0007Ow-SO
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 10:19:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816AbbJEIKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 04:10:10 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:61943 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751104AbbJEIKI (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2015 04:10:08 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Oct 2015 04:10:08 EDT
-X-AuditID: 1207440c-f79e16d000002a6e-e7-56122eb86c3b
+	id S1751988AbbJEITN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 04:19:13 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:43948 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751462AbbJEITM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2015 04:19:12 -0400
+X-AuditID: 1207440d-f79136d00000402c-e1-5612327b251a
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 1B.7F.10862.8BE22165; Mon,  5 Oct 2015 04:03:04 -0400 (EDT)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id DE.98.16428.B7232165; Mon,  5 Oct 2015 04:19:07 -0400 (EDT)
 Received: from [192.168.69.130] (p4FC96E0C.dip0.t-ipconnect.de [79.201.110.12])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t95832Ao031588
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t958J5x1032259
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 5 Oct 2015 04:03:03 -0400
+	Mon, 5 Oct 2015 04:19:06 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1443477738-32023-19-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqLtDTyjM4OwfDov5m04wWnRd6Way
-	+DehxoHZY8GmUo8Fz++ze3zeJBfAHMVtk5RYUhacmZ6nb5fAnfGudQ9jwTeJihXvX7I1MJ4W
-	6WLk5JAQMJF4c3cHM4QtJnHh3nq2LkYuDiGBy4wSMye3MEE455gknl9tZAKp4hXQlnh85Ts7
-	iM0ioCox8chCsG42AV2JRT3NYDWiAkESK5a/YISoF5Q4OfMJC4gtIuAgcXnXUbB6ZgFNiU0b
-	XrCC2MICWRL9e6ezQCxrA9o8u4MNJMEp4CXR3vqGDaJBT2LH9V+sELa8RPPW2cwTGAVmIdkx
-	C0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGurlZpbopaaUbmKEBC/PDsZv62QO
-	MQpwMCrx8EokCYYJsSaWFVfmHmKU5GBSEuWt1REKE+JLyk+pzEgszogvKs1JLT7EKMHBrCTC
-	q60FlONNSaysSi3Kh0lJc7AoifOqLlH3ExJITyxJzU5NLUgtgsnKcHAoSfD66gI1ChalpqdW
-	pGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIOiNb4YGK8gKR6gvbtBbuItLkjMBYpCtJ5iVJQS
-	5/0EkhAASWSU5sGNhaWkV4ziQF8K83aDbOcBpjO47ldAg5mABvfLgw0uSURISTUwdlximtZw
-	7FiTwhL1Oas2lqj4PljSOjNewfyCqzf3+vsppmtU+1ftM63fPeP//raLi/Qkz/M/jH96d89+
-	VZV3HMLWAcI510pmHF+4oduss9VdP9nn77nGf5JVr2bLXV9vpDzf6whX84kuPeUI 
+In-Reply-To: <1443477738-32023-23-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLIsWRmVeSWpSXmKPExsUixO6iqFttJBRm8Owkr8X8TScYLbqudDM5
+	MHkseH6f3ePzJrkApihum6TEkrLgzPQ8fbsE7ow3x1uYCmbyVnxavJC1gfEkVxcjJ4eEgInE
+	72fPmCFsMYkL99azdTFycQgJXGaU6OyawgThnGOSuDhrLTtIFa+AtsT3nY9YQGwWAVWJk+t+
+	sYLYbAK6Eot6mplAbFGBIIkVy18wQtQLSpyc+QSsXkTAQeLyrqNg24QF/CXmTV7DDLGgjVGi
+	4/kVsGZOAS+JlyfPgi1jFtCT2HEdYgGzgLzE9rdzmCcw8s9CMncWkrJZSMoWMDKvYpRLzCnN
+	1c1NzMwpTk3WLU5OzMtLLdI10svNLNFLTSndxAgJSt4djP/XyRxiFOBgVOLhPRAvGCbEmlhW
+	XJl7iFGSg0lJlLdWRyhMiC8pP6UyI7E4I76oNCe1+BCjBAezkgivthZQjjclsbIqtSgfJiXN
+	waIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwXvVAKhRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4
+	NS8ltSixtCQjHhSV8cXAuARJ8QDtZTQE2VtckJgLFIVoPcWoKCXO6wWSEABJZJTmwY2FpZpX
+	jOJAXwrzPgXZzgNMU3Ddr4AGMwEN7pcHG1ySiJCSamBU+cGUluHvtObEwdZ/nPcs9Vn9xd3L
+	LO52qGwqWHNp8+c+SakJ4mzP2T+b9IVOlk/euqIxfX+GOjtf1sfergVmCQ4Npkf1/OOunJlj
+	27nf64mOp3j4MYX128K2fZCUnHUgL2uSFA9vRe+elDPiCbf9Te78dZbw/Xv2elzK 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279044>
 
 On 09/29/2015 12:01 AM, David Turner wrote:
-> From: Ronnie Sahlberg <sahlberg@google.com>
+> Alternate refs backends might still use files to store per-worktree
+> refs.  So the files backend's ref-loading infrastructure should be
+> available to those backends, just for use on per-worktree refs.  Add
+> do_for_each_per_worktree_ref, which iterates over per-worktree refs.
 > 
-> Add a ref structure for backend methods. Start by adding method pointers
-> for the transaction functions.
-> 
-> Add a function set_refs_backend to switch between backends. The files
-> based backend is the default.
-> 
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 > Signed-off-by: David Turner <dturner@twopensource.com>
 > ---
->  refs-be-files.c | 62 +++++++++++++++++++++++++++-------------------
->  refs.c          | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  refs.h          | 36 +++++++++++++++++++++++++++
->  3 files changed, 150 insertions(+), 25 deletions(-)
+>  refs-be-files.c | 15 ++++++++++++---
+>  refs.h          | 11 +++++++++++
+>  2 files changed, 23 insertions(+), 3 deletions(-)
 > 
+> diff --git a/refs-be-files.c b/refs-be-files.c
+> index eb18a20..dc89289 100644
+> --- a/refs-be-files.c
+> +++ b/refs-be-files.c
+> @@ -587,9 +587,6 @@ static void sort_ref_dir(struct ref_dir *dir)
+>  	dir->sorted = dir->nr = i;
+>  }
+>  
+> -/* Include broken references in a do_for_each_ref*() iteration: */
+> -#define DO_FOR_EACH_INCLUDE_BROKEN 0x01
+> -
+>  /*
+>   * Return true iff the reference described by entry can be resolved to
+>   * an object in the database.  Emit a warning if the referred-to
 > [...]
 > diff --git a/refs.h b/refs.h
-> index 729bc3c..a1db3ef 100644
+> index 5875fe5..09d140d 100644
 > --- a/refs.h
 > +++ b/refs.h
-> @@ -530,4 +530,40 @@ extern int reflog_expire(const char *refname, const unsigned char *sha1,
->  			 reflog_expiry_cleanup_fn cleanup_fn,
->  			 void *policy_cb_data);
+> @@ -152,6 +152,12 @@ struct ref_transaction;
+>   */
+>  #define REF_BAD_NAME 0x08
 >  
-> +/* refs backends */
-> +typedef struct ref_transaction *(*ref_transaction_begin_fn)(struct strbuf *err);
+> +/* Include broken references in a do_for_each_ref*() iteration */
+> +#define DO_FOR_EACH_INCLUDE_BROKEN 0x01
 
-Hmmm, I thought our convention was to define typedefs for functions
-themselves, not for the pointer-to-function; e.g.,
+Why do you move this definition from refs-be-files.c?
 
-    typedef struct ref_transaction *ref_transaction_begin_fn(struct
-strbuf *err);
-
-(which would require `struct ref_be` to be changed to
-
-        ref_transaction_begin_fn *transaction_begin;
-
-etc.) But now as I grep through the code it looks like both conventions
-are used. So never mind :-)
-
-> +typedef int (*ref_transaction_update_fn)(struct ref_transaction *transaction,
-> +		const char *refname, const unsigned char *new_sha1,
-> +		const unsigned char *old_sha1, unsigned int flags,
-> +		const char *msg, struct strbuf *err);
-> +typedef int (*ref_transaction_create_fn)(
-> +		struct ref_transaction *transaction,
-> +		const char *refname, const unsigned char *new_sha1,
-> +		unsigned int flags, const char *msg, struct strbuf *err);
-> +typedef int (*ref_transaction_delete_fn)(struct ref_transaction *transaction,
-> +		const char *refname, const unsigned char *old_sha1,
-> +		unsigned int flags, const char *msg, struct strbuf *err);
-> +typedef int (*ref_transaction_verify_fn)(struct ref_transaction *transaction,
-> +		const char *refname, const unsigned char *old_sha1,
-> +		unsigned int flags, struct strbuf *err);
-> +typedef int (*ref_transaction_commit_fn)(struct ref_transaction *transaction,
-> +				     struct strbuf *err);
-> +typedef void (*ref_transaction_free_fn)(struct ref_transaction *transaction);
 > +
-> +struct ref_be {
-> +	struct ref_be *next;
-> +	const char *name;
-> +	ref_transaction_begin_fn transaction_begin;
-> +	ref_transaction_update_fn transaction_update;
-> +	ref_transaction_create_fn transaction_create;
-> +	ref_transaction_delete_fn transaction_delete;
-> +	ref_transaction_verify_fn transaction_verify;
-> +	ref_transaction_commit_fn transaction_commit;
-> +	ref_transaction_free_fn transaction_free;
-> +};
-> +
-> +
-> +extern struct ref_be refs_be_files;
-> +int set_refs_backend(const char *name);
-> +
->  #endif /* REFS_H */
-> 
+> +/* Only include per-worktree refs in a do_for_each_ref*() iteration */
+> +#define DO_FOR_EACH_PER_WORKTREE_ONLY 0x02
+
+And why do you define this one here instead of in refs-be-files.c?
+
+> [...]
 
 Michael
 
