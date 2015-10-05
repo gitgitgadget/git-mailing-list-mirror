@@ -1,75 +1,107 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 7/9] ref-filter: make %(upstream:track) prints "[gone]"
- for invalid upstreams
-Date: Mon, 5 Oct 2015 13:19:43 +0530
-Message-ID: <CAOLa=ZRF6tVg6DSjXZb65pJz_D5_H5aix7JFx9pSW49iyFN+iQ@mail.gmail.com>
-References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
- <1443807546-5985-8-git-send-email-Karthik.188@gmail.com> <vpqio6o9mu1.fsf@grenoble-inp.fr>
+From: Olaf Hering <olaf@aepfle.de>
+Subject: Re: [PATCH] git-gui: sort entries in tclIndex
+Date: Mon, 5 Oct 2015 09:43:32 +0200
+Message-ID: <20151005074332.GA21840@aepfle.de>
+References: <1422292043-12711-1-git-send-email-olaf@aepfle.de>
+ <20150210151803.GB8965@aepfle.de>
+ <20150415072251.GA18595@aepfle.de>
+ <553BC05F.1070702@web.de>
+ <87sibgpcpp.fsf@red.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Oct 05 09:50:29 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Mon Oct 05 09:50:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zj0XT-0007vR-P4
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 09:50:28 +0200
+	id 1Zj0XT-0007vR-4b
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 09:50:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752317AbbJEHuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 03:50:23 -0400
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:34312 "EHLO
-	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752273AbbJEHuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 03:50:13 -0400
-Received: by vkat63 with SMTP id t63so91083172vka.1
-        for <git@vger.kernel.org>; Mon, 05 Oct 2015 00:50:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=JvulJBXyOhUfazpl+xN0YI9/nnAYo7XVW0r4X+ZiBcI=;
-        b=g0/8M8LrFvrGEsVA6pHrqw5wHQJszTPQCQ7NjNcFEnp4JBeaQalTCUy27XeU0IZU5k
-         1FWdWGxulbrjbYy9UiNHHQEARDK2tLyLlKGp6ZRETlamDm4/gcKUF2LLFGGrlBCRu6dt
-         Xb+0+2YX3eHfg9H09U7A6j+WIQCp3rtyJd3O8s5FD4GQfC7eck3HmiQLFLJbXfaFhglP
-         asp8hgUijarmCxbjtkkIqCbsq2XOC9caLvlhlRCeZ50Vy0+nZttG9aEnoIj2YyWEXTwg
-         u4DYiSZwMFKosxgEk8OClWI/BeuFOFgaVsCemy1HzVz3kOBe9LYTY7fhXrgs/Sw5CuOG
-         eXLA==
-X-Received: by 10.31.161.142 with SMTP id k136mr18792709vke.17.1444031413027;
- Mon, 05 Oct 2015 00:50:13 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Mon, 5 Oct 2015 00:49:43 -0700 (PDT)
-In-Reply-To: <vpqio6o9mu1.fsf@grenoble-inp.fr>
+	id S1752272AbbJEHuN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2015 03:50:13 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.162]:37643 "EHLO
+	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751988AbbJEHtt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 03:49:49 -0400
+X-Greylist: delayed 374 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Oct 2015 03:49:49 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1444031388; l=1396;
+	s=domk; d=aepfle.de;
+	h=In-Reply-To:Content-Transfer-Encoding:Content-Disposition:
+	Content-Type:MIME-Version:References:Subject:Cc:To:From:Date;
+	bh=78VC8Dcnmx5bdI0MjTtmsNYHjj2BKwUp0qgDsbT2j9c=;
+	b=EFrOs2O4Ev8khuj7Nkx4tDaVSZpd05xx2eKjW8/gd9vGAykFROC/KZBWd5PXUcC0amX
+	2FKx11XKnUcdbhiTAVrxk9hCowfJMnCmYWjiOugQbkTikYLEvKV94AlUsWOduTqbdCL2i
+	PBZek3oHS0UMH192wjBKsGCQyhEWuL8/nSo=
+X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWtqWFmrC5F/k8792rLukQ==
+X-RZG-CLASS-ID: mo00
+Received: from probook.fritz.box (aftr-185-17-204-205.dynamic.mnet-online.de [185.17.204.205])
+	by smtp.strato.de (RZmta 37.12 DYNA|AUTH)
+	with ESMTPSA id 60269ar957hXSeo
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
+	(Client did not present a certificate);
+	Mon, 5 Oct 2015 09:43:33 +0200 (CEST)
+Received: by probook.fritz.box (Postfix, from userid 1000)
+	id 1B4D8508B6; Mon,  5 Oct 2015 09:43:32 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <87sibgpcpp.fsf@red.patthoyts.tk>
+User-Agent: Mutt/1.5.24 (6517)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279042>
 
-On Sat, Oct 3, 2015 at 5:38 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> diff --git a/ref-filter.c b/ref-filter.c
->> index 099acd6..48b06e3 100644
->> --- a/ref-filter.c
->> +++ b/ref-filter.c
->> @@ -1133,8 +1133,10 @@ static void populate_value(struct ref_array_item *ref)
->>                               char buf[40];
->>
->>                               if (stat_tracking_info(branch, &num_ours,
->> -                                                    &num_theirs, NULL))
->> +                                                    &num_theirs, NULL)) {
->> +                                     v->s = xstrdup("[gone]");
->
-> I think just "[gone]" without the xstrdup is OK, and avoids leaking one
-> string.
+To which branch was this applied?
+Its still broken in git-2.6.0.
 
-Will do.
+Olaf
 
--- 
-Regards,
-Karthik Nayak
+On Fri, May 01, Pat Thoyts wrote:
+
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+> >Looping in Pat (git-gui maintainer).
+> >
+> >Am 15.04.2015 um 09:22 schrieb Olaf Hering:
+> >> Ping?
+> >>
+> >> On Tue, Feb 10, Olaf Hering wrote:
+> >>
+> >>> Ping?
+> >>>
+> >>> On Mon, Jan 26, Olaf Hering wrote:
+> >>>
+> >>>> ALL_LIBFILES uses wildcard, which provides the result in directo=
+ry
+> >>>> order. This order depends on the underlying filesystem on the
+> >>>> buildhost. To get reproducible builds it is required to sort suc=
+h list
+> >>>> before using them.
+> >>>>
+> >>>> Signed-off-by: Olaf Hering <olaf@aepfle.de>
+> >>>> ---
+> >>>>   git-gui/Makefile | 2 +-
+> >>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>>
+> >>>> diff --git a/git-gui/Makefile b/git-gui/Makefile
+> >>>> index cde8b2e..7564a18 100644
+> >>>> --- a/git-gui/Makefile
+> >>>> +++ b/git-gui/Makefile
+> >>>> @@ -258,7 +258,7 @@ lib/tclIndex: $(ALL_LIBFILES) GIT-GUI-VARS
+> >>>>   	 rm -f $@ ; \
+> >>>>   	 echo '# Autogenerated by git-gui Makefile' >$@ && \
+> >>>>   	 echo >>$@ && \
+> >>>> -	 $(foreach p,$(PRELOAD_FILES) $(ALL_LIBFILES),echo '$(subst li=
+b/,,$p)' >>$@ &&) \
+> >>>> +	 $(foreach p,$(PRELOAD_FILES) $(sort $(ALL_LIBFILES)),echo '$(=
+subst lib/,,$p)' >>$@ &&) \
+> >>>>   	 echo >>$@ ; \
+> >>>>   	fi
+> >>>>
+> >
+>=20
+> Applied. Thank you.
