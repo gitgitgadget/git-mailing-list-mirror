@@ -1,98 +1,149 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 40/43] refs: allow ref backend to be set for clone
-Date: Mon, 05 Oct 2015 13:55:43 +0200
-Message-ID: <5612653F.5070502@alum.mit.edu>
-References: <1443477738-32023-1-git-send-email-dturner@twopensource.com> <1443477738-32023-41-git-send-email-dturner@twopensource.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH] completion: fix completion after 'git -C path'
+Date: Mon,  5 Oct 2015 14:02:15 +0200
+Message-ID: <1444046535-18316-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 05 13:55:55 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 14:18:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zj4Mw-0004ku-5u
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 13:55:50 +0200
+	id 1Zj4io-0003G0-Dq
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 14:18:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751221AbbJELzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 07:55:46 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:44959 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751054AbbJELzp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2015 07:55:45 -0400
-X-AuditID: 1207440d-f79136d00000402c-f2-5612654194b8
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id B2.4C.16428.14562165; Mon,  5 Oct 2015 07:55:45 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC96E0C.dip0.t-ipconnect.de [79.201.110.12])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t95BthE3008680
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 5 Oct 2015 07:55:44 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1443477738-32023-41-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrNIsWRmVeSWpSXmKPExsUixO6iqOuYKhRm8P0dm8X8TScYLbqudDM5
-	MHkseH6f3ePzJrkApihum6TEkrLgzPQ8fbsE7oyZE/YwFRzhrmh/H9HA+IKji5GTQ0LARGLt
-	lBusELaYxIV769m6GLk4hAQuM0ocPHiFFcI5xySxefN7FpAqXgFtiU17O9i7GDk4WARUJWY8
-	UAMJswnoSizqaWYCsUUFgiRWLH/BCFEuKHFy5hOwVhEBB4nLu44yg9jCAp4S1x6uZ4KY38Yo
-	0XBqHhtIglPAS2Lp6ulgzcwCehI7rv9ihbDlJba/ncM8gZF/FpK5s5CUzUJStoCReRWjXGJO
-	aa5ubmJmTnFqsm5xcmJeXmqRrpFebmaJXmpK6SZGSEDy7mD8v07mEKMAB6MSD++BeMEwIdbE
-	suLK3EOMkhxMSqK8N+2EwoT4kvJTKjMSizPii0pzUosPMUpwMCuJ8Fq6AuV4UxIrq1KL8mFS
-	0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK8GSlAjYJFqempFWmZOSUIaSYOTpDhXFIi
-	xal5KalFiaUlGfGgiIwvBsYkSIoHaG8ZSDtvcUFiLlAUovUUo6KUOO/GZKCEAEgiozQPbiws
-	zbxiFAf6Upj3AkgVDzBFwXW/AhrMBDS4Xx5scEkiQkqqgXF2Rkj1rxcvjVhb5Ld8W9v7JHCq
-	ea2T8r1FAtxvPO9vzzh/cDU334Vmvgr2b2Y8K065Hz6yM9v174Tf89rrf1yfsj/tuuRGy7x5
-	st6Wt3y3nnZiEc4MZ9mhIj9vwfUbdxgmTa0/k+QZuORdnrFFNic/q8CNHY1PJr5T 
+	id S1751432AbbJEMSQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2015 08:18:16 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:40969 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750810AbbJEMSQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2015 08:18:16 -0400
+X-Greylist: delayed 923 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Oct 2015 08:18:15 EDT
+Received: from x590c1d09.dyn.telefonica.de ([89.12.29.9] helo=localhost.localdomain)
+	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
+	iface 141.3.10.81 id 1Zj4Ta-00080x-Bg; Mon, 05 Oct 2015 14:02:44 +0200
+X-Mailer: git-send-email 2.6.0.rc2.22.g7128296
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1444046564.
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1444047494.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279057>
 
-On 09/29/2015 12:02 AM, David Turner wrote:
-> Add a new option, --refs-backend-type, to allow the ref backend type to
-> be set on new clones.
-> 
-> Submodules must use the same ref backend as the parent repository, so
-> we also pass the --refs-backend-type option option when cloning
-> submodules.
-> 
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
->  Documentation/git-clone.txt |  4 ++++
->  builtin/clone.c             | 27 +++++++++++++++++++++++++--
->  builtin/submodule--helper.c |  5 ++++-
->  cache.h                     |  1 +
->  refs.c                      |  2 ++
->  5 files changed, 36 insertions(+), 3 deletions(-)
-> 
-> [...]
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 3e14491..d489a87 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> [...]
-> @@ -744,6 +762,11 @@ static void write_config(struct string_list *config)
->  					       write_one_config, NULL) < 0)
->  			die("unable to write parameters to config file");
->  	}
-> +
-> +	if (refs_backend_type &&
-> +	    write_one_config("core.refs-backend-type",
-> +			     refs_backend_type, NULL) < 0)
-> +			die("unable to write backend parameter to config file");
->  }
+The main completion function finds the name of the git command by
+iterating through all the words on the command line in search for the
+first non-option-looking word.  As it is not aware of 'git -C's
+mandatory path argument, if the '-C path' option is present, 'path' wil=
+l
+be the first such word and it will be mistaken for a git command.  This
+breaks the completion script in various ways:
 
-Our config variable names don't use separated-with-hyphens but rather
-wordsruntogether (though in documentation this would be written
-core.refsBackendType, because the actual names are case-insensitive).
+ - If 'path' happens to match one of the commands supported by the
+   completion script, then its options will be offered.
 
-> [...]
+ - If 'path' doesn't match a supported command and doesn't contain any
+   characters not allowed in Bash identifier names, then the completion
+   script does basically nothing and lets Bash to fall back to filename
+   completion.
 
-Michael
+ - Otherwise, if 'path' contains such unallowed characters, then it
+   leads to a more or less ugly error in the middle of the command line=
+=2E
+   The standard '/' directory separator is such a character, and it
+   happens to trigger one of the uglier errors:
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+     $ git -C some/path <TAB>sh.exe": declare: `_git_some/path': not a =
+valid identifier
+     error: invalid key: alias.some/path
+
+=46ix this by skipping 'git -C's mandatory path argument while iteratin=
+g
+over the words on the command line.  Extend the relevant test with this
+case and, while at it, with cases that needed similar treatment in the
+past ('--git-dir', '-c', '--work-tree' and '--namespace').
+Additionally, shut up standard error of the 'declare' commands looking
+for the associated completion function and of the 'git config' query fo=
+r
+the aliased command, so if git learns a new option with a mandatory
+argument in the future, then at least the command line will not be
+utterly disrupted by those error messages.
+
+Note, that this change merely fixes the breakage related to 'git -C
+path', but the completion script will not take it into account as it
+does '--git-dir path'.
+
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+ contrib/completion/git-completion.bash | 8 ++++----
+ t/t9902-completion.sh                  | 7 ++++++-
+ 2 files changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 482ca84b45..80dc717fe2 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -763,7 +763,7 @@ __git_aliases ()
+ __git_aliased_command ()
+ {
+ 	local word cmdline=3D$(git --git-dir=3D"$(__gitdir)" \
+-		config --get "alias.$1")
++		config --get "alias.$1" 2>/dev/null)
+ 	for word in $cmdline; do
+ 		case "$word" in
+ 		\!gitk|gitk)
+@@ -2571,7 +2571,7 @@ __git_main ()
+ 		--git-dir)   ((c++)) ; __git_dir=3D"${words[c]}" ;;
+ 		--bare)      __git_dir=3D"." ;;
+ 		--help) command=3D"help"; break ;;
+-		-c|--work-tree|--namespace) ((c++)) ;;
++		-c|-C|--work-tree|--namespace) ((c++)) ;;
+ 		-*) ;;
+ 		*) command=3D"$i"; break ;;
+ 		esac
+@@ -2604,13 +2604,13 @@ __git_main ()
+ 	fi
+=20
+ 	local completion_func=3D"_git_${command//-/_}"
+-	declare -f $completion_func >/dev/null && $completion_func && return
++	declare -f $completion_func >/dev/null 2>/dev/null && $completion_fun=
+c && return
+=20
+ 	local expansion=3D$(__git_aliased_command "$command")
+ 	if [ -n "$expansion" ]; then
+ 		words[1]=3D$expansion
+ 		completion_func=3D"_git_${expansion//-/_}"
+-		declare -f $completion_func >/dev/null && $completion_func
++		declare -f $completion_func >/dev/null 2>/dev/null && $completion_fu=
+nc
+ 	fi
+ }
+=20
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 2ba62fbc17..f5a669918d 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -480,7 +480,12 @@ test_expect_success 'general options plus command'=
+ '
+ 	test_completion "git --namespace=3Dfoo check" "checkout " &&
+ 	test_completion "git --paginate check" "checkout " &&
+ 	test_completion "git --info-path check" "checkout " &&
+-	test_completion "git --no-replace-objects check" "checkout "
++	test_completion "git --no-replace-objects check" "checkout " &&
++	test_completion "git --git-dir some/path check" "checkout " &&
++	test_completion "git -c conf.var=3Dvalue check" "checkout " &&
++	test_completion "git -C some/path check" "checkout " &&
++	test_completion "git --work-tree some/path check" "checkout " &&
++	test_completion "git --namespace name/space check" "checkout "
+ '
+=20
+ test_expect_success 'git --help completion' '
+--=20
+2.6.0.rc2.22.g7128296
