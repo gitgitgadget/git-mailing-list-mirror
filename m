@@ -1,96 +1,72 @@
-From: Remi Pommarel <repk@triplefau.lt>
-Subject: [PATCH v3 1/1] Makefile: link libcurl before libssl
-Date: Mon,  5 Oct 2015 21:24:03 +0200
-Message-ID: <1444073043-24618-1-git-send-email-repk@triplefau.lt>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Remi Pommarel <repk@triplefau.lt>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 05 21:24:26 2015
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 1/1] Makefile: make curl-config path configurable
+Date: Mon, 5 Oct 2015 12:31:27 -0700
+Message-ID: <20151005193127.GC11993@google.com>
+References: <1444072858-24399-1-git-send-email-repk@triplefau.lt>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>
+To: Remi Pommarel <repk@triplefau.lt>
+X-From: git-owner@vger.kernel.org Mon Oct 05 21:31:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjBN4-0003GJ-89
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 21:24:26 +0200
+	id 1ZjBU1-0000Ie-Fp
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 21:31:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751191AbbJETYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 15:24:19 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:33793 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751052AbbJETYS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 15:24:18 -0400
-Received: from mfilter27-d.gandi.net (mfilter27-d.gandi.net [217.70.178.155])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 809D1172097;
-	Mon,  5 Oct 2015 21:24:16 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter27-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
-	by mfilter27-d.gandi.net (mfilter27-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id 1jt-buxwi_Sf; Mon,  5 Oct 2015 21:24:15 +0200 (CEST)
-X-Originating-IP: 81.57.43.44
-Received: from localhost (unknown [81.57.43.44])
-	(Authenticated sender: repk@triplefau.lt)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 81833172080;
-	Mon,  5 Oct 2015 21:24:13 +0200 (CEST)
-X-Mailer: git-send-email 2.0.1
+	id S1751696AbbJETbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 15:31:33 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35739 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751674AbbJETba (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 15:31:30 -0400
+Received: by pacfv12 with SMTP id fv12so188914294pac.2
+        for <git@vger.kernel.org>; Mon, 05 Oct 2015 12:31:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=jpJUOlMYgbB9ViKIRX50aPYiUaGkpXx7H94oaYoxeYo=;
+        b=gywh0fYsESxuYho3a+AiOcMEqbBxiEDOCKM6Y/77a253gvoX0j02yXzke+rvCOPwsq
+         lQ64layj7VdECUrf6eVWz4c4o6aqaM4KRf5AYpbFkZslbJEenLdxDJsG0qeU+TvzXm6x
+         xiTaymABOZBKR/oaA+QHC2aUphf/biT1ziuruC0jdElYPFc4mhIPHEg3cGTMjjjUZWdo
+         4h57j5MUKEnvV24cOgb6XuTBx7dHCp7qYJodro8hBilOeBm5F6SGmckw/N5fP+F3kPoj
+         FhBRlxE0gyLDzE+R7AwqJ/aw1ebMx6lQcip9K9HJfnyru9romwaFfJE/EGAg2S1/VYoB
+         UAkw==
+X-Received: by 10.66.145.193 with SMTP id sw1mr42011046pab.74.1444073490121;
+        Mon, 05 Oct 2015 12:31:30 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:201e:549b:492b:2feb])
+        by smtp.gmail.com with ESMTPSA id rw8sm29269818pac.11.2015.10.05.12.31.28
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 05 Oct 2015 12:31:29 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1444072858-24399-1-git-send-email-repk@triplefau.lt>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279070>
 
-For static linking especially library order while linking is important. For
-example, libcurl wants symbols for libssl when building http-push, http-fetch
-and remote-curl. So for these programs libcurl has to be linked before libssl.
+Remi Pommarel wrote:
 
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
----
- Makefile | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+> There are situations, ie during cross compilation, where curl-config program
+> is not present in the PATH.
 
-diff --git a/Makefile b/Makefile
-index ce0cfe2..59a0747 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1029,7 +1029,6 @@ ifdef HAVE_ALLOCA_H
- endif
- 
- IMAP_SEND_BUILDDEPS =
--IMAP_SEND_LDFLAGS = $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
- 
- ifdef NO_CURL
- 	BASIC_CFLAGS += -DNO_CURL
-@@ -1086,6 +1085,7 @@ else
- 		endif
- 	endif
- endif
-+IMAP_SEND_LDFLAGS += $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
- 
- ifdef ZLIB_PATH
- 	BASIC_CFLAGS += -I$(ZLIB_PATH)/include
-@@ -1971,10 +1971,10 @@ git-imap-send$X: imap-send.o $(IMAP_SEND_BUILDDEPS) GIT-LDFLAGS $(GITLIBS)
- 
- git-http-fetch$X: http.o http-walker.o http-fetch.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
--		$(LIBS) $(CURL_LIBCURL)
-+		$(CURL_LIBCURL) $(LIBS)
- git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
--		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-+		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
- 
- git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAGS $(GITLIBS) $(VCSSVN_LIB)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS) \
-@@ -1988,7 +1988,7 @@ $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
- 
- $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
--		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-+		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
- 
- $(LIB_FILE): $(LIB_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $^
--- 
-2.0.1
+s/ie/e.g.,/
+
+[...]
+> @@ -374,6 +378,7 @@ LDFLAGS =
+>  ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+>  ALL_LDFLAGS = $(LDFLAGS)
+>  STRIP ?= strip
+> +CURL_CONFIG = curl-config
+
+Could this go down with the other programs (CC, AR, FIND, et al)?
+
+The rest looks good.
+
+Jonathan
