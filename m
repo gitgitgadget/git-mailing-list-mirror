@@ -1,91 +1,73 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v2 02/43] refs: make repack_without_refs and is_branch
- public
-Date: Mon, 05 Oct 2015 16:26:43 -0400
-Organization: Twitter
-Message-ID: <1444076803.5158.13.camel@twopensource.com>
-References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
-	 <1443477738-32023-3-git-send-email-dturner@twopensource.com>
-	 <5611FDD9.1050405@alum.mit.edu>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2 0/4] Fix locking issues on Windows with `git clone
+ --dissociate`
+Date: Mon, 05 Oct 2015 22:29:44 +0200
+Organization: gmx
+Message-ID: <cover.1444076827.git.johannes.schindelin@gmx.de>
+References: <682991036f1e8e974ed8ecd7d20dbcc6fb86c344.1443469464.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Oct 05 22:26:51 2015
+Cc: Max Kirillov <max@max630.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 22:29:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjCLS-0004wL-9H
-	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 22:26:50 +0200
+	id 1ZjCOS-0007YS-3f
+	for gcvg-git-2@plane.gmane.org; Mon, 05 Oct 2015 22:29:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007AbbJEU0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 16:26:46 -0400
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:34640 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751458AbbJEU0p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 16:26:45 -0400
-Received: by qgez77 with SMTP id z77so160953890qge.1
-        for <git@vger.kernel.org>; Mon, 05 Oct 2015 13:26:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=5dUvUmyrmu00gxxeLqkLkKbfXwqLKZizarcyMF5/QGo=;
-        b=NBfCt0NMj38OBU0wNPGLEdqvkSCAG1Z7MYGRmNYphIF0ehak3xoEn1u+ruFJ050JvR
-         VXtZRtf429VTS3zId1D11Mi0+Ob7CnzbYwag9tx+kpLgjR6TYswzL6s1l9ZtMGT0zCXt
-         lNdhDPxR17H6G6ecut8gzluysRxsz/7yjiAChv6Y0nJix0tQZHZX6cG9BGoaUFvag9Nu
-         V5E3J2QCWVOuD/7fPOOTJZBsj1/RuEueORKMFAYBgrEMxsQer8rsYXL0sYzxMu84rmo3
-         rcohZObrm7k61da7kAG+g6BTK0UIUyP5SAtm4BFs7RDstU3vIYNAdP/+vgUf/6/wOqeg
-         rb4A==
-X-Gm-Message-State: ALoCoQlL7eTdzed0HiiZzMKakBHXGLOSuRG/bBkcWIe/zp0bD/G0kqCfJNmN6IS61EGT0EUjIC5W
-X-Received: by 10.140.98.54 with SMTP id n51mr42096177qge.75.1444076805153;
-        Mon, 05 Oct 2015 13:26:45 -0700 (PDT)
-Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id 138sm4193541qhw.27.2015.10.05.13.26.43
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Oct 2015 13:26:44 -0700 (PDT)
-In-Reply-To: <5611FDD9.1050405@alum.mit.edu>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1751520AbbJEU3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 16:29:52 -0400
+Received: from mout.gmx.net ([212.227.15.19]:60612 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751300AbbJEU3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 16:29:51 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M9ra4-1ZuDw11kAC-00B4CK; Mon, 05 Oct 2015 22:29:45
+ +0200
+In-Reply-To: <682991036f1e8e974ed8ecd7d20dbcc6fb86c344.1443469464.git.johannes.schindelin@gmx.de>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:tBFVGfj12BWHUFcBOjQH8cuieomgE2Pey7ev0vfaIGusy2MYYkQ
+ aclsw366GgVR7Zty7Wuvl3MAiUN+s0VVwRUn9kyixA4+wadC3tt8Tgv2Bk5xUV+DgJLECrE
+ 4iu4vJAXSUaG8snijJe/zInGyGyTPLEOo5LXksq+rbGqTziFcKYJGQ1T2ti/rYISbJz5c2+
+ vTUq3WcvI+Zjuj/NNtY4Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ptj4Xtbt00Q=:OBcFWI98rJid51f9ybu3U9
+ WN4A+NytzMjBekwYH36mUzcv/HAzWAS6zMtsHzTTiz7c5GFgwJk6GdXIzTgRRN8Pk0t1TJgB8
+ mmyiV6wo1tqgtPlYPJlECd+UXj4KXApA2Hk/DtYg/rBBpKzw+5V7LMxsftJGX33LnJHlWY8LT
+ E+0xK770gAtBoFGSMtB5UU9Vt+TLEmzJfItbXSDDyasaGyHlW1Q1cX4xKiGy1zpgjMQA38HrI
+ YHbgzp2c+7z5ncZDCS8vKKjW1As6RFIRr46qdCzBslmbYyf7cpUPpKUCQtjgd1MrQ8GEhZ/He
+ Dl7MUZvJ55LoBslU47j4Hu5bBJCvG27CDLIA1/MqBiHWROZY8K8Ys2HlMUbrxaC3AXy4BHrq0
+ MrnyvtfwFjCkPWSwQRx/lEV2EBP/d2U1JVfJFecf1JXLcZoqz7DEJGp4NQwU7h/pnJqrKGKXu
+ /A0drAaHHC+EpJ1bWSgmU9KrnDnt5fjTQxgOzKsrwz2ZreLSJkfD4CY77mazxZoRdhAu18b8J
+ cSBLce2CwgQ+pSJFTIyieKVduXeQofXPemWqfF2691ddKiJ/fPIoWTa3LEzRi3+8Z36CHELM4
+ DfyvM0lDlBzMS4X/a5qFcmALBzV9me+PRi1xnkbo+Z0+JIk2zCpfWy1Q5YtyZAeejO0PG5N5y
+ zyAaP5KjsneHxotPKufjdlwMpxnGNjg61rRE65JjQ0uwdT1JVqKvtv5wLGZ0r4zh/kCtPkHHD
+ 4Dw4JBz7r+ie1hkF84C1W/Qr+0aJYMQuCQkGnrJzmAItPUJK6DgPiNQIdYKP2q/BnahxAhFd 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279080>
 
-On Mon, 2015-10-05 at 06:34 +0200, Michael Haggerty wrote:
-> On 09/29/2015 12:01 AM, David Turner wrote:
-> > Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> > Signed-off-by: David Turner <dturner@twopensource.com>
-> > ---
-> >  refs.c |  9 +--------
-> >  refs.h | 13 +++++++++++++
-> >  2 files changed, 14 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/refs.c b/refs.c
-> > index ce551e9..2741cc5 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -2826,14 +2826,7 @@ int pack_refs(unsigned int flags)
-> >  	return 0;
-> >  }
-> >  
-> > -/*
-> > - * Rewrite the packed-refs file, omitting any refs listed in
-> > - * 'refnames'. On error, leave packed-refs unchanged, write an error
-> > - * message to 'err', and return a nonzero value.
-> > - *
-> > - * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
-> > - */
-> > -static int repack_without_refs(struct string_list *refnames, struct strbuf *err)
-> > +int repack_without_refs(struct string_list *refnames, struct strbuf *err)
-> 
-> I looked for the corresponding change to remove `static` from
-> is_branch(). Apparently that function already had external linkage, even
-> though it was not listed in the header file. As a convenience to readers
-> you might note that peculiarity in the commit message.
+This is version 2, split into multiple commits for easier digestion.
 
-Will fix, thnaks.
+Max, I hope that this helps also your use case!
+
+Johannes Schindelin (4):
+  Demonstrate a Windows file locking issue with `git clone --dissociate`
+  Consolidate code to close a pack's file descriptor
+  Add a function to release all packs
+  clone --dissociate: avoid locking pack files
+
+ builtin/clone.c            |  4 +++-
+ cache.h                    |  1 +
+ sha1_file.c                | 56 ++++++++++++++++++++++++++++------------------
+ t/t5700-clone-reference.sh | 21 +++++++++++++++++
+ 4 files changed, 59 insertions(+), 23 deletions(-)
+
+-- 
+2.5.3.windows.1.3.gc322723
