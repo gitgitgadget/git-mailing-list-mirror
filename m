@@ -1,67 +1,82 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: git interactive rebase bug?
-Date: Mon, 5 Oct 2015 21:34:43 -0700
-Message-ID: <CA+P7+xq8V0tNXsRaKYDQ34CWLTUpq9kGbArJc0OgxSSkPzjy-w@mail.gmail.com>
-References: <CA+P7+xqMFFtVPnZ7Pw9B9oYXHe5N=Ectyd-M+_aGb2NKjRvLAg@mail.gmail.com>
- <CA+P7+xomv59bevbAMV=NYwo+UtY29OqVog3nDFUG8Jp1YbLYpw@mail.gmail.com> <xmqqsi5ox6ih.fsf@gitster.mtv.corp.google.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: What's cooking in git.git (Oct 2015, #01; Mon, 5)
+Date: Tue, 6 Oct 2015 06:45:49 +0200
+Message-ID: <561351FD.9020102@web.de>
+References: <xmqqwpv0x6op.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 06 06:35:13 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	remi.galan-alfonso@ensimag.grenoble-inp.fr
+X-From: git-owner@vger.kernel.org Tue Oct 06 06:46:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjJy2-0001y9-Du
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 06:35:10 +0200
+	id 1ZjK8g-0002Qh-PJ
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 06:46:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342AbbJFEfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2015 00:35:04 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:35856 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750902AbbJFEfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2015 00:35:03 -0400
-Received: by ioii196 with SMTP id i196so208772112ioi.3
-        for <git@vger.kernel.org>; Mon, 05 Oct 2015 21:35:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=O3kt8Rphhq65k8SmxbodxJRE7Yi6hv2CrSbY73pZyAo=;
-        b=yFlRvlNrSl8Fg6u3uWzkmW2L8VcB3WmM+MFESeAm2VLb1ukfP50k+LAKywR3StnAqD
-         ODwX4C0Sb0VDu+zxO6Zzf5Z+ooQTEX4pjJRpQgA0d54fH3wx0VGSRl3FlrKuiZY2D6rP
-         ZMyeNGWLcdhuY61kb7GS1XQ1+hq/BOBr0kENQfNLvS8hjYZgwwNjo8kW58UIsEMrHiER
-         m3SHWHuTS4h6zqwjdgXvobHLq+cheA+CRIwaLbD5qprI3hy/T5Ruv9H1WWpWM9bTAro/
-         llLD+P1GQv9AKzh8rDcgpgOcwhK6gMTXq2a9ueK5VFwwxl2ZtEjw3Pe1/CjEMXUZiyIR
-         h1eQ==
-X-Received: by 10.107.133.151 with SMTP id p23mr40262321ioi.71.1444106102522;
- Mon, 05 Oct 2015 21:35:02 -0700 (PDT)
-Received: by 10.107.132.155 with HTTP; Mon, 5 Oct 2015 21:34:43 -0700 (PDT)
-In-Reply-To: <xmqqsi5ox6ih.fsf@gitster.mtv.corp.google.com>
+	id S1751433AbbJFEqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2015 00:46:05 -0400
+Received: from mout.web.de ([212.227.15.14]:55419 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751009AbbJFEqE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2015 00:46:04 -0400
+Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0MIBu2-1Zm5IE0RJ8-003ylx; Tue, 06 Oct 2015 06:45:52
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.3.0
+In-Reply-To: <xmqqwpv0x6op.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:nf1cegb6RyQ7AbWqUJYAzP2wu9BaBnqVTVq5cAlpZF02kQUbEOJ
+ nosaqAaC/68d06E5FV4C4PYb/f0L1/CMQGzKr/KWMvagn+3/4/8hV9VCjxXdFYMXv4b9y90
+ KE9hI52vDTbWfTCSJLOuhOnyk4Hai4pctEPVpxd1mgM8+rKFmc5wrELSyS6nP7ugVKW1BsZ
+ k95LQWb1G/ZzJ8B8KdQng==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RYL6bx7K9XM=:wY5EROJwuGjxNIHeXdXRxt
+ y+D2Ua25Lj0RBdbW3kpMYetOVJ6ttYIBmZ6AamT3oBxzDKev27irqWITuI2NB5XR+LTZ+3Wcf
+ GQmdl+1jBDZixIIK4tBKCXvkhGQ2qnJvmlXORYqoc61XLRxt3u3WVZWwWT9ZCrkREbwTPky3s
+ JeZzmQRgo78liEAszDcrI7/gcfQ3C3py6rPuwXgXc7pRB7WNehw37w3IOpiSf+9AzQYAJFuda
+ F4x/YP4EB4QvW/lezIs9V3X+ZfTeWSh3ydt2g6aEfrUiduKQg9HSd6zxrS4rT2+jt6/S3PLwO
+ 0C9mPD6nf/0RIE2zpBIgQZfYI/8LCc91RnEYq33INeTqJi8JQsSMXIgTrvIncOiBiDuPzbjm9
+ tLbjDccchbpNIOgc4F1H22YrbU/3xxFQ22GjJ6zx42OU7z26+ksRFBAgD0YvWVH127G3D2bBI
+ R2//daBxdgEwtbKEb/WvZF2IqOm9UfmWLp5agrvGI3CHxBqci7xbOhKjwlclvyqv3JF1TpR1I
+ Lip5nWJcOV3f0a60EtpIm2tPJFXIaN/vlWGa/k9aWoeX3G0Qj90KrjQm/EPJIy4cd65/YXzKQ
+ cuXQaURiESy8kQF9GQZ2PBK2neftMAPHDgWHHFAtxtpe9MG9JlxTAyktuq9lk2x0kd1CcMhvI
+ jRIF8aov7WHqutKu/gZaQFBUk9JLfbiNcRT81knHX2c5ryayS1YwAiwwLXWjoThHHCa/5a13z
+ f0BMlD+9Sw6P1rLdn7CKYs6MKigVPzcssyMJGRHgG//j25/PXuGWNrkB/eO7xbg9yJsW8khv 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279118>
 
-On Mon, Oct 5, 2015 at 4:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Platform, editor, terminal emulator, specifics?
->
+On 06.10.15 00:59, Junio C Hamano wrote:
+> * gr/rebase-i-drop-warn (2015-10-02) 2 commits
+>  - rebase-i: loosen over-eager check_bad_cmd check
+>  - rebase-i: explicitly accept tab as separator in commands
+> 
+>  "git rebase -i" had a minor regression recently, which stopped
+>  considering a line that begins with an indented '#' in its insn
+>  sheet not a comment, which is now fixed.
+> 
+>  Will merge to 'next'.
+This is breaking using a non-gnu sed, which doesn't handle "\t"...
+The solution is to replace "\t" with a literal TAB.
 
-I run ssh to a tmux terminal emulator and run vim, I normally see this
-when my local client is a windows machine running putty. After I close
-the editor it just hangs. and I have to Ctrl-C to get it to go. I
-suppose it could be an issue with vim or similar.
 
-I never noticed the problem with the same setup when I wasn't using
-the next branch. Tomorrow I will have some time to try out the 2.5.x
-tag and maybe see if I can bisect if it doesn't have an issue. I can
-try 3-4 rebase interactive attempts it usually shows up pretty fast.
-What bothers me is that it's not 100% reproducible.
 
-I'll follow up with more detail tomorrow.
-
-Regards,
-Jake
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 3da3ba3..3de0b1d 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1232,7 +1232,7 @@ test_expect_success 'tabs and spaces are accepted in the todolist' '
+ 	write_script add-indent.sh <<-\EOF &&
+ 	(
+ 		# Turn single spaces into space/tab mix
+-		sed "1s/ /\t/g; 2s/ /  /g; 3s/ / \t/g" "$1"
++		sed "1s/ /	/g; 2s/ /  /g; 3s/ / 	/g" "$1"
+ 		printf "\n\t# comment\n #more\n\t # comment\n"
+ 	) >$1.new
+ 	mv "$1.new" "$1"
