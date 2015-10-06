@@ -1,99 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 8/9] branch: use ref-filter printing APIs
-Date: Tue, 06 Oct 2015 21:03:49 +0200
-Message-ID: <vpqmvvvhl9m.fsf@grenoble-inp.fr>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 6/9] ref-filter: introduce format_ref_array_item()
+Date: Wed, 7 Oct 2015 00:46:09 +0530
+Message-ID: <CAOLa=ZSr19+0OVoyACdN_YfSFeWugtS40WNu0GB9=uZFEu8N5A@mail.gmail.com>
 References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
-	<1443807546-5985-9-git-send-email-Karthik.188@gmail.com>
-	<vpqvbao86pj.fsf@grenoble-inp.fr>
-	<CAOLa=ZSk8-6nkfEd+Kz1srOJxPLj6+zLEU9DnLgW3rW1O6kZGg@mail.gmail.com>
-	<vpq7fn1qhp2.fsf@grenoble-inp.fr>
-	<CAOLa=ZS5x=ksfnBt1kLp5bJJHmqeBztR7Zn7U5VKZN-56T-_5A@mail.gmail.com>
+ <1443807546-5985-7-git-send-email-Karthik.188@gmail.com> <vpqoagg9n2l.fsf@grenoble-inp.fr>
+ <CAOLa=ZTMf9i=+9Rgi9oO==vr_JGtG3J9DvQWk18Zx-yd5_35XA@mail.gmail.com> <vpq1td9zolv.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 06 21:04:15 2015
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 06 21:17:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjXX3-0004lg-OZ
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 21:04:14 +0200
+	id 1ZjXji-0004on-12
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 21:17:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713AbbJFTED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2015 15:04:03 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41691 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752456AbbJFTEA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2015 15:04:00 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t96J3kvm030367
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 6 Oct 2015 21:03:47 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t96J3nSJ029936;
-	Tue, 6 Oct 2015 21:03:49 +0200
-In-Reply-To: <CAOLa=ZS5x=ksfnBt1kLp5bJJHmqeBztR7Zn7U5VKZN-56T-_5A@mail.gmail.com>
-	(Karthik Nayak's message of "Tue, 6 Oct 2015 21:00:27 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 06 Oct 2015 21:03:47 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t96J3kvm030367
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1444763028.80257@SRDDAs3vJBF7qm1dEHL9Ng
+	id S1752760AbbJFTQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2015 15:16:55 -0400
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:36015 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752701AbbJFTQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2015 15:16:39 -0400
+Received: by vkfp126 with SMTP id p126so123823943vkf.3
+        for <git@vger.kernel.org>; Tue, 06 Oct 2015 12:16:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YUlPH0gQIf3HlxvfF2xMNWMj7UFatExE5TWexKT2iWk=;
+        b=Kah3wmqMDDYRCGQexmaTWWKfufR/abZuGz8gY5aeDk0D4fNcKAboqAmhaRbibQi4/9
+         L7K4YFeG96phnYs2cQYatJ/5PQqDjYctFZBi8LEixbBg4+RKWwITpaj4mBeORnIwVnRi
+         6Gx0BrcW3Z/Alb2DhDvZACvoUXVD0MhQna1LzugbhhHLEq3Hunb01zQuIWGsIp88DTT9
+         48ektONi16LZS+zAwN5c8JzZYggiUbj4UtVPG9ayTTxR/LgLXgVrGQmVtu+Z5M+Dn3fE
+         yHWhH4IKzQP5/pcz1V9RZydR5+MlPi1c3uQdnHESv6BoYAKWKng3mjqYkuR3CKpVWg/d
+         SeAg==
+X-Received: by 10.31.161.142 with SMTP id k136mr25287064vke.17.1444158998442;
+ Tue, 06 Oct 2015 12:16:38 -0700 (PDT)
+Received: by 10.103.23.193 with HTTP; Tue, 6 Oct 2015 12:16:09 -0700 (PDT)
+In-Reply-To: <vpq1td9zolv.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279160>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Mon, Oct 5, 2015 at 2:19 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>> which does not play well with the implementation of --column as done
+>> in tag.c. Where, If I'm not wrong the --column option captures all
+>> output, formats it and then prints it to stdout. Hence when using
+>> colors, we're told that the printing isn't done to a tty which
+>> supports colors, hence we lose out on colors.
+>
+> What I don't understand is how --column is different from --no-column
+> wrt colors.
+>
+> In any case, this should be explained better in comments.
 
-> If you look closely, thats only for the local branches, the remotes
-> have `align` atom when
-> printing in verbose.
+Well, If we use column the way we do in tag.c then it'll replace the tty
+and color will not print color because it will assume the output tty doesn't
+support colors.
 
-Yes, but that's already one thing factored out of the if, even if it's
-just for local.
-
-Actually, I think you can also factor some parts out of the
-%(if:notequals=remotes). In 'local', you have an %(if) to display either
-"* " or "  ", and in remote you always start with "  ". Why not always
-apply the %(if), and let it display "  " if not displaying the current
-branch? Similarly, the "verbose" part of remote branches seems like a
-particular case of the one for local ones (remotes don't have tracking
-branches, so the tracking info should expand to the empty string).
-
-To go a bit further, you can pre-build a string or strbuf aligned_short
-with value like "%%(align:20,left)%%(refname:short)%%(end)" and use it
-where needed (it's not a constant because you have to introduce maxwidth
-into the string, so it's not a candidate for #define).
-
-> I could cook up this:
-
-Your mailer broke the formatting, so it looks terrible, but from what I
-could parse, it's already much better than the previous one. It's not a
-matter of size of the function, I very much prefer reading 10 lines of
-nice code than 4 lines like
-
-> +                        local = xstrfmt("%%(if)%%(HEAD)%%(then)* %s%%(else)  %%(end)%%(align:%d,left)%%(refname:short)%%(end)%s"
-> +                                        " %%(objectname:short,7) %%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s] %%(end)"
-> +                                        "%%(if)%%(upstream:track)%%(then)%%(upstream:track) %%(end)%%(contents:subject)",
-> +                                        branch_get_color(BRANCH_COLOR_CURRENT), maxwidth, branch_get_color(BRANCH_COLOR_RESET),
-> +                                        branch_get_color(BRANCH_COLOR_UPSTREAM), branch_get_color(BRANCH_COLOR_RESET));
-
-;-).
-
-One obvious issue with the initial version was this big hard-to-parse
-block, but another one is that the code did not make it easy to
-understand what was changing depending on which branch of the if, and
-depending on local/remote. It's getting much easier already.
+I hope that's what you're asking
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Regards,
+Karthik Nayak
