@@ -1,83 +1,98 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH] error message typo fixes: unkown -> unknown
-Date: Tue,  6 Oct 2015 16:00:33 -0400
-Message-ID: <1444161633-1816-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 06 22:00:57 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: Clarification on Submodule/Subproject naming
+Date: Tue, 6 Oct 2015 15:00:44 -0700
+Message-ID: <CAGZ79kYyagjxyV0Da3FW3zWuJ+wD=FTPvzYebV7ER4TjTnMXpg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Oct 07 00:01:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjYPt-0007NS-3U
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 22:00:53 +0200
+	id 1ZjaI8-0000EM-H7
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 00:01:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753933AbbJFUAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2015 16:00:48 -0400
-Received: from mail-qg0-f52.google.com ([209.85.192.52]:36715 "EHLO
-	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753913AbbJFUAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2015 16:00:47 -0400
-Received: by qgx61 with SMTP id 61so185044972qgx.3
-        for <git@vger.kernel.org>; Tue, 06 Oct 2015 13:00:47 -0700 (PDT)
+	id S1753079AbbJFWAw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Oct 2015 18:00:52 -0400
+Received: from mail-yk0-f177.google.com ([209.85.160.177]:34708 "EHLO
+	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753027AbbJFWAp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Oct 2015 18:00:45 -0400
+Received: by ykdg206 with SMTP id g206so216143000ykd.1
+        for <git@vger.kernel.org>; Tue, 06 Oct 2015 15:00:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=uEwWqAsghrfiJ9sdbbFVJHiLUNHWjMia0iwLCS8WpUQ=;
+        b=jH6oG8j8nQDanP7klzbkqtO/lE9kTV/o6rza3wq0DKIxFAwnS/Q1m9rD1AZX1HHFEb
+         QyKMiU4qsTST0ku/4hDkK7jJzGXI5B0P6NXjMO8e7IcIrkdguehJJZIxGogULq93haU6
+         cY9PrzzAYSS+wK84tjQQIgNdXosaviA2MZRDYzY5S+Lvh6tlq/IXDH1ztUVmaEgPjpax
+         CWIl6GvXz7TAJKjCHZ9cwY25s448pwnqPQ5ns1R6n0lwDfhdvtBZh6SJEk44sY7A8aVT
+         5wwiCFPSoQXnevdsuOdR9IJPb683NENtj0ki8YXYuvNG781APLvHvM0B3yt1MwEuqF5u
+         ti8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=QDZIzBLKUxO1f3U5pRoLhI4gV8W4A2lBQCC0+ZX1Oek=;
-        b=jB0x1uV++fEqiC0mU1KWvLppeVDrkYE3w0KycIEX3a7lpReCPnvZR1xk6bVbbo1KQP
-         btvSVDIipG6RvaGOkEc0lVOW/3rdqsUpvyvJrLS509Doabu2JROT1UGHpsUvzKHVGV2O
-         F6oqEgI0KbFvysJLe6LsN2yOChd1BZ3sIMuKJJGqLPkYsLsLvVqvv2JvqSy6PWzqibS5
-         3pQ7+VDIapYFQwvDDDDU54Zsl/ONGgsYqTbdcFCJgrHdwx0ypKDVnU3OMAqvJNUKtl8b
-         aiZOwfuVL8Tu0PnVZ+kvAe7dqGS5ZQIwjJAZy9l+02FT+BE+M6VyJFLrIH+AM/Zt6WTw
-         HZmg==
-X-Gm-Message-State: ALoCoQk4iPVaSykxUWqHcsKiJ7sMyfLbisFFgxyGVwF9P1r7Z/16GAfx06cwT6+5X1C/oF5d83Ii
-X-Received: by 10.140.35.75 with SMTP id m69mr50393525qgm.39.1444161647169;
-        Tue, 06 Oct 2015 13:00:47 -0700 (PDT)
-Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id g197sm14495004qhc.35.2015.10.06.13.00.45
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 06 Oct 2015 13:00:46 -0700 (PDT)
-X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=uEwWqAsghrfiJ9sdbbFVJHiLUNHWjMia0iwLCS8WpUQ=;
+        b=I1PdqaDGbStvEU8bI55H8Lp+/s4vdWs/okcAfQw8jiibZLwZbrKcVsAw8ki5Etf4Ru
+         JXCqCc7nRU9MIl+vSZhDXh0fPllIxXSfX0D9krLqVJ9Orya4wO5u2blt8jVjSZ+M2h6c
+         stDGejNTfkMSWq+ZZ9qTsEQoxwWzXeps0K/tg/TRydf+AJ3Am80UnkCNq0V2lhwIZ66h
+         vWzMmEkJePaLLr7bfjBjdc0hNXpVQ2tIAN8m0LfrPirIfky9iDpqq5m+TNXZ1mS6Qprg
+         EY+HKtAJo3vnlyOmoyZT3FYjAC927K3D1oaEl2IsnObjT8cxdgHB/ATLD2lrAVgLHahF
+         VZXw==
+X-Gm-Message-State: ALoCoQk9RhBEvJSCDNSZ+yrFPQDg5SpQNKOStrZW1zIllTiEz9Y1LXw14JnLeb763BkcFrp5sEmy
+X-Received: by 10.13.198.194 with SMTP id i185mr30478648ywd.68.1444168844917;
+ Tue, 06 Oct 2015 15:00:44 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Tue, 6 Oct 2015 15:00:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279166>
 
-Fix two instances of a typo in user-visible error messages.
+So a discussing started in a Gerrit change [1] if we want to name it
+submodule or subproject.
+We decided to stick with the git core convention of naming it
+subproject for now.
 
-Signed-off-by: David Turner <dturner@twopensource.com>
----
- connect.c   | 2 +-
- sha1_file.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+But that lead me to the question: What is the difference of a
+submodule and a subproject?
 
-diff --git a/connect.c b/connect.c
-index ced4961..d3283b8 100644
---- a/connect.c
-+++ b/connect.c
-@@ -255,7 +255,7 @@ static const char *prot_name(enum protocol protocol)
- 		case PROTO_GIT:
- 			return "git";
- 		default:
--			return "unkown protocol";
-+			return "unknown protocol";
- 	}
- }
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index d295a32..bb5a3b8 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1719,7 +1719,7 @@ static int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
- 		strbuf_add(oi->typename, type_buf, type_len);
- 	/*
- 	 * Set type to 0 if its an unknown object and
--	 * we're obtaining the type using '--allow-unkown-type'
-+	 * we're obtaining the type using '--allow-unknown-type'
- 	 * option.
- 	 */
- 	if ((flags & LOOKUP_UNKNOWN_OBJECT) && (type < 0))
--- 
-2.4.2.644.g97b850b-twtrsrc
+As far as I can tell they are synonyms (internally also called
+GIT_LINK, but we never expose that to the users), where the term
+submodule was coined later in the game, subproject being there as the
+first term introduced in version 1.5.
+
+So is it worth to unify that same concept hiding between two names?
+
+Looking through the code we cannot switch to submodule as the literal
+string "subproject"
+is used for diffs in the plumbing layer.
+
+But getting rid of submodule is also not easy, as there is
+git-submodule.sh as a direct command.
+
+So then there is also git subtree, which "allow subprojects to be
+included within a subdirectory of the main project, optionally
+including the subproject=E2=80=99s entire history." (the man page)
+
+So can I understand a subproject as either a submodule or a subtree ?
+If so would it make sense to add an entry to gitglossary to state that
+subprojects are generic term for
+having some kind of structure? (a subdirectory containing independent
+stuff could be considered a
+subproject. i.e. We could make contrib/examples the historic-git subpro=
+ject ?)
+
+Any advice welcome!
+Stefan
+
+[1] https://gerrit-review.googlesource.com/#/c/70948/
