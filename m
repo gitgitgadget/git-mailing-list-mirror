@@ -1,48 +1,99 @@
-From: Bart Bogaerts <bartbogaerts@gmail.com>
-Subject: Git mv does not work with recursive submodules
-Date: Tue, 6 Oct 2015 15:27:13 +0300
-Message-ID: <CAOG-3GJtdpEhhaTZuKbMZqhq1qb=Ya7z8b8anZmK0+BO31FfcA@mail.gmail.com>
+From: Stijn De Ruyck <Stijn.DeRuyck@onsemi.com>
+Subject: Branch information (git branch/status) inconsistent when in
+ detached HEAD state
+Date: Tue, 6 Oct 2015 13:03:51 +0000
+Message-ID: <247ABEF3B84FB7499C074A0FE8058694153CB176@ONWATER51M.ad.onsemi.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 06 14:28:01 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 06 15:04:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjRLb-0006hD-6I
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 14:27:59 +0200
+	id 1ZjRuY-0003x3-2y
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 15:04:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486AbbJFM1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2015 08:27:55 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:33197 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438AbbJFM1x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2015 08:27:53 -0400
-Received: by wiclk2 with SMTP id lk2so164423322wic.0
-        for <git@vger.kernel.org>; Tue, 06 Oct 2015 05:27:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=Q7tpSTn9n95FwTcHhBdSB5TKuOStnRrlPQ0NvcGgTfg=;
-        b=D5GMI78FFnq0WzwBcQ0QImtTESUr5ieMf6YJG3LNg2GGah8J04NCWcsUiJE2DMFCq8
-         OpDGhP34/PDxZ4qzn6al6GCoDJ+HnAk/L/JMOwNIaVEOPXpM0m5DwZ8joTDDktK2fNq6
-         oVr91RnZseHhtg+HCpwwuQlvMpb0qkbT1kP4hjf3Io0pnqlBq54Zqcv71hkBWDCf85Jz
-         ROv34bLzjruq9IAicoBMqV5QfJSiMN/wNES4syAGm8ut/Au3ik0hkoK6Tu7DF6LzEsiw
-         b+heNsFCD/CQpkbqU2fA89+5vz3yrH9HR9FTCadGppdMj6asESLZmAfqJApv15myTYIt
-         xMWA==
-X-Received: by 10.194.184.136 with SMTP id eu8mr41194800wjc.151.1444134472412;
- Tue, 06 Oct 2015 05:27:52 -0700 (PDT)
-Received: by 10.27.176.76 with HTTP; Tue, 6 Oct 2015 05:27:13 -0700 (PDT)
+	id S1751472AbbJFND4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2015 09:03:56 -0400
+Received: from mx0b-00183b01.pphosted.com ([67.231.157.42]:35676 "EHLO
+	mx0b-00183b01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751073AbbJFND4 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Oct 2015 09:03:56 -0400
+Received: from pps.filterd (m0048103.ppops.net [127.0.0.1])
+	by mx0b-00183b01.pphosted.com (8.14.5/8.14.5) with SMTP id t96CtO63001084
+	for <git@vger.kernel.org>; Tue, 6 Oct 2015 07:03:55 -0600
+Received: from em2.onsemi.com (em2.onsemi.com [65.197.242.106])
+	by mx0b-00183b01.pphosted.com with ESMTP id 1xbry0j4m6-1
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 06 Oct 2015 07:03:55 -0600
+Received: from dns2.onsemi.com (dns2 [10.253.88.2])
+	by em2.onsemi.com (8.13.8/8.13.8) with ESMTP id t96D3rWe009807
+	for <git@vger.kernel.org>; Tue, 6 Oct 2015 06:03:53 -0700
+Received: from ONWATER53C.ad.onsemi.com (onwater53c.onsemi.com [10.253.116.147])
+	by dns2.onsemi.com (8.13.8+Sun/8.11.6) with ESMTP id t96D3rAZ015883
+	for <git@vger.kernel.org>; Tue, 6 Oct 2015 06:03:53 -0700 (MST)
+Received: from ONWATER51M.ad.onsemi.com ([fe80::70a7:46e:5e2f:c00d]) by
+ ONWATER53C.ad.onsemi.com ([::1]) with mapi id 14.03.0224.002; Tue, 6 Oct 2015
+ 06:03:52 -0700
+Thread-Topic: Branch information (git branch/status) inconsistent when in
+ detached HEAD state
+Thread-Index: AdEAN2M14NEzEpFyTRmqYaRTIrf/GA==
+Accept-Language: nl-NL, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.253.116.1]
+x-esetresult: clean, is OK
+x-esetid: E296D73E822878E9B0DA89
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.14.151,1.0.33,0.0.0000
+ definitions=2015-10-06_09:2015-10-06,2015-10-06,1970-01-01 signatures=0
+X-Proofpoint-Spam-Reason: safe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279132>
 
-For a complete description of this bug, see
-http://stackoverflow.com/questions/32782382/git-moving-submodules-recursively-nested-submodules/32924692?noredirect=1#comment53760394_32924692
+Hello,
 
--- 
-Bart Bogaerts
+Consider a repository with a develop branch tracking origin/develop and where HEAD = 545a36f = develop = origin/develop.
+Tested with Git 2.4.3 and 1.8.3.4 on Linux.
+
+1) git checkout develop
+2) git branch | head -1 (or git status)
+* develop
+3) git checkout origin/develop
+Note: checking out 'origin/develop'.
+You are in 'detached HEAD' state.
+4) git branch | head -1
+* (HEAD detached at origin/develop)
+5) git checkout 545a36f
+6) git branch | head -1
+* (HEAD detached at origin/develop)
+7) git checkout develop
+8) git branch | head -1 (or git status)
+* develop
+9) git checkout 545a36f
+Note: checking out '545a36f'.
+You are in 'detached HEAD' state.
+10) git branch | head -1 (or git status)
+* (HEAD detached at 545a36f)
+11) git checkout origin/develop
+12) git branch | head -1 (or git status)
+* (HEAD detached at 545a36f)
+
+As you can see, checking out a revision by SHA1 after checking out a local branch tells you you are detached at that SHA1. Ok.
+But, checking out a revision by SHA1 after checking out a remote tracking branch tells you you are detached at that remote tracking branch.
+And checking out a remote tracking branch after checking out a revision by SHA1 tells you you are detached at that SHA1.
+
+This is confusing. Is this by design?
+For a script I am writing, it would be great if the output would be consistent. Checkout origin/develop should always say "detached at origin/develop". Checkout 545a36f should always say "detached at 545a36f".
+
+It looks like the detached head information is only updated when a detached head state is entered and not anymore when a checkout occurs "within" a detached head state.
+
+Best regards,
+
+Stijn
