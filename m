@@ -1,67 +1,91 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] pretend_sha1_file(): Change return type from int to void
-Date: Tue, 06 Oct 2015 15:16:12 +0200
+Subject: [PATCH v3 0/4] Fix locking issues on Windows with `git clone
+ --dissociate`
+Date: Tue, 06 Oct 2015 15:17:36 +0200
 Organization: gmx
-Message-ID: <632cbcf1dc9fa45ce71693a2cfae73e4@dscho.org>
-References: <1444133704-29571-1-git-send-email-tklauser@distanz.ch>
+Message-ID: <cover.1444131898.git.johannes.schindelin@gmx.de>
+References: <682991036f1e8e974ed8ecd7d20dbcc6fb86c344.1443469464.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tobias Klauser <tklauser@distanz.ch>
-X-From: git-owner@vger.kernel.org Tue Oct 06 15:16:23 2015
+Cc: Max Kirillov <max@max630.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 06 15:17:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjS6O-0003H5-Ro
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 15:16:21 +0200
+	id 1ZjS7s-0004Du-Hd
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 15:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752196AbbJFNQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2015 09:16:17 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49543 "EHLO mout.gmx.net"
+	id S1752227AbbJFNRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2015 09:17:48 -0400
+Received: from mout.gmx.net ([212.227.17.22]:55811 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751706AbbJFNQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2015 09:16:16 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MIiHs-1ZldxN3vse-002DWG; Tue, 06 Oct 2015 15:16:14
+	id S1751460AbbJFNRr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2015 09:17:47 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MaIw0-1a3Apl00ka-00JvLk; Tue, 06 Oct 2015 15:17:37
  +0200
-In-Reply-To: <1444133704-29571-1-git-send-email-tklauser@distanz.ch>
+In-Reply-To: <682991036f1e8e974ed8ecd7d20dbcc6fb86c344.1443469464.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:6MP4G9qz3qXYTlhbMKHSTfPg0IIM/+Ika2yVV3OkGDVH1nkQORb
- 9Zn0PrUWjgzzCo946FmIgysOnMOSGh6ASXdJ5qrNjNlRA2PhH1MSkPsTaabqEJtrWtLOHFd
- vFnk1jfDEAPcGHqU9P/ZJrW1JcHQCff+jAkt/7ibhY5hLbDx4JhbfPQ/xbDd8dRB3BHpq94
- MwFVmX0/Ll//Qgugb03SQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3Mbyr52Ckps=:GglxaydtaMclQM4/M/S7PP
- msx8OnawtYasCFM/rTOFRihuqMC4xZs0Hlo838bgRbA9eeot5XZ7F1ngUBOJTE7hIBDabRd31
- KdEbYTCexUPCZZdrHFzUxOw/FPnBHmn+9vVtx1pY8G/uif0JGJ3UALySqfFO21EpbNYp7pns1
- 50Pj3DZMhSJNSITJHcCp8OklUuhBIevP8s1jUu20bwtVz5kEXXa75wkeD/NZVq7QxRMtG5eFq
- GxyzVKIxKnSlNzslFwzOEF75vcxjjLglrhPVFAQ/iYWh5ystcGSdNuHmuIAlk7Hl06jJ9kC1N
- dKi1gfkr5YEjdjeoK7BDyqMxuI4KyKdefVFXhW0gPXAIKlCWvSR3fkWcJ7pjnSmrxewZolDLg
- I677cclp1I0lqgaqiJNLRW67AxWK8aCX/reJ1SstBHONrP2rsp5DgplgvMUwXOqc6IPANM5Pa
- rR1t8sTTgW5W6el/mFz9r3+CZueh2XnpVdsBuLqCVcgiDrrWpqtRnqj8b1XfKlIKMYqcgyytu
- A+yxwAszrndQ+LS42W2yexwLf1kKtB1hVIS+zD/m6kMJfNZAP8K3ZE/6KW3Kkm0VLMcDE5HF6
- qJykVeQQgBqnWmpPHbJRzB5b6vA1+dZHWPzRuxsE+CxcLPIJJvdAVt5UIppJlxBtDWNdfkoSt
- YVpRgUUjdQYj1ZdcNRiL1bjOcBi8yBM4KUhEDJcpEzWaAGCSIJjPEXzXCXA2zx6aX3WsWzI4X
- q4QIyxgbs09DBr6vMLbnYh7yOoXkfJsgIMeQmYl1yVntD9WfeCn7EXvdTs50OUatV+PU6lTT 
+X-Provags-ID: V03:K0:Y+W/+D46P2waP4XLUZWnp9SeKxFeUeD53Ra74YTJDrYows8Ja56
+ Pq0E0gL22V2JaGfQYwDMSjw3oEtxt5qI3W/leqgyh1ygGRFcO4XW2p92oExTHH36SzovROl
+ qONaPjQ4mzWxSpbMNbRDUV/uGbaCAw1wPNKzWLrddtnx0oFT4gFhwkekwKlEy6bW5Ll08Z4
+ fD98PppIgAVE8SONtPayw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/mlodPRYZ5g=:CbW8j8p2PPWGoySX67S7G4
+ 33Z490etEnwwyZobxvKjC2ZHDVdc3WaEW8tq+0ktlItVYhlj8dT/U1gq2U7jb81R6X5Jn5Ahu
+ B7BCQru+KDLdp1tFICqMUNv19tYSyS1cKRxesWgcBhQzGLOL6dWpe6DUm/FM2nDn0x7pxfYQY
+ vAdtHbsiuw2FZkS1Bs6TUyWJgptYT3FuRlAQzajd5zZEGPqrNSo6dnjSGynBcPHhB5SjdU/5h
+ xManwwi85F/gmcaj2q9xH8YlOBicT9gxzJ1AOyAa1pvNTil2FqXjWcFBWuxRQs0+6FcrO/oif
+ kAFpQHSD5rfRaDaOFs6QYYJUfD7cEJdu+Epu7tYbwRN1r5eKHF4h+8EPfCZbHEfR6tyrCCbxv
+ KSCa1qT/5PP12z8QO6jR+aovM12Q5m3cWQTNCx3vcEoXvMYO6MktOtnEJ/ZcyaSn0kFCyMW3L
+ zKeAASCj4UCwUCy8JQJdh4gp11ohMXNk9OjOCcHMzf5+3Xelv8K6uvr4sKtttdUu5LxR1koRW
+ qiIwWpEsnaFCmTvzaHMRgivTHd6Aebz0PwcA0d/zrkz6iSMWMkU1Rq6XU7PSGcEMW+JRWEQW+
+ q5KYPfF4RzVwqMsaWG5bj2JTjSCSuGhfTgHuzmbiUIyM1JZjH5YWTT7Sq3GKQ+pRGwNC00Oqv
+ BTh0eKgP6AgC++IPz6xvcciyR7qYSigM53DKH7AYfOQndIQUN+tizsugsnuKWctuQyZ2/zZTV
+ zRHPuWsfjrtnhTdnxP6FHAEpNHMhhClPvk6ezCJixfX6cuFwEbqWyebQoSGesdZgk4zfZLS4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279135>
 
-Hi Tobias,
+This is version 3, adding that BUG! message if do_not_close was set.
 
-On 2015-10-06 14:15, Tobias Klauser wrote:
-> prented_sha1_file() always returns 0 and its only callsite in
-> builtin/blame.c doesn't use the return value, so change the return type
-> to void.
+Max, I still hope that this patch series helps also your use case!
 
-While this commit message is technically correct, it would appear that there are some things left unsaid.
+Interdiff below the diffstat.
 
-Is there a problem with the current code that is solved by not returning 0? If so, could you add it to the commit message? And in particular, change the oneline appropriately?
+Johannes Schindelin (4):
+  Demonstrate a Windows file locking issue with `git clone --dissociate`
+  Consolidate code to close a pack's file descriptor
+  Add a function to release all packs
+  clone --dissociate: avoid locking pack files
 
-Ciao,
-Johannes
+ builtin/clone.c            |  4 +++-
+ cache.h                    |  1 +
+ sha1_file.c                | 59 +++++++++++++++++++++++++++++-----------------
+ t/t5700-clone-reference.sh | 21 +++++++++++++++++
+ 4 files changed, 62 insertions(+), 23 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index fe823fe..ca699d7 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -810,7 +810,10 @@ void close_all_packs(void)
+ 	struct packed_git *p;
+ 
+ 	for (p = packed_git; p; p = p->next)
+-		close_pack(p);
++		if (p->do_not_close)
++			die("BUG! Want to close pack marked 'do-not-close'");
++		else
++			close_pack(p);
+ }
+ 
+ 
+-- 
+2.6.1.windows.1
