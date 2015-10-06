@@ -1,85 +1,70 @@
 From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v2 18/43] refs-be-files.c: add a backend method
- structure with transaction functions
-Date: Mon, 05 Oct 2015 20:20:29 -0400
+Subject: Re: [PATCH v2 39/43] refs: break out a ref conflict check
+Date: Mon, 05 Oct 2015 20:28:34 -0400
 Organization: Twitter
-Message-ID: <1444090829.7739.4.camel@twopensource.com>
+Message-ID: <1444091314.7739.5.camel@twopensource.com>
 References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
-	 <1443477738-32023-19-git-send-email-dturner@twopensource.com>
-	 <56122EB6.2020501@alum.mit.edu>
-	 <xmqq8u7hz0qw.fsf@gitster.mtv.corp.google.com>
+	 <1443477738-32023-40-git-send-email-dturner@twopensource.com>
+	 <56123DAD.9010204@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Ronnie Sahlberg <sahlberg@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 06 02:27:48 2015
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 06 02:33:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjFzg-0008CC-F9
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 02:20:36 +0200
+	id 1ZjG7V-0000MV-FB
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 02:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751227AbbJFAUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2015 20:20:32 -0400
-Received: from mail-qg0-f45.google.com ([209.85.192.45]:35007 "EHLO
-	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751165AbbJFAUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2015 20:20:31 -0400
-Received: by qgt47 with SMTP id 47so164982075qgt.2
-        for <git@vger.kernel.org>; Mon, 05 Oct 2015 17:20:31 -0700 (PDT)
+	id S1751900AbbJFA2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2015 20:28:37 -0400
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:35831 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751248AbbJFA2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2015 20:28:36 -0400
+Received: by qkap81 with SMTP id p81so76667005qka.2
+        for <git@vger.kernel.org>; Mon, 05 Oct 2015 17:28:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
          :references:organization:content-type:mime-version
          :content-transfer-encoding;
-        bh=5TFlwWcrF+edwMC88JFzxoiqmIp6WjWXmiTM/EMwjmk=;
-        b=jO6BjfD6OabaRscxc7DI/WQKv7Ooq4NqJLMuQS0NQrbGhyC2clNJWcuqHkenzIvuX1
-         YmFJtjBPS8aqge6aKTtM7jIF73hOUz6lcyf3WcgJdV47UWO1jy0JskADnIqUvix4Spop
-         EafV5BQG+/0CsqxxjEoEODmyn8dpk032IdVznNIENjsPuVE6R+hAdAIZeJycJafn07D1
-         FIUOafqWk+ZIbEnEVyuoxMuhj7M7spS7RU7BI4t209SAkJxo0jHRtmvPKmST95UDYgWU
-         2RVoU5K1gW+Q6XysIqOmaO4cQlAzuiGoAcYeYksuUeDXE2RdrGe8DUEp4sMlB3hyIBYx
-         W30Q==
-X-Gm-Message-State: ALoCoQkrG+xIUzV5P2GgTKPCCHOxITweKW66aHTdSLgqxPtH+vvfCNwQhL5GGqGSQLllC1CsMbb6
-X-Received: by 10.140.93.53 with SMTP id c50mr42251475qge.59.1444090831307;
-        Mon, 05 Oct 2015 17:20:31 -0700 (PDT)
+        bh=CXzbF/hxhQrRG1gLtIxF1ENvJLGqfkFIgFpmSq2qp/Q=;
+        b=PbaEYDQMECkfcZFGEbGAE+R6OOdc4XCYcxBtUKH0nYc9D/simRqQ9X/nAPuP+uRAlk
+         Wt2JEynhNvbeu5xSOXhPYdLVUM3CFAgqaJeTWjQYFJO+P/ks8zH6IbfINlrLppzBXiSr
+         wS+IYd1rRo6Dcj5WgYIVDARvT+/r2bYExCl/USZGnr2FHax1oPOQairUDeCwY3MO9Sjs
+         d+BzGINzY2Dzdev8Hmz8wrwZYcOhPjQd9hfV4xY3lFDbXJ0yLfkz038JvXADWcxjZoRQ
+         /4MJOgZAa63WvrcVpDC0IfUVbKa3QjPjtIMl5TZJijZCZyggGKYit3c2GjuOzd7ulxw6
+         Vu6g==
+X-Gm-Message-State: ALoCoQkH8iaKSHWVO4Dt8YHN6M85cun1T/7ARV3gcz7z2tHrKMH4WBFuw3fPcaaucd1gkvHOPJl/
+X-Received: by 10.55.195.198 with SMTP id r67mr32935758qkl.10.1444091315880;
+        Mon, 05 Oct 2015 17:28:35 -0700 (PDT)
 Received: from ubuntu (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id o20sm12568083qge.28.2015.10.05.17.20.29
+        by smtp.gmail.com with ESMTPSA id 82sm12500583qhs.8.2015.10.05.17.28.35
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Oct 2015 17:20:30 -0700 (PDT)
-In-Reply-To: <xmqq8u7hz0qw.fsf@gitster.mtv.corp.google.com>
+        Mon, 05 Oct 2015 17:28:35 -0700 (PDT)
+In-Reply-To: <56123DAD.9010204@alum.mit.edu>
 X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279108>
 
-On Mon, 2015-10-05 at 10:25 -0700, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Mon, 2015-10-05 at 11:06 +0200, Michael Haggerty wrote:
+> > +	/*
+> > +	 * Check for entries in extras that start with "$refname/". We
+> > +	 * do that by looking for the place where "$refname/" would be
+> > +	 * inserted in extras. If there is an entry at that position
+> > +	 * that starts with "$refname/" and is not in skip, then we
+> > +	 * have a conflict.
+> > +	 */
 > 
-> >> +/* refs backends */
-> >> +typedef struct ref_transaction *(*ref_transaction_begin_fn)(struct strbuf *err);
-> >
-> > Hmmm, I thought our convention was to define typedefs for functions
-> > themselves, not for the pointer-to-function; e.g.,
-> >
-> >     typedef struct ref_transaction *ref_transaction_begin_fn(struct
-> > strbuf *err);
-> >
-> > (which would require `struct ref_be` to be changed to
-> >
-> >         ref_transaction_begin_fn *transaction_begin;
-> >
-> > etc.) But now as I grep through the code it looks like both conventions
-> > are used. So never mind :-)
-> 
-> Well spotted.  My recollection is the same and we do prefer the
-> latter (I think all early function typedefs by Linus were done that
-> way).  It would be better to correct existing mistakes we added over
-> time and certainly not add more of them in new code.
+> Would you please turn this comment (or something like it) into a
+> docstring for this function in refs.h?
 
-Will fix, thanks.
+Yes, thanks.
