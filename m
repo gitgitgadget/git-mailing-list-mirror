@@ -1,88 +1,99 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v2 40/43] refs: allow ref backend to be set for clone
-Date: Tue, 06 Oct 2015 14:09:23 -0400
-Organization: Twitter
-Message-ID: <1444154963.7739.30.camel@twopensource.com>
-References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
-	 <1443477738-32023-41-git-send-email-dturner@twopensource.com>
-	 <5612439E.4080200@alum.mit.edu> <1444094977.7739.24.camel@twopensource.com>
-	 <20151006015806.GA4972@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 8/9] branch: use ref-filter printing APIs
+Date: Tue, 06 Oct 2015 21:03:49 +0200
+Message-ID: <vpqmvvvhl9m.fsf@grenoble-inp.fr>
+References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
+	<1443807546-5985-9-git-send-email-Karthik.188@gmail.com>
+	<vpqvbao86pj.fsf@grenoble-inp.fr>
+	<CAOLa=ZSk8-6nkfEd+Kz1srOJxPLj6+zLEU9DnLgW3rW1O6kZGg@mail.gmail.com>
+	<vpq7fn1qhp2.fsf@grenoble-inp.fr>
+	<CAOLa=ZS5x=ksfnBt1kLp5bJJHmqeBztR7Zn7U5VKZN-56T-_5A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 06 20:09:31 2015
+Content-Type: text/plain
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 06 21:04:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjWg6-0001Ls-Qf
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 20:09:31 +0200
+	id 1ZjXX3-0004lg-OZ
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 21:04:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752204AbbJFSJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2015 14:09:26 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:36640 "EHLO
-	mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751568AbbJFSJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2015 14:09:25 -0400
-Received: by qkht68 with SMTP id t68so5111272qkh.3
-        for <git@vger.kernel.org>; Tue, 06 Oct 2015 11:09:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=fizSgxODcnnjKwXY2ziis6x7b80u1k1qquprrXezZWM=;
-        b=F854rojyQBbruj4lvbs7I+rzmwKoL+SjFBaJaYVmbGTmG2MyqobbJePVzzYCckjmcm
-         pyvvXe3Iww+oBFTNJWsYgiH9qpCDvR7vUoKgrODlXFHZ5M0KSzG5znW2hETI9PBHlp9F
-         DHAfcNIBxhaKPS3B9tptgPqtBONC86AyLUOOU0srvfHyZR5wRVgGH78UFBPSqGRULLY1
-         jbe2nDGrDZum38mX5ywZV+T7BwKaX36z8b9ceC9RT9g3Kh7wUe5fWBiE74mtGIlv3qy1
-         RVupaSOuH9lAv6CP8nK6kmb7zOfE6ZmfEiNzEF7UMu9ihN0UgF1qIaP3dlIBah83uKT3
-         ne0Q==
-X-Gm-Message-State: ALoCoQmImQbnSNcdj8Kwk23lHTSSRjjpL9JDvO5yxeUOlkldn8qcaZLn3UVxiYr+Vz4fcp0r/Gcp
-X-Received: by 10.55.51.84 with SMTP id z81mr48970620qkz.21.1444154965156;
-        Tue, 06 Oct 2015 11:09:25 -0700 (PDT)
-Received: from ubuntu ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id z196sm14288725qhd.22.2015.10.06.11.09.24
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Oct 2015 11:09:24 -0700 (PDT)
-In-Reply-To: <20151006015806.GA4972@sigill.intra.peff.net>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1752713AbbJFTED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2015 15:04:03 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41691 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752456AbbJFTEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2015 15:04:00 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t96J3kvm030367
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 6 Oct 2015 21:03:47 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t96J3nSJ029936;
+	Tue, 6 Oct 2015 21:03:49 +0200
+In-Reply-To: <CAOLa=ZS5x=ksfnBt1kLp5bJJHmqeBztR7Zn7U5VKZN-56T-_5A@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 6 Oct 2015 21:00:27 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 06 Oct 2015 21:03:47 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t96J3kvm030367
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1444763028.80257@SRDDAs3vJBF7qm1dEHL9Ng
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279159>
 
-On Mon, 2015-10-05 at 21:58 -0400, Jeff King wrote:
-> On Mon, Oct 05, 2015 at 09:29:37PM -0400, David Turner wrote:
-> 
-> > > Therefore, I don't think this can be merged without a bump to
-> > > core.repositoryformatversion. Such a bump will tell well-behaved older
-> > > Git clients keep their hands off the repository. (Of course repositories
-> > > that use the files backend can continue using
-> > > core.repositoryformatversion 0.)
-> > > 
-> > > I thought Peff proposed a way to do such a bump, including a way to
-> > > extend repositories one by one with new features. But that was something
-> > > that we were chatting about off-list.
-> > > 
-> > > I haven't reviewed the actual code in this patch yet but I wanted to get
-> > > the above comment on your radar.
-> > > 
-> > > Michael
-> > 
-> > I'll fix this to upgrade to v=1 when the lmdb refs backend is in use,
-> > and to give sensible error messages in a v1 repo if built without LMDB.
-> 
-> I think the relevant series is:
-> 
->   http://article.gmane.org/gmane.comp.version-control.git/272447
-> 
-> It did not seem too controversial, but it mostly got dropped amidst the
-> release, and I haven't reposted it yet.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-That patch will work perfectly for this use case.  I'll add it to my
-series when I reroll, and set an extension.
+> If you look closely, thats only for the local branches, the remotes
+> have `align` atom when
+> printing in verbose.
+
+Yes, but that's already one thing factored out of the if, even if it's
+just for local.
+
+Actually, I think you can also factor some parts out of the
+%(if:notequals=remotes). In 'local', you have an %(if) to display either
+"* " or "  ", and in remote you always start with "  ". Why not always
+apply the %(if), and let it display "  " if not displaying the current
+branch? Similarly, the "verbose" part of remote branches seems like a
+particular case of the one for local ones (remotes don't have tracking
+branches, so the tracking info should expand to the empty string).
+
+To go a bit further, you can pre-build a string or strbuf aligned_short
+with value like "%%(align:20,left)%%(refname:short)%%(end)" and use it
+where needed (it's not a constant because you have to introduce maxwidth
+into the string, so it's not a candidate for #define).
+
+> I could cook up this:
+
+Your mailer broke the formatting, so it looks terrible, but from what I
+could parse, it's already much better than the previous one. It's not a
+matter of size of the function, I very much prefer reading 10 lines of
+nice code than 4 lines like
+
+> +                        local = xstrfmt("%%(if)%%(HEAD)%%(then)* %s%%(else)  %%(end)%%(align:%d,left)%%(refname:short)%%(end)%s"
+> +                                        " %%(objectname:short,7) %%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s] %%(end)"
+> +                                        "%%(if)%%(upstream:track)%%(then)%%(upstream:track) %%(end)%%(contents:subject)",
+> +                                        branch_get_color(BRANCH_COLOR_CURRENT), maxwidth, branch_get_color(BRANCH_COLOR_RESET),
+> +                                        branch_get_color(BRANCH_COLOR_UPSTREAM), branch_get_color(BRANCH_COLOR_RESET));
+
+;-).
+
+One obvious issue with the initial version was this big hard-to-parse
+block, but another one is that the code did not make it easy to
+understand what was changing depending on which branch of the if, and
+depending on local/remote. It's getting much easier already.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
