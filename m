@@ -1,71 +1,87 @@
-From: Tobias Klauser <tklauser@distanz.ch>
-Subject: Re: [PATCH] pretend_sha1_file(): Change return type from int to void
-Date: Tue, 6 Oct 2015 15:51:01 +0200
-Message-ID: <20151006135101.GA11304@distanz.ch>
-References: <1444133704-29571-1-git-send-email-tklauser@distanz.ch>
- <632cbcf1dc9fa45ce71693a2cfae73e4@dscho.org>
+From: Mr Tava Ithia <tava.ithia@rbs.co.uk>
+Subject: Unable to get GIT GUI to start on Windows XP - Git-1.9.4-preview20140929
+Date: Tue, 6 Oct 2015 13:49:29 +0000 (UTC)
+Message-ID: <loom.20151006T154739-494@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 06 16:00:29 2015
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 06 16:05:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjSn1-0004M7-AT
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 16:00:23 +0200
+	id 1ZjSri-0007Sj-Ux
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 16:05:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752715AbbJFOAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2015 10:00:12 -0400
-Received: from sym2.noone.org ([178.63.92.236]:47821 "EHLO sym2.noone.org"
+	id S1752337AbbJFOFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2015 10:05:08 -0400
+Received: from plane.gmane.org ([80.91.229.3]:59603 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752635AbbJFOAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2015 10:00:11 -0400
-X-Greylist: delayed 547 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Oct 2015 10:00:11 EDT
-Received: by sym2.noone.org (Postfix, from userid 1002)
-	id 3nVgDk0rfCzQWbp; Tue,  6 Oct 2015 15:51:02 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <632cbcf1dc9fa45ce71693a2cfae73e4@dscho.org>
-X-Editor: Vi IMproved 7.3
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752251AbbJFOFH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2015 10:05:07 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ZjSrY-0007Mw-Gl
+	for git@vger.kernel.org; Tue, 06 Oct 2015 16:05:04 +0200
+Received: from 155.136.80.171 ([155.136.80.171])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Oct 2015 16:05:04 +0200
+Received: from tava.ithia by 155.136.80.171 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Oct 2015 16:05:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 155.136.80.171 (Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279148>
 
-Hi Johannes
+Dear Support
 
-Thanks for your feedback.
+Can you please assist me, as I've got this issue starting up GIT GUI on 
+Windows XP, Service Pack 3
 
-On 2015-10-06 at 15:16:12 +0200, Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
-> Hi Tobias,
-> 
-> On 2015-10-06 14:15, Tobias Klauser wrote:
-> > prented_sha1_file() always returns 0 and its only callsite in
-> > builtin/blame.c doesn't use the return value, so change the return type
-> > to void.
-> 
-> While this commit message is technically correct, it would appear that there are some things left unsaid.
-> 
-> Is there a problem with the current code that is solved by not returning 0? If so, could you add it to the commit message? And in particular, change the oneline appropriately?
+Whenever I try to start-up GIT GUI, I get the following error 
+message "Error in startup script", please see below.
 
-There's no problem with the current code other than that the return
-value is unused and thus unnecessary for correct funcionality. So it's
-certainly not a functional problem but rather a cosmetic change.
+Error in startup script
 
-Does such a change even make sense (it's one of my first patch to git,
-so I'm not really sure what your criteria in this respect are)?
+unable to open key: The system cannot find the file specified.
+  while executing
+"registry values $key "LocaleName""
+  (procedure "mgcat::Init" line 50)
+  invoked from within
+"msgcat::Init"
+ (file "C:/Program Files/The Git Development 
+Community/Git/lib/tcl8/8.5/msgcat-1.5.0.tm" line 603)
+ invoked from within
+"source -encoding utf-8 {C:/Program Files/The Git Development 
+Community/Git/lib/tcl8/8.5/msgcat-1.5.0.tm}"
+ ("package ifneeded msgcat 1.5.0" script)
+ invoked from within
+"package require msgcat"
+ (file "C:/Program Files/The Git Development Community/Git/libexec/git-
+core/git-gui.tcl" line 94)
+ invoked from within
+"source [file join [file dirname [info script]] git-gui.tcl]"
+ (file "C;\Program Files\The Git Development Community\Git\libexec\git-
+core\git2 line 25)
 
-If yes, would something like the following bring across the intention
-more clearly?
+Git Release Notes (Git-1.9.4-preview20140929)
+Last update: 29 September 2014
 
-  pretend_sha1_file() always returns 0 and its only user in
-  builtin/blame.c doesn't use the returned value. Thus, the return value
-  is unnecessary and the return type of pretend_sha1_file() can be
-  changed to void.
+I've been searching the web forums for weeks now and speaking to other 
+members of my team, but know one has been able to find the solution.
 
-Cheers
-Tobias
+Any assistance you can give me would be very much appreciated.
+
+Kind regards
+
+Tava Ithia 
