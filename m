@@ -1,91 +1,97 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 0/4] Fix locking issues on Windows with `git clone
- --dissociate`
-Date: Tue, 06 Oct 2015 15:17:36 +0200
+Subject: [PATCH v3 1/4] Demonstrate a Windows file locking issue with `git
+ clone --dissociate`
+Date: Tue, 06 Oct 2015 15:18:03 +0200
 Organization: gmx
-Message-ID: <cover.1444131898.git.johannes.schindelin@gmx.de>
+Message-ID: <278799b6ec328bf9abc028a03298c6c29222adcb.1444131898.git.johannes.schindelin@gmx.de>
 References: <682991036f1e8e974ed8ecd7d20dbcc6fb86c344.1443469464.git.johannes.schindelin@gmx.de>
+ <cover.1444131898.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: Max Kirillov <max@max630.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 06 15:17:53 2015
+X-From: git-owner@vger.kernel.org Tue Oct 06 15:18:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjS7s-0004Du-Hd
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 15:17:52 +0200
+	id 1ZjS8B-0004Rt-Iw
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 15:18:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752227AbbJFNRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2015 09:17:48 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55811 "EHLO mout.gmx.net"
+	id S1751915AbbJFNSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2015 09:18:07 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56469 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751460AbbJFNRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2015 09:17:47 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MaIw0-1a3Apl00ka-00JvLk; Tue, 06 Oct 2015 15:17:37
+	id S1752132AbbJFNSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2015 09:18:05 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lp8h6-1aFEe80IHk-00eqEK; Tue, 06 Oct 2015 15:18:04
  +0200
-In-Reply-To: <682991036f1e8e974ed8ecd7d20dbcc6fb86c344.1443469464.git.johannes.schindelin@gmx.de>
+In-Reply-To: <cover.1444131898.git.johannes.schindelin@gmx.de>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:Y+W/+D46P2waP4XLUZWnp9SeKxFeUeD53Ra74YTJDrYows8Ja56
- Pq0E0gL22V2JaGfQYwDMSjw3oEtxt5qI3W/leqgyh1ygGRFcO4XW2p92oExTHH36SzovROl
- qONaPjQ4mzWxSpbMNbRDUV/uGbaCAw1wPNKzWLrddtnx0oFT4gFhwkekwKlEy6bW5Ll08Z4
- fD98PppIgAVE8SONtPayw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/mlodPRYZ5g=:CbW8j8p2PPWGoySX67S7G4
- 33Z490etEnwwyZobxvKjC2ZHDVdc3WaEW8tq+0ktlItVYhlj8dT/U1gq2U7jb81R6X5Jn5Ahu
- B7BCQru+KDLdp1tFICqMUNv19tYSyS1cKRxesWgcBhQzGLOL6dWpe6DUm/FM2nDn0x7pxfYQY
- vAdtHbsiuw2FZkS1Bs6TUyWJgptYT3FuRlAQzajd5zZEGPqrNSo6dnjSGynBcPHhB5SjdU/5h
- xManwwi85F/gmcaj2q9xH8YlOBicT9gxzJ1AOyAa1pvNTil2FqXjWcFBWuxRQs0+6FcrO/oif
- kAFpQHSD5rfRaDaOFs6QYYJUfD7cEJdu+Epu7tYbwRN1r5eKHF4h+8EPfCZbHEfR6tyrCCbxv
- KSCa1qT/5PP12z8QO6jR+aovM12Q5m3cWQTNCx3vcEoXvMYO6MktOtnEJ/ZcyaSn0kFCyMW3L
- zKeAASCj4UCwUCy8JQJdh4gp11ohMXNk9OjOCcHMzf5+3Xelv8K6uvr4sKtttdUu5LxR1koRW
- qiIwWpEsnaFCmTvzaHMRgivTHd6Aebz0PwcA0d/zrkz6iSMWMkU1Rq6XU7PSGcEMW+JRWEQW+
- q5KYPfF4RzVwqMsaWG5bj2JTjSCSuGhfTgHuzmbiUIyM1JZjH5YWTT7Sq3GKQ+pRGwNC00Oqv
- BTh0eKgP6AgC++IPz6xvcciyR7qYSigM53DKH7AYfOQndIQUN+tizsugsnuKWctuQyZ2/zZTV
- zRHPuWsfjrtnhTdnxP6FHAEpNHMhhClPvk6ezCJixfX6cuFwEbqWyebQoSGesdZgk4zfZLS4 
+X-Provags-ID: V03:K0:ig5IzlyRx0MR4/YYTRwgeV2PfqLqp6gp28cLCpnNjR/EDrN5vr/
+ Ev9/HRMGqw6yqODt6JKESU0fSEyxGUukWl1/iwV7A2ofMyEQyzdPdXsOIZ1yFnEtmlAIis8
+ MposOmtxCOznHIV50vDVYL770wx662xhr6n+iw+hsVmQY2UkXROWFKFpigi944iGEWTahb3
+ IxYvEc0WjRmo3EjFstPUQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Quv5uZCUzxQ=:Ka/o5RvsQgZ1hAOYYOgEah
+ v/rNFvS1jbB6jgGj4qcBfTmwRztin65nfmsUjL4WQd9GMqyFpQjADM9RKbU/2+mpiR8Qih1F5
+ D8E25c5Jfic8aOw8GoeVzdX72SaKCwJjdSo6vL/uOK+VKHr3CIjPguqiFMoQubP9A+I4z3tZU
+ sqxecSJZYkHkKO7sVjO7IG7APtCk0nHhoBEgVomh8n262ZPU+RBX2bcNSCEzSLjg3C+Gks8qD
+ P0wFe2mCicD2DmNjefNpbH4XM+PrDUPoi6ge+ebPcX1x9J/x7KNfYtpnlLC2EK/NG+TcPXVTJ
+ nrgXnsTz7O2c56AeloTe7eCKwc+ckTj6xUH6G3XKI2jeg2UA83WsJnIiPkmatNjfU86omPjHw
+ B8l6bhLG/1Wqdhyka1u2KODRQtCgei8qU0D3ld5FxAzY5Ugmbpardg/qgAWJoLFBScgeE2EqL
+ HD2XMn4yEI/w+dAqOyriLvOBwqmy0E8goY0UtTv3rB6Li6fuCbIvmyCAwNLtgMBk3uabwTfc3
+ baq3XVb03bTrWwBqEavPQcKvJ2GjneZ47C7L6sSQ8jkVeIMuwudr4Cz7jzUXLYmfTGLBLXtWM
+ H8Ydo9TGBhyHYYrMBRO3mTRvjqcasn72O7dSVxcp4LrslUPZbi+StMxiO7wXySR9g+ckZ9WSn
+ 8xThcYZg4wHOMvRf75BwLItQh2tJzv2cnrjBz4hxWITuhUriX65FWcS1rBl63dVjDkfRi9k7Q
+ 0y0+X5mSsIi39NYymrRnfPMlzC40rRwhf9US0RujBK0/klIe7zVhDD5zqMIUvHIvZsAA5vll 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279136>
 
-This is version 3, adding that BUG! message if do_not_close was set.
+On Windows, dissociating from a reference can fail very easily due to
+pack files that are still in use when they want to be removed.
 
-Max, I still hope that this patch series helps also your use case!
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t5700-clone-reference.sh | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-Interdiff below the diffstat.
-
-Johannes Schindelin (4):
-  Demonstrate a Windows file locking issue with `git clone --dissociate`
-  Consolidate code to close a pack's file descriptor
-  Add a function to release all packs
-  clone --dissociate: avoid locking pack files
-
- builtin/clone.c            |  4 +++-
- cache.h                    |  1 +
- sha1_file.c                | 59 +++++++++++++++++++++++++++++-----------------
- t/t5700-clone-reference.sh | 21 +++++++++++++++++
- 4 files changed, 62 insertions(+), 23 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index fe823fe..ca699d7 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -810,7 +810,10 @@ void close_all_packs(void)
- 	struct packed_git *p;
+diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
+index ef1779f..f7cec85 100755
+--- a/t/t5700-clone-reference.sh
++++ b/t/t5700-clone-reference.sh
+@@ -188,5 +188,26 @@ test_expect_success 'clone and dissociate from reference' '
+ 	test_must_fail git -C R fsck &&
+ 	git -C S fsck
+ '
++test_expect_failure MINGW 'clone, dissociate from partial reference and repack' '
++	rm -fr P Q R &&
++	git init P &&
++	(
++		cd P &&
++		test_commit one &&
++		git repack &&
++		test_commit two &&
++		git repack
++	) &&
++	git clone --bare P Q &&
++	(
++		cd P &&
++		git checkout -b second &&
++		test_commit three &&
++		git repack
++	) &&
++	git clone --bare --dissociate --reference=P Q R &&
++	ls R/objects/pack/*.pack >packs.txt &&
++	test_line_count = 1 packs.txt
++'
  
- 	for (p = packed_git; p; p = p->next)
--		close_pack(p);
-+		if (p->do_not_close)
-+			die("BUG! Want to close pack marked 'do-not-close'");
-+		else
-+			close_pack(p);
- }
- 
- 
+ test_done
 -- 
 2.6.1.windows.1
