@@ -1,85 +1,98 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [BUG?] parallel make interdepencies
-Date: Tue, 6 Oct 2015 14:33:41 +0100
-Message-ID: <20151006133341.GS17201@serenity.lan>
-References: <56138273.6010204@drmicha.warpmail.net>
- <e76ba2a01053392526a499ec9bff0d37@dscho.org>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/4] Consolidate code to close a pack's file descriptor
+Date: Tue, 06 Oct 2015 15:42:34 +0200
+Organization: gmx
+Message-ID: <fb0ee65afcb4087de1137d27991dc896@dscho.org>
+References: <682991036f1e8e974ed8ecd7d20dbcc6fb86c344.1443469464.git.johannes.schindelin@gmx.de>
+ <cover.1444076827.git.johannes.schindelin@gmx.de>
+ <a1f0d9339a9de95ba3f5eaaaf2e1a712629ad5d4.1444076827.git.johannes.schindelin@gmx.de>
+ <xmqqio6lxcci.fsf@gitster.mtv.corp.google.com>
+ <b7d0f89bb94f88cb8d600a461dfe7ea1@dscho.org>
+ <xmqq1td9x8pz.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 06 15:34:05 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Max Kirillov <max@max630.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 06 15:42:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjSNW-0005l1-G6
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 15:34:02 +0200
+	id 1ZjSVw-0002I5-Kh
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 15:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751443AbbJFNd6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Oct 2015 09:33:58 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:60282 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750999AbbJFNd5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Oct 2015 09:33:57 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id D4527CDA5BB;
-	Tue,  6 Oct 2015 14:33:56 +0100 (BST)
-X-Quarantine-ID: <vLjHxwx-bvI0>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1.001
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.001 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_20=-0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id vLjHxwx-bvI0; Tue,  6 Oct 2015 14:33:52 +0100 (BST)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 1A0CD866016;
-	Tue,  6 Oct 2015 14:33:43 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <e76ba2a01053392526a499ec9bff0d37@dscho.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1752718AbbJFNml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2015 09:42:41 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56904 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752205AbbJFNmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2015 09:42:40 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LzKQf-1aeDwQ3p9F-014Sbb; Tue, 06 Oct 2015 15:42:35
+ +0200
+In-Reply-To: <xmqq1td9x8pz.fsf@gitster.mtv.corp.google.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:fxvHLxrFBZDmzqDsVI7HwNr4MYBH5o6ovu9AGai9dzCuvhx3LE3
+ R1AvB5h7xCWerralElRvHo4VXlC8zQRQrcNCOf3w+87d9wwivd3GbBEmmN97+MUw1M+de/8
+ yozSzwEbgGazGLUC6F0mmmPWM4P/qFkfyvRT2DZr7YfaawhdZ3EvdmDIF4VB0SC4X98mcVM
+ FuYryfdxr7TQDd7vBEWDA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OLMTlnV9V4Y=:ji3rHaJ1pbTWw/Hq5dyrfs
+ rLGDawA4xLkmJIe8AaF104ZCCZTqrNxRcjvUufh9PWDACCXIL/mjw1RoxgylTI1R4cuNdlyg9
+ LPpLGD9XxOKfptHRh+QGi2jyhit6VboDju0hvDCnJJshUZnWxfGL+y/8Q3amkYC2mzDun3HkH
+ hvGV2ws54Krn5kZuVE2d14lvqMFdaZ1rdr2oNxWLWfjtySEdniwhCObyw75kBZicJk+fZk9O+
+ fHPadWbLp0mrXaFFak/5oQL80cpob9BI7Im8seuCPRtV7B80dlpxGmCJPTaFWYo6CTLcKMs0i
+ dwy1ZiftB0m5cXuhEckJhzHZ40rzL9e/wJr3bIfLC5yyA25Q+fF56/Fs6FzrI0vtHQcUTgjW4
+ KlQJbHj30mZlQo2+mIYO2HUBCEairxXYeRE5gePeEDghheLX8IeqVXItHtU/eSIflHiWqCFMp
+ sRJucCMs/PMfF8qoJMnGDkEXRNnBnrKpbonX8OJy1Hyd07mnfy4fy/aISaGHDVZAkZY6Up+ix
+ 93HkxVDGkmuY3TkEBG0QqduWP4UyxAdA7KMd5oGhg4dZcjPg1zGhHwXaCfVV6TP8wcEz5s3iL
+ g5IaRMXB80YM2DyD5Xx1xQjYzAxUyjTG86a8MW3U5roDBR01jPSL+oNezJFCFIImWcmudHPDw
+ 6nZua0XIXV30ZBXbniFYjfW9W2oEzffRriG2obhObsytvdoQvHemPabrfL18SwIzaOfqIhZYV
+ VNaMgWeuG0CoA2zH5SlRHgvAovQWphWnn4wdlrqTnH0PXzQhcX0HXezLVwM3wY5f+zXFZ2ti 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279142>
 
-On Tue, Oct 06, 2015 at 03:13:05PM +0200, Johannes Schindelin wrote:
-> Hi Michael,
->=20
-> On 2015-10-06 10:12, Michael J Gruber wrote:
-> > "make -j3" just errored out on me, a follow-up "make" succeeded". T=
-his
-> > looks like an interdependency issue, but I don't know how to track =
-it:
-> >=20
-> >     GEN git-web--browse
-> >     GEN git-add--interactive
-> >     GEN git-difftool
-> > mv: der Aufruf von stat f=C3=BCr =E2=80=9Eperl.mak=E2=80=9C ist nic=
-ht m=C3=B6glich: Datei oder
-> > Verzeichnis nicht gefunden
-> >=20
-> > (cannot stat "perl.mak")
->=20
-> This one sounds awfully familiar. Although I only encountered this if
-> I specified `make -j15 clean all`, i.e. *both* "clean" and "all"...
+Hi Junio,
 
-I've seen something like this after upgrading perl (I can't remember th=
-e
-exact error, so it may not be the same problem but I'm pretty sure it
-involves perl.mak).  The problem was a result of the perl library path
-changing, but I never got around to creating a patch.
+On 2015-10-06 00:15, Junio C Hamano wrote:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+>>>> +				&& !p->do_not_close)
+>>>> +				close_pack_fd(p);
+>>>
+>>> I wonder how this do_not_close bit should interact with "we are
+>>> shutting down (or we are spawning another to do the real work, while
+>>> we won't do anything useful anymore), so close everything down".
+>>
+>> The `close_all_packs()` function is meant for the use case where you
+>> really close all the packs, no question asked.
+>>
+>> I cannot think of a use case where it would make sense to try to be
+>> gentle, yet still ask for *all* of the packs to be closed. Maybe you
+>> can think of one to convince me that it might make sense to respect
+>> the `do_not_close` flag in such a function? Because so far, I am
+>> totally unconvinced.
+> 
+> Do not wait for being convinced forever, as I am not interested in
+> convincing you either way.  Decision by made-up examples or lack of
+> imagination is a waste of time ;-).
+> 
+> My earlier "I wonder" leads me to totally different conclusion,
+> which is "we declare that it is a bug for any caller to call
+> close-all-packs while marking any open pack with do_not_close bit".
+> 
+> Which merely means that while iterating over packs in the
+> "close-all" loop, we should throw a die("BUG") at the caller if that
+> bit is on.  That way, we won't have to rely on "we did not think of
+> a good use case so we unconditionally closed the packs without
+> telling the remainder of the system, hopefully we broke nothing."
 
-I thought I remembered someone else posting a patch to address this, bu=
-t
-I can't find it so perhaps I'm remembering commit 07981dc (Makefile:
-rebuild perl scripts when perl paths change, 2013-11-18).
+I just sent another iteration out that adds this sanity check.
+
+Ciao,
+Dscho
