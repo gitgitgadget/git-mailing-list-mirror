@@ -1,99 +1,76 @@
-From: Stijn De Ruyck <Stijn.DeRuyck@onsemi.com>
-Subject: Branch information (git branch/status) inconsistent when in
- detached HEAD state
-Date: Tue, 6 Oct 2015 13:03:51 +0000
-Message-ID: <247ABEF3B84FB7499C074A0FE8058694153CB176@ONWATER51M.ad.onsemi.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [BUG?] parallel make interdepencies
+Date: Tue, 06 Oct 2015 15:13:05 +0200
+Organization: gmx
+Message-ID: <e76ba2a01053392526a499ec9bff0d37@dscho.org>
+References: <56138273.6010204@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 06 15:04:07 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Oct 06 15:13:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjRuY-0003x3-2y
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 15:04:06 +0200
+	id 1ZjS3R-0001Ie-64
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 15:13:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751472AbbJFND4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2015 09:03:56 -0400
-Received: from mx0b-00183b01.pphosted.com ([67.231.157.42]:35676 "EHLO
-	mx0b-00183b01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751073AbbJFND4 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Oct 2015 09:03:56 -0400
-Received: from pps.filterd (m0048103.ppops.net [127.0.0.1])
-	by mx0b-00183b01.pphosted.com (8.14.5/8.14.5) with SMTP id t96CtO63001084
-	for <git@vger.kernel.org>; Tue, 6 Oct 2015 07:03:55 -0600
-Received: from em2.onsemi.com (em2.onsemi.com [65.197.242.106])
-	by mx0b-00183b01.pphosted.com with ESMTP id 1xbry0j4m6-1
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 06 Oct 2015 07:03:55 -0600
-Received: from dns2.onsemi.com (dns2 [10.253.88.2])
-	by em2.onsemi.com (8.13.8/8.13.8) with ESMTP id t96D3rWe009807
-	for <git@vger.kernel.org>; Tue, 6 Oct 2015 06:03:53 -0700
-Received: from ONWATER53C.ad.onsemi.com (onwater53c.onsemi.com [10.253.116.147])
-	by dns2.onsemi.com (8.13.8+Sun/8.11.6) with ESMTP id t96D3rAZ015883
-	for <git@vger.kernel.org>; Tue, 6 Oct 2015 06:03:53 -0700 (MST)
-Received: from ONWATER51M.ad.onsemi.com ([fe80::70a7:46e:5e2f:c00d]) by
- ONWATER53C.ad.onsemi.com ([::1]) with mapi id 14.03.0224.002; Tue, 6 Oct 2015
- 06:03:52 -0700
-Thread-Topic: Branch information (git branch/status) inconsistent when in
- detached HEAD state
-Thread-Index: AdEAN2M14NEzEpFyTRmqYaRTIrf/GA==
-Accept-Language: nl-NL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.253.116.1]
-x-esetresult: clean, is OK
-x-esetid: E296D73E822878E9B0DA89
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.14.151,1.0.33,0.0.0000
- definitions=2015-10-06_09:2015-10-06,2015-10-06,1970-01-01 signatures=0
-X-Proofpoint-Spam-Reason: safe
+	id S1752517AbbJFNNM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Oct 2015 09:13:12 -0400
+Received: from mout.gmx.net ([212.227.17.21]:65224 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752443AbbJFNNK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2015 09:13:10 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LpKY5-1aExWR0AMP-00fCed; Tue, 06 Oct 2015 15:13:06
+ +0200
+In-Reply-To: <56138273.6010204@drmicha.warpmail.net>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:PpYjvOjTAlyavtdQztziXJ+xF1JBESOlCg4NmiSgXBZY6kFOxIV
+ tLAZpi8LOeqcjEYC3LIwb8OG8sLZTdhf25jj8Xj+h+e0ygQfZn8iP0boCseY0p7HzVt6CtP
+ vGFhKWSYGul5LW26nrUQb0Ykov0dPfNkCF6fLNCHjXVEJTYWkl5GSobvW8fk6j6aLKQHliV
+ mO+Wd6FKgyv2s5pRS1cww==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wooT5vNDo0M=:sYJA/FS8DnhzuOVESyX+VY
+ y7mbW759Q+Jik1W9lBFCJvD5fcEcXDHy+RYZiLoVsw+wEJX02+6ZXpzpOLT5Vsx23jY2QJXe3
+ 2Ild7XfoPdmxM6tGeFiK+5j2Y8NolBQvmhs/jqHorVW44OPmeC+DClSlT7TlVkdUwAlHNvw+j
+ TEDHWO/wfHfo+xYCCnylFCgrKtsz8z8BnNOtqbI9Ckzc/vEJHn2KqRzN5ydZNmywVtmc0qZ4a
+ ARVfFdjAMY8Nxvetq2Z7JqkPoRZIhnWowFdjYcLVGU15W/KF7BavAWl2KR7qFcFSpcjEUlMzb
+ b5hqjBeAJ056e2B8C+tB3lz1hP0/5i0AMNZqpwd3B5Ze1eaAsoXKClxWw1oNBRHA67NkMYXhw
+ LGHl9rsy84CcYdNNZTrcb0bRTxWozJbr/iDAE2zpyEey+zBBqPIxNLGZQlruZDuU7xiSGVYG0
+ gOOfCjxfgozHfdWhjsHuAJzBTmxR1MeZLFrlYlFOOmIsk3GYVhwbXX0LmwU7LuTs4oGuWlNK1
+ mFrtTIlHk9uzHLFl75QP3bZwWhNT16eqELr9u3evvs5LXKmi5bM8Q0RpjD68oBEcpzkK3WuO8
+ dyXrcWmdO6Av7NzJRnBz0NlJp5hIz5s4+GahF+YxA/RLMvINy+7nb1MHqLx5ds5aiQzR8JCeg
+ EFXWqRUG2bdttRfmxlcD5G1g3X+VN6I7WDxURBKyJEYoAfJZqj0upz5S+DXQLSzpVXnKorLvz
+ oXoNN8wQwDcRJZiLQWVm3lVBqR+VTSjydSf9ErozYfAXNVmfqbofiEjEeDcfqnDk9h8C38vO 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279133>
 
-Hello,
+Hi Michael,
 
-Consider a repository with a develop branch tracking origin/develop and where HEAD = 545a36f = develop = origin/develop.
-Tested with Git 2.4.3 and 1.8.3.4 on Linux.
+On 2015-10-06 10:12, Michael J Gruber wrote:
+> "make -j3" just errored out on me, a follow-up "make" succeeded". Thi=
+s
+> looks like an interdependency issue, but I don't know how to track it=
+:
+>=20
+>     GEN git-web--browse
+>     GEN git-add--interactive
+>     GEN git-difftool
+> mv: der Aufruf von stat f=C3=BCr =E2=80=9Eperl.mak=E2=80=9C ist nicht=
+ m=C3=B6glich: Datei oder
+> Verzeichnis nicht gefunden
+>=20
+> (cannot stat "perl.mak")
 
-1) git checkout develop
-2) git branch | head -1 (or git status)
-* develop
-3) git checkout origin/develop
-Note: checking out 'origin/develop'.
-You are in 'detached HEAD' state.
-4) git branch | head -1
-* (HEAD detached at origin/develop)
-5) git checkout 545a36f
-6) git branch | head -1
-* (HEAD detached at origin/develop)
-7) git checkout develop
-8) git branch | head -1 (or git status)
-* develop
-9) git checkout 545a36f
-Note: checking out '545a36f'.
-You are in 'detached HEAD' state.
-10) git branch | head -1 (or git status)
-* (HEAD detached at 545a36f)
-11) git checkout origin/develop
-12) git branch | head -1 (or git status)
-* (HEAD detached at 545a36f)
+This one sounds awfully familiar. Although I only encountered this if I=
+ specified `make -j15 clean all`, i.e. *both* "clean" and "all"...
 
-As you can see, checking out a revision by SHA1 after checking out a local branch tells you you are detached at that SHA1. Ok.
-But, checking out a revision by SHA1 after checking out a remote tracking branch tells you you are detached at that remote tracking branch.
-And checking out a remote tracking branch after checking out a revision by SHA1 tells you you are detached at that SHA1.
-
-This is confusing. Is this by design?
-For a script I am writing, it would be great if the output would be consistent. Checkout origin/develop should always say "detached at origin/develop". Checkout 545a36f should always say "detached at 545a36f".
-
-It looks like the detached head information is only updated when a detached head state is entered and not anymore when a checkout occurs "within" a detached head state.
-
-Best regards,
-
-Stijn
+Ciao,
+Dscho
