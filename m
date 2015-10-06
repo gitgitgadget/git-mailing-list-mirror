@@ -1,100 +1,87 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [BUG?] parallel make interdepencies
-Date: Tue, 6 Oct 2015 16:24:12 +0200
-Message-ID: <5613D98C.1020103@drmicha.warpmail.net>
-References: <56138273.6010204@drmicha.warpmail.net>
- <e76ba2a01053392526a499ec9bff0d37@dscho.org>
- <20151006133341.GS17201@serenity.lan>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] pretend_sha1_file(): Change return type from int to void
+Date: Tue, 06 Oct 2015 16:30:36 +0200
+Organization: gmx
+Message-ID: <ef5b20ed42ea20b2891fc3998a81f339@dscho.org>
+References: <1444133704-29571-1-git-send-email-tklauser@distanz.ch>
+ <632cbcf1dc9fa45ce71693a2cfae73e4@dscho.org>
+ <20151006135101.GA11304@distanz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: John Keeping <john@keeping.me.uk>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 06 16:24:23 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tobias Klauser <tklauser@distanz.ch>
+X-From: git-owner@vger.kernel.org Tue Oct 06 16:30:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjTAF-0002k8-7p
-	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 16:24:23 +0200
+	id 1ZjTGT-0007Kb-1m
+	for gcvg-git-2@plane.gmane.org; Tue, 06 Oct 2015 16:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752888AbbJFOYR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Oct 2015 10:24:17 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:52572 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752509AbbJFOYO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Oct 2015 10:24:14 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 20171203DC
-	for <git@vger.kernel.org>; Tue,  6 Oct 2015 10:24:14 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Tue, 06 Oct 2015 10:24:14 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=A28uv7b/cMRLSaw/drZpp4sNKJ8=; b=h2bVNu
-	4oDC6sUDLunBN2fep3gmosbuANlSHCnngaL9EVuY5/EIVGxYvwa6UjwAj7FJlbqb
-	M3FzjlmLY0noo0lLyEsIk3NdtC4893aRt1jLxcFtAwPtPy+C8g7hPENmxR5atLAw
-	z0r43ZZ36MpvWnqbpnn7i4Cpoa/3p/geaDM3U=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=A28uv7b/cMRLSaw
-	/drZpp4sNKJ8=; b=hwUpIj9HYqYJL7Yb4X2McwA463VzXEI50Fjsuawd8LGqhZv
-	tBI4fHoXD4/Yu+0NV/cGzrfEq96fP21a7aPvN4Pa9IsfLZez9IkpWPTwP7PhiKjs
-	G+zHWVrZarAei6+FskKAkjAS2wBzCsdaPXZhShqPlwH6UgFtM5vD/MM/jNss=
-X-Sasl-enc: qhUyKVnwu3EptyLoFARFsiX5/EPkeFNW0424IcoBQ1X6 1444141453
-Received: from dickson.math.uni-hannover.de (dickson.math.uni-hannover.de [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 753F66800DB;
-	Tue,  6 Oct 2015 10:24:13 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <20151006133341.GS17201@serenity.lan>
+	id S1753105AbbJFOao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2015 10:30:44 -0400
+Received: from mout.gmx.net ([212.227.15.18]:61570 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752227AbbJFOal (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2015 10:30:41 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MDhny-1ZqdD11ycY-00H4ER; Tue, 06 Oct 2015 16:30:37
+ +0200
+In-Reply-To: <20151006135101.GA11304@distanz.ch>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:iDfK1C11B+C0f0USm99UVIV/2bo2bFibbL+1voeB2UWtrFLxi78
+ Vmb7DSbSvEhprYWU1oycpD1n3Bc5kE8/F+ucxSzYruQafc1Us7V84vEQyzC2IBqWEMfgG/x
+ Bd1lGE0hK64cXS8sR0vqlGk5CBrugUEm/IeCiucRv4cY7yCMqIx1W4UigAL4R6HlWKhglnX
+ tgQMby40uQrKwZfk2cXhQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:k0+TB90/lxs=:bZ2PAQqflebhkY437OLBOf
+ i30Zvs0KAVFqNu1gmwo5mn++Qlf8ynCNDpHzqG231+YBIA0d14+MDdOZgDCANFZyGUS0tLo6/
+ 2FPB8pqNLfsGys/3epIAWTMbF6Lzmbn5KHmO4zDJXgw/nRynKSG0iCt647fEdupji15aJvdts
+ WKykMxCzt85KME/CExoN3nVR0umorZpQY37YMBn88ysFtbFj3t9W8FAPaeoip/DFrU1v5Qv08
+ c7zn89+gXa99UtJ6ZtOUu6Q097MjNcNJlihkRMq2NcmnPBXMpUM/5Y3ziSN+Qapbq/Qk68OOO
+ mZ+4JiDKk6WpINlOmNpn3aSv38S1V8ZGI2xES6UU4fXiklSRlXcsJzZJxwZdREwHfP11FO7pA
+ 6qAxCR6l+opFEY9fMDlKPB5wERBuLfc8kt0uwGA7phNFgocn1yJ89OMtiSD/s9h4TD1IvW0Iu
+ KdbeWmBYTFbZtlWac+EExDPg9eONS6hboAxCZ3v27OBdAep8w8n0BQEKoE0GzzIyK+UmpyQ8W
+ j0YWWNImIDVX+bDaGsBjg90fpbOGNGfQfhulnENWK4J6OZE3xBcplivN4AGWHpFJsCscIc5pj
+ 7b8x2K5ebrTb51gW9Kd4QLx+ACf5I9ES5EzBcj95gh56IJTf7y3h5ctQkHAy8iag+O4v/CUtn
+ DdPJZEb8T0Pe0la9uDMpr6t2OzsjyKElv7Kpx4NmVtDsjvyX1AQ+gGZa4K8WgaNDPD8Z3kf1X
+ RcTtT70HO7fI4H8jEadDQiysiFxXm5pG9D4seqGHHQDYswhwxqIjipp8KMUSYDqXQLv8dIuM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279150>
 
-John Keeping venit, vidit, dixit 06.10.2015 15:33:
-> On Tue, Oct 06, 2015 at 03:13:05PM +0200, Johannes Schindelin wrote:
->> Hi Michael,
+Hi Tobias,
+
+On 2015-10-06 15:51, Tobias Klauser wrote:
+
+> On 2015-10-06 at 15:16:12 +0200, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
 >>
->> On 2015-10-06 10:12, Michael J Gruber wrote:
->>> "make -j3" just errored out on me, a follow-up "make" succeeded". T=
-his
->>> looks like an interdependency issue, but I don't know how to track =
-it:
->>>
->>>     GEN git-web--browse
->>>     GEN git-add--interactive
->>>     GEN git-difftool
->>> mv: der Aufruf von stat f=C3=BCr =E2=80=9Eperl.mak=E2=80=9C ist nic=
-ht m=C3=B6glich: Datei oder
->>> Verzeichnis nicht gefunden
->>>
->>> (cannot stat "perl.mak")
+>> On 2015-10-06 14:15, Tobias Klauser wrote:
+>> > prented_sha1_file() always returns 0 and its only callsite in
+>> > builtin/blame.c doesn't use the return value, so change the return type
+>> > to void.
 >>
->> This one sounds awfully familiar. Although I only encountered this i=
-f
->> I specified `make -j15 clean all`, i.e. *both* "clean" and "all"...
->=20
-> I've seen something like this after upgrading perl (I can't remember =
-the
-> exact error, so it may not be the same problem but I'm pretty sure it
-> involves perl.mak).  The problem was a result of the perl library pat=
-h
-> changing, but I never got around to creating a patch.
->=20
-> I thought I remembered someone else posting a patch to address this, =
-but
-> I can't find it so perhaps I'm remembering commit 07981dc (Makefile:
-> rebuild perl scripts when perl paths change, 2013-11-18).
->=20
+>> While this commit message is technically correct, it would appear that there are some things left unsaid.
+>>
+>> Is there a problem with the current code that is solved by not returning 0? If so, could you add it to the commit message? And in particular, change the oneline appropriately?
+> 
+> There's no problem with the current code other than that the return
+> value is unused and thus unnecessary for correct funcionality. So it's
+> certainly not a functional problem but rather a cosmetic change.
 
-At least I'm in good company, then. The statistical evidence is 100%
-clear: It's a John-related issue.
+Okay.
 
-Michael J(ohannes)
+> Does such a change even make sense (it's one of my first patch to git,
+> so I'm not really sure what your criteria in this respect are)?
+
+Welcome!
+
+As to the patch, I cannot speak for Junio, of course, but my preference would be to keep the return type. Traditionally, functions that can fail either die() or return an int; non-zero indicates an error. In this case, it seems that we do not have any condition (yet...) under which an error could occur. It does not seem very unlikely that we may eventually have such conditions, though, hence my preference.
+
+Ciao,
+Johannes
