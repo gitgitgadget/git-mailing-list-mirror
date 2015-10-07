@@ -1,80 +1,164 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 8/9] branch: use ref-filter printing APIs
-Date: Wed, 7 Oct 2015 23:32:27 +0530
-Message-ID: <CAOLa=ZQ8QpU_FTqK7Sn0xeygtyirsLOE7bG03iwcVoPUJFpptg@mail.gmail.com>
-References: <1443807546-5985-1-git-send-email-Karthik.188@gmail.com>
- <1443807546-5985-9-git-send-email-Karthik.188@gmail.com> <vpqvbao86pj.fsf@grenoble-inp.fr>
- <CAOLa=ZSk8-6nkfEd+Kz1srOJxPLj6+zLEU9DnLgW3rW1O6kZGg@mail.gmail.com>
- <vpq7fn1qhp2.fsf@grenoble-inp.fr> <CAOLa=ZS5x=ksfnBt1kLp5bJJHmqeBztR7Zn7U5VKZN-56T-_5A@mail.gmail.com>
- <vpqmvvvhl9m.fsf@grenoble-inp.fr> <CAOLa=ZS4xVfsQ+F+KGD8Gz9NHzvJtuVvW16RSLV08ZiEv8DhKw@mail.gmail.com>
- <vpqmvvu4l3o.fsf@grenoble-inp.fr>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 42/43] refs: add LMDB refs backend
+Date: Wed, 07 Oct 2015 20:31:08 +0200
+Message-ID: <561564EC.8070704@alum.mit.edu>
+References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>	 <1443477738-32023-43-git-send-email-dturner@twopensource.com>	 <56129B77.1030409@alum.mit.edu> <1444182660.7739.77.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Oct 07 20:03:04 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Oct 07 20:38:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zjt3Q-0003O1-3q
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 20:03:04 +0200
+	id 1ZjtbV-0000cT-CB
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 20:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754518AbbJGSC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2015 14:02:58 -0400
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:33618 "EHLO
-	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754179AbbJGSC5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Oct 2015 14:02:57 -0400
-Received: by vkgd64 with SMTP id d64so16784953vkg.0
-        for <git@vger.kernel.org>; Wed, 07 Oct 2015 11:02:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=bhUkqBnyIExJJ5K2BAKVVgAjoD88fHC5dS+5Q1mu328=;
-        b=xOOJ4qiv6eEfTLUw0/DQgE9c2b2dGoXszBRCF/GU3cx2N2HWL6/hcKjx5a33N/cxcI
-         fcwzXL7qO8sac6cbjVmTJaqexh/VumbDhaOJBBwt7rlCM1ISO2/DzXvg21zRvy239mWf
-         nsb6JsXuZuGCs9rX+T1tuTXISs7Q87PbFDAzCAmuBew7nWZBqyoraJBOr5z2obCjJilT
-         HZ0Og91kPO2prW8ZpyKc/jNRxOq3rTgfsuTGah3HLRMJdzEtWIGR5VnpKNk/LMyOtGn/
-         98hx8p6EZvkn1wNy930897teXwA1hXDWSD0r35kthvkJNi5aySraf/21ahl7YbVA0KNg
-         l5CQ==
-X-Received: by 10.31.173.136 with SMTP id w130mr2233915vke.72.1444240977181;
- Wed, 07 Oct 2015 11:02:57 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Wed, 7 Oct 2015 11:02:27 -0700 (PDT)
-In-Reply-To: <vpqmvvu4l3o.fsf@grenoble-inp.fr>
+	id S1751797AbbJGSiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2015 14:38:13 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:60308 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751488AbbJGSiM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Oct 2015 14:38:12 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Oct 2015 14:38:12 EDT
+X-AuditID: 1207440c-f79e16d000002a6e-72-561564ee0e44
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id A6.F6.10862.EE465165; Wed,  7 Oct 2015 14:31:10 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC9720C.dip0.t-ipconnect.de [79.201.114.12])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t97IV8YS015151
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 7 Oct 2015 14:31:09 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <1444182660.7739.77.camel@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjleLIzCtJLcpLzFFi42IRYndR1H2XIhpmcHWjgMX8TScYLbqudDM5
+	MHkseH6f3ePzJrkApihum6TEkrLgzPQ8fbsE7oy3Kx8wFTxQrlj+9wtbA+MZmS5GTg4JAROJ
+	Pwf3M0HYYhIX7q1n62Lk4hASuMwosbLjBDNIQkjgHJPEhfUWIDavgLbE02t32LsYOThYBFQl
+	1r2vBAmzCehKLOppBpsjKhAksWL5C0aIckGJkzOfsIDYIkCts4/0sIK0MguIS/T/AwsLC1hK
+	HH7cyAqx9gqjxIKVS8HWcgpYSHTeeQs2k1lAXeLPvEvMELa8RPPW2cwTGAVmIVkxC0nZLCRl
+	CxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGurlZpbopaaUbmKEhCnPDsZv62QOMQpwMCrx
+	8P4wFgkTYk0sK67MPcQoycGkJMq70Ec0TIgvKT+lMiOxOCO+qDQntfgQowQHs5IIb2AIUI43
+	JbGyKrUoHyYlzcGiJM6rukTdT0ggPbEkNTs1tSC1CCYrw8GhJMH7NxmoUbAoNT21Ii0zpwQh
+	zcTBCTKcS0qkODUvJbUosbQkIx4Up/HFwEgFSfEA7b0N0s5bXJCYCxSFaD3FqCglzrsMJCEA
+	ksgozYMbC0s+rxjFgb4U5o0CqeIBJi647ldAg5mABvfLC4EMLklESEk1MIZoV6v3MxWcnTR1
+	Y4T85PTiox8fXp4hdWLhan7Xwrfr7j/pOCn1O5p/bVXR/r9GrRIO+n8Pm5Z0nLJo/JP+dMLE
+	GzUnjYy1uCuO77g7+4G0qcDEihO2TRlVXtfVhBZFf5ItrOFsWbOqXTyA43/CKZk0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279192>
 
-On Wed, Oct 7, 2015 at 11:28 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> On Wed, Oct 7, 2015 at 12:33 AM, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
+On 10/07/2015 03:51 AM, David Turner wrote:
+> On Mon, 2015-10-05 at 17:47 +0200, Michael Haggerty wrote:
+>> On 09/29/2015 12:02 AM, David Turner wrote:
+>>> Add a database backend for refs using LMDB.  [...]
 >>
->>> To go a bit further, you can pre-build a string or strbuf aligned_short
->>> with value like "%%(align:20,left)%%(refname:short)%%(end)" and use it
->>> where needed (it's not a constant because you have to introduce maxwidth
->>> into the string, so it's not a candidate for #define).
->>>
->>
->> Again, the remote has a remote prefix here, so we can't really factor
->> it out much.
->
-> Ah, OK, there's a %s containing the remote prefix in "remote" that is
-> not there in "local", and in the last version you sent it's already
-> factored for verbose > 1 and verbose == 1. Indeed, there's nothing more
-> to gain here.
+>> I think you have said before that if one writer holds the write lock on
+>> the DB, then other writers fail immediately. Is that correct? If so, is
+>> that something that can be adjusted? I think it would be preferable for
+>> the second writer to retry acquiring the write lock for a little while
+>> with a timeout (as we now do when trying to acquire the packed-refs
+>> lock). Otherwise you could have the unhappy situation that somebody
+>> spends a long time pushing a packfile to a server, only to have the
+>> reference update be rejected at the last moment due to a lock conflict
+>> with another process that was touching completely different references.
+>> We already do before/after consistency checks when updating references,
+>> so you wouldn't even have to add such code in the backend yourself.
+> 
+> No, the second writer waits for the first writer to unlock (or for it to
+> crash).
 
-I'll send version2 of the patch series to the list then :)
+Cool, that's better behavior.
+
+> [...]
+>> Do you store "peeled" reference values for tags, as is done in
+>> packed-refs? I think that is an important optimization.
+> 
+> No.  Do you happen to know in what situations this is a performance
+> benefit, so that I can benchmark?  I suspect it would matter much less
+> for the LMDB backend, because lookups are pretty quick.
+
+The reference lookup speed is not relevant here. "Peeling" is applied to
+references that point at tag objects (a.k.a. annotated tags). It means
+that the tag object is looked up to see what *it* points at (recursively
+if necessary) and the result is stored to the packed-refs file in a
+specially-formatted extra line that looks like
+
+    17f9f635c101aef03874e1de1d8d0322187494b3 refs/tags/v2.6.0
+    ^be08dee9738eaaa0423885ed189c2b6ad8368cf0
+
+I think a good command to benchmark would be `git show-refs -d` in a
+repository with a number of annotated tags. This command's output is
+similar to the output of `git ls-remote <remote>` and also comes up
+during reference negotiation when fetching (so its performance is
+definitely not moot).
+
+> [...]
+>> Currently we discard the reflog for a reference when the reference is
+>> deleted. [...]
+>> Have you thought about removing this limitation in the lbdb backend?
+> 
+> I'm going for feature parity first.  We can always add new functionality
+> later.  This particular function would be pretty straightforward to add,
+> I think.
+
++1
+
+> [...]
+>>> +The rsync and file:// transports don't work yet, because they
+>>> +don't use the refs API.
+>>
+>> Do they fail gracefully?
+> 
+> Not particularly gracefully.
+> 
+> rsync: link_stat "/home/dturner/git/t/trash
+> directory.t5510-fetch/.git/packed-refs" failed: No such file or
+> directory (2)
+> rsync error: some files/attrs were not transferred (see previous errors)
+> (code 23) at main.c(1183) [sender=3.1.1]
+> fatal: Could not run rsync to get refs
+> -------------
+> 
+> The problem is that rsync on the client assumes that packed-refs exists.
+> We could hack it to also check for refdb.
+
+I guess this is something that will have to be improved sooner or later,
+though I guess not as a precondition for merging this patch series.
+
+> [...]
+>> I'm somewhat surprised that you only register the lmdb backend if it is
+>> used in the main repo. I would expect the backend to be registered
+>> unconditionally on startup. The cost is trivial, isn't it?
+> 
+> Yeah, but this was the easiest place to do it.
+
+OK.
+
+> [...]
+
+I'm really happy about your work.
+
+Regarding strategy: I think a good approach would be to get as much of
+the preparatory work as possible (the abstraction and separation of
+refs-be-files) to the point where it can be merged before there is too
+much more code churn in the area. That work is not very controversial, I
+think, and letting it wait for a long time will increase the likelihood
+of conflicts with other people's changes. The refs-be-lmdb patches, on
+the other hand, (1) will take longer to get polished, (2) will take
+longer to review because other people are not familiar with LDMB, and
+(3) won't bitrot very fast anyway because they don't overlap as much
+with areas that other people are likely to work on. So I would advocate
+working on those at a more deliberate pace and planning for them to be
+merged as a separate batch.
+
+Michael
 
 -- 
-Regards,
-Karthik Nayak
+Michael Haggerty
+mhagger@alum.mit.edu
