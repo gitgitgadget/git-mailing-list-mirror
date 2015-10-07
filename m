@@ -1,74 +1,89 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 1/2] quote: fix broken sq_quote_buf() related comment
-Date: Thu,  8 Oct 2015 00:05:49 +0200
-Message-ID: <1444255550-27631-1-git-send-email-chriscool@tuxfamily.org>
+Subject: [PATCH v2 2/2] quote: move comment before sq_quote_buf()
+Date: Thu,  8 Oct 2015 00:05:50 +0200
+Message-ID: <1444255550-27631-2-git-send-email-chriscool@tuxfamily.org>
+References: <1444255550-27631-1-git-send-email-chriscool@tuxfamily.org>
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <chriscool@tuxfamily.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 00:06:21 2015
+X-From: git-owner@vger.kernel.org Thu Oct 08 00:06:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zjwqq-0005W6-4m
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 00:06:20 +0200
+	id 1Zjwqx-0005gm-RA
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 00:06:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754928AbbJGWGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2015 18:06:16 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:37799 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751757AbbJGWGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Oct 2015 18:06:15 -0400
-Received: by wicfx3 with SMTP id fx3so216723wic.0
-        for <git@vger.kernel.org>; Wed, 07 Oct 2015 15:06:14 -0700 (PDT)
+	id S1755268AbbJGWGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2015 18:06:23 -0400
+Received: from mail-wi0-f173.google.com ([209.85.212.173]:35803 "EHLO
+	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755172AbbJGWGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Oct 2015 18:06:22 -0400
+Received: by wicge5 with SMTP id ge5so197707wic.0
+        for <git@vger.kernel.org>; Wed, 07 Oct 2015 15:06:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=LZl07g6M7FOaqRDotvbLumud4sh+7flFUbbI9I8RbRw=;
-        b=vzb1QmvjjGsl7j2d54X6YKu2OKvTFmFPflqQ0NC9fgi8Sh7ebEo6Z2IVmrlqlEScIx
-         CBX3EIA1wlLWUJAu8AiokpdXd5g+qYyY07Yr5fSG2TvOu6yt9de9s8fS8QZeMVNG0ta8
-         6uEM5aQ7Gwn7uCLQbSs6n/h/C50oA0DpdxbXDkwXJbIF1E2DRBB2KCZJNBg+Gxx1+1zZ
-         vevC4+7eFEXUdCDMX8EdiaiqIq9VaGnV3gbrxXfetHmzkRjlWUz36amYXog54DB1Hzkt
-         4CkFgaKJYr1d41w6xDq0yaLNpVTPonbwcA8uM11+JCKhWWdxcZT7gYVKK/eCRJDd+QvG
-         z/dw==
-X-Received: by 10.180.104.38 with SMTP id gb6mr19983wib.86.1444255574319;
-        Wed, 07 Oct 2015 15:06:14 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ihAkru1iBVuNRoKjlF66ivDwHLW15Nzvjmw2ZXHaFvc=;
+        b=TJAuvspluDOK6CFLTQXFVUcAlKc3nrDE3MPI2xPgbQ/2ogYNYvQCa3EpYvoRGggZup
+         3pb5n0XW1+vJGOIA6H/3Z1JBsUyf+EFKazbxTKENeg0psn6JQ+CTnaIJ5K5KZd8eyfaM
+         iY2vpataWDL1PxGci+b4Q0CNqJD+9FVm6aaUHCj52ixdemxg2LYIz6/K9LDE85kboL33
+         xgCQgKBaoakCmyzBDlnaPdPz4t4T+GTZmvLbc7z/rBdyTtFoslCkvf9fJT2P8BgJuBsR
+         AYKzI4nvk8IqwNp/0aMZIxlHBqta2hCwfmGjcAiFyRknDoESXGA1LW96xap6RCL7F5wi
+         loEw==
+X-Received: by 10.194.6.161 with SMTP id c1mr4373805wja.152.1444255581556;
+        Wed, 07 Oct 2015 15:06:21 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id hd1sm4385289wib.5.2015.10.07.15.06.12
+        by smtp.gmail.com with ESMTPSA id hd1sm4385289wib.5.2015.10.07.15.06.20
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 07 Oct 2015 15:06:13 -0700 (PDT)
+        Wed, 07 Oct 2015 15:06:20 -0700 (PDT)
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.6.0
+In-Reply-To: <1444255550-27631-1-git-send-email-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279205>
 
-Since 77d604c (Enhanced sq_quote(), 10 Oct 2005), the
-comment at the beginning of quote.c is broken.
-Let's fix it.
+A big comment at the beginning of quote.c is really
+related to sq_quote_buf(), so let's move it in front
+of this function.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
-The only change in this v2 is the added Signed-off-by ;-)
-Sorry for the spam.
-
- quote.c | 1 +
- 1 file changed, 1 insertion(+)
+ quote.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/quote.c b/quote.c
-index 7920e18..890885a 100644
+index 890885a..fe884d2 100644
 --- a/quote.c
 +++ b/quote.c
-@@ -7,6 +7,7 @@ int quote_path_fully = 1;
+@@ -4,6 +4,11 @@
+ 
+ int quote_path_fully = 1;
+ 
++static inline int need_bs_quote(char c)
++{
++	return (c == '\'' || c == '!');
++}
++
  /* Help to copy the thing properly quoted for the shell safety.
   * any single quote is replaced with '\'', any exclamation point
   * is replaced with '\!', and the whole thing is enclosed in a
-+ * single quote pair.
-  *
-  * E.g.
-  *  original     sq_quote     result
+@@ -16,11 +21,6 @@ int quote_path_fully = 1;
+  *  a'b      ==> a'\''b    ==> 'a'\''b'
+  *  a!b      ==> a'\!'b    ==> 'a'\!'b'
+  */
+-static inline int need_bs_quote(char c)
+-{
+-	return (c == '\'' || c == '!');
+-}
+-
+ void sq_quote_buf(struct strbuf *dst, const char *src)
+ {
+ 	char *to_free = NULL;
 -- 
 2.6.0
