@@ -1,60 +1,82 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Branch information (git branch/status) inconsistent when in
+From: Stijn De Ruyck <Stijn.DeRuyck@onsemi.com>
+Subject: RE: Branch information (git branch/status) inconsistent when in
  detached HEAD state
-Date: Wed, 7 Oct 2015 11:07:12 +0200
-Message-ID: <5614E0C0.7060805@drmicha.warpmail.net>
+Date: Wed, 7 Oct 2015 09:57:31 +0000
+Message-ID: <247ABEF3B84FB7499C074A0FE8058694153CB1BE@ONWATER51M.ad.onsemi.com>
 References: <247ABEF3B84FB7499C074A0FE8058694153CB176@ONWATER51M.ad.onsemi.com>
+ <5614E0C0.7060805@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Stijn De Ruyck <Stijn.DeRuyck@onsemi.com>,
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: Michael J Gruber <git@drmicha.warpmail.net>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 07 11:07:25 2015
+X-From: git-owner@vger.kernel.org Wed Oct 07 11:57:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zjkh2-0002Hk-Cj
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 11:07:24 +0200
+	id 1ZjlTj-00043D-CC
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 11:57:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752060AbbJGJHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2015 05:07:17 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:60150 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751538AbbJGJHO (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Oct 2015 05:07:14 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 01888226DD
-	for <git@vger.kernel.org>; Wed,  7 Oct 2015 05:07:13 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Wed, 07 Oct 2015 05:07:14 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=JAwaisskB14lC9N4p3bKZAHFyHg=; b=guIukV
-	nNta45H65Zfpj043uwNkV9kufD8350WFoywbIMtFGK+RfZMuVcXjYx0pMrPULLo4
-	7caNnbo9v0SSPH+VJ6pW/urIXllsHf3AfBlXtP6BFwfVxtZI/p1p+uYGRLRAAafB
-	+g2QeA04T6e5M//qBcYeLXdDErGgnkHYfEXYg=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=JAwaisskB14lC9N
-	4p3bKZAHFyHg=; b=V77yLwczuLvloR/yGkXSWTcs+I6Otg+AQ9tnpErS61e6i+Q
-	quQBoI7cP9Urm9psiafRwh/JKSe0FOKGj0HCial/eQYoqRNzWN0Q4GxzHtAl7OuA
-	yBimCDoIoDjI9bROOvPWY4exavcCkFe2e/kV0gJkERoZr7YeCUJ6YVDyG/4Q=
-X-Sasl-enc: mvoiUTViRgkya/JAx6yBELAnJ4eEsMLJFe6xF39RdkT1 1444208833
-Received: from dickson.math.uni-hannover.de (dickson.math.uni-hannover.de [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 79326C0001A;
-	Wed,  7 Oct 2015 05:07:13 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <247ABEF3B84FB7499C074A0FE8058694153CB176@ONWATER51M.ad.onsemi.com>
+	id S1752755AbbJGJ5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2015 05:57:39 -0400
+Received: from mx0b-00183b01.pphosted.com ([67.231.157.42]:60415 "EHLO
+	mx0b-00183b01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751865AbbJGJ5h convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 7 Oct 2015 05:57:37 -0400
+Received: from pps.filterd (m0048104.ppops.net [127.0.0.1])
+	by mx0b-00183b01.pphosted.com (8.14.5/8.14.5) with SMTP id t979vZgJ008373;
+	Wed, 7 Oct 2015 03:57:35 -0600
+Received: from em2.onsemi.com (em2.onsemi.com [65.197.242.106])
+	by mx0b-00183b01.pphosted.com with ESMTP id 1xay01592h-1
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 07 Oct 2015 03:57:35 -0600
+Received: from dns1.onsemi.com (dns1 [10.253.118.1])
+	by em2.onsemi.com (8.13.8/8.13.8) with ESMTP id t979vYEk032613;
+	Wed, 7 Oct 2015 02:57:34 -0700
+Received: from ONWATER53C.ad.onsemi.com (onwater53c.onsemi.com [10.253.116.147])
+	by dns1.onsemi.com (8.13.8+Sun/8.11.6) with ESMTP id t979vXWg026040;
+	Wed, 7 Oct 2015 02:57:34 -0700 (MST)
+Received: from ONWATER51M.ad.onsemi.com ([fe80::70a7:46e:5e2f:c00d]) by
+ ONWATER53C.ad.onsemi.com ([::1]) with mapi id 14.03.0224.002; Wed, 7 Oct 2015
+ 02:57:32 -0700
+Thread-Topic: Branch information (git branch/status) inconsistent when in
+ detached HEAD state
+Thread-Index: AdEAN2M14NEzEpFyTRmqYaRTIrf/GAA4taIAAA1NHXA=
+In-Reply-To: <5614E0C0.7060805@drmicha.warpmail.net>
+Accept-Language: nl-NL, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.253.116.1]
+x-esetresult: clean, is OK
+x-esetid: E296D73E822878E9B1D286
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.14.151,1.0.33,0.0.0000
+ definitions=2015-10-07_04:2015-10-06,2015-10-07,1970-01-01 signatures=0
+X-Proofpoint-Spam-Reason: safe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279177>
+
+Yes it is the tip. 
+So all I'm doing is checking out the exact same commit (the tip of a branch), but in different ways and in different sequences. The result on disk is the same, but the issue is git branch/status doesn't always reflect what I just did...
+
+If I do git checkout origin/develop, git branch might still say "detached at 545a36f", which, while true, feels wrong. How can I know afterwards what branch I actually tried to check out? "Detached at origin/develop" would make that clear.
+(I use this information in a build script to embed version information (including the branch being built) into the binary.)
+
+Best regards,
+
+Stijn De Ruyck
+
+
+-----Original Message-----
+From: Michael J Gruber [mailto:git@drmicha.warpmail.net] 
+Sent: Wednesday, October 07, 2015 11:07 AM
+To: Stijn De Ruyck; git@vger.kernel.org
+Subject: Re: Branch information (git branch/status) inconsistent when in detached HEAD state
 
 Stijn De Ruyck venit, vidit, dixit 06.10.2015 15:03:
 > Hello,
@@ -98,8 +120,6 @@ Stijn De Ruyck venit, vidit, dixit 06.10.2015 15:03:
 
 Does 545a36f happen to be the tip (value) of origin/develop?
 
-For a sha1 different from the tip, I can't reproduce the effect that you
-describe. There have been some changes in related code recently, but I
-don't think they should affect this scenario.
+For a sha1 different from the tip, I can't reproduce the effect that you describe. There have been some changes in related code recently, but I don't think they should affect this scenario.
 
 Michael
