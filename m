@@ -1,139 +1,151 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Branch information (git branch/status) inconsistent when in
- detached HEAD state
-Date: Wed, 7 Oct 2015 16:41:43 +0200
-Message-ID: <56152F27.5070907@drmicha.warpmail.net>
-References: <247ABEF3B84FB7499C074A0FE8058694153CB176@ONWATER51M.ad.onsemi.com>
- <5614E0C0.7060805@drmicha.warpmail.net>
- <247ABEF3B84FB7499C074A0FE8058694153CB1BE@ONWATER51M.ad.onsemi.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 38/43] refs: make some files backend functions public
+Date: Wed, 07 Oct 2015 18:00:20 +0200
+Message-ID: <56154194.9050607@alum.mit.edu>
+References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>	 <1443477738-32023-39-git-send-email-dturner@twopensource.com>	 <56123CE3.9070909@alum.mit.edu> <1444181145.7739.70.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-To: Stijn De Ruyck <Stijn.DeRuyck@onsemi.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 07 16:41:57 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Oct 07 18:07:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zjpug-0008Ub-Jl
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 16:41:50 +0200
+	id 1ZjrFb-0003OI-Vi
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 18:07:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754485AbbJGOlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2015 10:41:46 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:46874 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754281AbbJGOlp (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Oct 2015 10:41:45 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 2F2E82188F
-	for <git@vger.kernel.org>; Wed,  7 Oct 2015 10:41:45 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute6.internal (MEProxy); Wed, 07 Oct 2015 10:41:45 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=A94pCmwU3/dy6+lcW7kwOJ+ehaM=; b=QUBN+v
-	AVVcZt5TaKLz3tRRdlwil5T+2EoFUAut+8DiE7xcfAkVOkjbnuTcKk21rLR4v6Mp
-	tBHlIU/KJ7dbDMoZ45GBgIJqX+gv9JRtadh3fTL7Lv1jbT0zPp/RE/Uknk6tPUYe
-	EYIFX2pP2kphxJravql8BBqYftDL9BpErhAoc=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=A94pCmwU3/dy6+l
-	cW7kwOJ+ehaM=; b=csNY81xtt2St+ovcW39fCE7aCqsbvyWIsUDYJCjbjNHTdnZ
-	9rWCkJmMxFnFtWz3tEE7b4j9xXQRZdf0M7oVMiS2igNtalVTWlWsjUIeRC6D3vYo
-	Bz/AAJkoG4wK9+8Ccjs0ui+2NIHT3/TZ7xuAdu52nUzKGsUqXv3QAGpiU+1I=
-X-Sasl-enc: OT+dLCbQxjxhwWYGFyYdjYc+VznVhI17e/1kcYeMKzk6 1444228904
-Received: from dickson.math.uni-hannover.de (dickson.math.uni-hannover.de [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 9CB00680234;
-	Wed,  7 Oct 2015 10:41:44 -0400 (EDT)
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <247ABEF3B84FB7499C074A0FE8058694153CB1BE@ONWATER51M.ad.onsemi.com>
+	id S1754330AbbJGQH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2015 12:07:28 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:49203 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753852AbbJGQH1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Oct 2015 12:07:27 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Oct 2015 12:07:26 EDT
+X-AuditID: 1207440e-f79516d0000012b3-55-561541964726
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 55.12.04787.69145165; Wed,  7 Oct 2015 12:00:23 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC9720C.dip0.t-ipconnect.de [79.201.114.12])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t97G0KoD006280
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 7 Oct 2015 12:00:21 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <1444181145.7739.70.camel@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqDvdUTTM4NF3Rov5m04wWnRd6Way
+	aOi9wuzA7HHxkrLHguf32T0+b5ILYI7itklKLCkLzkzP07dL4M5YMOcBa0GDSsWlRfYNjE9l
+	uhg5OCQETCRmLPfvYuQEMsUkLtxbz9bFyMUhJHCZUeL59kuMEM45Jomdv/qYQKp4BbQlDvfP
+	YgOxWQRUJbat6mYEsdkEdCUW9TSD1YgKBEmsWP6CEaJeUOLkzCcsILYIUO/sIz2sIDazgLXE
+	7j6IuLCAj0TXqjfsEMuuMErs2/wYrJlTwELi470pjBAN6hJ/5l1ihrDlJZq3zmaewCgwC8mO
+	WUjKZiEpW8DIvIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11gvN7NELzWldBMjJHT5djC2r5c5
+	xCjAwajEw/vDWCRMiDWxrLgy9xCjJAeTkijvPQvRMCG+pPyUyozE4oz4otKc1OJDjBIczEoi
+	vMcdgHK8KYmVValF+TApaQ4WJXFetSXqfkIC6YklqdmpqQWpRTBZGQ4OJQne9yCNgkWp6akV
+	aZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aBIjS8GxipIigdo7wSwvcUFiblAUYjWU4yKUkBb
+	QRICIImM0jy4sbCE9IpRHOhLYV4zkCoeYDKD634FNJgJaHC/vBDI4JJEhJRUAyOLxokDC99e
+	zWdZYnvq/q3Fp4PZ+iaLZP9sSjlcvkRmg/1zhkCJJ+utGHzlBNhSNgv1h9qnmV1NXNI0zdiy
+	aSX7sk/8blsYZ8hEp+sanPc4a7FW8s7+I1/D/jKHPXbKrz5Wsfyh4naOnwd6lnwy 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279180>
 
-[Please make sure to bottom-post or reply-inline on the git-ml.]
-Stijn De Ruyck venit, vidit, dixit 07.10.2015 11:57:
-> Yes it is the tip. 
-> So all I'm doing is checking out the exact same commit (the tip of a branch), but in different ways and in different sequences. The result on disk is the same, but the issue is git branch/status doesn't always reflect what I just did...
+On 10/07/2015 03:25 AM, David Turner wrote:
+> On Mon, 2015-10-05 at 11:03 +0200, Michael Haggerty wrote:
+>> On 09/29/2015 12:02 AM, David Turner wrote:
+>>> Because HEAD and stash are per-worktree, other backends need to
+>>> go through the files backend to manage these refs and their reflogs.
+>>>
+>>> To enable this, we make some files backend functions public.
+>>
+>> I have a bad feeling about this change.
+>>
+>> Naively I would expect a reference backend that cannot handle its own
+>> (e.g.) stash to instantiate internally a files backend object and to
+>> delegate stash-related calls to that object. That way neither class's
+>> interface has to be changed.
+>>
+>> Here you are adding a separate interface to the files backend. That
+>> seems like a more complicated and less flexible design. But I'm open to
+>> be persuaded otherwise...
 > 
-> If I do git checkout origin/develop, git branch might still say "detached at 545a36f", which, while true, feels wrong. How can I know afterwards what branch I actually tried to check out? "Detached at origin/develop" would make that clear.
-> (I use this information in a build script to embed version information (including the branch being built) into the binary.)
+> After some thought, here's a summary of the problem:
+> 
+> Some writes are cross-backend writes.  For example, if HEAD is symref to
+> refs/head/master, a commit is a cross-backend write (HEAD itself is not
+> updated, but its reflog is).  Ronnie's design of the ref backend
+> structure did not account for cross-backend writes, because we didn't
+> have per-worktree refs at the time (there was only HEAD, and there was
+> only one copy of it).
+> 
+> Cross-backend writes are complicated because there is no way to tell a
+> backend to do only part of a ref update -- for instance, to tell the
+> files backend to update HEAD and HEAD's reflog but not
+> refs/heads/master.  Maybe we could set a flag that would do this, but
+> the synchronization would be fairly complicated.  For instance, an
+> update to HEAD might need to confirm the old sha for HEAD, meaning that
+> we couldn't do the db write first.  But if we move the db write second,
+> then when the db code goes to do its check of the HEAD sha, it might see
+> a new value.  Perhaps there's a way to make it work, but it seems
+> fragile/complex.
+> 
+> Right now, for cross-backend reads/writes, the lmdb code cheats. It
+> simply does the write directly and immediately.  This means that these
+> portions of transactions cannot be rolled back.  That's clearly bad. 
 
-Well, you think you do, but you don't. That is: You're not 'moving'; the
-value of HEAD stays the same, and if you check the reflog, you see that
-the second "checkout" (which in fact is a no-op) is not recorded in the
-reflog at all - because the HEAD ref doesn't change at all, and the HEAD
-reflog is all about changes to the HEAD ref.
+That's a really good point.
 
-In that sense everything is perfectly correct, in the same way as a fast
-forward merge is not "recorded" as a merge.
+I hate to break it to you, but the handling of symrefs in Git is already
+a mess. HEAD is the only symref that I would really trust to work
+correctly all the time. So I think that changes needn't be judged on
+whether they handle symrefs perfectly. They should just not break them
+in any dramatic new ways.
 
-The way you think about the checkout may change, of course. I'm not sure
-whether "no-op" entries in the reflog would do any harm or whether we
-should create them. (And I'm not sure whether the HEAD reflog is the
-right tool for your purpose.)
+So, you pointed out the problem that HEAD (a per-worktree reference) can
+be a symref that points at a shared reference. In fact, I think when
+HEAD is symbolic it is only allowed to point at a branch under
+refs/heads, so this particular problem is pretty well-constrained.
+
+Are there other cases of cross-backend writes? I suppose there could be
+a symref elsewhere among the per-worktree references that points at a
+shared reference. But I can't think of any cases where this is done by
+standard Git. Not that it is forbidden; I just don't think it is done by
+any of the standard tools.
+
+Or there could be a symref among the shared references that points at a
+per-worktree reference. But AFAIK the only other symrefs that are in
+common use are the refs/remotes/*/HEAD symrefs, and they always point at
+references within the same (shared) namespace.
+
+If everything that I've said is correct, then my opinion is that it
+would be perfectly adequate if your code would handle the specific case
+of HEAD (by hook or by crook), and if there are any other cross-backend
+symrefs, just die with a message stating that such usage is unsupported.
+Junio, do you think that would be acceptable?
+
+> The simplest solution would be for the lmdb code to simply acquire
+> locks, and write to lock files, and then commit those lock files just
+> before the db transaction commits. Then the lmdb code would handle all
+> of the orchestration without the files backend having to be rewritten to
+> handle this case.
+
+Wouldn't that essentially be re-implementing the files backend? I must
+be missing something.
+
+> [...]
+
+BTW I just realized that if one backend should delegate to another, then
+the primary backend should be the per-worktree backend and it should
+delegate to the common backend. I think I described things the other way
+around in my earlier message. This makes more sense because it is
+acceptable for per-worktree references to refer to common references but
+not vice versa.
 
 Michael
 
-> 
-> -----Original Message-----
-> From: Michael J Gruber [mailto:git@drmicha.warpmail.net] 
-> Sent: Wednesday, October 07, 2015 11:07 AM
-> To: Stijn De Ruyck; git@vger.kernel.org
-> Subject: Re: Branch information (git branch/status) inconsistent when in detached HEAD state
-> 
-> Stijn De Ruyck venit, vidit, dixit 06.10.2015 15:03:
->> Hello,
->>
->> Consider a repository with a develop branch tracking origin/develop and where HEAD = 545a36f = develop = origin/develop.
->> Tested with Git 2.4.3 and 1.8.3.4 on Linux.
->>
->> 1) git checkout develop
->> 2) git branch | head -1 (or git status)
->> * develop
->> 3) git checkout origin/develop
->> Note: checking out 'origin/develop'.
->> You are in 'detached HEAD' state.
->> 4) git branch | head -1
->> * (HEAD detached at origin/develop)
->> 5) git checkout 545a36f
->> 6) git branch | head -1
->> * (HEAD detached at origin/develop)
->> 7) git checkout develop
->> 8) git branch | head -1 (or git status)
->> * develop
->> 9) git checkout 545a36f
->> Note: checking out '545a36f'.
->> You are in 'detached HEAD' state.
->> 10) git branch | head -1 (or git status)
->> * (HEAD detached at 545a36f)
->> 11) git checkout origin/develop
->> 12) git branch | head -1 (or git status)
->> * (HEAD detached at 545a36f)
->>
->> As you can see, checking out a revision by SHA1 after checking out a local branch tells you you are detached at that SHA1. Ok.
->> But, checking out a revision by SHA1 after checking out a remote tracking branch tells you you are detached at that remote tracking branch.
->> And checking out a remote tracking branch after checking out a revision by SHA1 tells you you are detached at that SHA1.
->>
->> This is confusing. Is this by design?
->> For a script I am writing, it would be great if the output would be consistent. Checkout origin/develop should always say "detached at origin/develop". Checkout 545a36f should always say "detached at 545a36f".
->>
->> It looks like the detached head information is only updated when a detached head state is entered and not anymore when a checkout occurs "within" a detached head state.
->>
->> Best regards,
-> 
-> Does 545a36f happen to be the tip (value) of origin/develop?
-> 
-> For a sha1 different from the tip, I can't reproduce the effect that you describe. There have been some changes in related code recently, but I don't think they should affect this scenario.
-> 
-> Michael
-> 
-> 
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
