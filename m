@@ -1,85 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pretty: add format specifiers for short and raw date formats
-Date: Wed, 07 Oct 2015 13:22:13 -0700
-Message-ID: <xmqqmvvutone.fsf@gitster.mtv.corp.google.com>
-References: <1444235305-8718-1-git-send-email-szeder@ira.uka.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] pretend_sha1_file(): Change return type from int to void
+Date: Wed, 7 Oct 2015 13:42:30 -0700
+Message-ID: <CAGZ79kZmon6xwDE2reSOjM87HfG_dqc6-Rk2KzxnePLAN=BiQw@mail.gmail.com>
+References: <1444133704-29571-1-git-send-email-tklauser@distanz.ch>
+	<632cbcf1dc9fa45ce71693a2cfae73e4@dscho.org>
+	<20151006135101.GA11304@distanz.ch>
+	<ef5b20ed42ea20b2891fc3998a81f339@dscho.org>
+	<xmqqfv1mvawu.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed Oct 07 22:22:29 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Tobias Klauser <tklauser@distanz.ch>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 07 22:42:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZjvEK-0007OF-AA
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 22:22:28 +0200
+	id 1ZjvXo-0007xI-AH
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 22:42:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756041AbbJGUWQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Oct 2015 16:22:16 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:35971 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753842AbbJGUWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Oct 2015 16:22:15 -0400
-Received: by pablk4 with SMTP id lk4so30742657pab.3
-        for <git@vger.kernel.org>; Wed, 07 Oct 2015 13:22:14 -0700 (PDT)
+	id S1754204AbbJGUmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2015 16:42:32 -0400
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:34056 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752424AbbJGUmb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Oct 2015 16:42:31 -0400
+Received: by ykdg206 with SMTP id g206so30159278ykd.1
+        for <git@vger.kernel.org>; Wed, 07 Oct 2015 13:42:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=3v7onAmIVGfltM7x0FQ3chbfwA5uet7pjpt8xFCrqCc=;
-        b=TUKLuORCQOa6kTNcIkR8rCbPrFwdQQVpJjppXjLLWOUtf4t9MZJzHrIjU1Zjyhnn92
-         zd6BceDt52e854rmUbdJKcZbLyBsPWdV9kt2j1/GfsuIk9x7v6xUhUJDq0lTBwWCIEH9
-         58mqYInbxtl/HU0iw8RKfGXpRITsNJWT+j8leDoyMhD2GL0lWbr+heWlGgPJsCCnN7aV
-         Cs8iISnbXQqIpGn7tg4yeO19MZ0lLNcC3RF9qwCGJ9EXg41DF0yafil0CqTzDjEc20BM
-         7lI6M7LWG8PGzxblwohDR2tVQrJojXSaD8V4AFwLh0TFrOYnVX144x40LdwVMYwTgee5
-         +QEg==
-X-Received: by 10.68.68.167 with SMTP id x7mr3175310pbt.140.1444249334640;
-        Wed, 07 Oct 2015 13:22:14 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:c434:fdeb:15ec:325c])
-        by smtp.gmail.com with ESMTPSA id be3sm41028104pbc.88.2015.10.07.13.22.13
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 07 Oct 2015 13:22:13 -0700 (PDT)
-In-Reply-To: <1444235305-8718-1-git-send-email-szeder@ira.uka.de> ("SZEDER
-	=?utf-8?Q?G=C3=A1bor=22's?= message of "Wed, 7 Oct 2015 18:28:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=vTcr51pEdxoGDCYGnofIYoLymgp3sHPDV50XBhjUjKU=;
+        b=FpNX5j+6YylmTUFHS+owc1rwJrFRxAvGGkpJO7dguj1ErdibZpffv2mI9mSBt+Monj
+         +ir/8m0+6EdXQSj+pm44qtlCK1W3l8WABf5nEwAj0xL1wCQO4Qe0H20mTAHCrkHuJrsB
+         haLM6ZE0r8YP3uAeeSaqLKoHfkylEmiZmqd3UQOkNr+AD2r3vvDtNrrQFN88xGSxXyTH
+         Gizyy0SsPqD2nfV1EWZloSTr7v2AHBtCdxJ0v/ONBNVue5GpT+g6Gwo4/1aS+tyH9PZT
+         szIedhA+kcZmnuayebAAIr2dJH9612FPHdDw2Mto5HB1MuiscvjVAviMobYXvQtbgpz7
+         uT5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=vTcr51pEdxoGDCYGnofIYoLymgp3sHPDV50XBhjUjKU=;
+        b=bt2auuQf9fQyXompMB/tl7AlnN1/fLeqAaxKsDm7gjWW2i08qv1CaRTFijOuCRCTNk
+         j679GBaffkJ2TzzKqx+Am4nKY052Pfi3DAknuEPv5LTmwBrivlz5PFUxf/sPsxvjGLpB
+         DXohEH2w/dk3khuF/NWgG/FZ93eGJO4+GQ2THJJc5J7cyytsNt7U+bdZPMGs87P0RMen
+         0voWZN3H+8TF8tePCjeai7fY+W70E5u7QDOZY9V6+pFTdMNZxdf2ycGfm5ppdC+Hkqzk
+         dPCbVa04ACbFuTdnIA4l4eiwq7QkXfu+0RYIztdyS/h/NvkThwomh1QCwanMzhZ6tQnL
+         fVjQ==
+X-Gm-Message-State: ALoCoQk9W1kSnKrQVWRDujaSVm2kR982nHiT9+1U80Pszb4qlfps3tW2JfYR6rz2+Dq45Qrkl2rW
+X-Received: by 10.129.4.207 with SMTP id 198mr2990215ywe.320.1444250550377;
+ Wed, 07 Oct 2015 13:42:30 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Wed, 7 Oct 2015 13:42:30 -0700 (PDT)
+In-Reply-To: <xmqqfv1mvawu.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279196>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+Compare to a patch[1] I sent a while back and the discussion on it.
 
-> @@ -120,6 +120,8 @@ The placeholders are:
->  - '%at': author date, UNIX timestamp
->  - '%ai': author date, ISO 8601-like format
->  - '%aI': author date, strict ISO 8601 format
-> +- '%as': author date, short format
-> +- '%aR': author date, raw format
-
-Hmmm, are these two a good things the only ones that are missing?
-
-It makes me wonder if it's time for us to move to a more extensible
-format, e.g. "%aT(...)", in which 'T' stands for 'timestamp' and the
-part in the parentheses can be any format string that is understood
-by "log --date=3D<format>" [*1*].  Once we have something like that,
-we can keep the existing ones for historical convenience, stop
-adding new ones [*2*] and do not have to worry about these two
-mechanisms going out of sync.
-
-Also, "%at" is almost there as a replacement for "%aR"; what we are
-missing really is "%aZ" for zone offset.  If we had "%aZ", we do not
-need "%aR", as that is "%at %aZ".
-
-
-[Footnote]
-
-*1* Yes, and in longer term, we should really aim to unify the
-    for-each-ref format and "--pretty=3Dformat:" format.  "%aT(...)"
-    is probably a step in a wrong direction, and it should probably
-    be more like "%(authordate:...)".
-
-*2* Because we have "%ad", we _can_ stop adding new ones already.
+[1] https://www.mail-archive.com/git@vger.kernel.org/msg70474.html
