@@ -1,89 +1,67 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] pretty: add format specifiers for short and raw date formats
-Date: Wed,  7 Oct 2015 18:28:25 +0200
-Message-ID: <1444235305-8718-1-git-send-email-szeder@ira.uka.de>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Exclude a file from a pull =?utf-8?Q?request=E2=80=8F?=
+Date: Wed, 07 Oct 2015 18:33:21 +0200
+Message-ID: <87oaga8wq6.fsf@igel.home>
+References: <88A9B78851BE8145A87C05C88FC3ED840101DEB1@bsrspdag001.boursorama.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 07 18:28:45 2015
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Rudy YAYON <Rudy.YAYON.ext@boursorama.fr>
+X-From: git-owner@vger.kernel.org Wed Oct 07 18:33:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zjra8-0004rp-OR
-	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 18:28:45 +0200
+	id 1Zjrej-0000SL-2T
+	for gcvg-git-2@plane.gmane.org; Wed, 07 Oct 2015 18:33:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754443AbbJGQ2l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Oct 2015 12:28:41 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:56620 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753557AbbJGQ2k (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Oct 2015 12:28:40 -0400
-Received: from x590c2e2b.dyn.telefonica.de ([89.12.46.43] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
-	iface 141.3.10.81 id 1ZjrZy-0000EY-BW; Wed, 07 Oct 2015 18:28:35 +0200
-X-Mailer: git-send-email 2.6.1.134.ge857153
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1444235315.
+	id S1754583AbbJGQdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2015 12:33:25 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:51267 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753818AbbJGQdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Oct 2015 12:33:24 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3nWLnZ5PqPz3hjB6;
+	Wed,  7 Oct 2015 18:33:22 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3nWLnZ4Cz2zvdWt;
+	Wed,  7 Oct 2015 18:33:22 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id U931zYeWbIa8; Wed,  7 Oct 2015 18:33:21 +0200 (CEST)
+X-Auth-Info: U/Ad+Dd612mO2LsOonJFGkZmUBRhMXdOGCnHzTnBSyQfrRlQMIOa26jqhkH9eVHh
+Received: from igel.home (ppp-93-104-93-26.dynamic.mnet-online.de [93.104.93.26])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Wed,  7 Oct 2015 18:33:21 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 3A08E2C6DA1; Wed,  7 Oct 2015 18:33:21 +0200 (CEST)
+X-Yow: I am a jelly donut.  I am a jelly donut.
+In-Reply-To: <88A9B78851BE8145A87C05C88FC3ED840101DEB1@bsrspdag001.boursorama.fr>
+	(Rudy YAYON's message of "Wed, 7 Oct 2015 15:55:18 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279183>
 
-Other date formats already have their format specifiers and so should
-these, so they will be available in pretty format aliases as well.
+Rudy YAYON <Rudy.YAYON.ext@boursorama.fr> writes:
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- Documentation/pretty-formats.txt | 4 ++++
- pretty.c                         | 6 ++++++
- 2 files changed, 10 insertions(+)
+>   My concern is that one important file (Puppetfile) needs to be pushed to my remote repository so I can check the changes I commited.
+>   To do that, I need to commit changes (included to the Puppetfile) then I need to push it to the remote repository.
+>  
+>   Once I want to merge these changes from a specific branch to the master branch, I do NOT want to include this file. In other words, I want to merge all files except the Puppetfile file.
+>  
+>   What is the best way for you to do that?
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
-rmats.txt
-index 671cebd95c..ce62c70659 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -120,6 +120,8 @@ The placeholders are:
- - '%at': author date, UNIX timestamp
- - '%ai': author date, ISO 8601-like format
- - '%aI': author date, strict ISO 8601 format
-+- '%as': author date, short format
-+- '%aR': author date, raw format
- - '%cn': committer name
- - '%cN': committer name (respecting .mailmap, see
-   linkgit:git-shortlog[1] or linkgit:git-blame[1])
-@@ -132,6 +134,8 @@ The placeholders are:
- - '%ct': committer date, UNIX timestamp
- - '%ci': committer date, ISO 8601-like format
- - '%cI': committer date, strict ISO 8601 format
-+- '%cs': committer date, short format
-+- '%cR': committer date, raw format
- - '%d': ref names, like the --decorate option of linkgit:git-log[1]
- - '%D': ref names without the " (", ")" wrapping.
- - '%e': encoding
-diff --git a/pretty.c b/pretty.c
-index 151c2ae312..e3ea2c03b0 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -723,6 +723,12 @@ static size_t format_person_part(struct strbuf *sb=
-, char part,
- 	case 'I':	/* date, ISO 8601 strict */
- 		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(ISO8601_STRICT)));
- 		return placeholder_len;
-+	case 's':	/* date, short */
-+		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(SHORT)));
-+		return placeholder_len;
-+	case 'R':	/* date, raw */
-+		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(RAW)));
-+		return placeholder_len;
- 	}
-=20
- skip:
---=20
-2.6.1.134.ge857153
+Create a branch that does not include the file.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
