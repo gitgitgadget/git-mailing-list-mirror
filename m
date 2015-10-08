@@ -1,74 +1,70 @@
 From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] notes: allow merging from arbitrary references
-Date: Wed, 7 Oct 2015 17:28:24 -0700
-Message-ID: <CA+P7+xpu1rMHfM-Jk8X8H8Bw4bE+LhWJaG1v0KqZapbdCjH35g@mail.gmail.com>
-References: <1443739165-17526-1-git-send-email-jacob.e.keller@intel.com>
+Subject: =?UTF-8?Q?Re=3A_Exclude_a_file_from_a_pull_request=E2=80=8F?=
+Date: Wed, 7 Oct 2015 17:30:07 -0700
+Message-ID: <CA+P7+xqZwbLkLhG=1PvBXSRW_bJ_7CphTJDAY3Wrc1SyjCFsaA@mail.gmail.com>
+References: <88A9B78851BE8145A87C05C88FC3ED840101DEB1@bsrspdag001.boursorama.fr>
+ <87oaga8wq6.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Mike Hommey <mh@glandium.org>,
-	Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 02:28:55 2015
+Cc: Rudy YAYON <Rudy.YAYON.ext@boursorama.fr>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Thu Oct 08 02:30:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zjz4l-0008GK-O1
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 02:28:52 +0200
+	id 1Zjz6N-0001P7-Qd
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 02:30:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751950AbbJHA2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2015 20:28:44 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:36012 "EHLO
-	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751896AbbJHA2o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Oct 2015 20:28:44 -0400
-Received: by ioii196 with SMTP id i196so40949049ioi.3
-        for <git@vger.kernel.org>; Wed, 07 Oct 2015 17:28:43 -0700 (PDT)
+	id S1752153AbbJHAa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2015 20:30:28 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:33143 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751641AbbJHAa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Oct 2015 20:30:27 -0400
+Received: by iofh134 with SMTP id h134so41413642iof.0
+        for <git@vger.kernel.org>; Wed, 07 Oct 2015 17:30:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=+C1bTpAuyTjRb+kBiFJsIBzRIGveDE8yLxWs3eSy/3s=;
-        b=zc7D295cUytT4ioTiS1o0h54gjd4mB1jUbzcIULSC8pLvGeGRQEsjRqTq25T2r4Wg2
-         u255wxU9Ig+yQhKwjHw+qPax7OlZzAmpP57sJazVtZnCzfkt4CoKys6KDSb7KmkM7qkW
-         w5jx4Z0SlyWxGNDy34bOR2uLFM7C5ckVPconDNgHIYyJSafPmMrPnIoor9bum6gZX8Zd
-         xHKv7NUi+8902gdjUU4fT6iUlrU0DE/X3rZKKIqh9Ds2n1NQ1MdOiTCZO5NlczwHxW5c
-         /lUEx9fruQ9zdF/S/4yGeaG+Vb5wKJ7eB9OTzo12woS4R3NY36IxIxMm+jBPsuKU1zva
-         ZaIg==
-X-Received: by 10.107.166.201 with SMTP id p192mr6233376ioe.0.1444264123448;
- Wed, 07 Oct 2015 17:28:43 -0700 (PDT)
-Received: by 10.107.132.155 with HTTP; Wed, 7 Oct 2015 17:28:24 -0700 (PDT)
-In-Reply-To: <1443739165-17526-1-git-send-email-jacob.e.keller@intel.com>
+        bh=HfvogSthB/TAVnOWKb670pz8wToPZ7qwyyoNMBdAxvU=;
+        b=HRZuM6JqvufwyxAVZIFYNYe9cYRvNPfCdSH4nzkfHPjhSRX6D+vVYdmJIT6zh1q4dm
+         kmZ5CMpKbgA2w3OnbBFQrLQTV/HW7yZEGELnkIsYGF7twOOvOC2Umr0wQG1l3ypnfl27
+         BwIK2ZlheSyC+uxTSKqM3ehisbEGEHH+1WvdR7NCIQLAXc1ERBiwJwVIrJ4pWcaJCqKw
+         ZBWH/eGT5cDCPnrHriOH0Ilo5htIc61aV7VKA3f6oOByl6KAaxvzRdD2ogjfq0m2vmgQ
+         PhvSBYK6W+JgFXHR0OkmAGSHOAnNNKfrWMburxUKBUdGkF+4Ni1smAEVk2dQVVIsjB0B
+         Ssow==
+X-Received: by 10.107.166.201 with SMTP id p192mr6239788ioe.0.1444264226527;
+ Wed, 07 Oct 2015 17:30:26 -0700 (PDT)
+Received: by 10.107.132.155 with HTTP; Wed, 7 Oct 2015 17:30:07 -0700 (PDT)
+In-Reply-To: <87oaga8wq6.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279212>
 
-On Thu, Oct 1, 2015 at 3:39 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
-> From: Jacob Keller <jacob.keller@gmail.com>
+On Wed, Oct 7, 2015 at 9:33 AM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> Rudy YAYON <Rudy.YAYON.ext@boursorama.fr> writes:
 >
-> Create a new expansion function, expand_loose_notes_ref which will
-> expand any ref using get_sha1, but falls back to expand_notes_ref if
-> this fails. The contents of the strbuf will be either the hex string of
-> the sha1, or the expanded notes ref. It is expected to be re-expanded
-> using get_sha1 inside the notes merge machinery, and there is no real
-> error checking provided at this layer.
+>>   My concern is that one important file (Puppetfile) needs to be pushed to my remote repository so I can check the changes I commited.
+>>   To do that, I need to commit changes (included to the Puppetfile) then I need to push it to the remote repository.
+>>
+>>   Once I want to merge these changes from a specific branch to the master branch, I do NOT want to include this file. In other words, I want to merge all files except the Puppetfile file.
+>>
+>>   What is the best way for you to do that?
 >
-> Since we now support merging from non-notes refs, remove the test case
-> associated with that behavior. Add a test case for merging from a
-> non-notes ref.
+> Create a branch that does not include the file.
 >
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
+> Andreas.
+>
 
-
-Anyone have any comments on this one? It's basically Junio's
-suggestion of just using get_sha1 directly for the remote side of the
-notes merge...
+Why do the changes to "Puppetfile" need to be pushed to your github?
+Just test it locally and then push it and pull-request a commit which
+doesn't have those changes in it.
 
 Regards,
 Jake
