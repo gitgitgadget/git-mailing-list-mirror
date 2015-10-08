@@ -1,63 +1,88 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 0/1]  merge: fix cache_entry use-after-free
-Date: Thu,  8 Oct 2015 14:47:50 -0400
-Message-ID: <1444330071-8909-1-git-send-email-dturner@twitter.com>
-Cc: David Turner <dturner@twitter.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 08 20:48:11 2015
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 01/10] ref-filter: implement %(if), %(then), and %(else) atoms
+Date: Thu, 08 Oct 2015 20:48:41 +0200
+Message-ID: <vpqvbahmc1i.fsf@grenoble-inp.fr>
+References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
+	<1444295885-1657-2-git-send-email-Karthik.188@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 08 20:49:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkGEU-0006pA-Q4
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 20:48:03 +0200
+	id 1ZkGFN-0007aB-CU
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 20:48:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755632AbbJHSr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 14:47:58 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:34853 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753735AbbJHSr5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2015 14:47:57 -0400
-Received: by qgt47 with SMTP id 47so50016306qgt.2
-        for <git@vger.kernel.org>; Thu, 08 Oct 2015 11:47:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=3ZVu/2Ab4/WioIsui/lcEN1rirXi1MPrExOdL9KMBGY=;
-        b=Dfz1rZ9fiKD2k4I+F60/MKodzMmlnXdbeYwAXviHYZIq2ZMfxaYEB/WBDJUn3t+7WO
-         IR+KrWEdZBzBOILSiLtcsCHbXKZsLY8mVu7wUyY/4k/y5dF2nleZcL4SAX/llpHB8DlN
-         uZT3Nuq7w2VSGF/0xnIj0ImWU68TG5lPGMadtyTKx1s21bhixlVCxlD5/hJfcWRewi8S
-         4dFmuhZWpwFe8Z0o1K8yqOgJdMnFmDK8vH3ieRYb50qqx18Q3ZT2puCTAMfqbYNdvw/n
-         FRenhngfhLaF3ZkNyLh9bY9vdzGUkBWjQqu1pYy6JL98JhRm9dqeE2CrwnCX3IIjhT6V
-         137A==
-X-Gm-Message-State: ALoCoQkllMUNyjOwb+MF3JHdEo9oEKedPUSXzB0noNINvml2Jq62hP1WLoXmMeJKXgRou+WhzlAg
-X-Received: by 10.140.85.135 with SMTP id n7mr10045334qgd.53.1444330076372;
-        Thu, 08 Oct 2015 11:47:56 -0700 (PDT)
-Received: from ubuntu.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id e51sm19234094qge.46.2015.10.08.11.47.55
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Oct 2015 11:47:55 -0700 (PDT)
-X-Google-Original-From: David Turner <dturner@twitter.com>
-X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
+	id S1754187AbbJHSss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2015 14:48:48 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48551 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753080AbbJHSss (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2015 14:48:48 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t98ImduF009128
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 8 Oct 2015 20:48:39 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t98ImfWq009520;
+	Thu, 8 Oct 2015 20:48:41 +0200
+In-Reply-To: <1444295885-1657-2-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Thu, 8 Oct 2015 14:47:56 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 08 Oct 2015 20:48:39 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t98ImduF009128
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1444934921.69764@zVir7vRGTxaWcd8TGK+eCA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279258>
 
-Keith diagnosed the problem and wrote the patch.  I wrote the commit
-message and am sending it upstream with his OK.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Keith McGuigan (1):
-  merge: fix cache_entry use-after-free
+> +static void if_then_else_handler(struct ref_formatting_stack **stack)
+> +{
+> +	struct ref_formatting_stack *cur = *stack;
+> +	struct ref_formatting_stack *prev = cur->prev;
+> +	struct if_then_else *if_then_else = (struct if_then_else *)cur->at_end_data;
+> +
 
- cache.h        | 27 +++++++++++++++++++++++++++
- name-hash.c    |  7 ++++++-
- read-cache.c   |  5 ++++-
- split-index.c  | 12 +++++++-----
- unpack-trees.c |  6 ++++--
- 5 files changed, 48 insertions(+), 9 deletions(-)
+You should add
+
+	if (!if_then_else->then_atom)
+		die(_("format: %%(if) atom used without a %%(then) atom"));
+
+here ...
+
+> +static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
+> +{
+> +	struct ref_formatting_stack *cur = state->stack;
+> +	struct if_then_else *if_then_else = NULL;
+> +
+> +	if (cur->at_end == if_then_else_handler)
+> +		if_then_else = (struct if_then_else *)cur->at_end_data;
+> +	if (!if_then_else)
+> +		die(_("format: %%(then) atom used without an %%(if) atom"));
+> +	if (if_then_else->then_atom)
+> +		die(_("format: %%(then) atom used more than once"));
+> +	if_then_else->then_atom = 1;
+
+... and
+
+	if (if_then_else->else_atom)
+		die(_("format: %%(then) atom used after %%(else)"));
+
+here, just in case (adding the two corresponding test_must_fail wouldn't
+harm of course).
 
 -- 
-2.4.2.644.g97b850b-twtrsrc
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
