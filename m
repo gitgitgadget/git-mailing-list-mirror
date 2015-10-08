@@ -1,74 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] notes: Allow treeish expressions as notes ref
-Date: Thu, 08 Oct 2015 12:03:29 -0700
-Message-ID: <xmqqziztqj26.fsf@gitster.mtv.corp.google.com>
-References: <CALKQrgdGJy6vtBRL413bbSHSi+=KTh4Q98hpbgg29j4J191=bA@mail.gmail.com>
-	<1436517551-12172-1-git-send-email-mh@glandium.org>
-	<xmqqzj30yq03.fsf@gitster.dls.corp.google.com>
-	<20151008025018.GA29722@glandium.org>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 3/4] Add a function to release all packs
+Date: Thu, 08 Oct 2015 21:10:46 +0200
+Organization: gmx
+Message-ID: <991eaf53b382e8156ef9486014c1a4a5@dscho.org>
+References: <682991036f1e8e974ed8ecd7d20dbcc6fb86c344.1443469464.git.johannes.schindelin@gmx.de>
+ <cover.1444131898.git.johannes.schindelin@gmx.de>
+ <9953f8ed40d0cf99f1be7cfe2fa0b699b7769645.1444131898.git.johannes.schindelin@gmx.de>
+ <xmqq4mi2va9u.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Oct 08 21:03:37 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Max Kirillov <max@max630.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 08 21:11:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkGTX-00042z-S0
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 21:03:36 +0200
+	id 1ZkGai-0002Ig-R6
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 21:11:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756215AbbJHTDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 15:03:31 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:34424 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756138AbbJHTDb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2015 15:03:31 -0400
-Received: by padhy16 with SMTP id hy16so62344014pad.1
-        for <git@vger.kernel.org>; Thu, 08 Oct 2015 12:03:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=ydMdJZqO3VVzb6HvFmY3NJ0D+aAENFXr8lcJIH5eEW4=;
-        b=Lnpi8+LpIYccCmDCLizQ70a/57rLUbbse787sYXboTLUj02ZRoB1RWRH5FgrnKwUGl
-         EFwAmehCY7UHJDnFQg4SHzwJ9pbiLpp6buy/VygBdgjmaND37H3VQt6m8eISYb4GRioE
-         k6Annri4C3rfin+Lal1qesSkdJeWI4u5auel5k/U3OUA4Uym0Bi0kyEmElCLL98h6stP
-         ebrWFqEcG/uURon4tTey/uHCkMEn+Z2iDovf/e+ZFIXS71WM6rw+uUN7LpODvc7CEiUs
-         ocKTSqAvXUVf8NJRxU5QhUTfhznCts5eHs2OAlcPPZd/vhMpXwmzJf08xDvBhwVe4sUt
-         oiMg==
-X-Received: by 10.68.216.193 with SMTP id os1mr9768934pbc.110.1444331010546;
-        Thu, 08 Oct 2015 12:03:30 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:8f0:649c:42a6:426d])
-        by smtp.gmail.com with ESMTPSA id ci2sm19147987pbc.66.2015.10.08.12.03.29
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Thu, 08 Oct 2015 12:03:29 -0700 (PDT)
-In-Reply-To: <20151008025018.GA29722@glandium.org> (Mike Hommey's message of
-	"Thu, 8 Oct 2015 11:50:18 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756269AbbJHTK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2015 15:10:56 -0400
+Received: from mout.gmx.net ([212.227.15.19]:63610 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752718AbbJHTKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2015 15:10:55 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0M8ehf-1aWIb62nH1-00wFnF; Thu, 08 Oct 2015 21:10:47
+ +0200
+In-Reply-To: <xmqq4mi2va9u.fsf@gitster.mtv.corp.google.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:AALyM//SUdkIJ9hpa4dag45r1jdfKfuKLKOsEo0/3XIwVouozpb
+ KLOzCkzwSQueF73h1iySWEoj6fJepYpwcDIPvzLu16PqArHlVs6tz4bDEPCKcnGAsHCGqGG
+ /bWmqC8nUNfuPuZAFF/Wt7Uz/qB4ZThhmR1tJ8tvTy/QwIpxot6HVfUGjjNw7afk1gUfpLM
+ wu7pU4TpJ3P1KPr5y+Dig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZkVq2jPpr3U=:JE0j8Oi7SeDr/8s4xKcvol
+ nN78r+GL6AZi6LoCnvVM6Yp0G3BcLAa6yUHGc0hiNa2/t8HDvCPNJdzQsxbHVWZW1lqgoYiGL
+ wM5v6hRsX3Fc9Mnf/97rAVL6ek3ue6nnRsk7BkrxQgpwAtWiKjYlZSCQk0nE7ANxxBYGwk4ET
+ zHlGK4ptYw4oPRW+g5pVIDn422QhFPPSMQctfZTMhqkohXrPpZGd4f1rLiHaf2IlAoDgoI6Wh
+ vSU+F+a1/K2QPQk1PaeoG8eYyh9hX8Mk6HS7snMrpDE4vKUohyXyFOo7x0svlzif99EYFUGR7
+ 44sLzqUzofpqy7BvkbIM6pTIcxwAkF4HUmJ2yFWyLZAyHS9ToOA081m+BY5yg7ILV4IQ8zy3R
+ kj9mezHOIab60PWDy+ccu6RegoMssbOiwwBPvjIL/Zlu9haezF8aR5LsceJq6AhXROArUj0u9
+ DQ9Q/FrrSbSX60FQih/kFQfI9Dynu6KJ2EtVWqnyyAB9IVAgGjCJt+g0/43T/tHMFdDPARp08
+ KiF/FRcyTA87QNLDxItHQYzZ2qgnD8azEoXl/+lsLlBI71Xhir2cyeFNlWVWTwb1Xuq0XZbAL
+ 1m1Oo83zR8lOs9egpGp386i0keCngJLmtLUOWg96mLhZFOHoBKEL6YNa594or/7K7SnQoHv/l
+ hpxglS+2spTb9OiAsu2oINYS5SpADwO6Kq3I/QgQejtUUsI9jDTE3GuMHLmz0ljoj05zfnzSH
+ VonQwAvUrWgKGQ5B85YUBciJtkqqvsgsrNgt7A88Y3SibDauqdezL1//D88dhmviG9Gy8rKA 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279263>
 
-Mike Hommey <mh@glandium.org> writes:
+Hi Junio,
 
-> After refreshing the patch against current "next", it appears that
-> there is such a distinction:
->
-> $ ./git-log --notes=fdsfgsfdg HEAD^! --pretty=short
-> warning: notes ref refs/notes/fdsfgsfdg is invalid
-> commit e5b68b2e879608d881c2e3600ce84962fcdefc88
-> Author: Mike Hommey <mh@glandium.org>
->
->     notes: allow treeish expressions as notes ref
->
-> $ ./git-log --notes=foo HEAD^! --pretty=short
-> commit e5b68b2e879608d881c2e3600ce84962fcdefc88
-> Author: Mike Hommey <mh@glandium.org>
->
->     notes: allow treeish expressions as notes ref
+On 2015-10-07 19:49, Junio C Hamano wrote:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+>> On Windows, files that are in use cannot be removed or renamed. That
+>> means that we have to release pack files when we are about to, say,
+>> repack them. Let's introduce a convenient function to close them
+>> pack files.
+>>
+>> While at it, we consolidate the close windows/close fd/close index
+>> stanza in `free_pack_by_name()` into the `close_pack()` function that
+>> is used by the new `close_all_packs()` function to avoid repeated code.
+>>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> ---
+> 
+> This is the only one that was updated among the four and the change
+> looks sensible.  I'd reword the end of the first paragraph of the
+> proposed log message, though, to replace "close them pack files"
+> with "close all the pack files and their idx files".
+> 
+> Thanks.
 
-Good; thanks for checking.
+This time I was more clever and checked `pu` before sending off a fixed patch, seeing that you patched this already.
+
+Thanks,
+Dscho
