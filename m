@@ -1,64 +1,67 @@
-From: Ray Donnelly <mingw.android@gmail.com>
-Subject: Re: [PATCH 1/2] test-path-utils.c: remove incorrect assumption
-Date: Fri, 9 Oct 2015 11:12:08 +0100
-Message-ID: <CAOYw7dtC=7x8c2rUPxBbxq1OZgZB_-L3AD90riH9esYV4E85Ww@mail.gmail.com>
-References: <CAOYw7dubGJ=m5+EnjGy7jTQxR+b0uBmyG138KEQ5rzX2K7WcgA@mail.gmail.com>
-	<xmqqlhbj3mfo.fsf@gitster.mtv.corp.google.com>
-	<CAOYw7dv4iPQ4cq4Ab1ZeThrp=u51T5v387a1Y8QPO-yj=fyMcg@mail.gmail.com>
-	<xmqqwpv21rej.fsf@gitster.mtv.corp.google.com>
-	<CAOYw7duDLWYpu+NK2t2+hV3rtU=dK3eQ6R11mfwLKbQQowbWuQ@mail.gmail.com>
-	<CAOYw7dsfKpQT4NXjKrNRVsoPCrAFDjp7Hnms_5SF7JLw6s9g-Q@mail.gmail.com>
-	<xmqq1td4rgvv.fsf@gitster.mtv.corp.google.com>
+From: "Mr,Zaara Heyet." <geldkantor@aim.com>
+Subject: PLS I NEED YOUR HELP!
+Date: Thu, 8 Oct 2015 23:11:22 +0300 (EEST)
+Message-ID: <99f57669a7a93f5aff035629c94b1e38.squirrel@82.79.55.74>
+Reply-To: geldkantor@aim.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 09 12:12:19 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Fri Oct 09 13:56:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkUeu-00035K-Q8
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Oct 2015 12:12:17 +0200
+	id 1ZkWHt-0001M1-7h
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Oct 2015 13:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757373AbbJIKML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2015 06:12:11 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:34045 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755832AbbJIKMJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2015 06:12:09 -0400
-Received: by lbbwt4 with SMTP id wt4so75421224lbb.1
-        for <git@vger.kernel.org>; Fri, 09 Oct 2015 03:12:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Eafc9BbmNrqVaCYGJcWJtiBXwc7l823pRfhFX+tO+AI=;
-        b=bMbkAo9DRlGTj+GnQB4PRgnZKdkN67np1yBuj4Rfgx3eh1tY48YrpB7SfntLNiSdJV
-         BKi00LuDOV6v/CuUQdimZ3u/SBV75zmts0YtfgvoNO0fOhzI3/DhsNVdYNXpe0rLZI6J
-         Sdc4066WpCKxE8Kwog4GXd1ZhXCZBlpRsxwYIjOPSu9iI6SMnrEWjhpSMTi0cNkAlz9M
-         rkhfgNVN/wPMmpxFrQFGI4IXirq/wfJ1jOdf8/fhRerbp4dZl6tHc7Shs9CNdgO/vjzN
-         NuY3pk0qyYi9/yiO0BTC8h0M88HyQwadcUTr+Al9kv4CL+T52uc4xPq5bL00iMfgtfRO
-         x7Wg==
-X-Received: by 10.112.17.34 with SMTP id l2mr6025616lbd.117.1444385528628;
- Fri, 09 Oct 2015 03:12:08 -0700 (PDT)
-Received: by 10.112.20.131 with HTTP; Fri, 9 Oct 2015 03:12:08 -0700 (PDT)
-In-Reply-To: <xmqq1td4rgvv.fsf@gitster.mtv.corp.google.com>
+	id S1756381AbbJIL4d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2015 07:56:33 -0400
+Received: from [82.79.55.74] ([82.79.55.74]:44139 "EHLO
+	server-servicii.uvvgsm.ro" rhost-flags-FAIL-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754648AbbJIL4c (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2015 07:56:32 -0400
+X-Greylist: delayed 57251 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Oct 2015 07:56:32 EDT
+Received: from 82.79.55.74 (localhost [127.0.0.1])
+	by server-servicii.uvvgsm.ro (Postfix) with ESMTP id 9B9043ED11D;
+	Thu,  8 Oct 2015 23:11:22 +0300 (EEST)
+Received: from 185.13.106.89
+        (SquirrelMail authenticated user test1)
+        by 82.79.55.74 with HTTP;
+        Thu, 8 Oct 2015 23:11:22 +0300 (EEST)
+User-Agent: SquirrelMail/1.4.15
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279306>
+X-Spam-Report: 8.0 points;
+ *  1.8 SUBJ_ALL_CAPS Subject is all capitals
+ *  2.6 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
+ *  0.7 URG_BIZ BODY: Contains urgent matter
+ *  1.8 MILLION_USD BODY: Talks about millions of dollars
+ *  1.2 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279308>
 
-On Fri, Oct 9, 2015 at 2:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I'll squash this in as part of your first patch that removes the
-> test from test-path-utils.c.  That makes it clearer why it is the
-> right thing to remove the test, I'd think.
->
 
-Great, many thanks!
 
-> Thanks.
->
+
+I am Mrs Zaara Heyet an oil-servicing equipment merchant, am writing this
+mail to you with tears and love from my heart of charity work i could not
+fulfill before the end of my days due to my present healness ,Please do
+not think of this letter as one of those being sent around to ask for
+money,I got your email id from our chambers of commerce while searching
+for a reliable person to help me carry out this project.
+
+I have an urgent and confidential business proposition involving transfer
+of Nine Million $9,000.000.00 USD ,it will be of great benefit for both of
+us especially you as my days are number on earth. I will give you more
+details as regards this transaction as soon as you, reply me of your
+interest via my personal E-mail: hayettzaara@yahoo.com  , Thanks for your
+interested .
+
+WARNING!!WARNING!!
+This winning notification is expected to be read and/or used only by
+theindividual(s) for whom it is intended.:*********
