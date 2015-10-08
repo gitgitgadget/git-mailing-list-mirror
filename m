@@ -1,93 +1,73 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 00/10] port branch.c to use ref-filter's printing options
-Date: Thu, 8 Oct 2015 22:58:31 +0530
-Message-ID: <CAOLa=ZQOO9BjoTj1B-b=kUviL=617F7y46BeX1sOXpeHcatFVQ@mail.gmail.com>
-References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
- <vpqr3l5zgst.fsf@grenoble-inp.fr> <CAOLa=ZQvB_S2-nw8hOABt7aQJOWJXvfK1U2zurpnZmaAgJNnGA@mail.gmail.com>
- <vpq8u7dp9qr.fsf@grenoble-inp.fr>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: `-u`/`update-head-ok` unsupported on pull
+Date: Thu, 8 Oct 2015 11:13:34 -0700
+Message-ID: <CAGZ79kavoUw5tkeABkYXEsa7jt-2aRxjGyOB+=ofnuqpQBGGkA@mail.gmail.com>
+References: <CAA5Ydx9ySzEBWcUkmGQKTq93W0HzfEmb3ER7GPKzcnQJ0dbFKw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Oct 08 19:29:16 2015
+Cc: Git <git@vger.kernel.org>
+To: Victor Engmark <victor.engmark@gmail.com>,
+	Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 08 20:13:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkF0E-0003Qf-18
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 19:29:14 +0200
+	id 1ZkFhE-00014n-Fp
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 20:13:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965195AbbJHR3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 13:29:04 -0400
-Received: from mail-vk0-f50.google.com ([209.85.213.50]:36565 "EHLO
-	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965119AbbJHR3B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2015 13:29:01 -0400
-Received: by vkfp126 with SMTP id p126so36451742vkf.3
-        for <git@vger.kernel.org>; Thu, 08 Oct 2015 10:29:00 -0700 (PDT)
+	id S1752889AbbJHSNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2015 14:13:36 -0400
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:34993 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751464AbbJHSNf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2015 14:13:35 -0400
+Received: by ykec126 with SMTP id c126so19573539yke.2
+        for <git@vger.kernel.org>; Thu, 08 Oct 2015 11:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=/mhVvLPdIbp/9/SyhcbuDJFZ1lm9Vg9qococ/06vLJI=;
-        b=OU0KkrtSYvTuQTXIBcKQBFt5bzXvbYNlmUoFIo9HLstPDculjA5Dg5Df+K4YfvIICK
-         pMXKjY8/dl1XUxkhSsrPw7240WtgFwpuZ60QRx6bTmyCU5HH9T6i8n02pYxmbwfaDXYm
-         zjITf4Sal+pEBlA5MRo97C8JaE6dK6pwAP06aFOrefKzISGeDKIxQqB8SwUTAhomp5Lo
-         4sCM34Z9XJq1NPGAaSmyxDRikdc1Iz6rZ2S1YPMWs/GQU3kP/JY073U94KBzlKh8LkOy
-         3GTlHrMkbOcLsPMUjbPFvT6HNdwdIwqGq7vAmVl38eocLyE/tR9JbKFTbGX4cu4X5qNK
-         4ZgQ==
-X-Received: by 10.31.178.198 with SMTP id b189mr5261628vkf.114.1444325340769;
- Thu, 08 Oct 2015 10:29:00 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Thu, 8 Oct 2015 10:28:31 -0700 (PDT)
-In-Reply-To: <vpq8u7dp9qr.fsf@grenoble-inp.fr>
+        bh=PZde2tYz8JyujIXb6jOMFpizNXidQUsI7lRS21msK08=;
+        b=DQPJtP+I7F40O4acoLM3NrM7HUSwn/A7O7AD8uJWz02bKMh8SdsZR7b9B+ZoMMftdp
+         t48ll+wMdZHFSIGiQa2tB8ElDNz135pNlrhN6N8Utm/qdHajHzXAoQRAK7QQ+RdKIjRe
+         V/Owy917dx2MFwW4uTa+ufUweWbyk4SuAqgaYFGLPBRS67WDbOolxts1eEta98IJyZzr
+         U91RVXXfCSHzEsryhvedebshwHu+A4V1jHdCDzNntOR6mBalp1H1IDbvR1EXuh2n1Ei+
+         Ee7bKwBPGcyUx3yVviel6XrfIgcLOTuRPUhTBDr5yQwEgvbNSmSBXqH52z12/olDgfc1
+         8z6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=PZde2tYz8JyujIXb6jOMFpizNXidQUsI7lRS21msK08=;
+        b=SgJYyE7zjkDrr53w1pwq9jPVtpMoG+NZJkpKb/FJprfVMCa4Sj227CAUDf8MBSWQz5
+         Fl84oHRI/2mj2jX9sQyh5ndgTDTbVkGQLfwIpKH4vTl07ll4bnBVE6y+2T9VW5enHaur
+         RP3VCrTmV+JUBmgjYuM3QWabN+6TmvJ5IbHHYV8KuXt3KnSv6ynELaP2/+zNyvgEkUI8
+         m/Wup7s77SSm4o1ekjfuIRZxAgnYpxjSwBv+YioO4FQas4GKhDu2VDCUBWJeOqpSIqa1
+         rkF6GtIFWbTYWIgBQmgDarPjrVSWQLKKRiszOeHvk/PbqjeIu88aNCgJLEhXtl2kw6LZ
+         jdEA==
+X-Gm-Message-State: ALoCoQniqJuuuJE5LJCXPifBvfIk2mVnw3pcto8BZ1CHrpq6wnE4tejUZ+DEHZv2N6986oBr/AnK
+X-Received: by 10.129.4.207 with SMTP id 198mr7084139ywe.320.1444328014716;
+ Thu, 08 Oct 2015 11:13:34 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Thu, 8 Oct 2015 11:13:34 -0700 (PDT)
+In-Reply-To: <CAA5Ydx9ySzEBWcUkmGQKTq93W0HzfEmb3ER7GPKzcnQJ0dbFKw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279252>
 
-On Thu, Oct 8, 2015 at 10:40 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> On Thu, Oct 8, 2015 at 5:57 PM, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>>> +                             unsigned int nobracket = 0;
->>>> +
->>>> +                             if (!strcmp(valp, ",nobracket"))
->>>> +                                     nobracket = 1;
->>>
->>> The code to parse comma-separated values is different here and
->>> elsewhere. I'd rather have the same code (possibly factored into a
->>> helper function), both to get consistent behavior (you're not allowing
->>> %(upstream:nobracket,track) for example, right?) and consistent code.
->>>
->>
->> Speaking of comma-separated values, the only other place we use that is
->> in the align atom. Also I find this very specific to get a function out of.
->> Somehow I think this is the simplest way to go about this.
->
-> Well, most pieces of code start with one instance, then two, then
-> more ;-). When the second instance starts being different from the
-> first, it doesn't give a good example for the future third instance.
->
++Paul Tan who rewrote git pull in C recently.
 
-Totally agree with you here.
+The manpage:
+-u, --update-head-ok
+           By default git fetch refuses to update the head which
+corresponds to the current branch. This flag disables the check. This
+is purely for the internal use for git pull to communicate with
+           git fetch, and unless you are implementing your own
+Porcelain you are not supposed to use it.
 
-> This particular piece of code is so important and I won't fight for a
-> better factored one, but in general "there are only two instances" is a
-> dubious argument to avoid refactoring.
->
-> Still, I find it weird to force the nobracket to be always at the same
-> position.
->
-
-No i mean I could follow up with the way we use it in align, but I don't see
-how I can make a function out of this.
-
--- 
-Regards,
-Karthik Nayak
+I guess we either need to update the manpage to remove that option
+then, or add it back in in case somebody actually uses it despite the
+warning in the man page?
