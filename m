@@ -1,90 +1,164 @@
-From: Rudy YAYON <ryayon@outlook.com>
-Subject: Re: Exclude a file from a pull request
-Date: Thu, 8 Oct 2015 09:50:12 +0200
-Message-ID: <DUB130-W21C8C41143ED4495DB319ACE350@phx.gbl>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] filter-branch: strip pgp signature in commit messages
+Date: Thu, 8 Oct 2015 10:15:48 +0200
+Message-ID: <56162634.2010800@drmicha.warpmail.net>
+References: <20151008050122.GA21369@freya.jamessan.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "schwab@linux-m68k.org" <schwab@linux-m68k.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "jacob.keller@gmail.com" <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 10:03:34 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>
+To: James McCoy <vega.james@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 08 10:17:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zk62t-0000Zp-Cx
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 09:55:23 +0200
+	id 1Zk6Mq-0006PB-NM
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 10:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753188AbbJHHzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 03:55:17 -0400
-Received: from dub004-omc1s17.hotmail.com ([157.55.0.216]:49371 "EHLO
-	DUB004-OMC1S17.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752153AbbJHHzQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Oct 2015 03:55:16 -0400
-X-Greylist: delayed 303 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Oct 2015 03:55:16 EDT
-Received: from DUB130-W21 ([157.55.0.237]) by DUB004-OMC1S17.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.23008);
-	 Thu, 8 Oct 2015 00:50:12 -0700
-X-TMN: [Y6/PFyWWGpOQ8AgP1mkOuPoyZrN1TQF2]
-X-Originating-Email: [ryayon@outlook.com]
-Importance: Normal
-X-OriginalArrivalTime: 08 Oct 2015 07:50:12.0924 (UTC) FILETIME=[F69A0FC0:01D1019D]
+	id S1752272AbbJHIPz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Oct 2015 04:15:55 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:50219 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751458AbbJHIPv (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Oct 2015 04:15:51 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 1AADF205E8
+	for <git@vger.kernel.org>; Thu,  8 Oct 2015 04:15:51 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Thu, 08 Oct 2015 04:15:51 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=NfTPSrt+UGPKjiKxgBKCk2mDZS8=; b=S8YtpC
+	jkQ223dtvw8r82L90+e1rpn/LP2JsIMP7D8eI6onkoYIstCqpYgw/HL2m7mQXkIm
+	FjRlcpbJuGO/KV6Mt/EK7JsLpbkJwxBhDrvYFHCAN3eRts4sD13lj7NdErx4o0Jh
+	XHxFVHLxpEwz8dEFcaNu/Q8OAJ08RKSWdw3a0=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=NfTPSrt+UGPKjiK
+	xgBKCk2mDZS8=; b=b32hVwRDcLjTYU+Iv01uKEoL/jFuUjVXpDQuxxM9V33SCA1
+	7G94ZrIW+fB1Tvfj8hGikU/XVsODvnpV9w3DwGFvVYk5eqVeSiTB0SmFZtHFqMkd
+	DjkoGSZwJJugb5VHuGiMoUeDTb+163rhOS9CuPi7j4ZF0LBmj+QchTc2cIfQ=
+X-Sasl-enc: 9IDhKBjD10bvpzhsyTe2usQZTZQIIBJjCldAXmOTreep 1444292150
+Received: from dickson.math.uni-hannover.de (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 6C6C5C0001A;
+	Thu,  8 Oct 2015 04:15:49 -0400 (EDT)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <20151008050122.GA21369@freya.jamessan.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279222>
+
+James McCoy venit, vidit, dixit 08.10.2015 07:01:
+> df062010 (filter-branch: avoid passing commit message through sed)
+> introduced a regression when filtering gpg signed commits.  The gpgsi=
+g
+> header is multi-line and contains an empty line.  Although the signat=
+ure
+> is indented, making the line a whitespace only line, this still resul=
+ts
+> in $header_line being empty, causing the =E2=80=9Cskip header lines=E2=
+=80=9D loop to
+> exit.
+>=20
+> The rest of the commit object is then re-used as the rewritten commit
+> message, causing the new message to include the signature of the
+> original commit.
+
+I had to wrap my head around that commit message quite a bit and ended
+up testing the issue myself. So the catch is:
+
+df062010 (filter-branch: avoid passing commit message through sed)
+introduced a regression when filtering gpg signed commits. As a
+consequence, "filter-branch --msg-filter cat" (which should leave the
+commit message unchanged) spills the signature (without the BEGIN line,
+but with the END line) into (in front of) the original commit message.
+
+The reason is that although...
+
+=2E.. original commit.
+
+=46ix this by keeping track of the in/out-of signature state when parsi=
+ng
+the header lines.
 
 
-On Wed, Oct 7, 2015 at 9:33 AM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+[No, this does not alleviate my dislike for the commit signature
+implementation, and I have not checked the patch - the test looks good
+to me, though.]
 
-> Rudy YAYON <Rudy.YAYON.ext@boursorama.fr> writes:
-
-> 
-
->>   My concern is that one important file (Puppetfile) needs to be pushed to my remote repository so I can check the changes I commited.
-
->>   To do that, I need to commit changes (included to the Puppetfile) then I need to push it to the remote repository.
-
->> 
-
->>   Once I want to merge these changes from a specific branch to the master branch, I do NOT want to include this file. In other words, I want to merge all files except the Puppetfile file.
-
->> 
-
->>   What is the best way for you to do that?
-
-> 
-
-> Create a branch that does not include the file.
-
-> 
-
-> Andreas.
-
-> 
-
- 
-
-Why do the changes to "Puppetfile" need to be pushed to your github?
-
-Just test it locally and then push it and pull-request a commit which doesn't have those changes in it.
-
- 
-
-Regards,
-
-Jake
-
-
-Hi Jake,
-
-
-  Actually, once I run r10k, it will grab the Puppetfile from each branch from the remote repository to create Puppet environments (per git branch) and deploy other remote repositories.
-
-  This file is mandatory on the repository.
-
-
-Regards,
-Rudy YAYON 		 	   		  
+> Signed-off-by: James McCoy <vega.james@gmail.com>
+> ---
+>  git-filter-branch.sh     | 14 +++++++++++---
+>  t/t7003-filter-branch.sh | 14 ++++++++++++++
+>  2 files changed, 25 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+> index 5b3f63d..dd49b13 100755
+> --- a/git-filter-branch.sh
+> +++ b/git-filter-branch.sh
+> @@ -347,10 +347,18 @@ while read commit parents; do
+>  	fi
+> =20
+>  	{
+> -		while read -r header_line && test -n "$header_line"
+> +		while read -r header_line &&
+> +			( test -n "$header_line" || test -n "$gpg_signature" )
+>  		do
+> -			# skip header lines...
+> -			:;
+> +			# skip header lines... but track whether we are in a
+> +			# PGP signature, since it will have a whitespace only
+> +			# line which causes $header_line to be empty
+> +			if [ "${header_line#gpgsig}" !=3D "$header_line" ]; then
+> +				gpg_signature=3D1
+> +			elif test -n "$gpg_signature" &&
+> +				expr "$header_line" : ".*END PGP" >/dev/null; then
+> +				gpg_signature=3D
+> +			fi
+>  		done
+>  		# and output the actual commit message
+>  		cat
+> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+> index 855afda..377c648 100755
+> --- a/t/t7003-filter-branch.sh
+> +++ b/t/t7003-filter-branch.sh
+> @@ -2,6 +2,7 @@
+> =20
+>  test_description=3D'git filter-branch'
+>  . ./test-lib.sh
+> +. "$TEST_DIRECTORY/lib-gpg.sh"
+> =20
+>  test_expect_success 'setup' '
+>  	test_commit A &&
+> @@ -292,6 +293,19 @@ test_expect_success 'Tag name filtering strips g=
+pg signature' '
+>  	test_cmp expect actual
+>  '
+> =20
+> +test_expect_success GPG 'Filtering retains message of gpg signed com=
+mit' '
+> +	mkdir gpg &&
+> +	touch gpg/foo &&
+> +	git add gpg &&
+> +	test_tick &&
+> +	git commit -S -m "Adding gpg" &&
+> +
+> +	git log -1 --format=3D"%s" > expect &&
+> +	git filter-branch -f --msg-filter "cat" &&
+> +	git log -1 --format=3D"%s" > actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'Tag name filtering allows slashes in tag names'=
+ '
+>  	git tag -m tag-with-slash X/1 &&
+>  	git cat-file tag X/1 | sed -e s,X/1,X/2, > expect &&
+>=20
