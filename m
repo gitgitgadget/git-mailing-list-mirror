@@ -1,68 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 05/10] ref-filter: adopt get_head_description() from branch.c
-Date: Thu, 08 Oct 2015 21:01:03 +0200
-Message-ID: <vpq8u7dmbgw.fsf@grenoble-inp.fr>
-References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
-	<1444295885-1657-6-git-send-email-Karthik.188@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] notes: Allow treeish expressions as notes ref
+Date: Thu, 08 Oct 2015 12:03:29 -0700
+Message-ID: <xmqqziztqj26.fsf@gitster.mtv.corp.google.com>
+References: <CALKQrgdGJy6vtBRL413bbSHSi+=KTh4Q98hpbgg29j4J191=bA@mail.gmail.com>
+	<1436517551-12172-1-git-send-email-mh@glandium.org>
+	<xmqqzj30yq03.fsf@gitster.dls.corp.google.com>
+	<20151008025018.GA29722@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 21:01:27 2015
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Oct 08 21:03:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkGRQ-000285-IA
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 21:01:24 +0200
+	id 1ZkGTX-00042z-S0
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 21:03:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932112AbbJHTBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 15:01:11 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48754 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755272AbbJHTBK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2015 15:01:10 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t98J11js010002
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 8 Oct 2015 21:01:01 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t98J13Lg009629;
-	Thu, 8 Oct 2015 21:01:03 +0200
-In-Reply-To: <1444295885-1657-6-git-send-email-Karthik.188@gmail.com> (Karthik
-	Nayak's message of "Thu, 8 Oct 2015 14:48:00 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 08 Oct 2015 21:01:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t98J11js010002
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1444935662.89706@Lb++zuVdmA/PSXaF4ONnCA
+	id S1756215AbbJHTDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2015 15:03:31 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:34424 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756138AbbJHTDb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2015 15:03:31 -0400
+Received: by padhy16 with SMTP id hy16so62344014pad.1
+        for <git@vger.kernel.org>; Thu, 08 Oct 2015 12:03:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=ydMdJZqO3VVzb6HvFmY3NJ0D+aAENFXr8lcJIH5eEW4=;
+        b=Lnpi8+LpIYccCmDCLizQ70a/57rLUbbse787sYXboTLUj02ZRoB1RWRH5FgrnKwUGl
+         EFwAmehCY7UHJDnFQg4SHzwJ9pbiLpp6buy/VygBdgjmaND37H3VQt6m8eISYb4GRioE
+         k6Annri4C3rfin+Lal1qesSkdJeWI4u5auel5k/U3OUA4Uym0Bi0kyEmElCLL98h6stP
+         ebrWFqEcG/uURon4tTey/uHCkMEn+Z2iDovf/e+ZFIXS71WM6rw+uUN7LpODvc7CEiUs
+         ocKTSqAvXUVf8NJRxU5QhUTfhznCts5eHs2OAlcPPZd/vhMpXwmzJf08xDvBhwVe4sUt
+         oiMg==
+X-Received: by 10.68.216.193 with SMTP id os1mr9768934pbc.110.1444331010546;
+        Thu, 08 Oct 2015 12:03:30 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:8f0:649c:42a6:426d])
+        by smtp.gmail.com with ESMTPSA id ci2sm19147987pbc.66.2015.10.08.12.03.29
+        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
+        Thu, 08 Oct 2015 12:03:29 -0700 (PDT)
+In-Reply-To: <20151008025018.GA29722@glandium.org> (Mike Hommey's message of
+	"Thu, 8 Oct 2015 11:50:18 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279262>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Mike Hommey <mh@glandium.org> writes:
 
-> Copy the implementation of get_head_description() from branch.c.  This
-> gives a description of the HEAD ref if called. This is used as the
-> refname for the HEAD ref whenever the FILTER_REFS_DETACHED_HEAD option
-> is used. Make it public because we need it to calculate the length of
-> the HEAD refs description in branch.c:calc_maxwidth() when we port
-> branch.c to use ref-filter APIs.
+> After refreshing the patch against current "next", it appears that
+> there is such a distinction:
+>
+> $ ./git-log --notes=fdsfgsfdg HEAD^! --pretty=short
+> warning: notes ref refs/notes/fdsfgsfdg is invalid
+> commit e5b68b2e879608d881c2e3600ce84962fcdefc88
+> Author: Mike Hommey <mh@glandium.org>
+>
+>     notes: allow treeish expressions as notes ref
+>
+> $ ./git-log --notes=foo HEAD^! --pretty=short
+> commit e5b68b2e879608d881c2e3600ce84962fcdefc88
+> Author: Mike Hommey <mh@glandium.org>
+>
+>     notes: allow treeish expressions as notes ref
 
-If it's made public, then it could be simpler to just _move_ the
-function instead of copying it. You'd need to add a #include
-<ref-filter.c> to branch.c, but you're going to add one anyway.
-
-Code movement is more "git blame" friendly than code copy, and as a
-reviewer I'd rather see the code movement here and not hear about it
-later in the series.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Good; thanks for checking.
