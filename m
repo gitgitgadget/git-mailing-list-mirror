@@ -1,69 +1,74 @@
-From: Alex Henrie <alexhenrie24@gmail.com>
-Subject: Re: [PATCH] gitk: l10n: Update Catalan translation
-Date: Wed, 7 Oct 2015 17:08:48 -0600
-Message-ID: <CAMMLpeRhJiYrZ8P3G7uQj4rcRRV+1+5qRiRjaUbh9CDrvKprPg@mail.gmail.com>
-References: <1444105572-20580-1-git-send-email-alexhenrie24@gmail.com>
- <xmqqk2r0wo8g.fsf@gitster.mtv.corp.google.com> <CAMMLpeSMLjzq-8kkSx-shJGqVS1ZHsC=nKG5pOSyyz7ymnE95w@mail.gmail.com>
- <xmqqio6is2wg.fsf@gitster.mtv.corp.google.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] notes: allow merging from arbitrary references
+Date: Wed, 7 Oct 2015 17:28:24 -0700
+Message-ID: <CA+P7+xpu1rMHfM-Jk8X8H8Bw4bE+LhWJaG1v0KqZapbdCjH35g@mail.gmail.com>
+References: <1443739165-17526-1-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Paul Mackerras <paulus@samba.org>,
-	Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 01:09:19 2015
+Cc: Git List <git@vger.kernel.org>, Mike Hommey <mh@glandium.org>,
+	Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Thu Oct 08 02:28:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zjxpm-00024r-2G
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 01:09:18 +0200
+	id 1Zjz4l-0008GK-O1
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 02:28:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753446AbbJGXJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2015 19:09:10 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:32917 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753421AbbJGXJI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Oct 2015 19:09:08 -0400
-Received: by wiclk2 with SMTP id lk2so4675728wic.0
-        for <git@vger.kernel.org>; Wed, 07 Oct 2015 16:09:07 -0700 (PDT)
+	id S1751950AbbJHA2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2015 20:28:44 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:36012 "EHLO
+	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751896AbbJHA2o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Oct 2015 20:28:44 -0400
+Received: by ioii196 with SMTP id i196so40949049ioi.3
+        for <git@vger.kernel.org>; Wed, 07 Oct 2015 17:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=DZPRJsIGwLm5u0nW4q+2d64YdfxTFzuVy5/KpnPn4pw=;
-        b=HLKoIIRoI8dTUt/ehbHoRVXaz0CxEn5+DXXFk/ZSbvzl+29KPXAELT52C07wVHou/T
-         CDvlf69dW5Q89bX3CtKQq/ux3lDvEBS+IZSDaV2MOsF3OJG0coQJr5te56VONmfrMS4i
-         wgUaUon3s9Ma0CVbRDYfXsXyLk8+myUAma3JY64/2QT+CHHcj1VePQiPudg+pKNx+KmJ
-         P2QHSIl6LUPJRdW/2Y8k8e579ZqA6tqyDdsCzYDEXZTCv5tDC8l8CCrKwzrommKZ/KRQ
-         Pu9i+H0DWXHV419vKMqKJpdXcoIiZW9Br+ykmCGgIakFzWUvtJd0otuj4R/xzyYu8H3O
-         BwBA==
-X-Received: by 10.194.114.133 with SMTP id jg5mr3824107wjb.98.1444259347553;
- Wed, 07 Oct 2015 16:09:07 -0700 (PDT)
-Received: by 10.28.16.211 with HTTP; Wed, 7 Oct 2015 16:08:48 -0700 (PDT)
-In-Reply-To: <xmqqio6is2wg.fsf@gitster.mtv.corp.google.com>
+        bh=+C1bTpAuyTjRb+kBiFJsIBzRIGveDE8yLxWs3eSy/3s=;
+        b=zc7D295cUytT4ioTiS1o0h54gjd4mB1jUbzcIULSC8pLvGeGRQEsjRqTq25T2r4Wg2
+         u255wxU9Ig+yQhKwjHw+qPax7OlZzAmpP57sJazVtZnCzfkt4CoKys6KDSb7KmkM7qkW
+         w5jx4Z0SlyWxGNDy34bOR2uLFM7C5ckVPconDNgHIYyJSafPmMrPnIoor9bum6gZX8Zd
+         xHKv7NUi+8902gdjUU4fT6iUlrU0DE/X3rZKKIqh9Ds2n1NQ1MdOiTCZO5NlczwHxW5c
+         /lUEx9fruQ9zdF/S/4yGeaG+Vb5wKJ7eB9OTzo12woS4R3NY36IxIxMm+jBPsuKU1zva
+         ZaIg==
+X-Received: by 10.107.166.201 with SMTP id p192mr6233376ioe.0.1444264123448;
+ Wed, 07 Oct 2015 17:28:43 -0700 (PDT)
+Received: by 10.107.132.155 with HTTP; Wed, 7 Oct 2015 17:28:24 -0700 (PDT)
+In-Reply-To: <1443739165-17526-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279211>
 
-I figured out how to reproduce the problem: Running gitk with any
-parameter causes it to crash. For example:
+On Thu, Oct 1, 2015 at 3:39 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> Create a new expansion function, expand_loose_notes_ref which will
+> expand any ref using get_sha1, but falls back to expand_notes_ref if
+> this fails. The contents of the strbuf will be either the hex string of
+> the sha1, or the expanded notes ref. It is expected to be re-expanded
+> using get_sha1 inside the notes merge machinery, and there is no real
+> error checking provided at this layer.
+>
+> Since we now support merging from non-notes refs, remove the test case
+> associated with that behavior. Add a test case for merging from a
+> non-notes ref.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
 
-$ gitk e334ca2b9d9a48a1636f73fc12606b6eaa58b7d9
-Error in startup script: bad menu entry index "Edita la vista..."
-    while executing
-".bar.view entryconf [mca "Edit view..."] -state normal"
-    invoked from within
-"if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd ne {}} {
-    # create a view for the files/dirs specified on the command line
-    se..."
-    (file "/usr/bin/gitk" line 12442)
 
-Running gitk without parameters is still OK. My guess is that it is
-the same bug that
-<http://article.gmane.org/gmane.comp.version-control.git/278863>
-describes.
+Anyone have any comments on this one? It's basically Junio's
+suggestion of just using get_sha1 directly for the remote side of the
+notes merge...
 
--Alex
+Regards,
+Jake
