@@ -1,140 +1,177 @@
-From: James McCoy <vega.james@gmail.com>
-Subject: [PATCH] filter-branch: strip pgp signature in commit messages
-Date: Thu, 8 Oct 2015 01:01:22 -0400
-Message-ID: <20151008050122.GA21369@freya.jamessan.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: please strip MIME-Version and Content-T{ype,ransfer-Encoding} in git
+ am --scissors
+Date: Thu, 8 Oct 2015 09:17:28 +0200
+Message-ID: <20151008071728.GO3982@pengutronix.de>
+References: <1444162070-22034-1-git-send-email-u.kleine-koenig@pengutronix.de>
+ <1444162070-22034-2-git-send-email-u.kleine-koenig@pengutronix.de>
+ <5614CDAE.6070604@ti.com>
+ <20151007075338.GH3982@pengutronix.de>
+ <20151007102822.GT23801@atomide.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 08 07:01:36 2015
+X-From: git-owner@vger.kernel.org Thu Oct 08 09:17:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zk3Kh-0008WV-NJ
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 07:01:36 +0200
+	id 1Zk5SI-0002qO-Tz
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 09:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750955AbbJHFBV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Oct 2015 01:01:21 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:36344 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750735AbbJHFBU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2015 01:01:20 -0400
-Received: by qgx61 with SMTP id 61so33236237qgx.3
-        for <git@vger.kernel.org>; Wed, 07 Oct 2015 22:01:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=pPbzO4h7WoBI+BCPsM8HVlAE4TmiP8tNRN9kbTVfrS0=;
-        b=NEx8UFkwwjg6YKccEH65q5z4xJyBnB9fqHsDahzjjeLcETOfM4UYZMzJhxWjsRZX16
-         oEKob4AFzks3GdMMQqgFuoUGJdWoegpRyMpcdtaDSeSyblAQSXiXP/9BKPTfukyGm9IE
-         0Ho/N2uv2GpTjkuMBrEshh0pHVtp+FHpvVk2qsvjsAaDrWo7xUYgd1YqHXUS8tDgVaO/
-         GLDb7l3jLb/3jez6cZkoD0BusLML7lTXntjSNer+STMI5Wa4dXuI781t/NdHqemzQDHS
-         Zwm8HcdGACHyHudehIwcO6JHCd4LYkuyJPBPhuCZtZv0Xo8wPGI/9WYZCggFWpaxfSsq
-         Oc3g==
-X-Received: by 10.140.147.146 with SMTP id 140mr6305883qht.68.1444280479679;
-        Wed, 07 Oct 2015 22:01:19 -0700 (PDT)
-Received: from freya.jamessan.com (pool-71-162-119-45.bstnma.fios.verizon.net. [71.162.119.45])
-        by smtp.gmail.com with ESMTPSA id f61sm17882498qga.44.2015.10.07.22.01.18
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Oct 2015 22:01:18 -0700 (PDT)
-Received: from jamessan by freya.jamessan.com with local (Exim 4.86)
-	(envelope-from <vega.james@gmail.com>)
-	id 1Zk3KU-0003aU-Hk; Thu, 08 Oct 2015 01:01:22 -0400
+	id S1752817AbbJHHRb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Oct 2015 03:17:31 -0400
+Received: from metis.ext.4.pengutronix.de ([92.198.50.35]:48019 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752551AbbJHHRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2015 03:17:30 -0400
+Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0] ident=Debian-exim)
+	by metis.ext.pengutronix.de with esmtps (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Zk5SD-0004hF-6G
+	for git@vger.kernel.org; Thu, 08 Oct 2015 09:17:29 +0200
+Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.80)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Zk5SC-0005Y7-Ae
+	for git@vger.kernel.org; Thu, 08 Oct 2015 09:17:28 +0200
 Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20151007102822.GT23801@atomide.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279217>
 
-df062010 (filter-branch: avoid passing commit message through sed)
-introduced a regression when filtering gpg signed commits.  The gpgsig
-header is multi-line and contains an empty line.  Although the signatur=
-e
-is indented, making the line a whitespace only line, this still results
-in $header_line being empty, causing the =E2=80=9Cskip header lines=E2=80=
-=9D loop to
-exit.
+Hello,
 
-The rest of the commit object is then re-used as the rewritten commit
-message, causing the new message to include the signature of the
-original commit.
+when applying the mail below (without the '> ' prefix) using git am
+--scissors the result looks like:
 
-Signed-off-by: James McCoy <vega.james@gmail.com>
----
- git-filter-branch.sh     | 14 +++++++++++---
- t/t7003-filter-branch.sh | 14 ++++++++++++++
- 2 files changed, 25 insertions(+), 3 deletions(-)
+	$ git show
+	commit 26ef0606927cc1979faa4166d7f9f3584b5cdc61
+	Author: Tony Lindgren <tony@atomide.com>
+	Date:   Tue Oct 6 05:36:17 2015 -0700
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 5b3f63d..dd49b13 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -347,10 +347,18 @@ while read commit parents; do
- 	fi
-=20
- 	{
--		while read -r header_line && test -n "$header_line"
-+		while read -r header_line &&
-+			( test -n "$header_line" || test -n "$gpg_signature" )
- 		do
--			# skip header lines...
--			:;
-+			# skip header lines... but track whether we are in a
-+			# PGP signature, since it will have a whitespace only
-+			# line which causes $header_line to be empty
-+			if [ "${header_line#gpgsig}" !=3D "$header_line" ]; then
-+				gpg_signature=3D1
-+			elif test -n "$gpg_signature" &&
-+				expr "$header_line" : ".*END PGP" >/dev/null; then
-+				gpg_signature=3D
-+			fi
- 		done
- 		# and output the actual commit message
- 		cat
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 855afda..377c648 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -2,6 +2,7 @@
-=20
- test_description=3D'git filter-branch'
- . ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-gpg.sh"
-=20
- test_expect_success 'setup' '
- 	test_commit A &&
-@@ -292,6 +293,19 @@ test_expect_success 'Tag name filtering strips gpg=
- signature' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success GPG 'Filtering retains message of gpg signed commi=
-t' '
-+	mkdir gpg &&
-+	touch gpg/foo &&
-+	git add gpg &&
-+	test_tick &&
-+	git commit -S -m "Adding gpg" &&
-+
-+	git log -1 --format=3D"%s" > expect &&
-+	git filter-branch -f --msg-filter "cat" &&
-+	git log -1 --format=3D"%s" > actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'Tag name filtering allows slashes in tag names' '
- 	git tag -m tag-with-slash X/1 &&
- 	git cat-file tag X/1 | sed -e s,X/1,X/2, > expect &&
+	    memory: omap-gpmc: Fix unselectable debug option for GPMC
+	   =20
+	    MIME-Version: 1.0
+	    Content-Type: text/plain; charset=3DUTF-8
+	    Content-Transfer-Encoding: 8bit
+	   =20
+	    Commit 63aa945b1013 ("memory: omap-gpmc: Add Kconfig option for de=
+bug")
+	    added a debug option for GPMC, but somehow managed to keep it unse=
+lectable.
+	   =20
+	[...]
+
+	$ git version
+	git version 2.6.0
+
+The obvious improvement is to strip all headers like git am does withou=
+t
+--scissors.
+
+If someone wants a bounce of the original mail, just ask per PM.
+
+Best regards
+Uwe
+
+
+On Wed, Oct 07, 2015 at 03:41:19AM -0700, Tony Lindgren wrote:
+> * Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [151007 00:57]:
+> > On Wed, Oct 07, 2015 at 10:45:50AM +0300, Roger Quadros wrote:
+> > >=20
+> > > How about this instead?
+> > >=20
+> > > NOTE: Apart from matching the register setup with the bootloader =
+you also need to
+> > > match the GPMC FCLK frequency used by the bootloader else the GPM=
+C timings
+> > > won't be identical with the bootloader timings.
+> > Yeah, sounds better, thanks.
+> >=20
+> > > Also you might need to build this patch on top of
+> > > http://article.gmane.org/gmane.linux.kernel/2054796
+> > I talked to Tony about this patch yesterday on irc, but I didn't fi=
+nd it
+> > in the archives yet when I sent my mail.
+>=20
+> Yes sorry here's a repost with your and Roger's changes folded in and
+> edited a bit. Probably best to keep them together with this patch.
+>=20
+> Does the following look OK to you guys?
+>=20
+> Regards,
+>=20
+> Tony
+>=20
+> 8< ----------------
+> From: Tony Lindgren <tony@atomide.com>
+> Date: Tue, 6 Oct 2015 05:36:17 -0700
+> Subject: [PATCH] memory: omap-gpmc: Fix unselectable debug option for=
+ GPMC
+> MIME-Version: 1.0
+> Content-Type: text/plain; charset=3DUTF-8
+> Content-Transfer-Encoding: 8bit
+>=20
+> Commit 63aa945b1013 ("memory: omap-gpmc: Add Kconfig option for debug=
+")
+> added a debug option for GPMC, but somehow managed to keep it unselec=
+table.
+>=20
+> This probably happened because I had some uncommitted changes and the
+> GPMC option is selected in the platform specific Kconfig.
+>=20
+> Let's also update the description a bit, it does not mention that
+> enabling the debug option also disables the reset of GPMC controller
+> during the init as pointed out by Uwe Kleine-K=F6nig
+> <u.kleine-koenig@pengutronix.de> and Roger Quadros <rogerq@ti.com>.
+>=20
+> Fixes: 63aa945b1013 ("memory: omap-gpmc: Add Kconfig option for debug=
+")
+> Reported-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+> Signed-off-by: Tony Lindgren <tony@atomide.com>
+>=20
+> --- a/drivers/memory/Kconfig
+> +++ b/drivers/memory/Kconfig
+> @@ -58,12 +58,18 @@ config OMAP_GPMC
+>  	  memory drives like NOR, NAND, OneNAND, SRAM.
+> =20
+>  config OMAP_GPMC_DEBUG
+> -	bool
+> +	bool "Enable GPMC debug output and skip reset of GPMC during init"
+>  	depends on OMAP_GPMC
+>  	help
+>  	  Enables verbose debugging mostly to decode the bootloader provide=
+d
+> -	  timings. Enable this during development to configure devices
+> -	  connected to the GPMC bus.
+> +	  timings. To preserve the bootloader provided timings, the reset
+> +	  of GPMC is skipped during init. Enable this during development to
+> +	  configure devices connected to the GPMC bus.
+> +
+> +	  NOTE: In addition to matching the register setup with the bootloa=
+der
+> +	  you also need to match the GPMC FCLK frequency used by the
+> +	  bootloader or else the GPMC timings won't be identical with the
+> +	  bootloader timings.
+> =20
+>  config MVEBU_DEVBUS
+>  	bool "Marvell EBU Device Bus Controller"
+>=20
+
 --=20
-2.6.1
-
-
---=20
-James
-GPG Key: 4096R/331BA3DB 2011-12-05 James McCoy <vega.james@gmail.com>
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
