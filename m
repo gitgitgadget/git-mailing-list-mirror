@@ -1,93 +1,155 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/2] pack-objects: do not get distracted by broken
- symrefs
-Date: Thu, 08 Oct 2015 21:15:36 +0200
-Organization: gmx
-Message-ID: <5ee759ac37b2561eef9ab60d446ac463@dscho.org>
-References: <xmqqr3lnuzqu.fsf@gitster.mtv.corp.google.com>
- <cover.1444139796.git.johannes.schindelin@gmx.de>
- <f04229b0881eb7518a306ae07fe11ffc9589b1f1.1444139796.git.johannes.schindelin@gmx.de>
- <xmqq8u7evahd.fsf@gitster.mtv.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 08/10] ref-filter: add support for %(upstream:track,nobracket)
+Date: Thu, 08 Oct 2015 21:17:43 +0200
+Message-ID: <vpqziztkw4o.fsf@grenoble-inp.fr>
+References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
+	<1444295885-1657-9-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 21:15:54 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 08 21:18:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkGfM-0006kl-M9
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 21:15:49 +0200
+	id 1ZkGhU-0000Ib-9Z
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 21:18:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753858AbbJHTPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 15:15:44 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50709 "EHLO mout.gmx.net"
+	id S1753859AbbJHTR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2015 15:17:56 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44460 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751831AbbJHTPn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2015 15:15:43 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M3RZI-1aarDW0zia-00r1hU; Thu, 08 Oct 2015 21:15:38
- +0200
-In-Reply-To: <xmqq8u7evahd.fsf@gitster.mtv.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:fTiFTucblJJpcO9IEr/buGEINlvtSuIw/f8blUuVdAe2d3jyC/r
- nmpaYCdV2Kth5Wh+H7uRnl4yt4QQRTeYHnr//qBR1aWp6LBfGzA26g/CSNyvxLvaJwfwoXX
- GVk2SM7S9NA/3fpbLMel7V/ssOImB2cu/k7sb8L/Nhhz08wDMJtZkhhbinjJK9hXUUcN+EP
- c7V3lWKqVFa99dUFIFTJg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Hcz0dGEM9pc=:t+eek4TO7Dr/ggl57SVlDH
- GMRpgMmu/Y/RAARHebiuuSmK5oL5UY1H92E4xKxWRxkk79MqUMssJ/wALIVVSsZd/34AWRppa
- nw9LQ2KfRRH789TtVZEoUGvBfBM2iReZ1/SVBHc8ruy6CQV4LPSD2RZt2PdcOgpbZczmQpjE7
- UW2Vxf/rqdDIIbLep8t/4XEBfdsOf6SXHtuATgEkUvgVzaqiakPMhar1RDYXH/rocKK2zJ+Ec
- 8xqJF8PE4HMEejVHl4k1oKKAfIFEEQ1aViTgoNHz3oxlOkGuHpwVyPjhLGCHI8eu8KvlXl0VO
- 3nnuuIrRD/EVggq4ATKwUuB1xTa3gpklkZJ/YXDfCYEpPjQUneIUbhfQzKuXI0pP5cxL6imYq
- Jt/FB0sP/TrdSZH8nVQpPFUXZavAlbO2X2JlNKQzrunYLUWbun9eLZgcTe86vaQ1oi5AsnwTw
- VszA5jcsK22DKp8Uq4ckI5lVDNPZ9w3Q41cBxP2pLIs6aAIlpAO/UufCrj4gA9TL74WHHmrX4
- 2mcX4HxpwHmZV53Pc/KmtUjt4942qykmWSycxJKNX5TtSU+dA9jGMP8af0XUAtr1nifFLiJl0
- gkniZuF0NbjcbiXB9v50T14cv5VKUlE8vh0G+l9kkiSF/KD24z357SZsRmMbT7ZOiby/nLihE
- NpbObgmscMqfLVevC/KmaDP02xcBWwbYm6mu5D5bzAR0EA1QBmj8QpfbalqCxlE8XEZSuAsu6
- yPOWAg6JofQM18S7ZvldO8lGRjsglUj+eTpdQ+OHEarl3Vvmwe4z9noEciTxpFdvHW43isd5 
+	id S1751449AbbJHTR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2015 15:17:56 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t98JHfs4019571
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 8 Oct 2015 21:17:41 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t98JHh06009912;
+	Thu, 8 Oct 2015 21:17:43 +0200
+In-Reply-To: <1444295885-1657-9-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Thu, 8 Oct 2015 14:48:03 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 08 Oct 2015 21:17:41 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t98JHfs4019571
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1444936664.25749@cRaJJ3hKn5EJ57WdYpzbYA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279265>
 
-Hi Junio,
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-On 2015-10-07 19:45, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
->> It is quite possible for, say, a remote HEAD to become broken, e.g.
->> when the default branch was renamed.
->>
->> We should still be able to pack our objects when such a thing happens;
->> simply ignore broken symrefs (because they cannot matter for the packing
->> process anyway).
->>
->> This fixes https://github.com/git-for-windows/git/issues/423
->>
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> ---
-> 
-> It seems that the result of applying these two patches and log
-> messages of them are the same with what I queued on 'pu', except
-> that the first of these two patches adds a test with a wrong name
-> and then this one does "oops, that was misnamed".  So I'll keep what
-> is already queued.
+> Add support for %(upstream:track,nobracket) which will print the
+> tracking information without the brackets (i.e. "ahead N, behind M").
+>
+> Add test and documentation for the same.
+> ---
+>  Documentation/git-for-each-ref.txt |  6 ++++--
+>  ref-filter.c                       | 28 +++++++++++++++++++++++-----
+>  t/t6300-for-each-ref.sh            |  9 +++++++++
+>  3 files changed, 36 insertions(+), 7 deletions(-)
+>
+> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> index c713ec0..a38cbf6 100644
+> --- a/Documentation/git-for-each-ref.txt
+> +++ b/Documentation/git-for-each-ref.txt
+> @@ -114,8 +114,10 @@ upstream::
+>  	`refname` above.  Additionally respects `:track` to show
+>  	"[ahead N, behind M]" and `:trackshort` to show the terse
+>  	version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
+> -	or "=" (in sync).  Has no effect if the ref does not have
+> -	tracking information associated with it.
+> +	or "=" (in sync).  Append `:track,nobracket` to show tracking
+> +	information without brackets (i.e "ahead N, behind M").  Has
+> +	no effect if the ref does not have tracking information
+> +	associated with it.
+>  
+>  push::
+>  	The name of a local ref which represents the `@{push}` location
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 6a38089..6044eb0 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1112,27 +1112,45 @@ static void populate_value(struct ref_array_item *ref)
+>  			if (!strcmp(formatp, "short"))
+>  				refname = shorten_unambiguous_ref(refname,
+>  						      warn_ambiguous_refs);
+> -			else if (!strcmp(formatp, "track") &&
+> +			else if (skip_prefix(formatp, "track", &valp) &&
+> +				 strcmp(formatp, "trackshort") &&
+>  				 (starts_with(name, "upstream") ||
+>  				  starts_with(name, "push"))) {
+>  				char buf[40];
+> +				unsigned int nobracket = 0;
+> +
+> +				if (!strcmp(valp, ",nobracket"))
+> +					nobracket = 1;
+>  
+>  				if (stat_tracking_info(branch, &num_ours,
+>  						       &num_theirs, NULL)) {
+> -					v->s = "[gone]";
+> +					if (nobracket)
+> +						v->s = "gone";
+> +					else
+> +						v->s = "[gone]";
+>  					continue;
+>  				}
+>  
+>  				if (!num_ours && !num_theirs)
+>  					v->s = "";
+>  				else if (!num_ours) {
+> -					sprintf(buf, "[behind %d]", num_theirs);
+> +					if (nobracket)
+> +						sprintf(buf, "behind %d", num_theirs);
+> +					else
+> +						sprintf(buf, "[behind %d]", num_theirs);
+>  					v->s = xstrdup(buf);
+>  				} else if (!num_theirs) {
+> -					sprintf(buf, "[ahead %d]", num_ours);
+> +					if (nobracket)
+> +						sprintf(buf, "ahead %d", num_ours);
+> +					else
+> +						sprintf(buf, "[ahead %d]", num_ours);
+>  					v->s = xstrdup(buf);
+>  				} else {
+> -					sprintf(buf, "[ahead %d, behind %d]",
+> +					if (nobracket)
+> +						sprintf(buf, "ahead %d, behind %d",
+> +							num_ours, num_theirs);
+> +					else
+> +						sprintf(buf, "[ahead %d, behind %d]",
+>  						num_ours, num_theirs);
+>  					v->s = xstrdup(buf);
+>  				}
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index 4f620bf..7ab8bf8 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -344,6 +344,15 @@ test_expect_success 'Check upstream:track format' '
+>  '
+>  
+>  cat >expected <<EOF
+> +ahead 1
+> +EOF
+> +
+> +test_expect_success 'Check upstream:track,nobracket format' '
+> +	git for-each-ref --format="%(upstream:track,nobracket)" refs/heads >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +cat >expected <<EOF
+>  >
+>  EOF
 
-Sorry for fixing up the wrong commit. I honestly meant to fix up the first one. And thank you for fixing it up in `pu` already; I should have known better and check first whether you fixed it.
-
-However, there was one more change I made: I wanted to have that link to https://github.com/git-for-windows/git/issues/423 in the commit message to better link the original report with the commit.
-
-Would yo kindly add the line
-
-    This fixes https://github.com/git-for-windows/git/issues/423
-
-before the Signed-off-by lines?
-
-Thanks,
-Dscho
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
