@@ -1,77 +1,145 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/2] pack-objects: do not get distracted by broken
- symrefs
-Date: Thu, 08 Oct 2015 22:10:37 +0200
-Organization: gmx
-Message-ID: <e1ad395fac8ab0da54338f6eba4ad838@dscho.org>
-References: <xmqqr3lnuzqu.fsf@gitster.mtv.corp.google.com>
- <cover.1444139796.git.johannes.schindelin@gmx.de>
- <f04229b0881eb7518a306ae07fe11ffc9589b1f1.1444139796.git.johannes.schindelin@gmx.de>
- <xmqq8u7evahd.fsf@gitster.mtv.corp.google.com>
- <5ee759ac37b2561eef9ab60d446ac463@dscho.org>
- <xmqqr3l5qh8f.fsf@gitster.mtv.corp.google.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: please strip MIME-Version and Content-T{ype,ransfer-Encoding} in
+ git am --scissors
+Date: Thu, 8 Oct 2015 22:23:43 +0200
+Message-ID: <20151008202343.GU3982@pengutronix.de>
+References: <1444162070-22034-1-git-send-email-u.kleine-koenig@pengutronix.de>
+ <1444162070-22034-2-git-send-email-u.kleine-koenig@pengutronix.de>
+ <5614CDAE.6070604@ti.com>
+ <20151007075338.GH3982@pengutronix.de>
+ <20151007102822.GT23801@atomide.com>
+ <20151008071728.GO3982@pengutronix.de>
+ <xmqqvbahqhw1.fsf@gitster.mtv.corp.google.com>
+ <20151008193707.GT3982@pengutronix.de>
+ <xmqqio6hqg9a.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 22:11:12 2015
+X-From: git-owner@vger.kernel.org Thu Oct 08 22:23:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkHWg-0000JE-HO
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 22:10:54 +0200
+	id 1ZkHjF-0003Ma-3k
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 22:23:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754324AbbJHUKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 16:10:50 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50962 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753616AbbJHUKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2015 16:10:50 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MIQlv-1Zl5wN1bpf-0049XQ; Thu, 08 Oct 2015 22:10:40
- +0200
-In-Reply-To: <xmqqr3l5qh8f.fsf@gitster.mtv.corp.google.com>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:go6EN5+WXyASjSbkNkBFaKMZgFMkbsz2z0qPaZxK4Zf8661wk/J
- GcSHGK5t5DvNY3Cw6xcFYa/Mxa6Xts5p9zVgkX36gs2cY1LhiqijMWI/PP/lKPcTBOoOeHs
- TxIAGt02QDvHya2uzwWXgPbdn+Oi10eir0lxd7iyZXlaT1QBiRhYVITpvoAvxy1CpYny72N
- rq0zk+haR/k5PJJTfZ9jg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:80nkUsMQS44=:qJcA4PADs+eHxbiIBMGh8z
- s62vRMCm/QLpIueTY003USXyTr7lmJ3jEINTZZSRced3eKT1J1Ue0ImEnAVF6Y/jRyJBAR6lo
- iwZQJagefAr/o1gS8+/plr7ZyJQn4Cp489I5Y6XK9vIuAt2f48vF7TviF1qXy/mrkHTQoxH5+
- M+5lhr9b2o1YoCuukOci6K7oHFfGGDvLevsufO9rxmLzU6LOMHQVFwE4Wodj+LM8314VuiEYy
- IjTD/HImV1JsGV5432nJacsmIP8udUCF4RL/0IBEG4BXq1AYFETOSjVaN0me3uyKpVBlTaqpu
- S6r4CJ+eAFVJ+nkNIKshBBqB2lE1gAo2UheWN7U/B3PG43vbPJJ+1iDGwEyoof/+/vi6EmEMk
- /r4ID//VQIOFCL5+tZc44S1vyKWQSNDr1LMehWMbzwLaQ0OzBnzEi5MiGgvfV+xbdgyw35IqQ
- AFEvgUBCah1sbya58uOFSUQZ83+fwnkO6s1Ek1cqzcSgDcjfjnqpNGR/DrODng1G+r3k/ryNB
- eBYz+VMdPUPrLEZZr9wWS/lrrKwIJfXeoxUiwLFrqrrRLrm8NzZOWVUfQtn/wrrBA5YfBQOEo
- sfO8LdnOAVRjmGRPKSTUvYiEQXRQHsjsWL/YSfIypam2RYzJeE+Ct4c6ElRG4mIU6QwY1iRog
- jYlu1315mlb9867lE3nYntCTRtnw2D6CDAvcX+nFw1S3tyNx2yDw4TRPTu66KS9VwsfFDGjL7
- 8zquXAr4aoFSaS4fM3jl2Cbq3asZgYPyo4LMpjbEL60ST58ib63R3eBqbVao5tYDlsPrSVgZ 
+	id S1752973AbbJHUXt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Oct 2015 16:23:49 -0400
+Received: from metis.ext.4.pengutronix.de ([92.198.50.35]:33762 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751242AbbJHUXs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2015 16:23:48 -0400
+Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0] ident=Debian-exim)
+	by metis.ext.pengutronix.de with esmtps (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1ZkHj9-0001kA-A6; Thu, 08 Oct 2015 22:23:47 +0200
+Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.80)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1ZkHj5-0002Eb-PN; Thu, 08 Oct 2015 22:23:43 +0200
+Content-Disposition: inline
+In-Reply-To: <xmqqio6hqg9a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279274>
 
-Hi Junio,
+Hello Junio,
 
-On 2015-10-08 21:42, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
->> Would yo kindly add the line
->>
->>     This fixes https://github.com/git-for-windows/git/issues/423
->>
->> before the Signed-off-by lines?
-> 
-> Oh, sorry, I missed that one.  Fixed.
-> 
-> Thanks.
+On Thu, Oct 08, 2015 at 01:04:01PM -0700, Junio C Hamano wrote:
+> Uwe Kleine-K=F6nig  <u.kleine-koenig@pengutronix.de> writes:
+>=20
+> >> Does this have anything to do with scissors, though?  If you remov=
+e
+> >> everything before "8< ---" in the body of Tony's message (i.e. kee=
+p
+> >> the in-body headers starting with "From:" and ending with CTE) and
+> >> try again, I would suspect that you will get the same result.
+> > No, you're wrong here:
+> >
+> > ukl@dude.ptx:~/gsrc/linux$ head ~/tmp/1444332661.3982_89.ptx\:2\,RS=
+=20
+> > From: Tony Lindgren <tony@atomide.com>
+> > Date: Tue, 6 Oct 2015 05:36:17 -0700
+> > Subject: [PATCH] memory: omap-gpmc: Fix unselectable debug option f=
+or GPMC
+> > MIME-Version: 1.0
+> > Content-Type: text/plain; charset=3DUTF-8
+> > Content-Transfer-Encoding: 8bit
+> >
+> > Commit 63aa945b1013 ("memory: omap-gpmc: Add Kconfig option for deb=
+ug")
+> > added a debug option for GPMC, but somehow managed to keep it unsel=
+ectable.
+>=20
+> I think you are the one who misread my question.  I said "keep the
+> in-body headers", didn't I?  If you did the "head", then you would
+> see something like this:
 
-Thank you!
-Dscho
+Ah got it. Yes, you're right. (Subject and Date are actually different
+between real and in-body headers, but that's not important. git am pick=
+s
+up the in-body headers.)
+=20
+> > ukl@dude.ptx:~/gsrc/linux$ head ~/tmp/1444332661.3982_89.ptx\:2\,RS=
+=20
+> > From: Tony Lindgren <tony@atomide.com>
+> > Date: Tue, 6 Oct 2015 05:36:17 -0700
+> > Subject: [PATCH] memory: omap-gpmc: Fix unselectable debug option f=
+or GPMC
+> > ... probably Received: and all other junk from your mailbox ...
+> >
+> > From: Tony Lindgren <tony@atomide.com>
+> > Date: Tue, 6 Oct 2015 05:36:17 -0700
+> > Subject: [PATCH] memory: omap-gpmc: Fix unselectable debug option f=
+or GPMC
+> > MIME-Version: 1.0
+> > Content-Type: text/plain; charset=3DUTF-8
+> > Content-Transfer-Encoding: 8bit
+> >
+> > Commit 63aa945b1013 ("memory: omap-gpmc: Add Kconfig option for deb=
+ug")
+> > added a debug option for GPMC, but somehow managed to keep it unsel=
+ectable.
+>=20
+> >> I also think that the "MIME-Version" thing is what gives this;
+> >> mailinfo and am do not really use it, and consider that the in-bod=
+y
+> >> header ends there.
+> >
+> > I failed to follow you here.
+>=20
+> I think if you tried the example with in-body header, you will see
+> what I meant.
+>=20
+> >
+> >> The right approach to tweak mailinfo to cope with this better woul=
+d
+> >> be to keep a bit more state inside mailinfo.c::handle_commit_msg()
+> >> so that if we are (1) using in-body headers, (2) have already seen
+> >> _some_ valid in-body header like "Subject:" and "From: ", and (3)
+> >> have not seen a blank line, discard lines that we do not care abou=
+t
+> >> (e.g. "MIME-VERSION: 1.0").
+
+The right thing should also happen if MIME-Version comes above Subject
+in the body but other than that I'm with you here.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
