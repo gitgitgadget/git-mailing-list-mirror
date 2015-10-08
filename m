@@ -1,84 +1,92 @@
-From: Tobias Klauser <tklauser@distanz.ch>
-Subject: Re: [PATCH] pretend_sha1_file(): Change return type from int to void
-Date: Thu, 8 Oct 2015 09:45:26 +0200
-Message-ID: <20151008074526.GD11304@distanz.ch>
-References: <1444133704-29571-1-git-send-email-tklauser@distanz.ch>
- <632cbcf1dc9fa45ce71693a2cfae73e4@dscho.org>
- <20151006135101.GA11304@distanz.ch>
- <ef5b20ed42ea20b2891fc3998a81f339@dscho.org>
- <xmqqa8rutlu4.fsf@gitster.mtv.corp.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [BUG] GIT_INDEX environment variable ignored?
+Date: Thu, 8 Oct 2015 09:56:17 +0200
+Message-ID: <561621A1.8090609@drmicha.warpmail.net>
+References: <3316005380861448B5340D39CF27A7242F2375BE@us-voo-mb04.internal.sungard.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 09:45:37 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: "McAuley, Ben" <Ben.McAuley@sungard.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 08 10:01:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zk5tO-0008HJ-9E
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 09:45:34 +0200
+	id 1Zk63x-0001f7-4k
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 09:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753092AbbJHHpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 03:45:31 -0400
-Received: from sym2.noone.org ([178.63.92.236]:45199 "EHLO sym2.noone.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753037AbbJHHpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2015 03:45:30 -0400
-Received: by sym2.noone.org (Postfix, from userid 1002)
-	id 3nWl201KZ6zQWhD; Thu,  8 Oct 2015 09:45:27 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <xmqqa8rutlu4.fsf@gitster.mtv.corp.google.com>
-X-Editor: Vi IMproved 7.3
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752163AbbJHH4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2015 03:56:20 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:46053 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750760AbbJHH4T (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Oct 2015 03:56:19 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id DC1D5203AA
+	for <git@vger.kernel.org>; Thu,  8 Oct 2015 03:56:18 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Thu, 08 Oct 2015 03:56:18 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=+k2AM59WsOnP6DeR5RB8tuB9TF8=; b=TzH0hX
+	vXKXzcmwrv68zvosxirVncRr/VB0h71YYXnP8S2LqKCwbj4h0IylGJcrRN7c+Xvm
+	mNrVYSNm4SL7u24DHDYgzhkZMoqT8UuC8gu1KDWvfWIY8xVvK7UkIQomUYyPmDZW
+	ExhSHFhdmE/4xackvl9LOp9IeiYPj6eXYT/9g=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=+k2AM59WsOnP6De
+	R5RB8tuB9TF8=; b=jSwLetbDbyojLL3xEJyNikPx91Kcxv/5l+hSUZwgJL86xbh
+	Ycd11In2ElvwMxfmgrUMDkkNr0HSvmHthyPd99RxR8iac7P9mdfuejxzwbQqt8fH
+	IPkNUFX8EeA7e94XZqniTFtek+mxi9Kn7CJ0UBQnCsaj5QlJU7HBRiF1cT7k=
+X-Sasl-enc: Be5v5ZIZGFK6EcTb0VxwHsKbaoll1dYqoEcWWhNXQxs/ 1444290978
+Received: from dickson.math.uni-hannover.de (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 5A894680114;
+	Thu,  8 Oct 2015 03:56:18 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <3316005380861448B5340D39CF27A7242F2375BE@us-voo-mb04.internal.sungard.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279220>
 
-On 2015-10-07 at 23:22:59 +0200, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+McAuley, Ben venit, vidit, dixit 08.10.2015 06:48:
+> Hello,
 > 
-> > As to the patch, I cannot speak for Junio, of course, but my
-> > preference would be to keep the return type. Traditionally, functions
-> > that can fail either die() or return an int; non-zero indicates an
-> > error. In this case, it seems that we do not have any condition
-> > (yet...) under which an error could occur. It does not seem very
-> > unlikely that we may eventually have such conditions, though, hence my
-> > preference.
+> I was trying to use multiple indexes earlier, and ran into an issue which I've summarised into a test case:
 > 
-> Perhaps the attached is a better approach.
+> $ git init
+> $ touch file1 && git add file1 && git commit -m "file1"
+> $ git branch release 
+> $ touch file2 && git add file2 && git commit -m "file2"
+> $ cp .git/index .git/indexMaster
+> $ git checkout release
+> $ touch file3 && git add file3 && git commit -m "file3"
 > 
-> Even though the current implementation of "pretend" implementation
-> does not, future generations are allowed to make pretend_sha1_file()
-> return failure when appropriate.
+> I then ran ls-files with the --stage option to look at what the index contains.
+> As expected file1 and file3 are present, we're on the 'release' branch still.
+> 
+> $ git ls-files --stage
+> 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       file1
+> 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       file3
+> 
+> However when I run the same command again, this time using the 
+> GIT_INDEX env variable to provide the index I previously saved on master,
+> I don't see file2 like I'd expect...
+> 
+> $ GIT_INDEX=.git/indexMaster git ls-files --stage
+> 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       file1
+> 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       file3
+> 
+> Is this something going wrong, or am I misunderstanding the role of the index/GIT_INDEX variable?
+> 
+> Replicated on 2.5.0.windows.1 and 2.6.1 (Linux).
 
-For my original patch I didn't consider that pretend_sha1_file() might
-return failure in the future. I was just confused by the fact that the
-return value was seemingly useless (but now I realize that unused !=
-useless ;-), sorry for the noise.
+Maybe try GIT_INDEX_FILE instead of GIT_INDEX? ;)
 
-Please disregard my patch and apply yours instead, if you see fit.
-
-> 
->  builtin/blame.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 203a981..fa24f8f 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -2362,7 +2362,8 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
->  	convert_to_git(path, buf.buf, buf.len, &buf, 0);
->  	origin->file.ptr = buf.buf;
->  	origin->file.size = buf.len;
-> -	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_sha1);
-> +	if (pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_sha1))
-> +		die("failed to create a fake commit for the working tree version.");
->  
->  	/*
->  	 * Read the current index, replace the path entry with
-> 
+Michael
