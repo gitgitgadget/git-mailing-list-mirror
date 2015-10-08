@@ -1,113 +1,162 @@
-From: James McCoy <vega.james@gmail.com>
-Subject: Re: [PATCH] filter-branch: strip pgp signature in commit messages
-Date: Thu, 8 Oct 2015 07:36:15 -0400
-Message-ID: <20151008113614.GM16087@freya.jamessan.com>
-References: <20151008050122.GA21369@freya.jamessan.com>
- <56162634.2010800@drmicha.warpmail.net>
- <56162C96.80108@drmicha.warpmail.net>
- <56163ED6.2030403@drmicha.warpmail.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 00/10] port branch.c to use ref-filter's printing options
+Date: Thu, 08 Oct 2015 14:27:30 +0200
+Message-ID: <vpqr3l5zgst.fsf@grenoble-inp.fr>
+References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Oct 08 13:36:21 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 08 14:28:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zk9Ug-0003SL-UZ
-	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 13:36:19 +0200
+	id 1ZkAIh-0004Th-37
+	for gcvg-git-2@plane.gmane.org; Thu, 08 Oct 2015 14:27:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932648AbbJHLgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 07:36:16 -0400
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:36539 "EHLO
-	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932643AbbJHLgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2015 07:36:13 -0400
-Received: by qkht68 with SMTP id t68so17536914qkh.3
-        for <git@vger.kernel.org>; Thu, 08 Oct 2015 04:36:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=N9EHVKwhBjI0w3uj+4g1eivxRzKtCVqT41E+Id7chpU=;
-        b=zXjU6581I5EkDLCtheyv4YCx7SSy0jb9279PYigyDqVzJONlAyOiEzHS6WIFD6mmYG
-         0Oyn4AmxcEgiPKQJ58UfX2KhIbm+VCZ9TR/XYYPSBsPvQLMoetXimzFZe36MZ1pnxNOK
-         DpiTrvkCyqNkCci6q1ANlfuDSCSBmZIcX09fkGg0VNZf7hccuX2rSG0O54xjq+hu6a4o
-         j6EKK0uOvfObvJBUnYjjc90gy98hOrLjACT6gnb72n19tOv7vNQSUy8hN/a2qLf+GHAs
-         G2NDQ0ChKJ0YuGiHnPl/Q0s9i54UlPaBjHDJoyDTRJm+YO0cfiDUnbHwzmYs0o1jgYQP
-         S15A==
-X-Received: by 10.55.209.147 with SMTP id o19mr7308159qkl.61.1444304172727;
-        Thu, 08 Oct 2015 04:36:12 -0700 (PDT)
-Received: from freya.jamessan.com (pool-71-162-119-45.bstnma.fios.verizon.net. [71.162.119.45])
-        by smtp.gmail.com with ESMTPSA id 69sm18304496qhx.28.2015.10.08.04.36.11
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Oct 2015 04:36:11 -0700 (PDT)
-Received: from jamessan by freya.jamessan.com with local (Exim 4.86)
-	(envelope-from <vega.james@gmail.com>)
-	id 1Zk9Ud-0001ei-4T; Thu, 08 Oct 2015 07:36:15 -0400
-Content-Disposition: inline
-In-Reply-To: <56163ED6.2030403@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1757235AbbJHM1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2015 08:27:45 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:39648 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757192AbbJHM1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2015 08:27:43 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t98CRTem031790
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 8 Oct 2015 14:27:30 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t98CRU1u002542;
+	Thu, 8 Oct 2015 14:27:30 +0200
+In-Reply-To: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com> (Karthik
+	Nayak's message of "Thu, 8 Oct 2015 14:47:55 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 08 Oct 2015 14:27:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t98CRTem031790
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1444912052.24545@02yrzLcwjUovIYby8dRMEw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279238>
 
-On Thu, Oct 08, 2015 at 12:00:54PM +0200, Michael J Gruber wrote:
-> Michael J Gruber venit, vidit, dixit 08.10.2015 10:43:
-> > Michael J Gruber venit, vidit, dixit 08.10.2015 10:15:
-> >> James McCoy venit, vidit, dixit 08.10.2015 07:01:
-> > ...
-> >> [No, this does not alleviate my dislike for the commit signature
-> >> implementation, and I have not checked the patch - the test looks good
-> >> to me, though.]
-> > 
-> > OK, now grumpy ol' Mike actually tested the patch with all our tests
-> > that filter-branch something. All is good, and the new test catches the
-> > regression when run without the patch.
-> > 
-> > I do think that the parser still has a problem that it had before
-> > already: it does not distinguish between an empty line and an all white
-> > space line (or else we didn't have a problem here at all).
-> > 
-> > In that sense, the patch is wrong, it does not correct the parser
-> > deficiency. But it alleviates it for the special case of embedded
-> > signatures, which currently is the only exceptional case that I am aware
-> > of. It's not guaranteed to stay like that, of course. So maybe, one
-> > should amend the commit message by saying that.
-> > 
-> > Michael
-> > 
-> 
-> ... or do the right thing:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Indeed.  This fixes the actual problem of not consuming the entire
-header, rather than the specific instance of the problem I encountered.
+> +An example to show the usage of %(if)...%(then)...%(else)...%(end).
+> +This prefixes the current branch with a star.
+> +
+> +------------
+> +#!/bin/sh
+> +
+> +git for-each-ref --format="%(if)%(HEAD)%(then)* %(else)  %(end)%(refname:short)" refs/heads/
 
-> diff --git i/git-filter-branch.sh w/git-filter-branch.sh
-> index 5777947..27c9c54 100755
-> --- i/git-filter-branch.sh
-> +++ w/git-filter-branch.sh
-> @@ -377,7 +377,7 @@ while read commit parents; do
->  	fi
-> 
->  	{
-> -		while read -r header_line && test -n "$header_line"
-> +		while IFS='' read -r header_line && test -n "$header_line"
->  		do
->  			# skip header lines...
->  			:;
-> 
-> 
-> Not tested for POSIX etc., maybe we need a bare IFS inside a {} block
-> instead. In any case, we need to tell read not to split by words.
+I don't think the #!/bin/sh adds any value here. Just the 'git
+for-each-ref' line is sufficient IMHO.
 
-As far as I can tell, this should be fine in terms of POSIX.
+> +An example to show the usage of %(if)...%(then)...%(end).
+> +This adds a red color to authorname, if present
 
-Cheers,
+I don't think this is such a good example.
+%(color:red)%(authorname)%(color:reset) just works even if %(authorname)
+is empty.
+
+A better example would be
+
+git for-each-ref --format='%(if)%(authorname)%(then)Authored by %(authorname)%(end)'
+
+which avoids writting "Authored by " with no author.
+
+> -static int is_empty(const char * s){
+> +static int is_empty(const char *s){
+
+You still have the { on the declaration line, it should be on the next
+line.
+
+> @@ -309,10 +311,14 @@ static int is_empty(const char * s){
+>  static void then_atom_handler(struct atom_value *atomv, struct ref_formatting_state *state)
+>  {
+>  	struct ref_formatting_stack *cur = state->stack;
+> -	struct if_then_else *if_then_else = (struct if_then_else *)cur->at_end_data;
+> +	struct if_then_else *if_then_else = NULL;
+>  
+> +	if (cur->at_end == if_then_else_handler)
+> +		if_then_else = (struct if_then_else *)cur->at_end_data;
+
+OK, now the cast is safe since at_end_data has to be of type struct
+if_then_else * if at_end is if_then_else_handler.
+
+> +				unsigned int nobracket = 0;
+> +
+> +				if (!strcmp(valp, ",nobracket"))
+> +					nobracket = 1;
+
+The code to parse comma-separated values is different here and
+elsewhere. I'd rather have the same code (possibly factored into a
+helper function), both to get consistent behavior (you're not allowing
+%(upstream:nobracket,track) for example, right?) and consistent code.
+
+>  				if (!num_ours && !num_theirs)
+>  					v->s = "";
+>  				else if (!num_ours) {
+> -					sprintf(buf, "[behind %d]", num_theirs);
+> +					if (nobracket)
+> +						sprintf(buf, "behind %d", num_theirs);
+> +					else
+> +						sprintf(buf, "[behind %d]", num_theirs);
+
+Perhaps use sprintf(buf, "%sbehind %d%s", obracket, num_their, cbracket)
+unconditionnally, and set obracket = "" or obracket = "[" once and for
+all when you test for "nobracket" above. This avoids these "if
+(nobracket)" spread accross the code, but at the price of extra %s in
+the format strings.
+
+> @@ -1170,6 +1173,29 @@ static void populate_value(struct ref_array_item *ref)
+>  				else
+>  					v->s = "<>";
+>  				continue;
+> +			} else if (!strcmp(formatp, "dir") &&
+> +				   (starts_with(name, "refname"))) {
+> +				const char *sp, *ep, *tmp;
+> +
+> +				sp = tmp = ref->refname;
+> +				/*  Obtain refs/foo/bar/ from refname refs/foo/bar/abc */
+> +				do {
+> +					ep = tmp;
+> +					tmp = strchr(ep + 1, '/');
+> +				} while (tmp);
+
+To look for the last occurence of '/' you can also use strrchr().
+Doesn't it do what you want here?
+
+> --- a/t/t6040-tracking-info.sh
+> +++ b/t/t6040-tracking-info.sh
+> @@ -58,11 +58,11 @@ test_expect_success 'branch -v' '
+>  '
+>  
+>  cat >expect <<\EOF
+> -b1 [origin/master] [ahead 1, behind 1] d
+> -b2 [origin/master] [ahead 1, behind 1] d
+> -b3 [origin/master] [behind 1] b
+> -b4 [origin/master] [ahead 2] f
+> -b5 [brokenbase] [gone] g
+> +b1 [origin/master: ahead 1, behind 1] d
+> +b2 [origin/master: ahead 1, behind 1] d
+> +b3 [origin/master: behind 1] b
+> +b4 [origin/master: ahead 2] f
+> +b5 [brokenbase: gone] g
+>  b6 [origin/master] c
+>  EOF
+
+Cool!
+
+I didn't go through the patches themselves, but modulo my remarks above
+the interdiff looks good. Thanks.
+
 -- 
-James
-GPG Key: 4096R/331BA3DB 2011-12-05 James McCoy <vega.james@gmail.com>
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
