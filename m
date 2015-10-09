@@ -1,256 +1,183 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] mailinfo: ignore in-body header that we do not care about
-Date: Thu, 08 Oct 2015 18:43:25 -0700
-Message-ID: <xmqqtwq0q0jm.fsf@gitster.mtv.corp.google.com>
-References: <1444162070-22034-1-git-send-email-u.kleine-koenig@pengutronix.de>
-	<1444162070-22034-2-git-send-email-u.kleine-koenig@pengutronix.de>
-	<5614CDAE.6070604@ti.com> <20151007075338.GH3982@pengutronix.de>
-	<20151007102822.GT23801@atomide.com>
-	<20151008071728.GO3982@pengutronix.de>
-	<xmqqvbahqhw1.fsf@gitster.mtv.corp.google.com>
-	<20151008193707.GT3982@pengutronix.de>
-	<xmqqio6hqg9a.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v3 00/13] object_id part 2
+Date: Fri,  9 Oct 2015 01:43:46 +0000
+Message-ID: <1444355039-186351-1-git-send-email-sandals@crustytoothpaste.net>
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 09 03:43:39 2015
+X-From: git-owner@vger.kernel.org Fri Oct 09 03:45:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkMid-0008A3-R8
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Oct 2015 03:43:36 +0200
+	id 1ZkMkH-0001MB-Kt
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Oct 2015 03:45:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754911AbbJIBna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 21:43:30 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:36597 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753361AbbJIBn2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2015 21:43:28 -0400
-Received: by pablk4 with SMTP id lk4so70577701pab.3
-        for <git@vger.kernel.org>; Thu, 08 Oct 2015 18:43:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version:content-type;
-        bh=ibQk+7lKG7xzXD/Nsc6bxUMHzw3GwAD+uJnbeWNWoik=;
-        b=Z7WOg4A4ESUt36aq7f7kKMdoc71S5wU0/bUKZzd2No2LxmFp8AY4/EpCJ6uRsVGFOv
-         bqXYxHvgTEvoZ0sezvTLjjL8CK46aUp4JX0EJfZjTPjMt0kcWBHRNMT9hq5SXZTWwCkR
-         jXXeqIHAV9llIlYqVn5tZvH8QT6vx39iqC293GXlS4Zsm4VaTQJ1psodvK+KcdV1CiWu
-         RRxwuP3dz35vPZlWhuWS9wALfX1ObpQfVHhpUFfS8qGiHfZEURJOmrFB0Q7e/CegJYAa
-         48qtXxWUFys/JXZtP4w+R8DO3Hr7alwXSDFbux1PGQnp0i474gHq6Uxkmh/xeO4RwEJ0
-         zU2Q==
-X-Received: by 10.68.103.194 with SMTP id fy2mr8651934pbb.120.1444355008328;
-        Thu, 08 Oct 2015 18:43:28 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:6d9f:e45b:5c65:e644])
-        by smtp.gmail.com with ESMTPSA id ci2sm20156732pbc.66.2015.10.08.18.43.26
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 08 Oct 2015 18:43:26 -0700 (PDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755790AbbJIBpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2015 21:45:10 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:58045 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755625AbbJIBpI (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Oct 2015 21:45:08 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id AA9FA28094;
+	Fri,  9 Oct 2015 01:45:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1444355107;
+	bh=5O3d5DMPEzmTtwKOgvjZC7lq2tV8qboMk/QzwarTIEw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=fiO6omgb31pXUZjpBlC6RbatLlwBdxl/TrOjY7/Au/H6xMLXYYsoWbjGKW/+rIQXo
+	 /muzKGzSiCSZhl270YbtlPTks1iNSC0ok/0Fxx+6NHzMPElnUVbtjynjXlBbg7KuCb
+	 Smx642VSqXXwP9C3HFukA18B4AWIIj5uZEHGpCP8xPza4fL4F2dnYrJkcbusooea3N
+	 +GEX8HwYOmntFVbhSOfvwdLPulkVui2TzyXwlEECYPJzURsC5lA8iKzPFwNQKuo83G
+	 Ax69nkgJ9dfD20iWWAu4RLJhpIePoxd47Dw+4DoQoczvokrVP3zME9oB6cEboReh+R
+	 j0vebADb0K82KtuYNUlBzsMtMuu4I2RfGJvhz+09I0EkGLoruAZvBuI15osPz7LGiJ
+	 /VgieYlVdws1Weatm///89BCE1u1+lDZUeDxK6RcRBSW0fKNadQ/6Mpp197kccGFXa
+	 tJ0xtaHwCghXyebButpnfn6+yDOyNKtB399pb2r23IEYFVhimGK
+X-Mailer: git-send-email 2.6.1
+X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279285>
 
-"git mailinfo" (hence "git am") understands some well-known headers,
-like "Subject: ", "Date: " and "From: ", placed at the beginning of
-the message body (and the "--scissors" can discard the part of the
-body before a scissors-mark).  However, some people throw other
-kinds of header-looking things there, expecting them to be
-discarded.
+This is another series of conversions to struct object_id.
 
-Finding and discarding anything that looks like RFC2822 header is
-not a right solution.  The body of the message may start with a line
-that begins with a word followed by a colon that is a legitimate
-part of the message that should not be discarded.
+This series converts more of the refs code and struct object to use
+struct object_id.  It introduces an additional helper function,
+has_object_file, which is the equivalent of has_sha1_file.  The name was
+chosen to be slightly more logical than has_oid_file, although it can be
+changed if desired.
 
-Instead, keep reading non-blank lines once we see an in-body header
-at the beginning and discard them.  Nobody will be insane enough to
-reorder the headers to read like this:
+Unlike previous iterations, this series of patches should make it
+entirely to the list.  It split out the conversion of struct object into
+the introduction of a helper macro, the use of that macro in several
+areas, the conversion of other struct object uses and update of the
+macro, and the removal of the macro.  The final patch of that set
+(patch 12) was implemented entirely by the use of a Perl script, which
+will be included for inspection.
 
-    Garbage-non-in-body-header: here
-    Subject: in-body subject
+Patches 1 through 8 remain unchanged except for the rebase and the
+necessary changes due to other topics.  Necessary changes were minimal.
 
-    Here is the body of the commit log.
+This series is also available in the object-id-part2 branch from
 
-but it is common for lazy or misguided people to leave non-header
-materials in-body like this:
+https://github.com/bk2204/git.git
+https://git.crustytoothpaste.net/git/bmc/git.git
 
-    From: Junio C Hamano <gitster@pobox.com>
-    Date: Mon, 28 Sep 2015 19:19:27 -0700
-    Subject: [PATCH] Git 2.6.1
-    MIME-Version: 1.0
+Changes from v2:
+* Rebase on latest master.
+* Split out the conversion of struct object into multiple patches.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+brian m. carlson (13):
+  refs: convert some internal functions to use object_id
+  sha1_file: introduce has_object_file helper.
+  Convert struct ref to use object_id.
+  add_sought_entry_mem: convert to struct object_id
+  parse_fetch: convert to use struct object_id
+  get_remote_heads: convert to struct object_id
+  push_refs_with_export: convert to struct object_id
+  ref_newer: convert to use struct object_id
+  object: introduce get_object_hash macro.
+  Add several uses of get_object_hash.
+  Convert struct object to object_id
+  Remove get_object_hash.
+  remote: convert functions to struct object_id
 
- I think it is wrong for the in-body header codepath to pay
- attention to content-transfer-encodings and stuff, but that is a
- separate issue.
+ archive.c                |   6 +--
+ bisect.c                 |  10 ++--
+ branch.c                 |   2 +-
+ builtin/am.c             |   2 +-
+ builtin/blame.c          |  52 ++++++++++----------
+ builtin/branch.c         |   2 +-
+ builtin/checkout.c       |  22 ++++-----
+ builtin/clone.c          |  18 +++----
+ builtin/commit-tree.c    |   4 +-
+ builtin/commit.c         |   8 ++--
+ builtin/describe.c       |  20 ++++----
+ builtin/diff-tree.c      |  12 ++---
+ builtin/diff.c           |  12 ++---
+ builtin/fast-export.c    |  34 +++++++-------
+ builtin/fetch-pack.c     |  14 +++---
+ builtin/fetch.c          |  54 ++++++++++-----------
+ builtin/fmt-merge-msg.c  |   6 +--
+ builtin/fsck.c           |  36 +++++++-------
+ builtin/grep.c           |   6 +--
+ builtin/index-pack.c     |  10 ++--
+ builtin/log.c            |  36 +++++++-------
+ builtin/ls-remote.c      |   2 +-
+ builtin/merge-base.c     |   8 ++--
+ builtin/merge-tree.c     |   6 +--
+ builtin/merge.c          |  60 ++++++++++++------------
+ builtin/name-rev.c       |  12 ++---
+ builtin/notes.c          |   2 +-
+ builtin/pack-objects.c   |  16 +++----
+ builtin/pull.c           |   2 +-
+ builtin/receive-pack.c   |   2 +-
+ builtin/reflog.c         |   4 +-
+ builtin/remote.c         |  12 ++---
+ builtin/replace.c        |   6 +--
+ builtin/reset.c          |  30 ++++++------
+ builtin/rev-list.c       |  18 +++----
+ builtin/rev-parse.c      |   4 +-
+ builtin/shortlog.c       |   2 +-
+ builtin/show-branch.c    |   8 ++--
+ builtin/unpack-objects.c |  10 ++--
+ builtin/worktree.c       |   2 +-
+ bundle.c                 |  20 ++++----
+ cache-tree.c             |   2 +-
+ cache.h                  |   3 ++
+ combine-diff.c           |   4 +-
+ commit.c                 |  32 ++++++-------
+ connect.c                |  22 +++++----
+ decorate.c               |   2 +-
+ diff-lib.c               |   2 +-
+ fetch-pack.c             |  24 +++++-----
+ fsck.c                   |  14 +++---
+ http-backend.c           |   2 +-
+ http-push.c              |  88 +++++++++++++++++-----------------
+ http.c                   |   2 +-
+ line-log.c               |   6 +--
+ list-objects.c           |   4 +-
+ log-tree.c               |  40 ++++++++--------
+ merge-blobs.c            |   4 +-
+ merge-recursive.c        |  26 +++++-----
+ merge.c                  |   2 +-
+ notes-merge.c            |  24 +++++-----
+ object.c                 |   8 ++--
+ object.h                 |   2 +-
+ pack-bitmap-write.c      |  16 +++----
+ pack-bitmap.c            |  34 +++++++-------
+ patch-ids.c              |   6 +--
+ pretty.c                 |  18 +++----
+ ref-filter.c             |  18 +++----
+ refs.c                   | 106 ++++++++++++++++++++---------------------
+ remote-curl.c            |  20 ++++----
+ remote.c                 | 120 +++++++++++++++++++++++------------------------
+ remote.h                 |   8 ++--
+ revision.c               |  48 +++++++++----------
+ send-pack.c              |  16 +++----
+ sequencer.c              |  40 ++++++++--------
+ server-info.c            |   2 +-
+ sha1_file.c              |   5 ++
+ sha1_name.c              |  20 ++++----
+ shallow.c                |   6 +--
+ submodule.c              |   8 ++--
+ tag.c                    |  10 ++--
+ test-match-trees.c       |   2 +-
+ transport-helper.c       |  24 +++++-----
+ transport.c              |  32 ++++++-------
+ transport.h              |   8 ++--
+ tree.c                   |  10 ++--
+ upload-pack.c            |  26 +++++-----
+ walker.c                 |  20 ++++----
+ wt-status.c              |   2 +-
+ 88 files changed, 771 insertions(+), 759 deletions(-)
 
- Also if you remove the "does the line even look like a header?"
- check, some tests in t5100 starts failing.  E.g.
-
-    From nobody Mon Sep 17 00:00:00 2001
-    From: A U Thor <a.u.thor@example.com>
-    Subject: check bogus body header (from)
-    Date: Fri, 9 Jun 2006 00:44:16 -0700
-
-    From: bogosity
-      - a list
-      - of stuff
-
- wants to make sure the list of two bulletted-items are in the
- commit log, and the in-body From: line gets used.
-
- So I dunno.  I am not entirely convinced that this is a good
- change.
-
- builtin/mailinfo.c  | 34 +++++++++++++++++++++++++++++++---
- t/t5100-mailinfo.sh |  3 ++-
- t/t5100/info0018    |  5 +++++
- t/t5100/msg0018     |  2 ++
- t/t5100/patch0018   |  6 ++++++
- t/t5100/sample.mbox | 18 ++++++++++++++++++
- 6 files changed, 64 insertions(+), 4 deletions(-)
- create mode 100644 t/t5100/info0018
- create mode 100644 t/t5100/msg0018
- create mode 100644 t/t5100/patch0018
-
-diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index 999a525..169ee54 100644
---- a/builtin/mailinfo.c
-+++ b/builtin/mailinfo.c
-@@ -787,18 +787,46 @@ static int is_scissors_line(const struct strbuf *line)
- 
- static int handle_commit_msg(struct strbuf *line)
- {
-+	/*
-+	 * Are we still scanning and discarding in-body headers?
-+	 * It is initially set to 1, set to 2 when we do see a
-+	 * valid in-body header.
-+	 */
- 	static int still_looking = 1;
-+	int is_empty_line;
- 
- 	if (!cmitmsg)
- 		return 0;
- 
--	if (still_looking) {
--		if (!line->len || (line->len == 1 && line->buf[0] == '\n'))
-+	is_empty_line = (!line->len || (line->len == 1 && line->buf[0] == '\n'));
-+	if (still_looking == 1) {
-+		/*
-+		 * Haven't seen a known in-body header; discard an empty line.
-+		 */
-+		if (is_empty_line)
- 			return 0;
- 	}
- 
- 	if (use_inbody_headers && still_looking) {
--		still_looking = check_header(line, s_hdr_data, 0);
-+		int is_known_header = check_header(line, s_hdr_data, 0);
-+
-+		if (still_looking == 2) {
-+			/*
-+			 * an empty line after the in-body header block,
-+			 * or a line obviously not an attempt to invent
-+			 * an unsupported in-body header.
-+			 */
-+			if (is_empty_line || !is_rfc2822_header(line))
-+				still_looking = 0;
-+			if (is_empty_line)
-+				return 0;
-+			/* otherwise do not discard the line, but keep going */
-+		} else if (is_known_header) {
-+			still_looking = 2;
-+		} else if (still_looking != 2) {
-+			still_looking = 0;
-+		}
-+
- 		if (still_looking)
- 			return 0;
- 	} else
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index e97cfb2..3ce041b 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -11,7 +11,8 @@ test_expect_success 'split sample box' \
- 	'git mailsplit -o. "$TEST_DIRECTORY"/t5100/sample.mbox >last &&
- 	last=`cat last` &&
- 	echo total is $last &&
--	test `cat last` = 17'
-+	test `cat last` = 18
-+'
- 
- check_mailinfo () {
- 	mail=$1 opt=$2
-diff --git a/t/t5100/info0018 b/t/t5100/info0018
-new file mode 100644
-index 0000000..ec671fc
---- /dev/null
-+++ b/t/t5100/info0018
-@@ -0,0 +1,5 @@
-+Author: A U Thor
-+Email: a.u.thor@example.com
-+Subject: A E I O U
-+Date: Mon, 17 Sep 2012 14:23:49 -0700
-+
-diff --git a/t/t5100/msg0018 b/t/t5100/msg0018
-new file mode 100644
-index 0000000..2ee0900
---- /dev/null
-+++ b/t/t5100/msg0018
-@@ -0,0 +1,2 @@
-+New content here
-+
-diff --git a/t/t5100/patch0018 b/t/t5100/patch0018
-new file mode 100644
-index 0000000..35cf84c
---- /dev/null
-+++ b/t/t5100/patch0018
-@@ -0,0 +1,6 @@
-+diff --git a/foo b/foo
-+index e69de29..d95f3ad 100644
-+--- a/foo
-++++ b/foo
-+@@ -0,0 +1 @@
-++New content
-diff --git a/t/t5100/sample.mbox b/t/t5100/sample.mbox
-index 8b2ae06..d7c5878 100644
---- a/t/t5100/sample.mbox
-+++ b/t/t5100/sample.mbox
-@@ -406,6 +406,7 @@ Subject: re: [PATCH] another patch
- 
- From: A U Thor <a.u.thor@example.com>
- Subject: [PATCH] another patch
-+
- >Here is an empty patch from A U Thor.
- 
- Hey you forgot the patch!
-@@ -699,3 +700,20 @@ index e69de29..d95f3ad 100644
- +++ b/foo
- @@ -0,0 +1 @@
- +New content
-+From nobody Mon Sep 17 00:00:00 2001
-+From: A U Thor <a.u.thor@example.com>
-+Subject: Re: some discussion title
-+Date: Mon, 17 Sep 2012 14:23:49 -0700
-+
-+Subject: A E I O U
-+MIME-VERSION: 1.0
-+Garbage: Not a valid in-body header
-+
-+New content here
-+
-+diff --git a/foo b/foo
-+index e69de29..d95f3ad 100644
-+--- a/foo
-++++ b/foo
-+@@ -0,0 +1 @@
-++New content
 -- 
-2.6.1-296-ge15092e
+2.6.1
