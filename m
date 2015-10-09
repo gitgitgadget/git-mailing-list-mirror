@@ -1,44 +1,44 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v3 01/13] refs: convert some internal functions to use object_id
-Date: Fri,  9 Oct 2015 01:43:47 +0000
-Message-ID: <1444355039-186351-2-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 03/13] Convert struct ref to use object_id.
+Date: Fri,  9 Oct 2015 01:43:49 +0000
+Message-ID: <1444355039-186351-4-git-send-email-sandals@crustytoothpaste.net>
 References: <1444355039-186351-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Jeff King <peff@peff.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 09 03:45:26 2015
+X-From: git-owner@vger.kernel.org Fri Oct 09 03:45:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkMkP-0001VG-Fu
+	id 1ZkMkQ-0001VG-A6
 	for gcvg-git-2@plane.gmane.org; Fri, 09 Oct 2015 03:45:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755882AbbJIBpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2015 21:45:15 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:58050 "EHLO
+	id S1755883AbbJIBpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2015 21:45:17 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:58058 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755626AbbJIBpI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Oct 2015 21:45:08 -0400
+	by vger.kernel.org with ESMTP id S1755772AbbJIBpK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Oct 2015 21:45:10 -0400
 Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3305028095;
-	Fri,  9 Oct 2015 01:45:07 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5812F28099;
+	Fri,  9 Oct 2015 01:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1444355107;
-	bh=uiRBdrZJTegkWWAuEKWpXCbmkEpIJOsXPeHZHkz/JaE=;
+	s=default; t=1444355109;
+	bh=ImE2Llw8UOzsok+Q/MOx9MMPYJZVxBrhuk+uHrH9r0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/Ha8hChnKDyXTCNu1UlL5UM5qvfiXk0qYsdh0WGfT72jH2u1aITCNUnjQYOiv1wf
-	 jaF6demmFsLSjSqVOJYKeakdreTOxPhyc/yTDTxH6F7brF2LR3v12+d5nfDEPAI4A6
-	 ngU4HRNP+s4ZnKDpc6iMkViHdratjbHfHpytf4EMifV5mEHGGE/904o1MUjgy98nPv
-	 UH9OZA6WINDzHs7o78DrLshR0sqqFvWmBGTLpArxPpoyS4GPw4YCtNNlY0u4waSokk
-	 Xla+kTjlCwBqzGzvBkANYhHkT3HbWlV35TNah6PIXzFHY+qtx7AE7Ds5I134jnWKPq
-	 6ApHMqgaYHXnrvMxZ8+fPjZqNvyODdUnPyIPWtOl37Kxaxj5O06yMwfSC3YkTLbMZ+
-	 ZXWubmizaFUi2sQ423VFiRnvxhcqOzlZtPy6OsvB7X5a1Z8ERmFgl3o3WOo/cQ7NLM
-	 9UNsT3ED4bCLm8UMdJlDZsED3SZ33Ya5FxL71LVyojTP8IHCo7v
+	b=KgNmlqJMqhMJdeN7fSoKABiyaeJxrhrX0PkKWcwT3SDR66AQmEO4VT7Da/YZ1CJuU
+	 pVrpNIOynutqR8xCCNUoO4BBk2OM80aGskh+IpRPiOswLhBkAf+KrL7r2hcAm0hzdw
+	 wMzsgUJUHAFvtkZ2KlS7PC8VZCa1L1YgceYaVmgeeNrQSTk1CnuVqtTwNnH3P7ZQ5y
+	 85qE+DrtrywxANMci3KvFBwRneRSvqiJ0jCbPgLlSr0XgKXXDy1zETw7BOzP4uxJ6q
+	 4GB5+bGn+79BLjgKtcVkkdNruIgxOSOcF66ESYElNWv7zQU4WA0idg6TenPHTkwz5D
+	 6hWzCziEKg7qdjC9kRYduIjFdQJBxfXwlNFY6TZqZ2u/Fi9n0OwMJjWCmNL+osxL0F
+	 tyjSklqiN39nZBfDBS0HAxSJ3hRkw9Y8lU7m3hg8tI5/B5mLTVcu9+tkHua+zZJhek
+	 +JPg34692WjgI9zrwQcV7Tgn389wzZB7Sq3tDO267XoeQJADnEt
 X-Mailer: git-send-email 2.6.1
 In-Reply-To: <1444355039-186351-1-git-send-email-sandals@crustytoothpaste.net>
 X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
@@ -46,344 +46,1157 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279287>
 
-Convert several internal functions in refs.c to use struct object_id,
-and use the GIT_SHA1_HEXSZ constants in parse_ref_line.
+Use struct object_id in three fields in struct ref and convert all the
+necessary places that use it.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- refs.c | 104 ++++++++++++++++++++++++++++++++---------------------------------
- 1 file changed, 52 insertions(+), 52 deletions(-)
+ builtin/clone.c        | 16 +++++++-------
+ builtin/fetch-pack.c   |  4 ++--
+ builtin/fetch.c        | 50 +++++++++++++++++++++----------------------
+ builtin/ls-remote.c    |  2 +-
+ builtin/receive-pack.c |  2 +-
+ builtin/remote.c       | 12 +++++------
+ connect.c              |  2 +-
+ fetch-pack.c           | 18 ++++++++--------
+ http-push.c            | 46 +++++++++++++++++++--------------------
+ http.c                 |  2 +-
+ remote-curl.c          | 10 ++++-----
+ remote.c               | 58 +++++++++++++++++++++++++-------------------------
+ remote.h               |  6 +++---
+ send-pack.c            | 16 +++++++-------
+ transport-helper.c     | 18 ++++++++--------
+ transport.c            | 32 ++++++++++++++--------------
+ transport.h            |  8 +++----
+ walker.c               |  2 +-
+ 18 files changed, 152 insertions(+), 152 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 91c88bad..dae50c4e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1192,7 +1192,7 @@ static const char PACKED_REFS_HEADER[] =
-  * Return a pointer to the refname within the line (null-terminated),
-  * or NULL if there was a problem.
-  */
--static const char *parse_ref_line(struct strbuf *line, unsigned char *sha1)
-+static const char *parse_ref_line(struct strbuf *line, struct object_id *oid)
- {
- 	const char *ref;
- 
-@@ -1204,15 +1204,15 @@ static const char *parse_ref_line(struct strbuf *line, unsigned char *sha1)
- 	 *  +1 (space in between hex and name)
- 	 *  +1 (newline at the end of the line)
- 	 */
--	if (line->len <= 42)
-+	if (line->len <= GIT_SHA1_HEXSZ + 2)
- 		return NULL;
- 
--	if (get_sha1_hex(line->buf, sha1) < 0)
-+	if (get_oid_hex(line->buf, oid) < 0)
- 		return NULL;
--	if (!isspace(line->buf[40]))
-+	if (!isspace(line->buf[GIT_SHA1_HEXSZ]))
- 		return NULL;
- 
--	ref = line->buf + 41;
-+	ref = line->buf + GIT_SHA1_HEXSZ + 1;
- 	if (isspace(*ref))
- 		return NULL;
- 
-@@ -1257,7 +1257,7 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
- 	enum { PEELED_NONE, PEELED_TAGS, PEELED_FULLY } peeled = PEELED_NONE;
- 
- 	while (strbuf_getwholeline(&line, f, '\n') != EOF) {
--		unsigned char sha1[20];
-+		struct object_id oid;
- 		const char *refname;
- 		const char *traits;
- 
-@@ -1270,17 +1270,17 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 578da852..92007b35 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -552,7 +552,7 @@ static void write_remote_refs(const struct ref *local_refs)
+ 	for (r = local_refs; r; r = r->next) {
+ 		if (!r->peer_ref)
  			continue;
- 		}
- 
--		refname = parse_ref_line(&line, sha1);
-+		refname = parse_ref_line(&line, &oid);
- 		if (refname) {
- 			int flag = REF_ISPACKED;
- 
- 			if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 				if (!refname_is_safe(refname))
- 					die("packed refname is dangerous: %s", refname);
--				hashclr(sha1);
-+				oidclr(&oid);
- 				flag |= REF_BAD_NAME | REF_ISBROKEN;
- 			}
--			last = create_ref_entry(refname, sha1, flag, 0);
-+			last = create_ref_entry(refname, oid.hash, flag, 0);
- 			if (peeled == PEELED_FULLY ||
- 			    (peeled == PEELED_TAGS && starts_with(refname, "refs/tags/")))
- 				last->flag |= REF_KNOWS_PEELED;
-@@ -1291,8 +1291,8 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
- 		    line.buf[0] == '^' &&
- 		    line.len == PEELED_LINE_LENGTH &&
- 		    line.buf[PEELED_LINE_LENGTH - 1] == '\n' &&
--		    !get_sha1_hex(line.buf + 1, sha1)) {
--			hashcpy(last->u.value.peeled.hash, sha1);
-+		    !get_oid_hex(line.buf + 1, &oid)) {
-+			oidcpy(&last->u.value.peeled, &oid);
- 			/*
- 			 * Regardless of what the file header said,
- 			 * we definitely know the value of *this*
-@@ -1397,7 +1397,7 @@ static void read_loose_refs(const char *dirname, struct ref_dir *dir)
- 	strbuf_add(&refname, dirname, dirnamelen);
- 
- 	while ((de = readdir(d)) != NULL) {
--		unsigned char sha1[20];
-+		struct object_id oid;
- 		struct stat st;
- 		int flag;
- 
-@@ -1418,20 +1418,20 @@ static void read_loose_refs(const char *dirname, struct ref_dir *dir)
- 			int read_ok;
- 
- 			if (*refs->name) {
--				hashclr(sha1);
-+				oidclr(&oid);
- 				flag = 0;
- 				read_ok = !resolve_gitlink_ref(refs->name,
--							       refname.buf, sha1);
-+							       refname.buf, oid.hash);
- 			} else {
- 				read_ok = !read_ref_full(refname.buf,
- 							 RESOLVE_REF_READING,
--							 sha1, &flag);
-+							 oid.hash, &flag);
- 			}
- 
- 			if (!read_ok) {
--				hashclr(sha1);
-+				oidclr(&oid);
- 				flag |= REF_ISBROKEN;
--			} else if (is_null_sha1(sha1)) {
-+			} else if (is_null_oid(&oid)) {
- 				/*
- 				 * It is so astronomically unlikely
- 				 * that NULL_SHA1 is the SHA-1 of an
-@@ -1447,11 +1447,11 @@ static void read_loose_refs(const char *dirname, struct ref_dir *dir)
- 						 REFNAME_ALLOW_ONELEVEL)) {
- 				if (!refname_is_safe(refname.buf))
- 					die("loose refname is dangerous: %s", refname.buf);
--				hashclr(sha1);
-+				oidclr(&oid);
- 				flag |= REF_BAD_NAME | REF_ISBROKEN;
- 			}
- 			add_entry_to_dir(dir,
--					 create_ref_entry(refname.buf, sha1, flag, 0));
-+					 create_ref_entry(refname.buf, oid.hash, flag, 0));
- 		}
- 		strbuf_setlen(&refname, dirnamelen);
- 		strbuf_setlen(&path, path_baselen);
-@@ -1814,8 +1814,8 @@ int read_ref(const char *refname, unsigned char *sha1)
- 
- int ref_exists(const char *refname)
- {
--	unsigned char sha1[20];
--	return !!resolve_ref_unsafe(refname, RESOLVE_REF_READING, sha1, NULL);
-+	struct object_id oid;
-+	return !!resolve_ref_unsafe(refname, RESOLVE_REF_READING, oid.hash, NULL);
- }
- 
- static int filter_refs(const char *refname, const struct object_id *oid,
-@@ -1919,7 +1919,7 @@ static enum peel_status peel_entry(struct ref_entry *entry, int repeel)
- int peel_ref(const char *refname, unsigned char *sha1)
- {
- 	int flag;
--	unsigned char base[20];
-+	struct object_id base;
- 
- 	if (current_ref && (current_ref->name == refname
- 			    || !strcmp(current_ref->name, refname))) {
-@@ -1929,7 +1929,7 @@ int peel_ref(const char *refname, unsigned char *sha1)
- 		return 0;
+-		if (ref_transaction_create(t, r->peer_ref->name, r->old_sha1,
++		if (ref_transaction_create(t, r->peer_ref->name, r->old_oid.hash,
+ 					   0, NULL, &err))
+ 			die("%s", err.buf);
  	}
- 
--	if (read_ref_full(refname, RESOLVE_REF_READING, base, &flag))
-+	if (read_ref_full(refname, RESOLVE_REF_READING, base.hash, &flag))
+@@ -572,9 +572,9 @@ static void write_followtags(const struct ref *refs, const char *msg)
+ 			continue;
+ 		if (ends_with(ref->name, "^{}"))
+ 			continue;
+-		if (!has_sha1_file(ref->old_sha1))
++		if (!has_object_file(&ref->old_oid))
+ 			continue;
+-		update_ref(msg, ref->name, ref->old_sha1,
++		update_ref(msg, ref->name, ref->old_oid.hash,
+ 			   NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+ 	}
+ }
+@@ -594,7 +594,7 @@ static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
+ 	if (!ref)
  		return -1;
  
- 	/*
-@@ -1950,7 +1950,7 @@ int peel_ref(const char *refname, unsigned char *sha1)
+-	hashcpy(sha1, ref->old_sha1);
++	hashcpy(sha1, ref->old_oid.hash);
+ 	*rm = ref->next;
+ 	return 0;
+ }
+@@ -643,12 +643,12 @@ static void update_head(const struct ref *our, const struct ref *remote,
+ 		/* Local default branch link */
+ 		create_symref("HEAD", our->name, NULL);
+ 		if (!option_bare) {
+-			update_ref(msg, "HEAD", our->old_sha1, NULL, 0,
++			update_ref(msg, "HEAD", our->old_oid.hash, NULL, 0,
+ 				   UPDATE_REFS_DIE_ON_ERR);
+ 			install_branch_config(0, head, option_origin, our->name);
  		}
+ 	} else if (our) {
+-		struct commit *c = lookup_commit_reference(our->old_sha1);
++		struct commit *c = lookup_commit_reference(our->old_oid.hash);
+ 		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
+ 		update_ref(msg, "HEAD", c->object.sha1,
+ 			   NULL, REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
+@@ -658,7 +658,7 @@ static void update_head(const struct ref *our, const struct ref *remote,
+ 		 * HEAD points to a branch but we don't know which one.
+ 		 * Detach HEAD in all these cases.
+ 		 */
+-		update_ref(msg, "HEAD", remote->old_sha1,
++		update_ref(msg, "HEAD", remote->old_oid.hash,
+ 			   NULL, REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
+ 	}
+ }
+@@ -1009,7 +1009,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		 * remote HEAD check.
+ 		 */
+ 		for (ref = refs; ref; ref = ref->next)
+-			if (is_null_sha1(ref->old_sha1)) {
++			if (is_null_oid(&ref->old_oid)) {
+ 				complete_refs_before_fetch = 0;
+ 				break;
+ 			}
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 4a6b340a..19215b33 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -17,7 +17,7 @@ static void add_sought_entry_mem(struct ref ***sought, int *nr, int *alloc,
+ 	unsigned char sha1[20];
+ 
+ 	if (namelen > 41 && name[40] == ' ' && !get_sha1_hex(name, sha1)) {
+-		hashcpy(ref->old_sha1, sha1);
++		hashcpy(ref->old_oid.hash, sha1);
+ 		name += 41;
+ 		namelen -= 41;
+ 	}
+@@ -210,7 +210,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 
+ 	while (ref) {
+ 		printf("%s %s\n",
+-		       sha1_to_hex(ref->old_sha1), ref->name);
++		       oid_to_hex(&ref->old_oid), ref->name);
+ 		ref = ref->next;
  	}
  
--	return peel_object(base, sha1);
-+	return peel_object(base.hash, sha1);
- }
- 
- struct warn_if_dangling_data {
-@@ -2361,11 +2361,11 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- 	*ref = NULL;
- 	for (p = ref_rev_parse_rules; *p; p++) {
- 		char fullref[PATH_MAX];
--		unsigned char sha1_from_ref[20];
-+		struct object_id oid_from_ref;
- 		unsigned char *this_result;
- 		int flag;
- 
--		this_result = refs_found ? sha1_from_ref : sha1;
-+		this_result = refs_found ? oid_from_ref.hash : sha1;
- 		mksnpath(fullref, sizeof(fullref), *p, len, str);
- 		r = resolve_ref_unsafe(fullref, RESOLVE_REF_READING,
- 				       this_result, &flag);
-@@ -2392,13 +2392,13 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 
- 	*log = NULL;
- 	for (p = ref_rev_parse_rules; *p; p++) {
--		unsigned char hash[20];
-+		struct object_id oid;
- 		char path[PATH_MAX];
- 		const char *ref, *it;
- 
- 		mksnpath(path, sizeof(path), *p, len, str);
- 		ref = resolve_ref_unsafe(path, RESOLVE_REF_READING,
--					 hash, NULL);
-+					 oid.hash, NULL);
- 		if (!ref)
- 			continue;
- 		if (reflog_exists(path))
-@@ -2409,7 +2409,7 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 			continue;
- 		if (!logs_found++) {
- 			*log = xstrdup(it);
--			hashcpy(sha1, hash);
-+			hashcpy(sha1, oid.hash);
- 		}
- 		if (!warn_ambiguous_refs)
- 			break;
-@@ -2558,12 +2558,12 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
-  * Write an entry to the packed-refs file for the specified refname.
-  * If peeled is non-NULL, write it as the entry's peeled value.
-  */
--static void write_packed_entry(FILE *fh, char *refname, unsigned char *sha1,
--			       unsigned char *peeled)
-+static void write_packed_entry(FILE *fh, char *refname, struct object_id *oid,
-+			       struct object_id *peeled)
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 9a3869f4..a56b271a 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -196,7 +196,7 @@ static int will_fetch(struct ref **head, const unsigned char *sha1)
  {
--	fprintf_or_die(fh, "%s %s\n", sha1_to_hex(sha1), refname);
-+	fprintf_or_die(fh, "%s %s\n", oid_to_hex(oid), refname);
- 	if (peeled)
--		fprintf_or_die(fh, "^%s\n", sha1_to_hex(peeled));
-+		fprintf_or_die(fh, "^%s\n", oid_to_hex(peeled));
- }
+ 	struct ref *rm = *head;
+ 	while (rm) {
+-		if (!hashcmp(rm->old_sha1, sha1))
++		if (!hashcmp(rm->old_oid.hash, sha1))
+ 			return 1;
+ 		rm = rm->next;
+ 	}
+@@ -224,8 +224,8 @@ static void find_non_local_tags(struct transport *transport,
+ 		 * as one to ignore by setting util to NULL.
+ 		 */
+ 		if (ends_with(ref->name, "^{}")) {
+-			if (item && !has_sha1_file(ref->old_sha1) &&
+-			    !will_fetch(head, ref->old_sha1) &&
++			if (item && !has_object_file(&ref->old_oid) &&
++			    !will_fetch(head, ref->old_oid.hash) &&
+ 			    !has_sha1_file(item->util) &&
+ 			    !will_fetch(head, item->util))
+ 				item->util = NULL;
+@@ -251,7 +251,7 @@ static void find_non_local_tags(struct transport *transport,
+ 			continue;
  
- /*
-@@ -2576,9 +2576,9 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
- 	if (peel_status != PEEL_PEELED && peel_status != PEEL_NON_TAG)
- 		error("internal error: %s is not a valid packed reference!",
- 		      entry->name);
--	write_packed_entry(cb_data, entry->name, entry->u.value.oid.hash,
-+	write_packed_entry(cb_data, entry->name, &entry->u.value.oid,
- 			   peel_status == PEEL_PEELED ?
--			   entry->u.value.peeled.hash : NULL);
-+			   &entry->u.value.peeled : NULL);
+ 		item = string_list_insert(&remote_refs, ref->name);
+-		item->util = (void *)ref->old_sha1;
++		item->util = (void *)&ref->old_oid;
+ 	}
+ 	string_list_clear(&existing_refs, 1);
+ 
+@@ -273,7 +273,7 @@ static void find_non_local_tags(struct transport *transport,
+ 		{
+ 			struct ref *rm = alloc_ref(item->string);
+ 			rm->peer_ref = alloc_ref(item->string);
+-			hashcpy(rm->old_sha1, item->util);
++			oidcpy(&rm->old_oid, item->util);
+ 			**tail = rm;
+ 			*tail = &rm->next;
+ 		}
+@@ -419,8 +419,8 @@ static int s_update_ref(const char *action,
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+ 	    ref_transaction_update(transaction, ref->name,
+-				   ref->new_sha1,
+-				   check_old ? ref->old_sha1 : NULL,
++				   ref->new_oid.hash,
++				   check_old ? ref->old_oid.hash : NULL,
+ 				   0, msg, &err))
+ 		goto fail;
+ 
+@@ -453,11 +453,11 @@ static int update_local_ref(struct ref *ref,
+ 	struct branch *current_branch = branch_get(NULL);
+ 	const char *pretty_ref = prettify_refname(ref->name);
+ 
+-	type = sha1_object_info(ref->new_sha1, NULL);
++	type = sha1_object_info(ref->new_oid.hash, NULL);
+ 	if (type < 0)
+-		die(_("object %s not found"), sha1_to_hex(ref->new_sha1));
++		die(_("object %s not found"), oid_to_hex(&ref->new_oid));
+ 
+-	if (!hashcmp(ref->old_sha1, ref->new_sha1)) {
++	if (!oidcmp(&ref->old_oid, &ref->new_oid)) {
+ 		if (verbosity > 0)
+ 			strbuf_addf(display, "= %-*s %-*s -> %s",
+ 				    TRANSPORT_SUMMARY(_("[up to date]")),
+@@ -468,7 +468,7 @@ static int update_local_ref(struct ref *ref,
+ 	if (current_branch &&
+ 	    !strcmp(ref->name, current_branch->name) &&
+ 	    !(update_head_ok || is_bare_repository()) &&
+-	    !is_null_sha1(ref->old_sha1)) {
++	    !is_null_oid(&ref->old_oid)) {
+ 		/*
+ 		 * If this is the head, and it's not okay to update
+ 		 * the head, and the old value of the head isn't empty...
+@@ -480,7 +480,7 @@ static int update_local_ref(struct ref *ref,
+ 		return 1;
+ 	}
+ 
+-	if (!is_null_sha1(ref->old_sha1) &&
++	if (!is_null_oid(&ref->old_oid) &&
+ 	    starts_with(ref->name, "refs/tags/")) {
+ 		int r;
+ 		r = s_update_ref("updating tag", ref, 0);
+@@ -492,8 +492,8 @@ static int update_local_ref(struct ref *ref,
+ 		return r;
+ 	}
+ 
+-	current = lookup_commit_reference_gently(ref->old_sha1, 1);
+-	updated = lookup_commit_reference_gently(ref->new_sha1, 1);
++	current = lookup_commit_reference_gently(ref->old_oid.hash, 1);
++	updated = lookup_commit_reference_gently(ref->new_oid.hash, 1);
+ 	if (!current || !updated) {
+ 		const char *msg;
+ 		const char *what;
+@@ -517,7 +517,7 @@ static int update_local_ref(struct ref *ref,
+ 
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+-			check_for_new_submodule_commits(ref->new_sha1);
++			check_for_new_submodule_commits(ref->new_oid.hash);
+ 		r = s_update_ref(msg, ref, 0);
+ 		strbuf_addf(display, "%c %-*s %-*s -> %s%s",
+ 			    r ? '!' : '*',
+@@ -532,10 +532,10 @@ static int update_local_ref(struct ref *ref,
+ 		int r;
+ 		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
+ 		strcat(quickref, "..");
+-		strcat(quickref, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
++		strcat(quickref, find_unique_abbrev(ref->new_oid.hash, DEFAULT_ABBREV));
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+-			check_for_new_submodule_commits(ref->new_sha1);
++			check_for_new_submodule_commits(ref->new_oid.hash);
+ 		r = s_update_ref("fast-forward", ref, 1);
+ 		strbuf_addf(display, "%c %-*s %-*s -> %s%s",
+ 			    r ? '!' : ' ',
+@@ -548,10 +548,10 @@ static int update_local_ref(struct ref *ref,
+ 		int r;
+ 		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
+ 		strcat(quickref, "...");
+-		strcat(quickref, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
++		strcat(quickref, find_unique_abbrev(ref->new_oid.hash, DEFAULT_ABBREV));
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+-			check_for_new_submodule_commits(ref->new_sha1);
++			check_for_new_submodule_commits(ref->new_oid.hash);
+ 		r = s_update_ref("forced-update", ref, 1);
+ 		strbuf_addf(display, "%c %-*s %-*s -> %s  (%s)",
+ 			    r ? '!' : '+',
+@@ -578,7 +578,7 @@ static int iterate_ref_map(void *cb_data, unsigned char sha1[20])
+ 	if (!ref)
+ 		return -1; /* end of the list */
+ 	*rm = ref->next;
+-	hashcpy(sha1, ref->old_sha1);
++	hashcpy(sha1, ref->old_oid.hash);
  	return 0;
  }
  
-@@ -3145,7 +3145,7 @@ static int commit_ref_update(struct ref_lock *lock,
+@@ -629,7 +629,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 				continue;
+ 			}
  
- int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
+-			commit = lookup_commit_reference_gently(rm->old_sha1, 1);
++			commit = lookup_commit_reference_gently(rm->old_oid.hash, 1);
+ 			if (!commit)
+ 				rm->fetch_head_status = FETCH_HEAD_NOT_FOR_MERGE;
+ 
+@@ -639,8 +639,8 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 			if (rm->peer_ref) {
+ 				ref = xcalloc(1, sizeof(*ref) + strlen(rm->peer_ref->name) + 1);
+ 				strcpy(ref->name, rm->peer_ref->name);
+-				hashcpy(ref->old_sha1, rm->peer_ref->old_sha1);
+-				hashcpy(ref->new_sha1, rm->old_sha1);
++				oidcpy(&ref->old_oid, &rm->peer_ref->old_oid);
++				oidcpy(&ref->new_oid, &rm->old_oid);
+ 				ref->force = rm->peer_ref->force;
+ 			}
+ 
+@@ -685,7 +685,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 				/* fall-through */
+ 			case FETCH_HEAD_MERGE:
+ 				fprintf(fp, "%s\t%s\t%s",
+-					sha1_to_hex(rm->old_sha1),
++					oid_to_hex(&rm->old_oid),
+ 					merge_status_marker,
+ 					note.buf);
+ 				for (i = 0; i < url_len; ++i)
+@@ -927,7 +927,7 @@ static int do_fetch(struct transport *transport,
+ 						   rm->peer_ref->name);
+ 			if (peer_item) {
+ 				struct object_id *old_oid = peer_item->util;
+-				hashcpy(rm->peer_ref->old_sha1, old_oid->hash);
++				oidcpy(&rm->peer_ref->old_oid, old_oid);
+ 			}
+ 		}
+ 	}
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index 4554dbc8..db35e582 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -129,7 +129,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		if (!tail_match(pattern, ref->name))
+ 			continue;
+-		printf("%s	%s\n", sha1_to_hex(ref->old_sha1), ref->name);
++		printf("%s	%s\n", oid_to_hex(&ref->old_oid), ref->name);
+ 		status = 0; /* we found something */
+ 	}
+ 	return status;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index e6b93d02..bad85b2b 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -244,7 +244,7 @@ static void show_one_alternate_sha1(const unsigned char sha1[20], void *unused)
+ static void collect_one_alternate_ref(const struct ref *ref, void *data)
  {
--	unsigned char sha1[20], orig_sha1[20];
-+	struct object_id oid, orig_oid;
- 	int flag = 0, logmoved = 0;
- 	struct ref_lock *lock;
- 	struct stat loginfo;
-@@ -3157,7 +3157,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 		return error("reflog for %s is a symlink", oldrefname);
+ 	struct sha1_array *sa = data;
+-	sha1_array_append(sa, ref->old_sha1);
++	sha1_array_append(sa, ref->old_oid.hash);
+ }
  
- 	symref = resolve_ref_unsafe(oldrefname, RESOLVE_REF_READING,
--				    orig_sha1, &flag);
-+				    orig_oid.hash, &flag);
- 	if (flag & REF_ISSYMREF)
- 		return error("refname %s is a symbolic ref, renaming it is not supported",
- 			oldrefname);
-@@ -3171,13 +3171,13 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 		return error("unable to move logfile logs/%s to "TMP_RENAMED_LOG": %s",
- 			oldrefname, strerror(errno));
+ static void write_head_info(void)
+diff --git a/builtin/remote.c b/builtin/remote.c
+index e4c3ea13..68dec162 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -401,7 +401,7 @@ static int get_push_ref_states(const struct ref *remote_refs,
  
--	if (delete_ref(oldrefname, orig_sha1, REF_NODEREF)) {
-+	if (delete_ref(oldrefname, orig_oid.hash, REF_NODEREF)) {
- 		error("unable to delete old %s", oldrefname);
- 		goto rollback;
+ 		if (!ref->peer_ref)
+ 			continue;
+-		hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
++		oidcpy(&ref->new_oid, &ref->peer_ref->new_oid);
+ 
+ 		item = string_list_append(&states->push,
+ 					  abbrev_branch(ref->peer_ref->name));
+@@ -410,14 +410,14 @@ static int get_push_ref_states(const struct ref *remote_refs,
+ 		info->forced = ref->force;
+ 		info->dest = xstrdup(abbrev_branch(ref->name));
+ 
+-		if (is_null_sha1(ref->new_sha1)) {
++		if (is_null_oid(&ref->new_oid)) {
+ 			info->status = PUSH_STATUS_DELETE;
+-		} else if (!hashcmp(ref->old_sha1, ref->new_sha1))
++		} else if (!oidcmp(&ref->old_oid, &ref->new_oid))
+ 			info->status = PUSH_STATUS_UPTODATE;
+-		else if (is_null_sha1(ref->old_sha1))
++		else if (is_null_oid(&ref->old_oid))
+ 			info->status = PUSH_STATUS_CREATE;
+-		else if (has_sha1_file(ref->old_sha1) &&
+-			 ref_newer(ref->new_sha1, ref->old_sha1))
++		else if (has_object_file(&ref->old_oid) &&
++			 ref_newer(ref->new_oid.hash, ref->old_oid.hash))
+ 			info->status = PUSH_STATUS_FASTFORWARD;
+ 		else
+ 			info->status = PUSH_STATUS_OUTOFDATE;
+diff --git a/connect.c b/connect.c
+index ced49613..45eabcdd 100644
+--- a/connect.c
++++ b/connect.c
+@@ -166,7 +166,7 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+ 		if (!check_ref(name, flags))
+ 			continue;
+ 		ref = alloc_ref(buffer + 41);
+-		hashcpy(ref->old_sha1, old_sha1);
++		hashcpy(ref->old_oid.hash, old_sha1);
+ 		*list = ref;
+ 		list = &ref->next;
+ 		got_at_least_one_head = 1;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 820251a8..ec5a4c70 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -238,7 +238,7 @@ static void send_request(struct fetch_pack_args *args,
+ 
+ static void insert_one_alternate_ref(const struct ref *ref, void *unused)
+ {
+-	rev_list_insert_ref(NULL, ref->old_sha1);
++	rev_list_insert_ref(NULL, ref->old_oid.hash);
+ }
+ 
+ #define INITIAL_FLUSH 16
+@@ -280,7 +280,7 @@ static int find_common(struct fetch_pack_args *args,
+ 
+ 	fetching = 0;
+ 	for ( ; refs ; refs = refs->next) {
+-		unsigned char *remote = refs->old_sha1;
++		unsigned char *remote = refs->old_oid.hash;
+ 		const char *remote_hex;
+ 		struct object *o;
+ 
+@@ -570,7 +570,7 @@ static void filter_refs(struct fetch_pack_args *args,
+ 				continue;
+ 			if (get_sha1_hex(ref->name, sha1) ||
+ 			    ref->name[40] != '\0' ||
+-			    hashcmp(sha1, ref->old_sha1))
++			    hashcmp(sha1, ref->old_oid.hash))
+ 				continue;
+ 
+ 			ref->matched = 1;
+@@ -583,7 +583,7 @@ static void filter_refs(struct fetch_pack_args *args,
+ 
+ static void mark_alternate_complete(const struct ref *ref, void *unused)
+ {
+-	mark_complete(ref->old_sha1);
++	mark_complete(ref->old_oid.hash);
+ }
+ 
+ static int everything_local(struct fetch_pack_args *args,
+@@ -599,10 +599,10 @@ static int everything_local(struct fetch_pack_args *args,
+ 	for (ref = *refs; ref; ref = ref->next) {
+ 		struct object *o;
+ 
+-		if (!has_sha1_file(ref->old_sha1))
++		if (!has_object_file(&ref->old_oid))
+ 			continue;
+ 
+-		o = parse_object(ref->old_sha1);
++		o = parse_object(ref->old_oid.hash);
+ 		if (!o)
+ 			continue;
+ 
+@@ -630,7 +630,7 @@ static int everything_local(struct fetch_pack_args *args,
+ 	 * Don't mark them common yet; the server has to be told so first.
+ 	 */
+ 	for (ref = *refs; ref; ref = ref->next) {
+-		struct object *o = deref_tag(lookup_object(ref->old_sha1),
++		struct object *o = deref_tag(lookup_object(ref->old_oid.hash),
+ 					     NULL, 0);
+ 
+ 		if (!o || o->type != OBJ_COMMIT || !(o->flags & COMPLETE))
+@@ -646,7 +646,7 @@ static int everything_local(struct fetch_pack_args *args,
+ 	filter_refs(args, refs, sought, nr_sought);
+ 
+ 	for (retval = 1, ref = *refs; ref ; ref = ref->next) {
+-		const unsigned char *remote = ref->old_sha1;
++		const unsigned char *remote = ref->old_oid.hash;
+ 		struct object *o;
+ 
+ 		o = lookup_object(remote);
+@@ -987,7 +987,7 @@ static void update_shallow(struct fetch_pack_args *args,
+ 	if (!si->nr_ours && !si->nr_theirs)
+ 		return;
+ 	for (i = 0; i < nr_sought; i++)
+-		sha1_array_append(&ref, sought[i]->old_sha1);
++		sha1_array_append(&ref, sought[i]->old_oid.hash);
+ 	si->ref = &ref;
+ 
+ 	if (args->update_shallow) {
+diff --git a/http-push.c b/http-push.c
+index c98dad23..d054fdb9 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1437,11 +1437,11 @@ static void one_remote_ref(const char *refname)
+ 	 * Fetch a copy of the object if it doesn't exist locally - it
+ 	 * may be required for updating server info later.
+ 	 */
+-	if (repo->can_update_info_refs && !has_sha1_file(ref->old_sha1)) {
+-		obj = lookup_unknown_object(ref->old_sha1);
++	if (repo->can_update_info_refs && !has_object_file(&ref->old_oid)) {
++		obj = lookup_unknown_object(ref->old_oid.hash);
+ 		if (obj) {
+ 			fprintf(stderr,	"  fetch %s for %s\n",
+-				sha1_to_hex(ref->old_sha1), refname);
++				oid_to_hex(&ref->old_oid), refname);
+ 			add_fetch_request(obj);
+ 		}
+ 	}
+@@ -1474,11 +1474,11 @@ static void add_remote_info_ref(struct remote_ls_ctx *ls)
+ 		return;
  	}
  
--	if (!read_ref_full(newrefname, RESOLVE_REF_READING, sha1, NULL) &&
--	    delete_ref(newrefname, sha1, REF_NODEREF)) {
-+	if (!read_ref_full(newrefname, RESOLVE_REF_READING, oid.hash, NULL) &&
-+	    delete_ref(newrefname, oid.hash, REF_NODEREF)) {
- 		if (errno==EISDIR) {
- 			struct strbuf path = STRBUF_INIT;
- 			int result;
-@@ -3207,10 +3207,10 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 		strbuf_release(&err);
- 		goto rollback;
- 	}
--	hashcpy(lock->old_oid.hash, orig_sha1);
-+	oidcpy(&lock->old_oid, &orig_oid);
+-	o = parse_object(ref->old_sha1);
++	o = parse_object(ref->old_oid.hash);
+ 	if (!o) {
+ 		fprintf(stderr,
+ 			"Unable to parse object %s for remote ref %s\n",
+-			sha1_to_hex(ref->old_sha1), ls->dentry_name);
++			oid_to_hex(&ref->old_oid), ls->dentry_name);
+ 		aborted = 1;
+ 		free(ref);
+ 		return;
+@@ -1487,7 +1487,7 @@ static void add_remote_info_ref(struct remote_ls_ctx *ls)
+ 	len = strlen(ls->dentry_name) + 42;
+ 	ref_info = xcalloc(len + 1, 1);
+ 	sprintf(ref_info, "%s	%s\n",
+-		sha1_to_hex(ref->old_sha1), ls->dentry_name);
++		oid_to_hex(&ref->old_oid), ls->dentry_name);
+ 	fwrite_buffer(ref_info, 1, len, buf);
+ 	free(ref_info);
  
--	if (write_ref_to_lockfile(lock, orig_sha1, &err) ||
--	    commit_ref_update(lock, orig_sha1, logmsg, 0, &err)) {
-+	if (write_ref_to_lockfile(lock, orig_oid.hash, &err) ||
-+	    commit_ref_update(lock, orig_oid.hash, logmsg, 0, &err)) {
- 		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
- 		strbuf_release(&err);
- 		goto rollback;
-@@ -3228,8 +3228,8 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+@@ -1591,7 +1591,7 @@ static void fetch_symref(const char *path, char **symref, unsigned char *sha1)
+ static int verify_merge_base(unsigned char *head_sha1, struct ref *remote)
+ {
+ 	struct commit *head = lookup_commit_or_die(head_sha1, "HEAD");
+-	struct commit *branch = lookup_commit_or_die(remote->old_sha1, remote->name);
++	struct commit *branch = lookup_commit_or_die(remote->old_oid.hash, remote->name);
  
- 	flag = log_all_ref_updates;
- 	log_all_ref_updates = 0;
--	if (write_ref_to_lockfile(lock, orig_sha1, &err) ||
--	    commit_ref_update(lock, orig_sha1, NULL, 0, &err)) {
-+	if (write_ref_to_lockfile(lock, orig_oid.hash, &err) ||
-+	    commit_ref_update(lock, orig_oid.hash, NULL, 0, &err)) {
- 		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
- 		strbuf_release(&err);
+ 	return in_merge_bases(branch, head);
+ }
+@@ -1654,11 +1654,11 @@ static int delete_remote_branch(const char *pattern, int force)
+ 			return error("Remote HEAD resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", sha1_to_hex(head_sha1));
+ 
+ 		/* Remote branch must resolve to a known object */
+-		if (is_null_sha1(remote_ref->old_sha1))
++		if (is_null_oid(&remote_ref->old_oid))
+ 			return error("Unable to resolve remote branch %s",
+ 				     remote_ref->name);
+-		if (!has_sha1_file(remote_ref->old_sha1))
+-			return error("Remote branch %s resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", remote_ref->name, sha1_to_hex(remote_ref->old_sha1));
++		if (!has_object_file(&remote_ref->old_oid))
++			return error("Remote branch %s resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", remote_ref->name, oid_to_hex(&remote_ref->old_oid));
+ 
+ 		/* Remote branch must be an ancestor of remote HEAD */
+ 		if (!verify_merge_base(head_sha1, remote_ref)) {
+@@ -1874,7 +1874,7 @@ int main(int argc, char **argv)
+ 		if (!ref->peer_ref)
+ 			continue;
+ 
+-		if (is_null_sha1(ref->peer_ref->new_sha1)) {
++		if (is_null_oid(&ref->peer_ref->new_oid)) {
+ 			if (delete_remote_branch(ref->name, 1) == -1) {
+ 				error("Could not remove %s", ref->name);
+ 				if (helper_status)
+@@ -1887,7 +1887,7 @@ int main(int argc, char **argv)
+ 			continue;
+ 		}
+ 
+-		if (!hashcmp(ref->old_sha1, ref->peer_ref->new_sha1)) {
++		if (!oidcmp(&ref->old_oid, &ref->peer_ref->new_oid)) {
+ 			if (push_verbosely)
+ 				fprintf(stderr, "'%s': up-to-date\n", ref->name);
+ 			if (helper_status)
+@@ -1896,11 +1896,11 @@ int main(int argc, char **argv)
+ 		}
+ 
+ 		if (!force_all &&
+-		    !is_null_sha1(ref->old_sha1) &&
++		    !is_null_oid(&ref->old_oid) &&
+ 		    !ref->force) {
+-			if (!has_sha1_file(ref->old_sha1) ||
+-			    !ref_newer(ref->peer_ref->new_sha1,
+-				       ref->old_sha1)) {
++			if (!has_object_file(&ref->old_oid) ||
++			    !ref_newer(ref->peer_ref->new_oid.hash,
++				       ref->old_oid.hash)) {
+ 				/*
+ 				 * We do not have the remote ref, or
+ 				 * we know that the remote ref is not
+@@ -1921,10 +1921,10 @@ int main(int argc, char **argv)
+ 				continue;
+ 			}
+ 		}
+-		hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
++		oidcpy(&ref->new_oid, &ref->peer_ref->new_oid);
+ 		new_refs++;
+-		strcpy(old_hex, sha1_to_hex(ref->old_sha1));
+-		new_hex = sha1_to_hex(ref->new_sha1);
++		strcpy(old_hex, oid_to_hex(&ref->old_oid));
++		new_hex = oid_to_hex(&ref->new_oid);
+ 
+ 		fprintf(stderr, "updating '%s'", ref->name);
+ 		if (strcmp(ref->name, ref->peer_ref->name))
+@@ -1949,14 +1949,14 @@ int main(int argc, char **argv)
+ 
+ 		/* Set up revision info for this refspec */
+ 		commit_argc = 3;
+-		new_sha1_hex = xstrdup(sha1_to_hex(ref->new_sha1));
++		new_sha1_hex = xstrdup(oid_to_hex(&ref->new_oid));
+ 		old_sha1_hex = NULL;
+ 		commit_argv[1] = "--objects";
+ 		commit_argv[2] = new_sha1_hex;
+-		if (!push_all && !is_null_sha1(ref->old_sha1)) {
++		if (!push_all && !is_null_oid(&ref->old_oid)) {
+ 			old_sha1_hex = xmalloc(42);
+ 			sprintf(old_sha1_hex, "^%s",
+-				sha1_to_hex(ref->old_sha1));
++				oid_to_hex(&ref->old_oid));
+ 			commit_argv[3] = old_sha1_hex;
+ 			commit_argc++;
+ 		}
+@@ -1988,7 +1988,7 @@ int main(int argc, char **argv)
+ 		run_request_queue();
+ 
+ 		/* Update the remote branch if all went well */
+-		if (aborted || !update_remote(ref->new_sha1, ref_lock))
++		if (aborted || !update_remote(ref->new_oid.hash, ref_lock))
+ 			rc = 1;
+ 
+ 		if (!rc)
+diff --git a/http.c b/http.c
+index 0f924a8b..b0e71748 100644
+--- a/http.c
++++ b/http.c
+@@ -1387,7 +1387,7 @@ int http_fetch_ref(const char *base, struct ref *ref)
+ 	if (http_get_strbuf(url, &buffer, &options) == HTTP_OK) {
+ 		strbuf_rtrim(&buffer);
+ 		if (buffer.len == 40)
+-			ret = get_sha1_hex(buffer.buf, ref->old_sha1);
++			ret = get_oid_hex(buffer.buf, &ref->old_oid);
+ 		else if (starts_with(buffer.buf, "ref: ")) {
+ 			ref->symref = xstrdup(buffer.buf + 5);
+ 			ret = 0;
+diff --git a/remote-curl.c b/remote-curl.c
+index 71fbbb69..c4b645e5 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -172,7 +172,7 @@ static struct ref *parse_info_refs(struct discovery *heads)
+ 				      strlen(ref_name) + 1);
+ 			memset(ref, 0, sizeof(struct ref));
+ 			strcpy(ref->name, ref_name);
+-			get_sha1_hex(start, ref->old_sha1);
++			get_oid_hex(start, &ref->old_oid);
+ 			if (!refs)
+ 				refs = ref;
+ 			if (last_ref)
+@@ -351,7 +351,7 @@ static void output_refs(struct ref *refs)
+ 		if (posn->symref)
+ 			printf("@%s %s\n", posn->symref, posn->name);
+ 		else
+-			printf("%s %s\n", sha1_to_hex(posn->old_sha1), posn->name);
++			printf("%s %s\n", oid_to_hex(&posn->old_oid), posn->name);
  	}
-@@ -3502,11 +3502,11 @@ static int commit_ref_update(struct ref_lock *lock,
- 		 * check with HEAD only which should cover 99% of all usage
- 		 * scenarios (even 100% of the default ones).
+ 	printf("\n");
+ 	fflush(stdout);
+@@ -705,7 +705,7 @@ static int fetch_dumb(int nr_heads, struct ref **to_fetch)
+ 	if (options.depth)
+ 		die("dumb http transport does not support --depth");
+ 	for (i = 0; i < nr_heads; i++)
+-		targets[i] = xstrdup(sha1_to_hex(to_fetch[i]->old_sha1));
++		targets[i] = xstrdup(oid_to_hex(&to_fetch[i]->old_oid));
+ 
+ 	walker = get_http_walker(url.buf);
+ 	walker->get_all = 1;
+@@ -766,7 +766,7 @@ static int fetch_git(struct discovery *heads,
+ 		if (!*ref->name)
+ 			die("cannot fetch by sha1 over smart http");
+ 		packet_buf_write(&preamble, "%s %s\n",
+-				 sha1_to_hex(ref->old_sha1), ref->name);
++				 oid_to_hex(&ref->old_oid), ref->name);
+ 	}
+ 	packet_buf_flush(&preamble);
+ 
+@@ -818,7 +818,7 @@ static void parse_fetch(struct strbuf *buf)
+ 				die("protocol error: expected sha/ref, got %s'", p);
+ 
+ 			ref = alloc_ref(name);
+-			hashcpy(ref->old_sha1, old_sha1);
++			hashcpy(ref->old_oid.hash, old_sha1);
+ 
+ 			*list = ref;
+ 			list = &ref->next;
+diff --git a/remote.c b/remote.c
+index 26504b74..05741202 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1111,7 +1111,7 @@ static void tail_link_ref(struct ref *ref, struct ref ***tail)
+ static struct ref *alloc_delete_ref(void)
+ {
+ 	struct ref *ref = alloc_ref("(delete)");
+-	hashclr(ref->new_sha1);
++	oidclr(&ref->new_oid);
+ 	return ref;
+ }
+ 
+@@ -1131,7 +1131,7 @@ static int try_explicit_object_name(const char *name,
+ 
+ 	if (match) {
+ 		*match = alloc_ref(name);
+-		hashcpy((*match)->new_sha1, sha1);
++		hashcpy((*match)->new_oid.hash, sha1);
+ 	}
+ 	return 0;
+ }
+@@ -1226,7 +1226,7 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 	case 0:
+ 		if (starts_with(dst_value, "refs/"))
+ 			matched_dst = make_linked_ref(dst_value, dst_tail);
+-		else if (is_null_sha1(matched_src->new_sha1))
++		else if (is_null_oid(&matched_src->new_oid))
+ 			error("unable to delete '%s': remote ref does not exist",
+ 			      dst_value);
+ 		else if ((dst_guess = guess_ref(dst_value, matched_src)))
+@@ -1357,10 +1357,10 @@ static void add_missing_tags(struct ref *src, struct ref **dst, struct ref ***ds
+ 	memset(&sent_tips, 0, sizeof(sent_tips));
+ 	for (ref = *dst; ref; ref = ref->next) {
+ 		if (ref->peer_ref &&
+-		    !is_null_sha1(ref->peer_ref->new_sha1))
+-			add_to_tips(&sent_tips, ref->peer_ref->new_sha1);
++		    !is_null_oid(&ref->peer_ref->new_oid))
++			add_to_tips(&sent_tips, ref->peer_ref->new_oid.hash);
+ 		else
+-			add_to_tips(&sent_tips, ref->old_sha1);
++			add_to_tips(&sent_tips, ref->old_oid.hash);
+ 		if (starts_with(ref->name, "refs/tags/"))
+ 			string_list_append(&dst_tag, ref->name);
+ 	}
+@@ -1374,7 +1374,7 @@ static void add_missing_tags(struct ref *src, struct ref **dst, struct ref ***ds
+ 			continue; /* not a tag */
+ 		if (string_list_has_string(&dst_tag, ref->name))
+ 			continue; /* they already have it */
+-		if (sha1_object_info(ref->new_sha1, NULL) != OBJ_TAG)
++		if (sha1_object_info(ref->new_oid.hash, NULL) != OBJ_TAG)
+ 			continue; /* be conservative */
+ 		item = string_list_append(&src_tag, ref->name);
+ 		item->util = ref;
+@@ -1394,9 +1394,9 @@ static void add_missing_tags(struct ref *src, struct ref **dst, struct ref ***ds
+ 			struct ref *dst_ref;
+ 			struct commit *commit;
+ 
+-			if (is_null_sha1(ref->new_sha1))
++			if (is_null_oid(&ref->new_oid))
+ 				continue;
+-			commit = lookup_commit_reference_gently(ref->new_sha1, 1);
++			commit = lookup_commit_reference_gently(ref->new_oid.hash, 1);
+ 			if (!commit)
+ 				/* not pushing a commit, which is not an error */
+ 				continue;
+@@ -1410,7 +1410,7 @@ static void add_missing_tags(struct ref *src, struct ref **dst, struct ref ***ds
+ 
+ 			/* Add it in */
+ 			dst_ref = make_linked_ref(ref->name, dst_tail);
+-			hashcpy(dst_ref->new_sha1, ref->new_sha1);
++			oidcpy(&dst_ref->new_oid, &ref->new_oid);
+ 			dst_ref->peer_ref = copy_ref(ref);
+ 		}
+ 	}
+@@ -1517,7 +1517,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 
+ 			/* Create a new one and link it */
+ 			dst_peer = make_linked_ref(dst_name, &dst_tail);
+-			hashcpy(dst_peer->new_sha1, ref->new_sha1);
++			oidcpy(&dst_peer->new_oid, &ref->new_oid);
+ 			string_list_insert(&dst_ref_index,
+ 				dst_peer->name)->util = dst_peer;
+ 		}
+@@ -1569,13 +1569,13 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		int reject_reason = 0;
+ 
+ 		if (ref->peer_ref)
+-			hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
++			oidcpy(&ref->new_oid, &ref->peer_ref->new_oid);
+ 		else if (!send_mirror)
+ 			continue;
+ 
+-		ref->deletion = is_null_sha1(ref->new_sha1);
++		ref->deletion = is_null_oid(&ref->new_oid);
+ 		if (!ref->deletion &&
+-			!hashcmp(ref->old_sha1, ref->new_sha1)) {
++			!oidcmp(&ref->old_oid, &ref->new_oid)) {
+ 			ref->status = REF_STATUS_UPTODATE;
+ 			continue;
+ 		}
+@@ -1594,7 +1594,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
  		 */
--		unsigned char head_sha1[20];
-+		struct object_id head_oid;
- 		int head_flag;
- 		const char *head_ref;
- 		head_ref = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
--					      head_sha1, &head_flag);
-+					      head_oid.hash, &head_flag);
- 		if (head_ref && (head_flag & REF_ISSYMREF) &&
- 		    !strcmp(head_ref, lock->ref_name)) {
- 			struct strbuf log_err = STRBUF_INIT;
-@@ -3534,11 +3534,11 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- 	char ref[1000];
- 	int fd, len, written;
- 	char *git_HEAD = git_pathdup("%s", ref_target);
--	unsigned char old_sha1[20], new_sha1[20];
-+	struct object_id old_oid, new_oid;
- 	struct strbuf err = STRBUF_INIT;
+ 		if (ref->expect_old_sha1) {
+ 			if (ref->expect_old_no_trackback ||
+-			    hashcmp(ref->old_sha1, ref->old_sha1_expect))
++			    oidcmp(&ref->old_oid, &ref->old_oid_expect))
+ 				reject_reason = REF_STATUS_REJECT_STALE;
+ 		}
  
--	if (logmsg && read_ref(ref_target, old_sha1))
--		hashclr(old_sha1);
-+	if (logmsg && read_ref(ref_target, old_oid.hash))
-+		oidclr(&old_oid);
+@@ -1618,15 +1618,15 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		 *     passing the --force argument
+ 		 */
  
- 	if (safe_create_leading_directories(git_HEAD) < 0)
- 		return error("unable to create directory for %s", git_HEAD);
-@@ -3586,8 +3586,8 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- #ifndef NO_SYMLINK_HEAD
- 	done:
- #endif
--	if (logmsg && !read_ref(refs_heads_master, new_sha1) &&
--		log_ref_write(ref_target, old_sha1, new_sha1, logmsg, 0, &err)) {
-+	if (logmsg && !read_ref(refs_heads_master, new_oid.hash) &&
-+		log_ref_write(ref_target, old_oid.hash, new_oid.hash, logmsg, 0, &err)) {
- 		error("%s", err.buf);
- 		strbuf_release(&err);
+-		else if (!ref->deletion && !is_null_sha1(ref->old_sha1)) {
++		else if (!ref->deletion && !is_null_oid(&ref->old_oid)) {
+ 			if (starts_with(ref->name, "refs/tags/"))
+ 				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
+-			else if (!has_sha1_file(ref->old_sha1))
++			else if (!has_object_file(&ref->old_oid))
+ 				reject_reason = REF_STATUS_REJECT_FETCH_FIRST;
+-			else if (!lookup_commit_reference_gently(ref->old_sha1, 1) ||
+-				 !lookup_commit_reference_gently(ref->new_sha1, 1))
++			else if (!lookup_commit_reference_gently(ref->old_oid.hash, 1) ||
++				 !lookup_commit_reference_gently(ref->new_oid.hash, 1))
+ 				reject_reason = REF_STATUS_REJECT_NEEDS_FORCE;
+-			else if (!ref_newer(ref->new_sha1, ref->old_sha1))
++			else if (!ref_newer(ref->new_oid.hash, ref->old_oid.hash))
+ 				reject_reason = REF_STATUS_REJECT_NONFASTFORWARD;
+ 		}
+ 
+@@ -1925,7 +1925,7 @@ int get_fetch_map(const struct ref *remote_refs,
+ 
+ 		if (refspec->exact_sha1) {
+ 			ref_map = alloc_ref(name);
+-			get_sha1_hex(name, ref_map->old_sha1);
++			get_oid_hex(name, &ref_map->old_oid);
+ 		} else {
+ 			ref_map = get_remote_ref(remote_refs, name);
+ 		}
+@@ -1966,7 +1966,7 @@ int resolve_remote_symref(struct ref *ref, struct ref *list)
+ 		return 0;
+ 	for (; list; list = list->next)
+ 		if (!strcmp(ref->symref, list->name)) {
+-			hashcpy(ref->old_sha1, list->old_sha1);
++			oidcpy(&ref->old_oid, &list->old_oid);
+ 			return 0;
+ 		}
+ 	return 1;
+@@ -2181,7 +2181,7 @@ static int one_local_ref(const char *refname, const struct object_id *oid,
+ 
+ 	len = strlen(refname) + 1;
+ 	ref = xcalloc(1, sizeof(*ref) + len);
+-	hashcpy(ref->new_sha1, oid->hash);
++	oidcpy(&ref->new_oid, oid);
+ 	memcpy(ref->name, refname, len);
+ 	**local_tail = ref;
+ 	*local_tail = &ref->next;
+@@ -2218,7 +2218,7 @@ struct ref *guess_remote_head(const struct ref *head,
+ 	/* If refs/heads/master could be right, it is. */
+ 	if (!all) {
+ 		r = find_ref_by_name(refs, "refs/heads/master");
+-		if (r && !hashcmp(r->old_sha1, head->old_sha1))
++		if (r && !oidcmp(&r->old_oid, &head->old_oid))
+ 			return copy_ref(r);
  	}
+ 
+@@ -2226,7 +2226,7 @@ struct ref *guess_remote_head(const struct ref *head,
+ 	for (r = refs; r; r = r->next) {
+ 		if (r != head &&
+ 		    starts_with(r->name, "refs/heads/") &&
+-		    !hashcmp(r->old_sha1, head->old_sha1)) {
++		    !oidcmp(&r->old_oid, &head->old_oid)) {
+ 			*tail = copy_ref(r);
+ 			tail = &((*tail)->next);
+ 			if (!all)
+@@ -2274,7 +2274,7 @@ static int get_stale_heads_cb(const char *refname, const struct object_id *oid,
+ 
+ 	if (stale) {
+ 		struct ref *ref = make_linked_ref(refname, &info->stale_refs_tail);
+-		hashcpy(ref->new_sha1, oid->hash);
++		oidcpy(&ref->new_oid, oid);
+ 	}
+ 
+ clean_exit:
+@@ -2394,8 +2394,8 @@ static void apply_cas(struct push_cas_option *cas,
+ 			continue;
+ 		ref->expect_old_sha1 = 1;
+ 		if (!entry->use_tracking)
+-			hashcpy(ref->old_sha1_expect, cas->entry[i].expect);
+-		else if (remote_tracking(remote, ref->name, ref->old_sha1_expect))
++			hashcpy(ref->old_oid_expect.hash, cas->entry[i].expect);
++		else if (remote_tracking(remote, ref->name, ref->old_oid_expect.hash))
+ 			ref->expect_old_no_trackback = 1;
+ 		return;
+ 	}
+@@ -2405,7 +2405,7 @@ static void apply_cas(struct push_cas_option *cas,
+ 		return;
+ 
+ 	ref->expect_old_sha1 = 1;
+-	if (remote_tracking(remote, ref->name, ref->old_sha1_expect))
++	if (remote_tracking(remote, ref->name, ref->old_oid_expect.hash))
+ 		ref->expect_old_no_trackback = 1;
+ }
+ 
+diff --git a/remote.h b/remote.h
+index 312b7ca1..163ea5e8 100644
+--- a/remote.h
++++ b/remote.h
+@@ -79,9 +79,9 @@ extern const struct refspec *tag_refspec;
+ 
+ struct ref {
+ 	struct ref *next;
+-	unsigned char old_sha1[20];
+-	unsigned char new_sha1[20];
+-	unsigned char old_sha1_expect[20]; /* used by expect-old */
++	struct object_id old_oid;
++	struct object_id new_oid;
++	struct object_id old_oid_expect; /* used by expect-old */
+ 	char *symref;
+ 	unsigned int
+ 		force:1,
+diff --git a/send-pack.c b/send-pack.c
+index c6a40307..047bd18f 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -102,11 +102,11 @@ static int pack_objects(int fd, struct ref *refs, struct sha1_array *extra, stru
+ 			break;
+ 
+ 	while (refs) {
+-		if (!is_null_sha1(refs->old_sha1) &&
+-		    !feed_object(refs->old_sha1, po.in, 1))
++		if (!is_null_oid(&refs->old_oid) &&
++		    !feed_object(refs->old_oid.hash, po.in, 1))
+ 			break;
+-		if (!is_null_sha1(refs->new_sha1) &&
+-		    !feed_object(refs->new_sha1, po.in, 0))
++		if (!is_null_oid(&refs->new_oid) &&
++		    !feed_object(refs->new_oid.hash, po.in, 0))
+ 			break;
+ 		refs = refs->next;
+ 	}
+@@ -284,8 +284,8 @@ static int generate_push_cert(struct strbuf *req_buf,
+ 			continue;
+ 		update_seen = 1;
+ 		strbuf_addf(&cert, "%s %s %s\n",
+-			    sha1_to_hex(ref->old_sha1),
+-			    sha1_to_hex(ref->new_sha1),
++			    oid_to_hex(&ref->old_oid),
++			    oid_to_hex(&ref->new_oid),
+ 			    ref->name);
+ 	}
+ 	if (!update_seen)
+@@ -487,8 +487,8 @@ int send_pack(struct send_pack_args *args,
+ 		if (check_to_send_update(ref, args) < 0)
+ 			continue;
+ 
+-		old_hex = sha1_to_hex(ref->old_sha1);
+-		new_hex = sha1_to_hex(ref->new_sha1);
++		old_hex = oid_to_hex(&ref->old_oid);
++		new_hex = oid_to_hex(&ref->new_oid);
+ 		if (!cmds_sent) {
+ 			packet_buf_write(&req_buf,
+ 					 "%s %s %s%c%s",
+diff --git a/transport-helper.c b/transport-helper.c
+index 63d54271..91cb0e72 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -346,7 +346,7 @@ static int fetch_with_fetch(struct transport *transport,
+ 			continue;
+ 
+ 		strbuf_addf(&buf, "fetch %s %s\n",
+-			    sha1_to_hex(posn->old_sha1),
++			    oid_to_hex(&posn->old_oid),
+ 			    posn->symref ? posn->symref : posn->name);
+ 	}
+ 
+@@ -489,7 +489,7 @@ static int fetch_with_import(struct transport *transport,
+ 		else
+ 			private = xstrdup(name);
+ 		if (private) {
+-			if (read_ref(private, posn->old_sha1) < 0)
++			if (read_ref(private, posn->old_oid.hash) < 0)
+ 				die("Could not read ref %s", private);
+ 			free(private);
+ 		}
+@@ -756,7 +756,7 @@ static int push_update_refs_status(struct helper_data *data,
+ 		private = apply_refspecs(data->refspecs, data->refspec_nr, ref->name);
+ 		if (!private)
+ 			continue;
+-		update_ref("update by helper", private, ref->new_sha1, NULL, 0, 0);
++		update_ref("update by helper", private, ref->new_oid.hash, NULL, 0, 0);
+ 		free(private);
+ 	}
+ 	strbuf_release(&buf);
+@@ -818,7 +818,7 @@ static int push_refs_with_push(struct transport *transport,
+ 			if (ref->peer_ref)
+ 				strbuf_addstr(&buf, ref->peer_ref->name);
+ 			else
+-				strbuf_addstr(&buf, sha1_to_hex(ref->new_sha1));
++				strbuf_addstr(&buf, oid_to_hex(&ref->new_oid));
+ 		}
+ 		strbuf_addch(&buf, ':');
+ 		strbuf_addstr(&buf, ref->name);
+@@ -827,14 +827,14 @@ static int push_refs_with_push(struct transport *transport,
+ 		/*
+ 		 * The "--force-with-lease" options without explicit
+ 		 * values to expect have already been expanded into
+-		 * the ref->old_sha1_expect[] field; we can ignore
++		 * the ref->old_oid_expect[] field; we can ignore
+ 		 * transport->smart_options->cas altogether and instead
+ 		 * can enumerate them from the refs.
+ 		 */
+ 		if (ref->expect_old_sha1) {
+ 			struct strbuf cas = STRBUF_INIT;
+ 			strbuf_addf(&cas, "%s:%s",
+-				    ref->name, sha1_to_hex(ref->old_sha1_expect));
++				    ref->name, oid_to_hex(&ref->old_oid_expect));
+ 			string_list_append(&cas_options, strbuf_detach(&cas, NULL));
+ 		}
+ 	}
+@@ -884,7 +884,7 @@ static int push_refs_with_export(struct transport *transport,
+ 		if (private && !get_sha1(private, sha1)) {
+ 			strbuf_addf(&buf, "^%s", private);
+ 			string_list_append(&revlist_args, strbuf_detach(&buf, NULL));
+-			hashcpy(ref->old_sha1, sha1);
++			hashcpy(ref->old_oid.hash, sha1);
+ 		}
+ 		free(private);
+ 
+@@ -1016,12 +1016,12 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
+ 		if (buf.buf[0] == '@')
+ 			(*tail)->symref = xstrdup(buf.buf + 1);
+ 		else if (buf.buf[0] != '?')
+-			get_sha1_hex(buf.buf, (*tail)->old_sha1);
++			get_oid_hex(buf.buf, &(*tail)->old_oid);
+ 		if (eon) {
+ 			if (has_attribute(eon + 1, "unchanged")) {
+ 				(*tail)->status |= REF_STATUS_UPTODATE;
+ 				if (read_ref((*tail)->name,
+-					     (*tail)->old_sha1) < 0)
++					     (*tail)->old_oid.hash) < 0)
+ 					die(N_("Could not read ref %s"),
+ 					    (*tail)->name);
+ 			}
+diff --git a/transport.c b/transport.c
+index 863eb524..e7cf3a07 100644
+--- a/transport.c
++++ b/transport.c
+@@ -79,7 +79,7 @@ static int read_loose_refs(struct strbuf *path, int name_offset,
+ 				continue;
+ 			next = alloc_ref(path->buf + name_offset);
+ 			if (read_in_full(fd, buffer, 40) != 40 ||
+-					get_sha1_hex(buffer, next->old_sha1)) {
++					get_oid_hex(buffer, &next->old_oid)) {
+ 				close(fd);
+ 				free(next);
+ 				continue;
+@@ -131,7 +131,7 @@ static void insert_packed_refs(const char *packed_refs, struct ref **list)
+ 		if (!(*list)->next || cmp < 0) {
+ 			struct ref *next = alloc_ref(buffer + 41);
+ 			buffer[40] = '\0';
+-			if (get_sha1_hex(buffer, next->old_sha1)) {
++			if (get_oid_hex(buffer, &next->old_oid)) {
+ 				warning ("invalid SHA-1: %s", buffer);
+ 				free(next);
+ 				continue;
+@@ -162,7 +162,7 @@ static void set_upstreams(struct transport *transport, struct ref *refs,
+ 			continue;
+ 		if (!ref->peer_ref)
+ 			continue;
+-		if (is_null_sha1(ref->new_sha1))
++		if (is_null_oid(&ref->new_oid))
+ 			continue;
+ 
+ 		/* Follow symbolic refs (mainly for HEAD). */
+@@ -412,7 +412,7 @@ static struct ref *get_refs_from_bundle(struct transport *transport, int for_pus
+ 	for (i = 0; i < data->header.references.nr; i++) {
+ 		struct ref_list_entry *e = data->header.references.list + i;
+ 		struct ref *ref = alloc_ref(e->name);
+-		hashcpy(ref->old_sha1, e->sha1);
++		hashcpy(ref->old_oid.hash, e->sha1);
+ 		ref->next = result;
+ 		result = ref;
+ 	}
+@@ -608,7 +608,7 @@ void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int v
+ 			delete_ref(rs.dst, NULL, 0);
+ 		} else
+ 			update_ref("update by push", rs.dst,
+-					ref->new_sha1, NULL, 0, 0);
++					ref->new_oid.hash, NULL, 0, 0);
+ 		free(rs.dst);
+ 	}
+ }
+@@ -648,7 +648,7 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
+ {
+ 	if (ref->deletion)
+ 		print_ref_status('-', "[deleted]", ref, NULL, NULL, porcelain);
+-	else if (is_null_sha1(ref->old_sha1))
++	else if (is_null_oid(&ref->old_oid))
+ 		print_ref_status('*',
+ 			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
+ 			"[new branch]"),
+@@ -658,7 +658,7 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
+ 		char type;
+ 		const char *msg;
+ 
+-		strcpy(quickref, status_abbrev(ref->old_sha1));
++		strcpy(quickref, status_abbrev(ref->old_oid.hash));
+ 		if (ref->forced_update) {
+ 			strcat(quickref, "...");
+ 			type = '+';
+@@ -668,7 +668,7 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
+ 			type = ' ';
+ 			msg = NULL;
+ 		}
+-		strcat(quickref, status_abbrev(ref->new_sha1));
++		strcat(quickref, status_abbrev(ref->new_oid.hash));
+ 
+ 		print_ref_status(type, quickref, ref, ref->peer_ref, msg, porcelain);
+ 	}
+@@ -1136,8 +1136,8 @@ static int run_pre_push_hook(struct transport *transport,
+ 
+ 		strbuf_reset(&buf);
+ 		strbuf_addf( &buf, "%s %s %s %s\n",
+-			 r->peer_ref->name, sha1_to_hex(r->new_sha1),
+-			 r->name, sha1_to_hex(r->old_sha1));
++			 r->peer_ref->name, oid_to_hex(&r->new_oid),
++			 r->name, oid_to_hex(&r->old_oid));
+ 
+ 		if (write_in_full(proc.in, buf.buf, buf.len) != buf.len) {
+ 			ret = -1;
+@@ -1217,8 +1217,8 @@ int transport_push(struct transport *transport,
+ 		if ((flags & TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND) && !is_bare_repository()) {
+ 			struct ref *ref = remote_refs;
+ 			for (; ref; ref = ref->next)
+-				if (!is_null_sha1(ref->new_sha1) &&
+-				    !push_unpushed_submodules(ref->new_sha1,
++				if (!is_null_oid(&ref->new_oid) &&
++				    !push_unpushed_submodules(ref->new_oid.hash,
+ 					    transport->remote->name))
+ 				    die ("Failed to push all needed submodules!");
+ 		}
+@@ -1229,8 +1229,8 @@ int transport_push(struct transport *transport,
+ 			struct string_list needs_pushing = STRING_LIST_INIT_DUP;
+ 
+ 			for (; ref; ref = ref->next)
+-				if (!is_null_sha1(ref->new_sha1) &&
+-				    find_unpushed_submodules(ref->new_sha1,
++				if (!is_null_oid(&ref->new_oid) &&
++				    find_unpushed_submodules(ref->new_oid.hash,
+ 					    transport->remote->name, &needs_pushing))
+ 					die_with_unpushed_submodules(&needs_pushing);
+ 		}
+@@ -1283,8 +1283,8 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
+ 	for (rm = refs; rm; rm = rm->next) {
+ 		nr_refs++;
+ 		if (rm->peer_ref &&
+-		    !is_null_sha1(rm->old_sha1) &&
+-		    !hashcmp(rm->peer_ref->old_sha1, rm->old_sha1))
++		    !is_null_oid(&rm->old_oid) &&
++		    !oidcmp(&rm->peer_ref->old_oid, &rm->old_oid))
+ 			continue;
+ 		ALLOC_GROW(heads, nr_heads + 1, nr_alloc);
+ 		heads[nr_heads++] = rm;
+diff --git a/transport.h b/transport.h
+index 4336dd33..8ebaaf2c 100644
+--- a/transport.h
++++ b/transport.h
+@@ -74,15 +74,15 @@ struct transport {
+ 	/**
+ 	 * Push the objects and refs. Send the necessary objects, and
+ 	 * then, for any refs where peer_ref is set and
+-	 * peer_ref->new_sha1 is different from old_sha1, tell the
+-	 * remote side to update each ref in the list from old_sha1 to
+-	 * peer_ref->new_sha1.
++	 * peer_ref->new_oid is different from old_oid, tell the
++	 * remote side to update each ref in the list from old_oid to
++	 * peer_ref->new_oid.
+ 	 *
+ 	 * Where possible, set the status for each ref appropriately.
+ 	 *
+ 	 * The transport must modify new_sha1 in the ref to the new
+ 	 * value if the remote accepted the change. Note that this
+-	 * could be a different value from peer_ref->new_sha1 if the
++	 * could be a different value from peer_ref->new_oid if the
+ 	 * process involved generating new commits.
+ 	 **/
+ 	int (*push_refs)(struct transport *transport, struct ref *refs, int flags);
+diff --git a/walker.c b/walker.c
+index 44a936c1..14f71c0c 100644
+--- a/walker.c
++++ b/walker.c
+@@ -191,7 +191,7 @@ static int interpret_target(struct walker *walker, char *target, unsigned char *
+ 	if (!check_refname_format(target, 0)) {
+ 		struct ref *ref = alloc_ref(target);
+ 		if (!walker->fetch_ref(walker, ref)) {
+-			hashcpy(sha1, ref->old_sha1);
++			hashcpy(sha1, ref->old_oid.hash);
+ 			free(ref);
+ 			return 0;
+ 		}
 -- 
 2.6.1
