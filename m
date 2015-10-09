@@ -1,373 +1,174 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t0027: Improve test for not-normalized files
-Date: Fri, 09 Oct 2015 15:12:34 -0700
-Message-ID: <xmqqk2qvofn1.fsf@gitster.mtv.corp.google.com>
-References: <56172D62.9060408@web.de>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 0/1] merge: fix cache_entry use-after-free
+Date: Fri, 09 Oct 2015 18:16:03 -0400
+Organization: Twitter
+Message-ID: <1444428963.8836.36.camel@twopensource.com>
+References: <1444330071-8909-1-git-send-email-dturner@twitter.com>
+	 <1444330071-8909-2-git-send-email-dturner@twitter.com>
+	 <xmqqmvvtqgei.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Oct 10 00:12:49 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git mailing list <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 10 00:16:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zkfu5-0001RL-Uq
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Oct 2015 00:12:42 +0200
+	id 1ZkfxV-0004tf-Of
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Oct 2015 00:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757421AbbJIWMh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2015 18:12:37 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:36402 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754593AbbJIWMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2015 18:12:36 -0400
-Received: by pablk4 with SMTP id lk4so97760014pab.3
-        for <git@vger.kernel.org>; Fri, 09 Oct 2015 15:12:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=95eCe+pGHiWZ6vT/SYguswLXM/0UDZoK8i6ptnNhSh4=;
-        b=Ey1Amyy1eBanXCXQkl9U9V3V63kvUECEaHOSh7igPfmpAfrHvppXmHVwSZtxxC29cM
-         nSlm0UF2uSPuvVo6s1qGObxSmhO/ZSEeiagqGpzTtLDaREIS1mhB2hYB7pAeKv4+9mo8
-         9sgQaQez5lJbbuILkLCSZvjNVmtXGHd6CYPf5N9ju9V8CNJRNOKuD1TFQG2lVogwOviF
-         aUtwXTZciNo4Axzd9pt8yz00Hwy5kX2CvtqcP/OFXLbwy+CdWbBNF+fXY7aYODqpRGPQ
-         Oi2uHS6pax2Fq2LupYxunnxSqKzWpr5jr5b0MdgmXkbXI+3VkXs/KiNtstgTQc3fe79Q
-         NVpg==
-X-Received: by 10.66.142.202 with SMTP id ry10mr18394703pab.86.1444428755858;
-        Fri, 09 Oct 2015 15:12:35 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:1c62:e65b:3845:3a2b])
-        by smtp.gmail.com with ESMTPSA id bw8sm4313812pab.47.2015.10.09.15.12.35
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 09 Oct 2015 15:12:35 -0700 (PDT)
-In-Reply-To: <56172D62.9060408@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Fri, 9 Oct 2015 04:58:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1757599AbbJIWQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2015 18:16:09 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:34011 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757565AbbJIWQH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2015 18:16:07 -0400
+Received: by qgez77 with SMTP id z77so81166322qge.1
+        for <git@vger.kernel.org>; Fri, 09 Oct 2015 15:16:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=WQC+Pmt1zPCJ79IioJS1xnyTqBMcPVlytyB6C9iWU50=;
+        b=JH7OrvDsfS1rWmt/1qCRx/hnI2VLUreCOjQIPEAPz7TRvteT76ltHLXiFOJZi0CeyG
+         Sdz0DqRH4oohJrVvFr870sWA+vZ+DOGBPDIrJRd/HJozOtcxLkSIUzCjvq/ZDGS8URTB
+         AXN0hcPyggFt6vtcMnCkLIxhg3JGD2QqueQ9iMx3PG03sInu0e6LQKZksp9x57wwbSI0
+         5vOn1UuCWywqR0AQ4fTWMhgoRVrfFJ1fXjDEXxYc4A1mMHppZCDhCyt0JhsLgg2WE7T2
+         g8Vx3fmX8qz+H3kIcniYOzsqxD9jZwfN8SifW2NtCKesHPMVBN8bN1ZY5Vd5ENQ099Qc
+         LH3w==
+X-Gm-Message-State: ALoCoQkonuQ9kTL55LS/Y6LNOWI4AM8U5/X3TzZ8IJnInTBCujZKITDC5VHdM6BvBb+gqoldNhjE
+X-Received: by 10.140.144.8 with SMTP id 8mr18549992qhq.54.1444428965693;
+        Fri, 09 Oct 2015 15:16:05 -0700 (PDT)
+Received: from ubuntu ([192.133.79.147])
+        by smtp.gmail.com with ESMTPSA id c2sm1600027qkh.6.2015.10.09.15.16.04
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 Oct 2015 15:16:04 -0700 (PDT)
+In-Reply-To: <xmqqmvvtqgei.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279319>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
++Duy Nguyen, who knows the split index better.
 
-This patch is seriously broken and I do not know how you managed to
-do so.  Notice how "+create_NNO_files" is indented but no other
-added lines in the same hunk, for example.
+On Thu, 2015-10-08 at 13:00 -0700, Junio C Hamano wrote:
+> David Turner <dturner@twopensource.com> writes:
+> 
+> > From: Keith McGuigan <kmcguigan@twitter.com>
+> >
+> > During merges, we would previously free entries that we no longer need
+> > in the destination index.  But those entries might also be stored in
+> > the dir_entry cache, and when a later call to add_to_index found them,
+> > they would be used after being freed.
+> >
+> > To prevent this, add a ref count for struct cache_entry.  Whenever
+> > a cache entry is added to a data structure, the ref count is incremented;
+> > when it is removed from the data structure, it is decremented.  When
+> > it hits zero, the cache_entry is freed.
+> >
+> > Signed-off-by: David Turner <dturner@twopensource.com>
+> > Signed-off-by: Keith McGuigan <kmcguigan@twitter.com>
+> > ---
+> 
+> Thanks.
+> 
+> > @@ -213,6 +214,32 @@ struct cache_entry {
+> >  struct pathspec;
+> >  
+> >  /*
+> > + * Increment the cache_entry reference count.  Should be called
+> > + * whenever a pointer to a cache_entry is retained in a data structure,
+> > + * thus marking it as alive.
+> > + */
+> > +static inline void add_ce_ref(struct cache_entry *ce)
+> > +{
+> > +	assert(ce != NULL && ce->ref_count >= 0);
+> > +	++ce->ref_count;
+> > +}
+> 
+> We tend to prefer post-increment when the distinction between pre-
+> or post- does not make any difference, which is the case here.
 
-I tried to hand-munge, but gave up.
+Will fix.
 
->  +commit_chk_wrnNNO () {
+> > diff --git a/name-hash.c b/name-hash.c
+> > index 702cd05..f12c919 100644
+> > --- a/name-hash.c
+> > +++ b/name-hash.c
+> > @@ -92,7 +93,9 @@ static void remove_dir_entry(struct index_state *istate, struct cache_entry *ce)
+> >  	struct dir_entry *dir = hash_dir_entry(istate, ce, ce_namelen(ce));
+> >  	while (dir && !(--dir->nr)) {
+> >  		struct dir_entry *parent = dir->parent;
+> > -		hashmap_remove(&istate->dir_hash, dir, NULL);
+> > +		struct dir_entry *removed = hashmap_remove(&istate->dir_hash, dir, NULL);
+> > +		assert(removed == dir);
+> > +		drop_ce_ref(dir->ce);
+> 
+> This is curious.  In remove_name_hash() you do not have the
+> corresponding assert.  Why is it necessary here (or is it
+> unnecessary over there)?
 
-Squashing warn into wrn or (check into chk) does not make it any
-easier to read or type.
+It is unnecessary in any case: it's an assert rather than a check for an
+expected (or even unexpected) case.  That just happens to be where Keith
+first managed to track down the use-after free, so that's where he
+happened to put the assert while trying to debug it.  I'm in general in
+favor of more asserts rather than fewer, so I would prefer to keep it
+in.  But I can remove it if you like.
 
-> +	crlf=3D$1
-> +	attr=3D$2
-> +	lfwarn=3D$3
-> +	crlfwarn=3D$4
-> +	lfmixcrlf=3D$5
-> +	lfmixcr=3D$6
-> +	crlfnul=3D$7
-> +	pfx=3DNNO_${crlf}_attr_${attr}
-> +	#Commit files on top of existing file
-> +	create_gitattributes "$attr" &&
-> +	for f in LF CRLF CRLF_mix_LF LF_mix_CR CRLF_nul
-> +	do
-> +		fname=3D${pfx}_$f.txt &&
-> +		cp $f $fname &&
-> +		git -c core.autocrlf=3D$crlf add $fname 2>/dev/null &&
-> +		git -c core.autocrlf=3D$crlf commit -m "commit_$fname" $fname >"${=
-pfx}_$f.err" 2>&1
-> +	done
-> +
-> +	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr LF"=
- '
-> +		check_warning "$lfwarn" ${pfx}_LF.err
-> +	'
-> +	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr CRL=
-=46" '
-> +		check_warning "$crlfwarn" ${pfx}_CRLF.err
-> +	'
-> +
-> +	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr CRL=
-=46_mix_LF" '
-> +		check_warning "$lfmixcrlf" ${pfx}_CRLF_mix_LF.err
-> +	'
-> +
-> +	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr LF_=
-mix_cr" '
-> +		check_warning "$lfmixcr" ${pfx}_LF_mix_CR.err
-> +	'
-> +
-> +	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr CRL=
-=46_nul" '
-> +		check_warning "$crlfnul" ${pfx}_CRLF_nul.err
-> +	'
-> +}
-> +
->  check_files_in_repo () {
->  	crlf=3D$1
->  	attr=3D$2
-> @@ -115,6 +165,31 @@ check_files_in_repo () {
->  	compare_files $crlfnul ${pfx}CRLF_nul.txt
->  }
->  +check_in_repo_NNO () {
-> +	crlf=3D$1
-> +	attr=3D$2
-> +	lfname=3D$3
-> +	crlfname=3D$4
-> +	lfmixcrlf=3D$5
-> +	lfmixcr=3D$6
-> +	crlfnul=3D$7
-> +	pfx=3DNNO_${crlf}_attr_${attr}_
-> +	test_expect_success "compare_files $lfname ${pfx}LF.txt" '
-> +		compare_files $lfname ${pfx}LF.txt
-> +	'
-> +	test_expect_success "compare_files $crlfname ${pfx}CRLF.txt" '
-> +		compare_files $crlfname ${pfx}CRLF.txt
-> +	'
-> +	test_expect_success "compare_files $lfmixcrlf ${pfx}CRLF_mix_LF.txt=
-" '
-> +		compare_files $lfmixcrlf ${pfx}CRLF_mix_LF.txt
-> +	'
-> +	test_expect_success "compare_files $lfmixcr ${pfx}LF_mix_CR.txt" '
-> +		compare_files $lfmixcr ${pfx}LF_mix_CR.txt
-> +	'
-> +	test_expect_success "compare_files $crlfnul ${pfx}CRLF_nul.txt" '
-> +		compare_files $crlfnul ${pfx}CRLF_nul.txt
-> +	'
-> +}
->   checkout_files () {
->  	eol=3D$1
-> @@ -169,7 +244,11 @@ test_expect_success 'setup master' '
->  	printf "line1\nline2\rline3"     >LF_mix_CR &&
->  	printf "line1\r\nline2\rline3"   >CRLF_mix_CR &&
->  	printf "line1Q\r\nline2\r\nline3" | q_to_nul >CRLF_nul &&
-> -	printf "line1Q\nline2\nline3" | q_to_nul >LF_nul
-> +	printf "line1Q\nline2\nline3" | q_to_nul >LF_nul &&
-> +	create_NNO_files CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF CR=
-LF_mix_LF &&
-> +	git -c core.autocrlf=3Dfalse add NNO_*.txt &&
-> +	git commit -m "mixed line endings" &&
-> +	test_tick
->  '
->   @@ -191,46 +270,72 @@ else
->  	WAMIX=3DCRLF_LF
->  fi
->  -#                         attr   LF        CRLF      repoMIX   CRLF=
-mixLF
-> LFmixCR   CRLFNUL
-> +#                         attr   LF        CRLF      CRLFmixLF LFmix=
-CR   CRLFNUL
->  test_expect_success 'commit files empty attr' '
-> -	commit_check_warn false ""     ""        ""        ""        ""    =
-    ""
->    "" &&
-> -	commit_check_warn true  ""     "LF_CRLF" ""        "LF_CRLF" "LF_CR=
-LF" ""
->    "" &&
-> -	commit_check_warn input ""     ""        "CRLF_LF" "CRLF_LF" "CRLF_=
-LF" ""
->    ""
-> +	commit_check_warn false ""     ""        ""        ""        ""    =
-    "" &&
-> +	commit_check_warn true  ""     "LF_CRLF" ""        "LF_CRLF" ""    =
-    "" &&
-> +	commit_check_warn input ""     ""        "CRLF_LF" "CRLF_LF" ""    =
-    ""
->  '
->   test_expect_success 'commit files attr=3Dauto' '
-> -	commit_check_warn false "auto" "$WILC"   "$WICL"   "$WAMIX"  "$WAMI=
-X"  ""
->    "" &&
-> -	commit_check_warn true  "auto" "LF_CRLF" ""        "LF_CRLF" "LF_CR=
-LF" ""
->    "" &&
-> -	commit_check_warn input "auto" ""        "CRLF_LF" "CRLF_LF" "CRLF_=
-LF" ""
->    ""
-> +	commit_check_warn false "auto" "$WILC"   "$WICL"   "$WAMIX"  ""    =
-    "" &&
-> +	commit_check_warn true  "auto" "LF_CRLF" ""        "LF_CRLF" ""    =
-    "" &&
-> +	commit_check_warn input "auto" ""        "CRLF_LF" "CRLF_LF" ""    =
-    ""
->  '
->   test_expect_success 'commit files attr=3Dtext' '
-> -	commit_check_warn false "text" "$WILC"   "$WICL"   "$WAMIX"  "$WAMI=
-X"  "$WILC"
->   "$WICL"   &&
-> -	commit_check_warn true  "text" "LF_CRLF" ""        "LF_CRLF" "LF_CR=
-LF"
-> "LF_CRLF" ""        &&
-> -	commit_check_warn input "text" ""        "CRLF_LF" "CRLF_LF" "CRLF_=
-LF" ""
->    "CRLF_LF"
-> +	commit_check_warn false "text" "$WILC"   "$WICL"   "$WAMIX"  "$WILC=
-"   "$WICL"
->   &&
-> +	commit_check_warn true  "text" "LF_CRLF" ""        "LF_CRLF" "LF_CR=
-LF" ""
->    &&
-> +	commit_check_warn input "text" ""        "CRLF_LF" "CRLF_LF" ""    =
-    "CRLF_LF"
->  '
->   test_expect_success 'commit files attr=3D-text' '
-> -	commit_check_warn false "-text" ""       ""        ""        ""    =
-    ""
->    "" &&
-> -	commit_check_warn true  "-text" ""       ""        ""        ""    =
-    ""
->    "" &&
-> -	commit_check_warn input "-text" ""       ""        ""        ""    =
-    ""
->    ""
-> +	commit_check_warn false "-text" ""       ""        ""        ""    =
-    "" &&
-> +	commit_check_warn true  "-text" ""       ""        ""        ""    =
-    "" &&
-> +	commit_check_warn input "-text" ""       ""        ""        ""    =
-    ""
->  '
->   test_expect_success 'commit files attr=3Dlf' '
-> -	commit_check_warn false "lf"    ""       "CRLF_LF" "CRLF_LF" "CRLF_=
-LF"  ""
->    "CRLF_LF" &&
-> -	commit_check_warn true  "lf"    ""       "CRLF_LF" "CRLF_LF" "CRLF_=
-LF"  ""
->    "CRLF_LF" &&
-> -	commit_check_warn input "lf"    ""       "CRLF_LF" "CRLF_LF" "CRLF_=
-LF"  ""
->    "CRLF_LF"
-> +	commit_check_warn false "lf"    ""       "CRLF_LF" "CRLF_LF"  ""
-> "CRLF_LF" &&
-> +	commit_check_warn true  "lf"    ""       "CRLF_LF" "CRLF_LF"  ""
-> "CRLF_LF" &&
-> +	commit_check_warn input "lf"    ""       "CRLF_LF" "CRLF_LF"  ""   =
-    "CRLF_LF"
->  '
->   test_expect_success 'commit files attr=3Dcrlf' '
-> -	commit_check_warn false "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CR=
-LF"
-> "LF_CRLF" "" &&
-> -	commit_check_warn true  "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CR=
-LF"
-> "LF_CRLF" "" &&
-> -	commit_check_warn input "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CR=
-LF"
-> "LF_CRLF" ""
-> +	commit_check_warn false "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CR=
-LF" "" &&
-> +	commit_check_warn true  "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CR=
-LF" "" &&
-> +	commit_check_warn input "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CR=
-LF" ""
->  '
->  +#                       attr   LF        CRLF      CRLFmixLF 	 LF_m=
-ix_CR   CRLFNUL
-> +commit_chk_wrnNNO false ""     ""        ""        ""        	 ""   =
-     	 ""
-> +commit_chk_wrnNNO true  ""     "LF_CRLF" ""        ""        	 ""   =
-     	 ""
-> +commit_chk_wrnNNO input ""     ""        ""        ""        	 ""   =
-     	 ""
-> +
-> +
-> +commit_chk_wrnNNO false "auto" "$WILC"   "$WICL"   "$WAMIX"  	 ""   =
-     	 ""
-> +commit_chk_wrnNNO true  "auto" "LF_CRLF" ""        "LF_CRLF" 	 ""   =
-     	 ""
-> +commit_chk_wrnNNO input "auto" ""        "CRLF_LF" "CRLF_LF" 	 ""   =
-     	 ""
-> +
-> +commit_chk_wrnNNO false "text" "$WILC"   "$WICL"   "$WAMIX"  	 "$WIL=
-C"   	 "$WICL"
-> +commit_chk_wrnNNO true  "text" "LF_CRLF" ""        "LF_CRLF" 	 "LF_C=
-RLF" 	 ""
-> +commit_chk_wrnNNO input "text" ""        "CRLF_LF" "CRLF_LF" 	 ""   =
-     =09
-> "CRLF_LF"
-> +
-> +commit_chk_wrnNNO false "-text" ""       ""        ""        	 ""   =
-     	 ""
-> +commit_chk_wrnNNO true  "-text" ""       ""        ""        	 ""   =
-     	 ""
-> +commit_chk_wrnNNO input "-text" ""       ""        ""        	 ""   =
-     	 ""
-> +
-> +commit_chk_wrnNNO false "lf"    ""       "CRLF_LF" "CRLF_LF" 	  ""  =
-     =09
-> "CRLF_LF"
-> +commit_chk_wrnNNO true  "lf"    ""       "CRLF_LF" "CRLF_LF" 	  ""  =
-     =09
-> "CRLF_LF"
-> +commit_chk_wrnNNO input "lf"    ""       "CRLF_LF" "CRLF_LF" 	  ""  =
-     =09
-> "CRLF_LF"
-> +
-> +commit_chk_wrnNNO false "crlf" "LF_CRLF" ""        "LF_CRLF" 	 "LF_C=
-RLF" 	 ""
-> +commit_chk_wrnNNO true  "crlf" "LF_CRLF" ""        "LF_CRLF" 	 "LF_C=
-RLF" 	 ""
-> +commit_chk_wrnNNO input "crlf" "LF_CRLF" ""        "LF_CRLF" 	 "LF_C=
-RLF" 	 ""
-> +
->  test_expect_success 'create files cleanup' '
->  	rm -f *.txt &&
-> -	git reset --hard
-> +	git -c core.autocrlf=3Dfalse reset --hard
->  '
->   test_expect_success 'commit empty gitattribues' '
-> @@ -257,6 +362,24 @@ test_expect_success 'commit -text' '
->  	check_files_in_repo input "-text" LF CRLF CRLF_mix_LF LF_mix_CR CRL=
-=46_nul
->  '
->  +#                       attr    LF        CRLF      CRLF_mix_LF  LF=
-_mix_CR
-> CRLFNUL
-> +check_in_repo_NNO false ""      LF        CRLF      CRLF_mix_LF  LF_=
-mix_CR
-> CRLF_nul
-> +check_in_repo_NNO true  ""      LF        CRLF      CRLF_mix_LF  LF_=
-mix_CR
-> CRLF_nul
-> +check_in_repo_NNO input ""      LF        CRLF      CRLF_mix_LF  LF_=
-mix_CR
-> CRLF_nul
-> +
-> +check_in_repo_NNO false "auto"  LF        LF        LF           LF_=
-mix_CR
-> CRLF_nul
-> +check_in_repo_NNO true  "auto"  LF        LF        LF           LF_=
-mix_CR
-> CRLF_nul
-> +check_in_repo_NNO input "auto"  LF        LF        LF           LF_=
-mix_CR
-> CRLF_nul
-> +
-> +check_in_repo_NNO false "text"  LF        LF        LF           LF_=
-mix_CR 	LF_nul
-> +check_in_repo_NNO true  "text"  LF        LF        LF           LF_=
-mix_CR 	LF_nul
-> +check_in_repo_NNO input "text"  LF        LF        LF           LF_=
-mix_CR 	LF_nul
-> +
-> +check_in_repo_NNO false "-text" LF        CRLF      CRLF_mix_LF  LF_=
-mix_CR
-> CRLF_nul
-> +check_in_repo_NNO true  "-text" LF        CRLF      CRLF_mix_LF  LF_=
-mix_CR
-> CRLF_nul
-> +check_in_repo_NNO input "-text" LF        CRLF      CRLF_mix_LF  LF_=
-mix_CR
-> CRLF_nul
-> +
-> +
->  ####################################################################=
-############
->  # Check how files in the repo are changed when they are checked out
->  # How to read the table below:
+> > @@ -147,6 +151,7 @@ void remove_name_hash(struct index_state *istate, struct cache_entry *ce)
+> >  		return;
+> >  	ce->ce_flags &= ~CE_HASHED;
+> >  	hashmap_remove(&istate->name_hash, ce, ce);
+> > +	drop_ce_ref(ce);
+> >  
+> >  	if (ignore_case)
+> >  		remove_dir_entry(istate, ce);
+> > diff --git a/read-cache.c b/read-cache.c
+> > index 87204a5..442de34 100644
+> > --- a/read-cache.c
+> > +++ b/read-cache.c
+> > @@ -53,6 +53,7 @@ static const char *alternate_index_output;
+> >  static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
+> >  {
+> >  	istate->cache[nr] = ce;
+> > +	add_ce_ref(ce);
+> >  	add_name_hash(istate, ce);
+> >  }
+> 
+> What happens to the existing entry that used to be istate->cache[nr],
+> which may or may not be 'ce' that is replacing it?
+> 
+> It turns out that all three calling sites are safe, but it is not
+> immediately obvious why.  Perhaps some comment in front of the
+> function is in order, to warn those who may have to add a new caller
+> or restructure the existing calling chain, that istate->cache[nr] is
+> expected not to hold a live reference when the function is called,
+> or something?
+
+Happy to add it if you want, but to me it was clear without because if
+there were a value in istate->cache[nr], that old value would be leaked.
+Let me know.
+
+> > @@ -314,8 +314,10 @@ void replace_index_entry_in_base(struct index_state *istate,
+> >  	    istate->split_index->base &&
+> >  	    old->index <= istate->split_index->base->cache_nr) {
+> >  		new->index = old->index;
+> > -		if (old != istate->split_index->base->cache[new->index - 1])
+> > -			free(istate->split_index->base->cache[new->index - 1]);
+> > +		if (old != istate->split_index->base->cache[new->index - 1]) {
+> > +			struct cache_entry *ce = istate->split_index->base->cache[new->index - 1];
+> > +			drop_ce_ref(ce);
+> > +		}
+> >  		istate->split_index->base->cache[new->index - 1] = new;
+> 
+> Does 'new' already have the right refcount at this point?
+
+I spoke to Keith, and he thinks we do need an add_ce_ref there. I'll fix
+that on the reroll.  Duy, do you agree?
