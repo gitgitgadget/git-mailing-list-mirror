@@ -1,76 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] filter-branch: remove multi-line headers in msg filter
-Date: Fri, 09 Oct 2015 10:53:28 -0700
-Message-ID: <xmqqpp0oormv.fsf@gitster.mtv.corp.google.com>
-References: <20151009002113.GA329@freya.jamessan.com>
-	<561767AC.6060503@drmicha.warpmail.net>
+Subject: Re: [PATCH 0/2] Reinstate the helpful message when `git pull --rebase` fails
+Date: Fri, 09 Oct 2015 11:15:15 -0700
+Message-ID: <xmqqk2qvq570.fsf@gitster.mtv.corp.google.com>
+References: <cover.1444336120.git.johannes.schindelin@gmx.de>
+	<xmqq612grhg7.fsf@gitster.mtv.corp.google.com>
+	<CACRoPnSPVMt+FtK6bwfa7Z3jBheTEkBnhU+B7qL8JrAsSmAmkQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: James McCoy <vega.james@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Oct 09 19:53:46 2015
+Content-Type: text/plain
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Brendan Forster <shiftkey@github.com>,
+	Git List <git@vger.kernel.org>
+To: Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 09 20:15:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkbrP-0005jA-DE
-	for gcvg-git-2@plane.gmane.org; Fri, 09 Oct 2015 19:53:39 +0200
+	id 1ZkcCR-0001UM-KJ
+	for gcvg-git-2@plane.gmane.org; Fri, 09 Oct 2015 20:15:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755734AbbJIRxd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2015 13:53:33 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:35078 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756657AbbJIRxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2015 13:53:31 -0400
-Received: by pabve7 with SMTP id ve7so34058329pab.2
-        for <git@vger.kernel.org>; Fri, 09 Oct 2015 10:53:30 -0700 (PDT)
+	id S1754917AbbJISPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2015 14:15:19 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:33487 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754795AbbJISPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2015 14:15:17 -0400
+Received: by pacex6 with SMTP id ex6so93310677pac.0
+        for <git@vger.kernel.org>; Fri, 09 Oct 2015 11:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=2ghCqCA2zg4Zb0ARG3w47Jly3Rf7NmBCY6O9/P5sKWg=;
-        b=dJBy9cSGWVAve2yvMbsoCVMX3Ih8aDeiyWywq61kX4+m3HJSE/9wIFNz0zppRHM9r6
-         lpqovLQtsW8eJUoKOmzsyL68EdXpIGeyA/56e7WIazyGbnsjGmJB5T5K/av5k3mRPog8
-         afiV9jl+RqvUZiTxCWM+4EipCl/+QcsxBJJc/XaWZyw4AoWBTGhF1vtTfFpCH78RE25q
-         WBCisNYQ21gEAKsOD7VxpM1FMTOXoux0lUCPzdtYhqjNtEYJ+mcav9girZHxM5JZ+YlC
-         0+F+xwiinN3iVTxJgbtR6GEh7VrNTU1tVfwVjPkAdaG6vnr2sq3xQRl8BUFwob19PfD5
-         VBEg==
-X-Received: by 10.66.102.7 with SMTP id fk7mr16613682pab.119.1444413210575;
-        Fri, 09 Oct 2015 10:53:30 -0700 (PDT)
+         :user-agent:mime-version:content-type;
+        bh=/0wbQ1mauPIHnebd8/jjrqeW1nNemM0Oyb/C//IyLmk=;
+        b=OuFlKvp3Uvikfk1ncgCmFPLPNrr6wHgBGQzcCgtLXLNVK0rAAeZcBXverdsA+c3KEo
+         5pHNKpN4NWgxqFsAB4y6gJtmm+kuLHAO1S+0UouBwO00ovGwqXHuyr1UCDwVOGIw19ns
+         +9Mrk637pwcbncGlXgX6oVCzUeY6C+mz8jc/w0fO4W1eeVEN+Jy1KPpyJ0+YqVhCACJC
+         EjTR84Nqca6vv++I5Xn24/murCsxiCig8iAAHTIHvmj2f7oevDm9mPF7POym583gU8m9
+         XFM80ddRGOFki/7KJ4i6BIl/6FdV8/6NarVbOapoBK73Eo9SK+Fl1qXUBks1xIC+bTZ2
+         bU1g==
+X-Received: by 10.68.197.97 with SMTP id it1mr16693620pbc.4.1444414517318;
+        Fri, 09 Oct 2015 11:15:17 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:6d9f:e45b:5c65:e644])
-        by smtp.gmail.com with ESMTPSA id bh4sm3622005pbb.62.2015.10.09.10.53.29
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Fri, 09 Oct 2015 10:53:29 -0700 (PDT)
-In-Reply-To: <561767AC.6060503@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Fri, 9 Oct 2015 09:07:24 +0200")
+        by smtp.gmail.com with ESMTPSA id we9sm3775665pab.3.2015.10.09.11.15.16
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 09 Oct 2015 11:15:16 -0700 (PDT)
+In-Reply-To: <CACRoPnSPVMt+FtK6bwfa7Z3jBheTEkBnhU+B7qL8JrAsSmAmkQ@mail.gmail.com>
+	(Paul Tan's message of "Fri, 9 Oct 2015 09:40:58 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279311>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Paul Tan <pyokagan@gmail.com> writes:
 
->> Set IFS to an empty string for the =E2=80=9Cread=E2=80=9D call, thus=
- disabling the word
->> splitting, which causes $header_line to be set to the non-empty valu=
-e '
->> '.  This allows the loop to fully consume the header lines before
->> emitting the original, intact commit message.
->>=20
->> Signed-off-by: James McCoy <vega.james@gmail.com>
->> ---
+> That said, I do agree that even if we die(), we could try to be more
+> helpful by printing additional helpful instructions.
 >
-> Thanks for hanging in :)
+>> If that is the case, I'd thinkg that we'd prefer, as a regression
+>> fix to correct "that", i.e., let recursive-merge die and let the
+>> caller catch its exit status.
 >
-> Reviewed-by: Michael J Gruber <git@drmicha.warpmail.net>
+> We could do that, but I don't think it would be worth the overhead to
+> spawn an additional process for every patch just to print an
+> additional message should merge_recursive() call die().
 
-As long as you are fine with giving authorship to James, I am fine
-with that.  I'll amend what is queued with your reviewed-by above
-and will merge to 'next'.
+For a thing that (1) has to be run every time in the whole operation
+and (2) is a very small operation itself whose runtime cost can be
+dwarfed by cost of spawning on some platforms, it is clearly better
+to run it internally instead of running it via run_command()
+interface.  This is especially so if it (3) wants to just kill the
+whole operation when it finds a problem anyway.  For example, it
+would be crazy to run "update-ref" via run_command() in the "am"
+that is rewritten in C.
+
+But does the same reasoning apply to the use of merge-recursive in
+"am -3" codepath, where it (1) runs only as a fallback when straight
+application of the patch fails, (2) runs a heavy-weight recursive
+merge machinery, and (3) now a regression is pointed out that it
+wants to do more than just calling die() when there is a problem?
+
+You seem to be viewing the world in black-and-white and thinking
+that run_command() is unconditionally bad.  You need to stop doing
+that.  Instead, view it as another tool that gives a much better
+isolation from the main flow of logic (hence flexiblity) that comes
+with a bigger cost.  I am not convinced with your "I don't think it
+would be worth".
+
+> Instead, stepping back a bit, I wonder if we can extend coverage of
+> the helpful message to all die() calls when running git-am. We could
+> just install a die routine with set_die_routine() in builtin/am.c.
+> Then, should die() be called anywhere, the helpful error message will
+> be printed as well.
+
+That could certainly be a valid approach and may give us a better
+end result.  If it works, it could be a change that is localized
+with a lot less impact.
 
 Thanks.
