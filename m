@@ -1,8 +1,8 @@
 From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
 Subject: Re: [PATCH 0/2] Reinstate the helpful message when `git pull
  --rebase` fails
-Date: Sat, 10 Oct 2015 06:58:04 +0200
-Message-ID: <56189ADC.9040207@web.de>
+Date: Sat, 10 Oct 2015 18:05:52 +0200
+Message-ID: <56193760.5010307@web.de>
 References: <cover.1444336120.git.johannes.schindelin@gmx.de>
  <xmqq612grhg7.fsf@gitster.mtv.corp.google.com>
  <CACRoPnSPVMt+FtK6bwfa7Z3jBheTEkBnhU+B7qL8JrAsSmAmkQ@mail.gmail.com>
@@ -16,50 +16,50 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Git List <git@vger.kernel.org>
 To: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Paul Tan <pyokagan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 10 06:58:19 2015
+X-From: git-owner@vger.kernel.org Sat Oct 10 18:06:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZkmEb-0002ab-Jb
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Oct 2015 06:58:18 +0200
+	id 1Zkwew-000166-HH
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Oct 2015 18:06:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751240AbbJJE6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Oct 2015 00:58:13 -0400
-Received: from mout.web.de ([212.227.17.12]:63435 "EHLO mout.web.de"
+	id S1752231AbbJJQGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Oct 2015 12:06:05 -0400
+Received: from mout.web.de ([212.227.15.4]:52831 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751054AbbJJE6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Oct 2015 00:58:12 -0400
-Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0LxOHm-1aeGCS1hxC-016yCu; Sat, 10 Oct 2015 06:58:06
+	id S1752206AbbJJQGB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Oct 2015 12:06:01 -0400
+Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0Lu1Be-1amMAV20zm-011PmG; Sat, 10 Oct 2015 18:05:57
  +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
  Gecko/20100101 Thunderbird/38.3.0
 In-Reply-To: <d89d595a223508896db9303c901e7c30@dscho.org>
-X-Provags-ID: V03:K0:3ewOJTJt4g1/G+zdSAsfq15d5ZNgevnR9gBvDWcvpaSe+F96BxX
- 9XFZSy6/Z+VjG0BDndiuT812womGrCHXAXGTrnxDiYsiuDegD4TKPUmuPRd2gVaLueaoiRl
- NGSWGyL/lLGeoapXcKl/K2p8zU0fsXXeoWqvQAt8TRltTwPwIiqs71acK3KpH/N7UC2mYoM
- RF6gbbg6mA8bCiLQdTpGQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oGdLBmCmdlA=:COYQj6hOzbHf9hrrLUG8N2
- jpRklJZ01/2uZ9/PKF2/aWwq4WFPKimOWrFafoZ55LmKeSCCRghwu2/O0TBq51sNyQhezbv07
- E8ua28hPkUl941OOSz0YPc6PGun4LcoODo7PH7iHPzZymYCoWvWs9/LDL0Pc1LYVLJWVjdNjh
- ZNUmFIN0p3zUqEe1RQyVIhBPefwCaItmfMzSBwtE0op69s8560TX+o1HTb+jEGJLnLTgCtpj/
- WVjPYMOvYQx8Ew/tM6nB4rhQFupkDlZsm9tju9HrMUX4dYBzBTW9L18vxnHkTis4Bkesk7yx7
- NrioWcryYZZCszXbjQYLQ+RO7W2n2d9rKywGuuxmsLjxgnt2ejW2sD0iPaQGqA8SqvI0s2VTQ
- BvRJkkpbi01sdx+bDCc/sScT2sXLbiWHyhlLqRklnohAv3piXdSav+tXQadOtrvkdBN6Uj07D
- c0fI3dGgToX0yh+v63OzGa4JUOkgrazLR+UakaUs3yFizEIqyay+ZYqUtCA8YZMM1Z2gdO/qK
- 0cnsxFIcHipC4mp1g8MzKuKR0NQLkolXlAnSMvf1kbK/MjSeNV0yd1hwxFpySXfv2TA2XiXly
- zw4LEjH79tiLc/8m44c2csD72zRy60w39i0bzXXXQkym+i5QGG+4RYKLgyUpkGmGzEG5XSaXB
- lyRq+/4QkPdeAv3GcEXI5g19d9PVkqD1P+s5AqP9m4PoH3WfKpufRhUz4zTjXpNcjIuTOhgGD
- 3yDqdYLFUBm3EwmDwGNJZXtpt+L7UjRY2qzpJ/z9IxJLIRhDIHjF5oba43EQOaFBhdTf7bkR 
+X-Provags-ID: V03:K0:iMGKR3DOYdmDFPkatIJshUpSu4oSSt14dG/q4H+nFsV5jq/nufD
+ B1O6wFxv1jhPHdegUuY0lXoGR3k3c3jK9pCO/G+wVqJAFISTu8O4s0txU28z+/eFDiDi+TB
+ lnLYC094ypT9UMEXv3DoFWp3WVUmZnghM9wk+NTZkr2x1gb+D3NrexM+GbDq8EEbds91ZX8
+ G+58fyXIvvyYaSo4MlMig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:B/FSOwqpbzQ=:Rp25kMEkPve3CoDzHeO2hp
+ Zk1RT3gDeI/P68zN8OMo/62ABUhV7DTU2IsDRm9c+oDdV0o3GdILjUMWK2+LE/F1gmAZLx+9T
+ tDHgcOQN7Acg++O34blG1kcc0CPfQWUzZ6GbBIjYz1Jmx7g44tT68xEy1TNfeuhMFXbvsn/jg
+ PEwWAuk41C7j+V/4BLNyWwy4a0yTRKniPOWN+fiD2aiPwiAl+MAQ+mSNCv0wu4rRtrdes+8Qn
+ XespxCRbc9LocrFaeaZzltelgQbQPoQRMDl5TnTSuvCTkHQEQqc33i4lkyD9meM2XZ16KKwft
+ WlLcq9fwGokjnG5yqs4NY7MbcIIdT/UdY6ds275ZL0OnAMOYinDyvmqWF/FgtiS9fGi8zKw6e
+ TYHJg90D6sdTXgEAlSU/bfuSah07a/o6Pt+QNyp548Uc9t+z1TskNqKx3xibYZAJt/LtXQlCw
+ Ra01uu06vL/up15IryeooJIJCBrVQE263dEYMsGAMjj8Z+Zj9SJB/jSMfrYxPWsQWrYQqdPLF
+ KD/A3tfIICGV6cgZgmCm8OZoRFj8jGHu9JhPM5ifpZSGG0P3H5pBSKM1K39CJ0uCFEOITtSd0
+ VPI7LX1fepXdJ7Y5n1Bo1yWIIu/hi44jXzor5RoLWypa38UDx6noRb+L6f87GRNytUqSVOGkl
+ drcPxRXpEhU6jyfcXzBVmyu+IrnUo6lRAfVh7kR3AjSzp5ReoQ8TtxPFmelng5xk8oHzcS7r3
+ 6R1dgZEkTa1TIIwgLSjrHAekAMCBmdksDXsmgycRRpFXwQPRWmm4Z+Rbdqo2Tx3bIAndUYYS 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279323>
 
-On 2015-10-09 12.11, Johannes Schindelin wrote:
+On 09.10.15 12:11, Johannes Schindelin wrote:
 > Me again,
 > 
 > On 2015-10-09 11:50, Johannes Schindelin wrote:
@@ -118,71 +118,12 @@ On 2015-10-09 12.11, Johannes Schindelin wrote:
 > +	grep "When you have resolved this problem" out
 > +'
 > +
->  test_expect_success '--rebase fails with multiple branches' '
->  	git reset --hard before-rebase &&
->  	test_must_fail git pull --rebase . copy master 2>err &&
-> --
-> 
-> So the reason is that `unpack_trees()` fails with
-> 
->     error: Your local changes to the following files would be overwritten by merge:
-> 	file
->     Please, commit your changes or stash them before you can merge.
-> 
-> then returns -1 to its caller, `git_merge_trees()`, which still returns -1 in turn to *its* caller, `merge_trees()`, which then gives up by die()ing:
-> 
->     Aborting
-> 
-> I think there is more than one fix necessary to truly address the issue: the underlying problem is that Git handles *committed* CR/LF really badly when the corresponding `.gitattributes` label the file as `text=auto`. In fact, those files are labeled as modified in `git status`. If you change the line endings of them, they are labeled as modified in `git status`. And after a `git reset --hard`, they are *still* labeled as modified in `git status`.
-This is related to the normalization feature of Git:
-https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
-  *       text=auto
-This ensures that all files that Git considers to be text will have normalized
-(LF) line endings in the repository.
 
-The normalization feature has 2 consequences:
-a) - Files will get normalized at the next commit,
-     Line endings of the changed lines are normalized
-     Line endings of unchanged lines are normalized
-b) - Not normalized files will get normalized (at the next commit),
-    even if they are unchanged otherwise.
+One other question:
+Is it good to mix 2 different things in one test case ?
+"shows the helpful advice when failing" is one thing,
+and the problematic CRLF handling another.
 
+Does it make sense to simply create "really-modified" file to test the helpful advice ?
 
-As Git knows (* text=auto), that files are normalized at the next commit,
-they will change in the repo, and they are marked as changed already now.
-This is by design.
-
-The normalization has been disabled for core.autocrlf = true in commit
-fd6cce9e (Eyvind Bernhardsen   2010-05-19 22:43:10 +0200  207) 			 * This is the
-new safer autocrlf handling.
-(See convert.c)
-
-I'm in the mood to propose a patch that disables/suppresses the normalization
-even for "* text=auto", if a file has CRLF in the repo.
-This would make core.autocrlf = true do the same as "* text=auto".
-
-I'm nearly sure, that this change would break things for some users,
-and improve for others.
-
-Currently t0027 tests this behavior, and as soon as we have the new
-NNO tests establish, I will propose some cleanups in convert.c
-(without change of behavour), and later to make
-core.autocrlf = true
-to do the same as
-* text=auto
-
-
-
-
-
-
-
-
-
-
-
-> 
-> I will try to make some time to continue to work on this later today, but in the meantime I would be relatively happy if we could introduce that gentle flag. It is really a very gentle patch, after all, much gentler than reverting to the heavy-handed spawning of `merge-recursive`.
-> 
-> Ciao,
-> Dscho
+And may be another one witch test the CRLF handling, (may be)
