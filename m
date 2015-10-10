@@ -1,431 +1,188 @@
-From: =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: [PATCH v2] t0027: Improve test for not-normalized files
-Date: Sat, 10 Oct 2015 06:23:53 +0200
-Message-ID: <A496A503-08E7-4878-9EB0-342D322E245F@web.de>
-Mime-Version: 1.0 (Apple Message framework v1085)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 10 06:24:08 2015
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 0/2] Reinstate the helpful message when `git pull
+ --rebase` fails
+Date: Sat, 10 Oct 2015 06:58:04 +0200
+Message-ID: <56189ADC.9040207@web.de>
+References: <cover.1444336120.git.johannes.schindelin@gmx.de>
+ <xmqq612grhg7.fsf@gitster.mtv.corp.google.com>
+ <CACRoPnSPVMt+FtK6bwfa7Z3jBheTEkBnhU+B7qL8JrAsSmAmkQ@mail.gmail.com>
+ <4a99ca8724b3604cbbec48d559e134fd@dscho.org>
+ <d89d595a223508896db9303c901e7c30@dscho.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brendan Forster <shiftkey@github.com>,
+	Git List <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Paul Tan <pyokagan@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 10 06:58:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZklhX-0003vL-ML
-	for gcvg-git-2@plane.gmane.org; Sat, 10 Oct 2015 06:24:08 +0200
+	id 1ZkmEb-0002ab-Jb
+	for gcvg-git-2@plane.gmane.org; Sat, 10 Oct 2015 06:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101AbbJJEYB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Oct 2015 00:24:01 -0400
-Received: from mout.web.de ([212.227.17.11]:60136 "EHLO mout.web.de"
+	id S1751240AbbJJE6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Oct 2015 00:58:13 -0400
+Received: from mout.web.de ([212.227.17.12]:63435 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751055AbbJJEYA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Oct 2015 00:24:00 -0400
-Received: from [192.168.209.26] ([213.66.56.100]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0LvBMs-1aksRd40CQ-010MTD; Sat, 10 Oct 2015 06:23:56
+	id S1751054AbbJJE6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Oct 2015 00:58:12 -0400
+Received: from macce.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0LxOHm-1aeGCS1hxC-016yCu; Sat, 10 Oct 2015 06:58:06
  +0200
-X-Mailer: Apple Mail (2.1085)
-X-Provags-ID: V03:K0:vNxYU7R0PO1YWnTGeerIOfcrd43fxIQsfsIQERJYnxb9hXH82vV
- XBeIznLs3WcI5sf6JYvWbSNs0vaKh51XyQ5c15WRzieQA0uz7LpKIxZqOB/tdPyETbIhhah
- DnqEfgu6pnpn1NKx9hYlRQtDoZgw1/51xNUXbcSOZbhvQznFctT/xXgJwtNfN3guNDbc4Qn
- cniSo/TO5glKqGgeuOq4A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vELohpOppo4=:KthN/cv7ngbTC80qB/ZEM2
- B/bR97JntDCP249aTPGSUNgyKrOnSxhvC8iPGfJ05w1i9jcX32X8qMYR2eI3KM8ExsrNBF/u7
- 9najYu3jWq0llMvLBDbIT9XkFRvJjKMxe0oGjm8TKXpxRkx2ThTsXG9aE72WVrQS1m1EBfpNx
- Q9RggoXsHYWF2m1Ak8n7kZFuydytKR9WkzEqmPLBbENm+LThxnHTL3X5NZ4sWuvgAKCby7sZS
- 9w0UCnBDiIiyDeSFAtsWxRaSnPnlx5obYQSSgoA7ayrnNxqlyO4bUVLxIUsTVP8JTjZXPoNV1
- pHFO+TriCKHOpgKF10xHzfU7yXVL4XWYwaTl8wuHPPH/acX9ysc+c9N3UqZSJ1slOHFxY3Xlg
- AGABmCuf8jU38ghkprTZwocCLNGPkME0u8ezbQqvBPQfPEsOvehszukTKio0ewjmEfdx2tX8s
- PFEQ5d/oBhuY6WcfdaYphBZTBbi8Ih9MoX+rmm10jk+UngG2EsidLbPC5pe2rfYOVfasnBC52
- QBF7OnDgBodC4N3C6JWpxh/qdYaBHH6m82HC+uyXZJwrrzJJcAYRmBw/H/lJ0GG97lCAG7ulf
- zLmUMGfIUkyzkPzbZE8PFWVeW+dkeafF9xnrEWHs66LAlPZzVqer5KaXKS2OwmeqH0K3rrX29
- STsYmqT8+lvJVnDlzSGIskm4jlFGLT2dUUy+mw7o5WdC2GEq4RPyocXsnurylv0Wiw0gayDDF
- Rq9lJlTb8Lc/D4/9bYOdEUcVFWRuVjIQTUR8TI6M5SkBcwoPsvY67qwRaCNF80Gb6diFEvOJ 
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:38.0)
+ Gecko/20100101 Thunderbird/38.3.0
+In-Reply-To: <d89d595a223508896db9303c901e7c30@dscho.org>
+X-Provags-ID: V03:K0:3ewOJTJt4g1/G+zdSAsfq15d5ZNgevnR9gBvDWcvpaSe+F96BxX
+ 9XFZSy6/Z+VjG0BDndiuT812womGrCHXAXGTrnxDiYsiuDegD4TKPUmuPRd2gVaLueaoiRl
+ NGSWGyL/lLGeoapXcKl/K2p8zU0fsXXeoWqvQAt8TRltTwPwIiqs71acK3KpH/N7UC2mYoM
+ RF6gbbg6mA8bCiLQdTpGQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oGdLBmCmdlA=:COYQj6hOzbHf9hrrLUG8N2
+ jpRklJZ01/2uZ9/PKF2/aWwq4WFPKimOWrFafoZ55LmKeSCCRghwu2/O0TBq51sNyQhezbv07
+ E8ua28hPkUl941OOSz0YPc6PGun4LcoODo7PH7iHPzZymYCoWvWs9/LDL0Pc1LYVLJWVjdNjh
+ ZNUmFIN0p3zUqEe1RQyVIhBPefwCaItmfMzSBwtE0op69s8560TX+o1HTb+jEGJLnLTgCtpj/
+ WVjPYMOvYQx8Ew/tM6nB4rhQFupkDlZsm9tju9HrMUX4dYBzBTW9L18vxnHkTis4Bkesk7yx7
+ NrioWcryYZZCszXbjQYLQ+RO7W2n2d9rKywGuuxmsLjxgnt2ejW2sD0iPaQGqA8SqvI0s2VTQ
+ BvRJkkpbi01sdx+bDCc/sScT2sXLbiWHyhlLqRklnohAv3piXdSav+tXQadOtrvkdBN6Uj07D
+ c0fI3dGgToX0yh+v63OzGa4JUOkgrazLR+UakaUs3yFizEIqyay+ZYqUtCA8YZMM1Z2gdO/qK
+ 0cnsxFIcHipC4mp1g8MzKuKR0NQLkolXlAnSMvf1kbK/MjSeNV0yd1hwxFpySXfv2TA2XiXly
+ zw4LEjH79tiLc/8m44c2csD72zRy60w39i0bzXXXQkym+i5QGG+4RYKLgyUpkGmGzEG5XSaXB
+ lyRq+/4QkPdeAv3GcEXI5g19d9PVkqD1P+s5AqP9m4PoH3WfKpufRhUz4zTjXpNcjIuTOhgGD
+ 3yDqdYLFUBm3EwmDwGNJZXtpt+L7UjRY2qzpJ/z9IxJLIRhDIHjF5oba43EQOaFBhdTf7bkR 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279322>
 
-When a text file with mixed line endings is commited into the repo,
-it is called "not normalized" (or NNO) in t0027.
-The existing test case using repoMIX did not fully test all combination=
-s:
-(Especially when core.autocrlf =3D true)
-=46iles with NL are not converted at commit, but at checkout, so a warn=
-ing
-NL->CRLF is given.
-=46iles with CRLF are not converted at all (so no warning will be given=
-),
-unless they are marked as "text" or "auto".
+On 2015-10-09 12.11, Johannes Schindelin wrote:
+> Me again,
+> 
+> On 2015-10-09 11:50, Johannes Schindelin wrote:
+>>
+>> On 2015-10-09 03:40, Paul Tan wrote:
+>>> On Fri, Oct 9, 2015 at 8:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>>>>
+>>>>> Brendan Forster noticed that we no longer see the helpful message after
+>>>>> a failed `git pull --rebase`. It turns out that the builtin `am` calls
+>>>>> the recursive merge function directly, not via a separate process.
+>>>>>
+>>>>> But that function was not really safe to be called that way, as it
+>>>>> die()s pretty liberally.
+>>>
+>>> I'm not too familiar with the merge-recursive.c code, but I was under
+>>> the impression that it only called die() under fatal conditions. In
+>>> common use cases, such as merge conflicts, it just errors out and the
+>>> helpful error message does get printed. Is there a reproduction recipe
+>>> for this?
+>>
+>> Yes. Sorry, I should have added that as part of the patch series.
+>> Actually, I should have written it *before* making those patches.
+>> Because it revealed that the underlying problem is completely
+>> different: *Normally* you are correct, if `pull --rebase` fails with a
+>> merge conflict, the advice is shown.
+>>
+>> The problem occurs with CR/LF.
+> 
+> I finally have that test case working, took way longer than I wanted to:
+> 
+> -- snip --
+> Subject: [PATCH 3/2] Verify that `git pull --rebase` shows the helpful advice when failing
+> Author: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date:   Fri Oct 9 11:15:30 2015 +0200
+>     
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+> index a0013ee..bce332f 100755
+> --- a/t/t5520-pull.sh
+> +++ b/t/t5520-pull.sh
+> @@ -237,6 +237,18 @@ test_expect_success '--rebase' '
+>  	test new = "$(git show HEAD:file2)"
+>  '
+>  
+> +test_expect_success 'failed --rebase shows advice' '
+> +	git checkout -b diverging &&
+> +	test_commit attributes .gitattributes "* text=auto" attrs &&
+> +	sha1="$(printf "1\\r\\n" | git hash-object -w --stdin)" &&
+> +	git update-index --cacheinfo 0644 $sha1 file &&
+> +	git commit -m v1-with-cr &&
+> +	git checkout -f -b fails-to-rebase HEAD^ &&
+> +	test_commit v2-without-cr file "2" file2-lf &&
+> +	test_must_fail git pull --rebase . diverging 2>err >out &&
+> +	grep "When you have resolved this problem" out
+> +'
+> +
+>  test_expect_success '--rebase fails with multiple branches' '
+>  	git reset --hard before-rebase &&
+>  	test_must_fail git pull --rebase . copy master 2>err &&
+> --
+> 
+> So the reason is that `unpack_trees()` fails with
+> 
+>     error: Your local changes to the following files would be overwritten by merge:
+> 	file
+>     Please, commit your changes or stash them before you can merge.
+> 
+> then returns -1 to its caller, `git_merge_trees()`, which still returns -1 in turn to *its* caller, `merge_trees()`, which then gives up by die()ing:
+> 
+>     Aborting
+> 
+> I think there is more than one fix necessary to truly address the issue: the underlying problem is that Git handles *committed* CR/LF really badly when the corresponding `.gitattributes` label the file as `text=auto`. In fact, those files are labeled as modified in `git status`. If you change the line endings of them, they are labeled as modified in `git status`. And after a `git reset --hard`, they are *still* labeled as modified in `git status`.
+This is related to the normalization feature of Git:
+https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+  *       text=auto
+This ensures that all files that Git considers to be text will have normalized
+(LF) line endings in the repository.
 
-Remove repoMIX introduced in commit 8eeab92f02, and replace it with
-a combination of NNO tests.
-
-Signed-off-by: Torsten B=F6gershausen <tboegi@web.de>
----
-This is marked as V2, but is the same as V1
-Probably my mail program mangled the V1 patch,
-I'll try a different one (mail instead of thunderbird)
-
-
-t/t0027-auto-crlf.sh | 191 ++++++++++++++++++++++++++++++++++++++++++--=
--------
-1 file changed, 157 insertions(+), 34 deletions(-)
-
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-index 1a56e5e..b343651 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -55,6 +55,26 @@ create_gitattributes () {
-	esac
-}
-
-+create_NNO_files () {
-+	lfname=3D$1
-+	crlfname=3D$2
-+	lfmixcrlf=3D$3
-+	lfmixcr=3D$4
-+	crlfnul=3D$5
-+	for crlf in false true input
-+	do
-+		for attr in "" auto text -text lf crlf
-+		do
-+			pfx=3DNNO_${crlf}_attr_${attr} &&
-+			cp $lfname    ${pfx}_LF.txt &&
-+			cp $crlfname  ${pfx}_CRLF.txt &&
-+			cp $lfmixcrlf ${pfx}_CRLF_mix_LF.txt &&
-+			cp $lfmixcr   ${pfx}_LF_mix_CR.txt &&
-+			cp $crlfnul   ${pfx}_CRLF_nul.txt
-+		done
-+	done
-+}
-+
-check_warning () {
-	case "$1" in
-	LF_CRLF) echo "warning: LF will be replaced by CRLF" >"$2".expect ;;
-@@ -62,7 +82,7 @@ check_warning () {
-	'')	                                                 >"$2".expect ;;
-	*) echo >&2 "Illegal 1": "$1" ; return false ;;
-	esac
--	grep "will be replaced by" "$2" | sed -e "s/\(.*\) in [^ ]*$/\1/" >"$=
-2".actual
-+	grep "will be replaced by" "$2" | sed -e "s/\(.*\) in [^ ]*$/\1/" | u=
-niq  >"$2".actual
-	test_cmp "$2".expect "$2".actual
-}
-
-@@ -71,19 +91,10 @@ commit_check_warn () {
-	attr=3D$2
-	lfname=3D$3
-	crlfname=3D$4
--	repoMIX=3D$5
--	lfmixcrlf=3D$6
--	lfmixcr=3D$7
--	crlfnul=3D$8
-+	lfmixcrlf=3D$5
-+	lfmixcr=3D$6
-+	crlfnul=3D$7
-	pfx=3Dcrlf_${crlf}_attr_${attr}
--	# Special handling for repoMIX: It should already be in the repo
--	# with CRLF
--	f=3DrepoMIX
--	fname=3D${pfx}_$f.txt
--	echo >.gitattributes &&
--	cp $f $fname &&
--	git -c core.autocrlf=3Dfalse add $fname 2>"${pfx}_$f.err" &&
--	git commit -m "repoMIX" &&
-	create_gitattributes "$attr" &&
-	for f in LF CRLF repoMIX LF_mix_CR CRLF_mix_LF LF_nul CRLF_nul
-	do
-@@ -99,6 +110,45 @@ commit_check_warn () {
-	check_warning "$crlfnul" ${pfx}_CRLF_nul.err
-}
-
-+commit_chk_wrnNNO () {
-+	crlf=3D$1
-+	attr=3D$2
-+	lfwarn=3D$3
-+	crlfwarn=3D$4
-+	lfmixcrlf=3D$5
-+	lfmixcr=3D$6
-+	crlfnul=3D$7
-+	pfx=3DNNO_${crlf}_attr_${attr}
-+	#Commit files on top of existing file
-+	create_gitattributes "$attr" &&
-+	for f in LF CRLF CRLF_mix_LF LF_mix_CR CRLF_nul
-+	do
-+		fname=3D${pfx}_$f.txt &&
-+		cp $f $fname &&
-+		git -c core.autocrlf=3D$crlf add $fname 2>/dev/null &&
-+		git -c core.autocrlf=3D$crlf commit -m "commit_$fname" $fname >"${pf=
-x}_$f.err" 2>&1
-+	done
-+
-+	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr LF" '
-+		check_warning "$lfwarn" ${pfx}_LF.err
-+	'
-+	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr CRLF"=
- '
-+		check_warning "$crlfwarn" ${pfx}_CRLF.err
-+	'
-+
-+	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr CRLF_=
-mix_LF" '
-+		check_warning "$lfmixcrlf" ${pfx}_CRLF_mix_LF.err
-+	'
-+
-+	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr LF_mi=
-x_cr" '
-+		check_warning "$lfmixcr" ${pfx}_LF_mix_CR.err
-+	'
-+
-+	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr CRLF_=
-nul" '
-+		check_warning "$crlfnul" ${pfx}_CRLF_nul.err
-+	'
-+}
-+
-check_files_in_repo () {
-	crlf=3D$1
-	attr=3D$2
-@@ -115,6 +165,31 @@ check_files_in_repo () {
-	compare_files $crlfnul ${pfx}CRLF_nul.txt
-}
-
-+check_in_repo_NNO () {
-+	crlf=3D$1
-+	attr=3D$2
-+	lfname=3D$3
-+	crlfname=3D$4
-+	lfmixcrlf=3D$5
-+	lfmixcr=3D$6
-+	crlfnul=3D$7
-+	pfx=3DNNO_${crlf}_attr_${attr}_
-+	test_expect_success "compare_files $lfname ${pfx}LF.txt" '
-+		compare_files $lfname ${pfx}LF.txt
-+	'
-+	test_expect_success "compare_files $crlfname ${pfx}CRLF.txt" '
-+		compare_files $crlfname ${pfx}CRLF.txt
-+	'
-+	test_expect_success "compare_files $lfmixcrlf ${pfx}CRLF_mix_LF.txt" =
-'
-+		compare_files $lfmixcrlf ${pfx}CRLF_mix_LF.txt
-+	'
-+	test_expect_success "compare_files $lfmixcr ${pfx}LF_mix_CR.txt" '
-+		compare_files $lfmixcr ${pfx}LF_mix_CR.txt
-+	'
-+	test_expect_success "compare_files $crlfnul ${pfx}CRLF_nul.txt" '
-+		compare_files $crlfnul ${pfx}CRLF_nul.txt
-+	'
-+}
-
-checkout_files () {
-	eol=3D$1
-@@ -169,7 +244,11 @@ test_expect_success 'setup master' '
-	printf "line1\nline2\rline3"     >LF_mix_CR &&
-	printf "line1\r\nline2\rline3"   >CRLF_mix_CR &&
-	printf "line1Q\r\nline2\r\nline3" | q_to_nul >CRLF_nul &&
--	printf "line1Q\nline2\nline3" | q_to_nul >LF_nul
-+	printf "line1Q\nline2\nline3" | q_to_nul >LF_nul &&
-+	create_NNO_files CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF CRLF=
-_mix_LF &&
-+	git -c core.autocrlf=3Dfalse add NNO_*.txt &&
-+	git commit -m "mixed line endings" &&
-+	test_tick
-'
+The normalization feature has 2 consequences:
+a) - Files will get normalized at the next commit,
+     Line endings of the changed lines are normalized
+     Line endings of unchanged lines are normalized
+b) - Not normalized files will get normalized (at the next commit),
+    even if they are unchanged otherwise.
 
 
-@@ -191,46 +270,72 @@ else
-	WAMIX=3DCRLF_LF
-fi
+As Git knows (* text=auto), that files are normalized at the next commit,
+they will change in the repo, and they are marked as changed already now.
+This is by design.
 
--#                         attr   LF        CRLF      repoMIX   CRLFmix=
-LF LFmixCR   CRLFNUL
-+#                         attr   LF        CRLF      CRLFmixLF LFmixCR=
-   CRLFNUL
-test_expect_success 'commit files empty attr' '
--	commit_check_warn false ""     ""        ""        ""        ""      =
-  ""        "" &&
--	commit_check_warn true  ""     "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" ""        "" &&
--	commit_check_warn input ""     ""        "CRLF_LF" "CRLF_LF" "CRLF_LF=
-" ""        ""
-+	commit_check_warn false ""     ""        ""        ""        ""      =
-  "" &&
-+	commit_check_warn true  ""     "LF_CRLF" ""        "LF_CRLF" ""      =
-  "" &&
-+	commit_check_warn input ""     ""        "CRLF_LF" "CRLF_LF" ""      =
-  ""
-'
+The normalization has been disabled for core.autocrlf = true in commit
+fd6cce9e (Eyvind Bernhardsen   2010-05-19 22:43:10 +0200  207) 			 * This is the
+new safer autocrlf handling.
+(See convert.c)
 
-test_expect_success 'commit files attr=3Dauto' '
--	commit_check_warn false "auto" "$WILC"   "$WICL"   "$WAMIX"  "$WAMIX"=
-  ""        "" &&
--	commit_check_warn true  "auto" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" ""        "" &&
--	commit_check_warn input "auto" ""        "CRLF_LF" "CRLF_LF" "CRLF_LF=
-" ""        ""
-+	commit_check_warn false "auto" "$WILC"   "$WICL"   "$WAMIX"  ""      =
-  "" &&
-+	commit_check_warn true  "auto" "LF_CRLF" ""        "LF_CRLF" ""      =
-  "" &&
-+	commit_check_warn input "auto" ""        "CRLF_LF" "CRLF_LF" ""      =
-  ""
-'
+I'm in the mood to propose a patch that disables/suppresses the normalization
+even for "* text=auto", if a file has CRLF in the repo.
+This would make core.autocrlf = true do the same as "* text=auto".
 
-test_expect_success 'commit files attr=3Dtext' '
--	commit_check_warn false "text" "$WILC"   "$WICL"   "$WAMIX"  "$WAMIX"=
-  "$WILC"   "$WICL"   &&
--	commit_check_warn true  "text" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" "LF_CRLF" ""        &&
--	commit_check_warn input "text" ""        "CRLF_LF" "CRLF_LF" "CRLF_LF=
-" ""        "CRLF_LF"
-+	commit_check_warn false "text" "$WILC"   "$WICL"   "$WAMIX"  "$WILC" =
-  "$WICL"   &&
-+	commit_check_warn true  "text" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" ""        &&
-+	commit_check_warn input "text" ""        "CRLF_LF" "CRLF_LF" ""      =
-  "CRLF_LF"
-'
+I'm nearly sure, that this change would break things for some users,
+and improve for others.
 
-test_expect_success 'commit files attr=3D-text' '
--	commit_check_warn false "-text" ""       ""        ""        ""      =
-  ""        "" &&
--	commit_check_warn true  "-text" ""       ""        ""        ""      =
-  ""        "" &&
--	commit_check_warn input "-text" ""       ""        ""        ""      =
-  ""        ""
-+	commit_check_warn false "-text" ""       ""        ""        ""      =
-  "" &&
-+	commit_check_warn true  "-text" ""       ""        ""        ""      =
-  "" &&
-+	commit_check_warn input "-text" ""       ""        ""        ""      =
-  ""
-'
+Currently t0027 tests this behavior, and as soon as we have the new
+NNO tests establish, I will propose some cleanups in convert.c
+(without change of behavour), and later to make
+core.autocrlf = true
+to do the same as
+* text=auto
 
-test_expect_success 'commit files attr=3Dlf' '
--	commit_check_warn false "lf"    ""       "CRLF_LF" "CRLF_LF" "CRLF_LF=
-"  ""       "CRLF_LF" &&
--	commit_check_warn true  "lf"    ""       "CRLF_LF" "CRLF_LF" "CRLF_LF=
-"  ""       "CRLF_LF" &&
--	commit_check_warn input "lf"    ""       "CRLF_LF" "CRLF_LF" "CRLF_LF=
-"  ""       "CRLF_LF"
-+	commit_check_warn false "lf"    ""       "CRLF_LF" "CRLF_LF"  ""     =
-  "CRLF_LF" &&
-+	commit_check_warn true  "lf"    ""       "CRLF_LF" "CRLF_LF"  ""     =
-  "CRLF_LF" &&
-+	commit_check_warn input "lf"    ""       "CRLF_LF" "CRLF_LF"  ""     =
-  "CRLF_LF"
-'
 
-test_expect_success 'commit files attr=3Dcrlf' '
--	commit_check_warn false "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" "LF_CRLF" "" &&
--	commit_check_warn true  "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" "LF_CRLF" "" &&
--	commit_check_warn input "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" "LF_CRLF" ""
-+	commit_check_warn false "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" "" &&
-+	commit_check_warn true  "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" "" &&
-+	commit_check_warn input "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF=
-" ""
-'
 
-+#                       attr   LF        CRLF      CRLFmixLF 	 LF_mix_=
-CR   CRLFNUL
-+commit_chk_wrnNNO false ""     ""        ""        ""        	 ""     =
-   	 ""
-+commit_chk_wrnNNO true  ""     "LF_CRLF" ""        ""        	 ""     =
-   	 ""
-+commit_chk_wrnNNO input ""     ""        ""        ""        	 ""     =
-   	 ""
-+
-+
-+commit_chk_wrnNNO false "auto" "$WILC"   "$WICL"   "$WAMIX"  	 ""     =
-   	 ""
-+commit_chk_wrnNNO true  "auto" "LF_CRLF" ""        "LF_CRLF" 	 ""     =
-   	 ""
-+commit_chk_wrnNNO input "auto" ""        "CRLF_LF" "CRLF_LF" 	 ""     =
-   	 ""
-+
-+commit_chk_wrnNNO false "text" "$WILC"   "$WICL"   "$WAMIX"  	 "$WILC"=
-   	 "$WICL"
-+commit_chk_wrnNNO true  "text" "LF_CRLF" ""        "LF_CRLF" 	 "LF_CRL=
-=46" 	 ""
-+commit_chk_wrnNNO input "text" ""        "CRLF_LF" "CRLF_LF" 	 ""     =
-   	 "CRLF_LF"
-+
-+commit_chk_wrnNNO false "-text" ""       ""        ""        	 ""     =
-   	 ""
-+commit_chk_wrnNNO true  "-text" ""       ""        ""        	 ""     =
-   	 ""
-+commit_chk_wrnNNO input "-text" ""       ""        ""        	 ""     =
-   	 ""
-+
-+commit_chk_wrnNNO false "lf"    ""       "CRLF_LF" "CRLF_LF" 	  ""    =
-   	 "CRLF_LF"
-+commit_chk_wrnNNO true  "lf"    ""       "CRLF_LF" "CRLF_LF" 	  ""    =
-   	 "CRLF_LF"
-+commit_chk_wrnNNO input "lf"    ""       "CRLF_LF" "CRLF_LF" 	  ""    =
-   	 "CRLF_LF"
-+
-+commit_chk_wrnNNO false "crlf" "LF_CRLF" ""        "LF_CRLF" 	 "LF_CRL=
-=46" 	 ""
-+commit_chk_wrnNNO true  "crlf" "LF_CRLF" ""        "LF_CRLF" 	 "LF_CRL=
-=46" 	 ""
-+commit_chk_wrnNNO input "crlf" "LF_CRLF" ""        "LF_CRLF" 	 "LF_CRL=
-=46" 	 ""
-+
-test_expect_success 'create files cleanup' '
-	rm -f *.txt &&
--	git reset --hard
-+	git -c core.autocrlf=3Dfalse reset --hard
-'
 
-test_expect_success 'commit empty gitattribues' '
-@@ -257,6 +362,24 @@ test_expect_success 'commit -text' '
-	check_files_in_repo input "-text" LF CRLF CRLF_mix_LF LF_mix_CR CRLF_n=
-ul
-'
 
-+#                       attr    LF        CRLF      CRLF_mix_LF  LF_mi=
-x_CR 	CRLFNUL
-+check_in_repo_NNO false ""      LF        CRLF      CRLF_mix_LF  LF_mi=
-x_CR 	CRLF_nul
-+check_in_repo_NNO true  ""      LF        CRLF      CRLF_mix_LF  LF_mi=
-x_CR 	CRLF_nul
-+check_in_repo_NNO input ""      LF        CRLF      CRLF_mix_LF  LF_mi=
-x_CR 	CRLF_nul
-+
-+check_in_repo_NNO false "auto"  LF        LF        LF           LF_mi=
-x_CR 	CRLF_nul
-+check_in_repo_NNO true  "auto"  LF        LF        LF           LF_mi=
-x_CR 	CRLF_nul
-+check_in_repo_NNO input "auto"  LF        LF        LF           LF_mi=
-x_CR 	CRLF_nul
-+
-+check_in_repo_NNO false "text"  LF        LF        LF           LF_mi=
-x_CR 	LF_nul
-+check_in_repo_NNO true  "text"  LF        LF        LF           LF_mi=
-x_CR 	LF_nul
-+check_in_repo_NNO input "text"  LF        LF        LF           LF_mi=
-x_CR 	LF_nul
-+
-+check_in_repo_NNO false "-text" LF        CRLF      CRLF_mix_LF  LF_mi=
-x_CR 	CRLF_nul
-+check_in_repo_NNO true  "-text" LF        CRLF      CRLF_mix_LF  LF_mi=
-x_CR 	CRLF_nul
-+check_in_repo_NNO input "-text" LF        CRLF      CRLF_mix_LF  LF_mi=
-x_CR 	CRLF_nul
-+
-+
-#######################################################################=
-#########
-# Check how files in the repo are changed when they are checked out
-# How to read the table below:
---=20
-2.5.0
+
+
+
+
+
+
+> 
+> I will try to make some time to continue to work on this later today, but in the meantime I would be relatively happy if we could introduce that gentle flag. It is really a very gentle patch, after all, much gentler than reverting to the heavy-handed spawning of `merge-recursive`.
+> 
+> Ciao,
+> Dscho
