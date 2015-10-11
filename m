@@ -1,99 +1,101 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 07/10] ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
-Date: Sun, 11 Oct 2015 18:12:49 +0200
-Message-ID: <vpqa8rp2xku.fsf@grenoble-inp.fr>
-References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
-	<1444295885-1657-8-git-send-email-Karthik.188@gmail.com>
-	<vpqa8rtnqzp.fsf@grenoble-inp.fr>
-	<CAOLa=ZTvD5cXduPH3G0bGDba_hevLQsuwYsoZFtmfTd2SS4Prw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 11 18:13:49 2015
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/3] fixup: use xstrfmt instead of fixed-size buf + sprintf + xstrdup
+Date: Sun, 11 Oct 2015 18:16:26 +0200
+Message-ID: <1444580188-18773-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqa8rp2xku.fsf@grenoble-inp.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, karthik.188@gmail.com
+X-From: git-owner@vger.kernel.org Sun Oct 11 18:16:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlJFs-0000oY-TS
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 18:13:49 +0200
+	id 1ZlJIi-0003e6-5f
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 18:16:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144AbbJKQNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2015 12:13:17 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:53369 "EHLO rominette.imag.fr"
+	id S1751585AbbJKQQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2015 12:16:39 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53407 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752133AbbJKQNB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2015 12:13:01 -0400
+	id S1751261AbbJKQQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2015 12:16:38 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t9BGClZr028276
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t9BGGVvq028532
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sun, 11 Oct 2015 18:12:47 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9BGCntS023579;
-	Sun, 11 Oct 2015 18:12:49 +0200
-In-Reply-To: <CAOLa=ZTvD5cXduPH3G0bGDba_hevLQsuwYsoZFtmfTd2SS4Prw@mail.gmail.com>
-	(Karthik Nayak's message of "Sat, 10 Oct 2015 23:49:10 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 11 Oct 2015 18:12:47 +0200 (CEST)
+	Sun, 11 Oct 2015 18:16:31 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9BGGXFG023619;
+	Sun, 11 Oct 2015 18:16:33 +0200
+X-Mailer: git-send-email 2.6.0.rc2.24.gb06d8e9.dirty
+In-Reply-To: <vpqa8rp2xku.fsf@grenoble-inp.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 11 Oct 2015 18:16:31 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t9BGClZr028276
+X-MailScanner-ID: t9BGGVvq028532
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1445184769.09822@3ippMD1sZUCQz0/y58km+g
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1445184994.41387@oKc9Cpyx5noRfZ0SS5By5Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279340>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+The char buf[40] is safe (at least while the strings are not
+translated), but I'd rather avoid magic numbers like this 40 in the
+code, and use a construct that does not have this size limitation.
+Especially if it makes the code shorter.
 
-> On Fri, Oct 9, 2015 at 12:10 AM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->>> --- a/ref-filter.c
->>> +++ b/ref-filter.c
->>> @@ -1118,8 +1118,10 @@ static void populate_value(struct ref_array_item *ref)
->>>                               char buf[40];
->>>
->>>                               if (stat_tracking_info(branch, &num_ours,
->>> -                                                    &num_theirs, NULL))
->>> +                                                    &num_theirs, NULL)) {
->>> +                                     v->s = "[gone]";
->>
->> My remark about translation still holds. The string was previously
->> translated in "branch" and you are removing this translation (well, not
->> here, but when 09/10 starts using this code).
->>
->
-> I should have mentioned in my cover letter, I didn't really understand
-> what has to be done about this, couldn't find much reference to go
-> about this. What do you suggest?
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ ref-filter.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
->From the user point of view :
-
-git for-each-ref --format '%(upstream:track)' => Should always be the
-same, because this may be parsed by scripts (plumbing). Should not
-depend on $LANG, and shouldn't change from a version of Git to another.
-
-git branch --format '%(upstream:track)' => Should show what is most
-pleasant to the user (porcelain): translated according to $LANG and
-friends, and may be improved in the future.
-
-I already pointed out a fix where a string was translated in a plumbing
-command. Another example is setup_unpack_trees_porcelain() in
-unpack-trees.c which solves exactly the same problem.
-
-I'll followup with a small series on top of yours to show the way. I did
-not try to polish it since I guess you have local changes on the same
-part of the code. Feel free to squash patches together or to squash them
-with yours. The commit messages are not meant to be final either.
-
+diff --git a/ref-filter.c b/ref-filter.c
+index 6044eb0..7932c21 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1116,7 +1116,6 @@ static void populate_value(struct ref_array_item *ref)
+ 				 strcmp(formatp, "trackshort") &&
+ 				 (starts_with(name, "upstream") ||
+ 				  starts_with(name, "push"))) {
+-				char buf[40];
+ 				unsigned int nobracket = 0;
+ 
+ 				if (!strcmp(valp, ",nobracket"))
+@@ -1135,24 +1134,21 @@ static void populate_value(struct ref_array_item *ref)
+ 					v->s = "";
+ 				else if (!num_ours) {
+ 					if (nobracket)
+-						sprintf(buf, "behind %d", num_theirs);
++						v->s = xstrfmt("behind %d", num_theirs);
+ 					else
+-						sprintf(buf, "[behind %d]", num_theirs);
+-					v->s = xstrdup(buf);
++						v->s = xstrfmt("[behind %d]", num_theirs);
+ 				} else if (!num_theirs) {
+ 					if (nobracket)
+-						sprintf(buf, "ahead %d", num_ours);
++						v->s = xstrfmt("ahead %d", num_ours);
+ 					else
+-						sprintf(buf, "[ahead %d]", num_ours);
+-					v->s = xstrdup(buf);
++						v->s = xstrfmt("[ahead %d]", num_ours);
+ 				} else {
+ 					if (nobracket)
+-						sprintf(buf, "ahead %d, behind %d",
+-							num_ours, num_theirs);
++						v->s = xstrfmt("ahead %d, behind %d",
++							       num_ours, num_theirs);
+ 					else
+-						sprintf(buf, "[ahead %d, behind %d]",
+-						num_ours, num_theirs);
+-					v->s = xstrdup(buf);
++						v->s = xstrfmt("[ahead %d, behind %d]",
++							       num_ours, num_theirs);
+ 				}
+ 				continue;
+ 			} else if (!strcmp(formatp, "trackshort") &&
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.6.0.rc2.24.gb06d8e9.dirty
