@@ -1,142 +1,147 @@
-From: Victor Leschuk <vleschuk@accesssoftek.com>
-Subject: RE: [PATCH] git-svn: make batch mode optional for git-cat-file
-Date: Sun, 11 Oct 2015 05:31:57 -0700
-Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E7@mail.accesssoftek.com>
-References: <1442843498-22908-1-git-send-email-vleschuk@accesssoftek.com>
- <xmqqeghraauu.fsf@gitster.mtv.corp.google.com>
- <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9D6@mail.accesssoftek.com>
- <20150923001350.GA22266@dcvr.yhbt.net> <20150923003516.GA6086@dcvr.yhbt.net>
- <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9DC@mail.accesssoftek.com>,<20150923192212.GA8577@dcvr.yhbt.net>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 00/10] port branch.c to use ref-filter's printing options
+Date: Sun, 11 Oct 2015 18:18:43 +0530
+Message-ID: <CAOLa=ZQkjMFXVeJ==myQLjyRs6EcejnYnszYKJLyskFufjeqiA@mail.gmail.com>
+References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
+ <vpqr3l5zgst.fsf@grenoble-inp.fr> <CAOLa=ZQvB_S2-nw8hOABt7aQJOWJXvfK1U2zurpnZmaAgJNnGA@mail.gmail.com>
+ <vpq8u7dp9qr.fsf@grenoble-inp.fr> <CAOLa=ZQOO9BjoTj1B-b=kUviL=617F7y46BeX1sOXpeHcatFVQ@mail.gmail.com>
+ <xmqq4mi1rywu.fsf@gitster.mtv.corp.google.com> <vpqpp0ojvs6.fsf@grenoble-inp.fr>
+ <xmqqfv1jq4jy.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"vleschuk@gmail.com" <vleschuk@gmail.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Oct 11 14:32:08 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 11 14:49:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlFnJ-00041A-EW
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 14:32:05 +0200
+	id 1ZlG3y-0004nU-Cm
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 14:49:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751488AbbJKMcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2015 08:32:00 -0400
-Received: from mail.accesssoftek.com ([12.202.173.171]:47947 "EHLO
-	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751164AbbJKMb7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Oct 2015 08:31:59 -0400
-Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
- ([172.16.0.71]) with mapi; Sun, 11 Oct 2015 05:31:57 -0700
-Thread-Topic: [PATCH] git-svn: make batch mode optional for git-cat-file
-Thread-Index: AdD2NSc0lOq7ADl5TEuOhQQ9roiAkAN4VEps
-In-Reply-To: <20150923192212.GA8577@dcvr.yhbt.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1751599AbbJKMtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2015 08:49:14 -0400
+Received: from mail-vk0-f42.google.com ([209.85.213.42]:35309 "EHLO
+	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751282AbbJKMtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2015 08:49:13 -0400
+Received: by vkha6 with SMTP id a6so16964927vkh.2
+        for <git@vger.kernel.org>; Sun, 11 Oct 2015 05:49:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0T8x8Ek3TV6QWLyC41YLmvqRxvFWlFseiFexh+AT/3I=;
+        b=CIv2TgncUlopsddxtIrw3KxJEnumSZQgd7Ktza7b5xpAz0LDcIMwtW+x4xrOI5Ue8a
+         3iC/lGOvQxGUf1eDdE4sULTGqxbRdCbHR9ruBdqTuFYyXS+3ijngCNG/OvmWOX4ir3v9
+         4xP3b0SlIVos9aCRjxU7f+s/r2nJgAHQVOiqdHaDWit1K9EFzdryNKvciiPWJVG0sWNN
+         jluiGlYIUwnmf8Kcc4tUPENyaKtDoIcbn49V+PJGbsJwU3H55k5GqU8bH45CaQGzWBJz
+         GMMHOdHuGO5MMh/sZUN63Wz038bK37D15yC58fObK6DbFndabxC+kY2MegHRUVJ17+/c
+         NhXA==
+X-Received: by 10.31.161.142 with SMTP id k136mr15134899vke.17.1444567752478;
+ Sun, 11 Oct 2015 05:49:12 -0700 (PDT)
+Received: by 10.103.23.193 with HTTP; Sun, 11 Oct 2015 05:48:43 -0700 (PDT)
+In-Reply-To: <xmqqfv1jq4jy.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279336>
 
-Hello Eric,
-
-Thanks for all the advices. I have played with several repositories (both on 32bit and 64bit machines). You were correct most of the memory if used by mapped files and yes it doesn't cause any problems, even a 32bit machine with 500Mb of memory works normally with a heavy loaded git-cat-file.
-
-Thanks also for the advice to use git gc config options, I tested gc.auto=0 and it lead to the same behavior as my setting MALLOC_LIMIT, however it is more correct way to get this effect =)
-
-I agree that we shouldn't worry about mapped files.
-
---
-Best Regards,
-Victor
-________________________________________
-From: Eric Wong [normalperson@yhbt.net]
-Sent: Wednesday, September 23, 2015 12:22 PM
-To: Victor Leschuk
-Cc: Junio C Hamano; git@vger.kernel.org
-Subject: Re: [PATCH] git-svn: make batch mode optional for git-cat-file
-
-Victor Leschuk <vleschuk@accesssoftek.com> wrote:
-> Hello Eric, thanks for looking into it.
+On Fri, Oct 9, 2015 at 11:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 >
-> >> git-cat-file has outgrown the parent perl process several times
-> >> (git-cat-file - ~3-4Gb, perl - 400Mb).
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Then used_atom[] could become something like
+>>>
+>>>     struct {
+>>>      const char *str; /* e.g. "align:position=left,32" */
+>>>      struct {
+>>>              const char *part0; /* everything before '=' */
+>>>                 const char *part1; /* optional */
+>>>      } *modifier;
+>>>         int modifier_nr;
+>>>     } *used_atom;
+>>
+>> If the goal is to prepare as much as possible when parsing the format
+>> string, I'd even push it one step further and have stg like
+>>
+>>      struct {
+>>       const char *str; /* e.g. "align:position=left,32" */
+>>       union {
+>>               struct {
+>>                       int position;
+>>                       enum { left, right, center } kind;
+>>               } align;
+>>                 struct {
+>>                       ....;
+>>                 } objectname;
+>>         int modifier_nr;
+>>      } *used_atom;
+>>
+>> Just a thought, I'm not sure how useful this would be, and this may be
+>> too much change for this series (so it may deserve a separate topic).
 >
-> > Ugh, that sucks.
-> > Even the 400Mb size of Perl annoys me greatly and I'd work
-> > on fixing it if I had more time.
+> Yes, if we are willing to enrich the element of valid_atom[] array
+> with a type-specific parsing functions, we could even do that.  Then
+> populate_value() would not have to do any parsing and just do the
+> filling.
 >
-> I was going to look at this problem also, but first I'd like to improve the situation with cat-file as on large repos it is larger problem. By the way, what direction would you suggest to begin with?
+> I was shooting for a middle ground, but certainly with an eye
+> towards such an endgame state in the future.
 
-See below :)
+I like the idea's here, I was trying out what you suggested before
+Matthieu suggestion.
 
-<snip anonymous memory stuff, it doesn't seem to be a culprit>
+We could have:
 
-> > > git-cat-file has outgrown the parent perl process several times
-> > > (git-cat-file - ~3-4Gb, perl - 400Mb).
->
-> > How much of that is anonymous memory, though?
->
-> Haven't measured on this particular repo: didn't redo the 2 week
-> experiment =) However I checked on a smaller test repo and anon memory
-> is about 12M out of 40M total. Most of memory is really taken by
-> mmaped *.pack and *idx files.
+static void parse_atom_modifiers(struct used_atom *atom)
+{
+    const char *sp = NULL;
 
-If it's mmap-ed files, that physical memory is only used on-demand
-and can be dropped at any time because it's backed by disk.
+    atom->modifier = NULL;
+    atom->modifier_nr = 0;
 
-In other words, I would not worry about any file-backed mmap at all
-(unless you're on 32-bit, but I think git has workarounds for that)
+    if ((sp = strchr(atom->str, ':'))) {
+        while (sp[1]) {
+            const char *equal, *comma, *ep;
+            int no = atom->modifier_nr;
 
-Do you still have that giant repo around?
+            atom->modifier_nr++;
+            sp++;
+            REALLOC_ARRAY(atom->modifier, atom->modifier_nr);
 
-Are the combined size of the pack + idx files are at least 3-4 GB?
+            equal = strchr(sp, '=');
+            comma = strchr(sp, ',');
 
-This should cat all the blobs in history without re-running git-svn:
+            if (comma)
+                ep = comma;
+            else
+                ep = sp + strlen(sp);
 
-        git log --all --raw -r --no-abbrev | \
-          awk '/^:/ {print $3; print $4}' | git cat-file --batch
+            if (!equal) {
+                atom->modifier[no].part0 = xstrndup(sp, ep - sp);
+                atom->modifier[no].part1 = NULL;
+            } else {
+                atom->modifier[no].part0 = xstrndup(sp, equal - sp);
+                atom->modifier[no].part1 = xstrndup(equal + 1, ep - equal - 1);
+            }
+            sp = ep;
+        }
+    }
+}
 
-git log actually keeps growing, but the cat-file process shouldn't
-use anonymous memory much if you inspect it with pmap.
+or something on these lines for what you suggested. We could improve by
+having a special parsing function for selected atoms and leave this to
+be default.
 
-> Actually I accidentally found out that if I export GIT_MALLOC_LIMIT
-> variable set to several megabytes it has the following effect:
+Also does it make sense to integrate these changes here? Or would you like to
+have another series on this?
 
->  * git-svn.perl launches git-gc
->  * git-gc can't allocate enough memory and thus doesn't create any pack files
->  * git-cat-file works only with pure blob object, not packs, and it's
-> memory usage doesn't grow larger than 4-5M
->
-> It gave me a thought that maybe we could get rid of "git gc" calls
-> after each commit in perl code and just perform one large gc operation
-> at the end. It will cost disk space during clone but save us memory.
-> What do you think?
-
-You can set gc.auto to zero in your $GIT_CONFIG to disable gc.
-The "git gc" calls were added because unpacked repos were growing
-too large and caused problems for other people.
-
-Perhaps play with some other pack* options documented in
-Documentation/config to limit maximum pack size/depth.
-
-Is this a 32-bit or 64-bit system?
-
-> As for your suggestion regarding periodic restart of batch process
-> inside git-cat-file, I think we could give it a try, I can prepare a
-> patch and run some tests.
-
-I am not sure if we need it for git-svn.
-
-In another project, the only reason I've found to restart
-"cat-file --batch" is in case the repo got repacked and old packs
-got unlinked, cat-file would hold a reference onto the old file
-and suck up space.   It might be better if "cat-file --batch" learned
-to detect unlinked files and then munmap + close them.
+-- 
+Regards,
+Karthik Nayak
