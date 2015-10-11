@@ -1,77 +1,120 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 07/10] ref-filter: make %(upstream:track) prints
- "[gone]" for invalid upstreams
-Date: Mon, 12 Oct 2015 01:08:59 +0530
-Message-ID: <CAOLa=ZT5ADOY0x_rFRWVx5DtWtOBH3MvqBgh8v4COC1a1ND3NA@mail.gmail.com>
-References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
- <1444295885-1657-8-git-send-email-Karthik.188@gmail.com> <vpqa8rtnqzp.fsf@grenoble-inp.fr>
- <CAOLa=ZTvD5cXduPH3G0bGDba_hevLQsuwYsoZFtmfTd2SS4Prw@mail.gmail.com>
- <vpqa8rp2xku.fsf@grenoble-inp.fr> <CAOLa=ZRvTUpz2Ey9ZLwe_iqVGPaFZGJ2_HiASpn=txAgV57otg@mail.gmail.com>
- <vpqvbadz37a.fsf@grenoble-inp.fr>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 1/3] Add Travis CI support
+Date: Sun, 11 Oct 2015 16:40:59 -0400
+Message-ID: <CAPig+cQ4Gd6aNQdrdD7ZEJW2Mn=pJujkqje0-htJpJYz8LVbhQ@mail.gmail.com>
+References: <1444586102-82557-1-git-send-email-larsxschneider@gmail.com>
+	<1444586102-82557-2-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Oct 11 21:39:34 2015
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Pete Wyckoff <pw@padd.com>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 11 22:41:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlMSz-0005PM-RL
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 21:39:34 +0200
+	id 1ZlNQY-0006pQ-3C
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 22:41:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752450AbbJKTja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2015 15:39:30 -0400
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:36690 "EHLO
-	mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751793AbbJKTj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2015 15:39:29 -0400
-Received: by vkgc187 with SMTP id c187so12991355vkg.3
-        for <git@vger.kernel.org>; Sun, 11 Oct 2015 12:39:28 -0700 (PDT)
+	id S1751424AbbJKUlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2015 16:41:00 -0400
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:36651 "EHLO
+	mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751176AbbJKUlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2015 16:41:00 -0400
+Received: by vkgc187 with SMTP id c187so13364150vkg.3
+        for <git@vger.kernel.org>; Sun, 11 Oct 2015 13:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=fVSTu65puPvCKfGSkLU4QP/AoxknZjJBPWEV+oHVnTY=;
-        b=iWVV5xQ9MpyOie3dLKIEUDW5tM3a+l1PIebyvEuQfG/7Uj2VKSv5J0qBs/ztvedJFX
-         GPoGwFF423SpdTgFdzBhQuJ6KBrH7NtOg0I4uxCJZOWhAcJYIRo3Kr4yxWTkquhD1qQr
-         L7mkKi1ern60FlFFmRL1Ab81N7gDAjRSE91QQ7aRe6xqjUE6kHL86EzQEtUCkFxPdQdZ
-         SN67R3umsQ9eUVnEDzuHu5XRbBojm3VNNaWUm78eN9jdRNAxPBmBlCLhjLqmg1rt3VYR
-         IsQQSwO4T2w3w4NrvBhFjZPCzTPwY59Qa+dlH0A5DV4k9gMGK2JFiCsgXZCoK7HoBHvy
-         ztxw==
-X-Received: by 10.31.15.69 with SMTP id 66mr16231577vkp.142.1444592368553;
- Sun, 11 Oct 2015 12:39:28 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Sun, 11 Oct 2015 12:38:59 -0700 (PDT)
-In-Reply-To: <vpqvbadz37a.fsf@grenoble-inp.fr>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=a9PEXgZ3BVYm5r+0gjt/1qCU6PHYI5NQWWH1lItcn6Q=;
+        b=adQuXU1aeCELtQC3Q6IyBAesG9g6YT+CENnfMKRr3cBOpS18QCx+yusbwd1tU5Zooa
+         GrC8YYifZYdu5vmpSMPFsyML17rzuIfmF2d6+YFwzR+WHvzC23LwzN/WLd3/ZiGtHID8
+         nl41Iif34lYdG9jjD/VD1cjkU6JhZ8MK0QNkpYIFSZP8IEPUb1rrGE//cGgxrjA74dLO
+         IE27Qro+dq9otNz5xxogMAM1ntYCX6kWozx7xQEGsMTHAJdMCkfXYCE77BcW09tnQQ5J
+         8WJPmFlmoKiBXIdoBraHuMhF0nO+BOZAR85/hwsMBVtfIcZlNIoU3MsudSvx/ru5prC6
+         VT7A==
+X-Received: by 10.31.56.193 with SMTP id f184mr16360049vka.115.1444596059397;
+ Sun, 11 Oct 2015 13:40:59 -0700 (PDT)
+Received: by 10.31.224.68 with HTTP; Sun, 11 Oct 2015 13:40:59 -0700 (PDT)
+In-Reply-To: <1444586102-82557-2-git-send-email-larsxschneider@gmail.com>
+X-Google-Sender-Auth: GyZEJyc9Llp515yQuXJNqwikses
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279358>
 
-On Sun, Oct 11, 2015 at 11:40 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
+On Sun, Oct 11, 2015 at 1:55 PM,  <larsxschneider@gmail.com> wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
 >
->> A little blurry on how this works, as in how translation takes place,
->> probably need to look at some code.
+> The tests are currently executed on "Ubuntu 12.04 LTS Server Edition
+> 64 bit" and on "OS X Mavericks" using gcc and clang.
 >
-> What you really need to understand is: _("foo") is translated, "foo" is
-> not and will always be "foo". Technically, _ is a macro, it could be
-> called get_the_translated_string_for(...) but that would be too long.
+> Perforce and Git-LFS are installed and therefore available for the
+> respective tests.
 >
-> In git, _("foo") should be used when talking to a user (porcelain), and
-> "foo" when talking to a program (plumbing). This way a user running
->
-> git <plumbing-command> | grep "some-plumbing-message"
->
-> will always get the same result regardless of the current locale.
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+> diff --git a/.travis.yml b/.travis.yml
+> new file mode 100644
+> index 0000000..25a7079
+> --- /dev/null
+> +++ b/.travis.yml
+> @@ -0,0 +1,46 @@
+> +language: c
+> +
+> +os:
+> +  - linux
+> +  - osx
+> +
+> +compiler:
+> +  - clang
+> +  - gcc
+> +
+> +before_install:
+> +  - >
+> +    export GIT_TEST_OPTS=" --quiet";
+> +    case "${TRAVIS_OS_NAME:-linux}" in
+> +    linux)
+> +      wget -q https://package.perforce.com/perforce.pubkey -O - \
+> +        | sudo apt-key add -
+> +      echo 'deb http://package.perforce.com/apt/ubuntu precise release' \
+> +        | sudo tee -a /etc/apt/sources.list
+> +      wget -q https://packagecloud.io/gpg.key -O - | sudo apt-key add -
+> +      echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' \
+> +        | sudo tee -a /etc/apt/sources.list
+> +      sudo apt-get update -qq
+> +      sudo apt-get install -y apt-transport-https
+> +      sudo apt-get install perforce-server git-lfs
+> +      ;;
+> +    osx)
+> +      brew_force_set_latest_binary_hash () {
+> +        FORUMULA=$1
 
-That helped a lot, thanks a bunch.
+Is this spelling intentional or is it a misspelling of "formula"?
 
--- 
-Regards,
-Karthik Nayak
+> +        SHA=$(brew fetch --force $FORUMULA 2>&1 | grep ^SHA256: | cut -d ' ' -f 2)
+> +        sed -E -i.bak "s/sha256 \"[0-9a-f]{64}\"/sha256 \"$SHA\"/g" \
+> +          /usr/local/Library/Taps/homebrew/homebrew-binary/$FORUMULA.rb
+> +      }
+> +      brew update
+> +      brew tap homebrew/binary
+> +      brew_force_set_latest_binary_hash perforce
+> +      brew_force_set_latest_binary_hash perforce-server
+> +      brew install git-lfs perforce-server perforce
+> +      ;;
+> +    esac
+> +
+> +install: make configure && ./configure
+> +
+> +before_script: make
+> +
+> +script: make --quiet test
+> --
+> 2.5.1
