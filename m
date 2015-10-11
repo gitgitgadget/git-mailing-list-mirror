@@ -1,147 +1,110 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 00/10] port branch.c to use ref-filter's printing options
-Date: Sun, 11 Oct 2015 18:18:43 +0530
-Message-ID: <CAOLa=ZQkjMFXVeJ==myQLjyRs6EcejnYnszYKJLyskFufjeqiA@mail.gmail.com>
-References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
- <vpqr3l5zgst.fsf@grenoble-inp.fr> <CAOLa=ZQvB_S2-nw8hOABt7aQJOWJXvfK1U2zurpnZmaAgJNnGA@mail.gmail.com>
- <vpq8u7dp9qr.fsf@grenoble-inp.fr> <CAOLa=ZQOO9BjoTj1B-b=kUviL=617F7y46BeX1sOXpeHcatFVQ@mail.gmail.com>
- <xmqq4mi1rywu.fsf@gitster.mtv.corp.google.com> <vpqpp0ojvs6.fsf@grenoble-inp.fr>
- <xmqqfv1jq4jy.fsf@gitster.mtv.corp.google.com>
+From: Victor Leschuk <vleschuk@accesssoftek.com>
+Subject: thread-utils: build with NO_PTHREADS fails
+Date: Sun, 11 Oct 2015 05:58:30 -0700
+Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8@mail.accesssoftek.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 11 14:49:18 2015
+Content-Type: multipart/mixed;
+	boundary="_002_6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8mailaccesssof_"
+Cc: "vleschuk@gmail.com" <vleschuk@gmail.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 11 15:00:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlG3y-0004nU-Cm
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 14:49:18 +0200
+	id 1ZlGEi-0007kg-74
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 15:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751599AbbJKMtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2015 08:49:14 -0400
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:35309 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751282AbbJKMtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2015 08:49:13 -0400
-Received: by vkha6 with SMTP id a6so16964927vkh.2
-        for <git@vger.kernel.org>; Sun, 11 Oct 2015 05:49:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0T8x8Ek3TV6QWLyC41YLmvqRxvFWlFseiFexh+AT/3I=;
-        b=CIv2TgncUlopsddxtIrw3KxJEnumSZQgd7Ktza7b5xpAz0LDcIMwtW+x4xrOI5Ue8a
-         3iC/lGOvQxGUf1eDdE4sULTGqxbRdCbHR9ruBdqTuFYyXS+3ijngCNG/OvmWOX4ir3v9
-         4xP3b0SlIVos9aCRjxU7f+s/r2nJgAHQVOiqdHaDWit1K9EFzdryNKvciiPWJVG0sWNN
-         jluiGlYIUwnmf8Kcc4tUPENyaKtDoIcbn49V+PJGbsJwU3H55k5GqU8bH45CaQGzWBJz
-         GMMHOdHuGO5MMh/sZUN63Wz038bK37D15yC58fObK6DbFndabxC+kY2MegHRUVJ17+/c
-         NhXA==
-X-Received: by 10.31.161.142 with SMTP id k136mr15134899vke.17.1444567752478;
- Sun, 11 Oct 2015 05:49:12 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Sun, 11 Oct 2015 05:48:43 -0700 (PDT)
-In-Reply-To: <xmqqfv1jq4jy.fsf@gitster.mtv.corp.google.com>
+	id S1751922AbbJKNAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2015 09:00:18 -0400
+Received: from mail.accesssoftek.com ([12.202.173.171]:48618 "EHLO
+	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751484AbbJKNAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2015 09:00:17 -0400
+Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
+ ([172.16.0.71]) with mapi; Sun, 11 Oct 2015 06:00:14 -0700
+Thread-Topic: thread-utils: build with NO_PTHREADS fails
+Thread-Index: AQHRBCSGtNpNRryDVkOtvYPD+eAPtA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279337>
 
-On Fri, Oct 9, 2015 at 11:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Then used_atom[] could become something like
->>>
->>>     struct {
->>>      const char *str; /* e.g. "align:position=left,32" */
->>>      struct {
->>>              const char *part0; /* everything before '=' */
->>>                 const char *part1; /* optional */
->>>      } *modifier;
->>>         int modifier_nr;
->>>     } *used_atom;
->>
->> If the goal is to prepare as much as possible when parsing the format
->> string, I'd even push it one step further and have stg like
->>
->>      struct {
->>       const char *str; /* e.g. "align:position=left,32" */
->>       union {
->>               struct {
->>                       int position;
->>                       enum { left, right, center } kind;
->>               } align;
->>                 struct {
->>                       ....;
->>                 } objectname;
->>         int modifier_nr;
->>      } *used_atom;
->>
->> Just a thought, I'm not sure how useful this would be, and this may be
->> too much change for this series (so it may deserve a separate topic).
->
-> Yes, if we are willing to enrich the element of valid_atom[] array
-> with a type-specific parsing functions, we could even do that.  Then
-> populate_value() would not have to do any parsing and just do the
-> filling.
->
-> I was shooting for a middle ground, but certainly with an eye
-> towards such an endgame state in the future.
+--_002_6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8mailaccesssof_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-I like the idea's here, I was trying out what you suggested before
-Matthieu suggestion.
+Hello all,
 
-We could have:
+I think that no one tried it for a long time but I needed a single-threaded=
+ git version for debug purpose. I tried to build with -DNO_PTHREADS and thr=
+ead-utils.c failed to compile.
 
-static void parse_atom_modifiers(struct used_atom *atom)
+In brief the situation is the following:
+
+in header file we have something like that:
+
+
+#ifndef NO_PTHREAD
+extern int online_cpus(void);
+
+#else
+#define online_cpus() 1
+#endif // NO_PTHREAD
+
+and in *.c file:
+
+
+int online_cpus(void)
 {
-    const char *sp = NULL;
-
-    atom->modifier = NULL;
-    atom->modifier_nr = 0;
-
-    if ((sp = strchr(atom->str, ':'))) {
-        while (sp[1]) {
-            const char *equal, *comma, *ep;
-            int no = atom->modifier_nr;
-
-            atom->modifier_nr++;
-            sp++;
-            REALLOC_ARRAY(atom->modifier, atom->modifier_nr);
-
-            equal = strchr(sp, '=');
-            comma = strchr(sp, ',');
-
-            if (comma)
-                ep = comma;
-            else
-                ep = sp + strlen(sp);
-
-            if (!equal) {
-                atom->modifier[no].part0 = xstrndup(sp, ep - sp);
-                atom->modifier[no].part1 = NULL;
-            } else {
-                atom->modifier[no].part0 = xstrndup(sp, equal - sp);
-                atom->modifier[no].part1 = xstrndup(equal + 1, ep - equal - 1);
-            }
-            sp = ep;
-        }
-    }
+    // ...
 }
 
-or something on these lines for what you suggested. We could improve by
-having a special parsing function for selected atoms and leave this to
-be default.
+So the compilation fails with:=20
 
-Also does it make sense to integrate these changes here? Or would you like to
-have another series on this?
+test.c:3:21: error: macro "online_cpus" passed 1 arguments, but takes just =
+0
+ int online_cpus(void)
 
--- 
-Regards,
-Karthik Nayak
+That's a tiny issue, but maybe we could apply a straight-forward solution (=
+see attached diff)? If you agree I'll prepare a properly-formatted [PATCH] =
+submit.
+
+
+--
+Best Regards,
+Victor=
+
+--_002_6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8mailaccesssof_
+Content-Type: text/x-patch; name="no_pthreads.patch"
+Content-Description: no_pthreads.patch
+Content-Disposition: attachment; filename="no_pthreads.patch"; size=879;
+	creation-date="Sun, 11 Oct 2015 12:58:56 GMT";
+	modification-date="Sun, 11 Oct 2015 12:58:56 GMT"
+Content-Transfer-Encoding: base64
+
+ZGlmZiAtLWdpdCBhL3RocmVhZC11dGlscy5jIGIvdGhyZWFkLXV0aWxzLmMKaW5kZXggYTIxMzVl
+MC4uZjNlOTBmYiAxMDA2NDQKLS0tIGEvdGhyZWFkLXV0aWxzLmMKKysrIGIvdGhyZWFkLXV0aWxz
+LmMKQEAgLTIwLDYgKzIwLDcgQEAKIAogaW50IG9ubGluZV9jcHVzKHZvaWQpCiB7CisjaWZuZGVm
+IE5PX1BUSFJFQURTCiAjaWZkZWYgX1NDX05QUk9DRVNTT1JTX09OTE4KIAlsb25nIG5jcHVzOwog
+I2VuZGlmCkBAIC01OCwxMSArNTksMTMgQEAgaW50IG9ubGluZV9jcHVzKHZvaWQpCiAJCXJldHVy
+biAoaW50KW5jcHVzOwogI2VuZGlmCiAKKyNlbmRpZgogCXJldHVybiAxOwogfQogCiBpbnQgaW5p
+dF9yZWN1cnNpdmVfbXV0ZXgocHRocmVhZF9tdXRleF90ICptKQogeworI2lmbmRlZiBOT19QVEhS
+RUFEUwogCXB0aHJlYWRfbXV0ZXhhdHRyX3QgYTsKIAlpbnQgcmV0OwogCkBAIC03NCw0ICs3Nyw3
+IEBAIGludCBpbml0X3JlY3Vyc2l2ZV9tdXRleChwdGhyZWFkX211dGV4X3QgKm0pCiAJCXB0aHJl
+YWRfbXV0ZXhhdHRyX2Rlc3Ryb3koJmEpOwogCX0KIAlyZXR1cm4gcmV0OworI2Vsc2UKKwlyZXR1
+cm4gMDsKKyNlbmRpZgogfQpkaWZmIC0tZ2l0IGEvdGhyZWFkLXV0aWxzLmggYi90aHJlYWQtdXRp
+bHMuaAppbmRleCBkOWE3NjlkLi42ZmI5OGMzIDEwMDY0NAotLS0gYS90aHJlYWQtdXRpbHMuaAor
+KysgYi90aHJlYWQtdXRpbHMuaApAQCAtNyw5ICs3LDUgQEAKIGV4dGVybiBpbnQgb25saW5lX2Nw
+dXModm9pZCk7CiBleHRlcm4gaW50IGluaXRfcmVjdXJzaXZlX211dGV4KHB0aHJlYWRfbXV0ZXhf
+dCopOwogCi0jZWxzZQotCi0jZGVmaW5lIG9ubGluZV9jcHVzKCkgMQotCiAjZW5kaWYKICNlbmRp
+ZiAvKiBUSFJFQURfQ09NUEFUX0ggKi8K
+
+--_002_6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8mailaccesssof_--
