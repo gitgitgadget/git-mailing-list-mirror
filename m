@@ -1,110 +1,94 @@
-From: Victor Leschuk <vleschuk@accesssoftek.com>
-Subject: thread-utils: build with NO_PTHREADS fails
-Date: Sun, 11 Oct 2015 05:58:30 -0700
-Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8@mail.accesssoftek.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 04/10] ref-filter: modify "%(objectname:short)" to take length
+Date: Sun, 11 Oct 2015 18:05:22 +0200
+Message-ID: <vpqlhb92xx9.fsf@grenoble-inp.fr>
+References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
+	<1444295885-1657-5-git-send-email-Karthik.188@gmail.com>
+	<vpqh9m1mbln.fsf@grenoble-inp.fr>
+	<CAOLa=ZT8YydU-4HH2migNewtiAvB=wOCWx2TGV+Y+8YVHCdaNQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="_002_6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8mailaccesssof_"
-Cc: "vleschuk@gmail.com" <vleschuk@gmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 11 15:00:28 2015
+Content-Type: text/plain
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 11 18:06:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlGEi-0007kg-74
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 15:00:24 +0200
+	id 1ZlJ8Q-00020r-3q
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 18:06:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751922AbbJKNAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2015 09:00:18 -0400
-Received: from mail.accesssoftek.com ([12.202.173.171]:48618 "EHLO
-	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbbJKNAR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2015 09:00:17 -0400
-Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
- ([172.16.0.71]) with mapi; Sun, 11 Oct 2015 06:00:14 -0700
-Thread-Topic: thread-utils: build with NO_PTHREADS fails
-Thread-Index: AQHRBCSGtNpNRryDVkOtvYPD+eAPtA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1751831AbbJKQFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2015 12:05:32 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50245 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751612AbbJKQFb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2015 12:05:31 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t9BG5LNc027667
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sun, 11 Oct 2015 18:05:21 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9BG5MWU023443;
+	Sun, 11 Oct 2015 18:05:22 +0200
+In-Reply-To: <CAOLa=ZT8YydU-4HH2migNewtiAvB=wOCWx2TGV+Y+8YVHCdaNQ@mail.gmail.com>
+	(Karthik Nayak's message of "Sat, 10 Oct 2015 23:45:46 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 11 Oct 2015 18:05:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t9BG5LNc027667
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1445184325.54312@5Mx6OFb6Rn2Gl27yVSIXGw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279338>
 
---_002_6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8mailaccesssof_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Hello all,
+>>> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+>>> index 7c9bec7..6fc569e 100755
+>>> --- a/t/t6300-for-each-ref.sh
+>>> +++ b/t/t6300-for-each-ref.sh
+>>> @@ -385,6 +385,28 @@ test_expect_success 'Check short objectname format' '
+>>>       test_cmp expected actual
+>>>  '
+>>>
+>>> +cat >expected <<EOF
+>>> +$(git rev-parse --short=1 HEAD)
+>>> +EOF
+>>
+>> Please write all code within test_expect_success including this
+>> (t/README:
+>>
+>>  - Put all code inside test_expect_success and other assertions.
+>>
+>>    Even code that isn't a test per se, but merely some setup code
+>>    should be inside a test assertion.
+>> ).
+>>
+>
+> Was just following the previous syntax, should have read that. fixed it
 
-I think that no one tried it for a long time but I needed a single-threaded=
- git version for debug purpose. I tried to build with -DNO_PTHREADS and thr=
-ead-utils.c failed to compile.
+The common practice (not necessarily a rule, though) when you write code
+next to other code that does not follow the style is:
 
-In brief the situation is the following:
+* If it's not too disturbing, adopt the new style and keep the old code
+  as-is. I think we are in this case.
 
-in header file we have something like that:
+* If the new and the old style do not mix well, prepend a "modernize
+  style" patch to the series, and adopt the new style in the patch
+  itself.
 
+* If you're too lazy to do a "modernize style", adopt the old style for
+  consistency.
 
-#ifndef NO_PTHREAD
-extern int online_cpus(void);
-
-#else
-#define online_cpus() 1
-#endif // NO_PTHREAD
-
-and in *.c file:
-
-
-int online_cpus(void)
-{
-    // ...
-}
-
-So the compilation fails with:=20
-
-test.c:3:21: error: macro "online_cpus" passed 1 arguments, but takes just =
-0
- int online_cpus(void)
-
-That's a tiny issue, but maybe we could apply a straight-forward solution (=
-see attached diff)? If you agree I'll prepare a properly-formatted [PATCH] =
-submit.
-
-
---
-Best Regards,
-Victor=
-
---_002_6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8mailaccesssof_
-Content-Type: text/x-patch; name="no_pthreads.patch"
-Content-Description: no_pthreads.patch
-Content-Disposition: attachment; filename="no_pthreads.patch"; size=879;
-	creation-date="Sun, 11 Oct 2015 12:58:56 GMT";
-	modification-date="Sun, 11 Oct 2015 12:58:56 GMT"
-Content-Transfer-Encoding: base64
-
-ZGlmZiAtLWdpdCBhL3RocmVhZC11dGlscy5jIGIvdGhyZWFkLXV0aWxzLmMKaW5kZXggYTIxMzVl
-MC4uZjNlOTBmYiAxMDA2NDQKLS0tIGEvdGhyZWFkLXV0aWxzLmMKKysrIGIvdGhyZWFkLXV0aWxz
-LmMKQEAgLTIwLDYgKzIwLDcgQEAKIAogaW50IG9ubGluZV9jcHVzKHZvaWQpCiB7CisjaWZuZGVm
-IE5PX1BUSFJFQURTCiAjaWZkZWYgX1NDX05QUk9DRVNTT1JTX09OTE4KIAlsb25nIG5jcHVzOwog
-I2VuZGlmCkBAIC01OCwxMSArNTksMTMgQEAgaW50IG9ubGluZV9jcHVzKHZvaWQpCiAJCXJldHVy
-biAoaW50KW5jcHVzOwogI2VuZGlmCiAKKyNlbmRpZgogCXJldHVybiAxOwogfQogCiBpbnQgaW5p
-dF9yZWN1cnNpdmVfbXV0ZXgocHRocmVhZF9tdXRleF90ICptKQogeworI2lmbmRlZiBOT19QVEhS
-RUFEUwogCXB0aHJlYWRfbXV0ZXhhdHRyX3QgYTsKIAlpbnQgcmV0OwogCkBAIC03NCw0ICs3Nyw3
-IEBAIGludCBpbml0X3JlY3Vyc2l2ZV9tdXRleChwdGhyZWFkX211dGV4X3QgKm0pCiAJCXB0aHJl
-YWRfbXV0ZXhhdHRyX2Rlc3Ryb3koJmEpOwogCX0KIAlyZXR1cm4gcmV0OworI2Vsc2UKKwlyZXR1
-cm4gMDsKKyNlbmRpZgogfQpkaWZmIC0tZ2l0IGEvdGhyZWFkLXV0aWxzLmggYi90aHJlYWQtdXRp
-bHMuaAppbmRleCBkOWE3NjlkLi42ZmI5OGMzIDEwMDY0NAotLS0gYS90aHJlYWQtdXRpbHMuaAor
-KysgYi90aHJlYWQtdXRpbHMuaApAQCAtNyw5ICs3LDUgQEAKIGV4dGVybiBpbnQgb25saW5lX2Nw
-dXModm9pZCk7CiBleHRlcm4gaW50IGluaXRfcmVjdXJzaXZlX211dGV4KHB0aHJlYWRfbXV0ZXhf
-dCopOwogCi0jZWxzZQotCi0jZGVmaW5lIG9ubGluZV9jcHVzKCkgMQotCiAjZW5kaWYKICNlbmRp
-ZiAvKiBUSFJFQURfQ09NUEFUX0ggKi8K
-
---_002_6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8mailaccesssof_--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
