@@ -1,97 +1,111 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 04/10] ref-filter: modify "%(objectname:short)" to take length
-Date: Sun, 11 Oct 2015 23:14:56 +0530
-Message-ID: <CAOLa=ZSQMtW8Kd-B7u=9nJ0d3AtN7f1mtz0k0dS9WKmWSv5CNQ@mail.gmail.com>
+Subject: Re: [PATCH v2 07/10] ref-filter: make %(upstream:track) prints
+ "[gone]" for invalid upstreams
+Date: Sun, 11 Oct 2015 23:16:48 +0530
+Message-ID: <CAOLa=ZRvTUpz2Ey9ZLwe_iqVGPaFZGJ2_HiASpn=txAgV57otg@mail.gmail.com>
 References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
- <1444295885-1657-5-git-send-email-Karthik.188@gmail.com> <vpqh9m1mbln.fsf@grenoble-inp.fr>
- <CAOLa=ZT8YydU-4HH2migNewtiAvB=wOCWx2TGV+Y+8YVHCdaNQ@mail.gmail.com> <vpqlhb92xx9.fsf@grenoble-inp.fr>
+ <1444295885-1657-8-git-send-email-Karthik.188@gmail.com> <vpqa8rtnqzp.fsf@grenoble-inp.fr>
+ <CAOLa=ZTvD5cXduPH3G0bGDba_hevLQsuwYsoZFtmfTd2SS4Prw@mail.gmail.com> <vpqa8rp2xku.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git <git@vger.kernel.org>,
 	Christian Couder <christian.couder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Oct 11 19:45:31 2015
+X-From: git-owner@vger.kernel.org Sun Oct 11 19:47:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlKgd-0004y9-5R
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 19:45:31 +0200
+	id 1ZlKiU-0006sX-U7
+	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 19:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751589AbbJKRp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2015 13:45:27 -0400
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:34198 "EHLO
-	mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751366AbbJKRp0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2015 13:45:26 -0400
-Received: by vkat63 with SMTP id t63so75875140vka.1
-        for <git@vger.kernel.org>; Sun, 11 Oct 2015 10:45:25 -0700 (PDT)
+	id S1751787AbbJKRrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2015 13:47:22 -0400
+Received: from mail-vk0-f46.google.com ([209.85.213.46]:35041 "EHLO
+	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751558AbbJKRrV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2015 13:47:21 -0400
+Received: by vkha6 with SMTP id a6so18885296vkh.2
+        for <git@vger.kernel.org>; Sun, 11 Oct 2015 10:47:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=HsQmGfhrgY0YUDBlH2pg3qxJxjSe8TG3By0g59ot8LQ=;
-        b=LEID9R31G6ui/FfLe+BxgHTgNEhbKNWwWd9cXLAHKabz7vSfC1BWg+XqgrYRtEQRT7
-         JJ/HPMPRlrG5GUMoL4NIFHNsFaYU4bBiEb5rh+YhDVLVf9/wWZOKqE9Cg6NwqGdCTs7d
-         LWcwXege9pWk7lDypoXTWECQqMcRLXUS+kyPwgHk6yoVFDf8dHE09aWVhQnAnFUX2hDF
-         xvJNFoNU3z007tC293tOvZckpPo441oKOypzrbvLnHhxpf9PmPDWzfleySHeS/7Wbpv0
-         9t+dRRciLT5w8kvRwIeeg3H28DhXL+JN/DE1AygW68DNGVRbXt0coPGHfEDD5r2hEFoA
-         SsDg==
-X-Received: by 10.31.50.214 with SMTP id y205mr15894410vky.77.1444585525714;
- Sun, 11 Oct 2015 10:45:25 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Sun, 11 Oct 2015 10:44:56 -0700 (PDT)
-In-Reply-To: <vpqlhb92xx9.fsf@grenoble-inp.fr>
+        bh=cqF5K3UabcL6u/HGeTAuz0gJ1+VHCiBiEVjJYP7HMyU=;
+        b=zU70FBFIogNZ7VAz9GOn7el4tqyPmTes3ErynC2unJDUwUjmkkn588YPykGbu9VG0e
+         fe3YDACZA3miifiPLN35yfw/rTIVCYM7dtvkWS0ezs9r+Zb2CYtLax6IuI3W1bUeNnNf
+         QWlYgkb9R5Rs/hswNrP/1SjRrbIyVZ2qhG0oau6swqWGDvBc4SW5boxl6lCgdv2hiQZW
+         PwiGSfKuWcfKuSq9cDivHv7O0fxKtqeMhxAypK8ifti/syNyIbouOPf005Ad49hlo6oM
+         0efigB9U3vxJMBBQmP7mQhwnAJ4LHsqj9PkoVjDA0TF6HgMeT1S/mcGYRGJK8kLj+lhA
+         fVFw==
+X-Received: by 10.31.173.136 with SMTP id w130mr15835445vke.72.1444585641011;
+ Sun, 11 Oct 2015 10:47:21 -0700 (PDT)
+Received: by 10.103.23.193 with HTTP; Sun, 11 Oct 2015 10:46:48 -0700 (PDT)
+In-Reply-To: <vpqa8rp2xku.fsf@grenoble-inp.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279346>
 
-On Sun, Oct 11, 2015 at 9:35 PM, Matthieu Moy
+On Sun, Oct 11, 2015 at 9:42 PM, Matthieu Moy
 <Matthieu.Moy@grenoble-inp.fr> wrote:
 > Karthik Nayak <karthik.188@gmail.com> writes:
 >
->>>> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
->>>> index 7c9bec7..6fc569e 100755
->>>> --- a/t/t6300-for-each-ref.sh
->>>> +++ b/t/t6300-for-each-ref.sh
->>>> @@ -385,6 +385,28 @@ test_expect_success 'Check short objectname format' '
->>>>       test_cmp expected actual
->>>>  '
+>> On Fri, Oct 9, 2015 at 12:10 AM, Matthieu Moy
+>> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>>
+>>>> --- a/ref-filter.c
+>>>> +++ b/ref-filter.c
+>>>> @@ -1118,8 +1118,10 @@ static void populate_value(struct ref_array_item *ref)
+>>>>                               char buf[40];
 >>>>
->>>> +cat >expected <<EOF
->>>> +$(git rev-parse --short=1 HEAD)
->>>> +EOF
+>>>>                               if (stat_tracking_info(branch, &num_ours,
+>>>> -                                                    &num_theirs, NULL))
+>>>> +                                                    &num_theirs, NULL)) {
+>>>> +                                     v->s = "[gone]";
 >>>
->>> Please write all code within test_expect_success including this
->>> (t/README:
->>>
->>>  - Put all code inside test_expect_success and other assertions.
->>>
->>>    Even code that isn't a test per se, but merely some setup code
->>>    should be inside a test assertion.
->>> ).
+>>> My remark about translation still holds. The string was previously
+>>> translated in "branch" and you are removing this translation (well, not
+>>> here, but when 09/10 starts using this code).
 >>>
 >>
->> Was just following the previous syntax, should have read that. fixed it
+>> I should have mentioned in my cover letter, I didn't really understand
+>> what has to be done about this, couldn't find much reference to go
+>> about this. What do you suggest?
 >
-> The common practice (not necessarily a rule, though) when you write code
-> next to other code that does not follow the style is:
+> From the user point of view :
 >
-> * If it's not too disturbing, adopt the new style and keep the old code
->   as-is. I think we are in this case.
->
-> * If the new and the old style do not mix well, prepend a "modernize
->   style" patch to the series, and adopt the new style in the patch
->   itself.
->
-> * If you're too lazy to do a "modernize style", adopt the old style for
->   consistency.
+> git for-each-ref --format '%(upstream:track)' => Should always be the
+> same, because this may be parsed by scripts (plumbing). Should not
+> depend on $LANG, and shouldn't change from a version of Git to another.
 >
 
-Ah thanks, Makes sense :)
+A little blurry on how this works, as in how translation takes place,
+probably need to look at some code.
+
+> git branch --format '%(upstream:track)' => Should show what is most
+> pleasant to the user (porcelain): translated according to $LANG and
+> friends, and may be improved in the future.
+>
+> I already pointed out a fix where a string was translated in a plumbing
+> command. Another example is setup_unpack_trees_porcelain() in
+> unpack-trees.c which solves exactly the same problem.
+>
+
+You did. I was just too clueless.
+
+> I'll followup with a small series on top of yours to show the way. I did
+> not try to polish it since I guess you have local changes on the same
+> part of the code. Feel free to squash patches together or to squash them
+> with yours. The commit messages are not meant to be final either.
+>
+
+Thanks a lot for this. This should help me out. I'll probably squash them along.
+Thanks :)
 
 -- 
 Regards,
