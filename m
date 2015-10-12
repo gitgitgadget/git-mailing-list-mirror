@@ -1,120 +1,73 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 1/3] Add Travis CI support
-Date: Sun, 11 Oct 2015 16:40:59 -0400
-Message-ID: <CAPig+cQ4Gd6aNQdrdD7ZEJW2Mn=pJujkqje0-htJpJYz8LVbhQ@mail.gmail.com>
-References: <1444586102-82557-1-git-send-email-larsxschneider@gmail.com>
-	<1444586102-82557-2-git-send-email-larsxschneider@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/10] port branch.c to use ref-filter's printing options
+Date: Sun, 11 Oct 2015 17:36:07 -0700
+Message-ID: <xmqqbnc4ord4.fsf@gitster.mtv.corp.google.com>
+References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
+	<vpqr3l5zgst.fsf@grenoble-inp.fr>
+	<CAOLa=ZQvB_S2-nw8hOABt7aQJOWJXvfK1U2zurpnZmaAgJNnGA@mail.gmail.com>
+	<vpq8u7dp9qr.fsf@grenoble-inp.fr>
+	<CAOLa=ZQOO9BjoTj1B-b=kUviL=617F7y46BeX1sOXpeHcatFVQ@mail.gmail.com>
+	<xmqq4mi1rywu.fsf@gitster.mtv.corp.google.com>
+	<vpqpp0ojvs6.fsf@grenoble-inp.fr>
+	<xmqqfv1jq4jy.fsf@gitster.mtv.corp.google.com>
+	<CAOLa=ZQkjMFXVeJ==myQLjyRs6EcejnYnszYKJLyskFufjeqiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Pete Wyckoff <pw@padd.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 11 22:41:07 2015
+Content-Type: text/plain
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 02:36:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlNQY-0006pQ-3C
-	for gcvg-git-2@plane.gmane.org; Sun, 11 Oct 2015 22:41:06 +0200
+	id 1ZlR67-00022I-Oa
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 02:36:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424AbbJKUlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2015 16:41:00 -0400
-Received: from mail-vk0-f53.google.com ([209.85.213.53]:36651 "EHLO
-	mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751176AbbJKUlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2015 16:41:00 -0400
-Received: by vkgc187 with SMTP id c187so13364150vkg.3
-        for <git@vger.kernel.org>; Sun, 11 Oct 2015 13:40:59 -0700 (PDT)
+	id S1752766AbbJLAgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2015 20:36:10 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:35351 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752759AbbJLAgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2015 20:36:09 -0400
+Received: by pabve7 with SMTP id ve7so80035725pab.2
+        for <git@vger.kernel.org>; Sun, 11 Oct 2015 17:36:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=a9PEXgZ3BVYm5r+0gjt/1qCU6PHYI5NQWWH1lItcn6Q=;
-        b=adQuXU1aeCELtQC3Q6IyBAesG9g6YT+CENnfMKRr3cBOpS18QCx+yusbwd1tU5Zooa
-         GrC8YYifZYdu5vmpSMPFsyML17rzuIfmF2d6+YFwzR+WHvzC23LwzN/WLd3/ZiGtHID8
-         nl41Iif34lYdG9jjD/VD1cjkU6JhZ8MK0QNkpYIFSZP8IEPUb1rrGE//cGgxrjA74dLO
-         IE27Qro+dq9otNz5xxogMAM1ntYCX6kWozx7xQEGsMTHAJdMCkfXYCE77BcW09tnQQ5J
-         8WJPmFlmoKiBXIdoBraHuMhF0nO+BOZAR85/hwsMBVtfIcZlNIoU3MsudSvx/ru5prC6
-         VT7A==
-X-Received: by 10.31.56.193 with SMTP id f184mr16360049vka.115.1444596059397;
- Sun, 11 Oct 2015 13:40:59 -0700 (PDT)
-Received: by 10.31.224.68 with HTTP; Sun, 11 Oct 2015 13:40:59 -0700 (PDT)
-In-Reply-To: <1444586102-82557-2-git-send-email-larsxschneider@gmail.com>
-X-Google-Sender-Auth: GyZEJyc9Llp515yQuXJNqwikses
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=cEdO3TJmqosUDpT18l03w5wkNSPDXBsCxdq/r85EYIw=;
+        b=rhH62b33/rzNsCfV5qxOSTE5SZIVwcDlBpKAItuy3EuebhTyUMxm7nEs3+IIokD2f3
+         UY/IrodGBbSEvxjlnGx+0tEVGiN6rY2jpb35idLwoZLh0XOemyLI+RiRiWC6MBL72KVj
+         0xe2F9E+ZN/5FJzljSSmw45LjI5ogMqavePQVrhLrM5fwCbO6C5NpEHWMAcQrH7Gz728
+         Uobk5ZalFVPD0yCl55s4e8dsekUJUDjafwdSDZlSEA9NkSnSwcv6HObNXX1CMUWBPsMA
+         2TIJtRm8gOorzASfIyclKrEfG8hOVyh95VdelbXxSsSyYENW95C31EBHcBSF0cnn9yyn
+         CbTA==
+X-Received: by 10.66.235.194 with SMTP id uo2mr24299259pac.41.1444610169088;
+        Sun, 11 Oct 2015 17:36:09 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:448f:3a3:d25a:82f])
+        by smtp.gmail.com with ESMTPSA id xa4sm14752412pac.28.2015.10.11.17.36.08
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 11 Oct 2015 17:36:08 -0700 (PDT)
+In-Reply-To: <CAOLa=ZQkjMFXVeJ==myQLjyRs6EcejnYnszYKJLyskFufjeqiA@mail.gmail.com>
+	(Karthik Nayak's message of "Sun, 11 Oct 2015 18:18:43 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279359>
 
-On Sun, Oct 11, 2015 at 1:55 PM,  <larsxschneider@gmail.com> wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
->
-> The tests are currently executed on "Ubuntu 12.04 LTS Server Edition
-> 64 bit" and on "OS X Mavericks" using gcc and clang.
->
-> Perforce and Git-LFS are installed and therefore available for the
-> respective tests.
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> diff --git a/.travis.yml b/.travis.yml
-> new file mode 100644
-> index 0000000..25a7079
-> --- /dev/null
-> +++ b/.travis.yml
-> @@ -0,0 +1,46 @@
-> +language: c
-> +
-> +os:
-> +  - linux
-> +  - osx
-> +
-> +compiler:
-> +  - clang
-> +  - gcc
-> +
-> +before_install:
-> +  - >
-> +    export GIT_TEST_OPTS=" --quiet";
-> +    case "${TRAVIS_OS_NAME:-linux}" in
-> +    linux)
-> +      wget -q https://package.perforce.com/perforce.pubkey -O - \
-> +        | sudo apt-key add -
-> +      echo 'deb http://package.perforce.com/apt/ubuntu precise release' \
-> +        | sudo tee -a /etc/apt/sources.list
-> +      wget -q https://packagecloud.io/gpg.key -O - | sudo apt-key add -
-> +      echo 'deb https://packagecloud.io/github/git-lfs/debian/ jessie main' \
-> +        | sudo tee -a /etc/apt/sources.list
-> +      sudo apt-get update -qq
-> +      sudo apt-get install -y apt-transport-https
-> +      sudo apt-get install perforce-server git-lfs
-> +      ;;
-> +    osx)
-> +      brew_force_set_latest_binary_hash () {
-> +        FORUMULA=$1
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Is this spelling intentional or is it a misspelling of "formula"?
+> On Fri, Oct 9, 2015 at 11:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+> Also does it make sense to integrate these changes here? Or would you like to
+> have another series on this?
 
-> +        SHA=$(brew fetch --force $FORUMULA 2>&1 | grep ^SHA256: | cut -d ' ' -f 2)
-> +        sed -E -i.bak "s/sha256 \"[0-9a-f]{64}\"/sha256 \"$SHA\"/g" \
-> +          /usr/local/Library/Taps/homebrew/homebrew-binary/$FORUMULA.rb
-> +      }
-> +      brew update
-> +      brew tap homebrew/binary
-> +      brew_force_set_latest_binary_hash perforce
-> +      brew_force_set_latest_binary_hash perforce-server
-> +      brew install git-lfs perforce-server perforce
-> +      ;;
-> +    esac
-> +
-> +install: make configure && ./configure
-> +
-> +before_script: make
-> +
-> +script: make --quiet test
-> --
-> 2.5.1
+I do not think you would want to ask that question, as my answer
+would most likely be "The most preferable would be a series to clean
+up the existing codepath that deals with %(align) first, on top of
+which everything in flight that is not yet in 'next' is rebased."
