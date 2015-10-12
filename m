@@ -1,85 +1,107 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3 04/44] refs.c: add a new refs.c file to hold all common refs code
-Date: Mon, 12 Oct 2015 17:51:24 -0400
-Message-ID: <1444686725-27660-5-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v3 02/44] refs: make repack_without_refs and is_branch public
+Date: Mon, 12 Oct 2015 17:51:22 -0400
+Message-ID: <1444686725-27660-3-git-send-email-dturner@twopensource.com>
 References: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>
+Cc: David Turner <dturner@twopensource.com>,
+	Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Mon Oct 12 23:52:27 2015
+X-From: git-owner@vger.kernel.org Mon Oct 12 23:52:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zll18-0004JB-64
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 23:52:26 +0200
+	id 1Zll13-0004Ch-EH
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 23:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116AbbJLVwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 17:52:22 -0400
-Received: from mail-qg0-f52.google.com ([209.85.192.52]:34232 "EHLO
-	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751647AbbJLVwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 17:52:18 -0400
-Received: by qgez77 with SMTP id z77so130215171qge.1
-        for <git@vger.kernel.org>; Mon, 12 Oct 2015 14:52:17 -0700 (PDT)
+	id S1752077AbbJLVwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 17:52:17 -0400
+Received: from mail-qg0-f45.google.com ([209.85.192.45]:33789 "EHLO
+	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751647AbbJLVwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 17:52:16 -0400
+Received: by qgeb31 with SMTP id b31so28254355qge.0
+        for <git@vger.kernel.org>; Mon, 12 Oct 2015 14:52:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ZHZAfZD+5NjDu7BbVcJNGMW2t2O4USqqBwWT9+s+smo=;
-        b=Hivdl7wrMw1mJu3pZwkhbBOyoe5wqmXPJrV6F+7hVAGEtpqWAZ1CuXRoT+L8raH0Ul
-         7V9heTJ11xHCQd4LgQq9itmrsHyZweL7EMNO8+6a4ASvoXSM5LNCl25QZPqXEtK0ZmwO
-         elRFl5L39ujViXUGUsZsQacqAGgWNE2z6WBvzM3d2o7UQHRopkKr4ryNi4uHnCel18bo
-         hD1HGy/ixIJ58rK5YcLQWyLXXt49Q9dpX7S2Ue+8WzjgO/hVDGHvPGNCB9KDJIusfnaQ
-         ecz5gbSBxWlSJ1uP+sMv5szcgEVFeZ6YmFwugAaqeJsyHJdw3Hg9dNHk3EZ6Qtr6/wWz
-         KVsA==
-X-Gm-Message-State: ALoCoQn/UXfr7gbTcCKTSG14Qlrb+FA9RpWU+nWKXXYf7K7zwFRiQwrty9bg0KuBLsGsMuBM0ufQ
-X-Received: by 10.140.19.227 with SMTP id 90mr34666321qgh.51.1444686737740;
-        Mon, 12 Oct 2015 14:52:17 -0700 (PDT)
+        bh=aM+YYtcJ74Yr2p4251dDXVZXxvNruk0YFHmnO1RMid0=;
+        b=WgDOvneOinOAHoydcl8ZEXdwkKrNuBXl3svH9vPtQJEatiqiyx8+aJ+LN2vWdI4EDX
+         V9Xk1kzO6IVwmkJcNVPkLb2/9RmPrcjHxKhvhv55MsjwdXXqBav+sCP6sHe7RugqbGm8
+         3qtRrTXM87GDse8+TWzRX3KUOcbAFkFGxw46mydHRMN2OicOwR+PLzs+kxg81mxKUajG
+         83RCe5F4xOuUFIiwSUHy0zHx1RfMIV5QafCGYmDEqd1DVcT9w7NPMYScrxYZixVL1kV0
+         9PUybmNNRQHbZ2GM5LMt1+aE+ep4wIq5oUDIhgXxdOq/EKWtgO5YNIhwJ0DAIn9Qs1Cq
+         iLkg==
+X-Gm-Message-State: ALoCoQl0BKgOhu7WEkyo3cRMM/xQAS7y0cpIT9YtJYbMCrjprnVG0QKclDMNMpkBv877XjdUiCdL
+X-Received: by 10.140.95.73 with SMTP id h67mr35617409qge.14.1444686735978;
+        Mon, 12 Oct 2015 14:52:15 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id q140sm7865647qha.5.2015.10.12.14.52.16
+        by smtp.gmail.com with ESMTPSA id q140sm7865647qha.5.2015.10.12.14.52.14
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Oct 2015 14:52:17 -0700 (PDT)
+        Mon, 12 Oct 2015 14:52:15 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279421>
 
-From: Ronnie Sahlberg <sahlberg@google.com>
-
-Create a new refs.c file that will be used to hold all the refs
-code that is backend agnostic and will be shared across all backends.
+is_branch was already non-static, but this patch declares it in the
+header.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Makefile | 1 +
- refs.c   | 3 +++
- 2 files changed, 4 insertions(+)
- create mode 100644 refs.c
+ refs.c |  9 +--------
+ refs.h | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 19036de..43ceab0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -767,6 +767,7 @@ LIB_OBJS += reachable.o
- LIB_OBJS += read-cache.o
- LIB_OBJS += reflog-walk.o
- LIB_OBJS += refs-be-files.o
-+LIB_OBJS += refs.o
- LIB_OBJS += ref-filter.o
- LIB_OBJS += remote.o
- LIB_OBJS += replace_object.o
 diff --git a/refs.c b/refs.c
-new file mode 100644
-index 0000000..77492ff
---- /dev/null
+index fe71ea0..d0dfdfc 100644
+--- a/refs.c
 +++ b/refs.c
-@@ -0,0 +1,3 @@
-+/*
-+ * Common refs code for all backends.
+@@ -2814,14 +2814,7 @@ int pack_refs(unsigned int flags)
+ 	return 0;
+ }
+ 
+-/*
+- * Rewrite the packed-refs file, omitting any refs listed in
+- * 'refnames'. On error, leave packed-refs unchanged, write an error
+- * message to 'err', and return a nonzero value.
+- *
+- * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
+- */
+-static int repack_without_refs(struct string_list *refnames, struct strbuf *err)
++int repack_without_refs(struct string_list *refnames, struct strbuf *err)
+ {
+ 	struct ref_dir *packed;
+ 	struct string_list_item *refname;
+diff --git a/refs.h b/refs.h
+index 79ea220..729bc3c 100644
+--- a/refs.h
++++ b/refs.h
+@@ -218,6 +218,19 @@ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct st
+ int pack_refs(unsigned int flags);
+ 
+ /*
++ * Rewrite the packed-refs file, omitting any refs listed in
++ * 'refnames'. On error, packed-refs will be unchanged, the return
++ * value is nonzero, and a message about the error is written to the
++ * 'err' strbuf.
++ *
++ * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
 + */
++extern int repack_without_refs(struct string_list *refnames,
++			       struct strbuf *err);
++
++extern int is_branch(const char *refname);
++
++/*
+  * Return true iff a reference named refname could be created without
+  * conflicting with the name of an existing reference.  If
+  * skip is non-NULL, ignore potential conflicts with refs in skip
 -- 
 2.4.2.644.g97b850b-twtrsrc
