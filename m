@@ -1,85 +1,102 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] pull --rebase: reinstate helpful message on abort
-Date: Mon, 12 Oct 2015 11:16:15 +0200
+Subject: Re: [PATCH 0/2] Reinstate the helpful message when `git pull
+ --rebase` fails
+Date: Mon, 12 Oct 2015 11:40:56 +0200
 Organization: gmx
-Message-ID: <d2116a492e14f07c8969798ce21c78a2@dscho.org>
+Message-ID: <ed70803ecd73415f1bbafb68502fbbda@dscho.org>
 References: <cover.1444336120.git.johannes.schindelin@gmx.de>
- <47e66f159e8929879f22504a180330e3fa020ee9.1444336120.git.johannes.schindelin@gmx.de>
- <xmqqbnc7q489.fsf@gitster.mtv.corp.google.com>
+ <xmqq612grhg7.fsf@gitster.mtv.corp.google.com>
+ <CACRoPnSPVMt+FtK6bwfa7Z3jBheTEkBnhU+B7qL8JrAsSmAmkQ@mail.gmail.com>
+ <xmqqk2qvq570.fsf@gitster.mtv.corp.google.com>
+ <xmqq4mhzq41e.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Brendan Forster <shiftkey@github.com>, git@vger.kernel.org
+Cc: Paul Tan <pyokagan@gmail.com>,
+	Brendan Forster <shiftkey@github.com>,
+	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 12 11:16:26 2015
+X-From: git-owner@vger.kernel.org Mon Oct 12 11:41:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlZDV-00084G-5I
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 11:16:25 +0200
+	id 1ZlZbP-0002xL-OZ
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 11:41:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbbJLJQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 05:16:21 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53787 "EHLO mout.gmx.net"
+	id S1751495AbbJLJlD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 05:41:03 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51947 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750858AbbJLJQS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 05:16:18 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LvVUR-1akN6y3ecd-010gSf; Mon, 12 Oct 2015 11:16:15
+	id S1751173AbbJLJlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 05:41:00 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0McEI3-1a3WWc2sER-00Jbgc; Mon, 12 Oct 2015 11:40:57
  +0200
-In-Reply-To: <xmqqbnc7q489.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq4mhzq41e.fsf@gitster.mtv.corp.google.com>
 X-Sender: johannes.schindelin@gmx.de
 User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:sAnGy7oFxJBLtbc3Efi+gHq4ZoeJKjblKhR1kQTUbcc7unbgMtT
- bkCF5uOFCom7wuV7raA7l4fIfBfcwVCd/Ky9erj+/Sgx/sCYOvVNkSucE7Vy6cxNtno4PUk
- Spz3TFfUoDnNlZg8ItjclX3HQa9efe8l95SUjcRaDgA3K45qDB/TUXGwh23z7vpqKMZvgOx
- H1WOMn+yODM8A85UFWYvA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JRvIKJ57hGo=:XoAUQSo8+sykYzFDfULanC
- WvvF24PhBF8IpLTz3P3i7GfERg0TYAdVJDLeb0DWfaVGnUbw0Yk7WqKZO0XDGPyX67gc1RLxp
- geHZSh6uuX+A5zM87/boCUM+/tBk7Spx0wmJ+Q2Df21PMCqVaxxNUw3iOrEmv7fWnk33HBues
- 4elTcYjnHm6x4YwKy2ldWfq9qvgFDohtLNTERBk+uCcTQYwrNRDTWtoI56icDH+76MnOprDFI
- CSVadeTvM67mpuo28ExMZYPm2521cE8qpUvKYtS9e+kfBpXOiomFelyMv91xz35PnHwXLUJMl
- ExYNZte//hIkG1DBns0CcvVHqYgnFeffSkBy0JG2vNh2JUMRl4JbLw4z+CuJIOUAPpb2jGtww
- UG9v8YWZeLYZ2jfA/QFoHrLxua2MW11wYCQUpEY9clEHGJxR+TbMNBmPy2lS5VQuO0pbSOsmp
- Nxoev9shcUA7mxnQvTVhDvHiuZ2aLraMiZ4s6PtaMbAx0KdDkXcMipFuYuVwpQsnyTx0n+eZ6
- KUPkVVZk+NxkleOnWu40YEjXGkNDateJC1tp3/Z4kuYU34g0mhPIyeEX/HFO3tvyDZO88Y4vk
- 5hzC9GFO86iEm/oiJm5gfSqze0g+0h/XlIeTUVGRCb6EPJHpJy5r/25UaZcmeVemKMzHmFHwJ
- PjWDbCkMtWWAf0vFt2pV17lHekG9BXP5m5tWwwOxUStOV2yu7l8v+LLh3Tkb/9GkNvG00D4DI
- +y3dJsS6I++mI4fBaSCSO6Lg53B1JJbsS+S1YRv21Scvfp+Iflaqu9YGz5E2diK+aXoACg2u 
+X-Provags-ID: V03:K0:/3A1TbNedpU9TNK5Mo6Y3knw51qN4KXR9k6BKdr/ouGu9Pzv1/8
+ NJ83D2SaUNycV0oVSG0SDVE2+/UPrD0LAtF8RqmOaa/YETkhUC8eEhdi5jiDj1x3Grb1Djh
+ JxZ97NVq7uWbFHmTDWvsD8GNLC9/Z9bNF9fTtAJTA3WDEL9CdWnBbQQabzIWm6nLPt/0QDp
+ mjrb68Vd9py//ZDZPEHpw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9bqfCWIVynk=:DPvyPvCape4qDLsGa4Ye0V
+ SyHv3KHDePeops8O/a02SKaikmPLJdeRdOar8+VGh0ZZ4fE2r3TwMzLIvEJnWrJhtNJZQNecH
+ kI95Cl1TTSw52ax0/H/kO/lklJ1DVeuTy5aDhx3SGCDL3lIyAEe2xqmufLj6qfrJGkHxwore6
+ 64lvAi8XryWkdLOS2uf65rA4YbTgDOB+GcqWjYHxgj2rXMwuibVppbnJGsTlyqNgu2uzlig9H
+ UxSr7n5tMlC15mrytxKlE7WY7L2W/BA7nCfdYC10jVOYFLz8ixF6/gHDvW1Y8iYRFasHaXqbn
+ sjujjqG/AhGiQiDk5h2goZO/HLLgyTav//WhW88fytQdfdW4+SDYddUGHwCg3mzAejuUbLZWH
+ KB1npZ4JT1LFpZ1b1rOHoWOY6YRct0j4EekFysZ+yUCw+X/80cGVJZCTGNJraJ7Q0agZuge8T
+ SDcQTgNvPmrVru2YhhjGsUqVRPsbmPNuDU+EBbIwoVluP+QgjIPa+VAvovPjoY2DVkad/1xga
+ VWe1R3P1bYl35elgx3kZM+TctQhIQ+rvAqPHU6jB7gIgBh+QiW4iwprBhPXNJF1amM2G0xzKM
+ awlxtRw93Ao5Z2qfYF+0urR9n+dL2h12NKvKPQxHignjZVJ17T0cqgAc2+dUPg2m4w2ifdHb4
+ QfQ5YPYXBSqiBrx2AKiLQSvMtIeTJ935h4PrI9AhpNkzkwOnEin6j7kt1O8YiTYKlEh64qK0g
+ KDlHafw4t7XOy9SIFJ7sXZ2fIEwj7HVKdC5Lhb02m2pu47NoE/McpMH9b1UufzuavoZ9waaI 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279369>
 
 Hi Junio,
 
-On 2015-10-09 20:36, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On 2015-10-09 20:40, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
->> When calling `git pull --rebase`, things can go wrong. In such a case,
->> we want to tell the user about the most common ways out of this fix:
->> ...
->>  builtin/am.c | 1 +
->>  1 file changed, 1 insertion(+)
+>>> Instead, stepping back a bit, I wonder if we can extend coverage of
+>>> the helpful message to all die() calls when running git-am. We could
+>>> just install a die routine with set_die_routine() in builtin/am.c.
+>>> Then, should die() be called anywhere, the helpful error message will
+>>> be printed as well.
+>>
+>> That could certainly be a valid approach and may give us a better
+>> end result.  If it works, it could be a change that is localized
+>> with a lot less impact.
 > 
-> It is strange to see a patch to am that does not talk anything about
-> it, though.  And looking at the codepath, the issue does not have
-> much to do with "pull --rebase".  It doesn't even have much to do
-> with "rebase".  This is purely about "am -3" fallback codepath.
+> I looked at the codepath involved, and I do not think that is a
+> feasible way forward in this case.  It is not about a "helpful
+> message" at all.  You would have to do everything that is done in
+> the error codepath in your custom die routine, which does not make
+> much sense.
+> 
+> I think the most sensible regression fix as the first step at this
+> point is to call it as a separate process, just like the code calls
+> "apply" as a separate process for each patch.  Optimization can come
+> later when it is shown that it matters---we need to regain
+> correctness first.
 
-I made it a habit of describing the big picture in commit messages, including the original motivation for the patch. Naturally, it is purely an implementation detail that the bug displayed by `git pull --rebase` is fixed by modifying `am.c`.
+I fear that you might underestimate the finality of this "first step". If you reintroduce that separate process, not only is it a performance regression, but could we really realistically expect any further steps to happen after that? I do not think so.
 
-> Because fall-back-threeway wants to react to an error (i.e. calls
-> merge_recursive_generic() and wants to use its return value), but
-> merge_recursive_generic() can die, it fails to do so.  It would not
-> even run rerere(), for example.
+Also, please let me clarify why I called reintroducing the separate process "heavy-handed" in an earlier message. As pointed out by Paul, the dying code paths indicate non-recoverable problems, i.e. serious problems that not even a rerere could fix. Modulo bugs, of course, but those bugs need to be fixed and not papered over. The real bug, after all, is that a non-recoverable code path is taken when it should just return with an error code.
 
-Precisely, So the symptom triggering the bug fix was seemingly unrelated to the patch, hence the need for the comprehensive commit message.
+Reintroducing the separate process would not help the endeavor to fix those code paths. Indeed, if we still had the separate process, I would never have discovered that bug!
 
-Since our tastes seem to differ a bit, maybe we can have the best of both worlds by appending the following paragraph to the commit message?
+And we should also keep in mind that this whole story demonstrates the rather serious shortcomings of the mindset we display throughout libgit.a where it does not behave like a library at all. Of course, hindsight is 20/20, so it is all too easy, and not exactly fair, to criticise the short-sightedness of writing code that does not clean up after itself "because it is a short-running process anyway". I certainly have contributed to these problems myself! All the more eager am I to help *increase* the number of functions in libgit.a that are reentrant, eventually making libgit.a behave like a true library. And in that light, what you called "the first step" appears like it would be a huge step backwards.
 
--- snipsnap --
-This patch actually fixes a deeper-seated bug where the non-gentle death of the recursive merge would prevent not only the message from being shown but *any* code to run after the failed merge, including rerere.
+In contrast, introducing the "gentle" flag would be a step in the right direction. It is a much lighter stop-gap solution, too.
+
+For the above reasons, I respectfully remain convinced that reintroducing the separate process would be a mistake.
+
+Ciao,
+Dscho
