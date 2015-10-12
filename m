@@ -1,188 +1,100 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3 40/44] refs: allow ref backend to be set for clone
-Date: Mon, 12 Oct 2015 17:52:01 -0400
-Message-ID: <1444686725-27660-42-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v3 36/44] refs: make files_log_ref_write functions public
+Date: Mon, 12 Oct 2015 17:51:57 -0400
+Message-ID: <1444686725-27660-38-git-send-email-dturner@twopensource.com>
 References: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Mon Oct 12 23:53:31 2015
+X-From: git-owner@vger.kernel.org Mon Oct 12 23:53:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zll29-0005Ke-Sd
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 23:53:30 +0200
+	id 1Zll29-0005Ke-8h
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 23:53:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751782AbbJLVxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 17:53:20 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:34633 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752613AbbJLVw5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 17:52:57 -0400
-Received: by qgez77 with SMTP id z77so130225900qge.1
-        for <git@vger.kernel.org>; Mon, 12 Oct 2015 14:52:57 -0700 (PDT)
+	id S1752602AbbJLVwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 17:52:54 -0400
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:35036 "EHLO
+	mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752548AbbJLVwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 17:52:53 -0400
+Received: by qkap81 with SMTP id p81so63253313qka.2
+        for <git@vger.kernel.org>; Mon, 12 Oct 2015 14:52:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=SbWyrE5nG18DW6XNHtmemU8tl5uuTa+v5YtukJLoxLw=;
-        b=U5LV3auHIO9DIJMCLuUNkpH5mlLxklc/LGOz1BH6Xbb5GMcS8p5G9y8tLWwul/51wR
-         8qxlynam3H1lhMUB8KYYEVtmk26ZLjTXcrJpUR+Wk7lTitbm400Fj28IDbhDAb3QFjvf
-         1pmYvxJ3m/f9gwucqiovzJue0Uw5xQ9PtkNDPvHBoHeRaKGXwhvLoUufP/VO9LZQPKsM
-         B6g1zk7kKnotcyNzy9sd5wuIqyYy4RB0U3rZ3L5kj/wXXd9JqOt21cbIwHzZlHEBst18
-         CzzQ09RKRdDfuSLAKmDvfcQ37JsKo0XIUnv+uu4ylKg/DklYZ6JL/2f2du+On6+BknK2
-         VSNg==
-X-Gm-Message-State: ALoCoQlPCAGbRfKI/Ss/W2JWdupn9H0D7P/UjboyVVAB2fTFbtMbEMp6TyJVuMvgMxjXYyLTV+1x
-X-Received: by 10.140.32.247 with SMTP id h110mr35189271qgh.1.1444686777241;
-        Mon, 12 Oct 2015 14:52:57 -0700 (PDT)
+        bh=lv2Bny8ZmyQrCg+OVVUSmiTF0F3/xm7gphMMhXmBhPs=;
+        b=USgrvL4NTqzJWtLqiBoKhRmeXmmfIa8mUJlkZXHFdo/maOeSIcGcC5d00qQCzv8+iF
+         GRWu6VPM0OFvK5LTjtdfbspywkNJ5zVM1+CH7FzV4+AITQNcv6xN0ZZE3qCam0JJXV/A
+         PWsm6QacWYbdmI7sC38g/0y4Nnw5pDC2GW++jwggZ6Mvw1+5qjrhEBVmVIvrNaSaBp8Z
+         gtgJnKul8jUEnrZnXM/ZJcIbqGuqZl1WZNPhv/RwakZN8AxVi8pZhF7oL/R5pbrZ7MBA
+         nvk0oQMBdXhwdrTXCt2xMn2OnkJyvqiyybdDrTyuGZx9VQ17MotcH+pb67g2ErfYodpq
+         iVEA==
+X-Gm-Message-State: ALoCoQnabyhOUw1DqdVNhI1wmz4Li7T8sPf1atGaJx95AGf2OgDoT23R+RBRSbW9VfAIPTQz+aDb
+X-Received: by 10.55.201.217 with SMTP id m86mr35184692qkl.85.1444686772958;
+        Mon, 12 Oct 2015 14:52:52 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id q140sm7865647qha.5.2015.10.12.14.52.56
+        by smtp.gmail.com with ESMTPSA id q140sm7865647qha.5.2015.10.12.14.52.52
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Oct 2015 14:52:56 -0700 (PDT)
+        Mon, 12 Oct 2015 14:52:52 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279445>
 
-Add a new option, --refs-backend-type, to allow the ref backend type to
-be set on new clones.
+Because HEAD and stash are per-worktree, refs.c needs to go through
+the files backend to write these refs.
 
-Submodules must use the same ref backend as the parent repository, so
-we also pass the --refs-backend-type option option when cloning
-submodules.
+In this patch, we make one files backend internal functions
+public. Later, we will use this to handle reflog updates for
+per-worktree symbolic refs (HEAD).
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- Documentation/git-clone.txt |  4 ++++
- builtin/clone.c             | 27 +++++++++++++++++++++++++--
- builtin/submodule--helper.c |  5 ++++-
- cache.h                     |  1 +
- refs.c                      |  2 ++
- 5 files changed, 36 insertions(+), 3 deletions(-)
+ refs-be-files.c | 8 ++++++++
+ refs.h          | 5 +++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index f1f2a3f..d7a4cb0 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
- 	  [--dissociate] [--separate-git-dir <git dir>]
- 	  [--depth <depth>] [--[no-]single-branch]
-+	  [--refs-backend-type=<name>]
- 	  [--recursive | --recurse-submodules] [--] <repository>
- 	  [<directory>]
- 
-@@ -216,6 +217,9 @@ objects from the source repository into a pack in the cloned repository.
- 	The result is Git repository can be separated from working
- 	tree.
- 
-+--refs-backend-type=<name>::
-+	Type of refs backend. Default is to use the original files based
-+	backend.
- 
- <repository>::
- 	The (possibly remote) repository to clone from.  See the
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 3e14491..d489a87 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -92,11 +92,13 @@ static struct option builtin_clone_options[] = {
- 		   N_("separate git dir from working tree")),
- 	OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
- 			N_("set config inside the new repository")),
-+	OPT_STRING(0, "refs-backend-type", &refs_backend_type,
-+		   N_("name"), N_("name of backend type to use")),
- 	OPT_END()
- };
- 
- static const char *argv_submodule[] = {
--	"submodule", "update", "--init", "--recursive", NULL
-+	"submodule", "update", "--init", "--recursive", NULL, NULL
- };
- 
- static const char *get_repo_path_1(struct strbuf *path, int *is_bundle)
-@@ -724,8 +726,24 @@ static int checkout(void)
- 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
- 			   sha1_to_hex(sha1), "1", NULL);
- 
--	if (!err && option_recursive)
-+	if (!err && option_recursive) {
-+		const char **backend_arg = argv_submodule;
-+		char *new_backend_arg = NULL;
-+		if (refs_backend_type) {
-+			while (*backend_arg)
-+				++backend_arg;
+diff --git a/refs-be-files.c b/refs-be-files.c
+index 798a995..8d1ffce 100644
+--- a/refs-be-files.c
++++ b/refs-be-files.c
+@@ -2710,6 +2710,14 @@ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
+ 			 const unsigned char *new_sha1, const char *msg,
+ 			 int flags, struct strbuf *err)
+ {
++	return files_log_ref_write(refname, old_sha1, new_sha1, msg, flags,
++				   err);
++}
 +
-+			new_backend_arg = xmalloc(21 + strlen(refs_backend_type));
-+			sprintf(new_backend_arg, "--refs-backend-type=%s",
-+				refs_backend_type);
-+			*backend_arg = new_backend_arg;
-+		}
- 		err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
-+		if (refs_backend_type) {
-+			free(new_backend_arg);
-+			*backend_arg = NULL;
-+		}
-+	}
++int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
++			const unsigned char *new_sha1, const char *msg,
++			int flags, struct strbuf *err)
++{
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int ret = log_ref_write_1(refname, old_sha1, new_sha1, msg, &sb, flags,
+ 				  err);
+diff --git a/refs.h b/refs.h
+index 4d8b3bb..3aad3b8 100644
+--- a/refs.h
++++ b/refs.h
+@@ -633,6 +633,11 @@ enum ref_type ref_type(const char *refname);
  
- 	return err;
- }
-@@ -744,6 +762,11 @@ static void write_config(struct string_list *config)
- 					       write_one_config, NULL) < 0)
- 			die("unable to write parameters to config file");
- 	}
+ int copy_reflog_msg(char *buf, const char *msg);
+ 
++int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
++			const unsigned char *new_sha1, const char *msg,
++			int flags, struct strbuf *err);
 +
-+	if (refs_backend_type &&
-+	    write_one_config("core.refs-backend-type",
-+			     refs_backend_type, NULL) < 0)
-+			die("unable to write backend parameter to config file");
- }
- 
- static void write_refspec_config(const char *src_ref_prefix,
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f4c3eff..5c9ca4e 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -140,7 +140,10 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
- 		argv_array_pushl(&cp.args, "--reference", reference, NULL);
- 	if (gitdir && *gitdir)
- 		argv_array_pushl(&cp.args, "--separate-git-dir", gitdir, NULL);
--
-+	if (refs_backend_type && *refs_backend_type) {
-+		argv_array_push(&cp.args, "--refs-backend-type");
-+		argv_array_push(&cp.args, refs_backend_type);
-+	}
- 	argv_array_push(&cp.args, url);
- 	argv_array_push(&cp.args, path);
- 
-diff --git a/cache.h b/cache.h
-index cc817dc..692cfd3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -695,6 +695,7 @@ enum object_creation_mode {
- extern enum object_creation_mode object_creation_mode;
- 
- extern char *notes_ref_name;
-+extern const char *refs_backend_type;
- 
- extern int grafts_replace_parents;
- 
-diff --git a/refs.c b/refs.c
-index 025cc08..901558d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -21,6 +21,8 @@ struct ref_be *the_refs_backend = &refs_be_files;
-  */
- struct ref_be *refs_backends = &refs_be_files;
- 
-+const char *refs_backend_type;
 +
- /*
-  * This function is used to switch to an alternate backend.
-  */
+ enum expire_reflog_flags {
+ 	EXPIRE_REFLOGS_DRY_RUN = 1 << 0,
+ 	EXPIRE_REFLOGS_UPDATE_REF = 1 << 1,
 -- 
 2.4.2.644.g97b850b-twtrsrc
