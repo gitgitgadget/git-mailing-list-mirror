@@ -1,53 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv7 0/8] fetch submodules in parallel
-Date: Mon, 12 Oct 2015 12:32:12 -0700
-Message-ID: <xmqqr3kzlw77.fsf@gitster.mtv.corp.google.com>
-References: <1444675641-14866-1-git-send-email-sbeller@google.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v3 1/3] Add Travis CI support
+Date: Mon, 12 Oct 2015 21:37:16 +0200
+Message-ID: <CAHGBnuOqVPHAhfN6qtt=VDODW9h+A1xMEnzaZfD61DCNyj_YOg@mail.gmail.com>
+References: <1444586102-82557-1-git-send-email-larsxschneider@gmail.com>
+	<1444586102-82557-2-git-send-email-larsxschneider@gmail.com>
+	<561B69AE.8050403@gmail.com>
+	<BF182294-B896-4C2D-B371-74036BC522A2@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Oct 12 21:32:21 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	tboegi@web.de, pw@padd.com
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 21:37:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlipX-0007d9-EN
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 21:32:19 +0200
+	id 1ZliuS-0004Lh-9d
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 21:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751947AbbJLTcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 15:32:15 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:34754 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751449AbbJLTcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 15:32:14 -0400
-Received: by padhy16 with SMTP id hy16so161371885pad.1
-        for <git@vger.kernel.org>; Mon, 12 Oct 2015 12:32:14 -0700 (PDT)
+	id S1751642AbbJLThS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 15:37:18 -0400
+Received: from mail-ig0-f177.google.com ([209.85.213.177]:38739 "EHLO
+	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750995AbbJLThR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Oct 2015 15:37:17 -0400
+Received: by igkz10 with SMTP id z10so54078675igk.1
+        for <git@vger.kernel.org>; Mon, 12 Oct 2015 12:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=w+zsaZTronYuxot094uTA9ZDKcsy7l5IR4LKcFst//4=;
-        b=gQ7ciaL+BMzAL70SEGM5OUABkEPQbqlWkjGuBSo7e8woSJ17Jp4rq6fCBqLw9S30EA
-         gZqoHJ9n+yW0ApuwHV6QTrdhY9je+4zOusx1DIoMWMTKDezwdYH7lNy6X5SFdoGEvFst
-         4gWzT+cZXrD5T0btH22+1IWupYerp/3b33eO5jQ/hac/TqRo6vAlRSL/JyGCDpazLz2k
-         krZJMJ2b24/FhTbA+yhIr3Urp6fmnqaKakEF9+rm15wcujYXFs9fcH1YwyFd3VnZ5E38
-         ScXRfmKLQUurblw3IF/lwpGYvnefg724GPJSvNnFHjEUUkC/V+UZPR8GSV1iFAVJy70n
-         Cjeg==
-X-Received: by 10.68.217.8 with SMTP id ou8mr36477435pbc.164.1444678334395;
-        Mon, 12 Oct 2015 12:32:14 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:448f:3a3:d25a:82f])
-        by smtp.gmail.com with ESMTPSA id tp6sm19747581pbc.81.2015.10.12.12.32.13
-        (version=TLS1_2 cipher=AES128-SHA256 bits=128/128);
-        Mon, 12 Oct 2015 12:32:13 -0700 (PDT)
-In-Reply-To: <1444675641-14866-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Mon, 12 Oct 2015 11:47:13 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=mJ1FnyghnjBaR+0xqcHMx6SMYxfV+n+PI4e9n2I+n2A=;
+        b=s8870WQTxC750GA3TwBcNr9YVXVRJ/qtmAMQQfDpJvu/AtYGZwH4i2b6Xa6rDg3I9R
+         FTWxsB0KhZbuuJiqGf33pmC69z9Vp0ZFyNa94ZSHVTciu6g8JgeckpGQRCKSyFeIlAJB
+         wlilKhgS1QK+SNlbEhfsyCdZDLT/j08+y4E7esFmHZefbLTneG4+JFyfTPKj6VwO89fx
+         ZK3ZXhsIHwrKPRL1NOYR4jcsigTS/KPLWxbQJvmx56r5STVC9ZKHht0o2Rtl1HE2Qsju
+         LgGkT4YmY8ATtQ/EsSRPsnRyxaktqantB+0eCnJojK6xuk5Adc2FXUum3ByesSoCTp72
+         vxZg==
+X-Received: by 10.50.80.14 with SMTP id n14mr13361283igx.30.1444678637031;
+ Mon, 12 Oct 2015 12:37:17 -0700 (PDT)
+Received: by 10.107.138.213 with HTTP; Mon, 12 Oct 2015 12:37:16 -0700 (PDT)
+In-Reply-To: <BF182294-B896-4C2D-B371-74036BC522A2@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279407>
 
-Thanks; will replace.
+On Mon, Oct 12, 2015 at 7:12 PM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+
+>>> +install: make configure && ./configure
+>>> +
+>>> +before_script: make
+>>> +
+>>> +script: make --quiet test
+>>
+>> Semantically, it does not seem correct to me that configuarion goes to the install step. As "make test" will build git anyway, I'd instead propose to get rid of "install" and just say:
+>>
+>> before_script: make configure && ./configure
+>>
+>> script: make --quiet test
+>
+> I understand your point. I did this to make the "make" logs easily accessible (no option "--quite"). By default Travis CI automatically collapses the logs from all stages prior to the "script" stage. You can uncollapse these logs by clicking on the little triangle on the left border of the log. Therefore the "make" logs are available without noise.
+
+To make this more clear, I guess what you're referring to is the
+visual difference between [1] and [2], correct?
+
+> Do you see value in "make" logs?
+>
+> If yes then we could also do:
+> before_script: make configure && ./configure && make
+
+Reading through Travis' docs [3] again, "before_script" is documented
+to "return a non-zero exit code, the build is errored and stops
+immediately", while "script" is documented as "returns a non-zero exit
+code, the build is failed, but continues to run before being marked as
+failed". As it does not make much sense to continue the build or even
+start testing if the build failed, maybe it's indeed best to do:
+
+before_script: make configure && ./configure && make
+
+script: make --quiet test
+
+[1] https://travis-ci.org/larsxschneider/git/jobs/84805733
+[2] https://travis-ci.org/larsxschneider/git/jobs/84955658
+[3] http://docs.travis-ci.com/user/customizing-the-build/
+
+-- 
+Sebastian Schuberth
