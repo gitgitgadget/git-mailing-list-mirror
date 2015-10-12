@@ -1,91 +1,99 @@
-From: Aleksey Komarov <leeeeha@gmail.com>
-Subject: submodule: allow submodule directory in gitignore
-Date: Mon, 12 Oct 2015 13:30:10 +0700
-Message-ID: <561B5372.7040508@gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v3 3/3] git-p4: Skip t9819 test case on case insensitive
+ file systems
+Date: Mon, 12 Oct 2015 07:47:05 +0100
+Message-ID: <CAE5ih79M9guQsjs34XmyE6sxExa6a6KkgdYEHOyeBCv57-4-QA@mail.gmail.com>
+References: <1444586102-82557-1-git-send-email-larsxschneider@gmail.com>
+	<1444586102-82557-4-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 12 08:33:46 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Pete Wyckoff <pw@padd.com>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 08:47:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlWg4-0002yd-0q
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 08:33:44 +0200
+	id 1ZlWt6-0006sK-EA
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 08:47:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751169AbbJLGdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 02:33:11 -0400
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:36441 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750811AbbJLGdK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 02:33:10 -0400
-Received: by lbcao8 with SMTP id ao8so132896864lbc.3
-        for <git@vger.kernel.org>; Sun, 11 Oct 2015 23:33:08 -0700 (PDT)
+	id S1751574AbbJLGrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 02:47:08 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:33415 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169AbbJLGrG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 02:47:06 -0400
+Received: by obbbh8 with SMTP id bh8so100850332obb.0
+        for <git@vger.kernel.org>; Sun, 11 Oct 2015 23:47:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        bh=O6bKoL3j6TcfG8/OdUeej0QEkTHnRQfvRNAiDh6Hm9Q=;
-        b=T6JF2Lj1Hpas4WYAQ3FnKQvPG2hky3kvDGRE6NKDLXIxpyRuF2FqCKCrS1hIoSM/Fv
-         pXpFGtLH3b4csO5ipJdFHd3xEyFTYFq/7tKU0FC5wIvYkHHGuioleRQ2G+3S52ePCu8v
-         KCEkgvjypFh9RvKxcphUefRnewao+NZmp+r83c2MPOTIdmt1ZYWklPnfFI2+7brThY3R
-         BNAKhtc2HEJ0FEujC061F/O7NjxTvjXhRmy/fHbFY7BY7iQOeiZukTYeqO1trIPNq+Vu
-         sbp0K1pV2DPpLkLJ3B3dgsl2tkbV66iOITfjbuu4SYJ4p/A0C7YWxJY4eXSJMGyZKA8E
-         Rytg==
-X-Received: by 10.25.39.143 with SMTP id n137mr938340lfn.71.1444631588483;
-        Sun, 11 Oct 2015 23:33:08 -0700 (PDT)
-Received: from [127.0.0.1] ([62.213.32.124])
-        by smtp.gmail.com with ESMTPSA id z204sm2641126lfd.1.2015.10.11.23.33.06
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 11 Oct 2015 23:33:08 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=WNRWKXo+uxPrvxMC9ebCb6xTHoNOHLMBWPeZ4GYOfbA=;
+        b=BQzg7ZtaCUTDHptbK5dfaR1UAW7RsYwdv9NW1iOjBhpT5albRv9hPndRGsiqnzZxop
+         86CovFhzJjNrCxoZaBVrnrUu2l71mFQlyWlk/IViQgz01j4CLyzOmIKBqUdmf6WK32Rz
+         LWhzEtSFrvYan+E+yiJo5zso1JQ3WeoTWTXDI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=WNRWKXo+uxPrvxMC9ebCb6xTHoNOHLMBWPeZ4GYOfbA=;
+        b=LFTorPdR2zXT3eFx3kNcl3TBm2LRZpqxemBu8KYAZURd651lf2Y2c81wD4obKD6VDj
+         /2DaKYUDsC6SeLp8WPs4wruj05d5M6tlJU9oyxY56sTKcUEAgQdTyrzdHqtvQH7Hy7HC
+         WziCE8xErneZXsgQFezSLOveMnM0BitLGuRDQ+ltXqnJNiVWR+kKFtlim45MM7OMtfOJ
+         xR/pkyF8CVkowC/8azuhIL/GJKRdhz4TRx2UMbS7ETJ2driX2tPn9oDMRWDGx6VLZrSz
+         aIe8wVwywVLmJ0/fqG2JZtwABQ3tQqX5r0UPoXplP9GbGB9SRyty5Itg0ZezWCWYT6Md
+         S9rA==
+X-Gm-Message-State: ALoCoQmUKh+B8+QZJ81qUP+tnKkjhHYESMQrasyr/iXTcgu/Lp5xE44ygp9C8LDUTYwF6mc9bwSf
+X-Received: by 10.182.19.167 with SMTP id g7mr14703401obe.13.1444632425513;
+ Sun, 11 Oct 2015 23:47:05 -0700 (PDT)
+Received: by 10.60.46.38 with HTTP; Sun, 11 Oct 2015 23:47:05 -0700 (PDT)
+In-Reply-To: <1444586102-82557-4-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279362>
 
-Hi all!
+Looks good to me, Ack.
 
-I'm sorry if the letter came twice. I have troubles with my post client.
-
-I want to organize my repository so its submodules would be located at the root
-of repository. I'm trying to create .gitignore to ignore all files and don't
-ignore directories at the same time:
-
-$ cat .gitignore
-*
-!*/
-
-Now, I'm trying to add a submodule to my repository, but fail to understand why
-my .gitignore prevents it from being added. I use the following command to check
-if my submodule will be ignored or not:
-
-$ git add --dry-run --ignore-missing c/
-
-I have noticed that result of this check is different when directory c/ already
-exists and when it still doesn't by the time of the check.
-The described behavior is illustrated by the following example:
-
-$ mkdir git_test
-$ cd git_test
-$ git init
-Initialized empty Git repository in D:/temp/git_test/.git/
-$ echo \* >> .gitignore
-$ echo \!\*\/ >> .gitignore
-$ git add --dry-run --ignore-missing c/
-The following paths are ignored by one of your .gitignore files:
-c/
-Use -f if you really want to add them.
-$ mkdir c
-$ git add --dry-run --ignore-missing c/
-$
-
-Is this behavior expected? If yes, where can I read about it? Which part of the
-Git documentation should I consult?
-How should I correct my .gitignore to pass this check in both cases, when
-directory c/ exists and when it doesn't?
+On 11 October 2015 at 18:55,  <larsxschneider@gmail.com> wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> Windows and OS X file systems are case insensitive by default.
+> Consequently the "git-p4-case-folding" test case does not apply to
+> them.
+>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>  t/t9819-git-p4-case-folding.sh | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/t/t9819-git-p4-case-folding.sh b/t/t9819-git-p4-case-folding.sh
+> index 78f1d0f..d808c00 100755
+> --- a/t/t9819-git-p4-case-folding.sh
+> +++ b/t/t9819-git-p4-case-folding.sh
+> @@ -4,6 +4,12 @@ test_description='interaction with P4 case-folding'
+>
+>  . ./lib-git-p4.sh
+>
+> +if test_have_prereq CASE_INSENSITIVE_FS
+> +then
+> +       skip_all='skipping P4 case-folding tests; case insensitive file system detected'
+> +       test_done
+> +fi
+> +
+>  test_expect_success 'start p4d with case folding enabled' '
+>         start_p4d -C1
+>  '
+> --
+> 2.5.1
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
