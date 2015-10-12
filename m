@@ -1,99 +1,66 @@
-From: Francois-Xavier Le Bail <devel.fx.lebail@orange.fr>
-Subject: How to rebase when some commit hashes are in some commit messages
-Date: Mon, 12 Oct 2015 21:59:46 +0200
-Message-ID: <561C1132.3090606@orange.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 1/3] Add Travis CI support
+Date: Mon, 12 Oct 2015 22:10:45 +0200
+Message-ID: <vpq7fmryhiy.fsf@grenoble-inp.fr>
+References: <1444586102-82557-1-git-send-email-larsxschneider@gmail.com>
+	<1444586102-82557-2-git-send-email-larsxschneider@gmail.com>
+	<561B69AE.8050403@gmail.com>
+	<xmqq37xgnkh0.fsf@gitster.mtv.corp.google.com>
+	<B85D5671-9F8C-452E-87B9-EB4DE3C85955@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 12 21:59:59 2015
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	git@vger.kernel.org, johannes.schindelin@gmx.de, tboegi@web.de,
+	pw@padd.com
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 22:11:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZljGE-0001Sf-6p
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 21:59:54 +0200
+	id 1ZljR1-0003wY-Pl
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 22:11:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752683AbbJLT7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 15:59:50 -0400
-Received: from smtp12.smtpout.orange.fr ([80.12.242.134]:48066 "EHLO
-	smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752630AbbJLT7t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 15:59:49 -0400
-Received: from [127.0.0.1] ([213.178.77.178])
-	by mwinf5d35 with ME
-	id UKzm1r00B3qpEb103KznJT; Mon, 12 Oct 2015 21:59:48 +0200
-X-ME-Helo: [127.0.0.1]
-X-ME-Auth: ZGV2ZWwuZngubGViYWlsQHdhbmFkb28uZnI=
-X-ME-Date: Mon, 12 Oct 2015 21:59:48 +0200
-X-ME-IP: 213.178.77.178
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+	id S1751988AbbJLULA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 16:11:00 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56627 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751527AbbJLUK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 16:10:59 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t9CKAhKg016446
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 12 Oct 2015 22:10:43 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9CKAj8P019567;
+	Mon, 12 Oct 2015 22:10:45 +0200
+In-Reply-To: <B85D5671-9F8C-452E-87B9-EB4DE3C85955@gmail.com> (Lars
+	Schneider's message of "Mon, 12 Oct 2015 12:40:21 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 12 Oct 2015 22:10:44 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t9CKAhKg016446
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1445285446.80485@S+3Cfj2wxn5AvsB79Uw6Uw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279414>
 
-Hello,
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-[I try some search engines without success, perhaps I have missed something].
+> {Linux | OSX} * {gcc | clang} * {Default, NO_PTHREAD, NO_CURL, NO_OPENSSL, NO_MMAP, NO_IPV6, NO_PERL}
 
-For example, if I rebase the following commits, I would want that if
-the commit hash 2222222... become 7777777...,
-the message
-"Update test output for 2222222222222222222222222222222222222222"
-become
-"Update test output for 7777777..."
+Another option would be to have a single "NO_*" build, that would
+activate all NO_PTHREAD, NO_CURL, NO_OPENSSL, NO_MMAP, NO_IPV6, NO_PERL
+at the same time. We'd miss issues with perl but no pthread or so, but
+this should catch most issues.
 
-Is it possible currently? And if yes how?
-
-Greetings,
-Francois-Xavier
-
--------------------------------------------------------------------
-commit 6666666666666666666666666666666666666666
-Author: First Last <first.last@example.com>
-Date:  Fri Jul 3 17:14:58 2015 -0700
-
-Fix 5
-
-xxx xxx xxx xxx
-
-commit 5555555555555555555555555555555555555555
-Author: First Last <first.last@example.com>
-Date:  Fri Jul 3 16:58:58 2015 -0700
-
-Update test output for 2222222222222222222222222222222222222222
-
-commit 4444444444444444444444444444444444444444
-Author: First Last <first.last@example.com>
-Date:  Fri Jul 3 17:50:27 2015 -0700
-
-Fix 4
-
-commit 3333333333333333333333333333333333333333
-Author: First Last <first.last@example.com>
-Date:  Fri Jul 3 15:01:36 2015 -0700
-
-Fix 3
-
-xxx xxx xxx xxx
-
-commit 2222222222222222222222222222222222222222
-Author: First Last <first.last@example.com>
-Date:  Fri Jul 3 11:20:28 2015 -0700
-
-Fix 2
-
-xxx xxx xxx xxx
-
-commit 1111111111111111111111111111111111111111
-Author: First Last <first.last@example.com>
-Date:  Fri Jul 3 09:15:59 2015 -0700
-
-Fix 1
-
-xxx xxx xxx xxx
-
--------------------------------------------------------------------
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
