@@ -1,99 +1,90 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v3 3/3] git-p4: Skip t9819 test case on case insensitive
- file systems
-Date: Mon, 12 Oct 2015 07:47:05 +0100
-Message-ID: <CAE5ih79M9guQsjs34XmyE6sxExa6a6KkgdYEHOyeBCv57-4-QA@mail.gmail.com>
-References: <1444586102-82557-1-git-send-email-larsxschneider@gmail.com>
-	<1444586102-82557-4-git-send-email-larsxschneider@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH v2] filter-branch: remove multi-line headers in msg filter
+Date: Mon, 12 Oct 2015 09:26:41 +0200
+Message-ID: <561B60B1.10003@drmicha.warpmail.net>
+References: <20151009002113.GA329@freya.jamessan.com>
+ <561767AC.6060503@drmicha.warpmail.net>
+ <xmqqpp0oormv.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Pete Wyckoff <pw@padd.com>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 12 08:47:14 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: James McCoy <vega.james@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 09:26:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlWt6-0006sK-EA
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 08:47:12 +0200
+	id 1ZlXVT-0007z8-NG
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 09:26:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751574AbbJLGrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 02:47:08 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:33415 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751169AbbJLGrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 02:47:06 -0400
-Received: by obbbh8 with SMTP id bh8so100850332obb.0
-        for <git@vger.kernel.org>; Sun, 11 Oct 2015 23:47:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=WNRWKXo+uxPrvxMC9ebCb6xTHoNOHLMBWPeZ4GYOfbA=;
-        b=BQzg7ZtaCUTDHptbK5dfaR1UAW7RsYwdv9NW1iOjBhpT5albRv9hPndRGsiqnzZxop
-         86CovFhzJjNrCxoZaBVrnrUu2l71mFQlyWlk/IViQgz01j4CLyzOmIKBqUdmf6WK32Rz
-         LWhzEtSFrvYan+E+yiJo5zso1JQ3WeoTWTXDI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=WNRWKXo+uxPrvxMC9ebCb6xTHoNOHLMBWPeZ4GYOfbA=;
-        b=LFTorPdR2zXT3eFx3kNcl3TBm2LRZpqxemBu8KYAZURd651lf2Y2c81wD4obKD6VDj
-         /2DaKYUDsC6SeLp8WPs4wruj05d5M6tlJU9oyxY56sTKcUEAgQdTyrzdHqtvQH7Hy7HC
-         WziCE8xErneZXsgQFezSLOveMnM0BitLGuRDQ+ltXqnJNiVWR+kKFtlim45MM7OMtfOJ
-         xR/pkyF8CVkowC/8azuhIL/GJKRdhz4TRx2UMbS7ETJ2driX2tPn9oDMRWDGx6VLZrSz
-         aIe8wVwywVLmJ0/fqG2JZtwABQ3tQqX5r0UPoXplP9GbGB9SRyty5Itg0ZezWCWYT6Md
-         S9rA==
-X-Gm-Message-State: ALoCoQmUKh+B8+QZJ81qUP+tnKkjhHYESMQrasyr/iXTcgu/Lp5xE44ygp9C8LDUTYwF6mc9bwSf
-X-Received: by 10.182.19.167 with SMTP id g7mr14703401obe.13.1444632425513;
- Sun, 11 Oct 2015 23:47:05 -0700 (PDT)
-Received: by 10.60.46.38 with HTTP; Sun, 11 Oct 2015 23:47:05 -0700 (PDT)
-In-Reply-To: <1444586102-82557-4-git-send-email-larsxschneider@gmail.com>
+	id S1751850AbbJLH0s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2015 03:26:48 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:47527 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751778AbbJLH0p (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Oct 2015 03:26:45 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id DD44E20A6A
+	for <git@vger.kernel.org>; Mon, 12 Oct 2015 03:26:42 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Mon, 12 Oct 2015 03:26:42 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=9+2toaIJb/FyEODlAKZiMzIhFyE=; b=bWOlqq
+	Wd3WW4CWXoTqqKnRqCtw3W1SI8ig+qJNCn1fovZYTIwqqKkiLmGEVpEUwk68Fmo9
+	VAawEB9j20XnStLO4iypw4y6J7DmQYwv29aEmKy90It5TrXFwFMwJJpxRRG1sj39
+	LyDAetUAbGsZAX4bysO0PPGxJL48cPvLkTii8=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=9+2toaIJb/FyEOD
+	lAKZiMzIhFyE=; b=PPZbR53H9tUHclqgmeX9RwoCaCgY5daPMbiRf8ysk2wfKaI
+	02gWPM5sHLLZbKB0JIAvbAtnvgUegLFkB+LLWwG7Ng6iQUex6A1XKKO09FUO60CM
+	Cb46ZyXSqVT6I7vQm4qZGob2C/FK1uZ7TwOFSgxe7dVIN7Ci3LHwLldpPubE=
+X-Sasl-enc: 7+ZCBkDEmHiK99EySLZb3zavdWj+Bl6s34Q3++KqqU8K 1444634802
+Received: from dickson.math.uni-hannover.de (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 24137680154;
+	Mon, 12 Oct 2015 03:26:42 -0400 (EDT)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <xmqqpp0oormv.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279363>
 
-Looks good to me, Ack.
+Junio C Hamano venit, vidit, dixit 09.10.2015 19:53:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>=20
+>>> Set IFS to an empty string for the =E2=80=9Cread=E2=80=9D call, thu=
+s disabling the word
+>>> splitting, which causes $header_line to be set to the non-empty val=
+ue '
+>>> '.  This allows the loop to fully consume the header lines before
+>>> emitting the original, intact commit message.
+>>>
+>>> Signed-off-by: James McCoy <vega.james@gmail.com>
+>>> ---
+>>
+>> Thanks for hanging in :)
+>>
+>> Reviewed-by: Michael J Gruber <git@drmicha.warpmail.net>
+>=20
+> As long as you are fine with giving authorship to James, I am fine
+> with that.  I'll amend what is queued with your reviewed-by above
+> and will merge to 'next'.
 
-On 11 October 2015 at 18:55,  <larsxschneider@gmail.com> wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
->
-> Windows and OS X file systems are case insensitive by default.
-> Consequently the "git-p4-case-folding" test case does not apply to
-> them.
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  t/t9819-git-p4-case-folding.sh | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/t/t9819-git-p4-case-folding.sh b/t/t9819-git-p4-case-folding.sh
-> index 78f1d0f..d808c00 100755
-> --- a/t/t9819-git-p4-case-folding.sh
-> +++ b/t/t9819-git-p4-case-folding.sh
-> @@ -4,6 +4,12 @@ test_description='interaction with P4 case-folding'
->
->  . ./lib-git-p4.sh
->
-> +if test_have_prereq CASE_INSENSITIVE_FS
-> +then
-> +       skip_all='skipping P4 case-folding tests; case insensitive file system detected'
-> +       test_done
-> +fi
-> +
->  test_expect_success 'start p4d with case folding enabled' '
->         start_p4d -C1
->  '
-> --
-> 2.5.1
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Yep, I'm fine with "mini-mentoring", and just to be safe, the 7 new
+characters in git-filter-branch.sh are (also)
+
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+
+in case that is needed or preferred.
+
+Michael
