@@ -1,106 +1,102 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Hacking git for managing machine readable "source" files
-Date: Mon, 12 Oct 2015 10:07:12 +0200
-Message-ID: <561B6A30.4060406@drmicha.warpmail.net>
-References: <561B29DA.9050101@gna.org>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@dwim.me>
+Subject: Re: [PATCH v2 40/43] refs: allow ref backend to be set for clone
+Date: Mon, 12 Oct 2015 11:00:08 +0200
+Message-ID: <1444640408.41811.7.camel@dwim.me>
+References: <1443477738-32023-1-git-send-email-dturner@twopensource.com>
+	 <1443477738-32023-41-git-send-email-dturner@twopensource.com>
+	 <5612439E.4080200@alum.mit.edu> <1444094977.7739.24.camel@twopensource.com>
+	 <20151006015806.GA4972@sigill.intra.peff.net>
+	 <1444154963.7739.30.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Christian Gagneraud <chgans@gna.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 12 10:07:27 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 12 11:06:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlY8i-0008Nn-4k
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 10:07:24 +0200
+	id 1ZlZ3L-0007t6-Hm
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 11:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751250AbbJLIHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 04:07:17 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:51235 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750806AbbJLIHO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Oct 2015 04:07:14 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 100FE2049C
-	for <git@vger.kernel.org>; Mon, 12 Oct 2015 04:07:14 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Mon, 12 Oct 2015 04:07:14 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=l9QMEp8yy0OWZdirDslwW2nC3YQ=; b=E5odcj
-	xRXuJf8hrpQ4cUyYvMl8JaYLjDMfZ3hX2HawdAmzeFlfr2RuZHFUIq1S8tmqs8ym
-	goIMY1H7/V7yaxlssllrHedANLSUCbkvYkCAxF2V/StKwaOf+XFyhhR9eIxjd8dy
-	oTr4QU7ShX3Cd5N/ovSUb16XWaTzAv/KNMH5g=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=l9QMEp8yy0OWZdi
-	rDslwW2nC3YQ=; b=hoAFxmZ4BISXXIv0kn2fp1TM9kIfpUX37Zzy7h4mU5vtd3q
-	MI/W9FeqbukMedgC03o2li+Mf5cZAm5NhF4vjLGWiHzpJogYYyoE3xfVP9jwRVOV
-	8jdGd8EdwdRbqbDGpTl0gM05O0sc66AHh+7jdXuNI87H40XUrqucikjBhpw4=
-X-Sasl-enc: RsBwtDG0OhZz48pc+Mydu7tQ+LGrIm0zk6vSF9JWPQLc 1444637233
-Received: from dickson.math.uni-hannover.de (dickson.math.uni-hannover.de [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 82328C00018;
-	Mon, 12 Oct 2015 04:07:13 -0400 (EDT)
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <561B29DA.9050101@gna.org>
+	id S1751652AbbJLJFv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2015 05:05:51 -0400
+Received: from hessy.cmartin.tk ([78.47.67.53]:55600 "EHLO hessy.dwim.me"
+	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751398AbbJLJFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 05:05:50 -0400
+X-Greylist: delayed 339 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Oct 2015 05:05:49 EDT
+Received: from [IPv6:2001:6f8:900:8cd0:922b:34ff:fe1c:e3e4] (unknown [IPv6:2001:6f8:900:8cd0:922b:34ff:fe1c:e3e4])
+	by hessy.dwim.me (Postfix) with ESMTPSA id 2407E802AB;
+	Mon, 12 Oct 2015 11:00:09 +0200 (CEST)
+In-Reply-To: <1444154963.7739.30.camel@twopensource.com>
+X-Mailer: Evolution 3.18.0-2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279367>
 
-Christian Gagneraud venit, vidit, dixit 12.10.2015 05:32:
-> Hi git hackers,
-> 
-> I have been scratching my head since quite a few weeks to see if and how 
-> I could hack git to manage non-software-source-code files. Theses files 
-> might be text-based (XML, JSON, custom format, ...) but are not intended 
-> for humans, thus diffing and merging them using standard git features 
-> doesn't really make sense (and so the whole "pack" stuff seems useless 
-> as well). These files represent a non-software project developed using a 
-> graphical SW application. I'm talking here about designing and 
-> simulating electronic projects, but it could be apply to any sort of 
-> engineering (mechanical design comes second to me)
-> 
-> I would like to provide support for diffing, merging, branching and 
-> forking such electronics projects.
+On Tue, 2015-10-06 at 14:09 -0400, David Turner wrote:
+> On Mon, 2015-10-05 at 21:58 -0400, Jeff King wrote:
+> > On Mon, Oct 05, 2015 at 09:29:37PM -0400, David Turner wrote:
+> >=20
+> > > > Therefore, I don't think this can be merged without a bump to
+> > > > core.repositoryformatversion. Such a bump will tell well-
+> > > > behaved older
+> > > > Git clients keep their hands off the repository. (Of course
+> > > > repositories
+> > > > that use the files backend can continue using
+> > > > core.repositoryformatversion 0.)
+> > > >=20
+> > > > I thought Peff proposed a way to do such a bump, including a
+> > > > way to
+> > > > extend repositories one by one with new features. But that was
+> > > > something
+> > > > that we were chatting about off-list.
+> > > >=20
+> > > > I haven't reviewed the actual code in this patch yet but I
+> > > > wanted to get
+> > > > the above comment on your radar.
+> > > >=20
+> > > > Michael
+> > >=20
+> > > I'll fix this to upgrade to v=3D1 when the lmdb refs backend is i=
+n
+> > > use,
+> > > and to give sensible error messages in a v1 repo if built without
+> > > LMDB.
+> >=20
+> > I think the relevant series is:
+> >=20
+> > =C2=A0 http://article.gmane.org/gmane.comp.version-control.git/2724=
+47
+> >=20
+> > It did not seem too controversial, but it mostly got dropped amidst
+> > the
+> > release, and I haven't reposted it yet.
+>=20
+> That patch will work perfectly for this use case.=C2=A0=C2=A0I'll add=
+ it to my
+> series when I reroll, and set an extension.
 
-[wall of text snipped]
+This is something I'm working on right now for libgit2 as well; not
+lmdb specifically but allowing user-provided backends, which would
+allow built-in ones as well.
 
-I don't think you need to map the tree structure of your project to that
-of git's object store, nor am I sure you would benefit from it. (In case
-you do want to do it - look at the git-notes implementation.)
+Did we ever decide on the format for these extensions? The series
+mentioned above has a couple of examples, but doesn't have any testing
+for backend stuff. Do we have a concrete proposal for this? I was going
+to go for something like
 
-There are four handles in git's interface that you can use (and that
-have been used):
+extensions.refbackend =3D "lmdb"
+extensions.odbbackend =3D "psql"
 
-A) clean/smudge filters: They are meant to transform your working tree
-copy into a "standard/canonical form" which is stored in the repo (and
-back).
+and have backends register themselves by the "lmdb", "psql" or whatever
+format, but if we have already decided something else which I missed,
+I'd swap over to that.
 
-As an example, uncompressing compressed file formats, removing
-superfluous comments or time-stamps, sorting in default order (for
-unordered files) produces objects in the repo which are a better fit for
-packing and possibly also for git's default diff.
-
-B) textconv filters: Possibly lossy filters that produce a human
-readable form of an object which possibly also lends itself to a
-meaningful git diff (but no way back). Can be cached.
-
-C) external diff drivers: They are supposed to produce a meaningful diff
-in cases where textconv+default diff are not enough. They simply receive
-both objects to diff.
-
-D) external merge drivers: They are supposed to merge (non-text) files
-that git cannot merge.
-
-You'll find pointers in the manual pages for git-diff, git-merge and
-gitattributes.
-
-Michael
+Cheers,
+=C2=A0 =C2=A0cmn
