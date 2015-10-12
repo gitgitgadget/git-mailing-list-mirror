@@ -1,147 +1,260 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Fwd: [PATCH] submodule: Test a shallow branch
-Date: Mon, 12 Oct 2015 14:59:32 -0700
-Message-ID: <CAGZ79kYHZcByZc5Ju5K6YCcrWDt7Wt2Q0z4YYA4NTezg=358OQ@mail.gmail.com>
-References: <CAELgYhcmzDEVRH9neGwZeqVBduL-nb=d+XoSMwRGKpmLUeX83g@mail.gmail.com>
-	<1444685784-29598-1-git-send-email-sbeller@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, carlosjosepita@gmail.com
-X-From: git-owner@vger.kernel.org Mon Oct 12 23:59:56 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v2] merge: fix cache_entry use-after-free
+Date: Mon, 12 Oct 2015 18:03:33 -0400
+Message-ID: <1444687413-928-1-git-send-email-dturner@twitter.com>
+Cc: Keith McGuigan <kmcguigan@twitter.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 13 00:04:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zll8O-0003Bb-7T
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 23:59:56 +0200
+	id 1ZllCm-0007kr-HO
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 00:04:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752613AbbJLV7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 17:59:53 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:36499 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752660AbbJLV7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 17:59:33 -0400
-Received: by ykey125 with SMTP id y125so24425838yke.3
-        for <git@vger.kernel.org>; Mon, 12 Oct 2015 14:59:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=82QEYSpIT7OXYs9PP8528pvamaHuxdQIiHe99nHm72s=;
-        b=oVuq22cy45Z5oZczqQ0Vd8EpU1EDZUL65Tx1tNg2lMX8thP8kxdBd2RuBwJpRf6Vtv
-         UO0VZmXgiexjDJx67Te7sxMJmEerrzBnyMtYVoz5ETwoQ93IjQfLtKtF3+11WEJ8GPV3
-         oKM3OKr+gTd88ROnUdHtPXKCbAgqXSB7dPV5veyi2q0MJoJNvgPlD1xvH5Ky4r06G49A
-         Je2kjMjiQA9z1uAPCSuuc6zQWcSIMQi9J4iSj4RSywpl6LAe4rF6SlpIh4pnap0j8S1r
-         z0YK64aNt5MmQucN68jThdXcc15xZouVjODyM+2YI98SKG/63xJrA2nVV5tmUOaAE6GI
-         eIeg==
+	id S1751684AbbJLWEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 18:04:08 -0400
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:32811 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752621AbbJLWDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 18:03:41 -0400
+Received: by qgeb31 with SMTP id b31so28444315qge.0
+        for <git@vger.kernel.org>; Mon, 12 Oct 2015 15:03:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=82QEYSpIT7OXYs9PP8528pvamaHuxdQIiHe99nHm72s=;
-        b=TKQeuFx6wII1pzusrP6Mshl8B7Tp0iV5bE/Ee8K42onGMP+HI+v+QQ3e9qtZkgMm0l
-         kWpjJyRwIb3cR1bK0IT85bfe5vZZ44GZHyZzZXTsTn2V9StZBWsSfThkH5YXfWJxB41W
-         Yu9iM53xtpWHwlMKJ6VZH46gA3wizX9PP+rXmAJzKoR4XTeykYyP3Wz3FTua8IYgSdZa
-         8yYQjrsfiNK2tSpD4A2rUYIyV6oaCuues4hcOSaNsnijt2dKfugITr82zg1IvY8+W6CV
-         0Whqzh/l3w3bB8vU51AY93GB54xeEarfa109dGGQzVyMR1f/8/XZCcSDuff5kFJrE/+J
-         9upQ==
-X-Gm-Message-State: ALoCoQkgChJYV1azPkPlACv0sF9y+AUx1JspV6XP5ZVOIPIqC1JUv3AJp3Woi6wUUdvYa8WSWcg4
-X-Received: by 10.129.80.214 with SMTP id e205mr21909454ywb.199.1444687173007;
- Mon, 12 Oct 2015 14:59:33 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Mon, 12 Oct 2015 14:59:32 -0700 (PDT)
-In-Reply-To: <1444685784-29598-1-git-send-email-sbeller@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=kO9o6HajPTBjVk6M9FICTYFtSIB8eOCPR1xoXQoFNlw=;
+        b=G3dDuWTWs6pUZ5jWaSbEwrxeh8fJnhCdaErrx2FNqVmNpv7R+DDvL8FHYgkQocSJhY
+         UBoRwjFOfCluD/7mqvNB8546MbRKw+rCnlL35OS/dWkDYigYeUDpEeW/eT8nUtZxGk3d
+         dfIjWnR1Ju1dpAhmayAsJ3mfSg3KBCtmpp3A2cZ2OtLEEyN6QktaN1gsudBVDVSsuWOf
+         NHWMoN2SW//P8tSzhCrNAWgE/SUlgSJnRBkHJTT2eXFq0Lbl1BTe8XOGuZ2nnyWL5tm6
+         Pyz3dfBescirgmGoLR4gnSP6PIkG16SCfJOHVvcISu0yAu+PtfiWjfCcgaD5eJYsAP6P
+         ix7Q==
+X-Gm-Message-State: ALoCoQleqAz64e+unGsWePUT2+9jmi81bDlWrbCo1vrUxYfmcYzBJVrjtpE0t64amwDcLDz5rv6E
+X-Received: by 10.140.147.129 with SMTP id 123mr16707825qht.12.1444687420350;
+        Mon, 12 Oct 2015 15:03:40 -0700 (PDT)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
+        by smtp.gmail.com with ESMTPSA id 200sm7873431qhh.26.2015.10.12.15.03.39
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 12 Oct 2015 15:03:39 -0700 (PDT)
+X-Google-Original-From: David Turner <dturner@twitter.com>
+X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279465>
 
-I forgot to CC you guys.
+From: Keith McGuigan <kmcguigan@twitter.com>
 
----------- Forwarded message ----------
-From: Stefan Beller <sbeller@google.com>
-Date: Mon, Oct 12, 2015 at 2:36 PM
-Subject: [PATCH] submodule: Test a shallow branch
-To: gitster@pobox.com
-Cc: git@vger.kernel.org, carlosjosepita@gmail.com, Stefan Beller
-<sbeller@google.com>
+During merges, we would previously free entries that we no longer need
+in the destination index.  But those entries might also be stored in
+the dir_entry cache, and when a later call to add_to_index found them,
+they would be used after being freed.
 
+To prevent this, add a ref count for struct cache_entry.  Whenever
+a cache entry is added to a data structure, the ref count is incremented;
+when it is removed from the data structure, it is decremented.  When
+it hits zero, the cache_entry is freed.
 
-Instead of tracking the submodule at the specified branch, using a shallow
-clone, we get the following error:
-
-fatal: Cannot update paths and switch to branch 'anotherbranch' at the
-same time.
-Did you intend to checkout 'origin/anotherbranch' which can not be
-resolved as commit?
-Unable to checkout submodule 'submodule'
-
-Noticed-by: Carlos Pita <carlosjosepita@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Keith McGuigan <kmcguigan@twitter.com>
 ---
 
- Hi Carlos,
+This version addresses Junio's comments on v1.  It adds a missing
+add_ce_ref, and fixes a formatting nit.
 
- I can reproduce your issue and have a patch which we can add to the
- testing suite to document this faulty behavior.
+ cache.h        | 27 +++++++++++++++++++++++++++
+ name-hash.c    |  7 ++++++-
+ read-cache.c   |  6 +++++-
+ split-index.c  | 13 ++++++++-----
+ unpack-trees.c |  6 ++++--
+ 5 files changed, 50 insertions(+), 9 deletions(-)
 
- Thanks,
- Stefan
-
- t/t7400-submodule-basic.sh | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 540771c..cee74cb 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -846,7 +846,8 @@ test_expect_success 'submodule add with an
-existing name fails unless forced' '
-
- test_expect_success 'set up a second submodule' '
-        git submodule add ./init2 example2 &&
--       git commit -m "submodule example2 added"
-+       git commit -m "submodule example2 added" &&
-+       git checkout -b anotherbranch
- '
-
- test_expect_success 'submodule deinit should remove the whole
-submodule section from .git/config' '
-@@ -987,6 +988,7 @@ test_expect_success 'submodule with UTF-8 name' '
-
- test_expect_success 'submodule add clone shallow submodule' '
-        mkdir super &&
-+       test_when_finished "rm -rf super" &&
-        pwd=$(pwd) &&
-        (
-                cd super &&
-@@ -999,5 +1001,21 @@ test_expect_success 'submodule add clone shallow
-submodule' '
-        )
- '
-
-+test_expect_failure 'submodule add a shallow branch' '
-+       mkdir super &&
-+       test_when_finished "rm -rf super" &&
-+       pwd=$(pwd) &&
-+       (
-+               cd super &&
-+               git init &&
-+               git submodule add --depth=1 --branch anotherbranch
-file://"$pwd"/example2 submodule &&
-+               (
-+                       cd submodule &&
-+                       test 1 = $(git log --oneline | wc -l)
-+               )
-+       )
-+'
+diff --git a/cache.h b/cache.h
+index 752031e..738f76d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -149,6 +149,7 @@ struct stat_data {
+ 
+ struct cache_entry {
+ 	struct hashmap_entry ent;
++	unsigned int ref_count; /* count the number of refs to this in dir_hash */
+ 	struct stat_data ce_stat_data;
+ 	unsigned int ce_mode;
+ 	unsigned int ce_flags;
+@@ -213,6 +214,32 @@ struct cache_entry {
+ struct pathspec;
+ 
+ /*
++ * Increment the cache_entry reference count.  Should be called
++ * whenever a pointer to a cache_entry is retained in a data structure,
++ * thus marking it as alive.
++ */
++static inline void add_ce_ref(struct cache_entry *ce)
++{
++	assert(ce != NULL && ce->ref_count >= 0);
++	ce->ref_count++;
++}
 +
++/*
++ * Decrement the cache_entry reference count.  Should be called whenever
++ * a pointer to a cache_entry is dropped.  Once the counter drops to 0
++ * the cache_entry memory will be safely freed.
++ */
++static inline void drop_ce_ref(struct cache_entry *ce)
++{
++	if (ce != NULL) {
++		assert(ce->ref_count >= 0);
++		if (--ce->ref_count < 1) {
++			free(ce);
++		}
++	}
++}
 +
-
- test_done
---
-2.5.0.268.g453a26a
++/*
+  * Copy the sha1 and stat state of a cache entry from one to
+  * another. But we never change the name, or the hash state!
+  */
+diff --git a/name-hash.c b/name-hash.c
+index 702cd05..f12c919 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -66,6 +66,7 @@ static struct dir_entry *hash_dir_entry(struct index_state *istate,
+ 		dir = xcalloc(1, sizeof(struct dir_entry));
+ 		hashmap_entry_init(dir, memihash(ce->name, namelen));
+ 		dir->namelen = namelen;
++		add_ce_ref(ce);
+ 		dir->ce = ce;
+ 		hashmap_add(&istate->dir_hash, dir);
+ 
+@@ -92,7 +93,9 @@ static void remove_dir_entry(struct index_state *istate, struct cache_entry *ce)
+ 	struct dir_entry *dir = hash_dir_entry(istate, ce, ce_namelen(ce));
+ 	while (dir && !(--dir->nr)) {
+ 		struct dir_entry *parent = dir->parent;
+-		hashmap_remove(&istate->dir_hash, dir, NULL);
++		struct dir_entry *removed = hashmap_remove(&istate->dir_hash, dir, NULL);
++		assert(removed == dir);
++		drop_ce_ref(dir->ce);
+ 		free(dir);
+ 		dir = parent;
+ 	}
+@@ -105,6 +108,7 @@ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
+ 	ce->ce_flags |= CE_HASHED;
+ 	hashmap_entry_init(ce, memihash(ce->name, ce_namelen(ce)));
+ 	hashmap_add(&istate->name_hash, ce);
++	add_ce_ref(ce);
+ 
+ 	if (ignore_case)
+ 		add_dir_entry(istate, ce);
+@@ -147,6 +151,7 @@ void remove_name_hash(struct index_state *istate, struct cache_entry *ce)
+ 		return;
+ 	ce->ce_flags &= ~CE_HASHED;
+ 	hashmap_remove(&istate->name_hash, ce, ce);
++	drop_ce_ref(ce);
+ 
+ 	if (ignore_case)
+ 		remove_dir_entry(istate, ce);
+diff --git a/read-cache.c b/read-cache.c
+index 87204a5..8b685bb 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -52,7 +52,9 @@ static const char *alternate_index_output;
+ 
+ static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
+ {
++	/* istate->cache[nr] is assumed to not hold a live value */
+ 	istate->cache[nr] = ce;
++	add_ce_ref(ce);
+ 	add_name_hash(istate, ce);
+ }
+ 
+@@ -62,7 +64,7 @@ static void replace_index_entry(struct index_state *istate, int nr, struct cache
+ 
+ 	replace_index_entry_in_base(istate, old, ce);
+ 	remove_name_hash(istate, old);
+-	free(old);
++	drop_ce_ref(old);
+ 	set_index_entry(istate, nr, ce);
+ 	ce->ce_flags |= CE_UPDATE_IN_BASE;
+ 	istate->cache_changed |= CE_ENTRY_CHANGED;
+@@ -75,6 +77,7 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
+ 
+ 	new = xmalloc(cache_entry_size(namelen));
+ 	copy_cache_entry(new, old);
++	new->ref_count = 0;
+ 	new->ce_flags &= ~CE_HASHED;
+ 	new->ce_namelen = namelen;
+ 	new->index = 0;
+@@ -1426,6 +1429,7 @@ static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *on
+ {
+ 	struct cache_entry *ce = xmalloc(cache_entry_size(len));
+ 
++	ce->ref_count = 0;
+ 	ce->ce_stat_data.sd_ctime.sec = get_be32(&ondisk->ctime.sec);
+ 	ce->ce_stat_data.sd_mtime.sec = get_be32(&ondisk->mtime.sec);
+ 	ce->ce_stat_data.sd_ctime.nsec = get_be32(&ondisk->ctime.nsec);
+diff --git a/split-index.c b/split-index.c
+index 968b780..61b5631 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -124,7 +124,7 @@ static void replace_entry(size_t pos, void *data)
+ 	src->ce_flags |= CE_UPDATE_IN_BASE;
+ 	src->ce_namelen = dst->ce_namelen;
+ 	copy_cache_entry(dst, src);
+-	free(src);
++	drop_ce_ref(src);
+ 	si->nr_replacements++;
+ }
+ 
+@@ -227,7 +227,7 @@ void prepare_to_write_split_index(struct index_state *istate)
+ 			base->ce_flags = base_flags;
+ 			if (ret)
+ 				ce->ce_flags |= CE_UPDATE_IN_BASE;
+-			free(base);
++			drop_ce_ref(base);
+ 			si->base->cache[ce->index - 1] = ce;
+ 		}
+ 		for (i = 0; i < si->base->cache_nr; i++) {
+@@ -302,7 +302,7 @@ void save_or_free_index_entry(struct index_state *istate, struct cache_entry *ce
+ 	    ce == istate->split_index->base->cache[ce->index - 1])
+ 		ce->ce_flags |= CE_REMOVE;
+ 	else
+-		free(ce);
++		drop_ce_ref(ce);
+ }
+ 
+ void replace_index_entry_in_base(struct index_state *istate,
+@@ -314,8 +314,11 @@ void replace_index_entry_in_base(struct index_state *istate,
+ 	    istate->split_index->base &&
+ 	    old->index <= istate->split_index->base->cache_nr) {
+ 		new->index = old->index;
+-		if (old != istate->split_index->base->cache[new->index - 1])
+-			free(istate->split_index->base->cache[new->index - 1]);
++		if (old != istate->split_index->base->cache[new->index - 1]) {
++			struct cache_entry *ce = istate->split_index->base->cache[new->index - 1];
++			drop_ce_ref(ce);
++		}
+ 		istate->split_index->base->cache[new->index - 1] = new;
++		add_ce_ref(new);
+ 	}
+ }
+diff --git a/unpack-trees.c b/unpack-trees.c
+index f932e80..1a0a637 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -606,8 +606,10 @@ static int unpack_nondirectories(int n, unsigned long mask,
+ 					o);
+ 		for (i = 0; i < n; i++) {
+ 			struct cache_entry *ce = src[i + o->merge];
+-			if (ce != o->df_conflict_entry)
+-				free(ce);
++			if (ce != o->df_conflict_entry) {
++				drop_ce_ref(ce);
++				src[i + o->merge] = NULL;
++			}
+ 		}
+ 		return rc;
+ 	}
+-- 
+2.4.2.644.g97b850b-twtrsrc
