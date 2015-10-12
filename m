@@ -1,93 +1,158 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] merge: fix cache_entry use-after-free
-Date: Mon, 12 Oct 2015 15:28:07 -0700
-Message-ID: <xmqqio6bbu2w.fsf@gitster.mtv.corp.google.com>
-References: <1444687413-928-1-git-send-email-dturner@twitter.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Keith McGuigan <kmcguigan@twitter.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 00:28:19 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH] Add fetch.recurseSubmoduleParallelism config option
+Date: Mon, 12 Oct 2015 15:52:30 -0700
+Message-ID: <1444690350-6486-1-git-send-email-sbeller@google.com>
+Cc: git@vger.kernel.org, hvoigt@hvoigt.net, jens.lehmann@web.de,
+	Stefan Beller <sbeller@google.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Oct 13 00:53:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZllZn-0006WW-Hg
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 00:28:15 +0200
+	id 1Zlly7-00066O-Vt
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 00:53:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752513AbbJLW2M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 18:28:12 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:36681 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752133AbbJLW2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 18:28:11 -0400
-Received: by pacex6 with SMTP id ex6so2902pac.3
-        for <git@vger.kernel.org>; Mon, 12 Oct 2015 15:28:10 -0700 (PDT)
+	id S1752606AbbJLWw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 18:52:59 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33086 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752357AbbJLWw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 18:52:58 -0400
+Received: by pabrc13 with SMTP id rc13so592754pab.0
+        for <git@vger.kernel.org>; Mon, 12 Oct 2015 15:52:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=pjPNNqzadbM0Om5+QeCA7WMcgpD5ehEe3tk7yZgR6lk=;
-        b=oMICFLAwe6uWIL5dbDdldNftghYAJzSFWVxqM2+Eyk5dYABRWToucgG+kW50We3ERW
-         J3ORpfs+jqqb33GpYBJJ9Li9nsqFM1BRWACLb3qM7QB64DOYXJfI54wXyDvarfj/hfRk
-         SMjdI1KhkN2rM/JT/F0H5U5XN501ZdcZw9sNhcDkfHwUaopOClRuv3WN9UOZ1LoGlZ36
-         2oVBPYZfYUyHdNKgRUKN3xWSWkaQgCqfTKaEC9v4TSM2uH/HfqymB9pjIcI7soV8HQn0
-         InC7gwRFzeIDowytu9yY/U1Q18fZ8Zr3okoZx1pdRDiI3ZcfCSy6lcjX7j+FbIMSPZ4H
-         1UHA==
-X-Received: by 10.66.219.227 with SMTP id pr3mr37233009pac.33.1444688890498;
-        Mon, 12 Oct 2015 15:28:10 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:495:58e7:6a27:bf4d])
-        by smtp.gmail.com with ESMTPSA id xd10sm20343170pab.25.2015.10.12.15.28.09
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=4sYobNyYNmG/5Bxaop69dXy5hMFl1zzUwSE+LGfwdXE=;
+        b=C07EA07P0kJLY/TdPF7hhOk2y0iCn7sQcM/TPUk7UBKWpK4k4TCXVh3Pi1Sx//En08
+         cGigpf/CPaE1qsSbc+mKGPV30GxRr6UOykM4rCtHYwwrCqBUo4ZevLDoVVEHpt+Kpey7
+         O5uRKYX4IsRanaNyKXGQye+fYc7KkHP6EIZ52Mu+QWHJ6B91MJ3GJ7xZDXap8bSSB6K8
+         bBgC1aF5omOvRIe5RufrBKqsUbJniqXph+B+vfplJQBEBB0QRUz7W9T45g68IjiEfF4k
+         00lmaBD5EEieYTMJpaQnlUIiVrL1QLHdjGLAbQGNHkswa2FBPmK9+90NqXXjIBuHQBoP
+         KN2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=4sYobNyYNmG/5Bxaop69dXy5hMFl1zzUwSE+LGfwdXE=;
+        b=JzjfY0QZNSp+sRZUM0cVdvZjwtu1zHxWnHA0KBSu4RUEqf1MuIevSGzQBJEyg6Jth8
+         Tken/A0iNlLLER3Q0ei1/RigxgTaV9w76/vtjZBk646iFXyRkRZ9o39G3TK+6yO2H49p
+         sJDsBAgxnznHojHOiF+tE0eyjNnbXrqHSLm3uFBGSLFkU4FHpH2tslqdoHxoDu1IhwIR
+         8faZ3uohQgYpPUtng0nSbn6fJgO708QOzzaIf+W+MPORcHTR+19+f+tgB5Jj/jnuWVtw
+         gJYKYRYe74Pvsp2c5DxQr0sovXBVllj9nSzlwvRMYy1NQf3anoOe3DAByOdsyW6yS8Vv
+         EPyw==
+X-Gm-Message-State: ALoCoQktRFR5iJAytbBTlEDbNK51gLQZI8ZLgjkkAwlKW4gsrxXYkYD0dTgRwd3Ua8k9oIGWR0ry
+X-Received: by 10.69.1.5 with SMTP id bc5mr36643489pbd.151.1444690377536;
+        Mon, 12 Oct 2015 15:52:57 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:5950:8bdc:8939:e460])
+        by smtp.gmail.com with ESMTPSA id ux7sm20419746pac.10.2015.10.12.15.52.56
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 12 Oct 2015 15:28:09 -0700 (PDT)
-In-Reply-To: <1444687413-928-1-git-send-email-dturner@twitter.com> (David
-	Turner's message of "Mon, 12 Oct 2015 18:03:33 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        Mon, 12 Oct 2015 15:52:56 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0.267.g8d6e698.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279470>
 
-David Turner <dturner@twopensource.com> writes:
+This allows to configure fetching in parallel without having the annoying
+command line option.
 
-> From: Keith McGuigan <kmcguigan@twitter.com>
->
-> During merges, we would previously free entries that we no longer need
-> in the destination index.  But those entries might also be stored in
-> the dir_entry cache, and when a later call to add_to_index found them,
-> they would be used after being freed.
->
-> To prevent this, add a ref count for struct cache_entry.  Whenever
-> a cache entry is added to a data structure, the ref count is incremented;
-> when it is removed from the data structure, it is decremented.  When
-> it hits zero, the cache_entry is freed.
->
-> Signed-off-by: Keith McGuigan <kmcguigan@twitter.com>
-> ---
+This moved the responsibility to determine how many parallel processes
+to start from builtin/fetch to submodule.c as we need a way to communicate
+"The user did not specify the number of parallel processes in the command
+line options" in the builtin fetch. The submodule code takes care of
+the precedence (CLI > config > default)
 
-I'll forge your "messenger's sign-off" here ;-)
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/config.txt |  6 ++++++
+ builtin/fetch.c          |  2 +-
+ submodule.c              | 14 ++++++++++++++
+ 3 files changed, 21 insertions(+), 1 deletion(-)
+ 
+ I just monkey tested the code and it worked once! The problem with testing
+ this parallelizing option is that the expected behavior doesn't change
+ except for being faster. And I don't want to add timing tests to the test
+ suite because they are unreliable.
+ 
+ Any idea how to test this properly?
+ 
+ This applies on top of sb/submodule-parallel-fetch
+ 
+ Thanks,
+ Stefan
+ 
 
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index f932e80..1a0a637 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -606,8 +606,10 @@ static int unpack_nondirectories(int n, unsigned long mask,
->  					o);
->  		for (i = 0; i < n; i++) {
->  			struct cache_entry *ce = src[i + o->merge];
-> -			if (ce != o->df_conflict_entry)
-> -				free(ce);
-> +			if (ce != o->df_conflict_entry) {
-> +				drop_ce_ref(ce);
-> +				src[i + o->merge] = NULL;
-> +			}
-
-This one smelled iffy.  I think it is safe because the caller does
-not look at src[] other than src[0] after this function returns, and
-this setting to NULL happens only when o->merge is set to 1, so I do
-not think this is buggy, but at the same time I do not think setting
-to NULL is necessary.
-
-Other than that, looks nice.  Thanks.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 315f271..1172db0 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1140,6 +1140,12 @@ fetch.recurseSubmodules::
+ 	when its superproject retrieves a commit that updates the submodule's
+ 	reference.
+ 
++fetch.recurseSubmoduleParallelism
++	This is used to determine how many submodules can be fetched in
++	parallel. Specifying a positive integer allows up to that number
++	of submodules being fetched in parallel. Specifying 0 the number
++	of cpus will be taken as the maximum number.
++
+ fetch.fsckObjects::
+ 	If it is set to true, git-fetch-pack will check all fetched
+ 	objects. It will abort in the case of a malformed object or a
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f28eac6..b1399dc 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -37,7 +37,7 @@ static int prune = -1; /* unspecified */
+ static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
+ static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ static int tags = TAGS_DEFAULT, unshallow, update_shallow;
+-static int max_children = 1;
++static int max_children = -1;
+ static const char *depth;
+ static const char *upload_pack;
+ static struct strbuf default_rla = STRBUF_INIT;
+diff --git a/submodule.c b/submodule.c
+index c21b265..c85d3ef 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -15,6 +15,7 @@
+ #include "thread-utils.h"
+ 
+ static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
++static int config_fetch_parallel_submodules = -1;
+ static struct string_list changed_submodule_paths;
+ static int initialized_fetch_ref_tips;
+ static struct sha1_array ref_tips_before_fetch;
+@@ -179,6 +180,14 @@ int submodule_config(const char *var, const char *value, void *cb)
+ 	else if (!strcmp(var, "fetch.recursesubmodules")) {
+ 		config_fetch_recurse_submodules = parse_fetch_recurse_submodules_arg(var, value);
+ 		return 0;
++	} else if (!strcmp(var, "fetch.recursesubmoduleparallelism")) {
++		char *end;
++		int ret;
++		config_fetch_parallel_submodules = strtol(value, &end, 0);
++		ret = (*end == '\0');
++		if (!ret)
++			warning("value for fetch.recurseSubmoduleParallelism not recognized");
++		return ret;
+ 	}
+ 	return 0;
+ }
+@@ -759,6 +768,11 @@ int fetch_populated_submodules(const struct argv_array *options,
+ 	argv_array_push(&spf.args, "--recurse-submodules-default");
+ 	/* default value, "--submodule-prefix" and its value are added later */
+ 
++	if (max_parallel_jobs < 0)
++		max_parallel_jobs = config_fetch_parallel_submodules;
++	if (max_parallel_jobs < 0)
++		max_parallel_jobs = 1;
++
+ 	calculate_changed_submodule_paths();
+ 	run_processes_parallel(max_parallel_jobs,
+ 			       get_next_submodule,
+-- 
+2.5.0.267.g8d6e698.dirty
