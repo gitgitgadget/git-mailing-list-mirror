@@ -1,157 +1,213 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3 26/44] refs.c: move copy_msg to the common code
-Date: Mon, 12 Oct 2015 17:51:47 -0400
-Message-ID: <1444686725-27660-28-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v3 27/44] refs.c: move peel_object to the common code
+Date: Mon, 12 Oct 2015 17:51:48 -0400
+Message-ID: <1444686725-27660-29-git-send-email-dturner@twopensource.com>
 References: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
 Cc: David Turner <dturner@twopensource.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Mon Oct 12 23:53:48 2015
+X-From: git-owner@vger.kernel.org Mon Oct 12 23:53:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zll2Q-0005aW-UB
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 23:53:47 +0200
+	id 1Zll2W-0005hH-0H
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 23:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbbJLVwp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 17:52:45 -0400
-Received: from mail-qg0-f52.google.com ([209.85.192.52]:33038 "EHLO
-	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752331AbbJLVwn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 17:52:43 -0400
-Received: by qgeb31 with SMTP id b31so28261311qge.0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2015 14:52:42 -0700 (PDT)
+	id S1752691AbbJLVxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 17:53:47 -0400
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:35556 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752483AbbJLVwo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 17:52:44 -0400
+Received: by qgt47 with SMTP id 47so129534439qgt.2
+        for <git@vger.kernel.org>; Mon, 12 Oct 2015 14:52:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=qwPaqbwz+5AkGjyfSXpHiq663C9FeILdLHDqHBcz5hE=;
-        b=ihRf3mJz9JFCbt71dLCEHj99CmfaCN3vFLVCU73RgRwA67o3q/h3PklMu6jdM4fM9+
-         i4CTyJD8WkCTboTkFpGXa3rwmB0AjVSoQukNbNIe7TBGvmxFaQAPTGpjfUL9P1FDkV90
-         My7IpsyeJUO2LXconI5mezrVVfiWA6Iyc7OLrpz3SMem7Bd6JpE8A3e03q3MjVSoH0fZ
-         ZvTiVwWjO2xuDOC99iRVuUiaLnN3WI+v/k7qvTY4X1xMYHBTBtViwfNFhvKRoWf2zYkM
-         00f7UemvM6zTBcTyOxPzscfAotet2xjQ6xI/LiJitUEP9sR5vO36PBsAwOtceYzUm8Ar
-         kp7w==
-X-Gm-Message-State: ALoCoQmdlrzgtDMJDcYfUXuTy+I3WgIj1QSUckOPoWxh8JxV8Ee1fE7dcu/KReX4CjgzQ5dQu9QE
-X-Received: by 10.140.217.70 with SMTP id n67mr37114793qhb.96.1444686762422;
-        Mon, 12 Oct 2015 14:52:42 -0700 (PDT)
+        bh=tTEy39QsOg8DuR4I1ZKLXACPvKJFXpTb9yJAFOSXy8E=;
+        b=mg7RcTgWR3VUV/SNazQTggxB30UECAzggu9aXxZUJGOD39ZVoEf6y9GR9GmARiQvLa
+         Fz/Ir2q3n8c52YEawDsdD/rs/kQxcqNFYvkSB2nru72Rq7j1fL8y2f29jkJVBRnQQzvU
+         td6kgVm7Fp7Pjmf/IvfxohL4Plg9T+rb+ncSdr8p1KD+6hX8avGQGi+rijUkHJNxpjbC
+         Drhyo/Zi9Wza/5v+l2FFic8Pae99lcHuRl+fcULzBHMrEEBYixoojVZUiED7S6CT8SkB
+         3DsjfSrZ3CNqwFi+dO7LXyj+wz1GM3y+jVlXSRMpn8uztpZSlyjBFcxq2c6t2eEhfSIW
+         9ulA==
+X-Gm-Message-State: ALoCoQkotZYB6XvvuysBlrtBuTR2xEReWlxaY9XBBxUHJMm+EgFZi9qfCAn43keNKyCtuImDXBwx
+X-Received: by 10.140.108.102 with SMTP id i93mr34830390qgf.27.1444686763523;
+        Mon, 12 Oct 2015 14:52:43 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id q140sm7865647qha.5.2015.10.12.14.52.41
+        by smtp.gmail.com with ESMTPSA id q140sm7865647qha.5.2015.10.12.14.52.42
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Oct 2015 14:52:41 -0700 (PDT)
+        Mon, 12 Oct 2015 14:52:42 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279449>
 
-Rename copy_msg to copy_reflog_msg and make it public.
+This function does not contain any backend specific code so we
+move it to the common code.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- refs-be-files.c | 28 +---------------------------
- refs.c          | 26 ++++++++++++++++++++++++++
- refs.h          |  2 ++
- 3 files changed, 29 insertions(+), 27 deletions(-)
+ refs-be-files.c | 53 -----------------------------------------------------
+ refs.c          | 31 +++++++++++++++++++++++++++++++
+ refs.h          | 27 +++++++++++++++++++++++++++
+ 3 files changed, 58 insertions(+), 53 deletions(-)
 
 diff --git a/refs-be-files.c b/refs-be-files.c
-index 346429e..830b5a1 100644
+index 830b5a1..bf2fd7a 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -2637,32 +2637,6 @@ static int commit_ref(struct ref_lock *lock)
- 	return 0;
+@@ -1604,59 +1604,6 @@ static const char *files_resolve_ref_unsafe(const char *refname,
+ 	return ret;
  }
  
--/*
-- * copy the reflog message msg to buf, which has been allocated sufficiently
-- * large, while cleaning up the whitespaces.  Especially, convert LF to space,
-- * because reflog file is one line per entry.
-- */
--static int copy_msg(char *buf, const char *msg)
--{
--	char *cp = buf;
--	char c;
--	int wasspace = 1;
+-enum peel_status {
+-	/* object was peeled successfully: */
+-	PEEL_PEELED = 0,
 -
--	*cp++ = '\t';
--	while ((c = *msg++)) {
--		if (wasspace && isspace(c))
--			continue;
--		wasspace = isspace(c);
--		if (wasspace)
--			c = ' ';
--		*cp++ = c;
+-	/*
+-	 * object cannot be peeled because the named object (or an
+-	 * object referred to by a tag in the peel chain), does not
+-	 * exist.
+-	 */
+-	PEEL_INVALID = -1,
+-
+-	/* object cannot be peeled because it is not a tag: */
+-	PEEL_NON_TAG = -2,
+-
+-	/* ref_entry contains no peeled value because it is a symref: */
+-	PEEL_IS_SYMREF = -3,
+-
+-	/*
+-	 * ref_entry cannot be peeled because it is broken (i.e., the
+-	 * symbolic reference cannot even be resolved to an object
+-	 * name):
+-	 */
+-	PEEL_BROKEN = -4
+-};
+-
+-/*
+- * Peel the named object; i.e., if the object is a tag, resolve the
+- * tag recursively until a non-tag is found.  If successful, store the
+- * result to sha1 and return PEEL_PEELED.  If the object is not a tag
+- * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
+- * and leave sha1 unchanged.
+- */
+-static enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
+-{
+-	struct object *o = lookup_unknown_object(name);
+-
+-	if (o->type == OBJ_NONE) {
+-		int type = sha1_object_info(name, NULL);
+-		if (type < 0 || !object_as_type(o, type, 0))
+-			return PEEL_INVALID;
 -	}
--	while (buf < cp && isspace(cp[-1]))
--		cp--;
--	*cp++ = '\n';
--	return cp - buf;
+-
+-	if (o->type != OBJ_TAG)
+-		return PEEL_NON_TAG;
+-
+-	o = deref_tag_noverify(o);
+-	if (!o)
+-		return PEEL_INVALID;
+-
+-	hashcpy(sha1, o->sha1);
+-	return PEEL_PEELED;
 -}
 -
- static int should_autocreate_reflog(const char *refname)
- {
- 	if (!log_all_ref_updates)
-@@ -2765,7 +2739,7 @@ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
- 			sha1_to_hex(new_sha1),
- 			committer);
- 	if (msglen)
--		len += copy_msg(logrec + len - 1, msg) - 1;
-+		len += copy_reflog_msg(logrec + len - 1, msg) - 1;
- 
- 	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
- 	free(logrec);
+ /*
+  * Peel the entry (if possible) and return its new peel_status.  If
+  * repeel is true, re-peel the entry even if there is an old peeled
 diff --git a/refs.c b/refs.c
-index 2515f6e..bd8c71b 100644
+index bd8c71b..99b31f6 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -886,6 +886,32 @@ int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *c
- 	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
+@@ -4,6 +4,9 @@
+ #include "cache.h"
+ #include "refs.h"
+ #include "lockfile.h"
++#include "object.h"
++#include "tag.h"
++
+ /*
+  * We always have a files backend and it is the default.
+  */
+@@ -1059,6 +1062,34 @@ int refname_is_safe(const char *refname)
+ 	return 1;
  }
  
 +/*
-+ * copy the reflog message msg to buf, which has been allocated sufficiently
-+ * large, while cleaning up the whitespaces.  Especially, convert LF to space,
-+ * because reflog file is one line per entry.
++ * Peel the named object; i.e., if the object is a tag, resolve the
++ * tag recursively until a non-tag is found.  If successful, store the
++ * result to sha1 and return PEEL_PEELED.  If the object is not a tag
++ * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
++ * and leave sha1 unchanged.
 + */
-+int copy_reflog_msg(char *buf, const char *msg)
++enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
 +{
-+	char *cp = buf;
-+	char c;
-+	int wasspace = 1;
++	struct object *o = lookup_unknown_object(name);
 +
-+	*cp++ = '\t';
-+	while ((c = *msg++)) {
-+		if (wasspace && isspace(c))
-+			continue;
-+		wasspace = isspace(c);
-+		if (wasspace)
-+			c = ' ';
-+		*cp++ = c;
++	if (o->type == OBJ_NONE) {
++		int type = sha1_object_info(name, NULL);
++		if (type < 0 || !object_as_type(o, type, 0))
++			return PEEL_INVALID;
 +	}
-+	while (buf < cp && isspace(cp[-1]))
-+		cp--;
-+	*cp++ = '\n';
-+	return cp - buf;
++
++	if (o->type != OBJ_TAG)
++		return PEEL_NON_TAG;
++
++	o = deref_tag_noverify(o);
++	if (!o)
++		return PEEL_INVALID;
++
++	hashcpy(sha1, o->sha1);
++	return PEEL_PEELED;
 +}
 +
- int head_ref_namespaced(each_ref_fn fn, void *cb_data)
- {
- 	struct strbuf buf = STRBUF_INIT;
+ /* backend functions */
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   struct strbuf *err)
 diff --git a/refs.h b/refs.h
-index 7a936e2..3da5d09 100644
+index 3da5d09..636f959 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -597,6 +597,8 @@ enum ref_type {
+@@ -76,6 +76,33 @@ extern int is_branch(const char *refname);
+  */
+ extern int peel_ref(const char *refname, unsigned char *sha1);
  
- enum ref_type ref_type(const char *refname);
- 
-+int copy_reflog_msg(char *buf, const char *msg);
++enum peel_status {
++	/* object was peeled successfully: */
++	PEEL_PEELED = 0,
 +
- enum expire_reflog_flags {
- 	EXPIRE_REFLOGS_DRY_RUN = 1 << 0,
- 	EXPIRE_REFLOGS_UPDATE_REF = 1 << 1,
++	/*
++	 * object cannot be peeled because the named object (or an
++	 * object referred to by a tag in the peel chain), does not
++	 * exist.
++	 */
++	PEEL_INVALID = -1,
++
++	/* object cannot be peeled because it is not a tag: */
++	PEEL_NON_TAG = -2,
++
++	/* ref_entry contains no peeled value because it is a symref: */
++	PEEL_IS_SYMREF = -3,
++
++	/*
++	 * ref_entry cannot be peeled because it is broken (i.e., the
++	 * symbolic reference cannot even be resolved to an object
++	 * name):
++	 */
++	PEEL_BROKEN = -4
++};
++
++enum peel_status peel_object(const unsigned char *name, unsigned char *sha1);
++
+ /**
+  * Resolve refname in the nested "gitlink" repository that is located
+  * at path.  If the resolution is successful, return 0 and set sha1 to
 -- 
 2.4.2.644.g97b850b-twtrsrc
