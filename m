@@ -1,260 +1,340 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2] merge: fix cache_entry use-after-free
-Date: Mon, 12 Oct 2015 18:03:33 -0400
-Message-ID: <1444687413-928-1-git-send-email-dturner@twitter.com>
-Cc: Keith McGuigan <kmcguigan@twitter.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 13 00:04:31 2015
+Subject: [PATCH v3 05/44] refs.c: move update_ref to refs.c
+Date: Mon, 12 Oct 2015 17:51:25 -0400
+Message-ID: <1444686725-27660-6-git-send-email-dturner@twopensource.com>
+References: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>,
+	David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org, mhagger@alum.mit.edu
+X-From: git-owner@vger.kernel.org Tue Oct 13 00:10:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZllCm-0007kr-HO
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 00:04:29 +0200
+	id 1ZllIk-0005hp-VV
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 00:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751684AbbJLWEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 18:04:08 -0400
-Received: from mail-qg0-f54.google.com ([209.85.192.54]:32811 "EHLO
-	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752621AbbJLWDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 18:03:41 -0400
-Received: by qgeb31 with SMTP id b31so28444315qge.0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2015 15:03:40 -0700 (PDT)
+	id S1752375AbbJLWKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 18:10:35 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:36281 "EHLO
+	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751845AbbJLVwU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 17:52:20 -0400
+Received: by qkht68 with SMTP id t68so63040557qkh.3
+        for <git@vger.kernel.org>; Mon, 12 Oct 2015 14:52:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=kO9o6HajPTBjVk6M9FICTYFtSIB8eOCPR1xoXQoFNlw=;
-        b=G3dDuWTWs6pUZ5jWaSbEwrxeh8fJnhCdaErrx2FNqVmNpv7R+DDvL8FHYgkQocSJhY
-         UBoRwjFOfCluD/7mqvNB8546MbRKw+rCnlL35OS/dWkDYigYeUDpEeW/eT8nUtZxGk3d
-         dfIjWnR1Ju1dpAhmayAsJ3mfSg3KBCtmpp3A2cZ2OtLEEyN6QktaN1gsudBVDVSsuWOf
-         NHWMoN2SW//P8tSzhCrNAWgE/SUlgSJnRBkHJTT2eXFq0Lbl1BTe8XOGuZ2nnyWL5tm6
-         Pyz3dfBescirgmGoLR4gnSP6PIkG16SCfJOHVvcISu0yAu+PtfiWjfCcgaD5eJYsAP6P
-         ix7Q==
-X-Gm-Message-State: ALoCoQleqAz64e+unGsWePUT2+9jmi81bDlWrbCo1vrUxYfmcYzBJVrjtpE0t64amwDcLDz5rv6E
-X-Received: by 10.140.147.129 with SMTP id 123mr16707825qht.12.1444687420350;
-        Mon, 12 Oct 2015 15:03:40 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=A6hFIVMZbjPA3nBNGIjV3wEBrDWJt0vxpQkfcsdXLuQ=;
+        b=gTkk6DNo7jK0WdOmoj4Lum0YsgdXAg0SRLdzdwyaN1maRIEN/ItwXUEQCsdsgkIFcX
+         nKZYB3MYL/ecREX3QJdgXOJyYicTJ8QkUz0r6E9kJB6fYpC1JKPzRXedsqHO04X/+J1C
+         cVm4LtyTt/QibwuN35ca2aj/TSulpjQJfuIS5Ie/I+e6CG+y9dHYVaJO6/LB49Q2Uove
+         ojsXUwKZ6E0jE/GinJ0E6dibGAh1BnA5jQdtDQSdA6ivZBqxVb7eHBnCaMWhK/A/DRTo
+         9act64aWNWolOClkobMsmeEHGeBnno+3BPY6j1L0fxU3CasuvCPyNYYnjrMmJCmlF/3i
+         VFug==
+X-Gm-Message-State: ALoCoQmfvvcBk54yP3CvvWAmsI571sb0YP7eme8SkOqvq6/ZBsv/QIjvgEAK6M+2V1S2mF+fYU+E
+X-Received: by 10.55.23.83 with SMTP id i80mr35512617qkh.5.1444686738636;
+        Mon, 12 Oct 2015 14:52:18 -0700 (PDT)
 Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id 200sm7873431qhh.26.2015.10.12.15.03.39
+        by smtp.gmail.com with ESMTPSA id q140sm7865647qha.5.2015.10.12.14.52.17
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Oct 2015 15:03:39 -0700 (PDT)
-X-Google-Original-From: David Turner <dturner@twitter.com>
+        Mon, 12 Oct 2015 14:52:18 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
+In-Reply-To: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279466>
 
-From: Keith McGuigan <kmcguigan@twitter.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-During merges, we would previously free entries that we no longer need
-in the destination index.  But those entries might also be stored in
-the dir_entry cache, and when a later call to add_to_index found them,
-they would be used after being freed.
+Move update_ref() to the refs.c file since this function does not
+contain any backend specific code.  Move the ref classifier functions
+as well, since update_ref depends on them.
 
-To prevent this, add a ref count for struct cache_entry.  Whenever
-a cache entry is added to a data structure, the ref count is incremented;
-when it is removed from the data structure, it is decremented.  When
-it hits zero, the cache_entry is freed.
+Based on Ronnie Sahlberg's patch
 
-Signed-off-by: Keith McGuigan <kmcguigan@twitter.com>
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: David Turner <dturner@twopensource.com>
 ---
+ refs-be-files.c | 117 +-------------------------------------------------------
+ refs.c          | 115 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 116 insertions(+), 116 deletions(-)
 
-This version addresses Junio's comments on v1.  It adds a missing
-add_ce_ref, and fixes a formatting nit.
-
- cache.h        | 27 +++++++++++++++++++++++++++
- name-hash.c    |  7 ++++++-
- read-cache.c   |  6 +++++-
- split-index.c  | 13 ++++++++-----
- unpack-trees.c |  6 ++++--
- 5 files changed, 50 insertions(+), 9 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index 752031e..738f76d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -149,6 +149,7 @@ struct stat_data {
+diff --git a/refs-be-files.c b/refs-be-files.c
+index d0dfdfc..7fe4931 100644
+--- a/refs-be-files.c
++++ b/refs-be-files.c
+@@ -2675,8 +2675,6 @@ struct pack_refs_cb_data {
+ 	struct ref_to_prune *ref_to_prune;
+ };
  
- struct cache_entry {
- 	struct hashmap_entry ent;
-+	unsigned int ref_count; /* count the number of refs to this in dir_hash */
- 	struct stat_data ce_stat_data;
- 	unsigned int ce_mode;
- 	unsigned int ce_flags;
-@@ -213,6 +214,32 @@ struct cache_entry {
- struct pathspec;
- 
+-static int is_per_worktree_ref(const char *refname);
+-
  /*
-+ * Increment the cache_entry reference count.  Should be called
-+ * whenever a pointer to a cache_entry is retained in a data structure,
-+ * thus marking it as alive.
-+ */
-+static inline void add_ce_ref(struct cache_entry *ce)
+  * An each_ref_entry_fn that is run over loose references only.  If
+  * the loose reference can be packed, add an entry in the packed ref
+@@ -2691,7 +2689,7 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
+ 	int is_tag_ref = starts_with(entry->name, "refs/tags/");
+ 
+ 	/* Do not pack per-worktree refs: */
+-	if (is_per_worktree_ref(entry->name))
++	if (ref_type(entry->name) == REF_TYPE_PER_WORKTREE)
+ 		return 0;
+ 
+ 	/* ALWAYS pack tags */
+@@ -2879,77 +2877,6 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
+ 	return 0;
+ }
+ 
+-static int is_per_worktree_ref(const char *refname)
+-{
+-	return !strcmp(refname, "HEAD") ||
+-		starts_with(refname, "refs/bisect/");
+-}
+-
+-static int is_pseudoref_syntax(const char *refname)
+-{
+-	const char *c;
+-
+-	for (c = refname; *c; c++) {
+-		if (!isupper(*c) && *c != '-' && *c != '_')
+-			return 0;
+-	}
+-
+-	return 1;
+-}
+-
+-enum ref_type ref_type(const char *refname)
+-{
+-	if (is_per_worktree_ref(refname))
+-		return REF_TYPE_PER_WORKTREE;
+-	if (is_pseudoref_syntax(refname))
+-		return REF_TYPE_PSEUDOREF;
+-       return REF_TYPE_NORMAL;
+-}
+-
+-static int write_pseudoref(const char *pseudoref, const unsigned char *sha1,
+-			   const unsigned char *old_sha1, struct strbuf *err)
+-{
+-	const char *filename;
+-	int fd;
+-	static struct lock_file lock;
+-	struct strbuf buf = STRBUF_INIT;
+-	int ret = -1;
+-
+-	strbuf_addf(&buf, "%s\n", sha1_to_hex(sha1));
+-
+-	filename = git_path("%s", pseudoref);
+-	fd = hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
+-	if (fd < 0) {
+-		strbuf_addf(err, "Could not open '%s' for writing: %s",
+-			    filename, strerror(errno));
+-		return -1;
+-	}
+-
+-	if (old_sha1) {
+-		unsigned char actual_old_sha1[20];
+-
+-		if (read_ref(pseudoref, actual_old_sha1))
+-			die("could not read ref '%s'", pseudoref);
+-		if (hashcmp(actual_old_sha1, old_sha1)) {
+-			strbuf_addf(err, "Unexpected sha1 when writing %s", pseudoref);
+-			rollback_lock_file(&lock);
+-			goto done;
+-		}
+-	}
+-
+-	if (write_in_full(fd, buf.buf, buf.len) != buf.len) {
+-		strbuf_addf(err, "Could not write to '%s'", filename);
+-		rollback_lock_file(&lock);
+-		goto done;
+-	}
+-
+-	commit_lock_file(&lock);
+-	ret = 0;
+-done:
+-	strbuf_release(&buf);
+-	return ret;
+-}
+-
+ static int delete_pseudoref(const char *pseudoref, const unsigned char *old_sha1)
+ {
+ 	static struct lock_file lock;
+@@ -4098,48 +4025,6 @@ int ref_transaction_verify(struct ref_transaction *transaction,
+ 				      flags, NULL, err);
+ }
+ 
+-int update_ref(const char *msg, const char *refname,
+-	       const unsigned char *new_sha1, const unsigned char *old_sha1,
+-	       unsigned int flags, enum action_on_err onerr)
+-{
+-	struct ref_transaction *t = NULL;
+-	struct strbuf err = STRBUF_INIT;
+-	int ret = 0;
+-
+-	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
+-		ret = write_pseudoref(refname, new_sha1, old_sha1, &err);
+-	} else {
+-		t = ref_transaction_begin(&err);
+-		if (!t ||
+-		    ref_transaction_update(t, refname, new_sha1, old_sha1,
+-					   flags, msg, &err) ||
+-		    ref_transaction_commit(t, &err)) {
+-			ret = 1;
+-			ref_transaction_free(t);
+-		}
+-	}
+-	if (ret) {
+-		const char *str = "update_ref failed for ref '%s': %s";
+-
+-		switch (onerr) {
+-		case UPDATE_REFS_MSG_ON_ERR:
+-			error(str, refname, err.buf);
+-			break;
+-		case UPDATE_REFS_DIE_ON_ERR:
+-			die(str, refname, err.buf);
+-			break;
+-		case UPDATE_REFS_QUIET_ON_ERR:
+-			break;
+-		}
+-		strbuf_release(&err);
+-		return 1;
+-	}
+-	strbuf_release(&err);
+-	if (t)
+-		ref_transaction_free(t);
+-	return 0;
+-}
+-
+ static int ref_update_reject_duplicates(struct string_list *refnames,
+ 					struct strbuf *err)
+ {
+diff --git a/refs.c b/refs.c
+index 77492ff..2d10708 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1,3 +1,118 @@
+ /*
+  * Common refs code for all backends.
+  */
++#include "cache.h"
++#include "refs.h"
++#include "lockfile.h"
++
++static int is_per_worktree_ref(const char *refname)
 +{
-+	assert(ce != NULL && ce->ref_count >= 0);
-+	ce->ref_count++;
++	return !strcmp(refname, "HEAD") ||
++		starts_with(refname, "refs/bisect/");
 +}
 +
-+/*
-+ * Decrement the cache_entry reference count.  Should be called whenever
-+ * a pointer to a cache_entry is dropped.  Once the counter drops to 0
-+ * the cache_entry memory will be safely freed.
-+ */
-+static inline void drop_ce_ref(struct cache_entry *ce)
++static int is_pseudoref_syntax(const char *refname)
 +{
-+	if (ce != NULL) {
-+		assert(ce->ref_count >= 0);
-+		if (--ce->ref_count < 1) {
-+			free(ce);
++	const char *c;
++
++	for (c = refname; *c; c++) {
++		if (!isupper(*c) && *c != '-' && *c != '_')
++			return 0;
++	}
++
++	return 1;
++}
++
++enum ref_type ref_type(const char *refname)
++{
++	if (is_per_worktree_ref(refname))
++		return REF_TYPE_PER_WORKTREE;
++	if (is_pseudoref_syntax(refname))
++		return REF_TYPE_PSEUDOREF;
++       return REF_TYPE_NORMAL;
++}
++
++static int write_pseudoref(const char *pseudoref, const unsigned char *sha1,
++			   const unsigned char *old_sha1, struct strbuf *err)
++{
++	const char *filename;
++	int fd;
++	static struct lock_file lock;
++	struct strbuf buf = STRBUF_INIT;
++	int ret = -1;
++
++	strbuf_addf(&buf, "%s\n", sha1_to_hex(sha1));
++
++	filename = git_path("%s", pseudoref);
++	fd = hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
++	if (fd < 0) {
++		strbuf_addf(err, "Could not open '%s' for writing: %s",
++			    filename, strerror(errno));
++		return -1;
++	}
++
++	if (old_sha1) {
++		unsigned char actual_old_sha1[20];
++		read_ref(pseudoref, actual_old_sha1);
++		if (hashcmp(actual_old_sha1, old_sha1)) {
++			strbuf_addf(err, "Unexpected sha1 when writing %s", pseudoref);
++			rollback_lock_file(&lock);
++			goto done;
 +		}
 +	}
++
++	if (write_in_full(fd, buf.buf, buf.len) != buf.len) {
++		strbuf_addf(err, "Could not write to '%s'", filename);
++		rollback_lock_file(&lock);
++		goto done;
++	}
++
++	commit_lock_file(&lock);
++	ret = 0;
++done:
++	strbuf_release(&buf);
++	return ret;
 +}
 +
-+/*
-  * Copy the sha1 and stat state of a cache entry from one to
-  * another. But we never change the name, or the hash state!
-  */
-diff --git a/name-hash.c b/name-hash.c
-index 702cd05..f12c919 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -66,6 +66,7 @@ static struct dir_entry *hash_dir_entry(struct index_state *istate,
- 		dir = xcalloc(1, sizeof(struct dir_entry));
- 		hashmap_entry_init(dir, memihash(ce->name, namelen));
- 		dir->namelen = namelen;
-+		add_ce_ref(ce);
- 		dir->ce = ce;
- 		hashmap_add(&istate->dir_hash, dir);
- 
-@@ -92,7 +93,9 @@ static void remove_dir_entry(struct index_state *istate, struct cache_entry *ce)
- 	struct dir_entry *dir = hash_dir_entry(istate, ce, ce_namelen(ce));
- 	while (dir && !(--dir->nr)) {
- 		struct dir_entry *parent = dir->parent;
--		hashmap_remove(&istate->dir_hash, dir, NULL);
-+		struct dir_entry *removed = hashmap_remove(&istate->dir_hash, dir, NULL);
-+		assert(removed == dir);
-+		drop_ce_ref(dir->ce);
- 		free(dir);
- 		dir = parent;
- 	}
-@@ -105,6 +108,7 @@ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
- 	ce->ce_flags |= CE_HASHED;
- 	hashmap_entry_init(ce, memihash(ce->name, ce_namelen(ce)));
- 	hashmap_add(&istate->name_hash, ce);
-+	add_ce_ref(ce);
- 
- 	if (ignore_case)
- 		add_dir_entry(istate, ce);
-@@ -147,6 +151,7 @@ void remove_name_hash(struct index_state *istate, struct cache_entry *ce)
- 		return;
- 	ce->ce_flags &= ~CE_HASHED;
- 	hashmap_remove(&istate->name_hash, ce, ce);
-+	drop_ce_ref(ce);
- 
- 	if (ignore_case)
- 		remove_dir_entry(istate, ce);
-diff --git a/read-cache.c b/read-cache.c
-index 87204a5..8b685bb 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -52,7 +52,9 @@ static const char *alternate_index_output;
- 
- static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
- {
-+	/* istate->cache[nr] is assumed to not hold a live value */
- 	istate->cache[nr] = ce;
-+	add_ce_ref(ce);
- 	add_name_hash(istate, ce);
- }
- 
-@@ -62,7 +64,7 @@ static void replace_index_entry(struct index_state *istate, int nr, struct cache
- 
- 	replace_index_entry_in_base(istate, old, ce);
- 	remove_name_hash(istate, old);
--	free(old);
-+	drop_ce_ref(old);
- 	set_index_entry(istate, nr, ce);
- 	ce->ce_flags |= CE_UPDATE_IN_BASE;
- 	istate->cache_changed |= CE_ENTRY_CHANGED;
-@@ -75,6 +77,7 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
- 
- 	new = xmalloc(cache_entry_size(namelen));
- 	copy_cache_entry(new, old);
-+	new->ref_count = 0;
- 	new->ce_flags &= ~CE_HASHED;
- 	new->ce_namelen = namelen;
- 	new->index = 0;
-@@ -1426,6 +1429,7 @@ static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *on
- {
- 	struct cache_entry *ce = xmalloc(cache_entry_size(len));
- 
-+	ce->ref_count = 0;
- 	ce->ce_stat_data.sd_ctime.sec = get_be32(&ondisk->ctime.sec);
- 	ce->ce_stat_data.sd_mtime.sec = get_be32(&ondisk->mtime.sec);
- 	ce->ce_stat_data.sd_ctime.nsec = get_be32(&ondisk->ctime.nsec);
-diff --git a/split-index.c b/split-index.c
-index 968b780..61b5631 100644
---- a/split-index.c
-+++ b/split-index.c
-@@ -124,7 +124,7 @@ static void replace_entry(size_t pos, void *data)
- 	src->ce_flags |= CE_UPDATE_IN_BASE;
- 	src->ce_namelen = dst->ce_namelen;
- 	copy_cache_entry(dst, src);
--	free(src);
-+	drop_ce_ref(src);
- 	si->nr_replacements++;
- }
- 
-@@ -227,7 +227,7 @@ void prepare_to_write_split_index(struct index_state *istate)
- 			base->ce_flags = base_flags;
- 			if (ret)
- 				ce->ce_flags |= CE_UPDATE_IN_BASE;
--			free(base);
-+			drop_ce_ref(base);
- 			si->base->cache[ce->index - 1] = ce;
- 		}
- 		for (i = 0; i < si->base->cache_nr; i++) {
-@@ -302,7 +302,7 @@ void save_or_free_index_entry(struct index_state *istate, struct cache_entry *ce
- 	    ce == istate->split_index->base->cache[ce->index - 1])
- 		ce->ce_flags |= CE_REMOVE;
- 	else
--		free(ce);
-+		drop_ce_ref(ce);
- }
- 
- void replace_index_entry_in_base(struct index_state *istate,
-@@ -314,8 +314,11 @@ void replace_index_entry_in_base(struct index_state *istate,
- 	    istate->split_index->base &&
- 	    old->index <= istate->split_index->base->cache_nr) {
- 		new->index = old->index;
--		if (old != istate->split_index->base->cache[new->index - 1])
--			free(istate->split_index->base->cache[new->index - 1]);
-+		if (old != istate->split_index->base->cache[new->index - 1]) {
-+			struct cache_entry *ce = istate->split_index->base->cache[new->index - 1];
-+			drop_ce_ref(ce);
++int update_ref(const char *msg, const char *refname,
++	       const unsigned char *new_sha1, const unsigned char *old_sha1,
++	       unsigned int flags, enum action_on_err onerr)
++{
++	struct ref_transaction *t = NULL;
++	struct strbuf err = STRBUF_INIT;
++	int ret = 0;
++
++	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
++		ret = write_pseudoref(refname, new_sha1, old_sha1, &err);
++	} else {
++		t = ref_transaction_begin(&err);
++		if (!t ||
++		    ref_transaction_update(t, refname, new_sha1, old_sha1,
++					   flags, msg, &err) ||
++		    ref_transaction_commit(t, &err)) {
++			ret = 1;
++			ref_transaction_free(t);
 +		}
- 		istate->split_index->base->cache[new->index - 1] = new;
-+		add_ce_ref(new);
- 	}
- }
-diff --git a/unpack-trees.c b/unpack-trees.c
-index f932e80..1a0a637 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -606,8 +606,10 @@ static int unpack_nondirectories(int n, unsigned long mask,
- 					o);
- 		for (i = 0; i < n; i++) {
- 			struct cache_entry *ce = src[i + o->merge];
--			if (ce != o->df_conflict_entry)
--				free(ce);
-+			if (ce != o->df_conflict_entry) {
-+				drop_ce_ref(ce);
-+				src[i + o->merge] = NULL;
-+			}
- 		}
- 		return rc;
- 	}
++	}
++
++	if (ret) {
++		const char *str = "update_ref failed for ref '%s': %s";
++
++		switch (onerr) {
++		case UPDATE_REFS_MSG_ON_ERR:
++			error(str, refname, err.buf);
++			break;
++		case UPDATE_REFS_DIE_ON_ERR:
++			die(str, refname, err.buf);
++			break;
++		case UPDATE_REFS_QUIET_ON_ERR:
++			break;
++		}
++		strbuf_release(&err);
++		return 1;
++	}
++	strbuf_release(&err);
++	if (t)
++		ref_transaction_free(t);
++	return 0;
++}
 -- 
 2.4.2.644.g97b850b-twtrsrc
