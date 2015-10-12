@@ -1,70 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] filter-branch: remove multi-line headers in msg filter
-Date: Mon, 12 Oct 2015 09:05:29 -0700
-Message-ID: <xmqqtwpwm5rq.fsf@gitster.mtv.corp.google.com>
-References: <20151009002113.GA329@freya.jamessan.com>
-	<561767AC.6060503@drmicha.warpmail.net>
-	<xmqqpp0oormv.fsf@gitster.mtv.corp.google.com>
-	<561B60B1.10003@drmicha.warpmail.net>
+Subject: Re: [PATCH v3 0/3] Add Travis CI support
+Date: Mon, 12 Oct 2015 09:07:38 -0700
+Message-ID: <xmqqpp0km5o5.fsf@gitster.mtv.corp.google.com>
+References: <1444586102-82557-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: James McCoy <vega.james@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Oct 12 18:05:41 2015
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, tboegi@web.de,
+	pw@padd.com
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Mon Oct 12 18:07:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlfbX-0007DJ-Ug
-	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 18:05:40 +0200
+	id 1ZlfdZ-0000pc-3z
+	for gcvg-git-2@plane.gmane.org; Mon, 12 Oct 2015 18:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752229AbbJLQFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2015 12:05:33 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:33756 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752052AbbJLQFb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2015 12:05:31 -0400
-Received: by pabrc13 with SMTP id rc13so22636639pab.0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2015 09:05:30 -0700 (PDT)
+	id S1751881AbbJLQHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2015 12:07:41 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:33462 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751529AbbJLQHk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2015 12:07:40 -0400
+Received: by pabrc13 with SMTP id rc13so22681115pab.0
+        for <git@vger.kernel.org>; Mon, 12 Oct 2015 09:07:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=0SZK3BlVV7N0IXJXj8lgIFRJ07dQm7VYi/WfuyUXitY=;
-        b=H2q5J60PBtFyG7l7uJeD+pWAG/EkpXj2ureLmqn2yVOH/7fNJiGdPopw8hVQ5QjWS6
-         K1dVZ6ufsAr4zRZ9b/GpUdP21rxkVRNrZJMqaGhBmlUcTQ0MjGwv0l93ENNPrL/+gNSH
-         GlDEpgCFTrclR5yi4vDHIFTKXWqxBZNCxGrIvTg6O1ew62ieZrOfV4GUUS2ST2WaeVi3
-         TuXWBuNfMBT+5sEnIqPUhumMHOi0e9p9A21SeFU41/8P9Xpa8Flr43XAw4d5pjuoQUM6
-         i6cClUicW4r19A/kM5LCbIRSSmg/vAdwPmI4o45dIbT1aKSGZejtGYamYVHatjzrIDxr
-         SWHw==
-X-Received: by 10.69.17.1 with SMTP id ga1mr34689270pbd.163.1444665930651;
-        Mon, 12 Oct 2015 09:05:30 -0700 (PDT)
+        bh=vm5wxmK8vM72tGaQQkAt4Zi1P2409yIa4W2jcbiqkww=;
+        b=MANdTd8kZcGp3er1tv3jpA4vvu+Bx6tyicwNGbRVRPVqW0iLZZ4wBsqdILiTBBhFb/
+         lXNYD/exzQPXTVD73CtvBJu2eW5m+6/dsWcNYRg7R2MEnBvmU8UNBqVQ2a0ig9DMCl6H
+         AjsATpIc+Qh/2Cqe7x5GIsamxD/k1EuHycCOM8WMSIjDQ36TqH9guxq0R3fIiCt78Fcb
+         D3Q6LAKscuxJ2wwXsHWjHnE540E5tX6D8zdZn+lHc3BR56Uo3N3f6Gr2tBmL8e6Vtv+t
+         HRjinv/IASI5MmriyM23kRKxb7ZTb8HXrnPDBAnM+m2qtzviJKx0QiQ3PKcvEq9HGW+0
+         JsuQ==
+X-Received: by 10.68.68.205 with SMTP id y13mr24151117pbt.46.1444666060117;
+        Mon, 12 Oct 2015 09:07:40 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:448f:3a3:d25a:82f])
-        by smtp.gmail.com with ESMTPSA id zn9sm19267294pac.48.2015.10.12.09.05.29
+        by smtp.gmail.com with ESMTPSA id xz5sm19179912pbb.12.2015.10.12.09.07.39
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 12 Oct 2015 09:05:30 -0700 (PDT)
-In-Reply-To: <561B60B1.10003@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Mon, 12 Oct 2015 09:26:41 +0200")
+        Mon, 12 Oct 2015 09:07:39 -0700 (PDT)
+In-Reply-To: <1444586102-82557-1-git-send-email-larsxschneider@gmail.com>
+	(larsxschneider@gmail.com's message of "Sun, 11 Oct 2015 10:54:59
+	-0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279380>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+larsxschneider@gmail.com writes:
 
-> Yep, I'm fine with "mini-mentoring", and just to be safe, the 7 new
-> characters in git-filter-branch.sh are (also)
->
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->
-> in case that is needed or preferred.
+> Lars Schneider (3):
+>   Add Travis CI support
+>   git-p4: Improve test case portability for t9815 git-p4-submit-fail
+>   git-p4: Skip t9819 test case on case insensitive file systems
 
-I was wondering if we want to do that or I can just add comments
-"based on MJG's suggestion" or somesuch.  Most likely I'd do both
-;-)
-
-Thanks.
+Can you make this two separate series?  It seems Luke is happy with
+the p4 bits and I think it makes sense to have it as a separate
+series and apply sooner, while those who are interested in and well
+versed in Travis to help polishing the first one.
