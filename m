@@ -1,114 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add fetch.recurseSubmoduleParallelism config option
-Date: Tue, 13 Oct 2015 00:32:56 -0700
-Message-ID: <xmqqzizn9qaf.fsf@gitster.mtv.corp.google.com>
-References: <1444690350-6486-1-git-send-email-sbeller@google.com>
-	<xmqqeggzbrx5.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZuZZivs8czV2P6uHWaU6ay1hG21k-_G9tgN5KbV6jW8w@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 25/44] refs.h: document make refname_is_safe and add
+ it to header
+Date: Tue, 13 Oct 2015 09:33:24 +0200
+Message-ID: <561CB3C4.1010208@alum.mit.edu>
+References: <1444686725-27660-1-git-send-email-dturner@twopensource.com> <1444686725-27660-27-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <jens.lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 09:33:06 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 13 09:33:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zlu51-0001TB-4h
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 09:33:03 +0200
+	id 1Zlu5a-0001yr-CU
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 09:33:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338AbbJMHc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 03:32:59 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:36736 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752121AbbJMHc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2015 03:32:58 -0400
-Received: by pacex6 with SMTP id ex6so13187268pac.3
-        for <git@vger.kernel.org>; Tue, 13 Oct 2015 00:32:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=gjbiemhWRD7YMIacMFkpWOrkmL4+Dg3WJoKnccd1ED8=;
-        b=GHvX6ExYT5KBBE+gcrvtrqtLZpeEHyw40r7Fw3I6/yHSGDqOW1FL73umcbZO5+6RTM
-         jc0obmy5a07Y4xIerA57sYHfrpqY5VH3+gAf4CkOV5qlwfSMFT+ewcodCqA3+XMv+ti6
-         N0CvgSOSKWUacBPD5DBugDFM1/9Rgqs2T6nZSDlp36HhiDc6s1YnpwAJ/Qj65NBcrHmG
-         QtdohX8RxMWZUtpD3PRDznJVXlYS4XWaxN7x2cdzLCevyo7eSNOASfQG0Ijoe37S9wMx
-         mX50F3Ps03JM75DDmWofcKrJPM1tzSu0xeo7/0fItPjy4gmK6yVYSucU7bVL1ls6QW08
-         Tf4w==
-X-Received: by 10.66.227.72 with SMTP id ry8mr40096592pac.105.1444721578049;
-        Tue, 13 Oct 2015 00:32:58 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:495:58e7:6a27:bf4d])
-        by smtp.gmail.com with ESMTPSA id dd4sm2014913pbb.52.2015.10.13.00.32.57
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 13 Oct 2015 00:32:57 -0700 (PDT)
-In-Reply-To: <CAGZ79kZuZZivs8czV2P6uHWaU6ay1hG21k-_G9tgN5KbV6jW8w@mail.gmail.com>
-	(Stefan Beller's message of "Mon, 12 Oct 2015 16:31:18 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752197AbbJMHde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 03:33:34 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:55271 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751779AbbJMHdc (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Oct 2015 03:33:32 -0400
+X-AuditID: 1207440c-f79e16d000002a6e-c5-561cb3c6c943
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 9B.B0.10862.6C3BC165; Tue, 13 Oct 2015 03:33:26 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB2603.dip0.t-ipconnect.de [93.219.38.3])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t9D7XOK9017212
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 13 Oct 2015 03:33:25 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <1444686725-27660-27-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrDIsWRmVeSWpSXmKPExsUixO6iqHtss0yYwbo7XBbzN51gtOi60s3k
+	wOSx4Pl9do/Pm+QCmKK4bZISS8qCM9Pz9O0SuDNmtO1gKZjCXbHv3kH2BsbrHF2MnBwSAiYS
+	E/a9YoOwxSQu3FsPZHNxCAlcZpQ49rkDyjnLJPF492ZGkCpeAW2J1gezWUFsFgFVievTeplB
+	bDYBXYlFPc1MILaoQJDEiuUvoOoFJU7OfMICYosIOEhc3nUUrF5YIEpi5+sPrBAL2hglOl4d
+	BNrGwcEp4CVx60Y6SA2zgJ7Ejuu/WCFseYntb+cwT2Dkn4Vk7CwkZbOQlC1gZF7FKJeYU5qr
+	m5uYmVOcmqxbnJyYl5dapGuol5tZopeaUrqJERKSPDsYv62TOcQowMGoxMP7IlImTIg1say4
+	MvcQoyQHk5Io7+kNQCG+pPyUyozE4oz4otKc1OJDjBIczEoivEktQDnelMTKqtSifJiUNAeL
+	kjiv6hJ1PyGB9MSS1OzU1ILUIpisDAeHkgSv6CagRsGi1PTUirTMnBKENBMHJ8hwLimR4tS8
+	lNSixNKSjHhQTMYXA6MSJMUDtLcXpJ23uCAxFygK0XqKUVFKnFcMJCEAksgozYMbC0s0rxjF
+	gb4U5g0BqeIBJim47ldAg5mABhuxS4EMLklESEk1MDrvNRDWWeXHMFv42lWWMF2/iRHlf6/q
+	7jG8dDQ+4fGcdNe+dZPkLu7nfvXsps7OvuP9R9etu3H05Nq0WZ++fq6bM9kqz+DqtQl2qnXT
+	3hx/YGZlUxPh5/RW9+ocL9vzt0PnZWawymszOS2sav1+xPn4ygOh15etCq6v2rB4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279485>
 
-Stefan Beller <sbeller@google.com> writes:
+On 10/12/2015 11:51 PM, David Turner wrote:
+> This function might be used by other refs backends
+> 
+> Signed-off-by: David Turner <dturner@twopensource.com>
+> ---
+>  refs.h | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/refs.h b/refs.h
+> index fc8a748..7a936e2 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -348,6 +348,17 @@ int verify_refname_available(const char *newname, struct string_list *extra,
+>  			     struct string_list *skip, struct strbuf *err);
+>  
+>  /*
+> + * Check if a refname is safe.
+> + * For refs that start with "refs/" we consider it safe as long they do
+> + * not try to resolve to outside of refs/.
+> + *
+> + * For all other refs we only consider them safe iff they only contain
+> + * upper case characters and '_' (like "HEAD" AND "MERGE_HEAD", and not like
+> + * "config").
+> + */
+> +int refname_is_safe(const char *refname);
+> +
+> +/*
+>   * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
+>   * REF_NODEREF: act on the ref directly, instead of dereferencing
+>   *              symbolic references.
+> 
 
->> The parallel_process API could learn a new "verbose" feature that it
->> by itself shows some messages like
->>
->>     "processing the 'frotz' job with N tasks"
->>     "M tasks finished (N still running)"
->
-> I know what to fill in for M and N, 'frotz' is a bit unclear to me.
+The previous commit deleted this comment from where it previously
+appeared in refs-be-files.c. It would make more sense to squash this
+commit onto that one so it's clear that you are moving the comment
+rather than creating a new comment out of thin air.
 
-At least I don't know what M and N should be, and I'm curious how
-you'll define them.  See below.
+Michael
 
->> in the output stream from strategic places.  For example, the first
->> message will come at the end of pp_init(), and the second message
->> will be appended at the end of buffered output of a task that has
->> just been finished.  Once you have something like that, you could
->> check for them in a test in t/.
->>
->> Just a thought.
->
-> I like that thought. :)
-
-
-A few more random thoughts:
-
- * The only thing you could rely on if you were to use the above in
-   your tests is the one from pp_init() that declares how many
-   processes the machinery is going to use.  M/N will be unstable,
-   depending on the scheduling order (e.g. the foreground process
-   may take a lot of time to finish, while many other processes
-   finish first).
-
- * Every time the foreground process (i.e. the one whose output is
-   tee-ed to the overall output from the machinery) finishes, you
-   can emit "M tasks finished (N still running)", but I am not sure
-   what M should be.  It is debatable how to account for background
-   processes that have already completed but whose output haven't
-   been shown.
-
-   One school of thought that is in line with the "pretend as if the
-   background tasks are started immediately after the foreground
-   task finishes, and they run at infinite speed and produce output
-   in no time" idea, on which the "queue output from the background
-   processes and emit at once in order to avoid intermixing" design
-   was based on, would be not to include them in M (i.e. finished
-   ones), because their output haven't been emitted and we are
-   pretending that they haven't even been started.  If you take this
-   approach, you however may have to include them in N (i.e. still
-   running), but that would likely bump N beyond the maximum number
-   of simultaneous processes.
-
-   The other school of thought would of course tell the truth and
-   include the number of finished background processes in M, as they
-   have finished already in the reality.  This will not risk showing
-   N that is beyond the maximum, but your first "progress" output
-   might say "3 tasks finished", which will make it look odd in a
-   different way.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
