@@ -1,77 +1,75 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 05/44] refs.c: move update_ref to refs.c
-Date: Tue, 13 Oct 2015 16:40:17 -0400
-Organization: Twitter
-Message-ID: <1444768817.7234.17.camel@twopensource.com>
-References: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
-	 <1444686725-27660-6-git-send-email-dturner@twopensource.com>
-	 <561C7D7B.8020807@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] merge: fix cache_entry use-after-free
+Date: Tue, 13 Oct 2015 14:05:37 -0700
+Message-ID: <xmqqio6aa38e.fsf@gitster.mtv.corp.google.com>
+References: <1444687413-928-1-git-send-email-dturner@twitter.com>
+	<xmqqio6bbu2w.fsf@gitster.mtv.corp.google.com>
+	<1444764167.7234.14.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 13 22:41:11 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Keith McGuigan <kmcguigan@twitter.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Oct 13 23:05:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zm6NX-0003oj-PJ
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 22:41:00 +0200
+	id 1Zm6lV-0004Z6-Rq
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 23:05:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753080AbbJMUky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 16:40:54 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:34352 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752784AbbJMUkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2015 16:40:20 -0400
-Received: by qgez77 with SMTP id z77so26045123qge.1
-        for <git@vger.kernel.org>; Tue, 13 Oct 2015 13:40:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=CRMKLXnSj9sWuWSZqX1++LcIMQPDN0R7AwfR4dvA0l0=;
-        b=LzWBzW4xUjxpbwdsdm8c+HiH4hlJeTNwLHGP3adPA8A2Fkp6tF33EQjLDrTovUs9S8
-         4b4K/ptRQemSMeSw+WVEP5AVy1Ci5TLmU2YJ/Aitz2SkzPV5BnR62WU8U0s0PWNgK8NB
-         9vTW6pb0fDbgBr1aw0w9C13D/gQ77+Dkx1fr/LeY5EfBtwkQztFlF81DnxRCbJ9G+3lg
-         YrFZczAHiJYxHf5kLyVnOm82xuqGXhieolTkdjEU/G0TlqCQDONNq7mg7nHX1tbSHt+y
-         aE8lOTb0Yiz9XrupeTenrhj0g1/VLFLJOVi2+YWAJiwe5kPE/2eXa3IdDtfjiCd6z0kr
-         G+Ww==
-X-Gm-Message-State: ALoCoQkHjINtE+j2926hdt5XvXgkXwNZU+7HSovpnVqAV9WsYeQBCjJ17YP9NzmZQ0KcDUqSSa1V
-X-Received: by 10.140.234.212 with SMTP id f203mr44858086qhc.10.1444768819056;
-        Tue, 13 Oct 2015 13:40:19 -0700 (PDT)
-Received: from ubuntu ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id w32sm1912446qgd.45.2015.10.13.13.40.17
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Oct 2015 13:40:18 -0700 (PDT)
-In-Reply-To: <561C7D7B.8020807@alum.mit.edu>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1752862AbbJMVFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 17:05:41 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:33249 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752721AbbJMVFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2015 17:05:40 -0400
+Received: by pabrc13 with SMTP id rc13so31858044pab.0
+        for <git@vger.kernel.org>; Tue, 13 Oct 2015 14:05:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=smNuFvA68iswhXG6ayaTQvojYRZ65EzfGJfdAfhZmJY=;
+        b=OsEWeFBHde8HcwTnBZaFwP+DjUFwaljJQnnibXn7BXZwkoPtNDIBILZjLbWpQzRDiK
+         yn8eSxRE0RbgLzndLGNIhltgIXS+hK6run4MgTDYGK1qTUoSJgNRK2olteaHw9wIsZQv
+         KL6OYsO+zucN1ZaX/Bn08+frGyeKrgZuQSPYTm0ixiSwHa87Ks3C616JZth1O2/sQVSn
+         h2ZoxVMdzbHT0v8XTMeZG8XsIkF4NX7HxJc4GhGELF180zfcGsnI4YniVGlUqcH4yVym
+         JyhQ6ZY3EzqA+/CHK/G7dzrybDa56euybHAiHkXPrj64BUU6DUOS33jPZ24abM+c3XuT
+         UCyQ==
+X-Received: by 10.67.16.15 with SMTP id fs15mr43228547pad.82.1444770339522;
+        Tue, 13 Oct 2015 14:05:39 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:45f3:915b:d2ba:37bc])
+        by smtp.gmail.com with ESMTPSA id yh3sm5528529pbb.82.2015.10.13.14.05.38
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 13 Oct 2015 14:05:38 -0700 (PDT)
+In-Reply-To: <1444764167.7234.14.camel@twopensource.com> (David Turner's
+	message of "Tue, 13 Oct 2015 15:22:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279519>
 
-On Tue, 2015-10-13 at 05:41 +0200, Michael Haggerty wrote:
+David Turner <dturner@twopensource.com> writes:
 
-> If its removal was intentional, it deserves a careful explanation (and
-> should probably be done as a separate commit). If it was an accident,
-> please consider how this accident arose and try to think about whether
-> similar accidents might have happened elsewhere in this series.
+>> This one smelled iffy.  I think it is safe because the caller does
+>> not look at src[] other than src[0] after this function returns, and
+>> this setting to NULL happens only when o->merge is set to 1, so I do
+>> not think this is buggy, but at the same time I do not think setting
+>> to NULL is necessary.
+>> 
+>> Other than that, looks nice.  Thanks.
+>
+> I like to set a pointer to NULL after I free the thing pointed to by it,
+> because it helps make use-after-free bugs easier to detect.  
 
-This was an accident. I think it must have happened when I
-forward-ported Ronnie's changes over my change that introduced that
-check.  Usually, when there were conflicts during this process
-(indicating that the moved code had changed in the meantime), I did the
-move by copy-pasting the code (rather than by choosing the old version).
-Apparently, I missed this one.
+Yes, but it also helps unintended bugs to creep in if done blindly,
+and that is why I vetted what happens in the codepath of the caller
+of this function after src[] entries are NULLed (the caller could be
+expecting to do things only to NULLed fields, for example, in which
+case clearing them like this patch would have changed the behaviour
+of the caller after this function returns).
 
-Will fix.
-
-> > [...]
-> 
-> Michael
-> 
+Thanks.
