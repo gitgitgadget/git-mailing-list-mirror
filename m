@@ -1,180 +1,108 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 08/10] ref-filter: add support for %(upstream:track,nobracket)
-Date: Tue, 13 Oct 2015 23:43:45 +0530
-Message-ID: <CAOLa=ZRZszOqHqJfOHhFqa-XDZbrcPCuSdvM_zMEYHURv8kW_A@mail.gmail.com>
-References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com> <1444295885-1657-9-git-send-email-Karthik.188@gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v3 19/44] refs-be-files.c: add a backend method
+ structure with transaction functions
+Date: Tue, 13 Oct 2015 14:28:31 -0400
+Organization: Twitter
+Message-ID: <1444760911.7234.6.camel@twopensource.com>
+References: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
+	 <1444686725-27660-21-git-send-email-dturner@twopensource.com>
+	 <561CB919.8000801@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <Karthik.188@gmail.com>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 13 20:14:24 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 13 20:28:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zm45e-00089J-UL
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 20:14:23 +0200
+	id 1Zm4JS-0005Hh-MG
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 20:28:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753282AbbJMSOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 14:14:17 -0400
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:33339 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753035AbbJMSOQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2015 14:14:16 -0400
-Received: by vkaw128 with SMTP id w128so15509831vka.0
-        for <git@vger.kernel.org>; Tue, 13 Oct 2015 11:14:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Ab3By2/P0Ec6+gPS0Gh52iYbOYtfbnF+aIkVITe324o=;
-        b=iiIPKgw8vaEFmqZVOgARUYumNTWL1nw8FmP1qM3MAO+4kSulGJrqUAKzh8wFa5QjxB
-         p3mSqRo+qFfrLgUK5QCnnr94K82LqbJTfhSy5RMFhW0P1Dqz6WSKHD9O+2gZdQwEWhc3
-         DA2ZsjcgnPQB5Jcwed15qdua1lZNGDTduQJOkZNNdvqM3zbtBDVUI3WPyYYKbd3g9w2b
-         Fkv1RutusEmiFQI17DjlfD9bV2wl6JPHafYxwx/reJYikloMGsGeaEqn9Y6a/kwuKB1h
-         1NktrLEQEqyOVSljbMpig752jggWTlKkOU3yyab02u4cIpQKwjGsuSlY3llsbAL3dsy/
-         ja9w==
-X-Received: by 10.31.21.149 with SMTP id 143mr21952368vkv.79.1444760055347;
- Tue, 13 Oct 2015 11:14:15 -0700 (PDT)
-Received: by 10.103.23.193 with HTTP; Tue, 13 Oct 2015 11:13:45 -0700 (PDT)
-In-Reply-To: <1444295885-1657-9-git-send-email-Karthik.188@gmail.com>
+	id S1751257AbbJMS2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 14:28:34 -0400
+Received: from mail-qg0-f44.google.com ([209.85.192.44]:36069 "EHLO
+	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750926AbbJMS2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2015 14:28:33 -0400
+Received: by qgx61 with SMTP id 61so22434048qgx.3
+        for <git@vger.kernel.org>; Tue, 13 Oct 2015 11:28:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=xlX6pHX2kgaXpinLipKY6nuERzD8o5YV6CZLzwEiGw4=;
+        b=GLqwUZejmGzKtQvkNOzPMpJhXkWFDlZgo0hr2dvbwpxISIni1JC5f/uMISwhrU2OPR
+         Fdl+ulMo16WEc0yt6ez+NasubyNPC6Pq6sfRdB3mo2VyDhX7icALND6ZBWnuJn+gtsST
+         3KSnl9r6V+RSVNtvP8CiiYlxpQVRsF8Ad/IFOpTkAmGrS5Hn0VehcVZ0MA222a+4CIad
+         ZFxFxUQamGdPpWaqEDxIg8BwodYUOzHGaClO+oTHMG2MyFMMSzHvwDIdVzQqvuJIJY6j
+         130s94kZSJ0ZHv7iV0tUf+t+3fyVcSLbadQCn+fEHtm7ZrbkePLkJrwTdLfRGDfc1XLe
+         yXng==
+X-Gm-Message-State: ALoCoQnXaSWr1ABtunfxvI9kODeauQWYh7OfMUNpLcaecHuKO3X2rai1swZycUrDkX1BqzeWjyBG
+X-Received: by 10.140.40.139 with SMTP id x11mr41403359qgx.41.1444760913033;
+        Tue, 13 Oct 2015 11:28:33 -0700 (PDT)
+Received: from ubuntu ([192.133.79.147])
+        by smtp.gmail.com with ESMTPSA id o39sm1680681qgd.48.2015.10.13.11.28.31
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Oct 2015 11:28:31 -0700 (PDT)
+In-Reply-To: <561CB919.8000801@alum.mit.edu>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279510>
 
-On Thu, Oct 8, 2015 at 2:48 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Add support for %(upstream:track,nobracket) which will print the
-> tracking information without the brackets (i.e. "ahead N, behind M").
->
-> Add test and documentation for the same.
-> ---
->  Documentation/git-for-each-ref.txt |  6 ++++--
->  ref-filter.c                       | 28 +++++++++++++++++++++++-----
->  t/t6300-for-each-ref.sh            |  9 +++++++++
->  3 files changed, 36 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index c713ec0..a38cbf6 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -114,8 +114,10 @@ upstream::
->         `refname` above.  Additionally respects `:track` to show
->         "[ahead N, behind M]" and `:trackshort` to show the terse
->         version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
-> -       or "=" (in sync).  Has no effect if the ref does not have
-> -       tracking information associated with it.
-> +       or "=" (in sync).  Append `:track,nobracket` to show tracking
-> +       information without brackets (i.e "ahead N, behind M").  Has
-> +       no effect if the ref does not have tracking information
-> +       associated with it.
->
->  push::
->         The name of a local ref which represents the `@{push}` location
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 6a38089..6044eb0 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1112,27 +1112,45 @@ static void populate_value(struct ref_array_item *ref)
->                         if (!strcmp(formatp, "short"))
->                                 refname = shorten_unambiguous_ref(refname,
->                                                       warn_ambiguous_refs);
-> -                       else if (!strcmp(formatp, "track") &&
-> +                       else if (skip_prefix(formatp, "track", &valp) &&
-> +                                strcmp(formatp, "trackshort") &&
->                                  (starts_with(name, "upstream") ||
->                                   starts_with(name, "push"))) {
+On Tue, 2015-10-13 at 09:56 +0200, Michael Haggerty wrote:
+> On 10/12/2015 11:51 PM, David Turner wrote:
+> > From: Ronnie Sahlberg <sahlberg@google.com>
+> > 
+> > Add a ref structure for backend methods. Start by adding a method pointer
+> > for the transaction commit function.
+> > 
+> > Add a function set_refs_backend to switch between backends. The files
+> > based backend is the default.
+> > 
+> > Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> > Signed-off-by: David Turner <dturner@twopensource.com>
+> > ---
+> >  refs-be-files.c | 10 ++++++++--
+> >  refs.c          | 30 ++++++++++++++++++++++++++++++
+> >  refs.h          | 15 +++++++++++++++
+> >  3 files changed, 53 insertions(+), 2 deletions(-)
+> > 
+> > [...]
+> > diff --git a/refs.h b/refs.h
+> > index 4940ae9..419abf4 100644
+> > --- a/refs.h
+> > +++ b/refs.h
+> > @@ -619,4 +619,19 @@ extern int reflog_expire(const char *refname, const unsigned char *sha1,
+> >  			 reflog_expiry_cleanup_fn cleanup_fn,
+> >  			 void *policy_cb_data);
+> >  
+> > +/* refs backends */
+> > +typedef int ref_transaction_commit_fn(struct ref_transaction *transaction,
+> > +				      struct strbuf *err);
+> > +typedef void ref_transaction_free_fn(struct ref_transaction *transaction);
+> 
+> The ref_transaction_free_fn typedef isn't used anywhere.
 
-If you see here, we detect "track" first for
-%(upstream:track,nobracket) so although
-the idea was to use something similar to %(align:...) I don't see a
-good way of going
-about this. If we want %(upstream:nobracket,track) to be supported then, I think
-we'll have to change this whole layout and have the detection done up where we
-locat "upstream" / "push", what would be a nice way to go around this?
+Will fix, thanks.
 
-What I could think of:
-1. Do the cleanup that Junio and Matthieu suggested, where we
-basically parse the
-atoms and store them into a used_atom struct. I could either work on
-those patches
-before this and then rebase this on top.
-2. Let this be and come back on it when implementing the above series.
-After reading Matthieu's and Junio's discussion, I lean towards the latter.
+> > +struct ref_be {
+> > +	struct ref_be *next;
+> > +	const char *name;
+> > +	ref_transaction_commit_fn *transaction_commit;
+> > +};
+> > +
+> > +
+> > +extern struct ref_be refs_be_files;
+> 
+> I don't think that refs_be_files is needed in the public interface.
 
->                                 char buf[40];
-> +                               unsigned int nobracket = 0;
-> +
-> +                               if (!strcmp(valp, ",nobracket"))
-> +                                       nobracket = 1;
->
->                                 if (stat_tracking_info(branch, &num_ours,
->                                                        &num_theirs, NULL)) {
-> -                                       v->s = "[gone]";
-> +                                       if (nobracket)
-> +                                               v->s = "gone";
-> +                                       else
-> +                                               v->s = "[gone]";
->                                         continue;
->                                 }
->
->                                 if (!num_ours && !num_theirs)
->                                         v->s = "";
->                                 else if (!num_ours) {
-> -                                       sprintf(buf, "[behind %d]", num_theirs);
-> +                                       if (nobracket)
-> +                                               sprintf(buf, "behind %d", num_theirs);
-> +                                       else
-> +                                               sprintf(buf, "[behind %d]", num_theirs);
->                                         v->s = xstrdup(buf);
->                                 } else if (!num_theirs) {
-> -                                       sprintf(buf, "[ahead %d]", num_ours);
-> +                                       if (nobracket)
-> +                                               sprintf(buf, "ahead %d", num_ours);
-> +                                       else
-> +                                               sprintf(buf, "[ahead %d]", num_ours);
->                                         v->s = xstrdup(buf);
->                                 } else {
-> -                                       sprintf(buf, "[ahead %d, behind %d]",
-> +                                       if (nobracket)
-> +                                               sprintf(buf, "ahead %d, behind %d",
-> +                                                       num_ours, num_theirs);
-> +                                       else
-> +                                               sprintf(buf, "[ahead %d, behind %d]",
->                                                 num_ours, num_theirs);
->                                         v->s = xstrdup(buf);
->                                 }
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 4f620bf..7ab8bf8 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -344,6 +344,15 @@ test_expect_success 'Check upstream:track format' '
->  '
->
->  cat >expected <<EOF
-> +ahead 1
-> +EOF
-> +
-> +test_expect_success 'Check upstream:track,nobracket format' '
-> +       git for-each-ref --format="%(upstream:track,nobracket)" refs/heads >actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +cat >expected <<EOF
->  >
->  EOF
->
-> --
-> 2.6.0
->
-
-
-
--- 
-Regards,
-Karthik Nayak
+We use refs_be_lmdb in a few other places to set up the lmdb backend, so
+I thought I would put refs_be_files in refs.h too.  But I can remove
+refs_be_files and just stick it in the places it's needed.
