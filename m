@@ -1,99 +1,83 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 18/44] refs: move transaction functions into common
- code
-Date: Tue, 13 Oct 2015 13:29:44 +0200
-Message-ID: <561CEB28.3090907@alum.mit.edu>
-References: <1444686725-27660-1-git-send-email-dturner@twopensource.com> <1444686725-27660-19-git-send-email-dturner@twopensource.com>
+Subject: Re: [PATCH v3 01/13] refs: convert some internal functions to use
+ object_id
+Date: Tue, 13 Oct 2015 13:43:30 +0200
+Message-ID: <561CEE62.4030403@alum.mit.edu>
+References: <1444355039-186351-1-git-send-email-sandals@crustytoothpaste.net> <1444355039-186351-2-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Tue Oct 13 13:30:00 2015
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?B?eQ==?= 
+	<pclouds@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 13 13:43:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlxmF-0004ek-Cg
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 13:29:55 +0200
+	id 1ZlxzV-0000Mq-UY
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 13:43:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932330AbbJML3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 07:29:49 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:51545 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932289AbbJML3r (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Oct 2015 07:29:47 -0400
-X-AuditID: 12074414-f794f6d000007852-a5-561ceb2a727c
+	id S932240AbbJMLne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 07:43:34 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61535 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752559AbbJMLnd (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Oct 2015 07:43:33 -0400
+X-AuditID: 12074413-f79bd6d000007ac2-b3-561cee64c62c
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 2B.13.30802.A2BEC165; Tue, 13 Oct 2015 07:29:46 -0400 (EDT)
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id A0.81.31426.46EEC165; Tue, 13 Oct 2015 07:43:32 -0400 (EDT)
 Received: from [192.168.69.130] (p5DDB2603.dip0.t-ipconnect.de [93.219.38.3])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t9DBTiI5026855
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t9DBhUUv027419
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 13 Oct 2015 07:29:45 -0400
+	Tue, 13 Oct 2015 07:43:31 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1444686725-27660-19-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjleLIzCtJLcpLzFFi42IRYndR1NV6LRNmcHCKtMX8TScYLbqudDNZ
-	tM38weTA7LH85l8mjwXP77N7fN4kF8AcxW2TlFhSFpyZnqdvl8Cd0fhsCmPBbf6KPVO7mRsY
-	P/J0MXJySAiYSJy/9pwdwhaTuHBvPVsXIxeHkMBlRokZ7zqZIZyzTBJHvy9gAqniFdCW+NI1
-	mRnEZhFQlWjaOQ/MZhPQlVjU0wxWIyoQJLFi+QtGiHpBiZMzn7CA2CICNRKnF/aCbRMWCJQ4
-	f/YhI8SCNkaJt7cWAiU4ODgFvCTOL9IBqWEW0JPYcf0XK4QtL9G8dTbzBEb+WUjGzkJSNgtJ
-	2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFuhZ6uZkleqkppZsYIWEqsoPxyEm5Q4wCHIxK
-	PLwvImXChFgTy4orcw8xSnIwKYnyul0FCvEl5adUZiQWZ8QXleakFh9ilOBgVhLhTWoByvGm
-	JFZWpRblw6SkOViUxHm/LVb3ExJITyxJzU5NLUgtgsnKcHAoSfA+fQnUKFiUmp5akZaZU4KQ
-	ZuLgBBnOJSVSnJqXklqUWFqSEQ+KyfhiYFSCpHiA9p4DaectLkjMBYpCtJ5iVJQSh0gIgCQy
-	SvPgxsKSzytGcaAvhXmFXwFV8QATF1z3K6DBTECDjdilQAaXJCKkpBoYF5T92bG+v2Fy/T+D
-	w28K6xKrimLdmy8X7km3vlQ7b07srJbrDrK+Rt0vU7iu38l6K5V4VPNUgsYfCTfZ5fO+rl23
-	wm2925mQvDfcN5pPu+dPWfmkvP3bmnfnqvfcUucr3B6zzIDrziuNC/NFUhMj3u7S 
+In-Reply-To: <1444355039-186351-2-git-send-email-sandals@crustytoothpaste.net>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqJvyTibM4MtJFYuuK91MFt1T3jJa
+	/GjpYbZom/mDyYHFY/nNv0weO2fdZfd41ruH0ePzJrkAlihum6TEkrLgzPQ8fbsE7oz3Vy6x
+	FNxhr3hweTd7A+MSti5GTg4JAROJjnOzoGwxiQv31oPZQgKXGSUWbcjsYuQCss8ySdxZNIsZ
+	JMEroC0xq3c+mM0ioCrx7tESJhCbTUBXYlFPM5gtKhAksWL5C0aIekGJkzOfsIDYIgJeEvMf
+	zWAFsZkFqiX+XfsKtkxYIEzi2NlHUIv7GSUO90WA2JwCfhIXbywBmsMBVK8usX6eEESrvETz
+	1tnMExgFZiHZMAuhahaSqgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdM31cjNL9FJTSjcx
+	QoJZeAfjrpNyhxgFOBiVeHhfRMqECbEmlhVX5h5ilORgUhLldbsKFOJLyk+pzEgszogvKs1J
+	LT7EKMHBrCTCm9QClONNSaysSi3Kh0lJc7AoifOqLVH3ExJITyxJzU5NLUgtgsnKcHAoSfDu
+	fAPUKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K0vhiYJyCpHiA9t4BaectLkjM
+	BYpCtJ5i1OVY8OP2WiYhlrz8vFQpcd7FIEUCIEUZpXlwK2Cp6xWjONDHwrzGb4GqeIBpD27S
+	K6AlTEBLjNilQJaUJCKkpBoY1zw4+k3n96zjq9oCPdNDS73jY7ikPY8ck59jaDa5Mj1D0PP8
+	HM0Nxusa0mvZfh61qXf2Ct+waZ/n0pJvGkXr9mtzzni7l3v5jEt5Ph7vvd5/Cfb5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279497>
 
-I reviewed the patches up to here pretty carefully, and aside from the
-comments I already sent, they look good.
+On 10/09/2015 03:43 AM, brian m. carlson wrote:
+> Convert several internal functions in refs.c to use struct object_id,
+> and use the GIT_SHA1_HEXSZ constants in parse_ref_line.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> [...]
 
-I like the new approach where the ref_transaction-building code is
-shared across backends.
+I looked over this patch at the diff level and didn't find any problems.
 
-It seems to me that a good breaking point for the first batch of patches
-would be here, just before you start creating the VTABLE in commit
-[19/44]. The patches before this point all have to do with moving code
-around and a little bit of light refactoring. They cause a lot of code
-churn that will soon conflict with other people's work (e.g., [1]), but
-I think they are pretty uncontroversial.
+This patch conflicts heavily with [1]. But I noticed that it is
+independent of the rest of your series. I don't know when either patch
+series will be ready, but see [2] for my take on the other one.
 
-After this you start making a few important design decisions that
-*could* be controversial. Therefore, by making a cut, you can maximize
-the chance that the earlier patches can be merged to master relatively
-quickly, after which the cross section for future conflicts will be much
-smaller.
-
-Ideally, you would include a few later patches in the "pre-VTABLE" patch
-series. It looks like the following patches also mostly have to do with
-moving code around, and would fit logically with the "pre-VTABLE" changes:
-
-[24] refs.c: move refname_is_safe to the common code
-[25] refs.h: document make refname_is_safe and add it to header
-[26] refs.c: move copy_msg to the common code
-[27] refs.c: move peel_object to the common code
-[28] refs.c: move should_autocreate_reflog to common code
-[32] initdb: move safe_create_dir into common code
-[36] refs: make files_log_ref_write functions public
-[37] refs: break out a ref conflict check
-
-I tried rebasing those commits on top of your patch 18 and it wasn't too
-bad. The result is on branch "refs-backend-pre-vtable" on my GitHub repo
-[2], including my suggested changes to those eight patches (which
-therefore became seven because I squashed the first two together).
+Assuming neither series is rejected, I think it would be much easier to
+redo this patch on top of the first part of [1] than vice versa, so that
+would be my suggestion. If it comes down to that, I am willing to help
+redo this patch if you like.
 
 Michael
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/279286
-[2] https://github.com/mhagger/git
+[1] http://thread.gmane.org/gmane.comp.version-control.git/279423
+[2] http://article.gmane.org/gmane.comp.version-control.git/279496
 
 -- 
 Michael Haggerty
