@@ -1,110 +1,131 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 18/44] refs: move transaction functions into common
- code
-Date: Tue, 13 Oct 2015 19:05:25 -0400
-Organization: Twitter
-Message-ID: <1444777525.18742.7.camel@twopensource.com>
-References: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
-	 <1444686725-27660-19-git-send-email-dturner@twopensource.com>
-	 <561CEB28.3090907@alum.mit.edu> <1444774901.18742.6.camel@twopensource.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: How to rebase when some commit hashes are in some commit messages
+Date: Wed, 14 Oct 2015 00:06:58 +0100
+Organization: OPDS
+Message-ID: <B8985A8E92044BD8845B1ABD23FABA13@PhilipOakley>
+References: <561C1132.3090606@orange.fr> <vpqsi5fx2gr.fsf@grenoble-inp.fr> <561CC5E0.7060206@orange.fr> <20151013160004.11a103942062ee09c53bd235@domain007.com> <AD64941D9533442AB025BE27FF8F08AF@PhilipOakley> <CA+P7+xoDia6PC+qJeVn3sD5g4jk7KRuDAPOcEHvrntd+ndUraA@mail.gmail.com> <CANoM8SVAGQ4AL9wBiBMaAu0GvaotC8rhn-rWQhLjsyWr4DnXmw@mail.gmail.com> <B846BC4FDE6944D39DC79E245264E544@PhilipOakley> <CA+P7+xpgY-PGdxDKHBeu0X=U6FKMavzmjexUTWatUzEdw8CmcQ@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 14 01:05:51 2015
+Cc: "Mike Rappazzo" <rappazzo@gmail.com>,
+	"Konstantin Khomoutov" <kostix+git@007spb.ru>,
+	"Francois-Xavier Le Bail" <devel.fx.lebail@orange.fr>,
+	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
+	"Git List" <git@vger.kernel.org>
+To: "Jacob Keller" <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 14 01:07:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zm8dd-0002gA-LG
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 01:05:46 +0200
+	id 1Zm8ev-00047g-Vb
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 01:07:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751704AbbJMXF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 19:05:28 -0400
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:32788 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750903AbbJMXF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2015 19:05:27 -0400
-Received: by qgeb31 with SMTP id b31so28774313qge.0
-        for <git@vger.kernel.org>; Tue, 13 Oct 2015 16:05:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=qrcvO7PQTzGnP0+Sj6D7h1rRejqn7E8VV8C0Hkyk7fo=;
-        b=eYa8rkfvhg+8kAbK+zn+EUaxrvan7MQVcQmDZDICC2+GQKGSBXl9ybbaft7/oWzqty
-         +kzUwcJfK6343wXuXR5RVaWGMkKNpuhbIAYqBBInjoQKpNbjlytYBjNgbqZ0uSLAC4mc
-         C4DYQA/lY1lNk7nbhVAn8A8DfiHO8hTJEMd6zLSxx600JC3EklBpD6M/45pKO7+SGdGt
-         4mgGBFot5Cyh4YFqZ/rORJfZISGj48+lxMMt6lyLlGgOnehyIivgYRRN3iidxW4fOgre
-         9PRjpA/VO7Z2jA/ACcyEGpO3cQo2i1Hq0vSYkZExIJTF0MTUmYDsbatT7YZoVGGOprgQ
-         W7kA==
-X-Gm-Message-State: ALoCoQlfWEzEZ+go9bTYN4tSlefAyerXZC3NvHC3+I8dVvGEPGbGcjYZdKH688yzCNrixkMeATAg
-X-Received: by 10.140.129.212 with SMTP id 203mr5991qhb.46.1444777527143;
-        Tue, 13 Oct 2015 16:05:27 -0700 (PDT)
-Received: from ubuntu ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id w78sm2169164qge.42.2015.10.13.16.05.25
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Oct 2015 16:05:25 -0700 (PDT)
-In-Reply-To: <1444774901.18742.6.camel@twopensource.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1752048AbbJMXHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 19:07:01 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:15563 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751795AbbJMXHA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Oct 2015 19:07:00 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2BPUQB3jR1WPFc7FlxeGQECBIMGgUKGW224MoMTgn8EBAKBSE0BAQEBAQEHAQEBAUABJBtBAQEDAQGDWQUBAQEBAgEIAQEZFR4BASEFBgIDBQIBAxUDAgIFIQICFAEECBIGBwMUBhMIAgECAwGICAMKDK8ehliHZg2FNoEihVOEfoJQgj2CcDGBFAWWFgGBHooHg0yRaH+HSYItgjk9M4IAaIFvM4FnAQEB
+X-IPAS-Result: A2BPUQB3jR1WPFc7FlxeGQECBIMGgUKGW224MoMTgn8EBAKBSE0BAQEBAQEHAQEBAUABJBtBAQEDAQGDWQUBAQEBAgEIAQEZFR4BASEFBgIDBQIBAxUDAgIFIQICFAEECBIGBwMUBhMIAgECAwGICAMKDK8ehliHZg2FNoEihVOEfoJQgj2CcDGBFAWWFgGBHooHg0yRaH+HSYItgjk9M4IAaIFvM4FnAQEB
+X-IronPort-AV: E=Sophos;i="5.17,680,1437433200"; 
+   d="scan'208";a="611981330"
+Received: from host-92-22-59-87.as13285.net (HELO PhilipOakley) ([92.22.59.87])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 14 Oct 2015 00:06:58 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279529>
 
-On Tue, 2015-10-13 at 18:21 -0400, David Turner wrote:
-> On Tue, 2015-10-13 at 13:29 +0200, Michael Haggerty wrote:
-> > I reviewed the patches up to here pretty carefully, and aside from the
-> > comments I already sent, they look good.
-> > 
-> > I like the new approach where the ref_transaction-building code is
-> > shared across backends.
-> > 
-> > It seems to me that a good breaking point for the first batch of patches
-> > would be here, just before you start creating the VTABLE in commit
-> > [19/44]. The patches before this point all have to do with moving code
-> > around and a little bit of light refactoring. They cause a lot of code
-> > churn that will soon conflict with other people's work (e.g., [1]), but
-> > I think they are pretty uncontroversial.
-> > 
-> > After this you start making a few important design decisions that
-> > *could* be controversial. Therefore, by making a cut, you can maximize
-> > the chance that the earlier patches can be merged to master relatively
-> > quickly, after which the cross section for future conflicts will be much
-> > smaller.
-> > 
-> > Ideally, you would include a few later patches in the "pre-VTABLE" patch
-> > series. It looks like the following patches also mostly have to do with
-> > moving code around, and would fit logically with the "pre-VTABLE" changes:
-> > 
-> > [24] refs.c: move refname_is_safe to the common code
-> > [25] refs.h: document make refname_is_safe and add it to header
-> > [26] refs.c: move copy_msg to the common code
-> > [27] refs.c: move peel_object to the common code
-> > [28] refs.c: move should_autocreate_reflog to common code
-> > [32] initdb: move safe_create_dir into common code
-> > [36] refs: make files_log_ref_write functions public
-> > [37] refs: break out a ref conflict check
-> > 
-> > I tried rebasing those commits on top of your patch 18 and it wasn't too
-> > bad. The result is on branch "refs-backend-pre-vtable" on my GitHub repo
-> > [2], including my suggested changes to those eight patches (which
-> > therefore became seven because I squashed the first two together).
-> 
-> Thanks.  I started from that, and made the changes that you suggested 
-> in reviews that were not yet in there.
-> 
-> I also added Jeff's extension patch, since it seems uncontroversial to
-> me, and since we'll need it sooner or later anyway.
-> 
-> I put the result on my github at:
-> https://github.com/dturner-tw/git
-> on the refs-backend-pre-vtable branch 
+From: "Jacob Keller" <jacob.keller@gmail.com>
+> On Tue, Oct 13, 2015 at 12:24 PM, Philip Oakley <philipoakley@iee.org>
+> wrote:
+>> IIUC (as an alternate example),  in G4W one can submit a (long) pull
+>> request
+>> with internal back references that would be merged directly, so the
+>> sha1's
+>> could be updated as Francois-Xavier originally asked. I have a series
+>> that's
+>> been bumping along for a long while that needs regular rebasing, though
+>> doesn't have sha1 back references, so I can see that the need does
+>> happen. I
+>> can see that others may have a workflow that would work well with the
+>> sha1
+>> auto-update.
+>>
+>> --
+>> Philip
+>>
+>
+> I still don't see how this is useful, because the part that *can* be
+> implemented is not valuable and the part that is valuable can't be
+> implemented.
+>
+> So, what we can implement easily enough:
+>
+> you rebase a series and any time the message contains sha1 of a commit
+> we're modifying in this rebase, we update the sha1 to match again.
+> This seems reasonable, but not useful. Why would you reference a
+> commit that is *ITSELF* being rebased. No one has explained a
+> reasonable use for this... I'm sure there exists one, but I would want
+> an explanation of one first.
+>
+This particular case is about self-references within a long series. At the
+moment, on the Git list there is general comments about say [PATCH v3
+18/44], whichs is great for for the list ($gmane) but not for a `git log`.
+In flows where PRs are valid, one can have what was [34/44] refering to
+prior patch [26/44] as `deadbeaf` or whatever. It won't be suitable for most
+flows but will be useful for a proportion (as already evidenced by the
+request).
 
-While rebasing the rest of the series on this, I noticed an issue in one
-of the patches, which I have now fixed.  I re-pushed.
+> The "useful" case is if you rebase "onto" a tree that has a previous
+> history that has been changed. In this case, how do you propose we
+> find it.
+
+This use case (where upstream also rebases) hasn't been considered. It would
+be a tricky one. As long as the possibility (of such an A depends on B
+re-write) isn't closed off then the smaller requested case could still go
+ahead.
+
+> Doing as suggested above, ie: only changing sha1s that we are
+> already rebasing works, but why are you backreferencing it if you are
+> re-writing the commit?
+
+ Essentially one wants to say `$CURR_COMMIT~nn` (i.e. "see nn commits
+earlier in my series") and have that replaced with its cannonical sha1, and
+updated when rebased.
+It sort of begs the question whether there should be a ref shorthand for
+"the (this) current commit" to allow THIS~<n> as an interpretable [valid?]
+format.
+
+> That doesn't make sense to me at all. Yes, you
+> can do it, but I don't get why this is valuable.
+
+> If you're backref is
+> "fixes xyz" why not just fix xyz instead of have two commits. If the
+> back ref has some other value... what is that value? I don't
+> understand it I guess.
+For the 'fixes' (of a bug report) case we are already talking about an
+immutable so it would not be part of this.
+Its use may be more of the type "Using helper function xyz introduced
+earlier in patch abcde", which would change after each rebase.
+
+>
+> It just seems pretty narrow focus. I mean if someone wants to
+> implement it, that is fine.
+>
+Agreed
+--
+Philip 
