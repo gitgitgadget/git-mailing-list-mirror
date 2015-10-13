@@ -1,84 +1,88 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 01/13] refs: convert some internal functions to use
- object_id
-Date: Tue, 13 Oct 2015 13:43:30 +0200
-Message-ID: <561CEE62.4030403@alum.mit.edu>
-References: <1444355039-186351-1-git-send-email-sandals@crustytoothpaste.net> <1444355039-186351-2-git-send-email-sandals@crustytoothpaste.net>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] Reinstate the helpful message when `git pull
+ --rebase` fails
+Date: Tue, 13 Oct 2015 13:48:16 +0200
+Organization: gmx
+Message-ID: <0d0983480d85118291a058dcd3ef727d@dscho.org>
+References: <cover.1444336120.git.johannes.schindelin@gmx.de>
+ <xmqq612grhg7.fsf@gitster.mtv.corp.google.com>
+ <CACRoPnSPVMt+FtK6bwfa7Z3jBheTEkBnhU+B7qL8JrAsSmAmkQ@mail.gmail.com>
+ <xmqqk2qvq570.fsf@gitster.mtv.corp.google.com>
+ <xmqq4mhzq41e.fsf@gitster.mtv.corp.google.com>
+ <ed70803ecd73415f1bbafb68502fbbda@dscho.org>
+ <xmqqio6bltkq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?B?eQ==?= 
-	<pclouds@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 13 13:43:38 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Paul Tan <pyokagan@gmail.com>,
+	Brendan Forster <shiftkey@github.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 13 13:48:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZlxzV-0000Mq-UY
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 13:43:38 +0200
+	id 1Zly4I-0004gt-1V
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 13:48:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932240AbbJMLne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 07:43:34 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61535 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752559AbbJMLnd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Oct 2015 07:43:33 -0400
-X-AuditID: 12074413-f79bd6d000007ac2-b3-561cee64c62c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id A0.81.31426.46EEC165; Tue, 13 Oct 2015 07:43:32 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB2603.dip0.t-ipconnect.de [93.219.38.3])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t9DBhUUv027419
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 13 Oct 2015 07:43:31 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1444355039-186351-2-git-send-email-sandals@crustytoothpaste.net>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqJvyTibM4MtJFYuuK91MFt1T3jJa
-	/GjpYbZom/mDyYHFY/nNv0weO2fdZfd41ruH0ePzJrkAlihum6TEkrLgzPQ8fbsE7oz3Vy6x
-	FNxhr3hweTd7A+MSti5GTg4JAROJjnOzoGwxiQv31oPZQgKXGSUWbcjsYuQCss8ySdxZNIsZ
-	JMEroC0xq3c+mM0ioCrx7tESJhCbTUBXYlFPM5gtKhAksWL5C0aIekGJkzOfsIDYIgJeEvMf
-	zWAFsZkFqiX+XfsKtkxYIEzi2NlHUIv7GSUO90WA2JwCfhIXbywBmsMBVK8usX6eEESrvETz
-	1tnMExgFZiHZMAuhahaSqgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdM31cjNL9FJTSjcx
-	QoJZeAfjrpNyhxgFOBiVeHhfRMqECbEmlhVX5h5ilORgUhLldbsKFOJLyk+pzEgszogvKs1J
-	LT7EKMHBrCTCm9QClONNSaysSi3Kh0lJc7AoifOqLVH3ExJITyxJzU5NLUgtgsnKcHAoSfDu
-	fAPUKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K0vhiYJyCpHiA9t4BaectLkjM
-	BYpCtJ5i1OVY8OP2WiYhlrz8vFQpcd7FIEUCIEUZpXlwK2Cp6xWjONDHwrzGb4GqeIBpD27S
-	K6AlTEBLjNilQJaUJCKkpBoY1zw4+k3n96zjq9oCPdNDS73jY7ikPY8ck59jaDa5Mj1D0PP8
-	HM0Nxusa0mvZfh61qXf2Ct+waZ/n0pJvGkXr9mtzzni7l3v5jEt5Ph7vvd5/Cfb5 
+	id S932110AbbJMLsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 07:48:23 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59325 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752768AbbJMLsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2015 07:48:22 -0400
+Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MY7dI-1a7sg50aem-00UuDs; Tue, 13 Oct 2015 13:48:17
+ +0200
+In-Reply-To: <xmqqio6bltkq.fsf@gitster.mtv.corp.google.com>
+X-Sender: johannes.schindelin@gmx.de
+User-Agent: Roundcube Webmail/1.1.2
+X-Provags-ID: V03:K0:UEy6571sJP8CEuWpHVXu/2oXBNqX9HlBkq20e8vaQ7tbBA0Mj4f
+ AFhe6r9JOMIK620kzmr3Ecvi0e2IMl4fbij1yv4FgsolVxWytoJIZTAQ584vntQuGLmLry3
+ hmxQI5rixgjDMtRq+FT92MeKMjrVH1YiHxFDSDvj6cueHa8Rjr7cjWhenRx0NONeUVpPHaM
+ JszEMdu2cIXu9DfL/nb2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dEkDtq0bXVU=:OD28hcjhWmhWUQXlHTycDh
+ c9vNud9rfWul9n8AmNG+JC5XiTZm8mzflw51+ni+py28Btifh639cTzM16Xdh7dch5wdy8TK+
+ UmkEyVWwTUku4jSSQLsBP60apyfnfWaePsmFOtBgvUl32E+9i6S76tQ3JL9ZzMJ3oZOnxPboY
+ Oa56qic6A2sC1FzDxKYMEFT/hppzMXFkjBZpOhblf53KxGl+wQmjIlPM2tjM4Uqd7Of1ryCLB
+ boioBXec4MeJa7AAQKvFmfhHSh5F0Ewf/4ngCEOrWVD/Qx29QUw/qB06Elx+BrATU8cKrgwUK
+ L1thBHHmwRlN9iwuTJ7osLR9VWG4CVAVSJeyIA+3ghXSxyE0mI9rCsPKtfKlGhvBcT9KwwDmK
+ 8udCzbxTSWEWwwybsT+STS23FW+FVKnceMMKlVy2m692NfInAkGPnu7laiRzEg3cK90Nt4wn3
+ aw5w3v0EoK9XhMp7BPnUp1rOWeoWLwiVCwZOxpE5CPHgZ3oGfiD567CUfKewJ6sTm8g2sAzVg
+ +IB1C4lrKimsbLLkkt8TqdwttNdWLDsNprGMrxuy3l9njEC0nobT9I/1GD5uPGFrMwM5YtYx1
+ YHdHe18Eo5gW5hkUmZyR+ZMB46NMKKJ/Ak7JeTZQ3RdI2w4tfAdUqidwFH/Kre2Fli3Kik6sM
+ I7GzlGjkyg4Gg06RRh9v4ic3wcdVQpSMdZmGjyA2+WmAT7Et5kpvFXM3hFi/ujCxlLwmXYQQU
+ gDVfWM+njSWSCZCyVNunvZ0NvNgyT/HNsW4nPYHoIjRt9zIuRltOXFNa3ReXJBhRhxOtrcx3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279498>
 
-On 10/09/2015 03:43 AM, brian m. carlson wrote:
-> Convert several internal functions in refs.c to use struct object_id,
-> and use the GIT_SHA1_HEXSZ constants in parse_ref_line.
+Hi Junio,
+
+On 2015-10-12 22:28, Junio C Hamano wrote:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> [...]
+>>> I think the most sensible regression fix as the first step at this
+>>> point is to call it as a separate process, just like the code calls
+>>> "apply" as a separate process for each patch.  Optimization can come
+>>> later when it is shown that it matters---we need to regain
+>>> correctness first.
+>>
+>> I fear that you might underestimate the finality of this "first
+>> step". If you reintroduce that separate process, not only is it a
+>> performance regression, but could we really realistically expect any
+>> further steps to happen after that? I do not think so.
+>> ...
+>> For the above reasons, I respectfully remain convinced that
+>> reintroducing the separate process would be a mistake.
+> 
+> I am not saying we should forever do run_command() going forward.
 
-I looked over this patch at the diff level and didn't find any problems.
+Fine, I will stop arguing about this and go back grumble in my corner.
 
-This patch conflicts heavily with [1]. But I noticed that it is
-independent of the rest of your series. I don't know when either patch
-series will be ready, but see [2] for my take on the other one.
-
-Assuming neither series is rejected, I think it would be much easier to
-redo this patch on top of the first part of [1] than vice versa, so that
-would be my suggestion. If it comes down to that, I am willing to help
-redo this patch if you like.
-
-Michael
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/279423
-[2] http://article.gmane.org/gmane.comp.version-control.git/279496
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+Ciao,
+Dscho
