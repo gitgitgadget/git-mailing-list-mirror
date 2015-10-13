@@ -1,106 +1,124 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 18/44] refs: move transaction functions into common
- code
-Date: Tue, 13 Oct 2015 18:21:41 -0400
-Organization: Twitter
-Message-ID: <1444774901.18742.6.camel@twopensource.com>
-References: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
-	 <1444686725-27660-19-git-send-email-dturner@twopensource.com>
-	 <561CEB28.3090907@alum.mit.edu>
+From: lennart spitzner <len48@web.de>
+Subject: bug report: `git stash save -u` deletes directory whose contents are
+ .gitignored
+Date: Wed, 14 Oct 2015 00:48:03 +0200
+Message-ID: <561D8A23.2090601@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 14 00:21:54 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 14 00:48:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zm7x6-0007La-83
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 00:21:48 +0200
+	id 1Zm8NA-0001m9-P8
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 00:48:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751866AbbJMWVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 18:21:44 -0400
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:35775 "EHLO
-	mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801AbbJMWVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2015 18:21:43 -0400
-Received: by qkap81 with SMTP id p81so15246070qka.2
-        for <git@vger.kernel.org>; Tue, 13 Oct 2015 15:21:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=qCzG8YLmGvWwJQPpXiwLX5O7OpfvXX0AcMa0tFKW320=;
-        b=TmYjDdl84Wv7k3nBQ2F2TsmuY681pkVn/NOoUjJRrYfpr7eTRUjiS9kSS1WAQ178y2
-         3lPr+kr/zFQqS8wbmmFeB16H2zjRa1rmI6jcvk4uxUqliY2yhSiIu8fxw0RnIz8OC17t
-         +tdfqPWEXU9q+7tdyFHStyWH1P9x+fM4GXbY/OFrzTd+zSaGj7vJUIkPkCSj5sBXCw2z
-         Nc/2JftsmuqwI2M+n2R5nPIuQOIfAR1YIvvUFcm+PlAGWzW6SkfA+z0bC5aOEDGYHCSu
-         n/HT9N2HpHE7EgB0pWB9TEU2s0BRYe8EsXv4u6rinTKFH4Iiqj3nLv6G/T//Q37dR3Qr
-         rF4Q==
-X-Gm-Message-State: ALoCoQnUxPW+W1wX48LmVHWuyTEKacVq5B491ynkSka0TS0m1z28Xp3KJ+PDTKR5ZRUWjHjay9f/
-X-Received: by 10.55.41.93 with SMTP id p90mr41236311qkh.14.1444774902721;
-        Tue, 13 Oct 2015 15:21:42 -0700 (PDT)
-Received: from ubuntu ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id f129sm1375102qhe.45.2015.10.13.15.21.41
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Oct 2015 15:21:41 -0700 (PDT)
-In-Reply-To: <561CEB28.3090907@alum.mit.edu>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1751819AbbJMWsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 18:48:40 -0400
+Received: from mout.web.de ([212.227.15.3]:65175 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751037AbbJMWsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2015 18:48:39 -0400
+Received: from [192.168.178.21] ([77.6.117.61]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MMnD5-1Zeimx26L1-008aET for <git@vger.kernel.org>; Wed,
+ 14 Oct 2015 00:48:36 +0200
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.2.0
+X-Provags-ID: V03:K0:AwX1CggMGFNrm87khMZM62uM/raej2fToPFMd2tU4vkVVLQXhxs
+ uUjUqMGO9gzCyJTZWZhSSCnV4dNlUsmMuwuSfwyreohBmoVpPXNbTBkBavqIpYTl7e/9hNR
+ Fz6hfLV9KA/W3gTREK+02PTF/xD5P6xNZdgxGJcN3nl7uJwfktgk6wdaWj+6C2DKHmEsk9P
+ ttj/cGgsUxfWs7/yJ/N/Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FVsaWRfUBZ4=:ayE7WarYvg6YDutqFBLyfH
+ vZNIRj1dSoK5LwcBA8xgifvz4T6c9k1/rgVsPM2Ma9kwiY2k8TQ6lS8adI6zULXfg9JiJKgBd
+ vPcW98AupA4W6hgAOPN0qQdoVfQMutrSJ7Ic5gS34y4N48zTN3wlWeiRhU0NGuE9flMllfEHJ
+ hWm38FGLHJ7B/Tc9MJg/AuPK/T1hN8DSyC0kixN2ED66Uhjdwxh1cdB6QTcTzUvnTs3v01bu9
+ 11I3L3Zr10R7T/r1vguDhkt/3CZrRdcafVM1sRTTt6ATt0gzF9KtsTIQE2H6hitrHJjD6qzTr
+ z5QUFs/fLlvP7PSkXHk/c5m7iT/i/zr70YtUw8EeOFC36lSe9MK2qp9bLl9qIubiaolYpT0XO
+ j5pr7/0zRTr3gs51I4a6dXgGGC3xRunwdWhanPQCMui2LbjfLZH1gYzOZCbZpIJ+++xiFQzqk
+ EDJ1mHZObzQPt7H78WxHgqwVTiCwfdnQEbHBbzEGnANbd+IYEuB7V+FW/LctOYxq79UXgIkSm
+ GXnOFhy/9WhUVOas8EkH8EKXxRqyfX8BIZCFLBrRe+MB6x3+ja1lVTa9HjMXryel6aLYQnsyj
+ nbnvshM+LdW7wNMev3VD/3K+oiwEpPPe2ljhY54y/DXh+1whfGq0x+XrcVf7f/hMH+Aj0+0lw
+ rUlMXUKHcjjEb8IGEFVk0J96I+KNVEhKvdsefU8f81YhlsjApBcW5myli1eFpZDsOZVKUCR0v
+ tSKxN2nz9kQq/ilHlSwqlwBFSUee5QicD0tMCZQcLJoXU9FYRbmNU/M7AvO72OLjyDciE2l4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279527>
 
-On Tue, 2015-10-13 at 13:29 +0200, Michael Haggerty wrote:
-> I reviewed the patches up to here pretty carefully, and aside from the
-> comments I already sent, they look good.
-> 
-> I like the new approach where the ref_transaction-building code is
-> shared across backends.
-> 
-> It seems to me that a good breaking point for the first batch of patches
-> would be here, just before you start creating the VTABLE in commit
-> [19/44]. The patches before this point all have to do with moving code
-> around and a little bit of light refactoring. They cause a lot of code
-> churn that will soon conflict with other people's work (e.g., [1]), but
-> I think they are pretty uncontroversial.
-> 
-> After this you start making a few important design decisions that
-> *could* be controversial. Therefore, by making a cut, you can maximize
-> the chance that the earlier patches can be merged to master relatively
-> quickly, after which the cross section for future conflicts will be much
-> smaller.
-> 
-> Ideally, you would include a few later patches in the "pre-VTABLE" patch
-> series. It looks like the following patches also mostly have to do with
-> moving code around, and would fit logically with the "pre-VTABLE" changes:
-> 
-> [24] refs.c: move refname_is_safe to the common code
-> [25] refs.h: document make refname_is_safe and add it to header
-> [26] refs.c: move copy_msg to the common code
-> [27] refs.c: move peel_object to the common code
-> [28] refs.c: move should_autocreate_reflog to common code
-> [32] initdb: move safe_create_dir into common code
-> [36] refs: make files_log_ref_write functions public
-> [37] refs: break out a ref conflict check
-> 
-> I tried rebasing those commits on top of your patch 18 and it wasn't too
-> bad. The result is on branch "refs-backend-pre-vtable" on my GitHub repo
-> [2], including my suggested changes to those eight patches (which
-> therefore became seven because I squashed the first two together).
+hi,
 
-Thanks.  I started from that, and made the changes that you suggested 
-in reviews that were not yet in there.
+- `git stash save -u` deletes a directory, even though the _contents_
+of that directory are .gitignored (e.g. "foo/*" in .gitignore).
+Detailed reproduction below.
+- The behaviour is not present when instead .gitignoring the directory
+itself (e.g. "foo"). This does imo not excuse the behaviour of the
+described case.
+- The behaviour is not present with just `git stash save`.
+- The expected behaviour is: Only files listed in `git status` are
+stashed away; other things are left untouched. Potential exception:
+empty directories.
+- I am aware that `git stash save -u` is supposed to have semantics
+involving the equivalent of `reset --hard` and `clean -f`. Neither of
+those expose the directory-deletion behaviour.
 
-I also added Jeff's extension patch, since it seems uncontroversial to
-me, and since we'll need it sooner or later anyway.
+additional comments, not directly relevant to this bug:
+- both `git stash save; git stash pop` and `git stash save -u; git
+stash pop` should ideally behave as an "identity effect". The latter
+might affect the index (i.e. have an effect equivalent to `git reset`
+or something in that direction). Any other effect / special cases are
+bad interface design imo. If a differing design was chosen on purpose,
+i am thankful for pointers on the reasoning.
+- no, i luckily did not truely lose files due to the current behaviour.
 
-I put the result on my github at:
-https://github.com/dturner-tw/git
-on the refs-backend-pre-vtable branch 
+lennart
+
+----
+
+reproduction:
+
+> git init
+Initialized empty Git repository in $SOMEDIR/.git/
+> mkdir ignore-contents
+> echo "ignore-contents/*" > .gitignore
+> git add .gitignore
+> git commit -m "initial" > /dev/null
+> touch ignore-contents/blah.txt
+> touch abc.txt
+> git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+  abc.txt
+
+nothing added to commit but untracked files present (use "git add" to
+track)
+> ls -1a
+.
+..
+abc.txt
+.git
+.gitignore
+ignore-contents
+> git stash save -u
+Saved working directory and index state WIP on master: adc468b initial
+HEAD is now at adc468b initial
+> ls -1a
+.
+..
+.git
+.gitignore
+> git stash pop &> /dev/null
+> ls -1a
+.
+..
+abc.txt
+.git
+.gitignore
+> git --version
+git version 2.6.1
