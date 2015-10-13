@@ -1,70 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 08/10] ref-filter: add support for %(upstream:track,nobracket)
-Date: Tue, 13 Oct 2015 12:09:34 -0700
-Message-ID: <xmqqmvvma8lt.fsf@gitster.mtv.corp.google.com>
-References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
-	<1444295885-1657-9-git-send-email-Karthik.188@gmail.com>
-	<CAOLa=ZRZszOqHqJfOHhFqa-XDZbrcPCuSdvM_zMEYHURv8kW_A@mail.gmail.com>
-	<vpqeggy61ma.fsf@grenoble-inp.fr>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v2] merge: fix cache_entry use-after-free
+Date: Tue, 13 Oct 2015 15:22:47 -0400
+Organization: Twitter
+Message-ID: <1444764167.7234.14.camel@twopensource.com>
+References: <1444687413-928-1-git-send-email-dturner@twitter.com>
+	 <xmqqio6bbu2w.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Oct 13 21:09:49 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Keith McGuigan <kmcguigan@twitter.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 13 21:23:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zm4xA-0004Ys-JI
-	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 21:09:40 +0200
+	id 1Zm5A1-0000xz-Te
+	for gcvg-git-2@plane.gmane.org; Tue, 13 Oct 2015 21:22:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751492AbbJMTJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 15:09:36 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35299 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750903AbbJMTJf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2015 15:09:35 -0400
-Received: by pabve7 with SMTP id ve7so29732149pab.2
-        for <git@vger.kernel.org>; Tue, 13 Oct 2015 12:09:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=Wo6EWRJnyNtm+xkdblCeKr3SVsamVQ/hXHq00TCKp3E=;
-        b=JHyak1Sp6Fu2xnBEW65OUFDCMYDSpPdPeSYdzzIHTfvD+R9k4AER+PKRadrjKP/p40
-         MxlToU7BF1Dv4DCIJMxZS55c58BaIkwE+rVGhf+R7s5Ye8+Rrt+OYub3BHtrMbvLLdll
-         o+P0QA7iOnK18n2OgTSWIcn5/d92tUmlossDvyim4up+chQO2urVvMbkwvXICB5YtJqe
-         J9eyDTU5S+2frDpfpdl3LZ1TUHLvvW2wG1eM7Xxr8GIdvKvg3Jd6K+sIQRREs29EDDwa
-         Dt4S77rDhhC7RsQ5mj+4dT2DFmI2oxLKg46OmEwPUzj/hiO1SifWZEcc/B+o9bsQV3EG
-         F6Qg==
-X-Received: by 10.68.91.193 with SMTP id cg1mr42344872pbb.98.1444763375384;
-        Tue, 13 Oct 2015 12:09:35 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:495:58e7:6a27:bf4d])
-        by smtp.gmail.com with ESMTPSA id uc1sm5292111pab.20.2015.10.13.12.09.34
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 13 Oct 2015 12:09:34 -0700 (PDT)
-In-Reply-To: <vpqeggy61ma.fsf@grenoble-inp.fr> (Matthieu Moy's message of
-	"Tue, 13 Oct 2015 20:54:05 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752374AbbJMTWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 15:22:53 -0400
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:35682 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752197AbbJMTWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2015 15:22:50 -0400
+Received: by qgt47 with SMTP id 47so23871034qgt.2
+        for <git@vger.kernel.org>; Tue, 13 Oct 2015 12:22:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=AZhI20JLUo9sjw+vXjXu1nbU5qpoarJNEadpScXYjWU=;
+        b=Y37RFpVVAaZB5A2Xq/jdzp//KvnNtKfsygX/uuLfRyz4aceYa0BSP7XxZIyjjb1hLh
+         H2sCqmgVA0IgvWQ64At0EqzjEMzo7lXjQMBJ1s9xOG8pwIfwB+0nGG1NFEYZqLeWDFqC
+         8LNT6TJVDRyFqlXydYG82g6gyrbQ0aNl2nGDJzrIVYJbpVZ5x3r6SzP6FKngLMvJ8zck
+         q7gBi9dVdcXoCfISBxjRG39FQUrEdckj+2Zx/XD2fdraFFyPymWsO/NCHUg2y3zRRhPe
+         GlmqznEc4s3QrcQthTQrVSKZIK2O14EVy5cOfHmaHRBULHiretJuQEOwHLa40rWOYGeQ
+         VA3A==
+X-Gm-Message-State: ALoCoQnXJ+yO36uu8vALVGyVcDLTN+lyJyLgMEE4n1iX8wSpnGQ6WxkFSdpRO5v87LLpbol8ErwS
+X-Received: by 10.140.104.113 with SMTP id z104mr11983726qge.21.1444764169485;
+        Tue, 13 Oct 2015 12:22:49 -0700 (PDT)
+Received: from ubuntu ([192.133.79.147])
+        by smtp.gmail.com with ESMTPSA id 99sm1781009qkv.38.2015.10.13.12.22.47
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Oct 2015 12:22:48 -0700 (PDT)
+In-Reply-To: <xmqqio6bbu2w.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279516>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Mon, 2015-10-12 at 15:28 -0700, Junio C Hamano wrote:
+> David Turner <dturner@twopensource.com> writes:
+> 
+> > From: Keith McGuigan <kmcguigan@twitter.com>
+> >
+> > During merges, we would previously free entries that we no longer need
+> > in the destination index.  But those entries might also be stored in
+> > the dir_entry cache, and when a later call to add_to_index found them,
+> > they would be used after being freed.
+> >
+> > To prevent this, add a ref count for struct cache_entry.  Whenever
+> > a cache entry is added to a data structure, the ref count is incremented;
+> > when it is removed from the data structure, it is decremented.  When
+> > it hits zero, the cache_entry is freed.
+> >
+> > Signed-off-by: Keith McGuigan <kmcguigan@twitter.com>
+> > ---
+> 
+> I'll forge your "messenger's sign-off" here ;-)
 
->> If you see here, we detect "track" first for
->> %(upstream:track,nobracket)
->
-> Yes, but I still think that this was a bad idea. If you want
-> nobracket to apply to "track", then the syntax should be
-> %(upstream:track=nobracket). I think the "nobracket" should apply
-> to "upstream" (i.e. be global to the atom), hence
-> %(upstream:nobracket,track) and %(upstream:track,nobracket) should
-> both be accepted.
+Thanks.
 
-That makes sense to me, as I think what is being discussed would be
-%(upstream:track=yes,bracket=no) when it is fully spelled out.
+> > diff --git a/unpack-trees.c b/unpack-trees.c
+> > index f932e80..1a0a637 100644
+> > --- a/unpack-trees.c
+> > +++ b/unpack-trees.c
+> > @@ -606,8 +606,10 @@ static int unpack_nondirectories(int n, unsigned long mask,
+> >  					o);
+> >  		for (i = 0; i < n; i++) {
+> >  			struct cache_entry *ce = src[i + o->merge];
+> > -			if (ce != o->df_conflict_entry)
+> > -				free(ce);
+> > +			if (ce != o->df_conflict_entry) {
+> > +				drop_ce_ref(ce);
+> > +				src[i + o->merge] = NULL;
+> > +			}
+> 
+> This one smelled iffy.  I think it is safe because the caller does
+> not look at src[] other than src[0] after this function returns, and
+> this setting to NULL happens only when o->merge is set to 1, so I do
+> not think this is buggy, but at the same time I do not think setting
+> to NULL is necessary.
+> 
+> Other than that, looks nice.  Thanks.
+
+I like to set a pointer to NULL after I free the thing pointed to by it,
+because it helps make use-after-free bugs easier to detect.  
