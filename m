@@ -1,131 +1,97 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: How to rebase when some commit hashes are in some commit messages
-Date: Wed, 14 Oct 2015 00:06:58 +0100
-Organization: OPDS
-Message-ID: <B8985A8E92044BD8845B1ABD23FABA13@PhilipOakley>
-References: <561C1132.3090606@orange.fr> <vpqsi5fx2gr.fsf@grenoble-inp.fr> <561CC5E0.7060206@orange.fr> <20151013160004.11a103942062ee09c53bd235@domain007.com> <AD64941D9533442AB025BE27FF8F08AF@PhilipOakley> <CA+P7+xoDia6PC+qJeVn3sD5g4jk7KRuDAPOcEHvrntd+ndUraA@mail.gmail.com> <CANoM8SVAGQ4AL9wBiBMaAu0GvaotC8rhn-rWQhLjsyWr4DnXmw@mail.gmail.com> <B846BC4FDE6944D39DC79E245264E544@PhilipOakley> <CA+P7+xpgY-PGdxDKHBeu0X=U6FKMavzmjexUTWatUzEdw8CmcQ@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Mike Rappazzo" <rappazzo@gmail.com>,
-	"Konstantin Khomoutov" <kostix+git@007spb.ru>,
-	"Francois-Xavier Le Bail" <devel.fx.lebail@orange.fr>,
-	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
-	"Git List" <git@vger.kernel.org>
-To: "Jacob Keller" <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 14 01:07:07 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 00/26] mailinfo libification
+Date: Tue, 13 Oct 2015 16:16:21 -0700
+Message-ID: <1444778207-859-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 14 01:17:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zm8ev-00047g-Vb
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 01:07:06 +0200
+	id 1Zm8oi-00064u-Aq
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 01:17:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbbJMXHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 19:07:01 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:15563 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751795AbbJMXHA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Oct 2015 19:07:00 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2BPUQB3jR1WPFc7FlxeGQECBIMGgUKGW224MoMTgn8EBAKBSE0BAQEBAQEHAQEBAUABJBtBAQEDAQGDWQUBAQEBAgEIAQEZFR4BASEFBgIDBQIBAxUDAgIFIQICFAEECBIGBwMUBhMIAgECAwGICAMKDK8ehliHZg2FNoEihVOEfoJQgj2CcDGBFAWWFgGBHooHg0yRaH+HSYItgjk9M4IAaIFvM4FnAQEB
-X-IPAS-Result: A2BPUQB3jR1WPFc7FlxeGQECBIMGgUKGW224MoMTgn8EBAKBSE0BAQEBAQEHAQEBAUABJBtBAQEDAQGDWQUBAQEBAgEIAQEZFR4BASEFBgIDBQIBAxUDAgIFIQICFAEECBIGBwMUBhMIAgECAwGICAMKDK8ehliHZg2FNoEihVOEfoJQgj2CcDGBFAWWFgGBHooHg0yRaH+HSYItgjk9M4IAaIFvM4FnAQEB
-X-IronPort-AV: E=Sophos;i="5.17,680,1437433200"; 
-   d="scan'208";a="611981330"
-Received: from host-92-22-59-87.as13285.net (HELO PhilipOakley) ([92.22.59.87])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 14 Oct 2015 00:06:58 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751924AbbJMXQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 19:16:50 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:33104 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751717AbbJMXQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2015 19:16:49 -0400
+Received: by pabrc13 with SMTP id rc13so34522492pab.0
+        for <git@vger.kernel.org>; Tue, 13 Oct 2015 16:16:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:subject:date:message-id;
+        bh=IpzjF5IcySs/8YS2TuD2XpFu+51KBtP2XW5o1WPQ32M=;
+        b=S6tcEPKDWMPriNXWXtUI8aJAOvu2JBdlVsdlAYZReTZDFpvDjytoszWEy+8hARNWcP
+         CJjGtAk7LN8lsJgn58YBcEKWD86Xw+puMuy1R+H/rTYDfgX0riteKGfc5523N40Eweeh
+         3xboWXWr7f7BXilbvKIvhSrUlBJf42iGRZYq7bAHjZVVHmdpgHdxa21FyfU27uxSXlgU
+         Gh8Y0/8HaRmDHSWg/JpMWZVKNcViMD8R1IxLstwosm8FMuLvVe8pAxtSOsrn1BkZhU70
+         2pbXLyLnqvcVelK0Pv45+Hoq8CnBF+Dk3Q+VSsE9fUgV7JzIxgXojyPu49+6rumnIqCQ
+         pVGg==
+X-Received: by 10.66.221.104 with SMTP id qd8mr44538602pac.155.1444778209383;
+        Tue, 13 Oct 2015 16:16:49 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:45f3:915b:d2ba:37bc])
+        by smtp.gmail.com with ESMTPSA id or9sm5848967pbb.17.2015.10.13.16.16.48
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 13 Oct 2015 16:16:48 -0700 (PDT)
+X-Mailer: git-send-email 2.6.1-320-g86a1181
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279530>
 
-From: "Jacob Keller" <jacob.keller@gmail.com>
-> On Tue, Oct 13, 2015 at 12:24 PM, Philip Oakley <philipoakley@iee.org>
-> wrote:
->> IIUC (as an alternate example),  in G4W one can submit a (long) pull
->> request
->> with internal back references that would be merged directly, so the
->> sha1's
->> could be updated as Francois-Xavier originally asked. I have a series
->> that's
->> been bumping along for a long while that needs regular rebasing, though
->> doesn't have sha1 back references, so I can see that the need does
->> happen. I
->> can see that others may have a workflow that would work well with the
->> sha1
->> auto-update.
->>
->> --
->> Philip
->>
->
-> I still don't see how this is useful, because the part that *can* be
-> implemented is not valuable and the part that is valuable can't be
-> implemented.
->
-> So, what we can implement easily enough:
->
-> you rebase a series and any time the message contains sha1 of a commit
-> we're modifying in this rebase, we update the sha1 to match again.
-> This seems reasonable, but not useful. Why would you reference a
-> commit that is *ITSELF* being rebased. No one has explained a
-> reasonable use for this... I'm sure there exists one, but I would want
-> an explanation of one first.
->
-This particular case is about self-references within a long series. At the
-moment, on the Git list there is general comments about say [PATCH v3
-18/44], whichs is great for for the list ($gmane) but not for a `git log`.
-In flows where PRs are valid, one can have what was [34/44] refering to
-prior patch [26/44] as `deadbeaf` or whatever. It won't be suitable for most
-flows but will be useful for a proportion (as already evidenced by the
-request).
+So here is an attempt to libify "git mailinfo" so that the built-in
+version of "git am" does not have to run it via run_command()
+interface.  "git am", when fed an N-patch series, runs one
+"mailsplit", N "mailinfo" and N "apply" all via run_command()
+interface (plus 2 more "apply" and 1 "merge-recursive" per a patch
+that does not apply cleanly, when run with the "-3" option), and
+among the various programs spawned from "git am", "mailinfo" is the
+most straight-forward, stupid and light-weight program, so it is a
+no-brainer to pick it as the candidate for libification.
 
-> The "useful" case is if you rebase "onto" a tree that has a previous
-> history that has been changed. In this case, how do you propose we
-> find it.
+This goes on top of c5920b21 (mailinfo: ignore in-body header that
+we do not care about, 2015-10-08) that was posted earlier as a
+weatherbaloon patch.
 
-This use case (where upstream also rebases) hasn't been considered. It would
-be a tricky one. As long as the possibility (of such an A depends on B
-re-write) isn't closed off then the smaller requested case could still go
-ahead.
+Junio C Hamano (26):
+  mailinfo: remove a no-op call convert_to_utf8(it, "")
+  mailinfo: fix for off-by-one error in boundary stack
+  mailinfo: fold decode_header_bq() into decode_header()
+  mailinfo: move handle_boundary() lower
+  mailinfo: get rid of function-local static states
+  mailinfo: always pass "line" as an argument
+  mailinfo: move global "line" into mailinfo() function
+  mailinfo: introduce "struct mailinfo" to hold globals
+  mailinfo: move keep_subject & keep_non_patch_bracket to struct mailinfo
+  mailinfo: move global "FILE *fin, *fout" to struct mailinfo
+  mailinfo: move filter/header stage to struct mailinfo
+  mailinfo: move patch_lines to struct mailinfo
+  mailinfo: move add_message_id and message_id to struct mailinfo
+  mailinfo: move use_scissors and use_inbody_headers to struct mailinfo
+  mailinfo: move metainfo_charset to struct mailinfo
+  mailinfo: move transfer_encoding to struct mailinfo
+  mailinfo: move charset to struct mailinfo
+  mailinfo: handle_commit_msg() shouldn't be called after finding patchbreak
+  mailinfo: move cmitmsg and patchfile to struct mailinfo
+  mailinfo: move [ps]_hdr_data to struct mailinfo
+  mailinfo: keep the parsed log message in a strbuf
+  mailinfo: move content/content_top to struct mailinfo
+  mailinfo: handle errors found in decode_header() better
+  mailinfo: handle charset conversion errors in the caller
+  mailinfo: remove calls to exit() and die() deep in the callchain
+  mailinfo: libify the whole thing
 
-> Doing as suggested above, ie: only changing sha1s that we are
-> already rebasing works, but why are you backreferencing it if you are
-> re-writing the commit?
+ Makefile           |    1 +
+ builtin/mailinfo.c | 1083 +---------------------------------------------------
+ mailinfo.c         | 1058 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ mailinfo.h         |   41 ++
+ 4 files changed, 1120 insertions(+), 1063 deletions(-)
+ create mode 100644 mailinfo.c
+ create mode 100644 mailinfo.h
 
- Essentially one wants to say `$CURR_COMMIT~nn` (i.e. "see nn commits
-earlier in my series") and have that replaced with its cannonical sha1, and
-updated when rebased.
-It sort of begs the question whether there should be a ref shorthand for
-"the (this) current commit" to allow THIS~<n> as an interpretable [valid?]
-format.
-
-> That doesn't make sense to me at all. Yes, you
-> can do it, but I don't get why this is valuable.
-
-> If you're backref is
-> "fixes xyz" why not just fix xyz instead of have two commits. If the
-> back ref has some other value... what is that value? I don't
-> understand it I guess.
-For the 'fixes' (of a bug report) case we are already talking about an
-immutable so it would not be part of this.
-Its use may be more of the type "Using helper function xyz introduced
-earlier in patch abcde", which would change after each rebase.
-
->
-> It just seems pretty narrow focus. I mean if someone wants to
-> implement it, that is fine.
->
-Agreed
---
-Philip 
+-- 
+2.6.1-320-g86a1181
