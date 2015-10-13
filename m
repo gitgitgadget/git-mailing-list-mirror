@@ -1,96 +1,146 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 07/26] mailinfo: move global "line" into mailinfo() function
-Date: Tue, 13 Oct 2015 16:16:28 -0700
-Message-ID: <1444778207-859-8-git-send-email-gitster@pobox.com>
+Subject: [PATCH 23/26] mailinfo: handle errors found in decode_header() better
+Date: Tue, 13 Oct 2015 16:16:44 -0700
+Message-ID: <1444778207-859-24-git-send-email-gitster@pobox.com>
 References: <1444778207-859-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 14 01:18:15 2015
+X-From: git-owner@vger.kernel.org Wed Oct 14 01:18:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zm8pe-00079E-HX
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 01:18:10 +0200
+	id 1Zm8pg-00079E-UI
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 01:18:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351AbbJMXRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 19:17:19 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:34015 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752148AbbJMXQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2015 19:16:58 -0400
-Received: by pabws5 with SMTP id ws5so3472325pab.1
-        for <git@vger.kernel.org>; Tue, 13 Oct 2015 16:16:58 -0700 (PDT)
+	id S1753414AbbJMXSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 19:18:10 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:33461 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752121AbbJMXRQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2015 19:17:16 -0400
+Received: by pabrc13 with SMTP id rc13so34531342pab.0
+        for <git@vger.kernel.org>; Tue, 13 Oct 2015 16:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:subject:date:message-id:in-reply-to:references;
-        bh=E07L0MUetyk95C5oraGzO1Aj9IyXYyd8PIDvpLdRT64=;
-        b=dumwf8jBab/VTFJ1f+Y/hZsaAX030UPLdbXo7EI7MqMQDfEwQW7BxQX9gRXaKGx7Y3
-         yV2zUUi67STUhoiCg1dbPBHC2s2GIEUjXi4o+PuxQjDT6avjbiykY9GA6pM18nrC3bAP
-         SeYXlkNC8taGbrildNk4H2eqo3j9gMULfXUjpJJz0N/Pxy56oNdX94RNIX75nUFh9Nyj
-         yxlxJbHyopqzd87OZvMsqTTj8J97OomGo0rQLfjPCjVWx2xdjzVLJ+aKk32dKMSAhW1C
-         QCLlVqR5+jzOi69tRdjsp3BX3HNKDECBgq2kTww7TO5Wz48Y4FVxrFZ6CHBercDWTw2/
-         ORBA==
-X-Received: by 10.66.120.80 with SMTP id la16mr24909pab.1.1444778218476;
-        Tue, 13 Oct 2015 16:16:58 -0700 (PDT)
+        bh=72WGpOrjUj0R+i729yTpPzS6KHu/fcYhvtR7okBGTlo=;
+        b=E2SF2P5GpSD6e7v0vGBBEx+MTWvwN7uc5xirTX3mAGOoCrtYoBVHIRloml8NRV/e19
+         HBx2YH1Y0T9FPuJNRmCQBYsd+zOeVXfTM22hED60WGkDgW7ktWzrpGFU67YWgWMlr9ib
+         Xx69uHzRg9CRWEr4/wzkjqrM3/PWosPgmvvBaT/GSaBa2xa4eGjchzq2/13OXbQBtEJw
+         yvynttejkYI5vrZlwmz7LYNBojQuTVPv7hi4O7pZkmsDeklQ6ZMb2TS62tfJLnsvubBU
+         qCBWO6BVwHBiUADp2b0RGwUuaPcl5ZnA03Nap0WlPXP8Mga29PqBMu6N/T3/6416842m
+         LeAQ==
+X-Received: by 10.69.26.161 with SMTP id iz1mr23425pbd.17.1444778236581;
+        Tue, 13 Oct 2015 16:17:16 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:45f3:915b:d2ba:37bc])
-        by smtp.gmail.com with ESMTPSA id ih4sm5844137pbc.28.2015.10.13.16.16.57
+        by smtp.gmail.com with ESMTPSA id xz5sm5851852pbb.12.2015.10.13.16.17.16
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 13 Oct 2015 16:16:57 -0700 (PDT)
+        Tue, 13 Oct 2015 16:17:16 -0700 (PDT)
 X-Mailer: git-send-email 2.6.1-320-g86a1181
 In-Reply-To: <1444778207-859-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279554>
 
-The mailinfo() function is the only one that wants the "line_global"
-to be directly touchable.  Note that handle_body() has to be passed
-this strbuf so that it sees the "first line of the input" after the
-loop in this function processes the headers.  It feels a bit dirty
-that handle_body() then keeps reusing this strbuf to read more lines
-and does its processing, but that is how the code is structured now.
+The decode_header() function tries to unwrap RFC2047-style quoted
+strings but punts when it finds anything it cannot parse.  Allow the
+function to report if it punted to the caller, and use the resulting
+string in the caller only when the function says it parsed the input
+successfully.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/mailinfo.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ builtin/mailinfo.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index c3c7d67..6c671fb 100644
+index 4b9b1cc..6452a4c 100644
 --- a/builtin/mailinfo.c
 +++ b/builtin/mailinfo.c
-@@ -12,7 +12,6 @@ static FILE *cmitmsg, *patchfile, *fin, *fout;
- static int keep_subject;
- static int keep_non_patch_brackets_in_subject;
- static const char *metainfo_charset;
--static struct strbuf line_global = STRBUF_INIT;
- static struct strbuf name = STRBUF_INIT;
- static struct strbuf email = STRBUF_INIT;
- static char *message_id;
-@@ -995,6 +994,8 @@ static void handle_info(void)
- static int mailinfo(FILE *in, FILE *out, const char *msg, const char *patch)
+@@ -293,7 +293,7 @@ static void cleanup_space(struct strbuf *sb)
+ 	}
+ }
+ 
+-static void decode_header(struct mailinfo *mi, struct strbuf *line);
++static int decode_header(struct mailinfo *mi, struct strbuf *line);
+ static const char *header[MAX_HDR_PARSED] = {
+ 	"From","Subject","Date",
+ };
+@@ -336,8 +336,8 @@ static int check_header(struct mailinfo *mi,
+ 			 * normalize the meta information to utf8.
+ 			 */
+ 			strbuf_add(&sb, line->buf + len + 2, line->len - len - 2);
+-			decode_header(mi, &sb);
+-			handle_header(&hdr_data[i], &sb);
++			if (!decode_header(mi, &sb))
++				handle_header(&hdr_data[i], &sb);
+ 			ret = 1;
+ 			goto check_header_out;
+ 		}
+@@ -347,25 +347,26 @@ static int check_header(struct mailinfo *mi,
+ 	if (cmp_header(line, "Content-Type")) {
+ 		len = strlen("Content-Type: ");
+ 		strbuf_add(&sb, line->buf + len, line->len - len);
+-		decode_header(mi, &sb);
+-		strbuf_insert(&sb, 0, "Content-Type: ", len);
+-		handle_content_type(mi, &sb);
++		if (!decode_header(mi, &sb)) {
++			strbuf_insert(&sb, 0, "Content-Type: ", len);
++			handle_content_type(mi, &sb);
++		}
+ 		ret = 1;
+ 		goto check_header_out;
+ 	}
+ 	if (cmp_header(line, "Content-Transfer-Encoding")) {
+ 		len = strlen("Content-Transfer-Encoding: ");
+ 		strbuf_add(&sb, line->buf + len, line->len - len);
+-		decode_header(mi, &sb);
+-		handle_content_transfer_encoding(mi, &sb);
++		if (!decode_header(mi, &sb))
++			handle_content_transfer_encoding(mi, &sb);
+ 		ret = 1;
+ 		goto check_header_out;
+ 	}
+ 	if (cmp_header(line, "Message-Id")) {
+ 		len = strlen("Message-Id: ");
+ 		strbuf_add(&sb, line->buf + len, line->len - len);
+-		decode_header(mi, &sb);
+-		handle_message_id(mi, &sb);
++		if (!decode_header(mi, &sb))
++			handle_message_id(mi, &sb);
+ 		ret = 1;
+ 		goto check_header_out;
+ 	}
+@@ -537,11 +538,12 @@ static void convert_to_utf8(struct mailinfo *mi,
+ 	strbuf_attach(line, out, strlen(out), strlen(out));
+ }
+ 
+-static void decode_header(struct mailinfo *mi, struct strbuf *it)
++static int decode_header(struct mailinfo *mi, struct strbuf *it)
  {
- 	int peek;
-+	struct strbuf line = STRBUF_INIT;
+ 	char *in, *ep, *cp;
+ 	struct strbuf outbuf = STRBUF_INIT, *dec;
+ 	struct strbuf charset_q = STRBUF_INIT, piecebuf = STRBUF_INIT;
++	int found_error = -1; /* pessimism */
+ 
+ 	in = it->buf;
+ 	while (in - it->buf <= it->len && (ep = strstr(in, "=?")) != NULL) {
+@@ -610,10 +612,13 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
+ 	strbuf_addstr(&outbuf, in);
+ 	strbuf_reset(it);
+ 	strbuf_addbuf(it, &outbuf);
++	found_error = 0;
+ release_return:
+ 	strbuf_release(&outbuf);
+ 	strbuf_release(&charset_q);
+ 	strbuf_release(&piecebuf);
 +
- 	fin = in;
- 	fout = out;
++	return found_error;
+ }
  
-@@ -1019,10 +1020,10 @@ static int mailinfo(FILE *in, FILE *out, const char *msg, const char *patch)
- 	ungetc(peek, in);
- 
- 	/* process the email header */
--	while (read_one_header_line(&line_global, fin))
--		check_header(&line_global, p_hdr_data, 1);
-+	while (read_one_header_line(&line, fin))
-+		check_header(&line, p_hdr_data, 1);
- 
--	handle_body(&line_global);
-+	handle_body(&line);
- 	handle_info();
- 
- 	return 0;
+ static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
 -- 
 2.6.1-320-g86a1181
