@@ -1,103 +1,64 @@
-From: Victor Leschuk <vleschuk@accesssoftek.com>
-Subject: RE: thread-utils: build with NO_PTHREADS fails
-Date: Wed, 14 Oct 2015 04:24:03 -0700
-Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9ED@mail.accesssoftek.com>
-References: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9E8@mail.accesssoftek.com>
-	<xmqq7fmsnkp9.fsf@gitster.mtv.corp.google.com>,<xmqqd1wkm0om.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"vleschuk@gmail.com" <vleschuk@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 14 13:25:24 2015
+From: Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+Subject: [PATCH v2] git-gui: Update Russian translation
+Date: Wed, 14 Oct 2015 16:18:57 +0300
+Message-ID: <1444828738-14200-1-git-send-email-dimitriy.ryazantcev@gmail.com>
+References: <87r3kx91at.fsf@red.patthoyts.tk>
+Cc: git@vger.kernel.org,
+	Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Oct 14 15:20:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmKBI-0007pJ-JJ
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 13:25:16 +0200
+	id 1ZmLyL-0000P9-3c
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 15:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753373AbbJNLZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2015 07:25:11 -0400
-Received: from mail.accesssoftek.com ([12.202.173.171]:25682 "EHLO
-	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751731AbbJNLZJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Oct 2015 07:25:09 -0400
-Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
- ([172.16.0.71]) with mapi; Wed, 14 Oct 2015 04:25:06 -0700
-Thread-Topic: thread-utils: build with NO_PTHREADS fails
-Thread-Index: AdEFF00LRbFGOTw+S1Wz7k2RrvcusABW4fRx
-In-Reply-To: <xmqqd1wkm0om.fsf@gitster.mtv.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1753692AbbJNNT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2015 09:19:56 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:34554 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753580AbbJNNTy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2015 09:19:54 -0400
+Received: by wicgb1 with SMTP id gb1so129952013wic.1
+        for <git@vger.kernel.org>; Wed, 14 Oct 2015 06:19:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=bJR53gL5XajXR9jO6MfD/Y0dyjyMKUj+MFkgbr8JeBY=;
+        b=BjAbsP9zOD6lD9xYEq38GO0UZWF6dAQBPXcIBocMvYbzTiTrr92TRu5vm5lKAAhA6/
+         mJ2RO7sNRm5f8FJY6Y2Epzf07VglNIpZfD9voq+S7DBZFXnCvL75r7QVI3cByNBTb8pB
+         Wc/jhwdqRh8WqmuBs2ErTrYCKF1TR7pW0nXzgW0GbrM3unwBpUZYm4kTY3nug4OGNnNV
+         IwL4qnaHZujO53Wk/J46GCZ3T79EkuoCrXZB6ptI/z9CoJUGffho6HHaI8vGceYnMXFl
+         HElE61stV22nGJV1EV9Zin5/T723V7e1foWC9NMrgFbOchgJklKkPh929gAXbvdShzms
+         Xkwg==
+X-Received: by 10.180.93.232 with SMTP id cx8mr4361203wib.26.1444828780125;
+        Wed, 14 Oct 2015 06:19:40 -0700 (PDT)
+Received: from localhost.localdomain ([2a01:d0:8c94:0:dc2e:713e:8976:a916])
+        by smtp.gmail.com with ESMTPSA id h7sm10041020wjz.7.2015.10.14.06.19.39
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 14 Oct 2015 06:19:39 -0700 (PDT)
+X-Mailer: git-send-email 2.6.1.windows.1
+In-Reply-To: <87r3kx91at.fsf@red.patthoyts.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279570>
 
-Hello Junio, 
+>This section seems wrong as it replaces the existing copyright notice
+>with some auto-generated junk. As it is a translation I should think the
+>copyright is with the translators but it should not be using default
+>placeholders.
+Sorry for that. It seems that a Transifex bug, I uploaded po with copyrights
+to them. Sent a mail to Transifex support. For now I replaced it manually.
 
-sorry that was my fault, I was building it wrong way (defined NO_PTHREADS in CFLAGS variable, not as separate make variable). Sorry for the false alarm.
+Dimitriy Ryazantcev (1):
+  git-gui: Update Russian translation
 
---
-Best Regards,
-Victor
-________________________________________
-From: Junio C Hamano [jch2355@gmail.com] On Behalf Of Junio C Hamano [gitster@pobox.com]
-Sent: Monday, October 12, 2015 10:55 AM
-To: Victor Leschuk
-Cc: git@vger.kernel.org; vleschuk@gmail.com
-Subject: Re: thread-utils: build with NO_PTHREADS fails
+ po/ru.po | 668 +++++++++++++++++++++++----------------------------------------
+ 1 file changed, 243 insertions(+), 425 deletions(-)
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Victor Leschuk <vleschuk@accesssoftek.com> writes:
->
->> I think that no one tried it for a long time but I needed a
->> single-threaded git version for debug purpose. I tried to build
->> with -DNO_PTHREADS and thread-utils.c failed to compile.
->>
->> In brief the situation is the following:
->>
->> in header file we have something like that:
->>
->>
->> #ifndef NO_PTHREAD
->> extern int online_cpus(void);
->>
->> #else
->> #define online_cpus() 1
->> #endif // NO_PTHREAD
->>
->> and in *.c file:
->>
->>
->> int online_cpus(void)
->> {
->>     // ...
->> }
->
-> Yeah, that is obviously incorrect.
-> ...
-
-Well, no, I spoke too early.  I do not see there is much wrong here.
-
-There is this bit in the Makefile:
-
-        ifdef NO_PTHREADS
-                BASIC_CFLAGS += -DNO_PTHREADS
-        else
-                BASIC_CFLAGS += $(PTHREAD_CFLAGS)
-                EXTLIBS += $(PTHREAD_LIBS)
-                LIB_OBJS += thread-utils.o
-        endif
-
-The source file thread-utils.c is not compiled to thread-utils.o if
-you say NO_PTHREADS, and the resulting libgit.a does not of course
-have it.
+-- 
+2.6.0
