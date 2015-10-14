@@ -1,75 +1,76 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v3 05/44] refs.c: move update_ref to refs.c
-Date: Tue, 13 Oct 2015 21:01:56 -0400
-Organization: Twitter
-Message-ID: <1444784516.18742.12.camel@twopensource.com>
-References: <1444686725-27660-1-git-send-email-dturner@twopensource.com>
-	 <1444686725-27660-6-git-send-email-dturner@twopensource.com>
-	 <561C7D7B.8020807@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 27/26] mailinfo: close patchfile
+Date: Tue, 13 Oct 2015 18:37:52 -0700
+Message-ID: <xmqq4mhu9qmn.fsf_-_@gitster.mtv.corp.google.com>
+References: <1444778207-859-1-git-send-email-gitster@pobox.com>
+	<1444778207-859-20-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 14 03:02:06 2015
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 14 03:38:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmASC-0006tw-R4
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 03:02:05 +0200
+	id 1ZmB1R-00036b-S4
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 03:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752817AbbJNBB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 21:01:59 -0400
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:36202 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752295AbbJNBB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2015 21:01:59 -0400
-Received: by qgx61 with SMTP id 61so30632960qgx.3
-        for <git@vger.kernel.org>; Tue, 13 Oct 2015 18:01:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=0rZqnkK+TtfuwA73U8O7ScI6u1YW/wvACuvHMQWVPvA=;
-        b=aEdrLo7eBfLM9CJFmxwbsomEhZfhgMtjWSYHw1elJ1zVT9QcsYNJqBjw66+h8P4mLG
-         KAGw0TrTbB7c041ePShWgZZB/HAABXNggMH87R80veli6RhTScnySaxLUdWOUXrijvjI
-         elFsRye8dR45rMcRcSgEWW5kRLFX6j/TnV/ywQzah31ZCfJYaSq94rp+i0UytBKIbRiA
-         5AX/y6wB7ZWDbBD7FMhwH6ZQ4oncwEq3o12b7QL+rmHBcYbpoW/cRB2G6bw9GHsFS5HS
-         zDggHikwMNp0UKQ9fz/14/IIq1iaPLJHKplV4aa7ovIvYGfRYTSoq/Cd7gcZZgnH6Uey
-         hbJQ==
-X-Gm-Message-State: ALoCoQmAoeQS7gNotLiCUj8Umqr0oXxdf2+niJGe5fnfPX0Z58OyTI8+VsULc9wPYqWTu0vRYPYY
-X-Received: by 10.140.109.6 with SMTP id k6mr490163qgf.28.1444784518255;
-        Tue, 13 Oct 2015 18:01:58 -0700 (PDT)
-Received: from ubuntu ([192.133.79.147])
-        by smtp.gmail.com with ESMTPSA id 18sm2363986qgg.39.2015.10.13.18.01.57
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Oct 2015 18:01:57 -0700 (PDT)
-In-Reply-To: <561C7D7B.8020807@alum.mit.edu>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1752810AbbJNBhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 21:37:55 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:34706 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752557AbbJNBhy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2015 21:37:54 -0400
+Received: by pabws5 with SMTP id ws5so6745466pab.1
+        for <git@vger.kernel.org>; Tue, 13 Oct 2015 18:37:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=hDuyqgIxewOHGNM4rj9e5izuPoTxobxMKhvuOMIJlpU=;
+        b=qjRswe6SwRFLb29ijz+Gv42/b0pluvop71zXAl0IPOaMdDl25GXmC5czTsFhyuJutp
+         KpaHn6OjXj2Ln/F8hgDmH9MxOAKJrkxjyTopCXZpJ4EC3OY8X+fFkbwQn9/sUmAVQ30S
+         rwXr2jQT+oM/ZMNSc7fM9Psdx39j9IQL8g/kDU+JbMHXxBasdLmQRBokCt+VPsyc8axS
+         O9PDzWQ+I0fr7vubZQnapGyy35b3uLdPACLKeETiHHulk8MKmltxzrj3cDjQ7Ir52SO5
+         hTroccvbfuQpJOJ0fahOtDsOlUJYqoGslgaoXDKWnH2hSU9lIgWC2FH9thHyZSYQyV4C
+         nHpw==
+X-Received: by 10.67.12.196 with SMTP id es4mr636447pad.83.1444786674299;
+        Tue, 13 Oct 2015 18:37:54 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:45f3:915b:d2ba:37bc])
+        by smtp.gmail.com with ESMTPSA id qn5sm6185607pac.41.2015.10.13.18.37.53
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 13 Oct 2015 18:37:53 -0700 (PDT)
+In-Reply-To: <1444778207-859-20-git-send-email-gitster@pobox.com> (Junio
+	C. Hamano's message of "Tue, 13 Oct 2015 16:16:40 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279559>
 
-On Tue, 2015-10-13 at 05:41 +0200, Michael Haggerty wrote:
+"git mailinfo" itself did not need this, as open file handles are
+flushed and closed upon process exit, but the libified version needs
+to clean up after itself when it is done.
 
-> The original read
-> 
-> 		if (read_ref(pseudoref, actual_old_sha1))
-> 			die("could not read ref '%s'", pseudoref);
-> 
-> This seems like an important test. What happened to it?
-> 
-> If its removal was intentional, it deserves a careful explanation (and
-> should probably be done as a separate commit). If it was an accident,
-> please consider how this accident arose and try to think about whether
-> similar accidents might have happened elsewhere in this series.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ mailinfo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I went ahead and manually rechecked all of the patches to ensure that
-nothing else was screwed up.  While doing so, I found two or three
-spurious whitespace changes (moving newlines around), which I fixed (in
-refs-backend-pre-vtable, which I'll send to the list tomorrow-ish).
+diff --git a/mailinfo.c b/mailinfo.c
+index ca40030..00e2ea4 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -1013,7 +1013,7 @@ int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
+ 		fwrite(mi->log_message.buf, 1, mi->log_message.len, cmitmsg);
+ 	}
+ 	fclose(cmitmsg);
+-
++	fclose(mi->patchfile);
+ 	return mi->input_error;
+ }
+ 
+-- 
+2.6.1-320-g86a1181
