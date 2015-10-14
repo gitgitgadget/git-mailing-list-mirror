@@ -1,70 +1,72 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Alternative to manual editing with git add --patch
-Date: Wed, 14 Oct 2015 18:52:07 +0200
-Organization: gmx
-Message-ID: <1326b047519c9398a0a06e27a26295ca@dscho.org>
-References: <561E6FBB.7060302@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sven Helmberger <sven.helmberger@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 14 18:52:16 2015
+From: Richard Ipsum <richard.ipsum@codethink.co.uk>
+Subject: [RFC] Git based patch tracking and review
+Date: Wed, 14 Oct 2015 18:30:43 +0100
+Message-ID: <1444843845-8017-1-git-send-email-richard.ipsum@codethink.co.uk>
+Cc: Richard Ipsum <richard.ipsum@codethink.co.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 14 19:33:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmPHk-00006x-0I
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 18:52:16 +0200
+	id 1ZmPvK-0000N5-H5
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 19:33:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522AbbJNQwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2015 12:52:11 -0400
-Received: from mout.gmx.net ([212.227.15.15]:57725 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751126AbbJNQwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2015 12:52:10 -0400
-Received: from dscho.org ([87.106.4.80]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MMk99-1ZeRrL07Op-008XDJ; Wed, 14 Oct 2015 18:52:08
- +0200
-In-Reply-To: <561E6FBB.7060302@gmx.de>
-X-Sender: johannes.schindelin@gmx.de
-User-Agent: Roundcube Webmail/1.1.2
-X-Provags-ID: V03:K0:PWdo1gev88Mb4ztBznBWbiVcm0V1d6gCGP2vym6iLwUGIB0zBcM
- 4iX3ZyJjv1TFwUiXXZyyVpV2p/oOw4Qbzf9w/oh5IGGXxhqpvm0zRBxOAsK4SAMoryALAVC
- S5nyweyYfbF1XzEh3reos02vMbkEFkwooPmnCoJ1flQHJtunIeaiRUaLvRuGQnMhQVuR4nO
- wSvXeU543+p52+gBVD5UA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5HX5PAfsK6M=:zaV1QBDQCuFQ74n9mZ8mmV
- 5L8G8Haj12H/S86jvSAVoqTILGH9tj/evQip6HBhMDAr9xtUSIcCkA7HuCd9MgOBeZuK/9atO
- QNF1+xLqqwo+vhBsplSK6+PXft9Z34Ah1bOQtB66gd95baYWMY4LO7oE4XQTDWtCxzCBYqFb/
- 2WuRvR+yERGzxd6S/G+2pHvJAnwNWx3jZTa69uLuLuajvuswzAm0N3ZNL5RZDKMgATwGAVyHo
- pYrnsO365RXvKH4qWfjmpY8I4qKX6WcMPJFxkBDWuyDRFFA16Uy5hHjkFd9AovfPDvV1sgquN
- ozCTKezK4RNOoZh/jq/jwAV7gslGLLuyGBspRHIqxQs+e/9kNcc9KK3Tg8FlECwY0y28Gtk64
- R6Ofpv6QP8GHMlHCyiXuK6oFmXPRxXof+lSXYpyULPTiQr6qQ3xWEgoj6lKwevKkuIS5un8bn
- VWhfsMUPae/jgFcy10lEkwLd6SN3x1InRU9ETVsgbUB0ePBv9NKCagxGHu/e57Y0C8gTUxHaV
- SW2ALYWwfh0fHmXc90781CuCCGApGTuU3bh/78ZUDJWBUmAaeqql4GyXlnb0He37OtvLfbYPk
- f0iQoFs+hZvgqNoEHG7l0OGaBchKxtfznWKjfyDEfQDVI36xLrM8u48hdRV1qCIugM/JBGAV8
- JRYvD3LmRoi4CEHINFULk49TDN0RRygg78IqQoHTZmSed1lXlGz7wMqQm2CwrYfkI5CRcQX62
- 58SDN11wR3kb8/uZG6YPfig+UOGfWFut8UdkHE3+U8H15W5syWTcVy+UFDDIyiNljGD+Zxrz 
+	id S1753718AbbJNRdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2015 13:33:05 -0400
+Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:36543 "EHLO
+	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753479AbbJNRdE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2015 13:33:04 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 6E0E8462045;
+	Wed, 14 Oct 2015 18:33:01 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
+Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
+	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Qa0aPxTA4soV; Wed, 14 Oct 2015 18:32:58 +0100 (BST)
+Received: from salo.dyn.ducie.codethink.co.uk. (salo.dyn.ducie.codethink.co.uk [10.24.1.215])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id 7A443461EC7;
+	Wed, 14 Oct 2015 18:32:58 +0100 (BST)
+X-Mailer: git-send-email 2.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279580>
 
-Hi Sven,
+Hi,
 
-On 2015-10-14 17:07, Sven Helmberger wrote:
+I've been working to add patch tracking and candidate
+review to git. The motivation for this is simply that most patch
+tracking systems are centralised, since git is a distributed vcs it
+seems appropriate that patches, reviews and comments should also
+be distributed.
 
-> What I then often encountered was the situation where I happened to have
-> inserted consecutive lines of code that conceptually belong to different
-> commits. Normally I can nicely split patches, but not in this case,
-> making manually editing the patch the only alternative.
+The system aims to be fairly minimal, it adds a candidate
+subcommand which can be used to manipulate the state of candidates:
+add reviews, comment, submit new versions etc. This prototype is,
+as you would probably expect, by no means complete, at this point
+it seems useful to stop and ask where we should take this next.
 
-How about implementing it and then discussing the implementation? That would have two advantages:
+git-candidate is written in perl, with the hope that in time it
+can potentially be included within contrib.
 
-1) there would be something tangential to discuss, and
-2) even if Junio rejects it, you can carry the patch in your private fork and use it forever.
+The original source repository for this project can be found
+at https://bitbucket.org/richardipsum/git-candidate
 
-Ciao,
-Johannes
+Richard Ipsum (2):
+  contrib: Add git-candidate subcommand
+  contrib/git-candidate: Add README
+
+ contrib/git-candidate/GitUtils.pm        |  215 +++
+ contrib/git-candidate/README.md          |  153 ++
+ contrib/git-candidate/git-candidate.perl | 2602 ++++++++++++++++++++++++++++++
+ 3 files changed, 2970 insertions(+)
+ create mode 100644 contrib/git-candidate/GitUtils.pm
+ create mode 100644 contrib/git-candidate/README.md
+ create mode 100755 contrib/git-candidate/git-candidate.perl
+
+-- 
+2.1.4
