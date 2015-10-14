@@ -1,183 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 28/26] am: make direct call to mailinfo
-Date: Tue, 13 Oct 2015 18:46:06 -0700
-Message-ID: <xmqqsi5e8boh.fsf_-_@gitster.mtv.corp.google.com>
-References: <1444778207-859-1-git-send-email-gitster@pobox.com>
-	<1444778207-859-20-git-send-email-gitster@pobox.com>
-	<xmqq4mhu9qmn.fsf_-_@gitster.mtv.corp.google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 01/13] refs: convert some internal functions to use
+ object_id
+Date: Wed, 14 Oct 2015 02:50:06 +0000
+Message-ID: <20151014025006.GC208451@vauxhall.crustytoothpaste.net>
+References: <1444355039-186351-1-git-send-email-sandals@crustytoothpaste.net>
+ <1444355039-186351-2-git-send-email-sandals@crustytoothpaste.net>
+ <561CEE62.4030403@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 14 03:46:15 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="69pVuxX8awAiJ7fD"
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Oct 14 04:50:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmB8w-0002mS-QQ
-	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 03:46:15 +0200
+	id 1ZmC8x-0003VE-VQ
+	for gcvg-git-2@plane.gmane.org; Wed, 14 Oct 2015 04:50:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753062AbbJNBqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2015 21:46:11 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:33929 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752557AbbJNBqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2015 21:46:08 -0400
-Received: by pabws5 with SMTP id ws5so6945704pab.1
-        for <git@vger.kernel.org>; Tue, 13 Oct 2015 18:46:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=6COdzUa5rpxJsYiSKVkfoa/eVUf4ThhqIczuTBJgwz4=;
-        b=ZR+78DH5LbLRHsgpyXUua3Z/M7q9eAdTWu2P/MwFsPyQAAGkWfOQ49aP3g8ZMwm3Wz
-         kg27aaGzzVDkOz0xS8QnrRDsJ6QbJ7R0il/d3aGuKuH2qN2PEfxMkJTlNGds66clM1Ub
-         +tKdcPTaQg3d+6aGzGuwDo4g38tBHzkfNeSF6RCR0yjgyH9h7BOYn38xFzCDZ0pj/62s
-         bNUjGnlFYNDGNUm98rgWpXmu8Mymlx6Kj3HjfoP6KymiqAMXcn6LWQAFt7/6ljHLv8Qm
-         6NVhq4MEO2Cg29I2B1rRh4ZItVa9wimPeS/eq7sKAZnahaoi7egBb7m0ddH30cgNAYjD
-         2OEQ==
-X-Received: by 10.68.223.34 with SMTP id qr2mr672470pbc.97.1444787168275;
-        Tue, 13 Oct 2015 18:46:08 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:45f3:915b:d2ba:37bc])
-        by smtp.gmail.com with ESMTPSA id st5sm6202499pab.42.2015.10.13.18.46.07
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 13 Oct 2015 18:46:07 -0700 (PDT)
-In-Reply-To: <xmqq4mhu9qmn.fsf_-_@gitster.mtv.corp.google.com> (Junio
-	C. Hamano's message of "Tue, 13 Oct 2015 18:37:52 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751752AbbJNCuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2015 22:50:14 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:34364 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750852AbbJNCuN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Oct 2015 22:50:13 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7DB7B28094;
+	Wed, 14 Oct 2015 02:50:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1444791011;
+	bh=Lxln+9VOo4TloXSf8z5u0hUBr6xq38Vys23nx3rdKVY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pZdgxChKfQpHtPgVlLQ9VFrJyQscX+dnSAqIxaUFR/5Jfq6Sijc8WpwArvQQJZaJ1
+	 MEPol40F9kgdFAMvBo1gfQEvamJ6TuGjOSgWFH12y1bTISvdQ9MY1r0bV+2Mfn2Vkx
+	 yADpkolS2UC3fsJsDbkqD3ksWoDrk4xqiWyV1aXsUBUYB0n9Ml+JJH0l2Z0mSwsz58
+	 fh8EwtPG4YLhFTAMi7C57j+BI/uGfiwexdukXYe8eCTUo6Op4ThNsasgMrQNwXqhPM
+	 47LQML31uc8P66ua+/9a6uDjjhFJNCEW4+gFFfpb+zE+1tTyzE4v5X/HpdzkNlMmGy
+	 crjsANo81CMn5iuAlCGQemCgANdWSkRoxyA1hv/97tZcEsxNFoVah8qnWxyEaumwzI
+	 o0ZqyemUJmwYuU15NYvrgNiFZhFFzXbi6WEttn9k6ETFj57Mx/Gz0824X2RO56l711
+	 8PCoTFWyXNyOGkAfKeYALIbos34PoM+Z0TfDWtaIICsUfm/zP27
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <561CEE62.4030403@alum.mit.edu>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.2.0-1-amd64)
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279561>
 
-And finally the endgame.  Instead of spawning "git mailinfo" via the
-run_command() API the same number of times as there are incoming
-patches, make direct internal call to the libified mailinfo() from
-"git am" to reduce the spawning overhead, which would matter on some
-platforms.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+--69pVuxX8awAiJ7fD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- This is to be applied on top of a merge across
+On Tue, Oct 13, 2015 at 01:43:30PM +0200, Michael Haggerty wrote:
+> On 10/09/2015 03:43 AM, brian m. carlson wrote:
+> > Convert several internal functions in refs.c to use struct object_id,
+> > and use the GIT_SHA1_HEXSZ constants in parse_ref_line.
+> >=20
+> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > [...]
+>=20
+> I looked over this patch at the diff level and didn't find any problems.
+>=20
+> This patch conflicts heavily with [1]. But I noticed that it is
+> independent of the rest of your series. I don't know when either patch
+> series will be ready, but see [2] for my take on the other one.
+>=20
+> Assuming neither series is rejected, I think it would be much easier to
+> redo this patch on top of the first part of [1] than vice versa, so that
+> would be my suggestion. If it comes down to that, I am willing to help
+> redo this patch if you like.
 
-  - jc/am-3-fallback-regression-fix
-  - jc/mailinfo-lib (i.e. the 27-patch series)
+I'll take a look at it over the next couple of days.  I'll probably drop
+it from this series and either see if it can be put on top of the other
+one, or defer it to a future series.  That way we can minimize
+conflicts.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
- As I do not have ready access to such a platform with slow
- run_command(), it would be nice to see some numbers produced on
- such platform by other people.
+--69pVuxX8awAiJ7fD
+Content-Type: application/pgp-signature; name="signature.asc"
 
- Thanks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.8 (GNU/Linux)
 
- builtin/am.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+iQIcBAEBCgAGBQJWHcLeAAoJEL9TXYEfUvaLAQUP/RXJOvV6KjkW+EObwPnc4NU/
+YH5bu/lbKz4g9vC2NAc3ggm3qZQ6ZCCSgN8zwT7gvFQ2dpNGJR5HPX3ev4v/J7Jv
+UpHd9lvvqGNAGc3PvaNRl+PYvGRDjLOV8XxMKmiEMhkyknKgLaQVxqsn/27dH4Bf
+oxBX7TN7vMUeytUhkuwq6jpdR08JrqWfyUfUhhVX62nq9uY+zbUl8mAYWpb3ItNk
+jp8CJnViIPw4RXVsUFJfR8ITX48fIlYKqtKbLxndv+WSieL8017wEkyWL1eZqwOp
+j83rg8f4S9sFqUAXVzO3iw+i9pmm3YRj5+XNXR4o8wLkZFAcPCm/sPBR8Z2/ZD43
+SJcmBeBxbC8xK1x+7SqdehbZ91IZPjRCiWCeOSiOGpkx6eG0Nis/4U3Wl2F5LmiD
+XsISHyP8STqcUPP7Z0IesqKcnDNAHDm4iO/mgVdaJQFDM5Jm6HP33BgjegkRb5Xh
+Y0UyCZ/8gxCeIYhTW/B7Cqijj/saKXwfLgMyv07jKACBCxXJD8SMlgixPmbiWgFH
+Zd2Q6hm4FvnFxnYSvlMycap59KcSWYaD9MZ65Si2Gr8BwchKy911S9VM4u1z2tjL
+48ottlHMgj4VeqTHhowsZEz8Q2oMCg6fVd4RsFKT5f1lPj1EJWcQNf6XlxMMvEZO
+VRb1HNLZxeb/tSRas5hL
+=c6N9
+-----END PGP SIGNATURE-----
 
-diff --git a/builtin/am.c b/builtin/am.c
-index c869796..0471355 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -27,6 +27,7 @@
- #include "notes-utils.h"
- #include "rerere.h"
- #include "prompt.h"
-+#include "mailinfo.h"
- 
- /**
-  * Returns 1 if the file is empty or does not exist, 0 otherwise.
-@@ -1258,58 +1259,57 @@ static void am_append_signoff(struct am_state *state)
- static int parse_mail(struct am_state *state, const char *mail)
- {
- 	FILE *fp;
--	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf msg = STRBUF_INIT;
- 	struct strbuf author_name = STRBUF_INIT;
- 	struct strbuf author_date = STRBUF_INIT;
- 	struct strbuf author_email = STRBUF_INIT;
- 	int ret = 0;
-+	struct mailinfo mi;
- 
--	cp.git_cmd = 1;
--	cp.in = xopen(mail, O_RDONLY, 0);
--	cp.out = xopen(am_path(state, "info"), O_WRONLY | O_CREAT, 0777);
-+	setup_mailinfo(&mi);
- 
--	argv_array_push(&cp.args, "mailinfo");
--	argv_array_push(&cp.args, state->utf8 ? "-u" : "-n");
-+	if (state->utf8)
-+		mi.metainfo_charset = get_commit_output_encoding();
-+	else
-+		mi.metainfo_charset = NULL;
- 
- 	switch (state->keep) {
- 	case KEEP_FALSE:
- 		break;
- 	case KEEP_TRUE:
--		argv_array_push(&cp.args, "-k");
-+		mi.keep_subject = 1;
- 		break;
- 	case KEEP_NON_PATCH:
--		argv_array_push(&cp.args, "-b");
-+		mi.keep_non_patch_brackets_in_subject = 1;
- 		break;
- 	default:
- 		die("BUG: invalid value for state->keep");
- 	}
--
- 	if (state->message_id)
--		argv_array_push(&cp.args, "-m");
-+		mi.add_message_id = 1;
- 
- 	switch (state->scissors) {
- 	case SCISSORS_UNSET:
- 		break;
- 	case SCISSORS_FALSE:
--		argv_array_push(&cp.args, "--no-scissors");
-+		mi.use_scissors = 0;
- 		break;
- 	case SCISSORS_TRUE:
--		argv_array_push(&cp.args, "--scissors");
-+		mi.use_scissors = 1;
- 		break;
- 	default:
- 		die("BUG: invalid value for state->scissors");
- 	}
- 
--	argv_array_push(&cp.args, am_path(state, "msg"));
--	argv_array_push(&cp.args, am_path(state, "patch"));
-+	mi.input = fopen(mail, "r");
-+	mi.output = fopen(am_path(state, "info"), "w");
- 
--	if (run_command(&cp) < 0)
-+	if (mailinfo(&mi, am_path(state, "msg"), am_path(state, "patch")))
- 		die("could not parse patch");
- 
--	close(cp.in);
--	close(cp.out);
-+	fclose(mi.input);
-+	fclose(mi.output);
- 
- 	/* Extract message and author information */
- 	fp = xfopen(am_path(state, "info"), "r");
-@@ -1341,8 +1341,7 @@ static int parse_mail(struct am_state *state, const char *mail)
- 	}
- 
- 	strbuf_addstr(&msg, "\n\n");
--	if (strbuf_read_file(&msg, am_path(state, "msg"), 0) < 0)
--		die_errno(_("could not read '%s'"), am_path(state, "msg"));
-+	strbuf_addbuf(&msg, &mi.log_message);
- 	stripspace(&msg, 0);
- 
- 	if (state->signoff)
-@@ -1366,6 +1365,7 @@ finish:
- 	strbuf_release(&author_email);
- 	strbuf_release(&author_name);
- 	strbuf_release(&sb);
-+	clear_mailinfo(&mi);
- 	return ret;
- }
- 
--- 
-2.6.1-320-g86a1181
+--69pVuxX8awAiJ7fD--
