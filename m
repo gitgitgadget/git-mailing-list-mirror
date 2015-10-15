@@ -1,55 +1,66 @@
-From: Francois-Xavier Le Bail <devel.fx.lebail@orange.fr>
-Subject: Re: How to rebase when some commit hashes are in some commit messages
-Date: Thu, 15 Oct 2015 10:06:11 +0200
-Message-ID: <561F5E73.3050506@orange.fr>
-References: <561C1132.3090606@orange.fr> <vpqsi5fx2gr.fsf@grenoble-inp.fr> <561CC5E0.7060206@orange.fr> <20151013160004.11a103942062ee09c53bd235@domain007.com> <AD64941D9533442AB025BE27FF8F08AF@PhilipOakley> <CA+P7+xoDia6PC+qJeVn3sD5g4jk7KRuDAPOcEHvrntd+ndUraA@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 1/3] Add Travis CI support
+Date: Thu, 15 Oct 2015 10:07:08 +0200
+Message-ID: <vpq37xc4ksz.fsf@grenoble-inp.fr>
+References: <1444586102-82557-1-git-send-email-larsxschneider@gmail.com>
+	<1444586102-82557-2-git-send-email-larsxschneider@gmail.com>
+	<vpqwpurx2j1.fsf@grenoble-inp.fr>
+	<1B50DC8E-45CC-4D9A-80A1-6391D762A81C@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Konstantin Khomoutov <kostix+git@007spb.ru>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git List <git@vger.kernel.org>
-To: Jacob Keller <jacob.keller@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Oct 15 10:06:57 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, johannes.schindelin@gmx.de,
+	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	Pete Wyckoff <pw@padd.com>,
+	=?iso-8859-1?Q?Jean-No=EBl?= Avila <avila.jn@gmail.com>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 15 10:07:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmdYk-00086x-1i
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 10:06:46 +0200
+	id 1ZmdZQ-0000P9-Un
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 10:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013AbbJOIGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2015 04:06:17 -0400
-Received: from smtp06.smtpout.orange.fr ([80.12.242.128]:37675 "EHLO
-	smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751924AbbJOIGO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2015 04:06:14 -0400
-Received: from [127.0.0.1] ([213.178.77.178])
-	by mwinf5d29 with ME
-	id VL6B1r00F3qpEb103L6Bxo; Thu, 15 Oct 2015 10:06:12 +0200
-X-ME-Helo: [127.0.0.1]
-X-ME-Auth: ZGV2ZWwuZngubGViYWlsQHdhbmFkb28uZnI=
-X-ME-Date: Thu, 15 Oct 2015 10:06:12 +0200
-X-ME-IP: 213.178.77.178
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-In-Reply-To: <CA+P7+xoDia6PC+qJeVn3sD5g4jk7KRuDAPOcEHvrntd+ndUraA@mail.gmail.com>
+	id S1750960AbbJOIHV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Oct 2015 04:07:21 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46646 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750849AbbJOIHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2015 04:07:18 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t9F877Ia003067
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 15 Oct 2015 10:07:07 +0200
+Received: from anie (ensi-vpn-233.imag.fr [129.88.57.233])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9F878CA010215;
+	Thu, 15 Oct 2015 10:07:08 +0200
+In-Reply-To: <1B50DC8E-45CC-4D9A-80A1-6391D762A81C@gmail.com> (Lars
+	Schneider's message of "Thu, 15 Oct 2015 00:52:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 15 Oct 2015 10:07:08 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t9F877Ia003067
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1445501229.86733@/d24l4efb452gWHnExLm+g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279652>
 
+Lars Schneider <larsxschneider@gmail.com> writes:
 
+> I would like to get rid of the "sudo" calls, too. Unfortunately I
+> wasn't able to achieve this so far because these packages are not
+> white listed on Travis CI (see Jean-No=EBl answer in this thread).
 
-On 13/10/2015 19:07, Jacob Keller wrote:
+I think this would deserve a mention in the commit message, but I won't
+insist on that.
 
-> b) you are rebasing a commit which references another commit in the same rebase
-> 
-> I see no valid reason to reference a sha1 in this case. If you're
-> referencing as a "fixes", then you are being silly since you can just
-> squash the fix into the original commit and thus prevent introduction
-> of bug at all.
-
-squash need manual process, renaming the sha1 not.
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
