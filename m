@@ -1,68 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use the alternates of the source repository for dissociating clone
-Date: Thu, 15 Oct 2015 14:59:13 -0700
-Message-ID: <xmqqbnbzhjym.fsf@gitster.mtv.corp.google.com>
-References: <561F8DE9.4040703@cetitec.com>
+From: Kannan Goundan <kannan@cakoose.com>
+Subject: Make "git checkout" automatically update submodules?
+Date: Thu, 15 Oct 2015 22:50:05 +0000 (UTC)
+Message-ID: <loom.20151016T001449-848@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Alexander Riesen <alexander.riesen@cetitec.com>
-X-From: git-owner@vger.kernel.org Thu Oct 15 23:59:26 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 16 00:55:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmqYT-0006xD-Iz
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 23:59:21 +0200
+	id 1ZmrQm-0006bM-Cx
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 00:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753134AbbJOV7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2015 17:59:16 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:36121 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751997AbbJOV7P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2015 17:59:15 -0400
-Received: by pacfv9 with SMTP id fv9so677515pac.3
-        for <git@vger.kernel.org>; Thu, 15 Oct 2015 14:59:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=0ENauveMCTC6m3j/HOC0O3YHHbilb0AEb8SgiJ+bmI4=;
-        b=1CusIcawh+kAOUdEHbVCnolw1dy/+kRAa1zVI9lHw4mM1HIr9sfjcVOAmc4OEl3gzD
-         /Mu64z8fGfr/FLhprWGCg41Q1GpnimEEglqitMisxiZltAbDSGG6vhNwjfVUKlNpiJzE
-         IH17O3wNSiV4t8XPfJbOdOnGsDgX4OLnhIz8R9ux/yFFgSnSToE8ms5wk7MY131FDxCn
-         +uCYMFayO4GiZeRI5uEzm5o/byhIABZx2LHL/YzcV/XvfT9iFeYb78FwLEn7/iEMbY6+
-         CL69LT6TpUcyEixM6BL10tL0v7bhAIinpaiFG58Io+ZrL1Lz2a1p7VCpV+eWywveRIft
-         IPSA==
-X-Received: by 10.66.101.106 with SMTP id ff10mr12675072pab.100.1444946355253;
-        Thu, 15 Oct 2015 14:59:15 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:458e:bb5:8827:32a1])
-        by smtp.gmail.com with ESMTPSA id po7sm17207903pbc.56.2015.10.15.14.59.14
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 15 Oct 2015 14:59:14 -0700 (PDT)
-In-Reply-To: <561F8DE9.4040703@cetitec.com> (Alexander Riesen's message of
-	"Thu, 15 Oct 2015 13:28:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752345AbbJOWzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2015 18:55:16 -0400
+Received: from plane.gmane.org ([80.91.229.3]:59542 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751401AbbJOWzP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2015 18:55:15 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ZmrQO-0006IF-0E
+	for git@vger.kernel.org; Fri, 16 Oct 2015 00:55:04 +0200
+Received: from 205.189.0.114 ([205.189.0.114])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 16 Oct 2015 00:55:03 +0200
+Received: from kannan by 205.189.0.114 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 16 Oct 2015 00:55:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 205.189.0.114 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:41.0) Gecko/20100101 Firefox/41.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279712>
 
-Alexander Riesen <alexander.riesen@cetitec.com> writes:
+Git submodules seem to be a great fit for one of our repos.  The biggest
+pain point is that it's too easy to forget to update submodules.
 
-> The "--dissociate" option required reference repositories, which sometimes
-> demanded a look into the objects/info/alternates by the user. As this
-> is something which can be figured out automatically, do it in the
-> clone unless there is no other reference repositories.
+1. I often forget since most repos don't need it.
+2. Infrequent users of our repo almost never know to update submodules and
+end up coming to us with strange build errors.
+3. Existing scripts that work with Git repos are usually not built to handle
+submodules.
 
-I do not quite get this.
+In the common case of the submodule content having no local edits, it would
+be nice if "git checkout" automatically updated submodules [1].  If there
+are local edits, it could error out (maybe override with
+"--ignore-modified-submodules" or something).
 
-Before "clone" with or without "--dissociate" there is no
-objects/info/alternates (before "clone", there is no ".git" to find
-that file in the first place).
+I'm not a Git expert, though.  Is there a reason something like this isn't
+already implemented?  Maybe there's an existing write-up or mailing list
+thread I can read to get some background information?
 
-Are you talking about making a clone of a repository that was
-created with "clone --reference", to borrow from the same
-third repository the original is borrowing from?
+Thanks!
+
+[1] Our post-checkout procedure is:
+
+    git submodule sync
+    git submodule update --init
+    git submodule foreach --recursive \
+      'git submodule sync ; git submodule update --init'
+
+(Not sure if this is correct.  Different articles/blogs suggest a slightly
+different set of commands.)
