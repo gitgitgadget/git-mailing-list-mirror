@@ -1,188 +1,87 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v4 08/26] refs.c: move the hidden refs functions to the common code
-Date: Thu, 15 Oct 2015 15:46:32 -0400
-Message-ID: <1444938410-2345-9-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v4 04/26] refs.c: add a new refs.c file to hold all common refs code
+Date: Thu, 15 Oct 2015 15:46:28 -0400
+Message-ID: <1444938410-2345-5-git-send-email-dturner@twopensource.com>
 References: <1444938410-2345-1-git-send-email-dturner@twopensource.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Oct 15 21:48:15 2015
+X-From: git-owner@vger.kernel.org Thu Oct 15 21:48:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmoVX-0007WP-Mv
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 21:48:12 +0200
+	id 1ZmoVe-0007cu-OV
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 21:48:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749AbbJOTrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2015 15:47:16 -0400
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:35945 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752684AbbJOTrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2015 15:47:15 -0400
-Received: by qgx61 with SMTP id 61so80920405qgx.3
-        for <git@vger.kernel.org>; Thu, 15 Oct 2015 12:47:14 -0700 (PDT)
+	id S1752527AbbJOTrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2015 15:47:12 -0400
+Received: from mail-qk0-f182.google.com ([209.85.220.182]:35984 "EHLO
+	mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751329AbbJOTrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2015 15:47:10 -0400
+Received: by qkht68 with SMTP id t68so44757650qkh.3
+        for <git@vger.kernel.org>; Thu, 15 Oct 2015 12:47:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JNWDymkNRbHJ37UFuqW26LGrf/NazosBicUKHDMY3Qw=;
-        b=W7RqTJNUaIwEQqeS7cPGaeNpbaW7euRQ5YAhLNLvELeID8l/spud4MYWrtcyLLHqJr
-         C1zTVG5CClSk4WQ7SgjTcjQx1nCBiG+SwpclPD3kp4z1BA6ZApEkrJhiUEMq0bO/YsBa
-         Cdxvomfig3Bn+9B7v9qMR7Sobt3yw+4l+wY7mSLDLdDdgGFHPakfSE+R9xYa6A4kyacz
-         blsQud1SYFXKt2CeCnJh9UNQT9Gs2o5kzGQlEP2UNPLGXVN4VTq7QD6N/Czk9Eiv+gPw
-         t2AWZqNuuQMFgFe/7b4RL5cPWdqfzotjtmC+oQM1AflarCbarU1ztLwGvToOfQTQTAyi
-         EOyg==
-X-Gm-Message-State: ALoCoQkBYkZgOuXWBPg5q0sHGV94AILblNwogKjDpOGHowEUzOYQu7SJbk5OAGQljrqNH0BooUg8
-X-Received: by 10.140.99.117 with SMTP id p108mr14101367qge.91.1444938434431;
-        Thu, 15 Oct 2015 12:47:14 -0700 (PDT)
+        bh=HaXmcmeGHff7w+2qlXy+/vCyX2vHmyR9ka25cQYyiig=;
+        b=JOGVcHwPJbx0X37ZDiev1u1kRTRQRi7vpiaTETEtyDdbKXC9367sRVO2cKXKK0HK5Q
+         lj08LME9EnxLRiW9FY22Za8UmCap8f11NEkPx+PlV/dOd6GmbvG4IwT6shPxe7aZRKVi
+         KyDmwjwnYYyD5Rmgf4mdM7bAv5mmc8Qvbu+3ZPbfX51+TPNeqUjyRezaBgbq4Ps+3Dxj
+         WAKtLXb470BxA7mrAzuqSMDsBMeNRSd7vdfHv+5yRdFpthdtbcrhPrRfJ4LVQonGJi1o
+         xrCsGrzHflwvDFfxMiPBXn+fjPzFYPZ8spb5LzWXCCCjI6+v9aiZ3rJzoPQClIO2g40J
+         esuw==
+X-Gm-Message-State: ALoCoQk+eaTbbXOw11m11eiA8hFOpJJtsc3Vd4BAkElAO+cU+iUHTyB+jdLQYbdfl15QCNoU393V
+X-Received: by 10.55.19.211 with SMTP id 80mr13794387qkt.103.1444938429437;
+        Thu, 15 Oct 2015 12:47:09 -0700 (PDT)
 Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id p193sm6054142qha.29.2015.10.15.12.47.13
+        by smtp.gmail.com with ESMTPSA id p193sm6054142qha.29.2015.10.15.12.47.08
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Oct 2015 12:47:13 -0700 (PDT)
+        Thu, 15 Oct 2015 12:47:08 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1444938410-2345-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279701>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
 
-Move the hidden refs functions to the refs.c file since these
-functions do not contain any backend specific code.
+Create a new refs.c file that will be used to hold all the refs
+code that is backend agnostic and will be shared across all backends.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs-be-files.c | 51 ---------------------------------------------------
- refs.c          | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 51 deletions(-)
+ Makefile | 1 +
+ refs.c   | 3 +++
+ 2 files changed, 4 insertions(+)
+ create mode 100644 refs.c
 
-diff --git a/refs-be-files.c b/refs-be-files.c
-index 04c3206..dad23c7 100644
---- a/refs-be-files.c
-+++ b/refs-be-files.c
-@@ -4215,57 +4215,6 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
- 	return xstrdup(refname);
- }
- 
--static struct string_list *hide_refs;
--
--int parse_hide_refs_config(const char *var, const char *value, const char *section)
--{
--	if (!strcmp("transfer.hiderefs", var) ||
--	    /* NEEDSWORK: use parse_config_key() once both are merged */
--	    (starts_with(var, section) && var[strlen(section)] == '.' &&
--	     !strcmp(var + strlen(section), ".hiderefs"))) {
--		char *ref;
--		int len;
--
--		if (!value)
--			return config_error_nonbool(var);
--		ref = xstrdup(value);
--		len = strlen(ref);
--		while (len && ref[len - 1] == '/')
--			ref[--len] = '\0';
--		if (!hide_refs) {
--			hide_refs = xcalloc(1, sizeof(*hide_refs));
--			hide_refs->strdup_strings = 1;
--		}
--		string_list_append(hide_refs, ref);
--	}
--	return 0;
--}
--
--int ref_is_hidden(const char *refname)
--{
--	int i;
--
--	if (!hide_refs)
--		return 0;
--	for (i = hide_refs->nr - 1; i >= 0; i--) {
--		const char *match = hide_refs->items[i].string;
--		int neg = 0;
--		int len;
--
--		if (*match == '!') {
--			neg = 1;
--			match++;
--		}
--
--		if (!starts_with(refname, match))
--			continue;
--		len = strlen(match);
--		if (!refname[len] || refname[len] == '/')
--			return !neg;
--	}
--	return 0;
--}
--
- struct expire_reflog_cb {
- 	unsigned int flags;
- 	reflog_expiry_should_prune_fn *should_prune_fn;
+diff --git a/Makefile b/Makefile
+index 173b9d4..b37eae3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -763,6 +763,7 @@ LIB_OBJS += reachable.o
+ LIB_OBJS += read-cache.o
+ LIB_OBJS += reflog-walk.o
+ LIB_OBJS += refs-be-files.o
++LIB_OBJS += refs.o
+ LIB_OBJS += ref-filter.o
+ LIB_OBJS += remote.o
+ LIB_OBJS += replace_object.o
 diff --git a/refs.c b/refs.c
-index 8245118..6e5c8f8 100644
---- a/refs.c
+new file mode 100644
+index 0000000..77492ff
+--- /dev/null
 +++ b/refs.c
-@@ -292,3 +292,54 @@ int read_ref_at(const char *refname, unsigned int flags, unsigned long at_time,
- 
- 	return 1;
- }
-+
-+static struct string_list *hide_refs;
-+
-+int parse_hide_refs_config(const char *var, const char *value, const char *section)
-+{
-+	if (!strcmp("transfer.hiderefs", var) ||
-+	    /* NEEDSWORK: use parse_config_key() once both are merged */
-+	    (starts_with(var, section) && var[strlen(section)] == '.' &&
-+	     !strcmp(var + strlen(section), ".hiderefs"))) {
-+		char *ref;
-+		int len;
-+
-+		if (!value)
-+			return config_error_nonbool(var);
-+		ref = xstrdup(value);
-+		len = strlen(ref);
-+		while (len && ref[len - 1] == '/')
-+			ref[--len] = '\0';
-+		if (!hide_refs) {
-+			hide_refs = xcalloc(1, sizeof(*hide_refs));
-+			hide_refs->strdup_strings = 1;
-+		}
-+		string_list_append(hide_refs, ref);
-+	}
-+	return 0;
-+}
-+
-+int ref_is_hidden(const char *refname)
-+{
-+	int i;
-+
-+	if (!hide_refs)
-+		return 0;
-+	for (i = hide_refs->nr - 1; i >= 0; i--) {
-+		const char *match = hide_refs->items[i].string;
-+		int neg = 0;
-+		int len;
-+
-+		if (*match == '!') {
-+			neg = 1;
-+			match++;
-+		}
-+
-+		if (!starts_with(refname, match))
-+			continue;
-+		len = strlen(match);
-+		if (!refname[len] || refname[len] == '/')
-+			return !neg;
-+	}
-+	return 0;
-+}
+@@ -0,0 +1,3 @@
++/*
++ * Common refs code for all backends.
++ */
 -- 
 2.4.2.644.g97b850b-twtrsrc
