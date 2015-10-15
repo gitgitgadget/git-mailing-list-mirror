@@ -1,311 +1,224 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v4 13/26] refs.c: move check_refname_format to the common code
-Date: Thu, 15 Oct 2015 15:46:37 -0400
-Message-ID: <1444938410-2345-14-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v4 25/26] refs: break out ref conflict checks
+Date: Thu, 15 Oct 2015 15:46:49 -0400
+Message-ID: <1444938410-2345-26-git-send-email-dturner@twopensource.com>
 References: <1444938410-2345-1-git-send-email-dturner@twopensource.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	David Turner <dturner@twopensource.com>,
+Cc: David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Oct 15 21:48:08 2015
+X-From: git-owner@vger.kernel.org Thu Oct 15 21:48:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmoVR-0007RA-RW
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 21:48:06 +0200
+	id 1ZmoVK-0007IP-9W
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 21:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753185AbbJOTr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2015 15:47:58 -0400
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:35681 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752824AbbJOTrV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2015 15:47:21 -0400
-Received: by qgt47 with SMTP id 47so80820832qgt.2
-        for <git@vger.kernel.org>; Thu, 15 Oct 2015 12:47:21 -0700 (PDT)
+	id S1753140AbbJOTrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2015 15:47:46 -0400
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:33776 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753005AbbJOTrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2015 15:47:35 -0400
+Received: by qgeo38 with SMTP id o38so36984138qge.0
+        for <git@vger.kernel.org>; Thu, 15 Oct 2015 12:47:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QqAPo3Ys095SC2Ho8bJfTgdYVKVm1Ip3TBzTB44JCV8=;
-        b=mx1Lv22uKjGRRa39NPuF+tnzv8ONkSPEMNxiyhMo8Ye9+9d0E3iNtIakKNMj4wR0+t
-         Kz+bRo+EHmXc/B9JvIHxjTzTgHKxx0vexQ9aORsc5tbl69FG7lSojggT7cMHPl0ZgkQg
-         nFhlWbQnHOlPBjFDV0vVxCiDYXvI8pLbLDOyi/gqqtSXcM8KVADcTS+BcLmcH4UszBca
-         Akqxm+Hpf7MYRL8REHqKl7TS5w6+KDoMNozKL0SGsYwSojOoBeV0BgwWIXucADLclYQy
-         xUYw2AsEFSN66hD2rkQ6kxO7gfAsPsWWZ89Sop1Ly6lO9Q0rTCVuEkGwjWTRabS1lXDk
-         N+5A==
-X-Gm-Message-State: ALoCoQnATIlnp0WVPF6XKNP6RQLF9ncXyVvY+QiqDnYWwXZtouDDt/5N3L9yntCPHaTB0tyHkZ/A
-X-Received: by 10.141.28.69 with SMTP id f66mr14201239qhe.67.1444938441063;
-        Thu, 15 Oct 2015 12:47:21 -0700 (PDT)
+        bh=0ZnUoLigs6Y6V39nV8MW6dZ8xnPvq9Ze39c2cUzUJ5o=;
+        b=TYriL4Trs0dn1ag3X8ZSE0178nMXTVU/D3OcNfEYqpozIZoUjdx6vuomEYTX2S6V7B
+         Nx29N1sxAQeqk6ImirAFwHOrRRHv30mIPJrC1sNMzCTqYrmMlWrcIyOKFSkk2PnBFkdl
+         Z6bIA9o3LZQqSkJR8ZbfIQUd9GHqwGr8+WGv4Q5BhBKM5a4D2k9SRRsOUPV/l9etSlFh
+         fuqOPssXoil+AT3WuZSH673BVzK6DpsJ+p6vHNEsh+6IH5KvhdjhxtI8jrWztrvc6eGL
+         nyF06d1pn8ifmcjeMm/yTPPKfZlgMHxy+Rit3abaCSvUT4zP599JPU9qfMAQutDVjFtQ
+         MHBQ==
+X-Gm-Message-State: ALoCoQl+SrrPGdltkzVxN3RjV70DmGPK5ps9M+aTY3wul9vvaBcvuaFAQHIt0o2MmXFyAtwtoHs0
+X-Received: by 10.140.151.81 with SMTP id 78mr15344643qhx.101.1444938454700;
+        Thu, 15 Oct 2015 12:47:34 -0700 (PDT)
 Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id p193sm6054142qha.29.2015.10.15.12.47.19
+        by smtp.gmail.com with ESMTPSA id p193sm6054142qha.29.2015.10.15.12.47.33
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Oct 2015 12:47:20 -0700 (PDT)
+        Thu, 15 Oct 2015 12:47:34 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1444938410-2345-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279699>
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+Create new function verify_no_descendants, to hold one of the ref
+conflict checks used in verify_refname_available.  Multiple backends
+will need this function, so it goes in the common code.
 
-This function does not contain any backend specific code so we
-move it to the common code.
+rename_ref_available also moves to the common code, because alternate
+backends might need it and it has no files-backend-specific code.
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs-be-files.c | 109 --------------------------------------------------------
- refs.c          | 109 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 109 insertions(+), 109 deletions(-)
+ refs-be-files.c | 49 ++++++++-----------------------------------------
+ refs.c          | 38 ++++++++++++++++++++++++++++++++++++++
+ refs.h          | 15 +++++++++++++++
+ 3 files changed, 61 insertions(+), 41 deletions(-)
 
 diff --git a/refs-be-files.c b/refs-be-files.c
-index 589e10d..345bee7 100644
+index 1bda3e4..1f17348 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -14,27 +14,6 @@ struct ref_lock {
- };
+@@ -729,6 +729,7 @@ static int verify_refname_available_dir(const char *refname,
+ 					struct strbuf *err)
+ {
+ 	const char *slash;
++	const char *extra_refname;
+ 	int pos;
+ 	struct strbuf dirname = STRBUF_INIT;
+ 	int ret = -1;
+@@ -834,33 +835,15 @@ static int verify_refname_available_dir(const char *refname,
+ 		}
+ 	}
  
- /*
-- * How to handle various characters in refnames:
-- * 0: An acceptable character for refs
-- * 1: End-of-component
-- * 2: ., look for a preceding . to reject .. in refs
-- * 3: {, look for a preceding @ to reject @{ in refs
-- * 4: A bad character: ASCII control characters, and
-- *    ":", "?", "[", "\", "^", "~", SP, or TAB
-- * 5: *, reject unless REFNAME_REFSPEC_PATTERN is set
-- */
--static unsigned char refname_disposition[256] = {
--	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
--	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
--	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 1,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
--	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
--};
+-	if (extras) {
+-		/*
+-		 * Check for entries in extras that start with
+-		 * "$refname/". We do that by looking for the place
+-		 * where "$refname/" would be inserted in extras. If
+-		 * there is an entry at that position that starts with
+-		 * "$refname/" and is not in skip, then we have a
+-		 * conflict.
+-		 */
+-		for (pos = string_list_find_insert_index(extras, dirname.buf, 0);
+-		     pos < extras->nr; pos++) {
+-			const char *extra_refname = extras->items[pos].string;
 -
--/*
-  * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
-  * refs (i.e., because the reference is about to be deleted anyway).
-  */
-@@ -69,94 +48,6 @@ static unsigned char refname_disposition[256] = {
-  * value to ref_update::flags
-  */
- 
--/*
-- * Try to read one refname component from the front of refname.
-- * Return the length of the component found, or -1 if the component is
-- * not legal.  It is legal if it is something reasonable to have under
-- * ".git/refs/"; We do not like it if:
-- *
-- * - any path component of it begins with ".", or
-- * - it has double dots "..", or
-- * - it has ASCII control characters, or
-- * - it has ":", "?", "[", "\", "^", "~", SP, or TAB anywhere, or
-- * - it has "*" anywhere unless REFNAME_REFSPEC_PATTERN is set, or
-- * - it ends with a "/", or
-- * - it ends with ".lock", or
-- * - it contains a "@{" portion
-- */
--static int check_refname_component(const char *refname, int *flags)
--{
--	const char *cp;
--	char last = '\0';
+-			if (!starts_with(extra_refname, dirname.buf))
+-				break;
 -
--	for (cp = refname; ; cp++) {
--		int ch = *cp & 255;
--		unsigned char disp = refname_disposition[ch];
--		switch (disp) {
--		case 1:
--			goto out;
--		case 2:
--			if (last == '.')
--				return -1; /* Refname contains "..". */
--			break;
--		case 3:
--			if (last == '@')
--				return -1; /* Refname contains "@{". */
--			break;
--		case 4:
--			return -1;
--		case 5:
--			if (!(*flags & REFNAME_REFSPEC_PATTERN))
--				return -1; /* refspec can't be a pattern */
--
--			/*
--			 * Unset the pattern flag so that we only accept
--			 * a single asterisk for one side of refspec.
--			 */
--			*flags &= ~ REFNAME_REFSPEC_PATTERN;
--			break;
+-			if (!skip || !string_list_has_string(skip, extra_refname)) {
+-				strbuf_addf(err, "cannot process '%s' and '%s' at the same time",
+-					    refname, extra_refname);
+-				goto cleanup;
+-			}
 -		}
--		last = ch;
--	}
--out:
--	if (cp == refname)
--		return 0; /* Component has zero length. */
--	if (refname[0] == '.')
--		return -1; /* Component starts with '.'. */
--	if (cp - refname >= LOCK_SUFFIX_LEN &&
--	    !memcmp(cp - LOCK_SUFFIX_LEN, LOCK_SUFFIX, LOCK_SUFFIX_LEN))
--		return -1; /* Refname ends with ".lock". */
--	return cp - refname;
--}
--
--int check_refname_format(const char *refname, int flags)
--{
--	int component_len, component_count = 0;
--
--	if (!strcmp(refname, "@"))
--		/* Refname is a single character '@'. */
--		return -1;
--
--	while (1) {
--		/* We are at the start of a path component. */
--		component_len = check_refname_component(refname, &flags);
--		if (component_len <= 0)
--			return -1;
--
--		component_count++;
--		if (refname[component_len] == '\0')
--			break;
--		/* Skip to next component. */
--		refname += component_len + 1;
--	}
--
--	if (refname[component_len - 1] == '.')
--		return -1; /* Refname ends with '.'. */
--	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
--		return -1; /* Refname has only one component. */
--	return 0;
--}
--
- struct ref_entry;
++	extra_refname = find_descendant_ref(dirname.buf, extras, skip);
++	if (extra_refname) {
++		strbuf_addf(err,
++			    "cannot process '%s' and '%s' at the same time",
++			    refname, extra_refname);
++	} else {
++		ret = 0;
+ 	}
  
- /*
+-	/* No conflicts were found */
+-	ret = 0;
+-
+ cleanup:
+ 	strbuf_release(&dirname);
+ 	return ret;
+@@ -2461,22 +2444,6 @@ out:
+ 	return ret;
+ }
+ 
+-static int rename_ref_available(const char *oldname, const char *newname)
+-{
+-	struct string_list skip = STRING_LIST_INIT_NODUP;
+-	struct strbuf err = STRBUF_INIT;
+-	int ret;
+-
+-	string_list_insert(&skip, oldname);
+-	ret = !verify_refname_available(newname, NULL, &skip, &err);
+-	if (!ret)
+-		error("%s", err.buf);
+-
+-	string_list_clear(&skip, 0);
+-	strbuf_release(&err);
+-	return ret;
+-}
+-
+ static int write_ref_to_lockfile(struct ref_lock *lock,
+ 				 const unsigned char *sha1, struct strbuf *err);
+ static int commit_ref_update(struct ref_lock *lock,
 diff --git a/refs.c b/refs.c
-index fcd5ddd..d79ba82 100644
+index efc1c47..72d96ed 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -623,3 +623,112 @@ char *resolve_refdup(const char *refname, int resolve_flags,
- 	return xstrdup_or_null(resolve_ref_unsafe(refname, resolve_flags,
- 						  sha1, flags));
+@@ -1028,3 +1028,41 @@ enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
+ 	hashcpy(sha1, o->sha1);
+ 	return PEEL_PEELED;
  }
 +
-+/*
-+ * How to handle various characters in refnames:
-+ * 0: An acceptable character for refs
-+ * 1: End-of-component
-+ * 2: ., look for a preceding . to reject .. in refs
-+ * 3: {, look for a preceding @ to reject @{ in refs
-+ * 4: A bad character: ASCII control characters, and
-+ *    ":", "?", "[", "\", "^", "~", SP, or TAB
-+ * 5: *, reject unless REFNAME_REFSPEC_PATTERN is set
-+ */
-+static unsigned char refname_disposition[256] = {
-+	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-+	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-+	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 1,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
-+};
++const char *find_descendant_ref(const char *dirname,
++				const struct string_list *extras,
++				const struct string_list *skip)
++{
++	int pos;
++	if (!extras)
++		return NULL;
 +
++	/* Look for the place where dirname would be inserted in extras. */
++	for (pos = string_list_find_insert_index(extras, dirname, 0);
++	     pos < extras->nr; pos++) {
++		const char *extra_refname = extras->items[pos].string;
++
++		if (!starts_with(extra_refname, dirname))
++			break;
++
++		if (!skip || !string_list_has_string(skip, extra_refname))
++			return extra_refname;
++	}
++	return NULL;
++}
++
++int rename_ref_available(const char *oldname, const char *newname)
++{
++	struct string_list skip = STRING_LIST_INIT_NODUP;
++	struct strbuf err = STRBUF_INIT;
++	int ret;
++
++	string_list_insert(&skip, oldname);
++	ret = !verify_refname_available(newname, NULL, &skip, &err);
++	if (!ret)
++		error("%s", err.buf);
++
++	string_list_clear(&skip, 0);
++	strbuf_release(&err);
++	return ret;
++}
+diff --git a/refs.h b/refs.h
+index 7aed0a2..69fa4df 100644
+--- a/refs.h
++++ b/refs.h
+@@ -362,6 +362,8 @@ int pack_refs(unsigned int flags);
+ int verify_refname_available(const char *newname, struct string_list *extra,
+ 			     struct string_list *skip, struct strbuf *err);
+ 
++int rename_ref_available(const char *oldname, const char *newname);
++
+ extern int is_branch(const char *refname);
+ 
+ /*
+@@ -623,6 +625,19 @@ int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
+ 			const unsigned char *new_sha1, const char *msg,
+ 			int flags, struct strbuf *err);
+ 
 +/*
-+ * Try to read one refname component from the front of refname.
-+ * Return the length of the component found, or -1 if the component is
-+ * not legal.  It is legal if it is something reasonable to have under
-+ * ".git/refs/"; We do not like it if:
++ * Check for entries in extras that are within the specified
++ * directory, where dirname is a reference directory name including
++ * the trailing slash (e.g., "refs/heads/master/"). Ignore any
++ * conflicting references that are found in skip. If there is a
++ * conflicting reference, return its name.
 + *
-+ * - any path component of it begins with ".", or
-+ * - it has double dots "..", or
-+ * - it has ASCII control characters, or
-+ * - it has ":", "?", "[", "\", "^", "~", SP, or TAB anywhere, or
-+ * - it has "*" anywhere unless REFNAME_REFSPEC_PATTERN is set, or
-+ * - it ends with a "/", or
-+ * - it ends with ".lock", or
-+ * - it contains a "@{" portion
++ * extras and skip must be sorted lists of reference names. skip can
++ * be NULL; extras cannot.
 + */
-+static int check_refname_component(const char *refname, int *flags)
-+{
-+	const char *cp;
-+	char last = '\0';
-+
-+	for (cp = refname; ; cp++) {
-+		int ch = *cp & 255;
-+		unsigned char disp = refname_disposition[ch];
-+		switch (disp) {
-+		case 1:
-+			goto out;
-+		case 2:
-+			if (last == '.')
-+				return -1; /* Refname contains "..". */
-+			break;
-+		case 3:
-+			if (last == '@')
-+				return -1; /* Refname contains "@{". */
-+			break;
-+		case 4:
-+			return -1;
-+		case 5:
-+			if (!(*flags & REFNAME_REFSPEC_PATTERN))
-+				return -1; /* refspec can't be a pattern */
-+
-+			/*
-+			 * Unset the pattern flag so that we only accept
-+			 * a single asterisk for one side of refspec.
-+			 */
-+			*flags &= ~ REFNAME_REFSPEC_PATTERN;
-+			break;
-+		}
-+		last = ch;
-+	}
-+out:
-+	if (cp == refname)
-+		return 0; /* Component has zero length. */
-+	if (refname[0] == '.')
-+		return -1; /* Component starts with '.'. */
-+	if (cp - refname >= LOCK_SUFFIX_LEN &&
-+	    !memcmp(cp - LOCK_SUFFIX_LEN, LOCK_SUFFIX, LOCK_SUFFIX_LEN))
-+		return -1; /* Refname ends with ".lock". */
-+	return cp - refname;
-+}
-+
-+int check_refname_format(const char *refname, int flags)
-+{
-+	int component_len, component_count = 0;
-+
-+	if (!strcmp(refname, "@"))
-+		/* Refname is a single character '@'. */
-+		return -1;
-+
-+	while (1) {
-+		/* We are at the start of a path component. */
-+		component_len = check_refname_component(refname, &flags);
-+		if (component_len <= 0)
-+			return -1;
-+
-+		component_count++;
-+		if (refname[component_len] == '\0')
-+			break;
-+		/* Skip to next component. */
-+		refname += component_len + 1;
-+	}
-+
-+	if (refname[component_len - 1] == '.')
-+		return -1; /* Refname ends with '.'. */
-+	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
-+		return -1; /* Refname has only one component. */
-+	return 0;
-+}
++const char *find_descendant_ref(const char *dirname,
++				const struct string_list *extras,
++				const struct string_list *skip);
+ 
+ enum expire_reflog_flags {
+ 	EXPIRE_REFLOGS_DRY_RUN = 1 << 0,
 -- 
 2.4.2.644.g97b850b-twtrsrc
