@@ -1,232 +1,506 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v4 01/26] refs.c: create a public version of verify_refname_available
-Date: Thu, 15 Oct 2015 15:46:25 -0400
-Message-ID: <1444938410-2345-2-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v4 09/26] refs.c: move dwim and friend functions to the common refs code
+Date: Thu, 15 Oct 2015 15:46:33 -0400
+Message-ID: <1444938410-2345-10-git-send-email-dturner@twopensource.com>
 References: <1444938410-2345-1-git-send-email-dturner@twopensource.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Oct 15 21:48:37 2015
+X-From: git-owner@vger.kernel.org Thu Oct 15 21:48:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmoVo-0007pG-Bk
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 21:48:28 +0200
+	id 1ZmoVd-0007cu-OO
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 21:48:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752183AbbJOTrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2015 15:47:08 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:35948 "EHLO
-	mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752064AbbJOTrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2015 15:47:06 -0400
-Received: by qkht68 with SMTP id t68so44756802qkh.3
-        for <git@vger.kernel.org>; Thu, 15 Oct 2015 12:47:05 -0700 (PDT)
+	id S1753198AbbJOTsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2015 15:48:09 -0400
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:34603 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752734AbbJOTrQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2015 15:47:16 -0400
+Received: by qgez77 with SMTP id z77so81128489qge.1
+        for <git@vger.kernel.org>; Thu, 15 Oct 2015 12:47:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1ZL1E9DrAo6xoVSSdbMd9VLRidu2+st0W7/shJ13nFM=;
-        b=PuA0raFIDQu2+hzS8ycun9+zIUTX0ShAfuboa7TSb8RKcZT6fT6w86scE8d2Go+ALT
-         nbniZPQM448STDGbmui0kV2JkEtaLcr0DWBw3ChqOozGF54N/3U76R+GONkwWzEOyuFP
-         rT7ZS1McFqOUrpoKYLCK+84r93UdmiSAw/SC7+w4FeAl6mAukm+pfaEci4G3+/c/v9mZ
-         QkDT2LpsVSpzMNtxaywoJT3ca22fkeIbr5xvWG1Yu8EnzqdnunCvCV6Q7s2gyhioWQoG
-         aiIGmLHdKrM1oGvvm8KKxKxpNqAosU2dYXG0urN8E143sn5tazF39Y9G+NJj4WxAXloi
-         Xz6Q==
-X-Gm-Message-State: ALoCoQlWd5mprK2enpKPgsRvgB2KToyADmtOuNe1ifQIGaBHp5o4VOKfWNYdVNYLM/XKBAfMmM4g
-X-Received: by 10.55.43.37 with SMTP id r37mr14405832qkh.57.1444938425402;
-        Thu, 15 Oct 2015 12:47:05 -0700 (PDT)
+        bh=LC1tVKr0eWCzp51GXpCQCaYjF95tjVkk8hORREoqJiI=;
+        b=ZDn7I+Yqn3IYHozBEQ36a62UNeSb9caUmPoDqHUuMwykcmk/xIPkSFzxX0jlHHx2Do
+         Fnzs718YLTGe6YqhiErx7hi5VBTnxQq9OzQ7voFxe9L9uTPRfK7vo1bb+0IzoWCqVhvg
+         9USZcv4Gr+fTRqyBqp0yy05KydwwPe77f54688PZ1+/bWEx32iEa0nyv5YKKgXRfzSZc
+         Vb4kPGHxqIpnREEuD/bl86xAJyYVOvugRJDwdt1jWEWef9jL6VyALXIeEgol1S+VzByW
+         HL8Ti7q5rZE1ufrxa+GlrtBt1qvqMhsITxBj+BW5+Rm5P8xiU8PygjKP0nWNXYfib38b
+         +YGA==
+X-Gm-Message-State: ALoCoQksijC0kugDNd6VtjNlFN4y0M4KcvXcDCI8XuYLspd616MPUv2oucivAmTFehdOz6vJ/zCJ
+X-Received: by 10.140.32.247 with SMTP id h110mr14467313qgh.1.1444938435756;
+        Thu, 15 Oct 2015 12:47:15 -0700 (PDT)
 Received: from ubuntu.twitter.corp? (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
-        by smtp.gmail.com with ESMTPSA id p193sm6054142qha.29.2015.10.15.12.47.04
+        by smtp.gmail.com with ESMTPSA id p193sm6054142qha.29.2015.10.15.12.47.14
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Oct 2015 12:47:04 -0700 (PDT)
+        Thu, 15 Oct 2015 12:47:14 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 In-Reply-To: <1444938410-2345-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279705>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
 
-Create a public version of verify_refname_available that backends can
-provide.
+These functions do not contain any backend specific code so we move
+them to the common code and share across all backends.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs.c | 65 ++++++++++++++++++++++++++++++-----------------------------------
- refs.h | 20 ++++++++++++++++++++
- 2 files changed, 50 insertions(+), 35 deletions(-)
+ refs-be-files.c | 203 --------------------------------------------------------
+ refs.c          | 203 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 203 insertions(+), 203 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 132eff5..fe71ea0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -279,7 +279,7 @@ struct ref_dir {
-  * presence of an empty subdirectory does not block the creation of a
-  * similarly-named reference.  (The fact that reference names with the
-  * same leading components can conflict *with each other* is a
-- * separate issue that is regulated by verify_refname_available().)
-+ * separate issue that is regulated by verify_refname_available_dir().)
-  *
-  * Please note that the name field contains the fully-qualified
-  * reference (or subdirectory) name.  Space could be saved by only
-@@ -897,25 +897,13 @@ static int nonmatching_ref_fn(struct ref_entry *entry, void *vdata)
- /*
-  * Return 0 if a reference named refname could be created without
-  * conflicting with the name of an existing reference in dir.
-- * Otherwise, return a negative value and write an explanation to err.
-- * If extras is non-NULL, it is a list of additional refnames with
-- * which refname is not allowed to conflict. If skip is non-NULL,
-- * ignore potential conflicts with refs in skip (e.g., because they
-- * are scheduled for deletion in the same operation). Behavior is
-- * undefined if the same name is listed in both extras and skip.
-- *
-- * Two reference names conflict if one of them exactly matches the
-- * leading components of the other; e.g., "refs/foo/bar" conflicts
-- * with both "refs/foo" and with "refs/foo/bar/baz" but not with
-- * "refs/foo/bar" or "refs/foo/barbados".
-- *
-- * extras and skip must be sorted.
-+ * See verify_refname_available for details.
-  */
--static int verify_refname_available(const char *refname,
--				    const struct string_list *extras,
--				    const struct string_list *skip,
--				    struct ref_dir *dir,
--				    struct strbuf *err)
-+static int verify_refname_available_dir(const char *refname,
-+					const struct string_list *extras,
-+					const struct string_list *skip,
-+					struct ref_dir *dir,
-+					struct strbuf *err)
- {
- 	const char *slash;
- 	int pos;
-@@ -2464,9 +2452,12 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 		 */
- 		strbuf_git_path(&orig_ref_file, "%s", orig_refname);
- 		if (remove_empty_directories(&orig_ref_file)) {
-+			struct ref_dir *loose_refs;
-+			loose_refs = get_loose_refs(&ref_cache);
- 			last_errno = errno;
--			if (!verify_refname_available(orig_refname, extras, skip,
--						      get_loose_refs(&ref_cache), err))
-+			if (!verify_refname_available_dir(orig_refname, extras,
-+							  skip, loose_refs,
-+							  err))
- 				strbuf_addf(err, "there are still refs under '%s'",
- 					    orig_refname);
- 			goto error_return;
-@@ -2479,8 +2470,9 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	if (!refname) {
- 		last_errno = errno;
- 		if (last_errno != ENOTDIR ||
--		    !verify_refname_available(orig_refname, extras, skip,
--					      get_loose_refs(&ref_cache), err))
-+		    !verify_refname_available_dir(orig_refname, extras, skip,
-+						  get_loose_refs(&ref_cache),
-+						  err))
- 			strbuf_addf(err, "unable to resolve reference %s: %s",
- 				    orig_refname, strerror(last_errno));
- 
-@@ -2493,8 +2485,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	 * our refname.
- 	 */
- 	if (is_null_oid(&lock->old_oid) &&
--	    verify_refname_available(refname, extras, skip,
--				     get_packed_refs(&ref_cache), err)) {
-+	    verify_refname_available_dir(refname, extras, skip,
-+					 get_packed_refs(&ref_cache), err)) {
- 		last_errno = ENOTDIR;
- 		goto error_return;
- 	}
-@@ -3127,10 +3119,7 @@ static int rename_ref_available(const char *oldname, const char *newname)
- 	int ret;
- 
- 	string_list_insert(&skip, oldname);
--	ret = !verify_refname_available(newname, NULL, &skip,
--					get_packed_refs(&ref_cache), &err)
--		&& !verify_refname_available(newname, NULL, &skip,
--					     get_loose_refs(&ref_cache), &err);
-+	ret = !verify_refname_available(newname, NULL, &skip, &err);
- 	if (!ret)
- 		error("%s", err.buf);
- 
-@@ -3299,6 +3288,17 @@ static int should_autocreate_reflog(const char *refname)
- 		!strcmp(refname, "HEAD");
+diff --git a/refs-be-files.c b/refs-be-files.c
+index dad23c7..3609fb7 100644
+--- a/refs-be-files.c
++++ b/refs-be-files.c
+@@ -2247,30 +2247,6 @@ const char *prettify_refname(const char *name)
+ 		0);
  }
  
-+int verify_refname_available(const char *newname, struct string_list *extra,
-+			     struct string_list *skip, struct strbuf *err)
-+{
-+	struct ref_dir *packed_refs = get_packed_refs(&ref_cache);
-+	struct ref_dir *loose_refs = get_loose_refs(&ref_cache);
-+	return verify_refname_available_dir(newname, extra, skip,
-+					    packed_refs, err) ||
-+		verify_refname_available_dir(newname, extra, skip,
-+					     loose_refs, err);
-+}
-+
- /*
-  * Create a reflog for a ref.  If force_create = 0, the reflog will
-  * only be created for certain refs (those for which
-@@ -4334,8 +4334,6 @@ static int ref_present(const char *refname,
- int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 				   struct strbuf *err)
+-static const char *ref_rev_parse_rules[] = {
+-	"%.*s",
+-	"refs/%.*s",
+-	"refs/tags/%.*s",
+-	"refs/heads/%.*s",
+-	"refs/remotes/%.*s",
+-	"refs/remotes/%.*s/HEAD",
+-	NULL
+-};
+-
+-int refname_match(const char *abbrev_name, const char *full_name)
+-{
+-	const char **p;
+-	const int abbrev_name_len = strlen(abbrev_name);
+-
+-	for (p = ref_rev_parse_rules; *p; p++) {
+-		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
+-			return 1;
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+ static void unlock_ref(struct ref_lock *lock)
  {
--	struct ref_dir *loose_refs = get_loose_refs(&ref_cache);
--	struct ref_dir *packed_refs = get_packed_refs(&ref_cache);
- 	int ret = 0, i;
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
-@@ -4378,10 +4376,7 @@ int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 			die("BUG: initial ref transaction with old_sha1 set");
- 		if (verify_refname_available(update->refname,
- 					     &affected_refnames, NULL,
--					     loose_refs, err) ||
--		    verify_refname_available(update->refname,
--					     &affected_refnames, NULL,
--					     packed_refs, err)) {
-+					     err)) {
- 			ret = TRANSACTION_NAME_CONFLICT;
- 			goto cleanup;
- 		}
-diff --git a/refs.h b/refs.h
-index 6d30c98..7367a7f 100644
---- a/refs.h
-+++ b/refs.h
-@@ -218,6 +218,26 @@ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct st
- int pack_refs(unsigned int flags);
+ 	/* Do not free lock->lk -- atexit() still looks at them */
+@@ -2323,92 +2299,6 @@ static int remove_empty_directories(struct strbuf *path)
+ }
  
  /*
-+ * Return 0 if a reference named refname could be created without
-+ * conflicting with the name of an existing reference.
-+ * Otherwise, return a negative value and write an explanation to err.
-+ * If extras is non-NULL, it is a list of additional refnames with
-+ * which refname is not allowed to conflict. If skip is non-NULL,
-+ * ignore potential conflicts with refs in skip (e.g., because they
-+ * are scheduled for deletion in the same operation). Behavior is
-+ * undefined if the same name is listed in both extras and skip.
-+ *
-+ * Two reference names conflict if one of them exactly matches the
-+ * leading components of the other; e.g., "foo/bar" conflicts with
-+ * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
-+ * "foo/barbados".
-+ *
-+ * skip must be sorted.
-+ */
-+int verify_refname_available(const char *newname, struct string_list *extra,
-+			     struct string_list *skip, struct strbuf *err);
+- * *string and *len will only be substituted, and *string returned (for
+- * later free()ing) if the string passed in is a magic short-hand form
+- * to name a branch.
+- */
+-static char *substitute_branch_name(const char **string, int *len)
+-{
+-	struct strbuf buf = STRBUF_INIT;
+-	int ret = interpret_branch_name(*string, *len, &buf);
+-
+-	if (ret == *len) {
+-		size_t size;
+-		*string = strbuf_detach(&buf, &size);
+-		*len = size;
+-		return (char *)*string;
+-	}
+-
+-	return NULL;
+-}
+-
+-int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
+-{
+-	char *last_branch = substitute_branch_name(&str, &len);
+-	const char **p, *r;
+-	int refs_found = 0;
+-
+-	*ref = NULL;
+-	for (p = ref_rev_parse_rules; *p; p++) {
+-		char fullref[PATH_MAX];
+-		unsigned char sha1_from_ref[20];
+-		unsigned char *this_result;
+-		int flag;
+-
+-		this_result = refs_found ? sha1_from_ref : sha1;
+-		mksnpath(fullref, sizeof(fullref), *p, len, str);
+-		r = resolve_ref_unsafe(fullref, RESOLVE_REF_READING,
+-				       this_result, &flag);
+-		if (r) {
+-			if (!refs_found++)
+-				*ref = xstrdup(r);
+-			if (!warn_ambiguous_refs)
+-				break;
+-		} else if ((flag & REF_ISSYMREF) && strcmp(fullref, "HEAD")) {
+-			warning("ignoring dangling symref %s.", fullref);
+-		} else if ((flag & REF_ISBROKEN) && strchr(fullref, '/')) {
+-			warning("ignoring broken ref %s.", fullref);
+-		}
+-	}
+-	free(last_branch);
+-	return refs_found;
+-}
+-
+-int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+-{
+-	char *last_branch = substitute_branch_name(&str, &len);
+-	const char **p;
+-	int logs_found = 0;
+-
+-	*log = NULL;
+-	for (p = ref_rev_parse_rules; *p; p++) {
+-		unsigned char hash[20];
+-		char path[PATH_MAX];
+-		const char *ref, *it;
+-
+-		mksnpath(path, sizeof(path), *p, len, str);
+-		ref = resolve_ref_unsafe(path, RESOLVE_REF_READING,
+-					 hash, NULL);
+-		if (!ref)
+-			continue;
+-		if (reflog_exists(path))
+-			it = path;
+-		else if (strcmp(ref, path) && reflog_exists(ref))
+-			it = ref;
+-		else
+-			continue;
+-		if (!logs_found++) {
+-			*log = xstrdup(it);
+-			hashcpy(sha1, hash);
+-		}
+-		if (!warn_ambiguous_refs)
+-			break;
+-	}
+-	free(last_branch);
+-	return logs_found;
+-}
+-
+-/*
+  * Locks a ref returning the lock on success and NULL on failure.
+  * On failure errno is set to something meaningful.
+  */
+@@ -4122,99 +4012,6 @@ cleanup:
+ 	return ret;
+ }
+ 
+-char *shorten_unambiguous_ref(const char *refname, int strict)
+-{
+-	int i;
+-	static char **scanf_fmts;
+-	static int nr_rules;
+-	char *short_name;
+-
+-	if (!nr_rules) {
+-		/*
+-		 * Pre-generate scanf formats from ref_rev_parse_rules[].
+-		 * Generate a format suitable for scanf from a
+-		 * ref_rev_parse_rules rule by interpolating "%s" at the
+-		 * location of the "%.*s".
+-		 */
+-		size_t total_len = 0;
+-		size_t offset = 0;
+-
+-		/* the rule list is NULL terminated, count them first */
+-		for (nr_rules = 0; ref_rev_parse_rules[nr_rules]; nr_rules++)
+-			/* -2 for strlen("%.*s") - strlen("%s"); +1 for NUL */
+-			total_len += strlen(ref_rev_parse_rules[nr_rules]) - 2 + 1;
+-
+-		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
+-
+-		offset = 0;
+-		for (i = 0; i < nr_rules; i++) {
+-			assert(offset < total_len);
+-			scanf_fmts[i] = (char *)&scanf_fmts[nr_rules] + offset;
+-			offset += snprintf(scanf_fmts[i], total_len - offset,
+-					   ref_rev_parse_rules[i], 2, "%s") + 1;
+-		}
+-	}
+-
+-	/* bail out if there are no rules */
+-	if (!nr_rules)
+-		return xstrdup(refname);
+-
+-	/* buffer for scanf result, at most refname must fit */
+-	short_name = xstrdup(refname);
+-
+-	/* skip first rule, it will always match */
+-	for (i = nr_rules - 1; i > 0 ; --i) {
+-		int j;
+-		int rules_to_fail = i;
+-		int short_name_len;
+-
+-		if (1 != sscanf(refname, scanf_fmts[i], short_name))
+-			continue;
+-
+-		short_name_len = strlen(short_name);
+-
+-		/*
+-		 * in strict mode, all (except the matched one) rules
+-		 * must fail to resolve to a valid non-ambiguous ref
+-		 */
+-		if (strict)
+-			rules_to_fail = nr_rules;
+-
+-		/*
+-		 * check if the short name resolves to a valid ref,
+-		 * but use only rules prior to the matched one
+-		 */
+-		for (j = 0; j < rules_to_fail; j++) {
+-			const char *rule = ref_rev_parse_rules[j];
+-			char refname[PATH_MAX];
+-
+-			/* skip matched rule */
+-			if (i == j)
+-				continue;
+-
+-			/*
+-			 * the short name is ambiguous, if it resolves
+-			 * (with this previous rule) to a valid ref
+-			 * read_ref() returns 0 on success
+-			 */
+-			mksnpath(refname, sizeof(refname),
+-				 rule, short_name_len, short_name);
+-			if (ref_exists(refname))
+-				break;
+-		}
+-
+-		/*
+-		 * short name is non-ambiguous if all previous rules
+-		 * haven't resolved to a valid ref
+-		 */
+-		if (j == rules_to_fail)
+-			return short_name;
+-	}
+-
+-	free(short_name);
+-	return xstrdup(refname);
+-}
+-
+ struct expire_reflog_cb {
+ 	unsigned int flags;
+ 	reflog_expiry_should_prune_fn *should_prune_fn;
+diff --git a/refs.c b/refs.c
+index 6e5c8f8..53296e9 100644
+--- a/refs.c
++++ b/refs.c
+@@ -343,3 +343,206 @@ int ref_is_hidden(const char *refname)
+ 	}
+ 	return 0;
+ }
++
++static const char *ref_rev_parse_rules[] = {
++	"%.*s",
++	"refs/%.*s",
++	"refs/tags/%.*s",
++	"refs/heads/%.*s",
++	"refs/remotes/%.*s",
++	"refs/remotes/%.*s/HEAD",
++	NULL
++};
++
++int refname_match(const char *abbrev_name, const char *full_name)
++{
++	const char **p;
++	const int abbrev_name_len = strlen(abbrev_name);
++
++	for (p = ref_rev_parse_rules; *p; p++) {
++		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
++			return 1;
++		}
++	}
++
++	return 0;
++}
 +
 +/*
-  * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
-  * REF_NODEREF: act on the ref directly, instead of dereferencing
-  *              symbolic references.
++ * *string and *len will only be substituted, and *string returned (for
++ * later free()ing) if the string passed in is a magic short-hand form
++ * to name a branch.
++ */
++static char *substitute_branch_name(const char **string, int *len)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int ret = interpret_branch_name(*string, *len, &buf);
++
++	if (ret == *len) {
++		size_t size;
++		*string = strbuf_detach(&buf, &size);
++		*len = size;
++		return (char *)*string;
++	}
++
++	return NULL;
++}
++
++int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
++{
++	char *last_branch = substitute_branch_name(&str, &len);
++	const char **p, *r;
++	int refs_found = 0;
++
++	*ref = NULL;
++	for (p = ref_rev_parse_rules; *p; p++) {
++		char fullref[PATH_MAX];
++		unsigned char sha1_from_ref[20];
++		unsigned char *this_result;
++		int flag;
++
++		this_result = refs_found ? sha1_from_ref : sha1;
++		mksnpath(fullref, sizeof(fullref), *p, len, str);
++		r = resolve_ref_unsafe(fullref, RESOLVE_REF_READING,
++				       this_result, &flag);
++		if (r) {
++			if (!refs_found++)
++				*ref = xstrdup(r);
++			if (!warn_ambiguous_refs)
++				break;
++		} else if ((flag & REF_ISSYMREF) && strcmp(fullref, "HEAD")) {
++			warning("ignoring dangling symref %s.", fullref);
++		} else if ((flag & REF_ISBROKEN) && strchr(fullref, '/')) {
++			warning("ignoring broken ref %s.", fullref);
++		}
++	}
++	free(last_branch);
++	return refs_found;
++}
++
++int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
++{
++	char *last_branch = substitute_branch_name(&str, &len);
++	const char **p;
++	int logs_found = 0;
++
++	*log = NULL;
++	for (p = ref_rev_parse_rules; *p; p++) {
++		unsigned char hash[20];
++		char path[PATH_MAX];
++		const char *ref, *it;
++
++		mksnpath(path, sizeof(path), *p, len, str);
++		ref = resolve_ref_unsafe(path, RESOLVE_REF_READING,
++					 hash, NULL);
++		if (!ref)
++			continue;
++		if (reflog_exists(path))
++			it = path;
++		else if (strcmp(ref, path) && reflog_exists(ref))
++			it = ref;
++		else
++			continue;
++		if (!logs_found++) {
++			*log = xstrdup(it);
++			hashcpy(sha1, hash);
++		}
++		if (!warn_ambiguous_refs)
++			break;
++	}
++	free(last_branch);
++	return logs_found;
++}
++
++char *shorten_unambiguous_ref(const char *refname, int strict)
++{
++	int i;
++	static char **scanf_fmts;
++	static int nr_rules;
++	char *short_name;
++
++	if (!nr_rules) {
++		/*
++		 * Pre-generate scanf formats from ref_rev_parse_rules[].
++		 * Generate a format suitable for scanf from a
++		 * ref_rev_parse_rules rule by interpolating "%s" at the
++		 * location of the "%.*s".
++		 */
++		size_t total_len = 0;
++		size_t offset = 0;
++
++		/* the rule list is NULL terminated, count them first */
++		for (nr_rules = 0; ref_rev_parse_rules[nr_rules]; nr_rules++)
++			/* -2 for strlen("%.*s") - strlen("%s"); +1 for NUL */
++			total_len += strlen(ref_rev_parse_rules[nr_rules]) - 2 + 1;
++
++		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
++
++		offset = 0;
++		for (i = 0; i < nr_rules; i++) {
++			assert(offset < total_len);
++			scanf_fmts[i] = (char *)&scanf_fmts[nr_rules] + offset;
++			offset += snprintf(scanf_fmts[i], total_len - offset,
++					   ref_rev_parse_rules[i], 2, "%s") + 1;
++		}
++	}
++
++	/* bail out if there are no rules */
++	if (!nr_rules)
++		return xstrdup(refname);
++
++	/* buffer for scanf result, at most refname must fit */
++	short_name = xstrdup(refname);
++
++	/* skip first rule, it will always match */
++	for (i = nr_rules - 1; i > 0 ; --i) {
++		int j;
++		int rules_to_fail = i;
++		int short_name_len;
++
++		if (1 != sscanf(refname, scanf_fmts[i], short_name))
++			continue;
++
++		short_name_len = strlen(short_name);
++
++		/*
++		 * in strict mode, all (except the matched one) rules
++		 * must fail to resolve to a valid non-ambiguous ref
++		 */
++		if (strict)
++			rules_to_fail = nr_rules;
++
++		/*
++		 * check if the short name resolves to a valid ref,
++		 * but use only rules prior to the matched one
++		 */
++		for (j = 0; j < rules_to_fail; j++) {
++			const char *rule = ref_rev_parse_rules[j];
++			char refname[PATH_MAX];
++
++			/* skip matched rule */
++			if (i == j)
++				continue;
++
++			/*
++			 * the short name is ambiguous, if it resolves
++			 * (with this previous rule) to a valid ref
++			 * read_ref() returns 0 on success
++			 */
++			mksnpath(refname, sizeof(refname),
++				 rule, short_name_len, short_name);
++			if (ref_exists(refname))
++				break;
++		}
++
++		/*
++		 * short name is non-ambiguous if all previous rules
++		 * haven't resolved to a valid ref
++		 */
++		if (j == rules_to_fail)
++			return short_name;
++	}
++
++	free(short_name);
++	return xstrdup(refname);
++}
 -- 
 2.4.2.644.g97b850b-twtrsrc
