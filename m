@@ -1,113 +1,69 @@
-From: Alexander Riesen <alexander.riesen@cetitec.com>
-Subject: [PATCH] Allow "clone --dissociate" to dissociate from alternates
-Date: Thu, 15 Oct 2015 16:38:00 +0200
-Message-ID: <561FBA48.3050609@cetitec.com>
-References: <561F8DE9.4040703@cetitec.com> <alpine.DEB.1.00.1510151609280.31610@s15462909.onlinehome-server.info>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Alternative to manual editing with git add --patch
+Date: Thu, 15 Oct 2015 17:06:03 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1510151702420.31610@s15462909.onlinehome-server.info>
+References: <561E6FBB.7060302@gmx.de> <xmqqk2qp8hlj.fsf@gitster.mtv.corp.google.com> <561EE700.3020002@gmx.de> <alpine.DEB.1.00.1510151152470.31610@s15462909.onlinehome-server.info> <561FAC12.5020007@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 15 16:38:15 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Sven Helmberger <sven.helmberger@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 15 17:06:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmjfZ-0008Dv-K8
-	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 16:38:13 +0200
+	id 1Zmk6h-0003KK-7a
+	for gcvg-git-2@plane.gmane.org; Thu, 15 Oct 2015 17:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753311AbbJOOiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2015 10:38:09 -0400
-Received: from mout.kundenserver.de ([212.227.17.13]:50774 "EHLO
-	mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753147AbbJOOiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2015 10:38:08 -0400
-Received: from pflsmail.localdomain ([37.123.123.67]) by
- mrelayeu.kundenserver.de (mreue103) with ESMTPSA (Nemesis) id
- 0MYLUv-1a8Tes3Zrd-00VCNl; Thu, 15 Oct 2015 16:38:03 +0200
-Received: from localhost (localhost [127.0.0.1])
-	by pflsmail.localdomain (Postfix) with ESMTP id 26D74B016D5;
-	Thu, 15 Oct 2015 16:38:02 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at pflsmail.corp.cetitec.com
-Received: from pflsmail.localdomain ([127.0.0.1])
-	by localhost (pflsmail.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id V9JFUSQID7pA; Thu, 15 Oct 2015 16:38:00 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (unknown [10.10.11.230])
-	by pflsmail.localdomain (Postfix) with ESMTPS id 48071B016D4;
-	Thu, 15 Oct 2015 16:38:00 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <alpine.DEB.1.00.1510151609280.31610@s15462909.onlinehome-server.info>
-X-Provags-ID: V03:K0:pwZ1ASMEV2hu9tnYONsw+gFpLbza8s8HAsC0Iy39NuPRrn9KbkV
- h4CsxC71+mAp/vfTn1fwFi9/JO2ESIPDRRLW9+b8w5QTEyscMXFVG+gxhdNU7b1poyY8cTZ
- CIf6B/BopDlHUmCmbP69/bc3lCl1V0dUj9MFdatblTAen5sekAB9YRIdmBz6k3FV7fNQz7+
- 9SrkA5QvAo0tDk83qnPxQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sInj1Pdn2OI=:GcJkabKHtkcSEsDHWHewFu
- +Q3ik5oHHraDJGrnkaCEAwagtVxzwg9dHwXJk6wg+bEBbxX0K622ucNMeWIGM4y5Fu4s/Pnpk
- wdJtMWqDCyDjO05nkPsW6nj8pb5tFKTrVz0lzwmXgUnlpznJLjzsQPvN2ML4d/dAmla2FSQdt
- IUs11LXVsTwZQvmMhofaQ/Y5k9T6QaSml9CAFd6E7R3LARydzUC3STLW8NFXiUdFNTSCLPLmB
- zK8AnkUzhYjVczx46x9sMKUYGlEkcX165bwml3ihDhY1K8ThsNbfBDsFYVMjmv2mUZT6mKvhx
- yfajDok7hh2Fkt8l5C7OT8JRjwbDdr/OHkpjAG7aE/IfIUbgbFYrMk72CtyogYRP94qPIq7rV
- ZC4Lw6mNgztaMHZZxTUGEL6LZGzr3GTIIgZ1UAyTMKa4WT1kY0oTbNHRa76ngbOsriIsx6+6H
- mHAM7lGeQeFUa52r0lNBYrCpL4MqfrJyzCZhzFCQj6ytMqoqkcoMCWNUJ5P3CJ0T4CCC8Jrdu
- HSBq6MSgWOvl/rFcq5jBLvr3llyNZOR2gUtMCuqvdiNym8305fzGh5dZfBn1bXQCHAuDd9mfW
- m+JNBWCXTUu8pnFOgUUD4qO9AYo3p7zXlGUYPOV1XH2WTy8LrOh6Ew6D7s49VKlVGN4cNrAU3
- nmZJAAe9qeDz1rcfAn5iWBPja1zf0Qr1UKIZHnXbpC9aiZyHTTqUUnULsAcvB50+lvruPcjda
- 4E1w6t4/xxz1mAlB
+	id S1753320AbbJOPGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2015 11:06:09 -0400
+Received: from mout.gmx.net ([212.227.17.21]:64452 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752440AbbJOPGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2015 11:06:08 -0400
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0Lx4dh-1afJnY2105-016inv;
+ Thu, 15 Oct 2015 17:06:05 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <561FAC12.5020007@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:GZwqG+3Lh26mPkJVg7YfXFANjTLbjjWMNYh9ar2cMbjTRFuROep
+ bKDHgJ3KgdIuAXl0QtKogxgTzpw3isNyRiW+yLslzTsD2noomOLJFky0lL5ARsIWRdDajwX
+ 2Lv033QFwoV24DQ02BMFmDze0HYpFJ78ESDJ18QclFnkU2O3Ee83e2o64W6lHMWomaRNFc6
+ S0EbSBLaUJWSyJ6AiEyKg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:scvom6lkm+E=:j8I5tZhSWAsE8PVj/3nUmU
+ UOT4QNlQEQg9LTtai2UGrc3qYUrh3ftzUVDgJdX7g5UHwrrJ1xpu3gI65udNVHKsK9A1X4Apf
+ AFyFFp37N8HeXZ64xbNzVjgNxEgmexvT9xMh7ysRPmpmPM85xNRvWL+U61eL5f0Hw7B8piMWW
+ l07LzYunSJvqrUY9Hn5Sw2ynCK6uYbXoNn1njldJseYquaU/M4sZMbQc8yllHnQkEHjqjFEXD
+ 1/uBBVF5ElgERo9ysuWwPy1k4tN7O9A5B9PO0EwaZNTJ/WjXgczawyKwvoTxHIzoigxMyPniB
+ PJBwR3Z7Syp4VReZTXaA8UGFy2peaz4/hUOUhjVXwIFdKGFEwu3F7pFYmFedz5Kcgyvil12V3
+ HPBQIRva7iyhuQLtfSFKBh6YqavEjE7XS5EaV+hWPFvmP5K3QNj6PN48XEON6aCROhS3VmGbE
+ H2/l1S+jRFB4n/e1PImYzP5m4Udvq+sNrS4AdkTs3FHCMdGBkIke4QahTtIuJxnXamDEJ45KB
+ 2vB9Gz2Qof3Mv8Ah2rHVEZ+Fi2/eJ9cGlDTev7Ej01Rxq5BNbe/U+TgePKvCFYVBxOAcZv+xL
+ ZE0tTIPMluQqswI3ZFVOvrhTDPblA4outO49BW3Fm7CTD6zb8jd4/n1c18uoCmMKvdUKC1cfw
+ NUmp3tpQ4SW5uACbkA8aXk9XBarbrSXKKJnMkWml1lMc+/f2J/qO+20w9gwhsOgY++yS33Ylw
+ nSCnO8//oOLHDQNM/pe6GPCQVLicv+9z9V/q2nafS1AR2A2moN1TZ5LDMSmin94erbUa9l2B 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279669>
 
-The option requiring the explicit reference repositories is a bit of overkill:
-the alternates in the original repository *are* reference repositories and
-would be dissociated from should one pass any reference repository (even an
-unrelated one).
+Hi Sven,
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+On Thu, 15 Oct 2015, Sven Helmberger wrote:
 
-On 10/15/2015 04:11 PM, Johannes Schindelin wrote:
-> On Thu, 15 Oct 2015, Alexander  Riesen wrote:
- >
- >> The "--dissociate" option required reference repositories, which sometimes
- >> demanded a look into the objects/info/alternates by the user. As this
- >> is something which can be figured out automatically, do it in the
- >> clone unless there is no other reference repositories.
- >
- > Would it not make sense to reuse the copy_alternates() function to simply
- > copy the alternates and let `--dissociate` run its course with the copied
- > .objects/info/alternate file? That would make for less new code...
+> Am 15.10.2015 um 12:11 schrieb Johannes Schindelin:
+> > 
+> > This is all technically sound. From a usability perspective I would wish
+> > more for a way to exclude or filter the lines by a pattern. 
+> 
+> Why not do both?
 
-IIUC, I should validate the alternates in the source repository...
-But, the only thing the user looses if it is not validated, is the nice
-warning regarding no reference repositories to dissociate from, right?
+Because sometimes more is less. If users are overwhelmed with many, many
+options, they are *less* likely to benefit from the few that are easy to
+use because they won't find out about them.
 
-So maybe we can just remove the reset of option_dissociate and be done with
-it? I would actually suggest removing the warning as well: the alternates are
-something to dissociate from. And I see no harm otherwise.
-
-How about this instead?
-
-  builtin/clone.c | 4 ----
-  1 file changed, 4 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 578da85..b33d6f9 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -947,10 +947,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
-
-      if (option_reference.nr)
-          setup_reference();
--    else if (option_dissociate) {
--        warning(_("--dissociate given, but there is no --reference"));
--        option_dissociate = 0;
--    }
-
-      fetch_pattern = value.buf;
-      refspec = parse_fetch_refspec(1, &fetch_pattern);
--- 
-2.6.1.151.g74e8091
+Ciao,
+Johannes
