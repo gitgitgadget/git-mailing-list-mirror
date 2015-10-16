@@ -1,70 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] stripspace: Implement --count-lines option
-Date: Fri, 16 Oct 2015 10:35:49 -0700
-Message-ID: <xmqq8u72g1hm.fsf@gitster.mtv.corp.google.com>
-References: <1444911524-14504-1-git-send-email-tklauser@distanz.ch>
-	<1444911524-14504-3-git-send-email-tklauser@distanz.ch>
-	<xmqqoag0ggjh.fsf@gitster.mtv.corp.google.com>
-	<20151016075134.GM11304@distanz.ch>
+Subject: Re: [PATCH] pull: add angle brackets to usage string
+Date: Fri, 16 Oct 2015 10:42:49 -0700
+Message-ID: <xmqq4mhqg15y.fsf@gitster.mtv.corp.google.com>
+References: <1444962133-1266-1-git-send-email-alexhenrie24@gmail.com>
+	<xmqqwpumg480.fsf@gitster.mtv.corp.google.com>
+	<CAMMLpeQPngq-xM2vN4uX6+k5-uoOXyP3p0wgLO9LOkWxWtZBEA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Tobias Klauser <tklauser@distanz.ch>
-X-From: git-owner@vger.kernel.org Fri Oct 16 19:36:08 2015
+Cc: Paul Tan <pyokagan@gmail.com>,
+	Git mailing list <git@vger.kernel.org>
+To: Alex Henrie <alexhenrie24@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 16 19:42:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zn8v7-0002cW-1r
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 19:35:57 +0200
+	id 1Zn91s-0002Sy-VJ
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 19:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754344AbbJPRfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 13:35:52 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:33031 "EHLO
+	id S932554AbbJPRmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 13:42:52 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35609 "EHLO
 	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753803AbbJPRfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 13:35:51 -0400
-Received: by pabrc13 with SMTP id rc13so126311641pab.0
-        for <git@vger.kernel.org>; Fri, 16 Oct 2015 10:35:50 -0700 (PDT)
+	with ESMTP id S932548AbbJPRmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 13:42:51 -0400
+Received: by padcn9 with SMTP id cn9so11533485pad.2
+        for <git@vger.kernel.org>; Fri, 16 Oct 2015 10:42:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=sJac3IMyIIiN8JteoRvxhfOVTVNP7AAeiTS6S93mLuU=;
-        b=f9sIFKLqoOPEqQUFNCECsuRY9Y1POB6k5OpAYT5Z4Q91U3QqmT8J/ftMCAlJT/P2A6
-         our94dnuor2qkmJHw2r37KpP8nRBoAL6IiPZcmnaVLwOQjBLQ/p4SJiBs6mammQ9Px0H
-         tcHtg7EUWPZEyJ8UBeZcm8Kj3Yg/SJcNcWnQ/FEb2eueipp+qGVwPAayWR5OJ/euycDO
-         qYkd0iEq8Gv/dMlKG5/z3e/YS5S6XZLBrjX0AOwRZ6AfCkVQbCVi9ahwjNxZRl/jmILq
-         uAffdna1yveHVEtdRY+9UArltDD53qLFxYks6zw6AtZPkooYrnRbL+3QuL4AO2H6iWDU
-         NU9w==
-X-Received: by 10.67.4.9 with SMTP id ca9mr17747680pad.90.1445016950768;
-        Fri, 16 Oct 2015 10:35:50 -0700 (PDT)
+        bh=9cvygdoMUXwXYKfX+sAN5hdMcd69SvE1XcFBLe57kNc=;
+        b=j1IoQarfM8NrDwzzSckuYvVqpLefsQIighv6SUsPFPNUnocp7sO32TaWnWuk9YpDKQ
+         wKZGApAOXQlcYNYWcebX/bvmTYzG1FZWIRf749Lem9douKOwna2iqTxAwRl5yuhW3a8l
+         vgdpNKuDXWM3tR45bZRdsaITblFBgpFjUCx2XHqDRWntdt/UU8UZmkSaGYUW5G8c5Iit
+         kUnfxxvQoTl4NkoMSpm1pWasPU3Z9rhaKC2xDkndKAlYeMDMVnOKs30WP5Y2uLUOrd1v
+         kdp28D1fXTLH2TTZYhhfLlzDlU+FgabrsHGCokM+3KfOkt8c0dtm3kJNgmOxSo2fgDoK
+         CNVQ==
+X-Received: by 10.66.62.132 with SMTP id y4mr17912820par.130.1445017371047;
+        Fri, 16 Oct 2015 10:42:51 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:458e:bb5:8827:32a1])
-        by smtp.gmail.com with ESMTPSA id dy8sm22483625pab.38.2015.10.16.10.35.49
+        by smtp.gmail.com with ESMTPSA id ix1sm9099372pbd.40.2015.10.16.10.42.50
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 16 Oct 2015 10:35:50 -0700 (PDT)
-In-Reply-To: <20151016075134.GM11304@distanz.ch> (Tobias Klauser's message of
-	"Fri, 16 Oct 2015 09:51:35 +0200")
+        Fri, 16 Oct 2015 10:42:50 -0700 (PDT)
+In-Reply-To: <CAMMLpeQPngq-xM2vN4uX6+k5-uoOXyP3p0wgLO9LOkWxWtZBEA@mail.gmail.com>
+	(Alex Henrie's message of "Fri, 16 Oct 2015 10:42:45 -0600")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279759>
 
-Tobias Klauser <tklauser@distanz.ch> writes:
+Alex Henrie <alexhenrie24@gmail.com> writes:
 
->> So this is your output code, which gives only the number of lines
->> without the cleaned up result.
+> 2015-10-16 10:36 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
+>> Makes sense, as all the other <placeholders> in the usage string are
+>> bracketted.
+>>
+>> Does it make sense to do this for contrib/examples, which is the
+>> historical record, though?
 >
-> This should better be a simple printf("%zu\n", lines) I guess?
+> I didn't know that contrib/examples was a historical record. The last
+> patch I submitted, b7447679e84ed973430ab19fce87f56857b83068, also
+> modified contrib/examples.
 
-I think we actively avoid using %z conversion that is only C99.
+Yes, but that fixes historical "mistake", no?
 
-If you really want to, you could count in size_t and use %lu with
-appropriate casting, which I think is what we do in the rest of the
-codebase.
-
-For this one, I think it is sufficient to just count in int and
-print as int with %d, though.
+With this, you are breaking historical practice by changing only one
+instance to deviate from the then-current practice of saying
+'options' without brackets.  It is based on the point of view that
+considers anything inside <bracket> and a fixed string 'options' are
+meant to be replaced by intelligent readers, which is as valid as
+the more recent practice to consider only things inside <bracket>
+are placeholders.
