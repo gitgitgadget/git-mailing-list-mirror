@@ -1,128 +1,66 @@
-From: Tobias Klauser <tklauser@distanz.ch>
-Subject: [PATCH v2 2/4] stripspace: Use parse-options for command-line parsing
-Date: Fri, 16 Oct 2015 17:16:43 +0200
-Message-ID: <1445008605-16534-3-git-send-email-tklauser@distanz.ch>
-References: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
-To: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 16 17:17:26 2015
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [BUG] t7063-status-untracked-cache flaky?
+Date: Fri, 16 Oct 2015 17:22:01 +0200
+Message-ID: <56211619.3090907@web.de>
+References: <326E1A8B-3612-4771-80B8-77346C0D762D@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: pclouds@gmail.com, dturner@twopensource.com
+To: Lars Schneider <larsxschneider@gmail.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 16 17:42:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zn6ki-000388-Ox
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 17:17:05 +0200
+	id 1Zn79N-0004ie-Mi
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 17:42:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754302AbbJPPQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 11:16:51 -0400
-Received: from mail.zhinst.com ([212.126.164.98]:36622 "EHLO mail.zhinst.com"
+	id S932677AbbJPPmb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 11:42:31 -0400
+Received: from mout.web.de ([212.227.17.12]:62911 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754186AbbJPPQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 11:16:49 -0400
-Received: from ziws06.zhinst.com ([10.42.0.71])
-	by mail.zhinst.com (Kerio Connect 8.5.2);
-	Fri, 16 Oct 2015 17:16:45 +0200
-X-Mailer: git-send-email 2.6.1.148.g7927db1
-In-Reply-To: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
+	id S932455AbbJPPWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 11:22:10 -0400
+Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0LwqJw-1abwGd3OFE-016QCm; Fri, 16 Oct 2015 17:22:07
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.3.0
+In-Reply-To: <326E1A8B-3612-4771-80B8-77346C0D762D@gmail.com>
+X-Provags-ID: V03:K0:3tcMlYXnx9qti16IKUmu2pQFZuAPO6Vfe5l89schTam6AZ2uF2S
+ 3IgT0t+gtASP3ZZOMYSXJeozgShiVV1Dc6+SN+mKlx6TZBjv6J7h52cZ1AYOyjZssV3X/CM
+ 1N160axmVwn0k7z8MbVKBucmb+sYp4Nl6Q0cR/MvwAn+46G/GTu/+Qxs/fYyg9RCK2S+lQK
+ 2gMDr+XFMKDis2XWk5AoQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TfJ4rOofoD0=:L6r+Sdr2Dt9jPSuGNXMzmW
+ NwyVdYgUgw2l0xCavkZdE8euGWZ3O8KteCEbMZd5dodcr9wdRcS7V9zxglkLAcFs+skw0kmLe
+ 9bgKm+QEi0hGNeUvJepBdW5I0o8o3imcxWAxodMCc9BYFEH7sXFaD+5PCL5wwzhSs62q2qv/y
+ 71s3/0+WrFEOu5x7E4CgrVepsu6XRc2+AczAYoRpYKbbDGnb3Mi6tJDIMQYpuGshCgo0idcak
+ dgSuHgSitjuq2GvG/AYZB6xnDpYhF5PeH1sNJOOIZG/0vtJEJRSVQy/fJNUKv+IVwp4wKDRG9
+ H6xEi+4+4yy5yGT3BakNDlCd7f5cubX1ABw/vYcpbpWMBx6gh6LaEzh1cjXi2ex4tnnDje8QP
+ FrhcwDbRMbet+ojgC2xiRQyot10l9I9dlsMmWtKB2fwytGoSza+Nc3YbZT2xvMWPFlJ4O8Jr1
+ DfrHvbzLVN16ygnBHBZp/w8ofiF4+wruOu95qfCaZvmVHHv8jCJj1vY5pjSZLhrXRA6cbWiw0
+ rOg586ePgqKxX6IkgwpeVzQ1UHmuOzAkadoVi8K2FwdBr03YjhbjoyCmAsMb8it0N6u8I2m14
+ fICe9Lt+0dvNQEk7c/gicSKdSNVxrEaW25j9aOyFGzxCz0PAbebJ+PTv4NKmZq5P9+MBd+J/a
+ vLB5TJysHlipjlWwRcceNmIsxaJarddn6yu+2Sy2lwRLduh4sy9tJjCup4iLG4/0TG6fIm302
+ UOYoNjAvIufaf9lZBGEv3cMG6ZrLIGIVyN3AoWdR0Rv7P7RPY9U46DIQmYj6yy/McHok6pVe 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279747>
 
-Use parse-options to parse command-line options instead of a
-hand-crafted implementation.
+I can't reproduce it here.
+Do you want to give us some info about your setup ?
+OS ?
+Harddisk, SSD, Fusion ?
+Does "debug=t verbose=t ./t7063-status-untracked-cache.sh >xx.txt 2>&1" 
+give any more information ?
 
-This is a preparatory patch to simplify the introduction of the
---count-lines option in a follow-up patch.
 
-Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
----
- builtin/stripspace.c | 56 ++++++++++++++++++++++++++++------------------------
- 1 file changed, 30 insertions(+), 26 deletions(-)
-
-diff --git a/builtin/stripspace.c b/builtin/stripspace.c
-index f677093..ac1ab3d 100644
---- a/builtin/stripspace.c
-+++ b/builtin/stripspace.c
-@@ -1,5 +1,6 @@
- #include "builtin.h"
- #include "cache.h"
-+#include "parse-options.h"
- #include "strbuf.h"
- 
- static void comment_lines(struct strbuf *buf)
-@@ -12,41 +13,44 @@ static void comment_lines(struct strbuf *buf)
- 	free(msg);
- }
- 
--static const char *usage_msg = "\n"
--"  git stripspace [-s | --strip-comments] < input\n"
--"  git stripspace [-c | --comment-lines] < input";
-+static const char * const stripspace_usage[] = {
-+	N_("git stripspace [-s | --strip-comments] < input"),
-+	N_("git stripspace [-c | --comment-lines] < input"),
-+	NULL
-+};
-+
-+enum stripspace_mode {
-+	STRIP_DEFAULT = 0,
-+	STRIP_COMMENTS,
-+	COMMENT_LINES
-+};
- 
- int cmd_stripspace(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf buf = STRBUF_INIT;
--	int strip_comments = 0;
--	enum { INVAL = 0, STRIP_SPACE = 1, COMMENT_LINES = 2 } mode = STRIP_SPACE;
--
--	if (argc == 2) {
--		if (!strcmp(argv[1], "-s") ||
--		    !strcmp(argv[1], "--strip-comments")) {
--			strip_comments = 1;
--		} else if (!strcmp(argv[1], "-c") ||
--			   !strcmp(argv[1], "--comment-lines")) {
--			mode = COMMENT_LINES;
--		} else {
--			mode = INVAL;
--		}
--	} else if (argc > 1) {
--		mode = INVAL;
--	}
--
--	if (mode == INVAL)
--		usage(usage_msg);
--
--	if (strip_comments || mode == COMMENT_LINES)
-+	enum stripspace_mode mode = STRIP_DEFAULT;
-+
-+	const struct option options[] = {
-+		OPT_CMDMODE('s', "strip-comments", &mode,
-+			    N_("skip and remove all lines starting with comment character"),
-+			    STRIP_COMMENTS),
-+		OPT_CMDMODE('c', "comment-lines", &mode,
-+			    N_("prepend comment character and blank to each line"),
-+			    COMMENT_LINES),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options, stripspace_usage,
-+			     PARSE_OPT_KEEP_DASHDASH);
-+
-+	if (mode == STRIP_COMMENTS || mode == COMMENT_LINES)
- 		git_config(git_default_config, NULL);
- 
- 	if (strbuf_read(&buf, 0, 1024) < 0)
- 		die_errno("could not read the input");
- 
--	if (mode == STRIP_SPACE)
--		strbuf_stripspace(&buf, strip_comments);
-+	if (mode == STRIP_DEFAULT || mode == STRIP_COMMENTS)
-+		strbuf_stripspace(&buf, mode == STRIP_COMMENTS);
- 	else
- 		comment_lines(&buf);
- 
--- 
-2.6.1.148.g7927db1
+On 15.10.15 09:52, Lars Schneider wrote:
+> Hi,
+> 
+> I noticed that "t7063-status-untracked-cache.sh" occasionally fails with "not ok 24 - test sparse status with untracked cache".
