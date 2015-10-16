@@ -1,120 +1,77 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 02/26] refs: make repack_without_refs and is_branch
- public
-Date: Fri, 16 Oct 2015 08:34:41 +0200
-Message-ID: <56209A81.1060706@alum.mit.edu>
-References: <1444938410-2345-1-git-send-email-dturner@twopensource.com> <1444938410-2345-3-git-send-email-dturner@twopensource.com>
+Subject: Re: [PATCH v4 03/26] refs-be-files.c: rename refs to refs-be-files
+Date: Fri, 16 Oct 2015 08:36:54 +0200
+Message-ID: <56209B06.6000900@alum.mit.edu>
+References: <1444938410-2345-1-git-send-email-dturner@twopensource.com> <1444938410-2345-4-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 16 08:35:00 2015
+X-From: git-owner@vger.kernel.org Fri Oct 16 08:44:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmybR-0005nX-6F
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 08:34:57 +0200
+	id 1ZmykQ-0007J8-3J
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 08:44:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753102AbbJPGex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 02:34:53 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:51545 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751997AbbJPGew (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Oct 2015 02:34:52 -0400
-X-AuditID: 12074411-f797e6d000007df3-25-56209a84d442
+	id S1753552AbbJPGoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 02:44:10 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:57206 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753420AbbJPGoH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Oct 2015 02:44:07 -0400
+X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Oct 2015 02:44:07 EDT
+X-AuditID: 1207440c-f79e16d000002a6e-16-56209b08c72c
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 14.2A.32243.48A90265; Fri, 16 Oct 2015 02:34:44 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 90.60.10862.80B90265; Fri, 16 Oct 2015 02:36:56 -0400 (EDT)
 Received: from [192.168.69.130] (p5DDB262D.dip0.t-ipconnect.de [93.219.38.45])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t9G6Yfao001759
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t9G6asUg001875
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 16 Oct 2015 02:34:42 -0400
+	Fri, 16 Oct 2015 02:36:55 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1444938410-2345-3-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqNsySyHMoPc0s8X8TScYLbqudDNZ
-	NPReYbb4N6HGgcVjwaZSj4uXlD0WPL/P7vF5k1wASxS3TVJiSVlwZnqevl0Cd8anxzeZCt4K
-	VHy9Pp25gXEVbxcjB4eEgInEkWbvLkZOIFNM4sK99WxdjFwcQgKXGSVa3jazQDjnmCRWn9/N
-	BFLFK6Atce31IlYQm0VAVeLpzU42EJtNQFdiUU8zWI2oQJDEiuUvGCHqBSVOznzCAmKLCDhI
-	XN51lBnEZhbwlXjx5DmYLSwQLNG7+xHU5mZGiamr+sAGcQp4SOzfvZcJokFPYsf1X6wQtrxE
-	89bZzBMYBWYh2TELSdksJGULGJlXMcol5pTm6uYmZuYUpybrFicn5uWlFuma6uVmluilppRu
-	YoQEs+AOxhkn5Q4xCnAwKvHwMtgphAmxJpYVV+YeYpTkYFIS5T00CSjEl5SfUpmRWJwRX1Sa
-	k1p8iFGCg1lJhLcrBijHm5JYWZValA+TkuZgURLn5Vui7ickkJ5YkpqdmlqQWgSTleHgUJLg
-	/TgDqFGwKDU9tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFKvxxcBoBUnxAO1tAWnnLS5I
-	zAWKQrSeYlSUEue9AJIQAElklObBjYWlqFeM4kBfCvOWzASq4gGmN7juV0CDmYAG7/kvCzK4
-	JBEhJdXA2JBgPFfw5ZbDi8863U4W7posuXD7P3+r+1XbM09Iri6VPKnvya6wqeGh2N5u25cl
-	B6z+d2v8ntZ02yEwlmXHqQ8zKvzvxqveEPC2XrOr8O82O2ezqkDLR5lPGFdKT/99 
+In-Reply-To: <1444938410-2345-4-git-send-email-dturner@twopensource.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqMsxWyHM4Mt+A4v5m04wWnRd6Way
+	aOi9wmzxb0KNA4vHgk2lHhcvKXsseH6f3ePzJrkAlihum6TEkrLgzPQ8fbsE7oxbH06yF7xi
+	qzj2cStTA+Mm1i5GTg4JAROJryc3skDYYhIX7q1n62Lk4hASuMwoseTFbWYI5xyTxNtryxlB
+	qngFtCX2PlwI1M3BwSKgKvFieRVImE1AV2JRTzMTiC0qECSxYvkLqHJBiZMzn4AtEBFwkLi8
+	6ygziM0s4Cvx4slzMFtYwFtixeJOdhBbSKCZUWL7Xk8Qm1PAQ+LQwW+sEPV6Ejuu/4Ky5SW2
+	v53DPIFRYBaSFbOQlM1CUraAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6hXm5miV5qSukm
+	Rkgo8+xg/LZO5hCjAAejEg8vg51CmBBrYllxZe4hRkkOJiVR3kOTgEJ8SfkplRmJxRnxRaU5
+	qcWHGCU4mJVEeLtigHK8KYmVValF+TApaQ4WJXFe1SXqfkIC6YklqdmpqQWpRTBZGQ4OJQne
+	lzOBGgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBkRpfDIxVkBQP0N5ikHbe4oLE
+	XKAoROspRl2OBT9ur2USYsnLz0uVEuftBCkSACnKKM2DWwFLXK8YxYE+Fub9BFLFA0x6cJNe
+	AS1hAlqy578syJKSRISUVANjqOjzxzumNJ+e9ZPRj/34hMTmGvtZd6YtWBk8WSchYO3mSa0e
+	64oW39h8cIXDkpbpAg7dPy2r3SVTa3Jb52pblkbvi1H/O6Prte0vxfz3eUfuuIlP 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279729>
 
 On 10/15/2015 09:46 PM, David Turner wrote:
-> is_branch was already non-static, but this patch declares it in the
-> header.
-
-The commit message no longer reflects the patch.
-
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  refs.c | 5 +++--
->  refs.h | 2 ++
->  2 files changed, 5 insertions(+), 2 deletions(-)
+> From: Ronnie Sahlberg <sahlberg@google.com>
 > 
-> diff --git a/refs.c b/refs.c
-> index fe71ea0..84abc82 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2816,8 +2816,9 @@ int pack_refs(unsigned int flags)
->  
->  /*
->   * Rewrite the packed-refs file, omitting any refs listed in
-> - * 'refnames'. On error, leave packed-refs unchanged, write an error
-> - * message to 'err', and return a nonzero value.
-> + * 'refnames'. On error, packed-refs will be unchanged, the return
-> + * value is nonzero, and a message about the error is written to the
-> + * 'err' strbuf.
+> Rename refs.c to refs-be-files.c to indicate that this file now
+> holds the implementation for the files based refs backend.
+> A smaller portion of the code in this file is backend agnostic and will
+> be moved to a a new refs.c file that will hold all the common refs code
 
-^^^ ?
+"a" is repeated above.
 
-It is preferable for docstrings to be written in imperative form, so in
-my opinion this is a step backwards...
-
-...literally. Your "new" version comes from an older version of Git; it
-was changed in
-
-    79e4d8a9b8 repack_without_refs(): make function private (2015-06-22)
-
-to the imperative form.
-
-Assuming you are using `git-format-patch` to prepare your patches, it is
-always a good idea to read over the prepared email files before sending
-them to the ML, to check for bloopers like this.
-
->   *
->   * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
->   */
-> diff --git a/refs.h b/refs.h
-> index 7367a7f..8408bef 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -237,6 +237,8 @@ int pack_refs(unsigned int flags);
->  int verify_refname_available(const char *newname, struct string_list *extra,
->  			     struct string_list *skip, struct strbuf *err);
->  
-> +extern int is_branch(const char *refname);
-> +
->  /*
->   * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
->   * REF_NODEREF: act on the ref directly, instead of dereferencing
+> that is shared across all backends.
 > 
+> A second reason for first moving all the code to the new file and then
+> move the backend agnostic code back to refs.c instead of the other way
+> around is because the code that will eventually remain in this new
+> refs-be-files.c file is so entangled that it would then be very
+> difficult to break the split up into small independent patches/chunks.
+> [...]
 
 Michael
 
