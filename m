@@ -1,79 +1,82 @@
-From: Tobias Klauser <tklauser@distanz.ch>
-Subject: Re: [PATCH 2/3] stripspace: Implement --count-lines option
-Date: Fri, 16 Oct 2015 09:21:27 +0200
-Message-ID: <20151016072126.GL11304@distanz.ch>
-References: <1444911524-14504-1-git-send-email-tklauser@distanz.ch>
- <1444911524-14504-3-git-send-email-tklauser@distanz.ch>
- <vpqzizkysyh.fsf@grenoble-inp.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Oct 16 09:21:40 2015
+From: Paul Wise <pabs3@bonedaddy.net>
+Subject: [PATCH] fetch: only show "Fetching remote" when verbose mode is enabled
+Date: Fri, 16 Oct 2015 14:49:32 +0800
+Message-ID: <1444978172-7317-1-git-send-email-pabs3@bonedaddy.net>
+Cc: Paul Wise <pabs3@bonedaddy.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 16 09:23:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmzKZ-0004AU-Vn
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 09:21:36 +0200
+	id 1ZmzMP-000643-Jo
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 09:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753684AbbJPHVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 03:21:31 -0400
-Received: from sym2.noone.org ([178.63.92.236]:57616 "EHLO sym2.noone.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752675AbbJPHVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 03:21:30 -0400
-Received: by sym2.noone.org (Postfix, from userid 1002)
-	id 3ncf6c6Z3hzQWh1; Fri, 16 Oct 2015 09:21:28 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <vpqzizkysyh.fsf@grenoble-inp.fr>
-X-Editor: Vi IMproved 7.3
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753771AbbJPHXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 03:23:25 -0400
+Received: from master.debian.org ([82.195.75.110]:36752 "EHLO
+	master.debian.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753718AbbJPHXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 03:23:22 -0400
+X-Greylist: delayed 1888 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Oct 2015 03:23:22 EDT
+Received: from localhost ([::1] helo=chianamo.localdomain)
+	by master.debian.org with esmtp (Exim 4.84)
+	(envelope-from <pabs3@bonedaddy.net>)
+	id 1Zmyrm-0001Yy-NI; Fri, 16 Oct 2015 06:51:51 +0000
+X-Mailer: git-send-email 2.6.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279735>
 
-On 2015-10-15 at 18:52:54 +0200, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
-> Tobias Klauser <tklauser@distanz.ch> writes:
-> 
-> > --- a/Documentation/git-stripspace.txt
-> > +++ b/Documentation/git-stripspace.txt
-> > @@ -9,7 +9,7 @@ git-stripspace - Remove unnecessary whitespace
-> >  SYNOPSIS
-> >  --------
-> >  [verse]
-> > -'git stripspace' [-s | --strip-comments] < input
-> > +'git stripspace' [-s | --strip-comments] [-C | --count-lines] < input
-> 
-> I'm not sure it's a good idea to introduce a one-letter shortcut (-C).
-> In scripts, --count-lines is self-explanatory hence more readable than
-> -C (which is even more confusing since "git -C foo stripspace" and "git
-> stripspace -C" have totally different meanings. Outside scripts, I'm not
-> sure the command would be useful. I'd rather avoid polluting the
-> one-letter-option namespace.
+By default when fetching one remote nothing is printed unless there
+are changes that need fetching. This makes fetching multiple remotes
+be just as verbose as fetching a single remote.
 
-Ok, I'll drop the -C. Didn't consider the `git -C stripspace' case, so
-that's definitely unwanted.
+This is needed when fetching multiple repositories using the myrepos
+tool in minimal output mode, where myrepos only prints the repository
+names when git fetch prints some output. For example in the output below
+the cgit and git-remote-* lines would be hidden if git fetch were
+silent by default when fetching multiple remotes, since the default
+for myrepos is to fetch all remotes for git repositories.
 
-> > +Use 'git stripspace --count-lines' to obtain:
-> > +
-> > +---------
-> > +|5$
-> > +---------
-> 
-> In the examples above, I read the | as part of the input (unlike $ which
-> is used only to show the end of line). So the | should not be here. I
-> don't think you need the $ either, the --count-lines option is no longer
-> about trailing whitespaces.
+pabs@chianamo ~ $ mr -m fetch
+mr fetch: /home/pabs/cgit
+Fetching origin
 
-Will drop both | and $. Seems I didn't check the output careful enough,
-both don't make sense for this option.
+mr fetch: /home/pabs/git
+Fetching origin
+From https://github.com/git/git
+ - [tag update]      junio-gpg-pub -> junio-gpg-pub
+Fetching hg
+From https://github.com/SRabbelier/git
+ - [tag update]      junio-gpg-pub -> junio-gpg-pub
 
-> > +static const char * const usage_msg[] = {
-> 
-> Stick the * to usage_msg please.
+mr fetch: /home/pabs/git-remote-bzr
+Fetching origin
 
-Will change in v2.
+mr fetch: /home/pabs/git-remote-hg
+Fetching origin
+
+Signed-off-by: Paul Wise <pabs3@bonedaddy.net>
+---
+ builtin/fetch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 9a3869f..fc33667 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1067,7 +1067,7 @@ static int fetch_multiple(struct string_list *list)
+ 	for (i = 0; i < list->nr; i++) {
+ 		const char *name = list->items[i].string;
+ 		argv_array_push(&argv, name);
+-		if (verbosity >= 0)
++		if (verbosity >= 1)
+ 			printf(_("Fetching %s\n"), name);
+ 		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
+ 			error(_("Could not fetch %s"), name);
+-- 
+2.6.1
