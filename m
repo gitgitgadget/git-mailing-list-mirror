@@ -1,97 +1,117 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] Add fetch.recurseSubmoduleParallelism config option
-Date: Fri, 16 Oct 2015 10:04:27 -0700
-Message-ID: <CAGZ79kZDMawq6f3Jet0o-93-vSamy3skji63brdT3puzaLty5Q@mail.gmail.com>
-References: <1444690350-6486-1-git-send-email-sbeller@google.com>
-	<xmqqeggzbrx5.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZuZZivs8czV2P6uHWaU6ay1hG21k-_G9tgN5KbV6jW8w@mail.gmail.com>
-	<xmqqa8rnbq9k.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/4] stripspace: Use parse-options for command-line parsing
+Date: Fri, 16 Oct 2015 10:07:34 -0700
+Message-ID: <xmqqoafyg2sp.fsf@gitster.mtv.corp.google.com>
+References: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
+	<1445008605-16534-3-git-send-email-tklauser@distanz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <jens.lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 19:04:34 2015
+Content-Type: text/plain
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Tobias Klauser <tklauser@distanz.ch>
+X-From: git-owner@vger.kernel.org Fri Oct 16 19:07:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zn8Qj-0008JP-Ms
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 19:04:34 +0200
+	id 1Zn8Tu-0003UB-Ko
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 19:07:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754355AbbJPRE3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 13:04:29 -0400
-Received: from mail-yk0-f182.google.com ([209.85.160.182]:33989 "EHLO
-	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751968AbbJPRE2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 13:04:28 -0400
-Received: by ykfy204 with SMTP id y204so90767902ykf.1
-        for <git@vger.kernel.org>; Fri, 16 Oct 2015 10:04:27 -0700 (PDT)
+	id S1754319AbbJPRHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 13:07:38 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:33704 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753843AbbJPRHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 13:07:36 -0400
+Received: by pabrc13 with SMTP id rc13so125745718pab.0
+        for <git@vger.kernel.org>; Fri, 16 Oct 2015 10:07:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=3fEYecjDkznjVs5KMI8m4pOA1o0VcK0Bbs2EkzvVUJg=;
-        b=nwf+Ivglp+U1UzvCR4rOiizA64KHebVsJmAZgGoGJToqhsqncTrciOxTYvjI5xMRaG
-         x+YL0j4f7mf43f1IHgmMRGKSO7nWOTiOWdbEx9v00mlpeDLpcHjRkiR7wJzZ21EFN3Gi
-         jUPrkIUI9VB3GRgDW89PjunIdFLX5wZ8FI3L/aX0j8BPBf7uv5WezZ7HqOGtCf7MPESh
-         YbGA0r8GSH3pp0TjIiUyiOJjrRmJQPnPJ4BndQNOe2aiSUVDJ7q7HhMHNdBX0Gzas3ho
-         owGzlOc5xid5QFHLYYg3efiK02yvfwGIYo0/aH/4RqAgq2ORc/ILNfQPUd7K8J1h1X9I
-         J6yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=3fEYecjDkznjVs5KMI8m4pOA1o0VcK0Bbs2EkzvVUJg=;
-        b=dUqFSwac9FnU7RBPyet69ZrvkLTKws2G1lhudONGrfIFbxD4x5q/s+iyV6wrzgtgGn
-         SZax1KXs5xYyycNS1pQrN9lcazpDGuh0p0Wrmxpv/RElDrqTdgqCpf8/T8hpiNjNF2tt
-         OL6MDRehUa05cpWzAp5UuOLKqd+fQA40kbWDjj3rh6b4WNgBmQ3YzUjmuhl2V6M7Dz8o
-         HtTofzG87sVdTmNmBqpuCpwilxXwWKrOdETjEIyOTnEyGzS1RotktomBvXCa/vpNrhBJ
-         UlMyzLob6SFNM6kqPHYkuzkACLZVU2Q1RK6m2Oo2JeTNwdcsTdVlr18NA7woMqkZvivm
-         ulrA==
-X-Gm-Message-State: ALoCoQlxi+3KL9Y/iqZ0UqjvbgZdUaqmbxxhPE44hmngBhqpdglYNwqK+jZIkw7ZqRAphZ/DZubj
-X-Received: by 10.129.91.68 with SMTP id p65mr10860506ywb.252.1445015067588;
- Fri, 16 Oct 2015 10:04:27 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Fri, 16 Oct 2015 10:04:27 -0700 (PDT)
-In-Reply-To: <xmqqa8rnbq9k.fsf@gitster.mtv.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=teAJae6A6AbvCHiFuDux42q78+DqIIAaDoacm4XA43o=;
+        b=GgSTYD7xinCRDQwVQx4Heu4kTzKBwG6OLQS7eU1FDW3J8UitYy6BUnr6nVo/MqJC9O
+         TgB8d/pTeOn7nBcTdNJa9TAetLaWNQkuBYckEtyUoHK9DjkPIseja3nWjX7meRxpqtWG
+         NvgB4Iu9jlqG6BWuj1UAKBrSCT+uB3S/jDBrq9rKQuB9WAFw/mH/rxjjWlWX6sogcXQa
+         81RNpwUl0r6iEhcsBnmM0Ke55/SoSQ31SLxzEHBByrSzzJerbh10B5E/6qf4EgWLa7JN
+         CE1QM3JzQBIY/NWQ9VxYag28DseUYudfpVB6e35RV3zpP49Lh1uK11O8ZVOhm5H53Un9
+         w0Kw==
+X-Received: by 10.68.200.167 with SMTP id jt7mr17637298pbc.83.1445015255771;
+        Fri, 16 Oct 2015 10:07:35 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:458e:bb5:8827:32a1])
+        by smtp.gmail.com with ESMTPSA id hq1sm10610278pbb.43.2015.10.16.10.07.35
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 16 Oct 2015 10:07:35 -0700 (PDT)
+In-Reply-To: <1445008605-16534-3-git-send-email-tklauser@distanz.ch> (Tobias
+	Klauser's message of "Fri, 16 Oct 2015 17:16:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279754>
 
-On Mon, Oct 12, 2015 at 4:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Tobias Klauser <tklauser@distanz.ch> writes:
+
+> Use parse-options to parse command-line options instead of a
+> hand-crafted implementation.
 >
->> There is core.preloadIndex to enable parallel index preload, but
->> that is boolean and not giving fine control to the user. We want to give
->> fine control to the user here I'd assume.
->
-> I'd approach this as "fetching multiple submodules at a time", if I
-> were deciding its name.
->
+> This is a preparatory patch to simplify the introduction of the
+> --count-lines option in a follow-up patch.
 
-so maybe
-    fetch.recurseSubmoduleJobs
-    fetch.submoduleJobs
-    fetch.jobs
-    fetch.connectionsToUse
+The second paragraph is probably of much lessor importance than one
+thing you forgot to mention: the users can now use a unique prefix
+of the option and say "stripspace --comment".
 
-Eventually we want to also be parallel in git fetch --all, when using
-the latter two
-we could reuse these then too, no need to support different options for
-fetch --all and fetch --recurseSubmodules.
+> +enum stripspace_mode {
+> +	STRIP_DEFAULT = 0,
+> +	STRIP_COMMENTS,
+> +	COMMENT_LINES
+> +};
+>  
+>  int cmd_stripspace(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct strbuf buf = STRBUF_INIT;
+> -	int strip_comments = 0;
+> -	enum { INVAL = 0, STRIP_SPACE = 1, COMMENT_LINES = 2 } mode = STRIP_SPACE;
+> -
+> -	if (argc == 2) {
+> -		if (!strcmp(argv[1], "-s") ||
+> -		    !strcmp(argv[1], "--strip-comments")) {
+> -			strip_comments = 1;
+> -		} else if (!strcmp(argv[1], "-c") ||
+> -			   !strcmp(argv[1], "--comment-lines")) {
+> -			mode = COMMENT_LINES;
+> -		} else {
+> -			mode = INVAL;
+> -		}
+> -	} else if (argc > 1) {
+> -		mode = INVAL;
+> -	}
+> -
+> -	if (mode == INVAL)
+> -		usage(usage_msg);
 
+When given "git stripspace -s blorg", we used to set mode to INVAL
+and then showed the correct usage.  But we no longer have a check
+that corresponds to the old INVAL thing, do we?  Perhaps check argc
+to detect presence of an otherwise ignored non-option argument
+immediately after parse_options() returns?
 
-> So if you want
->
->     [submodule]
->         fetchParallel = 16
->         updateParallel = 4
+> -	if (strip_comments || mode == COMMENT_LINES)
+> +	enum stripspace_mode mode = STRIP_DEFAULT;
+> +
+> +	const struct option options[] = {
+> +		OPT_CMDMODE('s', "strip-comments", &mode,
+> +			    N_("skip and remove all lines starting with comment character"),
+> +			    STRIP_COMMENTS),
+> +		OPT_CMDMODE('c', "comment-lines", &mode,
+> +			    N_("prepend comment character and blank to each line"),
+> +			    COMMENT_LINES),
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options, stripspace_usage,
+> +			     PARSE_OPT_KEEP_DASHDASH);
 
-So you would have different settings here for only slightly different things?
-So the series I sent out yesterday evening, would make use of updateParallel
-for parallel cloning then instead?
+What is the point of keep-dashdash here?
