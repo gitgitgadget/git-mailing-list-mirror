@@ -1,66 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] stripspace: Implement --count-lines option
-Date: Fri, 16 Oct 2015 10:59:52 +0200
-Message-ID: <vpqwpun89yv.fsf@grenoble-inp.fr>
-References: <1444911524-14504-1-git-send-email-tklauser@distanz.ch>
-	<1444911524-14504-3-git-send-email-tklauser@distanz.ch>
-	<vpqzizkysyh.fsf@grenoble-inp.fr> <20151016084018.GO11304@distanz.ch>
+From: Aleksey Komarov <leeeeha@gmail.com>
+Subject: Re: submodule: allow submodule directory in gitignore
+Date: Fri, 16 Oct 2015 16:33:35 +0700
+Message-ID: <5620C46F.8040007@gmail.com>
+References: <561B5372.7040508@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tobias Klauser <tklauser@distanz.ch>
-X-From: git-owner@vger.kernel.org Fri Oct 16 11:00:36 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 16 11:34:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zn0s7-0003QG-6S
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 11:00:19 +0200
+	id 1Zn1Ok-0003O5-Lj
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 11:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752243AbbJPJAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 05:00:13 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39655 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752044AbbJPJAK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 05:00:10 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t9G8xpp3031404
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 16 Oct 2015 10:59:51 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9G8xq0i002423;
-	Fri, 16 Oct 2015 10:59:52 +0200
-In-Reply-To: <20151016084018.GO11304@distanz.ch> (Tobias Klauser's message of
-	"Fri, 16 Oct 2015 10:40:19 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 16 Oct 2015 10:59:51 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t9G8xpp3031404
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1445590794.99429@UqjmeyzrJz3jkq4Ze3MQpQ
+	id S1754066AbbJPJd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 05:33:57 -0400
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:34721 "EHLO
+	mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753926AbbJPJdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 05:33:55 -0400
+Received: by lfaz124 with SMTP id z124so76881461lfa.1
+        for <git@vger.kernel.org>; Fri, 16 Oct 2015 02:33:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=YjSUzwpklovyDQDpXrU1r7n9TumkZj9nie6rrx7YgQM=;
+        b=HP2M1QppRadN/YIT6VwvNmpqNp7XEqJneGubegg65pke1VRXmPuPvAjK9Dkz1okJcK
+         SoxxoTPXbf+K6Cp38gynz/KaymQ0sUVAo3T+ZmR075QXQp9OxiIRSsy98Ul/HSnXofDy
+         N86i0KHdkMNJIBOoCvDulnjl45rrA+UzS8nZeP9pDVy2Osv+mxSOYzcYpbB6s8l0kVi/
+         sFnH6Mdy2cr7Ws+hgnR76VPKq8EyMnvgL44nw16VbitJEnos3/Tn4pop/MbWc6iBL4O5
+         LQjeLgTUgR5Cq/J7iRq6s7iBPfIVdcKPhQE2dkQIfu+0XO2oSDIEEHuE+LAJp1k4RpWU
+         otHg==
+X-Received: by 10.25.212.2 with SMTP id l2mr4989993lfg.118.1444988034073;
+        Fri, 16 Oct 2015 02:33:54 -0700 (PDT)
+Received: from [127.0.0.1] ([62.213.32.124])
+        by smtp.gmail.com with ESMTPSA id p3sm2739388lfd.42.2015.10.16.02.33.50
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 16 Oct 2015 02:33:53 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <561B5372.7040508@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279741>
 
-Tobias Klauser <tklauser@distanz.ch> writes:
+On 12.10.2015 13:30, Aleksey Komarov wrote:
 
-> On 2015-10-15 at 18:52:54 +0200, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
->> Tobias Klauser <tklauser@distanz.ch> writes:
->> > +static const char * const usage_msg[] = {
->> 
->> Stick the * to usage_msg please.
->
-> Just noticed while looking at how other sub-commands define this, the vast
-> majority use "const char * const" and not "const char const *".
+> Now, I'm trying to add a submodule to my repository, but fail to understand why
+> my .gitignore prevents it from being added. I use the following command to check
+> if my submodule will be ignored or not:
+> 
+> $ git add --dry-run --ignore-missing c/
 
-Oops, I read your code too quickly. We stick the * to variable names
-when it follows the star, but I didn't see the "const", sorry.
+By the way I've just consulted documentation[1].
+Can --ignore-missing option be used for checking not already present
+directories, in addition to ordinary files?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+[1] https://git-scm.com/docs/git-add
