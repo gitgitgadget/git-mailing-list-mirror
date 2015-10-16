@@ -1,66 +1,87 @@
-From: Aleksey Komarov <leeeeha@gmail.com>
-Subject: Re: submodule: allow submodule directory in gitignore
-Date: Fri, 16 Oct 2015 16:33:35 +0700
-Message-ID: <5620C46F.8040007@gmail.com>
-References: <561B5372.7040508@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 16 11:34:12 2015
+From: Tobias Klauser <tklauser@distanz.ch>
+Subject: [PATCH v2 0/4] stripspace: Implement and use --count-lines option
+Date: Fri, 16 Oct 2015 17:16:41 +0200
+Message-ID: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 16 17:16:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zn1Ok-0003O5-Lj
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 11:34:03 +0200
+	id 1Zn6kZ-0002vo-Bs
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 17:16:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754066AbbJPJd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 05:33:57 -0400
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:34721 "EHLO
-	mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753926AbbJPJdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 05:33:55 -0400
-Received: by lfaz124 with SMTP id z124so76881461lfa.1
-        for <git@vger.kernel.org>; Fri, 16 Oct 2015 02:33:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=YjSUzwpklovyDQDpXrU1r7n9TumkZj9nie6rrx7YgQM=;
-        b=HP2M1QppRadN/YIT6VwvNmpqNp7XEqJneGubegg65pke1VRXmPuPvAjK9Dkz1okJcK
-         SoxxoTPXbf+K6Cp38gynz/KaymQ0sUVAo3T+ZmR075QXQp9OxiIRSsy98Ul/HSnXofDy
-         N86i0KHdkMNJIBOoCvDulnjl45rrA+UzS8nZeP9pDVy2Osv+mxSOYzcYpbB6s8l0kVi/
-         sFnH6Mdy2cr7Ws+hgnR76VPKq8EyMnvgL44nw16VbitJEnos3/Tn4pop/MbWc6iBL4O5
-         LQjeLgTUgR5Cq/J7iRq6s7iBPfIVdcKPhQE2dkQIfu+0XO2oSDIEEHuE+LAJp1k4RpWU
-         otHg==
-X-Received: by 10.25.212.2 with SMTP id l2mr4989993lfg.118.1444988034073;
-        Fri, 16 Oct 2015 02:33:54 -0700 (PDT)
-Received: from [127.0.0.1] ([62.213.32.124])
-        by smtp.gmail.com with ESMTPSA id p3sm2739388lfd.42.2015.10.16.02.33.50
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Oct 2015 02:33:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <561B5372.7040508@gmail.com>
+	id S1754323AbbJPPQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 11:16:51 -0400
+Received: from mail.zhinst.com ([212.126.164.98]:36621 "EHLO mail.zhinst.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754250AbbJPPQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 11:16:49 -0400
+Received: from ziws06.zhinst.com ([10.42.0.71])
+	by mail.zhinst.com (Kerio Connect 8.5.2);
+	Fri, 16 Oct 2015 17:16:45 +0200
+X-Mailer: git-send-email 2.6.1.148.g7927db1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279742>
 
-On 12.10.2015 13:30, Aleksey Komarov wrote:
+(1) Move the stripspace() function to the strbuf module adding a prefix
+    and changing all users accordingly. Also introduce a wrapper in case
+    any topic branches still depend on the old name.
 
-> Now, I'm trying to add a submodule to my repository, but fail to understand why
-> my .gitignore prevents it from being added. I use the following command to check
-> if my submodule will be ignored or not:
-> 
-> $ git add --dry-run --ignore-missing c/
+(2) Switch git stripspace to use parse-options in order to simplify
+    introducing new command line options (as in the following patch). In
+    v1 this was folded into patch (3) and is now split out for v2.
 
-By the way I've just consulted documentation[1].
-Can --ignore-missing option be used for checking not already present
-directories, in addition to ordinary files?
+(3) Introduce option --count-lines to git stripspace and add the
+    corresponding documentation and tests.
 
-[1] https://git-scm.com/docs/git-add
+(4) Change git-rebase--interactive.sh to replace commands like:
+
+	git stripspace ... | wc -l
+
+    with:
+
+	git stripspace --count-lines ...
+
+This patch set implements some of the project ideas around git stripspace
+suggested on https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
+
+v1 -> v2:
+
+  - Thanks to Junio and Matthieu for the review.
+  - Split patch 2/3 into two patches: patch 2/4 switches git stripspace
+    to use parse-options and patch 3/4 introduces the new option.
+  - Implement line counting in cmd_stripbuf() instead of (ab-)using
+    strbuf_stripspace() for it.
+  - Drop -C short option
+  - Correct example command output in documentation.
+  - Adjust commit messages to not include links to the wiki, fully
+    describe the motivation in the commit message instead.
+
+Tobias Klauser (4):
+  strbuf: make stripspace() part of strbuf
+  stripspace: Use parse-options for command-line parsing
+  stripspace: Implement --count-lines option
+  git rebase -i: Use newly added --count-lines option for stripspace
+
+ Documentation/git-stripspace.txt |  14 +++-
+ builtin/am.c                     |   2 +-
+ builtin/branch.c                 |   2 +-
+ builtin/commit.c                 |   6 +-
+ builtin/merge.c                  |   2 +-
+ builtin/notes.c                  |   6 +-
+ builtin/stripspace.c             | 137 +++++++++++++--------------------------
+ builtin/tag.c                    |   2 +-
+ git-rebase--interactive.sh       |   6 +-
+ strbuf.c                         |  66 +++++++++++++++++++
+ strbuf.h                         |  11 +++-
+ t/t0030-stripspace.sh            |  36 ++++++++++
+ 12 files changed, 181 insertions(+), 109 deletions(-)
+
+-- 
+2.6.1.148.g7927db1
