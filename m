@@ -1,80 +1,71 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 03/26] refs-be-files.c: rename refs to refs-be-files
-Date: Fri, 16 Oct 2015 08:36:54 +0200
-Message-ID: <56209B06.6000900@alum.mit.edu>
-References: <1444938410-2345-1-git-send-email-dturner@twopensource.com> <1444938410-2345-4-git-send-email-dturner@twopensource.com>
+From: Alexander Riesen <alexander.riesen@cetitec.com>
+Subject: Re: [PATCH] Use the alternates of the source repository for dissociating
+ clone
+Date: Fri, 16 Oct 2015 09:00:57 +0200
+Message-ID: <5620A0A9.5060007@cetitec.com>
+References: <561F8DE9.4040703@cetitec.com> <xmqqbnbzhjym.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 16 08:44:23 2015
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 16 09:01:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmykQ-0007J8-3J
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 08:44:14 +0200
+	id 1Zmz1J-0000kj-FT
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 09:01:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753552AbbJPGoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 02:44:10 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:57206 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753420AbbJPGoH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Oct 2015 02:44:07 -0400
-X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Oct 2015 02:44:07 EDT
-X-AuditID: 1207440c-f79e16d000002a6e-16-56209b08c72c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 90.60.10862.80B90265; Fri, 16 Oct 2015 02:36:56 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB262D.dip0.t-ipconnect.de [93.219.38.45])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id t9G6asUg001875
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 16 Oct 2015 02:36:55 -0400
+	id S1752037AbbJPHBN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 03:01:13 -0400
+Received: from mout.kundenserver.de ([212.227.17.10]:49172 "EHLO
+	mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751371AbbJPHBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 03:01:12 -0400
+Received: from pflsmail.localdomain ([37.123.123.67]) by
+ mrelayeu.kundenserver.de (mreue104) with ESMTPSA (Nemesis) id
+ 0LjbI0-1aOFdO0iWO-00bXWZ; Fri, 16 Oct 2015 09:01:02 +0200
+Received: from localhost (localhost [127.0.0.1])
+	by pflsmail.localdomain (Postfix) with ESMTP id E48F1B016C8;
+	Fri, 16 Oct 2015 09:01:00 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at pflsmail.corp.cetitec.com
+Received: from pflsmail.localdomain ([127.0.0.1])
+	by localhost (pflsmail.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SEs6i8r1Fl6Y; Fri, 16 Oct 2015 09:00:59 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (unknown [10.10.11.230])
+	by pflsmail.localdomain (Postfix) with ESMTPS id 38F46B0167F;
+	Fri, 16 Oct 2015 09:00:59 +0200 (CEST)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1444938410-2345-4-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCKsWRmVeSWpSXmKPExsUixO6iqMsxWyHM4Mt+A4v5m04wWnRd6Way
-	aOi9wmzxb0KNA4vHgk2lHhcvKXsseH6f3ePzJrkAlihum6TEkrLgzPQ8fbsE7oxbH06yF7xi
-	qzj2cStTA+Mm1i5GTg4JAROJryc3skDYYhIX7q1n62Lk4hASuMwoseTFbWYI5xyTxNtryxlB
-	qngFtCX2PlwI1M3BwSKgKvFieRVImE1AV2JRTzMTiC0qECSxYvkLqHJBiZMzn4AtEBFwkLi8
-	6ygziM0s4Cvx4slzMFtYwFtixeJOdhBbSKCZUWL7Xk8Qm1PAQ+LQwW+sEPV6Ejuu/4Ky5SW2
-	v53DPIFRYBaSFbOQlM1CUraAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6hXm5miV5qSukm
-	Rkgo8+xg/LZO5hCjAAejEg8vg51CmBBrYllxZe4hRkkOJiVR3kOTgEJ8SfkplRmJxRnxRaU5
-	qcWHGCU4mJVEeLtigHK8KYmVValF+TApaQ4WJXFe1SXqfkIC6YklqdmpqQWpRTBZGQ4OJQne
-	lzOBGgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBkRpfDIxVkBQP0N5ikHbe4oLE
-	XKAoROspRl2OBT9ur2USYsnLz0uVEuftBCkSACnKKM2DWwFLXK8YxYE+Fub9BFLFA0x6cJNe
-	AS1hAlqy578syJKSRISUVANjqOjzxzumNJ+e9ZPRj/34hMTmGvtZd6YtWBk8WSchYO3mSa0e
-	64oW39h8cIXDkpbpAg7dPy2r3SVTa3Jb52pblkbvi1H/O6Prte0vxfz3eUfuuIlP 
+In-Reply-To: <xmqqbnbzhjym.fsf@gitster.mtv.corp.google.com>
+X-Provags-ID: V03:K0:2UMCzQJUj/Q6/+JhEXjaSdQjtVi+T2NcZ2tqjoYZjdoStEizLmi
+ m/bl9dpzV81O6yr9oTxmztjgVsGUTO0I/kCymG06H0qveJmkW9Gzh4F8jShFPbbue97ywJd
+ ILvyDNUoEhQPMjT9xbzvAYs+2KXZ5YINUPquNduQA7f5ekJjaK5sDbiUqc5OlCExXTlT8Gq
+ fbAdw3SDLxjGY3VqigbpQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QhzjigDoDjU=:T/sc3q2vry+uTokbvz7qp8
+ BNkMLh/OT7YWO88N2QU54q+VNR8YDT6J5WWekyUS/LE4AJs7tw7sWF1isv86fatxQh1hqC3Sm
+ yGZxd1ihoRgfc5FHve1gagVtyBRWPffC6CExbdWsHbxumTqxX0lCfuRnE0QG1c0z+4YfHUGQu
+ UQpp7raDw981iNixDzVSRYAZuLjMMEKd0o7nC7/14+iktlN2ZLXJpzaiOT6LLGZOoZilHMcsM
+ jR92jIEiXZys8TY+QmTIC3M1fkihPedkJ6JagpFFOvkGcSXBrlhbr/lWYjEGxybPHF4jADqUk
+ Q3jSzTXhcK0oKORC9QOOAVgUh8V1eOGcJ0xXi2WSvLPwbXvUrrbn0T9fWRt8bDy8h5sQPYLy/
+ BU1DF3VNQ11859ZauipHMwevHs4H9mERH0ZvbnkY3aO4x/qojYMP0vM8YLJ7/JrRrwnGIJLy0
+ 2c+GhiX4h31eH0zyY+K6Y+okqtLudNJO3Og8wzVh/Dq4CT14MEexEJ5eK3fqhGhPU9/nlbr3k
+ 3oaXQdJ1rjzlbAh3X/ymSZMu8mTwSBpaPBQH4j93HQ+erDwwKri+TLeh0acNtthlMD1FUZKKC
+ zRWI0RD77uwyQBM4/L+P2dzCEd1TkYT7WY4HK3GV3Hz5BTOHFm0Uyg5Cys9T8P9ZUaTADHTu8
+ 6afn1tyasDhCN6CK5qrhJx7FNpjeHaTEcjBUDj8jXYdGCPaXafMC1YAZ8JrOuNl3xGifOPfyN
+ jsv+U5VcYlESisH4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279730>
 
-On 10/15/2015 09:46 PM, David Turner wrote:
-> From: Ronnie Sahlberg <sahlberg@google.com>
-> 
-> Rename refs.c to refs-be-files.c to indicate that this file now
-> holds the implementation for the files based refs backend.
-> A smaller portion of the code in this file is backend agnostic and will
-> be moved to a a new refs.c file that will hold all the common refs code
+Resend. The previous replies didn't make it to git-ml because of html part 
+inserted by gmail.
 
-"a" is repeated above.
-
-> that is shared across all backends.
-> 
-> A second reason for first moving all the code to the new file and then
-> move the backend agnostic code back to refs.c instead of the other way
-> around is because the code that will eventually remain in this new
-> refs-be-files.c file is so entangled that it would then be very
-> difficult to break the split up into small independent patches/chunks.
-> [...]
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+On 10/15/2015 11:59 PM, Junio C Hamano wrote:
+> Are you talking about making a clone of a repository that was
+> created with "clone --reference", to borrow from the same
+> third repository the original is borrowing from?
+Yes. Or the alternates file was created manually in the source repository.
