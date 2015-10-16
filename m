@@ -1,92 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Make "git checkout" automatically update submodules?
-Date: Thu, 15 Oct 2015 16:21:50 -0700
-Message-ID: <xmqq7fmnhg4x.fsf@gitster.mtv.corp.google.com>
-References: <loom.20151016T001449-848@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Kannan Goundan <kannan@cakoose.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 01:22:10 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 02/12] git submodule update: Announce uninitialized modules on stderr
+Date: Thu, 15 Oct 2015 18:52:03 -0700
+Message-ID: <1444960333-16003-3-git-send-email-sbeller@google.com>
+References: <1444960333-16003-1-git-send-email-sbeller@google.com>
+Cc: Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 16 03:52:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZmrqY-0000zW-Vi
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 01:22:07 +0200
+	id 1ZmuC1-000264-D7
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 03:52:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753401AbbJOXVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2015 19:21:55 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:35340 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752429AbbJOXVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2015 19:21:53 -0400
-Received: by pabws5 with SMTP id ws5so3105633pab.2
-        for <git@vger.kernel.org>; Thu, 15 Oct 2015 16:21:52 -0700 (PDT)
+	id S1752332AbbJPBwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2015 21:52:21 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:34161 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752099AbbJPBwT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2015 21:52:19 -0400
+Received: by payp3 with SMTP id p3so56445102pay.1
+        for <git@vger.kernel.org>; Thu, 15 Oct 2015 18:52:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=SCzvN0dIyEGGf9VWDBqsz1K6Aq7w7EZUIrQl1kMD1VM=;
-        b=ytWWuyGm0uueoHnRnbagykSV6dc9uZqoqMic0WKapD2w0inV4Hqf7mhbrp3sUn7bVL
-         0Fh1tsWSX8bUM6YFq4OVnxQ3vjoGizhR8gSQvt5ECPQSqPsg2z7FtlgF24/5352dirdj
-         Dien9hcA/yuhKcxt1ITF2c1B/4fnxrrxoBTq1d79OqUAB4DyPYzXUgMasAo/qST5K6Xt
-         2J3+X/lF19ZN9buFn2sSYU8BPkw9C9YG8ogofZhdXD1lPcZ4AX0+FCWh850yySy1u0Np
-         FaAyZMLlRf683uH5sspflvRMt4IXJh+wFifpgyDJwGnL+Gzu50pAYJCk2VWir3szRc6Q
-         7htA==
-X-Received: by 10.66.139.201 with SMTP id ra9mr12743028pab.153.1444951312286;
-        Thu, 15 Oct 2015 16:21:52 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:458e:bb5:8827:32a1])
-        by smtp.gmail.com with ESMTPSA id eg5sm17526812pac.30.2015.10.15.16.21.51
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=l0gZBY7XYXsyRr+JlP7COBqU3EPTOzQp0gt+IAW3VsM=;
+        b=btEZOXzxX2HVcqG5Lx1PqT9xkRMCqG5mqZTsoeWw4y/RmDKQdUyD2tng6pTIW0tueq
+         NksGExTQoSdDb5lbIZUaLTvkglSYOG7m9b0E6UNJ4YbWgglLjhhkcQYz5PLn+d9+P8R6
+         a/wHB/uUE+5TBts81O3yTDsq59CAC7p2DEdb4ntEskkRwDZ+vVJmKSsG5O8LOfVsUP9r
+         I3F0M/Qw5FzdzYPp+R+6vD3LkJvOcyiaXDt39o8mcJUANijhIluU+LMRSyhf2YPoEiyi
+         s7ASq6+fw0mwdB+0+Vk0HnUOdSzbQz6HA8aQezPiSwm6OqKWYBKd1YXK9SGAmK+lJHwW
+         AUew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=l0gZBY7XYXsyRr+JlP7COBqU3EPTOzQp0gt+IAW3VsM=;
+        b=HGD8SERHCANj03FqCAwDDO/BltipB8IxyvHRF1UYp0gYOwtBpx6FicLm32SV/lz+ZM
+         QaY3SKhQq1uV69J42CCvxMc2wn8X7QnAn9afjM96kXPrnL7nnutsQo19lrSMYiYmTJzl
+         Vm4tBipJRK/q90YYOZVlE5cjlbcOZ34lRHe64dPwK5xrW6BJ4v48BMVyegqTlou+pmxk
+         XQBPA9CwBXZRM60v2+LI/8s7afisJBu1i4KRFoEZO5FrzUE8H/KZurc2cujfXFf39JS/
+         f9O92UWBbPOdhai3MCXceq7AfHA6gXPoBHE2+KOVh56NSnWnY1mAQUP4+XmXfIin4qR5
+         JjGA==
+X-Gm-Message-State: ALoCoQkQimmIZHtsZDQUtvmGC6Kw9inIBdoUlhfb4t4Mdlwin0pd5KC97N1D0m733UKpdZAbnVgD
+X-Received: by 10.67.4.9 with SMTP id ca9mr13372498pad.90.1444960338638;
+        Thu, 15 Oct 2015 18:52:18 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:8909:dd69:53c0:2cb6])
+        by smtp.gmail.com with ESMTPSA id gi4sm17813429pbc.4.2015.10.15.18.52.18
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 15 Oct 2015 16:21:51 -0700 (PDT)
-In-Reply-To: <loom.20151016T001449-848@post.gmane.org> (Kannan Goundan's
-	message of "Thu, 15 Oct 2015 22:50:05 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        Thu, 15 Oct 2015 18:52:18 -0700 (PDT)
+X-Mailer: git-send-email 2.5.0.277.gfdc362b.dirty
+In-Reply-To: <1444960333-16003-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279714>
 
-Kannan Goundan <kannan@cakoose.com> writes:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ git-submodule.sh           |  2 +-
+ t/t7400-submodule-basic.sh | 12 ++++++------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-> Git submodules seem to be a great fit for one of our repos.  The biggest
-> pain point is that it's too easy to forget to update submodules.
-> ...
-> In the common case of the submodule content having no local edits, it would
-> be nice if "git checkout" automatically updated submodules [1].  If there
-> are local edits, it could error out (maybe override with
-> "--ignore-modified-submodules" or something).
->
-> I'm not a Git expert, though.  Is there a reason something like this isn't
-> already implemented?  Maybe there's an existing write-up or mailing list
-> thread I can read to get some background information?
-
-I think it is mostly because the area has a lot of corner cases and
-different workflows.  For example ...
-
-> [1] Our post-checkout procedure is:
->
->     git submodule sync
->     git submodule update --init
->     git submodule foreach --recursive \
->       'git submodule sync ; git submodule update --init'
-
-... this will clearly not work well for everybody, as you do not
-want to instantiate _all_ the submodules _unconditionally_.  Well,
-"you" (Kannan) and your project may want to, but not necessarily
-other large projects (e.g. imagine Android using submodules).
-
-So you can view the current status being "nothing is instantiated by
-default", which _is_ far from satisfactory than the ideal case where
-perhaps the project can specify in .gitmodules which submodules are
-to be instantiated by default, add labels to modules in .gitmodules
-so that "git clone" of a top-level project with submodules can be
-told "git clone --init-submodules=<label>" to instantiate the modules
-that match the given label after the top-level is cloned, etc. etc.
-
-But such a way to allow these more complicated situations to be
-handled nicely has not been designed by anybody, so for now "nothing
-instantiated by default" stands as the safest default.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 578ec48..eea27f8 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -693,7 +693,7 @@ cmd_update()
+ 			# Only mention uninitialized submodules when its
+ 			# path have been specified
+ 			test "$#" != "0" &&
+-			say "$(eval_gettext "Submodule path '\$displaypath' not initialized
++			say >&2 "$(eval_gettext "Submodule path '\$displaypath' not initialized
+ Maybe you want to use 'update --init'?")"
+ 			continue
+ 		fi
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 540771c..32a89b8 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -462,9 +462,9 @@ test_expect_success 'update --init' '
+ 	git config --remove-section submodule.example &&
+ 	test_must_fail git config submodule.example.url &&
+ 
+-	git submodule update init > update.out &&
+-	cat update.out &&
+-	test_i18ngrep "not initialized" update.out &&
++	git submodule update init 2> update.err &&
++	cat update.err &&
++	test_i18ngrep "not initialized" update.err &&
+ 	test_must_fail git rev-parse --resolve-git-dir init/.git &&
+ 
+ 	git submodule update --init init &&
+@@ -480,9 +480,9 @@ test_expect_success 'update --init from subdirectory' '
+ 	mkdir -p sub &&
+ 	(
+ 		cd sub &&
+-		git submodule update ../init >update.out &&
+-		cat update.out &&
+-		test_i18ngrep "not initialized" update.out &&
++		git submodule update ../init 2>update.err &&
++		cat update.err &&
++		test_i18ngrep "not initialized" update.err &&
+ 		test_must_fail git rev-parse --resolve-git-dir ../init/.git &&
+ 
+ 		git submodule update --init ../init
+-- 
+2.5.0.277.gfdc362b.dirty
