@@ -1,109 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pull: add angle brackets to usage string
-Date: Fri, 16 Oct 2015 09:36:47 -0700
-Message-ID: <xmqqwpumg480.fsf@gitster.mtv.corp.google.com>
-References: <1444962133-1266-1-git-send-email-alexhenrie24@gmail.com>
+Subject: Re: [PATCH v2 0/4] stripspace: Implement and use --count-lines option
+Date: Fri, 16 Oct 2015 09:41:31 -0700
+Message-ID: <xmqqsi5ag404.fsf@gitster.mtv.corp.google.com>
+References: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: pyokagan@gmail.com, git@vger.kernel.org
-To: Alex Henrie <alexhenrie24@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 18:36:58 2015
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Tobias Klauser <tklauser@distanz.ch>
+X-From: git-owner@vger.kernel.org Fri Oct 16 18:42:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zn7zz-0003oX-9V
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 18:36:55 +0200
+	id 1Zn84Y-0000SA-3D
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 18:41:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932178AbbJPQgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 12:36:50 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:35108 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754340AbbJPQgt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 12:36:49 -0400
-Received: by padcn9 with SMTP id cn9so10203250pad.2
-        for <git@vger.kernel.org>; Fri, 16 Oct 2015 09:36:49 -0700 (PDT)
+	id S932546AbbJPQlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 12:41:35 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:34149 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932548AbbJPQld (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 12:41:33 -0400
+Received: by pacez2 with SMTP id ez2so9288467pac.1
+        for <git@vger.kernel.org>; Fri, 16 Oct 2015 09:41:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=fErCbLdZgZDpLfdN+/T8iGRUtE4CJkRm6woDj/sMplY=;
-        b=oOITOgELN7INdKxqh8a7phyI3vkvsUm/Di4pDLCwweUlybZEJNWIxBOE7qPfMsrLCy
-         w4MVAkkhzvVUgcAJHx3cxFyk17W+m5/o+kwyu2F10tipmUy1/DNHhoDcjb7wWrrueu6A
-         k6zZTa6O3I1uiew6W/9HXi996XFsIPHEp/fY01Npyg9O3zEjj52JRNpN3ec+GF7zy7Mp
-         46jgpkGC/OAPq7U2HaK5A1AYMz6fqhtKype7cHdbCycPrsdL2tvEct3yd630uR9q85cb
-         g0atGCVfpmuFmOGnnctNJmkNUAoFG2c3Ltgu5Ms+8Uz6eP5gHlNAFtZlhibNKT/hwwdb
-         LcQQ==
-X-Received: by 10.68.92.194 with SMTP id co2mr17714137pbb.147.1445013409161;
-        Fri, 16 Oct 2015 09:36:49 -0700 (PDT)
+        bh=Ng4P/Ngy5eVI7l8fD9lVe3O0Q5Zyp3hIdjLcZj2t1gs=;
+        b=lWtVYS9u6Nt1NcrfSlM4V39iVC/kIbFGRwQPYe5+YNxc21uKFWPT4mzxza4dWPG0nn
+         f/R4nWY12K7Is5e6RYbjTfGVbWoADgSsCnQ2eJ4KLQH1G7GuOFsPWqBO0iwB134rgkQM
+         4UaD6GouEf8CLE0IH7TkgXF5PvmMF0ht+Jjfz8Scf+OqC2RQzdmMzMg0ICndGcBGZfX2
+         +tzWfAdUpS19M6KbiMJbKIf0obr0a9x4pm566/j+HJBYDxA+kc862W52+9cApLXNxsXa
+         dKarWwqgplbaL43chkIcvGVTgOo9n6gfEKXB+wUrYczNFa2AAFx9oF5CnpcCKxp5H4RQ
+         mN7g==
+X-Received: by 10.68.94.99 with SMTP id db3mr17581208pbb.165.1445013692857;
+        Fri, 16 Oct 2015 09:41:32 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:458e:bb5:8827:32a1])
-        by smtp.gmail.com with ESMTPSA id ey17sm22252916pac.26.2015.10.16.09.36.48
+        by smtp.gmail.com with ESMTPSA id es4sm22129213pbc.42.2015.10.16.09.41.32
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 16 Oct 2015 09:36:48 -0700 (PDT)
-In-Reply-To: <1444962133-1266-1-git-send-email-alexhenrie24@gmail.com> (Alex
-	Henrie's message of "Thu, 15 Oct 2015 20:22:13 -0600")
+        Fri, 16 Oct 2015 09:41:32 -0700 (PDT)
+In-Reply-To: <1445008605-16534-1-git-send-email-tklauser@distanz.ch> (Tobias
+	Klauser's message of "Fri, 16 Oct 2015 17:16:41 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279750>
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+Tobias Klauser <tklauser@distanz.ch> writes:
 
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
+Be consistent with the subjects, please.
 
-Makes sense, as all the other <placeholders> in the usage string are
-bracketted.
+>   strbuf: make stripspace() part of strbuf
 
-Does it make sense to do this for contrib/examples, which is the
-historical record, though?  The first one I found with
+s/make/make/ ;-)
 
-    $ less contrib/examples/*
+>   stripspace: Use parse-options for command-line parsing
 
-was this:
+s/Use/use/
 
-    #!/bin/sh
+>   stripspace: Implement --count-lines option
 
-    OPTIONS_KEEPDASHDASH=t
-    OPTIONS_SPEC="\
-    git-checkout [options] [<branch>] [<paths>...]
+s/Implement/implement/
 
-and the next one (clean) follows the same pattern.
+>   git rebase -i: Use newly added --count-lines option for stripspace
 
-I'd discard the part of the patch for contrib/ and queue.
+s/Use/use/
 
-Thanks.
 
->  builtin/pull.c               | 2 +-
->  contrib/examples/git-pull.sh | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index a39bb0a..bf3fd3f 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -66,7 +66,7 @@ static int parse_opt_rebase(const struct option *opt, const char *arg, int unset
->  }
->  
->  static const char * const pull_usage[] = {
-> -	N_("git pull [options] [<repository> [<refspec>...]]"),
-> +	N_("git pull [<options>] [<repository> [<refspec>...]]"),
->  	NULL
->  };
->  
-> diff --git a/contrib/examples/git-pull.sh b/contrib/examples/git-pull.sh
-> index 6b3a03f..bcf362e 100755
-> --- a/contrib/examples/git-pull.sh
-> +++ b/contrib/examples/git-pull.sh
-> @@ -8,7 +8,7 @@ SUBDIRECTORY_OK=Yes
->  OPTIONS_KEEPDASHDASH=
->  OPTIONS_STUCKLONG=Yes
->  OPTIONS_SPEC="\
-> -git pull [options] [<repository> [<refspec>...]]
-> +git pull [<options>] [<repository> [<refspec>...]]
->  
->  Fetch one or more remote refs and integrate it/them with the current HEAD.
->  --
+>  Documentation/git-stripspace.txt |  14 +++-
+>  builtin/am.c                     |   2 +-
+>  builtin/branch.c                 |   2 +-
+>  builtin/commit.c                 |   6 +-
+>  builtin/merge.c                  |   2 +-
+>  builtin/notes.c                  |   6 +-
+>  builtin/stripspace.c             | 137 +++++++++++++--------------------------
+>  builtin/tag.c                    |   2 +-
+>  git-rebase--interactive.sh       |   6 +-
+>  strbuf.c                         |  66 +++++++++++++++++++
+>  strbuf.h                         |  11 +++-
+>  t/t0030-stripspace.sh            |  36 ++++++++++
+>  12 files changed, 181 insertions(+), 109 deletions(-)
