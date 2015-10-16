@@ -1,118 +1,105 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] pull: add angle brackets to usage string
-Date: Fri, 16 Oct 2015 19:24:55 +0200
-Message-ID: <20151016172455.GA18751@ralf-ubuntu>
-References: <1444962133-1266-1-git-send-email-alexhenrie24@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add fetch.recurseSubmoduleParallelism config option
+Date: Fri, 16 Oct 2015 10:26:21 -0700
+Message-ID: <xmqqh9lqg1xe.fsf@gitster.mtv.corp.google.com>
+References: <1444690350-6486-1-git-send-email-sbeller@google.com>
+	<xmqqeggzbrx5.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZuZZivs8czV2P6uHWaU6ay1hG21k-_G9tgN5KbV6jW8w@mail.gmail.com>
+	<xmqqa8rnbq9k.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kZDMawq6f3Jet0o-93-vSamy3skji63brdT3puzaLty5Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pyokagan@gmail.com, git@vger.kernel.org
-To: Alex Henrie <alexhenrie24@gmail.com>, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Oct 16 19:25:11 2015
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Jens Lehmann <jens.lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Oct 16 19:26:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zn8kd-0006lj-LK
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 19:25:08 +0200
+	id 1Zn8lw-0008Na-J9
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 19:26:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752134AbbJPRZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 13:25:00 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:36852 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750756AbbJPRZA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 13:25:00 -0400
-Received: by wicgb1 with SMTP id gb1so18077823wic.1
-        for <git@vger.kernel.org>; Fri, 16 Oct 2015 10:24:59 -0700 (PDT)
+	id S932202AbbJPR0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 13:26:24 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:33906 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932103AbbJPR0X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 13:26:23 -0400
+Received: by pacez2 with SMTP id ez2so10196956pac.1
+        for <git@vger.kernel.org>; Fri, 16 Oct 2015 10:26:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=xes60MTs7aHCCM6qs7a/WybZ3fDIvqAHisnCkpTWvDM=;
-        b=OWvtKn/YVO7W8j2SgerK24Y9PDHLrjUuFW0MVXmfxSDIbj8Q/tlVk87z8mE+BcPr39
-         m6hZKue7MPhkLhkV0O2yFcx6e1dWcrFdEVjCsUNJV2acKsLkBI6/jQj6oX39FuG2wEnQ
-         ZMD671MYqs8PDlc/y+arlRo2DxQxW7eNz5MQJzoSckvpvtIIPyEEYvJTN9QyMu/YoU5P
-         vHmZDiqSxVds6q9EFI3BEUzn33vek5KbvMhkG7ZPTZQGOlrqT1j9IjmQRuoJ6aF8IZ/o
-         pfpa1e9oXYCzMZurNEF0TFn8y/jMpkFVuedQn8yQQjSvD4rMtEIzLvDMxIhZKvIqlHZb
-         8JMQ==
-X-Received: by 10.194.171.3 with SMTP id aq3mr18561515wjc.54.1445016298291;
-        Fri, 16 Oct 2015 10:24:58 -0700 (PDT)
-Received: from localhost (cable-94-139-9-57.cust.telecolumbus.net. [94.139.9.57])
-        by smtp.gmail.com with ESMTPSA id bf8sm23650636wjc.22.2015.10.16.10.24.57
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 16 Oct 2015 10:24:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1444962133-1266-1-git-send-email-alexhenrie24@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=u1aBWipOiZL/gfKatFkvRfjZURXkj+b3+RB9QtM/rbY=;
+        b=rOLlsYgNdqRmCGikHfEorML19y0XQfYH5RNMDh7SHsYu7pPqitG+dPG9wi1vzU/zqv
+         lT/1u1OAoXGt7HQ4RrvsnJgSuINqs4qWRaOSwmtZlCYeP2tt03ECTpWXkxUl27kXDjTc
+         K7znzk4uGsXP212DTTQaz9ErNGj8c6J/0qTQEBXDciwEJUHDVoqslevEVcdDA3xIwQlA
+         FVztTrXeZt9p4NVn1pBmRryV4RBxUyDXsPxt4admZTe0vNlmhlwZo+zKSrHuugPfU1GM
+         Gi9O1kdXh7gItM6fyxcmlPpGea5Z91L9VgiRPkqBiT6Wa8PlLEWWuWBSdTHHyPHmKO43
+         Ywww==
+X-Received: by 10.66.100.166 with SMTP id ez6mr17788725pab.78.1445016383289;
+        Fri, 16 Oct 2015 10:26:23 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:458e:bb5:8827:32a1])
+        by smtp.gmail.com with ESMTPSA id sn9sm22415878pac.16.2015.10.16.10.26.22
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 16 Oct 2015 10:26:22 -0700 (PDT)
+In-Reply-To: <CAGZ79kZDMawq6f3Jet0o-93-vSamy3skji63brdT3puzaLty5Q@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 16 Oct 2015 10:04:27 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279756>
 
-Alex Henrie <alexhenrie24@gmail.com> wrote:
-> ---
->  builtin/pull.c               | 2 +-
->  contrib/examples/git-pull.sh | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index a39bb0a..bf3fd3f 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -66,7 +66,7 @@ static int parse_opt_rebase(const struct option *opt, const char *arg, int unset
->  }
->  
->  static const char * const pull_usage[] = {
-> -	N_("git pull [options] [<repository> [<refspec>...]]"),
-> +	N_("git pull [<options>] [<repository> [<refspec>...]]"),
->  	NULL
->  };
+Stefan Beller <sbeller@google.com> writes:
 
+> so maybe
+>     fetch.recurseSubmoduleJobs
+>     fetch.submoduleJobs
+>     fetch.jobs
+>     fetch.connectionsToUse
 
-There seem to be three more places left missing these angle brances
-at the usage string.
-Junio, feel free to squash this or treat it as a separate patch
-on top, if suitable.
+"git remote update" is another example that may want to run multiple
+independent 'git fetch' in parallel.  I think "When the operation I
+ask involves fetching from multiple places, I want N instances of
+them to be executed", regardless of the kind of operation ("remote
+update" or "submodule update", etc.), would match the end-user's
+point of view the best, if you want to give them "set this single
+thing to apply to all of them" fallback default.
 
--- >8 --
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Date: Fri, 16 Oct 2015 19:09:57 +0200
-Subject: [PATCH] am, credential-cache: add angle brackets to usage string
+If you want to give them a finer-grained control, you would need to
+differentiate what kind of fetch would use N tasks (as opposed to
+other kind of fetch that uses M tasks) and the name would need to
+have "submodule" in it for that differentiation.
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- builtin/am.c       | 4 ++--
- credential-cache.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+>> So if you want
+>>
+>>     [submodule]
+>>         fetchParallel = 16
+>>         updateParallel = 4
+>
+> So you would have different settings here for only slightly different things?
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 4f77e07..98992cd 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2218,8 +2218,8 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 	int in_progress;
- 
- 	const char * const usage[] = {
--		N_("git am [options] [(<mbox>|<Maildir>)...]"),
--		N_("git am [options] (--continue | --skip | --abort)"),
-+		N_("git am [<options>] [(<mbox>|<Maildir>)...]"),
-+		N_("git am [<options>] (--continue | --skip | --abort)"),
- 		NULL
- 	};
- 
-diff --git a/credential-cache.c b/credential-cache.c
-index 8689a15..f4afdc6 100644
---- a/credential-cache.c
-+++ b/credential-cache.c
-@@ -88,7 +88,7 @@ int main(int argc, const char **argv)
- 	int timeout = 900;
- 	const char *op;
- 	const char * const usage[] = {
--		"git credential-cache [options] <action>",
-+		"git credential-cache [<options>] <action>",
- 		NULL
- 	};
- 	struct option options[] = {
--- 
-2.6.1.339.g81d1034
+I was just showing you that it is _possible_ if you want to give
+finer control.  For example, you can define:
+
+ * 'submodule.parallel', if defined gives the values for the
+   following more specific ones if they aren't given.
+
+ * 'submodule.fetchParallel' specifies how many tasks are run in
+   'fetch --recurse-submodules'.
+
+ * 'submodule.fetchParallel' specifies how many tasks are run in
+   'submodule update'.
+
+so that those who want finer controls can, and those who don't can
+set a single one to apply to all.
+
+If you want to start with a globally single setting, that is
+perfectly fine.
