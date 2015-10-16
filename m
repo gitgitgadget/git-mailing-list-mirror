@@ -1,203 +1,125 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] usage: do not insist that standard input must come from a file
-Date: Fri, 16 Oct 2015 15:26:55 -0700
-Message-ID: <xmqqh9lqcuvk.fsf@gitster.mtv.corp.google.com>
-References: <xmqqvba6ekip.fsf@gitster.mtv.corp.google.com>
+Subject: Re: git tag --contains now takes a long time
+Date: Fri, 16 Oct 2015 15:37:17 -0700
+Message-ID: <xmqqd1wecuea.fsf@gitster.mtv.corp.google.com>
+References: <20151016220739.GF17700@cantor.redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 00:27:05 2015
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jerry Snitselaar <jsnitsel@redhat.com>
+X-From: git-owner@vger.kernel.org Sat Oct 17 00:37:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZnDSo-0003A4-Tv
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Oct 2015 00:27:03 +0200
+	id 1ZnDcr-00078A-M5
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Oct 2015 00:37:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751492AbbJPW06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 18:26:58 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:34344 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750817AbbJPW05 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 18:26:57 -0400
-Received: by pabws5 with SMTP id ws5so1751964pab.1
-        for <git@vger.kernel.org>; Fri, 16 Oct 2015 15:26:57 -0700 (PDT)
+	id S1752124AbbJPWhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 18:37:21 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35825 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751877AbbJPWhT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 18:37:19 -0400
+Received: by payp3 with SMTP id p3so1210903pay.2
+        for <git@vger.kernel.org>; Fri, 16 Oct 2015 15:37:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=Y476r4U6GaW834WJj3MAOKvBjgaQGSEgh6oENkU7oos=;
-        b=vHohovfwFymMBQl7zzKsMvjYWWZZSVru2v9nOU4NCZfazbPguoVTQQkM6mZrZ2lBpT
-         VWJT4PPjLR1MJyxtcaEXpt6mLUkStiBwzRQ12zrc9vE87LWC9+0l9TheMnz5WOtffjkr
-         qxXv4DcGRiUVWxuBKiA/XIv49JGASzPwATjQAK5dr0V8ZtJXMKM/pWAsMyfzXChPZKgN
-         uSS6H74OCHOdq13KHIDNQZUxdu2OzPjI3rDYYsNHMRHuAwNzqp3HX4NB/3aD+jyyAIv/
-         sQ+WTDLcmIXFDt373ObrbBhHKj2zLtCFJMmcPInkdDtBXXx5w14IUaMipcHIGY1R15w4
-         tU5A==
-X-Received: by 10.68.93.133 with SMTP id cu5mr19393654pbb.71.1445034416935;
-        Fri, 16 Oct 2015 15:26:56 -0700 (PDT)
+        bh=Z6F4wTIc/QWv5pUYc2queOiHdQcYGrBE8H6IwpPORnQ=;
+        b=rwlQHBIVjtx8eyPk1N45A8fkdvSHlw81rsVbE/50EmGnLW385GuJS8Wzxo2SBkaR5q
+         6MJwvrXEietbrFqrJqlvVzeherfDWyiu5vOng3cyme8A3D00ioOzh2yqEEqN9hc9y8DM
+         8gNFMZSHHfybmIbCof6KU5jFt4JD9iZ/W9z3hVYg4eJAou8enOVqZ6AFYfTto1uIo48x
+         /4RE3s5V9h3KU0GLafjMNZ5GpcqmTsEv8KjJLF5L5c2dcL6SBOHpDqncB49t75ZFQH+z
+         bg6vgUPiehsLm7n39eLilTkeyqBYaEFxZK+JZsNeByxcupcOA4rMaHeg6J81dcuxObfQ
+         l+uQ==
+X-Received: by 10.68.201.168 with SMTP id kb8mr19201139pbc.95.1445035039033;
+        Fri, 16 Oct 2015 15:37:19 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:b1ee:7c8f:ac32:e39f])
-        by smtp.gmail.com with ESMTPSA id dk2sm23034258pbd.57.2015.10.16.15.26.56
+        by smtp.gmail.com with ESMTPSA id dg2sm23079041pbb.9.2015.10.16.15.37.18
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 16 Oct 2015 15:26:56 -0700 (PDT)
-In-Reply-To: <xmqqvba6ekip.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 16 Oct 2015 11:27:42 -0700")
+        Fri, 16 Oct 2015 15:37:18 -0700 (PDT)
+In-Reply-To: <20151016220739.GF17700@cantor.redhat.com> (Jerry Snitselaar's
+	message of "Fri, 16 Oct 2015 15:07:39 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279776>
 
-Here is what I prepared based on your review in an interdiff form.
-A few points to note:
+Jerry Snitselaar <jsnitsel@redhat.com> writes:
 
- * Stole the "fmt-merge-msg" example verbatim ;-)
+> Is this known and being looked into? I've seen a jump from 12 seconds
+> to over 9 minutes with running git tag --contains on my kernel repo.
 
- * The description of "show-ref --exclude" mode should be much
-   clearer now.
+Thanks for a report.  Yes, it seems that there is a recent
+regression on the 'master' branch, not yet in any released version,
+and we can observe with a much smaller repository X-<.  E.g.
 
-Thanks.
+    git tag --contains v2.5.0~12
 
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index 07aacf2..aa3b2bf 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -28,7 +28,8 @@ OPTIONS
- 	Consider `.gitattributes` in the index only, ignoring the working tree.
- 
- --stdin::
--	Read pathnames from stdin instead of from the command-line.
-+	Read pathnames from the standard input, one per line,
-+	instead of from the command-line.
- 
- -z::
- 	The output format is modified to be machine-parseable.
-diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-index 149b166..59531ab 100644
---- a/Documentation/git-check-ignore.txt
-+++ b/Documentation/git-check-ignore.txt
-@@ -35,7 +35,8 @@ OPTIONS
- 	for each given pathname.
- 
- --stdin::
--	Read file names from stdin instead of from the command-line.
-+	Read pathnames from the standard input, one per line,
-+	instead of from the command-line.
- 
- -z::
- 	The output format is modified to be machine-parseable (see
-diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
-index 9be6df3..6526b17 100644
---- a/Documentation/git-fmt-merge-msg.txt
-+++ b/Documentation/git-fmt-merge-msg.txt
-@@ -57,6 +57,18 @@ merge.summary::
- 	Synonym to `merge.log`; this is deprecated and will be removed in
- 	the future.
- 
-+EXAMPLE
-+-------
-+
-+--
-+$ git fetch origin master
-+$ git fmt-merge-msg --log <$GIT_DIR/FETCH_HEAD
-+--
-+
-+Print a log message describing a merge of the "master" branch from
-+the "origin" remote.
-+
-+
- SEE ALSO
- --------
- linkgit:git-merge[1]
-diff --git a/Documentation/git-get-tar-commit-id.txt b/Documentation/git-get-tar-commit-id.txt
-index 51804b0..ac44d85 100644
---- a/Documentation/git-get-tar-commit-id.txt
-+++ b/Documentation/git-get-tar-commit-id.txt
-@@ -15,10 +15,10 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 
--Read an archive created by 'git archive' from the standard input and
--extracts the commit ID stored in it.  It reads only the first 1024
--bytes of input, thus its runtime is not influenced by the size of
--the archive very much.
-+Read a tar archive created by 'git archive' from the standard input
-+and extract the commit ID stored in it.  It reads only the first
-+1024 bytes of input, thus its runtime is not influenced by the size
-+of the tar archive very much.
- 
- If no commit ID is found, 'git get-tar-commit-id' quietly exists with a
- return code of 1.  This can happen if the archive had not been created
-diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
-index 45e5ece..814e744 100644
---- a/Documentation/git-hash-object.txt
-+++ b/Documentation/git-hash-object.txt
-@@ -35,7 +35,8 @@ OPTIONS
- 	Read the object from standard input instead of from a file.
- 
- --stdin-paths::
--	Read file names from stdin instead of from the command-line.
-+	Read file names from the standard input, one per line, instead
-+	of from the command-line.
- 
- --path::
- 	Hash object as it were located at the given path. The location of
-diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
-index f4cc202..fa6a756 100644
---- a/Documentation/git-mktag.txt
-+++ b/Documentation/git-mktag.txt
-@@ -20,8 +20,8 @@ The output is the new tag's <object> identifier.
- 
- Tag Format
- ----------
--A tag signature file, to be fed from the standard input, has a
--very simple fixed format: four lines of
-+A tag signature file, to be fed to this command's standard input,
-+has a very simple fixed format: four lines of
- 
-   object <sha1>
-   type <typename>
-diff --git a/Documentation/git-patch-id.txt b/Documentation/git-patch-id.txt
-index 7816479..cf71fba 100644
---- a/Documentation/git-patch-id.txt
-+++ b/Documentation/git-patch-id.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Read a patch from the standard input, and compute the patch ID for it.
-+Read a patch from the standard input and compute the patch ID for it.
- 
- A "patch ID" is nothing but a sum of SHA-1 of the file diffs associated with a
- patch, with whitespace and line numbers ignored.  As such, it's "reasonably
-diff --git a/Documentation/git-show-index.txt b/Documentation/git-show-index.txt
-index b3e7488..a8a9509 100644
---- a/Documentation/git-show-index.txt
-+++ b/Documentation/git-show-index.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Read an idx file for packed Git archive created with
-+Read the idx file for a Git packfile created with
- 'git pack-objects' command from the standard input, and
- dump its contents.
- 
-diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
-index 2c08b08..7b74340 100644
---- a/Documentation/git-show-ref.txt
-+++ b/Documentation/git-show-ref.txt
-@@ -23,8 +23,9 @@ particular ref exists.
- 
- By default, shows the tags, heads, and remote refs.
- 
--The --exclude-existing form is a filter that does the inverse, it shows the
--refs from stdin that don't exist in the local repository.
-+The --exclude-existing form is a filter that does the inverse.  It reads
-+refs from stdin, one ref per line, and shows those that don't exist in
-+the local repository.
- 
- Use of this utility is encouraged in favor of directly accessing files under
- the `.git` directory.
+in git itself seems to have got 10 times slower.
+
+
+> snits ~/dev/linux> git --version
+> git version 2.6.1.145.gb27dacc
+>
+> snits ~/dev/linux> time git tag --contains 825fcfc
+> next-20151012
+> next-20151013
+> v4.3-rc5
+>
+> real	9m4.765s
+> user	8m56.157s
+> sys	0m2.450s
+>
+>
+>
+> snits ~/dev/linux> git --version
+> git version 2.5.0.275.gac4cc86
+>
+> snits ~/dev/linux> time git tag --contains 825fcfc
+> next-20151012
+> next-20151013
+> v4.3-rc5
+>
+> real	0m12.842s
+> user	0m11.536s
+> sys	0m1.098s
+>
+>
+>
+> b7cc53e92c806b73e14b03f60c17b7c29e52b4a4 is the first bad commit
+> commit b7cc53e92c806b73e14b03f60c17b7c29e52b4a4
+> Author: Karthik Nayak <karthik.188@gmail.com>
+> Date:   Fri Sep 11 20:36:16 2015 +0530
+>
+>    tag.c: use 'ref-filter' APIs
+>
+>    Make 'tag.c' use 'ref-filter' APIs for iterating through refs, sorting
+>    and printing of refs. This removes most of the code used in 'tag.c'
+>    replacing it with calls to the 'ref-filter' library.
+>
+>    Make 'tag.c' use the 'filter_refs()' function provided by 'ref-filter'
+>    to filter out tags based on the options set.
+>
+>    For printing tags we use 'show_ref_array_item()' function provided by
+>    'ref-filter'.
+>
+>    We improve the sorting option provided by 'tag.c' by using the sorting
+>    options provided by 'ref-filter'. This causes the test 'invalid sort
+>    parameter on command line' in t7004 to fail, as 'ref-filter' throws an
+>    error for all sorting fields which are incorrect. The test is changed
+>    to reflect the same.
+>
+>    Modify documentation for the same.
+>
+>    Mentored-by: Christian Couder <christian.couder@gmail.com>
+>    Mentored-by: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+>    Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>    Signed-off-by: Junio C Hamano <gitster@pobox.com>
