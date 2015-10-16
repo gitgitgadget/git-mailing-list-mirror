@@ -1,71 +1,66 @@
-From: Tobias Klauser <tklauser@distanz.ch>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH 2/3] stripspace: Implement --count-lines option
-Date: Fri, 16 Oct 2015 10:40:19 +0200
-Message-ID: <20151016084018.GO11304@distanz.ch>
+Date: Fri, 16 Oct 2015 10:59:52 +0200
+Message-ID: <vpqwpun89yv.fsf@grenoble-inp.fr>
 References: <1444911524-14504-1-git-send-email-tklauser@distanz.ch>
- <1444911524-14504-3-git-send-email-tklauser@distanz.ch>
- <vpqzizkysyh.fsf@grenoble-inp.fr>
+	<1444911524-14504-3-git-send-email-tklauser@distanz.ch>
+	<vpqzizkysyh.fsf@grenoble-inp.fr> <20151016084018.GO11304@distanz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Oct 16 10:40:38 2015
+To: Tobias Klauser <tklauser@distanz.ch>
+X-From: git-owner@vger.kernel.org Fri Oct 16 11:00:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zn0Z0-0000ML-5a
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 10:40:34 +0200
+	id 1Zn0s7-0003QG-6S
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 11:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754076AbbJPIkY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Oct 2015 04:40:24 -0400
-Received: from sym2.noone.org ([178.63.92.236]:36596 "EHLO sym2.noone.org"
+	id S1752243AbbJPJAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 05:00:13 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39655 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752771AbbJPIkX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 04:40:23 -0400
-Received: by sym2.noone.org (Postfix, from userid 1002)
-	id 3ncgsc4KMWzQWh1; Fri, 16 Oct 2015 10:40:20 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <vpqzizkysyh.fsf@grenoble-inp.fr>
-X-Editor: Vi IMproved 7.3
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752044AbbJPJAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 05:00:10 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t9G8xpp3031404
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 16 Oct 2015 10:59:51 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9G8xq0i002423;
+	Fri, 16 Oct 2015 10:59:52 +0200
+In-Reply-To: <20151016084018.GO11304@distanz.ch> (Tobias Klauser's message of
+	"Fri, 16 Oct 2015 10:40:19 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 16 Oct 2015 10:59:51 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t9G8xpp3031404
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1445590794.99429@UqjmeyzrJz3jkq4Ze3MQpQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279740>
 
-On 2015-10-15 at 18:52:54 +0200, Matthieu Moy <Matthieu.Moy@grenoble-in=
-p.fr> wrote:
-> Tobias Klauser <tklauser@distanz.ch> writes:
-> > +static const char * const usage_msg[] =3D {
->=20
-> Stick the * to usage_msg please.
+Tobias Klauser <tklauser@distanz.ch> writes:
 
-Just noticed while looking at how other sub-commands define this, the v=
-ast
-majority use "const char * const" and not "const char const *".
+> On 2015-10-15 at 18:52:54 +0200, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Tobias Klauser <tklauser@distanz.ch> writes:
+>> > +static const char * const usage_msg[] = {
+>> 
+>> Stick the * to usage_msg please.
+>
+> Just noticed while looking at how other sub-commands define this, the vast
+> majority use "const char * const" and not "const char const *".
 
-Also it would change the meaning. The following wouldn't produce a
-compiler warning:
+Oops, I read your code too quickly. We stick the * to variable names
+when it follows the star, but I didn't see the "const", sorry.
 
-	static const char const *usage_msg[] =3D { ... };
-	...
-	usage_msg[0] =3D "Foobar"
-
-while
-
-	static const char * const usage_msg[] =3D { ... };
-	...
-	usage_msg[0] =3D "Foobar"
-
-would produce one:
-
-	builtin/stripspace.c:36:2: error: assignment of read-only location =E2=
-=80=98usage_msg[0]=E2=80=99
-
-Even though I don't expect anyone to modify usage_msg at runtime I thin=
-k
-it'd be better to stick with the current version.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
