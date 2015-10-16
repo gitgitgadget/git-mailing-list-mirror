@@ -1,60 +1,73 @@
-From: Alex Henrie <alexhenrie24@gmail.com>
-Subject: Re: [PATCH] pull: add angle brackets to usage string
-Date: Fri, 16 Oct 2015 10:42:45 -0600
-Message-ID: <CAMMLpeQPngq-xM2vN4uX6+k5-uoOXyP3p0wgLO9LOkWxWtZBEA@mail.gmail.com>
-References: <1444962133-1266-1-git-send-email-alexhenrie24@gmail.com> <xmqqwpumg480.fsf@gitster.mtv.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 0/4] stripspace: Implement and use --count-lines option
+Date: Fri, 16 Oct 2015 18:54:45 +0200
+Message-ID: <vpqsi5a69ey.fsf@grenoble-inp.fr>
+References: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Paul Tan <pyokagan@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 18:43:18 2015
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tobias Klauser <tklauser@distanz.ch>
+X-From: git-owner@vger.kernel.org Fri Oct 16 18:55:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zn864-00028o-4m
-	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 18:43:12 +0200
+	id 1Zn8He-0006d7-2m
+	for gcvg-git-2@plane.gmane.org; Fri, 16 Oct 2015 18:55:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033AbbJPQnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2015 12:43:07 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:38242 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752134AbbJPQnG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2015 12:43:06 -0400
-Received: by wicll6 with SMTP id ll6so19643772wic.1
-        for <git@vger.kernel.org>; Fri, 16 Oct 2015 09:43:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=cVSbotT++c96SmK+huV6NwcEyHVYSu1SoHk3k++ZVss=;
-        b=LLChIELQoF99t5ibEed0TnrVA+bhaszD3Prmu0AmUH7BuNMmsZD9u/HuFQeXNcRgBi
-         e7y8xryf+DOEMwVar/XMrvwnYNVHQtslRTh6X+GzFdYnacx8qBQHiN0/nqQ9LUgfQGIs
-         aBZ6MCWqHz7Yg45gRwE3STlig/qQReb6eJWFofc/YCWnjvVKmu0QCH1+Jd4++LgChkD/
-         M0siiilRQ5vZUiEzc3IBHXy781h9C2mgCd3nCBDcvXbsFtZJLjwrPxAbALuuo5Ji6yvF
-         MTox+K0m5h8NyArZf5LPjqe+qO95gHmfk6hkOdfBvz8arTVO9TkxeqRLxHMqqmUHa+/8
-         ahZA==
-X-Received: by 10.194.123.193 with SMTP id mc1mr18316132wjb.154.1445013784759;
- Fri, 16 Oct 2015 09:43:04 -0700 (PDT)
-Received: by 10.28.16.211 with HTTP; Fri, 16 Oct 2015 09:42:45 -0700 (PDT)
-In-Reply-To: <xmqqwpumg480.fsf@gitster.mtv.corp.google.com>
+	id S932665AbbJPQzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2015 12:55:03 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:57597 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932101AbbJPQzA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2015 12:55:00 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t9GGsiiP021099
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 16 Oct 2015 18:54:44 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9GGsj2n014136;
+	Fri, 16 Oct 2015 18:54:45 +0200
+In-Reply-To: <1445008605-16534-1-git-send-email-tklauser@distanz.ch> (Tobias
+	Klauser's message of "Fri, 16 Oct 2015 17:16:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 16 Oct 2015 18:54:44 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t9GGsiiP021099
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1445619285.99974@UiYVcy0kJnXPO59qdVRYqw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279752>
 
-2015-10-16 10:36 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
-> Makes sense, as all the other <placeholders> in the usage string are
-> bracketted.
->
-> Does it make sense to do this for contrib/examples, which is the
-> historical record, though?
+Tobias Klauser <tklauser@distanz.ch> writes:
 
-I didn't know that contrib/examples was a historical record. The last
-patch I submitted, b7447679e84ed973430ab19fce87f56857b83068, also
-modified contrib/examples.
+>   - Split patch 2/3 into two patches: patch 2/4 switches git stripspace
+>     to use parse-options and patch 3/4 introduces the new option.
 
--Alex
+Much better now.
+
+>   - Implement line counting in cmd_stripbuf() instead of (ab-)using
+>     strbuf_stripspace() for it.
+
+Also short and sweet, I like it.
+
+>   - Drop -C short option
+>   - Correct example command output in documentation.
+>   - Adjust commit messages to not include links to the wiki, fully
+>     describe the motivation in the commit message instead.
+
+Good.
+
+I read the patches again, and the whole series is now
+
+Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
