@@ -1,68 +1,89 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [GIT PULL] l10n updates for 2.6 maint branch
-Date: Sat, 17 Oct 2015 20:24:14 +0800
-Message-ID: <CANYiYbHj5+X+FDsG9mcS5zY=4yRd4CHBe5im7u4oeXFDBj5euQ@mail.gmail.com>
+Subject: Re: submodule: allow submodule directory in gitignore
+Date: Sat, 17 Oct 2015 20:46:51 +0800
+Message-ID: <CANYiYbHNX+j6BPahWdGQ2qVbvBV-wd-Bi=ZjDmRfbXCsboNXpg@mail.gmail.com>
+References: <561B5372.7040508@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 14:24:23 2015
+Cc: Git List <git@vger.kernel.org>
+To: Aleksey Komarov <leeeeha@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 17 14:46:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZnQX7-0004zM-8V
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Oct 2015 14:24:21 +0200
+	id 1ZnQsz-0007nN-VW
+	for gcvg-git-2@plane.gmane.org; Sat, 17 Oct 2015 14:46:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752485AbbJQMYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Oct 2015 08:24:16 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:36403 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752073AbbJQMYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Oct 2015 08:24:15 -0400
-Received: by wicgb1 with SMTP id gb1so39176377wic.1
-        for <git@vger.kernel.org>; Sat, 17 Oct 2015 05:24:14 -0700 (PDT)
+	id S1752120AbbJQMqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Oct 2015 08:46:53 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:32998 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752073AbbJQMqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Oct 2015 08:46:52 -0400
+Received: by wijp11 with SMTP id p11so42787207wij.0
+        for <git@vger.kernel.org>; Sat, 17 Oct 2015 05:46:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=OXVJ+Sbt+6i5+DmZJQFnGnGX71eJgZi1mt0rN1sPuMU=;
-        b=V8MYZHTigr+WzJyuCE99wqnz1uXLxuM2POxR3Jzjb6fuD5OZzy8kmVotSf9Y13AI61
-         sdXg0HAvBz8fMNLGCaEaOnI57nHv8b96dsclffSWPWy7Bs0RQlDCVRpSiJvcA1JgjJGs
-         +v6tUvdlG/OridZ7FUMa5SiXT04Q7OkLtwqMf0Q3OLajPDdt7kg1SVBF1+B2/NVegHu3
-         bhOJQNnC/gFwi7KQL3JBgFq5vDSGtYDu3JqtfRwnnZ19q6AZMbFFhkiq39vdQQnTT6DJ
-         +Z7KqvMoLmVSWtSePXNSmY1QjzAMRjjg87i5Iv+p5Vp3kcsBDkNUtLZwCwsph0UcOYu8
-         UUnw==
-X-Received: by 10.180.182.107 with SMTP id ed11mr10417643wic.52.1445084654523;
- Sat, 17 Oct 2015 05:24:14 -0700 (PDT)
-Received: by 10.194.246.193 with HTTP; Sat, 17 Oct 2015 05:24:14 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=xFXZiRuo/FWclFwfTCj+esyn7IjAmrJy0J8xoR+25Mg=;
+        b=xoblt92IVCPWqa+Z+8ns7Toll30yOXWRWIoDWnwmdhOZ3+/0yspmYBVyAqsy+a5vbf
+         3SpXYcINMzMuqk1vrbivrlaeLcXOdY70umycQbZDAenEJx6Wl7f8dGMpKP9kIRddsYu8
+         /fFY0bHCtQtO7aKFqxThsNi9FiopeAi/Dx5YcLdtkXs2z6GNo3anuqGQRhPjT7xKchmb
+         ffhFSlYunsnXkpR4G1AD8J+WJWTWzrWwUIuXwRlAahNfXOwVKuuUtHJdCLzqC9eI/bcP
+         Lbl7uOU0H4yhAR6qxlyss4FBTLb/n2tOesM13pIIWhptISvMYx5VvELmiZbPMZ8s4DpJ
+         8rcQ==
+X-Received: by 10.195.12.164 with SMTP id er4mr23174855wjd.9.1445086011451;
+ Sat, 17 Oct 2015 05:46:51 -0700 (PDT)
+Received: by 10.194.246.193 with HTTP; Sat, 17 Oct 2015 05:46:51 -0700 (PDT)
+In-Reply-To: <561B5372.7040508@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279788>
 
-Hi Junio,
+2015-10-12 14:30 GMT+08:00 Aleksey Komarov <leeeeha@gmail.com>:
+> Hi all!
+>
+> I'm sorry if the letter came twice. I have troubles with my post client.
+>
+> I want to organize my repository so its submodules would be located at the root
+> of repository. I'm trying to create .gitignore to ignore all files and don't
+> ignore directories at the same time:
+>
+> $ cat .gitignore
+> *
+> !*/
+>
+> Now, I'm trying to add a submodule to my repository, but fail to understand why
+> my .gitignore prevents it from being added. I use the following command to check
+> if my submodule will be ignored or not:
+>
+> $ git add --dry-run --ignore-missing c/
+>
+> I have noticed that result of this check is different when directory c/ already
+> exists and when it still doesn't by the time of the check.
+> The described behavior is illustrated by the following example:
+>
+> $ mkdir git_test
+> $ cd git_test
+> $ git init
+> Initialized empty Git repository in D:/temp/git_test/.git/
+> $ echo \* >> .gitignore
+> $ echo \!\*\/ >> .gitignore
+> $ git add --dry-run --ignore-missing c/
+> The following paths are ignored by one of your .gitignore files:
+> c/
+> Use -f if you really want to add them.
+> $ mkdir c
+> $ git add --dry-run --ignore-missing c/
+> $
+>
 
-Please pull the following into the maint branch.  It includes l10n
-updates in Russian which missed the update window for 2.6.
+To check how an entry (c/) is affected by .gitignore in different cases,
+you can try this command:
 
-The following changes since commit 8d530c4d64ffcc853889f7b385f554d53db375ed:
-
-  Git 2.6-rc3 (2015-09-21 13:26:13 -0700)
-
-are available in the git repository at:
-
-  git://github.com/git-l10n/git-po maint
-
-for you to fetch changes up to 82aa9b751fe96c5e55c36819aedea3d47e98bb57:
-
-  l10n: ru.po: update Russian translation (2015-09-30 18:01:23 +0300)
-
-----------------------------------------------------------------
-Dimitriy Ryazantcev (1):
-      l10n: ru.po: update Russian translation
-
- po/ru.po | 3550 ++++++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 1967 insertions(+), 1583 deletions(-)
+    $ git check-ignore -v c/
