@@ -1,85 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git tag --contains now takes a long time
-Date: Sat, 17 Oct 2015 14:28:44 -0700
-Message-ID: <xmqq1tctchgz.fsf@gitster.mtv.corp.google.com>
-References: <20151016220739.GF17700@cantor.redhat.com>
-	<CAOLa=ZTDd3MSmqXArtNz8i5n=uj2NEB6UPk2jSnEhUsAqbr7nQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 3/4] stripspace: Implement --count-lines option
+Date: Sat, 17 Oct 2015 19:57:57 -0400
+Message-ID: <CAPig+cQ=8FO8yFY4sHUwr0mYuyvMu4d-eizHZeadE9f0BgpXpQ@mail.gmail.com>
+References: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
+	<1445008605-16534-4-git-send-email-tklauser@distanz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jerry Snitselaar <jsnitsel@redhat.com>, Git <git@vger.kernel.org>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 23:28:51 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git List <git@vger.kernel.org>
+To: Tobias Klauser <tklauser@distanz.ch>
+X-From: git-owner@vger.kernel.org Sun Oct 18 01:58:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZnZ22-0003DE-Q7
-	for gcvg-git-2@plane.gmane.org; Sat, 17 Oct 2015 23:28:51 +0200
+	id 1ZnbMh-0000cY-54
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Oct 2015 01:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751401AbbJQV2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Oct 2015 17:28:47 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:33565 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959AbbJQV2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Oct 2015 17:28:46 -0400
-Received: by pabrc13 with SMTP id rc13so152182759pab.0
-        for <git@vger.kernel.org>; Sat, 17 Oct 2015 14:28:46 -0700 (PDT)
+	id S1751642AbbJQX57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Oct 2015 19:57:59 -0400
+Received: from mail-vk0-f67.google.com ([209.85.213.67]:32820 "EHLO
+	mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751268AbbJQX56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Oct 2015 19:57:58 -0400
+Received: by vkaw128 with SMTP id w128so7582360vka.0
+        for <git@vger.kernel.org>; Sat, 17 Oct 2015 16:57:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=EMmLv89hEIZtTiAQ+WQCz9NgZ1huf9nmHUB9uE//tOM=;
-        b=V2nw49AKwStQyo+AreNn1yEVw5nFKgg+RuTENvTyTyxtl42klPsiAJtdwmPw8bw42a
-         fZ2fOgIGKnZWZ4HnAyYaj2Zagd+2lM5L5676xMmLLGsrR+1khMbOsUrT4w/sPxTkf1k2
-         j1ZPrxsmJTNhrUbJ8SL+iKc+kH5pA3iksY8uDPRkKUV9bNbEXYLOvZASAPehQVjorj+6
-         JVYfKUGIfvDNjiMiuYax9cdFNof1Bpp3dH8K2EJ88XzIAjugL2GkX+xBcMwQbgApslOQ
-         0rbfpPGsoZCp4xhU4yXbcVHGIPPkyJ+1jg7bS9MSK4KgjU3L9kPKR0qn2wBmYLvpzE8E
-         ikJw==
-X-Received: by 10.66.62.198 with SMTP id a6mr7894770pas.42.1445117326122;
-        Sat, 17 Oct 2015 14:28:46 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:305b:5af5:2c51:11cd])
-        by smtp.gmail.com with ESMTPSA id ey17sm28478379pac.26.2015.10.17.14.28.45
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 17 Oct 2015 14:28:45 -0700 (PDT)
-In-Reply-To: <CAOLa=ZTDd3MSmqXArtNz8i5n=uj2NEB6UPk2jSnEhUsAqbr7nQ@mail.gmail.com>
-	(Karthik Nayak's message of "Sat, 17 Oct 2015 12:14:58 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=jkuM7d1mp+xgyy3eBu+F38ixaVOxgaYraZLSRn1YSv0=;
+        b=xpoS/mpQE/JWJkCgwrUF+muIB18KLt8BZlGbM2w4q32JpRk+4JfravSkjgOwLXnmw5
+         izawssZNB7e9y5eKEnMwdW62yOstXe+40CgIMMw7EWQudPc+5ri+BvgPvhGU745raP/X
+         h9YZvcX4WuSFc1daa9+tjpQyDzUeDvNsqFl82MZUu62kKY4EC4xjKyFcTPDrjTIDUqv8
+         0+/LAzjEqve3UBt1p9lqF2v9K5v8cYwsJLf7/+yRCkJpjiwfB5PZ0vTUDwbDAV7AHLJv
+         OZCSieUFO5zORhnVRDOTKj3mFfdlnnOGcxFr6stGsafVBrPBSSPVnNs4fjvlJ+sL8AVa
+         a1QA==
+X-Received: by 10.31.11.209 with SMTP id 200mr15591571vkl.84.1445126277972;
+ Sat, 17 Oct 2015 16:57:57 -0700 (PDT)
+Received: by 10.31.159.204 with HTTP; Sat, 17 Oct 2015 16:57:57 -0700 (PDT)
+In-Reply-To: <1445008605-16534-4-git-send-email-tklauser@distanz.ch>
+X-Google-Sender-Auth: aAQ2xO3YYOAHgESBLd3wDvnVXLM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279796>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
-
-> So I did poke around a little. I think I missed this out on the
-> original commit (b7cc53e92c806b73e14b03f60c17b7c29e52b4a4).
+On Fri, Oct 16, 2015 at 11:16 AM, Tobias Klauser <tklauser@distanz.ch> wrote:
+> Implement the --count-lines options for git stripspace [...]
 >
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 977a18c..2c5a9f1 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -49,6 +49,7 @@ static int list_tags(struct ref_filter *filter,
-> struct ref_sorting *sorting)
->                 format = "%(refname:short)";
+> This will make it easier to port git-rebase--interactive.sh to C later
+> on.
+
+Is there any application beyond git-rebase--interactive where a
+--count-lines options is expected to be useful? It's not obvious from
+the commit message that this change is necessarily a win for later
+porting of git-rebase--interactive to C since the amount of extra code
+and support material added by this patch probably outweighs the amount
+of code a C version of git-rebase--interactive would need to count the
+lines itself.
+
+Stated differently, are the two or three instances of piping through
+'wc' in git-rebase--interactive sufficient justification for
+introducing extra complexity into git-stripspace and its documentation
+and tests?
+
+More below.
+
+> Furthermore, add the corresponding documentation and tests.
 >
->         verify_ref_format(format);
-> +       filter->with_commit_tag_algo = 1;
->         filter_refs(&array, filter, FILTER_REFS_TAGS);
->         ref_array_sort(sorting, &array);
-> ...
+> Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
+> ---
+> diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
+> index 29e91d8..9c00cb9 100755
+> --- a/t/t0030-stripspace.sh
+> +++ b/t/t0030-stripspace.sh
+> @@ -438,4 +438,40 @@ test_expect_success 'avoid SP-HT sequence in commented line' '
+>         test_cmp expect actual
+>  '
 >
-> Could you Squash that in, Junio?
+> +test_expect_success '--count-lines with newline only' '
+> +       printf "0\n" >expect &&
+> +       printf "\n" | git stripspace --count-lines >actual &&
+> +       test_cmp expect actual
+> +'
 
-Do we have two implementations that are supposed to compute the same
-thing, and with the bit set to 1, the faster of these two is used?
-Is there a reason somebody may want to use the slower one?  What
-difference other than performance does the choice of this bit makes,
-and why?
+What is the expected behavior when the input is an empty file, a file
+with content but no newline, a file with one or more lines but lacking
+a newline on the final line? Should these cases be tested, as well?
 
-I think the answers to the above questions deserve to be in the log
-message (no, I do not think I can "squash it in", rewriting the
-commit that has already been merged to 'next' and 'master').
-
-Thanks.
+> +test_expect_success '--count-lines with single line' '
+> +       printf "1\n" >expect &&
+> +       printf "foo\n" | git stripspace --count-lines >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--count-lines with single line preceeded by empty line' '
+> +       printf "1\n" >expect &&
+> +       printf "\nfoo" | git stripspace --count-lines >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--count-lines with single line followed by empty line' '
+> +       printf "1\n" >expect &&
+> +       printf "foo\n\n" | git stripspace --count-lines >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--count-lines with multiple lines and consecutive newlines' '
+> +       printf "5\n" >expect &&
+> +       printf "\none\n\n\nthree\nfour\nfive\n" | git stripspace --count-lines >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--count-lines combined with --strip-comments' '
+> +       printf "5\n" >expect &&
+> +       printf "\n# stripped\none\n#stripped\n\nthree\nfour\nfive\n" | git stripspace -s --count-lines >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
+> --
+> 2.6.1.148.g7927db1
