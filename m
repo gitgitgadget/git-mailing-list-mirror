@@ -1,77 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Feature Request] git blame showing only revisions from git rev-list --first-parent
-Date: Sun, 18 Oct 2015 10:41:17 -0700
-Message-ID: <xmqqlhb0axc2.fsf@gitster.mtv.corp.google.com>
-References: <CA+nPnMx1tkwTRckUjhg6LD055n-jzYDTKsH2sz-0PXPfJiy_tA@mail.gmail.com>
-	<20150911140133.GA14311@sigill.intra.peff.net>
-	<xmqqa8ss29tq.fsf@gitster.mtv.corp.google.com>
-	<xmqqsi6kzsgc.fsf@gitster.mtv.corp.google.com>
-	<20150912033054.GA30431@sigill.intra.peff.net>
-	<xmqqy4gcxcp4.fsf@gitster.mtv.corp.google.com>
-	<20150913100728.GA26562@sigill.intra.peff.net>
-	<CAPc5daUcwCferagupF+iy3gxxorfMyEMn0oFMRWBNjc0=2r4og@mail.gmail.com>
-	<20150915100538.GA21831@sigill.intra.peff.net>
-	<20151018113857.GA5722@wheezy.local>
+Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it to ignore instead?
+Date: Sun, 18 Oct 2015 10:58:39 -0700
+Message-ID: <xmqqfv18awj4.fsf@gitster.mtv.corp.google.com>
+References: <CAM-tV-_JPazYxeDYogtQTRfBxONpSZwb3u5pPanB=F9XnLnZyg@mail.gmail.com>
+	<CAM-tV-_eOgnhqsTFN6kKW=tcS7gAPYaxskBaxnJZo3bsx02HZg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	Stephen Connolly <stephen.alan.connolly@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Sun Oct 18 19:41:52 2015
+Cc: git@vger.kernel.org
+To: Noam Postavsky <npostavs@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sun Oct 18 19:58:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Znrxv-0007P7-CZ
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Oct 2015 19:41:51 +0200
+	id 1ZnsEJ-0006hA-QH
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Oct 2015 19:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932126AbbJRRlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Oct 2015 13:41:20 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:33938 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932087AbbJRRlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2015 13:41:19 -0400
-Received: by padhk11 with SMTP id hk11so5741071pad.1
-        for <git@vger.kernel.org>; Sun, 18 Oct 2015 10:41:18 -0700 (PDT)
+	id S932176AbbJRR6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Oct 2015 13:58:43 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35004 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751214AbbJRR6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2015 13:58:42 -0400
+Received: by pasz6 with SMTP id z6so6429290pas.2
+        for <git@vger.kernel.org>; Sun, 18 Oct 2015 10:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=IQBQDy0s1YOA/+02K643bckHyH7cA8/6NGMF3hcO8+s=;
-        b=LBh6vee2f5ppCWPbLqaay2oe1AnA9cV4T7VQjnQO3Si4WeZw8CJ8t1Xk9vbE0kLR3F
-         bMljHrNf9BH+Dz//NRa3G9v+QBa7fs1DX0M5CSPxLazEuHOy1enJAeyR6hJguUVz2AVl
-         vOwmFbFzmp8KWyOPfFY61TkGCgMCODpRWI+rxsJVdH+j9LS9bqch5V/Cd5YxcfizuKLg
-         +eKvhskKU6ONJafuev2Os28FzcLKgE89XHPhXYFmHtqvhTPFbYZAdL2C47EbKjTLlM/Q
-         /3qdpbTt0KpLgRMC0dIV7yKGWe8jDZaUQhbNR+YaJMDtvpj/jspT1yr3kr8AjOkh+WyR
-         rKBw==
-X-Received: by 10.66.227.201 with SMTP id sc9mr29222917pac.62.1445190078776;
-        Sun, 18 Oct 2015 10:41:18 -0700 (PDT)
+        bh=+w8zOdjkukWRR0odK1XOPo3CMIWOz4Y2o4giWTHhS74=;
+        b=mWHEW9SmxPKeQvcLdcqnoLyg4nwXS6msfW+y2M/UuByumq+0h3OHnmurQHA/F77ZLb
+         cjnEqzB9AQKpuZDSe2zbxD7mZK5sPySA76kxpjYzfQwUbJMuwuWgOpaHJoW184wEh5+T
+         Nvcs+yMlRBvSRzX8rJBbgzNSbN22kMogcCJxJBCYuU4o6X0O60IhBc4zNzYbyhGg7a3t
+         2UFtEnGugvwqsMQ8NlL+cjZJ5CQZtGUYoGoRKIlsAtES5dOc2oylRkmJjfMEUAlYEmDj
+         2h7KBlto1f6fsMMd+UD8I1kbIiHd9B5eAdpAIISUu13lF2pMQyUn0iAjbf7ZnmPb8D9d
+         IcJA==
+X-Received: by 10.66.227.72 with SMTP id ry8mr30277815pac.105.1445191121874;
+        Sun, 18 Oct 2015 10:58:41 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:305b:5af5:2c51:11cd])
-        by smtp.gmail.com with ESMTPSA id bn1sm32231480pad.17.2015.10.18.10.41.17
+        by smtp.gmail.com with ESMTPSA id z12sm31956759pbt.30.2015.10.18.10.58.40
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 18 Oct 2015 10:41:17 -0700 (PDT)
-In-Reply-To: <20151018113857.GA5722@wheezy.local> (Max Kirillov's message of
-	"Sun, 18 Oct 2015 14:38:57 +0300")
+        Sun, 18 Oct 2015 10:58:40 -0700 (PDT)
+In-Reply-To: <CAM-tV-_eOgnhqsTFN6kKW=tcS7gAPYaxskBaxnJZo3bsx02HZg@mail.gmail.com>
+	(Noam Postavsky's message of "Sun, 18 Oct 2015 11:15:59 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279818>
 
-Max Kirillov <max@max630.net> writes:
+Noam Postavsky <npostavs@users.sourceforge.net> writes:
 
-> I might be late for this discussion, but I seem to have
-> a case when blame --reverse --first-parent seems to work.
+> On Sat, Oct 10, 2015 at 12:45 PM, Noam Postavsky
+> <npostavs@users.sourceforge.net> wrote:
+>> I noticed that git-credential-cache--daemon quits on SIGHUP. This
+>> seems like surprising behaviour for a daemon. Would it be acceptable
+>> to change it to ignore SIGHUP?
+>
+> ping?
 
-I think during the discussion we already established that there are
-cases where the mode happens to do the right thing (the most trivial
-is a completely linear history).
+Thanks for pinging.  I guess this either fell in the cracks while
+people were busy discussing other topics, or nobody agreed with the
+reasoning behind the change, or perhaps a bit of both.  In any case,
+it is a prodent thing to ping on the thread after a week or so,
+which is what you did.  Very much appreciated.
 
-I do not strongly object to enabling the mode when it is safe to
-enable (i.e. it can be proven to work and produce a sensible and
-meaningful result); patches welcome to enable it when it can be
-shown that it is safe; "to disable it only when it can be shown that
-it is meaningless" is a different way to state the same thing.
+I cannot speak for the person who was primarily responsible for
+designing this behaviour, but I happen to agree with the current
+behaviour in the situation where it was designed to be used.  Upon
+the first use in your session, the "daemon" is auto-spawned, you can
+keep talking with that same instance during your session, and you do
+not have to do anything special to shut it down when you log out.
+Isn't that what happens here?
+
+If this were "when you start the system you start this free-standing
+daemon once, and it will stay around until it gets shut down. If you
+are staying around in logged-in state is immaterial" kind of daemon,
+I'd expect it, upon being killed with HUP, to do something useful,
+like re-reading its configuration file, and continue, instead of
+dying.
+
+Perhaps you can tweak the system to get both, by making it continue
+upon HUP by default, but teaching it an option not to (i.e. the
+current behaviour).  Pass that option when spawn_daemon() in
+credential-cache.c starts the daemon.  When using the daemon as a
+free-standing one (against the way its documentation expects you
+to---see "git help credential-cache--daemon"), you do not pass that
+option and your "daemon" will ignore HUP.
+
+Hmm?
