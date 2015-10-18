@@ -1,136 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add ls-files --eol-staged, --eol-worktree
-Date: Sun, 18 Oct 2015 10:35:23 -0700
-Message-ID: <xmqqpp0caxlw.fsf@gitster.mtv.corp.google.com>
-References: <D68CC6D0-3FD5-4423-A9E2-905DF18E893F@web.de>
+Subject: Re: [Feature Request] git blame showing only revisions from git rev-list --first-parent
+Date: Sun, 18 Oct 2015 10:41:17 -0700
+Message-ID: <xmqqlhb0axc2.fsf@gitster.mtv.corp.google.com>
+References: <CA+nPnMx1tkwTRckUjhg6LD055n-jzYDTKsH2sz-0PXPfJiy_tA@mail.gmail.com>
+	<20150911140133.GA14311@sigill.intra.peff.net>
+	<xmqqa8ss29tq.fsf@gitster.mtv.corp.google.com>
+	<xmqqsi6kzsgc.fsf@gitster.mtv.corp.google.com>
+	<20150912033054.GA30431@sigill.intra.peff.net>
+	<xmqqy4gcxcp4.fsf@gitster.mtv.corp.google.com>
+	<20150913100728.GA26562@sigill.intra.peff.net>
+	<CAPc5daUcwCferagupF+iy3gxxorfMyEMn0oFMRWBNjc0=2r4og@mail.gmail.com>
+	<20150915100538.GA21831@sigill.intra.peff.net>
+	<20151018113857.GA5722@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Oct 18 19:35:49 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	Stephen Connolly <stephen.alan.connolly@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Sun Oct 18 19:41:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Znrs1-0001Ik-MQ
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Oct 2015 19:35:46 +0200
+	id 1Znrxv-0007P7-CZ
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Oct 2015 19:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932095AbbJRRf0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Oct 2015 13:35:26 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:33176 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752857AbbJRRfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2015 13:35:25 -0400
-Received: by pabrc13 with SMTP id rc13so166963694pab.0
-        for <git@vger.kernel.org>; Sun, 18 Oct 2015 10:35:25 -0700 (PDT)
+	id S932126AbbJRRlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Oct 2015 13:41:20 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33938 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932087AbbJRRlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2015 13:41:19 -0400
+Received: by padhk11 with SMTP id hk11so5741071pad.1
+        for <git@vger.kernel.org>; Sun, 18 Oct 2015 10:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=YkoS6MczTszO7bSyElme1pnMZ/oMOa1XNjmno3qHBus=;
-        b=evQh4nt8kCQs0xl+igUpYMFDA8ukKDNqsiLqXa4ByzXMnTELTFUpxq20fRsiRv+rsc
-         EHKqCh7YOkzxhAnWM7+6kcQz48W3rIHbMI+bIpqmx5hnl8nZQ7aq8WBTi1HGm4uerRsN
-         K4jxQE+uKmD2/JoQ/GePG/PYedAzslNKBOQcefxQQmitYE/gMWVtZL1P5jdXQUHJLSDj
-         fWQpNtrERWCTDlDGtFVRU1wcMVYucdTTowqTHO2uXMzhsVNKHrIvpgrpZUOa3euLF1sb
-         7pg+qAs1VzP5MOKFnLjY/V1lK2yoESssALgYk/wJcsFxGtnZGUkUDOnHLpA3N4mBHlDy
-         +88g==
-X-Received: by 10.66.248.10 with SMTP id yi10mr30002061pac.6.1445189725122;
-        Sun, 18 Oct 2015 10:35:25 -0700 (PDT)
+         :user-agent:mime-version:content-type;
+        bh=IQBQDy0s1YOA/+02K643bckHyH7cA8/6NGMF3hcO8+s=;
+        b=LBh6vee2f5ppCWPbLqaay2oe1AnA9cV4T7VQjnQO3Si4WeZw8CJ8t1Xk9vbE0kLR3F
+         bMljHrNf9BH+Dz//NRa3G9v+QBa7fs1DX0M5CSPxLazEuHOy1enJAeyR6hJguUVz2AVl
+         vOwmFbFzmp8KWyOPfFY61TkGCgMCODpRWI+rxsJVdH+j9LS9bqch5V/Cd5YxcfizuKLg
+         +eKvhskKU6ONJafuev2Os28FzcLKgE89XHPhXYFmHtqvhTPFbYZAdL2C47EbKjTLlM/Q
+         /3qdpbTt0KpLgRMC0dIV7yKGWe8jDZaUQhbNR+YaJMDtvpj/jspT1yr3kr8AjOkh+WyR
+         rKBw==
+X-Received: by 10.66.227.201 with SMTP id sc9mr29222917pac.62.1445190078776;
+        Sun, 18 Oct 2015 10:41:18 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:305b:5af5:2c51:11cd])
-        by smtp.gmail.com with ESMTPSA id tk4sm32310426pab.45.2015.10.18.10.35.24
+        by smtp.gmail.com with ESMTPSA id bn1sm32231480pad.17.2015.10.18.10.41.17
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 18 Oct 2015 10:35:24 -0700 (PDT)
-In-Reply-To: <D68CC6D0-3FD5-4423-A9E2-905DF18E893F@web.de> ("Torsten
-	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Sat, 17 Oct 2015 22:18:06
- +0200")
+        Sun, 18 Oct 2015 10:41:17 -0700 (PDT)
+In-Reply-To: <20151018113857.GA5722@wheezy.local> (Max Kirillov's message of
+	"Sun, 18 Oct 2015 14:38:57 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279817>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Max Kirillov <max@max630.net> writes:
 
-> Make it possible to show the line endings of files.
-> Files which are staged and/or files in the working tree:
->
-> git ls-files --eol-staged
-> git ls-files --eol-worktree
->
-> Both will show an output like this:
->
-> empty    empty_file
-> bin      binary_file_or_with_cr_handled_as_binary
-> txt-crlf text_file_with_crlf
-> txt-mix  text_file_with_crlf_and_lf
-> txt-lf   text_file_with_lf
-> txt      text_file_with_no_eol_at_all
+> I might be late for this discussion, but I seem to have
+> a case when blame --reverse --first-parent seems to work.
 
-This _may_ be readable by who implemented it, but I cannot tell what
-you are trying to say above; "like this" does not help me at all
-deciphering.
+I think during the discussion we already established that there are
+cases where the mode happens to do the right thing (the most trivial
+is a completely linear history).
 
-Do I get the above after doing this?
-
-    $ >empty
-    $ >empty2
-    $ git ls-files --eol-worktree
-    empty empty_file
-    empty2 empty_file
-
-or do you mean this?
-
-    $ >empty_file
-    $ >empty_file2
-    $ git ls-files --eol-worktree
-    empty empty_file empty_file2
-
-or do you produce output one path at a time?
-
-    $ >empty_file
-    $ >empty_file2
-    $ git ls-files --eol-worktree
-    empty empty_file
-    empty empty_file2
-
-> txt      text_file_with_no_eol_at_all
-
-Does it help to have this category at all?  This gives the user an
-indication that this file consists on a single incomplete line and
-differentiates it from a file with the same single line with LF or
-CR/LF line ending.  What happens when I prepend to these three files
-another copy of the same line with LF or CR/LF line ending?  You get
-6 variations:
-
- 1. line LF line
- 2. line LF line LF
- 3. line LF line CRLF
- 4. line CRLF line
- 5. line CRLF line LF
- 6. line CRLF line CRLF
-   =20
-If you say 1 and 2 are with LF, 4 and 6 are with CRLF, eveyrything
-else is mixed, then you are losing the distinction between 1 and 2
-(and 4 and 6) that you made when the files were a single liner (with
-or without the incomplete line ending).  Is that desirable?
-
-I wonder if it would be easier for the scripts that process the
-output from this command to handle if the report said what
-combination of _three_ possible line-ending is used.  i.e. does the
-file contain a line that ends with LF? does the file contain a line
-that ends with CRLF? does the file contain a line with missing EOL?
-
-
-> Implementation details:
-> Make struct text_stat, is_binary() and gather_stats() from convert.c
-> public, add a new function get_convert_stats_ascii() and use it
-> in and use them in ls-files.
-> git ls-files --eol-staged will give a line like this:
->
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
-
-This is even worse than the "like this" above ;-)
+I do not strongly object to enabling the mode when it is safe to
+enable (i.e. it can be proven to work and produce a sensible and
+meaningful result); patches welcome to enable it when it can be
+shown that it is safe; "to disable it only when it can be shown that
+it is meaningless" is a different way to state the same thing.
