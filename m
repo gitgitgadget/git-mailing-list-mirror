@@ -1,74 +1,55 @@
-From: Thomas Koch <thomas@koch.ro>
-Subject: Re: How to rebase when some commit hashes are in some commit messages
-Date: Sun, 18 Oct 2015 15:58:25 +0200
-Message-ID: <1634617.ZbHCyji7nE@x121e>
-References: <561C1132.3090606@orange.fr> <AD64941D9533442AB025BE27FF8F08AF@PhilipOakley> <561F597B.8090102@orange.fr>
-Reply-To: thomas@koch.ro
+From: Noam Postavsky <npostavs@users.sourceforge.net>
+Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it to
+ ignore instead?
+Date: Sun, 18 Oct 2015 11:15:59 -0400
+Message-ID: <CAM-tV-_eOgnhqsTFN6kKW=tcS7gAPYaxskBaxnJZo3bsx02HZg@mail.gmail.com>
+References: <CAM-tV-_JPazYxeDYogtQTRfBxONpSZwb3u5pPanB=F9XnLnZyg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Konstantin Khomoutov <kostix+git@007spb.ru>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org
-To: Francois-Xavier Le Bail <devel.fx.lebail@orange.fr>
-X-From: git-owner@vger.kernel.org Sun Oct 18 16:08:58 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 18 17:16:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Znods-0002KM-4Z
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Oct 2015 16:08:56 +0200
+	id 1Znpgv-0008T3-A2
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Oct 2015 17:16:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752398AbbJROIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Oct 2015 10:08:24 -0400
-Received: from mx2.mailbox.org ([80.241.60.215]:39371 "EHLO mx2.mailbox.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751580AbbJROIX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2015 10:08:23 -0400
-X-Greylist: delayed 588 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Oct 2015 10:08:23 EDT
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mx2.mailbox.org (Postfix) with ESMTPS id 84A6C43526;
-	Sun, 18 Oct 2015 15:58:33 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-Received: from smtp1.mailbox.org ([80.241.60.240])
-	by gerste.heinlein-support.de (gerste.heinlein-support.de [91.198.250.173]) (amavisd-new, port 10030)
-	with ESMTP id DPyrd1888TCj; Sun, 18 Oct 2015 15:58:32 +0200 (CEST)
-User-Agent: KMail/4.14.1 (Linux/4.2.0-0.bpo.1-amd64; KDE/4.14.2; x86_64; ; )
-In-Reply-To: <561F597B.8090102@orange.fr>
+	id S1752837AbbJRPQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Oct 2015 11:16:01 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:34011 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752729AbbJRPQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2015 11:16:00 -0400
+Received: by wikq8 with SMTP id q8so20120874wik.1
+        for <git@vger.kernel.org>; Sun, 18 Oct 2015 08:15:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:content-type;
+        bh=zVp2/VtdHGBhQlVvj3Jg6N7+/xnsx+RS0qMe5rPrijc=;
+        b=nU3rv0X0eekh4GkAzG10v05jn+6zBsZh0bcR0N6t1VhJmjHt2Jr5mZn0ZWcjZafyrM
+         WDKOsOVKNIhauUSToD9Mb9vr7tgbtAfAAw2E8Gsjfvwxjf4gpnXBtJkFgvgCdkC+SUif
+         N2IzdKeQWfNEK8tGXFSowXLs1yq+XTr51JNcGqSl173g8dA5t05HshBAOC1BLaj/99sc
+         A2bH1sjNiKESg8hP6juvyc7UM9MoKCdyVLYKbo5AcrvVeHBeRl17x6BHiYgFzpfwymOO
+         Sk/SH9DiqwjsGRO5vKFzB3zyMnmTXyRnxxyv+QB8SByA3XfKaSWYeemPAXxFQQcj5vup
+         Y35w==
+X-Received: by 10.194.6.66 with SMTP id y2mr30264182wjy.82.1445181359767; Sun,
+ 18 Oct 2015 08:15:59 -0700 (PDT)
+Received: by 10.28.210.68 with HTTP; Sun, 18 Oct 2015 08:15:59 -0700 (PDT)
+In-Reply-To: <CAM-tV-_JPazYxeDYogtQTRfBxONpSZwb3u5pPanB=F9XnLnZyg@mail.gmail.com>
+X-Google-Sender-Auth: cZ3RsWxl1VJFmYyOBCCH6rS_VAg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279811>
 
-On Thursday 15 October 2015 09:44:59 Francois-Xavier Le Bail wrote:
-> >> On Tue, 13 Oct 2015 10:50:40 +0200
-> >> Francois-Xavier Le Bail <devel.fx.lebail@orange.fr> wrote:
-> >>> >> For example, if I rebase the following commits, I would want that
-> >>> >> if the commit hash 2222222... become 7777777...,
-> >>> >> the message
-> >>> >> "Update test output for 2222222222222222222222222222222222222222"
-> >>> >> become
-> >>> >> "Update test output for 7777777..."
-> >>> >> 
-> >>> >> Is it possible currently? And if yes how?
+On Sat, Oct 10, 2015 at 12:45 PM, Noam Postavsky
+<npostavs@users.sourceforge.net> wrote:
+> I noticed that git-credential-cache--daemon quits on SIGHUP. This
+> seems like surprising behaviour for a daemon. Would it be acceptable
+> to change it to ignore SIGHUP?
 
-The code review system Gerrit (highly recommended!) uses a commit-hook to adds 
-a trailer line to every commit message, e.g.:
-
-Change-Id: Id8269a1aa4a2c7a1a584b23b01d63259410c4e85
-
-This Change-Id is used to identify a change even if the change gets amended or 
-rebased and thus is represented in a different commit.
-
-So if you're using Gerrit you can refer to changes instead of commits and use 
-the Change-Id. Even if you don't use Gerrit you can still use its commit-hook 
-to write the Change-Id trailers.
-
-Regards,
-
-Thomas Koch
+ping?
