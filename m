@@ -1,79 +1,75 @@
-From: Kevin Daudt <me@ikke.info>
-Subject: Re: [PATCH] Fix worktree usage message
-Date: Sun, 18 Oct 2015 13:39:02 +0200
-Message-ID: <20151018113902.GA12622@ikke.info>
-References: <1445166144-29509-1-git-send-email-tigerkid001@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sidhant Sharma <tigerkid001@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 18 13:46:26 2015
+From: Sidhant Sharma <tigerkid001@gmail.com>
+Subject: [PATCH] Fix worktree usage message
+Date: Sun, 18 Oct 2015 17:45:30 +0530
+Message-ID: <1445170530-31573-1-git-send-email-tigerkid001@gmail.com>
+References: <20151018113902.GA12622@ikke.info>
+Cc: Sidhant Sharma <tigerkid001@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 18 14:16:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZnmPt-0000pK-He
-	for gcvg-git-2@plane.gmane.org; Sun, 18 Oct 2015 13:46:21 +0200
+	id 1Znmsl-0003jK-7l
+	for gcvg-git-2@plane.gmane.org; Sun, 18 Oct 2015 14:16:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499AbbJRLqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Oct 2015 07:46:16 -0400
-Received: from ikke.info ([178.21.113.177]:44782 "EHLO vps892.directvps.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752456AbbJRLqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2015 07:46:16 -0400
-X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Oct 2015 07:46:15 EDT
-Received: by vps892.directvps.nl (Postfix, from userid 1001)
-	id DAE3F4400AE; Sun, 18 Oct 2015 13:39:02 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1445166144-29509-1-git-send-email-tigerkid001@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1752604AbbJRMPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Oct 2015 08:15:45 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36352 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752146AbbJRMPo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2015 08:15:44 -0400
+Received: by pacfv9 with SMTP id fv9so66129305pac.3
+        for <git@vger.kernel.org>; Sun, 18 Oct 2015 05:15:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=v7+e1bgyHV0+c0oMFIE07CgLMQ/tR33Tgy2VbJPJLpg=;
+        b=VgFAurWMWql2eF5vFpngaLjHlbwo8E7lGPZUpVZ5V5qxEqcDBMnRKTmCeLE3f3vWna
+         iXOVycgkoLHlg0mcgXJvjt7Sux9wOf84XAVKXxobH1H12Pv6aRgvQQi8wiEgZDqTfWc1
+         nToZeEgllo6j2BOVd5yDvvzPFXtmy0MuddAMMlF1rpEicAeVVl2kvzJSkSkrlkgXqkQi
+         Et640IiGfk+/rqZX2qWrLu1jiZXL98IM1SEAQjhVPxz0AYkQW1UeGo09xqVtUfhhqtFT
+         JEv7a9Ax3YEOv/o+2KatcXL3WYdm0t6qTOwYbyvjiv2AeFeg60hiDt30S6cFoCU7Cqdk
+         OTgg==
+X-Received: by 10.68.164.98 with SMTP id yp2mr27757269pbb.125.1445170543897;
+        Sun, 18 Oct 2015 05:15:43 -0700 (PDT)
+Received: from localhost.localdomain ([182.68.185.98])
+        by smtp.gmail.com with ESMTPSA id sn9sm31154334pac.16.2015.10.18.05.15.42
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 18 Oct 2015 05:15:43 -0700 (PDT)
+X-Mailer: git-send-email 2.6.2
+In-Reply-To: <20151018113902.GA12622@ikke.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279809>
 
+Mark <branch> optional in worktree command line usage to maintain consistency with man pages.
 
+Reported-by: ch3cooli@gmail.com
 
-On Sun, Oct 18, 2015 at 04:32:24PM +0530, Sidhant Sharma wrote:
-> Mark <branch> as optional in worktree command line usage.
+Signed-off-by: Sidhant Sharma <tigerkid001@gmail.com>
+---
 
-Thank you for the patch. 
+ It was reported here: http://marc.info/?l=git&m=144514145804787&w=2
 
-Can you also explain why you mark it as optional in the commit message?
-That way it's clear why this patch is needed.
+ builtin/worktree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
-> Hi, just starting out with development for Git. Found this one super easy to fix,
-> so made a patch :)
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 71bb770..33d2d37 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -10,7 +10,7 @@
+ #include "refs.h"
 
-These kind of comments don't belong in the commit message. You could add
-them below the first three ---. That way, they will not be part of the
-commit history.
-
-
-> 
-> ---
->  builtin/worktree.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 71bb770..33d2d37 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -10,7 +10,7 @@
->  #include "refs.h"
-> 
->  static const char * const worktree_usage[] = {
-> -	N_("git worktree add [<options>] <path> <branch>"),
-> +	N_("git worktree add [<options>] <path> [<branch>]"),
->  	N_("git worktree prune [<options>]"),
->  	NULL
->  };
-> --
-> 2.6.2
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+ static const char * const worktree_usage[] = {
+-	N_("git worktree add [<options>] <path> <branch>"),
++	N_("git worktree add [<options>] <path> [<branch>]"),
+ 	N_("git worktree prune [<options>]"),
+ 	NULL
+ };
+--
+2.6.2
