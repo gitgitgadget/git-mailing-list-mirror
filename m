@@ -1,111 +1,108 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: problem with modification time of packfiles
-Date: Mon, 19 Oct 2015 23:09:19 +0000
-Message-ID: <20151019230919.GA60184@vauxhall.crustytoothpaste.net>
-References: <87io63503w.fsf@msstf091.ucc.ie>
- <20151019025727.GA23404@vauxhall.crustytoothpaste.net>
- <87a8re4oks.fsf@msstf091.ucc.ie>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v4 02/26] refs: make repack_without_refs and is_branch
+ public
+Date: Mon, 19 Oct 2015 19:16:36 -0400
+Organization: Twitter
+Message-ID: <1445296596.3418.31.camel@twopensource.com>
+References: <1444938410-2345-1-git-send-email-dturner@twopensource.com>
+	 <1444938410-2345-3-git-send-email-dturner@twopensource.com>
+	 <56209A81.1060706@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DocE+STaALJfprDB"
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Andreas Amann <a.amann@ucc.ie>
-X-From: git-owner@vger.kernel.org Tue Oct 20 01:09:59 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 20 01:16:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoJYv-0000uv-8Q
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 01:09:53 +0200
+	id 1ZoJfZ-0006lr-52
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 01:16:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750997AbbJSXJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2015 19:09:24 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:39563 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750814AbbJSXJX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Oct 2015 19:09:23 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 885D228094;
-	Mon, 19 Oct 2015 23:09:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1445296162;
-	bh=q0gOY7A5Yj/ipfBl0RAfNnIUGkVd7ChboP43WApfHMM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QsDL+RM04FMP+XKyrYb+lR2Y5dNqYyzEEcx7jX7tsaI0m+8l034XlWT+e2OeLwtrZ
-	 jZLhO7XYpjqfeHG8aUTsECzn6/U3ANQ9/DuBQ/nujcQSHfOmTwRmlqYXQhCG36ge1u
-	 dAfU3rMWI4NuGEs+WfGcdbtQC+YHJ+MUndZIlSVAi71t2PequO5ac3aNrb7Z8MOhFa
-	 MzSEwgBJsB2AlDCJFlLap5URrO2IZLniW6HepLTB+ovgNw9MoIegHabUlqdsr4k7EA
-	 MFdlqWswVfCTYx91wGra7736IxDA51rVPLzu4m09F1WnAByHoxScpg/MANgeSMHKnq
-	 IXh9/bsnioVnVfkxWzANJtZ41qH4hrvuvYz1IrSTP6CYObT2HdLyiU88B8n3Z9XUZT
-	 8qIrPtEfUS55iu9UQQ7lS6GcYuobvbTmzM/4h+EhsYMwBJs7/rQl5J085HDrgROUke
-	 4gxS7RY+EyvXzOl3rb9kMv4tPsEBMc/3eq2I/veyi5WQn+XJuv5
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Andreas Amann <a.amann@ucc.ie>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <87a8re4oks.fsf@msstf091.ucc.ie>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.2.0-1-amd64)
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Spam-Score: -0.272 BAYES_00,RDNS_NONE
+	id S1751386AbbJSXQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2015 19:16:39 -0400
+Received: from mail-qg0-f53.google.com ([209.85.192.53]:33203 "EHLO
+	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751140AbbJSXQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 19:16:39 -0400
+Received: by qgeo38 with SMTP id o38so470360qge.0
+        for <git@vger.kernel.org>; Mon, 19 Oct 2015 16:16:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=tJgyqvv2YDrloVi3SC+J7oDvPRkELnAU5rP/aUf1MhI=;
+        b=hfedqR99ph2POS2OCtYN4QTFx7k/wWnlgQX7G7imTfecNtcaT3vgy2wJubik4I8DF8
+         JvnDRf9ybOmsQb13rUn9oKPadiBXSdLtN5zYkMuy3H2NoaoBiLlRre2O1E3bIv9/82Bo
+         XkN5tCgJahvD+vIdqDmTtGQ34yWuSh79fJfGPjzpnI27PzTK6nAeuMMh6W69IiANFXCT
+         qfxW44V0E82LAo1ddQwqdUSn/JYWeXms0HFHM2m8BouSSFwNYEE4fnsboviG3uZ5S4kX
+         7m1TKTlF1uC2aXsr04VKyVW7Y9pvBz2tCBxd6hgMUmlatVEilZtzHvaTayXXyaY87sQq
+         t9aA==
+X-Gm-Message-State: ALoCoQmBf52zSsfPZ8uF0+qRHq1r8FCi4XxY5WZqXj0bfrNGqP+Pn8RCfA1D3nV/3UB60uP/4PvJ
+X-Received: by 10.140.96.71 with SMTP id j65mr31222qge.92.1445296598416;
+        Mon, 19 Oct 2015 16:16:38 -0700 (PDT)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id 206sm41145qhq.39.2015.10.19.16.16.37
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Oct 2015 16:16:37 -0700 (PDT)
+In-Reply-To: <56209A81.1060706@alum.mit.edu>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279897>
 
+On Fri, 2015-10-16 at 08:34 +0200, Michael Haggerty wrote:
+> On 10/15/2015 09:46 PM, David Turner wrote:
+> > is_branch was already non-static, but this patch declares it in the
+> > header.
+> 
+> The commit message no longer reflects the patch.
+> 
+> > Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> > Signed-off-by: David Turner <dturner@twopensource.com>
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > ---
+> >  refs.c | 5 +++--
+> >  refs.h | 2 ++
+> >  2 files changed, 5 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/refs.c b/refs.c
+> > index fe71ea0..84abc82 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -2816,8 +2816,9 @@ int pack_refs(unsigned int flags)
+> >  
+> >  /*
+> >   * Rewrite the packed-refs file, omitting any refs listed in
+> > - * 'refnames'. On error, leave packed-refs unchanged, write an error
+> > - * message to 'err', and return a nonzero value.
+> > + * 'refnames'. On error, packed-refs will be unchanged, the return
+> > + * value is nonzero, and a message about the error is written to the
+> > + * 'err' strbuf.
+> 
+> ^^^ ?
+> 
+> It is preferable for docstrings to be written in imperative form, so in
+> my opinion this is a step backwards...
+> 
+> ...literally. Your "new" version comes from an older version of Git; it
+> was changed in
+> 
+>     79e4d8a9b8 repack_without_refs(): make function private (2015-06-22)
+> 
+> to the imperative form.
+> 
+> Assuming you are using `git-format-patch` to prepare your patches, it is
+> always a good idea to read over the prepared email files before sending
+> them to the ML, to check for bloopers like this.
 
---DocE+STaALJfprDB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sorry about that one.  It's hard to keep track of what all of these
+patches do -- especially the ones that were rebases of Ronnie's.  I've
+fixed that and 03/26 as well.
 
-On Mon, Oct 19, 2015 at 08:59:15PM +0100, Andreas Amann wrote:
-> Thank you for your answer.  However, this reasoning only applies to loose
-> objects and not packfiles.
->=20
-> My understanding is that "git prune" will not prune any pack files
-> (except those starting with tmp_).  Only "git repack" should do that.
-> Repack seems to be however mtime agnostic and therefore it does not seem
-> to be necessary to freshen packfiles.
->=20
-> It therefore seems that git freshens packfiles unnecessarily, which can
-> lead to expensive and unnecessary backup operations.
->=20
-> Given this, would a trivial patch to remove the freshening of packfiles
-> be acceptable?
-
-I'm not familiar enough with the code to say for certain, but it looks
-like you're right.  Peff, Junio, do you think this is safe, or is there
-something we're missing?
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---DocE+STaALJfprDB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.9 (GNU/Linux)
-
-iQIcBAEBCgAGBQJWJXgeAAoJEL9TXYEfUvaLnwIQAJDGiL+vm5njwGtTc740QHnn
-cIxJdot86ZLoLNbQ6KOY8t8Bms/DdWO0RwTATNYfEN01J5KTQI5Wn/C+Xl7nD5GV
-0FlP+Q+rGL3AQnQ672vEnqDoM3fDa58IKS+QH6n08a7dgBUCO2gYksVcVJLEgtPW
-+Hc7hSzP9mnBnTO8GlMJOGqVonkSjlK0UlIRYKFKyWrnom6KvA4EHp/yO8kgciHy
-cn/J2jRjaokrfNe6LZlTCxDKm0xrLv/Z2e8fGDMqggFUCzFGnQ5BcfkpQRfltLS1
-a1h3zOXGCVjxxzWIYGGxVr06HVYHFhoDZbYIt/qslEzl1CPTTSVKnnalPxD3otuw
-9u41bd2yMvhg1RvMncTDmt5kJ7fqyEbLYz5jRui315ZjKe16S/MMIQPRy5v/JlCt
-2icagEx7aXpUar3V9IuQNVQ2KZJWfRu2dgqA/P8SnRzqAo8qdKu7nsATocI+Mz4b
-2ezoqkq0/A+l5911qlYAuNh+cEUB2VZbdt/c/kWcAaXKYguOP8w9vQaihQNJ5XSM
-7f9XeW8DtiAFSTnO/rKMjlE3WoBsU+TQzi44B0hseFVxyeubihzZLYH9u36It186
-qJjL+fc+Gwbkystt2lqw8gl9luB6JNMxtfyn5I2dK9IdWbprGd0z4MW0VaRXQx+e
-0lW3O+wUVOGwVieE0cKz
-=SjZR
------END PGP SIGNATURE-----
-
---DocE+STaALJfprDB--
+Do you have comments on any of the rest before I re-roll?  
