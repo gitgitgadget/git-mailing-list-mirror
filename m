@@ -1,73 +1,69 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 00/10] port branch.c to use ref-filter's printing options
-Date: Mon, 19 Oct 2015 10:12:46 +0200
-Message-ID: <vpqy4ezjmyp.fsf@grenoble-inp.fr>
-References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
-	<vpqr3l5zgst.fsf@grenoble-inp.fr>
-	<CAOLa=ZQvB_S2-nw8hOABt7aQJOWJXvfK1U2zurpnZmaAgJNnGA@mail.gmail.com>
-	<vpq8u7dp9qr.fsf@grenoble-inp.fr>
-	<CAOLa=ZQOO9BjoTj1B-b=kUviL=617F7y46BeX1sOXpeHcatFVQ@mail.gmail.com>
-	<xmqq4mi1rywu.fsf@gitster.mtv.corp.google.com>
-	<vpqpp0ojvs6.fsf@grenoble-inp.fr>
-	<xmqqfv1jq4jy.fsf@gitster.mtv.corp.google.com>
-	<CAOLa=ZQkjMFXVeJ==myQLjyRs6EcejnYnszYKJLyskFufjeqiA@mail.gmail.com>
-	<xmqqbnc4ord4.fsf@gitster.mtv.corp.google.com>
-	<CAOLa=ZT5AUAOgHNhX3AwpY20AZkm39=-JVQjUCgb0_x6LTHXaA@mail.gmail.com>
-	<vpq7fms9cjs.fsf@grenoble-inp.fr>
-	<xmqq37xfncak.fsf@gitster.mtv.corp.google.com>
-	<vpq612bzz0o.fsf@grenoble-inp.fr>
-	<CAOLa=ZQ5dCx4XheMvaFo1u-fR=uaR-LU-n7KHR3xNJ7TuF-zww@mail.gmail.com>
-	<xmqqzizfa2n7.fsf@gitster.mtv.corp.google.com>
+From: Stephen Connolly <stephen.alan.connolly@gmail.com>
+Subject: Feature Request: Branch Description updating support for git fetch/pull/push
+Date: Mon, 19 Oct 2015 10:15:52 +0100
+Message-ID: <CA+nPnMzQEgMZQGHjWbWXs2_QcZGV9PVn4+RTTmZO8QD5g18sfQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 10:13:01 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 19 11:16:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zo5Yz-00043V-5R
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 10:13:01 +0200
+	id 1Zo6Y3-0000pm-BX
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 11:16:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753158AbbJSIMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2015 04:12:55 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:33962 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750912AbbJSIMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2015 04:12:52 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t9J8CjAi026401
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 19 Oct 2015 10:12:45 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9J8CkW6016956;
-	Mon, 19 Oct 2015 10:12:46 +0200
-In-Reply-To: <xmqqzizfa2n7.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 18 Oct 2015 21:44:12 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 19 Oct 2015 10:12:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t9J8CjAi026401
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1445847166.59025@107ey2e3mOLllL0GhzeyCw
+	id S1753369AbbJSJPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2015 05:15:55 -0400
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:34943 "EHLO
+	mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750904AbbJSJPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 05:15:53 -0400
+Received: by qkbl190 with SMTP id l190so18605139qkb.2
+        for <git@vger.kernel.org>; Mon, 19 Oct 2015 02:15:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=VoWQOiR8XuvMLO2e6HUu9DlCbXodwcYsxCtjAsPvnGw=;
+        b=EkGoanu45tTGw/+nJrCgJc2wyEH7dArxeOrsyZG19wJxyx3bqYNREoVlNoEEhI9RA6
+         Kpu+AtESKCDW2ZlliAlliiZmoTM1HWNdBx74BQC8lMpHRsZ6HowHfNJkIVWoRUpsBzNJ
+         2cYp8N++gaCOGmGh91r2S2eKdY744tMuZ2LayPWQSxCsdr3ZuL09W5gO8bPRTBketTPj
+         L+tRjbc9NpbdEkty1GMe4bGfrJI5dMGYC/komEVvjmvT30OF79jYNgwha4i1VCecQxS7
+         spVCqqHdf0sH+QeL30eSCx3lwpgRoib742/zUulEw/GL0itP6b+IjiWCVGkKPZ/3eDfM
+         LfOg==
+X-Received: by 10.194.63.81 with SMTP id e17mr35352911wjs.147.1445246152399;
+ Mon, 19 Oct 2015 02:15:52 -0700 (PDT)
+Received: by 10.27.3.66 with HTTP; Mon, 19 Oct 2015 02:15:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279869>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Branch descriptions are great. Even more so if you set
+merge.branchdesc=true (while we are at it could there be a CLI option
+to git merge that allowed overriding merge.branchdesc for that merge)
 
-> I personally would suggest whichever order you feel more comfortable
-> and less error-prone.
+But the bit that pains me is that my description is local only.
 
-This is a good summary, and I fully agree with it.
+Could we add support for syncing the branch description with the remote?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+When I think about how such sync could work:
+
+* I would see the sync as an option that needs to be enabled rather
+than on by default (at least as long as `merge.branchdesc` is an
+option). Overriding by the CLI would be great, e.g.
+`--description-sync / --no-description-sync`
+* When that sync is enabled, if the destination side is missing a
+description then the description is sync'd. Otherwise if the
+destination description differs from the source description the user
+must explicitly specify one of `--description-sync /
+--no-description-sync` or else the operation will stop before updating
+references (I think that `git fetch` could be an exception to this
+rule as updating the remote branch descriptions by overwriting is
+exactly what you want, but for `git pull` / `git push` I think they
+need the CLI confirmation if the user has opted into synchronizing
+branch descriptions)
+
+WDYT?
