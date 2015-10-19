@@ -1,171 +1,164 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 33/34] mailinfo: remove calls to exit() and die() deep in the callchain
-Date: Mon, 19 Oct 2015 00:28:50 -0700
-Message-ID: <1445239731-10677-34-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 26/34] mailinfo: keep the parsed log message in a strbuf
+Date: Mon, 19 Oct 2015 00:28:43 -0700
+Message-ID: <1445239731-10677-27-git-send-email-gitster@pobox.com>
 References: <1444855557-2127-1-git-send-email-gitster@pobox.com>
  <1445239731-10677-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 19 09:29:56 2015
+X-From: git-owner@vger.kernel.org Mon Oct 19 09:30:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zo4tH-00032X-9E
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 09:29:55 +0200
+	id 1Zo4tN-000365-Gi
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 09:30:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751838AbbJSH3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2015 03:29:45 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:33198 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753117AbbJSH3e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2015 03:29:34 -0400
-Received: by pabrc13 with SMTP id rc13so183006856pab.0
-        for <git@vger.kernel.org>; Mon, 19 Oct 2015 00:29:34 -0700 (PDT)
+	id S1753214AbbJSH3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2015 03:29:54 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36546 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752884AbbJSH3Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 03:29:25 -0400
+Received: by pacfv9 with SMTP id fv9so86977882pac.3
+        for <git@vger.kernel.org>; Mon, 19 Oct 2015 00:29:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:subject:date:message-id:in-reply-to:references;
-        bh=ndXEqte4bUfT5m3baqc2J6LtNOgZ3Kq5clWcUMabg4k=;
-        b=S7hbYoNCH76g70Zk4qbS+NTy98RxgsZDkgCtkdVITwQeLhU6+RctwWXc6pE+rqh+rN
-         yCRK0u0k4XLO1M15kLMFlMvw/u4cuGVltG4puPgvRlaojm73L3ZFln0vZVWN28KwqMoE
-         OZvIr/td7/FmgAP308U8W5HiqMMPQfCqm799p2sA3kHsYfnRn73lWuJweDVtqr1zDuiM
-         l7HC0yvLsec2w5eTlb6Gn/VzheepzDwE4D+K2qB1gV3sgiV9SuzOok/2nfBiPZYs8gUU
-         6DSs21sMm2x4KwX7fvVmklTM3yVQ9rF042vLvlZWuXlSFhD2Bc6795NC+sAYJR7q9dgL
-         Gc2g==
-X-Received: by 10.66.221.104 with SMTP id qd8mr33895808pac.155.1445239773908;
-        Mon, 19 Oct 2015 00:29:33 -0700 (PDT)
+        bh=rSMGTTU/r1BMFVkd8sJ1qLDqIloqE7iXcyiLR91BCAk=;
+        b=N3daTs4evyJIszSxQU0W3nTWFkWhGVafCG58VT02ucrZ7nek3fDAJxRabVqFP9HRYg
+         S4xOwtDndaQBMiGhhJlIoGEFyhvnBhjlFm14sT/j3OJWkStp94+4qu+FSN/alx+TOofk
+         x+DbdBQfPW7OwONSZd6sW2q/IH0z0YMaUrcOZxsBk2pFPH7C76OVr0ZMLvKE/pACkj24
+         wuo68zF7XQUub0qBJ7x/NnbHZdcZglFxSQOdh82IUSP8CiYYs91QPYfOxwU78Z2Hf2u1
+         g8tDK56hOiL1p6dAxSyj3Pmlb48Q+1x/uczLEt9yg5486MEXSvxOex+nycWN23pD84G4
+         rXNg==
+X-Received: by 10.68.204.197 with SMTP id la5mr7492583pbc.159.1445239765067;
+        Mon, 19 Oct 2015 00:29:25 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:f5db:ee54:4f5:9373])
-        by smtp.gmail.com with ESMTPSA id gv1sm34490876pbc.38.2015.10.19.00.29.33
+        by smtp.gmail.com with ESMTPSA id ln10sm34857332pab.29.2015.10.19.00.29.24
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 19 Oct 2015 00:29:33 -0700 (PDT)
+        Mon, 19 Oct 2015 00:29:24 -0700 (PDT)
 X-Mailer: git-send-email 2.6.2-388-g10c4a0e
 In-Reply-To: <1445239731-10677-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279850>
 
-The top-level mailinfo() would instead punt when the code in the
-deeper part of the callchain detects an unrecoverable error in the
-input.
+When mailinfo() is eventually libified, the calling "git am" still
+will have to write out the log message in the "msg" file for hooks
+and other users of the information, but it does not have to reopen
+and reread what it wrote earlier if the function kept it in a strbuf.
+
+This also removes the need for seeking and truncating the output
+file when we see a scissors mark in the input, which in turn allows
+us to lose two callsites of die_errno().
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- mailinfo.c | 30 ++++++++++++++++++++++--------
- mailinfo.h |  1 +
- 2 files changed, 23 insertions(+), 8 deletions(-)
+ builtin/mailinfo.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/mailinfo.c b/mailinfo.c
-index 4fbf38f..9d009fa 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -163,8 +163,10 @@ static void handle_content_type(struct mailinfo *mi, struct strbuf *line)
- 	if (slurp_attr(line->buf, "boundary=", boundary)) {
- 		strbuf_insert(boundary, 0, "--", 2);
- 		if (++mi->content_top >= &mi->content[MAX_BOUNDARIES]) {
--			fprintf(stderr, "Too many boundaries to handle\n");
--			exit(1);
-+			error("Too many boundaries to handle");
-+			mi->input_error = -1;
-+			mi->content_top = &mi->content[MAX_BOUNDARIES] - 1;
-+			return;
- 		}
- 		*(mi->content_top) = boundary;
- 		boundary = NULL;
-@@ -355,9 +357,11 @@ static int convert_to_utf8(struct mailinfo *mi,
- 	if (same_encoding(mi->metainfo_charset, charset))
- 		return 0;
- 	out = reencode_string(line->buf, mi->metainfo_charset, charset);
--	if (!out)
-+	if (!out) {
-+		mi->input_error = -1;
- 		return error("cannot convert from %s to %s",
- 			     charset, mi->metainfo_charset);
-+	}
- 	strbuf_attach(line, out, strlen(out), strlen(out));
- 	return 0;
- }
-@@ -367,6 +371,7 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
- 	char *in, *ep, *cp;
- 	struct strbuf outbuf = STRBUF_INIT, *dec;
- 	struct strbuf charset_q = STRBUF_INIT, piecebuf = STRBUF_INIT;
-+	int found_error = 1; /* pessimism */
+diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
+index 286eda0..81bb3c7 100644
+--- a/builtin/mailinfo.c
++++ b/builtin/mailinfo.c
+@@ -12,7 +12,6 @@
+ struct mailinfo {
+ 	FILE *input;
+ 	FILE *output;
+-	FILE *cmitmsg;
+ 	FILE *patchfile;
  
- 	in = it->buf;
- 	while (in - it->buf <= it->len && (ep = strstr(in, "=?")) != NULL) {
-@@ -436,10 +441,14 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
- 	strbuf_addstr(&outbuf, in);
- 	strbuf_reset(it);
- 	strbuf_addbuf(it, &outbuf);
-+	found_error = 0;
- release_return:
- 	strbuf_release(&outbuf);
- 	strbuf_release(&charset_q);
- 	strbuf_release(&piecebuf);
+ 	struct strbuf name;
+@@ -36,6 +35,8 @@ struct mailinfo {
+ 	int header_stage; /* still checking in-body headers? */
+ 	struct strbuf **p_hdr_data;
+ 	struct strbuf **s_hdr_data;
 +
-+	if (found_error)
-+		mi->input_error = -1;
- }
++	struct strbuf log_message;
+ };
  
- static int check_header(struct mailinfo *mi,
-@@ -640,7 +649,7 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
- 
- 	/* normalize the log message to UTF-8. */
- 	if (convert_to_utf8(mi, line, mi->charset.buf))
--		exit(128);
-+		return 0; /* mi->input_error already set */
+ #define MAX_HDR_PARSED 10
+@@ -747,10 +748,8 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
  
  	if (mi->use_scissors && is_scissors_line(line)) {
  		int i;
-@@ -783,12 +792,15 @@ again:
- 		   will fail first.  But just in case..
- 		 */
- 		if (--mi->content_top < mi->content) {
--			fprintf(stderr, "Detected mismatched boundaries, "
--					"can't recover\n");
--			exit(1);
-+			error("Detected mismatched boundaries, can't recover");
-+			mi->input_error = -1;
-+			mi->content_top = mi->content;
-+			return 0;
- 		}
- 		handle_filter(mi, &newline);
- 		strbuf_release(&newline);
-+		if (mi->input_error)
-+			return 0;
+-		if (fseek(mi->cmitmsg, 0L, SEEK_SET))
+-			die_errno("Could not rewind output message file");
+-		if (ftruncate(fileno(mi->cmitmsg), 0))
+-			die_errno("Could not truncate output message file at scissors");
++
++		strbuf_setlen(&mi->log_message, 0);
+ 		mi->header_stage = 1;
  
- 		/* skip to the next boundary */
- 		if (!find_boundary(mi, line))
-@@ -873,6 +885,8 @@ static void handle_body(struct mailinfo *mi, struct strbuf *line)
- 			handle_filter(mi, line);
- 		}
+ 		/*
+@@ -767,13 +766,12 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
  
-+		if (mi->input_error)
-+			break;
- 	} while (!strbuf_getwholeline(line, mi->input, '\n'));
+ 	if (patchbreak(line)) {
+ 		if (mi->message_id)
+-			fprintf(mi->cmitmsg, "Message-Id: %s\n", mi->message_id);
+-		fclose(mi->cmitmsg);
+-		mi->cmitmsg = NULL;
++			strbuf_addf(&mi->log_message,
++				    "Message-Id: %s\n", mi->message_id);
+ 		return 1;
+ 	}
  
- handle_body_out:
-@@ -966,7 +980,7 @@ int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
- 
- 	handle_info(mi);
- 
--	return 0;
-+	return mi->input_error;
+-	fputs(line->buf, mi->cmitmsg);
++	strbuf_addbuf(&mi->log_message, line);
+ 	return 0;
  }
  
- static int git_mailinfo_config(const char *var, const char *value, void *mi_)
-diff --git a/mailinfo.h b/mailinfo.h
-index 27841be..5bf257d 100644
---- a/mailinfo.h
-+++ b/mailinfo.h
-@@ -31,6 +31,7 @@ struct mailinfo {
- 	struct strbuf **s_hdr_data;
+@@ -971,18 +969,19 @@ static void handle_info(struct mailinfo *mi)
  
- 	struct strbuf log_message;
-+	int input_error;
- };
+ static int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
+ {
++	FILE *cmitmsg;
+ 	int peek;
+ 	struct strbuf line = STRBUF_INIT;
  
- extern void setup_mailinfo(struct mailinfo *);
+-	mi->cmitmsg = fopen(msg, "w");
+-	if (!mi->cmitmsg) {
++	cmitmsg = fopen(msg, "w");
++	if (!cmitmsg) {
+ 		perror(msg);
+ 		return -1;
+ 	}
+ 	mi->patchfile = fopen(patch, "w");
+ 	if (!mi->patchfile) {
+ 		perror(patch);
+-		fclose(mi->cmitmsg);
++		fclose(cmitmsg);
+ 		return -1;
+ 	}
+ 
+@@ -999,6 +998,8 @@ static int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
+ 		check_header(mi, &line, mi->p_hdr_data, 1);
+ 
+ 	handle_body(mi, &line);
++	fwrite(mi->log_message.buf, 1, mi->log_message.len, cmitmsg);
++	fclose(cmitmsg);
+ 	fclose(mi->patchfile);
+ 
+ 	handle_info(mi);
+@@ -1026,6 +1027,7 @@ static void setup_mailinfo(struct mailinfo *mi)
+ 	strbuf_init(&mi->name, 0);
+ 	strbuf_init(&mi->email, 0);
+ 	strbuf_init(&mi->charset, 0);
++	strbuf_init(&mi->log_message, 0);
+ 	mi->header_stage = 1;
+ 	mi->use_inbody_headers = 1;
+ 	mi->content_top = mi->content;
+@@ -1052,6 +1054,8 @@ static void clear_mailinfo(struct mailinfo *mi)
+ 		free(*(mi->content_top));
+ 		mi->content_top--;
+ 	}
++
++	strbuf_release(&mi->log_message);
+ }
+ 
+ static const char mailinfo_usage[] =
 -- 
 2.6.2-383-g144b2e6
