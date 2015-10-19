@@ -1,256 +1,129 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH v1] git-p4: Add option to ignore empty commits
-Date: Mon, 19 Oct 2015 20:43:59 +0200
-Message-ID: <1445280239-39840-1-git-send-email-larsxschneider@gmail.com>
-Cc: luke@diamand.org, Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 19 20:44:10 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 3/4] stripspace: Implement --count-lines option
+Date: Mon, 19 Oct 2015 15:24:05 -0400
+Message-ID: <CAPig+cR4wyumSfzXjptCfniuN0QC8TErL1X9LDPMsCD8wHP_kA@mail.gmail.com>
+References: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
+	<1445008605-16534-4-git-send-email-tklauser@distanz.ch>
+	<CAPig+cQ=8FO8yFY4sHUwr0mYuyvMu4d-eizHZeadE9f0BgpXpQ@mail.gmail.com>
+	<xmqqwpukayde.fsf@gitster.mtv.corp.google.com>
+	<20151019134633.GL2468@distanz.ch>
+	<CAP8UFD2pqg_J36V9wZkAR0b-L421gHFi9SbRqFwBbZ1LMVOKSg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Tobias Klauser <tklauser@distanz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git List <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 19 21:24:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoFPk-00053o-UU
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 20:44:09 +0200
+	id 1ZoG2Y-0002In-Ex
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 21:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869AbbJSSoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2015 14:44:04 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:36725 "EHLO
-	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752087AbbJSSoD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2015 14:44:03 -0400
-Received: by lffz202 with SMTP id z202so36234822lff.3
-        for <git@vger.kernel.org>; Mon, 19 Oct 2015 11:44:01 -0700 (PDT)
+	id S1754498AbbJSTYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2015 15:24:08 -0400
+Received: from mail-vk0-f50.google.com ([209.85.213.50]:35447 "EHLO
+	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752928AbbJSTYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 15:24:07 -0400
+Received: by vkfw189 with SMTP id w189so26525494vkf.2
+        for <git@vger.kernel.org>; Mon, 19 Oct 2015 12:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=sPGjzXmHI2lPmCmGgdm6LJWOCLUO1QdtRtpcyL9NhVc=;
-        b=EXEFwMWTpgTT+PR49wbUSpTR4k2ku2K4ocsMPfsWd1AT4bANFXa0mh5l13BWTzYqkh
-         CLlGosqxj+JiJX/0Yr9/gBLVOSOeno66V/TjMge0VPqng6JGPwHpmg7Lohgf4+wxEfZQ
-         9zVC3yXyVKU7TgmvMHnrcPBrhyCIDH+o0ZAkdKpoqpJ6tq3+OE36PyuibpJnT+pUylrs
-         l76HKpoSwY3RgwzgmeLCHgZH/gOoVI/iLjADNCEmbmARriab4X9lbrGbGuG//8gwBKSY
-         uUafMj0SwQxaqBKwD+0CYzet6L4wXTEEo5zEOPIXg3Utm/uk3RRpuYS4Ma13iRaVZIU+
-         kfOw==
-X-Received: by 10.181.29.102 with SMTP id jv6mr21913574wid.59.1445280241243;
-        Mon, 19 Oct 2015 11:44:01 -0700 (PDT)
-Received: from slxBook3.fritz.box (p5DDB5D2E.dip0.t-ipconnect.de. [93.219.93.46])
-        by smtp.gmail.com with ESMTPSA id q1sm41756667wjy.31.2015.10.19.11.44.00
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 19 Oct 2015 11:44:00 -0700 (PDT)
-X-Mailer: git-send-email 2.5.1
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=wZWoRilL3l5g9wVFPlQu0oAONNj0LA6+4RzuKtPJvPM=;
+        b=wHrzqyGPWBTCcOflZL+8AebUd5eMTTORCQw0k3B+mIct68UuaTRW3tUnpLB+fmdtAM
+         0RxzV9qKiUUO7mUQ13iDQd5S7NXEXe+ftFM4YPTY3UmC4I+p8oP+XItBTDGnmk9H68+4
+         itaIat3yiNeB2kChaeCPzVfs72I3YiwaOVMoHWwn8z/hjEt8iZxWZ+X3oZRSC4k3+RhM
+         UGSGOEWwCFNTJ2NYm0ZuOQ/o4/fvh1D5xsfgLxcHjyXAv323EO0oJ9rH7NJHEOQ39DUU
+         pbyPU5A3G4fw4RpbbQ2o0Xo/Mi/XYyRRcTCocJJeK85KzBV2Vb3g6P6Cdr1qERIqAsp/
+         FpjA==
+X-Received: by 10.31.8.131 with SMTP id 125mr20185216vki.45.1445282645774;
+ Mon, 19 Oct 2015 12:24:05 -0700 (PDT)
+Received: by 10.31.159.204 with HTTP; Mon, 19 Oct 2015 12:24:05 -0700 (PDT)
+In-Reply-To: <CAP8UFD2pqg_J36V9wZkAR0b-L421gHFi9SbRqFwBbZ1LMVOKSg@mail.gmail.com>
+X-Google-Sender-Auth: akMbPFUvvi5IHCSfEuikAXxrfGw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279886>
 
-From: Lars Schneider <larsxschneider@gmail.com>
+On Mon, Oct 19, 2015 at 1:03 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Mon, Oct 19, 2015 at 3:46 PM, Tobias Klauser <tklauser@distanz.ch> wrote:
+>> On 2015-10-18 at 19:18:53 +0200, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>> > Is there any application beyond git-rebase--interactive where a
+>>> > --count-lines options is expected to be useful? It's not obvious from
+>>> > the commit message that this change is necessarily a win for later
+>>> > porting of git-rebase--interactive to C since the amount of extra code
+>>> > and support material added by this patch probably outweighs the amount
+>>> > of code a C version of git-rebase--interactive would need to count the
+>>> > lines itself.
+>>> >
+>>> > Stated differently, are the two or three instances of piping through
+>>> > 'wc' in git-rebase--interactive sufficient justification for
+>>> > introducing extra complexity into git-stripspace and its documentation
+>>> > and tests?
+>>>
+>>> Interesting thought.  When somebody rewrites "rebase -i" in C,
+>>> nobody needs to count lines in "stripspace" output.  The rewritten
+>>> "rebase -i" would internally run strbuf_stripspace() and the question
+>>> becomes what is the best way to let that code find out how many lines
+>>> the result contains.
+>>>
+>>> When viewed from that angle, I agree that "stripspace --count" does
+>>> not add anything to further the goal of helping "rebase -i" to move
+>>> to C.  Adding strbuf_count_lines() that counts the number of lines
+>>> in the given strbuf (if there is no such helper yet; I didn't check),
+>>> though.
+>>
+>> I check before implementing this series and didn't find any helper. I
+>> also didn't find any other uses of line counting in the code.
+>
+> This shows that implementing "git stripspace --count-lines" could
+> indirectly help porting "git rebase -i" to C as you could implement
+> strbuf_count_lines() for the former and it could then be reused in the
+> latter.
 
-A changelist that contains only excluded files (e.g. via client spec or
-branch prefix) will be imported as empty commit. Add option
-"git-p4.ignoreEmptyCommits" to ignore these commits.
+In this project, where all user-facing functionality must be supported
+for the life of the project, each new command, command-line option,
+configuration setting, and environment variable exacts additional
+costs beyond the initial implementation cost. With this in mind, my
+question was also indirectly asking whether there was sufficient
+justification of the long-term cost of a --count-lines option. The
+argument that --count-lines would help test a proposed
+strbuf_count_lines() likely does not outweigh that cost.
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- Documentation/git-p4.txt               |   5 ++
- git-p4.py                              |  41 ++++++++-----
- t/t9826-git-p4-ignore-empty-commits.sh | 103 +++++++++++++++++++++++++++++++++
- 3 files changed, 133 insertions(+), 16 deletions(-)
- create mode 100755 t/t9826-git-p4-ignore-empty-commits.sh
+>>> >> +test_expect_success '--count-lines with newline only' '
+>>> >> +       printf "0\n" >expect &&
+>>> >> +       printf "\n" | git stripspace --count-lines >actual &&
+>>> >> +       test_cmp expect actual
+>>> >> +'
+>>> >
+>>> > What is the expected behavior when the input is an empty file, a file
+>>> > with content but no newline, a file with one or more lines but lacking
+>>> > a newline on the final line? Should these cases be tested, as well?
+>>>
+>>> Good point here, too.  If we were to add strbuf_count_lines()
+>>> helper, whoever adds that function needs to take a possible
+>>> incomplete line at the end into account.
+>>
+>> Yes, makes more sense like this (even though it doesn't correspond to
+>> what 'wc -l' does).
+>
+> Tests for "git stripspace --count-lines" would test
+> strbuf_count_lines() which would also help when porting git rebase -i
+> to C.
 
-diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-index 82aa5d6..f096a6a 100644
---- a/Documentation/git-p4.txt
-+++ b/Documentation/git-p4.txt
-@@ -510,6 +510,11 @@ git-p4.useClientSpec::
- 	option '--use-client-spec'.  See the "CLIENT SPEC" section above.
- 	This variable is a boolean, not the name of a p4 client.
- 
-+git-p4.ignoreEmptyCommits::
-+	A changelist that contains only excluded files will be imported
-+	as empty commit. To ignore these commits set this boolean option
-+	to 'true'.
-+
- Submit variables
- ~~~~~~~~~~~~~~~~
- git-p4.detectRenames::
-diff --git a/git-p4.py b/git-p4.py
-index 0093fa3..6c50c74 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2288,12 +2288,6 @@ class P4Sync(Command, P4UserMap):
-         filesToDelete = []
- 
-         for f in files:
--            # if using a client spec, only add the files that have
--            # a path in the client
--            if self.clientSpecDirs:
--                if self.clientSpecDirs.map_in_client(f['path']) == "":
--                    continue
--
-             filesForCommit.append(f)
-             if f['action'] in self.delete_actions:
-                 filesToDelete.append(f)
-@@ -2368,18 +2362,33 @@ class P4Sync(Command, P4UserMap):
-         if self.verbose:
-             print "commit into %s" % branch
- 
--        # start with reading files; if that fails, we should not
--        # create a commit.
--        new_files = []
--        for f in files:
--            if [p for p in self.branchPrefixes if p4PathStartsWith(f['path'], p)]:
--                new_files.append (f)
--            else:
--                sys.stderr.write("Ignoring file outside of prefix: %s\n" % f['path'])
--
-         if self.clientSpecDirs:
-             self.clientSpecDirs.update_client_spec_path_cache(files)
- 
-+        def inClientSpec(path):
-+            if not self.clientSpecDirs:
-+                return True
-+            inClientSpec = self.clientSpecDirs.map_in_client(path)
-+            if not inClientSpec and self.verbose:
-+                print '\n  Ignoring file outside of client spec' % path
-+            return inClientSpec
-+
-+        def hasBranchPrefix(path):
-+            if not self.branchPrefixes:
-+                return True
-+            hasPrefix = [p for p in self.branchPrefixes
-+                            if p4PathStartsWith(path, p)]
-+            if hasPrefix and self.verbose:
-+                print '\n  Ignoring file outside of prefix: %s' % path
-+            return hasPrefix
-+
-+        files = [f for f in files
-+            if inClientSpec(f['path']) and hasBranchPrefix(f['path'])]
-+
-+        if not files and gitConfigBool('git-p4.ignoreEmptyCommits'):
-+            print '\n  Ignoring change %s as it would produce an empty commit.'
-+            return
-+
-         self.gitStream.write("commit %s\n" % branch)
- #        gitStream.write("mark :%s\n" % details["change"])
-         self.committedChanges.add(int(details["change"]))
-@@ -2403,7 +2412,7 @@ class P4Sync(Command, P4UserMap):
-                 print "parent %s" % parent
-             self.gitStream.write("from %s\n" % parent)
- 
--        self.streamP4Files(new_files)
-+        self.streamP4Files(files)
-         self.gitStream.write("\n")
- 
-         change = int(details["change"])
-diff --git a/t/t9826-git-p4-ignore-empty-commits.sh b/t/t9826-git-p4-ignore-empty-commits.sh
-new file mode 100755
-index 0000000..5ddccde
---- /dev/null
-+++ b/t/t9826-git-p4-ignore-empty-commits.sh
-@@ -0,0 +1,103 @@
-+#!/bin/sh
-+
-+test_description='Clone repositories and ignore empty commits'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
-+
-+test_expect_success 'Create a repo' '
-+	client_view "//depot/... //client/..." &&
-+	(
-+		cd "$cli" &&
-+
-+		mkdir -p subdir &&
-+
-+		>subdir/file1.txt &&
-+		p4 add subdir/file1.txt &&
-+		p4 submit -d "Add file 1" &&
-+
-+		>file2.txt &&
-+		p4 add file2.txt &&
-+		p4 submit -d "Add file 2" &&
-+
-+		>subdir/file3.txt &&
-+		p4 add subdir/file3.txt &&
-+		p4 submit -d "Add file 3"
-+	)
-+'
-+
-+test_expect_success 'Clone repo root path with all history' '
-+	client_view "//depot/... //client/..." &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git init . &&
-+		git p4 clone --use-client-spec --destination="$git" //depot@all &&
-+		cat >expect <<-\EOF &&
-+Add file 3
-+[git-p4: depot-paths = "//depot/": change = 3]
-+
-+Add file 2
-+[git-p4: depot-paths = "//depot/": change = 2]
-+
-+Add file 1
-+[git-p4: depot-paths = "//depot/": change = 1]
-+
-+		EOF
-+		git log --format=%B >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'Clone repo subdir with all history' '
-+	client_view "//depot/subdir/... //client/subdir/..." &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git init . &&
-+		git p4 clone --use-client-spec --destination="$git" //depot@all &&
-+		cat >expect <<-\EOF &&
-+Add file 3
-+[git-p4: depot-paths = "//depot/": change = 3]
-+
-+Add file 2
-+[git-p4: depot-paths = "//depot/": change = 2]
-+
-+Add file 1
-+[git-p4: depot-paths = "//depot/": change = 1]
-+
-+		EOF
-+		git log --format=%B >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'Clone repo subdir with all history but ignore empty commits' '
-+	client_view "//depot/subdir/... //client/subdir/..." &&
-+	test_when_finished cleanup_git &&
-+	(
-+		cd "$git" &&
-+		git init . &&
-+		git config git-p4.ignoreEmptyCommits true &&
-+		git p4 clone --use-client-spec --destination="$git" //depot@all &&
-+		cat >expect <<-\EOF &&
-+Add file 3
-+[git-p4: depot-paths = "//depot/": change = 3]
-+
-+Add file 1
-+[git-p4: depot-paths = "//depot/": change = 1]
-+
-+		EOF
-+		git log --format=%B >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
--- 
-2.5.1
+Rather than saddling the project with the cost of a new user-facing,
+but otherwise unneeded option, a more direct way to test the proposed
+strbuf_count_lines() would be to add a test-strbuf program, akin to
+test-config, test-string-list, etc. This has the added benefit of
+providing a home for strbuf-based tests beyond line counting.
