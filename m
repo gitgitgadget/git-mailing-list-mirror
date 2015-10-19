@@ -1,132 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 02/34] mailinfo: fold decode_header_bq() into decode_header()
-Date: Mon, 19 Oct 2015 00:28:19 -0700
-Message-ID: <1445239731-10677-3-git-send-email-gitster@pobox.com>
-References: <1444855557-2127-1-git-send-email-gitster@pobox.com>
- <1445239731-10677-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 19 09:31:05 2015
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 00/10] port branch.c to use ref-filter's printing options
+Date: Mon, 19 Oct 2015 10:12:46 +0200
+Message-ID: <vpqy4ezjmyp.fsf@grenoble-inp.fr>
+References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
+	<vpqr3l5zgst.fsf@grenoble-inp.fr>
+	<CAOLa=ZQvB_S2-nw8hOABt7aQJOWJXvfK1U2zurpnZmaAgJNnGA@mail.gmail.com>
+	<vpq8u7dp9qr.fsf@grenoble-inp.fr>
+	<CAOLa=ZQOO9BjoTj1B-b=kUviL=617F7y46BeX1sOXpeHcatFVQ@mail.gmail.com>
+	<xmqq4mi1rywu.fsf@gitster.mtv.corp.google.com>
+	<vpqpp0ojvs6.fsf@grenoble-inp.fr>
+	<xmqqfv1jq4jy.fsf@gitster.mtv.corp.google.com>
+	<CAOLa=ZQkjMFXVeJ==myQLjyRs6EcejnYnszYKJLyskFufjeqiA@mail.gmail.com>
+	<xmqqbnc4ord4.fsf@gitster.mtv.corp.google.com>
+	<CAOLa=ZT5AUAOgHNhX3AwpY20AZkm39=-JVQjUCgb0_x6LTHXaA@mail.gmail.com>
+	<vpq7fms9cjs.fsf@grenoble-inp.fr>
+	<xmqq37xfncak.fsf@gitster.mtv.corp.google.com>
+	<vpq612bzz0o.fsf@grenoble-inp.fr>
+	<CAOLa=ZQ5dCx4XheMvaFo1u-fR=uaR-LU-n7KHR3xNJ7TuF-zww@mail.gmail.com>
+	<xmqqzizfa2n7.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>, Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 19 10:13:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zo4uI-0003ig-T6
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 09:30:59 +0200
+	id 1Zo5Yz-00043V-5R
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 10:13:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752691AbbJSHay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2015 03:30:54 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35956 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751636AbbJSH24 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2015 03:28:56 -0400
-Received: by pacfv9 with SMTP id fv9so86964399pac.3
-        for <git@vger.kernel.org>; Mon, 19 Oct 2015 00:28:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:subject:date:message-id:in-reply-to:references;
-        bh=Kq+MCBF/9Zj0d3zDbSqb68ITn6cjDl5mNHd/0AcKTHQ=;
-        b=vn/hewG749UJ9b22/9Sge9q3RmY5kPVeKfbvCSZCsfLGp6oyBpFoHB/6cJnt+e3Ls5
-         X3ydqI5chdoNPgHzafv/rxpEGBabF7U3Cke/W8BZrqVmgxPloagWYPyxs4n2zucd94gl
-         5tIq5zD6emzAoFdpOUf/KSayoFp+PHFDZ7ZWxmx846qY4eq+cgOlX+yghwfsfWRkuTKS
-         uGOEO9TBkbbCGt7R8tGaZTGIL6ruDpfHVqJAC1AWXTDrayemv54Db5oWi9Bm9XRN0zo5
-         Fuby5lbqYa+i5aawbH5CtxVnqtXHxwTW+KYjoa4CHXvdLtr95F8Mh6ekpPlPg94FbJeE
-         lUzA==
-X-Received: by 10.68.168.2 with SMTP id zs2mr33412375pbb.154.1445239736496;
-        Mon, 19 Oct 2015 00:28:56 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:f5db:ee54:4f5:9373])
-        by smtp.gmail.com with ESMTPSA id a17sm34469827pbu.55.2015.10.19.00.28.55
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 19 Oct 2015 00:28:55 -0700 (PDT)
-X-Mailer: git-send-email 2.6.2-388-g10c4a0e
-In-Reply-To: <1445239731-10677-1-git-send-email-gitster@pobox.com>
+	id S1753158AbbJSIMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2015 04:12:55 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:33962 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750912AbbJSIMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 04:12:52 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id t9J8CjAi026401
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 19 Oct 2015 10:12:45 +0200
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9J8CkW6016956;
+	Mon, 19 Oct 2015 10:12:46 +0200
+In-Reply-To: <xmqqzizfa2n7.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Sun, 18 Oct 2015 21:44:12 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 19 Oct 2015 10:12:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t9J8CjAi026401
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1445847166.59025@107ey2e3mOLllL0GhzeyCw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279867>
 
-In olden days we might have wanted to behave differently in
-decode_header() if the header line was encoded with RFC2047, but we
-apparently do not do so, hence this helper function can go, together
-with its return value.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/mailinfo.c | 23 +++++++----------------
- 1 file changed, 7 insertions(+), 16 deletions(-)
+> I personally would suggest whichever order you feel more comfortable
+> and less error-prone.
 
-diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index 5a4ed75..addc0e0 100644
---- a/builtin/mailinfo.c
-+++ b/builtin/mailinfo.c
-@@ -525,19 +525,17 @@ static void convert_to_utf8(struct strbuf *line, const char *charset)
- 	strbuf_attach(line, out, strlen(out), strlen(out));
- }
- 
--static int decode_header_bq(struct strbuf *it)
-+static void decode_header(struct strbuf *it)
- {
- 	char *in, *ep, *cp;
- 	struct strbuf outbuf = STRBUF_INIT, *dec;
- 	struct strbuf charset_q = STRBUF_INIT, piecebuf = STRBUF_INIT;
--	int rfc2047 = 0;
- 
- 	in = it->buf;
- 	while (in - it->buf <= it->len && (ep = strstr(in, "=?")) != NULL) {
- 		int encoding;
- 		strbuf_reset(&charset_q);
- 		strbuf_reset(&piecebuf);
--		rfc2047 = 1;
- 
- 		if (in != ep) {
- 			/*
-@@ -567,22 +565,22 @@ static int decode_header_bq(struct strbuf *it)
- 		ep += 2;
- 
- 		if (ep - it->buf >= it->len || !(cp = strchr(ep, '?')))
--			goto decode_header_bq_out;
-+			goto release_return;
- 
- 		if (cp + 3 - it->buf > it->len)
--			goto decode_header_bq_out;
-+			goto release_return;
- 		strbuf_add(&charset_q, ep, cp - ep);
- 
- 		encoding = cp[1];
- 		if (!encoding || cp[2] != '?')
--			goto decode_header_bq_out;
-+			goto release_return;
- 		ep = strstr(cp + 3, "?=");
- 		if (!ep)
--			goto decode_header_bq_out;
-+			goto release_return;
- 		strbuf_add(&piecebuf, cp + 3, ep - cp - 3);
- 		switch (tolower(encoding)) {
- 		default:
--			goto decode_header_bq_out;
-+			goto release_return;
- 		case 'b':
- 			dec = decode_b_segment(&piecebuf);
- 			break;
-@@ -601,17 +599,10 @@ static int decode_header_bq(struct strbuf *it)
- 	strbuf_addstr(&outbuf, in);
- 	strbuf_reset(it);
- 	strbuf_addbuf(it, &outbuf);
--decode_header_bq_out:
-+release_return:
- 	strbuf_release(&outbuf);
- 	strbuf_release(&charset_q);
- 	strbuf_release(&piecebuf);
--	return rfc2047;
--}
--
--static void decode_header(struct strbuf *it)
--{
--	if (decode_header_bq(it))
--		return;
- }
- 
- static void decode_transfer_encoding(struct strbuf *line)
+This is a good summary, and I fully agree with it.
+
 -- 
-2.6.2-383-g144b2e6
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
