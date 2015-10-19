@@ -1,143 +1,116 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Add ls-files --eol-staged, --eol-worktree
-Date: Mon, 19 Oct 2015 07:23:11 +0200
-Message-ID: <56247E3F.40804@web.de>
+Date: Sun, 18 Oct 2015 23:32:14 -0700
+Message-ID: <xmqqvba39xn5.fsf@gitster.mtv.corp.google.com>
 References: <D68CC6D0-3FD5-4423-A9E2-905DF18E893F@web.de>
- <xmqq4mhoatna.fsf@gitster.mtv.corp.google.com>
+	<xmqq4mhoatna.fsf@gitster.mtv.corp.google.com> <56247E3F.40804@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, philipoakley@iee.org, tboegi@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 07:23:30 2015
+Cc: git@vger.kernel.org, philipoakley@iee.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Oct 19 08:32:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zo2ut-0007ma-TR
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 07:23:28 +0200
+	id 1Zo3zb-0007gC-Dw
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 08:32:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751590AbbJSFXX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Oct 2015 01:23:23 -0400
-Received: from mout.web.de ([212.227.15.4]:51536 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751273AbbJSFXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2015 01:23:22 -0400
-Received: from [192.168.88.158] ([194.47.243.242]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0MdLcJ-1a6OqT2Ebb-00IXRo; Mon, 19 Oct 2015 07:23:18
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.3.0
-In-Reply-To: <xmqq4mhoatna.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:EsQvd5TYVmEg9DsgAHp13eo1U4I2ywy4RCV/Rn8dnFIvvf5Czo7
- lIUDC8U6TJ74NP99suIj8UtGKNa8OWThBawK50oex95Ol8vkuWX3G05/TDkP8rjCu1PFcTo
- KJ5Z3stJQdZpb9jHu+9hiJsonV3XTO/g9ZS4pYqKmR/+L5goG6fKgVODG4xIAhDwFRUBU0z
- 2vPnS+GdoKYLJ34Wz/dXA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZRz7bIpAzDg=:v0ZzEPwPgUkIwPGda4xh/M
- qXHVE1prIrZfk8uiNL+V+eU9tQLADGhb7eGjVpOdlms2OtwlCJDTwvzNMar0I9fW6f3+RnEFk
- rWuBzb9Nox0oEK1h3c+rpLy1x2IufJbHR6XxKZ61/LvCAOSK2Api4MbN6nDcYHkHnZPX0Wa/e
- D8x5p/m6/OfsUAS9dqNzIktl1zwagGGS7RoSkcf4oHWM3grakEgLUwEQW1vWBfdvCHC3dTKUO
- pT8Qzmijt6wdO4LLKaj39YtDvZDFJUSp9jJeUwCVr61QqUKIhJg3k5HAtSRdYutekq7Az43XZ
- uG9nvJCjOWsWrUTI97T0jiFT2uf20ggQOIk5Cz7MMdHzVBqITUJ4dL5ozKANBtlu6LeBoT4JB
- FSbknzjW37N75uqWJv2mgmHU7YHzxwy1W7pHin7P07c9/hBJJ+eJq4diCIcQTwSIr1FAtnvs1
- GEE1gMJ3k2Ma287WekG1E7tkrm5ngNFx2Dqr6I4dHxorjVWxtqFw+PQMZDAAIi9Wfk4Uz686P
- zhN0SSHTJwqnMYrdAS6CWozZR2/LXqKmvW7CoEJjWpQVet6cloNjUb+y6+HnJk9L/CiQS13fO
- A67t12o3IFhMcv9qOVH083At+32o3tfj4JzJNQZsBiTna24iPi8C7rZczFONr3lwOp7NFx35j
- S7+qbyeRIXShXhhS5kDBx66JYCSKmWl+yJUSjvjZorl1IBpiWHpgp+elE1yn9EL6bdgLozUCK
- gy84+pYCrvkLFzdnQ/tG21N6GXI3Yd84C/xQVavkqo/+KQ7zx/XCCGEE0roH33k1b+lrkaBl 
+	id S1752883AbbJSGcT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Oct 2015 02:32:19 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36781 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752364AbbJSGcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 02:32:18 -0400
+Received: by pacfv9 with SMTP id fv9so85344907pac.3
+        for <git@vger.kernel.org>; Sun, 18 Oct 2015 23:32:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=NVIepsGoPmwHZG8hiSYDCkb3j/jF1fEiiunplUCE+2o=;
+        b=m1jrQKbW/qBESplWtgm53UOmR9G6BGRCAmCuFAge540XwI8dOZX8cUTx2nNWt7g1Zu
+         kqFMVzlSQ6JV1K0ffejjdiu2Z0yyCYQa8DAzi0dfWx1OV+SDumAG0ykNm5PFcvdCxOYy
+         AiYMPkovJg7EZsRefYNd0Nk55jm5XXNGNxqG1xZzBAvoE6mKNrMafP2FOY6auohmLveg
+         ilSuqDhITRSdy2qHOmnMYrnZusK9tCVo6t31j7U2sddtI9oo1HGloAPQeVhShnJNXUsD
+         O6QwvxSJVpE+5LQPqsKUBcEMpH2KgAzG8y1ISX3OsGutwVSWcshi6FtTAseZxW0O5TuO
+         haMw==
+X-Received: by 10.67.5.66 with SMTP id ck2mr32714582pad.137.1445236337705;
+        Sun, 18 Oct 2015 23:32:17 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:f5db:ee54:4f5:9373])
+        by smtp.gmail.com with ESMTPSA id qa5sm34125681pbc.70.2015.10.18.23.32.15
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 18 Oct 2015 23:32:15 -0700 (PDT)
+In-Reply-To: <56247E3F.40804@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershausen?=
+ =?utf-8?Q?=22's?= message of
+	"Mon, 19 Oct 2015 07:23:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279829>
 
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-
-On 18/10/15 21:00, Junio C Hamano wrote:
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+> I like this idea:
 >
->> Make it possible to show the line endings of files.
->> Files which are staged and/or files in the working tree:
->>
->> git ls-files --eol-staged
->> git ls-files --eol-worktree
-> Two unrelated (to the issues raised in other review responses)
-> issues in the UI:
+> binary
+> text
+> crlf
+> mixed
+> lf
+
+If you really like it, it would mean that my attempt to use Socratic
+method to enlighten you why the above is not a good idea failed X-<.
+
+> ----------------
+> $ git ls-files --eol-staged -s
+>  [snip]
+>  100644 981f810e80008d878d6a5af1331c89dc093c5927 0       txt-lf workt=
+ree.c
+
+Does it even make sense to give --eol-worktree in this case?
+
+> My understanding is that the eol options work togther with the existi=
+ng option,
+> as long as it makes sense (but see below)
 >
->   - While I can see how the new feature would be useful, I am not
->     convinced that it is a good idea to add it to ls-files.  Does the
->     option work well with other existing options like -s, -t, etc?
->     Does it make sense to combine it with other options like -m, -d,
->     etc?  I have this suspicion that "check-attr", "check-ignore",
->     etc.  may give a better model that fits this feature better,
->     i.e. "git check-eol".
->
-(This should answer all comments, thanks everybody
-@Erics Sunshine: Thanks for the review, dropped you from cc list becaus=
-e web.de=20
-can't find an MX record)
+> "git check-attr" will even report attributes for a file, that doesn't=
+ even exist.
 
+Both "ls-files -o/-i" talk about untracked paths, so that is not a
+very useful and valid objection, is it?
 
-I like this idea:
+> "git ls-files is a command which by default operates on the staged
+> area, unless I mis-understand it.
 
-binary
-text
-crlf
-mixed
-lf
+It is even worse than that.  It is true that "ls-files [-s]" is
+about "--cached" and there is no equivalent to show the working tree
+version.  But "-t", "-d", etc. are not about the state in the index
+nor the state in the working tree.  They are about the relationship
+between these two states.
 
+What the new operation wants to do, if I understand correctly, is
+either check the blob contents in the working tree or in the index,
+which is not a good fit with what the rest of "ls-files" does for
+exactly that reason.  The inability to mix -s with --eol-worktree
+is another natural consequence of this.
 
-----------------
-$ git ls-files --eol-staged -s
-  [snip]
-  100644 981f810e80008d878d6a5af1331c89dc093c5927 0       txt-lf worktr=
-ee.c
+> I was thinking about adding "git check-eol", but didn't want to
+> introduce just another command,
 
----------------------
-$ rm  Documentation/RelNotes/2.7.0.txt
-$ echo "/* */" >>builtin/ls-files.c
-$ ls-files -m --eol-worktree
-   empty    Documentation/RelNotes/2.7.0.txt
-   txt-lf   builtin/ls-files.c
------------------------
-(The empty is a bug, thanks Eric)
-------------------------------
-$ ./git-ls-files --eol-worktree -t
-[snip]
-$ H txt-lf   zlib.c
--------------------------
-My understanding is that the eol options work togther with the existing=
- option,
-as long as it makes sense (but see below)
+Between adding a new command that does one thing well and whose user
+interaction is coherent with the rest of the system, and adding a
+new operation mode to an existing command and makes the user
+interaction of that existing command more incoherent by introducing
+two variants --foo and --foo-worktree when there is no existing
+option that has similar variant pair, I'd say we prefer to see a new
+command.
 
-"git check-attr" will even report attributes for a file, that doesn't e=
-ven exist.
-"git ls-files is a command which by default operates on the staged area=
-, unless=20
-I mis-understand it.
-
-And that is the main purpose:
-Tell me how which line endings your staged files have, and I can tell y=
-ou that=20
-you may
-consider to normalize these files because "git status", "git blame" con=
-sider=20
-these files as changed.
-
-(From that point of view,
-"git ls-files --eol" could be the way to report the staged eols.
-But then users would ask:
-but why can't you tell me what I have in my worktree ?
-
-"git ls-files --eol-worktree" could be the answer (or "git ls-files -o=20
---eol-worktree" )
-
-I was thinking about adding "git check-eol", but didn't want to introdu=
-ce just=20
-another command,
-as the syntax and options (-z, -o -x -X) overlap much with ls-files
-
-Is it the common understanding to add a new command is the best solutio=
-n ?
+The -z output, and --stdin input are what we would want to have for
+the new command, but I do not think we want it to know -o, -x or -X.
+You would instead pipe output from ls-files with these options to
+the new command run with the --stdin option.
