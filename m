@@ -1,90 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/10] port branch.c to use ref-filter's printing options
-Date: Sun, 18 Oct 2015 21:44:12 -0700
-Message-ID: <xmqqzizfa2n7.fsf@gitster.mtv.corp.google.com>
-References: <1444295885-1657-1-git-send-email-Karthik.188@gmail.com>
-	<vpqr3l5zgst.fsf@grenoble-inp.fr>
-	<CAOLa=ZQvB_S2-nw8hOABt7aQJOWJXvfK1U2zurpnZmaAgJNnGA@mail.gmail.com>
-	<vpq8u7dp9qr.fsf@grenoble-inp.fr>
-	<CAOLa=ZQOO9BjoTj1B-b=kUviL=617F7y46BeX1sOXpeHcatFVQ@mail.gmail.com>
-	<xmqq4mi1rywu.fsf@gitster.mtv.corp.google.com>
-	<vpqpp0ojvs6.fsf@grenoble-inp.fr>
-	<xmqqfv1jq4jy.fsf@gitster.mtv.corp.google.com>
-	<CAOLa=ZQkjMFXVeJ==myQLjyRs6EcejnYnszYKJLyskFufjeqiA@mail.gmail.com>
-	<xmqqbnc4ord4.fsf@gitster.mtv.corp.google.com>
-	<CAOLa=ZT5AUAOgHNhX3AwpY20AZkm39=-JVQjUCgb0_x6LTHXaA@mail.gmail.com>
-	<vpq7fms9cjs.fsf@grenoble-inp.fr>
-	<xmqq37xfncak.fsf@gitster.mtv.corp.google.com>
-	<vpq612bzz0o.fsf@grenoble-inp.fr>
-	<CAOLa=ZQ5dCx4XheMvaFo1u-fR=uaR-LU-n7KHR3xNJ7TuF-zww@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 06:44:23 2015
+From: Sidhant Sharma <tigerkid001@gmail.com>
+Subject: [PATCH] worktree: usage: denote <branch> as optional with 'add'
+Date: Mon, 19 Oct 2015 10:14:53 +0530
+Message-ID: <1445229893-4179-1-git-send-email-tigerkid001@gmail.com>
+References: <CAPig+cRXq9qonwPpWQdnrFkJgQQW0zDokXQhSvw5n07d7OpqdQ@mail.gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 19 06:45:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zo2J2-0002Jp-4T
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 06:44:20 +0200
+	id 1Zo2Ju-0002zx-1r
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 06:45:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985AbbJSEoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2015 00:44:16 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:33933 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750836AbbJSEoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2015 00:44:15 -0400
-Received: by padhk11 with SMTP id hk11so17420009pad.1
-        for <git@vger.kernel.org>; Sun, 18 Oct 2015 21:44:14 -0700 (PDT)
+	id S1751095AbbJSEpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2015 00:45:08 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:35850 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750823AbbJSEpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 00:45:07 -0400
+Received: by pacfv9 with SMTP id fv9so82456149pac.3
+        for <git@vger.kernel.org>; Sun, 18 Oct 2015 21:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=jUZ/TbQqXvDeJsuaVQ5cjJoYPtG8pYKA3bX53O3mwgg=;
-        b=VkQaZ9EoUGp4mChJZzfG0Zy8vJMKudvp8RvU2L/jBrLi3ml10MMJXhx8H0Vv2ayVB6
-         +lASsKUYlqspjEc3Z0VPGJdjdpwENkQQA9iEVDjgAzWyFlBYwuY3l2PAvNLtXHEzjgCa
-         ZRMoWMFNj8J7VR4BRffJhGA1WUV81Hetlkme30ge6pPlpdYwXf8WmM+zcCZVe9DrFPH1
-         BvmlO8zWMYZaRPGj9E8e7RpL/SSPYQJ44CWzRPsBGwuaNsdV13yAbWr0YpDHOUY0wyDd
-         ERTVqw5DXYnG0k1tcy5PJHp8lEasR6Z6ZtzL9gPcylxf5Rikza0DW/QVEg9FEp46cj2j
-         AJug==
-X-Received: by 10.67.23.165 with SMTP id ib5mr31653683pad.26.1445229854859;
-        Sun, 18 Oct 2015 21:44:14 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:f5db:ee54:4f5:9373])
-        by smtp.gmail.com with ESMTPSA id yz3sm33548696pbb.37.2015.10.18.21.44.12
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 18 Oct 2015 21:44:13 -0700 (PDT)
-In-Reply-To: <CAOLa=ZQ5dCx4XheMvaFo1u-fR=uaR-LU-n7KHR3xNJ7TuF-zww@mail.gmail.com>
-	(Karthik Nayak's message of "Mon, 19 Oct 2015 00:37:05 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=from:to:subject:date:message-id:in-reply-to:references;
+        bh=gf+MfCRdz1dK2A04TKiq0A63vYoRx2J7DDnB5F60iys=;
+        b=AngChdOifuem3f3uoWeE7dsA69Svt3+eFVow2cXfWWM3wbfHBejm71XZkH8qw3yJHb
+         iN1usuwKQzgaCZ7Ip7824FxZDA3zw5g5EpTW7HSu6my5xEUBxmqWXhlihDx6H3w3epOV
+         nZk8tdxkdrUrVL7Fir8s/hTu86KI+h+wSX0MU2fuzyh8UJuO4HR5I4rORi7kny7thaS9
+         wA8R4IKb0oHQuDOro4Em/m4AQ0e1xUq2tfvX7Iig6zFXHgdtQwNr8bb1+kFX5DpM1885
+         GxxxE0sMCt/QGBdKowcpj6ZfDVkhi+WO7Hw7lPa+LzdxskT0kosxnhgoSj2tkfost3XZ
+         UTCw==
+X-Received: by 10.66.90.233 with SMTP id bz9mr32016475pab.14.1445229906764;
+        Sun, 18 Oct 2015 21:45:06 -0700 (PDT)
+Received: from localhost.localdomain ([182.68.245.161])
+        by smtp.gmail.com with ESMTPSA id tj2sm33861443pab.4.2015.10.18.21.45.05
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 18 Oct 2015 21:45:06 -0700 (PDT)
+X-Mailer: git-send-email 2.6.2
+In-Reply-To: <CAPig+cRXq9qonwPpWQdnrFkJgQQW0zDokXQhSvw5n07d7OpqdQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279827>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Although 1eb07d8 (worktree: add: auto-vivify new branch when
+<branch> is omitted, 2015-07-06) updated the documentation when
+<branch> became optional, it neglected to update the in-code
+usage message. Fix this oversight.
 
-> ... While doing so I realized I was moving a lot of code around
-> and this had me thinking it's perhaps easier to do the cleaning up
-> first as Junio suggested.
-> 
-> Maybe then it'd be simpler to do implement this rather than move
-> code around now and then move code around when we implement the
-> parsing methods we spoke about earlier?
+Reported-by: ch3cooli@gmail.com
+Signed-off-by: Sidhant Sharma <tigerkid001@gmail.com>
+---
+ builtin/worktree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-When I suggested the approach, I hadn't have done any of what you
-actually did, so I was primarily talking out of "hunch" (perhaps
-that is what some people call "taste") but I expected something like
-that may happen ;-).
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 71bb770..33d2d37 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -10,7 +10,7 @@
+ #include "refs.h"
 
-Right now, you practically own the topic, in the sense that nobody
-seems to be in a very urgent need to compete with you in parallel to
-implement what we have discussed before you do, so I personally
-would suggest whichever order you feel more comfortable and less
-error-prone.
-
-Thanks.
+ static const char * const worktree_usage[] = {
+-	N_("git worktree add [<options>] <path> <branch>"),
++	N_("git worktree add [<options>] <path> [<branch>]"),
+ 	N_("git worktree prune [<options>]"),
+ 	NULL
+ };
+--
+2.6.2
