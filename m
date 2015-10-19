@@ -1,89 +1,117 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git bug report: git doesn't change working directory
-Date: Mon, 19 Oct 2015 18:33:40 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1510191831130.31610@s15462909.onlinehome-server.info>
-References: <loom.20151017T034154-956@post.gmane.org>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 3/4] stripspace: Implement --count-lines option
+Date: Mon, 19 Oct 2015 19:03:34 +0200
+Message-ID: <CAP8UFD2pqg_J36V9wZkAR0b-L421gHFi9SbRqFwBbZ1LMVOKSg@mail.gmail.com>
+References: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
+	<1445008605-16534-4-git-send-email-tklauser@distanz.ch>
+	<CAPig+cQ=8FO8yFY4sHUwr0mYuyvMu4d-eizHZeadE9f0BgpXpQ@mail.gmail.com>
+	<xmqqwpukayde.fsf@gitster.mtv.corp.google.com>
+	<20151019134633.GL2468@distanz.ch>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-22421922-1445272421=:31610"
-Cc: git@vger.kernel.org
-To: =?VISCII?Q?Kh=E4i?= <hvksmr1996@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 18:33:49 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git List <git@vger.kernel.org>
+To: Tobias Klauser <tklauser@distanz.ch>
+X-From: git-owner@vger.kernel.org Mon Oct 19 19:03:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoDNc-0005bR-T7
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 18:33:49 +0200
+	id 1ZoDqm-0003sT-LZ
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 19:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753593AbbJSQdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2015 12:33:43 -0400
-Received: from mout.gmx.net ([212.227.15.19]:64825 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750995AbbJSQdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2015 12:33:42 -0400
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MYg42-1a22zv1R0E-00VTJm;
- Mon, 19 Oct 2015 18:33:41 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <loom.20151017T034154-956@post.gmane.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:Rn8iyruge+Ca65uyAgYmXnpGrPSRb7pLQvtGwde1vNQA0GHG72W
- jpWSRWZi1cj6MA8tpODh3CGYbrle0Y2TnJ78kxM+CuIg39p1VceR88Y/51KapzXtoxwz/G8
- ++BPHBFVgPtXMfvCx3ghSPmZ9CM1BmRlyqs/bxKwt8BDjaXIDljlu49OOuKmZo5YQS6kDGn
- G72dYZ/5d0h6i3KPXfLWg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BewviKyYnAI=:5qmuiDmOrm3bkq6Rw/6zd2
- w7FJ/2PVM89Sb3D2mSzlbVxOymcs3YOrH3GSehsI1BB1PiMRijgFdlyGt+u751FzCIQNTSbJL
- bdS4av7Il9S2LRA/l8w5amfC7EsabEJqvxN/n9VAJfwgwLhJ0Vn4KC3obG8YImha0470Sag1K
- fojBmj3e9x+YvrF3QXkpMqwPHNGCx8h6aswzlb5/wEJUDS/ppvC6Kr0D9zRylaRw7O3eoZmNs
- hU6w9PSCrntivGC+hCDaVp9LiG1obAh1McKvWsSk0SnD+ZoLkntLcGtLnyDw/ciMeIWgMNFY7
- xvGaGYQMZnLt6Sx4hG07iW9tTOhLBgh56bBZCX2m+gwtuDJn4sQrF2JZE+vTgyUMehHjgE4Pe
- O3Hm8XqvQEpDFlUr3WdSzerGw8wtSpv49BwqEvSdoBAm2KkR2/bnmSfBUykyO8LirSEfVkgtl
- FOd54Kgv/v4IF6zE130e18E35d1RFljTaqpe+es5csgClvSHeBoDjjASw+jHwX0kWAxTcBXFY
- mITmBG3zuyGRRQs2l7hCNF4isczKFxUaF3uaoGIRLSIRgkseYHxh0oljaz9iz/qaJeW09/Gh9
- ssW1YWuQgnw/pK6Xz08sjct+9SbiMo6ugRs4hVtjqedHIBUYAmdQZLvmC1+OrBa06Yvf1wxuA
- KOLw8G8XnvJMo+CQffYB26qsSVNuz0LPKbAEVbZjK7OzKm9Y7sMf31Mn67L8oiEZE71sDZijt
- 7ZNoloZAIKZ9OsG0W1jH8Xo70EbAX9dZmjvyR9eGtAVvdu1zBvYII58oZnx5haVPJehcUb2Z 
+	id S1754410AbbJSRDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2015 13:03:55 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:36153 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754542AbbJSRDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 13:03:35 -0400
+Received: by lbcao8 with SMTP id ao8so148465942lbc.3
+        for <git@vger.kernel.org>; Mon, 19 Oct 2015 10:03:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=P/g7TxfBIEo8l9JDborLqhAcmJNynhLbeoJ336D4BAk=;
+        b=jGovVTwaBCtHT/utp5z5TAZCJMYZtOhWnV6rPbCx3DTWRi/PTLSjgIhrJbzOeOHpA2
+         qgRszdIma9NBO3uI0zFDiyQNlXCzkmDcV7mCiORDNHX13pUlnrG/HbYhE0CibfYlI58S
+         S5fzwdtnHmmTpghR4821EY/oTS0XnC3HRtpgccVBtp+ibVFSlfluXsIQqsaEH+dDza9P
+         DbwepR1KocJPr0Ifpn3aU2xWI7BFW27wogp9WtPE6vSYKTwoVp8p8PEcY5OEryYa7CQW
+         7U0Sj9BckBTzvwv3iBhgDfGCYZ220EvbmH45RGHRWrPfiQcCdwY7R6kRVotBJGa4AoVd
+         GMbw==
+X-Received: by 10.112.218.42 with SMTP id pd10mr15583099lbc.114.1445274214092;
+ Mon, 19 Oct 2015 10:03:34 -0700 (PDT)
+Received: by 10.25.89.130 with HTTP; Mon, 19 Oct 2015 10:03:34 -0700 (PDT)
+In-Reply-To: <20151019134633.GL2468@distanz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279876>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---1784107012-22421922-1445272421=:31610
-Content-Type: TEXT/PLAIN; charset=VISCII
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-
-Hi Kh=E4i,
-
-On Sat, 17 Oct 2015, Kh=E4i wrote:
-
-> I'm using Windows 10. Before I install git 2.6.1.windows.1, I have
-> installed git 1.9.5.github.0 (by installing GitHub Desktop), it works
-> just fine.
-
-Good.
-
-> But when I installed git 2.6.1.windows.1 (from git-scm.com), I'm not
-> able to use git anymore:
+On Mon, Oct 19, 2015 at 3:46 PM, Tobias Klauser <tklauser@distanz.ch> wrote:
+> On 2015-10-18 at 19:18:53 +0200, Junio C Hamano <gitster@pobox.com> wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>
+>> > Is there any application beyond git-rebase--interactive where a
+>> > --count-lines options is expected to be useful? It's not obvious from
+>> > the commit message that this change is necessarily a win for later
+>> > porting of git-rebase--interactive to C since the amount of extra code
+>> > and support material added by this patch probably outweighs the amount
+>> > of code a C version of git-rebase--interactive would need to count the
+>> > lines itself.
+>> >
+>> > Stated differently, are the two or three instances of piping through
+>> > 'wc' in git-rebase--interactive sufficient justification for
+>> > introducing extra complexity into git-stripspace and its documentation
+>> > and tests?
+>>
+>> Interesting thought.  When somebody rewrites "rebase -i" in C,
+>> nobody needs to count lines in "stripspace" output.  The rewritten
+>> "rebase -i" would internally run strbuf_stripspace() and the question
+>> becomes what is the best way to let that code find out how many lines
+>> the result contains.
+>>
+>> When viewed from that angle, I agree that "stripspace --count" does
+>> not add anything to further the goal of helping "rebase -i" to move
+>> to C.  Adding strbuf_count_lines() that counts the number of lines
+>> in the given strbuf (if there is no such helper yet; I didn't check),
+>> though.
 >
->  - The powershell console displayed [(unknown)] instead of [master], even=
-=20
-> when I changed working directory to my project, it still display=20
-> [(unknown)]
+> I check before implementing this series and didn't find any helper. I
+> also didn't find any other uses of line counting in the code.
+
+This shows that implementing "git stripspace --count-lines" could
+indirectly help porting "git rebase -i" to C as you could implement
+strbuf_count_lines() for the former and it could then be reused in the
+latter.
+
+> After considering your and Eric's reply, I'll drop these patches for
+> now and only resubmit patches 1/4 and 2/4 for v3 (also see my reply to
+> Eric).
+
+It would be sad in my opinion.
+
+>> >> +test_expect_success '--count-lines with newline only' '
+>> >> +       printf "0\n" >expect &&
+>> >> +       printf "\n" | git stripspace --count-lines >actual &&
+>> >> +       test_cmp expect actual
+>> >> +'
+>> >
+>> > What is the expected behavior when the input is an empty file, a file
+>> > with content but no newline, a file with one or more lines but lacking
+>> > a newline on the final line? Should these cases be tested, as well?
+>>
+>> Good point here, too.  If we were to add strbuf_count_lines()
+>> helper, whoever adds that function needs to take a possible
+>> incomplete line at the end into account.
 >
->  - When I "git add" (or "git commit", "git push"), It told me an error:=
-=20
-> "fatal: Not a git repository: 'C:\Program Files\Git'"
+> Yes, makes more sense like this (even though it doesn't correspond to
+> what 'wc -l' does).
 
-Unfortunately, this is not enough information. Which options did you
-choose during installation? How do you modify the PATH to be able to run
-Git from Powershell? What code do you use to display `[(unknown)]`
-(Powershell has *no* Git integration by default)?
-
-Ciao,
-Johannes
---1784107012-22421922-1445272421=:31610--
+Tests for "git stripspace --count-lines" would test
+strbuf_count_lines() which would also help when porting git rebase -i
+to C.
