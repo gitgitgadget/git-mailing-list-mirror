@@ -1,136 +1,158 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 17/34] mailinfo: move use_scissors and use_inbody_headers to struct mailinfo
-Date: Mon, 19 Oct 2015 00:28:34 -0700
-Message-ID: <1445239731-10677-18-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 23/34] mailinfo: move [ps]_hdr_data to struct mailinfo
+Date: Mon, 19 Oct 2015 00:28:40 -0700
+Message-ID: <1445239731-10677-24-git-send-email-gitster@pobox.com>
 References: <1444855557-2127-1-git-send-email-gitster@pobox.com>
  <1445239731-10677-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 19 09:30:20 2015
+X-From: git-owner@vger.kernel.org Mon Oct 19 09:30:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zo4tf-0003JK-Fx
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 09:30:19 +0200
+	id 1Zo4tg-0003JK-2y
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 09:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875AbbJSH3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2015 03:29:16 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:36329 "EHLO
+	id S1753253AbbJSHaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2015 03:30:14 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:36476 "EHLO
 	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750904AbbJSH3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2015 03:29:14 -0400
-Received: by pacfv9 with SMTP id fv9so86972867pac.3
-        for <git@vger.kernel.org>; Mon, 19 Oct 2015 00:29:14 -0700 (PDT)
+	with ESMTP id S1752928AbbJSH3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 03:29:22 -0400
+Received: by pacfv9 with SMTP id fv9so86976177pac.3
+        for <git@vger.kernel.org>; Mon, 19 Oct 2015 00:29:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:subject:date:message-id:in-reply-to:references;
-        bh=xBKDtr7odzw20df+zANkNbzckt6n/XClVSZZfbDfZqk=;
-        b=zQeWz22BZRZDTZCG8UxKyx4/S877kEVIdV5hjMYUgjooXBEWtMI/wKCuE6sXRARUyc
-         hw8WmMt5I89evFL+sB9Tio2ANZ58PyF2ZMLSuouynDrzL1RtpdfcNNLKr3C1fpRue66h
-         z1MQx7ncTGtZru/MTHMNoWBzqsdzcUpL8XJ3Xc6/HMGpQMq8lzO8K4BoxGLWYzg1dBNj
-         dpojEcirkOH0g8HU8uoiGAXQxfBO8eUCOvBbU7Qobl0D0Ea51Xfxh6FCUamxY6PX5LxM
-         Qa3WYhzVp/MhCiY8NPK3zXEYLqNYwqbQw5hxBZowKvY+WNRaL0cIyOVfTDUam+hDpbBI
-         le3w==
-X-Received: by 10.68.90.34 with SMTP id bt2mr33201373pbb.145.1445239754508;
-        Mon, 19 Oct 2015 00:29:14 -0700 (PDT)
+        bh=SS2ZKMtIDCV4z6DgSnSCkvWNr+VOS4FmFw6GUt4y94s=;
+        b=eTgAipzR2SsctEvp877FOeoTHN02f3VfT2VCi7pvBrygK7RVVBK+Ed30OrsIQzyfTi
+         3XgFyoAdKuV4P/6KednViwziGbGltp4cDvkyv9H6i7ojUrdp9PfKu0NPhwQNxSqwKQP6
+         pt9NisZXxi4/F0VTjMpG9PK7YL81YBUdlldGRMVJQO8nWI4a31bWJY08HCbce5R6dr7D
+         6eY0JV3NRyda9AKenvKsJ4T/hbsgZPTbMl27wNKT6R52Q+TY4RVZ7TsmZAO8jAIyMD+M
+         D9C7qKjc+4kfgVD4ylnhu3ae6l7qA2J/owGoHQiFF1GB2YDa7Dew7euQ3ZpOCYCU8DJO
+         9Fzg==
+X-Received: by 10.68.65.67 with SMTP id v3mr27479301pbs.69.1445239761392;
+        Mon, 19 Oct 2015 00:29:21 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:f5db:ee54:4f5:9373])
-        by smtp.gmail.com with ESMTPSA id dn4sm10696725pbd.0.2015.10.19.00.29.13
+        by smtp.gmail.com with ESMTPSA id fa14sm34815625pac.8.2015.10.19.00.29.20
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 19 Oct 2015 00:29:14 -0700 (PDT)
+        Mon, 19 Oct 2015 00:29:20 -0700 (PDT)
 X-Mailer: git-send-email 2.6.2-388-g10c4a0e
 In-Reply-To: <1445239731-10677-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279857>
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/mailinfo.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ builtin/mailinfo.c | 37 +++++++++++++++++++++++--------------
+ 1 file changed, 23 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index c0522f2..2c8f249 100644
+index b8b94d6..2c194da 100644
 --- a/builtin/mailinfo.c
 +++ b/builtin/mailinfo.c
-@@ -20,6 +20,8 @@ struct mailinfo {
- 	int keep_subject;
- 	int keep_non_patch_brackets_in_subject;
- 	int add_message_id;
-+	int use_scissors;
-+	int use_inbody_headers; /* defaults to 1 */
- 
- 	char *message_id;
+@@ -30,10 +30,10 @@ struct mailinfo {
  	int patch_lines;
-@@ -34,8 +36,6 @@ static enum  {
- static struct strbuf charset = STRBUF_INIT;
+ 	int filter_stage; /* still reading log or are we copying patch? */
+ 	int header_stage; /* still checking in-body headers? */
++	struct strbuf **p_hdr_data;
++	struct strbuf **s_hdr_data;
+ };
  
- static struct strbuf **p_hdr_data, **s_hdr_data;
--static int use_scissors;
--static int use_inbody_headers = 1;
- 
+-static struct strbuf **p_hdr_data, **s_hdr_data;
+-
  #define MAX_HDR_PARSED 10
  #define MAX_BOUNDARIES 5
-@@ -734,7 +734,7 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
- 			return 0;
+ 
+@@ -733,7 +733,7 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
  	}
  
--	if (use_inbody_headers && mi->header_stage) {
-+	if (mi->use_inbody_headers && mi->header_stage) {
- 		mi->header_stage = check_header(mi, line, s_hdr_data, 0);
+ 	if (mi->use_inbody_headers && mi->header_stage) {
+-		mi->header_stage = check_header(mi, line, s_hdr_data, 0);
++		mi->header_stage = check_header(mi, line, mi->s_hdr_data, 0);
  		if (mi->header_stage)
  			return 0;
-@@ -748,7 +748,7 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
- 	if (metainfo_charset)
- 		convert_to_utf8(line, charset.buf);
- 
--	if (use_scissors && is_scissors_line(line)) {
-+	if (mi->use_scissors && is_scissors_line(line)) {
- 		int i;
- 		if (fseek(cmitmsg, 0L, SEEK_SET))
- 			die_errno("Could not rewind output message file");
-@@ -1009,12 +1009,14 @@ static int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
- 	return 0;
- }
- 
--static int git_mailinfo_config(const char *var, const char *value, void *unused)
-+static int git_mailinfo_config(const char *var, const char *value, void *mi_)
- {
-+	struct mailinfo *mi = mi_;
-+
- 	if (!starts_with(var, "mailinfo."))
--		return git_default_config(var, value, unused);
-+		return git_default_config(var, value, NULL);
- 	if (!strcmp(var, "mailinfo.scissors")) {
--		use_scissors = git_config_bool(var, value);
-+		mi->use_scissors = git_config_bool(var, value);
+ 	} else
+@@ -758,9 +758,9 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
+ 		 * them to give ourselves a clean restart.
+ 		 */
+ 		for (i = 0; header[i]; i++) {
+-			if (s_hdr_data[i])
+-				strbuf_release(s_hdr_data[i]);
+-			s_hdr_data[i] = NULL;
++			if (mi->s_hdr_data[i])
++				strbuf_release(mi->s_hdr_data[i]);
++			mi->s_hdr_data[i] = NULL;
+ 		}
  		return 0;
  	}
- 	/* perhaps others here */
-@@ -1027,6 +1029,7 @@ static void setup_mailinfo(struct mailinfo *mi)
- 	strbuf_init(&mi->name, 0);
- 	strbuf_init(&mi->email, 0);
- 	mi->header_stage = 1;
-+	mi->use_inbody_headers = 1;
- 	git_config(git_mailinfo_config, &mi);
+@@ -842,7 +842,7 @@ again:
+ 
+ 	/* slurp in this section's info */
+ 	while (read_one_header_line(line, mi->input))
+-		check_header(mi, line, p_hdr_data, 0);
++		check_header(mi, line, mi->p_hdr_data, 0);
+ 
+ 	strbuf_release(&newline);
+ 	/* replenish line */
+@@ -943,10 +943,10 @@ static void handle_info(struct mailinfo *mi)
+ 
+ 	for (i = 0; header[i]; i++) {
+ 		/* only print inbody headers if we output a patch file */
+-		if (mi->patch_lines && s_hdr_data[i])
+-			hdr = s_hdr_data[i];
+-		else if (p_hdr_data[i])
+-			hdr = p_hdr_data[i];
++		if (mi->patch_lines && mi->s_hdr_data[i])
++			hdr = mi->s_hdr_data[i];
++		else if (mi->p_hdr_data[i])
++			hdr = mi->p_hdr_data[i];
+ 		else
+ 			continue;
+ 
+@@ -986,8 +986,8 @@ static int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
+ 		return -1;
+ 	}
+ 
+-	p_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*p_hdr_data));
+-	s_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*s_hdr_data));
++	mi->p_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->p_hdr_data)));
++	mi->s_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->s_hdr_data)));
+ 
+ 	do {
+ 		peek = fgetc(mi->input);
+@@ -996,7 +996,7 @@ static int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
+ 
+ 	/* process the email header */
+ 	while (read_one_header_line(&line, mi->input))
+-		check_header(mi, &line, p_hdr_data, 1);
++		check_header(mi, &line, mi->p_hdr_data, 1);
+ 
+ 	handle_body(mi, &line);
+ 	fclose(mi->patchfile);
+@@ -1033,10 +1033,19 @@ static void setup_mailinfo(struct mailinfo *mi)
+ 
+ static void clear_mailinfo(struct mailinfo *mi)
+ {
++	int i;
++
+ 	strbuf_release(&mi->name);
+ 	strbuf_release(&mi->email);
+ 	strbuf_release(&mi->charset);
+ 	free(mi->message_id);
++
++	for (i = 0; mi->p_hdr_data[i]; i++)
++		strbuf_release(mi->p_hdr_data[i]);
++	free(mi->p_hdr_data);
++	for (i = 0; mi->s_hdr_data[i]; i++)
++		strbuf_release(mi->s_hdr_data[i]);
++	free(mi->s_hdr_data);
  }
  
-@@ -1068,11 +1071,11 @@ int cmd_mailinfo(int argc, const char **argv, const char *prefix)
- 		else if (starts_with(argv[1], "--encoding="))
- 			metainfo_charset = argv[1] + 11;
- 		else if (!strcmp(argv[1], "--scissors"))
--			use_scissors = 1;
-+			mi.use_scissors = 1;
- 		else if (!strcmp(argv[1], "--no-scissors"))
--			use_scissors = 0;
-+			mi.use_scissors = 0;
- 		else if (!strcmp(argv[1], "--no-inbody-headers"))
--			use_inbody_headers = 0;
-+			mi.use_inbody_headers = 0;
- 		else
- 			usage(mailinfo_usage);
- 		argc--; argv++;
+ static const char mailinfo_usage[] =
 -- 
 2.6.2-383-g144b2e6
