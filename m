@@ -1,75 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 3/4] stripspace: Implement --count-lines option
-Date: Mon, 19 Oct 2015 21:42:58 +0200
-Message-ID: <vpq4mhmablp.fsf@grenoble-inp.fr>
-References: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
-	<1445008605-16534-4-git-send-email-tklauser@distanz.ch>
-	<CAPig+cQ=8FO8yFY4sHUwr0mYuyvMu4d-eizHZeadE9f0BgpXpQ@mail.gmail.com>
-	<xmqqwpukayde.fsf@gitster.mtv.corp.google.com>
-	<20151019134633.GL2468@distanz.ch>
-	<CAP8UFD2pqg_J36V9wZkAR0b-L421gHFi9SbRqFwBbZ1LMVOKSg@mail.gmail.com>
-	<CAPig+cR4wyumSfzXjptCfniuN0QC8TErL1X9LDPMsCD8wHP_kA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Tobias Klauser <tklauser@distanz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 21:43:19 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH] fix flaky untracked-cache test
+Date: Mon, 19 Oct 2015 15:48:15 -0400
+Message-ID: <1445284095-6602-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org, pclouds@gmail.com, larsxschneider@gmail.com,
+	tboegi@web.de
+X-From: git-owner@vger.kernel.org Mon Oct 19 21:48:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoGL0-00009l-65
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 21:43:18 +0200
+	id 1ZoGPz-00044N-N9
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 21:48:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752771AbbJSTnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2015 15:43:14 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:52022 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751776AbbJSTnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2015 15:43:13 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t9JJgubd029243
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 19 Oct 2015 21:42:56 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9JJgwbk031902;
-	Mon, 19 Oct 2015 21:42:58 +0200
-In-Reply-To: <CAPig+cR4wyumSfzXjptCfniuN0QC8TErL1X9LDPMsCD8wHP_kA@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 19 Oct 2015 15:24:05 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 19 Oct 2015 21:42:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t9JJgubd029243
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1445888579.71397@H3imQcoJX9LSTgMkB0SGJg
+	id S1753368AbbJSTsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2015 15:48:23 -0400
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:33597 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752875AbbJSTsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 15:48:22 -0400
+Received: by qgeo38 with SMTP id o38so123906123qge.0
+        for <git@vger.kernel.org>; Mon, 19 Oct 2015 12:48:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=6kRqgkYKdAF6/Fsklba2kFw/3vHmuzzMkokQ18Pk0lU=;
+        b=FBl3pMfb6ok1ziGpycf1E4A8xurcOp97uSDDrbwpIWIjnYZ82uKM+s8Di8ZKTTyaEi
+         XVyqPHKYYwaf0rXvcw/YCaKiUxmZ9vSEjgMSurRYckqKkLXyI/ucfNvocz4WbYMuOj3Q
+         6wNaELdappeI5j/90fAREjJlbEfdVKW1kqrZpkplVYq20eOdJBVGctqHxtO6DKePBrYs
+         UZLK6XZ8TZrU/RfvHT43wlihfc3cqlT0t8WtW9GY5AOSpM6rUF4o9G+97PGXuN+Fku4B
+         IXLnhnvi8KkM3sf68bGjIehjpMUGg6ipg1zPWP1y+AetUCcHRjo3LzNWoZmvCDiipjz4
+         phOQ==
+X-Gm-Message-State: ALoCoQmOqNvs5N75/dAe65oGdGatpCgA5426SyYWxQBjRzNv1/u3qjOIt2F4nsWPDCe35vijZ2nk
+X-Received: by 10.140.98.206 with SMTP id o72mr13979447qge.2.1445284102201;
+        Mon, 19 Oct 2015 12:48:22 -0700 (PDT)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id i21sm15007210qkh.48.2015.10.19.12.48.20
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 19 Oct 2015 12:48:20 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2.644.g97b850b-twtrsrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279889>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Dirty the test worktree's root directory, as the test expects.
 
-> With this in mind, my
-> question was also indirectly asking whether there was sufficient
-> justification of the long-term cost of a --count-lines option. The
-> argument that --count-lines would help test a proposed
-> strbuf_count_lines() likely does not outweigh that cost.
+When testing the untracked-cache, we previously assumed that checking
+out master would be sufficient to mark the mtime of the worktree's
+root directory as racily-dirty.  But sometimes, the checkout would
+happen at 12345.999 seconds and the status at 12346.001 seconds,
+meaning that the worktree's root directory would not be racily-dirty.
+And since it was not truly dirty, occasionally the test would fail.
+By making the root truly dirty, the test will always succeed.
 
-I agree. If we expect users to call --count-lines outside
-rebase-interactive.sh and our own tests, then the actual use should be
-justified in the commit message.
+Tested by running a few hundred times.
 
-If not, then at least the --count-lines option should be hidden and not
-documented in the public doc. But I agree that introducing test-strbuf
-would be even better.
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
+ t/t7063-status-untracked-cache.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 37a24c1..0e8d0d4 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -412,7 +412,9 @@ test_expect_success 'create/modify files, some of which are gitignored' '
+ 	echo two bis >done/two &&
+ 	echo three >done/three && # three is gitignored
+ 	echo four >done/four && # four is gitignored at a higher level
+-	echo five >done/five # five is not gitignored
++	echo five >done/five && # five is not gitignored
++	echo test >base && #we need to ensure that the root dir is touched
++	rm base
+ '
+ 
+ test_expect_success 'test sparse status with untracked cache' '
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.4.2.644.g97b850b-twtrsrc
