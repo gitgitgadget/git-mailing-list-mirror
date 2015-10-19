@@ -1,141 +1,138 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 20/34] mailinfo: move transfer_encoding to struct mailinfo
-Date: Mon, 19 Oct 2015 00:28:37 -0700
-Message-ID: <1445239731-10677-21-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 21/34] mailinfo: move charset to struct mailinfo
+Date: Mon, 19 Oct 2015 00:28:38 -0700
+Message-ID: <1445239731-10677-22-git-send-email-gitster@pobox.com>
 References: <1444855557-2127-1-git-send-email-gitster@pobox.com>
  <1445239731-10677-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 19 09:29:59 2015
+X-From: git-owner@vger.kernel.org Mon Oct 19 09:30:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zo4tH-00032X-Sg
-	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 09:29:56 +0200
+	id 1Zo4tU-0003CF-DL
+	for gcvg-git-2@plane.gmane.org; Mon, 19 Oct 2015 09:30:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbbJSH3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2015 03:29:25 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:36404 "EHLO
+	id S1752951AbbJSH3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2015 03:29:24 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:34132 "EHLO
 	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752884AbbJSH3S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2015 03:29:18 -0400
-Received: by pacfv9 with SMTP id fv9so86974526pac.3
-        for <git@vger.kernel.org>; Mon, 19 Oct 2015 00:29:18 -0700 (PDT)
+	with ESMTP id S1752897AbbJSH3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2015 03:29:19 -0400
+Received: by padhk11 with SMTP id hk11so21775147pad.1
+        for <git@vger.kernel.org>; Mon, 19 Oct 2015 00:29:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:subject:date:message-id:in-reply-to:references;
-        bh=TgtzofUadQ/BSrTNUgZ2WYDUZpX/dXILljh38SaprFY=;
-        b=NJbHyJfXGrW1QbJUrLoPyTlJNIaflpEj04Huca9We5BaiSw2kkKdZchYI4P2EF/G2b
-         DOSXdCtXxSzS+kdaDMPy3TYUwOxjhTDa5b8Tl3U5JEzR+FtL18HSkNpS5dIpiCOx9Rfg
-         r8LaCxy3AYA/VY1nRY64p7SMtq5qPbJ2hVNAK9/A6VmXHfIFEu88oRWiGU9GZz1w6pRX
-         aPziX9AqfElNDaRTXCIbmomylidEO7dfnbx07Zshj3XJRWOoWDCJjhRjyaiiNNOeTt7Y
-         kDViK5U8MnyS5k4R6+7yYk2HMo9Kzsg7HbSnfasdVxj2ANZ2FsngkELwWlRm07vSipIw
-         op9A==
-X-Received: by 10.68.174.193 with SMTP id bu1mr32830755pbc.136.1445239758049;
-        Mon, 19 Oct 2015 00:29:18 -0700 (PDT)
+        bh=ycmiuIgV9QHe6d9JtLEMD6Zbs6KyzUqUDVt1OTrRyy8=;
+        b=Vp6ysqvvLdqvbqLrLYLF2KeCmi8c1jCHJdQPRNTWwERCl64dMO7TZIEKNdFOC5PeUQ
+         x4t/wSUR6qeisA1+I4Z6Kmrde2vU89KRU9Tbk+NhopAOxa/f7UH+S7RvpwSAy77uH5lf
+         6o0qcHedBHrtEKzCjSQKVmWMnOMwqq3FJ+ybtRxJFW4uf3VwOF2gYRDD3egE5ZnAjHuU
+         9jv5ySuzrjXvYDy7Ibr4coz7nRMlqLTaFyZGTJ8OtI7pTfTs0hBzWsC3UngLJDl+3BCF
+         yl0StSly9V3F0DQF5cG4Gl8gtUDrlv+ERF8Z+6BTD9bvSIFr+TBGhVhdbmUSepVIL/hy
+         4khA==
+X-Received: by 10.66.165.106 with SMTP id yx10mr33359436pab.102.1445239759115;
+        Mon, 19 Oct 2015 00:29:19 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:f5db:ee54:4f5:9373])
-        by smtp.gmail.com with ESMTPSA id yp9sm34814762pab.1.2015.10.19.00.29.17
+        by smtp.gmail.com with ESMTPSA id gw3sm34480197pbc.46.2015.10.19.00.29.18
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 19 Oct 2015 00:29:17 -0700 (PDT)
+        Mon, 19 Oct 2015 00:29:18 -0700 (PDT)
 X-Mailer: git-send-email 2.6.2-388-g10c4a0e
 In-Reply-To: <1445239731-10677-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279853>
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/mailinfo.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ builtin/mailinfo.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index 737d0fc..18781b7 100644
+index 18781b7..810d132 100644
 --- a/builtin/mailinfo.c
 +++ b/builtin/mailinfo.c
-@@ -23,14 +23,14 @@ struct mailinfo {
+@@ -22,6 +22,7 @@ struct mailinfo {
+ 	int use_inbody_headers; /* defaults to 1 */
  	const char *metainfo_charset;
  
++	struct strbuf charset;
  	char *message_id;
-+	enum  {
-+		TE_DONTCARE, TE_QP, TE_BASE64
-+	} transfer_encoding;
- 	int patch_lines;
- 	int filter_stage; /* still reading log or are we copying patch? */
+ 	enum  {
+ 		TE_DONTCARE, TE_QP, TE_BASE64
+@@ -31,9 +32,6 @@ struct mailinfo {
  	int header_stage; /* still checking in-body headers? */
  };
  
--static enum  {
--	TE_DONTCARE, TE_QP, TE_BASE64
--} transfer_encoding;
+-
+-static struct strbuf charset = STRBUF_INIT;
+-
+ static struct strbuf **p_hdr_data, **s_hdr_data;
  
- static struct strbuf charset = STRBUF_INIT;
+ #define MAX_HDR_PARSED 10
+@@ -186,7 +184,7 @@ static struct strbuf *content[MAX_BOUNDARIES];
  
-@@ -214,14 +214,15 @@ static void handle_message_id(struct mailinfo *mi, const struct strbuf *line)
- 		mi->message_id = strdup(line->buf);
- }
+ static struct strbuf **content_top = content;
  
--static void handle_content_transfer_encoding(const struct strbuf *line)
-+static void handle_content_transfer_encoding(struct mailinfo *mi,
-+					     const struct strbuf *line)
+-static void handle_content_type(struct strbuf *line)
++static void handle_content_type(struct mailinfo *mi, struct strbuf *line)
  {
- 	if (strcasestr(line->buf, "base64"))
--		transfer_encoding = TE_BASE64;
-+		mi->transfer_encoding = TE_BASE64;
- 	else if (strcasestr(line->buf, "quoted-printable"))
--		transfer_encoding = TE_QP;
-+		mi->transfer_encoding = TE_QP;
- 	else
--		transfer_encoding = TE_DONTCARE;
-+		mi->transfer_encoding = TE_DONTCARE;
- }
+ 	struct strbuf *boundary = xmalloc(sizeof(struct strbuf));
+ 	strbuf_init(boundary, line->len);
+@@ -200,7 +198,7 @@ static void handle_content_type(struct strbuf *line)
+ 		*content_top = boundary;
+ 		boundary = NULL;
+ 	}
+-	slurp_attr(line->buf, "charset=", &charset);
++	slurp_attr(line->buf, "charset=", &mi->charset);
  
- static int is_multipart_boundary(const struct strbuf *line)
-@@ -356,7 +357,7 @@ static int check_header(struct mailinfo *mi,
- 		len = strlen("Content-Transfer-Encoding: ");
+ 	if (boundary) {
+ 		strbuf_release(boundary);
+@@ -349,7 +347,7 @@ static int check_header(struct mailinfo *mi,
  		strbuf_add(&sb, line->buf + len, line->len - len);
  		decode_header(mi, &sb);
--		handle_content_transfer_encoding(&sb);
-+		handle_content_transfer_encoding(mi, &sb);
+ 		strbuf_insert(&sb, 0, "Content-Type: ", len);
+-		handle_content_type(&sb);
++		handle_content_type(mi, &sb);
  		ret = 1;
  		goto check_header_out;
  	}
-@@ -615,11 +616,11 @@ release_return:
- 	strbuf_release(&piecebuf);
- }
+@@ -745,7 +743,7 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
+ 		mi->header_stage = 0;
  
--static void decode_transfer_encoding(struct strbuf *line)
-+static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
- {
- 	struct strbuf *ret;
+ 	/* normalize the log message to UTF-8. */
+-	convert_to_utf8(mi, line, charset.buf);
++	convert_to_utf8(mi, line, mi->charset.buf);
  
--	switch (transfer_encoding) {
-+	switch (mi->transfer_encoding) {
- 	case TE_QP:
- 		ret = decode_q_segment(line, 0);
- 		break;
-@@ -838,7 +839,7 @@ again:
- 	}
+ 	if (mi->use_scissors && is_scissors_line(line)) {
+ 		int i;
+@@ -840,7 +838,7 @@ again:
  
  	/* set some defaults */
--	transfer_encoding = TE_DONTCARE;
-+	mi->transfer_encoding = TE_DONTCARE;
- 	strbuf_reset(&charset);
+ 	mi->transfer_encoding = TE_DONTCARE;
+-	strbuf_reset(&charset);
++	strbuf_reset(&mi->charset);
  
  	/* slurp in this section's info */
-@@ -876,9 +877,9 @@ static void handle_body(struct mailinfo *mi, struct strbuf *line)
- 		}
+ 	while (read_one_header_line(line, mi->input))
+@@ -1027,6 +1025,7 @@ static void setup_mailinfo(struct mailinfo *mi)
+ 	memset(mi, 0, sizeof(*mi));
+ 	strbuf_init(&mi->name, 0);
+ 	strbuf_init(&mi->email, 0);
++	strbuf_init(&mi->charset, 0);
+ 	mi->header_stage = 1;
+ 	mi->use_inbody_headers = 1;
+ 	git_config(git_mailinfo_config, &mi);
+@@ -1036,6 +1035,7 @@ static void clear_mailinfo(struct mailinfo *mi)
+ {
+ 	strbuf_release(&mi->name);
+ 	strbuf_release(&mi->email);
++	strbuf_release(&mi->charset);
+ 	free(mi->message_id);
+ }
  
- 		/* Unwrap transfer encoding */
--		decode_transfer_encoding(line);
-+		decode_transfer_encoding(mi, line);
- 
--		switch (transfer_encoding) {
-+		switch (mi->transfer_encoding) {
- 		case TE_BASE64:
- 		case TE_QP:
- 		{
 -- 
 2.6.2-383-g144b2e6
