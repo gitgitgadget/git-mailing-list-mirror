@@ -1,113 +1,124 @@
-From: Manlio Perillo <manlio.perillo@gmail.com>
-Subject: Re: Git-p4 fails with NameError with python 2.7.2
-Date: Tue, 20 Oct 2015 18:42:20 +0200
-Message-ID: <CAAToxAHdojvspxdb-=vYx-QY9=MTjnQD29fLTJK3KmY2+To5eQ@mail.gmail.com>
-References: <CAJA=mv5Kdsn1YEo4sUAwpTv=0Jc8Xg5V2WPMoCmsxNL4Hnk=kg@mail.gmail.com>
-	<CAE5ih793+YDd30rpMSyTHjUNZS+-BLY9D-kJkF9RAogjdctPFw@mail.gmail.com>
-	<xmqqy4ex8r8k.fsf@gitster.mtv.corp.google.com>
+From: Alex Henrie <alexhenrie24@gmail.com>
+Subject: Re: [PATCH] pull: add angle brackets to usage string
+Date: Tue, 20 Oct 2015 10:54:20 -0600
+Message-ID: <CAMMLpeStjJY2sqGvC0wV_OqFSA3OuzmcDitvr53d=z8+y2dBYA@mail.gmail.com>
+References: <1444962133-1266-1-git-send-email-alexhenrie24@gmail.com>
+ <xmqqwpumg480.fsf@gitster.mtv.corp.google.com> <CAMMLpeQPngq-xM2vN4uX6+k5-uoOXyP3p0wgLO9LOkWxWtZBEA@mail.gmail.com>
+ <xmqq4mhqg15y.fsf@gitster.mtv.corp.google.com> <CAMMLpeTf93NnqPM+SaxfhsSdMg1HUiVyo5FFdiuGF9o-KQbGog@mail.gmail.com>
+ <xmqqbnbu9kzr.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Luke Diamand <luke@diamand.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Etienne Girard <etienne.g.girard@gmail.com>,
-	Git Users <git@vger.kernel.org>
+Cc: Paul Tan <pyokagan@gmail.com>,
+	Git mailing list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 18:42:27 2015
+X-From: git-owner@vger.kernel.org Tue Oct 20 18:54:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoZzW-000696-6p
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 18:42:26 +0200
+	id 1ZoaBR-0001QU-P5
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 18:54:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743AbbJTQmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2015 12:42:22 -0400
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:35796 "EHLO
-	mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751120AbbJTQmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2015 12:42:21 -0400
-Received: by oiev17 with SMTP id v17so13371550oie.2
-        for <git@vger.kernel.org>; Tue, 20 Oct 2015 09:42:20 -0700 (PDT)
+	id S1752449AbbJTQym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2015 12:54:42 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:37345 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322AbbJTQyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2015 12:54:41 -0400
+Received: by wicfv8 with SMTP id fv8so38263901wic.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2015 09:54:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=RushMvWCQqAZlzmlGIyjALPIF0bsS4HsFHcXk6J7j3k=;
-        b=deLv93FetesRYTFVLWN9xQySRfC47TtmU3hH0GuRQ+n4VAdr4GtmWrpHMJvj28LyZ2
-         BKGGdAcoTLHvT5DGhQtOUoxClpJzQ9yulL7niFgXrLQF4DTgIZwEwhLMrnaQ2DDPZWJG
-         O1L5zi+/71NcpY22GWVQZOJxqkOOqjg7FAZ40j+9yRF4kHhWfVfStlwMEdPtsXDoUoJw
-         OyaWpqUno8fE/Pzear2T59rV6bsPQsSWetnG5DFw+6v2CvQM98gcHU9X75M/QA4t/rXu
-         4dpWyrY2dRm7mBKvaSV7l2MIyGIJswmENziRD9erqsBGJhYsNVcfqdsidt0Z9vbHsr0u
-         Plmg==
-X-Received: by 10.202.95.2 with SMTP id t2mr2573159oib.77.1445359340673; Tue,
- 20 Oct 2015 09:42:20 -0700 (PDT)
-Received: by 10.182.43.199 with HTTP; Tue, 20 Oct 2015 09:42:20 -0700 (PDT)
-In-Reply-To: <xmqqy4ex8r8k.fsf@gitster.mtv.corp.google.com>
+        bh=xijRoErGSx3KhIX9h+gL5dej0LHrPk1CD1KBtJUwUiA=;
+        b=cy4kYTwI7FOxLfa21VncpVOqfuM01O/rNlIUAYfVGfU4fYyMRwwm5njier3hSUHCh+
+         qDvyxnfqA5io/L07kESRgo9SY5VKOYLP82kI9quD1TbU27v35TYSBEmULU/GASmI+fgf
+         idNL0SZTZfDCmiGktyHu5RuFsOOBRA7dUTJ3lHpGKtupRrEzmwj9reYEbsBtUzcHQu/3
+         Uc/CrI8w+5IgfrG+625l4quVPF3B2GTwFzbRZ6Jnz+YraX6VIiPoAR8LqT3IDzQY5t1a
+         JXIqOJ4pF3dK5aAWwXWM0pKE6N3N71CRA+/zjyJSlJ/fLBW6Jh/esItdNQX85AFc/B4j
+         KNBQ==
+X-Received: by 10.194.114.133 with SMTP id jg5mr5224739wjb.98.1445360080069;
+ Tue, 20 Oct 2015 09:54:40 -0700 (PDT)
+Received: by 10.28.16.132 with HTTP; Tue, 20 Oct 2015 09:54:20 -0700 (PDT)
+In-Reply-To: <xmqqbnbu9kzr.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279925>
 
-On Tue, Oct 20, 2015 at 6:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+2015-10-19 23:17 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
+> Alex Henrie <alexhenrie24@gmail.com> writes:
 >
-> Luke Diamand <luke@diamand.org> writes:
+>> 2015-10-16 11:42 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
+>>>
+>>> Yes, but that fixes historical "mistake", no?
+>>>
+>>> With this, you are breaking historical practice by changing only one
+>>> instance to deviate from the then-current practice of saying
+>>> 'options' without brackets.  It is based on the point of view that
+>>> considers anything inside <bracket> and a fixed string 'options' are
+>>> meant to be replaced by intelligent readers, which is as valid as
+>>> the more recent practice to consider only things inside <bracket>
+>>> are placeholders.
+>>
+>> OK, I see. You're saying that it's OK to fix typos and grammatical
+>> errors in contrib/examples, but it's not okay to modernize the
+>> scripts' designs.
 >
-> > On 20 October 2015 at 11:34, Etienne Girard <etienne.g.girard@gmail.com> wrote:
-> >> Hello,
-> >>
-> >> Git-p4 fail when I try to rebase with the error: "NameError: global
-> >> name 'ctypes' is not defined". The error occurs when I use python
-> >> 2.7.2 that is installed by default on my company's computers (it goes
-> >> without saying that everything works fine with python 2.7.10).
-> >>
-> >> I'm a beginner in python, but simply importing ctypes at the beginning
-> >> of the script does the trick. I was wondering if submitting a patch
-> >> for this issue is worth the trouble, when a satisfying solution is not
-> >> using a 4 years old version of python.
-> >
-> > If you're able to submit a patch that would be great!
+> Please read it again, look at contrib/examples and realize that that
+> is not what I said at all.
 >
-> Lars's 4d25dc44 (git-p4: check free space during streaming,
-> 2015-09-26) introduced two references to ctypes.* and there is no
-> 'import ctypes' anywhere in the script.
+> This is not about modern vs old-school.  The reason why the part of
+> the patch to contrib/ under discussion is wrong is because of
+> (in)consistency.
 >
-> I do not follow Python development, but does the above mean that
-> with recent 2.x you can say ctypes without first saying "import
-> ctypes"?
+> Look at the output from "git grep option contrib/examples/" and
+> notice that in the old days, these scripted Porcelains consistently
+> said "[options]" without "<bracket>".
+>
+> It would have been a different matter if the patch _were_ to update
+> all "[options]" to "[<options>]" in contrib/examples/ consistently,
+> and such a patch might have even been an improvement, especially if
+> the modern style were clearly superiour than the old-school style
+> (which is not, by they way [*1*]).
+>
+> But that is not what the patch did.  It turned only one of them into
+> "[<options>]", making the single instance inconsistent from all the
+> others around it.  That is why it was wrong.
 
+I understand now, thanks. I really appreciate your commitment to being
+consistent.
 
-No.
-You need to import the ctypes  module.
+> [Footnote]
+>
+> *1* The "modern" style is not necessarily an improvement, by the
+>     way.  The way we specify that a "thing" in the help text is a
+>     placeholder and that there may be more instances of the same
+>     "thing" is to say "[<thing>...]", but in your "modernized" form,
+>     unlike all the other usual "things", possibly multiple options
+>     are spelled "[<options>]" without having ellipses at the end,
+>     which is an oddball.  If we are to treat options specially like
+>     that anyway, intelligent readers can read an "old-school"
+>     description "[options]" and understand that that token stands
+>     for possibly multiple options just fine, and all we have gained
+>     by going to the "modernized" form is to waste two characters for
+>     <brackets>.
+>
+>     I am not saying that we should not apply the other half of the
+>     patch that makes builtin/pull.c say "[<options>]".  These days,
+>     many other commands nearby (i.e. the "modern" ones) do use that
+>     form consistently, so it is an improvement.
 
-However in Python it is possible to "inject" the ctypes module (and
-any other name) in the builtin namespace.
-The builtin module contains names that are accessible without importing them:
-https://docs.python.org/2/library/__builtin__.html
+I pushed to change [options] to [<options>] because even if the angle
+brackets don't help new users or translators in this particular case,
+the angle brackets encourage Git authors to use angle brackets when
+writing commands that are not so easy to understand. If you think that
+[<option>...] is better because it is even more consistent, I would be
+happy to send a patch to make that change.
 
-IMHO, some code  is messing with the __builtin__ module.
+Anyway, thanks again for your attention to detail.
 
-Running pyflakes on git-p4.py code I get:
-git-p4.py:26: 'zlib' imported but unused
-git-p4.py:640: local variable 'v' is assigned to but never used
-git-p4.py:2114: local variable 'rhs_index' is assigned to but never used
-
-Running pylint I get a **lot** of warning and style issues; and the
-following errors:
-E:112,21: Undefined variable 'ctypes' (undefined-variable)
-E:113, 8: Undefined variable 'ctypes' (undefined-variable)
-E:113,51: Undefined variable 'ctypes' (undefined-variable)
-E:113,94: Undefined variable 'ctypes' (undefined-variable)
-E:1002,51: No value for argument 'contentFile' in method call
-(no-value-for-parameter)
-
-pyflakes is not reporting an error for ctypes.
-Whatever the cause, the code must be fixed to import the ctypes module.
-
-P.S.:
-Sorry for the double message.
-The first message contained an HTML part and was rejected by vger.kernel.org.
-
-
-Regards  Manlio
+-Alex
