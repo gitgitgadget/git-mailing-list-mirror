@@ -1,93 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Commit 5841520b makes it impossible to connect to github from behind my company's firewall.
-Date: Tue, 20 Oct 2015 13:46:16 +0200
-Message-ID: <vpq37x54vav.fsf@grenoble-inp.fr>
-References: <loom.20151020T131513-529@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Enrique Tobis <Enrique.Tobis@twosigma.com>
-To: Johan Laenen <johan.laenen+cygwin@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 13:46:46 2015
+From: Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 1/4] gitk: Fix crash with --all in non-English locales
+Date: Tue, 20 Oct 2015 14:33:01 +0200
+Message-ID: <1445344384-12762-2-git-send-email-tiwai@suse.de>
+References: <1445344384-12762-1-git-send-email-tiwai@suse.de>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 20 14:33:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoVNC-0004D0-Ip
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 13:46:34 +0200
+	id 1ZoW6p-0006b9-BC
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 14:33:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751071AbbJTLqa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2015 07:46:30 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:51092 "EHLO rominette.imag.fr"
+	id S1752596AbbJTMdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2015 08:33:38 -0400
+Received: from mx2.suse.de ([195.135.220.15]:35274 "EHLO mx2.suse.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750785AbbJTLq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2015 07:46:29 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t9KBkFUK014161
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 20 Oct 2015 13:46:15 +0200
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9KBkGLC012850;
-	Tue, 20 Oct 2015 13:46:16 +0200
-In-Reply-To: <loom.20151020T131513-529@post.gmane.org> (Johan Laenen's message
-	of "Tue, 20 Oct 2015 11:20:52 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 20 Oct 2015 13:46:15 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t9KBkFUK014161
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1445946377.87614@EBWTBTcHw/0MhYGymXE3ZQ
+	id S1752398AbbJTMdT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2015 08:33:19 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
+	by mx2.suse.de (Postfix) with ESMTP id C246FACA0;
+	Tue, 20 Oct 2015 12:33:16 +0000 (UTC)
+X-Mailer: git-send-email 2.6.1
+In-Reply-To: <1445344384-12762-1-git-send-email-tiwai@suse.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279907>
 
-Hi,
+When gitk is invoked with --all option in a non-English locale, it
+crashes like:
+$ LC_ALL="de_DE.UTF-8" gitk --all
+Error in startup script: bad menu entry index "Ansicht bearbeiten ..."
+    while executing
+".bar.view entryconf [mca "Edit view..."] -state normal"
+    invoked from within
+"if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd ne {}} {
+    # create a view for the files/dirs specified on the command line
+    se..."
+    (file "/usr/bin/gitk" line 12442)
 
-I'm just Cc-ing Enrique, the author of 5841520b.
+The reason is the leftover strings that don't match any longer with
+the new string containing accelerator mark (&).  This patch corrects
+these strings.
 
-Johan Laenen <johan.laenen+cygwin@gmail.com> writes:
+Bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=951153
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+---
+ gitk-git/gitk | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> Commit 5841520b makes it impossible to connect to github from behind my
-> company's firewall.
->
-> I'm running CYGWIN_NT-6.1 and the default git version 2.5.3 complains with a
-> fatal error when trying to git pull:
->
-> $ /bin/git --version
-> git version 2.5.3
-> $ /bin/git pull
-> fatal: unable to access 'https://github.com/gargle/french/': Unknown SSL
-> protocol error in connection to github.com:443
->
-> Taking the sources of git 2.6.1. and compiling with commit 5841520b in
-> http.c reverted gives me a working git.
->
-> My http.c now looks like:
->
->  466     if (curl_http_proxy) {
->  467         curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
->  468 #if LIBCURL_VERSION_NUM >= 0x070a07
->  469         curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
->  470 #endif
->  471     }
->
-> And it works:
->
-> $ git --version
-> git version 2.6.1
-> $ git pull
-> Already up-to-date.
->
->
->
-> Greetings,
->
-> Johan
-
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 2028b554f487..fcc606eab735 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -12452,8 +12452,8 @@ if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd ne {}} {
+     set viewchanged(1) 0
+     set vdatemode(1) 0
+     addviewmenu 1
+-    .bar.view entryconf [mca "Edit view..."] -state normal
+-    .bar.view entryconf [mca "Delete view"] -state normal
++    .bar.view entryconf [mca "&Edit view..."] -state normal
++    .bar.view entryconf [mca "&Delete view"] -state normal
+ }
+ 
+ if {[info exists permviews]} {
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.6.1
