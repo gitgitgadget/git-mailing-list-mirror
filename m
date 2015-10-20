@@ -1,150 +1,169 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 5/8] test-run-command: Increase test coverage
-Date: Tue, 20 Oct 2015 15:43:47 -0700
-Message-ID: <1445381030-23912-6-git-send-email-sbeller@google.com>
+Subject: [PATCH 6/8] run-command: Fix missing output from late callbacks
+Date: Tue, 20 Oct 2015 15:43:48 -0700
+Message-ID: <1445381030-23912-7-git-send-email-sbeller@google.com>
 References: <1445381030-23912-1-git-send-email-sbeller@google.com>
 Cc: ramsay@ramsayjones.plus.com, jacob.keller@gmail.com, peff@peff.net,
 	gitster@pobox.com, jrnieder@gmail.com,
 	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
 	ericsunshine@gmail.com, Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 21 00:44:40 2015
+X-From: git-owner@vger.kernel.org Wed Oct 21 00:44:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zofe3-00026B-Ox
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 00:44:40 +0200
+	id 1ZofeE-0002RO-AD
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 00:44:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932168AbbJTWoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2015 18:44:30 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:35147 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753219AbbJTWoD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2015 18:44:03 -0400
-Received: by pasz6 with SMTP id z6so33863095pas.2
-        for <git@vger.kernel.org>; Tue, 20 Oct 2015 15:44:02 -0700 (PDT)
+	id S932120AbbJTWo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2015 18:44:27 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:34286 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753276AbbJTWoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2015 18:44:04 -0400
+Received: by padhk11 with SMTP id hk11so33928455pad.1
+        for <git@vger.kernel.org>; Tue, 20 Oct 2015 15:44:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=y6DJXSJEYBObBpWuOEcqeVt94K/hS51yA2zQyUgX3VE=;
-        b=guyatpci4r5DPPFmif9gDsOPLw7w7QETrGVuQVSvEbp/E0c7+s6qvIFfQ7L/iChXPr
-         GSqkl/93s/Avi7F7+qlMcVwYsMJRUpf2/rs/Ewl+9egec3zS736g/pw3JYL079LR7QjO
-         Bj8BJq7+BMyhz7Zj2lmJzzDhyPZL492eZL8eIUNZnmMGwTNqvGc5Va7Y0hPl+WWEwUI6
-         s5CaDvhGiJHeNuxoUY4Qgprx1RqNBgfFq4TOh+ByubR+hzEvrr8l7SNWv76LqD07Wt7S
-         hrBFBcxKnKTGgY8TYuEi6HBGJ3P4JIAMCBtzM5atwU/z7sMTkBLLFBi52z8oN1KEhHMU
-         9FYQ==
+        bh=V3L6kDSihGJzoc4blu48aDxABHL6P9KrP7rXVlLlBFQ=;
+        b=pPs/RlYucx3Zm7vyOUD3r1H8UWLHAwfmMDtFsoQ0MHJe2GpP7Eu+UfFOxU1yAkg2HL
+         K0I7qILGFu4O34sOU5Qa5FRHRvqPEr5l66pJauGtEIK+KnAv0QFYNckgfnxUKmiiPnX9
+         0t2XIGb6j9GH9p6arwlLn1QZ4ntiOfA0BZiINm8nVHscrxjwX6zfTjPJjh/esQR2qdO3
+         Fwctxf81nBt6KDG/7DsrpKJNRQrGLhFV/EDLX1zvkr5HEw6I1vsE6Ndlzy0JmwljDkZJ
+         fzPBaapl3uuTGGnZe8gv79Qdof6L4MXTKTRnwPzR6NH6AoPudnB9xtUks5V88G95ZIrz
+         2Rtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=y6DJXSJEYBObBpWuOEcqeVt94K/hS51yA2zQyUgX3VE=;
-        b=IG0ghMGS5MWtHRMrB+4BoTTcOygJuVfLUBRuXwBhto7mlLshr2fQkHn03NM59kJdJf
-         PyH+Fj5arDpVHMXv4nH4uaS7oOP7Ty1fBL41cQSa8alyoqhrCQSHXBwTX7KPUZxtnbHu
-         Q/AD0M8nJ+jKU0c65y9CW5DAlLVmQrbiEoVUTE7dIwcJUSi4mx5kID485HyYe9EXtK1+
-         pXpVU9Ib/097nQkqbk7koi8hn0E2IvBrvoJSLlrO1ZkCBZtgkxui05EtXpWV8+/jUK0G
-         XgD5Q0CxjuWtweD4XKB6MH54EYEjg06r3BDs59zS3qT2yvpcCAxFB+uf/mgEGlaJvcrD
-         T02w==
-X-Gm-Message-State: ALoCoQlQXwddD1MHlUzLQiYpi+oQjfT2NAMnOkImg9SY2sXqDxhnZ/E1mJ7zaoMIYxPggfPYr4Ob
-X-Received: by 10.68.178.131 with SMTP id cy3mr6547041pbc.153.1445381042440;
-        Tue, 20 Oct 2015 15:44:02 -0700 (PDT)
+        bh=V3L6kDSihGJzoc4blu48aDxABHL6P9KrP7rXVlLlBFQ=;
+        b=SidNNWTpuuyGZ6p4cu2HKVmR+zEdYrvOctgK319m5oMXZRCOiwpFKQqW74T5Iyrs6D
+         c/sRqsfFn0pE0Oq1ljmYWe2L7AYtANG3TVfIAQ1OAkjWRq6rf22393jgU+6paouBc0Oq
+         yo3RuE2xqsFPv1PJ9CWqEJ6971xIy0NseOaIJAwPARNrGwzyvaZWXm4+kx7jYeVmnr8X
+         9klDprN/0vih1clGKWIC4JN49ONuS6nb/GOct6iHFw3c8saMQLnuUOJK5OT7coTiTNgU
+         VyCdZdxxm10ZjVqVBvFFuFf1PJH2fSoWQ2eLl7GVyr6Z0aKPOfcwOu9Vy61esENMjy2t
+         Spfg==
+X-Gm-Message-State: ALoCoQnP0+45yo9tODuWZ1Hjfg6eAvQ7CTlbfc2Wv4yQX/JG2vhehodk4M5L4Vd2A1DDJdbp3xg7
+X-Received: by 10.66.131.81 with SMTP id ok17mr6411680pab.150.1445381043553;
+        Tue, 20 Oct 2015 15:44:03 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:95b6:4bcd:ddcd:b6a3])
-        by smtp.gmail.com with ESMTPSA id c3sm5607911pbu.24.2015.10.20.15.44.01
+        by smtp.gmail.com with ESMTPSA id fe8sm5604699pab.40.2015.10.20.15.44.02
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 20 Oct 2015 15:44:02 -0700 (PDT)
+        Tue, 20 Oct 2015 15:44:03 -0700 (PDT)
 X-Mailer: git-send-email 2.5.0.275.gbfc1651.dirty
 In-Reply-To: <1445381030-23912-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279953>
 
-Currently we have exact 4 jobs to be run with at most 4 parallel
-processes. This sounds as if we're testing only one special case,
-but in reality we want to have any number of tasks be processed
-successfully, so test:
-* more tasks than max jobs (implying slots get reused)
-* equal number of jobs and max jobs
-* less tasks than max jobs (implying there are unused slots)
+The callbacks in the parallel processing API were given the contract, that
+they are not allowed to print anything to stdout/err, but the API will take
+care of their output needs instead.
+
+In case a child process is started, the callback can first add its messages
+to the buffer and then the child process output is buffered just in the
+same buffer, and so the output will be taken care of eventually once the
+child process is done.
+
+When no child process is run, we also need to fulfill our promise to
+output the buffer eventually. So when no child process is started, we need
+to amend the contents of the buffer passed to the child to our buffer for
+finished processes. We cannot output directly at that point in time as
+another process may be in the middle of its output.
+
+The buffer for finished child processes then also needs to be flushed in
+the cleanup phase as it may contain data.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- t/t0061-run-command.sh | 16 +++++++++++++---
- test-run-command.c     | 14 +++++++++-----
- 2 files changed, 22 insertions(+), 8 deletions(-)
+ run-command.c          | 11 ++++++++++-
+ t/t0061-run-command.sh |  9 +++++++++
+ test-run-command.c     | 13 +++++++++++++
+ 3 files changed, 32 insertions(+), 1 deletion(-)
 
+diff --git a/run-command.c b/run-command.c
+index d354c01..fa73dae 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -988,6 +988,12 @@ static void pp_cleanup(struct parallel_processes *pp)
+ 
+ 	free(pp->children);
+ 	free(pp->pfd);
++
++	/*
++	 * When get_next_task added messages to the buffer in its last
++	 * iteration, the buffered output is non empty.
++	 */
++	fputs(pp->buffered_output.buf, stderr);
+ 	strbuf_release(&pp->buffered_output);
+ 
+ 	sigchain_pop_common();
+@@ -1023,8 +1029,11 @@ static int pp_start_one(struct parallel_processes *pp)
+ 	if (!pp->get_next_task(&pp->children[i].data,
+ 			       &pp->children[i].process,
+ 			       &pp->children[i].err,
+-			       pp->data))
++			       pp->data)) {
++		strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
++		strbuf_reset(&pp->children[i].err);
+ 		return 1;
++	}
+ 
+ 	if (start_command(&pp->children[i].process)) {
+ 		int code = pp->start_failure(&pp->children[i].process,
 diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 0af77cd..f27ada7 100755
+index f27ada7..12228b4 100755
 --- a/t/t0061-run-command.sh
 +++ b/t/t0061-run-command.sh
-@@ -62,8 +62,18 @@ Hello
- World
- EOF
- 
--test_expect_success 'run_command runs in parallel' '
--	test-run-command run-command-parallel-4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+test_expect_success 'run_command runs in parallel with more jobs available than tasks' '
-+	test-run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'run_command runs in parallel with as many jobs as tasks' '
-+	test-run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'run_command runs in parallel with more tasks than jobs available' '
-+	test-run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
+@@ -91,4 +91,13 @@ test_expect_success 'run_command is asked to abort gracefully' '
  	test_cmp expect actual
  '
  
-@@ -77,7 +87,7 @@ asking for a quick stop
- EOF
- 
- test_expect_success 'run_command is asked to abort gracefully' '
--	test-run-command run-command-abort-3 false 2>actual &&
-+	test-run-command run-command-abort 3 false 2>actual &&
- 	test_cmp expect actual
- '
- 
++cat >expect <<-EOF
++no further jobs available
++EOF
++
++test_expect_success 'run_command outputs ' '
++	test-run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
++	test_cmp expect actual
++'
++
+ test_done
 diff --git a/test-run-command.c b/test-run-command.c
-index 4b59482..c8770c2 100644
+index c8770c2..13e5d44 100644
 --- a/test-run-command.c
 +++ b/test-run-command.c
-@@ -47,10 +47,11 @@ static int task_finished(int result,
- int main(int argc, char **argv)
- {
- 	struct child_process proc = CHILD_PROCESS_INIT;
-+	int jobs;
+@@ -34,6 +34,15 @@ static int parallel_next(void** task_cb,
+ 	return 1;
+ }
  
- 	if (argc < 3)
- 		return 1;
--	proc.argv = (const char **)argv+2;
-+	proc.argv = (const char **)argv + 2;
- 
- 	if (!strcmp(argv[1], "start-command-ENOENT")) {
- 		if (start_command(&proc) < 0 && errno == ENOENT)
-@@ -61,12 +62,15 @@ int main(int argc, char **argv)
- 	if (!strcmp(argv[1], "run-command"))
- 		exit(run_command(&proc));
- 
--	if (!strcmp(argv[1], "run-command-parallel-4"))
--		exit(run_processes_parallel(4, parallel_next,
-+	jobs = atoi(argv[2]);
-+	proc.argv = (const char **)argv + 3;
++static int no_job(void** task_cb,
++		  struct child_process *cp,
++		  struct strbuf *err,
++		  void *cb)
++{
++	strbuf_addf(err, "no further jobs available\n");
++	return 0;
++}
 +
-+	if (!strcmp(argv[1], "run-command-parallel"))
-+		exit(run_processes_parallel(jobs, parallel_next,
- 					    NULL, NULL, &proc));
- 
--	if (!strcmp(argv[1], "run-command-abort-3"))
--		exit(run_processes_parallel(3, parallel_next,
-+	if (!strcmp(argv[1], "run-command-abort"))
-+		exit(run_processes_parallel(jobs, parallel_next,
+ static int task_finished(int result,
+ 			 struct child_process *cp,
+ 			 struct strbuf *err,
+@@ -73,6 +82,10 @@ int main(int argc, char **argv)
+ 		exit(run_processes_parallel(jobs, parallel_next,
  					    NULL, task_finished, &proc));
  
++	if (!strcmp(argv[1], "run-command-no-jobs"))
++		exit(run_processes_parallel(jobs, no_job,
++					    NULL, task_finished, &proc));
++
  	fprintf(stderr, "check usage\n");
+ 	return 1;
+ }
 -- 
 2.5.0.275.gbfc1651.dirty
