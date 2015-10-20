@@ -1,128 +1,73 @@
-From: Enrique Tobis <Enrique.Tobis@twosigma.com>
-Subject: RE: Commit 5841520b makes it impossible to connect to github from
- behind my company's firewall.
-Date: Tue, 20 Oct 2015 13:39:55 +0000
-Message-ID: <cbf2c2c2c137445ebb9e2c5f1012cb10@EXMBNJE8.ad.twosigma.com>
-References: <loom.20151020T131513-529@post.gmane.org>
- <vpq37x54vav.fsf@grenoble-inp.fr>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: Git-p4 fails with NameError with python 2.7.2
+Date: Tue, 20 Oct 2015 14:57:46 +0100
+Message-ID: <CAE5ih793+YDd30rpMSyTHjUNZS+-BLY9D-kJkF9RAogjdctPFw@mail.gmail.com>
+References: <CAJA=mv5Kdsn1YEo4sUAwpTv=0Jc8Xg5V2WPMoCmsxNL4Hnk=kg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: 'Matthieu Moy' <Matthieu.Moy@grenoble-inp.fr>,
-	Johan Laenen <johan.laenen+cygwin@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 15:47:22 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Etienne Girard <etienne.g.girard@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 20 15:58:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoXG4-0007YX-AJ
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 15:47:20 +0200
+	id 1ZoXQH-0000My-F7
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 15:57:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752057AbbJTNrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2015 09:47:15 -0400
-Received: from mxl2.aoa.dmz.twosigma.com ([208.77.215.146]:60851 "EHLO
-	mxl2.aoa.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752005AbbJTNrO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2015 09:47:14 -0400
-X-Greylist: delayed 432 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Oct 2015 09:47:14 EDT
-Received: by mxl2.aoa.dmz.twosigma.com (Postfix, from userid 111)
-	id 9D43E600BD; Tue, 20 Oct 2015 13:40:01 +0000 (GMT)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
-	mxl2.aoa.dmz.twosigma.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00=-1.9 autolearn=no
-	version=3.3.2
-Received: from EXHTNJE1.ad.twosigma.com (exhtnje1.ad.twosigma.com [172.20.32.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mxl2.aoa.dmz.twosigma.com (Postfix) with ESMTPS id B73C6600C4;
-	Tue, 20 Oct 2015 13:39:55 +0000 (GMT)
-Received: from EXMBNJE6.ad.twosigma.com (172.20.45.169) by
- EXHTNJE1.ad.twosigma.com (172.20.32.77) with Microsoft SMTP Server (TLS) id
- 14.3.224.2; Tue, 20 Oct 2015 09:39:55 -0400
-Received: from EXMBNJE8.ad.twosigma.com (172.20.45.145) by
- EXMBNJE6.ad.twosigma.com (172.20.45.169) with Microsoft SMTP Server (TLS) id
- 15.0.1130.7; Tue, 20 Oct 2015 13:39:55 +0000
-Received: from EXMBNJE8.ad.twosigma.com ([fe80::1882:851f:2745:9d60]) by
- EXMBNJE8.ad.twosigma.com ([fe80::1882:851f:2745:9d60%17]) with mapi id
- 15.00.1130.005; Tue, 20 Oct 2015 13:39:55 +0000
-Thread-Topic: Commit 5841520b makes it impossible to connect to github from
- behind my company's firewall.
-Thread-Index: AQHRCyz2CwRD6HgpEESy5ILy46H0Yp50Xz2w
-In-Reply-To: <vpq37x54vav.fsf@grenoble-inp.fr>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.14]
+	id S1752843AbbJTN5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2015 09:57:49 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:33261 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752008AbbJTN5s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2015 09:57:48 -0400
+Received: by obbwb3 with SMTP id wb3so14578056obb.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2015 06:57:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=GF8O+Z/BnGB9LWeSSiqykDNeMfCO0JZeH2N4/NJbzbA=;
+        b=LrDe3lWIt5n4YfS6qCRat3ZP1yG4cSBKwakGsOOKEuGnEgu/5wzDVZbmHkeFh9Zpyc
+         6GylH5rciEuwEoH0GsedL8F7FuXPqsGgxx9Zqaxb8r0aeIwtxG9IwVQLsIfFX90MSh4A
+         YuHJQ1awmC/1Mw7bDTaLWW+OeFyugPeQRhLOs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=GF8O+Z/BnGB9LWeSSiqykDNeMfCO0JZeH2N4/NJbzbA=;
+        b=MxbopO/lC9dfvZ0dr192Z21kXoezJMkTN8g7NMsgmrsyIgxPr3YCj4Fa4u9kWhyunN
+         IIlygRPYl/+ynauF7U40Y5Cl5XWFDVyzyt0EaCLcz4K175c4bv/ZnDS2E/baCuUSicrq
+         T+kGPKjilAlK1SsanJwsfOTHRJVxmGAE4R7sk8q8zV1of+MErt5SiftLm1zGdiOO9xlt
+         /Fo+gD28OSMPXvR5rf+Z/HoSvDIspdoTEqtry4s7ajhJwhEoqFfe5iPLaMNov5m6JNjh
+         JWcY3SdZZWeQjGtTCnedr+FDjkFlMTsk/djFCs02K5kxHACNODe27Vn2vNNrK4LFIovV
+         u/NA==
+X-Gm-Message-State: ALoCoQkJG5K/J/efRigyaPQY5UkVfIIFAHA2Obre35L6pwYepdcqi6GrtZufxRGPEkgUnQzeG3/C
+X-Received: by 10.60.67.1 with SMTP id j1mr2048121oet.61.1445349466956; Tue,
+ 20 Oct 2015 06:57:46 -0700 (PDT)
+Received: by 10.60.34.8 with HTTP; Tue, 20 Oct 2015 06:57:46 -0700 (PDT)
+In-Reply-To: <CAJA=mv5Kdsn1YEo4sUAwpTv=0Jc8Xg5V2WPMoCmsxNL4Hnk=kg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279913>
 
-Hey!
+On 20 October 2015 at 11:34, Etienne Girard <etienne.g.girard@gmail.com> wrote:
+> Hello,
+>
+> Git-p4 fail when I try to rebase with the error: "NameError: global
+> name 'ctypes' is not defined". The error occurs when I use python
+> 2.7.2 that is installed by default on my company's computers (it goes
+> without saying that everything works fine with python 2.7.10).
+>
+> I'm a beginner in python, but simply importing ctypes at the beginning
+> of the script does the trick. I was wondering if submitting a patch
+> for this issue is worth the trouble, when a satisfying solution is not
+> using a 4 years old version of python.
 
-I'm really sorry to hear that.
-
-That change should enable more forms of authentication with your proxy, but it does cause libcurl to choose the one it finds most secure, according to the docs (http://curl.haxx.se/libcurl/c/CURLOPT_HTTPAUTH.html) What kinds of authentication does your proxy use?
+If you're able to submit a patch that would be great!
 
 Thanks,
-Enrique
-
------Original Message-----
-From: Matthieu Moy [mailto:Matthieu.Moy@grenoble-inp.fr] 
-Sent: Tuesday, October 20, 2015 07:46
-To: Johan Laenen
-Cc: git@vger.kernel.org; Enrique Tobis
-Subject: Re: Commit 5841520b makes it impossible to connect to github from behind my company's firewall.
-
-Hi,
-
-I'm just Cc-ing Enrique, the author of 5841520b.
-
-Johan Laenen <johan.laenen+cygwin@gmail.com> writes:
-
-> Commit 5841520b makes it impossible to connect to github from behind my
-> company's firewall.
->
-> I'm running CYGWIN_NT-6.1 and the default git version 2.5.3 complains with a
-> fatal error when trying to git pull:
->
-> $ /bin/git --version
-> git version 2.5.3
-> $ /bin/git pull
-> fatal: unable to access 'https://github.com/gargle/french/': Unknown SSL
-> protocol error in connection to github.com:443
->
-> Taking the sources of git 2.6.1. and compiling with commit 5841520b in
-> http.c reverted gives me a working git.
->
-> My http.c now looks like:
->
->  466     if (curl_http_proxy) {
->  467         curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
->  468 #if LIBCURL_VERSION_NUM >= 0x070a07
->  469         curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
->  470 #endif
->  471     }
->
-> And it works:
->
-> $ git --version
-> git version 2.6.1
-> $ git pull
-> Already up-to-date.
->
->
->
-> Greetings,
->
-> Johan
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Luke
