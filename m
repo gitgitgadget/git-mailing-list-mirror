@@ -1,73 +1,73 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: Git-p4 fails with NameError with python 2.7.2
-Date: Tue, 20 Oct 2015 14:57:46 +0100
-Message-ID: <CAE5ih793+YDd30rpMSyTHjUNZS+-BLY9D-kJkF9RAogjdctPFw@mail.gmail.com>
-References: <CAJA=mv5Kdsn1YEo4sUAwpTv=0Jc8Xg5V2WPMoCmsxNL4Hnk=kg@mail.gmail.com>
+From: Johan Laenen <johan.laenen+cygwin@gmail.com>
+Subject: Re: Commit 5841520b makes it impossible to connect to github from behind my company's firewall.
+Date: Tue, 20 Oct 2015 14:23:40 +0000 (UTC)
+Message-ID: <loom.20151020T155923-458@post.gmane.org>
+References: <loom.20151020T131513-529@post.gmane.org> <vpq37x54vav.fsf@grenoble-inp.fr> <cbf2c2c2c137445ebb9e2c5f1012cb10@EXMBNJE8.ad.twosigma.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>
-To: Etienne Girard <etienne.g.girard@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 15:58:00 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 20 16:24:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoXQH-0000My-F7
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 15:57:53 +0200
+	id 1ZoXpl-0007AO-QT
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 16:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752843AbbJTN5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2015 09:57:49 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:33261 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752008AbbJTN5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2015 09:57:48 -0400
-Received: by obbwb3 with SMTP id wb3so14578056obb.0
-        for <git@vger.kernel.org>; Tue, 20 Oct 2015 06:57:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=GF8O+Z/BnGB9LWeSSiqykDNeMfCO0JZeH2N4/NJbzbA=;
-        b=LrDe3lWIt5n4YfS6qCRat3ZP1yG4cSBKwakGsOOKEuGnEgu/5wzDVZbmHkeFh9Zpyc
-         6GylH5rciEuwEoH0GsedL8F7FuXPqsGgxx9Zqaxb8r0aeIwtxG9IwVQLsIfFX90MSh4A
-         YuHJQ1awmC/1Mw7bDTaLWW+OeFyugPeQRhLOs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=GF8O+Z/BnGB9LWeSSiqykDNeMfCO0JZeH2N4/NJbzbA=;
-        b=MxbopO/lC9dfvZ0dr192Z21kXoezJMkTN8g7NMsgmrsyIgxPr3YCj4Fa4u9kWhyunN
-         IIlygRPYl/+ynauF7U40Y5Cl5XWFDVyzyt0EaCLcz4K175c4bv/ZnDS2E/baCuUSicrq
-         T+kGPKjilAlK1SsanJwsfOTHRJVxmGAE4R7sk8q8zV1of+MErt5SiftLm1zGdiOO9xlt
-         /Fo+gD28OSMPXvR5rf+Z/HoSvDIspdoTEqtry4s7ajhJwhEoqFfe5iPLaMNov5m6JNjh
-         JWcY3SdZZWeQjGtTCnedr+FDjkFlMTsk/djFCs02K5kxHACNODe27Vn2vNNrK4LFIovV
-         u/NA==
-X-Gm-Message-State: ALoCoQkJG5K/J/efRigyaPQY5UkVfIIFAHA2Obre35L6pwYepdcqi6GrtZufxRGPEkgUnQzeG3/C
-X-Received: by 10.60.67.1 with SMTP id j1mr2048121oet.61.1445349466956; Tue,
- 20 Oct 2015 06:57:46 -0700 (PDT)
-Received: by 10.60.34.8 with HTTP; Tue, 20 Oct 2015 06:57:46 -0700 (PDT)
-In-Reply-To: <CAJA=mv5Kdsn1YEo4sUAwpTv=0Jc8Xg5V2WPMoCmsxNL4Hnk=kg@mail.gmail.com>
+	id S1753141AbbJTOYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2015 10:24:10 -0400
+Received: from plane.gmane.org ([80.91.229.3]:33737 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752839AbbJTOYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2015 10:24:08 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ZoXpe-00074x-G4
+	for git@vger.kernel.org; Tue, 20 Oct 2015 16:24:06 +0200
+Received: from 193.191.180.235 ([193.191.180.235])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 20 Oct 2015 16:24:06 +0200
+Received: from johan.laenen+cygwin by 193.191.180.235 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 20 Oct 2015 16:24:06 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 193.191.180.235 (Mozilla/5.0 (Windows NT 6.1; rv:41.0) Gecko/20100101 Firefox/41.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279914>
 
-On 20 October 2015 at 11:34, Etienne Girard <etienne.g.girard@gmail.com> wrote:
-> Hello,
->
-> Git-p4 fail when I try to rebase with the error: "NameError: global
-> name 'ctypes' is not defined". The error occurs when I use python
-> 2.7.2 that is installed by default on my company's computers (it goes
-> without saying that everything works fine with python 2.7.10).
->
-> I'm a beginner in python, but simply importing ctypes at the beginning
-> of the script does the trick. I was wondering if submitting a patch
-> for this issue is worth the trouble, when a satisfying solution is not
-> using a 4 years old version of python.
+Enrique Tobis <Enrique.Tobis <at> twosigma.com> writes:
 
-If you're able to submit a patch that would be great!
+> 
+> Hey!
+> 
+> I'm really sorry to hear that.
+> 
+> That change should enable more forms of authentication with your proxy,
+but it does cause libcurl to choose
+> the one it finds most secure, according to the docs
+> (http://curl.haxx.se/libcurl/c/CURLOPT_HTTPAUTH.html) What kinds of
+authentication does your
+> proxy use?
+> 
+> Thanks,
+> Enrique
+> 
 
-Thanks,
-Luke
+Hi,
+
+Thanks for looking into this.
+
+I'm behind a NTLM proxy :/
+
+Greetings,
+
+Johan
