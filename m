@@ -1,150 +1,128 @@
-From: Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 3/4] gitk: Add accelerators to Japanese locale
-Date: Tue, 20 Oct 2015 14:33:03 +0200
-Message-ID: <1445344384-12762-4-git-send-email-tiwai@suse.de>
-References: <1445344384-12762-1-git-send-email-tiwai@suse.de>
+From: Enrique Tobis <Enrique.Tobis@twosigma.com>
+Subject: RE: Commit 5841520b makes it impossible to connect to github from
+ behind my company's firewall.
+Date: Tue, 20 Oct 2015 13:39:55 +0000
+Message-ID: <cbf2c2c2c137445ebb9e2c5f1012cb10@EXMBNJE8.ad.twosigma.com>
+References: <loom.20151020T131513-529@post.gmane.org>
+ <vpq37x54vav.fsf@grenoble-inp.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Paul Mackerras <paulus@samba.org>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 20 14:34:04 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: 'Matthieu Moy' <Matthieu.Moy@grenoble-inp.fr>,
+	Johan Laenen <johan.laenen+cygwin@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 20 15:47:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoW6Z-0006P3-Vx
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 14:33:28 +0200
+	id 1ZoXG4-0007YX-AJ
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 15:47:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752559AbbJTMdX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Oct 2015 08:33:23 -0400
-Received: from mx2.suse.de ([195.135.220.15]:35271 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752365AbbJTMdT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2015 08:33:19 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
-	by mx2.suse.de (Postfix) with ESMTP id C24DFACA8;
-	Tue, 20 Oct 2015 12:33:16 +0000 (UTC)
-X-Mailer: git-send-email 2.6.1
-In-Reply-To: <1445344384-12762-1-git-send-email-tiwai@suse.de>
+	id S1752057AbbJTNrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2015 09:47:15 -0400
+Received: from mxl2.aoa.dmz.twosigma.com ([208.77.215.146]:60851 "EHLO
+	mxl2.aoa.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752005AbbJTNrO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2015 09:47:14 -0400
+X-Greylist: delayed 432 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Oct 2015 09:47:14 EDT
+Received: by mxl2.aoa.dmz.twosigma.com (Postfix, from userid 111)
+	id 9D43E600BD; Tue, 20 Oct 2015 13:40:01 +0000 (GMT)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
+	mxl2.aoa.dmz.twosigma.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00=-1.9 autolearn=no
+	version=3.3.2
+Received: from EXHTNJE1.ad.twosigma.com (exhtnje1.ad.twosigma.com [172.20.32.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mxl2.aoa.dmz.twosigma.com (Postfix) with ESMTPS id B73C6600C4;
+	Tue, 20 Oct 2015 13:39:55 +0000 (GMT)
+Received: from EXMBNJE6.ad.twosigma.com (172.20.45.169) by
+ EXHTNJE1.ad.twosigma.com (172.20.32.77) with Microsoft SMTP Server (TLS) id
+ 14.3.224.2; Tue, 20 Oct 2015 09:39:55 -0400
+Received: from EXMBNJE8.ad.twosigma.com (172.20.45.145) by
+ EXMBNJE6.ad.twosigma.com (172.20.45.169) with Microsoft SMTP Server (TLS) id
+ 15.0.1130.7; Tue, 20 Oct 2015 13:39:55 +0000
+Received: from EXMBNJE8.ad.twosigma.com ([fe80::1882:851f:2745:9d60]) by
+ EXMBNJE8.ad.twosigma.com ([fe80::1882:851f:2745:9d60%17]) with mapi id
+ 15.00.1130.005; Tue, 20 Oct 2015 13:39:55 +0000
+Thread-Topic: Commit 5841520b makes it impossible to connect to github from
+ behind my company's firewall.
+Thread-Index: AQHRCyz2CwRD6HgpEESy5ILy46H0Yp50Xz2w
+In-Reply-To: <vpq37x54vav.fsf@grenoble-inp.fr>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.14]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279912>
 
-Just follow the English accelerator keys.
+Hey!
 
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
----
- gitk-git/po/ja.po | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+I'm really sorry to hear that.
 
-diff --git a/gitk-git/po/ja.po b/gitk-git/po/ja.po
-index 9bbbadd3b427..59e42a89fd7e 100644
---- a/gitk-git/po/ja.po
-+++ b/gitk-git/po/ja.po
-@@ -91,71 +91,71 @@ msgstr "=E3=82=AD=E3=83=A3=E3=83=B3=E3=82=BB=E3=83=AB=
-"
-=20
- #: gitk:2069
- msgid "&Update"
--msgstr "=E6=9B=B4=E6=96=B0"
-+msgstr "=E6=9B=B4=E6=96=B0(&U)"
-=20
- #: gitk:2070
- msgid "&Reload"
--msgstr "=E3=83=AA=E3=83=AD=E3=83=BC=E3=83=89"
-+msgstr "=E3=83=AA=E3=83=AD=E3=83=BC=E3=83=89(&R)"
-=20
- #: gitk:2071
- msgid "Reread re&ferences"
--msgstr "=E3=83=AA=E3=83=95=E3=82=A1=E3=83=AC=E3=83=B3=E3=82=B9=E3=82=92=
-=E5=86=8D=E8=AA=AD=E3=81=BF=E8=BE=BC=E3=81=BF"
-+msgstr "=E3=83=AA=E3=83=95=E3=82=A1=E3=83=AC=E3=83=B3=E3=82=B9=E3=82=92=
-=E5=86=8D=E8=AA=AD=E3=81=BF=E8=BE=BC=E3=81=BF(&F)"
-=20
- #: gitk:2072
- msgid "&List references"
--msgstr "=E3=83=AA=E3=83=95=E3=82=A1=E3=83=AC=E3=83=B3=E3=82=B9=E3=83=AA=
-=E3=82=B9=E3=83=88=E3=82=92=E8=A1=A8=E7=A4=BA"
-+msgstr "=E3=83=AA=E3=83=95=E3=82=A1=E3=83=AC=E3=83=B3=E3=82=B9=E3=83=AA=
-=E3=82=B9=E3=83=88=E3=82=92=E8=A1=A8=E7=A4=BA(&L)"
-=20
- #: gitk:2074
- msgid "Start git &gui"
--msgstr "git gui =E3=81=AE=E9=96=8B=E5=A7=8B"
-+msgstr "git gui =E3=81=AE=E9=96=8B=E5=A7=8B(&G)"
-=20
- #: gitk:2076
- msgid "&Quit"
--msgstr "=E7=B5=82=E4=BA=86"
-+msgstr "=E7=B5=82=E4=BA=86(&Q)"
-=20
- #: gitk:2068
- msgid "&File"
--msgstr "=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB"
-+msgstr "=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB(&F)"
-=20
- #: gitk:2080
- msgid "&Preferences"
--msgstr "=E8=A8=AD=E5=AE=9A"
-+msgstr "=E8=A8=AD=E5=AE=9A(&P)"
-=20
- #: gitk:2079
- msgid "&Edit"
--msgstr "=E7=B7=A8=E9=9B=86"
-+msgstr "=E7=B7=A8=E9=9B=86(&E)"
-=20
- #: gitk:2084
- msgid "&New view..."
--msgstr "=E6=96=B0=E8=A6=8F=E3=83=93=E3=83=A5=E3=83=BC..."
-+msgstr "=E6=96=B0=E8=A6=8F=E3=83=93=E3=83=A5=E3=83=BC...(&N)"
-=20
- #: gitk:2085
- msgid "&Edit view..."
--msgstr "=E3=83=93=E3=83=A5=E3=83=BC=E7=B7=A8=E9=9B=86..."
-+msgstr "=E3=83=93=E3=83=A5=E3=83=BC=E7=B7=A8=E9=9B=86...(&E)"
-=20
- #: gitk:2086
- msgid "&Delete view"
--msgstr "=E3=83=93=E3=83=A5=E3=83=BC=E5=89=8A=E9=99=A4"
-+msgstr "=E3=83=93=E3=83=A5=E3=83=BC=E5=89=8A=E9=99=A4(&D)"
-=20
- #: gitk:2088 gitk:4043
- msgid "&All files"
--msgstr "=E5=85=A8=E3=81=A6=E3=81=AE=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB=
-"
-+msgstr "=E5=85=A8=E3=81=A6=E3=81=AE=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB=
-(&A)"
-=20
- #: gitk:2083 gitk:4067
- msgid "&View"
--msgstr "=E3=83=93=E3=83=A5=E3=83=BC"
-+msgstr "=E3=83=93=E3=83=A5=E3=83=BC(&V)"
-=20
- #: gitk:2093 gitk:2103 gitk:3012
- msgid "&About gitk"
--msgstr "gitk =E3=81=AB=E3=81=A4=E3=81=84=E3=81=A6"
-+msgstr "gitk =E3=81=AB=E3=81=A4=E3=81=84=E3=81=A6(&A)"
-=20
- #: gitk:2094 gitk:2108
- msgid "&Key bindings"
--msgstr "=E3=82=AD=E3=83=BC=E3=83=90=E3=82=A4=E3=83=B3=E3=83=87=E3=82=A3=
-=E3=83=B3=E3=82=B0"
-+msgstr "=E3=82=AD=E3=83=BC=E3=83=90=E3=82=A4=E3=83=B3=E3=83=87=E3=82=A3=
-=E3=83=B3=E3=82=B0(&K)"
-=20
- #: gitk:2092 gitk:2107
- msgid "&Help"
--msgstr "=E3=83=98=E3=83=AB=E3=83=97"
-+msgstr "=E3=83=98=E3=83=AB=E3=83=97(&H)"
-=20
- #: gitk:2185 gitk:8652
- msgid "SHA1 ID:"
---=20
-2.6.1
+That change should enable more forms of authentication with your proxy, but it does cause libcurl to choose the one it finds most secure, according to the docs (http://curl.haxx.se/libcurl/c/CURLOPT_HTTPAUTH.html) What kinds of authentication does your proxy use?
+
+Thanks,
+Enrique
+
+-----Original Message-----
+From: Matthieu Moy [mailto:Matthieu.Moy@grenoble-inp.fr] 
+Sent: Tuesday, October 20, 2015 07:46
+To: Johan Laenen
+Cc: git@vger.kernel.org; Enrique Tobis
+Subject: Re: Commit 5841520b makes it impossible to connect to github from behind my company's firewall.
+
+Hi,
+
+I'm just Cc-ing Enrique, the author of 5841520b.
+
+Johan Laenen <johan.laenen+cygwin@gmail.com> writes:
+
+> Commit 5841520b makes it impossible to connect to github from behind my
+> company's firewall.
+>
+> I'm running CYGWIN_NT-6.1 and the default git version 2.5.3 complains with a
+> fatal error when trying to git pull:
+>
+> $ /bin/git --version
+> git version 2.5.3
+> $ /bin/git pull
+> fatal: unable to access 'https://github.com/gargle/french/': Unknown SSL
+> protocol error in connection to github.com:443
+>
+> Taking the sources of git 2.6.1. and compiling with commit 5841520b in
+> http.c reverted gives me a working git.
+>
+> My http.c now looks like:
+>
+>  466     if (curl_http_proxy) {
+>  467         curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+>  468 #if LIBCURL_VERSION_NUM >= 0x070a07
+>  469         curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
+>  470 #endif
+>  471     }
+>
+> And it works:
+>
+> $ git --version
+> git version 2.6.1
+> $ git pull
+> Already up-to-date.
+>
+>
+>
+> Greetings,
+>
+> Johan
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
