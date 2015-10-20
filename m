@@ -1,77 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/4] stripspace: Use parse-options for command-line parsing
-Date: Tue, 20 Oct 2015 08:47:50 -0700
-Message-ID: <xmqq37x5a6e1.fsf@gitster.mtv.corp.google.com>
-References: <1445008605-16534-1-git-send-email-tklauser@distanz.ch>
-	<1445008605-16534-3-git-send-email-tklauser@distanz.ch>
-	<xmqqoafyg2sp.fsf@gitster.mtv.corp.google.com>
-	<xmqqd1weg1s0.fsf@gitster.mtv.corp.google.com>
-	<20151017103134.GD2468@distanz.ch>
-	<xmqq6125choi.fsf@gitster.mtv.corp.google.com>
-	<20151020084823.GP2468@distanz.ch>
+Subject: Re: Git-p4 fails with NameError with python 2.7.2
+Date: Tue, 20 Oct 2015 09:00:27 -0700
+Message-ID: <xmqqy4ex8r8k.fsf@gitster.mtv.corp.google.com>
+References: <CAJA=mv5Kdsn1YEo4sUAwpTv=0Jc8Xg5V2WPMoCmsxNL4Hnk=kg@mail.gmail.com>
+	<CAE5ih793+YDd30rpMSyTHjUNZS+-BLY9D-kJkF9RAogjdctPFw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Tobias Klauser <tklauser@distanz.ch>
-X-From: git-owner@vger.kernel.org Tue Oct 20 17:48:25 2015
+Cc: Etienne Girard <etienne.g.girard@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Luke Diamand <luke@diamand.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 20 18:00:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoZ8x-0003mY-QW
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 17:48:08 +0200
+	id 1ZoZL5-0007WP-By
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 18:00:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752165AbbJTPsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2015 11:48:00 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:34917 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752052AbbJTPrw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2015 11:47:52 -0400
-Received: by pasz6 with SMTP id z6so25000918pas.2
-        for <git@vger.kernel.org>; Tue, 20 Oct 2015 08:47:52 -0700 (PDT)
+	id S1751274AbbJTQAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2015 12:00:30 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:34755 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750958AbbJTQA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2015 12:00:29 -0400
+Received: by padhk11 with SMTP id hk11so25330884pad.1
+        for <git@vger.kernel.org>; Tue, 20 Oct 2015 09:00:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-type;
-        bh=KW2qF8dU+/myT5IsC721P+HgQKjKOMeqjvSdCMPcHyI=;
-        b=CrVW90Dsz3OGio/JzfK86vVejRYbQE3nEw4U26zkJ1h6LmGqpOwsqxw5/VclgBK0rJ
-         j5p6uSXSLRHtzrpyfKRX+RwP/8LbOHofGc21F0Wqs9qbfdkyPBm97mUq7FAq4+XqxTQX
-         9bsqk64VItJ4s48C0HYzRNxoZdOin2rnGqAhVJA7+GxqScTkYFceGwSEC0eGeIpS7WrR
-         kPiXU0YJ4geHlIlIv6lugeMVbBj40rLAPJSuls0Fx993qWxekcquwYQOmg7Coo7pUtvP
-         8nLe71iLrk4/TulQRZ1eCwNnIlgRXgP5sboysuxm/uxveiyuPCxdhMvejJRS9Kr9IOX4
-         NpGA==
-X-Received: by 10.67.4.9 with SMTP id ca9mr4829377pad.90.1445356072408;
-        Tue, 20 Oct 2015 08:47:52 -0700 (PDT)
+        bh=4hKVprUaFU+bcVVI14rUYXTELWxrg77XWL9JMN1DP14=;
+        b=DdJgrfYHZVR9gAfV8JDHwJ9Rbh9bqqaRjytXG7G4J6A48mJNU786pKR7mltEWUdkcy
+         lFOPuhfD5KCe8mp7Qj3EJLQ8C52cnL6hJGLJ/sdUALZ7Ubwk5R+n5RrRMgGXFCY/2TY+
+         AsuE6IXu6jOpFH7656VEEtKOYp0r2/HutPkY3CXMdlY3xJu3Uy4hlmxeSDRDh1aSkfD0
+         vbmzuXVLDp7APkxDM6/ZgTcMWaX9tPv4m+CIg47hyUcXsMcMM2x/8A7uIcKuqJqGhXiY
+         MtBiaB1tMFu3ERTJQd+oUeogIih3uN/lmIhl3T9Zit2n50GFjEDGIWzRoxv++wdxrHeH
+         E9mw==
+X-Received: by 10.68.168.97 with SMTP id zv1mr4880644pbb.86.1445356828800;
+        Tue, 20 Oct 2015 09:00:28 -0700 (PDT)
 Received: from localhost ([2620:0:1000:861b:e1b1:e6e0:dc10:8032])
-        by smtp.gmail.com with ESMTPSA id i9sm4448030pbq.84.2015.10.20.08.47.51
+        by smtp.gmail.com with ESMTPSA id yg2sm4495924pbb.79.2015.10.20.09.00.27
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 20 Oct 2015 08:47:51 -0700 (PDT)
-In-Reply-To: <20151020084823.GP2468@distanz.ch> (Tobias Klauser's message of
-	"Tue, 20 Oct 2015 10:48:23 +0200")
+        Tue, 20 Oct 2015 09:00:28 -0700 (PDT)
+In-Reply-To: <CAE5ih793+YDd30rpMSyTHjUNZS+-BLY9D-kJkF9RAogjdctPFw@mail.gmail.com>
+	(Luke Diamand's message of "Tue, 20 Oct 2015 14:57:46 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279919>
 
-Tobias Klauser <tklauser@distanz.ch> writes:
+Luke Diamand <luke@diamand.org> writes:
 
-> On 2015-10-17 at 23:24:13 +0200, Junio C Hamano <gitster@pobox.com> wrote:
->> Before starting v3, please fetch from me and check what is queued on
->> 'pu'.  It may turn out that the fix-ups I did while queuing this
->> round is sufficient, in which case you can just say that instead ;-)
+> On 20 October 2015 at 11:34, Etienne Girard <etienne.g.girard@gmail.com> wrote:
+>> Hello,
+>>
+>> Git-p4 fail when I try to rebase with the error: "NameError: global
+>> name 'ctypes' is not defined". The error occurs when I use python
+>> 2.7.2 that is installed by default on my company's computers (it goes
+>> without saying that everything works fine with python 2.7.10).
+>>
+>> I'm a beginner in python, but simply importing ctypes at the beginning
+>> of the script does the trick. I was wondering if submitting a patch
+>> for this issue is worth the trouble, when a satisfying solution is not
+>> using a 4 years old version of python.
 >
-> Now that patches 3 and 4 will be dropped and no changes being necessary
-> for patches 1 and 2 (except for your changes that I see are already
-> folded into 'pu'), do you want me to submit a v3 of the series? Or is it
-> enough if I ask you to drop patches 3 (stripspace: implement
-> --count-lines option) and 4 (rebase -i: use "stripspace --count-lines"
-> when counting todo items)?
+> If you're able to submit a patch that would be great!
 
-Yes, the latter is sufficient and preferrable (less work for both of
-us, without losing anything to help other people to review and
-discuss who may want to chime in).
+Lars's 4d25dc44 (git-p4: check free space during streaming,
+2015-09-26) introduced two references to ctypes.* and there is no
+'import ctypes' anywhere in the script.
 
-Thanks.
+I do not follow Python development, but does the above mean that
+with recent 2.x you can say ctypes without first saying "import
+ctypes"?  It feels somewhat non-pythonesque that identifiers like
+this is given to you without you asking with an explicit 'import',
+so I am puzzled.
