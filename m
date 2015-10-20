@@ -1,106 +1,93 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/8] Fixes for the parallel processing engine and git submodule update
-Date: Tue, 20 Oct 2015 15:43:42 -0700
-Message-ID: <1445381030-23912-1-git-send-email-sbeller@google.com>
-Cc: ramsay@ramsayjones.plus.com, jacob.keller@gmail.com, peff@peff.net,
-	gitster@pobox.com, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	ericsunshine@gmail.com, Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 21 00:45:46 2015
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH] git-p4: import the ctypes module
+Date: Wed, 21 Oct 2015 00:00:44 +0100
+Message-ID: <5626C79C.8060503@diamand.org>
+References: <CAJA=mv5Kdsn1YEo4sUAwpTv=0Jc8Xg5V2WPMoCmsxNL4Hnk=kg@mail.gmail.com>	<CAE5ih793+YDd30rpMSyTHjUNZS+-BLY9D-kJkF9RAogjdctPFw@mail.gmail.com>	<xmqqy4ex8r8k.fsf@gitster.mtv.corp.google.com>	<1445369506.8543.10.camel@kaarsemaker.net> <xmqqwpuh72ot.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Etienne Girard <etienne.g.girard@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Wed Oct 21 01:01:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zoff5-0003KE-S9
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 00:45:44 +0200
+	id 1Zoftt-0001Ns-CS
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 01:01:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753389AbbJTWpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2015 18:45:22 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:33773 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754503AbbJTWn5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2015 18:43:57 -0400
-Received: by pabrc13 with SMTP id rc13so33821376pab.0
-        for <git@vger.kernel.org>; Tue, 20 Oct 2015 15:43:56 -0700 (PDT)
+	id S1753015AbbJTXA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2015 19:00:57 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:35643 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751037AbbJTXA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2015 19:00:56 -0400
+Received: by wicll6 with SMTP id ll6so66695261wic.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2015 16:00:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=NLTuxYFbvhL9/hmOCXPCSwkqBgEemS7ihphUxes+Oyw=;
-        b=PCZMPEptBbc1WUuCsNY/ybDQSKLWRc8gWdDisBTrFmQZFLiJSqEZdqiK4nslMFZ0IE
-         BIfSyquASPoWTlIc/ICgxDA71Tj+KJ6WXX5cfypeGOY8SW4V+fcOcP0b0QsyuDRcu+bg
-         ZliRDUP6LX06RWjkv34V1D3b5HfkAZ/VBosoft/vOv8IxcMjEG+Tj1kakMyX0Nd0iNT2
-         LI31BnMiBI7Z4ZRxQNaOvJ2xZIi5kLSNV1LxyuEs4AJ2w8V4fjI71IhXvpiHy3q8nsn9
-         jBoayfw8u/Nbyyas6w/XB8pkS5CG7ziu+JaOLTUm77YOzKiHYsFlgBvS/TXCSHL3R3ba
-         yCuQ==
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=8GEfuNVTYiv2f4gMlucqaoBqkYRz7HejacCLaM2XZos=;
+        b=WqaPedA6Q54w2qNfbxHzrPRw8AJJ9PUfkarZfOYk1r9DedoY0YQyx0hFB5xh5NaEo6
+         bCFMVPR7g11ufvk+T+To7QXjheVhnybOJyPabmN0EPFm4SUlxoIhZRnmqVKUVMlnTYjP
+         Ill+1bf9ZcjPIcA4pPFSkqzS+HMTV3sMunD1I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=NLTuxYFbvhL9/hmOCXPCSwkqBgEemS7ihphUxes+Oyw=;
-        b=V+rY9XYBLExC/Xs7k2SLOQvo55GFs+Q7pYMyjmmWUZ28AnfOK+Lj2cIPIeirTQvkn0
-         pG/cYoPP/etzpM5OEb5av9VVcA7EsEettnio1Jco/KU9IQfHC6gYHiWkEuGR246RfrdJ
-         OiuDR4+M+rL/DbAgsjuk0QCWl6d1dl7qrvCtsardEBzEWz8JTaEK5KdorAiuRqRw0jBK
-         ua7G0M9yxmuwYQ02Tmi8Gw7HOHuKpc6VKnH34NmZg0rtBRW/BHspOYdwneZvUiOIX7v8
-         9OPy5lIK7gecY2VVB2akHXTR7HUdJ9fLigLQ2/pRYbmNPO0J5QAeRBD6YAJfu/UM3g+g
-         NqSQ==
-X-Gm-Message-State: ALoCoQlACom3ZS2kod9jdkoXMiepFbTX8F9ccsFDvAmhE4uW3X5BkI7RuCIQoklsveeF2re08jCM
-X-Received: by 10.66.216.101 with SMTP id op5mr6626499pac.51.1445381036791;
-        Tue, 20 Oct 2015 15:43:56 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:95b6:4bcd:ddcd:b6a3])
-        by smtp.gmail.com with ESMTPSA id pk2sm5607307pbb.21.2015.10.20.15.43.55
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 20 Oct 2015 15:43:56 -0700 (PDT)
-X-Mailer: git-send-email 2.5.0.275.gbfc1651.dirty
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=8GEfuNVTYiv2f4gMlucqaoBqkYRz7HejacCLaM2XZos=;
+        b=R6UwItHNgOItUeQ9clzDvDlIXcutI3zM8pKaLf/FE7HXCZY4Hsb4QS8K0vOdc9vgJ7
+         nbLmFnZ3jg40i1jzAFWbgR6ReDWtsNjUvNgBmkAfQQHqgPzVcbucg9CQulm1ZRIJFd3I
+         m+pYdFtvGCQM19261GJLKaKu6dMNWl/p0Ia3jp0uxhRkhkGiwO6sqm61BBttrsGM0F3y
+         cMJ39cbQbQzx7HJotN9pD501TFlxhSS5UYPCwLnNRMucVlDant98WpnOLj28okXD3OXM
+         Tne+3Jo/pnMAIc5Bzanx+9aeELsW5CczhasKJIpshJFejkzIB24LgNfsiPdbPg5uXGC8
+         cn1w==
+X-Gm-Message-State: ALoCoQkUSFbr4jYhMgEMktxA+VjCWU3m1jzG9lo4TmV9GlNuSBXJEVc486P5hyecCW6plyHB0OzH
+X-Received: by 10.180.12.241 with SMTP id b17mr7732130wic.55.1445382055064;
+        Tue, 20 Oct 2015 16:00:55 -0700 (PDT)
+Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
+        by smtp.gmail.com with ESMTPSA id ee5sm6517183wjd.17.2015.10.20.16.00.54
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 20 Oct 2015 16:00:54 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <xmqqwpuh72ot.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279956>
 
-Patches 1-6 replace the last 6 patches of sb/submodule-parallel-fetch
-(Patch 1,2 changed code, 3,4 stayed as is, 5 has more commit message, 
-Patch 6 is the same again)
+On 20/10/15 20:36, Junio C Hamano wrote:
+> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+>
+>>> I do not follow Python development, but does the above mean that
+>>> with recent 2.x you can say ctypes without first saying "import
+>>> ctypes"?  It feels somewhat non-pythonesque that identifiers like
+>>> this is given to you without you asking with an explicit 'import',
+>>> so I am puzzled.
+>>
+>> No, you cannot do that. The reason others may not have noticed this bug is that
+>> in git-p4.py, ctypes is only used on windows.
+>>
+>>   111     if platform.system() == 'Windows':
+>>   112         free_bytes = ctypes.c_ulonglong(0)
+>>   113         ctypes.windll.kernel32.GetDiskFreeSpaceExW(ctypes.c_wchar_p(os.getcwd()), None, None, ctypes.pointer(free_bytes))
+>>
+>> The fact that it works for the OP with 2.7.10 is puzzling (assuming that it's
+>> on the same system).
+>
+> Exactly.  That is where my "I am puzzled" comes from.
+>
+> The patch looks obviously the right thing to do.  Luke?  Lars?
 
-Patches 7,8 are new in the series .
-Patch 7 keeps the update strategy in the cached submodue structs around,
-Patch 8 rewrites some small part of the git submodule update script in C
-by having another larger helper function in builtin/submodule--helper.c
-which takes care of the cloning new submodules without having all the
-intermediate steps as in previous versions of this series.
+It looks sensible to me, and works fine on Linux, thanks. ack.
 
-The patch 8 is just a rewrite/translation without enabling the parallel
-processing though. This will be done in a later patch once we have
-bike shedded enough how to name the user facing option for that.
-(I guess the CLI option would be --jobs again, but I'd rather hint at
-the config option)
+I can't test on Windows today but I can't see why it wouldn't work.
 
-This supersedes 
-[RFC PATCHv1 00/12] git submodule update in C with parallel cloning
-
-Any feedback welcome!
-Thanks,
-Stefan
-
-Stefan Beller (8):
-  run-command: Fix early shutdown
-  run-command: Call get_next_task with a clean child process.
-  run-command: Initialize the shutdown flag
-  test-run-command: Test for gracefully aborting
-  test-run-command: Increase test coverage
-  run-command: Fix missing output from late callbacks
-  submodule config: Keep update strategy around
-  git submodule update: Have a dedicated helper for cloning
-
- builtin/submodule--helper.c | 222 ++++++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  45 +++------
- run-command.c               |  27 +++++-
- submodule-config.c          |  11 +++
- submodule-config.h          |   1 +
- t/t0061-run-command.sh      |  37 +++++++-
- t/t7400-submodule-basic.sh  |   4 +-
- test-run-command.c          |  37 +++++++-
- 8 files changed, 340 insertions(+), 44 deletions(-)
-
--- 
-2.5.0.275.gbfc1651.dirty
+Luke
