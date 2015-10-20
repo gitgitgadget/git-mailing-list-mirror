@@ -1,124 +1,100 @@
-From: Alex Henrie <alexhenrie24@gmail.com>
-Subject: Re: [PATCH] pull: add angle brackets to usage string
-Date: Tue, 20 Oct 2015 10:54:20 -0600
-Message-ID: <CAMMLpeStjJY2sqGvC0wV_OqFSA3OuzmcDitvr53d=z8+y2dBYA@mail.gmail.com>
-References: <1444962133-1266-1-git-send-email-alexhenrie24@gmail.com>
- <xmqqwpumg480.fsf@gitster.mtv.corp.google.com> <CAMMLpeQPngq-xM2vN4uX6+k5-uoOXyP3p0wgLO9LOkWxWtZBEA@mail.gmail.com>
- <xmqq4mhqg15y.fsf@gitster.mtv.corp.google.com> <CAMMLpeTf93NnqPM+SaxfhsSdMg1HUiVyo5FFdiuGF9o-KQbGog@mail.gmail.com>
- <xmqqbnbu9kzr.fsf@gitster.mtv.corp.google.com>
+From: Enrique Tobis <Enrique.Tobis@twosigma.com>
+Subject: RE: Commit 5841520b makes it impossible to connect to github from
+ behind my company's firewall.
+Date: Tue, 20 Oct 2015 17:06:37 +0000
+Message-ID: <33632f538b4a406fb8f0e1eb2b016c43@EXMBNJE8.ad.twosigma.com>
+References: <loom.20151020T131513-529@post.gmane.org>
+	<vpq37x54vav.fsf@grenoble-inp.fr>
+	<cbf2c2c2c137445ebb9e2c5f1012cb10@EXMBNJE8.ad.twosigma.com>
+ <xmqqr3kp8qqe.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Paul Tan <pyokagan@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 18:54:52 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: 'Matthieu Moy' <Matthieu.Moy@grenoble-inp.fr>,
+	Johan Laenen <johan.laenen+cygwin@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: 'Junio C Hamano' <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 20 19:12:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoaBR-0001QU-P5
-	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 18:54:46 +0200
+	id 1ZoaSE-0000md-7i
+	for gcvg-git-2@plane.gmane.org; Tue, 20 Oct 2015 19:12:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752449AbbJTQym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2015 12:54:42 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:37345 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751322AbbJTQyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2015 12:54:41 -0400
-Received: by wicfv8 with SMTP id fv8so38263901wic.0
-        for <git@vger.kernel.org>; Tue, 20 Oct 2015 09:54:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=xijRoErGSx3KhIX9h+gL5dej0LHrPk1CD1KBtJUwUiA=;
-        b=cy4kYTwI7FOxLfa21VncpVOqfuM01O/rNlIUAYfVGfU4fYyMRwwm5njier3hSUHCh+
-         qDvyxnfqA5io/L07kESRgo9SY5VKOYLP82kI9quD1TbU27v35TYSBEmULU/GASmI+fgf
-         idNL0SZTZfDCmiGktyHu5RuFsOOBRA7dUTJ3lHpGKtupRrEzmwj9reYEbsBtUzcHQu/3
-         Uc/CrI8w+5IgfrG+625l4quVPF3B2GTwFzbRZ6Jnz+YraX6VIiPoAR8LqT3IDzQY5t1a
-         JXIqOJ4pF3dK5aAWwXWM0pKE6N3N71CRA+/zjyJSlJ/fLBW6Jh/esItdNQX85AFc/B4j
-         KNBQ==
-X-Received: by 10.194.114.133 with SMTP id jg5mr5224739wjb.98.1445360080069;
- Tue, 20 Oct 2015 09:54:40 -0700 (PDT)
-Received: by 10.28.16.132 with HTTP; Tue, 20 Oct 2015 09:54:20 -0700 (PDT)
-In-Reply-To: <xmqqbnbu9kzr.fsf@gitster.mtv.corp.google.com>
+	id S1751545AbbJTRMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2015 13:12:01 -0400
+Received: from mxl2.nje.dmz.twosigma.com ([208.77.214.146]:47152 "EHLO
+	mxl2.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750983AbbJTRMA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2015 13:12:00 -0400
+X-Greylist: delayed 320 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Oct 2015 13:12:00 EDT
+Received: by mxl2.nje.dmz.twosigma.com (Postfix, from userid 111)
+	id 6247B600CB; Tue, 20 Oct 2015 17:06:39 +0000 (GMT)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
+	mxl2.nje.dmz.twosigma.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.0 required=5.0 tests=BAYES_40=-0.001 autolearn=no
+	version=3.3.2
+Received: from EXHTNJE1.ad.twosigma.com (exhtnje1.ad.twosigma.com [172.20.32.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mxl2.nje.dmz.twosigma.com (Postfix) with ESMTPS id 62837600B1;
+	Tue, 20 Oct 2015 17:06:38 +0000 (GMT)
+Received: from EXMBNJE8.ad.twosigma.com (172.20.45.145) by
+ EXHTNJE1.ad.twosigma.com (172.20.32.77) with Microsoft SMTP Server (TLS) id
+ 14.3.224.2; Tue, 20 Oct 2015 13:06:38 -0400
+Received: from EXMBNJE8.ad.twosigma.com (172.20.45.145) by
+ EXMBNJE8.ad.twosigma.com (172.20.45.145) with Microsoft SMTP Server (TLS) id
+ 15.0.1130.7; Tue, 20 Oct 2015 17:06:38 +0000
+Received: from EXMBNJE8.ad.twosigma.com ([fe80::1882:851f:2745:9d60]) by
+ EXMBNJE8.ad.twosigma.com ([fe80::1882:851f:2745:9d60%17]) with mapi id
+ 15.00.1130.005; Tue, 20 Oct 2015 17:06:38 +0000
+Thread-Topic: Commit 5841520b makes it impossible to connect to github from
+ behind my company's firewall.
+Thread-Index: AQHRC1H1CwRD6HgpEESy5ILy46H0Yp50l+og
+In-Reply-To: <xmqqr3kp8qqe.fsf@gitster.mtv.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.14]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279926>
 
-2015-10-19 23:17 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
-> Alex Henrie <alexhenrie24@gmail.com> writes:
->
->> 2015-10-16 11:42 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
->>>
->>> Yes, but that fixes historical "mistake", no?
->>>
->>> With this, you are breaking historical practice by changing only one
->>> instance to deviate from the then-current practice of saying
->>> 'options' without brackets.  It is based on the point of view that
->>> considers anything inside <bracket> and a fixed string 'options' are
->>> meant to be replaced by intelligent readers, which is as valid as
->>> the more recent practice to consider only things inside <bracket>
->>> are placeholders.
+
+
+From: Junio C Hamano [mailto:jch2355@gmail.com] On Behalf Of Junio C Hamano
+
+> Enrique Tobis <Enrique.Tobis@twosigma.com> writes:
+
+>> Hey!
 >>
->> OK, I see. You're saying that it's OK to fix typos and grammatical
->> errors in contrib/examples, but it's not okay to modernize the
->> scripts' designs.
->
-> Please read it again, look at contrib/examples and realize that that
-> is not what I said at all.
->
-> This is not about modern vs old-school.  The reason why the part of
-> the patch to contrib/ under discussion is wrong is because of
-> (in)consistency.
->
-> Look at the output from "git grep option contrib/examples/" and
-> notice that in the old days, these scripted Porcelains consistently
-> said "[options]" without "<bracket>".
->
-> It would have been a different matter if the patch _were_ to update
-> all "[options]" to "[<options>]" in contrib/examples/ consistently,
-> and such a patch might have even been an improvement, especially if
-> the modern style were clearly superiour than the old-school style
-> (which is not, by they way [*1*]).
->
-> But that is not what the patch did.  It turned only one of them into
-> "[<options>]", making the single instance inconsistent from all the
-> others around it.  That is why it was wrong.
+>> I'm really sorry to hear that.
+>>
+>> That change should enable more forms of authentication with your 
+>> proxy, but it does cause libcurl to choose the one it finds most 
+>> secure, according to the docs
+>> (http://curl.haxx.se/libcurl/c/CURLOPT_HTTPAUTH.html) What kinds of 
+>> authentication does your proxy use?
 
-I understand now, thanks. I really appreciate your commitment to being
-consistent.
+> Good line of thought.  The answer would reveal what non-working authentication form the proxy claims to support is chosen because libcurl considers  more secure than the one the user wants to use.
+> I'd imagine that the next step after that would be to make the list of authentication forms configurable so that the user can say "hey my proxy claims to support this one but it does not work" to skip it?
 
-> [Footnote]
->
-> *1* The "modern" style is not necessarily an improvement, by the
->     way.  The way we specify that a "thing" in the help text is a
->     placeholder and that there may be more instances of the same
->     "thing" is to say "[<thing>...]", but in your "modernized" form,
->     unlike all the other usual "things", possibly multiple options
->     are spelled "[<options>]" without having ellipses at the end,
->     which is an oddball.  If we are to treat options specially like
->     that anyway, intelligent readers can read an "old-school"
->     description "[options]" and understand that that token stands
->     for possibly multiple options just fine, and all we have gained
->     by going to the "modernized" form is to waste two characters for
->     <brackets>.
->
->     I am not saying that we should not apply the other half of the
->     patch that makes builtin/pull.c say "[<options>]".  These days,
->     many other commands nearby (i.e. the "modern" ones) do use that
->     form consistently, so it is an improvement.
+> That sounds like a similar approach as what we did for SSL ciphers in f6f2a9e4 (http: add support for specifying an SSL cipher list,
+2015-05-08) where some people had problems with certain cipher the server/client claimed to support when it was in fact broken.
 
-I pushed to change [options] to [<options>] because even if the angle
-brackets don't help new users or translators in this particular case,
-the angle brackets encourage Git authors to use angle brackets when
-writing commands that are not so easy to understand. If you think that
-[<option>...] is better because it is even more consistent, I would be
-happy to send a patch to make that change.
+> Thanks.
 
-Anyway, thanks again for your attention to detail.
+@Junio: I agree. From the post in the cygwin mailing list that Johan mentioned, the problem seems to be that the proxy supports NEGOTIATE, NTLM and Basic, and libcurl is choosing NEGOTIATE. That choice fails for that user.
 
--Alex
+There is something I don't understand, though. Johan must be configuring his proxy either a) through git config files; or b) through environment variables. Johan says his proxy uses NTLM authentication. If he is doing a), then my change should not have had any impact. We were already setting CURLOPT_PROXYAUTH to CURLAUTH_ANY in that case. If it's b), then his proxy couldn't have been using NTLM authentication. In the old code path, only _BASIC was available as an authentication mechanism. That default is what prompted me to make the change in the first place.
+
+@Johan: how are you configuring your proxy? Git configuration or environment variables? Also, could you run GIT_CURL_VERBOSE=1 git pull and send the output. That should show the failing authentication method.
+
+Thanks.
