@@ -1,93 +1,116 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH] git-p4: import the ctypes module
-Date: Wed, 21 Oct 2015 00:00:44 +0100
-Message-ID: <5626C79C.8060503@diamand.org>
-References: <CAJA=mv5Kdsn1YEo4sUAwpTv=0Jc8Xg5V2WPMoCmsxNL4Hnk=kg@mail.gmail.com>	<CAE5ih793+YDd30rpMSyTHjUNZS+-BLY9D-kJkF9RAogjdctPFw@mail.gmail.com>	<xmqqy4ex8r8k.fsf@gitster.mtv.corp.google.com>	<1445369506.8543.10.camel@kaarsemaker.net> <xmqqwpuh72ot.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/8] run-command: Call get_next_task with a clean child process.
+Date: Tue, 20 Oct 2015 16:05:45 -0700
+Message-ID: <xmqq4mhl6sza.fsf@gitster.mtv.corp.google.com>
+References: <1445381030-23912-1-git-send-email-sbeller@google.com>
+	<1445381030-23912-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Etienne Girard <etienne.g.girard@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Wed Oct 21 01:01:10 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
+	jacob.keller@gmail.com, peff@peff.net, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	ericsunshine@gmail.com
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Oct 21 01:05:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zoftt-0001Ns-CS
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 01:01:01 +0200
+	id 1Zofyd-0006D5-1w
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 01:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753015AbbJTXA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2015 19:00:57 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:35643 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751037AbbJTXA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2015 19:00:56 -0400
-Received: by wicll6 with SMTP id ll6so66695261wic.0
-        for <git@vger.kernel.org>; Tue, 20 Oct 2015 16:00:55 -0700 (PDT)
+	id S1754495AbbJTXFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2015 19:05:50 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:32833 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754464AbbJTXFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2015 19:05:47 -0400
+Received: by pabrc13 with SMTP id rc13so34294942pab.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2015 16:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=8GEfuNVTYiv2f4gMlucqaoBqkYRz7HejacCLaM2XZos=;
-        b=WqaPedA6Q54w2qNfbxHzrPRw8AJJ9PUfkarZfOYk1r9DedoY0YQyx0hFB5xh5NaEo6
-         bCFMVPR7g11ufvk+T+To7QXjheVhnybOJyPabmN0EPFm4SUlxoIhZRnmqVKUVMlnTYjP
-         Ill+1bf9ZcjPIcA4pPFSkqzS+HMTV3sMunD1I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=8GEfuNVTYiv2f4gMlucqaoBqkYRz7HejacCLaM2XZos=;
-        b=R6UwItHNgOItUeQ9clzDvDlIXcutI3zM8pKaLf/FE7HXCZY4Hsb4QS8K0vOdc9vgJ7
-         nbLmFnZ3jg40i1jzAFWbgR6ReDWtsNjUvNgBmkAfQQHqgPzVcbucg9CQulm1ZRIJFd3I
-         m+pYdFtvGCQM19261GJLKaKu6dMNWl/p0Ia3jp0uxhRkhkGiwO6sqm61BBttrsGM0F3y
-         cMJ39cbQbQzx7HJotN9pD501TFlxhSS5UYPCwLnNRMucVlDant98WpnOLj28okXD3OXM
-         Tne+3Jo/pnMAIc5Bzanx+9aeELsW5CczhasKJIpshJFejkzIB24LgNfsiPdbPg5uXGC8
-         cn1w==
-X-Gm-Message-State: ALoCoQkUSFbr4jYhMgEMktxA+VjCWU3m1jzG9lo4TmV9GlNuSBXJEVc486P5hyecCW6plyHB0OzH
-X-Received: by 10.180.12.241 with SMTP id b17mr7732130wic.55.1445382055064;
-        Tue, 20 Oct 2015 16:00:55 -0700 (PDT)
-Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
-        by smtp.gmail.com with ESMTPSA id ee5sm6517183wjd.17.2015.10.20.16.00.54
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 20 Oct 2015 16:00:54 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <xmqqwpuh72ot.fsf@gitster.mtv.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        bh=0eBxpmDsg+z1/yy/lx3qFResypxKyhhe812oXzpzO08=;
+        b=YW3r5Qqa/6iYB9SmcmCaS4cOukC0j95RJbVFDsiVxUlGcJ02IrWxWpM8nR8YdXOBvi
+         mOJ36+k/Ai/RIAeKsQGHjZkfT+dUM+A9WHkoZKo4Qqqtx8vcki1odUeXNypuhHlCmo+7
+         SH5igmSgCP+s2hwdN5gDEo/T4YSnW7D/r8Euc2qrQKr/7BgK8RL5tCx0D0rTnghAHmUZ
+         bC7yOZA/8u//IhESvEbLLcum+dAMwXsrfwWUbdDzec/uaxzhYJIGw2kuzamp2lSefnH3
+         izR2hgIvRLd64xU2v76Ixkbkq9p6SbL/lujErcQgNvV4Xr+WjDf9B6twQnNNC4ZzJMLs
+         CJYg==
+X-Received: by 10.68.185.67 with SMTP id fa3mr6511476pbc.113.1445382346956;
+        Tue, 20 Oct 2015 16:05:46 -0700 (PDT)
+Received: from localhost ([2620:0:1000:861b:f0a2:278f:6a7e:e323])
+        by smtp.gmail.com with ESMTPSA id v13sm5645761pbs.51.2015.10.20.16.05.45
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 20 Oct 2015 16:05:46 -0700 (PDT)
+In-Reply-To: <1445381030-23912-3-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 20 Oct 2015 15:43:44 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279957>
 
-On 20/10/15 20:36, Junio C Hamano wrote:
-> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+Stefan Beller <sbeller@google.com> writes:
+
+> If the `get_next_task` did not explicitly called child_process_init
+> and only filled in some fields, there may have been some stale data
+> in the child process. This is hard to debug and also adds a review
+> burden for each new user of that API. To improve the situation, we
+> pass only cleanly initialized child structs to the get_next_task.
 >
->>> I do not follow Python development, but does the above mean that
->>> with recent 2.x you can say ctypes without first saying "import
->>> ctypes"?  It feels somewhat non-pythonesque that identifiers like
->>> this is given to you without you asking with an explicit 'import',
->>> so I am puzzled.
->>
->> No, you cannot do that. The reason others may not have noticed this bug is that
->> in git-p4.py, ctypes is only used on windows.
->>
->>   111     if platform.system() == 'Windows':
->>   112         free_bytes = ctypes.c_ulonglong(0)
->>   113         ctypes.windll.kernel32.GetDiskFreeSpaceExW(ctypes.c_wchar_p(os.getcwd()), None, None, ctypes.pointer(free_bytes))
->>
->> The fact that it works for the OP with 2.7.10 is puzzling (assuming that it's
->> on the same system).
+> As an invariant you can now assume any child not in use is
+> cleaned up and ready for its next reuse.
 >
-> Exactly.  That is where my "I am puzzled" comes from.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  run-command.c | 13 ++++++++++++-
+>  1 file changed, 12 insertions(+), 1 deletion(-)
 >
-> The patch looks obviously the right thing to do.  Luke?  Lars?
+> diff --git a/run-command.c b/run-command.c
+> index b9363da..a5ef874 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -13,6 +13,12 @@ void child_process_init(struct child_process *child)
+>  	argv_array_init(&child->env_array);
+>  }
+>  
+> +void child_process_deinit(struct child_process *child)
+> +{
+> +	argv_array_clear(&child->args);
+> +	argv_array_clear(&child->env_array);
+> +}
+> +
 
-It looks sensible to me, and works fine on Linux, thanks. ack.
+Is this necessary (and is it necessary to make it global)?
+I thought that finish_command() already clears them....
 
-I can't test on Windows today but I can't see why it wouldn't work.
+    ... goes and looks ...
 
-Luke
+Ahh, of course, pp_*() functions do use start_command() but do not
+use finish_command(), which sort of breaks symmetry, but that cannot
+be helped.  Because we want to wait for any of the multiple tasks
+running, we cannot call finish_command() that explicitly says "I
+want to wait for this one to finish".
+
+And that is why you already have two calls to array-clear inside
+collect_finished(), just after calling task_finished().
+
+And of course we already have these array-clear calls in
+finish_command().
+
+So I agree that deinit helper should exist, but
+
+ * it should be file-scope static;
+
+ * it should be called by finish_command(); and
+
+ * if you are calling it from collect_finished(), then existing
+   calls to array-clear should go.
+
+Other than that, this looks good.
+
+Thansk.
