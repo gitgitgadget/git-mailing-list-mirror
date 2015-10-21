@@ -1,83 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] name-hash: don't reuse cache_entry in dir_entry
-Date: Wed, 21 Oct 2015 12:49:04 -0700
-Message-ID: <xmqqpp08uhn3.fsf@gitster.mtv.corp.google.com>
-References: <1445450051-7430-1-git-send-email-dturner@twopensource.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: t7063-status-untracked-cache.sh test failure on next
+Date: Wed, 21 Oct 2015 20:51:32 +0100
+Message-ID: <5627ECC4.6030304@ramsayjones.plus.com>
+References: <5627A31C.10906@ramsayjones.plus.com> <5627B7DD.3020909@web.de>
+ <1445449800.8302.12.camel@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 21:49:17 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Oct 21 21:51:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZozNp-0002Xk-QC
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 21:49:14 +0200
+	id 1ZozQD-0005A8-AN
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 21:51:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756106AbbJUTtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2015 15:49:09 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61549 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753500AbbJUTtH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2015 15:49:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 38E782388F;
-	Wed, 21 Oct 2015 15:49:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bqT7n51DRXZSOLAeX5wWX/0nshA=; b=byEbj4
-	1X8PRsUaeccASlpkYSR+gvuV7fbbW2fnDHJrHG8K2fTy/DLlIq9JY4tTUgYg5O7Z
-	welia9yQwZC6+Yt7kVpZ5hS1X/uB0HpDc0ZbjAlG6IJi2J3nD3QOo+ry8xWkWA8e
-	ENcDg7dW0E8frTXswO9OSXCSuTJT4ndP/xTOE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qxcugwseJWkWhv1zuN9N0znRAy/g3fiI
-	gov3pPH3qqBIPbQnAp0nh6VG7C6w1QVs0PzKAA7/9a9wsR0GGGex/sSPJAMcgEl3
-	tIn2dIx3Hdu983L7jHM0vdVDNRIHU69eMib38hsvK6wk+073fxoDwgrN2XRx3PT9
-	p75dMjp7BvI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 19E5C2388E;
-	Wed, 21 Oct 2015 15:49:07 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8F1FB2388D;
-	Wed, 21 Oct 2015 15:49:06 -0400 (EDT)
-In-Reply-To: <1445450051-7430-1-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Wed, 21 Oct 2015 13:54:11 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C9E7F734-782C-11E5-A18E-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755316AbbJUTvh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Oct 2015 15:51:37 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:34419 "EHLO
+	avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753500AbbJUTvg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2015 15:51:36 -0400
+Received: from [10.0.2.15] ([87.114.3.134])
+	by avasout08 with smtp
+	id XvrX1r00B2tV80P01vrYj4; Wed, 21 Oct 2015 20:51:35 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=bI7rW6KZ c=1 sm=1 tr=0
+ a=qQ71F3v+nKp5qei/W0vv8w==:117 a=qQ71F3v+nKp5qei/W0vv8w==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=G_wNqf4TB8V-oFW51zEA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <1445449800.8302.12.camel@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280007>
 
-David Turner <dturner@twopensource.com> writes:
 
-> Stop reusing cache_entry in dir_entry; doing so causes a
-> use-after-free bug.
->
-> During merges, we free entries that we no longer need in the
-> destination index.  But those entries might have also been stored in
-> the dir_entry cache, and when a later call to add_to_index found them,
-> they would be used after being freed.
->
-> To prevent this, change dir_entry to store a copy of the name instead
-> of a pointer to a cache_entry.  This entails some refactoring of code
-> that expects the cache_entry.
->
-> Keith McGuigan <kmcguigan@twitter.com> diagnosed this bug and wrote
-> the initial patch, but this version does not use any of Keith's code.
->
-> Helped-by: Keith McGuigan <kmcguigan@twitter.com>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
 
-The patch looks good to me.  Will replace the ce-refcnt one with
-this.
+On 21/10/15 18:50, David Turner wrote:
+> On Wed, 2015-10-21 at 18:05 +0200, Torsten B=C3=B6gershausen wrote:
+>> On 21.10.15 16:37, Ramsay Jones wrote:
+>>> Hi Junio,
+>>>
+>>> While testing the next branch today, I had a test failure, viz:
+>>>
+>>>     $ tail ntest-out-fail
+>>>     Test Summary Report
+>>>     -------------------
+>>>     t7063-status-untracked-cache.sh                  (Wstat: 256 Te=
+sts: 32 Failed: 22)
+>>
+>> Does this patch help ?
+>> (Recently send & tested by David. I just copy & paste the diff)
+>=20
+> My patch fixes one of the tests, but Ramsay has a zillion failures
+> (presumably because test 1 fails and most everything else follows fro=
+m
+> that).
+>=20
+> That test could fail if your clock were running fast and you had
+> 1-second resolution timetamps on your filesystem and you were somewha=
+t
+> unlucky. =20
 
-Thanks for following it through.
+yep. I've just stopped running the test in a loop after about an hour.
+In that time it has executed the test about 130+ times (yeah, I forgot
+the count), with no failures. I'm going to give up now and declare that
+I was simply unlucky! :-D
+
+ATB,
+Ramsay Jones
