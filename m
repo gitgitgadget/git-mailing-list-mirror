@@ -1,100 +1,103 @@
-From: Alexander Riesen <alexander.riesen@cetitec.com>
-Subject: Re: [PATCH] Allow "clone --dissociate" to dissociate from alternates
-Date: Wed, 21 Oct 2015 10:13:22 +0200
-Message-ID: <56274922.80007@cetitec.com>
-References: <561F8DE9.4040703@cetitec.com> <alpine.DEB.1.00.1510151609280.31610@s15462909.onlinehome-server.info> <561FBA48.3050609@cetitec.com>
+From: Etienne Girard <etienne.g.girard@gmail.com>
+Subject: Re: [PATCH] git-p4: import the ctypes module
+Date: Wed, 21 Oct 2015 10:23:43 +0200
+Message-ID: <CAJA=mv7N=PmL69kgZRjq8P6J_qsfUbLx76WguhvqPrG2o1UFww@mail.gmail.com>
+References: <CAJA=mv5Kdsn1YEo4sUAwpTv=0Jc8Xg5V2WPMoCmsxNL4Hnk=kg@mail.gmail.com>
+	<CAE5ih793+YDd30rpMSyTHjUNZS+-BLY9D-kJkF9RAogjdctPFw@mail.gmail.com>
+	<xmqqy4ex8r8k.fsf@gitster.mtv.corp.google.com>
+	<1445369506.8543.10.camel@kaarsemaker.net>
+	<xmqqwpuh72ot.fsf@gitster.mtv.corp.google.com>
+	<5626C79C.8060503@diamand.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 21 10:13:48 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed Oct 21 10:23:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZooWi-0006Fy-TH
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 10:13:41 +0200
+	id 1ZoogZ-0007kf-48
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 10:23:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932159AbbJUINg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2015 04:13:36 -0400
-Received: from mout.kundenserver.de ([212.227.126.187]:49407 "EHLO
-	mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752788AbbJUINd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2015 04:13:33 -0400
-Received: from pflsmail.localdomain ([37.123.123.67]) by
- mrelayeu.kundenserver.de (mreue003) with ESMTPSA (Nemesis) id
- 0LwmRY-1adWUn3axs-016Oar; Wed, 21 Oct 2015 10:13:25 +0200
-Received: from localhost (localhost [127.0.0.1])
-	by pflsmail.localdomain (Postfix) with ESMTP id D6E94B00F1A;
-	Wed, 21 Oct 2015 10:13:24 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at pflsmail.corp.cetitec.com
-Received: from pflsmail.localdomain ([127.0.0.1])
-	by localhost (pflsmail.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9e6+-uYsr-hr; Wed, 21 Oct 2015 10:13:23 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (unknown [10.10.11.230])
-	by pflsmail.localdomain (Postfix) with ESMTPS id 046C1B00935;
-	Wed, 21 Oct 2015 10:13:23 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <561FBA48.3050609@cetitec.com>
-X-Provags-ID: V03:K0:+6DGZSe3doWfLPJ43VYdEjqWw+vhd0ysrGwLfJPbQpVnd4XZ97H
- spK7NOW531v8bFY4VniZPuE0u2/TNqiT2KvxYgad76H5xshpvY4x2isttdcOwDvfi+h5+Gg
- iYF/xpRxRO4cFYllTuH6t1ocn2Y3Awu07v9hay8n+e0cGYkqDUA5c7N798a23cqi3c89zRT
- nF9WUw+jKjHklglLdAh/g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fPQdna+aSSI=:MaDwfOiKr1e2Sbzr4iCZsu
- GhJcFxLFe2u/lfoUUd+j5ea3NOAHjlNJ9PKKbdxMxSAaY54L+wh732l6tYw3DteH4OqR92Wqr
- Hk79REGKc4xeGaw3tSttirvArnQjUW/JqMCYxjuscqqifx32y65H2XclWlMS7GqjHCyYPHi7v
- yY3CjAfaMa3RFMBAHkk8NA3/Hb88q86l2BRl6G8s4+1lM8QJql/AhNCVW7YuQfPShsMWxlR/u
- 2oIJJee2yRrAynFrGlmDcLJWHC9YaLy4nRCk6HBNQUPx49OBsJtgfvhQ20o6ztjFuQ9IPHNiY
- 4lE+qV4VA9tDy5A5VaU0ryCJIu6EaBD5pr+BstATrzNbRro3s3W1EWPPDsrx5Lc9EGUqADMcz
- inz4lZYXM7Zudt+26Q5h/roGVKhE/EE3WU2PKC756btd14EF5V8L15qWDFK0SsyHBd6/D2/Mq
- 5+0Bqu5dLmCxiyccrHCh10dDZgHWFGco3sLZrDYERZZ6tbBEsQ93rVR+YrrJMR59wgx+4Dib4
- 4n6I7WmmQ7r1rKOnHwnEn88kUyRYkNuGEXuITx6uxnsrfh1a2VDVGdFd1T7uVNehdNH6b/3CV
- lJ72fp8VzolHLpRBN3qf9gwUcG+xIJaGtSRtcVwfmyub7Ni8M2SU/2lqLF2uPsoGUz5O2YvdN
- nK2exMxX2BR1Qx/8nwdqzZDir8GGXDNVUUBQzoqosmc53nQ0dw2mM0dg7/dVz4N/gAF8c/lcI
- 84+k9c1U7GkBJOA3
+	id S1753708AbbJUIXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2015 04:23:46 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:37708 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753201AbbJUIXo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2015 04:23:44 -0400
+Received: by igbhv6 with SMTP id hv6so32682128igb.0
+        for <git@vger.kernel.org>; Wed, 21 Oct 2015 01:23:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8tSvfDA62UBfyIZtMn2aTPEj1uEm/V3SYYVZkHdm7G4=;
+        b=TN1VS8bN3y+L4Ya5Thlbv9M+4Dwf7tGqlMsYx1rKlBtIxdYtPbnEw6YKi/EazXOywj
+         cQ8XFzK6/U6/TL1zYRG4kdggA7fmroZJFIL9ogsSdOD1l62VGoyOib62gA4bAyesjNEF
+         Ns54Cu+0Fq69v1qk7L4vcngAS5EaGbulqooiEelEaz+mFrPWvWlLsjwwt6/v0PEJ4lJG
+         nvQB/3EY/iC7+7RpPLoT5c83E5ExDXvPEEmbCFW5nqcOsiQhBIW62EV75/b+A2VKWH1V
+         +qxWHA2Rc3b3pXv+VLmsvJwNgA9Nwf2begr9k0jH05n9RBN5R07h/U+/Fjz0wmRK9J8y
+         YSZg==
+X-Received: by 10.50.50.137 with SMTP id c9mr28416301igo.23.1445415823792;
+ Wed, 21 Oct 2015 01:23:43 -0700 (PDT)
+Received: by 10.64.87.170 with HTTP; Wed, 21 Oct 2015 01:23:43 -0700 (PDT)
+In-Reply-To: <5626C79C.8060503@diamand.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279976>
 
-Reminder. Is this (or rather the one I'm replying to) patch a better option?
+Hello,
 
-Regards,
-Alex
+I couldn't work further on this yesterday (but I read
+Documentation/SubmittingPatches, which is a good start I guess). The
+diff proposed by Dennis works on my machine, I'll try to figure out
+why the original script worked with 2.7.10.
 
-On 10/15/2015 04:38 PM, Alexander Riesen wrote:
-> The option requiring the explicit reference repositories is a bit of overkill:
-> the alternates in the original repository *are* reference repositories and
-> would be dissociated from should one pass any reference repository (even an
-> unrelated one).
+Thanks
+
+2015-10-21 1:00 GMT+02:00 Luke Diamand <luke@diamand.org>:
+> On 20/10/15 20:36, Junio C Hamano wrote:
+>>
+>> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+>>
+>>>> I do not follow Python development, but does the above mean that
+>>>> with recent 2.x you can say ctypes without first saying "import
+>>>> ctypes"?  It feels somewhat non-pythonesque that identifiers like
+>>>> this is given to you without you asking with an explicit 'import',
+>>>> so I am puzzled.
+>>>
+>>>
+>>> No, you cannot do that. The reason others may not have noticed this bug
+>>> is that
+>>> in git-p4.py, ctypes is only used on windows.
+>>>
+>>>   111     if platform.system() == 'Windows':
+>>>   112         free_bytes = ctypes.c_ulonglong(0)
+>>>   113
+>>> ctypes.windll.kernel32.GetDiskFreeSpaceExW(ctypes.c_wchar_p(os.getcwd()),
+>>> None, None, ctypes.pointer(free_bytes))
+>>>
+>>> The fact that it works for the OP with 2.7.10 is puzzling (assuming that
+>>> it's
+>>> on the same system).
+>>
+>>
+>> Exactly.  That is where my "I am puzzled" comes from.
+>>
+>> The patch looks obviously the right thing to do.  Luke?  Lars?
 >
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
 >
-> On 10/15/2015 04:11 PM, Johannes Schindelin wrote:
->> On Thu, 15 Oct 2015, Alexander  Riesen wrote:
-> >
-> >> The "--dissociate" option required reference repositories, which sometimes
-> >> demanded a look into the objects/info/alternates by the user. As this
-> >> is something which can be figured out automatically, do it in the
-> >> clone unless there is no other reference repositories.
-> >
-> > Would it not make sense to reuse the copy_alternates() function to simply
-> > copy the alternates and let `--dissociate` run its course with the copied
-> > .objects/info/alternate file? That would make for less new code...
+> It looks sensible to me, and works fine on Linux, thanks. ack.
 >
-> IIUC, I should validate the alternates in the source repository...
-> But, the only thing the user looses if it is not validated, is the nice
-> warning regarding no reference repositories to dissociate from, right?
+> I can't test on Windows today but I can't see why it wouldn't work.
 >
-> So maybe we can just remove the reset of option_dissociate and be done with
-> it? I would actually suggest removing the warning as well: the alternates are
-> something to dissociate from. And I see no harm otherwise.
+> Luke
 >
-> How about this instead?
 >
