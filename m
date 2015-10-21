@@ -1,96 +1,255 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow "clone --dissociate" to dissociate from alternates
-Date: Wed, 21 Oct 2015 10:52:26 -0700
-Message-ID: <xmqqpp085cth.fsf@gitster.mtv.corp.google.com>
-References: <561F8DE9.4040703@cetitec.com>
-	<alpine.DEB.1.00.1510151609280.31610@s15462909.onlinehome-server.info>
-	<561FBA48.3050609@cetitec.com> <56274922.80007@cetitec.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Alexander Riesen <alexander.riesen@cetitec.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 19:52:50 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v4] name-hash: don't reuse cache_entry in dir_entry
+Date: Wed, 21 Oct 2015 13:54:11 -0400
+Message-ID: <1445450051-7430-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 21 19:54:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZoxZ3-00061o-P8
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 19:52:42 +0200
+	id 1Zoxav-0007yS-EC
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 19:54:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404AbbJURwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2015 13:52:37 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35879 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750767AbbJURwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2015 13:52:36 -0400
-Received: by pacfv9 with SMTP id fv9so63455567pac.3
-        for <git@vger.kernel.org>; Wed, 21 Oct 2015 10:52:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        bh=RE6Bjl5VeHswxlk9Y/ATQxgkBfyZKEBKIFeuWWzx2cY=;
-        b=caol1BS02gzSJc3hzh+M/v2kkPQ1OG5M4qixUgGjT6UHdunWEPujEdw2KYmbvbH8bt
-         zpcctev7qhJh1GQUblr5ccisIqmElQGW7JMvzJGEnoGoxVE5T0QsRs9dlhg0rLv/ttVE
-         h2tYciFpWeqvGXT5XsLMe45unQIetZ7YkPbT5193OILPP55xJiegc6NQvAwEsG+EC3YW
-         vwUxVl/D+vqk95HslChDxroF2DRBFNtbNcqMwlxyCxQrw18E+LwjZKRhrxox5DdCLgFh
-         Y4jTwyTLNPmZJ1rG5YUtjrQhqmWVeUzzdIwEzBlqntRvruTDb9DWqSg53qHJQ50hJrjW
-         q44A==
-X-Received: by 10.66.102.74 with SMTP id fm10mr11666116pab.113.1445449956138;
-        Wed, 21 Oct 2015 10:52:36 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:f0a2:278f:6a7e:e323])
-        by smtp.gmail.com with ESMTPSA id ro3sm10231359pbc.69.2015.10.21.10.52.35
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 21 Oct 2015 10:52:35 -0700 (PDT)
-In-Reply-To: <56274922.80007@cetitec.com> (Alexander Riesen's message of "Wed,
-	21 Oct 2015 10:13:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751706AbbJURyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2015 13:54:33 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:34330 "EHLO
+	mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750827AbbJURyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2015 13:54:32 -0400
+Received: by qkfm62 with SMTP id m62so42460950qkf.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2015 10:54:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=WazrSqBEtWo1PPM6CLrF1zrCA7+AwlaVUp+S9s6ZVG4=;
+        b=J2dXl3FeaQDT4EykdA9YRDVV0l5VvWjKg7DumqqG6BC9vF0hlxmIvuMm+lHN5Dgv5T
+         7f1OckI5IfHMv3Zf/beVY6E8Hk6LA5HPdIwwtlr5TkvzxvlOVWd2xHNE978bF0X+heOo
+         HvTDBeGp+IbeQfrNbG8CjsBVUYyFC+scfTgXBVDLb6lp8u190cmRzLqBDq3bdjppiaSO
+         8daBQ5UdWKEvgZSoVQfhfRClo4GEmFEeUAb+Zw7HL8hfauls5/azjKCG2qLMVT9Soz2A
+         JYD53Qg0wjskuMkdgZ+MUwX6sMU4BT8z+gUJ0Ww+5+1wnv1G56t7lwFUWBtfRdRiMXPb
+         qS7A==
+X-Gm-Message-State: ALoCoQmpiIyds/2wOz8zcao2Qj3mLVOjotMxaM1aklUYf54DIwGHuKOy12qYR3vqwJLC/P5YRxkX
+X-Received: by 10.55.217.20 with SMTP id u20mr12716363qki.98.1445450071208;
+        Wed, 21 Oct 2015 10:54:31 -0700 (PDT)
+Received: from ubuntu.twitter.corp? ([8.25.196.26])
+        by smtp.gmail.com with ESMTPSA id v63sm3713350qkl.2.2015.10.21.10.54.30
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 21 Oct 2015 10:54:30 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2.658.g6d8523e-twtrsrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279995>
 
-Alexander Riesen <alexander.riesen@cetitec.com> writes:
+Stop reusing cache_entry in dir_entry; doing so causes a
+use-after-free bug.
 
-> Reminder. Is this (or rather the one I'm replying to) patch a better option?
+During merges, we free entries that we no longer need in the
+destination index.  But those entries might have also been stored in
+the dir_entry cache, and when a later call to add_to_index found them,
+they would be used after being freed.
 
-I suspect that the reason why you didn't get any quick response was
-because it was unclear from either one of these proposed log
-messages why any change is needed in the first place.  At least that
-is what prevented me from commenting on either.
+To prevent this, change dir_entry to store a copy of the name instead
+of a pointer to a cache_entry.  This entails some refactoring of code
+that expects the cache_entry.
 
-The "clone --dissociate" was designed to be used with "--reference".
-The mindset of those who saw the need for the feature being that
-"clone --reference" is the only way to make the resulting
-repository's objects incomplete, needing to borrow objects from some
-other place, which necessitates the "--dissociate" option.
+Keith McGuigan <kmcguigan@twitter.com> diagnosed this bug and wrote
+the initial patch, but this version does not use any of Keith's code.
 
-The readers of this change need to be enlightened with a log message
-to remind them that "--reference" is not the only way.  Namely, if
-you start from a repository with $GIT_DIR/objects/info/alternates,
-i.e. the original already borrows from somewhere, and bypass the
-normal "Git aware" transport mechanism, i.e. "git clone --local",
-then the resulting repository would also become dependent of the
-object store that the original depended on before the clone.  In
-order to make it free-standing, you would need "--dissociate", but
-there is no "--reference" involved in that use case.
+Helped-by: Keith McGuigan <kmcguigan@twitter.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
+ cache.h      |  3 ++-
+ dir.c        | 22 ++++------------------
+ name-hash.c  | 54 ++++++++++++++++++++++++++++--------------------------
+ read-cache.c | 16 +---------------
+ 4 files changed, 35 insertions(+), 60 deletions(-)
 
-And once that is clarified, it becomes very clear why it is wrong to
-blindly require "--reference" to be there on the command line when
-"--dissociate" is given.
-
-As to the patch, I think this one is much simpler and preferrable.
-It would hurt those who make a clone without bypassing the normal
-"Git aware" transport mechanism and pass "--dissociate" without
-"--reference".  They will end up making a clone that does not need
-repacking to dissociate, but with this patch they would spend extra
-cycles to run an unnecessary repack.  To avoid that, I think you can
-throw in an check at the beginning of dissociate_from_references()
-to see if git_path("objects/info/alternates") is there and make the
-function a no-op if there isn't.
-
-Thanks.
+diff --git a/cache.h b/cache.h
+index 752031e..ccc329a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -520,7 +520,8 @@ extern int write_locked_index(struct index_state *, struct lock_file *lock, unsi
+ extern int discard_index(struct index_state *);
+ extern int unmerged_index(const struct index_state *);
+ extern int verify_path(const char *path);
+-extern struct cache_entry *index_dir_exists(struct index_state *istate, const char *name, int namelen);
++extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
++extern void adjust_dirname_case(struct index_state *istate, char *name);
+ extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+ extern int index_name_pos(const struct index_state *, const char *name, int namelen);
+ #define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
+diff --git a/dir.c b/dir.c
+index b90484a..c982aac 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1279,29 +1279,15 @@ enum exist_status {
+  */
+ static enum exist_status directory_exists_in_index_icase(const char *dirname, int len)
+ {
+-	const struct cache_entry *ce = cache_dir_exists(dirname, len);
+-	unsigned char endchar;
++	struct cache_entry *ce;
+ 
+-	if (!ce)
+-		return index_nonexistent;
+-	endchar = ce->name[len];
+-
+-	/*
+-	 * The cache_entry structure returned will contain this dirname
+-	 * and possibly additional path components.
+-	 */
+-	if (endchar == '/')
++	if (cache_dir_exists(dirname, len))
+ 		return index_directory;
+ 
+-	/*
+-	 * If there are no additional path components, then this cache_entry
+-	 * represents a submodule.  Submodules, despite being directories,
+-	 * are stored in the cache without a closing slash.
+-	 */
+-	if (!endchar && S_ISGITLINK(ce->ce_mode))
++	ce = cache_file_exists(dirname, len, ignore_case);
++	if (ce && S_ISGITLINK(ce->ce_mode))
+ 		return index_gitdir;
+ 
+-	/* This should never be hit, but it exists just in case. */
+ 	return index_nonexistent;
+ }
+ 
+diff --git a/name-hash.c b/name-hash.c
+index 702cd05..332ba95 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -11,16 +11,16 @@
+ struct dir_entry {
+ 	struct hashmap_entry ent;
+ 	struct dir_entry *parent;
+-	struct cache_entry *ce;
+ 	int nr;
+ 	unsigned int namelen;
++	char name[FLEX_ARRAY];
+ };
+ 
+ static int dir_entry_cmp(const struct dir_entry *e1,
+ 		const struct dir_entry *e2, const char *name)
+ {
+-	return e1->namelen != e2->namelen || strncasecmp(e1->ce->name,
+-			name ? name : e2->ce->name, e1->namelen);
++	return e1->namelen != e2->namelen || strncasecmp(e1->name,
++			name ? name : e2->name, e1->namelen);
+ }
+ 
+ static struct dir_entry *find_dir_entry(struct index_state *istate,
+@@ -41,14 +41,6 @@ static struct dir_entry *hash_dir_entry(struct index_state *istate,
+ 	 * closing slash.  Despite submodules being a directory, they never
+ 	 * reach this point, because they are stored
+ 	 * in index_state.name_hash (as ordinary cache_entries).
+-	 *
+-	 * Note that the cache_entry stored with the dir_entry merely
+-	 * supplies the name of the directory (up to dir_entry.namelen). We
+-	 * track the number of 'active' files in a directory in dir_entry.nr,
+-	 * so we can tell if the directory is still relevant, e.g. for git
+-	 * status. However, if cache_entries are removed, we cannot pinpoint
+-	 * an exact cache_entry that's still active. It is very possible that
+-	 * multiple dir_entries point to the same cache_entry.
+ 	 */
+ 	struct dir_entry *dir;
+ 
+@@ -63,10 +55,10 @@ static struct dir_entry *hash_dir_entry(struct index_state *istate,
+ 	dir = find_dir_entry(istate, ce->name, namelen);
+ 	if (!dir) {
+ 		/* not found, create it and add to hash table */
+-		dir = xcalloc(1, sizeof(struct dir_entry));
++		dir = xcalloc(1, sizeof(struct dir_entry) + namelen + 1);
+ 		hashmap_entry_init(dir, memihash(ce->name, namelen));
+ 		dir->namelen = namelen;
+-		dir->ce = ce;
++		strncpy(dir->name, ce->name, namelen);
+ 		hashmap_add(&istate->dir_hash, dir);
+ 
+ 		/* recursively add missing parent directories */
+@@ -188,26 +180,36 @@ static int same_name(const struct cache_entry *ce, const char *name, int namelen
+ 	return slow_same_name(name, namelen, ce->name, len);
+ }
+ 
+-struct cache_entry *index_dir_exists(struct index_state *istate, const char *name, int namelen)
++int index_dir_exists(struct index_state *istate, const char *name, int namelen)
+ {
+-	struct cache_entry *ce;
+ 	struct dir_entry *dir;
+ 
+ 	lazy_init_name_hash(istate);
+ 	dir = find_dir_entry(istate, name, namelen);
+-	if (dir && dir->nr)
+-		return dir->ce;
++	return dir && dir->nr;
++}
+ 
+-	/*
+-	 * It might be a submodule. Unlike plain directories, which are stored
+-	 * in the dir-hash, submodules are stored in the name-hash, so check
+-	 * there, as well.
+-	 */
+-	ce = index_file_exists(istate, name, namelen, 1);
+-	if (ce && S_ISGITLINK(ce->ce_mode))
+-		return ce;
++void adjust_dirname_case(struct index_state *istate, char *name)
++{
++	const char *startPtr = name;
++	const char *ptr = startPtr;
+ 
+-	return NULL;
++	lazy_init_name_hash(istate);
++	while (*ptr) {
++		while (*ptr && *ptr != '/')
++			ptr++;
++
++		if (*ptr == '/') {
++			struct dir_entry *dir;
++
++			ptr++;
++			dir = find_dir_entry(istate, name, ptr - name + 1);
++			if (dir) {
++				memcpy((void *)startPtr, dir->name + (startPtr - name), ptr - startPtr);
++				startPtr = ptr;
++			}
++		}
++	}
+ }
+ 
+ struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int icase)
+diff --git a/read-cache.c b/read-cache.c
+index 87204a5..de22df2 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -679,21 +679,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+ 	 * entry's directory case.
+ 	 */
+ 	if (ignore_case) {
+-		const char *startPtr = ce->name;
+-		const char *ptr = startPtr;
+-		while (*ptr) {
+-			while (*ptr && *ptr != '/')
+-				++ptr;
+-			if (*ptr == '/') {
+-				struct cache_entry *foundce;
+-				++ptr;
+-				foundce = index_dir_exists(istate, ce->name, ptr - ce->name - 1);
+-				if (foundce) {
+-					memcpy((void *)startPtr, foundce->name + (startPtr - ce->name), ptr - startPtr);
+-					startPtr = ptr;
+-				}
+-			}
+-		}
++		adjust_dirname_case(istate, ce->name);
+ 	}
+ 
+ 	alias = index_file_exists(istate, ce->name, ce_namelen(ce), ignore_case);
+-- 
+2.4.2.644.g97b850b-twtrsrc
