@@ -1,127 +1,79 @@
-From: Remi Pommarel <repk@triplefau.lt>
-Subject: [PATCH v4 1/1] Makefile: make curl-config path configurable
-Date: Wed, 21 Oct 2015 19:10:46 +0200
-Message-ID: <1445447446-21748-1-git-send-email-repk@triplefau.lt>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <drafnel@gmail.com>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Remi Pommarel <repk@triplefau.lt>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 21 19:10:44 2015
+From: David Turner <dturner@twopensource.com>
+Subject: Re: t7063-status-untracked-cache.sh test failure on next
+Date: Wed, 21 Oct 2015 13:50:00 -0400
+Organization: Twitter
+Message-ID: <1445449800.8302.12.camel@twopensource.com>
+References: <5627A31C.10906@ramsayjones.plus.com> <5627B7DD.3020909@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Torsten =?ISO-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Oct 21 19:50:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZowuO-0004iK-LW
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 19:10:41 +0200
+	id 1ZoxWe-0003Rn-DH
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 19:50:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751323AbbJURKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2015 13:10:36 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:60985 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750732AbbJURKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2015 13:10:35 -0400
-Received: from mfilter20-d.gandi.net (mfilter20-d.gandi.net [217.70.178.148])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 96478172071;
-	Wed, 21 Oct 2015 19:10:34 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter20-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
-	by mfilter20-d.gandi.net (mfilter20-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id ungVodi5oOop; Wed, 21 Oct 2015 19:10:33 +0200 (CEST)
-X-Originating-IP: 81.57.43.44
-Received: from localhost (mon75-1-81-57-43-44.fbx.proxad.net [81.57.43.44])
-	(Authenticated sender: repk@triplefau.lt)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 8CB611720A5;
-	Wed, 21 Oct 2015 19:10:32 +0200 (CEST)
-X-Mailer: git-send-email 2.0.1
+	id S1751843AbbJURuG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Oct 2015 13:50:06 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:34664 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750698AbbJURuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2015 13:50:05 -0400
+Received: by padhk11 with SMTP id hk11so60912633pad.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2015 10:50:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=nDAuYrwUbflpcZu2cpeHCW+No6KZ+ZrOEnVSUFFEqns=;
+        b=RpFHk+k34hGVtZ7yEY2DWsEO1Z6IrXqRtYUTeEgXr85j9kAZzsTmP+Iel7grjPlTbP
+         4RwFcdsz9EX49Cb5kTu0LHnDVAFrqnv/8CDvv4T5VFMSx+D1KNhtKIbmywektn5udZNe
+         y1K0dL+omKLUIjp48CCd0C2uV0dww8Xcisu2Kc3B5cSPzve4Dbw/kWHk/QqpkAS6SPA7
+         1Mbdu1pO5V3DHFxMhxbX4lgt0jEoZBkfgnYQtb+Op+nXFQw9gHE787xvZxg31RNxktMk
+         AHR1VZ75xm4irqiFM1YiYSjN3Hsk8GE+0nzZlgKAK9ZUQkq4/29AVr+ehL+DagT36erE
+         KHew==
+X-Gm-Message-State: ALoCoQmoKYLjeuOgYz+lHLs+zdV96A5GAx2b8MwAKlFp5SEx8As5Udg1jhTCj+IZg4YfNNBy2Wk4
+X-Received: by 10.68.179.33 with SMTP id dd1mr12081460pbc.134.1445449804366;
+        Wed, 21 Oct 2015 10:50:04 -0700 (PDT)
+Received: from ubuntu ([8.25.196.26])
+        by smtp.gmail.com with ESMTPSA id qn5sm10265572pac.41.2015.10.21.10.50.02
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 21 Oct 2015 10:50:03 -0700 (PDT)
+In-Reply-To: <5627B7DD.3020909@web.de>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279993>
 
-There are situations, e.g. during cross compilation, where curl-config
-program is not present in the PATH.
+On Wed, 2015-10-21 at 18:05 +0200, Torsten B=C3=B6gershausen wrote:
+> On 21.10.15 16:37, Ramsay Jones wrote:
+> > Hi Junio,
+> >=20
+> > While testing the next branch today, I had a test failure, viz:
+> >=20
+> >     $ tail ntest-out-fail
+> >     Test Summary Report
+> >     -------------------
+> >     t7063-status-untracked-cache.sh                  (Wstat: 256 Te=
+sts: 32 Failed: 22)
+>=20
+> Does this patch help ?
+> (Recently send & tested by David. I just copy & paste the diff)
 
-Make the makefile use a configurable curl-config program passed through
-CURL_CONFIG variable which can be set through config.mak.
+My patch fixes one of the tests, but Ramsay has a zillion failures
+(presumably because test 1 fails and most everything else follows from
+that).
 
-Also make this variable tunable through use of autoconf/configure. Configure
-will set CURL_CONFIG variable in config.mak.autogen to whatever value has been
-passed to ac_cv_prog_CURL_CONFIG.
-
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Changes to v3:
-	- Add Jonathan Nieder's modifications
-
- Makefile     |  8 ++++++--
- configure.ac | 13 +++++++++++++
- 2 files changed, 19 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 04c2231..7574c26 100644
---- a/Makefile
-+++ b/Makefile
-@@ -39,6 +39,9 @@ all::
- # Define CURLDIR=/foo/bar if your curl header and library files are in
- # /foo/bar/include and /foo/bar/lib directories.
- #
-+# Define CURL_CONFIG to curl's configuration program that prints information
-+# about the library (e.g., its version number).  The default is 'curl-config'.
-+#
- # Define NO_EXPAT if you do not have expat installed.  git-http-push is
- # not built, and you cannot push using http:// and https:// transports (dumb).
- #
-@@ -428,6 +431,7 @@ TCL_PATH = tclsh
- TCLTK_PATH = wish
- XGETTEXT = xgettext
- MSGFMT = msgfmt
-+CURL_CONFIG = curl-config
- PTHREAD_LIBS = -lpthread
- PTHREAD_CFLAGS =
- GCOV = gcov
-@@ -1066,13 +1070,13 @@ else
- 	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
- 	PROGRAM_OBJS += http-fetch.o
- 	PROGRAMS += $(REMOTE_CURL_NAMES)
--	curl_check := $(shell (echo 070908; curl-config --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
-+	curl_check := $(shell (echo 070908; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
- 	ifeq "$(curl_check)" "070908"
- 		ifndef NO_EXPAT
- 			PROGRAM_OBJS += http-push.o
- 		endif
- 	endif
--	curl_check := $(shell (echo 072200; curl-config --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
-+	curl_check := $(shell (echo 072200; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
- 	ifeq "$(curl_check)" "072200"
- 		USE_CURL_FOR_IMAP_SEND = YesPlease
- 	endif
-diff --git a/configure.ac b/configure.ac
-index 14012fa..01b07ad 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -525,6 +525,19 @@ GIT_UNSTASH_FLAGS($CURLDIR)
- 
- GIT_CONF_SUBST([NO_CURL])
- 
-+if test -z "$NO_CURL"; then
-+
-+AC_CHECK_PROG([CURL_CONFIG], [curl-config],
-+[curl-config],
-+[no])
-+
-+if test $CURL_CONFIG != no; then
-+    GIT_CONF_SUBST([CURL_CONFIG])
-+fi
-+
-+fi
-+
-+
- #
- # Define NO_EXPAT if you do not have expat installed.  git-http-push is
- # not built, and you cannot push using http:// and https:// transports.
--- 
-2.0.1
+That test could fail if your clock were running fast and you had
+1-second resolution timetamps on your filesystem and you were somewhat
+unlucky. =20
