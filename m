@@ -1,104 +1,178 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH] fix flaky untracked-cache test
-Date: Thu, 22 Oct 2015 00:47:29 +0200
-Message-ID: <B454F5BF-A18E-4D36-9B97-F7D51DC48EB0@gmail.com>
-References: <1445284095-6602-1-git-send-email-dturner@twopensource.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, pclouds@gmail.com, tboegi@web.de
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Oct 22 00:47:47 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4 00/35] libify mailinfo and call it directly from am
+Date: Wed, 21 Oct 2015 16:15:42 -0700
+Message-ID: <xmqqoafru82p.fsf_-_@gitster.mtv.corp.google.com>
+References: <1444855557-2127-1-git-send-email-gitster@pobox.com>
+	<1445239731-10677-1-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 22 01:15:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zp2AZ-0007Uc-4a
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Oct 2015 00:47:43 +0200
+	id 1Zp2bp-0004eF-JB
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Oct 2015 01:15:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756568AbbJUWre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2015 18:47:34 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:36447 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756560AbbJUWrd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Oct 2015 18:47:33 -0400
-Received: by wicfx6 with SMTP id fx6so111695595wic.1
-        for <git@vger.kernel.org>; Wed, 21 Oct 2015 15:47:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=y4gZdijOxf+RDxOQPg1u4VJMsd7bmzlcPFsVDNA3suA=;
-        b=dRNVkj1ryfTHMq+Yemekl/sAgx0noYwqXoZvKJYu2O3AQHlrVuSCpdmC5HhPnSOlm/
-         SrHfnr0GUbahiUPdVP50CvVp65pBQn5rf5k6Et/IdOhBzs64hmYwbBxn1zVAiNSwTRZJ
-         kFf8P3S4TBI+TX6XJIQqd36yXp+ANkM2h/pKuNH61jGN/3BY2w+OwfgWZsolBj+yV6kb
-         EN+s+2vklDqH7eMahvW0KaRR3YTv1b/T5lf/MHH/bo03Xc4fmeqFN5LtrMQEG96PS0Ww
-         Mw3C2XQNrlRV7r8OU3WASi3MiyfXknrnbAyaoJn3FILxaXVcFYTVrekXaMbDsO3hVqMZ
-         Mz0w==
-X-Received: by 10.180.207.235 with SMTP id lz11mr14030741wic.1.1445467652090;
-        Wed, 21 Oct 2015 15:47:32 -0700 (PDT)
-Received: from slxbook3.fritz.box (p5DDB5C89.dip0.t-ipconnect.de. [93.219.92.137])
-        by smtp.gmail.com with ESMTPSA id ld5sm13105010wjc.18.2015.10.21.15.47.30
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 21 Oct 2015 15:47:31 -0700 (PDT)
-In-Reply-To: <1445284095-6602-1-git-send-email-dturner@twopensource.com>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1756628AbbJUXPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2015 19:15:47 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61706 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755452AbbJUXPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2015 19:15:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D94072449F;
+	Wed, 21 Oct 2015 19:15:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TJfxQab9R/naxCFh+DqV5s313NM=; b=LEzBi8
+	ag7SfezSMN6DsEYWQzwS6HcPu85dnELIx8Q7NiOiPxcZJbFO0dVeGLNsVPPAP+kj
+	vo8LlaLZ2MYjTUh4Qkb/y+i9F91kryt78NasK9GRk+Zpr8TIKUGoSZfYJbe2pNYo
+	B7YLn08eMQjeSpUc7uHSPT6MIw+k5JiBfcWd4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BTJc5gx7j82/RrrkfcxSJsvKTsFmri6l
+	TAoy32oAT9b4R1gX8Jt04AVlINmBUm6el/IGfX+SUf8aOsI/Vr3wbnwTQ9fHQXKU
+	6tjHVndoedATtxeQwLMHoGPvkze31tXuDbbhdm3rqE/8PL+ECJuBJq8m9ZW7mi91
+	rSwgZVXLKWM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D19602449E;
+	Wed, 21 Oct 2015 19:15:44 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 579712449D;
+	Wed, 21 Oct 2015 19:15:44 -0400 (EDT)
+In-Reply-To: <1445239731-10677-1-git-send-email-gitster@pobox.com> (Junio
+	C. Hamano's message of "Mon, 19 Oct 2015 00:28:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A78DC4B2-7849-11E5-B34B-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280028>
 
-Looks good to me, Ack.
+The change in the endgame since v3 ($gmane/279832) is almost none
+(interdiff attached at the end), so I won't be sending the patches
+themselves.  The bulk out of the miniscule interdiff comes from the
+fifth "plug strbuf leak" patch.
 
-Test run with 74301d6 + my TravisCI patch:
-https://travis-ci.org/larsxschneider/git/builds/86702932
-... on Linux it failed in 1/2 cases after 53min
-... on OSX it failed in 2/2 cases after 6min
+The patches have been reordered to make the structure of the series
+clearer:
 
-Test run with 74301d6 + my TravisCI patch + David's t7063 patch:
-https://travis-ci.org/larsxschneider/git/builds/86707133
-.. on Linux it failed in 0/2 cases after 77min
-...on OSX it failed in 0/2 cases after 48min (no error, CI system timed out, click on the builds to see detailed log output)
+Preliminary fixes:
 
-Cheers,
-Lars
+  mailinfo: remove a no-op call convert_to_utf8(it, "")
+  mailinfo: fold decode_header_bq() into decode_header()
+  mailinfo: fix an off-by-one error in the boundary stack
+  mailinfo: explicitly close file handle to the patch output
+  mailinfo: plug strbuf leak during continuation line handling
 
-On 19 Oct 2015, at 21:48, David Turner <dturner@twopensource.com> wrote:
+Group related things together and remove forward declarations:
 
-> Dirty the test worktree's root directory, as the test expects.
-> 
-> When testing the untracked-cache, we previously assumed that checking
-> out master would be sufficient to mark the mtime of the worktree's
-> root directory as racily-dirty.  But sometimes, the checkout would
-> happen at 12345.999 seconds and the status at 12346.001 seconds,
-> meaning that the worktree's root directory would not be racily-dirty.
-> And since it was not truly dirty, occasionally the test would fail.
-> By making the root truly dirty, the test will always succeed.
-> 
-> Tested by running a few hundred times.
-> 
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
-> t/t7063-status-untracked-cache.sh | 4 +++-
-> 1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-> index 37a24c1..0e8d0d4 100755
-> --- a/t/t7063-status-untracked-cache.sh
-> +++ b/t/t7063-status-untracked-cache.sh
-> @@ -412,7 +412,9 @@ test_expect_success 'create/modify files, some of which are gitignored' '
-> 	echo two bis >done/two &&
-> 	echo three >done/three && # three is gitignored
-> 	echo four >done/four && # four is gitignored at a higher level
-> -	echo five >done/five # five is not gitignored
-> +	echo five >done/five && # five is not gitignored
-> +	echo test >base && #we need to ensure that the root dir is touched
-> +	rm base
-> '
-> 
-> test_expect_success 'test sparse status with untracked cache' '
-> -- 
-> 2.4.2.644.g97b850b-twtrsrc
-> 
+  mailinfo: move handle_boundary() lower
+  mailinfo: move read_one_header_line() closer to its callers
+  mailinfo: move check_header() after the helpers it uses
+  mailinfo: move cleanup_space() before its users
+  mailinfo: move definition of MAX_HDR_PARSED closer to its use
+
+Preliminary logic clean-up:
+
+  mailinfo: get rid of function-local static states
+  mailinfo: do not let handle_body() touch global "line" directly
+  mailinfo: do not let handle_boundary() touch global "line" directly
+  mailinfo: do not let find_boundary() touch global "line" directly
+  mailinfo: move global "line" into mailinfo() function
+
+Getting rid of the globals:
+
+  mailinfo: introduce "struct mailinfo" to hold globals
+  mailinfo: move keep_subject & keep_non_patch_bracket to struct mailinfo
+  mailinfo: move global "FILE *fin, *fout" to struct mailinfo
+  mailinfo: move filter/header stage to struct mailinfo
+  mailinfo: move patch_lines to struct mailinfo
+  mailinfo: move add_message_id and message_id to struct mailinfo
+  mailinfo: move use_scissors and use_inbody_headers to struct mailinfo
+  mailinfo: move metainfo_charset to struct mailinfo
+  mailinfo: move check for metainfo_charset to convert_to_utf8()
+  mailinfo: move transfer_encoding to struct mailinfo
+  mailinfo: move charset to struct mailinfo
+  mailinfo: move cmitmsg and patchfile to struct mailinfo
+  mailinfo: move [ps]_hdr_data to struct mailinfo
+  mailinfo: move content/content_top to struct mailinfo
+
+Libify:
+
+  mailinfo: handle_commit_msg() shouldn't be called after finding patchbreak
+  mailinfo: keep the parsed log message in a strbuf
+  mailinfo: libify
+
+Lifting the error handling to the caller:
+
+  mailinfo: handle charset conversion errors in the caller
+  mailinfo: remove calls to exit() and die() deep in the callchain
+
+Endgame:
+
+  am: make direct call to mailinfo
+
+ Makefile           |    1 +
+ builtin/am.c       |   42 ++-
+ builtin/mailinfo.c | 1055 +---------------------------------------------------
+ mailinfo.c         | 1037 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ mailinfo.h         |   41 ++
+ 5 files changed, 1122 insertions(+), 1054 deletions(-)
+ create mode 100644 mailinfo.c
+ create mode 100644 mailinfo.h
+
+-- 
+2.6.2-377-g450896c
+
+
+(Interdiff)
+
+diff --git a/mailinfo.c b/mailinfo.c
+index 49eaa99..e157ca6 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -729,6 +729,8 @@ static int is_rfc2822_header(const struct strbuf *line)
+ 
+ static int read_one_header_line(struct strbuf *line, FILE *in)
+ {
++	struct strbuf continuation = STRBUF_INIT;
++
+ 	/* Get the first part of the line. */
+ 	if (strbuf_getline(line, in, '\n'))
+ 		return 0;
+@@ -750,7 +752,6 @@ static int read_one_header_line(struct strbuf *line, FILE *in)
+ 	 */
+ 	for (;;) {
+ 		int peek;
+-		struct strbuf continuation = STRBUF_INIT;
+ 
+ 		peek = fgetc(in); ungetc(peek, in);
+ 		if (peek != ' ' && peek != '\t')
+@@ -761,6 +762,7 @@ static int read_one_header_line(struct strbuf *line, FILE *in)
+ 		strbuf_rtrim(&continuation);
+ 		strbuf_addbuf(line, &continuation);
+ 	}
++	strbuf_release(&continuation);
+ 
+ 	return 1;
+ }
+diff --git a/mailinfo.h b/mailinfo.h
+index 5bf257d..93776a7 100644
+--- a/mailinfo.h
++++ b/mailinfo.h
+@@ -14,7 +14,7 @@ struct mailinfo {
+ 	int keep_non_patch_brackets_in_subject;
+ 	int add_message_id;
+ 	int use_scissors;
+-	int use_inbody_headers; /* defaults to 1 */
++	int use_inbody_headers;
+ 	const char *metainfo_charset;
+ 
+ 	struct strbuf *content[MAX_BOUNDARIES];
