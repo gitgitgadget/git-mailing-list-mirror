@@ -1,68 +1,103 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v3 24/34] mailinfo: move content/content_top to struct mailinfo
-Date: Wed, 21 Oct 2015 14:08:59 -0700
-Message-ID: <CAGZ79kY95wfbktyEji+jcyB3sbdyVCmmJajnBQTr3Hrg_PFvpA@mail.gmail.com>
-References: <1444855557-2127-1-git-send-email-gitster@pobox.com>
-	<1445239731-10677-1-git-send-email-gitster@pobox.com>
-	<1445239731-10677-25-git-send-email-gitster@pobox.com>
-	<CAGZ79kbRLVaNNR=ZuMZNtJD2vorV5K1-wZ+R9CY5FY_zS3i95Q@mail.gmail.com>
-	<xmqqzizcszke.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 8/8] git submodule update: Have a dedicated helper for cloning
+Date: Wed, 21 Oct 2015 14:23:01 -0700
+Message-ID: <xmqqvb9zudai.fsf@gitster.mtv.corp.google.com>
+References: <1445381030-23912-1-git-send-email-sbeller@google.com>
+	<1445381030-23912-9-git-send-email-sbeller@google.com>
+	<xmqqd1w8uewx.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaa6b49rDW204ydtY0cf4NugSKOm+sBHKBYYoEsVugVfw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 23:09:08 2015
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Eric Sunshine <ericsunshine@gmail.com>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Oct 21 23:23:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zp0d9-0003cZ-UB
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 23:09:08 +0200
+	id 1Zp0qn-0001dZ-Kp
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 23:23:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752489AbbJUVJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2015 17:09:00 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:36429 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750756AbbJUVI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2015 17:08:59 -0400
-Received: by ykba4 with SMTP id a4so57098119ykb.3
-        for <git@vger.kernel.org>; Wed, 21 Oct 2015 14:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=odQooOITBU+e1PvKh55HDfBN7DhJuswrhnFv/zkr9xs=;
-        b=l2IYvQjRTabCk4MrR+z3ZgRydzhifqgvCMBONrkhhsHleS6mUwmSd6ln34xMHHRIn6
-         vk7f8130vBxMuFrjCuT7CDwo63NipgqWUGY02oQZfJvu174pv7htnN8n6DrzPsv9iJg7
-         fConDEmBh+To0E+YLNqaqDqtgEtL36gxC1XJDe5K86LGOo5WGfksn9USLr/sD5CukANT
-         ihkbdZN+kaZqT33pTj9KqFtmw2hcy1SAfjKwE+UxioFfO1RbIjzpJxte5F9hBw0awp//
-         0gSzqO3psu5KvNXpRt/S5G3EVvbJcQmASaUjdptoiccVZ3+0VKylmo/G5r/2oFBI4Pkx
-         7ImQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=odQooOITBU+e1PvKh55HDfBN7DhJuswrhnFv/zkr9xs=;
-        b=JWxhDuc7SGu2zrcHGG5lsufv6FDk0rbCL8dNd6a+IPLiv0q12Oxjv7tUfiRkWegSVO
-         Uv2XlxoxZsPhdW4dPuzXOi022zyupGSB8IE6In7aEms34XwK+aQ1DLTx85tptwtKg8Yc
-         d9EL3sYsjErkPcTHbEkk/eUkCSMPI1Ro6flmTL1z5P3TvzD2lcfxAIAW82hpAwwaeQWe
-         rsSlWyC6IHp9WV60l+U1cP/jee9q8eIYKjfzPUNEDCaA/C3wZ96CoJrs3f6E6qrJ01W3
-         RsOj8Bh/8GB75ewpfHJVMsZU+CVZ3oO5cJ37u/jdgYgfz4YnWwkyExcXmA2vllG1CI6P
-         EM/g==
-X-Gm-Message-State: ALoCoQk1Ro0NwxypjGVHyoDV96CWe3zDLMMFOg5vABTqj2RpCWEs7p3CswZtr2ojPiCO3A6oYmni
-X-Received: by 10.129.124.8 with SMTP id x8mr8525353ywc.44.1445461739151; Wed,
- 21 Oct 2015 14:08:59 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Wed, 21 Oct 2015 14:08:59 -0700 (PDT)
-In-Reply-To: <xmqqzizcszke.fsf@gitster.mtv.corp.google.com>
+	id S1755355AbbJUVXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2015 17:23:08 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61644 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753273AbbJUVXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2015 17:23:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CB39525D06;
+	Wed, 21 Oct 2015 17:23:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ckuRRkJkq0E4B2lUOStdgxTdpys=; b=sUlO5z
+	C2/7pifia2UlCYVfEY45OBMVgbaLSvUbeSwxX2EWOyDZNu/YlMQTabkPlPqQ2uoi
+	w+ms1jXYNmeMjXjEjLplXDmv4yi8bC71tXyLx7LrAGgankXpq97IHS5lqIBszN6X
+	0SZzcufD1eZ68kgUqxz76dWYH4spSij3vI5ZA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=locx9N/pz3qsbtUfbfvTqENDL3+Xaj74
+	t8BKtSa5jSW0odrpSvh4LKtA1EVmT9TbRf7TuyDwF0+Ta2vpY2ZhHqyText3QPBp
+	nPsYUki0M2RzyKmgD0Eqv4DOhypIw3z6z30PPJg50wXwxBjxdPQmOg3JxAQ/9FSr
+	oArUx1FbUsM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C18F525D05;
+	Wed, 21 Oct 2015 17:23:03 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 457B025D04;
+	Wed, 21 Oct 2015 17:23:03 -0400 (EDT)
+In-Reply-To: <CAGZ79kaa6b49rDW204ydtY0cf4NugSKOm+sBHKBYYoEsVugVfw@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 21 Oct 2015 14:06:37 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: E9AE6064-7839-11E5-A6D6-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280024>
 
-On Wed, Oct 21, 2015 at 2:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Stefan Beller <sbeller@google.com> writes:
+
+> I'd like to counter your argument with quoting code from update_clone
+> method:
+> 
+>      run_processes_parallel(1, get_next_task, start_failure,
+> task_finished, &pp);
 >
-> Looking at their final resting place, I do not think so.
+>      if (pp.print_unmatched) {
+>          printf("#unmatched\n");
+>          return 1;
+>      }
+>
+>      for_each_string_list_item(item, &pp.projectlines) {
+>          utf8_fprintf(stdout, "%s", item->string);
+>      }
+>
+> So we do already all the cloning first, and then once we did all of that
+> we just put out all accumulated lines of text. (It was harder to come up with
+> a sufficient file name than just storing it in memory. I don't think
+> memory is an
+> issue here, only a few bytes per submodule. So even 1000 submodules would
+> consume maybe 100kB)
 
-Right, I comment along the way without looking ahead, so this was a bad comment.
+That does not sound like a counter-argument; two bad design choices
+compensating each other's shortcomings, perhaps ;-)
+
+> Having a file though would allow us to continue after human
+> interaction fixed one problem.
+
+Yes.  That does sound like a better design.
+
+This obviously depends on the impact to the other part of what
+cmd_update() does, but your earlier idea to investigate the
+feasibility and usefulness of updating "clone --recurse-submodules"
+does sound like a good thing to do, too.  That's an excellent point.
