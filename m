@@ -1,116 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/8] run-command: Call get_next_task with a clean child process.
-Date: Tue, 20 Oct 2015 16:05:49 -0700
-Message-ID: <xmqq37x56sz6.fsf@gitster.mtv.corp.google.com>
-References: <1445381030-23912-1-git-send-email-sbeller@google.com>
-	<1445381030-23912-3-git-send-email-sbeller@google.com>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: t5516-fetch-push.sh fails with current master (74301d6)
+Date: Wed, 21 Oct 2015 03:40:43 +0200
+Message-ID: <CAA787rnfwVgE=40WF6co4cfMi0gNa8oT7dL-Wy1Gnto_gEF8AQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
-	jacob.keller@gmail.com, peff@peff.net, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	ericsunshine@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 01:06:08 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 21 03:41:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zofyh-0006Ft-M4
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 01:06:00 +0200
+	id 1ZoiP8-0000wh-0Q
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 03:41:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754523AbbJTXFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2015 19:05:55 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:32890 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754464AbbJTXFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2015 19:05:51 -0400
-Received: by pabrc13 with SMTP id rc13so34296266pab.0
-        for <git@vger.kernel.org>; Tue, 20 Oct 2015 16:05:50 -0700 (PDT)
+	id S1753268AbbJUBlQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Oct 2015 21:41:16 -0400
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:35193 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753155AbbJUBlO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2015 21:41:14 -0400
+Received: by lbbes7 with SMTP id es7so27933602lbb.2
+        for <git@vger.kernel.org>; Tue, 20 Oct 2015 18:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=MKA9LhiVtAZYM949EQMeUbLUpZgD6F/2i/lSDVjPROc=;
-        b=fnqIyf8Jc3HGZ1sK7ItUtuj3p1AicQD4KqP2TAp04/jFSkbCr5L0nrNS7SuAoZgffI
-         vuvDQOCIlQvbjQBxTbWRtk9GsONtI6ImZFNhxDsRo3bUns7XnFd9bmtJYSFr5J+Yroao
-         v0YmK5sZVrHfKqDfC/I+jVdb/128Nu8YjhNIyKLI6KficiTCU5lxennArstsnH5vr/vW
-         JwqK7Pn5MGSAfQiCCCnipj0x6toF+JrRtqjv5u2JBNIM5RMcCiMjje42hvAUnagaCkON
-         vpOt2G2jFPfHL8SlxD2UzbhLhni3IVIl39YEbO9GtCUlipwV77xINHVizJ/2BFIARexQ
-         zR8w==
-X-Received: by 10.66.228.97 with SMTP id sh1mr6597436pac.91.1445382350745;
-        Tue, 20 Oct 2015 16:05:50 -0700 (PDT)
-Received: from localhost ([2620:0:1000:861b:f0a2:278f:6a7e:e323])
-        by smtp.gmail.com with ESMTPSA id nz4sm5645621pbb.47.2015.10.20.16.05.50
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 20 Oct 2015 16:05:50 -0700 (PDT)
-In-Reply-To: <1445381030-23912-3-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Tue, 20 Oct 2015 15:43:44 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:sender:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=i6BKoqMaCPdvYfWwOkh1Yne4vjqXuYOYRUxs1yxNmjs=;
+        b=XuQRTDWgLoLsDEMkVbyJ8I3cVKqcYKaQjZVHR6HA2a6ghjJBJVBr1jULC8bfNZmP0J
+         3DJryyIJwLRJIXAyD2FmF1+Z86PMue5TmUp/pRnMuD2ME3j5ESU41s1ZolbKMpiMCqsC
+         3MMZa5yblmr0B71jRNggG6Mh9lJfLr48iJN8jHFV1xCJ1EOZIbP5kP6p5JD9yUPxiCEi
+         4lFgnd2oYec6kYCPJAY4lS57fkzHY5bftnVTcVstMbbtSlLeIZnY7i65E/fQN+RHnUy8
+         /3/3xi0WwZRwzhmtqfgB2R3rsbek8V7toEqtNh351tN8y0TG6JdXLhJWDqUKyUSC9NLs
+         p5tQ==
+X-Received: by 10.112.140.4 with SMTP id rc4mr3631933lbb.26.1445391672521;
+ Tue, 20 Oct 2015 18:41:12 -0700 (PDT)
+Received: by 10.25.25.137 with HTTP; Tue, 20 Oct 2015 18:40:43 -0700 (PDT)
+X-Google-Sender-Auth: vae8VQGVjUn6O_VrgoiUwzkyPAY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279959>
 
-Stefan Beller <sbeller@google.com> writes:
+When building from current master (74301d6, "Sync with maint",
+2015-10-20), test #75 in t5516-fetch-push.sh fails:
 
-> If the `get_next_task` did not explicitly called child_process_init
-> and only filled in some fields, there may have been some stale data
-> in the child process. This is hard to debug and also adds a review
-> burden for each new user of that API. To improve the situation, we
-> pass only cleanly initialized child structs to the get_next_task.
->
-> As an invariant you can now assume any child not in use is
-> cleaned up and ready for its next reuse.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  run-command.c | 13 ++++++++++++-
->  1 file changed, 12 insertions(+), 1 deletion(-)
->
-> diff --git a/run-command.c b/run-command.c
-> index b9363da..a5ef874 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -13,6 +13,12 @@ void child_process_init(struct child_process *child)
->  	argv_array_init(&child->env_array);
->  }
->  
-> +void child_process_deinit(struct child_process *child)
-> +{
-> +	argv_array_clear(&child->args);
-> +	argv_array_clear(&child->env_array);
-> +}
-> +
+*** t5516-fetch-push.sh ***
+ok 1 - setup
+ok 2 - fetch without wildcard
+[Snip 70 lines]
+ok 73 - fetch exact SHA1
+ok 74 - shallow fetch reachable SHA1 (but not a ref), allowtipsha1inwan=
+t=3Dtrue
+not ok 75 - deny fetch unreachable SHA1, allowtipsha1inwant=3Dtrue
+#
+# mk_empty testrepo &&
+# (
+#         cd testrepo &&
+#         git config uploadpack.allowtipsha1inwant $configallowtipsha1i=
+nwant &&
+#         git commit --allow-empty -m foo &&
+#         git commit --allow-empty -m bar &&
+#         git commit --allow-empty -m xyz
+# ) &&
+# SHA1_1=3D$(git --git-dir=3Dtestrepo/.git rev-parse HEAD^^) &&
+# SHA1_2=3D$(git --git-dir=3Dtestrepo/.git rev-parse HEAD^) &&
+# SHA1_3=3D$(git --git-dir=3Dtestrepo/.git rev-parse HEAD) &&
+# (
+#         cd testrepo &&
+#         git reset --hard $SHA1_2 &&
+#         git cat-file commit $SHA1_1 &&
+#         git cat-file commit $SHA1_3
+# ) &&
+# mk_empty shallow &&
+# (
+#         cd shallow &&
+#         test_must_fail git fetch ../testrepo/.git $SHA1_3 &&
+#         test_must_fail git fetch ../testrepo/.git $SHA1_1 &&
+#         git --git-dir=3D../testrepo/.git config
+uploadpack.allowreachablesha1inwant true &&
+#         git fetch ../testrepo/.git $SHA1_1 &&
+#         git cat-file commit $SHA1_1 &&
+#         test_must_fail git cat-file commit $SHA1_2 &&
+#         git fetch ../testrepo/.git $SHA1_2 &&
+#         git cat-file commit $SHA1_2 &&
+#         test_must_fail git fetch ../testrepo/.git $SHA1_3
+# )
+#
+ok 76 - shallow fetch reachable SHA1 (but not a ref), allowtipsha1inwan=
+t=3Dfalse
+ok 77 - deny fetch unreachable SHA1, allowtipsha1inwant=3Dfalse
+ok 78 - fetch follows tags by default
+ok 79 - pushing a specific ref applies remote.$name.push as refmap
+ok 80 - with no remote.$name.push, it is not used as refmap
+ok 81 - with no remote.$name.push, upstream mapping is used
+ok 82 - push does not follow tags by default
+ok 83 - push --follow-tag only pushes relevant tags
+ok 84 - push --no-thin must produce non-thin pack
+ok 85 - pushing a tag pushes the tagged object
+ok 86 - push into bare respects core.logallrefupdates
+ok 87 - fetch into bare respects core.logallrefupdates
+ok 88 - receive.denyCurrentBranch =3D updateInstead
+ok 89 - updateInstead with push-to-checkout hook
+# failed 1 among 89 test(s)
+1..89
+make[2]: *** [t5516-fetch-push.sh] Error 1
+make[2]: Leaving directory `/home/sunny/src/other/git/build-git/t'
+make[1]: *** [test] Error 2
+make[1]: Leaving directory `/home/sunny/src/other/git/build-git/t'
+make: *** [test] Error 2
 
-Is this necessary (and is it necessary to make it global)?
-I thought that finish_command() already clears them....
+(Removed indents to reduce email wrapping)
 
-    ... goes and looks ...
+OS: Debian GNU/Linux 7.9 (wheezy)
+gcc (Debian 4.7.2-5) 4.7.2
 
-Ahh, of course, pp_*() functions do use start_command() but do not
-use finish_command(), which sort of breaks symmetry, but that cannot
-be helped.  Because we want to wait for any of the multiple tasks
-running, we cannot call finish_command() that explicitly says "I
-want to wait for this one to finish".
-
-And that is why you already have two calls to array-clear inside
-collect_finished(), just after calling task_finished().
-
-And of course we already have these array-clear calls in
-finish_command().
-
-So I agree that deinit helper should exist, but
-
- * it should be file-scope static;
-
- * it should be called by finish_command(); and
-
- * if you are calling it from collect_finished(), then existing
-   calls to array-clear should go.
-
-Other than that, this looks good.
-
-Thanks.
+Regards,
+=C3=98yvind
