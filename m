@@ -1,112 +1,92 @@
-From: Etienne Girard <etienne.g.girard@gmail.com>
-Subject: Re: [PATCH] git-p4: import the ctypes module
-Date: Wed, 21 Oct 2015 11:54:18 +0200
-Message-ID: <CAJA=mv5ui6OLc=0OSJg+k5a6bgSxwX=waLmyxtV4=ikWBkXPQg@mail.gmail.com>
-References: <CAJA=mv5Kdsn1YEo4sUAwpTv=0Jc8Xg5V2WPMoCmsxNL4Hnk=kg@mail.gmail.com>
-	<CAE5ih793+YDd30rpMSyTHjUNZS+-BLY9D-kJkF9RAogjdctPFw@mail.gmail.com>
-	<xmqqy4ex8r8k.fsf@gitster.mtv.corp.google.com>
-	<1445369506.8543.10.camel@kaarsemaker.net>
-	<xmqqwpuh72ot.fsf@gitster.mtv.corp.google.com>
-	<5626C79C.8060503@diamand.org>
-	<CAJA=mv7N=PmL69kgZRjq8P6J_qsfUbLx76WguhvqPrG2o1UFww@mail.gmail.com>
+From: Daniel Steinborn <daniel.steinborn@lrz.de>
+Subject: Poor git write performance to NFS
+Date: Wed, 21 Oct 2015 15:14:59 +0200
+Message-ID: <56278FD3.3010103@lrz.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Wed Oct 21 11:54:40 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 21 15:20:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zoq6D-0002Hj-9L
-	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 11:54:25 +0200
+	id 1ZotJe-0001vm-9i
+	for gcvg-git-2@plane.gmane.org; Wed, 21 Oct 2015 15:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753836AbbJUJyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2015 05:54:21 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:34810 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753333AbbJUJyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2015 05:54:19 -0400
-Received: by igbni9 with SMTP id ni9so90212227igb.1
-        for <git@vger.kernel.org>; Wed, 21 Oct 2015 02:54:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=noBFSoTdhI3nwPpm9fjn9SYxn7tpzAX+twA6byAZnB4=;
-        b=e9oWlj46F4rYRBHAnALHHJkyWbl4RnR+Vg8U9MuqRGQjjJoHJDQUT28LWvh1/TUqau
-         kt+PG9R2jL1/6eH/iJWAU3Kl0Aa6etABksFb7hbkWO1IMIqJGWRearvnL69Eswvih0l8
-         OFc7NZjcsBRwz/xVKVyNSIN2wPSBfcP54f+5ogzRUyKYzKmVPfiLJLnhFrAKmGvohnEl
-         41WSOD9o7hwqNKJKo+Uldlk89jyH7O8gkrU9x1h9KuLYWnX9x0iK9QVpi+lF6VJIvbGr
-         xnMN3VxGPOCMFMAliDfsyArGOmne1g/3338wBkXIBfFWCoXzQctIjAc1qmrNcwq35Dbz
-         wTcw==
-X-Received: by 10.50.79.133 with SMTP id j5mr18963556igx.86.1445421258885;
- Wed, 21 Oct 2015 02:54:18 -0700 (PDT)
-Received: by 10.64.87.170 with HTTP; Wed, 21 Oct 2015 02:54:18 -0700 (PDT)
-In-Reply-To: <CAJA=mv7N=PmL69kgZRjq8P6J_qsfUbLx76WguhvqPrG2o1UFww@mail.gmail.com>
+	id S1755014AbbJUNUR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Oct 2015 09:20:17 -0400
+Received: from postout1.mail.lrz.de ([129.187.255.137]:57232 "EHLO
+	postout1.mail.lrz.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755002AbbJUNUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2015 09:20:14 -0400
+X-Greylist: delayed 311 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Oct 2015 09:20:14 EDT
+Received: from lxmhs51.srv.lrz.de (localhost [127.0.0.1])
+	by postout1.mail.lrz.de (Postfix) with ESMTP id 3ngskF3l0bzycZ
+	for <git@vger.kernel.org>; Wed, 21 Oct 2015 15:15:01 +0200 (CEST)
+Authentication-Results: postout.lrz.de (amavisd-new); dkim=pass (2048-bit key)
+	reason="pass (just generated, assumed good)" header.d=lrz.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lrz.de; h=
+	content-transfer-encoding:content-type:content-type:mime-version
+	:user-agent:date:date:message-id:subject:subject:from:from
+	:received:received; s=postout; t=1445433301; bh=qrZWhjrcmMIQGgkx
+	8aySIjAYzY59BAwLv36Xgm06/Xs=; b=lobIoXphsygAaiw4oqTxZom9a8f6yL38
+	TViP2/T9FGF/nPCeaLK/sXRcUdNuZwSh1/Moc86QdSN9gT/aaVY2Q9fsngYxcjno
+	DSgGLB8O1+8JMBNjJbW3nHR8YRgUeqRTCDGEttL60wsX/nzTOMXXz7d4lJ4i4JA/
+	C0jnThFWyjtXYgSwPt6tUN5kgKL9cNR4vyyA3HDZNEOe4berLqrtcDVBvpxxqihG
+	WM6jJPD0uV/mW2tVMGLSMkwO/HsxhKIQqcNJ7Id9HmvK/XntoNW3nNtz0l70v+dm
+	N9pbydxl9dzkiTeYbC8TYcpojtr5V0k5Ki9k9FgXST5wh0lA76bGEw==
+X-Virus-Scanned: by amavisd-new at lrz.de in lxmhs51.srv.lrz.de
+X-Spam-Flag: NO
+X-Spam-Score: -2.891
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.891 tagged_above=-999 required=5
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, LRZ_FROM_PHRASE=0.001,
+	LRZ_FROM_PRE_SUR=0.001, LRZ_FROM_PRE_SUR_PHRASE=0.001,
+	LRZ_MSGID_AN_AN=0.001, LRZ_MSGID_HU8_HU7=0.001, LRZ_MSGID_MOZ=0.001,
+	LRZ_MSGID_SPAM_68=0.001, LRZ_TO_SHORT=0.001, LRZ_UA_MOZ=0.001]
+	autolearn=no
+Received: from postout1.mail.lrz.de ([127.0.0.1])
+	by lxmhs51.srv.lrz.de (lxmhs51.srv.lrz.de [127.0.0.1]) (amavisd-new, port 20024)
+	with LMTP id UnXgzDdHwwrg for <git@vger.kernel.org>;
+	Wed, 21 Oct 2015 15:15:01 +0200 (CEST)
+Received: from badwlrz-cldst01.ws.lrz.de (unknown [IPv6:2001:4ca0:0:f000:fab1:56ff:febb:c1bd])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by postout1.mail.lrz.de (Postfix) with ESMTPSA id 3ngskF1LDVzyV2
+	for <git@vger.kernel.org>; Wed, 21 Oct 2015 15:15:01 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/279981>
 
-I was wrong, the script doesn't work on my machine if ctypes is not
-imported regardless of python version. I guess I was confused by using
-a version of git-p4 before ctypes was introduced, the failing version
-and the patched version, as well as several python versions.
+Hi,
 
-Sorry for this misleading claim, and thanks for the quick fix.
+currently we are experiencing poor write performance when a repository=20
+is pushed to a nfs volume. Interestingly, this seems to be a problem in=
+=20
+newer git versions:
 
-2015-10-21 10:23 GMT+02:00 Etienne Girard <etienne.g.girard@gmail.com>:
-> Hello,
->
-> I couldn't work further on this yesterday (but I read
-> Documentation/SubmittingPatches, which is a good start I guess). The
-> diff proposed by Dennis works on my machine, I'll try to figure out
-> why the original script worked with 2.7.10.
->
-> Thanks
->
-> 2015-10-21 1:00 GMT+02:00 Luke Diamand <luke@diamand.org>:
->> On 20/10/15 20:36, Junio C Hamano wrote:
->>>
->>> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
->>>
->>>>> I do not follow Python development, but does the above mean that
->>>>> with recent 2.x you can say ctypes without first saying "import
->>>>> ctypes"?  It feels somewhat non-pythonesque that identifiers like
->>>>> this is given to you without you asking with an explicit 'import',
->>>>> so I am puzzled.
->>>>
->>>>
->>>> No, you cannot do that. The reason others may not have noticed this bug
->>>> is that
->>>> in git-p4.py, ctypes is only used on windows.
->>>>
->>>>   111     if platform.system() == 'Windows':
->>>>   112         free_bytes = ctypes.c_ulonglong(0)
->>>>   113
->>>> ctypes.windll.kernel32.GetDiskFreeSpaceExW(ctypes.c_wchar_p(os.getcwd()),
->>>> None, None, ctypes.pointer(free_bytes))
->>>>
->>>> The fact that it works for the OP with 2.7.10 is puzzling (assuming that
->>>> it's
->>>> on the same system).
->>>
->>>
->>> Exactly.  That is where my "I am puzzled" comes from.
->>>
->>> The patch looks obviously the right thing to do.  Luke?  Lars?
->>
->>
->> It looks sensible to me, and works fine on Linux, thanks. ack.
->>
->> I can't test on Windows today but I can't see why it wouldn't work.
->>
->> Luke
->>
->>
+v1.7.12.4: Very good performance
+
+v2.1.4: Bad performance, up to 6 times slower
+
+Are there any changed default settings or new features that can be the=20
+reason for that problem?
+
+The tests are done on a Debian 8.2 VM.
+
+Please ask for specific details if they are neccessary.
+
+Thanks for your help! Best regards, Daniel Steinborn
+
+--=20
+Daniel Steinborn
+Leibniz-Rechenzentrum
+Boltzmannstra=C3=9Fe 1
+85748 Garching bei M=C3=BCnchen
