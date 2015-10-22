@@ -1,83 +1,134 @@
-From: Alexander Riesen <alexander.riesen@cetitec.com>
-Subject: Re: [PATCH] Consider object stores in alternates during a dissociating
- clone
-Date: Thu, 22 Oct 2015 20:08:18 +0200
-Message-ID: <56292612.3020609@cetitec.com>
-References: <561F8DE9.4040703@cetitec.com>	<alpine.DEB.1.00.1510151609280.31610@s15462909.onlinehome-server.info>	<561FBA48.3050609@cetitec.com> <56274922.80007@cetitec.com>	<xmqqpp085cth.fsf@gitster.mtv.corp.google.com>	<5628EBAF.1030205@cetitec.com>	<xmqq7fmeubkf.fsf@gitster.mtv.corp.google.com>	<562911AD.50004@cetitec.com> <xmqqd1w6ssg5.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] difftool: gracefully handle symlinks to directories
+Date: Thu, 22 Oct 2015 11:23:54 -0700
+Message-ID: <xmqq8u6usqx1.fsf@gitster.mtv.corp.google.com>
+References: <1445414673-15307-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 22 20:08:47 2015
+Content-Type: text/plain
+Cc: Ismail Badawi <ismail@badawi.io>,
+	John Keeping <john@keeping.me.uk>,
+	Tim Henigan <tim.henigan@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 22 20:24:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZpKI4-0007tD-Fn
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Oct 2015 20:08:40 +0200
+	id 1ZpKWz-0007xk-5E
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Oct 2015 20:24:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965403AbbJVSIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2015 14:08:36 -0400
-Received: from mout.kundenserver.de ([212.227.17.13]:56250 "EHLO
-	mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932428AbbJVSIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2015 14:08:34 -0400
-Received: from pflsmail.localdomain ([37.123.123.67]) by
- mrelayeu.kundenserver.de (mreue104) with ESMTPSA (Nemesis) id
- 0Lutwv-1aXDqO2V1t-0107wC; Thu, 22 Oct 2015 20:08:29 +0200
-Received: from localhost (localhost [127.0.0.1])
-	by pflsmail.localdomain (Postfix) with ESMTP id 10E6CB016C2;
-	Thu, 22 Oct 2015 20:08:28 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at pflsmail.corp.cetitec.com
-Received: from pflsmail.localdomain ([127.0.0.1])
-	by localhost (pflsmail.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Xxg8qR8frIdr; Thu, 22 Oct 2015 20:08:18 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (unknown [10.10.11.230])
-	by pflsmail.localdomain (Postfix) with ESMTPS id 22EDCB01679;
-	Thu, 22 Oct 2015 20:08:18 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <xmqqd1w6ssg5.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:X3N7KwEoBjOXhWj0fk8SU8952mxSIlNqoThAV+u+ZICi6kSkE/t
- wAdor6lym8+d5hPer9wogBB/I0vQuTPR2YAgEm8/TOrOBOsHxcKXzmjVhr+XsC9aq8y51wj
- J9cKxpIHBu+xD5S1rEtpX5X25U//zVHVV9ruq7hgVTfBjxTiXo6+Dc8AIxK0vv/PIo+eedW
- 2M2linS4T9k95gnxRK7BA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gUe79cl4QpQ=:dGF/Z/fqvZF0w9udu/5h1C
- YL+zLDOG67yg2uKZIYE/X7D+NOV2oBHFH0xjx6J3xgcFir+zJRBVwJVaSFzMbYSniYkmsrBJV
- feCNbZ3eOiClMtI2rZw2Ql2WhgD2sh38nF2uvuBH9VEvgOFDaFU+J7Bft1QdzjH0/wRqsLUQG
- QeRUX5sKKgt5kTTUnd9BUiWBTkwXQLwdHakyuxPSx0dNlv/5/nTKoNrskmZxEQdqir+/IeVNE
- 6CordM9CDSFbMsuQ3A9m3DTo2pjxeB1deT0hZa2bwCvRfi3TN1Ri8OShWPhSRYUUBOa5vsD42
- 5zG/V9PuxQXS9d6LehhMXZj+jKLDJkEWDfZu8kUR9gaXHvbHV9ho3vtxS8On1MDJDIq2Oel9l
- 7tTlpr8Zk04/W5ABwIZCWzFLvArz9rC2uhTSEQH21iP9eIWLxrFiwbt1BpYq1pYPZo2uyE9PT
- exKbJJ8Uq4um4DnRiJEpMs9UZ8yb073GDcnYnuvVyu9V6MuHaF3UAdDh5uAz5jUB7hPh5rceR
- a5NWr9zIxCnwXrGdQBPbbjDUhuBPMDX0nJBaggieClptQRXszyERXbCPZr5q8gexmTO0oANqy
- 1hpV508WrJ5tIpm4b6DwcRWS128RfqI85dwMtApqSjwbf79oln0sPuaNObpfFCDFl1MVRHp2G
- 9AplV2ubEB/5UX2nRCaSSzT/BsmhcwPAgf/AH0Isb5YeaMaN/aSvcyDUYYjXvXOvTYKrydRZN
- 5pkVnhMkcuLfSbF5
+	id S1757458AbbJVSYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2015 14:24:00 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57773 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757469AbbJVSX6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2015 14:23:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9122723CC0;
+	Thu, 22 Oct 2015 14:23:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4bLcv8j2f8gm1WMxlq1m/IJjmr0=; b=rzs5L7
+	NO82+EYNAJBGPXeIanwtbrMaHiIRGS3JmwZw73llZrAaCkaIDZkvYF9LAi7DwTiF
+	t1PjCaIRi8M6cp7pned8Z6WDLnh1rmg/NUrzF6wp3wltuAfYyLm6Qg+pWhNy3Y/A
+	8UXIiHqaJJ1pd+cKhF6MqJqwMZdq983YMt8N0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oYkWmBNBIJIFgKbGxsC8osEEAMUQIzD2
+	otfjTwVSax22M3+2/jXGJfeDAf2DiVl+SBvQbZhv8cOrObgB2zoj6bQQz5CAxj8v
+	u2I6SIKutM0tW6BNAcjvF+rB4l92R28hU1kInuVf8ce/Zj4n5ZN0zwlJGTa1xvke
+	G3xPECfvK1s=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8899223CBF;
+	Thu, 22 Oct 2015 14:23:56 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F07D623CBE;
+	Thu, 22 Oct 2015 14:23:55 -0400 (EDT)
+In-Reply-To: <1445414673-15307-1-git-send-email-davvid@gmail.com> (David
+	Aguilar's message of "Wed, 21 Oct 2015 01:04:33 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 0E2A0E9C-78EA-11E5-986A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280068>
 
-On 10/22/2015 07:50 PM, Junio C Hamano wrote:
-> Alexander Riesen <alexander.riesen@cetitec.com> writes:
+David Aguilar <davvid@gmail.com> writes:
+
+> difftool's dir-diff feature was blindly feeding worktree paths
+> to hash-object without checking whether the path was indeed a
+> file, causing the feature to fail when repositories contain
+> symlinks to directories.
+
+Wait.  Anything that considers symlinks "to directories" any special
+smells like a misdesign here.  Why is it safe to substitute a
+symbolic link that happens to point at a file with the file it
+points at?
+
+Because the way you would hash a symblic link is not by hashing the
+file it points at, but by hashing the result of readlink(2) of it,
+we must not reuse the working tree files for any symbolic link,
+regardless of its target, I would think.
+
+After all, a symbolic link may even be dangling and not pointing at
+anything.
+
 >
->>> Content-Type: text/plain; charset=windows-1252; format=flowed
-> I had to hand-munge it as the above lost all tabs and made the patch
-> unusable for machines X-<.
-I'm very sorry. I don't know why Icedove does that, nor do
-I know how to stop it mangling the text. Right now I just
-hate the damn thing.
-
-Thank you very much for reformatting the patch, as it would
-take quite some time until I configure a sane mail program
-to work here.
-
-Incidentally, what does "---" mean in the documentation hunk?
-
-Regards,
-Alex
+> Ensure that only files are ever given to hash-object.
+> Add a test to demonstrate the breakage.
+>
+> Reported-by: Ismail Badawi <ismail@badawi.io>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+>  git-difftool.perl   |  4 +---
+>  t/t7800-difftool.sh | 19 +++++++++++++++++++
+>  2 files changed, 20 insertions(+), 3 deletions(-)
+>
+> diff --git a/git-difftool.perl b/git-difftool.perl
+> index 7df7c8a..1abe647 100755
+> --- a/git-difftool.perl
+> +++ b/git-difftool.perl
+> @@ -70,9 +70,7 @@ sub use_wt_file
+>  	my ($repo, $workdir, $file, $sha1) = @_;
+>  	my $null_sha1 = '0' x 40;
+>  
+> -	if (! -e "$workdir/$file") {
+> -		# If the file doesn't exist in the working tree, we cannot
+> -		# use it.
+> +	if (! -f "$workdir/$file") {
+>  		return (0, $null_sha1);
+>  	}
+>  
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index 48c6e2b..ec8bc8c 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -504,4 +504,23 @@ test_expect_success PERL 'difftool properly honors gitlink and core.worktree' '
+>  	)
+>  '
+>  
+> +test_expect_success PERL,SYMLINKS 'difftool --dir-diff symlinked directories' '
+> +	git init dirlinks &&
+> +	(
+> +		cd dirlinks &&
+> +		git config diff.tool checktrees &&
+> +		git config difftool.checktrees.cmd "echo good" &&
+> +		mkdir foo &&
+> +		: >foo/bar &&
+> +		git add foo/bar &&
+> +		test_commit symlink-one &&
+> +		ln -s foo link &&
+> +		git add link &&
+> +		test_commit symlink-two &&
+> +		echo good >expect &&
+> +		git difftool --tool=checktrees --dir-diff HEAD~ >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+>  test_done
