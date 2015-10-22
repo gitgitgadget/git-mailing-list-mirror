@@ -1,147 +1,257 @@
-From: Alexander Riesen <alexander.riesen@cetitec.com>
-Subject: [PATCH] Consider object stores in alternates during a dissociating
- clone
-Date: Thu, 22 Oct 2015 15:59:11 +0200
-Message-ID: <5628EBAF.1030205@cetitec.com>
-References: <561F8DE9.4040703@cetitec.com>	<alpine.DEB.1.00.1510151609280.31610@s15462909.onlinehome-server.info>	<561FBA48.3050609@cetitec.com> <56274922.80007@cetitec.com> <xmqqpp085cth.fsf@gitster.mtv.corp.google.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] Add git-grep threads-num param
+Date: Thu, 22 Oct 2015 15:23:02 +0100
+Message-ID: <20151022142302.GL19802@serenity.lan>
+References: <1445520236-10753-1-git-send-email-vleschuk@accesssoftek.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 22 16:00:30 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Victor Leschuk <vleschuk@accesssoftek.com>
+To: Victor Leschuk <vleschuk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 22 16:23:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZpGPb-0005Ry-Ks
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Oct 2015 16:00:12 +0200
+	id 1ZpGmB-0002oe-Pc
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Oct 2015 16:23:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757838AbbJVN75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2015 09:59:57 -0400
-Received: from mout.kundenserver.de ([212.227.126.130]:49750 "EHLO
-	mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757827AbbJVN7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2015 09:59:55 -0400
-Received: from pflsmail.localdomain ([37.123.123.67]) by
- mrelayeu.kundenserver.de (mreue004) with ESMTPSA (Nemesis) id
- 0Lxbix-1aa39J0DJj-017DTH; Thu, 22 Oct 2015 15:59:18 +0200
+	id S1757932AbbJVOXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2015 10:23:23 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:54021 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757316AbbJVOXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2015 10:23:19 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by pflsmail.localdomain (Postfix) with ESMTP id CAA41B00F23;
-	Thu, 22 Oct 2015 15:59:16 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at pflsmail.corp.cetitec.com
-Received: from pflsmail.localdomain ([127.0.0.1])
-	by localhost (pflsmail.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eFxvUNdMad3E; Thu, 22 Oct 2015 15:59:11 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (unknown [10.10.11.230])
-	by pflsmail.localdomain (Postfix) with ESMTPS id D8DB7B00F1A;
-	Thu, 22 Oct 2015 15:59:11 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <xmqqpp085cth.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:Rt/d1M/qPE9rfwnUATVLtWvtO1Mxrp085GIAJwKrh7FVMfC0NUa
- 2mDPtAZZwHSkqzPlsy6jSJBhMj9DJcGgst5pWo+lIj7aD462qEOVUloQXLI2gh6pX8UoJqi
- UA3Xlq5N3T13qPJb0zeVzdX6ZklyQ3FL8pRcJl8lbJeEcpmzM1PQrrHhHJ/3yeR95hR7+M8
- Z+JPa8uUfDPvUOT2WZCCA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IkTl1f5edyo=:BSRGfLMTIU9GNPnx1ZSR/v
- RlXHnJHtsry/1m3xLsAmxTlDelGA74BaJsldOiiQVkZRhZZWkYkTrCLNa/WF5mfVPLtbL9PXz
- IunfCB0CKEZ0loCbCHZZhoODVbgSAdRRHLHDvSXigQ6Wiw028qx+r9dsWKeGv9nnzhwaT2XiW
- nY3K32f6vB5VupBsA8kAiaJcaPfNugblCYkRo4M+NitLJfvPNg6PN1NCMJhec+EctcuKgyur8
- iLuPXKEdaC5/0K/NicWVbu4xiKEEOWOWgDTRvDvRvr5D4Hv5XlWfE3MFOqp86Z8BHw2UoOdTi
- JRktCywoicx7wQoJlWbjmeg8MEBxC3LY3UTSyA5GuzAHHEh7Oxv3IOcJWU7N8ZflpQNIwSBHs
- 6LwLBau4Vf4FAY8HChrsuuRDT7ZppSQu3HH8h/sx+9D8nhSA9vEWRRC48EvhwJ4Wo0wESvL/6
- vNOAn3HQ1QLQKhRcpRx/bZhGx97v60ytPj0TgWRsjmKSq3S7VgsMr2cK9yuvYksfC8D/aRX35
- VAenCHGeqt3TUocEAObH0nqEOaZPow2Bgg1D553DS+A9miCj/1Jo0W+0VpaUgRlKXs1SfcXLI
- H7yVbR2kf6p/hHRQTTL7FYDgFnuRmwSEqNwd++Ujsqoa/JnFccwFdPPbax/ucdFwB06NS9u/Q
- 04782LN0EbBrB2kZrhSH48/iQ2RYNG4qTUkx066xEYa2BwtlkQKMcX0gkvijWwG6ctUX5PiEi
- ECwXvloX3vXVNcfV
+	by jackal.aluminati.org (Postfix) with ESMTP id 1D87F86604B;
+	Thu, 22 Oct 2015 15:23:18 +0100 (BST)
+X-Quarantine-ID: <4VxffKT8Zjnm>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 4VxffKT8Zjnm; Thu, 22 Oct 2015 15:23:14 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 22C43CDA6B1;
+	Thu, 22 Oct 2015 15:23:04 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <1445520236-10753-1-git-send-email-vleschuk@accesssoftek.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280055>
 
-From: Alex Riesen <raa.lkml@gmail.com>
+On Thu, Oct 22, 2015 at 04:23:56PM +0300, Victor Leschuk wrote:
+> Hello all, I suggest we make number of git-grep worker threads a configuration
+> parameter. I have run several tests on systems with different number of CPU cores.
+> It appeared that the hard-coded number 8 lowers performance on both of my systems:
+> on my 4-core and 8-core systems the thread number of 4 worked about 20% faster than
+> default 8. So I think it is better to allow users tune this parameter.
 
-The "--reference" option is not the only way to provide a repository to borrow
-objects from.
-For instance, the objects/info/alternates of the origin repository lists
-object stores which the origin repository borrowed objects from. During
-clone operations which bypass a git aware transport (i.e.  simply copy the
-things over, like git clone --local) the file is copied into the cloned
-repository.
-In such a case, even if there were no reference repositories given in the
-command-line, there might be still something to "dissociate" the cloned
-repository from, before it is really independent.
+For git-pack-objects we call the command-line parameter "--threads" and
+the config variable "pack.threads".  Is there a reason not to use the
+same name here (i.e. "--threads" and "grep.threads")?
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
-
-On 10/21/2015 07:52 PM, Junio C Hamano wrote:
-> The readers of this change need  to be enlightened with a log message
- > to remind them that "--reference" is not the only way. Namely, if
- > you start from a repository with $GIT_DIR/objects/info/alternates,
- > i.e. the original already borrows from somewhere, and bypass the
- > normal "Git aware" transport mechanism, i.e. "git clone --local",
- > then the resulting repository would also become dependent of the
- > object store that the original depended on before the clone. In
- > order to make it free-standing, you would need "--dissociate", but
- > there is no "--reference" involved in that use case.
- >
- > And once that is clarified, it becomes very clear why it is wrong to
- > blindly require "--reference" to be there on the command line when
- > "--dissociate" is given.
-
-Indeed. Log message improved.
-
-> As to the patch, I think this  one is much simpler and preferrable.
- > It would hurt those who make a clone without bypassing the normal
- > "Git aware" transport mechanism and pass "--dissociate" without
- > "--reference".  They will end up making a clone that does not need
- > repacking to dissociate, but with this patch they would spend extra
- > cycles to run an unnecessary repack.  To avoid that, I think you can
- > throw in an check at the beginning of dissociate_from_references()
- > to see if git_path("objects/info/alternates") is there and make the
- > function a no-op if there isn't.
-
-I think I understand. How about this?
-
-  builtin/clone.c | 10 +++++-----
-  1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 9eaecd9..a7d0c07 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -801,11 +801,15 @@ static void write_refspec_config(const char *src_ref_prefix,
-  static void dissociate_from_references(void)
-  {
-      static const char* argv[] = { "repack", "-a", "-d", NULL };
-+    char *alts = git_pathdup("objects/info/alternates");
-
-+    if (access(alts, F_OK) < 0)
-+        return;
-      if (run_command_v_opt(argv, RUN_GIT_CMD|RUN_COMMAND_NO_STDIN))
-          die(_("cannot repack to clean up"));
--    if (unlink(git_path("objects/info/alternates")) && errno != ENOENT)
-+    if (unlink(alts) && errno != ENOENT)
-          die_errno(_("cannot unlink temporary alternates file"));
-+    free(alts);
-  }
-
-  int cmd_clone(int argc, const char **argv, const char *prefix)
-@@ -954,10 +958,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
-
-      if (option_reference.nr)
-          setup_reference();
--    else if (option_dissociate) {
--        warning(_("--dissociate given, but there is no --reference"));
--        option_dissociate = 0;
--    }
-
-      fetch_pattern = value.buf;
-      refspec = parse_fetch_refspec(1, &fetch_pattern);
--- 
-2.6.1.151.ge74ab91
+> Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
+> ---
+>  Documentation/config.txt               |  4 ++++
+>  Documentation/git-grep.txt             |  5 +++++
+>  builtin/grep.c                         | 20 +++++++++++++-------
+>  contrib/completion/git-completion.bash |  1 +
+>  grep.c                                 | 15 +++++++++++++++
+>  grep.h                                 |  4 ++++
+>  6 files changed, 42 insertions(+), 7 deletions(-)
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 391a0c3..c3df20c 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1447,6 +1447,10 @@ grep.extendedRegexp::
+>  	option is ignored when the 'grep.patternType' option is set to a value
+>  	other than 'default'.
+>  
+> +grep.threadsNum::
+> +	Number of grep worker threads, use it to tune up performance on
+> +	multicore machines. Default value is 8.
+> +
+>  gpg.program::
+>  	Use this custom program instead of "gpg" found on $PATH when
+>  	making or verifying a PGP signature. The program must support the
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> index 4a44d6d..e9ca265 100644
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> @@ -22,6 +22,7 @@ SYNOPSIS
+>  	   [--color[=<when>] | --no-color]
+>  	   [--break] [--heading] [-p | --show-function]
+>  	   [-A <post-context>] [-B <pre-context>] [-C <context>]
+> +	   [-t <threads-num>]
+>  	   [-W | --function-context]
+>  	   [-f <file>] [-e] <pattern>
+>  	   [--and|--or|--not|(|)|-e <pattern>...]
+> @@ -220,6 +221,10 @@ OPTIONS
+>  	Show <num> leading lines, and place a line containing
+>  	`--` between contiguous groups of matches.
+>  
+> +-t <num>::
+> +--threads-num <num>::
+> +	Set number of worker threads to <num>. Default is 8.
+> +
+>  -W::
+>  --function-context::
+>  	Show the surrounding text from the previous line containing a
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index d04f440..9b4fc47 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -27,8 +27,7 @@ static char const * const grep_usage[] = {
+>  static int use_threads = 1;
+>  
+>  #ifndef NO_PTHREADS
+> -#define THREADS 8
+> -static pthread_t threads[THREADS];
+> +static pthread_t *threads;
+>  
+>  /* We use one producer thread and THREADS consumer
+>   * threads. The producer adds struct work_items to 'todo' and the
+> @@ -206,7 +205,8 @@ static void start_threads(struct grep_opt *opt)
+>  		strbuf_init(&todo[i].out, 0);
+>  	}
+>  
+> -	for (i = 0; i < ARRAY_SIZE(threads); i++) {
+> +	threads = xmalloc(sizeof(pthread_t) * opt->num_threads);
+> +	for (i = 0; i < opt->num_threads; i++) {
+>  		int err;
+>  		struct grep_opt *o = grep_opt_dup(opt);
+>  		o->output = strbuf_out;
+> @@ -220,7 +220,7 @@ static void start_threads(struct grep_opt *opt)
+>  	}
+>  }
+>  
+> -static int wait_all(void)
+> +static int wait_all(struct grep_opt *opt)
+>  {
+>  	int hit = 0;
+>  	int i;
+> @@ -238,12 +238,14 @@ static int wait_all(void)
+>  	pthread_cond_broadcast(&cond_add);
+>  	grep_unlock();
+>  
+> -	for (i = 0; i < ARRAY_SIZE(threads); i++) {
+> +	for (i = 0; i < opt->num_threads; i++) {
+>  		void *h;
+>  		pthread_join(threads[i], &h);
+>  		hit |= (int) (intptr_t) h;
+>  	}
+>  
+> +	free(threads);
+> +
+>  	pthread_mutex_destroy(&grep_mutex);
+>  	pthread_mutex_destroy(&grep_read_mutex);
+>  	pthread_mutex_destroy(&grep_attr_mutex);
+> @@ -256,7 +258,7 @@ static int wait_all(void)
+>  }
+>  #else /* !NO_PTHREADS */
+>  
+> -static int wait_all(void)
+> +static int wait_all(struct grep_opt *opt)
+>  {
+>  	return 0;
+>  }
+> @@ -702,6 +704,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  			N_("show <n> context lines before matches")),
+>  		OPT_INTEGER('A', "after-context", &opt.post_context,
+>  			N_("show <n> context lines after matches")),
+> +#ifndef NO_PTHREADS
+> +		OPT_INTEGER('t', "threads-num", &opt.num_threads,
+> +			N_("use <n> worker threads")),
+> +#endif /* !NO_PTHREADS */
+>  		OPT_NUMBER_CALLBACK(&opt, N_("shortcut for -C NUM"),
+>  			context_callback),
+>  		OPT_BOOL('p', "show-function", &opt.funcname,
+> @@ -910,7 +916,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  	}
+>  
+>  	if (use_threads)
+> -		hit |= wait_all();
+> +		hit |= wait_all(&opt);
+>  	if (hit && show_in_pager)
+>  		run_pager(&opt, prefix);
+>  	free_grep_patterns(&opt);
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 482ca84..6231595 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1310,6 +1310,7 @@ _git_grep ()
+>  			--full-name --line-number
+>  			--extended-regexp --basic-regexp --fixed-strings
+>  			--perl-regexp
+> +			--threads-num
+>  			--files-with-matches --name-only
+>  			--files-without-match
+>  			--max-depth
+> diff --git a/grep.c b/grep.c
+> index 7b2b96a..17e6a7c 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -40,6 +40,9 @@ void init_grep_defaults(void)
+>  	color_set(opt->color_selected, "");
+>  	color_set(opt->color_sep, GIT_COLOR_CYAN);
+>  	opt->color = -1;
+> +#ifndef NO_PTHREADS
+> +	opt->num_threads = GREP_NUM_THREADS_DEFAULT;
+> +#endif /* !NO_PTHREADS */
+>  }
+>  
+>  static int parse_pattern_type_arg(const char *opt, const char *arg)
+> @@ -124,6 +127,14 @@ int grep_config(const char *var, const char *value, void *cb)
+>  			return config_error_nonbool(var);
+>  		return color_parse(value, color);
+>  	}
+> +
+> +#ifndef NO_PTHREADS
+> +	if (!strcmp(var, "grep.threadsnum")) {
+> +		int threads = git_config_int(var, value);
+> +		opt->num_threads = (threads >= 0) ? threads : GREP_NUM_THREADS_DEFAULT;
+> +		return 0;
+> +	}
+> +#endif /* !NO_PTHREADS */
+>  	return 0;
+>  }
+>  
+> @@ -150,6 +161,10 @@ void grep_init(struct grep_opt *opt, const char *prefix)
+>  	opt->pathname = def->pathname;
+>  	opt->regflags = def->regflags;
+>  	opt->relative = def->relative;
+> +#ifndef NO_PTHREADS
+> +	if(!opt->num_threads)
+> +		opt->num_threads = def->num_threads;
+> +#endif /* !NO_PTHREADS */
+>  
+>  	color_set(opt->color_context, def->color_context);
+>  	color_set(opt->color_filename, def->color_filename);
+> diff --git a/grep.h b/grep.h
+> index 95f197a..e4a296b 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -132,6 +132,10 @@ struct grep_opt {
+>  	unsigned pre_context;
+>  	unsigned post_context;
+>  	unsigned last_shown;
+> +#ifndef NO_PTHREADS
+> +#define GREP_NUM_THREADS_DEFAULT 8
+> +	unsigned num_threads;
+> +#endif /* !NO_PTHREADS */
+>  	int show_hunk_mark;
+>  	int file_break;
+>  	int heading;
+> -- 
+> 2.6.2.281.gd4b1c9f
