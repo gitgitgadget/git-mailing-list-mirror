@@ -1,138 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] blame: allow blame --reverse --first-parent when it makes sense
-Date: Wed, 21 Oct 2015 21:25:37 -0700
-Message-ID: <xmqqfv13ttq6.fsf@gitster.mtv.corp.google.com>
-References: <1445485872-21453-1-git-send-email-max@max630.net>
-	<1445485872-21453-3-git-send-email-max@max630.net>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Watchman/inotify support and other ways to speed up git status
+Date: Thu, 22 Oct 2015 07:59:29 +0200
+Message-ID: <CAP8UFD3Cd9SOh6EYwcx9hTVv7P24M5bEJRCYCT5Qgj=qPRJ8hw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
-	git@vger.kernel.org
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Thu Oct 22 06:26:02 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	David Turner <dturner@twopensource.com>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 22 07:59:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zp7Rn-0003lP-Bu
-	for gcvg-git-2@plane.gmane.org; Thu, 22 Oct 2015 06:25:51 +0200
+	id 1Zp8ub-0007oC-BN
+	for gcvg-git-2@plane.gmane.org; Thu, 22 Oct 2015 07:59:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752952AbbJVEZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2015 00:25:46 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59360 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750930AbbJVEZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2015 00:25:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AF85E268E0;
-	Thu, 22 Oct 2015 00:25:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rOczN+qsWoz2xdM4tMCbypShlH8=; b=pDP8VK
-	g7twsAY7/pdaKmNgK954t1S+84BvpCQnfbCqBnYbNAiwDkAtjrzVkABjEO85MTF9
-	iUYhskBU4UAyZt1/Z/i6yHhyXiHxDEB9qWIbFyId94YUJqUmJPtUosMB2XTGY/qk
-	kF9YHiobEbFFyMYWSQpUTjCn24Leq92CV92TQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HhKEegjEEiqiqq/nVyd5H+TKZ9f9qjNn
-	m343uOHCVEUg9Z33Iumm02RWn/FotA+ZMsM9Si0nUJa4tD3R5hbfzAGvLCfJ3Xms
-	z8Vsk/DCsdtSozaS1IHkQsNOd3zNCOajPfH73vG3ii1vWHF9LazQdgH3ouOmtRtH
-	BN8jtRLYq5w=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A6CE4268DF;
-	Thu, 22 Oct 2015 00:25:44 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2BAA9268DE;
-	Thu, 22 Oct 2015 00:25:44 -0400 (EDT)
-In-Reply-To: <1445485872-21453-3-git-send-email-max@max630.net> (Max
-	Kirillov's message of "Thu, 22 Oct 2015 06:51:12 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F5E98698-7874-11E5-8BB1-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752161AbbJVF7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2015 01:59:32 -0400
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:36129 "EHLO
+	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751554AbbJVF7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2015 01:59:31 -0400
+Received: by lffz202 with SMTP id z202so35753680lff.3
+        for <git@vger.kernel.org>; Wed, 21 Oct 2015 22:59:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=yFICOvcz166cU/pYvbC3t6i9J5Qu/1DTPUKuCYfi91c=;
+        b=csCcDQQh2p+1OUG8vXC+ijwKOonr12KcN6YKtxl/ncCV7OiV9OjDxuUh/gYF42y4ij
+         W6+Y+wyYwR6A3djvHWG+jV9OVTXZUYANc2rCe5OkvOaVidUIjqZ88Jnzot8J5QqbFTNC
+         /up9dcUKtEbMcuoGvVaGJGrEbsBtZ6TRTiJx78BpR/HGg6PR809Czql60A9y0Dw2sb+3
+         pm6QTbbznLw3z2fTLNtJ7hI5yZOLDvxI+KlEvpWYUjyphx0WeYiTwaEWXwjYlbaMf0HR
+         m/GRAeiIrPD3jyYCjkqATNjIHnTGTW7O8AF6iXDOQ/bD5XI101QzvvCg2rR9ofdH8dVS
+         SL1w==
+X-Received: by 10.112.72.99 with SMTP id c3mr5839560lbv.113.1445493569860;
+ Wed, 21 Oct 2015 22:59:29 -0700 (PDT)
+Received: by 10.25.89.130 with HTTP; Wed, 21 Oct 2015 22:59:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280040>
 
-Max Kirillov <max@max630.net> writes:
+Hi everyone,
 
-> Do not die immediately when the two flags are specified. Instead
-> check that the specified range is along first-parent chain. Exploit
-> how prepare_revision_walk() handles first_parent_only flag: the commits
-> outside of first-parent chain are either unknown (and do not have any
-> children recorded) or appear as non-first parent of a commit along the
-> first-parent chain.
->
-> Since the check seems fragile, add test which verifies that blame dies
-> in both cases.
+I am starting to investigate ways to speed up git status and other git
+commands for Booking.com (thanks to AEvar) and I'd be happy to discuss
+the current status or be pointed to relevant documentation or mailing
+list threads.
 
-It is not quite clear in what way the "check seems fragile".
+>From the threads below ([0], [1], [2], [3], [4], [5], [6], [7], [8]) I
+understand that the status is roughly the following:
 
-It is either "correct" or "appears to have worked by chance and
-nobody has any confidence that it would tell if 'it makes sense'
-reliably", and the latter cannot be papered over with any number of
-tests.
+- instead of working on inotify support it's better to work on using a
+cross platform tool like Watchman
 
-The logic you implemented feels solid to me, at least at a first
-glance.  What kind of gotchas are you worried about?
+- instead of working on Watchman support it is better to work first on
+caching information in the index
 
-> Signed-off-by: Max Kirillov <max@max630.net>
-> ---
->  builtin/blame.c          | 11 +++++++++--
->  t/t8009-blame-reverse.sh |  7 ++++++-
->  2 files changed, 15 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 295ce92..27de544 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -2692,8 +2692,6 @@ parse_done:
->  	}
->  	else if (contents_from)
->  		die("--contents and --children do not blend well.");
-> -	else if (revs.first_parent_only)
-> -		die("combining --first-parent and --reverse is not supported");
->  	else {
->  		final_commit_name = prepare_initial(&sb);
->  		sb.commits.compare = compare_commits_by_reverse_commit_date;
-> @@ -2721,6 +2719,15 @@ parse_done:
->  	if (prepare_revision_walk(&revs))
->  		die(_("revision walk setup failed"));
->  
-> +	if (reverse && revs.first_parent_only) {
-> +		struct commit_list *final_children = lookup_decoration(&revs.children,
-> +								       &sb.final->object);
-> +		if (!final_children ||
-> +		    hashcmp(final_children->item->parents->item->object.sha1,
-> +			    sb.final->object.sha1))
-> +		    die("--reverse --first-parent together require range along first-parent chain");
-> +	}
-> +
->  	if (is_null_sha1(sb.final->object.sha1)) {
->  		o = sb.final->util;
->  		sb.final_buf = xmemdupz(o->file.ptr, o->file.size);
-> diff --git a/t/t8009-blame-reverse.sh b/t/t8009-blame-reverse.sh
-> index 9f40613..042863b 100755
-> --- a/t/t8009-blame-reverse.sh
-> +++ b/t/t8009-blame-reverse.sh
-> @@ -24,11 +24,16 @@ test_expect_failure 'blame --reverse finds B1, not C1' '
->  	test_cmp expect actual
->  	'
->  
-> -test_expect_failure 'blame --reverse --first-parent finds A1' '
-> +test_expect_success 'blame --reverse --first-parent finds A1' '
->  	git blame --porcelain --reverse --first-parent A0..A3 -- file.t >actual_full &&
->  	head -1 <actual_full | sed -e "sX .*XX" >actual &&
->  	git rev-parse A1 >expect &&
->  	test_cmp expect actual
->  	'
->  
-> +test_expect_success 'blame --reverse --first-parse dies if no first parent chain' '
-> +	test_must_fail git blame --porcelain --reverse --first-parent B1..A3 -- file.t &&
-> +	test_must_fail git blame --porcelain --reverse --first-parent B2..A3 -- file.t
-> +	'
-> +
->  test_done
+- git update-index --untracked-cache has been developed by Duy and
+others and merged to master in May 2015 to cache untracked status in
+the index; it is still considered experimental
+
+- git index-helper has been worked on by Duy but its status is not
+clear (at least to me)
+
+Is that correct?
+What are the possible/planned next steps in this area? improving
+--untracked-cache? git index-helper? watchman support?
+
+Thanks,
+Christian.
+
+[0] March 8 2015: [PATCH 00/24] nd/untracked-cache updates
+http://thread.gmane.org/gmane.comp.version-control.git/265053/
+
+[1] November 11 2014: [RFC] On watchman support
+http://thread.gmane.org/gmane.comp.version-control.git/259399/
+
+[2] October 27 2014:[PATCH 00/19] Untracked cache to speed up "git status"
+http://thread.gmane.org/gmane.comp.version-control.git/258766
+
+[3] July 28 2014: [PATCH v3 0/9] Speed up cache loading time
+http://thread.gmane.org/gmane.comp.version-control.git/254314/
+
+[4] May 7 2014: [PATCH 00/20] Untracked cache to speed up "git status"
+http://thread.gmane.org/gmane.comp.version-control.git/248306
+
+[5] May 2 2014: Watchman support for git
+http://thread.gmane.org/gmane.comp.version-control.git/248004/
+
+[6] March 10 2014:
+http://git.661346.n2.nabble.com/question-about-Facebook-makes-Mercurial-faster-than-Git-tt7605273.html#a7605280
+
+[7] January 29 2014:
+http://git.661346.n2.nabble.com/inotify-support-nearly-there-tt7602739.html
+
+[8] January 12 2014:
+http://git.661346.n2.nabble.com/PATCH-0-6-inotify-support-tt7601877.html#a7603955
