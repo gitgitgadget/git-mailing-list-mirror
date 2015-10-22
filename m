@@ -1,262 +1,130 @@
-From: Victor Leschuk <vleschuk@accesssoftek.com>
-Subject: RE: [PATCH] Add git-grep threads-num param
-Date: Thu, 22 Oct 2015 13:39:59 -0700
-Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9F7@mail.accesssoftek.com>
-References: <1445520236-10753-1-git-send-email-vleschuk@accesssoftek.com>,<20151022142302.GL19802@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add git-grep threads-num param
+Date: Thu, 22 Oct 2015 13:40:34 -0700
+Message-ID: <xmqqbnbqr60t.fsf@gitster.mtv.corp.google.com>
+References: <1445520236-10753-1-git-send-email-vleschuk@accesssoftek.com>
+	<20151022142302.GL19802@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: John Keeping <john@keeping.me.uk>,
-	Victor Leschuk <vleschuk@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 22 22:41:50 2015
+Content-Type: text/plain
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org,
+	Victor Leschuk <vleschuk@accesssoftek.com>
+To: Victor Leschuk <vleschuk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 22 22:41:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZpMgG-000691-R8
+	id 1ZpMgH-000691-JX
 	for gcvg-git-2@plane.gmane.org; Thu, 22 Oct 2015 22:41:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965817AbbJVUkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2015 16:40:04 -0400
-Received: from mail.accesssoftek.com ([12.202.173.171]:19728 "EHLO
-	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932530AbbJVUkB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Oct 2015 16:40:01 -0400
-Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
- ([172.16.0.71]) with mapi; Thu, 22 Oct 2015 13:39:59 -0700
-Thread-Topic: [PATCH] Add git-grep threads-num param
-Thread-Index: AdEM1TMMWDXiySSgROim0J/yF+fTeQAM6AMT
-In-Reply-To: <20151022142302.GL19802@serenity.lan>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S965508AbbJVUki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2015 16:40:38 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60307 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932560AbbJVUkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2015 16:40:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5976C2550A;
+	Thu, 22 Oct 2015 16:40:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Dzw92HSx9/F4IRLXZ0NNoC1lA20=; b=tbtuhb
+	rukX0Yxf+5a7GMNHLGCl+tPVkE89GHJiD1N7UX9w9OpQqnnhWuwKXBhz8bJdsfWo
+	omj1oy+HbkTYg8/3Q+uZbQqignuq/pYRmDPmAiZmS1IyF+/RRgiKPmPmh0m91Y/b
+	3pJLRbJPrz+8fWF/6gGlrX8BDsAnmsh0q16uc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TOyg9kU9abB+xWIwuX9YRWaFWVUSLPDi
+	N9XOE8JHXwE8EXWBHvj8qo4zfFTQa6XAm/HtvTI+kM0Hm9m0bglKXoUQeYhxfgkH
+	SHPzmVPJnxMaZpnIhUuD2VLYhNlYm/djKdv8NwEuxeI2S79OsPtYhyBT4WIVrKqk
+	P4Y/bRJV47M=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 51D7825509;
+	Thu, 22 Oct 2015 16:40:36 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CAF18254FB;
+	Thu, 22 Oct 2015 16:40:35 -0400 (EDT)
+In-Reply-To: <20151022142302.GL19802@serenity.lan> (John Keeping's message of
+	"Thu, 22 Oct 2015 15:23:02 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 25A6EEB0-78FD-11E5-AB60-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280076>
 
-Hello John,
+John Keeping <john@keeping.me.uk> writes:
 
-I haven't noticed the --threads option in pack-objects, I will fix the patch to make naming more uniform. Do you have any comments regarding the functionality?
+> On Thu, Oct 22, 2015 at 04:23:56PM +0300, Victor Leschuk wrote:
+>> Hello all, I suggest we make number of git-grep worker threads a configuration
+>> parameter. I have run several tests on systems with different number of CPU cores.
+>> It appeared that the hard-coded number 8 lowers performance on both of my systems:
+>> on my 4-core and 8-core systems the thread number of 4 worked about 20% faster than
+>> default 8. So I think it is better to allow users tune this parameter.
+>
+> For git-pack-objects we call the command-line parameter "--threads" and
+> the config variable "pack.threads".  Is there a reason not to use the
+> same name here (i.e. "--threads" and "grep.threads")?
 
---
-Best Regards,
-Victor
-________________________________________
-From: John Keeping [john@keeping.me.uk]
-Sent: Thursday, October 22, 2015 7:23 AM
-To: Victor Leschuk
-Cc: git@vger.kernel.org; Victor Leschuk
-Subject: Re: [PATCH] Add git-grep threads-num param
+Good suggestion.
 
-On Thu, Oct 22, 2015 at 04:23:56PM +0300, Victor Leschuk wrote:
-> Hello all, I suggest we make number of git-grep worker threads a configuration
-> parameter. I have run several tests on systems with different number of CPU cores.
-> It appeared that the hard-coded number 8 lowers performance on both of my systems:
-> on my 4-core and 8-core systems the thread number of 4 worked about 20% faster than
-> default 8. So I think it is better to allow users tune this parameter.
+>> +-t <num>::
+>> +--threads-num <num>::
+>> +	Set number of worker threads to <num>. Default is 8.
 
-For git-pack-objects we call the command-line parameter "--threads" and
-the config variable "pack.threads".  Is there a reason not to use the
-same name here (i.e. "--threads" and "grep.threads")?
+It is not like you would want to specify different degree of
+parallelism for every invocation of "grep".  The command line option
+for this feature is expected to be used extremely infrequently, only
+to defeat a configuration variable that is misconfigured to a wrong
+value.  Squatting on a short-and-sweet single-letter option name is
+unwarranted for an option like this.
 
-> Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
-> ---
->  Documentation/config.txt               |  4 ++++
->  Documentation/git-grep.txt             |  5 +++++
->  builtin/grep.c                         | 20 +++++++++++++-------
->  contrib/completion/git-completion.bash |  1 +
->  grep.c                                 | 15 +++++++++++++++
->  grep.h                                 |  4 ++++
->  6 files changed, 42 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 391a0c3..c3df20c 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1447,6 +1447,10 @@ grep.extendedRegexp::
->       option is ignored when the 'grep.patternType' option is set to a value
->       other than 'default'.
->
-> +grep.threadsNum::
-> +     Number of grep worker threads, use it to tune up performance on
-> +     multicore machines. Default value is 8.
-> +
->  gpg.program::
->       Use this custom program instead of "gpg" found on $PATH when
->       making or verifying a PGP signature. The program must support the
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> index 4a44d6d..e9ca265 100644
-> --- a/Documentation/git-grep.txt
-> +++ b/Documentation/git-grep.txt
-> @@ -22,6 +22,7 @@ SYNOPSIS
->          [--color[=<when>] | --no-color]
->          [--break] [--heading] [-p | --show-function]
->          [-A <post-context>] [-B <pre-context>] [-C <context>]
-> +        [-t <threads-num>]
->          [-W | --function-context]
->          [-f <file>] [-e] <pattern>
->          [--and|--or|--not|(|)|-e <pattern>...]
-> @@ -220,6 +221,10 @@ OPTIONS
->       Show <num> leading lines, and place a line containing
->       `--` between contiguous groups of matches.
->
-> +-t <num>::
-> +--threads-num <num>::
-> +     Set number of worker threads to <num>. Default is 8.
-> +
->  -W::
->  --function-context::
->       Show the surrounding text from the previous line containing a
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index d04f440..9b4fc47 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -27,8 +27,7 @@ static char const * const grep_usage[] = {
->  static int use_threads = 1;
->
->  #ifndef NO_PTHREADS
-> -#define THREADS 8
-> -static pthread_t threads[THREADS];
-> +static pthread_t *threads;
->
->  /* We use one producer thread and THREADS consumer
->   * threads. The producer adds struct work_items to 'todo' and the
-> @@ -206,7 +205,8 @@ static void start_threads(struct grep_opt *opt)
->               strbuf_init(&todo[i].out, 0);
->       }
->
-> -     for (i = 0; i < ARRAY_SIZE(threads); i++) {
-> +     threads = xmalloc(sizeof(pthread_t) * opt->num_threads);
-> +     for (i = 0; i < opt->num_threads; i++) {
->               int err;
->               struct grep_opt *o = grep_opt_dup(opt);
->               o->output = strbuf_out;
-> @@ -220,7 +220,7 @@ static void start_threads(struct grep_opt *opt)
->       }
->  }
->
-> -static int wait_all(void)
-> +static int wait_all(struct grep_opt *opt)
->  {
->       int hit = 0;
->       int i;
-> @@ -238,12 +238,14 @@ static int wait_all(void)
->       pthread_cond_broadcast(&cond_add);
->       grep_unlock();
->
-> -     for (i = 0; i < ARRAY_SIZE(threads); i++) {
-> +     for (i = 0; i < opt->num_threads; i++) {
->               void *h;
->               pthread_join(threads[i], &h);
->               hit |= (int) (intptr_t) h;
->       }
->
-> +     free(threads);
-> +
->       pthread_mutex_destroy(&grep_mutex);
->       pthread_mutex_destroy(&grep_read_mutex);
->       pthread_mutex_destroy(&grep_attr_mutex);
-> @@ -256,7 +258,7 @@ static int wait_all(void)
->  }
->  #else /* !NO_PTHREADS */
->
-> -static int wait_all(void)
-> +static int wait_all(struct grep_opt *opt)
->  {
->       return 0;
->  }
-> @@ -702,6 +704,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->                       N_("show <n> context lines before matches")),
->               OPT_INTEGER('A', "after-context", &opt.post_context,
->                       N_("show <n> context lines after matches")),
-> +#ifndef NO_PTHREADS
-> +             OPT_INTEGER('t', "threads-num", &opt.num_threads,
-> +                     N_("use <n> worker threads")),
-> +#endif /* !NO_PTHREADS */
->               OPT_NUMBER_CALLBACK(&opt, N_("shortcut for -C NUM"),
->                       context_callback),
->               OPT_BOOL('p', "show-function", &opt.funcname,
-> @@ -910,7 +916,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->       }
->
->       if (use_threads)
-> -             hit |= wait_all();
-> +             hit |= wait_all(&opt);
->       if (hit && show_in_pager)
->               run_pager(&opt, prefix);
->       free_grep_patterns(&opt);
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 482ca84..6231595 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1310,6 +1310,7 @@ _git_grep ()
->                       --full-name --line-number
->                       --extended-regexp --basic-regexp --fixed-strings
->                       --perl-regexp
-> +                     --threads-num
->                       --files-with-matches --name-only
->                       --files-without-match
->                       --max-depth
-> diff --git a/grep.c b/grep.c
-> index 7b2b96a..17e6a7c 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -40,6 +40,9 @@ void init_grep_defaults(void)
->       color_set(opt->color_selected, "");
->       color_set(opt->color_sep, GIT_COLOR_CYAN);
->       opt->color = -1;
-> +#ifndef NO_PTHREADS
-> +     opt->num_threads = GREP_NUM_THREADS_DEFAULT;
-> +#endif /* !NO_PTHREADS */
->  }
->
->  static int parse_pattern_type_arg(const char *opt, const char *arg)
-> @@ -124,6 +127,14 @@ int grep_config(const char *var, const char *value, void *cb)
->                       return config_error_nonbool(var);
->               return color_parse(value, color);
->       }
-> +
-> +#ifndef NO_PTHREADS
-> +     if (!strcmp(var, "grep.threadsnum")) {
-> +             int threads = git_config_int(var, value);
-> +             opt->num_threads = (threads >= 0) ? threads : GREP_NUM_THREADS_DEFAULT;
-> +             return 0;
-> +     }
-> +#endif /* !NO_PTHREADS */
->       return 0;
->  }
->
-> @@ -150,6 +161,10 @@ void grep_init(struct grep_opt *opt, const char *prefix)
->       opt->pathname = def->pathname;
->       opt->regflags = def->regflags;
->       opt->relative = def->relative;
-> +#ifndef NO_PTHREADS
-> +     if(!opt->num_threads)
-> +             opt->num_threads = def->num_threads;
-> +#endif /* !NO_PTHREADS */
->
->       color_set(opt->color_context, def->color_context);
->       color_set(opt->color_filename, def->color_filename);
-> diff --git a/grep.h b/grep.h
-> index 95f197a..e4a296b 100644
-> --- a/grep.h
-> +++ b/grep.h
-> @@ -132,6 +132,10 @@ struct grep_opt {
->       unsigned pre_context;
->       unsigned post_context;
->       unsigned last_shown;
-> +#ifndef NO_PTHREADS
-> +#define GREP_NUM_THREADS_DEFAULT 8
-> +     unsigned num_threads;
-> +#endif /* !NO_PTHREADS */
->       int show_hunk_mark;
->       int file_break;
->       int heading;
-> --
-> 2.6.2.281.gd4b1c9f
+>> -	for (i = 0; i < ARRAY_SIZE(threads); i++) {
+>> +	threads = xmalloc(sizeof(pthread_t) * opt->num_threads);
+
+xcalloc(nmemb, size)?
+
+>> @@ -702,6 +704,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>>  			N_("show <n> context lines before matches")),
+>>  		OPT_INTEGER('A', "after-context", &opt.post_context,
+>>  			N_("show <n> context lines after matches")),
+>> +#ifndef NO_PTHREADS
+>> +		OPT_INTEGER('t', "threads-num", &opt.num_threads,
+>> +			N_("use <n> worker threads")),
+>> +#endif /* !NO_PTHREADS */
+>>  		OPT_NUMBER_CALLBACK(&opt, N_("shortcut for -C NUM"),
+>>  			context_callback),
+>>  		OPT_BOOL('p', "show-function", &opt.funcname,
+>> @@ -910,7 +916,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>>  	}
+>>  
+>>  	if (use_threads)
+>> -		hit |= wait_all();
+>> +		hit |= wait_all(&opt);
+
+I do not think anybody checked if opt.num_threads is a sensible
+number after parse_options() returned at this point.  There is a
+code outside the context before this hunk that decides if it makes
+sense to use threads and turns use_threads to zero, which should
+be the right place to do the missing sanity check, I thinnk.
+
+>> diff --git a/grep.c b/grep.c
+>> index 7b2b96a..17e6a7c 100644
+>> --- a/grep.c
+>> +++ b/grep.c
+>> @@ -40,6 +40,9 @@ void init_grep_defaults(void)
+>>  	color_set(opt->color_selected, "");
+>>  	color_set(opt->color_sep, GIT_COLOR_CYAN);
+>>  	opt->color = -1;
+>> +#ifndef NO_PTHREADS
+>> +	opt->num_threads = GREP_NUM_THREADS_DEFAULT;
+>> +#endif /* !NO_PTHREADS */
+>>  }
+
+These #ifndef/#endif's are unnecessary distraction.  Just set them
+unconditionally, even in NO_PTHREADS build (and of course include
+the field even in NO_PTHREADS build in grep.h).
