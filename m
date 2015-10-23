@@ -1,115 +1,80 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Make "git checkout" automatically update submodules?
-Date: Fri, 23 Oct 2015 08:19:36 +0200
-Message-ID: <CAP8UFD2cuZ=bonk49a39dDCrODH8uYUCWJ5-BT=gE1kkqcVA4Q@mail.gmail.com>
-References: <loom.20151016T001449-848@post.gmane.org>
-	<xmqq7fmnhg4x.fsf@gitster.mtv.corp.google.com>
-	<loom.20151023T013752-72@post.gmane.org>
-	<xmqq37x2qqzf.fsf@gitster.mtv.corp.google.com>
-	<loom.20151023T044009-172@post.gmane.org>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: git-cherry doesn't detect a "copied" commit
+Date: Fri, 23 Oct 2015 08:47:56 +0200
+Message-ID: <CAC9WiBgkv+nu1YX+zaxigG9FWppDJ19f7d2gm_7H9wosHSV_Yw@mail.gmail.com>
+References: <CAC9WiBhM4edBFCYx35xZJB79AZWo49mkO-Pxnb1q4aLDmBufWQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Kannan Goundan <kannan@cakoose.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 08:19:48 2015
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 23 08:48:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZpVhX-0006b8-0R
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 08:19:43 +0200
+	id 1ZpW8v-0005Ls-4M
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 08:48:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751494AbbJWGTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Oct 2015 02:19:39 -0400
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:35975 "EHLO
-	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751133AbbJWGTi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Oct 2015 02:19:38 -0400
-Received: by lffz202 with SMTP id z202so72381101lff.3
-        for <git@vger.kernel.org>; Thu, 22 Oct 2015 23:19:36 -0700 (PDT)
+	id S1751803AbbJWGr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2015 02:47:57 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:35715 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751092AbbJWGr4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2015 02:47:56 -0400
+Received: by iofz202 with SMTP id z202so115005752iof.2
+        for <git@vger.kernel.org>; Thu, 22 Oct 2015 23:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=40Zsu5UMijuN+cwiiI/7ldQxeVOXU1iOaXNze7Z+KTY=;
-        b=NQIA6VAdrL72CF00BSAx6R1b1xjdFUEcq8jqRxCDGvm0soVd1e5L43D2w4sEheNW41
-         wAa4Px2DEcYkVIdkwk3+Gw8uMZOLqy2jdDy8/7OAY4qpx8jZmNaEsfOwctwBp2i3L31B
-         wEj1GF6ndQDvlODHjOx6f0C/vELRcD25hGRDFB3w5rFg1fZ0RJAp40XjnCwpk71kpVH5
-         VyTijDvC+fM8FG2hJc4CSnY0/8tgvX8r6aIgngLngMXGI+H4RcJhQeJmihrS31xXcmVP
-         rlWSvzvnXrWt4z0IFi32uxBlmfyzrPJtboe0cZTi/3JC7tOEa2B5odz3JHBe2RIqeFgg
-         j4UA==
-X-Received: by 10.112.158.1 with SMTP id wq1mr10203501lbb.67.1445581176572;
- Thu, 22 Oct 2015 23:19:36 -0700 (PDT)
-Received: by 10.25.89.130 with HTTP; Thu, 22 Oct 2015 23:19:36 -0700 (PDT)
-In-Reply-To: <loom.20151023T044009-172@post.gmane.org>
+         :content-type;
+        bh=VYLIMPcwHphgjYzyasRP4rwGHFc1fSfUgcbYVtu7xKE=;
+        b=nZPUGgAdLuH/A6ZGrL/1MbOvoym6LmLjrks7QPUdneyAYQV8wkd92eWFxvyUV52w04
+         pRc34uBX4aDVWlCGsSfVccMywQQqiRn0inpTQehZDul4YVJLr+aL0/KD5bejwFxkOvT6
+         cnYAdX6xYlBWc7T3YOqaLHkUsm7Y5lVgvznF6kNQZgRvUeRACvJ1y8pcfEtgZ2yHjh0q
+         BtR83lPbpLL2U884DpQJpVDv34XKsBP9YQLVBanrFLKISQtHSzkICpDLtvW7ZmbTgpNo
+         z+tg9y8WXekeNCmnN+zhmVILq7Vwcj4WM5fMpulP+J3eYMXrJt/PJpKexEGA4FuLU8St
+         S/Hw==
+X-Received: by 10.107.46.228 with SMTP id u97mr19529020iou.165.1445582876060;
+ Thu, 22 Oct 2015 23:47:56 -0700 (PDT)
+Received: by 10.79.77.1 with HTTP; Thu, 22 Oct 2015 23:47:56 -0700 (PDT)
+In-Reply-To: <CAC9WiBhM4edBFCYx35xZJB79AZWo49mkO-Pxnb1q4aLDmBufWQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280086>
 
-On Fri, Oct 23, 2015 at 5:46 AM, Kannan Goundan <kannan@cakoose.com> wrote:
-> Junio C Hamano <gitster <at> pobox.com> writes:
+Hi,
+
+On Tue, Oct 20, 2015 at 6:32 PM, Francis Moreau <francis.moro@gmail.com> wrote:
+> Hi,
 >
->> We are unfortunately not set up to handle money well.  For a
->> background explanation, please go read [*1*], which I wrote my take
->> on "money" some time ago.  Note that it is an explanation and not a
->> justification.  It explains why we are not set up to handle money
->> well and what the issues around money that are troublesome for the
->> project are.  It does not mean to say that it is a good thing that
->> it is hard to buy feature with money from our project [*2*].
+> I'm seeing something odd with git-cherry: it doesn't seem to detect
+> that a commit has been cherry-picked from master branch.
 >
-> I think the way I described it ("sponsoring a feature") doesn't really
-> reflect how I was imagining it.  In my head, it looked like this:
+> This happens with the systemd git repository (from github) so it
+> should be fairly simple to reproduce.
 >
-> 1. Figure out whether the Git community and maintainers seem ok with the
-> overall feature idea.  If not, give up.
-> 2. Come up with a plan for the UI/UX; see if the Git community and
-> maintainers seem ok with it.  If not, iterate or give up.
-> 3. Implement it, then go through the regular process of getting it merged
-> upstream.  If it doesn't go well, might have to iterate or give up.
+> What I did:
 >
-> I could try doing that myself, but someone familiar with the Git
-> codebase/community/history would be better at it (and probably be easier for
-> you guys to work with :-)
+> $ git --version
+> git version 2.6.0
+> $ git checkout -b foo v210
+> $ git cherry-pick -x 9ea28c55a2488e6cd4a44ac5786f12b71ad5bc9f
+> $ git branch --contains 9ea28c55a2488e6cd4a44ac5786f12b71ad5bc9f
+> master
+> $ git cherry master HEAD
+> + fef60bf34d1b372bea1db2515a8d936386dfc523
 >
-> I guess I'm just wondering if there are people who meet those qualifications
-> and are interested in going through those steps for pay.  Or maybe there's a
-> company that does this, like the old Cygnus Solutions?
-
-Well I am starting to do that for Booking.com. Not sure if it will
-also be possible for me to work for you as I also work on IPFS
-(http://ipfs.io) for the company that develops it, but we can discuss
-it privately.
-
-There was David Kastrup (dak at gnu.org) who previously said he could
-be interested in such jobs. We wrote a very short article about it in
-the first edition of Git Rev News last March:
-
-http://git.github.io/rev_news/2015/03/25/edition-1/
-
-We also wrote a very short article "Job Offer" article about
-Booking.com looking for Git developers in Git Rev News in the third
-edition last May:
-
-http://git.github.io/rev_news/2015/05/13/edition-3/
-
-so if you want we can write a similar "Job Offer" article in the next
-Git Rev News edition.
-
-You can even propose such an article yourself by editing the draft of
-the next edition here:
-
-https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-9.md
-
-and then creating a pull request.
-
-> In particular, I don't expect anything to change about the project's
-> development process.
+> so git-cherry tells me that the cherry-picked commit has not
+> equivalent in master, which is no the case.
 >
-> (This part is not relevant to the Git project, but I understand that it's
-> hard for anyone to guarantee a feature will make it into an open source
-> project.  I imagine these kinds of contracts are set up so that you're
-> primarily paying for the effort, not the outcome.  If it ends up not working
-> out, you don't get your money back.)
+> What am I missing ?
+>
+
+Could anybody give me a hint even if I'm blind and not seeing my
+stupid mistake ?
+
+Thanks
+-- 
+Francis
