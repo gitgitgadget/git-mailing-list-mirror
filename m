@@ -1,86 +1,82 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/3] expose parallelism for submodule {update, clone}
-Date: Fri, 23 Oct 2015 11:44:36 -0700
-Message-ID: <1445625879-30330-1-git-send-email-sbeller@google.com>
-Cc: jrnieder@gmail.com, Jens.Lehmann@web.de,
-	Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Oct 23 21:11:29 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Make "git checkout" automatically update submodules?
+Date: Fri, 23 Oct 2015 12:11:18 -0700
+Message-ID: <xmqq37x1pfhl.fsf@gitster.mtv.corp.google.com>
+References: <loom.20151016T001449-848@post.gmane.org>
+	<CAGZ79kYMyU5h8uQkNEpMU558FgLrNM52_aQsXud6CrBAUgFSNA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Kannan Goundan <kannan@cakoose.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Oct 23 21:11:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZphkI-00017I-RL
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 21:11:23 +0200
+	id 1ZphkO-0001Cx-DZ
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 21:11:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753342AbbJWTLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Oct 2015 15:11:19 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:33974 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754302AbbJWSon (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Oct 2015 14:44:43 -0400
-Received: by padhk11 with SMTP id hk11so125228256pad.1
-        for <git@vger.kernel.org>; Fri, 23 Oct 2015 11:44:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=eYhKktUFfMtpbN7tWK8hFsgU74tAod5318WMbBikw7c=;
-        b=MMDNXmJs9GSSQRhNtNHF6kCMTg0pyvXEkCtnAdUnN4LLW1ywI/TMlVbe2i0vhoIOYr
-         ktPLg5JJ1I7Uo6PBblNc9I+NP+db0lINfd3PAXBCsak5blT5MMDfpiwO5738kvRykNYh
-         TEBr9N1Q50B2BEJesvI2uJ10iWDNggR2d4CpJGdNksw3ji//GbVswzbksEgmPkVrWeDd
-         OWvQi7dGj8naIqRJXJiKI9eA1jDk8dph1K2jlWG6ea3QDAYr5zfRydbsLpg5jPswqpPe
-         CkyppSbJ2RBIAdfo/vlGB5BaMkwdjXPe8D5uHtf77nTPfykm7Wq+YkMo0y3Qm0uRGr7O
-         Km2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=eYhKktUFfMtpbN7tWK8hFsgU74tAod5318WMbBikw7c=;
-        b=aveCClFZYXyDn3btoRYy3IqTPEdWkBF/XVY3rXyfsg08o2NcNoLa5d5GJsjTU76HFn
-         9CUVaUUDuq62cxwoO7cMeLWi/kxde95c76p+VdseaA4n4am/BuWeWCbpysVTJ7j7EuMF
-         t0znt3GkBBkzXz8oMR/mW4Oyi9BBMyXLbGWhhKNe0DKUioCyfJnyzZsvjyV5RZErClLB
-         IHtCCaSMcp4Zm6ORB0NDgaqeO5C5nLlDasxnV0Yy53OKpLYG2YfsI8bpwbB+yH3s7NIH
-         u3vFfaJmFPXdZSvIaPTqIILeFY5VPsInRzSJRAeH70EnmUWufGJxCYlcOoni+BwqhpYM
-         itSQ==
-X-Gm-Message-State: ALoCoQnXffGMTaWzFg3lKPOxG7Yrop10YgkzJCl5uiQ37tEEUtQTR2c3hlBDlDAqCoeYVabA9218
-X-Received: by 10.68.252.194 with SMTP id zu2mr6664494pbc.58.1445625882458;
-        Fri, 23 Oct 2015 11:44:42 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:7d77:bdba:3237:8a09])
-        by smtp.gmail.com with ESMTPSA id qb7sm20285260pab.47.2015.10.23.11.44.41
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 23 Oct 2015 11:44:41 -0700 (PDT)
-X-Mailer: git-send-email 2.6.2.280.g74301d6
+	id S1753373AbbJWTLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2015 15:11:24 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62579 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753347AbbJWTLW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2015 15:11:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 170C823266;
+	Fri, 23 Oct 2015 15:11:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gNN3X47HoSlC2O6WWFt66xUEObA=; b=Fb9Y9b
+	xdGvLTy1uYQT1v5dJ8VDGZZktQX9RsBfZe0BX+an8sZfFY2pHNZDdMM7sfTEaypk
+	2r+s7SdQI39CcLjFZHWBHxvBc2vmpFzAIuNFezHVT9wsFj6zgZZoHo5Dp/cNpMXk
+	2NC68aIJAobiLChcwDrnqoMcU+3sIKLZtjhN8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mOE2qJCadbBbtSHp9GGtlBMgHyTgKud4
+	M8X74rpGrf25WyVGeMJypwteQ5nrOxrRukNS+U8YnahUTYqb5c7EzXwHyCgP87Wg
+	BeeKZROECUR/7F3H1xDWTo4CJrYz+UqpGyvXBKNpoYYzCElqYUe0S20rWrJazBT1
+	2sSU+MA9NSU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 09EFD23265;
+	Fri, 23 Oct 2015 15:11:20 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 50B4623261;
+	Fri, 23 Oct 2015 15:11:19 -0400 (EDT)
+In-Reply-To: <CAGZ79kYMyU5h8uQkNEpMU558FgLrNM52_aQsXud6CrBAUgFSNA@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 23 Oct 2015 10:20:15 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D7624CBE-79B9-11E5-90F0-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280107>
 
-This goes on top of origin/sb/submodule-parallel-fetch^
-The first patch replaces the last patch of origin/sb/submodule-parallel-fetch
-using clearer names for the callback functions.
+Stefan Beller <sbeller@google.com> writes:
 
-The patches 2 and 3 introduce CLI options for {submodule update, clone} to instruct Git
-to be parallel for cloning submodule operations.
+> Checkout [1]. There are lots of good patches, but hard to find.
+> (Including, but not limited to a recursive git checkout enhancement!)
+> ...
+> [1] https://github.com/jlehmann/git-submod-enhancements/wiki
 
-Additionally `git submodule update` respects the config option "submodule.jobs".
+Yes, Jens is not just one of the people who have been working on
+harder, and thinking longer about, submodules than anybody else, but
+also has demonstrated that he has good taste and balanced view on
+the design of the subsystem over time, whose technical judgment we
+can trust.
 
-I also want to make "git fetch --recurse-submodules" and "git clone --recursive"
-respect the same "submodule.jobs" config option, but that code change would collide
-with origin/sb/submodule-config-parse, so I will put the patches on top of that.
+Not all the changes listed on the page may necessarily be good as-is
+(e.g. some may help only a subset of users while hurting others,
+like the "recursively check-out everything unconditionally" that
+trigerred this thread), but the page has a good collection to remind
+anybody, who designs a coherent whole, of issues that need to be
+taken into account.
 
-Stefan Beller (3):
-  git submodule update: have a dedicated helper for cloning
-  submodule update: Expose parallelism to the user
-  clone: Allow an explicit argument for parallel submodule clones
-
- Documentation/git-clone.txt     |   5 +-
- Documentation/git-submodule.txt |   6 +-
- builtin/clone.c                 |  23 ++--
- builtin/submodule--helper.c     | 234 ++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh                |  54 ++++------
- t/t7400-submodule-basic.sh      |   4 +-
- 6 files changed, 282 insertions(+), 44 deletions(-)
-
--- 
-2.6.2.280.g74301d6
+Thanks for a pointer to an excellent starting page.
