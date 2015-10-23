@@ -1,130 +1,118 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Add git-grep threads-num param
-Date: Fri, 23 Oct 2015 15:40:53 -0700
-Message-ID: <xmqqbnbpnr7u.fsf@gitster.mtv.corp.google.com>
-References: <1445591717-5998-1-git-send-email-vleschuk@accesssoftek.com>
+Subject: Re: git-cherry doesn't detect a "copied" commit
+Date: Fri, 23 Oct 2015 15:41:45 -0700
+Message-ID: <xmqq37x1nr6e.fsf@gitster.mtv.corp.google.com>
+References: <CAC9WiBhM4edBFCYx35xZJB79AZWo49mkO-Pxnb1q4aLDmBufWQ@mail.gmail.com>
+	<20151023105756.GB12622@ikke.info>
+	<CAC9WiBjub2oBBaM7KxcE2Jv7QgGyvmPzEBU7WcSEk5huGzx+zg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Victor Leschuk <vleschuk@accesssoftek.com>
-To: Victor Leschuk <vleschuk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 24 00:41:14 2015
+Cc: Kevin Daudt <me@ikke.info>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 24 00:42:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zpl1K-0002GR-Tx
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 00:41:11 +0200
+	id 1Zpl1z-00031c-KL
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 00:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681AbbJWWlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Oct 2015 18:41:04 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60324 "EHLO
+	id S1752787AbbJWWls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2015 18:41:48 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50339 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752209AbbJWWlB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Oct 2015 18:41:01 -0400
+	with ESMTP id S1752721AbbJWWlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2015 18:41:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 434D425D20;
-	Fri, 23 Oct 2015 18:40:55 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E195325D3F;
+	Fri, 23 Oct 2015 18:41:46 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=YX28oEtrBlyPhWC+9MGV7TbNIEQ=; b=Wt0QUKevMLn3A1u92Air
-	zacRrcI6wGLvHucOh+eOYBOi52fHo6S+pLS9G8rL/JG2NSV+BCzTHxuuPe5nfBSk
-	sbGYruZHq+dy7bVrXx9496dBzqjl95OnzqIewrnNbhg77RuVCjRWdsq1JfBIqTtU
-	PXjc/Lb3TETYexh4B47ZzYU=
+	 s=sasl; bh=IIm1Z1r4nLzLrjgOfA6mM69DTeE=; b=JgNLYZ/4r3v1A0nWkLcA
+	vqK8hh8ia7/2iW3rru5sGJ4Wn583lywh9Div2caMMDHrtQT8y58/xdmerjp9Hspr
+	bCNA5yAmyumBba8eZDZJ2UVtHme8Xxw+uAuDt3Luw3scSnGxqjVd+QwWxBH1Bh4A
+	hA3dYBemBvKJfWSWzR764ig=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=EJOuev68yppq4h3/AhvtfDgz7nbzRwFvPdf7kY/7KaHYji
-	pSKndaBrNgU1e6MyTFr55NRjEKKdL+c1/3m25N43kMoM9lp7XfA9vKgAqkW8OFQz
-	0I3Ld5Y93OgWprRG6LmsUfbTpDcC5MA3gVA+3HlmhR2BI+DPt7yhnTiuooJAs=
+	 q=dns; s=sasl; b=gvRcQOm980NXKnXLH+d6WirvNueCRNI+mVcwZOuFAE6ikk
+	M+sAdZdzVTSBlonxsqEaf1aJc77xT30013HTAyQf9ffpO1UaM2/yJXRvDb/sDcbG
+	rl5TINhCZgiBt8iOV0Yf7N5/HpIEfrYSJn5v06uA2te5yu8GKCfkqnPxEKOiY=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3998F25D1D;
-	Fri, 23 Oct 2015 18:40:55 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D568425D3E;
+	Fri, 23 Oct 2015 18:41:46 -0400 (EDT)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B7E5425D1C;
-	Fri, 23 Oct 2015 18:40:54 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5BEAD25D3D;
+	Fri, 23 Oct 2015 18:41:46 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1EE11436-79D7-11E5-B8C5-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 3DA5CC36-79D7-11E5-AFE5-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280111>
 
-Please pay attention to your title.  It no longer matches what the
-patch does.
+Francis Moreau <francis.moro@gmail.com> writes:
 
-It may also be beneficial to study recent titles and log messages
-from other developers (you can find them in "git log --no-merges"
-and "git shortlog --no-merges") and learn and imitate their format,
-style and tone.  We want our log to tell a story in a consistent
-voice, no matter who the authors of individual commits are.
+> I was mislead by the git-cherry manpage somehow which says:
+>
+>     "git-cherry therefore
+>      detects when commits have been "copied" by means of git-cherry-pick(1),
+>
+> which is not exactly true.
 
-Victor Leschuk <vleschuk@gmail.com> writes:
+Yeah, I agree; the sentence is merely giving a description from
+layperson's point of view, and it should have expressed it as such,
+e.g. "roughly speaking, you can think of it like so", not sounding
+as if it is giving a strictly correct and authoritative statement.
 
-> It's a follow up to "[PATCH] Add git-grep threads-num param":
+> Would it make sense to add a "--fuzz" option which would reduce the
+> diff context area used to generate the hash ?
 
-Do you think anybody wants to see this line in the output from "git
-log" six months from now?  I doubt it.  The previous one will not be
-committed to my tree anyway, so the readers would not know (nor
-care) what other patch you are talking about.
+There could be situations where such fuzzing might be useful, but I
+do not think this particular use case of yours is one of them.
 
-> @@ -832,7 +836,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  	}
->  
->  #ifndef NO_PTHREADS
-> -	if (list.nr || cached || online_cpus() == 1)
-> +	if (list.nr || cached || online_cpus() == 1 || opt.num_threads <= 1)
->  		use_threads = 0;
+I'd imagine that you had two branches A (with "Unkown") and B (with
+"Unknown"), and wanted to apply changes in them to your integration
+branch (let's call that 'master').  You ask cherry "what commits in
+A are missing in my 'master'?" and apply them.  Next you ask cherry
+"what commits in B are missing in my 'master' now?" and apply them.
 
-This avoid --threads=0 to take the threading codepath and spawning
-no threads, which would have happend in the previous patch.
+Because "Unkown" and "Unknown" are not considered the "same" patches
+(one is most likely an update to the other), you get conflict when
+applying the second copy, and that is how you can notice that one of
+them is a stale and buggy one.  If you haven't made your interim
+integration result available to others after processing branch A,
+you even have a chance to replace the "Unkown" one you already
+applied with the corrected "Unknown" one before continuing.  Even if
+you choose not to bother and skip the "Unknown" one from branch B,
+at least you know that in the end result you have a typo that would
+eventually need to be fixed from "Unkown" into "Unknown".
 
-But it makes me wonder if the logic should be more like this:
-    
- - Because the code is not prepared to go multi-thread when
-   searching in the object data (not working tree), we always
-   disable threading if 'list' is not empty or 'cached' is given;
-   otherwise
+If you did a fuzzy version and ignored s/Unkown/Unknown/ typofix
+between the "same" patches, you can avoid the conflict and all
+patches from branch B may apply cleanly and automatically on top of
+applying changes from branch A.  But depending on the order you
+processed A and B, you have a 50% chance of keeping the buggy
+version without even realizing.
 
- - If the user explicitly said that she wants N threads, we use that
-   many threads; otherwise
+So erring on the safe side and judging "Unkown" and "Unknown" are
+different changes, inducing one extra conflict you had to look at,
+is actively a good thing in this case.
 
- - If there is only one CPU, we do not do multi-thread; otherwise
+One thing that helps to know while learning Git is that we try to
+avoid being overly clever and outsmarting human users.  Instead, we
+err on the safe side to avoid silently doing a wrong thing.
 
- - We use the default number of threads.
+This is because a tool that automates 100% of cases with 2% chance
+of producing wrong result cannot be trusted---you have to manually
+inspect all 100% cases it automatically handled to make sure it did
+the right thing.  We instead automate 98% of simple cases where it
+is obvious what the right result is, and ask the human user for help
+on the remaining 2%.
 
-IOW, I'd suggest making opt.num_threads an "int" (not "unsigned"),
-initialize it to -1 (unspecified), and then make this part more like
-this, perhaps?
-
-	if (!opt.num_threads)
-        	use_threads = 0; /* the user tells us not to use threads */
-	else if (list.nr || cached)
-        	use_threads = 0; /* cannot multi-thread object lookup */
-	else if (opt.num_threads >= 1)
-		use_threads = 1; /* the user explicitly wants this many */
-	else if (online_cpus() <= 1)
-        	use_threads = 0;
-	else {
-        	use_threads = 1;
-                opt.num_threads = GREP_NUM_THREADS_DEFAULT;
-	}
-
-Something like this code structure makes it very clear what needs to
-be changed when we want to add some sort of auto-scaling (instead of
-assigning the DEFAULT constant, you'd see how many cores you have,
-how many files you will be grepping in, etc. and come up with a good
-number dynamically).
-
-> @@ -150,6 +159,8 @@ void grep_init(struct grep_opt *opt, const char *prefix)
->  	opt->pathname = def->pathname;
->  	opt->regflags = def->regflags;
->  	opt->relative = def->relative;
-> +	if(!opt->num_threads)
-
-You forgot a required SP between a keyword for a syntactic construct
-and its open parenthesis.
-
-Thanks.
+And this design principle is not limited to cherry.  The design of
+our merge algorithms is the same way, for example.
