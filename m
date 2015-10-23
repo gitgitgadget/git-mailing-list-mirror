@@ -1,99 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Question about about a trivial merge conflict that git should
- resolve alone
-Date: Fri, 23 Oct 2015 16:52:57 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1510231651270.31610@s15462909.onlinehome-server.info>
-References: <CAC9WiBj7Vwfjzbik7+d9cxpS=m+_s-CViJ3b4fKAzYQ4ixXfiw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: ancestor and descendant ~ clarification needed
+Date: Fri, 23 Oct 2015 09:56:40 -0700
+Message-ID: <xmqqsi51plpz.fsf@gitster.mtv.corp.google.com>
+References: <CAAF+z6HEeFEYD9R+6Uz3ebRYNMpy5Gh0Fo9EjpaTYwSbqyDLgQ@mail.gmail.com>
+	<xmqqfv12r6vn.fsf@gitster.mtv.corp.google.com>
+	<CAAF+z6H+wwCOhPCU-_Uh-Odc=411N+G+d_iE_AKX+JxVMDtsMQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 16:53:14 2015
+Content-Type: text/plain
+Cc: Git <git@vger.kernel.org>
+To: Xue Fuqiao <xfq.free@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 23 18:56:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZpdiN-0004T0-Sq
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 16:53:08 +0200
+	id 1Zpfe5-0004sX-Fi
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 18:56:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654AbbJWOxC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Oct 2015 10:53:02 -0400
-Received: from mout.gmx.net ([212.227.17.20]:61462 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751097AbbJWOxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Oct 2015 10:53:01 -0400
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0LyzW8-1ac9k13q9A-014Ekq;
- Fri, 23 Oct 2015 16:52:57 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <CAC9WiBj7Vwfjzbik7+d9cxpS=m+_s-CViJ3b4fKAzYQ4ixXfiw@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:knAx0PUacvGwVPkr6/q8hSLGtFfzcEGKLhWdQqpMAz0D/VCndWH
- J1S8wmaJoA3DESakP/wDzl5zzCsHFSYqKNhmZ9gbsPguwRDy7s3UNeIS89kHgVMqyjM7d8G
- M2sbfDsva9fjpEhXXQElbNX2UlVioHmrGHAYObwJNBiMbLBydJ6ec9QJ2wWaNmttzAlmfv3
- cHUwvunirYVr57m+ZCQ1Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YAF5ZDeJlEM=:v75T8IAkJRWDiWG+YQVXbD
- TuJVrlt8aTePaZKgMqR95pNCAex9gelSnWV6bKLVx2s2DHmAI9rktMYi55M+bUEPhSeiS2NEK
- OyeLxxpVJm9SGIsfcHh89P6y1fRpom6x0ffclbTEX0q0GYIKUc8wL94MRcE+AOCWF1sQAvV1a
- SCAtqQE4d4O16Q9mHClEkXeqwCyNG2aUIbCIBANY7i5JUVY/QeHDtc2MsbHMnPi6BaOmStOvx
- CfwjdUw3J7wZ3dpkq99wSqcZNyluYc2991lFccYSAsZMZ9fqFp8asWp5tMRYsYjeqqJcQZ9in
- nhkwoi1+FU6k6tzS+1piLgdwjUnpFx3CTjxOQquo2OtyobUDSXh3dSf0H+2u5Nl++IPJdpHI+
- 9JLehrVlvit9jYNdA0ElFZaRxSTjY+1Zu50PMcuOi+TMnesf+s5FDWJTGdyA3Wx5ItTlYCEho
- pCXyOq2TsncExagY6RQI6Ml2b3QvXiZJJhEuoBaMB5Vwvelz3ymtE5zOfWedYmTVby3zrZcGB
- MaQFlHH0NS/K4bmXlZLcf9X9LRdSU7M31A8A+E+7dIhGTd/E6mU7V2SHsJIkkYRmQarfP/8gY
- W8Xaa7QQy5devzh+PBFIfGCbNCs6fFZQdIV+0UHHrWIbJwvKMJr0W1kdCHOFoSfkhOfkkjw38
- 24Z225fN7pFiaKxzh1qck6U0Rv/mbC0PAQgNKlLoQnob85bIBIzUFHAa4pbPakV/pJBgOe8ZN
- Q4JikSRnBVf47KENpmGjkQjXVN2kqIgYiaLp/LvShaJsemvF+Wn9NsRFXY+ertRdo71P0Wnv 
+	id S1753039AbbJWQ4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2015 12:56:45 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59998 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752991AbbJWQ4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2015 12:56:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0B8CC23CC9;
+	Fri, 23 Oct 2015 12:56:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mbhFoeN39K9kuTzzR9k90Al63uw=; b=R5stXI
+	2jUlYPKPh4IpSM86QVfIPpMiQP5iokQrX+76wVv8CRTbbcKUQXE0ZOOFfyLfbOV6
+	j6rW83tIa5l11K3lsdwnHXXrkBOq9nYXiSPKMJgLP5WqI8FcyUfxEpfNhMLE6GCH
+	meKcHndLf8WLf/Xy4pQuk7Akbe9qxvuGEc7Ws=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YtDxsfpBcJKcUL7zMOcpnWdWQnqB8hia
+	yO3bvKtPZqhQjR+2g6ii5tbCibuFDLKRG6ITh/10KYshi7IAdt1xntHIE5TWJaIN
+	vXOd9Y4KlFspIcxtzycHXkUSBq+UAWaRVxLKUslMV5FgmWJ3cGy6fVVpjXIL1EAk
+	C8ms/ypnDd4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0361F23CC8;
+	Fri, 23 Oct 2015 12:56:42 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7B07823CC7;
+	Fri, 23 Oct 2015 12:56:41 -0400 (EDT)
+In-Reply-To: <CAAF+z6H+wwCOhPCU-_Uh-Odc=411N+G+d_iE_AKX+JxVMDtsMQ@mail.gmail.com>
+	(Xue Fuqiao's message of "Fri, 23 Oct 2015 15:29:05 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 08953318-79A7-11E5-87BA-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280098>
 
-Hi Francis,
+Xue Fuqiao <xfq.free@gmail.com> writes:
 
-On Fri, 23 Oct 2015, Francis Moreau wrote:
+> Hi Junio,
+>
+> On Fri, Oct 23, 2015 at 4:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> Yeah, that is the other way around.
+>>
+>>  (1) If the current branch is a descendant of the other--so every
+>>      commit present in the other branch is already contained in the
+>>      current branch--then merging the other branch into the current
+>>      branch is a no-op "Already up-to-date!".
+>>
+>>  (2) If the current branch is an ancestor of the other--so every
+>>      commit present in the current branch is already contained in
+>>      the other branch--then merging the other branch into the
+>>      current branch can be fast-forwarded, by moving the tip of the
+>>      current branch to point at the commit at the tip of the other
+>>      branch, and by default Git does so, instead of creating an
+>>      unnecessary merge.
+>
+> I see.  Thank you.  What do you think about the following minor patch
+> for user-manual.txt?
 
-> I have a simple merge conflict use case:
-> 
-> $ mkdir foo
-> $ cd foo/
-> $ git init
-> $ echo line1 > a
-> $ git add .
-> $ git commit -q -m init
-> $ echo line2 >>a
-> $ git commit -a -q -m "add line2"
-> $ git checkout -b foo HEAD~1
-> $ git cherry-pick -x master
-> $ echo line3 >>a
-> $ git stage a
-> $ git commit -q -m "add line3"
-> $ git checkout master
-> $ git merge foo
-> $ git diff
-> diff --cc a
-> index c0d0fb4,83db48f..0000000
-> --- a/a
-> +++ b/a
-> @@@ -1,2 -1,3 +1,6 @@@
-> line1
-> line2
-> ++<<<<<<< HEAD
-> ++=======
-> + line3
-> ++>>>>>>> foo
-> 
-> Why does git think there's a conflict here since the "line2" string
-> was added in both branch by the same commit ?
+While the updated text is more correct than the original, I do not
+know if that is sufficient, or we would also want to mention the
+"Already up-to-date!" case here while at it.
 
-This is intentional, because what actually happens is that Git figures out
-that line2 & line3 were added in one branch, but only line2 in the other,
-and it helpfully reduces the conflict to the difference between the two.
-
-The rationale is that you do not know which version is correct: was line2
-sufficient, or do you really also need line3?
-
-Ciao,
-Johannes
+> -However, if the current branch is a descendant of the other--so every
+> -commit present in the one is already contained in the other--then Git
+> -just performs a "fast-forward"; the head of the current branch is moved
+> -forward to point at the head of the merged-in branch, without any new
+> -commits being created.
+> +However, if the current branch is an ancestor of the other--so every commit
+> +present in the current branch is already contained in the other
+> branch--then Git
+> +just performs a "fast-forward"; the head of the current branch is moved forward
+> +to point at the head of the merged-in branch, without any new commits being
+> +created.
