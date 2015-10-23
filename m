@@ -1,75 +1,62 @@
-From: Xue Fuqiao <xfq.free@gmail.com>
-Subject: Re: ancestor and descendant ~ clarification needed
-Date: Sat, 24 Oct 2015 07:11:33 +0800
-Message-ID: <CAAF+z6Guy4h8XDHkgkAmxLftfTTsXrDAd_ezFCQzdiWncvVSTg@mail.gmail.com>
-References: <CAAF+z6HEeFEYD9R+6Uz3ebRYNMpy5Gh0Fo9EjpaTYwSbqyDLgQ@mail.gmail.com>
-	<xmqqfv12r6vn.fsf@gitster.mtv.corp.google.com>
-	<CAAF+z6H+wwCOhPCU-_Uh-Odc=411N+G+d_iE_AKX+JxVMDtsMQ@mail.gmail.com>
-	<xmqqsi51plpz.fsf@gitster.mtv.corp.google.com>
+From: Noam Postavsky <npostavs@users.sourceforge.net>
+Subject: git --literal-pathspecs add -u says "fatal: pathspec ':/' did not
+ match any files"
+Date: Fri, 23 Oct 2015 19:39:29 -0400
+Message-ID: <CAM-tV--Q=DjTwLk8sZVm7-xMQsGwKmyjy4XiT08QpQ5-dffL0w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 24 01:11:52 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 24 01:39:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZplUo-0004X4-IY
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 01:11:38 +0200
+	id 1Zplvr-0004DN-9Y
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 01:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752209AbbJWXLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Oct 2015 19:11:34 -0400
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:33504 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751301AbbJWXLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Oct 2015 19:11:34 -0400
-Received: by igbkq10 with SMTP id kq10so44018793igb.0
-        for <git@vger.kernel.org>; Fri, 23 Oct 2015 16:11:33 -0700 (PDT)
+	id S1753075AbbJWXjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2015 19:39:31 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:37716 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752264AbbJWXja (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2015 19:39:30 -0400
+Received: by wicfv8 with SMTP id fv8so50828805wic.0
+        for <git@vger.kernel.org>; Fri, 23 Oct 2015 16:39:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=28AJnZyg7N1S2f/1y6ahIoM5Fppbxn1Vv10Z5mVuEAk=;
-        b=rE06KUNdTw1/ebv7RllLNzSRHIF4sQlMAkVbDyTCH/UmGXsmM86n9Yx0KxDXHnQSEn
-         +c9H9hqFWeDGC/OIIb+XFTvSQEb9gM7lLggNF7T01XipeWqOvFVSJE0FBIpUWRadem0g
-         /ojH8+8eClKXgbCGcYcImvhg0XQKLRkvUV8t5eJVa7PxTz1JZaAIrTjqsSbg9dBKS708
-         EeOXGEXFHeg8oKSE84zw5rTDRsR1ddJi/5U00vECLft4WztOQdhRKK2HXpm3w2sERG+R
-         ycp4hx4AogR/NP7xT7c8zOodJnJnPi1+R9fntC2ZWgi9dgyBcX861av2hhfWf/5QKrol
-         Ltxg==
-X-Received: by 10.50.117.65 with SMTP id kc1mr7607892igb.4.1445641893639; Fri,
- 23 Oct 2015 16:11:33 -0700 (PDT)
-Received: by 10.79.94.2 with HTTP; Fri, 23 Oct 2015 16:11:33 -0700 (PDT)
-In-Reply-To: <xmqqsi51plpz.fsf@gitster.mtv.corp.google.com>
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=BCDeZKJ4jA6LfEZ/yDVHU25PxrGfhRoPFVmZpVl0Wms=;
+        b=d0Cg/r0VVNYWBrOgTPi8xaQ8vQ4bFbS5WwuJ4bhIIDPZp5G5VOfZocadj2fXosGNbb
+         1Gu/tXqsYk3JpvRSm6JwUcyns8RcvREQ+Fzc2WyZkYErvDTMAQGjOjlAGiuWgZzH3zmp
+         94xAnuJorULV+Stmn2m8qA7SvF7V0GdXsBrdbXuVP9oOhM+4CVglSsFCvFAv1pWjvR0A
+         dQ28WhSiN/7wBn04V+RJArSN25YtJVHFb7JGIGOwRJk+sJgEGWT/9fK+iPofgTwj4Rai
+         +DQnJwXKupNfcDq6kuhNr1mNflfLTGTnaPwQdAX40QFSyZico6koyqXLvZ0efYpQf0A1
+         2haA==
+X-Received: by 10.180.93.197 with SMTP id cw5mr7641845wib.53.1445643569532;
+ Fri, 23 Oct 2015 16:39:29 -0700 (PDT)
+Received: by 10.28.29.87 with HTTP; Fri, 23 Oct 2015 16:39:29 -0700 (PDT)
+X-Google-Sender-Auth: OWv5twF8UYDibNKHioBvTgfATbs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280114>
 
-On Sat, Oct 24, 2015 at 12:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> I see.  Thank you.  What do you think about the following minor patch
->> for user-manual.txt?
->
-> While the updated text is more correct than the original, I do not
-> know if that is sufficient, or we would also want to mention the
-> "Already up-to-date!" case here while at it.
+~/tmp/tmprepo$ git init
+Initialized empty Git repository in /home/npostavs/tmp/tmprepo/.git/
+~/tmp/tmprepo$ git --literal-pathspecs add -u
+fatal: pathspec ':/' did not match any files
+~/tmp/tmprepo$ git --version
+git version 2.6.1
 
-I thought about that, and IMHO it's not needed.  The section name is
-"Fast-forward merges" and intends to introduce the "fast-forward"
-concept, which is irrelevant to "Already up-to-date!".  Although the
-"Already up-to-date!" case isn't mentioned all over the manual, it's
-pretty clear to me (as someone who isn't quite familiar with Git).
+It was reported[1] that 2.0.2 and several following versions also fail
+with the same error; I found that version 1.9.5 succeeds.
 
->> -However, if the current branch is a descendant of the other--so every
->> -commit present in the one is already contained in the other--then Git
->> -just performs a "fast-forward"; the head of the current branch is moved
->> -forward to point at the head of the merged-in branch, without any new
->> -commits being created.
->> +However, if the current branch is an ancestor of the other--so every commit
->> +present in the current branch is already contained in the other
->> branch--then Git
->> +just performs a "fast-forward"; the head of the current branch is moved forward
->> +to point at the head of the merged-in branch, without any new commits being
->> +created.
+Adding a "." argument:
+
+   git --literal-pathspecs add -u .
+
+succeeds in all versions.
+
+[1]: https://github.com/magit/magit/issues/2354#issuecomment-150665961
