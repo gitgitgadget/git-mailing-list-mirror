@@ -1,107 +1,130 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 0/3] expose parallelism for submodule {update, clone}
-Date: Fri, 23 Oct 2015 12:33:27 -0700
-Message-ID: <CAGZ79kYwtRwUoiy1=41tAWXXXcE_wxm4LT6uvmT+NJbo8WbQoQ@mail.gmail.com>
-References: <1445625879-30330-1-git-send-email-sbeller@google.com>
-	<xmqqvb9xo098.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Add git-grep threads-num param
+Date: Fri, 23 Oct 2015 15:40:53 -0700
+Message-ID: <xmqqbnbpnr7u.fsf@gitster.mtv.corp.google.com>
+References: <1445591717-5998-1-git-send-email-vleschuk@accesssoftek.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 21:33:38 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Victor Leschuk <vleschuk@accesssoftek.com>
+To: Victor Leschuk <vleschuk@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 24 00:41:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zpi5l-00084U-6l
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 21:33:33 +0200
+	id 1Zpl1K-0002GR-Tx
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 00:41:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752950AbbJWTd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Oct 2015 15:33:29 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:36840 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751682AbbJWTd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Oct 2015 15:33:28 -0400
-Received: by ykba4 with SMTP id a4so124638658ykb.3
-        for <git@vger.kernel.org>; Fri, 23 Oct 2015 12:33:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=M01vItTOHiV6qGXG072kst3Wzm2T8W4ze4tNwUUeEBE=;
-        b=JwDN0ppip8MoAmrHUcMyO+PLzpaxqoZBFdUxFzESk9nwehf2ip134wAVnBbAe8bOiI
-         mL8eyqGMPWAQ1WHtj9cXqRIblhdFwArwSG8vGNSTfwGJNHgrwethTCSxtemO9dj3vnn3
-         ssgCyySmTvqHa+adBdFZa16NaZ5HNfECJeApsrgqGyr+ccXqFMGmyzrqujQhvkqgRFK+
-         4Vl7/J1/4O/26bkKkbvazlmwwgixNNdXsZ8jSORASodpyKKsxyCXUT3G7UAsZO6bMJnZ
-         exEKmKWCfI61EloNHsDwTnZBg0VLSFcdgjxur/LcGIwwaPhPRW1vJVG4dcmEY5zFBV1y
-         sWaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=M01vItTOHiV6qGXG072kst3Wzm2T8W4ze4tNwUUeEBE=;
-        b=LLAMxr8MlSglEe2s9LqOMm6B0LgrPZnKqMLejUzchXNphW/impnd9tO7U+Is4QPO0g
-         VOMHUUgzh3Eynk3GUryZHJ31dkkV114zwtSvK3liAYIGx8BlFVsF0FLbh57ZtofITUMS
-         lr+cdfd+N924zxVJxYw9x66vz6CR/FGl82/9e5zOvyMxLIVFLKtSGzjRUWW31AcLf+Ux
-         7aKpD7jcaXQ1rYusuhBjaKtoHlO/DYfOvNHyxQoUDR7sriECpO+MOu2Zco4eY1XL7aP4
-         nxv871Hu8r6kvR1nPHPCgI4ZQQx7BQxjk4zGJFywsod7cK2Ctr6LwkjeDL9YJkrDVGrv
-         cKHw==
-X-Gm-Message-State: ALoCoQlmqeNb6IXWb7Pwehh/3tf8XAZKJr61yuttiTSNRb7H3ZSolfysAT23/TT+8deCJJ68KRU6
-X-Received: by 10.129.75.208 with SMTP id y199mr18617294ywa.48.1445628808047;
- Fri, 23 Oct 2015 12:33:28 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Fri, 23 Oct 2015 12:33:27 -0700 (PDT)
-In-Reply-To: <xmqqvb9xo098.fsf@gitster.mtv.corp.google.com>
+	id S1752681AbbJWWlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2015 18:41:04 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60324 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752209AbbJWWlB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2015 18:41:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 434D425D20;
+	Fri, 23 Oct 2015 18:40:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=YX28oEtrBlyPhWC+9MGV7TbNIEQ=; b=Wt0QUKevMLn3A1u92Air
+	zacRrcI6wGLvHucOh+eOYBOi52fHo6S+pLS9G8rL/JG2NSV+BCzTHxuuPe5nfBSk
+	sbGYruZHq+dy7bVrXx9496dBzqjl95OnzqIewrnNbhg77RuVCjRWdsq1JfBIqTtU
+	PXjc/Lb3TETYexh4B47ZzYU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=EJOuev68yppq4h3/AhvtfDgz7nbzRwFvPdf7kY/7KaHYji
+	pSKndaBrNgU1e6MyTFr55NRjEKKdL+c1/3m25N43kMoM9lp7XfA9vKgAqkW8OFQz
+	0I3Ld5Y93OgWprRG6LmsUfbTpDcC5MA3gVA+3HlmhR2BI+DPt7yhnTiuooJAs=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3998F25D1D;
+	Fri, 23 Oct 2015 18:40:55 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B7E5425D1C;
+	Fri, 23 Oct 2015 18:40:54 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1EE11436-79D7-11E5-B8C5-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280110>
 
-On Fri, Oct 23, 2015 at 12:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>   submodule update: Expose parallelism to the user
->>   clone: Allow an explicit argument for parallel submodule clones
->
-> downcase Expose and Allow, perhaps?
+Please pay attention to your title.  It no longer matches what the
+patch does.
 
-Will do, thanks!
+It may also be beneficial to study recent titles and log messages
+from other developers (you can find them in "git log --no-merges"
+and "git shortlog --no-merges") and learn and imitate their format,
+style and tone.  We want our log to tell a story in a consistent
+voice, no matter who the authors of individual commits are.
 
+Victor Leschuk <vleschuk@gmail.com> writes:
 
->
->
->
-> I was looking at the previous one and I am getting the feeling that
-> everything up to "run-command: fix missing output from late callbacks"
-> is ready for 'next'.  Am I being too optimistic and missing something
-> that may make you want to do another reroll?
+> It's a follow up to "[PATCH] Add git-grep threads-num param":
 
-I would even argue for "submodule config: keep update strategy around"
-to be ready for next. ;) But as that is quite unrelated to the previous patches
-and only needed for the last patch, we can omit that safely too.
+Do you think anybody wants to see this line in the output from "git
+log" six months from now?  I doubt it.  The previous one will not be
+committed to my tree anyway, so the readers would not know (nor
+care) what other patch you are talking about.
 
-All the fixes up to "run-command: fix missing output from late callbacks"
-sound good to me for next.
+> @@ -832,7 +836,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  	}
+>  
+>  #ifndef NO_PTHREADS
+> -	if (list.nr || cached || online_cpus() == 1)
+> +	if (list.nr || cached || online_cpus() == 1 || opt.num_threads <= 1)
+>  		use_threads = 0;
 
-I have run into a problem cloning big repositories though, but I haven't
-found the problem. So the whole parallel processing machine may need
-another bug fix later on.
+This avoid --threads=0 to take the threading codepath and spawning
+no threads, which would have happend in the previous patch.
 
->
-> 37bc721 submodule.c: write "Fetching submodule <foo>" to stderr
-> 0904370 xread: poll on non blocking fds
-> fd6ed7c xread_nonblock: add functionality to read from fds without blocking
-> e7ba957 strbuf: add strbuf_read_once to read without blocking
-> 8fc3f2e sigchain: add command to pop all common signals
-> f57c806 run-command: add an asynchronous parallel child processor
-> 4733d9e fetch_populated_submodules: use new parallel job processing
-> dca8113 submodules: allow parallel fetching, add tests and documentation
-> 79f3857 run-command: fix early shutdown
-> 1c53754 run-command: clear leftover state from child_process structure
-> 63ce47e run-command: initialize the shutdown flag
-> c3a5d11 test-run-command: test for gracefully aborting
-> 74cc04d test-run-command: increase test coverage
-> 376d400 run-command: fix missing output from late callbacks
+But it makes me wonder if the logic should be more like this:
+    
+ - Because the code is not prepared to go multi-thread when
+   searching in the object data (not working tree), we always
+   disable threading if 'list' is not empty or 'cached' is given;
+   otherwise
+
+ - If the user explicitly said that she wants N threads, we use that
+   many threads; otherwise
+
+ - If there is only one CPU, we do not do multi-thread; otherwise
+
+ - We use the default number of threads.
+
+IOW, I'd suggest making opt.num_threads an "int" (not "unsigned"),
+initialize it to -1 (unspecified), and then make this part more like
+this, perhaps?
+
+	if (!opt.num_threads)
+        	use_threads = 0; /* the user tells us not to use threads */
+	else if (list.nr || cached)
+        	use_threads = 0; /* cannot multi-thread object lookup */
+	else if (opt.num_threads >= 1)
+		use_threads = 1; /* the user explicitly wants this many */
+	else if (online_cpus() <= 1)
+        	use_threads = 0;
+	else {
+        	use_threads = 1;
+                opt.num_threads = GREP_NUM_THREADS_DEFAULT;
+	}
+
+Something like this code structure makes it very clear what needs to
+be changed when we want to add some sort of auto-scaling (instead of
+assigning the DEFAULT constant, you'd see how many cores you have,
+how many files you will be grepping in, etc. and come up with a good
+number dynamically).
+
+> @@ -150,6 +159,8 @@ void grep_init(struct grep_opt *opt, const char *prefix)
+>  	opt->pathname = def->pathname;
+>  	opt->regflags = def->regflags;
+>  	opt->relative = def->relative;
+> +	if(!opt->num_threads)
+
+You forgot a required SP between a keyword for a syntactic construct
+and its open parenthesis.
+
+Thanks.
