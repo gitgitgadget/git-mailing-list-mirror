@@ -1,92 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Make
-Date: Thu, 22 Oct 2015 19:05:24 -0700
-Message-ID: <xmqq37x2qqzf.fsf@gitster.mtv.corp.google.com>
-References: <loom.20151016T001449-848@post.gmane.org>
-	<xmqq7fmnhg4x.fsf@gitster.mtv.corp.google.com>
-	<loom.20151023T013752-72@post.gmane.org>
+From: Kannan Goundan <kannan@cakoose.com>
+Subject: Re: Make "git checkout" automatically update submodules?
+Date: Fri, 23 Oct 2015 03:46:47 +0000 (UTC)
+Message-ID: <loom.20151023T044009-172@post.gmane.org>
+References: <loom.20151016T001449-848@post.gmane.org> <xmqq7fmnhg4x.fsf@gitster.mtv.corp.google.com> <loom.20151023T013752-72@post.gmane.org> <xmqq37x2qqzf.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Kannan Goundan <kannan@cakoose.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 04:05:34 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 23 05:47:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZpRjY-0006BZ-Fh
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 04:05:32 +0200
+	id 1ZpTJm-0007fD-Qz
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 05:47:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752790AbbJWCF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2015 22:05:28 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53910 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751719AbbJWCF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2015 22:05:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5246825A02;
-	Thu, 22 Oct 2015 22:05:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eKqZyVK+RPxeAMgXmpF/PHaR9AA=; b=fRToRG
-	aWVB8CcT8tGJfYXY1mxyDdLYN1obmPSVPH2k34fCdH3prFYE5HnOW53FI+mUy0Lq
-	PYTkZ9/BBhZvcEKFwy0uzbsBZP9FEejKCGMI8aJA2+XmTnS3P1c4pkYuPIyePRgW
-	dtiaAU3ZEtHprhGAm+asxbAq4xdwrTSeLuV/Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=obXO2IzGdSSzxDCOMILGsLkPJ2ATe3b+
-	TmsxjottTwNs1FlO6OWKDbjnyyNFg9FapPZFJL08nq//jqWKfv6KeO00OyeE6Nuv
-	4I7mpnBm5J/1uuGBPqf4bLXMfICqvSbygH1oWn59ejfLblxZAoWyaLgpMnRn7+oI
-	/8hISSQJWZU=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 497C825A01;
-	Thu, 22 Oct 2015 22:05:26 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C8D4825A00;
-	Thu, 22 Oct 2015 22:05:25 -0400 (EDT)
-In-Reply-To: <loom.20151023T013752-72@post.gmane.org> (Kannan Goundan's
-	message of "Thu, 22 Oct 2015 23:46:28 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 86983D0A-792A-11E5-A29C-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1751796AbbJWDq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2015 23:46:58 -0400
+Received: from plane.gmane.org ([80.91.229.3]:54769 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751306AbbJWDq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2015 23:46:58 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ZpTJd-0007US-2B
+	for git@vger.kernel.org; Fri, 23 Oct 2015 05:46:53 +0200
+Received: from 205.189.0.114 ([205.189.0.114])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Oct 2015 05:46:53 +0200
+Received: from kannan by 205.189.0.114 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Oct 2015 05:46:53 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 205.189.0.114 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:41.0) Gecko/20100101 Firefox/41.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280082>
 
-Kannan Goundan <kannan@cakoose.com> writes:
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-> Thanks for the explanation.  I didn't realize some projects don't want to
-> initialize all their submodules, but the explicit opt-in idea you described
-> sounds nice.
->
-> I've seen cases where people will financially "sponsor" feature development
-> in open source projects.  Is there any precedent for this in the Git
-> project?  Is it ok to use this mailing list to ask about such things?
+> We are unfortunately not set up to handle money well.  For a
+> background explanation, please go read [*1*], which I wrote my take
+> on "money" some time ago.  Note that it is an explanation and not a
+> justification.  It explains why we are not set up to handle money
+> well and what the issues around money that are troublesome for the
+> project are.  It does not mean to say that it is a good thing that
+> it is hard to buy feature with money from our project [*2*].
 
-We are unfortunately not set up to handle money well.  For a
-background explanation, please go read [*1*], which I wrote my take
-on "money" some time ago.  Note that it is an explanation and not a
-justification.  It explains why we are not set up to handle money
-well and what the issues around money that are troublesome for the
-project are.  It does not mean to say that it is a good thing that
-it is hard to buy feature with money from our project [*2*].
+I think the way I described it ("sponsoring a feature") doesn't really
+reflect how I was imagining it.  In my head, it looked like this:
 
-I do not see (and back then in the discussion I do not think anybody
-saw) how we can make "We, a sponsoring company, pay this money to
-the project to fund effort Y." work well.  But that of course does
-not mean it is impossible to make it work--somebody with a fresh
-perspective may come up a way to do so, and that would be a very
-welcome development.
+1. Figure out whether the Git community and maintainers seem ok with the
+overall feature idea.  If not, give up.
+2. Come up with a plan for the UI/UX; see if the Git community and
+maintainers seem ok with it.  If not, iterate or give up.
+3. Implement it, then go through the regular process of getting it merged
+upstream.  If it doesn't go well, might have to iterate or give up.
 
+I could try doing that myself, but someone familiar with the Git
+codebase/community/history would be better at it (and probably be easier for
+you guys to work with :-)
 
-[Footnote/Reference]
+I guess I'm just wondering if there are people who meet those qualifications
+and are interested in going through those steps for pay.  Or maybe there's a
+company that does this, like the old Cygnus Solutions?
 
-*1* http://thread.gmane.org/gmane.comp.version-control.git/264993/focus=265215
+In particular, I don't expect anything to change about the project's
+development process.
 
-*2* Just like my message that you are responding to was an
-    explanation of the reason why we do not recurse and and
-    initialize all submodules by default.
+(This part is not relevant to the Git project, but I understand that it's
+hard for anyone to guarantee a feature will make it into an open source
+project.  I imagine these kinds of contracts are set up so that you're
+primarily paying for the effort, not the outcome.  If it ends up not working
+out, you don't get your money back.)
