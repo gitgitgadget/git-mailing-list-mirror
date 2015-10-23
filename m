@@ -1,82 +1,62 @@
-From: Kannan Goundan <kannan@cakoose.com>
-Subject: Re: Make "git checkout" automatically update submodules?
-Date: Fri, 23 Oct 2015 03:46:47 +0000 (UTC)
-Message-ID: <loom.20151023T044009-172@post.gmane.org>
-References: <loom.20151016T001449-848@post.gmane.org> <xmqq7fmnhg4x.fsf@gitster.mtv.corp.google.com> <loom.20151023T013752-72@post.gmane.org> <xmqq37x2qqzf.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 23 05:47:12 2015
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 1/2 jk/war-on-sprintf] read_branches_file: plug a FILE* leak
+Date: Fri, 23 Oct 2015 08:02:51 +0200
+Message-ID: <2c89c60e470def8f85941933c9fafe4db314628a.1445579874.git.j6t@kdbg.org>
+Cc: git@vger.kernel.org, git-for-windows@googlegroups.com,
+	Johannes Sixt <j6t@kdbg.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 23 08:03:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZpTJm-0007fD-Qz
-	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 05:47:03 +0200
+	id 1ZpVRz-00051A-U4
+	for gcvg-git-2@plane.gmane.org; Fri, 23 Oct 2015 08:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751796AbbJWDq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2015 23:46:58 -0400
-Received: from plane.gmane.org ([80.91.229.3]:54769 "EHLO plane.gmane.org"
+	id S1750899AbbJWGDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2015 02:03:09 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:31879 "EHLO bsmtp4.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751306AbbJWDq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2015 23:46:58 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1ZpTJd-0007US-2B
-	for git@vger.kernel.org; Fri, 23 Oct 2015 05:46:53 +0200
-Received: from 205.189.0.114 ([205.189.0.114])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Oct 2015 05:46:53 +0200
-Received: from kannan by 205.189.0.114 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Oct 2015 05:46:53 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 205.189.0.114 (Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:41.0) Gecko/20100101 Firefox/41.0)
+	id S1750781AbbJWGDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2015 02:03:08 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp4.bon.at (Postfix) with ESMTPSA id 3nhw2x4HPKz5tlP;
+	Fri, 23 Oct 2015 08:03:05 +0200 (CEST)
+Received: from dx.site (localhost [127.0.0.1])
+	by dx.site (Postfix) with ESMTP id DC438531A;
+	Fri, 23 Oct 2015 08:03:04 +0200 (CEST)
+X-Mailer: git-send-email 2.3.2.245.gb5bf9d3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280083>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+The earlier rewrite f28e3ab2 (read_branches_file: simplify string handling)
+of read_branches_file() lost an fclose() call. Put it back.
 
-> We are unfortunately not set up to handle money well.  For a
-> background explanation, please go read [*1*], which I wrote my take
-> on "money" some time ago.  Note that it is an explanation and not a
-> justification.  It explains why we are not set up to handle money
-> well and what the issues around money that are troublesome for the
-> project are.  It does not mean to say that it is a good thing that
-> it is hard to buy feature with money from our project [*2*].
+As on Windows files that are open cannot be removed, the leak manifests in
+a failure of 'git remote rename origin origin' when the remote's URL is
+specified in .git/branches/origin, because by the time that the command
+attempts to remove this file, it is still open.
 
-I think the way I described it ("sponsoring a feature") doesn't really
-reflect how I was imagining it.  In my head, it looked like this:
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ remote.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-1. Figure out whether the Git community and maintainers seem ok with the
-overall feature idea.  If not, give up.
-2. Come up with a plan for the UI/UX; see if the Git community and
-maintainers seem ok with it.  If not, iterate or give up.
-3. Implement it, then go through the regular process of getting it merged
-upstream.  If it doesn't go well, might have to iterate or give up.
-
-I could try doing that myself, but someone familiar with the Git
-codebase/community/history would be better at it (and probably be easier for
-you guys to work with :-)
-
-I guess I'm just wondering if there are people who meet those qualifications
-and are interested in going through those steps for pay.  Or maybe there's a
-company that does this, like the old Cygnus Solutions?
-
-In particular, I don't expect anything to change about the project's
-development process.
-
-(This part is not relevant to the Git project, but I understand that it's
-hard for anyone to guarantee a feature will make it into an open source
-project.  I imagine these kinds of contracts are set up so that you're
-primarily paying for the effort, not the outcome.  If it ends up not working
-out, you don't get your money back.)
+diff --git a/remote.c b/remote.c
+index 1101f82..fb16153 100644
+--- a/remote.c
++++ b/remote.c
+@@ -282,6 +282,7 @@ static void read_branches_file(struct remote *remote)
+ 		return;
+ 
+ 	strbuf_getline(&buf, f, '\n');
++	fclose(f);
+ 	strbuf_trim(&buf);
+ 	if (!buf.len) {
+ 		strbuf_release(&buf);
+-- 
+2.3.2.245.gb5bf9d3
