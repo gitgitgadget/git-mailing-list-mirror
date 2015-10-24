@@ -1,78 +1,72 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v1] git-p4: Add option to ignore empty commits
-Date: Sat, 24 Oct 2015 20:07:53 +0100
-Message-ID: <562BD709.1020307@diamand.org>
-References: <1445280239-39840-1-git-send-email-larsxschneider@gmail.com> <xmqqmvvd8n7t.fsf@gitster.mtv.corp.google.com> <C5352225-D67D-4ECD-83DB-D5E5A8ED13A7@gmail.com>
+From: Noam Postavsky <npostavs@users.sourceforge.net>
+Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it to
+ ignore instead?
+Date: Sat, 24 Oct 2015 17:47:03 -0400
+Message-ID: <CAM-tV-9sNgHncsWRPh36tEY3YFORUJBA-Q6W5R=mvX_KhSmWEQ@mail.gmail.com>
+References: <CAM-tV-_JPazYxeDYogtQTRfBxONpSZwb3u5pPanB=F9XnLnZyg@mail.gmail.com>
+	<CAM-tV-_eOgnhqsTFN6kKW=tcS7gAPYaxskBaxnJZo3bsx02HZg@mail.gmail.com>
+	<xmqqfv18awj4.fsf@gitster.mtv.corp.google.com>
+	<CAM-tV-8VXtB5uRgqP9dFpww6AaLzasPV46tCiquz=nz=ksBNng@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Lars Schneider <larsxschneider@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 24 21:08:01 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 24 23:47:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zq4AY-0004gD-7l
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 21:07:58 +0200
+	id 1Zq6ed-0000Oj-JB
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 23:47:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185AbbJXTHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Oct 2015 15:07:54 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:38600 "EHLO
+	id S1752444AbbJXVrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2015 17:47:06 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:33692 "EHLO
 	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbbJXTHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Oct 2015 15:07:53 -0400
-Received: by wicll6 with SMTP id ll6so68261676wic.1
-        for <git@vger.kernel.org>; Sat, 24 Oct 2015 12:07:52 -0700 (PDT)
+	with ESMTP id S1752357AbbJXVrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Oct 2015 17:47:04 -0400
+Received: by wijp11 with SMTP id p11so119046734wij.0
+        for <git@vger.kernel.org>; Sat, 24 Oct 2015 14:47:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=ksGk3OQJ0sHs6oF8YbNV+vx7/2oQ/yybTUZJNJNoUzk=;
-        b=iOZ6YfYIAFSpxkm77jQmqBPc5z+nwVn3GBj6EnUmCnFT2hUeI5H3XHIjsDiuglcJzn
-         /8PUrgVgUNg12ajJ37dcPCNcKsFMbXuduLossa4igZ7YJLZ1VLy51GgBlRUdjYkOv2ts
-         rBMcN9aERMMiA8mL77NZ8RejMNmeXreBMZG84=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=ksGk3OQJ0sHs6oF8YbNV+vx7/2oQ/yybTUZJNJNoUzk=;
-        b=HgrFxUo+0Eq+XC/ioHKqyFz3F4jM+3rAcbvO7t0FLITp6GKc9VSn/BvCY80D0OVvY3
-         H0/6jbzh96xJrxUf+HRjE4wIOZ+oCSIoJwke4v04BKPa6CBajDnNfk8XuuZfpIJp5Urp
-         94ej7F0o9Uqv3gN3ttkDqdttm8U14o6y0GKoADBT+/HM4wQ/5KpRnQclwQp6z6f0B9gQ
-         qzT6cVFD15SpBzMJFSdaiWkB82d4eQDxO8UoGm44yJUV/++IZaJZl+1ey2BFcRw9T5Vx
-         lHBo3tARKTvD1TKAryYtMaRkMNMXRBZzTTocewu/EN0GKNAinTwR034eZA4nSPUTVckN
-         yttQ==
-X-Gm-Message-State: ALoCoQm5D1uxm+Bbxv0RIJHNtLj4Ls/kdJIdWgFzkbSJtFYcstViFOKuHxByxfqXpLG4PSJBAk+T
-X-Received: by 10.180.8.230 with SMTP id u6mr10621432wia.21.1445713672512;
-        Sat, 24 Oct 2015 12:07:52 -0700 (PDT)
-Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
-        by smtp.gmail.com with ESMTPSA id jh4sm25057632wjb.33.2015.10.24.12.07.51
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Oct 2015 12:07:51 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <C5352225-D67D-4ECD-83DB-D5E5A8ED13A7@gmail.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=MTicjZJCg5K3NouiKLOgRXPsGe9PzsJFfiRGCMEKUE0=;
+        b=n3LN8HXuqkBP7nF6bCeRh+ndUst3vdTTcTkL+R5zhoHWQqWQLMdc/BNYXOY797PxuI
+         oz62SdjZLvHpdSPCRwY+/HF+lsUPnLUr38XWTSZ5JEzBn8XRexL+hJiBNqjPh0E3eHHo
+         +BAk2tlFg/uOurlTKZTm6r8SMT4FFxDXtcwTW+TO1/5WZQYMDDDEEkwZLwZNrgISxdel
+         a5AiJX6NTDzFZcteIZaeKHk2CXtJnQ7ET5NFkNb2t3E45CYthatFkZ1vXBFTjKgYNiBx
+         o0Wk2iTUvcQeqCHpLfIdJdLV5gJ65FnkvFlFqxw9w1WMtch8qajRRYdQBVybvKRWHCp3
+         3KTA==
+X-Received: by 10.194.57.8 with SMTP id e8mr14018043wjq.32.1445723223480; Sat,
+ 24 Oct 2015 14:47:03 -0700 (PDT)
+Received: by 10.28.29.87 with HTTP; Sat, 24 Oct 2015 14:47:03 -0700 (PDT)
+In-Reply-To: <CAM-tV-8VXtB5uRgqP9dFpww6AaLzasPV46tCiquz=nz=ksBNng@mail.gmail.com>
+X-Google-Sender-Auth: -b4ir36o9d0iuTlEZpA5BGIuV3A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280133>
 
-On 24/10/15 17:28, Lars Schneider wrote:
+On Tue, Oct 20, 2015 at 10:35 PM, Noam Postavsky
+<npostavs@users.sourceforge.net> wrote:
+> On Sun, Oct 18, 2015 at 1:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I cannot speak for the person who was primarily responsible for
+>> designing this behaviour, but I happen to agree with the current
+>> behaviour in the situation where it was designed to be used.  Upon
+>> the first use in your session, the "daemon" is auto-spawned, you can
+>> keep talking with that same instance during your session, and you do
+>> not have to do anything special to shut it down when you log out.
+>> Isn't that what happens here?
 >
+> After looking at this some more, I've discovered this is NOT what
+> actually happens here. If I "git push" from a shell and then log out
+> and log in again, another "git push" does NOT ask me for a password.
+> In other words, the daemon is NOT shut down automatically when I log
+> out. Given that, does it make sense to change the daemon to ignore
+> SIGHUP, or is there some way to change it so that it does exit on
+> logout?
 
->> Also I have this suspicion that those who do want to use client spec
->> to get a narrowed view into the history would almost always want
->> this "ignore empty" behaviour (I'd even say the current behaviour to
->> leave empty commits by default is a bug).  What are the advantages
->> of keeping empty commits?  If there aren't many, perhaps git-p4
->> should by the default skip empties and require p4.keepEmpty
->> configuration to keep them?
->
-> I agree.
-> @Luke: What option do you prefer? "git-p4.keepEmptyCommits" or "git-p4.ignoreEmptyCommits" ?
-
-keepEmptyCommits.
+ping?
