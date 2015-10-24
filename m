@@ -1,76 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: ancestor and descendant ~ clarification needed
-Date: Sat, 24 Oct 2015 09:42:55 -0700
-Message-ID: <xmqqy4esmd4g.fsf@gitster.mtv.corp.google.com>
-References: <CAAF+z6HEeFEYD9R+6Uz3ebRYNMpy5Gh0Fo9EjpaTYwSbqyDLgQ@mail.gmail.com>
-	<xmqqfv12r6vn.fsf@gitster.mtv.corp.google.com>
-	<CAAF+z6H+wwCOhPCU-_Uh-Odc=411N+G+d_iE_AKX+JxVMDtsMQ@mail.gmail.com>
-	<xmqqsi51plpz.fsf@gitster.mtv.corp.google.com>
-	<CAAF+z6Guy4h8XDHkgkAmxLftfTTsXrDAd_ezFCQzdiWncvVSTg@mail.gmail.com>
+From: Noam Postavsky <npostavs@users.sourceforge.net>
+Subject: Re: git --literal-pathspecs add -u says "fatal: pathspec ':/' did not
+ match any files"
+Date: Sat, 24 Oct 2015 12:55:47 -0400
+Message-ID: <CAM-tV-8Qpy2fLMU=x7Yc4x2BhwpwN+0zZtJspYMZpamCij=z5A@mail.gmail.com>
+References: <CAM-tV--Q=DjTwLk8sZVm7-xMQsGwKmyjy4XiT08QpQ5-dffL0w@mail.gmail.com>
+	<562B2FB2.4080604@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git <git@vger.kernel.org>
-To: Xue Fuqiao <xfq.free@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 24 18:43:06 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, vleschuk@accesssoftek.com
+To: Victor Leschuk <vleschuk@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 24 18:56:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zq1uK-0003Hk-By
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 18:43:04 +0200
+	id 1Zq26m-0000iX-Tf
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 18:55:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206AbbJXQm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Oct 2015 12:42:59 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51447 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751766AbbJXQm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Oct 2015 12:42:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5AE5522E45;
-	Sat, 24 Oct 2015 12:42:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=69Vb4Es5cUOFXK82oRDki2k1bH0=; b=UbATIl
-	l8RMiSGSkiXNxDN9feUI6fJv2vFjuHnLTp5oboA6yAws7JPFHpabS/Y9Ys+fM4Ss
-	FxqOyfNMZlpufq5pG1z3R/KWX5LJzAgnu4vIG826zoVLYuh+Qt7F/+VxG0av4rGV
-	ZvF3Kmkh2IqYTcooicBjByY+ZtA/7G6QwWe7w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J14YGt+aYiRKOys+NMcpZ6X0QKhX40lq
-	CHDuP77WWEIGrB3t1qYnw2p61bYdAzIW0wYXPV5rfwNy37ipXHS08R93ZpoP6OB3
-	Qsjvri1Pjz0zcaZ9Vh9BVANLWopnEcdoR6CpQNWrThGxFtS7uYpQvky0OpnEHIJB
-	XZdORyHPd4o=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 526CB22E43;
-	Sat, 24 Oct 2015 12:42:57 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CCA6A22E3F;
-	Sat, 24 Oct 2015 12:42:56 -0400 (EDT)
-In-Reply-To: <CAAF+z6Guy4h8XDHkgkAmxLftfTTsXrDAd_ezFCQzdiWncvVSTg@mail.gmail.com>
-	(Xue Fuqiao's message of "Sat, 24 Oct 2015 07:11:33 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4774C39C-7A6E-11E5-B9F7-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752476AbbJXQzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2015 12:55:51 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:35790 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752413AbbJXQzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Oct 2015 12:55:48 -0400
+Received: by wicll6 with SMTP id ll6so65783482wic.0
+        for <git@vger.kernel.org>; Sat, 24 Oct 2015 09:55:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=TmK0E0N+wK4mWPc9lYjD/kUeerVJKstSK/ZhNnMfdac=;
+        b=hvAwWEtw61kg60hdzvDa5xSPtKOrwTkxE9BGnJv9rdRioOtegF8qxeemCyHJ218Q7S
+         ExGNbbEkHg8WYLPCu2tz1cJf2CO2KcCOGrryfcEAXkkY0cKvBExcgjSy5aBmX0qsTeao
+         42U0GISCfFCbjlA5B9+wvU2JPf5J4/W8rOEt0VizGcN+nGUg79mx3iCVMf/oL6f8Ch5X
+         BAm9trqmFiUuFXfzvXg3K+57WGVB3igKmk0vDkJRXm80/+ihu+KcU+JHkUMqaSruJW9j
+         Nq4q7YUjvXohbHdbwEvQhjkXkGDI/2nLTGP3fp0wT7iN9neHQj9qu7GU3cdQCASNlikM
+         ffHQ==
+X-Received: by 10.180.37.135 with SMTP id y7mr10287440wij.89.1445705747667;
+ Sat, 24 Oct 2015 09:55:47 -0700 (PDT)
+Received: by 10.28.29.87 with HTTP; Sat, 24 Oct 2015 09:55:47 -0700 (PDT)
+In-Reply-To: <562B2FB2.4080604@gmail.com>
+X-Google-Sender-Auth: L3OQBKpj_T5FxUUrwurGZl6CKZA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280129>
 
-Xue Fuqiao <xfq.free@gmail.com> writes:
+On Sat, Oct 24, 2015 at 3:13 AM, Victor Leschuk <vleschuk@gmail.com> wrote:
+> The problem is that in the absence of explicit argument we set the list of
+> files to special path ":/" which means repo root:
 
-> On Sat, Oct 24, 2015 at 12:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> I see.  Thank you.  What do you think about the following minor patch
->>> for user-manual.txt?
->>
->> While the updated text is more correct than the original, I do not
->> know if that is sufficient, or we would also want to mention the
->> "Already up-to-date!" case here while at it.
->
-> I thought about that, and IMHO it's not needed.  The section name is
-> "Fast-forward merges" and intends to introduce the "fast-forward"
-> concept, which is irrelevant to "Already up-to-date!".
+> And after that we treat it as regular file
 
-Okay.
+Aha.
+
+> Maybe it'll make sense to modify file_exists() to treat ":/" specially.
+
+I'm not sure how this would translate into code, but it would make
+more sense to me if we undo the effect of --literal-pathspecs when
+setting arguments to ":/". After all, it's obviously not meant to be a
+literal file so it shouldn't treated as one (also this way still
+allows a user to pass --literal-pathspecs with ":/" to add an actual
+directory named ":" (not that anyone should ever want that)).
