@@ -1,140 +1,305 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re* git --literal-pathspecs add -u says "fatal: pathspec ':/' did not match any files"
-Date: Sat, 24 Oct 2015 10:57:16 -0700
-Message-ID: <xmqq37x0m9oj.fsf@gitster.mtv.corp.google.com>
-References: <CAM-tV--Q=DjTwLk8sZVm7-xMQsGwKmyjy4XiT08QpQ5-dffL0w@mail.gmail.com>
-	<562B2FB2.4080604@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Noam Postavsky <npostavs@users.sourceforge.net>,
-	git@vger.kernel.org, vleschuk@accesssoftek.com
-To: Victor Leschuk <vleschuk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 24 19:57:24 2015
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v1] git-p4: Add option to ignore empty commits
+Date: Sat, 24 Oct 2015 20:08:02 +0200
+Message-ID: <F77F291C-89D1-48B6-9E9F-AD7220CE0141@gmail.com>
+References: <1445280239-39840-1-git-send-email-larsxschneider@gmail.com> <56273197.3010505@diamand.org>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Sat Oct 24 20:08:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zq34F-0001CK-UD
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 19:57:24 +0200
+	id 1Zq3F3-0005KF-CW
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 20:08:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752336AbbJXR5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Oct 2015 13:57:20 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63349 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751884AbbJXR5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Oct 2015 13:57:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E01CF22A27;
-	Sat, 24 Oct 2015 13:57:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=bjKG2dVoVqSCFcRyt31NvH1+o54=; b=aPysG3IQg+t3aRVoGbVA
-	9GyDcCTsLueUCB7QVsd8y9zVp+N1zKUwnezC2GrAVKvz6KfwvX7b+rfoD55nyn/d
-	1MRAud7nHOxtI7zrSmcwxVKGPvvPKe/h81IsnFi5QhdD7IVhL/IHVfJV6A7KNDCs
-	3LsB1ZtCBOp+i1XOv94vRbE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=RKzgtp5CqbAZZpE3KlpFX/zA8O7ncGwJiTf8FyL7DDQeBw
-	kwflzXTiCc9Yk+d+2gZmPs4fu4kHqO/f8Xbpc/lMmYsQXldrv2Qj8bB1cUFM4hck
-	3Njf6nfVA01SGG2oy4xMr3fSKeMMeFINX1EjgtC/MF8yhPsn9Q+u7ER6GB654=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D799722A26;
-	Sat, 24 Oct 2015 13:57:17 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5CCC322A25;
-	Sat, 24 Oct 2015 13:57:17 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AA2F628A-7A78-11E5-87D2-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752476AbbJXSIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2015 14:08:22 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:34776 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752408AbbJXSIF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Oct 2015 14:08:05 -0400
+Received: by wikq8 with SMTP id q8so114818668wik.1
+        for <git@vger.kernel.org>; Sat, 24 Oct 2015 11:08:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=VNhLCOsEltnKpTHBVvX/4VEUEeCW+GrcmJFBWezlNFM=;
+        b=c/xrNiOEWgCRQQmfazR2KhbVkPcUtHk9j9P2CX9Evwt/RqQfvOAGe+J0a0LPWh8Oaw
+         CoaymqOGBMRfLjcog5xFFtB9BJc5dT1dCEsDmOLMEMwrOuZ/73xJCerzzB24WKFgd59M
+         PaMXtTHw+YTnle77bTOLkJ980SyauXr/rt22lqeuZL8BkmSkphtjgQKo/IYPuBkYx7uc
+         GeMMf0V7jd+lrc/BXfbmbNVv7CS6PriSz0dafpFc+L4FU9Vuh7EfEJi1ElOrTA6X2iey
+         rVoub5dBMnchkKaBaYJVxzIWc+5G9VhqZLSnEIFkz4L0x1lhjyBVgE5LU5/4uFFYtP+2
+         IVuQ==
+X-Received: by 10.194.62.15 with SMTP id u15mr12454166wjr.18.1445710083513;
+        Sat, 24 Oct 2015 11:08:03 -0700 (PDT)
+Received: from slxbook3.fritz.box (p5DDB60EA.dip0.t-ipconnect.de. [93.219.96.234])
+        by smtp.gmail.com with ESMTPSA id bd4sm29292757wjb.15.2015.10.24.11.08.02
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 24 Oct 2015 11:08:02 -0700 (PDT)
+In-Reply-To: <56273197.3010505@diamand.org>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280131>
 
-Victor Leschuk <vleschuk@gmail.com> writes:
 
-> Maybe it'll make sense to modify file_exists() to treat ":/"
-> specially.
+On 21 Oct 2015, at 08:32, Luke Diamand <luke@diamand.org> wrote:
 
-The real problem is that the code assumes that it can internally use
-":/" to mean "everything from the top", and with global 'literal
-pathspec' magic, that is not the case.  "did not match" is a red
-herring.  Even if you disable that typo-catcher, the resulting
-pathspec will match only paths inside a directory whose name is ':',
-so you would break 'add -u' in a more grave way.
+> On 19/10/15 19:43, larsxschneider@gmail.com wrote:
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>> 
+>> A changelist that contains only excluded files (e.g. via client spec or
+>> branch prefix) will be imported as empty commit. Add option
+>> "git-p4.ignoreEmptyCommits" to ignore these commits.
+>> 
+>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>> ---
+>>  Documentation/git-p4.txt               |   5 ++
+>>  git-p4.py                              |  41 ++++++++-----
+>>  t/t9826-git-p4-ignore-empty-commits.sh | 103 +++++++++++++++++++++++++++++++++
+>>  3 files changed, 133 insertions(+), 16 deletions(-)
+>>  create mode 100755 t/t9826-git-p4-ignore-empty-commits.sh
+>> 
+>> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+>> index 82aa5d6..f096a6a 100644
+>> --- a/Documentation/git-p4.txt
+>> +++ b/Documentation/git-p4.txt
+>> @@ -510,6 +510,11 @@ git-p4.useClientSpec::
+>>  	option '--use-client-spec'.  See the "CLIENT SPEC" section above.
+>>  	This variable is a boolean, not the name of a p4 client.
+>> 
+>> +git-p4.ignoreEmptyCommits::
+>> +	A changelist that contains only excluded files will be imported
+>> +	as empty commit. To ignore these commits set this boolean option
+>> +	to 'true'.
+> 
+> s/as empty/as an empty/
+> 
+> Possibly putting 'true' in quotes could be confusing.
+OK. Will fix.
 
-Disabling the typo-catcher has another problem.  When an end user
-says "git --literal-pathspecs add -u :/", the user means "I happen
-to have this funnily named directory ':' and want to update
-everything under it, but because :/ is normally taken as special, I
-am passing --literal-pathspecs".  And if that ':' does not exist,
-the user must get the "well you may have misspelt it" error.
+> 
+>> +
+>>  Submit variables
+>>  ~~~~~~~~~~~~~~~~
+>>  git-p4.detectRenames::
+>> diff --git a/git-p4.py b/git-p4.py
+>> index 0093fa3..6c50c74 100755
+>> --- a/git-p4.py
+>> +++ b/git-p4.py
+>> @@ -2288,12 +2288,6 @@ class P4Sync(Command, P4UserMap):
+>>          filesToDelete = []
+>> 
+>>          for f in files:
+>> -            # if using a client spec, only add the files that have
+>> -            # a path in the client
+>> -            if self.clientSpecDirs:
+>> -                if self.clientSpecDirs.map_in_client(f['path']) == "":
+>> -                    continue
+>> -
+>>              filesForCommit.append(f)
+>>              if f['action'] in self.delete_actions:
+>>                  filesToDelete.append(f)
+>> @@ -2368,18 +2362,33 @@ class P4Sync(Command, P4UserMap):
+>>          if self.verbose:
+>>              print "commit into %s" % branch
+>> 
+>> -        # start with reading files; if that fails, we should not
+>> -        # create a commit.
+>> -        new_files = []
+>> -        for f in files:
+>> -            if [p for p in self.branchPrefixes if p4PathStartsWith(f['path'], p)]:
+>> -                new_files.append (f)
+>> -            else:
+>> -                sys.stderr.write("Ignoring file outside of prefix: %s\n" % f['path'])
+>> -
+>>          if self.clientSpecDirs:
+>>              self.clientSpecDirs.update_client_spec_path_cache(files)
+>> 
+>> +        def inClientSpec(path):
+> 
+> This seems to be adding a new function in the middle of an existing function. Is that right?
+That is true. I could move these functions into the P4Sync class if you don't like them here. I added them right there because it is the only place where they are used/useful.
 
-But a code you are changing cannot tell if ":/" came from the end
-user, or if it the one added by our code upon seeing "-u" or "-A"
-without any pathspecs, to make that distinction so that you disable
-it only for our internal ":/".
 
-I think the right approach is something along the line of this patch
-instead.
+> 
+>> +            if not self.clientSpecDirs:
+>> +                return True
+>> +            inClientSpec = self.clientSpecDirs.map_in_client(path)
+>> +            if not inClientSpec and self.verbose:
+>> +                print '\n  Ignoring file outside of client spec' % path
+>> +            return inClientSpec
+> 
+> Any particular reason for putting a \n at the start of the message?
+I did this because "sys.stdout.write("\rImporting revision ..." (line 2724) does not add a newline. However, I agree that this looks stupid. I will remove the "\n" and fix the "Import revision" print. Speaking of that one: this is only printed if "not self.silent". Is there a particular reason to have "self.silent" and "self.verbose"? Should we merge the two? 
 
--- >8 --
-Subject: add: simplify -u/-A without pathspec
 
-Since Git 2.0, "add -u" and "add -A" run from a subdirectory without
-any pathspec mean "everything in the working tree" (before 2.0, they
-were limited to the current directory).  The limiting to the current
-directory was implemented by inserting "." to the command line when
-the end user did not give us any pathspec.  At 2.0, we updated the
-code to insert ":/" (instead of '.') to consider everything from the
-top-level, by using a pathspec magic "top".
+> 
+> Also, could you use python3 style print stmnts, print("whatever") ?
+Sure. How do you prefer the formatting? Using "format" would be true Python 3 style I think:
+print('Ignoring file outside of client spec: {}'.format(path))
+OK?
 
-The call to parse_pathspec() using the command line arguments is,
-however, made with PATHSPEC_PREFER_FULL option since 5a76aff1 (add:
-convert to use parse_pathspec, 2013-07-14), which predates Git 2.0.
-In retrospect, there was no need to turn "adding . to limit to the
-directory" into "adding :/ to unlimit to everywhere" in Git 2.0;
-instead we could just have done "if there is no pathspec on the
-command line, just let it be".  The parse_pathspec() then would give
-us a pathspec that matches everything and all is well.
+> 
+>> +
+>> +        def hasBranchPrefix(path):
+>> +            if not self.branchPrefixes:
+>> +                return True
+>> +            hasPrefix = [p for p in self.branchPrefixes
+>> +                            if p4PathStartsWith(path, p)]
+>> +            if hasPrefix and self.verbose:
+>> +                print '\n  Ignoring file outside of prefix: %s' % path
+>> +            return hasPrefix
+>> +
+>> +        files = [f for f in files
+>> +            if inClientSpec(f['path']) and hasBranchPrefix(f['path'])]
+>> +
+>> +        if not files and gitConfigBool('git-p4.ignoreEmptyCommits'):
+>> +            print '\n  Ignoring change %s as it would produce an empty commit.'
+>> +            return
+> 
+> As with Junio's comment elsewhere, I worry about deletion here.
+I believe this is right. See my answer to Junio.
 
-Incidentally such a simplifcation also fixes a corner case bug that
-stems from the fact that ":/" does not necessarily mean any magic.
-A user would say "git --literal-pathspecs add -u :/" from the
-command line when she has a directory ':' and wants to add
-everything in it (and she knows that her :/ will be taken as
-'everything under the sun' magic pathspec unless she disables the
-magic with --literal-pathspecs).  The internal use of ':/' would
-behave the same way as such an explicitly given ":/" when run with
-"--literal-pathspecs", and will not add everything under the sun as
-the code originally intended.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+>> +
+>>          self.gitStream.write("commit %s\n" % branch)
+>>  #        gitStream.write("mark :%s\n" % details["change"])
+>>          self.committedChanges.add(int(details["change"]))
+>> @@ -2403,7 +2412,7 @@ class P4Sync(Command, P4UserMap):
+>>                  print "parent %s" % parent
+>>              self.gitStream.write("from %s\n" % parent)
+>> 
+>> -        self.streamP4Files(new_files)
+>> +        self.streamP4Files(files)
+>>          self.gitStream.write("\n")
+>> 
+>>          change = int(details["change"])
+>> diff --git a/t/t9826-git-p4-ignore-empty-commits.sh b/t/t9826-git-p4-ignore-empty-commits.sh
+>> new file mode 100755
+>> index 0000000..5ddccde
+>> --- /dev/null
+>> +++ b/t/t9826-git-p4-ignore-empty-commits.sh
+>> @@ -0,0 +1,103 @@
+>> +#!/bin/sh
+>> +
+>> +test_description='Clone repositories and ignore empty commits'
+>> +
+>> +. ./lib-git-p4.sh
+>> +
+>> +test_expect_success 'start p4d' '
+>> +	start_p4d
+>> +'
+>> +
+>> +test_expect_success 'Create a repo' '
+>> +	client_view "//depot/... //client/..." &&
+>> +	(
+>> +		cd "$cli" &&
+>> +
+>> +		mkdir -p subdir &&
+>> +
+>> +		>subdir/file1.txt &&
+>> +		p4 add subdir/file1.txt &&
+>> +		p4 submit -d "Add file 1" &&
+>> +
+>> +		>file2.txt &&
+>> +		p4 add file2.txt &&
+>> +		p4 submit -d "Add file 2" &&
+>> +
+>> +		>subdir/file3.txt &&
+>> +		p4 add subdir/file3.txt &&
+>> +		p4 submit -d "Add file 3"
+>> +	)
+>> +'
+>> +
+>> +test_expect_success 'Clone repo root path with all history' '
+>> +	client_view "//depot/... //client/..." &&
+>> +	test_when_finished cleanup_git &&
+>> +	(
+>> +		cd "$git" &&
+>> +		git init . &&
+>> +		git p4 clone --use-client-spec --destination="$git" //depot@all &&
+>> +		cat >expect <<-\EOF &&
+>> +Add file 3
+>> +[git-p4: depot-paths = "//depot/": change = 3]
+>> +
+>> +Add file 2
+>> +[git-p4: depot-paths = "//depot/": change = 2]
+>> +
+>> +Add file 1
+>> +[git-p4: depot-paths = "//depot/": change = 1]
+> 
+> Could you not just test for existence of these files?
+Well, I assume the right files are in there as this is covered with other tests. I want to check that these particular commits are mentioned in the logs (including the commit message and the change list number).
 
- builtin/add.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index b2a5c57..145f06e 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -336,14 +336,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	if (!show_only && ignore_missing)
- 		die(_("Option --ignore-missing can only be used together with --dry-run"));
- 
--	if ((0 < addremove_explicit || take_worktree_changes) && !argc) {
--		static const char *whole[2] = { ":/", NULL };
--		argc = 1;
--		argv = whole;
--	}
--
- 	add_new_files = !take_worktree_changes && !refresh_only;
--	require_pathspec = !take_worktree_changes;
-+	require_pathspec = !(take_worktree_changes || (0 < addremove_explicit));
- 
- 	hold_locked_index(&lock_file, 1);
- 
+> If the format of the magic comments that git-p4 ever changes, this will break.
+I understand your reasoning. But how can I check for the correct commit messages, change list number and their order in a efficient different way?
+
+
+> 
+> (There's a patch out there that gets git-p4 to use git notes, so it's not as far-fetched as it sounds).
+> 
+> 
+>> +
+>> +		EOF
+>> +		git log --format=%B >actual &&
+>> +		test_cmp expect actual
+>> +	)
+>> +'
+>> +
+>> +test_expect_success 'Clone repo subdir with all history' '
+>> +	client_view "//depot/subdir/... //client/subdir/..." &&
+>> +	test_when_finished cleanup_git &&
+>> +	(
+>> +		cd "$git" &&
+>> +		git init . &&
+>> +		git p4 clone --use-client-spec --destination="$git" //depot@all &&
+>> +		cat >expect <<-\EOF &&
+>> +Add file 3
+>> +[git-p4: depot-paths = "//depot/": change = 3]
+>> +
+>> +Add file 2
+>> +[git-p4: depot-paths = "//depot/": change = 2]
+>> +
+>> +Add file 1
+>> +[git-p4: depot-paths = "//depot/": change = 1]
+>> +
+>> +		EOF
+>> +		git log --format=%B >actual &&
+>> +		test_cmp expect actual
+>> +	)
+>> +'
+>> +
+>> +test_expect_success 'Clone repo subdir with all history but ignore empty commits' '
+>> +	client_view "//depot/subdir/... //client/subdir/..." &&
+>> +	test_when_finished cleanup_git &&
+>> +	(
+>> +		cd "$git" &&
+>> +		git init . &&
+>> +		git config git-p4.ignoreEmptyCommits true &&
+>> +		git p4 clone --use-client-spec --destination="$git" //depot@all &&
+>> +		cat >expect <<-\EOF &&
+>> +Add file 3
+>> +[git-p4: depot-paths = "//depot/": change = 3]
+>> +
+>> +Add file 1
+>> +[git-p4: depot-paths = "//depot/": change = 1]
+>> +
+>> +		EOF
+>> +		git log --format=%B >actual &&
+> 
+> 
+> A deletion test would make me feel more comfortable!
+Agreed! I will add one!
+
+Thanks,
+Lars
