@@ -1,305 +1,78 @@
-From: Lars Schneider <larsxschneider@gmail.com>
+From: Luke Diamand <luke@diamand.org>
 Subject: Re: [PATCH v1] git-p4: Add option to ignore empty commits
-Date: Sat, 24 Oct 2015 20:08:02 +0200
-Message-ID: <F77F291C-89D1-48B6-9E9F-AD7220CE0141@gmail.com>
-References: <1445280239-39840-1-git-send-email-larsxschneider@gmail.com> <56273197.3010505@diamand.org>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8BIT
+Date: Sat, 24 Oct 2015 20:07:53 +0100
+Message-ID: <562BD709.1020307@diamand.org>
+References: <1445280239-39840-1-git-send-email-larsxschneider@gmail.com> <xmqqmvvd8n7t.fsf@gitster.mtv.corp.google.com> <C5352225-D67D-4ECD-83DB-D5E5A8ED13A7@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Sat Oct 24 20:08:39 2015
+To: Lars Schneider <larsxschneider@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 24 21:08:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zq3F3-0005KF-CW
-	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 20:08:33 +0200
+	id 1Zq4AY-0004gD-7l
+	for gcvg-git-2@plane.gmane.org; Sat, 24 Oct 2015 21:07:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752476AbbJXSIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Oct 2015 14:08:22 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:34776 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752408AbbJXSIF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Oct 2015 14:08:05 -0400
-Received: by wikq8 with SMTP id q8so114818668wik.1
-        for <git@vger.kernel.org>; Sat, 24 Oct 2015 11:08:03 -0700 (PDT)
+	id S1752185AbbJXTHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2015 15:07:54 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:38600 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752023AbbJXTHx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Oct 2015 15:07:53 -0400
+Received: by wicll6 with SMTP id ll6so68261676wic.1
+        for <git@vger.kernel.org>; Sat, 24 Oct 2015 12:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=VNhLCOsEltnKpTHBVvX/4VEUEeCW+GrcmJFBWezlNFM=;
-        b=c/xrNiOEWgCRQQmfazR2KhbVkPcUtHk9j9P2CX9Evwt/RqQfvOAGe+J0a0LPWh8Oaw
-         CoaymqOGBMRfLjcog5xFFtB9BJc5dT1dCEsDmOLMEMwrOuZ/73xJCerzzB24WKFgd59M
-         PaMXtTHw+YTnle77bTOLkJ980SyauXr/rt22lqeuZL8BkmSkphtjgQKo/IYPuBkYx7uc
-         GeMMf0V7jd+lrc/BXfbmbNVv7CS6PriSz0dafpFc+L4FU9Vuh7EfEJi1ElOrTA6X2iey
-         rVoub5dBMnchkKaBaYJVxzIWc+5G9VhqZLSnEIFkz4L0x1lhjyBVgE5LU5/4uFFYtP+2
-         IVuQ==
-X-Received: by 10.194.62.15 with SMTP id u15mr12454166wjr.18.1445710083513;
-        Sat, 24 Oct 2015 11:08:03 -0700 (PDT)
-Received: from slxbook3.fritz.box (p5DDB60EA.dip0.t-ipconnect.de. [93.219.96.234])
-        by smtp.gmail.com with ESMTPSA id bd4sm29292757wjb.15.2015.10.24.11.08.02
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 24 Oct 2015 11:08:02 -0700 (PDT)
-In-Reply-To: <56273197.3010505@diamand.org>
-X-Mailer: Apple Mail (2.1878.6)
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=ksGk3OQJ0sHs6oF8YbNV+vx7/2oQ/yybTUZJNJNoUzk=;
+        b=iOZ6YfYIAFSpxkm77jQmqBPc5z+nwVn3GBj6EnUmCnFT2hUeI5H3XHIjsDiuglcJzn
+         /8PUrgVgUNg12ajJ37dcPCNcKsFMbXuduLossa4igZ7YJLZ1VLy51GgBlRUdjYkOv2ts
+         rBMcN9aERMMiA8mL77NZ8RejMNmeXreBMZG84=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=ksGk3OQJ0sHs6oF8YbNV+vx7/2oQ/yybTUZJNJNoUzk=;
+        b=HgrFxUo+0Eq+XC/ioHKqyFz3F4jM+3rAcbvO7t0FLITp6GKc9VSn/BvCY80D0OVvY3
+         H0/6jbzh96xJrxUf+HRjE4wIOZ+oCSIoJwke4v04BKPa6CBajDnNfk8XuuZfpIJp5Urp
+         94ej7F0o9Uqv3gN3ttkDqdttm8U14o6y0GKoADBT+/HM4wQ/5KpRnQclwQp6z6f0B9gQ
+         qzT6cVFD15SpBzMJFSdaiWkB82d4eQDxO8UoGm44yJUV/++IZaJZl+1ey2BFcRw9T5Vx
+         lHBo3tARKTvD1TKAryYtMaRkMNMXRBZzTTocewu/EN0GKNAinTwR034eZA4nSPUTVckN
+         yttQ==
+X-Gm-Message-State: ALoCoQm5D1uxm+Bbxv0RIJHNtLj4Ls/kdJIdWgFzkbSJtFYcstViFOKuHxByxfqXpLG4PSJBAk+T
+X-Received: by 10.180.8.230 with SMTP id u6mr10621432wia.21.1445713672512;
+        Sat, 24 Oct 2015 12:07:52 -0700 (PDT)
+Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
+        by smtp.gmail.com with ESMTPSA id jh4sm25057632wjb.33.2015.10.24.12.07.51
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 24 Oct 2015 12:07:51 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <C5352225-D67D-4ECD-83DB-D5E5A8ED13A7@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280132>
 
+On 24/10/15 17:28, Lars Schneider wrote:
+>
 
-On 21 Oct 2015, at 08:32, Luke Diamand <luke@diamand.org> wrote:
+>> Also I have this suspicion that those who do want to use client spec
+>> to get a narrowed view into the history would almost always want
+>> this "ignore empty" behaviour (I'd even say the current behaviour to
+>> leave empty commits by default is a bug).  What are the advantages
+>> of keeping empty commits?  If there aren't many, perhaps git-p4
+>> should by the default skip empties and require p4.keepEmpty
+>> configuration to keep them?
+>
+> I agree.
+> @Luke: What option do you prefer? "git-p4.keepEmptyCommits" or "git-p4.ignoreEmptyCommits" ?
 
-> On 19/10/15 19:43, larsxschneider@gmail.com wrote:
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> A changelist that contains only excluded files (e.g. via client spec or
->> branch prefix) will be imported as empty commit. Add option
->> "git-p4.ignoreEmptyCommits" to ignore these commits.
->> 
->> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->> ---
->>  Documentation/git-p4.txt               |   5 ++
->>  git-p4.py                              |  41 ++++++++-----
->>  t/t9826-git-p4-ignore-empty-commits.sh | 103 +++++++++++++++++++++++++++++++++
->>  3 files changed, 133 insertions(+), 16 deletions(-)
->>  create mode 100755 t/t9826-git-p4-ignore-empty-commits.sh
->> 
->> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
->> index 82aa5d6..f096a6a 100644
->> --- a/Documentation/git-p4.txt
->> +++ b/Documentation/git-p4.txt
->> @@ -510,6 +510,11 @@ git-p4.useClientSpec::
->>  	option '--use-client-spec'.  See the "CLIENT SPEC" section above.
->>  	This variable is a boolean, not the name of a p4 client.
->> 
->> +git-p4.ignoreEmptyCommits::
->> +	A changelist that contains only excluded files will be imported
->> +	as empty commit. To ignore these commits set this boolean option
->> +	to 'true'.
-> 
-> s/as empty/as an empty/
-> 
-> Possibly putting 'true' in quotes could be confusing.
-OK. Will fix.
-
-> 
->> +
->>  Submit variables
->>  ~~~~~~~~~~~~~~~~
->>  git-p4.detectRenames::
->> diff --git a/git-p4.py b/git-p4.py
->> index 0093fa3..6c50c74 100755
->> --- a/git-p4.py
->> +++ b/git-p4.py
->> @@ -2288,12 +2288,6 @@ class P4Sync(Command, P4UserMap):
->>          filesToDelete = []
->> 
->>          for f in files:
->> -            # if using a client spec, only add the files that have
->> -            # a path in the client
->> -            if self.clientSpecDirs:
->> -                if self.clientSpecDirs.map_in_client(f['path']) == "":
->> -                    continue
->> -
->>              filesForCommit.append(f)
->>              if f['action'] in self.delete_actions:
->>                  filesToDelete.append(f)
->> @@ -2368,18 +2362,33 @@ class P4Sync(Command, P4UserMap):
->>          if self.verbose:
->>              print "commit into %s" % branch
->> 
->> -        # start with reading files; if that fails, we should not
->> -        # create a commit.
->> -        new_files = []
->> -        for f in files:
->> -            if [p for p in self.branchPrefixes if p4PathStartsWith(f['path'], p)]:
->> -                new_files.append (f)
->> -            else:
->> -                sys.stderr.write("Ignoring file outside of prefix: %s\n" % f['path'])
->> -
->>          if self.clientSpecDirs:
->>              self.clientSpecDirs.update_client_spec_path_cache(files)
->> 
->> +        def inClientSpec(path):
-> 
-> This seems to be adding a new function in the middle of an existing function. Is that right?
-That is true. I could move these functions into the P4Sync class if you don't like them here. I added them right there because it is the only place where they are used/useful.
-
-
-> 
->> +            if not self.clientSpecDirs:
->> +                return True
->> +            inClientSpec = self.clientSpecDirs.map_in_client(path)
->> +            if not inClientSpec and self.verbose:
->> +                print '\n  Ignoring file outside of client spec' % path
->> +            return inClientSpec
-> 
-> Any particular reason for putting a \n at the start of the message?
-I did this because "sys.stdout.write("\rImporting revision ..." (line 2724) does not add a newline. However, I agree that this looks stupid. I will remove the "\n" and fix the "Import revision" print. Speaking of that one: this is only printed if "not self.silent". Is there a particular reason to have "self.silent" and "self.verbose"? Should we merge the two? 
-
-
-> 
-> Also, could you use python3 style print stmnts, print("whatever") ?
-Sure. How do you prefer the formatting? Using "format" would be true Python 3 style I think:
-print('Ignoring file outside of client spec: {}'.format(path))
-OK?
-
-> 
->> +
->> +        def hasBranchPrefix(path):
->> +            if not self.branchPrefixes:
->> +                return True
->> +            hasPrefix = [p for p in self.branchPrefixes
->> +                            if p4PathStartsWith(path, p)]
->> +            if hasPrefix and self.verbose:
->> +                print '\n  Ignoring file outside of prefix: %s' % path
->> +            return hasPrefix
->> +
->> +        files = [f for f in files
->> +            if inClientSpec(f['path']) and hasBranchPrefix(f['path'])]
->> +
->> +        if not files and gitConfigBool('git-p4.ignoreEmptyCommits'):
->> +            print '\n  Ignoring change %s as it would produce an empty commit.'
->> +            return
-> 
-> As with Junio's comment elsewhere, I worry about deletion here.
-I believe this is right. See my answer to Junio.
-
-
->> +
->>          self.gitStream.write("commit %s\n" % branch)
->>  #        gitStream.write("mark :%s\n" % details["change"])
->>          self.committedChanges.add(int(details["change"]))
->> @@ -2403,7 +2412,7 @@ class P4Sync(Command, P4UserMap):
->>                  print "parent %s" % parent
->>              self.gitStream.write("from %s\n" % parent)
->> 
->> -        self.streamP4Files(new_files)
->> +        self.streamP4Files(files)
->>          self.gitStream.write("\n")
->> 
->>          change = int(details["change"])
->> diff --git a/t/t9826-git-p4-ignore-empty-commits.sh b/t/t9826-git-p4-ignore-empty-commits.sh
->> new file mode 100755
->> index 0000000..5ddccde
->> --- /dev/null
->> +++ b/t/t9826-git-p4-ignore-empty-commits.sh
->> @@ -0,0 +1,103 @@
->> +#!/bin/sh
->> +
->> +test_description='Clone repositories and ignore empty commits'
->> +
->> +. ./lib-git-p4.sh
->> +
->> +test_expect_success 'start p4d' '
->> +	start_p4d
->> +'
->> +
->> +test_expect_success 'Create a repo' '
->> +	client_view "//depot/... //client/..." &&
->> +	(
->> +		cd "$cli" &&
->> +
->> +		mkdir -p subdir &&
->> +
->> +		>subdir/file1.txt &&
->> +		p4 add subdir/file1.txt &&
->> +		p4 submit -d "Add file 1" &&
->> +
->> +		>file2.txt &&
->> +		p4 add file2.txt &&
->> +		p4 submit -d "Add file 2" &&
->> +
->> +		>subdir/file3.txt &&
->> +		p4 add subdir/file3.txt &&
->> +		p4 submit -d "Add file 3"
->> +	)
->> +'
->> +
->> +test_expect_success 'Clone repo root path with all history' '
->> +	client_view "//depot/... //client/..." &&
->> +	test_when_finished cleanup_git &&
->> +	(
->> +		cd "$git" &&
->> +		git init . &&
->> +		git p4 clone --use-client-spec --destination="$git" //depot@all &&
->> +		cat >expect <<-\EOF &&
->> +Add file 3
->> +[git-p4: depot-paths = "//depot/": change = 3]
->> +
->> +Add file 2
->> +[git-p4: depot-paths = "//depot/": change = 2]
->> +
->> +Add file 1
->> +[git-p4: depot-paths = "//depot/": change = 1]
-> 
-> Could you not just test for existence of these files?
-Well, I assume the right files are in there as this is covered with other tests. I want to check that these particular commits are mentioned in the logs (including the commit message and the change list number).
-
-
-> If the format of the magic comments that git-p4 ever changes, this will break.
-I understand your reasoning. But how can I check for the correct commit messages, change list number and their order in a efficient different way?
-
-
-> 
-> (There's a patch out there that gets git-p4 to use git notes, so it's not as far-fetched as it sounds).
-> 
-> 
->> +
->> +		EOF
->> +		git log --format=%B >actual &&
->> +		test_cmp expect actual
->> +	)
->> +'
->> +
->> +test_expect_success 'Clone repo subdir with all history' '
->> +	client_view "//depot/subdir/... //client/subdir/..." &&
->> +	test_when_finished cleanup_git &&
->> +	(
->> +		cd "$git" &&
->> +		git init . &&
->> +		git p4 clone --use-client-spec --destination="$git" //depot@all &&
->> +		cat >expect <<-\EOF &&
->> +Add file 3
->> +[git-p4: depot-paths = "//depot/": change = 3]
->> +
->> +Add file 2
->> +[git-p4: depot-paths = "//depot/": change = 2]
->> +
->> +Add file 1
->> +[git-p4: depot-paths = "//depot/": change = 1]
->> +
->> +		EOF
->> +		git log --format=%B >actual &&
->> +		test_cmp expect actual
->> +	)
->> +'
->> +
->> +test_expect_success 'Clone repo subdir with all history but ignore empty commits' '
->> +	client_view "//depot/subdir/... //client/subdir/..." &&
->> +	test_when_finished cleanup_git &&
->> +	(
->> +		cd "$git" &&
->> +		git init . &&
->> +		git config git-p4.ignoreEmptyCommits true &&
->> +		git p4 clone --use-client-spec --destination="$git" //depot@all &&
->> +		cat >expect <<-\EOF &&
->> +Add file 3
->> +[git-p4: depot-paths = "//depot/": change = 3]
->> +
->> +Add file 1
->> +[git-p4: depot-paths = "//depot/": change = 1]
->> +
->> +		EOF
->> +		git log --format=%B >actual &&
-> 
-> 
-> A deletion test would make me feel more comfortable!
-Agreed! I will add one!
-
-Thanks,
-Lars
+keepEmptyCommits.
