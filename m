@@ -1,104 +1,92 @@
-From: Christian Weiske <cweiske@cweiske.de>
-Subject: Re: git svn clone clone php/pear/Net_LDAP2 misses tags and branches
-Date: Sun, 25 Oct 2015 17:30:33 +0100
-Message-ID: <20151025173033.28346d49@bogo>
-References: <20151025154325.36eddb4c@bogo>
-	<CAOc6etYvzv+MFyTXk0zU673b1GypyUbTOuiVyS35PS4ROFHztg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] blame: allow blame --reverse --first-parent when it makes sense
+Date: Sun, 25 Oct 2015 09:52:53 -0700
+Message-ID: <xmqqk2qalwka.fsf@gitster.mtv.corp.google.com>
+References: <1445485872-21453-1-git-send-email-max@max630.net>
+	<1445485872-21453-3-git-send-email-max@max630.net>
+	<xmqqfv13ttq6.fsf@gitster.mtv.corp.google.com>
+	<20151022145606.GD5722@wheezy.local>
+	<xmqqvb9yra5g.fsf@gitster.mtv.corp.google.com>
+	<20151025124338.GA27615@wheezy.local>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- boundary="Sig_/08Ehfft=V=0ZL82yNn/9ZOX"; protocol="application/pgp-signature"
-Cc: git@vger.kernel.org
-To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 25 17:30:49 2015
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+	git@vger.kernel.org
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Sun Oct 25 17:53:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqOC0-000720-Fm
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Oct 2015 17:30:48 +0100
+	id 1ZqOXc-0004fM-3B
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Oct 2015 17:53:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024AbbJYQaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Oct 2015 12:30:39 -0400
-Received: from cweiske.de ([5.35.241.22]:37902 "EHLO mail.cweiske.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751794AbbJYQaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Oct 2015 12:30:39 -0400
-Received: by mail.cweiske.de (Postfix, from userid 65534)
-	id 561622E570D; Sun, 25 Oct 2015 17:30:37 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on ahso2
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-	URIBL_BLOCKED autolearn=unavailable version=3.3.2
-Received: from bogo (p5B09EA9E.dip0.t-ipconnect.de [91.9.234.158])
+	id S1751969AbbJYQxD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Oct 2015 12:53:03 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58326 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751717AbbJYQxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Oct 2015 12:53:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5C54D24287;
+	Sun, 25 Oct 2015 12:52:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=mP/yVHttesscAIaMfzaT33PpfhY=; b=iox8F6z4yH0C+zachQmc
+	gc7xZG4wYt3fdhg2Fi3aWza5qzzdDP5j8B9hZhokJotA0pZNMPzv/M3V8Y/DiFN1
+	D2tnTajYtzVeUdqyfsVnSPxUrpNHFjFQV39GCuXEyoPOIp66Px3RR/OB4MifFJXH
+	VD3+4hHtuEyyHABP8wPQM4A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=nc4Dz9x8xiOEoCp+AceCteEYFOsh2I47x1kpYKJW909FQK
+	UT6ZhIl74DOGRSJdHPbTBeuZWu3cBjd5z4UeD6fDKssFPAGgfmvIsFzFl96pgrkR
+	YXnsvTYeDYVkQ8/yAPT0UE1Ctjwfl4aSVUwlj/bWHpp9aDdtmMallCkv7m/Z8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 52F6B24284;
+	Sun, 25 Oct 2015 12:52:55 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by mail.cweiske.de (Postfix) with ESMTPSA id CCF6D2E567F;
-	Sun, 25 Oct 2015 17:30:35 +0100 (CET)
-In-Reply-To: <CAOc6etYvzv+MFyTXk0zU673b1GypyUbTOuiVyS35PS4ROFHztg@mail.gmail.com>
-X-Mailer: Claws Mail 3.10.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C696724283;
+	Sun, 25 Oct 2015 12:52:54 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D64ABEB2-7B38-11E5-A83F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280159>
 
---Sig_/08Ehfft=V=0ZL82yNn/9ZOX
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Max Kirillov <max@max630.net> writes:
 
-Hello Edmundo,
+> This additionally forbids having several end commits
+> (git blame --reverse --first-parent ^A B C ...), but
+> this does not seem to have much practical use.
 
+Even if there were practical uses for a request with multiple end
+points, a solution that
 
-> Using -r single-revision-number (against tha same repo), I was not
-> able to pull much (on that revision only the standard layout was set
-> up so nothing would come out for git)
+ (1) guarantees that "blame --reverse --first-parent" is the only
+     thing that is affected; and
 
-It's actually the standard layout here; I only used the single
-parameters to rule out problems with --stdlayout.
+ (2) errors out if "blame --reverse --first-parent" cannot give a
+     sensible answer.
 
+is a strict improvement over "we don't know how to produce a
+sensible answer in all cases, so we just forbid".  Somebody who
+needs multiple end points badly can build on top with the same
+principle, just widening the definition of what is "a sensible
+answer" in the criteria (2) above.  Until then, defining the
+sensible answer to be "an answer that consists of commits on the
+first parent chain (but in reverse)" is perfectly fine [*1*].
 
-> Did you try with -r revision-number:HEAD?
-
-Good idea. I tried it, and now I have the tags and branches:
-
-$ git svn clone --stdlayout
-  https://svn.php.net/repository/pear/packages/Net_LDAP2
-  -r 255346:HEAD
-...
-
-$ cd Net_LDAP2
-$ git br -a
-* master
-  remotes/origin/implementingPagedSearches_PHP5.4
-  remotes/origin/tags/Net_LDAP2-2.0.10
-  remotes/origin/tags/Net_LDAP2-2.0.12
-...
-  remotes/origin/trunk
-
-Thanks!
+As you added your patch after "-- <EOL>", my MUA refuses to quote it
+in this response, but that's OK, as this message is not about the
+patch itself ;-)
 
 
-Is there a way to convert the tags branches into real tags
-automatically?
+[Footnote]
 
-
---=20
-Regards/Mit freundlichen Gr=C3=BC=C3=9Fen
-Christian Weiske
-
--=3D=E2=89=A1 Geeking around in the name of science since 1982 =E2=89=A1=3D-
-
---Sig_/08Ehfft=V=0ZL82yNn/9ZOX
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlYtA6kACgkQFMhaCCTq+CNYNQCgmgPv2t3AAf7XSO16u0nHdie3
-JysAnRDgSvBWIQOEGTt6qRWNciqK33Sf
-=Rj/k
------END PGP SIGNATURE-----
-
---Sig_/08Ehfft=V=0ZL82yNn/9ZOX--
+*1* I haven't read the patch text to see if that is what the updated
+    code is computing, though.  That's for a weekday ;-).
