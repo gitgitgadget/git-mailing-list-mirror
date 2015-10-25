@@ -1,115 +1,94 @@
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: Re: git svn clone clone php/pear/Net_LDAP2 misses tags and branches
-Date: Sun, 25 Oct 2015 09:32:48 -0600
-Message-ID: <CAOc6etYvzv+MFyTXk0zU673b1GypyUbTOuiVyS35PS4ROFHztg@mail.gmail.com>
-References: <20151025154325.36eddb4c@bogo>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Christian Weiske <cweiske@cweiske.de>
-X-From: git-owner@vger.kernel.org Sun Oct 25 16:33:14 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v2] ref-filter: fallback on alphabetical comparison
+Date: Sun, 25 Oct 2015 21:59:00 +0530
+Message-ID: <1445790540-22764-1-git-send-email-Karthik.188@gmail.com>
+Cc: j6t@kdbg.org, Karthik Nayak <Karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 25 17:28:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqNIG-00062i-Cu
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Oct 2015 16:33:12 +0100
+	id 1ZqOAA-00059H-7O
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Oct 2015 17:28:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751436AbbJYPct convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Oct 2015 11:32:49 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:34360 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751327AbbJYPct convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Oct 2015 11:32:49 -0400
-Received: by padhk11 with SMTP id hk11so162639347pad.1
-        for <git@vger.kernel.org>; Sun, 25 Oct 2015 08:32:48 -0700 (PDT)
+	id S1751798AbbJYQ2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Oct 2015 12:28:50 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:35926 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759AbbJYQ2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Oct 2015 12:28:49 -0400
+Received: by pacfv9 with SMTP id fv9so170732720pac.3
+        for <git@vger.kernel.org>; Sun, 25 Oct 2015 09:28:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=VbRzAe7xiADpyBcn3Cb6npBWOvO+29HAk6vb4S7c5rU=;
-        b=FlpIjtHLRQW82pvPGmtfR2yR/3OCstIlAHPnJYiekLc5JoeI84LF4Xz0/pfTT+vzqR
-         zvV0lhzvrWvxEXtOK26FVAUlF1q3GkjdNB40+qLutFuZ+J5hhlJL2G282XXEkHMpXg1T
-         88qprGEp1Rb+mkJn5vWPBXfImlAmbT41lbsHX7CfagBq8sgEuVmVv3y9NGukf5cPTP2e
-         BlkingkKBG1pcCMFNc/GuU4qogJl85/IEAKSYCgg/gmwmEGOlU9xOPkg0MD6ZIrXDAyt
-         ToHd/OX5mcDqDMCMDwfWmG0oYLxcnt+reZ1T25yx97ORJmiNu6FCyNappgf6hjp9PIVz
-         p5Bw==
-X-Received: by 10.68.68.143 with SMTP id w15mr17374181pbt.28.1445787168600;
- Sun, 25 Oct 2015 08:32:48 -0700 (PDT)
-Received: by 10.66.149.4 with HTTP; Sun, 25 Oct 2015 08:32:48 -0700 (PDT)
-In-Reply-To: <20151025154325.36eddb4c@bogo>
+        h=from:to:cc:subject:date:message-id;
+        bh=X9Rh6ds7GQFseN3shsTMIqvG8qj7uuku0MywZBj2moU=;
+        b=mtKuQBXwS3pg37hQ261NZ0s6vM797ajDX8sy8UHgIZq9G2Tn02+nHAxnFbeNpQi9Mj
+         ZblNXXX6ZU5JqtahkosPky4uwrDKLE5vUpFh885oKRbqUD4J4SMosgKxaUeqUgd6Px2i
+         +ISp7zGdiGUukU62GSUqWtsqjWORE0dylQe/mBEvf/IZlxiXvqG5fcrEFs/uUrh3Cmzk
+         VkFOpe7GNqFa1tkZOVo7T5gvHpq3aAbagH5rJ512RpU1vs4oSZVb5BOFwAcOI3AeNXS9
+         BSG9Q1ycu0XrPt3DO7qtlalEV86K8jNKPdeqqalJArDH0qpzp2LcZ3KzROtSlrD5v1mv
+         t4Ow==
+X-Received: by 10.66.151.138 with SMTP id uq10mr17271034pab.22.1445790528772;
+        Sun, 25 Oct 2015 09:28:48 -0700 (PDT)
+Received: from ashley.localdomain ([106.51.130.23])
+        by smtp.gmail.com with ESMTPSA id yg2sm29272256pbb.79.2015.10.25.09.28.46
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 25 Oct 2015 09:28:48 -0700 (PDT)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.6.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280157>
 
-Using -r single-revision-number (against tha same repo), I was not
-able to pull much (on that revision only the standard layout was set
-up so nothing would come out for git)
+In ref-filter.c the comparison of refs while sorting is handled by
+cmp_ref_sorting() function. When sorting as per numerical values
+(e.g. --sort=objectsize) there is no fallback comparison when both
+refs hold the same value. This can cause unexpected results (i.e. the
+order of listting refs with equal values cannot be pre-determined) as
+pointed out by Johannes Sixt ($gmane/280117).
 
-Did you try with -r revision-number:HEAD?
+Hence, fallback to alphabetical comparison based on the refname
+whenever the other criterion is equal. Fix the test in t3203 in this
+regard.
 
+Reported-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+---
+ ref-filter.c             | 2 +-
+ t/t3203-branch-output.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-=2E
-=2E
-=2E
-r255572 =3D 73d7692d844ee6baae8b4b2e5fc0f07a4118d09e (refs/remotes/svn/=
-trunk)
-       M       package2.xml
-r255574 =3D d1f380277cb6a4d096d71e3a83942bb17dabf041 (refs/remotes/svn/=
-trunk)
-=46ound possible branch point:
-https://svn.php.net/repository/pear/packages/Net_LDAP2/trunk =3D>
-https://svn.php.net/repository/pear/packages/Net_LDAP2/tags/RELEASE_2_0=
-_0RC2
-, 255574
-=46ound branch parent: (refs/remotes/svn/tags/RELEASE_2_0_0RC2)
-d1f380277cb6a4d096d71e3a83942bb17dabf041
-=46ollowing parent with do_switch
-       D       LICENSE
-       D       tests/ldif_data/unsorted_w50_WIN.ldif
-Successfully followed parent
-W: -empty_dir: LICENSE
-W: -empty_dir: tests/ldif_data/unsorted_w50_WIN.ldif
-r255575 =3D d37158da793aee8692a6dca23870b9d2e3baaf18
-(refs/remotes/svn/tags/RELEASE_2_0_0RC2)
-       M       package2.xml
-r255576 =3D 05d71ac6543430b119232714334b3d836d20bfc8 (refs/remotes/svn/=
-trunk)
-       M       package2.xml
-       M       LDAP2/Entry.php
-=2E
-=2E
-=2E
-
-
-On Sun, Oct 25, 2015 at 8:43 AM, Christian Weiske <cweiske@cweiske.de> =
-wrote:
-> Hi,
->
->
-> Using git 2.6.2 to clone an SVN repository misses out branches and ta=
-gs.
->
-> The clone command:
->
-> $ git svn clone --trunk=3Dtrunk --tags=3Dtags --branches=3Dbranches
->   --prefix=3Dorigin/
->   https://svn.php.net/repository/pear/packages/Net_LDAP2 -r 255346
->
-> The final repository's tag and branch list is empty.
->
-> There are tags and branches, though - see the web interface at
-> http://svn.php.net/viewvc/pear/packages/Net_LDAP2/
->
-> What am I doing wrong here?
->
-> --
-> Regards/Mit freundlichen Gr=C3=BC=C3=9Fen
-> Christian Weiske
->
-> -=3D=E2=89=A1 Geeking around in the name of science since 1982 =E2=89=
-=A1=3D-
+diff --git a/ref-filter.c b/ref-filter.c
+index 046e73b..7b33cb8 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1698,7 +1698,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+ 		if (va->ul < vb->ul)
+ 			cmp = -1;
+ 		else if (va->ul == vb->ul)
+-			cmp = 0;
++			cmp = strcmp(a->refname, b->refname);
+ 		else
+ 			cmp = 1;
+ 	}
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index f77971c..9f2d482 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -158,8 +158,8 @@ EOF
+ 
+ test_expect_success 'git branch `--sort` option' '
+ 	cat >expect <<-\EOF &&
+-	  branch-two
+ 	* (HEAD detached from fromtag)
++	  branch-two
+ 	  branch-one
+ 	  master
+ 	EOF
+-- 
+2.6.2
