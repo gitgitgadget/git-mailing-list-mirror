@@ -1,97 +1,83 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] ref-filter: fallback on alphabetical comparison
-Date: Sat, 24 Oct 2015 20:18:19 -0400
-Message-ID: <CAPig+cRnDNFCQs6qspKDEz6C0Rum8W0tSMxejw+WOBD=XHrDxw@mail.gmail.com>
-References: <562B3807.2030203@kdbg.org>
-	<1445697770-29331-1-git-send-email-Karthik.188@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 25 02:19:02 2015
+From: Xue Fuqiao <xfq.free@gmail.com>
+Subject: [PATCH] user-manual: fix the description of fast-forward
+Date: Sun, 25 Oct 2015 08:28:43 +0800
+Message-ID: <1445732923-57550-1-git-send-email-xfq.free@gmail.com>
+Cc: git@vger.kernel.org, Xue Fuqiao <xfq.free@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Oct 25 02:30:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zq91Y-00057o-6H
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Oct 2015 02:19:00 +0200
+	id 1Zq9Cv-0000yh-Bo
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Oct 2015 02:30:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752641AbbJYASV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Oct 2015 20:18:21 -0400
-Received: from mail-vk0-f54.google.com ([209.85.213.54]:35720 "EHLO
-	mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752572AbbJYASU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Oct 2015 20:18:20 -0400
-Received: by vkfw189 with SMTP id w189so80893909vkf.2
-        for <git@vger.kernel.org>; Sat, 24 Oct 2015 17:18:19 -0700 (PDT)
+	id S1752558AbbJYAaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Oct 2015 20:30:06 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:36781 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751386AbbJYAaF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Oct 2015 20:30:05 -0400
+Received: by pacfv9 with SMTP id fv9so158001433pac.3
+        for <git@vger.kernel.org>; Sat, 24 Oct 2015 17:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=KwYKpLMtOc1nlDQoxIc8laicxRsVpY5CPHPQLAlVCts=;
-        b=zksZlkfYTMRszjFIt+9ni222WZj8ufMyHAYNhcRplNloQnMl8spjhoMLC8BWFczF2r
-         ILjxN6zTPzd53Sul+CS82gyOK9dJf5+7IbIEThXfGW8BQnO5hR1f47CDCWce1p4mn5GW
-         mHq8tm7leYNAFlU2VJhjOcsDhPo0mJb60C4Levv0mA/cWGA69aKWL+ssitcSGiy2ski+
-         u7IY0HFLMr+hLM8kwmcJgErYtjjMN/4LOv2Aolj5s/dQArilrqRr3B4aqd0C3X7qXcWy
-         TGIMHT1ViSGr4s/GBqGS5ULMQhrORebzMcQ60++6bynygyQJDs70wFYlosLcjVXl2Daw
-         lG7Q==
-X-Received: by 10.31.153.129 with SMTP id b123mr18408963vke.117.1445732299579;
- Sat, 24 Oct 2015 17:18:19 -0700 (PDT)
-Received: by 10.31.159.204 with HTTP; Sat, 24 Oct 2015 17:18:19 -0700 (PDT)
-In-Reply-To: <1445697770-29331-1-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: nz9XZeMAbs9AfdvLsgytWydt-Kc
+        h=from:to:cc:subject:date:message-id;
+        bh=Q/nC+grRmcCoL89rZ/WHGotjbNFJZmBrKJLyvl8xS5o=;
+        b=qiwLaWKWZELtvb7VtFHEuZk4tJUaL9Wnku6B9+f9j/OnTceS2hs/1fi0aYi/WL9GTO
+         SBIY6kq5RRXAQLllGznwEPFhOuaPawWXtsqhOzL0haiBTQVXI6MhECUmrfJw5enpxoN4
+         uSKEQjouSB9KQzCeIKHiOKN6rvRR38EaAqYeJDKaIevzrSQoSuaSaRP3eqQee+m+gM+B
+         dtzuRgF5bQkucpa1iHDiNV+E9QHAWq7/cVieQYqAAsXcMa2MTbEnkXtUhldH9GsN1gWV
+         YlYkmaGJVxnR7uXMGTl20Alujx5zFmRJtIZ50ersGc9Y8csp0CqBXSYkl6PkETR7mcMv
+         ypyg==
+X-Received: by 10.66.161.35 with SMTP id xp3mr13731507pab.13.1445733003925;
+        Sat, 24 Oct 2015 17:30:03 -0700 (PDT)
+Received: from XFQ-Mac.vpn ([119.81.160.236])
+        by smtp.gmail.com with ESMTPSA id d13sm26153713pbu.20.2015.10.24.17.30.02
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 24 Oct 2015 17:30:03 -0700 (PDT)
+X-Mailer: git-send-email 2.6.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280135>
 
-On Sat, Oct 24, 2015 at 10:42 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> In ref-filter.c the comparison of refs while sorting is handled by
-> cmp_ref_sorting() function. When sorting as per numerical values
-> (e.g. --sort=objectsize) there is no fallback comparison when both refs
-> hold the same value. This can cause unexpected results as pointed out
-> by Johannes Sixt ($gmane/280117).
+Currently, the "Fast-forward merges" section of user-manual.txt says if the
+current branch is a descendant of the other, Git will perform a fast-forward
+merge, but it should the other way around.  Correct this issue and improve
+wording.
 
-Please make the commit message self-contained by describing the
-"unexpected results" here rather than directing readers to chase down
-the information elsewhere themselves.
+Signed-off-by: Xue Fuqiao <xfq.free@gmail.com>
+Thanks-to: Junio C Hamano <gitster@pobox.com>
+---
 
-> Hence, fallback to alphabetical comparison based on the refname whenever
-> the other criterion is equal. Fix the test in t3203 in this regard.
->
-> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+Discussed in $gmane/280042.
 
-It would not be amiss to add a Reported-by: to credit j6t.
+ Documentation/user-manual.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-> ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 046e73b..7b33cb8 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1698,7 +1698,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
->                 if (va->ul < vb->ul)
->                         cmp = -1;
->                 else if (va->ul == vb->ul)
-> -                       cmp = 0;
-> +                       cmp = strcmp(a->refname, b->refname);
->                 else
->                         cmp = 1;
->         }
-> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-> index f77971c..9f2d482 100755
-> --- a/t/t3203-branch-output.sh
-> +++ b/t/t3203-branch-output.sh
-> @@ -158,8 +158,8 @@ EOF
->
->  test_expect_success 'git branch `--sort` option' '
->         cat >expect <<-\EOF &&
-> -         branch-two
->         * (HEAD detached from fromtag)
-> +         branch-two
->           branch-one
->           master
->         EOF
-> --
-> 2.6.2
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 1b7987e..d68df13 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1431,11 +1431,11 @@ differently.  Normally, a merge results in a merge commit, with two
+ parents, one pointing at each of the two lines of development that
+ were merged.
+ 
+-However, if the current branch is a descendant of the other--so every
+-commit present in the one is already contained in the other--then Git
+-just performs a "fast-forward"; the head of the current branch is moved
+-forward to point at the head of the merged-in branch, without any new
+-commits being created.
++However, if the current branch is an ancestor of the other--so every commit
++present in the current branch is already contained in the other branch--then Git
++just performs a "fast-forward"; the head of the current branch is moved forward
++to point at the head of the merged-in branch, without any new commits being
++created.
+ 
+ [[fixing-mistakes]]
+ Fixing mistakes
+-- 
+2.6.2
