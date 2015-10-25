@@ -1,131 +1,151 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] t5516 "75 - deny fetch unreachable SHA1, allowtipsha1inwant=true" flaky?
-Date: Sun, 25 Oct 2015 10:38:01 -0700
-Message-ID: <xmqq8u6qluh2.fsf@gitster.mtv.corp.google.com>
-References: <9A3BCDA2-5915-4287-A385-95A3ACCBB850@gmail.com>
-	<CABA5-z=1N5=8huSr=BLmjj_KHLbMMiXdo0qok7Mc_ZOeB=J9jA@mail.gmail.com>
-	<CFEB6E3F-48A0-41D8-A8FD-D48B806461DB@gmail.com>
+Subject: Re: [PATCH] fetch: only show "Fetching remote" when verbose mode is enabled
+Date: Sun, 25 Oct 2015 11:34:49 -0700
+Message-ID: <xmqqwpuakd9y.fsf@gitster.mtv.corp.google.com>
+References: <1445741384-30828-1-git-send-email-pabs3@bonedaddy.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Fredrik Medley <fredrik.medley@gmail.com>, peff@peff.net,
-	patrick.reynolds@github.com, Git Users <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 25 18:38:16 2015
+Cc: git@vger.kernel.org
+To: Paul Wise <pabs3@bonedaddy.net>
+X-From: git-owner@vger.kernel.org Sun Oct 25 19:35:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqPFD-0000hp-0a
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Oct 2015 18:38:11 +0100
+	id 1ZqQ8F-0008Km-5U
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Oct 2015 19:35:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751579AbbJYRiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Oct 2015 13:38:06 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61869 "EHLO
+	id S1752248AbbJYSex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Oct 2015 14:34:53 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55885 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751085AbbJYRiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Oct 2015 13:38:05 -0400
+	with ESMTP id S1751776AbbJYSew (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Oct 2015 14:34:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1B02D231B9;
-	Sun, 25 Oct 2015 13:38:03 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 03621245A4;
+	Sun, 25 Oct 2015 14:34:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xef01RX3Q1x98jQRKAp0mkxbGXs=; b=h1Z6pa
-	vnuKQ73upJJw86e0eDBNmv1neP1vbDwMsb3DmG+YcDvU2CxaxRhokRYk1FJwz3lb
-	hilvCN6ruqBo+AbfP9myXs7yI+OuADv2C7siz2+xtRdLDHQDZ2KhvMCvZ/GiSffj
-	akmA16fsYC9zYTQyfUCjV0z/OMKkllikcDTDQ=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=42ne5HYySZgbw3rm4pwnFV1jSBw=; b=q5AiVODpPuCXeHtt14AY
+	xy4TCp6Fo73cvn7XrXKc8USq4j7Z5rL9erJ8qDGQP2slRB4r6ALC2EXcyzEDC0Au
+	u2ivRzFQZLzfCzRTw5S5WNA3wVs0r5lTmv1sqsleod0R3uv7GwP3pNIFbE7Mn/A3
+	lEn7AGlp+CDW0yTUZ/34XHQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L7+4c9lCjdqpv2a4a/9RZX7Zh9yJ1wfZ
-	xIqnj9C2dAs5piSpMCP+JllP1C7c08NmQ+B5bKEZEDbWeaV5r8BXejydF+JuC88Q
-	JV+3tSBdbBpQRbIwbLexA4W2gRf+n638/whTxuzK0qAQxdBfBaxvyessuhqCV+6m
-	FVL1LN+uik8=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=wLptJDtG7CcogcdMFE9ha/Y3tEtya6XeH5xV7pW9ZFduUc
+	zKMK6cq6o6/v70HxirD3pio2UNjT9ZMc9kCVYgKHa/61maXGHaTizkraIW33saTc
+	YR9tLnlPH4Cf6VyFjdQV9g44E+O8uJmBz6T5ETYQ/fmYXANXxefxGlHbCs4tY=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 12CE6231B6;
-	Sun, 25 Oct 2015 13:38:03 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F04A9245A3;
+	Sun, 25 Oct 2015 14:34:50 -0400 (EDT)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8A890231B5;
-	Sun, 25 Oct 2015 13:38:02 -0400 (EDT)
-In-Reply-To: <CFEB6E3F-48A0-41D8-A8FD-D48B806461DB@gmail.com> (Lars
-	Schneider's message of "Sun, 25 Oct 2015 14:47:58 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 79DAF245A2;
+	Sun, 25 Oct 2015 14:34:50 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 243D5CAA-7B3F-11E5-AEB4-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 13865896-7B47-11E5-A9F2-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280162>
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+Paul Wise <pabs3@bonedaddy.net> writes:
 
-> (1) Make upload-pack wait for a response (with timeout) before it
-> closes the pipe. However, I believe this would not be in line with
-> the general Git philosophy stated in "git.c" (added in 7559a1be):
-> "Many parts of Git have subprograms communicate via pipe, expect
-> the upstream of a pipe to die with SIGPIPE when the downstream of
-> a pipe does not need to read all that is written."
+I ignored your patch when you sent it the first time the last week,
+due to the same issues I had with this round (see below) and forgot
+about it.
 
-While I think "waiting" with "timeout" is undesirable for the
-upload-pack / fetch-pack communication, you are rejecting it for a
-wrong reason.
+> By default when fetching one remote nothing is printed unless there
+> are changes that need fetching. This makes fetching multiple remotes
+> be just as verbose as fetching a single remote.
 
-What you quoted is not even a Git philosophy.  Yes, many parts do
-want to behave like that, and the "restore" needs to make sure that
-such a behaviour happens by fixing the environment given to us by
-the process spawning us.
+I read this several times over a few days and I still cannot tell
+what you are trying to say.  Let me disect.
 
-That does not mean some parts of the system, if they want to run
-SIGPIPE ignored, must not do so because it goes "against the
-philosophy".  
+> By default when fetching one remote nothing is printed unless there
+> are changes that need fetching.
 
-It only means that these parts of the system, if they choose to,
-must arrange to do so themselves.  That "restore" thing is merely to
-give us a known good state to start from.
+This is the description of the current behaviour, and a correct one
+at that.  We are silent when nothing needs to be done here.
 
-> (2) Ignore SIGPIPE errors when "fetch-pack" sends a "done" using
-> "sigchain_push(SIGPIPE, SIG_IGN)" /
-> "sigchain_pop(SIGPIPE)". However, then the check_pipe function
-> (added in 756e676c) kicks in and we would need to work around that
-> as well.
+I cannot tell if you are trying to say if that is problematic, or if
+you are trying to say if it is a good thing.
 
-I am not sure if we are looking at the issue the right way once we
-start saying 'do this _when_ fetch sends ...'.
+> This makes fetching multiple remotes
+> be just as verbose as fetching a single remote.
 
-The communication between fetch and upload goes bidirectionally in
-an overlapping fashion, and at any point in the communication, not
-limited to "after fetch sends 'done'", the other side can decide to
-disconnect while one side is sending.  If you are lucky, you will
-finish sending the current batch and try to read from the other side
-and notice "the remote end hung up unexpectedly", and if you are
-unlucky, you find your write cannot go through due to broken pipe.
+I cannot tell what "This" refers to.
 
-Dying with SIGPIPE would not give us a chance to clean things up
-(i.e. react to the "not our ref" error in a more application
-specific way), so the current behaviour has a room for improvement,
-but I suspect that changes required for "dying more nicely" would be
-rather large [*1*]; I am not convinced if it is worth the effort.
+Your earlier sentence was about the behaviour of fetching from one
+remote, e.g. "git fetch this".  And this second sentence makes it
+sound as if that behaviour has some influence on how verbosely "git
+fetch group" (where 'this' and 'that' are members of 'remotes.group')
+to fetch from multiple remotes behaves.
 
-That leaves us to something along this line...
+Also (and this is the more important part of my complaint), I cannot
+tell if you are saying that it is *bad* for fetching multiple to be
+just as verbose, or if it is *good*, or what.
 
-> (3) Add a method "test_must_fail_or_die" to
-> "test-lib-functions.sh". This method accepts exit codes 129<x<192,
-> too. Use the new method in t5516.
+If you are fetching from two places, and only one of them has
+something new, you would see
 
-... but I have to wonder if 129<x<192 is loosening too much, given
-that the only error we expect, other than the orderly shutdown, is
-reception of sigpipe.
+    $ git fetch subs
+    Fetching paulus
+    Fetching l10n
+    From git://one.of.the.places.xz/
+       aadb70a..74301d6  master     -> this/master
 
+so that you can see how remote.subs group expanded to.
+   
+> This is needed when fetching multiple repositories using the myrepos
+> tool in minimal output mode, where myrepos only prints the repository
+> names when git fetch prints some output.
 
-[Footnote]
+That does not sound like a valid excuse to change the behaviour of
+the command everybody, not just "myrepos tool" (whatever it is),
+uses.  Your explanation does not seem to give us enough information
+to answer this question intelligently: shouldn't you be fixing
+myrepos instead, perhaps by making it run 'git fetch' with more
+verbose mode, if it wants to see more information, or running 'git
+fetch' and parsing different parts of its output?
 
-*1* We'd need to update fetch-pack.c:send_request() so that it and
-    its helpers use a variant of write() that does not die with
-    SIGPIPE and instead returns an error status to the caller, and
-    update all the callers to react to an error, which may involve
-    jumping to the receive codepath with the hope that some early
-    response is already waiting for us to read and gives us an error
-    message from the remote side, or something along that line.  And
-    we'd probably need to update the other direction, i.e. push and
-    receive, for symmetry.
+Having said all that, this time I read the change and the change
+itself feels 40% sensible, even for those who do not care about
+"myrepos" at all.
+
+I'd sell it like the attached, if I were doing this patch.  The last
+paragraph is where the remaining 60% went ;-)
+
+-- sample --
+Subject: fetch: do not show remote group component without change
+
+When fetching from a remote group, "Fetching X" is shown, followed
+by the URL and ref-update summary, for each component of the remote
+group.  With the default verbosity, the URL and ref-update summary
+are not shown for repositories without anything new, but "Fetching
+X" is always shown, which results in an output like this:
+
+    $ git fetch group
+    Fetching X
+    From git://the.url.for.X.repo/
+       aadb70a..74301d6  master     -> X/master
+    Fetching Y
+    Fetching Z
+
+if the 'remotes.group' is configured to refer to three remotes, X, Y
+and Z.  Given that "git fetch Y" would have produced no output with
+the same verbosity, having the last two lines look inconsistent.
+
+Tweak the verbosity so that "Fetching X" lines are given only when a
+verbose output was requested with "git fetch -v".
+
+Note that the current output was deliberately designed like this to
+give an easy reminder for the user what the components of 'group'
+are.  With this change, we are selfishly and unilaterally breaking a
+feature that was designed to help them, but if they strongly care,
+they can complain and revert this change.
+
+-- end sample --
