@@ -1,85 +1,103 @@
-From: Christian Weiske <cweiske@cweiske.de>
-Subject: Re: git svn clone clone php/pear/Net_LDAP2 misses tags and branches
-Date: Sun, 25 Oct 2015 19:48:51 +0100
-Message-ID: <20151025194851.793f8c64@bogo>
-References: <20151025154325.36eddb4c@bogo>
-	<CAOc6etYvzv+MFyTXk0zU673b1GypyUbTOuiVyS35PS4ROFHztg@mail.gmail.com>
-	<20151025173033.28346d49@bogo>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/2] Fix interactive rebase when the editor saves with CR/LF
+Date: Sun, 25 Oct 2015 12:12:56 -0700
+Message-ID: <xmqqpp02kbif.fsf@gitster.mtv.corp.google.com>
+References: <cover.1445777347.git.johannes.schindelin@gmx.de>
+	<cover.1445782122.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- boundary="Sig_/TSSKIN8aelLu=0eMjfRhOYs"; protocol="application/pgp-signature"
-Cc: git@vger.kernel.org
-To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 25 19:49:50 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Chad Boles <chadbo@microsoft.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Philip Oakley <philipoakley@iee.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 25 20:13:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqQMU-0006m4-OA
-	for gcvg-git-2@plane.gmane.org; Sun, 25 Oct 2015 19:49:47 +0100
+	id 1ZqQjP-000620-2X
+	for gcvg-git-2@plane.gmane.org; Sun, 25 Oct 2015 20:13:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876AbbJYSs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Oct 2015 14:48:57 -0400
-Received: from cweiske.de ([5.35.241.22]:58201 "EHLO mail.cweiske.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751579AbbJYSs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Oct 2015 14:48:57 -0400
-Received: by mail.cweiske.de (Postfix, from userid 65534)
-	id 32D152E571C; Sun, 25 Oct 2015 19:48:52 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on ahso2
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.2
-Received: from bogo (p5B09EA9E.dip0.t-ipconnect.de [91.9.234.158])
+	id S1752146AbbJYTNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Oct 2015 15:13:16 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53703 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752126AbbJYTM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Oct 2015 15:12:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 002CA25320;
+	Sun, 25 Oct 2015 15:12:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9eoqQSadHUWXbPh2svd9Sthvpzg=; b=vaMWhv
+	FijXTm1lRMxP8mPPBSW2V4ZMKwQMj0Pz/eWg/hw7qTSqJYmv8NdNXCtVqgHukdYc
+	pD5a/eL/ZcGTaCgatxycdxPT8+w6zOlH6QFOqAKpe+OVmYM2W6/fWv5PSFutDfkQ
+	Wo8R9AauQt+qzytVj9tArSsZvG90nJeI/9Tvk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hMiFjUCptSCTuHH2gHleUlowZeQl84by
+	h3kJE3nuQfTQL8rNVutgqfYfBMUQNj5PXwUv3FPKDqRUQOeMaEixm6yYxzCIMuYd
+	pXVQFjaHiZkn1rcu0oSy667Wc+Qw0lgkmj5Lekh4Y4cQElf/7d69iy8Wh5KVfu1t
+	ncRa4w10MqQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EA62F2531F;
+	Sun, 25 Oct 2015 15:12:57 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by mail.cweiske.de (Postfix) with ESMTPSA id A07DA2E5434;
-	Sun, 25 Oct 2015 19:48:51 +0100 (CET)
-In-Reply-To: <20151025173033.28346d49@bogo>
-X-Mailer: Claws Mail 3.10.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6D9DA2531E;
+	Sun, 25 Oct 2015 15:12:57 -0400 (EDT)
+In-Reply-To: <cover.1445782122.git.johannes.schindelin@gmx.de> (Johannes
+	Schindelin's message of "Sun, 25 Oct 2015 15:10:11 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 66B0DC58-7B4C-11E5-B93C-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280164>
 
---Sig_/TSSKIN8aelLu=0eMjfRhOYs
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Hello Christian,
+> Chad Boles reported that `git rebase -i` recently started producing
+> errors when the editor saves files with DOS line endings. The symptom
+> is:
+>
+> 	Warning: the command isn't recognized in the following line:
+> 	 -
+>
+> 	You can fix this with 'git rebase --edit-todo'.
+> 	Or you can abort the rebase with 'git rebase --abort'.
+>
+> The real bummer is that simply calling `git rebase --continue` "fixes"
+> it.
 
+Two questions.
 
-> > Did you try with -r revision-number:HEAD?
->=20
-> Good idea. I tried it, and now I have the tags and branches:
+ * What does the DOS editor do to a file with ^M in the middle of a
+   line, e.g. "A^MB^M^J"?
 
-Unfortunately, the tag branches only have a single commit and have no
-relation to the trunk branch:
+ * Is your shell ported correctly to the platform?
 
-$ git log --oneline origin/tags/Net_LDAP2-2.0.12
-0bc9db1 Tagging the 2.0.12 release
-$
+The latter may need a bit of elaboration.  "read a b c" is supposed
+to read one line of text (where the definition of line is platform
+dependent, your platform may use CRLF to signal the end of an line),
+split the characters on the line (i.e. LF vs CRLF no longer matters
+at this point) at $IFS characters and give them to $a $b and $c. If
+the platform accepts CRLF as the EOL signal, should the program still
+see CR at the end of $c?
 
-What can I do against that?
+A solution that mucks with IFS smells like fixing a wrong problem
+without addressing the real cause.
 
---=20
-Regards/Mit freundlichen Gr=C3=BC=C3=9Fen
-Christian Weiske
+Also IFS is used not only by "read", so munging it globally doubly
+feels wrong.
 
--=3D=E2=89=A1 Geeking around in the name of science since 1982 =E2=89=A1=3D-
+In addition, you do not want to split at CR; what you want is to
+treat CRLF (i.e. not a lone CR) as the end-of-line separator.
+Adding CR to IFS feels triply wrong.
 
---Sig_/TSSKIN8aelLu=0eMjfRhOYs
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlYtJBMACgkQFMhaCCTq+CO0nwCdEGePSr/GG+9H5fZ0tXUw6Zzf
-t58Anix9l0HRRzOiJSVhzhXJT/m622Sy
-=RExw
------END PGP SIGNATURE-----
-
---Sig_/TSSKIN8aelLu=0eMjfRhOYs--
+By the way, saying "This is right, really" makes you sound as if you
+do not have a real argument.
