@@ -1,79 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] detecting delete/modechange conflicts
-Date: Mon, 26 Oct 2015 14:46:42 -0700
-Message-ID: <xmqq8u6pfgl9.fsf@gitster.mtv.corp.google.com>
-References: <20151026213502.GA17244@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it
+ to ignore instead?
+Date: Mon, 26 Oct 2015 17:50:16 -0400
+Message-ID: <20151026215016.GA17419@sigill.intra.peff.net>
+References: <CAM-tV-_JPazYxeDYogtQTRfBxONpSZwb3u5pPanB=F9XnLnZyg@mail.gmail.com>
+ <CAM-tV-_eOgnhqsTFN6kKW=tcS7gAPYaxskBaxnJZo3bsx02HZg@mail.gmail.com>
+ <xmqqfv18awj4.fsf@gitster.mtv.corp.google.com>
+ <CAM-tV-8VXtB5uRgqP9dFpww6AaLzasPV46tCiquz=nz=ksBNng@mail.gmail.com>
+ <CAM-tV-9sNgHncsWRPh36tEY3YFORUJBA-Q6W5R=mvX_KhSmWEQ@mail.gmail.com>
+ <xmqqfv0ylwa7.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 26 22:46:56 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Noam Postavsky <npostavs@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 26 22:50:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqpbP-0004dY-Jc
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 22:46:51 +0100
+	id 1Zqpeq-0008WU-Nl
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 22:50:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752728AbbJZVqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 17:46:47 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54088 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752677AbbJZVqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 17:46:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 56E6427218;
-	Mon, 26 Oct 2015 17:46:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1E9TPI2g4eOn4dHOPE0Y/2QWplE=; b=nMVrbz
-	vqatxdwOR5pb5I/YTGo9e+N/FeYoPd6eESlaH/WsqtCv7LVkCKFIDDBlT7WJ55pw
-	hGkGkwFUbpksWBHdDf+8mTEUd1Z9c6GcXr3W09/wFZjLlvod+y2q1hyNMaal1ShR
-	9F3Ev9gvTi5w4EQ0X0ARc/UnO5HFSXxc142sg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=suqACo2XZJWuzatAm1wRtT9SQ5IcQblf
-	DgQtGyXxT432EGOHAimTXEUGdMr/IIDMuSYUZjm2mytjzIXB9C/hxVh6yFJYL3zL
-	0Oam/xyWqnugNLk1j9enUy1dIl0/KtyCqInjMbiJ9SvgFiSum1TCWdoyLf4/1ow3
-	9PnCN42xtk8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5008627217;
-	Mon, 26 Oct 2015 17:46:44 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CDA4927215;
-	Mon, 26 Oct 2015 17:46:43 -0400 (EDT)
-In-Reply-To: <20151026213502.GA17244@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 26 Oct 2015 17:35:02 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0C6C399C-7C2B-11E5-B8CB-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752707AbbJZVuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2015 17:50:20 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48163 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751998AbbJZVuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2015 17:50:19 -0400
+Received: (qmail 9987 invoked by uid 102); 26 Oct 2015 21:50:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Oct 2015 16:50:19 -0500
+Received: (qmail 18263 invoked by uid 107); 26 Oct 2015 21:50:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Oct 2015 17:50:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Oct 2015 17:50:16 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqfv0ylwa7.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280231>
 
-Jeff King <peff@peff.net> writes:
+On Sun, Oct 25, 2015 at 09:58:56AM -0700, Junio C Hamano wrote:
 
-> After looking through the history and the list archive, I don't _think_
-> this was intentional, and we simply missed the case in both places. But
-> maybe somebody else knows something I don't. It seems like we should be
-> punting to the user under the general principle of stupid and safe
-> merges.
+> >>> I cannot speak for the person who was primarily responsible for
+> >>> designing this behaviour, but I happen to agree with the current
+> >>> behaviour in the situation where it was designed to be used.  Upon
+> >>> the first use in your session, the "daemon" is auto-spawned, you can
+> >>> keep talking with that same instance during your session, and you do
+> >>> not have to do anything special to shut it down when you log out.
+> >>> Isn't that what happens here?
+> >>
+> >> After looking at this some more, I've discovered this is NOT what
+> >> actually happens here. If I "git push" from a shell and then log out
+> >> and log in again, another "git push" does NOT ask me for a password.
+> >> In other words, the daemon is NOT shut down automatically when I log
+> >> out. Given that, does it make sense to change the daemon to ignore
+> >> SIGHUP, or is there some way to change it so that it does exit on
+> >> logout?
+> 
+> I have a feeling that it would be moving in a wrong direction to
+> change the code to ignore HUP, as I do think "logout to shutdown"
+> would be the desired behaviour.  If you are not seeing that happen,
+> perhaps the first thing to do is to figure out why and fix the code
+> so that it happens?
+> 
+> I dunno.  I'll cc Peff so that he can take a look when he comes
+> back.
 
-Yes, I do not recall ever discussing and agreeing with Linus that we
-should resolve to deletion over mode change, and I agree that it
-would be very likely that this never came up in practice simply
-because in real life removal is already rare, mode change is rarer,
-and these happening to the same path in the same timeperiod to
-matter in merges is even more rare.
+I could see it going both ways.
 
-We should definitely signal a conflict.
+If SIGHUP means "I am logging out, my session is over", then I agree it
+makes sense to drop any credentials. And that is what SIGHUP meant when
+people logged in through hard-wired terminals.
 
->   [1/3]: t6031: move triple-rename test to t3030
->   [2/3]: t6031: generalize for recursive and resolve strategies
->   [3/3]: merge: detect delete/modechange conflict
->
-> -Peff
+But these days, people often have several simultaneous sessions open.
+They may have multiple ssh sessions to a single machine, or they may
+have a bunch of terminal windows open, each of which has a login shell
+and will send HUP to its children when it exits. In that case, you have
+a meta-session surrounding those individual terminal sessions, and you
+probably do want to keep the cache going as long as the meta session[1].
+
+This is all further complicated by bash's huponexit option, which I
+think is off by default. So I, for example, have never noticed this
+behavior even with multiple xterms, because my cache never actually gets
+SIGHUP.  I don't know what shell Noam is using, but I wonder if tweaking
+that option (or a similar one if not bash) might be helpful to signal
+"let this stuff keep running even after I exit".
+
+But I am also not opposed to making it configurable somehow in git, if
+there really are two cases that cannot otherwise be distinguished.
+
+-Peff
+
+[1] Of course we have no idea when that meta-session is closed. But if
+    you have a script that runs on X logout, for instance, you could put
+    "git credential-cache exit" in it.
