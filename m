@@ -1,288 +1,135 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v3] Add git-grep threads param
-Date: Mon, 26 Oct 2015 19:32:41 +0000
-Message-ID: <20151026193241.GO19802@serenity.lan>
-References: <1445862733-838-1-git-send-email-vleschuk@accesssoftek.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] daemon: plug memory leak
+Date: Mon, 26 Oct 2015 15:47:53 -0400
+Message-ID: <20151026194753.GA25534@sigill.intra.peff.net>
+References: <562B756F.1020305@web.de>
+ <562B7838.8050009@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Victor Leschuk <vleschuk@accesssoftek.com>
-To: Victor Leschuk <vleschuk@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 26 20:33:03 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Mon Oct 26 20:48:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqnVv-0005VX-1f
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 20:33:03 +0100
+	id 1ZqnkP-0003r0-FA
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 20:48:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751701AbbJZTc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 15:32:58 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:54604 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751450AbbJZTc5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 15:32:57 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id E3C48CDA5DB;
-	Mon, 26 Oct 2015 19:32:55 +0000 (GMT)
-X-Quarantine-ID: <pdOui4tE4DHs>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id pdOui4tE4DHs; Mon, 26 Oct 2015 19:32:52 +0000 (GMT)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 1B373CDA553;
-	Mon, 26 Oct 2015 19:32:43 +0000 (GMT)
+	id S1751584AbbJZTr5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Oct 2015 15:47:57 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48085 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751108AbbJZTr4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2015 15:47:56 -0400
+Received: (qmail 4890 invoked by uid 102); 26 Oct 2015 19:47:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Oct 2015 14:47:56 -0500
+Received: (qmail 17307 invoked by uid 107); 26 Oct 2015 19:48:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Oct 2015 15:48:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Oct 2015 15:47:53 -0400
 Content-Disposition: inline
-In-Reply-To: <1445862733-838-1-git-send-email-vleschuk@accesssoftek.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <562B7838.8050009@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280212>
 
-On Mon, Oct 26, 2015 at 03:32:13PM +0300, Victor Leschuk wrote:
-> Make number of git-grep worker threads a configuration parameter.
-> According to several tests on systems with different number of CPU cores
-> the hard-coded number of 8 threads is not optimal for all systems:
-> tuning this parameter can significantly speed up grep performance.
-> 
-> Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
-> ---
->  Documentation/config.txt               |  4 ++++
->  Documentation/git-grep.txt             |  4 ++++
->  builtin/grep.c                         | 34 ++++++++++++++++++++++++++--------
->  contrib/completion/git-completion.bash |  1 +
->  grep.c                                 | 10 ++++++++++
->  grep.h                                 |  2 ++
->  6 files changed, 47 insertions(+), 8 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 391a0c3..1c95587 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1447,6 +1447,10 @@ grep.extendedRegexp::
->  	option is ignored when the 'grep.patternType' option is set to a value
->  	other than 'default'.
->  
-> +grep.threads::
-> +	Number of grep worker threads, use it to tune up performance on
-> +	multicore machines. Default value is 8.
-> +
->  gpg.program::
->  	Use this custom program instead of "gpg" found on $PATH when
->  	making or verifying a PGP signature. The program must support the
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> index 4a44d6d..fbd4f83 100644
-> --- a/Documentation/git-grep.txt
-> +++ b/Documentation/git-grep.txt
-> @@ -22,6 +22,7 @@ SYNOPSIS
->  	   [--color[=<when>] | --no-color]
->  	   [--break] [--heading] [-p | --show-function]
->  	   [-A <post-context>] [-B <pre-context>] [-C <context>]
-> +	   [--threads <num>]
+On Sat, Oct 24, 2015 at 02:23:20PM +0200, Ren=C3=A9 Scharfe wrote:
 
-Is this the best place for this option?  I know the current list isn't
-sorted in any particular way, but here you're splitting up the set of
-context options (`-A`, `-B`, `-C` and `-W`).
+> Call child_process_clear() when a child ends to release the memory
+> allocated for its environment.  This is necessary because unlike all
+> other users of start_command() we don't call finish_command(), which
+> would have taken care of that for us.
+>=20
+> This leak was introduced by f063d38b (daemon: use cld->env_array
+> when re-spawning).
 
->  	   [-W | --function-context]
->  	   [-f <file>] [-e] <pattern>
->  	   [--and|--or|--not|(|)|-e <pattern>...]
-> @@ -220,6 +221,9 @@ OPTIONS
->  	Show <num> leading lines, and place a line containing
->  	`--` between contiguous groups of matches.
->  
-> +--threads <num>::
-> +	Set number of worker threads to <num>. Default is 8.
+I agree this is a leak we need to address, but I find the solution a
+little unsatisfactory (but tl;dr, it's probably the best we can do).
 
-The same comment as above applies here.
+It would be nice if we could call finish_command() here to do the
+wait(). But it does not know about WNOHANG, so we would have to
+introduce a new helper anyway.
 
->  -W::
->  --function-context::
->  	Show the surrounding text from the previous line containing a
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index d04f440..5ef1b07 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -27,8 +27,7 @@ static char const * const grep_usage[] = {
->  static int use_threads = 1;
->  
->  #ifndef NO_PTHREADS
-> -#define THREADS 8
-> -static pthread_t threads[THREADS];
-> +static pthread_t *threads;
->  
->  /* We use one producer thread and THREADS consumer
->   * threads. The producer adds struct work_items to 'todo' and the
-> @@ -206,7 +205,8 @@ static void start_threads(struct grep_opt *opt)
->  		strbuf_init(&todo[i].out, 0);
->  	}
->  
-> -	for (i = 0; i < ARRAY_SIZE(threads); i++) {
-> +	threads = xcalloc(opt->num_threads, sizeof(pthread_t));
-> +	for (i = 0; i < opt->num_threads; i++) {
->  		int err;
->  		struct grep_opt *o = grep_opt_dup(opt);
->  		o->output = strbuf_out;
-> @@ -220,7 +220,7 @@ static void start_threads(struct grep_opt *opt)
->  	}
->  }
->  
-> -static int wait_all(void)
-> +static int wait_all(struct grep_opt *opt)
+However, the whole check_dead_children function is accidentally
+quadratic, and should probably be refactored in general. It loops over
+the list of children, calling `waitpid(pid, WNOHANG)` on each. So if `n=
+`
+children connect at one time, we make `O(n^2)` waitpid calls.
 
-I'm not sure passing a grep_opt in here is the cleanest way to do this.
-Options are a UI concept and all we care about here is the number of
-threads.
+I have patches to instead loop over waitpid(-1, WNOHANG) until there ar=
+e
+no dead children left (and use a hash to go from pid to each "struct
+child").
 
-Since `threads` is a global, shouldn't the number of threads be a global
-as well?  Could we reuse `use_threads` here (possibly renaming it
-`num_threads`)?
+But the reason I haven't posted them is that I'm somewhat of the opinio=
+n
+that this child-list can go away altogether. The main use is in
+enforcing the max_connections variable. Just enforcing that can be done
+with a counter, but we do something much weirder: when we get a new
+connection, we try to kill an _existing_ child by finding the first
+client with multiple connections, killing that, sleeping for a second
+(!), and then if that killed something, giving the slot to the new
+connection.
 
->  {
->  	int hit = 0;
->  	int i;
-> @@ -238,12 +238,14 @@ static int wait_all(void)
->  	pthread_cond_broadcast(&cond_add);
->  	grep_unlock();
->  
-> -	for (i = 0; i < ARRAY_SIZE(threads); i++) {
-> +	for (i = 0; i < opt->num_threads; i++) {
->  		void *h;
->  		pthread_join(threads[i], &h);
->  		hit |= (int) (intptr_t) h;
->  	}
->  
-> +	free(threads);
-> +
->  	pthread_mutex_destroy(&grep_mutex);
->  	pthread_mutex_destroy(&grep_read_mutex);
->  	pthread_mutex_destroy(&grep_attr_mutex);
-> @@ -256,7 +258,7 @@ static int wait_all(void)
->  }
->  #else /* !NO_PTHREADS */
->  
-> -static int wait_all(void)
-> +static int wait_all(struct grep_opt *opt)
->  {
->  	return 0;
->  }
-> @@ -702,6 +704,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  			N_("show <n> context lines before matches")),
->  		OPT_INTEGER('A', "after-context", &opt.post_context,
->  			N_("show <n> context lines after matches")),
-> +		OPT_INTEGER(0, "threads", &opt.num_threads,
-> +			N_("use <n> worker threads")),
->  		OPT_NUMBER_CALLBACK(&opt, N_("shortcut for -C NUM"),
->  			context_callback),
->  		OPT_BOOL('p', "show-function", &opt.funcname,
-> @@ -832,8 +836,22 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  	}
->  
->  #ifndef NO_PTHREADS
-> -	if (list.nr || cached || online_cpus() == 1)
-> +	if (!opt.num_threads) {
-> +		use_threads = 0; /* User explicitely told not to use threads */
-> +	}
-> +	else if (list.nr || cached) {
-> +		use_threads = 0; /* Can not multi-thread object lookup */
-> +	}
-> +	else if (opt.num_threads >= 0) {
-> +		use_threads = 1; /* User explicitely set the number of threads */
-> +	}
-> +	else if (online_cpus() <= 1) {
->  		use_threads = 0;
-> +	}
-> +	else {
-> +		use_threads = 1;
-> +		opt.num_threads = GREP_NUM_THREADS_DEFAULT;
-> +	}
->  #else
->  	use_threads = 0;
->  #endif
-> @@ -910,7 +928,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->  	}
->  
->  	if (use_threads)
-> -		hit |= wait_all();
-> +		hit |= wait_all(&opt);
->  	if (hit && show_in_pager)
->  		run_pager(&opt, prefix);
->  	free_grep_patterns(&opt);
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 482ca84..390d9c0 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1310,6 +1310,7 @@ _git_grep ()
->  			--full-name --line-number
->  			--extended-regexp --basic-regexp --fixed-strings
->  			--perl-regexp
-> +			--threads
->  			--files-with-matches --name-only
->  			--files-without-match
->  			--max-depth
-> diff --git a/grep.c b/grep.c
-> index 7b2b96a..b53fb14 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -40,6 +40,7 @@ void init_grep_defaults(void)
->  	color_set(opt->color_selected, "");
->  	color_set(opt->color_sep, GIT_COLOR_CYAN);
->  	opt->color = -1;
-> +	opt->num_threads = -1;
->  }
->  
->  static int parse_pattern_type_arg(const char *opt, const char *arg)
-> @@ -124,6 +125,14 @@ int grep_config(const char *var, const char *value, void *cb)
->  			return config_error_nonbool(var);
->  		return color_parse(value, color);
->  	}
-> +
-> +	if (!strcmp(var, "grep.threads")) {
-> +		int threads = git_config_int(var, value);
-> +		if (threads < 0)
-> +			die("invalid number of threads specified (%d)", threads);
-> +		opt->num_threads = threads;
-> +		return 0;
-> +	}
->  	return 0;
->  }
->  
-> @@ -150,6 +159,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
->  	opt->pathname = def->pathname;
->  	opt->regflags = def->regflags;
->  	opt->relative = def->relative;
-> +	opt->num_threads = def->num_threads;
->  
->  	color_set(opt->color_context, def->color_context);
->  	color_set(opt->color_filename, def->color_filename);
-> diff --git a/grep.h b/grep.h
-> index 95f197a..bb20456 100644
-> --- a/grep.h
-> +++ b/grep.h
-> @@ -132,6 +132,8 @@ struct grep_opt {
->  	unsigned pre_context;
->  	unsigned post_context;
->  	unsigned last_shown;
-> +#define GREP_NUM_THREADS_DEFAULT 8
-> +	int num_threads;
->  	int show_hunk_mark;
->  	int file_break;
->  	int heading;
-> -- 
-> 2.6.2.281.g222e106.dirty
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+This has a few problems:
+
+  1. Under non-malicious heavy load, you probably want to reject the ne=
+w
+     request rather than killing an existing one. If you kill a fetch
+     that is 99% completed, that client is likely to come back and fetc=
+h
+     again, and you've just thrown away all of the effort (both CPU and
+     bandwidth) put into the failed clone. You haven't spent anything o=
+n
+     the incoming connection, so you'd much rather they go away and com=
+e
+     back in a moment.
+
+  2. I think the kill_some_child algorithm was meant to enforce
+     fairness so that a single IP cannot monopolize all of your slots.
+     I'm not sure that's realistic for a few reasons:
+
+       a. Real bad guys will just hit you with a DDoS from many IPs.
+
+       b. Real sites have load-balancing in front of git-daemon, and th=
+e
+          client IPs may not be meaningful.
+
+       c. The duplicate selection is pretty naive. A bad guy with tons
+	  of duplicate connections is no more likely to be killed than a
+	  normal client with exactly two connections (it actually
+	  depends solely on when the latest connection from either came
+	  in). So I suspect a determine attacker with a single IP could
+	  still present a problem.
+
+  3. Calling sleep() in the server parent process is a great way to kil=
+l
+     performance. :)
+
+Of course my view is somewhat skewed by running a really big site with
+load balancers and such (and we have long set --max-connections high
+enough that it has never been hit). Maybe it's more realistic protectio=
+n
+for a "normal" site.
+
+But my inclination would be to drop kill_some_child entirely in favor o=
+f
+simply rejecting new connections that are over the limit, and getting
+rid of the child-list entirely (and calling waitpid only to reap the
+zombie PIDs).
+
+I guess we'd still need something like child_process_clear(), though. W=
+e
+could just run it immediately after spawning the child, rather than whe=
+n
+we cleaned it up.  So in that sense this series is the first incrementa=
+l
+step toward that future, anyway.
+
+-Peff
