@@ -1,210 +1,101 @@
-From: Paul Wise <pabs3@bonedaddy.net>
-Subject: Re: [PATCH] fetch: only show "Fetching remote" when verbose mode is
- enabled
-Date: Mon, 26 Oct 2015 08:04:07 +0800
-Message-ID: <1445817847.23160.31.camel@bonedaddy.net>
-References: <1445741384-30828-1-git-send-email-pabs3@bonedaddy.net>
-	 <xmqqwpuakd9y.fsf@gitster.mtv.corp.google.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Why are submodules not automatically handled by default or at
+ least configurable to do so?
+Date: Mon, 26 Oct 2015 13:56:52 +1300
+Message-ID: <CAFOYHZAKvN8xMKePCNFgo_ySHr0dc0+ASY0ux7j0p8UF1fuWCQ@mail.gmail.com>
+References: <D4E5E890658.000004DCjohsmi9933@inbox.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-RXh0SKfyTmAMmYFDG1is"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 26 01:24:33 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
+	sbeller@google.com
+To: John Smith <johsmi9933@inbox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 26 01:57:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqVaS-0004hy-0J
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 01:24:32 +0100
+	id 1ZqW6O-0003HO-Pk
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 01:57:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752430AbbJZAYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Oct 2015 20:24:03 -0400
-Received: from ns1.bonedaddy.net ([70.91.141.202]:52352 "EHLO
-	ns1.bonedaddy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752284AbbJZAYC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Oct 2015 20:24:02 -0400
-X-Greylist: delayed 1180 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Oct 2015 20:24:02 EDT
-Received: from chianamo (localhost [127.0.0.1])
-	by ns1.bonedaddy.net (8.14.9/8.14.4) with ESMTP id t9Q04HIf025534;
-	Sun, 25 Oct 2015 20:04:18 -0400
-In-Reply-To: <xmqqwpuakd9y.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Evolution 3.18.1-1 
+	id S1752387AbbJZA5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Oct 2015 20:57:07 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:35166 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752284AbbJZA4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Oct 2015 20:56:52 -0400
+Received: by igbkq10 with SMTP id kq10so48467532igb.0
+        for <git@vger.kernel.org>; Sun, 25 Oct 2015 17:56:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0ifkr9JmHavsLpMirs3ariImpEeU20WJDSghtS2l51c=;
+        b=0uAP6qBjn1Xftx7yEIpdcT+hsCkpCt2pKf1sIqodFuWRnT7uaJ9KRGDo5u/mU57HAa
+         Z7IcM4kPvVVXDfdKX9H3mcc5Ww9QQKxo1c50qm/UNtTyZ8TPdwj1UfotAZugBzodb5t3
+         Ep1JlQIwTW9B+5nSH2B9mGg8YHg2IzrltDDNeNvcINBxBfFbU8KsfvwmTWNgEi9BtCQK
+         m6vJUqTNbBoe56/Wwk3uDG36IP+ziT9AS2zIiA4J1ptmFA5mjcORWCfLAItB5wJQkcd/
+         X461alNrCO5r7QwcMC0rbosPCBHoWcOpHAEgjkvaUTCnv15VsDcRjzdKfUWjCoru6hEZ
+         AgyQ==
+X-Received: by 10.50.49.80 with SMTP id s16mr15963497ign.49.1445821012160;
+ Sun, 25 Oct 2015 17:56:52 -0700 (PDT)
+Received: by 10.79.84.195 with HTTP; Sun, 25 Oct 2015 17:56:52 -0700 (PDT)
+In-Reply-To: <D4E5E890658.000004DCjohsmi9933@inbox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280168>
 
+On Mon, Oct 26, 2015 at 12:10 PM, John Smith <johsmi9933@inbox.com> wrote:
+> I found that I use submodules much, much more often in my git projects than I used externals
+> in Subversion and the reason is that git encourages/forces to organize large projects into
+> smaller repositories, one reason for this being that subversion allows to check out parts of
+> a repository while git does not.
+>
+> But when I clone a git repository with subprojects, I (and everyone else) has to remember to
+> add the --recursive option. When switching between branches with different versions/commits of the
+> submodules everyone has to remember to update the submodules. When updating a submodule
+> everyone has to remember to recurse there too.
 
---=-RXh0SKfyTmAMmYFDG1is
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The config option fetch.recurseSubmodules exists. It's not quite the
+same as what git clone --recurse-submodules does but it's a start.
 
-On Sun, 2015-10-25 at 11:34 -0700, Junio C Hamano wrote:
+>
+> Basically, everything with submodules has to be done manually every time and there seems
+> to be no way to change that default.
+>
+> Why is that? Basically all the time I use submodules I would want automatic handling of
+> submodules to happen and I cannot  remember having had a single situation where I would
+> not have wanted it to happen. So  why does git default to doing nothing?
 
-> I ignored your patch when you sent it the first time the last week,
-> due to the same issues I had with this round (see below) and forgot
-> about it.
+It's hard to pick a default that suits every workflow that submodules
+support. Also with submodules there is a chicken-and-egg scenario.
+While you can put things in ~/.gitconfig most of what you'd want to
+configure when using submodules would be in super/.git/config but that
+doesn't exist until you've cloned super.git.
 
-Thanks for the feedback this round.
+> Why does it not provide a way to enable automatic
+> pulling/updating of submodules e.g. when cloning or switching branches?
 
+I believe Jens and Stefan (Cc'd) have been doing some great work in
+this area. Jens even posted his todo list a few days ago
+(https://github.com/jlehmann/git-submod-enhancements/wiki).
 
-> I cannot tell if you are trying to say if that is problematic, or if
-> you are trying to say if it is a good thing.
-
-It is just a description of the current behaviour when fetching a
-single remote and is used as a justification for changing the behaviour
-when fetching multiple remotes to match the behaviour when fetching a
-single remote, because that suits my myrepos use-case better.
-
-> I cannot tell what "This" refers to.
-
-Replace "This" with "This patch".
-
-> Your earlier sentence was about the behaviour of fetching from one
-> remote, e.g. "git fetch this".=C2=A0=C2=A0And this second sentence makes =
-it
-> sound as if that behaviour has some influence on how verbosely "git
-> fetch group" (where 'this' and 'that' are members of 'remotes.group')
-> to fetch from multiple remotes behaves.
-
-There is no correlation between the verbosity of fetching one remote
-and fetching multiple remotes but I would like them to have the same
-verbosity level by default. I would like the default verbosity level to
-be to not print anything when nothing was fetched. This is the default
-verbosity level for fetching a single remote but not multiple remotes.
-
-> Also (and this is the more important part of my complaint), I cannot
-> tell if you are saying that it is *bad* for fetching multiple to be
-> just as verbose, or if it is *good*, or what.
-
-I think it is good, as long as they both default to printing nothing
-when no commits/tags/etc were fetched.
-
-> If you are fetching from two places, and only one of them has
-> something new, you would see
-
-I am not interested in that case, only in the case where multiple
-remotes are being fetched and no commits/tags/etc were fetched,
-essentially I want to turn this output:
-
-$ git fetch --all
-Fetching origin
-Fetching mirror
-
-Into this output:
-
-$ git fetch --all
-
-> That does not sound like a valid excuse to change the behaviour of
-> the command everybody, not just "myrepos tool" (whatever it is),
-> uses.=C2=A0=C2=A0Your explanation does not seem to give us enough informa=
-tion
-> to answer this question intelligently: shouldn't you be fixing
-> myrepos instead, perhaps by making it run 'git fetch' with more
-> verbose mode, if it wants to see more information, or running 'git
-> fetch' and parsing different parts of its output?
-
-myrepos is a tool for managing multiple repos of different types:
-
-https://myrepos.branchable.com/
-
-It definitely wouldn't be appropriate to add screen scraping and
-parsing of different version control systems to myrepos.
-
-myrepos doesn't care about the output of repository tools beyond
-whether there was any output or not. myrepos will pass --verbose and
-other flags on to git fetch if the user passes --verbose to it.
-
-> Having said all that, this time I read the change and the change
-> itself feels 40% sensible, even for those who do not care about
-> "myrepos" at all.
-All I want is for "Fetching remote" to not be printed when there are no
-changes fetched and I haven't used the --verbose option.
-
-I realise now that my patch is actually incorrect in that it also
-suppresses=C2=A0"Fetching remote" messages when some changes were fetched.
-
-I will come back with a correct patch that is better explained.
-
-> I'd sell it like the attached, if I were doing this patch.=C2=A0=C2=A0The=
- last
-> paragraph is where the remaining 60% went ;-)
-
-Thanks, I will try to re-use that for the next patch.
-
-> Note that the current output was deliberately designed like this to
-> give an easy reminder for the user what the components of 'group'
-> are.=C2=A0=C2=A0With this change, we are selfishly and unilaterally break=
-ing a
-> feature that was designed to help them, but if they strongly care,
-> they can complain and revert this change.
-
-To be honest I didn't know this group feature existed and I am
-surprised that anyone would want anything other than --all.
-
-I am not sure what the solution here is but perhaps the behaviour
-demonstrated below is acceptable to users of this feature:
-
-# When no changes were fetched
-$ git fetch group
-
-# When some changes were fetched
-$ git fetch group
-Fetched origin
-From
-git://one.of.the.places.xz/
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 aadb70a..74301d6=C2=A0 master=C2=A0=C2=
-=A0=C2=A0=C2=A0 ->
-this/master
-No changes from someone someoneelse otherperson
-
-# When no changes were fetched in verbose mode
-$ git fetch --verbose group
-Fetching origin
-Fetching someone
-Fetching someoneelse
-Fetching otherperson
-
-# When some changes were fetched in verbose mode
-$ git fetch --verbose group
-Fetching origin
-=46rom git://one.of.the.places.xz/
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 aadb70a..74301d6=C2=A0 master=C2=A0=C2=
-=A0=C2=A0=C2=A0 -> this/master
-Fetching someone
-Fetching someoneelse
-Fetching otherperson
-
---=C2=A0
-bye,
-pabs
-
-http://bonedaddy.net/pabs3/
-
-
---=-RXh0SKfyTmAMmYFDG1is
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAABCgAGBQJWLW33AAoJEDEWul6f+mmjSSYP/AsYaQo6QoV7dX//lKHg5vD+
-Bog4mLGrrulB07bZ+Hxt165y8flLsMu9MnsOX55C2ctsRSC/+6wLk7x9aKsv7qwY
-O4vM3reWIWvel/zCl4j+cpA7meUjkYyS3rrQB2R2ij/s7WalRAYLqDRUH+qVJDUJ
-HuT84Ee+csXWjn/YVq3Fk8vjKhWZjv/1zeqN9OIGnIgu6t2RBt4u/6AI5PWauLNZ
-FlJWbbtA4DtX6j8JvNlDwpOZQn0cL4bFinnxgFC0CSM2EwjO+wCcQrc0j5ovTCVj
-ydmOw1SSE8hEbrbRHNhTfDDrluCZo9KO67YNm3sVwpE30uvA+czYwgHKYACQiTtj
-ZC6CselwqKhcJp5rkcGlB70yCSErqlDIijhMao/KeghWUwwdIpYx5yxuyp2/NN94
-35MyKa0a1LTuodiKbEKo4l2fi9J3K+Dz6pjMLwNmiyrY3/HhmQovrfuUMb95ZdIV
-zOKjBY7fuZcFfFTtem9X4rzr4URM17cwc6nN3bk38FT3UAUuLDosMAdCcF0lW8Rb
-FXRAIQfQoioIAdfkcMGwCSWSw7T7Dj1sG7rDyea2YZu36dndsLjCuQ9uUKXmqmUp
-7pC18yJwdqmD2iadlZzucf0O5LoSwzZXJLmcWka4/3/zTIx3d4tKkKpB+/eMdmml
-Bl0b9Qfe6Z3X22vNSfqQ
-=viMB
------END PGP SIGNATURE-----
-
---=-RXh0SKfyTmAMmYFDG1is--
+> When would people routinely check out a branch and want to stay with the submodules as
+> the have been checked out for the old branch?
+>
+> I honestly do not understand it.
+>
+> John
+>
+> ____________________________________________________________
+> Can't remember your password? Do you need a strong and secure password?
+> Use Password manager! It stores your passwords & protects your account.
+> Check it out at http://mysecurelogon.com/manager
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
