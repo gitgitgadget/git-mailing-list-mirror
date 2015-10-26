@@ -1,121 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with
- gdb
-Date: Mon, 26 Oct 2015 12:17:24 -0700
-Message-ID: <20151026191724.GE7881@google.com>
-References: <cover.1445865176.git.johannes.schindelin@gmx.de>
- <082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/2] run-command: factor out child_process_clear()
+Date: Mon, 26 Oct 2015 12:23:23 -0700
+Message-ID: <CAGZ79kYopHL5D_7+bJV2P9GeKDHufPDBTo3a8bRL=4B3OmTGjg@mail.gmail.com>
+References: <562B756F.1020305@web.de>
+	<xmqqziz5h3n5.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 26 20:17:35 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 26 20:23:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqnGu-0006O3-SC
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 20:17:33 +0100
+	id 1ZqnMe-0003yB-7l
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 20:23:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007AbbJZTR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 15:17:29 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:34093 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751920AbbJZTR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 15:17:28 -0400
-Received: by padhk11 with SMTP id hk11so196712073pad.1
-        for <git@vger.kernel.org>; Mon, 26 Oct 2015 12:17:27 -0700 (PDT)
+	id S1751684AbbJZTXY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Oct 2015 15:23:24 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:35984 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751450AbbJZTXX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Oct 2015 15:23:23 -0400
+Received: by ykba4 with SMTP id a4so188795480ykb.3
+        for <git@vger.kernel.org>; Mon, 26 Oct 2015 12:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=JUcp8/G5J0WT16dcZMDX0SY3nieXOW1R8k3rk7muqYE=;
-        b=reOwIxbebaan9lMgSrd2B+oF+d2+3SadqR7K1vUllL84kjhEktQFNMbsBydj/K28tB
-         lfBJlQLJpNqme3kHzq8pxfD0q43IpsDiL2cCMI0asJHVgUTNkdTKhrzaYuqjpkSBaKjD
-         NtalL56qdfCdITHM1wDTqXQV7XtlE57uWVMiSDlVZ3NTConK6aiVj4gXPnjZfdyraPw3
-         GZ2S9kFFW47G0DUoOJQiF+shCaWomXTC6ApxJmvKmHesrAXrssSj7NarwyrZMWlIlfD9
-         9NdKsY++aIFSAiFy5J3XkY+u5lFBr7gdrk+sIwxLVGxa3IOHPBLIxp9MV2p14TrGMJW8
-         Ws4Q==
-X-Received: by 10.68.189.69 with SMTP id gg5mr24037474pbc.55.1445887047631;
-        Mon, 26 Oct 2015 12:17:27 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:28d6:2c54:3a57:2d94])
-        by smtp.gmail.com with ESMTPSA id dd4sm35330412pbb.52.2015.10.26.12.17.26
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 26 Oct 2015 12:17:26 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=QA6qhWDi6tpmQeupr5uUe5C0Ynwt3a6fVZDYQfyJEHY=;
+        b=HVkyX70a4XEHjdRwLjz/wZLhFboA5XGDlkwFuHaEfHfm9MyM6/SCH/M+NmAT5rukdJ
+         xZEF5MpYtpWTOpV65OtZ+MAkOgY88hXCqWjAgSn51aEvCsLubHI4rJybylgstwdAUpuv
+         wJ8W5J7k5mvqPb6KSe1qWcXnytUT/8+tiXYjWNCLKy/ejC7MRAFHPfkMApvdnTHLf8qX
+         9D9MhVW5TlGw3e74mLeqMl0eS4b2CsJ7DPP8Q++dPwfTsurT+qXV4vOuPpvzPAu8PfY3
+         bWqnyOaUMnf2COoiDOEvQ+Ox0Pix2ciwuZraAi5Tu/VabaOhy4i0HftfjEuexG7IIVS3
+         BZ9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QA6qhWDi6tpmQeupr5uUe5C0Ynwt3a6fVZDYQfyJEHY=;
+        b=S8Dd/jMIWCIGRmfydkJZseCwb5oOTu0k85vc1rQXEHOxaDc3ginVs/+ntJIQcYTtgt
+         gmWiZ5yCLT/mO9lGUpDTT2wMRkxZRSvNC61DbALB94vld7bd5xQgM143z0nbeNFr2E+t
+         Rec5FjzshKkdxSDIWkV50RmZacjs5Nyemv9OTQoQxP82ovMnt8+1Rp9rB06SENiLas9z
+         sUe1WAuWTtbXtWUxahQk7hIpjIoQliRxC6UAD6iTVhz2eQbeUNdIK8INjQJt9LxOTaLv
+         uCfh6cdV52GnJ/B8bTQBmRu3CzlOcQzj0kIcwhbI1p786mNoms6ZwAsGrjWoFqxBW781
+         t76w==
+X-Gm-Message-State: ALoCoQl4gEH8LLwvUAuzASKmV3C7W5uqZqoGSq39Lt+xCk7lZZh9D7BAsBtHJ5CY55h7QNk8y4u5
+X-Received: by 10.129.75.208 with SMTP id y199mr30030485ywa.48.1445887403112;
+ Mon, 26 Oct 2015 12:23:23 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Mon, 26 Oct 2015 12:23:23 -0700 (PDT)
+In-Reply-To: <xmqqziz5h3n5.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280210>
 
-Johannes Schindelin wrote:
+On Mon, Oct 26, 2015 at 11:43 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>> Avoid duplication by moving the code to release allocated memory for
+>> arguments and environment to its own function, child_process_clear()=
+=2E
+>> Export it to provide a counterpart to child_process_init().
+>>
+>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>> ---
+>
+> Hmm, is this _deinit() Stefan added to his series recently?
 
-> When prefixing a Git call in the test suite with 'TEST_GDB_GIT=1 ', it
-> will now be run with GDB, allowing the developer to debug test failures
-> more conveniently.
-
-Neat.
-
-[...]
-> --- a/wrap-for-bin.sh
-> +++ b/wrap-for-bin.sh
-> @@ -19,4 +19,11 @@ GIT_TEXTDOMAINDIR='@@BUILD_DIR@@/po/build/locale'
->  PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
->  export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
->  
-> +if test -n "$TEST_GDB_GIT"
-> +then
-> +	exec gdb -args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-
-Most TEST_ environment variables that git respects are under
-GIT_TEST_* --- e.g., GIT_TEST_OPTS.  Should this match that pattern
-as well, for easier debugging with commands like 'env | grep GIT_'?
-
-What happens if the child in turn calls git again?  Should this
-unset TEST_GDB_GIT in gdb's environment?
-
-The gdb manual and --help output advertise "--args".  Has "-args"
-(with a single dash) always worked?
-
-> +	echo "Could not run gdb -args ${GIT_EXEC_PATH}/@@PROG@@ $*" >&2
-> +	exit 1
-
-Does the 'exec' after the fi need this as well?  exec is supposed to
-itself print a message and exit when it runs into an error.  Would
-including an 'else' with the if make the control flow clearer?  E.g.
-
-	if test -n "$TEST_GDB_GIT"
-	then
-		exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-	else
-		exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-	fi
-
-Thanks,
-Jonathan
-
-diff --git i/wrap-for-bin.sh w/wrap-for-bin.sh
-index a151c95..db0ec6a 100644
---- i/wrap-for-bin.sh
-+++ w/wrap-for-bin.sh
-@@ -19,11 +19,10 @@ GIT_TEXTDOMAINDIR='@@BUILD_DIR@@/po/build/locale'
- PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
- export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
- 
--if test -n "$TEST_GDB_GIT"
-+if test -n "$GIT_TEST_GDB"
- then
--	exec gdb -args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
--	echo "Could not run gdb -args ${GIT_EXEC_PATH}/@@PROG@@ $*" >&2
--	exit 1
-+	unset GIT_TEST_GDB
-+	exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-+else
-+	exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
- fi
--
--exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+Yes. Although you (Junio) take credit for actually using it in these
+places, too. :)
