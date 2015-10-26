@@ -1,140 +1,88 @@
-From: Lukas Fleischer <lfleischer@lfos.de>
-Subject: [PATCH/RFC] receive-pack: allow for hiding refs outside the namespace
-Date: Mon, 26 Oct 2015 09:09:59 +0100
-Message-ID: <1445846999-8627-1-git-send-email-lfleischer@lfos.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 26 09:16:50 2015
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 2/2] sh-setup: explicitly mark CR as a field separator
+Date: Mon, 26 Oct 2015 10:34:07 +0100
+Message-ID: <vpqlhaqas8g.fsf@grenoble-inp.fr>
+References: <cover.1445777347.git.johannes.schindelin@gmx.de>
+	<cover.1445782122.git.johannes.schindelin@gmx.de>
+	<2b089201404299257f23b3931499ea16202f0f65.1445782122.git.johannes.schindelin@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Chad Boles <chadbo@microsoft.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Philip Oakley <philipoakley@iee.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 26 10:34:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqcxW-0007K1-4K
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 09:16:50 +0100
+	id 1ZqeB2-0008Ks-Pe
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 10:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753240AbbJZIQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 04:16:45 -0400
-Received: from elnino.cryptocrack.de ([46.165.227.75]:39549 "EHLO
-	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753000AbbJZIQn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 04:16:43 -0400
-X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Oct 2015 04:16:42 EDT
-Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 1aba93df;
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	for <git@vger.kernel.org>;
-	Mon, 26 Oct 2015 09:10:01 +0100 (CET)
-X-Mailer: git-send-email 2.6.2
+	id S1753534AbbJZJeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2015 05:34:46 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53508 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753347AbbJZJee (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2015 05:34:34 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t9Q9Y6n3007150
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 26 Oct 2015 10:34:07 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9Q9Y7e8021616;
+	Mon, 26 Oct 2015 10:34:07 +0100
+In-Reply-To: <2b089201404299257f23b3931499ea16202f0f65.1445782122.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Sun, 25 Oct 2015 15:10:25 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 26 Oct 2015 10:34:09 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: t9Q9Y6n3007150
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1446456851.26677@z9rtAlVbHxY5urpPaoV4OA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280186>
 
-Right now, we always advertise all refs as ".have", even those outside
-the current namespace. This leads to problems when trying to push to a
-repository with a huge number of namespaces from a slow connection.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Add a configuration option receive.advertiseAllRefs that can be used to
-determine whether refs outside the current namespace should be
-advertised or not.
+> This is the correct thing to do, really: we already specify LF as
+> field separator.
 
-Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
----
-We are using Git namespaces to store a huge number of (virtual)
-repositories inside a shared repository. While the blobs in the virtual
-repositories are fairly similar, they do not share any refs, so
-advertising any refs outside the current namespace is undesirable. See
-the discussion on [1] for details.
+I'm almost convinced that this is the right thing to do in the long run
+("almost" because I'm not sure, not because I have arguments against). I
+agree with Junio that the commit message should be more convincing, but
+indeed, accepting LF and not CR is strange.
 
-Note that this patch is just a draft: I didn't do any testing, apart
-from checking that it compiles. I would like to hear some opinions
-before sending a polished version.
+However, is this the right thing to do in the maintainance branch? It
+does fix the issue, but does so in a rather intrusive way, so I'd need
+more arguments to be convinced that this is safe to merge in maint. Or
+have a local fix for rebase to be merged in maint, and apply this in
+master for the next feature release.
 
-Is our use case considered common enough to justify the inclusion of
-such a configuration option in mainline?
+Sorry for being negative, and especially sorry since I'm partly guilty
+for the breakage. I just want to be sure that we don't break anything
+while repairing it (we already introduced this breakage while repairing
+another one...).
 
-Are there suggestions for a better name for the option? Ideally, it
-should contain the word "namespace" but I could not come up with
-something sensible that is short enough.
+>  # Similarly for IFS, but some shells (e.g. FreeBSD 7.2) are buggy and
+>  # do not equate an unset IFS with IFS with the default, so here is
+> -# an explicit SP HT LF.
+> +# an explicit SP HT LF CR.
+>  IFS=' 	
+> -'
+> +'"$(printf '\r')"
 
-[1] https://lists.archlinux.org/pipermail/aur-general/2015-October/031596.html
+While we're there, it may be better to have a single "printf ' \t\n\r'"
+to avoid the whitespace magic in the source code.
 
- Documentation/config.txt |  6 ++++++
- builtin/receive-pack.c   | 31 +++++++++++++++++++++----------
- 2 files changed, 27 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 315f271..aa101a7 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2201,6 +2201,12 @@ receive.advertiseAtomic::
- 	capability to its clients. If you don't want to this capability
- 	to be advertised, set this variable to false.
- 
-+receive.advertiseAllRefs::
-+	By default, git-receive-pack will advertise all refs, even those
-+	outside the current namespace, so that the client can use them to
-+	minimize data transfer. If you only want to advertise refs from the
-+	active namespace to be advertised, set this variable to false.
-+
- receive.autogc::
- 	By default, git-receive-pack will run "git-gc --auto" after
- 	receiving data from git-push and updating refs.  You can stop
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index e6b93d0..ea9a820 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -41,6 +41,7 @@ static struct strbuf fsck_msg_types = STRBUF_INIT;
- static int receive_unpack_limit = -1;
- static int transfer_unpack_limit = -1;
- static int advertise_atomic_push = 1;
-+static int advertise_all_refs = 1;
- static int unpack_limit = 100;
- static int report_status;
- static int use_sideband;
-@@ -190,6 +191,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (strcmp(var, "receive.advertiseallrefs") == 0) {
-+		advertise_all_refs = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -222,16 +228,21 @@ static void show_ref(const char *path, const unsigned char *sha1)
- static int show_ref_cb(const char *path, const struct object_id *oid, int flag, void *unused)
- {
- 	path = strip_namespace(path);
--	/*
--	 * Advertise refs outside our current namespace as ".have"
--	 * refs, so that the client can use them to minimize data
--	 * transfer but will otherwise ignore them. This happens to
--	 * cover ".have" that are thrown in by add_one_alternate_ref()
--	 * to mark histories that are complete in our alternates as
--	 * well.
--	 */
--	if (!path)
--		path = ".have";
-+	if (!path) {
-+		if (advertise_all_refs) {
-+			/*
-+			 * Advertise refs outside our current namespace as
-+			 * ".have" refs, so that the client can use them to
-+			 * minimize data transfer but will otherwise ignore
-+			 * them. This happens to cover ".have" that are thrown
-+			 * in by add_one_alternate_ref() to mark histories that
-+			 * are complete in our alternates as well.
-+			 */
-+			path = ".have";
-+		} else {
-+			return 0;
-+		}
-+	}
- 	show_ref(path, oid->hash);
- 	return 0;
- }
 -- 
-2.6.2
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
