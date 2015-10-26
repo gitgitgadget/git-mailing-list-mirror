@@ -1,82 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/2] Fix interactive rebase when the editor saves with CR/LF
-Date: Mon, 26 Oct 2015 12:13:23 -0700
-Message-ID: <xmqqsi4xh298.fsf@gitster.mtv.corp.google.com>
-References: <cover.1445777347.git.johannes.schindelin@gmx.de>
-	<cover.1445782122.git.johannes.schindelin@gmx.de>
-	<xmqqpp02kbif.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.1.00.1510261133030.31610@s15462909.onlinehome-server.info>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with
+ gdb
+Date: Mon, 26 Oct 2015 12:17:24 -0700
+Message-ID: <20151026191724.GE7881@google.com>
+References: <cover.1445865176.git.johannes.schindelin@gmx.de>
+ <082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Chad Boles <chadbo@microsoft.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Philip Oakley <philipoakley@iee.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 26 20:13:53 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 26 20:17:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqnDM-0002bO-0t
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 20:13:52 +0100
+	id 1ZqnGu-0006O3-SC
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 20:17:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752012AbbJZTNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 15:13:47 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50001 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751741AbbJZTN0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 15:13:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B5E60251C5;
-	Mon, 26 Oct 2015 15:13:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=Xg8seiH6v24h9ytr+89xxiMwF9k=; b=IIRLjLhu4wjgyjHXj8Z1
-	TyTl5/BkjwEDLFYXWQGsxeklciuEKHdXC9nlVwSmxeeIOS2zEz3vePl/Kw0rLynh
-	7bClCrGAT4uMoCC3/QgEXwW+kkZE61QEX8dTuiLxp97PMCO7onoaPbphDn7QpU1x
-	W1AoBHeJvVumRxpOGERjntY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=KnvuNhXyZ07uuXAilV9FOS3Hf4sZIhPk2ngY0+JcbIf1lV
-	8CmbBPXUVAVzS9lNDWLcQqz4LNGShhuji+F+ae/G1+IPDeGZ+6ocyHALEfwWJ2Rj
-	pHvdYSXAAoe/vVCCYOISFwiDIIne6B5daiR0FAktdTGrCt03VcLseju/mPNmA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD6B0251C3;
-	Mon, 26 Oct 2015 15:13:24 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 31B10251C2;
-	Mon, 26 Oct 2015 15:13:24 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A10D05A6-7C15-11E5-A04A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752007AbbJZTR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2015 15:17:29 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:34093 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751920AbbJZTR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2015 15:17:28 -0400
+Received: by padhk11 with SMTP id hk11so196712073pad.1
+        for <git@vger.kernel.org>; Mon, 26 Oct 2015 12:17:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=JUcp8/G5J0WT16dcZMDX0SY3nieXOW1R8k3rk7muqYE=;
+        b=reOwIxbebaan9lMgSrd2B+oF+d2+3SadqR7K1vUllL84kjhEktQFNMbsBydj/K28tB
+         lfBJlQLJpNqme3kHzq8pxfD0q43IpsDiL2cCMI0asJHVgUTNkdTKhrzaYuqjpkSBaKjD
+         NtalL56qdfCdITHM1wDTqXQV7XtlE57uWVMiSDlVZ3NTConK6aiVj4gXPnjZfdyraPw3
+         GZ2S9kFFW47G0DUoOJQiF+shCaWomXTC6ApxJmvKmHesrAXrssSj7NarwyrZMWlIlfD9
+         9NdKsY++aIFSAiFy5J3XkY+u5lFBr7gdrk+sIwxLVGxa3IOHPBLIxp9MV2p14TrGMJW8
+         Ws4Q==
+X-Received: by 10.68.189.69 with SMTP id gg5mr24037474pbc.55.1445887047631;
+        Mon, 26 Oct 2015 12:17:27 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:28d6:2c54:3a57:2d94])
+        by smtp.gmail.com with ESMTPSA id dd4sm35330412pbb.52.2015.10.26.12.17.26
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 26 Oct 2015 12:17:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280209>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Johannes Schindelin wrote:
 
-> A simple test with CR/LF line endings in a script reveals that it is
-> pretty solid:
->
-> 	x=a
-> 	case "$x" in a) echo b;; esac
->
-> prints out 'b', as expected.
+> When prefixing a Git call in the test suite with 'TEST_GDB_GIT=1 ', it
+> will now be run with GDB, allowing the developer to debug test failures
+> more conveniently.
 
-I do not see what this has to do with anything.
+Neat.
 
-The shell language parser when parsing a script may do the right
-thing, but the bug I was alluding to was that your 'read' does not
-seem to be removing the terminating <newline> (which is CRLF on your
-platform) after reading a line before splitting the contents on the
-line at IFS boundaries.
+[...]
+> --- a/wrap-for-bin.sh
+> +++ b/wrap-for-bin.sh
+> @@ -19,4 +19,11 @@ GIT_TEXTDOMAINDIR='@@BUILD_DIR@@/po/build/locale'
+>  PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
+>  export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
+>  
+> +if test -n "$TEST_GDB_GIT"
+> +then
+> +	exec gdb -args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
 
-> Again. If CR has no place in IFS, why does LF have a place in IFS? It
-> makes *no* sense to argue for one and against the other.
+Most TEST_ environment variables that git respects are under
+GIT_TEST_* --- e.g., GIT_TEST_OPTS.  Should this match that pattern
+as well, for easier debugging with commands like 'env | grep GIT_'?
 
-See my message to Matthieu.
+What happens if the child in turn calls git again?  Should this
+unset TEST_GDB_GIT in gdb's environment?
+
+The gdb manual and --help output advertise "--args".  Has "-args"
+(with a single dash) always worked?
+
+> +	echo "Could not run gdb -args ${GIT_EXEC_PATH}/@@PROG@@ $*" >&2
+> +	exit 1
+
+Does the 'exec' after the fi need this as well?  exec is supposed to
+itself print a message and exit when it runs into an error.  Would
+including an 'else' with the if make the control flow clearer?  E.g.
+
+	if test -n "$TEST_GDB_GIT"
+	then
+		exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+	else
+		exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+	fi
+
+Thanks,
+Jonathan
+
+diff --git i/wrap-for-bin.sh w/wrap-for-bin.sh
+index a151c95..db0ec6a 100644
+--- i/wrap-for-bin.sh
++++ w/wrap-for-bin.sh
+@@ -19,11 +19,10 @@ GIT_TEXTDOMAINDIR='@@BUILD_DIR@@/po/build/locale'
+ PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
+ export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
+ 
+-if test -n "$TEST_GDB_GIT"
++if test -n "$GIT_TEST_GDB"
+ then
+-	exec gdb -args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+-	echo "Could not run gdb -args ${GIT_EXEC_PATH}/@@PROG@@ $*" >&2
+-	exit 1
++	unset GIT_TEST_GDB
++	exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
++else
++	exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+ fi
+-
+-exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
