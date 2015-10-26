@@ -1,110 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git repack command on larger pack file
-Date: Mon, 26 Oct 2015 00:11:21 -0700
-Message-ID: <xmqqziz6hzom.fsf@gitster.mtv.corp.google.com>
-References: <loom.20151026T065553-934@post.gmane.org>
-	<xmqq611ujfn0.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Sivakumar Selvam <gerritcode@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 26 08:11:30 2015
+From: Lukas Fleischer <lfleischer@lfos.de>
+Subject: [PATCH/RFC] receive-pack: allow for hiding refs outside the namespace
+Date: Mon, 26 Oct 2015 09:09:59 +0100
+Message-ID: <1445846999-8627-1-git-send-email-lfleischer@lfos.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 26 09:16:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqbwH-0004WG-9q
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 08:11:29 +0100
+	id 1ZqcxW-0007K1-4K
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 09:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753071AbbJZHLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 03:11:25 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57333 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752964AbbJZHLY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 03:11:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BFD3B20838;
-	Mon, 26 Oct 2015 03:11:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7y7qIAmyd3WZ1AOYQr39wfSpPE8=; b=lfonJp
-	0XHZH+TlFN9mq/+UkYY9kl7kcGYOdy17yE7jb++8D2IARiGWM6ZUtSzIv2K2oH75
-	yRs8HWr++PblBo6c3VA5TVyDQs977HUGZIZaTJ5M30+O5OLW4/p0TetUukq80c+H
-	scg8uuHMUOOlIeSQzE2HgJKrvuxyIGWKJQfac=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AocRSYB6YHKBfgDZyA3tnpEMRbeI0UDk
-	8xuXp2l6KE7Ns6X7sGBcQ5WLSg3Vumn5ezgWyJpjsLaxi6lrekp79+JXa2wvTKhB
-	JQ530xadpIukNvFsqkmy56rykoGQOgg0Zl2VFo6G9RCEDHzt0xIWDooOw4ga2GtX
-	OmGR6kLiJ80=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B732320837;
-	Mon, 26 Oct 2015 03:11:23 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2C49B20835;
-	Mon, 26 Oct 2015 03:11:23 -0400 (EDT)
-In-Reply-To: <xmqq611ujfn0.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 25 Oct 2015 23:41:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C3ABB720-7BB0-11E5-8D21-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753240AbbJZIQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2015 04:16:45 -0400
+Received: from elnino.cryptocrack.de ([46.165.227.75]:39549 "EHLO
+	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753000AbbJZIQn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2015 04:16:43 -0400
+X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Oct 2015 04:16:42 EDT
+Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 1aba93df;
+	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
+	for <git@vger.kernel.org>;
+	Mon, 26 Oct 2015 09:10:01 +0100 (CET)
+X-Mailer: git-send-email 2.6.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280185>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Right now, we always advertise all refs as ".have", even those outside
+the current namespace. This leads to problems when trying to push to a
+repository with a huge number of namespaces from a slow connection.
 
-> Sivakumar Selvam <gerritcode@gmail.com> writes:
->
->> ... So
->> I thought of splitting the pack file into 4 GB chunks.
-> ...
-> Hmmm, what is "this issue"?  I do not see anything surprising.
+Add a configuration option receive.advertiseAllRefs that can be used to
+determine whether refs outside the current namespace should be
+advertised or not.
 
-While the explanation might have been enlightening, the knowledge
-conveyed by the explanation by itself would not be of much practical
-use, and enlightment without practical use is never fun.
+Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
+---
+We are using Git namespaces to store a huge number of (virtual)
+repositories inside a shared repository. While the blobs in the virtual
+repositories are fairly similar, they do not share any refs, so
+advertising any refs outside the current namespace is undesirable. See
+the discussion on [1] for details.
 
-So let's do another tangent that may be more useful.
+Note that this patch is just a draft: I didn't do any testing, apart
+from checking that it compiles. I would like to hear some opinions
+before sending a polished version.
 
-In many repositories, older parts of the history often hold the bulk
-of objects that do not change, and it is wasteful to repack them
-over and over.  If your project is at around v40.0 today, and it was
-at around v36.0 6 months ago, for example, you may want to pack
-everything that happened before v36.0 into a single pack just once,
-pack them really well, and have your "repack" not touch that old
-part of the history.
+Is our use case considered common enough to justify the inclusion of
+such a configuration option in mainline?
 
-  $ git rev-list --objects v36.0 |
-    git pack-objects --window=200 --depth=128 pack
+Are there suggestions for a better name for the option? Ideally, it
+should contain the word "namespace" but I could not come up with
+something sensible that is short enough.
 
-would produce such a pack [*1*]
+[1] https://lists.archlinux.org/pipermail/aur-general/2015-October/031596.html
 
-The standard output from the above pipeline will give you a 40-hex
-string (e.g. 51c472761b4690a331c02c90ec364e47cca1b3ac, call it
-$HEX), and in the current directory you will find two files,
-pack-$HEX.pack and pack-$HEX.idx.
+ Documentation/config.txt |  6 ++++++
+ builtin/receive-pack.c   | 31 +++++++++++++++++++++----------
+ 2 files changed, 27 insertions(+), 10 deletions(-)
 
-You can then do this:
-
-  $ echo "v36.0 with W/D 200/128" >pack-$HEX.keep
-  $ mv pack-$HEX.* .git/objects/pack/.
-  $ git repack -a -d
-
-A pack that has an accompanying .keep file is excempt from
-repacking, so once you do this, your future "git repack" will only
-repack objects that are not in the kept packs.
-
-
-
-[Footnote]
-
-*1* I won't say 200/128 gives you a good pack; you would need to
-experiment.  In general, larger depth will result in smaller pack
-but it will result in bigger overhead while you use the repository
-every day.  Larger window will spend a lot of cycles while packing,
-but will result in a smaller pack.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 315f271..aa101a7 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2201,6 +2201,12 @@ receive.advertiseAtomic::
+ 	capability to its clients. If you don't want to this capability
+ 	to be advertised, set this variable to false.
+ 
++receive.advertiseAllRefs::
++	By default, git-receive-pack will advertise all refs, even those
++	outside the current namespace, so that the client can use them to
++	minimize data transfer. If you only want to advertise refs from the
++	active namespace to be advertised, set this variable to false.
++
+ receive.autogc::
+ 	By default, git-receive-pack will run "git-gc --auto" after
+ 	receiving data from git-push and updating refs.  You can stop
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index e6b93d0..ea9a820 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -41,6 +41,7 @@ static struct strbuf fsck_msg_types = STRBUF_INIT;
+ static int receive_unpack_limit = -1;
+ static int transfer_unpack_limit = -1;
+ static int advertise_atomic_push = 1;
++static int advertise_all_refs = 1;
+ static int unpack_limit = 100;
+ static int report_status;
+ static int use_sideband;
+@@ -190,6 +191,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (strcmp(var, "receive.advertiseallrefs") == 0) {
++		advertise_all_refs = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
+@@ -222,16 +228,21 @@ static void show_ref(const char *path, const unsigned char *sha1)
+ static int show_ref_cb(const char *path, const struct object_id *oid, int flag, void *unused)
+ {
+ 	path = strip_namespace(path);
+-	/*
+-	 * Advertise refs outside our current namespace as ".have"
+-	 * refs, so that the client can use them to minimize data
+-	 * transfer but will otherwise ignore them. This happens to
+-	 * cover ".have" that are thrown in by add_one_alternate_ref()
+-	 * to mark histories that are complete in our alternates as
+-	 * well.
+-	 */
+-	if (!path)
+-		path = ".have";
++	if (!path) {
++		if (advertise_all_refs) {
++			/*
++			 * Advertise refs outside our current namespace as
++			 * ".have" refs, so that the client can use them to
++			 * minimize data transfer but will otherwise ignore
++			 * them. This happens to cover ".have" that are thrown
++			 * in by add_one_alternate_ref() to mark histories that
++			 * are complete in our alternates as well.
++			 */
++			path = ".have";
++		} else {
++			return 0;
++		}
++	}
+ 	show_ref(path, oid->hash);
+ 	return 0;
+ }
+-- 
+2.6.2
