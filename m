@@ -1,86 +1,78 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [RFC] URL rewrite in .gitmodules
-Date: Mon, 26 Oct 2015 17:52:01 +0100
-Message-ID: <562E5A31.7050903@web.de>
-References: <DCA9FD0F-252B-4CD7-9137-395771CBC62E@gmail.com>
- <xmqqio618mxc.fsf@gitster.mtv.corp.google.com>
- <F01EF930-9787-44DD-A2E5-F5FBA029D3E7@gmail.com>
- <CAGZ79kbFDB55mKnw-ONPGBmHfeXZDBKOb=HrjjepiBh3kgcO1g@mail.gmail.com>
+Subject: Re: Why are submodules not automatically handled by default or at
+ least configurable to do so?
+Date: Mon, 26 Oct 2015 17:56:33 +0100
+Message-ID: <562E5B41.9090801@web.de>
+References: <D4E5E890658.000004DCjohsmi9933@inbox.com>
+ <CAEY4ZpPduXXqgW3rWn9rzkpHrTvY8QfPX=YcBZ_DpyVwnsZ6jw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 26 17:52:39 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nazri Ramliy <ayiehere@gmail.com>,
+	John Smith <johsmi9933@inbox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 26 17:56:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zql0d-0007tS-Bf
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 17:52:35 +0100
+	id 1Zql4h-0003QQ-Mn
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 17:56:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbbJZQwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 12:52:12 -0400
-Received: from mout.web.de ([212.227.15.14]:61698 "EHLO mout.web.de"
+	id S1752853AbbJZQ4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2015 12:56:42 -0400
+Received: from mout.web.de ([212.227.15.3]:61152 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751466AbbJZQwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 12:52:11 -0400
-Received: from [192.168.178.41] ([79.211.105.62]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0LgHau-1aKc9y3dPY-00nfPB; Mon, 26 Oct 2015 17:52:07
+	id S1751533AbbJZQ4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2015 12:56:40 -0400
+Received: from [192.168.178.41] ([79.211.105.62]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0M3k9J-1ahtit29yb-00rE0R; Mon, 26 Oct 2015 17:56:34
  +0100
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.3.0
-In-Reply-To: <CAGZ79kbFDB55mKnw-ONPGBmHfeXZDBKOb=HrjjepiBh3kgcO1g@mail.gmail.com>
-X-Provags-ID: V03:K0:5F9PRqrFslcFfC1KXhIaimhojcZF/FNsbtp1Uj5cOQCMlb71yEp
- 3xXBsA0Kspw4vEMu7ERfOfOfDNaFcml0Of4u15ZCyaMFb+2DsBHecmUJjVQxJPLamFeDu3t
- MYyRa1V/t/s7k/HOMJCiYm7h4lIQtT+1j5XbR8M6FpHWXm2TgpMFgxUtv0uxg5xzT3OicFm
- 9A5byOinY5lBex7Q8or6Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mjjTLBEznbo=:wSq9YIn9zElwtiMA3Sti/Q
- im6cOV7lG+N9Erw9CVnmtr/GDGpD7GleoJ4vHcqpmo2BBrKyRBIPNeRj87Z8BJyiOXDTimVTH
- KUhWgljaqshfK1RLjwUGo56FKwthgRoKNPs4nrMPiuBrtNItbN65EWaXsTJeKMZTrTJM1Np/9
- 3icYR9t0XYt8HlZ1B06tSm/a/5Lbtl5b1fsDuC1R+4z6oMRM7v6mp/VG76ysmdg5BxH/WWfOU
- oEAJPNwW1dThN2tjKzT3yIdM/oMKKQ7EmAMSugPpGe1wDuBohcLrCcOn4Y6oYrZW1jRFLbI/p
- VFH5+KOe0QcIFsrBO0yz4+6hQvoJPHZIQ8ANsUiscg4xp+eUJbbzizt6FupCzK9QG808jxz6E
- 9oLtkGp4OVKx54ex+T8wn7umBx5z6WKNXHo5IJPRLm95tna+UivwyBVY1KbfoIBqIC5HsZnSm
- d0yjJ6cjSCa0ZAKZUbmSheQ+zcDEZu+cVL8Ab4ZRjLDobkw+ugzZZFIWtlfFKnbQRq/CUKO0b
- EgaBmaOinnL4urB9hbYAVxg1liZvOAh1pmpPnV23YjnN0/QgaDAFSxODv16Xr2/WsmRHW3gvS
- I2CkIsqiHGi+1N+w112EgZwZjQl7TSmFtY7KY18909DN3MwAKA1JWRQYkhXDXxAYLE3ieMFjO
- IOfDCvxiqsAuGe0zv9VjxVZHpvua1zFCz5eCbmACigzVZabkEJR/0MOOzEcTQAKSpA9JWzQBV
- vMUaQSTPDtZ6y/zaS4NgElfXTqa3EoH681J3QeEbCIHEK0jxDcmJbMWFc/JedEZxehKoVs3o 
+In-Reply-To: <CAEY4ZpPduXXqgW3rWn9rzkpHrTvY8QfPX=YcBZ_DpyVwnsZ6jw@mail.gmail.com>
+X-Provags-ID: V03:K0:IFCUCld/t8LF5M25/xq18lfiNQQWkGPZGGeOmwvF79wvS7Q8Ct6
+ WVYM78hPtvqsFzmV97ltKlRxBFJ6I1mFWLrgpw9SODWpnm9j141xXM7abi8oGhfxd/lsnCO
+ +zTbW/7edbRLVTP9zWf2QDuwbDK+FwUtfdckRcK2Wy7wPFQmIfoxcxsGGF1JRHY1E5fcvsp
+ Qejd0mK2Ao2XiakpuQC2w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gMDAxk3pVHg=:klzcue5gnZtGdY07+Jkcfx
+ ZSgN7pDdkVg+CXpiawNafcmGxFSgTvGc1YHCFDxOOXPMflcF8RX2sYysEXqI5HeQdnoavtpQX
+ mMPbu2J1G5HKqsqGDOcoYT4q00f4WQnyR1BKZ62NBArIPP8Zr7sRHW9ogiZfw2yUQfDfRnSo0
+ KW0cFCk5fQYJ8xr6j51vNpB+1DX5aoa0KljIewY5066kxuw70OjaB9nMSwc5lBjzD9DqXAl6B
+ tdfRvBUY4ZmhFqSTTMhltr7PlvmlIqhqN7Qwhg/c/zzx5ude/7AN8YgcioNGg2kSfNvgcorYq
+ cBfjW86PaOx8X1GsBJppPLmO+lhhJoDY7cl46RUb+1SKkYzv+DK4TlMx5FbRBaAL8M+U0cdIy
+ TAYUqdSkDZ9//TW8l5ileD4fiSSRIikwsdj2/ThUnEVSEXbuquSK23Pwamow8D1AREHKdt1MM
+ qvRnlejjBiHTqhmu02M68ceAz0yqPdXBvgFp5/EIruftbfsHNFUO6pudjn297+N45omOoGkvN
+ ja8mRonXuijFaChbXLuI0uQLYLptb3i+A/PlBoSN3VYOFqsjB8NUv6OiTJDhf0d0lG8n2SQCZ
+ h5LmouXrGdGTr4MJVfrFQGAdSWvqP/JWVvFbjOumMm/ou0tXucTnfv8qE/fgGrUQ2/BjPpkZ9
+ PfnqqYb8PwyAwmTNoZDK86pXDCZwg4hWllGG8O6pQLztxajk8E1KoTqPUYCpYhaW8OdQ+JsuB
+ nVJnx4frgTRODS7xFDft5enysrSwAcpfJUrDz4siB1bmq04U91AxEyyT/A6164m9t7Flw1u+ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280201>
 
-Am 26.10.2015 um 17:34 schrieb Stefan Beller:
-> On Sun, Oct 25, 2015 at 8:12 AM, Lars Schneider <larsxschneider@gmail.com> wrote:
->> On 20 Oct 2015, at 19:33, Junio C Hamano <gitster@pobox.com> wrote:
->>> I do not think this topic is specific to use of submodules.  If you
->>> want to encourage your engineers to fetch from nearby mirrors you
->>> maintain, you would want a forest of url.mine.insteadof=theirs for
->>> the external repositories that matter to you specified by
->>> everybody's $HOME/.gitconfig, and one way to do so would be to have
->>> them use the configuration inclusion.  An item in your engineer
->>> orientation material could tell them to add
->>>
->>>        [include]
->>>                path = /usr/local/etc/git/mycompany.urlrewrite
->>>
->>> when they set up their "[user] name/email" in there.
->>>
->>> And you can update /usr/local/etc/git/mycompany.urlrewrite as
->>> needed.
->> Oh nice, I didn't know about "include". However, as mentioned to Stefan in this thread, I fear that our engineers will miss that. I would prefer a solution that does not need any additional setup. Therefore the suggestion to add rewrites in the .gitmodules file.
+Am 26.10.2015 um 05:48 schrieb Nazri Ramliy:
+> On Mon, Oct 26, 2015 at 7:10 AM, John Smith <johsmi9933@inbox.com> wrote:
+>> When would people routinely check out a branch and want to stay with the submodules as
+>> the have been checked out for the old branch?
 >
-> How do you distribute new copies of Git to your engineers?
-> Maybe you could ship them a version which has the "include" line
-> already builtin as default? So your distributed copy of Git
-> would not just check the default places for configs, but also
-> some complied in /net/share/mycompany.gitconfig
+> I do this a lot. At my $dayjob we have a super project with bunch of
+> sub projects.
+> Each subproject has its corresponding rpm spec file in the
+> superproject - it's quite
+> often that I work on a "git-merge-base--octopus" branch that updates only the
+> spec files and nothing else - so when changing between branches I
+> don't care what
+> states the submodules are in. When the fixes to the spec files are ready I just
+> checkout to the respective branches and merge in the changes - I don't actively
+> do "git submodule update" when switching to different branches.
 
-Which is just what we do at $DAYJOB, that way you can easily
-distribute all kinds of settings, customizations and hooks
-company-wide.
+Which seems a bit error prone as you could forget to update the submodules
+and build incorrect rpms from them, or am I missing something?
+
+I understand why you don't need to update the submodules every time, but
+would it hurt your workflow if they did (but don't get me wrong, that will
+always be configurable).
