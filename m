@@ -1,121 +1,131 @@
-From: Pietro Battiston <me@pietrobattiston.it>
-Subject: Filters and diff vs. status
-Date: Mon, 26 Oct 2015 15:54:44 +0100
-Message-ID: <1445871284.2698.43.camel@pietrobattiston.it>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: Why are submodules not automatically handled by default or at
+ least configurable to do so?
+Date: Mon, 26 Oct 2015 09:28:11 -0700
+Message-ID: <CAGZ79kb2kStk0+MqUXREH3g+rqbsXoNiTGj=4SxJ4vOR8TqEcA@mail.gmail.com>
+References: <D4E5E890658.000004DCjohsmi9933@inbox.com>
+	<CAFOYHZAKvN8xMKePCNFgo_ySHr0dc0+ASY0ux7j0p8UF1fuWCQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 26 16:01:00 2015
+Cc: John Smith <johsmi9933@inbox.com>, GIT <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 26 17:28:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqjGa-0006I4-F1
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 16:00:56 +0100
+	id 1Zqkd8-0001gV-Tj
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 17:28:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932075AbbJZPAv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Oct 2015 11:00:51 -0400
-Received: from pietrobattiston.it ([92.243.7.39]:54273 "EHLO
-	jauntuale.pietrobattiston.it" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754156AbbJZPAt (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Oct 2015 11:00:49 -0400
-X-Greylist: delayed 362 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Oct 2015 11:00:49 EDT
-Received: from debiousci (nat-sc.sssup.it [193.205.81.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by jauntuale.pietrobattiston.it (Postfix) with ESMTPSA id 1F7274E7A
-	for <git@vger.kernel.org>; Mon, 26 Oct 2015 15:54:45 +0100 (CET)
-X-Mailer: Evolution 3.18.1-1 
+	id S1751586AbbJZQ2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2015 12:28:13 -0400
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:36683 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751136AbbJZQ2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2015 12:28:12 -0400
+Received: by ykba4 with SMTP id a4so183258388ykb.3
+        for <git@vger.kernel.org>; Mon, 26 Oct 2015 09:28:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=gfV2iYmHjqvDu1xB7IpY8Af5pmg7rkfK8GrXGwKrB2U=;
+        b=fbj418h1Lf0q7kOWoeceE7gNsGWFZ9+V9E62e8wBWeu1yRD/UBxLdAaF6gdcI2cDKD
+         kY807NogibpLBTLourAIT5GGPdmJTjcgLuvJ/QbP+12ilUGGK97/YaFPMd0u6oL3HwCA
+         rvEjt9vSatPvwNJY+va7slCjBxsnrk2xt4XRWBZ5sLzacsetYClVP22sH4wA70RL4cx+
+         n+X1x3zWSko2DhW2pi7pgFD9FkE63QlCEFiGSp6tWGxs/2BN/Xad5K47VL3B0kx2ut1e
+         HVz1d1ROg6PdbIFC6uB4lbRUgg0Dio1J6wthRALD2b8U+jR7cyOUW1Gq+JlD9RBad8he
+         l/Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=gfV2iYmHjqvDu1xB7IpY8Af5pmg7rkfK8GrXGwKrB2U=;
+        b=dtqQPGmngZcW2TGHeZCweIAIcnL5mpsOFtXscLq9eFrcWJBSYYZpLH5PL12McAxkAr
+         lA5mTfObGl0nSRYvu8XC5tg7jMY9HBG787ul1wnxK1WR1RYpIgdvaQjytmwi0ozt5D0l
+         b9s6WPMEgVE7hT3t64fU5WfSP7Px2zUNXORldSKiy+df1mwnabKSR6SN22LhINlbpR/2
+         R4Md2jrZZ7YBKLOzVfkNxNeQdk/GhjTqdTxpC6F6bfh7FgvHHjSsTS/5K6JsIghobR+5
+         h2O/fiDiaUzh6rRdSPswVs1BAX0NvRURswQkq7d2B2/ZEU3t9KWAv54uzTvWfWDOu6cO
+         vEaw==
+X-Gm-Message-State: ALoCoQlNfMXtc8F7XhIwrpwVW1sQleaXOtLFJQ9E8yDtdcg/5L78Awrj2EIbeZrEtc45N/Dabv6z
+X-Received: by 10.129.155.130 with SMTP id s124mr25108533ywg.68.1445876891965;
+ Mon, 26 Oct 2015 09:28:11 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Mon, 26 Oct 2015 09:28:11 -0700 (PDT)
+In-Reply-To: <CAFOYHZAKvN8xMKePCNFgo_ySHr0dc0+ASY0ux7j0p8UF1fuWCQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280198>
 
-Dear mailing list,
+On Sun, Oct 25, 2015 at 5:56 PM, Chris Packham <judge.packham@gmail.com> wrote:
+> On Mon, Oct 26, 2015 at 12:10 PM, John Smith <johsmi9933@inbox.com> wrote:
+>> I found that I use submodules much, much more often in my git projects than I used externals
+>> in Subversion and the reason is that git encourages/forces to organize large projects into
+>> smaller repositories, one reason for this being that subversion allows to check out parts of
+>> a repository while git does not.
+>>
+>> But when I clone a git repository with subprojects, I (and everyone else) has to remember to
+>> add the --recursive option. When switching between branches with different versions/commits of the
+>> submodules everyone has to remember to update the submodules. When updating a submodule
+>> everyone has to remember to recurse there too.
+>
+> The config option fetch.recurseSubmodules exists. It's not quite the
+> same as what git clone --recurse-submodules does but it's a start.
+>
+>>
+>> Basically, everything with submodules has to be done manually every time and there seems
+>> to be no way to change that default.
+>>
+>> Why is that? Basically all the time I use submodules I would want automatic handling of
+>> submodules to happen and I cannot  remember having had a single situation where I would
+>> not have wanted it to happen. So  why does git default to doing nothing?
 
-I am using, on specific files, a filter which I created.=C2=B9 Often, f=
-iles
-being tracked are modified in a way not meant to be reflected in the
-git history to result in changes to be committed. And sometimes, the
-following happens:
+IIUC at the time submodules were invented, there was need for lots of
+code to be written.
+Each command needed new code to deal with submodules. As there was not
+enough people/time
+to do it properly, the "do nothing" was the safest action which could
+be added fast.
 
-pietro@debiousci:~/path/to/repo$ git status a_file.ipynb
-On branch master
-Your branch is up-to-date with 'origin/master'.
-Changes not staged for commit:
-=C2=A0 (use "git add <file>..." to update what will be committed)
-=C2=A0 (use "git checkout -- <file>..." to discard changes in working
-directory)
+>
+> It's hard to pick a default that suits every workflow that submodules
+> support. Also with submodules there is a chicken-and-egg scenario.
+> While you can put things in ~/.gitconfig most of what you'd want to
+> configure when using submodules would be in super/.git/config but that
+> doesn't exist until you've cloned super.git.
+>
+>> Why does it not provide a way to enable automatic
+>> pulling/updating of submodules e.g. when cloning or switching branches?
+>
+> I believe Jens and Stefan (Cc'd) have been doing some great work in
+> this area. Jens even posted his todo list a few days ago
+> (https://github.com/jlehmann/git-submod-enhancements/wiki).
 
-	modified:=C2=A0=C2=A0=C2=A0a_file.ipynb
+Yeah I would also point at Jens' wiki today.
 
-no changes added to commit (use "git add" and/or "git commit -a")
-pietro@debiousci:~/path/to/repo$ git diff a_file.ipynb
-pietro@debiousci:~/path/to/repo$
+All I did up to now was rewriting parts of the submodule code in C
+(git submodule update specifically), while the code/patches you find at Jens'
+copy of Git includes already lots of useful stuff such as `git
+checkout --recurse-submodules`
+(IIRC you don't need to type --recurse-submodules if you configured
+that to be the default)
 
+>
+>> When would people routinely check out a branch and want to stay with the submodules as
+>> the have been checked out for the old branch?
 
-(notice that no diff shown). Then I wonder what is happening (checking
-out the file doesn't help, resetting --hard neither), and I try to
-commit the (apparently unchanged) file . And I get the following:
+As said above, it was a sane choice which could be implemented fast, IIUC.
 
+I mean what would happen if you had commits made in the submodule, or
+just a dirty working tree?
 
-pietro@debiousci:~/path_to_repo$ git commit a_file.ipynb -m '?!'
-[master
-c76125a] ?!
-=C2=A01 file changed, 1 insertion(+), 1 deletion(-)
-pietro@debiousci:~/path/to/repo$ git show HEAD
-commit c76125a537f88db4ff5d13c97b92e1f01c13bb47
-Author: Pietro Battiston <me@pietrobattiston.it>
-Date:=C2=A0=C2=A0=C2=A0Mon Oct 26 13:37:24 2015 +0100
+>>
+>> I honestly do not understand it.
+>>
+>> John
+>>
 
-=C2=A0=C2=A0=C2=A0=C2=A0?!
-
-diff --git a/a_file.ipynb b/a_file.ipynb
-index dfdbd79..61663fb 100644
---- a/notebook/a_file.ipynb=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0
-+++ b/notebook/a_file.ipynb=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0
-@@ -349,4 +349,4 @@
-=C2=A0=C2=A0=C2=A0=C2=A0"metadata": {}
-=C2=A0=C2=A0=C2=A0}
-=C2=A0 ]
--}
-\ No newline at end of file
-+}
-
-
-Now, I don't particularly care about a newline being present or not at
-the end of the file, but the fact that the working tree looks dirty
-(forbidding me from doing merges) - and that I don't understand why,
-and how to fix this without adding bogus commits, annoys me.
-I found an analogous behaviour reported some years ago,=C2=B2 and the
-conclusion was "I think that there is a bug. I have observed this as
-well with my own clean filter sometimes, but not always. I haven't
-found a recipe that reliably exhibits the problem." Apart from that, I
-have found no clue of why "git diff" and "git status" do not agree.
-
-Does anybody have any pointer to solve this? I could try to play with
-my filter imposing that it adds/doesn't add a newline at the end of its
-output, but I am really missing the logic of what is going on on the
-git side.
-
-Thanks in advance,
-
-Pietro
-
-
-
-=C2=B9 I don't want to waste anybody's time (I guess the answer to my
-problem is pretty general), but for more details see
-=C2=A0https://github.com/toobaz/ipynb_output_filter=C2=A0, presenting b=
-oth the
-script and the configuration I use.
-
-=C2=B2=C2=A0
-http://thread.gmane.org/gmane.comp.version-control.git/125378/focus=3D1=
-25
-684
+Stefan
