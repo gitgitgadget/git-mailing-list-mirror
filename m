@@ -1,88 +1,136 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 2/2] sh-setup: explicitly mark CR as a field separator
-Date: Mon, 26 Oct 2015 10:34:07 +0100
-Message-ID: <vpqlhaqas8g.fsf@grenoble-inp.fr>
-References: <cover.1445777347.git.johannes.schindelin@gmx.de>
-	<cover.1445782122.git.johannes.schindelin@gmx.de>
-	<2b089201404299257f23b3931499ea16202f0f65.1445782122.git.johannes.schindelin@gmx.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] Fix interactive rebase when the editor saves with
+ CR/LF
+Date: Mon, 26 Oct 2015 11:43:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1510261133030.31610@s15462909.onlinehome-server.info>
+References: <cover.1445777347.git.johannes.schindelin@gmx.de> <cover.1445782122.git.johannes.schindelin@gmx.de> <xmqqpp02kbif.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
 	Chad Boles <chadbo@microsoft.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Philip Oakley <philipoakley@iee.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 26 10:34:53 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 26 11:43:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqeB2-0008Ks-Pe
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 10:34:53 +0100
+	id 1ZqfFs-0001mx-WF
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 11:43:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753534AbbJZJeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 05:34:46 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:53508 "EHLO rominette.imag.fr"
+	id S1753388AbbJZKnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2015 06:43:53 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50987 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753347AbbJZJee (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 05:34:34 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t9Q9Y6n3007150
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 26 Oct 2015 10:34:07 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9Q9Y7e8021616;
-	Mon, 26 Oct 2015 10:34:07 +0100
-In-Reply-To: <2b089201404299257f23b3931499ea16202f0f65.1445782122.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Sun, 25 Oct 2015 15:10:25 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 26 Oct 2015 10:34:09 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t9Q9Y6n3007150
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1446456851.26677@z9rtAlVbHxY5urpPaoV4OA
+	id S1753219AbbJZKnw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2015 06:43:52 -0400
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MEccf-1ZkOmw0IrR-00FiUa;
+ Mon, 26 Oct 2015 11:43:47 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqqpp02kbif.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:nGDWCi55iDQikSxbpEoqAOFhXHT4ffyV54b5/KtQsEuGsxO60iM
+ x235+F+44r2f5oass5TpYD0ZrcqYDJO3QSkcJEycSYkBQjiG4F20q64b7J9jia+10tQn/8K
+ 7vk+xhQeKVkeXWlyBysRFWPACxUz8Hcx356j3CL4rJaimQrAb6JV1/aQGGImqcbvesiuZk9
+ anUKvnilGIupV+ipeKI6w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BGkyLo/xxTY=:wyhQWXrpaY6FQu7JBOG2ia
+ Vf7N3zkWTH6jzpDFfTDs34e88PMt+mzFirCeeXfT4PKuRk4CJbHZSdsH3SrdQ0F6axyoOK2NG
+ S6I9dZqMZxnRDtUEFqehwM2kbMm9s31GEdd3MmJvLptDonpaAWfSV9+7T0/26HfaelTKvHn0X
+ 0bVOi4+7kEydOP49B+k+967N1DN87Na7m533zxIRkM2GOBj8+i48Gih8LX+j1LBh2UB7oPL87
+ +UTp7y4SVmKQ7kabsxzuvlKFNzOETvptS+/koVG/1+jJUcD1UNiKhPdGYsegQRBjQiOfiZY9k
+ MRU30G3GMeMSwYNpAKzor8pBPEC4TmvKAOYK/vBYRqC8ap9dMxRrCV3CzkdzxumiHYSWjfPqk
+ jD50MYDVYUnwrp2uv2su4/sBGBBBeHlwClPP1yjl1npXXFADN5CIJtYZPGds5kGhzm4kmM7oh
+ eEkDCikQ7EzhvTMtYwsXw3pTroRjd4wOKVuThR1czLrIa5cFWa4CoOWL51yVY4+6SpUIMt8DC
+ zfV0b/DPaEw3A4iRvp758RVQK1Yyl7FuAqnbZjrRgjIjiDJ7vC2EQwASGrnq1rheILwnjSDEr
+ Bp2w+1kQ4nYC3jx9JEesC6fppNdOBFjFYIaWsr2ar4157UzRG191PwHxQA7etIHDk5bYRckjM
+ xB3BskIBv+fG4JF4zw2A9/JHd3Rs73wc+1X8TPorfWhnS33ESJs8eyhunVn32qV9za1xOjZGi
+ ou0V+9Pn4fcljSYVoSC+ep/06+/RzWi4LHAcbz0YdgPWUMXxN5gG0goOO9NJztpmEa7ti4Kx 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280187>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Hi Junio,
 
-> This is the correct thing to do, really: we already specify LF as
-> field separator.
+On Sun, 25 Oct 2015, Junio C Hamano wrote:
 
-I'm almost convinced that this is the right thing to do in the long run
-("almost" because I'm not sure, not because I have arguments against). I
-agree with Junio that the commit message should be more convincing, but
-indeed, accepting LF and not CR is strange.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > Chad Boles reported that `git rebase -i` recently started producing
+> > errors when the editor saves files with DOS line endings. The symptom
+> > is:
+> >
+> > 	Warning: the command isn't recognized in the following line:
+> > 	 -
+> >
+> > 	You can fix this with 'git rebase --edit-todo'.
+> > 	Or you can abort the rebase with 'git rebase --abort'.
+> >
+> > The real bummer is that simply calling `git rebase --continue` "fixes"
+> > it.
+> 
+> Two questions.
+> 
+>  * What does the DOS editor do to a file with ^M in the middle of a
+>    line, e.g. "A^MB^M^J"?
 
-However, is this the right thing to do in the maintainance branch? It
-does fix the issue, but does so in a rather intrusive way, so I'd need
-more arguments to be convinced that this is safe to merge in maint. Or
-have a local fix for rebase to be merged in maint, and apply this in
-master for the next feature release.
+You mean mixed line endings? At least with this Windows 10 WordPad, *all*
+line endings are normalized to CR/LF. That is, if you edit a file that
+contains a stray CR, it is presented as a line break.
 
-Sorry for being negative, and especially sorry since I'm partly guilty
-for the breakage. I just want to be sure that we don't break anything
-while repairing it (we already introduced this breakage while repairing
-another one...).
+>  * Is your shell ported correctly to the platform?
 
->  # Similarly for IFS, but some shells (e.g. FreeBSD 7.2) are buggy and
->  # do not equate an unset IFS with IFS with the default, so here is
-> -# an explicit SP HT LF.
-> +# an explicit SP HT LF CR.
->  IFS=' 	
-> -'
-> +'"$(printf '\r')"
+I would think so. It is an MSys2 program, therefore it uses all the POSIX
+niceties, of course.
 
-While we're there, it may be better to have a single "printf ' \t\n\r'"
-to avoid the whitespace magic in the source code.
+A simple test with CR/LF line endings in a script reveals that it is
+pretty solid:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+	x=a
+	case "$x" in a) echo b;; esac
+
+prints out 'b', as expected.
+
+Please also note that things apparently worked alright before the patch
+removing the stripspace call was applied.
+
+> The latter may need a bit of elaboration.  "read a b c" is supposed
+> to read one line of text (where the definition of line is platform
+> dependent, your platform may use CRLF to signal the end of an line),
+> split the characters on the line (i.e. LF vs CRLF no longer matters
+> at this point) at $IFS characters and give them to $a $b and $c. If
+> the platform accepts CRLF as the EOL signal, should the program still
+> see CR at the end of $c?
+> 
+> A solution that mucks with IFS smells like fixing a wrong problem
+> without addressing the real cause.
+
+Please note that it is a bit unsettling if you use funny language like
+"smells" here and then accuse me of not having an argument when I point
+that the same rationale applies to having CR in IFS as applies to having
+LF in IFS. Yes, that was an implicit argument, but it is a strong one, so
+I do not think you are well served ignoring it.
+
+> Also IFS is used not only by "read", so munging it globally doubly
+> feels wrong.
+> 
+> In addition, you do not want to split at CR; what you want is to
+> treat CRLF (i.e. not a lone CR) as the end-of-line separator.
+> Adding CR to IFS feels triply wrong.
+> 
+> By the way, saying "This is right, really" makes you sound as if you
+> do not have a real argument.
+
+Again. If CR has no place in IFS, why does LF have a place in IFS? It
+makes *no* sense to argue for one and against the other.
+
+In any case, I am not interested in arguing for arguing's sake. Tell me
+what you want instead of the patch to IFS, I will implement it and test
+whether it fixes the bug and we will move on.
+
+Ciao,
+Johannes
