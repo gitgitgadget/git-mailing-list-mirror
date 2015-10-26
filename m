@@ -1,105 +1,121 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 00/34] libify mailinfo and call it directly from am
-Date: Mon, 26 Oct 2015 15:25:25 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1510261524000.31610@s15462909.onlinehome-server.info>
-References: <1444855557-2127-1-git-send-email-gitster@pobox.com> <1445239731-10677-1-git-send-email-gitster@pobox.com> <xmqqh9ll6xo8.fsf@gitster.mtv.corp.google.com> <5627B496.7030102@ramsayjones.plus.com> <5627EFE4.1060106@kdbg.org>
+From: Pietro Battiston <me@pietrobattiston.it>
+Subject: Filters and diff vs. status
+Date: Mon, 26 Oct 2015 15:54:44 +0100
+Message-ID: <1445871284.2698.43.camel@pietrobattiston.it>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Oct 26 15:26:00 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 26 16:01:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zqiih-0002EX-Bv
-	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 15:25:55 +0100
+	id 1ZqjGa-0006I4-F1
+	for gcvg-git-2@plane.gmane.org; Mon, 26 Oct 2015 16:00:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754246AbbJZOZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 10:25:34 -0400
-Received: from mout.gmx.net ([212.227.17.21]:64663 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754126AbbJZOZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 10:25:32 -0400
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0LezI3-1aI1v73DyR-00qhyw;
- Mon, 26 Oct 2015 15:25:26 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <5627EFE4.1060106@kdbg.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:FbUX0QqIGAW6C/wq0sfXQDwtJS8N29P52cUH6env9yCg5oeHOhb
- mJICa5QrWvgE+HxcTmOZJJKfJiSWPUyae9rePzXISQZj+0LCypfFxPgUdiCUgcmxAbiYwI1
- DXPGH3lSibZNK3VV3GKxLiTkBx4s9Fo6jZvKtJxIegNLwH+uvDGzdhOLXG/wLN1gdz4TDpo
- JTIV8iAhwlW9RJ0f+Of5g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ROsHdVryLNY=:JlznDjcdFpcVBddtvn6aKe
- 2FlJB5CbyPEjKCbiC61Bsc6/mf5Xyx8sstjwgl62+v6CjacC13ksBeKaJKZxv5+uXNXtv5Cv5
- N8WefXxJdFQBuDYPUx6+rtl2bHVauQ2ym2iKrmwFvgx4JmapyZXcBpteqwvo8EPsGbMXnknTp
- zOacuckqHDqDyPjnJMUCEGImGyEPS/XtlbYrPlSYBtxBZAhpm//JqEMTQ1aMPAAYFKVqGmN5/
- u4acgVUrB+S4EVPXtWRGa0/jIc2JcxnY2qj2KzPTwMXWBEciYBOhadR6W+Z0ej124fFXVwy2X
- +OaWKEen6WwIF4k1WEp9OLP1SIVVx+/+dAy+dvQX6wmuHJwzbAuNIrF9P46jaEgZDVCRQYiK2
- xkMwEqwRY2SoePbL/jiyOsq3AAYEHBvXlV6R6GOcLq+d71XndfSMgS1LuJ7lGTcsQKEX3PZ87
- aHMPP/KMB0dZ8xe+5HeX7yzqrKMO85aPy53RTelNN0xgwfLxgxaQYc10KUdd3Vl4i9nbHamho
- B6LWFiuPIwaEVo74/CJGYZvMj4GnnclwPRDUgPsMAQpsgW5j0bFRsLQ6mrOkXwO5SpVcsbeoe
- ifPikczBHMlSm8jQm1+Q+1ouHR6XKDYcArtYFOq3vp+8NQHQ6DTZE5oTSpD4oh66m4NjD2x22
- Za/PFtWJ5knY+P5bDkwk6IAKiPSzIPvDnlx1Xcd4Ou0y3OQms5pzpKueFdIHjsRxShgguFVeA
- jcfhooeGzwdEyrWNMuktWZf53IsHq4362G9STAo3A9U0OuoP86yRb3LlT51k8SHTsLydHdmx 
+	id S932075AbbJZPAv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Oct 2015 11:00:51 -0400
+Received: from pietrobattiston.it ([92.243.7.39]:54273 "EHLO
+	jauntuale.pietrobattiston.it" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754156AbbJZPAt (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Oct 2015 11:00:49 -0400
+X-Greylist: delayed 362 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Oct 2015 11:00:49 EDT
+Received: from debiousci (nat-sc.sssup.it [193.205.81.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by jauntuale.pietrobattiston.it (Postfix) with ESMTPSA id 1F7274E7A
+	for <git@vger.kernel.org>; Mon, 26 Oct 2015 15:54:45 +0100 (CET)
+X-Mailer: Evolution 3.18.1-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280197>
 
-Hi,
+Dear mailing list,
 
-On Wed, 21 Oct 2015, Johannes Sixt wrote:
+I am using, on specific files, a filter which I created.=C2=B9 Often, f=
+iles
+being tracked are modified in a way not meant to be reflected in the
+git history to result in changes to be committed. And sometimes, the
+following happens:
 
-> Am 21.10.2015 um 17:51 schrieb Ramsay Jones:
-> > On 20/10/15 22:24, Junio C Hamano wrote:
-> > > Junio C Hamano <gitster@pobox.com> writes:
-> > > some numbers on my desktop (Dell T3500 2.66GHz Xeon X5650 with 12GB,
-> > > running Ubuntu),
-> >
-> > I suspect that I haven't tested exactly the same version as you, but I had
-> > a quick look at testing this on Cygwin today. I have included a complete
-> > transcript (below), so you can see what I did wrong! :-P
-> >
-> > >
-> > > Between 'master' and the version with this series (on 'jch'),
-> > > applying this 34-patch series itself on top of 'master' using "git
-> > > am", best of 5 numbers for running:
-> > >
-> > >      time git am mbox >/dev/null
-> > >
-> > > are
-> > >
-> > >        (master)                 (with the series)
-> > >      real    0m0.648s            real    0m0.537s
-> > >      user    0m0.358s            user    0m0.338s
-> > >      sys     0m0.172s            sys     0m0.154s
-> > >
-> >
-> > The corresponding times for me were:
-> >
-> >      (master)           (with the series)
-> >    real	0m9.760s      real	0m5.744s
-> >    user	0m0.531s      user	0m0.656s
-> >    sys	0m5.726s      sys	0m3.520s
-> >
-> > So, yes, a noticeable improvement! :)
-> 
-> Same here, on Windows built with the old msysgit environment:
-> 
-> (master)             (with the series)
-> real    0m3.147s      real    0m1.947s
-> user    0m0.016s      user    0m0.000s
-> sys     0m0.015s      sys     0m0.031s
-> 
-> Although I tested 'git am patches/*' where the patches/* are the result of
-> 'git-format-patch v2.6.1..github/jc/mailinfo-lib'.
+pietro@debiousci:~/path/to/repo$ git status a_file.ipynb
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+=C2=A0 (use "git add <file>..." to update what will be committed)
+=C2=A0 (use "git checkout -- <file>..." to discard changes in working
+directory)
 
-2.548s vs 2.068s here.
+	modified:=C2=A0=C2=A0=C2=A0a_file.ipynb
 
-Ciao,
-Johannes
+no changes added to commit (use "git add" and/or "git commit -a")
+pietro@debiousci:~/path/to/repo$ git diff a_file.ipynb
+pietro@debiousci:~/path/to/repo$
+
+
+(notice that no diff shown). Then I wonder what is happening (checking
+out the file doesn't help, resetting --hard neither), and I try to
+commit the (apparently unchanged) file . And I get the following:
+
+
+pietro@debiousci:~/path_to_repo$ git commit a_file.ipynb -m '?!'
+[master
+c76125a] ?!
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+pietro@debiousci:~/path/to/repo$ git show HEAD
+commit c76125a537f88db4ff5d13c97b92e1f01c13bb47
+Author: Pietro Battiston <me@pietrobattiston.it>
+Date:=C2=A0=C2=A0=C2=A0Mon Oct 26 13:37:24 2015 +0100
+
+=C2=A0=C2=A0=C2=A0=C2=A0?!
+
+diff --git a/a_file.ipynb b/a_file.ipynb
+index dfdbd79..61663fb 100644
+--- a/notebook/a_file.ipynb=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0
++++ b/notebook/a_file.ipynb=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0
+@@ -349,4 +349,4 @@
+=C2=A0=C2=A0=C2=A0=C2=A0"metadata": {}
+=C2=A0=C2=A0=C2=A0}
+=C2=A0 ]
+-}
+\ No newline at end of file
++}
+
+
+Now, I don't particularly care about a newline being present or not at
+the end of the file, but the fact that the working tree looks dirty
+(forbidding me from doing merges) - and that I don't understand why,
+and how to fix this without adding bogus commits, annoys me.
+I found an analogous behaviour reported some years ago,=C2=B2 and the
+conclusion was "I think that there is a bug. I have observed this as
+well with my own clean filter sometimes, but not always. I haven't
+found a recipe that reliably exhibits the problem." Apart from that, I
+have found no clue of why "git diff" and "git status" do not agree.
+
+Does anybody have any pointer to solve this? I could try to play with
+my filter imposing that it adds/doesn't add a newline at the end of its
+output, but I am really missing the logic of what is going on on the
+git side.
+
+Thanks in advance,
+
+Pietro
+
+
+
+=C2=B9 I don't want to waste anybody's time (I guess the answer to my
+problem is pretty general), but for more details see
+=C2=A0https://github.com/toobaz/ipynb_output_filter=C2=A0, presenting b=
+oth the
+script and the configuration I use.
+
+=C2=B2=C2=A0
+http://thread.gmane.org/gmane.comp.version-control.git/125378/focus=3D1=
+25
+684
