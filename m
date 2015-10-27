@@ -1,60 +1,165 @@
-From: jerryfunds@vger.kernel.org
-Subject: (unknown)
-Date: Tue, 27 Oct 2015 09:00:18 +0530
-Message-ID: <MA1PR01MB03446137C4885340301F3C92B8220@MA1PR01MB0344.INDPRD01.PROD.OUTLOOK.COM>
-Reply-To: <jerrysmith@inbox.lv>
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH v4 1/3] Add test to describe expectation of blame
+ --reverse with branched history
+Date: Tue, 27 Oct 2015 06:40:50 +0200
+Message-ID: <20151027044049.GA18120@wheezy.local>
+References: <1445837217-4252-1-git-send-email-max@max630.net>
+ <1445837217-4252-3-git-send-email-max@max630.net>
+ <xmqqeggijga3.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 27 04:30:58 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 05:41:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZquyP-0001LO-BV
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 04:30:57 +0100
+	id 1Zqw4I-0006JT-G3
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 05:41:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998AbbJ0Daw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 23:30:52 -0400
-Received: from mail-bo1ind01hn0224.outbound.protection.outlook.com ([104.47.101.224]:61637
-	"EHLO IND01-BO1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751572AbbJ0Dav convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Oct 2015 23:30:51 -0400
-Authentication-Results: spf=none (sender IP is ) smtp.mailfrom=<>; 
-Received: from [192.168.1.100] (116.203.74.230) by
- MA1PR01MB0344.INDPRD01.PROD.OUTLOOK.COM (10.164.120.144) with Microsoft SMTP
- Server (TLS) id 15.1.306.13; Tue, 27 Oct 2015 03:30:35 +0000
-Content-Description: Mail message body
-Subject: 
-X-Originating-IP: [116.203.74.230]
-X-ClientProxiedBy: HKNPR06CA0039.apcprd06.prod.outlook.com (10.141.16.29) To
- MA1PR01MB0344.INDPRD01.PROD.OUTLOOK.COM (25.164.120.144)
-X-Microsoft-Exchange-Diagnostics: 1;MA1PR01MB0344;2:wsXEEG7ZTgYh6TbCauRoFPenj3xyxd/2iNasHCrn7JEABr6tANPxhbN32Gm3Ki4/MkJRRrFahXr/BKNGroQRQxLbpBvqe3M29drCYly+RlElMPvJ9VMPJ01Zt6md2Yf+8HqWB0oinHnZ/jjXNi+lGNiG/Iu6JfykW9QSnl4DsgY=;3:QCQnu7hT0IYB3w9Qc/9I4eZ0JdZfcoPpP/vi9dHWIMDUIZOgsxlAaZYvvuR4dsST1K3N0qR72LIds1gOWxy1G93K9zNJNV7E5PO+bL+y5TuflHOa4IZelGnTQ4fpGZq80+umAxHVuPG2HMElZra9nw==;25:tx09413Exl0+sraVw06mWAcCZHqIht+m0ko1l+ajHMQi/HeuK9rhaC1SpRQFXtrt9TmANEKCRw/sL8dZiL5U6+v5Wdv7qxiWJLM7Ke2J8apB5kqrUE8O9EvtujTAGE7IJHIfNU4CZThyXAdPnN0+O4laKYJZCCqq6kVqAtzFuDzbzi4YzdNBcSUPx86/j8Zn5iAopX9cvpqtZ8TweT5fN4wSojfkF1d7oP1KW0QgdSgThT+cdOKLGT1aP0gyBLK/5KORIjAiskSXvVtqh1HaiA==
-X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:MA1PR01MB0344;
-X-Microsoft-Antispam-PRVS: <MA1PR01MB0344EFFC880E9D704084698AB8220@MA1PR01MB0344.INDPRD01.PROD.OUTLOOK.COM>
-X-Exchange-Antispam-Report-Test: UriScan:;
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(2401047)(8121501046)(520078)(5005006)(3002001)(102215026)(6007046)(6003046)(6004014);SRVR:MA1PR01MB0344;BCL:0;PCL:0;RULEID:;SRVR:MA1PR01MB0344;
-X-Microsoft-Exchange-Diagnostics: 1;MA1PR01MB0344;4:2TuwS1L+ohKaZf0OgEQazU9D97AaK2p8V2xovUNBik9r/QPuHL3hNUGVzO8okjxvMPhqj3ePN+o7g9P1GHksy7wov/T352pEEg6onzPieZjEEzoMyOtG4A+dO/zFkxERtrraz8DlorqnAnfGWW5WOASEJFHm3edqMkwEnch7vfkWd4LigO97F2qaL7mjzwstMb1r0tunZCuw2JudrVwi967oi284BUf/7YViM+dmZIFEjn5ewfTQWy2bOuz3S9iLb8qpq1VW6F+3Fp6UIRJDrEOoTAm16YXuHx9/jWApHiVQBoDMxds0KHpOm7gk29+OJwksWai/VH0u4UidZ+fznnAK8n4C9AN1a63ijJevoDREpYT2mKlHVzCoC7tOs41Tqpi0eyP8ZEn8/2ILiZPYaDtdIp+fFa/JcFn3yRxr7NI=;23:wtQKY/sBlIdzgMvUxxhWKDC1sS82iyE/AczT7yUfCCvmANyZWGEV/m86j/WF87H4Y+LQlBqFdxRyJmuvdQQ2NykGaRr37AknPgiUKeYTOe/1ZVa+nRCRrAQm2Y3gKMFmgxID2nVF8c8hcFVXCeORNQ4gorewl+CvRY63NiOtulvAFAKxXCOW3Uamftf7RvzoBDn46orpGh3OvGSnmpMU+4ulQ3YlryKQJ//OfZRiekuch8K8VijAhfelZuJimpwN;5:+Y0+2GUrsoI9Q+HQLtGwK5HRGP1y7u7R2eM0W6X/gNoBbCzO7i97VnhhK
- Co+sKvq+CEHccJnHUOVCRggOale1DygVmRfKjXDWhOYjqfOBuYM+pyo7b9fgnOtMooFIlfFnTjX8tOuXZkPQIkikZz95Q==;24 
-X-Forefront-PRVS: 0742443479
-X-Forefront-Antispam-Report: SFV:SPM;SFS:(10019020)(6009001)(6049001)(5005620100007);DIR:OUT;SFP:1501;SCL:9;SRVR:MA1PR01MB0344;H:[192.168.1.100];FPR:;SPF:None;PTR:InfoNoRecords;LANG:en;
-Received-SPF: None (protection.outlook.com: [192.168.1.100] does not designate
- permitted sender hosts)
-SpamDiagnosticOutput: 1:22
-SpamDiagnosticMetadata: 00000000%2D0000%2D0000%2D0000%2D000000000000
-X-Microsoft-Exchange-Diagnostics: 1;MA1PR01MB0344;20:VMVG29Og61ArOtuHEbXXXi1P1Vlnn7O2PMJgkbA0piLVEbDH0vOIXAkQrVHvBH0QAzQ3yDI+ECR9aZ/ZwHzV3g==
-X-OriginatorOrg: jerryfunds102000.onmicrosoft.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2015 03:30:35.4906
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA1PR01MB0344
+	id S1750987AbbJ0ElA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 00:41:00 -0400
+Received: from p3plsmtpa07-04.prod.phx3.secureserver.net ([173.201.192.233]:34859
+	"EHLO p3plsmtpa07-04.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750891AbbJ0Ek7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2015 00:40:59 -0400
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa07-04.prod.phx3.secureserver.net with 
+	id a4gp1r00E5B68XE014gxC4; Mon, 26 Oct 2015 21:40:59 -0700
+Content-Disposition: inline
+In-Reply-To: <xmqqeggijga3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280244>
 
-We Give Out Loans For 3% Interest Rate And We Offer Loans From $5,000 To $50,000,000.00, Are You Looking To Buy A House Car Or Company Or Start Up A Truck Company or Buy A Truck Or Personal Loans, Email Us At jerrysmith@inbox.lv  With Amount Needed And Phone Number.
+On Sun, Oct 25, 2015 at 11:27:32PM -0700, Junio C Hamano wrote:
+> Max Kirillov <max@max630.net> writes:
+> 
+>> If history contains merges from feature branches, `blame --reverse`
+>> reports not the commit when the line was actually edited, but head of
+>> the last merged branch which was created before the edit.
+>>
+>> As a workaround, `blame --reverse --first-parent` could be used to find
+>> the merge of branch containing the edit, but it was disabled in
+>> 95a4fb0eac, because incorrectly specified range could produce in
+>> unexpected and meaningless result.
+>>
+>> Add tests which describe ideal functionality with and without
+>> `--first-parent`.
+>>
+>> Signed-off-by: Max Kirillov <max@max630.net>
+>
+> I _think_ I know why it would be useful to allow "--first-parent" to
+> the command; it is useful the same way why "git log --first-parent
+> $path" would be a good way to get an overview.
+> 
+> But I am puzzled by your complaints (I'd characterise the statement
+> as such, given your second paragraph calls the combination a
+> "workaround") in the first paragraph.  I honestly do not understand
+> where it comes from at all.
+> 
+> The reverse blame begins from an old state and shows the most recent
+> child in the history that each line survived to, and it does not
+> show what commit removed the line from the original state.  And that
+> does not have anything to do with the presence of any merges or
+> forks in the history.  The command will always report "not the
+> commit that edited the line."  There is nothing special about "If
+> the history contains merges".
+> 
+> If you have this history, for example:
+> 
+>     D---E---F
+>    /         \*
+>   O           X---Y
+>    \         /
+>     A---B---C
+> 
+> where O had the original file, which was not touched by any commits
+> on the branch on the upper side, and commit B rewrote all lines of
+> the file, running blame in reverse may show A as the last point
+> where all lines survived up to, if the "reversed" history happened
+> to consider A as the earlier "parent" (in reality it is a child but
+> blame is about assigning blame for each line from child to parents
+> so in the reversed history, real children becomes parents).  Or it
+> may show F as the last point where all lines survived up to, if D
+> was picked as the earlier "parent".  Because there is no inherent
+> ordering between A and D, both of which are children of O, your
+> result is not necessarily "head of the last merged branch".
+> 
+> But I do not see how "first-parent" would be a workaround for that.
+> The option would be useful to force the assignment of blame (in
+> reverse) along the first-parent chain O---D---E---F---X---Y so that
+> you can get a bird's-eye view of the history, i.e. squashing all
+> that happened in A---B---C as if that happened at X.
+> 
+> The explanation of the first paragraph needs to be rewritten to make
+> it understandable, but I am not sure what relevance it has with this
+> change.
+
+I understand how the blame works and why does it produce the
+result which it used to produce. In one of my letter I
+called it "technically correct, but absolutely useless", and
+let me explain why I think so.
+
+In a big project which uses the nowadays conventional topic
+branches aka pull-requests aka however it's named workflow,
+the history is a straigh first-parent chain with
+short-living branches, which are forked from it, exists for
+several days, then merged back and closed. When there are
+many people working on a project, there can be tens of
+merges during day, and average pull-request exists for
+several days. So the history looks rather like (the
+interesting line is removed in B1, line removal is
+practically more interesting case because edits can be found
+with normal forward blame):
+
+
+ a0--a1-----*a2-*a3-a4...-*a100
+ |\         /   /         /
+ | b0-B1..bN   /         /
+ |\           /         /
+ | c0..   ..cN         /
+ \                    /
+  z0..            ..zN
+
+
+...where many of the c-z branches started before a1 and
+contain the older version of line. And, what I usually need
+is the change b0->B1, because I expect to find there the
+person who did it and explanation why that was done.
+
+Now the git blame --reverse a0..a100 may return me zN, and in
+practice it often does return some quite late commit wN
+which was merged to some a90. Then, I continue search with
+range a0..a89, and so on. So, to find the commit B1 I might
+have to perform many blames. 
+
+(I realize that this behavior is correct, and it's even not
+obvious how to formally specify the b0 commit as something
+different than zM commit, so we could discuss the
+implementation of its search. But it does not make me want
+being able to find it less)
+
+In contrast, git blame --reverse --first-parent gives me a1,
+and then I need only one more step:
+git blame --reverse --first-parent a0..bN (--first-parent
+for case there are synchronizing merges from master). And,
+moreover, in the commit message of a2 I can often find the
+information which I expect to find in B1, because it
+summarizes what was done in the merged branch and often
+contains a link to other resources, like number of ticket.
+
+So "blame --reverse --first-parent" it not like "log
+--first-parent", which just decreases number of information
+but still pproduces a list which I should look through. It
+is really a difference between getting answer and not
+getting it.
+
+-- 
+Max
