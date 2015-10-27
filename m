@@ -1,81 +1,81 @@
-From: Stefan Beller <sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: What's the ".git/gitdir" file?
-Date: Tue, 27 Oct 2015 15:54:02 -0700
-Message-ID: <CAGZ79kaXdjxT2jbHGHYPN0Bnk_4ZFrPo0sXKUrVvynoMfLPjCQ@mail.gmail.com>
+Date: Tue, 27 Oct 2015 15:54:07 -0700
+Message-ID: <xmqqpozzncs0.fsf@gitster.mtv.corp.google.com>
 References: <87a8r4ary9.fsf@kyleam.com>
-	<CAGZ79ka0XvmvVpX5WrpeEBXBWKA41RTZm4p7q=QtUTFy18hkoA@mail.gmail.com>
-	<017901d11108$ceb2cd10$6c186730$@com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Kyle Meyer <kyle@kyleam.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Randall S. Becker" <rsbecker@nexbridge.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 23:54:13 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Kyle Meyer <kyle@kyleam.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 23:54:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrD86-0004Je-Pn
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 23:54:11 +0100
+	id 1ZrD8D-0004NY-8l
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 23:54:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932207AbbJ0WyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 18:54:05 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:36740 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754521AbbJ0WyE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2015 18:54:04 -0400
-Received: by ykba4 with SMTP id a4so229126563ykb.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2015 15:54:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=TOFvUtTpSZQYQv3TpDRP9kVtH5o12KXMo9MY6xIO2DQ=;
-        b=LdtuT6YDWRhIYN3OIaRbFmNjHqh3YllA/wG+vO3Tbmgvu/ChGVrLzm3jCfVlgjJMJH
-         PrpSVgDjsyupFtTd6oxkUr3e9eakUGMDvBc2ZBXdDmJd1lF/hPqga+7FzvFD27wkvBZy
-         gjM8mNE31w06ungTfvnA23t6uHjUY9ZO4ChVVU/eZTYpoBj4CQqUGH8G1dtQWa9xWeTN
-         owytoMF1+0/JXoxaNnFj6n1mSfVArXNWs2kBa/+VWcPiRHXZT1Q2qz7NLNrkssWKAQiE
-         y3y7okZVcUpKBzTQkBbaepU+LppG+CQX77icULeqoZjAwpwbfV4sZOqQE5gkKMnKLAj7
-         a73w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=TOFvUtTpSZQYQv3TpDRP9kVtH5o12KXMo9MY6xIO2DQ=;
-        b=kEQ5HnCzHGPz5RBIccNtwzZ85K0aRlb3eyxLaXJF5cOSHzE01lyiB4x2AtsRbixSPv
-         C2GsDe/MsCocsJqjqSRmsP3S59vlmjgifjPnpLe22tnnq7d6LwlEJqTzqTdc/cLMr3qw
-         UdjRVveOcBiVxgS5ru80KAUXzVvtIfRXGuG6QaxYKVqMewtO4OrRss2uXYNkTJSXR633
-         w9rvFVMgVmFLmLD0PEwSDo3zl6ZTB36bZJYhkSPV6P9NGmzS6sZhPugRNtwlR+EEbmHy
-         11TTTWhUbOk0024E0OPj3lay7yTA+oEVcI+mb7TWQcEkA5GtoI/1dlV21hXaCOULakji
-         bTfw==
-X-Gm-Message-State: ALoCoQmuTL2k86xoYDahtuZiwJuceq7HYGfMLM3BNxckdHki0pfl+Upg1+b6uE+skMv5faHg88Kf
-X-Received: by 10.129.40.18 with SMTP id o18mr31774624ywo.199.1445986442799;
- Tue, 27 Oct 2015 15:54:02 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Tue, 27 Oct 2015 15:54:02 -0700 (PDT)
-In-Reply-To: <017901d11108$ceb2cd10$6c186730$@com>
+	id S932227AbbJ0WyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 18:54:11 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53394 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754521AbbJ0WyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 18:54:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 22E2D25FC6;
+	Tue, 27 Oct 2015 18:54:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2fQiaWy/xYW5OrR7LbKnMh4FdMs=; b=aEH3oS
+	dEUP8GnDLNY4NI+D8UqCEaAcomZcEhmnfMwMB4kgUySmM22WVwdy26XBwoErem5R
+	OogrOG2prNiBXe5m0dkHVCMQKSCARAAKzgthUDzOhPvZq2ZxYPEjRGBXAnH06HgV
+	oHh1elY0iKiip69uUMz9w3c/vcMhJuw2KEQOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O5YsSXjZUDiKF2xsaZT2qM4ICaUVqZqi
+	3FsP1VF8rnYfGBV61BoFQqg9pjCflpqrzmHG/ivTM0/iaKkcDqBstFuaTNcQ4LGv
+	2LNL1sFEMNSlcIPpN+INI2vg7XOAMs2M435nYtTPhUp9S/Uhvb3kw+flRwgGtN9G
+	vhVV+54Kdao=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 19EEB25FC5;
+	Tue, 27 Oct 2015 18:54:09 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 93D8025FC4;
+	Tue, 27 Oct 2015 18:54:08 -0400 (EDT)
+In-Reply-To: <87a8r4ary9.fsf@kyleam.com> (Kyle Meyer's message of "Tue, 27 Oct
+	2015 18:04:46 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A1B3BF2A-7CFD-11E5-AC0D-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280313>
 
-On Tue, Oct 27, 2015 at 3:42 PM, Randall S. Becker
-<rsbecker@nexbridge.com> wrote:
-> Slightly OT: Is there any way of avoiding having that file in the first place? I'm hoping to have a git repository in a normal file system (Posix) and a working area in a rather less-than-normal one where dots in file names are bad (actually a dot is a separator).
+Kyle Meyer <kyle@kyleam.com> writes:
 
-As said before, I would not expect a file .git/gitdir to be there if
-not using submodules.
-For your OT question, I'd presume you'd have environment variables setup
-    export GIT_DIR=path_with_no_dots_and_git_repo_in_it # you mention
-that is in your posix FS
-    export GIT_WORK_TREE=/some.place.with.dot.separators
-and you'd be good to go.
-
-
+> When a ".git" file points to another repo, a ".git/gitdir" file is
+> created in that repo.
 >
-> Cheers,
-> Randall
+> For example, running
 >
+>     $ mkdir repo-a repo-b
+>     $ cd repo-a
+>     $ git init
+>     $ cd ../repo-b
+>     $ echo "gitdir: ../repo-a/.git" > .git
+>     $ git status
+>
+> results in a file "repo-a/.git/gitdir" that contains
+>
+>     $ cat repo-a/.git/gitdir
+>     .git
+
+Sounds like a bug in the recently added "worktree" stuff.  Perhaps
+update_linked_gitdir() tweaked by 82fde87f (setup: update the right
+file in multiple checkouts, 2015-08-25) is misbehaving?
