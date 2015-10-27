@@ -1,90 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it
- to ignore instead?
-Date: Tue, 27 Oct 2015 14:47:02 -0400
-Message-ID: <20151027184702.GB12717@sigill.intra.peff.net>
-References: <CAM-tV-_JPazYxeDYogtQTRfBxONpSZwb3u5pPanB=F9XnLnZyg@mail.gmail.com>
- <CAM-tV-_eOgnhqsTFN6kKW=tcS7gAPYaxskBaxnJZo3bsx02HZg@mail.gmail.com>
- <xmqqfv18awj4.fsf@gitster.mtv.corp.google.com>
- <CAM-tV-8VXtB5uRgqP9dFpww6AaLzasPV46tCiquz=nz=ksBNng@mail.gmail.com>
- <CAM-tV-9sNgHncsWRPh36tEY3YFORUJBA-Q6W5R=mvX_KhSmWEQ@mail.gmail.com>
- <xmqqfv0ylwa7.fsf@gitster.mtv.corp.google.com>
- <20151026215016.GA17419@sigill.intra.peff.net>
- <xmqqoafkci6j.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Noam Postavsky <npostavs@users.sourceforge.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 19:47:13 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v3] ref-filter: fallback on alphabetical comparison
+Date: Wed, 28 Oct 2015 00:30:56 +0530
+Message-ID: <1445972456-5621-1-git-send-email-Karthik.188@gmail.com>
+Cc: j6t@kdbg.org, Karthik Nayak <Karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 27 20:00:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zr9H4-0001qJ-M1
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 19:47:11 +0100
+	id 1Zr9UF-00044m-Pu
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 20:00:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965018AbbJ0SrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 14:47:06 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48677 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964913AbbJ0SrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 14:47:05 -0400
-Received: (qmail 18738 invoked by uid 102); 27 Oct 2015 18:47:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Oct 2015 13:47:05 -0500
-Received: (qmail 26940 invoked by uid 107); 27 Oct 2015 18:47:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Oct 2015 14:47:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Oct 2015 14:47:02 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqoafkci6j.fsf@gitster.mtv.corp.google.com>
+	id S964993AbbJ0TAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 15:00:43 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35771 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964950AbbJ0TAm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 15:00:42 -0400
+Received: by pasz6 with SMTP id z6so230257290pas.2
+        for <git@vger.kernel.org>; Tue, 27 Oct 2015 12:00:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=uwKxq8NUQQrKtTL8TGZzURWDK/ifN+Rc3+ahWQ7fYaI=;
+        b=STITO9/IEIDiKuLec+pqBqGD/XHMCwfgb1Q0Gzt4kNtFYZdAxsGESxOn+mCi9t/A0S
+         GW+E+AP/JdbPDUrd6/iBTB1v/NDp0QdqRZp7onDn+xgCYtWvpKTYYHRnV2Fo83yluoMJ
+         3l4bJwxvfvU9Mp2fAJ1vqmd0WJcBYcRDpqv79XKT5/NOkxbZO65IcdDHjRQyqEtA0cNj
+         i9P370w2hu+jPLvDB1BW6mMZdkGWBYCwWQTsXt6RV0BNrFqo2z4vmHCEB2xdT5KRVURx
+         sEnVZnwxtesySPYYqgwg/f0nbFJuIQqqKt+NPXWDEonYFQjIinvfQs0iwwe4mctZTAsn
+         AyTg==
+X-Received: by 10.68.110.65 with SMTP id hy1mr29713722pbb.147.1445972442205;
+        Tue, 27 Oct 2015 12:00:42 -0700 (PDT)
+Received: from ashley.localdomain ([106.51.130.23])
+        by smtp.gmail.com with ESMTPSA id in6sm16292030pbd.86.2015.10.27.12.00.40
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 27 Oct 2015 12:00:41 -0700 (PDT)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.6.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280289>
 
-On Tue, Oct 27, 2015 at 10:52:52AM -0700, Junio C Hamano wrote:
+In ref-filter.c the comparison of refs while sorting is handled by
+cmp_ref_sorting() function. When sorting as per numerical values
+(e.g. --sort=objectsize) there is no fallback comparison when both
+refs hold the same value. This can cause unexpected results (i.e. the
+order of listing refs with equal values cannot be pre-determined) as
+pointed out by Johannes Sixt ($gmane/280117).
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > But these days, people often have several simultaneous sessions open.
-> > They may have multiple ssh sessions to a single machine, or they may
-> > have a bunch of terminal windows open, each of which has a login shell
-> > and will send HUP to its children when it exits. In that case, you have
-> > a meta-session surrounding those individual terminal sessions, and you
-> > probably do want to keep the cache going as long as the meta session[1].
-> > ...
-> > [1] Of course we have no idea when that meta-session is closed. But if
-> >     you have a script that runs on X logout, for instance, you could put
-> >     "git credential-cache exit" in it.
-> 
-> Yes.  Probably the right way forward is to make it a non-issue by
-> teaching users how to control the lifetime of the "daemon" process,
-> and wean them off relying on "it is auto-spawned if you forgot to
-> start", as that convenience of auto-spawning is associated with
-> "...but how it is auto-shutdown really depends on many things in
-> your specific environment", which is the issue.
+Hence, fallback to alphabetical comparison based on the refname
+whenever the other criterion is equal. Fix the test in t3203 in this
+regard.
 
-I dunno. I think the auto-spawn is really what makes it usable; you can
-drop it in with "git config credential.helper config" and forget about
-it. Anything more fancy requires touching your login/startup files.
-Certainly I'm not opposed to people setting it up outside of the
-auto-spawn, but I wouldn't want that feature to go away.
+Reported-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+---
+ ref-filter.c             | 2 +-
+ t/t3203-branch-output.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-AFAICT, it works pretty well out of the box for most setups (where
-terminals do _not_ send SIGHUP; so we auto-start, and then it holds the
-credential until the timer expires).
-
-I am a little surprised that credential-cache gets wide use. I would
-think most people would prefer to use a system-specific secure-storage
-helper. I don't know what the state of the art is for that on Linux[1], but
-we seem to have only gnome-keyring in contrib/.
-
--Peff
-
-[1] I use Linux, but I do not use any of the common desktop
-    environments. However, I have my own personal read-only key program
-    that speaks the helper protocol.
+diff --git a/ref-filter.c b/ref-filter.c
+index 046e73b..7b33cb8 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1698,7 +1698,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+ 		if (va->ul < vb->ul)
+ 			cmp = -1;
+ 		else if (va->ul == vb->ul)
+-			cmp = 0;
++			cmp = strcmp(a->refname, b->refname);
+ 		else
+ 			cmp = 1;
+ 	}
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index f77971c..9f2d482 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -158,8 +158,8 @@ EOF
+ 
+ test_expect_success 'git branch `--sort` option' '
+ 	cat >expect <<-\EOF &&
+-	  branch-two
+ 	* (HEAD detached from fromtag)
++	  branch-two
+ 	  branch-one
+ 	  master
+ 	EOF
+-- 
+2.6.2
