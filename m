@@ -1,111 +1,129 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: What's the ".git/gitdir" file?
-Date: Tue, 27 Oct 2015 15:22:34 -0700
-Message-ID: <CAGZ79ka0XvmvVpX5WrpeEBXBWKA41RTZm4p7q=QtUTFy18hkoA@mail.gmail.com>
-References: <87a8r4ary9.fsf@kyleam.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] difftool: avoid symlinks when reusing worktree files
+Date: Tue, 27 Oct 2015 15:24:49 -0700
+Message-ID: <xmqq1tcgne4u.fsf@gitster.mtv.corp.google.com>
+References: <1445981088-6285-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Kyle Meyer <kyle@kyleam.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 23:22:55 2015
+Content-Type: text/plain
+Cc: Ismail Badawi <ismail@badawi.io>,
+	John Keeping <john@keeping.me.uk>,
+	Tim Henigan <tim.henigan@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 23:25:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrCdp-0001s5-H8
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 23:22:53 +0100
+	id 1ZrCfu-0003gd-14
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 23:25:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754754AbbJ0WWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 18:22:38 -0400
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:35383 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751654AbbJ0WWe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 18:22:34 -0400
-Received: by ykek133 with SMTP id k133so52521252yke.2
-        for <git@vger.kernel.org>; Tue, 27 Oct 2015 15:22:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=04EmwYAIiqjD9TsXL9i0k9ysG5A1h66fqgRic+sqVNs=;
-        b=OBt0eOKYZAFPzPcmyJpE2hzkyA+01uhbSZcJxaOwot7P4Wa+lMLH7epj8y4273oL34
-         suBnkSAxJOiLdOvbtuYhMffRVdnvyAvGSYQeCPp+UorVj2MU9V35HQrXzXAOvz/HX0G8
-         0BTy33V1kv0f6UnjYO9yVoi+0yGgr1tu9afKLI6EfnRlZOS3lqDGka3JEqMgzpjxOUW2
-         WFYPsBW4pgGwkauAFPs3FelrZf4tjcXdeYxOljKG9OO/Tyf1folSsqgDTNli1K2QAtqT
-         koXkNk3ByTRgO7GGR//ThDI0LolJXuOPX5ZVixNOQ5HawjoKq0S7CKvS6fo2qLx73JhN
-         K1aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=04EmwYAIiqjD9TsXL9i0k9ysG5A1h66fqgRic+sqVNs=;
-        b=fDLaQGIQkZ9XsKWwd424dR20clLpwEtMniyEqrYCPOrVOK/MMkxOSUdkmFxJT0HGey
-         LyMr577VgtV3+7PU0RthPAZoxqCp5FppkNuBZmCLKWlQtv+7Ob/KGN9D58m513BBYFCA
-         LujV48iz0Utn8D+3hv+Ksus8dMZdHIzd111P032iDl+zRETQUTBuAbcj44vvSfEtCJo0
-         O91aps6YnfYAWoDIDzCG4fuuB5YXc8I3tVgITDznIORHb3Pt0D4cvT5J5Lt91iwZ2D9E
-         HE14vzAUtWHCR8iloSALX+vNWZWaWPAlPsgX1wOO4FRu1Fb+0GLZPoc5T0KR5BAIBHdG
-         uSqw==
-X-Gm-Message-State: ALoCoQnyBBfG6IXyJ6BFK/p8uAnU7xmHf7mK3joi/0xX/y5RGSE5JVD2/nmti058cLHjphgerqrl
-X-Received: by 10.13.230.194 with SMTP id p185mr21541479ywe.320.1445984554098;
- Tue, 27 Oct 2015 15:22:34 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Tue, 27 Oct 2015 15:22:34 -0700 (PDT)
-In-Reply-To: <87a8r4ary9.fsf@kyleam.com>
+	id S932187AbbJ0WY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 18:24:57 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62412 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751824AbbJ0WY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 18:24:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0C72B25551;
+	Tue, 27 Oct 2015 18:24:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qF/1feKqMhRrDLFNhBiSCH40LPE=; b=G0qgPn
+	iQiKVWVFfIQKrVejgYnCGxQ1ZvaFrksFYkEBlB+oHIDSnxrja8SqqtODCsQngR2F
+	nDfyL3Bj2a+9EWhaPlkPFPqPWXgPK4Qp4b5Rdw3ibHw918QxKzARCNBbhKNVnJJQ
+	PvbWjeMsoRKtHbFo/WnSMmWFfRWYZ1Ew3Vyio=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ACzOaNiytn8ta+kmywUrvn5YCIZwDi8F
+	dES4yCENo84jRQHoDqKhI73X35+qpURGtHYrMOdVw3Cm3ZeLad4DXX4er29GlpCB
+	dsnw+D7FnlxtpVG9FMV5oZvD6A8pRDk730+4OskBfTFPZ7OaCo6aAxTg9Kusm/Eh
+	tnGzxuAwD1M=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 025B425550;
+	Tue, 27 Oct 2015 18:24:55 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7FE2C2554F;
+	Tue, 27 Oct 2015 18:24:54 -0400 (EDT)
+In-Reply-To: <1445981088-6285-1-git-send-email-davvid@gmail.com> (David
+	Aguilar's message of "Tue, 27 Oct 2015 14:24:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 8C3085E2-7CF9-11E5-BB99-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280309>
 
-On Tue, Oct 27, 2015 at 3:04 PM, Kyle Meyer <kyle@kyleam.com> wrote:
-> Hello,
->
-> When a ".git" file points to another repo, a ".git/gitdir" file is
-> created in that repo.
->
-> For example, running
->
->     $ mkdir repo-a repo-b
->     $ cd repo-a
->     $ git init
->     $ cd ../repo-b
->     $ echo "gitdir: ../repo-a/.git" > .git
->     $ git status
->
-> results in a file "repo-a/.git/gitdir" that contains
->
->     $ cat repo-a/.git/gitdir
->     .git
->
-> I don't see this file mentioned in the gitrepository-layout manpage,
-> and my searches haven't turned up any information on it.  What's the
-> purpose of ".git/gitdir"?  Are there cases where it will contain
-> something other than ".git"?
->
-> Thanks.
+David Aguilar <davvid@gmail.com> writes:
 
-It's designed for submodules to work IIUC.
-
-Back in the day each git submodule had its own .git directory
-keeping its local objects.
-
-Nowadays the repository of submodule <name> is kept in the superprojects
-.git/modules/<name> directory.
-
-If you are in the submodule however you need to know where the repository is,
-so we have a file pointing at ../<up until superprojects root
-dir>/.git/modules/<name> directory.
-
-If not using submodules, I'd expect that file to not be there.
-If you have a file .git/gitdir which points to plain .git, this is
-technically correct,
-indicating where to find the repository (containing objects etc).
-
+> difftool's dir-diff should never reuse a symlink, regardless of
+> what it points to.  Tighten use_wt_file() so that it rejects all
+> symlinks.
 >
-> --
-> Kyle
-> git version 2.6.1
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+
+Sorry.  I do recall saying "it is wrong to feed the contents of a
+file that a symlink points at to hash-object" but other than that,
+I completely lost track.
+
+What purpose does this function play in its callchain?  What does
+its caller wants it to compute?  Is use of the entity in the working
+tree completely optional?  Would the caller happily produce correct
+result even if we changed this function to unconditionally return
+($use=0, $wt_sha1='0'x40) regardless of the result of lstat(2) on
+"$workdir/$file"?
+
+The conclusion of the thought process that starts from "it is wrong
+to feed the contents of a file that a symlink points at to
+hash-object" may not be "so let's return $use=0 for all symlinks",
+which is this patch. Depending on what its caller wants it to
+compute, the right conclusion may be "we need to call hash-object
+correctly by first running readlink and then feeding the result to
+it".
+
+And if the answer is "the caller wants us to compute the hash for a
+symbolic link and say $use=1", then we would instead need to do
+an equivalent of
+
+	wt_sha1=$(readlink "$workdir/$file" | hash-object --stdin)
+
+I cannot quite tell which from the patch and explanation.
+
+Perhaps an additional test or two would help illustrate what issues
+are being addressed better?
+
+Thanks.
+
+>  git-difftool.perl | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/git-difftool.perl b/git-difftool.perl
+> index 1abe647..873db57 100755
+> --- a/git-difftool.perl
+> +++ b/git-difftool.perl
+> @@ -70,13 +70,13 @@ sub use_wt_file
+>  	my ($repo, $workdir, $file, $sha1) = @_;
+>  	my $null_sha1 = '0' x 40;
+>  
+> -	if (! -f "$workdir/$file") {
+> -		return (0, $null_sha1);
+> +	my $workfile = "$workdir/$file";
+> +	if (-f $workfile && ! -l $workfile) {
+> +		my $wt_sha1 = $repo->command_oneline('hash-object', $workfile);
+> +		my $use = ($sha1 eq $null_sha1) || ($sha1 eq $wt_sha1);
+> +		return ($use, $wt_sha1);
+>  	}
+> -
+> -	my $wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
+> -	my $use = ($sha1 eq $null_sha1) || ($sha1 eq $wt_sha1);
+> -	return ($use, $wt_sha1);
+> +	return (0, $null_sha1);
+>  }
+>  
+>  sub changed_files
