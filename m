@@ -1,106 +1,123 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/2] run-command: factor out child_process_clear()
-Date: Tue, 27 Oct 2015 14:31:48 -0700
-Message-ID: <CAGZ79kbCNnnWQapFjj=sA5+HPK2hpAu4=8LomNnOErM9+_QBjg@mail.gmail.com>
-References: <562B756F.1020305@web.de>
-	<xmqqziz5h3n5.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYopHL5D_7+bJV2P9GeKDHufPDBTo3a8bRL=4B3OmTGjg@mail.gmail.com>
-	<562FECCA.6080703@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/9] submodule-config: "goto" removal in parse_config()
+Date: Tue, 27 Oct 2015 14:39:37 -0700
+Message-ID: <xmqq611sng86.fsf@gitster.mtv.corp.google.com>
+References: <1445969753-418-1-git-send-email-sbeller@google.com>
+	<1445969753-418-2-git-send-email-sbeller@google.com>
+	<20151027212645.GF7881@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Tue Oct 27 22:32:03 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+	jacob.keller@gmail.com, peff@peff.net,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	ericsunshine@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 22:39:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrBqX-0000ri-Nk
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 22:31:58 +0100
+	id 1ZrBy5-0007uq-R4
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 22:39:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932474AbbJ0Vbv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Oct 2015 17:31:51 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:33784 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752322AbbJ0Vbs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2015 17:31:48 -0400
-Received: by ykft191 with SMTP id t191so50832060ykf.0
-        for <git@vger.kernel.org>; Tue, 27 Oct 2015 14:31:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=zieGcxJlgqB6iutcrMdg5XW4Qqoyo60fAKJkMsSbGIk=;
-        b=m+Hoqe+QtARG6+ZAYpRvkUvwHE4WH9d1YXs5etNLRLcU6UqEORjnP6nTg19QI/4NGj
-         1r92SGsKoA6si5pDRcYTURA3on2LFiwAm08lpsSXzj2lW8oxzHwVtY5AoERFMcjNQEov
-         C+L92atN0UmtigbFlQVoT/Pc13UuogSn4zvvyhlrVKdapNwfkwgbmgc9UgeTKG/dx/Ha
-         7la0kP+jeYyD8GRJOvuD9XqYCz1tdXBOquk1HXnEdwKqsuWzHqrTHR1UwxYL0monZXtY
-         EKJiWRaRzx+Guv4BjD0QzTqgOvU6pJbfr3BLOH0ClObW1qTFEACqSt+GGqSsjBjFvXtk
-         dgaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zieGcxJlgqB6iutcrMdg5XW4Qqoyo60fAKJkMsSbGIk=;
-        b=OA2gWXe2K6Q6bmXFYfAqwQxCGat3iE1jQg1QsDpoZjhbos7SOWDoBJJZRZ2zjv8WKD
-         dGUv+z3GCFPExQHDb68jDVlqcXp3FIhM47Nio/h8h2z3mTbyatdtW/WnJItxbAbAyRBS
-         nRxj10ahkf9hcNKNUE1xICB86E5eJ/yWD0z3Dyl0qWo5bW5PQrH7PsCn3SX7wfRYQBzC
-         3uKk+HIwuNJsUj07dWQVZauI+n/LKNhk0lpjrFdEDO8xGiSFDHv7rbqch9/aY9N/BQZ2
-         YRUD1J+ltdXkDJKfG4hpfAOSSvsVvjkgWODPN4psIKExqftpu4EJR+Zf2Vt+ngnunld3
-         8kKA==
-X-Gm-Message-State: ALoCoQmSNDUcVCXNDb5E6KZv+Mz7exgvMC9pbTnrq4m/Giur4mmaIAW0Spuo0INO9kIJX6RYO2m+
-X-Received: by 10.129.40.18 with SMTP id o18mr31555804ywo.199.1445981508217;
- Tue, 27 Oct 2015 14:31:48 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Tue, 27 Oct 2015 14:31:48 -0700 (PDT)
-In-Reply-To: <562FECCA.6080703@web.de>
+	id S932468AbbJ0Vjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 17:39:42 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61370 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932459AbbJ0Vjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 17:39:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C9B1C243FA;
+	Tue, 27 Oct 2015 17:39:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xyYzllf9th90T93VAvTVDwlR/PE=; b=gg6Pl4
+	Jdj2v4xDGx1sdzTky93CHOZ1HufCaaccZXaxVtjKfyvx3DTl6PaKygj3vm6FtUb5
+	TsKaJ61iDsj+KvQw5GipIrF+BwUhDfHyWjpdb3BmjINbTMVq0xUcJxNxbVWQnSaw
+	ms1rDRt+YJnXKlFLJNQ+CpMjRZH0ehqokHFzY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=W2L7reoejN3ZvZnxoNPmsx6LpywM7IXL
+	mgoTwAaFaZGkKoadVLq8tikkkcrLG4FTLXmvyee88Grri+xKDufw0dghC8Yceilj
+	n8bZAC37x1+YNV46f+TJYZ7XMUiKVM28V6nBgr5QdFD+5CJ/WlqQTRdvKBaJXtSa
+	P7j14VpxlRU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BFC8A243F9;
+	Tue, 27 Oct 2015 17:39:38 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3A363243F8;
+	Tue, 27 Oct 2015 17:39:38 -0400 (EDT)
+In-Reply-To: <20151027212645.GF7881@google.com> (Jonathan Nieder's message of
+	"Tue, 27 Oct 2015 14:26:45 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 39330B5E-7CF3-11E5-8C90-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280305>
 
-On Tue, Oct 27, 2015 at 2:29 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote=
-:
-> Am 26.10.2015 um 20:23 schrieb Stefan Beller:
->>
->> On Mon, Oct 26, 2015 at 11:43 AM, Junio C Hamano <gitster@pobox.com>
->> wrote:
->>>
->>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->>>
->>>> Avoid duplication by moving the code to release allocated memory f=
-or
->>>> arguments and environment to its own function, child_process_clear=
-().
->>>> Export it to provide a counterpart to child_process_init().
->>>>
->>>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->>>> ---
->>>
->>>
->>> Hmm, is this _deinit() Stefan added to his series recently?
->>
->>
->> Yes. Although you (Junio) take credit for actually using it in these
->> places, too. :)
->
->
-> Oh, and it's already in next.  I still like _clear() better (as in
-> {argv,object,ref,sha1}_array_clear(), or string_list_clear(), or ...)=
- than
-> _deinit(), which seems to have been introduced by vcs-svn and isn't a=
- real
-> word.  I'll rebase my patches on top of this series, but probably not=
- before
-> the weekend.
->
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Thanks for the coming cleanup. :)
-As you know naming things is hard.
-
-> Ren=C3=A9
+> Not having read the patch yet, the above makes me suspect this is
+> going to make the code worse.  A 'goto' for exception handling can
+> be a clean way to ensure everything allocated gets released, and
+> restructuring to avoid that can end up making the code more error
+> prone and harder to read.
 >
+> In other words, the "goto" removal should be a side effect and not
+> the motivation.
+
+Yes, I shared the same general feeling (cf. $gmane/279405).
+
+> More generally, the patch seems to be about changing from a code structure
+> of
+>
+> 	if (condition) {
+> 		handle it;
+> 		goto done;
+> 	}
+> 	if (other condition) {
+> 		handle it;
+> 		goto done;
+> 	}
+> 	handle misc;
+> 	goto done;
+>
+> to
+>
+> 	if (condition) {
+> 		handle it;
+> 	} else if (other condition) {
+> 		handle it;
+> 	} else {
+> 		handle misc;
+> 	}
+>
+> In this example the postimage is concise and simple enough that it's
+> probably worth it, but it is not obvious in the general case that this
+> is always a good thing to do.
+
+Generally, a large piece of code is _easier_ to read with forward
+"goto"s that jump to the shared clean-up code, as they serve as
+visual cues that tell the reader "you can stop reading here and
+ignore the remainder of this if/else if/... cascade".
+
+> Now that I see the patch is already merged, I don't think it needs
+> tweaks.  Just a little concerned about the possibility of people
+> judging from the commit message and emulating the pattern in the rest
+> of git.
+
+Yes, we shouldn't let people blindly imitate this change.  I merged
+it primarily because I wanted the change get out of my hair, as
+other changes in flight started conflicting with it.
+
+This kind of change can be good one only in a narrowly defined case
+(like this one) but I agree that in general, as you said at the
+beginning, it is an easy way to make the resulting code less
+maintainable and harder to read.
+
+Thanks.
