@@ -1,77 +1,72 @@
-From: Mike Rappazzo <rappazzo@gmail.com>
-Subject: Re: What's the ".git/gitdir" file?
-Date: Tue, 27 Oct 2015 19:26:34 -0400
-Message-ID: <CANoM8SWDHyS1P=o1FwZUnE4OVUhhFS+-dFfgPQPE-zeHtGAp3A@mail.gmail.com>
-References: <87a8r4ary9.fsf@kyleam.com> <xmqqpozzncs0.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with
+ gdb
+Date: Tue, 27 Oct 2015 19:28:49 -0400
+Message-ID: <20151027232848.GA4172@sigill.intra.peff.net>
+References: <cover.1445865176.git.johannes.schindelin@gmx.de>
+ <082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
+ <20151026191724.GE7881@google.com>
+ <alpine.DEB.1.00.1510271036100.31610@s15462909.onlinehome-server.info>
+ <xmqqr3kge0d3.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Kyle Meyer <kyle@kyleam.com>, Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 28 00:27:03 2015
+X-From: git-owner@vger.kernel.org Wed Oct 28 00:28:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrDdr-00089U-7p
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 00:26:59 +0100
+	id 1ZrDfl-0001Sd-1W
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 00:28:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751902AbbJ0X0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 19:26:54 -0400
-Received: from mail-oi0-f48.google.com ([209.85.218.48]:34204 "EHLO
-	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243AbbJ0X0y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 19:26:54 -0400
-Received: by oies66 with SMTP id s66so129853309oie.1
-        for <git@vger.kernel.org>; Tue, 27 Oct 2015 16:26:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=bsdFit1WPXJBRSbDbtcqmK0sGzZy2Sw3X1sF6qyIZ/o=;
-        b=txJJHD17XlCxiEli9L10MVvnd5SC6RF42YKlHTp5bJx2CHNwvLXf32SzQ88HglRzX/
-         lFlNfdl3b/pqVq4ejxGhEHGIH7DhvjvBv1xE2UluSVZmFM7nYFE+BV3owwt6it2m/Glm
-         dNeTum5pk11LbJZyZUWK6+XE1RWW86Idt6ERP4KNdqLMc2700VvmmfFMYWkk/oCts4UG
-         u6CYm/pWlQg26U/vJP0OJu4KgL9GOIABK7Z8QmcWVu5Hyj1n3tD1adRKHydE/kXhwziH
-         PaL64oc+BME7yJMmHZcsHbYVJTbf+UZ5R9IcsApcsrFysqlESsZ+qYCx9FekgfDPoO+t
-         bwjQ==
-X-Received: by 10.202.68.215 with SMTP id r206mr9421849oia.59.1445988413387;
- Tue, 27 Oct 2015 16:26:53 -0700 (PDT)
-Received: by 10.202.79.18 with HTTP; Tue, 27 Oct 2015 16:26:34 -0700 (PDT)
-In-Reply-To: <xmqqpozzncs0.fsf@gitster.mtv.corp.google.com>
+	id S1753794AbbJ0X2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 19:28:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48866 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753532AbbJ0X2v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 19:28:51 -0400
+Received: (qmail 8539 invoked by uid 102); 27 Oct 2015 23:28:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Oct 2015 18:28:51 -0500
+Received: (qmail 29966 invoked by uid 107); 27 Oct 2015 23:29:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Oct 2015 19:29:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Oct 2015 19:28:49 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqr3kge0d3.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280315>
 
-On Tue, Oct 27, 2015 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Kyle Meyer <kyle@kyleam.com> writes:
->
->> When a ".git" file points to another repo, a ".git/gitdir" file is
->> created in that repo.
->>
->> For example, running
->>
->>     $ mkdir repo-a repo-b
->>     $ cd repo-a
->>     $ git init
->>     $ cd ../repo-b
->>     $ echo "gitdir: ../repo-a/.git" > .git
->>     $ git status
->>
->> results in a file "repo-a/.git/gitdir" that contains
->>
->>     $ cat repo-a/.git/gitdir
->>     .git
->
-> Sounds like a bug in the recently added "worktree" stuff.  Perhaps
-> update_linked_gitdir() tweaked by 82fde87f (setup: update the right
-> file in multiple checkouts, 2015-08-25) is misbehaving?
+On Tue, Oct 27, 2015 at 09:34:48AM -0700, Junio C Hamano wrote:
 
-I noticed that as I was working on the worktree list command that my
-linked worktree gitdir files were being clobbered to '.git'.  I
-attributed it to my work, but now that you mention it, I think it has
-happened with the 2.6.1 release as well.
+> Yeah, that was my first reaction when I saw this patch.  Instead of
+> having to munge that line to "gdb -whatever-args git", you can do a
+> single-shot debugging in a convenient way.  And quite honestly,
+> because nobody sane will run:
+> 
+>      $ cd t && TEST_GDB_GIT=1 sh ./t1234-frotz.sh
+> 
+> and can drive all the "git" running under gdb at the same time, I
+> think what you showed would be the _only_ practical use case.
+
+I agree doing so would be crazy. But would:
+
+  ./t1234-frotz.sh --gdb=17
+
+be sane to run gdb only inside test 17?
+
+I suspect it would work about half the time. Many tests will call git
+only once per snippet, but many make multiple git calls, and we are only
+interested in debugging one.
+
+I dunno. Maybe that is making things more complicated than they need to
+be. I usually use the "tweak the test script" approach, but I have
+always found it annoying to have to untweak it later.
+
+-Peff
