@@ -1,9 +1,9 @@
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3 0/2] Fix interactive rebase when the editor saves with
+Subject: [PATCH v3 1/2] Demonstrate rebase fails when the editor saves with
  CR/LF
-Date: Tue, 27 Oct 2015 10:47:10 +0100 (CET)
-Message-ID: <cover.1445939154.git.johannes.schindelin@gmx.de>
-References: <cover.1445782122.git.johannes.schindelin@gmx.de>
+Date: Tue, 27 Oct 2015 10:47:16 +0100 (CET)
+Message-ID: <3d37a1348065d5902c829481db2124a52be0ca1a.1445939154.git.johannes.schindelin@gmx.de>
+References: <cover.1445782122.git.johannes.schindelin@gmx.de> <cover.1445939154.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
@@ -11,137 +11,76 @@ Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Philip Oakley <philipoakley@iee.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 10:47:44 2015
+X-From: git-owner@vger.kernel.org Tue Oct 27 10:47:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zr0qy-0000dh-0u
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 10:47:40 +0100
+	id 1Zr0r5-0000ow-8P
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 10:47:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753947AbbJ0Jrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 05:47:31 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51674 "EHLO mout.gmx.net"
+	id S1754076AbbJ0Jrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 05:47:43 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60483 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753224AbbJ0Jr3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 05:47:29 -0400
+	id S1752920AbbJ0Jrm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 05:47:42 -0400
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0LjLwB-1aMDrN1uud-00dUU8;
- Tue, 27 Oct 2015 10:47:10 +0100
+ mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0MKLeM-1ZpMx8410Y-001fg6;
+ Tue, 27 Oct 2015 10:47:17 +0100
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <cover.1445782122.git.johannes.schindelin@gmx.de>
+In-Reply-To: <cover.1445939154.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:2h9UzrBLDG+DifO+wMJJd22/eG8fwd2zGGxVIlyN4SH20Ju4RKN
- CLinogMe714zk1biOcZWBA9ppJ+RpYYPjfECvVcDe0VqSnQfqXOs1CPIiiQOofav+w6AXfM
- RDyPb7pEPXq6+XDy2cFqY5EnWvk74UKilCjROKi56Habam61SskL/QaPZjFcLpX/N08i4z5
- kJiHOo3tX+nXevQd9Xbpg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:U9OaDa5Tv9U=:2dEo5f1ubldPvwT1pzHJSP
- 33Llvf1pb9nMMfuPLWVIg7l4YV96qjdRPri5NcLayKp56Un58rxXQFr1E0vN0DEXJ1HTWnGq5
- 1UXEh3zXqFr59OqrYgeCToVO71Bt8BACNqNXcY7pOr6lLJAiqZImUqseUXjyxhn+Akq/Lvekt
- Uvn3QhWsl7VCK5mtOyLKXOU4I2MUTyHX0xqIipDNhWhePdG9l/4ehVTqAn0XSm46GB8j8qU2g
- TJFel1h78A7xLL8IowNC3CZSa78FnNXKsnHRvAMSbFG6fTP+J7T53WUJLni+DZxIGfNqffw+k
- wDhwG8WCzcCc/INGAO/A5+/Hx9Si7Q8GRfVMJ+SMpBxO7rTUL/lCvyUdnKA/zxcwaLz2dOArS
- TZpXU6HgIs5VT3JBkTk/u2wyQlo+XebNRmKgQPCvAiCOr75u+VeIdlU3liKhMyMYHTo5VpBES
- CcRRbWt935ZP36rb8KMMuZQcLzt/stfBr6oDaaJbSAdf41TQOAcMRQasAXTWvPkmsKJAHoeuf
- uae+ztREcvJwHBA4jmrWn5wSeSVg2CEmgc0IX4TYdsX8Uj/yWx7yCU0McaknXv7QPTpOF5yP8
- KHcjVR3DdawSsGjKu0+wgipy4rg7WFbL12QKZebuuX6QT5YHIvPOJCb95fKUSH/zwbZ8pIJiq
- 4xngqn+RONmUeqpWy7854Hns3JZPC0t43OKFlx6BjQqjG+b6kK1Gi0qluYr9RglSulOZlV2t3
- u2IWyj7oFMPNLS3Y93hih7uLClP0ndxQm/iadIwpaLwQAR/tFpcs4AXTxMgoTxfLeDkGJY1X 
+X-Provags-ID: V03:K0:eIwic3CX8sGDA775bMTQWmFvPbd2Xxftif7RzwwjQPukGhaBFd3
+ JtnPA9xrnxlQWLYSj2qdgEWQmqofqMWIiHO6FNq7tOgXfNaYRMswo8vLK70BXzG1tqfN2rp
+ GkYzWIYFHwihWSVycn41hqf2NxnbnrvvvAV9OAjrZgfda8g0k53afDcO1t5G31g3N08h/h7
+ rkNpHfHC3PsbUXTGItbVA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0o09txhnOxk=:duMdgAqj4efaQM26PWM4aF
+ qR1+aGs/Xa16LPgxpJTwcdHkrDe00mAt/1X6dcmgEwBDcz5mCgvLe718ASc9ah/e6AcY1cxED
+ 9d3YVv/uHgvVHAVZajbJV9qzdrLRY0b//zdThqkSc05JTIWv84yYOsRmhXKcUKqtx0AicbQZR
+ O8KF546i9D8FCiOBRIEbpKMsg8WoIl9PoMjpNQbys65sTIMNkd8oJg7KlAC/6b6bQBCQWm2zN
+ mQTS6J0xVUoquSxZbt8cXF41CFIpLD3rvc8b/VCYc9CW50FMNOAKhjYaYC31Xiojl8OjvRlSP
+ +0WVlK3VcqRdgI0FjnqRQBj3lDX7GnCq8u7yRWB/fE187aa6BZqwIFmTXBHOa8S5/8ZyY516k
+ VEreGI01i8GWlXiJjyBO3TSn3S7TcskDo4kfYaS3Swnl7rN7KJYxRoIpaF93WdomIuw43mgEf
+ 9Aamfy6d1STbSiPbqoIl82EGi6y9eMN39jPG3jEwgZfL6N/K0JM2lDccEonC9K6f+Nps82xNE
+ ZZI0bC3r1iX/CrH5BQxUGQgug+g7XrUPJxGp1lJ9Pzqw6itib97uuS7oTTSFQh2c0QyZ/gkMC
+ Lx9TeBnt7O1Be5ji91swR3Ecb/j1yA3Vu2dDDMefASJVfSO5Do1UAC52ybtkeaHnPjHpp5nm0
+ Kx332/asjlxtXnW/QuFur0dMtgdH62JBCFXABf1zkkujLpD9+IP44CiiB6F3jMhSjCEAH/VNP
+ EOh+tZVLs1r+voINyHyQIKqF22V9tyDol3IpZH/cj1bl0QPHSamErgPnHvi+3ZewHs8me+XO 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280254>
 
-Chad Boles reported that `git rebase -i` recently started producing
-errors when the editor saves files with DOS line endings. The symptom
-is:
+Based on a bug report by Chad Boles.
 
-	Warning: the command isn't recognized in the following line:
-	 -
-
-	You can fix this with 'git rebase --edit-todo'.
-	Or you can abort the rebase with 'git rebase --abort'.
-
-The real bummer is that simply calling `git rebase --continue` "fixes"
-it.
-
-Turns out that we now check whether a single Carriage Return is a valid
-command. This new check was introduced recently (1db168ee9, ironically
-named "rebase-i: loosen over-eager check_bad_cmd check").
-
-The proposed fix is to teach *all* shell scripts in Git to accept CR as
-a field separator. Since LF is already specified as such, it should be
-an uncontentious change.
-
-
-Johannes Schindelin (1):
-  Demonstrate rebase fails when the editor saves with CR/LF
-
-Junio C Hamano (1):
-  rebase-i: work around Windows CRLF line endings
-
- git-rebase--interactive.sh    | 13 +++++++++++++
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/t3404-rebase-interactive.sh | 12 ++++++++++++
- 2 files changed, 25 insertions(+)
+ 1 file changed, 12 insertions(+)
 
-Interdiff vs v2:
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index d65c06e..daadf2d 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -77,6 +77,10 @@ amend="$state_dir"/amend
- rewritten_list="$state_dir"/rewritten-list
- rewritten_pending="$state_dir"/rewritten-pending
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 3de0b1d..5dfa16a 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1261,4 +1261,16 @@ test_expect_success 'static check of bad SHA-1' '
+ 	test E = $(git cat-file commit HEAD | sed -ne \$p)
+ '
  
-+# Work around a Windows port of shell that does not strip
-+# the newline at the end of a line correctly.
-+cr=$(printf "\015")
-+
- strategy_args=
- if test -n "$do_merge"
- then
-@@ -518,6 +522,11 @@ do_next () {
- 	"$comment_char"*|''|noop|drop|d)
- 		mark_action_done
- 		;;
-+	"$cr")
-+		# Windows port of shell not stripping the newline
-+		# at the end of an empty line correctly.
-+		mark_action_done
-+		;;
- 	pick|p)
- 		comment_for_reflog pick
- 
-@@ -896,6 +905,10 @@ check_bad_cmd_and_sha () {
- 		"$comment_char"*|''|noop|x|exec)
- 			# Doesn't expect a SHA-1
- 			;;
-+		"$cr")
-+			# Windows port of shell not stripping the newline
-+			# at the end of an empty line correctly.
-+			;;
- 		pick|p|drop|d|reword|r|edit|e|squash|s|fixup|f)
- 			if ! check_commit_sha "${rest%%[ 	]*}" "$lineno" "$1"
- 			then
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index e34673d..4691fbc 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -11,9 +11,9 @@ unset CDPATH
- 
- # Similarly for IFS, but some shells (e.g. FreeBSD 7.2) are buggy and
- # do not equate an unset IFS with IFS with the default, so here is
--# an explicit SP HT LF CR.
-+# an explicit SP HT LF.
- IFS=' 	
--'"$(printf '\r')"
++test_expect_failure 'editor saves as CR/LF' '
++	git checkout -b with-crlf &&
++	write_script add-crs.sh <<-\EOF &&
++	sed -e "s/\$/Q/" <"$1" | tr Q "\\015" >"$1".new &&
++	mv -f "$1".new "$1"
++	EOF
++	(
++		test_set_editor "$(pwd)/add-crs.sh" &&
++		git rebase -i HEAD^
++	)
 +'
- 
- git_broken_path_fix () {
- 	case ":$PATH:" in
-
++
+ test_done
 -- 
 2.1.4
