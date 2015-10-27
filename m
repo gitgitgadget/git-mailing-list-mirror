@@ -1,62 +1,90 @@
-From: Konstantin Khomoutov <kostix+git@007spb.ru>
-Subject: Re: Why are submodules not automatically handled by default or at
- least configurable to do so?
-Date: Tue, 27 Oct 2015 15:16:37 +0300
-Message-ID: <20151027151637.d3ed7f0dd8c72c78d373c520@domain007.com>
-References: <D4E5E890658.000004DCjohsmi9933@inbox.com>
-	<562F5704.5070405@letterboxes.org>
-	<EC0D15E1-82B3-4A4C-96DE-8922AB870E2B@gmail.com>
-	<562F629F.7040206@letterboxes.org>
+From: Victor Leschuk <vleschuk@accesssoftek.com>
+Subject: RE: [PATCH v3] Add git-grep threads param
+Date: Tue, 27 Oct 2015 06:54:16 -0700
+Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9FF@mail.accesssoftek.com>
+References: <1445862733-838-1-git-send-email-vleschuk@accesssoftek.com>
+ <20151026193241.GO19802@serenity.lan>
+ <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9FC@mail.accesssoftek.com>,<20151027115256.GQ19802@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Davide Fiorentino <davide.fiorentino@gmail.com>,
-	John Smith <johsmi9933@inbox.com>, git@vger.kernel.org
-To: Nick <oinksocket@letterboxes.org>
-X-From: git-owner@vger.kernel.org Tue Oct 27 13:16:55 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Victor Leschuk <vleschuk@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Oct 27 14:54:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zr3BO-0003I5-8j
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 13:16:54 +0100
+	id 1Zr4hi-0006t0-8V
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 14:54:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932072AbbJ0MQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 08:16:50 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:60213 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753202AbbJ0MQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 08:16:49 -0400
-Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id t9RCGbPq017942;
-	Tue, 27 Oct 2015 15:16:38 +0300
-In-Reply-To: <562F629F.7040206@letterboxes.org>
-X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
+	id S932401AbbJ0NyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 09:54:18 -0400
+Received: from mail.accesssoftek.com ([12.202.173.171]:9661 "EHLO
+	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932390AbbJ0NyR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2015 09:54:17 -0400
+Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
+ ([172.16.0.71]) with mapi; Tue, 27 Oct 2015 06:54:16 -0700
+Thread-Topic: [PATCH v3] Add git-grep threads param
+Thread-Index: AdEQrg7tstW6NcujSDepDBa5XxXcVgADz8my
+In-Reply-To: <20151027115256.GQ19802@serenity.lan>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280263>
 
-On Tue, 27 Oct 2015 11:40:15 +0000
-Nick <oinksocket@letterboxes.org> wrote:
+Hello John,
 
-> > Why not set alias(es) for that?
-[...]
-> But oh yes, there is another difficulty with aliases.  Eclipse users
-> on Windows:
-[...]
+>> This thought also crossed my mind, however we already pass grep_opt to
+>> start_threads() function, so I think passing it to wait_all() is not
+>> that ugly, and kind of symmetric. And I do not like the idea of
+>> duplicating same information in different places. What do you think?
 
-Not to counter your actual argument, but AFAIK EGit uses JGit which is
-a Java implementation which does not call out to the "real" Git binary.
-This basically means that if something gets implemented in the stock
-Git, this won't affect JGit and EGit untill their respective
-maintainers implement the same feature.
+> The grep_opt in start_threads() is being passed through to run(), so it
+> seems slightly different to me.  If the threads were being setup in
+> grep.c (as opposed to builtin/grep.c) then I'd agree that it belongs in
+> grep_opt, but since this is local to this particular user of the grep
+> infrastructure adding num_threads to the grep_opt structure at all feels
+> wrong to me.
 
-> they don't tend to love it if you tell them to install
-> Cygwin, open a shell and type things into it.
+> Note that I wasn't suggesting passing num_threads as a parameter to
+> wait_all(), but rather having it as global state that is accessed by
+> wait_all() in the same way as the `threads` array.
 
-On Windows, you typically want them to use Git for Windows, not
-Cygwin.  Various GUI front-ends to Git working on Windows (such as Git
-Extentions and TortoiseGit) rely on GfW to work as well.
+> If we rename use_threads to num_threads and just use that, then we only
+> have the information in one place don't we?
+
+Yeah, I understood your idea. So we parse config_value directly to 
+
+static int num_threads; /* old use_threads */
+
+And use it internally in builtin/grep.c. I think you are right.
+
+Looks like grep_cmd_config() is the right place to parse it. Something like:
+
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -267,6 +267,8 @@ static int wait_all(struct grep_opt *opt)
+ static int grep_cmd_config(const char *var, const char *value, void *cb)
+ {
+        int st = grep_config(var, value, cb);
++       if (thread_config(var, value, cb) < 0)
++               st = -1;
+        if (git_color_default_config(var, value, cb) < 0)
+                st = -1;
+        return st;
+
+What do you think?
+
+--
+Best Regards,
+Victor
