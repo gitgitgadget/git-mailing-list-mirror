@@ -1,72 +1,75 @@
-From: Knut Franke <k.franke@science-computing.de>
-Subject: Re: [PATCH 1/2] http: allow selection of proxy authentication method
-Date: Tue, 27 Oct 2015 09:47:43 +0100
-Message-ID: <20151027084742.GA6492@science-computing.de>
-References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
- <xmqqk2q9fjyx.fsf@gitster.mtv.corp.google.com>
+From: Victor Leschuk <vleschuk@accesssoftek.com>
+Subject: RE: [PATCH v3] Add git-grep threads param
+Date: Tue, 27 Oct 2015 02:14:25 -0700
+Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9FE@mail.accesssoftek.com>
+References: <1445862733-838-1-git-send-email-vleschuk@accesssoftek.com>,<CA+55aFwrU25x25XrRODgS1oRXqN60rmYPiXLgfs3mqRco4Oi9A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 09:58:19 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Victor Leschuk <vleschuk@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 10:14:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zr05A-0002Th-7o
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 09:58:16 +0100
+	id 1Zr0Ku-0007AW-87
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 10:14:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754646AbbJ0I6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 04:58:10 -0400
-Received: from mx4.science-computing.de ([193.197.16.30]:62704 "EHLO
-	mx4.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754560AbbJ0I6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 04:58:09 -0400
-X-Greylist: delayed 620 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Oct 2015 04:58:08 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by scmail.science-computing.de (Postfix) with ESMTP id 0C78E3B7F;
-	Tue, 27 Oct 2015 09:47:44 +0100 (CET)
-X-Virus-Scanned: amavisd-new
-Received: from scmail.science-computing.de ([127.0.0.1])
-	by localhost (obi.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tj9N0Wx-pk0P; Tue, 27 Oct 2015 09:47:43 +0100 (CET)
-Received: from hallasan.science-computing.de (hallasan.science-computing.de [10.10.24.76])
-	by scmail.science-computing.de (Postfix) with ESMTP id 8B6DA1D28;
-	Tue, 27 Oct 2015 09:47:43 +0100 (CET)
-Received: by hallasan.science-computing.de (Postfix, from userid 1633)
-	id 6982CA78B1; Tue, 27 Oct 2015 09:47:43 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <xmqqk2q9fjyx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752902AbbJ0JO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 05:14:28 -0400
+Received: from mail.accesssoftek.com ([12.202.173.171]:56270 "EHLO
+	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751572AbbJ0JO1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2015 05:14:27 -0400
+Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
+ ([172.16.0.71]) with mapi; Tue, 27 Oct 2015 02:14:26 -0700
+Thread-Topic: [PATCH v3] Add git-grep threads param
+Thread-Index: AdEQiyDmh0fQJbXWS1qr96nKVElQmAACVtS+
+In-Reply-To: <CA+55aFwrU25x25XrRODgS1oRXqN60rmYPiXLgfs3mqRco4Oi9A@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280248>
 
-On 2015-10-26 13:33, Junio C Hamano wrote:
-> Call yours "http.proxyAuthmethod" in the documentation, and use
-> strcmp("http.proxyauthmethod", var) in the options callback code.
-[...]
-> Strange indentation here...
-[...]
-> Along the same line as how we do sslversions[] instead of a long
-> if/else if/ chain is preferrable.
+Hello Linus, 
 
-Thanks for the feedback, I'll fix these in the next iteration.
+>> According to several tests on systems with different number of CPU cores
+>> the hard-coded number of 8 threads is not optimal for all systems:
 
+> Did you also compare cold-cache filesystem performance?
 
-Cheers,
-Knut
--- 
-Vorstandsvorsitzender/Chairman of the board of management:
-Gerd-Lothar Leonhart
-Vorstand/Board of Management:
-Dr. Bernd Finkbeiner, Dr. Arno Steitz
-Vorsitzender des Aufsichtsrats/
-Chairman of the Supervisory Board:
-Philippe Miltin
-Sitz/Registered Office: Tuebingen
-Registergericht/Registration Court: Stuttgart
-Registernummer/Commercial Register No.: HRB 382196
+>  One of the reasons for doing threaded grep is for CPU scaling. But another is for IO scaling. If your git tree is over NFS, doing grep eight threads at a time if likely going to make things much faster even if you are on a single CPU.
+
+Yes, I have performed tests on cold-cache FS and it looks like number of threads affects performance. Here are the results for grepping linux kernel repo on a 4-core machine (similar test was conducted on 8-core machine):
+
+Threads: 4 Time: 39.13
+Threads: 8 Time: 34.39
+Threads: 16 Time: 31.46
+Threads: 32 Time: 27.40
+
+Here is test scenario:
+
+#!/bin/bash
+TIMEFORMAT=%R
+GIT=/home/del/git-dev/bin/git
+TESTS=10
+for n in 4 8 16 32; do
+    echo -n "Threads: $n Time: "
+    for i in $(seq 1 $TESTS); do
+        echo 3 > /proc/sys/vm/drop_caches
+        time $GIT grep --threads $n -e '#define' --and \( -e MAX_PATH -e PATH_MAX \)  >/dev/null
+    done 2>&1 | awk -v ntests=${TESTS} '{sum+=$1} END{printf "%.2f\n", sum/ntests}'
+done
+
+Note: With hot-cache grepping with 4 threads gives fastest results on both 4-core and 8-core machines.
+
+Thus I think it can be useful for users to be able to tune the threads number according to their needs.
