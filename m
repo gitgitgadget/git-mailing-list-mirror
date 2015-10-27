@@ -1,94 +1,82 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3] ref-filter: fallback on alphabetical comparison
-Date: Wed, 28 Oct 2015 00:30:56 +0530
-Message-ID: <1445972456-5621-1-git-send-email-Karthik.188@gmail.com>
-Cc: j6t@kdbg.org, Karthik Nayak <Karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 27 20:00:48 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it to ignore instead?
+Date: Tue, 27 Oct 2015 12:04:48 -0700
+Message-ID: <xmqqk2q8p1yn.fsf@gitster.mtv.corp.google.com>
+References: <CAM-tV-_JPazYxeDYogtQTRfBxONpSZwb3u5pPanB=F9XnLnZyg@mail.gmail.com>
+	<CAM-tV-_eOgnhqsTFN6kKW=tcS7gAPYaxskBaxnJZo3bsx02HZg@mail.gmail.com>
+	<xmqqfv18awj4.fsf@gitster.mtv.corp.google.com>
+	<CAM-tV-8VXtB5uRgqP9dFpww6AaLzasPV46tCiquz=nz=ksBNng@mail.gmail.com>
+	<CAM-tV-9sNgHncsWRPh36tEY3YFORUJBA-Q6W5R=mvX_KhSmWEQ@mail.gmail.com>
+	<xmqqfv0ylwa7.fsf@gitster.mtv.corp.google.com>
+	<20151026215016.GA17419@sigill.intra.peff.net>
+	<CAM-tV--80xt_Ro_vQdgRmRxfy+2k2Ca13gVsjDHK+1pdsB_hqQ@mail.gmail.com>
+	<20151027184151.GA12717@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Noam Postavsky <npostavs@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 27 20:05:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zr9UF-00044m-Pu
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 20:00:48 +0100
+	id 1Zr9YL-0007Vd-Ru
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 20:05:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964993AbbJ0TAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 15:00:43 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35771 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964950AbbJ0TAm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 15:00:42 -0400
-Received: by pasz6 with SMTP id z6so230257290pas.2
-        for <git@vger.kernel.org>; Tue, 27 Oct 2015 12:00:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=uwKxq8NUQQrKtTL8TGZzURWDK/ifN+Rc3+ahWQ7fYaI=;
-        b=STITO9/IEIDiKuLec+pqBqGD/XHMCwfgb1Q0Gzt4kNtFYZdAxsGESxOn+mCi9t/A0S
-         GW+E+AP/JdbPDUrd6/iBTB1v/NDp0QdqRZp7onDn+xgCYtWvpKTYYHRnV2Fo83yluoMJ
-         3l4bJwxvfvU9Mp2fAJ1vqmd0WJcBYcRDpqv79XKT5/NOkxbZO65IcdDHjRQyqEtA0cNj
-         i9P370w2hu+jPLvDB1BW6mMZdkGWBYCwWQTsXt6RV0BNrFqo2z4vmHCEB2xdT5KRVURx
-         sEnVZnwxtesySPYYqgwg/f0nbFJuIQqqKt+NPXWDEonYFQjIinvfQs0iwwe4mctZTAsn
-         AyTg==
-X-Received: by 10.68.110.65 with SMTP id hy1mr29713722pbb.147.1445972442205;
-        Tue, 27 Oct 2015 12:00:42 -0700 (PDT)
-Received: from ashley.localdomain ([106.51.130.23])
-        by smtp.gmail.com with ESMTPSA id in6sm16292030pbd.86.2015.10.27.12.00.40
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 27 Oct 2015 12:00:41 -0700 (PDT)
-X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
-X-Mailer: git-send-email 2.6.2
+	id S965222AbbJ0TE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 15:04:57 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58689 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965079AbbJ0TE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 15:04:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BBF8F25A8B;
+	Tue, 27 Oct 2015 15:04:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5hok+buzgHhrL9hlDgHc0jH03Hk=; b=QZIO1w
+	kw4gNOZHvKDt08zEI0vJzyzRilALCRlpgnOkgyBzmUsmiJp5mWTZtVU0cgb2HmAl
+	214Mhq4k7wqXnx3KftdjdTqPlhFkq3if34IA5Qu5GgviKy6nJ0DQvXAXtvLvD8Bg
+	20jU9uR3SAjSslY7gaoNe+3NfxItC5NIDzbAw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nGrYFkIDcSv3aIkvXdBFOgsw++TuE8vY
+	7eRP8OrAmqxcBdsBq5frG1+URPKxkHfegrHJEbRelMwd+ii+Zu728V3e1v30nA9L
+	Xuys+YqOwGXgjzkmYFOiqvyhFg9KibGp2p2OOKPr++D6w4/XS5LUL9dOnhd/8ATV
+	A60GWN8lkxU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B41FE25A8A;
+	Tue, 27 Oct 2015 15:04:49 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3B6E025A87;
+	Tue, 27 Oct 2015 15:04:49 -0400 (EDT)
+In-Reply-To: <20151027184151.GA12717@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 27 Oct 2015 14:41:51 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 987C5A90-7CDD-11E5-AF39-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280290>
 
-In ref-filter.c the comparison of refs while sorting is handled by
-cmp_ref_sorting() function. When sorting as per numerical values
-(e.g. --sort=objectsize) there is no fallback comparison when both
-refs hold the same value. This can cause unexpected results (i.e. the
-order of listing refs with equal values cannot be pre-determined) as
-pointed out by Johannes Sixt ($gmane/280117).
+Jeff King <peff@peff.net> writes:
 
-Hence, fallback to alphabetical comparison based on the refname
-whenever the other criterion is equal. Fix the test in t3203 in this
-regard.
+> So I dunno. I think it would be reasonable to provide a config option to
+> tell the cache-daemon to just ignore SIGHUP (or alternatively, a general
+> option to try harder to dissociate itself from the caller). But I'm not
+> sure I'd agree with making it the default. I'd want to know if anybody
+> is actually _using_ the SIGHUP-exits-daemon feature. Clearly neither of
+> us is, but I wouldn't be surprised if other setups are.
 
-Reported-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
----
- ref-filter.c             | 2 +-
- t/t3203-branch-output.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+That also is a very good summary of what I think.  I agree it is a
+good thing to have an option between "keep the die-on-HUP for those
+who have a working set-up that rely on it" and "daemonize fully and
+require the user to explicitly kill it with 'credential-cache
+exit'".
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 046e73b..7b33cb8 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1698,7 +1698,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
- 		if (va->ul < vb->ul)
- 			cmp = -1;
- 		else if (va->ul == vb->ul)
--			cmp = 0;
-+			cmp = strcmp(a->refname, b->refname);
- 		else
- 			cmp = 1;
- 	}
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index f77971c..9f2d482 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -158,8 +158,8 @@ EOF
- 
- test_expect_success 'git branch `--sort` option' '
- 	cat >expect <<-\EOF &&
--	  branch-two
- 	* (HEAD detached from fromtag)
-+	  branch-two
- 	  branch-one
- 	  master
- 	EOF
--- 
-2.6.2
+Thanks.
