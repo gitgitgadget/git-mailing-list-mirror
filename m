@@ -1,89 +1,80 @@
-From: James McCoy <vega.james@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 2/6] remote-http(s): Support SOCKS proxies
-Date: Mon, 26 Oct 2015 21:23:36 -0400
-Message-ID: <20151027012336.GK31271@freya.jamessan.com>
+Date: Mon, 26 Oct 2015 18:40:04 -0700
+Message-ID: <xmqqvb9tdr7v.fsf@gitster.mtv.corp.google.com>
 References: <cover.1445865176.git.johannes.schindelin@gmx.de>
- <bf218d020e24216f55d1514c4459e645b13ec075.1445865176.git.johannes.schindelin@gmx.de>
- <xmqq7fm9gze2.fsf@gitster.mtv.corp.google.com>
+	<bf218d020e24216f55d1514c4459e645b13ec075.1445865176.git.johannes.schindelin@gmx.de>
+	<xmqq7fm9gze2.fsf@gitster.mtv.corp.google.com>
+	<20151027012336.GK31271@freya.jamessan.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Pat Thoyts <patthoyts@users.sourceforge.net>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 02:23:47 2015
+To: James McCoy <vega.james@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 02:40:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqszJ-00012F-7F
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 02:23:45 +0100
+	id 1ZqtFe-0001xv-Mi
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 02:40:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753468AbbJ0BXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 21:23:40 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:36120 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753344AbbJ0BXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 21:23:39 -0400
-Received: by ykba4 with SMTP id a4so197194111ykb.3
-        for <git@vger.kernel.org>; Mon, 26 Oct 2015 18:23:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=0SBTnqIy+EeRafIdaFT24gorJBbtX1LjUH4wivM5oiM=;
-        b=HUCW/yxVRw0dgvpF/5HJ3FRO8H4JOveC+MyFzZKtt5/J/uoa+hioS/b6CrJ2Y0gnC7
-         VEUBcs1gKSpGXXKDb7aUAxoBqD/5wMIsFbkhYfrSmxqKjxsXJYQe184Pg3e9pPk6krs4
-         yOhq64IPKrV5zSFSROwWkojB/fpxnJDxOZtsNnkVXARiNzAeu/kUxWdjvZM2/0UpBStJ
-         hCJ9tvdECz9udzdW1zoMSzYrVnIBdyOlXvTJnuokgKUbgxlpCYuqq7+7ARhiGuj7A3+U
-         E8UE5IIsTbDVsDbx96ITiPZhcEoceTXr1QdxqOFb3CHmNa3jrBvdvLEu7tbMUxD3Kw7j
-         qrmg==
-X-Received: by 10.129.41.15 with SMTP id p15mr27122332ywp.91.1445909019019;
-        Mon, 26 Oct 2015 18:23:39 -0700 (PDT)
-Received: from freya.jamessan.com (pool-71-162-119-45.bstnma.fios.verizon.net. [71.162.119.45])
-        by smtp.gmail.com with ESMTPSA id i66sm26315123ywc.2.2015.10.26.18.23.37
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Oct 2015 18:23:37 -0700 (PDT)
-Received: from jamessan by freya.jamessan.com with local (Exim 4.86)
-	(envelope-from <vega.james@gmail.com>)
-	id 1ZqszA-00036S-Rj; Mon, 26 Oct 2015 21:23:36 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq7fm9gze2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S1752365AbbJ0BkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2015 21:40:08 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55819 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751871AbbJ0BkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2015 21:40:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 258A227BD8;
+	Mon, 26 Oct 2015 21:40:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DCiK3NcysBH4qnNZnjsNNafsBeU=; b=Rg25Gz
+	vQDgo5ARp0LWTKV3aiKVyTFUijWb/8s35U+v/0DBKVw2cqKkVzkwL9htJChQ8KbU
+	0YoxFPBKPe7DzqB9bncz3qdViDQD6Wefs4N5l44GViXJJVI6eEeE2mnA0IXloOFt
+	OleX2pDbcPYALC+OyWCe9QlEqQ/gdaSes8Yu0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UNEgLbSqG7grL+2p2kbW5+ls/GuQ6NMJ
+	QuEQUtt7WnxNJikcM2S6KsxO4qQNsj9txASxcR3zNsKiw7enrouqkA6E392RFS0v
+	PKGKPMpDUYTExS7sbIr8s/QCy6Q39pTdjLwlaaAYyOXRkPHDCkhmljNOJMJ/RxT0
+	VnIHquDn18o=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1DE6527BD7;
+	Mon, 26 Oct 2015 21:40:06 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9B56F27BD6;
+	Mon, 26 Oct 2015 21:40:05 -0400 (EDT)
+In-Reply-To: <20151027012336.GK31271@freya.jamessan.com> (James McCoy's
+	message of "Mon, 26 Oct 2015 21:23:36 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A624C4E4-7C4B-11E5-B7F1-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280239>
 
-On Mon, Oct 26, 2015 at 01:15:17PM -0700, Junio C Hamano wrote:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > This patch was required to work behind a faulty AP and scraped from
-> > http://stackoverflow.com/questions/15227130/#15228479 and guarded with
-> > an appropriate cURL version check by Johannes Schindelin.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> Thanks.
-> 
-> The code looks OK but the last paragraph makes _us_ worried.  What
-> is the licensing status of the original at SO?
+James McCoy <vega.james@gmail.com> writes:
 
-According to Stackoverflow[0],
+>> The code looks OK but the last paragraph makes _us_ worried.  What
+>> is the licensing status of the original at SO?
+>
+> According to Stackoverflow[0],
+>
+>   As noted in the Stack Exchange Terms of Service[1] and in the footer of
+>   every page, all user contributions are licensed under Creative Commons
+>   Attribution-Share Alike[2]. Proper attribution[3] is required if you
+>   republish any Stack Exchange content.
+>
+> [0]: https://stackoverflow.com/help/licensing
 
-  As noted in the Stack Exchange Terms of Service[1] and in the footer of
-  every page, all user contributions are licensed under Creative Commons
-  Attribution-Share Alike[2]. Proper attribution[3] is required if you
-  republish any Stack Exchange content.
-
-[0]: https://stackoverflow.com/help/licensing
-[1]: http://stackexchange.com/legal
-[2]: http://creativecommons.org/licenses/by-sa/3.0/
-[3]: http://blog.stackoverflow.com/2009/06/attribution-required/
-
-Cheers,
--- 
-James
-GPG Key: 4096R/331BA3DB 2011-12-05 James McCoy <vega.james@gmail.com>
+Yes, and (please correct me if I am wrong--this is one of the times
+I hope I am wrong!) I thought BY-SA does not mesh well with GPLv2,
+in which case we cannot use this patch (instead somebody has to
+reimplement the same without copying).
