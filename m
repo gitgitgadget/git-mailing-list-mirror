@@ -1,80 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/6] remote-http(s): Support SOCKS proxies
-Date: Mon, 26 Oct 2015 18:40:04 -0700
-Message-ID: <xmqqvb9tdr7v.fsf@gitster.mtv.corp.google.com>
-References: <cover.1445865176.git.johannes.schindelin@gmx.de>
-	<bf218d020e24216f55d1514c4459e645b13ec075.1445865176.git.johannes.schindelin@gmx.de>
-	<xmqq7fm9gze2.fsf@gitster.mtv.corp.google.com>
-	<20151027012336.GK31271@freya.jamessan.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	git@vger.kernel.org
-To: James McCoy <vega.james@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 02:40:40 2015
+From: Lucian Poston <lucian.poston@gmail.com>
+Subject: [BUG] diff --word-diff inconsistently places removed words
+Date: Mon, 26 Oct 2015 18:40:12 -0700
+Message-ID: <1445910013-13382-1-git-send-email-lucian.poston@gmail.com>
+Cc: Lucian Poston <lucian.poston@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 27 02:40:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZqtFe-0001xv-Mi
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 02:40:39 +0100
+	id 1ZqtFp-00029I-Si
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 02:40:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365AbbJ0BkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Oct 2015 21:40:08 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55819 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751871AbbJ0BkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Oct 2015 21:40:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 258A227BD8;
-	Mon, 26 Oct 2015 21:40:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DCiK3NcysBH4qnNZnjsNNafsBeU=; b=Rg25Gz
-	vQDgo5ARp0LWTKV3aiKVyTFUijWb/8s35U+v/0DBKVw2cqKkVzkwL9htJChQ8KbU
-	0YoxFPBKPe7DzqB9bncz3qdViDQD6Wefs4N5l44GViXJJVI6eEeE2mnA0IXloOFt
-	OleX2pDbcPYALC+OyWCe9QlEqQ/gdaSes8Yu0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UNEgLbSqG7grL+2p2kbW5+ls/GuQ6NMJ
-	QuEQUtt7WnxNJikcM2S6KsxO4qQNsj9txASxcR3zNsKiw7enrouqkA6E392RFS0v
-	PKGKPMpDUYTExS7sbIr8s/QCy6Q39pTdjLwlaaAYyOXRkPHDCkhmljNOJMJ/RxT0
-	VnIHquDn18o=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1DE6527BD7;
-	Mon, 26 Oct 2015 21:40:06 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9B56F27BD6;
-	Mon, 26 Oct 2015 21:40:05 -0400 (EDT)
-In-Reply-To: <20151027012336.GK31271@freya.jamessan.com> (James McCoy's
-	message of "Mon, 26 Oct 2015 21:23:36 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A624C4E4-7C4B-11E5-B7F1-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1751970AbbJ0Bkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Oct 2015 21:40:45 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:34220 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751572AbbJ0Bko (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Oct 2015 21:40:44 -0400
+Received: by padhk11 with SMTP id hk11so205182109pad.1
+        for <git@vger.kernel.org>; Mon, 26 Oct 2015 18:40:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=M5SwX6ru/ymLU5Eu7dEJWISrEo/24t7USCxIkTcz4Ac=;
+        b=JYuytgdq6UkmqloNR6OJPD3dHNLIguO3Vhjd3RfKRnie0KCX6h/RcG9fLgJxYmfPy1
+         KXZkUwOypDy61rJ9IqgKbxseVbShtxWLfZCxHPivYsFTA7tMbz3+Snr8HeTVAW2vG5Pr
+         DUG+Z7m3YMtvauBY48AwSOQyc7EUwWDUruLMuJ0XFx1BUad/RXjl1kY+712WtgO7cYiH
+         bqyAgHGXQfX9Dw3kQbHZsNGvXMYkqYB0X0oRHkG5iS9IV2/bCruAi1RdgmBXdY2qtOzt
+         YEK2czDK5wiLTgMF9vYuU1z+/csTPxX1P8pRDFVQ8/L4mDUpS5ivi5lGeiSUH2SDnnEe
+         YaeQ==
+X-Received: by 10.66.162.232 with SMTP id yd8mr24799662pab.55.1445910044098;
+        Mon, 26 Oct 2015 18:40:44 -0700 (PDT)
+Received: from bliss.localdomain (c-24-143-94-84.customer.broadstripe.net. [24.143.94.84])
+        by smtp.gmail.com with ESMTPSA id t9sm36229967pbs.17.2015.10.26.18.40.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 26 Oct 2015 18:40:43 -0700 (PDT)
+X-Mailer: git-send-email 2.4.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280240>
 
-James McCoy <vega.james@gmail.com> writes:
+In the output generated by diff --word-diff, if the first word of a line was
+removed, it may appear at the end of the previous line. For example, compare
+the following two diffs on the same files, the first diff without --word-diff
+and the second with it.
 
->> The code looks OK but the last paragraph makes _us_ worried.  What
->> is the licensing status of the original at SO?
->
-> According to Stackoverflow[0],
->
->   As noted in the Stack Exchange Terms of Service[1] and in the footer of
->   every page, all user contributions are licensed under Creative Commons
->   Attribution-Share Alike[2]. Proper attribution[3] is required if you
->   republish any Stack Exchange content.
->
-> [0]: https://stackoverflow.com/help/licensing
 
-Yes, and (please correct me if I am wrong--this is one of the times
-I hope I am wrong!) I thought BY-SA does not mesh well with GPLv2,
-in which case we cannot use this patch (instead somebody has to
-reimplement the same without copying).
+$ git diff
+
+diff --git a/smallest-test b/smallest-test
+index bc5f07a..d9116b1 100644
+--- a/smallest-test
++++ b/smallest-test
+@@ -1,7 +1,7 @@
+ 
+-111 aaa
+-111 aaa
++ aaa
++ aaa
+ 
+ 111 aaa
+-111 aaa
++ aaa
+ 
+
+
+$ git diff --word-diff=plain
+
+diff --git a/smallest-test b/smallest-test
+index bc5f07a..d9116b1 100644
+--- a/smallest-test
++++ b/smallest-test
+@@ -1,7 +1,7 @@
+
+[-111-] aaa[-111-]
+ aaa
+
+111 aaa
+[-111-] aaa
+
+
+I would expect every [-111-] to be on the line where it was removed. Instead
+it appears on the previous line in the case where the previous line also has a
+removal.
+
+Is this expected behavior?
+
+There is also a patch in this email thread that contains a test to further
+illustrate the issue. Running the test fails with the following diff between
+the expected result and actual result.
+
+--- expect	2015-10-27 01:08:05.415252713 +0000
++++ output.decrypted	2015-10-27 01:08:05.418252766 +0000
+@@ -6,5 +6,5 @@
+ 11aa<RESET>
+ <RED>11<RESET>aa
+ 
+-<RED>11<RESET>aa
+-<RED>11<RESET>aa
++<RED>11<RESET>aa<RED>11<RESET>
++aa
+
+
+Lucian Poston (1):
+  t4034: Test parsing words following newline
+
+ t/t4034-diff-words.sh | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+-- 
+2.4.10
