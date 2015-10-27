@@ -1,70 +1,89 @@
-From: Sean Krauth <spkrauth@gmail.com>
-Subject: fatal: Unable to read current working directory: No error
-Date: Tue, 27 Oct 2015 19:29:39 -0400
-Message-ID: <CAPkB0GxPghR9Y7YrB9yYq3rA9XZ2HJGN-sxbQgERGsBA2iOX_Q@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with gdb
+Date: Tue, 27 Oct 2015 16:39:37 -0700
+Message-ID: <CAGZ79karRbOTSEfFHRU6MG21T1L5GyuZW2ATqfdP4NE7wHMmHQ@mail.gmail.com>
+References: <cover.1445865176.git.johannes.schindelin@gmx.de>
+	<082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
+	<20151026191724.GE7881@google.com>
+	<alpine.DEB.1.00.1510271036100.31610@s15462909.onlinehome-server.info>
+	<xmqqr3kge0d3.fsf@gitster.mtv.corp.google.com>
+	<20151027232848.GA4172@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 28 00:29:46 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 28 00:39:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrDgY-00028t-7x
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 00:29:46 +0100
+	id 1ZrDqA-0002gh-SE
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 00:39:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101AbbJ0X3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 19:29:42 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:34347 "EHLO
-	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243AbbJ0X3l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 19:29:41 -0400
-Received: by lfaz124 with SMTP id z124so180331788lfa.1
-        for <git@vger.kernel.org>; Tue, 27 Oct 2015 16:29:39 -0700 (PDT)
+	id S1752101AbbJ0Xji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 19:39:38 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:33505 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751902AbbJ0Xji (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 19:39:38 -0400
+Received: by ykft191 with SMTP id t191so53639622ykf.0
+        for <git@vger.kernel.org>; Tue, 27 Oct 2015 16:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=TA48RYqrHmYaScmtZisu3nLdR07bcjv3eiZWIQKofdY=;
-        b=g4awadpMSM1vVAuIKMtp6meC8VTroebUvD/U+KbUz1jQOyXrmS2gIIZVBFjNyFzkiA
-         R8uE/yIGpeK3V0+/KuSxNkoc0Ynrp92vyP3p3VBgCvQATTXbJssdN7gVx2a1pTjl8x5D
-         bIREW8N+MkqRPz3jCYfooMyUSjuRpNbPZTkAHOPwrAFV7f0D7++4CvbwE4mSLWp3Qv+h
-         Hnc4olAn34jk5Lltcad991sPMMint8gSAlZD0gIeA9ibQnu8ZMnQQNeLdbR1DgWoA8uC
-         gi2ajEsRV4NXBxdb3gStBTzL8hezof81fQmErfCu69gin4J9puFjztOpY6aPaV3Sr+E0
-         /yGg==
-X-Received: by 10.25.165.84 with SMTP id o81mr14328625lfe.80.1445988579743;
- Tue, 27 Oct 2015 16:29:39 -0700 (PDT)
-Received: by 10.114.82.68 with HTTP; Tue, 27 Oct 2015 16:29:39 -0700 (PDT)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Ce/ogu+Uy7ZPcZVLqc4ZUBqqsvwpH6FsP0wYvseCWsA=;
+        b=kC5yQcGmabX/C2dZ29IVLkn+GJtKGqNrylqQfqjsMrvbcLqUnB4C8u8cpiFXJyPyRM
+         7pEJ0AApmuhNmIAW6kPXlmA6ar34AUl3zAW7fr+W7QQSmvqJpH7V0FojgEDsAWXH3kXi
+         hXQtIls3gCs3+Hz6oPXgZyiNFXWBcBO1/Y8r+4Pt/GLlr2VDU1pKVZGQCtZllbYOPKlG
+         0MlQz0POkkofEy2RNX+U4/I4Jcwc1JYtRGeyBMQEZB8yBVOToN0Ip6fQkWkYDtNahKnP
+         SMtVfBrXZLco0ziUoeSHuxJmOj4Vp9rsKXHj72aEHRDm5Fb47FQL9dbF6GV7rzGlqVtY
+         L0nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=Ce/ogu+Uy7ZPcZVLqc4ZUBqqsvwpH6FsP0wYvseCWsA=;
+        b=KlFq3HscQTeizJnLq/IMUVXHCBUM3mA9n5xVXWcJyBTD6NUxAuehxc3FoV+NXYr5i7
+         eb4XLW0aolbZ0V2ZS2J+9WPATeFiPjPARwjNJXiRFl2SI3PoohH1ToIz6fJdJjXg54Wp
+         3onM/1DVuRThMWqWAN4buZzFkD3RzPlz2H0laYIGlYT+sBj65nNB2ERwEIK+LpDkf1Oc
+         tY1m9FDuPHnGK+QLMXfAx1shqZa0vHC5Dvh5TXFzcY0HNhkAbUKocTpjVKl5r1FxL1g/
+         oWzGWyQhqbLxBA6XjsGFQLeZBDT937bjHDMpoarmgyh3B/eAc4rJuf1oLcHppuYrLjkC
+         JP6Q==
+X-Gm-Message-State: ALoCoQmCkicozhzIVxxCLJMJUX79Qrp00sjlmXc8hUaTv0GS9Hwh491TEhhL+E1/Wc1V+2yYG0dF
+X-Received: by 10.129.40.18 with SMTP id o18mr31880424ywo.199.1445989177441;
+ Tue, 27 Oct 2015 16:39:37 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Tue, 27 Oct 2015 16:39:37 -0700 (PDT)
+In-Reply-To: <20151027232848.GA4172@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280317>
 
-Dear magic git bug solver,
+On Tue, Oct 27, 2015 at 4:28 PM, Jeff King <peff@peff.net> wrote:
+> I agree doing so would be crazy. But would:
+>
+>   ./t1234-frotz.sh --gdb=17
+>
+> be sane to run gdb only inside test 17?
 
-I've encountered a problem and I haven't had any success with my own
-troubleshooting or googling so I'd appreciate some help. I noticed the
-issue originally when I changed a file name in windows explorer. I was
-working on a website and I named my Public folder with a capital P and
-wrote my file routes as public. So being a little lazy I decided to
-open windows explorer and rename Public to public. This was after I
-had used Git Bash to create a local repository. I'm almost positive
-this action broke Git. The next time I tried to run Git Bash I got an
-error that I believe said something similar to "fatal build error" or
-"fatal load error" and Git was really broke.
+OT:
+We have two ways of addressing tests, by number and by name.
+Usually when a test fails ("Foo gobbles the bar correctly" failed),
+I want to run tests 1,17 (1 is the correct setup and 17 is the failing test)
+But coming up with that tuple is hard.
+  * How do I know we need to run 1 as the setup ? (usually we do,
+    sometimes we don't and other times we also need 2,3 to completely
+setup the tests)
+  * How do I know it's test 17 which is failing? My workflow up to now
+    I just searched the test title in the file, such that I'd be there anyway
+    to inspect it further. But still I found it inconvenient to
+mentally map between
+    17 and the test title.
 
-This seemed like about as good of an excuse as any to update Git. I
-was running v. 2.5.1-32-bit and so I downloaded v. 2.6.2-32-bit,
-installed it. And it ran, kinda. I no longer seem to have access to
-any of my old commits and when I try to "git init" or "git status" I
-get the above error, "fatal: Unable to read current working directory:
-No error". This error pops up for anything, even new files that never
-had a repository.
-
-I'm sorry if this wasn't very well documented or explained, but it
-kinda caught me off guard. Any thoughts or possible solutions on how
-to get Git running again would be greatly appreciated.
-
-Sincerely,
-Sean Krauth
+Stefan
