@@ -1,83 +1,96 @@
-From: Nick <oinksocket@letterboxes.org>
-Subject: Re: Why are submodules not automatically handled by default or at
- least configurable to do so?
-Date: Tue, 27 Oct 2015 11:40:15 +0000
-Message-ID: <562F629F.7040206@letterboxes.org>
-References: <D4E5E890658.000004DCjohsmi9933@inbox.com>
- <562F5704.5070405@letterboxes.org>
- <EC0D15E1-82B3-4A4C-96DE-8922AB870E2B@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v3] Add git-grep threads param
+Date: Tue, 27 Oct 2015 11:52:56 +0000
+Message-ID: <20151027115256.GQ19802@serenity.lan>
+References: <1445862733-838-1-git-send-email-vleschuk@accesssoftek.com>
+ <20151026193241.GO19802@serenity.lan>
+ <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9FC@mail.accesssoftek.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: John Smith <johsmi9933@inbox.com>, git@vger.kernel.org
-To: Davide Fiorentino <davide.fiorentino@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 12:40:28 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Victor Leschuk <vleschuk@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Victor Leschuk <vleschuk@accesssoftek.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 12:53:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zr2c6-0000Rh-NE
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 12:40:27 +0100
+	id 1Zr2oW-0002Ht-EI
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 12:53:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753999AbbJ0LkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 07:40:22 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:59514 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753543AbbJ0LkV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2015 07:40:21 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 88D6120CEE
-	for <git@vger.kernel.org>; Tue, 27 Oct 2015 07:40:21 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Tue, 27 Oct 2015 07:40:21 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=letterboxes.org;
-	 h=cc:content-transfer-encoding:content-type:date:from
-	:in-reply-to:message-id:mime-version:references:subject:to
-	:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=nUWvQlpGJD3bZVDKuNZHFA+mv2Y
-	=; b=0OhdcBaTt7T3pFzekTE0hm8mX5WJqjuLMaRGv6Ux3r6O2HQkJdjo/NHXQzi
-	N5ivckbsCnH+5WobdIk376OZNxAk7PLDOf0WzRJNiPR2Q7WkoFWiURllrAFfwJaN
-	AUS4YCKQtjBG3vdHLz55a1pcfYEinrm2gqbXXvCsNylnzypo=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=nUWvQlpGJD3bZVD
-	KuNZHFA+mv2Y=; b=q+Mnz4J+PsbH88VWLzVS4OaXIRMJui8ky5NmCBOCVszQJUI
-	DLDc2Bas0msvGtb7nXbInJxm+p1zupvbGwUHV6jgt57ZCY+N4wVYqBR25+QB5LEf
-	PmoXd/0C9iibgOFfU3MOG5pK7EOAU1xTTzAPUQOJRaDWZFtlr2jpCBKhi75w=
-X-Sasl-enc: 0OudK82Gs3cWYIYbaG4POpF8oKtWYnCH4FpFkjOtjOPp 1445946021
-Received: from [192.168.69.14] (unknown [31.216.5.136])
-	by mail.messagingengine.com (Postfix) with ESMTPA id E81A168016F;
-	Tue, 27 Oct 2015 07:40:20 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <EC0D15E1-82B3-4A4C-96DE-8922AB870E2B@gmail.com>
+	id S1754160AbbJ0LxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 07:53:12 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:53495 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752322AbbJ0LxM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 07:53:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 6168986601E;
+	Tue, 27 Oct 2015 11:53:11 +0000 (GMT)
+X-Quarantine-ID: <6+g6Td+XoWOQ>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 6+g6Td+XoWOQ; Tue, 27 Oct 2015 11:53:10 +0000 (GMT)
+Received: from serenity.lan (griffin.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 536C7CDA638;
+	Tue, 27 Oct 2015 11:52:58 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9FC@mail.accesssoftek.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280261>
 
-On 27/10/15 10:56, Davide Fiorentino wrote:
-> Why not set alias(es) for that?
+On Mon, Oct 26, 2015 at 10:25:41PM -0700, Victor Leschuk wrote:
+> >> @@ -22,6 +22,7 @@ SYNOPSIS
+> >>          [--color[=<when>] | --no-color]
+> >>          [--break] [--heading] [-p | --show-function]
+> >>          [-A <post-context>] [-B <pre-context>] [-C <context>]
+> >> +        [--threads <num>]
+> 
+> > Is this the best place for this option?  I know the current list isn't
+> > sorted in any particular way, but here you're splitting up the set of
+> > context options (`-A`, `-B`, `-C` and `-W`).
+> 
+> Agree, I'll move the option both here and in documentation.
+> 
+> >> -static int wait_all(void)
+> >> +static int wait_all(struct grep_opt *opt)
+> 
+> > I'm not sure passing a grep_opt in here is the cleanest way to do this.
+> > Options are a UI concept and all we care about here is the number of
+> > threads.
+> 
+> > Since `threads` is a global, shouldn't the number of threads be a global
+> > as well?  Could we reuse `use_threads` here (possibly renaming it
+> > `num_threads`)?
+> 
+> This thought also crossed my mind, however we already pass grep_opt to
+> start_threads() function, so I think passing it to wait_all() is not
+> that ugly, and kind of symmetric. And I do not like the idea of
+> duplicating same information in different places. What do you think?
 
-That counts as a hand-rolled (i.e. ad-hoc) solution.  So not out of the 
-question, but I'd rather point my colleagues at something tried and 
-tested, rather than simply re-invent wheels, possibly badly.
+The grep_opt in start_threads() is being passed through to run(), so it
+seems slightly different to me.  If the threads were being setup in
+grep.c (as opposed to builtin/grep.c) then I'd agree that it belongs in
+grep_opt, but since this is local to this particular user of the grep
+infrastructure adding num_threads to the grep_opt structure at all feels
+wrong to me.
 
-I'd be interested if there are some out there I could adopt?
+Note that I wasn't suggesting passing num_threads as a parameter to
+wait_all(), but rather having it as global state that is accessed by
+wait_all() in the same way as the `threads` array.
 
-But oh yes, there is another difficulty with aliases.  Eclipse users on 
-Windows: they don't tend to love it if you tell them to install Cygwin, 
-open a shell and type things into it.  The Eclipse experience is 
-somewhat fraught already (e.g. EGit running out of memory cloning 
-moderate-sized repos, and other UI difficulties). I'd be surprised if 
-defining aliases is going to help their user experience.  I'm 
-considering suggesting they switch to to IntelliJ, but that's also 
-asking quite a lot of people who may be reluctant to relearn their whole 
-workflow again, and I'd need to do the research to ensure this doesn't 
-just make things more confusing.
-
-Cheers,
-
-N
+If we rename use_threads to num_threads and just use that, then we only
+have the information in one place don't we?
