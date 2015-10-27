@@ -1,141 +1,85 @@
 From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH] use pop_commit() for consuming the first entry of a
- struct commit_list
-Date: Tue, 27 Oct 2015 22:29:50 +0100
-Message-ID: <562FECCE.8050207@web.de>
-References: <562BB00B.1000704@web.de>
- <xmqqfv0xfh6q.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 1/2] run-command: factor out child_process_clear()
+Date: Tue, 27 Oct 2015 22:29:46 +0100
+Message-ID: <562FECCA.6080703@web.de>
+References: <562B756F.1020305@web.de>
+ <xmqqziz5h3n5.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kYopHL5D_7+bJV2P9GeKDHufPDBTo3a8bRL=4B3OmTGjg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8;
 	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Tue Oct 27 22:30:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrBoo-0007nQ-Ik
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 22:30:10 +0100
+	id 1ZrBos-0007pV-M4
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 22:30:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752505AbbJ0VaE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Oct 2015 17:30:04 -0400
-Received: from mout.web.de ([212.227.15.4]:63168 "EHLO mout.web.de"
+	id S1752467AbbJ0VaD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Oct 2015 17:30:03 -0400
+Received: from mout.web.de ([212.227.15.14]:56399 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751824AbbJ0VaB (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1750877AbbJ0VaB (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 27 Oct 2015 17:30:01 -0400
-Received: from [192.168.178.36] ([79.253.133.32]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0LzmLr-1acXZv1EW3-014xgU; Tue, 27 Oct 2015 22:29:56
+Received: from [192.168.178.36] ([79.253.133.32]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LakkS-1aFCuH0qzI-00kKzO; Tue, 27 Oct 2015 22:29:53
  +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
  Thunderbird/38.3.0
-In-Reply-To: <xmqqfv0xfh6q.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:PwEweqHF/D/Qiw/z0bCgso+BdorZItRe4M4CDSxlCaPRwZ0Z6yJ
- UVx6Mggh6N0v45pO+z/IQHXkvNlO+fVz1IDllUDPcLsRVNjIbaxpFQGJ+u9/3SiUXguLHHC
- xs5xyfF/bN5uH068uVLiqMUQ1CD4NvKh2GBY+MjNYz2J2ByscFVxJN+3pF87cMoVIkA8Q9X
- CZL89AqMRT2f01YQqCmUA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wO4zPI4YI7Q=:fHlviMXpWZr4Wal3I922sQ
- EsYzw6SCm56IJ2RROJZzuPDaf96ZYwWO8NSEQVB2JvMIqBRugOQEAhklNcq+6zy0JLE7TmMIM
- V4GT0VwkS03PwOSiZARpOrrocxToIFF7gXwuP0Gqh652QlVniOTxTrjJUSVJAcbECiuQKxLPJ
- Q3cWlF4zVo2fpmPhPUmcE2lRqn7yoPEMLxJOMPE4f8pLB+7MjGmskpLZ004EPeipOIx2AXzlu
- XHTVhMtHTm72eAbtCe9oQXsMWO3dqYhKZmZH+CWubEpQM8JX1muZNKSZFA2Klgm8gCS8uJkrd
- nhufaBvohimSOKlVvFs7UNfs02we+ahEyoz5fhpyfKu8tU4PHwhgm6WV+XeGDkmSXUsdnCwf7
- 2aOqFTtFK7QCz8kUx4icU5efNicc7zevvwQTouasQQXKJsyVlPI237rvuhno86cMKelPu1Lhx
- MW5oU0Kty7RfrW90sTmZbXyRFnyxCMqyebtt7ahbZ65nVNJ0NOXCbWkxzSPHy8wZHB9xV0X7c
- kO8cA++o2qKMb5V+pZJ0D0lVxIrmwIBW0NWj1NIO7LGQUfuSmYJf51sfSutIK8v9vuRGZWvdi
- G5bnKfxTphP0Ue4ifQJ6UsSjN+vn8Z+ffR5RHtLv9B6C4qQRE0XuJIbL4GkaVMxFgYvfWb8Ti
- 6Aupm4tCs1E9kvCAPkk3ObmQSFviPz7RAgL5eZbi321ps5u+P9JSAE1XAaa/ULoHERLCCRXzY
- kgkatf3Wu+3z1klNDX/K1F/fAVjg0oVyfF00DnljdUXbM0fk+DXBGwzETecYuya7UchqNFRE 
+In-Reply-To: <CAGZ79kYopHL5D_7+bJV2P9GeKDHufPDBTo3a8bRL=4B3OmTGjg@mail.gmail.com>
+X-Provags-ID: V03:K0:B6XuH/nVQF6fJuibknCKXkzxbUr6GAFgqluh5eFBif7mKPTElnJ
+ vOandgiYnvQ22nlVyVL8fMtKYjy67VqIlvT4Dln25p7hY5yiYLGJHKAv+JcGMPMNolEnCbA
+ +YRYJooHKDGyC3O2mC4cWj5VRlUQlCWtMksQUYaC9yHlU7UAHsM0ReHnCHLaoewdK+IW1VD
+ +5cVCRR15sUBd/IyoTaSg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MhSENd/gm5E=:PmGrjmxc+c4BxSlSbreO9a
+ +t6s+TW8jaEVjsVwz2KOyfQ7hXjqV2ZBtnMIJVPBExvASn2YWrf/yfDd9VPowAo6IWZbH51Ik
+ QKYBoSttEmcXgd+MVEv3PC2/naadrzKBHa7VZIUPgvi8YKEkseyDD60zls43NZyQKp1sgzS/Z
+ YNdEXYBRmJx8ow7Ac2cLq9W4KZLMaMCvscvHEEnVS3MA8lgeRUdX5YVTAqQKmkwnXEt1UPqD5
+ cYhPARwrGGw8dMqoZYuGJDPEdqdMUYSHrrmv+rAg55Kw80fKDoXQsXemcZF+tu5rkS/HwD5nE
+ LalTgKuzqrwXMiTPCUMwWIxeGNflv5zYkt6GJXj4JPTEKRGjADA3uIJBFaQQvQeSMunbre0MC
+ LkaWJ8w8yXOiVmeYdT15DdRn8a5BHEQNfFkOwc7aghtwWlJSaF2y/pk2MSRZAg//kfcOjpANW
+ r24wg5eIuA2ftkm28qb9h+rIvNml2SvUOPxln8ljJJE8Y0m8bh7Y8bVCevcKneoEGYSQEv3o+
+ aEHh9Ikmd0/jFc6aLIbI/GfDijJjlxj50D+PQyU082QsG4crKLWiL7uAqhXAGbD6xZ1Z17scM
+ y9VARqf61+rqDGBczG5fj2PnysZDkatFMX2UbVU7v3HLVSvqtglpuHHw/po0JKkUKQ9p/R3FU
+ W79qjzrGmhX1nB1ZJwdbGY/y8Mmgf+Eu5c2RJF0/GrazFOrV7vh/rKdMUgIxN6/gBcQag+PAR
+ PE+WlKI2YUn2FTY+aZpBO5mjB/wD5zKpZfgYMUsvqn804edKSorx/OIaxn+fYXDupYGVZPpB 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280303>
 
-Am 26.10.2015 um 22:33 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> Instead of open-coding the function pop_commit() just call it.  This
->> makes the intent clearer and reduces code size.
+Am 26.10.2015 um 20:23 schrieb Stefan Beller:
+> On Mon, Oct 26, 2015 at 11:43 AM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >>
->> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->> ---
->>   builtin/fmt-merge-msg.c |  9 +++------
->>   builtin/merge.c         | 12 +++++-------
->>   builtin/reflog.c        |  6 +-----
->>   builtin/rev-parse.c     |  7 ++-----
->>   builtin/show-branch.c   | 17 +++--------------
->>   commit.c                | 27 +++++++--------------------
->>   remote.c                |  6 ++----
->>   revision.c              | 27 +++++----------------------
->>   shallow.c               |  6 +-----
->>   upload-pack.c           |  6 ++----
->>   10 files changed, 31 insertions(+), 92 deletions(-)
->
-> While I appreciate this kind of simplification very much, I also
-> hate to review this kind of simplification at the same time, as it
-> is very easy to make and miss simple mistakes.
-
-Yeah, it's tempting to doze off after a few similar cases.
-
-> Let me try to go through it very carefully.
->
->> diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
->> index 4ba7f28..846004b 100644
->> --- a/builtin/fmt-merge-msg.c
->> +++ b/builtin/fmt-merge-msg.c
->> @@ -537,7 +537,7 @@ static void fmt_merge_msg_sigs(struct strbuf *ou=
-t)
->>   static void find_merge_parents(struct merge_parents *result,
->>   			       struct strbuf *in, unsigned char *head)
->>   {
->> -	struct commit_list *parents, *next;
->> +	struct commit_list *parents;
->>   	struct commit *head_commit;
->>   	int pos =3D 0, i, j;
+>>> Avoid duplication by moving the code to release allocated memory fo=
+r
+>>> arguments and environment to its own function, child_process_clear(=
+).
+>>> Export it to provide a counterpart to child_process_init().
+>>>
+>>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>>> ---
 >>
->> @@ -576,13 +576,10 @@ static void find_merge_parents(struct merge_pa=
-rents *result,
->>   	parents =3D reduce_heads(parents);
->>
->>   	while (parents) {
->> +		struct commit *cmit =3D pop_commit(&parents);
->>   		for (i =3D 0; i < result->nr; i++)
->> -			if (!hashcmp(result->item[i].commit,
->> -				     parents->item->object.sha1))
->> +			if (!hashcmp(result->item[i].commit, cmit->object.sha1))
->>   				result->item[i].used =3D 1;
->> -		next =3D parents->next;
->> -		free(parents);
->> -		parents =3D next;
+>> Hmm, is this _deinit() Stefan added to his series recently?
 >
-> OK, I would have called it "commit" not "cmit", but this is
-> trivially equivalent to the original.
+> Yes. Although you (Junio) take credit for actually using it in these
+> places, too. :)
 
-This is just to keep the line shorter than 80 characters, and it's not=20
-the first "cmit" in the tree..
-
->
->> diff --git a/builtin/merge.c b/builtin/merge.c
->> index a0a9328..31241b8 100644
->> --- a/builtin/merge.c
->> +++ b/builtin/merge.c
->> @@ -1019,7 +1019,7 @@ static struct commit_list *reduce_parents(stru=
-ct commit *head_commit,
->>   					  int *head_subsumed,
->>   					  struct commit_list *remoteheads)
->>   {
->> -	struct commit_list *parents, *next, **remotes =3D &remoteheads;
->> +	struct commit_list *parents, **remotes;
->
-> Interesting.  I viewed the result of applying this patch with "git
-> show -U32" to make sure that this initialization of remotes was
-> unnecessary.
-
-With "git show -W" you don't need any magic number. ;)
-
-Thanks for reviewing!
+Oh, and it's already in next.  I still like _clear() better (as in=20
+{argv,object,ref,sha1}_array_clear(), or string_list_clear(), or ...)=20
+than _deinit(), which seems to have been introduced by vcs-svn and isn'=
+t=20
+a real word.  I'll rebase my patches on top of this series, but probabl=
+y=20
+not before the weekend.
 
 Ren=C3=A9
