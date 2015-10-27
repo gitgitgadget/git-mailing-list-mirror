@@ -1,115 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 2/2] sh-setup: explicitly mark CR as a field separator
-Date: Tue, 27 Oct 2015 11:01:00 +0100
-Message-ID: <vpqd1w07hr7.fsf@grenoble-inp.fr>
-References: <cover.1445777347.git.johannes.schindelin@gmx.de>
-	<cover.1445782122.git.johannes.schindelin@gmx.de>
-	<2b089201404299257f23b3931499ea16202f0f65.1445782122.git.johannes.schindelin@gmx.de>
-	<vpqlhaqas8g.fsf@grenoble-inp.fr>
-	<xmqq8u6piir8.fsf@gitster.mtv.corp.google.com>
+From: Nick <oinksocket@letterboxes.org>
+Subject: Re: Why are submodules not automatically handled by default or at
+ least configurable to do so?
+Date: Tue, 27 Oct 2015 10:50:44 +0000
+Message-ID: <562F5704.5070405@letterboxes.org>
+References: <D4E5E890658.000004DCjohsmi9933@inbox.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org, Chad Boles <chadbo@microsoft.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Philip Oakley <philipoakley@iee.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 11:01:44 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+To: John Smith <johsmi9933@inbox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 27 11:50:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zr14a-0003Yo-DO
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 11:01:44 +0100
+	id 1Zr1qD-0001uG-NJ
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 11:50:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752406AbbJ0KBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 06:01:40 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57012 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751654AbbJ0KBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 06:01:39 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id t9RA0xNt015833
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 27 Oct 2015 11:01:00 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id t9RA10CL010148;
-	Tue, 27 Oct 2015 11:01:00 +0100
-In-Reply-To: <xmqq8u6piir8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 26 Oct 2015 11:31:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 27 Oct 2015 11:01:00 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: t9RA0xNt015833
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1446544860.84664@KVT3jyOLNIDBNSzRfmGYbA
+	id S1754061AbbJ0Kuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 06:50:54 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:51682 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754018AbbJ0Kux (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Oct 2015 06:50:53 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 609BF201EB
+	for <git@vger.kernel.org>; Tue, 27 Oct 2015 06:50:50 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute6.internal (MEProxy); Tue, 27 Oct 2015 06:50:50 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=letterboxes.org;
+	 h=content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=vM61rBXfZLRNctQXbIy7aey+XAE=; b=iQivy0
+	m/L71n1jwruRayg+RcONAXoFbzjsrmAgu+wgboQrzvQgSZBGRHvmksCYzZ3I9iQA
+	TSG/Xn3FUAW4VKawe9qZXWByswynw7dE0KjGbvY2Vj9GXN3MbpKipoSAFt1KKg/n
+	rlXUXcZE5GJnoG1qnVhVFyLQ6jneXx18UC5qU=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=vM61rBXfZLRNctQ
+	XbIy7aey+XAE=; b=EnMuhmvS5VD4yrszfiAEI3poA7Nm1/2drJq6LFU3HXkV+rF
+	im5ZT76rjcfiOp3GUQAkfn4LTfO1dMadf8wOtmVu2gSBMIK38sZ6GzhP38yhAAuU
+	NMUWYw0mwOp2kh/qOlQUzyWB4z+VRp0dQrqcy9NyYllDJKoRPKwfkSgQwJRk=
+X-Sasl-enc: Zo0IIq0l3wNgEskwxSjH1yQrvdRpyejRJp6TR732TPcn 1445943050
+Received: from [192.168.69.14] (unknown [31.216.5.136])
+	by mail.messagingengine.com (Postfix) with ESMTPA id DC03DC0001E;
+	Tue, 27 Oct 2015 06:50:49 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <D4E5E890658.000004DCjohsmi9933@inbox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280258>
 
-Junio C Hamano <gitster@pobox.com> writes:
+I too am interested in finding ways to automate working with submodules, 
+as it's a particular pain point with my colleagues.  They frequently 
+shoot themselves in the foot trying to branch and merge a project with 
+submodules, resulting in a broken build and grumpy comments about git 
+(or possibly about me, as the "Git Advocate").  And they're right, it is 
+awkward.
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->>
->>> This is the correct thing to do, really: we already specify LF as
->>> field separator.
->>
->> I'm almost convinced that this is the right thing to do in the long run
->> ("almost" because I'm not sure, not because I have arguments against). I
->> agree with Junio that the commit message should be more convincing, but
->> indeed, accepting LF and not CR is strange.
->
-> If there were a single character that denotes CRLF, I'd say that
-> including such a character in IFS would make sense on a system with
-> CRLF EOL convention.  But that is not the case.
+Whether or not any sensible default configuration exists, users do need 
+a way to avoid excessively complicated workflows, or people are just 
+going to avoid using submodules, or perhaps Git. Hand-rolled solutions 
+might be better than nothing, but I would expect that this is a common 
+issue which would benefit from a built-in solution.  For instance, so 
+that one can branch and merge the whole project without duplicating the 
+work for each submodule.
 
-It's not, but there are platforms where the newline convention is
-CR-only. AFAIK, they are all "old" architectures (like Mac OS < X), but
-there are still CR-only files lying around.
+Am I correct in thinking there isn't anything which does these kind of 
+things yet?
 
->  * read is not the only user of IFS.  Expressing "list of things"
->    (pre bashism "shell array" days) by concatenating elements into a
->    single string variable, separated with LF, and later iterating
->    over them is a very common use case, e.g.
->
-> 	LF='
->         '
-> 	list="$thing1"
-> 	list="$list$LF$thing2"
-> 	list="$list$LF$thing3"
->         ...
->
-> 	IFS=$LF
-> 	for thing in $list
->         do
->         	...
->
->    And including LF by default in IFS, especially when "things" can
->    contain SP/HT, is handy.
+Thanks!
 
-I don't get the argument. You're talking about a case where you
-explicitly set IFS, and the patch is about changing the default. The
-use-case above would work exactly like before if we modify the default
-IFS.
-
-> If you
-> have a variable in which "A^MB" is there, "set $variable" would
-> split them into two and assign B to $2, which is not what the
-> scripts would expect.
-
-The same goes if you replace ^M with a tab or a space. Using unquoted
-"set $variable" is sane only if you are sure that $variable does not
-contain unexpected special characters. I can't imagine a case where one
-would accept space, tab or LF as separator and would need to accept CR
-as a non-separator.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Nick
