@@ -1,282 +1,85 @@
-From: Victor Leschuk <vleschuk@gmail.com>
-Subject: [PATCH v4] Add git-grep threads param
-Date: Wed, 28 Oct 2015 00:22:24 +0300
-Message-ID: <1445980944-24000-1-git-send-email-vleschuk@accesssoftek.com>
-Cc: Victor Leschuk <vleschuk@accesssoftek.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 27 22:22:41 2015
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] difftool: avoid symlinks when reusing worktree files
+Date: Tue, 27 Oct 2015 14:24:48 -0700
+Message-ID: <1445981088-6285-1-git-send-email-davvid@gmail.com>
+Cc: Ismail Badawi <ismail@badawi.io>,
+	John Keeping <john@keeping.me.uk>,
+	Tim Henigan <tim.henigan@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 27 22:26:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrBhY-0001pS-IJ
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 22:22:41 +0100
+	id 1ZrBkt-0004ZJ-26
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 22:26:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752040AbbJ0VWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 17:22:36 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:36481 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751646AbbJ0VWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 17:22:35 -0400
-Received: by lbcao8 with SMTP id ao8so73322036lbc.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2015 14:22:34 -0700 (PDT)
+	id S1752945AbbJ0VZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 17:25:07 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35006 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751572AbbJ0VZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 17:25:06 -0400
+Received: by pasz6 with SMTP id z6so233329652pas.2
+        for <git@vger.kernel.org>; Tue, 27 Oct 2015 14:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=orjKjmff/2FTuQ2KdjmYHRHBrJaPNmiFRQghMC2Fpaw=;
-        b=DuK50E4O8gdUzcs9HUgMO7yKCQ/Ss9LYxIbitIKhXmjeZVJKefL4Z77cLQq/Pz+BAp
-         +oNMoTYnDDuJG4PsZfFZ9ln2s6uKGBk+ZnrGjnDH/T3ps5CX9N/CS9zRV0HQdWAkpSGd
-         yR3gLS6f1ltokwux1udhH0Nj3qCr4kwDo9hTRNWhmCA2YStDvLaldMlzrZvVgmwaKvUR
-         LL6gcAaAvJnSz39Oh+taoNdq5mPmEAX9JaR29XczdEGzqup7+sHAA8eUP/HS8NInOrw6
-         tpWoEB+lHaz+ErCt6D9tb98w4grgdtwFyIQ36g7fwwGcmlNbFzgAmI9OLp+sAxpuedTo
-         Ik6w==
-X-Received: by 10.112.52.40 with SMTP id q8mr21454661lbo.100.1445980954005;
-        Tue, 27 Oct 2015 14:22:34 -0700 (PDT)
-Received: from del-debian (93-80-35-11.broadband.corbina.ru. [93.80.35.11])
-        by smtp.gmail.com with ESMTPSA id g39sm7429686lfi.27.2015.10.27.14.22.32
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Oct 2015 14:22:33 -0700 (PDT)
-X-Google-Original-From: Victor Leschuk <vleschuk@accesssoftek.com>
-Received: from del by del-debian with local (Exim 4.86)
-	(envelope-from <vleschuk@gmail.com>)
-	id 1ZrBhQ-0006Fn-2N; Wed, 28 Oct 2015 00:22:32 +0300
-X-Mailer: git-send-email 2.6.2.308.g3b8f10c.dirty
+        bh=YaoDKefNSovfdScBtXsrZqA8k14VpWOsvkBLVQlruK0=;
+        b=hvUe8RkyIo8L44GsgznxY0Uf96YXty9HJGL9Gncy/uaRxL2PS9xKhnsQ+pzRxIs4i7
+         gYpA0jHLQldirjXAlj0oVs1NIzTdZqCzLCeQapVz/oVT51d8cJMEUzFbK/kJWfLTowL5
+         hsWuyejOboim4ZJnTtSl0L4KA44sVSlT/sq3H3pX9KK0JUSAAjvq7rfcNLFqwW9uxaWl
+         w2AIJJQeRYvbOTHEnN0LdmKpNGeiCbYDf4BZ/XZxDfZ3ib0vmRug4bz3viDUsm1ikApd
+         GevIULDb1Ow8eaDlsN41zX1sbhvHSfr6jL3UYuQs4zORG0LV8aHCDmvoe/LNLiGWYDEE
+         s5Qg==
+X-Received: by 10.66.218.230 with SMTP id pj6mr30406891pac.104.1445981106025;
+        Tue, 27 Oct 2015 14:25:06 -0700 (PDT)
+Received: from localhost.localdomain (cpe-45-48-246-9.socal.res.rr.com. [45.48.246.9])
+        by smtp.gmail.com with ESMTPSA id ss6sm41330272pbc.74.2015.10.27.14.24.59
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 27 Oct 2015 14:25:05 -0700 (PDT)
+X-Mailer: git-send-email 2.6.2.282.gfefd36e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280300>
 
-Make number of git-grep worker threads a configuration parameter.
-According to several tests on systems with different number of CPU cores
-the hard-coded number of 8 threads is not optimal for all systems:
-tuning this parameter can significantly speed up grep performance.
+difftool's dir-diff should never reuse a symlink, regardless of
+what it points to.  Tighten use_wt_file() so that it rejects all
+symlinks.
 
-Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- Documentation/config.txt               |  4 +++
- Documentation/git-grep.txt             |  9 ++++++
- builtin/grep.c                         | 56 ++++++++++++++++++++++++----------
- contrib/completion/git-completion.bash |  1 +
- 4 files changed, 54 insertions(+), 16 deletions(-)
+ git-difftool.perl | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 391a0c3..1dd2a61 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1447,6 +1447,10 @@ grep.extendedRegexp::
- 	option is ignored when the 'grep.patternType' option is set to a value
- 	other than 'default'.
+diff --git a/git-difftool.perl b/git-difftool.perl
+index 1abe647..873db57 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -70,13 +70,13 @@ sub use_wt_file
+ 	my ($repo, $workdir, $file, $sha1) = @_;
+ 	my $null_sha1 = '0' x 40;
  
-+grep.threads::
-+	Number of grep worker threads, use it to tune up performance on
-+	multicore machines. Default value is 8. Set to 0 to disable threading.
-+
- gpg.program::
- 	Use this custom program instead of "gpg" found on $PATH when
- 	making or verifying a PGP signature. The program must support the
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 4a44d6d..e766596 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -23,6 +23,7 @@ SYNOPSIS
- 	   [--break] [--heading] [-p | --show-function]
- 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
- 	   [-W | --function-context]
-+	   [--threads <num>]
- 	   [-f <file>] [-e] <pattern>
- 	   [--and|--or|--not|(|)|-e <pattern>...]
- 	   [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
-@@ -53,6 +54,10 @@ grep.extendedRegexp::
- 	option is ignored when the 'grep.patternType' option is set to a value
- 	other than 'default'.
- 
-+grep.threads::
-+	Number of grep worker threads, use it to tune up performance on
-+	multicore machines. Default value is 8. Set to 0 to disable threading.
-+
- grep.fullName::
- 	If set to true, enable '--full-name' option by default.
- 
-@@ -227,6 +232,10 @@ OPTIONS
- 	effectively showing the whole function in which the match was
- 	found.
- 
-+--threads <num>::
-+	Set number of worker threads to <num>. Default is 8.
-+	Set to 0 to disable threading.
-+
- -f <file>::
- 	Read patterns from <file>, one per line.
- 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index d04f440..694553e 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -24,11 +24,11 @@ static char const * const grep_usage[] = {
- 	NULL
- };
- 
--static int use_threads = 1;
-+#define GREP_NUM_THREADS_DEFAULT 8
-+static int num_threads = -1;
- 
- #ifndef NO_PTHREADS
--#define THREADS 8
--static pthread_t threads[THREADS];
-+static pthread_t *threads;
- 
- /* We use one producer thread and THREADS consumer
-  * threads. The producer adds struct work_items to 'todo' and the
-@@ -63,13 +63,13 @@ static pthread_mutex_t grep_mutex;
- 
- static inline void grep_lock(void)
- {
--	if (use_threads)
-+	if (num_threads)
- 		pthread_mutex_lock(&grep_mutex);
+-	if (! -f "$workdir/$file") {
+-		return (0, $null_sha1);
++	my $workfile = "$workdir/$file";
++	if (-f $workfile && ! -l $workfile) {
++		my $wt_sha1 = $repo->command_oneline('hash-object', $workfile);
++		my $use = ($sha1 eq $null_sha1) || ($sha1 eq $wt_sha1);
++		return ($use, $wt_sha1);
+ 	}
+-
+-	my $wt_sha1 = $repo->command_oneline('hash-object', "$workdir/$file");
+-	my $use = ($sha1 eq $null_sha1) || ($sha1 eq $wt_sha1);
+-	return ($use, $wt_sha1);
++	return (0, $null_sha1);
  }
  
- static inline void grep_unlock(void)
- {
--	if (use_threads)
-+	if (num_threads)
- 		pthread_mutex_unlock(&grep_mutex);
- }
- 
-@@ -206,7 +206,8 @@ static void start_threads(struct grep_opt *opt)
- 		strbuf_init(&todo[i].out, 0);
- 	}
- 
--	for (i = 0; i < ARRAY_SIZE(threads); i++) {
-+	threads = xcalloc(num_threads, sizeof(pthread_t));
-+	for (i = 0; i < num_threads; i++) {
- 		int err;
- 		struct grep_opt *o = grep_opt_dup(opt);
- 		o->output = strbuf_out;
-@@ -238,12 +239,14 @@ static int wait_all(void)
- 	pthread_cond_broadcast(&cond_add);
- 	grep_unlock();
- 
--	for (i = 0; i < ARRAY_SIZE(threads); i++) {
-+	for (i = 0; i < num_threads; i++) {
- 		void *h;
- 		pthread_join(threads[i], &h);
- 		hit |= (int) (intptr_t) h;
- 	}
- 
-+	free(threads);
-+
- 	pthread_mutex_destroy(&grep_mutex);
- 	pthread_mutex_destroy(&grep_read_mutex);
- 	pthread_mutex_destroy(&grep_attr_mutex);
-@@ -262,10 +265,22 @@ static int wait_all(void)
- }
- #endif
- 
-+static int grep_threads_config(const char *var, const char *value, void *cb)
-+{
-+	if (!strcmp(var, "grep.threads")) {
-+		num_threads = git_config_int(var, value);
-+		if (num_threads < 0)
-+			die("Invalid number of threads specified (%d)", num_threads);
-+	}
-+	return 0;
-+}
-+
- static int grep_cmd_config(const char *var, const char *value, void *cb)
- {
- 	int st = grep_config(var, value, cb);
--	if (git_color_default_config(var, value, cb) < 0)
-+	if (grep_threads_config(var, value, cb) < 0)
-+		st = -1;
-+	else if (git_color_default_config(var, value, cb) < 0)
- 		st = -1;
- 	return st;
- }
-@@ -294,7 +309,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
- 	}
- 
- #ifndef NO_PTHREADS
--	if (use_threads) {
-+	if (num_threads) {
- 		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
- 		strbuf_release(&pathbuf);
- 		return 0;
-@@ -323,7 +338,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 		strbuf_addstr(&buf, filename);
- 
- #ifndef NO_PTHREADS
--	if (use_threads) {
-+	if (num_threads) {
- 		add_work(opt, GREP_SOURCE_FILE, buf.buf, filename, filename);
- 		strbuf_release(&buf);
- 		return 0;
-@@ -702,6 +717,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			N_("show <n> context lines before matches")),
- 		OPT_INTEGER('A', "after-context", &opt.post_context,
- 			N_("show <n> context lines after matches")),
-+		OPT_INTEGER(0, "threads", &num_threads,
-+			N_("use <n> worker threads")),
- 		OPT_NUMBER_CALLBACK(&opt, N_("shortcut for -C NUM"),
- 			context_callback),
- 		OPT_BOOL('p', "show-function", &opt.funcname,
-@@ -801,7 +818,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		opt.output_priv = &path_list;
- 		opt.output = append_path;
- 		string_list_append(&path_list, show_in_pager);
--		use_threads = 0;
-+		num_threads = 0;
- 	}
- 
- 	if (!opt.pattern_list)
-@@ -832,14 +849,21 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	}
- 
- #ifndef NO_PTHREADS
--	if (list.nr || cached || online_cpus() == 1)
--		use_threads = 0;
-+	if (list.nr || cached) {
-+		num_threads = 0; /* Can not multi-thread object lookup */
-+	}
-+	else if (num_threads < 0 && online_cpus() <= 1) {
-+		num_threads = 0; /* User didn't set threading option and we have <= 1 of hardware cores */
-+	}
-+	else if (num_threads < 0) {
-+		num_threads = GREP_NUM_THREADS_DEFAULT;
-+	}
- #else
--	use_threads = 0;
-+	num_threads = 0;
- #endif
- 
- #ifndef NO_PTHREADS
--	if (use_threads) {
-+	if (num_threads) {
- 		if (!(opt.name_only || opt.unmatch_name_only || opt.count)
- 		    && (opt.pre_context || opt.post_context ||
- 			opt.file_break || opt.funcbody))
-@@ -909,7 +933,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		hit = grep_objects(&opt, &pathspec, &list);
- 	}
- 
--	if (use_threads)
-+	if (num_threads)
- 		hit |= wait_all();
- 	if (hit && show_in_pager)
- 		run_pager(&opt, prefix);
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 482ca84..390d9c0 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1310,6 +1310,7 @@ _git_grep ()
- 			--full-name --line-number
- 			--extended-regexp --basic-regexp --fixed-strings
- 			--perl-regexp
-+			--threads
- 			--files-with-matches --name-only
- 			--files-without-match
- 			--max-depth
+ sub changed_files
 -- 
-2.6.2.308.g3b8f10c.dirty
+2.6.2.282.gfefd36e
