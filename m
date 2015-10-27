@@ -1,96 +1,62 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v3] Add git-grep threads param
-Date: Tue, 27 Oct 2015 11:52:56 +0000
-Message-ID: <20151027115256.GQ19802@serenity.lan>
-References: <1445862733-838-1-git-send-email-vleschuk@accesssoftek.com>
- <20151026193241.GO19802@serenity.lan>
- <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9FC@mail.accesssoftek.com>
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
+Subject: Re: Why are submodules not automatically handled by default or at
+ least configurable to do so?
+Date: Tue, 27 Oct 2015 15:16:37 +0300
+Message-ID: <20151027151637.d3ed7f0dd8c72c78d373c520@domain007.com>
+References: <D4E5E890658.000004DCjohsmi9933@inbox.com>
+	<562F5704.5070405@letterboxes.org>
+	<EC0D15E1-82B3-4A4C-96DE-8922AB870E2B@gmail.com>
+	<562F629F.7040206@letterboxes.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Victor Leschuk <vleschuk@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Victor Leschuk <vleschuk@accesssoftek.com>
-X-From: git-owner@vger.kernel.org Tue Oct 27 12:53:21 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Davide Fiorentino <davide.fiorentino@gmail.com>,
+	John Smith <johsmi9933@inbox.com>, git@vger.kernel.org
+To: Nick <oinksocket@letterboxes.org>
+X-From: git-owner@vger.kernel.org Tue Oct 27 13:16:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zr2oW-0002Ht-EI
-	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 12:53:16 +0100
+	id 1Zr3BO-0003I5-8j
+	for gcvg-git-2@plane.gmane.org; Tue, 27 Oct 2015 13:16:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754160AbbJ0LxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 07:53:12 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:53495 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752322AbbJ0LxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 07:53:12 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 6168986601E;
-	Tue, 27 Oct 2015 11:53:11 +0000 (GMT)
-X-Quarantine-ID: <6+g6Td+XoWOQ>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 6+g6Td+XoWOQ; Tue, 27 Oct 2015 11:53:10 +0000 (GMT)
-Received: from serenity.lan (griffin.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 536C7CDA638;
-	Tue, 27 Oct 2015 11:52:58 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDAB9FC@mail.accesssoftek.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	id S932072AbbJ0MQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 08:16:50 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:60213 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753202AbbJ0MQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 08:16:49 -0400
+Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id t9RCGbPq017942;
+	Tue, 27 Oct 2015 15:16:38 +0300
+In-Reply-To: <562F629F.7040206@letterboxes.org>
+X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280262>
 
-On Mon, Oct 26, 2015 at 10:25:41PM -0700, Victor Leschuk wrote:
-> >> @@ -22,6 +22,7 @@ SYNOPSIS
-> >>          [--color[=<when>] | --no-color]
-> >>          [--break] [--heading] [-p | --show-function]
-> >>          [-A <post-context>] [-B <pre-context>] [-C <context>]
-> >> +        [--threads <num>]
-> 
-> > Is this the best place for this option?  I know the current list isn't
-> > sorted in any particular way, but here you're splitting up the set of
-> > context options (`-A`, `-B`, `-C` and `-W`).
-> 
-> Agree, I'll move the option both here and in documentation.
-> 
-> >> -static int wait_all(void)
-> >> +static int wait_all(struct grep_opt *opt)
-> 
-> > I'm not sure passing a grep_opt in here is the cleanest way to do this.
-> > Options are a UI concept and all we care about here is the number of
-> > threads.
-> 
-> > Since `threads` is a global, shouldn't the number of threads be a global
-> > as well?  Could we reuse `use_threads` here (possibly renaming it
-> > `num_threads`)?
-> 
-> This thought also crossed my mind, however we already pass grep_opt to
-> start_threads() function, so I think passing it to wait_all() is not
-> that ugly, and kind of symmetric. And I do not like the idea of
-> duplicating same information in different places. What do you think?
+On Tue, 27 Oct 2015 11:40:15 +0000
+Nick <oinksocket@letterboxes.org> wrote:
 
-The grep_opt in start_threads() is being passed through to run(), so it
-seems slightly different to me.  If the threads were being setup in
-grep.c (as opposed to builtin/grep.c) then I'd agree that it belongs in
-grep_opt, but since this is local to this particular user of the grep
-infrastructure adding num_threads to the grep_opt structure at all feels
-wrong to me.
+> > Why not set alias(es) for that?
+[...]
+> But oh yes, there is another difficulty with aliases.  Eclipse users
+> on Windows:
+[...]
 
-Note that I wasn't suggesting passing num_threads as a parameter to
-wait_all(), but rather having it as global state that is accessed by
-wait_all() in the same way as the `threads` array.
+Not to counter your actual argument, but AFAIK EGit uses JGit which is
+a Java implementation which does not call out to the "real" Git binary.
+This basically means that if something gets implemented in the stock
+Git, this won't affect JGit and EGit untill their respective
+maintainers implement the same feature.
 
-If we rename use_threads to num_threads and just use that, then we only
-have the information in one place don't we?
+> they don't tend to love it if you tell them to install
+> Cygwin, open a shell and type things into it.
+
+On Windows, you typically want them to use Git for Windows, not
+Cygwin.  Various GUI front-ends to Git working on Windows (such as Git
+Extentions and TortoiseGit) rely on GfW to work as well.
