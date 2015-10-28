@@ -1,78 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git repack command on larger pack file
-Date: Tue, 27 Oct 2015 23:47:17 -0700
-Message-ID: <xmqqh9lbmqve.fsf@gitster.mtv.corp.google.com>
-References: <loom.20151026T065553-934@post.gmane.org>
-	<xmqq611ujfn0.fsf@gitster.mtv.corp.google.com>
-	<xmqqziz6hzom.fsf@gitster.mtv.corp.google.com>
-	<loom.20151027T025257-333@post.gmane.org>
-	<20151027234406.GB4172@sigill.intra.peff.net>
-	<xmqqlhanmrz7.fsf@gitster.mtv.corp.google.com>
+From: Lukas Fleischer <lfleischer@lfos.de>
+Subject: Re: [PATCH/RFC] receive-pack: allow for hiding refs outside the namespace
+Date: Wed, 28 Oct 2015 08:00:45 +0100
+Message-ID: <20151028070045.5031.43810@s-8d3a2f8b.on.site.uni-stuttgart.de>
+References: <1445846999-8627-1-git-send-email-lfleischer@lfos.de>
+ <xmqqk2q9h05h.fsf@gitster.mtv.corp.google.com>
+ <20151027053916.3030.8259@typhoon.lan>
+ <20151027055911.4877.94179@typhoon.lan>
+ <20151027143207.18755.82151@s-8d3a2f8b.on.site.uni-stuttgart.de>
+ <xmqqfv0wcgzx.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Sivakumar Selvam <gerritcode@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 28 07:47:28 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 08:00:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrKW4-0004CW-Ii
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 07:47:24 +0100
+	id 1ZrKjC-00082Q-SQ
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 08:00:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755444AbbJ1GrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 02:47:20 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56607 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754774AbbJ1GrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2015 02:47:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EEBDC1A9B6;
-	Wed, 28 Oct 2015 02:47:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kfHXkvRXwxmRrj4jBqdSa7+li3I=; b=KR5D4g
-	Jk9FNoARaDsgJ4YuCtA7tPNgAxOoRp/82nqEzmCOz97lAHAWrMjNsPclO+EyQKVd
-	YkiNkz2VmGzHC4DYBDzlE4nQHg82hvJF/rYx9nEijQt//UtbSPNkmPXBkTVKlVCf
-	s9rDWmrKGpVYM/nIM5/D/SpFL2sFqhDcGUYfY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rKt/D2jQLoiFoTYMiBmv/cm/rhI0xQPG
-	qczzcuFEvNbhq8Z4/kAN07+Qlg3cNBWlSV16dVbCphnkmfy/NrrazZQZhrO1ot37
-	FBrtoBm0j+dImSrxKTeWhMsxblt1D3Sl6+UgB4mEl8PEtOxgwbOdpchqDNGOrE0h
-	n04fjYVEmoc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E6AC71A9B5;
-	Wed, 28 Oct 2015 02:47:18 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6FB521A9B4;
-	Wed, 28 Oct 2015 02:47:18 -0400 (EDT)
-In-Reply-To: <xmqqlhanmrz7.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 27 Oct 2015 23:23:24 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BB5FCA1C-7D3F-11E5-88A7-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755512AbbJ1HAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 03:00:49 -0400
+Received: from elnino.cryptocrack.de ([46.165.227.75]:12941 "EHLO
+	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755122AbbJ1HAs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Oct 2015 03:00:48 -0400
+Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 8a1780d2;
+	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
+	Wed, 28 Oct 2015 08:00:47 +0100 (CET)
+In-Reply-To: <xmqqfv0wcgzx.fsf@gitster.mtv.corp.google.com>
+User-Agent: alot/0.3.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280355>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, 27 Oct 2015 at 19:18:26, Junio C Hamano wrote:
+> [...]
+> When I asked 'Is transfer.hiderefs insufficient?', I wasn't
+> expecting it to be usable out of box.  It was a suggestion to build
+> on top of it, instead of adding a parallel support for something
+> specific to namespaces.
+> 
 
->> [1] This is all theory, and I don't know how well git actually finds
->>     such deltas, but it is probably better to have a dense tree of
->>     deltas rather than long chains.  If you have a chain of N objects
->>     and would to add object N+1 to it, you are probably not much worse
->>     off to base it on object N-1, creating a "fork" at N.
->
-> Yes, your guess is perfectly correct here, and indeed we did an
-> extensive work along that line in 2006/2007.  For an example, see
-> http://thread.gmane.org/gmane.comp.version-control.git/51949/focus=52003
+Agreed, and I do have a couple of patches to improve hideRefs. I still
+have some questions before submitting them, though. See below.
 
-And here is another, which is probably one of the most important
-thread on pack-objects, before the bitmap was introduced:
+> For example, if the problem is that you cannot tell ref_is_hidden()
+> what namespace the ref is from because it is called after running
+> strip_namespace(), perhaps you can find a way to have the original
+> "namespaced ref" specified on transfer.hiderefs and match them?
+> Then in repository for project A, namespaced refs for project B can
+> be excluded by specifying refs/namespaces/B/* on transfer.hiderefs.
+> 
+> Perhaps along the lines of this?
+> [...]
 
-http://thread.gmane.org/gmane.comp.version-control.git/20056/focus=20134
+My original question remains: Do we want to continue supporting things
+like transfer.hideRefs=.have (which currently magically hides all refs
+outside the current namespace)? For 100% backwards compatibility, we
+would have to. On the other hand, one could consider the current
+behavior a bug and one could argue that it is weird enough that probably
+nobody (apart from me) relies on it right now. If we decide to keep it
+anyway, I think it should be documented.
+
+Another patch I have in my patch queue adds support for a whitelist mode
+to hideRefs. There are several ways to implement that:
+
+1. Make transfer.hideRefs='' hide all refs (it currently does not). The
+   user can then whitelist refs explicitly using negative patterns
+   below that rule. This is how my current implementation works. Using
+   the empty string seemed most natural since hideRefs matches prefixes
+   and every string has the empty string as a prefix. If that seems too
+   weird, we could probably special case something like
+   transfer.hideRefs='*' instead.
+
+2. Detect whether hideRefs only contains negative patterns. Switch to
+   whitelist mode ("hide by default") in that case.
+
+3. Add another option to switch between "hide by default" and "show by
+   default".
+
+I personally prefer the first option. Any other opinions?
