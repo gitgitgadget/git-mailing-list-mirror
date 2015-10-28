@@ -1,98 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] http: allow selection of proxy authentication method
-Date: Wed, 28 Oct 2015 09:59:48 -0700
-Message-ID: <xmqqoafjkjy3.fsf@gitster.mtv.corp.google.com>
-References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
-	<1446025245-10128-1-git-send-email-k.franke@science-computing.de>
-	<1446025245-10128-2-git-send-email-k.franke@science-computing.de>
-	<xmqqsi4vkkcf.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v4 0/2] Fix interactive rebase when the editor saves with CR/LF
+Date: Wed, 28 Oct 2015 10:12:00 -0700
+Message-ID: <xmqqk2q6lxy7.fsf@gitster.mtv.corp.google.com>
+References: <cover.1445939154.git.johannes.schindelin@gmx.de>
+	<cover.1446043983.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Knut Franke <k.franke@science-computing.de>
-X-From: git-owner@vger.kernel.org Wed Oct 28 17:59:59 2015
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Chad Boles <chadbo@microsoft.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Philip Oakley <philipoakley@iee.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 28 18:12:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrU4q-0002D2-Kb
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 17:59:56 +0100
+	id 1ZrUGf-0004Ox-BW
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 18:12:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022AbbJ1Q7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 12:59:52 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59819 "EHLO
+	id S1752803AbbJ1RME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 13:12:04 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65428 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751159AbbJ1Q7v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2015 12:59:51 -0400
+	with ESMTP id S1751240AbbJ1RMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2015 13:12:03 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 789CA23C19;
-	Wed, 28 Oct 2015 12:59:50 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B266823FC6;
+	Wed, 28 Oct 2015 13:12:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KShflpTXfxmrOlyOD4xch+7xA1Y=; b=sVHr88
-	3URMgbxnSYliCWANBonEO7IYNn7Rasnd2kx9OqCtNhu+Vf2t7SnZ7hP6+XWbYsJ3
-	gyKeoKqXeJLMdzBTB70lMkkULwJsU4HlTLfq0U+XZPUqwQdhaA8PMutb5Z2uP9ya
-	bnd729EL4kw2gS8e+nFtvPtZC94y+/N8JkEtk=
+	:content-type; s=sasl; bh=4Vyw0eHmfip9iHso2IVuIts0XZ8=; b=UeiZlS
+	v9Qjof67f1Au3l8Ot7JOk5c0OEiPTJKJzw5WmYaIs0dLLqCMo8EB8nJqpv87pp2C
+	xE7pIAj6qk9MJtHwm/mq/tdcihoTd6KnMJxs4XtG/Q/wRpb4ZI0zARXlnlLbBHtR
+	wdP4yQ8xCiHCwC1ymLP8VN6pgrbJ6bSLXQi+U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kW0vnhxV0E6Wg2wrQDPtPr/eQ91ekwrl
-	POAjRmrP7zNXgXDGkUjX6n7sTB8jklnnO/4sjvtX0gb+fZ6LEuurKwue9ENbuzAp
-	5b0uL2RaDU4RnMaDDHA+iMaiOylSN9/s75cep5navMG1G/QSHLgkokJZDwfq4p+q
-	27o9dEEnw0c=
+	:content-type; q=dns; s=sasl; b=DjnKJphA8N6rSB4jAb3lSjN+JvgIa4n9
+	eeJ75icFNl4iMQNIr6LBse0yYaYR4ntGuG28ndAWZPPISpQzvwGOIsNZNoFB9Xeb
+	Z63+XhaOP3GAzHfGx+v/JPvKz6hyNCCMfvJsZpum2A4a4z5wTcjir1SefdMluSWU
+	pL10pl5oibg=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 70A6E23C18;
-	Wed, 28 Oct 2015 12:59:50 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AAEA123FC5;
+	Wed, 28 Oct 2015 13:12:02 -0400 (EDT)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EF7EA23C17;
-	Wed, 28 Oct 2015 12:59:49 -0400 (EDT)
-In-Reply-To: <xmqqsi4vkkcf.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 28 Oct 2015 09:51:12 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 10C6423FC3;
+	Wed, 28 Oct 2015 13:12:02 -0400 (EDT)
+In-Reply-To: <cover.1446043983.git.johannes.schindelin@gmx.de> (Johannes
+	Schindelin's message of "Wed, 28 Oct 2015 15:54:14 +0100 (CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4CFD9328-7D95-11E5-907D-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 0163809C-7D97-11E5-B5D0-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280378>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
->> +static void copy_from_env(const char **var, const char *envname)
->> +{
->> +	const char *val = getenv(envname);
->> +	if (val)
->> +		*var = xstrdup(val);
->> +}
->> +
->> +static void init_curl_proxy_auth(CURL *result)
->> +{
->> +	copy_from_env(&http_proxy_authmethod, "GIT_HTTP_PROXY_AUTHMETHOD");
->
-> Unless this helper is used regularly from many other places, is use
-> makes it harder to follow the flow of the logic, as it does not
-> offer clear and obvious abstraction, especially with the name
-> "copy_from_env()".  I was forced to look at the implementation to
-> see what happens when the environment variable does not exist to
-> make sure the right thing happens (i.e. http_proxy_authmethod is
-> unchanged).
+> Turns out that we now check whether a single Carriage Return is a valid
+> command. This new check was introduced recently (1db168ee9, ironically
+> named "rebase-i: loosen over-eager check_bad_cmd check").
 
-I see you use this liberally in 2/2, it is a handy helper to have,
-and I do _not_ think it is a good idea to open-code this in 1/2 and
-turn it into a helper in 2/2.  IOW, I am OK with this "one helper
-with a single caller introduced and used in 1/2".  I primarily was
-wishing that its name more clearly conveyed that it sets the
-variable from the environment _only if_ the environment variable
-exists, and otherwise it does not clobber.
+Will queue.
 
-The implementation of the helper seems to assume that the variable
-must not be pointing at a free-able piece of memory when it is
-called (that is why *var is assigned to without freeing the old
-value).  That's another subtle thing the callers need to be aware of
-(i.e. deserves at least a comment in front of the function, but as
-always a good name that clearly conveys it would be more
-preferrable, if we can find one).
+The root cause is not really "a new check added recently".  Earlier
+the edited result was fed to stripspace and because "stripspace"
+does what a dos-to-unix filter that turns CRLF into LF in addition
+to cleaning up spaces and comments, we did not see the problematic
+behaviour from "read" in this codepath.
 
 Thanks.
