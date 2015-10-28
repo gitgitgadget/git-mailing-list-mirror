@@ -1,92 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] prepare_packed_git(): refactor garbage reporting in pack directory
-Date: Wed, 28 Oct 2015 10:48:13 -0700
-Message-ID: <xmqqbnbilw9u.fsf@gitster.mtv.corp.google.com>
-References: <xmqqwpx6wx74.fsf@gitster.dls.corp.google.com>
-	<1439488973-11522-1-git-send-email-dougk.ff7@gmail.com>
-	<CAPig+cS0ntr1sYzVAPjNCwd8ei4oGQRNs+W=qMBV4Z6NaRWCWA@mail.gmail.com>
-	<xmqq37zhg8la.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2 2/2] object name: introduce '^{/!-<negative pattern>}' notation
+Date: Wed, 28 Oct 2015 10:52:14 -0700
+Message-ID: <xmqq7fm6lw35.fsf@gitster.mtv.corp.google.com>
+References: <1433550295-15098-1-git-send-email-wmpalmer@gmail.com>
+	<1433550295-15098-3-git-send-email-wmpalmer@gmail.com>
+	<xmqqbngqcfxd.fsf@gitster.dls.corp.google.com>
+	<CAAKF_ub5c+2vVmG161O6gnUUeEcNfDUMU=mtn+k0T8bC-9ZHPw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Doug Kelly <dougk.ff7@gmail.com>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Oct 28 18:48:20 2015
+Cc: git@vger.kernel.org
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 18:52:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrUpf-0001u6-QL
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 18:48:20 +0100
+	id 1ZrUta-0005IW-CK
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 18:52:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755486AbbJ1RsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 13:48:16 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62308 "EHLO
+	id S1755585AbbJ1RwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 13:52:18 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53324 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755391AbbJ1RsP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2015 13:48:15 -0400
+	with ESMTP id S1755117AbbJ1RwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2015 13:52:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D6FD223152;
-	Wed, 28 Oct 2015 13:48:14 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 12BE723362;
+	Wed, 28 Oct 2015 13:52:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZVKZXtrOHiC86i6Ks99rvGH3tE4=; b=rsMnXO
-	Mk3hCRIqWvsEI/8dcDmI04XRR0anLlU7IH/fsOU76Itzd6rtEq1Un6oDn2kVFZX/
-	6LzjniioFvBy7aehdFPSoUI2R3OuFS9kBmXv2KfqquOWGVj27k6mw2C1lS2/dCE2
-	x98T3VQ2VfB6rJVtBmiKOrkE87jjcx4O/0oDo=
+	:content-type; s=sasl; bh=gPXiV86H356cEz34bUUJJdQrFyw=; b=RFyi/D
+	AmxUUetOOlXPLclNo7j3K9kUkNv/HeaXRF+8FyGN2nn3SY1l2j1/E8MPD3eXDxMS
+	qK5qlp7XHwreEt0EHrbN3KI5pAD8YJBMnc3NN5WpzUYZAIM+HCoV8Z/ZqCcRgIqS
+	1/ybNYTNS/8ji4W4QayBmJdYD9TQa6VMdCYXk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vNqG0J6ugd951HOEZdcP5//pzGxB0NBo
-	LjaFFDNbxwXYlXm4YYfbX6pbG3W18RSKhyttSVUjTb+U3ZBDqW9i75HZjK+fYJv1
-	uWtbkupOPd2Fa25CxnrVmbvE5NONNzKh8owBBCX6g1ElWsdUFsIeYNyFCEMK/Ul0
-	upru1CiMsrM=
+	:content-type; q=dns; s=sasl; b=AAX3xHbS9S1HRSEUlDeOX1lOwqh8KXRF
+	x+2xoOCfvXJN558RsZgXOvLCB/SvXycGINdRnhNKA+uGJt398MJCaa4t8ettEtKN
+	8K2hHoPnkfOC+Uu/U1La0qDbUE5Dp40q0ryKrCgz2e2Jdgl5pidC16kXdzDnTyeb
+	hoM7hzveVFg=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CD28923150;
-	Wed, 28 Oct 2015 13:48:14 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0898423360;
+	Wed, 28 Oct 2015 13:52:17 -0400 (EDT)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 51EFE2314D;
-	Wed, 28 Oct 2015 13:48:14 -0400 (EDT)
-In-Reply-To: <xmqq37zhg8la.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 17 Aug 2015 09:53:21 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 084CD2335E;
+	Wed, 28 Oct 2015 13:52:15 -0400 (EDT)
+In-Reply-To: <CAAKF_ub5c+2vVmG161O6gnUUeEcNfDUMU=mtn+k0T8bC-9ZHPw@mail.gmail.com>
+	(Will Palmer's message of "Tue, 9 Jun 2015 19:14:23 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 101F6916-7D9C-11E5-9B54-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: A02F11D2-7D9C-11E5-BE06-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280386>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Will Palmer <wmpalmer@gmail.com> writes:
 
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->>> -static void real_report_garbage(const char *desc, const char *path)
->>> +const char *bits_to_msg(unsigned seen_bits)
->>
->> If you don't expect other callers outside this file, then this should
->> be declared 'static'. If you do expect future external callers, then
->> this should be declared in a public header file (but renamed to be
->> more meaningful).
->
-> I think this can be private to this file.  The sole point of moving
-> this logic to this file is to make it private, after all ;-)  Thanks
-> for sharp eyes.
->
-> Together with the need for a description on "why", this probably
-> deserves a test or two, probably at the end of t5304.
->
-> Thanks.
+> In summary: it looks like I'll be sending another one.
 
-Does somebody want to help tying the final loose ends on this topic?
-It has been listed in the [Stalled] section for too long, I _think_
-what it attempts to do is a worthy thing, and it is shame to see the
-initial implementation and review cycles we have spent so far go to
-waste.
+Has anything happened to this topic since then?  I am asking
+primarily because I want to decide if I should discard
+wp/sha1-name-negative-match topic from my tree [*1*].
 
-If I find nothing else to do before any taker appears, I could
-volunteer myself, but thought I should ask first.
+I think what it attempts to do is a worthy thing, and it is shame to
+see the initial implementation and review cycles we have spent so
+far go to waste.
 
-Thanks.
+
+[Footnote]
+
+*1* Not that my dropping a topic from 'pu' means very much; a
+    dropped topic can still be submitted and requeued after all.
