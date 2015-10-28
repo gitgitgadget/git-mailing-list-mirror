@@ -1,199 +1,56 @@
 From: Knut Franke <k.franke@science-computing.de>
-Subject: [PATCH 2/2] http: use credential API to handle proxy authentication
-Date: Wed, 28 Oct 2015 10:40:45 +0100
-Message-ID: <1446025245-10128-3-git-send-email-k.franke@science-computing.de>
+Subject: [PATCH v2] http proxy authentication improvements
+Date: Wed, 28 Oct 2015 10:40:43 +0100
+Message-ID: <1446025245-10128-1-git-send-email-k.franke@science-computing.de>
 References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
- <1446025245-10128-1-git-send-email-k.franke@science-computing.de>
-Cc: Knut Franke <k.franke@science-computing.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 28 10:51:38 2015
+X-From: git-owner@vger.kernel.org Wed Oct 28 10:54:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrNOC-000259-U9
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 10:51:29 +0100
+	id 1ZrNRM-0004ZK-Oy
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 10:54:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965264AbbJ1JvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 05:51:24 -0400
-Received: from mx3.science-computing.de ([193.197.16.20]:33943 "EHLO
-	mx3.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755650AbbJ1JvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2015 05:51:23 -0400
+	id S1755699AbbJ1Jyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 05:54:41 -0400
+Received: from mx4.science-computing.de ([193.197.16.30]:56070 "EHLO
+	mx4.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755597AbbJ1Jyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2015 05:54:40 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by scmail.science-computing.de (Postfix) with ESMTP id 7B15B486F;
-	Wed, 28 Oct 2015 10:41:07 +0100 (CET)
+	by scmail.science-computing.de (Postfix) with ESMTP id 299603BC7
+	for <git@vger.kernel.org>; Wed, 28 Oct 2015 10:41:07 +0100 (CET)
 X-Virus-Scanned: amavisd-new
 Received: from scmail.science-computing.de ([127.0.0.1])
-	by localhost (guiness.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id d6HWf1PhE8vM; Wed, 28 Oct 2015 10:41:06 +0100 (CET)
-Received: from hallasan.science-computing.de (hallasan.science-computing.de [10.10.24.76])
-	by scmail.science-computing.de (Postfix) with ESMTP id B3FDC42A0;
+	by localhost (obi.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id pNYd2dz9QJby for <git@vger.kernel.org>;
 	Wed, 28 Oct 2015 10:41:06 +0100 (CET)
+Received: from hallasan.science-computing.de (hallasan.science-computing.de [10.10.24.76])
+	by scmail.science-computing.de (Postfix) with ESMTP id AAE46883
+	for <git@vger.kernel.org>; Wed, 28 Oct 2015 10:41:06 +0100 (CET)
 Received: by hallasan.science-computing.de (Postfix, from userid 1633)
-	id A03D4A757D; Wed, 28 Oct 2015 10:41:06 +0100 (CET)
+	id 8FA5AA79C2; Wed, 28 Oct 2015 10:41:06 +0100 (CET)
 X-Mailer: git-send-email 2.3.7
-In-Reply-To: <1446025245-10128-1-git-send-email-k.franke@science-computing.de>
+In-Reply-To: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280359>
 
-Currently, the only way to pass proxy credentials to curl is by including them
-in the proxy URL. Usually, this means they will end up on disk unencrypted, one
-way or another (by inclusion in ~/.gitconfig, shell profile or history). Since
-proxy authentication often uses a domain user, credentials can be security
-sensitive; therefore, a safer way of passing credentials is desirable.
+Fixes in the second iteration:
 
-If the configured proxy contains a username but not a password, query the
-credential API for one. Also, make sure we approve/reject proxy credentials
-properly.
+* rename http.proxy-authmethod to http.proxyAuthmethod for consistency with
+  other core git variables
 
-For consistency reasons, add parsing of http_proxy/https_proxy/all_proxy
-environment variables, which would otherwise be evaluated as a fallback by curl.
-Without this, we would have different semantics for git configuration and
-environment variables.
+* issue warning() instead of error() for unsupported authentication method, for
+  consistency with http.sslVersion
 
-Signed-off-by: Knut Franke <k.franke@science-computing.de>
----
- http.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- http.h |  1 +
- 2 files changed, 63 insertions(+), 1 deletion(-)
-
-diff --git a/http.c b/http.c
-index 4756bab..11bebe1 100644
---- a/http.c
-+++ b/http.c
-@@ -79,6 +79,7 @@ static struct {
- 	// curl(1) and is not included in CURLAUTH_ANY, so we leave it out
- 	// here, too
- };
-+struct credential http_proxy_auth = CREDENTIAL_INIT;
- static const char *curl_cookie_file;
- static int curl_save_cookies;
- struct credential http_auth = CREDENTIAL_INIT;
-@@ -176,6 +177,9 @@ static void finish_active_slot(struct active_request_slot *slot)
- #else
- 		slot->results->auth_avail = 0;
- #endif
-+
-+		curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CONNECTCODE,
-+			&slot->results->http_connectcode);
- 	}
- 
- 	/* Run callback if appropriate */
-@@ -333,6 +337,25 @@ static void copy_from_env(const char **var, const char *envname)
- 
- static void init_curl_proxy_auth(CURL *result)
- {
-+	if (http_proxy_auth.username) {
-+		if (!http_proxy_auth.password) {
-+			credential_fill(&http_proxy_auth);
-+		}
-+#if LIBCURL_VERSION_NUM >= 0x071301
-+		curl_easy_setopt(result, CURLOPT_PROXYUSERNAME,
-+			http_proxy_auth.username);
-+		curl_easy_setopt(result, CURLOPT_PROXYPASSWORD,
-+			http_proxy_auth.password);
-+#else
-+		struct strbuf up = STRBUF_INIT;
-+		strbuf_reset(&up);
-+		strbuf_addstr_urlencode(&up, http_proxy_auth.username, 1);
-+		strbuf_addch(&up, ':');
-+		strbuf_addstr_urlencode(&up, http_proxy_auth.password, 1);
-+		curl_easy_setopt(result, CURLOPT_PROXYUSERPWD, up.buf);
-+#endif
-+	}
-+
- 	copy_from_env(&http_proxy_authmethod, "GIT_HTTP_PROXY_AUTHMETHOD");
- 
- 	if (http_proxy_authmethod) {
-@@ -513,8 +536,36 @@ static CURL *get_curl_handle(void)
- 		curl_easy_setopt(result, CURLOPT_USE_SSL, CURLUSESSL_TRY);
- #endif
- 
-+	/*
-+	 * curl also examines these variables as a fallback; but we need to query
-+	 * them here in order to decide whether to prompt for missing password (cf.
-+	 * init_curl_proxy_auth()).
-+	 */
-+	if (!curl_http_proxy) {
-+		if (!strcmp(http_auth.protocol, "https")) {
-+			copy_from_env(&curl_http_proxy, "HTTPS_PROXY");
-+			copy_from_env(&curl_http_proxy, "https_proxy");
-+		} else {
-+			copy_from_env(&curl_http_proxy, "http_proxy");
-+		}
-+		if (!curl_http_proxy) {
-+			copy_from_env(&curl_http_proxy, "ALL_PROXY");
-+			copy_from_env(&curl_http_proxy, "all_proxy");
-+		}
-+	}
-+
- 	if (curl_http_proxy) {
--		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
-+		if (strstr(curl_http_proxy, "://"))
-+			credential_from_url(&http_proxy_auth, curl_http_proxy);
-+		else {
-+			struct strbuf url = STRBUF_INIT;
-+			strbuf_reset(&url);
-+			strbuf_addstr(&url, "http://");
-+			strbuf_addstr(&url, curl_http_proxy);
-+			credential_from_url(&http_proxy_auth, url.buf);
-+		}
-+
-+		curl_easy_setopt(result, CURLOPT_PROXY, http_proxy_auth.host);
- 	}
- 	init_curl_proxy_auth(result);
- 
-@@ -658,6 +709,12 @@ void http_cleanup(void)
- 		curl_http_proxy = NULL;
- 	}
- 
-+	if (http_proxy_auth.password) {
-+		memset(http_proxy_auth.password, 0, strlen(http_proxy_auth.password));
-+		free(http_proxy_auth.password);
-+		http_proxy_auth.password = NULL;
-+	}
-+
- 	if (http_proxy_authmethod) {
- 		free((void *)http_proxy_authmethod);
- 		http_proxy_authmethod = NULL;
-@@ -991,6 +1048,8 @@ static int handle_curl_result(struct slot_results *results)
- 
- 	if (results->curl_result == CURLE_OK) {
- 		credential_approve(&http_auth);
-+		if (http_proxy_auth.password)
-+			credential_approve(&http_proxy_auth);
- 		return HTTP_OK;
- 	} else if (missing_target(results))
- 		return HTTP_MISSING_TARGET;
-@@ -1005,6 +1064,8 @@ static int handle_curl_result(struct slot_results *results)
- 			return HTTP_REAUTH;
- 		}
- 	} else {
-+		if (results->http_connectcode == 407)
-+			credential_reject(&http_proxy_auth);
- #if LIBCURL_VERSION_NUM >= 0x070c00
- 		if (!curl_errorstr[0])
- 			strlcpy(curl_errorstr,
-diff --git a/http.h b/http.h
-index 49afe39..7352a9e 100644
---- a/http.h
-+++ b/http.h
-@@ -54,6 +54,7 @@ struct slot_results {
- 	CURLcode curl_result;
- 	long http_code;
- 	long auth_avail;
-+	long http_connectcode;
- };
- 
- struct active_request_slot {
--- 
-2.3.7
-
+* fix some code formatting / style issues
+    
+* fix memory management bug
 -- 
 Vorstandsvorsitzender/Chairman of the board of management:
 Gerd-Lothar Leonhart
