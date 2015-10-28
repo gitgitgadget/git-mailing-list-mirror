@@ -1,516 +1,321 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v5 09/26] refs.c: move dwim and friend functions to the common refs code
-Date: Tue, 27 Oct 2015 22:14:10 -0400
-Message-ID: <1445998467-11511-10-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v5 13/26] refs.c: move check_refname_format to the common code
+Date: Tue, 27 Oct 2015 22:14:14 -0400
+Message-ID: <1445998467-11511-14-git-send-email-dturner@twopensource.com>
 References: <1445998467-11511-1-git-send-email-dturner@twopensource.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>,
 	David Turner <dturner@twopensource.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Wed Oct 28 03:15:07 2015
+X-From: git-owner@vger.kernel.org Wed Oct 28 03:15:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrGGX-00011F-4e
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 03:15:05 +0100
+	id 1ZrGGd-00017v-Jc
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 03:15:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755236AbbJ1CO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 22:14:58 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:33279 "EHLO
+	id S1755246AbbJ1CPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 22:15:05 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:34877 "EHLO
 	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755207AbbJ1CO4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 22:14:56 -0400
-Received: by igbkq10 with SMTP id kq10so108252990igb.0
-        for <git@vger.kernel.org>; Tue, 27 Oct 2015 19:14:55 -0700 (PDT)
+	with ESMTP id S1755241AbbJ1CPD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 22:15:03 -0400
+Received: by igbkq10 with SMTP id kq10so96958248igb.0
+        for <git@vger.kernel.org>; Tue, 27 Oct 2015 19:15:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource_com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZBAcIBQFH+gpDOzK8TaA3ViV19aqncPDvm1mvbRRMfE=;
-        b=HiYA0gFxl0sAhLg1fETmiGLK3jYJt0nreJGQRiuVwgh2cl8vVgKc7QuQer89d2QzOt
-         JNPMEd4Y0211+/DNLlcxYd9uBIaOToVgf1cKbTrMkD5O4EvHR8feL27fX6DopttbfT+z
-         dc89fE7iCK1exbv1rOQv+wIhz3y4XqDUx5Gg1QSp6TTBB+aDMbqABum/+Pe988bC7tUV
-         l8Eo9/A+hN4pP8Pr4+Ljm7uwNtaHNttM5xpwLIGk948CdNsvqH/Cg2EOdmUqNBgqzX75
-         bqNGmxMWqWD29I3VUmc6DWFfnz4Cwye2+NIBGOqBkTxsfrV+MjCuw876WCwQWKEwvrTJ
-         Hlzg==
+        bh=PlaIgEh0JDx4dGj51ejcYEHq6K17BOHPfs9I9zzzX44=;
+        b=tqxG/cpT9DsUle1Y/eYIQjSuHfuulhLzoCZW3aHQz67A+N/37BYmjsbSLpRveSWLzL
+         bKzTUXq8FJvgSzlry7wNXE+0pUXUFIqvXSzpPP1ZJbgeDIZv3Av8rUnkXIE50UrMrr5N
+         J/QuDmK+surPrRLY3iGTNfI8KzFlU4aIXxn476k52zAhtJyot2yVUvldhLeGqCJsOa8g
+         DPVSFt+6UvsxTtWlmT00v6CK0L4sJtipIfN1BA1pI4XAQrOiZt7tLKJTPa8XNeCSmXDs
+         WjU9mcW8Wn2JUHDH3vsz3AhjW4ogbyenEnucaR5QWyN2C3e+1hdJMlaxLYgxY9LkO8wV
+         XpbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ZBAcIBQFH+gpDOzK8TaA3ViV19aqncPDvm1mvbRRMfE=;
-        b=ETogYUFpxLAiyHW0OXPvioDE/qkZuXKk0SysrNzNpcUjyt7yyNFvZnO/j991qzoD4U
-         311+gmKgaBf5C/CfmAdGMqwkjp6T6oLJWxe25wo6RPnYrDP6vJZDVwmwQ1wzLup+jjvM
-         F8ZO2yRHwteSEO1U91/zC+sEN++tK09TlIzh5CWmvB1tvWD4+GqZT/i9DMFe1mziC6zx
-         +IIFOmsDLGAgfJkuWKJUm/+9ff1ykXY7f2EQAhJ3dAA8md6x69NrNRS2bul7cuBaWELq
-         4nbNMDgsAn1R7t/pHTJvgU63D/TABdrDe2G+PyqJfr3VibAEd18+kPGIZldMhmEdlW6T
-         MrvQ==
-X-Gm-Message-State: ALoCoQkbSf7NHw/JwVoNvqM44MTOSYlksRwoHk/HVQ7ApiTB/3aGNeqnZZmgsO+RHbvCyr8noTIy
-X-Received: by 10.50.61.145 with SMTP id p17mr342108igr.68.1445998495837;
-        Tue, 27 Oct 2015 19:14:55 -0700 (PDT)
+        bh=PlaIgEh0JDx4dGj51ejcYEHq6K17BOHPfs9I9zzzX44=;
+        b=ei6mj9gsHHe3e19ivb1VpxtDKmuAmPjixCG7RiTivqO8Hmb+2+Fb4PwYzbAmJoQXDt
+         g9M0nZifjOgW7scfwvG8PdmIbAvqitRJczreoIl8GDBHbOoOUW7Ttq/EHWHw9wOsfcHt
+         XXh7B43oDH/Vmv10UQJQNmUCfaf8+mlol6SVCQ3QNa2hld/MvapKhp6sDSk3o4v0PPdr
+         60o9O5zDV7Q0LjEPnvzbHe+IYjTB3Hs37O+kTZu8jRZEPrNT0EOAuk8yjYkk9QocJdSc
+         jpRWwIx+TEkmBwNQaUOm870ELv19rweeMjwTVzw8NhLaUHiLv9TuIo9el5ytfp3RkYn6
+         dOCw==
+X-Gm-Message-State: ALoCoQmScdXjr7lYMHoO2n2Vnth3l1cNmSuOzeKRN+581HuuVmZYWDx7eJsY8sKp/NUdkXpFCLu7
+X-Received: by 10.50.78.194 with SMTP id d2mr332422igx.72.1445998503025;
+        Tue, 27 Oct 2015 19:15:03 -0700 (PDT)
 Received: from ubuntu.twitter.corp? ([8.25.196.25])
-        by smtp.gmail.com with ESMTPSA id lo2sm9240077igb.17.2015.10.27.19.14.54
+        by smtp.gmail.com with ESMTPSA id lo2sm9240077igb.17.2015.10.27.19.15.01
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 27 Oct 2015 19:14:54 -0700 (PDT)
+        Tue, 27 Oct 2015 19:15:02 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.658.g6d8523e-twtrsrc
 In-Reply-To: <1445998467-11511-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280333>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
 
-These functions do not contain any backend specific code so we move
-them to the common code and share across all backends.
+This function does not contain any backend specific code so we
+move it to the common code.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs-be-files.c | 203 --------------------------------------------------------
- refs.c          | 203 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 203 insertions(+), 203 deletions(-)
+ refs-be-files.c | 109 --------------------------------------------------------
+ refs.c          | 109 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 109 insertions(+), 109 deletions(-)
 
 diff --git a/refs-be-files.c b/refs-be-files.c
-index 8be8405..b74b6cc 100644
+index dcb6394..ec6efd7 100644
 --- a/refs-be-files.c
 +++ b/refs-be-files.c
-@@ -2247,30 +2247,6 @@ const char *prettify_refname(const char *name)
- 		0);
- }
+@@ -14,27 +14,6 @@ struct ref_lock {
+ };
  
--static const char *ref_rev_parse_rules[] = {
--	"%.*s",
--	"refs/%.*s",
--	"refs/tags/%.*s",
--	"refs/heads/%.*s",
--	"refs/remotes/%.*s",
--	"refs/remotes/%.*s/HEAD",
--	NULL
+ /*
+- * How to handle various characters in refnames:
+- * 0: An acceptable character for refs
+- * 1: End-of-component
+- * 2: ., look for a preceding . to reject .. in refs
+- * 3: {, look for a preceding @ to reject @{ in refs
+- * 4: A bad character: ASCII control characters, and
+- *    ":", "?", "[", "\", "^", "~", SP, or TAB
+- * 5: *, reject unless REFNAME_REFSPEC_PATTERN is set
+- */
+-static unsigned char refname_disposition[256] = {
+-	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+-	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+-	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 1,
+-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
+-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
+-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
 -};
 -
--int refname_match(const char *abbrev_name, const char *full_name)
+-/*
+  * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
+  * refs (i.e., because the reference is about to be deleted anyway).
+  */
+@@ -69,94 +48,6 @@ static unsigned char refname_disposition[256] = {
+  * value to ref_update::flags
+  */
+ 
+-/*
+- * Try to read one refname component from the front of refname.
+- * Return the length of the component found, or -1 if the component is
+- * not legal.  It is legal if it is something reasonable to have under
+- * ".git/refs/"; We do not like it if:
+- *
+- * - any path component of it begins with ".", or
+- * - it has double dots "..", or
+- * - it has ASCII control characters, or
+- * - it has ":", "?", "[", "\", "^", "~", SP, or TAB anywhere, or
+- * - it has "*" anywhere unless REFNAME_REFSPEC_PATTERN is set, or
+- * - it ends with a "/", or
+- * - it ends with ".lock", or
+- * - it contains a "@{" portion
+- */
+-static int check_refname_component(const char *refname, int *flags)
 -{
--	const char **p;
--	const int abbrev_name_len = strlen(abbrev_name);
+-	const char *cp;
+-	char last = '\0';
 -
--	for (p = ref_rev_parse_rules; *p; p++) {
--		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
--			return 1;
+-	for (cp = refname; ; cp++) {
+-		int ch = *cp & 255;
+-		unsigned char disp = refname_disposition[ch];
+-		switch (disp) {
+-		case 1:
+-			goto out;
+-		case 2:
+-			if (last == '.')
+-				return -1; /* Refname contains "..". */
+-			break;
+-		case 3:
+-			if (last == '@')
+-				return -1; /* Refname contains "@{". */
+-			break;
+-		case 4:
+-			return -1;
+-		case 5:
+-			if (!(*flags & REFNAME_REFSPEC_PATTERN))
+-				return -1; /* refspec can't be a pattern */
+-
+-			/*
+-			 * Unset the pattern flag so that we only accept
+-			 * a single asterisk for one side of refspec.
+-			 */
+-			*flags &= ~ REFNAME_REFSPEC_PATTERN;
+-			break;
 -		}
+-		last = ch;
+-	}
+-out:
+-	if (cp == refname)
+-		return 0; /* Component has zero length. */
+-	if (refname[0] == '.')
+-		return -1; /* Component starts with '.'. */
+-	if (cp - refname >= LOCK_SUFFIX_LEN &&
+-	    !memcmp(cp - LOCK_SUFFIX_LEN, LOCK_SUFFIX, LOCK_SUFFIX_LEN))
+-		return -1; /* Refname ends with ".lock". */
+-	return cp - refname;
+-}
+-
+-int check_refname_format(const char *refname, int flags)
+-{
+-	int component_len, component_count = 0;
+-
+-	if (!strcmp(refname, "@"))
+-		/* Refname is a single character '@'. */
+-		return -1;
+-
+-	while (1) {
+-		/* We are at the start of a path component. */
+-		component_len = check_refname_component(refname, &flags);
+-		if (component_len <= 0)
+-			return -1;
+-
+-		component_count++;
+-		if (refname[component_len] == '\0')
+-			break;
+-		/* Skip to next component. */
+-		refname += component_len + 1;
 -	}
 -
+-	if (refname[component_len - 1] == '.')
+-		return -1; /* Refname ends with '.'. */
+-	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
+-		return -1; /* Refname has only one component. */
 -	return 0;
 -}
 -
- static void unlock_ref(struct ref_lock *lock)
- {
- 	/* Do not free lock->lk -- atexit() still looks at them */
-@@ -2323,92 +2299,6 @@ static int remove_empty_directories(struct strbuf *path)
- }
+ struct ref_entry;
  
  /*
-- * *string and *len will only be substituted, and *string returned (for
-- * later free()ing) if the string passed in is a magic short-hand form
-- * to name a branch.
-- */
--static char *substitute_branch_name(const char **string, int *len)
--{
--	struct strbuf buf = STRBUF_INIT;
--	int ret = interpret_branch_name(*string, *len, &buf);
--
--	if (ret == *len) {
--		size_t size;
--		*string = strbuf_detach(&buf, &size);
--		*len = size;
--		return (char *)*string;
--	}
--
--	return NULL;
--}
--
--int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
--{
--	char *last_branch = substitute_branch_name(&str, &len);
--	const char **p, *r;
--	int refs_found = 0;
--
--	*ref = NULL;
--	for (p = ref_rev_parse_rules; *p; p++) {
--		char fullref[PATH_MAX];
--		unsigned char sha1_from_ref[20];
--		unsigned char *this_result;
--		int flag;
--
--		this_result = refs_found ? sha1_from_ref : sha1;
--		mksnpath(fullref, sizeof(fullref), *p, len, str);
--		r = resolve_ref_unsafe(fullref, RESOLVE_REF_READING,
--				       this_result, &flag);
--		if (r) {
--			if (!refs_found++)
--				*ref = xstrdup(r);
--			if (!warn_ambiguous_refs)
--				break;
--		} else if ((flag & REF_ISSYMREF) && strcmp(fullref, "HEAD")) {
--			warning("ignoring dangling symref %s.", fullref);
--		} else if ((flag & REF_ISBROKEN) && strchr(fullref, '/')) {
--			warning("ignoring broken ref %s.", fullref);
--		}
--	}
--	free(last_branch);
--	return refs_found;
--}
--
--int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
--{
--	char *last_branch = substitute_branch_name(&str, &len);
--	const char **p;
--	int logs_found = 0;
--
--	*log = NULL;
--	for (p = ref_rev_parse_rules; *p; p++) {
--		unsigned char hash[20];
--		char path[PATH_MAX];
--		const char *ref, *it;
--
--		mksnpath(path, sizeof(path), *p, len, str);
--		ref = resolve_ref_unsafe(path, RESOLVE_REF_READING,
--					 hash, NULL);
--		if (!ref)
--			continue;
--		if (reflog_exists(path))
--			it = path;
--		else if (strcmp(ref, path) && reflog_exists(ref))
--			it = ref;
--		else
--			continue;
--		if (!logs_found++) {
--			*log = xstrdup(it);
--			hashcpy(sha1, hash);
--		}
--		if (!warn_ambiguous_refs)
--			break;
--	}
--	free(last_branch);
--	return logs_found;
--}
--
--/*
-  * Locks a ref returning the lock on success and NULL on failure.
-  * On failure errno is set to something meaningful.
-  */
-@@ -4121,99 +4011,6 @@ cleanup:
- 	return ret;
- }
- 
--char *shorten_unambiguous_ref(const char *refname, int strict)
--{
--	int i;
--	static char **scanf_fmts;
--	static int nr_rules;
--	char *short_name;
--
--	if (!nr_rules) {
--		/*
--		 * Pre-generate scanf formats from ref_rev_parse_rules[].
--		 * Generate a format suitable for scanf from a
--		 * ref_rev_parse_rules rule by interpolating "%s" at the
--		 * location of the "%.*s".
--		 */
--		size_t total_len = 0;
--		size_t offset = 0;
--
--		/* the rule list is NULL terminated, count them first */
--		for (nr_rules = 0; ref_rev_parse_rules[nr_rules]; nr_rules++)
--			/* -2 for strlen("%.*s") - strlen("%s"); +1 for NUL */
--			total_len += strlen(ref_rev_parse_rules[nr_rules]) - 2 + 1;
--
--		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
--
--		offset = 0;
--		for (i = 0; i < nr_rules; i++) {
--			assert(offset < total_len);
--			scanf_fmts[i] = (char *)&scanf_fmts[nr_rules] + offset;
--			offset += snprintf(scanf_fmts[i], total_len - offset,
--					   ref_rev_parse_rules[i], 2, "%s") + 1;
--		}
--	}
--
--	/* bail out if there are no rules */
--	if (!nr_rules)
--		return xstrdup(refname);
--
--	/* buffer for scanf result, at most refname must fit */
--	short_name = xstrdup(refname);
--
--	/* skip first rule, it will always match */
--	for (i = nr_rules - 1; i > 0 ; --i) {
--		int j;
--		int rules_to_fail = i;
--		int short_name_len;
--
--		if (1 != sscanf(refname, scanf_fmts[i], short_name))
--			continue;
--
--		short_name_len = strlen(short_name);
--
--		/*
--		 * in strict mode, all (except the matched one) rules
--		 * must fail to resolve to a valid non-ambiguous ref
--		 */
--		if (strict)
--			rules_to_fail = nr_rules;
--
--		/*
--		 * check if the short name resolves to a valid ref,
--		 * but use only rules prior to the matched one
--		 */
--		for (j = 0; j < rules_to_fail; j++) {
--			const char *rule = ref_rev_parse_rules[j];
--			char refname[PATH_MAX];
--
--			/* skip matched rule */
--			if (i == j)
--				continue;
--
--			/*
--			 * the short name is ambiguous, if it resolves
--			 * (with this previous rule) to a valid ref
--			 * read_ref() returns 0 on success
--			 */
--			mksnpath(refname, sizeof(refname),
--				 rule, short_name_len, short_name);
--			if (ref_exists(refname))
--				break;
--		}
--
--		/*
--		 * short name is non-ambiguous if all previous rules
--		 * haven't resolved to a valid ref
--		 */
--		if (j == rules_to_fail)
--			return short_name;
--	}
--
--	free(short_name);
--	return xstrdup(refname);
--}
--
- struct expire_reflog_cb {
- 	unsigned int flags;
- 	reflog_expiry_should_prune_fn *should_prune_fn;
 diff --git a/refs.c b/refs.c
-index 071784c..e0bc031 100644
+index b605460..58991a0 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -342,3 +342,206 @@ int ref_is_hidden(const char *refname)
- 	}
- 	return 0;
+@@ -622,3 +622,112 @@ char *resolve_refdup(const char *refname, int resolve_flags,
+ 	return xstrdup_or_null(resolve_ref_unsafe(refname, resolve_flags,
+ 						  sha1, flags));
  }
 +
-+static const char *ref_rev_parse_rules[] = {
-+	"%.*s",
-+	"refs/%.*s",
-+	"refs/tags/%.*s",
-+	"refs/heads/%.*s",
-+	"refs/remotes/%.*s",
-+	"refs/remotes/%.*s/HEAD",
-+	NULL
++/*
++ * How to handle various characters in refnames:
++ * 0: An acceptable character for refs
++ * 1: End-of-component
++ * 2: ., look for a preceding . to reject .. in refs
++ * 3: {, look for a preceding @ to reject @{ in refs
++ * 4: A bad character: ASCII control characters, and
++ *    ":", "?", "[", "\", "^", "~", SP, or TAB
++ * 5: *, reject unless REFNAME_REFSPEC_PATTERN is set
++ */
++static unsigned char refname_disposition[256] = {
++	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
++	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
++	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 1,
++	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
++	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
++	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
 +};
 +
-+int refname_match(const char *abbrev_name, const char *full_name)
-+{
-+	const char **p;
-+	const int abbrev_name_len = strlen(abbrev_name);
-+
-+	for (p = ref_rev_parse_rules; *p; p++) {
-+		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
-+			return 1;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
 +/*
-+ * *string and *len will only be substituted, and *string returned (for
-+ * later free()ing) if the string passed in is a magic short-hand form
-+ * to name a branch.
++ * Try to read one refname component from the front of refname.
++ * Return the length of the component found, or -1 if the component is
++ * not legal.  It is legal if it is something reasonable to have under
++ * ".git/refs/"; We do not like it if:
++ *
++ * - any path component of it begins with ".", or
++ * - it has double dots "..", or
++ * - it has ASCII control characters, or
++ * - it has ":", "?", "[", "\", "^", "~", SP, or TAB anywhere, or
++ * - it has "*" anywhere unless REFNAME_REFSPEC_PATTERN is set, or
++ * - it ends with a "/", or
++ * - it ends with ".lock", or
++ * - it contains a "@{" portion
 + */
-+static char *substitute_branch_name(const char **string, int *len)
++static int check_refname_component(const char *refname, int *flags)
 +{
-+	struct strbuf buf = STRBUF_INIT;
-+	int ret = interpret_branch_name(*string, *len, &buf);
++	const char *cp;
++	char last = '\0';
 +
-+	if (ret == *len) {
-+		size_t size;
-+		*string = strbuf_detach(&buf, &size);
-+		*len = size;
-+		return (char *)*string;
-+	}
-+
-+	return NULL;
-+}
-+
-+int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
-+{
-+	char *last_branch = substitute_branch_name(&str, &len);
-+	const char **p, *r;
-+	int refs_found = 0;
-+
-+	*ref = NULL;
-+	for (p = ref_rev_parse_rules; *p; p++) {
-+		char fullref[PATH_MAX];
-+		unsigned char sha1_from_ref[20];
-+		unsigned char *this_result;
-+		int flag;
-+
-+		this_result = refs_found ? sha1_from_ref : sha1;
-+		mksnpath(fullref, sizeof(fullref), *p, len, str);
-+		r = resolve_ref_unsafe(fullref, RESOLVE_REF_READING,
-+				       this_result, &flag);
-+		if (r) {
-+			if (!refs_found++)
-+				*ref = xstrdup(r);
-+			if (!warn_ambiguous_refs)
-+				break;
-+		} else if ((flag & REF_ISSYMREF) && strcmp(fullref, "HEAD")) {
-+			warning("ignoring dangling symref %s.", fullref);
-+		} else if ((flag & REF_ISBROKEN) && strchr(fullref, '/')) {
-+			warning("ignoring broken ref %s.", fullref);
-+		}
-+	}
-+	free(last_branch);
-+	return refs_found;
-+}
-+
-+int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
-+{
-+	char *last_branch = substitute_branch_name(&str, &len);
-+	const char **p;
-+	int logs_found = 0;
-+
-+	*log = NULL;
-+	for (p = ref_rev_parse_rules; *p; p++) {
-+		unsigned char hash[20];
-+		char path[PATH_MAX];
-+		const char *ref, *it;
-+
-+		mksnpath(path, sizeof(path), *p, len, str);
-+		ref = resolve_ref_unsafe(path, RESOLVE_REF_READING,
-+					 hash, NULL);
-+		if (!ref)
-+			continue;
-+		if (reflog_exists(path))
-+			it = path;
-+		else if (strcmp(ref, path) && reflog_exists(ref))
-+			it = ref;
-+		else
-+			continue;
-+		if (!logs_found++) {
-+			*log = xstrdup(it);
-+			hashcpy(sha1, hash);
-+		}
-+		if (!warn_ambiguous_refs)
++	for (cp = refname; ; cp++) {
++		int ch = *cp & 255;
++		unsigned char disp = refname_disposition[ch];
++		switch (disp) {
++		case 1:
++			goto out;
++		case 2:
++			if (last == '.')
++				return -1; /* Refname contains "..". */
 +			break;
-+	}
-+	free(last_branch);
-+	return logs_found;
-+}
-+
-+char *shorten_unambiguous_ref(const char *refname, int strict)
-+{
-+	int i;
-+	static char **scanf_fmts;
-+	static int nr_rules;
-+	char *short_name;
-+
-+	if (!nr_rules) {
-+		/*
-+		 * Pre-generate scanf formats from ref_rev_parse_rules[].
-+		 * Generate a format suitable for scanf from a
-+		 * ref_rev_parse_rules rule by interpolating "%s" at the
-+		 * location of the "%.*s".
-+		 */
-+		size_t total_len = 0;
-+		size_t offset = 0;
-+
-+		/* the rule list is NULL terminated, count them first */
-+		for (nr_rules = 0; ref_rev_parse_rules[nr_rules]; nr_rules++)
-+			/* -2 for strlen("%.*s") - strlen("%s"); +1 for NUL */
-+			total_len += strlen(ref_rev_parse_rules[nr_rules]) - 2 + 1;
-+
-+		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
-+
-+		offset = 0;
-+		for (i = 0; i < nr_rules; i++) {
-+			assert(offset < total_len);
-+			scanf_fmts[i] = (char *)&scanf_fmts[nr_rules] + offset;
-+			offset += snprintf(scanf_fmts[i], total_len - offset,
-+					   ref_rev_parse_rules[i], 2, "%s") + 1;
-+		}
-+	}
-+
-+	/* bail out if there are no rules */
-+	if (!nr_rules)
-+		return xstrdup(refname);
-+
-+	/* buffer for scanf result, at most refname must fit */
-+	short_name = xstrdup(refname);
-+
-+	/* skip first rule, it will always match */
-+	for (i = nr_rules - 1; i > 0 ; --i) {
-+		int j;
-+		int rules_to_fail = i;
-+		int short_name_len;
-+
-+		if (1 != sscanf(refname, scanf_fmts[i], short_name))
-+			continue;
-+
-+		short_name_len = strlen(short_name);
-+
-+		/*
-+		 * in strict mode, all (except the matched one) rules
-+		 * must fail to resolve to a valid non-ambiguous ref
-+		 */
-+		if (strict)
-+			rules_to_fail = nr_rules;
-+
-+		/*
-+		 * check if the short name resolves to a valid ref,
-+		 * but use only rules prior to the matched one
-+		 */
-+		for (j = 0; j < rules_to_fail; j++) {
-+			const char *rule = ref_rev_parse_rules[j];
-+			char refname[PATH_MAX];
-+
-+			/* skip matched rule */
-+			if (i == j)
-+				continue;
++		case 3:
++			if (last == '@')
++				return -1; /* Refname contains "@{". */
++			break;
++		case 4:
++			return -1;
++		case 5:
++			if (!(*flags & REFNAME_REFSPEC_PATTERN))
++				return -1; /* refspec can't be a pattern */
 +
 +			/*
-+			 * the short name is ambiguous, if it resolves
-+			 * (with this previous rule) to a valid ref
-+			 * read_ref() returns 0 on success
++			 * Unset the pattern flag so that we only accept
++			 * a single asterisk for one side of refspec.
 +			 */
-+			mksnpath(refname, sizeof(refname),
-+				 rule, short_name_len, short_name);
-+			if (ref_exists(refname))
-+				break;
++			*flags &= ~ REFNAME_REFSPEC_PATTERN;
++			break;
 +		}
++		last = ch;
++	}
++out:
++	if (cp == refname)
++		return 0; /* Component has zero length. */
++	if (refname[0] == '.')
++		return -1; /* Component starts with '.'. */
++	if (cp - refname >= LOCK_SUFFIX_LEN &&
++	    !memcmp(cp - LOCK_SUFFIX_LEN, LOCK_SUFFIX, LOCK_SUFFIX_LEN))
++		return -1; /* Refname ends with ".lock". */
++	return cp - refname;
++}
 +
-+		/*
-+		 * short name is non-ambiguous if all previous rules
-+		 * haven't resolved to a valid ref
-+		 */
-+		if (j == rules_to_fail)
-+			return short_name;
++int check_refname_format(const char *refname, int flags)
++{
++	int component_len, component_count = 0;
++
++	if (!strcmp(refname, "@"))
++		/* Refname is a single character '@'. */
++		return -1;
++
++	while (1) {
++		/* We are at the start of a path component. */
++		component_len = check_refname_component(refname, &flags);
++		if (component_len <= 0)
++			return -1;
++
++		component_count++;
++		if (refname[component_len] == '\0')
++			break;
++		/* Skip to next component. */
++		refname += component_len + 1;
 +	}
 +
-+	free(short_name);
-+	return xstrdup(refname);
++	if (refname[component_len - 1] == '.')
++		return -1; /* Refname ends with '.'. */
++	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
++		return -1; /* Refname has only one component. */
++	return 0;
 +}
 -- 
 2.4.2.658.g6d8523e-twtrsrc
