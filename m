@@ -1,97 +1,144 @@
-From: Victor Leschuk <vleschuk@gmail.com>
-Subject: Re: Bug: Segfault when doing "git diff"
-Date: Wed, 28 Oct 2015 15:24:25 +0300
-Message-ID: <5630BE79.40708@gmail.com>
-References: <5630B876.7080407@sociomantic.com>
+From: Etienne Girard <etienne.g.girard@gmail.com>
+Subject: [PATCH] git-p4: Handle p4 submit failure
+Date: Wed, 28 Oct 2015 14:12:21 +0100
+Message-ID: <CAJA=mv4Tr_DoBMwR8hK_fEJ1PFCYTu17HHvEnFWMANGFcf0Wpg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: vleschuk@accesssoftek.com
-To: "Mathias L. Baumann" <mathias.baumann@sociomantic.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 28 13:24:38 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 28 14:12:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrPmN-0003HD-Ht
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 13:24:35 +0100
+	id 1ZrQX2-0006gf-ML
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 14:12:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965168AbbJ1MYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 08:24:31 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:33182 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965045AbbJ1MY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2015 08:24:28 -0400
-Received: by lbbec13 with SMTP id ec13so4388387lbb.0
-        for <git@vger.kernel.org>; Wed, 28 Oct 2015 05:24:27 -0700 (PDT)
+	id S965455AbbJ1NMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 09:12:44 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:33380 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965526AbbJ1NMV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2015 09:12:21 -0400
+Received: by igvi2 with SMTP id i2so2432107igv.0
+        for <git@vger.kernel.org>; Wed, 28 Oct 2015 06:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=LnhHXgDqO9+6AE2RoReyYwGnJGdPeIySjJpG77pGLTY=;
-        b=wCQ3qHTylBZTlpZCxyztnkJZ6A8TJ2jgfzX+VUTIUD8EkZXio1fIYkNfMTL60t/DHy
-         f4MBeb9cdPOWSvcntKOPBaWp5vpo4Y1YLFqRxb8okSY4S/YEZDL3TO/VFcVcfTFYH5ly
-         hYQOH8+qNev1yojS0nJjjFVI6vUGQmonYHJzZxTUSllujvC5gb29OapYcKcu+430VekV
-         I1u8HHv0VR6QFmYDkAbJWF53wW3sCM++kOzN26CBVS2bceuQW66UsdjtcgJ4f28K+QqH
-         Eo0ajm1qDOZCtybJ3JYA5t1QOSwQNPdBNCZ4hCCM3N5n73dHyjjmtBDH/YtOpES8XWJC
-         BZDw==
-X-Received: by 10.112.218.42 with SMTP id pd10mr23251889lbc.114.1446035067068;
-        Wed, 28 Oct 2015 05:24:27 -0700 (PDT)
-Received: from [192.168.1.101] (93-80-35-11.broadband.corbina.ru. [93.80.35.11])
-        by smtp.gmail.com with ESMTPSA id ug9sm7771099lbb.22.2015.10.28.05.24.25
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Oct 2015 05:24:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <5630B876.7080407@sociomantic.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=B5BLRrG3s/1N4kf3HNdjGqt/DRwIaxeeB7u36BsrAjo=;
+        b=FPXRjhGJM2nLL8O0z0b38YX64e1bZdM0a9ELgWkqk0oZj4H7FIbkK6hLYyixNju2EJ
+         P3Bm9tkyb121HDH16nJxlnp7Kem6/fP+8yXwnB9EY+8v5WbnXBOOkLieHDJ0vYnd/V83
+         rGZG82jHxrDJAmyKPJMVFjMDUbMabg0KG/Pykn46VI4911elShk03vtgF9NRbfv3Nprn
+         pJLLixEI/Sd48oLgLL3vQOjxHdiJmTBiOiuXRe5xGmxoABy5oCuUc6RGt+AphGqoZ9ht
+         MqL6B4Pt4BOQBUYTm5WL1bpx29u+9KnIy/Gy6brsoEOSMuwZmebZ5NU5gYAOllvUCbQO
+         Cv0A==
+X-Received: by 10.50.122.106 with SMTP id lr10mr2695898igb.86.1446037941384;
+ Wed, 28 Oct 2015 06:12:21 -0700 (PDT)
+Received: by 10.64.87.170 with HTTP; Wed, 28 Oct 2015 06:12:21 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280362>
 
+Clean the workspace if p4_write_pipe raised SystemExit,
+so that the user don't have to do it themselves.
 
+Signed-off-by: GIRARD Etienne <egirard@murex.com>
+---
+ git-p4.py | 71 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 37 insertions(+), 34 deletions(-)
 
-On 10/28/2015 02:58 PM, Mathias L. Baumann wrote:
-> Hello dear git devs,
->
-> I just stumbled upon a segfault when doing just "git diff" in my repo.
->
-> I managed to create a minimal repo setup where the bug is reproducable.
->
-> The problem seems to be a mix of having an untracked submodule and 
-> having set an alternates file for one submodule.
->
-> Attached you'll find my setup that will reproduce the problem. Simply 
-> run  'git diff' in bugtest1.
->
-> In case the attachment is refused, I also uploaded it here:
->
-> http://supraverse.net/bugdemo.tar.gz
->
-> cheers,
->
->     --Marenz
-Hello Marenz,
+The p4 submit command may fail, for example if the changelist contains
+a job that does not exist in the Jobs section. If this is the case,
+p4_write_pipe will exit the script. This change makes it so that the
+workspace is reverted before letting the script die.
 
-I have just tried to reproduce segfault with the provided archive:
+diff --git a/git-p4.py b/git-p4.py
+index 0093fa3..d535904 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1538,44 +1538,47 @@ class P4Submit(Command, P4UserMap):
+         #
+         # Let the user edit the change description, then submit it.
+         #
+-        if self.edit_template(fileName):
+-            # read the edited message and submit
+-            ret = True
+-            tmpFile = open(fileName, "rb")
+-            message = tmpFile.read()
+-            tmpFile.close()
+-            if self.isWindows:
+-                message = message.replace("\r\n", "\n")
+-            submitTemplate = message[:message.index(separatorLine)]
+-            p4_write_pipe(['submit', '-i'], submitTemplate)
+-
+-            if self.preserveUser:
+-                if p4User:
+-                    # Get last changelist number. Cannot easily get it from
+-                    # the submit command output as the output is
+-                    # unmarshalled.
+-                    changelist = self.lastP4Changelist()
+-                    self.modifyChangelistUser(changelist, p4User)
+-
+-            # The rename/copy happened by applying a patch that created a
+-            # new file.  This leaves it writable, which confuses p4.
+-            for f in pureRenameCopy:
+-                p4_sync(f, "-f")
++        submitted = False
 
-[del@del-debian bugtest1 (master)]$ git diff
-diff --git a/submodules/bugtest2 b/submodules/bugtest2
---- a/submodules/bugtest2
-+++ b/submodules/bugtest2
-@@ -1 +1 @@
--Subproject commit cd0b9ee2946d2df3626943347332a4d86f93b126
-+Subproject commit cd0b9ee2946d2df3626943347332a4d86f93b126-dirty
+-        else:
++        try:
++            if self.edit_template(fileName):
++                # read the edited message and submit
++                tmpFile = open(fileName, "rb")
++                message = tmpFile.read()
++                tmpFile.close()
++                if self.isWindows:
++                    message = message.replace("\r\n", "\n")
++                submitTemplate = message[:message.index(separatorLine)]
++                p4_write_pipe(['submit', '-i'], submitTemplate)
++
++                if self.preserveUser:
++                    if p4User:
++                        # Get last changelist number. Cannot easily get it from
++                        # the submit command output as the output is
++                        # unmarshalled.
++                        changelist = self.lastP4Changelist()
++                        self.modifyChangelistUser(changelist, p4User)
++
++                # The rename/copy happened by applying a patch that created a
++                # new file.  This leaves it writable, which confuses p4.
++                for f in pureRenameCopy:
++                    p4_sync(f, "-f")
++                submitted = True
++
++        finally:
+             # skip this patch
+-            ret = False
+-            print "Submission cancelled, undoing p4 changes."
+-            for f in editedFiles:
+-                p4_revert(f)
+-            for f in filesToAdd:
+-                p4_revert(f)
+-                os.remove(f)
+-            for f in filesToDelete:
+-                p4_revert(f)
++            if not submitted:
++                print "Submission cancelled, undoing p4 changes."
++                for f in editedFiles:
++                    p4_revert(f)
++                for f in filesToAdd:
++                    p4_revert(f)
++                    os.remove(f)
++                for f in filesToDelete:
++                    p4_revert(f)
 
-No segfault occured. I am using
+         os.remove(fileName)
+-        return ret
++        return submitted
 
-git version 2.6.2.308.g3b8f10c
-
-Could you please specify which version of git you are using and also try 
-to reproduce it with latest 2.6.2?
-
---
-Victor
+     # Export git tags as p4 labels. Create a p4 label and then tag
+     # with that.
+-- 
+1.9.1
