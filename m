@@ -1,146 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] merge-file: clamp exit code to maximum 127
-Date: Wed, 28 Oct 2015 18:44:21 -0400
-Message-ID: <20151028224421.GA14911@sigill.intra.peff.net>
+From: =?UTF-8?Q?Rafael_Esp=C3=ADndola?= <rafael.espindola@gmail.com>
+Subject: git fsck failure on OS X with files >= 4 GiB
+Date: Wed, 28 Oct 2015 16:10:10 -0700
+Message-ID: <CAG3jReJn2Pz6-bXLw6baOZaE1BHYiC+1-zN0eagigfG3umWpJA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Filipe Cabecinhas <filcab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 28 23:44:37 2015
+X-From: git-owner@vger.kernel.org Thu Oct 29 00:10:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrZSL-0001n7-Qc
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 23:44:34 +0100
+	id 1ZrZrF-0000Oe-NZ
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 00:10:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752870AbbJ1WoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 18:44:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49581 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751234AbbJ1WoY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2015 18:44:24 -0400
-Received: (qmail 17976 invoked by uid 102); 28 Oct 2015 22:44:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 28 Oct 2015 17:44:23 -0500
-Received: (qmail 7652 invoked by uid 107); 28 Oct 2015 22:44:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 28 Oct 2015 18:44:47 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Oct 2015 18:44:21 -0400
-Content-Disposition: inline
+	id S1753648AbbJ1XKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 19:10:12 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:33929 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752870AbbJ1XKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2015 19:10:11 -0400
+Received: by obbza9 with SMTP id za9so19815933obb.1
+        for <git@vger.kernel.org>; Wed, 28 Oct 2015 16:10:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=IvH4FP3evvXvXzWb6Y6hXSdoEHhFS5gJ9TqotWM4qYs=;
+        b=KPqL6sfb3EudnZ+8qRWcOfqHKnflz5OH9nxgVJk02bWGlbxn3t03L/jTS4qFtHp9MN
+         U0aUK85ZF07Z+x6FGOmrMlVTRjK5o2co+hB0jmoY+4camdU4nAEREv8urUKtcONT3EAs
+         H0n+h2sRxnHb6snTjlvv2TbeQ9NJyT30uJopD5PfbCUF+TgqWyCA2aSBLz0fZsChnNj4
+         fcx/PH/BR09cgIJ56E+8eCumuEDZJJBKRGLOyrXCg7QNedKOh/qbKbYG/iqbHv1qhwfA
+         YVdGTdqV6ydrSGMjtPir/xN+SWWCBvAtZXsQ8eujiHKB3qaHvOT2dmOeh6HpKXLcfnDX
+         fBiA==
+X-Received: by 10.182.65.5 with SMTP id t5mr35665137obs.32.1446073810166; Wed,
+ 28 Oct 2015 16:10:10 -0700 (PDT)
+Received: by 10.202.228.73 with HTTP; Wed, 28 Oct 2015 16:10:10 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280421>
 
-Git-merge-file is documented to return one of three exit
-codes:
+I first noticed this with "2.4.9 (Apple Git-60)", but it reproduces
+with git built from 37023ba381b6d251d7140a997b39b566dbc63c42.
 
-  - zero means the merge was successful
+Create two files with just 0s:
 
-  - a negative number means an error occurred
+-rw-r--r--  1 espindola  staff  4294967296 28 Oct 11:09 exactly-4gib
+-rw-r--r--  1 espindola  staff  4294967295 28 Oct 11:09 one-less-than-4gib
 
-  - a positive number indicates the number of conflicts
 
-Unfortunately, this all gets stuffed into an 8-bit return
-code. Which means that if you have 256 conflicts, this wraps
-to zero, and the merge appears to succeed (and commits a
-blob full of conflict-marker cruft!).
+and run
 
-This patch clamps the return value to a maximum of 127,
-which we should be able to safely represent everywhere. This
-also leaves 128-255 for other values. Shells (and some parts
-of git) will typically represent signal death as 128 plus
-the signal number. And negative values are typically coerced
-to an 8-bit unsigned value (so "return -1" ends up as 255).
+git init
+git add one-less-than-4gib
+git commit -m bar
+git fsck
+git add exactly-4gib
+git commit -m bar
+git fsck
 
-Technically negative returns have the same problem (e.g.,
-"-256" wraps back to 0), but this is not a problem in
-practice, as the only negative value we use is "-1".
+The first fsck will run with no problems, but the second one fails:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This can be triggered when using the "resolve" strategy, though I found
-it when comparing the results of git-merge-index with libgit2's merge
-driver across a large number of GitHub merges (git claimed to
-successfully merge but libgit2 correctly identified the conflict). The
-real world case that triggered it had exactly 768 conflicts.
+error: packed cfdaf54c9ccfd8f5e4cee562f7d5f92df13d3106 from
+.git/objects/pack/pack-ff08480fd7f767b6bd0aeb559f0f5dea2245b0b3.pack
+is corrupt
 
- Documentation/git-merge-file.txt |  3 ++-
- builtin/merge-file.c             |  3 +++
- t/t7600-merge.sh                 | 33 +++++++++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+), 1 deletion(-)
+Using the very same revision on freebsd doesn't cause any errors.
 
-diff --git a/Documentation/git-merge-file.txt b/Documentation/git-merge-file.txt
-index d2fc12e..f856032 100644
---- a/Documentation/git-merge-file.txt
-+++ b/Documentation/git-merge-file.txt
-@@ -41,7 +41,8 @@ lines from `<other-file>`, or lines from both respectively.  The length of the
- conflict markers can be given with the `--marker-size` option.
- 
- The exit value of this program is negative on error, and the number of
--conflicts otherwise. If the merge was clean, the exit value is 0.
-+conflicts otherwise (truncated to 127 if there are more than that many
-+conflicts). If the merge was clean, the exit value is 0.
- 
- 'git merge-file' is designed to be a minimal clone of RCS 'merge'; that is, it
- implements all of RCS 'merge''s functionality which is needed by
-diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-index 50d0bc8..5544705 100644
---- a/builtin/merge-file.c
-+++ b/builtin/merge-file.c
-@@ -104,5 +104,8 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 		free(result.ptr);
- 	}
- 
-+	if (ret > 127)
-+		ret = 127;
-+
- 	return ret;
- }
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 75c50ee..302e238 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -692,4 +692,37 @@ test_expect_success GPG 'merge --no-edit tag should skip editor' '
- 	test_cmp actual expect
- '
- 
-+test_expect_success 'set up mod-256 conflict scenario' '
-+	# 256 near-identical stanzas...
-+	for i in $(test_seq 1 256); do
-+		for j in 1 2 3 4 5; do
-+			echo $i-$j
-+		done
-+	done >file &&
-+	git add file &&
-+	git commit -m base &&
-+
-+	# one side changes the first line of each to "master"
-+	sed s/-1/-master/ <file >tmp &&
-+	mv tmp file &&
-+	git commit -am master &&
-+
-+	# and the other to "side"; merging the two will
-+	# yield 256 separate conflicts
-+	git checkout -b side HEAD^ &&
-+	sed s/-1/-side/ <file >tmp &&
-+	mv tmp file &&
-+	git commit -am side
-+'
-+
-+test_expect_success 'merge detects mod-256 conflicts (recursive)' '
-+	git reset --hard &&
-+	test_must_fail git merge -s recursive master
-+'
-+
-+test_expect_success 'merge detects mod-256 conflicts (resolve)' '
-+	git reset --hard &&
-+	test_must_fail git merge -s resolve master
-+'
-+
- test_done
--- 
-2.6.2.572.g6ed22dd
+Cheers,
+Rafael
