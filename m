@@ -1,120 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 02/17] check-attr, check-ignore, checkout-index: read paths with strbuf_gets()
-Date: Wed, 28 Oct 2015 15:25:46 -0700
-Message-ID: <1446071161-15610-3-git-send-email-gitster@pobox.com>
-References: <xmqqtws5o4lp.fsf@gitster.dls.corp.google.com>
- <1446071161-15610-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 28 23:34:32 2015
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v1] git-p4: Add option to ignore empty commits
+Date: Wed, 28 Oct 2015 23:35:04 +0100
+Message-ID: <9A4A2FFA-BCF0-46B6-A3A5-69D7F197FDA5@gmail.com>
+References: <1445280239-39840-1-git-send-email-larsxschneider@gmail.com> <56273197.3010505@diamand.org> <F77F291C-89D1-48B6-9E9F-AD7220CE0141@gmail.com> <562E8FA2.9050507@diamand.org>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Luke Diamand <luke@diamand.org>
+X-From: git-owner@vger.kernel.org Wed Oct 28 23:42:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrZIb-0001AA-RL
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 23:34:30 +0100
+	id 1ZrZPx-00086E-5v
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 23:42:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756132AbbJ1WeE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 18:34:04 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54505 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754680AbbJ1Wd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2015 18:33:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6026526A13;
-	Wed, 28 Oct 2015 18:26:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=7cJu
-	St6bqD/xzr8CndSdH/nyRT0=; b=mlLN2gAS2ZupvSexD1PW65yXe9e9jRmzpKpp
-	MzasFHRsjs/NOWDPlzykeBLwlFccn9mz0Zae37CUQIFozZl0iiDL4CgMGXDDzi2h
-	Pkr6bal5N817oDZts2bQJPPNTjzVb7uW9REj6s5wcFme1SonZrmgyePp4ZCQNedM
-	hws8s8s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=LsOPVs
-	OqM+Q6aeguuVuNT61ssWx/ORhf7WtCn2o5yusKv9wqtr69xt+Gr9y6l6U4CYudxF
-	NwKzHmpv9Ludm2Ki026Rd9VWwFSKu/BJcyW7Y/SYKZ7jyd0Hd/TdWFuBP+0/gk3d
-	IGsC/YadD+Ik6y0NH6+zSvHtOSLGal0eC2m30=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 596C326A12;
-	Wed, 28 Oct 2015 18:26:06 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D4BB426A11;
-	Wed, 28 Oct 2015 18:26:05 -0400 (EDT)
-X-Mailer: git-send-email 2.6.2-423-g5314b62
-In-Reply-To: <1446071161-15610-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: E120BF1C-7DC2-11E5-8A1D-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754653AbbJ1WmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 18:42:00 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:35630 "EHLO
+	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752688AbbJ1Wl7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Oct 2015 18:41:59 -0400
+X-Greylist: delayed 416 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Oct 2015 18:41:59 EDT
+Received: by wmll128 with SMTP id l128so13722672wml.0
+        for <git@vger.kernel.org>; Wed, 28 Oct 2015 15:41:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=w5xTEzSWtYwIMPilpE0dk6A76TcYdSC8qStTwqOMaXc=;
+        b=Q4/me+0IpVsTsGrN+917lB3w10x1aDM0Ad8oViRJze3Yrfm1w4aUTMgTKHcMb7tt3C
+         f8CA1lOWsBaamVvAM6/PyxD6OuchsU7XviPv92QDIffdD8y6rOsL2uB0WiPLThqcKVEo
+         +Z5iCOT91yY9I16p6z74ERw2psoOsC6wGXTXNZXlLX/0QuzT8JFtQ3/hWTNfc09nfbmF
+         IA0W7n0cU0AAVJb+sW9a3eAPS1kTtGXQe4r4qsEuI2YugSqD7n3GxRR2hiUZDLRoKHcb
+         XmYQmDvrRbqtB34rS/gqLdtwhIZdkJS7fYchgqLyhI3ZI1r0fxbf4uTFyajf3IRd5Ah/
+         t/vA==
+X-Received: by 10.28.87.208 with SMTP id l199mr2833893wmb.43.1446071701537;
+        Wed, 28 Oct 2015 15:35:01 -0700 (PDT)
+Received: from slxbook3.fritz.box (p5DDB72B9.dip0.t-ipconnect.de. [93.219.114.185])
+        by smtp.gmail.com with ESMTPSA id jt9sm36612550wjc.24.2015.10.28.15.35.00
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 28 Oct 2015 15:35:01 -0700 (PDT)
+In-Reply-To: <562E8FA2.9050507@diamand.org>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280418>
 
-These commands read list of paths from their standard input under
-the --stdin option (in order to avoid busting limit on the length of
-the command line).
 
-When they are using text input mode (i.e. line_termination is set to
-'\n'), we should try to be more friendly to our DOSsy friends and
-accept lines with CRLF endings.
+On 26 Oct 2015, at 21:40, Luke Diamand <luke@diamand.org> wrote:
 
-It is tempting to lift this logic to strbuf_getline() and not
-introduce a separate strbuf_gets(), but that can lead to silent
-misconversion.
+> On 24/10/15 19:08, Lars Schneider wrote:
+>> 
+>> On 21 Oct 2015, at 08:32, Luke Diamand <luke@diamand.org> wrote:
+>> 
+>>> On 19/10/15 19:43, larsxschneider@gmail.com wrote:
+>>>> From: Lars Schneider <larsxschneider@gmail.com>
+>>>> 
+-- snip --
+>> 
+>>> Also, could you use python3 style print stmnts, print("whatever") ?
+>> Sure. How do you prefer the formatting? Using "format" would be true Python 3 style I think:
+>> print('Ignoring file outside of client spec: {}'.format(path))
+> 
+> Will that breaker older versions of python? There's a statement somewhere about how far back we support.
+The "format" method requires Python 2.6 according to the Python docs:
+https://docs.python.org/2/library/functions.html#format
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/check-attr.c     | 4 +++-
- builtin/check-ignore.c   | 5 ++++-
- builtin/checkout-index.c | 4 +++-
- 3 files changed, 10 insertions(+), 3 deletions(-)
+Luckily this is also the version we aim to support according to Documentation/CodingGuidelines
 
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 265c9ba..72d4bb6 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -77,7 +77,9 @@ static void check_attr_stdin_paths(const char *prefix, int cnt,
- 
- 	strbuf_init(&buf, 0);
- 	strbuf_init(&nbuf, 0);
--	while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
-+	while ((line_termination
-+		? strbuf_gets(&buf, stdin)
-+		: strbuf_getline(&buf, stdin, '\0')) != EOF) {
- 		if (line_termination && buf.buf[0] == '"') {
- 			strbuf_reset(&nbuf);
- 			if (unquote_c_style(&nbuf, buf.buf, NULL))
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index 43f3617..d36e9bf 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -122,7 +122,10 @@ static int check_ignore_stdin_paths(struct dir_struct *dir, const char *prefix)
- 
- 	strbuf_init(&buf, 0);
- 	strbuf_init(&nbuf, 0);
--	while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
-+
-+	while ((line_termination
-+		? strbuf_gets(&buf, stdin)
-+		: strbuf_getline(&buf, stdin, '\0')) != EOF) {
- 		if (line_termination && buf.buf[0] == '"') {
- 			strbuf_reset(&nbuf);
- 			if (unquote_c_style(&nbuf, buf.buf, NULL))
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index 8028c37..8b6be57 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -258,7 +258,9 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 		if (all)
- 			die("git checkout-index: don't mix '--all' and '--stdin'");
- 
--		while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
-+		while ((line_termination
-+			? strbuf_gets(&buf, stdin)
-+			: strbuf_getline(&buf, stdin, '\0')) != EOF) {
- 			char *p;
- 			if (line_termination && buf.buf[0] == '"') {
- 				strbuf_reset(&nbuf);
--- 
-2.6.2-423-g5314b62
+Thanks,
+Lars
