@@ -1,76 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 0/2] Fix interactive rebase when the editor saves with CR/LF
-Date: Wed, 28 Oct 2015 10:12:00 -0700
-Message-ID: <xmqqk2q6lxy7.fsf@gitster.mtv.corp.google.com>
-References: <cover.1445939154.git.johannes.schindelin@gmx.de>
-	<cover.1446043983.git.johannes.schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] add_submodule_odb: initialize alt_odb list earlier
+Date: Wed, 28 Oct 2015 13:27:58 -0400
+Message-ID: <20151028172758.GA21851@sigill.intra.peff.net>
+References: <5630B876.7080407@sociomantic.com>
+ <5630BE79.40708@gmail.com>
+ <5630CF1B.9000706@sociomantic.com>
+ <20151028140725.GA15304@sigill.intra.peff.net>
+ <xmqqa8r3m2xq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Chad Boles <chadbo@microsoft.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Philip Oakley <philipoakley@iee.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 28 18:12:12 2015
+Content-Type: text/plain; charset=utf-8
+Cc: "Mathias L. Baumann" <mathias.baumann@sociomantic.com>,
+	Victor Leschuk <vleschuk@gmail.com>, git@vger.kernel.org,
+	vleschuk@accesssoftek.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 18:28:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrUGf-0004Ox-BW
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 18:12:09 +0100
+	id 1ZrUWU-0001s1-CJ
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 18:28:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752803AbbJ1RME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 13:12:04 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65428 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751240AbbJ1RMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2015 13:12:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B266823FC6;
-	Wed, 28 Oct 2015 13:12:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4Vyw0eHmfip9iHso2IVuIts0XZ8=; b=UeiZlS
-	v9Qjof67f1Au3l8Ot7JOk5c0OEiPTJKJzw5WmYaIs0dLLqCMo8EB8nJqpv87pp2C
-	xE7pIAj6qk9MJtHwm/mq/tdcihoTd6KnMJxs4XtG/Q/wRpb4ZI0zARXlnlLbBHtR
-	wdP4yQ8xCiHCwC1ymLP8VN6pgrbJ6bSLXQi+U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DjnKJphA8N6rSB4jAb3lSjN+JvgIa4n9
-	eeJ75icFNl4iMQNIr6LBse0yYaYR4ntGuG28ndAWZPPISpQzvwGOIsNZNoFB9Xeb
-	Z63+XhaOP3GAzHfGx+v/JPvKz6hyNCCMfvJsZpum2A4a4z5wTcjir1SefdMluSWU
-	pL10pl5oibg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AAEA123FC5;
-	Wed, 28 Oct 2015 13:12:02 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 10C6423FC3;
-	Wed, 28 Oct 2015 13:12:02 -0400 (EDT)
-In-Reply-To: <cover.1446043983.git.johannes.schindelin@gmx.de> (Johannes
-	Schindelin's message of "Wed, 28 Oct 2015 15:54:14 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 0163809C-7D97-11E5-B5D0-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752375AbbJ1R2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 13:28:01 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49325 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751114AbbJ1R2B (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2015 13:28:01 -0400
+Received: (qmail 24728 invoked by uid 102); 28 Oct 2015 17:28:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 28 Oct 2015 12:28:00 -0500
+Received: (qmail 4156 invoked by uid 107); 28 Oct 2015 17:28:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 28 Oct 2015 13:28:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Oct 2015 13:27:58 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqa8r3m2xq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280379>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Wed, Oct 28, 2015 at 08:24:17AM -0700, Junio C Hamano wrote:
 
-> Turns out that we now check whether a single Carriage Return is a valid
-> command. This new check was introduced recently (1db168ee9, ironically
-> named "rebase-i: loosen over-eager check_bad_cmd check").
+> > Note that we can remove the prepare_alt_odb call from the
+> > end. It is guaranteed to be a noop, since we will have
+> > called it earlier.
+> 
+> Thanks for a quick and detailed diagnosis and a fix.
+> 
+> The removal is correct, but even without this fix, the order of
+> calls in the original should have screamed "bug" loudly at us, I
+> think.  We shouldn't be reading data from alternates file without
+> first preparing the place we read data into.
 
-Will queue.
+Yeah, I agree. I spent a long time trying to figure out if that
+prepare_alt_odb was actually doing something useful (like if it was
+needed to somehow "cement" the new alt into place).
 
-The root cause is not really "a new check added recently".  Earlier
-the edited result was fed to stripspace and because "stripspace"
-does what a dos-to-unix filter that turns CRLF into LF in addition
-to cleaning up spaces and comments, we did not see the problematic
-behaviour from "read" in this codepath.
+But I don't think it was.
 
-Thanks.
+In the majority of cases, it was a noop (we had already prepared when we
+looked up the first object). But for other cases...
+
+  - if read_info_alternates actually did something, we segfaulted (i.e.,
+    this bug)
+
+  - otherwise, we would prepare on _top_ of what we just added to the
+    list, which was probably buggy (I didn't dig far enough to see if
+    prepare_alt_odb() would overwrite what we just added to the list).
+
+So some pretty dark corners of the code. :)
+
+-Peff
