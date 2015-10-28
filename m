@@ -1,66 +1,64 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH 3/3] clone: Allow an explicit argument for parallel
- submodule clones
-Date: Wed, 28 Oct 2015 22:03:46 +0100
-Message-ID: <56313832.4000002@gmail.com>
-References: <1445625879-30330-1-git-send-email-sbeller@google.com>
- <1445625879-30330-4-git-send-email-sbeller@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: fatal: Unable to read current working directory: No error
+Date: Wed, 28 Oct 2015 17:14:15 -0400
+Message-ID: <20151028211415.GA24501@sigill.intra.peff.net>
+References: <CAPkB0GxPghR9Y7YrB9yYq3rA9XZ2HJGN-sxbQgERGsBA2iOX_Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: jrnieder@gmail.com, Jens.Lehmann@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 28 22:04:13 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Sean Krauth <spkrauth@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 22:14:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrXtC-0004F6-0S
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 22:04:10 +0100
+	id 1ZrY36-00054t-Vq
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 22:14:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932454AbbJ1VEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 17:04:05 -0400
-Received: from plane.gmane.org ([80.91.229.3]:48117 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932442AbbJ1VEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2015 17:04:04 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1ZrXt3-00048S-9g
-	for git@vger.kernel.org; Wed, 28 Oct 2015 22:04:01 +0100
-Received: from p548d6c52.dip0.t-ipconnect.de ([84.141.108.82])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Oct 2015 22:04:01 +0100
-Received: from sschuberth by p548d6c52.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Oct 2015 22:04:01 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p548d6c52.dip0.t-ipconnect.de
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12)
- Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-In-Reply-To: <1445625879-30330-4-git-send-email-sbeller@google.com>
+	id S964804AbbJ1VOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 17:14:20 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49482 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932496AbbJ1VOS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2015 17:14:18 -0400
+Received: (qmail 11131 invoked by uid 102); 28 Oct 2015 21:14:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 28 Oct 2015 16:14:18 -0500
+Received: (qmail 6463 invoked by uid 107); 28 Oct 2015 21:14:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 28 Oct 2015 17:14:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Oct 2015 17:14:15 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPkB0GxPghR9Y7YrB9yYq3rA9XZ2HJGN-sxbQgERGsBA2iOX_Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280396>
 
-On 23.10.2015 20:44, Stefan Beller wrote:
+On Tue, Oct 27, 2015 at 07:29:39PM -0400, Sean Krauth wrote:
 
-> [...] which may pick reasonable
-> defaults if you don't specify an explicit number.
+> This seemed like about as good of an excuse as any to update Git. I
+> was running v. 2.5.1-32-bit and so I downloaded v. 2.6.2-32-bit,
+> installed it. And it ran, kinda. I no longer seem to have access to
+> any of my old commits and when I try to "git init" or "git status" I
+> get the above error, "fatal: Unable to read current working directory:
+> No error". This error pops up for anything, even new files that never
+> had a repository.
 
-IMO the above should also be mentioned ini the docs:
+That message means that getcwd() is failing. If it were happening in one
+place, I'd say to check if there is something funny with your directory
+(e.g., bad permissions or something). But if it's happening anywhere, it
+sounds like there is some fundamental incompatibility between the build
+of Git and your system.
 
-> +-j::
-> +--jobs::
-> +	The number of submodules fetched at the same time.
+It sounds like you're on a Windows system, and the problem may be
+system-specific. You might try asking at the specific Git for Windows
+list:
 
-Otherwise, from reading the docs, my immediate question would be "What's 
-the default for n if not specified?"
+  https://groups.google.com/forum/?hl=en#!forum/git-for-windows
 
--- 
-Sebastian Schuberth
+though many of those people do frequent this list, too.
+
+-Peff
