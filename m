@@ -1,356 +1,222 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v5 26/26] introduce "extensions" form of core.repositoryformatversion
-Date: Tue, 27 Oct 2015 22:14:27 -0400
-Message-ID: <1445998467-11511-27-git-send-email-dturner@twopensource.com>
+Subject: [PATCH v5 21/26] refs.c: move peel_object to the common code
+Date: Tue, 27 Oct 2015 22:14:22 -0400
+Message-ID: <1445998467-11511-22-git-send-email-dturner@twopensource.com>
 References: <1445998467-11511-1-git-send-email-dturner@twopensource.com>
-Cc: Jeff King <peff@peff.net>
+Cc: David Turner <dturner@twopensource.com>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Wed Oct 28 03:15:53 2015
+X-From: git-owner@vger.kernel.org Wed Oct 28 03:16:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrGHG-0001cY-Cd
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 03:15:51 +0100
+	id 1ZrGI8-0002UX-Ik
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 03:16:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755257AbbJ1CPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Oct 2015 22:15:34 -0400
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:33467 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755274AbbJ1CPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Oct 2015 22:15:25 -0400
-Received: by igbkq10 with SMTP id kq10so108258571igb.0
-        for <git@vger.kernel.org>; Tue, 27 Oct 2015 19:15:25 -0700 (PDT)
+	id S1755109AbbJ1CQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Oct 2015 22:16:41 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:37887 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755259AbbJ1CPS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Oct 2015 22:15:18 -0400
+Received: by igbhv6 with SMTP id hv6so92971238igb.0
+        for <git@vger.kernel.org>; Tue, 27 Oct 2015 19:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource_com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sQZVO+3Zan/FnRX7LqsqRClCRyWyTm4hzClGKtcvEc0=;
-        b=qIYHheJX7YYDAPi1b6ksikJNyX5sups+Ibi09fUWERH22Osbjb8ChdCdDLzaafC/ny
-         /jmzaOe2GL/Z/HFFITAJTi/+9VSbVHXcORHrF94T/uZ6DOiwwN0UUggPovWjPkFBpiaQ
-         N/fq3HS7TUjLTGS5P447xKlu1v+re0LqBlXsYy/ofMGazOWpMsFlQyxSFB4dXmVRmU9o
-         CZJtrgPKZOBUoqa5uPS6jRXYUXzQEA2OD7ROPJnIXdLe5wba8G6BiHPyKGVQebtZZf+k
-         8DGAEJfA3e3fjhO1SII1rBr5JV++cBCWkA9VBCwxjuUfElrmmYyOJQb0uN33TzLerPfJ
-         CtaQ==
+        bh=+jTytYUvMGkQkvjUqX3sTt3Hd478CY1Tb1hSAwNU+fY=;
+        b=2KxTNRtmc1l6enOwvY42D8LHRnMtFqkz5L3v271JS2ywUGxFceGticQbdWNCcIz0aw
+         xm9gV5rV5FOxvOSl1gKLfd3uUdDkiMPJhRz0Q0ERsR8dBtybRQtAA7X+jkU556AZvyb6
+         0rT+BoH08k7QXiLaoz5PIqJNSAL8/kBX/wWfm/+JgqyHRfNVA41e06ipDcN4icJ+TTRC
+         n2ukerAoahd0I98QkSQtOk46FH8Ki2fOfl4TpyyGryE0cs11id8uxGhUPCawUk3GX8UR
+         tdy4JQzwfuXiF4eC6jXv3Sr9Qc3hzXGu41EarMlqi757VZWO/MGRRHxGjHivPmyqfhvg
+         ZffQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=sQZVO+3Zan/FnRX7LqsqRClCRyWyTm4hzClGKtcvEc0=;
-        b=hvFUeD+NZCxD4wCVxj/CmHCT+zNRTjUVg+bU+u41nRaJ3hGXuVPb8IDOy7b7FoH7w1
-         eII3fInvRNV+nqXCVIrJMaYpxNpqawZ+c4I2rYGPqe/hPVcMcCJf8us8ZTgxUfruGfkS
-         c9UWOIA85A3vDLG0uWZ/sHTsj2JXfk32RIqc/F+bef12dpdu38c0kE5pXVoD/RvBLZ+G
-         i5c2N2DLEP3MzF7DtQw9FibEc0I/bGvdRJu7VTOIkV2vrEgwloi6bjwwKRH8UjCIptNo
-         T10KcaHoOAhPq4g21HmSBzHkv89XW3GaTW/9u2NoqzkmSIaI4QB0aNZ/2T5qSerc3b30
-         j8NQ==
-X-Gm-Message-State: ALoCoQmDb1fukbdjyGDF2b1X7we9S4tRChUhzuOJtzTC22zJz4MPOMBFz5RHNPTFgw5k6rbwmwC9
-X-Received: by 10.50.73.168 with SMTP id m8mr330184igv.95.1445998525315;
-        Tue, 27 Oct 2015 19:15:25 -0700 (PDT)
+        bh=+jTytYUvMGkQkvjUqX3sTt3Hd478CY1Tb1hSAwNU+fY=;
+        b=JmNz/GZe29N+WCRl1OPBVG7LKuKCVCfmbydnTtGG3e1nHXVThJ48zLep5TAj2+v7jK
+         ly7cnzrwyR8esrulEqnu+r7aPE5l4hHKusHDgWEoSsb5NSNNzt90W3k9cbny3pii53q7
+         Ous4sgW1f922T8EexgmyMbcFq98/92pOPiV5zMeTil+7dOm58BbPiYDOqUL9VDDpP3q0
+         vh0VA4zWQ1/tjYQkZC94RFdklfx1OUQ8Oz5pqJK2S6I87/TcCG4ITcyc4CgmgQfUsAAf
+         jyc9yqcq6YTk/JUUSvYaTuHM7zd5Bsc1atRclYto962hDFw7z9um/wmdGaWeoQZcMkXP
+         JcXw==
+X-Gm-Message-State: ALoCoQmbQKdgcspF/jdjYjdj9eskoFkVOti1sFrWcwqAOWk77K7yfn/JV1h/M3iKzgV/nBT0yTn2
+X-Received: by 10.50.79.201 with SMTP id l9mr364535igx.60.1445998517432;
+        Tue, 27 Oct 2015 19:15:17 -0700 (PDT)
 Received: from ubuntu.twitter.corp? ([8.25.196.25])
-        by smtp.gmail.com with ESMTPSA id lo2sm9240077igb.17.2015.10.27.19.15.23
+        by smtp.gmail.com with ESMTPSA id lo2sm9240077igb.17.2015.10.27.19.15.15
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 27 Oct 2015 19:15:24 -0700 (PDT)
+        Tue, 27 Oct 2015 19:15:16 -0700 (PDT)
 X-Mailer: git-send-email 2.4.2.658.g6d8523e-twtrsrc
 In-Reply-To: <1445998467-11511-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280345>
 
-From: Jeff King <peff@peff.net>
+This function does not contain any backend specific code so we
+move it to the common code.
 
-Normally we try to avoid bumps of the whole-repository
-core.repositoryformatversion field. However, it is
-unavoidable if we want to safely change certain aspects of
-git in a backwards-incompatible way (e.g., modifying the set
-of ref tips that we must traverse to generate a list of
-unreachable, safe-to-prune objects).
-
-If we were to bump the repository version for every such
-change, then any implementation understanding version `X`
-would also have to understand `X-1`, `X-2`, and so forth,
-even though the incompatibilities may be in orthogonal parts
-of the system, and there is otherwise no reason we cannot
-implement one without the other (or more importantly, that
-the user cannot choose to use one feature without the other,
-weighing the tradeoff in compatibility only for that
-particular feature).
-
-This patch documents the existing repositoryformatversion
-strategy and introduces a new format, "1", which lets a
-repository specify that it must run with an arbitrary set of
-extensions. This can be used, for example:
-
- - to inform git that the objects should not be pruned based
-   only on the reachability of the ref tips (e.g, because it
-   has "clone --shared" children)
-
- - that the refs are stored in a format besides the usual
-   "refs" and "packed-refs" directories
-
-Because we bump to format "1", and because format "1"
-requires that a running git knows about any extensions
-mentioned, we know that older versions of the code will not
-do something dangerous when confronted with these new
-formats.
-
-For example, if the user chooses to use database storage for
-refs, they may set the "extensions.refbackend" config to
-"db". Older versions of git will not understand format "1"
-and bail. Versions of git which understand "1" but do not
-know about "refbackend", or which know about "refbackend"
-but not about the "db" backend, will refuse to run. This is
-annoying, of course, but much better than the alternative of
-claiming that there are no refs in the repository, or
-writing to a location that other implementations will not
-read.
-
-Note that we are only defining the rules for format 1 here.
-We do not ever write format 1 ourselves; it is a tool that
-is meant to be used by users and future extensions to
-provide safety with older implementations.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: David Turner <dturner@twopensource.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- Documentation/technical/repository-version.txt | 81 ++++++++++++++++++++++++++
- cache.h                                        |  6 ++
- setup.c                                        | 37 +++++++++++-
- t/t1302-repo-version.sh                        | 38 ++++++++++++
- 4 files changed, 159 insertions(+), 3 deletions(-)
- create mode 100644 Documentation/technical/repository-version.txt
+ refs-be-files.c | 53 -----------------------------------------------------
+ refs.c          | 23 +++++++++++++++++++++++
+ refs.h          | 34 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 57 insertions(+), 53 deletions(-)
 
-diff --git a/Documentation/technical/repository-version.txt b/Documentation/technical/repository-version.txt
-new file mode 100644
-index 0000000..3d7106d
---- /dev/null
-+++ b/Documentation/technical/repository-version.txt
-@@ -0,0 +1,81 @@
-+Git Repository Format Versions
-+==============================
-+
-+Every git repository is marked with a numeric version in the
-+`core.repositoryformatversion` key of its `config` file. This version
-+specifies the rules for operating on the on-disk repository data. An
-+implementation of git which does not understand a particular version
-+advertised by an on-disk repository MUST NOT operate on that repository;
-+doing so risks not only producing wrong results, but actually losing
-+data.
-+
-+Because of this rule, version bumps should be kept to an absolute
-+minimum. Instead, we generally prefer these strategies:
-+
-+  - bumping format version numbers of individual data files (e.g.,
-+    index, packfiles, etc). This restricts the incompatibilities only to
-+    those files.
-+
-+  - introducing new data that gracefully degrades when used by older
-+    clients (e.g., pack bitmap files are ignored by older clients, which
-+    simply do not take advantage of the optimization they provide).
-+
-+A whole-repository format version bump should only be part of a change
-+that cannot be independently versioned. For instance, if one were to
-+change the reachability rules for objects, or the rules for locking
-+refs, that would require a bump of the repository format version.
-+
-+Note that this applies only to accessing the repository's disk contents
-+directly. An older client which understands only format `0` may still
-+connect via `git://` to a repository using format `1`, as long as the
-+server process understands format `1`.
-+
-+The preferred strategy for rolling out a version bump (whether whole
-+repository or for a single file) is to teach git to read the new format,
-+and allow writing the new format with a config switch or command line
-+option (for experimentation or for those who do not care about backwards
-+compatibility with older gits). Then after a long period to allow the
-+reading capability to become common, we may switch to writing the new
-+format by default.
-+
-+The currently defined format versions are:
-+
-+Version `0`
-+-----------
-+
-+This is the format defined by the initial version of git, including but
-+not limited to the format of the repository directory, the repository
-+configuration file, and the object and ref storage. Specifying the
-+complete behavior of git is beyond the scope of this document.
-+
-+Version `1`
-+-----------
-+
-+This format is identical to version `0`, with the following exceptions:
-+
-+  1. When reading the `core.repositoryformatversion` variable, a git
-+     implementation which supports version 1 MUST also read any
-+     configuration keys found in the `extensions` section of the
-+     configuration file.
-+
-+  2. If a version-1 repository specifies any `extensions.*` keys that
-+     the running git has not implemented, the operation MUST NOT
-+     proceed. Similarly, if the value of any known key is not understood
-+     by the implementation, the operation MUST NOT proceed.
-+
-+Note that if no extensions are specified in the config file, then
-+`core.repositoryformatversion` SHOULD be set to `0` (setting it to `1`
-+provides no benefit, and makes the repository incompatible with older
-+implementations of git).
-+
-+This document will serve as the master list for extensions. Any
-+implementation wishing to define a new extension should make a note of
-+it here, in order to claim the name.
-+
-+The defined extensions are:
-+
-+`noop`
-+~~~~~~
-+
-+This extension does not change git's behavior at all. It is useful only
-+for testing format-1 compatibility.
-diff --git a/cache.h b/cache.h
-index 28b9896..90ec48e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -696,7 +696,13 @@ extern char *notes_ref_name;
- 
- extern int grafts_replace_parents;
- 
-+/*
-+ * GIT_REPO_VERSION is the version we write by default. The
-+ * _READ variant is the highest number we know how to
-+ * handle.
-+ */
- #define GIT_REPO_VERSION 0
-+#define GIT_REPO_VERSION_READ 1
- extern int repository_format_version;
- extern int check_repository_format(void);
- 
-diff --git a/setup.c b/setup.c
-index 2b64cbb..0c29469 100644
---- a/setup.c
-+++ b/setup.c
-@@ -5,6 +5,7 @@
- static int inside_git_dir = -1;
- static int inside_work_tree = -1;
- static int work_tree_config_is_bogus;
-+static struct string_list unknown_extensions = STRING_LIST_INIT_DUP;
- 
- /*
-  * The input parameter must contain an absolute path, and it must already be
-@@ -349,10 +350,23 @@ void setup_work_tree(void)
- 
- static int check_repo_format(const char *var, const char *value, void *cb)
- {
-+	const char *ext;
-+
- 	if (strcmp(var, "core.repositoryformatversion") == 0)
- 		repository_format_version = git_config_int(var, value);
- 	else if (strcmp(var, "core.sharedrepository") == 0)
- 		shared_repository = git_config_perm(var, value);
-+	else if (skip_prefix(var, "extensions.", &ext)) {
-+		/*
-+		 * record any known extensions here; otherwise,
-+		 * we fall through to recording it as unknown, and
-+		 * check_repository_format will complain
-+		 */
-+		if (!strcmp(ext, "noop"))
-+			;
-+		else
-+			string_list_append(&unknown_extensions, ext);
-+	}
- 	return 0;
- }
- 
-@@ -363,6 +377,8 @@ static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
- 	config_fn_t fn;
- 	int ret = 0;
- 
-+	string_list_clear(&unknown_extensions, 0);
-+
- 	if (get_common_dir(&sb, gitdir))
- 		fn = check_repo_format;
- 	else
-@@ -380,16 +396,31 @@ static int check_repository_format_gently(const char *gitdir, int *nongit_ok)
- 	 * is a good one.
- 	 */
- 	git_config_early(fn, NULL, repo_config);
--	if (GIT_REPO_VERSION < repository_format_version) {
-+	if (GIT_REPO_VERSION_READ < repository_format_version) {
- 		if (!nongit_ok)
- 			die ("Expected git repo version <= %d, found %d",
--			     GIT_REPO_VERSION, repository_format_version);
-+			     GIT_REPO_VERSION_READ, repository_format_version);
- 		warning("Expected git repo version <= %d, found %d",
--			GIT_REPO_VERSION, repository_format_version);
-+			GIT_REPO_VERSION_READ, repository_format_version);
- 		warning("Please upgrade Git");
- 		*nongit_ok = -1;
- 		ret = -1;
- 	}
-+
-+	if (repository_format_version >= 1 && unknown_extensions.nr) {
-+		int i;
-+
-+		if (!nongit_ok)
-+			die("unknown repository extension: %s",
-+			    unknown_extensions.items[0].string);
-+
-+		for (i = 0; i < unknown_extensions.nr; i++)
-+			warning("unknown repository extension: %s",
-+				unknown_extensions.items[i].string);
-+		*nongit_ok = -1;
-+		ret = -1;
-+	}
-+
- 	strbuf_release(&sb);
+diff --git a/refs-be-files.c b/refs-be-files.c
+index fc8a0a9..23c2f78 100644
+--- a/refs-be-files.c
++++ b/refs-be-files.c
+@@ -1600,59 +1600,6 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
  	return ret;
  }
-diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
-index 0d9388a..8dd6fd7 100755
---- a/t/t1302-repo-version.sh
-+++ b/t/t1302-repo-version.sh
-@@ -67,4 +67,42 @@ test_expect_success 'gitdir required mode' '
- 	)
- '
  
-+check_allow () {
-+	git rev-parse --git-dir >actual &&
-+	echo .git >expect &&
-+	test_cmp expect actual
+-enum peel_status {
+-	/* object was peeled successfully: */
+-	PEEL_PEELED = 0,
+-
+-	/*
+-	 * object cannot be peeled because the named object (or an
+-	 * object referred to by a tag in the peel chain), does not
+-	 * exist.
+-	 */
+-	PEEL_INVALID = -1,
+-
+-	/* object cannot be peeled because it is not a tag: */
+-	PEEL_NON_TAG = -2,
+-
+-	/* ref_entry contains no peeled value because it is a symref: */
+-	PEEL_IS_SYMREF = -3,
+-
+-	/*
+-	 * ref_entry cannot be peeled because it is broken (i.e., the
+-	 * symbolic reference cannot even be resolved to an object
+-	 * name):
+-	 */
+-	PEEL_BROKEN = -4
+-};
+-
+-/*
+- * Peel the named object; i.e., if the object is a tag, resolve the
+- * tag recursively until a non-tag is found.  If successful, store the
+- * result to sha1 and return PEEL_PEELED.  If the object is not a tag
+- * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
+- * and leave sha1 unchanged.
+- */
+-static enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
+-{
+-	struct object *o = lookup_unknown_object(name);
+-
+-	if (o->type == OBJ_NONE) {
+-		int type = sha1_object_info(name, NULL);
+-		if (type < 0 || !object_as_type(o, type, 0))
+-			return PEEL_INVALID;
+-	}
+-
+-	if (o->type != OBJ_TAG)
+-		return PEEL_NON_TAG;
+-
+-	o = deref_tag_noverify(o);
+-	if (!o)
+-		return PEEL_INVALID;
+-
+-	hashcpy(sha1, o->sha1);
+-	return PEEL_PEELED;
+-}
+-
+ /*
+  * Peel the entry (if possible) and return its new peel_status.  If
+  * repeel is true, re-peel the entry even if there is an old peeled
+diff --git a/refs.c b/refs.c
+index c31418d..3867549 100644
+--- a/refs.c
++++ b/refs.c
+@@ -4,6 +4,8 @@
+ #include "cache.h"
+ #include "refs.h"
+ #include "lockfile.h"
++#include "object.h"
++#include "tag.h"
+ 
+ static int is_per_worktree_ref(const char *refname)
+ {
+@@ -994,3 +996,24 @@ int refname_is_safe(const char *refname)
+ 	}
+ 	return 1;
+ }
++
++enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
++{
++	struct object *o = lookup_unknown_object(name);
++
++	if (o->type == OBJ_NONE) {
++		int type = sha1_object_info(name, NULL);
++		if (type < 0 || !object_as_type(o, type, 0))
++			return PEEL_INVALID;
++	}
++
++	if (o->type != OBJ_TAG)
++		return PEEL_NON_TAG;
++
++	o = deref_tag_noverify(o);
++	if (!o)
++		return PEEL_INVALID;
++
++	hashcpy(sha1, o->sha1);
++	return PEEL_PEELED;
 +}
+diff --git a/refs.h b/refs.h
+index 4951141..ca60de5 100644
+--- a/refs.h
++++ b/refs.h
+@@ -76,6 +76,40 @@ extern int is_branch(const char *refname);
+  */
+ extern int peel_ref(const char *refname, unsigned char *sha1);
+ 
++enum peel_status {
++	/* object was peeled successfully: */
++	PEEL_PEELED = 0,
 +
-+check_abort () {
-+	test_must_fail git rev-parse --git-dir
-+}
++	/*
++	 * object cannot be peeled because the named object (or an
++	 * object referred to by a tag in the peel chain), does not
++	 * exist.
++	 */
++	PEEL_INVALID = -1,
 +
-+# avoid git-config, since it cannot be trusted to run
-+# in a repository with a broken version
-+mkconfig () {
-+	echo '[core]' &&
-+	echo "repositoryformatversion = $1" &&
-+	shift &&
++	/* object cannot be peeled because it is not a tag: */
++	PEEL_NON_TAG = -2,
 +
-+	if test $# -gt 0; then
-+		echo '[extensions]' &&
-+		for i in "$@"; do
-+			echo "$i"
-+		done
-+	fi
-+}
++	/* ref_entry contains no peeled value because it is a symref: */
++	PEEL_IS_SYMREF = -3,
 +
-+while read outcome version extensions; do
-+	test_expect_success "$outcome version=$version $extensions" "
-+		mkconfig $version $extensions >.git/config &&
-+		check_${outcome}
-+	"
-+done <<\EOF
-+allow 0
-+allow 1
-+allow 1 noop
-+abort 1 no-such-extension
-+allow 0 no-such-extension
-+EOF
++	/*
++	 * ref_entry cannot be peeled because it is broken (i.e., the
++	 * symbolic reference cannot even be resolved to an object
++	 * name):
++	 */
++	PEEL_BROKEN = -4
++};
 +
- test_done
++/*
++ * Peel the named object; i.e., if the object is a tag, resolve the
++ * tag recursively until a non-tag is found.  If successful, store the
++ * result to sha1 and return PEEL_PEELED.  If the object is not a tag
++ * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
++ * and leave sha1 unchanged.
++ */
++enum peel_status peel_object(const unsigned char *name, unsigned char *sha1);
++
+ /**
+  * Resolve refname in the nested "gitlink" repository that is located
+  * at path.  If the resolution is successful, return 0 and set sha1 to
 -- 
 2.4.2.658.g6d8523e-twtrsrc
