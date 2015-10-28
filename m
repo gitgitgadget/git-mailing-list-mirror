@@ -1,99 +1,97 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 5/9] submodule update: expose parallelism to the user
-Date: Wed, 28 Oct 2015 14:40:09 -0700
-Message-ID: <CAGZ79kbm_aucoEADLFt3VjShP5Kgi0Wwyb6m1dRJtQWu9_ZtBA@mail.gmail.com>
-References: <1445969753-418-1-git-send-email-sbeller@google.com>
-	<1445969753-418-6-git-send-email-sbeller@google.com>
-	<xmqqk2q8ni2i.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] ref-filter: fallback on alphabetical comparison
+Date: Wed, 28 Oct 2015 15:16:50 -0700
+Message-ID: <xmqqy4emskod.fsf@gitster.mtv.corp.google.com>
+References: <1445972456-5621-1-git-send-email-Karthik.188@gmail.com>
+	<xmqq7fm8ozu9.fsf@gitster.mtv.corp.google.com>
+	<CAOLa=ZSF5bJocJkMG70x0kTaU139pj0-ONypC=V2Tdnu3yQtow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Eric Sunshine <ericsunshine@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 28 22:40:19 2015
+Content-Type: text/plain
+Cc: Git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 28 23:17:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrYSA-0002vU-6L
-	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 22:40:18 +0100
+	id 1ZrZ1i-0002Da-VY
+	for gcvg-git-2@plane.gmane.org; Wed, 28 Oct 2015 23:17:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755391AbbJ1VkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 17:40:11 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:34125 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751191AbbJ1VkK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Oct 2015 17:40:10 -0400
-Received: by ykdr3 with SMTP id r3so22979294ykd.1
-        for <git@vger.kernel.org>; Wed, 28 Oct 2015 14:40:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=HaJvV5wTV9IVncHYFDlZoZCweZ7nlecee4Til8cB8cI=;
-        b=kQc/C+MIuN5FWwLLGBGWd4uwfH9kxYEunNHq4qTsAo3JG+rSlSSAQbGwqZcBVz2nJJ
-         IkZj41eMnHUqAbKu8qdKzrMPPYRdar7FfdOpYmwuwUuxCIKvmZuYezjSQMEa9Qn92C2d
-         ix2WeVD8EphYT2apzNVi5nA94ki7JXTY/yaHbLxghgvLCer7fJ8Dd+iB7U+k2pFsa9AL
-         debm1OH5PlBUKZ9IQkTqWk5gH8nWZ+ijWFGzCATs1kL3PSqvl25IebuvVOSLmAdh47Tu
-         5Sugr4m+JPByGfQo1WMU0ZfvIFEAkU9eZDd0CzfYHrNfKrA8Lh2yCydE2BrH8FIrdrO9
-         bnaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=HaJvV5wTV9IVncHYFDlZoZCweZ7nlecee4Til8cB8cI=;
-        b=co1Z+jIMbCKcXxwKBIGnm7cs7gadTjYFjma9nPj1u3nrzNG+sdcgZEkDuvhxo2O+05
-         2CGNhJa2nqB/Zz9XeK3qUzQLjDHZl7lDEqvZPayD4vFcdE2sN8S9iq8qhs3mtuzgY4NZ
-         iE5HXRWSCOm//R22XffaluJG9pD2ZmuU0O/ipjWtsQ/KXRPQA9o3SZtrmEbHDFlPoHHW
-         rfma0cTr+JYqw+nhSLaf6Zi6wz0GITWpHa+bNaR2pMDRhLNESsWVCmQ3cmaQveQ5a+GJ
-         mujCu7mlHOv0l0R/0OheprWm//jBEf8iVsWXlBXRFi9NwBKYXUUrY/VHaGIgKP6q8r9Q
-         KBwg==
-X-Gm-Message-State: ALoCoQlaYG1NOwmZnJ/hURWxk+ToJkgoq/5Odr1SwtFa6HIye+GSigIQFS5NtJT4rTMNDtM/f+uB
-X-Received: by 10.129.29.8 with SMTP id d8mr24336755ywd.63.1446068409435; Wed,
- 28 Oct 2015 14:40:09 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Wed, 28 Oct 2015 14:40:09 -0700 (PDT)
-In-Reply-To: <xmqqk2q8ni2i.fsf@gitster.mtv.corp.google.com>
+	id S1756383AbbJ1WQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 18:16:59 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54964 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755485AbbJ1WQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2015 18:16:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6C07726692;
+	Wed, 28 Oct 2015 18:16:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=i/9SyNTDABOLhoyY59P3jOY1d30=; b=fM05Oa
+	QQ68E7gpgHvWywPdnRZ+w77hGiO/KCtcyOQqeQ2H8aalqKjnNb3kVbF8GjxeyH1n
+	5ieoiMfz66I0U//haplpUdkf56c9QirEnlmY6V7umv02cBN/fJji0bwvayy8JdHZ
+	Kwt0OZa0vojNVVQtIKnJU5vxGdx75XC0mMjDQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=j0+zYpytgWF02ld7AAnsBkvOHEI48+Zp
+	OaZsAvALK8pcGUppB2z9Pi8BlgCOQcuSdoML/xetNO+LWwvKIpKbph49op67MiId
+	rfhT/yKZK49kxGl/z5Z6bsgkh3nFD3/++/17L1Kx8arJKwnirtIbsKRuv0bRKbTq
+	MPgbfHwM3F8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6233626691;
+	Wed, 28 Oct 2015 18:16:52 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DC0B12668F;
+	Wed, 28 Oct 2015 18:16:51 -0400 (EDT)
+In-Reply-To: <CAOLa=ZSF5bJocJkMG70x0kTaU139pj0-ONypC=V2Tdnu3yQtow@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 29 Oct 2015 00:25:27 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 96EFD636-7DC1-11E5-961F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280398>
 
-On Tue, Oct 27, 2015 at 1:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> And when 0 starts to meaning something special, we would need to
-> describe that here (and/or submodule.jobs entry in config.txt).
-> As I already said, I do not think "0 means num_cpus" is a useful
-> default, and I would prefer if we reserved 0 to mean something more
-> useful we would figure out later.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Ok I'll add that, too.
+> On Wed, Oct 28, 2015 at 1:20 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Hence, fallback to alphabetical comparison based on the refname
+>>> whenever the other criterion is equal. Fix the test in t3203 in this
+>>> regard.
+>>
+>> It is unclear what "in this regard" is.  Do you mean this (I am not
+>> suggesting you to spell these out in a very detailed way in the
+>> final log message; I am deliberately being detailed here to help me
+>> understand what you really mean)?
+>>
+>>     A test in t3203 was expecting that branch-two sorts before HEAD,
+>>     which happened to be how qsort(3) on Linux sorted the array, but
+>>     (1) that outcome was not even guaranteed, and (2) once we start
+>>     breaking ties with the refname, "HEAD" should sort before
+>>     "branch-two" so the original expectation was inconsistent with
+>>     the criterion we now use.
+>>
+>
+> Exactly what you're saying, they happened to have the same objectsize.
+> Hence sorting them would put them together, but since we compare the
+> refname's the "HEAD" ref would come before "branch-two".
+>
+>>     Update it to match the new world order, which we can now depend
+>>     on being stable.
+>>
+>> I am not sure about "HEAD" and "branch-two" in the above (it may be
+>> comparison between "HEAD" and "refs/heads/branch-two", for example).
+>
+> It actually is, we consider "refs/heads/branch-two rather then the shortened
+> version of this. It makes sense to classify refs this way, even though this
+> was a side effect of this commit.
 
-I am just debating with myself where the best place is.
-In run-command.c in pp_init we have:
+Now these are enough bits of info, that can and needs to be
+condenced into an updated log message to help future readers.
 
-    if (n < 1)
-        n = online_cpus();
-    pp->max_processes = n;
-
-we would need to change only that one place to insert an
-
-    die("We haven't found the right default yet for 0");
-
-However I think for most loads online_cpus makes sense as that
-is ususally the bottleneck for local operations (if being excessive
-memory may become an issue, but unlikely IMHO).
-So instead I think it makes more sense to add it in the fetch/clone/update
-to come up with a treatment for 0.
-
-Maybe we want to make the explicit decision for the default value
-for any user of the parallel processing, such that this code above
-is misguided as it leads to bad defaults if reviewers are inattentive.
-
-So having spelled out that, we may just want to bark in the pp_init
-for having a number n < 1.
+Thanks.
