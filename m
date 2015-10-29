@@ -1,96 +1,120 @@
-From: Matt Glazar <strager@fb.com>
-Subject: git-fetch pulls already-pulled objects?
-Date: Wed, 28 Oct 2015 23:28:24 +0000
-Message-ID: <D256A718.1373A%strager@fb.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] difftool: avoid symlinks when reusing worktree files
+Date: Wed, 28 Oct 2015 18:55:39 -0700
+Message-ID: <20151029015539.GA12513@gmail.com>
+References: <1445981088-6285-1-git-send-email-davvid@gmail.com>
+ <xmqq1tcgne4u.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 29 00:28:38 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Ismail Badawi <ismail@badawi.io>,
+	John Keeping <john@keeping.me.uk>,
+	Tim Henigan <tim.henigan@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 02:55:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zra8z-0000CX-2h
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 00:28:37 +0100
+	id 1ZrcRP-0002Ap-Aq
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 02:55:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964934AbbJ1X22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Oct 2015 19:28:28 -0400
-Received: from mx0a-00082601.pphosted.com ([67.231.145.42]:40962 "EHLO
-	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S964911AbbJ1X21 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Oct 2015 19:28:27 -0400
-Received: from pps.filterd (m0044010.ppops.net [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.15.0.59/8.15.0.59) with SMTP id t9SNOX0d032177
-	for <git@vger.kernel.org>; Wed, 28 Oct 2015 16:28:26 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : subject : date
- : message-id : content-type : content-id : content-transfer-encoding :
- mime-version; s=facebook; bh=CqIf0ttjusF++bOnWUWsuTWw7QtGjX9iBJxhik7jnj8=;
- b=FAVEofnzY7uNbfYwDWaQQ8suIkrRDT+vHB8xcnw4+oRlIqsPPsIjnlGDihM3FM3iMebd
- vfWPqlE6dISxWiEL2EcPToP5HhPDp0gG9isgCZjTLXb/CNOdmO6ruagKe1Rz7/+IFn8C
- Y1lO6y5Y7k3OzKxKidjmLd35N/dhrSaJpJQ= 
-Received: from mail.thefacebook.com ([199.201.64.23])
-	by mx0a-00082601.pphosted.com with ESMTP id 1xtjx9nwku-1
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 28 Oct 2015 16:28:26 -0700
-Received: from PRN-MBX01-4.TheFacebook.com ([169.254.3.151]) by
- PRN-CHUB02.TheFacebook.com ([fe80::5de8:34:5a87:6990%12]) with mapi id
- 14.03.0248.002; Wed, 28 Oct 2015 16:28:26 -0700
-Thread-Topic: git-fetch pulls already-pulled objects?
-Thread-Index: AQHREdhXt4Zi9tm5IkaAubrCKnEpKg==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.52.123]
-Content-ID: <DECE8CFC126218469A5A7B34A42A2797@fb.com>
-X-Proofpoint-Spam-Reason: safe
-X-FB-Internal: Safe
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2015-10-29_01:,,
- signatures=0
+	id S932442AbbJ2Bzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Oct 2015 21:55:43 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:35392 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751237AbbJ2Bzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Oct 2015 21:55:42 -0400
+Received: by pasz6 with SMTP id z6so23925835pas.2
+        for <git@vger.kernel.org>; Wed, 28 Oct 2015 18:55:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=cmJjYehZCx8yp2aBxFWm2QMSu/dut/HztArdzJpzAmw=;
+        b=Xh8eed0uMQ5RdQ03JV0onSvql9nDpc7UUumVEdCKWIUyciQP7sWH9Ygaw41JjQXRGl
+         PPfZHFdXzopA26bRZRETUsNf2l6sJKiilruaTCujnbCeqPeuPn0IH/8Hsu/Usb+e53So
+         nNPdhqZ3gOC0rc85esLuq+icCAJJrx+cmB/xwhwlao+WzuYMn7WnDSsRemcgeh35nOkN
+         hNnHhLIdWXZMAQL8qmD1hm4gS4k24yhWpqDL5UAZJOARfavEZ0tP855O8zWDxFuN1NK+
+         0IFkWaUU6S0NxekgMf2ErMMiHcwwaKOMPQQVp66QENFJeSIk6DOvESP43qYnBK1emaiS
+         NsvQ==
+X-Received: by 10.66.164.161 with SMTP id yr1mr37335105pab.62.1446083742162;
+        Wed, 28 Oct 2015 18:55:42 -0700 (PDT)
+Received: from gmail.com (w.disneyanimation.com. [198.187.190.241])
+        by smtp.gmail.com with ESMTPSA id ce3sm47774159pbb.35.2015.10.28.18.55.41
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Oct 2015 18:55:41 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqq1tcgne4u.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280432>
 
-T24gYSByZW1vdGUsIEkgaGF2ZSB0d28gR2l0IGNvbW1pdCBvYmplY3RzIHdoaWNoIHBvaW50IHRv
-IHRoZSBzYW1lIHRyZWUNCm9iamVjdCAoY3JlYXRlZCB3aXRoIGdpdCBjb21taXQtdHJlZSkuIElm
-IEkgZmV0Y2ggb25lIG9mIHRoZSBjb21taXRzLCB0aGUNCmNvbW1pdCBvYmplY3QgKGluY2x1ZGlu
-ZyB0aGUgdHJlZSBvYmplY3QpIGlzIGZldGNoZWQuIElmIEkgdGhlbiBmZXRjaCB0aGUNCm90aGVy
-IGNvbW1pdCwgdGhlIHRyZWUgb2JqZWN0IChhbmQgaXRzIGRlcGVuZGVuY2llcykgaXMgZmV0Y2hl
-ZCAqYWdhaW4qIChJDQp0aGluaykuIEkgZG9uJ3Qgd2F0Y2ggdGhlIHRyZWUgb2JqZWN0IGRvd25s
-b2FkZWQgYWdhaW4sIGJlY2F1c2UgaXQgaXMNCmxhcmdlIChtdWx0aS1naWdhYnl0ZSkuIEJlY2F1
-c2UgdGhlIHRyZWUgb2JqZWN0IGV4aXN0cyBsb2NhbGx5LCBJIHRoaW5rIGl0DQpzaG91bGQgbm90
-IGJlIGRvd25sb2FkZWQuDQoNCklzIHRoaXMgYSBidWcgaW4gR2l0LCBvciBpcyB0aGlzIGJ5IGRl
-c2lnbj8gSG93IGNhbiBJIGNvbmZpcm0gdGhhdCB0aGUNCnRyZWUgb2JqZWN0IChhbmQgZGVwZW5k
-ZW5jaWVzKSBhcmUgZG93bmxvYWRlZCB0d2ljZT8gSXMgdGhlcmUgYXJlIG1vcmUNCmNvbXBsaWNh
-dGVkIGdpdC1mZXRjaCAob3Igc2ltaWxhcikgY29tbWFuZCBJIGNhbiBleGVjdXRlIHRvIG5vdCBk
-b3dubG9hZA0KdGhlIGFscmVhZHktZG93bmxvYWRlZCB0cmVlIG9iamVjdHM/IChJIGhhdmUgdGhl
-IGhhc2ggb2YgdGhlIHRyZWUgb2JqZWN0DQp3aGljaCB3b3VsZCBiZSBwb3RlbnRpYWxseSByZS1k
-b3dubG9hZGVkLCBpZiB0aGF0IGhlbHBzLikNCg0KU2VxdWVuY2Ugb2YgY29tbWFuZHMgdG8gcmVw
-cm9kdWNlOg0KDQojIFJlcGxhY2UgdGhpcyB3aXRoIHRoZSBVUkwgdG8gYW4gZW1wdHkgR2l0IHJl
-cG9zaXRvcnkuDQpyZW1vdGU9c3NoOi8vZm9vL2Jhci5naXQNCg0KIyBDcmVhdGUgc29tZSByYW5k
-b20gZGF0YSB0byBleGFnZ2VyYXRlIGdpdC1mZXRjaCB0aW1lcy4NCiMgSWYgeW91IGhhdmUgYSBz
-bG93IHJlbW90ZSwgcmVkdWNlICdjb3VudCcuDQpta2RpciBtaW5pbWFsDQpjZCBtaW5pbWFsDQpk
-ZCBpZj0vZGV2L3VyYW5kb20gb2Y9cmFuZG9tIGJzPTY1NTM2IGNvdW50PTQwOTYNCg0KIyBDcmVh
-dGUgb3VyIHR3byBjb21taXRzIChtYXN0ZXIgYW5kIG1hc3RlcjIpLg0KZ2l0IGluaXQNCmdpdCBh
-ZGQgcmFuZG9tDQpnaXQgY29tbWl0IC1tICdSYW5kb20gZGF0YSAoY29tbWl0IDEpJw0KZ2l0IGJy
-YW5jaCBtYXN0ZXIyIFwNCiAgIiQoZWNobyAnUmFuZG9tIGRhdGEgKGNvbW1pdCAyKScgXA0KICAg
-IHwgZ2l0IGNvbW1pdC10cmVlICdIRUFEXnt0cmVlfScpIg0KDQojIFB1c2ggb3VyIGNvbW1pdHMu
-IEV4cGVjdGVkIHRvIHRha2Ugc29tZSB0aW1lLg0KZ2l0IHJlbW90ZSBhZGQgb3JpZ2luICIke3Jl
-bW90ZX0iDQpnaXQgcHVzaCBvcmlnaW4gXA0KICBtYXN0ZXI6cmVmcy9oZWFkcy9tYXN0ZXIgXA0K
-ICBtYXN0ZXIyOnJlZnMvaGVhZHMvbWFzdGVyMg0KDQojIENsb25lIG1hc3Rlci4gRXhwZWN0ZWQg
-dG8gdGFrZSBzb21lIHRpbWUuDQpjZCAuLg0KbWtkaXIgbWluaW1hbC1jbG9uZQ0KZ2l0IGNsb25l
-IC0tc2luZ2xlLWJyYW5jaCAtLWJyYW5jaCBtYXN0ZXIgIiR7cmVtb3RlfSINCg0KIyBGZXRjaCBt
-YXN0ZXIyLiBTaG91bGQgYmUgbmVhcmx5IGluc3RhbnQsIGJ1dCB0YWtlcyBzb21lDQojIHRpbWUu
-IFNlZW1zIHRvIGJlIGRvd25sb2FkIGV2ZXJ5dGhpbmcgYWdhaW4uDQpjZCBtaW5pbWFsLWNsb25l
-DQpnaXQgZmV0Y2ggb3JpZ2luIG1hc3RlcjINCg0KIyBUcnkgYWdhaW4uIGdpdC1mZXRjaCB0YWtl
-cyBhIHdoaWxlLCBidXQgc2hvdWxkbid0Lg0Kcm0gLWYgLmdpdC9GRVRDSF9IRUFEDQpnaXQgZ2Mg
-LS1wcnVuZT1hbGwNCmdpdCBmZXRjaCBvcmlnaW4gbWFzdGVyMg0KDQpJbmZvIGFib3V0IG15IHN5
-c3RlbToNCg0KDQpMb2NhbCAocHVzaGVyKToNCk9TOiBPUyBYIDEwLjEwLjUNCmdpdDogZ2l0IHZl
-cnNpb24gMi4wLjENCnNzaDogT3BlblNTSF82LjJwMiwgT1NTTFNoaW0gMC45LjhyIDggRGVjIDIw
-MTENCg0KDQpSZW1vdGUgKHNlcnZlcik6DQpPUzogTGludXggNC4wLjkgKENlbnRPUyA2KQ0KZ2l0
-OiBnaXQgdmVyc2lvbiAyLjQuNg0Kc3NoZDogT3BlblNTSF82LjdwMS1ocG4xNHY1LCBPcGVuU1NM
-IDEuMC4xZS1maXBzIDExIEZlYiAyMDEzDQoNCg==
+On Tue, Oct 27, 2015 at 03:24:49PM -0700, Junio C Hamano wrote:
+> David Aguilar <davvid@gmail.com> writes:
+> 
+> > difftool's dir-diff should never reuse a symlink, regardless of
+> > what it points to.  Tighten use_wt_file() so that it rejects all
+> > symlinks.
+> >
+> > Helped-by: Junio C Hamano <gitster@pobox.com>
+> > Signed-off-by: David Aguilar <davvid@gmail.com>
+> > ---
+> 
+> Sorry.  I do recall saying "it is wrong to feed the contents of a
+> file that a symlink points at to hash-object" but other than that,
+> I completely lost track.
+> 
+> What purpose does this function play in its callchain?  What does
+> its caller wants it to compute?  Is use of the entity in the working
+> tree completely optional?  Would the caller happily produce correct
+> result even if we changed this function to unconditionally return
+> ($use=0, $wt_sha1='0'x40) regardless of the result of lstat(2) on
+> "$workdir/$file"?
+> 
+> The conclusion of the thought process that starts from "it is wrong
+> to feed the contents of a file that a symlink points at to
+> hash-object" may not be "so let's return $use=0 for all symlinks",
+> which is this patch. Depending on what its caller wants it to
+> compute, the right conclusion may be "we need to call hash-object
+> correctly by first running readlink and then feeding the result to
+> it".
+> 
+> And if the answer is "the caller wants us to compute the hash for a
+> symbolic link and say $use=1", then we would instead need to do
+> an equivalent of
+> 
+> 	wt_sha1=$(readlink "$workdir/$file" | hash-object --stdin)
+> 
+> I cannot quite tell which from the patch and explanation.
+> 
+> Perhaps an additional test or two would help illustrate what issues
+> are being addressed better?
+> 
+> Thanks.
+
+Right.  At first I thought I could revise the commit message to
+make it clearer that we simply want to skip all symlinks, since
+it never makes sense to reuse a worktree symlinks, but looking
+at the tests and implementation makes me realize that it's not
+that simple.
+
+This is going to take a bit more time to get right.  John, I was
+hoping you'd be able to take a look -- I'm playing catch-up too.
+When it was first reported I let it sit for a while in hopes
+that the original author would pickup the issue, but months
+passed and I figured I'd take a stab at helping the user out.
+
+Anyways, it'll take me a bit more time to understand the code
+and work out a sensible solution.  My gut feeling is that we
+should adjust the dir-diff feature so that it ignores all
+symlinks.  That seems like a simple answer since we're deciding
+to skip that chunk of complexity.
+
+John, do you have any thoughts on how we can best handle this?
+-- 
+David
