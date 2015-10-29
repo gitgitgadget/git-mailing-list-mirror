@@ -1,90 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 0/8] Expose the submodule parallelism to the user
-Date: Thu, 29 Oct 2015 13:12:14 -0700
-Message-ID: <xmqqsi4tqvs1.fsf@gitster.mtv.corp.google.com>
-References: <xmqqfv0wp1l1.fsf@gitster.mtv.corp.google.com>
-	<1446074504-6014-1-git-send-email-sbeller@google.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: improve some translations
+Date: Thu, 29 Oct 2015 22:19:22 +0100
+Message-ID: <1446153562-12133-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, jacob.keller@gmail.com, peff@peff.net,
-	jrnieder@gmail.com, johannes.schindelin@gmail.com,
-	Jens.Lehmann@web.de, ericsunshine@gmail.com
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 21:12:24 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	phillip.szelat@gmail.com, matthias.ruester@gmail.com,
+	magnus.goerlitz@googlemail.com,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 29 22:27:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrtYc-0004on-3p
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 21:12:22 +0100
+	id 1Zrujc-0000E0-8L
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 22:27:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751770AbbJ2UMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2015 16:12:18 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60142 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751474AbbJ2UMR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2015 16:12:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 18DA62769B;
-	Thu, 29 Oct 2015 16:12:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LsYK3n621tflDKzZvUY3hxdmDFw=; b=J+N0HN
-	XpevDJzZ5sPaizln9ek8HFepDxAbNIUOXW+1WnbwABMrHT7cmWxjD1F15+weqtFN
-	8ZWYbU3sWlDY+SCOfwJhXSJBeqcMbNCGjnLtUqA/v8V6bpWPcfkmb8YTZkm9e1ar
-	tbq+BfRkhOJwTsMVEvp5eX36Y2Svca/ws0dW0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bN9t8S1dH6Aegz3vBbBjb5RkR+l9xY8G
-	48cXEDzWR41D05BB3elJu6Kl7pbioTpBW0+0xzqGluVrnuS9KrUeVFzsKGN9XN4T
-	0Yw4AD9UCY1iabg1tP5AFeT/JOIOFIWSmEG7SlqiWimmIZrInZA1oKDSQg8E7j3/
-	NfEC5gbAVHQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0F3C22769A;
-	Thu, 29 Oct 2015 16:12:16 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 73CBE27699;
-	Thu, 29 Oct 2015 16:12:15 -0400 (EDT)
-In-Reply-To: <1446074504-6014-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Wed, 28 Oct 2015 16:21:36 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 59180DA2-7E79-11E5-8F2F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S965316AbbJ2V1o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Oct 2015 17:27:44 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35128 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755412AbbJ2V1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2015 17:27:43 -0400
+X-Greylist: delayed 497 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Oct 2015 17:27:43 EDT
+Received: by wmll128 with SMTP id l128so2872064wml.2
+        for <git@vger.kernel.org>; Thu, 29 Oct 2015 14:27:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=mTytWOfZA3MJyh/sixPQHZNInIkrQfP/R+2t7VZ/Izc=;
+        b=etWt5ue3doIpswGnE2eZT/xXf4jxiQ3Zzljfct5JCQAv4+ftIWZQaB0c+te/ZSK3Fd
+         JOW/RNyf70QDuDHUBZS+XpA3au0AueBy2pGWK/7/LYxdcoGD8rWLcDY6yZ1Xm6UliFUS
+         Tk+Wr4iuj890Q9zB61ShiIjAODx3YRYr5Ibu5VTfS8b/SFbWpWXkj1A/7fP8y6T+mVWq
+         DIxI7rHz+KrpOgdJqxsA2XvITCCSOiQIY1tgNIhQ8I+T7sdBPf01cVDQMAOheyNt1SuV
+         944tUkCAkrSNDl5Fb/QrqcZfSu2FmzNG1gk3uBukyYcf0sQVaXVbj+PKEvvX9HQsq0a8
+         6J3w==
+X-Received: by 10.28.217.6 with SMTP id q6mr6790124wmg.5.1446153565573;
+        Thu, 29 Oct 2015 14:19:25 -0700 (PDT)
+Received: from localhost (cable-86-56-116-100.cust.telecolumbus.net. [86.56.116.100])
+        by smtp.gmail.com with ESMTPSA id r13sm5411616wmg.12.2015.10.29.14.19.24
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 29 Oct 2015 14:19:24 -0700 (PDT)
+X-Mailer: git-send-email 2.6.2.441.gf54246d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280459>
 
-Stefan Beller <sbeller@google.com> writes:
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-> This replaces origin/sb/submodule-parallel-update
-> (anchoring at 74367d8938, Merge branch 'sb/submodule-parallel-fetch'
-> into sb/submodule-parallel-update)
->
-> What does it do?
-> ---
-> This series should finish the on going efforts of parallelizing
-> submodule network traffic. The patches contain tests for clone,
-> fetch and submodule update to use the actual parallelism both via
-> command line as well as a configured option. I decided to go with
-> "submodule.jobs" for all three for now.
->
-> What is new in v2?
-> ---
-> * The patches got reordered slightly
-> * Documentation was adapted
-
-A couple of things I noticed (other than "many issues pointed out in
-v1 have been updated") are:
-
- - The way 7/8 and 8/8 checks for uninitialized max_jobs are
-   inconsistently written.  The way 7/8 does, i.e. (max_jobs < 0),
-   looks more conventional.
-
- - "Defaults to the `submodule.jobs` option" should say
-   "configuration variable" instead.
-
-I haven't formed an opinion on 6/8 yet.
+diff --git a/po/de.po b/po/de.po
+index c682aaf..be30642 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -592,7 +592,7 @@ msgstr "Fehler beim Schreiben der Signatur nach '%s=
+': %s"
+ #: grep.c:1718
+ #, c-format
+ msgid "'%s': unable to read %s"
+-msgstr "'%s': konnte nicht lesen %s"
++msgstr "'%s': konnte %s nicht lesen"
+=20
+ #: grep.c:1735
+ #, c-format
+@@ -11749,7 +11749,7 @@ msgstr "unbekannte Option: $opt"
+=20
+ #: git-stash.sh:397
+ msgid "No stash found."
+-msgstr "Kein \"stash\" gefunden."
++msgstr "Kein Stash-Eintrag gefunden."
+=20
+ #: git-stash.sh:404
+ #, sh-format
+@@ -11773,7 +11773,7 @@ msgstr "'$args' ist keine \"stash\"-Referenz"
+=20
+ #: git-stash.sh:457
+ msgid "unable to refresh index"
+-msgstr "unf=C3=A4hig den Index zu aktualisieren"
++msgstr "Konnte den Index nicht aktualisieren."
+=20
+ #: git-stash.sh:461
+ msgid "Cannot apply a stash in the middle of a merge"
+--=20
+2.6.2.441.gf54246d
