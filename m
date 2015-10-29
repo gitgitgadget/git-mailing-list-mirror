@@ -1,137 +1,135 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: git-cherry doesn't detect a "copied" commit
-Date: Thu, 29 Oct 2015 15:44:54 +0100
-Message-ID: <CAC9WiBhwAMH6axJqexhdfM-0j2AQ=+mvxjKQOJu5TLVrCCn8Fg@mail.gmail.com>
-References: <CAC9WiBhM4edBFCYx35xZJB79AZWo49mkO-Pxnb1q4aLDmBufWQ@mail.gmail.com>
-	<20151023105756.GB12622@ikke.info>
-	<CAC9WiBjub2oBBaM7KxcE2Jv7QgGyvmPzEBU7WcSEk5huGzx+zg@mail.gmail.com>
-	<xmqq37x1nr6e.fsf@gitster.mtv.corp.google.com>
+From: Filipe Cabecinhas <filcab@gmail.com>
+Subject: Re: git fsck failure on OS X with files >= 4 GiB
+Date: Thu, 29 Oct 2015 08:15:28 -0700
+Message-ID: <CAEDE853n2HR-SK9_sGn8n3j0xoTb3eQa86UvdW0DBrc+Z1sDrg@mail.gmail.com>
+References: <CAG3jReJn2Pz6-bXLw6baOZaE1BHYiC+1-zN0eagigfG3umWpJA@mail.gmail.com>
+	<CAEDE8505fXAwVXx=EZwxPHvXpMByzpnXJ9LBgfx3U6VUaFbPHw@mail.gmail.com>
+	<CAG3jRe+23sy1k9QNdpdn3GF3nbzPMmYO=TM=SufEq83OtwNxbA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Kevin Daudt <me@ikke.info>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 15:45:01 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Rafael_Esp=C3=ADndola?= <rafael.espindola@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 16:15:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZroRn-0007Al-VL
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 15:45:00 +0100
+	id 1ZrovO-0005SV-Kp
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 16:15:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757242AbbJ2Oo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2015 10:44:56 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:35815 "EHLO
-	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754006AbbJ2Ooz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2015 10:44:55 -0400
-Received: by iofz202 with SMTP id z202so47848329iof.2
-        for <git@vger.kernel.org>; Thu, 29 Oct 2015 07:44:54 -0700 (PDT)
+	id S1756916AbbJ2PPa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Oct 2015 11:15:30 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:38909 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754034AbbJ2PP3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2015 11:15:29 -0400
+Received: by wicll6 with SMTP id ll6so45623362wic.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2015 08:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=gDwyXcq+XwFcOiB4RXrOQ0A0K8HdnXQ9SM2PmAuplLU=;
-        b=e0bq/eHhMWbaxwGQF0oAc0eXYjfnmS69edPeDCO7nGWOVHlTZSbe6qYHOON/49CU4V
-         eduTn3ieKDkXgDJY1oHpDBnqazSRrCs4YQ+DYrtO8B6HNAM9Oa+pOKGz1O9mz1dX25HZ
-         J6RSw8YPgw1g+VjQBOlw208fRYgVIuqGWLqNj1hCPtU9VgFxBWtfIglZJB6yShJJ5TQO
-         nkxMU4mk8gcg6PCFS9Wnp8Hzo3Sunw4V4WTiNtjX8AOzJz7q5o8uc0tHvHEs37dlLQ90
-         hVio8971Sq75x+19u5kEByiCN0UG8g7Q+ezSeUrZpdlYVfep9coWu7hEaVp/QV33dfdT
-         jvew==
-X-Received: by 10.107.46.142 with SMTP id u14mr3788227iou.165.1446129894671;
- Thu, 29 Oct 2015 07:44:54 -0700 (PDT)
-Received: by 10.79.77.1 with HTTP; Thu, 29 Oct 2015 07:44:54 -0700 (PDT)
-In-Reply-To: <xmqq37x1nr6e.fsf@gitster.mtv.corp.google.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=mF9aPb9xmwo2kGzECVSoQAAzMUqxByEgSCMsqJLN0ec=;
+        b=ZtzL8w2A3fmFEWHZutLwL93hMS+/vy5pYiVckEgHjB50qlqPE3LC09mf9p2YLXxihg
+         zWRAcHUq1cqrQtpR3RCsjk6MiUJwMHLqGTL8Q/b62u5KBxPeiO4y6+M09S01BqNcLv0b
+         Pyn7+H/5vSsNfIBSQ3mvp2QZ76nr49enul7HhBBqe4ePXigXm6hdbtOP4Bu/zf0UhP0G
+         ekQ6zeH//nMeEtdJKg9Wb60Go7JeMIz38VQtgjOc8eGU+FKizkq9VcB059/jnQYUun7G
+         AbffvNkBAttzg2rpGiXNx4AdCuxluchZz0+P1wC85bD6MLEcW9pwhxhGigUYaetrFYq1
+         RIEA==
+X-Received: by 10.194.59.137 with SMTP id z9mr2959674wjq.28.1446131728472;
+ Thu, 29 Oct 2015 08:15:28 -0700 (PDT)
+Received: by 10.194.59.10 with HTTP; Thu, 29 Oct 2015 08:15:28 -0700 (PDT)
+In-Reply-To: <CAG3jRe+23sy1k9QNdpdn3GF3nbzPMmYO=TM=SufEq83OtwNxbA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280442>
 
-Hello Junio,
+Defining BLK_SHA1 =3D YesPlease (when calling make) should just change
+the SHA functions, instead of completely removing OpenSSL or
+CommonCrypto.
 
-On Sat, Oct 24, 2015 at 12:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Francis Moreau <francis.moro@gmail.com> writes:
+Regards,
+  Filipe
+
+
+On Thu, Oct 29, 2015 at 3:46 AM, Rafael Esp=C3=ADndola
+<rafael.espindola@gmail.com> wrote:
+> Awesome, building with
 >
->> I was mislead by the git-cherry manpage somehow which says:
+> NO_OPENSSL =3D 1
+> NO_GETTEXT =3D 1
+>
+> produces a working git :-)
+>
+> Cheers,
+> Rafael
+>
+>
+> On 28 October 2015 at 23:37, Filipe Cabecinhas <filcab@gmail.com> wro=
+te:
+>> I did some debugging, and it seems CC_SHA1_Update (used by
+>> write_sha1_file_prepare if APPLE_COMMON_CRYPTO is defined in the Mak=
+efile)
+>> takes a uint32_t as a "length" parameter, which explains why it stop=
+s
+>> working at 4GiB (UINT_MAX+1).
 >>
->>     "git-cherry therefore
->>      detects when commits have been "copied" by means of git-cherry-pick(1),
+>> In the OS X 10.11 SDK header CommonCrypto/CommonDigest.h, we have:
 >>
->> which is not exactly true.
->
-> Yeah, I agree; the sentence is merely giving a description from
-> layperson's point of view, and it should have expressed it as such,
-> e.g. "roughly speaking, you can think of it like so", not sounding
-> as if it is giving a strictly correct and authoritative statement.
->
->> Would it make sense to add a "--fuzz" option which would reduce the
->> diff context area used to generate the hash ?
->
-> There could be situations where such fuzzing might be useful, but I
-> do not think this particular use case of yours is one of them.
->
-> I'd imagine that you had two branches A (with "Unkown") and B (with
-> "Unknown"), and wanted to apply changes in them to your integration
-> branch (let's call that 'master').  You ask cherry "what commits in
-> A are missing in my 'master'?" and apply them.  Next you ask cherry
-> "what commits in B are missing in my 'master' now?" and apply them.
->
-> Because "Unkown" and "Unknown" are not considered the "same" patches
-> (one is most likely an update to the other), you get conflict when
-> applying the second copy, and that is how you can notice that one of
-> them is a stale and buggy one.  If you haven't made your interim
-> integration result available to others after processing branch A,
-> you even have a chance to replace the "Unkown" one you already
-> applied with the corrected "Unknown" one before continuing.  Even if
-> you choose not to bother and skip the "Unknown" one from branch B,
-> at least you know that in the end result you have a typo that would
-> eventually need to be fixed from "Unkown" into "Unknown".
->
-> If you did a fuzzy version and ignored s/Unkown/Unknown/ typofix
-> between the "same" patches, you can avoid the conflict and all
-> patches from branch B may apply cleanly and automatically on top of
-> applying changes from branch A.  But depending on the order you
-> processed A and B, you have a 50% chance of keeping the buggy
-> version without even realizing.
->
-> So erring on the safe side and judging "Unkown" and "Unknown" are
-> different changes, inducing one extra conflict you had to look at,
-> is actively a good thing in this case.
->
-
-In this case, ie where code modification happens, I agree that we
-should play in the safe side.
-
-But in my case I was more using git-cherry as a tool to help me
-compare my integration branch and the master one. I'm interested to
-know which commits have been picked up from upstream and which ones
-are specific to my branch.
-
-And when backporting (cherry-picking) commits from upstream, it's
-quite frequent that the context is slightly different.
-
-I think in this case and not the one you describe, such 'fuzz' option
-might make sense. Fuzzy match could be reported with a different tag,
-'~' for example.
-
-> One thing that helps to know while learning Git is that we try to
-> avoid being overly clever and outsmarting human users.  Instead, we
-> err on the safe side to avoid silently doing a wrong thing.
->
-> This is because a tool that automates 100% of cases with 2% chance
-> of producing wrong result cannot be trusted---you have to manually
-> inspect all 100% cases it automatically handled to make sure it did
-> the right thing.  We instead automate 98% of simple cases where it
-> is obvious what the right result is, and ask the human user for help
-> on the remaining 2%.
->
-> And this design principle is not limited to cherry.  The design of
-> our merge algorithms is the same way, for example.
-
-I fully agree with this principle.
-
-Thanks
--- 
-Francis
+>> typedef uint32_t CC_LONG;       /* 32 bit unsigned integer */
+>> //...
+>> extern int CC_SHA1_Update(CC_SHA1_CTX *c, const void *data, CC_LONG =
+len)
+>>
+>> A possible fix would be to either call SHA1_Update with a maximum of
+>> UINT_MAX, looping if necessary. Or have a compatibility SHA1_Update =
+for OS X
+>> which can handle data longer than UINT_MAX.
+>>
+>> I'm not sure what the git maintainers would prefer.
+>>
+>> Regards,
+>>
+>>   Filipe
+>>
+>> On Wed, Oct 28, 2015 at 4:10 PM, Rafael Esp=C3=ADndola
+>> <rafael.espindola@gmail.com> wrote:
+>>>
+>>> I first noticed this with "2.4.9 (Apple Git-60)", but it reproduces
+>>> with git built from 37023ba381b6d251d7140a997b39b566dbc63c42.
+>>>
+>>> Create two files with just 0s:
+>>>
+>>> -rw-r--r--  1 espindola  staff  4294967296 28 Oct 11:09 exactly-4gi=
+b
+>>> -rw-r--r--  1 espindola  staff  4294967295 28 Oct 11:09 one-less-th=
+an-4gib
+>>>
+>>>
+>>> and run
+>>>
+>>> git init
+>>> git add one-less-than-4gib
+>>> git commit -m bar
+>>> git fsck
+>>> git add exactly-4gib
+>>> git commit -m bar
+>>> git fsck
+>>>
+>>> The first fsck will run with no problems, but the second one fails:
+>>>
+>>> error: packed cfdaf54c9ccfd8f5e4cee562f7d5f92df13d3106 from
+>>> .git/objects/pack/pack-ff08480fd7f767b6bd0aeb559f0f5dea2245b0b3.pac=
+k
+>>> is corrupt
+>>>
+>>> Using the very same revision on freebsd doesn't cause any errors.
+>>>
+>>> Cheers,
+>>> Rafael
+>>
+>>
