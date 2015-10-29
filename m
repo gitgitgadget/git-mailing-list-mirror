@@ -1,135 +1,84 @@
-From: Filipe Cabecinhas <filcab@gmail.com>
-Subject: Re: git fsck failure on OS X with files >= 4 GiB
-Date: Thu, 29 Oct 2015 08:15:28 -0700
-Message-ID: <CAEDE853n2HR-SK9_sGn8n3j0xoTb3eQa86UvdW0DBrc+Z1sDrg@mail.gmail.com>
-References: <CAG3jReJn2Pz6-bXLw6baOZaE1BHYiC+1-zN0eagigfG3umWpJA@mail.gmail.com>
-	<CAEDE8505fXAwVXx=EZwxPHvXpMByzpnXJ9LBgfx3U6VUaFbPHw@mail.gmail.com>
-	<CAG3jRe+23sy1k9QNdpdn3GF3nbzPMmYO=TM=SufEq83OtwNxbA@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2 0/8] Expose the submodule parallelism to the user
+Date: Thu, 29 Oct 2015 08:51:27 -0700
+Message-ID: <CAGZ79kYXrOFDqs5c-OYG2vRO9GY_aoD_GU1=TkRtOMaGC_GowA@mail.gmail.com>
+References: <xmqqfv0wp1l1.fsf@gitster.mtv.corp.google.com>
+	<1446074504-6014-1-git-send-email-sbeller@google.com>
+	<56321CF4.60807@ramsayjones.plus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Rafael_Esp=C3=ADndola?= <rafael.espindola@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 16:15:39 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Eric Sunshine <ericsunshine@gmail.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 16:51:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrovO-0005SV-Kp
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 16:15:34 +0100
+	id 1ZrpUC-0002g1-SK
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 16:51:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756916AbbJ2PPa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Oct 2015 11:15:30 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:38909 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754034AbbJ2PP3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2015 11:15:29 -0400
-Received: by wicll6 with SMTP id ll6so45623362wic.1
-        for <git@vger.kernel.org>; Thu, 29 Oct 2015 08:15:28 -0700 (PDT)
+	id S1753068AbbJ2Pv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2015 11:51:28 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:32929 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751258AbbJ2Pv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2015 11:51:27 -0400
+Received: by ykft191 with SMTP id t191so46735503ykf.0
+        for <git@vger.kernel.org>; Thu, 29 Oct 2015 08:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=mF9aPb9xmwo2kGzECVSoQAAzMUqxByEgSCMsqJLN0ec=;
-        b=ZtzL8w2A3fmFEWHZutLwL93hMS+/vy5pYiVckEgHjB50qlqPE3LC09mf9p2YLXxihg
-         zWRAcHUq1cqrQtpR3RCsjk6MiUJwMHLqGTL8Q/b62u5KBxPeiO4y6+M09S01BqNcLv0b
-         Pyn7+H/5vSsNfIBSQ3mvp2QZ76nr49enul7HhBBqe4ePXigXm6hdbtOP4Bu/zf0UhP0G
-         ekQ6zeH//nMeEtdJKg9Wb60Go7JeMIz38VQtgjOc8eGU+FKizkq9VcB059/jnQYUun7G
-         AbffvNkBAttzg2rpGiXNx4AdCuxluchZz0+P1wC85bD6MLEcW9pwhxhGigUYaetrFYq1
-         RIEA==
-X-Received: by 10.194.59.137 with SMTP id z9mr2959674wjq.28.1446131728472;
- Thu, 29 Oct 2015 08:15:28 -0700 (PDT)
-Received: by 10.194.59.10 with HTTP; Thu, 29 Oct 2015 08:15:28 -0700 (PDT)
-In-Reply-To: <CAG3jRe+23sy1k9QNdpdn3GF3nbzPMmYO=TM=SufEq83OtwNxbA@mail.gmail.com>
+         :cc:content-type;
+        bh=29IxkZB9PF4L6WnTHb/9P997BCZG53ShJjYbwZbZ3wo=;
+        b=paH/EYwGaaEsAlXsLJdI+Tkpc+iQ1KRfOqU7z8ZcQGkwW8EACThQ56uCHFcbGrVIDy
+         igDJ/SNV/3947GSW6bdMp+dOi3SqquIIpnkuQkZ/fgm03AiUWrppN3BswkEZeUx8lqAi
+         v+E2RBhoB2GZxrK+k448UVQfcExKnY1w+AlU+0PrCnyD/mpu+SHtwH5f8YjKvyjpSiun
+         c6tkY7Nwz8LwPFEVfbGybD6aQfSt3ahiDGBZXqgOAcxRY9JLgHP0IjL+4xIKB4GZ6tn4
+         tLRyqHxpTsh/4uNDoTQlE3kdpgyYZ9lO9Cb4p7Bnq8KReezVRIzSZKJeK+CZsnvSmwRH
+         ENrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=29IxkZB9PF4L6WnTHb/9P997BCZG53ShJjYbwZbZ3wo=;
+        b=f//vBk6XxI4Rl6I3GPAjspUUOc+JphkRahBSqqnZfr9Y1n55aREOchjniCInI14d+O
+         zinyxpdVTGRKj0V0SBjuavfEKdn+KsgUoy9zfybfpxyZdC9Q/w32cB0ARyBen7JhurWL
+         /Ph+v0VFBplggDQEzxaJ4jS25fHDnlGPs0jj2PXRjpvrsDs5EdfvM61WcqFQPPYO1RKM
+         xC69DlSI8hQpA+VAyrdmUgVDjrB4OsGwVC8x/YX77N8NBD2MKNMoqQRZNMmpyHVc0CdY
+         LTaHOxy+LYGPYnTP6NYCyzYWBujftZdUIaCRk30+5lVnA1qcGtAJ7qjbXUkpSNIwYu6W
+         ZXNw==
+X-Gm-Message-State: ALoCoQlFzu+x2tCn5/Ph68Uju3RKXeE9wY8InITRCTGOqNryq1OypnPbPbnREKI3zsOC3+Mxqhif
+X-Received: by 10.129.75.208 with SMTP id y199mr2163616ywa.48.1446133887217;
+ Thu, 29 Oct 2015 08:51:27 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Thu, 29 Oct 2015 08:51:27 -0700 (PDT)
+In-Reply-To: <56321CF4.60807@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280443>
 
-Defining BLK_SHA1 =3D YesPlease (when calling make) should just change
-the SHA functions, instead of completely removing OpenSSL or
-CommonCrypto.
+On Thu, Oct 29, 2015 at 6:19 AM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
 
-Regards,
-  Filipe
+> Hmm, is there a way to _not_ fetch in parallel (override the
+> config) from the command line for a given command?
+>
+> ATB,
+> Ramsay Jones
 
+git config submodule.jobs 42
+git <foo> --jobs 1 # should run just one task, despite having 42 configured
 
-On Thu, Oct 29, 2015 at 3:46 AM, Rafael Esp=C3=ADndola
-<rafael.espindola@gmail.com> wrote:
-> Awesome, building with
->
-> NO_OPENSSL =3D 1
-> NO_GETTEXT =3D 1
->
-> produces a working git :-)
->
-> Cheers,
-> Rafael
->
->
-> On 28 October 2015 at 23:37, Filipe Cabecinhas <filcab@gmail.com> wro=
-te:
->> I did some debugging, and it seems CC_SHA1_Update (used by
->> write_sha1_file_prepare if APPLE_COMMON_CRYPTO is defined in the Mak=
-efile)
->> takes a uint32_t as a "length" parameter, which explains why it stop=
-s
->> working at 4GiB (UINT_MAX+1).
->>
->> In the OS X 10.11 SDK header CommonCrypto/CommonDigest.h, we have:
->>
->> typedef uint32_t CC_LONG;       /* 32 bit unsigned integer */
->> //...
->> extern int CC_SHA1_Update(CC_SHA1_CTX *c, const void *data, CC_LONG =
-len)
->>
->> A possible fix would be to either call SHA1_Update with a maximum of
->> UINT_MAX, looping if necessary. Or have a compatibility SHA1_Update =
-for OS X
->> which can handle data longer than UINT_MAX.
->>
->> I'm not sure what the git maintainers would prefer.
->>
->> Regards,
->>
->>   Filipe
->>
->> On Wed, Oct 28, 2015 at 4:10 PM, Rafael Esp=C3=ADndola
->> <rafael.espindola@gmail.com> wrote:
->>>
->>> I first noticed this with "2.4.9 (Apple Git-60)", but it reproduces
->>> with git built from 37023ba381b6d251d7140a997b39b566dbc63c42.
->>>
->>> Create two files with just 0s:
->>>
->>> -rw-r--r--  1 espindola  staff  4294967296 28 Oct 11:09 exactly-4gi=
-b
->>> -rw-r--r--  1 espindola  staff  4294967295 28 Oct 11:09 one-less-th=
-an-4gib
->>>
->>>
->>> and run
->>>
->>> git init
->>> git add one-less-than-4gib
->>> git commit -m bar
->>> git fsck
->>> git add exactly-4gib
->>> git commit -m bar
->>> git fsck
->>>
->>> The first fsck will run with no problems, but the second one fails:
->>>
->>> error: packed cfdaf54c9ccfd8f5e4cee562f7d5f92df13d3106 from
->>> .git/objects/pack/pack-ff08480fd7f767b6bd0aeb559f0f5dea2245b0b3.pac=
-k
->>> is corrupt
->>>
->>> Using the very same revision on freebsd doesn't cause any errors.
->>>
->>> Cheers,
->>> Rafael
->>
->>
+It does use the parallel processing machinery though, but with a maximum of
+one subcommand being spawned. Is that what you're asking?
+
+Thanks,
+Stefan
