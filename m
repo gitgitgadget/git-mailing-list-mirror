@@ -1,84 +1,112 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: git-gui is still using old-style git-merge invocation
-Date: Thu, 29 Oct 2015 18:56:35 +0100
-Message-ID: <1446141395.3199.2.camel@kaarsemaker.net>
-References: <56325C58.1060007@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] difftool: avoid symlinks when reusing worktree files
+Date: Thu, 29 Oct 2015 10:59:58 -0700
+Message-ID: <xmqq8u6lsggx.fsf@gitster.mtv.corp.google.com>
+References: <1445981088-6285-1-git-send-email-davvid@gmail.com>
+	<xmqq1tcgne4u.fsf@gitster.mtv.corp.google.com>
+	<20151029015539.GA12513@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: Johannes Sixt <j6t@kdbg.org>,
+Content-Type: text/plain
+Cc: Ismail Badawi <ismail@badawi.io>,
+	John Keeping <john@keeping.me.uk>,
+	Tim Henigan <tim.henigan@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 29 18:56:44 2015
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 19:00:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrrRL-0004Fk-EN
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 18:56:43 +0100
+	id 1ZrrUh-0007Qj-Li
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 19:00:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756914AbbJ2R4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2015 13:56:39 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:33914 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752811AbbJ2R4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2015 13:56:38 -0400
-Received: by wikq8 with SMTP id q8so292109839wik.1
-        for <git@vger.kernel.org>; Thu, 29 Oct 2015 10:56:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker_net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:content-type
-         :mime-version:content-transfer-encoding;
-        bh=0WWKd4IAWTSxyYkCKRcq+N2dMbD2V1n/i0X94q4Zmgs=;
-        b=poDj17yqHbWbxcCETPvE146Hrwpn3IGvdCse4Y/x73Jbe0JaVC/08X0a720NA+26D/
-         xS47tQy7nqM+/eqO14ccm/T65wQaCKfypJI/uzsVn9hYXAPxxGlvkAFOrjG5WpbB7gmB
-         nix0cU9FOcO6sageo0V3YCKglvC0HtQZzzYIiZkGnsNCBLcaYQog+tND99lKfx9ij1cT
-         M6xgmdHedVO92OP/BgagF2jIA0Hc71XjfzliDVOZTKahU7n3DPmKFrgMCqTYIKqZ7YSN
-         tpNxyQuK8euzep/pNUekHtODekQlrI54RO0Qa3AwJ/TKRD9MV4HEVjrmQ3i6QDQPKFMP
-         ozsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=0WWKd4IAWTSxyYkCKRcq+N2dMbD2V1n/i0X94q4Zmgs=;
-        b=Ng5mmFGw7WDxrmLpeFYSbaj11Zm+XL1hJ+SZXHRmIc5nONER5PvIoaFutEXdgCivvM
-         tgLSEiQ332VIVnRRx/7D2ySrhPpUayR8Gil58IGrNyDB0HR/vHPBGsBwZaNNGDc6CEgs
-         QSH3HKgYsZyK5Bg4v+6yq81ZsAQJTlpD+429UIAtUneWlKyQDYGilf64nzXeD2w+blsi
-         upCq3ejnlO4oE/GJTvIe2Q3YxRQGA9iiqYw4AvUMIvbGZ9rq3/hW61qbRqSXVymEtK3w
-         halFsOB8cQq4d/tiEKJ5Uu1aT/IAbbJZouK2k8xKoKPdn1A/TBrjVpw6yKoGR3O74mnN
-         bPKQ==
-X-Gm-Message-State: ALoCoQmO8SGGLy3QxD8PQoMEJObmVmGCuJVCy0gBsOR4nWlkufQ8jv2V7DMQreVhXb9UqrdKptZR
-X-Received: by 10.194.2.144 with SMTP id 16mr3812552wju.90.1446141396971;
-        Thu, 29 Oct 2015 10:56:36 -0700 (PDT)
-Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id at4sm2943475wjc.9.2015.10.29.10.56.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 29 Oct 2015 10:56:36 -0700 (PDT)
-In-Reply-To: <56325C58.1060007@kdbg.org>
-X-Mailer: Evolution 3.16.5-1ubuntu3 
+	id S1757517AbbJ2SAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2015 14:00:05 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65341 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756914AbbJ2SAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2015 14:00:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4522227098;
+	Thu, 29 Oct 2015 14:00:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=B9qToJ4KHen1ih+XWfpaN3jMI+Y=; b=Vk927o
+	yPXtYGVBZJiQoaR/l4zMDaOQ0s9bPxJCGkBUUR+S1+naNSqVPFaOjcTK/eryNMoh
+	BoFRltsSfP3xSCRYxgs1S3kuNr8ilqCrTWfmOmsiR+Ag1jl1mTWE887E8CNYKX+t
+	X2Qot53oTj2OOIRC6zkzsdpBoPUzxoSHCHdKY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YASrecvrLoMW9RnMHR1jU/YXcX8PlG56
+	KodbRxVTDEWiWi9c4G2guJzLEJxUIS1Su3Hkqmzo4kbltBIKFflB/KzSDDIPk9WZ
+	NhC9nFsApu3ABpu5M2hg3cJgShVd1Jk3kmQoGcAuvhcL0zlPeyhgEGYloNsyF8LL
+	m2wG38ewXXE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EBA9D27094;
+	Thu, 29 Oct 2015 14:00:00 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0E04A27085;
+	Thu, 29 Oct 2015 14:00:00 -0400 (EDT)
+In-Reply-To: <20151029015539.GA12513@gmail.com> (David Aguilar's message of
+	"Wed, 28 Oct 2015 18:55:39 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DF376936-7E66-11E5-9016-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280452>
 
-On do, 2015-10-29 at 18:50 +0100, Johannes Sixt wrote:
-> Performing a merge with git gui presents the following message in the
-> merge result window:
-> 
-> warning: old-style 'git merge <msg> HEAD <commit>' is deprecated.
-> Merge made by the 'recursive' strategy.
->   a | 1 +
->   1 file changed, 1 insertion(+)
->   create mode 100644 a
-> 
-> But I am unable to find where the invocation happens. Can somebody
-> help?
+David Aguilar <davvid@gmail.com> writes:
 
-git-gui/lib/merge.tcl, method _start
+> Right.  At first I thought I could revise the commit message to
+> make it clearer that we simply want to skip all symlinks, since
+> it never makes sense to reuse a worktree symlinks, but looking
+> at the tests and implementation makes me realize that it's not
+> that simple.
+>
+> This is going to take a bit more time to get right.  John, I was
+> hoping you'd be able to take a look -- I'm playing catch-up too.
+> When it was first reported I let it sit for a while in hopes
+> that the original author would pickup the issue, but months
+> passed and I figured I'd take a stab at helping the user out.
+>
+> Anyways, it'll take me a bit more time to understand the code
+> and work out a sensible solution.  My gut feeling is that we
+> should adjust the dir-diff feature so that it ignores all
+> symlinks.  That seems like a simple answer since we're deciding
+> to skip that chunk of complexity.
 
-The command is constructed on lines 115-120 (master as of today,
- 37023ba3)
--- 
-Dennis Kaarsemaker
-www.kaarsemaker.net
+What dir-diff wants to do is to prepare two directory hierarchies on
+the filesystem and run "diff -r" (or an equivalent command of user's
+choice) on them, e.g. "diff -r left/ right/".  "left/" tree is
+typically what you want to compare your working tree files agaist
+(e.g. a clean checkout of "the other version"), and "right/" tree is
+populated with either copies of the working tree or symbolic links.
+The copying to "right/" feels wasteful, but your working tree may be
+littered with build artifacts, and making a clean copy with only
+tracked files is one way to make sure that "diff -r" with a clean
+checout of "the other version" will not show them.
+
+In the loop that walks the @rawdiff array, there are a lot of "if we
+see a symbolic link on the left, do this" before the last one that
+says "if the working tree side is not $null (i.e. not missing), ask
+ut_wt_file()".  That code remembers which path on either side had
+symbolic links.
+
+Later in the same function, there is this comment "Symbolic links
+require special treatment."  The intent of the code here is that any
+path that involves a symbolic link should be tweaked there.  The
+loop over %symlink expects left/ and right/ to be populated normally
+by the loop over @working_tree, and then for any path that is a
+symbolic link is replaced with a phony regular file (not a symbolic
+link) that says "Here is a symbolic link".
+
+So I think it is fine to return $use=0 for any symbolic link from
+use_wt_file.  Anything you do there will be replaced by the loop
+over %symlink that appears later in the caller.  The caller discards
+$wt_sha1 when $use=0 is returned, so the second return value does
+not matter.
