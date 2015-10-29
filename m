@@ -1,106 +1,121 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: Watchman/inotify support and other ways to speed up git status
-Date: Thu, 29 Oct 2015 09:10:05 +0100
-Message-ID: <CAP8UFD3rkacENsnthdhqTPczbZP+J_iV6xr8sTXj2MFgZRx8DQ@mail.gmail.com>
-References: <CAP8UFD3Cd9SOh6EYwcx9hTVv7P24M5bEJRCYCT5Qgj=qPRJ8hw@mail.gmail.com>
-	<1445990089.8302.27.camel@twopensource.com>
+From: =?UTF-8?Q?Rafael_Esp=C3=ADndola?= <rafael.espindola@gmail.com>
+Subject: Re: git fsck failure on OS X with files >= 4 GiB
+Date: Thu, 29 Oct 2015 03:46:53 -0700
+Message-ID: <CAG3jRe+23sy1k9QNdpdn3GF3nbzPMmYO=TM=SufEq83OtwNxbA@mail.gmail.com>
+References: <CAG3jReJn2Pz6-bXLw6baOZaE1BHYiC+1-zN0eagigfG3umWpJA@mail.gmail.com>
+	<CAEDE8505fXAwVXx=EZwxPHvXpMByzpnXJ9LBgfx3U6VUaFbPHw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Luciano Rocha <luciano.rocha@booking.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Oct 29 09:10:39 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Filipe Cabecinhas <filcab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 29 11:47:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZriI4-0007aZ-4x
-	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 09:10:32 +0100
+	id 1ZrkjS-000381-QP
+	for gcvg-git-2@plane.gmane.org; Thu, 29 Oct 2015 11:46:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751845AbbJ2IKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2015 04:10:16 -0400
-Received: from mail-lf0-f41.google.com ([209.85.215.41]:34437 "EHLO
-	mail-lf0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753696AbbJ2IKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2015 04:10:07 -0400
-Received: by lfaz124 with SMTP id z124so14975186lfa.1
-        for <git@vger.kernel.org>; Thu, 29 Oct 2015 01:10:05 -0700 (PDT)
+	id S1751488AbbJ2Kqz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Oct 2015 06:46:55 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:34346 "EHLO
+	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089AbbJ2Kqy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Oct 2015 06:46:54 -0400
+Received: by oies66 with SMTP id s66so26782044oie.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2015 03:46:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Ko59Dh1sEX9eslkOBe4wV+Okmsj01gsVO3Ewob5iKLo=;
-        b=lrUHo0nvVVLQ4AlO4htDTHfNAAac5G8gZihvIkCuwlFjBH6yz5/Z7eEMsqbKIJwugP
-         KTNY6BPBYz3Japf8b2tMij29dN+eJ7TvQ6HzO1FdCUYkvjiuhdDM+tMEzSGuw/n07bRV
-         gcx8arM9VDjUdelFIb9HRAsrOsHOCQzggqktcRNOQJJLpenCya4gFCZd3K93R2xZmjlq
-         9A/lRTaiVhx5awN3YyJoNntzVJEab7KsAiX1bbgNPvpCURtM1J0aXskF2tnYXh69UwlC
-         dUXOI1+lPOHv9jUEC4RI6a3Eq+TTDMRgOL0d1AfvBY+F8HfiVpaTWk/4erv66eSmuPRd
-         HN6Q==
-X-Received: by 10.25.18.233 with SMTP id 102mr145104lfs.96.1446106205203; Thu,
- 29 Oct 2015 01:10:05 -0700 (PDT)
-Received: by 10.25.89.130 with HTTP; Thu, 29 Oct 2015 01:10:05 -0700 (PDT)
-In-Reply-To: <1445990089.8302.27.camel@twopensource.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=5X+OtefOed1ODwsbgevVMQO2s7ll7InvGnO80nHFQTg=;
+        b=SwcRmn1+D0QKji9yDVg0ZnyPZDXZfWkVlduMX3sgPu8K9pjaXsze5eF81JkRvjbwik
+         H8cMDJD5Kuo2BgfJ2pPcCJ+4HKUNozt5QqhkrIOUCGfdh+f4BRbwDAH0H0VdGgCTa4OQ
+         y4ci52XB2PuUKowxkdyWZQqBwc8ShackC4wgOzHKQ/MaLIPGCxjbu6yzQwnh0RCCDyTh
+         wSyvzvbsj/Mf81FV/Z9MQbVF7u3jma2H/E+I0swg66OUqD/hCJQ4eUWCrizTRLNS7Dqz
+         pD2azXxMqhSUT/zo5Nxojpe3QDuxUmmcHAAvm9ikCufjPrSuvYRpLle8qXoTUYDQwkzf
+         N7sA==
+X-Received: by 10.202.97.196 with SMTP id v187mr482400oib.91.1446115613377;
+ Thu, 29 Oct 2015 03:46:53 -0700 (PDT)
+Received: by 10.202.228.73 with HTTP; Thu, 29 Oct 2015 03:46:53 -0700 (PDT)
+In-Reply-To: <CAEDE8505fXAwVXx=EZwxPHvXpMByzpnXJ9LBgfx3U6VUaFbPHw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280437>
 
-On Wed, Oct 28, 2015 at 12:54 AM, David Turner <dturner@twopensource.com> wrote:
+Awesome, building with
+
+NO_OPENSSL =3D 1
+NO_GETTEXT =3D 1
+
+produces a working git :-)
+
+Cheers,
+Rafael
+
+
+On 28 October 2015 at 23:37, Filipe Cabecinhas <filcab@gmail.com> wrote=
+:
+> I did some debugging, and it seems CC_SHA1_Update (used by
+> write_sha1_file_prepare if APPLE_COMMON_CRYPTO is defined in the Make=
+file)
+> takes a uint32_t as a "length" parameter, which explains why it stops
+> working at 4GiB (UINT_MAX+1).
 >
-> On Thu, 2015-10-22 at 07:59 +0200, Christian Couder wrote:
->> Hi everyone,
->>
->> I am starting to investigate ways to speed up git status and other git
->> commands for Booking.com (thanks to AEvar) and I'd be happy to discuss
->> the current status or be pointed to relevant documentation or mailing
->> list threads.
->>
->> From the threads below ([0], [1], [2], [3], [4], [5], [6], [7], [8]) I
->> understand that the status is roughly the following:
->>
->> - instead of working on inotify support it's better to work on using a
->> cross platform tool like Watchman
->>
->> - instead of working on Watchman support it is better to work first on
->> caching information in the index
->>
->> - git update-index --untracked-cache has been developed by Duy and
->> others and merged to master in May 2015 to cache untracked status in
->> the index; it is still considered experimental
->>
->> - git index-helper has been worked on by Duy but its status is not
->> clear (at least to me)
->>
->> Is that correct?
->> What are the possible/planned next steps in this area? improving
+> In the OS X 10.11 SDK header CommonCrypto/CommonDigest.h, we have:
 >
-> We're using Watchman at Twitter.  A week or two ago posted a dump of our
-> code to github, but I would advise waiting a day or two to use it, as
-> I'm about to pull a large number of bugfixes into it (I'll update this
-> thread and provide a link once I do so).
-
-Great, I will have a look at it then!
-
-> It's good, but it's not great.  One major problem is a bug on OS X[1]
-> that causes missed updates.  Another is that wide changes end up being
-> quite inefficient when querying watchman.  This means that we do some
-> hackery to manually update the fs_cache during various large git
-> operations.
+> typedef uint32_t CC_LONG;       /* 32 bit unsigned integer */
+> //...
+> extern int CC_SHA1_Update(CC_SHA1_CTX *c, const void *data, CC_LONG l=
+en)
 >
-> I agree that in general it would be better to store or all some of this
-> information in the index, and the untracked-cache is a good step on
-> that. But with it enabled and watchman disabled, there still appears to
-> be 1 lstat per file (plus one stat per dir).  The stats per-directory
-> alone are a large issue for Twitter because we have a relatively deep
-> and bushy directory structure (an average dir has about 3 or 4 entries
-> in it).  As a result, git status with watchman is almost twice as fast
-> as with the untracked cache (on my particular machine).
-
-Thanks for this detailled description.
-
-> [1] https://github.com/facebook/watchman/issues/172
+> A possible fix would be to either call SHA1_Update with a maximum of
+> UINT_MAX, looping if necessary. Or have a compatibility SHA1_Update f=
+or OS X
+> which can handle data longer than UINT_MAX.
+>
+> I'm not sure what the git maintainers would prefer.
+>
+> Regards,
+>
+>   Filipe
+>
+> On Wed, Oct 28, 2015 at 4:10 PM, Rafael Esp=C3=ADndola
+> <rafael.espindola@gmail.com> wrote:
+>>
+>> I first noticed this with "2.4.9 (Apple Git-60)", but it reproduces
+>> with git built from 37023ba381b6d251d7140a997b39b566dbc63c42.
+>>
+>> Create two files with just 0s:
+>>
+>> -rw-r--r--  1 espindola  staff  4294967296 28 Oct 11:09 exactly-4gib
+>> -rw-r--r--  1 espindola  staff  4294967295 28 Oct 11:09 one-less-tha=
+n-4gib
+>>
+>>
+>> and run
+>>
+>> git init
+>> git add one-less-than-4gib
+>> git commit -m bar
+>> git fsck
+>> git add exactly-4gib
+>> git commit -m bar
+>> git fsck
+>>
+>> The first fsck will run with no problems, but the second one fails:
+>>
+>> error: packed cfdaf54c9ccfd8f5e4cee562f7d5f92df13d3106 from
+>> .git/objects/pack/pack-ff08480fd7f767b6bd0aeb559f0f5dea2245b0b3.pack
+>> is corrupt
+>>
+>> Using the very same revision on freebsd doesn't cause any errors.
+>>
+>> Cheers,
+>> Rafael
+>
+>
