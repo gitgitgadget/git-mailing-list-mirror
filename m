@@ -1,82 +1,141 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCHv2 0/8] Expose the submodule parallelism to the user
-Date: Thu, 29 Oct 2015 23:50:57 +0000
-Message-ID: <5632B0E1.8040309@ramsayjones.plus.com>
-References: <xmqqfv0wp1l1.fsf@gitster.mtv.corp.google.com>
- <1446074504-6014-1-git-send-email-sbeller@google.com>
- <56321CF4.60807@ramsayjones.plus.com>
- <CAGZ79kYXrOFDqs5c-OYG2vRO9GY_aoD_GU1=TkRtOMaGC_GowA@mail.gmail.com>
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: Re: [PATCH 0/2] checkout: added two options to control progress output
+Date: Thu, 29 Oct 2015 18:09:06 -0600
+Message-ID: <CAOc6etakOy_zZ3fH_vS5UGGqouXTd7SJFtD6UC9bZRJaYWsRQw@mail.gmail.com>
+References: <1445698768-22614-1-git-send-email-eantoranz@gmail.com>
+	<20151029220519.GA466@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Eric Sunshine <ericsunshine@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 00:51:18 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 30 01:09:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrwyR-0001YJ-Jy
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 00:51:15 +0100
+	id 1ZrxFo-0001ch-RR
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 01:09:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757173AbbJ2XvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2015 19:51:11 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:40551 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751639AbbJ2XvK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2015 19:51:10 -0400
-Received: from [10.0.2.15] ([87.114.3.134])
-	by avasout07 with smtp
-	id bBqx1r0042tV80P01Bqy8n; Thu, 29 Oct 2015 23:50:59 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=JN/GyJ+b c=1 sm=1 tr=0
- a=qQ71F3v+nKp5qei/W0vv8w==:117 a=qQ71F3v+nKp5qei/W0vv8w==:17 a=0Bzu9jTXAAAA:8
- a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=gFx7NAWHfTl2va5yEs4A:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <CAGZ79kYXrOFDqs5c-OYG2vRO9GY_aoD_GU1=TkRtOMaGC_GowA@mail.gmail.com>
+	id S1757820AbbJ3AJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2015 20:09:08 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33800 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752336AbbJ3AJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2015 20:09:07 -0400
+Received: by padhk11 with SMTP id hk11so55081116pad.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2015 17:09:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=zWgnbAKqp67JaSQ/7b65yNuXksqAcphlpmsHqCT88G8=;
+        b=IazSbYR+tBQR1Qjf5Rrpltw2BCENd+/bf0dT4wu4o45iu3zXJmwOFfI87T8WrVyJ6m
+         rrP7uWW3i0pjkcXRyIhQgbOn+XX4frVqD2ARoSOrjcMq+fM/GE1TLMnFpcTzEMKyjqsA
+         vJ6Om0uMHD8OwZhxoTaTzk7uapouaxErYjYTkxS8YLfvftqazpPSDDKTt7D5B/ibxdMw
+         BrtaCaKp6I4eHrGUuMyeGfDOZ/4G6udCgUNF8S/UICm7JOWa0fpxCJTDfTuPEfv4LaI2
+         l8ASAd8DHZM+qspV4EI0SZiVOv2bAREV+19EmwDbt5zDMUdJT0pLfoRGjVqZWDzYxKDg
+         XQrQ==
+X-Received: by 10.66.124.165 with SMTP id mj5mr5045188pab.58.1446163746273;
+ Thu, 29 Oct 2015 17:09:06 -0700 (PDT)
+Received: by 10.66.149.4 with HTTP; Thu, 29 Oct 2015 17:09:06 -0700 (PDT)
+In-Reply-To: <20151029220519.GA466@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280463>
 
-
-
-On 29/10/15 15:51, Stefan Beller wrote:
-> On Thu, Oct 29, 2015 at 6:19 AM, Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
-> 
->> Hmm, is there a way to _not_ fetch in parallel (override the
->> config) from the command line for a given command?
+On Thu, Oct 29, 2015 at 4:05 PM, Jeff King <peff@peff.net> wrote:
+> On Sat, Oct 24, 2015 at 08:59:28AM -0600, Edmundo Carmona wrote:
+>
+>> From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
 >>
->> ATB,
->> Ramsay Jones
-> 
-> git config submodule.jobs 42
-> git <foo> --jobs 1 # should run just one task, despite having 42 configured
+>> checkout will refuse to print progress information if it's not connected
+>> to a TTY. These patches will add two options:
+>
+> Not just checkout, but all of git's progress code. The usual rules are:
+>
+>   - if the user told us --progress, show progress
+>
+>   - if the user told us --no-progress, don't show progress
+>
+>   - if neither is set, guess based on isatty(2)
+>
+> So with that in mind...
+>
+>> --progress-no-tty: enable printing progress info even if not using a TTY
+>
+> This should just be "--progress", shouldn't it?
 
-Heh, yes ... I didn't pose the question quite right ...
-> 
-> It does use the parallel processing machinery though, but with a maximum of
-> one subcommand being spawned. Is that what you're asking?
+It sure does!
 
-... but, despite that, you correctly inferred what I was really
-asking about! :)
+A comment there: I think more builtins support --progress than the ones that
+support --no-progress, right?
 
-I was just wondering what overhead the parallel processing machinery
-adds to the original 'non-parallel' code path (for the j=1 case).
-I suspect the answer is 'not much', but that's just a guess.
-Have you measured it? What happens if there is only a single
-submodule to fetch?
+>
+> It looks like checkout does not understand --progress and --no-progress.
+> It does have "--quiet", but elsewhere we usually use that to mean "no
+> progress, but also no other informational messages". We should probably
+> make this consistent with other commands. See how builtin/clone.c does
+> this, for example. Note also that clone's "quiet" option is part of
+> OPT__VERBOSITY(), which provides both "-q" and "-v" to turn the
+> verbosity level up/down. We could switch checkout to use that, too, but
+> I do not think it buys us anything, as we have no "-v" output for
+> checkout yet.
+>
+>> --progress-lf: print progress information using LFs instead of CRs
+>
+> I notice this is part of your patch 1, but it really seems orthogonal to
+> checkout's --progress option. It should probably be a separate patch,
+> and it probably needs some justification in the commit message (i.e.,
+> explain not just _what_ you are doing in the patch, but _why_ it is
+> useful).
+>
+> It also seems like this has nothing to do with checkout in particular.
+> Should it be triggered by an environment variable or by an option to the
+> main git binary? E.g.:
+>
+>   git --progress-lf checkout ...
+>
+> to affect the progress meter for all commands?
 
-ATB,
-Ramsay Jones
+I think it would be worth it but, given that this is a more "global"
+adjustment (
+as in, for the whole progress and not just checkout), I think it's better I
+separate it from the "--progress for checkout" patch cause right now checkout
+is missing the --progress option that many other builtins already support....
+say, for standardization's sake.
+
+>
+>> Edmundo Carmona Antoranz (2):
+>>   checkout: progress on non-tty. progress with lf
+>>   checkout: adjust documentation to the two new options
+>
+> I mentioned above that the two orthogonal features should each get their
+> own patches. I think you should also do the reverse with the
+> documentation: include it along with the implementation of the feature.
+> Sometimes we do documentation as a separate patch (especially if it is
+> large, or if the feature itself took many patches to complete). But for
+> a small feature, as a reviewer (and when looking back through history) I
+> usually find it simpler if the documentation is included in the same
+> commit.
+>
+>>  Documentation/git-checkout.txt | 10 ++++++++++
+>>  builtin/checkout.c             | 12 ++++++++++--
+>>  progress.c                     |  8 +++++++-
+>>  progress.h                     |  1 +
+>>  unpack-trees.c                 |  3 +++
+>>  unpack-trees.h                 |  2 ++
+>>  6 files changed, 33 insertions(+), 3 deletions(-)
+>
+> I didn't look too carefully at the patches themselves, as they would
+> need to be reworked substantially to follow the suggestions above. But I
+> didn't notice any style or patch-formatting problems, and you seem to
+> generally be touching the right areas for what you want to do.
+>
+> -Peff
+
+It's ok. I knew I would have to rework them based on feedback from the list.
+
+Thank you very much!
