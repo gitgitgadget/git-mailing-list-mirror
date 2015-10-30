@@ -1,97 +1,109 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv2 1/8] run_processes_parallel: Add output to tracing messages
-Date: Fri, 30 Oct 2015 10:32:55 -0700
-Message-ID: <CAGZ79kbmkwiQYSqtvn0kTCqh6XfkkcfxN1exTXzr8FOz4pWDQw@mail.gmail.com>
-References: <xmqqfv0wp1l1.fsf@gitster.mtv.corp.google.com>
-	<1446074504-6014-1-git-send-email-sbeller@google.com>
-	<1446074504-6014-2-git-send-email-sbeller@google.com>
-	<CAPig+cToAFAPhhFhOd_MF+EUcvRUjWOooeZH4uDy3-d9GEq73g@mail.gmail.com>
+From: Etienne Girard <etienne.g.girard@gmail.com>
+Subject: Re: [PATCH] git-p4: Handle p4 submit failure
+Date: Fri, 30 Oct 2015 18:33:07 +0100
+Message-ID: <CAJA=mv7ydNCm-yy9Ukk2XB-xvAJ1VkyqHEGcCTA2PEg=5y9cFQ@mail.gmail.com>
+References: <CAJA=mv4Tr_DoBMwR8hK_fEJ1PFCYTu17HHvEnFWMANGFcf0Wpg@mail.gmail.com>
+	<xmqqeggcmhle.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 18:33:11 2015
+Cc: Git Users <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
+	Pete Wyckoff <pw@padd.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 18:33:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsDY5-0003oL-AC
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 18:33:09 +0100
+	id 1ZsDYB-0003vb-2c
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 18:33:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030341AbbJ3RdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 13:33:03 -0400
-Received: from mail-yk0-f176.google.com ([209.85.160.176]:35560 "EHLO
-	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759944AbbJ3Rc5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 13:32:57 -0400
-Received: by ykek133 with SMTP id k133so83352895yke.2
-        for <git@vger.kernel.org>; Fri, 30 Oct 2015 10:32:55 -0700 (PDT)
+	id S1030508AbbJ3RdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 13:33:10 -0400
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:35364 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030504AbbJ3RdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 13:33:08 -0400
+Received: by igpw7 with SMTP id w7so16782933igp.0
+        for <git@vger.kernel.org>; Fri, 30 Oct 2015 10:33:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=0LkQCQG43izu0G17e4dnQCa4AU1MfM1bWaTvkM0YeBI=;
-        b=ZLPkuQcnT74FfL+/so7GBZMfPdAEuL1kFdy+5te9IpaaQ5/jPUKh3CqpxRV5sOnX/w
-         SS7CXGXyVSYXYf/Xe5TVnTIlrxLaTnOAVo9bxQ8qpbM/JKmzFBbl76Br4bMhuH7oQDRX
-         +kfMu0NKj1Md+tQJbWpK1lwGIq2sp9Qo6hVqhQqPzCkR8D5Mfz1MPqQWy2qKw0BAvLrG
-         clXX3tXV/DZ1/Jom0jVae+OBV7rA8unZb64Q4vl6l+N1uycj3I+ldC+6L0umZCvA6CwO
-         jKtve9X08f4b0CkVDDQ5RXtU7+M8Y2ZM67Wph2h5jk0c+17K0da2yAm3HSpmtQCD9PtE
-         7u5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=0LkQCQG43izu0G17e4dnQCa4AU1MfM1bWaTvkM0YeBI=;
-        b=O4oPMVvd+7KH1TILAJ4MyxDsFk2zie0TcBF5ZGTb62bkMm3S6J1vPxZMz6IiF1vkGG
-         W3rT1xpdRD9WOzlPNCWwB2iaGpKhFmpLWc/LL1cYn/3CEdkjF4d4AlQIqEm1HM2z7/4T
-         RLHnMW0NuYTRN2ZtaZP2lc6795vzB9uKGQ0VPMNk+/uSKMIF3v2eMPN8SzOjUtHO7Gkp
-         C3NIjbNVwDUyae0kz1erWSWU3PGTl7mexIvlLNUF/4sQXn9MnhzLW4xlHz63k2/0i7nV
-         C5EA4TNPxF47b0G4f7FAzvymwR1uRy8kyBIEG0ZG7ybxAOrAS6cjt2qDA0tB0L/4qI6H
-         ZJBw==
-X-Gm-Message-State: ALoCoQnYfXD++G/2TxOYDmfr85v7cSHD0yhMkmmFqJDGCIyP1rhvmXaFjDmMz40sRcsE2kW39PsV
-X-Received: by 10.13.251.2 with SMTP id l2mr7215057ywf.44.1446226375265; Fri,
- 30 Oct 2015 10:32:55 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Fri, 30 Oct 2015 10:32:55 -0700 (PDT)
-In-Reply-To: <CAPig+cToAFAPhhFhOd_MF+EUcvRUjWOooeZH4uDy3-d9GEq73g@mail.gmail.com>
+        bh=OlQvU+p+HHn2Biwsfqe0eGyBFfhOHBThXBSRow0LLvE=;
+        b=W6dG3lMOCGKx9b1FbIgLajSgglRK4VxqOhO29qENLzH2ZgYEM7fCRIQ3Sr2vPOJ+aa
+         ctpwVbloRdSFatYbwoBXmX4cuEaKqzIUXzrfcyK0mTYeJCQDJJXLYPMcKJqFNXLa+pE9
+         JOieeRoc4SdSr8UZAQG+MJ7oepfLkbQV3E0roNr2OgvsFg4Ey72YacMUlaZyFUv1WwV6
+         gW+st/rowhZ3cWKx9SwGIiN8upkEqbpIrAmnrwStiPJUEoN9GwuRsZgNkykeXPcKvbA1
+         +OMBJS8p280adgqeb1Cz2eXxSDWZKKPf3YueFdkWz4UVeRA7ljX6LkFvzcspRW1AyE2w
+         ry8w==
+X-Received: by 10.50.61.241 with SMTP id t17mr4187169igr.86.1446226387351;
+ Fri, 30 Oct 2015 10:33:07 -0700 (PDT)
+Received: by 10.64.87.170 with HTTP; Fri, 30 Oct 2015 10:33:07 -0700 (PDT)
+In-Reply-To: <xmqqeggcmhle.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280499>
 
-On Thu, Oct 29, 2015 at 6:10 PM, Eric Sunshine <ericsunshine@gmail.com> wrote:
-> On Wed, Oct 28, 2015 at 7:21 PM, Stefan Beller <sbeller@google.com> wrote:
->> run_processes_parallel: Add output to tracing messages
+Hello,
+
+>         Note: this time, you do not need to resend the patch; just
+>         please let me know if you want me to do the equivalent of
+>         the above while applying to make your murex address and name
+>         appear as the author in "git log" and "git shortlog" output.
+
+I'd like my murex address to appear on the log please, if it is not
+too much trouble. Thank you for all these tips on the submitting
+process.
+
+>> The p4 submit command may fail, for example if the changelist contains
+>> a job that does not exist in the Jobs section. If this is the case,
+>> p4_write_pipe will exit the script. This change makes it so that the
+>> workspace is reverted before letting the script die.
 >
-> This doesn't really say much. I guess you mean that the intention is
-> to delimit a section in which output from various tasks may be
-> intermixed.
-
-My original intention is to have it there for testing in later patches,
-so I am not so much interested in the delimiting but the raw number
-%d here.
-
->     run_processes_parallel: delimit intermixed task output
-
-Sounds good to me, better than my subject.
-
-> s/children/tasks/ maybe?
+> Some of the information contained in this paragraph deserves to be
+> in the log message proper.  How about
 >
-> Minor: Perhaps drop "in parallel" since the parallelism is already
-> implied by the "run_processes_parallel" prefix.
-
-done
-
->> +       trace_printf("run_processes_parallel: parallel processing done");
+>         From: GIRARD Etienne <egirard@murex.com>
+>         Subject: git-p4: clean up after p4 submit failure
 >
-> Minor: Likewise, perhaps just "done" rather than "parallel processing
-> done" since the "run_processes_parallel" prefix already implies
-> parallelism.
+>         When "p4 submit" command fails in P4Submit.applyCommit, the
+>         workspace is left with the changes.  We already have a code
+>         to revert the changes to the workspace when the user decides
+>         to cancel submission by aborting the editor that edits the
+>         change description, and we should treat the "p4 submit"
+>         failure the same way.
+>
+>         Clean the workspace if p4_write_pipe raised SystemExit,
+>         so that the user don't have to do it themselves.
+>
+>         Signed-off-by: GIRARD Etienne <egirard@murex.com>
+>
+> or something like that?
 
-done
+It seems like a good description. Please let me know if I should
+submit another patch with the proper log message
+
+>
+> While trying to come up with the above description, I started
+> wondering if the error message wants to differentiate the two cases.
+>
+> When self.edit_template() returns false, we know that the user
+> actively said "no I do not want to submit", and "Submission
+> cancelled" is perfectly fine, but when "p4 submit" fails because it
+> did not like the change description or if it found some other
+> issues, it is not necessarily that the user said "I want to cancel";
+> it is more like "Submission failed".
+
+Yes, however if `p4 submit` fails the corresponding "Command failed"
+error message is displayed, and the p4 error message itself is
+displayed if any.
+Tthe script will also terminate successfully if self.edit_template
+returns false but it will exit with error code 1 if p4 submit fails.
+
+So the user will get "Command failed: [...]" followed by "Submission
+cancelled, undoing p4 changes", to let him know that the script failed
+because of p4 and that nothing was submitted.
