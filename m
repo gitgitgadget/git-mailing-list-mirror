@@ -1,43 +1,43 @@
 From: Atousa Pahlevan Duprat <atousa.p@gmail.com>
 Subject: [PATCH] Limit the size of the data block passed to SHA1_Update()
-Date: Fri, 30 Oct 2015 15:12:02 -0700
-Message-ID: <1446243122-21464-1-git-send-email-apahlevan@ieee.org>
+Date: Fri, 30 Oct 2015 15:18:20 -0700
+Message-ID: <1446243500-21580-1-git-send-email-apahlevan@ieee.org>
 References: <CA+izobsBmYHHepYka795K2VnVLYBmN2tFqEyzSweMoS9gvuRVw@mail.gmail.com>
 Cc: Atousa Pahlevan Duprat <apahlevan@ieee.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 30 23:12:51 2015
+X-From: git-owner@vger.kernel.org Fri Oct 30 23:18:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsHug-0005qX-Ro
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 23:12:47 +0100
+	id 1ZsI0Z-0003RF-S9
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 23:18:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031214AbbJ3WMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 18:12:43 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:33923 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759373AbbJ3WMm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 18:12:42 -0400
-Received: by padhk11 with SMTP id hk11so85777229pad.1
-        for <git@vger.kernel.org>; Fri, 30 Oct 2015 15:12:41 -0700 (PDT)
+	id S1031267AbbJ3WSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 18:18:47 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:33224 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030387AbbJ3WSq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 18:18:46 -0400
+Received: by padhy1 with SMTP id hy1so79738611pad.0
+        for <git@vger.kernel.org>; Fri, 30 Oct 2015 15:18:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
         bh=/eoD5+BXE3hAlzfyo2QsZwWg7/xlyHCluiBys9mMQac=;
-        b=BCzZALBMkNc2t/un0ppk4F2ZeYBJJlRQjHZdaZeRwEJXi72fWPtaxM5gBCy1nUahtP
-         qp5LE/qlaKIyhda12+NJs36L8QF6DU/4iSZta9GW4bIzk/+rQ7FiwQbOHA2ps+mr+gzz
-         A+SHq98AqwCoBRjuqsoHKGuRWjiB8/hXgf4SFG+igGHcohhZQd5nIESRPaHpdmbaxcoy
-         qVtrsUFesnkJxpF/Eu2VwzdfMzDhREyuP6kMGGjuYcP+fu7P47K61UnrZ+I/B/ccZrJZ
-         G+Ws1IQPKVtHikMBOmrvdYQfImZhRpcZaCxY2MLydAfdkZJCiFymMmC/w4sj+rgGXNyZ
-         WC8g==
-X-Received: by 10.67.30.74 with SMTP id kc10mr10953288pad.147.1446243161799;
-        Fri, 30 Oct 2015 15:12:41 -0700 (PDT)
+        b=PmpMRvt2PAcWi+a5aBJR2pZOIKCP3JR6bnq5xt2bMyS+ObFW2HDp2iICUefbiXFhS1
+         UIOZiUzo/QhGPHvGBFswaTTJxbES0maYvytpnQ6uu5d6jXJgjoVrikuXANaTZJ0h24d8
+         gkRgrxNOuljnLXtqvioU8y9l10e2ZtjlppOC/FVG5O7OYLBh305lszUxC946Fk/jHuK/
+         xoqtaiSjtyUvntat1eAKeTo29d87nKoWqlWRdgvk0uxOklxBfYM7B+GwrrxOPZjCS5Sx
+         sTb6h90uAdKakVVNvQnuHZR2NDbtvN7VXKKLtppPIlEUWfhjl6iQkhuVIDU9ai2o8nh4
+         h+IQ==
+X-Received: by 10.66.157.36 with SMTP id wj4mr11389107pab.36.1446243525038;
+        Fri, 30 Oct 2015 15:18:45 -0700 (PDT)
 Received: from Atousas-Air.jduprat.net ([50.240.193.13])
-        by smtp.gmail.com with ESMTPSA id g12sm10041775pat.36.2015.10.30.15.12.40
+        by smtp.gmail.com with ESMTPSA id we9sm10115740pab.3.2015.10.30.15.18.43
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 30 Oct 2015 15:12:41 -0700 (PDT)
+        Fri, 30 Oct 2015 15:18:44 -0700 (PDT)
 X-Google-Original-From: Atousa Pahlevan Duprat <apahlevan@ieee.org>
 X-Mailer: git-send-email 2.4.9 (Apple Git-60)
 In-Reply-To: <CA+izobsBmYHHepYka795K2VnVLYBmN2tFqEyzSweMoS9gvuRVw@mail.gmail.com>
@@ -45,7 +45,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280551>
 
 Some implementations of SHA_Updates have inherent limits
 on the max chunk size. SHA1_MAX_BLOCK_SIZE can be defined
