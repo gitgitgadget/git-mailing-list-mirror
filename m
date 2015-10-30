@@ -1,85 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with gdb
-Date: Fri, 30 Oct 2015 11:32:49 -0700
-Message-ID: <xmqqlhakky0e.fsf@gitster.mtv.corp.google.com>
-References: <cover.1445865176.git.johannes.schindelin@gmx.de>
-	<082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
-	<20151026191724.GE7881@google.com>
-	<alpine.DEB.1.00.1510271036100.31610@s15462909.onlinehome-server.info>
-	<xmqqr3kge0d3.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.1.00.1510301925360.31610@s15462909.onlinehome-server.info>
+From: Knut Franke <k.franke@science-computing.de>
+Subject: Re: [PATCH 2/2] http: use credential API to handle proxy
+ authentication
+Date: Fri, 30 Oct 2015 19:24:27 +0100
+Message-ID: <20151030182426.GA16389@science-computing.de>
+References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
+ <1446025245-10128-1-git-send-email-k.franke@science-computing.de>
+ <1446025245-10128-3-git-send-email-k.franke@science-computing.de>
+ <CAPig+cRK-EPpH4dUMpYBcjR22Wqw4RnNTYeBvw-M7h=CTFGviQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 30 19:33:12 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 19:34:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsEUC-0002xK-4U
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 19:33:12 +0100
+	id 1ZsEVP-00046T-P0
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 19:34:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760065AbbJ3SdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 14:33:07 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54751 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753661AbbJ3SdG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 14:33:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0035024B41;
-	Fri, 30 Oct 2015 14:33:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5xXetZ3WgShGku1PbBwfa/V30MA=; b=eFWJZN
-	Ow4dmlTSPCDeJ353DgO0HFPbo6ovB3tri0hI86HWCNlRluiEXRnseCplbAXLUJls
-	Iclka/1SU5TSWkfi8d98sei0GmxtdbLUHq3vMCDa7EtGcAc3q3HzH57dYFWmq6DK
-	KmhP2BVXs29+AReHFuhFUg4DBn2mjUSJMR5a8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mi4orweGR8zDIiQw6CyAXa9Gk5c0YepJ
-	JIvgVHc31gdQE7fAEunoqaaaYFaqflSHCC7jkwyYxhJZ+F1b4IcYD81ONysPgl36
-	Db9vc3ZuqTGM+e7EbRk6rQn7mARkQPZnoOSrXfCtVI9L/rFBUp4d3zD4HRu4GAMO
-	bsZ6P81MMJg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EA34724B40;
-	Fri, 30 Oct 2015 14:33:04 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7473A24B3F;
-	Fri, 30 Oct 2015 14:33:04 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.1510301925360.31610@s15462909.onlinehome-server.info>
-	(Johannes Schindelin's message of "Fri, 30 Oct 2015 19:27:34 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A8652852-7F34-11E5-A98F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1760567AbbJ3SeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 14:34:22 -0400
+Received: from mx1.science-computing.de ([217.243.222.155]:65035 "EHLO
+	mx1.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752472AbbJ3SeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 14:34:21 -0400
+X-Greylist: delayed 591 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Oct 2015 14:34:20 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by scmail.science-computing.de (Postfix) with ESMTP id DF56A3A91;
+	Fri, 30 Oct 2015 19:24:27 +0100 (CET)
+X-Virus-Scanned: amavisd-new
+Received: from scmail.science-computing.de ([127.0.0.1])
+	by localhost (obi.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0_XDbiiEBpZu; Fri, 30 Oct 2015 19:24:27 +0100 (CET)
+Received: from hallasan.science-computing.de (hallasan.science-computing.de [10.10.24.76])
+	by scmail.science-computing.de (Postfix) with ESMTP id 653993844;
+	Fri, 30 Oct 2015 19:24:27 +0100 (CET)
+Received: by hallasan.science-computing.de (Postfix, from userid 1633)
+	id 51112A7966; Fri, 30 Oct 2015 19:24:27 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRK-EPpH4dUMpYBcjR22Wqw4RnNTYeBvw-M7h=CTFGviQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280515>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 2015-10-28 14:58, Eric Sunshine wrote:
+> > +               }
+> > +               if (!curl_http_proxy) {
+> > +                       copy_from_env(&curl_http_proxy, "ALL_PROXY");
+> > +                       copy_from_env(&curl_http_proxy, "all_proxy");
+> > +               }
+> 
+> If this sort of upper- and lowercase environment variable name
+> checking is indeed desirable, I wonder if it would make sense to fold
+> that functionality into the helper function.
 
-> Hi Junio,
->
-> On Tue, 27 Oct 2015, Junio C Hamano wrote:
->
->> It can be called GDB=1, perhaps?
->
-> No, this is way too generic. As I only test that the environment
-> variable's existence, even something like GDB=/usr/opt/gdb/bin/gdb would
-> trigger it.
->
-> I could be talked into GDB_GIT=1, though.
+It's just for consistency with libcurl here, not generally desirable; so I don't
+think it makes sense to add it to the helper.
 
-As I said in another message, I have no preference myself over the
-name of this variable (or making it a shell function like Duy
-mentioned, which incidentally may give us more visual pleasantness
-by losing '=').
+Otherwise, will fix. Thanks.
 
-I'd just be happy as long as the feature becomes available, and I'd
-leave the choice of consistent and convenient naming to others who
-have stronger opinions ;-)
+
+Cheers,
+Knut
+-- 
+Vorstandsvorsitzender/Chairman of the board of management:
+Gerd-Lothar Leonhart
+Vorstand/Board of Management:
+Dr. Bernd Finkbeiner, Dr. Arno Steitz
+Vorsitzender des Aufsichtsrats/
+Chairman of the Supervisory Board:
+Philippe Miltin
+Sitz/Registered Office: Tuebingen
+Registergericht/Registration Court: Stuttgart
+Registernummer/Commercial Register No.: HRB 382196
