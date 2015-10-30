@@ -1,686 +1,156 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Oct 2015, #07; Fri, 30)
-Date: Fri, 30 Oct 2015 15:07:17 -0700
-Message-ID: <xmqqeggcj9ii.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Atousa Pahlevan Duprat <atousa.p@gmail.com>
+Subject: [PATCH] Limit the size of the data block passed to SHA1_Update()
+Date: Fri, 30 Oct 2015 15:12:02 -0700
+Message-ID: <1446243122-21464-1-git-send-email-apahlevan@ieee.org>
+References: <CA+izobsBmYHHepYka795K2VnVLYBmN2tFqEyzSweMoS9gvuRVw@mail.gmail.com>
+Cc: Atousa Pahlevan Duprat <apahlevan@ieee.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 30 23:07:31 2015
+X-From: git-owner@vger.kernel.org Fri Oct 30 23:12:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsHpa-0000nP-0A
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 23:07:30 +0100
+	id 1ZsHug-0005qX-Ro
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 23:12:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932935AbbJ3WHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 18:07:25 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54784 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932928AbbJ3WHW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 18:07:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E2FF24B75;
-	Fri, 30 Oct 2015 18:07:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=m
-	hVt6mcLgOiZMD+djOKf9apoCNg=; b=OkAluZMzb0brOGl86cFYl9/zef4KF5XoB
-	9yXA8g7ZOT4hzNgnKjpGaFjAvnaTqKfDVMTRuBZfKH9pB1Hr2qn+R0bvM203614C
-	NT0NTiWHqGU0BNJa2cY+qXOXLTN7jrJroL/mFLLfgZH+830TAFqcdr/iKvUjYL4Q
-	zJ6FIRgTYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=h2n
-	IWJCv7ou210DOFD0+ZjkiHKtSNguoDyKj13075m+xVDazKojvSURA/yqAoCoXANB
-	Rsy0f74pQxc0JQ30R9k87YzMZUVhU649+Oo3nZBdCFGPuqFlfvs4sKw7am2Xh5CG
-	O5Wippr8tkd/KtMVsxHETwvAmfO+0f+YJGsPt6nE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 63A4824B74;
-	Fri, 30 Oct 2015 18:07:21 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 24D5824B73;
-	Fri, 30 Oct 2015 18:07:20 -0400 (EDT)
-X-master-at: 2635c2b8bfc9aec07b7f023d8e3b3d02df715344
-X-next-at: 3dda608c19069845846bd7fd57000a99f97b9c9d
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 96F987A2-7F52-11E5-A378-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1031214AbbJ3WMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 18:12:43 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33923 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759373AbbJ3WMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 18:12:42 -0400
+Received: by padhk11 with SMTP id hk11so85777229pad.1
+        for <git@vger.kernel.org>; Fri, 30 Oct 2015 15:12:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/eoD5+BXE3hAlzfyo2QsZwWg7/xlyHCluiBys9mMQac=;
+        b=BCzZALBMkNc2t/un0ppk4F2ZeYBJJlRQjHZdaZeRwEJXi72fWPtaxM5gBCy1nUahtP
+         qp5LE/qlaKIyhda12+NJs36L8QF6DU/4iSZta9GW4bIzk/+rQ7FiwQbOHA2ps+mr+gzz
+         A+SHq98AqwCoBRjuqsoHKGuRWjiB8/hXgf4SFG+igGHcohhZQd5nIESRPaHpdmbaxcoy
+         qVtrsUFesnkJxpF/Eu2VwzdfMzDhREyuP6kMGGjuYcP+fu7P47K61UnrZ+I/B/ccZrJZ
+         G+Ws1IQPKVtHikMBOmrvdYQfImZhRpcZaCxY2MLydAfdkZJCiFymMmC/w4sj+rgGXNyZ
+         WC8g==
+X-Received: by 10.67.30.74 with SMTP id kc10mr10953288pad.147.1446243161799;
+        Fri, 30 Oct 2015 15:12:41 -0700 (PDT)
+Received: from Atousas-Air.jduprat.net ([50.240.193.13])
+        by smtp.gmail.com with ESMTPSA id g12sm10041775pat.36.2015.10.30.15.12.40
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 30 Oct 2015 15:12:41 -0700 (PDT)
+X-Google-Original-From: Atousa Pahlevan Duprat <apahlevan@ieee.org>
+X-Mailer: git-send-email 2.4.9 (Apple Git-60)
+In-Reply-To: <CA+izobsBmYHHepYka795K2VnVLYBmN2tFqEyzSweMoS9gvuRVw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280549>
-
-Here are the topics that have been cooking.  Commits prefixed with
-'-' are only in 'pu' (proposed updates) while commits prefixed with
-'+' are in 'next'.
-
-At tinyurl.com/gitCal, I drew a 14-week schedule for this cycle.  I
-plan to be offline during weeks #7-#9 myself; hopefully we'll have
-capable interim maintainers to take care of the list traffic in the
-meantime as in past years.
-
-You can find the changes described here in the integration branches
-of the repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[Graduated to "master"]
-
-* ar/clone-dissociate (2015-10-22) 1 commit
-  (merged to 'next' on 2015-10-23 at 6bf746f)
- + clone: allow "--dissociate" without reference
-
- "git clone --dissociate" used to require that "--reference" was
- used at the same time, but you can create a new repository that
- borrows objects from another without using "--reference", namely
- with "clone --local" from a repository that borrows objects from
- other repositories.
-
-
-* dt/name-hash-dir-entry-fix (2015-10-21) 1 commit
-  (merged to 'next' on 2015-10-22 at 15eb519)
- + name-hash: don't reuse cache_entry in dir_entry
-
- The name-hash subsystem that is used to cope with case insensitive
- filesystems keeps track of directories and their on-filesystem
- cases for all the paths in the index by holding a pointer to a
- randomly chosen cache entry that is inside the directory (for its
- ce->ce_name component).  This pointer was not updated even when the
- cache entry was removed from the index, leading to use after free.
- This was fixed by recording the path for each directory instead of
- borrowing cache entries and restructuring the API somewhat.
-
-
-* gr/rebase-i-drop-warn (2015-10-28) 2 commits
-  (merged to 'next' on 2015-10-29 at 4bfda25)
- + rebase-i: work around Windows CRLF line endings
- + t3404: "rebase -i" gets broken when insn sheet uses CR/LF line endings
-
- Recent update to "rebase -i" that tries to sanity check the edited
- insn sheet before it uses it has become too picky on Windows where
- CRLF left by the editor is turned into a trailing CR on the line
- read via the "read" built-in command.
-
-
-* jc/add-u-A-default-to-top (2015-10-24) 1 commit
-  (merged to 'next' on 2015-10-29 at 15aea9c)
- + add: simplify -u/-A without pathspec
-
- "git --literal-pathspecs add -u/-A" without any command line
- argument misbehaved ever since Git 2.0.
-
-
-* jc/am-mailinfo-direct (2015-10-21) 1 commit
-  (merged to 'next' on 2015-10-22 at ca15014)
- + am: make direct call to mailinfo
- (this branch is used by jc/mailinfo; uses jc/mailinfo-lib.)
-
- "git am" used to spawn "git mailinfo" via run_command() API once
- per each patch, but learned to make a direct call to mailinfo()
- instead.
-
-
-* jc/em-dash-in-doc (2015-10-22) 1 commit
-  (merged to 'next' on 2015-10-23 at 31a08ce)
- + Documentation: AsciiDoc spells em-dash as double-dashes, not triple
-
- AsciiDoc markup fixes.
-
-
-* jc/everyday-markup (2015-10-22) 1 commit
-  (merged to 'next' on 2015-10-22 at 0a2702d)
- + Documentation/everyday: match undefline with the text
-
- AsciiDoc markup fixes.
-
-
-* jc/mailinfo-lib (2015-10-21) 34 commits
-  (merged to 'next' on 2015-10-22 at 405bd66)
- + mailinfo: remove calls to exit() and die() deep in the callchain
- + mailinfo: handle charset conversion errors in the caller
- + mailinfo: libify
- + mailinfo: keep the parsed log message in a strbuf
- + mailinfo: handle_commit_msg() shouldn't be called after finding patchbreak
- + mailinfo: move content/content_top to struct mailinfo
- + mailinfo: move [ps]_hdr_data to struct mailinfo
- + mailinfo: move cmitmsg and patchfile to struct mailinfo
- + mailinfo: move charset to struct mailinfo
- + mailinfo: move transfer_encoding to struct mailinfo
- + mailinfo: move check for metainfo_charset to convert_to_utf8()
- + mailinfo: move metainfo_charset to struct mailinfo
- + mailinfo: move use_scissors and use_inbody_headers to struct mailinfo
- + mailinfo: move add_message_id and message_id to struct mailinfo
- + mailinfo: move patch_lines to struct mailinfo
- + mailinfo: move filter/header stage to struct mailinfo
- + mailinfo: move global "FILE *fin, *fout" to struct mailinfo
- + mailinfo: move keep_subject & keep_non_patch_bracket to struct mailinfo
- + mailinfo: introduce "struct mailinfo" to hold globals
- + mailinfo: move global "line" into mailinfo() function
- + mailinfo: do not let find_boundary() touch global "line" directly
- + mailinfo: do not let handle_boundary() touch global "line" directly
- + mailinfo: do not let handle_body() touch global "line" directly
- + mailinfo: get rid of function-local static states
- + mailinfo: move definition of MAX_HDR_PARSED closer to its use
- + mailinfo: move cleanup_space() before its users
- + mailinfo: move check_header() after the helpers it uses
- + mailinfo: move read_one_header_line() closer to its callers
- + mailinfo: move handle_boundary() lower
- + mailinfo: plug strbuf leak during continuation line handling
- + mailinfo: explicitly close file handle to the patch output
- + mailinfo: fix an off-by-one error in the boundary stack
- + mailinfo: fold decode_header_bq() into decode_header()
- + mailinfo: remove a no-op call convert_to_utf8(it, "")
- (this branch is used by jc/am-mailinfo-direct and jc/mailinfo.)
-
- The implementation of "git mailinfo" was refactored so that a
- mailinfo() function can be directly called from inside a process.
-
-
-* jk/delete-modechange-conflict (2015-10-26) 3 commits
-  (merged to 'next' on 2015-10-29 at 59ce69d)
- + merge: detect delete/modechange conflict
- + t6031: generalize for recursive and resolve strategies
- + t6031: move triple-rename test to t3030
-
- Merging a branch that removes a path and another that changes the
- mode bits on the same path should have conflicted at the path, but
- it didn't and silently favoured the removal.
-
-
-* jk/merge-file-exit-code (2015-10-29) 1 commit
-  (merged to 'next' on 2015-10-29 at 6ae613f)
- + merge-file: clamp exit code to maximum 127
-
- "git merge-file" tried to signal how many conflicts it found, which
- obviously would not work well when there are too many of them.
-
-
-* jk/war-on-sprintf (2015-10-23) 2 commits
-  (merged to 'next' on 2015-10-23 at 3a94851)
- + compat/mingw.c: remove printf format warning
- + read_branches_file: plug a FILE* leak
-
-
-* js/imap-send-curl-compilation-fix (2015-10-26) 1 commit
-  (merged to 'next' on 2015-10-29 at 9c4f3eb)
- + imap-send: only use CURLOPT_LOGIN_OPTIONS if it is actually available
-
- "git imap-send" did not compile well with older version of cURL library.
-
-
-* js/misc-fixes (2015-10-26) 3 commits
-  (merged to 'next' on 2015-10-29 at 8990f29)
- + Correct fscanf formatting string for I64u values
- + Silence GCC's "cast of pointer to integer of a different size" warning
- + Squelch warning about an integer overflow
-
- Various compilation fixes and squelching of warnings.
-
-
-* mk/blame-error-message (2015-10-26) 1 commit
-  (merged to 'next' on 2015-10-29 at 82a1b18)
- + blame: fix option name in error message
-
- The error message from "git blame --contents --reverse" incorrectly
- talked about "--contents --children".
-
-
-* rp/link-curl-before-ssl (2015-10-21) 3 commits
-  (merged to 'next' on 2015-10-22 at dad4fc6)
- + configure.ac: detect ssl need with libcurl
- + Makefile: make curl-config path configurable
- + Makefile: link libcurl before zlib
-
- The linkage order of libraries was wrong in places around libcurl.
-
-
-* rs/pop-commit (2015-10-26) 1 commit
-  (merged to 'next' on 2015-10-29 at f24d8ed)
- + use pop_commit() for consuming the first entry of a struct commit_list
-
- Code simplification.
-
-
-* tk/sigchain-unnecessary-post-tempfile (2015-10-22) 4 commits
-  (merged to 'next' on 2015-10-22 at b049f0a)
- + shallow: remove unused #include "sigchain.h"
- + read-cache: remove unused #include "sigchain.h"
- + diff: remove unused #include "sigchain.h"
- + credential-cache--daemon: remove unused #include "sigchain.h"
-
- Remove no-longer used #include.
-
-
-* xf/user-manual-ff (2015-10-26) 1 commit
-  (merged to 'next' on 2015-10-29 at 488c4f8)
- + user-manual: fix the description of fast-forward
-
-
-* xf/user-manual-markup (2015-10-22) 3 commits
-  (merged to 'next' on 2015-10-22 at cd33c83)
- + Documentation: match undefline with the text in old release notes
- + Documentation: match underline with the text
- + Documentation: fix header markup
-
- AsciiDoc markup fixes.
-
---------------------------------------------------
-[New Topics]
-
-* sb/submodule-parallel-update (2015-10-29) 9 commits
- - clone: allow an explicit argument for parallel submodule clones
- - submodule update: expose parallelism to the user
- - git submodule update: have a dedicated helper for cloning
- - fetching submodules: respect `submodule.jobs` config option
- - submodule config: update parse_config()
- - submodule config: remove name_and_item_from_var
- - submodule config: keep update strategy around
- - run_processes_parallel: add output to tracing messages
- - Merge branch 'sb/submodule-parallel-fetch' into sb/submodule-parallel-update
- (this branch uses sb/submodule-parallel-fetch.)
-
- Builds on top of the "fetch --recurse-submodules" work to introduce
- parallel downloading into multiple submodules for "submodule update".
-
- Waiting for reviews.
-
-
-* jc/strbuf-gets (2015-10-28) 17 commits
- - test-sha1-array: read command stream with strbuf_gets()
- - grep: read -f file with strbuf_gets()
- - send-pack: read list of refs with strbuf_gets()
- - column: read lines with strbuf_gets()
- - cat-file: read batch stream with strbuf_gets()
- - transport-helper: read helper response with strbuf_gets()
- - clone/sha1_file: read info/alternates with strbuf_gets()
- - remote.c: read $GIT_DIR/remotes/* with strbuf_gets()
- - ident.c: read /etc/mailname with strbuf_gets()
- - rev-parse: read parseopt spec with strbuf_gets()
- - revision: read --stdin with strbuf_gets()
- - hash-object: read --stdin-paths with strbuf_gets()
- - mktree: read textual tree representation with strbuf_gets()
- - update-index: read list of paths with strbuf_gets() under --stdin
- - update-index: read --index-info with strbuf_gets()
- - check-attr, check-ignore, checkout-index: read paths with strbuf_gets()
- - strbuf: add strbuf_gets()
-
- Teach codepaths that communicate with users by reading text files
- to be more lenient to editors that write CRLF-terminated lines.
- Note that this is only about communication with Git, like feeding
- list of object names from the standard input instead of from the
- command line, and does not involve files in the working tree.
-
- Waiting for reviews.
-
-
-* eg/p4-submit-catch-failure (2015-10-30) 1 commit
- - git-p4: clean up after p4 submit failure
-
- Just like the working tree is cleaned up when the user cancelled
- submission in P4Submit.applyCommit(), clean up the mess if "p4
- submit" fails.
-
- Needs an update to test.
-
-
-* jk/initialization-fix-to-add-submodule-odb (2015-10-28) 1 commit
- - add_submodule_odb: initialize alt_odb list earlier
-
- We peek objects from submodule's object store by linking it to the
- list of alternate object databases, but the code to do so forgot to
- correctly initialize the list.
-
- Will merge to 'next'.
-
-
-* ep/ident-with-getaddrinfo (2015-10-30) 1 commit
- - (NEEDSWORK $gmane/280507) ident.c: add support for IPv6
-
- A build without NO_IPv6 used to use gethostbyname() when guessing
- user's hostname, instead of getaddrinfo() that is used in other
- codepaths in such a build.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280550>
+
+Some implementations of SHA_Updates have inherent limits
+on the max chunk size. SHA1_MAX_BLOCK_SIZE can be defined
+to set the max chunk size supported, if required.  This is
+enabled for OSX CommonCrypto library and set to 1GiB.
+---
+ Makefile                     |  9 +++++++++
+ cache.h                      |  7 ++++++-
+ compat/apple-common-crypto.h |  4 ++++
+ compat/sha1_chunked.c        | 20 ++++++++++++++++++++
+ 4 files changed, 39 insertions(+), 1 deletion(-)
+ create mode 100644 compat/sha1_chunked.c
+
+diff --git a/Makefile b/Makefile
+index 04c2231..5955542 100644
+--- a/Makefile
++++ b/Makefile
+@@ -141,6 +141,10 @@ all::
+ # Define PPC_SHA1 environment variable when running make to make use of
+ # a bundled SHA1 routine optimized for PowerPC.
+ #
++# Define SHA1_MAX_BLOCK_SIZE if your SSH1_Update() implementation can
++# hash only a limited amount of data in one call (e.g. APPLE_COMMON_CRYPTO
++# may want 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined).
++#
+ # Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl (Darwin).
+ #
+ # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
+@@ -1346,6 +1350,7 @@ else
+ ifdef APPLE_COMMON_CRYPTO
+ 	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
+ 	SHA1_HEADER = <CommonCrypto/CommonDigest.h>
++	SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
+ else
+ 	SHA1_HEADER = <openssl/sha.h>
+ 	EXTLIBS += $(LIB_4_CRYPTO)
+@@ -1353,6 +1358,10 @@ endif
+ endif
+ endif
  
- Waiting for a reroll.
- ($gmane/280507)
-
-
-* js/git-gdb (2015-10-30) 1 commit
- - test: facilitate debugging Git executables in tests with gdb
-
- Allow easier debugging of a single "git" invocation in our test
- scripts.
-
- Will merge to 'next'.
-
-
-* kn/for-each-branch (2015-10-30) 1 commit
- - ref-filter: fallback on alphabetical comparison
-
- Using the timestamp based criteria in "git branch --sort" did not
- tiebreak branches that point at commits with the same timestamp (or
- the same commit), making the resulting output unstable.
-
- Will merge to 'next' and then quickly to 'master'.
-
-
-* ea/checkout-progress (2015-10-30) 2 commits
- - SQUASH???
- - checkout: add --progress option
-
- "git checkout" did not follow the usual "--[no-]progress"
- convention and implemented only "--quiet" that is essentially
- "--no-progress".
-
- Waiting for a reroll.
-
-
-* jc/test-must-fail-with-sigpipe (2015-10-30) 1 commit
- - test: accept death by SIGPIPE as a valid failure mode
-
-  Waiting for reviews.
-
---------------------------------------------------
-[Stalled]
-
-* dk/gc-idx-wo-pack (2015-08-17) 3 commits
- - DONTMERGE: log message, grace-period and tests $gmane/276058
- - gc: remove stale .idx files without corresponding .pack file
- - prepare_packed_git(): refactor garbage reporting in pack directory
-
- Having a leftover .idx file without corresponding .pack file in
- the repository hurts performance; "git gc" learned to prune them.
-
- Waiting for a reroll.
-
-
-* nd/ita-cleanup (2015-09-06) 6 commits
- - grep: make it clear i-t-a entries are ignored
- - checkout(-index): do not checkout i-t-a entries
- - apply: make sure check_preimage() does not leave empty file on error
- - apply: fix adding new files on i-t-a entries
- - add and use a convenience macro ce_intent_to_add()
- - blame: remove obsolete comment
-
- Paths that have been told the index about with "add -N" are not yet
- in the index, but various commands behaved as if they already are.
-
- Some commits need better explanation.
-
- Waiting for a reroll.
-
-
-* ld/p4-detached-head (2015-09-09) 2 commits
- - git-p4: work with a detached head
- - git-p4: add failing test for submit from detached head
-
- Will be rerolled.
- ($gmane/277574)
-
-
-* mg/httpd-tests-update-for-apache-2.4 (2015-04-08) 2 commits
- - t/lib-git-svn: check same httpd module dirs as lib-httpd
- - t/lib-httpd: load mod_unixd
-
- This is the first two commits in a three-patch series $gmane/266962
-
- Becoming tired of waiting for a reroll.
- with updated log message ($gmane/268061).
-
-
-* wp/sha1-name-negative-match (2015-06-08) 2 commits
- - sha1_name.c: introduce '^{/!-<negative pattern>}' notation
- - test for '!' handling in rev-parse's named commits
-
- Introduce "branch^{/!-<pattern>}" notation to name a commit
- reachable from branch that does not match the given pattern.
-
- Becoming tired of waiting for a reroll.
- ($gmane/271213).
-
-
-* ak/format-patch-odir-config (2015-06-19) 1 commit
- - format-patch: introduce format.outputDirectory configuration
-
- Reroll exists but didn't pick it up as it seemed to be still
- collecting review comments.
-
- Becoming tired of waiting for a reroll.
- ($gmane/272180).
-
-
-* jc/diff-b-m (2015-02-23) 5 commits
- . WIPWIP
- . WIP: diff-b-m
- - diffcore-rename: allow easier debugging
- - diffcore-rename.c: add locate_rename_src()
- - diffcore-break: allow debugging
-
- "git diff -B -M" produced incorrect patch when the postimage of a
- completely rewritten file is similar to the preimage of a removed
- file; such a resulting file must not be expressed as a rename from
- other place.
-
- The fix in this patch is broken, unfortunately.
-
---------------------------------------------------
-[Cooking]
-
-* pt/http-socks-proxy (2015-10-26) 1 commit
- - remote-http(s): support SOCKS proxies
-
- Add support for talking http/https over socks proxy.
-
- Will merge to 'next'.
-
-
-* da/difftool (2015-10-29) 1 commit
- - difftool: ignore symbolic links in use_wt_file
-
- The code to prepare the working tree side of temporary directory
- for the "dir-diff" feature forgot that symbolic links need not be
- copied (or symlinked) to the temporary area, as the code already
- special cases and overwrites them.  Besides, it was wrong to try
- computing the object name of the target of symbolic link, which may
- not even exist or may be a directory.
-
- Waiting for response.
-
-
-* mh/notes-allow-reading-treeish (2015-10-08) 3 commits
-  (merged to 'next' on 2015-10-23 at 8a697f0)
- + notes: allow treeish expressions as notes ref
- + Merge branch 'jk/notes-dwim-doc' into next
- + Merge branch 'jc/merge-drop-old-syntax' into next
- (this branch uses jc/merge-drop-old-syntax.)
-
- Some "git notes" operations, e.g. "git log --notes=<note>", should
- be able to read notes from any tree-ish that is shaped like a notes
- tree, but the notes infrastructure required that the argument must
- be a ref under refs/notes/.  Loosen it to require a valid ref only
- when the operation would update the notes (in which case we must
- have a place to store the updated notes tree, iow, a ref).
-
- Will cook in 'next'.
-
-
-* dt/refs-backend-pre-vtable (2015-10-15) 26 commits
- - refs: break out ref conflict checks
- - refs: make files_log_ref_write functions public
- - initdb: move safe_create_dir into common code
- - refs.c: move should_autocreate_reflog to common code
- - refs.c: move peel_object to the common code
- - refs.c: move copy_msg to the common code
- - refs.c: move refname_is_safe to the common code
- - refs: move transaction functions into common code
- - refs.c: move head_ref_namespaced to the common code
- - refs.c: move ref iterators to the common code
- - refs.c: move prettify_refname to the common code
- - refs.c: move is_branch to the common code
- - refs.c: move check_refname_format to the common code
- - refs.c: move resolve_refdup to common
- - refs.c: move read_ref, read_ref_full and ref_exists to the common code
- - refs.c: move warn_if_dangling_symref* to the common code
- - refs.c: move dwim and friend functions to the common refs code
- - refs.c: move the hidden refs functions to the common code
- - refs.c: move read_ref_at to the common refs file
- - refs.c: move delete_pseudoref and delete_ref to the common code
- - refs.c: move update_ref to refs.c
- - refs.c: add a new refs.c file to hold all common refs code
- - refs-be-files.c: rename refs to refs-be-files
- - refs: make repack_without_refs and is_branch public
- - refs.c: create a public version of verify_refname_available
- - Merge branch 'jk/war-on-sprintf' into HEAD
-
- The early part of the pluggable ref backend series, which sifts the
- ref API functions into two bins: the filesystem backend specific
- ones and the generic API functions.  The next step will start
- introducing the framework to dispatch generic calls to specific
- backend implementation(s) and then finally plug a new backend that
- is different from the file backend.
-
- Reroll exists, but haven't picked up yet.
-
-
-* jc/mailinfo (2015-10-21) 1 commit
- - mailinfo: ignore in-body header that we do not care about
-
- Some people write arbitrary garbage at the beginning of a piece of
- e-mail (or after -- >8 -- scissors -- >8 -- line) in the commit log
- message and expect them to be discarded, even though "From:" and
- "Subject:" are the only documented in-body headers that you are
- supposed to have there.  Allow some garbage (specifically, what may
- look like RFC2822 headers like "MIME-Version: ...") to be there and
- ignore them.
-
- I have a feeling that that this is a step in a wrong direction.
- Comments?
-
-
-* js/am-3-merge-recursive-direct (2015-10-12) 2 commits
-  (merged to 'next' on 2015-10-23 at dc631e5)
- + am: make a direct call to merge_recursive
- + merge_recursive_options: introduce the "gently" flag
-
- The merge_recursive_generic() function has been made a bit safer to
- call from inside a process.  "git am -3" was taught to make a direct
- call to the function when falling back to three-way merge.
-
- Will keep in 'next' during the 2.7 cycle.
-
-
-* sg/pretty-more-date-mode-format (2015-10-07) 1 commit
- - pretty: add format specifiers for short and raw date formats
-
- Introduce "%as" and "%aR" placeholders for "log --format" to show
- the author date in the short and raw formats.
-
- I have a feeling that that this is a step in a wrong direction.
- Comments?
-
-
-* kn/for-each-branch-remainder (2015-10-02) 9 commits
- - branch: implement '--format' option
- - branch: use ref-filter printing APIs
- - ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
- - ref-filter: introduce format_ref_array_item()
- - ref-filter: adopt get_head_description() from branch.c
- - ref-filter: modify "%(objectname:short)" to take length
- - ref-filter: add support for %(path) atom
- - ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
- - ref-filter: implement %(if), %(then), and %(else) atoms
-
- More unification among "branch -l", "tag -l" and "for-each-ref --format".
-
- Expecting a reroll.
- ($gmane/278926)
-
-
-* jk/graph-format-padding (2015-09-14) 1 commit
- - pretty: pass graph width to pretty formatting for use in '%>|(N)'
-
- Redefine the way '%>|(N)' padding and the "--graph" option
- interacts.  It has been that the available columns to display the
- log message was measured from the edge of the area the graph ended,
- but with this it becomes the beginning of the entire output.
-
- I have a suspicion that 50% of the users would appreciate this
- change, and the remainder see this break their expectation.  If
- that is the case, we might need to introduce a similar but
- different alignment operator so that this new behaviour is
- available to those who want to use it, without negatively affecting
- existing uses.
-
- Undecided.
- ($gmane/278326)
-
-
-* sb/submodule-parallel-fetch (2015-10-21) 14 commits
-  (merged to 'next' on 2015-10-23 at 8f04bbd)
- + run-command: fix missing output from late callbacks
- + test-run-command: increase test coverage
- + test-run-command: test for gracefully aborting
- + run-command: initialize the shutdown flag
- + run-command: clear leftover state from child_process structure
- + run-command: fix early shutdown
-  (merged to 'next' on 2015-10-15 at df63590)
- + submodules: allow parallel fetching, add tests and documentation
- + fetch_populated_submodules: use new parallel job processing
- + run-command: add an asynchronous parallel child processor
- + sigchain: add command to pop all common signals
- + strbuf: add strbuf_read_once to read without blocking
- + xread_nonblock: add functionality to read from fds without blocking
- + xread: poll on non blocking fds
- + submodule.c: write "Fetching submodule <foo>" to stderr
- (this branch is used by sb/submodule-parallel-update.)
-
- Add a framework to spawn a group of processes in parallel, and use
- it to run "git fetch --recurse-submodules" in parallel.
-
- Will cook in 'next'.
-
-
-* ad/cygwin-wants-rename (2015-08-07) 1 commit
- - config.mak.uname: Cygwin needs OBJECT_CREATION_USES_RENAMES
-
- Will hold.
- ($gmane/275680).
-
-
-* jc/rerere-multi (2015-09-14) 7 commits
- - rerere: do use multiple variants
- - t4200: rerere a merge with two identical conflicts
- - rerere: allow multiple variants to exist
- - rerere: delay the recording of preimage
- - rerere: handle leftover rr-cache/$ID directory and postimage files
- - rerere: scan $GIT_DIR/rr-cache/$ID when instantiating a rerere_id
- - rerere: split conflict ID further
-
- "git rerere" can encounter two or more files with the same conflict
- signature that have to be resolved in different ways, but there was
- no way to record these separate resolutions.
-
-
-* jc/merge-drop-old-syntax (2015-04-29) 1 commit
-  (merged to 'next' on 2015-10-07 at 50fed71)
- + merge: drop 'git merge <message> HEAD <commit>' syntax
- (this branch is used by mh/notes-allow-reading-treeish.)
-
- Originally merged to 'next' on 2015-05-28
-
- Stop supporting "git merge <message> HEAD <commit>" syntax that has
- been deprecated since October 2007.  It has been reported that
- git-gui still uses the deprecated syntax, which needs to be fixed
- before this final step can proceed.
-
- Will keep in 'next' during the 2.7 cycle.
-
---------------------------------------------------
-[Discarded]
-
-* km/cache-entry-refcnt (2015-10-14) 1 commit
- . merge: fix cache_entry use-after-free
-
- Made unnecessary with dt/name-hash-dir-entry-fix topic.
++ifdef SHA1_MAX_BLOCK_SIZE
++	LIB_OBJS += compat/sha1_chunked.o
++	BASIC_CFLAGS += -DSHA1_MAX_BLOCK_SIZE="$(SHA1_MAX_BLOCK_SIZE)"
++endif
+ ifdef NO_PERL_MAKEMAKER
+ 	export NO_PERL_MAKEMAKER
+ endif
+diff --git a/cache.h b/cache.h
+index 79066e5..ec84b16 100644
+--- a/cache.h
++++ b/cache.h
+@@ -14,7 +14,12 @@
+ #ifndef git_SHA_CTX
+ #define git_SHA_CTX	SHA_CTX
+ #define git_SHA1_Init	SHA1_Init
+-#define git_SHA1_Update	SHA1_Update
++#ifdef SHA1_MAX_BLOCK_SIZE
++extern int SHA1_Update_Chunked(SHA_CTX *, const void *, size_t);
++#define git_SHA1_Update SHA1_Update_Chunked
++#else
++#define git_SHA1_Update SHA1_Update
++#endif
+ #define git_SHA1_Final	SHA1_Final
+ #endif
+ 
+diff --git a/compat/apple-common-crypto.h b/compat/apple-common-crypto.h
+index c8b9b0e..83668fd 100644
+--- a/compat/apple-common-crypto.h
++++ b/compat/apple-common-crypto.h
+@@ -16,6 +16,10 @@
+ #undef TYPE_BOOL
+ #endif
+ 
++#ifndef SHA1_MAX_BLOCK_SIZE
++#error "Using Apple Common Crypto library requires setting SHA1_MAX_BLOCK_SIZE"
++#endif
++
+ #ifdef APPLE_LION_OR_NEWER
+ #define git_CC_error_check(pattern, err) \
+ 	do { \
+diff --git a/compat/sha1_chunked.c b/compat/sha1_chunked.c
+new file mode 100644
+index 0000000..4a8e4f7
+--- /dev/null
++++ b/compat/sha1_chunked.c
+@@ -0,0 +1,20 @@
++#include "cache.h"
++
++#ifdef SHA1_MAX_BLOCK_SIZE
++int git_SHA1_Update(SHA_CTX *c, const void *data, size_t len)
++{
++	size_t nr;
++	size_t total = 0;
++	char *cdata = (char*)data;
++	while(len > 0) {
++		nr = len;
++		if(nr > SHA1_MAX_BLOCK_SIZE)
++			nr = SHA1_MAX_BLOCK_SIZE;
++		SHA1_Update(c, cdata, nr);
++		total += nr;
++		cdata += nr;
++		len -= nr;
++	}
++	return total;
++}
++#endif
+-- 
+2.4.9 (Apple Git-60)
