@@ -1,184 +1,169 @@
-From: Atousa Duprat <atousa.p@gmail.com>
-Subject: Re: git fsck failure on OS X with files >= 4 GiB
-Date: Thu, 29 Oct 2015 19:15:05 -0700
-Message-ID: <CA+izobsBmYHHepYka795K2VnVLYBmN2tFqEyzSweMoS9gvuRVw@mail.gmail.com>
-References: <CAG3jReJn2Pz6-bXLw6baOZaE1BHYiC+1-zN0eagigfG3umWpJA@mail.gmail.com>
-	<CAEDE8505fXAwVXx=EZwxPHvXpMByzpnXJ9LBgfx3U6VUaFbPHw@mail.gmail.com>
-	<CAG3jRe+23sy1k9QNdpdn3GF3nbzPMmYO=TM=SufEq83OtwNxbA@mail.gmail.com>
-	<CAEDE853n2HR-SK9_sGn8n3j0xoTb3eQa86UvdW0DBrc+Z1sDrg@mail.gmail.com>
-	<CA+izobtdwszVrYsnKU=_ytLuNbPGyRe_7kXqyrQO7u5Lo+OdPg@mail.gmail.com>
-	<xmqqlhalsict.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <ericsunshine@gmail.com>
+Subject: Re: [PATCHv2 5/8] fetching submodules: Respect `submodule.jobs`
+ config option
+Date: Thu, 29 Oct 2015 22:17:12 -0400
+Message-ID: <CAPig+cS5yCzcz6xNyaMLTBFUzPqmbbE8x2_toFxAvXELcc786A@mail.gmail.com>
+References: <xmqqfv0wp1l1.fsf@gitster.mtv.corp.google.com>
+	<1446074504-6014-1-git-send-email-sbeller@google.com>
+	<1446074504-6014-6-git-send-email-sbeller@google.com>
+Reply-To: Eric Sunshine <sunshine@sunshineco.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Rafael_Esp=C3=ADndola?= <rafael.espindola@gmail.com>,
-	Filipe Cabecinhas <filcab@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 03:15:28 2015
+Cc: Git List <git@vger.kernel.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 03:17:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrzDy-0006q9-HX
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 03:15:26 +0100
+	id 1ZrzFm-0000Gy-47
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 03:17:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753169AbbJ3CPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2015 22:15:07 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:36512 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752379AbbJ3CPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2015 22:15:06 -0400
-Received: by ykba4 with SMTP id a4so62398983ykb.3
-        for <git@vger.kernel.org>; Thu, 29 Oct 2015 19:15:05 -0700 (PDT)
+	id S1755607AbbJ3CRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2015 22:17:14 -0400
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:34551 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752379AbbJ3CRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2015 22:17:13 -0400
+Received: by vkgs66 with SMTP id s66so39206644vkg.1
+        for <git@vger.kernel.org>; Thu, 29 Oct 2015 19:17:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=BmHzheDgqRcRrlspe189KBr+BgifUuYARNKkitrdTMU=;
-        b=monr3vOpn/r4UL9tYsfvSY0MG54yAKQLhZTSjYY2GLkOQvR8i1pKBFAZNJs2PL8fce
-         8Ip4feZ2rqX8mo+JgUeNovaJUT+y0+7A8Iez+R13He4TzFVyGoqqFbwW9u3E13L6Hg27
-         bB4yzzKGa7Johery6ifeshS2cCQLIuhzKUz6vKFRobDM0Vew4q//PsBdJxPitLYd7CcX
-         94GRCFIN+DiRXgn7akfh/WNZ4n6L3K0rcajM7HTwhwanpsDYmobNKvJR5fjdJxj0YlJs
-         vmzNcXJaAOOzvFwGQTR6T/TM297uRGPsHDgmF6ps1HiuiTlzxyRhBfnD7FFyZ+Y4ZIpI
-         DAgA==
-X-Received: by 10.129.106.193 with SMTP id f184mr4590762ywc.21.1446171305275;
- Thu, 29 Oct 2015 19:15:05 -0700 (PDT)
-Received: by 10.37.91.198 with HTTP; Thu, 29 Oct 2015 19:15:05 -0700 (PDT)
-In-Reply-To: <xmqqlhalsict.fsf@gitster.mtv.corp.google.com>
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=aFg6hp81vOGhl5VzpclqivvKNpPS9AkNzprZH38Kbxk=;
+        b=Unbm6Bl77kMov0j14j2i0nCCZ6r9den1En0+Du4mf27uaMonNSk/1GXaDGfwKB1M8S
+         JLLlLIS5R7D4SDV8S2Ju55w9M9Is99PR5Lyh99raa/vGgC3fABUp4llv4HxZiEFoKjMA
+         moqFOpFLB+JOFtoSJhLQcFKpt/srFEy7CCtwmFLxF2aAUfIrv44mVTqXMbjRNcAdQOHh
+         r/vv2psWnaRUfhydSjcRnvO0w0b4f7nEZt/nCwF0V2yWr27Iiun99qHfvfEM7VIhMKLD
+         UOL/uzRDE7zhDwEm5fKLn9XyxNA344OzhdE6DMvIFSSaA7AXBwJivWFNGF9jxD5jass0
+         hy7g==
+X-Received: by 10.31.131.141 with SMTP id f135mr3792309vkd.37.1446171432301;
+ Thu, 29 Oct 2015 19:17:12 -0700 (PDT)
+Received: by 10.31.159.204 with HTTP; Thu, 29 Oct 2015 19:17:12 -0700 (PDT)
+In-Reply-To: <1446074504-6014-6-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280475>
 
-Thank you for the feedback.  I have revised the proposed patch as
-suggested, allowing the use of SHA1_MAX_BLOCK_SIZE to enable the
-chunked implementation.  When building for OSX with the CommonCrypto
-library we error out if SHA1_MAX_BLOCK_SIZE is not defined, which will
-avoid compiling a version of the tool that won't compute hashes
-properly on large files.  It should be easy to enable this on other
-platforms if needed.
+On Wed, Oct 28, 2015 at 7:21 PM, Stefan Beller <sbeller@google.com> wrote:
+> This allows to configure fetching and updating in parallel
+> without having the command line option.
+>
+> This moved the responsibility to determine how many parallel processes
+> to start from builtin/fetch to submodule.c as we need a way to communicate
+> "The user did not specify the number of parallel processes in the command
+> line options" in the builtin fetch. The submodule code takes care of
+> the precedence (CLI > config > default)
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 391a0c3..785721a 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2643,6 +2643,13 @@ submodule.<name>.ignore::
+>         "--ignore-submodules" option. The 'git submodule' commands are not
+>         affected by this setting.
+>
+> +submodule.jobs::
+> +       This is used to determine how many submodules can be operated on in
+> +       parallel. Specifying a positive integer allows up to that number
+> +       of submodules being fetched in parallel. This is used in fetch
+> +       and clone operations only. A value of 0 will give some reasonable
+> +       default. The defaults may change with different versions of Git.
 
-Atousa
+I'm not sure that "default" is the correct word here. When you talk
+about a "default", you're normally explaining what happens when the
+configuration is not provided. (In fact, the default number of jobs is
+1, which you may want to document here).
 
-On Thu, Oct 29, 2015 at 10:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Atousa Duprat <atousa.p@gmail.com> writes:
+>  tag.sort::
+>         This variable controls the sort ordering of tags when displayed by
+>         linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
+> diff --git a/submodule-config.c b/submodule-config.c
+> index 1cea404..07bdcdf 100644
+> --- a/submodule-config.c
+> +++ b/submodule-config.c
+> @@ -32,6 +32,7 @@ enum lookup_type {
 >
->> [PATCH] Limit the size of the data block passed to SHA1_Update()
->>
->> This avoids issues where OS-specific implementations use
->> a 32-bit integer to specify block size.  Limit currently
->> set to 1GiB.
->> ---
->>  cache.h | 20 +++++++++++++++++++-
->>  1 file changed, 19 insertions(+), 1 deletion(-)
->>
->> diff --git a/cache.h b/cache.h
->> index 79066e5..c305985 100644
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -14,10 +14,28 @@
->>  #ifndef git_SHA_CTX
->>  #define git_SHA_CTX SHA_CTX
->>  #define git_SHA1_Init SHA1_Init
->> -#define git_SHA1_Update SHA1_Update
->>  #define git_SHA1_Final SHA1_Final
->>  #endif
->>
->> +#define SHA1_MAX_BLOCK_SIZE (1024*1024*1024)
->> +
->> +static inline int git_SHA1_Update(SHA_CTX *c, const void *data, size_t len)
->> +{
->> + size_t nr;
->> + size_t total = 0;
->> + char *cdata = (char*)data;
->> + while(len > 0) {
->> + nr = len;
->> + if(nr > SHA1_MAX_BLOCK_SIZE)
->> + nr = SHA1_MAX_BLOCK_SIZE;
->> + SHA1_Update(c, cdata, nr);
->> + total += nr;
->> + cdata += nr;
->> + len -= nr;
->> + }
->> + return total;
->> +}
->> +
+>  static struct submodule_cache cache;
+>  static int is_cache_init;
+> +static int parallel_jobs = -1;
 >
-> I think the idea illustrated above is a good start, but there are
-> a few issues:
+>  static int config_path_cmp(const struct submodule_entry *a,
+>                            const struct submodule_entry *b,
+> @@ -235,6 +236,9 @@ static int parse_generic_submodule_config(const char *var,
+>                                           const char *key,
+>                                           const char *value)
+>  {
+> +       if (!strcmp(key, "jobs")) {
+> +               parallel_jobs = strtol(value, NULL, 10);
+> +       }
+
+Style: unnecessary braces
+
+Why does this allow a negative value? The documentation doesn't
+mention anything about it.
+
+>         return 0;
+>  }
 >
->  * SHA1_Update() is used in fairly many places; it is unclear if it
->    is a good idea to inline.
+> diff --git a/submodule.c b/submodule.c
+> index 0257ea3..188ba02 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -752,6 +752,11 @@ int fetch_populated_submodules(const struct argv_array *options,
+>         argv_array_push(&spf.args, "--recurse-submodules-default");
+>         /* default value, "--submodule-prefix" and its value are added later */
 >
->  * There is no need to punish implementations with working
->    SHA1_Update by another level of wrapping.
->
->  * What would you do when you find an implementation for which 1G is
->    still too big?
->
-> Perhaps something like this in the header
->
-> #ifdef SHA1_MAX_BLOCK_SIZE
-> extern int SHA1_Update_Chunked(SHA_CTX *, const void *, size_t);
-> #define git_SHA1_Update SHA1_Update_Chunked
-> #endif
->
-> with compat/sha1_chunked.c that has
->
-> #ifdef SHA1_MAX_BLOCK_SIZE
-> int SHA1_Update_Chunked(SHA_CTX *c, const void *data, size_t len)
-> {
->         ... your looping implementation ...
-> }
-> #endif
->
-> in it, that is only triggered via a Makefile macro, e.g.
-> might be a good workaround.
->
-> diff --git a/Makefile b/Makefile
-> index 8466333..83348b8 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -139,6 +139,10 @@ all::
->  # Define PPC_SHA1 environment variable when running make to make use of
->  # a bundled SHA1 routine optimized for PowerPC.
->  #
-> +# Define SHA1_MAX_BLOCK_SIZE if your SSH1_Update() implementation can
-> +# hash only a limited amount of data in one call (e.g. APPLE_COMMON_CRYPTO
-> +# may want 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined).
-> +#
->  # Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl (Darwin).
->  #
->  # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
-> @@ -1002,6 +1006,7 @@ ifeq ($(uname_S),Darwin)
->         ifndef NO_APPLE_COMMON_CRYPTO
->                 APPLE_COMMON_CRYPTO = YesPlease
->                 COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
-> +               SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L
->         endif
->         NO_REGEX = YesPlease
->         PTHREAD_LIBS =
-> @@ -1350,6 +1355,11 @@ endif
->  endif
->  endif
->
-> +ifdef SHA1_MAX_BLOCK_SIZE
-> +LIB_OBJS += compat/sha1_chunked.o
-> +BASIC_CFLAGS += SHA1_MAX_BLOCK_SIZE="$(SHA1_MAX_BLOCK_SIZE)"
-> +endif
+> +       if (max_parallel_jobs < 0)
+> +               max_parallel_jobs = config_parallel_submodules();
+> +       if (max_parallel_jobs < 0)
+> +               max_parallel_jobs = 1;
+
+run_process_parallel() itself specially handles max_parallel_jobs==0,
+so you don't need to consider it here. Okay.
+
 > +
->  ifdef NO_PERL_MAKEMAKER
->         export NO_PERL_MAKEMAKER
->  endif
+>         calculate_changed_submodule_paths();
+>         run_processes_parallel(max_parallel_jobs,
+>                                get_next_submodule,
+> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+> index 1b4ce69..5c3579c 100755
+> --- a/t/t5526-fetch-submodules.sh
+> +++ b/t/t5526-fetch-submodules.sh
+> @@ -470,4 +470,18 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
+>         test_i18ncmp expect.err actual.err
+>  '
+>
+> +test_expect_success 'fetching submodules respects parallel settings' '
+> +       git config fetch.recurseSubmodules true &&
+> +       (
+> +               cd downstream &&
+> +               GIT_TRACE=$(pwd)/trace.out git fetch --jobs 7 &&
+> +               grep "7 children" trace.out &&
+> +               git config submodule.jobs 8 &&
+> +               GIT_TRACE=$(pwd)/trace.out git fetch &&
+> +               grep "8 children" trace.out &&
+> +               GIT_TRACE=$(pwd)/trace.out git fetch --jobs 9 &&
+> +               grep "9 children" trace.out
+> +       )
+> +'
 
+Not specifically related to this test, but maybe add tests to check
+cases when --jobs is not specified, and --jobs=1?
 
-
--- 
-Atousa Pahlevan, PhD
-M.Math. University of Waterloo, Canada
-Ph.D. Department of Computer Science, University of Victoria, Canada
-Voice: 415-341-6206
-Email: apahlevan@ieee.org
-Website: www.apahlevan.org
+> +
+>  test_done
+> --
+> 2.5.0.281.g4ed9cdb
+>
