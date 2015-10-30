@@ -1,93 +1,98 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH] git-p4: Handle p4 submit failure
-Date: Fri, 30 Oct 2015 19:53:30 +0000
-Message-ID: <5633CABA.1000003@diamand.org>
-References: <CAJA=mv4Tr_DoBMwR8hK_fEJ1PFCYTu17HHvEnFWMANGFcf0Wpg@mail.gmail.com>	<xmqqeggcmhle.fsf@gitster.mtv.corp.google.com>	<CAJA=mv7ydNCm-yy9Ukk2XB-xvAJ1VkyqHEGcCTA2PEg=5y9cFQ@mail.gmail.com> <xmqqy4ekkzmg.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with
+ gdb
+Date: Fri, 30 Oct 2015 15:56:12 -0400
+Message-ID: <20151030195611.GC5486@sigill.intra.peff.net>
+References: <cover.1445865176.git.johannes.schindelin@gmx.de>
+ <082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
+ <20151026191724.GE7881@google.com>
+ <alpine.DEB.1.00.1510271036100.31610@s15462909.onlinehome-server.info>
+ <xmqqr3kge0d3.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.1.00.1510301925360.31610@s15462909.onlinehome-server.info>
+ <xmqqlhakky0e.fsf@gitster.mtv.corp.google.com>
+ <20151030190256.GI7881@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Users <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Etienne Girard <etienne.g.girard@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 20:53:41 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 20:56:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsFk3-0005Sy-4B
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 20:53:39 +0100
+	id 1ZsFmd-00085X-Fs
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 20:56:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760469AbbJ3Txe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 15:53:34 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:35661 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752504AbbJ3Txe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 15:53:34 -0400
-Received: by wmll128 with SMTP id l128so20290463wml.0
-        for <git@vger.kernel.org>; Fri, 30 Oct 2015 12:53:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=fYDVxHlFNIDJa0dM1qjSCLiX1Zqc2r3n/ZvfZOGvGr4=;
-        b=N/YuL7Jyt5TkQ3XUE91Kqv0qrSEEkmbNWRowUsSIXjwCcSHYbDo13sc3Hlw/ZH9loF
-         ZXZLjgcBZPuuM02PztBQdHp+JW9CLI0Dm2BCiCFC1leV9bQfZ73FCt1vQarPVlkXOpEj
-         MyIDei4zZVa0LtfrdGyNVv1eXIgKFq4IRCMm4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=fYDVxHlFNIDJa0dM1qjSCLiX1Zqc2r3n/ZvfZOGvGr4=;
-        b=cKTC+pwigqnlIDQn5C4eJFF4FcYn15XDOFiG4zsfS9k0wJ2ULqOm+0DD+CRqxCTOL5
-         skebx+4I7UW1+c3JW7zwqn1vfyOQI3CCo1DGqUrm/ef5VgyRAGJtWR1BvC/b+h5l0sA7
-         jzyvFP3QZrf3JQRTlB5CF39Zpzgt2nmfIT6fAFxROu+NFn16msOfWsXKzNYQYTQAUJHo
-         +4rM0JoSq7yHrzFYy9W6HhmbTahbC5isE4rtdAdfYTWC488Pg1K7cYkcMsMAWEICeBYn
-         7ND3Nuxt8AWpqFfUR2ExFL8LVN0IuQ1hklqL3uRKAWMv5upsL2K6c9P1Jm2s1F5e0unw
-         fJVA==
-X-Gm-Message-State: ALoCoQngr0b2sVjwe55oE7rA68cU+KjoGhjPYGPD8r6z1TV31gz7W27yBChHjuWstfKD9krvdKhU
-X-Received: by 10.28.137.194 with SMTP id l185mr5754wmd.21.1446234812771;
-        Fri, 30 Oct 2015 12:53:32 -0700 (PDT)
-Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
-        by smtp.gmail.com with ESMTPSA id e189sm4447665wma.4.2015.10.30.12.53.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 30 Oct 2015 12:53:31 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <xmqqy4ekkzmg.fsf@gitster.mtv.corp.google.com>
+	id S1760042AbbJ3T4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 15:56:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50623 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757370AbbJ3T4O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 15:56:14 -0400
+Received: (qmail 9833 invoked by uid 102); 30 Oct 2015 19:56:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 30 Oct 2015 14:56:14 -0500
+Received: (qmail 26048 invoked by uid 107); 30 Oct 2015 19:56:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 30 Oct 2015 15:56:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Oct 2015 15:56:12 -0400
+Content-Disposition: inline
+In-Reply-To: <20151030190256.GI7881@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280536>
 
-On 30/10/15 17:57, Junio C Hamano wrote:
-> Etienne Girard <etienne.g.girard@gmail.com> writes:
->
->> Yes, however if `p4 submit` fails the corresponding "Command failed"
->> error message is displayed, and the p4 error message itself is
->> displayed if any.
->> Tthe script will also terminate successfully if self.edit_template
->> returns false but it will exit with error code 1 if p4 submit fails.
->>
->> So the user will get "Command failed: [...]" followed by "Submission
->> cancelled, undoing p4 changes", to let him know that the script failed
->> because of p4 and that nothing was submitted.
->
-> OK, then it sounds like all I have to do is to update the log
-> message with the "How about this" version and correct the authorship
-> to use your murex address, and then wait for reviews from real "git
-> p4" reviewers.
->
+On Fri, Oct 30, 2015 at 12:02:56PM -0700, Jonathan Nieder wrote:
 
-Looks good to me. Nice use of try...finally.
+> > I'd just be happy as long as the feature becomes available, and I'd
+> > leave the choice of consistent and convenient naming to others who
+> > have stronger opinions ;-)
+> 
+> Here's a suggested patch.
+> 
+> -- >8 --
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Subject: Facilitate debugging Git executables in tests with gdb
+> 
+> When prefixing a Git call in the test suite with 'debug ', it will now
+> be run with GDB, allowing the developer to debug test failures more
+> conveniently.
 
-One very small thing - test t9807-git-p4-submit.sh is now failing with 
-this change.
+At the risk of repeating what I just said elsewhere in the thread, I
+think this patch is the best of the proposed solutions.
 
-That's because it tries to delete one of the files it created, but you 
-are now deleting it already! Could you just update that please?
+> --- a/wrap-for-bin.sh
+> +++ b/wrap-for-bin.sh
+> @@ -19,4 +19,10 @@ GIT_TEXTDOMAINDIR='@@BUILD_DIR@@/po/build/locale'
+>  PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
+>  export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
+>  
+> -exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+> +if test -n "$GIT_TEST_GDB"
+> +then
+> +	unset GIT_TEST_GDB
+> +	exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+> +else
+> +	exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+> +fi
 
-Thanks!
-Luke
+Somebody suggested elsewhere that the name "gdb" be configurable. We
+could stick that in the same variable, like:
+
+  test "$GIT_TEST_GDB" = 1 && GIT_TEST_GDB=gdb
+  exec ${GIT_TEST_GDB} --args ...
+
+but that does not play well with the "debug" function, which does not
+know which value to set it to. I guess we would need GIT_TEST_GDB_PATH
+or something.
+
+I am happy to let that get added later by interested parties (I am happy
+with "gdb" myself). I just wanted to mention it to make sure we are not
+painting ourselves into any corners.
+
+-Peff
