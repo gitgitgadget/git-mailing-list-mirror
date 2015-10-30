@@ -1,88 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with
- gdb
-Date: Fri, 30 Oct 2015 19:31:13 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1510301929020.31610@s15462909.onlinehome-server.info>
-References: <cover.1445865176.git.johannes.schindelin@gmx.de> <082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de> <20151026191724.GE7881@google.com> <alpine.DEB.1.00.1510271036100.31610@s15462909.onlinehome-server.info>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with gdb
+Date: Fri, 30 Oct 2015 11:32:49 -0700
+Message-ID: <xmqqlhakky0e.fsf@gitster.mtv.corp.google.com>
+References: <cover.1445865176.git.johannes.schindelin@gmx.de>
+	<082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
+	<20151026191724.GE7881@google.com>
+	<alpine.DEB.1.00.1510271036100.31610@s15462909.onlinehome-server.info>
+	<xmqqr3kge0d3.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.1.00.1510301925360.31610@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 19:31:25 2015
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Oct 30 19:33:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsESQ-0001Af-3W
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 19:31:22 +0100
+	id 1ZsEUC-0002xK-4U
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 19:33:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760519AbbJ3SbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 14:31:17 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49406 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760516AbbJ3SbQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 14:31:16 -0400
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MLA45-1ZrxL92iMD-000ICq;
- Fri, 30 Oct 2015 19:31:14 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <alpine.DEB.1.00.1510271036100.31610@s15462909.onlinehome-server.info>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:g7hzancTYzzElm9Lo0YN0ke7iFsiVtksjd2my4bUZzSa2Q8zgf2
- HbMa0ULxRWQ6g0lI+XMrybnpRxDy2MYr0524zKP98dzCGPrIYd1x0XSMJZt9VCBrIZCNrpE
- hMP3RrGOuQTF69QFAK1d8OLZJ8g6NRrCHavs3BWGI2ok6GpcNt/LTEZkpBoL8y6AXMhKqsR
- d/DKxJPf3p8trQPbB+ejg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:r2K0FDc/vi4=:3CAilbE0RXKQh1Oq/GdcH3
- dzQkkkwY4azFH5sj3a5qoHIz4c32SCkrPbID+9DdsQbw1pQhwkfxYr4rD9raUrVh/60GohYhE
- qY5824rYfe6ArbidjIRaij+fKpwlG0W08D7Z2LhJfV4YZ+LYTBS3EE6lNgay1spZa++sR2LdB
- ilds1ebJ0VOiYgar/Qxwhss6knavN0pOUeiCiobSPFHXgqKMwyhv+ldmQ86KWW5LZ890W49tt
- PHxLbrI6UsMhYFKmp11q1R5FNtz4btxY0znKgknqpjxXvCH0GPS4Tn+EPqmu62t2Ep3R6IFKS
- 8KQ+MZDuP8CVExU9iLK/IxCFA3/TEa5rWutwXNC3gik3dHWrZ0jsD0Vw5neTxfjrjPzhURoMW
- bp1nXlTOpE6jyoh2l0X6LVFTfnEi5taUC42Iuig+8UCnU5tMmNtv8bCuwsazqG86zfKIWd42M
- 9LPI6HzfuKd/bPml+0So/z5bT48VN47gt2qsRgwtdP7N8rURIFLSkKcQNBlq0U24dgNpmItNA
- ducEixnIUzpC2FI5AOnZRL1H9cpsNeQ0pOTlEgv760HNY2kA7qfyyOYwrfKU5//O+p6G+5PTT
- /oIJFjlDuy+7EbgN7WrJ4nupsFb3P5kM9T7puxCkm3IoMYXlvg3T51AzRlxbmpkZd1W4X00Ts
- AtZfYrYbGW2fMvrrxdvhFU8/kHXcXDwQhSQKCtoKSYZfQxy01wgxpc6oisDF5rS0xrIJcHUUH
- AUkCIGGVxtBB/hC4Ln9W3MrYjMFpmTJMP0vO8xeyQ0r9bDEN5SH2/tsiKOV54q73TAvUkI8s 
+	id S1760065AbbJ3SdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 14:33:07 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54751 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753661AbbJ3SdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 14:33:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0035024B41;
+	Fri, 30 Oct 2015 14:33:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5xXetZ3WgShGku1PbBwfa/V30MA=; b=eFWJZN
+	Ow4dmlTSPCDeJ353DgO0HFPbo6ovB3tri0hI86HWCNlRluiEXRnseCplbAXLUJls
+	Iclka/1SU5TSWkfi8d98sei0GmxtdbLUHq3vMCDa7EtGcAc3q3HzH57dYFWmq6DK
+	KmhP2BVXs29+AReHFuhFUg4DBn2mjUSJMR5a8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mi4orweGR8zDIiQw6CyAXa9Gk5c0YepJ
+	JIvgVHc31gdQE7fAEunoqaaaYFaqflSHCC7jkwyYxhJZ+F1b4IcYD81ONysPgl36
+	Db9vc3ZuqTGM+e7EbRk6rQn7mARkQPZnoOSrXfCtVI9L/rFBUp4d3zD4HRu4GAMO
+	bsZ6P81MMJg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EA34724B40;
+	Fri, 30 Oct 2015 14:33:04 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7473A24B3F;
+	Fri, 30 Oct 2015 14:33:04 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.1510301925360.31610@s15462909.onlinehome-server.info>
+	(Johannes Schindelin's message of "Fri, 30 Oct 2015 19:27:34 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A8652852-7F34-11E5-A98F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280514>
 
-Hi Jonathan,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, 27 Oct 2015, Johannes Schindelin wrote:
+> Hi Junio,
+>
+> On Tue, 27 Oct 2015, Junio C Hamano wrote:
+>
+>> It can be called GDB=1, perhaps?
+>
+> No, this is way too generic. As I only test that the environment
+> variable's existence, even something like GDB=/usr/opt/gdb/bin/gdb would
+> trigger it.
+>
+> I could be talked into GDB_GIT=1, though.
 
-> On Mon, 26 Oct 2015, Jonathan Nieder wrote:
-> 
-> > Does the 'exec' after the fi need this as well?  exec is supposed to
-> > itself print a message and exit when it runs into an error.  Would
-> > including an 'else' with the if make the control flow clearer?  E.g.
-> > 
-> > 	if test -n "$TEST_GDB_GIT"
-> > 	then
-> > 		exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-> > 	else
-> > 		exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-> > 	fi
-> 
-> I suppose you're right! The `exec` can fail easily, e.g. when `gdb` was
-> not found.
+As I said in another message, I have no preference myself over the
+name of this variable (or making it a shell function like Duy
+mentioned, which incidentally may give us more visual pleasantness
+by losing '=').
 
-Actually, after reading the patch again, I think it is better to be less
-intrusive and add the error message *just* for the gdb case, as it is
-right now:
-
--- snipsnap --
- export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
- 
-+if test -n "$TEST_GDB_GIT"
-+then
-+       exec gdb -args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-+       echo "Could not run gdb -args ${GIT_EXEC_PATH}/@@PROG@@ $*" >&2
-+       exit 1
-+fi
-+
- exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+I'd just be happy as long as the feature becomes available, and I'd
+leave the choice of consistent and convenient naming to others who
+have stronger opinions ;-)
