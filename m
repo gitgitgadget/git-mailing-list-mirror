@@ -1,189 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Limit the size of the data block passed to SHA1_Update()
-Date: Fri, 30 Oct 2015 15:22:05 -0700
-Message-ID: <xmqqa8r0j8tu.fsf@gitster.mtv.corp.google.com>
-References: <CA+izobsBmYHHepYka795K2VnVLYBmN2tFqEyzSweMoS9gvuRVw@mail.gmail.com>
-	<1446243122-21464-1-git-send-email-apahlevan@ieee.org>
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: RE: [PATCH] Limit the size of the data block passed to SHA1_Update()
+Date: Fri, 30 Oct 2015 18:26:38 -0400
+Message-ID: <015b01d11362$0b8c1e70$22a45b50$@com>
+References: <CA+izobsBmYHHepYka795K2VnVLYBmN2tFqEyzSweMoS9gvuRVw@mail.gmail.com> <1446243500-21580-1-git-send-email-apahlevan@ieee.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Atousa Pahlevan Duprat <apahlevan@ieee.org>
-To: Atousa Pahlevan Duprat <atousa.p@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 23:22:15 2015
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+Cc: "'Atousa Pahlevan Duprat'" <apahlevan@ieee.org>
+To: "'Atousa Pahlevan Duprat'" <atousa.p@gmail.com>,
+	<git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 30 23:27:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsI3q-0006rJ-8u
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 23:22:14 +0100
+	id 1ZsI8Q-00037f-QP
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 23:26:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759373AbbJ3WWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 18:22:09 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62797 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752028AbbJ3WWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 18:22:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6D61C27110;
-	Fri, 30 Oct 2015 18:22:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8H+2jYzm7k5gv8oL1nhWvjaPKK4=; b=k8TDYR
-	MOHzOfkjEad78bHrjjEGreZCcR/MABP0IbacdfPXw0XqvLGXlAZgRs0x1GjmEkHq
-	W2wOWqO+eOJA8/qM/YX8/NGo0C4qzocFuq00IoHo0g6QfCTPWlnKtUtOWAqRO/T7
-	4o84fRXi0/XTVqakAl8AoncZzldp7rnpG6U+8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=af30eqe/3fW/2mKy+U+4PGBN9cgOiHMb
-	P6DowuMdYMh6vEw8C0wrPsXFphSh2Pa+Y1maV08qHfw8pG8R1s4FNuGDf2Y4NUte
-	4JILGEx4ZrO5vjyt7s7dgzNPOY/Kwu0NJlgADwWG8q7KPnDPAt0tNZT3grD1JhXE
-	3LdtqLGBlzk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6395C2710F;
-	Fri, 30 Oct 2015 18:22:07 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E21972710D;
-	Fri, 30 Oct 2015 18:22:06 -0400 (EDT)
-In-Reply-To: <1446243122-21464-1-git-send-email-apahlevan@ieee.org> (Atousa
-	Pahlevan Duprat's message of "Fri, 30 Oct 2015 15:12:02 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A7884E08-7F54-11E5-98D0-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1759827AbbJ3W0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 18:26:55 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:10669 "EHLO
+	elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759598AbbJ3W0y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 18:26:54 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gojira (CPE0023eb577e25-CM602ad06c91a7.cpe.net.cable.rogers.com [99.237.128.150])
+	(authenticated bits=0)
+	by elephants.elehost.com (8.14.9/8.14.9) with ESMTP id t9UMQpka072417
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 30 Oct 2015 18:26:52 -0400 (EDT)
+	(envelope-from rsbecker@nexbridge.com)
+In-Reply-To: <1446243500-21580-1-git-send-email-apahlevan@ieee.org>
+X-Mailer: Microsoft Office Outlook 12.0
+Content-language: en-ca
+Thread-index: AdETYPw77k/rIM5KSEmtYZnouNJxrwAANCeg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280553>
 
-Atousa Pahlevan Duprat <atousa.p@gmail.com> writes:
+On October-30-15 6:18 PM, Atousa Pahlevan Duprat wrote:
+>Some implementations of SHA_Updates have inherent limits on the max chunk
+size. >SHA1_MAX_BLOCK_SIZE can be defined to set the max chunk size
+supported, if >required.  This is enabled for OSX CommonCrypto library and
+set to 1GiB.
+>---
+> <snip>
 
-> Some implementations of SHA_Updates have inherent limits
-> on the max chunk size. SHA1_MAX_BLOCK_SIZE can be defined
-> to set the max chunk size supported, if required.  This is
-> enabled for OSX CommonCrypto library and set to 1GiB.
-> ---
+Didn't we have this same issue with NonStop port about a year ago and
+decided to provision this through the configure script?
 
-Missing sign-off.
-
->  Makefile                     |  9 +++++++++
->  cache.h                      |  7 ++++++-
->  compat/apple-common-crypto.h |  4 ++++
->  compat/sha1_chunked.c        | 20 ++++++++++++++++++++
->  4 files changed, 39 insertions(+), 1 deletion(-)
->  create mode 100644 compat/sha1_chunked.c
->
-> diff --git a/Makefile b/Makefile
-> index 04c2231..5955542 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -141,6 +141,10 @@ all::
->  # Define PPC_SHA1 environment variable when running make to make use of
->  # a bundled SHA1 routine optimized for PowerPC.
->  #
-> +# Define SHA1_MAX_BLOCK_SIZE if your SSH1_Update() implementation can
-> +# hash only a limited amount of data in one call (e.g. APPLE_COMMON_CRYPTO
-> +# may want 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined).
-> +#
->  # Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl (Darwin).
->  #
->  # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
-> @@ -1346,6 +1350,7 @@ else
->  ifdef APPLE_COMMON_CRYPTO
->  	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
->  	SHA1_HEADER = <CommonCrypto/CommonDigest.h>
-> +	SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
->  else
->  	SHA1_HEADER = <openssl/sha.h>
->  	EXTLIBS += $(LIB_4_CRYPTO)
-> @@ -1353,6 +1358,10 @@ endif
->  endif
->  endif
->  
-> +ifdef SHA1_MAX_BLOCK_SIZE
-> +	LIB_OBJS += compat/sha1_chunked.o
-> +	BASIC_CFLAGS += -DSHA1_MAX_BLOCK_SIZE="$(SHA1_MAX_BLOCK_SIZE)"
-> +endif
->  ifdef NO_PERL_MAKEMAKER
->  	export NO_PERL_MAKEMAKER
->  endif
-> diff --git a/cache.h b/cache.h
-> index 79066e5..ec84b16 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -14,7 +14,12 @@
->  #ifndef git_SHA_CTX
->  #define git_SHA_CTX	SHA_CTX
->  #define git_SHA1_Init	SHA1_Init
-> -#define git_SHA1_Update	SHA1_Update
-> +#ifdef SHA1_MAX_BLOCK_SIZE
-> +extern int SHA1_Update_Chunked(SHA_CTX *, const void *, size_t);
-> +#define git_SHA1_Update SHA1_Update_Chunked
-> +#else
-> +#define git_SHA1_Update SHA1_Update
-> +#endif
->  #define git_SHA1_Final	SHA1_Final
->  #endif
->  
-> diff --git a/compat/apple-common-crypto.h b/compat/apple-common-crypto.h
-> index c8b9b0e..83668fd 100644
-> --- a/compat/apple-common-crypto.h
-> +++ b/compat/apple-common-crypto.h
-> @@ -16,6 +16,10 @@
->  #undef TYPE_BOOL
->  #endif
->  
-> +#ifndef SHA1_MAX_BLOCK_SIZE
-> +#error "Using Apple Common Crypto library requires setting SHA1_MAX_BLOCK_SIZE"
-> +#endif
-> +
-
-It crossed my mind if this might be better to just define it to some
-reasonable value instead of erroring out, but because we do give a
-default value in the Makefile, it would be a sign that the user is
-doing something _quite_ unusual if the symbol is not defined here,
-so I agree with your decision to error it out here.
-
->  #ifdef APPLE_LION_OR_NEWER
->  #define git_CC_error_check(pattern, err) \
->  	do { \
-> diff --git a/compat/sha1_chunked.c b/compat/sha1_chunked.c
-> new file mode 100644
-> index 0000000..4a8e4f7
-> --- /dev/null
-> +++ b/compat/sha1_chunked.c
-> @@ -0,0 +1,20 @@
-> +#include "cache.h"
-> +
-> +#ifdef SHA1_MAX_BLOCK_SIZE
-> +int git_SHA1_Update(SHA_CTX *c, const void *data, size_t len)
-> +{
-> +	size_t nr;
-> +	size_t total = 0;
-> +	char *cdata = (char*)data;
-
-Please have a single blank line between the decls at the beginning
-of a function and its first statement.  I am not sure about the cast
-here, though.  Doesn't the function SHA1_Update() you are going to
-call in the body of the loop take "const void *" as its second
-parameter?  That's how openssl/sha1.h and block-sha1/sha1.h declare
-this function.
-
-> +	while(len > 0) {
-> +		nr = len;
-> +		if(nr > SHA1_MAX_BLOCK_SIZE)
-
-Please have a SP around () for control statements, like while,
-switch and if.
-
-> +			nr = SHA1_MAX_BLOCK_SIZE;
-> +		SHA1_Update(c, cdata, nr);
-> +		total += nr;
-> +		cdata += nr;
-> +		len -= nr;
-> +	}
-> +	return total;
-> +}
-> +#endif
-
-Thanks.
+Cheers,
+Randall
