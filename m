@@ -1,148 +1,93 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv2 4/8] submodule-config: parse_config
-Date: Fri, 30 Oct 2015 12:29:11 -0700
-Message-ID: <CAGZ79kbPkc_+g1QHxAoN2yYKG-Tft=yR=uJ-NCddRjrc5Wy20A@mail.gmail.com>
-References: <xmqqfv0wp1l1.fsf@gitster.mtv.corp.google.com>
-	<1446074504-6014-1-git-send-email-sbeller@google.com>
-	<1446074504-6014-5-git-send-email-sbeller@google.com>
-	<CAPig+cRHy5iT940scnKyMNDx8zgXt50ZsFqF0tALVRpueKdo-A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] http: use credential API to handle proxy authentication
+Date: Fri, 30 Oct 2015 12:31:29 -0700
+Message-ID: <xmqq8u6kkvam.fsf@gitster.mtv.corp.google.com>
+References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
+	<1446025245-10128-1-git-send-email-k.franke@science-computing.de>
+	<1446025245-10128-3-git-send-email-k.franke@science-computing.de>
+	<CAPig+cRK-EPpH4dUMpYBcjR22Wqw4RnNTYeBvw-M7h=CTFGviQ@mail.gmail.com>
+	<20151030182426.GA16389@science-computing.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 20:29:18 2015
+Content-Type: text/plain
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Knut Franke <k.franke@science-computing.de>
+X-From: git-owner@vger.kernel.org Fri Oct 30 20:31:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsFMS-00078Q-RJ
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 20:29:17 +0100
+	id 1ZsFOi-0000vd-Ba
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 20:31:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759267AbbJ3T3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 15:29:13 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:33332 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753286AbbJ3T3M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 15:29:12 -0400
-Received: by ykft191 with SMTP id t191so86070030ykf.0
-        for <git@vger.kernel.org>; Fri, 30 Oct 2015 12:29:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=b2xTK8+myNLIDJKJvHSuOilpUTSBw/Tq22e8Tbn5i6U=;
-        b=QzvHjleUUMMSrCV2395ETmzrdoSd1K2jS+rHmC4BVic5s+4O3IH+Atl0IBqlYHOsrd
-         CwlnBzFIWzRpoQacMPZm3EIpddESmXqH/5K1vTg5XUB8wEdZdbDa08KlB10mJZl7wKvo
-         GWvu+h6EIXHXlNOTgqJVgTM37IrYoV99zs2kXrqlMHmR+IPfU5RlgwYBvlJFljuH30ua
-         8rJMQn4pPCW70z0S3bh0NX5Nob3lVa5BgHo83P8JXRRNga+8AZL/bkCEEPFlDvuuDJVA
-         bs70g6MXvQb2Q+91UO9HkJkZacg1RPoSCc64pDWOQEVJpcTRPwttdxR0FNnbPOPlVVkk
-         tOXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=b2xTK8+myNLIDJKJvHSuOilpUTSBw/Tq22e8Tbn5i6U=;
-        b=j7FLcZTWnjoPmtBP9m5DiOySs4/e4MYrakOzXJ+wR2kqLN9DQCQVb64p+/LNeVVEoT
-         YnFXUODS8ljDAE8nBbepQLT8iaUdalXY66FCavirs/5h0K3QCUnqGIqo49hwHLluNmrD
-         kHV1ANc/YgyYdj6FFR4KuiiLy5GqUScrI3kJPWOywOBJNPvOKmY6yQ/fkUklMX8OoWZT
-         2AkqQ+XmKa59ZuZTU6DoF+rd83/xVXKw4x5gHzwmEOcfYRysoN2mmzSIj49ge6Wemxff
-         ZmsfY4tLyJVh5/Pd6oIVVI8yVVFUMF7CRdVhjgahQ+0L4GMpNSZ69eVSWa8yaFYb0g5B
-         Bvdg==
-X-Gm-Message-State: ALoCoQkhrTUec6HAtIZoXduZqXh8HogWt1Qfh1cszaC4wc39Ez+6WD+C7+YEK06xd1hTSHRkYJ+/
-X-Received: by 10.129.29.8 with SMTP id d8mr7724787ywd.63.1446233351268; Fri,
- 30 Oct 2015 12:29:11 -0700 (PDT)
-Received: by 10.37.29.213 with HTTP; Fri, 30 Oct 2015 12:29:11 -0700 (PDT)
-In-Reply-To: <CAPig+cRHy5iT940scnKyMNDx8zgXt50ZsFqF0tALVRpueKdo-A@mail.gmail.com>
+	id S1758627AbbJ3Tbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 15:31:32 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57064 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753242AbbJ3Tbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 15:31:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E9C8A2641E;
+	Fri, 30 Oct 2015 15:31:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tmgY8yqDsHtOoTQdBt7EXnIQ2Gs=; b=OyiXvz
+	42NcJEq9VsxIuotnHhxJtBVw2AhT3omud8wYuuMBzkxGegmj0luteA2rZj1dC+Uc
+	VQLTAnekZG9YSIZ0lbZQSIINAMNIAT0a/TtwrL3pULBhaKnVYNsChiOP8GEghDRT
+	lwtN9F0HQvGQFA7e9TPhlmFjGE1WkbB/2p3VU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=D6JlembfqFIOvBzgR25hBb+8wGkAnqdt
+	xAFLUqsZlknC7kDFDNnjPn3bczyengnR3tmR4KRkRufsRoy6ht758HWNaxTfX3xF
+	eGcUVGTwqt2t/2/OpSK4AGEE2j7oyfbM42+M4naWDu3qUD0eM3VWqoF/c3id+v6M
+	E7CCFbhzQ2g=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E0E1B2641C;
+	Fri, 30 Oct 2015 15:31:30 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6B4E82641B;
+	Fri, 30 Oct 2015 15:31:30 -0400 (EDT)
+In-Reply-To: <20151030182426.GA16389@science-computing.de> (Knut Franke's
+	message of "Fri, 30 Oct 2015 19:24:27 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D21CC1C0-7F3C-11E5-97F0-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280530>
 
-On Thu, Oct 29, 2015 at 6:53 PM, Eric Sunshine <ericsunshine@gmail.com> wrote:
-> On Wed, Oct 28, 2015 at 7:21 PM, Stefan Beller <sbeller@google.com> wrote:
->> submodule-config: parse_config
+Knut Franke <k.franke@science-computing.de> writes:
+
+> On 2015-10-28 14:58, Eric Sunshine wrote:
+>> > +               }
+>> > +               if (!curl_http_proxy) {
+>> > +                       copy_from_env(&curl_http_proxy, "ALL_PROXY");
+>> > +                       copy_from_env(&curl_http_proxy, "all_proxy");
+>> > +               }
+>> 
+>> If this sort of upper- and lowercase environment variable name
+>> checking is indeed desirable, I wonder if it would make sense to fold
+>> that functionality into the helper function.
 >
-> Um, what?
+> It's just for consistency with libcurl here, not generally desirable; so I don't
+> think it makes sense to add it to the helper.
 
-submodule-config: Introduce parse_generic_submodule_config
+I agree.  Unlike many environment variables, historically these
+proxy environment variables were all lowercase only for quite a
+while (found as early as in CERN libwww 2.15 March '94).
 
->
->> This rewrites parse_config to distinguish between configs specific to
->> one submodule and configs which apply generically to all submodules.
->> We do not have generic submodule configs yet, but the next patch will
->> introduce "submodule.jobs".
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->>
->> # Conflicts:
->> #       submodule-config.c
->
-> Interesting.
+It appears that CURL did not know this and implemented only
+uppercase variants, which was later corrected to take both
+(http://sourceforge.net/p/curl/bugs/40/ shows a fix in Nov 2000).
 
-fixed
+So both unfortunately are used in user's environment and we need to
+pay attention to both.  As lowercase version is the more kosher one,
+looking at uppercase first and then overriding it with the lowercase
+one is the right order, I think.
 
->
-> Minor: Are these 'key', 'value', 'var' arguments analogous to the
-> like-named arguments of parse_generic_submodule_config()? If so, why
-> is the order of arguments different?
-
-Reordered. I thought how they made most sense individually, but consistency
-across functions is better.
-
->
->> +{
->> +       int ret = 0;
->> +       struct submodule *submodule = lookup_or_create_by_name(me->cache,
->> +                                                              me->gitmodules_sha1,
->> +                                                              name);
->>
->>         if (!strcmp(key, "path")) {
->>                 if (!value)
->> @@ -318,6 +314,30 @@ static int parse_config(const char *var, const char *value, void *data)
->>         return ret;
->>  }
->>
->> +static int parse_config(const char *var, const char *value, void *data)
->> +{
->> +       struct parse_config_parameter *me = data;
->> +
->> +       int subsection_len;
->> +       const char *subsection, *key;
->> +       char *name;
->> +
->> +       if (parse_config_key(var, "submodule", &subsection,
->> +                            &subsection_len, &key) < 0)
->> +               return 0;
->> +
->> +       if (!subsection_len)
->> +               return parse_generic_submodule_config(var, key, value);
->> +       else {
->> +               int ret;
->> +               /* subsection is not null terminated */
->> +               name = xmemdupz(subsection, subsection_len);
->> +               ret = parse_specific_submodule_config(me, name, key, value, var);
->> +               free(name);
->> +               return ret;
->> +       }
->> +}
->
-> Minor: You could drop the 'else' and outdent its body, thus losing one
-> indentation level.
-
-By passing on the subsection, subsection_len, we only have one statement there
-
-     if (!subsection_len)
-         return parse_generic_submodule_config(key, var, value, me);
-     else
-         return parse_specific_submodule_config(subsection,
-               subsection_len, key,
-                  var, value, me);
-
-will do without dedenting I guess.
+It's a mess, but it is limited to these proxy-ish variables and does
+not deserve a helper to promote the pattern.
