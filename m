@@ -1,91 +1,69 @@
-From: Balaco Baco <balacobaco@imap.cc>
-Subject: Re: [Savannah-users] Anonymous commit (empty Author and Committer)
-Date: Fri, 30 Oct 2015 12:39:42 -0300
-Message-ID: <1446219582.3019364.424715177.39046D65@webmail.messagingengine.com>
-References: <56337DF8.5050802@gmail.com> <56338C30.6010302@riseup.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [gmane.comp.version-control.git] [PATCH 0/4] gitk crash fix and locale updates
+Date: Fri, 30 Oct 2015 09:03:11 -0700
+Message-ID: <xmqqmvv0mji8.fsf@gitster.mtv.corp.google.com>
+References: <xmqqziz5dv3f.fsf@gitster.mtv.corp.google.com>
+	<20151030101038.GG25993@fergus.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: The development of GRUB 2 <grub-devel@gnu.org>,
-	git@vger.kernel.org, savannah-users@gnu.org
-X-From: git-owner@vger.kernel.org Fri Oct 30 16:39:48 2015
+Cc: Takashi Iwai <tiwai@suse.de>, git@vger.kernel.org
+To: Paul Mackerras <paulus@ozlabs.org>
+X-From: git-owner@vger.kernel.org Fri Oct 30 17:03:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsBmN-0004lQ-MN
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 16:39:48 +0100
+	id 1ZsC9C-00025B-4n
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 17:03:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030412AbbJ3Pjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 11:39:43 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:43841 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758707AbbJ3Pjn (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2015 11:39:43 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5A8E7208A5
-	for <git@vger.kernel.org>; Fri, 30 Oct 2015 11:39:42 -0400 (EDT)
-Received: from web2 ([10.202.2.212])
-  by compute1.internal (MEProxy); Fri, 30 Oct 2015 11:39:42 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=imap.cc; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=+oeZgqP9aGHmanwVwHeBOK8FCDU=; b=NHRH1/
-	JES0k3RWs38rP0RcpJ+BUzMPhyj7qgkAY9T7BQmad9aO7+/ulPO3lEfECqzNebm9
-	xxFMEN6rRQA41iDb37ImtqkBxBzr6yr7osrAinlRZ1K3R6P8sKoIMKwI9eFv7qLL
-	E+ZBTk9r+prjGy3yMHtlhqdWb2W2l1J47xN14=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=+oeZgqP9aGHmanw
-	VwHeBOK8FCDU=; b=DD6rphR64+S4tlh25i7zPjQ6X+SEQjs/WY8Q89onJBSOfFO
-	HupJrH9m3Eci++oMQ6rvlv+rVaOLuYHvfwSxCHenVO9zbPV9D3A9gs3kS8tz8fKO
-	jOQBY98tgQRewBXgFMX0sGk8RKWclA3jie7GnMiKVLtgkK+eOsyFoUuMOtoA=
-Received: by web2.nyi.internal (Postfix, from userid 99)
-	id 2A0495402D6; Fri, 30 Oct 2015 11:39:42 -0400 (EDT)
-X-Sasl-Enc: 3T/dkC+KLbBn6cTU4ia2F0R7dCyYR9/zrEWXEYoh5X5g 1446219582
-X-Mailer: MessagingEngine.com Webmail Interface - html
-In-Reply-To: <56338C30.6010302@riseup.net>
+	id S932915AbbJ3QDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 12:03:17 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57529 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751858AbbJ3QDR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 12:03:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E4AB426918;
+	Fri, 30 Oct 2015 12:03:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jnKGAMPvLazPrJaDVM5hQm9g3Xg=; b=Or+rEn
+	WHWeNRUpwQaNwGAm7FfQ0YXrk64DgDbn+lmwB0W75yNxkE9Pk3ni2k7a3sCBiHPG
+	mQOwux8N5RR8VEModkvvj75yujZCoJZn7PFSlqBYZdb0RveLLj5xtipKaNoLpEOf
+	0PXOes/DUWpVlvXxcHUa9O+Gs0oJgiod7Lkkg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ImvUDWy3PmXQe2b0Eif9RGyo75A3/qzm
+	PznPD37OCpvd+EPr9npwuC7NDKk+1s9ZF3Am8wD6kagFHijoWat5BL5TlpqHbQgm
+	uFqhlAcdphv5qtSKY0APhIsDVd3GODnd9ZaDxkSdTm+uJJXkU00a6U3OolY4kkzF
+	GyVwAFjhdto=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DD30726917;
+	Fri, 30 Oct 2015 12:03:13 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 620BB26916;
+	Fri, 30 Oct 2015 12:03:13 -0400 (EDT)
+In-Reply-To: <20151030101038.GG25993@fergus.ozlabs.ibm.com> (Paul Mackerras's
+	message of "Fri, 30 Oct 2015 21:10:38 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B94BDE82-7F1F-11E5-9DA5-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280490>
 
+Paul Mackerras <paulus@ozlabs.org> writes:
 
-> > See 
-> > http://git.savannah.gnu.org/cgit/grub.git/commit/?id=206676601eb853fc3
-> 19df14cd3398fbdfde665ac
-> >
-> >
-> > 
-> > 
-> > I was not even aware that this is possible. Is there anything on 
-> > server side that can prevent it?
-> > 
-> > Would be good if commit were amended and force pushed to fix it.
-> > 
-> > 
-> 
-> Is this even a problem? I'm pretty sure Git warns you if you try to
-> commit something before user.name and user.email are defined, and if
-> someone wants to do so, I don't see why you should try to stop them.
-> It wouldn't work, anyway; they would just write some simple name like
-> "anonymous" and some nonsense email if they really want to be anonymous.
-> 
+> Yes, sorry about that.  I have applied a patch from Beat Bolli fixing
+> the basic issue, since his patch was the same as Takashi's first patch
+> and was posted earlier.  I have also applied 2-4 of Takashi's series
+> plus some other translation updates.  I have pushed all that out to
+> git://ozlabs.org/~paulus/gitk.git.
+>
+> Please pull whenever is convenient for you.
 
-This commit just removed a line from the README:
-
-"Please look at the GRUB Wiki <http://grub.enbug.org> for
-testing-procedures."
-
-Is this change something that may justify that it's-not-me-there action?
-I agree that it should not be prevented to avoid some pressure
-situations that might be (eventually) present. Bogus random data there
-would be harder to track. The empty fields are easy, and if it
-guarantees some safety to whoever does it, should be the choice.
-
-
--- 
-http://www.fastmail.com - mmm... Fastmail...
+Thanks!
