@@ -1,67 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] ref-filter: fallback on alphabetical comparison
-Date: Fri, 30 Oct 2015 15:54:12 -0700
-Message-ID: <xmqq1tccj7cb.fsf@gitster.mtv.corp.google.com>
-References: <1446194728-7944-1-git-send-email-Karthik.188@gmail.com>
-	<5633F489.60008@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Oct 30 23:54:37 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v2] http.c: use CURLOPT_RANGE for range requests
+Date: Fri, 30 Oct 2015 18:54:42 -0400
+Message-ID: <1446245682-18087-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 30 23:55:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsIYz-0004aQ-9Z
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 23:54:25 +0100
+	id 1ZsIZp-0005L9-SO
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 23:55:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759952AbbJ3WyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 18:54:21 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57316 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753286AbbJ3WyU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 18:54:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B089627AD5;
-	Fri, 30 Oct 2015 18:54:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DX3Bv6Nyd7n+rijTA59Rvg23xv8=; b=fBIa9g
-	b5gupaCyH5wgOTyUqudTBe5AiwegjAvZpGJSBE4IbK7P6hItxgYax3pEXuLMbD8v
-	HOWG+Ry5G9q96FJ/cNs6XIJzptoCZZvUrqQL3DwYvSZm1M+r8RidHDC61ILpaNrx
-	wq76rGImRsyVrDweKDFs/aU0Ea9tkj5SE+0P8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TPZNTB3WWkiNmU5K9+ZbC+PewvtkpVG+
-	jlkB3AGtWvOi6jSVcMXMQFMxCZzXxACcA0d4an7Dr3iR1PpoMjDt2DH1rje3ErUD
-	MVEjLYRr1PCoAJ2SLywXj+/lUJfzEru2SBzIXWa7rqC0ufhbVKRaARW51xVogV5L
-	KO6SFVC5UnE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A7AD027AD4;
-	Fri, 30 Oct 2015 18:54:14 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2DD9227AD3;
-	Fri, 30 Oct 2015 18:54:14 -0400 (EDT)
-In-Reply-To: <5633F489.60008@kdbg.org> (Johannes Sixt's message of "Fri, 30
-	Oct 2015 23:51:53 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 2445514E-7F59-11E5-9E76-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1759974AbbJ3WzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 18:55:12 -0400
+Received: from mail-qg0-f48.google.com ([209.85.192.48]:34962 "EHLO
+	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753286AbbJ3WzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 18:55:10 -0400
+Received: by qgbb65 with SMTP id b65so73716295qgb.2
+        for <git@vger.kernel.org>; Fri, 30 Oct 2015 15:55:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource_com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=Ti2fapL+3+56uwasvvX8He9dbxRfLCXy1EszX3yv7YY=;
+        b=mb+o/Oh0NntJS39FrMYpmGPnXr+2mwb8J+K1V7ufF+S546ZCwc60Yc1hHp2UoRmZWJ
+         yuyYULhfi3LtRUwrUUuhoHhczNUe8VYutEBtal2gvbuC0DYeBNLD9TIQZEyryPyVhMs+
+         AezzLMEVwP7mAURaVorL34Y2K2KZA06tNm/Q0ZZA1yj9jdMzL/EGZZQ7rZWCuq9V+BLP
+         fqZI6X9gK4Co8M/gYGosSi4HcrocZbmrBqzGmL4jVz1ujgqwU3Fiywmnk/SKjUInagTK
+         dHAcP7TcviCyHsERjAz5Fh4ID0KL6IWJbFEPDkHaAt7ZQWGjM/bo7piNWty5dHFjFLu8
+         BALA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Ti2fapL+3+56uwasvvX8He9dbxRfLCXy1EszX3yv7YY=;
+        b=kjR83rqZO/0TNXHovETSpAmoRxx+nbZQW57kJjJQkXwTMA9ZK9FGKtTlS1yUiWimVf
+         grjhG+juAxBselsKkPGsl134NuIqVVbUxEAM3DK8VIQWTXwYtoDbSbnolvVLk7Pxlbgv
+         ToR32co0X5WOVe7IuogjMU2fI3zARAcGzVa0vfdLF/LmnZD7ypsgeVLzpWGDM8/cqHm1
+         cV0YaU4A9tO+AljE2AvwyLKBYPMPx3I8CpSBGM7auNVaXuSgYQwuNqRL4ZOnpW7IediM
+         O1KakOiWP2UAS/D2pe6kNnyenGe7IRrT7lj0S3idl+gvrMtJ6BdGEDqNhZzHcXHtbkYZ
+         gjIA==
+X-Gm-Message-State: ALoCoQnhFJMwAmvt4ztvEWO2P8aL43KubSZPj5gZJGtYaA2WP9K7+Toc7nA/RSLIIysy16LCxNoH
+X-Received: by 10.140.152.68 with SMTP id 65mr13912078qhy.16.1446245709942;
+        Fri, 30 Oct 2015 15:55:09 -0700 (PDT)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id e80sm3391200qka.38.2015.10.30.15.55.08
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 30 Oct 2015 15:55:09 -0700 (PDT)
+X-Mailer: git-send-email 2.4.2.691.g714732c-twtrsrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280559>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+A HTTP server is permitted to return a non-range response to a HTTP
+range request (and Apache httpd in fact does this in some cases).
+While libcurl knows how to correctly handle this (by skipping bytes
+before and after the requested range), it only turns on this handling
+if it is aware that a range request is being made.  By manually
+setting the range header instead of using CURLOPT_RANGE, we were
+hiding the fact that this was a range request from libcurl.  This
+could cause corruption.
 
->> Update it to match the new world order, which we can now depend on
->> being stable.
->
-> Needless to say that the patch fixes the test failure on Windows. (I
-> tested v2 of the patch.)
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
 
-Thanks, both.  Queued.
+This version applies on top of pu.  It also catches all of the range
+requests instead of just the one that I happened to notice.
+
+---
+ http.c | 24 ++++++++----------------
+ http.h |  1 -
+ 2 files changed, 8 insertions(+), 17 deletions(-)
+
+diff --git a/http.c b/http.c
+index 6b89dea..16610b9 100644
+--- a/http.c
++++ b/http.c
+@@ -30,7 +30,7 @@ static CURL *curl_default;
+ #endif
+ 
+ #define PREV_BUF_SIZE 4096
+-#define RANGE_HEADER_SIZE 30
++#define RANGE_HEADER_SIZE 17
+ 
+ char curl_errorstr[CURL_ERROR_SIZE];
+ 
+@@ -1213,8 +1213,9 @@ static int http_request(const char *url,
+ 			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
+ 					 fwrite);
+ 			if (posn > 0) {
+-				strbuf_addf(&buf, "Range: bytes=%ld-", posn);
+-				headers = curl_slist_append(headers, buf.buf);
++				strbuf_addf(&buf, "%ld-", posn);
++				curl_easy_setopt(slot->curl, CURLOPT_RANGE,
++						 &buf.buf);
+ 				strbuf_reset(&buf);
+ 			}
+ 		} else
+@@ -1526,10 +1527,6 @@ void release_http_pack_request(struct http_pack_request *preq)
+ 		fclose(preq->packfile);
+ 		preq->packfile = NULL;
+ 	}
+-	if (preq->range_header != NULL) {
+-		curl_slist_free_all(preq->range_header);
+-		preq->range_header = NULL;
+-	}
+ 	preq->slot = NULL;
+ 	free(preq->url);
+ 	free(preq);
+@@ -1631,10 +1628,8 @@ struct http_pack_request *new_http_pack_request(
+ 			fprintf(stderr,
+ 				"Resuming fetch of pack %s at byte %ld\n",
+ 				sha1_to_hex(target->sha1), prev_posn);
+-		xsnprintf(range, sizeof(range), "Range: bytes=%ld-", prev_posn);
+-		preq->range_header = curl_slist_append(NULL, range);
+-		curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER,
+-			preq->range_header);
++		xsnprintf(range, sizeof(range), "%ld-", prev_posn);
++		curl_easy_setopt(preq->slot->curl, CURLOPT_RANGE, range);
+ 	}
+ 
+ 	return preq;
+@@ -1685,7 +1680,6 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	ssize_t prev_read = 0;
+ 	long prev_posn = 0;
+ 	char range[RANGE_HEADER_SIZE];
+-	struct curl_slist *range_header = NULL;
+ 	struct http_object_request *freq;
+ 
+ 	freq = xcalloc(1, sizeof(*freq));
+@@ -1791,10 +1785,8 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 			fprintf(stderr,
+ 				"Resuming fetch of object %s at byte %ld\n",
+ 				hex, prev_posn);
+-		xsnprintf(range, sizeof(range), "Range: bytes=%ld-", prev_posn);
+-		range_header = curl_slist_append(range_header, range);
+-		curl_easy_setopt(freq->slot->curl,
+-				 CURLOPT_HTTPHEADER, range_header);
++		xsnprintf(range, sizeof(range), "%ld-", prev_posn);
++		curl_easy_setopt(freq->slot->curl, CURLOPT_RANGE, range);
+ 	}
+ 
+ 	return freq;
+diff --git a/http.h b/http.h
+index 49afe39..4f97b60 100644
+--- a/http.h
++++ b/http.h
+@@ -190,7 +190,6 @@ struct http_pack_request {
+ 	struct packed_git **lst;
+ 	FILE *packfile;
+ 	char tmpfile[PATH_MAX];
+-	struct curl_slist *range_header;
+ 	struct active_request_slot *slot;
+ };
+ 
+-- 
+2.4.2.691.g714732c-twtrsrc
