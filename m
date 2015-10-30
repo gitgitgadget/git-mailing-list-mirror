@@ -1,152 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with
- gdb
-Date: Fri, 30 Oct 2015 12:02:56 -0700
-Message-ID: <20151030190256.GI7881@google.com>
-References: <cover.1445865176.git.johannes.schindelin@gmx.de>
- <082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
- <20151026191724.GE7881@google.com>
- <alpine.DEB.1.00.1510271036100.31610@s15462909.onlinehome-server.info>
- <xmqqr3kge0d3.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.1.00.1510301925360.31610@s15462909.onlinehome-server.info>
- <xmqqlhakky0e.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] checkout: add --progress option
+Date: Fri, 30 Oct 2015 15:04:02 -0400
+Message-ID: <CAPig+cSw7+-vfsWtfP2y4eNijuWdauWe-HfgbOvUt1vYFUEjAg@mail.gmail.com>
+References: <1446168186-4730-1-git-send-email-eantoranz@gmail.com>
+	<CAPig+cTvRs_O8uY9_SrZZCf95Lraon8knkQUDgm0Lke3pve01A@mail.gmail.com>
+	<xmqqh9l8kxa3.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Edmundo Carmona Antoranz <eantoranz@gmail.com>,
+	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 20:03:06 2015
+X-From: git-owner@vger.kernel.org Fri Oct 30 20:04:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsEx8-00072M-1L
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 20:03:06 +0100
+	id 1ZsEy9-000804-D3
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 20:04:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759876AbbJ3TDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 15:03:00 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:33925 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758935AbbJ3TC7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 15:02:59 -0400
-Received: by padhk11 with SMTP id hk11so82177155pad.1
-        for <git@vger.kernel.org>; Fri, 30 Oct 2015 12:02:59 -0700 (PDT)
+	id S1760158AbbJ3TEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 15:04:05 -0400
+Received: from mail-vk0-f43.google.com ([209.85.213.43]:32894 "EHLO
+	mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753304AbbJ3TEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 15:04:04 -0400
+Received: by vkgy127 with SMTP id y127so53709738vkg.0
+        for <git@vger.kernel.org>; Fri, 30 Oct 2015 12:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=mmeyzLKrjaO26fPJ08iIG5VWdTbyl8+1bxcZkfzJ3qU=;
-        b=AFmXh8s8JKv62UECimB3wrGfPEkP1KbegS83259FYhhxoQdmOv+HL+1hZCLM7DxRTy
-         w/NU4Keb7z5xggIaNDTxEnCOn5gx760B10zsUpVgLsJMmR1qa0x38vHFze9XQjATTj3k
-         MDJWQsRNCmzFBCmTGFWFocbsse4ojF4icoZyS2uwZQkz4EBw/N+dwkhkEySBOE8r1RZJ
-         rlN9AJTibn75SuKBm559Y/h0lHDKMzaRvwuIcjQC1DX27Xq77Sv0Xco/fva3mlpaMThP
-         XP9+8tEDR/yFB7I0y6ZA6kyxMBk9gXZLUFCKwAzh9hkYW910ZTZFfl2EwLQKLWd1p3Qg
-         020Q==
-X-Received: by 10.66.172.6 with SMTP id ay6mr10506181pac.44.1446231779369;
-        Fri, 30 Oct 2015 12:02:59 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:c1d3:800a:733a:d60a])
-        by smtp.gmail.com with ESMTPSA id ey17sm9577835pac.26.2015.10.30.12.02.58
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 30 Oct 2015 12:02:58 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqlhakky0e.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=H1dTgD6xOpmK5PTcrapql0W+iehGfSq0Ui3zQVpw/A8=;
+        b=ObxP32j5O39sAemEvr4vifeAOfw5nRcDw/kyHI+e3zAXL5ZUYzYKE14ZJ2lx0UDlec
+         XYCy42nkt7sh8RYu1umhSm+ZHPROKoi8OmaUVYdnkj9lQjYMhd3/xNCsaMP2/Oj9Lyao
+         uC11ifXsb8lO3qzmD9sso/dabcn6R1AL6Ev1gr1NbsJQ55HJMVrfLZezJoAAEGNqOiCy
+         +SolcewxCwdFjTdNInAoGxsIJqWJiwGunWbvdGbZzgPopREfrNs8HAff2O3DWTRQOwj7
+         +OjtbgIWF4qsu9z+AqUshzPIXiEOBngPcHLVK8bCEGaD0heQDg9SKE965ou/rCe2AGj8
+         UvSA==
+X-Received: by 10.31.56.15 with SMTP id f15mr6593752vka.84.1446231842666; Fri,
+ 30 Oct 2015 12:04:02 -0700 (PDT)
+Received: by 10.31.159.204 with HTTP; Fri, 30 Oct 2015 12:04:02 -0700 (PDT)
+In-Reply-To: <xmqqh9l8kxa3.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: eCcB0hCVUGnZho9lb_mI1XkjA1w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280522>
 
-Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> On Tue, 27 Oct 2015, Junio C Hamano wrote:
-
->>> It can be called GDB=1, perhaps?
+On Fri, Oct 30, 2015 at 2:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> On Thu, Oct 29, 2015 at 9:23 PM, Edmundo Carmona Antoranz
+>> <eantoranz@gmail.com> wrote:
+>>> +       opts.verbose_update = !o->quiet && (option_progress > 0 ||
+>>> +                                          (option_progress < 0 && isatty(2)));
 >>
->> No, this is way too generic. As I only test that the environment
->> variable's existence, even something like GDB=/usr/opt/gdb/bin/gdb would
->> trigger it.
->>
->> I could be talked into GDB_GIT=1, though.
+>> Does this logic also need to be applied to the other instance where
+>> isatty() is consulted in merge_working_tree()?
 >
-> As I said in another message, I have no preference myself over the
-> name of this variable (or making it a shell function like Duy
-> mentioned, which incidentally may give us more visual pleasantness
-> by losing '=').
+> This makes me wonder if option_progress and o->quiet change once
+> parse_options() finished doing its job.  If we know that these two
+> will never change once parse_options() is done, then we can
+> introduce a variable "show_progress", assign the value of that
+> variable to opts.verbose_update in these places and then arrange
+> that variable is set to the combination of quiet, option_progress
+> and isatty(2) just once after parse_options().
 >
-> I'd just be happy as long as the feature becomes available, and I'd
-> leave the choice of consistent and convenient naming to others who
-> have stronger opinions ;-)
+> That is, something like this on top of Edmundo's patch.
+>
+> @@ -27,7 +27,7 @@ static const char * const checkout_usage[] = {
+> -static int option_progress = -1;
+> +static int show_progress = 1;
+> @@ -430,8 +430,7 @@ static int reset_tree(struct tree *tree, const struct checkout_opts *o,
+> -       opts.verbose_update = !o->quiet && (option_progress > 0 ||
+> -                                          (option_progress < 0 && isatty(2)));
+> +       opts.verbose_update = show_progress;
+> @@ -515,7 +514,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+> -               topts.verbose_update = !opts->quiet && isatty(2);
+> +               topts.verbose_update = show_progress;
+> @@ -1143,6 +1142,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+> +       int option_progress = -1;
+> @@ -1187,6 +1187,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+>         argc = parse_options(argc, argv, prefix, options, checkout_usage,
+>                              PARSE_OPT_KEEP_DASHDASH);
+>
+> +       show_progress = (!opts.quiet &&
+> +                        (0 < option_progress || (option_progress < 0 && isatty(2))));
 
-Here's a suggested patch.
-
--- >8 --
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Facilitate debugging Git executables in tests with gdb
-
-When prefixing a Git call in the test suite with 'debug ', it will now
-be run with GDB, allowing the developer to debug test failures more
-conveniently.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/README                | 5 +++++
- t/test-lib-functions.sh | 8 ++++++++
- wrap-for-bin.sh         | 8 +++++++-
- 3 files changed, 20 insertions(+), 1 deletion(-)
-
-diff --git a/t/README b/t/README
-index 35438bc..1dc908e 100644
---- a/t/README
-+++ b/t/README
-@@ -563,6 +563,11 @@ library for your script to use.
-    argument.  This is primarily meant for use during the
-    development of a new test script.
- 
-+ - debug <git-command>
-+
-+   Run a git command inside a debugger. This is primarily meant for
-+   use when debugging a failing test script.
-+
-  - test_done
- 
-    Your test script must have test_done at the end.  Its purpose
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 6dffb8b..73e37a1 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -145,6 +145,14 @@ test_pause () {
- 	fi
- }
- 
-+# Wrap git in gdb. Adding this to a command can make it easier to
-+# understand what is going on in a failing test.
-+#
-+# Example: "debug git checkout master".
-+debug () {
-+	 GIT_TEST_GDB=1 "$@"
-+}
-+
- # Call test_commit with the arguments "<message> [<file> [<contents> [<tag>]]]"
- #
- # This will commit a file with the given contents and the given commit
-diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
-index 701d233..db0ec6a 100644
---- a/wrap-for-bin.sh
-+++ b/wrap-for-bin.sh
-@@ -19,4 +19,10 @@ GIT_TEXTDOMAINDIR='@@BUILD_DIR@@/po/build/locale'
- PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
- export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
- 
--exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-+if test -n "$GIT_TEST_GDB"
-+then
-+	unset GIT_TEST_GDB
-+	exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-+else
-+	exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-+fi
--- 
-2.6.0.rc2.230.g3dd15c0
+Yep, I was thinking that too. Also, Edmundo's explanatory comment
+about how --quiet, --progress, and isatty() interact would move down
+to this location (if it's deemed worth keeping).
