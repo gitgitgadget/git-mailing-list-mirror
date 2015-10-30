@@ -1,91 +1,79 @@
-From: Eric Sunshine <ericsunshine@gmail.com>
-Subject: Re: [PATCHv2 2/8] submodule config: keep update strategy around
-Date: Thu, 29 Oct 2015 21:14:22 -0400
-Message-ID: <CAPig+cRTa35B5aHcopaWOtCLxN6BhGJKTcVeDUf0hrZE_nfCKQ@mail.gmail.com>
-References: <xmqqfv0wp1l1.fsf@gitster.mtv.corp.google.com>
-	<1446074504-6014-1-git-send-email-sbeller@google.com>
-	<1446074504-6014-3-git-send-email-sbeller@google.com>
-Reply-To: Eric Sunshine <sunshine@sunshineco.com>
+From: Noam Postavsky <npostavs@users.sourceforge.net>
+Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it to
+ ignore instead?
+Date: Thu, 29 Oct 2015 21:20:01 -0400
+Message-ID: <CAM-tV-8qSVJFOxLQt9SaYK_WqpxixzPArJnAK=3tHU9inM9Law@mail.gmail.com>
+References: <xmqqfv18awj4.fsf@gitster.mtv.corp.google.com>
+	<CAM-tV-8VXtB5uRgqP9dFpww6AaLzasPV46tCiquz=nz=ksBNng@mail.gmail.com>
+	<CAM-tV-9sNgHncsWRPh36tEY3YFORUJBA-Q6W5R=mvX_KhSmWEQ@mail.gmail.com>
+	<xmqqfv0ylwa7.fsf@gitster.mtv.corp.google.com>
+	<20151026215016.GA17419@sigill.intra.peff.net>
+	<xmqqoafkci6j.fsf@gitster.mtv.corp.google.com>
+	<20151027184702.GB12717@sigill.intra.peff.net>
+	<CAM-tV--B3HaC1DcORfnx9bWW9-quyk0=pQDxmvonc=6dgrMOxA@mail.gmail.com>
+	<20151030001000.GA2123@sigill.intra.peff.net>
+	<CAM-tV-_dc_YEE0Dh2T=8+_DcBiq_rvynOw2cFi+8QizkeGTusw@mail.gmail.com>
+	<20151030005057.GA23251@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 02:14:28 2015
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 30 02:20:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZryGx-0005xk-JJ
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 02:14:27 +0100
+	id 1ZryMT-0003G5-Rb
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 02:20:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752460AbbJ3BOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2015 21:14:23 -0400
-Received: from mail-vk0-f51.google.com ([209.85.213.51]:32888 "EHLO
-	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751917AbbJ3BOX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2015 21:14:23 -0400
-Received: by vkgy127 with SMTP id y127so38776769vkg.0
-        for <git@vger.kernel.org>; Thu, 29 Oct 2015 18:14:22 -0700 (PDT)
+	id S1757187AbbJ3BUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2015 21:20:04 -0400
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:33386 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751474AbbJ3BUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2015 21:20:02 -0400
+Received: by wijp11 with SMTP id p11so1269972wij.0
+        for <git@vger.kernel.org>; Thu, 29 Oct 2015 18:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=rJbNP63m32bolnvXBeWOwEo/Jr+D85Sim42hGYfV8UU=;
-        b=aX/ZPtMbzmWhawYhDbuyE1F5Xc3G7BWfd308e9Ybf1bmuBQ47btwdX1W1D1TWMw0t2
-         iLYXDXSdIeRFN+4J++GI9NW50XstMu34GYOBGxeluOjjYeI7F5YZyYfPy/GYRq2dWMdZ
-         kjaVsLnWwSq7DBOgrvuaZGxJ2qSgF7LUGQmqrrIDku7us5jk4afclOuESKhj5ZM34Jjs
-         oiYvZC0IrQsUyGXgIifPtivlW4YSCojiUsqKkoOcGW+0URzfjlQ3JsIJMaNj1MQvO0QA
-         59+jLQSO5U29R5u5kLmrKAXbmP5DqtWW8gDNIdJOqmbrKcKR7TI44Nbl6sK/K5xo1Xh5
-         oDJQ==
-X-Received: by 10.31.153.210 with SMTP id b201mr3543942vke.117.1446167662301;
- Thu, 29 Oct 2015 18:14:22 -0700 (PDT)
-Received: by 10.31.159.204 with HTTP; Thu, 29 Oct 2015 18:14:22 -0700 (PDT)
-In-Reply-To: <1446074504-6014-3-git-send-email-sbeller@google.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=RV/zDBTmmaDEd9dOCNswU+Q219Iij42cs64JhGJ+94M=;
+        b=shBUKtUqXtKcfclgL5fm7S30mW7AKQ6ybKL55B9Nzv71ahGnjeXw+Cl7FfmtyTs4Re
+         XsAX+sK5OBukJOAZjeA4aDDfIO4+P6+ooj89DpaA28CbUWVGLdaBQmhUMhO8W2CTDh44
+         7wutOztWzHZhF9Kt3Mw0hpvvVDu4pK9qKGa31tSAEQyz8WCPKB9etyJehN1GEVuWISb4
+         gw33Y/crLGXXExbkH9EVGfip1Ltm6nyj3Y+6joYZUGsAdI73jyXTkEWj+el4Whb6dx2G
+         KvCL7iwYJwCtZ0427MYL/yfW3RGUL72caOc2efK6qoXktyCZ6iP5gCLVXKl8bd6tR0R7
+         5QVg==
+X-Received: by 10.194.62.112 with SMTP id x16mr6425351wjr.132.1446168001509;
+ Thu, 29 Oct 2015 18:20:01 -0700 (PDT)
+Received: by 10.28.29.87 with HTTP; Thu, 29 Oct 2015 18:20:01 -0700 (PDT)
+In-Reply-To: <20151030005057.GA23251@sigill.intra.peff.net>
+X-Google-Sender-Auth: nlrTEUjU3na30hlQklUd38KhT2c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280470>
 
-On Wed, Oct 28, 2015 at 7:21 PM, Stefan Beller <sbeller@google.com> wrote:
-> We need the submodule update strategies in a later patch.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git a/submodule-config.c b/submodule-config.c
-> index afe0ea8..8b8c7d1 100644
-> --- a/submodule-config.c
-> +++ b/submodule-config.c
-> @@ -311,6 +312,16 @@ static int parse_config(const char *var, const char *value, void *data)
->                         free((void *) submodule->url);
->                         submodule->url = xstrdup(value);
->                 }
-> +       } else if (!strcmp(item.buf, "update")) {
-> +               if (!value)
-> +                       ret = config_error_nonbool(var);
-> +               else if (!me->overwrite && submodule->update != NULL)
+On Thu, Oct 29, 2015 at 8:50 PM, Jeff King <peff@peff.net> wrote:
+> workaround (the real inelegance is that you are assuming that "foo"
+> needs run in the first place).
 
-Although "foo != NULL" is unusual in this code-base, it is used
-elsewhere in this file, including just outside the context seen above.
-Okay.
+Well, we currently check the output from "git config
+credential.helpers" to determine what's needed, so the inelegance here
+is that we reimplement git's checking of this option.
 
-> +                       warn_multiple_config(me->commit_sha1, submodule->name,
-> +                                            "update");
-> +               else {
-> +                       free((void *)submodule->update);
+> I'm still not sure how the pre-helper would work. What git command kicks
+> off the pre-helper command? Wouldn't it also be subject to the SIGHUP
+> problem?
 
-Minor: Every other 'free((void *) foo)' in this file has a space after
-"(void *)", one of which can be seen in the context just above.
-
-> +                       submodule->update = xstrdup(value);
-> +               }
->         }
->
->         strbuf_release(&name);
+Ah, maybe the missing piece I forgot to mention is that we could make
+our pre/1st-helper be an emacsclient command, which would tell Emacs
+to startup the daemon. So the daemon would be a subprocess of Emacs,
+not "git push", thereby avoiding the SIGHUP. In our current workaround
+we startup the daemon (if it's not running) before git commands that
+we think are going to run credential helpers (i.e. "push", "pull",
+"fetch"), hence my thought that it would be nicer if we only did that
+before git is *actually* going to run the helpers.
