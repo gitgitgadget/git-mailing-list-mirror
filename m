@@ -1,141 +1,107 @@
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: Re: [PATCH 0/2] checkout: added two options to control progress output
-Date: Thu, 29 Oct 2015 18:09:06 -0600
-Message-ID: <CAOc6etakOy_zZ3fH_vS5UGGqouXTd7SJFtD6UC9bZRJaYWsRQw@mail.gmail.com>
-References: <1445698768-22614-1-git-send-email-eantoranz@gmail.com>
-	<20151029220519.GA466@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it
+ to ignore instead?
+Date: Thu, 29 Oct 2015 20:10:01 -0400
+Message-ID: <20151030001000.GA2123@sigill.intra.peff.net>
+References: <CAM-tV-_JPazYxeDYogtQTRfBxONpSZwb3u5pPanB=F9XnLnZyg@mail.gmail.com>
+ <CAM-tV-_eOgnhqsTFN6kKW=tcS7gAPYaxskBaxnJZo3bsx02HZg@mail.gmail.com>
+ <xmqqfv18awj4.fsf@gitster.mtv.corp.google.com>
+ <CAM-tV-8VXtB5uRgqP9dFpww6AaLzasPV46tCiquz=nz=ksBNng@mail.gmail.com>
+ <CAM-tV-9sNgHncsWRPh36tEY3YFORUJBA-Q6W5R=mvX_KhSmWEQ@mail.gmail.com>
+ <xmqqfv0ylwa7.fsf@gitster.mtv.corp.google.com>
+ <20151026215016.GA17419@sigill.intra.peff.net>
+ <xmqqoafkci6j.fsf@gitster.mtv.corp.google.com>
+ <20151027184702.GB12717@sigill.intra.peff.net>
+ <CAM-tV--B3HaC1DcORfnx9bWW9-quyk0=pQDxmvonc=6dgrMOxA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 30 01:09:14 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Noam Postavsky <npostavs@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Oct 30 01:10:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZrxFo-0001ch-RR
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 01:09:13 +0100
+	id 1ZrxGt-0002db-JW
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 01:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757820AbbJ3AJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Oct 2015 20:09:08 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:33800 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752336AbbJ3AJH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Oct 2015 20:09:07 -0400
-Received: by padhk11 with SMTP id hk11so55081116pad.1
-        for <git@vger.kernel.org>; Thu, 29 Oct 2015 17:09:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=zWgnbAKqp67JaSQ/7b65yNuXksqAcphlpmsHqCT88G8=;
-        b=IazSbYR+tBQR1Qjf5Rrpltw2BCENd+/bf0dT4wu4o45iu3zXJmwOFfI87T8WrVyJ6m
-         rrP7uWW3i0pjkcXRyIhQgbOn+XX4frVqD2ARoSOrjcMq+fM/GE1TLMnFpcTzEMKyjqsA
-         vJ6Om0uMHD8OwZhxoTaTzk7uapouaxErYjYTkxS8YLfvftqazpPSDDKTt7D5B/ibxdMw
-         BrtaCaKp6I4eHrGUuMyeGfDOZ/4G6udCgUNF8S/UICm7JOWa0fpxCJTDfTuPEfv4LaI2
-         l8ASAd8DHZM+qspV4EI0SZiVOv2bAREV+19EmwDbt5zDMUdJT0pLfoRGjVqZWDzYxKDg
-         XQrQ==
-X-Received: by 10.66.124.165 with SMTP id mj5mr5045188pab.58.1446163746273;
- Thu, 29 Oct 2015 17:09:06 -0700 (PDT)
-Received: by 10.66.149.4 with HTTP; Thu, 29 Oct 2015 17:09:06 -0700 (PDT)
-In-Reply-To: <20151029220519.GA466@sigill.intra.peff.net>
+	id S1758253AbbJ3AKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Oct 2015 20:10:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50110 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757876AbbJ3AKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Oct 2015 20:10:04 -0400
+Received: (qmail 28869 invoked by uid 102); 30 Oct 2015 00:10:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Oct 2015 19:10:03 -0500
+Received: (qmail 17204 invoked by uid 107); 30 Oct 2015 00:10:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Oct 2015 20:10:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Oct 2015 20:10:01 -0400
+Content-Disposition: inline
+In-Reply-To: <CAM-tV--B3HaC1DcORfnx9bWW9-quyk0=pQDxmvonc=6dgrMOxA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280464>
 
-On Thu, Oct 29, 2015 at 4:05 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Oct 24, 2015 at 08:59:28AM -0600, Edmundo Carmona wrote:
->
->> From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
->>
->> checkout will refuse to print progress information if it's not connected
->> to a TTY. These patches will add two options:
->
-> Not just checkout, but all of git's progress code. The usual rules are:
->
->   - if the user told us --progress, show progress
->
->   - if the user told us --no-progress, don't show progress
->
->   - if neither is set, guess based on isatty(2)
->
-> So with that in mind...
->
->> --progress-no-tty: enable printing progress info even if not using a TTY
->
-> This should just be "--progress", shouldn't it?
+On Tue, Oct 27, 2015 at 11:46:20PM -0400, Noam Postavsky wrote:
 
-It sure does!
+> > I dunno. I think the auto-spawn is really what makes it usable; you can
+> > drop it in with "git config credential.helper config" and forget about
+> > it. Anything more fancy requires touching your login/startup files.
+> > Certainly I'm not opposed to people setting it up outside of the
+> > auto-spawn, but I wouldn't want that feature to go away.
+> 
+> Perhaps we could express the auto-spawn more explicitly, something
+> like "git config credential.pre-helper start-cache-daemon". A way to
+> run a command before the credential helpers start would be useful to
+> our magit workaround for this issue (currently we start the daemon
+> before "push", "fetch", and "pull", but it won't work with user
+> aliases that run those commands).
 
-A comment there: I think more builtins support --progress than the ones that
-support --no-progress, right?
+I'm not clear on when the pre-helper would be run. Git runs the helper
+when it needs a credential. What git command would start it? Or are you
+proposing a new credential interface for programs (like magit) to call
+along the lines of "do any prep work you need; I might be asking for a
+credential soon", without having to know the specifics of the user's
+helper config.
 
->
-> It looks like checkout does not understand --progress and --no-progress.
-> It does have "--quiet", but elsewhere we usually use that to mean "no
-> progress, but also no other informational messages". We should probably
-> make this consistent with other commands. See how builtin/clone.c does
-> this, for example. Note also that clone's "quiet" option is part of
-> OPT__VERBOSITY(), which provides both "-q" and "-v" to turn the
-> verbosity level up/down. We could switch checkout to use that, too, but
-> I do not think it buys us anything, as we have no "-v" output for
-> checkout yet.
->
->> --progress-lf: print progress information using LFs instead of CRs
->
-> I notice this is part of your patch 1, but it really seems orthogonal to
-> checkout's --progress option. It should probably be a separate patch,
-> and it probably needs some justification in the commit message (i.e.,
-> explain not just _what_ you are doing in the patch, but _why_ it is
-> useful).
->
-> It also seems like this has nothing to do with checkout in particular.
-> Should it be triggered by an environment variable or by an option to the
-> main git binary? E.g.:
->
->   git --progress-lf checkout ...
->
-> to affect the progress meter for all commands?
+You can do that already like:
 
-I think it would be worth it but, given that this is a more "global"
-adjustment (
-as in, for the whole progress and not just checkout), I think it's better I
-separate it from the "--progress for checkout" patch cause right now checkout
-is missing the --progress option that many other builtins already support....
-say, for standardization's sake.
+  echo url=dummy://a:b@c/ | git credential approve
 
->
->> Edmundo Carmona Antoranz (2):
->>   checkout: progress on non-tty. progress with lf
->>   checkout: adjust documentation to the two new options
->
-> I mentioned above that the two orthogonal features should each get their
-> own patches. I think you should also do the reverse with the
-> documentation: include it along with the implementation of the feature.
-> Sometimes we do documentation as a separate patch (especially if it is
-> large, or if the feature itself took many patches to complete). But for
-> a small feature, as a reviewer (and when looking back through history) I
-> usually find it simpler if the documentation is included in the same
-> commit.
->
->>  Documentation/git-checkout.txt | 10 ++++++++++
->>  builtin/checkout.c             | 12 ++++++++++--
->>  progress.c                     |  8 +++++++-
->>  progress.h                     |  1 +
->>  unpack-trees.c                 |  3 +++
->>  unpack-trees.h                 |  2 ++
->>  6 files changed, 33 insertions(+), 3 deletions(-)
->
-> I didn't look too carefully at the patches themselves, as they would
-> need to be reworked substantially to follow the suggestions above. But I
-> didn't notice any style or patch-formatting problems, and you seem to
-> generally be touching the right areas for what you want to do.
->
-> -Peff
+though I guess for some helpers, that may actually store the bogus
+value (for the cache, it inserts a dummy cache entry, but that's not a
+problem; something with permanent storage would be more annoying).
 
-It's ok. I knew I would have to rework them based on feedback from the list.
+I guess the most elegant thing would be to add an "init" command to the
+helper interface. So magit would run:
 
-Thank you very much!
+  git credential init
+
+which would then see that we have "credential.helper" defined as "foo",
+and would run:
+
+  git credential-foo init
+
+which could be a noop, start a daemon, or whatever, depending on how the
+helper operates.
+
+I dunno. It almost seems like adding a credentialcache.ignoreHUP option
+would be less hacky. :)
+
+> I'm not sure it's that widely used. Perhaps most people use ssh-agent?
+> That's what I do, though I've been experimenting with credential-cache
+> since it was brought up by a magit user.
+
+I don't know. Certainly up until a few years ago, anybody sane was using
+ssh-agent, because the http password stuff was so awful (no storage, and
+we didn't even respect 401s for a long time). But these days sites like
+GitHub push people into using https as the protocol of choice. Mostly, I
+think, because there was a lot of support load in teaching people to set
+up ssh. But I guess a lot of those people are on non-Linux platforms.
+
+-Peff
