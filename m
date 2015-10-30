@@ -1,105 +1,91 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH] ident.c: add support for IPv6
-Date: Fri, 30 Oct 2015 15:48:07 +0100
-Message-ID: <1446216487-11503-1-git-send-email-gitter.spiros@gmail.com>
-Cc: peff@peff.net, Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 30 15:48:27 2015
+From: Balaco Baco <balacobaco@imap.cc>
+Subject: Re: [Savannah-users] Anonymous commit (empty Author and Committer)
+Date: Fri, 30 Oct 2015 12:39:42 -0300
+Message-ID: <1446219582.3019364.424715177.39046D65@webmail.messagingengine.com>
+References: <56337DF8.5050802@gmail.com> <56338C30.6010302@riseup.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: The development of GRUB 2 <grub-devel@gnu.org>,
+	git@vger.kernel.org, savannah-users@gnu.org
+X-From: git-owner@vger.kernel.org Fri Oct 30 16:39:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsAyg-0003Xm-Uw
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 15:48:27 +0100
+	id 1ZsBmN-0004lQ-MN
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 16:39:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751631AbbJ3OsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 10:48:23 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:33265 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026AbbJ3OsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 10:48:22 -0400
-Received: by padhy1 with SMTP id hy1so70558289pad.0
-        for <git@vger.kernel.org>; Fri, 30 Oct 2015 07:48:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=bJUHibVurax74uxVlMm0Z1LDls4UaULDjtFzFcLe25Y=;
-        b=sjTltTP1oxfH+5ShS5ze1SQeU0rdsYaBkvq72LKfHiePGvgkfQIBDRsv2src+LN8wu
-         qR+m74r/Av3A4y+qf7+xI7RbImr2aiaZxpBym8eyTsnzjIb85hRO5D4PNZ35JA2xXnCt
-         caB+lj80W00F2FI/kRahw0FfsOlKxASTGuJ7rc5ljHHrcgxGQk15q4psAW9ckOcazSVj
-         9824RAAJ2GnGos7AZSfzaFU/OBtyJZg1NecXIMbYuDNOtyIUmCPLEv6KCw8MeHZcIbVa
-         Sqs+g4/AraG898QnW0clMetI9Q156KsufQAyAR69nF91930s7+i//DNtwPNSR4qd+/k9
-         7Npw==
-X-Received: by 10.66.141.42 with SMTP id rl10mr9351792pab.18.1446216501543;
-        Fri, 30 Oct 2015 07:48:21 -0700 (PDT)
-Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id tj2sm8717011pab.4.2015.10.30.07.48.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 30 Oct 2015 07:48:20 -0700 (PDT)
-X-Mailer: git-send-email 2.3.3.GIT
+	id S1030412AbbJ3Pjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 11:39:43 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:43841 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758707AbbJ3Pjn (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2015 11:39:43 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 5A8E7208A5
+	for <git@vger.kernel.org>; Fri, 30 Oct 2015 11:39:42 -0400 (EDT)
+Received: from web2 ([10.202.2.212])
+  by compute1.internal (MEProxy); Fri, 30 Oct 2015 11:39:42 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=imap.cc; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=+oeZgqP9aGHmanwVwHeBOK8FCDU=; b=NHRH1/
+	JES0k3RWs38rP0RcpJ+BUzMPhyj7qgkAY9T7BQmad9aO7+/ulPO3lEfECqzNebm9
+	xxFMEN6rRQA41iDb37ImtqkBxBzr6yr7osrAinlRZ1K3R6P8sKoIMKwI9eFv7qLL
+	E+ZBTk9r+prjGy3yMHtlhqdWb2W2l1J47xN14=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=+oeZgqP9aGHmanw
+	VwHeBOK8FCDU=; b=DD6rphR64+S4tlh25i7zPjQ6X+SEQjs/WY8Q89onJBSOfFO
+	HupJrH9m3Eci++oMQ6rvlv+rVaOLuYHvfwSxCHenVO9zbPV9D3A9gs3kS8tz8fKO
+	jOQBY98tgQRewBXgFMX0sGk8RKWclA3jie7GnMiKVLtgkK+eOsyFoUuMOtoA=
+Received: by web2.nyi.internal (Postfix, from userid 99)
+	id 2A0495402D6; Fri, 30 Oct 2015 11:39:42 -0400 (EDT)
+X-Sasl-Enc: 3T/dkC+KLbBn6cTU4ia2F0R7dCyYR9/zrEWXEYoh5X5g 1446219582
+X-Mailer: MessagingEngine.com Webmail Interface - html
+In-Reply-To: <56338C30.6010302@riseup.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280489>
 
-Add IPv6 support by implementing name resolution with the
-protocol agnostic getaddrinfo(3) API. The old gethostbyname(3)
-code is still available when git is compiled with NO_IPV6.
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- ident.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+> > See 
+> > http://git.savannah.gnu.org/cgit/grub.git/commit/?id=206676601eb853fc3
+> 19df14cd3398fbdfde665ac
+> >
+> >
+> > 
+> > 
+> > I was not even aware that this is possible. Is there anything on 
+> > server side that can prevent it?
+> > 
+> > Would be good if commit were amended and force pushed to fix it.
+> > 
+> > 
+> 
+> Is this even a problem? I'm pretty sure Git warns you if you try to
+> commit something before user.name and user.email are defined, and if
+> someone wants to do so, I don't see why you should try to stop them.
+> It wouldn't work, anyway; they would just write some simple name like
+> "anonymous" and some nonsense email if they really want to be anonymous.
+> 
 
-diff --git a/ident.c b/ident.c
-index 5ff1aad..86b62be 100644
---- a/ident.c
-+++ b/ident.c
-@@ -69,6 +69,34 @@ static int add_mailname_host(struct strbuf *buf)
- 	fclose(mailname);
- 	return 0;
- }
-+#ifndef NO_IPV6
-+
-+static void add_domainname(struct strbuf *out)
-+{
-+	char buf[1024];
-+	struct addrinfo hints, *ai;
-+	int gai;
-+
-+	if (gethostname(buf, sizeof(buf))) {
-+		warning("cannot get host name: %s", strerror(errno));
-+		strbuf_addstr(out, "(none)");
-+		return;
-+	}
-+	if (strchr(buf, '.'))
-+		strbuf_addstr(out, buf);
-+	else	{
-+		memset (&hints, '\0', sizeof (hints));
-+		hints.ai_flags = AI_CANONNAME;
-+		if (!(gai = getaddrinfo(buf, NULL, &hints, &ai)) && ai && strchr(ai->ai_canonname, '.')) {
-+			strbuf_addstr(out, ai->ai_canonname);
-+			freeaddrinfo(ai);
-+		}
-+		else
-+			strbuf_addf(out, "%s.(none)", buf);
-+	}
-+}
-+#else /* NO_IPV6 */
-+
- 
- static void add_domainname(struct strbuf *out)
- {
-@@ -88,6 +116,8 @@ static void add_domainname(struct strbuf *out)
- 		strbuf_addf(out, "%s.(none)", buf);
- }
- 
-+#endif /* NO_IPV6 */
-+
- static void copy_email(const struct passwd *pw, struct strbuf *email)
- {
- 	/*
+This commit just removed a line from the README:
+
+"Please look at the GRUB Wiki <http://grub.enbug.org> for
+testing-procedures."
+
+Is this change something that may justify that it's-not-me-there action?
+I agree that it should not be prevented to avoid some pressure
+situations that might be (eventually) present. Bogus random data there
+would be harder to track. The empty fields are easy, and if it
+guarantees some safety to whoever does it, should be the choice.
+
+
 -- 
-2.3.3.GIT
+http://www.fastmail.com - mmm... Fastmail...
