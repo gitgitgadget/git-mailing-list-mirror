@@ -1,91 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] receive-pack: allow for hiding refs outside the namespace
-Date: Fri, 30 Oct 2015 14:31:28 -0700
-Message-ID: <xmqqmvv0jb67.fsf@gitster.mtv.corp.google.com>
-References: <1445846999-8627-1-git-send-email-lfleischer@lfos.de>
-	<xmqqk2q9h05h.fsf@gitster.mtv.corp.google.com>
-	<20151027053916.3030.8259@typhoon.lan>
-	<20151027055911.4877.94179@typhoon.lan>
-	<20151027143207.18755.82151@s-8d3a2f8b.on.site.uni-stuttgart.de>
+From: Kaz Kylheku <kaz@kylheku.com>
+Subject: Re: Anonymous commit (empty Author and Committer)
+Date: Fri, 30 Oct 2015 14:45:24 -0700
+Message-ID: <0eb2d04aed9a93b38867292bfa6c55f6@mail.kylheku.com>
+References: <56337DF8.5050802@gmail.com> <5633CDCD.10004@gmail.com>
+	<5633CE60.8060907@gmail.com> <5633D0C7.2020709@gmail.com>
+	<20151030205955.GC21923@csclub.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Lukas Fleischer <lfleischer@lfos.de>
-X-From: git-owner@vger.kernel.org Fri Oct 30 22:31:36 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: quoted-printable
+Cc: The development of GNU GRUB <grub-devel@gnu.org>,
+	savannah-users-bounces+kaz=kylheku.com@gnu.org,
+	git@vger.kernel.org, savannah-users@gnu.org
+To: Lennart Sorensen <lsorense@csclub.uwaterloo.ca>
+X-From: savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org Fri Oct 30 22:45:56 2015
+Return-path: <savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org>
+Envelope-to: gcgsu-savannah-users@m.gmane.org
+Received: from lists.gnu.org ([208.118.235.17])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsHGp-0007rg-5t
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 22:31:35 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759727AbbJ3Vbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 17:31:31 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57460 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758824AbbJ3Vba (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 17:31:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CC90828F2E;
-	Fri, 30 Oct 2015 17:31:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OX46Pfms94hO41KG6HdVtEvYZow=; b=laYD/Y
-	0fwPGbM+f5qKQqsnDH29Jb6a34NE9X/RCGq1vjy2fFXnOz9QoYaMOFgysHSeHKQ7
-	1EMiQQuTRP4OcxcA7yIcEaDntFCHYCtpVakfaGcmeK7IiFDGk213Dlex9E29miX/
-	BsjAWNMgeW/Zib2K7WC4WbBpYCEmHp3lnu4wA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QwjWNq6r4p7RXP88S9ArBKZulqxSKKlv
-	2FWieVj47ZqxcIxtKv25NkyD6fzC26V4JB2H7RntKGF18qQzRwKjY7AmaJMokouk
-	7I9bMmH/cH1+P9o1b3z/UyvQWmRAsPiOFTRrutadL87DwlSKIjnyskcw6IyEYhzE
-	DbnzXBV2k9M=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C31A428F2D;
-	Fri, 30 Oct 2015 17:31:29 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 48D0128F2C;
-	Fri, 30 Oct 2015 17:31:29 -0400 (EDT)
-In-Reply-To: <20151027143207.18755.82151@s-8d3a2f8b.on.site.uni-stuttgart.de>
-	(Lukas Fleischer's message of "Tue, 27 Oct 2015 15:32:07 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 94F76640-7F4D-11E5-A2A3-6BD26AB36C07-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280545>
+	(envelope-from <savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org>)
+	id 1ZsHUg-0005Bc-OB
+	for gcgsu-savannah-users@m.gmane.org; Fri, 30 Oct 2015 22:45:54 +0100
+Received: from localhost ([::1]:53341 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org>)
+	id 1ZsHUg-0002Wo-13
+	for gcgsu-savannah-users@m.gmane.org; Fri, 30 Oct 2015 17:45:54 -0400
+Received: from eggs.gnu.org ([2001:4830:134:3::10]:34651)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <kaz@kylheku.com>) id 1ZsHUb-0002WQ-VE
+	for savannah-users@gnu.org; Fri, 30 Oct 2015 17:45:50 -0400
+Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
+	(envelope-from <kaz@kylheku.com>) id 1ZsHUb-00044Y-1z
+	for savannah-users@gnu.org; Fri, 30 Oct 2015 17:45:49 -0400
+Received: from smtp-out-no.shaw.ca ([64.59.134.12]:52693)
+	by eggs.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <kaz@kylheku.com>)
+	id 1ZsHUS-000421-Gl; Fri, 30 Oct 2015 17:45:40 -0400
+Received: from kylheku.com ([24.85.175.81]) by shaw.ca with SMTP
+	id sHUDZeCrNT2vosHUEZ9BSF; Fri, 30 Oct 2015 15:45:27 -0600
+X-Authority-Analysis: v=2.1 cv=NrEbCZpJ c=1 sm=1 tr=0
+	a=WiYoHcCliNeVponEdG0Ckg==:117 a=WiYoHcCliNeVponEdG0Ckg==:17
+	a=2KUf1mbJAAAA:8
+	a=IkcTkHD0fZMA:10 a=SMorJkV_YP8A:10 a=5lJygRwiOn0A:10
+	a=X9NiZ6c7jFUXzRrVG30A:9 a=QEXdDO2ut3YA:10
+Received: from www-data by kylheku.com with local (Exim 4.72)
+	(envelope-from <kaz@kylheku.com>)
+	id 1ZsHUC-0006IM-7u; Fri, 30 Oct 2015 14:45:24 -0700
+X-PHP-Originating-Script: 501:rcmail.php
+In-Reply-To: <20151030205955.GC21923@csclub.uwaterloo.ca>
+X-Sender: kaz@kylheku.com
+User-Agent: Roundcube Webmail/0.9.2
+X-CMAE-Envelope: MS4wfKr3lT8qHTRa8DeDH3Nmf1nI+NiS08VbnrCmYBPawpVNj0Fnn1JjdiSQkVoKSfwrazmDHmqFwMkoN1rp55CjAue6ijPT1gUtsHYNcnK67jb5SUIiMb9mywmo20isaA1Yp9MkteYirfgI7dn4ilstVB+6bRu0jrKF+HZEgtGqlEGvxonbMUQDJvWltATleCKCnYloXJXn6bXKPLbOPKuGR+CM3FbzjllapsR3qDJED0wgQ8TeUIzMbo3x9mCoXq2H0OjV0ZuMgqWg1bViZUFpY5eQGMZcopvKaInvmSrFwWHxoBDE5q5VIb01Oij3A9JqQIUIU0foCOcDjSHsshQMFXc=
+X-detected-operating-system: by eggs.gnu.org: GNU/Linux 3.x
+X-Received-From: 64.59.134.12
+X-BeenThere: savannah-users@gnu.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+List-Id: Discussion of savannah-announce and any user-oriented topic
+	<savannah-users.gnu.org>
+List-Unsubscribe: <https://lists.gnu.org/mailman/options/savannah-users>,
+	<mailto:savannah-users-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/archive/html/savannah-users>
+List-Post: <mailto:savannah-users@gnu.org>
+List-Help: <mailto:savannah-users-request@gnu.org?subject=help>
+List-Subscribe: <https://lists.gnu.org/mailman/listinfo/savannah-users>,
+	<mailto:savannah-users-request@gnu.org?subject=subscribe>
+Errors-To: savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org
+Sender: savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280546>
 
-Lukas Fleischer <lfleischer@lfos.de> writes:
+On 30.10.2015 13:59, Lennart Sorensen wrote:
+>> I don't have non-fast-forward rights. Does someone from savannah-users
+>> have them? Could he just delete this commit?
+>=20
+> If you do that, then anyone that already did a pull after it went in
+> will have a broken tree.  Rather annoying.
 
-> 1. There does not seem to be a way to pass configuration parameters to
->    git-shell commands. Right now, the only way to work around this seems
->    to write a wrapper script around git-shell that catches
->    git-receive-pack commands and executes something like
->    
->        git -c receive.hideRefs=[...] receive-pack [...]
->    
->    instead of forwarding those commands to git-shell.
+Nope. They will have a git in which that commit looks like their own
+local work. *Someone* will inadvertently do a "git push" to blast out
+their changes based on that deleted commit, thereby causing it to
+reappear.
 
-This part we have never discussed in the thread, I think.  Why do
-you need to override, instead of having these in the repository's
-config files?
-
-Is it because a repository may host multiple pseudo repositories in
-the form of "namespaces" but they must share the same config file,
-and you would want to customize per "namespace"?
-
-For that we may want to enhance the [include] mechanism.  Something
-like
-
-	[include "namespace=foo"]
-        	path = /path/to/foo/specific/config.txt
-
-	[include "namespace=bar"]
-        	path = /path/to/bar/specific/config.txt
-
-Cc'ing Peff as we have discussed this kind of conditional inclusion
-in the past...
+:)
