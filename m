@@ -1,98 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with
- gdb
-Date: Fri, 30 Oct 2015 15:56:12 -0400
-Message-ID: <20151030195611.GC5486@sigill.intra.peff.net>
-References: <cover.1445865176.git.johannes.schindelin@gmx.de>
- <082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
- <20151026191724.GE7881@google.com>
- <alpine.DEB.1.00.1510271036100.31610@s15462909.onlinehome-server.info>
- <xmqqr3kge0d3.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.1.00.1510301925360.31610@s15462909.onlinehome-server.info>
- <xmqqlhakky0e.fsf@gitster.mtv.corp.google.com>
- <20151030190256.GI7881@google.com>
+From: =?UTF-8?Q?Vladimir_'=cf=86-coder/phcoder'_Serbinenko?= 
+	<phcoder@gmail.com>
+Subject: Re: Anonymous commit (empty Author and Committer)
+Date: Fri, 30 Oct 2015 21:09:04 +0100
+Message-ID: <5633CE60.8060907@gmail.com>
+References: <56337DF8.5050802@gmail.com> <5633CDCD.10004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 20:56:20 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="Bhdnco7q4G6txxEFdTJUjUbC6vupiKSlw"
+To: The development of GNU GRUB <grub-devel@gnu.org>,
+	git@vger.kernel.org, savannah-users@gnu.org
+X-From: git-owner@vger.kernel.org Fri Oct 30 21:09:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsFmd-00085X-Fs
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 20:56:19 +0100
+	id 1ZsFz6-0003PT-SZ
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 21:09:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760042AbbJ3T4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 15:56:15 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50623 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757370AbbJ3T4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 15:56:14 -0400
-Received: (qmail 9833 invoked by uid 102); 30 Oct 2015 19:56:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 30 Oct 2015 14:56:14 -0500
-Received: (qmail 26048 invoked by uid 107); 30 Oct 2015 19:56:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 30 Oct 2015 15:56:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Oct 2015 15:56:12 -0400
-Content-Disposition: inline
-In-Reply-To: <20151030190256.GI7881@google.com>
+	id S1760833AbbJ3UJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 16:09:08 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:34058 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760771AbbJ3UJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 16:09:07 -0400
+Received: by wikq8 with SMTP id q8so18117892wik.1
+        for <git@vger.kernel.org>; Fri, 30 Oct 2015 13:09:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-type;
+        bh=S4EnCJxXbchtFiJ9q9KmjwsWwIeu3DCyo4VVuwZR1qA=;
+        b=PUNMsk2gElPFahsL8FBywJlgq+1pj3DUOcvR51ERn1cskWSbE0Z4voFoib1REFNezY
+         Z9Yo71NqNqyo/NWt4ImQZwmZEfnOq2OEsYDmZMyegWro0BgmSivHniQFtZYookdUy+GY
+         thbzzcWSqTaMMDoSp9p3z3p+ljNu1DT+QZwENZ1OGrynVIuNT1qW2BMQEEU7oT3ulz7R
+         1/tcBkualcNdrv68HRG15cgTyIlpILA1z2GCoE6k5US9N1LBFIc8fsufVLWoOZRM88Gl
+         wGSvoyS6NolrLak779xOwxz8C37boz+8wHDCkpw+1HW3y7zwz6xl5tJOknvcoZPyuTLb
+         rmiw==
+X-Received: by 10.194.90.79 with SMTP id bu15mr12435719wjb.36.1446235745726;
+        Fri, 30 Oct 2015 13:09:05 -0700 (PDT)
+Received: from ?IPv6:2a02:1205:34c8:dc00:863a:4bff:fe50:abc4? ([2a02:1205:34c8:dc00:863a:4bff:fe50:abc4])
+        by smtp.gmail.com with ESMTPSA id vr10sm8627085wjc.38.2015.10.30.13.09.04
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 30 Oct 2015 13:09:05 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Icedove/38.3.0
+In-Reply-To: <5633CDCD.10004@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280537>
 
-On Fri, Oct 30, 2015 at 12:02:56PM -0700, Jonathan Nieder wrote:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--Bhdnco7q4G6txxEFdTJUjUbC6vupiKSlw
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> > I'd just be happy as long as the feature becomes available, and I'd
-> > leave the choice of consistent and convenient naming to others who
-> > have stronger opinions ;-)
-> 
-> Here's a suggested patch.
-> 
-> -- >8 --
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Subject: Facilitate debugging Git executables in tests with gdb
-> 
-> When prefixing a Git call in the test suite with 'debug ', it will now
-> be run with GDB, allowing the developer to debug test failures more
-> conveniently.
+On 30.10.2015 21:06, Vladimir '=CF=86-coder/phcoder' Serbinenko wrote:
+> On 30.10.2015 15:26, Andrei Borzenkov wrote:
+>> See
+>> http://git.savannah.gnu.org/cgit/grub.git/commit/?id=3D206676601eb853f=
+c319df14cd3398fbdfde665ac
+>>
+>>
+>> I was not even aware that this is possible. Is there anything on serve=
+r
+>> side that can prevent it?
+>>
+>> Would be good if commit were amended and force pushed to fix it.
+>>
+> It is a bug in SGit. I'll investigate how it happened
+>> _______________________________________________
+>> Grub-devel mailing list
+>> Grub-devel@gnu.org
+>> https://lists.gnu.org/mailman/listinfo/grub-devel
+>> .
+>>
+>=20
+>=20
 
-At the risk of repeating what I just said elsewhere in the thread, I
-think this patch is the best of the proposed solutions.
 
-> --- a/wrap-for-bin.sh
-> +++ b/wrap-for-bin.sh
-> @@ -19,4 +19,10 @@ GIT_TEXTDOMAINDIR='@@BUILD_DIR@@/po/build/locale'
->  PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
->  export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
->  
-> -exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-> +if test -n "$GIT_TEST_GDB"
-> +then
-> +	unset GIT_TEST_GDB
-> +	exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-> +else
-> +	exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-> +fi
 
-Somebody suggested elsewhere that the name "gdb" be configurable. We
-could stick that in the same variable, like:
+--Bhdnco7q4G6txxEFdTJUjUbC6vupiKSlw
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-  test "$GIT_TEST_GDB" = 1 && GIT_TEST_GDB=gdb
-  exec ${GIT_TEST_GDB} --args ...
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-but that does not play well with the "debug" function, which does not
-know which value to set it to. I guess we would need GIT_TEST_GDB_PATH
-or something.
+iF4EAREKAAYFAlYzzmAACgkQmBXlbbo5nOviygD+KOxrSqixWXZTdamko2tJMzdN
+99Eqbdl2GIj+hx1nsKMBAIzU751rzyg3M0hWQGcHH//qMuDhaZMXVgzSXKkAcQiG
+=OBGf
+-----END PGP SIGNATURE-----
 
-I am happy to let that get added later by interested parties (I am happy
-with "gdb" myself). I just wanted to mention it to make sure we are not
-painting ourselves into any corners.
-
--Peff
+--Bhdnco7q4G6txxEFdTJUjUbC6vupiKSlw--
