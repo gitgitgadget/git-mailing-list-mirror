@@ -1,91 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] checkout: add --progress option
-Date: Fri, 30 Oct 2015 12:37:37 -0700
-Message-ID: <xmqq4mh8kv0e.fsf@gitster.mtv.corp.google.com>
-References: <1446168186-4730-1-git-send-email-eantoranz@gmail.com>
-	<CAPig+cTvRs_O8uY9_SrZZCf95Lraon8knkQUDgm0Lke3pve01A@mail.gmail.com>
-	<xmqqh9l8kxa3.fsf@gitster.mtv.corp.google.com>
-	<20151030193151.GB5336@sigill.intra.peff.net>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH] git-p4: Handle p4 submit failure
+Date: Fri, 30 Oct 2015 19:53:30 +0000
+Message-ID: <5633CABA.1000003@diamand.org>
+References: <CAJA=mv4Tr_DoBMwR8hK_fEJ1PFCYTu17HHvEnFWMANGFcf0Wpg@mail.gmail.com>	<xmqqeggcmhle.fsf@gitster.mtv.corp.google.com>	<CAJA=mv7ydNCm-yy9Ukk2XB-xvAJ1VkyqHEGcCTA2PEg=5y9cFQ@mail.gmail.com> <xmqqy4ekkzmg.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Edmundo Carmona Antoranz <eantoranz@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 30 20:37:47 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Users <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Etienne Girard <etienne.g.girard@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 20:53:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsFUe-0006xu-AK
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 20:37:44 +0100
+	id 1ZsFk3-0005Sy-4B
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 20:53:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759256AbbJ3Thk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 15:37:40 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56502 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752495AbbJ3Thj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 15:37:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DD4E0266B2;
-	Fri, 30 Oct 2015 15:37:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w0lzwtCJ1WYObOL8AHe2nUj8fsc=; b=fUw9Ad
-	0+ReceojrnMF1tHzMJH+gm5/9PJixYQ9mnAIqBoSqlJ6ODY5fHy+DyNH7l0LwstX
-	VoGa0LiFfRwZAbgSvA4zdhoF/fEduh2LjJCRwzhhKrT3D2LMauwxrAXVIFU2SBVc
-	fNxQSu4Cv3DBnionqkGuxfWan7pHWI2Ah3Ldc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WTKO1mL99Uo3KHl3bbyt4yIwVN33Lrg1
-	6j5L1OK7fl2H28DoBlJhQrMSuAVJNz4OyocfWS3zMUsYF7x92lT0eegz0CqoNuNO
-	Si2S0yE/4Z8u7i0ruRmVh1LvX1Kc0uJ3vsKpZvB+yrUDv/M8sI90RQlMaMK5Al74
-	eN4TrfAI/rI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D4799266B1;
-	Fri, 30 Oct 2015 15:37:38 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5A35A266B0;
-	Fri, 30 Oct 2015 15:37:38 -0400 (EDT)
-In-Reply-To: <20151030193151.GB5336@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 30 Oct 2015 15:31:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: AD6A2E7A-7F3D-11E5-BF81-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1760469AbbJ3Txe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 15:53:34 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:35661 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752504AbbJ3Txe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 15:53:34 -0400
+Received: by wmll128 with SMTP id l128so20290463wml.0
+        for <git@vger.kernel.org>; Fri, 30 Oct 2015 12:53:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=fYDVxHlFNIDJa0dM1qjSCLiX1Zqc2r3n/ZvfZOGvGr4=;
+        b=N/YuL7Jyt5TkQ3XUE91Kqv0qrSEEkmbNWRowUsSIXjwCcSHYbDo13sc3Hlw/ZH9loF
+         ZXZLjgcBZPuuM02PztBQdHp+JW9CLI0Dm2BCiCFC1leV9bQfZ73FCt1vQarPVlkXOpEj
+         MyIDei4zZVa0LtfrdGyNVv1eXIgKFq4IRCMm4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=fYDVxHlFNIDJa0dM1qjSCLiX1Zqc2r3n/ZvfZOGvGr4=;
+        b=cKTC+pwigqnlIDQn5C4eJFF4FcYn15XDOFiG4zsfS9k0wJ2ULqOm+0DD+CRqxCTOL5
+         skebx+4I7UW1+c3JW7zwqn1vfyOQI3CCo1DGqUrm/ef5VgyRAGJtWR1BvC/b+h5l0sA7
+         jzyvFP3QZrf3JQRTlB5CF39Zpzgt2nmfIT6fAFxROu+NFn16msOfWsXKzNYQYTQAUJHo
+         +4rM0JoSq7yHrzFYy9W6HhmbTahbC5isE4rtdAdfYTWC488Pg1K7cYkcMsMAWEICeBYn
+         7ND3Nuxt8AWpqFfUR2ExFL8LVN0IuQ1hklqL3uRKAWMv5upsL2K6c9P1Jm2s1F5e0unw
+         fJVA==
+X-Gm-Message-State: ALoCoQngr0b2sVjwe55oE7rA68cU+KjoGhjPYGPD8r6z1TV31gz7W27yBChHjuWstfKD9krvdKhU
+X-Received: by 10.28.137.194 with SMTP id l185mr5754wmd.21.1446234812771;
+        Fri, 30 Oct 2015 12:53:32 -0700 (PDT)
+Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
+        by smtp.gmail.com with ESMTPSA id e189sm4447665wma.4.2015.10.30.12.53.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 30 Oct 2015 12:53:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <xmqqy4ekkzmg.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280535>
 
-Jeff King <peff@peff.net> writes:
+On 30/10/15 17:57, Junio C Hamano wrote:
+> Etienne Girard <etienne.g.girard@gmail.com> writes:
+>
+>> Yes, however if `p4 submit` fails the corresponding "Command failed"
+>> error message is displayed, and the p4 error message itself is
+>> displayed if any.
+>> Tthe script will also terminate successfully if self.edit_template
+>> returns false but it will exit with error code 1 if p4 submit fails.
+>>
+>> So the user will get "Command failed: [...]" followed by "Submission
+>> cancelled, undoing p4 changes", to let him know that the script failed
+>> because of p4 and that nothing was submitted.
+>
+> OK, then it sounds like all I have to do is to update the log
+> message with the "How about this" version and correct the authorship
+> to use your murex address, and then wait for reviews from real "git
+> p4" reviewers.
+>
 
-> I sometimes find it confusing when there are two variables with very
-> similar meanings (option_progress and show_progress here). I wonder if
-> we could use one variable, like:
->
->   static int show_progress = -1;
->   ...
->   OPT_BOOL(0, "progress", &show_progress, ...);
->   ...
->   parse_options(...);
->   if (show_progress < 0) {
-> 	if (opts.quiet)
-> 		show_progress = 0;
-> 	else
-> 		show_progress = isatty(2);
->   }
->
-> That somehow is much clearer to me, especially around the behavior of
-> "-q --progress". Mine does the opposite of what you wrote above, but I
-> think it makes more sense.
->
-> I can live with it either way, though. :)
+Looks good to me. Nice use of try...finally.
 
-Actually, using a single variable is my preference.  In this case I
-wanted to illustrate that the value parsed by parse_options() does
-not have to be the one that is used in the final location deep in
-the callchain for educational purposes, and I found it clearer to
-use two separate variables in the illustration.
+One very small thing - test t9807-git-p4-submit.sh is now failing with 
+this change.
+
+That's because it tries to delete one of the files it created, but you 
+are now deleting it already! Could you just update that please?
+
+Thanks!
+Luke
