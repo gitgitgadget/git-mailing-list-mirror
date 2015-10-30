@@ -1,109 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] receive-pack: allow for hiding refs outside the
- namespace
-Date: Fri, 30 Oct 2015 17:46:19 -0400
-Message-ID: <20151030214618.GA11426@sigill.intra.peff.net>
-References: <1445846999-8627-1-git-send-email-lfleischer@lfos.de>
- <xmqqk2q9h05h.fsf@gitster.mtv.corp.google.com>
- <20151027053916.3030.8259@typhoon.lan>
- <20151027055911.4877.94179@typhoon.lan>
- <20151027143207.18755.82151@s-8d3a2f8b.on.site.uni-stuttgart.de>
- <xmqqmvv0jb67.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] Facilitate debugging Git executables in tests with gdb
+Date: Fri, 30 Oct 2015 14:53:56 -0700
+Message-ID: <xmqqio5oja4r.fsf@gitster.mtv.corp.google.com>
+References: <cover.1445865176.git.johannes.schindelin@gmx.de>
+	<082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de>
+	<20151026191724.GE7881@google.com>
+	<alpine.DEB.1.00.1510271036100.31610@s15462909.onlinehome-server.info>
+	<xmqqr3kge0d3.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.1.00.1510301925360.31610@s15462909.onlinehome-server.info>
+	<xmqqlhakky0e.fsf@gitster.mtv.corp.google.com>
+	<20151030190256.GI7881@google.com>
+	<20151030195611.GC5486@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lukas Fleischer <lfleischer@lfos.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 30 22:46:30 2015
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 30 22:54:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsHVC-0005hw-7J
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 22:46:26 +0100
+	id 1ZsHca-0004nH-QX
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 22:54:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758916AbbJ3VqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Oct 2015 17:46:22 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50676 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757943AbbJ3VqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Oct 2015 17:46:21 -0400
-Received: (qmail 19387 invoked by uid 102); 30 Oct 2015 21:46:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 30 Oct 2015 16:46:21 -0500
-Received: (qmail 26860 invoked by uid 107); 30 Oct 2015 21:46:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 30 Oct 2015 17:46:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Oct 2015 17:46:19 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqmvv0jb67.fsf@gitster.mtv.corp.google.com>
+	id S1759727AbbJ3VyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 17:54:00 -0400
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62237 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1759701AbbJ3Vx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 17:53:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AB3B4246CC;
+	Fri, 30 Oct 2015 17:53:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Sk3b5FOpsMuB1GU256EnylY8sg8=; b=B9F+9j
+	der/BkopCJM8JcqiVOz97+6mktpwIR6PNzfwNcfLq3H41hkIYjeFuvIc759e/YXw
+	ejFV8ry9G+kpof/w2X5yrTBobz6s/6torU+n7GxQpzDIIyxmpXyduFdxKzvxT8E0
+	gTLMG5VpowfxfX821t7NxGaMi31s4najbgIpk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tzICekGNutlQXl+PMhK02oyFXp2JtxKm
+	IEwOv/it7Z/83TSZtPG8kVuzlvo8PKyfVnd+2vhcEr8k5UafisjHMLz4X9qTqF7h
+	Sgb/Y4OZS2KL5Ou4f9dc7OamdFYoucMQf2aVQWKz0hKapbl27rKt7oalQua0nBss
+	BPxy1RhScXM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A2A91246CA;
+	Fri, 30 Oct 2015 17:53:58 -0400 (EDT)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 28C5D246C9;
+	Fri, 30 Oct 2015 17:53:58 -0400 (EDT)
+In-Reply-To: <20151030195611.GC5486@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 30 Oct 2015 15:56:12 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B8F46018-7F50-11E5-866A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280548>
 
-On Fri, Oct 30, 2015 at 02:31:28PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Lukas Fleischer <lfleischer@lfos.de> writes:
-> 
-> > 1. There does not seem to be a way to pass configuration parameters to
-> >    git-shell commands. Right now, the only way to work around this seems
-> >    to write a wrapper script around git-shell that catches
-> >    git-receive-pack commands and executes something like
-> >    
-> >        git -c receive.hideRefs=[...] receive-pack [...]
-> >    
-> >    instead of forwarding those commands to git-shell.
-> 
-> This part we have never discussed in the thread, I think.  Why do
-> you need to override, instead of having these in the repository's
-> config files?
-> 
-> Is it because a repository may host multiple pseudo repositories in
-> the form of "namespaces" but they must share the same config file,
-> and you would want to customize per "namespace"?
-> 
-> For that we may want to enhance the [include] mechanism.  Something
-> like
-> 
-> 	[include "namespace=foo"]
->         	path = /path/to/foo/specific/config.txt
-> 
-> 	[include "namespace=bar"]
->         	path = /path/to/bar/specific/config.txt
-> 
-> Cc'ing Peff as we have discussed this kind of conditional inclusion
-> in the past...
+> At the risk of repeating what I just said elsewhere in the thread, I
+> think this patch is the best of the proposed solutions.
 
-Yeah, that sort of conditional matching is exactly what I had intended
-for the "subsection" of include to be. We just haven't come up with a
-good condition to act as our first use case. :)
+OK, will queue.  I agree that more could be built on top, instead of
+polishing this further in place.
 
-I am happy with any syntax that does not paint us into a corner (and
-your example above looks fine, assuming we could later add other keys on
-the left-hand of the "=").
-
-I am slightly confused, though, where the namespace is set in such a
-git-shell example. I have no really used ref namespaces myself, but my
-understanding is that they have to come from the environment. You can
-similarly set config through the environment. I don't think we've ever
-publicized that, but it is how "git -c" works. E.g.:
-
-  $ git -c alias.foo='!env' -c another.option=true foo | grep GIT_
-  GIT_CONFIG_PARAMETERS='alias.foo='\!'env' 'another.option=true'
-
-I think it is very particular that you single-quote each item, though:
-
-  $ GIT_CONFIG_PARAMETERS=foo.bar=true git config foo.bar
-  error: bogus format in GIT_CONFIG_PARAMETERS
-  fatal: unable to parse command-line config
-
-  $ GIT_CONFIG_PARAMETERS="'foo.bar=true'" git config foo.bar
-  true
-
-So we may want to make it a little more friendly before truly
-recommending it as an interface, but I don't think there is any
-conceptual problem with doing so.
-
--Peff
+Thanks.
