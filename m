@@ -1,136 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] ident.c: add support for IPv6
-Date: Fri, 30 Oct 2015 11:13:03 -0700
-Message-ID: <xmqqtwp8kyxc.fsf@gitster.mtv.corp.google.com>
-References: <1446216487-11503-1-git-send-email-gitter.spiros@gmail.com>
-	<5633A838.3070801@web.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv2 2/8] submodule config: keep update strategy around
+Date: Fri, 30 Oct 2015 14:16:19 -0400
+Message-ID: <CAPig+cRh9J0izFvLzRjjU4FEBKJsiJaYFv=9WdxFVfJ3xs0JiQ@mail.gmail.com>
+References: <xmqqfv0wp1l1.fsf@gitster.mtv.corp.google.com>
+	<1446074504-6014-1-git-send-email-sbeller@google.com>
+	<1446074504-6014-3-git-send-email-sbeller@google.com>
+	<CAPig+cRTa35B5aHcopaWOtCLxN6BhGJKTcVeDUf0hrZE_nfCKQ@mail.gmail.com>
+	<CAGZ79kZ1usWVutWwyFQKeujyyTPVRtSQM6dvkU9gWUDSTNpB6w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
-	peff@peff.net
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Oct 30 19:13:18 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Oct 30 19:16:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsEAu-0000Q9-Bb
-	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 19:13:16 +0100
+	id 1ZsEDw-0003UI-MZ
+	for gcvg-git-2@plane.gmane.org; Fri, 30 Oct 2015 19:16:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760249AbbJ3SNN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Oct 2015 14:13:13 -0400
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63466 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751254AbbJ3SNL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Oct 2015 14:13:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 352082425A;
-	Fri, 30 Oct 2015 14:13:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Ahpip/SXaBQ4
-	vKY2BjAV5OHSEpc=; b=LDrKcCRR1gL1VR14UrSh0EkIRZW/m/XJWH/0gerKczvJ
-	G89Gjk7rfL3f1ZsIOUbBe2ebufTiYRrAOITgwfgO5W1RqyDkeO2eWYHA85mns8Di
-	nOpZqpjzYQNNshiQ/F3+sfLC+BWj5SlkR/r3i831iMH0pdTSjhblMfpIVYMp2D8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NwCYS6
-	vZs4Rj+3tONzh1HcGIpFi5G3fGUKPNVhkyaMPoxa/DtMyVZmMGv7ZirppnU3CPvc
-	a+hpdCl0vff1hQRupJAgbEFMwlyYrHnuvMZEsjmP8QruKJx+NYnGyQ7MENzCLU1V
-	ZbXMSwf1tcGIwKL00gudOKMVWg6+2/m0ZWEwE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2B9E124259;
-	Fri, 30 Oct 2015 14:13:05 -0400 (EDT)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 930E424258;
-	Fri, 30 Oct 2015 14:13:04 -0400 (EDT)
-In-Reply-To: <5633A838.3070801@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Fri, 30 Oct 2015 18:26:16 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DD36A6D0-7F31-11E5-8D28-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1759433AbbJ3SQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Oct 2015 14:16:20 -0400
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:32966 "EHLO
+	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758640AbbJ3SQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Oct 2015 14:16:19 -0400
+Received: by vkgy127 with SMTP id y127so52901348vkg.0
+        for <git@vger.kernel.org>; Fri, 30 Oct 2015 11:16:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=0a5MNifnddLhDKI59UjHIFPXznVsYCA/HH6R6ixBulk=;
+        b=JYhKZw+cECHfJNESPRTYe2xavre6P4TJz+s3YWAN5Bbho9MeOXXq6GT5GaSYNSZi7W
+         +O1hf7jDjIXiMZgdTcwq7nGw8QAR/dARXRc1J8iV/t4LofI+2m+DrzgF+DNgmAWMGvq+
+         xRFwl5RDaltW5irvaPA9WhoDiEd+/coPJVeIMbZ2wCHl7DF1q7XTJEJEGeMhuh8QCDpZ
+         i21TPPyFFEvtUB11IM+RuH+/0B2lvaV1daWUH/ykqhsdBp/ItaxOpKDEwTI7ElFuCDpd
+         iDTwKLI7sontJqwGsm33dXxwDHgZXI1kTLgo38wzIOK33IAfjMgi46QS7trSdRDqz3A7
+         SC/g==
+X-Received: by 10.31.153.210 with SMTP id b201mr6228435vke.117.1446228979097;
+ Fri, 30 Oct 2015 11:16:19 -0700 (PDT)
+Received: by 10.31.159.204 with HTTP; Fri, 30 Oct 2015 11:16:19 -0700 (PDT)
+In-Reply-To: <CAGZ79kZ1usWVutWwyFQKeujyyTPVRtSQM6dvkU9gWUDSTNpB6w@mail.gmail.com>
+X-Google-Sender-Auth: KmwUKxQ5n9iDRMTEy4ATw-8eeW8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280505>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
-
-> On 2015-10-30 15.48, Elia Pinto wrote:
->> Add IPv6 support by implementing name resolution with the
-> Minor question: How is this related to IPV6?
-> Could the header line be written something like
+On Fri, Oct 30, 2015 at 1:38 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Thu, Oct 29, 2015 at 6:14 PM, Eric Sunshine <ericsunshine@gmail.com> wrote:
+>>> +               else if (!me->overwrite && submodule->update != NULL)
+>>
+>> Although "foo != NULL" is unusual in this code-base, it is used
+>> elsewhere in this file, including just outside the context seen above.
+>> Okay.
 >
-> "ident.c: Use getaddrinfo() instead of gethostbyname() if available"
+> ok, I'll clean that up as we go.
+
+Oh, I wasn't suggesting that you clean this up (though you may if you
+want). I was merely commenting (for the sake of others reviewing this
+patch) that, while not the norm for the project, this instance is
+consistent with surrounding code.
+
+>>> +                       free((void *)submodule->update);
+>>
+>> Minor: Every other 'free((void *) foo)' in this file has a space after
+>> "(void *)", one of which can be seen in the context just above.
 >
-> On which systems has the patch been tested ?
-> Linux ?
-> Mac OS X ?
-> Windows ?
-> BSD ?
->
-> The motivation on which platforms the usage of getaddrinfo() is prefe=
-rred
-> over gethostbyname() could be helpful to motivate this patch:
-> System XYZ behaves bad when gethostbyname() is used.
-> Fix it by using getaddrinfo() instead.
-
-gethostbyname() fills a hostent that gives us the official name,
-list of aliases, _one_ addrtype (either AF_INET or AF_INET6), and
-list of addresses, so if we were asking for the physical addresses,
-we may not be able to obtain all addresses for a host with both IPv4
-and IPv6 addresses, which may be an issue.
-
-But this function is about learning the official name of the host,
-given the result of gethostname().  In that context, does that
-"limited to single address family" issue of gethostbyname() still
-matter?  I am guessing it doesn't, and I somehow doubt that the
-value of this patch is about working around any platform bug.
-
-I think the real reason to favour getaddrinfo() over gethostbyname()
-is that the family of functions the latter belongs to is obsolete.
-In other codepaths where we need to learn the inet address, we
-already use getaddrinfo() if available (i.e. NO_IPV6 is not set),
-and gethostbyname() is used only when compiling with NO_IPV6.
-
-Converting this codepath to match that pattern incidentally allows
-you to work around a platform bugs like "gethostbyname() is broken
-on sysmte XYZ" (which you work around by not saying NO_IPV6), but I
-view it as a side effect.
-
->> +static void add_domainname(struct strbuf *out)
->> +{
->> +	char buf[1024];
->> +	struct addrinfo hints, *ai;
->> +	int gai;
-> The scope of these variables can be narrowed, by moving them into the=
- "{" block,
-> where they are needed. (Before the memset())
->> +
->> +	if (gethostname(buf, sizeof(buf))) {
->> +		warning("cannot get host name: %s", strerror(errno));
->> +		strbuf_addstr(out, "(none)");
->> +		return;
->> +	}
->> +	if (strchr(buf, '.'))
->> +		strbuf_addstr(out, buf);
->> +	else	{
-> Many ' ' between else and '{', one should be enough
->> +		memset (&hints, '\0', sizeof (hints));
->> +		hints.ai_flags =3D AI_CANONNAME;
->> +		if (!(gai =3D getaddrinfo(buf, NULL, &hints, &ai)) && ai && strch=
-r(ai->ai_canonname, '.')) {
->> +			strbuf_addstr(out, ai->ai_canonname);
->> +			freeaddrinfo(ai);
->> +		}
->> +		else
-> Colud be written in one line as "} else"
->> +			strbuf_addf(out, "%s.(none)", buf);
->> +	}
->> +}
->> +#else /* NO_IPV6 */
+> done
