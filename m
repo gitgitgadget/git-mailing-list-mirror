@@ -1,107 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] checkout: add --progress option
-Date: Sat, 31 Oct 2015 16:07:02 -0400
-Message-ID: <20151031200702.GA4115@sigill.intra.peff.net>
-References: <1446168186-4730-1-git-send-email-eantoranz@gmail.com>
- <CAPig+cTvRs_O8uY9_SrZZCf95Lraon8knkQUDgm0Lke3pve01A@mail.gmail.com>
- <xmqqh9l8kxa3.fsf@gitster.mtv.corp.google.com>
- <20151030193151.GB5336@sigill.intra.peff.net>
- <xmqq4mh8kv0e.fsf@gitster.mtv.corp.google.com>
- <CAOc6etYiqH8bvnCD_9hedzDW6fhknXLGesM6dX7S9DBB_r-9zA@mail.gmail.com>
- <CAOc6etYCzBYpf+7p8p3=zQun7bYXYVc-codoUf5Abcq+hAz8cA@mail.gmail.com>
- <xmqqk2q3hrbl.fsf@gitster.mtv.corp.google.com>
- <CAOc6eta7_0RfBUngtMg5ZAEUvjuPVgZ20ESgnbJK=--h53k+Tw@mail.gmail.com>
- <CAOc6etapqKNAXxNycAx9g9VTJXnnCxuXj5eU7giKvZUy5s8X3Q@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 0/3] daemon: plug memory leak
+Date: Sat, 31 Oct 2015 13:32:40 -0700
+Message-ID: <CAGZ79kaXfkmSm0dn40kqrD95D2qpMo+NgEYbs=rVca5qnLTuMQ@mail.gmail.com>
+References: <56348709.9080207@web.de>
+	<20151031135304.GA28310@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 31 21:07:51 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Oct 31 21:32:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZscRJ-00041u-Vz
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Oct 2015 21:07:50 +0100
+	id 1ZscpS-0000kv-3z
+	for gcvg-git-2@plane.gmane.org; Sat, 31 Oct 2015 21:32:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751649AbbJaUHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Oct 2015 16:07:37 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50984 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751620AbbJaUHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Oct 2015 16:07:05 -0400
-Received: (qmail 23738 invoked by uid 102); 31 Oct 2015 20:07:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 31 Oct 2015 15:07:05 -0500
-Received: (qmail 575 invoked by uid 107); 31 Oct 2015 20:07:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 31 Oct 2015 16:07:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 31 Oct 2015 16:07:02 -0400
-Content-Disposition: inline
-In-Reply-To: <CAOc6etapqKNAXxNycAx9g9VTJXnnCxuXj5eU7giKvZUy5s8X3Q@mail.gmail.com>
+	id S1750964AbbJaUcl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Oct 2015 16:32:41 -0400
+Received: from mail-yk0-f178.google.com ([209.85.160.178]:34389 "EHLO
+	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750864AbbJaUcl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 Oct 2015 16:32:41 -0400
+Received: by ykdr3 with SMTP id r3so106817069ykd.1
+        for <git@vger.kernel.org>; Sat, 31 Oct 2015 13:32:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=OkIa+pstkp7tqqW+2QVau7A3bPaW6MFH0GMyMyndqxE=;
+        b=jV696RHcpnB/oankcduD2wG/1to1pl3htojRbHhG9CTcrijTTI46W4iYrPc+rMsuSY
+         ju8bkbzd/4CaErC1lhBSVH5qfF3+q51X9/xtppFVf+wIzmvETf+Lj5KMoauVdW1hep6D
+         0BM4hDTMr5sAc3uAAowmRuuo703xZtRAROE6YazXWKdIkOOgfgFe1f9wgEPPz/5Pxje/
+         9Qqhki0GOvTgy9aoOdSuWrMtqPNL+TMV/m/hZWQnqEdlfF0lw3VzWErKVYf/IF9tyTne
+         jrmZYaxQD6nkj/Zo8847zNkcAMUaw07Q+P85l/FMakcsaCyom+d3U4eom6EyVtDiFKB1
+         tguQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OkIa+pstkp7tqqW+2QVau7A3bPaW6MFH0GMyMyndqxE=;
+        b=k9m5kgspakCoGZaEsxyTKpHnuYojstABUg+cOhFgWyG08wA2DQPUjg1LaLisvyYmGr
+         RDLEmIszMyRwn6AEtK5tv2Gy1wyM3XkKo8SqneLLkYNS9P3hYE1AIe60dbzR0IPobRUI
+         HPmZwZelgjDDQBBqPcL1i4iEk5scqMjvaUaDR8S3BTS8MSPSqjo6a1Q5YnWuOWGgURbI
+         u6dDeEt1BWP/WyIZ7Mg6dq7axd7cDNSSbeXTZoQW4zBLBuG4AiWNnj+Q8sVkLaJn2A0i
+         K7ZBuRv6bIPjWa3jKTdffyPM/nTY6uO/2u7Cch+xBoitkIoVygaKrqFA9hUZkHe5B1eE
+         Mn+g==
+X-Gm-Message-State: ALoCoQm2aJB9BKNUNTHckzOV++FiHQjl74GqvLdLVAvPLiYyzo4ng1USECtgmpzTnLXNI0qSovnS
+X-Received: by 10.13.199.133 with SMTP id j127mr11039986ywd.176.1446323560311;
+ Sat, 31 Oct 2015 13:32:40 -0700 (PDT)
+Received: by 10.37.29.213 with HTTP; Sat, 31 Oct 2015 13:32:40 -0700 (PDT)
+In-Reply-To: <20151031135304.GA28310@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280601>
 
-On Sat, Oct 31, 2015 at 12:14:39PM -0600, Edmundo Carmona Antoranz wrote:
+On Sat, Oct 31, 2015 at 6:53 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Oct 31, 2015 at 10:16:57AM +0100, Ren=C3=A9 Scharfe wrote:
+>
+>> Changes since v1:
+>> - Rebased on next, which already has a cleanup function.
+>> - Added first patch for renaming it.
+>>
+>> Rene Scharfe (3):
+>>   run-command: name the cleanup function child_process_clear()
+>>   run-command: export child_process_clear()
+>>   daemon: plug memory leak
+>
+> This round looks good to me. Thanks.
 
-> On Sat, Oct 31, 2015 at 11:42 AM, Edmundo Carmona Antoranz
-> <eantoranz@gmail.com> wrote:
-> > On Sat, Oct 31, 2015 at 11:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> >> I do find what Peff showed us a lot easier to follow.
-> >>
-> >>         if (opts.show_progress < 0) {
-> >>                 if (opts.quiet)
-> >>                         opts.show_progress = 0;
-> >>                 else
-> >>                         opts.show_progress = isatty(2);
-> >>         }
-> >>
-> >
-> > Ok.... let me rewrite it that way. Other than that, the other things are ok?
-> 
-> In Peff's implementation I think he uses -1 as --no-progress, 1 as
-> --progress and 0 as undefined, right?
+Looks good to me, too
 
-I didn't mean to, though I don't promise I didn't send something buggy.
-It looks right to me, though:
+Thanks
+Stefan
 
-  if (opts.show_progress < 0) { /* if the user didn't say... */
-          if (opts.quiet)
-		opts.show_progress = 0; /* quiet means "no progress" */
-	  else
-		opts.show_progress = isatty(2); /* returns 0/1 bool */
-  }
-
-> In my implementation I'm using -1 as undefined and 0 as --no-progress.
-> What would be the standard approach?
-
-That's standard. And "1" is "--progress".
-
-> From what I can see on
-> parse_options's behavior, if you select --no-progress, the variable
-> ends up with a 0, which makes me think I'm using the right approach.
-> 
-> End result with my assumptions would be:
-> 
->         if (opts.show_progress) {
->                 /* user selected --progress or didn't specify */
->                 if (opts.quiet) {
->                         opts.show_progress = 0;
->                 } else if (opts.show_progress < 0) {
->                         opts.show_progress = isatty(2);
->                 }
->         }
-
-The difference between mine and yours is that in mine, "--progress"
-trumps "--quiet", whereas it is the other way around in yours. I don't
-know if it is a huge deal, but mine makes more sense to me (because
-"--progress" is more specific than "--quiet", which might silence other
-messages, too).
-
--Peff
+>
+> -Peff
