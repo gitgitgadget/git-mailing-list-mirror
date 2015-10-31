@@ -1,97 +1,93 @@
-From: phillip <phillip.szelat@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: improve some translations
-Date: Fri, 30 Oct 2015 23:39:17 -0700
-Message-ID: <1C830873-5140-43D3-87CC-6636BB5F3F76@gmail.com>
-References: <1446153562-12133-1-git-send-email-ralf.thielow@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Anonymous commit (empty Author and Committer)
+Date: Sat, 31 Oct 2015 08:02:27 +0100
+Message-ID: <871tcbwmf0.fsf@igel.home>
+References: <56337DF8.5050802@gmail.com> <5633CDCD.10004@gmail.com>
+	<5633CE60.8060907@gmail.com> <5633D0C7.2020709@gmail.com>
+	<20151030205955.GC21923@csclub.uwaterloo.ca>
+	<0eb2d04aed9a93b38867292bfa6c55f6@mail.kylheku.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	matthias.ruester@gmail.com, magnus.goerlitz@googlemail.com
-To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 31 07:39:52 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain
+Cc: The development of GNU GRUB <grub-devel@gnu.org>, savannah-users@gnu.org,
+	savannah-users-bounces+kaz=kylheku.com@gnu.org, git@vger.kernel.org,
+	Lennart Sorensen <lsorense@csclub.uwaterloo.ca>
+To: Kaz Kylheku <kaz@kylheku.com>
+X-From: savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org Sat Oct 31 08:02:53 2015
+Return-path: <savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org>
+Envelope-to: gcgsu-savannah-users@m.gmane.org
+Received: from lists.gnu.org ([208.118.235.17])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsPpP-00081K-CO
-	for gcvg-git-2@plane.gmane.org; Sat, 31 Oct 2015 07:39:51 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751478AbbJaGjU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Oct 2015 02:39:20 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:35259 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751373AbbJaGjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Oct 2015 02:39:19 -0400
-Received: by pasz6 with SMTP id z6so94358481pas.2
-        for <git@vger.kernel.org>; Fri, 30 Oct 2015 23:39:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:content-type:subject:from:date:to:cc
-         :message-id;
-        bh=SBxWa8ILzxI48y6+UUF51QZDCZEPxuG4uOegENum3ik=;
-        b=iVX/TrOiTAJsvAdPxeeRv7jBOQLs+C5bHOKoKxIbamhdtEibih3PKZiGgE3KHCe7M4
-         rKxkXTNn1dWnKa+URPL4APl71dIpg6YHAgjp3lGoEFei8Ufo8uFJoUOs8WsBZAKfcKGA
-         gC59OAoe/TyXEJIvg0w8UzEnfjEm1vd9Dmd+v5tsV5Dzce5gWFbH4qVmsE2T0AdJTb4d
-         mnXR6fe7MVpYBvCXx4n7WPrTwM4anS4r4fLHXc3fh4d98xmTdlYjQ8dmolJBWbI3iutX
-         Nt1w9si+eg1DJBF7kpY+VxKE+XVTgLhKcIlqtmDiY/bqEqkSoyTlQUsLulkpMnPwSsm2
-         y+UQ==
-X-Received: by 10.66.251.72 with SMTP id zi8mr13651160pac.67.1446273558891;
-        Fri, 30 Oct 2015 23:39:18 -0700 (PDT)
-Received: from [172.20.2.103] (50-203-149-6-static.hfc.comcastbusiness.net. [50.203.149.6])
-        by smtp.gmail.com with ESMTPSA id xz5sm11820634pbb.12.2015.10.30.23.39.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 30 Oct 2015 23:39:17 -0700 (PDT)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <1446153562-12133-1-git-send-email-ralf.thielow@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280567>
+	(envelope-from <savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org>)
+	id 1ZsQBg-0004A9-4u
+	for gcgsu-savannah-users@m.gmane.org; Sat, 31 Oct 2015 08:02:52 +0100
+Received: from localhost ([::1]:54501 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org>)
+	id 1ZsQBf-00054Q-HV
+	for gcgsu-savannah-users@m.gmane.org; Sat, 31 Oct 2015 03:02:51 -0400
+Received: from eggs.gnu.org ([2001:4830:134:3::10]:54418)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <whitebox@nefkom.net>) id 1ZsQBT-0004wY-Vo
+	for savannah-users@gnu.org; Sat, 31 Oct 2015 03:02:40 -0400
+Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
+	(envelope-from <whitebox@nefkom.net>) id 1ZsQBT-0008Qx-4H
+	for savannah-users@gnu.org; Sat, 31 Oct 2015 03:02:39 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:51221)
+	by eggs.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <whitebox@nefkom.net>)
+	id 1ZsQBN-0008Oy-8F; Sat, 31 Oct 2015 03:02:33 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3nnrzn1NtBz3hk9g;
+	Sat, 31 Oct 2015 08:02:28 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3nnrzm4cHqzvh2Z;
+	Sat, 31 Oct 2015 08:02:28 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new,
+	port 10024)
+	with ESMTP id oxaq8jZfst4p; Sat, 31 Oct 2015 08:02:27 +0100 (CET)
+X-Auth-Info: 565WI0sOFvGxkjLt2sJ9JHXjRcQb4DFa35Tm+01IMdoqXeeo08Exm6oBI4JH2Hj0
+Received: from igel.home (ppp-93-104-62-118.dynamic.mnet-online.de
+	[93.104.62.118]) by mail.mnet-online.de (Postfix) with ESMTPA;
+	Sat, 31 Oct 2015 08:02:27 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+	id 1CD632C3E1C; Sat, 31 Oct 2015 08:02:27 +0100 (CET)
+X-Yow: ..I just walked into th' HOUSE OF REPRESENTATIVES with fourteen WET
+	DOLPHINS and an out-of-date MARRIAGE MANUAL...
+In-Reply-To: <0eb2d04aed9a93b38867292bfa6c55f6@mail.kylheku.com> (Kaz
+	Kylheku's message of "Fri, 30 Oct 2015 14:45:24 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+X-detected-operating-system: by eggs.gnu.org: GNU/Linux 3.x
+X-Received-From: 212.18.0.10
+X-BeenThere: savannah-users@gnu.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+List-Id: Discussion of savannah-announce and any user-oriented topic
+	<savannah-users.gnu.org>
+List-Unsubscribe: <https://lists.gnu.org/mailman/options/savannah-users>,
+	<mailto:savannah-users-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/archive/html/savannah-users>
+List-Post: <mailto:savannah-users@gnu.org>
+List-Help: <mailto:savannah-users-request@gnu.org?subject=help>
+List-Subscribe: <https://lists.gnu.org/mailman/listinfo/savannah-users>,
+	<mailto:savannah-users-request@gnu.org?subject=subscribe>
+Errors-To: savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org
+Sender: savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280568>
 
-Hi,=20
+Kaz Kylheku <kaz@kylheku.com> writes:
 
-all good.
+> Nope. They will have a git in which that commit looks like their own
+> local work. *Someone* will inadvertently do a "git push" to blast out
+> their changes based on that deleted commit, thereby causing it to
+> reappear.
 
-Acked-by: Phillip Sz <phillip.szelat@gmail.com>
+Not if another one pushes something different in the mean time.
 
->Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
->---
-> po/de.po | 6 +++---
-> 1 file changed, 3 insertions(+), 3 deletions(-)
->
->diff --git a/po/de.po b/po/de.po
->index c682aaf..be30642 100644
->--- a/po/de.po
->+++ b/po/de.po
->@@ -592,7 +592,7 @@ msgstr "Fehler beim Schreiben der Signatur nach
->'%s': %s"
-> #: grep.c:1718
-> #, c-format
-> msgid "'%s': unable to read %s"
->-msgstr "'%s': konnte nicht lesen %s"
->+msgstr "'%s': konnte %s nicht lesen"
->=20
-> #: grep.c:1735
-> #, c-format
->@@ -11749,7 +11749,7 @@ msgstr "unbekannte Option: $opt"
->=20
-> #: git-stash.sh:397
-> msgid "No stash found."
->-msgstr "Kein \"stash\" gefunden."
->+msgstr "Kein Stash-Eintrag gefunden."
->=20
-> #: git-stash.sh:404
-> #, sh-format
->@@ -11773,7 +11773,7 @@ msgstr "'$args' ist keine \"stash\"-Referenz"
->=20
-> #: git-stash.sh:457
-> msgid "unable to refresh index"
->-msgstr "unf=C3=A4hig den Index zu aktualisieren"
->+msgstr "Konnte den Index nicht aktualisieren."
->=20
-> #: git-stash.sh:461
-> msgid "Cannot apply a stash in the middle of a merge"
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
