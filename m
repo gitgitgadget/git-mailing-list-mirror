@@ -1,87 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Limit the size of the data block passed to SHA1_Update()
-Date: Sun, 01 Nov 2015 10:37:48 -0800
-Message-ID: <xmqqh9l5h8g3.fsf@gitster.mtv.corp.google.com>
-References: <CAPig+cRRjCDhdT-DvGtZqns1mMxygnxi=ZnRKzg+H_do7oRpqQ@mail.gmail.com>
-	<1446359536-25829-1-git-send-email-apahlevan@ieee.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] ls-files: Add eol diagnostics
+Date: Sun, 01 Nov 2015 19:40:50 +0100
+Message-ID: <vpqmvuxzhot.fsf@anie.imag.fr>
+References: <52B3B0AC-037A-4872-9E0E-CDF6BE7A9695@web.de>
+	<vpqbnbfpc6p.fsf@anie.imag.fr> <5635D0B1.9040800@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com,
-	rsbecker@nexbridge.com, Atousa Pahlevan Duprat <apahlevan@ieee.org>
-To: atousa.p@gmail.com
-X-From: git-owner@vger.kernel.org Sun Nov 01 19:37:57 2015
+Cc: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 01 19:41:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsxVq-0003rB-Vs
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 19:37:55 +0100
+	id 1ZsxYo-0006P7-JW
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 19:40:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752663AbbKAShv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 13:37:51 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64936 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752408AbbKAShu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2015 13:37:50 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D7C65276FB;
-	Sun,  1 Nov 2015 13:37:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1AcFVdFE5LMYM0A6Ep458DO8VB4=; b=K7nmNo
-	MD110+UuTPKFRojAtwz2iaDYhxdbxYIjiFYZu0eZsXRKNzHfJ0ybpX8w3xYrIpfs
-	oZ/3613uWIDIDIMl1TEwFXMvIZvXYV8Wh0f1Kb5iy5jonE1lTz8u7wNaczfwxzmk
-	ZElr3+gMztG8LF5tjrvmZ29Y3crHf91Dwy5iY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xMqIqM5UvO4KODMszdsR+LsNrkz1CwbW
-	9BU+feCjdCN7EVI5xyGEHKm2Ix4luHGhx+s/GPXj1HZhqPtsfgKKkoTqMMzVADs/
-	pMXNG2nAyB5SeYc4vVs63CW9TqBqT1YebGFW+wMePyBxzm1Wlln+JJpEsisE+3It
-	QjQi8AbA/WQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CFAB8276FA;
-	Sun,  1 Nov 2015 13:37:49 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 585C9276F9;
-	Sun,  1 Nov 2015 13:37:49 -0500 (EST)
-In-Reply-To: <1446359536-25829-1-git-send-email-apahlevan@ieee.org> (atousa
-	p.'s message of "Sat, 31 Oct 2015 23:32:16 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A7110EDC-80C7-11E5-A438-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752671AbbKASky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 13:40:54 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:37364 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752567AbbKASkx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2015 13:40:53 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id tA1IemsX032720
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sun, 1 Nov 2015 19:40:48 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tA1Ieo8q011091;
+	Sun, 1 Nov 2015 19:40:50 +0100
+In-Reply-To: <5635D0B1.9040800@gmail.com> (Sebastian Schuberth's message of
+	"Sun, 1 Nov 2015 09:43:29 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 01 Nov 2015 19:40:48 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: tA1IemsX032720
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1447008048.56532@ODOfLOQgjwuS+NRsbnIj7Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280651>
 
-atousa.p@gmail.com writes:
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-> diff --git a/cache.h b/cache.h
-> index 79066e5..ec84b16 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -14,7 +14,12 @@
->  #ifndef git_SHA_CTX
->  #define git_SHA_CTX	SHA_CTX
->  #define git_SHA1_Init	SHA1_Init
-> -#define git_SHA1_Update	SHA1_Update
-> +#ifdef SHA1_MAX_BLOCK_SIZE
-> +extern int SHA1_Update_Chunked(SHA_CTX *, const void *, size_t);
-> +#define git_SHA1_Update SHA1_Update_Chunked
-> +#else
-> +#define git_SHA1_Update SHA1_Update
-> +#endif
->  #define git_SHA1_Final	SHA1_Final
->  #endif
+> However, the commit message says "to check if text files are stored
+> normalized in the *repository*", yet the output refers to the index /
+> cache. Is there a (potential) difference between line endings in the
+> index and repo?
 
-Hmm, I admit that this mess is my creation, but unfortunately it
-does not allow us to say:
+There is when you have staged changes that are not commited yet.
 
-	make SHA1_MAX_BLOCK_SIZE='1024L*1024L*1024L'
+> Any I find it a bit confusing to refer to the index where, as e.g. for
+> a freshly cloned repo the index should be empty,
 
-when using other SHA-1 implementations (e.g. blk_SHA1_Update()).
+No it is not. The index is a complete snapshot of your working tree.
+When you have no uncommited staged changes, the index contains all files
+that are in HEAD. Most commands show you _changes_ in the index (wrt
+HEAD or wrt the working tree), but the index itself contain all files.
 
-Ideas for cleaning it up, anybody?
+> Long story short, how about consistently talking about line endings in
+> the repo, and also using "repo" instead of "ca" here?
+
+I don't think this is a good idea. One typical use-case for the feature
+would probably be:
+
+1) wtf, there's something wrong with my line endings, let's fix this.
+
+2) tweak .gitattributes, try to get everything right
+
+3) prepare a commit to apply the new settings to the repository, play
+   with "git add", "dos2unix" and friends.
+
+4) check that it's OK
+
+5) "git commit"
+
+At stage 4), you really want to see the content of the index, because
+your HEAD is still broken.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
