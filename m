@@ -1,83 +1,64 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] mailinfo: fix passing wrong address to git_mailinfo_config
-Date: Sun,  1 Nov 2015 15:30:30 +0100
-Message-ID: <1446388230-27966-1-git-send-email-pclouds@gmail.com>
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: Re: [PATCH] checkout: add --progress option
+Date: Sun, 1 Nov 2015 10:50:28 -0600
+Message-ID: <CAOc6etY5Gh+njnWjtA3MYgnu+LCR-x75UCNOdRDw4+ReEbhVLQ@mail.gmail.com>
+References: <1446168186-4730-1-git-send-email-eantoranz@gmail.com>
+	<CAPig+cTvRs_O8uY9_SrZZCf95Lraon8knkQUDgm0Lke3pve01A@mail.gmail.com>
+	<xmqqh9l8kxa3.fsf@gitster.mtv.corp.google.com>
+	<20151030193151.GB5336@sigill.intra.peff.net>
+	<xmqq4mh8kv0e.fsf@gitster.mtv.corp.google.com>
+	<CAOc6etYiqH8bvnCD_9hedzDW6fhknXLGesM6dX7S9DBB_r-9zA@mail.gmail.com>
+	<CAOc6etYCzBYpf+7p8p3=zQun7bYXYVc-codoUf5Abcq+hAz8cA@mail.gmail.com>
+	<CAPig+cQ+-k_eAm+EMEHqAyQ1P-AjNXQwmyPKqm=fD3vZ1chTLA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 01 15:31:23 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Nov 01 17:50:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZstfG-0008OS-CD
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 15:31:22 +0100
+	id 1Zsvpx-00056f-Ic
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 17:50:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752569AbbKAObR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Nov 2015 09:31:17 -0500
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:36366 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751450AbbKAObR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2015 09:31:17 -0500
-Received: by wicfx6 with SMTP id fx6so35644889wic.1
-        for <git@vger.kernel.org>; Sun, 01 Nov 2015 06:31:15 -0800 (PST)
+	id S1752502AbbKAQu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 11:50:29 -0500
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:33460 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751615AbbKAQu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2015 11:50:28 -0500
+Received: by padhy1 with SMTP id hy1so116592982pad.0
+        for <git@vger.kernel.org>; Sun, 01 Nov 2015 08:50:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=QkiwLw5mm2xYHTyKps6QniU+bZkwMagWs0GiQQE5Au8=;
-        b=UMfFgPESCMuf01Fqz8yzCFyzcPVk0xYrLCadrcDjyFUyhLmUrF6/aeSqnRp+W2kGHw
-         LVj7r7Q7t4YckoUvYHtnvS08kjsOY7xyOpg/ad1rC/bnGhoFlyzFArxBFb5CcsZBUH1X
-         xBeUmqhqV2bh8efiUjzSaB7b6aEDH5ktFVDd4ulx3jGFeSDAxLN2c/Zc3FRkOd233w2Z
-         LR+z19FnypNz0DMH0JyNZZ+zdQ5nCf+arI0FTjMsc45+lLDET6BOGZGJLwbxXYZ5m8cZ
-         S4lWGW9YMILrn5daEfn5I1kdmKLcQ96C11RGfXa9rvvd7cAJ3PeZaXbL8dkCOiZrAFKm
-         wk6w==
-X-Received: by 10.194.82.166 with SMTP id j6mr20281941wjy.63.1446388275893;
-        Sun, 01 Nov 2015 06:31:15 -0800 (PST)
-Received: from duynguyen-vnpc.dek-tpc.internal.homenet.telecomitalia.it (host171-164-static.60-79-b.business.telecomitalia.it. [79.60.164.171])
-        by smtp.gmail.com with ESMTPSA id m143sm13087170wmb.1.2015.11.01.06.31.13
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 01 Nov 2015 06:31:14 -0800 (PST)
-X-Mailer: git-send-email 2.2.0.513.g477eb31
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=WPdvIDEWAidBgkgzrw/5QAgJ+DXk1era7b7CzHiCmKU=;
+        b=i3FFUvDs4iIfUyTSNwnnPQ7jBVxeOxX9bRoD5I9p1JGvsuZmjqjSaUS5RVoB0MasV3
+         vs9chSAxE8R7+WNFgSLLWQfyPEhFja8li8WBCUwkk112BrZ6/aJYCXJ41PV1x+7JrPUY
+         BBoLj+2EkGj6u3LDD38dwpE+OjO/Ep2/RqxujBtPgNCta6txTmi34n3nAqF8EoVyWzBw
+         MMsbdeufSoI3mePhO32U6C0tMTKBmvOxyTPCJBqIi/qTaKi3vu7PbuXlatw023Pf8rGV
+         p1zPaBLAvNjpxKFHDMO8rokz7jKSt+HsMUfLsY4zwgNqb7tdRBwwYEuLGmH31myW6ggl
+         yjwQ==
+X-Received: by 10.67.14.42 with SMTP id fd10mr21896945pad.11.1446396628484;
+ Sun, 01 Nov 2015 08:50:28 -0800 (PST)
+Received: by 10.66.97.70 with HTTP; Sun, 1 Nov 2015 08:50:28 -0800 (PST)
+In-Reply-To: <CAPig+cQ+-k_eAm+EMEHqAyQ1P-AjNXQwmyPKqm=fD3vZ1chTLA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280635>
 
-git_mailinfo_config() expects "struct mailinfo *". But in
-setup_mailinfo(), "mi" is already "struct mailinfo *". &mi would make
-it "struct mailinfo **" and git_mailinfo_config() would damage some
-other memory when it assigns some value to mi->use_scissors.
+On Sat, Oct 31, 2015 at 6:45 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> Patches in 'next' are pretty much set in stone, and those in 'master'
+> definitely are, but 'pu' is volatile, so just send the entire patch
+> revised, tagged v2 (or v3, etc.), rather than sending a patch to fix
+> what is in 'pu', and Junio will replace the previous version with the
+> new one.
+>
 
-This is caught by t4150.20. git_mailinfo_config() breaks
-mi->name.alloc and makes strbuf_release() in clear_mailinfo() attempt
-to free strbuf_slopbuf.
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- mailinfo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mailinfo.c b/mailinfo.c
-index e157ca6..f289941 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -1009,7 +1009,7 @@ void setup_mailinfo(struct mailinfo *mi)
- 	mi->header_stage =3D 1;
- 	mi->use_inbody_headers =3D 1;
- 	mi->content_top =3D mi->content;
--	git_config(git_mailinfo_config, &mi);
-+	git_config(git_mailinfo_config, mi);
- }
-=20
- void clear_mailinfo(struct mailinfo *mi)
---=20
-2.2.0.513.g477eb31
+Will do!
