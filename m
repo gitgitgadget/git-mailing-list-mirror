@@ -1,73 +1,149 @@
 From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: Re: [PATCH v3] checkout: add --progress option
-Date: Sun, 1 Nov 2015 11:43:42 -0600
-Message-ID: <CAOc6etZ7Vcd-Gq6bV6VuzJQY2om7k0gWfGYsSmQ8xYtGvOWBxQ@mail.gmail.com>
-References: <1446398545-8245-1-git-send-email-eantoranz@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
-	Edmundo Carmona Antoranz <eantoranz@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 01 18:43:49 2015
+Subject: [PATCH v4] checkout: add --progress option
+Date: Sun,  1 Nov 2015 11:47:56 -0600
+Message-ID: <1446400076-9983-1-git-send-email-eantoranz@gmail.com>
+Cc: peff@peff.net, Edmundo Carmona Antoranz <eantoranz@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 01 18:48:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZswfT-0000pT-2U
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 18:43:47 +0100
+	id 1Zswjl-0004d0-Nd
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 18:48:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547AbbKARnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 12:43:43 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:35805 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752448AbbKARnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2015 12:43:42 -0500
-Received: by pasz6 with SMTP id z6so123333105pas.2
-        for <git@vger.kernel.org>; Sun, 01 Nov 2015 09:43:42 -0800 (PST)
+	id S1752672AbbKARsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 12:48:09 -0500
+Received: from mail-yk0-f174.google.com ([209.85.160.174]:34665 "EHLO
+	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752034AbbKARsH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2015 12:48:07 -0500
+Received: by ykdr3 with SMTP id r3so119842091ykd.1
+        for <git@vger.kernel.org>; Sun, 01 Nov 2015 09:48:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DAtCl7yWhjkx7/QTOqkor2nc/jkDdx2zJdVlpg28fW4=;
-        b=I+g539wYDfITWS0kjzi/+7VVbSSkp/j7q2XEWKtw5tE324xo9f9qnDxlSyrrGwvetc
-         pmxXz59l/kKLCW0PA+nLzdu/yZ622K3yA8oP109umX02M3ZwSGZcYecrLgLNiCexyCAF
-         VflSL6VJjm+Z8j4yW06adjuyVEczS3FjxD2KKrlSuAn18s6nwNG/Uto2MV4cK0eFtLh7
-         EVIhgp2boQfbt7e3cK8gtX3cpZsrebZ9/6JvjuDxahncDcR3xLw6/M4Or6NbG2P8RcwA
-         DYoohqbnCaTkEu8KOHwDD/YUaYGeM9xbmM7/QtOMLeGJ9ifhumo9KhRp7If3u5Ipocz7
-         NrXg==
-X-Received: by 10.68.201.5 with SMTP id jw5mr8596790pbc.28.1446399822431; Sun,
- 01 Nov 2015 09:43:42 -0800 (PST)
-Received: by 10.66.97.70 with HTTP; Sun, 1 Nov 2015 09:43:42 -0800 (PST)
-In-Reply-To: <1446398545-8245-1-git-send-email-eantoranz@gmail.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=MCDd8zo+zAGuMM++MRiCj7iNgBF5a+weTSdJnGh9C2c=;
+        b=ZsYlTGTcS+xKEDNRFA9ECdFliztbASxvUp0cElOzpHxedjb2sfLSovf9a5zDic9Xvj
+         rLBefKcouUBYYi9uxkwdpKc1sWzR56X8eSqjGfhF1+fdEDqcj8/iZL6VBqJB+hj1GMhL
+         yTMxFHSaAvmREpyN89fGRHZQCjFeOaoO5k3Rwauut8b4iy7yOB7zb5RaEyaiZlCHwKnk
+         ZvSYcdeS6BDxZDFxZ9zmflUT2rwQaZhf62wOX9xkl409VchVpCxORCGb0ccsbzaGMe3q
+         yCGIdyWVurex7r80wMZc/r+FvuAamO+hWTpBiNVqcMsXLDVCjvZ6HfNg6VHOYD5RffKb
+         rOLw==
+X-Received: by 10.13.236.206 with SMTP id v197mr13866514ywe.20.1446400087331;
+        Sun, 01 Nov 2015 09:48:07 -0800 (PST)
+Received: from linuxerio.cabletica.com (ip157-11-15-186.ct.co.cr. [186.15.11.157])
+        by smtp.gmail.com with ESMTPSA id y185sm10987971ywc.44.2015.11.01.09.48.05
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 01 Nov 2015 09:48:06 -0800 (PST)
+X-Mailer: git-send-email 2.6.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280638>
 
-On Sun, Nov 1, 2015 at 11:22 AM, Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
-> +       /*
-> +        * Final processing of show_progress
-> +        * - User selected --progress: show progress
-> +        * - user selected --no-progress: skip progress
-> +        * - User didn't specify:
-> +        *     (check rules in order till finding the first matching one)
-> +        *     - user selected --quiet: skip progress
-> +        *     - stderr is connected to a terminal: show progress
-> +        *     - fallback: skip progress
-> +        */
-> +       if (opts.show_progress < 0) {
-> +               /* user selected --progress or didn't specify */
-> +               if (opts.quiet) {
-> +                       opts.show_progress = 0;
-> +               } else {
-> +                       opts.show_progress = isatty(2);
-> +               }
-> +       }
-> +
+Under normal circumstances, and like other git commands,
+git checkout will write progress info to stderr if
+attached to a terminal. This option allows progress
+to be forced even if not using a terminal. Also,
+progress can be skipped if using option --no-progress.
 
+Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+---
+ Documentation/git-checkout.txt |  6 ++++++
+ builtin/checkout.c             | 26 ++++++++++++++++++++++++--
+ 2 files changed, 30 insertions(+), 2 deletions(-)
 
-/* user selected --progress or didn't specify */
-This comment is not correct. Disregard this patch.
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index e269fb1..93ba35a 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -107,6 +107,12 @@ OPTIONS
+ --quiet::
+ 	Quiet, suppress feedback messages.
+ 
++--progress::
++	Progress status is reported on the standard error stream
++	by default when it is attached to a terminal, unless -q
++	is specified. This flag forces progress status even if the
++	standard error stream is not directed to a terminal.
++
+ -f::
+ --force::
+ 	When switching branches, proceed even if the index or the
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index bc703c0..c3b8e5d 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -37,6 +37,7 @@ struct checkout_opts {
+ 	int overwrite_ignore;
+ 	int ignore_skipworktree;
+ 	int ignore_other_worktrees;
++	int show_progress;
+ 
+ 	const char *new_branch;
+ 	const char *new_branch_force;
+@@ -417,7 +418,7 @@ static int reset_tree(struct tree *tree, const struct checkout_opts *o,
+ 	opts.reset = 1;
+ 	opts.merge = 1;
+ 	opts.fn = oneway_merge;
+-	opts.verbose_update = !o->quiet && isatty(2);
++	opts.verbose_update = o->show_progress;
+ 	opts.src_index = &the_index;
+ 	opts.dst_index = &the_index;
+ 	parse_tree(tree);
+@@ -501,7 +502,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 		topts.update = 1;
+ 		topts.merge = 1;
+ 		topts.gently = opts->merge && old->commit;
+-		topts.verbose_update = !opts->quiet && isatty(2);
++		topts.verbose_update = opts->show_progress;
+ 		topts.fn = twoway_merge;
+ 		if (opts->overwrite_ignore) {
+ 			topts.dir = xcalloc(1, sizeof(*topts.dir));
+@@ -1156,6 +1157,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 				N_("second guess 'git checkout <no-such-branch>'")),
+ 		OPT_BOOL(0, "ignore-other-worktrees", &opts.ignore_other_worktrees,
+ 			 N_("do not check if another worktree is holding the given ref")),
++		OPT_BOOL(0, "progress", &opts.show_progress, N_("force progress reporting")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -1163,6 +1165,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	memset(&new, 0, sizeof(new));
+ 	opts.overwrite_ignore = 1;
+ 	opts.prefix = prefix;
++	opts.show_progress = -1;
+ 
+ 	gitmodules_config();
+ 	git_config(git_checkout_config, &opts);
+@@ -1172,6 +1175,25 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, options, checkout_usage,
+ 			     PARSE_OPT_KEEP_DASHDASH);
+ 
++	/*
++	 * Final processing of show_progress
++	 * - User selected --progress: show progress
++	 * - user selected --no-progress: skip progress
++	 * - User didn't specify:
++	 *     (check rules in order till finding the first matching one)
++	 *     - user selected --quiet: skip progress
++	 *     - stderr is connected to a terminal: show progress
++	 *     - fallback: skip progress
++	 */
++	if (opts.show_progress < 0) {
++		/* user didn't specify --[no-]progress */
++		if (opts.quiet) {
++			opts.show_progress = 0;
++		} else {
++			opts.show_progress = isatty(2);
++		}
++	}
++
+ 	if (conflict_style) {
+ 		opts.merge = 1; /* implied */
+ 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
+-- 
+2.6.1
