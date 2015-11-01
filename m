@@ -1,61 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] ls-files: Add eol diagnostics
-Date: Sun, 01 Nov 2015 19:41:26 +0100
-Message-ID: <vpqio5lzhnt.fsf@anie.imag.fr>
-References: <52B3B0AC-037A-4872-9E0E-CDF6BE7A9695@web.de>
-	<vpqbnbfpc6p.fsf@anie.imag.fr>
-	<xmqqtwp5h95i.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5] checkout: add --progress option
+Date: Sun, 1 Nov 2015 14:13:05 -0500
+Message-ID: <CAPig+cTE=vhFf-wf9qd4EMt8agi5SneQ3efKi1DCrArEsii5GA@mail.gmail.com>
+References: <1446401039-13848-1-git-send-email-eantoranz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 01 19:41:36 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 01 20:13:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsxZP-0006v9-JC
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 19:41:35 +0100
+	id 1Zsy4X-00088B-2i
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 20:13:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752766AbbKASlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 13:41:31 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:37384 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752567AbbKASlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2015 13:41:31 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id tA1IfN0J000519
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sun, 1 Nov 2015 19:41:24 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tA1IfQ83011102;
-	Sun, 1 Nov 2015 19:41:26 +0100
-In-Reply-To: <xmqqtwp5h95i.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Sun, 01 Nov 2015 10:22:33 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 01 Nov 2015 19:41:24 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: tA1IfN0J000519
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1447008084.34431@t6nSomE3q+/AAzSuI3pGjQ
+	id S1752741AbbKATNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 14:13:09 -0500
+Received: from mail-vk0-f49.google.com ([209.85.213.49]:33533 "EHLO
+	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752506AbbKATNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2015 14:13:07 -0500
+Received: by vkgy127 with SMTP id y127so74545556vkg.0
+        for <git@vger.kernel.org>; Sun, 01 Nov 2015 11:13:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=4ygGEVj44eBbSqCb3aq7aOAY+0TijFkv8nRlnaxEk+4=;
+        b=jwDZMkef0wyq2BLsdRTs3Qni0KugSTjocT77ehCJugYVxG0ERxyOA1ZaI+HATJtdTD
+         KEfJWkcclvTH+5d46bscqOoQEKQoO14L8bGt+8YkHU6qENtl6XlpW30DkoeQDjCqNSDE
+         t2bFiYI8ER6lWjkKPVujKhs0ldMw1w3luiMtWoU2iWbzMsm9TB0q+FKu7HsrSROBjJeH
+         FyJCXIZ5lxYYqvEo96bd2pEViWC2Gjkml0R5h5juRJMPiB7R8XmiN+wJtqNn8wGj5cZQ
+         ci2ulMiB4o9xyjyAc1sJnnif1u5W+s2qttg5UZLTHynQoYykJH6iWFf88VzzJRF1GeZL
+         /7KQ==
+X-Received: by 10.31.163.85 with SMTP id m82mr11172368vke.19.1446405185691;
+ Sun, 01 Nov 2015 11:13:05 -0800 (PST)
+Received: by 10.31.159.204 with HTTP; Sun, 1 Nov 2015 11:13:05 -0800 (PST)
+In-Reply-To: <1446401039-13848-1-git-send-email-eantoranz@gmail.com>
+X-Google-Sender-Auth: gy89VgSGwrCuxIzb7tra3Oqfkh0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280653>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, Nov 1, 2015 at 1:03 PM, Edmundo Carmona Antoranz
+<eantoranz@gmail.com> wrote:
+> Under normal circumstances, and like other git commands,
+> git checkout will write progress info to stderr if
+> attached to a terminal. This option allows progress
+> to be forced even if not using a terminal. Also,
+> progress can be skipped if using option --no-progress.
+>
+> Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+> ---
+> +       /*
+> +        * Final processing of show_progress
+> +        * - User selected --progress: show progress
+> +        * - user selected --no-progress: skip progress
+> +        * - User didn't specify:
+> +        *     (check rules in order till finding the first matching one)
+> +        *     - user selected --quiet: skip progress
+> +        *     - stderr is connected to a terminal: show progress
+> +        *     - fallback: skip progress
+> +        */
+> +       if (opts.show_progress < 0) {
+> +               /* user didn't specify --[no-]progress */
+> +               if (opts.quiet)
+> +                       opts.show_progress = 0;
+> +               else
+> +                       opts.show_progress = isatty(2);
+> +       }
 
-> i/ and w/ have been used to denote the "i"ndex and "w"orktree
-> versions for the past 7 years with diff.mnemonicprefix option,
-> which you may want to match.
+Style-wise this looks better.
 
-Indeed.
+I'll assume that you simply overlooked the remainder of my v4 review
+comments, so I'll merely provide a reference to them[1] rather than
+repeating myself. If that assumption is incorrect, please do have the
+courtesy to state that you disagree with review comments and to
+explain your position, otherwise reviewers will feel that their
+efforts are wasted.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks.
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/280641
