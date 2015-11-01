@@ -1,149 +1,140 @@
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: [PATCH v4] checkout: add --progress option
-Date: Sun,  1 Nov 2015 11:47:56 -0600
-Message-ID: <1446400076-9983-1-git-send-email-eantoranz@gmail.com>
-Cc: peff@peff.net, Edmundo Carmona Antoranz <eantoranz@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 01 18:48:15 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] wt-status: avoid building bogus branch name with detached HEAD
+Date: Sun, 01 Nov 2015 09:50:45 -0800
+Message-ID: <xmqqbnbdip6y.fsf@gitster.mtv.corp.google.com>
+References: <5634FB59.1000506@web.de> <5634FC23.2090703@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Sun Nov 01 18:50:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zswjl-0004d0-Nd
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 18:48:14 +0100
+	id 1ZswmP-00072P-VC
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 18:50:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752672AbbKARsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 12:48:09 -0500
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:34665 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752034AbbKARsH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2015 12:48:07 -0500
-Received: by ykdr3 with SMTP id r3so119842091ykd.1
-        for <git@vger.kernel.org>; Sun, 01 Nov 2015 09:48:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=MCDd8zo+zAGuMM++MRiCj7iNgBF5a+weTSdJnGh9C2c=;
-        b=ZsYlTGTcS+xKEDNRFA9ECdFliztbASxvUp0cElOzpHxedjb2sfLSovf9a5zDic9Xvj
-         rLBefKcouUBYYi9uxkwdpKc1sWzR56X8eSqjGfhF1+fdEDqcj8/iZL6VBqJB+hj1GMhL
-         yTMxFHSaAvmREpyN89fGRHZQCjFeOaoO5k3Rwauut8b4iy7yOB7zb5RaEyaiZlCHwKnk
-         ZvSYcdeS6BDxZDFxZ9zmflUT2rwQaZhf62wOX9xkl409VchVpCxORCGb0ccsbzaGMe3q
-         yCGIdyWVurex7r80wMZc/r+FvuAamO+hWTpBiNVqcMsXLDVCjvZ6HfNg6VHOYD5RffKb
-         rOLw==
-X-Received: by 10.13.236.206 with SMTP id v197mr13866514ywe.20.1446400087331;
-        Sun, 01 Nov 2015 09:48:07 -0800 (PST)
-Received: from linuxerio.cabletica.com (ip157-11-15-186.ct.co.cr. [186.15.11.157])
-        by smtp.gmail.com with ESMTPSA id y185sm10987971ywc.44.2015.11.01.09.48.05
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 01 Nov 2015 09:48:06 -0800 (PST)
-X-Mailer: git-send-email 2.6.1
+	id S1752570AbbKARuy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Nov 2015 12:50:54 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62851 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752520AbbKARux convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Nov 2015 12:50:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0394026796;
+	Sun,  1 Nov 2015 12:50:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=q6/ophovL60K
+	4rgOk5EVH1g9Rf4=; b=QkNBuU+lfsh5WOvXjlC//npjgpg3vNBRVEnj0reNEY6l
+	8oZunWdkj09kSFlPXkYvGNzngmyzHwpuE8bAK9FhdToBBr26orqKXcWWHaWWfdrD
+	6suLYDr8Hn9yQUvGgGoPSq4hZcjTiWq/F9sIh7FGbIEO17K6Ww+1b0fKM4gNy/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pcbkM1
+	B5LSsN+gv5vjJlce4z76o7gXZY5/WZq108CakAsrAYzs1LsJUyaLBqhCiKU3BMyM
+	6s0Izcho8YPyCGD5DA/1XVjiTKFHMpp+ArfLqXhU7PmjhBuNTMN3jK6bdarWiGb4
+	jj9Sjfkd7joRb6m18TN7sjPCYZLeFUiusfZ+k=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EED3826793;
+	Sun,  1 Nov 2015 12:50:46 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 588E62678D;
+	Sun,  1 Nov 2015 12:50:46 -0500 (EST)
+In-Reply-To: <5634FC23.2090703@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
+ message of "Sat, 31
+	Oct 2015 18:36:35 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1462F5A6-80C1-11E5-BF4A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280639>
 
-Under normal circumstances, and like other git commands,
-git checkout will write progress info to stderr if
-attached to a terminal. This option allows progress
-to be forced even if not using a terminal. Also,
-progress can be skipped if using option --no-progress.
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
----
- Documentation/git-checkout.txt |  6 ++++++
- builtin/checkout.c             | 26 ++++++++++++++++++++++++--
- 2 files changed, 30 insertions(+), 2 deletions(-)
+> If we're on a detached HEAD then wt_shortstatus_print_tracking() take=
+s
+> the string "HEAD (no branch)", translates it, skips the first eleven
+> characters and passes the result to branch_get(), which returns a bog=
+us
+> result and accesses memory out of bounds in order to produce it.
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index e269fb1..93ba35a 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -107,6 +107,12 @@ OPTIONS
- --quiet::
- 	Quiet, suppress feedback messages.
- 
-+--progress::
-+	Progress status is reported on the standard error stream
-+	by default when it is attached to a terminal, unless -q
-+	is specified. This flag forces progress status even if the
-+	standard error stream is not directed to a terminal.
-+
- -f::
- --force::
- 	When switching branches, proceed even if the index or the
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index bc703c0..c3b8e5d 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -37,6 +37,7 @@ struct checkout_opts {
- 	int overwrite_ignore;
- 	int ignore_skipworktree;
- 	int ignore_other_worktrees;
-+	int show_progress;
- 
- 	const char *new_branch;
- 	const char *new_branch_force;
-@@ -417,7 +418,7 @@ static int reset_tree(struct tree *tree, const struct checkout_opts *o,
- 	opts.reset = 1;
- 	opts.merge = 1;
- 	opts.fn = oneway_merge;
--	opts.verbose_update = !o->quiet && isatty(2);
-+	opts.verbose_update = o->show_progress;
- 	opts.src_index = &the_index;
- 	opts.dst_index = &the_index;
- 	parse_tree(tree);
-@@ -501,7 +502,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 		topts.update = 1;
- 		topts.merge = 1;
- 		topts.gently = opts->merge && old->commit;
--		topts.verbose_update = !opts->quiet && isatty(2);
-+		topts.verbose_update = opts->show_progress;
- 		topts.fn = twoway_merge;
- 		if (opts->overwrite_ignore) {
- 			topts.dir = xcalloc(1, sizeof(*topts.dir));
-@@ -1156,6 +1157,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 				N_("second guess 'git checkout <no-such-branch>'")),
- 		OPT_BOOL(0, "ignore-other-worktrees", &opts.ignore_other_worktrees,
- 			 N_("do not check if another worktree is holding the given ref")),
-+		OPT_BOOL(0, "progress", &opts.show_progress, N_("force progress reporting")),
- 		OPT_END(),
- 	};
- 
-@@ -1163,6 +1165,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	memset(&new, 0, sizeof(new));
- 	opts.overwrite_ignore = 1;
- 	opts.prefix = prefix;
-+	opts.show_progress = -1;
- 
- 	gitmodules_config();
- 	git_config(git_checkout_config, &opts);
-@@ -1172,6 +1175,25 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, checkout_usage,
- 			     PARSE_OPT_KEEP_DASHDASH);
- 
-+	/*
-+	 * Final processing of show_progress
-+	 * - User selected --progress: show progress
-+	 * - user selected --no-progress: skip progress
-+	 * - User didn't specify:
-+	 *     (check rules in order till finding the first matching one)
-+	 *     - user selected --quiet: skip progress
-+	 *     - stderr is connected to a terminal: show progress
-+	 *     - fallback: skip progress
-+	 */
-+	if (opts.show_progress < 0) {
-+		/* user didn't specify --[no-]progress */
-+		if (opts.quiet) {
-+			opts.show_progress = 0;
-+		} else {
-+			opts.show_progress = isatty(2);
-+		}
-+	}
-+
- 	if (conflict_style) {
- 		opts.merge = 1; /* implied */
- 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
--- 
-2.6.1
+The fix is correct, but the above explanation looks "not quite" to
+me.
+
+That "HEAD (no branch)" thing is in a separate branch_name variable
+that is not involved in the actual computation (i.e. call to
+branch_get()).
+
+The function gets "HEAD" in s->branch, uses that and skips the first
+eleven characters (i.e. beyond the end of that string), lets
+branch_get() to return a garbage and likely missing branch, finds
+that nobody tracks that, and does the right thing anyway.  If the
+garbage past the end of the "HEAD" happens to have a name of an
+existing branch, we would get an incorrect result.
+
+Thanks.
+
+> Somehow stat_tracking_info(), which is passed that result, does the
+> right thing anyway, i.e. it finds that there is no base.
+>
+> Avoid the bogus results and memory accesses by checking for HEAD firs=
+t
+> and exiting early in that case.  This fixes t7060 with --valgrind.
+>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  t/t7060-wtstatus.sh |  2 +-
+>  wt-status.c         | 15 +++++++++------
+>  2 files changed, 10 insertions(+), 7 deletions(-)
+>
+> diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+> index e6af772..44bf1d8 100755
+> --- a/t/t7060-wtstatus.sh
+> +++ b/t/t7060-wtstatus.sh
+> @@ -213,7 +213,7 @@ EOF
+>  	git checkout master
+>  '
+> =20
+> -test_expect_failure 'status --branch with detached HEAD' '
+> +test_expect_success 'status --branch with detached HEAD' '
+>  	git reset --hard &&
+>  	git checkout master^0 &&
+>  	git status --branch --porcelain >actual &&
+> diff --git a/wt-status.c b/wt-status.c
+> index 083328f..e206cc9 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1644,16 +1644,19 @@ static void wt_shortstatus_print_tracking(str=
+uct wt_status *s)
+>  		return;
+>  	branch_name =3D s->branch;
+> =20
+> +	if (s->is_initial)
+> +		color_fprintf(s->fp, header_color, _("Initial commit on "));
+> +
+> +	if (!strcmp(s->branch, "HEAD")) {
+> +		color_fprintf(s->fp, color(WT_STATUS_NOBRANCH, s), "%s",
+> +			      _("HEAD (no branch)"));
+> +		goto conclude;
+> +	}
+> +
+>  	if (starts_with(branch_name, "refs/heads/"))
+>  		branch_name +=3D 11;
+> -	else if (!strcmp(branch_name, "HEAD")) {
+> -		branch_name =3D _("HEAD (no branch)");
+> -		branch_color_local =3D color(WT_STATUS_NOBRANCH, s);
+> -	}
+> =20
+>  	branch =3D branch_get(s->branch + 11);
+> -	if (s->is_initial)
+> -		color_fprintf(s->fp, header_color, _("Initial commit on "));
+> =20
+>  	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
