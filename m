@@ -1,151 +1,78 @@
-From: Lukas Fleischer <lfleischer@lfos.de>
-Subject: Re: [PATCH] Allow hideRefs to match refs outside the namespace
-Date: Sun, 01 Nov 2015 12:27:16 +0100
-Message-ID: <20151101112716.3758.7843@typhoon.lan>
-References: <1445846999-8627-1-git-send-email-lfleischer@lfos.de>
- <1446046920-15646-1-git-send-email-lfleischer@lfos.de>
- <xmqq1tcfm09k.fsf@gitster.mtv.corp.google.com>
- <20151031084917.26006.98611@typhoon.lan>
- <xmqqsi4rhrmc.fsf@gitster.mtv.corp.google.com>
- <20151031234039.3799.78352@typhoon.lan>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: RE: [PATCH 3/6] Facilitate debugging Git executables in tests with
+ gdb
+Date: Sun, 1 Nov 2015 14:37:34 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1511011436550.31610@s15462909.onlinehome-server.info>
+References: <cover.1445865176.git.johannes.schindelin@gmx.de> <082d6474a31c405b16087f76de7bc5d01faba529.1445865176.git.johannes.schindelin@gmx.de> <5631AB75.5030800@gmail.com>,<alpine.DEB.1.00.1510301941170.31610@s15462909.onlinehome-server.info>
+ <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA0B@mail.accesssoftek.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 01 12:27:26 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Victor Leschuk <vleschuk@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Victor Leschuk <vleschuk@accesssoftek.com>
+X-From: git-owner@vger.kernel.org Sun Nov 01 14:37:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsqnF-00023q-A9
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 12:27:25 +0100
+	id 1ZsspU-0003OO-Sz
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 14:37:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752556AbbKAL1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 06:27:20 -0500
-Received: from elnino.cryptocrack.de ([46.165.227.75]:47287 "EHLO
-	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752446AbbKAL1T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Nov 2015 06:27:19 -0500
-Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 28a7e9b7;
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	Sun, 1 Nov 2015 12:27:17 +0100 (CET)
-In-Reply-To: <20151031234039.3799.78352@typhoon.lan>
-User-Agent: alot/0.3.6
+	id S1752157AbbKANhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 08:37:48 -0500
+Received: from mout.gmx.net ([212.227.17.21]:58626 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751270AbbKANhr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2015 08:37:47 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MN748-1ZqfuK3kEK-006bjP;
+ Sun, 01 Nov 2015 14:37:36 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA0B@mail.accesssoftek.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:PtH5U3o8TD+CutMlnW2CpDEO2aqmuGC4kzU+N9ewp7+FBaF0sap
+ J7LpA0MJZ3+jiismNuAXG1+5VydEjlg+UcNQN9y/fR694ihiD2b3Q5xWpC01R/DYt7q04tV
+ zZjXnt+s4a4wivpij0PAtOIdQ5Qo2BRyt0vWpOfGwcA2l6keyTth/HPUy+yg7mk8p8YWcP6
+ ygMpa6pGFPKFS1ZRmh+Ig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:R4tjHceES0I=:6CDFBTfXdxE7mf2W5Z1fsY
+ 1vDjnVnnuHahZVVI0flzv+iLZ7UAavE5ihZI7nZKa9HfdoX3K3aElOpQkhG6DQ2c09S9dUp6j
+ j0TnMlLXHdHSyLpmu0/eb8KmbdSq8BXzUdvR+5Hl52EYjox3bZnKvLv5WL3g2elK9dLnlCCYa
+ Zvd7gHdwRRm/FfrD1ted+V0+4zHW+5FP5REjaq1VU3whIG+dVRGttDoN3x2p3IQQXXqjEAmPm
+ Fy+gvnu2JBb7BLvb6ATIhWpnsXQvUaQrSZ7Y/eXrxWbXocVEoSa1fk3jMxmTDEZ8/nnqx9Yem
+ ZzCRiNqsx4C0/61RziGTCjQfELMscHEzi+f+SKA1yB8pjNFxMcy6H2HgTW5fzcDsrXPqEyfAX
+ /h1eGwWs/pGiZDgR5+d8R7jJ+z5gNP8AthY1Cs+lWlwIDW2fp5a5bZDezvZ1ab16UjQSy40JW
+ P9plXquVmu+53IuAAP4zhSsMpHjMBumcBDnkn6wl9VXyw2I03qQdZh7TkPHG/UoDxBF2Ni/yV
+ H+4aqcGY+9FhQVNG8eXTkdWtfJDkDeU64+SQEm+GHxrDQl1XdBiOUEu3rEDEspeDjpcd/WP0D
+ swlA2hFOKCS/LmG7O9VhKFkOb65zbfhYSXQk5ERtNrGlWmOsuG1c6zazPamIvauQrQPKOKdhd
+ nkuZ+CMm/WTWOSEMz3G2HGxT9PXsjsW+NixvlQUN9LyrRSaKS8yzpWx94x6DLmkW7skmjQcus
+ CIupvYdOn0/DKaHuiVpoJs4xJKpP1x9QPqeR/cbJx5GS6j6dY23W6ijs9bsd4AXrE/z/yAhB 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280617>
 
-On Sun, 01 Nov 2015 at 00:40:39, Lukas Fleischer wrote:
-> On Sat, 31 Oct 2015 at 18:31:23, Junio C Hamano wrote:
-> > [...]
-> > You earlier (re)discovered a good approach to introduce a new
-> > feature without breaking settings of existing users when we
-> > discussed a "whitelist".  Since setting the configuration to an
-> > empty string did not do anything in the old code, an empty string
-> > was an invalid and non-working setting.  By taking advantage of that
-> > fact, you safely can say "if you start with an empty that would
-> > match everything, we'll treat all the others differently from the
-> > way we did before" if you wanted to.  I think you can follow the
-> > same principle here.  For example, I can imagine that the rule for
-> > the "ref-is-hidden" can be updated to:
-> > 
-> >  * it now takes refname and also the fullname before stripping the
-> >    namespace;
-> > 
-> >  * hide patterns that is prefixed with '!' means negative, just as
-> >    before;
-> > 
-> >  * (after possibly '!' is stripped), hide patterns that is prefixed
-> >    with '^', which was invalid before, means check the fullname with
-> >    namespace prefix, which is a new rule;
-> > 
-> >  * otherwise, check the refname after stripping the namespace.
-> > 
-> > Such an update would allow a new feature "we now allow you to write
-> > a pattern that determines the match before stripping the namespace
-> > prefix" without breaking the existing repositories, no?
-> > 
+Hi Victor,
+
+On Sat, 31 Oct 2015, Victor Leschuk wrote:
+
+> > >   +if test -n "$TEST_GDB_GIT"
+> > > +then
+> > > +   exec gdb -args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
+> > Maybe we could make $TEST_GDB_GIT not just a boolean flag? It would be useful
+> > to contain "gdb" executable name. It would allow to set path to GDB when it
+> > is not in $PATH, set different debuggers (for example, I usually use cgdb),
+> > or even set it to /path/to/gdb_wrapper.sh which could contain different gdb
+> > options and tunings.
 > 
-> Yes. If I understood you correctly, this is exactly what I suggested in
-> the last paragraph of my previous email (the only difference being that
-> I suggested to use "/" as full name indicator instead of "^" but that is
-> just an implementation detail). I will look into implementing this if
-> that is the way we want to go.
-> [...]
+> > Sure, as long as TEST_GDB_GIT=1 still works. Why don't you make an add-on
+> > patch and submit it?
+> 
+> Sure, I will prepare the patch as soon as this one is included in master.
 
-There are two more things I noticed.
+Excuse my asking: why do you want to wait?
 
-Firstly, while looking for other callers of ref_is_hidden(), I realized
-that send_ref() in upload-pack.c contains these lines of code:
-
-    const char *refname_nons = strip_namespace(refname);                    
-    struct object_id peeled;                                                
-                                                                            
-    if (mark_our_ref(refname, oid))                                         
-            return 0;                                                       
-
-where mark_our_ref() performs the ref_is_hidden() check on its first
-parameter. So, in contrast to receive-pack, we already match the
-original full reference (and not the stripped one) against the hideRefs
-pattern there. In particular, when using transfer.hideRefs, the same
-pattern does different things when receiving and uploading.
-
-Now, this cannot be intended behavior and I do not think this is
-something we want to retain when improving that feature. My suggestion
-is:
-
-1. Define the (current) semantics of hideRefs pattern. It either needs
-   to be defined to match full references or stripped references. Both
-   definitions are equivalent when Git namespaces are not used.
-   
-   It probably makes sense to define hideRefs patterns to match stripped
-   references. If anybody relied on the upload-pack behavior of patterns
-   matching full references, it may happen that more refs are hidden
-   when that behavior is adjusted to match the new hideRefs semantics.
-   The administrator would become aware of that change soon if it
-   affects anything (i.e. hides things that should not be hidden). But I
-   am pretty sure that this behavior isn't currently being relied on
-   either way. Both Git namespaces and hideRefs aren't very popular
-   features and anybody using that combination would probably have
-   noticed the inconsistency and reported a bug earlier.
-
-2. Improve the documentation and describe the hideRefs semantics better.
-   Include details on the choice we made in (1).
-
-3. Fix the send_ref() code in either receive-pack or upload-pack,
-   depending on which is buggy according to our new definition.
-
-4. Improve hideRefs patterns and allow to match both full references and
-   stripped references by using a special indicator as suggested
-   earlier.
-
-5. Add a note on the change in behavior to the release notes of the
-   release that "breaks backwards compatibility". Putting it in quotes
-   because I actually think that we are fixing a bug rather than
-   breaking compatibility. But since there was no documentation on the
-   correct behavior, the former implementation was, technically, the
-   only specification of "correct" behavior that existed at that
-   point...
-
-The second thing I noticed is that having syntax for allowing matches
-against both full references and stripped references is extremely handy
-and desirable, even if we would not have to introduce it for backwards
-compatibility. For example, using the syntax Junio described earlier, my
-initial use case could be solved by
-
-    receive.hideRefs=^refs/
-    receive.hideRefs=!refs/
-
-which means "Hide all references but do not hide references from the
-current namespace." Here, I am assuming that patterns for stripped refs
-never match anything outside the current namespace because those
-patterns become NULL after stripping. This kind of supersedes the other
-discussion on setting configuration via environment as well (at least in
-this context).
-
-Regards,
-Lukas
+Ciao,
+Johannes
