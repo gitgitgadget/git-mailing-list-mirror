@@ -1,112 +1,164 @@
-From: Lukas Fleischer <lfleischer@lfos.de>
-Subject: Re: [PATCH] Allow hideRefs to match refs outside the namespace
-Date: Sun, 01 Nov 2015 00:40:39 +0100
-Message-ID: <20151031234039.3799.78352@typhoon.lan>
-References: <1445846999-8627-1-git-send-email-lfleischer@lfos.de>
- <1446046920-15646-1-git-send-email-lfleischer@lfos.de>
- <xmqq1tcfm09k.fsf@gitster.mtv.corp.google.com>
- <20151031084917.26006.98611@typhoon.lan>
- <xmqqsi4rhrmc.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] checkout: add --progress option
+Date: Sat, 31 Oct 2015 20:45:46 -0400
+Message-ID: <CAPig+cQ+-k_eAm+EMEHqAyQ1P-AjNXQwmyPKqm=fD3vZ1chTLA@mail.gmail.com>
+References: <1446168186-4730-1-git-send-email-eantoranz@gmail.com>
+	<CAPig+cTvRs_O8uY9_SrZZCf95Lraon8knkQUDgm0Lke3pve01A@mail.gmail.com>
+	<xmqqh9l8kxa3.fsf@gitster.mtv.corp.google.com>
+	<20151030193151.GB5336@sigill.intra.peff.net>
+	<xmqq4mh8kv0e.fsf@gitster.mtv.corp.google.com>
+	<CAOc6etYiqH8bvnCD_9hedzDW6fhknXLGesM6dX7S9DBB_r-9zA@mail.gmail.com>
+	<CAOc6etYCzBYpf+7p8p3=zQun7bYXYVc-codoUf5Abcq+hAz8cA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 01 00:40:58 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Git List <git@vger.kernel.org>
+To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 01 01:46:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsflP-0004fB-RX
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 00:40:48 +0100
+	id 1Zsgmu-0007rC-KP
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 01:46:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751264AbbJaXkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Oct 2015 19:40:43 -0400
-Received: from elnino.cryptocrack.de ([46.165.227.75]:27906 "EHLO
-	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075AbbJaXkn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 31 Oct 2015 19:40:43 -0400
-Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id d13d73da;
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	Sun, 1 Nov 2015 00:40:41 +0100 (CET)
-In-Reply-To: <xmqqsi4rhrmc.fsf@gitster.mtv.corp.google.com>
-User-Agent: alot/0.3.6
+	id S1751270AbbKAApt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Oct 2015 20:45:49 -0400
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:35433 "EHLO
+	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750964AbbKAAps (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Oct 2015 20:45:48 -0400
+Received: by vkfw189 with SMTP id w189so67364192vkf.2
+        for <git@vger.kernel.org>; Sat, 31 Oct 2015 17:45:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=qmaUUc3oCIxzQAUI3zqbThk9JUtpXI/btCS4/A5YtgA=;
+        b=ZDCJ4Pl6Qz3kXSCToEH2IBQT7aeaaS33KwbGXYMDk+6IhL88U+UzaPnEthN7t7gp4B
+         6pNo9r4W5nIGzUgasdrj9OGSKDzLJLHlG9g0RPLNQ5lynOfzgjO3fm5pSxkcXEXcJWfV
+         8R6EYcwU/08Mv4KdScbiJ34B9P5/dhvPErLShn+uDW46dra+SDcfYk0vboMIHIYDeqdB
+         JAf7KKaDnJyQOtXdB3LxCggvpSO/D3cVY0SeiuZu3I5CY+QicTilRwU7IothDCc0IVwA
+         qOPVJGs6jHj+Ejfzr9M5gU8GDx2J8N6Zj2pifeNt2c1gE6mZ4Jkf+uNLIJzO7R7iODR3
+         3Vfw==
+X-Received: by 10.31.163.85 with SMTP id m82mr9381911vke.19.1446338746934;
+ Sat, 31 Oct 2015 17:45:46 -0700 (PDT)
+Received: by 10.31.159.204 with HTTP; Sat, 31 Oct 2015 17:45:46 -0700 (PDT)
+In-Reply-To: <CAOc6etYCzBYpf+7p8p3=zQun7bYXYVc-codoUf5Abcq+hAz8cA@mail.gmail.com>
+X-Google-Sender-Auth: FUTeVJAJCzMnCVBJhY5-KWdK2nU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280603>
 
-On Sat, 31 Oct 2015 at 18:31:23, Junio C Hamano wrote:
-> [...]
-> You earlier (re)discovered a good approach to introduce a new
-> feature without breaking settings of existing users when we
-> discussed a "whitelist".  Since setting the configuration to an
-> empty string did not do anything in the old code, an empty string
-> was an invalid and non-working setting.  By taking advantage of that
-> fact, you safely can say "if you start with an empty that would
-> match everything, we'll treat all the others differently from the
-> way we did before" if you wanted to.  I think you can follow the
-> same principle here.  For example, I can imagine that the rule for
-> the "ref-is-hidden" can be updated to:
-> 
->  * it now takes refname and also the fullname before stripping the
->    namespace;
-> 
->  * hide patterns that is prefixed with '!' means negative, just as
->    before;
-> 
->  * (after possibly '!' is stripped), hide patterns that is prefixed
->    with '^', which was invalid before, means check the fullname with
->    namespace prefix, which is a new rule;
-> 
->  * otherwise, check the refname after stripping the namespace.
-> 
-> Such an update would allow a new feature "we now allow you to write
-> a pattern that determines the match before stripping the namespace
-> prefix" without breaking the existing repositories, no?
-> 
+On Fri, Oct 30, 2015 at 10:11 PM, Edmundo Carmona Antoranz
+<eantoranz@gmail.com> wrote:
+> Ok.... this is like the previous patch (on top of my patch) but does
+> post_processing right after parse_options and so there's no need for
+> the function I had introduced before. Hope it can get your blessings
+> so I can send-email the _second_ patch for this feature (following the
+> one that has already being merged into pu, right?).
 
-Yes. If I understood you correctly, this is exactly what I suggested in
-the last paragraph of my previous email (the only difference being that
-I suggested to use "/" as full name indicator instead of "^" but that is
-just an implementation detail). I will look into implementing this if
-that is the way we want to go.
+Patches in 'next' are pretty much set in stone, and those in 'master'
+definitely are, but 'pu' is volatile, so just send the entire patch
+revised, tagged v2 (or v3, etc.), rather than sending a patch to fix
+what is in 'pu', and Junio will replace the previous version with the
+new one.
 
-> [...]
-> Assuming other namespaces are forks of the same project as yours
-> (and otherwise the repository management strategy needs to be
-> rethought--using namespace for them is not gaining anything other
-> than making your repack more costly), it is likely that all of them
-> share a lot of refs that point at the same object (think "tags").
-> Do we end up sending a lot of ".have" for exactly the same object
-> number of times?  Even though we cannot dedup show_ref() lines that
-> talk about concrete refs (because they talk about what refs exist at
-> which value, and the sending side would use them to locally reject
-> non-ff pushes, for example), ".have" lines that talk about the same
-> object can be safely deduped.  This is not directly related to your
-> topic of "what should be included in the advertisement", but a
-> potentially good thing to fix, if it indeed turns out that we are
-> sending a lot of duplicate ".have"s.  A fix in that would make
-> things better for everybody (not just namespace users, but those who
-> show the ".have" lines from the refs in the repository we borrow
-> objects from).
-
-Yes, I think we currently send a lot of duplicate lines. Would be nice
-to have that fixed as well.
-
-Note that we do use Git namespaces to store a lot of different but
-similar pseudo repositories (i.e. they do not share any history but the
-objects have huge similarities). Even though the pseudo repositories
-itself are tiny, having the objects in a shared object storage reduces
-the size significantly. Other people probably use separate repositories,
-combined with something like GIT_OBJECT_DIRECTORY and preciousObjects
-for that. Using Git namespaces, however, allows to run `git gc`/`git
-repack` without needing to take care of maintaining back references to
-the pseudo repositories and, more importantly, allows for storing all
-the refs in a single "packed-refs" file which did reduce the size the
-size by another factor of 10 in our tests. That massive difference in
-size is probably mostly due to the fact that the actual content of each
-repository is just some 100 bytes. Not sure if saving that much space
-can currently be achieved with any other approach.
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index e28c36b..9e78835 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -27,8 +27,6 @@ static const char * const checkout_usage[] = {
+>        NULL,
+> };
+>
+> -static int option_progress = -1;
+> -
+> struct checkout_opts {
+>        int patch_mode;
+>        int quiet;
+> @@ -39,6 +37,7 @@ struct checkout_opts {
+>        int overwrite_ignore;
+>        int ignore_skipworktree;
+>        int ignore_other_worktrees;
+> +       int show_progress;
+>
+>        const char *new_branch;
+>        const char *new_branch_force;
+> @@ -419,19 +418,7 @@ static int reset_tree(struct tree *tree, const
+> struct checkout_opts *o,
+>        opts.reset = 1;
+>        opts.merge = 1;
+>        opts.fn = oneway_merge;
+> -       /**
+> -        * Rules to display progress:
+> -        * -q is selected
+> -        *      no verbiage
+> -        * -q is _not_ selected and --no-progress _is_ selected,
+> -        *      progress will be skipped
+> -        * -q is _not_ selected and --progress _is_ selected,
+> -        *      progress will be printed to stderr
+> -        * -q is _not_ selected and --progress is 'undefined'
+> -        *      progress will be printed to stderr _if_ working on a terminal
+> -        */
+> -       opts.verbose_update = !o->quiet && (option_progress > 0 ||
+> -                                          (option_progress < 0 && isatty(2)));
+> +       opts.verbose_update = o->show_progress;
+>        opts.src_index = &the_index;
+>        opts.dst_index = &the_index;
+>        parse_tree(tree);
+> @@ -515,7 +502,7 @@ static int merge_working_tree(const struct
+> checkout_opts *opts,
+>                topts.update = 1;
+>                topts.merge = 1;
+>                topts.gently = opts->merge && old->commit;
+> -               topts.verbose_update = !opts->quiet && isatty(2);
+> +               topts.verbose_update = opts->show_progress;
+>                topts.fn = twoway_merge;
+>                if (opts->overwrite_ignore) {
+>                        topts.dir = xcalloc(1, sizeof(*topts.dir));
+> @@ -1170,7 +1157,7 @@ int cmd_checkout(int argc, const char **argv,
+> const char *prefix)
+>                                N_("second guess 'git checkout
+> <no-such-branch>'")),
+>                OPT_BOOL(0, "ignore-other-worktrees",
+> &opts.ignore_other_worktrees,
+>                         N_("do not check if another worktree is
+> holding the given ref")),
+> -               OPT_BOOL(0, "progress", &option_progress, N_("force
+> progress reporting")),
+> +               OPT_BOOL(0, "progress", &opts.show_progress, N_("force
+> progress reporting")),
+>                OPT_END(),
+>        };
+>
+> @@ -1178,6 +1165,7 @@ int cmd_checkout(int argc, const char **argv,
+> const char *prefix)
+>        memset(&new, 0, sizeof(new));
+>        opts.overwrite_ignore = 1;
+>        opts.prefix = prefix;
+> +       opts.show_progress = -1;
+>
+>        gitmodules_config();
+>        git_config(git_checkout_config, &opts);
+> @@ -1187,6 +1175,16 @@ int cmd_checkout(int argc, const char **argv,
+> const char *prefix)
+>        argc = parse_options(argc, argv, prefix, options, checkout_usage,
+>                             PARSE_OPT_KEEP_DASHDASH);
+>
+> +       /*
+> +        * Final processing of show_progress
+> +        * Any of these 3 conditions will make progress output be skipped:
+> +        * - selected --quiet
+> +        * - selected --no-progress
+> +        * - didn't select --progress and not working on a terminal
+> +        */
+> +       opts.show_progress = !opts.quiet && opts.show_progress &&
+> +                            (opts.show_progress >= 0 || isatty(2));
+> +
+>        if (conflict_style) {
+>                opts.merge = 1; /* implied */
+>                git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
