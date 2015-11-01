@@ -1,7 +1,7 @@
 From: Lukas Fleischer <lfleischer@lfos.de>
-Subject: [PATCH 2/4] upload-pack: strip refs before calling ref_is_hidden()
-Date: Sun,  1 Nov 2015 20:34:21 +0100
-Message-ID: <1446406463-22527-3-git-send-email-lfleischer@lfos.de>
+Subject: [PATCH 1/4] Document the semantics of hideRefs with namespaces
+Date: Sun,  1 Nov 2015 20:34:20 +0100
+Message-ID: <1446406463-22527-2-git-send-email-lfleischer@lfos.de>
 References: <1446406463-22527-1-git-send-email-lfleischer@lfos.de>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sun Nov 01 20:34:43 2015
@@ -10,16 +10,16 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsyOl-0000LI-Ni
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 20:34:40 +0100
+	id 1ZsyOl-0000LI-3E
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 20:34:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbbKATeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 14:34:36 -0500
+	id S1752814AbbKATee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 14:34:34 -0500
 Received: from elnino.cryptocrack.de ([46.165.227.75]:8371 "EHLO
 	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752792AbbKATee (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2015 14:34:34 -0500
-Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id aba88d9c;
+	with ESMTP id S1751123AbbKATec (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2015 14:34:32 -0500
+Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id d901d5b3;
 	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
 	for <git@vger.kernel.org>;
 	Sun, 1 Nov 2015 20:34:30 +0100 (CET)
@@ -29,47 +29,35 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280658>
 
-Make hideRefs handling in upload-pack consistent with the behavior
-described in the documentation by stripping refs before comparing them
-with prefixes in hideRefs.
+Right now, there is no clear definition of how transfer.hideRefs should
+behave when a namespace is set. Explain that hideRefs prefixes match
+stripped names in that case. This is how hideRefs patterns are currently
+handled in receive-pack.
 
 Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
 ---
- upload-pack.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/config.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index d0bc3ca..4ca960e 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -692,7 +692,7 @@ static int mark_our_ref(const char *refname, const struct object_id *oid)
- {
- 	struct object *o = lookup_unknown_object(oid->hash);
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1204072..3da97a1 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2684,6 +2684,13 @@ You may also include a `!` in front of the ref name to negate the entry,
+ explicitly exposing it, even if an earlier entry marked it as hidden.
+ If you have multiple hideRefs values, later entries override earlier ones
+ (and entries in more-specific config files override less-specific ones).
+++
++If a namespace is set, references are stripped before matching. For example, if
++the prefix `refs/heads/master` is specified in `transfer.hideRefs` and the
++current namespace is `foo`, then `refs/namespaces/foo/refs/heads/master` is
++omitted from the advertisements but `refs/heads/master` and
++`refs/namespaces/bar/refs/heads/master` are still advertised as so-called
++"have" lines.
  
--	if (ref_is_hidden(refname)) {
-+	if (refname && ref_is_hidden(refname)) {
- 		o->flags |= HIDDEN_REF;
- 		return 1;
- 	}
-@@ -703,7 +703,7 @@ static int mark_our_ref(const char *refname, const struct object_id *oid)
- static int check_ref(const char *refname, const struct object_id *oid,
- 		     int flag, void *cb_data)
- {
--	mark_our_ref(refname, oid);
-+	mark_our_ref(strip_namespace(refname), oid);
- 	return 0;
- }
- 
-@@ -726,7 +726,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 	const char *refname_nons = strip_namespace(refname);
- 	struct object_id peeled;
- 
--	if (mark_our_ref(refname, oid))
-+	if (mark_our_ref(refname_nons, oid))
- 		return 0;
- 
- 	if (capabilities) {
+ transfer.unpackLimit::
+ 	When `fetch.unpackLimit` or `receive.unpackLimit` are
 -- 
 2.6.2
