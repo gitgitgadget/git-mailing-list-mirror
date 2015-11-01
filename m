@@ -1,77 +1,90 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v2] ls-files: Add eol diagnostics
-Date: Sun, 1 Nov 2015 09:43:29 +0100
-Message-ID: <5635D0B1.9040800@gmail.com>
-References: <52B3B0AC-037A-4872-9E0E-CDF6BE7A9695@web.de>
- <vpqbnbfpc6p.fsf@anie.imag.fr>
+From: Eric Sunshine <ericsunshine@gmail.com>
+Subject: Re: [PATCHv2 8/8] clone: allow an explicit argument for parallel
+ submodule clones
+Date: Sun, 1 Nov 2015 03:58:38 -0500
+Message-ID: <CAPig+cRLQeiHcP=fseT0r-Ata6FE-EjAzFpKdtex-_NH4WMBdQ@mail.gmail.com>
+References: <xmqqfv0wp1l1.fsf@gitster.mtv.corp.google.com>
+	<1446074504-6014-1-git-send-email-sbeller@google.com>
+	<1446074504-6014-9-git-send-email-sbeller@google.com>
+Reply-To: Eric Sunshine <sunshine@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Nov 01 09:43:41 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Sun Nov 01 09:59:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsoEl-00032Z-1B
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 09:43:39 +0100
+	id 1ZsoTp-000758-9R
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 09:59:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189AbbKAIne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 03:43:34 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:36363 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751047AbbKAInd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2015 03:43:33 -0500
-Received: by wmec75 with SMTP id c75so38969859wme.1
-        for <git@vger.kernel.org>; Sun, 01 Nov 2015 01:43:32 -0700 (PDT)
+	id S1751396AbbKAI6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 03:58:39 -0500
+Received: from mail-vk0-f50.google.com ([209.85.213.50]:35077 "EHLO
+	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056AbbKAI6j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2015 03:58:39 -0500
+Received: by vkfw189 with SMTP id w189so69912073vkf.2
+        for <git@vger.kernel.org>; Sun, 01 Nov 2015 01:58:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=JTGIY4grfWtF3gwuEvxYSZExBxILZh2zpIvtloFY9Ck=;
-        b=0G9owUy2XOzw7aN20PBUB4L48iAadpmg0+xZsPGe0ei7NpayT5cjVSuXdFtXeWd1ru
-         xOMZYwvmJCB3oQBoTkLofDAfmePLNewtEtCCNDAOfCPvg2sb8/9ascBwnEKm0NcwTSt1
-         bLrx5aHG7C+liD0LpVAP7pUB/hnF2wb/AZZb4WMI4GzeYUVhtWKGue3PM6+cvx68Ni27
-         HXe9J6FQM+6Q1coRuykLO0mEPNmH2/4pu8bP2PIpWkITVVQ3AxeBERojVSjxabuBv/r2
-         XMkhXb2lwr/mngJINklitTEpTrm31cA0IxpPRx7GLo8T43LNCxrBre9EFVS3lAHl8CEq
-         +VQg==
-X-Received: by 10.28.146.146 with SMTP id u140mr6715757wmd.85.1446367412892;
-        Sun, 01 Nov 2015 01:43:32 -0700 (PDT)
-Received: from [192.168.188.20] (p548D6BA4.dip0.t-ipconnect.de. [84.141.107.164])
-        by smtp.googlemail.com with ESMTPSA id b12sm11789722wma.6.2015.11.01.01.43.31
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 Nov 2015 01:43:32 -0700 (PDT)
-Newsgroups: gmane.comp.version-control.git
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12)
- Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-In-Reply-To: <vpqbnbfpc6p.fsf@anie.imag.fr>
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=csinStzNURtRYTKzb7/Zcr+ZwHCMwaUCEDR7aU7BFWQ=;
+        b=oC+0oJXvRnWeSwGiX3ydYy9XCa0P4fH1tUnE2gD3v884JCZgFMkNqzz2++pVJLj3Hy
+         A+Ancc41zOvBwSgY2R3kaa3PkzYLNHNuhxZHGx1NyILKhjL0SV77cHSJsZGcD8VNev59
+         n9tIcRqJqHOj5hPp9QEEQ4qCrp0LO/iWIO1f24qU5nPRJKxT9WjszTAU9p+Rh4jz7vE3
+         QWDbDuH0QmU44JzpuONpSkJXwlnavpbPUTbdNZmRKladjDFiLrOgupb3b/gnmy5EaJgV
+         FN7p29xp4ZpNaT97qy2hJhoCl9yVlEaeXCljqO7DwX44qNomRrdNCifZNo2TTq2C1DkX
+         jLkw==
+X-Received: by 10.31.163.85 with SMTP id m82mr10082964vke.19.1446368318198;
+ Sun, 01 Nov 2015 01:58:38 -0700 (PDT)
+Received: by 10.31.159.204 with HTTP; Sun, 1 Nov 2015 01:58:38 -0700 (PDT)
+In-Reply-To: <1446074504-6014-9-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280615>
 
-On 31.10.2015 11:25, Matthieu Moy wrote:
+On Wed, Oct 28, 2015 at 7:21 PM, Stefan Beller <sbeller@google.com> wrote:
+> Just pass it along to "git submodule update", which may pick reasonable
+> defaults if you don't specify an explicit number.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> @@ -724,8 +723,20 @@ static int checkout(void)
+>         err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
+>                            sha1_to_hex(sha1), "1", NULL);
+>
+> -       if (!err && option_recursive)
+> -               err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
+> +       if (!err && option_recursive) {
+> +               struct argv_array args = ARGV_ARRAY_INIT;
+> +               argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
+> +
+> +               if (max_jobs != -1) {
+> +                       struct strbuf sb = STRBUF_INIT;
+> +                       strbuf_addf(&sb, "--jobs=%d", max_jobs);
+> +                       argv_array_push(&args, sb.buf);
+> +                       strbuf_release(&sb);
 
->> ca:text-no-eol   wt:text-no-eol   t/t5100/empty
->> ca:binary        wt:binary        t/test-binary-2.png
->> ca:text-lf       wt:text-lf       t/t5100/rfc2047-info-0007
->> ca:text-lf       wt:text-crlf     doit.bat
->> ca:text-crlf-lf  wt:text-crlf-lf  locale/XX.po
-> 
-> I would spell the first "in" or "idx" (for "index"), not "ca" (for
-> "cache"). I think we avoid talking about "the cache" these days even
-> though the doc sometimes says "cached in the index" (i.e. use "cache" as
-> a verb, not a noun).
+The above four lines can be collapsed to:
 
-Good point, I'd prefer "idx" over ca", too.
+    argv_array_pushf(&args, "--jobs=%d", max_jobs);
 
-However, the commit message says "to check if text files are stored normalized in the *repository*", yet the output refers to the index / cache. Is there a (potential) difference between line endings in the index and repo? AFAIK there is not. Any I find it a bit confusing to refer to the index where, as e.g. for a freshly cloned repo the index should be empty, yet you do have specific line endings in the repo.
-
-Long story short, how about consistently talking about line endings in the repo, and also using "repo" instead of "ca" here?
-
--- 
-Sebastian Schuberth
+> +               }
+> +
+> +               err = run_command_v_opt(args.argv, RUN_GIT_CMD);
+> +               argv_array_clear(&args);
+> +       }
+>
+>         return err;
+>  }
