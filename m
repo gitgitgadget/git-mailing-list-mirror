@@ -1,81 +1,72 @@
-From: Lukas Fleischer <lfleischer@lfos.de>
-Subject: [PATCH 4/4] t5509: add basic tests for hideRefs
-Date: Sun,  1 Nov 2015 20:34:23 +0100
-Message-ID: <1446406463-22527-5-git-send-email-lfleischer@lfos.de>
-References: <1446406463-22527-1-git-send-email-lfleischer@lfos.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 01 20:34:48 2015
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: Re: [PATCH v4] checkout: add --progress option
+Date: Sun, 1 Nov 2015 13:35:16 -0600
+Message-ID: <CAOc6etb24owGX1KD9b-eYt5TtTKzEzinvnJ-81ev5QK_tKgLPQ@mail.gmail.com>
+References: <1446400076-9983-1-git-send-email-eantoranz@gmail.com>
+	<CAPig+cSLC_xkpXEznzPQdA=FE6GV5VSuwSrFy62Nzybv7jQf1g@mail.gmail.com>
+	<20151101191902.GA19594@sigill.intra.peff.net>
+	<CAPig+cQvsXMqAzV_59sZdqDEh_SRfOMh+BY3XLmzSPdfWwugdg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Nov 01 20:35:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsyOt-0000So-2H
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 20:34:47 +0100
+	id 1ZsyPR-0000v8-OF
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 20:35:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbbKATen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 14:34:43 -0500
-Received: from elnino.cryptocrack.de ([46.165.227.75]:8371 "EHLO
-	elnino.cryptocrack.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752861AbbKATek (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2015 14:34:40 -0500
-Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 03f69787;
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	for <git@vger.kernel.org>;
-	Sun, 1 Nov 2015 20:34:32 +0100 (CET)
-X-Mailer: git-send-email 2.6.2
-In-Reply-To: <1446406463-22527-1-git-send-email-lfleischer@lfos.de>
+	id S1752976AbbKATfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 14:35:17 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:34382 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752930AbbKATfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2015 14:35:17 -0500
+Received: by padec8 with SMTP id ec8so15670139pad.1
+        for <git@vger.kernel.org>; Sun, 01 Nov 2015 11:35:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Sh5FCmIQft55/pE4JuPWQzIktoSFYZH8aqTqenkDH2g=;
+        b=ow3SjnV1flUZXrIYEM5kMpEIttOyKKaLQwflQaDfOd2a1qiapHH59v4i4rieIDqfcM
+         pH/vR1Xk2wfjFxSjy1bp5k2eJ2pc2oRNs5hhpJf/AvdoyleTC7pyLHsoZzCgCpcGrx4u
+         fUykDa4Qbe+1qp/KBxacaNxdE57G8jXI4nNqsfB4lR8isyxuuPlXlsyxT6c4z2d7jFLp
+         gpgtTGm+sV3NSDHiJnE2Siogk4khhx8PRYH0XhHaF4Sgywecfy4nL1wYZSQhNqztZyQ4
+         TluJI9FHbUGmQPN3wrtKZ8P76A9Qg6lPz3X/T0O97hAy9JGNv7+GuTCS8ZFdzIPGVkO9
+         ttJg==
+X-Received: by 10.67.14.42 with SMTP id fd10mr22673429pad.11.1446406516529;
+ Sun, 01 Nov 2015 11:35:16 -0800 (PST)
+Received: by 10.66.97.70 with HTTP; Sun, 1 Nov 2015 11:35:16 -0800 (PST)
+In-Reply-To: <CAPig+cQvsXMqAzV_59sZdqDEh_SRfOMh+BY3XLmzSPdfWwugdg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280662>
 
-Test whether regular and full hideRefs patterns work as expected when
-namespaces are used.
+On Sun, Nov 1, 2015 at 1:29 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> > +--progress::
+>>> > +       Progress status is reported on the standard error stream
+>>> > +       by default when it is attached to a terminal, unless -q
+>>> > +       is specified. This flag forces progress status even if the
+>>> > +       standard error stream is not directed to a terminal.
 
-Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
----
- t/t5509-fetch-push-namespaces.sh | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+Before I send a new full patch, could you guys tell me if you find this ok?
 
-diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
-index cc0b31f..a3f1060 100755
---- a/t/t5509-fetch-push-namespaces.sh
-+++ b/t/t5509-fetch-push-namespaces.sh
-@@ -82,4 +82,33 @@ test_expect_success 'mirroring a repository using a ref namespace' '
- 	)
- '
- 
-+test_expect_success "Hide namespaced refs with transfer.hideRefs" '
-+	cd pushee &&
-+	test_config transfer.hideRefs refs/tags &&
-+	GIT_NAMESPACE=namespace git ls-remote "ext::git %s ." >actual &&
-+	printf "$commit1\trefs/heads/master\n" >expected &&
-+	test_cmp expected actual &&
-+	cd ..
-+'
-+
-+test_expect_success "Check that transfer.hideRefs does not match unstripped refs" '
-+	cd pushee &&
-+	test_config transfer.hideRefs "refs/namespaces/namespace/refs/tags" &&
-+	GIT_NAMESPACE=namespace git ls-remote "ext::git %s ." >actual &&
-+	printf "$commit1\trefs/heads/master\n" >expected &&
-+	printf "$commit0\trefs/tags/0\n" >>expected &&
-+	printf "$commit1\trefs/tags/1\n" >>expected &&
-+	test_cmp expected actual &&
-+	cd ..
-+'
-+
-+test_expect_success "Hide full refs with transfer.hideRefs" '
-+	cd pushee &&
-+	test_config transfer.hideRefs "^refs/namespaces/namespace/refs/tags" &&
-+	GIT_NAMESPACE=namespace git ls-remote "ext::git %s ." >actual &&
-+	printf "$commit1\trefs/heads/master\n" >expected &&
-+	test_cmp expected actual &&
-+	cd ..
-+'
-+
- test_done
--- 
-2.6.2
+-q::
+--quiet::
+Quiet, suppress feedback messages. Progress can skip this option.
+Read the information about --progress
+
+--[no-]progress::
+Progress status is reported on the standard error stream
+by default when it is attached to a terminal, unless --quiet
+or -q is specified. This flag forces progress status even if the
+standard error stream is not directed to a terminal and overrides
+the --quiet or -q options.
+
+Thank you all, guys!
