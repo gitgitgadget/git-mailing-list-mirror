@@ -1,135 +1,80 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4] checkout: add --progress option
-Date: Sun, 1 Nov 2015 12:52:57 -0500
-Message-ID: <CAPig+cSLC_xkpXEznzPQdA=FE6GV5VSuwSrFy62Nzybv7jQf1g@mail.gmail.com>
-References: <1446400076-9983-1-git-send-email-eantoranz@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/5] wt-status: don't skip a magical number of characters blindly
+Date: Sun, 01 Nov 2015 09:55:50 -0800
+Message-ID: <xmqq37wpioyh.fsf@gitster.mtv.corp.google.com>
+References: <5634FB59.1000506@web.de> <5634FC48.7070609@web.de>
+	<xmqq7fm1ip51.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 01 18:53:06 2015
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Sun Nov 01 18:55:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZswoS-0000RB-45
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 18:53:04 +0100
+	id 1ZswrG-0002s1-5x
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 18:55:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752598AbbKARw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 12:52:59 -0500
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:35733 "EHLO
-	mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752448AbbKARw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2015 12:52:58 -0500
-Received: by vkfw189 with SMTP id w189so73407192vkf.2
-        for <git@vger.kernel.org>; Sun, 01 Nov 2015 09:52:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=kgY4cfQHWR9VyfaY1npL7Nw6hNHo5n+UWxAvyLv3kNI=;
-        b=tkcELYe0Jpe48hhZtbGAIknU9SnDGuaSEeT/YCY/AtcFDaVl5iKbfa5VjRsLlEgA2w
-         DSIlB2xUiKF4SP7QnGtl7+W8V7bfzQ7kgfPTySOsOnBU35zrRuYvC9mENq61aBqfp5Aw
-         R2q0pv7Cxw3ZuGRjtPu4HbtosXzaH4lQTzaD8QpVHwWZRDu4l2W7nO/61f2T3uadC3NB
-         W6v2M+Gm8UhpG5Pp3p5qOcHRWJHwTd9VFJx3rY3nYp93k9lTgUIFE2IYb2N++bVzMYyx
-         FL2N7LEFFf9ujuKJoVFNyvw1xdqC3T6pc+La/ClJg7zWvhuhv02daOPAJ3IAeJjOGS8E
-         0SCQ==
-X-Received: by 10.31.56.75 with SMTP id f72mr12639499vka.115.1446400377660;
- Sun, 01 Nov 2015 09:52:57 -0800 (PST)
-Received: by 10.31.159.204 with HTTP; Sun, 1 Nov 2015 09:52:57 -0800 (PST)
-In-Reply-To: <1446400076-9983-1-git-send-email-eantoranz@gmail.com>
-X-Google-Sender-Auth: J02WrefTNquWkwPGfxNb6sGrZHQ
+	id S1752505AbbKARzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 12:55:54 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50723 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751999AbbKARzx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2015 12:55:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 85DA2269AB;
+	Sun,  1 Nov 2015 12:55:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GXz5V0WcfcNK6+O5XTBRiq+grMA=; b=j7mefo
+	r1a8gx38z3CLS92MLLkVFF0nzwrUwhncsGu6Fm+cza7d21u+GLgFzlDKx5dJzJWD
+	V3kFIhdwMNOeWdAhncUn3dwae0Ji7iNQCGe8PdYRMkRSzVdWqzNAetVoXO8edClx
+	9dl8dfgybLmpQkNaXAHl+uZfas9eFX4+mkKaE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HlCfnUHEmScwNTEEhMVsD3BwoA0SlLH2
+	0we6FcDYxRMRzOPDOMnLJbcqEtkmdfEwmhT4exvp6MQjbeMeFvZr2+kX0H0Fpjhr
+	gGMZkRj3vMEbYJF0Elk00KXRylXjNr5yH2IjlOQDMhxn2chFl3Uod9DU12WN8xqL
+	/SbeTPXUXso=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7EBFB269A9;
+	Sun,  1 Nov 2015 12:55:52 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 084D6269A7;
+	Sun,  1 Nov 2015 12:55:51 -0500 (EST)
+In-Reply-To: <xmqq7fm1ip51.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Sun, 01 Nov 2015 09:51:54 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: CA94B486-80C1-11E5-9095-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280642>
 
-On Sun, Nov 1, 2015 at 12:47 PM, Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
-> Under normal circumstances, and like other git commands,
-> git checkout will write progress info to stderr if
-> attached to a terminal. This option allows progress
-> to be forced even if not using a terminal. Also,
-> progress can be skipped if using option --no-progress.
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> diff --git a/wt-status.c b/wt-status.c
+>> index e206cc9..42ea15e 100644
+>> --- a/wt-status.c
+>> +++ b/wt-status.c
+>> @@ -1656,7 +1656,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+>>  	if (starts_with(branch_name, "refs/heads/"))
+>>  		branch_name += 11;
+>>  
+>> -	branch = branch_get(s->branch + 11);
+>> +	branch = branch_get(branch_name);
 >
-> Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-> ---
-> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> index e269fb1..93ba35a 100644
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -107,6 +107,12 @@ OPTIONS
->  --quiet::
->         Quiet, suppress feedback messages.
->
-> +--progress::
-> +       Progress status is reported on the standard error stream
-> +       by default when it is attached to a terminal, unless -q
-> +       is specified. This flag forces progress status even if the
-> +       standard error stream is not directed to a terminal.
+> Is this correct?  s->branch is the refname that is l10n independent;
+> branch_name is the localized variant for human consumption.
 
-What this kind of implies, but neglects to say explicitly, is that the
-logic implemented by this patch also overrides --quiet. It probably
-should say so explicitly.
+Ahh, and that convention has been changed at patch 3/5.  Now the
+only localizable string "HEAD (no branch)" never goes into that
+variable thanks to the code reorganization in 3/5, this variable
+is used only to give us a shortened refname.
 
-I realize that this text was copied from elsewhere (likely from
-git-clone.txt), but git-checkout.txt does try to do a bit better job
-with formatting, so it might be a good idea to quote -q with backticks
-(`-q` or `--quiet`).
-
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index bc703c0..c3b8e5d 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1163,6 +1165,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
->         memset(&new, 0, sizeof(new));
->         opts.overwrite_ignore = 1;
->         opts.prefix = prefix;
-> +       opts.show_progress = -1;
->
->         gitmodules_config();
->         git_config(git_checkout_config, &opts);
-> @@ -1172,6 +1175,25 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
->         argc = parse_options(argc, argv, prefix, options, checkout_usage,
->                              PARSE_OPT_KEEP_DASHDASH);
->
-> +       /*
-> +        * Final processing of show_progress
-> +        * - User selected --progress: show progress
-> +        * - user selected --no-progress: skip progress
-> +        * - User didn't specify:
-> +        *     (check rules in order till finding the first matching one)
-> +        *     - user selected --quiet: skip progress
-> +        *     - stderr is connected to a terminal: show progress
-> +        *     - fallback: skip progress
-> +        */
-
-It takes longer to read and digest this comment block than it does to
-comprehend the actual logic in code, which is pretty clear in its
-current form. Comment blocks which merely repeat easily digested code
-add little, if any, value, so it might be worthwhile to drop the
-comment altogether.
-
-> +       if (opts.show_progress < 0) {
-> +               /* user didn't specify --[no-]progress */
-
-Here, also, consider dropping the comment which merely repeats what
-the code already states clearly.
-
-> +               if (opts.quiet) {
-> +                       opts.show_progress = 0;
-> +               } else {
-> +                       opts.show_progress = isatty(2);
-> +               }
-
-Style: drop unnecessary braces
-
-> +       }
-> +
->         if (conflict_style) {
->                 opts.merge = 1; /* implied */
->                 git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
-> --
-> 2.6.1
+OK, I misread the code.  The result is correct.
