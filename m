@@ -1,90 +1,91 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v5 18/26] refs: move transaction functions into common
- code
-Date: Sun, 01 Nov 2015 09:17:14 +0100
-Message-ID: <5635CA8A.2080505@alum.mit.edu>
-References: <1445998467-11511-1-git-send-email-dturner@twopensource.com> <1445998467-11511-19-git-send-email-dturner@twopensource.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] Limit the size of the data block passed to SHA1_Update()
+Date: Sun, 1 Nov 2015 03:30:08 -0500
+Message-ID: <CAPig+cSLoC-O1YneUVRjBpZzHLmASmRQx_+8b2dsk34ReU-ovw@mail.gmail.com>
+References: <CAPig+cRRjCDhdT-DvGtZqns1mMxygnxi=ZnRKzg+H_do7oRpqQ@mail.gmail.com>
+	<1446359536-25829-1-git-send-email-apahlevan@ieee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 01 09:24:52 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	rsbecker@nexbridge.com, Atousa Pahlevan Duprat <apahlevan@ieee.org>
+To: Atousa Pahlevan Duprat <atousa.p@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 01 09:31:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZsnwX-0005dM-OK
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 09:24:50 +0100
+	id 1Zso2h-0001yt-Ri
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Nov 2015 09:31:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751126AbbKAIYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 03:24:19 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:53814 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750976AbbKAIYS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Nov 2015 03:24:18 -0500
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sun, 01 Nov 2015 03:24:18 EST
-X-AuditID: 12074414-f794f6d000007852-69-5635ca8cbf24
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 40.28.30802.C8AC5365; Sun,  1 Nov 2015 03:17:16 -0500 (EST)
-Received: from [192.168.69.130] (p5DDB24F4.dip0.t-ipconnect.de [93.219.36.244])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tA18HEH3014283
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 1 Nov 2015 03:17:15 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1445998467-11511-19-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqNtzyjTM4O4JPYv5m04wWnRd6Way
-	aOi9wuzA7HHxkrLHguf32T0+b5ILYI7itklKLCkLzkzP07dL4M44/H0/Y8F/jorm/n8sDYwt
-	7F2MnBwSAiYSZ9fuYYOwxSQu3FsPZHNxCAlcZpQ4uuIAO4Rzjkli5fRpYFW8AtoSHc0nWUBs
-	FgFVievHf7CC2GwCuhKLepqZQGxRgSCJFctfMELUC0qcnPkErF5EwEHi8q6jzCA2s4CaxKEl
-	j4BqODiEBQIllq2zgNjVxihx6fwfsDmcAl4SX9evZYSo15PYcf0XK4QtL9G8dTbzBEaBWUhW
-	zEJSNgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFuhZ6uZkleqkppZsYIcErsoPxyEm5
-	Q4wCHIxKPLwvvpqECbEmlhVX5h5ilORgUhLlZf4JFOJLyk+pzEgszogvKs1JLT7EKMHBrCTC
-	e2W9aZgQb0piZVVqUT5MSpqDRUmc99tidT8hgfTEktTs1NSC1CKYrAwHh5IEb8ZJoEbBotT0
-	1Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UKzGFwOjFSTFA7T33QmQvcUFiblAUYjWU4yK
-	UuK8gSBzBUASGaV5cGNhKekVozjQl8K8FseBqniA6Qyu+xXQYCagweHbwAaXJCKkpBoYCwy8
-	677V/J0h3jiFh9cugP9v+EI3+5kPbqyWyfZkL9DeqXDWbJPnBh3FsI9+H5dtM76tVjNZ/lei
-	6Ie9DzVb5/bZ/wh63/Lebm9T7J641Wei3z3r3pjkFykgyKjgyzZV3T9G4btI5hKT 
+	id S1752157AbbKAIaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 03:30:55 -0500
+Received: from mail-vk0-f54.google.com ([209.85.213.54]:36514 "EHLO
+	mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751226AbbKAIaJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Nov 2015 03:30:09 -0500
+Received: by vkex70 with SMTP id x70so69481566vke.3
+        for <git@vger.kernel.org>; Sun, 01 Nov 2015 01:30:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=mCSoBRVJxo6wDRwwLxipi/CzZpadko4mRen2cMZsOkE=;
+        b=Eqs5H265VrmpMW1QYv1rMql9msgTJXwSUnLSyL37Ogx82O+KN2320bI7VpgSATx3gN
+         ipePPkWhmkwpQJnNlokRJHLkHQxMdk0E55mLb96tNFyVEcPkgJPJods1BcV6bpE+NAlj
+         6KvatrS9M/q6E1N1WUim+kpGJqQIIE/oylgTvOy4xUz5ISirkEXd+dpUWmIhR7EgXWxn
+         dUFEcBypyqxiB/8U3jwGbyd1ufqtQGsZxniRUAsCvgFkm5DfIEqmf6jOf9T89VVnqkaZ
+         jw/9449cJxLnrmCrcsZuDnz7UEfnSq+ZaaohrmA5VOPtJjYMdoIxLJrSHCkQw/Q/RMKT
+         RDNA==
+X-Received: by 10.31.163.85 with SMTP id m82mr10047847vke.19.1446366608957;
+ Sun, 01 Nov 2015 01:30:08 -0700 (PDT)
+Received: by 10.31.159.204 with HTTP; Sun, 1 Nov 2015 01:30:08 -0700 (PDT)
+In-Reply-To: <1446359536-25829-1-git-send-email-apahlevan@ieee.org>
+X-Google-Sender-Auth: rHueBWqQCcdFWekJyJOfwzzANDU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280613>
 
-On 10/28/2015 03:14 AM, David Turner wrote:
-> The common ref code will build up a ref transaction.  Backends will
-> then commit it.  So the transaction creation and update functions should
-> be in the common code.  We also need to move the ref structs into
-> the common code so that alternate backends can access them.
-> 
-> Later, we will modify struct ref_update to support alternate backends.
+On Sun, Nov 1, 2015 at 1:32 AM,  <atousa.p@gmail.com> wrote:
+> Some implementations of SHA_Updates have inherent limits
+> on the max chunk size. SHA1_MAX_BLOCK_SIZE can be defined
+> to set the max chunk size supported, if required.  This is
+> enabled for OSX CommonCrypto library and set to 1GiB.
+>
+> Signed-off-by: Atousa Pahlevan Duprat <apahlevan@ieee.org>
+> ---
+> diff --git a/compat/sha1_chunked.c b/compat/sha1_chunked.c
+> new file mode 100644
+> index 0000000..bf62b1b
+> --- /dev/null
+> +++ b/compat/sha1_chunked.c
+> @@ -0,0 +1,21 @@
+> +#include "cache.h"
+> +
+> +#ifdef SHA1_MAX_BLOCK_SIZE
 
-I would prefer that this and later patches *not* add declarations to the
-public API in refs.h for functions and data that are only meant to be
-used by other reference backends.
+This file is only compiled when SHA1_MAX_BLOCK_SIZE is defined, so
+does this #ifdef serve a purpose?
 
-So I'm working on a modified version of your series that declares such
-functions in refs-internal.h [1] instead. I hope to submit it tomorrow.
+> +int git_SHA1_Update(SHA_CTX *c, const void *data, size_t len)
+> +{
+> +       size_t nr;
+> +       size_t total = 0;
+> +       char *cdata = (char*)data;
 
-Actually, I have half a mind to move all of the refs-related files to a
-subdirectory, like
+Nit: This could be 'const char *'.
 
-    refs.h
-    refs/refs.c
-    refs/refs-internal.h
-    refs/refs-be-files.c
-    refs/refs-be-lmdb.c       <- still to come
-
-What would you think of that?
-
-Michael
-
-[1] We've discussed this idea earlier, using the tentative names
-refs-shared.h or refs-common.h.
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+> +       while (len > 0) {
+> +               nr = len;
+> +               if (nr > SHA1_MAX_BLOCK_SIZE)
+> +                       nr = SHA1_MAX_BLOCK_SIZE;
+> +               SHA1_Update(c, cdata, nr);
+> +               total += nr;
+> +               cdata += nr;
+> +               len -= nr;
+> +       }
+> +       return total;
+> +}
+> +#endif
