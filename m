@@ -1,75 +1,65 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: git filter-branch and merging of signed tags
-Date: Mon, 2 Nov 2015 18:13:26 +0100
-Message-ID: <20151102171326.GY4931@pengutronix.de>
-References: <20151102080428.GO4931@pengutronix.de>
- <56378D6F.8080508@drmicha.warpmail.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: git log --author=me
+Date: Mon, 02 Nov 2015 18:50:38 +0100
+Message-ID: <8737wos32p.fsf@igel.home>
+References: <563764B8.4010101@exec64.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Nov 02 18:13:36 2015
+To: Harry Jeffery <harry@exec64.co.uk>
+X-From: git-owner@vger.kernel.org Mon Nov 02 18:50:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtIfl-0008D5-Dm
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 18:13:33 +0100
+	id 1ZtJFp-0003aU-CE
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 18:50:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932138AbbKBRN3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2015 12:13:29 -0500
-Received: from metis.ext.4.pengutronix.de ([92.198.50.35]:48223 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932109AbbKBRN2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 12:13:28 -0500
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0] ident=Debian-exim)
-	by metis.ext.pengutronix.de with esmtps (TLS1.2:RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1ZtIff-0003TC-2u; Mon, 02 Nov 2015 18:13:27 +0100
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.84)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1ZtIfe-0001JV-Q4; Mon, 02 Nov 2015 18:13:26 +0100
-Content-Disposition: inline
-In-Reply-To: <56378D6F.8080508@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1754276AbbKBRup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 12:50:45 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:42479 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752615AbbKBRuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 12:50:44 -0500
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3nqMGp41Rtz3hjHn;
+	Mon,  2 Nov 2015 18:50:42 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3nqMGp34BmzvdWc;
+	Mon,  2 Nov 2015 18:50:42 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id FYOJYQl1rpWZ; Mon,  2 Nov 2015 18:50:39 +0100 (CET)
+X-Auth-Info: 0Ron9SN1QndSksot4j8niL/Aliq5ncuIj0qRV+Sclo5Lh/W5M3cWIModw6xAzSV5
+Received: from igel.home (ppp-93-104-185-31.dynamic.mnet-online.de [93.104.185.31])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Mon,  2 Nov 2015 18:50:39 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+	id DBD112C158B; Mon,  2 Nov 2015 18:50:38 +0100 (CET)
+X-Yow: Barbie says, Take quaaludes in gin and go to a disco right away!
+ But Ken says, WOO-WOO!!  No credit at ``Mr. Liquor''!!
+In-Reply-To: <563764B8.4010101@exec64.co.uk> (Harry Jeffery's message of "Mon,
+	2 Nov 2015 13:27:20 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280704>
 
-Hello Michael,
+Harry Jeffery <harry@exec64.co.uk> writes:
 
-On Mon, Nov 02, 2015 at 05:21:03PM +0100, Michael J Gruber wrote:
-> Uwe Kleine-K=F6nig venit, vidit, dixit 02.11.2015 09:04:
-> > 	~/gsrc/linux$ git version
-> > 	git version 2.6.1
->=20
-> Does your git include
-> a5a4b3f (filter-branch: remove multi-line headers in msg filter,
-> 2015-10-08)? That takes care of the incomplete header tag parsing.
-No, it does not. Thanks for the hint.
+> The purpose being to make finding your own commits quicker and easier:
+>     git log --author=me
 
-> Should be in master by now, I think.
->=20
-> Keeping the mergetag signature would require some extra logic in
-> filter-branch.
-that I'd like to have :-). It seems I have to dig into that myself. (If
-someone is quicker than me, I promise not to be angry :-)
+Since --author does a regexp search, this would most likely break
+someone's searches.  Better add a new option for that functionality.
 
-Best regards
-Uwe
+Andreas.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
