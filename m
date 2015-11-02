@@ -1,76 +1,197 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] Add git-grep threads param
-Date: Mon, 02 Nov 2015 07:13:10 -0800
-Message-ID: <xmqqlhagfn95.fsf@gitster.mtv.corp.google.com>
-References: <1445980944-24000-1-git-send-email-vleschuk@accesssoftek.com>
-	<6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA0C@mail.accesssoftek.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git filter-branch and merging of signed tags
+Date: Mon, 2 Nov 2015 17:21:03 +0100
+Message-ID: <56378D6F.8080508@drmicha.warpmail.net>
+References: <20151102080428.GO4931@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Victor Leschuk <vleschuk@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Victor Leschuk <vleschuk@accesssoftek.com>
-X-From: git-owner@vger.kernel.org Mon Nov 02 16:13:18 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 02 17:21:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtGnO-000053-88
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 16:13:18 +0100
+	id 1ZtHr7-0000wK-Eb
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 17:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753512AbbKBPNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 10:13:14 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51322 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752234AbbKBPNN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 10:13:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8D92E2496A;
-	Mon,  2 Nov 2015 10:13:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cmiWcwAeLU0U7w0KF0YWH2Gs83M=; b=w7eBDJ
-	iZwmnjug3D6UYhsh6UKjPoo7sAwAccgqse2aiicmVFJ5g8IFNeGvSE+BwaX4MEKZ
-	/gUr+SrqFoZmJeCPavABSDWbLB66/iuELORQygjP4pqlSEUfqja+ZozGdPLmyz16
-	WCSx3EgVfzaWtDjd3EViBeGCru7rAAx7kmfPE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Au0Vt7aEwkw2xXyqaQqm40PxXjX9dnmL
-	rF+/4NbkqF8yYnrIKMrELDiR9ClfcPJC4sGbEG1ISKPbEYSi6x1vy8cWH+6XJcyc
-	MFSHdBqSwjF31s5+DDlvlzJWriiHR501/V1myFk0j/Kf/usqiax5OyVBodRBm01I
-	XVGeMaKwQFs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 855C624969;
-	Mon,  2 Nov 2015 10:13:12 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F052E24968;
-	Mon,  2 Nov 2015 10:13:11 -0500 (EST)
-In-Reply-To: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA0C@mail.accesssoftek.com>
-	(Victor Leschuk's message of "Sun, 1 Nov 2015 20:43:39 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3B8E122E-8174-11E5-82C1-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753359AbbKBQVJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2015 11:21:09 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:38457 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752234AbbKBQVG (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Nov 2015 11:21:06 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 5226820A36
+	for <git@vger.kernel.org>; Mon,  2 Nov 2015 11:21:05 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Mon, 02 Nov 2015 11:21:05 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=iE1UF4CxF9SpWDkEVpaJXsymQGM=; b=cZY8T4
+	JPz2JfZlfqK/rzqIUwp/C9i7euaRUVpqlDSsGf0Sqj2A3mc739Dne4ANvTxfXi37
+	9fmX+823ZdnfX0+5puzUiKM4JyueEk0GN+krVEZW9Y+CuWvsvDg1YP/otz2S/WdN
+	zGq2XSVPUXn4ZKiSOdlPsexkQF07+GwoHoWhM=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=iE1UF4CxF9SpWDk
+	EVpaJXsymQGM=; b=jzGZyrxHsX/Al1Y0nbH7+YbyWiCCOJ9Mn6wX+Gb1XHAdF1R
+	whuUqxfpmqg291Su5TxUz1GPxYw5Pe372SdIKru+hJUv18Gbvr2QQIvvrJVEqR9W
+	p3MjjIHR/GaULVAKLok8hQgNDw51ktOIuMBjpPPlUbN0BHtHSHbxBkWQH4lo=
+X-Sasl-enc: Ha5LQmSrb3u1rCh+VlOGqZPTjC79Rj3diVmh0CUSPwVI 1446481264
+Received: from dickson.math.uni-hannover.de (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 7BD05C016FA;
+	Mon,  2 Nov 2015 11:21:04 -0500 (EST)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <20151102080428.GO4931@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280696>
 
-Victor Leschuk <vleschuk@accesssoftek.com> writes:
+Uwe Kleine-K=F6nig venit, vidit, dixit 02.11.2015 09:04:
+> Hello,
+>=20
+> Consider I want to rewrite a commit that is a merge of a signed tag. =
+In
+> my case that's 064ca93f7ab927c2752d86fc5727716e340d737c that currentl=
+y
+> sits in linux-next:
+>=20
+> 	~/gsrc/linux$ git version
+> 	git version 2.6.1
+> 	~/gsrc/linux$ git checkout 064ca93f7ab927c2752d86fc5727716e340d737c
+> 	~/gsrc/linux$ git cat-file commit HEAD
+> 	tree 7086bbd51d06ebd0e3fcca70380d0a066efce6ef
+> 	parent e44a01fa0e0aec2f3a21dadb9c030d14831d4258
+> 	parent f719a0d6a8541b383c506aaa4b4fa6b4109669f4
+> 	author Arnd Bergmann <arnd@arndb.de> 1444139956 +0200
+> 	committer Arnd Bergmann <arnd@arndb.de> 1444139956 +0200
+> 	mergetag object f719a0d6a8541b383c506aaa4b4fa6b4109669f4
+> 	 type commit
+> 	 tag efm32-for-4.4-rc1
+> 	 tagger Uwe Kleine-K=F6nig <uwe@kleine-koenig.org> 1443549594 +0200
+> 	=20
+> 	 efm32 cleanups for 4.4-rc1
+> 	=20
+> 	 These are just two followup cleanups for commits that are in v3.17-=
+rc1 and
+> 	 waited in my private tree for application since that time.
+> 	 -----BEGIN PGP SIGNATURE-----
+> 	=20
+> 	 iQEcBAABCgAGBQJWCtIwAAoJEMH8FHityuwJFPYH/2LJpi0yUhI01s0D9U5rZgjl
+> 	 8mLP70utAMaqXiGqP/O0ndH+za5TrrUTwDJE5jhAHru1Q6q62Ld2BfOR5+K8zlrP
+> 	 4UDGBDj3ePJgEtbSsJYJIRT+AKque2GONbeGpJh2arPrNamWChKIz8HoGSgwdRlx
+> 	 TvQuVFEa6C3ujP0ATM8x54f0vR4bYm9WmBS522DwZQY4JpGZC005A3Quw6fmFxPJ
+> 	 vJRo1fE1d2OZ3Cuxb15m8PLtZw6sbMdMwgyirAFGrJsN9u/V6BzsSzH0s8suT7IP
+> 	 WIohnmYtFSUfkQjaGrMl2wIpJSsIzettiXf9GrQDXSGZsQ4k7sW3U+qrcZ7ZUR4=3D
+> 	 =3Dngv1
+> 	 -----END PGP SIGNATURE-----
+>=20
+> 	Merge tag 'efm32-for-4.4-rc1' of git://git.pengutronix.de/git/ukl/li=
+nux into next/cleanup
+>=20
+> 	Merge "efm32 cleanups for 4.4-rc1" from Uwe Kleine-Koenig:
+>=20
+> 	These are just two followup cleanups for commits that are in v3.17-r=
+c1 and
+> 	waited in my private tree for application since that time.
+>=20
+> 	* tag 'efm32-for-4.4-rc1' of git://git.pengutronix.de/git/ukl/linux:
+> 	  ARM: efm32: switch to vendor,device compatible strings
+> 	  ARM: efm32: switch to properly namespaced location property
+>=20
+> OK, to fix my name in the commit log I do:
+>=20
+> 	 git filter-branch -f --msg-filter "sed 's/Kleine-Koenig/$(echo Klei=
+ne-K+APY-nig | iconv -f utf-7 -t utf-8)/'" HEAD ^HEAD^ ^HEAD^2
+>=20
+> This destroys the mergetag, as now I have:
+>=20
+> 	~/gsrc/linux$ git cat-file commit HEAD
+> 	tree 7086bbd51d06ebd0e3fcca70380d0a066efce6ef
+> 	parent e44a01fa0e0aec2f3a21dadb9c030d14831d4258
+> 	parent f719a0d6a8541b383c506aaa4b4fa6b4109669f4
+> 	author Arnd Bergmann <arnd@arndb.de> 1444139956 +0200
+> 	committer Arnd Bergmann <arnd@arndb.de> 1444139956 +0200
+>=20
+> 	 efm32 cleanups for 4.4-rc1
+> 	=20
+> 	 These are just two followup cleanups for commits that are in v3.17-=
+rc1 and
+> 	 waited in my private tree for application since that time.
+> 	 -----BEGIN PGP SIGNATURE-----
+> 	=20
+> 	 iQEcBAABCgAGBQJWCtIwAAoJEMH8FHityuwJFPYH/2LJpi0yUhI01s0D9U5rZgjl
+> 	 8mLP70utAMaqXiGqP/O0ndH+za5TrrUTwDJE5jhAHru1Q6q62Ld2BfOR5+K8zlrP
+> 	 4UDGBDj3ePJgEtbSsJYJIRT+AKque2GONbeGpJh2arPrNamWChKIz8HoGSgwdRlx
+> 	 TvQuVFEa6C3ujP0ATM8x54f0vR4bYm9WmBS522DwZQY4JpGZC005A3Quw6fmFxPJ
+> 	 vJRo1fE1d2OZ3Cuxb15m8PLtZw6sbMdMwgyirAFGrJsN9u/V6BzsSzH0s8suT7IP
+> 	 WIohnmYtFSUfkQjaGrMl2wIpJSsIzettiXf9GrQDXSGZsQ4k7sW3U+qrcZ7ZUR4=3D
+> 	 =3Dngv1
+> 	 -----END PGP SIGNATURE-----
+>=20
+> 	Merge tag 'efm32-for-4.4-rc1' of git://git.pengutronix.de/git/ukl/li=
+nux into next/cleanup
+>=20
+> 	Merge "efm32 cleanups for 4.4-rc1" from Uwe Kleine-K=F6nig:
+>=20
+> 	These are just two followup cleanups for commits that are in v3.17-r=
+c1 and
+> 	waited in my private tree for application since that time.
+>=20
+> 	* tag 'efm32-for-4.4-rc1' of git://git.pengutronix.de/git/ukl/linux:
+> 	  ARM: efm32: switch to vendor,device compatible strings
+> 	  ARM: efm32: switch to properly namespaced location property
+>=20
+> 	~/gsrc/linux$ diff -u <(git cat-file commit HEAD) <(git cat-file com=
+mit 064ca93f7ab927c2752d86fc5727716e340d737c)
+> 	--- /dev/fd/63	2015-11-02 09:02:17.310373539 +0100
+> 	+++ /dev/fd/62	2015-11-02 09:02:17.310373539 +0100
+> 	@@ -3,7 +3,11 @@
+> 	 parent f719a0d6a8541b383c506aaa4b4fa6b4109669f4
+> 	 author Arnd Bergmann <arnd@arndb.de> 1444139956 +0200
+> 	 committer Arnd Bergmann <arnd@arndb.de> 1444139956 +0200
+> 	-
+> 	+mergetag object f719a0d6a8541b383c506aaa4b4fa6b4109669f4
+> 	+ type commit
+> 	+ tag efm32-for-4.4-rc1
+> 	+ tagger Uwe Kleine-K=F6nig <uwe@kleine-koenig.org> 1443549594 +0200
+> 	+=20
+> 	  efm32 cleanups for 4.4-rc1
+> 	 =20
+> 	  These are just two followup cleanups for commits that are in v3.17=
+-rc1 and
+> 	@@ -21,7 +25,7 @@
+> 	=20
+> 	 Merge tag 'efm32-for-4.4-rc1' of git://git.pengutronix.de/git/ukl/l=
+inux into next/cleanup
+> 	=20
+> 	-Merge "efm32 cleanups for 4.4-rc1" from Uwe Kleine-K=F6nig:
+> 	+Merge "efm32 cleanups for 4.4-rc1" from Uwe Kleine-Koenig:
+> 	=20
+> 	 These are just two followup cleanups for commits that are in v3.17-=
+rc1 and
+> 	 waited in my private tree for application since that time.
+>=20
+> So now the PGP-Signature also appears in the regular commit log. So
+> either remove the mergetag info completely or (preferably) keep it
+> completely if the merged parent didn't change.
 
-> do we have any objections on this patch?
+Does your git include
+a5a4b3f (filter-branch: remove multi-line headers in msg filter,
+2015-10-08)? That takes care of the incomplete header tag parsing.
 
-The question you should be asking is "do we have any support".
+Should be in master by now, I think.
 
-It is not like the default for any series is to be included; it is
-quite the opposite.  "Is this worth having in our tree?" is the
-question we all ask ourselves.
+Keeping the mergetag signature would require some extra logic in
+filter-branch.
 
-Also I think you should have CC'ed those who gave review comments on
-this topic in the earlier rounds, if you wanted to receive answers
-to that question (whichever one it is ;-).
-
-Having said that, I didn't immediately spot anything objectionable.
-
-Thanks.
+Michael
