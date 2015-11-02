@@ -1,124 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] http: use credential API to handle proxy authentication
-Date: Mon, 02 Nov 2015 14:54:51 -0800
-Message-ID: <xmqqbnbcdnb8.fsf@gitster.mtv.corp.google.com>
-References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
-	<1446483264-15123-1-git-send-email-k.franke@science-computing.de>
-	<1446483264-15123-3-git-send-email-k.franke@science-computing.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: git.git as of tonight
+Date: Mon, 2 Nov 2015 15:06:44 -0800
+Message-ID: <CAGZ79kbx7UJOOkhiXiUJfUS25gMGx5BUq=Qxa9205H0Z78ijbQ@mail.gmail.com>
+References: <xmqqpoztf6ok.fsf@gitster.mtv.corp.google.com>
+	<5637D266.4060904@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Knut Franke <k.franke@science-computing.de>
-X-From: git-owner@vger.kernel.org Mon Nov 02 23:55:00 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Nov 03 00:06:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtO0B-00038o-58
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 23:54:59 +0100
+	id 1ZtOBd-00059o-WD
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 00:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568AbbKBWyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 17:54:55 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53228 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751415AbbKBWyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 17:54:54 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 52D692773E;
-	Mon,  2 Nov 2015 17:54:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ChBMYe/tKFacJEhNDloJ3rhD6Oo=; b=Nl+3Qp
-	P5L4Wop20AKqNaQiCaoj0VIVG739yQIIBRImrjARCe4EPZD2EKG0idDJ9S0n1svU
-	vr6Mu/GMyDg/Qd91s6a5PRoomDIA/GlzEQhvMLU1X1kvDYggxC90ua8NgAPRvvbP
-	BaYG/JvcgVg0ZNS0PKEalDd96+zQqbTnysgQs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mTEYw+js3OCis7/agEx0ylEdnVo5dHiA
-	1E12Ozgr/82eZFAiHQx/TnfzK5nb1gRhuBDKNH1Nivl9FqbgnJewSantKE7SEhEf
-	Z2ZCVr0+U5SceyiVHs2yqc49L2PgZm3LVIAdfNBdr6e7sqtgj55+VcNL0iSV1bXf
-	UZ+lMAjl+mo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4B4EE2773D;
-	Mon,  2 Nov 2015 17:54:53 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CA1CA2773C;
-	Mon,  2 Nov 2015 17:54:52 -0500 (EST)
-In-Reply-To: <1446483264-15123-3-git-send-email-k.franke@science-computing.de>
-	(Knut Franke's message of "Mon, 2 Nov 2015 17:54:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BA8A7AAA-81B4-11E5-A86F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1751407AbbKBXGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 18:06:46 -0500
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:34331 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751219AbbKBXGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 18:06:45 -0500
+Received: by ykdr3 with SMTP id r3so155599260ykd.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2015 15:06:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=VbDJHRO1ofvCqTgfpYWMjRjZ5T0jB1bcdxAkRmPotDI=;
+        b=Bz7Gl/MBGa5b2ij6yYsoMbNslFPrUJxiKutGhHcr7SiV2xP9sYdAKMNUcXTSvbK10K
+         i+p/P/qoJh2QXY/GyRPlbH9Zy7PeUBvzeOh30DaHV0HCx4K4eae54U/p+6V8sAMoxF8R
+         DPgW8ihVtTvTRhV+CXPUn8WnOy/lqB/7Sfa4fDrfw8XGIDlyu8AI7jDyHySgrOh3vD1r
+         JmdhxsoUeancEKxvTR6YOXMN/4gdcJ7JnHIrgppsulV8yoTgEvjtEyg05cU4VhVIJhN9
+         qGFAXhhNVhvI5ImklXVV5JgjNmwBK4v07YACqvctJyzJ3OzLWjRNtm9rDHsfh71gRYKN
+         IPng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=VbDJHRO1ofvCqTgfpYWMjRjZ5T0jB1bcdxAkRmPotDI=;
+        b=a5XntUQLpDmFM+WMAxyDhbre7jXHS9abCW4Dkm1Nou9s+sl3DirTB1cYCajgXarvUG
+         i9fwfe9/Thv0NMZ75FjTlVxmBLlarlnBqNtOZ+/Ud4TsCv4RBLdnLRlKd6jAisV8Xlvr
+         XZ7Acd39kDHR97hgDUhz+okHT3MwCfC9CWVafgZe4g9rhHbYz5NdllV/vs5hQfIh9CEM
+         AyijeuoIMosKsTJMVw1CdC7llVCJd0oOSv5/oTUskoYpF68fo8/lJ7PZXThoDEm1C3Oa
+         UC4Y7hF+aYcqOHN9xkzoM0OzpzVIiF6F4G9157AbQgFuLYorDxG7t/j40wLo6sJL6tWK
+         muqQ==
+X-Gm-Message-State: ALoCoQkvuTyFxb/Oq6doF//FLmCxajdBnn6+2w5Bj8Js/FdCF1trnHfEGUJE4K+Mhr3USYNm5Sl0
+X-Received: by 10.129.155.130 with SMTP id s124mr18722239ywg.68.1446505604523;
+ Mon, 02 Nov 2015 15:06:44 -0800 (PST)
+Received: by 10.37.29.213 with HTTP; Mon, 2 Nov 2015 15:06:44 -0800 (PST)
+In-Reply-To: <5637D266.4060904@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280736>
 
-Knut Franke <k.franke@science-computing.de> writes:
-
-> Currently, the only way to pass proxy credentials to curl is by including them
-> in the proxy URL. Usually, this means they will end up on disk unencrypted, one
-> way or another (by inclusion in ~/.gitconfig, shell profile or history). Since
-> proxy authentication often uses a domain user, credentials can be security
-> sensitive; therefore, a safer way of passing credentials is desirable.
+On Mon, Nov 2, 2015 at 1:15 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 02.11.2015 um 03:58 schrieb Junio C Hamano:
+>> * sb/submodule-parallel-fetch (2015-10-21) 14 commits
+>>    (merged to 'next' on 2015-10-23 at 8f04bbd)
+>>   + run-command: fix missing output from late callbacks
+>>   + test-run-command: increase test coverage
+>>   + test-run-command: test for gracefully aborting
+>>   + run-command: initialize the shutdown flag
+>>   + run-command: clear leftover state from child_process structure
+>>   + run-command: fix early shutdown
+>>    (merged to 'next' on 2015-10-15 at df63590)
+>>   + submodules: allow parallel fetching, add tests and documentation
+>>   + fetch_populated_submodules: use new parallel job processing
+>>   + run-command: add an asynchronous parallel child processor
+>>   + sigchain: add command to pop all common signals
+>>   + strbuf: add strbuf_read_once to read without blocking
+>>   + xread_nonblock: add functionality to read from fds without blocking
+>>   + xread: poll on non blocking fds
+>>   + submodule.c: write "Fetching submodule <foo>" to stderr
+>>   (this branch is used by rs/daemon-leak-fix and sb/submodule-parallel-update.)
+>>
+>>   Add a framework to spawn a group of processes in parallel, and use
+>>   it to run "git fetch --recurse-submodules" in parallel.
+>>
+>>   Will merge to 'master'.
 >
-> If the configured proxy contains a username but not a password, query the
-> credential API for one. Also, make sure we approve/reject proxy credentials
-> properly.
+> Please don't, yet. This series does not build on Windows:
 >
-> For consistency reasons, add parsing of http_proxy/https_proxy/all_proxy
-> environment variables, which would otherwise be evaluated as a fallback by curl.
-> Without this, we would have different semantics for git configuration and
-> environment variables.
+> run-command.c: In function 'set_nonblocking':
+> run-command.c:1011: error: 'F_GETFL' undeclared (first use in this function)
+> run-command.c:1011: error: (Each undeclared identifier is reported only once
+> run-command.c:1011: error: for each function it appears in.)
+> run-command.c:1015: error: 'F_SETFL' undeclared (first use in this function)
+> run-command.c:1015: error: 'O_NONBLOCK' undeclared (first use in this function)
+> make: *** [run-command.o] Error 1
+
+Going by a quick search http://stackoverflow.com/a/22756664
+I'd hope we only need to modify the set_nonblocking function using #ifdefs ?
+
 >
-> Signed-off-by: Knut Franke <k.franke@science-computing.de>
-> Reviewed-by: Junio C Hamano <gitster@pobox.com>
-> Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
-
-As 1/2, I never reviewed this version yet.
-
-> ---
->  http.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
->  http.h |  1 +
->  2 files changed, 75 insertions(+), 2 deletions(-)
+> I have to investigate whether we can have some sort of Posixy
+> non-blocking IO on Windows or whether we have to opt-out from this
+> parallel-process facility. Any help from Windows experts would be
+> appreciated.
 >
-> diff --git a/http.c b/http.c
-> index 1172819..5708c7a 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -62,7 +62,7 @@ static const char *ssl_cainfo;
->  static long curl_low_speed_limit = -1;
->  static long curl_low_speed_time = -1;
->  static int curl_ftp_no_epsv;
-> -static const char *curl_http_proxy;
-> +static const char *curl_http_proxy = NULL;
->  static const char *http_proxy_authmethod = NULL;
-
-We do not do unnecessary initialization of file-scope globals to 0
-or NULL.  The existing definition of curl_http_proxy is correct;
-the one for http_proxy_authmethod needs to be changed to match.
-
->  static void init_curl_proxy_auth(CURL *result)
->  {
-> +	if (proxy_auth.username) {
-> +		if (!proxy_auth.password)
-> +			credential_fill(&proxy_auth);
-> +#if LIBCURL_VERSION_NUM >= 0x071301
-> +		curl_easy_setopt(result, CURLOPT_PROXYUSERNAME,
-> +			proxy_auth.username);
-> +		curl_easy_setopt(result, CURLOPT_PROXYPASSWORD,
-> +			proxy_auth.password);
-> +#else
-> +		struct strbuf s = STRBUF_INIT;
-> +		strbuf_addstr_urlencode(&s, proxy_auth.username, 1);
-> +		strbuf_addch(&s, ':');
-> +		strbuf_addstr_urlencode(&s, proxy_auth.password, 1);
-> +		curl_proxyuserpwd = strbuf_detach(&s, NULL);
-> +		curl_easy_setopt(result, CURLOPT_PROXYUSERPWD, curl_proxyuserpwd);
-> +#endif
-
-I think #else clause of this thing would introduce decl-after-stmt
-compilation error.
+> -- Hannes
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
