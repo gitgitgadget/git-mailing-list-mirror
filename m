@@ -1,86 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: configure: -lpthread doesn't belong in CFLAGS
-Date: Mon, 02 Nov 2015 09:27:41 +0100
-Message-ID: <vpqa8qwst4y.fsf@anie.imag.fr>
-References: <201511012230.tA1MUGa5016836@tezro.nonet>
+From: Harry Jeffery <harry@exec64.co.uk>
+Subject: git log --author=me
+Date: Mon, 2 Nov 2015 13:27:20 +0000
+Message-ID: <563764B8.4010101@exec64.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: "Rainer M. Canavan" <git@canavan.de>
-X-From: git-owner@vger.kernel.org Mon Nov 02 09:28:06 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 02 14:34:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtATG-0006EN-0y
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 09:28:06 +0100
+	id 1ZtFG6-0001oA-Kb
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 14:34:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798AbbKBI2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 03:28:00 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:54885 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752386AbbKBI15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 03:27:57 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id tA28Rg6o018687
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 2 Nov 2015 09:27:42 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tA28RfZT019906;
-	Mon, 2 Nov 2015 09:27:41 +0100
-In-Reply-To: <201511012230.tA1MUGa5016836@tezro.nonet> (Rainer M. Canavan's
-	message of "Sun, 1 Nov 2015 23:30:16 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 02 Nov 2015 09:27:43 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: tA28Rg6o018687
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1447057665.67772@UcPhRKHxc2nnosVgSNp79A
+	id S1752544AbbKBNeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 08:34:46 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:33619 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751423AbbKBNep (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 08:34:45 -0500
+Received: by wmeg8 with SMTP id g8so59278446wme.0
+        for <git@vger.kernel.org>; Mon, 02 Nov 2015 05:34:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=exec64_co_uk.20150623.gappssmtp.com; s=20150623;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=CwDuoT2s3QPFCpS4isVT3pK8LcRHayOC1oBfBY8zTf4=;
+        b=P+nJxhUsIy1EMVvOYLj9F+jmzc4tK996gfj0ENgUlbdIhcCfN7YX9SOm7Os3EFN/IW
+         vEV1gKLT56swhdFzoujkWRPVKAyCb5FKjaY8kfuRDXtBHeWDrbCJCPsycno0h//G2103
+         ydM4PuCVFFUZt5OsNlkOGcdv8uYin/iA4WeN++2XtCSxSC8D29PEfymMxli08uzoTHmN
+         RGhvISbKhwIp0anXf7qt+78dO2rym0uVjEXCkVm6H8wXQ3WBw51p6drrfhh1X4nyxB4P
+         vfEYLOXY4u3dV50R2YKSAJG+8M9DywgrZwjFhO12uJUAUva+x3FHg4ugqabRzH+3pxC8
+         6f6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-type:content-transfer-encoding;
+        bh=CwDuoT2s3QPFCpS4isVT3pK8LcRHayOC1oBfBY8zTf4=;
+        b=NRO+IJZPa/WtJnauxJJw8bJM/D+mIxr3bk96uv8tu4zVfl/rg5n2xx4Ykr6gM9kUYT
+         NEKRQUUt+TTD/I4caA5AL/w7SrW+LNxVpuqvbfAIrKPl+ATTX021/gmRnaowTRYBeHci
+         FkXERA5kXuHNQphDm+QwusXQtbo+/ukT0qVsEk9l2K/N9O+aGVPfF/JMc0SYFR++99Dg
+         Cm+srIBZFUDcRSKHm7B1PFVqgviYLMUJzfyDQ489lpYMIWUwlMDPFiNFlW1hlB4n5UHP
+         Ai5XLDjN0e1zgl2D+jIa8bRF1X/fbX/bjp17g7ZQgLAUUYzrbBGudNChs+ozPa7t1Uo/
+         yKSA==
+X-Gm-Message-State: ALoCoQlHIq+XI8LeLKS8kKMihogoYUBizcnum+nefMNbebYbpWihVJ7+GV+LdS94t2QIskQiVCuQ
+X-Received: by 10.28.218.83 with SMTP id r80mr14526618wmg.55.1446470848272;
+        Mon, 02 Nov 2015 05:27:28 -0800 (PST)
+Received: from [192.168.43.34] (92.40.248.232.threembb.co.uk. [92.40.248.232])
+        by smtp.googlemail.com with ESMTPSA id it4sm22403679wjb.0.2015.11.02.05.27.27
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 02 Nov 2015 05:27:27 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280688>
-
-"Rainer M. Canavan" <git@canavan.de> writes:
-
-> Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280689>
 
 Hi,
 
-Thanks for the patch. However, it will need a bit more work to be
-integrated into git.git.
+I've written a patch that allows `me` to be used as shorthand for 
+$(user.name) or $(user.email) in the `--author` and `--commiter` fields.
 
-Please, read
-https://github.com/git/git/blob/master/Documentation/SubmittingPatches
+The purpose being to make finding your own commits quicker and easier:
+     git log --author=me
 
-The body of your email should end up being the commit message. It is not
-(yet) properly written as such. Also, read about Developer's Certificate
-of Origin in the document above.
+Is this a change that would be accepted if submitted? The only thing 
+it's currently missing is unit tests.
 
->    for opt in "" -mt -pthread -lpthread; do
->       old_CFLAGS="$CFLAGS"
-> -     CFLAGS="$opt $CFLAGS"
-> +     old_LIBS="$LIBS"
-> +     if test "$(echo $opt | cut -b 1-2)" = -l ; then
-
-Don't use "echo" on string that may begin with - (different versions of
-echo will have different behaviors). One option is to use "printf" which
-is more robust. Another one, more elegant IMHO in this case is to use a
-case:
-
-case "$opt" in
-   -l*)
-      # ...
-      ;;
-   *)
-      # ...
-      ;;
-esac
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Regards,
+Harry
