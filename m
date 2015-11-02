@@ -1,113 +1,69 @@
-From: Atousa Duprat <atousa.p@gmail.com>
-Subject: Re: [PATCH] Limit the size of the data block passed to SHA1_Update()
-Date: Mon, 2 Nov 2015 12:52:34 -0800
-Message-ID: <CA+izobvbDYLvShT8TdDhe9UiYHVWw+Le+Yy4yOnvCYOWE0bhQQ@mail.gmail.com>
-References: <CAPig+cRRjCDhdT-DvGtZqns1mMxygnxi=ZnRKzg+H_do7oRpqQ@mail.gmail.com>
-	<1446359536-25829-1-git-send-email-apahlevan@ieee.org>
-	<xmqqh9l5h8g3.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] setup: do not create $X/gitdir unnecessarily when
+ accessing git file $X
+Date: Mon, 2 Nov 2015 15:52:53 -0500
+Message-ID: <20151102205252.GA12181@sigill.intra.peff.net>
+References: <xmqqwpu7klmu.fsf@gitster.mtv.corp.google.com>
+ <1446491306-13493-1-git-send-email-pclouds@gmail.com>
+ <20151102203507.GB10722@sigill.intra.peff.net>
+ <xmqqtwp4dt17.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Randall Becker <rsbecker@nexbridge.com>,
-	Atousa Pahlevan Duprat <apahlevan@ieee.org>
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, rappazzo@gmail.com, kyle@kyleam.com,
+	sunshine@sunshineco.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 02 21:52:40 2015
+X-From: git-owner@vger.kernel.org Mon Nov 02 21:53:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtM5o-0006eg-4x
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 21:52:40 +0100
+	id 1ZtM67-0006w9-LX
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 21:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753256AbbKBUwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 15:52:36 -0500
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:34837 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752773AbbKBUwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 15:52:35 -0500
-Received: by ykek133 with SMTP id k133so153139853yke.2
-        for <git@vger.kernel.org>; Mon, 02 Nov 2015 12:52:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=HkcOGw91qEjC6c7nLqXEWpg9Q7cC1bi45uP5ib1oA3A=;
-        b=B5tHM5YKyuWE5J8c0A6ZV24irkBoYkByMzrcgD0x9sOaaYVb/FA4cVJkwpDR9x3GPj
-         FnuecG+sRYBV8+BsLmgXa0cCNOejJIzpaFO7Btf1924e407AlGTCI4pzTtKaJCTOIWb1
-         S9FEl5MswwH8s1NFlfPnQ63XFSnpyInW+umXu4zAI5q2HafyBIb686w5NpSLyBfUjQGJ
-         ZPja9wWUy2ThuRPQ56c/RGLsCbfbJMG1cjS2vpRVla9pnM84i2bEM36lQ0zwQAQVCOnF
-         ssa9E3/4q+sUDG1VK/WfoS/+fF6r+kZ8KCSoVtQv375lXr22N+4MuzjOTpHzRIjrfdcZ
-         Oa8g==
-X-Received: by 10.129.50.23 with SMTP id y23mr11581368ywy.329.1446497554824;
- Mon, 02 Nov 2015 12:52:34 -0800 (PST)
-Received: by 10.37.91.198 with HTTP; Mon, 2 Nov 2015 12:52:34 -0800 (PST)
-In-Reply-To: <xmqqh9l5h8g3.fsf@gitster.mtv.corp.google.com>
+	id S1753338AbbKBUw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 15:52:56 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51650 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753258AbbKBUwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 15:52:55 -0500
+Received: (qmail 14622 invoked by uid 102); 2 Nov 2015 20:52:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Nov 2015 14:52:55 -0600
+Received: (qmail 16921 invoked by uid 107); 2 Nov 2015 20:53:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Nov 2015 15:53:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Nov 2015 15:52:53 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqtwp4dt17.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280718>
 
-In the Makefile there is the following:
+On Mon, Nov 02, 2015 at 12:51:16PM -0800, Junio C Hamano wrote:
 
-ifdef BLK_SHA1
-        SHA1_HEADER = "block-sha1/sha1.h"
-        LIB_OBJS += block-sha1/sha1.o
-else
-ifdef PPC_SHA1
-        SHA1_HEADER = "ppc/sha1.h"
-        LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
-else
-ifdef APPLE_COMMON_CRYPTO
-        COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
-        SHA1_HEADER = <CommonCrypto/CommonDigest.h>
-        SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
-else
-        SHA1_HEADER = <openssl/sha.h>
-        EXTLIBS += $(LIB_4_CRYPTO)
-endif
+> Jeff King <peff@peff.net> writes:
+> 
+> > [2] I suspect this code should use write_file_gently(). What happens if
+> >     I have a read-only linked checkout?
+> 
+> Or you may not be the owner of the repository, you think you are
+> doing a read-only operation, and you silently end up creating a file
+> that cannot be written by the repository owner?
+> 
+> Honestly, I think this whole "just in case the user moved without
+> telling us, we sneakily fix things without telling the user" should
+> just go away.  This is not the first incidence of a tool trying to
+> be overly clever and pretend to know better than the end user biting
+> us, is it?
 
-which seems to imply that BLK_SHA1 and APPLE_COMMON_CRYPTO are
-mutually exclusive?
+I have to admit, that was my gut feeling, too, but I do not know enough
+about the problem it is solving to say whether it is a good tradeoff.
+Unfortunately 23af91d102e1efaff33b77ab7746356835a3d600 did not have much
+discussion. I didn't dig into the mailing list, though. I was hoping Duy
+could summarize it. :)
 
-On Sun, Nov 1, 2015 at 10:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> atousa.p@gmail.com writes:
->
->> diff --git a/cache.h b/cache.h
->> index 79066e5..ec84b16 100644
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -14,7 +14,12 @@
->>  #ifndef git_SHA_CTX
->>  #define git_SHA_CTX  SHA_CTX
->>  #define git_SHA1_Init        SHA1_Init
->> -#define git_SHA1_Update      SHA1_Update
->> +#ifdef SHA1_MAX_BLOCK_SIZE
->> +extern int SHA1_Update_Chunked(SHA_CTX *, const void *, size_t);
->> +#define git_SHA1_Update SHA1_Update_Chunked
->> +#else
->> +#define git_SHA1_Update SHA1_Update
->> +#endif
->>  #define git_SHA1_Final       SHA1_Final
->>  #endif
->
-> Hmm, I admit that this mess is my creation, but unfortunately it
-> does not allow us to say:
->
->         make SHA1_MAX_BLOCK_SIZE='1024L*1024L*1024L'
->
-> when using other SHA-1 implementations (e.g. blk_SHA1_Update()).
->
-> Ideas for cleaning it up, anybody?
->
-
-
-
--- 
-Atousa Pahlevan, PhD
-M.Math. University of Waterloo, Canada
-Ph.D. Department of Computer Science, University of Victoria, Canada
-Voice: 415-341-6206
-Email: apahlevan@ieee.org
-Website: www.apahlevan.org
+-Peff
