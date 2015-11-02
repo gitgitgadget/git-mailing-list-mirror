@@ -1,123 +1,85 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] http.c: use CURLOPT_RANGE for range requests
-Date: Mon, 2 Nov 2015 15:18:32 -0500
-Message-ID: <20151102201831.GA10722@sigill.intra.peff.net>
-References: <1446492986-32350-1-git-send-email-dturner@twopensource.com>
+Subject: Re: [PATCH] setup: do not create $X/gitdir unnecessarily when
+ accessing git file $X
+Date: Mon, 2 Nov 2015 15:35:07 -0500
+Message-ID: <20151102203507.GB10722@sigill.intra.peff.net>
+References: <xmqqwpu7klmu.fsf@gitster.mtv.corp.google.com>
+ <1446491306-13493-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon Nov 02 21:18:40 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	rappazzo@gmail.com, kyle@kyleam.com, sunshine@sunshineco.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 02 21:35:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtLYt-0002hz-BH
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 21:18:39 +0100
+	id 1ZtLp3-0008Q5-1u
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 21:35:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752076AbbKBUSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 15:18:35 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51626 "HELO cloud.peff.net"
+	id S1752980AbbKBUfO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2015 15:35:14 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51637 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750887AbbKBUSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 15:18:34 -0500
-Received: (qmail 12431 invoked by uid 102); 2 Nov 2015 20:18:34 -0000
+	id S1752973AbbKBUfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 15:35:09 -0500
+Received: (qmail 13511 invoked by uid 102); 2 Nov 2015 20:35:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Nov 2015 14:18:34 -0600
-Received: (qmail 16694 invoked by uid 107); 2 Nov 2015 20:19:00 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Nov 2015 14:35:09 -0600
+Received: (qmail 16810 invoked by uid 107); 2 Nov 2015 20:35:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Nov 2015 15:19:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Nov 2015 15:18:32 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Nov 2015 15:35:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Nov 2015 15:35:07 -0500
 Content-Disposition: inline
-In-Reply-To: <1446492986-32350-1-git-send-email-dturner@twopensource.com>
+In-Reply-To: <1446491306-13493-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280715>
 
-On Mon, Nov 02, 2015 at 02:36:26PM -0500, David Turner wrote:
+On Mon, Nov 02, 2015 at 08:08:26PM +0100, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 
-> A HTTP server is permitted to return a non-range response to a HTTP
-> range request (and Apache httpd in fact does this in some cases).
-> While libcurl knows how to correctly handle this (by skipping bytes
-> before and after the requested range), it only turns on this handling
-> if it is aware that a range request is being made.  By manually
-> setting the range header instead of using CURLOPT_RANGE, we were
-> hiding the fact that this was a range request from libcurl.  This
-> could cause corruption.
-> 
-> Signed-off-by: David Turner <dturner@twopensource.com>
-> ---
-> 
-> This version breaks the range option formatting/setting out to a
-> helper function, as suggested by Junio and Jeff.
-> 
-> In addition, it clears the range option when curl slots are cleared
-> before reuse, also as suggested
+> $X/gitdir is created, or refreshed, in order to keep a linked worktre=
+e
+> from being pruned. But while git file is used as the foundation for
+> linked worktrees, it's used for other purposes as well and we should
+> not create $X/gitdir in those cases.
+>=20
+> Tighten the check. Only update an existing file, which is an
+> indication this is a linked worktree.
 
-Thanks, this looks much nicer to me.
+Hrm. I think this fixes the immediate problem, but it seems odd for us
+to rely on "does the file exist"[1].
 
-A few minor comments:
+We trigger this code unconditionally from read_gitfile_gently(). But
+=2Egit files are a general-purpose mechanism.  Shouldn't we be doing th=
+is
+only if we suspect we are working with a linked working tree directory
+in the first place?
 
-> +static void http_opt_request_remainder(CURL *curl, ssize_t lo)
+Or we do not know at all, because we are operating in the linked dir,
+and seeing the presence of the "gitdir" file is the only way we say "ah=
+,
+it turns out we are linked, so we should take the opportunity to do som=
+e
+maintenance"?
 
-I notice you used ssize_t here. If we are going to deal with large files, I
-would think off_t would make more sense (i.e., to allow >2GB on a 32-bit
-system).
-
-But much worse than that, the value we are passing typically comes from
-ftell(), which only returns a long. So we're truncated anyway in that
-case.
-
-I certainly don't think we are making anything _worse_ here; the problem
-is in the existing code. But I don't think ssize_t is making anything
-better (it's generally the same size as a long anyway). So I think I'd
-prefer one of the following:
-
-  1. Leave it as "long". At least then we are matching ftell(), which is
-     clear (and works fine on 64-bit machines).
-
-  2. Use off_t here instead. It doesn't fix the problem, but at least
-     fixes our one component, so it's working towards a better solution
-     in the long run.
-
-  3. Detect and complain when we overflow the long. Hopefully ftell()
-     returns -1 on a 32-bit system when the file is larger than 2GB, so
-     this Just Works already, and we don't create a broken output.
-
-  4. Fix all of the callers. I suspect this would involve calling
-     fstat(fileno(fh)) to get a real off_t.
-
-Options (3) and (4) are obviously more work, and I don't necessarily
-expect you to do them. But I think I'd prefer (2) to what you have now.
-Using off_t has an issue with being unsigned, but...
-
-> +{
-> +	char buf[128];
-> +	int len = 0;
-> +
-> +	if (lo >= 0)
-> +		len += xsnprintf(buf + len, 128 - len, "%"PRIiMAX,
-> +				 (intmax_t)lo);
-> +	len += xsnprintf(buf + len, 128 - len, "-");
-
-I think we could just drop this "lo >= 0". Now that there is no "hi"
-(which I think is fine), there's no reason to call the function at all
-if you do not have a limit.
-
-Also, we should prefer "sizeof(buf)" to repeating the "128", as the two
-getting out of sync would be disastrous. So altogether something like:
-
-
-  static void http_opt_request_remainder(CURL *curl, off_t pos)
-  {
-	char buf[128];
-	xsnprintf(buf, sizeof(buf), "%"PRIuMAX", (uintmax_t)pos);
-	curl_easy_setopt(curl, CURLOPT_RANGE, buf);
-  }
-
-would be enough, I think.
+If the latter, then I guess this is the only way to do it. It does seem
+a bit strange to me that an otherwise read-only operation (reading the
+file) might involve writing[2].
 
 -Peff
+
+[1] You check only !stat(), so it is not really "does it exist", but
+    "can we stat it". I think that is OK, because this is an
+    opportunistic update, and failing the stat should just mean we don'=
+t
+    do the update.
+
+[2] I suspect this code should use write_file_gently(). What happens if
+    I have a read-only linked checkout?
