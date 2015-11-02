@@ -1,171 +1,193 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Limit the size of the data block passed to SHA1_Update()
-Date: Mon, 02 Nov 2015 13:21:02 -0800
-Message-ID: <xmqqpozsdrnl.fsf@gitster.mtv.corp.google.com>
-References: <CAPig+cRRjCDhdT-DvGtZqns1mMxygnxi=ZnRKzg+H_do7oRpqQ@mail.gmail.com>
-	<1446359536-25829-1-git-send-email-apahlevan@ieee.org>
-	<xmqqh9l5h8g3.fsf@gitster.mtv.corp.google.com>
-	<CA+izobvbDYLvShT8TdDhe9UiYHVWw+Le+Yy4yOnvCYOWE0bhQQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Randall Becker <rsbecker@nexbridge.com>,
-	Atousa Pahlevan Duprat <apahlevan@ieee.org>
-To: Atousa Duprat <atousa.p@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 02 22:21:13 2015
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v4] http.c: use CURLOPT_RANGE for range requests
+Date: Mon,  2 Nov 2015 16:39:58 -0500
+Message-ID: <1446500398-12257-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twopensource.com>
+To: git@vger.kernel.org, peff@peff.net
+X-From: git-owner@vger.kernel.org Mon Nov 02 22:40:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtMXP-00068O-UI
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 22:21:12 +0100
+	id 1ZtMpq-0005qx-Hi
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 22:40:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754036AbbKBVVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 16:21:08 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52848 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753874AbbKBVVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 16:21:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B64827340;
-	Mon,  2 Nov 2015 16:21:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=o5fIzJ5VRrjU24MP7tON0/+yUy4=; b=W6tsC2
-	OVT1ucWhWGoue3jIlIR3taLK+B2MS2ccvprDwEzkTB8+EDfQU6SBEIIdgI/H1CRg
-	LopSOxE2vwmGv23mm7PLYPvLPGIiWdeJhK4SOC68tsq6hqavGYqRCZHq5uvCjiI2
-	JAxy2coK1x8nJxgE5u63XlVLbn9aJ5JqGlwyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RmaPzWbgcnOtfLaAnRD8YNgn5gLOU5cb
-	uUd5BH+JRxokfMUzyJWSvlX2skBVfSXFYcqV0//0WyaW0xSfYz4mizgTR2SqZ9K2
-	a6CPHYp+B5ZUl7gXardP3QOkDNX3IXPiDh2YzYco1UkbdpGs6fOImFc+cNlbQ2iT
-	0WgfTscujj8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 50D552733E;
-	Mon,  2 Nov 2015 16:21:04 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CACD32733D;
-	Mon,  2 Nov 2015 16:21:03 -0500 (EST)
-In-Reply-To: <CA+izobvbDYLvShT8TdDhe9UiYHVWw+Le+Yy4yOnvCYOWE0bhQQ@mail.gmail.com>
-	(Atousa Duprat's message of "Mon, 2 Nov 2015 12:52:34 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9F65D0F6-81A7-11E5-8DDD-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753489AbbKBVkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 16:40:10 -0500
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:34740 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752134AbbKBVkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 16:40:08 -0500
+Received: by qkcn129 with SMTP id n129so64181377qkc.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2015 13:40:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource_com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id;
+        bh=l3EJme6le/UIc5Z9tEzIuMNyK3M0UP7J1MY0Na4DJQo=;
+        b=EU5hnE/d8xv+IaF1ssjrPN9MZ+DQoU4JrWePd9RtvQ5olIGjbwJWIM5bxzZTD53xB5
+         5WwkdDelfANRBQS77hF0LGGZ6nRJxRa0QqTALCp8bYcoMRvVIdObU0M5As2IvBvigb+P
+         CY2N/QvwEuo+uiDRatlLRN9iBABSvSOPtpXiY1y8RLHhcwstxmnVbyiBf8XQeRurWras
+         z7GytW8NQyuBaVntxH8N9hJtLO7uE3EC3xaygcqDs+jGGuAndaen7y8omS08b+nW/on7
+         wpygSVGcxUrmTFIUeEZRVXIIqfc26UC0Ssuik36hdqh1qukqVMVSEeWNDhrB0PdMNU+c
+         divw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=l3EJme6le/UIc5Z9tEzIuMNyK3M0UP7J1MY0Na4DJQo=;
+        b=YC+lvJHYje3viz+FM43SxUlsgqM2t9XvEvto23eHklx0l+FDAS7nqHXq+mpqjoH8BA
+         lD0vQWHzZSq93t0sPSiSon7X5STdE7ICGU6JBbFSXeKKThmIdD05kX1U1HzG50z9p/BH
+         Ld8vhMu8POmWtvQCmiWkHhrHWxBZrhImbZ/8gzyH4t+3+D6eTO6cZekk+4gRNgI5YYxe
+         zS2Fsx1rxEXq1BKzD/t2WJ5mAm1E8idDbcqmLL5AywIsGTO2aJLU1NG7ziL55GqHCIMp
+         8tW+p35PLui9rFDL5Q2HA8V08mtIjzx+jxf85lvxmrqU8ewolgFpLLnGEIE9oQVTL7Qh
+         Dkew==
+X-Gm-Message-State: ALoCoQmZtBUv0xjFuupan5xgH4yf+HsXcIFSTsUy9o2TwBBP5ZVz4lAqfTEl1SX9hUvf5TxlDoxJ
+X-Received: by 10.55.221.9 with SMTP id n9mr31844205qki.102.1446500407990;
+        Mon, 02 Nov 2015 13:40:07 -0800 (PST)
+Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id j94sm8621072qge.27.2015.11.02.13.40.06
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 02 Nov 2015 13:40:06 -0800 (PST)
+X-Mailer: git-send-email 2.4.2.691.g714732c-twtrsrc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280724>
 
-Atousa Duprat <atousa.p@gmail.com> writes:
+A HTTP server is permitted to return a non-range response to a HTTP
+range request (and Apache httpd in fact does this in some cases).
+While libcurl knows how to correctly handle this (by skipping bytes
+before and after the requested range), it only turns on this handling
+if it is aware that a range request is being made.  By manually
+setting the range header instead of using CURLOPT_RANGE, we were
+hiding the fact that this was a range request from libcurl.  This
+could cause corruption.
 
-> On Sun, Nov 1, 2015 at 10:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Hmm, I admit that this mess is my creation, but unfortunately it
->> does not allow us to say:
->>
->>         make SHA1_MAX_BLOCK_SIZE='1024L*1024L*1024L'
->>
->> when using other SHA-1 implementations (e.g. blk_SHA1_Update()).
->>
->> Ideas for cleaning it up, anybody?
->>
-> In the Makefile there is the following:
->
-> ifdef BLK_SHA1
->         SHA1_HEADER = "block-sha1/sha1.h"
->         LIB_OBJS += block-sha1/sha1.o
-> else
-> ifdef PPC_SHA1
->         SHA1_HEADER = "ppc/sha1.h"
->         LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
-> else
-> ifdef APPLE_COMMON_CRYPTO
->         COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
->         SHA1_HEADER = <CommonCrypto/CommonDigest.h>
->         SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
-> else
->         SHA1_HEADER = <openssl/sha.h>
->         EXTLIBS += $(LIB_4_CRYPTO)
-> endif
->
-> which seems to imply that BLK_SHA1 and APPLE_COMMON_CRYPTO are
-> mutually exclusive?
+Signed-off-by: David Turner <dturner@twopensource.com>
+---
 
-Yes, you are correct that these two cannot be used at the same time.
-In general (not limited to BLK_SHA1 and APPLE_COMMON_CRYPTO) you can
-pick only _one_ underlying SHA-1 implementation to use with the
-system.
+This one incorporates Jeff's suggestions about off_t.  It also
+simplifies by removing the possiblity of a missing low-end of a range;
+the entire point of this function is to add a range HEADER and a
+range of - is nugatory.
 
-If you use APPLE_COMMON_CRYPTO, you may have to use the Chunked
-thing, because of APPLE_COMMON_CRYPTO implementation's limitation.
+---
+ http.c | 33 ++++++++++++---------------------
+ http.h |  1 -
+ 2 files changed, 12 insertions(+), 22 deletions(-)
 
-But the above two facts taken together does not have to imply that
-you are forbidden from choosing to use Chunked thing if you are
-using BLK_SHA1 or OpenSSL's SHA-1 implementation.  If only for
-making sure that the Chunked wrapper passes compilation test, for
-trying it out to see how well it works, or just for satisfying
-curiosity, it would be nice if we allowed such a combination.
-
-The original arrangement of macro was:
-
- * The user code uses git_SHA1_Update()
-
- * cache.h renames git_SHA1_Update() to refer to the underlying
-   SHA1_Update() function, either from OpenSSL or AppleCommonCrypto,
-   or block-sha1/sha1.h renames git_SHA1_Update() to refer to our
-   implementation blk_SHA1_Update().
-
-What we want with Chunked is:
-
- * The user code uses git_SHA1_Update(); we must not change this, as
-   there are many existing calls.
-
- * We want git_SHA1_Update() to call the Chunked thing when
-   SHA1_MAX_BLOCK_SIZE is set.
-
- * The Chunked thing must delegate the actual hashing to underlying
-   SHA1_Update(), either from OpenSSL or AppleCommonCrypto.  If we
-   are using BLK_SHA1, we want the Chunked thing to instead call
-   blk_SHA1_Update().
-
-I do not seem to be able to find a way to do this with the current
-two-level indirection.  If we added another level, we can.
-
-* In cache.h, define platform_SHA1_Update() to refer to
-  SHA1_Update() from the platform (unless block-sha1/ is used).
-  git_SHA1_Update() in the user code may directly call it, or it may
-  go to the Chunked thing.
-
-  #ifndef git_SHA1_CTX
-  #define platform_SHA1_Update  SHA1_Update
-  #endif
-
-  #ifdef SHA1_MAX_BLOCK_SIZE
-  #define git_SHA1_Update       git_SHA1_Update_Chunked
-  #else
-  #define git_SHA1_Update       platform_SHA1_Update
-  #endif
-
-* In block-sha1/sha1.h, redirect platform_SHA1_Update() to
-  blk_SHA1_Update().
-
-  #define platform_SHA1_Update  blk_SHA1_Update
-
-* In compat/sha1_chunked.c, implement the Chunked thing in terms of
-  the platform_SHA1_Update():
-
-  git_SHA1_Update_Chunked(...)
-  {
-        ...
-        while (...) {
-                platform_SHA1_Update(...);
-        }
-  }
-
-
-I am not sure if the above is worth it, but I suspect the damage is
-localized enough that this may be OK.
+diff --git a/http.c b/http.c
+index 6b89dea..f9a0dc5 100644
+--- a/http.c
++++ b/http.c
+@@ -30,7 +30,6 @@ static CURL *curl_default;
+ #endif
+ 
+ #define PREV_BUF_SIZE 4096
+-#define RANGE_HEADER_SIZE 30
+ 
+ char curl_errorstr[CURL_ERROR_SIZE];
+ 
+@@ -692,6 +691,7 @@ struct active_request_slot *get_active_slot(void)
+ 	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 0);
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
+ 	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 1);
++	curl_easy_setopt(slot->curl, CURLOPT_RANGE, NULL);
+ #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, http_auth_methods);
+ #endif
+@@ -1184,6 +1184,13 @@ static const char *get_accept_language(void)
+ 	return cached_accept_language;
+ }
+ 
++static void http_opt_request_remainder(CURL *curl, off_t pos)
++{
++	char buf[128];
++	xsnprintf(buf, sizeof(buf), "%"PRIuMAX"-", (uintmax_t)pos);
++	curl_easy_setopt(curl, CURLOPT_RANGE, buf);
++}
++
+ /* http_request() targets */
+ #define HTTP_REQUEST_STRBUF	0
+ #define HTTP_REQUEST_FILE	1
+@@ -1212,11 +1219,8 @@ static int http_request(const char *url,
+ 			long posn = ftell(result);
+ 			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
+ 					 fwrite);
+-			if (posn > 0) {
+-				strbuf_addf(&buf, "Range: bytes=%ld-", posn);
+-				headers = curl_slist_append(headers, buf.buf);
+-				strbuf_reset(&buf);
+-			}
++			if (posn > 0)
++				http_opt_request_remainder(slot->curl, posn);
+ 		} else
+ 			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
+ 					 fwrite_buffer);
+@@ -1526,10 +1530,6 @@ void release_http_pack_request(struct http_pack_request *preq)
+ 		fclose(preq->packfile);
+ 		preq->packfile = NULL;
+ 	}
+-	if (preq->range_header != NULL) {
+-		curl_slist_free_all(preq->range_header);
+-		preq->range_header = NULL;
+-	}
+ 	preq->slot = NULL;
+ 	free(preq->url);
+ 	free(preq);
+@@ -1593,7 +1593,6 @@ struct http_pack_request *new_http_pack_request(
+ 	struct packed_git *target, const char *base_url)
+ {
+ 	long prev_posn = 0;
+-	char range[RANGE_HEADER_SIZE];
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct http_pack_request *preq;
+ 
+@@ -1631,10 +1630,7 @@ struct http_pack_request *new_http_pack_request(
+ 			fprintf(stderr,
+ 				"Resuming fetch of pack %s at byte %ld\n",
+ 				sha1_to_hex(target->sha1), prev_posn);
+-		xsnprintf(range, sizeof(range), "Range: bytes=%ld-", prev_posn);
+-		preq->range_header = curl_slist_append(NULL, range);
+-		curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER,
+-			preq->range_header);
++		http_opt_request_remainder(preq->slot->curl, prev_posn);
+ 	}
+ 
+ 	return preq;
+@@ -1684,8 +1680,6 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	char prev_buf[PREV_BUF_SIZE];
+ 	ssize_t prev_read = 0;
+ 	long prev_posn = 0;
+-	char range[RANGE_HEADER_SIZE];
+-	struct curl_slist *range_header = NULL;
+ 	struct http_object_request *freq;
+ 
+ 	freq = xcalloc(1, sizeof(*freq));
+@@ -1791,10 +1785,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 			fprintf(stderr,
+ 				"Resuming fetch of object %s at byte %ld\n",
+ 				hex, prev_posn);
+-		xsnprintf(range, sizeof(range), "Range: bytes=%ld-", prev_posn);
+-		range_header = curl_slist_append(range_header, range);
+-		curl_easy_setopt(freq->slot->curl,
+-				 CURLOPT_HTTPHEADER, range_header);
++		http_opt_request_remainder(freq->slot->curl, prev_posn);
+ 	}
+ 
+ 	return freq;
+diff --git a/http.h b/http.h
+index 49afe39..4f97b60 100644
+--- a/http.h
++++ b/http.h
+@@ -190,7 +190,6 @@ struct http_pack_request {
+ 	struct packed_git **lst;
+ 	FILE *packfile;
+ 	char tmpfile[PATH_MAX];
+-	struct curl_slist *range_header;
+ 	struct active_request_slot *slot;
+ };
+ 
+-- 
+2.4.2.691.g714732c-twtrsrc
