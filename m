@@ -1,103 +1,171 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 2/5] Add watchman support to reduce index refresh cost
-Date: Mon, 02 Nov 2015 16:19:34 -0500
-Organization: Twitter
-Message-ID: <1446499174.4131.20.camel@twopensource.com>
-References: <1446386146-10438-1-git-send-email-pclouds@gmail.com>
-	 <1446386146-10438-3-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Limit the size of the data block passed to SHA1_Update()
+Date: Mon, 02 Nov 2015 13:21:02 -0800
+Message-ID: <xmqqpozsdrnl.fsf@gitster.mtv.corp.google.com>
+References: <CAPig+cRRjCDhdT-DvGtZqns1mMxygnxi=ZnRKzg+H_do7oRpqQ@mail.gmail.com>
+	<1446359536-25829-1-git-send-email-apahlevan@ieee.org>
+	<xmqqh9l5h8g3.fsf@gitster.mtv.corp.google.com>
+	<CA+izobvbDYLvShT8TdDhe9UiYHVWw+Le+Yy4yOnvCYOWE0bhQQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 02 22:19:48 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Randall Becker <rsbecker@nexbridge.com>,
+	Atousa Pahlevan Duprat <apahlevan@ieee.org>
+To: Atousa Duprat <atousa.p@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 02 22:21:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtMW1-0004rE-LQ
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 22:19:46 +0100
+	id 1ZtMXP-00068O-UI
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 22:21:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754162AbbKBVTl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2015 16:19:41 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:35853 "EHLO
-	mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752296AbbKBVTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 16:19:37 -0500
-Received: by qkcl124 with SMTP id l124so60294476qkc.3
-        for <git@vger.kernel.org>; Mon, 02 Nov 2015 13:19:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource_com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=UjUH4kJPNyViLgmsInI6K950kI2GRNVZ9nG/ULkijlQ=;
-        b=bGE8LsMSW72iXciTp1JYmaQWprvYTfRthlkziwZdoyPgcUGXtqM7LeFht8M/Bcr+3D
-         op149+t6aYUTbRfCvGMK1TPb8EVY5IS2wJsIHQqIMrBZ0aTs/0VbV/sFmy8KlRw8XkZg
-         lKkHFUDRwI0Z4rroWKDXLxaU5dSvPRBwKoW4bPH4BB1iZaTraezauYmCAcl08+9oEnbc
-         XobMaiEChyybAWr77ChZzlYrjydkVQaqEG74QHvkIpUdrTQklRHLCPiFLXCKO2k+7BiY
-         wqFivBFRQ14U3H0Kqzk8BZXy8Z37G0cpfINpZi6zvRtf6RGmqapUz3zsa1DqQGq8Z5bR
-         OkKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=UjUH4kJPNyViLgmsInI6K950kI2GRNVZ9nG/ULkijlQ=;
-        b=Iz7ah+Km80sDW4uJe6IjXQWhsHOlJSrfQUNbhUofiXQRLPCxOSZ5kjEawY2M6tCZjN
-         IjhS4NitktLbX6YO+OKtF2nzBJ9bTTyJPhqrYDzXAnH/TUYYaiK+wgyu4y+M6hAdUMtm
-         DGFljpZmT2GdKPJGa1CbLB/QmmchLNOT9qAu5vEpTkNZyoKposudmhhNyMlBO58eNJY6
-         RorNpFm8ZoEZ6U1lUPIESwl0g4nUU4fw4E4R7eNGC3H1vsWzwZPvi2H3mqLrHSvZeSIu
-         2XTg5roLKEw7GNc0bu02Xj8s42KLxMXgLQ7N3bcv6egF+OMjUskZzww6n4j9N84cHsom
-         M2EQ==
-X-Gm-Message-State: ALoCoQnvIl3fvlo+TQIN70KOVSzWUxsT8bvug0zJuaHuUdzN4FaXkd38pKfA4u3SFF4RBtoZ8mcl
-X-Received: by 10.55.79.86 with SMTP id d83mr32556750qkb.87.1446499176781;
-        Mon, 02 Nov 2015 13:19:36 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id v63sm8626112qkl.2.2015.11.02.13.19.35
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Nov 2015 13:19:35 -0800 (PST)
-In-Reply-To: <1446386146-10438-3-git-send-email-pclouds@gmail.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1754036AbbKBVVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 16:21:08 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52848 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753874AbbKBVVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 16:21:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B64827340;
+	Mon,  2 Nov 2015 16:21:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=o5fIzJ5VRrjU24MP7tON0/+yUy4=; b=W6tsC2
+	OVT1ucWhWGoue3jIlIR3taLK+B2MS2ccvprDwEzkTB8+EDfQU6SBEIIdgI/H1CRg
+	LopSOxE2vwmGv23mm7PLYPvLPGIiWdeJhK4SOC68tsq6hqavGYqRCZHq5uvCjiI2
+	JAxy2coK1x8nJxgE5u63XlVLbn9aJ5JqGlwyM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RmaPzWbgcnOtfLaAnRD8YNgn5gLOU5cb
+	uUd5BH+JRxokfMUzyJWSvlX2skBVfSXFYcqV0//0WyaW0xSfYz4mizgTR2SqZ9K2
+	a6CPHYp+B5ZUl7gXardP3QOkDNX3IXPiDh2YzYco1UkbdpGs6fOImFc+cNlbQ2iT
+	0WgfTscujj8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 50D552733E;
+	Mon,  2 Nov 2015 16:21:04 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CACD32733D;
+	Mon,  2 Nov 2015 16:21:03 -0500 (EST)
+In-Reply-To: <CA+izobvbDYLvShT8TdDhe9UiYHVWw+Le+Yy4yOnvCYOWE0bhQQ@mail.gmail.com>
+	(Atousa Duprat's message of "Mon, 2 Nov 2015 12:52:34 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 9F65D0F6-81A7-11E5-8DDD-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280723>
 
-On Sun, 2015-11-01 at 14:55 +0100, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
-c Duy wrote:
-> The previous patch has the logic to clear bits in 'WAMA' bitmap. This
-> patch has logic to set bits as told by watchman. The missing bit,
-> _using_ these bits, are not here yet.
->=20
-> A lot of this code is written by David Turner originally, mostly from
-> [1]. I'm just copying and polishing it a bit.
+Atousa Duprat <atousa.p@gmail.com> writes:
+
+> On Sun, Nov 1, 2015 at 10:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Hmm, I admit that this mess is my creation, but unfortunately it
+>> does not allow us to say:
+>>
+>>         make SHA1_MAX_BLOCK_SIZE='1024L*1024L*1024L'
+>>
+>> when using other SHA-1 implementations (e.g. blk_SHA1_Update()).
+>>
+>> Ideas for cleaning it up, anybody?
+>>
+> In the Makefile there is the following:
 >
-> [1] http://article.gmane.org/gmane.comp.version-control.git/248006
+> ifdef BLK_SHA1
+>         SHA1_HEADER = "block-sha1/sha1.h"
+>         LIB_OBJS += block-sha1/sha1.o
+> else
+> ifdef PPC_SHA1
+>         SHA1_HEADER = "ppc/sha1.h"
+>         LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
+> else
+> ifdef APPLE_COMMON_CRYPTO
+>         COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
+>         SHA1_HEADER = <CommonCrypto/CommonDigest.h>
+>         SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
+> else
+>         SHA1_HEADER = <openssl/sha.h>
+>         EXTLIBS += $(LIB_4_CRYPTO)
+> endif
+>
+> which seems to imply that BLK_SHA1 and APPLE_COMMON_CRYPTO are
+> mutually exclusive?
 
-Our code has evolved somewhat from there[1].  It looks like you've
-incorporated some of these updates.  But I wanted to call out one thing
-in particular that it doesn't look like this patch handles: there's som=
-e
-real ugliness on at least OSX around case-changing renames.=20
+Yes, you are correct that these two cannot be used at the same time.
+In general (not limited to BLK_SHA1 and APPLE_COMMON_CRYPTO) you can
+pick only _one_ underlying SHA-1 implementation to use with the
+system.
 
-You probably won't be able to use our code directly as-is, but we'll
-want to do something about this situation.  This is thicket of TOCTOU
-issues.  For instance, watchman learns that a file called FOO has
-changed, but by the time it goes to the filesystem to look up the
-canonical case, FOO has been renamed to foo already (or renamed and the=
-n
-deleted). =20
+If you use APPLE_COMMON_CRYPTO, you may have to use the Chunked
+thing, because of APPLE_COMMON_CRYPTO implementation's limitation.
 
-I won't say for sure that your code is insufficient as I haven't yet
-tried it out, but we should ensure this case is handled before this is
-merged.
+But the above two facts taken together does not have to imply that
+you are forbidden from choosing to use Chunked thing if you are
+using BLK_SHA1 or OpenSSL's SHA-1 implementation.  If only for
+making sure that the Chunked wrapper passes compilation test, for
+trying it out to see how well it works, or just for satisfying
+curiosity, it would be nice if we allowed such a combination.
 
-[1] https://github.com/dturner-tw/git/tree/dturner/watchman
+The original arrangement of macro was:
 
-> +
-> +		pos =3D index_name_pos(istate, wm->name, strlen(wm->name));
+ * The user code uses git_SHA1_Update()
 
-This is the bit where case matters.
+ * cache.h renames git_SHA1_Update() to refer to the underlying
+   SHA1_Update() function, either from OpenSSL or AppleCommonCrypto,
+   or block-sha1/sha1.h renames git_SHA1_Update() to refer to our
+   implementation blk_SHA1_Update().
+
+What we want with Chunked is:
+
+ * The user code uses git_SHA1_Update(); we must not change this, as
+   there are many existing calls.
+
+ * We want git_SHA1_Update() to call the Chunked thing when
+   SHA1_MAX_BLOCK_SIZE is set.
+
+ * The Chunked thing must delegate the actual hashing to underlying
+   SHA1_Update(), either from OpenSSL or AppleCommonCrypto.  If we
+   are using BLK_SHA1, we want the Chunked thing to instead call
+   blk_SHA1_Update().
+
+I do not seem to be able to find a way to do this with the current
+two-level indirection.  If we added another level, we can.
+
+* In cache.h, define platform_SHA1_Update() to refer to
+  SHA1_Update() from the platform (unless block-sha1/ is used).
+  git_SHA1_Update() in the user code may directly call it, or it may
+  go to the Chunked thing.
+
+  #ifndef git_SHA1_CTX
+  #define platform_SHA1_Update  SHA1_Update
+  #endif
+
+  #ifdef SHA1_MAX_BLOCK_SIZE
+  #define git_SHA1_Update       git_SHA1_Update_Chunked
+  #else
+  #define git_SHA1_Update       platform_SHA1_Update
+  #endif
+
+* In block-sha1/sha1.h, redirect platform_SHA1_Update() to
+  blk_SHA1_Update().
+
+  #define platform_SHA1_Update  blk_SHA1_Update
+
+* In compat/sha1_chunked.c, implement the Chunked thing in terms of
+  the platform_SHA1_Update():
+
+  git_SHA1_Update_Chunked(...)
+  {
+        ...
+        while (...) {
+                platform_SHA1_Update(...);
+        }
+  }
+
+
+I am not sure if the above is worth it, but I suspect the damage is
+localized enough that this may be OK.
