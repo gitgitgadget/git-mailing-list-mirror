@@ -1,80 +1,123 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] setup: do not create $X/gitdir unnecessarily when
- accessing git file $X
-Date: Mon, 2 Nov 2015 15:01:47 -0500
-Message-ID: <CAPig+cTKGtVoNr32C7XfZsKYs3Rhchb1Xrr3YEhJuie1tfa9Vw@mail.gmail.com>
-References: <xmqqwpu7klmu.fsf@gitster.mtv.corp.google.com>
-	<1446491306-13493-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] http.c: use CURLOPT_RANGE for range requests
+Date: Mon, 2 Nov 2015 15:18:32 -0500
+Message-ID: <20151102201831.GA10722@sigill.intra.peff.net>
+References: <1446492986-32350-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Mike Rappazzo <rappazzo@gmail.com>, kyle@kyleam.com
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 02 21:01:54 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Nov 02 21:18:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtLIf-0005EU-Gb
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 21:01:53 +0100
+	id 1ZtLYt-0002hz-BH
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 21:18:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160AbbKBUBt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2015 15:01:49 -0500
-Received: from mail-vk0-f44.google.com ([209.85.213.44]:35969 "EHLO
-	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750887AbbKBUBs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Nov 2015 15:01:48 -0500
-Received: by vkex70 with SMTP id x70so91807252vke.3
-        for <git@vger.kernel.org>; Mon, 02 Nov 2015 12:01:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=D3MdKDHF1ynsOoK9VfhZgzfhyX6FRTctmPiCUAaXqNA=;
-        b=xGzInla04yUwBEHCwBssY++lfMiPxe5uuiztJeMAfhBUCB7YT5YuwGQuV5OqXIe/Hr
-         9CIOGg8ujp4sGG2ncrKwx4knMOhuBFKxqLUS+d75UgQRU5f3uMaZw7fPJYecVg+yT0uj
-         7E5cFYa3J5GjRabp8K894ro9V/VInqEIWp0AHVGm2B/W+FgU8z4Cejcpdw6aVe55L9Z0
-         U1myt7EYbEwzqxsFKHdfi5YCyMMCDUh8f3BTxqpr80HfxSfRmIAxN2SegFM1rJ+b+WB2
-         NUmdmHdZ6tLqLI/ItUBPyQ5wJhfnYZokA1B2WTUmskGx5oqKkaWjNMJqgy5iVC+SLzM4
-         DCBg==
-X-Received: by 10.31.2.193 with SMTP id 184mr16200290vkc.151.1446494507742;
- Mon, 02 Nov 2015 12:01:47 -0800 (PST)
-Received: by 10.31.159.204 with HTTP; Mon, 2 Nov 2015 12:01:47 -0800 (PST)
-In-Reply-To: <1446491306-13493-1-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: 8E9AKsA2Fwd1CiGP7LeIi1ZTEr4
+	id S1752076AbbKBUSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 15:18:35 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51626 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750887AbbKBUSe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 15:18:34 -0500
+Received: (qmail 12431 invoked by uid 102); 2 Nov 2015 20:18:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Nov 2015 14:18:34 -0600
+Received: (qmail 16694 invoked by uid 107); 2 Nov 2015 20:19:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 02 Nov 2015 15:19:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Nov 2015 15:18:32 -0500
+Content-Disposition: inline
+In-Reply-To: <1446492986-32350-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280714>
 
-On Mon, Nov 2, 2015 at 2:08 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> $X/gitdir is created, or refreshed, in order to keep a linked worktre=
-e
-> from being pruned. But while git file is used as the foundation for
-> linked worktrees, it's used for other purposes as well and we should
-> not create $X/gitdir in those cases.
->
-> Tighten the check. Only update an existing file, which is an
-> indication this is a linked worktree.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+On Mon, Nov 02, 2015 at 02:36:26PM -0500, David Turner wrote:
+
+> A HTTP server is permitted to return a non-range response to a HTTP
+> range request (and Apache httpd in fact does this in some cases).
+> While libcurl knows how to correctly handle this (by skipping bytes
+> before and after the requested range), it only turns on this handling
+> if it is aware that a range request is being made.  By manually
+> setting the range header instead of using CURLOPT_RANGE, we were
+> hiding the fact that this was a range request from libcurl.  This
+> could cause corruption.
+> 
+> Signed-off-by: David Turner <dturner@twopensource.com>
 > ---
-> diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-> @@ -99,6 +99,13 @@ test_expect_success 'check rev-list' '
-> +test_expect_success '$REAL/gitdir is not created on ordinary git fil=
-e' '
-> +       echo "gitdir: $REAL" >expected &&
-> +       test_cmp expected .git &&
-> +       git status &&
-> +       ! test -f "$REAL"/gitdir
+> 
+> This version breaks the range option formatting/setting out to a
+> helper function, as suggested by Junio and Jeff.
+> 
+> In addition, it clears the range option when curl slots are cleared
+> before reuse, also as suggested
 
-Minor: test_path_is_missing() might convey the intention a bit more cle=
-arly.
+Thanks, this looks much nicer to me.
 
-> +'
+A few minor comments:
+
+> +static void http_opt_request_remainder(CURL *curl, ssize_t lo)
+
+I notice you used ssize_t here. If we are going to deal with large files, I
+would think off_t would make more sense (i.e., to allow >2GB on a 32-bit
+system).
+
+But much worse than that, the value we are passing typically comes from
+ftell(), which only returns a long. So we're truncated anyway in that
+case.
+
+I certainly don't think we are making anything _worse_ here; the problem
+is in the existing code. But I don't think ssize_t is making anything
+better (it's generally the same size as a long anyway). So I think I'd
+prefer one of the following:
+
+  1. Leave it as "long". At least then we are matching ftell(), which is
+     clear (and works fine on 64-bit machines).
+
+  2. Use off_t here instead. It doesn't fix the problem, but at least
+     fixes our one component, so it's working towards a better solution
+     in the long run.
+
+  3. Detect and complain when we overflow the long. Hopefully ftell()
+     returns -1 on a 32-bit system when the file is larger than 2GB, so
+     this Just Works already, and we don't create a broken output.
+
+  4. Fix all of the callers. I suspect this would involve calling
+     fstat(fileno(fh)) to get a real off_t.
+
+Options (3) and (4) are obviously more work, and I don't necessarily
+expect you to do them. But I think I'd prefer (2) to what you have now.
+Using off_t has an issue with being unsigned, but...
+
+> +{
+> +	char buf[128];
+> +	int len = 0;
+> +
+> +	if (lo >= 0)
+> +		len += xsnprintf(buf + len, 128 - len, "%"PRIiMAX,
+> +				 (intmax_t)lo);
+> +	len += xsnprintf(buf + len, 128 - len, "-");
+
+I think we could just drop this "lo >= 0". Now that there is no "hi"
+(which I think is fine), there's no reason to call the function at all
+if you do not have a limit.
+
+Also, we should prefer "sizeof(buf)" to repeating the "128", as the two
+getting out of sync would be disastrous. So altogether something like:
+
+
+  static void http_opt_request_remainder(CURL *curl, off_t pos)
+  {
+	char buf[128];
+	xsnprintf(buf, sizeof(buf), "%"PRIuMAX", (uintmax_t)pos);
+	curl_easy_setopt(curl, CURLOPT_RANGE, buf);
+  }
+
+would be enough, I think.
+
+-Peff
