@@ -1,76 +1,78 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-Subject: Re: [PATCH 0/5] Use watchman to reduce index refresh time
-Date: Mon, 2 Nov 2015 15:54:57 +0100
-Message-ID: <CAHVLzcn3j8eLi9VrNoZjyOZ2UzE7=NYF1bqB9UyKmghUoUw1Zg@mail.gmail.com>
-References: <1446386146-10438-1-git-send-email-pclouds@gmail.com>
+From: "Lennart Sorensen" <lsorense@csclub.uwaterloo.ca>
+Subject: Re: Anonymous commit (empty Author and Committer)
+Date: Mon, 2 Nov 2015 10:11:23 -0500
+Message-ID: <20151102151123.GF21923@csclub.uwaterloo.ca>
+References: <56337DF8.5050802@gmail.com> <5633CDCD.10004@gmail.com>
+	<5633CE60.8060907@gmail.com> <5633D0C7.2020709@gmail.com>
+	<20151030205955.GC21923@csclub.uwaterloo.ca>
+	<56345076.30207@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 02 15:55:24 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=us-ascii
+Cc: savannah-users@gnu.org, git@vger.kernel.org
+To: The development of GNU GRUB <grub-devel@gnu.org>
+X-From: savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org Mon Nov 02 16:11:41 2015
+Return-path: <savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org>
+Envelope-to: gcgsu-savannah-users@m.gmane.org
+Received: from lists.gnu.org ([208.118.235.17])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtGW4-0005TF-2m
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 15:55:24 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752853AbbKBOzT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2015 09:55:19 -0500
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:35775 "EHLO
-	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751633AbbKBOzS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Nov 2015 09:55:18 -0500
-Received: by lfbn126 with SMTP id n126so62512947lfb.2
-        for <git@vger.kernel.org>; Mon, 02 Nov 2015 06:55:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=cWoVnMTwYWgAktHAhNXIU6NuhTkS09Lc8WSr7WNtYwU=;
-        b=VDZtX+2un7J5sUWLGg0bV/mxzQsEMN39+ECVu8GnZkS5HzMMGtOSGQ64JNlF2XMbo1
-         wnrO1/aN57vcsjR2d9OHs7RDnJFzMOKbNkFYG+IHqXvxlACorW47GAw0gtHBKiPN2Zj1
-         tfgI9ucKl19RUbI4weiNRslF8EV6IC7BNN6sj3b0tExDrJYaohIRfuuTgJRem2HdvF3K
-         uHBB9Ri1NaMnSUjH2tUUtcQIJF0IAyz7nmUTKsZU5vEKJ4Rfd+siW563RATx/OoHNw3L
-         he5l5qMqpTRY9sglafxuMr25d9MMpFWzu7sxYDhV8njvacqolmo/15x+sQwUsHpr8C90
-         J8EQ==
-X-Received: by 10.25.17.103 with SMTP id g100mr6746305lfi.110.1446476117056;
- Mon, 02 Nov 2015 06:55:17 -0800 (PST)
-Received: by 10.25.198.195 with HTTP; Mon, 2 Nov 2015 06:54:57 -0800 (PST)
-In-Reply-To: <1446386146-10438-1-git-send-email-pclouds@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280692>
+	(envelope-from <savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org>)
+	id 1ZtGln-0007SP-T3
+	for gcgsu-savannah-users@m.gmane.org; Mon, 02 Nov 2015 16:11:40 +0100
+Received: from localhost ([::1]:42836 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org>)
+	id 1ZtGln-0003UY-As
+	for gcgsu-savannah-users@m.gmane.org; Mon, 02 Nov 2015 10:11:39 -0500
+Received: from eggs.gnu.org ([2001:4830:134:3::10]:54081)
+	by lists.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <lsorense@csclub.uwaterloo.ca>) id 1ZtGlf-0003Ml-IN
+	for savannah-users@gnu.org; Mon, 02 Nov 2015 10:11:35 -0500
+Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
+	(envelope-from <lsorense@csclub.uwaterloo.ca>) id 1ZtGle-0001Hn-N9
+	for savannah-users@gnu.org; Mon, 02 Nov 2015 10:11:31 -0500
+Received: from mail.csclub.uwaterloo.ca ([129.97.134.52]:35112)
+	by eggs.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <lsorense@csclub.uwaterloo.ca>)
+	id 1ZtGlZ-0001Gp-TF; Mon, 02 Nov 2015 10:11:25 -0500
+Received: from caffeine.csclub.uwaterloo.ca (caffeine.csclub.uwaterloo.ca
+	[129.97.134.17])
+	by mail.csclub.uwaterloo.ca (Postfix) with SMTP id D628B20F21;
+	Mon,  2 Nov 2015 10:11:23 -0500 (EST)
+Received: by caffeine.csclub.uwaterloo.ca (sSMTP sendmail emulation);
+	Mon, 02 Nov 2015 10:11:23 -0500
+Content-Disposition: inline
+In-Reply-To: <56345076.30207@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-detected-operating-system: by eggs.gnu.org: GNU/Linux 3.x
+X-Received-From: 129.97.134.52
+X-BeenThere: savannah-users@gnu.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+List-Id: Discussion of savannah-announce and any user-oriented topic
+	<savannah-users.gnu.org>
+List-Unsubscribe: <https://lists.gnu.org/mailman/options/savannah-users>,
+	<mailto:savannah-users-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/archive/html/savannah-users>
+List-Post: <mailto:savannah-users@gnu.org>
+List-Help: <mailto:savannah-users-request@gnu.org?subject=help>
+List-Subscribe: <https://lists.gnu.org/mailman/listinfo/savannah-users>,
+	<mailto:savannah-users-request@gnu.org?subject=subscribe>
+Errors-To: savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org
+Sender: savannah-users-bounces+gcgsu-savannah-users=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280693>
 
-On Sun, Nov 1, 2015 at 2:55 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
+On Sat, Oct 31, 2015 at 08:24:06AM +0300, Andrei Borzenkov wrote:
+> If we decide to fix this commit it is better done now, while it is the last
+> one. It is annoying but do you have suggestion how it can be done
+> differently?
 
-Hi Duy,
+Well the only options are:
 
-> This series builds on top of the index-helper series I just sent and
-> uses watchman to keep track of file changes in order to avoid lstat()
-> at refresh time. The series can also be found at [1]
->
-> When I started this work, watchman did not support Windows yet. It
-> does now, even if still experimental [2]. So Windows people, please
-> try it out if you have time.
->
-> To put all pieces so far together, we have split-index to reduce inde=
-x
-> write time, untracked cache to reduce I/O as well as computation for
-> .gitignore, index-helper for index read time and this series for
-> lstat() at refresh time. The remaining piece is killing lstat() from
-> untracked cache, but right now it's just some idea and incomplete
-> code.
+1) Leave it alone
+2) Break the tree of anyone that already pulled.  (Posting instructions on
+how to fix it would at least be nice then).
 
-Did you manage to measure the speedup introduced by this series?
+Not sure how many people regularly pull the tree.
 
-Ciao,
---=20
-Paolo
+-- 
+Len Sorensen
