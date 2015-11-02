@@ -1,161 +1,288 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: git.git as of tonight
-Date: Sun, 01 Nov 2015 18:58:51 -0800
-Message-ID: <xmqqpoztf6ok.fsf@gitster.mtv.corp.google.com>
+From: Victor Leschuk <vleschuk@accesssoftek.com>
+Subject: RE: [PATCH v4] Add git-grep threads param
+Date: Sun, 1 Nov 2015 20:43:39 -0800
+Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA0C@mail.accesssoftek.com>
+References: <1445980944-24000-1-git-send-email-vleschuk@accesssoftek.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 02 03:59:00 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "gitster@pobox.com" <gitster@pobox.com>
+To: Victor Leschuk <vleschuk@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 02 05:45:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zt5Kl-0008FM-MD
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 03:59:00 +0100
+	id 1Zt6zi-0006Lk-1D
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 05:45:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbbKBC6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Nov 2015 21:58:55 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59046 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750935AbbKBC6y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Nov 2015 21:58:54 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 67EA528BD4;
-	Sun,  1 Nov 2015 21:58:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=t
-	7joxY83gmNkyCRhhG/TA0v20kw=; b=pUQDyh5yjmenYzaQfZDOQeHWrsoejFzIy
-	bKGof11IAR891kY8IiLmSE7Cm7/pu00uSaLv3m8wC+hPrFsL3w0/Mp8gjSpnyuAQ
-	RGWZ6/RqMZlnN4v0TjmsJNxuzUNDUk6+5kFXbg2YUJ6KtD5yOFBR1yUhzdX0muh5
-	eTVu+F30Gs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=LA3
-	oJomVoDMI+7t2dNr9fRqMfwuNKXmh/fwkSEIgDzBmgWfumqY7xvaMkvjUDF7QFJq
-	VMURD4CPXzhbAkx3KwN6p6dUB5bg2P97yznvkOSTuyJqXD3XwWOggE3tfbsZeryO
-	iWSkz06SlmN0Zsb0vtRiYNn3L8Q9vFneoFSr0OiQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5FC4228BD3;
-	Sun,  1 Nov 2015 21:58:53 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DE11228BD1;
-	Sun,  1 Nov 2015 21:58:52 -0500 (EST)
-X-master-at: 2635c2b8bfc9aec07b7f023d8e3b3d02df715344
-X-next-at: 3dda608c19069845846bd7fd57000a99f97b9c9d
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A64C8850-810D-11E5-AA85-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752123AbbKBEpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Nov 2015 23:45:17 -0500
+Received: from mail.accesssoftek.com ([12.202.173.171]:3405 "EHLO
+	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751740AbbKBEpQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Nov 2015 23:45:16 -0500
+Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
+ ([172.16.0.71]) with mapi; Sun, 1 Nov 2015 20:45:14 -0800
+Thread-Topic: [PATCH v4] Add git-grep threads param
+Thread-Index: AdEQ/ao1HYNrM8atQ7a9X0/DPCuyzgEK2EqO
+In-Reply-To: <1445980944-24000-1-git-send-email-vleschuk@accesssoftek.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280679>
 
-I've merged a handful of topics to 'next', and hoping that many of
-them can be merged to 'master' before I'll go offline for a few
-weeks starting on the week #7 of the cycle (starting Nov 9th).
+Hello all,
 
-As I hate sending out the whole text back to back (the last one was
-issued on the last Friday), here is an abbreviated update for the
-"What's cooking" report, highlighting those topics that I want to
-see in 'master' by the end of the week #6 (Nov 8th).
+do we have any objections on this patch?
 
-Thanks.
+--
+Best Regards,
+Victor
+________________________________________
+From: Victor Leschuk [vleschuk@gmail.com]
+Sent: Tuesday, October 27, 2015 14:22
+To: git@vger.kernel.org
+Cc: Victor Leschuk
+Subject: [PATCH v4] Add git-grep threads param
 
+Make number of git-grep worker threads a configuration parameter.
+According to several tests on systems with different number of CPU cores
+the hard-coded number of 8 threads is not optimal for all systems:
+tuning this parameter can significantly speed up grep performance.
 
-* kn/for-each-branch (2015-10-30) 1 commit
-  (merged to 'next' on 2015-11-01 at 4249dc9)
- + ref-filter: fallback on alphabetical comparison
+Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
+---
+ Documentation/config.txt               |  4 +++
+ Documentation/git-grep.txt             |  9 ++++++
+ builtin/grep.c                         | 56 ++++++++++++++++++++++++----------
+ contrib/completion/git-completion.bash |  1 +
+ 4 files changed, 54 insertions(+), 16 deletions(-)
 
- Using the timestamp based criteria in "git branch --sort" did not
- tiebreak branches that point at commits with the same timestamp (or
- the same commit), making the resulting output unstable.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 391a0c3..1dd2a61 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1447,6 +1447,10 @@ grep.extendedRegexp::
+        option is ignored when the 'grep.patternType' option is set to a value
+        other than 'default'.
 
- Will merge to 'master'.
++grep.threads::
++       Number of grep worker threads, use it to tune up performance on
++       multicore machines. Default value is 8. Set to 0 to disable threading.
++
+ gpg.program::
+        Use this custom program instead of "gpg" found on $PATH when
+        making or verifying a PGP signature. The program must support the
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 4a44d6d..e766596 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -23,6 +23,7 @@ SYNOPSIS
+           [--break] [--heading] [-p | --show-function]
+           [-A <post-context>] [-B <pre-context>] [-C <context>]
+           [-W | --function-context]
++          [--threads <num>]
+           [-f <file>] [-e] <pattern>
+           [--and|--or|--not|(|)|-e <pattern>...]
+           [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
+@@ -53,6 +54,10 @@ grep.extendedRegexp::
+        option is ignored when the 'grep.patternType' option is set to a value
+        other than 'default'.
 
++grep.threads::
++       Number of grep worker threads, use it to tune up performance on
++       multicore machines. Default value is 8. Set to 0 to disable threading.
++
+ grep.fullName::
+        If set to true, enable '--full-name' option by default.
 
-* jc/mailinfo-lib (2015-11-01) 1 commit
-  (merged to 'next' on 2015-11-01 at 3ecaa28)
- + mailinfo: fix passing wrong address to git_mailinfo_config
+@@ -227,6 +232,10 @@ OPTIONS
+        effectively showing the whole function in which the match was
+        found.
 
- Hotfix for a topic already in 'master'.
++--threads <num>::
++       Set number of worker threads to <num>. Default is 8.
++       Set to 0 to disable threading.
++
+ -f <file>::
+        Read patterns from <file>, one per line.
 
- Will merge to 'master'.
+diff --git a/builtin/grep.c b/builtin/grep.c
+index d04f440..694553e 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -24,11 +24,11 @@ static char const * const grep_usage[] = {
+        NULL
+ };
 
+-static int use_threads = 1;
++#define GREP_NUM_THREADS_DEFAULT 8
++static int num_threads = -1;
 
-* sb/submodule-parallel-fetch (2015-10-21) 14 commits
-  (merged to 'next' on 2015-10-23 at 8f04bbd)
- + run-command: fix missing output from late callbacks
- + test-run-command: increase test coverage
- + test-run-command: test for gracefully aborting
- + run-command: initialize the shutdown flag
- + run-command: clear leftover state from child_process structure
- + run-command: fix early shutdown
-  (merged to 'next' on 2015-10-15 at df63590)
- + submodules: allow parallel fetching, add tests and documentation
- + fetch_populated_submodules: use new parallel job processing
- + run-command: add an asynchronous parallel child processor
- + sigchain: add command to pop all common signals
- + strbuf: add strbuf_read_once to read without blocking
- + xread_nonblock: add functionality to read from fds without blocking
- + xread: poll on non blocking fds
- + submodule.c: write "Fetching submodule <foo>" to stderr
- (this branch is used by rs/daemon-leak-fix and sb/submodule-parallel-update.)
+ #ifndef NO_PTHREADS
+-#define THREADS 8
+-static pthread_t threads[THREADS];
++static pthread_t *threads;
 
- Add a framework to spawn a group of processes in parallel, and use
- it to run "git fetch --recurse-submodules" in parallel.
+ /* We use one producer thread and THREADS consumer
+  * threads. The producer adds struct work_items to 'todo' and the
+@@ -63,13 +63,13 @@ static pthread_mutex_t grep_mutex;
 
- Will merge to 'master'.
+ static inline void grep_lock(void)
+ {
+-       if (use_threads)
++       if (num_threads)
+                pthread_mutex_lock(&grep_mutex);
+ }
 
+ static inline void grep_unlock(void)
+ {
+-       if (use_threads)
++       if (num_threads)
+                pthread_mutex_unlock(&grep_mutex);
+ }
 
-* rs/daemon-leak-fix (2015-10-31) 3 commits
-  (merged to 'next' on 2015-11-01 at 9b6c8f9)
- + daemon: plug memory leak
- + run-command: export child_process_clear()
- + run-command: name the cleanup function child_process_clear()
- (this branch is used by sb/submodule-parallel-update; uses sb/submodule-parallel-fetch.)
+@@ -206,7 +206,8 @@ static void start_threads(struct grep_opt *opt)
+                strbuf_init(&todo[i].out, 0);
+        }
 
- "git daemon" uses "run_command()" without "finish_command()", so it
- needs to release resources itself, which it forgot to do.
+-       for (i = 0; i < ARRAY_SIZE(threads); i++) {
++       threads = xcalloc(num_threads, sizeof(pthread_t));
++       for (i = 0; i < num_threads; i++) {
+                int err;
+                struct grep_opt *o = grep_opt_dup(opt);
+                o->output = strbuf_out;
+@@ -238,12 +239,14 @@ static int wait_all(void)
+        pthread_cond_broadcast(&cond_add);
+        grep_unlock();
 
- Will merge to 'master'.
+-       for (i = 0; i < ARRAY_SIZE(threads); i++) {
++       for (i = 0; i < num_threads; i++) {
+                void *h;
+                pthread_join(threads[i], &h);
+                hit |= (int) (intptr_t) h;
+        }
 
++       free(threads);
++
+        pthread_mutex_destroy(&grep_mutex);
+        pthread_mutex_destroy(&grep_read_mutex);
+        pthread_mutex_destroy(&grep_attr_mutex);
+@@ -262,10 +265,22 @@ static int wait_all(void)
+ }
+ #endif
 
-* rs/wt-status-detached-branch-fix (2015-11-01) 5 commits
-  (merged to 'next' on 2015-11-01 at cb23615)
- + wt-status: use skip_prefix() to get rid of magic string length constants
- + wt-status: don't skip a magical number of characters blindly
- + wt-status: avoid building bogus branch name with detached HEAD
- + wt-status: exit early using goto in wt_shortstatus_print_tracking()
- + t7060: add test for status --branch on a detached HEAD
++static int grep_threads_config(const char *var, const char *value, void *cb)
++{
++       if (!strcmp(var, "grep.threads")) {
++               num_threads = git_config_int(var, value);
++               if (num_threads < 0)
++                       die("Invalid number of threads specified (%d)", num_threads);
++       }
++       return 0;
++}
++
+ static int grep_cmd_config(const char *var, const char *value, void *cb)
+ {
+        int st = grep_config(var, value, cb);
+-       if (git_color_default_config(var, value, cb) < 0)
++       if (grep_threads_config(var, value, cb) < 0)
++               st = -1;
++       else if (git_color_default_config(var, value, cb) < 0)
+                st = -1;
+        return st;
+ }
+@@ -294,7 +309,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
+        }
 
- "git status --branch --short" accessed beyond the constant string
- "HEAD", which has been corrected.
+ #ifndef NO_PTHREADS
+-       if (use_threads) {
++       if (num_threads) {
+                add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
+                strbuf_release(&pathbuf);
+                return 0;
+@@ -323,7 +338,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+                strbuf_addstr(&buf, filename);
 
- Will merge to 'master'.
+ #ifndef NO_PTHREADS
+-       if (use_threads) {
++       if (num_threads) {
+                add_work(opt, GREP_SOURCE_FILE, buf.buf, filename, filename);
+                strbuf_release(&buf);
+                return 0;
+@@ -702,6 +717,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+                        N_("show <n> context lines before matches")),
+                OPT_INTEGER('A', "after-context", &opt.post_context,
+                        N_("show <n> context lines after matches")),
++               OPT_INTEGER(0, "threads", &num_threads,
++                       N_("use <n> worker threads")),
+                OPT_NUMBER_CALLBACK(&opt, N_("shortcut for -C NUM"),
+                        context_callback),
+                OPT_BOOL('p', "show-function", &opt.funcname,
+@@ -801,7 +818,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+                opt.output_priv = &path_list;
+                opt.output = append_path;
+                string_list_append(&path_list, show_in_pager);
+-               use_threads = 0;
++               num_threads = 0;
+        }
 
+        if (!opt.pattern_list)
+@@ -832,14 +849,21 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+        }
 
-* da/difftool (2015-10-29) 1 commit
-  (merged to 'next' on 2015-11-01 at 4e5ab33)
- + difftool: ignore symbolic links in use_wt_file
+ #ifndef NO_PTHREADS
+-       if (list.nr || cached || online_cpus() == 1)
+-               use_threads = 0;
++       if (list.nr || cached) {
++               num_threads = 0; /* Can not multi-thread object lookup */
++       }
++       else if (num_threads < 0 && online_cpus() <= 1) {
++               num_threads = 0; /* User didn't set threading option and we have <= 1 of hardware cores */
++       }
++       else if (num_threads < 0) {
++               num_threads = GREP_NUM_THREADS_DEFAULT;
++       }
+ #else
+-       use_threads = 0;
++       num_threads = 0;
+ #endif
 
- The code to prepare the working tree side of temporary directory
- for the "dir-diff" feature forgot that symbolic links need not be
- copied (or symlinked) to the temporary area, as the code already
- special cases and overwrites them.  Besides, it was wrong to try
- computing the object name of the target of symbolic link, which may
- not even exist or may be a directory.
+ #ifndef NO_PTHREADS
+-       if (use_threads) {
++       if (num_threads) {
+                if (!(opt.name_only || opt.unmatch_name_only || opt.count)
+                    && (opt.pre_context || opt.post_context ||
+                        opt.file_break || opt.funcbody))
+@@ -909,7 +933,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+                hit = grep_objects(&opt, &pathspec, &list);
+        }
 
- Will merge to 'master'.
-
-
-* jk/initialization-fix-to-add-submodule-odb (2015-10-28) 1 commit
-  (merged to 'next' on 2015-11-01 at da94b97)
- + add_submodule_odb: initialize alt_odb list earlier
-
- We peek objects from submodule's object store by linking it to the
- list of alternate object databases, but the code to do so forgot to
- correctly initialize the list.
-
- Will merge to 'master'.
+-       if (use_threads)
++       if (num_threads)
+                hit |= wait_all();
+        if (hit && show_in_pager)
+                run_pager(&opt, prefix);
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 482ca84..390d9c0 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1310,6 +1310,7 @@ _git_grep ()
+                        --full-name --line-number
+                        --extended-regexp --basic-regexp --fixed-strings
+                        --perl-regexp
++                       --threads
+                        --files-with-matches --name-only
+                        --files-without-match
+                        --max-depth
+--
+2.6.2.308.g3b8f10c.dirty
