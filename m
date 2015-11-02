@@ -1,200 +1,80 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3] http.c: use CURLOPT_RANGE for range requests
-Date: Mon,  2 Nov 2015 14:36:26 -0500
-Message-ID: <1446492986-32350-1-git-send-email-dturner@twopensource.com>
-Cc: David Turner <dturner@twopensource.com>
-To: git@vger.kernel.org, peff@peff.net
-X-From: git-owner@vger.kernel.org Mon Nov 02 20:36:47 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] setup: do not create $X/gitdir unnecessarily when
+ accessing git file $X
+Date: Mon, 2 Nov 2015 15:01:47 -0500
+Message-ID: <CAPig+cTKGtVoNr32C7XfZsKYs3Rhchb1Xrr3YEhJuie1tfa9Vw@mail.gmail.com>
+References: <xmqqwpu7klmu.fsf@gitster.mtv.corp.google.com>
+	<1446491306-13493-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Mike Rappazzo <rappazzo@gmail.com>, kyle@kyleam.com
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 02 21:01:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtKuN-00028N-3Y
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 20:36:47 +0100
+	id 1ZtLIf-0005EU-Gb
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 21:01:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbbKBTgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 14:36:43 -0500
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:36523 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750887AbbKBTgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 14:36:42 -0500
-Received: by qgad10 with SMTP id d10so124772784qga.3
-        for <git@vger.kernel.org>; Mon, 02 Nov 2015 11:36:41 -0800 (PST)
+	id S1752160AbbKBUBt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2015 15:01:49 -0500
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:35969 "EHLO
+	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750887AbbKBUBs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Nov 2015 15:01:48 -0500
+Received: by vkex70 with SMTP id x70so91807252vke.3
+        for <git@vger.kernel.org>; Mon, 02 Nov 2015 12:01:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource_com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id;
-        bh=eQmoJDdYSzcwbUziGfgmT3BMvQCJZXmTMT9vcpx2z8Y=;
-        b=1kIp2hhL+fB23xk95Tv4YQn80vdxp8gwUSs1BQ1O7qxmVuDq9GL93ks3MEvy0sRm21
-         vq/tUxfOK2cO+O5NlIoxvbAsf67Kmam4SRDwBc5Z1tU9MMeBUbP0esAcl2neLdm/FyZ3
-         dYRBxNIENda7Dh3Rt5GA7Hw2S/ahTLIIPX6SqZ9h/lzYpYVS7sxIJanleOv070Cx3PDy
-         1nwEfme+mmFtCm+9Y4KMX6sQIp724iLrX7hfiQosXzDFheaHgVVCrqQq16pu2ofwmVvF
-         dNhDwB0QX7/ggc/hOfwwPaGsMfEu4xXcupEcDKhkTGzt8N9R+BAbbCyzk6tk+Soz/OGn
-         gUMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=eQmoJDdYSzcwbUziGfgmT3BMvQCJZXmTMT9vcpx2z8Y=;
-        b=ZCchAQXRNbma74CjeApqQggb9/giDW4YiClU+hlgwSZMSNBPvvU2NYzm3lFCbPJY40
-         7/sldieRp9uFVsngNenBhJlAQGvk1MISt3AHm65stE+SXRzaWXnWnPfHQ5e+/QUkqMiO
-         5DnvyfnM8smuuMLx4QOoUdPdkSL2OJHUeNxC+1MI9MM1suW2XCoyTpESqyDhZ+ezWeS3
-         c2Dk+FXf19iV0+gpuQboV4u//phRUdWARbM8LlVjJLmxfm54YRxXSAf6xm7dw2/frL7i
-         uqiDZjVI4oRyPcsoCVaTid12oL9bnukrL6UJvdH9icDW5vGKhpnBpYNMwpNUh/GGRaeM
-         Hg/A==
-X-Gm-Message-State: ALoCoQk0+8ZIqHfcLrpi2Uoj75oKc2RcqagTH1ueqqse06r270T+lJjYqmEYk6S8Ep42y14x061S
-X-Received: by 10.140.93.1 with SMTP id c1mr31219646qge.59.1446493001277;
-        Mon, 02 Nov 2015 11:36:41 -0800 (PST)
-Received: from ubuntu.jfk4.office.twttr.net ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id w50sm8431538qge.45.2015.11.02.11.36.40
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 02 Nov 2015 11:36:40 -0800 (PST)
-X-Mailer: git-send-email 2.4.2.691.g714732c-twtrsrc
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=D3MdKDHF1ynsOoK9VfhZgzfhyX6FRTctmPiCUAaXqNA=;
+        b=xGzInla04yUwBEHCwBssY++lfMiPxe5uuiztJeMAfhBUCB7YT5YuwGQuV5OqXIe/Hr
+         9CIOGg8ujp4sGG2ncrKwx4knMOhuBFKxqLUS+d75UgQRU5f3uMaZw7fPJYecVg+yT0uj
+         7E5cFYa3J5GjRabp8K894ro9V/VInqEIWp0AHVGm2B/W+FgU8z4Cejcpdw6aVe55L9Z0
+         U1myt7EYbEwzqxsFKHdfi5YCyMMCDUh8f3BTxqpr80HfxSfRmIAxN2SegFM1rJ+b+WB2
+         NUmdmHdZ6tLqLI/ItUBPyQ5wJhfnYZokA1B2WTUmskGx5oqKkaWjNMJqgy5iVC+SLzM4
+         DCBg==
+X-Received: by 10.31.2.193 with SMTP id 184mr16200290vkc.151.1446494507742;
+ Mon, 02 Nov 2015 12:01:47 -0800 (PST)
+Received: by 10.31.159.204 with HTTP; Mon, 2 Nov 2015 12:01:47 -0800 (PST)
+In-Reply-To: <1446491306-13493-1-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: 8E9AKsA2Fwd1CiGP7LeIi1ZTEr4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280713>
 
-A HTTP server is permitted to return a non-range response to a HTTP
-range request (and Apache httpd in fact does this in some cases).
-While libcurl knows how to correctly handle this (by skipping bytes
-before and after the requested range), it only turns on this handling
-if it is aware that a range request is being made.  By manually
-setting the range header instead of using CURLOPT_RANGE, we were
-hiding the fact that this was a range request from libcurl.  This
-could cause corruption.
+On Mon, Nov 2, 2015 at 2:08 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy <pclouds@gmail.com> wrote:
+> $X/gitdir is created, or refreshed, in order to keep a linked worktre=
+e
+> from being pruned. But while git file is used as the foundation for
+> linked worktrees, it's used for other purposes as well and we should
+> not create $X/gitdir in those cases.
+>
+> Tighten the check. Only update an existing file, which is an
+> indication this is a linked worktree.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+> @@ -99,6 +99,13 @@ test_expect_success 'check rev-list' '
+> +test_expect_success '$REAL/gitdir is not created on ordinary git fil=
+e' '
+> +       echo "gitdir: $REAL" >expected &&
+> +       test_cmp expected .git &&
+> +       git status &&
+> +       ! test -f "$REAL"/gitdir
 
-Signed-off-by: David Turner <dturner@twopensource.com>
----
+Minor: test_path_is_missing() might convey the intention a bit more cle=
+arly.
 
-This version breaks the range option formatting/setting out to a
-helper function, as suggested by Junio and Jeff.
-
-In addition, it clears the range option when curl slots are cleared
-before reuse, also as suggested
-
----
- http.c | 39 ++++++++++++++++++---------------------
- http.h |  1 -
- 2 files changed, 18 insertions(+), 22 deletions(-)
-
-diff --git a/http.c b/http.c
-index 6b89dea..eea5836 100644
---- a/http.c
-+++ b/http.c
-@@ -30,7 +30,6 @@ static CURL *curl_default;
- #endif
- 
- #define PREV_BUF_SIZE 4096
--#define RANGE_HEADER_SIZE 30
- 
- char curl_errorstr[CURL_ERROR_SIZE];
- 
-@@ -692,6 +691,7 @@ struct active_request_slot *get_active_slot(void)
- 	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 0);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
- 	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 1);
-+	curl_easy_setopt(slot->curl, CURLOPT_RANGE, NULL);
- #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, http_auth_methods);
- #endif
-@@ -1184,6 +1184,19 @@ static const char *get_accept_language(void)
- 	return cached_accept_language;
- }
- 
-+static void http_opt_request_remainder(CURL *curl, ssize_t lo)
-+{
-+	char buf[128];
-+	int len = 0;
-+
-+	if (lo >= 0)
-+		len += xsnprintf(buf + len, 128 - len, "%"PRIiMAX,
-+				 (intmax_t)lo);
-+	len += xsnprintf(buf + len, 128 - len, "-");
-+
-+	curl_easy_setopt(curl, CURLOPT_RANGE, buf);
-+}
-+
- /* http_request() targets */
- #define HTTP_REQUEST_STRBUF	0
- #define HTTP_REQUEST_FILE	1
-@@ -1212,11 +1225,8 @@ static int http_request(const char *url,
- 			long posn = ftell(result);
- 			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
- 					 fwrite);
--			if (posn > 0) {
--				strbuf_addf(&buf, "Range: bytes=%ld-", posn);
--				headers = curl_slist_append(headers, buf.buf);
--				strbuf_reset(&buf);
--			}
-+			if (posn > 0)
-+				http_opt_request_remainder(slot->curl, posn);
- 		} else
- 			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
- 					 fwrite_buffer);
-@@ -1526,10 +1536,6 @@ void release_http_pack_request(struct http_pack_request *preq)
- 		fclose(preq->packfile);
- 		preq->packfile = NULL;
- 	}
--	if (preq->range_header != NULL) {
--		curl_slist_free_all(preq->range_header);
--		preq->range_header = NULL;
--	}
- 	preq->slot = NULL;
- 	free(preq->url);
- 	free(preq);
-@@ -1593,7 +1599,6 @@ struct http_pack_request *new_http_pack_request(
- 	struct packed_git *target, const char *base_url)
- {
- 	long prev_posn = 0;
--	char range[RANGE_HEADER_SIZE];
- 	struct strbuf buf = STRBUF_INIT;
- 	struct http_pack_request *preq;
- 
-@@ -1631,10 +1636,7 @@ struct http_pack_request *new_http_pack_request(
- 			fprintf(stderr,
- 				"Resuming fetch of pack %s at byte %ld\n",
- 				sha1_to_hex(target->sha1), prev_posn);
--		xsnprintf(range, sizeof(range), "Range: bytes=%ld-", prev_posn);
--		preq->range_header = curl_slist_append(NULL, range);
--		curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER,
--			preq->range_header);
-+		http_opt_request_remainder(preq->slot->curl, prev_posn);
- 	}
- 
- 	return preq;
-@@ -1684,8 +1686,6 @@ struct http_object_request *new_http_object_request(const char *base_url,
- 	char prev_buf[PREV_BUF_SIZE];
- 	ssize_t prev_read = 0;
- 	long prev_posn = 0;
--	char range[RANGE_HEADER_SIZE];
--	struct curl_slist *range_header = NULL;
- 	struct http_object_request *freq;
- 
- 	freq = xcalloc(1, sizeof(*freq));
-@@ -1791,10 +1791,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
- 			fprintf(stderr,
- 				"Resuming fetch of object %s at byte %ld\n",
- 				hex, prev_posn);
--		xsnprintf(range, sizeof(range), "Range: bytes=%ld-", prev_posn);
--		range_header = curl_slist_append(range_header, range);
--		curl_easy_setopt(freq->slot->curl,
--				 CURLOPT_HTTPHEADER, range_header);
-+		http_opt_request_remainder(freq->slot->curl, prev_posn);
- 	}
- 
- 	return freq;
-diff --git a/http.h b/http.h
-index 49afe39..4f97b60 100644
---- a/http.h
-+++ b/http.h
-@@ -190,7 +190,6 @@ struct http_pack_request {
- 	struct packed_git **lst;
- 	FILE *packfile;
- 	char tmpfile[PATH_MAX];
--	struct curl_slist *range_header;
- 	struct active_request_slot *slot;
- };
- 
--- 
-2.4.2.691.g714732c-twtrsrc
+> +'
