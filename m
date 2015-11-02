@@ -1,77 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git log --author=me
-Date: Mon, 02 Nov 2015 10:05:42 -0800
-Message-ID: <xmqqy4ege0p5.fsf@gitster.mtv.corp.google.com>
-References: <563764B8.4010101@exec64.co.uk> <8737wos32p.fsf@igel.home>
+From: Anthony Baire <Anthony.Baire@irisa.fr>
+Subject: announcing git-svnsync (server-side =?UTF-8?B?R0lU4oaUU1ZOIHN5bmM=?=
+ =?UTF-8?B?KQ==?=
+Date: Mon, 02 Nov 2015 19:11:59 +0100
+Message-ID: <5637A76F.4040600@irisa.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Harry Jeffery <harry@exec64.co.uk>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Nov 02 19:05:57 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 02 19:09:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtJUS-0007Bz-Hc
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 19:05:56 +0100
+	id 1ZtJYC-0001w6-1i
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 19:09:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753912AbbKBSFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 13:05:52 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56083 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752603AbbKBSFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 13:05:51 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6FCD6272C8;
-	Mon,  2 Nov 2015 13:05:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=h2Oc9NlBYeeLnNxC74Sak8tSAdE=; b=k2JAzl
-	vJID1WvV87fh6ve2ddMaFdP77IV2xvDQB9jivivDomKIjQua528avVOv0lu8DipD
-	rh2W1TP/eNJEBPF41XxWh2/89sRugU0A1JWjSmaHqs3Q88C9EyQI0p67xtZaC0LD
-	wqRK1euUjf0IddxkGLtMvf4rX5zpgKBcoRV8M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SKanE3yEoNBNesWlLKPSKXaVM/oG+hbc
-	fvs+z7tFLEHQ0EtFqaHUwhNPYQPa9LVqshlAXz7ofNnjuwdO1bBJCCOhAV7YiYL8
-	ErV1qKg07E9TbQgRg0F1fbpD2u60/CsQUNMfmI1Rb2A1lUZ2At6nlRHfDp1d+7fq
-	MBcqQABAMac=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 677DA272C7;
-	Mon,  2 Nov 2015 13:05:45 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DE073272C6;
-	Mon,  2 Nov 2015 13:05:44 -0500 (EST)
-In-Reply-To: <8737wos32p.fsf@igel.home> (Andreas Schwab's message of "Mon, 02
-	Nov 2015 18:50:38 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5660C5D4-818C-11E5-B09D-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754307AbbKBSJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 13:09:44 -0500
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:8344 "EHLO
+	mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753215AbbKBSJn (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Nov 2015 13:09:43 -0500
+X-IronPort-AV: E=Sophos;i="5.20,234,1444687200"; 
+   d="scan'208";a="185680861"
+Received: from halfoat.irisa.fr (HELO [131.254.16.11]) ([131.254.16.11])
+  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/DHE-RSA-AES128-SHA; 02 Nov 2015 19:09:42 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280706>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+Hi,
+today we are announcing the first release of git-svnsync
 
-> Harry Jeffery <harry@exec64.co.uk> writes:
->
->> The purpose being to make finding your own commits quicker and easier:
->>     git log --author=me
->
-> Since --author does a regexp search, this would most likely break
-> someone's searches.  Better add a new option for that functionality.
+http://git-svnsync.gforge.inria.fr/
 
-I do not think it would hurt too much to add "--mine" to look for
-"--author" that matches you, but on the other hand, I am not sure
-its value outweighs the additional noise in the manual page.
+Git-svnsync is a bi-directional server-side synchronisation tool between 
+a git and a subversion repository.
 
-It certainly does not help "I have done this much to this project in
-the time period, and you can look at the output of this command
-yourself to verify my claim.  Type 'git shortlog --mine' and then
-promote me this season, please!" use case ;-)
+It is based on hooks and it is designed to allow a smooth transition of 
+projects from a subversion repository to a git repository. Git-svnsync 
+guarantees that any branch update ('svn commit' or 'git push') is 
+applied atomically in both repositories, thus providing a seamless 
+experience to the developers.
 
-So...
+
+At the moment the tool is minimalist (syncs only one branch), but quite 
+useful in projects where everybody commits in trunk and it is 100% free. 
+We have used it internally since 2013 without any major issue and hope 
+it will be helpful for the community.
+
+Best Regards
+--
+Anthony Baire
+IRISA/University of Rennes 1
