@@ -1,85 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git.git as of tonight
-Date: Mon, 02 Nov 2015 14:16:50 -0800
-Message-ID: <xmqqlhagdp2l.fsf@gitster.mtv.corp.google.com>
-References: <xmqqpoztf6ok.fsf@gitster.mtv.corp.google.com>
-	<5637D266.4060904@kdbg.org>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v5 18/26] refs: move transaction functions into common
+ code
+Date: Mon, 02 Nov 2015 17:19:36 -0500
+Organization: Twitter
+Message-ID: <1446502776.4131.30.camel@twopensource.com>
+References: <1445998467-11511-1-git-send-email-dturner@twopensource.com>
+	 <1445998467-11511-19-git-send-email-dturner@twopensource.com>
+	 <5635CA8A.2080505@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Nov 02 23:16:58 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Nov 02 23:19:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtNPO-00043C-15
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 23:16:58 +0100
+	id 1ZtNS7-0006Rd-Vg
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 23:19:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751968AbbKBWQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 17:16:54 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52313 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751709AbbKBWQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 17:16:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 93D5B289E0;
-	Mon,  2 Nov 2015 17:16:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/mMKqhpwSzubV56W2VQeCvrwmUc=; b=mFBW2Y
-	dlFWLQRDLg+TMHFHQ1mIz8H+Uz30Vo6jEwxr/8pkqyvTT8BIltB1JVniByaNkzX1
-	f6rhHXeDAFk+Ktsils0/dlzKEuefkgPf371tonc9Aoh/D45tkHJRqWi4rEQSBLr9
-	QaYcCOjLjSCs9PhqS1EG1gEw1M1cIR1AR3qJ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f8McW53Uu14/zJmUeYbduaHsgnxXclrm
-	PNewOaErNWOzrTupW6efoGLPhrc1SdG7LP4lHJFzZZZSLuyGq/eLau/cCyJg0Mo5
-	ce1U+KNPd/ZVuMezuK9V4m31dWOEYGYKSVUdFUOh8P7BI1bGZcqYbkVTf+8SLU4g
-	yapsR8QiJSA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 89ABB289DF;
-	Mon,  2 Nov 2015 17:16:52 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 12CB1289DD;
-	Mon,  2 Nov 2015 17:16:52 -0500 (EST)
-In-Reply-To: <5637D266.4060904@kdbg.org> (Johannes Sixt's message of "Mon, 2
-	Nov 2015 22:15:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6B1C5254-81AF-11E5-93E2-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1751780AbbKBWTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 17:19:39 -0500
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:35819 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751182AbbKBWTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 17:19:38 -0500
+Received: by qgbb65 with SMTP id b65so128187443qgb.2
+        for <git@vger.kernel.org>; Mon, 02 Nov 2015 14:19:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource_com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=Q9mqw19TeQZRI3MS+Dge5T17XMvABIsRkZ1WToheAjA=;
+        b=CPSQ/vZ8HCcwM1ffqeObO8roh1O61qIMBZsQHBB32dZNGq2iXRBar45W3y3VOW73LV
+         vuAeJ+nByuwR6wkJazGhfy4aIJ1Q9r1rZR0e33he7PKZ85sH96rsnjbJDA/3jxOFSd9F
+         PaDr2eABZETY6L99n1SC18eXaR8yRS0Nat5g2DT/B5yrUNuea6gz0CD1JhMnI3dM4fX8
+         jj/92HrbWkVUYN0fQA7rEUxTo1seNsJrsNnLMTfXX1RLytTGuLopmmdjM0PqJMGyM7Xe
+         p9/Vszxv/lvX7NkD99UsCo0uOArZmhv/Ui8JmZe7EKknAo9MuvNsTyf0elObibQdP/pp
+         8kJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=Q9mqw19TeQZRI3MS+Dge5T17XMvABIsRkZ1WToheAjA=;
+        b=MKmXjZ3mfT26L8c2wOG246Mx/8yNs249vBtT87FkRxr0T3rWLn1pc5xZeu1y0Q0Nxp
+         qFBz8KDbPWLkp+5rcviiCcuesWKv46KpjQ8Z9zHRHNN2tXS7TctqRUCFWDar+sAnO5S/
+         gl1rMFFB/cLR17aHJoBYrYuUB7oEJize32vkTFxPu+8TQSJ/lYnITBkZXwydUGx8zflM
+         Mkq8yyc+NkpyO44U4QGxZza4tcrsN1qLncwjU0rpNC5XvM5HyYgERPDzwGfb3IZrs1bS
+         wYniX9hIblRkw/aL80jDhcP1wm7uBTegoPknIPD1Z+moEyO1kok97RSk9fEH64Wkgn3l
+         hjag==
+X-Gm-Message-State: ALoCoQn/IlvNSdRVBVIIpR7D5z1dgUuvS6/W6FkbFLl/MEVcjMWccUHq24neW3fdBB9KaaUkx9C2
+X-Received: by 10.140.22.234 with SMTP id 97mr33133866qgn.55.1446502777455;
+        Mon, 02 Nov 2015 14:19:37 -0800 (PST)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id 44sm8684896qgh.11.2015.11.02.14.19.36
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 02 Nov 2015 14:19:36 -0800 (PST)
+In-Reply-To: <5635CA8A.2080505@alum.mit.edu>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280731>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Sun, 2015-11-01 at 09:17 +0100, Michael Haggerty wrote:
+> On 10/28/2015 03:14 AM, David Turner wrote:
+> > The common ref code will build up a ref transaction.  Backends will
+> > then commit it.  So the transaction creation and update functions should
+> > be in the common code.  We also need to move the ref structs into
+> > the common code so that alternate backends can access them.
+> > 
+> > Later, we will modify struct ref_update to support alternate backends.
+> 
+> I would prefer that this and later patches *not* add declarations to the
+> public API in refs.h for functions and data that are only meant to be
+> used by other reference backends.
+> 
+> So I'm working on a modified version of your series that declares such
+> functions in refs-internal.h [1] instead. I hope to submit it tomorrow.
 
-> Am 02.11.2015 um 03:58 schrieb Junio C Hamano:
->> * sb/submodule-parallel-fetch (2015-10-21) 14 commits
->>    (merged to 'next' on 2015-10-23 at 8f04bbd)
->>   + run-command: fix missing output from late callbacks
->>...
->>   + submodule.c: write "Fetching submodule <foo>" to stderr
->>   (this branch is used by rs/daemon-leak-fix and sb/submodule-parallel-update.)
->> 
->>   Add a framework to spawn a group of processes in parallel, and use
->>   it to run "git fetch --recurse-submodules" in parallel.
->> 
->>   Will merge to 'master'.
->
-> Please don't, yet. This series does not build on Windows:
+OK, I will fix up your other two issues and then wait for that series.
 
-The only reason the series is listed here is because the cycle is
-still young and I was hoping that any fallout will be addressed by
-the time we tag -rc0; if the extent of required fixups is too great,
-that obviously would not work well.
+> Actually, I have half a mind to move all of the refs-related files to a
+> subdirectory, like
+> 
+>     refs.h
+>     refs/refs.c
+>     refs/refs-internal.h
+>     refs/refs-be-files.c
+>     refs/refs-be-lmdb.c       <- still to come
+> 
+> What would you think of that?
 
-I'll try to see if I can untangle rs/daemon-leak-fix topic so that
-it does not depend on this thing and have it graduate separately.
-
-Thanks for stopping me.
+Since we're moving stuff around anyway, we might as well introduce a
+little more hierarchy.  
