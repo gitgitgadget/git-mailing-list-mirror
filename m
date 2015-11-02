@@ -1,261 +1,221 @@
 From: Knut Franke <k.franke@science-computing.de>
-Subject: [PATCH 1/2] http: allow selection of proxy authentication method
-Date: Mon,  2 Nov 2015 17:54:23 +0100
-Message-ID: <1446483264-15123-2-git-send-email-k.franke@science-computing.de>
+Subject: [PATCH 2/2] http: use credential API to handle proxy authentication
+Date: Mon,  2 Nov 2015 17:54:24 +0100
+Message-ID: <1446483264-15123-3-git-send-email-k.franke@science-computing.de>
 References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
  <1446483264-15123-1-git-send-email-k.franke@science-computing.de>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Knut Franke <k.franke@science-computing.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 02 18:04:41 2015
+X-From: git-owner@vger.kernel.org Mon Nov 02 18:05:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtIXA-0001KJ-NE
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 18:04:41 +0100
+	id 1ZtIXU-0001TX-UL
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Nov 2015 18:05:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754214AbbKBREc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 12:04:32 -0500
-Received: from mx3.science-computing.de ([193.197.16.20]:14493 "EHLO
-	mx3.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754194AbbKBRE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 12:04:29 -0500
+	id S1754367AbbKBREv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 12:04:51 -0500
+Received: from mx1.science-computing.de ([217.243.222.155]:65315 "EHLO
+	mx1.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754194AbbKBREf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 12:04:35 -0500
+X-Greylist: delayed 588 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Nov 2015 12:04:34 EST
 Received: from localhost (localhost [127.0.0.1])
-	by scmail.science-computing.de (Postfix) with ESMTP id 764D74140;
+	by scmail.science-computing.de (Postfix) with ESMTP id 67C304915;
 	Mon,  2 Nov 2015 17:54:45 +0100 (CET)
 X-Virus-Scanned: amavisd-new
 Received: from scmail.science-computing.de ([127.0.0.1])
 	by localhost (guiness.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LQckC_Qz-ffz; Mon,  2 Nov 2015 17:54:44 +0100 (CET)
+	with ESMTP id STEqQHchQHnY; Mon,  2 Nov 2015 17:54:44 +0100 (CET)
 Received: from hallasan.science-computing.de (hallasan.science-computing.de [10.10.24.76])
-	by scmail.science-computing.de (Postfix) with ESMTP id 9D4424900;
+	by scmail.science-computing.de (Postfix) with ESMTP id 959484140;
 	Mon,  2 Nov 2015 17:54:44 +0100 (CET)
 Received: by hallasan.science-computing.de (Postfix, from userid 1633)
-	id 93B08A7980; Mon,  2 Nov 2015 17:54:44 +0100 (CET)
+	id 8955BA0978; Mon,  2 Nov 2015 17:54:44 +0100 (CET)
 X-Mailer: git-send-email 2.3.7
 In-Reply-To: <1446483264-15123-1-git-send-email-k.franke@science-computing.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280702>
 
-CURLAUTH_ANY does not work with proxies which answer unauthenticated requests
-with a 307 redirect to an error page instead of a 407 listing supported
-authentication methods. Therefore, allow the authentication method to be set
-using the environment variable GIT_HTTP_PROXY_AUTHMETHOD or configuration
-variables http.proxyAuthmethod and remote.<name>.proxyAuthmethod (in analogy
-to http.proxy and remote.<name>.proxy).
+Currently, the only way to pass proxy credentials to curl is by including them
+in the proxy URL. Usually, this means they will end up on disk unencrypted, one
+way or another (by inclusion in ~/.gitconfig, shell profile or history). Since
+proxy authentication often uses a domain user, credentials can be security
+sensitive; therefore, a safer way of passing credentials is desirable.
 
-The following values are supported:
+If the configured proxy contains a username but not a password, query the
+credential API for one. Also, make sure we approve/reject proxy credentials
+properly.
 
-* anyauth (default)
-* basic
-* digest
-* negotiate
-* ntlm
+For consistency reasons, add parsing of http_proxy/https_proxy/all_proxy
+environment variables, which would otherwise be evaluated as a fallback by curl.
+Without this, we would have different semantics for git configuration and
+environment variables.
 
 Signed-off-by: Knut Franke <k.franke@science-computing.de>
 Reviewed-by: Junio C Hamano <gitster@pobox.com>
 Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- Documentation/config.txt | 26 +++++++++++++++++
- http.c                   | 72 ++++++++++++++++++++++++++++++++++++++++++++++--
- remote.c                 |  3 ++
- remote.h                 |  1 +
- 4 files changed, 99 insertions(+), 3 deletions(-)
+ http.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ http.h |  1 +
+ 2 files changed, 75 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 391a0c3..6f29893 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1597,6 +1597,27 @@ http.proxy::
- 	`curl(1)`).  This can be overridden on a per-remote basis; see
- 	remote.<name>.proxy
- 
-+http.proxyAuthMethod::
-+	Set the method with which to authenticate against the HTTP proxy. This only
-+	takes effect if the configured proxy URI contains a user name part (i.e. is
-+	of the form 'user@host' or 'user@host:port'). This can be overridden on a
-+	per-remote basis; see `remote.<name>.proxyAuthMethod`. Both can be
-+	overridden by the 'GIT_HTTP_PROXY_AUTHMETHOD' environment variable.
-+	Possible values are:
-++
-+--
-+* `anyauth` - Automatically pick a suitable authentication method. It is
-+  assumed that the proxy answers an unauthenticated request with a 407
-+  status code and one or more Proxy-authenticate headers with supported
-+  authentication methods. This is the default.
-+* `basic` - HTTP Basic authentication
-+* `digest` - HTTP Digest authentication; this prevents the password from being
-+  transmitted to the proxy in clear text
-+* `negotiate` - GSS-Negotiate authentication (compare the --negotiate option
-+  of `curl(1)`)
-+* `ntlm` - NTLM authentication (compare the --ntlm option of `curl(1)`)
-+--
-+
- http.cookieFile::
- 	File containing previously stored cookie lines which should be used
- 	in the Git http session, if they match the server. The file format
-@@ -2390,6 +2411,11 @@ remote.<name>.proxy::
- 	the proxy to use for that remote.  Set to the empty string to
- 	disable proxying for that remote.
- 
-+remote.<name>.proxyAuthMethod::
-+	For remotes that require curl (http, https and ftp), the method to use for
-+	authenticating against the proxy in use (probably set in
-+	`remote.<name>.proxy`). See `http.proxyAuthMethod`.
-+
- remote.<name>.fetch::
- 	The default set of "refspec" for linkgit:git-fetch[1]. See
- 	linkgit:git-fetch[1].
 diff --git a/http.c b/http.c
-index 7da76ed..1172819 100644
+index 1172819..5708c7a 100644
 --- a/http.c
 +++ b/http.c
-@@ -63,6 +63,24 @@ static long curl_low_speed_limit = -1;
+@@ -62,7 +62,7 @@ static const char *ssl_cainfo;
+ static long curl_low_speed_limit = -1;
  static long curl_low_speed_time = -1;
  static int curl_ftp_no_epsv;
- static const char *curl_http_proxy;
-+static const char *http_proxy_authmethod = NULL;
-+static struct {
-+	const char *name;
-+	long curlauth_param;
-+} proxy_authmethods[] = {
-+	{ "basic", CURLAUTH_BASIC },
-+	{ "digest", CURLAUTH_DIGEST },
-+	{ "negotiate", CURLAUTH_GSSNEGOTIATE },
-+	{ "ntlm", CURLAUTH_NTLM },
-+#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
-+	{ "anyauth", CURLAUTH_ANY },
-+#endif
-+	/*
-+	 * CURLAUTH_DIGEST_IE has no corresponding command-line option in
-+	 * curl(1) and is not included in CURLAUTH_ANY, so we leave it out
-+	 * here, too
-+	 */
-+};
+-static const char *curl_http_proxy;
++static const char *curl_http_proxy = NULL;
+ static const char *http_proxy_authmethod = NULL;
+ static struct {
+ 	const char *name;
+@@ -81,6 +81,8 @@ static struct {
+ 	 * here, too
+ 	 */
+ };
++static struct credential proxy_auth = CREDENTIAL_INIT;
++static const char *curl_proxyuserpwd = NULL;
  static const char *curl_cookie_file;
  static int curl_save_cookies;
  struct credential http_auth = CREDENTIAL_INIT;
-@@ -257,6 +275,9 @@ static int http_options(const char *var, const char *value, void *cb)
- 	if (!strcmp("http.proxy", var))
- 		return git_config_string(&curl_http_proxy, var, value);
- 
-+	if (!strcmp("http.proxyauthmethod", var))
-+		return git_config_string(&http_proxy_authmethod, var, value);
-+
- 	if (!strcmp("http.cookiefile", var))
- 		return git_config_string(&curl_cookie_file, var, value);
- 	if (!strcmp("http.savecookies", var)) {
-@@ -305,6 +326,42 @@ static void init_curl_http_auth(CURL *result)
+@@ -178,6 +180,9 @@ static void finish_active_slot(struct active_request_slot *slot)
+ #else
+ 		slot->results->auth_avail = 0;
  #endif
- }
- 
-+/* assumes *var is either NULL or free-able */
-+static void env_override(const char **var, const char *envname)
-+{
-+	const char *val = getenv(envname);
-+	if (val) {
-+		if (*var)
-+			free((void*)*var);
-+		*var = xstrdup(val);
-+	}
-+}
 +
-+static void init_curl_proxy_auth(CURL *result)
-+{
-+	env_override(&http_proxy_authmethod, "GIT_HTTP_PROXY_AUTHMETHOD");
-+
-+#if LIBCURL_VERSION_NUM >= 0x070a07 /* CURLOPT_PROXYAUTH and CURLAUTH_ANY */
-+	if (http_proxy_authmethod) {
-+		int i;
-+		for (i = 0; i < ARRAY_SIZE(proxy_authmethods); i++) {
-+			if (!strcmp(http_proxy_authmethod, proxy_authmethods[i].name)) {
-+				curl_easy_setopt(result, CURLOPT_PROXYAUTH,
-+						proxy_authmethods[i].curlauth_param);
-+				break;
-+			}
-+		}
-+		if (i == ARRAY_SIZE(proxy_authmethods)) {
-+			warning("unsupported proxy authentication method %s: using anyauth",
-+					http_proxy_authmethod);
-+			curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
-+		}
-+	}
-+	else
-+		curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
-+#endif
-+}
-+
- static int has_cert_password(void)
- {
- 	if (ssl_cert == NULL || ssl_cert_password_required != 1)
-@@ -466,9 +523,7 @@ static CURL *get_curl_handle(void)
- 	if (curl_http_proxy) {
- 		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
++		curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CONNECTCODE,
++			&slot->results->http_connectcode);
  	}
--#if LIBCURL_VERSION_NUM >= 0x070a07
--	curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
--#endif
-+	init_curl_proxy_auth(result);
  
- 	set_curl_keepalive(result);
+ 	/* Run callback if appropriate */
+@@ -339,6 +344,24 @@ static void env_override(const char **var, const char *envname)
  
-@@ -509,6 +564,12 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 	if (remote && remote->http_proxy)
- 		curl_http_proxy = xstrdup(remote->http_proxy);
- 
-+	if (remote && remote->http_proxy_authmethod) {
-+		if (http_proxy_authmethod)
-+			free((void*)http_proxy_authmethod);
-+		http_proxy_authmethod = xstrdup(remote->http_proxy_authmethod);
+ static void init_curl_proxy_auth(CURL *result)
+ {
++	if (proxy_auth.username) {
++		if (!proxy_auth.password)
++			credential_fill(&proxy_auth);
++#if LIBCURL_VERSION_NUM >= 0x071301
++		curl_easy_setopt(result, CURLOPT_PROXYUSERNAME,
++			proxy_auth.username);
++		curl_easy_setopt(result, CURLOPT_PROXYPASSWORD,
++			proxy_auth.password);
++#else
++		struct strbuf s = STRBUF_INIT;
++		strbuf_addstr_urlencode(&s, proxy_auth.username, 1);
++		strbuf_addch(&s, ':');
++		strbuf_addstr_urlencode(&s, proxy_auth.password, 1);
++		curl_proxyuserpwd = strbuf_detach(&s, NULL);
++		curl_easy_setopt(result, CURLOPT_PROXYUSERPWD, curl_proxyuserpwd);
++#endif
 +	}
 +
- 	pragma_header = curl_slist_append(pragma_header, "Pragma: no-cache");
- 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
+ 	env_override(&http_proxy_authmethod, "GIT_HTTP_PROXY_AUTHMETHOD");
  
-@@ -607,6 +668,11 @@ void http_cleanup(void)
+ #if LIBCURL_VERSION_NUM >= 0x070a07 /* CURLOPT_PROXYAUTH and CURLAUTH_ANY */
+@@ -520,8 +543,42 @@ static CURL *get_curl_handle(void)
+ 		curl_easy_setopt(result, CURLOPT_USE_SSL, CURLUSESSL_TRY);
+ #endif
+ 
++	/*
++	 * CURL also examines these variables as a fallback; but we need to query
++	 * them here in order to decide whether to prompt for missing password (cf.
++	 * init_curl_proxy_auth()).
++	 *
++	 * Unlike many other common environment variables, these are historically
++	 * lowercase only. It appears that CURL did not know this and implemented
++	 * only uppercase variants, which was later corrected to take both - with
++	 * the exception of http_proxy, which is lowercase only also in CURL. As
++	 * the lowercase versions are the historical quasi-standard, they take
++	 * precedence here, as in CURL.
++	 */
++	if (!curl_http_proxy) {
++		if (!strcmp(http_auth.protocol, "https")) {
++			env_override(&curl_http_proxy, "HTTPS_PROXY");
++			env_override(&curl_http_proxy, "https_proxy");
++		} else {
++			env_override(&curl_http_proxy, "http_proxy");
++		}
++		if (!curl_http_proxy) {
++			env_override(&curl_http_proxy, "ALL_PROXY");
++			env_override(&curl_http_proxy, "all_proxy");
++		}
++	}
++
+ 	if (curl_http_proxy) {
+-		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
++		if (strstr(curl_http_proxy, "://"))
++			credential_from_url(&proxy_auth, curl_http_proxy);
++		else {
++			struct strbuf url = STRBUF_INIT;
++			strbuf_addf(&url, "http://%s", curl_http_proxy);
++			credential_from_url(&proxy_auth, url.buf);
++			strbuf_release(&url);
++		}
++
++		curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
+ 	}
+ 	init_curl_proxy_auth(result);
+ 
+@@ -668,6 +725,17 @@ void http_cleanup(void)
  		curl_http_proxy = NULL;
  	}
  
-+	if (http_proxy_authmethod) {
-+		free((void *)http_proxy_authmethod);
-+		http_proxy_authmethod = NULL;
++	if (proxy_auth.password) {
++		memset(proxy_auth.password, 0, strlen(proxy_auth.password));
++		free(proxy_auth.password);
++		proxy_auth.password = NULL;
 +	}
 +
- 	if (cert_auth.password != NULL) {
- 		memset(cert_auth.password, 0, strlen(cert_auth.password));
- 		free(cert_auth.password);
-diff --git a/remote.c b/remote.c
-index 10f1ffc..0e3bba8 100644
---- a/remote.c
-+++ b/remote.c
-@@ -428,6 +428,9 @@ static int handle_config(const char *key, const char *value, void *cb)
- 	} else if (!strcmp(subkey, ".proxy")) {
- 		return git_config_string((const char **)&remote->http_proxy,
- 					 key, value);
-+	} else if (!strcmp(subkey, ".proxyauthmethod")) {
-+		return git_config_string((const char **)&remote->http_proxy_authmethod,
-+					 key, value);
- 	} else if (!strcmp(subkey, ".vcs")) {
- 		return git_config_string(&remote->foreign_vcs, key, value);
- 	}
-diff --git a/remote.h b/remote.h
-index 312b7ca..a221c5a 100644
---- a/remote.h
-+++ b/remote.h
-@@ -54,6 +54,7 @@ struct remote {
- 	 * for curl remotes only
- 	 */
- 	char *http_proxy;
-+	char *http_proxy_authmethod;
++	if (curl_proxyuserpwd) {
++		free((void *)curl_proxyuserpwd);
++		curl_proxyuserpwd = NULL;
++	}
++
+ 	if (http_proxy_authmethod) {
+ 		free((void *)http_proxy_authmethod);
+ 		http_proxy_authmethod = NULL;
+@@ -1001,6 +1069,8 @@ static int handle_curl_result(struct slot_results *results)
+ 
+ 	if (results->curl_result == CURLE_OK) {
+ 		credential_approve(&http_auth);
++		if (proxy_auth.password)
++			credential_approve(&proxy_auth);
+ 		return HTTP_OK;
+ 	} else if (missing_target(results))
+ 		return HTTP_MISSING_TARGET;
+@@ -1015,6 +1085,8 @@ static int handle_curl_result(struct slot_results *results)
+ 			return HTTP_REAUTH;
+ 		}
+ 	} else {
++		if (results->http_connectcode == 407)
++			credential_reject(&proxy_auth);
+ #if LIBCURL_VERSION_NUM >= 0x070c00
+ 		if (!curl_errorstr[0])
+ 			strlcpy(curl_errorstr,
+diff --git a/http.h b/http.h
+index 49afe39..7352a9e 100644
+--- a/http.h
++++ b/http.h
+@@ -54,6 +54,7 @@ struct slot_results {
+ 	CURLcode curl_result;
+ 	long http_code;
+ 	long auth_avail;
++	long http_connectcode;
  };
  
- struct remote *remote_get(const char *name);
+ struct active_request_slot {
 -- 
 2.3.7
 
