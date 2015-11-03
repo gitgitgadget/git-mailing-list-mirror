@@ -1,137 +1,174 @@
 From: Jonathan Lebon <jonathan.lebon@gmail.com>
-Subject: [PATCH 4/4] diff-highlight: add maxhunksize config option
-Date: Mon,  2 Nov 2015 21:05:34 -0500
-Message-ID: <1446516334-27652-5-git-send-email-jonathan.lebon@gmail.com>
+Subject: [PATCH 2/4] diff-highlight: factor out prefix/suffix functions
+Date: Mon,  2 Nov 2015 21:05:32 -0500
+Message-ID: <1446516334-27652-3-git-send-email-jonathan.lebon@gmail.com>
 References: <1446516334-27652-1-git-send-email-jonathan.lebon@gmail.com>
 Cc: peff@peff.net, Jonathan Lebon <jonathan.lebon@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 03 03:06:36 2015
+X-From: git-owner@vger.kernel.org Tue Nov 03 03:06:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtQzV-00030D-NI
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 03:06:30 +0100
+	id 1ZtQzk-0003Ee-K8
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 03:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754687AbbKCCG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 21:06:27 -0500
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:36805 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754662AbbKCCGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 21:06:23 -0500
-Received: by qgad10 with SMTP id d10so2284089qga.3
-        for <git@vger.kernel.org>; Mon, 02 Nov 2015 18:06:22 -0800 (PST)
+	id S1754658AbbKCCGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 21:06:35 -0500
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:33342 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754657AbbKCCGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 21:06:22 -0500
+Received: by qgeo38 with SMTP id o38so2387882qge.0
+        for <git@vger.kernel.org>; Mon, 02 Nov 2015 18:06:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FRwjm2R+WgUq1PmI3Xkdsstv2H3mOMMBsLW+SL34J1A=;
-        b=qP4wx0sO7iYok//DiOmHywMlizAOeKn4hj7KmJlTdARuXEpwZKQTepRWbaaEKMhUoj
-         Q5VzG+YIhXs887+akt/BQMCtRUCknJbVbFQJ4eM8i4LbRWzFJ8hSM3ZqKeRhafuVLDt/
-         LBjsDm4Txf/HhVl96SyibIS8whWtlvNXPwHbytDAePBie8sK4qv/nihPEcun8q2TW2Ej
-         2hJ4kyMa6O6rFvO/X+RPF+yx183qjHdzMo3bblS4RVehxurYBjqvHJ0FDwdp/GH6xwRb
-         oBKVqZ6d1QH1Nz0Cm8G2wSLPY9H4aLZyFcv01Q8kH1PYZTZBmYSDfek1IRTPM0rTDQ6B
-         G/0A==
-X-Received: by 10.140.94.40 with SMTP id f37mr33357893qge.3.1446516382513;
-        Mon, 02 Nov 2015 18:06:22 -0800 (PST)
+        bh=xaM33Ykv5Bhi5PVxQQ3jcAGzTiuGU7V9TO9N8NPCYXA=;
+        b=xP0i9uGNBFlJtV2oMyvTiddEchtREzKEz/IT61vGjyWNA94YkrT9FXuBi/i+erMjbW
+         1ch6BykNop9kh7b4kbrmUZWMs+x/Ha3ev8jDU9xkBNcg+BifKZIzLNh4ILyhpUUcwoHl
+         un8suIti1LcYVpYS6Oyd9DoKAJDMBm/YeubE6VOMAohmEP3FvNe5cWAZLNwk3C3j5o+P
+         33jeFjIswjnesJ6T4QGtJdyK5lrI+TgKwDtPHXAIb7H8bi64/ocoal7hIeinrwirTlGe
+         wrdu6CoaQEJ90+VTFkapcF+Rgr122smD/gDm3HUD0n6oZXbyi/YXXQbSzetPZFqdS4Zt
+         U9ZA==
+X-Received: by 10.140.21.133 with SMTP id 5mr32903309qgl.36.1446516381390;
+        Mon, 02 Nov 2015 18:06:21 -0800 (PST)
 Received: from vostro.yyz.redhat.com ([38.104.156.250])
-        by smtp.gmail.com with ESMTPSA id s21sm9013447qkl.36.2015.11.02.18.06.21
+        by smtp.gmail.com with ESMTPSA id s21sm9013447qkl.36.2015.11.02.18.06.20
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Nov 2015 18:06:22 -0800 (PST)
+        Mon, 02 Nov 2015 18:06:20 -0800 (PST)
 X-Mailer: git-send-email 2.6.0
 In-Reply-To: <1446516334-27652-1-git-send-email-jonathan.lebon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280744>
 
-As the size of the hunk gets bigger, it becomes harder to jump back and
-forth between the removed and added lines, and highlighting becomes less
-beneficial. We add a new config option called
-
-	diff-highlight.maxhunksize
-
-which controls the maximum size of the hunk allowed for which
-highlighting is still performed. The default value is set to 20.
+In preparation for the next patch, we factor out the functions for
+finding the common prefix and suffix between two lines.
 
 Signed-off-by: Jonathan Lebon <jonathan.lebon@gmail.com>
 ---
- contrib/diff-highlight/README         | 20 ++++++++++++++++++++
- contrib/diff-highlight/diff-highlight | 16 ++++++++++++++++
- 2 files changed, 36 insertions(+)
+ contrib/diff-highlight/diff-highlight | 98 ++++++++++++++++++++---------------
+ 1 file changed, 56 insertions(+), 42 deletions(-)
 
-diff --git a/contrib/diff-highlight/README b/contrib/diff-highlight/README
-index 885ff2f..ed12be1 100644
---- a/contrib/diff-highlight/README
-+++ b/contrib/diff-highlight/README
-@@ -89,6 +89,26 @@ newHighlight = "black #aaffaa"
- ---------------------------------------------
- 
- 
-+Max Hunk Config
-+---------------
-+
-+By default, diff-highlight will not do any highlighting if either the
-+number of removed or added lines is greater than 20. This is because as
-+the hunk gets bigger, it becomes harder to jump back and forth between
-+the removed and added lines, and highlighting becomes less beneficial.
-+
-+You can change this default by setting the "diff-highlight.maxhunksize"
-+configuration.
-+
-+Example:
-+
-+---------------------------------------------
-+# Increase the maximum diff-highlight to 30
-+[diff-highlight]
-+maxhunksize = 30
-+---------------------------------------------
-+
-+
- Bugs
- ----
- 
 diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
-index 46556fc..a005146 100755
+index ffefc31..a332f86 100755
 --- a/contrib/diff-highlight/diff-highlight
 +++ b/contrib/diff-highlight/diff-highlight
-@@ -17,6 +17,8 @@ my @NEW_HIGHLIGHT = (
- 	color_config('color.diff-highlight.newreset', $OLD_HIGHLIGHT[2])
- );
+@@ -110,48 +110,8 @@ sub highlight_pair {
+ 	my @a = split_line(shift);
+ 	my @b = split_line(shift);
  
-+my $MAX_HUNK_SIZE = config('diff-highlight.maxhunksize', 20);
-+
- my $RESET = "\x1b[m";
- my $COLOR = qr/\x1b\[[0-9;]*m/;
- my $BORING = qr/$COLOR|\s/;
-@@ -79,6 +81,13 @@ sub color_config {
- 	return length($s) ? $s : $default;
+-	# Find common prefix, taking care to skip any ansi
+-	# color codes.
+-	my $seen_plusminus;
+-	my ($pa, $pb) = (0, 0);
+-	while ($pa < @a && $pb < @b) {
+-		if ($a[$pa] =~ /$COLOR/) {
+-			$pa++;
+-		}
+-		elsif ($b[$pb] =~ /$COLOR/) {
+-			$pb++;
+-		}
+-		elsif ($a[$pa] eq $b[$pb]) {
+-			$pa++;
+-			$pb++;
+-		}
+-		elsif (!$seen_plusminus && $a[$pa] eq '-' && $b[$pb] eq '+') {
+-			$seen_plusminus = 1;
+-			$pa++;
+-			$pb++;
+-		}
+-		else {
+-			last;
+-		}
+-	}
+-
+-	# Find common suffix, ignoring colors.
+-	my ($sa, $sb) = ($#a, $#b);
+-	while ($sa >= $pa && $sb >= $pb) {
+-		if ($a[$sa] =~ /$COLOR/) {
+-			$sa--;
+-		}
+-		elsif ($b[$sb] =~ /$COLOR/) {
+-			$sb--;
+-		}
+-		elsif ($a[$sa] eq $b[$sb]) {
+-			$sa--;
+-			$sb--;
+-		}
+-		else {
+-			last;
+-		}
+-	}
++	my ($pa, $pb) = find_common_prefix(\@a, \@b);
++	my ($sa, $sb) = find_common_suffix(\@a, $pa, \@b, $pb);
+ 
+ 	if (is_pair_interesting(\@a, $pa, $sa, \@b, $pb, $sb)) {
+ 		return highlight_line(\@a, $pa, $sa, \@OLD_HIGHLIGHT),
+@@ -173,6 +133,60 @@ sub split_line {
+ 		split /($COLOR+)/;
  }
  
-+# Also handle our own fallback here to be independent.
-+sub config {
-+	my ($key, $default) = @_;
-+	my $s = `git config --get $key 2>/dev/null`;
-+	return length($s) ? $s : $default;
-+}
++sub find_common_prefix {
++	my ($a, $b) = @_;
 +
- sub show_hunk {
- 	my ($a, $b) = @_;
- 
-@@ -88,6 +97,13 @@ sub show_hunk {
- 		return;
- 	}
- 
-+	# Skip highlighting if the hunk gets bigger than the user configured
-+	# limit.
-+	if (@$a > $MAX_HUNK_SIZE || @$b > $MAX_HUNK_SIZE) {
-+		print @$a, @$b;
-+		return;
++	# Take care to skip any ansi color codes.
++	my $seen_plusminus;
++	my ($pa, $pb) = (0, 0);
++	while ($pa < @$a && $pb < @$b) {
++		if ($a->[$pa] =~ /$COLOR/) {
++			$pa++;
++		}
++		elsif ($b->[$pb] =~ /$COLOR/) {
++			$pb++;
++		}
++		elsif ($a->[$pa] eq $b->[$pb]) {
++			$pa++;
++			$pb++;
++		}
++		elsif (!$seen_plusminus && $a->[$pa] eq '-' && $b->[$pb] eq '+') {
++			$seen_plusminus = 1;
++			$pa++;
++			$pb++;
++		}
++		else {
++			last;
++		}
 +	}
 +
- 	my @queue;
- 	match_and_highlight_pairs($a, 0, scalar @$a, $b, 0, scalar @$b, \@queue);
- 	print @queue;
++	return $pa, $pb;
++}
++
++sub find_common_suffix {
++	my ($a, $pa, $b, $pb) = @_;
++
++	# Take care to skip any ansi color codes.
++	my ($sa, $sb) = ($#$a, $#$b);
++	while ($sa >= $pa && $sb >= $pb) {
++		if ($a->[$sa] =~ /$COLOR/) {
++			$sa--;
++		}
++		elsif ($b->[$sb] =~ /$COLOR/) {
++			$sb--;
++		}
++		elsif ($a->[$sa] eq $b->[$sb]) {
++			$sa--;
++			$sb--;
++		}
++		else {
++			last;
++		}
++	}
++
++	return $sa, $sb;
++}
++
+ sub highlight_line {
+ 	my ($line, $prefix, $suffix, $theme) = @_;
+ 
 -- 
 2.6.0
