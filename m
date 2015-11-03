@@ -1,73 +1,87 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Watchman/inotify support and other ways to speed up git status
-Date: Tue, 3 Nov 2015 06:45:22 +0100
-Message-ID: <CACsJy8AC1B+b_KBBcob07LkAkjjiwFQCLnMcgX0iUdQeNdeLfQ@mail.gmail.com>
-References: <CAP8UFD3Cd9SOh6EYwcx9hTVv7P24M5bEJRCYCT5Qgj=qPRJ8hw@mail.gmail.com>
- <1445990089.8302.27.camel@twopensource.com> <CAP8UFD3rkacENsnthdhqTPczbZP+J_iV6xr8sTXj2MFgZRx8DQ@mail.gmail.com>
- <1446497776.4131.6.camel@twopensource.com>
+Subject: Re: [PATCH] setup: do not create $X/gitdir unnecessarily when
+ accessing git file $X
+Date: Tue, 3 Nov 2015 06:48:31 +0100
+Message-ID: <CACsJy8Csjgcv_L+TW9YPTs5V=T2XD+eqo1w1PO4jpfDoHLQKpQ@mail.gmail.com>
+References: <xmqqwpu7klmu.fsf@gitster.mtv.corp.google.com> <1446491306-13493-1-git-send-email-pclouds@gmail.com>
+ <20151102203507.GB10722@sigill.intra.peff.net> <xmqqtwp4dt17.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Luciano Rocha <luciano.rocha@booking.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-To: David Turner <dturner@twopensource.com>,
-	Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 06:46:34 2015
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	rappazzo@gmail.com, kyle@kyleam.com,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 03 06:54:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtUQQ-0005xe-Lu
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 06:46:31 +0100
+	id 1ZtUYX-0005OH-70
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 06:54:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752102AbbKCFpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 00:45:54 -0500
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:33405 "EHLO
-	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751415AbbKCFpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 00:45:53 -0500
-Received: by lfbf136 with SMTP id f136so5829270lfb.0
-        for <git@vger.kernel.org>; Mon, 02 Nov 2015 21:45:52 -0800 (PST)
+	id S1752499AbbKCFtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 00:49:06 -0500
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:34023 "EHLO
+	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750774AbbKCFtD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 00:49:03 -0500
+Received: by lfgh9 with SMTP id h9so5794030lfg.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2015 21:49:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=5bsKzjGwlyIjL5TPgKnT2aOhXKaAuLk1dhBa2VRtNZ4=;
-        b=ity+Zzp0EUkTu59wLdgtbGhc1KFT/iZ60gCVZKw8+iUFKjEdu0301fb2t5GJvyoXcL
-         9XUVv3oCgonEvVO5JlWddw7f5iQytop04zKqRYuEEOWqi8SUucE/hQx3jyRAjFGA3PIj
-         1+G1/zp1Rs9fVSUQyaDBnpMmXeiTHYlCdGx8ZLt99dEKbf6gQ/mKlbKFvpBk35GNBJxN
-         hABfF5RKp/G2L8EbsfwqXjmwMyGdiqWlFEKfz3fMWwtR2Gf1Ph9t7fTYN6lbBJHyWKsK
-         /vB9FgVlfOnSoTI1qsIKi+A4hLmnRLMfKmQFncZ6pDZaH1wdf6Keas2oyQEZygecf+19
-         kLFA==
-X-Received: by 10.112.202.194 with SMTP id kk2mr11456574lbc.71.1446529552262;
- Mon, 02 Nov 2015 21:45:52 -0800 (PST)
-Received: by 10.112.255.229 with HTTP; Mon, 2 Nov 2015 21:45:22 -0800 (PST)
-In-Reply-To: <1446497776.4131.6.camel@twopensource.com>
+        bh=W7wn2SyHeI7vNGNa2hz5qcDDS/Vz5r39huYxMe+rbKk=;
+        b=yuMfDcdm7Y8NlBUJG1QW0GFY4wWvlvVO2qr6qGmY+0DaYnlakxawEWGnOzW5ig7IMg
+         P+CUx3F7ClP5Mwt+bsHl2EVDtf7lfKM6u54cVxHRTb4/YhiZoRIamvOowDfsunTUrTzO
+         P3jnXO5dTe6yZVp7bi28cJ7Lo6A7KBxX5AZgQs2DIbSqspNVE8JLINWKhvfPgE4qTTjy
+         j3XMue1NS5OTjYNGR3/xDh8LiMpq7EZ/ZvcmLvbv5VKzLeedLY3nF3sgCYIKye1PijyB
+         ZfUppCYaLx6BwAFrkkejX94ywpkvOmC+jpdkIFC0rUJFkhtDw1H65b3DE26tj8bhAp8O
+         eV4Q==
+X-Received: by 10.25.24.195 with SMTP id 64mr8001623lfy.71.1446529741266; Mon,
+ 02 Nov 2015 21:49:01 -0800 (PST)
+Received: by 10.112.255.229 with HTTP; Mon, 2 Nov 2015 21:48:31 -0800 (PST)
+In-Reply-To: <xmqqtwp4dt17.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280749>
 
-On Mon, Nov 2, 2015 at 9:56 PM, David Turner <dturner@twopensource.com> wrote:
-> On Thu, 2015-10-29 at 09:10 +0100, Christian Couder wrote:
->> > We're using Watchman at Twitter.  A week or two ago posted a dump of our
->> > code to github, but I would advise waiting a day or two to use it, as
->> > I'm about to pull a large number of bugfixes into it (I'll update this
->> > thread and provide a link once I do so).
->>
->> Great, I will have a look at it then!
->
-> Here's the most recent version:
->
-> https://github.com/dturner-tw/git/tree/dturner/watchman
+(resend)
 
-Christian, the index-helper/watchman series are posted because you
-showed interest in this area. I'm not rerolling to address David's
-comments on the series for now. Take your time evaluate the two
-approaches, then you can pick one (and let me know if you want me to
-hand my series over, very glad to do so).
+On Mon, Nov 2, 2015 at 9:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> [2] I suspect this code should use write_file_gently(). What happens if
+>>     I have a read-only linked checkout?
+
+I can't hide anything from you guys can I? :) My first attempt was
+move this update logic back to setup_..._gentle where it should
+belong, but it got complicated because read_file_gently was buried too
+deep and there was no easy way to get the information out.
+
+I can try again, or..
+
+>
+> Or you may not be the owner of the repository, you think you are
+> doing a read-only operation, and you silently end up creating a file
+> that cannot be written by the repository owner?
+>
+> Honestly, I think this whole "just in case the user moved without
+> telling us, we sneakily fix things without telling the user" should
+> just go away.  This is not the first incidence of a tool trying to
+> be overly clever and pretend to know better than the end user biting
+> us, is it?
+
+The whole prune strategy is a bit messy trying to cover all cases
+while still keeping out of the user's way. Perhaps if we implement
+"git worktree mv", or even "worktree fixup" so the user can do it
+manually (back when the prune strategy commit was implemented, there
+was no git-worktree), then we don't need this magic any more.
+
+So, which way to go?
+
 -- 
 Duy
