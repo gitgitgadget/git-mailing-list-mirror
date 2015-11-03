@@ -1,100 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] Add git-grep threads param
-Date: Tue, 03 Nov 2015 09:22:09 -0800
-Message-ID: <xmqqvb9jc81q.fsf@gitster.mtv.corp.google.com>
-References: <1445980944-24000-1-git-send-email-vleschuk@accesssoftek.com>
+From: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
+Subject: [BUG] Wrong worktree path when using multiple worktree
+Date: Tue, 3 Nov 2015 17:58:06 +0100
+Message-ID: <5638E79E.10407@morey-chaisemartin.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Victor Leschuk <vleschuk@accesssoftek.com>,
-	"torvalds\@linux-foundation.org" <torvalds@linux-foundation.org>,
-	"john\@keeping.me.uk" <john@keeping.me.uk>
-To: Victor Leschuk <vleschuk@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 18:22:22 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 03 18:34:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtfHp-0001UM-Mh
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 18:22:22 +0100
+	id 1ZtfTJ-0003jS-8L
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 18:34:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755461AbbKCRWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 12:22:15 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57712 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754645AbbKCRWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 12:22:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 56327289EE;
-	Tue,  3 Nov 2015 12:22:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NKYdmI4whjE87AYZZ37UucGBJxk=; b=bycEVA
-	XCfKnl1vStRHifobrai3+TSd3+mfWE/mga8UvHK4a3HLyjGmRBErIenkVtlAJxTo
-	e0Wpvg/MM4EV36nQWY3EYZtBVQoEgOgsx8ErZ2ekYqi7Jx380y92SbXOJgQ9Zv5B
-	lX8SM8GG9cn0w4YqWDXqlgC0xD+2CIGSXSnaE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ohYZl7mlHM2KurOWd8qVtgzGD4+57aG7
-	4a8x8mDqpvuo54Th4w/jz0BYWcDxL8JnU4EuAXYTk+ob+mGWWzkRZPgkehbHkh+m
-	Sb88GfLhri8f4+WfbF5sUMPB/SYnQuDemzct2t3KzM4RV8OBfbjbLoAdT4wCqwcV
-	4ufXVo9kPUI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4B5A4289ED;
-	Tue,  3 Nov 2015 12:22:11 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C2540289EC;
-	Tue,  3 Nov 2015 12:22:10 -0500 (EST)
-In-Reply-To: <1445980944-24000-1-git-send-email-vleschuk@accesssoftek.com>
-	(Victor Leschuk's message of "Wed, 28 Oct 2015 00:22:24 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 6AA8AF52-824F-11E5-978F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754982AbbKCReI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 12:34:08 -0500
+Received: from 9.mo69.mail-out.ovh.net ([46.105.56.78]:59542 "EHLO
+	9.mo69.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754081AbbKCReG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 12:34:06 -0500
+X-Greylist: delayed 1804 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Nov 2015 12:34:05 EST
+Received: from mail97.ha.ovh.net (b9.ovh.net [213.186.33.59])
+	by mo69.mail-out.ovh.net (Postfix) with SMTP id 91FAC1000B88
+	for <git@vger.kernel.org>; Tue,  3 Nov 2015 17:58:12 +0100 (CET)
+Received: from localhost (HELO queueout) (127.0.0.1)
+	by localhost with SMTP; 3 Nov 2015 18:58:11 +0200
+Received: from unknown (HELO sat.lin.mbt.kalray.eu) (nicolas@morey-chaisemartin.com@92.103.151.218)
+  by ns0.ovh.net with SMTP; 3 Nov 2015 18:58:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:43.0) Gecko/20100101
+ Thunderbird/43.0a2
+X-Ovh-Tracer-Id: 16690340220637538270
+X-Ovh-Remote: 92.103.151.218 ()
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: 0
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeekhedrvdekucetufdoteggodftvfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeekhedrvdekucetufdoteggodftvfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280804>
 
-Victor Leschuk <vleschuk@gmail.com> writes:
+Hi,
 
-> Make number of git-grep worker threads a configuration parameter.
-> According to several tests on systems with different number of CPU cores
-> the hard-coded number of 8 threads is not optimal for all systems:
-> tuning this parameter can significantly speed up grep performance.
->
-> Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
-> ---
->  Documentation/config.txt               |  4 +++
->  Documentation/git-grep.txt             |  9 ++++++
->  builtin/grep.c                         | 56 ++++++++++++++++++++++++----------
->  contrib/completion/git-completion.bash |  1 +
->  4 files changed, 54 insertions(+), 16 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 391a0c3..1dd2a61 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1447,6 +1447,10 @@ grep.extendedRegexp::
->  	option is ignored when the 'grep.patternType' option is set to a value
->  	other than 'default'.
->  
-> +grep.threads::
-> +	Number of grep worker threads, use it to tune up performance on
-> +	multicore machines. Default value is 8. Set to 0 to disable threading.
-> +
+There seem to be an issue with the path computed for a worktree when multiple worktree were created (using git worktree)
+In my Setup, I have 3 repos:
+A/repo (main One)
+A/repo-patches (worktree, using branch dev)
+B/repo (worktree, using branch next)
 
-I am not enthused by this "Set to 0 to disable".  As Zero is
-magical, it would be more useful if 1 meant that threading is not
-used (i.e. there is only 1 worker), and 0 meant that we would
-automatically pick some reasonable parallelism for you (and we
-promise that the our choice would not be outrageously wrong), or
-something like that.
+I'm working in A/repo-patches an run:
+$ git checkout next
+fatal: 'next' is already checked out at 'A/repo-patches'
 
-Of course, we can do grep.threads=auto to make it even more
-explicit, but I'd imagine that the in-core code to parse the option
-and config to the num_threads variable would need one "int" value to
-represent that "auto", and 0 would be a natural choice for that.
+Which is partially true but not completely.
+I looked a bit in the code and found that the issue comes from here (get_linked_worktree):
+    if (!strbuf_strip_suffix(&worktree_path, "/.git")) {
+        strbuf_reset(&worktree_path);
+        strbuf_addstr(&worktree_path, absolute_path("."));
+        strbuf_strip_suffix(&worktree_path, "/.");
+    }
+Because it wrongfully assumes that I am in the linked worktree.
+I checked in the .git/worktree files and couldn't see anything that actually points to where the repo are setup.
 
-Thanks.
+Nicolas
