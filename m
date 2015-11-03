@@ -1,460 +1,98 @@
-From: miurahr@linux.com
-Subject: [PATCH] Update japanese translation
-Date: Tue,  3 Nov 2015 21:47:40 +0900
-Message-ID: <1446554860-2539-1-git-send-email-miurahr@linux.com>
+From: Konstantin Khomoutov <kostix+git-I8vNd4LC5SeHXe+LvDLADg@public.gmane.org>
+Subject: Automatic download at git-scm.com does not work (Was: 
+ Cant download Git)
+Date: Tue, 3 Nov 2015 16:14:28 +0300
+Message-ID: <20151103161428.a6be2380032c2d07c1769507@domain007.com>
+References: <025c4d3a-f018-4e13-9fc8-7649460662cd@googlegroups.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Hiroshi Miura <miurahr@linux.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Nov 03 13:54:29 2015
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: M Hendrickson <mkckkcm-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+X-From: git-users+bncBCWKX34CSUCBBN7G4KYQKGQETCVJ5HQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Tue Nov 03 14:14:34 2015
+Return-path: <git-users+bncBCWKX34CSUCBBN7G4KYQKGQETCVJ5HQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-lf0-f61.google.com ([209.85.215.61])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ztb6R-00050h-G4
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 13:54:20 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751960AbbKCMyO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Nov 2015 07:54:14 -0500
-Received: from nm12-vm0.bullet.mail.bf1.yahoo.com ([98.139.213.140]:47043 "EHLO
-	nm12-vm0.bullet.mail.bf1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751382AbbKCMyN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Nov 2015 07:54:13 -0500
-X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Nov 2015 07:54:13 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1446554888; bh=2cWN7b4dNCTHrX468ja4vDiXtlWlUvWb5QJddq+qIC4=; h=From:To:Cc:Subject:Date:From:Subject; b=HPoC9vwKySF4L5/hnC3eM6w3tbs5lBuJCfmSYL74fx0dVVeqkWRALxN5YAaV+evG5KZ+4DmJRXkjct4IQMawjPWxxB1L5fkJtOkElx65q6i/GuwgIOOiogCF72mhdMq+7S8ZEzqMhNkQyCbsbdiWUanDC2javfQuOk0UREUwmgRoZCXALS9l0kHCakaoji4nLKRilZVldLfK8Gu13lZwOr5gWhT3s3VvWwMEc7Ceb55dxTA+hpXqNQQIXbqY3Z+XuIhueR7wImUYasruSJeCvkn3crd/VO7mEuA1AKzSdgIBIk0I8XHcN0Xd8D+gk7fRa4m/H04rpbqfh9wYQ9Yv1Q==
-Received: from [66.196.81.170] by nm12.bullet.mail.bf1.yahoo.com with NNFMP; 03 Nov 2015 12:48:08 -0000
-Received: from [98.139.213.9] by tm16.bullet.mail.bf1.yahoo.com with NNFMP; 03 Nov 2015 12:48:08 -0000
-Received: from [127.0.0.1] by smtp109.mail.bf1.yahoo.com with NNFMP; 03 Nov 2015 12:48:08 -0000
-X-Yahoo-Newman-Id: 381349.73366.bm@smtp109.mail.bf1.yahoo.com
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: kLU6lNYVM1kNe8JY8xGKxfJjRlFRGiBtzIWZLhURUPubk80
- 7Ml7ZRBnMH8ZTND3HW85P37WshbFxd5m55pQUUBFJkZu6iCLcP6gyMedlSBe
- rIED.49NyGbvPmuxnXmU3vQPRKZDVYyMlpgqzproTZuHU4HcbVSCPVpqCynU
- N1jdY3wUWLSdJa_g_.D1yWs6ZCUDbWeUqkVkheqeF8Z4Uf0vAWS20W0RZvQf
- uHgKOmMrFB3UTVzkLHMAK.Tethnhr8QY7QL9tdfpc.9vvYRnCkd5gFg11Blw
- L8eAZdqx7rBPu.IVLgQhZC2mZAelCrpw56TgrV7DpgfVSje_YulME5aebb3i
- VJ0innTPhCTX7AI9osSJhnG2oBqUJaww2Ms_YvVz8scz3HgoMO9tSzYAdU0m
- 7co0rfMaevZMRGsOoVwe2LvvKJhgF2QsgqAyTs7SxwCvk_zKPF7jMl_RQfRT
- apg4rq6lZQigaebEH1LBNPoU6ifTK4YOO5t9gZD07aF9TvoBRSH90rYCcOSa
- FtCbQduYQz4Bjrk67K1kUbvC59T_Z_EVDCC7nQrsRzUBPWhVLzA--
-X-Yahoo-SMTP: TFiWS.GswBDcwJZc5VAEj6aHk.w-
-X-Mailer: git-send-email 2.6.2
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280793>
+	(envelope-from <git-users+bncBCWKX34CSUCBBN7G4KYQKGQETCVJ5HQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1ZtbQ1-0003wi-1r
+	for gcggu-git-users@m.gmane.org; Tue, 03 Nov 2015 14:14:33 +0100
+Received: by lfu67 with SMTP id 67sf4460151lfu.0
+        for <gcggu-git-users@m.gmane.org>; Tue, 03 Nov 2015 05:14:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-type:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:x-spam-checked-in-group:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe;
+        bh=1n2EwOkDLlB6UtnGhEoxkH7SNw4KlJa6Iiqkl0iUdZI=;
+        b=PdmQpasX0VM0lMNm5JZA5D4j9fT8OC8c21BC6zZ7hQwof/H9tFHjCkWTooTWwTBmh/
+         hS2M+BpZvD3YLyQi3eLRNHak/ru7nGwsCAS+mIiAcDsEkHhrxkdM657TZtTmqMt+4WtK
+         5O5AkZ5+4oquJdRYHp1nLfKp1jnhOewGBYmC/ZfxoKBP59dxaVHvfLOXEzaHYvKMebp2
+         kMkV4HY8zCzruG9+UaUR3PPMZfX7MhReALFQhGyQVdtzvuHkU6GBebuVhDAL72izDsGD
+         SF2zpxLelgQMRYnFsKDtzS3SG0xxXdU8OT8FifKh1yV6UuJVorWQILFYZG/J/Hn5+mcF
+         9xUg==
+X-Received: by 10.28.9.209 with SMTP id 200mr77898wmj.15.1446556472839;
+        Tue, 03 Nov 2015 05:14:32 -0800 (PST)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.28.146.133 with SMTP id u127ls863920wmd.2.canary; Tue, 03 Nov
+ 2015 05:14:31 -0800 (PST)
+X-Received: by 10.28.173.83 with SMTP id w80mr3474706wme.0.1446556471513;
+        Tue, 03 Nov 2015 05:14:31 -0800 (PST)
+Received: from mailhub.007spb.ru (mailhub.007spb.ru. [84.204.203.130])
+        by gmr-mx.google.com with ESMTPS id wn2si188943lbb.0.2015.11.03.05.14.31
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 03 Nov 2015 05:14:31 -0800 (PST)
+Received-SPF: pass (google.com: domain of kostix+git-I8vNd4LC5SeHXe+LvDLADg@public.gmane.org designates 84.204.203.130 as permitted sender) client-ip=84.204.203.130;
+Received: from tigra.domain007.com ([192.168.2.102])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id tA3DESJt019478;
+	Tue, 3 Nov 2015 16:14:30 +0300
+In-Reply-To: <025c4d3a-f018-4e13-9fc8-7649460662cd-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
+X-Original-Sender: kostix+git-I8vNd4LC5SeHXe+LvDLADg@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of kostix+git-I8vNd4LC5SeHXe+LvDLADg@public.gmane.org designates 84.204.203.130 as
+ permitted sender) smtp.mailfrom=kostix+git-I8vNd4LC5SeHXe+LvDLADg@public.gmane.org
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Spam-Checked-In-Group: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>,
+ <http://groups.google.com/group/git-users/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280794>
 
-=46rom: Hiroshi Miura <miurahr@linux.com>
+On Tue, 3 Nov 2015 04:55:22 -0800 (PST)
+M Hendrickson <mkckkcm-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
 
-- Update untranslated terms
+> I am trying to download Git. When I click download for Mac OS X it
+> says "download starting" but the download doesn't start.
+> 
+> There is a manual download option from sourceforge. But some have
+> warned me that downloading from sourceforge often contains unwanted
+> things included in the download.
 
-Signed-off-by: Hiroshi Miura <miurahr@linux.com>
----
- gitk-git/po/ja.po | 97 ++++++++++++++++++++++++-----------------------=
---------
- 1 file changed, 42 insertions(+), 55 deletions(-)
+That was a blunder of the (recent) past so I'd say it's OK to download
+directly from SF.  Note that the Mac OS X build accessible from
+git-scm.com, while being "officially blessed" is not prepared by the
+upstream Git developers (as they only distribute the source code) but
+rather this is a port coordinated there at that SF project you referred
+to.
 
-diff --git a/gitk-git/po/ja.po b/gitk-git/po/ja.po
-index 59e42a8..cb55909 100644
---- a/gitk-git/po/ja.po
-+++ b/gitk-git/po/ja.po
-@@ -9,14 +9,15 @@ msgstr ""
- "Project-Id-Version: gitk\n"
- "Report-Msgid-Bugs-To: \n"
- "POT-Creation-Date: 2015-05-17 14:32+1000\n"
--"PO-Revision-Date: 2009-11-06 01:45+0900\n"
--"Last-Translator: Mizar <mizar.jp@gmail.com>\n"
-+"PO-Revision-Date: 2015-11-03 16:38+0900\n"
-+"Last-Translator: Hiroshi Miura <miurahr@linux.com>\n"
- "Language-Team: Japanese\n"
--"Language: \n"
- "MIME-Version: 1.0\n"
- "Content-Type: text/plain; charset=3DUTF-8\n"
- "Content-Transfer-Encoding: 8bit\n"
- "Plural-Forms: nplurals=3D1; plural=3D0;\n"
-+"X-Generator: Poedit 1.5.4\n"
-+"Language: ja\n"
-=20
- #: gitk:140
- msgid "Couldn't get list of unmerged files:"
-@@ -24,11 +25,11 @@ msgstr "=E3=83=9E=E3=83=BC=E3=82=B8=E3=81=95=E3=82=8C=
-=E3=81=A6=E3=81=84=E3=81=AA=E3=81=84=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB=
-=E3=81=AE=E3=83=AA=E3=82=B9=E3=83=88=E3=82=92=E5=8F=96=E5=BE=97=E3=81=A7=
-=E3=81=8D=E3=81=BE=E3=81=9B
-=20
- #: gitk:212 gitk:2381
- msgid "Color words"
--msgstr ""
-+msgstr "=E5=8D=98=E8=AA=9E=E3=81=AB=E8=89=B2=E3=82=92=E4=BB=98=E3=81=91=
-=E3=82=8B"
-=20
- #: gitk:217 gitk:2381 gitk:8220 gitk:8253
- msgid "Markup words"
--msgstr ""
-+msgstr "=E5=8D=98=E8=AA=9E=E3=82=92=E3=83=9E=E3=83=BC=E3=82=AF=E3=81=99=
-=E3=82=8B"
-=20
- #: gitk:324
- msgid "Error parsing revisions:"
-@@ -308,19 +309,16 @@ msgid "Compare with marked commit"
- msgstr "=E3=83=9E=E3=83=BC=E3=82=AF=E3=82=92=E4=BB=98=E3=81=91=E3=81=9F=
-=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=81=A8=E6=AF=94=E8=BC=83=E3=81=99=
-=E3=82=8B"
-=20
- #: gitk:2629 gitk:2640
--#, fuzzy
- msgid "Diff this -> marked commit"
--msgstr "=E3=81=93=E3=82=8C=E3=81=A8=E9=81=B8=E6=8A=9E=E3=81=97=E3=81=9F=
-=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=81=AEdiff=E3=82=92=E8=A6=8B=E3=82=
-=8B"
-+msgstr "=E3=81=93=E3=82=8C->=E9=81=B8=E6=8A=9E=E3=81=97=E3=81=9F=E3=82=
-=B3=E3=83=9F=E3=83=83=E3=83=88=E3=81=AEdiff"
-=20
- #: gitk:2630 gitk:2641
--#, fuzzy
- msgid "Diff marked commit -> this"
--msgstr "=E9=81=B8=E6=8A=9E=E3=81=97=E3=81=9F=E3=82=B3=E3=83=9F=E3=83=83=
-=E3=83=88=E3=81=A8=E3=81=93=E3=82=8C=E3=81=AEdiff=E3=82=92=E8=A6=8B=E3=82=
-=8B"
-+msgstr "=E9=81=B8=E6=8A=9E=E3=81=97=E3=81=9F=E3=82=B3=E3=83=9F=E3=83=83=
-=E3=83=88->=E3=81=93=E3=82=8C=E3=81=AEdiff"
-=20
- #: gitk:2631
--#, fuzzy
- msgid "Revert this commit"
--msgstr "=E3=81=93=E3=81=AE=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=81=AB=
-=E3=83=9E=E3=83=BC=E3=82=AF=E3=82=92=E3=81=A4=E3=81=91=E3=82=8B"
-+msgstr "=E3=81=93=E3=81=AE=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=82=92=
-=E3=83=AA=E3=83=90=E3=83=BC=E3=83=88"
-=20
- #: gitk:2647
- msgid "Check out this branch"
-@@ -332,7 +330,7 @@ msgstr "=E3=81=93=E3=81=AE=E3=83=96=E3=83=A9=E3=83=B3=
-=E3=83=81=E3=82=92=E9=99=A4=E5=8E=BB=E3=81=99=E3=82=8B"
-=20
- #: gitk:2649
- msgid "Copy branch name"
--msgstr ""
-+msgstr "=E3=83=96=E3=83=A9=E3=83=B3=E3=83=81=E5=90=8D=E3=82=92=E3=82=B3=
-=E3=83=94=E3=83=BC"
-=20
- #: gitk:2656
- msgid "Highlight this too"
-@@ -352,7 +350,7 @@ msgstr "=E8=A6=AA=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=
-=E3=81=8B=E3=82=89 blame =E3=82=92=E3=81=8B=E3=81=91=E3=82=8B"
-=20
- #: gitk:2660
- msgid "Copy path"
--msgstr ""
-+msgstr "=E3=83=91=E3=82=B9=E3=82=92=E3=82=B3=E3=83=94=E3=83=BC"
-=20
- #: gitk:2667
- msgid "Show origin of this line"
-@@ -363,7 +361,6 @@ msgid "Run git gui blame on this line"
- msgstr "=E3=81=93=E3=81=AE=E8=A1=8C=E3=81=AB git gui =E3=81=A7 blame =E3=
-=82=92=E3=81=8B=E3=81=91=E3=82=8B"
-=20
- #: gitk:3014
--#, fuzzy
- msgid ""
- "\n"
- "Gitk - a commit viewer for git\n"
-@@ -375,7 +372,7 @@ msgstr ""
- "\n"
- "Gitk - git=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=83=93=E3=83=A5=E3=83=
-=BC=E3=82=A2\n"
- "\n"
--"Copyright \\u00a9 2005-2010 Paul Mackerras\n"
-+"Copyright =C2=A9 2005-2014 Paul Mackerras\n"
- "\n"
- "=E4=BD=BF=E7=94=A8=E3=81=8A=E3=82=88=E3=81=B3=E5=86=8D=E9=85=8D=E5=B8=
-=83=E3=81=AF GNU General Public License =E3=81=AB=E5=BE=93=E3=81=A3=E3=81=
-=A6=E3=81=8F=E3=81=A0=E3=81=95=E3=81=84"
-=20
-@@ -397,9 +394,9 @@ msgid "<%s-Q>\t\tQuit"
- msgstr "<%s-Q>\t\t=E7=B5=82=E4=BA=86"
-=20
- #: gitk:3049
--#, fuzzy, tcl-format
-+#, tcl-format
- msgid "<%s-W>\t\tClose window"
--msgstr "<%s-F>\t\t=E6=A4=9C=E7=B4=A2"
-+msgstr "<%s-W>\t\t=E3=82=A6=E3=82=A4=E3=83=B3=E3=83=89=E3=82=A6=E3=82=92=
-=E9=96=89=E3=81=98=E3=82=8B"
-=20
- #: gitk:3050
- msgid "<Home>\t\tMove to first commit"
-@@ -410,19 +407,16 @@ msgid "<End>\t\tMove to last commit"
- msgstr "<End>\t\t=E6=9C=80=E5=BE=8C=E3=81=AE=E3=82=B3=E3=83=9F=E3=83=83=
-=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
-=20
- #: gitk:3052
--#, fuzzy
- msgid "<Up>, p, k\tMove up one commit"
--msgstr "<Up>, p, i\t=E4=B8=80=E3=81=A4=E4=B8=8A=E3=81=AE=E3=82=B3=E3=83=
-=9F=E3=83=83=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
-+msgstr "<Up>, p, k\t=E4=B8=80=E3=81=A4=E4=B8=8A=E3=81=AE=E3=82=B3=E3=83=
-=9F=E3=83=83=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
-=20
- #: gitk:3053
--#, fuzzy
- msgid "<Down>, n, j\tMove down one commit"
--msgstr "<Down>, n, k\t=E4=B8=80=E3=81=A4=E4=B8=8B=E3=81=AE=E3=82=B3=E3=
-=83=9F=E3=83=83=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
-+msgstr "<Down>, n, j\t=E4=B8=80=E3=81=A4=E4=B8=8B=E3=81=AE=E3=82=B3=E3=
-=83=9F=E3=83=83=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
-=20
- #: gitk:3054
--#, fuzzy
- msgid "<Left>, z, h\tGo back in history list"
--msgstr "<Left>, z, j\t=E5=B1=A5=E6=AD=B4=E3=81=AE=E5=89=8D=E3=81=AB=E6=
-=88=BB=E3=82=8B"
-+msgstr "<Left>, z, h\t=E5=B1=A5=E6=AD=B4=E3=81=AE=E5=89=8D=E3=81=AB=E6=
-=88=BB=E3=82=8B"
-=20
- #: gitk:3055
- msgid "<Right>, x, l\tGo forward in history list"
-@@ -431,7 +425,7 @@ msgstr "<Right>, x, l\t=E5=B1=A5=E6=AD=B4=E3=81=AE=E6=
-=AC=A1=E3=81=B8=E9=80=B2=E3=82=80"
- #: gitk:3056
- #, tcl-format
- msgid "<%s-n>\tGo to n-th parent of current commit in history list"
--msgstr ""
-+msgstr "<%s-n>\t=E3=83=92=E3=82=B9=E3=83=88=E3=83=AA=E3=81=AE=E7=8F=BE=
-=E5=9C=A8=E3=81=8B=E3=82=89n=E7=95=AA=E7=9B=AE=E3=81=AE=E8=A6=AA=E3=82=B3=
-=E3=83=9F=E3=83=83=E3=83=88=E3=81=B8=E7=A7=BB=E5=8B=95=E3=81=99=E3=82=8B=
-"
-=20
- #: gitk:3057
- msgid "<PageUp>\tMove up one page in commit list"
-@@ -514,9 +508,8 @@ msgid "<Return>\tMove to next find hit"
- msgstr "<Return>\t=E6=AC=A1=E3=82=92=E6=A4=9C=E7=B4=A2=E3=81=97=E3=81=A6=
-=E7=A7=BB=E5=8B=95"
-=20
- #: gitk:3075
--#, fuzzy
- msgid "g\t\tGo to commit"
--msgstr "<End>\t\t=E6=9C=80=E5=BE=8C=E3=81=AE=E3=82=B3=E3=83=9F=E3=83=83=
-=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
-+msgstr "g\t\t=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=81=AB=E7=A7=BB=E5=
-=8B=95"
-=20
- #: gitk:3076
- msgid "/\t\tFocus the search box"
-@@ -672,9 +665,8 @@ msgid "Matches all Commit Info criteria"
- msgstr "=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E6=83=85=E5=A0=B1=E3=81=AE=
-=E5=85=A8=E3=81=A6=E3=81=AE=E6=9D=A1=E4=BB=B6=E3=81=AB=E4=B8=80=E8=87=B4=
-"
-=20
- #: gitk:4086
--#, fuzzy
- msgid "Matches no Commit Info criteria"
--msgstr "=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E6=83=85=E5=A0=B1=E3=81=AE=
-=E5=85=A8=E3=81=A6=E3=81=AE=E6=9D=A1=E4=BB=B6=E3=81=AB=E4=B8=80=E8=87=B4=
-"
-+msgstr "=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E6=83=85=E5=A0=B1=E3=81=AB=
-=E4=B8=80=E8=87=B4=E3=81=97=E3=81=BE=E3=81=9B=E3=82=93"
-=20
- #: gitk:4087
- msgid "Changes to Files:"
-@@ -761,9 +753,8 @@ msgid "-- criteria for selecting revisions"
- msgstr "=E2=80=95 =E3=83=AA=E3=83=93=E3=82=B8=E3=83=A7=E3=83=B3=E3=81=AE=
-=E9=81=B8=E6=8A=9E=E6=9D=A1=E4=BB=B6"
-=20
- #: gitk:4241
--#, fuzzy
- msgid "View Name"
--msgstr "=E3=83=93=E3=83=A5=E3=83=BC=E5=90=8D:"
-+msgstr "=E3=83=93=E3=83=A5=E3=83=BC=E5=90=8D"
-=20
- #: gitk:4316
- msgid "Apply (F5)"
-@@ -984,12 +975,11 @@ msgstr "=E3=82=BF=E3=82=B0=E5=90=8D:"
-=20
- #: gitk:9268
- msgid "Tag message is optional"
--msgstr ""
-+msgstr "=E3=82=BF=E3=82=B0=E3=83=A1=E3=83=83=E3=82=BB=E3=83=BC=E3=82=B8=
-=E3=81=AF=E4=BB=BB=E6=84=8F=E3=81=A7=E3=81=99"
-=20
- #: gitk:9270
--#, fuzzy
- msgid "Tag message:"
--msgstr "=E3=82=BF=E3=82=B0=E5=90=8D:"
-+msgstr "=E3=82=BF=E3=82=B0=E3=83=A1=E3=83=83=E3=82=BB=E3=83=BC=E3=82=B8=
-=EF=BC=9A"
-=20
- #: gitk:9274 gitk:9439
- msgid "Create"
-@@ -1066,33 +1056,32 @@ msgid "No changes committed"
- msgstr "=E4=BD=95=E3=81=AE=E5=A4=89=E6=9B=B4=E3=82=82=E3=82=B3=E3=83=9F=
-=E3=83=83=E3=83=88=E3=81=95=E3=82=8C=E3=81=A6=E3=81=84=E3=81=BE=E3=81=9B=
-=E3=82=93"
-=20
- #: gitk:9593
--#, fuzzy, tcl-format
-+#, tcl-format
- msgid "Commit %s is not included in branch %s -- really revert it?"
- msgstr ""
--"=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88 %s =E3=81=AF=E6=97=A2=E3=81=AB=E3=
-=83=96=E3=83=A9=E3=83=B3=E3=83=81 %s =E3=81=AB=E5=90=AB=E3=81=BE=E3=82=8C=
-=E3=81=A6=E3=81=84=E3=81=BE=E3=81=99 =E2=80=95 =E6=9C=AC=E5=BD=93=E3=81=
-=AB=E3=81=93=E3=82=8C=E3=82=92=E5=86=8D=E9=81=A9=E7=94=A8=E3=81=97=E3=81=
-=BE=E3=81=99=E3=81=8B=EF=BC=9F"
-+"=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88 %s =E3=81=AF=E6=97=A2=E3=81=AB=E3=
-=83=96=E3=83=A9=E3=83=B3=E3=83=81 %s =E3=81=AB=E5=90=AB=E3=81=BE=E3=82=8C=
-=E3=81=A6=E3=81=84=E3=81=BE=E3=81=9B=E3=82=93 =E2=80=95 =E6=9C=AC=E5=BD=
-=93=E3=81=AB=E3=81=93=E3=82=8C=E3=82=92=E3=83=AA=E3=83=90=E3=83=BC=E3=83=
-=88=E3=81=97=E3=81=BE=E3=81=99"
-+"=E3=81=8B=EF=BC=9F"
-=20
- #: gitk:9598
--#, fuzzy
- msgid "Reverting"
--msgstr "=E3=83=AA=E3=82=BB=E3=83=83=E3=83=88=E4=B8=AD"
-+msgstr "=E3=83=AA=E3=83=90=E3=83=BC=E3=83=88=E4=B8=AD"
-=20
- #: gitk:9606
--#, fuzzy, tcl-format
-+#, tcl-format
- msgid ""
- "Revert failed because of local changes to the following files:%s Plea=
-se "
- "commit, reset or stash  your changes and try again."
- msgstr ""
--"=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB '%s' =E3=81=AE=E3=83=AD=E3=83=BC=
-=E3=82=AB=E3=83=AB=E3=81=AA=E5=A4=89=E6=9B=B4=E3=81=AE=E3=81=9F=E3=82=81=
-=E3=81=AB=E3=83=81=E3=82=A7=E3=83=AA=E3=83=BC=E3=83=94=E3=83=83=E3=82=AF=
-=E3=81=AF=E5=A4=B1=E6=95=97=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82=
-\n"
-+"=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB '%s' =E3=81=AE=E3=83=AD=E3=83=BC=
-=E3=82=AB=E3=83=AB=E3=81=AA=E5=A4=89=E6=9B=B4=E3=81=AE=E3=81=9F=E3=82=81=
-=E3=81=AB=E3=83=AA=E3=83=90=E3=83=BC=E3=83=88=E3=81=AF=E5=A4=B1=E6=95=97=
-=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82\n"
- "=E3=81=82=E3=81=AA=E3=81=9F=E3=81=AE=E5=A4=89=E6=9B=B4=E3=81=AB commi=
-t, reset, stash =E3=81=AE=E3=81=84=E3=81=9A=E3=82=8C=E3=81=8B=E3=82=92=E8=
-=A1=8C=E3=81=A3=E3=81=A6=E3=81=8B=E3=82=89=E3=82=84=E3=82=8A=E7=9B=B4=E3=
-=81=97=E3=81=A6=E3=81=8F=E3=81=A0=E3=81=95"
- "=E3=81=84=E3=80=82"
-=20
- #: gitk:9610
--#, fuzzy
- msgid ""
- "Revert failed because of merge conflict.\n"
- " Do you wish to run git citool to resolve it?"
- msgstr ""
--"=E3=83=9E=E3=83=BC=E3=82=B8=E3=81=AE=E8=A1=9D=E7=AA=81=E3=81=AB=E3=82=
-=88=E3=81=A3=E3=81=A6=E3=83=81=E3=82=A7=E3=83=AA=E3=83=BC=E3=83=94=E3=83=
-=83=E3=82=AF=E3=81=AF=E5=A4=B1=E6=95=97=E3=81=97=E3=81=BE=E3=81=97=E3=81=
-=9F=E3=80=82\n"
-+"=E3=83=9E=E3=83=BC=E3=82=B8=E3=81=AE=E8=A1=9D=E7=AA=81=E3=81=AB=E3=82=
-=88=E3=81=A3=E3=81=A6=E3=83=AA=E3=83=90=E3=83=BC=E3=83=88=E3=81=AF=E5=A4=
-=B1=E6=95=97=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82\n"
- "=E3=81=93=E3=81=AE=E8=A7=A3=E6=B1=BA=E3=81=AE=E3=81=9F=E3=82=81=E3=81=
-=AB git citool =E3=82=92=E5=AE=9F=E8=A1=8C=E3=81=97=E3=81=9F=E3=81=84=E3=
-=81=A7=E3=81=99=E3=81=8B=EF=BC=9F"
-=20
- #: gitk:9653
-@@ -1200,9 +1189,8 @@ msgid "Show local changes"
- msgstr "=E3=83=AD=E3=83=BC=E3=82=AB=E3=83=AB=E3=81=AA=E5=A4=89=E6=9B=B4=
-=E3=82=92=E8=A1=A8=E7=A4=BA"
-=20
- #: gitk:11361
--#, fuzzy
- msgid "Auto-select SHA1 (length)"
--msgstr "SHA1 =E3=81=AE=E8=87=AA=E5=8B=95=E9=81=B8=E6=8A=9E"
-+msgstr "SHA1(l=E9=8D=B5=E9=95=B7)=E3=81=AE=E8=87=AA=E5=8B=95=E9=81=B8=E6=
-=8A=9E"
-=20
- #: gitk:11365
- msgid "Hide remote refs"
-@@ -1217,13 +1205,12 @@ msgid "Tab spacing"
- msgstr "=E3=82=BF=E3=83=96=E7=A9=BA=E7=99=BD=E5=B9=85"
-=20
- #: gitk:11374
--#, fuzzy
- msgid "Display nearby tags/heads"
--msgstr "=E8=BF=91=E3=81=8F=E3=81=AE=E3=82=BF=E3=82=B0=E3=82=92=E8=A1=A8=
-=E7=A4=BA=E3=81=99=E3=82=8B"
-+msgstr "=E8=BF=91=E3=81=8F=E3=81=AE=E3=82=BF=E3=82=B0/head=E3=82=92=E8=
-=A1=A8=E7=A4=BA=E3=81=99=E3=82=8B"
-=20
- #: gitk:11377
- msgid "Maximum # tags/heads to show"
--msgstr ""
-+msgstr "=E8=A1=A8=E7=A4=BA=E3=81=99=E3=82=8B=E6=9C=80=E5=A4=A7=E3=81=AE=
-=E3=82=BF=E3=82=B0/=E3=83=98=E3=83=83=E3=83=89=E6=95=B0 #"
-=20
- #: gitk:11380
- msgid "Limit diffs to listed paths"
-@@ -1242,21 +1229,20 @@ msgid "Choose..."
- msgstr "=E9=81=B8=E6=8A=9E..."
-=20
- #: gitk:11395
--#, fuzzy
- msgid "General options"
--msgstr "=E3=83=91=E3=83=83=E3=83=81=E7=94=9F=E6=88=90"
-+msgstr "=E5=85=A8=E8=88=AC=E3=82=AA=E3=83=97=E3=82=B7=E3=83=A7=E3=83=B3=
-"
-=20
- #: gitk:11398
- msgid "Use themed widgets"
--msgstr ""
-+msgstr "=E3=83=86=E3=83=BC=E3=83=9E=E3=81=AE=E3=82=A6=E3=82=A3=E3=82=B8=
-=E3=82=A7=E3=83=83=E3=83=88=E3=82=92=E4=BD=BF=E3=81=86"
-=20
- #: gitk:11400
- msgid "(change requires restart)"
--msgstr ""
-+msgstr "(=E5=A4=89=E6=9B=B4=E3=82=92=E5=8F=8D=E6=98=A0=E3=81=99=E3=82=8B=
-=E3=81=AB=E3=81=AF=E5=86=8D=E3=82=B9=E3=82=BF=E3=83=BC=E3=83=88=E3=81=AE=
-=E5=BF=85=E8=A6=81=E3=81=8C=E3=81=82=E3=82=8A=E3=81=BE=E3=81=99=EF=BC=89=
-"
-=20
- #: gitk:11402
- msgid "(currently unavailable)"
--msgstr ""
-+msgstr "=EF=BC=88=E7=8F=BE=E5=9C=A8=E5=AD=98=E5=9C=A8=E3=81=97=E3=81=AA=
-=E3=81=84=EF=BC=89"
-=20
- #: gitk:11413
- msgid "Colors: press to choose"
-@@ -1343,17 +1329,16 @@ msgid "Gitk preferences"
- msgstr "Gitk =E8=A8=AD=E5=AE=9A"
-=20
- #: gitk:11494
--#, fuzzy
- msgid "General"
--msgstr "=E7=94=9F=E6=88=90"
-+msgstr "=E5=85=A8=E8=88=AC"
-=20
- #: gitk:11495
- msgid "Colors"
--msgstr ""
-+msgstr "=E8=89=B2"
-=20
- #: gitk:11496
- msgid "Fonts"
--msgstr ""
-+msgstr "=E3=83=95=E3=82=A9=E3=83=B3=E3=83=88"
-=20
- #: gitk:11546
- #, tcl-format
-@@ -1365,6 +1350,8 @@ msgid ""
- "Sorry, gitk cannot run with this version of Tcl/Tk.\n"
- " Gitk requires at least Tcl/Tk 8.4."
- msgstr ""
-+"=E7=94=B3=E3=81=97=E8=A8=B3=E6=9C=89=E3=82=8A=E3=81=BE=E3=81=9B=E3=82=
-=93=E3=80=82gitk=E3=81=AF=E3=80=81=E3=81=93=E3=81=AE=E3=83=90=E3=83=BC=E3=
-=82=B8=E3=83=A7=E3=83=B3=E3=81=AETcl/Tk=E3=81=A7=E3=81=AF=E5=8B=95=E4=BD=
-=9C=E3=81=97=E3=81=BE=E3=81=9B=E3=82=93=E3=80=82\n"
-+"Gitk=E3=81=AB=E3=81=AF=E5=B0=91=E3=81=AA=E3=81=8F=E3=81=A8=E3=82=82Tc=
-l/Tk 8.4=E3=81=8C=E5=BF=85=E8=A6=81=E3=81=A7=E3=81=99=E3=80=82"
-=20
- #: gitk:12269
- msgid "Cannot find a git repository here."
---=20
-2.6.2
+Well, I've just verified that what would be automacitally downloaded
+has the same URL as that "download manually" link.
+So you should be fine with the manual download.
+
+> Does anyone know why the download from git-scm.com is not working?
+
+-- 
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit https://groups.google.com/d/optout.
