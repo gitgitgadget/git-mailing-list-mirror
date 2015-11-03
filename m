@@ -1,79 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Update japanese translation
-Date: Tue, 03 Nov 2015 12:40:45 -0800
-Message-ID: <xmqqio5iddf6.fsf@gitster.mtv.corp.google.com>
-References: <1446554860-2539-1-git-send-email-miurahr@linux.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: git.git as of tonight
+Date: Tue, 3 Nov 2015 22:03:02 +0100
+Message-ID: <56392106.1010401@kdbg.org>
+References: <xmqqpoztf6ok.fsf@gitster.mtv.corp.google.com>
+ <5637D266.4060904@kdbg.org>
+ <CAGZ79kbx7UJOOkhiXiUJfUS25gMGx5BUq=Qxa9205H0Z78ijbQ@mail.gmail.com>
+ <56385587.1010601@kdbg.org> <xmqq37wndndp.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kbAj-tZS3X1EwFw_gGh1=YU8M0OmEX91W8f++fqs6TiBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: miurahr@linux.com
-X-From: git-owner@vger.kernel.org Tue Nov 03 21:40:53 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Nov 03 22:03:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtiNw-0000ci-KQ
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 21:40:52 +0100
+	id 1Ztija-0003n2-Jy
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 22:03:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932525AbbKCUks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 15:40:48 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63717 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752030AbbKCUkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 15:40:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0BD882916F;
-	Tue,  3 Nov 2015 15:40:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KgbjGy/SHSHnRXlWo8X+g1oqcg0=; b=BRUDLV
-	JiVyetBtwouOiB+w8aTrKzjd3h8nq7SIr937/EXTdC/fc1eswNSgjABEdz/2dtQa
-	4zpHQHlK7/H4aLN+uTFoXsqeuKQA+jv4h2VUxzFdHmlDPMNcoKUKfR6IT8pAWBT4
-	t9xHn8hQVBgAW+0GDfnNxuSPi8e16Tog2r0io=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=voISNCcWMDGHH27P5jjTbKjH2sqZKJ7N
-	FGsdzJrFgWoCZ9TQXLZcll0nZ+K7/chB9RfBeDMY84SBN5sTizJo2/ouS91Syz2D
-	HD8yIYU3ijqBMgnkhY/Lg2Z6DGFwpjhTIVkpBzH1ovO43uQakFGvit5m8non7ORW
-	zJ8BVsCNc4Y=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0344B2916E;
-	Tue,  3 Nov 2015 15:40:47 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6CAF429168;
-	Tue,  3 Nov 2015 15:40:46 -0500 (EST)
-In-Reply-To: <1446554860-2539-1-git-send-email-miurahr@linux.com>
-	(miurahr@linux.com's message of "Tue, 3 Nov 2015 21:47:40 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 28EFC4C6-826B-11E5-958C-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S932684AbbKCVDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 16:03:10 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:10079 "EHLO bsmtp4.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932525AbbKCVDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 16:03:08 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp4.bon.at (Postfix) with ESMTPSA id 3nr3VK1TQLz5tlD;
+	Tue,  3 Nov 2015 22:03:05 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 9DE5F538A;
+	Tue,  3 Nov 2015 22:03:02 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <CAGZ79kbAj-tZS3X1EwFw_gGh1=YU8M0OmEX91W8f++fqs6TiBA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280816>
 
-miurahr@linux.com writes:
+Am 03.11.2015 um 19:18 schrieb Stefan Beller:
+> ... ReadFileEx ... "overlapped" operation.
 
-> From: Hiroshi Miura <miurahr@linux.com>
+Let's not go there just yet.
+
+>>   1. Make this an optional feature so that platforms can compile it
+>>      out, if it is not already done.  My preference, even if we go
+>>      that route, would be to see if we can find a way to preserve the
+>>      overall code structure (e.g. instead of spawning multiple
+>>      workers, which is why the code needs NONBLOCK to avoid getting
+>>      stuck on reading from one while others are working, perhaps we
+>>      can spawn only one and not do a nonblock read?).
 >
-> - Update untranslated terms
->
-> Signed-off-by: Hiroshi Miura <miurahr@linux.com>
-> ---
->  gitk-git/po/ja.po | 97 ++++++++++++++++++++++++-------------------------------
->  1 file changed, 42 insertions(+), 55 deletions(-)
+> Yeah that would be my understanding as well. If we don't come up with
+> a good solution for parallelism in Windows now, we'd need to make it at
+> least working in the jobs=1 case as well as it worked before.
 
-Sorry but I do not take patches directly to gitk or git-gui, both of
-which are independent projects of their own.
+That should be possible. I discovered today that we have this function:
 
-Could you redo this change against Paul Mackerras's tree, which is
-our upstream "gitk" project, that is found here:
+static void set_nonblocking(int fd)
+{
+	int flags = fcntl(fd, F_GETFL);
+	if (flags < 0)
+		warning("Could not get file status flags, "
+			"output will be degraded");
+	else if (fcntl(fd, F_SETFL, flags | O_NONBLOCK))
+		warning("Could not set file status flags, "
+			"output will be degraded");
+}
 
-    git://git.kernel.org/pub/scm/gitk/gitk.git
+Notice that it is not a fatal condition if O_NONBLOCK cannot be 
+established. (BTW, did you ever test this condition?) If we add two 
+lines (which remove the stuff that does not work on Windows) like this:
 
-and Cc Paul Mackerras <paulus@samba.org>  when you post your patch?
+static void set_nonblocking(int fd)
+{
+#ifndef GIT_WINDOWS_NATIVE
+	int flags = fcntl(fd, F_GETFL);
+	if (flags < 0)
+		warning("Could not get file status flags, "
+			"output will be degraded");
+	else if (fcntl(fd, F_SETFL, flags | O_NONBLOCK))
+#endif
+		warning("Could not set file status flags, "
+			"output will be degraded");
+}
 
-Thanks.
+we should get something that works, theoretically. We still need a more 
+complete waitpid emulation, but that does not look like rocket science. 
+I'll investigate further in this direction.
+
+-- Hannes
