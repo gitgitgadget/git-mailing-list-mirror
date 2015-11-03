@@ -1,90 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] http: allow selection of proxy authentication method
-Date: Tue, 03 Nov 2015 11:46:54 -0800
-Message-ID: <xmqqr3k6dfwx.fsf@gitster.mtv.corp.google.com>
-References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
-	<1446483264-15123-1-git-send-email-k.franke@science-computing.de>
-	<1446483264-15123-2-git-send-email-k.franke@science-computing.de>
-	<xmqqfv0odnoc.fsf@gitster.mtv.corp.google.com>
-	<20151103090724.GA6354@science-computing.de>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 1/5] read-cache: add watchman 'WAMA' extension
+Date: Tue, 03 Nov 2015 14:49:41 -0500
+Organization: Twitter
+Message-ID: <1446580181.4131.36.camel@twopensource.com>
+References: <1446386146-10438-1-git-send-email-pclouds@gmail.com>
+	 <1446386146-10438-2-git-send-email-pclouds@gmail.com>
+	 <1446501799.4131.24.camel@twopensource.com>
+	 <CACsJy8Bb0BVsCdgDQe9JWPUOR9Hw+963Zph3HMZA6Zmzr2THMA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Knut Franke <k.franke@science-computing.de>
-X-From: git-owner@vger.kernel.org Tue Nov 03 20:47:48 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 03 20:50:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZthYY-0004dz-KV
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 20:47:46 +0100
+	id 1ZthbS-0007Lr-EE
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 20:50:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932374AbbKCTrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 14:47:24 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56349 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932457AbbKCTrD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 14:47:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8C02029C28;
-	Tue,  3 Nov 2015 14:46:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DqXhW3ut/qOdZsOx324Qi7Ii7Tw=; b=k+eT3T
-	7NpwD1gnUgLcugYLZK8WnJuAbWHkEbGd8v9V6+qtt7YsVQeezkVdHNhrbehcjXNB
-	hSX+r1A0uKysDY9M/zZXt9yUFTR1P5kSvylExBWj3PPL64sBV01ESKLOE4Es9mWq
-	vwOeYcubbZhBWM86Ai14aUnCVFLQYlZFfPn64=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nN5hdjxw82CNAniXDNhx1c6SPTxsOfWE
-	/4wKvT/EfQmlthVVh20HVtCZw45JxJWlkXLJdV5GSBXhy1gO7848TVYcwxxV0QCX
-	3pEbTDqovkZZLN00G9DCrqBe6heONWxUCsoY2NbkP2L+DnGlSGMFqDN+92jLDCOT
-	FTqPJwWt7f0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 849BA29C27;
-	Tue,  3 Nov 2015 14:46:56 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0B01B29C26;
-	Tue,  3 Nov 2015 14:46:55 -0500 (EST)
-In-Reply-To: <20151103090724.GA6354@science-computing.de> (Knut Franke's
-	message of "Tue, 3 Nov 2015 10:07:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A3785616-8263-11E5-B793-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S932435AbbKCTtt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Nov 2015 14:49:49 -0500
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:35276 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932354AbbKCTto (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 14:49:44 -0500
+Received: by qgbb65 with SMTP id b65so22693791qgb.2
+        for <git@vger.kernel.org>; Tue, 03 Nov 2015 11:49:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource_com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=Z2+VE4VuuWpwaT72NcnLOLkVFL5jKMf2yN/AvO3JYYo=;
+        b=Sh9ZPtTBjxGrQIVG+zj3axlRKDX5CHSjkAfb1ynrkeentoh0utfcFxuoVNlMyVptoE
+         p9sJy9aRLMiBOj+I7LCHobFVuqYI1ES7ong2L98flT1UlgsRwNjtoVE5l3y69D8ePFv1
+         4R3C7eiBMVHPwb/UpoZ+s9qiz9ivJK1G7i+r+nYGimlajhr905MxRMTRedPVw++DYkix
+         jNWQkmnD5ksZhiu73i2V2zc5VXfJAJ6cFSXdFdYUVQ204hpG3Vy0rvhorMM114NPz5ge
+         CAYcehqcEVENBpolp45UN74+wgrGDrnJFC+kz9TKiG0Zc+4CdltFuz8bm94pbrqDgsrd
+         UV3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=Z2+VE4VuuWpwaT72NcnLOLkVFL5jKMf2yN/AvO3JYYo=;
+        b=STwKx/bkD9JURReRB5krtY3jwjXov7ia5QVwCy6/1pGcSgj7B/wWhHzwS8b3T0TjY9
+         AK4CQjqmXiqcjsWezi4N3wd9jHcu4pcXD+/u7wvWdJoLa8mDliU+PrW+erzZMRo8VG9I
+         +gt4gbSPj4lHslHq2GsmQIwMHXZq82CQWr6MqpjKWzFoLRgn70Gk3B73eunLHvab5p9b
+         kq69LI9iUOUpcSyl3reMDl0k//X3MXH32lHHlLPQGRQSHFCSyGJd4v7+ikXzPxniuoZg
+         6npSbeCU2GE+ic//Su/nuqIwBtnLy5xKKCMoSidqgp0nUzWQT2gYh/l2CoTDSJJrepc9
+         PyKw==
+X-Gm-Message-State: ALoCoQnj26EQSZKONS4+OdsOjVjszewCCys30ZDBXJZaYRg+Am+679BtphyZHml/xjPBL2PKoGgn
+X-Received: by 10.141.28.136 with SMTP id f130mr41821073qhe.66.1446580183893;
+        Tue, 03 Nov 2015 11:49:43 -0800 (PST)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id e7sm10309311qkj.19.2015.11.03.11.49.42
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 Nov 2015 11:49:43 -0800 (PST)
+In-Reply-To: <CACsJy8Bb0BVsCdgDQe9JWPUOR9Hw+963Zph3HMZA6Zmzr2THMA@mail.gmail.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280812>
 
-Knut Franke <k.franke@science-computing.de> writes:
+On Tue, 2015-11-03 at 20:17 +0100, Duy Nguyen wrote:
+> On Mon, Nov 2, 2015 at 11:03 PM, David Turner <dturner@twopensource.c=
+om> wrote:
+> > On Sun, 2015-11-01 at 14:55 +0100, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=
+=8Dc Duy wrote:
+> >>
+> >>+#define CE_NO_WATCH  (0x0001)
+> >
+> > This name seems very confusing to me.  CE_NO_WATCHMAN_STAT?
+> > CE_UNKNOWN_TO_WATCHMAN?
+>=20
+> Files that are known updated. Maybe CE_WATCHMAN_DIRTY?
 
-> On 2015-11-02 14:46, Junio C Hamano wrote:
->> > Reviewed-by: Junio C Hamano <gitster@pobox.com>
->> > Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
->> 
->> Please add these only when you are doing the final submission,
->> sending the same version reviewed by these people after they said
->> the patch(es) look good.  To credit others for helping you to polish
->> your patch, Helped-by: would be more appropriate.
->
-> Sorry about that.
->
-> However, may I suggest that Documentation/SubmittingPatches could do with a
-> little rewording in this respect?
->
->> Do not forget to add trailers such as "Acked-by:", "Reviewed-by:" and
->> "Tested-by:" lines as necessary to credit people who helped your
->> patch.
->
-> "Helped-by:" isn't even mentioned.
++1
 
-That is because it is not actively encouraged.
+> > (one reason it may seem more confusing to me than to others is that
+> > Twitter's code has a concept of files that we don't watch at all e.=
+g.
+> > Intellij's .idea dir).
+> >
+> >> @@ -322,6 +325,7 @@ struct index_state {
+> >>       struct untracked_cache *untracked;
+> >>       void *mmap;
+> >>       size_t mmap_size;
+> >> +     char *last_update;
+> >
+> > Might be worth a comment explaining what this is.
+>=20
+> It's the clock value from watchman when we query file status. Will
+> make a note. Or maybe I should just rename it to watchman_clock.
 
-The only thing I care about is that people do not incorrectly use
-Reviewed/Acked-by when reviewers did not say "this version looks
-good"; that would mislead the maintainer to think "ah, if that
-reviewer said this is good, whose judgment I can trust, then I do
-not have to read it carefully myself."
+Either way would work for me.
