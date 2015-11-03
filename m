@@ -1,98 +1,108 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: git.git as of tonight
-Date: Tue, 3 Nov 2015 22:03:02 +0100
-Message-ID: <56392106.1010401@kdbg.org>
-References: <xmqqpoztf6ok.fsf@gitster.mtv.corp.google.com>
- <5637D266.4060904@kdbg.org>
- <CAGZ79kbx7UJOOkhiXiUJfUS25gMGx5BUq=Qxa9205H0Z78ijbQ@mail.gmail.com>
- <56385587.1010601@kdbg.org> <xmqq37wndndp.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kbAj-tZS3X1EwFw_gGh1=YU8M0OmEX91W8f++fqs6TiBA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/4] Add support for matching full refs in hideRefs
+Date: Tue, 03 Nov 2015 13:07:03 -0800
+Message-ID: <xmqqd1vqdc7c.fsf@gitster.mtv.corp.google.com>
+References: <1446537497-13921-1-git-send-email-lfleischer@lfos.de>
+	<1446537497-13921-4-git-send-email-lfleischer@lfos.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 22:03:16 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Lukas Fleischer <lfleischer@lfos.de>
+X-From: git-owner@vger.kernel.org Tue Nov 03 22:07:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ztija-0003n2-Jy
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 22:03:14 +0100
+	id 1ZtinS-0007Gw-Di
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 22:07:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932684AbbKCVDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 16:03:10 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:10079 "EHLO bsmtp4.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932525AbbKCVDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 16:03:08 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp4.bon.at (Postfix) with ESMTPSA id 3nr3VK1TQLz5tlD;
-	Tue,  3 Nov 2015 22:03:05 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 9DE5F538A;
-	Tue,  3 Nov 2015 22:03:02 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <CAGZ79kbAj-tZS3X1EwFw_gGh1=YU8M0OmEX91W8f++fqs6TiBA@mail.gmail.com>
+	id S1755019AbbKCVHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 16:07:08 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55164 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750753AbbKCVHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 16:07:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5D04E29892;
+	Tue,  3 Nov 2015 16:07:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TaMzdcKdJcmkHRzWQVv6yvMRamY=; b=qIrt3v
+	pHjMZmq/1sbKr/vfPV0uLA4sGwBluSzFMh8pGnZ1LzD3hvVOiKe4jyKgKnXu5mkl
+	Z/LQ5vIGErWkSbF0c4xW1rVkwG1qlkrz8U1+00O+lFLACOQOaQtdokitcRNpkya1
+	hy+/axSwek/dOu3vZzEdL9zoqSheu3UUvPcb0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Oj59YjHsZtWTQZxn6bPyjaKKeJaywhmo
+	3uhOIjq3DcwHghhAOLVgEoUktITidD141EBm1GvckvakbyO6GRVWK8ik1NTUFI5t
+	q8Zcgg+BtR0kAAUZq86+NVbWYz0BPNKaOrkT0xHsA9ik+f73UWqPTZmUe/IwWUtr
+	xPaElHSL0vg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 54FEE29891;
+	Tue,  3 Nov 2015 16:07:05 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6DB5429890;
+	Tue,  3 Nov 2015 16:07:04 -0500 (EST)
+In-Reply-To: <1446537497-13921-4-git-send-email-lfleischer@lfos.de> (Lukas
+	Fleischer's message of "Tue, 3 Nov 2015 08:58:16 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D5805554-826E-11E5-9F5B-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280817>
 
-Am 03.11.2015 um 19:18 schrieb Stefan Beller:
-> ... ReadFileEx ... "overlapped" operation.
+Lukas Fleischer <lfleischer@lfos.de> writes:
 
-Let's not go there just yet.
+>  static void show_ref(const char *path, const unsigned char *sha1)
+>  {
+> -	if (ref_is_hidden(path))
+> -		return;
+> -
+>  	if (sent_capabilities) {
+>  		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
+>  	} else {
+> @@ -219,9 +216,14 @@ static void show_ref(const char *path, const unsigned char *sha1)
+>  	}
+>  }
+>  
+> -static int show_ref_cb(const char *path, const struct object_id *oid, int flag, void *unused)
+> +static int show_ref_cb(const char *path_full, const struct object_id *oid,
+> +		       int flag, void *unused)
+>  {
+> -	path = strip_namespace(path);
+> +	const char *path = strip_namespace(path_full);
+> +
+> +	if (ref_is_hidden(path, path_full))
+> +		return 1;
+> +
 
->>   1. Make this an optional feature so that platforms can compile it
->>      out, if it is not already done.  My preference, even if we go
->>      that route, would be to see if we can find a way to preserve the
->>      overall code structure (e.g. instead of spawning multiple
->>      workers, which is why the code needs NONBLOCK to avoid getting
->>      stuck on reading from one while others are working, perhaps we
->>      can spawn only one and not do a nonblock read?).
->
-> Yeah that would be my understanding as well. If we don't come up with
-> a good solution for parallelism in Windows now, we'd need to make it at
-> least working in the jobs=1 case as well as it worked before.
+These two hunks are doing a bit more than the primary topic of this
+step, aren't they?
 
-That should be possible. I discovered today that we have this function:
+The semantics of "hideRefs" used to be that "refs can be hidden from
+ls-remote" (i.e. prevents fetching, avoids contaminating "--mirror")
+and "refs can be hidden from 'push'", but the objects being known
+tips of histories that are complete, they still participate in
+common ancestor discovery.  
 
-static void set_nonblocking(int fd)
-{
-	int flags = fcntl(fd, F_GETFL);
-	if (flags < 0)
-		warning("Could not get file status flags, "
-			"output will be degraded");
-	else if (fcntl(fd, F_SETFL, flags | O_NONBLOCK))
-		warning("Could not set file status flags, "
-			"output will be degraded");
-}
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 3da97a1..91ed6a5 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2690,7 +2690,8 @@ the prefix `refs/heads/master` is specified in `transfer.hideRefs` and the
+>  current namespace is `foo`, then `refs/namespaces/foo/refs/heads/master` is
+>  omitted from the advertisements but `refs/heads/master` and
+>  `refs/namespaces/bar/refs/heads/master` are still advertised as so-called
+> -"have" lines.
+> +"have" lines. In order to match refs before stripping, add a `^` in front of
+> +the ref name. If you combine `!` and `^`, `!` must be specified first.
 
-Notice that it is not a fatal condition if O_NONBLOCK cannot be 
-established. (BTW, did you ever test this condition?) If we add two 
-lines (which remove the stuff that does not work on Windows) like this:
-
-static void set_nonblocking(int fd)
-{
-#ifndef GIT_WINDOWS_NATIVE
-	int flags = fcntl(fd, F_GETFL);
-	if (flags < 0)
-		warning("Could not get file status flags, "
-			"output will be degraded");
-	else if (fcntl(fd, F_SETFL, flags | O_NONBLOCK))
-#endif
-		warning("Could not set file status flags, "
-			"output will be degraded");
-}
-
-we should get something that works, theoretically. We still need a more 
-complete waitpid emulation, but that does not look like rocket science. 
-I'll investigate further in this direction.
-
--- Hannes
+I think the changes in the above two hunks prevent the hidden refs
+from participating in common ancestor discovery (which is probably a
+good thing), making the above description stale.
