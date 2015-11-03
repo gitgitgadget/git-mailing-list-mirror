@@ -1,190 +1,193 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v6 07/25] refs: move the hidden refs functions to the common code
-Date: Tue,  3 Nov 2015 08:39:51 +0100
-Message-ID: <41fe017e6d9ae1348de1838b80af70b8bf7db947.1446534991.git.mhagger@alum.mit.edu>
+Subject: [PATCH v6 09/25] refs: move warn_if_dangling_symref* to the common code
+Date: Tue,  3 Nov 2015 08:39:53 +0100
+Message-ID: <4b1de143c01feee0d9195820196c3d350c809b14.1446534991.git.mhagger@alum.mit.edu>
 References: <cover.1446534991.git.mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
 	David Turner <dturner@twopensource.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 08:48:13 2015
+X-From: git-owner@vger.kernel.org Tue Nov 03 08:48:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtWKC-0005ql-IF
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 08:48:13 +0100
+	id 1ZtWKI-0005wr-P4
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 08:48:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752615AbbKCHsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 02:48:08 -0500
+	id S1752633AbbKCHsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 02:48:12 -0500
 Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:44588 "EHLO
 	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751346AbbKCHsG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Nov 2015 02:48:06 -0500
-X-AuditID: 12074414-f794f6d000007852-94-563864e8ca42
+	by vger.kernel.org with ESMTP id S1752078AbbKCHsI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Nov 2015 02:48:08 -0500
+X-Greylist: delayed 461 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Nov 2015 02:48:07 EST
+X-AuditID: 12074414-f794f6d000007852-9e-563864eafdf2
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 38.2D.30802.8E468365; Tue,  3 Nov 2015 02:40:24 -0500 (EST)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 49.2D.30802.AE468365; Tue,  3 Nov 2015 02:40:26 -0500 (EST)
 Received: from michael.fritz.box (p5DDB0E27.dip0.t-ipconnect.de [93.219.14.39])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tA37eDd4016391
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tA37eDd6016391
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 3 Nov 2015 02:40:23 -0500
+	Tue, 3 Nov 2015 02:40:25 -0500
 X-Mailer: git-send-email 2.6.2
 In-Reply-To: <cover.1446534991.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqPsixSLM4MclAYv5m04wWnRd6Way
-	aOi9wmxxe8V8Zot/E2ocWD3+vv/A5LFgU6nHxUvKHgue32f3+LxJLoA1itsmKbGkLDgzPU/f
-	LoE7Y9m+BYwFU2Qq/i1czdTAuECsi5GDQ0LARGLjq4guRk4gU0ziwr31bF2MXBxCApcZJSY8
-	WcIC4Rxjkpjy7w8zSBWbgK7Eop5mJhBbREBNYmLbIbAiZoFFjBKtb6aDJYQFAiXmvTrFDmKz
-	CKhKzJt0ByzOKxAlcfrCfjaIdXISU+63g8U5BSwkHtz9A1YvJGAuseneMrYJjLwLGBlWMcol
-	5pTm6uYmZuYUpybrFicn5uWlFula6OVmluilppRuYoQElMgOxiMn5Q4xCnAwKvHwLlhiHibE
-	mlhWXJl7iFGSg0lJlHddjEWYEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHegkCgHG9KYmVValE+
-	TEqag0VJnPfbYnU/IYH0xJLU7NTUgtQimKwMB4eSBO+lZKBGwaLU9NSKtMycEoQ0EwcnyHAu
-	KZHi1LyU1KLE0pKMeFBsxBcDowMkxQO0NyEFZG9xQWIuUBSi9RSjopQ470WQuQIgiYzSPLix
-	sDTxilEc6Eth3okgVTzAFAPX/QpoMBPQ4PBtpiCDSxIRUlINjFzfr122mlITsURfZ6raD/sp
-	zzTSd4XZFXgnpokXrLTpsIq8I9u3ydexuvSAF8uKZwr5Z6tXX89Y/CS44mjJjlR/67fuuR/6
-	65fHdy3Y+NYh2MH6UabgPZdFkzoW3dmlvVl7/oGHL3e+sJDKWPa+0cd5da2Y7etT 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFIsWRmVeSWpSXmKPExsUixO6iqPsqxSLM4E2TtsX8TScYLbqudDNZ
+	NPReYba4vWI+s8W/CTUOrB5/339g8liwqdTj4iVljwXP77N7fN4kF8AaxW2TlFhSFpyZnqdv
+	l8CdceJCB1vBDLmKvhuNLA2MnyS6GDk5JARMJP4+OcYGYYtJXLi3Hsjm4hASuMwoseXCZxYI
+	5xiTxKvfW8Gq2AR0JRb1NDOB2CICahIT2w6BFTELLGKUaH0zHSjBwSEsECDx7FgkiMkioCqx
+	5q0ASDmvQJTEq5fX2CGWyUlMud8ONoZTwELiwd0/YHEhAXOJTfeWsU1g5F3AyLCKUS4xpzRX
+	NzcxM6c4NVm3ODkxLy+1SNdCLzezRC81pXQTIyScRHYwHjkpd4hRgINRiYd3wRLzMCHWxLLi
+	ytxDjJIcTEqivOtiLMKE+JLyUyozEosz4otKc1KLDzFKcDArifAWBALleFMSK6tSi/JhUtIc
+	LErivN8Wq/sJCaQnlqRmp6YWpBbBZGU4OJQkeC8lAzUKFqWmp1akZeaUIKSZODhBhnNJiRSn
+	5qWkFiWWlmTEgyIjvhgYGyApHqC9CSkge4sLEnOBohCtpxgVpcR5L4LMFQBJZJTmwY2FJYlX
+	jOJAXwrzTgSp4gEmGLjuV0CDmYAGh28zBRlckoiQkmpg9Dly6bGU3PwdOuxMRqfFti2XmCN6
+	XEw22e/4trSv03Zl/u9L0bdln9X9cNnxr9WmBjs9DJ9eWL2gQPDpDt3DN3bO0D9+qlPg9VpJ
+	YxkWxzD3FuPDi71j6qUd96Wyc3xf/OTOy7zSmGff6vgPX/lzQMWA83wGU8lzD641 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280775>
 
 From: Ronnie Sahlberg <sahlberg@google.com>
 
-Move the hidden refs functions to refs/refs.c since these functions do
-not contain any backend specific code.
+These functions do not use any backend specific code so move them to
+the common code.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 51 ---------------------------------------------------
- refs/refs.c          | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 51 deletions(-)
+ refs/files-backend.c | 52 ----------------------------------------------------
+ refs/refs.c          | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+), 52 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 8eba347..8f1e486 100644
+index 8809595..9fb77c2 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -4219,57 +4219,6 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
- 	return xstrdup(refname);
+@@ -1956,58 +1956,6 @@ int peel_ref(const char *refname, unsigned char *sha1)
+ 	return peel_object(base, sha1);
  }
  
--static struct string_list *hide_refs;
+-struct warn_if_dangling_data {
+-	FILE *fp;
+-	const char *refname;
+-	const struct string_list *refnames;
+-	const char *msg_fmt;
+-};
 -
--int parse_hide_refs_config(const char *var, const char *value, const char *section)
+-static int warn_if_dangling_symref(const char *refname, const struct object_id *oid,
+-				   int flags, void *cb_data)
 -{
--	if (!strcmp("transfer.hiderefs", var) ||
--	    /* NEEDSWORK: use parse_config_key() once both are merged */
--	    (starts_with(var, section) && var[strlen(section)] == '.' &&
--	     !strcmp(var + strlen(section), ".hiderefs"))) {
--		char *ref;
--		int len;
+-	struct warn_if_dangling_data *d = cb_data;
+-	const char *resolves_to;
+-	struct object_id junk;
 -
--		if (!value)
--			return config_error_nonbool(var);
--		ref = xstrdup(value);
--		len = strlen(ref);
--		while (len && ref[len - 1] == '/')
--			ref[--len] = '\0';
--		if (!hide_refs) {
--			hide_refs = xcalloc(1, sizeof(*hide_refs));
--			hide_refs->strdup_strings = 1;
--		}
--		string_list_append(hide_refs, ref);
--	}
--	return 0;
--}
--
--int ref_is_hidden(const char *refname)
--{
--	int i;
--
--	if (!hide_refs)
+-	if (!(flags & REF_ISSYMREF))
 -		return 0;
--	for (i = hide_refs->nr - 1; i >= 0; i--) {
--		const char *match = hide_refs->items[i].string;
--		int neg = 0;
--		int len;
 -
--		if (*match == '!') {
--			neg = 1;
--			match++;
--		}
--
--		if (!starts_with(refname, match))
--			continue;
--		len = strlen(match);
--		if (!refname[len] || refname[len] == '/')
--			return !neg;
+-	resolves_to = resolve_ref_unsafe(refname, 0, junk.hash, NULL);
+-	if (!resolves_to
+-	    || (d->refname
+-		? strcmp(resolves_to, d->refname)
+-		: !string_list_has_string(d->refnames, resolves_to))) {
+-		return 0;
 -	}
+-
+-	fprintf(d->fp, d->msg_fmt, refname);
+-	fputc('\n', d->fp);
 -	return 0;
 -}
 -
- struct expire_reflog_cb {
- 	unsigned int flags;
- 	reflog_expiry_should_prune_fn *should_prune_fn;
+-void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+-{
+-	struct warn_if_dangling_data data;
+-
+-	data.fp = fp;
+-	data.refname = refname;
+-	data.refnames = NULL;
+-	data.msg_fmt = msg_fmt;
+-	for_each_rawref(warn_if_dangling_symref, &data);
+-}
+-
+-void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames)
+-{
+-	struct warn_if_dangling_data data;
+-
+-	data.fp = fp;
+-	data.refname = NULL;
+-	data.refnames = refnames;
+-	data.msg_fmt = msg_fmt;
+-	for_each_rawref(warn_if_dangling_symref, &data);
+-}
+-
+ /*
+  * Call fn for each reference in the specified ref_cache, omitting
+  * references not in the containing_dir of base.  fn is called for all
 diff --git a/refs/refs.c b/refs/refs.c
-index 99221a3..0620ba3 100644
+index 40d7831..6d9ea7c 100644
 --- a/refs/refs.c
 +++ b/refs/refs.c
-@@ -291,3 +291,54 @@ int read_ref_at(const char *refname, unsigned int flags, unsigned long at_time,
- 
- 	return 1;
+@@ -545,3 +545,55 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
+ 	free(short_name);
+ 	return xstrdup(refname);
  }
 +
-+static struct string_list *hide_refs;
++struct warn_if_dangling_data {
++	FILE *fp;
++	const char *refname;
++	const struct string_list *refnames;
++	const char *msg_fmt;
++};
 +
-+int parse_hide_refs_config(const char *var, const char *value, const char *section)
++static int warn_if_dangling_symref(const char *refname, const struct object_id *oid,
++				   int flags, void *cb_data)
 +{
-+	if (!strcmp("transfer.hiderefs", var) ||
-+	    /* NEEDSWORK: use parse_config_key() once both are merged */
-+	    (starts_with(var, section) && var[strlen(section)] == '.' &&
-+	     !strcmp(var + strlen(section), ".hiderefs"))) {
-+		char *ref;
-+		int len;
++	struct warn_if_dangling_data *d = cb_data;
++	const char *resolves_to;
++	struct object_id junk;
 +
-+		if (!value)
-+			return config_error_nonbool(var);
-+		ref = xstrdup(value);
-+		len = strlen(ref);
-+		while (len && ref[len - 1] == '/')
-+			ref[--len] = '\0';
-+		if (!hide_refs) {
-+			hide_refs = xcalloc(1, sizeof(*hide_refs));
-+			hide_refs->strdup_strings = 1;
-+		}
-+		string_list_append(hide_refs, ref);
++	if (!(flags & REF_ISSYMREF))
++		return 0;
++
++	resolves_to = resolve_ref_unsafe(refname, 0, junk.hash, NULL);
++	if (!resolves_to
++	    || (d->refname
++		? strcmp(resolves_to, d->refname)
++		: !string_list_has_string(d->refnames, resolves_to))) {
++		return 0;
 +	}
++
++	fprintf(d->fp, d->msg_fmt, refname);
++	fputc('\n', d->fp);
 +	return 0;
 +}
 +
-+int ref_is_hidden(const char *refname)
++void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
 +{
-+	int i;
++	struct warn_if_dangling_data data;
 +
-+	if (!hide_refs)
-+		return 0;
-+	for (i = hide_refs->nr - 1; i >= 0; i--) {
-+		const char *match = hide_refs->items[i].string;
-+		int neg = 0;
-+		int len;
++	data.fp = fp;
++	data.refname = refname;
++	data.refnames = NULL;
++	data.msg_fmt = msg_fmt;
++	for_each_rawref(warn_if_dangling_symref, &data);
++}
 +
-+		if (*match == '!') {
-+			neg = 1;
-+			match++;
-+		}
++void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames)
++{
++	struct warn_if_dangling_data data;
 +
-+		if (!starts_with(refname, match))
-+			continue;
-+		len = strlen(match);
-+		if (!refname[len] || refname[len] == '/')
-+			return !neg;
-+	}
-+	return 0;
++	data.fp = fp;
++	data.refname = NULL;
++	data.refnames = refnames;
++	data.msg_fmt = msg_fmt;
++	for_each_rawref(warn_if_dangling_symref, &data);
 +}
 -- 
 2.6.2
