@@ -1,83 +1,98 @@
-From: Mike Rappazzo <rappazzo@gmail.com>
-Subject: Re: [BUG] Wrong worktree path when using multiple worktree
-Date: Tue, 3 Nov 2015 17:27:31 -0500
-Message-ID: <CANoM8SVOPpOvnykGxfw+dn1Twwe8S=WKfePogx+GRQeAjn6D7g@mail.gmail.com>
-References: <5638E79E.10407@morey-chaisemartin.com>
+From: Felipe Sateler <fsateler@debian.org>
+Subject: Bug: stash save -u removes (some) ignored files
+Date: Tue, 3 Nov 2015 19:37:33 -0300
+Message-ID: <CAAfdZj8=pqWDB9U3=bPeKXGzsZvzns2xX8WxEzQAy08wgSm=ZQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 23:27:58 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 03 23:38:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ztk3Z-0003ns-M5
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 23:27:58 +0100
+	id 1ZtkDa-0004Wf-QS
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 23:38:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964933AbbKCW1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 17:27:52 -0500
-Received: from mail-oi0-f43.google.com ([209.85.218.43]:34587 "EHLO
-	mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754494AbbKCW1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 17:27:52 -0500
-Received: by oies66 with SMTP id s66so17824268oie.1
-        for <git@vger.kernel.org>; Tue, 03 Nov 2015 14:27:51 -0800 (PST)
+	id S965038AbbKCWiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 17:38:14 -0500
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:34529 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964839AbbKCWiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 17:38:14 -0500
+Received: by igpw7 with SMTP id w7so78623251igp.1
+        for <git@vger.kernel.org>; Tue, 03 Nov 2015 14:38:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=1XJNi/dX0UouG5TMzn7StfOwCYwsocdni7VdhoB8Uno=;
-        b=imaRUd5aeP26hjjSnVKIeZd79Dmpn5ZT4vFyuKK4ufccURRmdLn9AvON9xw8av71Io
-         eY47ltt+iMPRJpUm/PTjEFOO2dohI4YcyPm3ng8UlIIHruSVETRPkilYlJpWHL00A/6a
-         UueTxVsKZlCnjvy4mDX4w3kWwiAW5sE1AQ/enZPfxiL+g8XV/G7VxtzpsB+XsUnWkjJ0
-         vJPAiy22uS92oS7G1GBIJ73fcfG3NuVKpDXpZvMu2+8qxBw1K9Uiup6KsdJSokmNrxLX
-         ljeTSJ8p4ycLziql+7EmuRsed5L2qjB9GvC8TfW1vE9Msq6Y4xpTkRrPemrcsPMNkttQ
-         wpQQ==
-X-Received: by 10.202.208.10 with SMTP id h10mr19699690oig.124.1446589671364;
- Tue, 03 Nov 2015 14:27:51 -0800 (PST)
-Received: by 10.202.79.76 with HTTP; Tue, 3 Nov 2015 14:27:31 -0800 (PST)
-In-Reply-To: <5638E79E.10407@morey-chaisemartin.com>
+        h=mime-version:sender:from:date:message-id:subject:to:content-type;
+        bh=2ynUxEOIcAN2aDFlFcu42vo3ymf1x/35mn+6xMz9CGk=;
+        b=ROKsRGicZAz3/oA8iM59YT84m6yBz0fx2sYHVgkYdDTkqFL9hJnzyPmgx0/8aVmkcr
+         yI0DEuIOVGu2whP5CIAHjq12RSZIoNCS+mGIFiefnbKuE1KKA6KF8ZH2av0b2fpb51KH
+         WiHj1mhrCj8AzTmXTAHBFRfjy+VsjGYudNYXs1k5SDl9XOMpej3eYCIqEoxzsk6vUDCD
+         9arTphcWWQIBU3PqWp29KTCH8leyN1msdWqaUigcPNTwFTB/wxRTSTMLAyFyBWTB3Y6w
+         kBgLBDERaV7+/ytun/7NI3YListg230xA8Q8p8gYszQeyt/Wr31lTdxZeYoR9KSE85ID
+         N6Kw==
+X-Received: by 10.50.66.69 with SMTP id d5mr18155719igt.30.1446590293110; Tue,
+ 03 Nov 2015 14:38:13 -0800 (PST)
+Received: by 10.107.131.101 with HTTP; Tue, 3 Nov 2015 14:37:33 -0800 (PST)
+X-Google-Sender-Auth: JSNVdZpXf40KGPgKqQDHNhBB6As
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280829>
 
-On Tue, Nov 3, 2015 at 11:58 AM, Nicolas Morey-Chaisemartin
-<nicolas@morey-chaisemartin.com> wrote:
-> Hi,
->
-> There seem to be an issue with the path computed for a worktree when multiple worktree were created (using git worktree)
-> In my Setup, I have 3 repos:
-> A/repo (main One)
-> A/repo-patches (worktree, using branch dev)
-> B/repo (worktree, using branch next)
->
-> I'm working in A/repo-patches an run:
-> $ git checkout next
-> fatal: 'next' is already checked out at 'A/repo-patches'
->
-> Which is partially true but not completely.
-> I looked a bit in the code and found that the issue comes from here (get_linked_worktree):
->     if (!strbuf_strip_suffix(&worktree_path, "/.git")) {
->         strbuf_reset(&worktree_path);
->         strbuf_addstr(&worktree_path, absolute_path("."));
->         strbuf_strip_suffix(&worktree_path, "/.");
->     }
-> Because it wrongfully assumes that I am in the linked worktree.
-> I checked in the .git/worktree files and couldn't see anything that actually points to where the repo are setup.
->
-> Nicolas
+I have seen the following problem:
 
-This is code that I worked on, but I am unable to reproduce it locally
-just yet.  Before I dig too deep, could you report the contents of
-"A/repo/.git/worktrees/repo-patches/gitdir" (or similar)?  There is
-another issue reported[1] where the contents of the gitdir for a
-linked worktree are overwritten in some cases.  A fix for this is
-being worked on (see discussion).
+felipe@felipe:testgit% cat .gitignore
+**/notrack/*
+!**/notrack/track/
+notrackfile**
 
-In the mean time, I will continue to try and reproduce.
+felipe@felipe:testgit% find *
+newfile
+notrack
+notrack/1
+notrackfile1
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/280307
+felipe@felipe:testgit% git status --porcelain
+?? newfile
+
+felipe@felipe:testgit% git stash save -u
+Saved working directory and index state WIP on master: 523cb39 Initial commit
+HEAD is now at 523cb39 Initial commit
+
+felipe@felipe:testgit% find *
+notrackfile1
+
+So, after a stash save, git decided to keep the untracked file in the
+current directory, but not the ones inside the untracked directory.
+However, the files were "correctly" ignored and did not appear on the stash:
+
+felipe@felipe:testgit% git stash pop
+Already up-to-date!
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        newfile
+
+nothing added to commit but untracked files present (use "git add" to track)
+Dropped refs/stash@{0} (e6508f345af1dd207557ad0291e7e3bce8a89b1e)
+
+felipe@felipe:testgit% find *
+newfile
+notrackfile1
+
+I think the correct behaviour should be to left the ignored files
+untouched in both scenarios.
+
+This is with git 2.6.1 (from debian).
+
+I note that if I add a file inside the notrack/track directory, it is
+correctly kept, but the files in notrack/ are still deleted.
+
+-- 
+
+Saludos,
+Felipe Sateler
