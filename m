@@ -1,139 +1,99 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 1/2] Limit the size of the data block passed to SHA1_Update()
-Date: Tue, 03 Nov 2015 12:51:24 +0100
-Message-ID: <56389FBC.7050909@web.de>
-References: <xmqqpozsdrnl.fsf@gitster.mtv.corp.google.com> <1446533930-463-1-git-send-email-apahlevan@ieee.org>
+From: Mr Guillaume Seren <guillaumeseren@gmail.com>
+Subject: Re: When a file was locked by some program, git will work stupidly
+Date: Tue, 03 Nov 2015 12:54:24 +0100
+Message-ID: <144655166408.9681.9553872736815399069@t440s>
+References: <CABEb4T7V=WEi-ZZm7ywOFASm+=LtAyOz53gqv-jjuzF-3=veeA@mail.gmail.com>
+ <144647528273.8071.637981592426422555@t440s>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Atousa Pahlevan Duprat <apahlevan@ieee.org>
-To: atousa.p@gmail.com, git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Nov 03 12:52:12 2015
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 03 12:54:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zta8J-0006CZ-UF
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 12:52:12 +0100
+	id 1ZtaAc-0007uN-75
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 12:54:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751819AbbKCLwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 06:52:05 -0500
-Received: from mout.web.de ([212.227.15.3]:51889 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751382AbbKCLwD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 06:52:03 -0500
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MCIoz-1Zl5gS2hAP-009C4K; Tue, 03 Nov 2015 12:51:49
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <1446533930-463-1-git-send-email-apahlevan@ieee.org>
-X-Provags-ID: V03:K0:G06d0kDue8GJT5w+z43BzEc81k9492Us3GBKRFJOeIwgpWtV4Kk
- VddoYMW4m9WWDrC1m7TJyMIR5NIb/O0ELjj75omYfdC18ArdOtHQnrGL6MEd7Tawf1NGlc/
- 2GHlBmyEf/Xp5OtqGdBjlUZ4S9+1JApzJ+nreCLWKjfLVXB3Da/epSaGUiRWGCwML9TwF07
- TlQy947wAK2yUpS5ZE4sQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:I+kVTdyw3UQ=:yy7fEVg5ZSWcLXv2ePKpf9
- CUmal76B/m6CDvL2B0audqJw7lR+teyBMfseu4WURgDKdFVmTOJAfaVXwK1HvdoCIzYkniqJE
- bpmo+7LMG2IQKDgxkRWSY50w9ccbldi8Fz1EIYUu5eFDaHNl0dpjWJMz/KiKuXUsSqDNwb2hR
- JW1d0ZID1CY17hrmrQ0TwivY9L8beKJVgm27LTZ4sBAtVAAl1USAz5grlYzWso4YyR/l57UjZ
- Z+gPP6pqNZp4bZgB5OUNeh9g1w3u48mtsvvVIPUksgUDVg/tpH5CnUGPKfdsIRKmbPmAbrVU4
- 9ex/AItBBwlyj8SmTMm4dOtcbeOF+rp4aNVPPIR2e2bkE2XsIZQvb7EOzLy9uu1EHd9QIVYLJ
- 9U5LJNje3ICcKuM3J6XvYWTDX6IjTohGMI7ZrJMlOCnwnAmvE/fJt6RM9ZZ3E9YN3yb+/ot3d
- KC0nTa5hGiFD4V0EJJooiuHWYBBM0TPlMsUS70NwTDyrmFdAUwCtgZHFCpwxXyVBB0a7yliBs
- OwCHkrkb+wtH5+N3JLcGTPI/VB9cRqvFPDuN6sbT7632YB+RK+JQkxUnfzcOrV95hHC5Vzdyi
- yhdfJEyWD7FDW/5/WU4M216Ja1EJNsa+eBKbriksSmIm3iG8CwgqOmh321natoo1jn3FIOvFG
- +ZNjERlyIkIBSKR/cKw4CVYBssGRG+INW9pb1IEXshDkqxZd8Yb9hL+hcjrEQf770grePMUVo
- a3GapIUlmW8CXViDqAd4nNUaNLoUDQ9nRgiUMAxAUx5zA/TjsZJ/qd44cS1PwV75qzPu3H4m 
+	id S1752911AbbKCLya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 06:54:30 -0500
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:37301 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751572AbbKCLy1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Nov 2015 06:54:27 -0500
+Received: by wicfv8 with SMTP id fv8so9917757wic.0
+        for <git@vger.kernel.org>; Tue, 03 Nov 2015 03:54:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:content-transfer-encoding:from:user-agent
+         :to:references:in-reply-to:message-id:subject:date;
+        bh=0YyEZCc5AHUVApUHJqYvUNkJrOXhh/p6QVGnu4KyCDM=;
+        b=s/yq6ZCejwyFfRN10MDUnC/Go8OwKmpR1fOacPpsfPvLAoWgDlCOxZroYUihst5NxF
+         f9mnzVdjix2fq3hBF9yJGKp3Xs2yIwksrYOko9g/Q3s73TbKRvVa1emhasIRl/WZnFMj
+         Nb0rv4MPDBICJ5HpJmhk4MejYi3/PGvgS1QXBaw43Fd8cu2vJdKI6v/oNSuuxVT7ermp
+         WUpXQV26eV3/ah3B8DPHOBF9vIh/JX0Wjg1ANzArMsgJrsorglFBqJbq5HOa+OPgDj33
+         I60XjwadNPn9ilf2hPkISClFj11JvCoTS6/rx/4uIqF46aVPRl1NRNE3OrJdgSqO+fIL
+         r8Vw==
+X-Received: by 10.194.206.39 with SMTP id ll7mr27356119wjc.114.1446551666469;
+        Tue, 03 Nov 2015 03:54:26 -0800 (PST)
+Received: from localhost (mic92-1-82-67-159-185.fbx.proxad.net. [82.67.159.185])
+        by smtp.gmail.com with ESMTPSA id lb2sm27196694wjc.15.2015.11.03.03.54.25
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 Nov 2015 03:54:25 -0800 (PST)
+User-Agent: alot/0.3.6
+In-Reply-To: <144647528273.8071.637981592426422555@t440s>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280792>
 
-On 11/03/2015 07:58 AM, atousa.p@gmail.com wrote:
-> From: Atousa Pahlevan Duprat <apahlevan@ieee.org>
-Minor comments inline
-> diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
-> index b864df6..d085412 100644
-> --- a/block-sha1/sha1.h
-> +++ b/block-sha1/sha1.h
-> @@ -18,5 +18,5 @@ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx);
->   
->   #define git_SHA_CTX	blk_SHA_CTX
->   #define git_SHA1_Init	blk_SHA1_Init
-> -#define git_SHA1_Update	blk_SHA1_Update
-> +#define platform_SHA1_Update	blk_SHA1_Update
->   #define git_SHA1_Final	blk_SHA1_Final
-> diff --git a/cache.h b/cache.h
-> index 79066e5..a501652 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -10,12 +10,21 @@
->   #include "trace.h"
->   #include "string-list.h"
->   
-> +// platform's underlying implementation of SHA1
-Please use /* */ for comments
->   #include SHA1_HEADER
->   #ifndef git_SHA_CTX
-> -#define git_SHA_CTX	SHA_CTX
-> -#define git_SHA1_Init	SHA1_Init
-> -#define git_SHA1_Update	SHA1_Update
-> -#define git_SHA1_Final	SHA1_Final
-> +#define git_SHA_CTX		SHA_CTX
-> +#define git_SHA1_Init		SHA1_Init
-> +#define platform_SHA1_Update	SHA1_Update
-> +#define git_SHA1_Final		SHA1_Final
-> +#endif
-> +
-> +// choose whether chunked implementation or not
-> +#ifdef SHA1_MAX_BLOCK_SIZE
-> +int git_SHA1_Update_Chunked(SHA_CTX *c, const void *data, size_t len);
-> +#define git_SHA1_Update       git_SHA1_Update_Chunked
-> +#else
-> +#define git_SHA1_Update       platform_SHA1_Update
->   #endif
->   
->   #include <zlib.h>
-> diff --git a/compat/apple-common-crypto.h b/compat/apple-common-crypto.h
-> index c8b9b0e..d3fb264 100644
-> --- a/compat/apple-common-crypto.h
-> +++ b/compat/apple-common-crypto.h
-> @@ -16,6 +16,10 @@
->   #undef TYPE_BOOL
->   #endif
->   
-> +#ifndef SHA1_MAX_BLOCK_SIZE
-> +#error Using Apple Common Crypto library requires setting SHA1_MAX_BLOCK_SIZE
-> +#endif
-> +
->   #ifdef APPLE_LION_OR_NEWER
->   #define git_CC_error_check(pattern, err) \
->   	do { \
-> diff --git a/compat/sha1_chunked.c b/compat/sha1_chunked.c
-> new file mode 100644
-> index 0000000..61f67de
-> --- /dev/null
-> +++ b/compat/sha1_chunked.c
-> @@ -0,0 +1,19 @@
-> +#include "cache.h"
-> +
-> +int git_SHA1_Update_Chunked(SHA_CTX *c, const void *data, size_t len)
-> +{
-> +	size_t nr;
-> +	size_t total = 0;
-> +	const char *cdata = (const char*)data;
-> +
-> +	while (len > 0) {
-size_t is unsigned, isn't it ?
-Better to use  "while (len) {"
-> +		nr = len;
-> +		if (nr > SHA1_MAX_BLOCK_SIZE)
-> +			nr = SHA1_MAX_BLOCK_SIZE;
-> +		platform_SHA1_Update(c, cdata, nr);
-> +		total += nr;
-> +		cdata += nr;
-> +		len -= nr;
-> +	}
-> +	return total;
-> +}
+Quoting Mr Guillaume Seren (2015-11-02 15:41:22)
+> Quoting dayong xie (2015-11-02 05:56:55)
+> > To be specific
+> > In my Unity project, there is a native plugin,  and plugin's extension
+> > is .dll, and this plugin is
+> > under git version control, when Unity is running, the plugin file will
+> > be locked.
+> > If i merge another branch, which contains modification of the plugin,
+> > git will report error, looks
+> > like:
+> > error: unable to unlink old 'xxxxxxx/xxx.dll' (Permission denied)
+> > This is not bad, however, the unfinished merge action will not revert
+> > by git, a lot of changes
+> > produced in repository.
+> > usually it makes me crazy, even worse, some of my partners are not
+> > good at using git.
+> > Of course, this problem can be avoided by quit Unity, but not every
+> > time we can remember. In
+> > my opinion, git should revert the unfinished action when the error
+> > occurred, not just stop.
+> > 
+> > -- 
+> > --------------------------------------------------------------
+> > Best Regards,
+> > John Xie
+> > --------------------------------------------------------------
+> > --
+> > To unsubscribe from this list: send the line "unsubscribe git" in
+> > the body of a message to majordomo@vger.kernel.org
+> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+> 
+> --------------------
+> | Mr Guillaume Seren
+> |
+> | website: http://www.guillaumeseren.com/
+> | github: https://github.com/GuillaumeSeren
+> --------------------
+
+
+--------------------
+| Mr Guillaume Seren
+|
+| website: http://www.guillaumeseren.com/
+| github: https://github.com/GuillaumeSeren
+--------------------
