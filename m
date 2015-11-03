@@ -1,98 +1,155 @@
-From: Felipe Sateler <fsateler@debian.org>
-Subject: Bug: stash save -u removes (some) ignored files
-Date: Tue, 3 Nov 2015 19:37:33 -0300
-Message-ID: <CAAfdZj8=pqWDB9U3=bPeKXGzsZvzns2xX8WxEzQAy08wgSm=ZQ@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: git.git as of tonight
+Date: Tue, 3 Nov 2015 15:00:24 -0800
+Message-ID: <CAGZ79kZM-Q2oxVkMO9=v=tAdJkpWWOTVkaSMRDKZSZia2MY5Ng@mail.gmail.com>
+References: <xmqqpoztf6ok.fsf@gitster.mtv.corp.google.com>
+	<5637D266.4060904@kdbg.org>
+	<CAGZ79kbx7UJOOkhiXiUJfUS25gMGx5BUq=Qxa9205H0Z78ijbQ@mail.gmail.com>
+	<56385587.1010601@kdbg.org>
+	<xmqq37wndndp.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbAj-tZS3X1EwFw_gGh1=YU8M0OmEX91W8f++fqs6TiBA@mail.gmail.com>
+	<56392106.1010401@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 03 23:38:20 2015
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Nov 04 00:00:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtkDa-0004Wf-QS
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 23:38:19 +0100
+	id 1ZtkZ5-00076i-63
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 00:00:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965038AbbKCWiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 17:38:14 -0500
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:34529 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964839AbbKCWiO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 17:38:14 -0500
-Received: by igpw7 with SMTP id w7so78623251igp.1
-        for <git@vger.kernel.org>; Tue, 03 Nov 2015 14:38:13 -0800 (PST)
+	id S965059AbbKCXA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 18:00:26 -0500
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:33063 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965038AbbKCXAZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 18:00:25 -0500
+Received: by ykft191 with SMTP id t191so42940788ykf.0
+        for <git@vger.kernel.org>; Tue, 03 Nov 2015 15:00:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:content-type;
-        bh=2ynUxEOIcAN2aDFlFcu42vo3ymf1x/35mn+6xMz9CGk=;
-        b=ROKsRGicZAz3/oA8iM59YT84m6yBz0fx2sYHVgkYdDTkqFL9hJnzyPmgx0/8aVmkcr
-         yI0DEuIOVGu2whP5CIAHjq12RSZIoNCS+mGIFiefnbKuE1KKA6KF8ZH2av0b2fpb51KH
-         WiHj1mhrCj8AzTmXTAHBFRfjy+VsjGYudNYXs1k5SDl9XOMpej3eYCIqEoxzsk6vUDCD
-         9arTphcWWQIBU3PqWp29KTCH8leyN1msdWqaUigcPNTwFTB/wxRTSTMLAyFyBWTB3Y6w
-         kBgLBDERaV7+/ytun/7NI3YListg230xA8Q8p8gYszQeyt/Wr31lTdxZeYoR9KSE85ID
-         N6Kw==
-X-Received: by 10.50.66.69 with SMTP id d5mr18155719igt.30.1446590293110; Tue,
- 03 Nov 2015 14:38:13 -0800 (PST)
-Received: by 10.107.131.101 with HTTP; Tue, 3 Nov 2015 14:37:33 -0800 (PST)
-X-Google-Sender-Auth: JSNVdZpXf40KGPgKqQDHNhBB6As
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=VFHyMniw0DnrbJExXfk8U2lURzuFZUrrUCXzjG2HRHA=;
+        b=eX1Z3twpPitmBmhcjXecAqLH8BlJTfc/brhZ/4nrBGyIPa91iSgkwqXo7oYX/Cg0Jp
+         zZ7piniTk1m6A+N6rrtHM4V5Ny1+u4S9SLfi0EdsKRzpWHNt9J1ZJJiP+pfhwMNQfBgA
+         kJwmheUrJu3tbdbXLzXgIXgxE6miZpUgNOqH2lZmGDsh02ycFiP8dJUrs3/NBp7CoV7F
+         SmGpZtTdDDDPHBoXHqzILxOj8vttYoydbstWBkWEbYYjF8GvyMOlywD9G1zobvad6Uys
+         60ZyrBHpN9tKhr2XYftLeSB6Tdc6xGGTVb9SPhHCJ3SIM0R1mfkZRztYmq7fswcxWdHD
+         cDwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=VFHyMniw0DnrbJExXfk8U2lURzuFZUrrUCXzjG2HRHA=;
+        b=F/Rcc7MssIccYQRNkzqxD35vmp348TyqYPU/EhWzUbB1MTFNAQvPSZWUC2oOSmfNoo
+         mzcMeSC75A82ywQCABPq9le6gJNj/bcCEFmVAEjOfYPlnbjoKD6UFv+De34GexUx9IiR
+         dN34WadngA91JDdrQT4f4TwexH9yNxpi+muCwfX5bX/ekVWeQ/xbYzbnHMtz1vssu3lq
+         F7KIvjzdPZP5gIeY+vlYm+YxJxax0lL7fIhCBeI49LqfFDwpYN1vehN1sKXTU7d50j1G
+         FVQSjvDpyiC73voGUZme0lr8O4IXUJgiaLykVZXt2Dt6xYaZMMYEdBsE+vjAn8TVlFEw
+         OUJQ==
+X-Gm-Message-State: ALoCoQmLgiH5mzJaau5HxevZ3ycLKbWUTLeUEPn7B2G19RgApKq3a58EsBzuuugwwZ8BWs0UyVwA
+X-Received: by 10.129.40.147 with SMTP id o141mr12959008ywo.199.1446591624872;
+ Tue, 03 Nov 2015 15:00:24 -0800 (PST)
+Received: by 10.37.29.213 with HTTP; Tue, 3 Nov 2015 15:00:24 -0800 (PST)
+In-Reply-To: <56392106.1010401@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280830>
 
-I have seen the following problem:
+On Tue, Nov 3, 2015 at 1:03 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 03.11.2015 um 19:18 schrieb Stefan Beller:
+>>
+>> ... ReadFileEx ... "overlapped" operation.
+>
+>
+> Let's not go there just yet.
+>
+>>>   1. Make this an optional feature so that platforms can compile it
+>>>      out, if it is not already done.  My preference, even if we go
+>>>      that route, would be to see if we can find a way to preserve the
+>>>      overall code structure (e.g. instead of spawning multiple
+>>>      workers, which is why the code needs NONBLOCK to avoid getting
+>>>      stuck on reading from one while others are working, perhaps we
+>>>      can spawn only one and not do a nonblock read?).
+>>
+>>
+>> Yeah that would be my understanding as well. If we don't come up with
+>> a good solution for parallelism in Windows now, we'd need to make it at
+>> least working in the jobs=1 case as well as it worked before.
+>
+>
+> That should be possible. I discovered today that we have this function:
+>
+> static void set_nonblocking(int fd)
+> {
+>         int flags = fcntl(fd, F_GETFL);
+>         if (flags < 0)
+>                 warning("Could not get file status flags, "
+>                         "output will be degraded");
+>         else if (fcntl(fd, F_SETFL, flags | O_NONBLOCK))
+>                 warning("Could not set file status flags, "
+>                         "output will be degraded");
+> }
+>
+> Notice that it is not a fatal condition if O_NONBLOCK cannot be established.
+> (BTW, did you ever test this condition?)
 
-felipe@felipe:testgit% cat .gitignore
-**/notrack/*
-!**/notrack/track/
-notrackfile**
+No, as I viewed it more like a severe problem, not to be happen in the
+near future.
+But if it were to happen we would still need to finish the command
+instead of giving
+up because of degraded output. (I would not know how to test this
+system call to fail,
+so maybe I am just making up excuses)
 
-felipe@felipe:testgit% find *
-newfile
-notrack
-notrack/1
-notrackfile1
+I added an #ifdef just as you proposed below and the output itself
+doesn't look too bad
+except for the warning message themselves. If we'd just remove them it
+would look
+better to me.
 
-felipe@felipe:testgit% git status --porcelain
-?? newfile
+So maybe we could just go with
 
-felipe@felipe:testgit% git stash save -u
-Saved working directory and index state WIP on master: 523cb39 Initial commit
-HEAD is now at 523cb39 Initial commit
+    static void set_nonblocking(int fd)
+    {
+    #ifndef GIT_WINDOWS_NATIVE
+        int flags = fcntl(fd, F_GETFL);
+        if (!(flags < 0))
+            fcntl(fd, F_SETFL, flags | O_NONBLOCK)
+    #endif
+    }
 
-felipe@felipe:testgit% find *
-notrackfile1
+and see how people react to the output then?
 
-So, after a stash save, git decided to keep the untracked file in the
-current directory, but not the ones inside the untracked directory.
-However, the files were "correctly" ignored and did not appear on the stash:
 
-felipe@felipe:testgit% git stash pop
-Already up-to-date!
-On branch master
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-        newfile
-
-nothing added to commit but untracked files present (use "git add" to track)
-Dropped refs/stash@{0} (e6508f345af1dd207557ad0291e7e3bce8a89b1e)
-
-felipe@felipe:testgit% find *
-newfile
-notrackfile1
-
-I think the correct behaviour should be to left the ignored files
-untouched in both scenarios.
-
-This is with git 2.6.1 (from debian).
-
-I note that if I add a file inside the notrack/track directory, it is
-correctly kept, but the files in notrack/ are still deleted.
-
--- 
-
-Saludos,
-Felipe Sateler
+> If we add two lines (which remove
+> the stuff that does not work on Windows) like this:
+>
+> static void set_nonblocking(int fd)
+> {
+> #ifndef GIT_WINDOWS_NATIVE
+>         int flags = fcntl(fd, F_GETFL);
+>         if (flags < 0)
+>                 warning("Could not get file status flags, "
+>                         "output will be degraded");
+>         else if (fcntl(fd, F_SETFL, flags | O_NONBLOCK))
+> #endif
+>                 warning("Could not set file status flags, "
+>                         "output will be degraded");
+> }
+>
+> we should get something that works, theoretically. We still need a more
+> complete waitpid emulation, but that does not look like rocket science. I'll
+> investigate further in this direction.
+>
+> -- Hannes
+>
