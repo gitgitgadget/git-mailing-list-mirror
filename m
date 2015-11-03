@@ -1,163 +1,90 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv2 0/8] Expose the submodule parallelism to the user
-Date: Tue, 3 Nov 2015 11:41:52 -0800
-Message-ID: <CAGZ79kbWbN_8XSMyYnkxstqV-+fHEixceeGaR4NYGqrvw0ZaUQ@mail.gmail.com>
-References: <xmqqfv0wp1l1.fsf@gitster.mtv.corp.google.com>
-	<1446074504-6014-1-git-send-email-sbeller@google.com>
-	<56321CF4.60807@ramsayjones.plus.com>
-	<CAGZ79kYXrOFDqs5c-OYG2vRO9GY_aoD_GU1=TkRtOMaGC_GowA@mail.gmail.com>
-	<5632B0E1.8040309@ramsayjones.plus.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] http: allow selection of proxy authentication method
+Date: Tue, 03 Nov 2015 11:46:54 -0800
+Message-ID: <xmqqr3k6dfwx.fsf@gitster.mtv.corp.google.com>
+References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
+	<1446483264-15123-1-git-send-email-k.franke@science-computing.de>
+	<1446483264-15123-2-git-send-email-k.franke@science-computing.de>
+	<xmqqfv0odnoc.fsf@gitster.mtv.corp.google.com>
+	<20151103090724.GA6354@science-computing.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Eric Sunshine <ericsunshine@gmail.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 20:42:01 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+To: Knut Franke <k.franke@science-computing.de>
+X-From: git-owner@vger.kernel.org Tue Nov 03 20:47:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZthSw-0007y7-2g
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 20:41:58 +0100
+	id 1ZthYY-0004dz-KV
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 20:47:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756007AbbKCTly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 14:41:54 -0500
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:36819 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755916AbbKCTlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 14:41:53 -0500
-Received: by ykba4 with SMTP id a4so34125734ykb.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2015 11:41:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=pYsaV2uLhrvblz9MRzDA/++wZuO09ZvTd7pnPW0RibA=;
-        b=IPmFow4iiJq41BsY+vfaOhuaV5lKx/MMOpxvrAm5/inW0rene7h4HfOwYxqPEAvMUi
-         5gJza5KlZs//O68fcJqu4UXiVR+Q9CSkYLA8nh7fEpv67oB/7OAF+G+gkTp+YYC1JSjD
-         AN4FKA1sCss0xPbWK5ko7h5eUXBifmPAkJebsAWXGpPiRuu2vlOkZXAo7A6/lDsrDhyX
-         +5e39g1DeisDIpmDXKQIbbOSyqXqJ4fbOhQHDPneVA20LObKukU7QtZ+l4upn+Qkv8t+
-         SIxG4ApuKqiuZCbIRcyANuUEkxxNLHhH6FxtVa9b4feYS/ZTa4wOw3Sch1rkS/WRVkhu
-         EKiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=pYsaV2uLhrvblz9MRzDA/++wZuO09ZvTd7pnPW0RibA=;
-        b=eFbjTr3+P48DoCBA0iGzqVy4Fp04HSGt0Cnoewv8lwoXP7fOLFAhHgo7jk6Ldg+ah0
-         GJOZ9GhFzv0RENCzF6BDioRRUYcqQEFRfaIXMoz49UlwBA8Brlqd1b5LunEbvrtpOX3+
-         BEmrl9JI+ar3ReJllveN/9d3SxnaC70xDD9d4jw5HUGkO1sRk7zF/XDIkg4LDWEmdHQM
-         /Z5t2LotU2rPhEWVy4tm1tggY2TOf9kj1E6LroSjdHfFXmVQ0UCmZw5a29faDdXdMpB5
-         Jh5ODffi8uGz5Jo3rLt6Bm6+554t0SMpzOYzdMv2S1RR1PcVr9zipmRGBC0yPgenAXyq
-         qn1g==
-X-Gm-Message-State: ALoCoQkAyACRJYd6WckjxRIrjfeN2mK+n+WHNbPp+331EnPS7N1eRO+4U6AZVTByv4dmyhJRI+3w
-X-Received: by 10.13.230.194 with SMTP id p185mr24653497ywe.320.1446579712374;
- Tue, 03 Nov 2015 11:41:52 -0800 (PST)
-Received: by 10.37.29.213 with HTTP; Tue, 3 Nov 2015 11:41:52 -0800 (PST)
-In-Reply-To: <5632B0E1.8040309@ramsayjones.plus.com>
+	id S932374AbbKCTrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 14:47:24 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56349 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932457AbbKCTrD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 14:47:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8C02029C28;
+	Tue,  3 Nov 2015 14:46:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DqXhW3ut/qOdZsOx324Qi7Ii7Tw=; b=k+eT3T
+	7NpwD1gnUgLcugYLZK8WnJuAbWHkEbGd8v9V6+qtt7YsVQeezkVdHNhrbehcjXNB
+	hSX+r1A0uKysDY9M/zZXt9yUFTR1P5kSvylExBWj3PPL64sBV01ESKLOE4Es9mWq
+	vwOeYcubbZhBWM86Ai14aUnCVFLQYlZFfPn64=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nN5hdjxw82CNAniXDNhx1c6SPTxsOfWE
+	/4wKvT/EfQmlthVVh20HVtCZw45JxJWlkXLJdV5GSBXhy1gO7848TVYcwxxV0QCX
+	3pEbTDqovkZZLN00G9DCrqBe6heONWxUCsoY2NbkP2L+DnGlSGMFqDN+92jLDCOT
+	FTqPJwWt7f0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 849BA29C27;
+	Tue,  3 Nov 2015 14:46:56 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0B01B29C26;
+	Tue,  3 Nov 2015 14:46:55 -0500 (EST)
+In-Reply-To: <20151103090724.GA6354@science-computing.de> (Knut Franke's
+	message of "Tue, 3 Nov 2015 10:07:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: A3785616-8263-11E5-B793-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280811>
 
-On Thu, Oct 29, 2015 at 4:50 PM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
+Knut Franke <k.franke@science-computing.de> writes:
+
+> On 2015-11-02 14:46, Junio C Hamano wrote:
+>> > Reviewed-by: Junio C Hamano <gitster@pobox.com>
+>> > Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+>> 
+>> Please add these only when you are doing the final submission,
+>> sending the same version reviewed by these people after they said
+>> the patch(es) look good.  To credit others for helping you to polish
+>> your patch, Helped-by: would be more appropriate.
 >
+> Sorry about that.
 >
-> On 29/10/15 15:51, Stefan Beller wrote:
->> On Thu, Oct 29, 2015 at 6:19 AM, Ramsay Jones
->> <ramsay@ramsayjones.plus.com> wrote:
->>
->>> Hmm, is there a way to _not_ fetch in parallel (override the
->>> config) from the command line for a given command?
->>>
->>> ATB,
->>> Ramsay Jones
->>
->> git config submodule.jobs 42
->> git <foo> --jobs 1 # should run just one task, despite having 42 configured
+> However, may I suggest that Documentation/SubmittingPatches could do with a
+> little rewording in this respect?
 >
-> Heh, yes ... I didn't pose the question quite right ...
->>
->> It does use the parallel processing machinery though, but with a maximum of
->> one subcommand being spawned. Is that what you're asking?
+>> Do not forget to add trailers such as "Acked-by:", "Reviewed-by:" and
+>> "Tested-by:" lines as necessary to credit people who helped your
+>> patch.
 >
-> ... but, despite that, you correctly inferred what I was really
-> asking about! :)
->
-> I was just wondering what overhead the parallel processing machinery
-> adds to the original 'non-parallel' code path (for the j=1 case).
-> I suspect the answer is 'not much', but that's just a guess.
-> Have you measured it?
+> "Helped-by:" isn't even mentioned.
 
-Totally unscientific:
- * Make a copy of my current gerrit repository and time the fetch.
- * That repo contains 5 submodules, one needs fetching
+That is because it is not actively encouraged.
 
-time git fetch --recurse-submodules=yes --jobs=1 # this series
-real 0m7.150s
-user 0m3.459s
-sys 0m1.126s
-
-time git fetch --recurse-submodules=yes # origin/master
-real 0m7.667s
-user 0m3.439s
-sys 0m1.190s
-
-Now let's test a few more times repeatedly to avoid cold caches or
-network hiccups, (also there is nothing to fetch, so it's more like doing
-6 ls-remotes in a row, one for gerrit and 5 submodules)
-
-this series, best out of 5:
-real 0m3.971s
-user 0m2.447s
-sys 0m0.452s
-
-this series, worst out of 5:
-real 0m4.229s
-user 0m2.506s
-sys 0m0.413s
-
-origin/master, best out of 5:
-real 0m3.968s
-user 0m2.516s
-sys 0m0.380s
-
-origin/master, worst out of 5:
-real 0m4.217s
-user 0m2.472s
-sys 0m0.408s
-
-The ratio of real time taken longer is < 1 % in
-both the best and worst case.
-
-If you really care about 1 % of performance, you'd want to fetch in
-parallel anyway?
-
-
-> What happens if there is only a single
-> submodule to fetch?
-
-Ok let's see. I created https://github.com/stefanbeller/test-sub-1
-to play around with it. However
-time git fetch --recurse-submodules=yes
-or
-time git fetch --recurse-submodules=yes --jobs 100
-seems to be lost in the noise.
-
-So I am not sure what the question is w.r.t. having just one
-submodule.
-
-
->
-> ATB,
-> Ramsay Jones
->
->
+The only thing I care about is that people do not incorrectly use
+Reviewed/Acked-by when reviewers did not say "this version looks
+good"; that would mislead the maintainer to think "ah, if that
+reviewer said this is good, whose judgment I can trust, then I do
+not have to read it carefully myself."
