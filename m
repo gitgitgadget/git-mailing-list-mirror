@@ -1,90 +1,85 @@
-From: Knut Franke <k.franke@science-computing.de>
-Subject: Re: [PATCH 2/2] http: use credential API to handle proxy
- authentication
-Date: Tue, 3 Nov 2015 10:31:04 +0100
-Message-ID: <20151103093103.GB6354@science-computing.de>
-References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
- <1446483264-15123-1-git-send-email-k.franke@science-computing.de>
- <1446483264-15123-3-git-send-email-k.franke@science-computing.de>
- <xmqqbnbcdnb8.fsf@gitster.mtv.corp.google.com>
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Subject: Re: [PATCH 0/5] Use watchman to reduce index refresh time
+Date: Tue, 3 Nov 2015 11:26:47 +0100
+Message-ID: <CAHVLzcnm6qUhcuuP36Q7Yvf9rUAu-KK4j5-Rzmzd_CFCaRwYug@mail.gmail.com>
+References: <1446386146-10438-1-git-send-email-pclouds@gmail.com>
+ <CAHVLzcn3j8eLi9VrNoZjyOZ2UzE7=NYF1bqB9UyKmghUoUw1Zg@mail.gmail.com>
+ <CACsJy8DzSEVJYc85-3vSAZ8wB1pR9TLz0RrKyKFfHth9Tq+xyg@mail.gmail.com> <CACsJy8Dz17gRSHch9e=iB2Kq2t4FbssatW84DF8pHTuFMgEgjQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 10:41:38 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 03 11:27:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtY5v-0008JD-ES
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 10:41:35 +0100
+	id 1ZtYo7-0000sX-Iw
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 11:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753016AbbKCJlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 04:41:08 -0500
-Received: from mx1.science-computing.de ([217.243.222.155]:42847 "EHLO
-	mx1.science-computing.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752995AbbKCJlC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 04:41:02 -0500
-X-Greylist: delayed 595 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Nov 2015 04:41:02 EST
-Received: from localhost (localhost [127.0.0.1])
-	by scmail.science-computing.de (Postfix) with ESMTP id D7C51492D;
-	Tue,  3 Nov 2015 10:31:04 +0100 (CET)
-X-Virus-Scanned: amavisd-new
-Received: from scmail.science-computing.de ([127.0.0.1])
-	by localhost (guiness.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Bedy_mPyY5Iw; Tue,  3 Nov 2015 10:31:04 +0100 (CET)
-Received: from hallasan.science-computing.de (hallasan.science-computing.de [10.10.24.76])
-	by scmail.science-computing.de (Postfix) with ESMTP id 4202127C7;
-	Tue,  3 Nov 2015 10:31:04 +0100 (CET)
-Received: by hallasan.science-computing.de (Postfix, from userid 1633)
-	id 32F32A797B; Tue,  3 Nov 2015 10:31:04 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <xmqqbnbcdnb8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752048AbbKCK1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 05:27:10 -0500
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:34086 "EHLO
+	mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751336AbbKCK1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 05:27:08 -0500
+Received: by lfgh9 with SMTP id h9so12234293lfg.1
+        for <git@vger.kernel.org>; Tue, 03 Nov 2015 02:27:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=AO1hl1birb1c8w8H7q6Xw4OFyElSyUE1nLc5synLE4Y=;
+        b=bLxLqEY/5gyjRmQ1jTfp23uDkemj0sFA8URd92V6DXsOOdsLKvBsRmjGcERAkHUsaN
+         gmtHH+Ff6IxMBwjlOCbg0eLpcU3T+pNoXN5lcaUkMFvKXB0TE/+bcNpOHvW5YuIhITtb
+         +FXK8Ex2y41yj0bTc9ZITd3fQzLksbmOIiY08vap52iSBP09PGTeuJIqet1F0TSJCaxw
+         OqV/vmR89DA9AfnxSGLbzoMMTOlFwT7lyeZjyEYvxztWMG8XkLOhzQBkbxoVf1pG+Yy9
+         QCaHPcgfbCHCARpAQohAFzJlAsd7KpGSJl69GFXQJMA+MLjHW5eM57/7UAStbB7C6FNV
+         5Xww==
+X-Received: by 10.112.168.10 with SMTP id zs10mr12564974lbb.101.1446546427247;
+ Tue, 03 Nov 2015 02:27:07 -0800 (PST)
+Received: by 10.25.198.133 with HTTP; Tue, 3 Nov 2015 02:26:47 -0800 (PST)
+In-Reply-To: <CACsJy8Dz17gRSHch9e=iB2Kq2t4FbssatW84DF8pHTuFMgEgjQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280789>
 
-On 2015-11-02 14:54, Junio C Hamano wrote:
-> >  static void init_curl_proxy_auth(CURL *result)
-> >  {
-> > +	if (proxy_auth.username) {
-> > +		if (!proxy_auth.password)
-> > +			credential_fill(&proxy_auth);
-> > +#if LIBCURL_VERSION_NUM >= 0x071301
-> > +		curl_easy_setopt(result, CURLOPT_PROXYUSERNAME,
-> > +			proxy_auth.username);
-> > +		curl_easy_setopt(result, CURLOPT_PROXYPASSWORD,
-> > +			proxy_auth.password);
-> > +#else
-> > +		struct strbuf s = STRBUF_INIT;
-> > +		strbuf_addstr_urlencode(&s, proxy_auth.username, 1);
-> > +		strbuf_addch(&s, ':');
-> > +		strbuf_addstr_urlencode(&s, proxy_auth.password, 1);
-> > +		curl_proxyuserpwd = strbuf_detach(&s, NULL);
-> > +		curl_easy_setopt(result, CURLOPT_PROXYUSERPWD, curl_proxyuserpwd);
-> > +#endif
-> 
-> I think #else clause of this thing would introduce decl-after-stmt
-> compilation error.
+On Tue, Nov 3, 2015 at 10:21 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> It was from last year. I may have measured it but because I didn't
+>> save it in the commit message, it was lost anyway. Installing watchman
+>> and measuring with webkit.git soon..
+>
+> Test repo: webkit.git with 104665 tracked files, 5615 untracked,
+> 3517 dirs. Best numbers out of a few tries. This is best case
+> scenario. Normal usage could have worse numbers.
+>
+> There is something strange about the "-uno" measurements. I don't
+> think watchman+untracked cache can beat -uno..  Maybe I did something
+> wrong.
+>
+> 0m0.383s   index v2
+> 0m0.351s   index v4
+> 0m0.352s   v2 split-index
+> 0m0.309s   v2 split index-helper
+> 0m0.159s   v2 split helper untracked-cache
+> 0m0.123s   v2 split helper "status -uno"
+> 0m0.098s   v2 split helper untracked watchman
+> 0m0.071s   v2 split helper watchman "status -uno"
+>
+> Note, the watchman series needs
+> s/free_watchman_shm/release_watchman_shm/ (I didn't do a good job
+> of testing after rebase). And there's a small bug in index-helper
+> --detach code writing incorrect PID..
 
-I've actually tested this with CURL 7.15.5 (0x070f05), and didn't get any
-compilation error.
 
+Impressive improvements!
 
-Cheers,
-Knut
+Ciao,
+Paolo
+
 -- 
-Vorstandsvorsitzender/Chairman of the board of management:
-Gerd-Lothar Leonhart
-Vorstand/Board of Management:
-Dr. Bernd Finkbeiner, Dr. Arno Steitz
-Vorsitzender des Aufsichtsrats/
-Chairman of the Supervisory Board:
-Philippe Miltin
-Sitz/Registered Office: Tuebingen
-Registergericht/Registration Court: Stuttgart
-Registernummer/Commercial Register No.: HRB 382196
+Paolo
