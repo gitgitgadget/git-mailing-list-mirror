@@ -1,93 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] setup: do not create $X/gitdir unnecessarily when accessing git file $X
-Date: Tue, 03 Nov 2015 11:54:33 -0800
-Message-ID: <xmqqmvuudfk6.fsf@gitster.mtv.corp.google.com>
-References: <xmqqwpu7klmu.fsf@gitster.mtv.corp.google.com>
-	<1446491306-13493-1-git-send-email-pclouds@gmail.com>
-	<20151102203507.GB10722@sigill.intra.peff.net>
-	<xmqqtwp4dt17.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8Csjgcv_L+TW9YPTs5V=T2XD+eqo1w1PO4jpfDoHLQKpQ@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: Watchman/inotify support and other ways to speed up git status
+Date: Tue, 03 Nov 2015 15:32:21 -0500
+Organization: Twitter
+Message-ID: <1446582741.4131.37.camel@twopensource.com>
+References: <CAP8UFD3Cd9SOh6EYwcx9hTVv7P24M5bEJRCYCT5Qgj=qPRJ8hw@mail.gmail.com>
+	 <1445990089.8302.27.camel@twopensource.com>
+	 <CAP8UFD3rkacENsnthdhqTPczbZP+J_iV6xr8sTXj2MFgZRx8DQ@mail.gmail.com>
+	 <1446497776.4131.6.camel@twopensource.com>
+	 <CACsJy8AC1B+b_KBBcob07LkAkjjiwFQCLnMcgX0iUdQeNdeLfQ@mail.gmail.com>
+	 <CAP8UFD04C-Amt2vGQKrJmA=DYVXrR7+hhkk9e49NsT-F0wiV1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	rappazzo@gmail.com, kyle@kyleam.com,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 20:54:42 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Luciano Rocha <luciano.rocha@booking.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 03 21:32:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZthfG-0002Cq-9v
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 20:54:42 +0100
+	id 1ZtiGD-0001wj-Uk
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 21:32:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753898AbbKCTyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 14:54:38 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52995 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755916AbbKCTyh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 14:54:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4C9AE29F20;
-	Tue,  3 Nov 2015 14:54:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uIFab21lInVB6U/Bi9M49YtGI6I=; b=e2fTfr
-	qw/or2lWS2IRwKgWekh2nqxTv80p0jtcmR5HxVnB7+SSTD52jqQZ/4RoMWPqKD7N
-	UYC/zB5Z+fj0SdFOc/pfHgKOq8mqq9ci+8aQ1RRMzsXbGszozk4I2Ba4/VSFa5XF
-	diFoW7EjC1rxA4s0SIY2ZDAMVG8oeqT/gb55o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BDVblEGsFZLUbqv+zM6nNnx2j6Ho4HDl
-	21Ig/MMafr+SR6mkGQRt2BFOM7GbMSdEEgGmh15TErIIjN58k1PG/C77ycAIX0cy
-	a3F/TqbPW2IiTT4nltGX6Nj+RaNrskDLYiH8odtp69K768umXj7UgnXxOcebAjNP
-	aHZiN7PJKlc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 42D0729F1F;
-	Tue,  3 Nov 2015 14:54:36 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3530529F1E;
-	Tue,  3 Nov 2015 14:54:35 -0500 (EST)
-In-Reply-To: <CACsJy8Csjgcv_L+TW9YPTs5V=T2XD+eqo1w1PO4jpfDoHLQKpQ@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 3 Nov 2015 06:48:31 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: B53C1332-8264-11E5-B42A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S964980AbbKCUc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 15:32:27 -0500
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:36536 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964798AbbKCUcY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 15:32:24 -0500
+Received: by qgad10 with SMTP id d10so23738948qga.3
+        for <git@vger.kernel.org>; Tue, 03 Nov 2015 12:32:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource_com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=COywF1EfnVs5f0pfjMWrQAEpRCmle1VlHr+BEdSiasY=;
+        b=HvGbxD6JytjY862+ifIfWmKCKaQVDB15j+YaAzCManfoF0D86tszFHqvpATFmTurcp
+         8YBoTjZRxNU+553eVm2Sis/Db4Tyn4lTgKnsfFec5PCtyhdxrlQSdLPNL2VfEoxgrKKr
+         jyL2SZ2x1Ffi3QarulQAI+jJ5Mn/AnYIOe5f5pd+AaxByFSIo07xLF9tWKUa8lOz9Djm
+         3Tmo7X6/OWBIiqqITdiPBncvnId+YnfXim8myh/cDbJXKrolJdIPw7mTUhl2GK/zHSJN
+         vtXkRbkkNScGsno06NHe9/UBUwzBc6HZwR+f0pRNQt3wLZUrcp6m4yGaEQuFEpGoM0gq
+         weJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=COywF1EfnVs5f0pfjMWrQAEpRCmle1VlHr+BEdSiasY=;
+        b=Vh+z1cp8Fwa2GJtqL25tr0D0H+H9iPOL/MfrWaZ8ReET/BIca21+8Sw4OboEWgctMZ
+         4F1hYYRaqdsXrk+FZnbJlNdtVSrZLg0oi6u3WVhUXZ7Zcr3hFN5lwof5TIF/TsmdQ+RN
+         ideUrCth/N3mlXrKslKYl/nn8QEBZQ+gS3ptZfj0DDwX/+3My4RtfEiccwSOc2Y39LGf
+         sfT9Y+upahWJyxYYUgRXjk7yudHgNzEgAUByMUJ/XbHbuxoj9Or/2qkcGGxcYvgCgni+
+         QiSxCIUWaawQzNo3UljBZ87Ldtml2sG/ldMtPwvZs7r66bF419onKnLTWF/ELyZ801UF
+         6Miw==
+X-Gm-Message-State: ALoCoQn6GAq1UrT4ePrxPYAnmMjx02IkoOsFbcR6hr8+HzGHPomCxrp0Sv6NbCg31g0lzkRxJCPu
+X-Received: by 10.140.93.104 with SMTP id c95mr39213771qge.101.1446582743980;
+        Tue, 03 Nov 2015 12:32:23 -0800 (PST)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id 76sm1439864qhj.2.2015.11.03.12.32.22
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 Nov 2015 12:32:23 -0800 (PST)
+In-Reply-To: <CAP8UFD04C-Amt2vGQKrJmA=DYVXrR7+hhkk9e49NsT-F0wiV1Q@mail.gmail.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280814>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Tue, 2015-11-03 at 08:09 +0100, Christian Couder wrote:
+> On Tue, Nov 3, 2015 at 6:45 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> > On Mon, Nov 2, 2015 at 9:56 PM, David Turner <dturner@twopensource.com> wrote:
+> >> On Thu, 2015-10-29 at 09:10 +0100, Christian Couder wrote:
+> >>> > We're using Watchman at Twitter.  A week or two ago posted a dump of our
+> >>> > code to github, but I would advise waiting a day or two to use it, as
+> >>> > I'm about to pull a large number of bugfixes into it (I'll update this
+> >>> > thread and provide a link once I do so).
+> >>>
+> >>> Great, I will have a look at it then!
+> >>
+> >> Here's the most recent version:
+> >>
+> >> https://github.com/dturner-tw/git/tree/dturner/watchman
+> >
+> > Christian, the index-helper/watchman series are posted because you
+> > showed interest in this area. I'm not rerolling to address David's
+> > comments on the series for now.
+> 
+> Ok no problem. Thanks a lot to you and David for posting your rebased series!
+> 
+> > Take your time evaluate the two
+> > approaches, then you can pick one (and let me know if you want me to
+> > hand my series over, very glad to do so).
+> 
+> Yeah, I will do that, thanks again!
 
-> The whole prune strategy is a bit messy trying to cover all cases
-> while still keeping out of the user's way. Perhaps if we implement
-> "git worktree mv", or even "worktree fixup" so the user can do it
-> manually (back when the prune strategy commit was implemented, there
-> was no git-worktree), then we don't need this magic any more.
->
-> So, which way to go?
-
-I'd prefer to see "conservative and minimal first and carefully
-build up" instead of "snapping something together quickly and having
-to patch it up in rapid succession before people get hurt." and that
-is not limited to the "worktree" topic.
-
-I think "if you move, you are on your own, do not do it." would be a
-good starting point.  The user education material would say: if you
-create worktree B out of the primary A, and if you do not like the
-location B, you "rm -fr B" and then create a new C out of the
-primary A at a desired place, and do not reuse location B for any
-other purpose.  The list of worktrees kept somewhere in A would then
-name the old location B, and it is OK to notice the staleness and
-remove it, but we do not have to.  At that point, the magic can and
-should go.
-
-After setting the user expectation that way, it is fine to design
-how we would give "worktree rm" and "worktree mv".  As long as
-users' initial expectation is set to "you do not mv, ever", these
-can be introduced without hurting their established use pattern that
-would involve no 'mv'.
+To be clear: I think Duy's approach is probably best in the long term.
