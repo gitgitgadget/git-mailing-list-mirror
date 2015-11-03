@@ -1,100 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Lebon <jonathan.lebon@gmail.com>
 Subject: Re: [PATCH 1/4] diff-highlight: add `less -r` to cmd in README
-Date: Mon, 02 Nov 2015 18:41:53 -0800
-Message-ID: <xmqq7flzerda.fsf@gitster.mtv.corp.google.com>
+Date: Mon, 2 Nov 2015 22:12:13 -0500
+Message-ID: <CAM0PgJ6XZmtuSXPq77V_TSoj_b=KhU2AFxmUgbkoE_f9e8Prmw@mail.gmail.com>
 References: <1446516334-27652-1-git-send-email-jonathan.lebon@gmail.com>
-	<1446516334-27652-2-git-send-email-jonathan.lebon@gmail.com>
+ <1446516334-27652-2-git-send-email-jonathan.lebon@gmail.com> <xmqq7flzerda.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, peff@peff.net
-To: Jonathan Lebon <jonathan.lebon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 03:42:02 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 03 04:12:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtRXt-0000T9-FB
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 03:42:01 +0100
+	id 1ZtS1h-00030t-3B
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 04:12:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754287AbbKCCl5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 21:41:57 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64185 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751965AbbKCCl4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 21:41:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8FBDC297EA;
-	Mon,  2 Nov 2015 21:41:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p/3Eu2dTe7FEZ8bfKVNEQJWcf2U=; b=luQLmK
-	tYsGin3g09y4iwEM++36r43ENyffxsu1lN0nkr1UrkBXeJ+VKylDR+d0PeYq+vlp
-	UGlxktacU9JXkp0IzCjb2/TTiXOIkMYdGZu0fWn+GyUAT9Zq/Rfum6wXjFtxnMHT
-	nT+SK8XeUtv10ZbhdtdSbRFj4aqBuxgdJe/ZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=D0rzryTbjeExPIlJstmxr6rghXRQv9pD
-	Q+xnRgLn4OI3SZF9FwLib0Q6kdnyhLUg7mhPW5JhlKl5NksMhvYAgwmF80T8MCUy
-	DgEk3fjSEP90yjeZlLdd/DkHofL+03Y/+ytgyPwLQmr246CQBtNiQnXk4T+wwp9i
-	eoexj4htQ/0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 87A4B297E9;
-	Mon,  2 Nov 2015 21:41:55 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0A107297E8;
-	Mon,  2 Nov 2015 21:41:54 -0500 (EST)
-In-Reply-To: <1446516334-27652-2-git-send-email-jonathan.lebon@gmail.com>
-	(Jonathan Lebon's message of "Mon, 2 Nov 2015 21:05:31 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7203B65A-81D4-11E5-816D-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752288AbbKCDMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Nov 2015 22:12:44 -0500
+Received: from mail-qk0-f181.google.com ([209.85.220.181]:34796 "EHLO
+	mail-qk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751229AbbKCDMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 22:12:43 -0500
+Received: by qkcn129 with SMTP id n129so1648236qkc.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2015 19:12:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=PuPvP+42z9FijyFGqBeGVvkkBBaqPEhD21UupFTM1dY=;
+        b=FUkfUxS8QM07mild7xkXmw5uYDye5ZO+OlPndbx3j6VDXoa0LSM+fYyw51W0wGkMsg
+         VLUVx/CRW5dvxKlWLFKiBg5D/m0v2rquM1Nb+MwAt6YrqeeUIv0UfV6EiMBpLWficZCv
+         HJXxAyffdDp6DwrS0u3ZTDuE9oPxGzTzm2eShrJ7qOkqhSBtqXGRaWUQ+7OXt0m22B64
+         h/WLakFCj3AA9GkPWaafWjoA/fcaggnUvLxG+ujLb0N16erZYVSsD8oAj3wVaFDK7/2k
+         XDqAbMGCWwoSR8EYLL+eE4Asn26yakKeG/WPSYn6wyVc9zaAWs6vt/yUNj/4UU7cYpuy
+         Nd/w==
+X-Received: by 10.55.50.149 with SMTP id y143mr33521554qky.86.1446520363206;
+ Mon, 02 Nov 2015 19:12:43 -0800 (PST)
+Received: by 10.55.221.141 with HTTP; Mon, 2 Nov 2015 19:12:13 -0800 (PST)
+In-Reply-To: <xmqq7flzerda.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280747>
 
-Jonathan Lebon <jonathan.lebon@gmail.com> writes:
-
-> As it is, the suggested command for trying out diff-highlight will just
-> dump the whole git log output to the terminal. Let's pipe it through
-> `less` so users aren't surprised on the first try.
-
-That justifies the "less" part but not your choice of "-r".
-
-I am assuming that you are telling "less" not to show the ANSI
-"color" escape sequences using the caret notation with "-r", which
-is a very natural and sensible thing to do when using `highlight`.
-
-But if that is the case, you don't want "-r" (raw control chars for
-everything).  You would want to say "-R", I think.
-
-Other than that, looks like a sensible thing to do to me.
-
-Thanks.
-
-
-> Signed-off-by: Jonathan Lebon <jonathan.lebon@gmail.com>
-> ---
->  contrib/diff-highlight/README | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+On Mon, Nov 2, 2015 at 9:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> diff --git a/contrib/diff-highlight/README b/contrib/diff-highlight/README
-> index 836b97a..bbbfdda 100644
-> --- a/contrib/diff-highlight/README
-> +++ b/contrib/diff-highlight/README
-> @@ -44,9 +44,9 @@ Use
->  
->  You can try out the diff-highlight program with:
->  
-> ----------------------------------------------
-> -git log -p --color | /path/to/diff-highlight
-> ----------------------------------------------
-> +------------------------------------------------------
-> +git log -p --color | /path/to/diff-highlight | less -r
-> +------------------------------------------------------
->  
->  If you want to use it all the time, drop it in your $PATH and put the
->  following in your git configuration:
+> Jonathan Lebon <jonathan.lebon@gmail.com> writes:
+>
+> > As it is, the suggested command for trying out diff-highlight will just
+> > dump the whole git log output to the terminal. Let's pipe it through
+> > `less` so users aren't surprised on the first try.
+>
+> That justifies the "less" part but not your choice of "-r".
+>
+> I am assuming that you are telling "less" not to show the ANSI
+> "color" escape sequences using the caret notation with "-r", which
+> is a very natural and sensible thing to do when using `highlight`.
+>
+> But if that is the case, you don't want "-r" (raw control chars for
+> everything).  You would want to say "-R", I think.
+
+Ahh thanks, that makes sense. I will update this for v2 tomorrow.
