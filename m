@@ -1,106 +1,68 @@
-From: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
-Subject: [PATCH 1/1] gitk: add --cwd=path commandline parameter to change path
-Date: Tue,  3 Nov 2015 17:00:42 +0200
-Message-ID: <1446562842-8478-2-git-send-email-juhapekka.heikkila@gmail.com>
-References: <1446562842-8478-1-git-send-email-juhapekka.heikkila@gmail.com>
-Cc: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 03 16:00:54 2015
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git gc/prune runs again and again
+Date: Tue, 3 Nov 2015 16:01:24 +0100
+Message-ID: <CACsJy8DMyjaZ_jKz4B93e6gSgV7ensORqxD-WYOYL9=9SV5tLw@mail.gmail.com>
+References: <20151103124420.GA10946@inner.h.apk.li>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Nov 03 16:02:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ztd4t-0002Si-CA
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 16:00:51 +0100
+	id 1Ztd61-0003PV-Dq
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 16:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754678AbbKCPAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 10:00:47 -0500
-Received: from mga03.intel.com ([134.134.136.65]:7736 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754606AbbKCPAp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 10:00:45 -0500
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga103.jf.intel.com with ESMTP; 03 Nov 2015 07:00:45 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.20,239,1444719600"; 
-   d="scan'208";a="842080652"
-Received: from jheikkil-mobl2.fi.intel.com ([10.237.66.161])
-  by fmsmga002.fm.intel.com with ESMTP; 03 Nov 2015 07:00:43 -0800
-X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1446562842-8478-1-git-send-email-juhapekka.heikkila@gmail.com>
+	id S1753138AbbKCPB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 10:01:57 -0500
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:33622 "EHLO
+	mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751098AbbKCPB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 10:01:56 -0500
+Received: by lfbf136 with SMTP id f136so20994360lfb.0
+        for <git@vger.kernel.org>; Tue, 03 Nov 2015 07:01:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YZjPs0TIU6Lx800S6nmX1aMYZrfQh/SKJp2H0nnVFx0=;
+        b=cpYmWyYKieKenMurgQTXMwF0Um4D3MRE/ZxAplaPPBDsEZEXzhGcIyI/GmK9PgLWwo
+         zR0kd2Y4Z/lKQYwHGsJZ2ng40tu5dCrNLadFewUVHR9XraQ7T3Bnemn4XbbaXeBWGFfl
+         zZt53wq+RwnkZDiT8GSGyCx0FqkGGib+9fwTqf5LY6HHgcT3Yylh+qkvARGm/+gSCRQq
+         oZ6IdwqvEQ8WS58NEIpKi8GnQzBzYqc4LouEhMKzxZiI9bUllxpfAnqnKAABqyb7Y0rq
+         vLMTR2S5nt2kT16TF02FfYBF/Dd6Pw3rI2CF4JFahPpGfhWgE24tux3/YZKEFC5L2ozH
+         eNwQ==
+X-Received: by 10.112.202.194 with SMTP id kk2mr12808630lbc.71.1446562914505;
+ Tue, 03 Nov 2015 07:01:54 -0800 (PST)
+Received: by 10.112.255.229 with HTTP; Tue, 3 Nov 2015 07:01:24 -0800 (PST)
+In-Reply-To: <20151103124420.GA10946@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280799>
 
-This patch adds --cwd (change working directory) parameter to
-gitk. With this parameter, instead of need to cd to directory
-with .git folder, one can point the correct folder from
-commandline.
+On Tue, Nov 3, 2015 at 1:44 PM, Andreas Krey <a.krey@gmx.de> wrote:
+> Hi all,
+>
+> I have a bit of an annoying behaviour in git gc;
+> there is a repo I regularly do a fetch in, and
+> this kicks off a gc/prune every time. I remember
+> there being a heuristic with being that many files
+> in .git/objects/17 as the gc trigger.
+>
+> Which is unfortunate if the gc does not actually
+> reduce the number of files there because they
+> aren't old enough => gc comes right back.
+>
+> What can I do there? (This git is a bit old, 2.2.2)
 
-Signed-off-by: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
----
- Documentation/gitk.txt |  5 +++++
- gitk-git/gitk          | 15 +++++++++------
- 2 files changed, 14 insertions(+), 6 deletions(-)
+Run "git prune". 2.2.2 hides this suggestion to run git-prune in this
+case. The next git version will show it back.
 
-diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-index 6ade002..1f42198 100644
---- a/Documentation/gitk.txt
-+++ b/Documentation/gitk.txt
-@@ -146,6 +146,11 @@ gitk-specific options
- 	Select the specified commit after loading the graph.
- 	Default behavior is equivalent to specifying '--select-commit=HEAD'.
- 
-+--cwd=<path>::
-+
-+	Change working direcoty to <path>. If the git tree exist elsewhere
-+	gitk first cd to given path before start to operate.
-+
- Examples
- --------
- gitk v2.6.12.. include/scsi drivers/scsi::
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index fcc606e..5fdf459 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -12279,12 +12279,6 @@ setui $uicolor
- 
- setoptions
- 
--# check that we can find a .git directory somewhere...
--if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
--    show_error {} . [mc "Cannot find a git repository here."]
--    exit 1
--}
--
- set selecthead {}
- set selectheadid {}
- 
-@@ -12305,6 +12299,9 @@ foreach arg $argv {
- 	"--argscmd=*" {
- 	    set revtreeargscmd [string range $arg 10 end]
- 	}
-+	"--cwd=*" {
-+	    cd [string range $arg 6 end]
-+	}
- 	default {
- 	    lappend revtreeargs $arg
- 	}
-@@ -12312,6 +12309,12 @@ foreach arg $argv {
-     incr i
- }
- 
-+# check that we can find a .git directory somewhere...
-+if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
-+    show_error {} . [mc "Cannot find a git repository here."]
-+    exit 1
-+}
-+
- if {$selecthead eq "HEAD"} {
-     set selecthead {}
- }
+
 -- 
-1.9.1
+Duy
