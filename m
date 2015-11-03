@@ -1,94 +1,87 @@
-From: "Ch'Gans" <chgans@gna.org>
-Subject: Strange diff-index output
-Date: Tue, 3 Nov 2015 12:59:37 +1300
-Message-ID: <CABxGUTj-5vdmyVGkKuoMdBAG2EAQvLJNYLLA++T2hNFvGRmb0w@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: Strange diff-index output
+Date: Mon, 02 Nov 2015 19:27:49 -0500
+Organization: Twitter
+Message-ID: <1446510469.4131.35.camel@twopensource.com>
+References: <CABxGUTj-5vdmyVGkKuoMdBAG2EAQvLJNYLLA++T2hNFvGRmb0w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 03 01:00:14 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ch'Gans <chgans@gna.org>
+X-From: git-owner@vger.kernel.org Tue Nov 03 01:28:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtP1K-0001Ft-Cu
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 01:00:14 +0100
+	id 1ZtPSE-0000Pc-AF
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 01:28:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751949AbbKBX7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Nov 2015 18:59:39 -0500
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:33824 "EHLO
-	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751193AbbKBX7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Nov 2015 18:59:38 -0500
-Received: by qkcn129 with SMTP id n129so184943qkc.1
-        for <git@vger.kernel.org>; Mon, 02 Nov 2015 15:59:37 -0800 (PST)
+	id S1751549AbbKCA1x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Nov 2015 19:27:53 -0500
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:33225 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751280AbbKCA1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Nov 2015 19:27:52 -0500
+Received: by qgeo38 with SMTP id o38so860453qge.0
+        for <git@vger.kernel.org>; Mon, 02 Nov 2015 16:27:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=jyn95WKA89wZOJNQ3Si6hUpHlp7702TS/vE9+u6MATU=;
-        b=n8el3+AsEF48swHifWsAZDA/Sg6FvxU7aeXxdv/+ALfr3kljY/JabWXngClwu8UoOs
-         CJRWqXHM9b4Woz78o0Vuy/t5QGB4rzUV4Xc4A2EvSMcwYiMaZWvRL1Q2H5L2dUuZpgKO
-         clti3AKX2oF7AdLA/Bea3FnMHMxEm/JlwlCzxPgsd+sNbuY/cHj1IYT9YdCI6zZxqd3h
-         MbesDEtDt4WwhRPU406EvZ4EiKkBJELTYmS1t4QHbPOk/txoxLRruT6GUG8oJiyjdbjA
-         HIA3nUoUQvPGLwwLrh+LERK9QO6Of0LMnhC3j2nzEGGff7GRkYUUg4ZSelDqIdgSLeSA
-         +k0Q==
-X-Received: by 10.55.71.81 with SMTP id u78mr33522627qka.81.1446508777859;
- Mon, 02 Nov 2015 15:59:37 -0800 (PST)
-Received: by 10.140.107.70 with HTTP; Mon, 2 Nov 2015 15:59:37 -0800 (PST)
-X-Google-Sender-Auth: OWFLMeV9wWyTLDQ53Ol03vH_BpY
+        d=twopensource_com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=BP+yOTcW0rVEGPeT/CDeYEw/Fq3pv8Q1dfWqtN7WkCQ=;
+        b=Nb5ZD3Qk1As686zpv6XlsJ/fAq1qCGsLdDpoha3mxuxcLJfyMOXC64SEu2HKND96NZ
+         cltSXtwmmfd6u3oIv2NcvyuMmTt5QZYpS1ZjilUAky3pfQvdXxaZv3P0HdxtQ803hjku
+         gq09iBg3PIJwfGilMF/JrW7ws/I4nFe/Wg9GjIeZqLXCo4phw/mGI9pSdGZ0hT30LkAV
+         aPJk6+ynshK5JLVJGjFaBAcSWEWbaYeATbOn6SFdIsydbnr7WsFpGbpSWHK63VRaFNWf
+         ins7FpoSvQELxbP/Ml9ak/u0LQK/JC6DqRTP+szpqnOafpw+rN7DKpx112uj/zUrK63g
+         pvFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=BP+yOTcW0rVEGPeT/CDeYEw/Fq3pv8Q1dfWqtN7WkCQ=;
+        b=SqH4bYh3YooNpwGwsWJS5ZQQYV3tuGZhhWsmtv+fTLV6m0ZbgGVYbm7KRh29Kxmhv5
+         GezTdh5xIzI1UfDJPSkjDuEOeghzkYM3w+ae62TNa13I8IFQcQUJc4O09sMqjjQH6mQ1
+         LU7TV9M1y3F3sMztxV7EbhKVoFyZHa2aEiFR1SxgJC1vOa2hL+q0GN4uCpxc4rd0VnT0
+         +xXAWK0dVOA7gIxXEx3fOjLBqXsmozx9E1pTDxHv6GIZTffZvv+9jiJZcWV+VCmHX9AL
+         Y9BZh+5rZKNCUQ7n1iQrExSaZftUjDxL8i7Pbh6gESvr0GhLZCkRFZGZQ+8Yi2ApyeAv
+         oAog==
+X-Gm-Message-State: ALoCoQnNk1hJ/wggBzt7LVq4Nz+FSqC8/qS2MOq3iAICmP8BYfl8j0dblk+IhXvvO09dSKdYxuej
+X-Received: by 10.140.25.166 with SMTP id 35mr34197383qgt.96.1446510471475;
+        Mon, 02 Nov 2015 16:27:51 -0800 (PST)
+Received: from ubuntu ([192.133.79.145])
+        by smtp.gmail.com with ESMTPSA id s68sm8850589qge.42.2015.11.02.16.27.50
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 02 Nov 2015 16:27:50 -0800 (PST)
+In-Reply-To: <CABxGUTj-5vdmyVGkKuoMdBAG2EAQvLJNYLLA++T2hNFvGRmb0w@mail.gmail.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280739>
 
-Hi there,
+On Tue, 2015-11-03 at 12:59 +1300, Ch'Gans wrote:
+> Hi there,
+>=20
+> We're using a script to verify that what we are building is clean
+> against our git repository, for this we're using "git rev-parse
+> --short HEAD" to get the current hash and "git diff-index --quiet
+> HEAD" to check for local modification.
 
-We're using a script to verify that what we are building is clean
-against our git repository, for this we're using "git rev-parse
---short HEAD" to get the current hash and "git diff-index --quiet
-HEAD" to check for local modification.
-This script works fine on developer's machines, but doesn't on our CI
-system (Atlassian Bamboo/Stash).
+See this note from the git diff-index man page:
+           Note
+           As with other commands of this type, git diff-index does not
+           actually look at the contents of the file at all. So maybe
+           kernel/sched.c hasn=E2=80=99t actually changed, and it=E2=80=
+=99s just that
+you
+           touched it. In either case, it=E2=80=99s a note that you nee=
+d to git
+           update-index it to make the index be in sync.
 
-HEAD points to refs/heads/FIX-XYZ and refs/heads/FIX-XYZ exists.
-
-On our CI, the output of diff-index gives something like:
-:100644 100644 abcdef 000000 M file1
-
-Our problem is very likely related with how Bamboo works and/or how we
-use it, but to investigate this issue further, I first would like to
-understand the meaning of the above output.
-
->From the man page of diff-index:
-- 100644 is the mode of "src"
-- 100644 is the mode of dst
-- abcdef is the hash of src
-- 000000 is the hash of dst
-- M stands for "Modified"
-- file1 is the filename being considered.
-
->From my understanding, src here means the file system and dst the git
-object. So the above should mean "file1" is new and out of sync with
-the index, which doesn't make sense since "file1" is definitely in the
-repository. The weird stuff is that diff-index report the same problem
-on every single file no just a few!
-
-Notes:
- - Something I've noticed with Bamboo is that the cloned repository
-doesn't have any remotes. Although I'm not sure if it is relevant
-here.
- - I have tried with "shallow copy" Bamboo option enabled or not and I
-get the same problems
- - I have tried "git update-index", but still get the same results
- - git log still gives me the full log history (but no remote heads)
- - git status reports nothing else than a couple of generated files
- - git status HEAD reports that the working directory is clean
- - git diff-index --cached reports nothing
-
-Does any of you have ever come across this kind of problem? Could
-anyone shed some light on what's going on with our clone? Any
-documentation point out or hints appreciated.
-
-Thanks,
-Chris
+You can either add an update-index to your script, or use git status
+--porcelain.
