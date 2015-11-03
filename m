@@ -1,131 +1,131 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: git.git as of tonight
-Date: Tue, 3 Nov 2015 10:18:40 -0800
-Message-ID: <CAGZ79kbAj-tZS3X1EwFw_gGh1=YU8M0OmEX91W8f++fqs6TiBA@mail.gmail.com>
-References: <xmqqpoztf6ok.fsf@gitster.mtv.corp.google.com>
-	<5637D266.4060904@kdbg.org>
-	<CAGZ79kbx7UJOOkhiXiUJfUS25gMGx5BUq=Qxa9205H0Z78ijbQ@mail.gmail.com>
-	<56385587.1010601@kdbg.org>
-	<xmqq37wndndp.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/1] gitk: add --cwd=path commandline parameter to change path
+Date: Tue, 3 Nov 2015 13:27:00 -0500
+Message-ID: <CAPig+cSs0v88AiQwSrqm-wK7rY4RdykaVf5Axh5jFyij25rfvg@mail.gmail.com>
+References: <1446562842-8478-1-git-send-email-juhapekka.heikkila@gmail.com>
+	<1446562842-8478-2-git-send-email-juhapekka.heikkila@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 19:18:52 2015
+Cc: Git List <git@vger.kernel.org>
+To: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 03 19:28:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtgAV-0001bf-9E
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 19:18:51 +0100
+	id 1ZtgIb-0000Yu-17
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 19:27:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755679AbbKCSSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 13:18:42 -0500
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:36191 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753996AbbKCSSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 13:18:41 -0500
-Received: by ykba4 with SMTP id a4so30098642ykb.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2015 10:18:40 -0800 (PST)
+	id S1754460AbbKCS1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 13:27:04 -0500
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:35172 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751285AbbKCS1B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 13:27:01 -0500
+Received: by ykek133 with SMTP id k133so30652212yke.2
+        for <git@vger.kernel.org>; Tue, 03 Nov 2015 10:27:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=9II42/V2dZ0rGqF4x3Pkqjb5Uvu3YQ4fn+UiXhdiWEY=;
-        b=R9gCFYFU8bq+7h1T1bzlrcgVaiNVTlsK4aPemNZqusB+vpz2CBFV3xYpGhwBrvxZSG
-         54mF5rDBodBvRn9c9AOWQl+nZta1Xp2WRdnEqSwxpHu0XK9mn+374X5wzvAI2jgsQ4Rw
-         U0/4jMIuZtu/xc3hoipDzVIPlRCMigwTM4846Am5twAs9bUd8503U22H3cA2+dkka0Y6
-         MtTwykgOZUcvABfGsf5uD9S9kUUei/Dd0g8UmauqSilTUvpLd7DJsSLvunQXPBDT6Ncx
-         u9U3zBxSSbB9SYpNtVfggQTjgV5tCwJBbCykCBqhSCr50FpjxwQZb1YMTloILE1VI67G
-         H/vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=9II42/V2dZ0rGqF4x3Pkqjb5Uvu3YQ4fn+UiXhdiWEY=;
-        b=HZcT3gIhHrgFSY5/PPWGeTGMdrXiuAw0o/WmaLMW+AssqQ7+Co27vw1QqItVNI/xCG
-         Tgmp9xOxUJ2Rzld2E09822iP32nj7QLrPYhA+Ek0ipVyWRrH7yKgmqwqqP63bz2h93X/
-         i1qSePs90sIvecRDt4GoKh0IqSgkpM0m4s3zH0Y0IXCzDtNye3LQV3C22Ps1hUdjFHJ4
-         8CeGGYKXlrNSOiyIHOAKZdCsVOCUTWuCCIoCbpqrQePY66Gq71S/XsoYaTQ5ICEcFeNG
-         7W8p/RFvEgAYXV5HMRG1a0SJeNvteLQkIPE6ueWd7aTH1zXW7P3Ve2pWEcXZLIEzZu7n
-         y0pw==
-X-Gm-Message-State: ALoCoQnLC+Y2lHA6FtMxffBPrhMECo1RJWfYSB/x873/dImPdTuSqiZjNDHG7MkE5tJxcDsCkmQT
-X-Received: by 10.13.254.69 with SMTP id o66mr21478644ywf.252.1446574720321;
- Tue, 03 Nov 2015 10:18:40 -0800 (PST)
-Received: by 10.37.29.213 with HTTP; Tue, 3 Nov 2015 10:18:40 -0800 (PST)
-In-Reply-To: <xmqq37wndndp.fsf@gitster.mtv.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=azrhHjthGNTyLN/v/C8tBUmzceSDlH8rVytmmQkJ16w=;
+        b=HY78iiogEL+Q9frxCLXPDNTYUB2kTAODkf1itwkn/6XR1XX25WdId8VtXk7wtB2Wln
+         I7jlR6LU0ZNr40h9bMZG2el/8G8oTKkeNhCJ4AnNKM9erFQB5p9T0DP4qz0E1IR7+vHc
+         /p/GD4qX8PMWKzIFVCUEHyfRaEO0M448pgu70gGbsn2NMcmVc8h0aOg97648TxJsIPAK
+         X/ZyUBBXE/BdAE7eZs/5CMdDiJ0Vqp3gC2+rb9QfdRBlvJKtYSX7SeuLEICqW1KN41SV
+         0ZrW/AmoIkpIelrnn1oKnrTVMa9GMKF410WqBvHzGn9dPjaI/EvKaAKRkoqhPNu14t6t
+         e84A==
+X-Received: by 10.31.160.79 with SMTP id j76mr554737vke.37.1446575220471; Tue,
+ 03 Nov 2015 10:27:00 -0800 (PST)
+Received: by 10.31.159.204 with HTTP; Tue, 3 Nov 2015 10:27:00 -0800 (PST)
+In-Reply-To: <1446562842-8478-2-git-send-email-juhapekka.heikkila@gmail.com>
+X-Google-Sender-Auth: s14gRI6Z08KT6lGUZ0EhU3OqTIg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280808>
 
-On Tue, Nov 3, 2015 at 9:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
+On Tue, Nov 3, 2015 at 10:00 AM, Juha-Pekka Heikkila
+<juhapekka.heikkila@gmail.com> wrote:
+> This patch adds --cwd (change working directory) parameter to
+> gitk. With this parameter, instead of need to cd to directory
+> with .git folder, one can point the correct folder from
+> commandline.
+
+git itself supports this sort of functionality via -C, as does GNU
+tar, which suggests such an option in gitk should be named -C, as
+well.
+
+> Signed-off-by: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
+> ---
+> diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+> @@ -146,6 +146,11 @@ gitk-specific options
+>         Select the specified commit after loading the graph.
+>         Default behavior is equivalent to specifying '--select-commit=HEAD'.
 >
->> My findings so far are negative. The only short-term and mid-term
->> solution I see so far is to opt-out from the framework during
->> build-time.
+> +--cwd=<path>::
+> +
+> +       Change working direcoty to <path>. If the git tree exist elsewhere
 
-So I started reading up on that[1].
-As far as I understand, we don't need to mark a file descriptor
-to be non blocking, but rather we could use ReadFileEx[2] with
-a flag set for "overlapped" operation.
+s/direcoty/directory/
 
-So that said, we can make set_nonblocking a noop and
-provide another implementation for strbuf_read_once
-depending on NO_PTHREADS being set.
-Maybe not even strbuf_read_once, but rather the underlying
-xread_nonblock ?
+> +       gitk first cd to given path before start to operate.
 
+Taking git's -C documentation as a template, perhaps this could be
+written instead as:
 
+    Run as if gitk was started in '<path>' instead of the current
+    working directory. When multiple `-C` options are given, each
+    subsequent non-absolute `-C <path>` is interpreted relative to
+    the preceding `-C <path>`.
 
-[1] http://tinyclouds.org/iocp-links.html
-[2] https://msdn.microsoft.com/en-us/library/aa365468(v=VS.85).aspx
+This description correctly reflects your implementation which allows
+--cwd to be specified multiple times.
 
+>  Examples
+>  --------
+>  gitk v2.6.12.. include/scsi drivers/scsi::
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index fcc606e..5fdf459 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -12279,12 +12279,6 @@ setui $uicolor
 >
-> Now, from where I sit, it seems that the way forward would be
+>  setoptions
 >
->  1. Make this an optional feature so that platforms can compile it
->     out, if it is not already done.  My preference, even if we go
->     that route, would be to see if we can find a way to preserve the
->     overall code structure (e.g. instead of spawning multiple
->     workers, which is why the code needs NONBLOCK to avoid getting
->     stuck on reading from one while others are working, perhaps we
->     can spawn only one and not do a nonblock read?).
-
-Yeah that would be my understanding as well. If we don't come up with
-a good solution for parallelism in Windows now, we'd need to make it at
-least working in the jobs=1 case as well as it worked before.
-
+> -# check that we can find a .git directory somewhere...
+> -if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
+> -    show_error {} . [mc "Cannot find a git repository here."]
+> -    exit 1
+> -}
+> -
+>  set selecthead {}
+>  set selectheadid {}
 >
->  2. After that is done, the feature could graduate to 'master'.  As
->     this is a bigger framework change than others, however, we do
->     not necessarily want to rush it.  On the other hand, because
->     this only affects submodules, which means it has fewer users and
->     testers that would give us feedback while it is on 'next', we
->     may want to push it to 'master' sooner to give it a larger
->     exposure.  I dunno, and I do not want to decide this myself the
->     week before I'll go offline for a few weeks (i.e. today).
-
-Yeah I guess cooking this well done has its benefits.
-
+> @@ -12305,6 +12299,9 @@ foreach arg $argv {
+>         "--argscmd=*" {
+>             set revtreeargscmd [string range $arg 10 end]
+>         }
+> +       "--cwd=*" {
+> +           cd [string range $arg 6 end]
+> +       }
+>         default {
+>             lappend revtreeargs $arg
+>         }
+> @@ -12312,6 +12309,12 @@ foreach arg $argv {
+>      incr i
+>  }
 >
->  3. Then we would enlist help from folks who are more familiar with
->     Windows platform (like you) to see how the "run parallel workers
->     and collect from them" can be (re)done with a nice level of
->     abstraction.  I am hoping that we can continue the tradition of
->     the evolution of run-command.c API (I am specifically impressed
->     by what you did for "async" that allows the callers not to worry
->     about threads and processes) aroundt this area.  That is
->     obviously a mid- to longer term goal.
-
-I just wonder if we can skip step 1) and 2) by having the discussion
-now how to change the framework to work well without posix file
-descriptors here.
-
->
-> Thanks for working together well, you two.
+> +# check that we can find a .git directory somewhere...
+> +if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
+> +    show_error {} . [mc "Cannot find a git repository here."]
+> +    exit 1
+> +}
+> +
+>  if {$selecthead eq "HEAD"} {
+>      set selecthead {}
+>  }
+> --
+> 1.9.1
