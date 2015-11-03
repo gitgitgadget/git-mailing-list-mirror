@@ -1,147 +1,132 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v6 00/25] refs backend pre-vtable
-Date: Tue,  3 Nov 2015 08:39:44 +0100
-Message-ID: <cover.1446534991.git.mhagger@alum.mit.edu>
-References: <1445998467-11511-1-git-send-email-dturner@twopensource.com>
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v6 02/25] refs/files-backend.c: new file, renamed from refs.c
+Date: Tue,  3 Nov 2015 08:39:46 +0100
+Message-ID: <5910b009877933ad63ca376a904f5003fcd3e627.1446534991.git.mhagger@alum.mit.edu>
+References: <cover.1446534991.git.mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 03 08:40:23 2015
+X-From: git-owner@vger.kernel.org Tue Nov 03 08:40:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtWCc-00078B-5F
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 08:40:22 +0100
+	id 1ZtWCh-0007BW-HZ
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Nov 2015 08:40:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752663AbbKCHkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 02:40:17 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:62314 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751433AbbKCHkQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Nov 2015 02:40:16 -0500
-X-AuditID: 1207440c-f79e16d000002a6e-cf-563864df9a2e
+	id S1752809AbbKCHkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 02:40:24 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:48275 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752677AbbKCHkU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Nov 2015 02:40:20 -0500
+X-AuditID: 12074411-f797e6d000007df3-c7-563864e2205f
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 85.28.10862.FD468365; Tue,  3 Nov 2015 02:40:15 -0500 (EST)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 9D.B5.32243.2E468365; Tue,  3 Nov 2015 02:40:18 -0500 (EST)
 Received: from michael.fritz.box (p5DDB0E27.dip0.t-ipconnect.de [93.219.14.39])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tA37eDcv016391
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tA37eDcx016391
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 3 Nov 2015 02:40:14 -0500
+	Tue, 3 Nov 2015 02:40:17 -0500
 X-Mailer: git-send-email 2.6.2
-In-Reply-To: <1445998467-11511-1-git-send-email-dturner@twopensource.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrCIsWRmVeSWpSXmKPExsUixO6iqHs/xSLM4M8yXYuuK91MFg29V5gt
-	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M7Y834+c8FjhYp986wbGPdJ
-	djFyckgImEjM/faNCcIWk7hwbz1bFyMXh5DAZUaJOT+es0I4x5gktm3/wwpSxSagK7Gopxms
-	Q0RATWJi2yEWEJtZwEFi8+dGRhBbWMBQ4unu82A2i4CqxORZM9lAbF4Bc4nVU98zQmyTk5hy
-	vx1sDqeAp8S9Y+vA4kICHhKNV2ayTmDkXcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11Av
-	N7NELzWldBMjJFR4djB+WydziFGAg1GJh/fHMvMwIdbEsuLK3EOMkhxMSqK862IswoT4kvJT
-	KjMSizPii0pzUosPMUpwMCuJ8BYEAuV4UxIrq1KL8mFS0hwsSuK8qkvU/YQE0hNLUrNTUwtS
-	i2CyMhwcShK8s5OBGgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBkRFfDIwNkBQP
-	0N6VIO28xQWJuUBRiNZTjLocT+Zf2sMkxJKXn5cqJc47GaRIAKQoozQPbgUsMbxiFAf6WJh3
-	IkgVDzCpwE16BbSECWhJ+DZTkCUliQgpqQZGEW2HqNu10et3+/SI+iyQ2eUcfK80kUtXPnqR
-	lomCLOcRkav/m6/HfPZV7kpRkeHcxXA2J+cFZ0UMk9C/BSp1bQLFMgHvNszrTnE1r9W/fXdR
-	oHHZ00mnbM+/svw6ack/kdsRM2fysnPcmWI/YePpt5I+sqXKzRc5l4ZtcX82u1Ig 
+In-Reply-To: <cover.1446534991.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqPsoxSLMYO4WHouuK91MFg29V5gt
+	bq+Yz2zxb0KNA4vH3/cfmDwWbCr1uHhJ2ePzJrkAlihum6TEkrLgzPQ8fbsE7owXSzcwF0wQ
+	q3h8eTFLA+NaoS5GTg4JAROJb9cfsUDYYhIX7q1n62Lk4hASuMwo8ff5C2YI5xiTxPLNr5hA
+	qtgEdCUW9TSD2SICahIT2w6BdTMLFEjMXrqVHcQWFvCVePqxnQ3EZhFQlTh95BuYzSsQJXH7
+	7RMmiG1yElPut4PZnAIWEg/u/gHrFRIwl9h0bxnbBEbeBYwMqxjlEnNKc3VzEzNzilOTdYuT
+	E/PyUot0TfVyM0v0UlNKNzFCgkdwB+OMk3KHGAU4GJV4eBcsMQ8TYk0sK67MPcQoycGkJMq7
+	LsYiTIgvKT+lMiOxOCO+qDQntfgQowQHs5IIb0EgUI43JbGyKrUoHyYlzcGiJM7Lt0TdT0gg
+	PbEkNTs1tSC1CCYrw8GhJMF7KRmoUbAoNT21Ii0zpwQhzcTBCTKcS0qkODUvJbUosbQkIx4U
+	G/HFwOgASfEA7V0J0s5bXJCYCxSFaD3FqCglzjsZJCEAksgozYMbC0sJrxjFgb4U5r0AUsUD
+	TCdw3a+ABjMBDQ7fZgoyuCQRISXVwBjxSYzJjEmt1u3aNnsjqevOiQd5zd5Kpu4NXjmzWvJC
+	ySKhuroeLsNZJy/d+hL+1WZVc83lWxdE7IOqDV7U/9ri4fcjdPmm7otid6eKuPXyRO2N2Bvi
+	X+6xfy/n0iv7W78eV192uj1P/KGb94SnV248k3jPOf1SZ7qF23H3wB8r3/66ldBq 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280755>
 
-This is a proposed revision of David Turner's refs-backend-pre-vtable
-v5 [1]. It incorporates all of the changes I suggested when reviewing
-that series, plus it moves the refs-related code to a subdirectory and
-creates a new header file refs/refs-internal.h for declarations meant
-to be used within the refs module but not by other code. I've retained
-the authors of the original patches because most of what I've done is
-just shift things around and adjust some includes and comments
-accordingly.
+From: Ronnie Sahlberg <sahlberg@google.com>
 
-This branch proposes the following file layout for the refs module:
+We are about to split up the reference code into multiple source
+files, to separate the generic code from the code that is specific to
+the current files-based backend. To keep things organized, we will
+move the reference-related code to a subdirectory, "refs/". Over time,
+more files will appear in this subdirectory.
 
-    refs.h
-    refs/refs.c
-    refs/refs-internal.h
-    refs/files-backend.c
-    refs/lmdb-backend.c   <- suggested name for the upcoming LMDB code
+As the first step, rename refs.c to refs/files-backend.c. This file
+will eventually contain only the code specific to the files-based
+backend. In subsequent commits we will move backend-agnostic code to a
+new refs/refs.c file that will hold the common refs code that is
+shared across backends.
 
-I changed the name of "refs-be-files.c" to "refs/files-backend.c"
-because otherwise the "refs" would have been redundant with the
-subdirectory name, and now there is room in the filename to spell out
-"backend".
+The reason for first moving all the code to refs/files-backend.c and
+then moving the backend agnostic code back to refs/refs.c instead of
+moving refs.c to refs/refs.c first is because the code that will
+eventually remain in this new files-backend.c file is so entangled
+that it would then be very difficult to break the split up into small
+independent patches/chunks.
 
-Summary of changes in my branch vs. your v5:
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ Makefile                       |  4 ++--
+ refs.c => refs/files-backend.c | 14 +++++++-------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+ rename refs.c => refs/files-backend.c (99%)
 
-* Rename refs-be-files.c to refs/files-backend.c
-* Rename refs.c to refs/refs.c
-* Introduce a new header file, refs/refs-internal.h, to hold
-  declarations that are needed by other refs backends but shouldn't
-  be used by non-refs code. The end result is that refs.h is almost
-  unchanged by this series.
-* Adjust commit messages for the new file locations.
-* Instead of making verify_refname_available() public, move it to
-  refs/refs-internal.h. (I think this function will only be needed
-  by other refs backends and not by other code.) This change
-  required your patch 03/26 to be moved later in the series.
-* Add a missing LF in your patch 18/26.
-* Touch up the log message and comments in your patch 25/26.
-* Drop patch 26/26, Peff's "introduce "extensions" form of
-  core.repositoryformatversion", as that patch is already in master.
-
-These patches are also available as the `refs-backend-pre-vtable`
-branch in my GitHub repo [2].
-
-I don't want to hijack this patch series or anything, but it seemed
-simpler to express my suggestions as code. Feel free to pick and
-choose what you like and submit a v7 if that is your preference.
-
-Michael
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/280325
-[2] https://github.com/mhagger/git
-
-David Turner (9):
-  refs: make is_branch public
-  refs: move transaction functions to the common code
-  refs: move refname_is_safe to the common code
-  refs: move copy_msg to the common code
-  refs: move peel_object to the common code
-  refs: move should_autocreate_reflog to common code
-  initdb: make safe_create_dir public
-  files_log_ref_write: new function
-  refs: break out ref conflict checks
-
-Ronnie Sahlberg (16):
-  refs/files-backend.c: new file, renamed from refs.c
-  refs: add a new file, refs/refs.c, to hold common refs code
-  refs: move update_ref to refs/refs.c
-  refs: move delete_pseudoref and delete_ref to the common code
-  refs: move read_ref_at to the common refs file
-  refs: move the hidden refs functions to the common code
-  refs: move dwim and friend functions to the common refs code
-  refs: move warn_if_dangling_symref* to the common code
-  refs: move read_ref, read_ref_full and ref_exists to the common code
-  refs: move resolve_refdup to common
-  refs: move check_refname_format to the common code
-  refs: move is_branch to the common code
-  refs: move prettify_refname to the common code
-  refs: move ref iterators to the common code
-  refs: move head_ref_namespaced to the common code
-  refs: create a shared version of verify_refname_available
-
- Makefile                       |    5 +-
- builtin/init-db.c              |   12 -
- cache.h                        |    8 +
- path.c                         |   12 +
- refs.h                         |    2 +
- refs.c => refs/files-backend.c | 1291 ++--------------------------------------
- refs/refs-internal.h           |  200 +++++++
- refs/refs.c                    | 1073 +++++++++++++++++++++++++++++++++
- 8 files changed, 1348 insertions(+), 1255 deletions(-)
- rename refs.c => refs/files-backend.c (75%)
- create mode 100644 refs/refs-internal.h
- create mode 100644 refs/refs.c
-
+diff --git a/Makefile b/Makefile
+index 0d9f5dd..1a63383 100644
+--- a/Makefile
++++ b/Makefile
+@@ -762,8 +762,8 @@ LIB_OBJS += quote.o
+ LIB_OBJS += reachable.o
+ LIB_OBJS += read-cache.o
+ LIB_OBJS += reflog-walk.o
+-LIB_OBJS += refs.o
+ LIB_OBJS += ref-filter.o
++LIB_OBJS += refs/files-backend.o
+ LIB_OBJS += remote.o
+ LIB_OBJS += replace_object.o
+ LIB_OBJS += rerere.o
+@@ -2412,7 +2412,7 @@ profile-clean:
+ 	$(RM) $(addsuffix *.gcno,$(addprefix $(PROFILE_DIR)/, $(object_dirs)))
+ 
+ clean: profile-clean coverage-clean
+-	$(RM) *.o *.res block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o
++	$(RM) *.o *.res refs/*.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o
+ 	$(RM) xdiff/*.o vcs-svn/*.o ewah/*.o builtin/*.o
+ 	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+diff --git a/refs.c b/refs/files-backend.c
+similarity index 99%
+rename from refs.c
+rename to refs/files-backend.c
+index 132eff5..dc39b36 100644
+--- a/refs.c
++++ b/refs/files-backend.c
+@@ -1,10 +1,10 @@
+-#include "cache.h"
+-#include "lockfile.h"
+-#include "refs.h"
+-#include "object.h"
+-#include "tag.h"
+-#include "dir.h"
+-#include "string-list.h"
++#include "../cache.h"
++#include "../refs.h"
++#include "../lockfile.h"
++#include "../object.h"
++#include "../tag.h"
++#include "../dir.h"
++#include "../string-list.h"
+ 
+ struct ref_lock {
+ 	char *ref_name;
 -- 
 2.6.2
