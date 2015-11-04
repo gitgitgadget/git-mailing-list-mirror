@@ -1,98 +1,118 @@
-From: Lasse Makholm <lasse.makholm@gmail.com>
-Subject: Re: When a file was locked by some program, git will work stupidly
-Date: Wed, 4 Nov 2015 22:12:27 +0100
-Message-ID: <CAB7pA085XNdtkMkeCL9D8Zi2RjvYEuJG7u3uqMkbdNujbz1x-Q@mail.gmail.com>
-References: <CABEb4T7V=WEi-ZZm7ywOFASm+=LtAyOz53gqv-jjuzF-3=veeA@mail.gmail.com>
-	<01b901d1157b$699cf5f0$3cd6e1d0$@com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 02/11] run-command: report failure for degraded output just once
+Date: Wed, 04 Nov 2015 13:19:38 -0800
+Message-ID: <xmqqziyt8nth.fsf@gitster.mtv.corp.google.com>
+References: <1446597434-1740-1-git-send-email-sbeller@google.com>
+	<1446597434-1740-3-git-send-email-sbeller@google.com>
+	<xmqqd1vpbpik.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaiRKHd2RS9eNeZt_VZqqBF0HS0D=x1HbOTPXYOphu8pg@mail.gmail.com>
+	<xmqq8u6da448.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbwJrQ9SrGkJsSx9oUcP98dn9wP=ZvgQLRjmPaZtOzanA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: dayong xie <dayong1111@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Randall S. Becker" <rsbecker@nexbridge.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 22:12:33 2015
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Eric Sunshine <ericsunshine@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 22:19:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zu5M8-00078z-Am
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 22:12:32 +0100
+	id 1Zu5T8-0004ft-C8
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 22:19:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030680AbbKDVM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 16:12:28 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:35681 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932428AbbKDVM2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Nov 2015 16:12:28 -0500
-Received: by wicll6 with SMTP id ll6so98210839wic.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2015 13:12:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=NavLd5sq/WurhNhP5FOCq8bqF7ohjQ6TuPpa7RYxSvw=;
-        b=HxUQ7kOybebBpZ8CaUUBR7hq9tfcWqXpv9cJU5f9p5SkCLWPreT6DlmpWa18Yz+y8F
-         PS6+fXMvZWji+pwybeNYp14WeWwngdiBTpWkmZjmGGLgfe2s21xB7ikRyQtqEfoNZdRs
-         3xvC9dFBWB7yqzs+aqWK88sq/HZnEaxT/EF8vh2ibjSGQp9BpOstOqXsT9IKtRLPYc92
-         9+zGn55xYpE5I2dfazny9K7zgSiNhnOxmCER5WrYCRzkH+ew2efaVOzMb3nLbVWMyPor
-         QwuYhKctDqWWAkI7EaKkw279jDmsLUy/T1RK6CzdsMoZIlmuswWEyQaoOex+V/LiOcd1
-         tYPw==
-X-Received: by 10.194.189.228 with SMTP id gl4mr4327663wjc.44.1446671547149;
- Wed, 04 Nov 2015 13:12:27 -0800 (PST)
-Received: by 10.194.34.169 with HTTP; Wed, 4 Nov 2015 13:12:27 -0800 (PST)
-In-Reply-To: <01b901d1157b$699cf5f0$3cd6e1d0$@com>
+	id S1030907AbbKDVTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 16:19:42 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59080 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932428AbbKDVTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 16:19:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6EDA526F7A;
+	Wed,  4 Nov 2015 16:19:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3U3BP5SwFkyxUqczk2vTc59zWpA=; b=beJYya
+	ffqAXejS/HpolDkWLthu+EiJr5k74a9x5B/mODe/uP7ZLm7pKUHxSBxQNaYAP6zd
+	C0QXZw/6dPD7gQUMS2kXHmkoRo4b+ExYVuiXd3dz50rYPoFFEByM2krxKzAFKMz3
+	ZhPgcBDRvbTkEKbuocantweKCxl7VHUdd5lWs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XUt9nRhvFZov7daTbUiEl4+ngCQdhO5/
+	GinAgfN8+LCeLIHhOtq0Gdo1aPQPuc4USgNqp3zPe8I/fQ81d6JePnTqyo4e0XvU
+	jJbTaoqu1CLCTYOykvv3ZaJUagPNBJFtbi3ugZmUiHn3UpacdbI/i87ySLG+aINx
+	yVlRmDasCkg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 636D326F79;
+	Wed,  4 Nov 2015 16:19:40 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D16C726F76;
+	Wed,  4 Nov 2015 16:19:39 -0500 (EST)
+In-Reply-To: <CAGZ79kbwJrQ9SrGkJsSx9oUcP98dn9wP=ZvgQLRjmPaZtOzanA@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 4 Nov 2015 13:04:31 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C236AA72-8339-11E5-AEE9-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280887>
 
-On 2 November 2015 at 15:33, Randall S. Becker <rsbecker@nexbridge.com> wrote:
+Stefan Beller <sbeller@google.com> writes:
+
+> So more like:
 >
-> On November-01-15 11:57 PM dayong xie wrote:
->>To be specific
->>In my Unity project, there is a native plugin,  and plugin's extension is .dll, >and this plugin is under git version control, when Unity is running, the plugin >file will be locked.
->>If i merge another branch, which contains modification of the plugin, git will >report error, looks
->>like:
->>error: unable to unlink old 'xxxxxxx/xxx.dll' (Permission denied) This is not >bad, however, the unfinished merge action will not revert by git, a lot of >changes produced in repository.
->>usually it makes me crazy, even worse, some of my partners are not good at >using git.
->>Of course, this problem can be avoided by quit Unity, but not every time we can >remember. In my opinion, git should revert the unfinished action when the error >occurred, not just stop.
+>     if (platform_capable_non_blocking_IO())
+>         set_nonblocking_or_die(&pp->children[i].process.err);
+>     else
+>         pp->children[i].process.err = 2; /* ugly intermixed output is possible*/
+
+When I mentioned #if..#endif, I didn't mean it as a dogmatic
+"conditional compilation is wrong" sense.  It was more about "the
+high-level flow of logic should not have to know too much about
+platform peculiarities".  As platform_capable_non_blocking_IO()
+function would be a constant function after you compile it for a
+single platform, if you add 10 instances of such if/else in a patch
+that adds 250 lines, unless the change is to add a set of lowest
+level helpers to be called from the higher-level flow of logic so
+that the callers do not have to know about the platform details,
+that's just as bad as adding 10 instances of #if..#endif.
+
+>> On the other hand, on a platform that is known to be incapable
+>> (e.g. lacks SETFL or NONBLOCK), we have two options.
+>>
+>> 1. If we can arrange to omit the intermediary buffer processing
+>>    without butchering the flow of the main logic with many
+>>    #ifdef..#endif, then that would make a lot of sense to do so, and
+>>    running the processes in parallel with mixed output might be OK.
+>>    It may not be very nice, but should be an acceptable compromise.
 >
-> What version of Unity (or Unity Pro) are you using? Is this experienced with the Commit in MonoDevelop/Visual Studio or are you using a separate git client?
->
-> I have found similar issues in some versions of Unity and MonoDevelop or Visual Studio not saving all files, especially the project files until you have fully exited - nothing to do with git, but your git commits may not contain complete images of your change.
->
-> When I use git with Unity, I either have the source committed through MonoDevelop (no issues) if my changes are source-only, or if I have assets and project changes, then I do exit completely so that I am sure Unity flushes everything to disk and I can get a single atomic commit with all the Unity and C# bits using SourceTree or gitk.
+> From what I hear this kind of output is very annoying. (One of the
+> main complaints of repo users beside missing atomic fetch transactions)
 
-Ouch. That sounds broken. Do you have a case number with Unity for
-this? I work at Unity (though not on the editor) and can ask around...
+When (1) "parallelism with sequential output" is the desired
+outcome, (2) on some platforms we haven't found a way to achieve
+both, and (3) a non-sequential output is unacceptable, then
+parallelism has to give :-(.
 
-> OTOH I'm not sure you really should be storing build products out of MonoDevelop or Visual Studio in your git repository. If the DLL can be rebuild automatically on the client - usual answer is yes - then let it. Handle the release build separately - at least in a separate branch that does not involve having the Unity editor open to get in the way.
->
-> In my environment, I have added *.dll (and other stuff) to .gitignore so that I do not track dll changes - they get built on demand instead. There are recommended ways of using git in the Unity forums.
+I was getting an impression from your "not buffer" suggestion that
+"sequential output" would be the one that can be sacrificed, but
+that is OK.  Until we find a way to achieve both at the same time,
+achieving only either one or the other is better than achieving
+nothing.
 
-The way I'm reading this, the plugin comes from a third party and is
-not built as part of the project. I could be wrong though.
-
-Dayong - do you have a case number with Unity for your problem?
-
-And just to not make this not completely off-topic: I agree that git
-should ideally do a proper rollback in case of a failed (as opposed to
-conflicted) merge but I'm not sure what the precedent is for handling
-failure cases like this.
-
-Perhaps this is more easily solved, for now at least, by helping the
-people who are not comfortable with git setup an alias as an
-easier-to-remember way of saying e.g. git reset --hard HEAD ?
-
-/Lasse
-
->
-> Cheers,
-> Randall
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>> Either way, bringing "parallelism with sequential output" to
+>> platforms without nonblock IO can be left for a later day, when we
+>> find either (1) a good approach that does not require nonblock IO to
+>> do this, or (2) a good approach to do a nonblock IO on these
+>> platforms (we know about Windows, but there may be others; I dunno).
