@@ -1,111 +1,108 @@
 From: Doug Kelly <dougk.ff7@gmail.com>
-Subject: [PATCH 3/3] gc: Remove garbage .idx files from pack dir
-Date: Tue,  3 Nov 2015 21:05:08 -0600
-Message-ID: <1446606308-1668-3-git-send-email-dougk.ff7@gmail.com>
-References: <CAEtYS8TR4mnaGpGDpB3cz_nu2hdCYTWf=PVCJbmzYi6YA53_bg@mail.gmail.com>
- <1446606308-1668-1-git-send-email-dougk.ff7@gmail.com>
-Cc: Doug Kelly <dougk.ff7@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 04 04:05:31 2015
+Subject: Re: [PATCH 1/2] prepare_packed_git(): refactor garbage reporting in
+ pack directory
+Date: Tue, 3 Nov 2015 21:12:38 -0600
+Message-ID: <CAEtYS8Q1T-ig2KqZUoCCODs1YbjOmF__vbiH5rL-s6hNaUhZeA@mail.gmail.com>
+References: <xmqqwpx6wx74.fsf@gitster.dls.corp.google.com>
+	<1439488973-11522-1-git-send-email-dougk.ff7@gmail.com>
+	<CAPig+cS0ntr1sYzVAPjNCwd8ei4oGQRNs+W=qMBV4Z6NaRWCWA@mail.gmail.com>
+	<xmqq37zhg8la.fsf@gitster.dls.corp.google.com>
+	<xmqqbnbilw9u.fsf@gitster.mtv.corp.google.com>
+	<CAEtYS8TR4mnaGpGDpB3cz_nu2hdCYTWf=PVCJbmzYi6YA53_bg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 04 04:13:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtoOA-0001aO-0G
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 04:05:30 +0100
+	id 1ZtoVb-0000Vb-28
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 04:13:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752803AbbKDDF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 22:05:26 -0500
-Received: from mail-io0-f175.google.com ([209.85.223.175]:34643 "EHLO
-	mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752098AbbKDDFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 22:05:25 -0500
-Received: by iody8 with SMTP id y8so40445238iod.1
-        for <git@vger.kernel.org>; Tue, 03 Nov 2015 19:05:25 -0800 (PST)
+	id S1752448AbbKDDMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 22:12:39 -0500
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:35319 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751589AbbKDDMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 22:12:39 -0500
+Received: by igpw7 with SMTP id w7so95440729igp.0
+        for <git@vger.kernel.org>; Tue, 03 Nov 2015 19:12:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=o8VsiqTXFpJ3sIQslqhTW+vSDibKMmJVYlPiGxmY0+A=;
-        b=SatMfy2FRN7khMIWgRw/4UxtN5Rej+XMcDGS2DomcPrTWcmuhNP2benMa+n5fTgk9E
-         YQ+y0gaI8dR087f9HOf12eN/9tEk2f7IZPc1mNljDYi2XcLqfFU2YlzWxZ0juYE6q+qH
-         S5jNN/oGt4UpKKnAGqpxX2R1Xm5XQirdWKHhxylZGuYoCGWL3cP7+/CLi5qNVmVmE7LH
-         gelN2MEjDvMKsyCfTI8YJrtencmnDUlzxAgNuJd/CogEqXSGAfzqtlUFQxBCakU4RwAh
-         xdSOv2Cv2JBdx8wmkfqGYm7+p7zuirITSIdG64cMDbYDQaiPE68MIsvhaUyPNxyW3rBc
-         Hxvg==
-X-Received: by 10.107.9.233 with SMTP id 102mr678944ioj.122.1446606325072;
-        Tue, 03 Nov 2015 19:05:25 -0800 (PST)
-Received: from kenshin.dougk-ff7.net (64-151-63-23.static.everestkc.net. [64.151.63.23])
-        by smtp.gmail.com with ESMTPSA id c23sm292311iod.0.2015.11.03.19.05.24
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Nov 2015 19:05:24 -0800 (PST)
-X-Mailer: git-send-email 2.0.5
-In-Reply-To: <1446606308-1668-1-git-send-email-dougk.ff7@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=32NweXrV8TO/gad+S1JUqdg9Kj8RpfwoCAheA2BYsF8=;
+        b=vy9lYdil3iFApqbLRdL3zJSzPblzEMoOuzlOqV0u54yRRd+0gwIon7lARs6akavLhX
+         f7eR21rueT8kmpKfH9mvbVfWwLnK3cM0uVxwsTxyUbaLJqp0PnZEm+r4vk+K56Cu3gDZ
+         69LFBIl1MDaU3K0VNZggwUj67YNkK5+eetNL5rFJiDxnuuzdEalhlhmvkKTeiB7GX25i
+         6yu8s0yd64QwixZSJbbJbYurC6tLoM4pzQD9jmvtHAEO19AZienUiJgvTdVGWJVk+lfS
+         UvGjDVgV2Zr+9hBEk/JqFGt6On4qZkTwD3utbKebUu4dLvGauSWk9gpymxunfrq/yOaq
+         DZjA==
+X-Received: by 10.50.30.233 with SMTP id v9mr21610878igh.5.1446606758291; Tue,
+ 03 Nov 2015 19:12:38 -0800 (PST)
+Received: by 10.79.38.129 with HTTP; Tue, 3 Nov 2015 19:12:38 -0800 (PST)
+In-Reply-To: <CAEtYS8TR4mnaGpGDpB3cz_nu2hdCYTWf=PVCJbmzYi6YA53_bg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280847>
 
-Add a custom report_garbage handler to collect and remove garbage
-.idx files from the pack directory.
+On Wed, Oct 28, 2015 at 5:43 PM, Doug Kelly <dougk.ff7@gmail.com> wrote:
+> On Wed, Oct 28, 2015 at 12:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>>
+>>>>> -static void real_report_garbage(const char *desc, const char *path)
+>>>>> +const char *bits_to_msg(unsigned seen_bits)
+>>>>
+>>>> If you don't expect other callers outside this file, then this should
+>>>> be declared 'static'. If you do expect future external callers, then
+>>>> this should be declared in a public header file (but renamed to be
+>>>> more meaningful).
+>>>
+>>> I think this can be private to this file.  The sole point of moving
+>>> this logic to this file is to make it private, after all ;-)  Thanks
+>>> for sharp eyes.
+>>>
+>>> Together with the need for a description on "why", this probably
+>>> deserves a test or two, probably at the end of t5304.
+>>>
+>>> Thanks.
+>>
+>> Does somebody want to help tying the final loose ends on this topic?
+>> It has been listed in the [Stalled] section for too long, I _think_
+>> what it attempts to do is a worthy thing, and it is shame to see the
+>> initial implementation and review cycles we have spent so far go to
+>> waste.
+>>
+>> If I find nothing else to do before any taker appears, I could
+>> volunteer myself, but thought I should ask first.
+>>
+>> Thanks.
+>
+> I agree; I've been wanting to get back to it, but had some
+> higher-priority things at work for a while, so I've not had time.  I'd
+> be happy to get back into it, but if you get to it first, believe me,
+> I'm not going to be offended. :)
+>
+> I'll see if I can't devote a little extra time to it this upcoming
+> week, though.  Hopefully it doesn't need too much additional polishing
+> to be ready.
+>
+> P.S. Does a Googler want to tell the Inbox team that the inability to
+> send plain-text email is really annoying? :P
 
-Signed-off-by: Doug Kelly <dougk.ff7@gmail.com>
----
- builtin/gc.c     | 20 ++++++++++++++++++++
- t/t5304-prune.sh |  2 +-
- 2 files changed, 21 insertions(+), 1 deletion(-)
+I think the patches I sent (a bit prematurely) address the remaining
+comments... I did find there was a relevant test in t5304 already, so
+I added a new test in the same section (and cleaned up some of the
+garbage it wasn't removing before).  I'm not sure if it's poor form to
+move tests around like this, but I figured it might be best to keep
+them logically grouped.
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index df3e454..668f975 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -45,6 +45,21 @@ static struct argv_array rerere = ARGV_ARRAY_INIT;
- 
- static struct tempfile pidfile;
- static struct lock_file log_lock;
-+static struct string_list pack_garbage = STRING_LIST_INIT_DUP;
-+
-+static void clean_pack_garbage(void)
-+{
-+	int i;
-+	for (i = 0; i < pack_garbage.nr; i++)
-+		unlink_or_warn(pack_garbage.items[i].string);
-+	string_list_clear(&pack_garbage, 0);
-+}
-+
-+static void report_pack_garbage(unsigned seen_bits, const char *path)
-+{
-+	if (seen_bits == PACKDIR_FILE_IDX)
-+		string_list_append(&pack_garbage, path);
-+}
- 
- static void git_config_date_string(const char *key, const char **output)
- {
-@@ -416,6 +431,11 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 	if (run_command_v_opt(rerere.argv, RUN_GIT_CMD))
- 		return error(FAILED_RUN, rerere.argv[0]);
- 
-+	report_garbage = report_pack_garbage;
-+	reprepare_packed_git();
-+	if (pack_garbage.nr > 0)
-+		clean_pack_garbage();
-+
- 	if (auto_gc && too_many_loose_objects())
- 		warning(_("There are too many unreachable loose objects; "
- 			"run 'git prune' to remove them."));
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 0297515..def203c 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -245,7 +245,7 @@ EOF
- 	test_cmp expected actual
- '
- 
--test_expect_failure 'clean pack garbage with gc' '
-+test_expect_success 'clean pack garbage with gc' '
- 	test_when_finished "rm -f .git/objects/pack/fake*" &&
- 	test_when_finished "rm -f .git/objects/pack/foo*" &&
- 	: >.git/objects/pack/foo.keep &&
--- 
-2.5.1
+Let me know if there's anything I can do, and once again, sorry for the delay!
