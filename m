@@ -1,171 +1,134 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] Limit the size of the data block passed to SHA1_Update()
-Date: Wed, 4 Nov 2015 14:51:04 -0500
-Message-ID: <CAPig+cS7NktyhveQUiBFkRtJH1D-Aif861e9qshL2R=ZNg2+Lw@mail.gmail.com>
-References: <56389FBC.7050909@web.de>
-	<1446611086-6102-1-git-send-email-apahlevan@ieee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] http: use credential API to handle proxy authentication
+Date: Wed, 04 Nov 2015 11:53:46 -0800
+Message-ID: <xmqqd1vpa6d1.fsf@gitster.mtv.corp.google.com>
+References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
+	<1446628405-8070-1-git-send-email-k.franke@science-computing.de>
+	<1446628405-8070-3-git-send-email-k.franke@science-computing.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"gitster@pobox.com" <gitster@pobox.com>,
-	Atousa Pahlevan Duprat <apahlevan@ieee.org>
-To: "atousa.p@gmail.com" <atousa.p@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 20:51:17 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+To: Knut Franke <k.franke@science-computing.de>
+X-From: git-owner@vger.kernel.org Wed Nov 04 20:53:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zu45U-0008Bi-1w
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 20:51:16 +0100
+	id 1Zu486-0001yQ-NL
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 20:53:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965639AbbKDTvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 14:51:08 -0500
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:36788 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965374AbbKDTvF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 14:51:05 -0500
-Received: by ykba4 with SMTP id a4so91885940ykb.3
-        for <git@vger.kernel.org>; Wed, 04 Nov 2015 11:51:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=PB3qwmkH0IuE0tA7qXcaIiFji/M7ivp7FIhgDhUSrjs=;
-        b=rtDgHffM5xDo5IETIBL95UnabQNw86BMOGx8YGWKEtySMjkQV4uZWdXYzqJcStIxFL
-         nMG6AjFcV5C7y5WYwKkNDs3q/BNnu9HjWwtnB7fi/twWbRtnZ3kln0PU2sE4+jsw8lda
-         9hMQ1k/H/8PzhP1WiJVBEN2UTMVpPMR0XlZwBgCmYDj67tM6xRXVenfV8+2TmSfUqBv5
-         WWS1OrFHo/kMtFDl17C3vnz7BmV/gbgd0IiSR80GXeT8LNd06EUcSmDS3QIJ/q386OZV
-         sBzxi0hjKYup7DiY0UFKLwYpkg/t+59uxvesZv2o7v/PG37pJ5vZRx/IgqBlgFVdjFIn
-         dm1w==
-X-Received: by 10.31.2.193 with SMTP id 184mr3610082vkc.151.1446666665024;
- Wed, 04 Nov 2015 11:51:05 -0800 (PST)
-Received: by 10.31.159.204 with HTTP; Wed, 4 Nov 2015 11:51:04 -0800 (PST)
-In-Reply-To: <1446611086-6102-1-git-send-email-apahlevan@ieee.org>
-X-Google-Sender-Auth: 06cww8m8KNM8LQhi3v_lZuWyJ4U
+	id S965161AbbKDTxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 14:53:54 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51906 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S964811AbbKDTxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 14:53:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 02F6227BA5;
+	Wed,  4 Nov 2015 14:53:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=q6pEvPH4DEED/mZvFYYUMgoiBlA=; b=RbQDkI
+	M2Wflcs3y3d17u8gp6VCb3p8KQaFNlOUboWPueZv67m4CDIN2FJIGlBReLnvzJ7T
+	eGuzD2h5CKmEZrAkxj/OYroFCpl4h5VAA/tstx07mbKVkSRV78AWWe4PKAshi0W6
+	bKT6LvM7pBBLcg1rvzuIoAAG5FjftGO/kFUUk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OA4REk8xXuCoLYyBiYuTiNL/Ss8E4lIJ
+	neBruId1gRKmBIf1j7Hzc4+QcmR02upYTtXYq6XRxKBxA3D3poBoct0LQPZLC/60
+	7akWk8Stfb9EC+3AoSIdnmCPF8j+UeBszvG8+zIEdFbPq6JATVoeh/7zPuaKel2u
+	Pui8BLAqrMU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EF37927BA4;
+	Wed,  4 Nov 2015 14:53:47 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7798827BA3;
+	Wed,  4 Nov 2015 14:53:47 -0500 (EST)
+In-Reply-To: <1446628405-8070-3-git-send-email-k.franke@science-computing.de>
+	(Knut Franke's message of "Wed, 4 Nov 2015 10:13:25 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C31F850A-832D-11E5-91D2-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280872>
 
-On Tuesday, November 3, 2015, <atousa.p@gmail.com> wrote:
-> [PATCH] Limit the size of the data block passed to SHA1_Update()
+Knut Franke <k.franke@science-computing.de> writes:
 
-As an aid for reviewers, please include the version number of the
-patch, such as [PATCH vN] where "N" is the revision. format-patch's -v
-option can help automate this.
+> @@ -337,6 +342,24 @@ static void var_override(const char **var, char *value)
+>  
+>  static void init_curl_proxy_auth(CURL *result)
+>  {
+> +	if (proxy_auth.username) {
+> +		struct strbuf s = STRBUF_INIT;
 
-> Some implementations of SHA_Updates have inherent limits
-> on the max chunk size. SHA1_MAX_BLOCK_SIZE can be defined
-> to set the max chunk size supported, if required.  This is
-> enabled for OSX CommonCrypto library and set to 1GiB.
->
-> Signed-off-by: Atousa Pahlevan Duprat <apahlevan@ieee.org>
-> ---
+Having this variable triggers compilation error with newer libcurl
+version as it is only used in the #else clause X-<.
 
-It is helpful to reviewers if you can describe here, below the "---"
-line, how this version of the patch differs from the previous one.
-More below...
-
-> diff --git a/Makefile b/Makefile
-> @@ -136,11 +136,15 @@ all::
->  # to provide your own OpenSSL library, for example from MacPorts.
->  #
->  # Define BLK_SHA1 environment variable to make use of the bundled
-> -# optimized C SHA1 routine.
-> +# optimized C SHA1 routine.  This implies NO_APPLE_COMMON_CRYPTO.
->  #
->  # Define PPC_SHA1 environment variable when running make to make use of
->  # a bundled SHA1 routine optimized for PowerPC.
->  #
-> +# Define SHA1_MAX_BLOCK_SIZE if your SSH1_Update() implementation can
-> +# hash only a limited amount of data in one call (e.g. APPLE_COMMON_CRYPTO
-> +# may want 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined).
-> +#
->  # Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl (Darwin).
->  #
->  # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
-> @@ -986,6 +990,10 @@ ifeq (no,$(USE_PARENS_AROUND_GETTEXT_N))
->  endif
->  endif
->
-> +ifdef BLK_SHA1
-> +       NO_APPLE_COMMON_CRYPTO=1
-> +endif
-
-I think Junio already mentioned[1] that this change (and its
-corresponding documentation update above) likely is undesirable, but I
-just wanted to mention that you would typically want to split such a
-change out to a separate patch since it's unrelated to the overall
-intention of the current patch. More below...
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/280859
-
->  ifeq ($(uname_S),Darwin)
->         ifndef NO_FINK
->                 ifeq ($(shell test -d /sw/lib && echo y),y)
-> @@ -1346,6 +1354,8 @@ else
->  ifdef APPLE_COMMON_CRYPTO
->         COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
->         SHA1_HEADER = <CommonCrypto/CommonDigest.h>
-> +       # Apple CommonCrypto requires chunking
-> +       SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
->  else
->         SHA1_HEADER = <openssl/sha.h>
->         EXTLIBS += $(LIB_4_CRYPTO)
-> @@ -1353,6 +1363,10 @@ endif
->  endif
->  endif
->
-> +ifdef SHA1_MAX_BLOCK_SIZE
-> +       LIB_OBJS += compat/sha1_chunked.o
-> +       BASIC_CFLAGS += -DSHA1_MAX_BLOCK_SIZE="$(SHA1_MAX_BLOCK_SIZE)"
-> +endif
-> diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
-> @@ -18,5 +18,5 @@ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx);
->
->  #define git_SHA_CTX    blk_SHA_CTX
->  #define git_SHA1_Init  blk_SHA1_Init
-> -#define git_SHA1_Update        blk_SHA1_Update
-> +#define platform_SHA1_Update   blk_SHA1_Update
->  #define git_SHA1_Final blk_SHA1_Final
-> diff --git a/cache.h b/cache.h
-> index 79066e5..e345e38 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -10,12 +10,21 @@
->  #include "trace.h"
->  #include "string-list.h"
->
-> +/* platform's underlying implementation of SHA1 */
->  #include SHA1_HEADER
->  #ifndef git_SHA_CTX
-> -#define git_SHA_CTX    SHA_CTX
-> -#define git_SHA1_Init  SHA1_Init
-> -#define git_SHA1_Update        SHA1_Update
-> -#define git_SHA1_Final SHA1_Final
-> +#define git_SHA_CTX            SHA_CTX
-> +#define git_SHA1_Init          SHA1_Init
-> +#define platform_SHA1_Update   SHA1_Update
-> +#define git_SHA1_Final         SHA1_Final
-> +#endif
-
-It's a bit ugly that this special-cases only "update" with the
-"platform_" abstraction. It _might_ be preferable to generalize this
-for all the SHA1 operations. If so, that's something you'd want to do
-as a separate preparatory patch specifically aimed at adding this new
-abstraction layer.
-
-(In fact, even if you decide only to special-case "update", that still
-might deserve a separate preparatory patch since it's a conceptually
-distinct change from the overall focus of this patch, and would make
-this patch less noisy, thus easier to review.)
-
-> +/* choose chunked implementation or not */
-> +#ifdef SHA1_MAX_BLOCK_SIZE
-> +int git_SHA1_Update_Chunked(SHA_CTX *c, const void *data, size_t len);
-> +#define git_SHA1_Update       git_SHA1_Update_Chunked
+> +		if (!proxy_auth.password)
+> +			credential_fill(&proxy_auth);
+> +#if LIBCURL_VERSION_NUM >= 0x071301
+> +		curl_easy_setopt(result, CURLOPT_PROXYUSERNAME,
+> +			proxy_auth.username);
+> +		curl_easy_setopt(result, CURLOPT_PROXYPASSWORD,
+> +			proxy_auth.password);
 > +#else
-> +#define git_SHA1_Update       platform_SHA1_Update
->  #endif
+> +		strbuf_addstr_urlencode(&s, proxy_auth.username, 1);
+> +		strbuf_addch(&s, ':');
+> +		strbuf_addstr_urlencode(&s, proxy_auth.password, 1);
+> +		curl_proxyuserpwd = strbuf_detach(&s, NULL);
+> +		curl_easy_setopt(result, CURLOPT_PROXYUSERPWD, curl_proxyuserpwd);
+> +#endif
+> +	}
+
+It is probably easier to follow the flow of the logic of the primary
+interface (i.e. init_curl_proxy_auth()) if you split this part into
+its own helper function that deals with implementation detail, e.g.
+
+ http.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/http.c b/http.c
+index 1f269b0..fad2ba5 100644
+--- a/http.c
++++ b/http.c
+@@ -340,24 +340,30 @@ static void var_override(const char **var, char *value)
+ 	}
+ }
+ 
+-static void init_curl_proxy_auth(CURL *result)
++static void set_proxyauth_name_password(CURL *result)
+ {
+-	if (proxy_auth.username) {
+-		struct strbuf s = STRBUF_INIT;
+-		if (!proxy_auth.password)
+-			credential_fill(&proxy_auth);
+ #if LIBCURL_VERSION_NUM >= 0x071301
+ 		curl_easy_setopt(result, CURLOPT_PROXYUSERNAME,
+ 			proxy_auth.username);
+ 		curl_easy_setopt(result, CURLOPT_PROXYPASSWORD,
+ 			proxy_auth.password);
+ #else
++		struct strbuf s = STRBUF_INIT;
++
+ 		strbuf_addstr_urlencode(&s, proxy_auth.username, 1);
+ 		strbuf_addch(&s, ':');
+ 		strbuf_addstr_urlencode(&s, proxy_auth.password, 1);
+ 		curl_proxyuserpwd = strbuf_detach(&s, NULL);
+ 		curl_easy_setopt(result, CURLOPT_PROXYUSERPWD, curl_proxyuserpwd);
+ #endif
++}
++
++static void init_curl_proxy_auth(CURL *result)
++{
++	if (proxy_auth.username) {
++		if (!proxy_auth.password)
++			credential_fill(&proxy_auth);
++		set_proxyauth_name_password(result);
+ 	}
+ 
+ 	var_override(&http_proxy_authmethod, getenv("GIT_HTTP_PROXY_AUTHMETHOD"));
