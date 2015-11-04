@@ -1,146 +1,125 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv3 00/11] Expose the submodule parallelism to the user
-Date: Wed, 4 Nov 2015 10:08:36 -0800
-Message-ID: <CAGZ79kZhgVThVrR-gOZj3zaicG43JNgv1FTxk2S5mr__7YB5Yg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 02/11] run-command: report failure for degraded output just once
+Date: Wed, 04 Nov 2015 10:14:43 -0800
+Message-ID: <xmqqd1vpbpik.fsf@gitster.mtv.corp.google.com>
 References: <1446597434-1740-1-git-send-email-sbeller@google.com>
-	<xmqqk2pxbqft.fsf@gitster.mtv.corp.google.com>
+	<1446597434-1740-3-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Eric Sunshine <ericsunshine@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 19:08:44 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
+	jacob.keller@gmail.com, peff@peff.net, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	ericsunshine@gmail.com, j6t@kdbg.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 19:14:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zu2UE-0006ZQ-PN
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 19:08:43 +0100
+	id 1Zu2aB-0002zK-HZ
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 19:14:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756207AbbKDSIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 13:08:38 -0500
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:33203 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754063AbbKDSIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 13:08:37 -0500
-Received: by ykft191 with SMTP id t191so86536012ykf.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2015 10:08:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=0r+mx3QfrDplr75S6Nk5DEuvKe0kUdJ0OgFz+eGSwFA=;
-        b=AI9ZuvH761s7STA86B3TG1ZN2icvlkk46RP84/sadCBdK2nCN7BwlTbEdCwgvu3wfm
-         K8xQgsuB1Ke9DmTuUdW/UTmZiSLEWJbR+5LthAHAOhIdUKR8MGsAA2t9wZ/tjmJIIFkb
-         Wm1olpYO3137I/Rv3F21imtdezRMoAfa8XMDyuRpcLoCWkFWcQZeAmVik7gdbgIg8Ul+
-         hYxC6C7Ati+vRaYK5dvUH8HFPIwXPJp0R697FqWOpi5XC4R2g8eKCu0Tl6tcSyRBs1Pg
-         oBLJ90hT6IUNnj9zrG3T0nYy4Vs6h4+btYODgyiTlenTJlz+fqRyTeq/YOIXJCaZL0o2
-         oAdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=0r+mx3QfrDplr75S6Nk5DEuvKe0kUdJ0OgFz+eGSwFA=;
-        b=DWQtLHdQDJXLhU9SJMX8CQ34Ui6wQTgidAjygAFFgsx+4bLdiL0ZFm9fBxwGkhEs9f
-         Woc/Vy5jQJEncU5Uc9hANtlLhkL3wHoWVWxaML+uLfXKaV7IIN61lgTg+qp2sE5MBzk+
-         HDRVOavpmRgM+P0hSdHfQOzVtYYvhVE3qBYRYDMmd7GWOJxFHmooanvEv0BmrKAoWH9e
-         sDAni6oZkTGHgYQ/LLsinyJElWFmJWbNNkoFk23KE8lvaiaJCa55g4eJ45eKQtTcpW6G
-         igDjQKMSPqYIjq7jX+9Gn3jWU272l7B/K98+gC3BjqCzs20zXI96KcltcTzkz+j1+mrL
-         ooxw==
-X-Gm-Message-State: ALoCoQli9dMCaBZ8gl4XJPXWxYrU7BFocB262TF88BZP1quYbZNqq5OPonWAnLwSjZrKDPl4AGJ9
-X-Received: by 10.129.40.147 with SMTP id o141mr2292939ywo.199.1446660516698;
- Wed, 04 Nov 2015 10:08:36 -0800 (PST)
-Received: by 10.37.29.213 with HTTP; Wed, 4 Nov 2015 10:08:36 -0800 (PST)
-In-Reply-To: <xmqqk2pxbqft.fsf@gitster.mtv.corp.google.com>
+	id S1756159AbbKDSOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 13:14:46 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51782 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754990AbbKDSOp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 13:14:45 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E84F3272C6;
+	Wed,  4 Nov 2015 13:14:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jPM7k7F6EP7U6+kEPIJtXaPAYj8=; b=U4Sb7X
+	6PYJTs07RHdvb0wRAhoArI1mf0M3lgc1GbjixaD+YNXdcUeNRFO4tSAOPvULEzHT
+	jT2HEdpNGgYsK/sA0nnwpbI4M/Ah2R0mlQT2S/8vSF9fCUlMrwRSoulda9gsFB3h
+	ldVuzwpDeHHV8k/ho/jKto/Lj3qvt8MPdgGFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SuSBHoG3DWgCJ8+98yP2SpsFMYcpurpz
+	98HdyqnKrumZWSYdKAEav0Cs14dG9Z/ckCuH8dEDlEhuIfrRCkrfa3Tuh8+ZLthA
+	Z6a3c7BhW8ln7E8E1dnWmZvtTygZ6LOXDU6B7wtMIHeFzTNb1j1iDHeUM+9dXdGV
+	FtPec0T8eb8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DFD24272C5;
+	Wed,  4 Nov 2015 13:14:44 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 69653272C4;
+	Wed,  4 Nov 2015 13:14:44 -0500 (EST)
+In-Reply-To: <1446597434-1740-3-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 3 Nov 2015 16:37:05 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: ECD2587C-831F-11E5-BA05-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280863>
 
-On Wed, Nov 4, 2015 at 9:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Stefan Beller <sbeller@google.com> writes:
+
+> The warning message is cluttering the output itself,
+> so just report it once.
 >
->> Where does it apply?
->> ---
->> This series applies on top of d075d2604c0f92045caa8d5bb6ab86cf4921a4ae (Merge
->> branch 'rs/daemon-plug-child-leak' into sb/submodule-parallel-update) and replaces
->> the previous patches in sb/submodule-parallel-update
->>
->> What does it do?
->> ---
->> This series should finish the on going efforts of parallelizing
->> submodule network traffic. The patches contain tests for clone,
->> fetch and submodule update to use the actual parallelism both via
->> command line as well as a configured option. I decided to go with
->> "submodule.jobs" for all three for now.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  run-command.c | 20 ++++++++++++++------
+>  1 file changed, 14 insertions(+), 6 deletions(-)
 >
-> The order of patches and where the series builds makes me suspect
-> that I have been expecting too much from the "parallel-fetch" topic.
->
-> I've been hoping that it would be useful for the project as a whole
-> to polish the other topic and make it available to wider audience
-> sooner by itself (both from "end users get improved Git early"
-> aspect and from "the core machinery to be reused in follow-up
-> improvements are made closer to perfection sooner" perspective).  So
-> I've been expecting that "Let's fix it on Windows" change directly
-> on top of sb/submodule-parallel-fetch to make that topic usable
-> before everything else.
+> diff --git a/run-command.c b/run-command.c
+> index 7c00c21..3ae563f 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1012,13 +1012,21 @@ static void pp_cleanup(struct parallel_processes *pp)
+>  
+>  static void set_nonblocking(int fd)
+>  {
+> +	static int reported_degrade = 0;
+>  	int flags = fcntl(fd, F_GETFL);
+> -	if (flags < 0)
+> -		warning("Could not get file status flags, "
+> -			"output will be degraded");
+> -	else if (fcntl(fd, F_SETFL, flags | O_NONBLOCK))
+> -		warning("Could not set file status flags, "
+> -			"output will be degraded");
+> +	if (flags < 0) {
+> +		if (!reported_degrade) {
+> +			warning("Could not get file status flags, "
+> +				"output will be degraded");
+> +			reported_degrade = 1;
+> +		}
+> +	} else if (fcntl(fd, F_SETFL, flags | O_NONBLOCK)) {
+> +		if (!reported_degrade) {
+> +			warning("Could not set file status flags, "
+> +				"output will be degraded");
+> +			reported_degrade = 1;
+> +		}
+> +	}
+>  }
 
-I can resend the patches on top of sb/submodule-parallel-fetch
-(though looking at sb/submodule-parallel-fetch..d075d2604c0f920
-[Merge branch 'rs/daemon-plug-child-leak' into sb/submodule-parallel-update]
-I don't expect conflicts, so it would be a verbatim resend)
+Imagine that we are running two things A and B at the same time.  We
+ask poll(2) and it says both A and B have some data ready to be
+read, and we try to read from A.  strbuf_read_once() would try to
+read up to 8K, relying on the fact that you earlier set the IO to be
+nonblock.  It will get stuck reading from A without allowing output
+from B to drain.  B's write may get stuck because we are not reading
+from it, and would cause B to stop making progress.
 
+What if the other sides of the connection from A and B are talking
+with each other, and B's non-progress caused the processing for A on
+the other side of the connection to block, causing it not to produce
+more output to allow us to make progress reading from A (so that
+eventually we can give B a chance to drain its output)?  Imagine A
+and B are pushes to the same remote, B may be pushing a change to a
+submodule while A may be pushing a matching change to its
+superproject, and the server may be trying to make sure that the
+submodule update completes and updates the ref before making the
+superproject's tree that binds that updated submodule's commit
+availble, for example?  Can we make any progress from that point?
 
-> Other patches in this series may require
-> the child_process_cleanup() change, so they may be applied on top of
-> the merge between sb/submodule-parallel-fetch (updated for Windows)
-> and rs/daemon-plug-child-leak topic.
-
-I assumed the rs/daemon-plug-child-leak topic is no feature, but cleanup.
-Which is why I would have expected a sb/submodule-parallel-fetch-for-windows
-pointing at maybe the third patch of the series on top of
-rs/daemon-plug-child-leak
-
->
-> That does not seem to be what's happening here (note: I am not
-> complaining; I am just trying to make sure expectation matches
-> reality).  Am I reading you correctly?
-
-I really wanted to send out just one series, my bad.
-The ordering made sense to me (first the run-command related fixes
-and then the new features in later patches)
-
->
-> I think sb/submodule-parallel-fetch + sb/submodule-parallel-update
-> as a single topic would need more time to mature to be in a tagged
-> release than we have in the remainder of this cycle.
-
-I agree on that.
-
->  It is likely
-> that the former topic has a chance to get rebased after 2.7 happens.
-> And that would allow us to (1) use the child_process_cleanup() from
-> get-go instead of _deinit and to (2) get the machinery right both
-> for UNIX and Windows from get-go.  Which would make the result
-> easier to understand.  As this is one of the more important areas,
-> it matters to keep the resulting code and the rationale behind it
-> understandable by reading "log --reverse -p".
-
-So you are saying that reading the Windows cleanup patch
-before the s/deinit/clear/ Patch by Rene makes it way easier to understand?
-Which is why you would prefer another history. (Merging an updated
-sb/submodule-parallel-fetch again to  rs/daemon-plug-child-leak or even
-sb/submodule-parallel-update)
-
-Thanks,
-Stefan
+I am not convinced that the failure to set nonblock IO is merely
+"output will be degraded".  It feels more like a fatal error if we
+are driving more than one task at the same time.
