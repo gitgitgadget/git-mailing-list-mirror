@@ -1,81 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] prepare_packed_git(): refactor garbage reporting in pack directory
-Date: Wed, 04 Nov 2015 11:35:52 -0800
-Message-ID: <xmqqr3k5a76v.fsf@gitster.mtv.corp.google.com>
-References: <xmqqwpx6wx74.fsf@gitster.dls.corp.google.com>
-	<1439488973-11522-1-git-send-email-dougk.ff7@gmail.com>
-	<CAPig+cS0ntr1sYzVAPjNCwd8ei4oGQRNs+W=qMBV4Z6NaRWCWA@mail.gmail.com>
-	<xmqq37zhg8la.fsf@gitster.dls.corp.google.com>
-	<xmqqbnbilw9u.fsf@gitster.mtv.corp.google.com>
-	<CAEtYS8TR4mnaGpGDpB3cz_nu2hdCYTWf=PVCJbmzYi6YA53_bg@mail.gmail.com>
-	<CAEtYS8Q1T-ig2KqZUoCCODs1YbjOmF__vbiH5rL-s6hNaUhZeA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 4/4] t5509: add basic tests for hideRefs
+Date: Wed, 4 Nov 2015 14:36:54 -0500
+Message-ID: <CAPig+cQWbisskb4aQ48Oo=8_SYKZWwMK8jn_P_zsivY-xuk43g@mail.gmail.com>
+References: <1446537497-13921-1-git-send-email-lfleischer@lfos.de>
+	<1446537497-13921-5-git-send-email-lfleischer@lfos.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>
-To: Doug Kelly <dougk.ff7@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 20:36:04 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Lukas Fleischer <lfleischer@lfos.de>
+X-From: git-owner@vger.kernel.org Wed Nov 04 20:37:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zu3ql-0004SY-AG
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 20:36:03 +0100
+	id 1Zu3s0-0005TW-Mw
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 20:37:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756254AbbKDTf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 14:35:57 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56926 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756134AbbKDTfz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 14:35:55 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BB90127484;
-	Wed,  4 Nov 2015 14:35:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qsXHfIMgRsbGfgYFWEaIdQ7af80=; b=EkOcM8
-	sSOpL6rP5xROtkXLoUNpc2Te9GjyGjEXpXtVOpvUY/zd6ShnIo7+Ox67S9I6ji87
-	V32FK4vaJf0t8wHEZF91KIZBd7DiOf8GkaPgdBVpk8iX9Y+NOVjxbYR8GZR4FN4r
-	NAQmwh6+h+jDT3uzIlAxDTElgE6Ukdl4veHPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M6peWKMxaPCnZ4nrVZHcLJDBAyuygmmi
-	fJCmeyiOm1xk5MtLCdjjJ44DU//GSebDDkbgWKel70iJ9E6phz7TVGUmQZ1xvloe
-	O+RN4HzjBlxxm7ih7I43xCrL0qpmkMwn+IawZ3c9Jfpp9ah/5kEST59TZH0r8VLy
-	yfnYHRQEMNI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B357027483;
-	Wed,  4 Nov 2015 14:35:54 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2BDD027481;
-	Wed,  4 Nov 2015 14:35:54 -0500 (EST)
-In-Reply-To: <CAEtYS8Q1T-ig2KqZUoCCODs1YbjOmF__vbiH5rL-s6hNaUhZeA@mail.gmail.com>
-	(Doug Kelly's message of "Tue, 3 Nov 2015 21:12:38 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 4360CEB6-832B-11E5-852E-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1756354AbbKDThO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 14:37:14 -0500
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:36277 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756315AbbKDTgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 14:36:55 -0500
+Received: by ykba4 with SMTP id a4so91142569ykb.3
+        for <git@vger.kernel.org>; Wed, 04 Nov 2015 11:36:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=qd8ojafJej28RKSB/ReiW0x5W/zCZmlepXkRNRH2Luk=;
+        b=QkNVxvL8CoeHAus8i5mLWNvozZqq6famyWEoZyI+ZZ5mgALcxIrxCrCALUGokdB8Eo
+         t9TNKwfjHTAvMRa0sp6lCh99Cin6RDzBMtj69dZa0ebgOKM4L/KfKNvVCYk1Vv7oF3f5
+         Hu6jSxm/pkzsSXhRqOjxCQsrs4ItRH0W+3MblSVw5oekmIjaD/oomrCS85B+FiPM4wZm
+         OUc5e8Tb5HtKMhpnc8aqHKN4td1WncfYwrBivWMGkjSv0OIZmEGVTkqmAsrtnyMl6hJd
+         v11i6uUfp27ZzdBkXPk5tBxH/M6GuvkIgQ06tCCvyaG8ydZSLRSael088rlIrMGWCgzC
+         uwig==
+X-Received: by 10.31.56.75 with SMTP id f72mr3572290vka.115.1446665814431;
+ Wed, 04 Nov 2015 11:36:54 -0800 (PST)
+Received: by 10.31.159.204 with HTTP; Wed, 4 Nov 2015 11:36:54 -0800 (PST)
+In-Reply-To: <1446537497-13921-5-git-send-email-lfleischer@lfos.de>
+X-Google-Sender-Auth: gsuWTpnIXk6oWSTquyEPn7SnQQ8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280867>
 
-Doug Kelly <dougk.ff7@gmail.com> writes:
+On Tuesday, November 3, 2015, Lukas Fleischer <lfleischer@lfos.de> wrote:
+> Test whether regular and full hideRefs patterns work as expected when
+> namespaces are used.
+>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
+> ---
+> diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
+> @@ -82,4 +82,45 @@ test_expect_success 'mirroring a repository using a ref namespace' '
+> +test_expect_success 'hide namespaced refs with transfer.hideRefs' '
+> +       GIT_NAMESPACE=namespace \
+> +               git -C pushee -c transfer.hideRefs=refs/tags \
+> +               ls-remote "ext::git %s ." >actual &&
+> +       printf "$commit1\trefs/heads/master\n" >expected &&
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'check that transfer.hideRefs does not match unstripped refs' '
+> +       GIT_NAMESPACE=namespace \
+> +               git -C pushee -c transfer.hideRefs=refs/namespaces/namespace/refs/tags \
+> +               ls-remote "ext::git %s ." >actual &&
+> +       printf "$commit1\trefs/heads/master\n" >expected &&
+> +       printf "$commit0\trefs/tags/0\n" >>expected &&
+> +       printf "$commit1\trefs/tags/1\n" >>expected &&
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'hide full refs with transfer.hideRefs' '
+> +       GIT_NAMESPACE=namespace \
+> +               git -C pushee -c transfer.hideRefs="^refs/namespaces/namespace/refs/tags" \
+> +               ls-remote "ext::git %s ." >actual &&
+> +       printf "$commit1\trefs/heads/master\n" >expected &&
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'try to update a hidden ref' '
+> +       test_config -C pushee transfer.hideRefs refs/heads/master &&
+> +       test_must_fail git -C original push pushee-namespaced master
 
-> I think the patches I sent (a bit prematurely) address the
-> remaining comments... I did find there was a relevant test in
-> t5304 already, so I added a new test in the same section (and
-> cleaned up some of the garbage it wasn't removing before).  I'm
-> not sure if it's poor form to move tests around like this, but I
-> figured it might be best to keep them logically grouped.
+In above tests, you use -c to set the configuration temporarily for
+the git invocation, but not in this and following tests. Is that
+because the -c isn't visible to sub-commands which git-push invokes?
+(Genuine question; I want to make sure I understand the reasoning.)
 
-OK, will queue as I didn't spot anything glaringly wrong ;-)
-
-I did wonder if we want to say anything about .bitmap files, though.
-If there is one without matching .idx and .pack, shouldn't we report
-just like we report .idx without .pack (or vice versa)?
-
-Thanks.
+> +'
+> +
+> +test_expect_success 'try to update a ref that is not hidden' '
+> +       test_config -C pushee transfer.hideRefs refs/namespaces/namespace/refs/heads/master &&
+> +       git -C original push pushee-namespaced master
+> +'
+> +
+> +test_expect_success 'try to update a hidden full ref' '
+> +       test_config -C pushee transfer.hideRefs "^refs/namespaces/namespace/refs/heads/master" &&
+> +       test_must_fail git -C original push pushee-namespaced master
+> +'
+> +
+>  test_done
+> --
+> 2.6.2
+>
