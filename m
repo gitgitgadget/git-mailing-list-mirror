@@ -1,72 +1,112 @@
-From: Felipe Sateler <fsateler@debian.org>
-Subject: Re: Bug: stash save -u removes (some) ignored files
-Date: Wed, 4 Nov 2015 09:27:24 -0300
-Message-ID: <CAAfdZj_t86AuhU7dgx81-MXFp7Fe=TCZ0uzRu37+FUp80mvy5Q@mail.gmail.com>
-References: <CAAfdZj8=pqWDB9U3=bPeKXGzsZvzns2xX8WxEzQAy08wgSm=ZQ@mail.gmail.com>
- <CA+izobsNJ+Aj6JwFTtZVD_+8m9uXV-iiM7Z2aYWNCnWXFd82Dg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Limit the size of the data block passed to SHA1_Update()
+Date: Wed, 04 Nov 2015 09:09:03 -0800
+Message-ID: <xmqqsi4lbsk0.fsf@gitster.mtv.corp.google.com>
+References: <CAPig+cRRjCDhdT-DvGtZqns1mMxygnxi=ZnRKzg+H_do7oRpqQ@mail.gmail.com>
+	<1446359536-25829-1-git-send-email-apahlevan@ieee.org>
+	<xmqqh9l5h8g3.fsf@gitster.mtv.corp.google.com>
+	<CA+izobvbDYLvShT8TdDhe9UiYHVWw+Le+Yy4yOnvCYOWE0bhQQ@mail.gmail.com>
+	<xmqqpozsdrnl.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Randall Becker <rsbecker@nexbridge.com>,
+	Atousa Pahlevan Duprat <apahlevan@ieee.org>
 To: Atousa Duprat <atousa.p@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 13:28:14 2015
+X-From: git-owner@vger.kernel.org Wed Nov 04 18:09:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZtxAh-0001xx-G9
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 13:28:11 +0100
+	id 1Zu1Yj-0000M3-Uc
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 18:09:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965135AbbKDM2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 07:28:06 -0500
-Received: from mail-io0-f174.google.com ([209.85.223.174]:33499 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754545AbbKDM2E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 07:28:04 -0500
-Received: by iodd200 with SMTP id d200so51552445iod.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2015 04:28:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=rhQFmEGYpVE6w4LsWcVDPMletdcNymW3FHAPOyppBtI=;
-        b=KgmNCfjwVItB31CFvpOg4AKpcUZy0NMn+7f+R1bSzEcfoKx0nQ2yLgfZ5TeWR8wu88
-         wN5HVx1+dF8AMwSpe6ytfzNlj6HqHtXzrbNsSoN+2jUKOTG947pLqBVeNIssn++2vmrP
-         NxFEwJm6qq0ykwwNrOIbD3sbooMyfTpmVxMvv4ZVlcNgg1Q2mcB8z5VwwzaQoYepm+ap
-         4I+GNq1NKIotpjJQ3DtcRFEnfeLfm3zLR2HphgDZ+GNNgphpE4hstQTX8+yhXM5xsO9q
-         vaA+bE8kYe+i5zSYRv2LbjcqAIAjQwTc0M9TbVU8YjdnS2uJg77/W/AfR7CZjAr4DLR9
-         DB6A==
-X-Received: by 10.107.6.195 with SMTP id f64mr2455749ioi.46.1446640083860;
- Wed, 04 Nov 2015 04:28:03 -0800 (PST)
-Received: by 10.107.131.101 with HTTP; Wed, 4 Nov 2015 04:27:24 -0800 (PST)
-In-Reply-To: <CA+izobsNJ+Aj6JwFTtZVD_+8m9uXV-iiM7Z2aYWNCnWXFd82Dg@mail.gmail.com>
-X-Google-Sender-Auth: FWB7ZCrvLOXyt6VAWn9zF-KHDis
+	id S1756079AbbKDRJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 12:09:13 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59408 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756074AbbKDRJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 12:09:12 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 51D0E2764F;
+	Wed,  4 Nov 2015 12:09:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OBM9c2s2aN/WhDjNLCX1ZIIXjXo=; b=xXqs0N
+	vsewB9ncOWHKB16oVihrucd+/ddjMrh8cfRxXip/K1mLwtSiSVYwkQYjCyAYd5kS
+	SXLWOifNBw3EcBrMi9ez0YwzeyLEfcwUXtNr7SPAdSmWSPH7XdMWQilS3JrsY95t
+	nQJKcLqzVeCHRIpum4pOvRc3hxNS1BjV4mlZs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qjwXBg4OnlSJHwTAIs59cw89rGA5PKCb
+	7PMRQ6fZwosG1HpluBvwpdTAlkilVdJDkO9LtrHx4RiUSyIilg8Bf7+dSP50zcJb
+	j4AqNfY34QJjVpChIxoVROYCc0NX9xQZGAv6KHK2/rCQUvFJ09xHA03bJ2tikhLl
+	yWcQfuiQQAw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 489302764C;
+	Wed,  4 Nov 2015 12:09:05 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BEAE127649;
+	Wed,  4 Nov 2015 12:09:04 -0500 (EST)
+In-Reply-To: <xmqqpozsdrnl.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 02 Nov 2015 13:21:02 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C09BA3C0-8316-11E5-962A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280859>
 
-On 4 November 2015 at 03:23, Atousa Duprat <atousa.p@gmail.com> wrote:
->> felipe@felipe:testgit% git stash save -u
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> ifdef BLK_SHA1
+>>         SHA1_HEADER = "block-sha1/sha1.h"
+>>         LIB_OBJS += block-sha1/sha1.o
+>> else
+>> ifdef PPC_SHA1
+>>         SHA1_HEADER = "ppc/sha1.h"
+>>         LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
+>> else
+>> ifdef APPLE_COMMON_CRYPTO
+>>         COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
+>>         SHA1_HEADER = <CommonCrypto/CommonDigest.h>
+>>         SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
+>> else
+>>         SHA1_HEADER = <openssl/sha.h>
+>>         EXTLIBS += $(LIB_4_CRYPTO)
+>> endif
+>>
+>> which seems to imply that BLK_SHA1 and APPLE_COMMON_CRYPTO are
+>> mutually exclusive?
 >
-> This does the following:
-> $ GIT_TRACE=1 git stash save -u
-> [...]
-> 21:59:10.606094 git.c:348               trace: built-in: git 'clean'
-> '--force' '--quiet' '-d'
->
-> git-clean -d removes untracked directories in addition to untracked files.
-> Should 'git stash save -u' issue a 'git clean -d' or simply a 'git clean'?
+> Yes, you are correct that these two cannot be used at the same time.
+> In general (not limited to BLK_SHA1 and APPLE_COMMON_CRYPTO) you can
+> pick only _one_ underlying SHA-1 implementation to use with the
+> system.
 
-It appears to be intentionally done[1]. Maybe the problem is that
-git-clean -d should not remove untracked directories that contain
-ignored files?
+Our "seems to imply" above is a faulty reading.  The four lines I
+wrote are not incorrect per-se, but this exchange was misleading.
 
+When BLK_SHA1 is defined, the above fragment from the Makefile is
+only saying "CommonCrypto may or may not be used for any other
+purposes, but for SHA-1 hashing, I'll use our own block-sha1/
+implementation."  It does not say anything about how the system
+favours CommonCrypto over OpenSSL with APPLE_COMMON_CRYPTO.
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/180214
+And it is legit to define both APPLE_COMMON_CRYPTO and BLK_SHA1; the
+resulting build would still use SSL-related functions what other
+people may use from OpenSSL from CommonCrypto.  Filipe Cabecinhas
+pointed out that such a configuration works (and solves the issue
+that triggered this thread) very early in the thread.
 
--- 
+I haven't looked carefully at the latest version of your patch, but
+I just wanted to make sure that I didn't mislead you to add an
+unnecessary "we check if both APPLE_COMMON_CRYPTO and BLK_SHA1 are
+defined and error out because they are incompatible" check.  Sorry
+for an earlier message that may have been confusing.
 
-Saludos,
-Felipe Sateler
+Thanks.
