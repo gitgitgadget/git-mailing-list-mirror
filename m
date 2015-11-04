@@ -1,68 +1,61 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Strange diff-index output
-Date: Wed, 4 Nov 2015 01:38:04 -0500
-Message-ID: <20151104063803.GA16605@sigill.intra.peff.net>
-References: <CABxGUTj-5vdmyVGkKuoMdBAG2EAQvLJNYLLA++T2hNFvGRmb0w@mail.gmail.com>
- <1446510469.4131.35.camel@twopensource.com>
- <CABxGUTihNmHqp-RovCVreTRqoK_sj+KCjRQE_YOVZ8OQzOHHoA@mail.gmail.com>
+Subject: Re: [PATCH v4] Add git-grep threads param
+Date: Wed, 4 Nov 2015 01:40:21 -0500
+Message-ID: <20151104064021.GB16605@sigill.intra.peff.net>
+References: <1445980944-24000-1-git-send-email-vleschuk@accesssoftek.com>
+ <xmqqvb9jc81q.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org
-To: Ch'Gans <chgans@gna.org>
-X-From: git-owner@vger.kernel.org Wed Nov 04 07:38:58 2015
+Cc: Victor Leschuk <vleschuk@gmail.com>, git@vger.kernel.org,
+	Victor Leschuk <vleschuk@accesssoftek.com>,
+	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
+	"john@keeping.me.uk" <john@keeping.me.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 07:40:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ztrij-0007L6-A9
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 07:38:57 +0100
+	id 1ZtrkD-0000KG-1f
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 07:40:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754996AbbKDGiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 01:38:11 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52542 "HELO cloud.peff.net"
+	id S1755575AbbKDGkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 01:40:25 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52547 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751064AbbKDGiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 01:38:07 -0500
-Received: (qmail 31960 invoked by uid 102); 4 Nov 2015 06:38:06 -0000
+	id S1751064AbbKDGkY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 01:40:24 -0500
+Received: (qmail 32189 invoked by uid 102); 4 Nov 2015 06:40:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Nov 2015 00:38:06 -0600
-Received: (qmail 32743 invoked by uid 107); 4 Nov 2015 06:38:32 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Nov 2015 00:40:24 -0600
+Received: (qmail 300 invoked by uid 107); 4 Nov 2015 06:40:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Nov 2015 01:38:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Nov 2015 01:38:04 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Nov 2015 01:40:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Nov 2015 01:40:21 -0500
 Content-Disposition: inline
-In-Reply-To: <CABxGUTihNmHqp-RovCVreTRqoK_sj+KCjRQE_YOVZ8OQzOHHoA@mail.gmail.com>
+In-Reply-To: <xmqqvb9jc81q.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280854>
 
-On Tue, Nov 03, 2015 at 02:00:33PM +1300, Ch'Gans wrote:
+On Tue, Nov 03, 2015 at 09:22:09AM -0800, Junio C Hamano wrote:
 
-> I first tried "git update-index" but it didn't work. However "git
-> update-index --refresh" seems to fix our problem.
-> I didn't get why "--refresh" is needed thought, I'm really not
-> familiar with the caching aspect of git.
+> > +grep.threads::
+> > +	Number of grep worker threads, use it to tune up performance on
+> > +	multicore machines. Default value is 8. Set to 0 to disable threading.
+> > +
+> 
+> I am not enthused by this "Set to 0 to disable".  As Zero is
+> magical, it would be more useful if 1 meant that threading is not
+> used (i.e. there is only 1 worker), and 0 meant that we would
+> automatically pick some reasonable parallelism for you (and we
+> promise that the our choice would not be outrageously wrong), or
+> something like that.
 
-It is because update-index is a general command for manipulating the
-index. For example, you can add, delete, or change entries without
-regard to what is in the working tree.
-
-One of the manipulations is "refresh the index based on what is in the
-working tree", and that is spelled "--refresh". Most porcelain-level git
-commands (like "git diff") will do this for you automatically and
-transparently. But when using the scriptable plumbing (like diff-index),
-git gives you more control. This lets you do things more efficiently
-(e.g,. you might refresh once and then issue several low-level
-commands), at the cost of convenience.
-
-You could also have used "git diff-index --cached HEAD", which instructs
-diff-index not to look at the working tree at all (so you would compare
-whatever is in the index, whether it is up to date with what is in the
-working tree or not). Depending on what you are trying to achieve, that
-might be fine (it's also more efficient in general, as it does not
-require an lstat() of every file in the working tree).
+Not just useful, but consistent with other parts of git, like
+pack.threads, where "0" already means "autodetect".
 
 -Peff
