@@ -1,108 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: drop connectivity check for local clones
-Date: Wed, 4 Nov 2015 12:34:58 -0500
-Message-ID: <20151104173458.GA11917@sigill.intra.peff.net>
-References: <CAJR51WY-HSoTHpBm1jek2+fZyHQL3-n2J6aS-MBCDO5WtYTKRg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 00/11]  Expose the submodule parallelism to the user
+Date: Wed, 04 Nov 2015 09:54:46 -0800
+Message-ID: <xmqqk2pxbqft.fsf@gitster.mtv.corp.google.com>
+References: <1446597434-1740-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Matej Buday <m.buday@o0.sk>
-X-From: git-owner@vger.kernel.org Wed Nov 04 18:35:12 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com,
+	jacob.keller@gmail.com, peff@peff.net, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	ericsunshine@gmail.com, j6t@kdbg.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 18:54:57 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zu1xl-0004Lm-C9
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 18:35:09 +0100
+	id 1Zu2Gt-0003em-Cz
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 18:54:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755956AbbKDRfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 12:35:03 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52746 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755171AbbKDRfB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 12:35:01 -0500
-Received: (qmail 5710 invoked by uid 102); 4 Nov 2015 17:35:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Nov 2015 11:35:01 -0600
-Received: (qmail 4155 invoked by uid 107); 4 Nov 2015 17:35:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Nov 2015 12:35:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Nov 2015 12:34:58 -0500
-Content-Disposition: inline
-In-Reply-To: <CAJR51WY-HSoTHpBm1jek2+fZyHQL3-n2J6aS-MBCDO5WtYTKRg@mail.gmail.com>
+	id S1756191AbbKDRyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 12:54:50 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56844 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756173AbbKDRyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 12:54:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2AB7D28AE3;
+	Wed,  4 Nov 2015 12:54:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CZvYuTdlUetqkjayI6AVgh46AE0=; b=GNF2Nc
+	sNnGr60W+q7rTHbz2svH5A0zYiQEDL/lHmoMVu3jj72cRzLCoq1G8kkbmUhP134V
+	+XtCR3qfMmVQL4PKQNV8qayLkSqsB7bKJWLFjVFXF4wUbVE8s++LCtuzQ/C7PChp
+	oxQYiUSrHHv0sFnVQOg2wenJ+RmsiZxGhVv7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=br+I28sc+9w6bO9v71zTdEktxwnxK0Ef
+	3VAMyc8aBn08xlWTY+AvOfsACLO4cePfRF8GjQUOp0F7zHwr09Eiwr8qYPMasz2U
+	NXriZTLnqfoYrhxxWiNTfOCBHVwwp+PH06StM4Re2tl/ykfK3U5npunZfGSw9uzr
+	wXCmaAuK1rI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 22E1A28AE2;
+	Wed,  4 Nov 2015 12:54:48 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9C5CB28AE1;
+	Wed,  4 Nov 2015 12:54:47 -0500 (EST)
+In-Reply-To: <1446597434-1740-1-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Tue, 3 Nov 2015 16:37:03 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 237ACA1A-831D-11E5-9B7D-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280861>
 
-[I'm cc-ing the list, since I think this answer is of general interest.]
+Stefan Beller <sbeller@google.com> writes:
 
-On Wed, Nov 04, 2015 at 11:00:34AM +0100, Matej Buday wrote:
+> Where does it apply?
+> ---
+> This series applies on top of d075d2604c0f92045caa8d5bb6ab86cf4921a4ae (Merge
+> branch 'rs/daemon-plug-child-leak' into sb/submodule-parallel-update) and replaces
+> the previous patches in sb/submodule-parallel-update
+>
+> What does it do?
+> ---
+> This series should finish the on going efforts of parallelizing
+> submodule network traffic. The patches contain tests for clone,
+> fetch and submodule update to use the actual parallelism both via
+> command line as well as a configured option. I decided to go with
+> "submodule.jobs" for all three for now.
 
-> I have a question somewhat regarding this old commit of yours:
-> https://github.com/git/git/commit/125a05fd0b45416558923b753f6418c24208d443
-> 
-> Let me preface this by saying that I don't completely understand what the
-> connectivity check does...
+The order of patches and where the series builds makes me suspect
+that I have been expecting too much from the "parallel-fetch" topic.
 
-One of the invariants git tries to remain in the repository is that for
-any object reachable from a ref (i.e., a branch or tag), we have all of
-the ancestor objects. So if you have commit 125a05, you also have the
-parent, and its parent, and so on, down to the root.
+I've been hoping that it would be useful for the project as a whole
+to polish the other topic and make it available to wider audience
+sooner by itself (both from "end users get improved Git early"
+aspect and from "the core machinery to be reused in follow-up
+improvements are made closer to perfection sooner" perspective).  So
+I've been expecting that "Let's fix it on Windows" change directly
+on top of sb/submodule-parallel-fetch to make that topic usable
+before everything else.  Other patches in this series may require
+the child_process_cleanup() change, so they may be applied on top of
+the merge between sb/submodule-parallel-fetch (updated for Windows)
+and rs/daemon-plug-child-leak topic.
 
-When we fetch or clone from a remote repository, it sends us some
-objects, and we plan to point one of our refs at it. But rather than
-trust that the remote sent us everything we need to maintain that
-invariant, we actually walk the graph to make sure that is the case.
+That does not seem to be what's happening here (note: I am not
+complaining; I am just trying to make sure expectation matches
+reality).  Am I reading you correctly?
 
-This can catch bugs or transfer errors early. So the operation is safer,
-at the expense of spending some CPU time.
+I think sb/submodule-parallel-fetch + sb/submodule-parallel-update
+as a single topic would need more time to mature to be in a tagged
+release than we have in the remainder of this cycle.  It is likely
+that the former topic has a chance to get rebased after 2.7 happens.
+And that would allow us to (1) use the child_process_cleanup() from
+get-go instead of _deinit and to (2) get the machinery right both
+for UNIX and Windows from get-go.  Which would make the result
+easier to understand.  As this is one of the more important areas,
+it matters to keep the resulting code and the rationale behind it
+understandable by reading "log --reverse -p".
 
-We skip it for local disk-to-disk clones. We trust the source clone
-more, and since the point of a local clone is to be very fast, the
-safety/CPU tradeoff doesn't make as much sense.
-
-> Well, the question is -- is this check necessary
-> for local clones that use the --reference option?
-
-Sort of. If you say:
-
-  git clone --reference /some/local/repo git://some-remote-repo
-
-Then we do check the incoming objects from some-remote-repo. However,
-there is an optimization we don't do: we could assume that everything in
-/some/local/repo is fine, and stop traversing there. So if you fetch
-only a few objects from the remote, that is all you would check.
-
-The optimization would look something like this:
-
-  https://github.com/peff/git/commit/1254ff54b49eff19ec8a09c36e3edd24d490cae1
-
-I wrote that last year, but haven't actually submitted the patch yet.
-There are two reasons:
-
-  1. It needs minor cleanup due to the sha1/oid transition that is
-     ongoing (see the "ugh" comment). I think this could be fixed by
-     refactoring some of the callback interfaces, but I haven't gotten
-     around to it.
-
-  2. Using alternates to optimize can backfire at a certain scale. If
-     you have a very large number of refs in the alternate repository,
-     just accessing and processing those refs can be more expensive than
-     walking the history graph in the first place.
-
-     This is the case for us at GitHub, where our alternates have the
-     refs for _all_ of the forks of a given project. So I would want
-     some flag to turn this behavior off.
-
-     Of course, we are in an exceptional circumstance at GitHub, and
-     that is no reason the topic cannot go upstream (we already carry
-     custom patches to disable alternates for things like receive-pack,
-     and could do the same here).
-
-     So that is not a good reason not to submit, only an explanation why
-     I have not yet bothered to spend the time on it. :)
-
--Peff
+Thanks.
