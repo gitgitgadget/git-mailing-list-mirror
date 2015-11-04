@@ -1,84 +1,98 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v6 25/25] refs: break out ref conflict checks
-Date: Wed, 04 Nov 2015 16:01:24 -0500
-Organization: Twitter
-Message-ID: <1446670884.4131.42.camel@twopensource.com>
-References: <cover.1446534991.git.mhagger@alum.mit.edu>
-	 <3060e6410e8798064ef84cd31645021d1b84fbb9.1446534991.git.mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 02/11] run-command: report failure for degraded output just once
+Date: Wed, 04 Nov 2015 13:01:53 -0800
+Message-ID: <xmqq4mh1a37i.fsf@gitster.mtv.corp.google.com>
+References: <1446597434-1740-1-git-send-email-sbeller@google.com>
+	<1446597434-1740-3-git-send-email-sbeller@google.com>
+	<xmqqd1vpbpik.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaiRKHd2RS9eNeZt_VZqqBF0HS0D=x1HbOTPXYOphu8pg@mail.gmail.com>
+	<563A6C3D.2050805@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Nov 04 22:01:33 2015
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Eric Sunshine <ericsunshine@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Nov 04 22:02:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zu5BU-0006SL-PW
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 22:01:33 +0100
+	id 1Zu5Bx-0006q2-1q
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 22:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030691AbbKDVB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 16:01:28 -0500
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:32911 "EHLO
-	mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030264AbbKDVB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 16:01:27 -0500
-Received: by qkas77 with SMTP id s77so21656960qka.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2015 13:01:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource_com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=/tpfKgQV3wepcNYQzMwmgs0tGgEo7MpkTEd6AZqzQWg=;
-        b=mQjpdHkiT0asGuTbkle8/oPJ+Ww/56c+vYdc0vunkhHkFvvZSLO3s9m+Mk6xhgl9ob
-         dgZrdyvWOpJrnzCPzSQ9c8o2+CM0fP7ayHfLFqDYbLx6k/WaANqjaeuB1w+a5ttpBSAP
-         oq3WYUm3nBn4zvj3v59A6Kd8nzv1fQkS0cGz9gthXuFFecK1GFkAL3WHlU30l0DlQbCp
-         UmYmBu8v0Bx3gQicNYVDaU67ClOGsZjin2Z9emG9cEkHkLhT3HeNr4wvO81jw3Ive+qQ
-         Anwzmf/reYvo73OYwMghUEqH8kQusAimiN5SrDEbmOzRyn258PHOJy3mutt5loHVii6u
-         2x9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=/tpfKgQV3wepcNYQzMwmgs0tGgEo7MpkTEd6AZqzQWg=;
-        b=a7+B4wd5Blt9mBClbzTqGcInUTI6NZNhCsoFdgO9XroSU5gxjtuyXxxjhNmPmnhp2Q
-         n3aL10G0a3flfBJA8hxt2dS6YyYbzMi3gJCYVOfKXo45kr43IOTlGj5CbqO42ZcRJYmq
-         D9AzMh/k04tEDTytoWLnhgWVJncPxdpkpZi9Wg23macTZ8DpuWkIYbNN5XruC3482vKh
-         12RnAUzNpsEMKmWBvMYkZtub3WGLk0VrLEC/lwz99Si7bsStivs/1slhB792Wf5WvNMY
-         8We2gHg0lPzA57IQeROdhfVrljICwHXKJLXuDkwAbEZ/UjJvhIoca8tF2Omr3Gxc61Y7
-         PHxA==
-X-Gm-Message-State: ALoCoQkbbUdj7v/kXyDFLZlTer8L7Z2alWWIKjxIQj6pyyM0FkRhM1dcBTBba8WNjd0VtXMpnafJ
-X-Received: by 10.55.41.32 with SMTP id p32mr3803615qkh.18.1446670886033;
-        Wed, 04 Nov 2015 13:01:26 -0800 (PST)
-Received: from ubuntu ([192.133.79.145])
-        by smtp.gmail.com with ESMTPSA id i71sm782481qhc.44.2015.11.04.13.01.24
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Nov 2015 13:01:25 -0800 (PST)
-In-Reply-To: <3060e6410e8798064ef84cd31645021d1b84fbb9.1446534991.git.mhagger@alum.mit.edu>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+	id S1030567AbbKDVB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 16:01:57 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63458 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1030298AbbKDVB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 16:01:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 665C9267F8;
+	Wed,  4 Nov 2015 16:01:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Qiz1/JNJJ3UxJ8gJbsIDApSe4/Q=; b=gnvn+Q
+	kejvHk2KBuKkgu5NNVsm/wLaLcV1ahHvqtC55r18KXE9815VNuB4qFZHZKOrEouS
+	/5Z8ufur1gk8z0WwhudrGIQiWtlyGsLmmuOL3toPS8JB+b3/FJ9KsanBzaAx3u86
+	NFbeFmM4VwFYgoAKXNHCbxEWH63StcLcJL4kU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BpSi7OJfibYyF+qg/zbkDEkVZK2ufbow
+	SfPZW9d//NGuZc25xMmbqR/nuOLOOWw14rL2H1HLP4uL0E/6q0hjsSE/nMq/UVBO
+	LuAYy4sXMUSdtp7WoMouSDROKDmFcjLb98nJvM7eXA7af+YMbt6riVDi9L8MQ1av
+	c8FTnYe/yok=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5AEA0267F7;
+	Wed,  4 Nov 2015 16:01:55 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CC2F6267F2;
+	Wed,  4 Nov 2015 16:01:54 -0500 (EST)
+In-Reply-To: <563A6C3D.2050805@kdbg.org> (Johannes Sixt's message of "Wed, 4
+	Nov 2015 21:36:13 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 47690F44-8337-11E5-9209-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280884>
 
-On Tue, 2015-11-03 at 08:40 +0100, Michael Haggerty wrote:
-> + * extras and skip must be sorted lists of reference names. Either one
-> + * can be NULL, signifying the empty list.
-> + */
+Johannes Sixt <j6t@kdbg.org> writes:
 
-My version had:
+> I think that a scenario where A and B are communicating is rather
+> far-fetched. We are talking about parallelizing independent tasks. I
+> would not worry.
 
-"skip can be NULL; extras cannot."
+I wouldn't worry too much if this were merely a hack that is only
+applicable to submodules, but I do not think it is a healthy
+attitude to dismiss potential problem as far-fetched without
+thinking things through, when you are designing what goes into
+the run-command API.
 
-The first thing that function does is:
-string_list_find_insert_index(extras, dirname, 0)
+I'd grant you that a complete deadlock is unlikely to be a problem
+on its own.  Somewhere somebody will eventually time out and unblock
+the deadlock anyway.
 
-And that crashes when extras is null.  So I think my version is correct
-here.
+But the symptom does not have to be as severe as a total deadlock to
+be problematic.  If we block B (and other tasks) by not reading from
+them quickly because we are blocked on reading from A, which may
+take forever (in timescale of B and other tasks) to feed us enough
+to satisfy strbuf_read_once(), we are wasting resource by spawning B
+(and other tasks) early when we are not prepared to service them
+well, on both our end and on the other side of the connection.
 
-Other than that, I've reviewed both the patches themselves and the
-overall diff and everything looks good to me.
+By the way, A and B do not have to be directly communicating to
+deadlock.  The underlying system, either the remote end or the local
+end or even a relaying system in between (think: network) can
+throttle to cause the same symptom without A and B knowing (which
+was the example I gave).
