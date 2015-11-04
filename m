@@ -1,16 +1,18 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 02/11] run-command: report failure for degraded output just once
-Date: Wed, 04 Nov 2015 13:19:38 -0800
-Message-ID: <xmqqziyt8nth.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv3 02/11] run-command: report failure for degraded output
+ just once
+Date: Wed, 4 Nov 2015 13:41:04 -0800
+Message-ID: <CAGZ79kYYvgLyDhNO5j=t-RPmKV_KHHMoN3xOV4Ygt2MwQe2HRQ@mail.gmail.com>
 References: <1446597434-1740-1-git-send-email-sbeller@google.com>
 	<1446597434-1740-3-git-send-email-sbeller@google.com>
 	<xmqqd1vpbpik.fsf@gitster.mtv.corp.google.com>
 	<CAGZ79kaiRKHd2RS9eNeZt_VZqqBF0HS0D=x1HbOTPXYOphu8pg@mail.gmail.com>
 	<xmqq8u6da448.fsf@gitster.mtv.corp.google.com>
 	<CAGZ79kbwJrQ9SrGkJsSx9oUcP98dn9wP=ZvgQLRjmPaZtOzanA@mail.gmail.com>
+	<xmqqziyt8nth.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Jacob Keller <jacob.keller@gmail.com>,
 	Jeff King <peff@peff.net>,
@@ -19,100 +21,128 @@ Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
 	Eric Sunshine <ericsunshine@gmail.com>,
 	Johannes Sixt <j6t@kdbg.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 22:19:49 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 04 22:41:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zu5T8-0004ft-C8
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 22:19:46 +0100
+	id 1Zu5ns-0005aW-Rj
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 22:41:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030907AbbKDVTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 16:19:42 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59080 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932428AbbKDVTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 16:19:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6EDA526F7A;
-	Wed,  4 Nov 2015 16:19:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3U3BP5SwFkyxUqczk2vTc59zWpA=; b=beJYya
-	ffqAXejS/HpolDkWLthu+EiJr5k74a9x5B/mODe/uP7ZLm7pKUHxSBxQNaYAP6zd
-	C0QXZw/6dPD7gQUMS2kXHmkoRo4b+ExYVuiXd3dz50rYPoFFEByM2krxKzAFKMz3
-	ZhPgcBDRvbTkEKbuocantweKCxl7VHUdd5lWs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XUt9nRhvFZov7daTbUiEl4+ngCQdhO5/
-	GinAgfN8+LCeLIHhOtq0Gdo1aPQPuc4USgNqp3zPe8I/fQ81d6JePnTqyo4e0XvU
-	jJbTaoqu1CLCTYOykvv3ZaJUagPNBJFtbi3ugZmUiHn3UpacdbI/i87ySLG+aINx
-	yVlRmDasCkg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 636D326F79;
-	Wed,  4 Nov 2015 16:19:40 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D16C726F76;
-	Wed,  4 Nov 2015 16:19:39 -0500 (EST)
-In-Reply-To: <CAGZ79kbwJrQ9SrGkJsSx9oUcP98dn9wP=ZvgQLRjmPaZtOzanA@mail.gmail.com>
-	(Stefan Beller's message of "Wed, 4 Nov 2015 13:04:31 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C236AA72-8339-11E5-AEE9-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S965414AbbKDVlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 16:41:07 -0500
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:34849 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965372AbbKDVlG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 16:41:06 -0500
+Received: by ykek133 with SMTP id k133so97697701yke.2
+        for <git@vger.kernel.org>; Wed, 04 Nov 2015 13:41:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=XlrjTQ2YEHHGY5GTwCYheFakBle5aHYzl+5rpTgMhsY=;
+        b=nGEcrG3dZ7WUJkpoF6KgqucPgCcNUqlDmLl5NjVNwdW/addAW8Enho6tDyd4fIIrRI
+         rqthnyeSv86NKST37PeHHQcrHDYVHrJCxxrA2yqjLxCp692Z0pDkFUb0hPSuuGp3RRJW
+         4wCP8Mp9HwCegbvCG7jOQUVyyehCgH5vx4hsKi324F3Ws0mYgWunb+ku61rd/xt0lJgW
+         uYsNDfXUtAgVj9iglM8MGVss854Po87lOGxf7j1sK47bnkKsuuX4qvvZWxf4Vk32wNlG
+         fXqJE/+1x7iGJvbJO0lHbAY6ZEOokKASuzEEINpP2RjByF1b35A+QVx8Dk6cvp71wTjU
+         TqzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=XlrjTQ2YEHHGY5GTwCYheFakBle5aHYzl+5rpTgMhsY=;
+        b=lz9MSHLOh2X3VUP2maRVhUXHkIaJ+eAqDsY7oY+WSznUGbMxtUU2OxTaQXO32yFu7v
+         JbvhFJu88PAPu2UnOd/vaW/g4mAxzSbr55G8jimCchMG9KCRCpF2gDGb4j57LdZJmTDY
+         dhrZA3ZvIY0y48d8dIbEL5DD+qDgh7nyPaO53W2TLCDRWGaOh/cbb7wdpdxSjvPPDzBw
+         7N8GWROog3x7BKDkAjM4DM1KjXYvio8HChiBP0jqxKLlWjIf3y/QNQbObKv9/2a8G/fI
+         QkqN9TIL/Fc+DjHWDjMAlpH+fNqc5/wMR9s6kvc3Uvuf0ZEjxdfuobXxWu+BuaQybgVV
+         esKA==
+X-Gm-Message-State: ALoCoQnxR0Yd5eG7o7ODpxFun6oCpcFjmojjttnjTGEmvOFXD2xN55FA3Cvv3nCXkgr98s+wNRPf
+X-Received: by 10.13.251.2 with SMTP id l2mr3342196ywf.44.1446673264472; Wed,
+ 04 Nov 2015 13:41:04 -0800 (PST)
+Received: by 10.37.29.213 with HTTP; Wed, 4 Nov 2015 13:41:04 -0800 (PST)
+In-Reply-To: <xmqqziyt8nth.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280888>
 
-Stefan Beller <sbeller@google.com> writes:
-
-> So more like:
+On Wed, Nov 4, 2015 at 1:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->     if (platform_capable_non_blocking_IO())
->         set_nonblocking_or_die(&pp->children[i].process.err);
->     else
->         pp->children[i].process.err = 2; /* ugly intermixed output is possible*/
-
-When I mentioned #if..#endif, I didn't mean it as a dogmatic
-"conditional compilation is wrong" sense.  It was more about "the
-high-level flow of logic should not have to know too much about
-platform peculiarities".  As platform_capable_non_blocking_IO()
-function would be a constant function after you compile it for a
-single platform, if you add 10 instances of such if/else in a patch
-that adds 250 lines, unless the change is to add a set of lowest
-level helpers to be called from the higher-level flow of logic so
-that the callers do not have to know about the platform details,
-that's just as bad as adding 10 instances of #if..#endif.
-
->> On the other hand, on a platform that is known to be incapable
->> (e.g. lacks SETFL or NONBLOCK), we have two options.
+>> So more like:
 >>
->> 1. If we can arrange to omit the intermediary buffer processing
->>    without butchering the flow of the main logic with many
->>    #ifdef..#endif, then that would make a lot of sense to do so, and
->>    running the processes in parallel with mixed output might be OK.
->>    It may not be very nice, but should be an acceptable compromise.
+>>     if (platform_capable_non_blocking_IO())
+>>         set_nonblocking_or_die(&pp->children[i].process.err);
+>>     else
+>>         pp->children[i].process.err = 2; /* ugly intermixed output is possible*/
 >
-> From what I hear this kind of output is very annoying. (One of the
-> main complaints of repo users beside missing atomic fetch transactions)
+> When I mentioned #if..#endif, I didn't mean it as a dogmatic
+> "conditional compilation is wrong" sense.  It was more about "the
+> high-level flow of logic should not have to know too much about
+> platform peculiarities".  As platform_capable_non_blocking_IO()
+> function would be a constant function after you compile it for a
+> single platform, if you add 10 instances of such if/else in a patch
+> that adds 250 lines, unless the change is to add a set of lowest
+> level helpers to be called from the higher-level flow of logic so
+> that the callers do not have to know about the platform details,
+> that's just as bad as adding 10 instances of #if..#endif.
 
-When (1) "parallelism with sequential output" is the desired
-outcome, (2) on some platforms we haven't found a way to achieve
-both, and (3) a non-sequential output is unacceptable, then
-parallelism has to give :-(.
+Right. Yeah I was just outlining the program flow as I understood it.
 
-I was getting an impression from your "not buffer" suggestion that
-"sequential output" would be the one that can be sacrificed, but
-that is OK.  Until we find a way to achieve both at the same time,
-achieving only either one or the other is better than achieving
-nothing.
+Specially:
+ * It's fine if the platform doesn't support non blocking IO
+ * but if the platform claims to support it and fails to, this is a hard error.
+    How is this worse than the platform claiming to not support it at all?
 
->> Either way, bringing "parallelism with sequential output" to
->> platforms without nonblock IO can be left for a later day, when we
->> find either (1) a good approach that does not require nonblock IO to
->> do this, or (2) a good approach to do a nonblock IO on these
->> platforms (we know about Windows, but there may be others; I dunno).
+I mean another solution there would be to try to set the non blocking IO
+and if that fails we put that process-to-be-started into a special queue,
+which will start the process once the stderr channel is not occupied any more
+(i.e. the process which is the current output owner has ended or there is
+no such process)
+
+That way we would fall back to no parallelism in Windows and could
+even gracefully fallback in other systems, which suddenly have problems
+setting non blocking IO. (Though I suspect that isn't required here).
+
+>
+>>> On the other hand, on a platform that is known to be incapable
+>>> (e.g. lacks SETFL or NONBLOCK), we have two options.
+>>>
+>>> 1. If we can arrange to omit the intermediary buffer processing
+>>>    without butchering the flow of the main logic with many
+>>>    #ifdef..#endif, then that would make a lot of sense to do so, and
+>>>    running the processes in parallel with mixed output might be OK.
+>>>    It may not be very nice, but should be an acceptable compromise.
+>>
+>> From what I hear this kind of output is very annoying. (One of the
+>> main complaints of repo users beside missing atomic fetch transactions)
+>
+> When (1) "parallelism with sequential output" is the desired
+> outcome, (2) on some platforms we haven't found a way to achieve
+> both, and (3) a non-sequential output is unacceptable, then
+> parallelism has to give :-(.
+
+Ok, then I will go that route.
+
+>
+> I was getting an impression from your "not buffer" suggestion that
+> "sequential output" would be the one that can be sacrificed, but
+> that is OK.  Until we find a way to achieve both at the same time,
+> achieving only either one or the other is better than achieving
+> nothing.
+
+I was not sure what is better to sacrifice. Scarifying parallelism sounds
+safer to me (no apparent change compared to before).
+
+>
+>>> Either way, bringing "parallelism with sequential output" to
+>>> platforms without nonblock IO can be left for a later day, when we
+>>> find either (1) a good approach that does not require nonblock IO to
+>>> do this, or (2) a good approach to do a nonblock IO on these
+>>> platforms (we know about Windows, but there may be others; I dunno).
