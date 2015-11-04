@@ -1,112 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Limit the size of the data block passed to SHA1_Update()
-Date: Wed, 04 Nov 2015 09:09:03 -0800
-Message-ID: <xmqqsi4lbsk0.fsf@gitster.mtv.corp.google.com>
-References: <CAPig+cRRjCDhdT-DvGtZqns1mMxygnxi=ZnRKzg+H_do7oRpqQ@mail.gmail.com>
-	<1446359536-25829-1-git-send-email-apahlevan@ieee.org>
-	<xmqqh9l5h8g3.fsf@gitster.mtv.corp.google.com>
-	<CA+izobvbDYLvShT8TdDhe9UiYHVWw+Le+Yy4yOnvCYOWE0bhQQ@mail.gmail.com>
-	<xmqqpozsdrnl.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: drop connectivity check for local clones
+Date: Wed, 4 Nov 2015 12:34:58 -0500
+Message-ID: <20151104173458.GA11917@sigill.intra.peff.net>
+References: <CAJR51WY-HSoTHpBm1jek2+fZyHQL3-n2J6aS-MBCDO5WtYTKRg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Randall Becker <rsbecker@nexbridge.com>,
-	Atousa Pahlevan Duprat <apahlevan@ieee.org>
-To: Atousa Duprat <atousa.p@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 04 18:09:18 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Matej Buday <m.buday@o0.sk>
+X-From: git-owner@vger.kernel.org Wed Nov 04 18:35:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zu1Yj-0000M3-Uc
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 18:09:18 +0100
+	id 1Zu1xl-0004Lm-C9
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 18:35:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756079AbbKDRJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 12:09:13 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59408 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756074AbbKDRJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 12:09:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 51D0E2764F;
-	Wed,  4 Nov 2015 12:09:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OBM9c2s2aN/WhDjNLCX1ZIIXjXo=; b=xXqs0N
-	vsewB9ncOWHKB16oVihrucd+/ddjMrh8cfRxXip/K1mLwtSiSVYwkQYjCyAYd5kS
-	SXLWOifNBw3EcBrMi9ez0YwzeyLEfcwUXtNr7SPAdSmWSPH7XdMWQilS3JrsY95t
-	nQJKcLqzVeCHRIpum4pOvRc3hxNS1BjV4mlZs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qjwXBg4OnlSJHwTAIs59cw89rGA5PKCb
-	7PMRQ6fZwosG1HpluBvwpdTAlkilVdJDkO9LtrHx4RiUSyIilg8Bf7+dSP50zcJb
-	j4AqNfY34QJjVpChIxoVROYCc0NX9xQZGAv6KHK2/rCQUvFJ09xHA03bJ2tikhLl
-	yWcQfuiQQAw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 489302764C;
-	Wed,  4 Nov 2015 12:09:05 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BEAE127649;
-	Wed,  4 Nov 2015 12:09:04 -0500 (EST)
-In-Reply-To: <xmqqpozsdrnl.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 02 Nov 2015 13:21:02 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C09BA3C0-8316-11E5-962A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755956AbbKDRfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 12:35:03 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52746 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755171AbbKDRfB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 12:35:01 -0500
+Received: (qmail 5710 invoked by uid 102); 4 Nov 2015 17:35:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Nov 2015 11:35:01 -0600
+Received: (qmail 4155 invoked by uid 107); 4 Nov 2015 17:35:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 04 Nov 2015 12:35:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Nov 2015 12:34:58 -0500
+Content-Disposition: inline
+In-Reply-To: <CAJR51WY-HSoTHpBm1jek2+fZyHQL3-n2J6aS-MBCDO5WtYTKRg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280860>
 
-Junio C Hamano <gitster@pobox.com> writes:
+[I'm cc-ing the list, since I think this answer is of general interest.]
 
->> ifdef BLK_SHA1
->>         SHA1_HEADER = "block-sha1/sha1.h"
->>         LIB_OBJS += block-sha1/sha1.o
->> else
->> ifdef PPC_SHA1
->>         SHA1_HEADER = "ppc/sha1.h"
->>         LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
->> else
->> ifdef APPLE_COMMON_CRYPTO
->>         COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
->>         SHA1_HEADER = <CommonCrypto/CommonDigest.h>
->>         SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
->> else
->>         SHA1_HEADER = <openssl/sha.h>
->>         EXTLIBS += $(LIB_4_CRYPTO)
->> endif
->>
->> which seems to imply that BLK_SHA1 and APPLE_COMMON_CRYPTO are
->> mutually exclusive?
->
-> Yes, you are correct that these two cannot be used at the same time.
-> In general (not limited to BLK_SHA1 and APPLE_COMMON_CRYPTO) you can
-> pick only _one_ underlying SHA-1 implementation to use with the
-> system.
+On Wed, Nov 04, 2015 at 11:00:34AM +0100, Matej Buday wrote:
 
-Our "seems to imply" above is a faulty reading.  The four lines I
-wrote are not incorrect per-se, but this exchange was misleading.
+> I have a question somewhat regarding this old commit of yours:
+> https://github.com/git/git/commit/125a05fd0b45416558923b753f6418c24208d443
+> 
+> Let me preface this by saying that I don't completely understand what the
+> connectivity check does...
 
-When BLK_SHA1 is defined, the above fragment from the Makefile is
-only saying "CommonCrypto may or may not be used for any other
-purposes, but for SHA-1 hashing, I'll use our own block-sha1/
-implementation."  It does not say anything about how the system
-favours CommonCrypto over OpenSSL with APPLE_COMMON_CRYPTO.
+One of the invariants git tries to remain in the repository is that for
+any object reachable from a ref (i.e., a branch or tag), we have all of
+the ancestor objects. So if you have commit 125a05, you also have the
+parent, and its parent, and so on, down to the root.
 
-And it is legit to define both APPLE_COMMON_CRYPTO and BLK_SHA1; the
-resulting build would still use SSL-related functions what other
-people may use from OpenSSL from CommonCrypto.  Filipe Cabecinhas
-pointed out that such a configuration works (and solves the issue
-that triggered this thread) very early in the thread.
+When we fetch or clone from a remote repository, it sends us some
+objects, and we plan to point one of our refs at it. But rather than
+trust that the remote sent us everything we need to maintain that
+invariant, we actually walk the graph to make sure that is the case.
 
-I haven't looked carefully at the latest version of your patch, but
-I just wanted to make sure that I didn't mislead you to add an
-unnecessary "we check if both APPLE_COMMON_CRYPTO and BLK_SHA1 are
-defined and error out because they are incompatible" check.  Sorry
-for an earlier message that may have been confusing.
+This can catch bugs or transfer errors early. So the operation is safer,
+at the expense of spending some CPU time.
 
-Thanks.
+We skip it for local disk-to-disk clones. We trust the source clone
+more, and since the point of a local clone is to be very fast, the
+safety/CPU tradeoff doesn't make as much sense.
+
+> Well, the question is -- is this check necessary
+> for local clones that use the --reference option?
+
+Sort of. If you say:
+
+  git clone --reference /some/local/repo git://some-remote-repo
+
+Then we do check the incoming objects from some-remote-repo. However,
+there is an optimization we don't do: we could assume that everything in
+/some/local/repo is fine, and stop traversing there. So if you fetch
+only a few objects from the remote, that is all you would check.
+
+The optimization would look something like this:
+
+  https://github.com/peff/git/commit/1254ff54b49eff19ec8a09c36e3edd24d490cae1
+
+I wrote that last year, but haven't actually submitted the patch yet.
+There are two reasons:
+
+  1. It needs minor cleanup due to the sha1/oid transition that is
+     ongoing (see the "ugh" comment). I think this could be fixed by
+     refactoring some of the callback interfaces, but I haven't gotten
+     around to it.
+
+  2. Using alternates to optimize can backfire at a certain scale. If
+     you have a very large number of refs in the alternate repository,
+     just accessing and processing those refs can be more expensive than
+     walking the history graph in the first place.
+
+     This is the case for us at GitHub, where our alternates have the
+     refs for _all_ of the forks of a given project. So I would want
+     some flag to turn this behavior off.
+
+     Of course, we are in an exceptional circumstance at GitHub, and
+     that is no reason the topic cannot go upstream (we already carry
+     custom patches to disable alternates for things like receive-pack,
+     and could do the same here).
+
+     So that is not a good reason not to submit, only an explanation why
+     I have not yet bothered to spend the time on it. :)
+
+-Peff
