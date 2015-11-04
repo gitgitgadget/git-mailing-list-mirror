@@ -1,7 +1,7 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCHv3 06/11] submodule-config: remove name_and_item_from_var
-Date: Tue,  3 Nov 2015 16:37:09 -0800
-Message-ID: <1446597434-1740-7-git-send-email-sbeller@google.com>
+Subject: [PATCHv3 08/11] fetching submodules: respect `submodule.jobs` config option
+Date: Tue,  3 Nov 2015 16:37:11 -0800
+Message-ID: <1446597434-1740-9-git-send-email-sbeller@google.com>
 References: <1446597434-1740-1-git-send-email-sbeller@google.com>
 Cc: ramsay@ramsayjones.plus.com, jacob.keller@gmail.com, peff@peff.net,
 	gitster@pobox.com, jrnieder@gmail.com,
@@ -9,187 +9,195 @@ Cc: ramsay@ramsayjones.plus.com, jacob.keller@gmail.com, peff@peff.net,
 	ericsunshine@gmail.com, j6t@kdbg.org,
 	Stefan Beller <sbeller@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 04 01:37:42 2015
+X-From: git-owner@vger.kernel.org Wed Nov 04 01:37:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ztm55-0002qW-Uv
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 01:37:40 +0100
+	id 1Ztm4z-0002iH-Dw
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Nov 2015 01:37:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965032AbbKDAha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Nov 2015 19:37:30 -0500
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:36259 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756047AbbKDAhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Nov 2015 19:37:25 -0500
-Received: by pacdm15 with SMTP id dm15so9425217pac.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2015 16:37:25 -0800 (PST)
+	id S965058AbbKDAhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Nov 2015 19:37:31 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36304 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756127AbbKDAh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Nov 2015 19:37:29 -0500
+Received: by pacdm15 with SMTP id dm15so9426428pac.3
+        for <git@vger.kernel.org>; Tue, 03 Nov 2015 16:37:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9O78fjqUGyU9ICcjXY0c7u5bHFNu1+Zppdd6QvDR6yo=;
-        b=XBOY/z+aV9ujAx6DGadV9V7nRdSVtqqv/wV7bSSTDQH+eAh4Y3xUosopBQUz0eIE/J
-         a+FcxcX5D17qtpCZtgJ8M7wCvfRT1vCz7XV0DUFwzcyAfkdIKdUteLk9m4vNJXDVHPT7
-         KI1N0vlJzgI3wTC1UISCn4id82Q9ibCI1Hsn1qojFSv5WrkcaRlsiMWqob2OEZr6s5tC
-         BJSr8WCEGNDgPIngTp6e+shKmn4fmWgT9gNeyhxHAGSk1TdEltW8QZw8r1tA2vqOIdmU
-         RpSTyGBygOi9RgvEc+uA+D4Di94xHj66mh7sm938UHT1jsuJ84gFplz35o6nLxRO5KcW
-         VhVw==
+        bh=0/KxUya1iTa/L8h8/Bkgq6delUpX98wn9U5rcHPrl/o=;
+        b=PhmcRqVA7+vlFUAfApu376VGnLWqHwyl9SJl5LjqROPpaVvbDGxV3MuTa6dpl1CEij
+         fOqAaCdzlifHhcOMkAORD9HJQ7Y5eiZo9ONkT+6PdGtNilil0tPczPsJdMww4LsD+mqR
+         w2OTLZZ4nZ8WGYFNkTot5adMwimz9HVfVPyHoJegB9DC0xw6xrSXNDym+3c2dcBsEzch
+         WYy957SdprTCb3vKXehX7kZDoteHakYODwz1qHxCtRD9GMkwQBPe/3egCVLZc5mBEubo
+         WPpFJwgN/fOrTtw1gPj3OURJxq4eevzSLfQizxsVuC6IgPqnjyPBRBmytHporFKzP6pj
+         Wkhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=9O78fjqUGyU9ICcjXY0c7u5bHFNu1+Zppdd6QvDR6yo=;
-        b=m1bRmoOf24r3YBBDHF9kwwitkGcApO3av+llcXCyMcZODWqHkSPEMh9s9daC20p1i4
-         H5bQnQ8t7IqMSHVqEah7FM8QQBNb+78yxUw0H/JfPrAEBVa0nq8CiQa//eqyiFQibHeD
-         rakTZgcXh3UWDZZdsSWFWc9coy9IhMr98Uzc6+PTsAEEAHVsFKrnEOna3DNBZS6bN5c4
-         tp9AuahpG7wSd8o6bf7Q4IVJANjmNVP5PD11tVHrEj2XSK+Yzxf12QyjkvE9m9oOcuWE
-         iN6QmIeNnWcEoCGy8Dq/scEYB0CoJkJkCX1MUFTZasT/HWpGiIFQv5sNjEbu7hhcm2N2
-         epFA==
-X-Gm-Message-State: ALoCoQlNhhPTiQ6sHf+xAGceku5VW97G8TfohOb+DUEkj4RH0cCZvuZOAOA1beWikbYdDwdK9w28
-X-Received: by 10.66.248.137 with SMTP id ym9mr37678454pac.157.1446597445393;
-        Tue, 03 Nov 2015 16:37:25 -0800 (PST)
+        bh=0/KxUya1iTa/L8h8/Bkgq6delUpX98wn9U5rcHPrl/o=;
+        b=Xj1MbwMIzNz8IIltCSLtdpafn7S/PGznpBchUNrQviKIePFELZLe5o8px1Ri3mypjZ
+         iDSRURKs1PSNSFkcR1ojdbDdPpdg/w5ncWlAYuorT2oNqD/9PFJTdVnZuX8EC44L8cBA
+         onPf8RMv66gWgxEek7kDm5wLaMizQLbp/heQbIh/UvqsupOvzHI/xIk9G7RC68qJw0/O
+         iPVCkvlZl9tAJwwLF5gTToU05jf7kG2tv5gUKObrp/gKb5UOy6JEBYBkVrJ7Ffo4XeoS
+         t9wsJHXU3jJP5Zo0zcshO1b4Hhm1tvI1dpevMNdappBminWdQh49Pn4Sqjy/Ee13f5Yv
+         RhqQ==
+X-Gm-Message-State: ALoCoQmy4wj4DK+t+N+O1yHLYutIqir3uo3ifrF6Q+39LwgX5d9Cz4A3w6RwGR1qV72dnQko5XRy
+X-Received: by 10.68.190.5 with SMTP id gm5mr36658279pbc.81.1446597447968;
+        Tue, 03 Nov 2015 16:37:27 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:799e:c67e:2702:f55])
-        by smtp.gmail.com with ESMTPSA id uy1sm26762624pac.39.2015.11.03.16.37.24
+        by smtp.gmail.com with ESMTPSA id mk5sm31787579pab.44.2015.11.03.16.37.27
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 03 Nov 2015 16:37:24 -0800 (PST)
+        Tue, 03 Nov 2015 16:37:27 -0800 (PST)
 X-Mailer: git-send-email 2.6.1.247.ge8f2a41.dirty
 In-Reply-To: <1446597434-1740-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280835>
 
-`name_and_item_from_var` does not provide the proper abstraction
-we need here in a later patch.
+This allows to configure fetching and updating in parallel
+without having the command line option.
+
+This moved the responsibility to determine how many parallel processes
+to start from builtin/fetch to submodule.c as we need a way to communicate
+"The user did not specify the number of parallel processes in the command
+line options" in the builtin fetch. The submodule code takes care of
+the precedence (CLI > config > default)
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule-config.c | 48 ++++++++++++++++--------------------------------
- 1 file changed, 16 insertions(+), 32 deletions(-)
+ Documentation/config.txt    |  7 +++++++
+ builtin/fetch.c             |  2 +-
+ submodule-config.c          | 15 +++++++++++++++
+ submodule-config.h          |  2 ++
+ submodule.c                 |  5 +++++
+ t/t5526-fetch-submodules.sh | 14 ++++++++++++++
+ 6 files changed, 44 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 391a0c3..70e1b88 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2643,6 +2643,13 @@ submodule.<name>.ignore::
+ 	"--ignore-submodules" option. The 'git submodule' commands are not
+ 	affected by this setting.
+ 
++submodule.jobs::
++	This is used to determine how many submodules can be operated on in
++	parallel. Specifying a positive integer allows up to that number
++	of submodules being fetched in parallel. This is used in fetch
++	and clone operations only. A value of 0 will give some reasonable
++	configuration. It defaults to 1.
++
+ tag.sort::
+ 	This variable controls the sort ordering of tags when displayed by
+ 	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 9cc1c9d..60e6797 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -37,7 +37,7 @@ static int prune = -1; /* unspecified */
+ static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
+ static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ static int tags = TAGS_DEFAULT, unshallow, update_shallow;
+-static int max_children = 1;
++static int max_children = -1;
+ static const char *depth;
+ static const char *upload_pack;
+ static struct strbuf default_rla = STRBUF_INIT;
 diff --git a/submodule-config.c b/submodule-config.c
-index 6d01941..b826841 100644
+index 29e21b2..475551a 100644
 --- a/submodule-config.c
 +++ b/submodule-config.c
-@@ -161,31 +161,17 @@ static struct submodule *cache_lookup_name(struct submodule_cache *cache,
- 	return NULL;
- }
+@@ -32,6 +32,7 @@ enum lookup_type {
  
--static int name_and_item_from_var(const char *var, struct strbuf *name,
--				  struct strbuf *item)
--{
--	const char *subsection, *key;
--	int subsection_len, parse;
--	parse = parse_config_key(var, "submodule", &subsection,
--			&subsection_len, &key);
--	if (parse < 0 || !subsection)
--		return 0;
--
--	strbuf_add(name, subsection, subsection_len);
--	strbuf_addstr(item, key);
--
--	return 1;
--}
--
- static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
--		const unsigned char *gitmodules_sha1, const char *name)
-+						  const unsigned char *gitmodules_sha1,
-+						  const char *name_ptr, int name_len)
+ static struct submodule_cache cache;
+ static int is_cache_init;
++static int parallel_jobs = -1;
+ 
+ static int config_path_cmp(const struct submodule_entry *a,
+ 			   const struct submodule_entry *b,
+@@ -239,6 +240,15 @@ static int parse_generic_submodule_config(const char *key,
+ 					  const char *value,
+ 					  struct parse_config_parameter *me)
  {
- 	struct submodule *submodule;
- 	struct strbuf name_buf = STRBUF_INIT;
-+	char *name = xmemdupz(name_ptr, name_len);
- 
- 	submodule = cache_lookup_name(cache, gitmodules_sha1, name);
- 	if (submodule)
--		return submodule;
-+		goto out;
- 
- 	submodule = xmalloc(sizeof(*submodule));
- 
-@@ -201,7 +187,8 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 	hashcpy(submodule->gitmodules_sha1, gitmodules_sha1);
- 
- 	cache_add(cache, submodule);
--
-+out:
-+	free(name);
- 	return submodule;
++	if (!strcmp(key, "jobs")) {
++		parallel_jobs = strtol(value, NULL, 10);
++		if (parallel_jobs < 0) {
++			warning("submodule.jobs not allowed to be negative.");
++			parallel_jobs = 1;
++			return 1;
++		}
++	}
++
+ 	return 0;
  }
  
-@@ -251,18 +238,18 @@ static int parse_config(const char *var, const char *value, void *data)
- {
- 	struct parse_config_parameter *me = data;
- 	struct submodule *submodule;
--	struct strbuf name = STRBUF_INIT, item = STRBUF_INIT;
--	int ret = 0;
-+	int subsection_len, ret = 0;
-+	const char *subsection, *key;
- 
--	/* this also ensures that we only parse submodule entries */
--	if (!name_and_item_from_var(var, &name, &item))
-+	if (parse_config_key(var, "submodule", &subsection,
-+			     &subsection_len, &key) < 0 || !subsection_len)
- 		return 0;
- 
- 	submodule = lookup_or_create_by_name(me->cache,
- 					     me->gitmodules_sha1,
--					     name.buf);
-+					     subsection, subsection_len);
- 
--	if (!strcmp(item.buf, "path")) {
-+	if (!strcmp(key, "path")) {
- 		if (!value)
- 			ret = config_error_nonbool(var);
- 		else if (!me->overwrite && submodule->path)
-@@ -275,7 +262,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			submodule->path = xstrdup(value);
- 			cache_put_path(me->cache, submodule);
- 		}
--	} else if (!strcmp(item.buf, "fetchrecursesubmodules")) {
-+	} else if (!strcmp(key, "fetchrecursesubmodules")) {
- 		/* when parsing worktree configurations we can die early */
- 		int die_on_error = is_null_sha1(me->gitmodules_sha1);
- 		if (!me->overwrite &&
-@@ -286,7 +273,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			submodule->fetch_recurse = parse_fetch_recurse(
- 								var, value,
- 								die_on_error);
--	} else if (!strcmp(item.buf, "ignore")) {
-+	} else if (!strcmp(key, "ignore")) {
- 		if (!value)
- 			ret = config_error_nonbool(var);
- 		else if (!me->overwrite && submodule->ignore)
-@@ -302,7 +289,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			free((void *) submodule->ignore);
- 			submodule->ignore = xstrdup(value);
- 		}
--	} else if (!strcmp(item.buf, "url")) {
-+	} else if (!strcmp(key, "url")) {
- 		if (!value) {
- 			ret = config_error_nonbool(var);
- 		} else if (!me->overwrite && submodule->url) {
-@@ -312,7 +299,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			free((void *) submodule->url);
- 			submodule->url = xstrdup(value);
- 		}
--	} else if (!strcmp(item.buf, "update")) {
-+	} else if (!strcmp(key, "update")) {
- 		if (!value)
- 			ret = config_error_nonbool(var);
- 		else if (!me->overwrite && submodule->update)
-@@ -324,9 +311,6 @@ static int parse_config(const char *var, const char *value, void *data)
- 		}
- 	}
- 
--	strbuf_release(&name);
--	strbuf_release(&item);
--
- 	return ret;
+@@ -482,3 +492,8 @@ void submodule_free(void)
+ 	cache_free(&cache);
+ 	is_cache_init = 0;
  }
++
++int config_parallel_submodules(void)
++{
++	return parallel_jobs;
++}
+diff --git a/submodule-config.h b/submodule-config.h
+index f9e2a29..d9bbf9a 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -27,4 +27,6 @@ const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
+ 		const char *path);
+ void submodule_free(void);
  
++int config_parallel_submodules(void);
++
+ #endif /* SUBMODULE_CONFIG_H */
+diff --git a/submodule.c b/submodule.c
+index 0257ea3..188ba02 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -752,6 +752,11 @@ int fetch_populated_submodules(const struct argv_array *options,
+ 	argv_array_push(&spf.args, "--recurse-submodules-default");
+ 	/* default value, "--submodule-prefix" and its value are added later */
+ 
++	if (max_parallel_jobs < 0)
++		max_parallel_jobs = config_parallel_submodules();
++	if (max_parallel_jobs < 0)
++		max_parallel_jobs = 1;
++
+ 	calculate_changed_submodule_paths();
+ 	run_processes_parallel(max_parallel_jobs,
+ 			       get_next_submodule,
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 1b4ce69..5c3579c 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -470,4 +470,18 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
+ 	test_i18ncmp expect.err actual.err
+ '
+ 
++test_expect_success 'fetching submodules respects parallel settings' '
++	git config fetch.recurseSubmodules true &&
++	(
++		cd downstream &&
++		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 7 &&
++		grep "7 children" trace.out &&
++		git config submodule.jobs 8 &&
++		GIT_TRACE=$(pwd)/trace.out git fetch &&
++		grep "8 children" trace.out &&
++		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 9 &&
++		grep "9 children" trace.out
++	)
++'
++
+ test_done
 -- 
 2.6.1.247.ge8f2a41.dirty
