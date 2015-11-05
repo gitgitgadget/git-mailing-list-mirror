@@ -1,95 +1,236 @@
 From: Lukas Fleischer <lfleischer@lfos.de>
-Subject: [PATCH v3 4/4] t5509: add basic tests for hideRefs
-Date: Thu,  5 Nov 2015 07:07:31 +0100
-Message-ID: <1446703651-9049-5-git-send-email-lfleischer@lfos.de>
+Subject: [PATCH v3 3/4] Add support for matching full refs in hideRefs
+Date: Thu,  5 Nov 2015 07:07:30 +0100
+Message-ID: <1446703651-9049-4-git-send-email-lfleischer@lfos.de>
 References: <1446703651-9049-1-git-send-email-lfleischer@lfos.de>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 05 07:08:14 2015
+X-From: git-owner@vger.kernel.org Thu Nov 05 07:08:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuDiW-000386-Tz
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 07:08:13 +0100
+	id 1ZuDiR-00033G-SR
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 07:08:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030656AbbKEGIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 01:08:06 -0500
+	id S1030498AbbKEGID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 01:08:03 -0500
 Received: from elnino.cryptocrack.de ([46.165.227.75]:43646 "EHLO
 	elnino.cryptocrack.de" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1030300AbbKEGIE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 01:08:04 -0500
-Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id 79f7d1a2;
+	with ESMTP id S1756532AbbKEGIB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 01:08:01 -0500
+Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id bea6b1cf;
 	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	Thu, 5 Nov 2015 07:07:36 +0100 (CET)
+	Thu, 5 Nov 2015 07:07:35 +0100 (CET)
 X-Mailer: git-send-email 2.6.2
 In-Reply-To: <1446703651-9049-1-git-send-email-lfleischer@lfos.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280903>
 
-Test whether regular and full hideRefs patterns work as expected when
-namespaces are used.
+In addition to matching stripped refs, one can now add hideRefs patterns
+that the full (unstripped) ref is matched against. To distinguish
+between stripped and full matches, those new patterns must be prefixed
+with a circumflex (^).
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+This commit also removes support for the undocumented and unintended
+hideRefs settings "have" (suppressing all "have" lines) and
+"capabilities^{}" (suppressing the capabilities line).
+
 Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
 ---
- t/t5509-fetch-push-namespaces.sh | 41 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ Documentation/config.txt |  3 ++-
+ builtin/receive-pack.c   | 27 +++++++++++++++++++++------
+ refs.c                   | 15 ++++++++++++---
+ refs.h                   | 10 +++++++++-
+ upload-pack.c            | 13 ++++++++-----
+ 5 files changed, 52 insertions(+), 16 deletions(-)
 
-diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
-index cc0b31f..bc44ac3 100755
---- a/t/t5509-fetch-push-namespaces.sh
-+++ b/t/t5509-fetch-push-namespaces.sh
-@@ -82,4 +82,45 @@ test_expect_success 'mirroring a repository using a ref namespace' '
- 	)
- '
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 74a81e0..d816338 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2691,7 +2691,8 @@ prefix `refs/heads/master` is specified in `transfer.hideRefs` and the current
+ namespace is `foo`, then `refs/namespaces/foo/refs/heads/master` is omitted
+ from the advertisements but `refs/heads/master` and
+ `refs/namespaces/bar/refs/heads/master` are still advertised as so-called
+-"have" lines.
++"have" lines. In order to match refs before stripping, add a `^` in front of
++the ref name. If you combine `!` and `^`, `!` must be specified first.
  
-+test_expect_success 'hide namespaced refs with transfer.hideRefs' '
-+	GIT_NAMESPACE=namespace \
-+		git -C pushee -c transfer.hideRefs=refs/tags \
-+		ls-remote "ext::git %s ." >actual &&
-+	printf "$commit1\trefs/heads/master\n" >expected &&
-+	test_cmp expected actual
-+'
+ transfer.unpackLimit::
+ 	When `fetch.unpackLimit` or `receive.unpackLimit` are
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index bcb624b..f06f70a 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -195,9 +195,6 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ 
+ static void show_ref(const char *path, const unsigned char *sha1)
+ {
+-	if (ref_is_hidden(path))
+-		return;
+-
+ 	if (sent_capabilities) {
+ 		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
+ 	} else {
+@@ -219,9 +216,14 @@ static void show_ref(const char *path, const unsigned char *sha1)
+ 	}
+ }
+ 
+-static int show_ref_cb(const char *path, const struct object_id *oid, int flag, void *unused)
++static int show_ref_cb(const char *path_full, const struct object_id *oid,
++		       int flag, void *unused)
+ {
+-	path = strip_namespace(path);
++	const char *path = strip_namespace(path_full);
 +
-+test_expect_success 'check that transfer.hideRefs does not match unstripped refs' '
-+	GIT_NAMESPACE=namespace \
-+		git -C pushee -c transfer.hideRefs=refs/namespaces/namespace/refs/tags \
-+		ls-remote "ext::git %s ." >actual &&
-+	printf "$commit1\trefs/heads/master\n" >expected &&
-+	printf "$commit0\trefs/tags/0\n" >>expected &&
-+	printf "$commit1\trefs/tags/1\n" >>expected &&
-+	test_cmp expected actual
-+'
++	if (ref_is_hidden(path, path_full))
++		return 0;
 +
-+test_expect_success 'hide full refs with transfer.hideRefs' '
-+	GIT_NAMESPACE=namespace \
-+		git -C pushee -c transfer.hideRefs="^refs/namespaces/namespace/refs/tags" \
-+		ls-remote "ext::git %s ." >actual &&
-+	printf "$commit1\trefs/heads/master\n" >expected &&
-+	test_cmp expected actual
-+'
+ 	/*
+ 	 * Advertise refs outside our current namespace as ".have"
+ 	 * refs, so that the client can use them to minimize data
+@@ -1195,16 +1197,29 @@ static int iterate_receive_command_list(void *cb_data, unsigned char sha1[20])
+ 
+ static void reject_updates_to_hidden(struct command *commands)
+ {
++	struct strbuf refname_full = STRBUF_INIT;
++	size_t prefix_len;
+ 	struct command *cmd;
+ 
++	strbuf_addstr(&refname_full, get_git_namespace());
++	prefix_len = refname_full.len;
 +
-+test_expect_success 'try to update a hidden ref' '
-+	test_config -C pushee transfer.hideRefs refs/heads/master &&
-+	test_must_fail git -C original push pushee-namespaced master
-+'
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (cmd->error_string || !ref_is_hidden(cmd->ref_name))
++		if (cmd->error_string)
++			continue;
 +
-+test_expect_success 'try to update a ref that is not hidden' '
-+	test_config -C pushee transfer.hideRefs refs/namespaces/namespace/refs/heads/master &&
-+	git -C original push pushee-namespaced master
-+'
++		strbuf_setlen(&refname_full, prefix_len);
++		strbuf_addstr(&refname_full, cmd->ref_name);
 +
-+test_expect_success 'try to update a hidden full ref' '
-+	test_config -C pushee transfer.hideRefs "^refs/namespaces/namespace/refs/heads/master" &&
-+	test_must_fail git -C original push pushee-namespaced master
-+'
++		if (!ref_is_hidden(cmd->ref_name, refname_full.buf))
+ 			continue;
+ 		if (is_null_sha1(cmd->new_sha1))
+ 			cmd->error_string = "deny deleting a hidden ref";
+ 		else
+ 			cmd->error_string = "deny updating a hidden ref";
+ 	}
 +
- test_done
++	strbuf_release(&refname_full);
+ }
+ 
+ static int should_process_cmd(struct command *cmd)
+diff --git a/refs.c b/refs.c
+index 72d96ed..892fffb 100644
+--- a/refs.c
++++ b/refs.c
+@@ -321,7 +321,7 @@ int parse_hide_refs_config(const char *var, const char *value, const char *secti
+ 	return 0;
+ }
+ 
+-int ref_is_hidden(const char *refname)
++int ref_is_hidden(const char *refname, const char *refname_full)
+ {
+ 	int i;
+ 
+@@ -329,6 +329,7 @@ int ref_is_hidden(const char *refname)
+ 		return 0;
+ 	for (i = hide_refs->nr - 1; i >= 0; i--) {
+ 		const char *match = hide_refs->items[i].string;
++		const char *subject;
+ 		int neg = 0;
+ 		int len;
+ 
+@@ -337,10 +338,18 @@ int ref_is_hidden(const char *refname)
+ 			match++;
+ 		}
+ 
+-		if (!starts_with(refname, match))
++		if (*match == '^') {
++			subject = refname_full;
++			match++;
++		} else {
++			subject = refname;
++		}
++
++		/* refname can be NULL when namespaces are used. */
++		if (!subject || !starts_with(subject, match))
+ 			continue;
+ 		len = strlen(match);
+-		if (!refname[len] || refname[len] == '/')
++		if (!subject[len] || subject[len] == '/')
+ 			return !neg;
+ 	}
+ 	return 0;
+diff --git a/refs.h b/refs.h
+index 69fa4df..116c461 100644
+--- a/refs.h
++++ b/refs.h
+@@ -604,7 +604,15 @@ int update_ref(const char *msg, const char *refname,
+ 
+ extern int parse_hide_refs_config(const char *var, const char *value, const char *);
+ 
+-extern int ref_is_hidden(const char *);
++/*
++ * Check whether a ref is hidden. If no namespace is set, both the first and
++ * the second parameter point to the full ref name. If a namespace is set and
++ * the ref is inside that namespace, the first parameter is a pointer to the
++ * name of the ref with the namespace prefix removed. If a namespace is set and
++ * the ref is outside that namespace, the first parameter is NULL. The second
++ * parameter always points to the full ref name.
++ */
++extern int ref_is_hidden(const char *, const char *);
+ 
+ enum ref_type {
+ 	REF_TYPE_PER_WORKTREE,
+diff --git a/upload-pack.c b/upload-pack.c
+index 4ca960e..08efb1d 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -688,11 +688,12 @@ static void receive_needs(void)
+ }
+ 
+ /* return non-zero if the ref is hidden, otherwise 0 */
+-static int mark_our_ref(const char *refname, const struct object_id *oid)
++static int mark_our_ref(const char *refname, const char *refname_full,
++			const struct object_id *oid)
+ {
+ 	struct object *o = lookup_unknown_object(oid->hash);
+ 
+-	if (refname && ref_is_hidden(refname)) {
++	if (ref_is_hidden(refname, refname_full)) {
+ 		o->flags |= HIDDEN_REF;
+ 		return 1;
+ 	}
+@@ -700,10 +701,12 @@ static int mark_our_ref(const char *refname, const struct object_id *oid)
+ 	return 0;
+ }
+ 
+-static int check_ref(const char *refname, const struct object_id *oid,
++static int check_ref(const char *refname_full, const struct object_id *oid,
+ 		     int flag, void *cb_data)
+ {
+-	mark_our_ref(strip_namespace(refname), oid);
++	const char *refname = strip_namespace(refname_full);
++
++	mark_our_ref(refname, refname_full, oid);
+ 	return 0;
+ }
+ 
+@@ -726,7 +729,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 	const char *refname_nons = strip_namespace(refname);
+ 	struct object_id peeled;
+ 
+-	if (mark_our_ref(refname_nons, oid))
++	if (mark_our_ref(refname_nons, refname, oid))
+ 		return 0;
+ 
+ 	if (capabilities) {
 -- 
 2.6.2
