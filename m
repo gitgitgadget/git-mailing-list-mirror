@@ -1,97 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 02/11] run-command: report failure for degraded output just once
-Date: Wed, 04 Nov 2015 18:05:17 -0800
-Message-ID: <xmqqvb9h8ale.fsf@gitster.mtv.corp.google.com>
-References: <1446597434-1740-1-git-send-email-sbeller@google.com>
-	<1446597434-1740-3-git-send-email-sbeller@google.com>
-	<xmqqd1vpbpik.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kaiRKHd2RS9eNeZt_VZqqBF0HS0D=x1HbOTPXYOphu8pg@mail.gmail.com>
-	<563A6C3D.2050805@kdbg.org>
-	<xmqq4mh1a37i.fsf@gitster.mtv.corp.google.com>
-	<20151104225618.GA18805@sigill.intra.peff.net>
+Subject: Re: File owner/group and git
+Date: Wed, 04 Nov 2015 18:38:40 -0800
+Message-ID: <xmqqoaf9891r.fsf@gitster.mtv.corp.google.com>
+References: <1446689037.4131.47.camel@twopensource.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Johannes Sixt <j6t@kdbg.org>, Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Eric Sunshine <ericsunshine@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 05 03:05:26 2015
+Cc: git mailing list <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Nov 05 03:38:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zu9vZ-0002IW-Ue
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 03:05:26 +0100
+	id 1ZuARt-0004cS-6Y
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 03:38:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756436AbbKECFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 21:05:22 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57365 "EHLO
+	id S1031843AbbKECip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 21:38:45 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58248 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756325AbbKECFV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 21:05:21 -0500
+	with ESMTP id S1031791AbbKECin (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 21:38:43 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id ABE002A829;
-	Wed,  4 Nov 2015 21:05:19 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2437429124;
+	Wed,  4 Nov 2015 21:38:42 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FZIqzbSdwz/amL/6tIiCPkn79fQ=; b=Mi1cvx
-	2or1qOxSERQENOZRKDq9vKFYxAnfeL+2k1k8EvK4xax8mhd3btS0C8MusW8DmSjB
-	YXsZwrA6nmtEiZmD2mpfUO5mEaUB7ZuiB8dG46m1rVUAHBBVhWfcOKWaoHnQXBET
-	ibDTGfjHgox/3XF6duAi5TqNI2DL6KgQdUwa0=
+	:content-type; s=sasl; bh=s9Gf7n+PJDkQUFl9hm7nMRqH7PQ=; b=lhgiGA
+	JfspJN/HUwaISItgMvkvQlreR+RMoRXZXwIzh/lvg7IYYs0JjXfrDNH2c9QQo+eR
+	nyq0hcQhWZPOmKKT/Y8bkO1EEa5L4pR7rnj4xYRL2joyje6fdIeTW6wK+hsEeZpv
+	Iymy19w0xgNJjghzXW464H/l7xoGgSX9AAfDY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p0HuTCSXXiO1u31UZ5Rt8CKMYOWB+mJe
-	QcHGC7dSA4LTr0rekI35kJ0Dh1Q/EUNz1ytSOKYL0CDj6c1ss6REHiXq58S7xNvh
-	OLI35nRF6jzLaXgaD7PsckAnCYnuq+mERanSsmgrRENqY4SV6TfRo/Pb7iUqSyAG
-	Vlkf59akqcE=
+	:content-type; q=dns; s=sasl; b=ZKVwkc8f49br0emrBpZjUtZGIr1QrHWl
+	DHQ2WIA5C7nzr5Ml+zuAo6mE44DsFgks6k+4EhkgyFRB6mDLWpAoGDUsi3EDGTcL
+	CEVX9kXS7e/rJ3kkifRPoVflKjpm2SCF3/kWqORXzTeNFEnW/TMi/Ix2tG4zr+XK
+	pPJWbd82faM=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A291A2A828;
-	Wed,  4 Nov 2015 21:05:19 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1C18D29123;
+	Wed,  4 Nov 2015 21:38:42 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 167652A827;
-	Wed,  4 Nov 2015 21:05:19 -0500 (EST)
-In-Reply-To: <20151104225618.GA18805@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 4 Nov 2015 17:56:18 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9995A29122;
+	Wed,  4 Nov 2015 21:38:41 -0500 (EST)
+In-Reply-To: <1446689037.4131.47.camel@twopensource.com> (David Turner's
+	message of "Wed, 04 Nov 2015 21:03:57 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: A9FDF9EC-8361-11E5-8C35-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 538E5282-8366-11E5-B834-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280895>
 
-Jeff King <peff@peff.net> writes:
+David Turner <dturner@twopensource.com> writes:
 
-> So I'm not sure I see why we need to be non-blocking at all here, if we
-> are correctly hitting poll() and doing a single read on anybody who
-> claims to be ready (rather than trying to soak up all of their available
-> data), then we should never block, and we should never starve one
-> process (even without blocking, we could be in a busy loop slurping from
-> A and starve B, but by hitting the descriptors in round-robin for each
-> poll(), we make sure they all progress).
->
-> What am I missing?
+> In unpack-trees.c, in verify_uptodate_1, we check ie_match_stat.  This
+> returns OWNER_CHANGED if a file has changed ownership since the index
+> was updated.  Do we actually care about that particular case?  Or really
+> anything other than DATA_CHANGED?
 
-I've always assumed that the original reason why we wanted to set
-the fd to nonblock was because poll(2) only tells us there is
-something to read (even a single byte), and the xread_nonblock()
-call strbuf_read_once() makes with the default size of 8KB is
-allowed to consume all available bytes and then get stuck waiting
-for the remainder of 8KB before returning.
+That's a 10-year old code and there aren't that many people left
+who can answer the original rationale, I am afraid ;-)
 
-If the read(2) in xread_nonblock() always returns as soon as we
-receive as much as there is data available without waiting for any
-more, ignoring the size of the buffer (rather, taking the size of
-the buffer only as the upper bound), then there is no need for
-nonblock anywhere.
+In general, "Do we actually care?" is not the question we ask in
+this area of the code.  "Does it help us to catch real changes, or
+does it change spuriously to make it too unreliable a signal to be
+useful?" is the question that drives the design of this part of the
+system.
 
-So perhaps the original reasoning of doing nonblock was faulty, you
-are saying?
+DATA_CHANGED is "we know the contents are different without even
+looking at the data".  If the size is different from the last time
+we hashed the data, the contents must have changed.  The inverse is
+not true (and that is half of the "racy git" issue).
+
+Other *_CHANGED are finely classified only because originally we
+didn't really know which are useful to treat as notable change
+event, and "changed" variable had sufficient number of bits to hold
+different classification, so that we could pick and choose which
+ones we truly care.  We knew MTIME was useful in the sense that even
+if the size is the same, updated mtime is good enough indication
+that the stuff has changed, even to "make" utility.
+
+INODE and CTIME are not so stable on some filesystems (e.g. inum may
+not be stable on a network share across remount) and in some
+environments (e.g. some virus scanners touch ctime to mark scanned
+files, cf. 1ce4790b), and would trigger false positives too often to
+be useful.  We always paid attention to them initially, but there
+are configurations to tell Git not raise them these days.
+
+OWNER probably falls into a category that is stable enough to be
+useful, as the most likely way for it to change is not by running
+"chown" on the file in-place (which does not change the contents),
+but by running "mv" to drop another file owned by somebody else to
+the original location (which likely does change the contents).  At
+the same time, "mv" a different file into the path would likely
+trigger changes to INODE and MTIME as well, so it cannot be more
+than belt-and-suspenders measure to catch modification.  In that
+sense ignoring OWNER would not hurt too much.
+
+If it changes spuriously to make it too unreliable a signal to be
+useful, it certainly is OK to introduce a knob to ignore it.  It
+might even make sense to ignore it unconditionally if the false hit
+happens too frequently, but offhand my gut reaction is that there
+may be something wrong in the environment (i.e. system outside Git
+in which Git runs) if owner/group changes spuriously to cause
+issues.
