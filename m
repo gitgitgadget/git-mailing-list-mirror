@@ -1,109 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 02/11] run-command: report failure for degraded output just once
-Date: Wed, 04 Nov 2015 23:32:21 -0800
-Message-ID: <xmqq4mh09a0q.fsf@gitster.mtv.corp.google.com>
-References: <1446597434-1740-1-git-send-email-sbeller@google.com>
-	<1446597434-1740-3-git-send-email-sbeller@google.com>
-	<xmqqd1vpbpik.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kaiRKHd2RS9eNeZt_VZqqBF0HS0D=x1HbOTPXYOphu8pg@mail.gmail.com>
-	<563A6C3D.2050805@kdbg.org>
-	<xmqq4mh1a37i.fsf@gitster.mtv.corp.google.com>
-	<20151104225618.GA18805@sigill.intra.peff.net>
-	<xmqqvb9h8ale.fsf@gitster.mtv.corp.google.com>
-	<20151105065111.GA4725@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] test: accept death by SIGPIPE as a valid failure mode
+Date: Thu, 5 Nov 2015 02:47:31 -0500
+Message-ID: <20151105074730.GA6819@sigill.intra.peff.net>
+References: <9A3BCDA2-5915-4287-A385-95A3ACCBB850@gmail.com>
+ <CABA5-z=1N5=8huSr=BLmjj_KHLbMMiXdo0qok7Mc_ZOeB=J9jA@mail.gmail.com>
+ <CFEB6E3F-48A0-41D8-A8FD-D48B806461DB@gmail.com>
+ <xmqq8u6qluh2.fsf@gitster.mtv.corp.google.com>
+ <xmqqvb9ojcmf.fsf@gitster.mtv.corp.google.com>
+ <xmqqr3kcjbll.fsf_-_@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Sixt <j6t@kdbg.org>, Stefan Beller <sbeller@google.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Eric Sunshine <ericsunshine@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 05 08:32:47 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Git Users <git@vger.kernel.org>,
+	Fredrik Medley <fredrik.medley@gmail.com>,
+	patrick.reynolds@github.com,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 05 08:47:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuF2I-0000t2-9Q
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 08:32:42 +0100
+	id 1ZuFGk-00057f-Q3
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 08:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032477AbbKEHcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 02:32:25 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59674 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1031994AbbKEHcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 02:32:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1F7E61FA26;
-	Thu,  5 Nov 2015 02:32:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yAUbNNob8EsKb2SgJIQ8SpqeZ0I=; b=he+dnS
-	YNWNsJ7z4Uiq5XZ/ZPAmSwVMZvRA2vZH9NLud1zu6chGI6ejV3rzY4JzWjO/kVcg
-	shMprTMywjk1B8PNwqyq48fF7bR/7jE/3Vap2Wl+kHtDH9MSPE6rPm4yEyAoUhlj
-	imD9gTKcjHnCiK2ku24eM4qb+D30DPbWb5U+I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gUHHbQPLFt6leQQga8R7tevq39lFYul0
-	3/7hGvhyeCn2o9lKFTzGMqNlJdJp3hCvP1v5/9uuMkgjvyj4IDprDceVp5y5yWud
-	LMiTk+Y+9sZD62l8NlAcT3+jf1prP+9Eju0d7fve27hYGKof47ty5DXRMV9pr50U
-	CsUZFngoI/U=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 150541FA24;
-	Thu,  5 Nov 2015 02:32:23 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 48D871FA23;
-	Thu,  5 Nov 2015 02:32:22 -0500 (EST)
-In-Reply-To: <20151105065111.GA4725@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 5 Nov 2015 01:51:11 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 5A555F7E-838F-11E5-A805-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1032709AbbKEHre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 02:47:34 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53221 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1032699AbbKEHrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 02:47:33 -0500
+Received: (qmail 22307 invoked by uid 102); 5 Nov 2015 07:47:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 01:47:34 -0600
+Received: (qmail 11141 invoked by uid 107); 5 Nov 2015 07:48:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 02:48:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Nov 2015 02:47:31 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqr3kcjbll.fsf_-_@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280915>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Oct 30, 2015 at 02:22:14PM -0700, Junio C Hamano wrote:
 
-> POSIX implies it is the case in the definition of read[2] in two ways:
->
->   1. The O_NONBLOCK behavior for pipes is mentioned only when dealing
->      with empty pipes.
->
->   2. Later, it says:
->
->        The value returned may be less than nbyte if the number of bytes
->        left in the file is less than nbyte, if the read() request was
->        interrupted by a signal, or if the file is a pipe or FIFO or
->        special file and has fewer than nbyte bytes immediately available
->        for reading.
->
->      That is not explicit, but the "immediately" there seems to imply
->      it.
+> On a local host, the object/history transport code often talks over
+> pipe with the other side.  The other side may notice some (expected)
+> failure, send the error message either to our process or to the
+> standard error and hung up.  In such codepaths, if timing were not
+> unfortunate, our side would receive the report of (expected) failure
+> from the other side over the pipe and die().  Otherwise, our side
+> may still be trying to talk to it and would die with a SIGPIPE.
+> 
+> This was observed as an intermittent breakage in t5516 by a few
+> people.
+> 
+> In the real-life scenario, either mode of death exits with a
+> non-zero status, and the user would learn that the command failed.
+> The test_must_fail helper should also know that dying with SIGPIPE
+> is one of the valid failure modes when we are expecting the tested
+> operation to notice problem and fail.
 
-We were reading the same book, but I was more worried about that
-"may" there; it merely tells the caller of read(2) not to be alarmed
-when the call returned without filling the entire buffer, without
-mandating the implementation of read(2) never to block.
+Sorry for the slow review; before commenting I wanted to dig into
+whether this SIGPIPE ambiguity was avoidable in the first place.
 
-Having said that,...
+I think the answer is "probably not". We do call write_or_die() pretty
+consistently in the network-aware programs. So we could ignore SIGPIPE,
+and then we would catch EPIPE (of course, we convert that into SIGPIPE
+in many places, but we do not have to do so). But since the SIGPIPE
+behavior is global, that carries the risk of us failing to check a write
+against some other descriptor. It's probably not worth it.
 
->> So perhaps the original reasoning of doing nonblock was faulty, you
->> are saying?
->
-> Exactly. And therefore a convenient way to deal with the portability
-> issue is to get rid of it. :)
+Teaching the tests to handle both cases seems like a reasonable
+workaround. Changing test_must_fail covers a lot of cases; I wondered if
+there are other tests that would not want to silently cover up a SIGPIPE
+death. But I could not really think of a plausible reason.
 
-... I do like the simplification you alluded to in the other
-message.  Not having to worry about the nonblock (at least until it
-is found problematic in the real world) is a very good first step,
-especially because the approach allows us to collectively make
-progress by letting all of us in various platforms build and
-experiment with "something that works".
+So I think your patch is the best thing to do.
+
+-Peff
