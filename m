@@ -1,148 +1,126 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] http: use credential API to handle proxy
- authentication
-Date: Thu, 5 Nov 2015 03:24:21 -0500
-Message-ID: <20151105082421.GB6819@sigill.intra.peff.net>
-References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
- <1446628405-8070-1-git-send-email-k.franke@science-computing.de>
- <1446628405-8070-3-git-send-email-k.franke@science-computing.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Knut Franke <k.franke@science-computing.de>
-X-From: git-owner@vger.kernel.org Thu Nov 05 09:24:30 2015
+From: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
+Subject: [PATCH v2] gitk: add -C <path> commandline parameter to change path
+Date: Thu,  5 Nov 2015 11:19:24 +0200
+Message-ID: <1446715164-19165-1-git-send-email-juhapekka.heikkila@gmail.com>
+References: <CAPig+cSs0v88AiQwSrqm-wK7rY4RdykaVf5Axh5jFyij25rfvg@mail.gmail.com>
+Cc: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 05 10:19:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuFqQ-0007k5-29
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 09:24:30 +0100
+	id 1ZuGhk-0005Ky-Ls
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 10:19:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1033304AbbKEIYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 03:24:25 -0500
-Received: from cloud.peff.net ([50.56.180.127]:53236 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030562AbbKEIYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 03:24:24 -0500
-Received: (qmail 24159 invoked by uid 102); 5 Nov 2015 08:24:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 02:24:24 -0600
-Received: (qmail 11381 invoked by uid 107); 5 Nov 2015 08:24:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 03:24:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Nov 2015 03:24:21 -0500
-Content-Disposition: inline
-In-Reply-To: <1446628405-8070-3-git-send-email-k.franke@science-computing.de>
+	id S1756474AbbKEJTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 04:19:31 -0500
+Received: from mga02.intel.com ([134.134.136.20]:56535 "EHLO mga02.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754977AbbKEJT2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 04:19:28 -0500
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga101.jf.intel.com with ESMTP; 05 Nov 2015 01:19:28 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.20,247,1444719600"; 
+   d="scan'208";a="812301589"
+Received: from jheikkil-mobl2.fi.intel.com ([10.237.66.161])
+  by orsmga001.jf.intel.com with ESMTP; 05 Nov 2015 01:19:26 -0800
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <CAPig+cSs0v88AiQwSrqm-wK7rY4RdykaVf5Axh5jFyij25rfvg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280917>
 
-On Wed, Nov 04, 2015 at 10:13:25AM +0100, Knut Franke wrote:
+This patch adds -C (change working directory) parameter to
+gitk. With this parameter, instead of need to cd to directory
+with .git folder, one can point the correct folder from
+commandline.
 
-> For consistency reasons, add parsing of http_proxy/https_proxy/all_proxy
-> environment variables, which would otherwise be evaluated as a fallback by curl.
-> Without this, we would have different semantics for git configuration and
-> environment variables.
+v2: Adjusted the parameter as per Eric's suggestion. I think
+    it now work in similar manner as in many GNU tools as well
+    as git itself.
 
-I can't say I'm excited about this, but I don't think there's a better
-way.
+Signed-off-by: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
+---
+ Documentation/gitk.txt |  7 +++++++
+ gitk-git/gitk          | 26 +++++++++++++++++---------
+ 2 files changed, 24 insertions(+), 9 deletions(-)
 
-There was a series similar to yours in 2012, and it ran into the same
-problems. There's sadly no good way to ask curl "what is the proxy you
-ended up using?".
-
-There was also some discussion with curl upstream of providing a new
-authentication interface, where we would provide curl with
-authentication callbacks, and it would trigger them if and when
-credentials were needed. Somebody upstream was working on a patch, but I
-don't think it ever got merged. :(
-
-Here's a relevant bit from that old series (which doesn't seem threaded,
-but you can search for the author if you want to see more):
-
-  http://thread.gmane.org/gmane.comp.version-control.git/192246
-
-I have a few comments/questions below.
-
-> +
-> +		curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CONNECTCODE,
-> +			&slot->results->http_connectcode);
-
-It looks like you use this to see the remote side's HTTP 407 code.  In
-the 2012 series, I think we simply looked for a 407 in the HTTP return
-code (I assume that if we fail in the CONNECT, we can't get any other
-HTTP code and so curl just returns the proxy code).
-
-I don't have a proxy to test against, but would that work (it's entirely
-possible the other series was simply wrong)?
-
-If we do need CONNECTCODE, do we need to protect it with an #ifdef on
-the curl version? The manpage says it came in 7.10.7, which was released
-in 2003. That's probably old enough not to worry about.
-
-> +	if (proxy_auth.password) {
-> +		memset(proxy_auth.password, 0, strlen(proxy_auth.password));
-> +		free(proxy_auth.password);
-
-My understanding is that memset() like this is not sufficient for
-zero-ing sensitive data, as they can be optimized out by the compiler. I
-don't think there's a portable alternative, though, so it may be the
-best we can do. OTOH, the rest of git does not worry about such zero-ing
-anyway, so we could also simply omit it here.
-
-> +	free((void *)curl_proxyuserpwd);
-
-This cast is necessary because curl_proxyuserpwd is declared const. But
-I do not see anywhere that it needs to be const (we detach a strbuf into
-it). Can we simply change the declaration?
-
-For that matter, it is not clear to me why this needs to be a global at
-all. Once we hand the value to curl_easy_setopt, curl keeps its own
-copy.
-
->  	free((void *) http_proxy_authmethod);
-
-This one unfortunately does need to remain const, as it is used with
-git_config_string (though given the number of void casts necessary in
-patch 1, it may be less painful to simply cast it in the call to
-git_config_string()).
-
-> @@ -994,6 +1060,8 @@ static int handle_curl_result(struct slot_results *results)
->  
->  	if (results->curl_result == CURLE_OK) {
->  		credential_approve(&http_auth);
-> +		if (proxy_auth.password)
-> +			credential_approve(&proxy_auth);
->  		return HTTP_OK;
-
-Approving on success. Makes sense. You can drop the conditional here;
-credential_approve() is a noop if the password isn't set.
-
-> @@ -1008,6 +1076,8 @@ static int handle_curl_result(struct slot_results *results)
->  			return HTTP_REAUTH;
->  		}
->  	} else {
-> +		if (results->http_connectcode == 407)
-> +			credential_reject(&proxy_auth);
-
-Rejecting on a 407 makes sense (though again, can we check
-results->http_code?). But if we get a 407 and we _don't_ have a
-password, shouldn't we then prompt for one, similar to what we do with a
-401?
-
-That will require some refactoring around http_request_reauth, though
-(because now we might potentially retry twice: once to get past the
-proxy auth, and once to get past the real site's auth).
-
-You prompt unconditionally for the password earlier, but only if the
-proxy URL contains a username. We used to do the same thing for regular
-http, but people got annoyed that they had to specify half the
-credential in the URL. Perhaps it would be less so with proxies (which
-are changed a lot less), so I don't think making this work is an
-absolute requirement.
-
--Peff
+diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+index 6ade002..d194d9b 100644
+--- a/Documentation/gitk.txt
++++ b/Documentation/gitk.txt
+@@ -146,6 +146,13 @@ gitk-specific options
+ 	Select the specified commit after loading the graph.
+ 	Default behavior is equivalent to specifying '--select-commit=HEAD'.
+ 
++-C <path>::
++
++	Run as if gitk was started in '<path>' instead of the current
++	working directory. When multiple `-C` options are given, each
++	subsequent non-absolute `-C <path>` is interpreted relative to
++	the preceding `-C <path>`.
++
+ Examples
+ --------
+ gitk v2.6.12.. include/scsi drivers/scsi::
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index fcc606e..606474a 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -12279,20 +12279,14 @@ setui $uicolor
+ 
+ setoptions
+ 
+-# check that we can find a .git directory somewhere...
+-if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
+-    show_error {} . [mc "Cannot find a git repository here."]
+-    exit 1
+-}
+-
+ set selecthead {}
+ set selectheadid {}
+ 
+ set revtreeargs {}
+ set cmdline_files {}
+-set i 0
+ set revtreeargscmd {}
+-foreach arg $argv {
++for {set i 0} {$i < [llength $argv]} {incr i} {
++	set arg [lindex $argv [expr {$i}]]
+     switch -glob -- $arg {
+ 	"" { }
+ 	"--" {
+@@ -12305,11 +12299,25 @@ foreach arg $argv {
+ 	"--argscmd=*" {
+ 	    set revtreeargscmd [string range $arg 10 end]
+ 	}
++	"-C*" {
++		if {[string length $arg] < 3} {
++			incr i
++			cd [lindex $argv [expr {$i}]]
++			continue
++		} else {
++			cd [string range $arg 2 end]
++		}
++	}
+ 	default {
+ 	    lappend revtreeargs $arg
+ 	}
+     }
+-    incr i
++}
++
++# check that we can find a .git directory somewhere...
++if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
++    show_error {} . [mc "Cannot find a git repository here."]
++    exit 1
+ }
+ 
+ if {$selecthead eq "HEAD"} {
+-- 
+1.9.1
