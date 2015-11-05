@@ -1,161 +1,217 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Sixt <j6t@kdbg.org>
 Subject: Re: [PATCH 1/2] run-command: Remove set_nonblocking
-Date: Thu, 05 Nov 2015 11:37:00 -0800
-Message-ID: <xmqqio5g5jc3.fsf@gitster.mtv.corp.google.com>
+Date: Thu, 5 Nov 2015 21:27:40 +0100
+Message-ID: <563BBBBC.7070807@kdbg.org>
 References: <1446747439-30349-1-git-send-email-sbeller@google.com>
-	<1446747439-30349-2-git-send-email-sbeller@google.com>
-	<xmqqpozo5lqg.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZgEtKoYqxa8+wj0PCJedW140CQAPX6XwEYib1W3fPhXw@mail.gmail.com>
+ <1446747439-30349-2-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Eric Sunshine <ericsunshine@gmail.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	ericsunshine@gmail.com, tboegi@web.de
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Nov 05 20:37:18 2015
+X-From: git-owner@vger.kernel.org Thu Nov 05 21:27:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuQLV-0003NX-33
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 20:37:17 +0100
+	id 1ZuR8O-0007rc-Vx
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 21:27:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753176AbbKEThI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 14:37:08 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60687 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751509AbbKEThE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 14:37:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 995B8286BC;
-	Thu,  5 Nov 2015 14:37:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rUU6dZcDZu6zADjVqCBWfgQveLw=; b=lRrNJE
-	Mvl/e41U5l75qE4NT/LGyaVe796OOwl4hUi+ICz2BDAwdpV9Wygw3/ogNsHdKsn7
-	S3FSHHMdaTwvOCkCHfCdRd5Ait/RFT56BaIxxlifJ8oj3A/MRfliV1RyqFnVRj7k
-	dQrLDhf6+KLA8feLOQ9sdv7UDyLbImVJACtUU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=npNpp8CEYG+tvhaM6rG/4JoMoZjHXajd
-	5EgiExK8XBiGeJPsEOuDfVLPZOLhlPlumKVAMQXTcbb+tzbkFiIsBtUhRU6udAle
-	DHJ3CZb6teorCN/6iwpFQScFKfOtu+FLWP2xyjnFBoWNDhD4IBZ4jFYWcvfoIt9G
-	TVQlMaVklR8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 90ED3286BB;
-	Thu,  5 Nov 2015 14:37:02 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id ED10D286B9;
-	Thu,  5 Nov 2015 14:37:01 -0500 (EST)
-In-Reply-To: <CAGZ79kZgEtKoYqxa8+wj0PCJedW140CQAPX6XwEYib1W3fPhXw@mail.gmail.com>
-	(Stefan Beller's message of "Thu, 5 Nov 2015 11:22:29 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 963F84BE-83F4-11E5-830B-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755517AbbKEU1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 15:27:45 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:50596 "EHLO bsmtp4.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752152AbbKEU1o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 15:27:44 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp4.bon.at (Postfix) with ESMTPSA id 3nsGcY0x39z5tlM;
+	Thu,  5 Nov 2015 21:27:41 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 8C8B6537D;
+	Thu,  5 Nov 2015 21:27:40 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <1446747439-30349-2-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280937>
 
-Stefan Beller <sbeller@google.com> writes:
+Am 05.11.2015 um 19:17 schrieb Stefan Beller:
+> strbuf_read_once can also operate on blocking file descriptors if we are
+> sure they are ready. The poll (2) command however makes sure this is the
+> case.
+> 
+> Reading the manual for poll (2), there may be spurious returns indicating
+> readiness but that is for network sockets only. Pipes should be unaffected.
+> By having this patch, we rely on the correctness of poll to return
+> only pipes ready to read.
+> 
+> This fixes compilation in Windows.
 
-> On Thu, Nov 5, 2015 at 10:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> strbuf_read_once can also operate on blocking file descriptors if we are
->>> sure they are ready. The poll (2) command however makes sure this is the
->>> case.
->>>
->>> Reading the manual for poll (2), there may be spurious returns indicating
->>> readiness but that is for network sockets only. Pipes should be unaffected.
->>
->> Given the presence of "for example" in that bug section, I wouldn't
->> say "only" or "should be unaffected".
->
-> Reading the documentation we are in agreement, that we expect
-> no spurious returns, no?
+It certainly does (but I haven't tested, yet). But parallel processes
+will not work because we do not have a sufficiently complete waitpid
+emulation, yet. (waitpid(-1, ...) is not implemented.)
 
-Given the presence of "for example" in that bug section, I wouldn't
-say "only" or "should be unaffected".  I cannot say "we expect no
-spurious returns".
+However, I think that the infrastructure can be simplified even further
+to a level that we do not need additional emulation on Windows.
 
->> Thanks.  Let's apply these fixes on sb/submodule-parallel-fetch,
->> merge the result to 'next' and have people play with it.
->
-> Maybe the commit message was weakly crafted. Do you want me to resend?
+First let me say that I find it very questionable that the callbacks
+receive a struct child_process. This is an implementation detail. It is
+also an implementation detail that stderr of the children is read and
+buffered, and that the child's stdout is redirected to stderr. It
+should not be the task of the get_next_task callback to set the members
+no_stdin, stdout_to_stderr, and err of struct child_process.
 
-I somehow feel that it is prudent to let this cook just above 'next'
-for a few days (not just for the log message but to verify the
-strategy and wait for others to come up with even better ideas), but
-then I'll be offline starting next week, so I expect that merging
-the final version to 'next' will be done by our interim maintainer,
-which means we still have time to polish ;-)
+If you move that initialization to pp_start_one, you will notice rather
+sooner than later that the readable end of the file descriptor is never
+closed!
 
-Here is what I queued for now.
+Which makes me think: Other users of start_command/finish_command work
+such that they
 
--- >8 --
-From: Stefan Beller <sbeller@google.com>
-Date: Thu, 5 Nov 2015 10:17:18 -0800
-Subject: [PATCH] run-command: remove set_nonblocking()
+1. request a pipe by setting .out = -1
+2. start_command
+3. read from .out until EOF
+4. close .out
+5. wait for the process with finish_command
 
-strbuf_read_once can also operate on blocking file descriptors if we
-are sure they are ready.  And the poll(2) we call before calling
-this ensures that this is the case.
+But the parallel_process infrastructure does not follow this pattern.
+It
 
-Reading the manual for poll(2), there may be spurious returns
-indicating readiness but that is for network sockets only and pipes
-should be unaffected.
+1. requests a pipe by setting .err = -1
+2. start_command
+3. read from .err
+4. wait for the process with waitpid
 
-With this change, we rely on
+(and forgets to close .err). EOF is not in the picture (but that is
+not essential).
 
- - poll(2) returns only non-empty pipes; and
- - read(2) on a non-empty pipe does not block.
+I suggest to change this such that we read from the children until EOF,
+mark them to be at their end of life, and then wait for them using
+finish_command (assuming that a process that closes stdout and stderr
+will die very soon if it is not already dead).
 
-This should fix compilation on Windows.
+Here is a prototype patch. Feel free to pick it up. It marks a process
+whose EOF we have found by setting .err to -1. It's probably better to
+extend the meaning of the in_use indicator for this purpose. This seems
+to work on Linux with test-run-command with sub-processes that produce
+100k output each:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- run-command.c | 13 -------------
- 1 file changed, 13 deletions(-)
+./test-run-command run-command-parallel 5 sh -c "printf \"%0100000d\n\" 999"
+
+although error handling would require some polishing according to
+t0061-run-command.
 
 diff --git a/run-command.c b/run-command.c
-index 1fbd286..07424e9 100644
+index 51d078c..3e42299 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -996,17 +996,6 @@ static void pp_cleanup(struct parallel_processes *pp)
- 	sigchain_pop_common();
+@@ -977,7 +977,7 @@ static struct parallel_processes *pp_init(int n,
+ 	for (i = 0; i < n; i++) {
+ 		strbuf_init(&pp->children[i].err, 0);
+ 		child_process_init(&pp->children[i].process);
+-		pp->pfd[i].events = POLLIN;
++		pp->pfd[i].events = POLLIN|POLLHUP;
+ 		pp->pfd[i].fd = -1;
+ 	}
+ 	sigchain_push_common(handle_children_on_signal);
+@@ -1061,11 +1061,17 @@ static void pp_buffer_stderr(struct parallel_processes *pp, int output_timeout)
+ 	/* Buffer output from all pipes. */
+ 	for (i = 0; i < pp->max_processes; i++) {
+ 		if (pp->children[i].in_use &&
+-		    pp->pfd[i].revents & POLLIN)
+-			if (strbuf_read_once(&pp->children[i].err,
+-					     pp->children[i].process.err, 0) < 0)
++		    pp->pfd[i].revents & (POLLIN|POLLHUP)) {
++			int n = strbuf_read_once(&pp->children[i].err,
++					     pp->children[i].process.err, 0);
++			if (n == 0) {
++				close(pp->children[i].process.err);
++				pp->children[i].process.err = -1;
++			} else if (n < 0) {
+ 				if (errno != EAGAIN)
+ 					die_errno("read");
++			}
++		}
+ 	}
  }
  
--static void set_nonblocking(int fd)
--{
--	int flags = fcntl(fd, F_GETFL);
--	if (flags < 0)
--		warning("Could not get file status flags, "
--			"output will be degraded");
--	else if (fcntl(fd, F_SETFL, flags | O_NONBLOCK))
--		warning("Could not set file status flags, "
--			"output will be degraded");
--}
--
- /* returns
-  *  0 if a new task was started.
-  *  1 if no new jobs was started (get_next_task ran out of work, non critical
-@@ -1042,8 +1031,6 @@ static int pp_start_one(struct parallel_processes *pp)
- 		return code ? -1 : 1;
- 	}
+@@ -1082,59 +1088,20 @@ static void pp_output(struct parallel_processes *pp)
+ static int pp_collect_finished(struct parallel_processes *pp)
+ {
+ 	int i = 0;
+-	pid_t pid;
+-	int wait_status, code;
++	int code;
+ 	int n = pp->max_processes;
+ 	int result = 0;
  
--	set_nonblocking(pp->children[i].process.err);
+ 	while (pp->nr_processes > 0) {
+-		pid = waitpid(-1, &wait_status, WNOHANG);
+-		if (pid == 0)
+-			break;
 -
- 	pp->nr_processes++;
- 	pp->children[i].in_use = 1;
- 	pp->pfd[i].fd = pp->children[i].process.err;
--- 
-2.6.2-539-g1c5cd50
+-		if (pid < 0)
+-			die_errno("wait");
+-
+ 		for (i = 0; i < pp->max_processes; i++)
+ 			if (pp->children[i].in_use &&
+-			    pid == pp->children[i].process.pid)
++			    pp->children[i].process.err == -1)
+ 				break;
++
+ 		if (i == pp->max_processes)
+-			die("BUG: found a child process we were not aware of");
+-
+-		if (strbuf_read(&pp->children[i].err,
+-				pp->children[i].process.err, 0) < 0)
+-			die_errno("strbuf_read");
+-
+-		if (WIFSIGNALED(wait_status)) {
+-			code = WTERMSIG(wait_status);
+-			if (!pp->shutdown &&
+-			    code != SIGINT && code != SIGQUIT)
+-				strbuf_addf(&pp->children[i].err,
+-					    "%s died of signal %d",
+-					    pp->children[i].process.argv[0],
+-					    code);
+-			/*
+-			 * This return value is chosen so that code & 0xff
+-			 * mimics the exit code that a POSIX shell would report for
+-			 * a program that died from this signal.
+-			 */
+-			code += 128;
+-		} else if (WIFEXITED(wait_status)) {
+-			code = WEXITSTATUS(wait_status);
+-			/*
+-			 * Convert special exit code when execvp failed.
+-			 */
+-			if (code == 127) {
+-				code = -1;
+-				errno = ENOENT;
+-			}
+-		} else {
+-			strbuf_addf(&pp->children[i].err,
+-				    "waitpid is confused (%s)",
+-				    pp->children[i].process.argv[0]);
+-			code = -1;
+-		}
++			break;
++
++		code = finish_command(&pp->children[i].process);
+ 
+ 		if (pp->task_finished(code, &pp->children[i].process,
+ 				      &pp->children[i].err, pp->data,
+@@ -1144,7 +1111,6 @@ static int pp_collect_finished(struct parallel_processes *pp)
+ 		pp->nr_processes--;
+ 		pp->children[i].in_use = 0;
+ 		pp->pfd[i].fd = -1;
+-		child_process_clear(&pp->children[i].process);
+ 		child_process_init(&pp->children[i].process);
+ 
+ 		if (i != pp->output_owner) {
