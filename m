@@ -1,236 +1,107 @@
-From: Lukas Fleischer <lfleischer@lfos.de>
-Subject: [PATCH v3 3/4] Add support for matching full refs in hideRefs
-Date: Thu,  5 Nov 2015 07:07:30 +0100
-Message-ID: <1446703651-9049-4-git-send-email-lfleischer@lfos.de>
-References: <1446703651-9049-1-git-send-email-lfleischer@lfos.de>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 05 07:08:08 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: About global --progress option
+Date: Wed, 04 Nov 2015 22:11:14 -0800
+Message-ID: <xmqqk2px7z7h.fsf@gitster.mtv.corp.google.com>
+References: <CAOc6etYiGV0v4gkkpudi3ACa6kA3H8CnqYYeSksfO4mGGfEyXg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 05 07:11:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuDiR-00033G-SR
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 07:08:08 +0100
+	id 1ZuDlZ-0005jP-MA
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 07:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030498AbbKEGID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 01:08:03 -0500
-Received: from elnino.cryptocrack.de ([46.165.227.75]:43646 "EHLO
-	elnino.cryptocrack.de" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756532AbbKEGIB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 01:08:01 -0500
-Received: by elnino.cryptocrack.de (OpenSMTPD) with ESMTPSA id bea6b1cf;
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	Thu, 5 Nov 2015 07:07:35 +0100 (CET)
-X-Mailer: git-send-email 2.6.2
-In-Reply-To: <1446703651-9049-1-git-send-email-lfleischer@lfos.de>
+	id S1030641AbbKEGLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 01:11:18 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62549 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756510AbbKEGLR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 01:11:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 623731C6AF;
+	Thu,  5 Nov 2015 01:11:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KHv/iq+cVdzeMOIcRa2tS0zpRyU=; b=SubCc/
+	ISmdSZthlF+ywrC9c4fFFp2zD4US9mwt+aSPoEVWQWTaFkO4+Ma2wBNjlDi3E5+c
+	Orz3Hh943vO+f5ZIx+qtQRACNcnf+s8Yqz09IiRv2+3bVckdAn23mrfNb7S62JkS
+	bhJZvuR88AfgMkEOP2bZfLHXq9EtJl9Rl/D0A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=giAFixNNrVRQluoUAyWdX124eK1F2Du+
+	gBW6ioBsTGvHXZf5O/tCGdgaVuX8cAwuy7APZ0AgGUayUFNIZifu9xWDyFr36NLn
+	2MANo8CYEi2y8NQf5fflj7K0AqGk3WkAhEn9OuyNtPWsCr4BivlvpUignbQ2sOQq
+	OEUfh6SELc4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5A52B1C6AD;
+	Thu,  5 Nov 2015 01:11:16 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CF21A1C571;
+	Thu,  5 Nov 2015 01:11:15 -0500 (EST)
+In-Reply-To: <CAOc6etYiGV0v4gkkpudi3ACa6kA3H8CnqYYeSksfO4mGGfEyXg@mail.gmail.com>
+	(Edmundo Carmona Antoranz's message of "Wed, 4 Nov 2015 21:13:20
+	-0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 05AA0818-8384-11E5-A450-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280904>
 
-In addition to matching stripped refs, one can now add hideRefs patterns
-that the full (unstripped) ref is matched against. To distinguish
-between stripped and full matches, those new patterns must be prefixed
-with a circumflex (^).
+Edmundo Carmona Antoranz <eantoranz@gmail.com> writes:
 
-This commit also removes support for the undocumented and unintended
-hideRefs settings "have" (suppressing all "have" lines) and
-"capabilities^{}" (suppressing the capabilities line).
+> Which would be the correct development path?
+>
+> - Two-step process: First step, implement global --[no-]progress at
+> the git level and also support the option from the builtins that
+> laready have it. Let it live like that for some releases (so that
+> people have the time to dump using the builtin option and start using
+> the global option) and then on the second step dump the builtin
+> options and keep the global one.
+>
+> or
+>
+> - A single step that would remove --[no-]progress from all builtins
+> that support it and would place it as a global git option?
 
-Signed-off-by: Lukas Fleischer <lfleischer@lfos.de>
----
- Documentation/config.txt |  3 ++-
- builtin/receive-pack.c   | 27 +++++++++++++++++++++------
- refs.c                   | 15 ++++++++++++---
- refs.h                   | 10 +++++++++-
- upload-pack.c            | 13 ++++++++-----
- 5 files changed, 52 insertions(+), 16 deletions(-)
+Assuming by "dump" you mean "removal of support", I doubt either is
+correct.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 74a81e0..d816338 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2691,7 +2691,8 @@ prefix `refs/heads/master` is specified in `transfer.hideRefs` and the current
- namespace is `foo`, then `refs/namespaces/foo/refs/heads/master` is omitted
- from the advertisements but `refs/heads/master` and
- `refs/namespaces/bar/refs/heads/master` are still advertised as so-called
--"have" lines.
-+"have" lines. In order to match refs before stripping, add a `^` in front of
-+the ref name. If you combine `!` and `^`, `!` must be specified first.
- 
- transfer.unpackLimit::
- 	When `fetch.unpackLimit` or `receive.unpackLimit` are
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index bcb624b..f06f70a 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -195,9 +195,6 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
- 
- static void show_ref(const char *path, const unsigned char *sha1)
- {
--	if (ref_is_hidden(path))
--		return;
--
- 	if (sent_capabilities) {
- 		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
- 	} else {
-@@ -219,9 +216,14 @@ static void show_ref(const char *path, const unsigned char *sha1)
- 	}
- }
- 
--static int show_ref_cb(const char *path, const struct object_id *oid, int flag, void *unused)
-+static int show_ref_cb(const char *path_full, const struct object_id *oid,
-+		       int flag, void *unused)
- {
--	path = strip_namespace(path);
-+	const char *path = strip_namespace(path_full);
-+
-+	if (ref_is_hidden(path, path_full))
-+		return 0;
-+
- 	/*
- 	 * Advertise refs outside our current namespace as ".have"
- 	 * refs, so that the client can use them to minimize data
-@@ -1195,16 +1197,29 @@ static int iterate_receive_command_list(void *cb_data, unsigned char sha1[20])
- 
- static void reject_updates_to_hidden(struct command *commands)
- {
-+	struct strbuf refname_full = STRBUF_INIT;
-+	size_t prefix_len;
- 	struct command *cmd;
- 
-+	strbuf_addstr(&refname_full, get_git_namespace());
-+	prefix_len = refname_full.len;
-+
- 	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (cmd->error_string || !ref_is_hidden(cmd->ref_name))
-+		if (cmd->error_string)
-+			continue;
-+
-+		strbuf_setlen(&refname_full, prefix_len);
-+		strbuf_addstr(&refname_full, cmd->ref_name);
-+
-+		if (!ref_is_hidden(cmd->ref_name, refname_full.buf))
- 			continue;
- 		if (is_null_sha1(cmd->new_sha1))
- 			cmd->error_string = "deny deleting a hidden ref";
- 		else
- 			cmd->error_string = "deny updating a hidden ref";
- 	}
-+
-+	strbuf_release(&refname_full);
- }
- 
- static int should_process_cmd(struct command *cmd)
-diff --git a/refs.c b/refs.c
-index 72d96ed..892fffb 100644
---- a/refs.c
-+++ b/refs.c
-@@ -321,7 +321,7 @@ int parse_hide_refs_config(const char *var, const char *value, const char *secti
- 	return 0;
- }
- 
--int ref_is_hidden(const char *refname)
-+int ref_is_hidden(const char *refname, const char *refname_full)
- {
- 	int i;
- 
-@@ -329,6 +329,7 @@ int ref_is_hidden(const char *refname)
- 		return 0;
- 	for (i = hide_refs->nr - 1; i >= 0; i--) {
- 		const char *match = hide_refs->items[i].string;
-+		const char *subject;
- 		int neg = 0;
- 		int len;
- 
-@@ -337,10 +338,18 @@ int ref_is_hidden(const char *refname)
- 			match++;
- 		}
- 
--		if (!starts_with(refname, match))
-+		if (*match == '^') {
-+			subject = refname_full;
-+			match++;
-+		} else {
-+			subject = refname;
-+		}
-+
-+		/* refname can be NULL when namespaces are used. */
-+		if (!subject || !starts_with(subject, match))
- 			continue;
- 		len = strlen(match);
--		if (!refname[len] || refname[len] == '/')
-+		if (!subject[len] || subject[len] == '/')
- 			return !neg;
- 	}
- 	return 0;
-diff --git a/refs.h b/refs.h
-index 69fa4df..116c461 100644
---- a/refs.h
-+++ b/refs.h
-@@ -604,7 +604,15 @@ int update_ref(const char *msg, const char *refname,
- 
- extern int parse_hide_refs_config(const char *var, const char *value, const char *);
- 
--extern int ref_is_hidden(const char *);
-+/*
-+ * Check whether a ref is hidden. If no namespace is set, both the first and
-+ * the second parameter point to the full ref name. If a namespace is set and
-+ * the ref is inside that namespace, the first parameter is a pointer to the
-+ * name of the ref with the namespace prefix removed. If a namespace is set and
-+ * the ref is outside that namespace, the first parameter is NULL. The second
-+ * parameter always points to the full ref name.
-+ */
-+extern int ref_is_hidden(const char *, const char *);
- 
- enum ref_type {
- 	REF_TYPE_PER_WORKTREE,
-diff --git a/upload-pack.c b/upload-pack.c
-index 4ca960e..08efb1d 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -688,11 +688,12 @@ static void receive_needs(void)
- }
- 
- /* return non-zero if the ref is hidden, otherwise 0 */
--static int mark_our_ref(const char *refname, const struct object_id *oid)
-+static int mark_our_ref(const char *refname, const char *refname_full,
-+			const struct object_id *oid)
- {
- 	struct object *o = lookup_unknown_object(oid->hash);
- 
--	if (refname && ref_is_hidden(refname)) {
-+	if (ref_is_hidden(refname, refname_full)) {
- 		o->flags |= HIDDEN_REF;
- 		return 1;
- 	}
-@@ -700,10 +701,12 @@ static int mark_our_ref(const char *refname, const struct object_id *oid)
- 	return 0;
- }
- 
--static int check_ref(const char *refname, const struct object_id *oid,
-+static int check_ref(const char *refname_full, const struct object_id *oid,
- 		     int flag, void *cb_data)
- {
--	mark_our_ref(strip_namespace(refname), oid);
-+	const char *refname = strip_namespace(refname_full);
-+
-+	mark_our_ref(refname, refname_full, oid);
- 	return 0;
- }
- 
-@@ -726,7 +729,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 	const char *refname_nons = strip_namespace(refname);
- 	struct object_id peeled;
- 
--	if (mark_our_ref(refname_nons, oid))
-+	if (mark_our_ref(refname_nons, refname, oid))
- 		return 0;
- 
- 	if (capabilities) {
--- 
-2.6.2
+Existing users know that the way to squelch progress output from
+their "git clone" is with "git clone --no-progress".  Introducing
+another way to say the same thing, i.e. "git --no-progress clone" is
+one thing, but I do not see what value you are adding to the system
+by breaking what they know has worked forever and forcing them to
+use "git --no-progress clone".  Why should they learn that the
+"--no-checkout" option for example has to come after "clone" and
+the "--no-progress" option has to come before?  Why should they
+adjust their scripts and their finger memory to your whim?
+
+Besides, I am not convinced that you are bringing in a net positive
+value by allowing "git --no-progress clone".  You would need to
+think what to do when you get two conflicting options (e.g. should
+"git --no-progress clone --progress" give progress?  Why?), you
+would need to explain to the users why the resulting code works the
+way you made it work (most likely, "do nothing special") when the
+global one is given to a command that does not give any progress
+output, and you would need to make sure whatever answers you would
+give to these questions are implemented consistently.  And you would
+need more code to do so.  It is unclear to me what value the end
+users get out of all that effort, if any, and if the value offered
+to the end users outweigh the added complexity, additional code that
+has to be maintained, and additional risk to introduce unnecessary
+bugs.
+
+A lot more useful thing to do in the same area with a lot smaller
+amount of effort would be to find an operation that sometimes take a
+long time to perform that does not show the progress report and
+teach the codepath involved in the operation to show progress, I
+would think.
