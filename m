@@ -1,110 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: File owner/group and git
-Date: Wed, 04 Nov 2015 18:38:40 -0800
-Message-ID: <xmqqoaf9891r.fsf@gitster.mtv.corp.google.com>
-References: <1446689037.4131.47.camel@twopensource.com>
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: About global --progress option
+Date: Wed, 4 Nov 2015 21:13:20 -0600
+Message-ID: <CAOc6etYiGV0v4gkkpudi3ACa6kA3H8CnqYYeSksfO4mGGfEyXg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git mailing list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu Nov 05 03:38:52 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 05 04:13:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuARt-0004cS-6Y
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 03:38:49 +0100
+	id 1ZuAzO-0000gV-Iv
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 04:13:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031843AbbKECip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Nov 2015 21:38:45 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58248 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1031791AbbKECin (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Nov 2015 21:38:43 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2437429124;
-	Wed,  4 Nov 2015 21:38:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=s9Gf7n+PJDkQUFl9hm7nMRqH7PQ=; b=lhgiGA
-	JfspJN/HUwaISItgMvkvQlreR+RMoRXZXwIzh/lvg7IYYs0JjXfrDNH2c9QQo+eR
-	nyq0hcQhWZPOmKKT/Y8bkO1EEa5L4pR7rnj4xYRL2joyje6fdIeTW6wK+hsEeZpv
-	Iymy19w0xgNJjghzXW464H/l7xoGgSX9AAfDY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZKVwkc8f49br0emrBpZjUtZGIr1QrHWl
-	DHQ2WIA5C7nzr5Ml+zuAo6mE44DsFgks6k+4EhkgyFRB6mDLWpAoGDUsi3EDGTcL
-	CEVX9kXS7e/rJ3kkifRPoVflKjpm2SCF3/kWqORXzTeNFEnW/TMi/Ix2tG4zr+XK
-	pPJWbd82faM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1C18D29123;
-	Wed,  4 Nov 2015 21:38:42 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9995A29122;
-	Wed,  4 Nov 2015 21:38:41 -0500 (EST)
-In-Reply-To: <1446689037.4131.47.camel@twopensource.com> (David Turner's
-	message of "Wed, 04 Nov 2015 21:03:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 538E5282-8366-11E5-B834-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1031829AbbKEDNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Nov 2015 22:13:22 -0500
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:36274 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031616AbbKEDNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Nov 2015 22:13:21 -0500
+Received: by pacdm15 with SMTP id dm15so48280668pac.3
+        for <git@vger.kernel.org>; Wed, 04 Nov 2015 19:13:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=oCuKQNXB+sz8eKRXAvH1Fkn4GwLYo5w2uVd9reI01/s=;
+        b=utxXW+eZ080tbwKIjoA+ezUq9J/RybG7mK3vmkreb5NCogEAUWUmCpa+MHORYT0CDU
+         Urwwo+3d4T/2j0vDkhsU4Bw866jTq051TkaHT2+xwrWQOU9t6V2I4Sg/QMtGntnv3sIi
+         D6jvYz0eeEN7Y+ZJYjgN3wd1ITL9Mt3l7LHrRwbdTg7rSh1uKIAm6KG/Qw8sjjbT5ied
+         5eF4ukOjqD+wCeRWO/5Byd+AEpOZ4Sid9MRESdDYeZi6pf5gAPL9YGp8A2RnnNQAaINY
+         NyLbnxUKEujYcqf79oMEPNUs0404tc8Ut0TnVbz1C+XZFxfgNfqxRjU7s2deSn1VYFFZ
+         xaLw==
+X-Received: by 10.68.57.208 with SMTP id k16mr6629094pbq.12.1446693200965;
+ Wed, 04 Nov 2015 19:13:20 -0800 (PST)
+Received: by 10.66.97.70 with HTTP; Wed, 4 Nov 2015 19:13:20 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280896>
 
-David Turner <dturner@twopensource.com> writes:
+Hi, everybody!
 
-> In unpack-trees.c, in verify_uptodate_1, we check ie_match_stat.  This
-> returns OWNER_CHANGED if a file has changed ownership since the index
-> was updated.  Do we actually care about that particular case?  Or really
-> anything other than DATA_CHANGED?
+Coming back from my patch about the --[no-]progress option for
+checkout (it's already in next, J!!!!), I'd like to build into the
+idea of the single --[no-]progress option for git as a whole.
 
-That's a 10-year old code and there aren't that many people left
-who can answer the original rationale, I am afraid ;-)
+So, in order to know what/how things should be developed, let's start
+with a tiny survey
 
-In general, "Do we actually care?" is not the question we ask in
-this area of the code.  "Does it help us to catch real changes, or
-does it change spuriously to make it too unreliable a signal to be
-useful?" is the question that drives the design of this part of the
-system.
+Which would be the correct development path?
 
-DATA_CHANGED is "we know the contents are different without even
-looking at the data".  If the size is different from the last time
-we hashed the data, the contents must have changed.  The inverse is
-not true (and that is half of the "racy git" issue).
+- Two-step process: First step, implement global --[no-]progress at
+the git level and also support the option from the builtins that
+laready have it. Let it live like that for some releases (so that
+people have the time to dump using the builtin option and start using
+the global option) and then on the second step dump the builtin
+options and keep the global one.
 
-Other *_CHANGED are finely classified only because originally we
-didn't really know which are useful to treat as notable change
-event, and "changed" variable had sufficient number of bits to hold
-different classification, so that we could pick and choose which
-ones we truly care.  We knew MTIME was useful in the sense that even
-if the size is the same, updated mtime is good enough indication
-that the stuff has changed, even to "make" utility.
+or
 
-INODE and CTIME are not so stable on some filesystems (e.g. inum may
-not be stable on a network share across remount) and in some
-environments (e.g. some virus scanners touch ctime to mark scanned
-files, cf. 1ce4790b), and would trigger false positives too often to
-be useful.  We always paid attention to them initially, but there
-are configurations to tell Git not raise them these days.
+- A single step that would remove --[no-]progress from all builtins
+that support it and would place it as a global git option?
 
-OWNER probably falls into a category that is stable enough to be
-useful, as the most likely way for it to change is not by running
-"chown" on the file in-place (which does not change the contents),
-but by running "mv" to drop another file owned by somebody else to
-the original location (which likely does change the contents).  At
-the same time, "mv" a different file into the path would likely
-trigger changes to INODE and MTIME as well, so it cannot be more
-than belt-and-suspenders measure to catch modification.  In that
-sense ignoring OWNER would not hurt too much.
 
-If it changes spuriously to make it too unreliable a signal to be
-useful, it certainly is OK to introduce a knob to ignore it.  It
-might even make sense to ignore it unconditionally if the false hit
-happens too frequently, but offhand my gut reaction is that there
-may be something wrong in the environment (i.e. system outside Git
-in which Git runs) if owner/group changes spuriously to cause
-issues.
+Thanks in advance.
