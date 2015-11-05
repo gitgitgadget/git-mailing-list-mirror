@@ -1,84 +1,148 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] test: accept death by SIGPIPE as a valid failure mode
-Date: Thu, 5 Nov 2015 02:47:31 -0500
-Message-ID: <20151105074730.GA6819@sigill.intra.peff.net>
-References: <9A3BCDA2-5915-4287-A385-95A3ACCBB850@gmail.com>
- <CABA5-z=1N5=8huSr=BLmjj_KHLbMMiXdo0qok7Mc_ZOeB=J9jA@mail.gmail.com>
- <CFEB6E3F-48A0-41D8-A8FD-D48B806461DB@gmail.com>
- <xmqq8u6qluh2.fsf@gitster.mtv.corp.google.com>
- <xmqqvb9ojcmf.fsf@gitster.mtv.corp.google.com>
- <xmqqr3kcjbll.fsf_-_@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 2/2] http: use credential API to handle proxy
+ authentication
+Date: Thu, 5 Nov 2015 03:24:21 -0500
+Message-ID: <20151105082421.GB6819@sigill.intra.peff.net>
+References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
+ <1446628405-8070-1-git-send-email-k.franke@science-computing.de>
+ <1446628405-8070-3-git-send-email-k.franke@science-computing.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git Users <git@vger.kernel.org>,
-	Fredrik Medley <fredrik.medley@gmail.com>,
-	patrick.reynolds@github.com,
-	Lars Schneider <larsxschneider@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 05 08:47:39 2015
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Knut Franke <k.franke@science-computing.de>
+X-From: git-owner@vger.kernel.org Thu Nov 05 09:24:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuFGk-00057f-Q3
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 08:47:39 +0100
+	id 1ZuFqQ-0007k5-29
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 09:24:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032709AbbKEHre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 02:47:34 -0500
-Received: from cloud.peff.net ([50.56.180.127]:53221 "HELO cloud.peff.net"
+	id S1033304AbbKEIYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 03:24:25 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53236 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1032699AbbKEHrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 02:47:33 -0500
-Received: (qmail 22307 invoked by uid 102); 5 Nov 2015 07:47:34 -0000
+	id S1030562AbbKEIYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 03:24:24 -0500
+Received: (qmail 24159 invoked by uid 102); 5 Nov 2015 08:24:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 01:47:34 -0600
-Received: (qmail 11141 invoked by uid 107); 5 Nov 2015 07:48:00 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 02:24:24 -0600
+Received: (qmail 11381 invoked by uid 107); 5 Nov 2015 08:24:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 02:48:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Nov 2015 02:47:31 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 03:24:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Nov 2015 03:24:21 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqqr3kcjbll.fsf_-_@gitster.mtv.corp.google.com>
+In-Reply-To: <1446628405-8070-3-git-send-email-k.franke@science-computing.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280916>
 
-On Fri, Oct 30, 2015 at 02:22:14PM -0700, Junio C Hamano wrote:
+On Wed, Nov 04, 2015 at 10:13:25AM +0100, Knut Franke wrote:
 
-> On a local host, the object/history transport code often talks over
-> pipe with the other side.  The other side may notice some (expected)
-> failure, send the error message either to our process or to the
-> standard error and hung up.  In such codepaths, if timing were not
-> unfortunate, our side would receive the report of (expected) failure
-> from the other side over the pipe and die().  Otherwise, our side
-> may still be trying to talk to it and would die with a SIGPIPE.
-> 
-> This was observed as an intermittent breakage in t5516 by a few
-> people.
-> 
-> In the real-life scenario, either mode of death exits with a
-> non-zero status, and the user would learn that the command failed.
-> The test_must_fail helper should also know that dying with SIGPIPE
-> is one of the valid failure modes when we are expecting the tested
-> operation to notice problem and fail.
+> For consistency reasons, add parsing of http_proxy/https_proxy/all_proxy
+> environment variables, which would otherwise be evaluated as a fallback by curl.
+> Without this, we would have different semantics for git configuration and
+> environment variables.
 
-Sorry for the slow review; before commenting I wanted to dig into
-whether this SIGPIPE ambiguity was avoidable in the first place.
+I can't say I'm excited about this, but I don't think there's a better
+way.
 
-I think the answer is "probably not". We do call write_or_die() pretty
-consistently in the network-aware programs. So we could ignore SIGPIPE,
-and then we would catch EPIPE (of course, we convert that into SIGPIPE
-in many places, but we do not have to do so). But since the SIGPIPE
-behavior is global, that carries the risk of us failing to check a write
-against some other descriptor. It's probably not worth it.
+There was a series similar to yours in 2012, and it ran into the same
+problems. There's sadly no good way to ask curl "what is the proxy you
+ended up using?".
 
-Teaching the tests to handle both cases seems like a reasonable
-workaround. Changing test_must_fail covers a lot of cases; I wondered if
-there are other tests that would not want to silently cover up a SIGPIPE
-death. But I could not really think of a plausible reason.
+There was also some discussion with curl upstream of providing a new
+authentication interface, where we would provide curl with
+authentication callbacks, and it would trigger them if and when
+credentials were needed. Somebody upstream was working on a patch, but I
+don't think it ever got merged. :(
 
-So I think your patch is the best thing to do.
+Here's a relevant bit from that old series (which doesn't seem threaded,
+but you can search for the author if you want to see more):
+
+  http://thread.gmane.org/gmane.comp.version-control.git/192246
+
+I have a few comments/questions below.
+
+> +
+> +		curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CONNECTCODE,
+> +			&slot->results->http_connectcode);
+
+It looks like you use this to see the remote side's HTTP 407 code.  In
+the 2012 series, I think we simply looked for a 407 in the HTTP return
+code (I assume that if we fail in the CONNECT, we can't get any other
+HTTP code and so curl just returns the proxy code).
+
+I don't have a proxy to test against, but would that work (it's entirely
+possible the other series was simply wrong)?
+
+If we do need CONNECTCODE, do we need to protect it with an #ifdef on
+the curl version? The manpage says it came in 7.10.7, which was released
+in 2003. That's probably old enough not to worry about.
+
+> +	if (proxy_auth.password) {
+> +		memset(proxy_auth.password, 0, strlen(proxy_auth.password));
+> +		free(proxy_auth.password);
+
+My understanding is that memset() like this is not sufficient for
+zero-ing sensitive data, as they can be optimized out by the compiler. I
+don't think there's a portable alternative, though, so it may be the
+best we can do. OTOH, the rest of git does not worry about such zero-ing
+anyway, so we could also simply omit it here.
+
+> +	free((void *)curl_proxyuserpwd);
+
+This cast is necessary because curl_proxyuserpwd is declared const. But
+I do not see anywhere that it needs to be const (we detach a strbuf into
+it). Can we simply change the declaration?
+
+For that matter, it is not clear to me why this needs to be a global at
+all. Once we hand the value to curl_easy_setopt, curl keeps its own
+copy.
+
+>  	free((void *) http_proxy_authmethod);
+
+This one unfortunately does need to remain const, as it is used with
+git_config_string (though given the number of void casts necessary in
+patch 1, it may be less painful to simply cast it in the call to
+git_config_string()).
+
+> @@ -994,6 +1060,8 @@ static int handle_curl_result(struct slot_results *results)
+>  
+>  	if (results->curl_result == CURLE_OK) {
+>  		credential_approve(&http_auth);
+> +		if (proxy_auth.password)
+> +			credential_approve(&proxy_auth);
+>  		return HTTP_OK;
+
+Approving on success. Makes sense. You can drop the conditional here;
+credential_approve() is a noop if the password isn't set.
+
+> @@ -1008,6 +1076,8 @@ static int handle_curl_result(struct slot_results *results)
+>  			return HTTP_REAUTH;
+>  		}
+>  	} else {
+> +		if (results->http_connectcode == 407)
+> +			credential_reject(&proxy_auth);
+
+Rejecting on a 407 makes sense (though again, can we check
+results->http_code?). But if we get a 407 and we _don't_ have a
+password, shouldn't we then prompt for one, similar to what we do with a
+401?
+
+That will require some refactoring around http_request_reauth, though
+(because now we might potentially retry twice: once to get past the
+proxy auth, and once to get past the real site's auth).
+
+You prompt unconditionally for the password earlier, but only if the
+proxy URL contains a username. We used to do the same thing for regular
+http, but people got annoyed that they had to specify half the
+credential in the URL. Perhaps it would be less so with proxies (which
+are changed a lot less), so I don't think making this work is an
+absolute requirement.
 
 -Peff
