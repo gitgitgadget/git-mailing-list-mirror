@@ -1,303 +1,266 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: [ANNOUNCE] Git v2.6.3
-Date: Thu, 05 Nov 2015 15:13:27 -0800
-Message-ID: <xmqqegg43uqw.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: A note from the maintainer
+Date: Thu, 05 Nov 2015 15:14:06 -0800
+Message-ID: <xmqqa8qs3upt.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 06 00:13:49 2015
+X-From: git-owner@vger.kernel.org Fri Nov 06 00:14:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuTj2-0003gP-Bn
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 00:13:48 +0100
+	id 1ZuTjU-0004B1-VK
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 00:14:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757087AbbKEXNd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Nov 2015 18:13:33 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55477 "EHLO
+	id S1756886AbbKEXOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 18:14:10 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51785 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756621AbbKEXN3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Nov 2015 18:13:29 -0500
+	with ESMTP id S1756736AbbKEXOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 18:14:08 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 410672752C;
-	Thu,  5 Nov 2015 18:13:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=Vm5NrD6XRlQI+ucf8bxdGxjA6
-	5M=; b=X/2mS5m1M9VfFvt1vj+jIbbhyEiOZXwU2NQ2lCSEjIwjJ5nv46mAxVqNV
-	8bzmCTVmblueM9DYjOZGpEWLKFQjF3sBXaQfXuJr714WLFELlT2BgAZyMxAL5mB8
-	J6MLMPl2xK1mv+JAQtvp21dzokkra5IK8Q6vko92KFkf6V4Ao0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=a9mcG8VNJj32QiCF3jm
-	EF5qRCeeHc6VgIgfuWAKbrwOZ7WOEb0NlhaPUkOkn9v0XnV2lPrGjfWwjpJ/VtiT
-	PNZu5O1Sn+Gq5sf+iTjHyojcshzuGCWknAStbt023HgowBcoTmb9zm2XbLP3AO+4
-	0MoRGA94VZIdPNBna50Ey1Sw=
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BF26727558;
+	Thu,  5 Nov 2015 18:14:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=+
+	sSZVxowZInNeQkDx/Dp076RiSc=; b=Fiz9YaDoazwim/yWrIlSyLEmJiylpNsvU
+	iQ6JzgqLxQOZK2Dq44y2Dr/jP1hAk5eTiLuYk5S5zo+0XC+Ny5WIvI+u4tY3imbM
+	EVdicLj2TV+HkPkm9LT1F4z9jtESI/t0cQBdTP4EHczrLnuie/sZrbOJ2U0lveXe
+	WAVcEoihUw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=mSG
+	GgYjQ1Bqn6Wqnm7oShpHQVFyh4+KJ4Wk+ZMfBdyzN5cmJTHP85ptdHuMpx5xkYjY
+	11u3Cq4p3PiXrNbSIy1zJhDgGtHpf/3zGPe0LEBg11eaifopQEhTl5FchHGU56JA
+	ctNU0oJnZeWKwcLuc9kFYFHU+EuMl31o6ujOSIaM=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 36A932752A;
-	Thu,  5 Nov 2015 18:13:29 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B687827557;
+	Thu,  5 Nov 2015 18:14:07 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 99D2427528;
-	Thu,  5 Nov 2015 18:13:28 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 25CA127553;
+	Thu,  5 Nov 2015 18:14:07 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: D2D9508A-8412-11E5-901C-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: E9CFDF52-8412-11E5-B874-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280948>
 
-The latest maintenance release Git v2.6.3 is now available at
-the usual places.  This contains bug & regression fixes that
-have already been merged to the 'master' front.
+Welcome to the Git development community.
 
-The tarballs are found at:
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-    https://www.kernel.org/pub/software/scm/git/
+* Mailing list and the community
 
-The following public repositories all have a copy of the 'v2.6.3'
-tag and the 'maint' branch that the tag points at:
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
 
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
-----------------------------------------------------------------
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise may be a sign that those who can evaluate
+your patch don't have enough mental/time bandwidth to process them
+right at the moment, and it often helps to wait until the list traffic
+becomes calmer before sending such a reminder.
 
-Git v2.6.3 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+The list archive is available at a few public sites:
 
-=46ixes since v2.6.2
-------------------
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.theaimsgroup.com/?l=git
+        http://www.spinics.net/lists/git/
 
- * The error message from "git blame --contents --reverse" incorrectly
-   talked about "--contents --children".
+For those who prefer to read it over NNTP:
 
- * "git merge-file" tried to signal how many conflicts it found, which
-   obviously would not work well when there are too many of them.
+        nntp://news.gmane.org/gmane.comp.version-control.git
 
- * The name-hash subsystem that is used to cope with case insensitive
-   filesystems keeps track of directories and their on-filesystem
-   cases for all the paths in the index by holding a pointer to a
-   randomly chosen cache entry that is inside the directory (for its
-   ce->ce_name component).  This pointer was not updated even when the
-   cache entry was removed from the index, leading to use after free.
-   This was fixed by recording the path for each directory instead of
-   borrowing cache entries and restructuring the API somewhat.
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
 
- * When the "git am" command was reimplemented in C, "git am -3" had a
-   small regression where it is aborted in its error handling codepath
-   when underlying merge-recursive failed in some ways.
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
 
- * The synopsis text and the usage string of subcommands that read
-   list of things from the standard input are often shown as if they
-   only take input from a file on a filesystem, which was misleading.
+as it also allows people who subscribe to the mailing list as gmane
+newsgroup to "jump to" the article.
 
- * A couple of commands still showed "[options]" in their usage string
-   to note where options should come on their command line, but we
-   spell that "[<options>]" in most places these days.
+Some members of the development community can sometimes be found on
+the #git and #git-devel IRC channels on Freenode.  Their logs are
+available at:
 
- * The submodule code has been taught to work better with separate
-   work trees created via "git worktree add".
+        http://colabti.org/irclogger/irclogger_log/git
+        http://colabti.org/irclogger/irclogger_log/git-devel
 
- * When "git gc --auto" is backgrounded, its diagnosis message is
-   lost.  It now is saved to a file in $GIT_DIR and is shown next time
-   the "gc --auto" is run.
+There is a volunteer-run newsletter to serve our community ("Git Rev
+News" http://git.github.io/rev_news/rev_news.html).
 
- * Work around "git p4" failing when the P4 depot records the contents
-   in UTF-16 without UTF-16 BOM.
+Git is a member project of software freedom conservancy, a non-profit
+organization (https://sfconservancy.org/).  To reach a committee of
+liaisons to the conservancy, contact them at <git@sfconservancy.org>.
 
- * Recent update to "rebase -i" that tries to sanity check the edited
-   insn sheet before it uses it has become too picky on Windows where
-   CRLF left by the editor is turned into a trailing CR on the line
-   read via the "read" built-in command.
 
- * "git clone --dissociate" runs a big "git repack" process at the
-   end, and it helps to close file descriptors that are open on the
-   packs and their idx files before doing so on filesystems that
-   cannot remove a file that is still open.
+* Reporting bugs
 
- * Correct "git p4 --detect-labels" so that it does not fail to create
-   a tag that points at a commit that is also being imported.
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken. People would not know what other result Y you expected
+to see instead of X, if you left it unsaid.
 
- * The internal stripspace() function has been moved to where it
-   logically belongs to, i.e. strbuf API, and the command line parser
-   of "git stripspace" has been updated to use the parse_options API.
+Please remember to always state
 
- * Prepare for Git on-disk repository representation to undergo
-   backward incompatible changes by introducing a new repository
-   format version "1", with an extension mechanism.
+ - what you wanted to achieve;
 
- * "git gc" used to barf when a symbolic ref has gone dangling
-   (e.g. the branch that used to be your upstream's default when you
-   cloned from it is now gone, and you did "fetch --prune").
+ - what you did (the version of git and the command sequence to reproduce
+   the behavior);
 
- * The normalize_ceiling_entry() function does not muck with the end
-   of the path it accepts, and the real world callers do rely on that,
-   but a test insisted that the function drops a trailing slash.
+ - what you saw happen (X above);
 
- * "git gc" is safe to run anytime only because it has the built-in
-   grace period to protect young objects.  In order to run with no
-   grace period, the user must make sure that the repository is
-   quiescent.
+ - what you expected to see (Y above); and
 
- * A recent "filter-branch --msg-filter" broke skipping of the commit
-   object header, which is fixed.
+ - how the last two are different.
 
- * "git --literal-pathspecs add -u/-A" without any command line
-   argument misbehaved ever since Git 2.0.
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
 
- * Merging a branch that removes a path and another that changes the
-   mode bits on the same path should have conflicted at the path, but
-   it didn't and silently favoured the removal.
+If you think you found a security-sensitive issue and want to disclose
+it to us without announcing it to wider public, please contact us at
+our security mailing list <git-security@googlegroups.com>.
 
- * "git imap-send" did not compile well with older version of cURL libr=
-ary.
 
- * The linkage order of libraries was wrong in places around libcurl.
+* Repositories, branches and documentation.
 
- * It was not possible to use a repository-lookalike created by "git
-   worktree add" as a local source of "git clone".
+My public git.git repositories are at:
 
- * When "git send-email" wanted to talk over Net::SMTP::SSL,
-   Net::Cmd::datasend() did not like to be fed too many bytes at the
-   same time and failed to send messages.  Send the payload one line
-   at a time to work around the problem.
+  git://git.kernel.org/pub/scm/git/git.git/
+  https://kernel.googlesource.com/pub/scm/git/git
+  git://repo.or.cz/alt-git.git/
+  https://github.com/git/git/
+  git://git.sourceforge.jp/gitroot/git-core/git.git/
+  git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
 
- * We peek objects from submodule's object store by linking it to the
-   list of alternate object databases, but the code to do so forgot to
-   correctly initialize the list.
+A few web interfaces are found at:
 
- * "git status --branch --short" accessed beyond the constant string
-   "HEAD", which has been corrected.
+  http://git.kernel.org/cgit/git/git.git
+  https://kernel.googlesource.com/pub/scm/git/git
+  http://repo.or.cz/w/alt-git.git
 
- * "git daemon" uses "run_command()" without "finish_command()", so it
-   needs to release resources itself, which it forgot to do.
+Preformatted documentation from the tip of the "master" branch can be
+found in:
 
-Also contains typofixes, documentation updates and trivial code
-clean-ups.
+  git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+  git://repo.or.cz/git-{htmldocs,manpages}.git/
+  https://github.com/gitster/git-{htmldocs,manpages}.git/
 
-----------------------------------------------------------------
+Also GitHub shows the manual pages formatted in HTML (with a
+formatting backend different from the one that is used to create the
+above) at:
 
-Changes since v2.6.2 are as follows:
+  http://git-scm.com/docs/git
 
-David Turner (2):
-      t7063: fix flaky untracked-cache test
-      name-hash: don't reuse cache_entry in dir_entry
+There are four branches in git.git repository that track the source tree
+of git: "master", "maint", "next", and "pu".
 
-Dimitriy Ryazantcev (1):
-      l10n: ru.po: update Russian translation
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a
+"feature release" is cut from the tip of this branch.  They used to be
+named with three dotted decimal digits (e.g. "1.8.5"), but recently we
+switched the versioning scheme and "feature releases" are named with
+three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
 
-James McCoy (1):
-      filter-branch: remove multi-line headers in msg filter
+The last such release was 2.6.0 done on Sep 28th, 2015. You can expect
+that the tip of the "master" branch is always more stable than any of
+the released versions.
 
-Jeff King (7):
-      introduce "extensions" form of core.repositoryformatversion
-      introduce "preciousObjects" repository extension
-      t6031: move triple-rename test to t3030
-      t6031: generalize for recursive and resolve strategies
-      merge: detect delete/modechange conflict
-      add_submodule_odb: initialize alt_odb list earlier
-      merge-file: clamp exit code to maximum 127
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious, safe and urgent fixes after a
+feature release are applied to this branch and maintenance releases
+are cut from it.  The maintenance releases used to be named with four
+dotted decimal, named after the feature release they are updates to
+(e.g. "1.8.5.1" was the first maintenance release for "1.8.5" feature
+release).  These days, maintenance releases are named by incrementing
+the last digit of three-dotted decimal name (e.g. "2.6.3" is the
+third maintenance release for the "2.6" series).
 
-Johannes Schindelin (10):
-      t5700: demonstrate a Windows file locking issue with `git clone -=
--dissociate`
-      sha1_file: consolidate code to close a pack's file descriptor
-      gc: demonstrate failure with stale remote HEAD
-      sha1_file.c: add a function to release all packs
-      clone --dissociate: avoid locking pack files
-      pack-objects: do not get distracted by broken symrefs
-      imap-send: only use CURLOPT_LOGIN_OPTIONS if it is actually avail=
-able
-      Squelch warning about an integer overflow
-      Silence GCC's "cast of pointer to integer of a different size" wa=
-rning
-      t3404: "rebase -i" gets broken when insn sheet uses CR/LF line en=
-dings
+New features never go to the 'maint' branch.  This branch is also
+merged into "master" to propagate the fixes forward as needed.
 
-Junio C Hamano (10):
-      am -3: do not let failed merge from completing the error codepath
-      Documentation/gc: warn against --prune=3D<now>
-      usage: do not insist that standard input must come from a file
-      Documentation/everyday: match undefline with the text
-      Documentation: match underline with the text
-      Documentation: match undefline with the text in old release notes
-      Documentation: AsciiDoc spells em-dash as double-dashes, not trip=
-le
-      add: simplify -u/-A without pathspec
-      rebase-i: work around Windows CRLF line endings
-      Git 2.6.3
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" and your patches are queued
+there, and kept out of "master" while people test it out. The quality of
+topic branches are judged primarily by the mailing list discussions.
 
-Lars Schneider (2):
-      git-p4: add test case for "Translation of file content failed" er=
-ror
-      git-p4: handle "Translation of file content failed"
+Topic branches that are in good shape are merged to the "next" branch. In
+general, the "next" branch always contains the tip of "master".  It might
+not be quite rock-solid, but is expected to work more or less without major
+breakage. The "next" branch is where new and exciting things take place. A
+topic that is in "next" is expected to be polished to perfection before it
+is merged to "master".  Please help this process by building & using the
+"next" branch for your daily work, and reporting any new bugs you find to
+the mailing list, before the breakage is merged down to the "master".
 
-Luke Diamand (3):
-      git-p4: failing test for ignoring invalid p4 labels
-      git-p4: do not terminate creating tag for unknown commit
-      git-p4: fix P4 label import for unprocessed commits
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches the maintainer happens to have seen.  There is no guarantee that
+the maintainer has enough bandwidth to pick up any and all topics that
+are remotely promising from the list traffic, so please do not read
+too much into a topic being on (or not on) the "pu" branch.  This
+branch is mainly to remind the maintainer that the topics in them may
+turn out to be interesting when they are polished, nothing more.  The
+topics on this branch aren't usually complete, well tested, or well
+documented and they often need further work.  When a topic that was
+in "pu" proves to be in a testable shape, it is merged to "next".
 
-Max Kirillov (3):
-      submodule refactor: use strbuf_git_path_submodule() in add_submod=
-ule_odb()
-      path: implement common_dir handling in git_pathdup_submodule()
-      blame: fix option name in error message
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns out
+to be not so good and the topic can be dropped from "pu" in such a case.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (7):
-      path.c: delete an extra space
-      gc: save log from daemonized gc --auto and print it next time
-      t0002: add test for enter_repo(), non-strict mode
-      enter_repo: avoid duplicating logic, use is_git_directory() inste=
-ad
-      enter_repo: allow .git files in strict mode
-      clone: allow --local from a linked checkout
-      clone: better error when --reference is a linked checkout
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
 
-Ralf Thielow (1):
-      am, credential-cache: add angle brackets to usage string
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged to "next".
 
-Ray Donnelly (1):
-      test-path-utils.c: remove incorrect assumption
 
-Remi Pommarel (3):
-      Makefile: link libcurl before zlib
-      Makefile: make curl-config path configurable
-      configure.ac: detect ssl need with libcurl
+* Other people's trees.
 
-Ren=C3=A9 Scharfe (7):
-      t7060: add test for status --branch on a detached HEAD
-      wt-status: exit early using goto in wt_shortstatus_print_tracking=
-()
-      wt-status: avoid building bogus branch name with detached HEAD
-      wt-status: don't skip a magical number of characters blindly
-      wt-status: use skip_prefix() to get rid of magic string length co=
-nstants
-      run-command: factor out child_process_clear()
-      daemon: plug memory leak
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
 
-Sidhant Sharma (1):
-      worktree: usage: denote <branch> as optional with 'add'
+Although the following are included in git.git repository, they have their
+own authoritative repository and maintainers:
 
-Stefan Agner (1):
-      git-send-email.perl: Fixed sending of many/huge changes/patches
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
 
-Tobias Klauser (2):
-      strbuf: make stripspace() part of strbuf
-      stripspace: use parse-options for command-line parsing
+        git://repo.or.cz/git-gui.git
 
-Waldek Maleska (1):
-      Correct fscanf formatting string for I64u values
+ - gitk-git/ comes from Paul Mackerras's gitk project:
 
-Xue Fuqiao (2):
-      Documentation: fix header markup
-      user-manual: fix the description of fast-forward
+        git://ozlabs.org/~paulus/gitk
+
+ - po/ comes from the localization coordinator, Jiang Xin:
+
+	https://github.com/git-l10n/git-po/
+
+When sending proposed updates and fixes to these parts of the system,
+please base your patches on these trees, not git.git (the former two
+even have different directory structures).
