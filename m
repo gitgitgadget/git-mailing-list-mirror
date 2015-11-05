@@ -1,98 +1,105 @@
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: Re: About global --progress option
-Date: Thu, 5 Nov 2015 00:47:22 -0600
-Message-ID: <CAOc6etbuK7=-8kH60taO8uH+6XNGTFRNGmmkswgP-19bCRNB3Q@mail.gmail.com>
-References: <CAOc6etYiGV0v4gkkpudi3ACa6kA3H8CnqYYeSksfO4mGGfEyXg@mail.gmail.com>
-	<xmqqk2px7z7h.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv3 02/11] run-command: report failure for degraded output
+ just once
+Date: Thu, 5 Nov 2015 01:51:11 -0500
+Message-ID: <20151105065111.GA4725@sigill.intra.peff.net>
+References: <1446597434-1740-1-git-send-email-sbeller@google.com>
+ <1446597434-1740-3-git-send-email-sbeller@google.com>
+ <xmqqd1vpbpik.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kaiRKHd2RS9eNeZt_VZqqBF0HS0D=x1HbOTPXYOphu8pg@mail.gmail.com>
+ <563A6C3D.2050805@kdbg.org>
+ <xmqq4mh1a37i.fsf@gitster.mtv.corp.google.com>
+ <20151104225618.GA18805@sigill.intra.peff.net>
+ <xmqqvb9h8ale.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j6t@kdbg.org>, Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Eric Sunshine <ericsunshine@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 05 07:48:58 2015
+X-From: git-owner@vger.kernel.org Thu Nov 05 07:52:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuELx-0003OY-9S
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 07:48:57 +0100
+	id 1ZuEPm-0003OY-F2
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 07:52:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1034463AbbKEGrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 01:47:31 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:33269 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1034430AbbKEGrW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 01:47:22 -0500
-Received: by pabfh17 with SMTP id fh17so78254882pab.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2015 22:47:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=w2rzR6pHlolRv0EDYuOMfG0pRwYh64zPS/zqJPbw+Go=;
-        b=q9uEBIMi5zJocVW77Blesy6H0CQkZXcccjI9cotWi6TuRXXDOKEQ1xF3/v60TTAjBB
-         9Z9uSjeMOK94PrlBCB7BO3J4XwFszlRxTNtVdD897stP8S75n7iDVCiPpsFBq1AwYQEe
-         ztcphj+yn4MW7QTb3Nfv1YdE65u6hlj57G1JVwNTfI2AHFDczE9fg7dzIcKGby6t0I9y
-         u2Uns/p8s7pn8COmVraM5946KEMp7oTrhr2Wl3/w0S4xK5ZIv4liuMhjzJyPSj8gt0Ul
-         Zoh7oNkIOdqMECL9qrNbWBJ3Qb/l02Pwoc0lGVLQ5EryAohU9e5PbhoztI9vdVSNDKr8
-         ureA==
-X-Received: by 10.68.201.97 with SMTP id jz1mr7469037pbc.28.1446706042130;
- Wed, 04 Nov 2015 22:47:22 -0800 (PST)
-Received: by 10.66.97.70 with HTTP; Wed, 4 Nov 2015 22:47:22 -0800 (PST)
-In-Reply-To: <xmqqk2px7z7h.fsf@gitster.mtv.corp.google.com>
+	id S1033657AbbKEGvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 01:51:17 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53173 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1033638AbbKEGvP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 01:51:15 -0500
+Received: (qmail 19276 invoked by uid 102); 5 Nov 2015 06:51:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 00:51:14 -0600
+Received: (qmail 10665 invoked by uid 107); 5 Nov 2015 06:51:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 01:51:41 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Nov 2015 01:51:11 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqvb9h8ale.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280908>
 
-On Thu, Nov 5, 2015 at 12:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Besides, I am not convinced that you are bringing in a net positive
-> value by allowing "git --no-progress clone".  You would need to
-> think what to do when you get two conflicting options (e.g. should
-> "git --no-progress clone --progress" give progress?  Why?), you
-> would need to explain to the users why the resulting code works the
-> way you made it work (most likely, "do nothing special") when the
-> global one is given to a command that does not give any progress
-> output, and you would need to make sure whatever answers you would
-> give to these questions are implemented consistently.  And you would
-> need more code to do so.  It is unclear to me what value the end
-> users get out of all that effort, if any, and if the value offered
-> to the end users outweigh the added complexity, additional code that
-> has to be maintained, and additional risk to introduce unnecessary
-> bugs.
+On Wed, Nov 04, 2015 at 06:05:17PM -0800, Junio C Hamano wrote:
 
-The contradictory case of git --progress whatever --no-progress (or
-viceversa) was going to be my follow-up question. Dude, don't get too
-far ahead in the conversation :-)
+> I've always assumed that the original reason why we wanted to set
+> the fd to nonblock was because poll(2) only tells us there is
+> something to read (even a single byte), and the xread_nonblock()
+> call strbuf_read_once() makes with the default size of 8KB is
+> allowed to consume all available bytes and then get stuck waiting
+> for the remainder of 8KB before returning.
+> 
+> If the read(2) in xread_nonblock() always returns as soon as we
+> receive as much as there is data available without waiting for any
+> more, ignoring the size of the buffer (rather, taking the size of
+> the buffer only as the upper bound), then there is no need for
+> nonblock anywhere.
 
-On the technical side, I think the global --progress option (and
-removing the option from the builtins) would not add complexity but
-the opposite because setting the flag would be done at the "main git"
-level and then all the builtins would just forget about it and would
-use progress regardless (cause deciding _if_ progress should be shown
-or not won't be up to them anymore) so the code from the builtins to
-support the option would be gone. It would certainly be more complex
-while keeping global and builtin options alive. Anyway, I do
-understand your concerns and will stand down on the topic (as in....
-global --progress who???).
+This latter paragraph was my impression of how pipe reading generally
+worked, for blocking or non-blocking. That is, if there is data, both
+cases return what we have (up to the length specified by the user), and
+it is only when there is _no_ data that we might choose to block.
 
-> A lot more useful thing to do in the same area with a lot smaller
-> amount of effort would be to find an operation that sometimes take a
-> long time to perform that does not show the progress report and
-> teach the codepath involved in the operation to show progress, I
-> would think.
+It's easy to verify experimentally. E.g.:
 
-Sounds interesting and in-topic (different direction). You got a list
-of those paths that I could work on? At least a couple you can think
-off the top of your head? Cause I can't complain about the progress I
-get on the workflows I follow (although I could keep a closer look to
-try to catch some operation I know is taking place and is not showing
-any progress and I'm used to it and so I don't complain at the lack of
-progress). Right now I'm thinking about cherry-picking... sometimes it
-can take a few seconds (or more seconds.... you have to see the
-performance of some of the boxes that I work on) and getting some
-progress there would be nice. Will take a look at it. Nice way to get
-familiarized with the code, by the way.
+  perl -e 'while(1) { syswrite(STDOUT, "a", 1); sleep(1); }' |
+  strace perl -e 'while(1) { sysread(STDIN, my $buf, 1024) }'
 
-Thank you very much, Junio!
+should show a series of 1-byte reads. But of course that only shows that
+it works on my system[1], not everywhere.
+
+POSIX implies it is the case in the definition of read[2] in two ways:
+
+  1. The O_NONBLOCK behavior for pipes is mentioned only when dealing
+     with empty pipes.
+
+  2. Later, it says:
+
+       The value returned may be less than nbyte if the number of bytes
+       left in the file is less than nbyte, if the read() request was
+       interrupted by a signal, or if the file is a pipe or FIFO or
+       special file and has fewer than nbyte bytes immediately available
+       for reading.
+
+     That is not explicit, but the "immediately" there seems to imply
+     it.
+
+> So perhaps the original reasoning of doing nonblock was faulty, you
+> are saying?
+
+Exactly. And therefore a convenient way to deal with the portability
+issue is to get rid of it. :)
+
+-Peff
