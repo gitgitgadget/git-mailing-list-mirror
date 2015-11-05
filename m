@@ -1,157 +1,128 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] http: use credential API to handle proxy
- authentication
-Date: Thu, 5 Nov 2015 12:30:22 -0500
-Message-ID: <20151105173021.GA2168@sigill.intra.peff.net>
-References: <1445882109-18184-1-git-send-email-k.franke@science-computing.de>
- <1446628405-8070-1-git-send-email-k.franke@science-computing.de>
- <1446628405-8070-3-git-send-email-k.franke@science-computing.de>
- <20151105082421.GB6819@sigill.intra.peff.net>
- <20151105115654.GA6786@science-computing.de>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv3 02/11] run-command: report failure for degraded output
+ just once
+Date: Thu, 5 Nov 2015 09:37:14 -0800
+Message-ID: <CAGZ79kaoWkJR+dg1fiKTiWHWi7N2Ni3ANi4n06_7OU=qt=X_KA@mail.gmail.com>
+References: <1446597434-1740-1-git-send-email-sbeller@google.com>
+	<1446597434-1740-3-git-send-email-sbeller@google.com>
+	<xmqqd1vpbpik.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaiRKHd2RS9eNeZt_VZqqBF0HS0D=x1HbOTPXYOphu8pg@mail.gmail.com>
+	<563A6C3D.2050805@kdbg.org>
+	<xmqq4mh1a37i.fsf@gitster.mtv.corp.google.com>
+	<20151104225618.GA18805@sigill.intra.peff.net>
+	<xmqqvb9h8ale.fsf@gitster.mtv.corp.google.com>
+	<20151105065111.GA4725@sigill.intra.peff.net>
+	<xmqq4mh09a0q.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Knut Franke <k.franke@science-computing.de>
-X-From: git-owner@vger.kernel.org Thu Nov 05 18:30:30 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Eric Sunshine <ericsunshine@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 05 18:37:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuOMo-0004SP-3r
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 18:30:30 +0100
+	id 1ZuOTS-0002HT-TP
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 18:37:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162041AbbKERa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 12:30:26 -0500
-Received: from cloud.peff.net ([50.56.180.127]:53467 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752928AbbKERaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 12:30:25 -0500
-Received: (qmail 22143 invoked by uid 102); 5 Nov 2015 17:30:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 11:30:24 -0600
-Received: (qmail 15867 invoked by uid 107); 5 Nov 2015 17:30:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 12:30:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Nov 2015 12:30:22 -0500
-Content-Disposition: inline
-In-Reply-To: <20151105115654.GA6786@science-computing.de>
+	id S932741AbbKERhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 12:37:17 -0500
+Received: from mail-yk0-f177.google.com ([209.85.160.177]:34348 "EHLO
+	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755905AbbKERhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 12:37:15 -0500
+Received: by ykdr3 with SMTP id r3so143609944ykd.1
+        for <git@vger.kernel.org>; Thu, 05 Nov 2015 09:37:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=PI/QbYnXZST+Ab4QoYkKO9qeNcr++G4OzYSagJl+hYc=;
+        b=alkpJvQH1S61AwMBYa1OGqCBJn5TqnRjszG5JY+fVF3v0OoX4Ho71whhqEoUJxlu3X
+         SS+n2vLLzdTffJ7IlD/5/yts8Pts5wyWuA5PtxQ1m4iCU4u8ZKmVkHd1ekw9F9WdcZoc
+         5myyyCSLhuoGz+9VBKGgc5PvRx3MAm4BeWJ077LzwvXBTcLBLZjhwrXlpPGeKv4n5CKw
+         zmons2zf2vIUcoqWb/kwwzdUpKQlG7F0oznacSDHO/LDjAmXWzruJxH9qlpnq5NRfHKR
+         vF3fHQbW4LUdeRNojWTB8EYo9KkX2PLmFpwPIrxweXXZS6vkZ7ISzHmlZ2wAEm0cN8ui
+         lWDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=PI/QbYnXZST+Ab4QoYkKO9qeNcr++G4OzYSagJl+hYc=;
+        b=ObkG/nyg+9Zf5Fq6CzoOhjLsTks7nSrFrV8FLLbmIvvwZRD3ObcTyUXfVRN6ei4W2m
+         q6TCavE3xGgj/Znnns1KIgyUlDd3Xn2FDIFnZKnPOnp1z0qn6Py0KDXdlvFoMOA1QdcS
+         xCIBedOgCg9jUfQx61GQCfgVEVzfK6QJot8oB+snvBG8uhPDzBZtFkD2cUWRvJtbrSnj
+         rYP6YsrnYRQXDABKoKFOgxn5V6n5joGlQotB5yDyIoKcnOzspaDxXTciVpXoZwg9uq8K
+         QyxZGu4Fbb8XXxWoRQaZbqwQMeHHTYyBkKpe3TjlzxS/k1NpkvzJZypiXMP1s6Bi4D3c
+         x+sw==
+X-Gm-Message-State: ALoCoQmawxh4MsIUwBkXoqIWbRPXkfxQGLJ4yt1tHyY5oGoIsclpJd7uyfoZNJFecx4ocgW1cdBk
+X-Received: by 10.13.251.2 with SMTP id l2mr7544083ywf.44.1446745034879; Thu,
+ 05 Nov 2015 09:37:14 -0800 (PST)
+Received: by 10.37.29.213 with HTTP; Thu, 5 Nov 2015 09:37:14 -0800 (PST)
+In-Reply-To: <xmqq4mh09a0q.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280926>
 
-On Thu, Nov 05, 2015 at 12:56:54PM +0100, Knut Franke wrote:
+On Wed, Nov 4, 2015 at 11:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> POSIX implies it is the case in the definition of read[2] in two ways:
+>>
+>>   1. The O_NONBLOCK behavior for pipes is mentioned only when dealing
+>>      with empty pipes.
+>>
+>>   2. Later, it says:
+>>
+>>        The value returned may be less than nbyte if the number of bytes
+>>        left in the file is less than nbyte, if the read() request was
+>>        interrupted by a signal, or if the file is a pipe or FIFO or
+>>        special file and has fewer than nbyte bytes immediately available
+>>        for reading.
+>>
+>>      That is not explicit, but the "immediately" there seems to imply
+>>      it.
+>
+> We were reading the same book, but I was more worried about that
+> "may" there; it merely tells the caller of read(2) not to be alarmed
+> when the call returned without filling the entire buffer, without
+> mandating the implementation of read(2) never to block.
+>
+> Having said that,...
+>
+>>> So perhaps the original reasoning of doing nonblock was faulty, you
+>>> are saying?
 
-> My main takeaway from this, apart from the points you mention below, is that
-> it'd be good to have a test case, similar to t/lib-httpd.sh. Since none of the
-> existent proxy-related code has an automated test, I think this would be an
-> improvement on top of the other patches. I'd need to look into how easy/hard
-> this would be to implement.
+I agree that the original reasoning was faulty. It happened in the first place,
+because of how I approached the problem. (strbuf_read should return immediately
+after reading and to communicate that we had non blocking read and checked for
+EAGAIN).
 
-Yeah, tests would be wonderful. I think the main challenge will be
-configuring Apache as a proxy (and failing gracefully when mod_proxy is
-not available).
+Having read the man pages again, I agree with you that the non blocking is
+bogus to begin with.
 
-If there's another proxy that is easy to configure for a one-shot test,
-that would be fine, too. It's nice if it's something that's commonly
-available, though, so more people can actually run the test.
+>>
+>> Exactly. And therefore a convenient way to deal with the portability
+>> issue is to get rid of it. :)
+>
+> ... I do like the simplification you alluded to in the other
+> message.  Not having to worry about the nonblock (at least until it
+> is found problematic in the real world) is a very good first step,
+> especially because the approach allows us to collectively make
+> progress by letting all of us in various platforms build and
+> experiment with "something that works".
 
-> > It looks like you use this to see the remote side's HTTP 407 code.  In
-> > the 2012 series, I think we simply looked for a 407 in the HTTP return
-> > code
-> 
-> I'm not sure why that worked for the author of the old series - possibly curl
-> semantics changed at some point.
+I'll send a patch to just remove set_nonblocking which should fix the compile
+problems on Windows and make it work regardless on all platforms.
 
-It's not clear to me that the original _did_ work in all cases. So I'll
-trust your experiments now much more than that old thread. :)
-
-> > My understanding is that memset() like this is not sufficient for
-> > zero-ing sensitive data, as they can be optimized out by the compiler. I
-> > don't think there's a portable alternative, though, so it may be the
-> > best we can do. OTOH, the rest of git does not worry about such zero-ing
-> > anyway, so we could also simply omit it here.
-> 
-> For what it's worth, that's the same as we do for cert_auth (while, as far as I
-> can see, no attempt is made for http_auth). I tend to think it's better than
-> nothing. Maybe an in-code comment stating it's not reliable would be in order,
-> to prevent the passing reader from putting too much trust in it.
-
-Rather than just a comment, can we do something like:
-
-  void clear_password(void *buf, size_t len)
-  {
-	/*
-	 * TODO: This is known to be insufficient, but perhaps better
-	 * than nothing, and at least portable. We should use a more
-	 * secure variant on systems that provide it.
-	 */
-	memset(buf, 0, len);
-  }
-
-That will make it easier to find such sites and improve them later
-(adding this function in a separate translation unit might actually be
-enough to make it work, as the compiler cannot omit a call to the opaque
-clear_password, and clear_password itself does not know the results will
-not be used).
-
-> > For that matter, it is not clear to me why this needs to be a global at
-> > all. Once we hand the value to curl_easy_setopt, curl keeps its own
-> > copy.
-> 
-> That's true only for relatively recent curl versions; before 7.17.0, strings
-> were not copied.
-
-Yeah, I remembered that, but I thought for some reason it was old enough
-that we didn't need to worry about it. I have a feeling that there may
-be other places where we do not handle it that well.
-
-7.17.0 is from 2007. I wonder if it is time we bumped our minimum
-required curl version. Supporting older installations is nice, but at
-some point it is not really helping anybody, and that has to be
-balanced by the increase in code complexity (and especially we are not
-helping those people if there are subtle bugs that nobody else is
-exercising).
-
-That's a separate topic from your patch, though (though I would not mind
-at all if you wanted to work on it :) ).
-
-> > That will require some refactoring around http_request_reauth, though
-> > (because now we might potentially retry twice: once to get past the
-> > proxy auth, and once to get past the real site's auth).
-> 
-> I think this would also require changes to post_rpc in remote-curl.c, which
-> apparently does something similar to http_request_reauth. Probably something
-> along the lines of adding a HTTP_PROXY_REAUTH return code, plus some refactoring
-> in order to prevent code duplication between the different code parts handling
-> (proxy) reauth. :-/
-
-Yeah, that would work. I think we could also just loop on HTTP_REAUTH.
-The code in handle_curl_result that returns HTTP_REAUTH will only do so
-if it looks like we could make progress by trying again.
-
-> > You prompt unconditionally for the password earlier, but only if the
-> > proxy URL contains a username. We used to do the same thing for regular
-> > http, but people got annoyed that they had to specify half the
-> > credential in the URL. Perhaps it would be less so with proxies (which
-> > are changed a lot less), so I don't think making this work is an
-> > absolute requirement.
-> 
-> As far as I understand, the issue was around unconditionally prompting for the
-> password even if it was listed in ~/.netrc. As far as I can see, curl doesn't
-> read ~/.netrc for proxy credentials, so I don't think it would make a difference
-> here.
-
-The .netrc thing came up recently-ish, but the HTTP prompting issues are
-much older than that. Basically, does:
-
-  git config http.proxy http://example.com:8080
-
-work out of the box if example.com requires a username and password? I
-think with your patch it doesn't. You need to use
-"http://user@example.com:8080" to convince git to prompt at all.
-
--Peff
+After that I continue with the update series.
