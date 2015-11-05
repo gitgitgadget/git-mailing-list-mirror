@@ -1,117 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] run-command: Remove set_nonblocking
-Date: Thu, 05 Nov 2015 12:50:33 -0800
-Message-ID: <xmqqa8qs5fxi.fsf@gitster.mtv.corp.google.com>
-References: <1446747439-30349-1-git-send-email-sbeller@google.com>
-	<1446747439-30349-2-git-send-email-sbeller@google.com>
-	<563BBBBC.7070807@kdbg.org>
+From: alan@clueserver.org
+Subject: Odd problems trying to build an orphaned branch
+Date: Thu, 5 Nov 2015 13:16:54 -0800
+Message-ID: <1bf03e2146ceb5bb36b81f1ce64354b0.squirrel@clueserver.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-	peff@peff.net, johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	ericsunshine@gmail.com, tboegi@web.de
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Nov 05 21:50:44 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: alan@clueserver.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 05 22:28:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuRUX-00042X-45
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 21:50:41 +0100
+	id 1ZuS4u-0000aU-3n
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 22:28:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753682AbbKEUuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 15:50:37 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51293 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751252AbbKEUug (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 15:50:36 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8DE2627FC9;
-	Thu,  5 Nov 2015 15:50:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4hwY6nBynRJypyqrHpGdOrd1DEw=; b=jbWjTw
-	pNqcYwYV8Jp46rlKYPyKQWr39IWrVPEj4UrGd+xOx3Yp2ehCEV+E+6va3by1aPqK
-	bcwOEbFNS8JjHPJGpKH8+EOMOrlMvzVcglzB7lEGWtHZxNODf6DnNhJ9fJv574D+
-	yXczG6H9H4HxFDZFydsibl/PVGzmaXaHPMMxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uH5aBzY9kRI9P0y3HW5zi4elD2wDGKoG
-	YRlNLD6KpnfqvnGQ25wSFTnKfUjHIqlFcBT5mh99O74tdDcoZ/NZsoT1wHuPEtU/
-	fL6/Ik/3dZJfliE342RmaGAFMeYobRWSRQ6Iv4iPwG/p1Ea5wuEgUSoPn8wtqX5Q
-	BxGut32rCE4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 857E427FC8;
-	Thu,  5 Nov 2015 15:50:35 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B731F27FC7;
-	Thu,  5 Nov 2015 15:50:34 -0500 (EST)
-In-Reply-To: <563BBBBC.7070807@kdbg.org> (Johannes Sixt's message of "Thu, 5
-	Nov 2015 21:27:40 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: DC75EAC2-83FE-11E5-87B1-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1756768AbbKEVYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 16:24:43 -0500
+Received: from clueserver.org ([65.102.45.174]:58423 "EHLO clueserver.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756917AbbKEVYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 16:24:32 -0500
+X-Greylist: delayed 456 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Nov 2015 16:24:32 EST
+Received: from clueserver.org (localhost [127.0.0.1])
+	by clueserver.org (Postfix) with ESMTP id 6BD2F60059E;
+	Thu,  5 Nov 2015 13:16:54 -0800 (PST)
+Received: from 192.55.54.43
+        (SquirrelMail authenticated user alan)
+        by clueserver.org with HTTP;
+        Thu, 5 Nov 2015 13:16:54 -0800
+User-Agent: SquirrelMail/1.4.22-14.fc20
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280940>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+I am trying to create an orphaned branch that contains the linux-3.12.y
+branch from linux-stable. Each time I try a method to make this work I
+encounter a blocker that halts my progress.
 
-> Am 05.11.2015 um 19:17 schrieb Stefan Beller:
->> strbuf_read_once can also operate on blocking file descriptors if we are
->> sure they are ready. The poll (2) command however makes sure this is the
->> case.
->> 
->> Reading the manual for poll (2), there may be spurious returns indicating
->> readiness but that is for network sockets only. Pipes should be unaffected.
->> By having this patch, we rely on the correctness of poll to return
->> only pipes ready to read.
->> 
->> This fixes compilation in Windows.
->
-> It certainly does (but I haven't tested, yet). But parallel processes
-> will not work because we do not have a sufficiently complete waitpid
-> emulation, yet. (waitpid(-1, ...) is not implemented.)
->
-> However, I think that the infrastructure can be simplified even further
-> to a level that we do not need additional emulation on Windows.
+I expect that at least one of these is a bug, but I am not sure.
 
-;-)
+Here is what I did. I have read the docs and tried a huge pile of
+suggestions. How is this supposed to be done?
 
-This is why I love this list (and in general not rushing any change
-too early to 'next').
+I am using git version 2.6.2.402.g2635c2b. It passes all the tests.
 
-> Which makes me think: Other users of start_command/finish_command work
-> such that they
->
-> 1. request a pipe by setting .out = -1
-> 2. start_command
-> 3. read from .out until EOF
-> 4. close .out
-> 5. wait for the process with finish_command
->
-> But the parallel_process infrastructure does not follow this pattern.
-> It
->
-> 1. requests a pipe by setting .err = -1
-> 2. start_command
-> 3. read from .err
-> 4. wait for the process with waitpid
->
-> (and forgets to close .err). EOF is not in the picture (but that is
-> not essential).
+I created an orphan branch from 3.12-rc1. I then used git format-patch to
+generate patches from 3.12-rc1 to HEAD. (Over 7000 patches.) I use git am
+to apply them to the orphan branch. At patch 237 it fails to apply. (It
+appears the patch is from a block of code added with a merge commit, but
+it is somewhere in the middle of the block.)
 
-Unrelated tangent.  daemon is another one that uses start_command()
-but does not use finish_command().
+Are merge commits supposed to screw up git-format-patch?
 
-> I suggest to change this such that we read from the children until EOF,
-> mark them to be at their end of life, and then wait for them using
-> finish_command (assuming that a process that closes stdout and stderr
-> will die very soon if it is not already dead).
+I also tried using clone with depth and --single-branch set.  It ignored
+the depth setting and gave me the whole branch all the way back to 2.6.x.
 
-Hmm, interesting.  This does match the normal "spawn, interact and
-wait" cycle for a single process much better.
+All the examples of shallow clones use depth=1. Is it broken for values
+bigger than 1 or am I missing something?
+
+I tried using graft and filter-branch. None of the descriptions are very
+clear. None of them worked either. Filter-branch died on a commit
+somewhere in 2.6 land that had no author. (Which is outside of the commits
+I want to keep.)
+
+I tried creating an orphan branch and using cherry-pick
+v3.12-rc1..linux-3.12.y. It blew up on the first merge commit it hit. I
+tried adding in "-m 1" to try to get it to pick a parent, but then it died
+on the first commit because it was not a merge.
+
+Why is this so hard?
+
+All I want to do is take a branch from linux-stable and create a branch
+that contains just the commits from where it was branched off of master
+until it hits HEAD. That is it. All the scripts that I have seen that
+claim to do just what I want break when it hits a merge or a bogus author.
+(How that got into linux-stable, I have no idea. The commit is 10 year
+old!)
+
+Ideas? Do I need to create a new command? ("cake-cutter". Cut from
+commit..commit and make a new branch out of it.)
