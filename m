@@ -1,80 +1,76 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/2] Remove non-blocking fds from run-command.
-Date: Thu,  5 Nov 2015 10:17:17 -0800
-Message-ID: <1446747439-30349-1-git-send-email-sbeller@google.com>
-Cc: peff@peff.net, gitster@pobox.com, johannes.schindelin@gmail.com,
-	Jens.Lehmann@web.de, ericsunshine@gmail.com, tboegi@web.de,
-	j6t@kdbg.org, Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 05 19:17:39 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 3/3] Move all the SHA1 implementations into one directory
+Date: Thu, 05 Nov 2015 10:29:09 -0800
+Message-ID: <xmqq8u6c711m.fsf@gitster.mtv.corp.google.com>
+References: <1446705523-30701-1-git-send-email-apahlevan@ieee.org>
+	<1446705523-30701-3-git-send-email-apahlevan@ieee.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Atousa Pahlevan Duprat <apahlevan@ieee.org>
+To: atousa.p@gmail.com
+X-From: git-owner@vger.kernel.org Thu Nov 05 19:29:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuP6K-0004qf-1L
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 19:17:32 +0100
+	id 1ZuPHi-0007IT-EN
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Nov 2015 19:29:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162123AbbKESRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 13:17:23 -0500
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:32879 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964781AbbKESRX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 13:17:23 -0500
-Received: by pabfh17 with SMTP id fh17so94274472pab.0
-        for <git@vger.kernel.org>; Thu, 05 Nov 2015 10:17:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=W3UBjINeCs9awmPh3qZ2TRO5o1TKo7Nb97WqwweS3MQ=;
-        b=S1rc4CNn7OTECl+Hrvok6Sj8YX0A2cQQytgrtxOi0lIqTQPi0S6KMokSLXpzt/rqmX
-         yOFPXFrugAiNYp7l4nb/8dpvttmtz18Pjw9kRB2kG6leU5mQL8vV8ZW5+ZT3uO7eJTvW
-         r6ycTaje+fpP0fr9FFqojwtOdkbSM+TzGZdyUyKPx9l1XGExGdeO8C7W9eDzzeXL0iA/
-         zeOo+9rUPAhb23nmjLjNTGxJyG1SRII4owD6bUguMA7qIa7M5uPZrTNDrMlLpbKJSxAp
-         bhbIl5x/dHKDWEl/NdY4esp/WbZXDfkb8TkpBtlNv4ETE1XvAgxTLI/VkbiUQrUo2IKZ
-         JhmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=W3UBjINeCs9awmPh3qZ2TRO5o1TKo7Nb97WqwweS3MQ=;
-        b=E2rLygOs8CuV6koRau355r7Sb4Pku4PVUumJxt04aevMDkgmMYWj8HWHxzi0tYpLov
-         8fUqWv8kYdkXaS3WyT1kmxrGfatEqYmoG1+vM9GnsP8BHHEgbSc2vmkUt8+273sT1zm5
-         ThrkvoOj4TcSCvAEqFuuvO6ZpVhiUtpX9Z4o4o6Q6xsojBMdFCpqcgi/htf/h4Wel99Q
-         /WR1NVPf4r0TLI5fw1F1k/wTEfUf6cpeW8wH4jg4tpStHS7Q6ESmWmVHYSO/qoIGyv5M
-         RaZIAy6GaJtvLYVCI8VoEM14UUFVp+HA4tM96VB47wXKmtBotd5kzfqqVawPlNX+i0JG
-         rUOw==
-X-Gm-Message-State: ALoCoQlKgnLyTzD76nvhLqv6k2ChRhbyVr+pwXDM9H6SmIvdKWcdD8U1N5KWRh/lkT0VgsYqjedi
-X-Received: by 10.66.251.6 with SMTP id zg6mr10743815pac.79.1446747442184;
-        Thu, 05 Nov 2015 10:17:22 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:8805:9922:277f:8125])
-        by smtp.gmail.com with ESMTPSA id ck9sm9157016pad.28.2015.11.05.10.17.21
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 05 Nov 2015 10:17:21 -0800 (PST)
-X-Mailer: git-send-email 2.6.1.247.ge8f2a41.dirty
+	id S965774AbbKES3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 13:29:13 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61856 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965705AbbKES3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 13:29:12 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D2C5428A82;
+	Thu,  5 Nov 2015 13:29:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QmNCJJfIraD/ipa7N4+r7ezV7Mc=; b=ExMGas
+	Eth7zF8k5B9Snkkc70qNsevKmILj4VUgRH1ZgGdcBpWxrtDC33GHW1jDhquPJUIb
+	LTCH7xao7n0giGk0/4/05VI8AMww+xugZclTRiVfF2WUvjF5ZpD9boCDEhjyxgB6
+	8Nth5g4ZpE0AC8QUzZL706bZV0d0qmEfpozFQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=X1ewnV8Ofz9mZBURnG+s7RgXajB/Ni0h
+	feRNhgiUC5+r79JygHhRDB69L90LYrxXG9oL9kfDGlx/bkElEYf1wO2w2UlD8vRV
+	WdxROln0f+aKlIeBnxV3Ol5sk/z5o/DIhUY4IkGLEas63XmSOnV70l0AZq6iA35b
+	85De/lcapF8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CBB8928A80;
+	Thu,  5 Nov 2015 13:29:11 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5714928A7F;
+	Thu,  5 Nov 2015 13:29:11 -0500 (EST)
+In-Reply-To: <1446705523-30701-3-git-send-email-apahlevan@ieee.org> (atousa
+	p.'s message of "Wed, 4 Nov 2015 22:38:43 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1BEC7964-83EB-11E5-ADBC-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280931>
 
-So as far as I understand, all of the discussion participants (Torsten, Jeff,
-Junio and me) are convinced we don't need the non-blocking feature. So remove it.
+atousa.p@gmail.com writes:
 
-I developed it on top of d075d2604c0 (Merge branch 'rs/daemon-plug-child-leak' into sb/submodule-parallel-update)
-but AFAICT it also applies to sb/submodule-parallel-fetch.
+> From: Atousa Pahlevan Duprat <apahlevan@ieee.org>
+>
+> The various SHA1 implementations were spread around in 3 directories.
+> This makes it easier to understand what implementations are
+> available at a glance.
+>
+> Signed-off-by: Atousa Pahlevan Duprat <apahlevan@ieee.org>
+> ---
 
-This will fix compilation in Windows without any platform specific hacks.
+I am not strongly opposed to moving block and ppc (I am not strongly
+for the movement, either, though).
 
-Thanks,
-Stefan
-
-Stefan Beller (2):
-  run-command: Remove set_nonblocking
-  strbuf: Correct documentation for strbuf_read_once
-
- run-command.c | 13 -------------
- strbuf.h      |  3 +--
- 2 files changed, 1 insertion(+), 15 deletions(-)
-
--- 
-2.6.1.247.ge8f2a41.dirty
+I however think the chunked one should not be mixed together with
+them--it is not a full SHA-1 hash implementation but belongs to a
+different layer of abstration (and that is the reason why we
+introduced a new layer of indirection in 1/3).
