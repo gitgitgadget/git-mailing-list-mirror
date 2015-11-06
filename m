@@ -1,7 +1,7 @@
 From: larsxschneider@gmail.com
-Subject: [PATCH v4 3/4] git-p4: retry kill/cleanup operations in tests with timeout
-Date: Fri,  6 Nov 2015 09:58:42 +0100
-Message-ID: <1446800323-2914-4-git-send-email-larsxschneider@gmail.com>
+Subject: [PATCH v4 2/4] git-p4: add p4d timeout in tests
+Date: Fri,  6 Nov 2015 09:58:41 +0100
+Message-ID: <1446800323-2914-3-git-send-email-larsxschneider@gmail.com>
 References: <1446800323-2914-1-git-send-email-larsxschneider@gmail.com>
 Cc: sunshine@sunshineco.com, sschuberth@gmail.com,
 	Matthieu.Moy@grenoble-inp.fr, avila.jn@gmail.com, luke@diamand.org,
@@ -13,108 +13,96 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZucrM-0007cS-6n
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 09:59:00 +0100
+	id 1ZucrK-0007cS-W7
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 09:58:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1032965AbbKFI6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2015 03:58:55 -0500
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:36572 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1032817AbbKFI6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2015 03:58:50 -0500
-Received: by wimw2 with SMTP id w2so25927637wim.1
-        for <git@vger.kernel.org>; Fri, 06 Nov 2015 00:58:49 -0800 (PST)
+	id S1032930AbbKFI6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2015 03:58:51 -0500
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:33026 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031997AbbKFI6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2015 03:58:49 -0500
+Received: by wijp11 with SMTP id p11so25802394wij.0
+        for <git@vger.kernel.org>; Fri, 06 Nov 2015 00:58:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3LCFAsF8N7F4lc+qNuPwT5g/2nATvzP6dwffMm5DOaY=;
-        b=uOn0TjN24Xuy4BqPEkli67V2nJwItJGiXrCoSGbarh1BDqsSjlKasY5G2/ip9ywmWF
-         /G80J0KXQ7CGLrc8/h+8PXVYQWZdpd5MyWgZ/24rtivF4zR6q9FjI7qucy+VBmod+L2J
-         x5Dq85UEoXDu/W6aNLjoko86QMKWy3oUs/DirUU51KeU/V6nS2pAgZN4NxUlCCmP5qt5
-         zVpHqP6yRD3Bhy5NKQpdrJHW0heUIY5tyEyg03MwwY8lXRoIsIj9NaRupTFzv7JmsbJY
-         UQQGYQYBXkiG8ag1mNXd+IQOoocWFVRju6fSz9WIl2/i48HE4HgT7naUaT8U2pg30SiQ
-         Ln2A==
-X-Received: by 10.194.134.72 with SMTP id pi8mr13105225wjb.34.1446800329411;
-        Fri, 06 Nov 2015 00:58:49 -0800 (PST)
-Received: from slxBook3.fritz.box (p5DDB59AE.dip0.t-ipconnect.de. [93.219.89.174])
-        by smtp.gmail.com with ESMTPSA id cr5sm11098003wjb.16.2015.11.06.00.58.48
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=MkZZm2ZdPzV1DATl9xAQaMsBilaXU3PBBKOmDv+8O3Q=;
+        b=nZSxHSwcjykB+Gxt+M7v8VIFv/VMvg9dMyQpMpaMRGU/uOiZ+p2v+G3/x7ODdye3Je
+         73GouoTwn5nHvbhJcFR3jSID13dGZ3kYB25hPZvOoHLt/TUGi/+i8QWD7/UMXuAlECxk
+         2L+yqo70HIBd5BAaG0U6r++9VWSistZWrrl9cYdHT8WDO1RtPgJjZKfz9q2u9m+vBk2X
+         w4DGVOeqP1hmlDIEm6KG/BvOYwsdD/hMvp5o6o0zmkzC/6Je8DXsqr2LzB8j0jw7n4C0
+         Uz+C4Yond8gWhYHXFyNI5cSQMUBE4G2vEZZJidD608JfZVuozLxRR8tA6MabKhf/ptzd
+         YKLg==
+X-Received: by 10.194.115.69 with SMTP id jm5mr1823806wjb.156.1446800328388;
         Fri, 06 Nov 2015 00:58:48 -0800 (PST)
+Received: from slxBook3.fritz.box (p5DDB59AE.dip0.t-ipconnect.de. [93.219.89.174])
+        by smtp.gmail.com with ESMTPSA id cr5sm11098003wjb.16.2015.11.06.00.58.47
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 06 Nov 2015 00:58:47 -0800 (PST)
 X-Mailer: git-send-email 2.5.1
 In-Reply-To: <1446800323-2914-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280967>
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-In rare cases kill/cleanup operations in tests fail. Retry these
-operations with a timeout to make the test less flaky.
+In rare cases p4d seems to hang. This watchdog will kill the p4d
+process after 300s in any case. That means each individual git p4 test
+needs to finish before 300s or it will fail.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- t/lib-git-p4.sh | 31 +++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+ t/lib-git-p4.sh | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
-index b1660f6..9043b51 100644
+index 7548225..b1660f6 100644
 --- a/t/lib-git-p4.sh
 +++ b/t/lib-git-p4.sh
-@@ -10,6 +10,10 @@ TEST_NO_CREATE_REPO=NoThanks
- # the defined timeout in seconds.
- P4D_TIMEOUT=300
+@@ -6,6 +6,10 @@
+ # a subdirectory called "$git"
+ TEST_NO_CREATE_REPO=NoThanks
  
-+# Some operations require multiple attempts to be successful. Define
-+# here the maximal retry timeout in seconds.
-+RETRY_TIMEOUT=60
++# Sometimes p4d seems to hang. Terminate the p4d process automatically after
++# the defined timeout in seconds.
++P4D_TIMEOUT=300
 +
  . ./test-lib.sh
  
  if ! test_have_prereq PYTHON
-@@ -138,14 +142,24 @@ p4_add_user() {
- 	EOF
- }
- 
-+retry_until_success() {
-+    timeout=$(($(date +%s) + $RETRY_TIMEOUT))
-+    until "$@" 2>/dev/null || test $(date +%s) -gt $timeout
-+    do :
-+    done
-+}
-+
-+retry_until_fail() {
-+    timeout=$(($(date +%s) + $RETRY_TIMEOUT))
-+    until ! "$@" 2>/dev/null || test $(date +%s) -gt $timeout
-+    do :
-+    done
-+}
-+
- kill_p4d() {
+@@ -81,6 +85,19 @@ start_p4d() {
+ 	# will be caught with the "kill -0" check below.
+ 	i=${P4D_START_PATIENCE:-300}
  	pid=$(cat "$pidfile")
--	# it had better exist for the first kill
--	kill $pid &&
--	for i in 1 2 3 4 5 ; do
--		kill $pid >/dev/null 2>&1 || break
--		sleep 1
--	done &&
-+	retry_until_fail kill $pid
-+	retry_until_fail kill -9 $pid
++
++	timeout=$(($(date +%s) + $P4D_TIMEOUT))
++    while true
++	do
++		if test $(date +%s) -gt $timeout
++		then
++			kill -9 $pid
++			exit 1
++		fi
++		sleep 1
++	done &
++	watchdog_pid=$!
++
+ 	ready=
+ 	while test $i -gt 0
+ 	do
+@@ -131,7 +148,8 @@ kill_p4d() {
+ 	done &&
  	# complain if it would not die
  	test_must_fail kill $pid >/dev/null 2>&1 &&
- 	rm -rf "$db" "$cli" "$pidfile" &&
-@@ -153,8 +167,9 @@ kill_p4d() {
+-	rm -rf "$db" "$cli" "$pidfile"
++	rm -rf "$db" "$cli" "$pidfile" &&
++	retry_until_fail kill -9 $watchdog_pid
  }
  
  cleanup_git() {
--	rm -rf "$git" &&
--	mkdir "$git"
-+	retry_until_success rm -r "$git"
-+	test_must_fail test -d "$git" &&
-+	retry_until_success mkdir "$git"
- }
- 
- marshal_dump() {
 -- 
 2.5.1
