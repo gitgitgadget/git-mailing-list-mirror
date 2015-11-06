@@ -1,266 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: A note from the maintainer
-Date: Thu, 05 Nov 2015 15:14:06 -0800
-Message-ID: <xmqqa8qs3upt.fsf@gitster.mtv.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Odd problems trying to build an orphaned branch
+Date: Thu, 5 Nov 2015 19:18:32 -0500
+Message-ID: <20151106001832.GB9963@sigill.intra.peff.net>
+References: <1bf03e2146ceb5bb36b81f1ce64354b0.squirrel@clueserver.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 06 00:14:18 2015
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: alan@clueserver.org
+X-From: git-owner@vger.kernel.org Fri Nov 06 01:18:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuTjU-0004B1-VK
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 00:14:17 +0100
+	id 1ZuUjv-0007v9-Bn
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 01:18:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756886AbbKEXOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 18:14:10 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51785 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756736AbbKEXOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 18:14:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BF26727558;
-	Thu,  5 Nov 2015 18:14:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=+
-	sSZVxowZInNeQkDx/Dp076RiSc=; b=Fiz9YaDoazwim/yWrIlSyLEmJiylpNsvU
-	iQ6JzgqLxQOZK2Dq44y2Dr/jP1hAk5eTiLuYk5S5zo+0XC+Ny5WIvI+u4tY3imbM
-	EVdicLj2TV+HkPkm9LT1F4z9jtESI/t0cQBdTP4EHczrLnuie/sZrbOJ2U0lveXe
-	WAVcEoihUw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=mSG
-	GgYjQ1Bqn6Wqnm7oShpHQVFyh4+KJ4Wk+ZMfBdyzN5cmJTHP85ptdHuMpx5xkYjY
-	11u3Cq4p3PiXrNbSIy1zJhDgGtHpf/3zGPe0LEBg11eaifopQEhTl5FchHGU56JA
-	ctNU0oJnZeWKwcLuc9kFYFHU+EuMl31o6ujOSIaM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B687827557;
-	Thu,  5 Nov 2015 18:14:07 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 25CA127553;
-	Thu,  5 Nov 2015 18:14:07 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E9CFDF52-8412-11E5-B874-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S965997AbbKFASi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 19:18:38 -0500
+Received: from cloud.peff.net ([50.56.180.127]:53770 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965929AbbKFASf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 19:18:35 -0500
+Received: (qmail 14149 invoked by uid 102); 6 Nov 2015 00:18:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 18:18:35 -0600
+Received: (qmail 20577 invoked by uid 107); 6 Nov 2015 00:19:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 05 Nov 2015 19:19:01 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Nov 2015 19:18:32 -0500
+Content-Disposition: inline
+In-Reply-To: <1bf03e2146ceb5bb36b81f1ce64354b0.squirrel@clueserver.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280949>
 
-Welcome to the Git development community.
+On Thu, Nov 05, 2015 at 01:16:54PM -0800, alan@clueserver.org wrote:
 
-This message is written by the maintainer and talks about how Git
-project is managed, and how you can work with it.
+> I created an orphan branch from 3.12-rc1. I then used git format-patch to
+> generate patches from 3.12-rc1 to HEAD. (Over 7000 patches.) I use git am
+> to apply them to the orphan branch. At patch 237 it fails to apply. (It
+> appears the patch is from a block of code added with a merge commit, but
+> it is somewhere in the middle of the block.)
+> 
+> Are merge commits supposed to screw up git-format-patch?
 
-* Mailing list and the community
+Yes. There is no defined format for merge patches, so git-format-patch
+cannot show them. What you're trying to do won't work.
 
-The development is primarily done on the Git mailing list. Help
-requests, feature proposals, bug reports and patches should be sent to
-the list address <git@vger.kernel.org>.  You don't have to be
-subscribed to send messages.  The convention on the list is to keep
-everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
-I am not subscribed".
+If your goal is to have the history at HEAD truncated at 3.12-rc1, you
+are probably better off using a graft and having "filter-branch" rewrite
+the history based on that. That will preserve merges and the general
+shape of history.
 
-Before sending patches, please read Documentation/SubmittingPatches
-and Documentation/CodingGuidelines to familiarize yourself with the
-project convention.
+> I also tried using clone with depth and --single-branch set.  It ignored
+> the depth setting and gave me the whole branch all the way back to 2.6.x.
 
-If you sent a patch and you did not hear any response from anybody for
-several days, it could be that your patch was totally uninteresting,
-but it also is possible that it was simply lost in the noise.  Please
-do not hesitate to send a reminder message in such a case.  Messages
-getting lost in the noise may be a sign that those who can evaluate
-your patch don't have enough mental/time bandwidth to process them
-right at the moment, and it often helps to wait until the list traffic
-becomes calmer before sending such a reminder.
+Was it a local clone? Depth is ignored for those (it _should_ print a
+warning). If so, try --no-local to make it act like a "regular" clone.
 
-The list archive is available at a few public sites:
+> I tried using graft and filter-branch. None of the descriptions are very
+> clear. None of them worked either. Filter-branch died on a commit
+> somewhere in 2.6 land that had no author. (Which is outside of the commits
+> I want to keep.)
 
-        http://news.gmane.org/gmane.comp.version-control.git/
-        http://marc.theaimsgroup.com/?l=git
-        http://www.spinics.net/lists/git/
+I suspect you need to graft more than just the commit at v3.12-rc1. For
+example, consider this history graph:
 
-For those who prefer to read it over NNTP:
+  --A--B--C--D---G--H
+           \    /
+            E--F
 
-        nntp://news.gmane.org/gmane.comp.version-control.git
+If we imagine that H is the current HEAD, and D is our tag (v3.12-rc1),
+then making a cut between D and C will not have any effect on the side
+branch that contains E and F. Commits A and B are still reachable
+through them.
 
-When you point at a message in a mailing list archive, using
-gmane is often the easiest to follow by readers, like this:
+You can find the complete set of boundary commits like this:
 
-        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
+  git log --boundary --format='%m %H' v3.12-rc1..HEAD
 
-as it also allows people who subscribe to the mailing list as gmane
-newsgroup to "jump to" the article.
+and then graft them all like this:
 
-Some members of the development community can sometimes be found on
-the #git and #git-devel IRC channels on Freenode.  Their logs are
-available at:
+  git log --boundary --format='%m %H' v3.12-rc1..HEAD |
+    grep ^- | cut -d' ' -f2 >.git/info/grafts
 
-        http://colabti.org/irclogger/irclogger_log/git
-        http://colabti.org/irclogger/irclogger_log/git-devel
+Then you should be able to run "git filter-branch" to rewrite the
+history based on that.
 
-There is a volunteer-run newsletter to serve our community ("Git Rev
-News" http://git.github.io/rev_news/rev_news.html).
+I think you can probably get the same effect by running:
 
-Git is a member project of software freedom conservancy, a non-profit
-organization (https://sfconservancy.org/).  To reach a committee of
-liaisons to the conservancy, contact them at <git@sfconservancy.org>.
+  git filter-branch v3.12-rc1..HEAD
 
+Of course that leaves only the problem that filter-branch is
+horrendously slow (for the kernel, most of the time goes to populating
+the index for each commit; I think filter-branch could probably learn to
+skip this step if there is no index or tree filter at work).
 
-* Reporting bugs
+> I tried creating an orphan branch and using cherry-pick
+> v3.12-rc1..linux-3.12.y. It blew up on the first merge commit it hit. I
+> tried adding in "-m 1" to try to get it to pick a parent, but then it died
+> on the first commit because it was not a merge.
 
-When you think git does not behave as you expect, please do not stop
-your bug report with just "git does not work".  "I used git in this
-way, but it did not work" is not much better, neither is "I used git
-in this way, and X happend, which is broken".  It often is that git is
-correct to cause X happen in such a case, and it is your expectation
-that is broken. People would not know what other result Y you expected
-to see instead of X, if you left it unsaid.
+That won't do what you want. Cherry-pick doesn't preserve merges. When
+you pick a merge and choose a mainline, it is effectively saying "treat
+that as the only interesting parent" and squashes the result down to a
+single non-merge commit.
 
-Please remember to always state
+If you wanted to follow this path (starting at an orphan and moving the
+patches over), I think rebase's "--preserve-merges" would be your best
+bet. It used to have some corner cases, though, and I don't know if
+those were ever fixed. I'd say filter-branch is the most-supported way
+to do what you want.
 
- - what you wanted to achieve;
+> All I want to do is take a branch from linux-stable and create a branch
+> that contains just the commits from where it was branched off of master
+> until it hits HEAD. That is it. All the scripts that I have seen that
+> claim to do just what I want break when it hits a merge or a bogus author.
+> (How that got into linux-stable, I have no idea. The commit is 10 year
+> old!)
 
- - what you did (the version of git and the command sequence to reproduce
-   the behavior);
+As an aside, which commit caused the bogus-author problem? Filter-branch
+generally tries to preserve or fix problems rather than barfing, exactly
+because it is often used to rewrite-out crap. I wonder if there is
+something it could be doing better (though again, I think in your case
+you are hitting the commit only because of an incomplete cut with your
+grafts).
 
- - what you saw happen (X above);
-
- - what you expected to see (Y above); and
-
- - how the last two are different.
-
-See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
-hints.
-
-If you think you found a security-sensitive issue and want to disclose
-it to us without announcing it to wider public, please contact us at
-our security mailing list <git-security@googlegroups.com>.
-
-
-* Repositories, branches and documentation.
-
-My public git.git repositories are at:
-
-  git://git.kernel.org/pub/scm/git/git.git/
-  https://kernel.googlesource.com/pub/scm/git/git
-  git://repo.or.cz/alt-git.git/
-  https://github.com/git/git/
-  git://git.sourceforge.jp/gitroot/git-core/git.git/
-  git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
-
-A few web interfaces are found at:
-
-  http://git.kernel.org/cgit/git/git.git
-  https://kernel.googlesource.com/pub/scm/git/git
-  http://repo.or.cz/w/alt-git.git
-
-Preformatted documentation from the tip of the "master" branch can be
-found in:
-
-  git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-  git://repo.or.cz/git-{htmldocs,manpages}.git/
-  https://github.com/gitster/git-{htmldocs,manpages}.git/
-
-Also GitHub shows the manual pages formatted in HTML (with a
-formatting backend different from the one that is used to create the
-above) at:
-
-  http://git-scm.com/docs/git
-
-There are four branches in git.git repository that track the source tree
-of git: "master", "maint", "next", and "pu".
-
-The "master" branch is meant to contain what are very well tested and
-ready to be used in a production setting.  Every now and then, a
-"feature release" is cut from the tip of this branch.  They used to be
-named with three dotted decimal digits (e.g. "1.8.5"), but recently we
-switched the versioning scheme and "feature releases" are named with
-three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
-
-The last such release was 2.6.0 done on Sep 28th, 2015. You can expect
-that the tip of the "master" branch is always more stable than any of
-the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off from
-"master" at that point.  Obvious, safe and urgent fixes after a
-feature release are applied to this branch and maintenance releases
-are cut from it.  The maintenance releases used to be named with four
-dotted decimal, named after the feature release they are updates to
-(e.g. "1.8.5.1" was the first maintenance release for "1.8.5" feature
-release).  These days, maintenance releases are named by incrementing
-the last digit of three-dotted decimal name (e.g. "2.6.3" is the
-third maintenance release for the "2.6" series).
-
-New features never go to the 'maint' branch.  This branch is also
-merged into "master" to propagate the fixes forward as needed.
-
-A new development does not usually happen on "master". When you send a
-series of patches, after review on the mailing list, a separate topic
-branch is forked from the tip of "master" and your patches are queued
-there, and kept out of "master" while people test it out. The quality of
-topic branches are judged primarily by the mailing list discussions.
-
-Topic branches that are in good shape are merged to the "next" branch. In
-general, the "next" branch always contains the tip of "master".  It might
-not be quite rock-solid, but is expected to work more or less without major
-breakage. The "next" branch is where new and exciting things take place. A
-topic that is in "next" is expected to be polished to perfection before it
-is merged to "master".  Please help this process by building & using the
-"next" branch for your daily work, and reporting any new bugs you find to
-the mailing list, before the breakage is merged down to the "master".
-
-The "pu" (proposed updates) branch bundles all the remaining topic
-branches the maintainer happens to have seen.  There is no guarantee that
-the maintainer has enough bandwidth to pick up any and all topics that
-are remotely promising from the list traffic, so please do not read
-too much into a topic being on (or not on) the "pu" branch.  This
-branch is mainly to remind the maintainer that the topics in them may
-turn out to be interesting when they are polished, nothing more.  The
-topics on this branch aren't usually complete, well tested, or well
-documented and they often need further work.  When a topic that was
-in "pu" proves to be in a testable shape, it is merged to "next".
-
-You can run "git log --first-parent master..pu" to see what topics are
-currently in flight.  Sometimes, an idea that looked promising turns out
-to be not so good and the topic can be dropped from "pu" in such a case.
-
-The two branches "master" and "maint" are never rewound, and "next"
-usually will not be either.  After a feature release is made from
-"master", however, "next" will be rebuilt from the tip of "master"
-using the topics that didn't make the cut in the feature release.
-
-Note that being in "next" is not a guarantee to appear in the next
-release, nor even in any future release.  There were cases that topics
-needed reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" was reverted from "next" because
-fatal flaws were found in it after it was merged to "next".
-
-
-* Other people's trees.
-
-Documentation/SubmittingPatches outlines to whom your proposed changes
-should be sent.  As described in contrib/README, I would delegate fixes
-and enhancements in contrib/ area to the primary contributors of them.
-
-Although the following are included in git.git repository, they have their
-own authoritative repository and maintainers:
-
- - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
-
-        git://repo.or.cz/git-gui.git
-
- - gitk-git/ comes from Paul Mackerras's gitk project:
-
-        git://ozlabs.org/~paulus/gitk
-
- - po/ comes from the localization coordinator, Jiang Xin:
-
-	https://github.com/git-l10n/git-po/
-
-When sending proposed updates and fixes to these parts of the system,
-please base your patches on these trees, not git.git (the former two
-even have different directory structures).
+-Peff
