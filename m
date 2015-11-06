@@ -1,89 +1,100 @@
-From: "Rainer M. Canavan" <git@canavan.de>
-Subject: [PATCH] In configure.ac, try -lpthread in $LIBS instead of $CFLAGS to make picky linkers happy
-Date: Fri, 6 Nov 2015 02:11:37 +0100 (CET)
-Message-ID: <201511060111.tA61BbFX084361@tezro.nonet>
-References: <vpqa8qwst4y.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Matthieu.Moy@grenoble-inp.fr
+From: David Greene <greened@obbligato.org>
+Subject: [PATCH 7/7] contrib/subtree: Handle '--prefix' argument with a slash appended
+Date: Thu,  5 Nov 2015 21:35:03 -0600
+Message-ID: <1446780903-22156-8-git-send-email-greened@obbligato.org>
+References: <1446780903-22156-1-git-send-email-greened@obbligato.org>
+Cc: techlivezheng@gmail.com, alex.crezoff@gmail.com, davvid@gmail.com,
+	cbailey32@bloomberg.net, danny0838@gmail.com, prohaska@zib.de,
+	th.acker@arcor.de, sschuberth@gmail.com, peff@peff.net,
+	gitter.spiros@gmail.com, nod.helm@gmail.com,
+	"David A . Greene" <greened@obbligato.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 06 02:13:14 2015
+X-From: git-owner@vger.kernel.org Fri Nov 06 05:20:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuVab-0005KC-KR
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 02:13:13 +0100
+	id 1ZuYW7-00076B-Dl
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 05:20:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030660AbbKFBNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Nov 2015 20:13:09 -0500
-Received: from [213.196.234.34] ([213.196.234.34]:50720 "EHLO turms.7val.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1030447AbbKFBNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2015 20:13:07 -0500
-Received: from localhost (amavis.7val.com [172.22.0.32])
-	by localhost (Postfix) with ESMTP id 505D43956EBE;
-	Fri,  6 Nov 2015 02:12:10 +0100 (CET)
-Received: from turms.7val.com ([172.22.0.34])
-	by localhost (amavis.7val.com [172.22.0.32]) (amavisd-new, port 10024)
-	with ESMTP id tzbNNk+5YHPP; Fri,  6 Nov 2015 02:12:07 +0100 (CET)
-Received: from qube.nonet (xdsl-78-35-202-116.netcologne.de [78.35.202.116])
-	by turms.7val.com (Postfix) with ESMTP;
-	Fri,  6 Nov 2015 02:12:07 +0100 (CET)
-Received: from tezro.nonet (tezro.nonet [10.0.0.1])
-	by qube.nonet (Postfix) with ESMTP id 0C44E2DB21;
-	Fri,  6 Nov 2015 02:12:04 +0100 (CET)
-Received: from tezro.nonet (localhost [127.0.0.1])
-	by tezro.nonet (SGI-8.12.11.20060308/8.12.11) with ESMTP id tA61Bc73084362;
-	Fri, 6 Nov 2015 02:11:38 +0100 (CET)
-Received: (from canavan@localhost)
-	by tezro.nonet (SGI-8.12.11.20060308/8.12.11/Submit) id tA61BbFX084361;
-	Fri, 6 Nov 2015 02:11:37 +0100 (CET)
-In-Reply-To: <vpqa8qwst4y.fsf@anie.imag.fr>
-X-Mailer: Ishmail 2.1.0-20150803-mips-sgi-irix6.5 <http://ishmail.sourceforge.net>
+	id S1031254AbbKFEUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Nov 2015 23:20:43 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:48859 "EHLO
+	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1030793AbbKFEUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Nov 2015 23:20:42 -0500
+X-Greylist: delayed 2718 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Nov 2015 23:20:42 EST
+Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.us.cray.com)
+	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_CBC_SHA256:128)
+	(Exim 4.85)
+	(envelope-from <greened@obbligato.org>)
+	id 1ZuXpJ-0005Zp-VX; Thu, 05 Nov 2015 21:36:34 -0600
+X-Mailer: git-send-email 2.6.1
+In-Reply-To: <1446780903-22156-1-git-send-email-greened@obbligato.org>
+X-Filter-Spam-Score: ()
+X-Filter-Spam-Report: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280952>
 
-Some linkers, namely the one on IRIX are rather strict concerning the order or
-arguments for symbol resolution, i.e. no libraries listed before objects or
-other libraries on the command line are considered for symbol resolution. 
-Therefore, -lpthread can't work if it's put in CFLAGS, because it will not be
-considered for resolving pthread_key_create in conftest.o. Use $LIBS instead.
+From: Techlive Zheng <techlivezheng@gmail.com>
 
-Signed-off-by: Rainer Canavan <git@canavan.de>
+'git subtree merge' will fail if the argument of '--prefix' has a slash
+appended.
+
+Signed-off-by: Techlive Zheng <techlivezheng@gmail.com>
+Signed-off-by: David A. Greene <greened@obbligato.org>
 ---
- configure.ac | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ contrib/subtree/git-subtree.sh     |  2 +-
+ contrib/subtree/t/t7900-subtree.sh | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/configure.ac b/configure.ac
-index fd22d41..1f55009 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -1149,7 +1149,12 @@ elif test -z "$PTHREAD_CFLAGS"; then
-   # would then trigger compiler warnings on every single file we compile.
-   for opt in "" -mt -pthread -lpthread; do
-      old_CFLAGS="$CFLAGS"
--     CFLAGS="$opt $CFLAGS"
-+     old_LIBS="$LIBS"
-+     case "$opt" in
-+        -l*)  LIBS="$opt $LIBS" ;;
-+        *)    CFLAGS="$opt $CFLAGS" ;;
-+     esac
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 308b777..edf36f8 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -90,7 +90,7 @@ while [ $# -gt 0 ]; do
+ 		--annotate) annotate="$1"; shift ;;
+ 		--no-annotate) annotate= ;;
+ 		-b) branch="$1"; shift ;;
+-		-P) prefix="$1"; shift ;;
++		-P) prefix="${1%/}"; shift ;;
+ 		-m) message="$1"; shift ;;
+ 		--no-prefix) prefix= ;;
+ 		--onto) onto="$1"; shift ;;
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 2683d7d..751aee3 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -257,6 +257,26 @@ test_expect_success 'merge the added subproj again, should do nothing' '
+ 	)
+ '
+ 
++next_test
++test_expect_success 'merge new subproj history into subdir/ with a slash appended to the argument of --prefix' '
++	test_create_repo "$test_count" &&
++	test_create_repo "$test_count/subproj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/subproj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./subproj master &&
++		git subtree add --prefix=subdir/ FETCH_HEAD
++	) &&
++	test_create_commit "$test_count/subproj" sub2 &&
++	(
++		cd "$test_count" &&
++		git fetch ./subproj master &&
++		git subtree merge --prefix=subdir/ FETCH_HEAD &&
++		check_equal "$(last_commit_message)" "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
++	)
++'
 +
-      AC_MSG_CHECKING([for POSIX Threads with '$opt'])
-      AC_LINK_IFELSE([PTHREADTEST_SRC],
- 	[AC_MSG_RESULT([yes])
-@@ -1161,6 +1166,7 @@ elif test -z "$PTHREAD_CFLAGS"; then
- 	],
- 	[AC_MSG_RESULT([no])])
-       CFLAGS="$old_CFLAGS"
-+      LIBS="$old_LIBS"
-   done
-   if test $threads_found != yes; then
-     AC_CHECK_LIB([pthread], [pthread_create],
+ #
+ # Tests for 'git subtree split'
+ #
 -- 
-2.6.2
+2.6.1
