@@ -1,236 +1,160 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 1/4] add function test_must_fail_or_sigpipe and use it to fix flaky tests
-Date: Fri, 06 Nov 2015 10:27:02 -0800
-Message-ID: <xmqqr3k32dc9.fsf@gitster.mtv.corp.google.com>
-References: <1446800323-2914-1-git-send-email-larsxschneider@gmail.com>
-	<1446800323-2914-2-git-send-email-larsxschneider@gmail.com>
+From: alan@clueserver.org
+Subject: Re: Odd problems trying to build an orphaned branch
+Date: Fri, 6 Nov 2015 10:32:56 -0800
+Message-ID: <929fa95cedaa2d2588753864b77380e9.squirrel@clueserver.org>
+References: <1bf03e2146ceb5bb36b81f1ce64354b0.squirrel@clueserver.org>
+    <20151106001832.GB9963@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, sschuberth@gmail.com,
-	Matthieu.Moy@grenoble-inp.fr, avila.jn@gmail.com, luke@diamand.org,
-	dturner@twopensource.com
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Fri Nov 06 19:27:20 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: alan@clueserver.org, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 06 19:33:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuljK-0008DQ-N6
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 19:27:19 +0100
+	id 1Zulou-0004nn-Dx
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 19:33:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751492AbbKFS1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2015 13:27:08 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54108 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751284AbbKFS1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2015 13:27:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0704728465;
-	Fri,  6 Nov 2015 13:27:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ewi0BcV0mS9M6UPKQWwer4v8SyE=; b=Jylt+G
-	x91zlixa1BhPai0WAM/MqyjrivhseGvKlxm/yQnb1Y6c4VfarzpX9ln7tagWHYeA
-	qnldwTTrsrVvBFIfSf2TAXCHhn+uCm3GUnuG+LcbPE+o3mbcIDoM7TTQxLUlaa7G
-	7gbKo3he4BPbeV40seVNbf0tlK5IDJlckjt48=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gjpeoD7D6fE03dwIS/30MBNq4n4nbRyo
-	AXzcIoBOykCnWDWIiAFbRCdSdDQQ3PQk6tGbcsGTCeUD/8de38OOA9HF0v6hfudg
-	i8wmxsTijhBkWeTLnVZ208YuDqILDu+is3Immo56bEqCuU90lqCjMKOCBeHfTjHO
-	4l9J1ywp4gE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F195428463;
-	Fri,  6 Nov 2015 13:27:04 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5253C28460;
-	Fri,  6 Nov 2015 13:27:04 -0500 (EST)
-In-Reply-To: <1446800323-2914-2-git-send-email-larsxschneider@gmail.com>
-	(larsxschneider@gmail.com's message of "Fri, 6 Nov 2015 09:58:40
-	+0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: FAAB0616-84B3-11E5-9ABB-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1751734AbbKFSc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2015 13:32:58 -0500
+Received: from clueserver.org ([65.102.45.174]:60215 "EHLO clueserver.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751154AbbKFSc5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2015 13:32:57 -0500
+Received: from clueserver.org (localhost [127.0.0.1])
+	by clueserver.org (Postfix) with ESMTP id 518A36002D5;
+	Fri,  6 Nov 2015 10:32:54 -0800 (PST)
+Received: from 192.55.54.43
+        (SquirrelMail authenticated user alan)
+        by clueserver.org with HTTP;
+        Fri, 6 Nov 2015 10:32:56 -0800
+In-Reply-To: <20151106001832.GB9963@sigill.intra.peff.net>
+User-Agent: SquirrelMail/1.4.22-14.fc20
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280994>
 
-larsxschneider@gmail.com writes:
-
-> From: Lars Schneider <larsxschneider@gmail.com>
+> On Thu, Nov 05, 2015 at 01:16:54PM -0800, alan@clueserver.org wrote:
 >
-> t5516 "75 - deny fetch unreachable SHA1, allowtipsha1inwant=true" is
-> flaky in the following case:
-> 1. remote upload-pack finds out "not our ref"
-> 2. remote sends a response and closes the pipe
-> 3. fetch-pack still tries to write commands to the remote upload-pack
-> 4. write call in wrapper.c dies with SIGPIPE
+>> I created an orphan branch from 3.12-rc1. I then used git format-patch
+>> to
+>> generate patches from 3.12-rc1 to HEAD. (Over 7000 patches.) I use git
+>> am
+>> to apply them to the orphan branch. At patch 237 it fails to apply. (It
+>> appears the patch is from a block of code added with a merge commit, but
+>> it is somewhere in the middle of the block.)
+>>
+>> Are merge commits supposed to screw up git-format-patch?
 >
-> t5504 "9 - push with transfer.fsckobjects" is flaky, too, and returns
-> SIGPIPE once in a while. I had to remove the final "To dst..." output
-> check because there is no output if the process dies with SIGPIPE.
+> Yes. There is no defined format for merge patches, so git-format-patch
+> cannot show them. What you're trying to do won't work.
 
-Thanks for a clear write-up.
+This makes me worry about using git-format-patch. If it cannot handle
+merge commits correctly, then using it to send patches to customers is
+risky at best. (I work for a place that does not want to distribute the
+kernel, just patches on top of the kernel. The case of having a large
+number of merge commits in the tree seems to break that.)
 
-> This patch accepts the SIGPIPE exit as legitimate test exit.
+> If your goal is to have the history at HEAD truncated at 3.12-rc1, you
+> are probably better off using a graft and having "filter-branch" rewrite
+> the history based on that. That will preserve merges and the general
+> shape of history.
 
-It is not this patch that accepts such a failure as legit ;-).
+I tried using that.  The documentation on how to do it correctly is vague.
+It seemed to want to take the patches before the graft point, not after.
+When filter-branch hit a commit with no author, it died. (It does not
+allow a rewrite of a commit that does not have an author.)
 
-"Accept such a death-with-sigpipe also as OK when we are expecting a
-failure", perhaps?
-
-
-
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index ec22c98..22a941b 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -1162,15 +1162,15 @@ do
->  		mk_empty shallow &&
->  		(
->  			cd shallow &&
-> -			test_must_fail git fetch ../testrepo/.git $SHA1_3 &&
-> -			test_must_fail git fetch ../testrepo/.git $SHA1_1 &&
-> +			test_must_fail_or_sigpipe git fetch ../testrepo/.git $SHA1_3 &&
-> +			test_must_fail_or_sigpipe git fetch ../testrepo/.git $SHA1_1 &&
->  			git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
-
-These I understand.
-
->  			git fetch ../testrepo/.git $SHA1_1 &&
->  			git cat-file commit $SHA1_1 &&
-> -			test_must_fail git cat-file commit $SHA1_2 &&
-> +			test_must_fail_or_sigpipe git cat-file commit $SHA1_2 &&
-
-This I don't.  Under what condition is it sane for this "cat-file
-commit" to fail with sigpipe?
-
->  			git fetch ../testrepo/.git $SHA1_2 &&
->  			git cat-file commit $SHA1_2 &&
-> -			test_must_fail git fetch ../testrepo/.git $SHA1_3
-> +			test_must_fail_or_sigpipe git fetch ../testrepo/.git $SHA1_3
-
-And this I do.
-
->  		)
->  	'
->  done
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 73e37a1..19a598e 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -600,6 +600,29 @@ test_must_fail () {
->  	return 0
->  }
 >
-> +# Similar to test_must_fail, but tolerates sigpipe signal, too.
-> +
-> +test_must_fail_or_sigpipe () {
-> +	"$@"
-> +	exit_code=$?
-> +	if test $exit_code = 0; then
-> +		echo >&2 "test_must_fail: command succeeded: $*"
-> +		return 1
-> +	elif test $exit_code -ne 141 && \
-> +		 test $exit_code -gt 129 && \
-> +		 test $exit_code -le 192; then
-> +		echo >&2 "test_must_fail: died by signal: $*"
-> +		return 1
-> +	elif test $exit_code = 127; then
-> +		echo >&2 "test_must_fail: command not found: $*"
-> +		return 1
-> +	elif test $exit_code = 126; then
-> +		echo >&2 "test_must_fail: valgrind error: $*"
-> +		return 1
-> +	fi
-> +	return 0
-> +}
-> +
+>> I also tried using clone with depth and --single-branch set.  It ignored
+>> the depth setting and gave me the whole branch all the way back to
+>> 2.6.x.
+>
+> Was it a local clone? Depth is ignored for those (it _should_ print a
+> warning). If so, try --no-local to make it act like a "regular" clone.
 
-When you are coming up with this patch, you must have checked the
-existing code around this area.  Did you notice that 126 is handled
-differently between must_fail and might_fail?  Can you explain and
-justify the difference?
+I did not add any options for "local" vs "regular". What defines that?
 
-One explanation I can think of is that the contributor who did
-eeb69131 (tests: notice valgrind error in test_must_fail,
-2013-03-31) did not notice that we do essentially the same thing in
-might_fail and forgot to add it.  And it is not the fault of that
-contributor, but the fault of the duplicated and poorly organized
-code back then.
+>> I tried using graft and filter-branch. None of the descriptions are very
+>> clear. None of them worked either. Filter-branch died on a commit
+>> somewhere in 2.6 land that had no author. (Which is outside of the
+>> commits
+>> I want to keep.)
+>
+> I suspect you need to graft more than just the commit at v3.12-rc1. For
+> example, consider this history graph:
+>
+>   --A--B--C--D---G--H
+>            \    /
+>             E--F
+>
+> If we imagine that H is the current HEAD, and D is our tag (v3.12-rc1),
+> then making a cut between D and C will not have any effect on the side
+> branch that contains E and F. Commits A and B are still reachable
+> through them.
+>
+> You can find the complete set of boundary commits like this:
+>
+>   git log --boundary --format='%m %H' v3.12-rc1..HEAD
+>
+> and then graft them all like this:
+>
+>   git log --boundary --format='%m %H' v3.12-rc1..HEAD |
+>     grep ^- | cut -d' ' -f2 >.git/info/grafts
+>
+> Then you should be able to run "git filter-branch" to rewrite the
+> history based on that.
+>
+> I think you can probably get the same effect by running:
+>
+>   git filter-branch v3.12-rc1..HEAD
 
-Adding the third variant in the way this patch does is making things
-worse by inviting more mistakes.
+I will try this and see what happens.
 
-How about doing something like the attached to consolidate the
-existing two into one, and then build this third one on top?
+> Of course that leaves only the problem that filter-branch is
+> horrendously slow (for the kernel, most of the time goes to populating
+> the index for each commit; I think filter-branch could probably learn to
+> skip this step if there is no index or tree filter at work).
 
- t/test-lib-functions.sh | 41 +++++++++++++++++++++--------------------
- 1 file changed, 21 insertions(+), 20 deletions(-)
+I have to only run this once, so I don't care. Running at all would be nice.
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index e8d3c0f..54497d6 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -560,22 +560,7 @@ test_line_count () {
- # the failure could be due to a segv.  We want a controlled failure.
- 
- test_must_fail () {
--	"$@"
--	exit_code=$?
--	if test $exit_code = 0; then
--		echo >&2 "test_must_fail: command succeeded: $*"
--		return 1
--	elif test $exit_code -gt 129 && test $exit_code -le 192; then
--		echo >&2 "test_must_fail: died by signal: $*"
--		return 1
--	elif test $exit_code = 127; then
--		echo >&2 "test_must_fail: command not found: $*"
--		return 1
--	elif test $exit_code = 126; then
--		echo >&2 "test_must_fail: valgrind error: $*"
--		return 1
--	fi
--	return 0
-+	test_failure_helper test_must_fail "$@"
- }
- 
- # Similar to test_must_fail, but tolerates success, too.  This is
-@@ -590,13 +575,29 @@ test_must_fail () {
- # because we want to notice if it fails due to segv.
- 
- test_might_fail () {
-+	test_failure_helper test_might_fail "$@"
-+}
-+
-+test_failure_helper () {
-+	test_expect=$1
-+	shift
- 	"$@"
- 	exit_code=$?
--	if test $exit_code -gt 129 && test $exit_code -le 192; then
--		echo >&2 "test_might_fail: died by signal: $*"
-+	if test $test_expect != test_might_fail && test $exit_code = 0
-+	then
-+		echo >&2 "$test_expect: command succeeded: $*"
-+		return 1
-+	elif test $exit_code -gt 129 && test $exit_code -le 192
-+	then
-+		echo >&2 "$test_expect: died by signal: $*"
-+		return 1
-+	elif test $exit_code = 127
-+	then
-+		echo >&2 "$test_expect: command not found: $*"
- 		return 1
--	elif test $exit_code = 127; then
--		echo >&2 "test_might_fail: command not found: $*"
-+	elif test $exit_code = 126
-+	then
-+		echo >&2 "$test_expect: valgrind error: $*"
- 		return 1
- 	fi
- 	return 0
+>> I tried creating an orphan branch and using cherry-pick
+>> v3.12-rc1..linux-3.12.y. It blew up on the first merge commit it hit. I
+>> tried adding in "-m 1" to try to get it to pick a parent, but then it
+>> died
+>> on the first commit because it was not a merge.
+>
+> That won't do what you want. Cherry-pick doesn't preserve merges. When
+> you pick a merge and choose a mainline, it is effectively saying "treat
+> that as the only interesting parent" and squashes the result down to a
+> single non-merge commit.
+>
+> If you wanted to follow this path (starting at an orphan and moving the
+> patches over), I think rebase's "--preserve-merges" would be your best
+> bet. It used to have some corner cases, though, and I don't know if
+> those were ever fixed. I'd say filter-branch is the most-supported way
+> to do what you want.
+>
+>> All I want to do is take a branch from linux-stable and create a branch
+>> that contains just the commits from where it was branched off of master
+>> until it hits HEAD. That is it. All the scripts that I have seen that
+>> claim to do just what I want break when it hits a merge or a bogus
+>> author.
+>> (How that got into linux-stable, I have no idea. The commit is 10 year
+>> old!)
+>
+> As an aside, which commit caused the bogus-author problem? Filter-branch
+> generally tries to preserve or fix problems rather than barfing, exactly
+> because it is often used to rewrite-out crap. I wonder if there is
+> something it could be doing better (though again, I think in your case
+> you are hitting the commit only because of an incomplete cut with your
+> grafts).
+
+I will try and find it again. It is in the 2.6 tree from 2005.
