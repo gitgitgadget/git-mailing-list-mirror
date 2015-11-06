@@ -1,153 +1,62 @@
-From: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
-Subject: Re: [PATCH v2] gitk: add -C <path> commandline parameter to change
- path
-Date: Fri, 6 Nov 2015 12:49:41 +0200
-Message-ID: <563C85C5.80703@gmail.com>
-References: <CAPig+cSs0v88AiQwSrqm-wK7rY4RdykaVf5Axh5jFyij25rfvg@mail.gmail.com>
- <1446715164-19165-1-git-send-email-juhapekka.heikkila@gmail.com>
- <CAPig+cT9K2H_jzVNOHS0vaarU+tfDfp_=Z4c1n6o5EX9wE6JXA@mail.gmail.com>
-Reply-To: juhapekka.heikkila@gmail.com
+From: Xue Fuqiao <xfq.free@gmail.com>
+Subject: Re: A note from the maintainer
+Date: Fri, 6 Nov 2015 18:50:31 +0800
+Message-ID: <CAAF+z6Ea6CnDLgOsasUtJeYRVhHs6y+Tq3SdBy4JtDhNtoMH5Q@mail.gmail.com>
+References: <xmqqa8qs3upt.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Paul Mackerras <paulus@samba.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Nov 06 11:49:44 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 06 11:50:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZueaV-0001WQ-It
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 11:49:43 +0100
+	id 1ZuebL-0002Hc-SP
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 11:50:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1033189AbbKFKtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2015 05:49:39 -0500
-Received: from mga02.intel.com ([134.134.136.20]:21482 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031997AbbKFKti (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2015 05:49:38 -0500
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga101.jf.intel.com with ESMTP; 06 Nov 2015 02:49:38 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.20,251,1444719600"; 
-   d="scan'208";a="844605917"
-Received: from jheikkil-mobl2.fi.intel.com (HELO [10.237.66.34]) ([10.237.66.34])
-  by fmsmga002.fm.intel.com with ESMTP; 06 Nov 2015 02:49:36 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <CAPig+cT9K2H_jzVNOHS0vaarU+tfDfp_=Z4c1n6o5EX9wE6JXA@mail.gmail.com>
+	id S1033193AbbKFKuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2015 05:50:32 -0500
+Received: from mail-io0-f179.google.com ([209.85.223.179]:35435 "EHLO
+	mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031997AbbKFKub (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2015 05:50:31 -0500
+Received: by ioc74 with SMTP id 74so54398133ioc.2
+        for <git@vger.kernel.org>; Fri, 06 Nov 2015 02:50:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=TOqTcvh5+d2/GYpqYZ1Z+WTRRBebvLHbpjCtPFaFjtI=;
+        b=S/Yo+c8tFI2nlEWwCPKPim1MSNw+DNZ+dL8OnWFAZoF11bxTz/9Dy/G+8V7fJ6qSvM
+         TbrQoH6TN85q82Ljtr1gipqCD5Z4r60E4EGrIS4MRXTSfdoeJaCEzpkdpVJfghg+PbCR
+         ltEn62aigcqKzzaM1TLMSHbQxVHia8PwN5DB4wKinLTxymkw8YnZseaL/ERdSy50MMHy
+         kghxXQJnd/mYL7dD9eQUVbQiegOVdOIyfcvav0BtMhenTP3UD+PMPIqJR1FMxKfxq18M
+         ntZiZMkaf+swFPhb21/AwmHN0+EPsfuhBqMxYsgv/dfMBUAGsp+TOUhN2e/H1HHAjNax
+         aNxg==
+X-Received: by 10.107.16.90 with SMTP id y87mr13677833ioi.183.1446807031153;
+ Fri, 06 Nov 2015 02:50:31 -0800 (PST)
+Received: by 10.79.94.2 with HTTP; Fri, 6 Nov 2015 02:50:31 -0800 (PST)
+In-Reply-To: <xmqqa8qs3upt.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280974>
 
-On 06.11.2015 11:48, Eric Sunshine wrote:
-> On Thu, Nov 5, 2015 at 4:19 AM, Juha-Pekka Heikkila
-> <juhapekka.heikkila@gmail.com> wrote:
->> This patch adds -C (change working directory) parameter to
->> gitk. With this parameter, instead of need to cd to directory
->> with .git folder, one can point the correct folder from
->> commandline.
->
-> Thanks, -C makes more sense than --cwd, and is more consistent with
-> other commands.
->
-> You'll want to also address the patch to Paul Mackerras (I've cc:'d
-> him) since he's the gitk maintainer, and Junio pulls gitk from him.
->
->> v2: Adjusted the parameter as per Eric's suggestion. I think
->>      it now work in similar manner as in many GNU tools as well
->>      as git itself.
->
-> This sort of explanation of of changes between versions is definitely
-> welcome, but should be placed below the "---" line just under your
-> sign-off so that it does not become part of the permanent commit
-> message.
+Hi Junio,
 
-Ok, I'll make bit later another version. I didn't realize to check where 
-to put this comment as some projects want these in the commit message.
+Thanks for writing this note!  It is very helpful.
 
+On Fri, Nov 6, 2015 at 7:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> The list archive is available at a few public sites:
 >
->> Signed-off-by: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
->> ---
->
-> You'd place your commentary about changes between patch versions here.
-> More below...
->
->>   Documentation/gitk.txt |  7 +++++++
->>   gitk-git/gitk          | 26 +++++++++++++++++---------
->>   2 files changed, 24 insertions(+), 9 deletions(-)
->>
->> diff --git a/gitk-git/gitk b/gitk-git/gitk
->> @@ -12279,20 +12279,14 @@ setui $uicolor
->>
->>   setoptions
->>
->> -# check that we can find a .git directory somewhere...
->> -if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
->> -    show_error {} . [mc "Cannot find a git repository here."]
->> -    exit 1
->> -}
->> -
->>   set selecthead {}
->>   set selectheadid {}
->>
->>   set revtreeargs {}
->>   set cmdline_files {}
->> -set i 0
->>   set revtreeargscmd {}
->> -foreach arg $argv {
->> +for {set i 0} {$i < [llength $argv]} {incr i} {
->> +       set arg [lindex $argv [expr {$i}]]
->>       switch -glob -- $arg {
->>          "" { }
->>          "--" {
->> @@ -12305,11 +12299,25 @@ foreach arg $argv {
->>          "--argscmd=*" {
->>              set revtreeargscmd [string range $arg 10 end]
->>          }
->> +       "-C*" {
->> +               if {[string length $arg] < 3} {
->> +                       incr i
->> +                       cd [lindex $argv [expr {$i}]]
->
-> What happens if no arguments follow -C (that is, the entire
-> command-line is "gitk -C")? Will this simply run "cd" with no argument
-> or with an empty argument or error out or what? Should there be a
-> check for this condition?
->
->> +                       continue
->
-> Why does this 'continue' need to be here? Am I missing something obvious?
->
+>         http://news.gmane.org/gmane.comp.version-control.git/
+>         http://marc.theaimsgroup.com/?l=git
+>         http://www.spinics.net/lists/git/
 
-I'll add the missing try/catch for these cd commands, I slowly start to 
-understand how tcl work. Earlier catch was not for some reason needed 
-here when the loop was ran with 'foreach', error was reported once 
-reached UI but now it seem to advertise "error in startup script.." 
-'continue' was part of this skipping but doesn't do its trick anymore.
+The second link is broken.  The following link is the correct version
+now:
 
-Anyway, I'll make v3 and resend. :)
-
->> +               } else {
->> +                       cd [string range $arg 2 end]
->> +               }
->> +       }
->>          default {
->>              lappend revtreeargs $arg
->>          }
->>       }
->> -    incr i
->> +}
->> +
->> +# check that we can find a .git directory somewhere...
->> +if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
->> +    show_error {} . [mc "Cannot find a git repository here."]
->> +    exit 1
->>   }
->>
->>   if {$selecthead eq "HEAD"} {
->> --
->> 1.9.1
+https://marc.info/?l=git
