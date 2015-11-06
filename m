@@ -1,161 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] filter-branch: skip index read/write when possible
-Date: Fri, 6 Nov 2015 01:24:29 -0500
-Message-ID: <20151106062429.GA24442@sigill.intra.peff.net>
-References: <1bf03e2146ceb5bb36b81f1ce64354b0.squirrel@clueserver.org>
- <20151106001832.GB9963@sigill.intra.peff.net>
- <20151106002048.GC9963@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] In configure.ac, try -lpthread in $LIBS instead of $CFLAGS to make picky linkers happy
+Date: Fri, 06 Nov 2015 09:25:20 +0100
+Message-ID: <vpqbnb7edqn.fsf@anie.imag.fr>
+References: <201511060111.tA61BbFX084361@tezro.nonet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: alan@clueserver.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 06 07:24:40 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: "Rainer M. Canavan" <git@canavan.de>
+X-From: git-owner@vger.kernel.org Fri Nov 06 09:25:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZuaRy-0000eK-Gq
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 07:24:38 +0100
+	id 1ZucLI-0007AN-En
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 09:25:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754601AbbKFGYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2015 01:24:33 -0500
-Received: from cloud.peff.net ([50.56.180.127]:53856 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751539AbbKFGYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Nov 2015 01:24:32 -0500
-Received: (qmail 1968 invoked by uid 102); 6 Nov 2015 06:24:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 06 Nov 2015 00:24:32 -0600
-Received: (qmail 22626 invoked by uid 107); 6 Nov 2015 06:24:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 06 Nov 2015 01:24:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Nov 2015 01:24:29 -0500
-Content-Disposition: inline
-In-Reply-To: <20151106002048.GC9963@sigill.intra.peff.net>
+	id S1032744AbbKFIZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2015 03:25:45 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:32969 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757240AbbKFIZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2015 03:25:36 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id tA68PMxh008217
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 6 Nov 2015 09:25:22 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tA68PKZf017382;
+	Fri, 6 Nov 2015 09:25:20 +0100
+In-Reply-To: <201511060111.tA61BbFX084361@tezro.nonet> (Rainer M. Canavan's
+	message of "Fri, 6 Nov 2015 02:11:37 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 06 Nov 2015 09:25:22 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: tA68PMxh008217
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1447403126.75756@emVKPcUUuTPulChbrcK9aw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280962>
 
-On Thu, Nov 05, 2015 at 07:20:48PM -0500, Jeff King wrote:
+"Rainer M. Canavan" <git@canavan.de> writes:
 
-> Here's a totally untested patch that seems to make a filter-branch like
-> this on the kernel orders of magnitude faster:
+> Subject: Re: [PATCH] In configure.ac, try -lpthread in $LIBS instead of $CFLAGS to make picky linkers happy
 
-Testing shows that it is indeed broken. :)
+The patch looks good, but the subject should be improved. We normally
+try to stick to 50 characters (to let "git log --oneline" fit in a 80
+columns terminal). 50 is a bit strict and not always followed, but yours
+is definitely too long.
 
-If $filter_subdir is set, it handles the index read itself, but my
-earlier patch did not correctly do the write.
+Also, the convention is "subsystem: what you did". I'd suggest this:
 
-This one should work for all cases (unless the user does something
-really strange, like expect to manipulate the index inside the
---env-filter or something, but IMHO it is insane for anyone to rely on
-that working).
+configure.ac: try -lpthread in $LIBS instead of $CFLAGS
 
--- >8 --
-Subject: filter-branch: skip index read/write when possible
+The "to make picky linkers happy" is important, but redundant with the
+body of the message.
 
-If the user specifies an index filter but not a tree filter,
-filter-branch cleverly avoids checking out the tree
-entirely. But we don't do the next level of optimization: if
-you have no index or tree filter, we do not need to read the
-index at all.
-
-This can greatly speed up cases where we are only changing
-the commit objects (e.g., cementing a graft into place).
-Here are numbers from the newly-added perf test:
-
-  Test                  HEAD^              HEAD
-  ---------------------------------------------------------------
-  7000.2: noop filter   13.81(4.95+0.83)   5.43(0.42+0.43) -60.7%
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Those numbers are from git.git. The bigger your tree, the better the
-speedup (I didn't run the perf test, because even the span of
-HEAD~100..HEAD takes tens of minutes for each trial with the old code.
-With the new it's less than 30 seconds).
-
- git-filter-branch.sh          | 23 +++++++++++++++++++++--
- t/perf/p7000-filter-branch.sh | 19 +++++++++++++++++++
- 2 files changed, 40 insertions(+), 2 deletions(-)
- create mode 100755 t/perf/p7000-filter-branch.sh
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 27c9c54..d61f9ba 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -306,6 +306,15 @@ then
- 	start_timestamp=$(date '+%s')
- fi
- 
-+if test -n "$filter_index" ||
-+   test -n "$filter_tree" ||
-+   test -n "$filter_subdir"
-+then
-+	need_index=t
-+else
-+	need_index=
-+fi
-+
- while read commit parents; do
- 	git_filter_branch__commit_count=$(($git_filter_branch__commit_count+1))
- 
-@@ -313,7 +322,10 @@ while read commit parents; do
- 
- 	case "$filter_subdir" in
- 	"")
--		GIT_ALLOW_NULL_SHA1=1 git read-tree -i -m $commit
-+		if test -n "$need_index"
-+		then
-+			GIT_ALLOW_NULL_SHA1=1 git read-tree -i -m $commit
-+		fi
- 		;;
- 	*)
- 		# The commit may not have the subdirectory at all
-@@ -387,8 +399,15 @@ while read commit parents; do
- 	} <../commit |
- 		eval "$filter_msg" > ../message ||
- 			die "msg filter failed: $filter_msg"
-+
-+	if test -n "$need_index"
-+	then
-+		tree=$(git write-tree)
-+	else
-+		tree="$commit^{tree}"
-+	fi
- 	workdir=$workdir @SHELL_PATH@ -c "$filter_commit" "git commit-tree" \
--		$(git write-tree) $parentstr < ../message > ../map/$commit ||
-+		"$tree" $parentstr < ../message > ../map/$commit ||
- 			die "could not write rewritten commit"
- done <../revs
- 
-diff --git a/t/perf/p7000-filter-branch.sh b/t/perf/p7000-filter-branch.sh
-new file mode 100755
-index 0000000..15ee5d1
---- /dev/null
-+++ b/t/perf/p7000-filter-branch.sh
-@@ -0,0 +1,19 @@
-+#!/bin/sh
-+
-+test_description='performance of filter-branch'
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+test_checkout_worktree
-+
-+test_expect_success 'mark bases for tests' '
-+	git tag -f tip &&
-+	git tag -f base HEAD~100
-+'
-+
-+test_perf 'noop filter' '
-+	git checkout --detach tip &&
-+	git filter-branch -f base..HEAD
-+'
-+
-+test_done
 -- 
-2.6.2.711.g30c79de
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
