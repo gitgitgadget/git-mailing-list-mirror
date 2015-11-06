@@ -1,88 +1,84 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v4 3/4] git-p4: retry kill/cleanup operations in tests with timeout
-Date: Fri, 6 Nov 2015 14:19:37 +0100
-Message-ID: <493416AE-4514-437F-909D-BE2894FF118D@gmail.com>
-References: <1446800323-2914-1-git-send-email-larsxschneider@gmail.com> <1446800323-2914-4-git-send-email-larsxschneider@gmail.com> <CAPig+cQiGqo2rNSC_Lw-WXq0ABp6PRFV-2w1wtK+XccQt2RD=w@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.1 \(3096.5\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v4 4/4] Add Travis CI support
+Date: Fri, 6 Nov 2015 14:20:09 +0100
+Message-ID: <CAHGBnuNwzGNjfh57zFOtwr6qU1PCsc7rgOniY8-Mz5Jgnv2QTg@mail.gmail.com>
+References: <1446800323-2914-1-git-send-email-larsxschneider@gmail.com>
+	<1446800323-2914-5-git-send-email-larsxschneider@gmail.com>
+	<CAPig+cSc+BBgd3-UeVE79D9GWXfaQqbLCQdKo6FbhnPMsK_eFA@mail.gmail.com>
+	<22B2C2B1-9260-4EC0-A4C5-C7F7DDD388BA@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Jean-Noel Avila <avila.jn@gmail.com>,
 	Luke Diamand <luke@diamand.org>,
 	David Turner <dturner@twopensource.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Nov 06 14:19:48 2015
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 06 14:20:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zugvf-0007Lc-Fb
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 14:19:43 +0100
+	id 1ZugwL-0007pn-6t
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Nov 2015 14:20:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1033215AbbKFNTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Nov 2015 08:19:39 -0500
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:38361 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1033190AbbKFNTi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Nov 2015 08:19:38 -0500
-Received: by wicll6 with SMTP id ll6so28581796wic.1
-        for <git@vger.kernel.org>; Fri, 06 Nov 2015 05:19:38 -0800 (PST)
+	id S1033343AbbKFNUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Nov 2015 08:20:14 -0500
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:34728 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1033190AbbKFNUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Nov 2015 08:20:10 -0500
+Received: by igpw7 with SMTP id w7so31923626igp.1
+        for <git@vger.kernel.org>; Fri, 06 Nov 2015 05:20:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=kKXDfrSzzye7fSB5yYAY7WPX+mzzf9sb6JOiAuURzyc=;
-        b=xcIGI2o3tYaTTEmz8DB6Q+GKaVGbxHDfKq2qNNzDrs9/FffEtdOz9HvSxNXf4JHrPa
-         7LgIA2Dt1gMIk2oNci5EMGN6/TSGW3SQh8o+0E3RA1MpuenN5NtYyNsD6j4Ifcuh3PhC
-         XNejgMMB/gcRTOJoJHkZVix8cqbC8ibah4qlf2KFmbg1OCydJfYJS6AEnC6EC11TiVvI
-         qGnZLpkYG2yu17L8w1vThRh7CNpzCjmQVtuW0rFM9cp7XWAows0Y94kcqBObpf0kh6E9
-         PaknkFGAsl+pGFUsy/eNND2h8N0Xl1C4Bm5kiFL5h9t/hle6QhjemQtbgNhztxu5sL7A
-         CxVQ==
-X-Received: by 10.194.176.70 with SMTP id cg6mr16613543wjc.155.1446815977941;
-        Fri, 06 Nov 2015 05:19:37 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id r9sm99133wjz.35.2015.11.06.05.19.37
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 06 Nov 2015 05:19:37 -0800 (PST)
-In-Reply-To: <CAPig+cQiGqo2rNSC_Lw-WXq0ABp6PRFV-2w1wtK+XccQt2RD=w@mail.gmail.com>
-X-Mailer: Apple Mail (2.3096.5)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=noYDQ/Dy4MXclAOAcwqhYmCPPuNGsABp+ak/H5Pk38Q=;
+        b=OvENuiHh0GVyCUCU7e9G5pfmX114c6+hWA+7eMtAexj8iolQEngVv0HhjcODWqyV/A
+         9nTxOuh70LXfnuYBuRXSxb4oeFsoFV1cCCS/thoTo/d0xFm+94E7KWIVq2g3yNJAfCqi
+         H2aWMDPQUCTZPrtTBWoEjV3wi+JJkbHmldU7YL0iHSg7EbnnDZ2IQ9cvlr5WYK4XYsUN
+         UlJjcLK3kHqZuY/ib1QmxZNQrQ+zTkCZ/ZIOdXEr+CJQknl5NND1aR/qkgBlLOfQJZL1
+         cczxSrVZJRiRCl/sezR2/yigJ04CjJJSmnowvQOLAsx3S5H6kENe8epXZdVhq9wAvapz
+         6lyw==
+X-Received: by 10.50.66.69 with SMTP id d5mr8208277igt.30.1446816009872; Fri,
+ 06 Nov 2015 05:20:09 -0800 (PST)
+Received: by 10.107.182.133 with HTTP; Fri, 6 Nov 2015 05:20:09 -0800 (PST)
+In-Reply-To: <22B2C2B1-9260-4EC0-A4C5-C7F7DDD388BA@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/280977>
 
+On Fri, Nov 6, 2015 at 2:11 PM, Lars Schneider <larsxschneider@gmail.com> wrote:
 
-> On 06 Nov 2015, at 10:28, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> 
-> On Fri, Nov 6, 2015 at 3:58 AM,  <larsxschneider@gmail.com> wrote:
->> In rare cases kill/cleanup operations in tests fail. Retry these
->> operations with a timeout to make the test less flaky.
->> 
->> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->> ---
->> diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
->> +retry_until_success() {
->> +    timeout=$(($(date +%s) + $RETRY_TIMEOUT))
->> +    until "$@" 2>/dev/null || test $(date +%s) -gt $timeout
->> +    do :
->> +    done
->> +}
->> +
->> +retry_until_fail() {
->> +    timeout=$(($(date +%s) + $RETRY_TIMEOUT))
->> +    until ! "$@" 2>/dev/null || test $(date +%s) -gt $timeout
->> +    do :
->> +    done
->> +}
-> 
-> I'm confused by this. Patch 2/4 was already calling
-> retry_until_fail(), but it's introduction seems to be here in patch
-> 3/4. Am I missing something obvious?
-No, my fault. I reordered the commits and forgot about this. I will fix the order in the next roll.
+> Per platform/compiler (Linux&Mac/clang&gcc) we run two configurations. One
+> normal configuration (see the lonely "-" right under "matrix:") and one
+> configuration with all sorts of things are disabled ("NO...").
+>
+> You can see all 8 configurations ([linux, mac] * [clang, gcc] * [normal,
+> NO_...]) here:
+> https://travis-ci.org/larsxschneider/git/builds/89598194
 
-Thanks,
-Lars
+Aren't these 8 configurations a bit too much? I see the total running
+time is about 2 hours. For my taste, this is way to much to give
+developers feedback about the status of their PR. It should be
+something < 30 minutes.
+
+IMO, the purpose of the Travis CI configuration mainly is to 1) save
+developers work by not requiring to build manually, 2) build on other
+platforms than the developer has access to. I doubt that the average
+developer manually builds anything close to these 8 configurations
+before we had this job, so I wouldn't make it a requirement for Travis
+to do much more than a developer could / would to manually.
+
+On the other hand, I see the point in letting a CI system test more
+configurations than manually feasible. But that should be done as part
+of a different job then. E.g. we could have a "fast" PR validation
+job, and a "slow" nightly build job.
+
+-- 
+Sebastian Schuberth
