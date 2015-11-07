@@ -1,74 +1,92 @@
-From: Adam Dinwoodie <adam@dinwoodie.org>
-Subject: Bug: t5813 failing on Cygwin
-Date: Sat, 07 Nov 2015 12:11:29 +0000
-Message-ID: <563DEA71.1080808@dinwoodie.org>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Git potential bug with fork-point
+Date: Sat, 7 Nov 2015 16:01:20 +0000
+Message-ID: <20151107160120.GG19802@serenity.lan>
+References: <a3db24afbc3247c3a8466c8d7ce0c785@SEGOTNC5113-N2.vcn.ds.volvo.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 07 13:11:40 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Stenberg Jim (2)" <jim.stenberg.2@volvo.com>
+X-From: git-owner@vger.kernel.org Sat Nov 07 17:01:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zv2LL-0002kX-Ik
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Nov 2015 13:11:39 +0100
+	id 1Zv5vq-0006LT-RD
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Nov 2015 17:01:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753148AbbKGMLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Nov 2015 07:11:34 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:37626 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752841AbbKGMLd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Nov 2015 07:11:33 -0500
-Received: by wmll128 with SMTP id l128so60411693wml.0
-        for <git@vger.kernel.org>; Sat, 07 Nov 2015 04:11:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        bh=u4GnVCDusG97wqEF/f1LOu/FwnfJsSEWrw3ZhTEC2Lo=;
-        b=uwhvOkMbDLsLLD4oPs2r4t2m0qSMcetqaKkSXq2Ixvr9XwPNNq1Lqs+GnNUtZpkBPV
-         uG2+wOIXj6LGowhPjpG7udVQp47dFneXhjJnXuw6y8E/iLrJxfVb9dOjez7S/vMBGlpD
-         X19IH0QWKWGaTgXdSa2KgOhOg29QEt6R92DrU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:content-type:content-transfer-encoding;
-        bh=u4GnVCDusG97wqEF/f1LOu/FwnfJsSEWrw3ZhTEC2Lo=;
-        b=JEYbc9P0TZa/JK9qbvVduwq/Px6TaLPJh3D73EG4ljgJIzEsRiqcLC1Qzl1NCeY06K
-         SpUxpJUoHG3pNK63fW7iU9GYCqG0eCH2wwHgrSaPFsDKBzaD/10qjBbeniMGSWh7xgFL
-         Wz3es5N1vKjz0zG0cKtqIa5Y1jzrQX/U5DveS4yevYOGjhwQ8OK/X5Gy5jtoalqEO6jQ
-         QQjzFTrU6UGtd/cgNWXaJ+AXeFqYZIdRjHqEPiLsstAGTw6oeO/+abkhSZJKHmIKTcI7
-         TM1nXJ7f8ke6Q8ZgZz7Ci91arSXD9cy8nUuYefKu7/zwcmq+mV76sb42iUqu9OSbZ+zl
-         SLTw==
-X-Gm-Message-State: ALoCoQmUvSzEjQ3B4jVZl39lOUtkrd3G2ZTJDAaOnH7nlme2uuo5yMFc90qqTo1nfOAJBpbD9lh+
-X-Received: by 10.28.4.144 with SMTP id 138mr16422988wme.32.1446898292330;
-        Sat, 07 Nov 2015 04:11:32 -0800 (PST)
-Received: from Wheatley.lan (19.207.199.146.dyn.plus.net. [146.199.207.19])
-        by smtp.gmail.com with ESMTPSA id h7sm4844284wjz.7.2015.11.07.04.11.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 07 Nov 2015 04:11:31 -0800 (PST)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+	id S1753823AbbKGQBa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Nov 2015 11:01:30 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:33940 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753677AbbKGQB3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Nov 2015 11:01:29 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 5AC77CDA55D;
+	Sat,  7 Nov 2015 16:01:28 +0000 (GMT)
+X-Quarantine-ID: <0z9QI4UV5YTl>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1.001
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.001 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_40=-0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 0z9QI4UV5YTl; Sat,  7 Nov 2015 16:01:27 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 84E6ECDA591;
+	Sat,  7 Nov 2015 16:01:22 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <a3db24afbc3247c3a8466c8d7ce0c785@SEGOTNC5113-N2.vcn.ds.volvo.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281020>
 
-In the process of pulling up the Cygwin Git release from v2.5.3, I've 
-discovered t5813 is failing, and appears to have been failing since it 
-was first introduced in a5adace.
+On Mon, Nov 02, 2015 at 06:27:52AM +0000, Stenberg Jim (2) wrote:
+> My problem:
+> "Git merge-base --fork-point" acts unexpected when I refer to remote
+> branches (typically "origin/".) With unexpected I mean that if I swap
+> the position of the two references that the function takes as argumen=
+t
+> I get different results.  I highly suspect that this isn't a feature
+> but a bug, or maybe I'm using the function in a way it wasn't intende=
+d
+> to be used.
+> I don't need you to fix it (swapping the arguments solves it), I just
+> want you to be aware of it.
+>=20
+> History & procedure:
+> When=A0 I was working on my automatic build script I came across the
+> oddity that "Git merge-base --fork-point" behaved differently
+> depending on the order in which the two references are passed.
 
-I've not yet done any significant digging into the problem myself; I'm 
-reporting here now in case in the hope someone else will have a better 
-idea what's going on.
+I think this is expected.  The documentation for `--fork-point` says:
 
-Specifically, I'm seeing t5813 subtests 9-13 and 15-19 failing. This 
-happens with a clean build straight from the Git source tree (git clean 
--dfx && make configure && ./configure && make && cd t && 
-./t5813-proto-disable-ssh.sh) as well as builds using the Cygwin 
-packaging paraphernalia.
+	git merge-base --fork-point <ref> [<commit>]
 
-Adam
+	Find the point at which a branch (or any history that leads to
+	<commit>) forked from another branch (or any reference) <ref>.
+	This does not just look for the common ancestor of the two
+	commits, but also takes into account the reflog of <ref> to see
+	if the history leading to <commit> forked from an earlier
+	incarnation of the branch <ref> (see discussion on this mode
+	below).
+
+Clearly the order of the arguments matters because the reflog is only
+inspected for the `<ref>` argument.  Since the reflog is involved this
+also means that the results are likely to be different between separate
+copies of the same repository.
+
+I suspect you do not want to be using `--fork-point` in your build
+script; it is intended to help `git rebase` recover from history being
+rewritten and if you do not need that behaviour you are probably better
+off using the normal `git merge-base <commit> <commit>` mode, which
+should give consistent results regardless of the order of the commits.
