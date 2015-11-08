@@ -1,216 +1,546 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: Bug: t5813 failing on Cygwin
-Date: Sun, 8 Nov 2015 01:46:26 +0000
-Message-ID: <563EA972.9000209@ramsayjones.plus.com>
-References: <563DEA71.1080808@dinwoodie.org>
- <20151107184527.GA4483@sigill.intra.peff.net>
- <20151107192029.GW14466@dinwoodie.org>
- <1446930165.16957.9.camel@kaarsemaker.net>
- <563E6B47.5000807@ramsayjones.plus.com>
- <563E83C2.5050300@ramsayjones.plus.com>
- <1446939168.16957.11.camel@kaarsemaker.net>
+From: miurahr@linux.com
+Subject: [PATCH v2] gitk: Update Japanese translation
+Date: Sun,  8 Nov 2015 11:51:39 +0900
+Message-ID: <1446951099-23502-1-git-send-email-miurahr@linux.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-	Adam Dinwoodie <adam@dinwoodie.org>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 08 02:47:19 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: mizar.jp@gmail.com, paulus@samba.org,
+	Hiroshi Miura <miurahr@linux.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 08 04:24:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZvF4e-0000VQ-Bp
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Nov 2015 02:47:16 +0100
+	id 1ZvGaS-0000Ze-OW
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Nov 2015 04:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752421AbbKHBqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Nov 2015 20:46:40 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:46318 "EHLO
-	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751729AbbKHBqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Nov 2015 20:46:39 -0500
-Received: from [10.0.2.15] ([146.199.93.105])
-	by avasout04 with smtp
-	id epmY1r0022GQ2gJ01pmbPQ; Sun, 08 Nov 2015 01:46:35 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=CvRCCSMD c=1 sm=1 tr=0
- a=SWxm+s7FAPvPP0IAAWI2og==:117 a=SWxm+s7FAPvPP0IAAWI2og==:17 a=0Bzu9jTXAAAA:8
- a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=Ug-vZEPJW4lenwntlxwA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <1446939168.16957.11.camel@kaarsemaker.net>
+	id S1752873AbbKHDXi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Nov 2015 22:23:38 -0500
+Received: from nm13-vm0.bullet.mail.bf1.yahoo.com ([98.139.213.79]:37537 "EHLO
+	nm13-vm0.bullet.mail.bf1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752392AbbKHDXh (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Nov 2015 22:23:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1446953016; bh=ICt8mJzkJF0rRG3FLzEVHM+fddr+LN/dHsanBIvI0YA=; h=From:To:Cc:Subject:Date:From:Subject; b=EnQlmgTGNUHXd3A2WdxHLuRHhqrFnE0lop5f6Oah1G7c0k7lGe1gZY/ht4rsHMuzQO+k9suJSOxnSyoaw01qkzDmlFOGAQLxeOGnpjzNJy9mP3RrstbeTTi4K3mTopovykfBi2CO1JeBG0vOssrpgSZWtXOe6N78G4f5qvymS7hMEGd0IwXArHyIVV5GR9eGEqeDCr1Wb1Vaj5VuEHa6yZYH4eFGOoXt23V9i5afnbIdQiHClGC+tpJsGQlEAbJCQV586ToJVBjndwxiNnCuxN7bKcFAuL/j/n23+Lit5k5ZxQtBIzlmbydoPJGIjeuUqtHQhUSMc0fV8OGDU0dGTQ==
+Received: from [66.196.81.174] by nm13.bullet.mail.bf1.yahoo.com with NNFMP; 08 Nov 2015 03:23:36 -0000
+Received: from [68.142.230.69] by tm20.bullet.mail.bf1.yahoo.com with NNFMP; 08 Nov 2015 03:23:36 -0000
+Received: from [127.0.0.1] by smtp226.mail.bf1.yahoo.com with NNFMP; 08 Nov 2015 03:23:36 -0000
+X-Yahoo-Newman-Id: 585733.76724.bm@smtp226.mail.bf1.yahoo.com
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: HV6_ywQVM1mXj4SPEC8aFpcDYQE7TXEFjZa6eivXInuVhFJ
+ fJVTqK.2sRu.OAl7p.6Hc0A6pbZ_Gm3B_NFhvKnsAP1BIk7.rkg._m4z8eIg
+ 4SN5ajA7dpY3PC4ZzU7GHsIWkawDE0ei6rkj7JS2MsFW_d8g4VJP.7JMdrBq
+ iho2_nV2wGC6hRePJ0CPXLfw_dJeR_2u1_63yIl8IpmyeTL0ZLWbSvIGCptA
+ Zz5v8eIqGVGID4M7nnA.j9aHzH4Ziiq4y31BvUX934lO.d1XRvJlbsv5s.oZ
+ mLpQ02_Rlq.aAOd8su8yr0iQVtrXIu33TmWWrrJCO0n.nzS0H7BCtnyiwdz7
+ jfBcWl2rBPY06PWqxj7_7k6mqt3T0y9.v6TMNBUlOTkpY0NzwItDN3AzbXUS
+ wGP_5G9xdEYfS5rPsABDnt4bE4RPVXaPkJPvFSFu_V6XaH4azYUXQoNY6XKF
+ Gjnd.g99grElyhyrE8KXe5Z4hpSuAYR1xmmavLYfCpOXSaWK3HR5mmsOpA0n
+ y7WdMgImgCC2M1OD4DDaQSwixq1IWuMX.
+X-Yahoo-SMTP: TFiWS.GswBDcwJZc5VAEj6aHk.w-
+X-Mailer: git-send-email 2.6.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281029>
 
+=46rom: Hiroshi Miura <miurahr@linux.com>
 
+Signed-off-by: Hiroshi Miura <miurahr@linux.com>
+---
 
-On 07/11/15 23:32, Dennis Kaarsemaker wrote:
-> On za, 2015-11-07 at 23:05 +0000, Ramsay Jones wrote:
->>
->> On 07/11/15 21:21, Ramsay Jones wrote:
->>>
->>>
->>> On 07/11/15 21:02, Dennis Kaarsemaker wrote:
->>>> On za, 2015-11-07 at 19:20 +0000, Adam Dinwoodie wrote:
->>>>> On Sat, Nov 07, 2015 at 01:45:27PM -0500, Jeff King wrote:
->>>>>> On Sat, Nov 07, 2015 at 12:11:29PM +0000, Adam Dinwoodie
->>>>>> wrote:
->>>>>>
->>>>>>> Specifically, I'm seeing t5813 subtests 9-13 and 15-19
->>>>>>> failing.
->>>>>>> This happens
->>>>>>> with a clean build straight from the Git source tree (git
->>>>>>> clean 
->>>>>>> -dfx && make
->>>>>>> configure && ./configure && make && cd t && ./t5813-proto
->>>>>>> -disable
->>>>>>> -ssh.sh) as
->>>>>>> well as builds using the Cygwin packaging paraphernalia.
->>>>>>
->>>>>> What does the output of "./t5813-proto-disable-ssh.sh -v -i"
->>>>>> show?
->>>>>>
->>>>>> It seems strange that it would fail only on Cygwin; this code
->>>>>> doesn't
->>>>>> really use any platform-dependent features. It's also weird
->>>>>> that it
->>>>>> fails _only_ for ssh, and _only_ on the tests that are using
->>>>>> "ssh://"
->>>>>> URLs are not "host:path" syntax.
->>>>>
->>>>> Ah!  I thought I'd checked that already, but looking at the
->>>>> output
->>>>> now I
->>>>> can see what's going wrong.  Cutting down to the relevant
->>>>> error:
->>>>>
->>>>>     ssh: remote git-upload-pack '//home/Adam/vcs/Cygwin-Git/git
->>>>> -2.6.2
->>>>> -1.x86_64/build/t/trash directory.t5813-proto-disable
->>>>> -ssh/remote/repo.git' fatal: '//home/Adam/vcs/Cygwin-Git/git
->>>>> -2.6.2
->>>>> -1.x86_64/build/t/trash directory.t5813-proto-disable
->>>>> -ssh/remote/repo.git' does not appear to be a git repository
->>>>>
->>>>> Note the '//' at the start of the path -- on most *nix systems
->>>>> '//'
->>>>> is
->>>>> effectively identical to '/'.  On Cygwin, however, '//' is used
->>>>> to
->>>>> access Windows UNC paths: what Windows calls "\\server\share",
->>>>> Cygwin
->>>>> calls "//server/share".  If you replace the '//' with '/' you
->>>>> get the
->>>>> locatoin of the repository; but here Cygwin is looking for the
->>>>> repository in a share called "Adam" on a network server called
->>>>> "home"...
->>>>>
->>>>> I suspect the correct fix here is to fix whatever's causing Git
->>>>> to
->>>>> generate a path with that '//'.  If nobody else gets to it soon
->>>>> (probably on the order of a week before I'll get the chance),
->>>>> I'll go
->>>>> code diving and submit a patch.
->>>>>
->>>>>> I tried building on Linux with the Cygwin build knobs found
->>>>>> in
->>>>>> config.mak.uname, but I couldn't get it to fail. I also
->>>>>> wondered if
->>>>>> the
->>>>>> test was doing something with the shell that might not be
->>>>>> portable,
->>>>>> but
->>>>>> I don't see anything interesting.
->>>>>
->>>>> If I recall correctly, the correct interpretation of '//' isn't
->>>>> defined
->>>>> in POSIX, so whatever's causing that path to be generated is
->>>>> the bit
->>>>> that's not fully portable.  It looks as though t5813 throwing
->>>>> this up
->>>>> is
->>>>> just a coincidence rather than it being particularly related to
->>>>> the
->>>>> function those tests are actually testing.
->>>>
->>>> Looks like lib-proto-disable.sh's fake SSH doesn't strip double
->>>> leading
->>>> /'es from the path. Try this patch:
->>>>
->>>> diff --git a/t/t5813-proto-disable-ssh.sh b/t/t5813-proto-disable
->>>> -ssh.sh
->>>> index ad877d7..a954ead 100755
->>>> --- a/t/t5813-proto-disable-ssh.sh
->>>> +++ b/t/t5813-proto-disable-ssh.sh
->>>> @@ -14,7 +14,7 @@ test_expect_success 'setup repository to clone'
->>>> '
->>>>  '
->>>>  
->>>>  test_proto "host:path" ssh "remote:repo.git"
->>>> -test_proto "ssh://" ssh "ssh://remote/$PWD/remote/repo.git"
->>>> -test_proto "git+ssh://" ssh
->>>> "git+ssh://remote/$PWD/remote/repo.git"
->>>> +test_proto "ssh://" ssh "ssh://remote$PWD/remote/repo.git"
->>>> +test_proto "git+ssh://" ssh
->>>> "git+ssh://remote$PWD/remote/repo.git"
->>>
->>> Heh, this looks familiar ... see, for example, commit 3a81f33c5. ;
->>> -)
->>
->> An alternative patch may look like this:
->>
->> diff --git a/connect.c b/connect.c
->> index 108f5ab..fc73cf9 100644
->> --- a/connect.c
->> +++ b/connect.c
->> @@ -636,6 +636,8 @@ static enum protocol parse_connect_url(const char
->> *url_orig, char **ret_host,
->>  	end = path; /* Need to \0 terminate host here */
->>  	if (separator == ':')
->>  		path++; /* path starts after ':' */
->> +	if (starts_with(path, "//"))
->> +		path++;
->>  	if (protocol == PROTO_GIT || protocol == PROTO_SSH) {
->>  		if (path[1] == '~')
->>  			path++;
->>
->> It seems to work, but I haven't thought about it too deeply ...
->> so I don't know if there are any problems lurking. :)
->>
->> I have to go now, so if somebody wants to take this up ...
-> 
-> Won't that break file:////server/share urls on cygwin?
+Notes:
+    A patch based on git://ozlabs.org/~paulus/gitk
 
-Hmm, yes ... do they work? (I'm not in a position to test them)
-ie. does 'git clone [file://]//myserver/myshare/myrepo.git' work now
-on cygwin? How about git for windows?
+ po/ja.po | 115 ++++++++++++++++++++++++++++---------------------------=
+--------
+ 1 file changed, 51 insertions(+), 64 deletions(-)
 
-I suppose we could restrict the stripping to git and ssh protocols
-like so:
-
-diff --git a/connect.c b/connect.c
-index 108f5ab..62e89aa 100644
---- a/connect.c
-+++ b/connect.c
-@@ -637,6 +637,8 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
- 	if (separator == ':')
- 		path++; /* path starts after ':' */
- 	if (protocol == PROTO_GIT || protocol == PROTO_SSH) {
-+		while (starts_with(path, "//"))
-+			path++;
- 		if (path[1] == '~')
- 			path++;
- 	}
-
-... where I've added a loop to skip multiple /'s (may not be
-necessary).
-
-Again, it seems to work ... :-D
-
-ATB,
-Ramsay Jones
+diff --git a/po/ja.po b/po/ja.po
+index 59e42a8..0318e6e 100644
+--- a/po/ja.po
++++ b/po/ja.po
+@@ -9,26 +9,27 @@ msgstr ""
+ "Project-Id-Version: gitk\n"
+ "Report-Msgid-Bugs-To: \n"
+ "POT-Creation-Date: 2015-05-17 14:32+1000\n"
+-"PO-Revision-Date: 2009-11-06 01:45+0900\n"
+-"Last-Translator: Mizar <mizar.jp@gmail.com>\n"
++"PO-Revision-Date: 2015-11-04 08:47+0900\n"
++"Last-Translator: Hiroshi Miura <miurahr@linux.com>\n"
+ "Language-Team: Japanese\n"
+-"Language: \n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=3DUTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ "Plural-Forms: nplurals=3D1; plural=3D0;\n"
++"X-Generator: Poedit 1.5.4\n"
++"Language: ja\n"
+=20
+ #: gitk:140
+ msgid "Couldn't get list of unmerged files:"
+-msgstr "=E3=83=9E=E3=83=BC=E3=82=B8=E3=81=95=E3=82=8C=E3=81=A6=E3=81=84=
+=E3=81=AA=E3=81=84=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB=E3=81=AE=E3=83=AA=
+=E3=82=B9=E3=83=88=E3=82=92=E5=8F=96=E5=BE=97=E3=81=A7=E3=81=8D=E3=81=BE=
+=E3=81=9B=E3=82=93:"
++msgstr "=E6=9C=AA=E3=83=9E=E3=83=BC=E3=82=B8=E3=81=AE=E3=83=95=E3=82=A1=
+=E3=82=A4=E3=83=AB=E4=B8=80=E8=A6=A7=E3=82=92=E5=8F=96=E5=BE=97=E3=81=A7=
+=E3=81=8D=E3=81=BE=E3=81=9B=E3=82=93:"
+=20
+ #: gitk:212 gitk:2381
+ msgid "Color words"
+-msgstr ""
++msgstr "=E5=8D=98=E8=AA=9E=E3=81=AB=E7=9D=80=E8=89=B2"
+=20
+ #: gitk:217 gitk:2381 gitk:8220 gitk:8253
+ msgid "Markup words"
+-msgstr ""
++msgstr "=E5=8D=98=E8=AA=9E=E3=82=92=E3=83=9E=E3=83=BC=E3=82=AF"
+=20
+ #: gitk:324
+ msgid "Error parsing revisions:"
+@@ -176,11 +177,11 @@ msgstr "=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88"
+ #: gitk:2299 gitk:2301 gitk:4687 gitk:4710 gitk:4734 gitk:6755 gitk:68=
+27
+ #: gitk:6912
+ msgid "containing:"
+-msgstr "=E5=90=AB=E3=82=80:"
++msgstr "=E6=96=87=E5=AD=97=E3=82=92=E5=90=AB=E3=82=80:"
+=20
+ #: gitk:2302 gitk:3526 gitk:3531 gitk:4763
+ msgid "touching paths:"
+-msgstr "=E3=83=91=E3=82=B9=E3=81=AE=E4=B8=80=E9=83=A8:"
++msgstr "=E3=83=91=E3=82=B9=E3=81=AB=E5=90=AB=E3=82=80:"
+=20
+ #: gitk:2303 gitk:4777
+ msgid "adding/removing string:"
+@@ -188,7 +189,7 @@ msgstr "=E8=BF=BD=E5=8A=A0/=E9=99=A4=E5=8E=BB=E3=81=
+=99=E3=82=8B=E6=96=87=E5=AD=97=E5=88=97:"
+=20
+ #: gitk:2304 gitk:4779
+ msgid "changing lines matching:"
+-msgstr ""
++msgstr "=E5=A4=89=E6=9B=B4=E8=A1=8C=E3=81=8C=E5=90=AB=E3=82=80=EF=BC=9A=
+"
+=20
+ #: gitk:2313 gitk:2315 gitk:4766
+ msgid "Exact"
+@@ -204,7 +205,7 @@ msgstr "=E6=AD=A3=E8=A6=8F=E8=A1=A8=E7=8F=BE"
+=20
+ #: gitk:2317 gitk:2318 gitk:4874 gitk:4904 gitk:4911 gitk:6848 gitk:69=
+16
+ msgid "All fields"
+-msgstr "=E5=85=A8=E3=81=A6=E3=81=AE=E9=A0=85=E7=9B=AE"
++msgstr "=E5=85=A8=E9=A0=85=E7=9B=AE"
+=20
+ #: gitk:2318 gitk:4871 gitk:4904 gitk:6786
+ msgid "Headline"
+@@ -249,7 +250,7 @@ msgstr "=E7=A9=BA=E7=99=BD=E3=81=AE=E9=81=95=E3=81=84=
+=E3=82=92=E7=84=A1=E8=A6=96"
+=20
+ #: gitk:2378 gitk:2380 gitk:7959 gitk:8206
+ msgid "Line diff"
+-msgstr ""
++msgstr "=E8=A1=8C=E5=B7=AE=E5=88=86=E8=A1=A8=E7=A4=BA"
+=20
+ #: gitk:2445
+ msgid "Patch"
+@@ -269,7 +270,7 @@ msgstr "=E9=81=B8=E6=8A=9E=E3=81=97=E3=81=9F=E3=82=B3=
+=E3=83=9F=E3=83=83=E3=83=88=E3=81=A8=E3=81=93=E3=82=8C=E3=81=AEdiff=E3=82=
+=92=E8=A6=8B=E3=82=8B"
+=20
+ #: gitk:2619 gitk:2639
+ msgid "Make patch"
+-msgstr "=E3=83=91=E3=83=83=E3=83=81=E4=BD=9C=E6=88=90"
++msgstr "=E3=83=91=E3=83=83=E3=83=81=E3=82=92=E4=BD=9C=E6=88=90"
+=20
+ #: gitk:2620 gitk:9254
+ msgid "Create tag"
+@@ -301,26 +302,23 @@ msgstr "=E3=83=9E=E3=83=BC=E3=82=AF=E3=82=92=E4=BB=
+=98=E3=81=91=E3=81=9F=E6=89=80=E3=81=AB=E6=88=BB=E3=82=8B"
+=20
+ #: gitk:2627
+ msgid "Find descendant of this and mark"
+-msgstr "=E3=81=93=E3=82=8C=E3=81=A8=E3=83=9E=E3=83=BC=E3=82=AF=E3=82=92=
+=E3=81=A4=E3=81=91=E3=81=9F=E6=89=80=E3=81=A8=E3=81=AE=E5=AD=90=E5=AD=AB=
+=E3=82=92=E8=A6=8B=E3=81=A4=E3=81=91=E3=82=8B"
++msgstr "=E3=81=93=E3=82=8C=E3=81=A8=E3=83=9E=E3=83=BC=E3=82=AF=E3=82=92=
+=E4=BB=98=E3=81=91=E3=81=9F=E6=89=80=E3=81=A8=E3=81=AE=E5=AD=90=E5=AD=AB=
+=E3=82=92=E8=A6=8B=E3=81=A4=E3=81=91=E3=82=8B"
+=20
+ #: gitk:2628
+ msgid "Compare with marked commit"
+ msgstr "=E3=83=9E=E3=83=BC=E3=82=AF=E3=82=92=E4=BB=98=E3=81=91=E3=81=9F=
+=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=81=A8=E6=AF=94=E8=BC=83=E3=81=99=
+=E3=82=8B"
+=20
+ #: gitk:2629 gitk:2640
+-#, fuzzy
+ msgid "Diff this -> marked commit"
+-msgstr "=E3=81=93=E3=82=8C=E3=81=A8=E9=81=B8=E6=8A=9E=E3=81=97=E3=81=9F=
+=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=81=AEdiff=E3=82=92=E8=A6=8B=E3=82=
+=8B"
++msgstr "=E3=81=93=E3=82=8C->=E3=83=9E=E3=83=BC=E3=82=AF=E3=81=97=E3=81=
+=9F=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=81=AEdiff"
+=20
+ #: gitk:2630 gitk:2641
+-#, fuzzy
+ msgid "Diff marked commit -> this"
+-msgstr "=E9=81=B8=E6=8A=9E=E3=81=97=E3=81=9F=E3=82=B3=E3=83=9F=E3=83=83=
+=E3=83=88=E3=81=A8=E3=81=93=E3=82=8C=E3=81=AEdiff=E3=82=92=E8=A6=8B=E3=82=
+=8B"
++msgstr "=E3=83=9E=E3=83=BC=E3=82=AF=E3=81=97=E3=81=9F=E3=82=B3=E3=83=9F=
+=E3=83=83=E3=83=88->=E3=81=93=E3=82=8C=E3=81=AEdiff"
+=20
+ #: gitk:2631
+-#, fuzzy
+ msgid "Revert this commit"
+-msgstr "=E3=81=93=E3=81=AE=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=81=AB=
+=E3=83=9E=E3=83=BC=E3=82=AF=E3=82=92=E3=81=A4=E3=81=91=E3=82=8B"
++msgstr "=E3=81=93=E3=81=AE=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=82=92=
+=E3=83=AA=E3=83=90=E3=83=BC=E3=83=88=E3=81=99=E3=82=8B"
+=20
+ #: gitk:2647
+ msgid "Check out this branch"
+@@ -332,7 +330,7 @@ msgstr "=E3=81=93=E3=81=AE=E3=83=96=E3=83=A9=E3=83=B3=
+=E3=83=81=E3=82=92=E9=99=A4=E5=8E=BB=E3=81=99=E3=82=8B"
+=20
+ #: gitk:2649
+ msgid "Copy branch name"
+-msgstr ""
++msgstr "=E3=83=96=E3=83=A9=E3=83=B3=E3=83=81=E5=90=8D=E3=82=92=E3=82=B3=
+=E3=83=94=E3=83=BC=E3=81=99=E3=82=8B"
+=20
+ #: gitk:2656
+ msgid "Highlight this too"
+@@ -352,7 +350,7 @@ msgstr "=E8=A6=AA=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=
+=E3=81=8B=E3=82=89 blame =E3=82=92=E3=81=8B=E3=81=91=E3=82=8B"
+=20
+ #: gitk:2660
+ msgid "Copy path"
+-msgstr ""
++msgstr "=E3=83=91=E3=82=B9=E3=82=92=E3=82=B3=E3=83=94=E3=83=BC"
+=20
+ #: gitk:2667
+ msgid "Show origin of this line"
+@@ -363,7 +361,6 @@ msgid "Run git gui blame on this line"
+ msgstr "=E3=81=93=E3=81=AE=E8=A1=8C=E3=81=AB git gui =E3=81=A7 blame =E3=
+=82=92=E3=81=8B=E3=81=91=E3=82=8B"
+=20
+ #: gitk:3014
+-#, fuzzy
+ msgid ""
+ "\n"
+ "Gitk - a commit viewer for git\n"
+@@ -375,7 +372,7 @@ msgstr ""
+ "\n"
+ "Gitk - git=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=83=93=E3=83=A5=E3=83=
+=BC=E3=82=A2\n"
+ "\n"
+-"Copyright \\u00a9 2005-2010 Paul Mackerras\n"
++"Copyright =C2=A9 2005-2014 Paul Mackerras\n"
+ "\n"
+ "=E4=BD=BF=E7=94=A8=E3=81=8A=E3=82=88=E3=81=B3=E5=86=8D=E9=85=8D=E5=B8=
+=83=E3=81=AF GNU General Public License =E3=81=AB=E5=BE=93=E3=81=A3=E3=81=
+=A6=E3=81=8F=E3=81=A0=E3=81=95=E3=81=84"
+=20
+@@ -397,9 +394,9 @@ msgid "<%s-Q>\t\tQuit"
+ msgstr "<%s-Q>\t\t=E7=B5=82=E4=BA=86"
+=20
+ #: gitk:3049
+-#, fuzzy, tcl-format
++#, tcl-format
+ msgid "<%s-W>\t\tClose window"
+-msgstr "<%s-F>\t\t=E6=A4=9C=E7=B4=A2"
++msgstr "<%s-W>\t\t=E3=82=A6=E3=82=A4=E3=83=B3=E3=83=89=E3=82=A6=E3=82=92=
+=E9=96=89=E3=81=98=E3=82=8B"
+=20
+ #: gitk:3050
+ msgid "<Home>\t\tMove to first commit"
+@@ -410,19 +407,16 @@ msgid "<End>\t\tMove to last commit"
+ msgstr "<End>\t\t=E6=9C=80=E5=BE=8C=E3=81=AE=E3=82=B3=E3=83=9F=E3=83=83=
+=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
+=20
+ #: gitk:3052
+-#, fuzzy
+ msgid "<Up>, p, k\tMove up one commit"
+-msgstr "<Up>, p, i\t=E4=B8=80=E3=81=A4=E4=B8=8A=E3=81=AE=E3=82=B3=E3=83=
+=9F=E3=83=83=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
++msgstr "<Up>, p, k\t=E4=B8=80=E3=81=A4=E4=B8=8A=E3=81=AE=E3=82=B3=E3=83=
+=9F=E3=83=83=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
+=20
+ #: gitk:3053
+-#, fuzzy
+ msgid "<Down>, n, j\tMove down one commit"
+-msgstr "<Down>, n, k\t=E4=B8=80=E3=81=A4=E4=B8=8B=E3=81=AE=E3=82=B3=E3=
+=83=9F=E3=83=83=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
++msgstr "<Down>, n, j\t=E4=B8=80=E3=81=A4=E4=B8=8B=E3=81=AE=E3=82=B3=E3=
+=83=9F=E3=83=83=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
+=20
+ #: gitk:3054
+-#, fuzzy
+ msgid "<Left>, z, h\tGo back in history list"
+-msgstr "<Left>, z, j\t=E5=B1=A5=E6=AD=B4=E3=81=AE=E5=89=8D=E3=81=AB=E6=
+=88=BB=E3=82=8B"
++msgstr "<Left>, z, h\t=E5=B1=A5=E6=AD=B4=E3=81=AE=E5=89=8D=E3=81=AB=E6=
+=88=BB=E3=82=8B"
+=20
+ #: gitk:3055
+ msgid "<Right>, x, l\tGo forward in history list"
+@@ -431,7 +425,7 @@ msgstr "<Right>, x, l\t=E5=B1=A5=E6=AD=B4=E3=81=AE=E6=
+=AC=A1=E3=81=B8=E9=80=B2=E3=82=80"
+ #: gitk:3056
+ #, tcl-format
+ msgid "<%s-n>\tGo to n-th parent of current commit in history list"
+-msgstr ""
++msgstr "<%s-n>\t=E3=83=92=E3=82=B9=E3=83=88=E3=83=AA=E3=81=AE=E7=8F=BE=
+=E5=9C=A8=E3=81=8B=E3=82=89n=E7=95=AA=E7=9B=AE=E3=81=AE=E8=A6=AA=E3=82=B3=
+=E3=83=9F=E3=83=83=E3=83=88=E3=81=B8=E7=A7=BB=E5=8B=95=E3=81=99=E3=82=8B=
+"
+=20
+ #: gitk:3057
+ msgid "<PageUp>\tMove up one page in commit list"
+@@ -514,9 +508,8 @@ msgid "<Return>\tMove to next find hit"
+ msgstr "<Return>\t=E6=AC=A1=E3=82=92=E6=A4=9C=E7=B4=A2=E3=81=97=E3=81=A6=
+=E7=A7=BB=E5=8B=95"
+=20
+ #: gitk:3075
+-#, fuzzy
+ msgid "g\t\tGo to commit"
+-msgstr "<End>\t\t=E6=9C=80=E5=BE=8C=E3=81=AE=E3=82=B3=E3=83=9F=E3=83=83=
+=E3=83=88=E3=81=AB=E7=A7=BB=E5=8B=95"
++msgstr "g\t\t=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E3=81=AB=E7=A7=BB=E5=
+=8B=95"
+=20
+ #: gitk:3076
+ msgid "/\t\tFocus the search box"
+@@ -672,9 +665,8 @@ msgid "Matches all Commit Info criteria"
+ msgstr "=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E6=83=85=E5=A0=B1=E3=81=AE=
+=E5=85=A8=E3=81=A6=E3=81=AE=E6=9D=A1=E4=BB=B6=E3=81=AB=E4=B8=80=E8=87=B4=
+"
+=20
+ #: gitk:4086
+-#, fuzzy
+ msgid "Matches no Commit Info criteria"
+-msgstr "=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E6=83=85=E5=A0=B1=E3=81=AE=
+=E5=85=A8=E3=81=A6=E3=81=AE=E6=9D=A1=E4=BB=B6=E3=81=AB=E4=B8=80=E8=87=B4=
+"
++msgstr "=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88=E6=83=85=E5=A0=B1=E3=81=AB=
+=E4=B8=80=E8=87=B4=E3=81=97=E3=81=BE=E3=81=9B=E3=82=93"
+=20
+ #: gitk:4087
+ msgid "Changes to Files:"
+@@ -761,9 +753,8 @@ msgid "-- criteria for selecting revisions"
+ msgstr "=E2=80=95 =E3=83=AA=E3=83=93=E3=82=B8=E3=83=A7=E3=83=B3=E3=81=AE=
+=E9=81=B8=E6=8A=9E=E6=9D=A1=E4=BB=B6"
+=20
+ #: gitk:4241
+-#, fuzzy
+ msgid "View Name"
+-msgstr "=E3=83=93=E3=83=A5=E3=83=BC=E5=90=8D:"
++msgstr "=E3=83=93=E3=83=A5=E3=83=BC=E5=90=8D"
+=20
+ #: gitk:4316
+ msgid "Apply (F5)"
+@@ -803,7 +794,7 @@ msgstr "=E3=82=B9=E3=83=86=E3=83=BC=E3=82=B8=E3=81=95=
+=E3=82=8C=E3=81=A6=E3=81=84=E3=81=AA=E3=81=84=E3=80=81=E3=82=B3=E3=83=9F=
+=E3=83=83=E3=83=88=E5=89=8D=E3=81=AE=E3=83=AD=E3=83=BC=E3=82=AB=E3=83=AB=
+=E3=81=AA=E5=A4=89=E6=9B=B4
+=20
+ #: gitk:7134
+ msgid "and many more"
+-msgstr ""
++msgstr "=E3=81=9D=E3=81=AE=E4=BB=96=E3=82=AA=E3=83=97=E3=82=B7=E3=83=A7=
+=E3=83=B3"
+=20
+ #: gitk:7137
+ msgid "many"
+@@ -984,12 +975,11 @@ msgstr "=E3=82=BF=E3=82=B0=E5=90=8D:"
+=20
+ #: gitk:9268
+ msgid "Tag message is optional"
+-msgstr ""
++msgstr "=E3=82=BF=E3=82=B0=E3=83=A1=E3=83=83=E3=82=BB=E3=83=BC=E3=82=B8=
+=E3=81=AF=E4=BB=BB=E6=84=8F=E3=81=A7=E3=81=99"
+=20
+ #: gitk:9270
+-#, fuzzy
+ msgid "Tag message:"
+-msgstr "=E3=82=BF=E3=82=B0=E5=90=8D:"
++msgstr "=E3=82=BF=E3=82=B0=E3=83=A1=E3=83=83=E3=82=BB=E3=83=BC=E3=82=B8=
+=EF=BC=9A"
+=20
+ #: gitk:9274 gitk:9439
+ msgid "Create"
+@@ -1066,33 +1056,32 @@ msgid "No changes committed"
+ msgstr "=E4=BD=95=E3=81=AE=E5=A4=89=E6=9B=B4=E3=82=82=E3=82=B3=E3=83=9F=
+=E3=83=83=E3=83=88=E3=81=95=E3=82=8C=E3=81=A6=E3=81=84=E3=81=BE=E3=81=9B=
+=E3=82=93"
+=20
+ #: gitk:9593
+-#, fuzzy, tcl-format
++#, tcl-format
+ msgid "Commit %s is not included in branch %s -- really revert it?"
+ msgstr ""
+-"=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88 %s =E3=81=AF=E6=97=A2=E3=81=AB=E3=
+=83=96=E3=83=A9=E3=83=B3=E3=83=81 %s =E3=81=AB=E5=90=AB=E3=81=BE=E3=82=8C=
+=E3=81=A6=E3=81=84=E3=81=BE=E3=81=99 =E2=80=95 =E6=9C=AC=E5=BD=93=E3=81=
+=AB=E3=81=93=E3=82=8C=E3=82=92=E5=86=8D=E9=81=A9=E7=94=A8=E3=81=97=E3=81=
+=BE=E3=81=99=E3=81=8B=EF=BC=9F"
++"=E3=82=B3=E3=83=9F=E3=83=83=E3=83=88 %s =E3=81=AF=E6=97=A2=E3=81=AB=E3=
+=83=96=E3=83=A9=E3=83=B3=E3=83=81 %s =E3=81=AB=E5=90=AB=E3=81=BE=E3=82=8C=
+=E3=81=A6=E3=81=84=E3=81=BE=E3=81=9B=E3=82=93 =E2=80=95 =E6=9C=AC=E5=BD=
+=93=E3=81=AB=E3=81=93=E3=82=8C=E3=82=92=E3=83=AA=E3=83=90=E3=83=BC=E3=83=
+=88=E3=81=97=E3=81=BE=E3=81=99"
++"=E3=81=8B=EF=BC=9F"
+=20
+ #: gitk:9598
+-#, fuzzy
+ msgid "Reverting"
+-msgstr "=E3=83=AA=E3=82=BB=E3=83=83=E3=83=88=E4=B8=AD"
++msgstr "=E3=83=AA=E3=83=90=E3=83=BC=E3=83=88=E4=B8=AD"
+=20
+ #: gitk:9606
+-#, fuzzy, tcl-format
++#, tcl-format
+ msgid ""
+ "Revert failed because of local changes to the following files:%s Plea=
+se "
+ "commit, reset or stash  your changes and try again."
+ msgstr ""
+-"=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB '%s' =E3=81=AE=E3=83=AD=E3=83=BC=
+=E3=82=AB=E3=83=AB=E3=81=AA=E5=A4=89=E6=9B=B4=E3=81=AE=E3=81=9F=E3=82=81=
+=E3=81=AB=E3=83=81=E3=82=A7=E3=83=AA=E3=83=BC=E3=83=94=E3=83=83=E3=82=AF=
+=E3=81=AF=E5=A4=B1=E6=95=97=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82=
+\n"
++"=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB '%s' =E3=81=AE=E3=83=AD=E3=83=BC=
+=E3=82=AB=E3=83=AB=E3=81=AA=E5=A4=89=E6=9B=B4=E3=81=AE=E3=81=9F=E3=82=81=
+=E3=81=AB=E3=83=AA=E3=83=90=E3=83=BC=E3=83=88=E3=81=AF=E5=A4=B1=E6=95=97=
+=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82\n"
+ "=E3=81=82=E3=81=AA=E3=81=9F=E3=81=AE=E5=A4=89=E6=9B=B4=E3=81=AB commi=
+t, reset, stash =E3=81=AE=E3=81=84=E3=81=9A=E3=82=8C=E3=81=8B=E3=82=92=E8=
+=A1=8C=E3=81=A3=E3=81=A6=E3=81=8B=E3=82=89=E3=82=84=E3=82=8A=E7=9B=B4=E3=
+=81=97=E3=81=A6=E3=81=8F=E3=81=A0=E3=81=95"
+ "=E3=81=84=E3=80=82"
+=20
+ #: gitk:9610
+-#, fuzzy
+ msgid ""
+ "Revert failed because of merge conflict.\n"
+ " Do you wish to run git citool to resolve it?"
+ msgstr ""
+-"=E3=83=9E=E3=83=BC=E3=82=B8=E3=81=AE=E8=A1=9D=E7=AA=81=E3=81=AB=E3=82=
+=88=E3=81=A3=E3=81=A6=E3=83=81=E3=82=A7=E3=83=AA=E3=83=BC=E3=83=94=E3=83=
+=83=E3=82=AF=E3=81=AF=E5=A4=B1=E6=95=97=E3=81=97=E3=81=BE=E3=81=97=E3=81=
+=9F=E3=80=82\n"
++"=E3=83=9E=E3=83=BC=E3=82=B8=E3=81=AE=E8=A1=9D=E7=AA=81=E3=81=AB=E3=82=
+=88=E3=81=A3=E3=81=A6=E3=83=AA=E3=83=90=E3=83=BC=E3=83=88=E3=81=AF=E5=A4=
+=B1=E6=95=97=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82\n"
+ "=E3=81=93=E3=81=AE=E8=A7=A3=E6=B1=BA=E3=81=AE=E3=81=9F=E3=82=81=E3=81=
+=AB git citool =E3=82=92=E5=AE=9F=E8=A1=8C=E3=81=97=E3=81=9F=E3=81=84=E3=
+=81=A7=E3=81=99=E3=81=8B=EF=BC=9F"
+=20
+ #: gitk:9653
+@@ -1200,9 +1189,8 @@ msgid "Show local changes"
+ msgstr "=E3=83=AD=E3=83=BC=E3=82=AB=E3=83=AB=E3=81=AA=E5=A4=89=E6=9B=B4=
+=E3=82=92=E8=A1=A8=E7=A4=BA"
+=20
+ #: gitk:11361
+-#, fuzzy
+ msgid "Auto-select SHA1 (length)"
+-msgstr "SHA1 =E3=81=AE=E8=87=AA=E5=8B=95=E9=81=B8=E6=8A=9E"
++msgstr "SHA1(l=E9=8D=B5=E9=95=B7)=E3=81=AE=E8=87=AA=E5=8B=95=E9=81=B8=E6=
+=8A=9E"
+=20
+ #: gitk:11365
+ msgid "Hide remote refs"
+@@ -1217,13 +1205,12 @@ msgid "Tab spacing"
+ msgstr "=E3=82=BF=E3=83=96=E7=A9=BA=E7=99=BD=E5=B9=85"
+=20
+ #: gitk:11374
+-#, fuzzy
+ msgid "Display nearby tags/heads"
+-msgstr "=E8=BF=91=E3=81=8F=E3=81=AE=E3=82=BF=E3=82=B0=E3=82=92=E8=A1=A8=
+=E7=A4=BA=E3=81=99=E3=82=8B"
++msgstr "=E8=BF=91=E3=81=8F=E3=81=AE=E3=82=BF=E3=82=B0/head=E3=82=92=E8=
+=A1=A8=E7=A4=BA=E3=81=99=E3=82=8B"
+=20
+ #: gitk:11377
+ msgid "Maximum # tags/heads to show"
+-msgstr ""
++msgstr "=E8=A1=A8=E7=A4=BA=E3=81=99=E3=82=8B=E6=9C=80=E5=A4=A7=E3=81=AE=
+=E3=82=BF=E3=82=B0/=E3=83=98=E3=83=83=E3=83=89=E6=95=B0 #"
+=20
+ #: gitk:11380
+ msgid "Limit diffs to listed paths"
+@@ -1242,21 +1229,20 @@ msgid "Choose..."
+ msgstr "=E9=81=B8=E6=8A=9E..."
+=20
+ #: gitk:11395
+-#, fuzzy
+ msgid "General options"
+-msgstr "=E3=83=91=E3=83=83=E3=83=81=E7=94=9F=E6=88=90"
++msgstr "=E5=85=A8=E8=88=AC=E3=82=AA=E3=83=97=E3=82=B7=E3=83=A7=E3=83=B3=
+"
+=20
+ #: gitk:11398
+ msgid "Use themed widgets"
+-msgstr ""
++msgstr "=E3=83=86=E3=83=BC=E3=83=9E=E3=81=AE=E3=82=A6=E3=82=A3=E3=82=B8=
+=E3=82=A7=E3=83=83=E3=83=88=E3=82=92=E4=BD=BF=E3=81=86"
+=20
+ #: gitk:11400
+ msgid "(change requires restart)"
+-msgstr ""
++msgstr "(=E5=A4=89=E6=9B=B4=E3=82=92=E5=8F=8D=E6=98=A0=E3=81=99=E3=82=8B=
+=E3=81=AB=E3=81=AF=E5=86=8D=E3=82=B9=E3=82=BF=E3=83=BC=E3=83=88=E3=81=AE=
+=E5=BF=85=E8=A6=81=E3=81=8C=E3=81=82=E3=82=8A=E3=81=BE=E3=81=99=EF=BC=89=
+"
+=20
+ #: gitk:11402
+ msgid "(currently unavailable)"
+-msgstr ""
++msgstr "=EF=BC=88=E7=8F=BE=E5=9C=A8=E5=AD=98=E5=9C=A8=E3=81=97=E3=81=AA=
+=E3=81=84=EF=BC=89"
+=20
+ #: gitk:11413
+ msgid "Colors: press to choose"
+@@ -1343,17 +1329,16 @@ msgid "Gitk preferences"
+ msgstr "Gitk =E8=A8=AD=E5=AE=9A"
+=20
+ #: gitk:11494
+-#, fuzzy
+ msgid "General"
+-msgstr "=E7=94=9F=E6=88=90"
++msgstr "=E5=85=A8=E8=88=AC"
+=20
+ #: gitk:11495
+ msgid "Colors"
+-msgstr ""
++msgstr "=E8=89=B2"
+=20
+ #: gitk:11496
+ msgid "Fonts"
+-msgstr ""
++msgstr "=E3=83=95=E3=82=A9=E3=83=B3=E3=83=88"
+=20
+ #: gitk:11546
+ #, tcl-format
+@@ -1365,6 +1350,8 @@ msgid ""
+ "Sorry, gitk cannot run with this version of Tcl/Tk.\n"
+ " Gitk requires at least Tcl/Tk 8.4."
+ msgstr ""
++"=E7=94=B3=E3=81=97=E8=A8=B3=E6=9C=89=E3=82=8A=E3=81=BE=E3=81=9B=E3=82=
+=93=E3=80=82gitk=E3=81=AF=E3=80=81=E3=81=93=E3=81=AE=E3=83=90=E3=83=BC=E3=
+=82=B8=E3=83=A7=E3=83=B3=E3=81=AETcl/Tk=E3=81=A7=E3=81=AF=E5=8B=95=E4=BD=
+=9C=E3=81=97=E3=81=BE=E3=81=9B=E3=82=93=E3=80=82\n"
++"Gitk=E3=81=AB=E3=81=AF=E5=B0=91=E3=81=AA=E3=81=8F=E3=81=A8=E3=82=82Tc=
+l/Tk 8.4=E3=81=8C=E5=BF=85=E8=A6=81=E3=81=A7=E3=81=99=E3=80=82"
+=20
+ #: gitk:12269
+ msgid "Cannot find a git repository here."
+--=20
+2.6.2
