@@ -1,97 +1,89 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: Bug: t5813 failing on Cygwin
-Date: Sun, 8 Nov 2015 13:21:37 +0000
-Message-ID: <563F4C61.5040500@ramsayjones.plus.com>
-References: <563DEA71.1080808@dinwoodie.org>
- <20151107184527.GA4483@sigill.intra.peff.net>
- <20151107192029.GW14466@dinwoodie.org>
- <1446930165.16957.9.camel@kaarsemaker.net>
- <20151108051059.GB19191@sigill.intra.peff.net>
+From: "Rainer M. Canavan" <git@canavan.de>
+Subject: [PATCH] configure.ac: try -lpthread in $LIBS instead of $CFLAGS
+Date: Sun, 8 Nov 2015 16:28:42 +0100 (CET)
+Message-ID: <201511081528.tA8FSgdc003895@tezro.nonet>
+References: <vpqbnb7edqn.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>,
-	Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Sun Nov 08 14:21:51 2015
+Content-Type: text/plain
+Cc: Matthieu.Moy@grenoble-inp.fr
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 08 16:31:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZvPun-0003yw-NP
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Nov 2015 14:21:50 +0100
+	id 1ZvRvx-0001jR-AT
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Nov 2015 16:31:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751477AbbKHNVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Nov 2015 08:21:45 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:56594 "EHLO
-	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750887AbbKHNVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Nov 2015 08:21:44 -0500
-Received: from [10.0.2.15] ([146.199.93.105])
-	by avasout04 with smtp
-	id f1Me1r0042GQ2gJ011Mf6V; Sun, 08 Nov 2015 13:21:42 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=CvRCCSMD c=1 sm=1 tr=0
- a=SWxm+s7FAPvPP0IAAWI2og==:117 a=SWxm+s7FAPvPP0IAAWI2og==:17 a=0Bzu9jTXAAAA:8
- a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=mrKfVvcapvGXeMQbqeAA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <20151108051059.GB19191@sigill.intra.peff.net>
+	id S1752701AbbKHPbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Nov 2015 10:31:00 -0500
+Received: from [213.196.234.34] ([213.196.234.34]:55691 "EHLO turms.7val.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752619AbbKHPaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Nov 2015 10:30:17 -0500
+Received: from localhost (amavis.7val.com [172.22.0.32])
+	by localhost (Postfix) with ESMTP id 1AB0339538A6;
+	Sun,  8 Nov 2015 16:29:20 +0100 (CET)
+Received: from turms.7val.com ([172.22.0.34])
+	by localhost (amavis.7val.com [172.22.0.32]) (amavisd-new, port 10024)
+	with ESMTP id nu0FmU76nUhO; Sun,  8 Nov 2015 16:29:17 +0100 (CET)
+Received: from qube.nonet (xdsl-87-78-120-226.netcologne.de [87.78.120.226])
+	by turms.7val.com (Postfix) with ESMTP;
+	Sun,  8 Nov 2015 16:29:17 +0100 (CET)
+Received: from tezro.nonet (tezro.nonet [10.0.0.1])
+	by qube.nonet (Postfix) with ESMTP id A55342DA90;
+	Sun,  8 Nov 2015 16:29:14 +0100 (CET)
+Received: from tezro.nonet (localhost [127.0.0.1])
+	by tezro.nonet (SGI-8.12.11.20060308/8.12.11) with ESMTP id tA8FShnq003897;
+	Sun, 8 Nov 2015 16:28:43 +0100 (CET)
+Received: (from canavan@localhost)
+	by tezro.nonet (SGI-8.12.11.20060308/8.12.11/Submit) id tA8FSgdc003895;
+	Sun, 8 Nov 2015 16:28:42 +0100 (CET)
+In-Reply-To: <vpqbnb7edqn.fsf@anie.imag.fr>
+X-Mailer: Ishmail 2.1.0-20150803-mips-sgi-irix6.5 <http://ishmail.sourceforge.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281038>
 
+Some linkers, namely the one on IRIX are rather strict concerning the order or
+arguments for symbol resolution, i.e. no libraries listed before objects or
+other libraries on the command line are considered for symbol resolution. That
+means that -lpthread can't work if it's put in CFLAGS, because it will not be
+considered for resolving pthread_key_create in conftest.o. Use $LIBS instead.
 
+Signed-off-by: Rainer Canavan <git@canavan.de>
+---
+ configure.ac | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-On 08/11/15 05:10, Jeff King wrote:
-> On Sat, Nov 07, 2015 at 10:02:45PM +0100, Dennis Kaarsemaker wrote:
-> 
->> Looks like lib-proto-disable.sh's fake SSH doesn't strip double leading
->> /'es from the path. Try this patch:
->>
->> diff --git a/t/t5813-proto-disable-ssh.sh b/t/t5813-proto-disable
->> -ssh.sh
->> index ad877d7..a954ead 100755
->> --- a/t/t5813-proto-disable-ssh.sh
->> +++ b/t/t5813-proto-disable-ssh.sh
->> @@ -14,7 +14,7 @@ test_expect_success 'setup repository to clone' '
->>  '
->>  
->>  test_proto "host:path" ssh "remote:repo.git"
->> -test_proto "ssh://" ssh "ssh://remote/$PWD/remote/repo.git"
->> -test_proto "git+ssh://" ssh "git+ssh://remote/$PWD/remote/repo.git"
->> +test_proto "ssh://" ssh "ssh://remote$PWD/remote/repo.git"
->> +test_proto "git+ssh://" ssh "git+ssh://remote$PWD/remote/repo.git"
->>  
->>  test_done
-> 
-> Good catch. It's a shame that the resulting URL becomes a little less
-> readable, but given that the damage is limited to this one test, I think
-> we can live with it. Working around it in the fake ssh script would
-> probably end up unnecessarily complex.
-> 
-> We may want to have git itself remove extra slashes from URLs, as Ramsay
-> suggested elsewhere, but I would worry about regressions. Let's solve
-> this test portability problem by itself, and we can consider the other
-> as a separate topic if anybody wants to pursue it.
-
-Yep, this is essentially what I decided to do in a similar situation
-back in 2011 (see commit 3a81f33c5).
-
-Until I looked into that bug, I hadn't given any thought to whether
-cygwin (let alone git) supported the UNC notation. At that time, I did
-spend a little time trying to determine if it worked, but for some
-reason I just couldn't get a network share configured properly.
-It kept on giving me 'permission denied' errors - even using windows
-only commands. :(
-
-Since I have no need for network shares on cygwin, I didn't try too
-hard ... I will leave it to people more motivated than me! ;-)
-
-ATB,
-Ramsay Jones
+diff --git a/configure.ac b/configure.ac
+index fd22d41..1f55009 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1149,7 +1149,12 @@ elif test -z "$PTHREAD_CFLAGS"; then
+   # would then trigger compiler warnings on every single file we compile.
+   for opt in "" -mt -pthread -lpthread; do
+      old_CFLAGS="$CFLAGS"
+-     CFLAGS="$opt $CFLAGS"
++     old_LIBS="$LIBS"
++     case "$opt" in
++        -l*)  LIBS="$opt $LIBS" ;;
++        *)    CFLAGS="$opt $CFLAGS" ;;
++     esac
++
+      AC_MSG_CHECKING([for POSIX Threads with '$opt'])
+      AC_LINK_IFELSE([PTHREADTEST_SRC],
+ 	[AC_MSG_RESULT([yes])
+@@ -1161,6 +1166,7 @@ elif test -z "$PTHREAD_CFLAGS"; then
+ 	],
+ 	[AC_MSG_RESULT([no])])
+       CFLAGS="$old_CFLAGS"
++      LIBS="$old_LIBS"
+   done
+   if test $threads_found != yes; then
+     AC_CHECK_LIB([pthread], [pthread_create],
+-- 
+2.6.2
