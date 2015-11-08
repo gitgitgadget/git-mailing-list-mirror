@@ -1,98 +1,100 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: Bug: t5813 failing on Cygwin
-Date: Sun, 8 Nov 2015 08:11:53 +0100
-Message-ID: <563EF5B9.9020002@web.de>
-References: <563DEA71.1080808@dinwoodie.org>
- <20151107184527.GA4483@sigill.intra.peff.net>
- <20151107192029.GW14466@dinwoodie.org>
- <1446930165.16957.9.camel@kaarsemaker.net>
- <563E6B47.5000807@ramsayjones.plus.com>
- <563E83C2.5050300@ramsayjones.plus.com>
- <1446939168.16957.11.camel@kaarsemaker.net>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: [PATCH] t5813: avoid creating urls that break on cygwin
+Date: Sun, 8 Nov 2015 10:54:04 +0100
+Message-ID: <20151108095400.GA9448@spirit>
+References: <20151108051059.GB19191@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Adam Dinwoodie <adam@dinwoodie.org>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 08 08:12:20 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: peff@peff.net, gitster@pobox.com, adam@dinwoodie.org,
+	ramsay@ramsayjones.plus.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 08 10:54:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZvK9E-00020s-4J
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Nov 2015 08:12:20 +0100
+	id 1ZvMfv-0008GT-Ip
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Nov 2015 10:54:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754541AbbKHHMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Nov 2015 02:12:16 -0500
-Received: from mout.web.de ([212.227.15.4]:49542 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753916AbbKHHMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Nov 2015 02:12:15 -0500
-Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0MP2Sl-1ZpWqR2sLv-006Qhs; Sun, 08 Nov 2015 08:11:56
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.3.0
-In-Reply-To: <1446939168.16957.11.camel@kaarsemaker.net>
-X-Provags-ID: V03:K0:ZILxAT0JHlVzhfSt2IqVUcsO/rkr98r51O8QXUzoteF/aeVf6Aj
- zLV09ZoSKeGB4MyOtVMMett6EyB0+nf9EEYFoQySSOTfsd0Lq0s1vTnUTeUR0Kvm/bVwb39
- NJA0zC5kUcWIDpR21XrqrTXHm2GuxQzH7EZQg4D+F+c+ZEJSuYDmMfafROH6d9RMMSZdiMZ
- uVNj+bv59VLCYANf5EW5Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9k7SUSC36ZI=:FS3SN9U2zd7xtDO10kB3rS
- PwJKcryjZ70i9SGXu6aMnhJeRqbKkmmVZBk5dsQqj+wM/aAaGgE6bQxhem4d2S62u+wqwwvqs
- 4Mf534/pbomoHh4rpZIg4+cWWPfFXd/dTA8GKa570vICjwaqf/81ETWkDl/1iaYQnyACb1eQH
- MMe1GJlVnSKciUTp9kyuLhfb3G2odDvryBKIK/Wti+dR334/fPAutOLiBWcKUyzk74066Tc0c
- 6FtB06/ze+cSPjEujyFLg6ikOrmLt6ifryJcBXlukhdCeBktbcDnUm5ho7WEub4+dS+wqZPRo
- 3oJPTwEV/5Znt71tL6EhocRv8R7iJ/K7Gm6pfUxDZ0OTPqiU19n4BnUigiKbSgo/RoPXKPj3g
- ANPXCzsaAnYe/do03TTYkob6W+zx68r8igomZAnsQKFUbGT+1fJLjZQxCbY948gl7kCWAhS8W
- i+h9GMrvqhQkttFkE4uCBBADqJISOF8BiGL0dQGYp8kFNCwzaAAZG8f3Nu0LE866ySzqBc/u9
- A9sWcoJBFJDHO6LBERnQf9qN+dNpgF8OCvs6qXWrnYZ9RTkH0sDba5NSg1uqotlijkRlnRTsf
- CY1TPJ0OT0exCZ2yud1LZAhOfWCZHuj+/VBapmOcbIG6ZYIsjLLIwWjGRZ0aII5ZisrE1PGKZ
- 4nYzg41nUG8GHHkqixeeOClROlPXUaI/YoJvL6kpQtL+iVmSO2Hw/b3Zs5momPzvH4E8OYaKI
- kkAWknzIE6bKbg9ylfWZozYqOWWsXRndtGeFoueg2tmPjetCIeGeUxeuCWtGYmGMRoxjROVL 
+	id S1752693AbbKHJyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Nov 2015 04:54:11 -0500
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:36728 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752222AbbKHJyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Nov 2015 04:54:09 -0500
+Received: by wimw2 with SMTP id w2so53948218wim.1
+        for <git@vger.kernel.org>; Sun, 08 Nov 2015 01:54:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker_net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=awO06oaCVX+evmuxkRme6ebBHKFwb9QRbpYaNJkauz4=;
+        b=tLLB6mepAEOcb+Hw4NIvPpBNdUv1XCy6fGJz59uTD1EIt5V1hBHEct5gQI5ybrg0Ee
+         r7UqZjDY5VQp9e0KxqGrNhM5GpinId8IzP9QncwfnzrYZmZFzzYBVM3AbBYXE996OGBl
+         PQxgoX5jBvjF88xtxuqZX7CQjG9KEiidrNY+6ll4N7T0ITMh2K1xNHiYPAnsp9lMc3Cn
+         2q1EcQ3hnVVAWEVnnZySLkZfvoqGfIH5nfNtz1kbnmgPyC3MV4u5bl53pqu+ztoMIr0j
+         toCXjcDpVYNdmKNVO3HqYf9pe/evK8UhHIvh+B7lRkgn0AasiI9D2p9XsgrrxnuEPdvY
+         ljwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=awO06oaCVX+evmuxkRme6ebBHKFwb9QRbpYaNJkauz4=;
+        b=AFYwc9IqdScjMj1OEGK7wUYX5qyctY7sw69PzcrDnm/F4PrfbL/R7MK/d4GJ4Uk3Nq
+         xWTcvFS2PasgHGanAWHcGFIWBU0SQIEpLbclTuzULeWJXkTTlknFEzMXJGqJ6nPmzYir
+         yX+l6OIFPu6I2oZeeDYCxxvuHruzoyVXPmh/1WQXByrS7tJddafGK6j2Tv9xOj07cs/d
+         BGxTxQ58XD/XxvFP4LjpKhwFO7MaVBY+a4uwXngk1uP+tZRYWHOOcUueS30WpRNKU/Oz
+         nWgqzfyIQ/hC1dzlcCBF/X5FqCdxLX8LTpZ7RZkm0KNGhVLITnLk50smaB1i0ddn+lCx
+         gspQ==
+X-Gm-Message-State: ALoCoQk8w6dc9chCCeaEFOBNQyS7gOZtwLwK6E9no//EhW08jyzI9aGU+j9Hx73cboDj0eCfybI9
+X-Received: by 10.194.8.38 with SMTP id o6mr23981849wja.42.1446976448353;
+        Sun, 08 Nov 2015 01:54:08 -0800 (PST)
+Received: from spirit ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id c194sm1519202wmd.13.2015.11.08.01.54.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 08 Nov 2015 01:54:07 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20151108051059.GB19191@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281035>
 
->>
->> diff --git a/connect.c b/connect.c
->> index 108f5ab..fc73cf9 100644
->> --- a/connect.c
->> +++ b/connect.c
->> @@ -636,6 +636,8 @@ static enum protocol parse_connect_url(const char
->> *url_orig, char **ret_host,
->>  	end = path; /* Need to \0 terminate host here */
->>  	if (separator == ':')
->>  		path++; /* path starts after ':' */
->> +	if (starts_with(path, "//"))
->> +		path++;
->>  	if (protocol == PROTO_GIT || protocol == PROTO_SSH) {
->>  		if (path[1] == '~')
->>  			path++;
->>
->> It seems to work, but I haven't thought about it too deeply ...
->> so I don't know if there are any problems lurking. :)
->>
->> I have to go now, so if somebody wants to take this up ...
-> 
-> Won't that break file:////server/share urls on cygwin?
-> 
-The official way to specify UNC names looks like this:
-file://<host>/<path>
-(Or file://server/share/morepath to follow your example)
-#http://www.faqs.org/rfcs/rfc1738.html
+The fake ssh used by this test simply strips ssh://host from the url,
+leaving paths behind that start with //, which cygwin interprets as UNC
+paths, causing the test to fail.
 
-But unfortunately Git doesn't support it.
-I can put it on the to-do list...
+We may want to actually fix this in git itself, making it remove extra
+slashes from urls before feeding them to transports or helpers, but
+that's for another topic as it could cause regressions.
 
-But using "file:////" this is not an official syntax,
-and should (in theory) not be used by any user.
-Does anybody use it?
+Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+---
+ t/t5813-proto-disable-ssh.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Or do people use simply "git clone //server/share/" ?
+diff --git a/t/t5813-proto-disable-ssh.sh b/t/t5813-proto-disable-ssh.sh
+index ad877d7..a954ead 100755
+--- a/t/t5813-proto-disable-ssh.sh
++++ b/t/t5813-proto-disable-ssh.sh
+@@ -14,7 +14,7 @@ test_expect_success 'setup repository to clone' '
+ '
  
+ test_proto "host:path" ssh "remote:repo.git"
+-test_proto "ssh://" ssh "ssh://remote/$PWD/remote/repo.git"
+-test_proto "git+ssh://" ssh "git+ssh://remote/$PWD/remote/repo.git"
++test_proto "ssh://" ssh "ssh://remote$PWD/remote/repo.git"
++test_proto "git+ssh://" ssh "git+ssh://remote$PWD/remote/repo.git"
+ 
+ test_done
+-- 
+2.6.3-495-gf0a7f49
+
+
+-- 
+Dennis Kaarsemaker <dennis@kaarsemaker.net>
+http://twitter.com/seveas
