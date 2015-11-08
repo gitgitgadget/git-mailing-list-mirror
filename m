@@ -1,71 +1,97 @@
-From: Daniel Knittl-Frank <knittl89@googlemail.com>
-Subject: [PATCH] Escape Git's exec path in contrib/rerere-train.sh script
-Date: Sun,  8 Nov 2015 12:27:55 +0100
-Message-ID: <1446982075-26161-1-git-send-email-knittl89+git@googlemail.com>
-Cc: Daniel Knittl-Frank <knittl89+git@googlemail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 08 12:28:42 2015
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: Bug: t5813 failing on Cygwin
+Date: Sun, 8 Nov 2015 13:21:37 +0000
+Message-ID: <563F4C61.5040500@ramsayjones.plus.com>
+References: <563DEA71.1080808@dinwoodie.org>
+ <20151107184527.GA4483@sigill.intra.peff.net>
+ <20151107192029.GW14466@dinwoodie.org>
+ <1446930165.16957.9.camel@kaarsemaker.net>
+ <20151108051059.GB19191@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>,
+	Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Sun Nov 08 14:21:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZvO9I-0004mU-WB
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Nov 2015 12:28:41 +0100
+	id 1ZvPun-0003yw-NP
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Nov 2015 14:21:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbbKHL2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Nov 2015 06:28:37 -0500
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:35644 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750823AbbKHL2f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Nov 2015 06:28:35 -0500
-Received: by wiby19 with SMTP id y19so268763wib.0
-        for <git@vger.kernel.org>; Sun, 08 Nov 2015 03:28:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=cELfeKyoaAq55s0iNsmGgAX++vgA5yZbGzt7aJ9I0dI=;
-        b=U4+gGQa5it3+1TBumIIMN5U81BMc1sMrj8+SvLdYhxzs3JEZKgYVPaC4ie8ps44Mm9
-         JYCH5Bltg8bL6CnaQPGkZo4OJu7uIOlzFFJUXfiSnXFoFez8kMcBorr4wncTRbmPP6HQ
-         d/NJU/nSIIPDpLi0q/i6xzqy1mgrXkqD0bf+X/PeiCXZC+N1+c/fDNDCvfziwJ64sLxb
-         wm50M4CYncsSs3rT8/RKn9l4maQ+7ruXnBs1rPh0PjwfXFgAIScI1WkosTEVA/Lv4ehu
-         xAKvq7jbtRsP03ICq25xYn1QGSzUA2Nt6gr8uiDpB1HR/Ce0yPrW7nRKpmhBOnEq7Oh/
-         tvyg==
-X-Received: by 10.194.120.169 with SMTP id ld9mr24296102wjb.48.1446982114576;
-        Sun, 08 Nov 2015 03:28:34 -0800 (PST)
-Received: from localhost.localdomain (cpe90-146-127-42.liwest.at. [90.146.127.42])
-        by smtp.gmail.com with ESMTPSA id t2sm8487014wme.0.2015.11.08.03.28.33
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 08 Nov 2015 03:28:33 -0800 (PST)
-X-Google-Original-From: Daniel Knittl-Frank <knittl89+git@googlemail.com>
-X-Mailer: git-send-email 2.6.3.490.ge2d6e62
+	id S1751477AbbKHNVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Nov 2015 08:21:45 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:56594 "EHLO
+	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750887AbbKHNVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Nov 2015 08:21:44 -0500
+Received: from [10.0.2.15] ([146.199.93.105])
+	by avasout04 with smtp
+	id f1Me1r0042GQ2gJ011Mf6V; Sun, 08 Nov 2015 13:21:42 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=CvRCCSMD c=1 sm=1 tr=0
+ a=SWxm+s7FAPvPP0IAAWI2og==:117 a=SWxm+s7FAPvPP0IAAWI2og==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=mrKfVvcapvGXeMQbqeAA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <20151108051059.GB19191@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281037>
 
-Whitespace can cause the source command to fail. This is usually not a
-problem on Unix systems, but on Windows Git is likely to be installed
-under "C:/Program Files/", thus rendering the script broken.
 
-Signed-off-by: Daniel Knittl-Frank <knittl89+git@googlemail.com>
----
- contrib/rerere-train.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/rerere-train.sh b/contrib/rerere-train.sh
-index 36b6fee..52ad9e4 100755
---- a/contrib/rerere-train.sh
-+++ b/contrib/rerere-train.sh
-@@ -7,7 +7,7 @@ USAGE="$me rev-list-args"
- 
- SUBDIRECTORY_OK=Yes
- OPTIONS_SPEC=
--. $(git --exec-path)/git-sh-setup
-+. "$(git --exec-path)/git-sh-setup"
- require_work_tree
- cd_to_toplevel
- 
--- 
-2.6.0.rc0.134.g48a2a2a
+On 08/11/15 05:10, Jeff King wrote:
+> On Sat, Nov 07, 2015 at 10:02:45PM +0100, Dennis Kaarsemaker wrote:
+> 
+>> Looks like lib-proto-disable.sh's fake SSH doesn't strip double leading
+>> /'es from the path. Try this patch:
+>>
+>> diff --git a/t/t5813-proto-disable-ssh.sh b/t/t5813-proto-disable
+>> -ssh.sh
+>> index ad877d7..a954ead 100755
+>> --- a/t/t5813-proto-disable-ssh.sh
+>> +++ b/t/t5813-proto-disable-ssh.sh
+>> @@ -14,7 +14,7 @@ test_expect_success 'setup repository to clone' '
+>>  '
+>>  
+>>  test_proto "host:path" ssh "remote:repo.git"
+>> -test_proto "ssh://" ssh "ssh://remote/$PWD/remote/repo.git"
+>> -test_proto "git+ssh://" ssh "git+ssh://remote/$PWD/remote/repo.git"
+>> +test_proto "ssh://" ssh "ssh://remote$PWD/remote/repo.git"
+>> +test_proto "git+ssh://" ssh "git+ssh://remote$PWD/remote/repo.git"
+>>  
+>>  test_done
+> 
+> Good catch. It's a shame that the resulting URL becomes a little less
+> readable, but given that the damage is limited to this one test, I think
+> we can live with it. Working around it in the fake ssh script would
+> probably end up unnecessarily complex.
+> 
+> We may want to have git itself remove extra slashes from URLs, as Ramsay
+> suggested elsewhere, but I would worry about regressions. Let's solve
+> this test portability problem by itself, and we can consider the other
+> as a separate topic if anybody wants to pursue it.
+
+Yep, this is essentially what I decided to do in a similar situation
+back in 2011 (see commit 3a81f33c5).
+
+Until I looked into that bug, I hadn't given any thought to whether
+cygwin (let alone git) supported the UNC notation. At that time, I did
+spend a little time trying to determine if it worked, but for some
+reason I just couldn't get a network share configured properly.
+It kept on giving me 'permission denied' errors - even using windows
+only commands. :(
+
+Since I have no need for network shares on cygwin, I didn't try too
+hard ... I will leave it to people more motivated than me! ;-)
+
+ATB,
+Ramsay Jones
