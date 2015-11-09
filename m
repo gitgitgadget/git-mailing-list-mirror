@@ -1,139 +1,80 @@
-From: Marc Haber <mh+git@zugschlus.de>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
 Subject: Re: how to check for uncommitted/unstaged changes on remote side
  before pushing
-Date: Mon, 9 Nov 2015 10:31:24 +0100
-Message-ID: <20151109093124.GB18762@torres.zugschlus.de>
+Date: Mon, 09 Nov 2015 10:38:20 +0100
+Message-ID: <1447061900.5074.12.camel@kaarsemaker.net>
 References: <20151108212320.GA18762@torres.zugschlus.de>
- <1447057500.5074.8.camel@kaarsemaker.net>
+	 <1447057500.5074.8.camel@kaarsemaker.net>
+	 <20151109093124.GB18762@torres.zugschlus.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Mon Nov 09 10:32:20 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: Marc Haber <mh+git@zugschlus.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 09 10:38:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZvioE-0006Vm-M6
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 10:32:19 +0100
+	id 1ZviuE-0003lB-GO
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 10:38:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752828AbbKIJcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2015 04:32:04 -0500
-Received: from torres.zugschlus.de ([85.214.131.164]:55682 "EHLO
-	torres.zugschlus.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752320AbbKIJb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2015 04:31:26 -0500
-Received: from mh by torres.zugschlus.de with local (Exim 4.80)
-	(envelope-from <mh+git@zugschlus.de>)
-	id 1ZvinM-0007d5-FZ; Mon, 09 Nov 2015 10:31:24 +0100
-Content-Disposition: inline
-In-Reply-To: <1447057500.5074.8.camel@kaarsemaker.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752540AbbKIJiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2015 04:38:25 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:36522 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752505AbbKIJiY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2015 04:38:24 -0500
+Received: by wmww144 with SMTP id w144so69445789wmw.1
+        for <git@vger.kernel.org>; Mon, 09 Nov 2015 01:38:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker_net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:content-type
+         :mime-version:content-transfer-encoding;
+        bh=Ky1jK+kfGEwwRqyLbOFnxw+nHN8qI9evlG0Ul3Vih0U=;
+        b=R55wtkf0+pTCHHTFcUXDgh5W0YV6C+wiLTrQYcsT1rpoAFtZJvxuns14fwJEyQzcfL
+         TpIXFXaHGyJf9UQ762ChfCvY2lvNqi+GXDdNhGv3Ts8MgWZLQy9MwFq3OtqT5Qo+rU7H
+         6TwPaLKWZeAOZ9Grn3chhAT04QFqunSlFvNW7NFi/JDYMFS1axxfGfDvagOMN+mmoMAQ
+         Kru+RidEuOB2mpDQfJHUbJ4Klp56nSUVRDfLeY7KHgx+V0Cw1txRTloW0G8DebZISRuV
+         jVXivKKLw9wXrXaCWC218wbIU3YGENawcZwrMR5rur5TqTAeGMXBVBP58yvdBfmct6BN
+         zyBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=Ky1jK+kfGEwwRqyLbOFnxw+nHN8qI9evlG0Ul3Vih0U=;
+        b=PIV5G+VTlP1qjlsgNSc4d2jq/11Xdo/RZCDWEFRTn54GTUWguyuI02kCSaHFZKzpgX
+         mq4LxrNiwQCfK9I1CuVDLjnzsaXzppC4/kw7YP+HXYv3InVLChYXFrCMPZnKkvzswlD1
+         tQKGcuutI01GrbmEUHmpPFyXyqeHF/JHE1ZwhxpLF/DAjFrvAgO9y15q36dH9ocir1HR
+         jDsLE6timvlw/+Y2vfFjJtQiz1wUz+EnAWS7X64NhuoqQcoWmf68PlHve1rXCVJvwfci
+         ugz+K94y0muVLVAQK24lUAMjoLZuPEz8jYjniIHLdMGqrPzdlfRiz4JXLbQR030zXF13
+         N61w==
+X-Gm-Message-State: ALoCoQluc8pafv97UC/e2gJoIyCVPk6HG7iAiT4vbfqF7mp2buWBMCRjYHlE8E8a48Npsdi8v5kf
+X-Received: by 10.28.132.13 with SMTP id g13mr23751972wmd.35.1447061903269;
+        Mon, 09 Nov 2015 01:38:23 -0800 (PST)
+Received: from spirit.local ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id l81sm13303931wmb.2.2015.11.09.01.38.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Nov 2015 01:38:22 -0800 (PST)
+In-Reply-To: <20151109093124.GB18762@torres.zugschlus.de>
+X-Mailer: Evolution 3.16.5-1ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281047>
 
-Hi Dennis,
+On ma, 2015-11-09 at 10:31 +0100, Marc Haber wrote:
+> Abusing git here has the advantage that one can save local changes 
+> and merge them, which is handy for the task at hand (which is 
+> deploying my dotfiles to "my" servers).
 
-thanks for your comments. I appreciate that.
+For this I really like vcsh (https://github.com/RichiH/vcsh/) in
+combination with a .bashrc.d snippet that updates dotfiles upon login
+when possible (
+https://github.com/seveas/dotfiles/blob/master/.bashrc.d/vcsh.sh)
 
-On Mon, Nov 09, 2015 at 09:25:00AM +0100, Dennis Kaarsemaker wrote:
-> On zo, 2015-11-08 at 22:23 +0100, Marc Haber wrote:
-> > Hi,
-> > 
-> > I am trying to abuse git as a code distribution channel and would
-> > like
-> > to be able to trigger redistribution just by git push.
-> 
-> [insert obligatory remark about git not being a deployment tool]
-
-That's why I said "abuse" ;-)
-
-Abusing git here has the advantage that one can save local changes and
-merge them, which is handy for the task at hand (which is deploying my
-dotfiles to "my" servers).
-
-> > The idea is to push to a remote to the branch that is currently
-> > checked out followed by a git reset --hard in the post-receive hook.
-> > I
-> > have already figured out that I need to set receive.denyCurrentBranch
-> > to ignore to be able to push to the currently checked out branch.
-> 
-> You'll need a new enough git, so you can set it to updateInstead (and
-> maybe use a push-to-checkout hook).
-
-That's a nice new feature. Unfortunately even the git 2.1.4 which is
-in current Debian stable does not support that yet, but I think I can
-live with a backport, and in the past git has shown to be reasonably
-easy to backport.
-
-> > I am also aware that it is a good idea to git pull before git push
-> > just in case there were local commits on the remote.
-> 
-> No, hooks should never pull, merge or do anything that could be
-> interactive.
-
-I mean that I would manually pull on the master before pushing to the
-remote, thus making sure that the push will go through fine. With the
-pull, I would get all committed remote changes merged locally on the
-master, leaving uncommitted and unstaged changes to worry about.
-
-> > git reset --hard will unconditionally throw away local uncommitted
-> > changes. I would like to detect this situation on the remote and
-> > abort
-> > the receive progress. But my pre-receive hook does not work as
-> > intended. Here is my code:
-> >
-> > [snip code]
-> >
-> > What is going wrong here?
-> 
-> You mention a post-receive hook first, but have written a pre-receive
-> hook. Not sure if that's what you intended (or even if that's what's
-> going wrong).
-
-My intention was having a pre-receive hook check for uncommitted or
-unstaged changes and abort the process if there were any. If there
-were none, the push would go through and a post-receive hook would
-update the working copy.
-
-With updateInstead, I could probably go without the post-receive hook,
-but in my understanding, the check for uncommitted/unstaged changes
-would still be handy and helpful.
-
-> > If my entire approach is wrong, what is the recommended way to 
-> > prevent a repository with unstaged or uncommitted changes from being 
-> > pushed to?
-> 
-> Push-to-checkout is a very simplistic way of deploying and while it
-> works in simple cases, I'd not recommend it.
-> 
-> Two safer/saner approaches are:
-> - Have a separate non-bare repo, and make the post-receive hook in a
->   bare repo trigger a fetch+reset in the non-bare one
-> - Use git archive and symlink trickery for even better deploys
-
-Both these approaches would make it harder or even impossible to merge
-local changes done on the remotes.
-
-> Questions like this come up in #git all the time, so I wrote up a few
-> more detailed recipes here, including working hooks and config for all
-> three ways of deploying: 
-> http://git.seveas.net/simple-deployments-with-git.html
-
-Thanks, that is appreciated. I refrained from coming to #git since my
-experience is that complex issues are hard to manage on IRC. I have,
-however just joined as Zugschlus, so if you want to talk to me
-directly feel free to do so.
-
-Greetings
-Marc
 
 -- 
------------------------------------------------------------------------------
-Marc Haber         | "I don't trust Computers. They | Mailadresse im Header
-Leimen, Germany    |  lose things."    Winona Ryder | Fon: *49 6224 1600402
-Nordisch by Nature |  How to make an American Quilt | Fax: *49 6224 1600421
+Dennis Kaarsemaker
+www.kaarsemaker.net
