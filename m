@@ -1,96 +1,152 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] Add git-grep threads param
-Date: Mon, 9 Nov 2015 11:53:43 -0500
-Message-ID: <20151109165343.GA29179@sigill.intra.peff.net>
-References: <1445980944-24000-1-git-send-email-vleschuk@accesssoftek.com>
- <xmqqvb9jc81q.fsf@gitster.mtv.corp.google.com>
- <20151104064021.GB16605@sigill.intra.peff.net>
- <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA15@mail.accesssoftek.com>
- <20151109155538.GC27224@sigill.intra.peff.net>
- <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA17@mail.accesssoftek.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Victor Leschuk <vleschuk@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
-	"john@keeping.me.uk" <john@keeping.me.uk>
-To: Victor Leschuk <vleschuk@accesssoftek.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 17:54:04 2015
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v7 00/11] refs backend pre-vtable
+Date: Mon,  9 Nov 2015 18:03:37 +0100
+Message-ID: <cover.1447085798.git.mhagger@alum.mit.edu>
+Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
+	Lukas Fleischer <lfleischer@lfos.de>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 09 18:04:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZvphX-0006Ig-Bw
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 17:53:52 +0100
+	id 1Zvpre-0007ey-T0
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 18:04:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751903AbbKIQxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2015 11:53:47 -0500
-Received: from cloud.peff.net ([50.56.180.127]:54989 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751675AbbKIQxq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2015 11:53:46 -0500
-Received: (qmail 6505 invoked by uid 102); 9 Nov 2015 16:53:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Nov 2015 10:53:45 -0600
-Received: (qmail 16983 invoked by uid 107); 9 Nov 2015 16:54:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Nov 2015 11:54:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Nov 2015 11:53:43 -0500
-Content-Disposition: inline
-In-Reply-To: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA17@mail.accesssoftek.com>
+	id S1751942AbbKIREL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2015 12:04:11 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:50061 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750978AbbKIREH (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2015 12:04:07 -0500
+X-AuditID: 12074411-f797e6d000007df3-79-5640d204de2a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id FB.74.32243.402D0465; Mon,  9 Nov 2015 12:04:04 -0500 (EST)
+Received: from michael.fritz.box (p4FC97689.dip0.t-ipconnect.de [79.201.118.137])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tA9H41Yn026059
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Mon, 9 Nov 2015 12:04:02 -0500
+X-Mailer: git-send-email 2.6.2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMIsWRmVeSWpSXmKPExsUixO6iqMtyySHM4PAWK4v5m04wWnRd6Way
+	aOi9wmwxacpNJovbK+YzW/xo6WG26O37xOrA7vH3/Qcmj52z7rJ7nD2Y6fGsdw+jx8VLyh4L
+	nt9n9/i8SS6APYrbJimxpCw4Mz1P3y6BO2PO13aWghVKFX9uuDYwvpTqYuTkkBAwkWh/u4Qd
+	whaTuHBvPVsXIxeHkMBlRomOg19ZIZwTTBIzm/uZQarYBHQlFvU0M4HYIgJqEhPbDrGAFDEL
+	fGSUmPtjIVhCWMBQ4tbsG0DdHBwsAqoSh7YmgIR5BcwlrjfcZ4XYJicx5X470wRG7gWMDKsY
+	5RJzSnN1cxMzc4pTk3WLkxPz8lKLdE31cjNL9FJTSjcxQgJJcAfjjJNyhxgFOBiVeHgZptuH
+	CbEmlhVX5h5ilORgUhLljT7hECbEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhLdgF1CONyWxsiq1
+	KB8mJc3BoiTOy7dE3U9IID2xJDU7NbUgtQgmK8PBoSTBu+kCUKNgUWp6akVaZk4JQpqJgxNk
+	OJeUSHFqXkpqUWJpSUY8KNDji4GhDpLiAdq7A6Sdt7ggMRcoCtF6ilGX48n8S3uYhFjy8vNS
+	pcR5xS8CFQmAFGWU5sGtgKWNV4ziQB8L8xqAVPEAUw7cpFdAS5iAliz1B1tSkoiQkmpg7Fs6
+	j3G9hDbDZQ/G60fY84LsGn4+f3xtgaXqlge2jAWdRxuEbnh9PNGpsDj1ZGsaiwT/vPPnNG5x
+	nqls3uq1cuNtj9VV77O5njTGujRf9pfdbrZG5t5TpZ3xn5dp/fq/0TVa3+SH5JIu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281057>
 
-On Mon, Nov 09, 2015 at 08:34:27AM -0800, Victor Leschuk wrote:
+This is another reroll of the pre-vtable part of the refs-backend
+patch series dt/refs-backend-pre-vtable. v6 [1] proved cumbersome
+because it conflicted messily with lf/ref-is-hidden-namespace [2]. The
+conflicts were partly due to the motion of code across files but, even
+worse, due to the change of order of function definitions between old
+and new files.
 
-> > Why don't we leave it at 8, then? That's the conservative choice, and
-> > once we have --threads, people can easily experiment with different
-> > values and we can follow-up with a change to the default if need be.
->
-> I'd propose the following:
->
->     if (list.nr || cached) {
->         num_threads = 0; /* Can not multi-thread object lookup */
->     }
->     else if (num_threads < 0 && online_cpus() <= 1) {
->         num_threads = 0; /* User didn't set threading option and we have <= 1 of hardware cores */
->     }
+So I have heavily "optimized" this reroll for reviewability and to
+minimize conflicts with other work in the area. The only such work
+that I know of is lf/ref-is-hidden-namespace, which can now be merged
+with this series *without conflicts*.
 
-OK, so you are presumably initializing:
+Changes since v6:
 
-  static int num_threads = -1;
+* It doesn't move refs.c to the refs/ subdirectory, as v6 did.
+  Instead, leave the shared code in the existing file, refs.c.
 
->     else if (num_threads == 0) {
->         num_threads = GREP_NUM_THREADS_DEFAULT; /* User explicitly choose default behavior */
->     }
->     else if (num_threads < 0) {  /* Actually this one should be checked earlier so no need to double check here */
->         die(_("Ivalid number of threads specified (%d)"), num_threads)
->     }
+* Don't rename refs.c to refs/files-backend.c and then selectively
+  move content back to refs.c. Instead, move content only once and
+  only in one direction, namely from refs.c -> refs/files-backend.c
+  (in patch 08/11). This is a giant commit but *it makes no other
+  changes* so it should be easy to review. (The "--patience" option of
+  "git diff" is quite helpful here. It was turned on when this patch
+  series was generated.)
 
-What happens if the user has not specified a value (nr_threads == -1)?
-Here you die, but shouldn't you take the default thread value?
+* Preserve the order of code during the move. Aside from a few lines
+  of boilerplate, each of the following commands, when applied to
+  commit 08, shows only lines being deleted:
 
-I wonder if it would be simpler to just default to 0, and then treat
-negative values the same as 0 (which is what pack.threads does). Like:
+    git diff --patience $commit^:refs.c $commit:refs.c
+    git diff --patience $commit^:refs.c $commit:refs/files-backend.c
 
-  if (list.nr || cached)
-	num_threads = 1;
-  if (!num_threads)
-	num_threads = GREP_NUM_THREADS_DEFAULT;
+* To make all of the above possible, patches 01 through 06 do a little
+  bit of preparatory code untangling. These commits have themselves
+  been split up a bit to make them as "obviously correct" as possible.
+  Patch 07 creates the new header file, refs/refs-internal.h, thereby
+  increasing the visibility of some declarations.
 
-and then later, instead of use_threads, do:
+* The final patches 09, 10, and 11 are not quite as "obviously
+  correct" as the first eight, but I left them in to keep the logical
+  contents of this patch series the same as v6. But these last three
+  commits could just as well be postponed until the next tranche of
+  patches if that helps speed the way of the first eight patches into
+  master.
 
-  if (num_threads <= 1) {
-	... do single-threaded version ...
-  } else {
-        ... do multi-threaded version ...
-  }
+* I also fixed a commit message and fixed the implementation of the
+  new verify_refname_available() function to return a negative number
+  on error as documented (previously it returned 1 on error).
 
-That matches the logic in builtin/pack-objects.c.
+I've tried to attribute authorship of these changes as fairly as
+possible based on who initiated the corresponding changes. If anybody
+feels that I have appropriated his work or, conversely, put words into
+his mouth, just let me know and I would be happy to adjust the
+authorship.
 
--Peff
+It would be great to get this patch series (at least the first eight
+patches) reviewed and merged as soon as possible. Even though it no
+longer conflicts with lf/ref-is-hidden-namespace, it is still very
+prone to conflicting with any other work in the references code.
+
+This patch series is also available on my GitHub fork [3] as branch
+"refs-backend-pre-vtable".
+
+Michael
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/280325/focus=280754
+[2] http://article.gmane.org/gmane.comp.version-control.git/281004
+[3] https://github.com/mhagger/git
+
+David Turner (5):
+  refs: make is_branch public
+  copy_msg(): rename to copy_reflog_msg()
+  initdb: make safe_create_dir public
+  files_log_ref_write: new function
+  refs: break out ref conflict checks
+
+Michael Haggerty (4):
+  pack_if_possible_fn(): use ref_type() instead of is_per_worktree_ref()
+  refname_is_safe(): improve docstring
+  refs/refs-internal.h: new header file
+  refs: split filesystem-based refs code into a new file
+
+Ronnie Sahlberg (2):
+  verify_refname_available(): rename function
+  verify_refname_available(): new function
+
+ Makefile                       |    3 +-
+ builtin/init-db.c              |   12 -
+ cache.h                        |    8 +
+ path.c                         |   12 +
+ refs.c                         | 3709 +---------------------------------------
+ refs.h                         |    2 +
+ refs.c => refs/files-backend.c | 1287 +-------------
+ refs/refs-internal.h           |  202 +++
+ 8 files changed, 315 insertions(+), 4920 deletions(-)
+ copy refs.c => refs/files-backend.c (75%)
+ create mode 100644 refs/refs-internal.h
+
+-- 
+2.6.2
