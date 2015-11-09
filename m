@@ -1,135 +1,115 @@
-From: Marc Haber <mh+git@zugschlus.de>
-Subject: how to check for uncommitted/unstaged changes on remote side before
- pushing
-Date: Sun, 8 Nov 2015 22:23:20 +0100
-Message-ID: <20151108212320.GA18762@torres.zugschlus.de>
+From: Noam Postavsky <npostavs@users.sourceforge.net>
+Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it to
+ ignore instead?
+Date: Sun, 8 Nov 2015 21:58:06 -0500
+Message-ID: <CAM-tV-9CNO_hqnweFpLaRHx4xEA32CPRdq56y6vYMWqURV9kgg@mail.gmail.com>
+References: <CAM-tV-9sNgHncsWRPh36tEY3YFORUJBA-Q6W5R=mvX_KhSmWEQ@mail.gmail.com>
+	<xmqqfv0ylwa7.fsf@gitster.mtv.corp.google.com>
+	<20151026215016.GA17419@sigill.intra.peff.net>
+	<xmqqoafkci6j.fsf@gitster.mtv.corp.google.com>
+	<20151027184702.GB12717@sigill.intra.peff.net>
+	<CAM-tV--B3HaC1DcORfnx9bWW9-quyk0=pQDxmvonc=6dgrMOxA@mail.gmail.com>
+	<20151030001000.GA2123@sigill.intra.peff.net>
+	<CAM-tV-_dc_YEE0Dh2T=8+_DcBiq_rvynOw2cFi+8QizkeGTusw@mail.gmail.com>
+	<20151030005057.GA23251@sigill.intra.peff.net>
+	<CAM-tV-8qSVJFOxLQt9SaYK_WqpxixzPArJnAK=3tHU9inM9Law@mail.gmail.com>
+	<20151030210849.GA7149@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 08 22:57:31 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 09 03:58:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZvXxp-0003vo-Vt
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Nov 2015 22:57:30 +0100
+	id 1Zvces-0008GI-2b
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 03:58:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360AbbKHV50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Nov 2015 16:57:26 -0500
-Received: from torres.zugschlus.de ([85.214.131.164]:54132 "EHLO
-	torres.zugschlus.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751067AbbKHV5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Nov 2015 16:57:25 -0500
-X-Greylist: delayed 2044 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Nov 2015 16:57:25 EST
-Received: from mh by torres.zugschlus.de with local (Exim 4.80)
-	(envelope-from <mh+git@zugschlus.de>)
-	id 1ZvXQm-0004xW-Ca
-	for git@vger.kernel.org; Sun, 08 Nov 2015 22:23:20 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752573AbbKIC6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Nov 2015 21:58:10 -0500
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:35280 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752500AbbKIC6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Nov 2015 21:58:07 -0500
+Received: by igl9 with SMTP id 9so22064718igl.0
+        for <git@vger.kernel.org>; Sun, 08 Nov 2015 18:58:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=6Vck5jTRDYU31dYnHfpKzmPAYDXpiTxUl4opWWQbNPQ=;
+        b=sct5jLH1nW7CmGjNBdnvwNB9FZ04oCNa8drTNYMTjQ2pKYUb7+r3BI70w4Om7k3uNH
+         eWSG+DXPeJX37/C7R8/7KqF+q/2O3Ouh06MmkAF4Hq2OFjjA8aCa6WYq48KFGMjbEeJe
+         +RaTMeGzYL1Ar2383XOaivcRZkHhDAj/zG9+anGTsumxUEwnOGxIhPIT3DCr2BisfU/f
+         OXCNsAJy4PU472gD673mSHuqT6hGYexejqZ7tr8EqkwLyrzGV37Yv1rHWxWcoN/BBPis
+         +CB9VBkAh3BTqGt1C7pwL0AhJzIWrgScR1H+WNTRAXgSsxwtcMioNyx9pfofWLtRklOA
+         5DGA==
+X-Received: by 10.50.61.203 with SMTP id s11mr2498344igr.79.1447037886238;
+ Sun, 08 Nov 2015 18:58:06 -0800 (PST)
+Received: by 10.79.119.2 with HTTP; Sun, 8 Nov 2015 18:58:06 -0800 (PST)
+In-Reply-To: <20151030210849.GA7149@sigill.intra.peff.net>
+X-Google-Sender-Auth: X_aEyYJvZjxy6CruUZBmLORurcg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281044>
 
-Hi,
+On Fri, Oct 30, 2015 at 5:08 PM, Jeff King <peff@peff.net> wrote:
+> Right. And not only is that hard to get right (I doubt, for example, you
+> support the arbitrary "!" shell expressions that git does), but it's
+> impossible to know for sure that will be needed, because you cannot know
+> all possible helpers (I might even have a helper that is a shell snippet
+> that calls credential-cache).
 
-I am trying to abuse git as a code distribution channel and would like
-to be able to trigger redistribution just by git push.
+Yep, in that case the user would have to override the result of parsing.
 
-The idea is to push to a remote to the branch that is currently
-checked out followed by a git reset --hard in the post-receive hook. I
-have already figured out that I need to set receive.denyCurrentBranch
-to ignore to be able to push to the currently checked out branch.
+>> Ah, maybe the missing piece I forgot to mention is that we could make
+>> our pre/1st-helper be an emacsclient command, which would tell Emacs
+>> to startup the daemon. So the daemon would be a subprocess of Emacs,
+>> not "git push", thereby avoiding the SIGHUP. In our current workaround
+>> we startup the daemon (if it's not running) before git commands that
+>> we think are going to run credential helpers (i.e. "push", "pull",
+>> "fetch"), hence my thought that it would be nicer if we only did that
+>> before git is *actually* going to run the helpers.
+>
+> I don't think even git knows it will need a helper until it is actually
+> ready to call one (e.g., it may depend on getting an HTTP 401 from the
+> server).
 
-I am also aware that it is a good idea to git pull before git push
-just in case there were local commits on the remote.
+Yes, so just call me first. :)
 
-git reset --hard will unconditionally throw away local uncommitted
-changes. I would like to detect this situation on the remote and abort
-the receive progress. But my pre-receive hook does not work as
-intended. Here is my code:
+>
+> I am leaning more towards ignoring SIGHUP (configurably) being the only
+> really sane path forward. Do you want to try your hand at a patch?
 
-#!/bin/bash
+Something like this?
 
-echo "this is the pre-receive hook on $HOSTNAME"
+diff --git i/credential-cache--daemon.c w/credential-cache--daemon.c
+index eef6fce..e3f2612 100644
+--- i/credential-cache--daemon.c
++++ w/credential-cache--daemon.c
+@@ -256,6 +256,9 @@ int main(int argc, const char **argv)
+         OPT_END()
+     };
 
-if [ "$(git status --porcelain | wc -l)" -ne 0 ]; then
-  echo "there are uncommitted changes"
-  echo "PWD=$PWD"
-  echo "git status --porcelain"
-  git status --porcelain
-  echo "end git status"
-  exit 1
-fi
++    int ignore_sighup = 0;
++    git_config_get_bool("credential.cache.ignoreSighup", &ignore_sighup);
++
+     argc = parse_options(argc, argv, NULL, options, usage, 0);
+     socket_path = argv[0];
 
-When I invoke my hook from the remote, everything is fine:
+@@ -264,6 +267,12 @@ int main(int argc, const char **argv)
 
-mh@jessie:~/.stdacct$ .git/hooks/pre-receive
-this is the pre-receive hook on jessie
-there are uncommitted changes
-PWD=/home/mh/.stdacct
-git status --porcelain
- M dotfiles/.bashrc
- M hooks/pre-receive-hook
-?? hooks/pre-receive-hook~
-end git status
-mh@jessie:~/.stdacct$ 
-
-However, the output is different when invoked during a push:
-
-[7/504]mh@swivel:~/git/stdacct$ git push jessie
-Counting objects: 4, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (4/4), done.
-Writing objects: 100% (4/4), 363 bytes | 0 bytes/s, done.
-Total 4 (delta 3), reused 0 (delta 0)
-remote: this is the pre-receive hook on jessie
-remote: there are uncommitted changes
-remote: PWD=/home/mh/.stdacct/.git
-remote: git status --porcelain
-remote: ?? HEAD
-remote: ?? ORIG_HEAD
-remote: ?? config
-remote: ?? description
-remote: ?? hooks/applypatch-msg.sample
-remote: ?? hooks/commit-msg.sample
-remote: ?? hooks/post-receive
-remote: ?? hooks/post-update.sample
-remote: ?? hooks/pre-applypatch.sample
-remote: ?? hooks/pre-commit.sample
-remote: ?? hooks/pre-push.sample
-remote: ?? hooks/pre-rebase.sample
-remote: ?? hooks/pre-receive
-remote: ?? hooks/prepare-commit-msg.sample
-remote: ?? hooks/update.sample
-remote: ?? index
-remote: ?? index.lock
-remote: ?? info/
-remote: ?? logs/
-remote: ?? objects/
-remote: ?? refs/
-remote: end git status
-To ssh://jessie/home/mh/.stdacct
- ! [remote rejected] jessie -> jessie (pre-receive hook declined)
-error: failed to push some refs to 'ssh://jessie/home/mh/.stdacct'
-
-It looks like the hook thinks that it is invoked inside the .git/hooks
-directory which is not considered part of the repository.
-
-What is going wrong here?
-
-If my entire approach is wrong, what is the recommended way to prevent
-a repository with unstaged or uncommitted changes from being pushed to?
-
-Greetings
-Marc
-
-
--- 
------------------------------------------------------------------------------
-Marc Haber         | "I don't trust Computers. They | Mailadresse im Header
-Leimen, Germany    |  lose things."    Winona Ryder | Fon: *49 6224 1600402
-Nordisch by Nature |  How to make an American Quilt | Fax: *49 6224 1600421
+     check_socket_directory(socket_path);
+     register_tempfile(&socket_file, socket_path);
++
++    if (ignore_sighup) {
++        sigchain_pop(SIGHUP);
++        signal(SIGHUP, SIG_IGN);
++    }
++
+     serve_cache(socket_path, debug);
+     delete_tempfile(&socket_file);
