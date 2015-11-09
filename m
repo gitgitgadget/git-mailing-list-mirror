@@ -1,80 +1,134 @@
-From: Victor Leschuk <vleschuk@accesssoftek.com>
-Subject: RE: [PATCH v4] Add git-grep threads param
-Date: Mon, 9 Nov 2015 03:36:16 -0800
-Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA15@mail.accesssoftek.com>
-References: <1445980944-24000-1-git-send-email-vleschuk@accesssoftek.com>
- <xmqqvb9jc81q.fsf@gitster.mtv.corp.google.com>,<20151104064021.GB16605@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: Victor Leschuk <vleschuk@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
-	"john@keeping.me.uk" <john@keeping.me.uk>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 12:36:25 2015
+From: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
+Subject: [PATCH v3] gitk: add -C <path> commandline parameter to change path
+Date: Mon,  9 Nov 2015 13:45:22 +0200
+Message-ID: <1447069522-19895-1-git-send-email-juhapekka.heikkila@gmail.com>
+References: <563C85C5.80703@gmail.com>
+Cc: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>,
+	sunshine@sunshineco.com, paulus@samba.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 09 12:45:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZvkkJ-0006hn-DE
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 12:36:23 +0100
+	id 1ZvktL-0007AW-Nt
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 12:45:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753129AbbKILgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2015 06:36:19 -0500
-Received: from mail.accesssoftek.com ([12.202.173.171]:12447 "EHLO
-	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752469AbbKILgS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2015 06:36:18 -0500
-Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
- ([172.16.0.71]) with mapi; Mon, 9 Nov 2015 03:36:17 -0800
-Thread-Topic: [PATCH v4] Add git-grep threads param
-Thread-Index: AdEWzVX8bis3L0SoQfyxe42LfQy0cQEAG1lC
-In-Reply-To: <20151104064021.GB16605@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1752818AbbKILpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2015 06:45:39 -0500
+Received: from mga03.intel.com ([134.134.136.65]:22085 "EHLO mga03.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750850AbbKILpi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2015 06:45:38 -0500
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga103.jf.intel.com with ESMTP; 09 Nov 2015 03:45:38 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.20,265,1444719600"; 
+   d="scan'208";a="846023561"
+Received: from jheikkil-mobl2.fi.intel.com ([10.237.66.150])
+  by orsmga002.jf.intel.com with ESMTP; 09 Nov 2015 03:45:36 -0800
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <563C85C5.80703@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281049>
 
+This patch adds -C (change working directory) parameter to
+gitk. With this parameter, instead of need to cd to directory
+with .git folder, one can point the correct folder from
+commandline.
 
-________________________________________
-From: Jeff King [peff@peff.net]
-Sent: Tuesday, November 03, 2015 22:40
-To: Junio C Hamano
-Cc: Victor Leschuk; git@vger.kernel.org; Victor Leschuk; torvalds@linux-foundation.org; john@keeping.me.uk
-Subject: Re: [PATCH v4] Add git-grep threads param
+Signed-off-by: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
 
-On Tue, Nov 03, 2015 at 09:22:09AM -0800, Junio C Hamano wrote:
+---
+v2: Adjusted the parameter as per Eric's suggestion. I think
+    it now work in similar manner as in many GNU tools as well
+    as git itself.
 
-> > +grep.threads::
-> > +   Number of grep worker threads, use it to tune up performance on
-> > +   multicore machines. Default value is 8. Set to 0 to disable threading.
-> > +
->
-> I am not enthused by this "Set to 0 to disable".  As Zero is
-> magical, it would be more useful if 1 meant that threading is not
-> used (i.e. there is only 1 worker), and 0 meant that we would
-> automatically pick some reasonable parallelism for you (and we
-> promise that the our choice would not be outrageously wrong), or
-> something like that.
+v3: catch error from cd and other small refinement.
 
-> Not just useful, but consistent with other parts of git, like
-> pack.threads, where "0" already means "autodetect".
+ Documentation/gitk.txt |  7 +++++++
+ gitk-git/gitk          | 30 +++++++++++++++++++++---------
+ 2 files changed, 28 insertions(+), 9 deletions(-)
 
-Hello Peff and Junio,
-
-Yeah do also think it would be more reasonable to use "0" for "autodetect" default value. However chat this autodetect value should be?
-
-For index index-pack and pack-objects we use ncpus() for this, however according to my tests this wouldn't an Ideal for all cases. Maybe it should be something like ncpus()*2, 
-anyway before it we even used hard-coded 8 for all systems...
-
-In this case we use "1" as "Do not use threads" and die on all negative numbers during parsing.
-
-Agreed?
+diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+index 6ade002..d194d9b 100644
+--- a/Documentation/gitk.txt
++++ b/Documentation/gitk.txt
+@@ -146,6 +146,13 @@ gitk-specific options
+ 	Select the specified commit after loading the graph.
+ 	Default behavior is equivalent to specifying '--select-commit=HEAD'.
+ 
++-C <path>::
++
++	Run as if gitk was started in '<path>' instead of the current
++	working directory. When multiple `-C` options are given, each
++	subsequent non-absolute `-C <path>` is interpreted relative to
++	the preceding `-C <path>`.
++
+ Examples
+ --------
+ gitk v2.6.12.. include/scsi drivers/scsi::
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index fcc606e..a7076f8 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -12279,20 +12279,14 @@ setui $uicolor
+ 
+ setoptions
+ 
+-# check that we can find a .git directory somewhere...
+-if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
+-    show_error {} . [mc "Cannot find a git repository here."]
+-    exit 1
+-}
+-
+ set selecthead {}
+ set selectheadid {}
+ 
+ set revtreeargs {}
+ set cmdline_files {}
+-set i 0
+ set revtreeargscmd {}
+-foreach arg $argv {
++for {set i 0} {$i < [llength $argv]} {incr i} {
++	set arg [lindex $argv [expr {$i}]]
+     switch -glob -- $arg {
+ 	"" { }
+ 	"--" {
+@@ -12305,11 +12299,29 @@ foreach arg $argv {
+ 	"--argscmd=*" {
+ 	    set revtreeargscmd [string range $arg 10 end]
+ 	}
++	"-C*" {
++		if {[string length $arg] < 3} {
++			incr i
++			set cwd_path [lindex $argv [expr {$i}]]
++		} else {
++			set cwd_path [string range $arg 2 end]
++		}
++
++		if {[catch {cd $cwd_path}]} {
++			show_error {} . [mc "Cannot change directory to '%s'" $cwd_path]
++			exit 1
++		}
++	}
+ 	default {
+ 	    lappend revtreeargs $arg
+ 	}
+     }
+-    incr i
++}
++
++# check that we can find a .git directory somewhere...
++if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
++    show_error {} . [mc "Cannot find a git repository here."]
++    exit 1
+ }
+ 
+ if {$selecthead eq "HEAD"} {
+-- 
+1.9.1
