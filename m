@@ -1,94 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: fetch unshallow fails to honor dry-run
-Date: Mon, 9 Nov 2015 14:24:00 -0500
-Message-ID: <20151109192400.GA31715@sigill.intra.peff.net>
-References: <562C9DD0.5040109@gnu.org>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v7 07/11] refs/refs-internal.h: new header file
+Date: Mon, 9 Nov 2015 19:46:43 +0000
+Message-ID: <5640F823.5010902@ramsayjones.plus.com>
+References: <cover.1447085798.git.mhagger@alum.mit.edu>
+ <5f62351689318a4ef9feeb3639e6a7a00b354a02.1447085798.git.mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Tim Janik <timj@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Nov 09 20:24:10 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
+	Lukas Fleischer <lfleischer@lfos.de>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 09 20:47:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zvs2z-00032z-1b
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 20:24:09 +0100
+	id 1ZvsP3-0005h1-42
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 20:46:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751503AbbKITYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2015 14:24:04 -0500
-Received: from cloud.peff.net ([50.56.180.127]:55136 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751449AbbKITYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2015 14:24:03 -0500
-Received: (qmail 18719 invoked by uid 102); 9 Nov 2015 19:24:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Nov 2015 13:24:02 -0600
-Received: (qmail 19184 invoked by uid 107); 9 Nov 2015 19:24:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 09 Nov 2015 14:24:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Nov 2015 14:24:00 -0500
-Content-Disposition: inline
-In-Reply-To: <562C9DD0.5040109@gnu.org>
+	id S1751697AbbKITqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2015 14:46:53 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:42206 "EHLO
+	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751339AbbKITqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2015 14:46:52 -0500
+Received: from [10.0.2.15] ([146.199.93.105])
+	by avasout04 with smtp
+	id fXmp1r0052GQ2gJ01XmrJ1; Mon, 09 Nov 2015 19:46:51 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=CvRCCSMD c=1 sm=1 tr=0
+ a=SWxm+s7FAPvPP0IAAWI2og==:117 a=SWxm+s7FAPvPP0IAAWI2og==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=N659UExz7-8A:10 a=ZkIGFN-mwHTVqstyOvoA:9 a=pILNOxqGKmIA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <5f62351689318a4ef9feeb3639e6a7a00b354a02.1447085798.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281079>
 
-[+cc Duy for shallow expertise]
 
-On Sun, Oct 25, 2015 at 10:16:00AM +0100, Tim Janik wrote:
 
-> git fetch --dry-run modifies the repository if --unshallow is passed:
+On 09/11/15 17:03, Michael Haggerty wrote:
+> There are a number of constants, structs, and static functions defined
+> in refs.c and treated as private to the references module. But we want
+> to support multiple reference backends within the reference module,
+> and those backends will need access to some heretofore private
+> declarations.
 > 
-> $ git --version
-> git version 2.1.4
-> $ git fetch --dry-run --unshallow
-> remote: Counting objects: 30603, done.
-> remote: Compressing objects: 100% (6843/6843), done.
-> remote: Total 30603 (delta 24564), reused 29164 (delta 23386)
-> Receiving objects: 100% (30603/30603), 5.42 MiB | 0 bytes/s, done.
-> Resolving deltas: 100% (24564/24564), completed with 317 local objects.
-> remote: Counting objects: 7, done.
-> remote: Compressing objects: 100% (7/7), done.
-> remote: Total 7 (delta 0), reused 6 (delta 0)
-> Unpacking objects: 100% (7/7), done.
+> We don't want those declarations to be visible to non-refs code, so we
+> don't want to move them to refs.h. Instead, add a new header file,
+> refs/refs-internal.h, that is intended to be included only from within
+> the refs module. Make some functions non-static and move some
+> declarations (and their corresponding docstrings) from refs.c to this
+> file.
+> 
+> In a moment we will add more content to the "refs" subdirectory.
+> 
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  refs.c               | 175 +++----------------------------------------------
+>  refs/refs-internal.h | 182 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 191 insertions(+), 166 deletions(-)
+>  create mode 100644 refs/refs-internal.h
+> 
+> diff --git a/refs.c b/refs.c
+> index f48c58a..9aff0c8 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1,6 +1,6 @@
+>  #include "cache.h"
+> +#include "refs/refs-internal.h"
+>  #include "lockfile.h"
+> -#include "refs.h"
 
-Hmm. I think that is because --dry-run is effectively "transfer the
-objects, but do not update refs". So by fetching the objects, we've
-effectively deepened the repository, whether we update the refs or not.
+This looked wrong to me, until I had read the remainder of the
+patch and noticed that the 'internal' header #included the
+'public' interface header.
 
-That being said, I suspect nobody has really thought hard about the
-interaction of these two flags. And while obviously we update the
-object database with a dry-run fetch, I can see the reasoning that we
-should not touch the .git/shallow file, even if we have the objects.
+Unfortunately, this still feels wrong to me! I would rather that
+the internal header _not_ include the public header (so, include
+them _both_ when necessary). Just my opinion, which you can simply
+ignore. :-D
 
-Naively, something like this patch might help, but I have no idea if it
-causes other problems.
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 4ce4fa0..24aa331 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -870,7 +870,7 @@ static struct transport *prepare_transport(struct remote *remote)
- 		set_option(transport, TRANS_OPT_KEEP, "yes");
- 	if (depth)
- 		set_option(transport, TRANS_OPT_DEPTH, depth);
--	if (update_shallow)
-+	if (update_shallow && !dry_run)
- 		set_option(transport, TRANS_OPT_UPDATE_SHALLOW, "yes");
- 	return transport;
- }
-
-> I actually tried --dry-run --unshallow in order to find a way to
-> detect in a script if the current git repository is shallow or not.
-> Better suggestions to find this out are very welcome.
-
-You can look for .git/shallow. I don't know if we've documented that
-anywhere as a public interface, but I think it should be safe to rely
-on.
-
--Peff
+ATB,
+Ramsay Jones
