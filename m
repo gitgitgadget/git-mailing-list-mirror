@@ -1,105 +1,76 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v7 10/11] files_log_ref_write: new function
-Date: Mon,  9 Nov 2015 18:03:47 +0100
-Message-ID: <b017ec518536e9f21c2900b3821b40a8a3a8f375.1447085798.git.mhagger@alum.mit.edu>
-References: <cover.1447085798.git.mhagger@alum.mit.edu>
-Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
-	Lukas Fleischer <lfleischer@lfos.de>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 18:12:32 2015
+From: Victor Leschuk <vleschuk@accesssoftek.com>
+Subject: RE: [PATCH v4] Add git-grep threads param
+Date: Mon, 9 Nov 2015 09:28:12 -0800
+Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA18@mail.accesssoftek.com>
+References: <1445980944-24000-1-git-send-email-vleschuk@accesssoftek.com>
+ <xmqqvb9jc81q.fsf@gitster.mtv.corp.google.com>
+ <20151104064021.GB16605@sigill.intra.peff.net>
+ <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA15@mail.accesssoftek.com>
+ <20151109155538.GC27224@sigill.intra.peff.net>
+ <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA17@mail.accesssoftek.com>,<20151109165343.GA29179@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Victor Leschuk <vleschuk@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
+	"john@keeping.me.uk" <john@keeping.me.uk>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 09 18:28:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZvpzM-0006hc-Mp
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 18:12:17 +0100
+	id 1ZvqEx-0005DL-3N
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 18:28:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752177AbbKIRL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2015 12:11:56 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:46283 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752149AbbKIRLy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2015 12:11:54 -0500
-X-AuditID: 12074414-f794f6d000007852-db-5640d216be09
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id DD.2D.30802.612D0465; Mon,  9 Nov 2015 12:04:22 -0500 (EST)
-Received: from michael.fritz.box (p4FC97689.dip0.t-ipconnect.de [79.201.118.137])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tA9H41Yx026059
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 9 Nov 2015 12:04:20 -0500
-X-Mailer: git-send-email 2.6.2
-In-Reply-To: <cover.1447085798.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixO6iqCt2ySHMYMN8IYv5m04wWnRd6Way
-	aOi9wmwxacpNJovbK+YzW/xo6WG26O37xOrA7vH3/Qcmj52z7rJ7nD2Y6fGsdw+jx8VLyh4L
-	nt9n9/i8SS6APYrbJimxpCw4Mz1P3y6BO+Pdko8sBRP4Kta/Oc3ewHiFu4uRk0NCwETiwo3v
-	bBC2mMSFe+uBbC4OIYHLjBJXflxkgXBOMEl83XOXGaSKTUBXYlFPMxOILSKgJjGx7RBYEbPA
-	R0aJuT8WAiU4OIQFrCV+ftYAqWERUJX4vGUCWD2vQJTEo7Z+FohtchJT7reDxTkFLCR2nPjH
-	CGILCZhLTFy1hmkCI+8CRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRboWermZJXqpKaWbGCGh
-	J7KD8chJuUOMAhyMSjy8ETPtw4RYE8uKK3MPMUpyMCmJ8kafcAgT4kvKT6nMSCzOiC8qzUkt
-	PsQowcGsJMJbsAsox5uSWFmVWpQPk5LmYFES5/22WN1PSCA9sSQ1OzW1ILUIJivDwaEkwZt8
-	AahRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhQb8cXA6ABJ8QDttQVp5y0uSMwF
-	ikK0nmJUlBKHmCsAksgozYMbC0sorxjFgb4U5jW4CFTFA0xGcN2vgAYzAQ1e6g82uCQRISXV
-	wGi9YYqJk7nhcbF4S6fvty6F3upPY6lfvSX8cACP+mpXNndbvrUx008fUN5/Xmkel0zy+9LM
-	oG7eiavsN221l/rjYS0fnJ6YeFw564mRbsLF4w9ml4eLH3Lj663/vz8+bJ+QldLL 
+	id S1752118AbbKIR2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2015 12:28:17 -0500
+Received: from mail.accesssoftek.com ([12.202.173.171]:33486 "EHLO
+	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751980AbbKIR2O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2015 12:28:14 -0500
+Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
+ ([172.16.0.71]) with mapi; Mon, 9 Nov 2015 09:28:13 -0800
+Thread-Topic: [PATCH v4] Add git-grep threads param
+Thread-Index: AdEbDzMp7vyMKPUTSJ610CKsqgeg4QAAc532
+In-Reply-To: <20151109165343.GA29179@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281068>
 
-From: David Turner <dturner@twopensource.com>
 
-Because HEAD and stash are per-worktree, every refs backend needs to
-go through the files backend to write these refs.
+ > if (list.nr || cached)
+>        num_threads = 1;
+ >  if (!num_threads)
+>         num_threads = GREP_NUM_THREADS_DEFAULT;
 
-So create a new function, files_log_ref_write, and add it to
-refs/refs-internal.h. Later, we will use this to handle reflog updates
-for per-worktree symbolic refs (HEAD).
+>  and then later, instead of use_threads, do:
 
-Signed-off-by: David Turner <dturner@twopensource.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs/files-backend.c | 8 ++++++++
- refs/refs-internal.h | 4 ++++
- 2 files changed, 12 insertions(+)
+ >  if (num_threads <= 1) {
+        ... do single-threaded version ...
+  > } else {
+        ... do multi-threaded version ...
+  > }
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index a2e5a56..1094348 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2735,6 +2735,14 @@ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
- 			 const unsigned char *new_sha1, const char *msg,
- 			 int flags, struct strbuf *err)
- {
-+	return files_log_ref_write(refname, old_sha1, new_sha1, msg, flags,
-+				   err);
-+}
-+
-+int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
-+			const unsigned char *new_sha1, const char *msg,
-+			int flags, struct strbuf *err)
-+{
- 	struct strbuf sb = STRBUF_INIT;
- 	int ret = log_ref_write_1(refname, old_sha1, new_sha1, msg, &sb, flags,
- 				  err);
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 8f5cfb4..88a5be0 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -179,4 +179,8 @@ struct ref_transaction {
- 	enum ref_transaction_state state;
- };
- 
-+int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
-+			const unsigned char *new_sha1, const char *msg,
-+			int flags, struct strbuf *err);
-+
- #endif /* REFS_REFS_INTERNAL_H */
--- 
-2.6.2
+ > That matches the logic in builtin/pack-objects.c.
+
+Maybe use the simplest version (and keep num_numbers == 0 also as flag for all other checks in code like if(num_flags) .... ):
+
+if (list.nr || cached )
+  num_threads = 0; // do not use threads
+else if (num_threads == 0)
+  num_threads = online_cpus() <= 1 ? 0 : GREP_NUM_THREADS_DEFAULT;
+else if (num_threads < 0)
+  die(...)
+
+// here we are num_threads > zero, so do nothing
