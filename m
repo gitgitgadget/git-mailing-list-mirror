@@ -1,500 +1,90 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v7 07/11] refs/refs-internal.h: new header file
-Date: Mon,  9 Nov 2015 18:03:44 +0100
-Message-ID: <5f62351689318a4ef9feeb3639e6a7a00b354a02.1447085798.git.mhagger@alum.mit.edu>
+Subject: [PATCH v7 05/11] pack_if_possible_fn(): use ref_type() instead of is_per_worktree_ref()
+Date: Mon,  9 Nov 2015 18:03:42 +0100
+Message-ID: <d229d316ab0cf086f5b93e5d720f011701129791.1447085798.git.mhagger@alum.mit.edu>
 References: <cover.1447085798.git.mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
 	Lukas Fleischer <lfleischer@lfos.de>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 09 18:04:37 2015
+X-From: git-owner@vger.kernel.org Mon Nov 09 18:04:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zvprw-0007tx-QF
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 18:04:37 +0100
+	id 1Zvpry-0007tx-Ns
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Nov 2015 18:04:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752256AbbKIREW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2015 12:04:22 -0500
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:50064 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751580AbbKIRER (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2015 12:04:17 -0500
-X-AuditID: 12074411-f797e6d000007df3-ae-5640d21013d9
+	id S1752359AbbKIREc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2015 12:04:32 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:57424 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752237AbbKIREW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2015 12:04:22 -0500
+X-AuditID: 12074413-f79bd6d000007ac2-74-5640d20d1263
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 10.84.32243.012D0465; Mon,  9 Nov 2015 12:04:16 -0500 (EST)
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 51.11.31426.D02D0465; Mon,  9 Nov 2015 12:04:13 -0500 (EST)
 Received: from michael.fritz.box (p4FC97689.dip0.t-ipconnect.de [79.201.118.137])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tA9H41Yu026059
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tA9H41Ys026059
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 9 Nov 2015 12:04:15 -0500
+	Mon, 9 Nov 2015 12:04:11 -0500
 X-Mailer: git-send-email 2.6.2
 In-Reply-To: <cover.1447085798.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsUixO6iqCtwySHM4EqjvMX8TScYLbqudDNZ
-	NPReYbaYNOUmk8XtFfOZLX609DBb9PZ9YnVg9/j7/gOTx85Zd9k9zh7M9HjWu4fR4+IlZY8F
-	z++ze3zeJBfAHsVtk5RYUhacmZ6nb5fAnXF28Vbmgo0lFY2fJjA3MM6J7mLk5JAQMJF42zGL
-	GcIWk7hwbz1bFyMXh5DAZUaJO68usEA4J5gkGiY3MoFUsQnoSizqaQazRQTUJCa2HQIrYhb4
-	yCgx98dCsISwgL3Er5kX2EBsFgFViWmfNrKC2LwCURLtM14xQqyTk5hyvx2snlPAQmLHiX9g
-	cSEBc4mJq9YwTWDkXcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11QvN7NELzWldBMjJPgE
-	dzDOOCl3iFGAg1GJh5dhun2YEGtiWXFl7iFGSQ4mJVHe6BMOYUJ8SfkplRmJxRnxRaU5qcWH
-	GCU4mJVEeAt2AeV4UxIrq1KL8mFS0hwsSuK8fEvU/YQE0hNLUrNTUwtSi2CyMhwcShK8my4A
-	NQoWpaanVqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaWZMSDoiO+GBgfICkeoL07QNp5iwsSc4Gi
-	EK2nGBWlxHnFLwIlBEASGaV5cGNhKeUVozjQl8K8BiBVPMB0BNf9CmgwE9Dgpf5gg0sSEVJS
-	DYxNE3cErDl7e3vAtX3vuU+tO1A0u/wlx3nBc8sTTlScC3J+2N2zjeOReZjDn79R7LOSo0K+
-	/re2/Dplw7WaEr83yVLyxb5zwg2FDt+xXxvc//MDv07Ch7z1+7rXOFhsvrHz8s8H 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixO6iqMt7ySHMYPVZEYv5m04wWnRd6Way
+	aOi9wmwxacpNJovbK+YzW/xo6WG26O37xOrA7vH3/Qcmj52z7rJ7nD2Y6fGsdw+jx8VLyh4L
+	nt9n9/i8SS6APYrbJimxpCw4Mz1P3y6BO+P1x3msBa85K2bPvsfSwPiHvYuRk0NCwESi/Xwf
+	lC0mceHeerYuRi4OIYHLjBIPfm1hhnBOMElc3tbPAlLFJqArsainmQnEFhFQk5jYdogFpIhZ
+	4COjxNwfC4ESHBzCAgkSD+4YgtSwCKhKbG2fzQZi8wpESbz7NZERYpucxJT77WBzOAUsJHac
+	+AcWFxIwl5i4ag3TBEbeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0zfVyM0v0UlNKNzFC
+	Qk94B+Ouk3KHGAU4GJV4eCNm2ocJsSaWFVfmHmKU5GBSEuWNPuEQJsSXlJ9SmZFYnBFfVJqT
+	WnyIUYKDWUmEt2AXUI43JbGyKrUoHyYlzcGiJM6rtkTdT0ggPbEkNTs1tSC1CCYrw8GhJMG7
+	6QJQo2BRanpqRVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJRjwoNuKLgdEBkuIB2rsDpJ23uCAx
+	FygK0XqKUVFKnHcRSEIAJJFRmgc3FpZQXjGKA30pzGtwEaiKB5iM4LpfAQ1mAhq81B9scEki
+	QkqqgTHGpi7z76LdU8+2r0hgnHz3zxXe2htJs075nWWI9d1yxcdmSfu1HwbmOXVhdW+ilGtz
+	7hqEVPx0mtZwzbfRgfH5lvD+lYKvZ7a83t/a/tp7/tJG06xImaQnR61d1k56dLV1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281061>
 
-There are a number of constants, structs, and static functions defined
-in refs.c and treated as private to the references module. But we want
-to support multiple reference backends within the reference module,
-and those backends will need access to some heretofore private
-declarations.
-
-We don't want those declarations to be visible to non-refs code, so we
-don't want to move them to refs.h. Instead, add a new header file,
-refs/refs-internal.h, that is intended to be included only from within
-the refs module. Make some functions non-static and move some
-declarations (and their corresponding docstrings) from refs.c to this
-file.
-
-In a moment we will add more content to the "refs" subdirectory.
+is_per_worktree_ref() will soon be made private, so use the public
+interface, ref_type(), in its place. And now that we're using
+ref_type(), we can make it clear that we won't pack pseudorefs. This was
+the case before, but due to the not-so-obvious reason that this function
+is applied to references via the loose reference cache, which only
+includes references that live inside "refs/".
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c               | 175 +++----------------------------------------------
- refs/refs-internal.h | 182 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 191 insertions(+), 166 deletions(-)
- create mode 100644 refs/refs-internal.h
+ refs.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index f48c58a..9aff0c8 100644
+index 480de9a..82129f0 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1,6 +1,6 @@
- #include "cache.h"
-+#include "refs/refs-internal.h"
- #include "lockfile.h"
--#include "refs.h"
- #include "object.h"
- #include "tag.h"
- #include "dir.h"
-@@ -35,41 +35,6 @@ static unsigned char refname_disposition[256] = {
+@@ -2671,8 +2671,6 @@ struct pack_refs_cb_data {
+ 	struct ref_to_prune *ref_to_prune;
  };
  
+-static int is_per_worktree_ref(const char *refname);
+-
  /*
-- * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
-- * refs (i.e., because the reference is about to be deleted anyway).
-- */
--#define REF_DELETING	0x02
--
--/*
-- * Used as a flag in ref_update::flags when a loose ref is being
-- * pruned.
-- */
--#define REF_ISPRUNING	0x04
--
--/*
-- * Used as a flag in ref_update::flags when the reference should be
-- * updated to new_sha1.
-- */
--#define REF_HAVE_NEW	0x08
--
--/*
-- * Used as a flag in ref_update::flags when old_sha1 should be
-- * checked.
-- */
--#define REF_HAVE_OLD	0x10
--
--/*
-- * Used as a flag in ref_update::flags when the lockfile needs to be
-- * committed.
-- */
--#define REF_NEEDS_COMMIT 0x20
--
--/*
-- * 0x40 is REF_FORCE_CREATE_REFLOG, so skip it if you're adding a
-- * value to ref_update::flags
-- */
--
--/*
-  * Try to read one refname component from the front of refname.
-  * Return the length of the component found, or -1 if the component is
-  * not legal.  It is legal if it is something reasonable to have under
-@@ -340,20 +305,7 @@ static struct ref_dir *get_ref_dir(struct ref_entry *entry)
- 	return dir;
- }
+  * An each_ref_entry_fn that is run over loose references only.  If
+  * the loose reference can be packed, add an entry in the packed ref
+@@ -2687,7 +2685,7 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
+ 	int is_tag_ref = starts_with(entry->name, "refs/tags/");
  
--/*
-- * Return true iff refname is minimally safe. "Safe" here means that
-- * deleting a loose reference by this name will not do any damage, for
-- * example by causing a file that is not a reference to be deleted.
-- * This function does not check that the reference name is legal; for
-- * that, use check_refname_format().
-- *
-- * We consider a refname that starts with "refs/" to be safe as long
-- * as any ".." components that it might contain do not escape "refs/".
-- * Names that do not start with "refs/" are considered safe iff they
-- * consist entirely of upper case characters and '_' (like "HEAD" and
-- * "MERGE_HEAD" but not "config" or "FOO/BAR").
-- */
--static int refname_is_safe(const char *refname)
-+int refname_is_safe(const char *refname)
- {
- 	if (starts_with(refname, "refs/")) {
- 		char *buf;
-@@ -1823,39 +1775,7 @@ static int filter_refs(const char *refname, const struct object_id *oid,
- 	return filter->fn(refname, oid, flags, filter->cb_data);
- }
- 
--enum peel_status {
--	/* object was peeled successfully: */
--	PEEL_PEELED = 0,
--
--	/*
--	 * object cannot be peeled because the named object (or an
--	 * object referred to by a tag in the peel chain), does not
--	 * exist.
--	 */
--	PEEL_INVALID = -1,
--
--	/* object cannot be peeled because it is not a tag: */
--	PEEL_NON_TAG = -2,
--
--	/* ref_entry contains no peeled value because it is a symref: */
--	PEEL_IS_SYMREF = -3,
--
--	/*
--	 * ref_entry cannot be peeled because it is broken (i.e., the
--	 * symbolic reference cannot even be resolved to an object
--	 * name):
--	 */
--	PEEL_BROKEN = -4
--};
--
--/*
-- * Peel the named object; i.e., if the object is a tag, resolve the
-- * tag recursively until a non-tag is found.  If successful, store the
-- * result to sha1 and return PEEL_PEELED.  If the object is not a tag
-- * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
-- * and leave sha1 unchanged.
-- */
--static enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
-+enum peel_status peel_object(const unsigned char *name, unsigned char *sha1)
- {
- 	struct object *o = lookup_unknown_object(name);
- 
-@@ -3110,27 +3030,10 @@ out:
- 	return ret;
- }
- 
--/*
-- * Return 0 if a reference named refname could be created without
-- * conflicting with the name of an existing reference. Otherwise,
-- * return a negative value and write an explanation to err. If extras
-- * is non-NULL, it is a list of additional refnames with which refname
-- * is not allowed to conflict. If skip is non-NULL, ignore potential
-- * conflicts with refs in skip (e.g., because they are scheduled for
-- * deletion in the same operation). Behavior is undefined if the same
-- * name is listed in both extras and skip.
-- *
-- * Two reference names conflict if one of them exactly matches the
-- * leading components of the other; e.g., "foo/bar" conflicts with
-- * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
-- * "foo/barbados".
-- *
-- * extras and skip must be sorted.
-- */
--static int verify_refname_available(const char *newname,
--				    struct string_list *extras,
--				    struct string_list *skip,
--				    struct strbuf *err)
-+int verify_refname_available(const char *newname,
-+			     struct string_list *extras,
-+			     struct string_list *skip,
-+			     struct strbuf *err)
- {
- 	struct ref_dir *packed_refs = get_packed_refs(&ref_cache);
- 	struct ref_dir *loose_refs = get_loose_refs(&ref_cache);
-@@ -3284,12 +3187,7 @@ static int commit_ref(struct ref_lock *lock)
- 	return 0;
- }
- 
--/*
-- * copy the reflog message msg to buf, which has been allocated sufficiently
-- * large, while cleaning up the whitespaces.  Especially, convert LF to space,
-- * because reflog file is one line per entry.
-- */
--static int copy_reflog_msg(char *buf, const char *msg)
-+int copy_reflog_msg(char *buf, const char *msg)
- {
- 	char *cp = buf;
- 	char c;
-@@ -3310,7 +3208,7 @@ static int copy_reflog_msg(char *buf, const char *msg)
- 	return cp - buf;
- }
- 
--static int should_autocreate_reflog(const char *refname)
-+int should_autocreate_reflog(const char *refname)
- {
- 	if (!log_all_ref_updates)
+ 	/* Do not pack per-worktree refs: */
+-	if (is_per_worktree_ref(entry->name))
++	if (ref_type(entry->name) != REF_TYPE_NORMAL)
  		return 0;
-@@ -3963,61 +3861,6 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
- 	return retval;
- }
  
--/**
-- * Information needed for a single ref update. Set new_sha1 to the new
-- * value or to null_sha1 to delete the ref. To check the old value
-- * while the ref is locked, set (flags & REF_HAVE_OLD) and set
-- * old_sha1 to the old value, or to null_sha1 to ensure the ref does
-- * not exist before update.
-- */
--struct ref_update {
--	/*
--	 * If (flags & REF_HAVE_NEW), set the reference to this value:
--	 */
--	unsigned char new_sha1[20];
--	/*
--	 * If (flags & REF_HAVE_OLD), check that the reference
--	 * previously had this value:
--	 */
--	unsigned char old_sha1[20];
--	/*
--	 * One or more of REF_HAVE_NEW, REF_HAVE_OLD, REF_NODEREF,
--	 * REF_DELETING, and REF_ISPRUNING:
--	 */
--	unsigned int flags;
--	struct ref_lock *lock;
--	int type;
--	char *msg;
--	const char refname[FLEX_ARRAY];
--};
--
--/*
-- * Transaction states.
-- * OPEN:   The transaction is in a valid state and can accept new updates.
-- *         An OPEN transaction can be committed.
-- * CLOSED: A closed transaction is no longer active and no other operations
-- *         than free can be used on it in this state.
-- *         A transaction can either become closed by successfully committing
-- *         an active transaction or if there is a failure while building
-- *         the transaction thus rendering it failed/inactive.
-- */
--enum ref_transaction_state {
--	REF_TRANSACTION_OPEN   = 0,
--	REF_TRANSACTION_CLOSED = 1
--};
--
--/*
-- * Data structure for holding a reference transaction, which can
-- * consist of checks and updates to multiple references, carried out
-- * as atomically as possible.  This structure is opaque to callers.
-- */
--struct ref_transaction {
--	struct ref_update **updates;
--	size_t alloc;
--	size_t nr;
--	enum ref_transaction_state state;
--};
--
- struct ref_transaction *ref_transaction_begin(struct strbuf *err)
- {
- 	assert(err);
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-new file mode 100644
-index 0000000..8f5cfb4
---- /dev/null
-+++ b/refs/refs-internal.h
-@@ -0,0 +1,182 @@
-+#ifndef REFS_REFS_INTERNAL_H
-+#define REFS_REFS_INTERNAL_H
-+
-+/*
-+ * Data structures and functions for the internal use of the refs
-+ * module. Code outside of the refs module should use only the public
-+ * functions defined in "refs.h", and should *not* include this file.
-+ */
-+
-+#include "../refs.h"
-+
-+/*
-+ * Flag passed to lock_ref_sha1_basic() telling it to tolerate broken
-+ * refs (i.e., because the reference is about to be deleted anyway).
-+ */
-+#define REF_DELETING	0x02
-+
-+/*
-+ * Used as a flag in ref_update::flags when a loose ref is being
-+ * pruned.
-+ */
-+#define REF_ISPRUNING	0x04
-+
-+/*
-+ * Used as a flag in ref_update::flags when the reference should be
-+ * updated to new_sha1.
-+ */
-+#define REF_HAVE_NEW	0x08
-+
-+/*
-+ * Used as a flag in ref_update::flags when old_sha1 should be
-+ * checked.
-+ */
-+#define REF_HAVE_OLD	0x10
-+
-+/*
-+ * Used as a flag in ref_update::flags when the lockfile needs to be
-+ * committed.
-+ */
-+#define REF_NEEDS_COMMIT 0x20
-+
-+/*
-+ * 0x40 is REF_FORCE_CREATE_REFLOG, so skip it if you're adding a
-+ * value to ref_update::flags
-+ */
-+
-+/*
-+ * Return true iff refname is minimally safe. "Safe" here means that
-+ * deleting a loose reference by this name will not do any damage, for
-+ * example by causing a file that is not a reference to be deleted.
-+ * This function does not check that the reference name is legal; for
-+ * that, use check_refname_format().
-+ *
-+ * We consider a refname that starts with "refs/" to be safe as long
-+ * as any ".." components that it might contain do not escape "refs/".
-+ * Names that do not start with "refs/" are considered safe iff they
-+ * consist entirely of upper case characters and '_' (like "HEAD" and
-+ * "MERGE_HEAD" but not "config" or "FOO/BAR").
-+ */
-+int refname_is_safe(const char *refname);
-+
-+enum peel_status {
-+	/* object was peeled successfully: */
-+	PEEL_PEELED = 0,
-+
-+	/*
-+	 * object cannot be peeled because the named object (or an
-+	 * object referred to by a tag in the peel chain), does not
-+	 * exist.
-+	 */
-+	PEEL_INVALID = -1,
-+
-+	/* object cannot be peeled because it is not a tag: */
-+	PEEL_NON_TAG = -2,
-+
-+	/* ref_entry contains no peeled value because it is a symref: */
-+	PEEL_IS_SYMREF = -3,
-+
-+	/*
-+	 * ref_entry cannot be peeled because it is broken (i.e., the
-+	 * symbolic reference cannot even be resolved to an object
-+	 * name):
-+	 */
-+	PEEL_BROKEN = -4
-+};
-+
-+/*
-+ * Peel the named object; i.e., if the object is a tag, resolve the
-+ * tag recursively until a non-tag is found.  If successful, store the
-+ * result to sha1 and return PEEL_PEELED.  If the object is not a tag
-+ * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
-+ * and leave sha1 unchanged.
-+ */
-+enum peel_status peel_object(const unsigned char *name, unsigned char *sha1);
-+
-+/*
-+ * Return 0 if a reference named refname could be created without
-+ * conflicting with the name of an existing reference. Otherwise,
-+ * return a negative value and write an explanation to err. If extras
-+ * is non-NULL, it is a list of additional refnames with which refname
-+ * is not allowed to conflict. If skip is non-NULL, ignore potential
-+ * conflicts with refs in skip (e.g., because they are scheduled for
-+ * deletion in the same operation). Behavior is undefined if the same
-+ * name is listed in both extras and skip.
-+ *
-+ * Two reference names conflict if one of them exactly matches the
-+ * leading components of the other; e.g., "foo/bar" conflicts with
-+ * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
-+ * "foo/barbados".
-+ *
-+ * extras and skip must be sorted.
-+ */
-+int verify_refname_available(const char *newname,
-+			     struct string_list *extras,
-+			     struct string_list *skip,
-+			     struct strbuf *err);
-+
-+/*
-+ * Copy the reflog message msg to buf, which has been allocated sufficiently
-+ * large, while cleaning up the whitespaces.  Especially, convert LF to space,
-+ * because reflog file is one line per entry.
-+ */
-+int copy_reflog_msg(char *buf, const char *msg);
-+
-+int should_autocreate_reflog(const char *refname);
-+
-+/**
-+ * Information needed for a single ref update. Set new_sha1 to the new
-+ * value or to null_sha1 to delete the ref. To check the old value
-+ * while the ref is locked, set (flags & REF_HAVE_OLD) and set
-+ * old_sha1 to the old value, or to null_sha1 to ensure the ref does
-+ * not exist before update.
-+ */
-+struct ref_update {
-+	/*
-+	 * If (flags & REF_HAVE_NEW), set the reference to this value:
-+	 */
-+	unsigned char new_sha1[20];
-+	/*
-+	 * If (flags & REF_HAVE_OLD), check that the reference
-+	 * previously had this value:
-+	 */
-+	unsigned char old_sha1[20];
-+	/*
-+	 * One or more of REF_HAVE_NEW, REF_HAVE_OLD, REF_NODEREF,
-+	 * REF_DELETING, and REF_ISPRUNING:
-+	 */
-+	unsigned int flags;
-+	struct ref_lock *lock;
-+	int type;
-+	char *msg;
-+	const char refname[FLEX_ARRAY];
-+};
-+
-+/*
-+ * Transaction states.
-+ * OPEN:   The transaction is in a valid state and can accept new updates.
-+ *         An OPEN transaction can be committed.
-+ * CLOSED: A closed transaction is no longer active and no other operations
-+ *         than free can be used on it in this state.
-+ *         A transaction can either become closed by successfully committing
-+ *         an active transaction or if there is a failure while building
-+ *         the transaction thus rendering it failed/inactive.
-+ */
-+enum ref_transaction_state {
-+	REF_TRANSACTION_OPEN   = 0,
-+	REF_TRANSACTION_CLOSED = 1
-+};
-+
-+/*
-+ * Data structure for holding a reference transaction, which can
-+ * consist of checks and updates to multiple references, carried out
-+ * as atomically as possible.  This structure is opaque to callers.
-+ */
-+struct ref_transaction {
-+	struct ref_update **updates;
-+	size_t alloc;
-+	size_t nr;
-+	enum ref_transaction_state state;
-+};
-+
-+#endif /* REFS_REFS_INTERNAL_H */
+ 	/* ALWAYS pack tags */
 -- 
 2.6.2
