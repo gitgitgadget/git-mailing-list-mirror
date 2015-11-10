@@ -1,109 +1,204 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Allow git alias to override existing Git commands
-Date: Tue, 10 Nov 2015 22:57:51 +0100
-Message-ID: <5642685F.9070405@web.de>
-References: <56421BD9.5060501@game-point.net>
- <CAGZ79kZxQWVMe3N1ti8npyp9_4DUPAVy9Uk5a75Jwh3Eud2eZQ@mail.gmail.com>
+Subject: Re: [PATCHv3 08/11] fetching submodules: respect `submodule.jobs`
+ config option
+Date: Tue, 10 Nov 2015 23:21:05 +0100
+Message-ID: <56426DD1.6090904@web.de>
+References: <1446597434-1740-1-git-send-email-sbeller@google.com>
+ <1446597434-1740-9-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Stefan Beller <sbeller@google.com>,
-	Jeremy Morton <admin@game-point.net>
-X-From: git-owner@vger.kernel.org Tue Nov 10 22:58:18 2015
+Cc: ramsay@ramsayjones.plus.com, jacob.keller@gmail.com, peff@peff.net,
+	gitster@pobox.com, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, ericsunshine@gmail.com, j6t@kdbg.org
+To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 10 23:21:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwGvh-0002gA-CG
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 22:58:17 +0100
+	id 1ZwHI5-00073Q-SI
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 23:21:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751615AbbKJV6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2015 16:58:13 -0500
-Received: from mout.web.de ([212.227.15.3]:65171 "EHLO mout.web.de"
+	id S1751897AbbKJWVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2015 17:21:22 -0500
+Received: from mout.web.de ([212.227.17.11]:62297 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750749AbbKJV6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2015 16:58:12 -0500
-Received: from [192.168.178.41] ([79.211.101.61]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0Lbrk4-1afTdE2OcW-00jFSn; Tue, 10 Nov 2015 22:58:00
+	id S1751476AbbKJWVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2015 17:21:20 -0500
+Received: from [192.168.178.41] ([79.211.101.61]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0LwYnz-1aU8iq35nb-018Lib; Tue, 10 Nov 2015 23:21:08
  +0100
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.3.0
-In-Reply-To: <CAGZ79kZxQWVMe3N1ti8npyp9_4DUPAVy9Uk5a75Jwh3Eud2eZQ@mail.gmail.com>
-X-Provags-ID: V03:K0:BjfZFFQEiMvvm2d+rnx6VDXSAOyHXV8926GiPLBOhvGP2krcywF
- 46uSvi4i5tdwjOxw11vbpLZvzC0RyQk3tgMbsR7kMBFA6iOD9gimR/qBeZbS0Wq1Rx5d6o/
- drcsf2iQJvuJ2D62DCfpsqvPs3B7V6lYbCG4knkS3jEDJKLjJTsK+zazwAOja5dNI20VkYY
- 9NX+gnHWkBxIjK4QQP6/A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9OA1GTljTT8=:LkyG89zY8uxrb5lXrgA4PZ
- vq+J8JXRRoqRAaglxNkfUamn2JcSQ9mZ/zZEnYXYmEuDr960xFECuhmxkT2Fr299Un4A7cZzG
- l38m5nzc79G4cGmQKVTwMTGKUEARO8VCfTfSeDu4vn2IuHQemPaucZDqiFLdePFWLCDq3NeGT
- Igbfcy7RknShorzPTCwQUV7PPzVaMx5o6iAIWckiBmJD/b2IfYhcp7SC9MzCNIFfejbY+fezN
- dhWiqdw4qJI45AThtF8a3Ykxb/9wDNgmpmSzTBdOERZhT3EKaVxZ6Wf5SxP1W38GYP8aVTcVj
- j6u71mc2qRrjO8twZTSU44XJGpSt+if6YEbR9s7wTDFdb3QVnRuRglB+LDYB3o+rPHlHjnVxe
- 3W8vqkxr21rxGS2yhUPVrfXphnE8OrN167RW+sYFvY90X3ObIbstgoH/OmGZhoRLCse1weCAb
- kKNi/0k76xll1o0hEU8JJVF2Vh3q++AnNwgnbkQra9zI9ybXpdt2Kwp2mvOPt8I8hzL2inbz7
- gsjxl2s3luJ+Qd4FX8OyNQNV6XqK0eRzXu9qa7F/Ua7XlBJVmmck+UGQVt9tdK4kSIhYOjtCr
- XPcZ+VD5G2Sjvj/8jJTVr1usxtYsU9Lw9lD6/rjS0tdg60BTFI0E7ZB1KAEZq8StTFlN1v3Cv
- Y1hNWlKhnfJKW9VTPXsjAO3v3plil5+cLP88yGo15ZLGOxTl/lDv3WJ3mM7BJBLdVATIKkNDB
- ba1uER1OGAj8DOdjwXPkDhFQkLYFhjFZWMl00FhCqrCsNoOeAqdMUHikK1Zl3CVUEJmaxoIf 
+In-Reply-To: <1446597434-1740-9-git-send-email-sbeller@google.com>
+X-Provags-ID: V03:K0:/En+ExHu2RaX4AP+nFK9YqjxdBquCI8zZ6nTX4mm5/6MeKkO0pU
+ BGG8iXuuWi93tODs8yatk2txxWFQsYWFpvhp6zmcM0t49CzPpsqYyQHugnG5lnDqijfx2n4
+ 3e4ng7S5agCBDn17V7eUAmLBgvf1qL5MEhkKxt7ORGLmA0nhyqQ0doZ8MrqIHM0EKlxk9jC
+ +fYHsTirdJWynhoO4wX7A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:GwctspX3D4Y=:B3p/skX2KUqXGKzfSkHeJ7
+ OdKuNUR1A0ebgIuPR8HSAnoRft9TZktIT8GnYT04+kV7dy2WJNB7PbPYUwErlTYYSeUfwvFnW
+ K7uDD7EWgqJRFLtpG6TjHYNWNsD9FJaZ8ou7KxlCyCepcQIB0a0bYMYuG0De+XLVccq58Rc1X
+ 5GK+WubFc+Gedm/J4LVJ6AcyzGsI+2mpDj5w05OfQ5l7XZl6ZpEbhyX/y/NUTMY5dnM/Eu9T3
+ TZogJ4HvpKZR0raDEIEhHIefKv2JXgUZixaQU9yb3LO/QwBVe3ZpH1Kd5zFHmxmQ32gECnHq8
+ gHH9JIu19GzNX+S85BReNH7qyKH/wY8cFfoyMzm9y7Sz2tbrpIAtpYccDYZVvw5A4r0knD574
+ /kqpkR+ZcyI6cS0FuFIh8ehtKaJ/XBiKPk4/heKOz6jqCTCtONxKaSz1o6L9QezRypDTjk01G
+ wcH/NbHDl5QfIVaa840DEeSJ2YvogBply2dVe+25TQcdYxOMK2RxTg/fjxO+hyUFNhl5X1I1L
+ 06EnyTatOJny7oTcZhHeU8uF/gOdmRNy55PRcxGQaaxmer3rnyJ7kF4uRTJBoBLy11qlt7mk+
+ xO2Puba/5+KCkTINsajRjdU5nP5DwWB74tCAzkxgAm7OCqhdmTYcNC8XWNAkbDPtDgfG6UEoa
+ PpWZbusf4D+2c2Gl6dyjpqU+4ZM943fT/2Qy59sMwspToBJQdgSXHrKyhaq2WtXBnPPIT6/QP
+ tOPNV0YH7W2eucEY6vimJ+XGbhpRZUOuaaUT4cD0eMZy/GyDgV7D7VPdIQqeEGmRFrUF9s42 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281136>
 
-Am 10.11.2015 um 19:12 schrieb Stefan Beller:
-> On Tue, Nov 10, 2015 at 8:31 AM, Jeremy Morton <admin@game-point.net> wrote:
->> It's recently come to my attention that the "git alias" config functionality
->> ignores all aliases that would override existing Git commands.  This seems
->> like a bad idea to me.
+Am 04.11.2015 um 01:37 schrieb Stefan Beller:
+> This allows to configure fetching and updating in parallel
+> without having the command line option.
 >
-> This ensures that the plumbing commands always work as expected.
-> As scripts *should* only use plumbing commands, the scripts should
-> work with high probability despite all the crazy user configuration/aliases.
-
-Exactly.
-
->> For example, I wanted to setup "git clone" to automatically act as "git
->> clone --recursive".  Sure I could do it in the shell, but it's more of a
->> pain - any tutorial I set up about doing it would have to worry about what
->> shell the user was using - and if you're going to make that argument, why
->> have "git alias" at all?  It can all be done from the shell.
+> This moved the responsibility to determine how many parallel processes
+> to start from builtin/fetch to submodule.c as we need a way to communicate
+> "The user did not specify the number of parallel processes in the command
+> line options" in the builtin fetch. The submodule code takes care of
+> the precedence (CLI > config > default)
 >
-> I think the git way for your example would be to configure git to include that
-> option by default, something like
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>   Documentation/config.txt    |  7 +++++++
+>   builtin/fetch.c             |  2 +-
+>   submodule-config.c          | 15 +++++++++++++++
+>   submodule-config.h          |  2 ++
+>   submodule.c                 |  5 +++++
+>   t/t5526-fetch-submodules.sh | 14 ++++++++++++++
+>   6 files changed, 44 insertions(+), 1 deletion(-)
 >
->      git config --global submodules.recursiveClone yes
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 391a0c3..70e1b88 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2643,6 +2643,13 @@ submodule.<name>.ignore::
+>   	"--ignore-submodules" option. The 'git submodule' commands are not
+>   	affected by this setting.
 >
-> though I was skimming through the man page of git config and did not find
-> that option there. I guess it's missing.
+> +submodule.jobs::
+> +	This is used to determine how many submodules can be operated on in
+> +	parallel. Specifying a positive integer allows up to that number
+> +	of submodules being fetched in parallel. This is used in fetch
+> +	and clone operations only. A value of 0 will give some reasonable
+> +	configuration. It defaults to 1.
+> +
 
-We thought about adding such a config option, but I believe that would
-fall a bit short. If I want to have recursive clone I also want to init
-all those submodules appearing in later fetches too (otherwise the end
-result would depend on whether you cloned before or after a submodule
-was added upstream, which is confusing). Extra points for populating
-the submodule in my work tree when switching to a commit containing
-the new submodule.
+Just curious (and sorry if this has already been discussed and I missed
+it, but the volume of your output is too much for my current git time
+budget ;-): While this config is for fetching only, do I recall correctly
+that you have plans to do submodule work tree updates in parallel too?
+If so, would it make sense to have different settings for fetching and
+updating?
 
-So what about a "submodule.autoupdate" config option? If set to true,
-all submodules not marked "update=none" would automatically be fetched
-and inited by fetch (and thus clone too) and then checked out (with my
-recursive update changes) in every work tree manipulating command
-(again including clone).
-
-Users who only want the submodules to be present in the work tree but
-not automagically updated could set "submodule.autoupdate=clone" to
-avoid the extra cost of updating the work tree every time they switch
-between commits. Now that Heiko's config-from-commit changes are in
-master, someone could easily add that to fetch and clone as the first
-step. We could also teach clone to make "submodule.autoupdate=true"
-imply --recursive and execute the "git submodule" command to update
-the work tree as a first step until the recursive checkout patches
-are ready.
-
-Does that make sense?
+>   tag.sort::
+>   	This variable controls the sort ordering of tags when displayed by
+>   	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 9cc1c9d..60e6797 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -37,7 +37,7 @@ static int prune = -1; /* unspecified */
+>   static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
+>   static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+>   static int tags = TAGS_DEFAULT, unshallow, update_shallow;
+> -static int max_children = 1;
+> +static int max_children = -1;
+>   static const char *depth;
+>   static const char *upload_pack;
+>   static struct strbuf default_rla = STRBUF_INIT;
+> diff --git a/submodule-config.c b/submodule-config.c
+> index 29e21b2..475551a 100644
+> --- a/submodule-config.c
+> +++ b/submodule-config.c
+> @@ -32,6 +32,7 @@ enum lookup_type {
+>
+>   static struct submodule_cache cache;
+>   static int is_cache_init;
+> +static int parallel_jobs = -1;
+>
+>   static int config_path_cmp(const struct submodule_entry *a,
+>   			   const struct submodule_entry *b,
+> @@ -239,6 +240,15 @@ static int parse_generic_submodule_config(const char *key,
+>   					  const char *value,
+>   					  struct parse_config_parameter *me)
+>   {
+> +	if (!strcmp(key, "jobs")) {
+> +		parallel_jobs = strtol(value, NULL, 10);
+> +		if (parallel_jobs < 0) {
+> +			warning("submodule.jobs not allowed to be negative.");
+> +			parallel_jobs = 1;
+> +			return 1;
+> +		}
+> +	}
+> +
+>   	return 0;
+>   }
+>
+> @@ -482,3 +492,8 @@ void submodule_free(void)
+>   	cache_free(&cache);
+>   	is_cache_init = 0;
+>   }
+> +
+> +int config_parallel_submodules(void)
+> +{
+> +	return parallel_jobs;
+> +}
+> diff --git a/submodule-config.h b/submodule-config.h
+> index f9e2a29..d9bbf9a 100644
+> --- a/submodule-config.h
+> +++ b/submodule-config.h
+> @@ -27,4 +27,6 @@ const struct submodule *submodule_from_path(const unsigned char *commit_sha1,
+>   		const char *path);
+>   void submodule_free(void);
+>
+> +int config_parallel_submodules(void);
+> +
+>   #endif /* SUBMODULE_CONFIG_H */
+> diff --git a/submodule.c b/submodule.c
+> index 0257ea3..188ba02 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -752,6 +752,11 @@ int fetch_populated_submodules(const struct argv_array *options,
+>   	argv_array_push(&spf.args, "--recurse-submodules-default");
+>   	/* default value, "--submodule-prefix" and its value are added later */
+>
+> +	if (max_parallel_jobs < 0)
+> +		max_parallel_jobs = config_parallel_submodules();
+> +	if (max_parallel_jobs < 0)
+> +		max_parallel_jobs = 1;
+> +
+>   	calculate_changed_submodule_paths();
+>   	run_processes_parallel(max_parallel_jobs,
+>   			       get_next_submodule,
+> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+> index 1b4ce69..5c3579c 100755
+> --- a/t/t5526-fetch-submodules.sh
+> +++ b/t/t5526-fetch-submodules.sh
+> @@ -470,4 +470,18 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
+>   	test_i18ncmp expect.err actual.err
+>   '
+>
+> +test_expect_success 'fetching submodules respects parallel settings' '
+> +	git config fetch.recurseSubmodules true &&
+> +	(
+> +		cd downstream &&
+> +		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 7 &&
+> +		grep "7 children" trace.out &&
+> +		git config submodule.jobs 8 &&
+> +		GIT_TRACE=$(pwd)/trace.out git fetch &&
+> +		grep "8 children" trace.out &&
+> +		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 9 &&
+> +		grep "9 children" trace.out
+> +	)
+> +'
+> +
+>   test_done
+>
