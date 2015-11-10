@@ -1,87 +1,72 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v7 07/11] refs/refs-internal.h: new header file
-Date: Tue, 10 Nov 2015 08:40:02 +0100
-Message-ID: <56419F52.9050806@alum.mit.edu>
-References: <cover.1447085798.git.mhagger@alum.mit.edu> <5f62351689318a4ef9feeb3639e6a7a00b354a02.1447085798.git.mhagger@alum.mit.edu> <5640F823.5010902@ramsayjones.plus.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: gitk fails to start after upgrading to 2.6.3 (cannot load
+ translation)
+Date: Tue, 10 Nov 2015 10:48:47 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1511101040180.27599@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
-	Lukas Fleischer <lfleischer@lfos.de>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>, git@vger.kernel.org
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 10 08:40:16 2015
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 10 10:59:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zw3XL-0008AS-Pe
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 08:40:16 +0100
+	id 1Zw5hp-00076Q-Tr
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 10:59:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751790AbbKJHkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2015 02:40:09 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61959 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751162AbbKJHkI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Nov 2015 02:40:08 -0500
-X-AuditID: 12074413-f79bd6d000007ac2-7e-56419f54811a
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 4A.36.31426.45F91465; Tue, 10 Nov 2015 02:40:04 -0500 (EST)
-Received: from [192.168.69.130] (p4FC97D33.dip0.t-ipconnect.de [79.201.125.51])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tAA7e2Gd004959
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 10 Nov 2015 02:40:03 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
-In-Reply-To: <5640F823.5010902@ramsayjones.plus.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCKsWRmVeSWpSXmKPExsUixO6iqBsy3zHMYN45U4v5m04wWnRd6Way
-	aOi9wmwxacpNJosfLT3MFjOvWlv09n1idWD32DnrLrvH2YOZHs969zB6XLyk7LF/6TY2jwXP
-	77N7fN4kF8AexW2TlFhSFpyZnqdvl8Cd0Xm5gbHgM1vF05vTGBsY97F2MXJySAiYSHz69pcN
-	whaTuHBvPZDNxSEkcJlRorf1AyOEc55J4tznrYwgVbwC2hK7OxuZQGwWAVWJF5PmMIPYbAK6
-	Eot6msHiogJBEiuWv4CqF5Q4OfMJC4gtIhAt8f/aXrANzAL7GSW+T90C1iAs4CzxoeMpE8S2
-	dYwSy3dfB5rKwcEJdN/XOdYgNcwCehI7rv9ihbDlJba/ncM8gVFgFpIds5CUzUJStoCReRWj
-	XGJOaa5ubmJmTnFqsm5xcmJeXmqRrrlebmaJXmpK6SZGSCwI72DcdVLuEKMAB6MSD++Ebw5h
-	QqyJZcWVuYcYJTmYlER5+ac5hgnxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4bV/AVTOm5JYWZVa
-	lA+TkuZgURLnVVui7ickkJ5YkpqdmlqQWgSTleHgUJLglZgHNFSwKDU9tSItM6cEIc3EwQky
-	nEtKpDg1LyW1KLG0JCMeFK3xxcB4BUnxAO2dOReonbe4IDEXKArReopRl2PBj9trmYRY8vLz
-	UqXEeeeDFAmAFGWU5sGtgCW+V4ziQB8L834DqeIBJk24Sa+AljABLVnqD/JccUkiQkqqgZFh
-	A7/j44+LTxosvvWrzfljMGdi76pfW2ta7Zp+2SlaJr88F1RhxBN+yO3Bmd2yYtdT 
+	id S1752400AbbKJJ6V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Nov 2015 04:58:21 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:34783 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752354AbbKJJ5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2015 04:57:51 -0500
+X-Greylist: delayed 542 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Nov 2015 04:57:51 EST
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id tAA9mlPs029058
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 10 Nov 2015 10:48:47 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id tAA9mloj029054;
+	Tue, 10 Nov 2015 10:48:47 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Tue, 10 Nov 2015 10:48:47 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281105>
 
-On 11/09/2015 08:46 PM, Ramsay Jones wrote:
-> On 09/11/15 17:03, Michael Haggerty wrote:
->> [...]
->> diff --git a/refs.c b/refs.c
->> index f48c58a..9aff0c8 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -1,6 +1,6 @@
->>  #include "cache.h"
->> +#include "refs/refs-internal.h"
->>  #include "lockfile.h"
->> -#include "refs.h"
-> 
-> This looked wrong to me, until I had read the remainder of the
-> patch and noticed that the 'internal' header #included the
-> 'public' interface header.
-> 
-> Unfortunately, this still feels wrong to me! I would rather that
-> the internal header _not_ include the public header (so, include
-> them _both_ when necessary). Just my opinion, which you can simply
-> ignore. :-D
+Hi!
 
-Yeah, I was of two minds about this. I will change this in the next
-round. Thanks for your review!
+After upgrading Git to 2.6.3 (from 2.5.0), gitk refuses to start when=20
+trying to load the Swedish translation if I pass it a commit range:
 
-Michael
+   $ gitk v2.5.0..v2.6.3
+   Error in startup script: bad menu entry index "=C4ndra vy..."
+       while executing
+   ".bar.view entryconf [mca "Edit view..."] -state normal"
+       invoked from within
+"if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd ne {=
+}} {
+     # create a view for the files/dirs specified on the command line
+     se..."
+     (file "/usr/local/bin/gitk" line 12442)
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+If I start it without any parameters, it does start up, but the main=20
+menu is untranslated.
+
+The translation for this entry is defined in gitk-git/po/sv.po line 135=
+=20
+and hasn't changed since 2008, even if the sv.po file does have a few=20
+updates since the previous version in some other places.
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
