@@ -1,59 +1,57 @@
-From: Beat Bolli <dev+git@drbeat.li>
-Subject: Re: gitk fails to start after upgrading to 2.6.3 (cannot load
- translation)
-Date: Tue, 10 Nov 2015 20:38:52 +0100
-Message-ID: <564247CC.5060702@drbeat.li>
-References: <alpine.DEB.2.00.1511101040180.27599@ds9.cixit.se>
+From: Jeremy Morton <admin@game-point.net>
+Subject: Re: Allow git alias to override existing Git commands
+Date: Tue, 10 Nov 2015 20:04:46 +0000
+Message-ID: <56424DDE.2030808@game-point.net>
+References: <56421BD9.5060501@game-point.net> <CAGZ79kZxQWVMe3N1ti8npyp9_4DUPAVy9Uk5a75Jwh3Eud2eZQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Peter Krefting <peter@softwolves.pp.se>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 10 20:49:49 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Tue Nov 10 21:05:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwEvL-0007vD-HE
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 20:49:47 +0100
+	id 1ZwFAQ-0006Dz-Vm
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 21:05:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027AbbKJTtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2015 14:49:43 -0500
-Received: from mx1.2b3w.ch ([92.42.186.250]:51180 "EHLO mx1.2b3w.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750825AbbKJTtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2015 14:49:43 -0500
-X-Greylist: delayed 583 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Nov 2015 14:49:42 EST
-Received: from mx1.2b3w.ch (localhost [127.0.0.1])
-	by mx1.2b3w.ch (Postfix) with ESMTP id A0C36C3445;
-	Tue, 10 Nov 2015 20:39:45 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.2
-Received: from mcmini.bolli (178-241-153-5.dyn.cable.fcom.ch [5.153.241.178])
-	by mx1.2b3w.ch (Postfix) with ESMTPSA id 77C93C3442;
-	Tue, 10 Nov 2015 20:39:45 +0100 (CET)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.3.0
-In-Reply-To: <alpine.DEB.2.00.1511101040180.27599@ds9.cixit.se>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1751417AbbKJUFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2015 15:05:16 -0500
+Received: from mail.gooeysoftware.com ([208.100.15.213]:34250 "EHLO
+	mail.gooeysoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750997AbbKJUFP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2015 15:05:15 -0500
+Received: from [192.168.1.3] (82-69-83-224.dsl.in-addr.zen.co.uk [82.69.83.224])
+	by mail.gooeysoftware.com (Postfix) with ESMTPSA id 13ED618A00F2;
+	Tue, 10 Nov 2015 14:01:20 -0600 (CST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+In-Reply-To: <CAGZ79kZxQWVMe3N1ti8npyp9_4DUPAVy9Uk5a75Jwh3Eud2eZQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281129>
 
-On 10.11.15 10:48, Peter Krefting wrote:
-> Hi!
-> 
-> After upgrading Git to 2.6.3 (from 2.5.0), gitk refuses to start when
-> trying to load the Swedish translation if I pass it a commit range:
+On 10/11/2015 18:12, Stefan Beller wrote:
+> On Tue, Nov 10, 2015 at 8:31 AM, Jeremy Morton<admin@game-point.net>  wrote:
+>> It's recently come to my attention that the "git alias" config functionality
+>> ignores all aliases that would override existing Git commands.  This seems
+>> like a bad idea to me.
+>
+> This ensures that the plumbing commands always work as expected.
+> As scripts *should* only use plumbing commands, the scripts should
+> work with high probability despite all the crazy user configuration/aliases.
+>
 
-The patch can be found here:
+I just disagree with this.  If a user chooses to override their Git 
+commands, it's their problem.  Why should Git care about this?  It 
+should provide the user with the option to do this, and if the user 
+ruins scripts because of their aliases, it is not Git's problem.  What 
+you are doing is taking away power from users to use git aliases to 
+their full potential.
 
-http://article.gmane.org/gmane.comp.version-control.git/278863
-
-Cheers,
-Beat
+-- 
+Best regards,
+Jeremy Morton (Jez)
