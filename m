@@ -1,155 +1,205 @@
-From: Noam Postavsky <npostavs@users.sourceforge.net>
-Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it to
- ignore instead?
-Date: Mon, 9 Nov 2015 20:05:25 -0500
-Message-ID: <CAM-tV--hBSdCJckCnMtKgkQB2f_3eN8sXHdFWwg2hzb6s7ufxw@mail.gmail.com>
-References: <20151026215016.GA17419@sigill.intra.peff.net>
-	<xmqqoafkci6j.fsf@gitster.mtv.corp.google.com>
-	<20151027184702.GB12717@sigill.intra.peff.net>
-	<CAM-tV--B3HaC1DcORfnx9bWW9-quyk0=pQDxmvonc=6dgrMOxA@mail.gmail.com>
-	<20151030001000.GA2123@sigill.intra.peff.net>
-	<CAM-tV-_dc_YEE0Dh2T=8+_DcBiq_rvynOw2cFi+8QizkeGTusw@mail.gmail.com>
-	<20151030005057.GA23251@sigill.intra.peff.net>
-	<CAM-tV-8qSVJFOxLQt9SaYK_WqpxixzPArJnAK=3tHU9inM9Law@mail.gmail.com>
-	<20151030210849.GA7149@sigill.intra.peff.net>
-	<CAM-tV-9CNO_hqnweFpLaRHx4xEA32CPRdq56y6vYMWqURV9kgg@mail.gmail.com>
-	<20151109155342.GB27224@sigill.intra.peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: improve rebase/mkdirs performance
+Date: Tue, 10 Nov 2015 01:46:58 +0000
+Message-ID: <20151110014658.GA17298@dcvr.yhbt.net>
+References: <1446719175-9860-1-git-send-email-dair@feralinteractive.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001a113ec13a0ff73e0524254e8f
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 10 02:06:02 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dair Grant <dair@feralinteractive.com>
+X-From: git-owner@vger.kernel.org Tue Nov 10 02:54:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZvxNp-0007Ct-DZ
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 02:06:01 +0100
+	id 1Zvy8n-0005fN-DL
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 02:54:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751259AbbKJBF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2015 20:05:27 -0500
-Received: from mail-io0-f176.google.com ([209.85.223.176]:33523 "EHLO
-	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751030AbbKJBF0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Nov 2015 20:05:26 -0500
-Received: by iodd200 with SMTP id d200so205256579iod.0
-        for <git@vger.kernel.org>; Mon, 09 Nov 2015 17:05:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=MjOkBHWwGAPRefZXKWtNqXE2t4BJtfsbY5oAMua0LNQ=;
-        b=ijWGvhL7FiJ243/yLFIlJcr9+LZNly6S63NIxDQ6J+EBlVMaDJdlAxjf/hVJf4V7Oy
-         szmaW/Ot+b9u3NSv3SrPlrGt5n8hvPVsKZWwpMWJNM9q8bpSNVvfYNX14JvPZHsqhnM0
-         vucKILMIqHW8ZnoqR8ZHgeC0Mzijod8WltM84+aSI2F6w++5TWwk8Vu5yT+KTT3lsQL+
-         yJy6xW+7HD8fRKcYKIXUHXybjWuehjFQy98G/ifVy3h42sOW4gBMkMpFotdANc1cpvfb
-         QHlAgSJxQrlO/p6wdyulJ8rFrZftRVIqqGD5kHf2l/hV/kkRre7kDhhFAAhoERDMZrAl
-         5c0w==
-X-Received: by 10.107.130.167 with SMTP id m39mr1364256ioi.18.1447117525601;
- Mon, 09 Nov 2015 17:05:25 -0800 (PST)
-Received: by 10.79.119.2 with HTTP; Mon, 9 Nov 2015 17:05:25 -0800 (PST)
-In-Reply-To: <20151109155342.GB27224@sigill.intra.peff.net>
-X-Google-Sender-Auth: sv_YM1onrFRFpyLx6OTVirStFGY
+	id S1751107AbbKJBy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Nov 2015 20:54:29 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:46564 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750727AbbKJBy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Nov 2015 20:54:28 -0500
+X-Greylist: delayed 449 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Nov 2015 20:54:28 EST
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id A18D11F4DD;
+	Tue, 10 Nov 2015 01:46:58 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1446719175-9860-1-git-send-email-dair@feralinteractive.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281088>
 
---001a113ec13a0ff73e0524254e8f
-Content-Type: text/plain; charset=UTF-8
+Dair Grant <dair@feralinteractive.com> wrote:
+> This takes 10 minutes to process when using a single hash, vs
+> 3 seconds with a hash of hashes.
+> 
+> Signed-off-by: Dair Grant <dair@feralinteractive.com>
 
-On Mon, Nov 9, 2015 at 10:53 AM, Jeff King <peff@peff.net> wrote:
-> Yes, but with a proper commit message, and an update to
-> Documentation/config.txt. :)
+Thanks!  I've made some minor edits, will push the following out
+to git://bogomips.org/git-svn.git for Junio to pull in a day
+or so.
 
-Right, see attached.
+Btw, feel free to Cc: me on any git-(svn|Perl)-related stuff.  Likewise,
+Cc: any regular contributor/maintainer on any subsystem you work on.  We
+might not always answer, but appreciate being Cc:-ed anyways just in
+case.
 
->
-> Automated tests would be nice, but I suspect it may be too complicated
-> to be worth it.
+-------------------------- 8< ---------------------------
+From: Dair Grant <dair@feralinteractive.com>
+Subject: [PATCH] git-svn: improve rebase/mkdirs performance
 
-I attempted
+Processing empty_dir directives becomes extremely slow for svn
+repositories with a large enough history.
 
-test_ignore_sighup ()
-{
-    mkdir "$HOME/.git-credential-cache" &&
-    chmod 0700 "$HOME/.git-credential-cache" &&
-    git -c credentialCache.ignoreSIGHUP=true credential-cache--daemon
-"$HOME/.git-credential-cache/socket" &
-    kill -SIGHUP $! &&
-    ps $!
-}
+This is due to using a single hash to store the list of empty
+directories, with the expensive step being purging items from
+that hash using grep+delete.
 
-test_expect_success 'credentialCache.ignoreSIGHUP works' 'test_ignore_sighup'
+Storing directories in a hash of hashes improves the performance
+of this purge step and removes a potentially lengthy delay after
+every rebase/mkdirs command.
 
-but it does't pass (testing manually by running
-./git-credential-cache--daemon $HOME/.git-credential-cache/test-socket
-& and then kill -HUP does work).
+The svn repository with this behaviour has 110K commits with
+unhandled.log containing 170K empty_dir directives.
 
->
-> I don't think we should use the credential.X.* namespace here. That is
-> already reserved for credential setup for URLs matching "X".
->
-> Probably "credentialCache.ignoreSIGHUP" would be better. Or maybe
-> "credential-cache". We usually avoid dashes in our config names, but
-> in this case it matches the program name.
+This takes 10 minutes to process when using a single hash, vs
+3 seconds with a hash of hashes.
 
-I went with "credentialCache.ignoreSIGHUP".
+[ew: wrap comments, shorten initializations, avoid unnecessary spaces]
 
->
-> Also, we usually spell config names as all-lowercase in the code. The
-> older callback-interface config code needed this (since we just strcmp'd
-> the keys against a normalized case). I think git_config_get_bool() will
-> normalize the key we feed it, but I'd rather stay consistent.
+Signed-off-by: Dair Grant <dair@feralinteractive.com>
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ perl/Git/SVN.pm | 84 +++++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 76 insertions(+), 8 deletions(-)
 
-Oh, I didn't even realize git config names were case insensitive.
-
-> I don't think you need to pop the tempfile handler here. You can simply
-> sigchain_push() the SIG_IGN, and since we won't ever pop and propagate
-> that, it doesn't matter what is under it.
-
-Yup.
-
---001a113ec13a0ff73e0524254e8f
-Content-Type: text/x-diff; charset=US-ASCII; 
-	name="0001-credential-cache-new-option-to-ignore-sighup.patch"
-Content-Disposition: attachment; 
-	filename="0001-credential-cache-new-option-to-ignore-sighup.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_igsoedck0
-
-RnJvbSA1ZmM5NWI2ZTJmOTU2NDAzZGE2ODQ1ZmMzY2VkODNiMjFiZWU3YmIwIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBOb2FtIFBvc3RhdnNreSA8bnBvc3RhdnNAdXNlcnMuc291cmNl
-Zm9yZ2UubmV0PgpEYXRlOiBNb24sIDkgTm92IDIwMTUgMTk6MjY6MjkgLTA1MDAKU3ViamVjdDog
-W1BBVENIXSBjcmVkZW50aWFsLWNhY2hlOiBuZXcgb3B0aW9uIHRvIGlnbm9yZSBzaWdodXAKCklu
-dHJvZHVjZSBuZXcgb3B0aW9uICJjcmVkZW50aWFsQ2FjaGUuaWdub3JlU0lHSFVQIiB3aGljaCBz
-dG9wcwpnaXQtY3JlZGVudGlhbC1jYWNoZS0tZGFlbW9uIGZyb20gcXVpdHRpbmcgb24gU0lHSFVQ
-LiAgVGhpcyBpcyB1c2VmdWwKd2hlbiAiZ2l0IHB1c2giIGlzIHN0YXJ0ZWQgZnJvbSBFbWFjcywg
-YmVjYXVzZSBhbGwgY2hpbGQKcHJvY2Vzc2VzIChpbmNsdWRpbmcgdGhlIGRhZW1vbikgd2lsbCBy
-ZWNlaXZlIGEgU0lHSFVQIHdoZW4gImdpdCBwdXNoIgpleGl0cy4KLS0tCiBEb2N1bWVudGF0aW9u
-L2NvbmZpZy50eHQgICB8IDMgKysrCiBjcmVkZW50aWFsLWNhY2hlLS1kYWVtb24uYyB8IDcgKysr
-KysrKwogMiBmaWxlcyBjaGFuZ2VkLCAxMCBpbnNlcnRpb25zKCspCgpkaWZmIC0tZ2l0IGEvRG9j
-dW1lbnRhdGlvbi9jb25maWcudHh0IGIvRG9jdW1lbnRhdGlvbi9jb25maWcudHh0CmluZGV4IDRk
-M2NiMTAuLjQ0NDRlNWIgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRpb24vY29uZmlnLnR4dAorKysg
-Yi9Eb2N1bWVudGF0aW9uL2NvbmZpZy50eHQKQEAgLTExMjIsNiArMTEyMiw5IEBAIGNyZWRlbnRp
-YWwuPHVybD4uKjo6CiAJZXhhbXBsZS5jb20uIFNlZSBsaW5rZ2l0OmdpdGNyZWRlbnRpYWxzWzdd
-IGZvciBkZXRhaWxzIG9uIGhvdyBVUkxzIGFyZQogCW1hdGNoZWQuCiAKK2NyZWRlbnRpYWxDYWNo
-ZS5pZ25vcmVTSUdIVVA6OgorCVRlbGwgZ2l0LWNyZWRlbnRpYWwtY2FjaGUtLWRhZW1vbiB0byBp
-Z25vcmUgU0lHSFVQLCBpbnN0ZWFkIG9mIHF1aXR0aW5nLgorCiBpbmNsdWRlOjpkaWZmLWNvbmZp
-Zy50eHRbXQogCiBkaWZmdG9vbC48dG9vbD4ucGF0aDo6CmRpZmYgLS1naXQgYS9jcmVkZW50aWFs
-LWNhY2hlLS1kYWVtb24uYyBiL2NyZWRlbnRpYWwtY2FjaGUtLWRhZW1vbi5jCmluZGV4IGVlZjZm
-Y2UuLjZjZGE5YzAgMTAwNjQ0Ci0tLSBhL2NyZWRlbnRpYWwtY2FjaGUtLWRhZW1vbi5jCisrKyBi
-L2NyZWRlbnRpYWwtY2FjaGUtLWRhZW1vbi5jCkBAIC0yNTYsNiArMjU2LDkgQEAgaW50IG1haW4o
-aW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2KQogCQlPUFRfRU5EKCkKIAl9OwogCisJaW50IGln
-bm9yZV9zaWdodXAgPSAwOworCWdpdF9jb25maWdfZ2V0X2Jvb2woImNyZWRlbnRpYWxjYWNoZS5p
-Z25vcmVzaWdodXAiLCAmaWdub3JlX3NpZ2h1cCk7CisKIAlhcmdjID0gcGFyc2Vfb3B0aW9ucyhh
-cmdjLCBhcmd2LCBOVUxMLCBvcHRpb25zLCB1c2FnZSwgMCk7CiAJc29ja2V0X3BhdGggPSBhcmd2
-WzBdOwogCkBAIC0yNjQsNiArMjY3LDEwIEBAIGludCBtYWluKGludCBhcmdjLCBjb25zdCBjaGFy
-ICoqYXJndikKIAogCWNoZWNrX3NvY2tldF9kaXJlY3Rvcnkoc29ja2V0X3BhdGgpOwogCXJlZ2lz
-dGVyX3RlbXBmaWxlKCZzb2NrZXRfZmlsZSwgc29ja2V0X3BhdGgpOworCisJaWYgKGlnbm9yZV9z
-aWdodXApCisJCXNpZ25hbChTSUdIVVAsIFNJR19JR04pOworCiAJc2VydmVfY2FjaGUoc29ja2V0
-X3BhdGgsIGRlYnVnKTsKIAlkZWxldGVfdGVtcGZpbGUoJnNvY2tldF9maWxlKTsKIAotLSAKMi42
-LjEKCg==
---001a113ec13a0ff73e0524254e8f--
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 152fb7e..b2c14e2 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1211,20 +1211,87 @@ sub do_fetch {
+ sub mkemptydirs {
+ 	my ($self, $r) = @_;
+ 
++	# add/remove/collect a paths table
++	#
++	# Paths are split into a tree of nodes, stored as a hash of hashes.
++	#
++	# Each node contains a 'path' entry for the path (if any) associated
++	# with that node and a 'children' entry for any nodes under that
++	# location.
++	#
++	# Removing a path requires a hash lookup for each component then
++	# dropping that node (and anything under it), which is substantially
++	# faster than a grep slice into a single hash of paths for large
++	# numbers of paths.
++	#
++	# For a large (200K) number of empty_dir directives this reduces
++	# scanning time to 3 seconds vs 10 minutes for grep+delete on a single
++	# hash of paths.
++	sub add_path {
++		my ($paths_table, $path) = @_;
++		my $node_ref;
++
++		foreach my $x (split('/', $path)) {
++			if (!exists($paths_table->{$x})) {
++				$paths_table->{$x} = { children => {} };
++			}
++
++			$node_ref = $paths_table->{$x};
++			$paths_table = $paths_table->{$x}->{children};
++		}
++
++		$node_ref->{path} = $path;
++	}
++
++	sub remove_path {
++		my ($paths_table, $path) = @_;
++		my $nodes_ref;
++		my $node_name;
++
++		foreach my $x (split('/', $path)) {
++			if (!exists($paths_table->{$x})) {
++				return;
++			}
++
++			$nodes_ref = $paths_table;
++			$node_name = $x;
++
++			$paths_table = $paths_table->{$x}->{children};
++		}
++
++		delete($nodes_ref->{$node_name});
++	}
++
++	sub collect_paths {
++		my ($paths_table, $paths_ref) = @_;
++
++		foreach my $v (values %$paths_table) {
++			my $p = $v->{path};
++			my $c = $v->{children};
++
++			collect_paths($c, $paths_ref);
++
++			if (defined($p)) {
++				push(@$paths_ref, $p);
++			}
++		}
++	}
++
+ 	sub scan {
+-		my ($r, $empty_dirs, $line) = @_;
++		my ($r, $paths_table, $line) = @_;
+ 		if (defined $r && $line =~ /^r(\d+)$/) {
+ 			return 0 if $1 > $r;
+ 		} elsif ($line =~ /^  \+empty_dir: (.+)$/) {
+-			$empty_dirs->{$1} = 1;
++			add_path($paths_table, $1);
+ 		} elsif ($line =~ /^  \-empty_dir: (.+)$/) {
+-			my @d = grep {m[^\Q$1\E(/|$)]} (keys %$empty_dirs);
+-			delete @$empty_dirs{@d};
++			remove_path($paths_table, $1);
+ 		}
+ 		1; # continue
+ 	};
+ 
+-	my %empty_dirs = ();
++	my @empty_dirs;
++	my %paths_table;
++
+ 	my $gz_file = "$self->{dir}/unhandled.log.gz";
+ 	if (-f $gz_file) {
+ 		if (!can_compress()) {
+@@ -1235,7 +1302,7 @@ sub mkemptydirs {
+ 				die "Unable to open $gz_file: $!\n";
+ 			my $line;
+ 			while ($gz->gzreadline($line) > 0) {
+-				scan($r, \%empty_dirs, $line) or last;
++				scan($r, \%paths_table, $line) or last;
+ 			}
+ 			$gz->gzclose;
+ 		}
+@@ -1244,13 +1311,14 @@ sub mkemptydirs {
+ 	if (open my $fh, '<', "$self->{dir}/unhandled.log") {
+ 		binmode $fh or croak "binmode: $!";
+ 		while (<$fh>) {
+-			scan($r, \%empty_dirs, $_) or last;
++			scan($r, \%paths_table, $_) or last;
+ 		}
+ 		close $fh;
+ 	}
+ 
++	collect_paths(\%paths_table, \@empty_dirs);
+ 	my $strip = qr/\A\Q@{[$self->path]}\E(?:\/|$)/;
+-	foreach my $d (sort keys %empty_dirs) {
++	foreach my $d (sort @empty_dirs) {
+ 		$d = uri_decode($d);
+ 		$d =~ s/$strip//;
+ 		next unless length($d);
+-- 
+EW
