@@ -1,92 +1,71 @@
-From: "Ryabov, Vasily V" <vasily.v.ryabov@intel.com>
-Subject: [bug] git 2.6.2 (64-bit) blocks keyboard input (running in RDP,
- Win7 x64)
-Date: Tue, 10 Nov 2015 14:02:22 +0000
-Message-ID: <D28D2D5A78DB8B49BB75DB10E72239683ABA1700@IRSMSX102.ger.corp.intel.com>
+From: Jeremy Morton <admin@game-point.net>
+Subject: Allow git alias to override existing Git commands
+Date: Tue, 10 Nov 2015 16:31:21 +0000
+Message-ID: <56421BD9.5060501@game-point.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 10 15:02:35 2015
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 10 17:39:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zw9VJ-0007wC-DU
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 15:02:33 +0100
+	id 1ZwBx8-0008IC-PO
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 17:39:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694AbbKJOCY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2015 09:02:24 -0500
-Received: from mga11.intel.com ([192.55.52.93]:30747 "EHLO mga11.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752065AbbKJOCX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Nov 2015 09:02:23 -0500
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga102.fm.intel.com with ESMTP; 10 Nov 2015 06:02:23 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.20,270,1444719600"; 
-   d="scan'208";a="597562066"
-Received: from irsmsx110.ger.corp.intel.com ([163.33.3.25])
-  by FMSMGA003.fm.intel.com with ESMTP; 10 Nov 2015 06:02:22 -0800
-Received: from irsmsx102.ger.corp.intel.com ([169.254.2.251]) by
- irsmsx110.ger.corp.intel.com ([169.254.15.163]) with mapi id 14.03.0248.002;
- Tue, 10 Nov 2015 14:02:22 +0000
-Thread-Topic: [bug] git 2.6.2 (64-bit) blocks keyboard input (running in
- RDP, Win7 x64)
-Thread-Index: AdEbwFFCHwseOB+ZR1e7k4rymJ8q8Q==
-Accept-Language: en-US, ru-RU
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [163.33.239.180]
+	id S1753931AbbKJQjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2015 11:39:22 -0500
+Received: from mail.gooeysoftware.com ([208.100.15.213]:46873 "EHLO
+	mail.gooeysoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753881AbbKJQjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2015 11:39:20 -0500
+X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Nov 2015 11:39:20 EST
+Received: from [192.168.1.3] (82-69-83-224.dsl.in-addr.zen.co.uk [82.69.83.224])
+	by mail.gooeysoftware.com (Postfix) with ESMTPSA id 8849F18A00F2
+	for <git@vger.kernel.org>; Tue, 10 Nov 2015 10:27:56 -0600 (CST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281124>
 
-     Hi,
+It's recently come to my attention that the "git alias" config 
+functionality ignores all aliases that would override existing Git 
+commands.  This seems like a bad idea to me.
 
-I'm trying to run something like this (on the remote machine (Win7 x64 with git 2.6.2 64-bit) through RDP):
-```
-git pull --tags --progress ssh://<username>@<repo_URL>:<tcp_port>/<repo_name> +refs/heads/*:refs/remotes/origin/*
-```
-It worked on local machine with git 1.9.5.
+For example, I wanted to setup "git clone" to automatically act as 
+"git clone --recursive".  Sure I could do it in the shell, but it's 
+more of a pain - any tutorial I set up about doing it would have to 
+worry about what shell the user was using - and if you're going to 
+make that argument, why have "git alias" at all?  It can all be done 
+from the shell.
 
-Git asks to confirm an action:
-```
-The server's host key is not cached in the registry. You
-have no guarantee that the server is the computer you
-think it is.
-The server's dss key fingerprint is:
-ssh-dss 1024 <...>
-If you trust this host, enter "y" to add the key to
-PuTTY's cache and carry on connecting.
-If you want to carry on connecting just once, without
-adding the key to the cache, enter "n".
-If you do not trust this host, press Return to abandon the
-connection.
-Store key in cache? (y/n)
-```
-I'm typing `y`, but there is no reaction at all. No symbols appears in the console. But...
-When I'm pressing `Ctrl+C`, it's killed. And I can see `yyyyy` keys in the bash console for the next command.
+Obviously I could also use a different alias that wasn't an existing 
+Git command for this behaviour, but that would rather defeat the 
+point: I want "git clone" to have different functionality.  If I 
+remembered to use a different Git command, I might as well remember to 
+type "git clone --recursive".  Also, if a future Git command were 
+introduced with the same name as my alias, my alias's functionality 
+would suddenly be ignored, giving unexpected behaviour.
 
-On-screen keyboard didn't help as well.
+The reasoning behind this that it's "to avoid confusion and troubles 
+with script usage" seems to be at odds with the general Git mentality 
+that the user is given lots of power, and if they screw it up it's 
+basically just user error.  For example, Git doesn't *have* to allow 
+you to rebase.  It's a potentially dangerous operation, so why is it 
+allowed?  It might "cause confusion and troubles".
 
-I've already tried several combinations of `MinTTY` and `Windows cmd.exe` check boxes in the installer. Nothing helped.
-It looks like a bug in Git client.
+On the other hand, by disallowing the overriding of existing Git 
+commands through aliases you are preventing a lot of useful 
+functionality that those aliases might be used for.
 
+So I think you should either allow Git aliases to override existing 
+Git commands by default, or at least provide a config option that 
+allows the user to say that this should happen.
+
+-- 
 Best regards,
--Vasily.
-
---------------------------------------------------------------------
-Joint Stock Company Intel A/O
-Registered legal address: Krylatsky Hills Business Park,
-17 Krylatskaya Str., Bldg 4, Moscow 121614,
-Russian Federation
-
-This e-mail and any attachments may contain confidential material for
-the sole use of the intended recipient(s). Any review or distribution
-by others is strictly prohibited. If you are not the intended
-recipient, please contact the sender and delete all copies.
+Jeremy Morton (Jez)
