@@ -1,76 +1,87 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v4 08/12] object: introduce get_object_hash macro.
-Date: Tue, 10 Nov 2015 02:22:26 +0000
-Message-ID: <1447122150-672570-9-git-send-email-sandals@crustytoothpaste.net>
-References: <1447122150-672570-1-git-send-email-sandals@crustytoothpaste.net>
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>,
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v7 01/11] refs: make is_branch public
+Date: Tue, 10 Nov 2015 08:37:35 +0100
+Message-ID: <56419EBF.5020404@alum.mit.edu>
+References: <cover.1447085798.git.mhagger@alum.mit.edu> <39e0a2a708fb1a42b69e45bc5c0b17d565d3662e.1447085798.git.mhagger@alum.mit.edu> <5640EBD3.8040505@ramsayjones.plus.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
+	Lukas Fleischer <lfleischer@lfos.de>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 10 03:23:44 2015
+X-From: git-owner@vger.kernel.org Tue Nov 10 08:37:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zvyaz-0001Xj-W9
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 03:23:42 +0100
+	id 1Zw3V5-0005gq-FJ
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 08:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752453AbbKJCXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Nov 2015 21:23:36 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:58418 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752245AbbKJCWz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Nov 2015 21:22:55 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3198A2809C;
-	Tue, 10 Nov 2015 02:22:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1447122174;
-	bh=Zt+8a+Qi9OkCGyIOzjzwE3yf3dNAJz9bNnQyVexaKlQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zLeXtWHVO65bAMGVwgrQsQApSLqvVX91Dj5LSsGi2Y/kMMnJoyj64M6ejYF7qoXAQ
-	 7jb53igq5mmC55jJLtYi6rgLg0XamHiO88z2mD+Ywur4mLo6rQ2vMICSvGwbcvfWMH
-	 vuEEQsJmJLJ60mRgFM3HN6k1NvxHrmPPVDXE5ASRUn1xQ5cs15UJN8q/05QbtT8Mpk
-	 Ks5zFHDBAtyRu9j4x6qU4gVST2sC0+HKvacEVZp3FiaGds/d4KHfIVHQyzLGrCaE0d
-	 SrdmanGXsw5ISgjd8SD1V1JeWKitplVatq1DJi2c/6pQqm7pXI3K1/kQc1qTnfdyvZ
-	 XFBp3z17HrUbsiuBJfLX2N0hl56C1G3m/F3UidEPy0l2dnAILOqwzDUeH/B20A0wJO
-	 MCQdxwYgMt4CVJBU7M85vA2k+2p6r7dBORcLIcC8FuthFBRrg2GD4qOyJGZP/zh3fl
-	 sB39q1ILCQUpjNkGvwMAp6z3kj+z70NEGTAaXZEjdocS3EOkgCn
-X-Mailer: git-send-email 2.6.2.409.gb049f0a
-In-Reply-To: <1447122150-672570-1-git-send-email-sandals@crustytoothpaste.net>
-X-Spam-Score: -2.5 ALL_TRUSTED,BAYES_00
+	id S1751540AbbKJHhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2015 02:37:51 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:59434 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751462AbbKJHhu (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Nov 2015 02:37:50 -0500
+X-AuditID: 1207440f-f79df6d000007c0f-80-56419ec34588
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 96.C3.31759.3CE91465; Tue, 10 Nov 2015 02:37:40 -0500 (EST)
+Received: from [192.168.69.130] (p4FC97D33.dip0.t-ipconnect.de [79.201.125.51])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tAA7bZ4P004856
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 10 Nov 2015 02:37:36 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+In-Reply-To: <5640EBD3.8040505@ramsayjones.plus.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNKsWRmVeSWpSXmKPExsUixO6iqHtknmOYwa2DjBbzN51gtOi60s1k
+	0dB7hdli0pSbTBY/WnqYLWZetbbo7fvEavFvQo0Dh8fOWXfZPRZsKvU4ezDT41nvHkaPi5eU
+	PfYv3cbmseD5fXaPz5vkAjiiuG2SEkvKgjPT8/TtErgzeleUFTxkq9j5r425gXETaxcjJ4eE
+	gInE86WfmSBsMYkL99azgdhCApcZJc5sUO1i5AKyzzNJvPz9hREkwSugLTFh1Q5mEJtFQFWi
+	58FkdhCbTUBXYlFPM9ggUYEgiRXLX0DVC0qcnPmEBcQWEYiW+H9tLxvIUGaB94wS+489ArtC
+	WMBSYsXUv4wQ29YxSiz/dAxsKifQeQ9n7wQ7iVlAT2LH9V+sELa8xPa3c5gnMArMQrJkFpKy
+	WUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdHLzSzRS00p3cQIiQz+HYxd62UOMQpw
+	MCrx8E745hAmxJpYVlyZe4hRkoNJSZSXf5pjmBBfUn5KZUZicUZ8UWlOavEhRgkOZiURXvsX
+	QOW8KYmVValF+TApaQ4WJXFe9SXqfkIC6YklqdmpqQWpRTBZGQ4OJQnexLlAQwWLUtNTK9Iy
+	c0oQ0kwcnCDDuaREilPzUlKLEktLMuJBsRpfDIxWkBQP0N44kHbe4oLEXKAoROspRl2OBT9u
+	r2USYsnLz0uVAroApEgApCijNA9uBSwNvmIUB/pYmHcHSBUPMIXCTXoFtIQJaMlSf5DniksS
+	EVJSDYym11RC5hz1e5fSm6HiNcVt4RfFd0dqF/yRlOn0D7c9OmOzZna6yZuzzTKb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281102>
 
-This macro is a temporary change to ease the transition of struct object
-to use struct object_id.  It takes an argument of struct object and
-returns the object's hash.  Provide this hash next to struct object for
-easier conversion.
+On 11/09/2015 07:54 PM, Ramsay Jones wrote:
+> On 09/11/15 17:03, Michael Haggerty wrote:
+>> [...]
+>> diff --git a/refs.h b/refs.h
+>> index 6d30c98..39b8edc 100644
+>> --- a/refs.h
+>> +++ b/refs.h
+>> @@ -217,6 +217,8 @@ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct st
+>>   */
+>>  int pack_refs(unsigned int flags);
+>>  
+>> +int is_branch(const char *refname);
+>> +
+>>  /*
+>>   * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
+>>   * REF_NODEREF: act on the ref directly, instead of dereferencing
+>>
+> 
+> I don't understand, is_branch() is already declared in refs.h, see line 67.
+> 
+> This is true in master, next and pu now appears to have two declarations.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- object.h | 2 ++
- 1 file changed, 2 insertions(+)
+Thanks for noticing! I'll drop that patch from the next round.
 
-diff --git a/object.h b/object.h
-index 6416247d..7c098d03 100644
---- a/object.h
-+++ b/object.h
-@@ -52,6 +52,8 @@ struct object {
- 	unsigned char sha1[20];
- };
- 
-+#define get_object_hash(x) ((x).sha1)
-+
- extern const char *typename(unsigned int type);
- extern int type_from_string_gently(const char *str, ssize_t, int gentle);
- #define type_from_string(str) type_from_string_gently(str, -1, 0)
+Michael
+
 -- 
-2.6.2.409.gb049f0a
+Michael Haggerty
+mhagger@alum.mit.edu
