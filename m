@@ -1,92 +1,133 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v8 03/10] copy_msg(): rename to copy_reflog_msg()
-Date: Tue, 10 Nov 2015 12:42:33 +0100
-Message-ID: <d5951e1c72531c497febfb08f5425c5080218476.1447154711.git.mhagger@alum.mit.edu>
-References: <cover.1447154711.git.mhagger@alum.mit.edu>
-Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
-	Lukas Fleischer <lfleischer@lfos.de>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 10 12:50:23 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it
+ to ignore instead?
+Date: Tue, 10 Nov 2015 07:25:02 -0500
+Message-ID: <20151110122501.GA14418@sigill.intra.peff.net>
+References: <20151027184702.GB12717@sigill.intra.peff.net>
+ <CAM-tV--B3HaC1DcORfnx9bWW9-quyk0=pQDxmvonc=6dgrMOxA@mail.gmail.com>
+ <20151030001000.GA2123@sigill.intra.peff.net>
+ <CAM-tV-_dc_YEE0Dh2T=8+_DcBiq_rvynOw2cFi+8QizkeGTusw@mail.gmail.com>
+ <20151030005057.GA23251@sigill.intra.peff.net>
+ <CAM-tV-8qSVJFOxLQt9SaYK_WqpxixzPArJnAK=3tHU9inM9Law@mail.gmail.com>
+ <20151030210849.GA7149@sigill.intra.peff.net>
+ <CAM-tV-9CNO_hqnweFpLaRHx4xEA32CPRdq56y6vYMWqURV9kgg@mail.gmail.com>
+ <20151109155342.GB27224@sigill.intra.peff.net>
+ <CAM-tV--hBSdCJckCnMtKgkQB2f_3eN8sXHdFWwg2hzb6s7ufxw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Noam Postavsky <npostavs@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Nov 10 13:25:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zw7RO-0006vD-1o
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 12:50:22 +0100
+	id 1Zw7z6-0005Vz-6X
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 13:25:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752727AbbKJLuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2015 06:50:12 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:43077 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752726AbbKJLuI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Nov 2015 06:50:08 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Nov 2015 06:50:07 EST
-X-AuditID: 12074412-f79a76d000007c8b-f7-5641d840f718
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 41.1A.31883.048D1465; Tue, 10 Nov 2015 06:42:56 -0500 (EST)
-Received: from michael.fritz.box (p4FC97D33.dip0.t-ipconnect.de [79.201.125.51])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tAABglj7014324
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 10 Nov 2015 06:42:55 -0500
-X-Mailer: git-send-email 2.6.2
-In-Reply-To: <cover.1447154711.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBIsWRmVeSWpSXmKPExsUixO6iqOtwwzHM4OBtDYv5m04wWnRd6Way
-	aOi9wmwxacpNJovbK+YzW/xo6WG2mHnV2qK37xOrA4fH3/cfmDx2zrrL7nH2YKbHs949jB4X
-	Lyl77F+6jc1jwfP77B6fN8kFcERx2yQllpQFZ6bn6dslcGd0XuxiLujnrHi7oZ+tgXEZexcj
-	J4eEgInE42N7WSFsMYkL99azdTFycQgJXGaU+PTnJzOEc4JJYmvPFTaQKjYBXYlFPc1MILaI
-	gJrExLZDLCA2s8AyJolZe21BbGEBR4nJ69aC1bMIqEpsnn0PbAOvQJTElrZeJohtchJT7rcD
-	2RwcnAIWEnPPZYCEhQTMJY63T2ScwMi7gJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGumV5u
-	ZoleakrpJkZIKArtYFx/Uu4QowAHoxIPr8UXhzAh1sSy4srcQ4ySHExKorz7TzmGCfEl5adU
-	ZiQWZ8QXleakFh9ilOBgVhLhtX8BVM6bklhZlVqUD5OS5mBREuf9uVjdT0ggPbEkNTs1tSC1
-	CCYrw8GhJMHrfh1oqGBRanpqRVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJRjwoMuKLgbEBkuIB
-	2psC0s5bXJCYCxSFaD3FqCglzqsFkhAASWSU5sGNhSWYV4ziQF8K8zqDVPEAkxNc9yugwUxA
-	g5f6gzxUXJKIkJJqYLT0MVnUvKy0rk3Yc19yByv76jQd46pJshsU9JYqs3Cu/xEcs1DtadeD
-	69v4D6mc9Ji6Zs/UYOVahkf/Ltc/nXBf9I+I0MSjb3VtXr+YInbWW3Lx/sM3lu+7 
+	id S1752920AbbKJMZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2015 07:25:06 -0500
+Received: from cloud.peff.net ([50.56.180.127]:55495 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752650AbbKJMZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2015 07:25:05 -0500
+Received: (qmail 24774 invoked by uid 102); 10 Nov 2015 12:25:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Nov 2015 06:25:05 -0600
+Received: (qmail 26298 invoked by uid 107); 10 Nov 2015 12:25:33 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.2)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 10 Nov 2015 07:25:33 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Nov 2015 07:25:02 -0500
+Content-Disposition: inline
+In-Reply-To: <CAM-tV--hBSdCJckCnMtKgkQB2f_3eN8sXHdFWwg2hzb6s7ufxw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281117>
 
-From: David Turner <dturner@twopensource.com>
+On Mon, Nov 09, 2015 at 08:05:25PM -0500, Noam Postavsky wrote:
 
-We will soon increase the visibility of this function, so make its name
-more distinctive.
+> > Automated tests would be nice, but I suspect it may be too complicated
+> > to be worth it.
+> 
+> I attempted
+> 
+> test_ignore_sighup ()
+> {
+>     mkdir "$HOME/.git-credential-cache" &&
+>     chmod 0700 "$HOME/.git-credential-cache" &&
+>     git -c credentialCache.ignoreSIGHUP=true credential-cache--daemon
+> "$HOME/.git-credential-cache/socket" &
+>     kill -SIGHUP $! &&
+>     ps $!
+> }
+> 
+> test_expect_success 'credentialCache.ignoreSIGHUP works' 'test_ignore_sighup'
+> 
+> but it does't pass (testing manually by running
+> ./git-credential-cache--daemon $HOME/.git-credential-cache/test-socket
+> & and then kill -HUP does work).
 
-Signed-off-by: David Turner <dturner@twopensource.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Your test looks racy. After the "&" in spawning the daemon, we don't
+have any guarantee that the daemon actually reached the signal() call
+before we issued our kill.
 
-diff --git a/refs.c b/refs.c
-index ddcdf81..480de9a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3287,7 +3287,7 @@ static int commit_ref(struct ref_lock *lock)
-  * large, while cleaning up the whitespaces.  Especially, convert LF to space,
-  * because reflog file is one line per entry.
-  */
--static int copy_msg(char *buf, const char *msg)
-+static int copy_reflog_msg(char *buf, const char *msg)
- {
- 	char *cp = buf;
- 	char c;
-@@ -3391,7 +3391,7 @@ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
- 			sha1_to_hex(new_sha1),
- 			committer);
- 	if (msglen)
--		len += copy_msg(logrec + len - 1, msg) - 1;
-+		len += copy_reflog_msg(logrec + len - 1, msg) - 1;
- 
- 	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
- 	free(logrec);
--- 
-2.6.2
+The daemon issues an "ok\n" to stdout to report that it's ready to serve
+(this is how the auto-spawn avoids races). So you could use that with a
+fifo to fix this. It's a little complicated; see lib-git-daemon.sh for
+an example.
+
+I'm also not sure the use of "ps" here is portable (i.e., does it always
+report a useful error code on all systems?).
+
+So I dunno. Given the complexity of the test, and that it is such a
+simple feature that is unlikely to be broken, I'm not sure it is worth
+it. A test failure seems like it would more likely be a problem in the
+test, not the code.
+
+> From 5fc95b6e2f956403da6845fc3ced83b21bee7bb0 Mon Sep 17 00:00:00 2001
+> From: Noam Postavsky <npostavs@users.sourceforge.net>
+> Date: Mon, 9 Nov 2015 19:26:29 -0500
+> Subject: [PATCH] credential-cache: new option to ignore sighup
+> 
+> Introduce new option "credentialCache.ignoreSIGHUP" which stops
+> git-credential-cache--daemon from quitting on SIGHUP.  This is useful
+> when "git push" is started from Emacs, because all child
+> processes (including the daemon) will receive a SIGHUP when "git push"
+> exits.
+> ---
+
+Can you add a signed-off-by here (see the "sign-off" section in
+Documentation/SubmittingPatches).
+
+> diff --git a/credential-cache--daemon.c b/credential-cache--daemon.c
+> index eef6fce..6cda9c0 100644
+> --- a/credential-cache--daemon.c
+> +++ b/credential-cache--daemon.c
+> @@ -256,6 +256,9 @@ int main(int argc, const char **argv)
+>  		OPT_END()
+>  	};
+>  
+> +	int ignore_sighup = 0;
+> +	git_config_get_bool("credentialcache.ignoresighup", &ignore_sighup);
+> +
+
+Style-wise, I think the declaration should go above the options-list.
+
+> @@ -264,6 +267,10 @@ int main(int argc, const char **argv)
+>  
+>  	check_socket_directory(socket_path);
+>  	register_tempfile(&socket_file, socket_path);
+> +
+> +	if (ignore_sighup)
+> +		signal(SIGHUP, SIG_IGN);
+> +
+
+This part looks obviously correct. :)
+
+I don't think there's any need to use sigchain_push here (we have no
+intention of ever popping it).
+
+-Peff
