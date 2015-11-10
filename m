@@ -1,90 +1,111 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v8 05/10] refname_is_safe(): improve docstring
-Date: Tue, 10 Nov 2015 12:42:35 +0100
-Message-ID: <e3b0c07b34f78996c53df88c17d01cd6a494899d.1447154711.git.mhagger@alum.mit.edu>
-References: <cover.1447154711.git.mhagger@alum.mit.edu>
+Subject: [PATCH v8 00/10] refs backend pre-vtable
+Date: Tue, 10 Nov 2015 12:42:30 +0100
+Message-ID: <cover.1447154711.git.mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
 	Lukas Fleischer <lfleischer@lfos.de>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 10 12:43:12 2015
+X-From: git-owner@vger.kernel.org Tue Nov 10 12:43:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zw7KR-0000Mo-Hp
+	id 1Zw7KQ-0000Mo-Vu
 	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 12:43:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751977AbbKJLnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2015 06:43:04 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:49683 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751864AbbKJLnB (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Nov 2015 06:43:01 -0500
-X-AuditID: 1207440c-f79e16d000002a6e-16-5641d843d048
+	id S1751838AbbKJLm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2015 06:42:58 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:55608 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751663AbbKJLmy (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Nov 2015 06:42:54 -0500
+X-AuditID: 12074411-f797e6d000007df3-09-5641d83b19bb
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 50.36.10862.348D1465; Tue, 10 Nov 2015 06:42:59 -0500 (EST)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 36.2D.32243.B38D1465; Tue, 10 Nov 2015 06:42:51 -0500 (EST)
 Received: from michael.fritz.box (p4FC97D33.dip0.t-ipconnect.de [79.201.125.51])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tAABglj9014324
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tAABglj4014324
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 10 Nov 2015 06:42:58 -0500
+	Tue, 10 Nov 2015 06:42:49 -0500
 X-Mailer: git-send-email 2.6.2
-In-Reply-To: <cover.1447154711.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOIsWRmVeSWpSXmKPExsUixO6iqOt8wzHM4PJLa4v5m04wWnRd6Way
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrNIsWRmVeSWpSXmKPExsUixO6iqGt9wzHM4MMeRYv5m04wWnRd6Way
 	aOi9wmwxacpNJovbK+YzW/xo6WG2mHnV2qK37xOrA4fH3/cfmDx2zrrL7nH2YKbHs949jB4X
-	Lyl77F+6jc1jwfP77B6fN8kFcERx2yQllpQFZ6bn6dslcGd82BxY8I6rYlLXSaYGxlMcXYyc
-	HBICJhJfTq5khrDFJC7cW8/WxcjFISRwmVFi06+lzBDOCSaJpe/OgVWxCehKLOppZgKxRQTU
-	JCa2HWIBsZkFljFJzNprC2ILC9hJHN34jRHEZhFQlThx9ykriM0rECXxaNd5FohtchJT7rcD
-	zeHg4BSwkJh7LgMkLCRgLnG8fSLjBEbeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0DfVy
-	M0v0UlNKNzFCApFnB+O3dTKHGAU4GJV4eCd8cwgTYk0sK67MPcQoycGkJMq7/5RjmBBfUn5K
-	ZUZicUZ8UWlOavEhRgkOZiURXvsXQOW8KYmVValF+TApaQ4WJXFe1SXqfkIC6YklqdmpqQWp
-	RTBZGQ4OJQne2utAQwWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBcRFfDIwMkBQP
-	0N7ZIO28xQWJuUBRiNZTjIpS4rxaIAkBkERGaR7cWFh6ecUoDvSlMO9ekCoeYGqC634FNJgJ
-	aPBSf5CHiksSEVJSDYx5+u9sOKVeTtlQftnpvV7lstPz997nfyDz6butxS5XFsYeb1vFGR49
-	5/hucfz5tcKoZAJHbTnTNn3zH0sD13a+Upl5UKBiwv7//+bKFue+Tlddn86q5Gr8 
+	Lyl77F+6jc1jwfP77B6fN8kFcERx2yQllpQFZ6bn6dslcGecmRpZ8IG/omuDVwNjL08XIyeH
+	hICJxOe3V1khbDGJC/fWs3UxcnEICVxmlJh/9SYzhHOCSeLNkUYWkCo2AV2JRT3NTCC2iICa
+	xMS2Q2BxZoFlTBKz9tqC2MIChhK3W/axg9gsAqoSDR87wep5Bcwl7n39wwaxTU5iyv12pgmM
+	3AsYGVYxyiXmlObq5iZm5hSnJusWJyfm5aUW6Zrq5WaW6KWmlG5ihASW4A7GGSflDjEKcDAq
+	8fBafHEIE2JNLCuuzD3EKMnBpCTKu/+UY5gQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEV77F0Dl
+	vCmJlVWpRfkwKWkOFiVxXr4l6n5CAumJJanZqakFqUUwWRkODiUJXvfrQEMFi1LTUyvSMnNK
+	ENJMHJwgw7mkRIpT81JSixJLSzLiQWEeXwwMdJAUD9BeJZB23uKCxFygKETrKUZdjifzL+1h
+	EmLJy89LlRLn1QIpEgApyijNg1sBSyOvGMWBPhbmZQOp4gGmILhJr4CWMAEtWeoP8lxxSSJC
+	SqqBMfPljuelu5+w/WCalu3dd7zMw7T2wTSedXOflXEoH+1oVexN+mTT9KRhSwl/wtkpq+Z+
+	Np8u5xKe7y5qv7J18lmrs2tSvzSLPU6/omrMJKV1YUMTp9Prme+Z54TJum38VvLy 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281108>
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+Another re-roll of this patch series, to address the comments of
+Ramsay Jones (thanks!) about v7 [1].
 
-diff --git a/refs.c b/refs.c
-index 82129f0..f48c58a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -341,13 +341,17 @@ static struct ref_dir *get_ref_dir(struct ref_entry *entry)
- }
- 
- /*
-- * Check if a refname is safe.
-- * For refs that start with "refs/" we consider it safe as long they do
-- * not try to resolve to outside of refs/.
-+ * Return true iff refname is minimally safe. "Safe" here means that
-+ * deleting a loose reference by this name will not do any damage, for
-+ * example by causing a file that is not a reference to be deleted.
-+ * This function does not check that the reference name is legal; for
-+ * that, use check_refname_format().
-  *
-- * For all other refs we only consider them safe iff they only contain
-- * upper case characters and '_' (like "HEAD" AND "MERGE_HEAD", and not like
-- * "config").
-+ * We consider a refname that starts with "refs/" to be safe as long
-+ * as any ".." components that it might contain do not escape "refs/".
-+ * Names that do not start with "refs/" are considered safe iff they
-+ * consist entirely of upper case characters and '_' (like "HEAD" and
-+ * "MERGE_HEAD" but not "config" or "FOO/BAR").
-  */
- static int refname_is_safe(const char *refname)
- {
+This version has the following changes compared to v7:
+
+* Drop "refs: make is_branch public" patch. This was already done
+  quite a while ago:
+
+      e7e0f26 refs.c: add a public is_branch function (2014-07-15)
+
+* Instead of having refs-internal.h include refs.h, have the "*.c"
+  files include both header files.
+
+* Remove some unneeded includes from refs/files-backend.c.
+
+Since patch 01/11 of v7 was omitted, the patches in this version are
+numbered differently. In particular, it is now patches 01 through 07
+that form the core of this patch series. The last three patches can
+easily be postponed if that will speed the progress of the first
+seven.
+
+These patches are also available from my GitHub fork [2] as branch
+"refs-backend-pre-vtable".
+
+Michael
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/281057
+[2] https://github.com/mhagger/git
+
+David Turner (4):
+  copy_msg(): rename to copy_reflog_msg()
+  initdb: make safe_create_dir public
+  files_log_ref_write: new function
+  refs: break out ref conflict checks
+
+Michael Haggerty (4):
+  pack_if_possible_fn(): use ref_type() instead of is_per_worktree_ref()
+  refname_is_safe(): improve docstring
+  refs/refs-internal.h: new header file
+  refs: split filesystem-based refs code into a new file
+
+Ronnie Sahlberg (2):
+  verify_refname_available(): rename function
+  verify_refname_available(): new function
+
+ Makefile                       |    3 +-
+ builtin/init-db.c              |   12 -
+ cache.h                        |    8 +
+ path.c                         |   12 +
+ refs.c                         | 3709 +---------------------------------------
+ refs.c => refs/files-backend.c | 1286 +-------------
+ refs/refs-internal.h           |  200 +++
+ 7 files changed, 311 insertions(+), 4919 deletions(-)
+ copy refs.c => refs/files-backend.c (75%)
+ create mode 100644 refs/refs-internal.h
+
 -- 
 2.6.2
