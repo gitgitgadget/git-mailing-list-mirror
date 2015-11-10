@@ -1,101 +1,117 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Allow git alias to override existing Git commands
-Date: Tue, 10 Nov 2015 12:22:56 -0800
-Message-ID: <CAGZ79kZ9zw+Lf4P7EFxZ6Q7PK7GrTFZokPgtEJ-Gcdp3pHkurA@mail.gmail.com>
-References: <56421BD9.5060501@game-point.net>
-	<CAGZ79kZxQWVMe3N1ti8npyp9_4DUPAVy9Uk5a75Jwh3Eud2eZQ@mail.gmail.com>
-	<56424DDE.2030808@game-point.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5] Add git-grep threads param
+Date: Tue, 10 Nov 2015 15:55:35 -0500
+Message-ID: <CAPig+cQXCHzAJ80ZEHcM_+7J7jRs1obwuSzqe7sRDnuocMYUbw@mail.gmail.com>
+References: <1447162118-17636-1-git-send-email-vleschuk@accesssoftek.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeremy Morton <admin@game-point.net>
-X-From: git-owner@vger.kernel.org Tue Nov 10 21:23:04 2015
+Cc: Git List <git@vger.kernel.org>,
+	Victor Leschuk <vleschuk@accesssoftek.com>
+To: Victor Leschuk <vleschuk@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 10 21:55:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwFRV-0006XF-Rt
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 21:23:02 +0100
+	id 1ZwFx6-00032Z-7V
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 21:55:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751306AbbKJUW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2015 15:22:58 -0500
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:33013 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751028AbbKJUW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2015 15:22:57 -0500
-Received: by ykdv3 with SMTP id v3so14505389ykd.0
-        for <git@vger.kernel.org>; Tue, 10 Nov 2015 12:22:56 -0800 (PST)
+	id S1751123AbbKJUzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2015 15:55:37 -0500
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:36482 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750749AbbKJUzg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2015 15:55:36 -0500
+Received: by ykdr82 with SMTP id r82so15935948ykd.3
+        for <git@vger.kernel.org>; Tue, 10 Nov 2015 12:55:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=fIDK5rp9VUJTNRAghcL27+lKr4kKUPrDXJzgyioISus=;
-        b=gWKNzY2iVxUJt6AR3q0yISkZqBin7rtvQl8dUlagaEFtubbPfry3PCZTFy/PnjGOwz
-         8XcJjdsMPEAzHb7Qzds5C6Q5GwJenGzJBLSIFUXWrziokWZ66RuX4kuPhH9ziEcBm3ay
-         ReRshOrhaGQDjF2eVpM1zQCSVXiki2eWX84Aau2s/gOeS2l61SZSN6kO4TRSlr5GvYXa
-         pt1u2pMc9QGs9S17usEON7R5JGvjkxD5KF61gkT2cOBSltM6FySNgc3mARK1Tl8ew5um
-         wB1jJSQhzKQ2VOKraClmLiv7Q6Tiu3uxT14CaSTNDkmvLfgq/Q6k8jRvlgSrGvfq1Jrx
-         xTLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=fIDK5rp9VUJTNRAghcL27+lKr4kKUPrDXJzgyioISus=;
-        b=HrXZWJvWEvTWPAm6aAUZitNJsE2tSc9+yCo8+H4VLPHK/8v+GXymns6LCcl4GN52i8
-         1weT2CALIwniE4Lq4EmE66azoq3Qf7XblV3IeO3Cp1UuE+657CpBjslIlacIRCmb+nKC
-         PwqzytWZT2U19Wn/r63dCIvkyzrwPA6mpbBgGm8gpY1SoU5M9rEYNlzHf07azBP3BLNr
-         TBr+4yug0cFVVfe5B/VYpFz9f7C4Yw8KwMqVB588eX+cUtYTvjq6YXYptkYyzmY/Km5y
-         lls2Dp02WcSV6AX0XXrbe2v/rBXZNoO2SM6RklJt/dUGqdcs0HbZNLLxhllejfM+wubi
-         1RjA==
-X-Gm-Message-State: ALoCoQmoTn8SmMsS7xidDkatzzzxFiGUHeoYBpeTEVpASHNPP3oKoHWSiThDoqzd0QQ0EqKY/gE2
-X-Received: by 10.13.210.4 with SMTP id u4mr5128895ywd.68.1447186976408; Tue,
- 10 Nov 2015 12:22:56 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Tue, 10 Nov 2015 12:22:56 -0800 (PST)
-In-Reply-To: <56424DDE.2030808@game-point.net>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=9szEi5bKMXBUW8wH9RrhU+oa+F+2eKGTP5SXTg2eVKY=;
+        b=Dc2XyhpV4J1Bs/J1DH3+gF/FgRswldpF+ls2v0txfBhRt4eLGUsKie7iEmx/M5y3nj
+         Xyy+3PI8K420sfXa+vvCc36cc22cjCtabJDuTj/E1Z4sd1q8kyiFdBb8gdVe7Q03fLoV
+         9ZQwHVQ4HM67inSDH0/NjGw6MIU03zy3MZxBiFEom42Bdb7Pt98wHwNUMRejkS7NtuOt
+         I3dqunGO8ctVxI4K0aqCpKNNVod0b014FtCpOK6hGMvGPA8u6zn9yLSQTxHwo+W7YJ6W
+         7/UBdSsdeaYgHEQeZOkaacSfro6Wrkmrn4ClBQnnp2boO2rKJst4OVLAySAdcolo2vxp
+         yD9w==
+X-Received: by 10.129.53.132 with SMTP id c126mr5189963ywa.108.1447188935686;
+ Tue, 10 Nov 2015 12:55:35 -0800 (PST)
+Received: by 10.31.159.204 with HTTP; Tue, 10 Nov 2015 12:55:35 -0800 (PST)
+In-Reply-To: <1447162118-17636-1-git-send-email-vleschuk@accesssoftek.com>
+X-Google-Sender-Auth: qi9zPCawlvkBnfdcTIq2bjlkVlM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281133>
 
-On Tue, Nov 10, 2015 at 12:04 PM, Jeremy Morton <admin@game-point.net> wrote:
-> On 10/11/2015 18:12, Stefan Beller wrote:
->>
->> On Tue, Nov 10, 2015 at 8:31 AM, Jeremy Morton<admin@game-point.net>
->> wrote:
->>>
->>> It's recently come to my attention that the "git alias" config
->>> functionality
->>> ignores all aliases that would override existing Git commands.  This
->>> seems
->>> like a bad idea to me.
->>
->>
->> This ensures that the plumbing commands always work as expected.
->> As scripts *should* only use plumbing commands, the scripts should
->> work with high probability despite all the crazy user
->> configuration/aliases.
->>
+On Tue, Nov 10, 2015 at 8:28 AM, Victor Leschuk <vleschuk@gmail.com> wrote:
+> "git grep" can now be configured (or told from the command line)
+>  how many threads to use when searching in the working tree files.
 >
-> I just disagree with this.  If a user chooses to override their Git
-> commands, it's their problem.  Why should Git care about this?
+> Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
+> ---
 
-Because we still have some Git commands (i.e. git submodule) as scripts,
-which would break if the user aliases plumbing commands. This is unexpected,
-so should be avoided. Maybe we could allow aliasing porcelain commands though,
-but that is extra effort, which nobody looked into yet.
+As an aid for reviewers, please use this space (below the "---" line)
+to describe what changed since the previous version. It's also helpful
+if you can provide a link to the previous version in the mailing list
+archive.
 
-> It should
-> provide the user with the option to do this, and if the user ruins scripts
-> because of their aliases, it is not Git's problem.  What you are doing is
-> taking away power from users to use git aliases to their full potential.
+>  Documentation/config.txt               |  7 +++++
+>  Documentation/git-grep.txt             | 15 ++++++++++
+>  builtin/grep.c                         | 50 +++++++++++++++++++++++-----------
+>  contrib/completion/git-completion.bash |  1 +
+>  4 files changed, 57 insertions(+), 16 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> @@ -1447,6 +1447,13 @@ grep.extendedRegexp::
+>         option is ignored when the 'grep.patternType' option is set to a value
+>         other than 'default'.
+>
+> +grep.threads::
+> +       Number of grep worker threads, use it to tune up performance on
+> +       your machines. Leave it unset (or set to 0) for default behavior,
+> +       which for now is using 8 threads for all systems.
+> +       Default behavior can be changed in future versions
+> +       to better suite hardware and circumstances.
 
-Yeah, no user asked for that power I guess, you're the first. :)
+s/suite/suit/ (here and elsewhere)
 
-As from your initial email, I think before trying to overriding 'clone'
-to 'clone --recurse' you'd rather want to have a globally configured
-option to recurse by default on invocation of 'clone'.
-That sounds saner to me at least.
+Was the conclusion of discussion that there should be some explanation
+here that this is more about tuning for I/O rather than CPU, or did I
+misunderstand?
 
-Stefan
+>  gpg.program::
+>         Use this custom program instead of "gpg" found on $PATH when
+>         making or verifying a PGP signature. The program must support the
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> index 4a44d6d..91027b6 100644
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> @@ -832,14 +846,18 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>         }
+>
+>  #ifndef NO_PTHREADS
+> -       if (list.nr || cached || online_cpus() == 1)
+> -               use_threads = 0;
+> +       if (list.nr || cached)
+> +               num_threads = 0; /* Can not multi-thread object lookup */
+> +       else if (num_threads == 0)
+> +               num_threads = GREP_NUM_THREADS_DEFAULT; /* User didn't specify value, or just wants default behavior */
+> +       else if (num_threads < 0)
+> +               die("Invalid number of threads specified (%d)", num_threads);
+
+The original code consulted online_cpus(), but the new code does not.
+This is a sufficiently significant change that it deserves mention in
+the commit message. In fact, it's really a distinct change which might
+deserve being done in its own preparatory patch (with an explanation
+something along the lines of "even single-core machines may benefit
+from threading when the bottleneck is I/O").
+
+>  #else
+> -       use_threads = 0;
+> +       num_threads = 0;
+>  #endif
