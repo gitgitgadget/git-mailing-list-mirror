@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v8 04/10] pack_if_possible_fn(): use ref_type() instead of is_per_worktree_ref()
-Date: Tue, 10 Nov 2015 12:42:34 +0100
-Message-ID: <e9063e3bf2383cc9cb9b0d8270cd9255e58450b4.1447154711.git.mhagger@alum.mit.edu>
+Subject: [PATCH v8 08/10] initdb: make safe_create_dir public
+Date: Tue, 10 Nov 2015 12:42:38 +0100
+Message-ID: <7e6da5e50ceda627136e2115aed1cff513a49128.1447154711.git.mhagger@alum.mit.edu>
 References: <cover.1447154711.git.mhagger@alum.mit.edu>
 Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
 	Lukas Fleischer <lfleischer@lfos.de>,
@@ -9,83 +9,127 @@ Cc: Jeff King <peff@peff.net>, David Turner <dturner@twopensource.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 10 12:43:43 2015
+X-From: git-owner@vger.kernel.org Tue Nov 10 12:43:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zw7Ks-0000ro-4Y
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 12:43:38 +0100
+	id 1Zw7Kp-0000ro-Ul
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Nov 2015 12:43:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752247AbbKJLnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2015 06:43:32 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:51859 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752100AbbKJLnK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Nov 2015 06:43:10 -0500
-X-AuditID: 12074414-f794f6d000007852-57-5641d842b94a
+	id S1752088AbbKJLnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2015 06:43:10 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:60562 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752035AbbKJLnH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Nov 2015 06:43:07 -0500
+X-AuditID: 1207440f-f79df6d000007c0f-cc-5641d849af03
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id D8.35.30802.248D1465; Tue, 10 Nov 2015 06:42:58 -0500 (EST)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id AF.F7.31759.948D1465; Tue, 10 Nov 2015 06:43:05 -0500 (EST)
 Received: from michael.fritz.box (p4FC97D33.dip0.t-ipconnect.de [79.201.125.51])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tAABglj8014324
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id tAABgljC014324
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 10 Nov 2015 06:42:56 -0500
+	Tue, 10 Nov 2015 06:43:04 -0500
 X-Mailer: git-send-email 2.6.2
 In-Reply-To: <cover.1447154711.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrGIsWRmVeSWpSXmKPExsUixO6iqOt0wzHM4P5HEYv5m04wWnRd6Way
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBIsWRmVeSWpSXmKPExsUixO6iqOt5wzHM4MFRa4v5m04wWnRd6Way
 	aOi9wmwxacpNJovbK+YzW/xo6WG2mHnV2qK37xOrA4fH3/cfmDx2zrrL7nH2YKbHs949jB4X
-	Lyl77F+6jc1jwfP77B6fN8kFcERx2yQllpQFZ6bn6dslcGe8/jiPteA1Z8Xs2fdYGhj/sHcx
-	cnJICJhIdN/uZISwxSQu3FvP1sXIxSEkcJlR4sDbtVDOCSaJ++1LwTrYBHQlFvU0M4HYIgJq
-	EhPbDrGA2MwCy5gkZu217WLk4BAWSJB4eV4XxGQRUJV490MfpIJXIEri9p7FbBC75CSm3G9n
-	AinhFLCQmHsuAyQsJGAucbx9IuMERt4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3Qt9HIz
-	S/RSU0o3MULCUGQH45GTcocYBTgYlXh4J3xzCBNiTSwrrsw9xCjJwaQkyrv/lGOYEF9Sfkpl
-	RmJxRnxRaU5q8SFGCQ5mJRFe+xdA5bwpiZVVqUX5MClpDhYlcd5vi9X9hATSE0tSs1NTC1KL
-	YLIyHBxKErzs14GGChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIOiIr4YGBcgKR6g
-	vUog7bzFBYm5QFGI1lOMilLivNuuASUEQBIZpXlwY2HJ5RWjONCXwrxsIO08wMQE1/0KaDAT
-	0OCl/iAPFZckIqSkGhgXPPoSb/HQf/4syzfzjjL8WL5hUlbqzzfN+/wjko4dMrs3r6o+42bv
-	he6AN2fUuF8ee566eXpPjIhblpzI3kWR7Fqv4tQK/NyeCfzcUVzLfvLEv76G3T/f 
+	Lyl77F+6jc1jwfP77B6fN8kFcERx2yQllpQFZ6bn6dslcGe0nJ7AWrBYqOL83C9sDYwn+LoY
+	OTkkBEwkWtfeZYKwxSQu3FvP1sXIxSEkcJlR4sDi7SwQzgkmiTvrnoJVsQnoSizqaQazRQTU
+	JCa2HWIBsZkFljFJzNprC2ILC9hKzD+yjB3EZhFQlbjycSIbiM0rECXxa88cNohtchJT7rcD
+	zeHg4BSwkJh7LgMkLCRgLnG8fSLjBEbeBYwMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0TfRy
+	M0v0UlNKNzFCQpF/B2PXeplDjAIcjEo8vBO+OYQJsSaWFVfmHmKU5GBSEuXdf8oxTIgvKT+l
+	MiOxOCO+qDQntfgQowQHs5IIr/0LoHLelMTKqtSifJiUNAeLkjiv+hJ1PyGB9MSS1OzU1ILU
+	IpisDAeHkgQv+3WgoYJFqempFWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgyIgvBsYGSIoH
+	aG/+NaB23uKCxFygKETrKUZFKXHebSAJAZBERmke3FhYgnnFKA70pTAvG8h2HmBygut+BTSY
+	CWjwUn+Qh4pLEhFSUg2Misx8M97+2bK4V2PxiXXfnu07LHYkwPP0sc7Aq/9CjnhuW3EyMZ9/
+	Za18+voDGrbKjftOXWpxPPL6v+DpOUnMa/akrH37eJ+cgfG/Cy8+h38vuOv5yWBu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281114>
 
-is_per_worktree_ref() will soon be made private, so use the public
-interface, ref_type(), in its place. And now that we're using
-ref_type(), we can make it clear that we won't pack pseudorefs. This was
-the case before, but due to the not-so-obvious reason that this function
-is applied to references via the loose reference cache, which only
-includes references that live inside "refs/".
+From: David Turner <dturner@twopensource.com>
 
+Soon we will want to create initdb functions for ref backends, and
+code from initdb that calls this function needs to move into the files
+backend. So this function needs to be public.
+
+Signed-off-by: David Turner <dturner@twopensource.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ builtin/init-db.c | 12 ------------
+ cache.h           |  8 ++++++++
+ path.c            | 12 ++++++++++++
+ 3 files changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 480de9a..82129f0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2671,8 +2671,6 @@ struct pack_refs_cb_data {
- 	struct ref_to_prune *ref_to_prune;
- };
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index f59f407..07229d6 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -24,18 +24,6 @@ static int init_shared_repository = -1;
+ static const char *init_db_template_dir;
+ static const char *git_link;
  
--static int is_per_worktree_ref(const char *refname);
+-static void safe_create_dir(const char *dir, int share)
+-{
+-	if (mkdir(dir, 0777) < 0) {
+-		if (errno != EEXIST) {
+-			perror(dir);
+-			exit(1);
+-		}
+-	}
+-	else if (share && adjust_shared_perm(dir))
+-		die(_("Could not make %s writable by group"), dir);
+-}
 -
- /*
-  * An each_ref_entry_fn that is run over loose references only.  If
-  * the loose reference can be packed, add an entry in the packed ref
-@@ -2687,7 +2685,7 @@ static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
- 	int is_tag_ref = starts_with(entry->name, "refs/tags/");
+ static void copy_templates_1(struct strbuf *path, struct strbuf *template,
+ 			     DIR *dir)
+ {
+diff --git a/cache.h b/cache.h
+index 9a905a8..0f9808c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1737,4 +1737,12 @@ void stat_validity_update(struct stat_validity *sv, int fd);
+ int versioncmp(const char *s1, const char *s2);
+ void sleep_millisec(int millisec);
  
- 	/* Do not pack per-worktree refs: */
--	if (is_per_worktree_ref(entry->name))
-+	if (ref_type(entry->name) != REF_TYPE_NORMAL)
- 		return 0;
++/*
++ * Create a directory and (if share is nonzero) adjust its permissions
++ * according to the shared_repository setting. Only use this for
++ * directories under $GIT_DIR.  Don't use it for working tree
++ * directories.
++ */
++void safe_create_dir(const char *dir, int share);
++
+ #endif /* CACHE_H */
+diff --git a/path.c b/path.c
+index 212695a..9e0283c 100644
+--- a/path.c
++++ b/path.c
+@@ -723,6 +723,18 @@ int adjust_shared_perm(const char *path)
+ 	return 0;
+ }
  
- 	/* ALWAYS pack tags */
++void safe_create_dir(const char *dir, int share)
++{
++	if (mkdir(dir, 0777) < 0) {
++		if (errno != EEXIST) {
++			perror(dir);
++			exit(1);
++		}
++	}
++	else if (share && adjust_shared_perm(dir))
++		die(_("Could not make %s writable by group"), dir);
++}
++
+ static int have_same_root(const char *path1, const char *path2)
+ {
+ 	int is_abs1, is_abs2;
 -- 
 2.6.2
