@@ -1,65 +1,106 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 9
-Date: Wed, 11 Nov 2015 23:47:00 +0100
-Message-ID: <CAP8UFD2SC=cCCAAE0G19VzR2c24eQNwMzEQd5=sTHKWd98KTLg@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv3 08/11] fetching submodules: respect `submodule.jobs`
+ config option
+Date: Wed, 11 Nov 2015 15:34:27 -0800
+Message-ID: <CAGZ79kYiPb-GJ37Zq-2ULpLD8Lh_3qAxa0W+u6+5fMrX6YzJdw@mail.gmail.com>
+References: <1446597434-1740-1-git-send-email-sbeller@google.com>
+	<1446597434-1740-9-git-send-email-sbeller@google.com>
+	<56426DD1.6090904@web.de>
+	<CAGZ79kbqedWRDADChorvWhcmyjO4iZqt4WO8KSo917pxWgr4Rg@mail.gmail.com>
+	<56439D1E.8080102@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	Nicola Paolucci <npaolucci@atlassian.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Stefan Beller <stefanbeller@gmail.com>,
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Kannan Goundan <kannan@cakoose.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Luke Diamand <luke@diamand.org>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 11 23:47:10 2015
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Eric Sunshine <ericsunshine@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Nov 12 00:34:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZweAW-0004Lw-UF
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 23:47:09 +0100
+	id 1ZweuP-0004UU-Ky
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Nov 2015 00:34:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753013AbbKKWrD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 17:47:03 -0500
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:37000 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752824AbbKKWrB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 17:47:01 -0500
-Received: by igbhv6 with SMTP id hv6so30564887igb.0
-        for <git@vger.kernel.org>; Wed, 11 Nov 2015 14:47:00 -0800 (PST)
+	id S1751657AbbKKXe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 18:34:28 -0500
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:33269 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751053AbbKKXe1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2015 18:34:27 -0500
+Received: by ykdv3 with SMTP id v3so76805130ykd.0
+        for <git@vger.kernel.org>; Wed, 11 Nov 2015 15:34:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=y6QPKM/uH+xwqGZQ31HNs7mhKaQYKufzHShuX1CV3Y0=;
-        b=HBhXuVepuT33TDgrUkSk2jYMKtUXwVRb5Q+W03wtzn7lJZMUZU4HPFTgryu58y7irk
-         WkJ1vvP8EhrfMoDZQNPOj6RWM5tmHZ7V6mey2kLhRMB8uS3IFO2tHPgGkcFmn3iD7Y+Z
-         332lnj4Hl4K5X1k0nFYYl5WxDAFoszm3Yg4FolxywOJB/hOrDwfpVMDtpJ3SmA1OG+sG
-         O+tDqHrYMy8wwkwvtC6yz9Hh8WpXWYYvCXLbYjG2AjpiDP5TyA6nu0OkwNMkZNpikUhb
-         PiE33Uln3bcksaz7+sCRxJ8iq5ZIHGvgIQpZjQxjbIyPp16e2miG0FSaPQjK7LGPDgLy
-         k08A==
-X-Received: by 10.50.49.46 with SMTP id r14mr11336241ign.71.1447282020877;
- Wed, 11 Nov 2015 14:47:00 -0800 (PST)
-Received: by 10.36.146.68 with HTTP; Wed, 11 Nov 2015 14:47:00 -0800 (PST)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=JUpbwNOm/fWw4p3KGVDQ4+xIE/L+NzURDDH6ibeiIB8=;
+        b=nRUgssApKQaMYbVMZeIEslNLKg6x9MYWO45E7rxKQf8EzouygI09KlLMKrZQocldih
+         7M0TdBTJlyctAptsKvN2mmUufagloHwiSwfTDnaVfx0dqrCFOcC7VyZ7iYmJlUHuhnWL
+         SQJwOah+HXNqNDraOHIfI/84FfoiEfCYwut8Us/Bs/TtPsFIz7ekJCmqJl+cSYy2q5RX
+         JsgL+ay6CbjH4ekTiHCyhjUtJYWjMSzEDHlSHlIv/8/N+tdTbxs13BYuVBU6ClgWQJNM
+         Qh0KKAKkeS4T8gVrhvwSwwmlipRp+rs2NRraZNQ9r08ZKMcuWKZmuwHOq7/6nsGKNLGJ
+         3akA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=JUpbwNOm/fWw4p3KGVDQ4+xIE/L+NzURDDH6ibeiIB8=;
+        b=EXqQpA8fhTT3zUoqNfTYyMwuBh3c0p1WRG7ZzzTangemOzleFLBJtVHQ4JnN9qS2ob
+         42/NGl1P2ufQIuumG9DO1HnIOkefuBAx3+A752zellPUc3kk3FM7QrQmbRQHXUBiHdUx
+         K4ierPBZ+/AzXuqBX/+pzfKcYyan8xL2a6yyYueFXez+8hKcTHgHx/j9Tohx6oKBcz+s
+         kMZAHc0tgkart36gh5yT1Ci7znVqVbXiX/rYs1UlCBnrKvYNt9Wjcw8uF5SQNQpSbIg7
+         ElTHaMaB3ShYOQQ1kRAcKMKndiB5C1tNsH6LWdmgxLpDxBscSo1/yn0seroEvEC+uIQw
+         gXIg==
+X-Gm-Message-State: ALoCoQnfmoZNEYlmn8ufILkSgZMm/d7pRM1rXTVI67DrWEIHZ24uS6qQhrNbcQoa+zMQ4dstaU19
+X-Received: by 10.13.210.4 with SMTP id u4mr13017619ywd.68.1447284867154; Wed,
+ 11 Nov 2015 15:34:27 -0800 (PST)
+Received: by 10.37.196.70 with HTTP; Wed, 11 Nov 2015 15:34:27 -0800 (PST)
+In-Reply-To: <56439D1E.8080102@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281207>
 
-Hi everyone,
+On Wed, Nov 11, 2015 at 11:55 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>>
+>> TL;DR: checkout is serial, network-related stuff only will be using
+>> submodule.jobs
+>
+>
+> My point being: isn't "jobs" a bit too generic for a config option that
+> is only relevant for network-related stuff? Maybe "submodule.fetchJobs"
+> or similar would be better, as you are already thinking about adding
+> other parallelisms with different constraints later?
 
-I'm happy announce that the 9th edition of Git Rev News is now published:
+Actually I don't think that far ahead.
 
-http://git.github.io/rev_news/2015/11/11/edition-9/
+(I assume network to be the bottleneck for clone/fetch operations)
+All I want is a saturated network all the time, and as the native git protocol
+doesn't provide that (tcp startup takes time until full band witdth is reached,
+local operations both on client and server) I added the parallel stuff
+to 'smear' different submodule network traffics along the timeline,
+such that we have a better approximation of an always fully saturated link
+for the whole operation. So in the long term future, we maybe want to
+reuse an http/ssh session for a different submodule, possibly interleaving
+the different submodules on the wire to make it even faster. Though that
+may not be helping much.
 
-Thanks a lot to all the contributors, especially Matthieu!
+So we're back at bike shedding about the name. submodule.fetchJobs
+sounds like it only applies to fetching, do you think it's sufficient for clone
+as well?
 
-Enjoy,
-Christian, Thomas and Nicola.
+Once upon a time, Junio used  'submodule.fetchParallel' or  'submodule.paralle'
+in a discussion[1] for the distinction of the local and networked things.
+[1] Discussing "[PATCH] Add fetch.recurseSubmoduleParallelism config option"
+
+How about submodules.parallelNetwork for the networking part and
+submodules.parallelLocal for the local part? (I don't implement parallelLocal in
+the next few weeks I'd estimate).
