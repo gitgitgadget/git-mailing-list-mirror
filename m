@@ -1,68 +1,70 @@
-From: Stanislav <s.seletskiy@gmail.com>
-Subject: git clone --recursive should run git submodule update with flag --remote
-Date: Wed, 11 Nov 2015 12:46:30 +0000 (UTC)
-Message-ID: <loom.20151111T133121-436@post.gmane.org>
-Mime-Version: 1.0
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: [RFC] Clone repositories recursive with depth 1
+Date: Wed, 11 Nov 2015 15:09:18 +0100
+Message-ID: <DE5B8B46-B185-4258-A1C8-07E46072CD5D@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.1 \(3096.5\))
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 11 13:50:18 2015
+Content-Transfer-Encoding: 8BIT
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 11 15:10:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwUqu-0004je-U3
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 13:50:17 +0100
+	id 1ZwW5V-0005jy-Uf
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 15:09:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752563AbbKKMuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 07:50:09 -0500
-Received: from plane.gmane.org ([80.91.229.3]:41315 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752440AbbKKMuI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 07:50:08 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1ZwUqj-0004Wv-BK
-	for git@vger.kernel.org; Wed, 11 Nov 2015 13:50:05 +0100
-Received: from 195.19.70.32 ([195.19.70.32])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Nov 2015 13:50:05 +0100
-Received: from s.seletskiy by 195.19.70.32 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Nov 2015 13:50:05 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 195.19.70.32 (Mozilla/5.0 (X11; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0)
+	id S1750938AbbKKOJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 09:09:21 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:35588 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750818AbbKKOJU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2015 09:09:20 -0500
+Received: by wmdw130 with SMTP id w130so114316547wmd.0
+        for <git@vger.kernel.org>; Wed, 11 Nov 2015 06:09:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:content-type:content-transfer-encoding:subject:message-id:date
+         :to:mime-version;
+        bh=G793v/SABT2JX+1+q6Cq9SXHAWo7QAhwvnsJND0+/F4=;
+        b=PHVKdbL+thd23Mjp8n12SXMJ/5iywVfULx1ciT0qCEfet2sUbkYCCLFb2J4TuoXL1g
+         pP1p8T8yiqZ6xZTtREAr9oyoycvQ/I4brv1MC2yqLfp8KczCKt7lVCeMAJZG805VN8LY
+         kEwDI2pwibBjju3xoGRgHVjvqdEVBf/scjyv0UE8in4qDHT55MvKSpStNF7TcsImMk7v
+         nUgvW11sBVxyDlA4rpKoJGBKjD6HY1DOFuYqnKbcdC+QFtHV1/l1db+4Ugz/CMZvabjC
+         q+nxfKFsCD0jD29w+X8eJ0VSV0wAt/58jsbDnfSxj59fXhN57KPil5yaaWC0z2e4YgQt
+         Y4GQ==
+X-Received: by 10.195.11.101 with SMTP id eh5mr10427825wjd.104.1447250959689;
+        Wed, 11 Nov 2015 06:09:19 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id w67sm9773155wmw.17.2015.11.11.06.09.18
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 11 Nov 2015 06:09:19 -0800 (PST)
+X-Mailer: Apple Mail (2.3096.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281163>
 
-Consider two repositories, A and B.
+Hi,
 
-Repo A is embedded into B by using submodule:
+I have a clean build machine and I want to clone my source code to this machine while transferring only the minimal necessary amount of data. Therefore I use this command:
 
-  git submodule add -b master <url-to-A> sub-a
+git clone --recursive --depth 1 --single-branch <url>
 
-So, submodule sub-a is set to track master branch of the repo A.
+Apparently this does not clone the submodules with "--depth 1" (using Git 2.4.9). As a workaround I tried:
 
-Running git submodule update --remote inside repo B will automatically
-update and checkout submodule sub-a to the latest master commit (as expected).
+git clone --depth 1 --single-branch <url>
+cd <repo-name>
+git submodule update --init --recursive --depth 1
 
-However, when using git clone --recursive <url-to-B>, repo B will be cloned
-with submodule A checkouted to the commmit which was recorded on git
-submodule add command, not the master commit.
+However, this does not work either as I get:
+fatal: reference is not a tree: <correct sha1 of the submodule referenced by the main project>
+Unable to checkout <correct sha1 of the submodule referenced by the main project> in submodule path <submodule path>
 
-Expected behaviour is to automatically update checkout commit pointed by
-branch, that was specified by -b flag in the git submodule add invocation.
+How would you clone the repo? Is the behavior above expected? If not, should the "--depth 1" flag be applied recursively to all submodules on a clone --recursive? Has a patch implementing this a chance to get in?
 
-Reason for this behaviour is that line:
-
-  https://github.com/git/git/blob/master/builtin/clone.c#L99
-
-I guess, it should be changed to include --remote flag.
+Thanks,
+Lars
