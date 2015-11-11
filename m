@@ -1,110 +1,128 @@
-From: Thomas Berg <merlin66b@gmail.com>
-Subject: Fwd: Question: .idx without .pack causes performance issues?
-Date: Wed, 11 Nov 2015 15:58:09 +0100
-Message-ID: <CABYiQpmYP=x-Urbwd0e_aa=iAMM4wP2bvdXwDN0=htEr5iOZAw@mail.gmail.com>
-References: <CAEtYS8QWCg5_DtrJw-e+c50vcG0OpciR6LWon-3GgyngGn+0pQ@mail.gmail.com>
-	<xmqq4mkxwd77.fsf@gitster.dls.corp.google.com>
-	<xmqqzj2puxu2.fsf@gitster.dls.corp.google.com>
-	<CABYiQpn7r2Vcf=S5RaWHBN85eBYGPV_e02+BY=4L98qfUzDT1Q@mail.gmail.com>
+From: Richard Ipsum <richard.ipsum@codethink.co.uk>
+Subject: Re: [PATCH 0/2] git-candidate: git based patch tracking and review
+Date: Wed, 11 Nov 2015 15:12:05 +0000
+Message-ID: <20151111151204.GA4249@salo>
+References: <1447160198-23296-1-git-send-email-richard.ipsum@codethink.co.uk>
+ <5643107B.20501@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Doug Kelly <dougk.ff7@gmail.com>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 15:58:17 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Nov 11 16:12:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwWql-0003Ri-PA
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 15:58:16 +0100
+	id 1ZwX4L-0008So-Bk
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 16:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206AbbKKO6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 09:58:11 -0500
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:33557 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752089AbbKKO6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 09:58:10 -0500
-Received: by obbww6 with SMTP id ww6so23623664obb.0
-        for <git@vger.kernel.org>; Wed, 11 Nov 2015 06:58:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=B3NNSwwqRx1ArpovjMwqi8dCprsP0u4pbY5qx0haX6Y=;
-        b=JCK0KM+/ba2lNlNSt3zwWKuMQxnx1CIpb7rBqe+rhMhI8eJPZrpHPtB5tS+O/f5sHO
-         2vLTprAwPFq4sGaSC5E1HOlGkCD0TZZEo1g30EqaW+1eZ1P1/JZDPUigepGU4LYM1QWq
-         4Jq6DHDOmWmRE15/xdnkZNQvA9a+Q8EfKruk0gFOWlxRRf474pkTPuSwr1oXex/iYEI+
-         kkBMj+6VTF1MWEsBikQ37L6OiOKHmBdWquDDLD6yl3TEP17e0gfZDr6H5kpe4m7oVTDJ
-         CjsDznxppN/O3bl91igtfq+mA5OWN5x/W8px6WK0PIhjJXgt6LLEI5jEo/5FHPm9RLOj
-         9LiQ==
-X-Received: by 10.60.17.200 with SMTP id q8mr5215713oed.76.1447253889597; Wed,
- 11 Nov 2015 06:58:09 -0800 (PST)
-Received: by 10.182.44.99 with HTTP; Wed, 11 Nov 2015 06:58:09 -0800 (PST)
-In-Reply-To: <CABYiQpn7r2Vcf=S5RaWHBN85eBYGPV_e02+BY=4L98qfUzDT1Q@mail.gmail.com>
+	id S1751826AbbKKPMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 10:12:13 -0500
+Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:49568 "EHLO
+	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750818AbbKKPMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2015 10:12:12 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 20E404620D7;
+	Wed, 11 Nov 2015 15:12:10 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
+Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
+	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8aZkYb4mpN2v; Wed, 11 Nov 2015 15:12:06 +0000 (GMT)
+Received: from salo (salo.dyn.ducie.codethink.co.uk [10.24.1.218])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id 48029461E2A;
+	Wed, 11 Nov 2015 15:12:06 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <5643107B.20501@alum.mit.edu>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281169>
 
-Hi all,
+On Wed, Nov 11, 2015 at 10:55:07AM +0100, Michael Haggerty wrote:
+> On 11/10/2015 01:56 PM, Richard Ipsum wrote:
+> > I've continued my work[1] to add patch tracking and candidate review capability
+> > to git.
+> > 
+> > git-candidate now has a more git-like user interface, so remote candidates
+> > can now be specified in a similar way to remote refs (e.g. origin/candidate)
+> > as well as various other improvements, such as versioned metadata.
+> 
+> This is a really interesting project. I've seen a blog post or two
+> proposing to store bug tracker information in Git in a distributed way,
+> but I don't recall anything about doing the same for code review
+> information.
+> 
+> I would be interested to hear about the design of your system at an
+> abstract technical level. What do you store in Git and in what layout?
+> Do you need to record any extra metadata within the commits that are
+> merged to master? How do you merge and/or reconcile code review comments
+> that come from multiple sources (or are they just tabulated)? Can your
+> system handle the rebasing of topic branches? What about nonlinear topic
+> branches (branches branches that themselves include merges)?
 
-(re-sending because my first e-mail was rejected due to html formatting)
+Extra metadata tracks the latest revision of a candidate
+and the metadata version, the metadata objects for the revisions and reviews
+are stored in trees, each object is keyed on the hash of the content
+that is stored within the object, so reviews from multiple sources
+cannot conflict. There's no ordering of reviews or comments,
+the status command simply sorts reviews based on their timestamp.
 
-While debugging a git fetch performance problem on Windows I came
-across this thread. The problem in our case was also caused by
-orphaned .idx files.
+The system reserves a portion of the refspace under refs/candidates/
+the root tree object is stored in a commit under refs/candidate/heads/foo__meta
+where foo is the name of the candidate. Anchors are also stored in this space,
+an anchor is made for every revision of a candidate to ensure that commits
+referred to by a candidate are not garbage collected.
 
-On Tue, Jul 21, 2015 at 9:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > I however do not think that we mark the in-core structure that
-> > corresponds to an open ".idx" file in any way when such a failure
-> > happens.  If we really cared enough, we could do so, saying "we know
-> > there is .idx file, but do not bother looking at it again, as we
-> > know the corresponding .pack is missing", and that would speed things
-> > up a bit, essentially bringing us back to a sane situation without
-> > any ".idx" without corresponding ".pack".
-> >
-> > I do not think it is worth the effort, though.  It would be more
-> > fruitful to find out how you end up with ".idx exists but not
-> > corresponding .pack" and if that is some systemic failure, see if
-> > there is a way to prevent that from happening in the first place.
->
-> While I still think that it is more important to prevent such a
-> situation from occurring in the first place, ignoring .idx that lack
-> corresponding .pack should be fairly simple, perhaps like this.
+The operations performed on a topic branch don't matter, all the candidate
+knows about is the head sha of the branch we want to merge. Merging a
+candidate is no different from merging any other git branch, you have
+a ref candidate/foo so you can choose to merge that, or you can
+check it out rebase it and then merge it.
 
-I have observed the following: if garbage collection is triggered
-during a git fetch, I always get messages like this:
+> 
+> All that being said, my gut feeling is that a system like this should
+> not be developed within the Git project itself. Code review is a
+> complicated thing, and I expect that different people will have very
+> different ideas about how it should work. It would be a bad idea for the
+> Git project to "bless" one system by including it in our source tree.
+> (Earlier in the Git's history it was easier to get something accepted
+> into "contrib", but that has gotten much harder over time.)
 
-$ git fetch origin
-> Auto packing the repository for optimum performance. You may also
-> run "git gc" manually. See "git help gc" for more information.
-> Counting objects: 396468, done.
-> Delta compression using up to 12 threads.
-> Compressing objects: 100% (98683/98683), done.
-> Writing objects: 100% (396468/396468), done.
-> Total 396468 (delta 289422), reused 395212 (delta 288289)
-> Unlink of file '.git/objects/pack/pack-343b6cfdf58171f53c235b900a75d09bd9219e06.pack' failed. Should I try again? (y/n) n
-> Unlink of file '.git/objects/pack/pack-343b6cfdf58171f53c235b900a75d09bd9219e06.idx' failed. Should I try again? (y/n) n
-> Unlink of file '.git/objects/pack/pack-63a6cb5e2a9f72eea72b02ac74a167e1d71d417f.idx' failed. Should I try again? (y/n) n
-> Unlink of file '.git/objects/pack/pack-9b616a2501bb9c13acecf3e981c39868dd2f5ff7.pack' failed. Should I try again? (y/n) n
-> Unlink of file '.git/objects/pack/pack-9b616a2501bb9c13acecf3e981c39868dd2f5ff7.idx' failed. Should I try again? (y/n) n
-> Checking connectivity: 396468, done.
+The aim is not to bless one particular system but to eventually
+provide a common data model that all review systems can share,
+so that it is possible to do distributed reviews with arbitrary UIs
+in a widely compatible way.
 
-Windows has the property that if a file is open it can't be deleted.
-If so, it could be that git fetch needs to close the files first. I
-can't remember observing this problem when running git gc by itself.
+If we add git-candidate to contrib then it can act as a reference
+implementation, so that this data model can be validated and tested
+by additional developers.
 
-In the repos where we have problems I observed both unnecessary .pack
-files and .idx files, but way more .idx files. Maybe, over time,
-unnecessary pack files have been cleaned up but not .idx files?
+> 
+> If, someday, one system becomes crushingly dominant, then conceivably it
+> would make sense for it to be distributed along with Git for the
+> convenience of users. Or if a bunch of review systems standardize on a
+> single data model for storing review information in a Git repo, it might
+> make sense for the plumbing for handling that data to reside in git-core
+> for performance and data integrity reasons. Until then, I think it would
+> be better for code review systems to live on their own, as independent
+> projects.
 
-If so, this would explain how we get into this situation. I have been
-testing this with very old git versions on Windows (1.7.4 and 1.8.4),
-sorry if these problems are already fixed in later versions.
+I don't feel too strongly either way, that said I do think it may be
+advantageous for all concerned to have this data model, we don't necessarily
+need to wait for a particular system to become crushingly dominant.
 
-- Thomas
+> 
+> In my opinion it would be fine to discuss the design of your system and
+> solicit feedback about the design on the Git mailing list, and also to
+> publish occasional announcement emails when you release new versions or
+> whatever. You might also want to list your system on the Git SCM wiki,
+> for example here [1].
+
+Thanks, it would be good to add git-candidate to the list there.
+
+Thanks,
+Richard Ipsum
