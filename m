@@ -1,79 +1,116 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: git submodule sync / git submodule rm
-Date: Wed, 11 Nov 2015 21:02:32 +0100
-Message-ID: <56439ED8.2030705@web.de>
-References: <8C0042D8869AEA4AA334B49AFBBCEF8294713B41@TUT-EX02-PV.KSTG.corp>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC] Clone repositories recursive with depth 1
+Date: Wed, 11 Nov 2015 12:09:41 -0800
+Message-ID: <CAGZ79kazAWj+D85EXUyP9iHgcb=7QpymyaaKEqQRu9a+UO9msw@mail.gmail.com>
+References: <DE5B8B46-B185-4258-A1C8-07E46072CD5D@gmail.com>
+	<CAGZ79kbfFhCvQW=_7i4KxjWeh7uYRTTNvLzQUq+CJ641g3=UDg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Boettger, Heiko" <Heiko.Boettger@karlstorz.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 11 21:02:55 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 21:09:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwbbN-00084v-Fi
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 21:02:41 +0100
+	id 1ZwbiF-00078Q-1O
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 21:09:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752640AbbKKUCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 15:02:37 -0500
-Received: from mout.web.de ([212.227.17.11]:64730 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752597AbbKKUCg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 15:02:36 -0500
-Received: from [192.168.178.41] ([79.211.127.69]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MVchv-1Zukhq2Hol-00Z09i; Wed, 11 Nov 2015 21:02:33
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <8C0042D8869AEA4AA334B49AFBBCEF8294713B41@TUT-EX02-PV.KSTG.corp>
-X-Provags-ID: V03:K0:bW/53QqwU9m5OWiabgq7bYQ+TPYWkNQfN0G0+12bAIjvBUePPGE
- xPPdATZROksj+jtwhC2ZeBuevsJyUi5hZo+Zm8jg6N9FFb0g+NO52IXwxRr9hXqdYPvjZas
- PxlHubIcaVd3dLonGB0VhZYXkazybvWXX71ywSyGrf3tEPPLkMNBfF8wvJkmS1c0yu3Q8UC
- Dpzd5p70JI9t7uZ/mb6Kw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RxDY5GUz1aM=:4cj9gfI7KJV66yDaZq6VQq
- Nxbd5IW9DTjTsZwQHYyDJ+Frh2DyCacWrb7tNHmb5bAzz/FKYOXCbqc9WKLdO++GC1jP4Q9y4
- gfLcAAByD1tuclSsxZ5YfM/e50Zejyu0A+mR3mc99QzeE8VYe18Dou0zmMz0HpicZsTxRsZ7y
- xnDHyHdlfrwky26VaxQ3nNIlKBIqonzrGrpvA9m9xmct1d2hVkvBfJ9BnalgOHEmRG+hSzovn
- M8Oj+4bfAh69wIzJY2oeJzHQ2beCyneSUxtDvYEsiOwiTkTv+GZzOdNcC+b9QWmJ7zE9fdviV
- YloAxUG+WStynyXPU3DT7gpt8KD0amwaGZUhajl8NZ4AOOmIHrevy+lgxtSrH3jiEyc4ZfCM/
- LJYL9VZPRw7H8XN36GjoWvISaddCdqFJ6V1nqo/p4S/CSF+aGlyLPqrhUfaZTkgRnb+gisVqN
- ntYvh2EtkyMzCBtny4E5Wc0qv7WtVxa3QgT2U5ElrkYq17QPAMKY1RerowJYpq3fYBeysWZag
- /K205UAhRvOcI/VYJKpjZkVsHBAOEKxKXb6Bt5X+GQNV89SmN26Rs7jdMgEL3NOv7ETUOKQZ8
- ZzV9rRjXlUmBwE0ipaXznD4tvzX3IyzeCQd3kUW3eJFbqSfAjPcJFWrFUbMkAp0HZV915Tvo3
- vuDNYX//2ShNvPDoRppIYGBjFcUSV3t5U+AKZMZX867HMPm5AIzdulDzEm+cj37GVnHNlP3mx
- nG86/bSr9x+W3TJRUohlzHW670AuBSOWdK5Y1m+1RklaBUPrQxiy1xgmxmJwV4HR1+XD3UAW 
+	id S1752395AbbKKUJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 15:09:43 -0500
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:33850 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751522AbbKKUJm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2015 15:09:42 -0500
+Received: by ykfs79 with SMTP id s79so68214404ykf.1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2015 12:09:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=/dOgOQ/7GKpm7MhIjUJPnMhECtwHjsfOYSISH8XeB+U=;
+        b=im9PRaPTHe+U+3kxxpzDdzBBlk54zgBKd7vv/Zkk/BPKiEK+cm6//UGSG52uviFNJX
+         JTsJMJtj63yaGXEyP03OvyEfVaEzxvsJRer7ORzQc6xv0E/5RKjIu7RmKNnLn4t5PLvA
+         Xo/ZesIijMn8OZNIwWSapAS3nLHzdCGYl9jOU6Ll86Z5kF8Uk9K45znF3ENz8W6p/dNH
+         OPMO/iGAfcgnRlBVR0/QggPZNcYgqSZzFIXiMqjd27uMQnEjmpnQnDvJmlj/5lMEIU5a
+         rKFXj+YBQ11mathL3ERVH87OTdQ7yn61a6U2viyVOH+v4wxaFAVBaBX046+MMjegswyr
+         3GGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=/dOgOQ/7GKpm7MhIjUJPnMhECtwHjsfOYSISH8XeB+U=;
+        b=LglTU9qjOZmJWw2qjhVHHh4sPWtshIDtTQAYe3BmCN4QsXk/TjEzaqnrL/BvxubfCE
+         Z7AD/flyEDx2oeqAlCotJ6PLeVlp1R5Rqr4xZUdcv1+xmcm1AOuKbL8Clu8i3TQChIIj
+         DSsPBeE4VWCAjHO26gmHmgwXScRUepQjru3+rY4LQIUlPtB3tnEUTcocQo1B/+FuM3eG
+         VT6+SD5G5+okKcDjVAyBIXNotQUX4WLHxIV8AiOOcjfAHUzMQA6rCBjAGbmlNE48QlDu
+         41aBR9d0eDvmdv58dKP0EiY1t67xIgQUrWlFa/AzbAQZjElq96Uy2TJuXjGcL71uPWg7
+         Ih3A==
+X-Gm-Message-State: ALoCoQlXMEepwkMizu7coHvXXosUMi4ltDeCfPdcENYFfEII9jYN3YQUpvoj2et72Gwxc7MPP8M/
+X-Received: by 10.13.210.4 with SMTP id u4mr12062345ywd.68.1447272581885; Wed,
+ 11 Nov 2015 12:09:41 -0800 (PST)
+Received: by 10.37.196.70 with HTTP; Wed, 11 Nov 2015 12:09:41 -0800 (PST)
+In-Reply-To: <CAGZ79kbfFhCvQW=_7i4KxjWeh7uYRTTNvLzQUq+CJ641g3=UDg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281194>
 
-Am 11.11.2015 um 11:18 schrieb Boettger, Heiko:
-> i'm currently on a migration from svn to git and also have the task to convert the svnexternal to git submodules. During the migration step I am doing an automatic verification which needs a reliable way to switch the working tree to another branch include the submodules.
-> When the submodule definition changes I miss a reliable command to update the .git/config:
+On Wed, Nov 11, 2015 at 11:19 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, Nov 11, 2015 at 6:09 AM, Lars Schneider
+> <larsxschneider@gmail.com> wrote:
+>> Hi,
+>>
+>> I have a clean build machine and I want to clone my source code to this machine while transferring only the minimal necessary amount of data. Therefore I use this command:
+>>
+>> git clone --recursive --depth 1 --single-branch <url>
 >
-> 1. the git submodule sync seems to do nothing if a module was removed
-
-That's on purpose. In case you check out an older commit which still
-contains the submodule in the superproject later the old config is
-active again.
-
-> 2. git submodule update complains about the missing entry in .gitmodules
-> 3. git submodule deinit doesn't work either and complains about missing path in .gitmodules as well
-
-Not sure what you are talking about here, what exactly did you do to
-get into this situation? I assume you just removed the submodule entry
-from .gitmodules but did not remove it from the index?
-
-> These issues are partially described in the git book under https://git-scm.com/book/en/v2/Git-Tools-Submodules in section "Issues with Submodules". Now what I am really missing is a way to keep the .git/config and references in sync with the .gitmodules file which at best is integrated into git checkout. It is clear that I could write a script for that by myself, but it would be much better to have an integrated command for that which I though is git submodule sync, but unfortunately it doesn't do a complete sync of all settings.
+> That *should* work, actually.
+> However looking at the code it does not.
 >
-> In the google forum there was someone asking for a git submodule remove command:
+> citing from builtin/clone.c:
 >
-> https://groups.google.com/forum/#!searchin/git-users/submodule/git-users/Md72iVvPHqw/H_j3mT7bRq4J
+>     static struct option builtin_clone_options[] = {
+>         ...
+>         OPT_BOOL(0, "recursive", &option_recursive,
+>            N_("initialize submodules in the clone")),
+>         OPT_BOOL(0, "recurse-submodules", &option_recursive,
+>           N_("initialize submodules in the clone")),
+>         ...
+>     };
+>     ...
+>     static const char *argv_submodule[] = {
+>         "submodule", "update", "--init", "--recursive", NULL
+>     };
 >
-> I don't think that it is strictly required to remove the untracked file, this can be archived by a git clean as well, but is there any progress on this.
+>     if (!err && option_recursive)
+>         err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
+>
+> So the --depth argument is not passed on, although "git submodule update"
+> definitely supports --depth.
+>
+> In an upcoming series (next version of origin/sb/submodule-parallel-update),
+> this will slightly change, such it will be even easier to add the
+> depth argument in
+> there as we construct the argument list in code instead of hard coding
+> argv_submodule.
+>
+> This may require some discussion whether you expect --depth to be recursed.
+> (What if you only want a top level shallow thing?, What if you want to have only
+> submodules shallow? What is the user expectation here?)
+>
+>>
+>> Apparently this does not clone the submodules with "--depth 1" (using Git 2.4.9). As a workaround I tried:
+>>
+>> git clone --depth 1 --single-branch <url>
+>> cd <repo-name>
+>> git submodule update --init --recursive --depth 1
+>>
 
-Did you check "git rm <submodule>"? ;-)
+The workaround works with the origin/master version for me.
+
+Notice the other email thread, which suggests to include --remote into the
+call to  git submodule update depending on a branch config option being
+present in the .gitmodules file.
