@@ -1,102 +1,90 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: [PATCH] http: fix some printf format warnings on 32-bit builds
-Date: Tue, 10 Nov 2015 20:22:37 -0500
-Message-ID: <CAPig+cR+jXgw7+kUK9vrZxNbytwyK3gzgm1YPf_6s57_UxPaBA@mail.gmail.com>
+Date: Tue, 10 Nov 2015 18:00:29 -0800
+Message-ID: <CAGZ79kb1pDhcP+hN9+C0xK-VYKxfnhvj6a2Len6kOWgmv4+fmQ@mail.gmail.com>
 References: <56428A6A.5010406@ramsayjones.plus.com>
+	<CAPig+cR+jXgw7+kUK9vrZxNbytwyK3gzgm1YPf_6s57_UxPaBA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 02:22:57 2015
+To: Eric Sunshine <sunshine@sunshineco.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 03:00:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwK7j-00037h-GY
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 02:22:55 +0100
+	id 1ZwKiB-0002pt-LM
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 03:00:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752162AbbKKBWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2015 20:22:47 -0500
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:33660 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751760AbbKKBWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2015 20:22:37 -0500
-Received: by ykdv3 with SMTP id v3so26698882ykd.0
-        for <git@vger.kernel.org>; Tue, 10 Nov 2015 17:22:37 -0800 (PST)
+	id S1751861AbbKKCAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2015 21:00:31 -0500
+Received: from mail-yk0-f181.google.com ([209.85.160.181]:34562 "EHLO
+	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751398AbbKKCAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2015 21:00:30 -0500
+Received: by ykfs79 with SMTP id s79so27812083ykf.1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2015 18:00:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=2xMP6LxyMbIsG8fxWorB0hbT0aYyUwA2hvXfKtkGCxA=;
-        b=SOJImujy/RNlzyxPYYSsSBfF4EYWPgYD9oPbs7JLLgLZPSEwdxWNptuCwGX7EiCU55
-         tB8zg/6ffVY7DhO8AYRkgSC0Ak689HQ1N6YAax0L1rWPsVwAluzRLqlhoPIUMjC34pms
-         WIrEfoeQx9Ak2+pQRxy4EII3AjvSqFBInD4QtTb6Dd39WKqp9pP8/JhRFPJXX/tAKy4G
-         xYe+j7k/XsoRC2IwEKq4V0JtUuqJBnJ8cyAm0vWiRQ0+Bj7dbL2aG++6NsBXwGOwzYRD
-         LdRVhu2N7aqQJheUGC+pSGNB0YoVEF+P6Fme3euSbKerDZ0/5O4SI7H3TWrm6SjG9l8j
-         ggEA==
-X-Received: by 10.13.205.70 with SMTP id p67mr6968970ywd.249.1447204957075;
- Tue, 10 Nov 2015 17:22:37 -0800 (PST)
-Received: by 10.31.159.204 with HTTP; Tue, 10 Nov 2015 17:22:37 -0800 (PST)
-In-Reply-To: <56428A6A.5010406@ramsayjones.plus.com>
-X-Google-Sender-Auth: l3AW0KHQ8k1H8xmEQZU84RyMiwA
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jGa6lP2OsP8P0tBhQCEZqTznXwXXbEuivlBokwiWjVI=;
+        b=Hdx/UyhuHkqcsINZBWjvUYlEoSg07F+P/CPC2n+NelWgqS4RWmv31Xex0nrRFug2z/
+         qQZD2VeH54vHqA5jFIx8980Ieo6syf1Oc4LWDu7lnEavjLVYvJceHBLNd6PgTi8ZoLxF
+         K1slf6lAw6R+49vHoLXgE7gzvrNproZSdvV7E80umPYWZN+OjxIMg7WciHRmd08f0mdz
+         tIZi7GPeHKjsXlT8sec/nLniiIYMpn2Npq/y6/oj3WAZnDSXn/R01MsHAmSqPTULVrch
+         a8/QG5lt2UvGqL8DABPGOEzac3AlmrGpiR9//PtXv+JdIgC4lP4A2G3dec6/dDQ3Z3r8
+         Vy6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=jGa6lP2OsP8P0tBhQCEZqTznXwXXbEuivlBokwiWjVI=;
+        b=ICO07ciZtc6uOr9Y3+Y2B1PJAJ79cZWuuMdKdTbaUpfP/bRAc4F5O1VVhaz3VnBDGS
+         bbVIGk6O3ZROGRuAmedIwzJ4U7GOF7OIeFICs0SEeWOpydniieVK3hGPfc/f88pf9Ozj
+         8L45JpZsf1SK+b/0XqCN371rXJE6Yh5FnjOmG1JEuGNotTFOIUPWNpXsEISGxBc9URaQ
+         NjCIei3YPvnCvWpg67D2giXK5oVhp7KkXi3uDQeCCVXTCUpCfW6FDzPtDqC0QpGY9cE4
+         Q9AZbFTe9grNpgE7Ady5m9vaDrTyLSj2gnPTA0FRV08mk4p4n214yMHiiYWaCUU2tBLm
+         TJeQ==
+X-Gm-Message-State: ALoCoQmgU0bJ/bk4ALnAcTfgf8iNaaP11IYpXZt/ISxQi1ZgkbfiJ9eZfxwgGqoGCEr56lOCfgIE
+X-Received: by 10.13.214.19 with SMTP id y19mr6615588ywd.63.1447207230017;
+ Tue, 10 Nov 2015 18:00:30 -0800 (PST)
+Received: by 10.37.196.70 with HTTP; Tue, 10 Nov 2015 18:00:29 -0800 (PST)
+In-Reply-To: <CAPig+cR+jXgw7+kUK9vrZxNbytwyK3gzgm1YPf_6s57_UxPaBA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281142>
 
-On Tue, Nov 10, 2015 at 7:23 PM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
-> Commit f8117f55 ("http: use off_t to store partial file size",
-> 02-11-2015) changed the type of some variables from long to off_t.
-> The 32-bit build, which enables the large filesystem interface
-> (_FILE_OFFSET_BITS == 64), defines the off_t type as a 64-bit
-> integer, whereas long is a 32-bit integer. This results in a couple
-> of printf format warnings.
+On Tue, Nov 10, 2015 at 5:22 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Nov 10, 2015 at 7:23 PM, Ramsay Jones
+> <ramsay@ramsayjones.plus.com> wrote:
+>> Commit f8117f55 ("http: use off_t to store partial file size",
+>> 02-11-2015) changed the type of some variables from long to off_t.
+>> The 32-bit build, which enables the large filesystem interface
+>> (_FILE_OFFSET_BITS == 64), defines the off_t type as a 64-bit
+>> integer, whereas long is a 32-bit integer. This results in a couple
+>> of printf format warnings.
+>>
+>> In order to suppress the warnings, change the format specifier to use
+>> the PRIuMAX macro and cast the off_t argument to uintmax_t. (See also
+>> the http_opt_request_remainder() function, which uses the same
+>> solution).
 >
-> In order to suppress the warnings, change the format specifier to use
-> the PRIuMAX macro and cast the off_t argument to uintmax_t. (See also
-> the http_opt_request_remainder() function, which uses the same
-> solution).
-
-I just ran across the problem when building 'next' on my Mac and was
-about to investigate, so am happy to find that the work has already
-been done. Thanks.
-
-My machine is 64-bit, though, so perhaps it's misleading to
-characterize this as a fix for 32-bit builds. In particular, off_t is
-'long long' on this machine, so it complains about the "long" format
-specifier.
-
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
-> diff --git a/http.c b/http.c
-> index 42f29ce..2532976 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -1617,8 +1617,8 @@ struct http_pack_request *new_http_pack_request(
->         if (prev_posn>0) {
->                 if (http_is_verbose)
->                         fprintf(stderr,
-> -                               "Resuming fetch of pack %s at byte %ld\n",
-> -                               sha1_to_hex(target->sha1), prev_posn);
-> +                               "Resuming fetch of pack %s at byte %"PRIuMAX"\n",
-> +                               sha1_to_hex(target->sha1), (uintmax_t)prev_posn);
->                 http_opt_request_remainder(preq->slot->curl, prev_posn);
->         }
+> I just ran across the problem when building 'next' on my Mac and was
+> about to investigate, so am happy to find that the work has already
+> been done. Thanks.
 >
-> @@ -1772,8 +1772,8 @@ struct http_object_request *new_http_object_request(const char *base_url,
->         if (prev_posn>0) {
->                 if (http_is_verbose)
->                         fprintf(stderr,
-> -                               "Resuming fetch of object %s at byte %ld\n",
-> -                               hex, prev_posn);
-> +                               "Resuming fetch of object %s at byte %"PRIuMAX"\n",
-> +                               hex, (uintmax_t)prev_posn);
->                 http_opt_request_remainder(freq->slot->curl, prev_posn);
->         }
->
-> --
-> 2.6.0
+> My machine is 64-bit, though, so perhaps it's misleading to
+> characterize this as a fix for 32-bit builds. In particular, off_t is
+> 'long long' on this machine, so it complains about the "long" format
+> specifier.
+
++Lars
+
+I wonder if 32 bit compilation can be part of travis.
