@@ -1,87 +1,77 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: What's cooking in git.git (Nov 2015, #02; Fri, 6)
-Date: Wed, 11 Nov 2015 11:21:19 -0800
-Message-ID: <CAGZ79kZC9kf4VyyHx65EAwjSeiiX-OXQo0Bca0fZozMaDa9iVw@mail.gmail.com>
-References: <xmqq4mgy3dcr.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kaK==GhD4nUTh4nnd_NPTNsUG15kS61hAhmP=K6MdHmYg@mail.gmail.com>
-	<20151111191151.GA29543@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 11 20:21:25 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH/RFC 00/10] ref-filter: use parsing functions
+Date: Thu, 12 Nov 2015 01:14:26 +0530
+Message-ID: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
+Cc: matthieu.moy@grenoble-inp.fr, gitster@pobox.com,
+	Karthik Nayak <Karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 11 20:44:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwaxQ-0006rI-4V
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 20:21:24 +0100
+	id 1ZwbJh-0005ub-1P
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 20:44:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751961AbbKKTVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 14:21:20 -0500
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:36458 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509AbbKKTVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 14:21:19 -0500
-Received: by ykdr82 with SMTP id r82so65579848ykd.3
-        for <git@vger.kernel.org>; Wed, 11 Nov 2015 11:21:19 -0800 (PST)
+	id S1752187AbbKKToV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 14:44:21 -0500
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:33343 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752146AbbKKToU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2015 14:44:20 -0500
+Received: by padfb7 with SMTP id fb7so5385470pad.0
+        for <git@vger.kernel.org>; Wed, 11 Nov 2015 11:44:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=s8G5fbYD7o8GIH+XIfa9OP+BV2G1bSjNzXbpC0dTxpY=;
-        b=UvaTkprDyx+uYeBGCHFvcm5t/soDiyS3rnE+Q3fX6vhth95H9Sto/wQaUfV78KQ1zh
-         U74ImDq5AH2BUzn+NNERILDGo0EbewSB7rMEYckyjAiKfdxAy8oO+2OGV6fzcGTpK7mR
-         T3un47scq/PQtKj20wi3mVTpkmlhhBZTh2c+kqlmXfaiQSD50iOwAd1+dAQbjOq8B3Os
-         uzRGiEaxp7TfKICz7999YLallQOsu2bdLTcHK6t4ly0Zee7riwVZCc9HhqNMXDXAwm9a
-         cpnB5e/R9vO5FJze8kP4gO9goRB9BHHRjmO14CjYwP9kyNSDKidOSihgqCusUIUz1dq3
-         n3/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=s8G5fbYD7o8GIH+XIfa9OP+BV2G1bSjNzXbpC0dTxpY=;
-        b=Ubmd49TLA+pSfEM2IHEAmzX7arX+U0Dsp/BaSDT+gL2L7yl/3ioangkJoiVxFgra5h
-         03mkwqFqHr659z6T5aYkhHuTkbhCx0EKb8xWF27Sjlny9aL4lw44pq9iUcRJE3bN1Fhs
-         gD0dI0qpJZpdGrMCrpiHLg7DY6lOvFOBzPhqhr84xuSQFLJ5wrtSuyGor813+ivoBYah
-         J+T2qs99kQkHaixEx9dFa+PjROyubC2erOInB+jgxYEkTkvgz/0KEFazI04c7Y9TnWY3
-         5SoVGcqfFc8FVebdcqZtXjEWB4QvMMuQ0YAP8R0QsxRxIo3U2iyBnJ/RXtVYQGbQOsia
-         49Pw==
-X-Gm-Message-State: ALoCoQl3Kw3D7N0syuIHyC9lrEk3GL/w+MyHmnQeWhtKHmRo8/LMaXX25O2plrj20anWTSM74hQz
-X-Received: by 10.13.214.19 with SMTP id y19mr11804340ywd.63.1447269679319;
- Wed, 11 Nov 2015 11:21:19 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Wed, 11 Nov 2015 11:21:19 -0800 (PST)
-In-Reply-To: <20151111191151.GA29543@sigill.intra.peff.net>
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=tTy5/iinfFBJpNQHUIQUdHwRfZIdiqCpgR4jG1jp1ZM=;
+        b=TCza7BqhBzEpd6Go0DbiOwuCiVsE7MriWb0FLnIcpPHdQ8K5wQlGQXQVRjrIKFNPrU
+         dhVgLwrjohcqyun5Kf36q9KlHehJQ3mLWTtq2SwI0c46fpW418t0o4Tx0C65MFm5qpOs
+         Z4K0va2YCRsNUcSX+qSab77dB2Q/uuWNzqu1yBi/xFQLErlZ6JRJq7t+50MZm++Gjt7u
+         R2kGUPe1bCw1HN2Ek7o9FKZEX8mx82tfNJdiGLuHb8T1c/Vh8/9LHWMf2+PtauNbUwlm
+         kVFiR7hd6ao/jwHpOWAGds6HijnaMmLyo+XQXb4F9lok3ckQPUNdVhfkms5pKpq+BihR
+         YHiQ==
+X-Received: by 10.66.234.101 with SMTP id ud5mr17018499pac.136.1447271060010;
+        Wed, 11 Nov 2015 11:44:20 -0800 (PST)
+Received: from ashley.localdomain ([106.51.241.110])
+        by smtp.gmail.com with ESMTPSA id j5sm278998pbq.74.2015.11.11.11.44.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 11 Nov 2015 11:44:18 -0800 (PST)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.6.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281180>
 
-On Wed, Nov 11, 2015 at 11:11 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Nov 11, 2015 at 10:59:26AM -0800, Stefan Beller wrote:
->
->> On Fri, Nov 6, 2015 at 3:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> > I'll be offline for a few weeks, and Jeff King graciously agreed to
->> > help shepherd the project forward in the meantime as an interim
->> > maintainer.  Please be gentle.
->> >
->>
->> Jeff,
->> gently asking where I can find our interims maintainers tree. :)
->
-> Sorry, I was traveling Monday and Tuesday this week, so I haven't pushed
-> anything yet.
+Carried over
+http://thread.gmane.org/gmane.comp.version-control.git/279226/focus=279352. Where
+we were talking about pre-parsing most of the atoms so that we do not
+have to parse them in ref-filter:populate_value(), where we could now
+instead only fill in necessary values. This series aims to introduce
+parsing functions for atoms so that they maybe parsed before hand and
+the necessary values maybe stored the introduce used_atom structure.
 
-No worries, I just started Git again today, too :)
-Shawn tricked me into doing Gerrit for the last few days.
+Karthik Nayak (10):
+  ref-filter: introduce a parsing function for each atom in valid_atom
+  ref-filter: introduce struct used_atom
+  ref-fitler: bump match_atom() name to the top
+  ref-filter: skip deref specifier in match_atom_name()
+  ref-filter: introduce color_atom_parser()
+  strbuf: introduce strbuf_split_str_without_term()
+  ref-filter: introduce align_atom_parser()
+  ref-filter: introduce remote_ref_atom_parser()
+  ref-filter: introduce contents_atom_parser()
+  ref-filter: introduce objectname_atom_parser()
 
-> I hope to do a cycle today and push out the result. My
-> plan is to push my workspace up to git://github.com/peff/git.git,
-> including topic branches and the usual master/next/etc.
+ Documentation/git-for-each-ref.txt |  18 +-
+ ref-filter.c                       | 483 ++++++++++++++++++++++---------------
+ strbuf.c                           |  17 +-
+ strbuf.h                           |  14 +-
+ t/t6302-for-each-ref-filter.sh     |   4 +-
+ 5 files changed, 328 insertions(+), 208 deletions(-)
 
-ok remote added.
-
-Thanks,
-Stefan
+-- 
+2.6.2
