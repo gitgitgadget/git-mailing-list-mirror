@@ -1,7 +1,7 @@
 From: Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH 3/5] ff-refs: add --dry-run and --skip-worktree options
-Date: Tue, 10 Nov 2015 21:11:23 -0500
-Message-ID: <1447207885-10911-4-git-send-email-rappazzo@gmail.com>
+Subject: [PATCH 4/5] ff-refs: Add documentation
+Date: Tue, 10 Nov 2015 21:11:24 -0500
+Message-ID: <1447207885-10911-5-git-send-email-rappazzo@gmail.com>
 References: <1447207885-10911-1-git-send-email-rappazzo@gmail.com>
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net,
 	dturner@twopensource.com, pclouds@gmail.com,
@@ -13,119 +13,107 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwKun-0007SP-KI
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 03:13:37 +0100
+	id 1ZwKum-0007SP-FL
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 03:13:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130AbbKKCNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Nov 2015 21:13:33 -0500
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:34763 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751774AbbKKCNX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Nov 2015 21:13:23 -0500
-Received: by ykfs79 with SMTP id s79so28235233ykf.1
-        for <git@vger.kernel.org>; Tue, 10 Nov 2015 18:13:22 -0800 (PST)
+	id S1752100AbbKKCN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Nov 2015 21:13:26 -0500
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:34783 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751781AbbKKCNY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Nov 2015 21:13:24 -0500
+Received: by ykfs79 with SMTP id s79so28235952ykf.1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2015 18:13:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=uD155kaB4ZB/FHBhYnDripbrEMixMNrNL+CiwJLY/Sk=;
-        b=Qj2+ti+AhPF/5pVDLRuRDmWRqTOyb272fRK6tlwcTJxxQsKNKh4XiiJs1SXcdxQ4aI
-         APBONWWoQhQg5CM5crg771GNqcbSetitaP6DsacySqPFMW9YdpJFu2oORFqh7oHeJOBw
-         ZL7uEk6EQT8Wtb50WgjY9xepS0zCxhAv5B4bcSwRJJ5BRPMgPqrxcTOOL4wxFm7qBXiA
-         54wlbAmcW/Eou3VeS2fgPsrZInHjcfhrzF8aZKl+8KBiB8/rHpiczgrn3Ddhj6Va1yd5
-         VvDTQLRIYYukpr0i1pcb+gWU7kdsanfomSOW06W1Dg+eC96bn/DNJ3TRr8HXrpqPH+Ga
-         4CwA==
-X-Received: by 10.129.51.82 with SMTP id z79mr6367736ywz.198.1447208002643;
-        Tue, 10 Nov 2015 18:13:22 -0800 (PST)
+        bh=nIkIsBFcug4RgPtHo+gKxJAp6npA8wt31vFHqih7wKU=;
+        b=wpbJzkdk7UZd27ai7rDdW4K84L2RHv7S/HXoG94tkoOQC35ufyRoAX6LEfuEoAgGo3
+         lw62ZcW423dE2qOJQqAUDmzCxNJmml8w8gDwFeBghWu3KPeAcZdBjhdkkAh6Ndb3PCxo
+         OvcxHIB8JJmPOz9pN18em2RSg4usdbGFP97nubK0ACpwtX2nA6BjHaJU/QKuCEsn0DfJ
+         hHFBuiXB9RBEzrikv5a9RGVyHDJLYUNphH//H/K5/0Tj4qpYwp3deZf0dhlLZYvvi2RO
+         92eVL2cOCGP2oQ5GzusfbEf5XIyHhfgWAvDivxOPXY0xTtp+Ra+g/yLC4ANeQrRmtUQm
+         wk3Q==
+X-Received: by 10.129.72.198 with SMTP id v189mr6398478ywa.220.1447208003836;
+        Tue, 10 Nov 2015 18:13:23 -0800 (PST)
 Received: from localhost.localdomain (ool-18e4990e.dyn.optonline.net. [24.228.153.14])
-        by smtp.gmail.com with ESMTPSA id m128sm7948819ywm.34.2015.11.10.18.13.21
+        by smtp.gmail.com with ESMTPSA id m128sm7948819ywm.34.2015.11.10.18.13.22
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 10 Nov 2015 18:13:22 -0800 (PST)
+        Tue, 10 Nov 2015 18:13:23 -0800 (PST)
 X-Mailer: git-send-email 2.6.2
 In-Reply-To: <1447207885-10911-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281146>
-
-'--dry-run' reports the updatable state of each ref without acutally
-updating any refs.  Refs which are fast-forwardable are reported as
-'WOULD-UPDATE'.
-
-'--skip-worktrees' does not update refs which are checked out in any
-worktree.  Branches which are fast-forwardable but checked out in a
-worktree are reported as 'SKIPPED'.  With `--dry-run` these are reported
-'WOULD-SKIP'.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281147>
 
 Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
 ---
- builtin/ff-refs.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ Documentation/git-ff-refs.txt | 55 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
+ create mode 100644 Documentation/git-ff-refs.txt
 
-diff --git a/builtin/ff-refs.c b/builtin/ff-refs.c
-index f14afc5..ae68cfb 100644
---- a/builtin/ff-refs.c
-+++ b/builtin/ff-refs.c
-@@ -5,6 +5,8 @@
- #include "run-command.h"
- #include "worktree.h"
- 
-+int dry_run = 0;
-+int no_wt = 0;
- struct worktree **worktrees;
- const char *padding = ".....................................................";
- 
-@@ -18,6 +20,7 @@ enum ff_result_type {
- 	UPDATABLE,
- 	REMOTE_MISSING,
- 	NON_FAST_FORWARD,
-+	SKIPPED,
- 	UNABLE_TO_UPDATE
- };
- 
-@@ -48,11 +51,13 @@ static const char *result_type_str(enum ff_result_type result_type)
- 	case UP_TO_DATE:
- 		return _("UP-TO-DATE");
- 	case UPDATABLE:
--		return _("WOULD-UPDATE");
-+		return dry_run ? _("WOULD-UPDATE") : _("UPDATED");
- 	case REMOTE_MISSING:
- 		return _("REMOTE-MISSING");
- 	case NON_FAST_FORWARD:
- 		return _("NON-FAST-FORWARD");
-+	case SKIPPED:
-+		return dry_run ? _("WOULD-SKIP") : _("SKIPPED");
- 	default:
- 		return _("UNABLE-TO-UPDATE");
- 	}
-@@ -135,7 +140,7 @@ static void process_refs(struct ff_ref_data *data)
- 
- 		printf("     %s -> %s%*.*s",
- 			details->branch->name, details->shortened_upstream, padLen, padLen, padding);
--		if (details->result_type == UPDATABLE)
-+		if (!dry_run && details->result_type == UPDATABLE)
- 			do_ref_update(data, details);
- 
- 		printf("[%s]\n", result_type_str(details->result_type));
-@@ -208,6 +213,9 @@ static int analize_refs(const char *refname,
- 			else if (!in_merge_bases(details->branch_commit, details->upstream_commit))
- 				details->result_type = NON_FAST_FORWARD;
- 
-+			else if (no_wt && details->wt)
-+				details->result_type = SKIPPED;
+diff --git a/Documentation/git-ff-refs.txt b/Documentation/git-ff-refs.txt
+new file mode 100644
+index 0000000..569d1d4
+--- /dev/null
++++ b/Documentation/git-ff-refs.txt
+@@ -0,0 +1,55 @@
++git-ff-refs(1)
++============
 +
- 			else
- 				details->result_type = UPDATABLE;
- 		}
-@@ -233,6 +241,9 @@ int cmd_ff_refs(int argc, const char **argv, const char *prefix)
- 	int ret = 0;
- 
- 	struct option options[] = {
-+		OPT_BOOL(0, "dry-run", &dry_run, N_("show what would be fast-forwarded")),
-+		OPT_BOOL(0, "skip-worktrees", &no_wt,
-+				N_("skip refs checked out in any worktree")),
- 		OPT_END()
- 	};
- 
++NAME
++----
++git-ff-refs - Fast-forward each local branch to its upstream (if possible)
++
++
++SYNOPSIS
++--------
++[verse]
++'git ff-refs' [<options>]
++
++
++DESCRIPTION
++-----------
++Update local branches to their tracked upstream if and only if the local branch
++can be fast-forwarded to the upstream ref.  Local branches which have diverged
++from the upstream will not be updated.
++
++Each local branch tracking an upstream will be reported with a status based on
++whether or not it it was updated.  The statuses are:
++
++	UP-TO-DATE - The local branch is the same or equal to the upstream
++	UPDATED - The branch was fast forwarded
++	WOULD-UPDATE - With `--dry-run`, the branch is fast forwardable
++	REMOTE-MISSING - The branch is tracking an upstream that is not present
++	NON-FAST-FORWARD - The branch has diverged from the upstream
++	SKIPPED - With `--skip-worktrees` the branch is fast forwardable but checked
++		out in a local worktree
++	WOULD-SKIP - With `--skip-worktrees` and `--dry-run`, the branch is fast
++		forwardable but checked out in a local worktree
++	UNABLE-TO-UPDATE - An error occurred while trying to update the branch
++
++OPTIONS
++-------
++--dry-run::
++	Report the updatable state of each branch without acutally updating anything.
++	In a dry run, fast-forwardable branches are marked 'WOULD-UPDATE' instead of
++	'UPDATED'.
++
++--skip-worktrees::
++	Does not update branches which are checked out in any worktree.  Branches
++	which are fast-forwardable that are checked out in any worktree are marked
++	'SKIPPED'.  If `--dry-run` is also set, those branches are marked 'WOULD-SKIP'.
++
++
++SEE ALSO
++--------
++linkgit:git-update-ref[1]
++linkgit:git-merge[1]
++
++GIT
++---
++Part of the linkgit:git[1] suite
 -- 
 2.6.2
