@@ -1,44 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH/RFC 01/10] ref-filter: introduce a parsing function for each atom in valid_atom
-Date: Thu, 12 Nov 2015 01:14:27 +0530
-Message-ID: <1447271075-15364-2-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH/RFC 05/10] ref-filter: introduce color_atom_parser()
+Date: Thu, 12 Nov 2015 01:14:31 +0530
+Message-ID: <1447271075-15364-6-git-send-email-Karthik.188@gmail.com>
 References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, gitster@pobox.com,
 	Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 11 20:44:36 2015
+X-From: git-owner@vger.kernel.org Wed Nov 11 20:44:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwbJr-00062Z-JF
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 20:44:35 +0100
+	id 1ZwbJu-00062Z-0J
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 20:44:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752258AbbKKToY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 14:44:24 -0500
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:34857 "EHLO
+	id S1752535AbbKKTod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 14:44:33 -0500
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:36623 "EHLO
 	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509AbbKKToX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 14:44:23 -0500
-Received: by padhk6 with SMTP id hk6so5331053pad.2
-        for <git@vger.kernel.org>; Wed, 11 Nov 2015 11:44:22 -0800 (PST)
+	with ESMTP id S1752449AbbKKTob (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2015 14:44:31 -0500
+Received: by pabfh17 with SMTP id fh17so5361108pab.3
+        for <git@vger.kernel.org>; Wed, 11 Nov 2015 11:44:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=x79ppZnqgF0Pjg7Szip/Hao5TUpjHt3QBMMhUBK+JvI=;
-        b=vYFbBvabggNUAhLtOZYbLC/878Hwme3cUa1OLcn0RhfT0oxUuZkM0eHKyGeSEL9zGK
-         2/T18Bzb4SBPBGLAFCE2LW0Kf41XaIdvOkpiHkX6n82Hz/sfqQiRnd+sucBcFydBehGV
-         t+gS9d4alHq4ZfTdrerzUaKCpGZ3yCX8n84NySs+Z+HO9FnMCyHX+ApQA9I7GJSfOeH3
-         xMVqj8o3G3OOitkMlm6wZReEJMwHMGaZojXb75vs0PpoKL2pzAjFcWeTXW2Uau0cp3sy
-         7QLFq4N1oTiUdeP5pQ4PDDjG5gvB3+42xl2ymxnIwdRrKvnUI9kfxB1ynvyhUSiFpZTL
-         7tAA==
-X-Received: by 10.66.228.33 with SMTP id sf1mr16777707pac.132.1447271062241;
-        Wed, 11 Nov 2015 11:44:22 -0800 (PST)
+        bh=Pw6g8iKXye0f9fd4j9jo22svUYeB+pOHhP0ksQh3dA8=;
+        b=saShP3ovueVyv13cSOy57fAVBfkkbvh82iLJQmmoTBPTVtRZdfSokhQEmGXAulgbyw
+         nZvaPAmKgc4cEkI78ZM/JJ8BCiukFPiuPhh6TwdQ/m8HMs8NlL9c3QOlGOuAC1bQHD9h
+         ZL3i1/SRd/Czx224+XyRuk/EO7OFw3OXokJIF3Qm6HBLNblrgbBNaMS4ODC9mhZk0W/j
+         4qpYuj0YvCXqcHap8viATdMWaGQLNF/iZdGkrKnS7BByLehFvPciMQQiMQQ/cEnzXIpY
+         Az2khiJyPKb/5GRCmKb3wXwaGNnmIC/WP7zYmuZLZN/nz5SW7tZ5uIZCTuF0uQ7mWa9i
+         xcHw==
+X-Received: by 10.68.104.229 with SMTP id gh5mr17155038pbb.130.1447271070934;
+        Wed, 11 Nov 2015 11:44:30 -0800 (PST)
 Received: from ashley.localdomain ([106.51.241.110])
-        by smtp.gmail.com with ESMTPSA id j5sm278998pbq.74.2015.11.11.11.44.20
+        by smtp.gmail.com with ESMTPSA id j5sm278998pbq.74.2015.11.11.11.44.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 Nov 2015 11:44:21 -0800 (PST)
+        Wed, 11 Nov 2015 11:44:30 -0800 (PST)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.6.2
 In-Reply-To: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
@@ -46,94 +46,77 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281182>
 
-Introduce a parsing function for each atom in valid_atom. Using this
-we can define special parsing functions for each of the atoms. Since
-we have a third field in valid_atom structure, we now fill out missing
-cmp_type values.
+Introduce color_atom_parser() which will parse a "color" atom and
+store its color in the "use_atom" structure for further usage in
+'populate_value()'.
 
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- ref-filter.c | 59 ++++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 30 insertions(+), 29 deletions(-)
+ ref-filter.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index e205dd2..fbbda17 100644
+index 4af28ef..0523d54 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -19,42 +19,43 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+@@ -29,6 +29,9 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+ static struct used_atom {
+ 	const char *str;
+ 	cmp_type type;
++	union {
++		const char *color;
++	} u;
+ } *used_atom;
+ static int used_atom_cnt, need_tagged, need_symref;
+ static int need_color_reset_at_eol;
+@@ -53,6 +56,13 @@ static int match_atom_name(const char *name, const char *atom_name, const char *
+ 	return 1;
+ }
+ 
++void color_atom_parser(struct used_atom *atom)
++{
++	match_atom_name(atom->str, "color", &atom->u.color);
++	if (!atom->u.color)
++		die(_("expected format: %%(color:<color>)"));
++}
++
  static struct {
  	const char *name;
  	cmp_type cmp_type;
-+	void (*parser)(struct used_atom *atom);
- } valid_atom[] = {
--	{ "refname" },
--	{ "objecttype" },
-+	{ "refname", FIELD_STR },
-+	{ "objecttype", FIELD_STR },
- 	{ "objectsize", FIELD_ULONG },
--	{ "objectname" },
--	{ "tree" },
--	{ "parent" },
-+	{ "objectname", FIELD_STR },
-+	{ "tree", FIELD_STR },
-+	{ "parent", FIELD_STR },
- 	{ "numparent", FIELD_ULONG },
--	{ "object" },
--	{ "type" },
--	{ "tag" },
--	{ "author" },
--	{ "authorname" },
--	{ "authoremail" },
-+	{ "object", FIELD_STR },
-+	{ "type", FIELD_STR },
-+	{ "tag", FIELD_STR },
-+	{ "author", FIELD_STR },
-+	{ "authorname", FIELD_STR },
-+	{ "authoremail", FIELD_STR },
- 	{ "authordate", FIELD_TIME },
--	{ "committer" },
--	{ "committername" },
--	{ "committeremail" },
-+	{ "committer", FIELD_STR },
-+	{ "committername", FIELD_STR },
-+	{ "committeremail", FIELD_STR },
- 	{ "committerdate", FIELD_TIME },
--	{ "tagger" },
--	{ "taggername" },
--	{ "taggeremail" },
-+	{ "tagger", FIELD_STR },
-+	{ "taggername", FIELD_STR },
-+	{ "taggeremail", FIELD_STR },
- 	{ "taggerdate", FIELD_TIME },
--	{ "creator" },
-+	{ "creator", FIELD_STR },
- 	{ "creatordate", FIELD_TIME },
--	{ "subject" },
--	{ "body" },
--	{ "contents" },
--	{ "upstream" },
--	{ "push" },
--	{ "symref" },
--	{ "flag" },
--	{ "HEAD" },
--	{ "color" },
--	{ "align" },
--	{ "end" },
-+	{ "subject", FIELD_STR },
-+	{ "body", FIELD_STR },
-+	{ "contents", FIELD_STR },
-+	{ "upstream", FIELD_STR },
-+	{ "push", FIELD_STR },
-+	{ "symref", FIELD_STR },
-+	{ "flag", FIELD_STR },
-+	{ "HEAD", FIELD_STR },
-+	{ "color", FIELD_STR },
-+	{ "align", FIELD_STR },
-+	{ "end", FIELD_STR },
+@@ -90,7 +100,7 @@ static struct {
+ 	{ "symref", FIELD_STR },
+ 	{ "flag", FIELD_STR },
+ 	{ "HEAD", FIELD_STR },
+-	{ "color", FIELD_STR },
++	{ "color", FIELD_STR, color_atom_parser },
+ 	{ "align", FIELD_STR },
+ 	{ "end", FIELD_STR },
  };
+@@ -175,6 +185,9 @@ int parse_ref_filter_atom(const char *atom, const char *ep)
+ 	REALLOC_ARRAY(used_atom, used_atom_cnt);
+ 	used_atom[at].str = xmemdupz(atom, ep - atom);
+ 	used_atom[at].type = valid_atom[i].cmp_type;
++	memset(&used_atom[at].u, 0, sizeof(used_atom[at].u));
++	if (valid_atom[i].parser)
++		valid_atom[i].parser(&used_atom[at]);
+ 	if (*atom == '*')
+ 		need_tagged = 1;
+ 	if (!strcmp(used_atom[at].str, "symref"))
+@@ -833,11 +846,10 @@ static void populate_value(struct ref_array_item *ref)
+ 			refname = branch_get_push(branch, NULL);
+ 			if (!refname)
+ 				continue;
+-		} else if (match_atom_name(name, "color", &valp)) {
++		} else if (starts_with(name, "color")) {
+ 			char color[COLOR_MAXLEN] = "";
++			const char *valp = atom->u.color;
  
- #define REF_FORMATTING_STATE_INIT  { 0, NULL }
+-			if (!valp)
+-				die(_("expected format: %%(color:<color>)"));
+ 			if (color_parse(valp, color) < 0)
+ 				die(_("unable to parse format"));
+ 			v->s = xstrdup(color);
 -- 
 2.6.2
