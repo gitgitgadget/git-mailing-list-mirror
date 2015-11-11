@@ -1,84 +1,122 @@
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH] http: fix some printf format warnings on 32-bit builds
-Date: Wed, 11 Nov 2015 17:49:10 +0000
-Message-ID: <56437F96.2070209@ramsayjones.plus.com>
-References: <56428A6A.5010406@ramsayjones.plus.com>
- <CAPig+cR+jXgw7+kUK9vrZxNbytwyK3gzgm1YPf_6s57_UxPaBA@mail.gmail.com>
- <CAGZ79kb1pDhcP+hN9+C0xK-VYKxfnhvj6a2Len6kOWgmv4+fmQ@mail.gmail.com>
+From: yac <yac@blesmrt.net>
+Subject: Suspected bug on `git -C <rp> rev-list --all` where <rp> has 0
+ commits
+Date: Wed, 11 Nov 2015 19:26:34 +0100
+Message-ID: <20151111192634.629102e6@linux-apw9.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 11 18:49:20 2015
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 11 19:26:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwZWJ-0007m2-Ia
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 18:49:19 +0100
+	id 1Zwa64-0002iq-O5
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 19:26:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751602AbbKKRtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 12:49:15 -0500
-Received: from avasout01.plus.net ([84.93.230.227]:55445 "EHLO
-	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509AbbKKRtO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 12:49:14 -0500
-Received: from [10.0.2.15] ([146.199.93.105])
-	by avasout01 with smtp
-	id gHpC1r0062GQ2gJ01HpDfx; Wed, 11 Nov 2015 17:49:13 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=MbeRwMLf c=1 sm=1 tr=0
- a=SWxm+s7FAPvPP0IAAWI2og==:117 a=SWxm+s7FAPvPP0IAAWI2og==:17 a=0Bzu9jTXAAAA:8
- a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=BCjA09oAAAAA:8 a=J2d4_G6QDc1fK1R13N8A:9
- a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <CAGZ79kb1pDhcP+hN9+C0xK-VYKxfnhvj6a2Len6kOWgmv4+fmQ@mail.gmail.com>
+	id S1752296AbbKKS0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 13:26:12 -0500
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:37510 "EHLO
+	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752046AbbKKS0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2015 13:26:12 -0500
+Received: by wmww144 with SMTP id w144so56166248wmw.0
+        for <git@vger.kernel.org>; Wed, 11 Nov 2015 10:26:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=blesmrt_net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=hR5hauiIJiykbfQlN5/9C3NRRZK+qt+dOfJl5IX2kT4=;
+        b=KQKUxjSWFDeyNpdY8FpcbMXVOh+lXUrTlQUhF9B14Tpbxn0tlzULU1ACoW+Uh/prRx
+         +qzZD7T6EZNLyIYOlINGpnFEdCYccgKnhhvsU/vGFXvTe7Fv6CQhLhZSxneAWgbBQT8m
+         6YKyI1c672gn2kEUM0BDSUH1mlvc3YPHpiFYEFB9HNlt9YCtinbGk1ukj1JVDEUpoaHw
+         1UkSvSd7dj5e3Dvo9plLyj0pLva4TqOWCIfOHkNSPGxkYk0ByjovQNJZnh4HIw4Oyol4
+         zf5xinIV3oyRbjIPE0nPgcBoDHtnA06n3+73nbTJ9kGbjYvYUywMs7q7mOZEkSemX3xT
+         tEDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=hR5hauiIJiykbfQlN5/9C3NRRZK+qt+dOfJl5IX2kT4=;
+        b=c8M0wFJP6MvfjmkUZxFe6ABUcJKQz77B3Tk+k26JJc5EBiv+roYuHvvLP+nkO0lMct
+         W36qY/1ZauMe66yJmzGjIyeUUFxLz2lL7To+4Ui08eWFVxAerZrAxEvCXXSIUYPyvOav
+         PdJqVrZRlvBY5DSCEGnjUwvRoRmWtjFeVwZAjjf4XkmcpQDdZEcMyZVvU8SSW0hdAzHS
+         DTRbb3OdbPwyHa4MrSAH7f6gu0d7si51yrqKMl5DJR3yByxwKpANbybUpY44Nmw/hStk
+         2RnkcZlHMZJlsvfIx/jPTSOLbZ20h39/SOBfeXQlyDcDZzdEQT2tEAXXnfHXMWI2yF21
+         xphA==
+X-Gm-Message-State: ALoCoQn4f9P/aKD5DGhkKVfVj/hafryUAJro19gAxCgcrbba6KAfwgkAtd+i1H2Jq+LwUaVdwnee
+X-Received: by 10.28.61.213 with SMTP id k204mr24223209wma.5.1447266369788;
+        Wed, 11 Nov 2015 10:26:09 -0800 (PST)
+Received: from linux-apw9.site (nat1.scz.suse.com. [213.151.88.250])
+        by smtp.gmail.com with ESMTPSA id vr10sm10254975wjc.38.2015.11.11.10.26.09
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 11 Nov 2015 10:26:09 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281175>
 
+Hello
 
+basics:
 
-On 11/11/15 02:00, Stefan Beller wrote:
-> On Tue, Nov 10, 2015 at 5:22 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Tue, Nov 10, 2015 at 7:23 PM, Ramsay Jones
->> <ramsay@ramsayjones.plus.com> wrote:
->>> Commit f8117f55 ("http: use off_t to store partial file size",
->>> 02-11-2015) changed the type of some variables from long to off_t.
->>> The 32-bit build, which enables the large filesystem interface
->>> (_FILE_OFFSET_BITS == 64), defines the off_t type as a 64-bit
->>> integer, whereas long is a 32-bit integer. This results in a couple
->>> of printf format warnings.
->>>
->>> In order to suppress the warnings, change the format specifier to use
->>> the PRIuMAX macro and cast the off_t argument to uintmax_t. (See also
->>> the http_opt_request_remainder() function, which uses the same
->>> solution).
->>
->> I just ran across the problem when building 'next' on my Mac and was
->> about to investigate, so am happy to find that the work has already
->> been done. Thanks.
->>
->> My machine is 64-bit, though, so perhaps it's misleading to
->> characterize this as a fix for 32-bit builds. In particular, off_t is
->> 'long long' on this machine, so it complains about the "long" format
->> specifier.
-> 
-> +Lars
-> 
-> I wonder if 32 bit compilation can be part of travis.
-> 
+% rpm -q git git-core
+git-2.6.2-2.1.x86_64
+git-core-2.6.2-2.1.x86_64
 
-Did this warning show up on the OS X build?
+~ % grep PRETTY_NAME /etc/os-release
+PRETTY_NAME="openSUSE Tumbleweed (20151030) (x86_64)"
 
-ATB,
-Ramsay Jones
+current behavior:
+
+~ % git init no-commits
+Initialized empty Git repository in /home/tester/no-commits/.git/
+~ % git -C no-commits rev-list --all
+usage: git rev-list [OPTION] <commit-id>... [ -- paths... ]
+  limiting output:
+    --max-count=<n>
+    --max-age=<epoch>
+    --min-age=<epoch>
+    --sparse
+    --no-merges
+    --min-parents=<n>
+    --no-min-parents
+    --max-parents=<n>
+    --no-max-parents
+    --remove-empty
+    --all
+    --branches
+    --tags
+    --remotes
+    --stdin
+    --quiet
+  ordering output:
+    --topo-order
+    --date-order
+    --reverse
+  formatting output:
+    --parents
+    --children
+    --objects | --objects-edge
+    --unpacked
+    --header | --pretty
+    --abbrev=<n> | --no-abbrev
+    --abbrev-commit
+    --left-right
+    --count
+  special purpose:
+    --bisect
+    --bisect-vars
+    --bisect-all
+~ % echo $?
+129
+
+expected behavior:
+
+~ % git -C no-commits rev-list --all
+~ % echo $?
+0
