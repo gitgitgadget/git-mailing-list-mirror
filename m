@@ -1,92 +1,97 @@
-From: "Boettger, Heiko" <Heiko.Boettger@karlstorz.com>
-Subject: git submodule sync / git submodule rm
-Date: Wed, 11 Nov 2015 10:18:40 +0000
-Message-ID: <8C0042D8869AEA4AA334B49AFBBCEF8294713B41@TUT-EX02-PV.KSTG.corp>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 0/5] ff-refs: builtin command to fast-forward local refs
+Date: Wed, 11 Nov 2015 11:41:45 +0100
+Message-ID: <56431B69.9010007@drmicha.warpmail.net>
+References: <1447207885-10911-1-git-send-email-rappazzo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 11 11:18:46 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, peff@peff.net,
+	dturner@twopensource.com, pclouds@gmail.com,
+	sunshine@sunshineco.com
+To: Michael Rappazzo <rappazzo@gmail.com>, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Nov 11 11:42:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwSUH-0001ck-Tv
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 11:18:46 +0100
+	id 1ZwSqm-0007LL-5X
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 11:42:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752350AbbKKKSm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Nov 2015 05:18:42 -0500
-Received: from mx1.karlstorz.com ([62.134.46.135]:11714 "EHLO
-	mx1.karlstorz.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752121AbbKKKSl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2015 05:18:41 -0500
-X-IronPort-AV: E=Sophos;i="5.20,275,1444687200"; 
-   d="scan'208";a="34555946"
-Received: from unknown (HELO TUT-EX04-PV.KSTG.corp) ([10.0.10.234])
-  by mx1.karlstorz.com with ESMTP; 11 Nov 2015 11:18:40 +0100
-Received: from TUT-EX02-PV.KSTG.corp ([169.254.2.245]) by
- TUT-EX04-PV.KSTG.corp ([10.0.10.234]) with mapi id 14.03.0248.002; Wed, 11
- Nov 2015 11:18:40 +0100
-Thread-Topic: git submodule sync / git submodule rm
-Thread-Index: AdEcaAQCoTIVxeKrQg+xTAlDUnoCxg==
-Accept-Language: de-CH, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.0.10.246]
+	id S1752110AbbKKKlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 05:41:50 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:59501 "EHLO
+	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751766AbbKKKlt (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Nov 2015 05:41:49 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id F410520A7E
+	for <git@vger.kernel.org>; Wed, 11 Nov 2015 05:41:47 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 11 Nov 2015 05:41:47 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=Ps2azJdOTfrpk8r+rroEJXOdlRw=; b=CRJewe
+	beF9yoDIu2J3ubFfoCHYB/3sE/PseTAkEeqbgmFaB3dkYc9JRQann83TZSrjuDOP
+	4mfh8S+nUZp2RxXxzgAStDCZm68Rr7yIukHZJ7cHI//Fuy7V/ECTywVW4/GYHEBW
+	8Zx94LbZN2auFoROS/eEGKA/J7SjDuwC7zs6Q=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Ps2azJdOTfrpk8r
+	+rroEJXOdlRw=; b=AtWFPRxmjI7OPGXEX+ytdObywap4juCVCkrKOviYumUe775
+	5w35DJ5DUZLERqhwZiDuP5B4aiiNQStfisZ6T+MC2PkwpmjavncSVpyv8g8HFbkK
+	S00ST77P1XAQjtDNlNGX/MgbAwDQfLoRKWuImgxE1YpcKaDYKWYfMcVfr2hU=
+X-Sasl-enc: 7I5zGXUi28K50VDwDai+PCqix7bYOw5PCuMS660xFR0M 1447238507
+Received: from dickson.math.uni-hannover.de (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 8D978C016DB;
+	Wed, 11 Nov 2015 05:41:46 -0500 (EST)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <1447207885-10911-1-git-send-email-rappazzo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281158>
 
-Hi,
+Michael Rappazzo venit, vidit, dixit 11.11.2015 03:11:
+> This patch series is built on (based on) 'next' because it relies on
+> worktree.c
+> 
+> `ff-refs` will update local branches which can be fast-forwarded to their
+> upstream tracking branch.  Any branch which has diverged from the upstream
+> will be left untouched by this command.  Additionally, there are options
+> for '--dry-run' and to '--skip-worktrees'.
+> 
+> There are two primary update mechanisms for fast-forwarding a branch.
+>   - For a checked out branch, emulate `git-merge --ff-only`
+>   - For a non-checked out branch, emulate `git update-ref`
+> 
+> When run on a repo with multiple worktrees (created with git-worktree add),
+> git-ff-refs will take that into account when fast-forwarding.  That is, it
+> will run in 'merge --ff-only' emulation mode when a branch is checked out
+> in a worktree, rather than in 'update-ref' mode.
+> 
+> The primary benefit of ff-refs will come for those who maintain several
+> local branches which track upstream remote branches that update often.  The
+> intended usage pattern is to run `git-fetch` followed by `git-ff-refs`.
 
-i'm currently on a migration from svn to git and also have the task to =
-convert the svnexternal to git submodules. During the migration step I =
-am doing an automatic verification which needs a reliable way to switch=
- the working tree to another branch include the submodules.
-When the submodule definition changes I miss a reliable command to upda=
-te the .git/config:
+I'm sorry, but I don't see why this deserves a new command. If refspec
+with and without "+" are not enough then maybe "git fetch --all" or "git
+remote update" should learn a new "--ff-only" option (ignoring all "+")
+like merge has.
 
-1. the git submodule sync seems to do nothing if a module was removed
-2. git submodule update complains about the missing entry in .gitmodule=
-s
-3. git submodule deinit doesn't work either and complains about missing=
- path in .gitmodules as well
+As for updating worktrees: This shouldn't be taken too lightly anyways.
+But the worktree interface still has some rough edges, and I would hope
+that it learns a "foreach" subcommand very much like the submodule
+version. That would allow you to
 
-These issues are partially described in the git book under https://git-=
-scm.com/book/en/v2/Git-Tools-Submodules in section "Issues with Submodu=
-les". Now what I am really missing is a way to keep the .git/config and=
- references in sync with the .gitmodules file which at best is integrat=
-ed into git checkout. It is clear that I could write a script for that =
-by myself, but it would be much better to have an integrated command fo=
-r that which I though is git submodule sync, but unfortunately it doesn=
-'t do a complete sync of all settings.
+git worktree foreach git merge --ff-only
 
-In the google forum there was someone asking for a git submodule remove=
- command:
+with a systematic aproach that opens many other opportunities.
 
-https://groups.google.com/forum/#!searchin/git-users/submodule/git-user=
-s/Md72iVvPHqw/H_j3mT7bRq4J
-
-I don't think that it is strictly required to remove the untracked file=
-, this can be archived by a git clean as well, but is there any progres=
-s on this.
-
-Heiko B=F6ttger
-
-STORZ Endoskop Produktions GmbH
-Niederlassung Schaffhausen
-Schneckenackerstr. 1
-8200 Schaffhausen
-Switzerland
-
------------------------------------------------------------------------=
-------------------------------------------
-We would be most pleased to welcome you to MEDICA 2015 in D=FCsseldorf,
-Germany, 16th -=A019th November 2015. You will find us in hall 10 booth=
- D22.
------------------------------------------------------------------------=
-------------------------------------------
+Michael
