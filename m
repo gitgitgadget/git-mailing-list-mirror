@@ -1,44 +1,44 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH/RFC 07/10] ref-filter: introduce align_atom_parser()
-Date: Thu, 12 Nov 2015 01:14:33 +0530
-Message-ID: <1447271075-15364-8-git-send-email-Karthik.188@gmail.com>
+Subject: [PATCH/RFC 08/10] ref-filter: introduce remote_ref_atom_parser()
+Date: Thu, 12 Nov 2015 01:14:34 +0530
+Message-ID: <1447271075-15364-9-git-send-email-Karthik.188@gmail.com>
 References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, gitster@pobox.com,
 	Karthik Nayak <Karthik.188@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 11 20:44:46 2015
+X-From: git-owner@vger.kernel.org Wed Nov 11 20:44:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwbK0-0006Fl-Si
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 20:44:45 +0100
+	id 1ZwbK1-0006Fl-Kj
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 20:44:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752584AbbKKToi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752597AbbKKToj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 14:44:39 -0500
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:35022 "EHLO
+	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752580AbbKKToi (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 11 Nov 2015 14:44:38 -0500
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:34609 "EHLO
-	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752449AbbKKTog (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 14:44:36 -0500
-Received: by pacfl14 with SMTP id fl14so5347916pac.1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2015 11:44:35 -0800 (PST)
+Received: by padhk6 with SMTP id hk6so5331668pad.2
+        for <git@vger.kernel.org>; Wed, 11 Nov 2015 11:44:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+BixjeHlT/5pry9/iNP0w+UKIAW5mSd7PeQCiDCgCIE=;
-        b=rflTubJKiVlbp/ESjRiz6xgTzkDmvXI6B1uXe0x6/p8VhLfIM+fWGEZBCko8TvTRpV
-         nIU7xjQ09LDr5PlFVwnu7bIP2oKUBR/jDtrctGrzxYMLCC59PTgtcUKGEG5MbsAkKcyF
-         7ag5HKgPSjneQtoJ63MJsVppuZwZxlDhaT2bvtQjDs19xjPSHA7Se0gRXiUwJbTFVoI1
-         B6zJ7SCuWuz4FjxftzeTyjGUY7VuzB3HVZOUcErbXpo8Zc4PevtIADROxzu6TQ2LQJW+
-         wAsROvvU1Lb9jtIUwYCsKJcdpw9M5nKodFBdClglWRAxcc1muGgwgnbbsTSW3mpPKDiz
-         5U3A==
-X-Received: by 10.66.234.101 with SMTP id ud5mr17019981pac.136.1447271075331;
-        Wed, 11 Nov 2015 11:44:35 -0800 (PST)
+        bh=/k6BTzwAwioKWu11iPAWlbCDDDT2QkB2GPau2hYhZSQ=;
+        b=iuum2biBmEQNG+eWh4hUuKQgMeJPIizX1WGXg3FLUxw3jVwLA5FdBymafURdAfrCps
+         FLWaTRQ+WOjjrxfzUSqZuDQKjAQURpPwZOfLuK5jr9wTir89/novlZDLGEUj+gKEqiZY
+         49xzEt6cLeLdS2qI76pyscisx7Y2VRVSSXptSslN4rYeEd7d5JAuAiCCvfaUzkkq/Zd9
+         Lbe0jkyHKeKyQh5ueNJFYHoOHt5x5f/Svq8fVmYpyo+qfC0S6wgyX4sg+1SIdA0jXx52
+         zdHhcb4QSpw57lJ8LEDnCC/NeZIsRgu4XKrLVhVayEMVTCSkWDcxQC2daUldYMmAddpQ
+         SoCg==
+X-Received: by 10.68.130.69 with SMTP id oc5mr16810417pbb.140.1447271077516;
+        Wed, 11 Nov 2015 11:44:37 -0800 (PST)
 Received: from ashley.localdomain ([106.51.241.110])
-        by smtp.gmail.com with ESMTPSA id j5sm278998pbq.74.2015.11.11.11.44.33
+        by smtp.gmail.com with ESMTPSA id j5sm278998pbq.74.2015.11.11.11.44.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 11 Nov 2015 11:44:34 -0800 (PST)
+        Wed, 11 Nov 2015 11:44:36 -0800 (PST)
 X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
 X-Mailer: git-send-email 2.6.2
 In-Reply-To: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
@@ -46,219 +46,181 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281187>
 
-Introduce align_atom_parser() which will parse 'align' atoms and store
-the required width and position into the 'used_atom' structure. While
-we're here, add support for the usage of 'width=' and 'position=' when
-using the 'align' atom (e.g. %(align:position=middle,width=30)).
-
-Add documentation and modify the existing tests in t6302 to reflect
-the same.
+Introduce remote_ref_atom_parser() which will parse the '%(upstream)'
+and '%(push)' atoms and store information into the 'used_atom'
+structure based on the modifiers used along with the corresponding
+atom.
 
 Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  18 ++++---
- ref-filter.c                       | 102 +++++++++++++++++++++++--------------
- t/t6302-for-each-ref-filter.sh     |   4 +-
- 3 files changed, 75 insertions(+), 49 deletions(-)
+ ref-filter.c | 107 ++++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 66 insertions(+), 41 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index c6f073c..56ffdc1 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -129,14 +129,16 @@ color::
- 
- align::
- 	Left-, middle-, or right-align the content between
--	%(align:...) and %(end). The "align:" is followed by `<width>`
--	and `<position>` in any order separated by a comma, where the
--	`<position>` is either left, right or middle, default being
--	left and `<width>` is the total length of the content with
--	alignment. If the contents length is more than the width then
--	no alignment is performed. If used with '--quote' everything
--	in between %(align:...) and %(end) is quoted, but if nested
--	then only the topmost level performs quoting.
-+	%(align:...) and %(end). The "align:" is followed by
-+	`width=<width>` and `position=<position>` in any order
-+	separated by a comma, where the `<position>` is either left,
-+	right or middle, default being left and `<width>` is the total
-+	length of the content with alignment. The prefix for the
-+	arguments is not mandatory. If the contents length is more
-+	than the width then no alignment is performed. If used with
-+	'--quote' everything in between %(align:...) and %(end) is
-+	quoted, but if nested then only the topmost level performs
-+	quoting.
- 
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
 diff --git a/ref-filter.c b/ref-filter.c
-index 4e8b3c9..049e6b9 100644
+index 049e6b9..802629b 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -16,6 +16,11 @@
- 
- typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
- 
-+struct align {
-+	align_type position;
-+	unsigned int width;
-+};
-+
- /*
-  * An atom is a valid field atom listed below, possibly prefixed with
-  * a "*" to denote deref_tag().
-@@ -31,6 +36,7 @@ static struct used_atom {
- 	cmp_type type;
+@@ -37,6 +37,11 @@ static struct used_atom {
  	union {
  		const char *color;
-+		struct align align;
+ 		struct align align;
++		struct {
++			unsigned int shorten : 1,
++				track : 1,
++				trackshort : 1;
++		} remote_ref;
  	} u;
  } *used_atom;
  static int used_atom_cnt, need_tagged, need_symref;
-@@ -63,6 +69,61 @@ void color_atom_parser(struct used_atom *atom)
+@@ -69,6 +74,24 @@ void color_atom_parser(struct used_atom *atom)
  		die(_("expected format: %%(color:<color>)"));
  }
  
-+static align_type get_align_position(const char *type)
++void remote_ref_atom_parser(struct used_atom *atom)
 +{
-+	if (!strcmp(type, "right"))
-+		return ALIGN_RIGHT;
-+	else if (!strcmp(type, "middle"))
-+		return ALIGN_MIDDLE;
-+	else if (!strcmp(type, "left"))
-+		return ALIGN_LEFT;
-+	return -1;
-+}
++	const char *buf;
 +
-+void align_atom_parser(struct used_atom *atom)
-+{
-+	struct align *align = &atom->u.align;
-+	const char *buf = NULL;
-+	struct strbuf **s, **to_free;
-+	int width = -1;
-+
-+	match_atom_name(atom->str, "align", &buf);
++	buf = strchr(atom->str, ':');
 +	if (!buf)
-+		die(_("expected format: %%(align:<width>,<position>)"));
-+	s = to_free = strbuf_split_str_without_term(buf, ',', 0);
-+
-+	/*  By default align to ALGIN_LEFT */
-+	align->position = ALIGN_LEFT;
-+
-+	while (*s) {
-+		int position;
-+		buf = s[0]->buf;
-+
-+		position = get_align_position(buf);
-+
-+		if (skip_prefix(buf, "position=", &buf)) {
-+			position = get_align_position(buf);
-+			if (position == -1)
-+				die(_("improper format entered align:%s"), s[0]->buf);
-+			align->position = position;
-+		} else if (skip_prefix(buf, "width=", &buf)) {
-+			if (strtoul_ui(buf, 10, (unsigned int *)&width))
-+				die(_("improper format entered align:%s"), s[0]->buf);
-+		} else if (!strtoul_ui(buf, 10, (unsigned int *)&width))
-+				;
-+		else if (position != -1)
-+			align->position = position;
-+		else
-+			die(_("improper format entered align:%s"), s[0]->buf);
-+		s++;
-+	}
-+
-+	if (width < 0)
-+		die(_("positive width expected with the %%(align) atom"));
-+	align->width = width;
-+	strbuf_list_free(to_free);
++		return;
++	buf++;
++	if (!strcmp(buf, "short"))
++		atom->u.remote_ref.shorten = 1;
++	else if (!strcmp(buf, "track"))
++		atom->u.remote_ref.track = 1;
++	else if (!strcmp(buf, "trackshort"))
++		atom->u.remote_ref.trackshort = 1;
++	else
++		die(_("improper format entered align:%s"), buf);
 +}
 +
- static struct {
- 	const char *name;
- 	cmp_type cmp_type;
-@@ -101,17 +162,12 @@ static struct {
+ static align_type get_align_position(const char *type)
+ {
+ 	if (!strcmp(type, "right"))
+@@ -156,8 +179,8 @@ static struct {
+ 	{ "subject", FIELD_STR },
+ 	{ "body", FIELD_STR },
+ 	{ "contents", FIELD_STR },
+-	{ "upstream", FIELD_STR },
+-	{ "push", FIELD_STR },
++	{ "upstream", FIELD_STR, remote_ref_atom_parser },
++	{ "push", FIELD_STR, remote_ref_atom_parser },
+ 	{ "symref", FIELD_STR },
  	{ "flag", FIELD_STR },
  	{ "HEAD", FIELD_STR },
- 	{ "color", FIELD_STR, color_atom_parser },
--	{ "align", FIELD_STR },
-+	{ "align", FIELD_STR, align_atom_parser },
- 	{ "end", FIELD_STR },
- };
+@@ -838,6 +861,42 @@ static inline char *copy_advance(char *dst, const char *src)
+ 	return dst;
+ }
  
- #define REF_FORMATTING_STATE_INIT  { 0, NULL }
++static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
++				    struct branch *branch, const char **s)
++{
++	int num_ours, num_theirs;
++	if (atom->u.remote_ref.shorten)
++		*s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
++	else if (atom->u.remote_ref.track) {
++		if (stat_tracking_info(branch, &num_ours,
++				       &num_theirs, NULL))
++			return;
++		if (!num_ours && !num_theirs)
++			*s = "";
++		else if (!num_ours)
++			*s = xstrfmt("[behind %d]", num_theirs);
++		else if (!num_theirs)
++			*s = xstrfmt("[ahead %d]", num_ours);
++		else
++			*s = xstrfmt("[ahead %d, behind %d]",
++				     num_ours, num_theirs);
++	} else if (atom->u.remote_ref.trackshort) {
++		if (stat_tracking_info(branch, &num_ours,
++				       &num_theirs, NULL))
++			return;
++
++		if (!num_ours && !num_theirs)
++			*s = "=";
++		else if (!num_ours)
++			*s = "<";
++		else if (!num_theirs)
++			*s = ">";
++		else
++			*s = "<>";
++	} else
++		*s = refname;
++}
++
+ /*
+  * Parse the object referred by ref, and grab needed value.
+  */
+@@ -892,6 +951,8 @@ static void populate_value(struct ref_array_item *ref)
+ 			refname = branch_get_upstream(branch, NULL);
+ 			if (!refname)
+ 				continue;
++			fill_remote_ref_details(atom, refname, branch, &v->s);
++			continue;
+ 		} else if (starts_with(name, "push")) {
+ 			const char *branch_name;
+ 			if (!skip_prefix(ref->refname, "refs/heads/",
+@@ -902,6 +963,8 @@ static void populate_value(struct ref_array_item *ref)
+ 			refname = branch_get_push(branch, NULL);
+ 			if (!refname)
+ 				continue;
++			fill_remote_ref_details(atom, refname, branch, &v->s);
++			continue;
+ 		} else if (starts_with(name, "color")) {
+ 			char color[COLOR_MAXLEN] = "";
+ 			const char *valp = atom->u.color;
+@@ -948,49 +1011,11 @@ static void populate_value(struct ref_array_item *ref)
  
--struct align {
--	align_type position;
--	unsigned int width;
--};
+ 		formatp = strchr(name, ':');
+ 		if (formatp) {
+-			int num_ours, num_theirs;
 -
- struct contents {
- 	unsigned int lines;
- 	struct object_id oid;
-@@ -881,39 +937,7 @@ static void populate_value(struct ref_array_item *ref)
- 				v->s = " ";
- 			continue;
- 		} else if (match_atom_name(name, "align", &valp)) {
--			struct align *align = &v->u.align;
--			struct strbuf **s, **to_free;
--			int width = -1;
+ 			formatp++;
+ 			if (!strcmp(formatp, "short"))
+ 				refname = shorten_unambiguous_ref(refname,
+ 						      warn_ambiguous_refs);
+-			else if (!strcmp(formatp, "track") &&
+-				 (starts_with(name, "upstream") ||
+-				  starts_with(name, "push"))) {
 -
--			if (!valp)
--				die(_("expected format: %%(align:<width>,<position>)"));
+-				if (stat_tracking_info(branch, &num_ours,
+-						       &num_theirs, NULL))
+-					continue;
 -
--			/*
--			 * TODO: Implement a function similar to strbuf_split_str()
--			 * which would omit the separator from the end of each value.
--			 */
--			s = to_free = strbuf_split_str_without_term(valp, ',', 0);
--
--			align->position = ALIGN_LEFT;
--
--			while (*s) {
--				if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
--					;
--				else if (!strcmp(s[0]->buf, "left"))
--					align->position = ALIGN_LEFT;
--				else if (!strcmp(s[0]->buf, "right"))
--					align->position = ALIGN_RIGHT;
--				else if (!strcmp(s[0]->buf, "middle"))
--					align->position = ALIGN_MIDDLE;
+-				if (!num_ours && !num_theirs)
+-					v->s = "";
+-				else if (!num_ours)
+-					v->s = xstrfmt("[behind %d]", num_theirs);
+-				else if (!num_theirs)
+-					v->s = xstrfmt("[ahead %d]", num_ours);
 -				else
--					die(_("improper format entered align:%s"), s[0]->buf);
--				s++;
--			}
+-					v->s = xstrfmt("[ahead %d, behind %d]",
+-						       num_ours, num_theirs);
+-				continue;
+-			} else if (!strcmp(formatp, "trackshort") &&
+-				   (starts_with(name, "upstream") ||
+-				    starts_with(name, "push"))) {
+-				assert(branch);
 -
--			if (width < 0)
--				die(_("positive width expected with the %%(align) atom"));
--			align->width = width;
--			strbuf_list_free(to_free);
-+			v->u.align = atom->u.align;
- 			v->handler = align_atom_handler;
- 			continue;
- 		} else if (!strcmp(name, "end")) {
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index fe4796c..688751e 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -97,7 +97,7 @@ test_expect_success 'left alignment is default' '
- 	refname is refs/tags/three    |refs/tags/three
- 	refname is refs/tags/two      |refs/tags/two
- 	EOF
--	git for-each-ref --format="%(align:30)refname is %(refname)%(end)|%(refname)" >actual &&
-+	git for-each-ref --format="%(align:width=30)refname is %(refname)%(end)|%(refname)" >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -113,7 +113,7 @@ test_expect_success 'middle alignment' '
- 	|  refname is refs/tags/three  |refs/tags/three
- 	|   refname is refs/tags/two   |refs/tags/two
- 	EOF
--	git for-each-ref --format="|%(align:middle,30)refname is %(refname)%(end)|%(refname)" >actual &&
-+	git for-each-ref --format="|%(align:position=middle,30)refname is %(refname)%(end)|%(refname)" >actual &&
- 	test_cmp expect actual
- '
- 
+-				if (stat_tracking_info(branch, &num_ours,
+-							&num_theirs, NULL))
+-					continue;
+-
+-				if (!num_ours && !num_theirs)
+-					v->s = "=";
+-				else if (!num_ours)
+-					v->s = "<";
+-				else if (!num_theirs)
+-					v->s = ">";
+-				else
+-					v->s = "<>";
+-				continue;
+-			} else
++			else
+ 				die("unknown %.*s format %s",
+ 				    (int)(formatp - name), name, formatp);
+ 		}
 -- 
 2.6.2
