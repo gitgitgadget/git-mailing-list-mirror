@@ -1,94 +1,112 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Allow git alias to override existing Git commands
-Date: Wed, 11 Nov 2015 09:42:52 -0800
-Message-ID: <CAGZ79kZcgHknvZ03+T++1o3d2_YMo4+FCNkOMuG13qsHJp8V0Q@mail.gmail.com>
-References: <56421BD9.5060501@game-point.net>
-	<CAGZ79kZxQWVMe3N1ti8npyp9_4DUPAVy9Uk5a75Jwh3Eud2eZQ@mail.gmail.com>
-	<56424DDE.2030808@game-point.net>
-	<5642C8BA.8030003@gmail.com>
-	<56430A27.2030604@game-point.net>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] http: fix some printf format warnings on 32-bit builds
+Date: Wed, 11 Nov 2015 17:47:43 +0000
+Message-ID: <56437F3F.7050305@ramsayjones.plus.com>
+References: <56428A6A.5010406@ramsayjones.plus.com>
+ <CAPig+cR+jXgw7+kUK9vrZxNbytwyK3gzgm1YPf_6s57_UxPaBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeremy Morton <admin@game-point.net>
-X-From: git-owner@vger.kernel.org Wed Nov 11 18:42:59 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 18:48:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwZQA-0001LF-Lm
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 18:42:59 +0100
+	id 1ZwZV1-0006OK-Dj
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 18:47:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752121AbbKKRmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 12:42:54 -0500
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:33642 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750942AbbKKRmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 12:42:53 -0500
-Received: by ykdv3 with SMTP id v3so61018890ykd.0
-        for <git@vger.kernel.org>; Wed, 11 Nov 2015 09:42:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=XiVpiOY7btNboSW28DEea393kEAf0K00k8hHRjg6/RA=;
-        b=K4+vdaBA6QuTp/cIE4HOK/j4JMKe2/IRbusnWNnKY+WG3mi/YzfoFelS9HCwmOdoXf
-         5SFyHwvaqEWI8ycc1VWLmFbX2EfRwhd42Q2CtbNR9Sg/0fVBo0oTN+2URtLsi2FkHEXj
-         OXSnSWPWNJp4miAoGeblJlqSLEEYm1ZaSCTeqiSFya5ekt5i+Fqbk/pKhqVgv6uUndqq
-         z712gCKrmgcecV//TqyT4bcK9YiDYKiLiEZ+WXvvhpPq2onnh2UD0ze7ioXQFGfliBn0
-         YnxG1l51nfvdk9RtE/ow8MM8V5o0eYDIkTJ1qdP2ICeDPKsE6CSfokcDs1kXoe0efyWz
-         n6Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=XiVpiOY7btNboSW28DEea393kEAf0K00k8hHRjg6/RA=;
-        b=FtGQBEkn4fHvmpOmYdHYGG0q0JISkJJhEFym8yChjbZUirZ/Wqw2q4l6rEMkbnrgvO
-         GciwSbcmL/hKkwgwFM4+sMKVaolzHCPWA1w0Dlqr7R+z1Dm714ja3qrdFhwGuXOAe1G+
-         ZUN7QUMJJ84O18PygarNwnD19y4UQg4RFj+iPj7thk7rqU2hZ2xpjXx3oMJ44Ca56nNG
-         EnNlKb/X4RK9RdMFJY2Z+ft7WhyfRKfQaxQ9ZJmYNaErFT/wRSscA5WwH4llIpJz69tR
-         mPHl+iTDCZoNuwy2/KegvqWC7GeMLzTaZHoSdzhW6FQlRKFTwv6GviG8rxcRRMIatCEQ
-         I2kg==
-X-Gm-Message-State: ALoCoQnDg0be/ZERRVIV6QhU9IHywZGRi2567SNF2T7DYc4hdpsDorDZDB3eN4Vb6+o5bGrQLxC4
-X-Received: by 10.129.78.12 with SMTP id c12mr361665ywb.320.1447263772923;
- Wed, 11 Nov 2015 09:42:52 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Wed, 11 Nov 2015 09:42:52 -0800 (PST)
-In-Reply-To: <56430A27.2030604@game-point.net>
+	id S1751582AbbKKRrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 12:47:52 -0500
+Received: from avasout01.plus.net ([84.93.230.227]:54706 "EHLO
+	avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414AbbKKRru (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2015 12:47:50 -0500
+Received: from [10.0.2.15] ([146.199.93.105])
+	by avasout01 with smtp
+	id gHnk1r0072GQ2gJ01HnlZT; Wed, 11 Nov 2015 17:47:49 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=MbeRwMLf c=1 sm=1 tr=0
+ a=SWxm+s7FAPvPP0IAAWI2og==:117 a=SWxm+s7FAPvPP0IAAWI2og==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=vPAaMmz6WfBFfUcQtJ0A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <CAPig+cR+jXgw7+kUK9vrZxNbytwyK3gzgm1YPf_6s57_UxPaBA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281173>
 
-On Wed, Nov 11, 2015 at 1:28 AM, Jeremy Morton <admin@game-point.net> wrote:
-> On 11/11/2015 04:48, Sitaram Chamarty wrote:
+
+
+On 11/11/15 01:22, Eric Sunshine wrote:
+> On Tue, Nov 10, 2015 at 7:23 PM, Ramsay Jones
+> <ramsay@ramsayjones.plus.com> wrote:
+>> Commit f8117f55 ("http: use off_t to store partial file size",
+>> 02-11-2015) changed the type of some variables from long to off_t.
+>> The 32-bit build, which enables the large filesystem interface
+>> (_FILE_OFFSET_BITS == 64), defines the off_t type as a 64-bit
+>> integer, whereas long is a 32-bit integer. This results in a couple
+>> of printf format warnings.
 >>
->> A lot of things in Unix do follow that "give you rope to hang yourself"
->> philosophy.  I used to (and to *some* extent still do) think like that,
->> but some years of supporting normal users trying to do stuff has taught
->> me it's not always that simple.
+>> In order to suppress the warnings, change the format specifier to use
+>> the PRIuMAX macro and cast the off_t argument to uintmax_t. (See also
+>> the http_opt_request_remainder() function, which uses the same
+>> solution).
+> 
+> I just ran across the problem when building 'next' on my Mac and was
+> about to investigate, so am happy to find that the work has already
+> been done. Thanks.
+
+Hmm, interesting. I've never used a Mac, so please forgive my ignorance ...
+
+> My machine is 64-bit, though, so perhaps it's misleading to
+> characterize this as a fix for 32-bit builds. In particular, off_t is
+> 'long long' on this machine, so it complains about the "long" format
+> specifier.
+
+... but this seems to imply that sizeof(long) is 4 on your machine, right?
+(on x86_64 linux it's 8, which is why I hadn't noticed before).
+
+Jeff, do you need me to re-word the commit message?
+
+ATB,
+Ramsay Jones
+
+> 
+>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>> ---
+>> diff --git a/http.c b/http.c
+>> index 42f29ce..2532976 100644
+>> --- a/http.c
+>> +++ b/http.c
+>> @@ -1617,8 +1617,8 @@ struct http_pack_request *new_http_pack_request(
+>>         if (prev_posn>0) {
+>>                 if (http_is_verbose)
+>>                         fprintf(stderr,
+>> -                               "Resuming fetch of pack %s at byte %ld\n",
+>> -                               sha1_to_hex(target->sha1), prev_posn);
+>> +                               "Resuming fetch of pack %s at byte %"PRIuMAX"\n",
+>> +                               sha1_to_hex(target->sha1), (uintmax_t)prev_posn);
+>>                 http_opt_request_remainder(preq->slot->curl, prev_posn);
+>>         }
 >>
->> I can easily see someone blogging some cool way to do something, and a
->> less savvy user uses that in his gitconfig, and gets burned later
->> (possibly much later, enough that he does not easily make the
->> connection!)
->
->
-> We're not talking about "normal users" here, that's what Google Chrome is
-> for.  We're talking about Git users using the commandline client. They ought
-> to know what they're doing and if they don't, they're screwed anyway because
-> there are quite a few gotchas with Git.
->
-
-Just because you're an expert, doesn't mean you don't appreciate working without
-safety net.
-
-There are tons of people out there, who use Git for $REASONS (their
-boss told them so,
-it's cooler than $OTHERVCS, the project uses Git), without having the
-time to take
-a deep dive into Git. "It should just work".
-
-So I haven't tried Sitaram's script, but it looks like it can get your job done?
+>> @@ -1772,8 +1772,8 @@ struct http_object_request *new_http_object_request(const char *base_url,
+>>         if (prev_posn>0) {
+>>                 if (http_is_verbose)
+>>                         fprintf(stderr,
+>> -                               "Resuming fetch of object %s at byte %ld\n",
+>> -                               hex, prev_posn);
+>> +                               "Resuming fetch of object %s at byte %"PRIuMAX"\n",
+>> +                               hex, (uintmax_t)prev_posn);
+>>                 http_opt_request_remainder(freq->slot->curl, prev_posn);
+>>         }
+>>
+>> --
+>> 2.6.0
+> 
