@@ -1,128 +1,107 @@
-From: Richard Ipsum <richard.ipsum@codethink.co.uk>
-Subject: Re: [PATCH 0/2] git-candidate: git based patch tracking and review
-Date: Wed, 11 Nov 2015 15:12:05 +0000
-Message-ID: <20151111151204.GA4249@salo>
-References: <1447160198-23296-1-git-send-email-richard.ipsum@codethink.co.uk>
- <5643107B.20501@alum.mit.edu>
+From: =?UTF-8?B?0JDQvdC00YDQtdC5INCg0YvQsdCw0Lo=?= <rybak.a.v@gmail.com>
+Subject: [PATCH] Documentation: make formatting more consistent
+Date: Wed, 11 Nov 2015 18:47:25 +0300
+Message-ID: <CACayv=gEGY-JNfu26fOzztXwhV_bkG8pv_iOXLC5L-Mig9f0kw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Nov 11 16:12:26 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 11 16:47:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwX4L-0008So-Bk
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 16:12:17 +0100
+	id 1ZwXcl-0002xf-Ks
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 16:47:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751826AbbKKPMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 10:12:13 -0500
-Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:49568 "EHLO
-	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750818AbbKKPMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 10:12:12 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 20E404620D7;
-	Wed, 11 Nov 2015 15:12:10 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
-Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
-	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8aZkYb4mpN2v; Wed, 11 Nov 2015 15:12:06 +0000 (GMT)
-Received: from salo (salo.dyn.ducie.codethink.co.uk [10.24.1.218])
-	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id 48029461E2A;
-	Wed, 11 Nov 2015 15:12:06 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <5643107B.20501@alum.mit.edu>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752449AbbKKPrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 10:47:47 -0500
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:35558 "EHLO
+	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751838AbbKKPrr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2015 10:47:47 -0500
+Received: by lfdo63 with SMTP id o63so18359263lfd.2
+        for <git@vger.kernel.org>; Wed, 11 Nov 2015 07:47:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=d/wMejo3/s23+nNzB6WVAmXO+sFVqZoGet/CUNz1rwE=;
+        b=F4D5N4BMAnX1/WRN6mq6qEiHbsdT3NMVhLu5XGka4Os2ZxPpSawSSjdziI5RIJEyCl
+         HqSTxA/Ke2u9C5s2FqszykQwzqkuWCtXnTvHsUPiUaz9LjQdsew/QF2TFXRwlbkDtTvA
+         UO+uar4dMsguZIfYP8d7mbGD14eq3Lsvm57/5H0ldvtYCeI9TvqlHinPAteiekoyGNsa
+         T29KYAit0q/QQMxbzN5Ef6iYJZ3PnAZz2iT8ar3fuKjxQF4ZSqilCQQV8XbIpoe4VbAy
+         r+2c5Yl1p2VVQpuLbWLUx2Ts+Ea56Z5C+SkeGa00P8OnMF5OFn6b0q9ZU8W2VM2E75Jm
+         EAXg==
+X-Received: by 10.25.18.93 with SMTP id h90mr4886301lfi.7.1447256865355; Wed,
+ 11 Nov 2015 07:47:45 -0800 (PST)
+Received: by 10.112.185.68 with HTTP; Wed, 11 Nov 2015 07:47:25 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281170>
 
-On Wed, Nov 11, 2015 at 10:55:07AM +0100, Michael Haggerty wrote:
-> On 11/10/2015 01:56 PM, Richard Ipsum wrote:
-> > I've continued my work[1] to add patch tracking and candidate review capability
-> > to git.
-> > 
-> > git-candidate now has a more git-like user interface, so remote candidates
-> > can now be specified in a similar way to remote refs (e.g. origin/candidate)
-> > as well as various other improvements, such as versioned metadata.
-> 
-> This is a really interesting project. I've seen a blog post or two
-> proposing to store bug tracker information in Git in a distributed way,
-> but I don't recall anything about doing the same for code review
-> information.
-> 
-> I would be interested to hear about the design of your system at an
-> abstract technical level. What do you store in Git and in what layout?
-> Do you need to record any extra metadata within the commits that are
-> merged to master? How do you merge and/or reconcile code review comments
-> that come from multiple sources (or are they just tabulated)? Can your
-> system handle the rebasing of topic branches? What about nonlinear topic
-> branches (branches branches that themselves include merges)?
+Documentation/git.txt: enclose all Environment Variables in single quotes.
 
-Extra metadata tracks the latest revision of a candidate
-and the metadata version, the metadata objects for the revisions and reviews
-are stored in trees, each object is keyed on the hash of the content
-that is stored within the object, so reviews from multiple sources
-cannot conflict. There's no ordering of reviews or comments,
-the status command simply sorts reviews based on their timestamp.
+Signed-off-by: Andrey Rybak <rybak.a.v@gmail.com>
+---
+Documentation/git.txt is not consistent in the way it stylizes mentions
+of Environment Variables. Most of them are enclosed in single quotes,
+some are enclosed in backticks, some are not enclosed.
 
-The system reserves a portion of the refspace under refs/candidates/
-the root tree object is stored in a commit under refs/candidate/heads/foo__meta
-where foo is the name of the candidate. Anchors are also stored in this space,
-an anchor is made for every revision of a candidate to ensure that commits
-referred to by a candidate are not garbage collected.
+ Documentation/git.txt | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-The operations performed on a topic branch don't matter, all the candidate
-knows about is the head sha of the branch we want to merge. Merging a
-candidate is no different from merging any other git branch, you have
-a ref candidate/foo so you can choose to merge that, or you can
-check it out rebase it and then merge it.
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index c2e2a94..900272b 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -1056,7 +1056,7 @@ of clones and fetches.
+  cloning of shallow repositories.
+  See 'GIT_TRACE' for available trace output options.
 
-> 
-> All that being said, my gut feeling is that a system like this should
-> not be developed within the Git project itself. Code review is a
-> complicated thing, and I expect that different people will have very
-> different ideas about how it should work. It would be a bad idea for the
-> Git project to "bless" one system by including it in our source tree.
-> (Earlier in the Git's history it was easier to get something accepted
-> into "contrib", but that has gotten much harder over time.)
+-GIT_LITERAL_PATHSPECS::
++'GIT_LITERAL_PATHSPECS'::
+  Setting this variable to `1` will cause Git to treat all
+  pathspecs literally, rather than as glob patterns. For example,
+  running `GIT_LITERAL_PATHSPECS=1 git log -- '*.c'` will search
+@@ -1065,15 +1065,15 @@ GIT_LITERAL_PATHSPECS::
+  literal paths to Git (e.g., paths previously given to you by
+  `git ls-tree`, `--raw` diff output, etc).
 
-The aim is not to bless one particular system but to eventually
-provide a common data model that all review systems can share,
-so that it is possible to do distributed reviews with arbitrary UIs
-in a widely compatible way.
+-GIT_GLOB_PATHSPECS::
++'GIT_GLOB_PATHSPECS'::
+  Setting this variable to `1` will cause Git to treat all
+  pathspecs as glob patterns (aka "glob" magic).
 
-If we add git-candidate to contrib then it can act as a reference
-implementation, so that this data model can be validated and tested
-by additional developers.
+-GIT_NOGLOB_PATHSPECS::
++'GIT_NOGLOB_PATHSPECS'::
+  Setting this variable to `1` will cause Git to treat all
+  pathspecs as literal (aka "literal" magic).
 
-> 
-> If, someday, one system becomes crushingly dominant, then conceivably it
-> would make sense for it to be distributed along with Git for the
-> convenience of users. Or if a bunch of review systems standardize on a
-> single data model for storing review information in a Git repo, it might
-> make sense for the plumbing for handling that data to reside in git-core
-> for performance and data integrity reasons. Until then, I think it would
-> be better for code review systems to live on their own, as independent
-> projects.
+-GIT_ICASE_PATHSPECS::
++'GIT_ICASE_PATHSPECS'::
+  Setting this variable to `1` will cause Git to treat all
+  pathspecs as case-insensitive.
 
-I don't feel too strongly either way, that said I do think it may be
-advantageous for all concerned to have this data model, we don't necessarily
-need to wait for a particular system to become crushingly dominant.
+@@ -1087,7 +1087,7 @@ GIT_ICASE_PATHSPECS::
+  variable when it is invoked as the top level command by the
+  end user, to be recorded in the body of the reflog.
 
-> 
-> In my opinion it would be fine to discuss the design of your system and
-> solicit feedback about the design on the Git mailing list, and also to
-> publish occasional announcement emails when you release new versions or
-> whatever. You might also want to list your system on the Git SCM wiki,
-> for example here [1].
+-`GIT_REF_PARANOIA`::
++'GIT_REF_PARANOIA'::
+  If set to `1`, include broken or badly named refs when iterating
+  over lists of refs. In a normal, non-corrupted repository, this
+  does nothing. However, enabling it may help git to detect and
+@@ -1098,7 +1098,7 @@ GIT_ICASE_PATHSPECS::
+  an operation has touched every ref (e.g., because you are
+  cloning a repository to make a backup).
 
-Thanks, it would be good to add git-candidate to the list there.
-
-Thanks,
-Richard Ipsum
+-`GIT_ALLOW_PROTOCOL`::
++'GIT_ALLOW_PROTOCOL'::
+  If set, provide a colon-separated list of protocols which are
+  allowed to be used with fetch/push/clone. This is useful to
+  restrict recursive submodule initialization from an untrusted
+-- 
+2.5.3.windows.1
