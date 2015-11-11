@@ -1,107 +1,86 @@
-From: =?UTF-8?B?0JDQvdC00YDQtdC5INCg0YvQsdCw0Lo=?= <rybak.a.v@gmail.com>
-Subject: [PATCH] Documentation: make formatting more consistent
-Date: Wed, 11 Nov 2015 18:47:25 +0300
-Message-ID: <CACayv=gEGY-JNfu26fOzztXwhV_bkG8pv_iOXLC5L-Mig9f0kw@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] http: fix some printf format warnings on 32-bit builds
+Date: Wed, 11 Nov 2015 09:38:22 -0800
+Message-ID: <CAGZ79kbOQk4S3T7b9Ay=NnXnVBhoNLxCKeE6wefhh5qC19+_yg@mail.gmail.com>
+References: <56428A6A.5010406@ramsayjones.plus.com>
+	<CAPig+cR+jXgw7+kUK9vrZxNbytwyK3gzgm1YPf_6s57_UxPaBA@mail.gmail.com>
+	<CAGZ79kb1pDhcP+hN9+C0xK-VYKxfnhvj6a2Len6kOWgmv4+fmQ@mail.gmail.com>
+	<5C9FC321-5B5E-47E6-9BCE-6CDAA41D6E54@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 11 16:47:54 2015
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 11 18:38:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwXcl-0002xf-Ks
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 16:47:51 +0100
+	id 1ZwZLo-0005Zi-EN
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Nov 2015 18:38:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752449AbbKKPrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 10:47:47 -0500
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:35558 "EHLO
-	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751838AbbKKPrr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 10:47:47 -0500
-Received: by lfdo63 with SMTP id o63so18359263lfd.2
-        for <git@vger.kernel.org>; Wed, 11 Nov 2015 07:47:45 -0800 (PST)
+	id S1752323AbbKKRiY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 12:38:24 -0500
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:36675 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414AbbKKRiX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2015 12:38:23 -0500
+Received: by ykdr82 with SMTP id r82so60516648ykd.3
+        for <git@vger.kernel.org>; Wed, 11 Nov 2015 09:38:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=d/wMejo3/s23+nNzB6WVAmXO+sFVqZoGet/CUNz1rwE=;
-        b=F4D5N4BMAnX1/WRN6mq6qEiHbsdT3NMVhLu5XGka4Os2ZxPpSawSSjdziI5RIJEyCl
-         HqSTxA/Ke2u9C5s2FqszykQwzqkuWCtXnTvHsUPiUaz9LjQdsew/QF2TFXRwlbkDtTvA
-         UO+uar4dMsguZIfYP8d7mbGD14eq3Lsvm57/5H0ldvtYCeI9TvqlHinPAteiekoyGNsa
-         T29KYAit0q/QQMxbzN5Ef6iYJZ3PnAZz2iT8ar3fuKjxQF4ZSqilCQQV8XbIpoe4VbAy
-         r+2c5Yl1p2VVQpuLbWLUx2Ts+Ea56Z5C+SkeGa00P8OnMF5OFn6b0q9ZU8W2VM2E75Jm
-         EAXg==
-X-Received: by 10.25.18.93 with SMTP id h90mr4886301lfi.7.1447256865355; Wed,
- 11 Nov 2015 07:47:45 -0800 (PST)
-Received: by 10.112.185.68 with HTTP; Wed, 11 Nov 2015 07:47:25 -0800 (PST)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=D/JY+xmwqWWwu2UuaftpTtkxguyOI4RIB668B220gpc=;
+        b=cRyCN7mWIt5FdQ3vLRIk3SSQ8pKJDfXcIIU+PSgGDjXDENJpIEF5IIrWjmk31aR53X
+         /R0wq5LVSTmnaYDcH6fdhlFrd0qF50NoDC1l44xgiku2NsFA8la11abRiUTuybEXm9jB
+         42ekIPrdNP8Dj3pjqQzvzYWdMaLOplycq2FxiEHdrUxWL34rSuezERNezkn7JWKCEdmB
+         i7aXYYyQeEfFwmjgeMcaEDPyXEvhVdEe+rrMB2Z0ootvQYkP9vkLavM4NaLWk4jLm4tV
+         3wGmcISdMEMEi5w4DqKI/iMH/F+3f7LsbDuf1a5YYkR31ZnfptTH/xAbpzi8i697ftwk
+         LTPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=D/JY+xmwqWWwu2UuaftpTtkxguyOI4RIB668B220gpc=;
+        b=J2d5QdE/IAtSkDG6dYtE+TZE17EEJ4YcPxq10UTxxaiV0EoN76V/XYw3dIpWEazezD
+         WYRnbMWQgNjOPlzM16Uw4MvJ8iaUjpUO3vQtylYl2SnkYJZBhO/2cKqeIbNTw8e253Xd
+         69Lm4Z6Dm8beB/rbQC7luTpTALeB5nrSFAFU2uRzjdeqA/NxyAqNs3k1mK28g5hAG4L5
+         20aLjVeUrU37pc/DVrtgugRoa/dsgkjbS4yobmFw11kRyVr7Jie0OxwEsxBt2k1Qbhxw
+         WeO8vBrYF4vXnwI6KBk9S6/TCQEZYNjD/TE3dIMLwB2Gxd8TmAqgMEFhfC9CODvq4mjK
+         oswg==
+X-Gm-Message-State: ALoCoQm0mpfcQMLwbak2MxBZh9OeYVjwLtrDETJfRipH7NqSm3ju4lLoBpoMKda+YLG5LTxAHWqK
+X-Received: by 10.129.75.131 with SMTP id y125mr12117076ywa.48.1447263502463;
+ Wed, 11 Nov 2015 09:38:22 -0800 (PST)
+Received: by 10.37.196.70 with HTTP; Wed, 11 Nov 2015 09:38:22 -0800 (PST)
+In-Reply-To: <5C9FC321-5B5E-47E6-9BCE-6CDAA41D6E54@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281171>
 
-Documentation/git.txt: enclose all Environment Variables in single quotes.
+On Wed, Nov 11, 2015 at 12:02 AM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+>
+> Unfortunately no. All their machines are 64-bit [1] and they have "no immediate plans to add this feature" [2].
+> However, we could the following build configuration on a 64-bit machine:
+>
+> export CFLAGS="-m32"
+> export LDFLAGS="-m32"
+>
+> I think then we could catch these kind of warnings. Do you see a downside with this approach?
 
-Signed-off-by: Andrey Rybak <rybak.a.v@gmail.com>
----
-Documentation/git.txt is not consistent in the way it stylizes mentions
-of Environment Variables. Most of them are enclosed in single quotes,
-some are enclosed in backticks, some are not enclosed.
+I think that should do it.
 
- Documentation/git.txt | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Assuming their 64 bit means x86-64 architecture, we may want to prefer
+-mx32, such that we can also test it?
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index c2e2a94..900272b 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -1056,7 +1056,7 @@ of clones and fetches.
-  cloning of shallow repositories.
-  See 'GIT_TRACE' for available trace output options.
-
--GIT_LITERAL_PATHSPECS::
-+'GIT_LITERAL_PATHSPECS'::
-  Setting this variable to `1` will cause Git to treat all
-  pathspecs literally, rather than as glob patterns. For example,
-  running `GIT_LITERAL_PATHSPECS=1 git log -- '*.c'` will search
-@@ -1065,15 +1065,15 @@ GIT_LITERAL_PATHSPECS::
-  literal paths to Git (e.g., paths previously given to you by
-  `git ls-tree`, `--raw` diff output, etc).
-
--GIT_GLOB_PATHSPECS::
-+'GIT_GLOB_PATHSPECS'::
-  Setting this variable to `1` will cause Git to treat all
-  pathspecs as glob patterns (aka "glob" magic).
-
--GIT_NOGLOB_PATHSPECS::
-+'GIT_NOGLOB_PATHSPECS'::
-  Setting this variable to `1` will cause Git to treat all
-  pathspecs as literal (aka "literal" magic).
-
--GIT_ICASE_PATHSPECS::
-+'GIT_ICASE_PATHSPECS'::
-  Setting this variable to `1` will cause Git to treat all
-  pathspecs as case-insensitive.
-
-@@ -1087,7 +1087,7 @@ GIT_ICASE_PATHSPECS::
-  variable when it is invoked as the top level command by the
-  end user, to be recorded in the body of the reflog.
-
--`GIT_REF_PARANOIA`::
-+'GIT_REF_PARANOIA'::
-  If set to `1`, include broken or badly named refs when iterating
-  over lists of refs. In a normal, non-corrupted repository, this
-  does nothing. However, enabling it may help git to detect and
-@@ -1098,7 +1098,7 @@ GIT_ICASE_PATHSPECS::
-  an operation has touched every ref (e.g., because you are
-  cloning a repository to make a backup).
-
--`GIT_ALLOW_PROTOCOL`::
-+'GIT_ALLOW_PROTOCOL'::
-  If set, provide a colon-separated list of protocols which are
-  allowed to be used with fetch/push/clone. This is useful to
-  restrict recursive submodule initialization from an untrusted
--- 
-2.5.3.windows.1
+>
+> - Lars
+>
+> [1] http://docs.travis-ci.com/user/ci-environment/
+> [2] https://github.com/travis-ci/travis-ci/issues/986
