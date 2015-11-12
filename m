@@ -1,57 +1,89 @@
-From: Atousa Duprat <atousa.p@gmail.com>
-Subject: Re: [PATCH v4 2/3] Limit the size of the data block passed to SHA1_Update()
-Date: Wed, 11 Nov 2015 15:46:51 -0800
-Message-ID: <CA+izobv=PUf+6WWfQNEO+bwfzLRQ3V-TKQdUS0-qNJ0aCSkJzA@mail.gmail.com>
-References: <1446705523-30701-1-git-send-email-apahlevan@ieee.org>
-	<1446705523-30701-2-git-send-email-apahlevan@ieee.org>
-	<xmqqtwp05mgn.fsf@gitster.mtv.corp.google.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] http: fix some printf format warnings
+Date: Thu, 12 Nov 2015 00:07:42 +0000
+Message-ID: <5643D84E.2070904@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Atousa Pahlevan Duprat <apahlevan@ieee.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 12 00:46:57 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 12 01:07:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zwf6O-0001sh-UV
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Nov 2015 00:46:57 +0100
+	id 1ZwfQg-00005D-MS
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Nov 2015 01:07:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752324AbbKKXqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Nov 2015 18:46:52 -0500
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:35006 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752301AbbKKXqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Nov 2015 18:46:52 -0500
-Received: by ykba77 with SMTP id a77so76654560ykb.2
-        for <git@vger.kernel.org>; Wed, 11 Nov 2015 15:46:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=66s7ZE2pq5P9s7Lxz6EQgYpQhSfX6Ow58jr56hnjWg4=;
-        b=KbsZipCVYUrfn6VrWqb21rY9Z9pTKiMKXhRKHVgzSheBSC5S4v+Ox+o9Fxe0xqbt9U
-         PCE5KsppshYImw3gy14MV2NTRH9n31T6EMHSiERtEdrBz+XLw6OBx6s3rbKLFwxDeI3x
-         iHED9W4ikJRESQ+OTC5wzUV0LSXcXw9eao9Yi7n3j/lCiUNnQ68u6M59xA+kF9e4CE1y
-         WfNf4FRscaTyk1yMeQR40aLXU7g/094hoNGWvJk9nscLHa8Ux7XJNxL2hntBJTq74mRO
-         lvHOoG78rFa/q2U5sVSdGinCH3oCJ4AvsEWwa55vdbGe0vMS3nOeJgKcKMu5ezyAGhoZ
-         TLOQ==
-X-Received: by 10.129.2.194 with SMTP id 185mr12556238ywc.331.1447285611622;
- Wed, 11 Nov 2015 15:46:51 -0800 (PST)
-Received: by 10.37.83.195 with HTTP; Wed, 11 Nov 2015 15:46:51 -0800 (PST)
-In-Reply-To: <xmqqtwp05mgn.fsf@gitster.mtv.corp.google.com>
+	id S1752484AbbKLAHu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Nov 2015 19:07:50 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:60533 "EHLO
+	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751671AbbKLAHt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Nov 2015 19:07:49 -0500
+Received: from [10.0.2.15] ([146.199.93.105])
+	by avasout04 with smtp
+	id gQ7k1r0042GQ2gJ01Q7lRR; Thu, 12 Nov 2015 00:07:47 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=CvRCCSMD c=1 sm=1 tr=0
+ a=SWxm+s7FAPvPP0IAAWI2og==:117 a=SWxm+s7FAPvPP0IAAWI2og==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=W-DkS_-wva5Ft8jEB14A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281209>
 
-> Adjusting to the proposed change to 1/3, this step would become the
-> attached patch.  Note that I thought the above would not scale well
-> so I did it a bit differently.
 
-Thank you, I understand now the changes that you made.
-Let me know if this can be improved any further.
+Commit f8117f55 ("http: use off_t to store partial file size",
+02-11-2015) changed the type of some variables from long to off_t.
+Unfortunately, the off_t type is not portable and can be represented
+by several different actual types (even multiple types on the same
+platform). This makes it difficult to print an off_t variable in
+a platform independent way. As a result, this commit causes gcc to
+issue some printf format warnings on a couple of different platforms.
 
-Atousa
+In order to suppress the warnings, change the format specifier to use
+the PRIuMAX macro and cast the off_t argument to uintmax_t. (See also
+the http_opt_request_remainder() function, which uses the same
+solution).
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+ http.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/http.c b/http.c
+index 42f29ce..2532976 100644
+--- a/http.c
++++ b/http.c
+@@ -1617,8 +1617,8 @@ struct http_pack_request *new_http_pack_request(
+ 	if (prev_posn>0) {
+ 		if (http_is_verbose)
+ 			fprintf(stderr,
+-				"Resuming fetch of pack %s at byte %ld\n",
+-				sha1_to_hex(target->sha1), prev_posn);
++				"Resuming fetch of pack %s at byte %"PRIuMAX"\n",
++				sha1_to_hex(target->sha1), (uintmax_t)prev_posn);
+ 		http_opt_request_remainder(preq->slot->curl, prev_posn);
+ 	}
+ 
+@@ -1772,8 +1772,8 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	if (prev_posn>0) {
+ 		if (http_is_verbose)
+ 			fprintf(stderr,
+-				"Resuming fetch of object %s at byte %ld\n",
+-				hex, prev_posn);
++				"Resuming fetch of object %s at byte %"PRIuMAX"\n",
++				hex, (uintmax_t)prev_posn);
+ 		http_opt_request_remainder(freq->slot->curl, prev_posn);
+ 	}
+ 
+-- 
+2.6.0
