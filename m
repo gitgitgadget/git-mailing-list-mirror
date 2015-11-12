@@ -1,117 +1,130 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [RFC] Clone repositories recursive with depth 1
-Date: Thu, 12 Nov 2015 10:39:45 +0100
-Message-ID: <19CE7136-E1FD-495A-9BAC-636164757E04@gmail.com>
-References: <DE5B8B46-B185-4258-A1C8-07E46072CD5D@gmail.com> <CAGZ79kbfFhCvQW=_7i4KxjWeh7uYRTTNvLzQUq+CJ641g3=UDg@mail.gmail.com> <CAGZ79kazAWj+D85EXUyP9iHgcb=7QpymyaaKEqQRu9a+UO9msw@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Nov 12 10:40:00 2015
+From: Konstantin Khomoutov <kostix+git@007spb.ru>
+Subject: Fw: [git-users] git fsck error - duplicate file entries - different
+ then existing stackoverflow scenarios
+Date: Thu, 12 Nov 2015 14:02:10 +0300
+Message-ID: <20151112140210.ef05a31c401dd49992e9674e@domain007.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Wind Over Water <wndovrwtr@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 12 12:02:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZwoMG-0001RP-Q9
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Nov 2015 10:39:57 +0100
+	id 1Zwpdz-0003Gg-Hk
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Nov 2015 12:02:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753756AbbKLJjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2015 04:39:51 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:38412 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753605AbbKLJjr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Nov 2015 04:39:47 -0500
-Received: by wmec201 with SMTP id c201so82732337wme.1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2015 01:39:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=TiHdGfTDozIhQjQlwa1nsOo1DOBgykwG3BaKH6pqcgs=;
-        b=nDQWZW7AxhcRXY8whU0S3eSy62TLXQh82Rl5EnaEmnUhKD4bAzZtqA+S+YdEzUkrXm
-         tZQptfIpwiIstaLxPv6fFvSwAH5CKtQj/x/8/VN4QkIMKogGRD49ty6lxCSKwUna/Pyq
-         WpjR3k7ERVaW6/f+mGzkjyx+Eo5B6zNpAydM37l4dDnWTTOkAN9wkAEdeiltM2QhZSTB
-         dLic1dnXqqikJd/lSn20aVezq2uf0m/rshv0m56z9FkZgs9mFscCOWUa+QhdvlpjxOwf
-         HJapuleE3Nd3r7tahk1E64K0C7iIopRTZb9Xc2aYIiZMJAa/aai2qFnUU2d7VkVhGVzX
-         QTlg==
-X-Received: by 10.194.76.9 with SMTP id g9mr14696008wjw.47.1447321186899;
-        Thu, 12 Nov 2015 01:39:46 -0800 (PST)
-Received: from slxbook3.fritz.box (p5DDB6E5E.dip0.t-ipconnect.de. [93.219.110.94])
-        by smtp.gmail.com with ESMTPSA id w73sm29749108wme.12.2015.11.12.01.39.45
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Nov 2015 01:39:46 -0800 (PST)
-In-Reply-To: <CAGZ79kazAWj+D85EXUyP9iHgcb=7QpymyaaKEqQRu9a+UO9msw@mail.gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1753876AbbKLLCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2015 06:02:15 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:50804 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751048AbbKLLCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2015 06:02:14 -0500
+Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id tACB2A1e009688;
+	Thu, 12 Nov 2015 14:02:11 +0300
+X-Mailer: Sylpheed 3.5.0beta1 (GTK+ 2.24.25; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281216>
+
+A user recently asked an interesting question on the git-users list.
+I think it warrants attentions of a specialists more hard-core than
+we're there over at git-users.
+
+So I'd like to solicit help if those knowledgeable, if possible.
+
+Begin forwarded message:
+
+Date: Wed, 11 Nov 2015 14:30:40 -0800 (PST)
+From: Wind Over Water <wndovrwtr@g...>
+To: Git for human beings <git-users@g...>
+Subject: [git-users] git fsck error - duplicate file entries -
+different then existing stackoverflow scenarios
 
 
-On 11 Nov 2015, at 21:09, Stefan Beller <sbeller@google.com> wrote:
+Hi all,
 
-> On Wed, Nov 11, 2015 at 11:19 AM, Stefan Beller <sbeller@google.com> wrote:
->> On Wed, Nov 11, 2015 at 6:09 AM, Lars Schneider
->> <larsxschneider@gmail.com> wrote:
->>> Hi,
->>> 
->>> I have a clean build machine and I want to clone my source code to this machine while transferring only the minimal necessary amount of data. Therefore I use this command:
->>> 
->>> git clone --recursive --depth 1 --single-branch <url>
->> 
->> That *should* work, actually.
->> However looking at the code it does not.
->> 
->> citing from builtin/clone.c:
->> 
->>    static struct option builtin_clone_options[] = {
->>        ...
->>        OPT_BOOL(0, "recursive", &option_recursive,
->>           N_("initialize submodules in the clone")),
->>        OPT_BOOL(0, "recurse-submodules", &option_recursive,
->>          N_("initialize submodules in the clone")),
->>        ...
->>    };
->>    ...
->>    static const char *argv_submodule[] = {
->>        "submodule", "update", "--init", "--recursive", NULL
->>    };
->> 
->>    if (!err && option_recursive)
->>        err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
->> 
->> So the --depth argument is not passed on, although "git submodule update"
->> definitely supports --depth.
->> 
->> In an upcoming series (next version of origin/sb/submodule-parallel-update),
->> this will slightly change, such it will be even easier to add the
->> depth argument in
->> there as we construct the argument list in code instead of hard coding
->> argv_submodule.
->> 
->> This may require some discussion whether you expect --depth to be recursed.
->> (What if you only want a top level shallow thing?, What if you want to have only
->> submodules shallow? What is the user expectation here?)
->> 
->>> 
->>> Apparently this does not clone the submodules with "--depth 1" (using Git 2.4.9). As a workaround I tried:
->>> 
->>> git clone --depth 1 --single-branch <url>
->>> cd <repo-name>
->>> git submodule update --init --recursive --depth 1
->>> 
-> 
-> The workaround works with the origin/master version for me.
-> 
-> Notice the other email thread, which suggests to include --remote into the
-> call to  git submodule update depending on a branch config option being
-> present in the .gitmodules file.
+I have a repo that is giving a 'git fsck --full' error that seems to be 
+different from the existing questions and answers on stackoverflow on
+this topic.  For example, in our fsck error it is not obvious which
+file is actually duplicated and how/where.  And there is no commit sha
+involved - apparently only blob and tree sha's.  But then finding good
+documentation on this is challenging.
 
-Can you check "[PATCH v2] add test to demonstrate that shallow recursive clones fail"? This demonstrates the failure that I see. I also tried the "--remote" flag but this does not work either (see test case).
-Can you confirm this behavior?
+Might anyone have a pointer as to what to read to help figure out a 
+solution/fix to the below?  Or know of a solution outright?
 
-Cheers,
-Lars
+Thanks much in advance!
+
+-sandy
+
+$ git fsck --full
+
+Checking object directories: 100% (256/256), done.
+
+error in tree df79068051fa8702eae7e91635cca7eee1339002: contains
+duplicate file entries
+
+error in tree c2d09540a3c3f44c42be1dc8a2b0afa73a35f861: contains
+duplicate file entries
+
+Checking objects: 100% (623704/623704), done.
+
+Checking connectivity: 623532, done.
+
+dangling commit 4d1402c8c74c9f4de6172d7dbd5a14c41683c9e8
+
+
+$ git ls-tree df79068051fa8702eae7e91635cca7eee1339002
+
+100644 blob 14d6d1a6a2f4a7db4e410583c2893d24cb587766 build.gradle
+
+120000 blob cd70e37500a35663957cf60f011f81703be5d032 msrc
+
+040000 tree 658c892e15fbe0d3ea6b8490d9d54c5f2e658fc9 msrc
+
+100644 blob f623819c94a08252298220871ac0ba1118372e59 pom.xml
+
+100644 blob 9223cc2fddb138f691312c1ea2656b9dc17612d2 settings.gradle
+
+040000 tree c3bac1d92722bdee9588a27747b164baa275201f src
+
+
+$ git ls-tree c2d09540a3c3f44c42be1dc8a2b0afa73a35f861
+
+100644 blob 14d6d1a6a2f4a7db4e410583c2893d24cb587766 build.gradle
+
+120000 blob cd70e37500a35663957cf60f011f81703be5d032 msrc
+
+040000 tree 658c892e15fbe0d3ea6b8490d9d54c5f2e658fc9 msrc
+
+100644 blob f623819c94a08252298220871ac0ba1118372e59 pom.xml
+
+100644 blob 9223cc2fddb138f691312c1ea2656b9dc17612d2 settings.gradle
+
+040000 tree a5aa6758a25fee779cbb8c9717d744297071ea79 src
+
+
+$ git show cd70e37500a35663957cf60f011f81703be5d032
+
+src/main/java/com/foo/bar/baz/common/
+
+
+$ git show 658c892e15fbe0d3ea6b8490d9d54c5f2e658fc9
+
+tree 658c892e15fbe0d3ea6b8490d9d54c5f2e658fc9
+
+
+BillingAggregator.java
+
+BillingDataThriftAdapter.java
+
+[...]
+
+MetricsProcessor.java
