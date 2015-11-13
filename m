@@ -1,85 +1,93 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Re: [PATCH 0/7] contrib/subtree: Testsuite cleanup
-Date: Fri, 13 Nov 2015 18:23:20 +0300
-Message-ID: <20151113152320.GA8336@dell-note>
-References: <1447381956-4771-1-git-send-email-greened@obbligato.org>
+From: Fredrik Medley <fredrik.medley@gmail.com>
+Subject: Re: [PATCH] rebase-i-exec: Allow space in SHELL_PATH
+Date: Fri, 13 Nov 2015 16:25:18 +0100
+Message-ID: <CABA5-zk+RVBxfmuLyK8CcCFUpMXEzbHRKeWWV2SKsJqjnG-nfA@mail.gmail.com>
+References: <1447394599-16077-1-git-send-email-fredrik.medley@gmail.com> <20151113062534.GE32157@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Cc: git@vger.kernel.org, techlivezheng@gmail.com, davvid@gmail.com,
-	cbailey32@bloomberg.net, danny0838@gmail.com, prohaska@zib.de,
-	th.acker@arcor.de, sschuberth@gmail.com, peff@peff.net,
-	gitter.spiros@gmail.com, nod.helm@gmail.com, gitster@pobox.com
-To: David Greene <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Fri Nov 13 16:23:30 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Users <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 13 16:25:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZxGCG-0001Sh-Sl
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 16:23:29 +0100
+	id 1ZxGEQ-0003rt-US
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 16:25:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932765AbbKMPXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2015 10:23:25 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34127 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932478AbbKMPXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Nov 2015 10:23:24 -0500
-Received: by lffz63 with SMTP id z63so5507299lff.1
-        for <git@vger.kernel.org>; Fri, 13 Nov 2015 07:23:23 -0800 (PST)
+	id S932180AbbKMPZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2015 10:25:39 -0500
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:36513 "EHLO
+	mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754331AbbKMPZi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Nov 2015 10:25:38 -0500
+Received: by oiww189 with SMTP id w189so51172591oiw.3
+        for <git@vger.kernel.org>; Fri, 13 Nov 2015 07:25:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=vG99/SJNDEQ1u2ElfSZRCTPSMV9cxZTiv9zd7Uw0Xsc=;
-        b=aXMTFcnAdCUzv0CIYQRjjdaxwDeR1h7vfS/GGEr90AMGbBSjR85REBHJ44UW8YnEGb
-         s8V5wcCWTlsMdzh6Y5b2xeM7K6/JYTPfW3jb6wTQUeIRw2pfVahe3euWFSG1U0VZcqoI
-         88IlxhNJXBS/q0u/MAUTuXOVcxKYSfGddVPg6DQg7CLVeyWbKNvG2wor63No6/387Z6u
-         obMdR/fM3lXYGpXKhx3wRYfa5JTVHKJRUURid1YDtrRLHr+ygXfNBs8aygcTRcbvshuX
-         9U6bcaBqOT2K9YnHFSL4qZ7RsLFVZQ7GMWL8fA6fuNyljONVgSvGrPr0fWe/XWIU4o+N
-         eklA==
-X-Received: by 10.25.168.140 with SMTP id r134mr10929167lfe.34.1447428203062;
-        Fri, 13 Nov 2015 07:23:23 -0800 (PST)
-Received: from localhost ([213.108.22.197])
-        by smtp.gmail.com with ESMTPSA id i3sm3175564lbj.0.2015.11.13.07.23.21
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Nov 2015 07:23:22 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1447381956-4771-1-git-send-email-greened@obbligato.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=l1Vx9ahqnk1whX0ksuMxVzumqu4OMkF266R1sckZKnk=;
+        b=O8ufl/wb84lGLxuDfXbfJuj3yy4Icj7MB9QFdyRzvkprUe8CyPSnIHLX88jwE85vPt
+         QwSL7m8MGyXNyj4DaMGFEcNVlbVNsZs46U8UqRzEN3pO0yzBS2iz+CiLeTnkJUixwdsN
+         6k1u2rKYuVMWfOo8/B18S5rlLtULio3C1IeAnGyi3XD6itluY93AwE/NI4XpaFdwSux8
+         /fncozXHAhdfeu+M0rmlc9Vim59SXNo52FW5nELZLjsAV30smXKvKEk87uEli9mza5Wi
+         MMc2w8yUW8IexEo93pp7DpDhJ8Gq/tPFKaicmtx2jFPWe5Ookn8/PeTi//L+mZtcOXsv
+         LFUQ==
+X-Received: by 10.202.85.193 with SMTP id j184mr8911005oib.4.1447428338018;
+ Fri, 13 Nov 2015 07:25:38 -0800 (PST)
+Received: by 10.202.97.196 with HTTP; Fri, 13 Nov 2015 07:25:18 -0800 (PST)
+In-Reply-To: <20151113062534.GE32157@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281252>
 
-On Thu, Nov 12, 2015 at 08:32:29PM -0600, David Greene wrote:
-> Sending again with a proper From: address after rebasing on latest master.
-> 
-> Copying the maintainers because the origin patchset didn't get any
-> comments and I'm unsure of how to proceed.
-> 
-> These are some old changes I have lying around that should get applied
-> to clean up git-subtree's testbase.  With these changes post-mortem
-> analysis is much easier and adding new tests can be done in an orderly
-> fashion.
-> 
-> I have a number of future patches and further development ideas for
-> git-subtree that require these changes as a prerequisite.
-Please, could you take a look to the following thread
-http://thread.gmane.org/gmane.comp.version-control.git/277343
-to take into account the mentioned bug for your futher work?
+2015-11-13 7:25 GMT+01:00 Jeff King <peff@peff.net>:
+> On Fri, Nov 13, 2015 at 07:03:19AM +0100, Fredrik Medley wrote:
+>
+>> On Windows, when Git is installed under "C:\Program Files\Git", SHELL_PATH
+>> will include a space. Fix "git rebase --interactive --exec" so that it
+>> works with spaces in SHELL_PATH.
+>>
+>> Signed-off-by: Fredrik Medley <fredrik.medley@gmail.com>
+>> ---
+>>  git-rebase--interactive.sh | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>> index 30edb17..b938a6d 100644
+>> --- a/git-rebase--interactive.sh
+>> +++ b/git-rebase--interactive.sh
+>> @@ -610,7 +610,7 @@ do_next () {
+>>               read -r command rest < "$todo"
+>>               mark_action_done
+>>               printf 'Executing: %s\n' "$rest"
+>> -             ${SHELL:-@SHELL_PATH@} -c "$rest" # Actual execution
+>> +             "${SHELL:-@SHELL_PATH@}" -c "$rest" # Actual execution
+>
+> I think this is the right thing to do (at least I could not think of a
+> case that would be harmed by it, and it certainly fixes your case). It
+> looks like filter-branch would need a similar fix?
+>
+> I think this still isn't resilient to weird meta-characters in the
+> @SHELL_PATH@, but as this is a build-time option, I think it's OK to let
+> people who do
+>
+>   make SHELL_PATH='}"; rm -rf /'
+>
+> hang themselves.
+>
+> -Peff
 
-Thank you
-> 
->                         -David
-> 
->  contrib/subtree/git-subtree.sh     |    2 +-
->  contrib/subtree/t/Makefile         |   31 +-
->  contrib/subtree/t/t7900-subtree.sh | 1366 +++++++++++++++++++++----------
->  3 files changed, 956 insertions(+), 443 deletions(-)
-> 
+Okay, that's what @SHELL_PATH@ stands for. I just read the result
+in the Windows installation that is something like ${SHELL:-/bin/sh}.
+The shell script processor then replaces /bin/sh with
+C:\Program Files\...\bin\sh.
 
--- 
-Alexey Shumkin
-E-mail: Alex.Crezoff@gmail.com
+I assume the Windows compilation does not fail in building this. I've
+never tried building git for Windows, though.
+
+/Fredrik
