@@ -1,83 +1,69 @@
-From: greened@obbligato.org (David A. Greene)
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] contrib/subtree: unwrap tag refs
-Date: Thu, 12 Nov 2015 22:36:16 -0600
-Message-ID: <87h9kqwm67.fsf@waller.obbligato.org>
+Date: Fri, 13 Nov 2015 00:01:24 -0500
+Message-ID: <20151113050123.GA29708@sigill.intra.peff.net>
 References: <1447388144-23806-1-git-send-email-git@rob.dqd.com>
+ <87h9kqwm67.fsf@waller.obbligato.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Rob Mayoff <mayoff@dqd.com>
-X-From: git-owner@vger.kernel.org Fri Nov 13 05:36:58 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Rob Mayoff <mayoff@dqd.com>, git@vger.kernel.org
+To: "David A. Greene" <greened@obbligato.org>
+X-From: git-owner@vger.kernel.org Fri Nov 13 06:01:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zx66b-0002LJ-Ob
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 05:36:58 +0100
+	id 1Zx6UO-0002KN-Rw
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 06:01:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932209AbbKMEgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2015 23:36:24 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:60634 "EHLO
-	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754507AbbKMEgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2015 23:36:24 -0500
-Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.obbligato.org)
-	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	(Exim 4.85)
-	(envelope-from <greened@obbligato.org>)
-	id 1Zx66h-0004tw-Nn; Thu, 12 Nov 2015 22:37:03 -0600
-In-Reply-To: <1447388144-23806-1-git-send-email-git@rob.dqd.com> (Rob Mayoff's
-	message of "Thu, 12 Nov 2015 22:15:44 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
-X-Filter-Spam-Score: ()
-X-Filter-Spam-Report: 
+	id S1752093AbbKMFB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2015 00:01:28 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56881 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751987AbbKMFB0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Nov 2015 00:01:26 -0500
+Received: (qmail 12011 invoked by uid 102); 13 Nov 2015 05:01:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 12 Nov 2015 23:01:26 -0600
+Received: (qmail 20754 invoked by uid 107); 13 Nov 2015 05:01:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Nov 2015 00:01:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Nov 2015 00:01:24 -0500
+Content-Disposition: inline
+In-Reply-To: <87h9kqwm67.fsf@waller.obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281234>
 
-Rob Mayoff <mayoff@dqd.com> writes:
+On Thu, Nov 12, 2015 at 10:36:16PM -0600, David A. Greene wrote:
 
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index 9f06571..b051600 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -245,7 +245,10 @@ find_latest_squash()
->  		case "$a" in
->  			START) sq="$b" ;;
->  			git-subtree-mainline:) main="$b" ;;
-> -			git-subtree-split:) sub="$b" ;;
-> +			git-subtree-split:)
-> +				sub="$b"
+> > +				sub="$(git rev-parse "$b^0")" || die "could not rev-parse split hash $b from commit $sq"
+> 
+> This seems like odd quoting.  Would not this do the same?
+> 
+> 				sub="$(git rev-parse $b^0)" || die "could not rev-parse split hash $b from commit $sq"
+> 
+> Perhaps I am missing something.
 
-Why include the above line?
+The former is quoting "$b" against whitespace splitting in the
+sub-command. Given that the value just came from a "read" call, I think
+by definition it cannot contains IFS. Still, quoting here is a good
+habit.
 
-> +				sub="$(git rev-parse "$b^0")" || die "could not rev-parse split hash $b from commit $sq"
+It is actually the _outer_ quotes that are unnecessary, as variable
+assignment does not do extra splitting. So:
 
-This seems like odd quoting.  Would not this do the same?
+  foo=$(echo one two)
 
-				sub="$(git rev-parse $b^0)" || die "could not rev-parse split hash $b from commit $sq"
+will put the full "one two" into $foo. But the quotes do not hurt
+anything, and it is a reasonable style to use them to avoid this
+discussion. :)
 
-Perhaps I am missing something.
+It also matches style-wise with nearby assignments, like:
 
-> +				;;
->  			END)
->  				if [ -n "$sub" ]; then
->  					if [ -n "$main" ]; then
-> @@ -278,7 +281,10 @@ find_existing_splits()
->  		case "$a" in
->  			START) sq="$b" ;;
->  			git-subtree-mainline:) main="$b" ;;
-> -			git-subtree-split:) sub="$b" ;;
-> +			git-subtree-split:)
-> +				sub="$b"
+  main="$b"
 
-And here too.
-
-> +				sub="$(git rev-parse "$b^0")" || die "could not rev-parse split hash $b from commit $sq"
-
-Same as above.
-
-                        -David
+-Peff
