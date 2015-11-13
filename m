@@ -1,125 +1,93 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: [RFC] rename detection: allow more renames
-Date: Fri, 13 Nov 2015 17:35:06 +0100
-Message-ID: <20151113163506.GD16219@inner.h.apk.li>
+From: Dominik Rauch <dominik.rauch@gmx.at>
+Subject: git log --merges doesn't show commits as expected
+Date: Fri, 13 Nov 2015 16:21:36 +0000
+Message-ID: <AMSPR02MB168531F809E1625FACEB25283110@AMSPR02MB168.eurprd02.prod.outlook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 13 17:35:18 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 13 17:37:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZxHJk-0003oF-4p
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 17:35:16 +0100
+	id 1ZxHLr-0006TV-Ki
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 17:37:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933053AbbKMQfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2015 11:35:10 -0500
-Received: from continuum.iocl.org ([217.140.74.2]:38832 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932616AbbKMQfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Nov 2015 11:35:09 -0500
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id tADGZ6R00557;
-	Fri, 13 Nov 2015 17:35:06 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S933162AbbKMQhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2015 11:37:21 -0500
+Received: from mail-am1on0124.outbound.protection.outlook.com ([157.56.112.124]:1376
+	"EHLO emea01-am1-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932281AbbKMQhU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Nov 2015 11:37:20 -0500
+X-Greylist: delayed 940 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Nov 2015 11:37:19 EST
+Received: from AMSPR02MB168.eurprd02.prod.outlook.com (10.242.94.25) by
+ AMSPR02MB166.eurprd02.prod.outlook.com (10.242.94.22) with Microsoft SMTP
+ Server (TLS) id 15.1.325.17; Fri, 13 Nov 2015 16:21:36 +0000
+Received: from AMSPR02MB168.eurprd02.prod.outlook.com ([10.242.94.25]) by
+ AMSPR02MB168.eurprd02.prod.outlook.com ([10.242.94.25]) with mapi id
+ 15.01.0325.003; Fri, 13 Nov 2015 16:21:36 +0000
+Thread-Topic: git log --merges doesn't show commits as expected
+Thread-Index: AdEeLaVPhrMV+VW+SRK9Z9ItZS3uGA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=dominik@dominikrauch.onmicrosoft.com; 
+x-ms-exchange-messagesentrepresentingtype: 2
+x-originating-ip: [212.186.82.27]
+x-microsoft-exchange-diagnostics: 1;AMSPR02MB166;5:zisuRZqPdq9JWTAfb9+AMEms7rH2kJIzQdSrHTzIbvh+vKbO7ZDcDkceHrxjk7WbBUpEBKCYOYqxmzyYr+rUu9B3n+4GdsYhjNjmcjoMzv3vQFjO56BNznaWF2FpBe7g207S9nj2xWYqMs2StgQGZg==;24:PGNT25/KNluozrH4k/uOvjH12ze70Knxz1j1BJ74L4IdIU0IJNmYPtiH+CWPIvnZMAqV33+A+sqKEKE2r+2/comEgjJBh72kBoOKdhAGGas=;20:oHH5TapvxGOI9VBlVN4mUejLaFgfyYIqNZlGK4DZKRG4Erk04jOtFZ7V+36OJqbf4QvlC/d1lICj6JNUdBkYAA==
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:AMSPR02MB166;
+x-microsoft-antispam-prvs: <AMSPR02MB1660A69CD036AE82EB04A6D83110@AMSPR02MB166.eurprd02.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(2401047)(5005006)(520078)(8121501046)(10201501046)(3002001);SRVR:AMSPR02MB166;BCL:0;PCL:0;RULEID:;SRVR:AMSPR02MB166;
+x-forefront-prvs: 0759F7A50A
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(189002)(199003)(5003600100002)(19580395003)(64872006)(11100500001)(2351001)(229853001)(10400500002)(2501003)(76576001)(15975445007)(74316001)(5002640100001)(89136004)(92566002)(5007970100001)(106356001)(15395725005)(5004730100002)(189998001)(54356999)(102836002)(450100001)(86902001)(101416001)(2900100001)(81156007)(5001960100002)(74482002)(107886002)(66066001)(50986999)(110136002)(97736004)(40100003)(87936001)(105586002)(33656002)(122556002)(77096005)(86972001)(42882005);DIR:OUT;SFP:1102;SCL:1;SRVR:AMSPR02MB166;H:AMSPR02MB168.eurprd02.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:0;LANG:en;
+received-spf: None (protection.outlook.com: dominikrauch.onmicrosoft.com does
+ not designate permitted sender hosts)
+spamdiagnosticoutput: 1:23
+spamdiagnosticmetadata: NSPM
+X-OriginatorOrg: dominikrauch.onmicrosoft.com
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2015 16:21:36.1137
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 62860c5f-96cd-494b-b6bc-19dacd3a942d
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMSPR02MB166
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281256>
 
-Hi all,
-
-we also ran into the maximum rename limit
-in the rename detection. (Yes, we get a lot
-of rename candidates when cherry-picking
-between two specific releases.)
-
-The code talks about limiting the size
-of the rename matrix, but as far as I
-can see, the matrix itself never exists
-as such, and the only thing that could
-actually overflow is the computation
-for the progress indication. This
-can be fixed by reporting just the
-destinations checked instead of the
-combinations, since we only update
-the progress once per destination
-anyway.
-
-If the direction is good, I will
-shape it up (and obtain the
-proper signoffs).
-
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 749a35d..279f24e 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -368,7 +368,7 @@ static int too_many_rename_candidates(int num_create,
- 	int rename_limit = options->rename_limit;
- 	int num_src = rename_src_nr;
- 	int i;
--
-+	static int max_rename_limit = 100000;
- 	options->needed_rename_limit = 0;
+Hello!
  
- 	/*
-@@ -380,8 +380,8 @@ static int too_many_rename_candidates(int num_create,
- 	 * but handles the potential overflow case specially (and we
- 	 * assume at least 32-bit integers)
- 	 */
--	if (rename_limit <= 0 || rename_limit > 32767)
--		rename_limit = 32767;
-+	if (rename_limit <= 0 || rename_limit > max_rename_limit)
-+		rename_limit = max_rename_limit;
- 	if ((num_create <= rename_limit || num_src <= rename_limit) &&
- 	    (num_create * num_src <= rename_limit * rename_limit))
- 		return 0;
-@@ -515,7 +515,7 @@ void diffcore_rename(struct diff_options *options)
- 	if (options->show_rename_progress) {
- 		progress = start_progress_delay(
- 				_("Performing inexact rename detection"),
--				rename_dst_nr * rename_src_nr, 50, 1);
-+				rename_dst_nr, 50, 1);
- 	}
- 
- 	mx = xcalloc(num_create * NUM_CANDIDATE_PER_DST, sizeof(*mx));
-@@ -552,7 +552,7 @@ void diffcore_rename(struct diff_options *options)
- 			diff_free_filespec_blob(two);
- 		}
- 		dst_cnt++;
--		display_progress(progress, (i+1)*rename_src_nr);
-+		display_progress(progress, (i+1));
- 	}
- 	stop_progress(&progress);
+(This is my first post to this mailing list and I couldn't find a FAQ section - please excuse me, if I haven't followed all the established posting guidelines yet.)
 
+I have the following repository tree:
 
-And we would also like to see progress when doing
-a cherry pick - in our case this takes a few minutes:
+C
+|\
+| B
+| /
+A
 
- 
-diff --git a/sequencer.c b/sequencer.c
-index 3c060e0..8fce028 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -282,6 +282,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 
- 	for (xopt = opts->xopts; xopt != opts->xopts + opts->xopts_nr; xopt++)
- 		parse_merge_opt(&o, *xopt);
-+	o.show_rename_progress = isatty(2);
- 
- 	clean = merge_trees(&o,
- 			    head_tree,
+Commit A: Parents=(). Initial commit. Contains file foo with content "ABC".
+Commit B: Parents=(A). Represents a commit on some feature branch. Contains file foo with content "XYZ".
+Commit C: Parents=(A, B). Represents a merge commit of a feature branch back to the main branch. Contains file foo with content "XYZ".
 
+I expected "git log --merges foo" to show C, however, the log is empty! Specifying "--full-history" results in the correct history, therefore I assume, I misunderstand Git's default history simplification algorithm. Unfortunately, the example in the Git docs at [1] does not contain the very same situation (although it is probably one of the most common situations...).
 
-Andreas
+Does anybody know why I don't see the log output I expect? I'm confused...even if the log output is correct, I don't think it follows the principle of least surprise...
 
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+Side note: specifying "--first-parent" also results in commit C being shown.
+
+Best regards,
+Dominik
+
+PS: This is a cross post of [2], somebody noted it could be a bug, which is why I decided to post to this mailing list.
+
+[1] https://git-scm.com/docs/git-log#_history_simplification 
+[2] http://stackoverflow.com/q/33695763/
