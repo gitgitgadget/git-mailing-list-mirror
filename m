@@ -1,121 +1,102 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones fail
-Date: Fri, 13 Nov 2015 10:41:23 -0800
-Message-ID: <CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
-References: <1447321061-74381-1-git-send-email-larsxschneider@gmail.com>
-	<20151113053547.GD29708@sigill.intra.peff.net>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] http: fix some printf format warnings on 32-bit builds
+Date: Fri, 13 Nov 2015 20:02:23 +0000
+Message-ID: <564641CF.5050008@ramsayjones.plus.com>
+References: <56428A6A.5010406@ramsayjones.plus.com>
+ <CAPig+cR+jXgw7+kUK9vrZxNbytwyK3gzgm1YPf_6s57_UxPaBA@mail.gmail.com>
+ <CAGZ79kb1pDhcP+hN9+C0xK-VYKxfnhvj6a2Len6kOWgmv4+fmQ@mail.gmail.com>
+ <56437F96.2070209@ramsayjones.plus.com>
+ <71B4BDE3-153C-4918-A23A-F45F0228A988@gmail.com>
+ <CAPig+cRjDVPHH3VH-Mv_KJTeOVyxV-6agHDk+bXqZ4kjJoaLJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 13 19:41:38 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 13 21:02:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZxJI2-0001lC-4u
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 19:41:38 +0100
+	id 1ZxKYS-0006n7-K4
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 21:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933186AbbKMSla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2015 13:41:30 -0500
-Received: from mail-yk0-f175.google.com ([209.85.160.175]:35490 "EHLO
-	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933087AbbKMSlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Nov 2015 13:41:23 -0500
-Received: by ykba77 with SMTP id a77so161348416ykb.2
-        for <git@vger.kernel.org>; Fri, 13 Nov 2015 10:41:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nLCAz4BtmlrPzt4S/AYQFEyx1H8EtsPoagA6Pw/oHfc=;
-        b=RFXWK7z8D9f9eV7aMFjVQsxEvMLN1ybOgnY4rEwosyStQM3kH2RAeZdhyHtK5uPvDW
-         GBjQKn2a+eSgsTH6Ni5XK3gBUgy8lBF71zq0TuMTdii9eO8hT2rmpzLzy4TFt+F5bw/Q
-         Z67hN+WNKqX7cqMvNfyf+ZIyO1H7Qh52enH+KrQaXRNkOtwZgz3ULtr1nQtjeLCZxIiS
-         cG3Du4vwUmP/jdDjmZczNDMh45Gs9fmyjR+q+A72/NCd/mw/U2WKcQHDnXzml4cDbQql
-         WtBZnYWLCe5TXcKpvEC0WA5VEKZLS28+44ZMtWpieYUoLUTQu2Eo1KELcYGvihw+f8fY
-         4ekg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=nLCAz4BtmlrPzt4S/AYQFEyx1H8EtsPoagA6Pw/oHfc=;
-        b=TXWYyxDi7VAlXtaKoEvyx8jmO/7JS4jUq5x/Rp9XCSK2i+8UFQ7ZZQolTEXHGtdZyx
-         ynBfZaccBAtuz2NZcAP2er9AG+DxtToGeZP6/Lgv9Mkt17PM0JWg2l1JPKDtMAW0wXGN
-         vFxpr+L6OJHu38wTRn+63dr3okx3fMz82SE5JUM/Ua9n4iEWRUeZKq0nfS6BxUvnIYb9
-         oUahMKNwofHQBeUQrdRmvkuW2VIb+7OFbgrM8KRDieHSSBrv0wimkocEbTkhDfLnPFsy
-         Jyaxrfqee+VJYq05u6QKNmu6kkXaiPAutmJwwuDp7oRRjLj1folzBnWclScX3HfFENO5
-         L+yQ==
-X-Gm-Message-State: ALoCoQk0x0JhIIIrC0OJVuGRNYjDLB3DEeUKZV+MA1RwNFBubn5qkOBqJ2cgOoe3KHTapCd0jDyw
-X-Received: by 10.129.40.147 with SMTP id o141mr23122618ywo.199.1447440083156;
- Fri, 13 Nov 2015 10:41:23 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Fri, 13 Nov 2015 10:41:23 -0800 (PST)
-In-Reply-To: <20151113053547.GD29708@sigill.intra.peff.net>
+	id S1754865AbbKMUCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2015 15:02:36 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:44093 "EHLO
+	avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754225AbbKMUCe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Nov 2015 15:02:34 -0500
+Received: from [10.0.2.15] ([146.199.93.105])
+	by avasout04 with smtp
+	id h82R1r0042GQ2gJ0182SLS; Fri, 13 Nov 2015 20:02:31 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=CvRCCSMD c=1 sm=1 tr=0
+ a=SWxm+s7FAPvPP0IAAWI2og==:117 a=SWxm+s7FAPvPP0IAAWI2og==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=BCjA09oAAAAA:8
+ a=extA4yZ_AAAA:8 a=v7MLz4EJ5Y4oeCqJLJEA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <CAPig+cRjDVPHH3VH-Mv_KJTeOVyxV-6agHDk+bXqZ4kjJoaLJQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281261>
 
-On Thu, Nov 12, 2015 at 9:35 PM, Jeff King <peff@peff.net> wrote:
->
-> Hrm. Do we want to make these workarounds work correctly? Or is the
-> final solution going to be that the first command you gave simply works,
-> and no workarounds are needed.  If the latter, I wonder if we want to be
-> adding tests for the workarounds in the first place.
 
-I think we want to make the final solution just work. I dug into that and it is
-harder than expected. I may even call it a bug. The bug doesn't occur often as
-it is only triggered by things like rewriting history (forced pushes)
-or a short dpeth
-argument.
 
-So if you invoke "git clone --recursive", it will internally just
-delegate the submodule
-handling to "git submodule update --init --recursive", which then (as
-the submodule
-doesn't exist yet) will delegate the cloning to "git submodule--helper
-clone", which
-will then call git clone for the actual cloning.
+On 13/11/15 08:57, Eric Sunshine wrote:
+> On Fri, Nov 13, 2015 at 3:46 AM, Lars Schneider
+> <larsxschneider@gmail.com> wrote:
+>> On 11 Nov 2015, at 18:49, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
+>>> On 11/11/15 02:00, Stefan Beller wrote:
+>>>> On Tue, Nov 10, 2015 at 5:22 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>>>> On Tue, Nov 10, 2015 at 7:23 PM, Ramsay Jones
+>>>>> <ramsay@ramsayjones.plus.com> wrote:
+>>>>>> Commit f8117f55 ("http: use off_t to store partial file size",
+>>>>>> 02-11-2015) changed the type of some variables from long to off_t.
+>>>>>> The 32-bit build, which enables the large filesystem interface
+>>>>>> (_FILE_OFFSET_BITS == 64), defines the off_t type as a 64-bit
+>>>>>> integer, whereas long is a 32-bit integer. This results in a couple
+>>>>>> of printf format warnings.
+>>>>>
+>>>>> My machine is 64-bit, though, so perhaps it's misleading to
+>>>>> characterize this as a fix for 32-bit builds. In particular, off_t is
+>>>>> 'long long' on this machine, so it complains about the "long" format
+>>>>> specifier.
+>>>>
+>>>> I wonder if 32 bit compilation can be part of travis.
+>>>
+>>> Did this warning show up on the OS X build?
+>>
+>> Yes, I added CFLAGS="-Werror=format" to the my experimental TravisCI
+>> build and it breaks the build on OS X.
+>> See here (you need to scroll all the way down):
+>> https://travis-ci.org/larsxschneider/git/jobs/90899656
+>>
+>> BTW: I tried to set "-Werror" but then I got a bunch of macro redefined errors like this:
+>> ./git-compat-util.h:614:9: error: 'strlcpy' macro redefined [-Werror]
+>>
+>> Is this a known issue? Is this an issue at all?
+> 
+> Odd. I don't experience anything like that on my Mac.
+> 
 
-However in this whole chain of commands we never pass around the actual sha1
-we need. The strategy is to clone first and then checkout the sha1, which the
-superprojects wants to see. The desired sha1 was hopefully included in
-the cloning,
-so we can check it out.
+Hmm, from the output, it looks like the configure script is
+not detecting that 'strlcpy' is available (so setting
+NO_STRLCPY=YesPlease in the config.mak.autogen file).
+However, it seems to be a 'macro redirect' set in the
+/usr/include/secure/_string.h header file (presumably it
+redirects between a more or less secure version ;-)
 
-But the sha1 may not be present if we have a very short depth argument, or if we
-rewrote history. In case of a short depth argument, consider the
-following history:
+Unfortunately, I don't have access to a mac - so I can't
+help you with the debugging. :(
 
-... <- A <- B
-
-A is the recorded sha1 in the superproject, whereas B is the HEAD in the
-remote you're cloning from. If cloning with depth=1, the most naive way
-would have been to pass on the depth argument down the command chain,
-but then we would end up cloning B with no further depth, and upon checkout
-we cannot find A.
-
-In case of the rewritten history, consider:
-
-.. < - C <- B
-         \
-          A
-
-whereas A is the recorded sha1 in the superproject, but on a different branch
-(or even just a dangling commit. but used to be on master).
-B is the master branch. In case we pass on --depth to cloning the submodule,
---single-branch is implied by --depth, so we would not clone A. In case of
-A being a dangling commit, we wouldn't even clone it without the depth argument.
-
-So I propose:
- * similar to fetch, we enable clone to obtain a specific sha1 from remote.
- * we explicitly pass the submodule sha1 as recorded in the superproject
-   to the submodule fetch/clone in case we follow the exact sha1. In case of
-   --remote or the branch field present in the superprojects .gitmodule file,
-   we can just pass the branch name.
-
-Thanks,
-Stefan
+ATB,
+Ramsay Jones
