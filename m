@@ -1,69 +1,66 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] contrib/subtree: unwrap tag refs
-Date: Fri, 13 Nov 2015 00:01:24 -0500
-Message-ID: <20151113050123.GA29708@sigill.intra.peff.net>
-References: <1447388144-23806-1-git-send-email-git@rob.dqd.com>
- <87h9kqwm67.fsf@waller.obbligato.org>
+Subject: Re: [PATCH 0/7] contrib/subtree: Testsuite cleanup
+Date: Fri, 13 Nov 2015 00:05:48 -0500
+Message-ID: <20151113050548.GB29708@sigill.intra.peff.net>
+References: <1447381956-4771-1-git-send-email-greened@obbligato.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Rob Mayoff <mayoff@dqd.com>, git@vger.kernel.org
-To: "David A. Greene" <greened@obbligato.org>
-X-From: git-owner@vger.kernel.org Fri Nov 13 06:01:33 2015
+Cc: git@vger.kernel.org, techlivezheng@gmail.com,
+	alex.crezoff@gmail.com, davvid@gmail.com, cbailey32@bloomberg.net,
+	danny0838@gmail.com, prohaska@zib.de, th.acker@arcor.de,
+	sschuberth@gmail.com, gitter.spiros@gmail.com, nod.helm@gmail.com,
+	gitster@pobox.com
+To: David Greene <greened@obbligato.org>
+X-From: git-owner@vger.kernel.org Fri Nov 13 06:06:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zx6UO-0002KN-Rw
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 06:01:33 +0100
+	id 1Zx6Yk-0000DK-8e
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 06:06:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752093AbbKMFB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2015 00:01:28 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56881 "HELO cloud.peff.net"
+	id S1754719AbbKMFFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2015 00:05:52 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56887 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751987AbbKMFB0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Nov 2015 00:01:26 -0500
-Received: (qmail 12011 invoked by uid 102); 13 Nov 2015 05:01:26 -0000
+	id S1754716AbbKMFFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Nov 2015 00:05:51 -0500
+Received: (qmail 12354 invoked by uid 102); 13 Nov 2015 05:05:51 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 12 Nov 2015 23:01:26 -0600
-Received: (qmail 20754 invoked by uid 107); 13 Nov 2015 05:01:55 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 12 Nov 2015 23:05:51 -0600
+Received: (qmail 20807 invoked by uid 107); 13 Nov 2015 05:06:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Nov 2015 00:01:55 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Nov 2015 00:01:24 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Nov 2015 00:06:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Nov 2015 00:05:48 -0500
 Content-Disposition: inline
-In-Reply-To: <87h9kqwm67.fsf@waller.obbligato.org>
+In-Reply-To: <1447381956-4771-1-git-send-email-greened@obbligato.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281235>
 
-On Thu, Nov 12, 2015 at 10:36:16PM -0600, David A. Greene wrote:
+On Thu, Nov 12, 2015 at 08:32:29PM -0600, David Greene wrote:
 
-> > +				sub="$(git rev-parse "$b^0")" || die "could not rev-parse split hash $b from commit $sq"
+> Sending again with a proper From: address after rebasing on latest master.
 > 
-> This seems like odd quoting.  Would not this do the same?
-> 
-> 				sub="$(git rev-parse $b^0)" || die "could not rev-parse split hash $b from commit $sq"
-> 
-> Perhaps I am missing something.
+> Copying the maintainers because the origin patchset didn't get any
+> comments and I'm unsure of how to proceed.
 
-The former is quoting "$b" against whitespace splitting in the
-sub-command. Given that the value just came from a "read" call, I think
-by definition it cannot contains IFS. Still, quoting here is a good
-habit.
+That's because Junio is on vacation and I am just slow (I'm filling in
+for the next few weeks, but I haven't pushed out any updates yet). :)
 
-It is actually the _outer_ quotes that are unnecessary, as variable
-assignment does not do extra splitting. So:
+> These are some old changes I have lying around that should get applied
+> to clean up git-subtree's testbase.  With these changes post-mortem
+> analysis is much easier and adding new tests can be done in an orderly
+> fashion.
 
-  foo=$(echo one two)
+OK. Since these are all in a contrib subdir, and since AFAIK you are the
+last person who volunteered to be the subsystem maintainer, I am happy
+to pick them up if you think they're good.
 
-will put the full "one two" into $foo. But the quotes do not hurt
-anything, and it is a reasonable style to use them to avoid this
-discussion. :)
-
-It also matches style-wise with nearby assignments, like:
-
-  main="$b"
+I'll queue what's here for now, but review from interested parties is
+welcome.
 
 -Peff
