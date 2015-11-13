@@ -1,108 +1,261 @@
-From: Rob Mayoff <mayoff@dqd.com>
-Subject: [PATCH v2] contrib/subtree: unwrap tag refs
-Date: Fri, 13 Nov 2015 11:25:49 -0600
-Message-ID: <1447435549-34410-1-git-send-email-mayoff@dqd.com>
-Cc: Rob Mayoff <mayoff@dqd.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH RFC] completion: add support for completing email aliases
+Date: Fri, 13 Nov 2015 10:17:40 -0800
+Message-ID: <1447438660-6115-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	"Shawn O . Pearce" <spearce@spearce.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Lee Marlow <lee.marlow@gmail.com>,
+	Jacob Keller <jacob.keller@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 13 18:26:38 2015
+X-From: git-owner@vger.kernel.org Fri Nov 13 19:17:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZxI7P-0007vq-Rw
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 18:26:36 +0100
+	id 1ZxIux-0004X4-Oq
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 19:17:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933024AbbKMR0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2015 12:26:31 -0500
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:33540 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932607AbbKMR0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Nov 2015 12:26:31 -0500
-Received: by obbww6 with SMTP id ww6so78765559obb.0
-        for <git@vger.kernel.org>; Fri, 13 Nov 2015 09:26:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dqd_com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id;
-        bh=o6/HlbVln/ska2Dto4YsrIPqAo1wsvkEIiu/adJymvg=;
-        b=vcjDaA3vO8Hg16oKV9DSBFpZgcyGd/cppaB1/Z2bi7w0OxsPCDZVhx7j1i3IHmmVMs
-         hvQqA1VbsZY6uXw/Nh4HAzo+5kN0vbP+BbqfMS4BZf5MjMLQfR9DRr21GOlu+N2WyyJH
-         Y5CrzvGnoc8M7R7z4BknbAB9Vr86e5oDPagY1s881fVIPuEJjQ+ZL0qreYSgLzre8vZy
-         HqRIc29u42NdhfQYZs6T377VallVMm3Onn++FfD1n6LnG4Js/9zNgX93CK469cLj3b+e
-         q/EPXxpReTe6f2xCePZZYe7tflmIaAsBzOGGqYTuYD3JWoKMWyoIZ5VZpECK0HIQOrQV
-         XAig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=o6/HlbVln/ska2Dto4YsrIPqAo1wsvkEIiu/adJymvg=;
-        b=RnYdcL3pQYCgeGKNrAk2/HE3faCDwb2NWFmPAqJu9AVdiPKU1iiILABM/E2ycWBtqc
-         yr+QncIRobFFGxMcc6pDrbTt08rvnDs9dFoGNWzWg8NcPHdyRB2UwlDrgsT+RsuIwEOB
-         KsipQlRkXRJDy4R3uaQgNpRRako6VcSQ8WL+X98WqfzNjHo/XHA5lHJDwlJyCZe+GEeV
-         4LbRV2BEZrxZa1ssf8Cs3AB/LA9SYM6GXpoFTKTe3dB9JCYP3UeJqg67jwa6aABmu+PW
-         n3kxFNZeZL3uxtXmKIcqG982eTk+3KklcwGZP13VUjQYC1NQ9CpVqifsB8kr1q/Ufk8c
-         PTDw==
-X-Gm-Message-State: ALoCoQkN8pcf2IIWWL1meQs/jpDlVhduqUX3Qp78zl5WcK0PzitRGq0lwBaELY7hsGOeT1HtDtb1
-X-Received: by 10.60.115.138 with SMTP id jo10mr14349246oeb.85.1447435588964;
-        Fri, 13 Nov 2015 09:26:28 -0800 (PST)
-Received: from can.dqd.com (65-36-82-75.dyn.grandenetworks.net. [65.36.82.75])
-        by smtp.gmail.com with ESMTPSA id x131sm6272721oix.27.2015.11.13.09.26.28
-        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 13 Nov 2015 09:26:28 -0800 (PST)
-X-Mailer: git-send-email 2.4.3
+	id S933042AbbKMSRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2015 13:17:43 -0500
+Received: from mga11.intel.com ([192.55.52.93]:45862 "EHLO mga11.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933005AbbKMSRm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Nov 2015 13:17:42 -0500
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga102.fm.intel.com with ESMTP; 13 Nov 2015 10:17:42 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.20,288,1444719600"; 
+   d="scan'208";a="837248831"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.123])
+  by fmsmga001.fm.intel.com with ESMTP; 13 Nov 2015 10:17:42 -0800
+X-Mailer: git-send-email 2.6.1.264.gbab76a9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281259>
 
-If a subtree was added using a tag ref, the tag ref is stored in
-the subtree commit message instead of the underlying commit's ref.
-To split or push subsequent changes to the subtree, the subtree
-command needs to unwrap the tag ref.  This patch makes it do so.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-The problem was described in a message to the mailing list from
-Junio C Hamano dated 29 Apr 2014, with the subject "Re: git subtree
-issue in more recent versions". The archived message can be found
-at <http://comments.gmane.org/gmane.comp.version-control.git/247503>.
+Extract email aliases from the sendemail.aliasesfile according to the
+known types. Implementation only extracts the alias name and does not
+attempt to complete email addresses.
 
-Signed-off-by: Rob Mayoff <mayoff@dqd.com>
+Add a few tests for simple layouts of the currently supported alias
+filetypes.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
 
-changes since v1:
+Labeled this RFC because I have only been able to test the mutt format
+as this is what I use locally. I have a few (probably brittle) test
+cases for the files, but they are not "real" configuration files as per
+the upstream tools, so they are essentially made to work with the simple
+extractors that I have now. I'd like some review on this to see if it's
+valuable, but it definitely helps me type out aliases and see what is
+available by just using TAB.
 
-* remove obsolete sub assignments
-* wrap lines
+ contrib/completion/git-completion.bash | 69 ++++++++++++++++++++++++++
+ t/t9902-completion.sh                  | 90 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 159 insertions(+)
 
- contrib/subtree/git-subtree.sh | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 9f06571..5ed0ea5 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -245,7 +245,10 @@ find_latest_squash()
- 		case "$a" in
- 			START) sq="$b" ;;
- 			git-subtree-mainline:) main="$b" ;;
--			git-subtree-split:) sub="$b" ;;
-+			git-subtree-split:)
-+				sub="$(git rev-parse "$b^0")" ||
-+				    die "could not rev-parse split hash $b from commit $sq"
-+				;;
- 			END)
- 				if [ -n "$sub" ]; then
- 					if [ -n "$main" ]; then
-@@ -278,7 +281,10 @@ find_existing_splits()
- 		case "$a" in
- 			START) sq="$b" ;;
- 			git-subtree-mainline:) main="$b" ;;
--			git-subtree-split:) sub="$b" ;;
-+			git-subtree-split:)
-+				sub="$(git rev-parse "$b^0")" ||
-+				    die "could not rev-parse split hash $b from commit $sq"
-+				;;
- 			END)
- 				debug "  Main is: '$main'"
- 				if [ -z "$main" -a -n "$sub" ]; then
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 482ca84b451b..9b786bb390ba 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -10,6 +10,7 @@
+ #    *) local and remote tag names
+ #    *) .git/remotes file names
+ #    *) git 'subcommands'
++#    *) git email aliases for git-send-email
+ #    *) tree paths within 'ref:path/to/file' expressions
+ #    *) file paths within current working directory and index
+ #    *) common --long-options
+@@ -785,6 +786,56 @@ __git_aliased_command ()
+ 	done
+ }
+ 
++# Print aliases for email addresses from sendemail.aliasesfile
++__git_email_aliases ()
++{
++	local file="$(git --git-dir="$(__gitdir)" config --path sendemail.aliasesfile)"
++	local filetype="$(git --git-dir="$(__gitdir)" config sendemail.aliasfiletype)"
++
++	# Only run awk if we find an actual file
++	if ! [ -f $file ]; then
++		return
++	fi
++
++	case "$filetype" in
++		# Each file type needs to be parsed differently.
++		mutt|mailrc)
++			# Mutt and mailrc are simple and just put the alias in
++			# the 2nd field of the file.
++			awk '{print $2}' $file
++			return
++			;;
++		sendmail)
++			# Skip new lines, lines without fields, and lines
++			# ending in '\' then print the name minus the final :
++			awk 'NF && $1!~/^#/ && !/\\$/ {sub(/:$/, "", $1); print $1 }' $file
++			return
++			;;
++		pine)
++			# According to spec, line continuations are any line
++			# which starts with whitespace, otherwise we can just
++			# use the normal separator and print the first field.
++			awk '/^\S/ {print $1}' "$file"
++			return
++			;;
++		elm)
++			# Elm doesn't appear to allow newlines, and
++			# git-send-email only accepts one alias per line, so
++			# just print the first field.
++			awk '{print $1}' "$file"
++			return
++			;;
++		gnus)
++			# The gnus format has the alias quoted, so we just use
++			# gsub to extract the alias from the quotes
++			awk '/define-mail-alias/ {gsub(/"/, "", $2); print $2}' $file
++			return
++			;;
++		*)
++			return;;
++	esac
++}
++
+ # __git_find_on_cmdline requires 1 argument
+ __git_find_on_cmdline ()
+ {
+@@ -1735,6 +1786,24 @@ _git_send_email ()
+ 			" "" "${cur##--thread=}"
+ 		return
+ 		;;
++	--to=*)
++		__gitcomp "
++		$(__git_email_aliases)
++		" "" "${cur##--to=}"
++		return
++		;;
++	--cc=*)
++		__gitcomp "
++		$(__git_email_aliases)
++		" "" "${cur##--cc=}"
++		return
++		;;
++	--bcc=*)
++		__gitcomp "
++		$(__git_email_aliases)
++		" "" "${cur##--bcc=}"
++		return
++		;;
+ 	--*)
+ 		__gitcomp "--annotate --bcc --cc --cc-cmd --chain-reply-to
+ 			--compose --confirm= --dry-run --envelope-sender
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 2ba62fbc178e..0549f75e6e7c 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -404,6 +404,96 @@ test_expect_success '__git_aliases' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '__git_email_aliases (mutt)' '
++	cat >aliases <<-EOF &&
++	alias user1 Some User <user1@example.org>
++	alias user2 random-user-foo@foo.garbage
++	EOF
++	cat >expect <<-EOF &&
++	user1
++	user2
++	EOF
++	test_config sendemail.aliasesfile aliases &&
++	test_config sendemail.aliasfiletype mutt &&
++	__git_email_aliases >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '__git_email_aliases (mailrc)' '
++	cat >aliases <<-EOF &&
++	alias user1 Some User <user1@example.org>
++	alias user2 random-user-foo@foo.garbage
++	EOF
++	cat >expect <<-EOF &&
++	user1
++	user2
++	EOF
++	test_config sendemail.aliasesfile aliases &&
++	test_config sendemail.aliasfiletype mailrc &&
++	__git_email_aliases >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '__git_email_aliases (sendmail)' '
++	cat >aliases <<-EOF &&
++	user1: Some User <user1@example.org>
++	user2: random-user-foo@foo.garbage
++	EOF
++	cat >expect <<-EOF &&
++	user1
++	user2
++	EOF
++	test_config sendemail.aliasesfile aliases &&
++	test_config sendemail.aliasfiletype sendmail &&
++	__git_email_aliases >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '__git_email_aliases (pine)' '
++	cat >aliases <<-EOF &&
++	user1	Some User	user1@example.org>
++	user2	random-user-foo@foo.garbage
++	EOF
++	cat >expect <<-EOF &&
++	user1
++	user2
++	EOF
++	test_config sendemail.aliasesfile aliases &&
++	test_config sendemail.aliasfiletype pine &&
++	__git_email_aliases >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '__git_email_aliases (elm)' '
++	cat >aliases <<-EOF &&
++	user1 = User; Someone = user1@example.org
++	user2 = = user2@garbage.foo
++	EOF
++	cat >expect <<-EOF &&
++	user1
++	user2
++	EOF
++	test_config sendemail.aliasesfile aliases &&
++	test_config sendemail.aliasfiletype elm &&
++	__git_email_aliases >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '__git_email_aliases (gnus)' '
++	cat >aliases <<-EOF &&
++	define-mail-alias "user1" "user1@example.org"
++	define-mail-alias "user2" "user2@arbitrary.foo"
++	EOF
++	cat >expect <<-EOF &&
++	user1
++	user2
++	EOF
++	test_config sendemail.aliasesfile aliases &&
++	test_config sendemail.aliasfiletype gnus &&
++	__git_email_aliases >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'basic' '
+ 	run_completion "git " &&
+ 	# built-in
 -- 
-2.4.3
+2.6.1.264.gbab76a9
