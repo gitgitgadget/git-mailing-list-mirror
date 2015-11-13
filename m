@@ -1,7 +1,7 @@
 From: David Greene <greened@obbligato.org>
-Subject: [PATCH 5/7] contrib/subtree: Add split tests
-Date: Thu, 12 Nov 2015 20:32:34 -0600
-Message-ID: <1447381956-4771-6-git-send-email-greened@obbligato.org>
+Subject: [PATCH 7/7] contrib/subtree: Handle '--prefix' argument with a slash appended
+Date: Thu, 12 Nov 2015 20:32:36 -0600
+Message-ID: <1447381956-4771-8-git-send-email-greened@obbligato.org>
 References: <1447381956-4771-1-git-send-email-greened@obbligato.org>
 Cc: techlivezheng@gmail.com, alex.crezoff@gmail.com, davvid@gmail.com,
 	cbailey32@bloomberg.net, danny0838@gmail.com, prohaska@zib.de,
@@ -9,26 +9,26 @@ Cc: techlivezheng@gmail.com, alex.crezoff@gmail.com, davvid@gmail.com,
 	gitter.spiros@gmail.com, nod.helm@gmail.com, gitster@pobox.com,
 	"David A . Greene" <greened@obbligato.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 13 03:33:41 2015
+X-From: git-owner@vger.kernel.org Fri Nov 13 03:33:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zx4BJ-0007SB-04
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 03:33:41 +0100
+	id 1Zx4BP-0007aI-1F
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Nov 2015 03:33:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932448AbbKMCdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Nov 2015 21:33:37 -0500
-Received: from li209-253.members.linode.com ([173.255.199.253]:60502 "EHLO
+	id S932476AbbKMCdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Nov 2015 21:33:44 -0500
+Received: from li209-253.members.linode.com ([173.255.199.253]:60528 "EHLO
 	johnson.obbligato.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932345AbbKMCdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Nov 2015 21:33:36 -0500
+	with ESMTP id S932453AbbKMCdl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Nov 2015 21:33:41 -0500
 Received: from chippewa-nat.cray.com ([136.162.34.1] helo=waller.us.cray.com)
 	by johnson.obbligato.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_CBC_SHA256:128)
 	(Exim 4.85)
 	(envelope-from <greened@obbligato.org>)
-	id 1Zx4Bs-0004iE-0m; Thu, 12 Nov 2015 20:34:16 -0600
+	id 1Zx4Bx-0004iE-R7; Thu, 12 Nov 2015 20:34:22 -0600
 X-Mailer: git-send-email 2.6.1
 In-Reply-To: <1447381956-4771-1-git-send-email-greened@obbligato.org>
 X-Filter-Spam-Score: ()
@@ -37,53 +37,63 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281230>
 
 From: Techlive Zheng <techlivezheng@gmail.com>
 
-Add tests to check various options to split.  Check combinations of
---prefix, --message, --annotate, --branch and --rejoin.
+'git subtree merge' will fail if the argument of '--prefix' has a slash
+appended.
 
 Signed-off-by: Techlive Zheng <techlivezheng@gmail.com>
 Signed-off-by: David A. Greene <greened@obbligato.org>
 ---
- contrib/subtree/t/t7900-subtree.sh | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ contrib/subtree/git-subtree.sh     |  2 +-
+ contrib/subtree/t/t7900-subtree.sh | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 308b777..edf36f8 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -90,7 +90,7 @@ while [ $# -gt 0 ]; do
+ 		--annotate) annotate="$1"; shift ;;
+ 		--no-annotate) annotate= ;;
+ 		-b) branch="$1"; shift ;;
+-		-P) prefix="$1"; shift ;;
++		-P) prefix="${1%/}"; shift ;;
+ 		-m) message="$1"; shift ;;
+ 		--no-prefix) prefix= ;;
+ 		--onto) onto="$1"; shift ;;
 diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 7d59a1a..6250194 100755
+index 2683d7d..751aee3 100755
 --- a/contrib/subtree/t/t7900-subtree.sh
 +++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -250,7 +250,6 @@ test_expect_success 'split requires path given by option --prefix must exist' '
- 
- test_expect_success 'check if --message works for split+rejoin' '
- 	spl1=''"$(git subtree split --annotate='"'*'"' --prefix "sub dir" --onto FETCH_HEAD --message "Split & rejoin" --rejoin)"'' &&
--	git branch spl1 "$spl1" &&
- 	check_equal ''"$(last_commit_message)"'' "Split & rejoin" &&
- 	undo
- '
-@@ -282,7 +281,21 @@ test_expect_success 'check split with --branch for an incompatible branch' '
- 	test_must_fail git subtree split --prefix "sub dir" --onto FETCH_HEAD --branch subdir
+@@ -257,6 +257,26 @@ test_expect_success 'merge the added subproj again, should do nothing' '
+ 	)
  '
  
--test_expect_success 'check split+rejoin' '
-+test_expect_success 'split sub dir/ with --rejoin' '
-+	spl1=$(git subtree split --prefix="sub dir" --annotate="*") &&
-+	git branch spl1 "$spl1" &&
-+	git subtree split --prefix="sub dir" --annotate="*" --rejoin &&
-+	check_equal "$(last_commit_message)" "Split '\''sub dir/'\'' into commit '\''$spl1'\''" &&
-+	undo
++next_test
++test_expect_success 'merge new subproj history into subdir/ with a slash appended to the argument of --prefix' '
++	test_create_repo "$test_count" &&
++	test_create_repo "$test_count/subproj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/subproj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./subproj master &&
++		git subtree add --prefix=subdir/ FETCH_HEAD
++	) &&
++	test_create_commit "$test_count/subproj" sub2 &&
++	(
++		cd "$test_count" &&
++		git fetch ./subproj master &&
++		git subtree merge --prefix=subdir/ FETCH_HEAD &&
++		check_equal "$(last_commit_message)" "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
++	)
 +'
 +
-+test_expect_success 'split sub dir/ with --rejoin and --message' '
-+	git subtree split --prefix="sub dir" --message="Split & rejoin" --annotate="*" --rejoin &&
-+	check_equal "$(last_commit_message)" "Split & rejoin" &&
-+	undo
-+'
-+
-+test_expect_success 'check split+rejoin+onto' '
- 	spl1=''"$(git subtree split --annotate='"'*'"' --prefix "sub dir" --onto FETCH_HEAD --message "Split & rejoin" --rejoin)"'' &&
- 	undo &&
- 	git subtree split --annotate='"'*'"' --prefix "sub dir" --onto FETCH_HEAD --rejoin &&
+ #
+ # Tests for 'git subtree split'
+ #
 -- 
 2.6.1
