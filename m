@@ -1,151 +1,94 @@
-From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-Subject: Re: [PATCH RFC] completion: add support for completing email
- aliases
-Date: Sat, 14 Nov 2015 10:44:02 +0100
-Message-ID: <20151114104402.Horde.1et7Ak3QVluviq1iADQupQI@webmail.informatik.kit.edu>
-References: <20151114015504.Horde.4mcBf20X0mnolD3xNrtymin@webmail.informatik.kit.edu>
- <CA+P7+xpxpkCJxesU4Tif46pYeQHG-NdvMuD0bj1Kr_kGz4djTg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] git-candidate: git based patch tracking and review
+Date: Sat, 14 Nov 2015 05:07:42 -0800
+Message-ID: <xmqqbnawzq3l.fsf@gitster.mtv.corp.google.com>
+References: <1447160198-23296-1-git-send-email-richard.ipsum@codethink.co.uk>
+	<5643107B.20501@alum.mit.edu> <20151111151204.GA4249@salo>
+	<20151114081707.GA32739@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	DelSp=Yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O . Pearce" <spearce@spearce.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Lee Marlow <lee.marlow@gmail.com>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 14 10:44:24 2015
+Content-Type: text/plain
+Cc: Richard Ipsum <richard.ipsum@codethink.co.uk>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Nov 14 14:08:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZxXNf-0003nz-7b
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Nov 2015 10:44:23 +0100
+	id 1ZxaZA-0000Wj-7j
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Nov 2015 14:08:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170AbbKNJoQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Nov 2015 04:44:16 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:59435 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751112AbbKNJoK convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Nov 2015 04:44:10 -0500
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
-	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-	iface 141.3.10.81 id 1ZxXNM-0002Ox-U6; Sat, 14 Nov 2015 10:44:04 +0100
-Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
-	(envelope-from <szeder@ira.uka.de>)
-	id 1ZxXNK-0000WB-EQ; Sat, 14 Nov 2015 10:44:02 +0100
-Received: from x590d706e.dyn.telefonica.de (x590d706e.dyn.telefonica.de
- [89.13.112.110]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
- Sat, 14 Nov 2015 10:44:02 +0100
-In-Reply-To: <CA+P7+xpxpkCJxesU4Tif46pYeQHG-NdvMuD0bj1Kr_kGz4djTg@mail.gmail.com>
-User-Agent: Horde Application Framework 5
-Content-Disposition: inline
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1447494244.
+	id S1750994AbbKNNHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Nov 2015 08:07:51 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63312 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750998AbbKNNHu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Nov 2015 08:07:50 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8C49D2776B;
+	Sat, 14 Nov 2015 08:07:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XdEV3KDv4LbAdkQ1QHJE+nr5Plo=; b=ZoScgM
+	ENYNQnlzJbqRdMhbtWaiWcY+MJK3zslc9gtgexHhIxOdkZnazEmqxwoieCibxqLK
+	0vR4ova3zcJeVMGMjoOiBpUq1tPH3mFVm7UN/8ivLAYN3RPKDKtK+77SUapU1Psf
+	zxeDBn6q562KdYQag7mQrlKw3tL0e8LA+LT34=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PsX97Ygtl4fcs32CSjbzN/WXTBkrjHKd
+	Na5Vw0+Ke2UZhid4L/2//B/g/eSyKn1mu1A2hN9XpaODbWcLTkcQQGzsb3lcDk6j
+	VBe64fOmYhHg7SUBhbd4Ewf0lcTa3BRjcEjevFv8lluA1G0iZBCjpvOo2Jj3Uxui
+	uQ56nOQsvvc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 84BF12776A;
+	Sat, 14 Nov 2015 08:07:44 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0CBEE27769;
+	Sat, 14 Nov 2015 08:07:43 -0500 (EST)
+In-Reply-To: <20151114081707.GA32739@sigill.intra.peff.net> (Jeff King's
+	message of "Sat, 14 Nov 2015 03:17:08 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B1836CE4-8AD0-11E5-84B3-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281304>
 
+Jeff King <peff@peff.net> writes:
 
-Quoting Jacob Keller <jacob.keller@gmail.com>:
-
-> On Fri, Nov 13, 2015 at 4:55 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de=
-> wrote:
-
->> However, 'git send-email' already knows how to parse these files, so
->> how about letting it do all the work, i.e. teach it a new 'git
->> send-email --list-aliases' option that would only read the config,
->> parse the alias file, print all the aliases, i.e. the keys from the
->> 'aliases' associative array and exit.  That way we wouldn't have to
->> duplicate parts of an already working and tested parsing into a
->> different language, the completion script would be simpler, because =
-we
->> wouldn't need __git_email_aliases() helper function, it would
->> immediately benefit from future bug fixes to 'send-email', and new
->> alias file formats would Just Work.
->>
+> On Wed, Nov 11, 2015 at 03:12:05PM +0000, Richard Ipsum wrote:
+>> 
+>> The aim is not to bless one particular system but to eventually
+>> provide a common data model that all review systems can share,
+>> so that it is possible to do distributed reviews with arbitrary UIs
+>> in a widely compatible way.
 >
-> Agreed. I hadn't thought about it this way. We could also add email
-> addresses to the complete list, if that was a reasonable addition?
-> Maybe not worth it though.
+> I think that's a laudable goal, but I didn't see any discussion or
+> documentation of the data model in your patches. Maybe that would be a
+> good place to start.
 
-I don't really see the use case of listing email addresses as well.
+Even before doing that it might be a good idea to pick brains of
+folks who work on Gerrit, who has already done one such data model
+that may be generic enough to serve as a good starting point. ISTR
+that they were migrating to a notes based storage to ease federated
+code review systems?
 
-> I'll respin a version like this in the next few days.
-
-Great, thank you!
-
-
->>> @@ -1735,6 +1786,24 @@ _git_send_email ()
->>>                         " "" "${cur##--thread=3D}"
->>>                 return
->>>                 ;;
->>> +       --to=3D*)
->>> +               __gitcomp "
->>> +               $(__git_email_aliases)
->>> +               " "" "${cur##--to=3D}"
->>> +               return
->>> +               ;;
->>> +       --cc=3D*)
->>> +               __gitcomp "
->>> +               $(__git_email_aliases)
->>> +               " "" "${cur##--cc=3D}"
->>> +               return
->>> +               ;;
->>> +       --bcc=3D*)
->>> +               __gitcomp "
->>> +               $(__git_email_aliases)
->>> +               " "" "${cur##--bcc=3D}"
->>> +               return
->>> +               ;;
->>
->>
->> These case branches look essentially the same except what has to be
->> removed from the word being completed.  And what gets removed is
->> essentially everything before and including the first '=3D'.
->> So how about squashing these three cases into a single (untested) on=
-e
->> like this:
+>> If we add git-candidate to contrib then it can act as a reference
+>> implementation, so that this data model can be validated and tested
+>> by additional developers.
 >
-> I tried this, but I wasn't sure if it was reasonable or not inccase
-> there was an equals later in the section? since glob will match the
-> longest one?
-
-That's why I used a single '#' in the parameter expansion below.  A =20
-single '#' removes the shortest matching prefix pattern, '##' removes =20
-the longest:
-
-$ cur=3D"foo=3Dbar=3Dbaz"
-$ echo "#: ${cur#*=3D}    ##: ${cur##*=3D}"
-#: bar=3Dbaz    ##: baz
-
-(Don't ask why we use '##' without glob everywhere... :)
-
->>
->>      --to=3D*|--cc=3D*|--bcc=3D*)
->>        __gitcomp "$(__git_email_aliases)" "" "${cur#*=3D}"
->>        return
->>
->>        ;;
->>
-
-There's an other point: these options have an unstuck variant as well, =
-=20
-i.e. '--to alice'.  It would be great to support those, too.
-Perhaps something like this snippet looking at the previous word on =20
-the command line could come before the big case statement handling the =
-=20
-current word:
-
-   case "$prev" in
-   --to|--cc|--bcc)
-     __gitcomp "$(git --git-dir=3D"$dir" send-email --list-aliases 2>/d=
-ev/null)"
-     return
-     ;;
-   esca
+> That can happen outside of git's contrib/ directory, too.
+>
+> I think Michael's "bless" argument applies to the data model, too. Is
+> your data model a good one? Should other systems adopt it, or is it
+> still a work in progress? We don't know yet.
+>
+> I think I'd rather see it prove itself before entering the git tree, if
+> only because it doesn't really gain anything by being inside the git
+> tree. Once upon a time that was a good way to get publicity and easy
+> hosting, but these days it is easy to find git hosting, and I am not
+> sure people actually explore contrib/ all that much.
