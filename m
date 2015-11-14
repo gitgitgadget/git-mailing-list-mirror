@@ -1,116 +1,123 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] refs.c: get_ref_cache: use a bucket hash
-Date: Fri, 13 Nov 2015 19:01:18 -0500
-Message-ID: <20151114000118.GB18260@sigill.intra.peff.net>
-References: <20150316142026.GJ7847@inner.h.apk.li>
- <xmqq1tkosvpi.fsf@gitster.dls.corp.google.com>
- <20150316184040.GA8902@inner.h.apk.li>
- <20150317024005.GA26313@peff.net>
- <xmqqd248p4o9.fsf@gitster.dls.corp.google.com>
- <20150317054759.GA16860@peff.net>
- <20151113152915.GC16219@inner.h.apk.li>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones fail
+Date: Fri, 13 Nov 2015 16:10:41 -0800
+Message-ID: <CAGZ79kaUZ08GXZjKtYNmRYOCQ0EQpsGd8+6PYFDU1LxYLw818g@mail.gmail.com>
+References: <1447321061-74381-1-git-send-email-larsxschneider@gmail.com>
+	<20151113053547.GD29708@sigill.intra.peff.net>
+	<CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
+	<CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
+	<20151113233807.GD16173@sigill.intra.peff.net>
+	<20151113234116.GA18234@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Nov 14 01:01:45 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Nov 14 01:11:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZxOHn-0002Y5-A6
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Nov 2015 01:01:43 +0100
+	id 1ZxOQq-0006Zp-RU
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Nov 2015 01:11:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751143AbbKNABW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Nov 2015 19:01:22 -0500
-Received: from cloud.peff.net ([50.56.180.127]:57356 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750908AbbKNABV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Nov 2015 19:01:21 -0500
-Received: (qmail 19665 invoked by uid 102); 14 Nov 2015 00:01:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Nov 2015 18:01:21 -0600
-Received: (qmail 30006 invoked by uid 107); 14 Nov 2015 00:01:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 13 Nov 2015 19:01:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Nov 2015 19:01:18 -0500
-Content-Disposition: inline
-In-Reply-To: <20151113152915.GC16219@inner.h.apk.li>
+	id S1752858AbbKNALA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Nov 2015 19:11:00 -0500
+Received: from mail-yk0-f176.google.com ([209.85.160.176]:34093 "EHLO
+	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752947AbbKNAKm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Nov 2015 19:10:42 -0500
+Received: by ykfs79 with SMTP id s79so174561485ykf.1
+        for <git@vger.kernel.org>; Fri, 13 Nov 2015 16:10:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=uGoiv4nOWXB3c86pIpsJtqr8ueJDNUSfIB2bt894KZU=;
+        b=D4XJf4kg7BHeamJpERVE6E2fCk3ldEo/Ro1x3E/NMs+1uYQyNWttIeyAAbs5xa8bsl
+         yKv6B1scNmumqMxH2WYEQ3DO7sdHYYCQwDf627feCta95/9OTTg739OVXF+YF1HPAZSD
+         feivdkBOEDHcxXiP2Z6p0frR1zUHezHEFA05/fMk8I53ZMHz+FgtKRvXNfpLm6muV/eZ
+         Ipi705y6ADaWpJGHaPJaL2tm87SrAlTvDJZcdZWOYj4z1kNfloL1p8m+qfpI3u2/sGiR
+         kQkTW3y1MbnPa4QUlvnCFrL1Ip7Q9A1LivUJW5UU1vo4tjcWim4VUzkwgTN7sGbnOzJ1
+         XKKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=uGoiv4nOWXB3c86pIpsJtqr8ueJDNUSfIB2bt894KZU=;
+        b=lAZEw6vyQMC/K6AJGv5LR9Bf8Y4oOjIRP0N9XEaUxn5SPixVcfk9Su1jzM0xpD1D6O
+         VuCZeFGjD3PPKw6a7r71UB4rdTctZqqga1uTWdxpa8X+eemTUEUsJWsB4b6CxEY/tiHy
+         sPI4OiFEnu2tQ1gwaA3ghb31H29SSpYRKTia/6Xywak06gyczq5xNScHzaRpd6KoAiNP
+         +TtYNfbjn65yz0T46eYNvDaOKu13BIbEimLJIQKpuY7ZF8zohVjt/kRmojfWvEBwwG+2
+         ymfi8L5DCpERgQZh2T93sJ/ox19ZK8mbKyoLqV+G8Uu31r/ucG1aPTCSpTiLTQVVtzUg
+         2KVg==
+X-Gm-Message-State: ALoCoQk7cZ0D9FUFZT5IszkclS4jnfVLAjQst9dyZOBrTytyOHs1kWduOpWY9D3dIP8o04eGZrjR
+X-Received: by 10.13.214.19 with SMTP id y19mr25232524ywd.63.1447459842003;
+ Fri, 13 Nov 2015 16:10:42 -0800 (PST)
+Received: by 10.37.196.70 with HTTP; Fri, 13 Nov 2015 16:10:41 -0800 (PST)
+In-Reply-To: <20151113234116.GA18234@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281278>
 
-On Fri, Nov 13, 2015 at 04:29:15PM +0100, Andreas Krey wrote:
+On Fri, Nov 13, 2015 at 3:41 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Nov 13, 2015 at 06:38:07PM -0500, Jeff King wrote:
+>
+>> On Fri, Nov 13, 2015 at 03:16:01PM -0800, Stefan Beller wrote:
+>>
+>> > Junio wrote on Oct 09, 2014:
+>> > > This is so non-standard a thing to do that I doubt it is worth
+>> > > supporting with "git clone".  "git clone --branch", which is about
+>> > "> I want to follow that particular branch", would not mesh well with
+>> > > "I want to see the history that leads to this exact commit", either.
+>> > > You would not know which branch(es) is that exact commit is on in
+>> > > the first place.
+>> >
+>> > I disagree with this. This is the *exact* thing you actually want to do when
+>> > dealing with submodules. When fetching/cloning for a submodule, you want
+>> > to obtain the exact sha1, instead of a branch (which happens to be supported
+>> > too, but is not the original use case with submodules.)
+>>
+>> I think this is already implemented in 68ee628 (upload-pack: optionally
+>> allow fetching reachable sha1, 2015-05-21), isn't it?
+>
+> Note that this just implements the server side. I think to use this with
+> submodules right now, you'd have to manually "git init && git fetch" in
+> the submodule. It might make sense to teach clone to handle this, to
+> avoid the submodule code duplicating what the clone code does.
 
-> > Likewise, I think dir.c:remove_dir_recurse is in a similar boat.
-> > Grepping for resolve_gitlink_ref, it looks like there may be others,
-> > too.
-> 
-> Can't we handle this in resolve_gitlink_ref itself? As I understand it,
-> it should resolve a ref (here "HEAD") when path points to a submodule.
-> When there isn't one it should return -1, so:
+Yes I want to add it to clone, as that is a prerequisite for making
+git clone --recursive --depth 1 to work as you'd expect. (such that
+the submodule can be cloned&checkout instead of rewriting that to be
+init&fetch.
 
-I'm not sure. I think part of the change to git-clean was that
-is_git_directory() is a _better_ check than "can we resolve HEAD?"
-because it covers empty repos, too.
+Thanks for pointing out that we already have some kind of server support.
 
-> diff --git a/refs.c b/refs.c
-> index 132eff5..f8648c5 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1553,6 +1553,10 @@ int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sh
->  	if (!len)
->  		return -1;
->  	submodule = xstrndup(path, len);
-> +	if (!is_git_directory(submodule)) {
-> +		free(submodule);
-> +		return -1;
-> +	}
->  	refs = get_ref_cache(submodule);
->  	free(submodule);
-> 
-> I'm way too little into the code to see what may this may get wrong.
+I wonder if we should add an additional way to make fetching only some
+sha1s possible. ("I don't want users to fetch any sha1, but only those
+where superprojects point{ed} to", even if you force push a superproject,
+you want to want to only allow fetching all sha1s which exist in the current
+superprojects branch.)
 
-I don't think it produces wrong outcomes, but I think it's sub-optimal.
-In cases where we already have a ref cache, we'll hit the filesystem for
-each lookup to re-confirm what we already know. That doesn't affect your
-case, but it does when we actually _do_ have a submodule.
+Maybe our emails crossed, but in the other mail I pointed out we could use
+some sort of hidden ref (refs/superprojects/*) for that, which are
+allowed to mark
+any sort of sha1, which are allowed in the superproject/submodule context
+to be fetched.
 
-So if we were to follow this route, I think it would go better in
-get_ref_cache itself (right after we determine there is no existing
-cache, but before we call create_ref_cache()).
+So whenever you push to a superproject (a project that has a gitlink),
+we would need to check serverside if that submodule is at us and mark the
+correct sha1s in the submodule. Then you can disallow fetching most of the sha1s
+but still could have a correctly working submodule update mechanism.
 
-> But this, as well as the old hash-ref-cache patch speeds me
-> up considerably, in this case a git ls-files -o from half a
-> minute of mostly user CPU to a second.
+Thanks,
+Stefan
 
-Right, that makes sense to me.
 
-> > All of these should be using the same test, I think. Doing that with
-> > is_git_directory() is probably OK. It is a little more expensive than we
-> > might want for mass-use (it actually opens and parses the HEAD file in
-> > each directory),
-> 
-> This happens as well when we let resolve_gitlink_ref run its old course.
-> (It (ls-files) even seems to try to open .git and then .git/HEAD, even
-> if the former fails with ENOENT.)
-
-Yes, I think my earlier comment that you are quoting was just misguided.
-We only do the extra work if the directory actually does look like a
-gitdir, and the many-directories case we are optimizing here is the
-opposite of that.
-
-So summing up, I think:
-
-  1. We could get by with teaching get_ref_cache not to auto-create ref
-     caches for non-git-directories.
-
-  2. But for a little more work, pushing the is_git_directory() check
-     out to the call-sites gives us probably saner semantics overall.
-
--Peff
+>
+> -Peff
