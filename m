@@ -1,135 +1,92 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v2 1/2] sendemail: teach git-send-email to list aliases
-Date: Sun, 15 Nov 2015 12:22:19 -0800
-Message-ID: <1447618940-27446-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	"Shawn O . Pearce" <spearce@spearce.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Lee Marlow <lee.marlow@gmail.com>,
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] notes: allow merging from arbitrary references
+Date: Sun, 15 Nov 2015 23:14:11 +0100
+Message-ID: <CALKQrgcKxJqJn+3-rg4DCbT5CFDZW8o9GtCS=kh-iSy0YyGAUA@mail.gmail.com>
+References: <1447432462-21192-1-git-send-email-jacob.e.keller@intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>,
+	Mike Hommey <mh@glandium.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
 	Jacob Keller <jacob.keller@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 15 21:22:30 2015
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Sun Nov 15 23:51:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zy3oj-00086L-0O
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Nov 2015 21:22:29 +0100
+	id 1Zy69L-0007uP-7G
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Nov 2015 23:51:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751561AbbKOUWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Nov 2015 15:22:23 -0500
-Received: from mga03.intel.com ([134.134.136.65]:62631 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750779AbbKOUWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Nov 2015 15:22:23 -0500
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP; 15 Nov 2015 12:22:22 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.20,298,1444719600"; 
-   d="scan'208";a="851279889"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.123])
-  by orsmga002.jf.intel.com with ESMTP; 15 Nov 2015 12:22:23 -0800
-X-Mailer: git-send-email 2.6.3.491.g3e3f6ce
+	id S1752093AbbKOWvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Nov 2015 17:51:21 -0500
+Received: from locusts.copyleft.no ([188.94.218.116]:60545 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751740AbbKOWvV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Nov 2015 17:51:21 -0500
+X-Greylist: delayed 2221 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Nov 2015 17:51:20 EST
+Received: from mail-yk0-f181.google.com ([209.85.160.181])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1Zy5Yv-000KLI-QV
+	for git@vger.kernel.org; Sun, 15 Nov 2015 23:14:17 +0100
+Received: by ykba77 with SMTP id a77so211267356ykb.2
+        for <git@vger.kernel.org>; Sun, 15 Nov 2015 14:14:11 -0800 (PST)
+X-Received: by 10.13.230.145 with SMTP id p139mr27905171ywe.314.1447625651960;
+ Sun, 15 Nov 2015 14:14:11 -0800 (PST)
+Received: by 10.37.208.21 with HTTP; Sun, 15 Nov 2015 14:14:11 -0800 (PST)
+In-Reply-To: <1447432462-21192-1-git-send-email-jacob.e.keller@intel.com>
+X-Gmail-Original-Message-ID: <CALKQrgcKxJqJn+3-rg4DCbT5CFDZW8o9GtCS=kh-iSy0YyGAUA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281323>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Fri, Nov 13, 2015 at 5:34 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> Create a new expansion function, expand_loose_notes_ref which will
+> expand any ref using get_sha1, but falls back to expand_notes_ref if
+> this fails. The contents of the strbuf will be either the hex string of
+> the sha1, or the expanded notes ref. It is expected to be re-expanded
+> using get_sha1 inside the notes merge machinery, and there is no real
+> error checking provided at this layer.
+>
+> Since we now support merging from non-notes refs, remove the test case
+> associated with that behavior. Add a test case for merging from a
+> non-notes ref.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> I do not remember what version this was since it has been an age ago
+> that I sent the previous code. This is mostly just a rebase onto current
+> next. I believe I have covered everything previous reviewers noted.
 
-Add an option "list-aliases" which changes the default behavior of
-git-send-email. This mode will simply read the alias files configured by
-sendemail.aliasesfile and sendemail.aliasfiletype and print a list of
-all known aliases. The intended usecase for this option is the
-bash-completion script which will use it to autocomplete aliases on the
-options which take addresses.
+Looks good to me.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- Documentation/git-send-email.txt | 10 ++++++++++
- git-send-email.perl              | 11 +++++++++++
- 2 files changed, 21 insertions(+)
+> I'm interested in whether this is the right direction, as my longterm
+> goal is to be able to push/pull notes to a specific namespace (probably
+> refs/remote-notes/*, since actually modifying to use
+> refs/remotes/notes/* is difficult to send to users, and remote-notes
+> makes the most useful sense). The first part of this is allowing merge
+> to come from an arbitrary reference, as currently it is not really
+> possible to merge from refs/remote-notes as we'd need it to be.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index b9134d234f53..481770d72e13 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git send-email' [options] <file|directory|rev-list options>...
-+'git send-email' --list-aliases
- 
- 
- DESCRIPTION
-@@ -387,6 +388,15 @@ default to '--validate'.
- 	Send emails even if safety checks would prevent it.
- 
- 
-+Information
-+~~~~~~~~~~~
-+
-+--list-aliases::
-+	Instead of the standard operation, list all aliases found in the
-+	configured alias file(s), and then exit. See 'sendemail.aliasesfile'
-+	for more information about aliases.
-+
-+
- CONFIGURATION
- -------------
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index e907e0eacf31..ee14894b172b 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -46,6 +46,7 @@ package main;
- sub usage {
- 	print <<EOT;
- git send-email [options] <file | directory | rev-list options >
-+git send-email --list-aliases
- 
-   Composing:
-     --from                  <str>  * Email From:
-@@ -101,6 +102,9 @@ git send-email [options] <file | directory | rev-list options >
-                                      `git format-patch` ones.
-     --force                        * Send even if safety checks would prevent it.
- 
-+  Information:
-+    --list-aliases                 * read the aliases from configured alias files
-+
- EOT
- 	exit(1);
- }
-@@ -180,6 +184,7 @@ my ($quiet, $dry_run) = (0, 0);
- my $format_patch;
- my $compose_filename;
- my $force = 0;
-+my $list_aliases = 0;
- 
- # Handle interactive edition of files.
- my $multiedit;
-@@ -344,6 +349,7 @@ my $rc = GetOptions("h" => \$help,
- 		    "force" => \$force,
- 		    "xmailer!" => \$use_xmailer,
- 		    "no-xmailer" => sub {$use_xmailer = 0},
-+                    "list-aliases" => \$list_aliases,
- 	 );
- 
- usage() if $help;
-@@ -551,6 +557,11 @@ if (@alias_files and $aliasfiletype and defined $parse_alias{$aliasfiletype}) {
- 	}
- }
- 
-+if ($list_aliases) {
-+    print $_,"\n" for (keys %aliases);
-+    exit(0);
-+}
-+
- # is_format_patch_arg($f) returns 0 if $f names a patch, or 1 if
- # $f is a revision list specification to be passed to format-patch.
- sub is_format_patch_arg {
+Yes, I agree that merging from refs outside refs/notes/ should become possible.
+
+A related topic that has been discussed (although I cannot remember if
+any conclusion was reached) is whether to allow more notes operations
+- specifically _read-only_ operations - on notes trees outside
+refs/notes/. I believe this should also become possible, although I
+haven't thoroughly examined all implications.
+
+...Johan
+
+
 -- 
-2.6.3.491.g3e3f6ce
+Johan Herland, <johan@herland.net>
+www.herland.net
