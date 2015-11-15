@@ -1,84 +1,124 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones fail
-Date: Sun, 15 Nov 2015 13:53:31 +0100
-Message-ID: <D21E9A9A-7444-4585-9066-3546F172A0EC@gmail.com>
-References: <1447321061-74381-1-git-send-email-larsxschneider@gmail.com> <20151113053547.GD29708@sigill.intra.peff.net>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, sbeller@google.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 15 13:53:42 2015
+From: larsxschneider@gmail.com
+Subject: [PATCH v5 1/6] implement test_might_fail using a refactored test_must_fail
+Date: Sun, 15 Nov 2015 14:08:35 +0100
+Message-ID: <1447592920-89228-2-git-send-email-larsxschneider@gmail.com>
+References: <1447592920-89228-1-git-send-email-larsxschneider@gmail.com>
+Cc: sunshine@sunshineco.com, gitster@pobox.com,
+	Lars Schneider <larsxschneider@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 15 14:09:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZxwoN-0001wy-3p
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Nov 2015 13:53:39 +0100
+	id 1Zxx3Y-0002cC-OS
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Nov 2015 14:09:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400AbbKOMxf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Nov 2015 07:53:35 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:35499 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751272AbbKOMxe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Nov 2015 07:53:34 -0500
-Received: by wmdw130 with SMTP id w130so79682639wmd.0
-        for <git@vger.kernel.org>; Sun, 15 Nov 2015 04:53:33 -0800 (PST)
+	id S1751502AbbKONIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Nov 2015 08:08:53 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:33207 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751335AbbKONIp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Nov 2015 08:08:45 -0500
+Received: by wmec201 with SMTP id c201so140151168wme.0
+        for <git@vger.kernel.org>; Sun, 15 Nov 2015 05:08:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Oq3s13ShSHSTVgA/R3zlz6CBGj+dq0D7ZeFoXLbYqBs=;
-        b=fSs24G9VKnNrqxl8LReBwtb6cij0ZpoB5xKmmWorH47kbOxlGeZQTSrAmUOnFMmxpj
-         xFjvm4jsib3mUxF4fYELwqiXkNzlC0tJgCppr4ewwcSIgKj2dc+CEAVOpggsMSGzhnHr
-         bEQng39SAYKmhyOdctKaC98N9tVpLFcXtVy5iTC0BDvnI8KkxEE+leEDkps20iNG72np
-         bquTQqv40jCXMfwIJPnVtYcYxdaqaPxPUXUHoFfuVXnrah8DUFBpvgNhTtz16V7G8GEO
-         wBIwoeWx9EnoqPaHRtF3Dc007EAtof2yEIECutrkZwy5QOLdZVhRviCVhEMlbf1QZT02
-         9gYA==
-X-Received: by 10.194.82.99 with SMTP id h3mr26232725wjy.41.1447592013085;
-        Sun, 15 Nov 2015 04:53:33 -0800 (PST)
-Received: from slxbook3.fritz.box (p5DDB712F.dip0.t-ipconnect.de. [93.219.113.47])
-        by smtp.gmail.com with ESMTPSA id lv4sm29295716wjb.43.2015.11.15.04.53.32
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 15 Nov 2015 04:53:32 -0800 (PST)
-In-Reply-To: <20151113053547.GD29708@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1878.6)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=bso5DdwcMoU+5Li+xmBNZyuFKRCBIyXAdib5K3PH+qw=;
+        b=sv3vb/rZrQ/rDkBLTq4tk4BN9rSHYFQ9bcmOf5RrI+eh/Bif8FoLm3DWxSSc/LrezW
+         j4CTjujLE3SbZNsZ/jRBiDJkUxSTwFMO5MKUlvYmqWR39Uygx0LA08NXOTM8SDrLHNmF
+         gW6wm09gcIT1dhJokhyGHOb5tf+ltALceW4gTkBgO8a5XM/zN7xaVc2cyWBa4YlWUDJi
+         hltkU9+BA4MK9QeDlVqU1YHWhJdLRJN8iYnedY2LzlkQPxvaCe0Kwmd6czG5gfuRtBCx
+         DVhjfX3QNn1fom6wlPOucH9lmka5FqRNKg0+8fQ/thxjsmSEfmuE0owvEJ5kk9C6QJCB
+         BKtw==
+X-Received: by 10.28.63.22 with SMTP id m22mr14328772wma.58.1447592923642;
+        Sun, 15 Nov 2015 05:08:43 -0800 (PST)
+Received: from slxBook3.fritz.box (p5DDB712F.dip0.t-ipconnect.de. [93.219.113.47])
+        by smtp.gmail.com with ESMTPSA id t2sm13472567wme.0.2015.11.15.05.08.42
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 15 Nov 2015 05:08:43 -0800 (PST)
+X-Mailer: git-send-email 2.5.1
+In-Reply-To: <1447592920-89228-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281313>
 
+From: Lars Schneider <larsxschneider@gmail.com>
 
-On 13 Nov 2015, at 06:35, Jeff King <peff@peff.net> wrote:
+Add an (optional) first parameter "ok=<special case>" to test_must_fail
+and return success for "<special case>". Add "success" as
+"<special case>" and use it to implement "test_might_fail". This removes
+redundancies in test-lib-function.sh.
 
-> On Thu, Nov 12, 2015 at 10:37:41AM +0100, larsxschneider@gmail.com wrote:
-> 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> "git clone --recursive --depth 1 --single-branch <url>" clones the
->> submodules successfully. However, it does not obey "--depth 1" for
->> submodule cloning.
->> 
->> The following workaround does only work if the used submodule pointer
->> is on the default branch. Otherwise "git submodule update" fails with
->> "fatal: reference is not a tree:" and "Unable to checkout".
->> git clone --depth 1 --single-branch <url>
->> cd <repo-name>
->> git submodule update --init --recursive --depth 1
->> 
->> The workaround does not fail using the "--remote" flag. However, in that
->> case the wrong commit is checked out.
-> 
-> Hrm. Do we want to make these workarounds work correctly? Or is the
-> final solution going to be that the first command you gave simply works,
-> and no workarounds are needed.  If the latter, I wonder if we want to be
-> adding tests for the workarounds in the first place.
-> 
-> I'm not clear on the expected endgame.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ t/test-lib-functions.sh | 35 ++++++++++++++++++++---------------
+ 1 file changed, 20 insertions(+), 15 deletions(-)
 
-I see your point. I'll remove the workaround tests in the next roll. That being said, I think the we should do something about the workarounds, too, because it certainly confused me as Git user. Would you merge a patch that prints a warning message like "--depth parameter not supported for submodules update command" or something if a user tries this command?
-
-Thanks,
-Lars
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 73e37a1..1e762da 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -582,18 +582,32 @@ test_line_count () {
+ # the failure could be due to a segv.  We want a controlled failure.
+ 
+ test_must_fail () {
++	case "$1" in
++	ok=*)
++		_test_ok=${1#ok=}
++		shift
++		;;
++	*)
++		_test_ok=
++		;;
++	esac
+ 	"$@"
+ 	exit_code=$?
+-	if test $exit_code = 0; then
++	if ! case ",$_test_ok," in *,success,*) false;; esac &&
++		test $exit_code = 0
++	then
+ 		echo >&2 "test_must_fail: command succeeded: $*"
+-		return 1
+-	elif test $exit_code -gt 129 && test $exit_code -le 192; then
++		return 0
++	elif test $exit_code -gt 129 && test $exit_code -le 192
++	then
+ 		echo >&2 "test_must_fail: died by signal: $*"
+ 		return 1
+-	elif test $exit_code = 127; then
++	elif test $exit_code = 127
++	then
+ 		echo >&2 "test_must_fail: command not found: $*"
+ 		return 1
+-	elif test $exit_code = 126; then
++	elif test $exit_code = 126
++	then
+ 		echo >&2 "test_must_fail: valgrind error: $*"
+ 		return 1
+ 	fi
+@@ -612,16 +626,7 @@ test_must_fail () {
+ # because we want to notice if it fails due to segv.
+ 
+ test_might_fail () {
+-	"$@"
+-	exit_code=$?
+-	if test $exit_code -gt 129 && test $exit_code -le 192; then
+-		echo >&2 "test_might_fail: died by signal: $*"
+-		return 1
+-	elif test $exit_code = 127; then
+-		echo >&2 "test_might_fail: command not found: $*"
+-		return 1
+-	fi
+-	return 0
++	test_must_fail ok=success "$@"
+ }
+ 
+ # Similar to test_must_fail and test_might_fail, but check that a
+-- 
+2.5.1
