@@ -1,92 +1,59 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] notes: allow merging from arbitrary references
-Date: Sun, 15 Nov 2015 15:23:51 -0800
-Message-ID: <CA+P7+xoyCwgYWaiVj0FNVHuaY=kUZA5a3LBMtpe6SirOVeK9rA@mail.gmail.com>
-References: <1447432462-21192-1-git-send-email-jacob.e.keller@intel.com> <CALKQrgcKxJqJn+3-rg4DCbT5CFDZW8o9GtCS=kh-iSy0YyGAUA@mail.gmail.com>
+From: "Info" <peterouellette1@invis.ca>
+Subject: Reprensentative Inquiry!
+Date: Sun, 15 Nov 2015 17:31:01 +0000
+Message-ID: <20151115191619.A7C6F1AC661@ns1.crediambato.fin.ec>
+Reply-To: michaelwong@kunlunenergy.cc
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Mike Hommey <mh@glandium.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Nov 16 00:24:39 2015
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <peterouellette1@invis.ca>
+X-From: git-owner@vger.kernel.org Mon Nov 16 01:36:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zy6ez-0000iS-Ql
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 00:24:38 +0100
+	id 1Zy7mZ-0006Ro-IC
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 01:36:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbbKOXYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Nov 2015 18:24:12 -0500
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:36497 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751687AbbKOXYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Nov 2015 18:24:11 -0500
-Received: by igcph11 with SMTP id ph11so46953483igc.1
-        for <git@vger.kernel.org>; Sun, 15 Nov 2015 15:24:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nDpiKdy9QMN7zMwqM/AoBxX99YAPRfk5SZRMigA5/kA=;
-        b=JKVcrxNQWpk/VwIpyF1glJOMO+f9/FGFywMExSmWeeMNVOxN5Qkkew+6+kOc0v6M59
-         /9qTx+ReB/h/+j33MHLY7NA8X13g7wFGPhLcULM0ZTMOQ/iJIkDoZQzTp53stUeQngQH
-         l0zA+VOLj/1iO4/bKXvcmXEytnPc0BJyL4ZwxcM/cIJlfKW0/Png7HE7NwV6mJuR4ML3
-         jHWxprRJ6nnkcjUjuW8aq4dxrB+avn7/9l8DkAC28mL+HJsZLBGDYTp1l5lCWfQiLqzS
-         9q2HLdWWFabmu7uJznFx9GkrPpVI0F1LL1F4lQlDBn8PUhkDXsnlPgZ6Y8hrWp9xUZPc
-         mdfg==
-X-Received: by 10.50.87.71 with SMTP id v7mr8689920igz.92.1447629850386; Sun,
- 15 Nov 2015 15:24:10 -0800 (PST)
-Received: by 10.107.19.227 with HTTP; Sun, 15 Nov 2015 15:23:51 -0800 (PST)
-In-Reply-To: <CALKQrgcKxJqJn+3-rg4DCbT5CFDZW8o9GtCS=kh-iSy0YyGAUA@mail.gmail.com>
+	id S1752505AbbKPAfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Nov 2015 19:35:55 -0500
+Received: from crediambato.fin.ec ([186.42.163.90]:42060 "EHLO
+	ns1.crediambato.fin.ec" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751892AbbKPAfz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Nov 2015 19:35:55 -0500
+X-Greylist: delayed 3787 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Nov 2015 19:35:54 EST
+Received: from localhost (unknown [127.0.0.1])
+	by ns1.crediambato.fin.ec (Postfix) with ESMTP id A7C6F1AC661;
+	Sun, 15 Nov 2015 19:16:19 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at crediambato.fin.ec
+Received: from ns1.crediambato.fin.ec ([127.0.0.1])
+	by localhost (ns1.crediambato.fin.ec [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id D1V4Yzbxs9di; Sun, 15 Nov 2015 14:16:19 -0500 (ECT)
+Received: from [10.254.5.134] (unknown [196.4.67.134])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by ns1.crediambato.fin.ec (Postfix) with ESMTPSA id 1BCB21BC108;
+	Sun, 15 Nov 2015 12:39:45 -0500 (ECT)
+Content-Description: Mail message body
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281325>
 
-On Sun, Nov 15, 2015 at 2:14 PM, Johan Herland <johan@herland.net> wrote:
->> ---
->> I do not remember what version this was since it has been an age ago
->> that I sent the previous code. This is mostly just a rebase onto current
->> next. I believe I have covered everything previous reviewers noted.
->
-> Looks good to me.
->
->> I'm interested in whether this is the right direction, as my longterm
->> goal is to be able to push/pull notes to a specific namespace (probably
->> refs/remote-notes/*, since actually modifying to use
->> refs/remotes/notes/* is difficult to send to users, and remote-notes
->> makes the most useful sense). The first part of this is allowing merge
->> to come from an arbitrary reference, as currently it is not really
->> possible to merge from refs/remote-notes as we'd need it to be.
->
-> Yes, I agree that merging from refs outside refs/notes/ should become possible.
->
+My Name Is Michael Wong, Representative Executive Officer of Kunlun Energy Company Limited. We Need Services In Collection/Business Relationships in your region.
 
-Thanks.
 
-> A related topic that has been discussed (although I cannot remember if
-> any conclusion was reached) is whether to allow more notes operations
-> - specifically _read-only_ operations - on notes trees outside
-> refs/notes/. I believe this should also become possible, although I
-> haven't thoroughly examined all implications.
->
-> ...Johan
->
->
+Please let us know if you can be of help. kindly contact us Via E-mail: michaelwong@kunlunenergy.cc
 
-This was discussed at some point on one of the versions of my patch.
-The tricky part is in how to get it implemented correctly.
-
-We need to be able to correctly handle DWIM logic for things, and
-ensure that what we're operating on actually looks "note-like" since
-we don't really want to perform read-only ops on refs that don't hold
-notes like objects.
 
 Regards,
-Jake
+Michael Wong
+President Representative Executive Officer
+Kunlun Energy Company Limited
+39/F,118 Connaught Road,
+West Hong Kong.
+Tel : (852) 2522 2281
+Fax: (852) 2868 1743
