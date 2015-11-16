@@ -1,116 +1,308 @@
-From: "Ryabov, Vasily V" <vasily.v.ryabov@intel.com>
-Subject: RE: [bug] git 2.6.2 (64-bit) blocks keyboard input (running in RDP,
- Win7 x64)
-Date: Mon, 16 Nov 2015 12:21:22 +0000
-Message-ID: <D28D2D5A78DB8B49BB75DB10E72239683ABA2037@IRSMSX102.ger.corp.intel.com>
-References: <D28D2D5A78DB8B49BB75DB10E72239683ABA1700@IRSMSX102.ger.corp.intel.com>
- <alpine.DEB.1.00.1511161308510.1686@s15462909.onlinehome-server.info>
+From: Victor Leschuk <vleschuk@accesssoftek.com>
+Subject: RE: [PATCH v6] Add git-grep threads param
+Date: Mon, 16 Nov 2015 05:11:16 -0800
+Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA1F@mail.accesssoftek.com>
+References: <1447242770-20753-1-git-send-email-vleschuk@accesssoftek.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 16 13:21:45 2015
+Cc: Victor Leschuk <vleschuk@gmail.com>,
+	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>
+To: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	"john@keeping.me.uk" <john@keeping.me.uk>,
+	"peff@peff.net" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 16 14:11:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyIn0-0000bE-V1
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 13:21:43 +0100
+	id 1ZyJZ9-0004dI-Ij
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 14:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751532AbbKPMVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2015 07:21:38 -0500
-Received: from mga01.intel.com ([192.55.52.88]:64480 "EHLO mga01.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750822AbbKPMVi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2015 07:21:38 -0500
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga101.fm.intel.com with ESMTP; 16 Nov 2015 04:21:24 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.20,302,1444719600"; 
-   d="scan'208";a="821208174"
-Received: from irsmsx109.ger.corp.intel.com ([163.33.3.23])
-  by orsmga001.jf.intel.com with ESMTP; 16 Nov 2015 04:21:23 -0800
-Received: from irsmsx102.ger.corp.intel.com ([169.254.2.251]) by
- IRSMSX109.ger.corp.intel.com ([169.254.13.96]) with mapi id 14.03.0248.002;
- Mon, 16 Nov 2015 12:21:22 +0000
-Thread-Topic: [bug] git 2.6.2 (64-bit) blocks keyboard input (running in
- RDP, Win7 x64)
-Thread-Index: AdEbwFFCHwseOB+ZR1e7k4rymJ8q8QEp3bAAAAAwYNA=
-In-Reply-To: <alpine.DEB.1.00.1511161308510.1686@s15462909.onlinehome-server.info>
-Accept-Language: en-US, ru-RU
+	id S1752234AbbKPNLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2015 08:11:22 -0500
+Received: from mail.accesssoftek.com ([12.202.173.171]:11889 "EHLO
+	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751864AbbKPNLV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2015 08:11:21 -0500
+Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
+ ([172.16.0.71]) with mapi; Mon, 16 Nov 2015 05:11:19 -0800
+Thread-Topic: [PATCH v6] Add git-grep threads param
+Thread-Index: AdEcd4UkdPpVLB+US7GsTj8NMg4EnAD+A2Lo
+In-Reply-To: <1447242770-20753-1-git-send-email-vleschuk@accesssoftek.com>
+Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [163.33.239.180]
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281338>
 
-     Hi Johannes,
+Hello all,
 
-Thanks for your response.
-I've already workarounded the issue by using OpenSSH.
+The earlier version of this patch is already included in /pu branch, however as we all agreed ($gmane/280299) we have changed the default behavior and the meaning of "0". The question is: what is the right way to include changes from patch v6 (this one) into already merged patch to pu?
 
-It seems there is no simple way to configure Jenkins Git plugin to call Putty first under LOCAL_SYSTEM account, so using OpenSSH is much simpler in this case.
+Thanks.
+--
+Best Regards,
+Victor
+________________________________________
+From: Victor Leschuk [vleschuk@gmail.com]
+Sent: Wednesday, November 11, 2015 03:52
+To: git@vger.kernel.org
+Cc: Victor Leschuk
+Subject: [PATCH v6] Add git-grep threads param
 
-Best regards,
--Vasily.
+"git grep" can now be configured (or told from the command line)
+ how many threads to use when searching in the working tree files.
 
------Original Message-----
-From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
-Sent: Monday, November 16, 2015 3:10 PM
-To: Ryabov, Vasily V
-Cc: git@vger.kernel.org
-Subject: Re: [bug] git 2.6.2 (64-bit) blocks keyboard input (running in RDP, Win7 x64)
+ Changes to default behavior: number of threads now doesn't depend
+ on online_cpus(), e.g. if specific number is not configured
+ GREP_NUM_THREADS_DEFAULT (8) threads will be used even on 1-core CPU.
 
-Hi Vasily,
+Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
+---
+History of changes from the first version ($gmane/280053/:
+        * Param renamed from threads-num to threads
+        * Short version of '--threads' cmd key was removed
+        * Made num_threads 'decision-tree' more obvious
+          and easy to edit for future use ($gmane/280089)
+        * Moved option description to more suitable place in documentation ($gmane/280188)
+        * Hid threads param from 'external' grep.c, made it private for builtin/grep.c ($gmane/280188)
+        * Improved num_threads 'decision-tree', got rid of dependency on online_cpus ($gmane/280299)
+        * Improved param documentation ($gmane/280299)
 
-On Tue, 10 Nov 2015, Ryabov, Vasily V wrote:
 
-> I'm trying to run something like this (on the remote machine (Win7 x64 with git 2.6.2 64-bit) through RDP):
-> ```
-> git pull --tags --progress 
-> ssh://<username>@<repo_URL>:<tcp_port>/<repo_name> 
-> +refs/heads/*:refs/remotes/origin/*
-> ```
-> It worked on local machine with git 1.9.5.
-> 
-> Git asks to confirm an action:
-> ```
-> The server's host key is not cached in the registry. You have no 
-> guarantee that the server is the computer you think it is.
-> The server's dss key fingerprint is:
-> ssh-dss 1024 <...>
-> If you trust this host, enter "y" to add the key to PuTTY's cache and 
-> carry on connecting.
-> If you want to carry on connecting just once, without adding the key 
-> to the cache, enter "n".
-> If you do not trust this host, press Return to abandon the connection.
-> Store key in cache? (y/n)
-> ```
-> I'm typing `y`, but there is no reaction at all. No symbols appears in the console. But...
-> When I'm pressing `Ctrl+C`, it's killed. And I can see `yyyyy` keys in the bash console for the next command.
+ Documentation/config.txt               |  7 +++++
+ Documentation/git-grep.txt             | 15 ++++++++++
+ builtin/grep.c                         | 50 +++++++++++++++++++++++-----------
+ contrib/completion/git-completion.bash |  1 +
+ 4 files changed, 57 insertions(+), 16 deletions(-)
 
-This is a known issue, mentioned in the release notes
-(https://github.com/git-for-windows/build-extra/blob/master/installer/ReleaseNotes.md#known-issues):
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 391a0c3..5084e36 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1447,6 +1447,13 @@ grep.extendedRegexp::
+        option is ignored when the 'grep.patternType' option is set to a value
+        other than 'default'.
 
-> * If configured to use Plink, you will have to connect with putty first
->   and accept the host key.
++grep.threads::
++       Number of grep worker threads, use it to tune up performance on
++       your machines. Leave it unset (or set to 0) for default behavior,
++       which for now is using 8 threads for all systems.
++       Default behavior can be changed in future versions
++       to better suit hardware and circumstances.
++
+ gpg.program::
+        Use this custom program instead of "gpg" found on $PATH when
+        making or verifying a PGP signature. The program must support the
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 4a44d6d..8222a83 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -23,6 +23,7 @@ SYNOPSIS
+           [--break] [--heading] [-p | --show-function]
+           [-A <post-context>] [-B <pre-context>] [-C <context>]
+           [-W | --function-context]
++          [--threads <num>]
+           [-f <file>] [-e] <pattern>
+           [--and|--or|--not|(|)|-e <pattern>...]
+           [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
+@@ -53,6 +54,13 @@ grep.extendedRegexp::
+        option is ignored when the 'grep.patternType' option is set to a value
+        other than 'default'.
 
-Ciao,
-Johannes
++grep.threads::
++       Number of grep worker threads, use it to tune up performance on
++       your machines. Leave it unset (or set to 0) for default behavior,
++       which for now is using 8 threads for all systems.
++       Default behavior can be changed in future versions
++       to better suit hardware and circumstances.
++
+ grep.fullName::
+        If set to true, enable '--full-name' option by default.
 
---------------------------------------------------------------------
-Joint Stock Company Intel A/O
-Registered legal address: Krylatsky Hills Business Park,
-17 Krylatskaya Str., Bldg 4, Moscow 121614,
-Russian Federation
+@@ -227,6 +235,13 @@ OPTIONS
+        effectively showing the whole function in which the match was
+        found.
 
-This e-mail and any attachments may contain confidential material for
-the sole use of the intended recipient(s). Any review or distribution
-by others is strictly prohibited. If you are not the intended
-recipient, please contact the sender and delete all copies.
++--threads <num>::
++       Number of grep worker threads, use it to tune up performance on
++       your machines. Leave it unset (or set to 0) for default behavior,
++       which for now is using 8 threads for all systems.
++       Default behavior can be changed in future versions
++       to better suit hardware and circumstances.
++
+ -f <file>::
+        Read patterns from <file>, one per line.
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index d04f440..f0e3dfb 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -24,11 +24,11 @@ static char const * const grep_usage[] = {
+        NULL
+ };
+
+-static int use_threads = 1;
++#define GREP_NUM_THREADS_DEFAULT 8
++static int num_threads = 0;
+
+ #ifndef NO_PTHREADS
+-#define THREADS 8
+-static pthread_t threads[THREADS];
++static pthread_t *threads;
+
+ /* We use one producer thread and THREADS consumer
+  * threads. The producer adds struct work_items to 'todo' and the
+@@ -63,13 +63,13 @@ static pthread_mutex_t grep_mutex;
+
+ static inline void grep_lock(void)
+ {
+-       if (use_threads)
++       if (num_threads)
+                pthread_mutex_lock(&grep_mutex);
+ }
+
+ static inline void grep_unlock(void)
+ {
+-       if (use_threads)
++       if (num_threads)
+                pthread_mutex_unlock(&grep_mutex);
+ }
+
+@@ -206,7 +206,8 @@ static void start_threads(struct grep_opt *opt)
+                strbuf_init(&todo[i].out, 0);
+        }
+
+-       for (i = 0; i < ARRAY_SIZE(threads); i++) {
++       threads = xcalloc(num_threads, sizeof(pthread_t));
++       for (i = 0; i < num_threads; i++) {
+                int err;
+                struct grep_opt *o = grep_opt_dup(opt);
+                o->output = strbuf_out;
+@@ -238,12 +239,14 @@ static int wait_all(void)
+        pthread_cond_broadcast(&cond_add);
+        grep_unlock();
+
+-       for (i = 0; i < ARRAY_SIZE(threads); i++) {
++       for (i = 0; i < num_threads; i++) {
+                void *h;
+                pthread_join(threads[i], &h);
+                hit |= (int) (intptr_t) h;
+        }
+
++       free(threads);
++
+        pthread_mutex_destroy(&grep_mutex);
+        pthread_mutex_destroy(&grep_read_mutex);
+        pthread_mutex_destroy(&grep_attr_mutex);
+@@ -262,10 +265,19 @@ static int wait_all(void)
+ }
+ #endif
+
++static int grep_threads_config(const char *var, const char *value, void *cb)
++{
++       if (!strcmp(var, "grep.threads"))
++               num_threads = git_config_int(var, value); /* Sanity check of value will be perfomed later */
++       return 0;
++}
++
+ static int grep_cmd_config(const char *var, const char *value, void *cb)
+ {
+        int st = grep_config(var, value, cb);
+-       if (git_color_default_config(var, value, cb) < 0)
++       if (grep_threads_config(var, value, cb) < 0)
++               st = -1;
++       else if (git_color_default_config(var, value, cb) < 0)
+                st = -1;
+        return st;
+ }
+@@ -294,7 +306,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
+        }
+
+ #ifndef NO_PTHREADS
+-       if (use_threads) {
++       if (num_threads) {
+                add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
+                strbuf_release(&pathbuf);
+                return 0;
+@@ -323,7 +335,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+                strbuf_addstr(&buf, filename);
+
+ #ifndef NO_PTHREADS
+-       if (use_threads) {
++       if (num_threads) {
+                add_work(opt, GREP_SOURCE_FILE, buf.buf, filename, filename);
+                strbuf_release(&buf);
+                return 0;
+@@ -702,6 +714,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+                        N_("show <n> context lines before matches")),
+                OPT_INTEGER('A', "after-context", &opt.post_context,
+                        N_("show <n> context lines after matches")),
++               OPT_INTEGER(0, "threads", &num_threads,
++                       N_("use <n> worker threads")),
+                OPT_NUMBER_CALLBACK(&opt, N_("shortcut for -C NUM"),
+                        context_callback),
+                OPT_BOOL('p', "show-function", &opt.funcname,
+@@ -801,7 +815,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+                opt.output_priv = &path_list;
+                opt.output = append_path;
+                string_list_append(&path_list, show_in_pager);
+-               use_threads = 0;
++               num_threads = 0;
+        }
+
+        if (!opt.pattern_list)
+@@ -832,14 +846,18 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+        }
+
+ #ifndef NO_PTHREADS
+-       if (list.nr || cached || online_cpus() == 1)
+-               use_threads = 0;
++       if (list.nr || cached)
++               num_threads = 0; /* Can not multi-thread object lookup */
++       else if (num_threads == 0)
++               num_threads = GREP_NUM_THREADS_DEFAULT; /* User didn't specify value, or just wants default behavior */
++       else if (num_threads < 0)
++               die("Invalid number of threads specified (%d)", num_threads);
+ #else
+-       use_threads = 0;
++       num_threads = 0;
+ #endif
+
+ #ifndef NO_PTHREADS
+-       if (use_threads) {
++       if (num_threads) {
+                if (!(opt.name_only || opt.unmatch_name_only || opt.count)
+                    && (opt.pre_context || opt.post_context ||
+                        opt.file_break || opt.funcbody))
+@@ -909,7 +927,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+                hit = grep_objects(&opt, &pathspec, &list);
+        }
+
+-       if (use_threads)
++       if (num_threads)
+                hit |= wait_all();
+        if (hit && show_in_pager)
+                run_pager(&opt, prefix);
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 482ca84..390d9c0 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1310,6 +1310,7 @@ _git_grep ()
+                        --full-name --line-number
+                        --extended-regexp --basic-regexp --fixed-strings
+                        --perl-regexp
++                       --threads
+                        --files-with-matches --name-only
+                        --files-without-match
+                        --max-depth
+--
+2.6.3.369.g3e7f205.dirty
