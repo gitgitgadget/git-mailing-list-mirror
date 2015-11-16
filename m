@@ -1,125 +1,132 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] Optimize usage of grep by passing -q
-Date: Mon, 16 Nov 2015 13:43:29 -0800
-Message-ID: <1447710209-13117-1-git-send-email-sbeller@google.com>
-Cc: Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org, peff@peff.net
-X-From: git-owner@vger.kernel.org Mon Nov 16 22:43:46 2015
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/6] remote-http(s): Support SOCKS proxies
+Date: Mon, 16 Nov 2015 22:49:08 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1511162246540.1686@s15462909.onlinehome-server.info>
+References: <cover.1445865176.git.johannes.schindelin@gmx.de> <bf218d020e24216f55d1514c4459e645b13ec075.1445865176.git.johannes.schindelin@gmx.de> <xmqq7fm9gze2.fsf@gitster.mtv.corp.google.com> <20151027012336.GK31271@freya.jamessan.com>
+ <xmqqvb9tdr7v.fsf@gitster.mtv.corp.google.com> <alpine.DEB.1.00.1510271649430.31610@s15462909.onlinehome-server.info> <alpine.DEB.1.00.1510271651420.31610@s15462909.onlinehome-server.info> <87si4e6c49.fsf@red.patthoyts.tk>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	James McCoy <vega.james@gmail.com>, git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Mon Nov 16 22:49:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyRYs-0006FZ-So
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 22:43:43 +0100
+	id 1ZyReY-0006Xu-E5
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 22:49:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752256AbbKPVni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2015 16:43:38 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:34137 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751914AbbKPVni (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2015 16:43:38 -0500
-Received: by padhx2 with SMTP id hx2so187368722pad.1
-        for <git@vger.kernel.org>; Mon, 16 Nov 2015 13:43:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=sli7DaHko0UU/1UfNlDNL5tTyfl5ZXXhG8stQ6l7C+Y=;
-        b=dfsmiYSEvVgs5I5rieOJ1UG4cWq8SzgCXL1S6MmNk4DnMo2imUHTt6JxvnJ9TzaXTH
-         z/nKz3/jMQC/X3g8Zvt9kLiI0IGGqczXeEgKg9Udww4LtFD57Trv0iO0/x9a6xpObwK3
-         2RQp8waiK9MGA6ol7F0sjfVWG3lg2hxJjLHEbPC02tGm70mWRW1jUQSqERhUFyXKADBG
-         p3K21RsTYUiYS+ZfEFjzlktHMR8fa1qg9ZkExSrn7HuMnVmoDSXhOcS4v9K+eV3n+WLR
-         z/tFp04B5a7TWHQgbD0RbsTTYJDy9YZNtsRn7Eu3S6yqRc4HLUIHpr5lwRIWKe98S4hE
-         Yrsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=sli7DaHko0UU/1UfNlDNL5tTyfl5ZXXhG8stQ6l7C+Y=;
-        b=jKWctXrjwT6+S8Y7uV7IgA3YXKg/2XfKUb7zyJB1ullzRKxfZZw0wWUiJRpwLPLSEK
-         yuUVD2oklh89J/4Z5/OJ+7d3rGK+xaLOB2DY/oSUZzCAIqx3Nv8rXNAIBS3A8bAD5iQb
-         rzXCHEZyfYMMxOJ07o7UP1QwBKVMBJqnHqq4BJlBbhf+FBUn+VXvIGVCXxAgbeENPRWa
-         kvv8qPxe2v8vMAHzJJThRe4RNbS40NmLAu7ErKKpEztesCp9WBCtZU4s9qDemewUBbLT
-         LZE5skNuCM/Zt6zvBoXkt7P+ee6v/4VeY3GTlCf0ldJRxpgJVYzLhEA+8DCIBdD6KqBN
-         47/g==
-X-Gm-Message-State: ALoCoQkTWuEP9MWtc/eDBCNFjj97R2aBhPy9TI2uB6MkiaKm2XLLVYE0zO/q2AD1MuTsEnchV4xi
-X-Received: by 10.67.22.66 with SMTP id hq2mr56932312pad.81.1447710216951;
-        Mon, 16 Nov 2015 13:43:36 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:380a:a12b:fed2:c2ed])
-        by smtp.gmail.com with ESMTPSA id yh3sm38373847pbb.82.2015.11.16.13.43.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 16 Nov 2015 13:43:36 -0800 (PST)
-X-Mailer: git-send-email 2.6.3.368.gf34be46
+	id S1752498AbbKPVt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2015 16:49:28 -0500
+Received: from mout.gmx.net ([212.227.17.22]:63305 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752157AbbKPVtZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2015 16:49:25 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0M6fXs-1aLcpN3b1Q-00wWxK;
+ Mon, 16 Nov 2015 22:49:09 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <87si4e6c49.fsf@red.patthoyts.tk>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:7WE0WnQeVKlEhu7Foubf3ZH6NHC86L8HZqRDyXzbVvvj+gNLpf7
+ 2FkATeF2YySLbAfIsdwkxhjMq+2v8V/Vn0g9s0yGBe9qm0aCTfxVCpflicyhIgVOI4HcIXF
+ NoQ9hbF9/GY5A+i2kLlhNeW2NtZAHy4+Qhvb26W2GIgzivoMTm80/pCrvpn0PUh7wfZO6Lc
+ bGE34GqIsBEQMv/cQV/sA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qA7oC0JjLRw=:HpRYbC077F0XISES4iLVIu
+ RUMuof+l/GRrSIz7Pi9Q99rNwljOzQDEuUy66m9OdEu/hGzvSrZK0rVVr3HzMbEyxzRfTKJka
+ t48b96wwCYCV3OcWA8mIk75tV1dTJxdxLWjyaF0ZVH+rfc5WK+25DfwFtMmr/4gQTUNREGIC7
+ f+YuED86wOMEOYu6cgOwpxjgSXbqVMOIDWYxlPohXO7jVPItRvvdm8z4e4el8Nf1BdetO7UML
+ uBWa1rru2TNh6PCuWC/MEBcAIaRdcrpQd1wCXuekd/0rFTVNaU9hlSuL8t0Fb/RyrHX7C+bq9
+ 2/eXVa9cMmEvSmFcXHdaFLV8Xetyxr0dbL7oVm/aUygNZ1J72kEcnuTJt0MZXetTeen75scGQ
+ oEQfkkHbKnCRde7BdJmIZrJnOygmVkZsFPPo7ylyrvWa9VaxQ4S8XLvRwqi9ZwI/KMXJscOpC
+ rGWhz8kjeLldXBo7GVnQXK8XsK+InwjGCQScb2P2FdMnTX/8fe69vi+rVUpQ/UGTZHkNg7eo+
+ nl2SbXHCQUXKTUS7FWSfQYug7SFFh9bUvWIJpV/5X875Ide6rwsEgAhvxKrWt8cPTM0DBVN8W
+ GKX3XXR/zQORfKVkWjZky+SN2qP+ZJ/oGy9OBYbUxJKfhDGFUHN67oBlCyb2qdz8OR99pR/0z
+ HHvaTI0GibosUzS8HUkAWh+EdSXzKZ+EhEO2srVYJeO3QOrQ70beN8XK9ZFNR7zjlkq5ogx0z
+ dHgSPs5N6OtOzC1dv2zfSZbGnm2KetXGJHDkxdYAUrGjJr47xnlG9TQhNTSlQ6YQ06LF6bMC 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281360>
 
-Instead of redirecting all grep output to /dev/null, we can just
-pass in -q instead. This preserves the exit code behavior, but is faster.
-As grep returns true if it finds at least one match, grep can exit promptly
-after finding the first line and doesn't need to find more occurrences
-which would be redirected to /dev/null anyways.
+Hi Pat,
 
-This is true for the gnu version of grep. I am not sure if all
-versions of grep support this optimization. In case it is not,
-we'd revert this patch.
+On Mon, 9 Nov 2015, Pat Thoyts wrote:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- git-bisect.sh              | 5 ++---
- git-rebase--interactive.sh | 2 +-
- git-rebase.sh              | 2 +-
- 3 files changed, 4 insertions(+), 5 deletions(-)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >On Tue, 27 Oct 2015, Johannes Schindelin wrote:
+> >
+> >> On Mon, 26 Oct 2015, Junio C Hamano wrote:
+> >> 
+> >> > James McCoy <vega.james@gmail.com> writes:
+> >> > 
+> >> > >> The code looks OK but the last paragraph makes _us_ worried.  What
+> >> > >> is the licensing status of the original at SO?
+> >> > >
+> >> > > According to Stackoverflow[0],
+> >> > >
+> >> > >   As noted in the Stack Exchange Terms of Service[1] and in the footer of
+> >> > >   every page, all user contributions are licensed under Creative Commons
+> >> > >   Attribution-Share Alike[2]. Proper attribution[3] is required if you
+> >> > >   republish any Stack Exchange content.
+> >> > >
+> >> > > [0]: https://stackoverflow.com/help/licensing
+> >> > 
+> >> > Yes, and (please correct me if I am wrong--this is one of the times
+> >> > I hope I am wrong!) I thought BY-SA does not mesh well with GPLv2,
+> >> > in which case we cannot use this patch (instead somebody has to
+> >> > reimplement the same without copying).
+> >> 
+> >> Pat, could you please allow us to insert your SOB?
+> >
+> >On second thought... Junio, could you please sanity-check my claim that
+> >this patch:
+> >
+> >-- snip --
+> >@@ -465,6 +465,17 @@ static CURL *get_curl_handle(void)
+> > 
+> >        if (curl_http_proxy) {
+> >                curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+> >+#if LIBCURL_VERSION_NUM >= 0x071800
+> >+               if (starts_with(curl_http_proxy, "socks5"))
+> >+                       curl_easy_setopt(result,
+> >+                               CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+> >+               else if (starts_with(curl_http_proxy, "socks4a"))
+> >+                       curl_easy_setopt(result,
+> >+                               CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4A);
+> >+               else if (starts_with(curl_http_proxy, "socks"))
+> >+                       curl_easy_setopt(result,
+> >+                               CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
+> >+#endif
+> >        }
+> > #if LIBCURL_VERSION_NUM >= 0x070a07
+> >        curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
+> >-- snap --
+> >
+> >cannot be copyrighted because it is pretty much the only way to implement
+> >said functionality?
+> >
+> >Still, Pat, if you find the time, could you please simply relicense your
+> >patch (I know that you are fine with it, but we need an explicit
+> >statement)?
+> >
+> >Ciao,
+> >Johannes
+> 
+> A bit late to the party but 'yes'. Frankly by posting something to SO I
+> rather consider it public domain
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 5d1cb00..b909605 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -519,8 +519,7 @@ exit code \$res from '\$command' is < 0 or >= 128" >&2
- 
- 		cat "$GIT_DIR/BISECT_RUN"
- 
--		if sane_grep "first $TERM_BAD commit could be any of" "$GIT_DIR/BISECT_RUN" \
--			>/dev/null
-+		if sane_grep -q "first $TERM_BAD commit could be any of" "$GIT_DIR/BISECT_RUN"
- 		then
- 			gettextln "bisect run cannot continue any more" >&2
- 			exit $res
-@@ -533,7 +532,7 @@ exit code \$res from '\$command' is < 0 or >= 128" >&2
- 			exit $res
- 		fi
- 
--		if sane_grep "is the first $TERM_BAD commit" "$GIT_DIR/BISECT_RUN" >/dev/null
-+		if sane_grep -q "is the first $TERM_BAD commit" "$GIT_DIR/BISECT_RUN"
- 		then
- 			gettextln "bisect run success"
- 			exit 0;
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index d65c06e..f360ac0 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -1225,7 +1225,7 @@ then
- 	git rev-list $revisions |
- 	while read rev
- 	do
--		if test -f "$rewritten"/$rev && test "$(sane_grep "$rev" "$state_dir"/not-cherry-picks)" = ""
-+		if test -f "$rewritten"/$rev && test "$(sane_grep -q "$rev" "$state_dir"/not-cherry-picks)"
- 		then
- 			# Use -f2 because if rev-list is telling us this commit is
- 			# not worthwhile, we don't want to track its multiple heads,
-diff --git a/git-rebase.sh b/git-rebase.sh
-index af7ba5f..b6a5f73 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -578,7 +578,7 @@ mb=$(git merge-base "$onto" "$orig_head")
- if test "$type" != interactive && test "$upstream" = "$onto" &&
- 	test "$mb" = "$onto" && test -z "$restrict_revision" &&
- 	# linear history?
--	! (git rev-list --parents "$onto".."$orig_head" | sane_grep " .* ") > /dev/null
-+	! (git rev-list --parents "$onto".."$orig_head" | sane_grep -q " .* ")
- then
- 	if test -z "$force_rebase"
- 	then
--- 
-2.6.3.368.gf34be46
+Yeah, unfortunately it needs to be stated explicitly, though... ;-)
+
+> but I hereby license this patch as required for use by the Git project.
+> 
+> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+
+Thanks!
+
+Ciao,
+Dscho
