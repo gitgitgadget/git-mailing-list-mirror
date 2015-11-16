@@ -1,75 +1,94 @@
-From: <stefan.naewe@atlas-elektronik.com>
+From: Adam GROSZER <agroszer@gmail.com>
 Subject: Re: opening an editor from git-gui on a file
-Date: Mon, 16 Nov 2015 11:38:10 +0100
-Message-ID: <5649B212.30206@atlas-elektronik.com>
-References: <56498CBB.4070709@gmail.com>
+Date: Mon, 16 Nov 2015 12:10:41 +0100
+Message-ID: <5649B9B1.7090203@gmail.com>
+References: <56498CBB.4070709@gmail.com> <5649B212.30206@atlas-elektronik.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-To: <agroszer@gmail.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 16 11:38:42 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: stefan.naewe@atlas-elektronik.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 16 12:10:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyHBH-0002pm-RQ
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 11:38:40 +0100
+	id 1ZyHgP-0006v4-JY
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 12:10:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752330AbbKPKi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2015 05:38:27 -0500
-Received: from mail96.atlas.de ([194.156.172.86]:20292 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751855AbbKPKiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2015 05:38:24 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id 410D4101D1;
-	Mon, 16 Nov 2015 11:38:22 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mail96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ner6E3aAif8f; Mon, 16 Nov 2015 11:38:11 +0100 (CET)
-Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Mon, 16 Nov 2015 11:38:11 +0100 (CET)
-Received: from MSEXSRV1.atlas.de (webmail.atlas.de [10.200.102.56])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 772AE27169;
-	Mon, 16 Nov 2015 11:38:11 +0100 (CET)
-Received: from MSSRVS1.atlas.de (10.200.101.71) by MSEXSRV1.atlas.de
- (10.200.102.56) with Microsoft SMTP Server (TLS) id 14.3.248.2; Mon, 16 Nov
- 2015 11:38:10 +0100
-Received: from MSSRVS4.atlas.de ([10.200.97.74]) by MSSRVS1.atlas.de
- ([10.200.101.71]) with mapi; Mon, 16 Nov 2015 11:38:11 +0100
-Thread-Topic: opening an editor from git-gui on a file
-Thread-Index: AdEgWuN48a65z7ISS+GKBGsl6zSAfg==
-In-Reply-To: <56498CBB.4070709@gmail.com>
-Accept-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+	id S1751424AbbKPLKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2015 06:10:46 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:35562 "EHLO
+	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751238AbbKPLKo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2015 06:10:44 -0500
+Received: by wmdw130 with SMTP id w130so105894974wmd.0
+        for <git@vger.kernel.org>; Mon, 16 Nov 2015 03:10:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=SVpky4cIh70tJZSWzqTxL9vzjpffRNzZ71S35AMqotg=;
+        b=ZnO7qJZkkvR6cVn62hnObNDtSOSvUUeMZu3hnIMZc6zIGnBhwYLUh00MPmUinoOKcj
+         4hQ2/CdQ9GeDLb6H43iU/Axw4zg/GGPyGMFWjX7ttyw49Lx4VmXZYtC8oJIJccw39eOC
+         g6m6sHsSMDphOYnEw4bvsCFg1Qd8WNMD48iYp4JKczk/E0gEAAXZN5Mm6+rj/RroDmbX
+         7BQNiEygS9BIG7wI0LxLQQ/Od0Sg8kwZCgDYfm1Fl+FwlslYI+OWSnICoM4Lijuun0DV
+         QgZKwBpHhfGD561XYUtkgSfTSM7ncTkMeWKiunU9fKwmGn1fYHm1E2GCIluYaoTspRFC
+         rIhA==
+X-Received: by 10.28.48.213 with SMTP id w204mr17248584wmw.38.1447672243392;
+        Mon, 16 Nov 2015 03:10:43 -0800 (PST)
+Received: from [192.168.1.247] (catv-78-139-38-214.catv.broadband.hu. [78.139.38.214])
+        by smtp.googlemail.com with ESMTPSA id s9sm18037372wmf.2.2015.11.16.03.10.42
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Nov 2015 03:10:42 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
  Thunderbird/38.3.0
-acceptlanguage: de-DE
-X-C2ProcessedOrg: 8e578ea2-b414-4638-aa54-659db1be7428
+In-Reply-To: <5649B212.30206@atlas-elektronik.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281334>
 
-QW0gMTYuMTEuMjAxNSB1bSAwODo1OCBzY2hyaWViIEFkYW0gR1JPU1pFUjoNCj4gSGkgdGhlcmUs
-DQo+IA0KPiBIb3BlZnVsbHkgc2VuZGluZyB0aGUgcXVlc3Rpb24vaWRlYSB0byB0aGUgcmlnaHQg
-bGlzdC4uLg0KPiANCj4gSSdtIG1pc3NpbmcgdGhlIGZlYXR1cmUgdG8gb3BlbiBhIChjb25maWd1
-cmFibGUpIGVkaXRvciB3aXRoIHRoZQ0KPiBjdXJyZW50bHkgc2VsZWN0ZWQgZmlsZSBpbiBnaXQg
-Z3VpLg0KPiANCj4gRS5nLiBMb29raW5nIGF0DQo+IA0KPiBodHRwczovL2Nkbi50dXRzcGx1cy5j
-b20vbmV0L3VwbG9hZHMvbGVnYWN5LzIwODFfZ2l0d2luL2dpdC1ndWktc3RhZ2UuanBnDQo+IA0K
-PiBJJ2QgbGlrZSB0byBvcGVuIG15IGVkaXRvciB3aXRoIHRoZSAicmVxdWVzdC5waHAiLg0KPiAN
-Cj4gQW55IGNoYW5jZSB0byBoYXZlIHRoYXQ/IE9yIGRvIEkgbWlzcyBzb21ldGhpbmc/DQoNCkkg
-aGF2ZSB0aGlzIGluIG15IC5naXRjb25maWc6DQoNCltndWl0b29sICJFZGl0L3dpdGggR1ZpbSJd
-DQogICAgICAgIGNtZCA9IGd2aW0gLS1yZW1vdGUtdGFiLXNpbGVudCAkRklMRU5BTUUNCiAgICAg
-ICAgbm9jb25zb2xlID0geWVzDQogICAgICAgIG5lZWRzZmlsZSA9IHllcw0KDQpXb3JrcyBmb3Ig
-bWUuDQoNCkhUSCwNCiAgU3RlZmFuDQotLSANCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCi9kZXYvcmFuZG9tIHNheXM6IFdo
-eSBkaWQgS2FtYWthemllIHBpbG90cyB3ZWFyIGhlbG1ldHM/Pz8NCnB5dGhvbiAtYyAicHJpbnQg
-JzczNzQ2NTY2NjE2ZTJlNmU2MTY1Nzc2NTQwNjE3NDZjNjE3MzJkNjU2YzY1NmI3NDcyNmY2ZTY5
-NmIyZTYzNmY2ZCcuZGVjb2RlKCdoZXgnKSIgDQpHUEcgS2V5IGZpbmdlcnByaW50ID0gMkRGNSBF
-MDFCIDA5QzMgNzUwMSBCQ0E5ICA5NjY2IDgyOUIgNDlDNSA5MjIxIDI3QUYNCg==
+Thank you!
+
+Works fine. Tho I don't find any docs/references for a hotkey...
+
+On 11/16/2015 11:38 AM, stefan.naewe@atlas-elektronik.com wrote:
+> Am 16.11.2015 um 08:58 schrieb Adam GROSZER:
+>> Hi there,
+>>
+>> Hopefully sending the question/idea to the right list...
+>>
+>> I'm missing the feature to open a (configurable) editor with the
+>> currently selected file in git gui.
+>>
+>> E.g. Looking at
+>>
+>> https://cdn.tutsplus.com/net/uploads/legacy/2081_gitwin/git-gui-stage.jpg
+>>
+>> I'd like to open my editor with the "request.php".
+>>
+>> Any chance to have that? Or do I miss something?
+>
+> I have this in my .gitconfig:
+>
+> [guitool "Edit/with GVim"]
+>          cmd = gvim --remote-tab-silent $FILENAME
+>          noconsole = yes
+>          needsfile = yes
+>
+> Works for me.
+>
+> HTH,
+>    Stefan
+>
+
+-- 
+Best regards,
+  Adam GROSZER
+--
+Quote of the day:
+Rudin's Law: In a crisis that forces a choice to be made among 
+alternative courses of action, most people will choose the worst one 
+possible.
