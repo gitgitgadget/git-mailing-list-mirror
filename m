@@ -1,308 +1,399 @@
-From: Victor Leschuk <vleschuk@accesssoftek.com>
-Subject: RE: [PATCH v6] Add git-grep threads param
-Date: Mon, 16 Nov 2015 05:11:16 -0800
-Message-ID: <6AE1604EE3EC5F4296C096518C6B77EE5D0FDABA1F@mail.accesssoftek.com>
-References: <1447242770-20753-1-git-send-email-vleschuk@accesssoftek.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: Victor Leschuk <vleschuk@gmail.com>,
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>
-To: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"gitster@pobox.com" <gitster@pobox.com>,
-	"john@keeping.me.uk" <john@keeping.me.uk>,
-	"peff@peff.net" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 16 14:11:29 2015
+From: Mike Crowe <mac@mcrowe.com>
+Subject: [PATCH] push: add recurseSubmodules config option
+Date: Mon, 16 Nov 2015 13:24:54 +0000
+Message-ID: <1447680294-13395-1-git-send-email-mac@mcrowe.com>
+Cc: Mike Crowe <mac@mcrowe.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 16 14:42:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyJZ9-0004dI-Ij
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 14:11:28 +0100
+	id 1ZyK16-0006hJ-QN
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 14:40:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234AbbKPNLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2015 08:11:22 -0500
-Received: from mail.accesssoftek.com ([12.202.173.171]:11889 "EHLO
-	mail.accesssoftek.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751864AbbKPNLV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Nov 2015 08:11:21 -0500
-Received: from mail.accesssoftek.com ([172.16.0.71]) by mail.accesssoftek.com
- ([172.16.0.71]) with mapi; Mon, 16 Nov 2015 05:11:19 -0800
-Thread-Topic: [PATCH v6] Add git-grep threads param
-Thread-Index: AdEcd4UkdPpVLB+US7GsTj8NMg4EnAD+A2Lo
-In-Reply-To: <1447242770-20753-1-git-send-email-vleschuk@accesssoftek.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1752937AbbKPNkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2015 08:40:16 -0500
+Received: from relay.appriver.com ([207.97.230.34]:57751 "EHLO
+	relay.appriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751859AbbKPNkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2015 08:40:12 -0500
+X-Greylist: delayed 902 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Nov 2015 08:40:12 EST
+Received: from [86.30.112.98] (HELO elite.brightsign)
+  by relay.appriver.com (CommuniGate Pro SMTP 6.1.2)
+  with ESMTP id 640748026; Mon, 16 Nov 2015 08:25:08 -0500
+Received: from chuckie.brightsign ([172.30.1.25] helo=chuckie)
+	by elite.brightsign with esmtp (Exim 4.84)
+	(envelope-from <mcrowe@brightsign.biz>)
+	id 1ZyJmL-0006pw-Sn; Mon, 16 Nov 2015 13:25:05 +0000
+Received: from mac by chuckie with local (Exim 4.84)
+	(envelope-from <mcrowe@brightsign.biz>)
+	id 1ZyJmL-0003Uk-Rv; Mon, 16 Nov 2015 13:25:05 +0000
+X-Mailer: git-send-email 2.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281339>
 
-Hello all,
+The --recurse-submodules command line parameter has existed for some
+time but it has no config file equivalent.
 
-The earlier version of this patch is already included in /pu branch, however as we all agreed ($gmane/280299) we have changed the default behavior and the meaning of "0". The question is: what is the right way to include changes from patch v6 (this one) into already merged patch to pu?
+Following the style of the corresponding parameter for git fetch, let's
+invent push.recurseSubmodules to provide a default for this
+parameter. This also requires the addition of --recurse-submodules=no to
+allow the configuration to be overridden on the command line when
+required.
 
-Thanks.
---
-Best Regards,
-Victor
-________________________________________
-From: Victor Leschuk [vleschuk@gmail.com]
-Sent: Wednesday, November 11, 2015 03:52
-To: git@vger.kernel.org
-Cc: Victor Leschuk
-Subject: [PATCH v6] Add git-grep threads param
+The most straightforward way to implement this appears to be to make
+push use code in submodule-config in a similar way to fetch.
 
-"git grep" can now be configured (or told from the command line)
- how many threads to use when searching in the working tree files.
-
- Changes to default behavior: number of threads now doesn't depend
- on online_cpus(), e.g. if specific number is not configured
- GREP_NUM_THREADS_DEFAULT (8) threads will be used even on 1-core CPU.
-
-Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
+Signed-off-by: Mike Crowe <mac@mcrowe.com>
 ---
-History of changes from the first version ($gmane/280053/:
-        * Param renamed from threads-num to threads
-        * Short version of '--threads' cmd key was removed
-        * Made num_threads 'decision-tree' more obvious
-          and easy to edit for future use ($gmane/280089)
-        * Moved option description to more suitable place in documentation ($gmane/280188)
-        * Hid threads param from 'external' grep.c, made it private for builtin/grep.c ($gmane/280188)
-        * Improved num_threads 'decision-tree', got rid of dependency on online_cpus ($gmane/280299)
-        * Improved param documentation ($gmane/280299)
-
-
- Documentation/config.txt               |  7 +++++
- Documentation/git-grep.txt             | 15 ++++++++++
- builtin/grep.c                         | 50 +++++++++++++++++++++++-----------
- contrib/completion/git-completion.bash |  1 +
- 4 files changed, 57 insertions(+), 16 deletions(-)
+ Documentation/config.txt       |  13 +++++
+ Documentation/git-push.txt     |   4 +-
+ builtin/push.c                 |  37 ++++++++-----
+ submodule-config.c             |  20 +++++++
+ submodule-config.h             |   1 +
+ submodule.h                    |   1 +
+ t/t5531-deep-submodule-push.sh | 123 ++++++++++++++++++++++++++++++++++++++++-
+ 7 files changed, 182 insertions(+), 17 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 391a0c3..5084e36 100644
+index 391a0c3..0546da5 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1447,6 +1447,13 @@ grep.extendedRegexp::
-        option is ignored when the 'grep.patternType' option is set to a value
-        other than 'default'.
-
-+grep.threads::
-+       Number of grep worker threads, use it to tune up performance on
-+       your machines. Leave it unset (or set to 0) for default behavior,
-+       which for now is using 8 threads for all systems.
-+       Default behavior can be changed in future versions
-+       to better suit hardware and circumstances.
+@@ -2226,6 +2226,19 @@ push.gpgSign::
+ 	override a value from a lower-priority config file. An explicit
+ 	command-line flag always overrides this config option.
+ 
++push.recurseSubmodules::
++	Make sure all submodule commits used by the revisions to be pushed
++	are available on a remote-tracking branch. If the value is 'check'
++	then Git will verify that all submodule commits that changed in the
++	revisions to be pushed are available on at least one remote of the
++	submodule. If any commits are missing the push will be aborted and
++	exit with non-zero status. If the value is 'on-demand' then all
++	submodules that changed in the revisions to be pushed will be
++	pushed. If on-demand was not able to push all necessary revisions
++	it will also be aborted and exit with non-zero status. You may
++	override this configuration at time of push by specifying
++	'--recurse-submodules=check|on-demand|no'.
 +
- gpg.program::
-        Use this custom program instead of "gpg" found on $PATH when
-        making or verifying a PGP signature. The program must support the
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 4a44d6d..8222a83 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -23,6 +23,7 @@ SYNOPSIS
-           [--break] [--heading] [-p | --show-function]
-           [-A <post-context>] [-B <pre-context>] [-C <context>]
-           [-W | --function-context]
-+          [--threads <num>]
-           [-f <file>] [-e] <pattern>
-           [--and|--or|--not|(|)|-e <pattern>...]
-           [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
-@@ -53,6 +54,13 @@ grep.extendedRegexp::
-        option is ignored when the 'grep.patternType' option is set to a value
-        other than 'default'.
-
-+grep.threads::
-+       Number of grep worker threads, use it to tune up performance on
-+       your machines. Leave it unset (or set to 0) for default behavior,
-+       which for now is using 8 threads for all systems.
-+       Default behavior can be changed in future versions
-+       to better suit hardware and circumstances.
-+
- grep.fullName::
-        If set to true, enable '--full-name' option by default.
-
-@@ -227,6 +235,13 @@ OPTIONS
-        effectively showing the whole function in which the match was
-        found.
-
-+--threads <num>::
-+       Number of grep worker threads, use it to tune up performance on
-+       your machines. Leave it unset (or set to 0) for default behavior,
-+       which for now is using 8 threads for all systems.
-+       Default behavior can be changed in future versions
-+       to better suit hardware and circumstances.
-+
- -f <file>::
-        Read patterns from <file>, one per line.
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index d04f440..f0e3dfb 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -24,11 +24,11 @@ static char const * const grep_usage[] = {
-        NULL
- };
-
--static int use_threads = 1;
-+#define GREP_NUM_THREADS_DEFAULT 8
-+static int num_threads = 0;
-
- #ifndef NO_PTHREADS
--#define THREADS 8
--static pthread_t threads[THREADS];
-+static pthread_t *threads;
-
- /* We use one producer thread and THREADS consumer
-  * threads. The producer adds struct work_items to 'todo' and the
-@@ -63,13 +63,13 @@ static pthread_mutex_t grep_mutex;
-
- static inline void grep_lock(void)
+ rebase.stat::
+ 	Whether to show a diffstat of what changed upstream since the last
+ 	rebase. False by default.
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 85a4d7d..fb0e9b7 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -257,7 +257,7 @@ origin +master` to force a push to the `master` branch). See the
+ 	is specified. This flag forces progress status even if the
+ 	standard error stream is not directed to a terminal.
+ 
+---recurse-submodules=check|on-demand::
++--recurse-submodules=check|on-demand|no::
+ 	Make sure all submodule commits used by the revisions to be
+ 	pushed are available on a remote-tracking branch. If 'check' is
+ 	used Git will verify that all submodule commits that changed in
+@@ -267,6 +267,8 @@ origin +master` to force a push to the `master` branch). See the
+ 	all submodules that changed in the revisions to be pushed will
+ 	be pushed. If on-demand was not able to push all necessary
+ 	revisions it will also be aborted and exit with non-zero status.
++	A value of 'no' is used to override the push.recurseSubmodules
++	variable when no submodule recursion is required.
+ 
+ --[no-]verify::
+ 	Toggle the pre-push hook (see linkgit:githooks[5]).  The
+diff --git a/builtin/push.c b/builtin/push.c
+index 3bda430..dfced74 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -9,6 +9,7 @@
+ #include "transport.h"
+ #include "parse-options.h"
+ #include "submodule.h"
++#include "submodule-config.h"
+ #include "send-pack.h"
+ 
+ static const char * const push_usage[] = {
+@@ -20,7 +21,7 @@ static int thin = 1;
+ static int deleterefs;
+ static const char *receivepack;
+ static int verbosity;
+-static int progress = -1;
++static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ 
+ static struct push_cas_option cas;
+ 
+@@ -452,22 +453,15 @@ static int do_push(const char *repo, int flags)
+ static int option_parse_recurse_submodules(const struct option *opt,
+ 				   const char *arg, int unset)
  {
--       if (use_threads)
-+       if (num_threads)
-                pthread_mutex_lock(&grep_mutex);
+-	int *flags = opt->value;
++	int *recurse_submodules = opt->value;
+ 
+-	if (*flags & (TRANSPORT_RECURSE_SUBMODULES_CHECK |
+-		      TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND))
++	if (*recurse_submodules != RECURSE_SUBMODULES_DEFAULT)
+ 		die("%s can only be used once.", opt->long_name);
+ 
+-	if (arg) {
+-		if (!strcmp(arg, "check"))
+-			*flags |= TRANSPORT_RECURSE_SUBMODULES_CHECK;
+-		else if (!strcmp(arg, "on-demand"))
+-			*flags |= TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND;
+-		else
+-			die("bad %s argument: %s", opt->long_name, arg);
+-	} else
+-		die("option %s needs an argument (check|on-demand)",
+-				opt->long_name);
++	if (arg)
++		*recurse_submodules = parse_push_recurse_submodules_arg(opt->long_name, arg);
++	else
++		die("%s missing parameter", opt->long_name);
+ 
+ 	return 0;
  }
-
- static inline void grep_unlock(void)
- {
--       if (use_threads)
-+       if (num_threads)
-                pthread_mutex_unlock(&grep_mutex);
- }
-
-@@ -206,7 +206,8 @@ static void start_threads(struct grep_opt *opt)
-                strbuf_init(&todo[i].out, 0);
-        }
-
--       for (i = 0; i < ARRAY_SIZE(threads); i++) {
-+       threads = xcalloc(num_threads, sizeof(pthread_t));
-+       for (i = 0; i < num_threads; i++) {
-                int err;
-                struct grep_opt *o = grep_opt_dup(opt);
-                o->output = strbuf_out;
-@@ -238,12 +239,14 @@ static int wait_all(void)
-        pthread_cond_broadcast(&cond_add);
-        grep_unlock();
-
--       for (i = 0; i < ARRAY_SIZE(threads); i++) {
-+       for (i = 0; i < num_threads; i++) {
-                void *h;
-                pthread_join(threads[i], &h);
-                hit |= (int) (intptr_t) h;
-        }
-
-+       free(threads);
+@@ -522,6 +516,10 @@ static int git_push_config(const char *k, const char *v, void *cb)
+ 					return error("Invalid value for '%s'", k);
+ 			}
+ 		}
++	} else if (!strcmp(k, "push.recursesubmodules")) {
++		const char *value;
++		if (!git_config_get_value("push.recursesubmodules", &value))
++			recurse_submodules = parse_push_recurse_submodules_arg(k, value);
+ 	}
+ 
+ 	return git_default_config(k, v, NULL);
+@@ -532,6 +530,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	int flags = 0;
+ 	int tags = 0;
+ 	int push_cert = -1;
++	int recurse_submodules_from_cmdline = RECURSE_SUBMODULES_DEFAULT;
+ 	int rc;
+ 	const char *repo = NULL;	/* default repository */
+ 	struct option options[] = {
+@@ -549,7 +548,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		  0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
+ 		  N_("require old value of ref to be at this value"),
+ 		  PARSE_OPT_OPTARG, parseopt_push_cas_option },
+-		{ OPTION_CALLBACK, 0, "recurse-submodules", &flags, "check|on-demand",
++		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules_from_cmdline, N_("check|on-demand|no"),
+ 			N_("control recursive pushing of submodules"),
+ 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+ 		OPT_BOOL( 0 , "thin", &thin, N_("use thin pack")),
+@@ -580,6 +579,14 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	if (deleterefs && argc < 2)
+ 		die(_("--delete doesn't make sense without any refs"));
+ 
++	if (recurse_submodules_from_cmdline != RECURSE_SUBMODULES_DEFAULT)
++		recurse_submodules = recurse_submodules_from_cmdline;
 +
-        pthread_mutex_destroy(&grep_mutex);
-        pthread_mutex_destroy(&grep_read_mutex);
-        pthread_mutex_destroy(&grep_attr_mutex);
-@@ -262,10 +265,19 @@ static int wait_all(void)
++	if (recurse_submodules == RECURSE_SUBMODULES_CHECK)
++		flags |= TRANSPORT_RECURSE_SUBMODULES_CHECK;
++	else if (recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
++		flags |= TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND;
++
+ 	if (tags)
+ 		add_refspec("refs/tags/*");
+ 
+diff --git a/submodule-config.c b/submodule-config.c
+index afe0ea8..33d8790 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -228,6 +228,26 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
+ 	return parse_fetch_recurse(opt, arg, 1);
  }
- #endif
-
-+static int grep_threads_config(const char *var, const char *value, void *cb)
+ 
++static int parse_push_recurse(const char *opt, const char *arg,
++			       int die_on_error)
 +{
-+       if (!strcmp(var, "grep.threads"))
-+               num_threads = git_config_int(var, value); /* Sanity check of value will be perfomed later */
-+       return 0;
++    if (!strcmp(arg, "on-demand"))
++	return RECURSE_SUBMODULES_ON_DEMAND;
++    else if (!strcmp(arg, "check"))
++	return RECURSE_SUBMODULES_CHECK;
++    else if (!strcmp(arg, "no"))
++	return RECURSE_SUBMODULES_OFF;
++    else if (die_on_error)
++	die("bad %s argument: %s", opt, arg);
++    else
++	return RECURSE_SUBMODULES_ERROR;
 +}
 +
- static int grep_cmd_config(const char *var, const char *value, void *cb)
++int parse_push_recurse_submodules_arg(const char *opt, const char *arg)
++{
++	return parse_push_recurse(opt, arg, 1);
++}
++
+ static void warn_multiple_config(const unsigned char *commit_sha1,
+ 				 const char *name, const char *option)
  {
-        int st = grep_config(var, value, cb);
--       if (git_color_default_config(var, value, cb) < 0)
-+       if (grep_threads_config(var, value, cb) < 0)
-+               st = -1;
-+       else if (git_color_default_config(var, value, cb) < 0)
-                st = -1;
-        return st;
- }
-@@ -294,7 +306,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
-        }
-
- #ifndef NO_PTHREADS
--       if (use_threads) {
-+       if (num_threads) {
-                add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
-                strbuf_release(&pathbuf);
-                return 0;
-@@ -323,7 +335,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
-                strbuf_addstr(&buf, filename);
-
- #ifndef NO_PTHREADS
--       if (use_threads) {
-+       if (num_threads) {
-                add_work(opt, GREP_SOURCE_FILE, buf.buf, filename, filename);
-                strbuf_release(&buf);
-                return 0;
-@@ -702,6 +714,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
-                        N_("show <n> context lines before matches")),
-                OPT_INTEGER('A', "after-context", &opt.post_context,
-                        N_("show <n> context lines after matches")),
-+               OPT_INTEGER(0, "threads", &num_threads,
-+                       N_("use <n> worker threads")),
-                OPT_NUMBER_CALLBACK(&opt, N_("shortcut for -C NUM"),
-                        context_callback),
-                OPT_BOOL('p', "show-function", &opt.funcname,
-@@ -801,7 +815,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
-                opt.output_priv = &path_list;
-                opt.output = append_path;
-                string_list_append(&path_list, show_in_pager);
--               use_threads = 0;
-+               num_threads = 0;
-        }
-
-        if (!opt.pattern_list)
-@@ -832,14 +846,18 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
-        }
-
- #ifndef NO_PTHREADS
--       if (list.nr || cached || online_cpus() == 1)
--               use_threads = 0;
-+       if (list.nr || cached)
-+               num_threads = 0; /* Can not multi-thread object lookup */
-+       else if (num_threads == 0)
-+               num_threads = GREP_NUM_THREADS_DEFAULT; /* User didn't specify value, or just wants default behavior */
-+       else if (num_threads < 0)
-+               die("Invalid number of threads specified (%d)", num_threads);
- #else
--       use_threads = 0;
-+       num_threads = 0;
- #endif
-
- #ifndef NO_PTHREADS
--       if (use_threads) {
-+       if (num_threads) {
-                if (!(opt.name_only || opt.unmatch_name_only || opt.count)
-                    && (opt.pre_context || opt.post_context ||
-                        opt.file_break || opt.funcbody))
-@@ -909,7 +927,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
-                hit = grep_objects(&opt, &pathspec, &list);
-        }
-
--       if (use_threads)
-+       if (num_threads)
-                hit |= wait_all();
-        if (hit && show_in_pager)
-                run_pager(&opt, prefix);
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 482ca84..390d9c0 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1310,6 +1310,7 @@ _git_grep ()
-                        --full-name --line-number
-                        --extended-regexp --basic-regexp --fixed-strings
-                        --perl-regexp
-+                       --threads
-                        --files-with-matches --name-only
-                        --files-without-match
-                        --max-depth
---
-2.6.3.369.g3e7f205.dirty
+diff --git a/submodule-config.h b/submodule-config.h
+index 9061e4e..9bfa65a 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -19,6 +19,7 @@ struct submodule {
+ };
+ 
+ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
++int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
+ int parse_submodule_config_option(const char *var, const char *value);
+ const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
+ 		const char *name);
+diff --git a/submodule.h b/submodule.h
+index 5507c3d..ddff512 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -5,6 +5,7 @@ struct diff_options;
+ struct argv_array;
+ 
+ enum {
++	RECURSE_SUBMODULES_CHECK = -4,
+ 	RECURSE_SUBMODULES_ERROR = -3,
+ 	RECURSE_SUBMODULES_NONE = -2,
+ 	RECURSE_SUBMODULES_ON_DEMAND = -1,
+diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
+index 6507487..d2fb072 100755
+--- a/t/t5531-deep-submodule-push.sh
++++ b/t/t5531-deep-submodule-push.sh
+@@ -64,7 +64,15 @@ test_expect_success 'push fails if submodule commit not on remote' '
+ 		cd work &&
+ 		git add gar/bage &&
+ 		git commit -m "Third commit for gar/bage" &&
+-		test_must_fail git push --recurse-submodules=check ../pub.git master
++		# the push should fail with --recurse-submodules=check
++		# on the command line...
++		test_must_fail git push --recurse-submodules=check ../pub.git master &&
++
++		# ...or if specified in the configuration..
++		git config push.recurseSubmodules check &&
++		test_must_fail git push ../pub.git master &&
++
++		git config --unset push.recurseSubmodules
+ 	)
+ '
+ 
+@@ -79,6 +87,119 @@ test_expect_success 'push succeeds after commit was pushed to remote' '
+ 	)
+ '
+ 
++test_expect_success 'push succeeds if submodule commit not on remote but using on-demand on command line' '
++	(
++		cd work/gar/bage &&
++		>recurse-on-demand-on-command-line &&
++		git add recurse-on-demand-on-command-line &&
++		git commit -m "Recurse on-demand on command line junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse on-demand on command line for gar/bage" &&
++		git push --recurse-submodules=on-demand ../pub.git master &&
++		# Check that the supermodule commit got there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master
++		# Check that the submodule commit got there too
++		cd gar/bage &&
++		git diff --quiet origin/master master
++	)
++'
++
++test_expect_success 'push succeeds if submodule commit not on remote but using on-demand from config' '
++	(
++		cd work/gar/bage &&
++		>recurse-on-demand-from-config &&
++		git add recurse-on-demand-from-config &&
++		git commit -m "Recurse on-demand from config junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse on-demand on command line for gar/bage" &&
++		git config push.recurseSubmodules on-demand &&
++		git push ../pub.git master &&
++		git config --unset push.recurseSubmodules &&
++		# Check that the supermodule commit got there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master
++		# Check that the submodule commit got there too
++		cd gar/bage &&
++		git diff --quiet origin/master master
++	)
++'
++
++test_expect_success 'push fails if submodule commit not on remote using check from cmdline overriding config' '
++	(
++		cd work/gar/bage &&
++		>recurse-check-on-command-line-overriding-config &&
++		git add recurse-check-on-command-line-overriding-config &&
++		git commit -m "Recurse on command-line overridiing config junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse on command-line overriding config for gar/bage" &&
++		git config push.recurseSubmodules on-demand &&
++		test_must_fail git push --recurse-submodules=check ../pub.git master &&
++		git config --unset push.recurseSubmodules &&
++		# Check that the supermodule commit did not get there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master^
++		# Check that the submodule commit did not get there
++		cd gar/bage &&
++		git diff --quiet origin/master master^
++	)
++'
++
++test_expect_success 'push succeeds if submodule commit not on remote using on-demand from cmdline overriding config' '
++	(
++		cd work/gar/bage &&
++		>recurse-on-demand-on-command-line-overriding-config &&
++		git add recurse-on-demand-on-command-line-overriding-config &&
++		git commit -m "Recurse on-demand on command-line overriding config junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse on-demand on command-line overriding config for gar/bage" &&
++		git config push.recurseSubmodules check &&
++		git push --recurse-submodules=on-demand ../pub.git master &&
++		git config --unset push.recurseSubmodules &&
++		# Check that the supermodule commit got there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master
++		# Check that the submodule commit got there
++		cd gar/bage &&
++		git diff --quiet origin/master master
++	)
++'
++
++test_expect_success 'push succeeds if submodule commit disabling recursion from cmdline overriding config' '
++	(
++		cd work/gar/bage &&
++		>recurse-disable-on-command-line-overriding-config &&
++		git add recurse-disable-on-command-line-overriding-config &&
++		git commit -m "Recurse disable on command-line overriding config junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse disable on command-line overriding config for gar/bage" &&
++		git config push.recurseSubmodules check &&
++		git push --recurse-submodules=no ../pub.git master &&
++		git config --unset push.recurseSubmodules &&
++		# Check that the supermodule commit got there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master &&
++		# But that the submodule commit did not
++		cd gar/bage &&
++		git diff --quiet origin/master master^
++	)
++'
++
+ test_expect_success 'push fails when commit on multiple branches if one branch has no remote' '
+ 	(
+ 		cd work/gar/bage &&
+-- 
+2.1.4
