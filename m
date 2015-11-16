@@ -1,86 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rebase-i-exec: Allow space in SHELL_PATH
-Date: Mon, 16 Nov 2015 17:01:03 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1511161656480.1686@s15462909.onlinehome-server.info>
-References: <1447394599-16077-1-git-send-email-fredrik.medley@gmail.com> <20151113062534.GE32157@sigill.intra.peff.net> <CABA5-zk+RVBxfmuLyK8CcCFUpMXEzbHRKeWWV2SKsJqjnG-nfA@mail.gmail.com> <20151113222748.GA14830@sigill.intra.peff.net>
- <CABA5-zmmKeeDDhSdan9sTppRVeDNuPiR8WX=P4Umdbq=ELafqw@mail.gmail.com> <20151113230933.GA16173@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] refs.c: get_ref_cache: use a bucket hash
+Date: Mon, 16 Nov 2015 11:31:30 -0500
+Message-ID: <20151116163130.GA15046@sigill.intra.peff.net>
+References: <20150316142026.GJ7847@inner.h.apk.li>
+ <xmqq1tkosvpi.fsf@gitster.dls.corp.google.com>
+ <20150316184040.GA8902@inner.h.apk.li>
+ <20150317024005.GA26313@peff.net>
+ <xmqqd248p4o9.fsf@gitster.dls.corp.google.com>
+ <20150317054759.GA16860@peff.net>
+ <20151113152915.GC16219@inner.h.apk.li>
+ <20151114000118.GB18260@sigill.intra.peff.net>
+ <20151114133501.GI16219@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Fredrik Medley <fredrik.medley@gmail.com>,
-	Git Users <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 16 17:01:30 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 16 17:31:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyMDh-0007no-E9
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 17:01:29 +0100
+	id 1ZyMgs-0003oD-7l
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 17:31:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752719AbbKPQBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2015 11:01:23 -0500
-Received: from mout.gmx.net ([212.227.15.15]:64803 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752259AbbKPQBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2015 11:01:21 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MHHdb-1aBmUd2vQJ-00E5DF;
- Mon, 16 Nov 2015 17:01:04 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <20151113230933.GA16173@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:Y4i5RgrMeKlOY/SMh0S9J9iHrR1VYKrjp5CGbe+NcFm4KU03yxI
- OTGiECI6XBqon4AWuBe1xdv9kQSPf5w171k1hkVNYk5vRjyUt+bEv8Hv17JpTjYipxMyjGT
- Ro9DPBE9Tf2qpQwImogIBkrlwivsy32cI6cn/HQaPOFj/66ar2gSAkaQe6zvhS9/4m2GykI
- BPZFRGEjjXCduHdf0M0iQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:98MNuDSGGdY=:AcMkx6eS8azECin1ajm/nD
- W5LMlgjyVaN6kyiUpDimobL0DuqOmWNmdJUpbkPZJTAlmQL50zPUAaPMzzNNdiK1Jqf0Votda
- 3Kd3owOiPedk1iEN2IqJ7yM9HHu7Mr0nYHzilk0l/sOlACynQgumwAtCS3o5Ej6/qwzuU9wig
- cReunp8S4aie9TE2LdBf753D421g3ht+ypFbWxY4WTwNWrdFdgAaif73fdWZ+lw2k7lcI/o8o
- qBOKuhmqaszm8rbaj1qHrLa5sMDRpf2cFSoWdD/QtphxEWDTsxdFS1YOx1IV9lBs8+njDJlL9
- ryXiQhlN1XZMpJupodPY5sdz52qsZVIQ4zqNfRhtUrtf/VZuDibqkvAY0dhuIQeM8wDlJyoO5
- knOtPXO27NzCIbTselEn4VfQ0/HoNH+4m5jOnG+eHEIjgyyNelNyrhB8SwdRKPcaDML4urYTo
- ojaUV19ztKLM3wrBJxs1tlqU/v2H3XxguDGp6i3OIzQ8SlpRjwOIbSRcWjDkAaQlZL009qc8n
- I7vFxIrrSKDArndgN0bbZn55XrFEAHnupBq8J7V5BglrzTVX6xvrV60iFO2dRByBXAmhkDC6P
- GLydfrUnaFRcwujTPCca0ad4Pp2mlOeuBHGA4jF7U5Psn8kbGBTzX7ImgNAbvL5Ao8oLOwMfD
- +2OC0Pamcit+j5XHxIQpArqfQFPfIKKtjUMZDJR1PZJEqe2aa7+srgHgYBZhRbdVsaFW16Uqg
- cB3zluBOKBUEUZ+1sD2pxxskOD+7ksfzRvwRFr+GxyLyqnPUonYRe7xCRBq2/OmBPmxkB1u/ 
+	id S1752691AbbKPQbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2015 11:31:34 -0500
+Received: from cloud.peff.net ([50.56.180.127]:58145 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751942AbbKPQbd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2015 11:31:33 -0500
+Received: (qmail 4997 invoked by uid 102); 16 Nov 2015 16:31:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Nov 2015 10:31:33 -0600
+Received: (qmail 13945 invoked by uid 107); 16 Nov 2015 16:32:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 16 Nov 2015 11:32:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Nov 2015 11:31:30 -0500
+Content-Disposition: inline
+In-Reply-To: <20151114133501.GI16219@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281347>
 
-Hi Peff,
+On Sat, Nov 14, 2015 at 02:35:01PM +0100, Andreas Krey wrote:
 
-On Fri, 13 Nov 2015, Jeff King wrote:
+> On Fri, 13 Nov 2015 19:01:18 +0000, Jeff King wrote:
+> ...
+> >   2. But for a little more work, pushing the is_git_directory() check
+> >      out to the call-sites gives us probably saner semantics overall.
+> 
+> Oops, now I get it[1]: You mean replacing resolve_gitlink_ref usages
+> with is_git_directory, like:
 
-> It's possible somebody could be doing something clever with $SHELL, but
-> I kind of doubt it. If they want to do something clever, it is much
-> easier to put it directly on the exec line, and have the normal $SHELL
-> run their clever thing.
+Yes. I mistakenly said is_git_directory, when I really meant
+is_git_repository, the new function added in 0179ca7a62. You seem to
+have figured out what I meant, but the critical thing is that we check
+"$dir/.git", not just "$dir" (and check it both as a git dir and as a
+gitfile, as is_git_repository() does).
 
-To clarify the Git for Windows scenario: SHELL_PATH is indeed set to
-`/bin/sh`, but reportedly it is converted into a full Windows path when we
-leave the POSIX emulation layer, i.e. when `git.exe` is called (which has
-*no* idea about POSIX paths, or at least next to none).
+I'm not sure if we can simply make that function public or not. It's
+mostly straightforward, but it does err on the side of "yes, this is a
+git repo" if we see a ".git" file we can't read. I think that's probably
+reasonable in most sites, but I didn't look closely.
 
-The reason is, of course, that regular Windows programs would not know
-what to do with the path /bin/sh.
+> diff --git a/dir.c b/dir.c
+> index d2a8f06..7765dc6 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1375,8 +1375,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+>  		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
+>  			break;
+>  		if (!(dir->flags & DIR_NO_GITLINKS)) {
+> -			unsigned char sha1[20];
+> -			if (resolve_gitlink_ref(dirname, "HEAD", sha1) == 0)
+> +			if (is_git_directory(dirname))
+>  				return path_untracked;
+>  		}
+>  		return path_recurse;
+> 
+> That, I like. If it is correct.
 
-The problem arises when we re-enter the POSIX realm, i.e. when we run a
-script (such as `git-rebase`): the path is not converted back!
+Yes, that's what I had in mind, modulo the directory/repository thing
+above (the is_git_repository function also takes a strbuf, so we'd need
+to handle that extra allocation somewhere).
 
-There are already tickets on Git for Windows' bug tracker where the case
-is made that vim has serious problems with that space in the environment
-variable, so the long-term fix is really to teach the POSIX emulation
-layer (read: MSys2) to convert SHELL_PATH back into a POSIX path when
-appropriate.
-
-This is on my plate, but there are quite a couple more urgent tasks I need
-to take care of, so please do not hold your breath (unless you are into
-that kind of thing).
-
-Ciao,
-Dscho
+-Peff
