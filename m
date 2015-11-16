@@ -1,84 +1,107 @@
-From: admin@guru.pp.ua
-Subject: =?Windows-1251?B?5O7v7uzu5rPy/CDt4Pju7PMg8eDp8vMgaHR0cDovL2d1cnUucHAudWEvIC0g4fPk/CDr4PHq4Cwg4rPk6vDo6fLlIOnu4+4g5Ov/IO/l8OXj6//k8yDu5O2zur8t5OLu9SDx8u7ws+3u6g==?=
-Date: Sun, 15 Nov 2015 09:39:36 +0200
-Message-ID: <E1ZxruS-0005Hh-BR@server31.guru.pp.ua>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] notes: allow merging from arbitrary references
+Date: Mon, 16 Nov 2015 08:55:04 +0100
+Message-ID: <CALKQrgdDH2WZc-xi3ROLUBxdk=yVqfFGN3jN1GjQq4qJj_K+-A@mail.gmail.com>
+References: <1447432462-21192-1-git-send-email-jacob.e.keller@intel.com>
+	<CALKQrgcKxJqJn+3-rg4DCbT5CFDZW8o9GtCS=kh-iSy0YyGAUA@mail.gmail.com>
+	<CA+P7+xoyCwgYWaiVj0FNVHuaY=kUZA5a3LBMtpe6SirOVeK9rA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=Windows-1251
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 16 04:30:56 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Mike Hommey <mh@glandium.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 16 08:55:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyAVL-00065X-A5
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 04:30:55 +0100
+	id 1ZyEdE-0000SC-Cn
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 08:55:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752711AbbKPDav convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Nov 2015 22:30:51 -0500
-Received: from 194.28.85.203.hostpro.com.ua ([194.28.85.203]:48681 "EHLO
-	server31.guru.pp.ua" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752597AbbKPDau (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Nov 2015 22:30:50 -0500
-X-Greylist: delayed 71753 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Nov 2015 22:30:50 EST
-Received: from domennika by server31.guru.pp.ua with local (Exim 4.72)
-	(envelope-from <admin@guru.pp.ua>)
-	id 1ZxruS-0005Hh-BR
-	for git@vger.kernel.org; Sun, 15 Nov 2015 09:39:36 +0200
-X-Bitrix-Posting: 3692
+	id S1751572AbbKPHzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2015 02:55:14 -0500
+Received: from locusts.copyleft.no ([188.94.218.116]:55576 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751438AbbKPHzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2015 02:55:13 -0500
+Received: from mail-yk0-f171.google.com ([209.85.160.171])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1ZyEd4-000EA1-UD
+	for git@vger.kernel.org; Mon, 16 Nov 2015 08:55:11 +0100
+Received: by ykdv3 with SMTP id v3so225973201ykd.0
+        for <git@vger.kernel.org>; Sun, 15 Nov 2015 23:55:05 -0800 (PST)
+X-Received: by 10.129.74.212 with SMTP id x203mr37127407ywa.69.1447660505039;
+ Sun, 15 Nov 2015 23:55:05 -0800 (PST)
+Received: by 10.37.208.21 with HTTP; Sun, 15 Nov 2015 23:55:04 -0800 (PST)
+In-Reply-To: <CA+P7+xoyCwgYWaiVj0FNVHuaY=kUZA5a3LBMtpe6SirOVeK9rA@mail.gmail.com>
+X-Gmail-Original-Message-ID: <CALKQrgdDH2WZc-xi3ROLUBxdk=yVqfFGN3jN1GjQq4qJj_K+-A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281327>
 
-=C4=EE=E1=F0=EE=E3=EE =E4=ED=FF,=20
-=E1=F3=E4=FC =EB=E0=F1=EA=E0, =EF=F0=EE=F1=E8=EC=EE =EF=E5=F0=E5=E3=EB=FF=
-=ED=F3=F2=E8 =ED=E0=F8 =F1=E0=E9=F2,
-=FF=EA=F9=EE =F6=E5 =ED=E5 =E2=E0=E6=EA=EE =E4=EB=FF =E2=E0=F1,
-http://guru.pp.ua/ - =E1=F3=E4=FC =EB=E0=F1=EA=E0, =E2=B3=E4=EA=F0=E8=E9=
-=F2=E5 =E9=EE=E3=EE =E4=EB=FF =EF=E5=F0=E5=E3=EB=FF=E4=F3 =EE=E4=ED=B3=BA=
-=BF-=E4=E2=EE=F5 =F1=F2=EE=F0=B3=ED=EE=EA,
-=B3 =ED=E0 =E1=F3=E4=FC-=FF=EA=B3=E9 =F1=F2=EE=F0=B3=ED=F6=B3 =EE=E4=E8=
-=ED =F0=E0=E7 =ED=E0=F2=E8=F1=ED=B3=F2=FC =ED=E0 =F0=E5=EA=EB=E0=EC=ED=E8=
-=E9 =E1=E0=ED=E5=F0, =FF=EA=E8=E9 =E2=E0=EC =ED=E0=E9=E1=B3=EB=FC=F8 =F6=
-=B3=EA=E0=E2=E8=E9,
-=F6=E5 =C2=E0=F8=E0 =E4=EE=EF=EE=EC=EE=E3=E0, =F9=EE=E1 =EC=E8 =EC=EE=E3=
-=EB=E8 =E7=E0=EF=EB=E0=F2=E8=F2=E8 =E7=E0 =F5=EE=F1=F2=E8=ED=E3 =ED=E0=F8=
-=EE=E3=EE =F1=E0=E9=F2=F3,
-=E4=FF=EA=F3=BA=EC=EE,
-=F1=E8=F1=F2=E5=EC=ED=E8=E9 =E0=E4=EC=B3=ED=B3=F1=F2=F0=E0=F2=EE=F0
-admin@guru.pp.ua
-http://guru.pp.ua/
+On Mon, Nov 16, 2015 at 12:23 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Sun, Nov 15, 2015 at 2:14 PM, Johan Herland <johan@herland.net> wrote:
+>> A related topic that has been discussed (although I cannot remember if
+>> any conclusion was reached) is whether to allow more notes operations
+>> - specifically _read-only_ operations - on notes trees outside
+>> refs/notes/. I believe this should also become possible, although I
+>> haven't thoroughly examined all implications.
+>
+> This was discussed at some point on one of the versions of my patch.
+> The tricky part is in how to get it implemented correctly.
+>
+> We need to be able to correctly handle DWIM logic for things, and
+> ensure that what we're operating on actually looks "note-like" since
+> we don't really want to perform read-only ops on refs that don't hold
+> notes like objects.
 
-hello,=20
-our school site require you view,
-please, if it's not hard for you,=20
-http://guru.pp.ua/ - please open it for viewing our site - one or two p=
-ages,
-and on any page,=20
-click once on the advertising banner that most interesting for you,
-it is your help to pay for hosting our school site,
-thank you
-system Administrator
-admin@guru.pp.ua
-http://guru.pp.ua/
+I believe read-only operations on non-notes trees is harmless
+(although suboptimal). When reading in a notes tree, the notes code
+maintains non-note entries in a sorted linked list. Only paths that
+contain exactly 40 hex characters (modulo '/') ends up as "notes"
+(i.e. false positives). The rest ends up in the non-notes list. The
+overwhelming majority of non-notes trees will have no "notes" in them
+(zero false positives).
 
-=C7=E4=F0=E0=E2=F1=F2=E2=F3=E9=F2=E5, =EF=F0=EE=F1=E8=EC =EF=F0=EE=F1=EC=
-=EE=F2=F0=E5=F2=FC =ED=E0=F8 =F1=E0=E9=F2,
-=E5=F1=EB=E8 =FD=F2=EE =ED=E5 =F2=F0=F3=E4=ED=EE =E4=EB=FF =E2=E0=F1,
-http://guru.pp.ua/ - =EF=EE=E6=E0=EB=F3=E9=F1=F2=E0, =EE=F2=EA=F0=EE=E9=
-=F2=E5 =E5=E3=EE =E4=EB=FF =EF=F0=EE=F1=EC=EE=F2=F0=E0 =EE=E4=ED=EE=E9-=
-=E4=E2=F3=F5 =F1=F2=F0=E0=ED=E8=F6,
-=E8 =ED=E0 =EB=FE=E1=EE=E9 =F1=F2=F0=E0=ED=E8=F6=E5 =EE=E4=E8=ED =F0=E0=
-=E7 =ED=E0=E6=EC=E8=F2=E5 =ED=E0 =F0=E5=EA=EB=E0=EC=ED=FB=E9 =E1=E0=ED=ED=
-=E5=F0, =EA=EE=F2=EE=F0=FB=E9 =E2=E0=EC =ED=E0=E8=E1=EE=EB=E5=E5 =E8=ED=
-=F2=E5=F0=E5=F1=E5=ED,=20
-=FD=F2=EE =C2=E0=F8=E0 =EF=EE=EC=EE=F9=FC, =F7=F2=EE=E1=FB =EC=FB =EC=EE=
-=E3=EB=E8 =E7=E0=EF=EB=E0=F2=E8=F2=FC =E7=E0 =F5=EE=F1=F2=E8=ED=E3 =ED=E0=
-=F8=E5=E3=EE =F1=E0=E9=F2=E0,
-=F1=EF=E0=F1=E8=E1=EE
-=F1=E8=F1=F2=E5=EC=ED=FB=E9 =E0=E4=EC=E8=ED=E8=F1=F2=F0=E0=F2=EE=F0
-admin@guru.pp.ua
-http://guru.pp.ua/=20
+For those few trees that do contain note-like paths: since we never
+write out the tree again, we don't end up corrupting the non-notes
+tree itself (which would typically look like changing the "fanout" of
+note-like paths, e.g. moving 'de/adbeef...' to 'deadbeef...'). Hence,
+the only damage we can get from reading in a non-notes tree depend on
+what we subsequently do with the "notes" information read from that
+tree.
+
+Again, since the number of "notes" read from a non-notes tree is
+typically zero, the subsequent damage is typically, also, zero.
+
+For "git notes merge", false positives from a non-notes tree are
+merged into the first (proper) notes tree.
+
+For "git log --notes", false positives end up being displayed as part
+of the output. Note that here, a false positive must not only match
+the above criteria (40 hex chars, modulo '/'), but must also correctly
+name a commit that occurs in the log.
+
+Are there other cases where a false positive would wreak considerable havoc?
+
+Additionally, if we suspect that passing non-notes trees to read-only
+operations will be a common error, we could add a simple heuristic to
+the notes code, to warn (or even abort) if we strongly suspect that we
+are reading in a non-notes tree. For example, if the ratio of
+non-notes to notes entries goes above, say, 1:1 (or even 10:1), then
+what we're reading is probably not a proper notes tree...
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
