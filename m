@@ -1,192 +1,145 @@
-From: Clemens Buchacher <clemens.buchacher@intel.com>
-Subject: Re: [PATCH] allow hooks to ignore their standard input stream
-Date: Mon, 16 Nov 2015 09:05:58 +0100
-Organization: Intel Deutschland GmbH - Registered Address: Am Campeon 10-12, 85579 Neubiberg, Germany - Tel: +49 89 99 8853-0, www.intel.de - Managing Directors: Prof. Dr. Hermann Eul, Christin Eisenschmid - Chairperson of the Supervisory Board: Tiffany Doon Silva - Registered Office: Munich - Commercial Register: Amtsgericht Mnchen HRB 186928
-Message-ID: <20151116080558.GA23851@musxeris015.imu.intel.com>
-References: <20151111143920.GA30409@musxeris015.imu.intel.com> <20151111144222.GA24717@musxeris015.imu.intel.com> <20151113061729.GC32157@sigill.intra.peff.net> <20151113093303.GA4111@musxeris015.imu.intel.com> <20151113232320.GB16173@sigill.intra.peff.net>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v5 3/6] git-p4: retry kill/cleanup operations in tests
+ with timeout
+Date: Mon, 16 Nov 2015 08:36:31 +0000
+Message-ID: <5649958F.2010407@diamand.org>
+References: <1447592920-89228-1-git-send-email-larsxschneider@gmail.com> <1447592920-89228-4-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: junio@pobox.com
-X-From: git-owner@vger.kernel.org Mon Nov 16 09:06:08 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: sunshine@sunshineco.com, gitster@pobox.com
+To: larsxschneider@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 16 09:36:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyEnf-0000Bs-GO
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 09:06:07 +0100
+	id 1ZyFHB-0001hv-O6
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Nov 2015 09:36:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbbKPIGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2015 03:06:04 -0500
-Received: from mga02.intel.com ([134.134.136.20]:10834 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751462AbbKPIGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2015 03:06:02 -0500
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga101.jf.intel.com with ESMTP; 16 Nov 2015 00:06:00 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.20,301,1444719600"; 
-   d="scan'208";a="839475978"
-Received: from musxeris015.imu.intel.com (HELO localhost) ([10.216.40.13])
-  by fmsmga001.fm.intel.com with ESMTP; 16 Nov 2015 00:05:59 -0800
-Content-Disposition: inline
-In-Reply-To: <20151113232320.GB16173@sigill.intra.peff.net>
-User-Agent: Mutt/1.4.2.2i
+	id S1752188AbbKPIgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2015 03:36:33 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:33260 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752177AbbKPIgc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2015 03:36:32 -0500
+Received: by wmec201 with SMTP id c201so163875770wme.0
+        for <git@vger.kernel.org>; Mon, 16 Nov 2015 00:36:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=UPwjKDzTIEkfMKKJUpMtu7YTQrRvNVwTpP/QNqyZXQ4=;
+        b=Pslx2kGDhC7Z1c5qG/am2xIn37wohYEoFzSt9cLgMKgyZr95YveHp8ZNiBkF47cbt4
+         A1S+SZdFoQc9b+RU5VBhXzWpDOOoUk+QzP8HzO9YuXQFLeWePNiH4spqyVaEaNzlm8tT
+         ZAjPrCaxsDTdGj+0tZAW9/WmxDfrIPFNcyXKo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=UPwjKDzTIEkfMKKJUpMtu7YTQrRvNVwTpP/QNqyZXQ4=;
+        b=dmS0XqoM0yVuTVb+YqGr9ht1yD2yR4qyaA/d04GFbrnUXc+HCC+xuVlywqKBqe1e1M
+         GrsPP3wwm2vqqyx3c29dDAr3Dx8mTWk2t3FbFDaDGsRDD3EVDD6jbFKDg/UOKE0SsFz8
+         wolH4T7dCrxAoXCMDuhsrZxnfhCHTJ/Efa9OU2wy0nDcwTchsoEJpmlB2l7XHH0kINHP
+         9EhT+ECOxviGODldgDpHSbM37czP+ia1PWwvTHAf+EM7yP7o/vCy4MYbi91BuC0/nG0P
+         AxwgvFFurU+PZ3njh9pypklmwVu/Ywpi0fcz2OOXRq8/C3URYsarus2+NWJVFFSDGXpk
+         0JBw==
+X-Gm-Message-State: ALoCoQns0T/UMgzqxhOiccrAdk9tN758joXLxGclJFpk2CAwWn/I5g959i47SDLxICOv7yjMTdVT
+X-Received: by 10.194.20.35 with SMTP id k3mr742243wje.19.1447662991091;
+        Mon, 16 Nov 2015 00:36:31 -0800 (PST)
+Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
+        by smtp.gmail.com with ESMTPSA id i18sm17374154wmf.6.2015.11.16.00.36.30
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Nov 2015 00:36:30 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <1447592920-89228-4-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281330>
 
-Hi Junio,
+On 15/11/15 13:08, larsxschneider@gmail.com wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> In rare cases kill/cleanup operations in tests fail. Retry these
+> operations with a timeout to make the test less flaky.
 
-I believe we have finalized the discussion on this patch. Please apply
+Should there be a sleep in that retry_until_success loop so that it 
+doesn't spin sending signals to p4d?
 
-On Fri, Nov 13, 2015 at 06:23:20PM -0500, Jeff King wrote:
-> 
-> > +test_expect_success 'filling pipe buffer does not cause failure' '
-> > +	git push parent1 "refs/heads/b/*:refs/heads/b/*" &&
-> > +	test_cmp expected actual
-> > +'
-> 
-> It actually _does_ read all of the input, but I guess is making sure we
-> call write() in a loop. I don't know if this is even worth keeping.
-> 
-> Can you think of a good reason that it is checking something
-> interesting?
+Do we need to worry about the time offset being updated (e.g. NTP) while 
+this is running?
 
-No, I also cannot think of a good reason to keep it. Here is the patch
-with the test above removed.
+>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>   t/lib-git-p4.sh | 31 +++++++++++++++++++++++--------
+>   1 file changed, 23 insertions(+), 8 deletions(-)
+>
+> diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+> index 7548225..8d6b48f 100644
+> --- a/t/lib-git-p4.sh
+> +++ b/t/lib-git-p4.sh
+> @@ -6,6 +6,10 @@
+>   # a subdirectory called "$git"
+>   TEST_NO_CREATE_REPO=NoThanks
+>
+> +# Some operations require multiple attempts to be successful. Define
+> +# here the maximal retry timeout in seconds.
+> +RETRY_TIMEOUT=60
+> +
+>   . ./test-lib.sh
+>
+>   if ! test_have_prereq PYTHON
+> @@ -121,22 +125,33 @@ p4_add_user() {
+>   	EOF
+>   }
+>
+> +retry_until_success() {
+> +    timeout=$(($(date +%s) + $RETRY_TIMEOUT))
+> +    until "$@" 2>/dev/null || test $(date +%s) -gt $timeout
+> +    do :
 
-Best regards,
-Clemens
+  sleep here?
 
---o<--
-Since ec7dbd145 (receive-pack: allow hooks to ignore its standard input stream)
-the pre-receive and post-receive hooks ignore SIGPIPE. Do the same for the
-remaining hooks pre-push and post-rewrite, which read from standard input. The
-same arguments for ignoring SIGPIPE apply.
+> +    done
+> +}
+> +
+> +retry_until_fail() {
+> +    timeout=$(($(date +%s) + $RETRY_TIMEOUT))
+> +    until ! "$@" 2>/dev/null || test $(date +%s) -gt $timeout
+> +    do :
 
-Include test by Jeff King which checks that SIGPIPE does not cause
-pre-push hook failure. With the use of git update-ref --stdin it is fast
-enough to be enabled by default.
+  sleep here?
 
-Signed-off-by: Clemens Buchacher <clemens.buchacher@intel.com>
----
- builtin/commit.c         |  3 +++
- t/t5571-pre-push-hook.sh | 33 +++++++++++++++------------------
- transport.c              | 11 +++++++++--
- 3 files changed, 27 insertions(+), 20 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index dca09e2..f2a8b78 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -32,6 +32,7 @@
- #include "sequencer.h"
- #include "notes-utils.h"
- #include "mailmap.h"
-+#include "sigchain.h"
- 
- static const char * const builtin_commit_usage[] = {
- 	N_("git commit [<options>] [--] <pathspec>..."),
-@@ -1537,8 +1538,10 @@ static int run_rewrite_hook(const unsigned char *oldsha1,
- 		return code;
- 	n = snprintf(buf, sizeof(buf), "%s %s\n",
- 		     sha1_to_hex(oldsha1), sha1_to_hex(newsha1));
-+	sigchain_push(SIGPIPE, SIG_IGN);
- 	write_in_full(proc.in, buf, n);
- 	close(proc.in);
-+	sigchain_pop(SIGPIPE);
- 	return finish_command(&proc);
- }
- 
-diff --git a/t/t5571-pre-push-hook.sh b/t/t5571-pre-push-hook.sh
-index 6f9916a..ba975bb 100755
---- a/t/t5571-pre-push-hook.sh
-+++ b/t/t5571-pre-push-hook.sh
-@@ -109,23 +109,20 @@ test_expect_success 'push to URL' '
- 	diff expected actual
- '
- 
--# Test that filling pipe buffers doesn't cause failure
--# Too slow to leave enabled for general use
--if false
--then
--	printf 'parent1\nrepo1\n' >expected
--	nr=1000
--	while test $nr -lt 2000
--	do
--		nr=$(( $nr + 1 ))
--		git branch b/$nr $COMMIT3
--		echo "refs/heads/b/$nr $COMMIT3 refs/heads/b/$nr $_z40" >>expected
--	done
--
--	test_expect_success 'push many refs' '
--		git push parent1 "refs/heads/b/*:refs/heads/b/*" &&
--		diff expected actual
--	'
--fi
-+test_expect_success 'set up many-ref tests' '
-+	{
-+		nr=1000
-+		while test $nr -lt 2000
-+		do
-+			nr=$(( $nr + 1 ))
-+			echo "create refs/heads/b/$nr $COMMIT3"
-+		done
-+	} | git update-ref --stdin
-+'
-+
-+test_expect_success 'sigpipe does not cause pre-push hook failure' '
-+	echo "exit 0" | write_script "$HOOK" &&
-+	git push parent1 "refs/heads/b/*:refs/heads/b/*"
-+'
- 
- test_done
-diff --git a/transport.c b/transport.c
-index 23b2ed6..e34ab92 100644
---- a/transport.c
-+++ b/transport.c
-@@ -15,6 +15,7 @@
- #include "submodule.h"
- #include "string-list.h"
- #include "sha1-array.h"
-+#include "sigchain.h"
- 
- /* rsync support */
- 
-@@ -1127,6 +1128,8 @@ static int run_pre_push_hook(struct transport *transport,
- 		return -1;
- 	}
- 
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+
- 	strbuf_init(&buf, 256);
- 
- 	for (r = remote_refs; r; r = r->next) {
-@@ -1140,8 +1143,10 @@ static int run_pre_push_hook(struct transport *transport,
- 			 r->peer_ref->name, sha1_to_hex(r->new_sha1),
- 			 r->name, sha1_to_hex(r->old_sha1));
- 
--		if (write_in_full(proc.in, buf.buf, buf.len) != buf.len) {
--			ret = -1;
-+		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
-+			/* We do not mind if a hook does not read all refs. */
-+			if (errno != EPIPE)
-+				ret = -1;
- 			break;
- 		}
- 	}
-@@ -1152,6 +1157,8 @@ static int run_pre_push_hook(struct transport *transport,
- 	if (!ret)
- 		ret = x;
- 
-+	sigchain_pop(SIGPIPE);
-+
- 	x = finish_command(&proc);
- 	if (!ret)
- 		ret = x;
--- 
-1.9.4
+> +    done
+> +}
+> +
+>   kill_p4d() {
+>   	pid=$(cat "$pidfile")
+> -	# it had better exist for the first kill
+> -	kill $pid &&
+> -	for i in 1 2 3 4 5 ; do
+> -		kill $pid >/dev/null 2>&1 || break
+> -		sleep 1
+> -	done &&
+> +	retry_until_fail kill $pid
+> +	retry_until_fail kill -9 $pid
+>   	# complain if it would not die
+>   	test_must_fail kill $pid >/dev/null 2>&1 &&
+>   	rm -rf "$db" "$cli" "$pidfile"
+>   }
+>
+>   cleanup_git() {
+> -	rm -rf "$git" &&
+> -	mkdir "$git"
+> +	retry_until_success rm -r "$git"
+> +	test_must_fail test -d "$git" &&
+> +	retry_until_success mkdir "$git"
+>   }
+>
+>   marshal_dump() {
+>
