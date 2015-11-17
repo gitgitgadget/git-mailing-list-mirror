@@ -1,79 +1,69 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v2 1/2] sendemail: teach git-send-email to list aliases
-Date: Tue, 17 Nov 2015 00:10:35 +0000
-Message-ID: <1447719035.23262.17.camel@intel.com>
-References: <1447618940-27446-1-git-send-email-jacob.e.keller@intel.com>
-	 <CAPig+cQ929oAZqQM+X68x3PVQ-opwdi3VzjcQTUsaCfVK3411g@mail.gmail.com>
-	 <1447717227.23262.10.camel@intel.com>
-	 <CAPig+cSMW2UmTzuyvBFpcpr4tF1FRdxHUPH4+wS3vrZSP9AzJA@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] check-ignore: correct documentation about output
+Date: Mon, 16 Nov 2015 16:22:16 -0800
+Message-ID: <CAGZ79ka2t7qZGSa5vOUsgXz7atuWmz_soCj39T85T21SmAthNA@mail.gmail.com>
+References: <20151108201036.GA28434@spirit>
+	<1447683184.2733.0.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"gitster@pobox.com" <gitster@pobox.com>,
-	"spearce@spearce.org" <spearce@spearce.org>,
-	"lee.marlow@gmail.com" <lee.marlow@gmail.com>,
-	"felipe.contreras@gmail.com" <felipe.contreras@gmail.com>,
-	"szeder@ira.uka.de" <szeder@ira.uka.de>,
-	"jacob.keller@gmail.com" <jacob.keller@gmail.com>
-To: "sunshine@sunshineco.com" <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 01:10:45 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 17 01:22:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyTr8-0004Je-52
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 01:10:42 +0100
+	id 1ZyU2P-0006qV-Oi
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 01:22:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752772AbbKQAKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2015 19:10:38 -0500
-Received: from mga09.intel.com ([134.134.136.24]:44582 "EHLO mga09.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751946AbbKQAKh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2015 19:10:37 -0500
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga102.jf.intel.com with ESMTP; 16 Nov 2015 16:10:36 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.20,305,1444719600"; 
-   d="scan'208";a="601452549"
-Received: from orsmsx103.amr.corp.intel.com ([10.22.225.130])
-  by FMSMGA003.fm.intel.com with ESMTP; 16 Nov 2015 16:10:36 -0800
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.96]) by
- ORSMSX103.amr.corp.intel.com ([169.254.2.103]) with mapi id 14.03.0248.002;
- Mon, 16 Nov 2015 16:10:35 -0800
-Thread-Topic: [PATCH v2 1/2] sendemail: teach git-send-email to list aliases
-Thread-Index: AQHRH+NeL2JBu1hRzUqsWBsvOxZ9JJ6f09QAgAAC2YCAAALsgIAABX+A
-In-Reply-To: <CAPig+cSMW2UmTzuyvBFpcpr4tF1FRdxHUPH4+wS3vrZSP9AzJA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.3.123]
-Content-ID: <E237687BB837BB4C8CF5E131FB38BA12@intel.com>
+	id S1751921AbbKQAWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2015 19:22:17 -0500
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:35095 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865AbbKQAWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2015 19:22:17 -0500
+Received: by ykba77 with SMTP id a77so267636892ykb.2
+        for <git@vger.kernel.org>; Mon, 16 Nov 2015 16:22:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ajiVNYGeCD/TVwCv8oSSuXhnFd6nDDQeevs1XU7jydM=;
+        b=IlG28eUV3/yuknXNgr3X38RSUurUt+T54oMa01cNDvdza9VvADl1+YsjC7P8eojBUM
+         Jw/aLv9x88NAjQx52Roepl2COvPTkvjlJm+V/6rwDqNJju4sjj3Dxy8jDLHxLvZLFTO/
+         gbg9TFWKusuVBn7/u9IlI/OCoQS/xnGVJMxo6QR018U3nrp+khM6q70zLBa0eQ+JsNM0
+         ZJRTe192ttPb7L6kfyuARFo3o74zYiVlKg8SKke1689cXgCm2+CJrmrPhG8zRFovZ+FT
+         elFwKT5EICkUyc79rnz0Pq2i3pNOlL7259Q8W1abWAkq65fqQ4RUbamQ3j2KX7OJRgVB
+         7WfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=ajiVNYGeCD/TVwCv8oSSuXhnFd6nDDQeevs1XU7jydM=;
+        b=YLIXDoekkLnS865aVvO/nQkyvVhPv5qm12a5I0Vs+A38iGpyEkcpMnm1D0lCd18k7B
+         GceZH3IFVZPQ4mN4uZbatIxcQzRL+lUC8Aw1AGwBjuN4xDRsIBk2IZ4jPqZD+5iZ00jp
+         mb1T6C0VYLU7YlD9kv+aBhlAemAfstF5W1BkgYGg43DBo8OsTp6uzn+7YPH2HYd2cNwd
+         LTZF8kNdzi6WMNgl5KADhDM3Ha9YS74Bv5ZmDS24OOo3KTsSONKCtDDGPZVcLGudTK+r
+         /GEM3verfSb1TQCmgHP+OLsE9jiNCF39OF7s8COJvk/Rt2PtaiKTBkBBZiexYtu0jYAf
+         GtQA==
+X-Gm-Message-State: ALoCoQmrFFCBXCLR2dlenBEJFZDEROv0QhRxzsqDZdYyLiknKLNs9uSPlPmR6gNQZdG+DbN6jJyw
+X-Received: by 10.13.251.2 with SMTP id l2mr39247057ywf.44.1447719736388; Mon,
+ 16 Nov 2015 16:22:16 -0800 (PST)
+Received: by 10.37.196.70 with HTTP; Mon, 16 Nov 2015 16:22:16 -0800 (PST)
+In-Reply-To: <1447683184.2733.0.camel@kaarsemaker.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281372>
 
-T24gTW9uLCAyMDE1LTExLTE2IGF0IDE4OjUwIC0wNTAwLCBFcmljIFN1bnNoaW5lIHdyb3RlOg0K
-PiBJdCBzaG91bGQgYmUgcG9zc2libGUgdG8gZXh0cmFjdCB0aGUgYWxpYXMgd2l0aGluIHRoZSBz
-aGVsbCBpdHNlbGYNCj4gd2l0aG91dCBhIHNlcGFyYXRlIHByb2Nlc3MuIEZvciBpbnN0YW5jZToN
-Cj4gDQo+IMKgwqDCoMKgcmVhZCBhbGlhcyByZXN0DQo+IA0KPiB3aWxsIGxlYXZlIHRoZSBmaXJz
-dCB0b2tlbiBpbiAkYWxpYXMgYW5kIHRoZSByZW1haW5kZXIgb2YgdGhlIGxpbmUgaW4NCj4gJHJl
-c3QsIGFuZCBpdCdzIGFsbCBkb25lIHdpdGhpbiB0aGUgc2hlbGwgcHJvY2Vzcy4NCj4gDQoNCkkn
-bGwgbG9vayBpbnRvIHRoaXMgOikNCg0KPiA+ID4gTmV3IHRlc3Qocykgc2VlbSB0byBiZSBtaXNz
-aW5nLg0KPiA+IA0KPiA+IEkgaGFkIHJlbW92ZWQgdGhlIHRlc3RzIGZyb20gdGhlIG9sZCB2ZXJz
-aW9uIGJlY2F1c2UgdGhleSB3ZXJlbid0DQo+ID4gbmVjZXNzYXJ5IGFueW1vcmUuIE5ldyBvbmVz
-IHdvdWxkbid0IGh1cnQgaGVyZSBlaXRoZXIsIHRob3VnaC4uDQo+ID4gSSdsbA0KPiA+IHdvcmsg
-b24gdGhhdC4NCj4gDQo+IEknbSBub3Qgc3VyZSB3aGljaCB0ZXN0cyB5b3UgbWVhbiwgYnV0IEkg
-d2FzIHJlZmVycmluZyB0byB0ZXN0cyB0bw0KPiBtYWtlIHN1cmUgdGhhdCBnaXQtc2VuZC1lbWFp
-bCByZWNvZ25pemVzIC0tbGlzdC1hbGlhc2VzIChvcg0KPiAtLWR1bXAtYWxpYXNlcyBpZiB5b3Ug
-c3dpdGNoIHRvIHRoYXQpIGFuZCB0aGF0IGl0IHByb2R1Y2VzIHRoZQ0KPiBleHBlY3RlZCBvdXRw
-dXQgaW4gdGhlIGV4cGVjdGVkIGZvcm1hdC4NCj4gDQoNClllcCwgSSBhZGRlZCBzb21lIGluIG15
-IHJlc3Bpbi4NCg0KPiBBbHNvLCBzaG91bGRuJ3QgLS1saXN0LWFsaWFzZXMgKG9yIC0tZHVtcC1h
-bGlhc2VzKSBiZSBtdXR1YWxseQ0KPiBleGNsdXNpdmUgd2l0aCBtYW55IG9mIHRoZSBvdGhlciBv
-cHRpb25zPyBOZXcgdGVzdHMgd291bGQgY2hlY2sgc3VjaA0KPiBleGNsdXNpdml0eSBhcyB3ZWxs
-Lg0KDQpJIGFtIGF0IGEgbG9zcyBmb3IgaG93IHRvIGRvIHRoYXQgY29ycmVjdGx5IGluIHRoZSBw
-ZXJsLiBIZWxwIHdvdWxkIGJlDQphcHByZWNpYXRlZCBoZXJlLg0KDQpSZWdhcmRzLA0KSmFr
++cc Jeff
+
+On Mon, Nov 16, 2015 at 6:13 AM, Dennis Kaarsemaker
+<dennis@kaarsemaker.net> wrote:
+> Ping.
+
+Junio is on vacation, so Jeff is our interim maintainer,
+and it seems he isn't up to full power as Junio. :)
