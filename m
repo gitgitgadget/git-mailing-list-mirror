@@ -1,87 +1,65 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v5 3/6] git-p4: retry kill/cleanup operations in tests
- with timeout
-Date: Tue, 17 Nov 2015 23:40:01 +0000
-Message-ID: <CAE5ih78ma-71xVgA52LDiWNyPq+tCmXb3GgocO=dF81=yZXuWw@mail.gmail.com>
-References: <1447592920-89228-1-git-send-email-larsxschneider@gmail.com>
-	<1447592920-89228-4-git-send-email-larsxschneider@gmail.com>
-	<CAPig+cQkNB3VzbC_R_T=ppkgvmTbOWnK22hFxyMzJH1DZ_iVhQ@mail.gmail.com>
-	<52A9F66D-12C4-4BB5-A2D4-C476A1E12DC5@gmail.com>
-	<CAPig+cR8igO1bWNgma_yZqrcru_jnKchpRH+i2_AaNj8Atcb9g@mail.gmail.com>
-	<564AF48C.9040406@diamand.org>
-	<CAPig+cT2aBrL6Qh3W3d-ODjj7S0GORkTZMyQ6PBfHCLVqeKBvQ@mail.gmail.com>
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: Re: [PATCH v2] blame: avoid checking if a file exists on the working
+ tree if a revision is provided
+Date: Tue, 17 Nov 2015 17:47:01 -0600
+Message-ID: <CAOc6etY9cXm04KdqUdRE11xtG+7Yj3ihkB4-OTweyWyGF8gs0g@mail.gmail.com>
+References: <1447723762-32309-1-git-send-email-eantoranz@gmail.com>
+	<CAPig+cTjg8yvmLO0uuWZt4nATUnfxJOj4f_AmvRP9mHsGRmEOg@mail.gmail.com>
+	<CAOc6etbjCYRp4gbSNRtcngwbh93R67JYZHJn0=D=FeiBm5=FNw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Max Kirillov <max@max630.net>,
+	Jeff King <peff@peff.net>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 00:40:12 2015
+X-From: git-owner@vger.kernel.org Wed Nov 18 00:47:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zypr9-0006Mp-4n
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 00:40:11 +0100
+	id 1ZypyA-0000rQ-Hv
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 00:47:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754316AbbKQXkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 18:40:04 -0500
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:33064 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752578AbbKQXkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 18:40:03 -0500
-Received: by obbww6 with SMTP id ww6so20324636obb.0
-        for <git@vger.kernel.org>; Tue, 17 Nov 2015 15:40:01 -0800 (PST)
+	id S932078AbbKQXrD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 18:47:03 -0500
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:34378 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754344AbbKQXrC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 18:47:02 -0500
+Received: by padhx2 with SMTP id hx2so23779071pad.1
+        for <git@vger.kernel.org>; Tue, 17 Nov 2015 15:47:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=QO+TkeNXGBGGA4qWufEG6eRv910ijOSVuo/4wTBmbrg=;
-        b=Q1BqA+mygbgNLS6yIwjwJhejy5OanfCeQQyTFrCkwnYiK4QeXZyczvZXzxvEPRmCWh
-         yPVGjZDU25purt+7kn52/+oz0Zdnccn7ecNTAC1T+zkwT/XEWCqvBOkVDHW1D0K+K7A/
-         /fn64JP8Ir09CeZREbo/NiOXG/YbWbpt8EFrU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=QO+TkeNXGBGGA4qWufEG6eRv910ijOSVuo/4wTBmbrg=;
-        b=TnQX+KKv2vxbaZmHtXnf0COunNLry1PEzrw00CKtARBJ8ikRhisBDY0BnHbcsl4vXl
-         XvFx8N6DccqgfyO32d3TmspLbphGONFuE/Y2eH6+C5M21Svte+02yw7DgPHOd2u1fme4
-         jwzABm2zDroMFasdYTPq5InWHL2ImcSYb0PJJFaXZyZJQywV+Xy7OftTwH2THnsiZpyD
-         W5YS/9ukzmOaG5hd7oa2Uy7TS3SFJ7cXtp3DpEKJvWwzwleYubUM4JYPCzNlalEh1Ooa
-         40OElVL07MhsVVMZOKa5MP0y9tsTzYDxVgZFTkwrUxWJxq7ad2b5Tzdz8mTSgYmrYcPr
-         1KJA==
-X-Gm-Message-State: ALoCoQkc9mNScpwV6eW2wDLr53iEC8vcZgG0TQCXq5ObI/GUtN1tPXxkiLqSYoQUqDJikJugOKPE
-X-Received: by 10.182.33.98 with SMTP id q2mr29253650obi.20.1447803601842;
- Tue, 17 Nov 2015 15:40:01 -0800 (PST)
-Received: by 10.60.141.40 with HTTP; Tue, 17 Nov 2015 15:40:01 -0800 (PST)
-In-Reply-To: <CAPig+cT2aBrL6Qh3W3d-ODjj7S0GORkTZMyQ6PBfHCLVqeKBvQ@mail.gmail.com>
+        bh=FyDi0ScojG3TEDMlBto6emPTyy1UAX6Qe/TrAfyQMfM=;
+        b=ha0jDGx8zxx/9t8E95N5//vDXAae5ZLX0m67XA/6T/BVi4Elt6PZ88y1JBelbVV3It
+         hS3umSFbNhUooXnlTR8uVtt/1W5E4sm/gKHKh6ojVvg3128gRTU5bCbw1A80kALg5RFI
+         dJoYjpxKwwMZzxztU8yvKUXtQJsHfLTvSF7CDNpWmJbirrVYj/+VGzw+61cR7pFW+dyH
+         UbUHkCheINP0Cj8HNBcxXfzOYLCCqZpO4nqOOSeLxaao9mZINjQ0ZdK/wNVEAK5x/x4U
+         EjUM1LnDDBPo7rj0gM9nPGSuVxFEb1QT6Jv4fc4dK5eHqobtccQflJNTzcValLH5stpv
+         c9uw==
+X-Received: by 10.66.190.66 with SMTP id go2mr66318029pac.114.1447804021738;
+ Tue, 17 Nov 2015 15:47:01 -0800 (PST)
+Received: by 10.66.97.70 with HTTP; Tue, 17 Nov 2015 15:47:01 -0800 (PST)
+In-Reply-To: <CAOc6etbjCYRp4gbSNRtcngwbh93R67JYZHJn0=D=FeiBm5=FNw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281432>
 
->>
->> Which other platforms are we talking about here?
->>
->> https://www.perforce.com/downloads/helix
->>
->> From there, you can get Solaris10, HP-UX, AIX and various flavours of BSD.
->> Solaris supports "date +%s".
->
-> The question about "date +%s" portability arose with a suggestion to
-> employ it in git-filter-branch[1]. Apparently, the concern about
-> Solaris was raised in response to a Stack Overflow question[2] which
-> claimed that +%s was not supported by that OS. Unfortunately, however,
-> [2] did not indicate to which (older?) versions of Solaris that
-> shortcoming applied. If Solaris 10 does support +%s, and the Perforce
-> product is only available for Solaris 10, then perhaps concern about
-> +%s a non-issue(?).
->
-> [1]: http://git.661346.n2.nabble.com/FEATURE-REQUEST-Filter-branch-extend-progress-with-a-simple-estimated-time-remaning-td7638200.html#a7638504
-> [2]: http://stackoverflow.com/questions/2445198/get-seconds-since-epoch-in-any-posix-compliant-shell
+On Tue, Nov 17, 2015 at 5:37 PM, Edmundo Carmona Antoranz
+<eantoranz@gmail.com> wrote:
+> So, do I forget about the blame patch (given that I'm not fixing an
+> advertised syntax, even if it's supported) and fix annotate instead or
+> do I fix both? And if I should swing for both, do I create a single
+> patch or a chain of two patches, one for each builtin?
 
-Rereading the man page more carefully, you're right, Solaris 10
-doesn't do "%s". Using python to get the seconds should work though.
+Actually, cmd_annotate will call cmd_blame so this patch actually
+fixes annotate as well (nice unintended consequence).
+
+So I guess it will be a single patch. Let me work on the tests and
+then I'll send a patch that will hopefully cover all raised points.
+
+Cheers!
