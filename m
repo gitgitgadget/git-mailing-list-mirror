@@ -1,263 +1,72 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v4 1/2] sendemail: teach git-send-email to dump alias names
-Date: Tue, 17 Nov 2015 03:45:49 -0800
-Message-ID: <1447760750-21287-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	"Shawn O . Pearce" <spearce@spearce.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Lee Marlow <lee.marlow@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 17 12:48:41 2015
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: fatal: Unable to read current working directory: No error
+Date: Tue, 17 Nov 2015 12:52:57 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1511171251120.1686@s15462909.onlinehome-server.info>
+References: <CAPkB0GxPghR9Y7YrB9yYq3rA9XZ2HJGN-sxbQgERGsBA2iOX_Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Sean Krauth <spkrauth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 17 12:53:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zyejf-0006SH-RQ
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 12:47:44 +0100
+	id 1Zyeos-0004ZA-Mt
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 12:53:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753452AbbKQLrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 06:47:12 -0500
-Received: from mga03.intel.com ([134.134.136.65]:57964 "EHLO mga03.intel.com"
+	id S1752514AbbKQLxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 06:53:01 -0500
+Received: from mout.gmx.net ([212.227.17.21]:52013 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753331AbbKQLpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 06:45:53 -0500
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP; 17 Nov 2015 03:45:52 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.20,307,1444719600"; 
-   d="scan'208";a="852657508"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.123])
-  by orsmga002.jf.intel.com with ESMTP; 17 Nov 2015 03:45:52 -0800
-X-Mailer: git-send-email 2.6.3.491.g3e3f6ce
+	id S1751978AbbKQLxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 06:53:00 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0MdFwl-1ZgIsz0FCV-00IVcb;
+ Tue, 17 Nov 2015 12:52:58 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CAPkB0GxPghR9Y7YrB9yYq3rA9XZ2HJGN-sxbQgERGsBA2iOX_Q@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:aWD5CHPlNd0Y0b4MAOg5uNAGoYuWKZAuy8Lay6RGCAzRIUTEZZj
+ hS574FIw+FMcOKOt9d+ihyq2K36cr4BaCRcDrVBoZEkXhm+NS84iWrt5Z37LJrK5EDEpF+S
+ jj1XMGt+fTOVwIvJtX156lrCaCc+td5tg5fL24sp33ZtE8dU2DeYM9IgBGB1ck6wKY9PqYq
+ mgIj9r8WCm4H8OUBv7wfQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1edXslPox6c=:hjSmmgnQCgJeSUisTkt3Xz
+ QLKK2bmXv4q5RLnPILSfXRm01tcQ/UNX5nT2QQKY6LkTqGYR7ptkdBcsK41VLXjJz6qzOJlq3
+ PxyhJz5lMfLLgNrV6AnrLA4wlQ2O1dekkAyf7CskiNN/SEK7Z3d1QXvZJLi9Z7Au4ZSbPGueb
+ NtlK+zMZSm48fHtJUc1xhPR26elGnpyC2CMjET35SP67AIT6/3m3n9UGNKXOf8xLhYU38ibdO
+ rfuzJNm+Uhk6YPXQyyQJxFgFywxF5kOUApTVEytWfp3dHhlTEFEuz9JE4L9sbUh8pWpO5ZD8c
+ ujfknf24QAlDHFxYOo8SiiBm/nfILMCpYFb5rnQ4XTgf+udKnzzDAlmWzT+ktdUjmJHaN2r0q
+ ztRzt3szmDSu1YLVD9NCbvggdFgz0J6FhkhH4xefrbeu50PORO3i/4IO0lUfO+Y0DRRWrtEUd
+ 5hIclzNU6JbRtoz0qkRPGxWDvDnz7JzYwZmrQg6f1gBZKr1PbEp94blFOZENdGUU8AdNi0boG
+ rawacUDfC2fu986XeXvsHwI7jbrG0iiu9AMiFEG2c7f8WTVge+i4SGq3aoV9nk1GnKtJWyTkv
+ q1DdfFurGhhOcEKmVXyH07/cEUBw4SjBS6n2C5r4ysMxtJT+xZnh0i9XrSr64TrpgkZyuI8gW
+ ueD2TUkCJkzmnZlEZmZd5u5H2am9GhyFKxCnjwqEB5TNiEaWyLz0vf6bVpOUrxVqejV1qEbIY
+ 6o/6pOfYJ5JaSccyPNbnLn+D4AFQF0N5q19GqtlZmoYd9T75svCIloKZqZaEJaL8wka4JPgH 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281403>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Hi Sean,
 
-Add an option "--dump-aliases" which changes the default behavior of
-git-send-email. This mode will simply read the alias files configured by
-sendemail.aliasesfile and sendemail.aliasfiletype and dump a list of all
-configured aliases, one per line. The intended use case for this option
-is the bash-completion script which will use it to autocomplete aliases
-on the options which take addresses.
+On Tue, 27 Oct 2015, Sean Krauth wrote:
 
-Add some tests for the new option using various alias file formats.
+> I've encountered a problem and I haven't had any success with my own
+> troubleshooting or googling so I'd appreciate some help. I noticed the
+> issue originally when I changed a file name in windows explorer. I was
+> working on a website and I named my Public folder with a capital P and
+> wrote my file routes as public. So being a little lazy I decided to
+> open windows explorer and rename Public to public. This was after I
+> had used Git Bash to create a local repository. I'm almost positive
+> this action broke Git. The next time I tried to run Git Bash I got an
+> error that I believe said something similar to "fatal build error" or
+> "fatal load error" and Git was really broke.
 
-A possible future extension to the alias dump format could be done by
-extending the --dump-aliases to take an optional argument defining the
-format to display. This has not been done in this patch as no user of
-this information has been identified.
+If you could boil this down to a [Minimal, Complete & Verifiable
+Example](http://stackoverflow.com/help/mcve), I will have a look.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-
-I also noticed a possible issue with the gnus format for mail addresses,
-in that the expansion of the alias does not allow spaces in its regular
-expression, but I am not sure how best to resolve this or even if it's
-an issue. Anyone know?
-
-Notes:
-    - v2
-    * Add command --list-aliases to git-send-email
-    
-    - v3
-    * Add test
-    * change option to --dump-aliases
-    * dump both the alias and its expansion
-    
-    - v4
-    * Rework and extend tests
-    * Only print alias names for now, punt full format for when a use case is
-      identified
-    * Ensure no other options are used with --dump-aliases
-
- Documentation/git-send-email.txt | 11 ++++++
- git-send-email.perl              | 15 ++++++++
- t/t9001-send-email.sh            | 82 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 108 insertions(+)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index b9134d234f53..771a7b5b0915 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git send-email' [options] <file|directory|rev-list options>...
-+'git send-email' --dump-aliases
- 
- 
- DESCRIPTION
-@@ -387,6 +388,16 @@ default to '--validate'.
- 	Send emails even if safety checks would prevent it.
- 
- 
-+Information
-+~~~~~~~~~~~
-+
-+--dump-aliases::
-+	Instead of the normal operation, dump the shorthand alias names from
-+	the configured alias file(s), one per line in alphabetical order. Note,
-+	this only includes the alias name and not its expanded email addresses.
-+	See 'sendemail.aliasesfile' for more information about aliases.
-+
-+
- CONFIGURATION
- -------------
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index e907e0eacf31..a475b0d75370 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -46,6 +46,7 @@ package main;
- sub usage {
- 	print <<EOT;
- git send-email [options] <file | directory | rev-list options >
-+git send-email --dump-aliases
- 
-   Composing:
-     --from                  <str>  * Email From:
-@@ -101,6 +102,9 @@ git send-email [options] <file | directory | rev-list options >
-                                      `git format-patch` ones.
-     --force                        * Send even if safety checks would prevent it.
- 
-+  Information:
-+    --dump-aliases                 * Dump configured aliases and exit.
-+
- EOT
- 	exit(1);
- }
-@@ -180,6 +184,7 @@ my ($quiet, $dry_run) = (0, 0);
- my $format_patch;
- my $compose_filename;
- my $force = 0;
-+my $dump_aliases = 0;
- 
- # Handle interactive edition of files.
- my $multiedit;
-@@ -291,6 +296,11 @@ $SIG{INT}  = \&signal_handler;
- 
- my $help;
- my $rc = GetOptions("h" => \$help,
-+                    "dump-aliases" => \$dump_aliases);
-+usage() unless $rc;
-+die "--dump-aliases incompatible with other options\n"
-+    if !$help and $dump_aliases and @ARGV;
-+$rc = GetOptions(
- 		    "sender|from=s" => \$sender,
-                     "in-reply-to=s" => \$initial_reply_to,
- 		    "subject=s" => \$initial_subject,
-@@ -551,6 +561,11 @@ if (@alias_files and $aliasfiletype and defined $parse_alias{$aliasfiletype}) {
- 	}
- }
- 
-+if ($dump_aliases) {
-+    print "$_\n" for (sort keys %aliases);
-+    exit(0);
-+}
-+
- # is_format_patch_arg($f) returns 0 if $f names a patch, or 1 if
- # $f is a revision list specification to be passed to format-patch.
- sub is_format_patch_arg {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 5b4a5ce06b94..3c49536e0e8d 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1555,6 +1555,88 @@ test_expect_success $PREREQ 'sendemail.aliasfile=~/.mailrc' '
- 	grep "^!someone@example\.org!$" commandline1
- '
- 
-+test_dump_aliases () {
-+	msg="$1" && shift &&
-+	filetype="$1" && shift &&
-+	printf '%s\n' "$@" >expect &&
-+	cat >.tmp-email-aliases &&
-+
-+	test_expect_success $PREREQ "$msg" '
-+		clean_fake_sendmail && rm -fr outdir &&
-+		git config --replace-all sendemail.aliasesfile \
-+			"$(pwd)/.tmp-email-aliases" &&
-+		git config sendemail.aliasfiletype "$filetype" &&
-+		git send-email --dump-aliases 2>errors >actual &&
-+		test_cmp expect actual
-+	'
-+}
-+
-+test_dump_aliases '--dump-aliases sendmail format' \
-+	'sendmail' \
-+	'abgroup' \
-+	'alice' \
-+	'bcgrp' \
-+	'bob' \
-+	'chloe' <<-\EOF
-+	alice: Alice W Land <awol@example.com>
-+	bob: Robert Bobbyton <bob@example.com>
-+	chloe: chloe@example.com
-+	abgroup: alice, bob
-+	bcgrp: bob, chloe, Other <o@example.com>
-+	EOF
-+
-+test_dump_aliases '--dump-aliases mutt format' \
-+	'mutt' \
-+	'alice' \
-+	'bob' \
-+	'chloe' \
-+	'donald' <<-\EOF
-+	alias alice Alice W Land <awol@example.com>
-+	alias donald Donald C Carlton <donc@example.com>
-+	alias bob Robert Bobbyton <bob@example.com>
-+	alias chloe chloe@example.com
-+	EOF
-+
-+test_dump_aliases '--dump-aliases mailrc format' \
-+	'mailrc' \
-+	'alice' \
-+	'bob' \
-+	'chloe' \
-+	'eve' <<-\EOF
-+	alias alice   Alice W Land <awol@example.com>
-+	alias eve     Eve <eve@example.com>
-+	alias bob     Robert Bobbyton <bob@example.com>
-+	alias chloe   chloe@example.com
-+	EOF
-+
-+test_dump_aliases '--dump-aliases pine format' \
-+	'pine' \
-+	'alice' \
-+	'bob' \
-+	'chloe' \
-+	'eve' <<-\EOF
-+	alice	Alice W Land	<awol@example.com>
-+	eve	Eve	<eve@example.com>
-+	bob	Robert	Bobbyton <bob@example.com>
-+	chloe		chloe@example.com
-+	EOF
-+
-+test_dump_aliases '--dump-aliases gnus format' \
-+	'gnus' \
-+	'alice' \
-+	'bob' \
-+	'chloe' \
-+	'eve' <<-\EOF
-+	(define-mail-alias "alice" "awol@example.com")
-+	(define-mail-alias "eve" "eve@example.com")
-+	(define-mail-alias "bob" "bob@example.com")
-+	(define-mail-alias "chloe" "chloe@example.com")
-+	EOF
-+
-+test_expect_success '--dump-aliases must be used alone' '
-+	test_must_fail git send-email --dump-aliases --to=janice@example.com -1 refs/heads/accounting
-+'
-+
- test_sendmail_aliases () {
- 	msg="$1" && shift &&
- 	expect="$@" &&
--- 
-2.6.3.491.g3e3f6ce
+Ciao,
+Johannes
