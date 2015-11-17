@@ -1,135 +1,103 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] blame: avoid checking if a file exists on the working
- tree if a revision is provided
-Date: Tue, 17 Nov 2015 00:11:25 -0500
-Message-ID: <CAPig+cTjg8yvmLO0uuWZt4nATUnfxJOj4f_AmvRP9mHsGRmEOg@mail.gmail.com>
-References: <1447723762-32309-1-git-send-email-eantoranz@gmail.com>
+From: Jonathan Lebon <jonathan.lebon@gmail.com>
+Subject: Re: [PATCH 3/4] diff-highlight: match up lines before highlighting
+Date: Tue, 17 Nov 2015 00:18:28 -0500
+Message-ID: <CAM0PgJ4erahEZsL75c4mytF158xxeE6itG8KOMMi4n-zBTHcww@mail.gmail.com>
+References: <1446516334-27652-1-git-send-email-jonathan.lebon@gmail.com>
+ <1446516334-27652-4-git-send-email-jonathan.lebon@gmail.com>
+ <20151103214416.GC22484@sigill.intra.peff.net> <20151103220314.GE22484@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Max Kirillov <max@max630.net>,
-	Jeff King <peff@peff.net>
-To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 06:11:45 2015
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 17 06:19:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyYYS-00088W-T1
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 06:11:45 +0100
+	id 1ZyYg3-0004hc-UI
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 06:19:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751147AbbKQFL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 00:11:26 -0500
-Received: from mail-vk0-f54.google.com ([209.85.213.54]:35525 "EHLO
-	mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751065AbbKQFLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 00:11:25 -0500
-Received: by vkas68 with SMTP id s68so5511683vka.2
-        for <git@vger.kernel.org>; Mon, 16 Nov 2015 21:11:25 -0800 (PST)
+	id S1751915AbbKQFTV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 00:19:21 -0500
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:34527 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751790AbbKQFS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 00:18:58 -0500
+Received: by ykfs79 with SMTP id s79so275492678ykf.1
+        for <git@vger.kernel.org>; Mon, 16 Nov 2015 21:18:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=m4dRP7aJrwON5dGCvKc8hhbfUy90Hdxa0EgquDRWczU=;
-        b=LUqGCA9sJtmhmyjIixEFKiqMatkJ/Mi+pzPy8rU3OKXmR+yft0jAeP1jA1WNJHNigQ
-         UzDMAnL5Sv70Dnq48MUriWeEYFeXitfTtnyV8yN0gesRwm8DKrN0jjklbOA8WEF6WpSP
-         tWAxn+jez4yRRfzt3qZqtxCyoVBzHr9U1fZhf+nDvmDBjdHCl2VKaYR0MQSbCTqnwqjp
-         2hxj+pLwMyMBWGWSBNeoWVRJnZh2kSmJxP1z3x6NsHLDIfXx4Q52Jk19spBSz5VCZPUC
-         MfqNEP+WqbEmz6vGn7yBwwRfsx8ifMcCczeZHcTowqVWc0vUMurQ2zPdBQb9tF/10NW7
-         gkcw==
-X-Received: by 10.31.152.19 with SMTP id a19mr1687245vke.45.1447737085194;
- Mon, 16 Nov 2015 21:11:25 -0800 (PST)
-Received: by 10.31.159.204 with HTTP; Mon, 16 Nov 2015 21:11:25 -0800 (PST)
-In-Reply-To: <1447723762-32309-1-git-send-email-eantoranz@gmail.com>
-X-Google-Sender-Auth: SfpOlB01H7YAjxHYueLRySpEL2M
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=kXptcOa2yCBzr7mxd6+Bum+oxxPG/3jjojZGYvXLDas=;
+        b=lhxO1/w/e7/kiYXS0FsxGEgjrBeD7z0hS0c+u7YO1XT3Kz83NHia4QQfCkBkDJjn7C
+         zCUCTwZAicH1GHAoR05KNtTI7IuVkL3FR0Ou7FyGQHO9zAdIPQhU7rm3uTu9frcUfLCH
+         RD3xXuW4ROGtW2YdM2Iv7EmZJTOvJ4/QSPp69T8jVz9dmMCAUCIZlOq+EMdY07tpkk3j
+         y8jBlsPUAnC5+Z/2u6k9YgWOdDHGHoBRskg9K9zl4d/k7ME+Kcujv3wCA1LD5dkd0kAQ
+         y47X6+bmio1MQ+yD7qtF3Yd+K/y4kjMHjaBJvFCbjDJ2N0BWtXgNymcsSNyQqYeRigTI
+         iJBg==
+X-Received: by 10.129.85.84 with SMTP id j81mr40725480ywb.194.1447737537940;
+ Mon, 16 Nov 2015 21:18:57 -0800 (PST)
+Received: by 10.37.32.10 with HTTP; Mon, 16 Nov 2015 21:18:28 -0800 (PST)
+In-Reply-To: <20151103220314.GE22484@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281382>
 
-On Mon, Nov 16, 2015 at 8:29 PM, Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
-> blame: avoid checking if a file exists on the working tree
-> if a revision is provided
-
-This subject is a bit long; try to keep it to about 72 characters or less.
-
-More importantly, though, it doesn't give us a high level overview of
-the purpose of the patch, which is that it is fixing blame to work on
-a file at a given revision even if the file no longer exists in the
-worktree.
-
-> If a file has been deleted/renamed, blame refused to display
-
-Imperative: s/refused/refuses/
-
-> blame content even if the path provided does match an existing
-> blob on said revision.
-
-git-blame documentation does not advertise "blame <file> <rev>" as a
-valid invocation. It does advertise "blame <rev> -- <file>", and this
-case already works correctly even when <file> does not exist in the
-worktree.
-
-git-annotate documentation, on the other hand, does advertise
-"annotate <file> <rev>", and it fails to work when <file> is absent
-from the worktree, so perhaps you want to sell this patch as fixing
-git-annotate instead?
-
-> $ git status
-> On branch hide
-> Changes not staged for commit:
->   (use "git add/rm <file>..." to update what will be committed)
->   (use "git checkout -- <file>..." to discard changes in working directory)
+On Tue, Nov 3, 2015 at 5:03 PM, Jeff King <peff@peff.net> wrote:
+> Your is _much_ slower. I get:
 >
->         deleted:    testfile1.txt
+>   real    0m25.538s
+>   user    0m25.420s
+>   sys     0m0.120s
 >
-> no changes added to commit (use "git add" and/or "git commit -a")
+> for the old versus:
 >
-> Before:
-> $ git blame testfile1.txt
-> fatal: cannot stat path 'testfile1.txt': No such file or directory
-> $ git blame testfile1.txt HEAD
-> fatal: cannot stat path 'testfile1.txt': No such file or directory
->
-> After:
-> $ git blame testfile1.txt
-> fatal: Cannot lstat 'testfile1.txt': No such file or directory
-> $ git blame testfile1.txt HEAD
-> ^da1a96f testfile2.txt (Edmundo Carmona Antoranz 2015-11-10 17:52:00 -0600 1) testfile 2
-> ^da1a96f testfile2.txt (Edmundo Carmona Antoranz 2015-11-10 17:52:00 -0600 2)
-> ^da1a96f testfile2.txt (Edmundo Carmona Antoranz 2015-11-10 17:52:00 -0600 3) Some content
+>   real    2m3.580s
+>   user    2m3.548s
+>   sys     0m0.156s
 
-This example is certainly illustrative, but an even more common case
-may be trying to blame/annotate a file which existed in an older
-revision but doesn't exist anymore at HEAD, thus is absent from the
-worktree. Such a case could likely be described in a sentence or two
-without resorting to verbose examples (though, not a big deal if you
-keep the example).
+Thanks for investigating and trying it out. I got the same results
+here as well.
 
-A new test or two would be welcome, possibly in t/annotate-tests.sh if
-you consider this also fixing git-blame, or in t8001-annotate.sh if
-you're selling it only as a fix for git-annotate.
+> for your series. In an interactive setting, the latency may not be that
+> noticeable, but if you are digging far into history (e.g., "git log -p",
+> then using "/" in less to search for a commit or some test), I suspect
+> it would be very noticeable.
 
-> Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-> ---
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> @@ -2683,12 +2683,13 @@ parse_done:
->                 argv[argc - 1] = "--";
+Agreed.
+
+> I was thinking there was some low-hanging fruit in memoizing the
+> calculations, but even the prefix/suffix computation is pairwise. I'm
+> not really sure how to make this much faster.
+
+I gave memoization a try to see if it could improve the situation. I also
+lowered maxhunksize to 10. Doing `git log -p` on git.git went from 2m31
+to 2m11. So I think it would require a whole other approach overall.
+
+> As for the output itself, the diff between the two looks promising. The
+> first several cases I looked at ar strict improvements. Some of them are
+> kind of weird, especially in English text.
+
+Yes, I'm very happy with the improvements and run with these patches all
+the time for now.
+
+> In the other thread I mentioned earlier, the solution I cooked up was
+> dropping highlighting entirely for hunks over a certain percentage of
+> highlighting. I wonder if we could do something similar here (e.g.,
+> don't match lines where more than 50% of the line would be highlighted).
+
+I looked over but haven't tested the patches in the other thread yet. But
+overall, the LCS definitely looks promising. I'm hoping to find some time
+to have a more serious go at it and maybe pick it up where you left off.
+
 >
->                 setup_work_tree();
-> -               if (!file_exists(path))
-> -                       die_errno("cannot stat path '%s'", path);
->         }
->
->         revs.disable_stdin = 1;
->         setup_revisions(argc, argv, &revs, NULL);
-> +       if (!revs.pending.nr && !file_exists(path))
-> +               die_errno("cannot stat path '%s'", path);
-> +
->         memset(&sb, 0, sizeof(sb));
->
->         sb.revs = &revs;
-> --
-> 2.6.2
+> -Peff
+
+Thanks again for reviewing these patches and apologies for the delayed
+reply.
+
+Jonathan
