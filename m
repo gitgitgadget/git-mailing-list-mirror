@@ -1,65 +1,84 @@
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: Re: [PATCH v2] blame: avoid checking if a file exists on the working
- tree if a revision is provided
-Date: Tue, 17 Nov 2015 17:47:01 -0600
-Message-ID: <CAOc6etY9cXm04KdqUdRE11xtG+7Yj3ihkB4-OTweyWyGF8gs0g@mail.gmail.com>
-References: <1447723762-32309-1-git-send-email-eantoranz@gmail.com>
-	<CAPig+cTjg8yvmLO0uuWZt4nATUnfxJOj4f_AmvRP9mHsGRmEOg@mail.gmail.com>
-	<CAOc6etbjCYRp4gbSNRtcngwbh93R67JYZHJn0=D=FeiBm5=FNw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Max Kirillov <max@max630.net>,
-	Jeff King <peff@peff.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 00:47:31 2015
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 2/2] send-email: expand paths in sendemail.{to,cc}cmd config
+Date: Tue, 17 Nov 2015 22:01:06 +0000
+Message-ID: <db0b817c4be57635248a48a529a32719ad232f02.1447797487.git.john@keeping.me.uk>
+References: <cover.1447797487.git.john@keeping.me.uk>
+Cc: John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 18 01:15:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZypyA-0000rQ-Hv
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 00:47:26 +0100
+	id 1ZyqPh-0002VW-Qi
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 01:15:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932078AbbKQXrD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 18:47:03 -0500
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:34378 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754344AbbKQXrC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 18:47:02 -0500
-Received: by padhx2 with SMTP id hx2so23779071pad.1
-        for <git@vger.kernel.org>; Tue, 17 Nov 2015 15:47:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=FyDi0ScojG3TEDMlBto6emPTyy1UAX6Qe/TrAfyQMfM=;
-        b=ha0jDGx8zxx/9t8E95N5//vDXAae5ZLX0m67XA/6T/BVi4Elt6PZ88y1JBelbVV3It
-         hS3umSFbNhUooXnlTR8uVtt/1W5E4sm/gKHKh6ojVvg3128gRTU5bCbw1A80kALg5RFI
-         dJoYjpxKwwMZzxztU8yvKUXtQJsHfLTvSF7CDNpWmJbirrVYj/+VGzw+61cR7pFW+dyH
-         UbUHkCheINP0Cj8HNBcxXfzOYLCCqZpO4nqOOSeLxaao9mZINjQ0ZdK/wNVEAK5x/x4U
-         EjUM1LnDDBPo7rj0gM9nPGSuVxFEb1QT6Jv4fc4dK5eHqobtccQflJNTzcValLH5stpv
-         c9uw==
-X-Received: by 10.66.190.66 with SMTP id go2mr66318029pac.114.1447804021738;
- Tue, 17 Nov 2015 15:47:01 -0800 (PST)
-Received: by 10.66.97.70 with HTTP; Tue, 17 Nov 2015 15:47:01 -0800 (PST)
-In-Reply-To: <CAOc6etbjCYRp4gbSNRtcngwbh93R67JYZHJn0=D=FeiBm5=FNw@mail.gmail.com>
+	id S1754299AbbKRAPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 19:15:49 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:42336 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752482AbbKRAPt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 19:15:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id E599BCDA75C;
+	Tue, 17 Nov 2015 23:10:21 +0000 (GMT)
+X-Quarantine-ID: <dbpRoJxrMavt>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id dbpRoJxrMavt; Tue, 17 Nov 2015 23:10:18 +0000 (GMT)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 044B396251E;
+	Tue, 17 Nov 2015 22:01:34 +0000 (GMT)
+X-Mailer: git-send-email 2.6.3.462.gbe2c914
+In-Reply-To: <cover.1447797487.git.john@keeping.me.uk>
+In-Reply-To: <cover.1447797487.git.john@keeping.me.uk>
+References: <cover.1447797487.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281433>
 
-On Tue, Nov 17, 2015 at 5:37 PM, Edmundo Carmona Antoranz
-<eantoranz@gmail.com> wrote:
-> So, do I forget about the blame patch (given that I'm not fixing an
-> advertised syntax, even if it's supported) and fix annotate instead or
-> do I fix both? And if I should swing for both, do I create a single
-> patch or a chain of two patches, one for each builtin?
+These configuration variables specify the paths to commands so we should
+support tilde-expansion for files inside a user's home directory.
 
-Actually, cmd_annotate will call cmd_blame so this patch actually
-fixes annotate as well (nice unintended consequence).
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ git-send-email.perl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-So I guess it will be a single patch. Let me work on the tests and
-then I'll send a patch that will hopefully cover all raised points.
-
-Cheers!
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 719c715..8e4c0e1 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -242,9 +242,7 @@ my %config_settings = (
+     "smtpdomain" => \$smtp_domain,
+     "smtpauth" => \$smtp_auth,
+     "to" => \@initial_to,
+-    "tocmd" => \$to_cmd,
+     "cc" => \@initial_cc,
+-    "cccmd" => \$cc_cmd,
+     "aliasfiletype" => \$aliasfiletype,
+     "bcc" => \@bcclist,
+     "suppresscc" => \@suppress_cc,
+@@ -259,6 +257,8 @@ my %config_settings = (
+ my %config_path_settings = (
+     "aliasesfile" => \@alias_files,
+     "smtpsslcertpath" => \$smtp_ssl_cert_path,
++    "tocmd" => \$to_cmd,
++    "cccmd" => \$cc_cmd,
+ );
+ 
+ # Handle Uncouth Termination
+-- 
+2.6.3.462.gbe2c914
