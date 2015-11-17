@@ -1,169 +1,94 @@
-From: Jeff King <peff@peff.net>
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
 Subject: Re: [PATCH v2] blame: avoid checking if a file exists on the working
  tree if a revision is provided
-Date: Tue, 17 Nov 2015 18:22:37 -0500
-Message-ID: <20151117232237.GA29014@sigill.intra.peff.net>
+Date: Tue, 17 Nov 2015 17:37:45 -0600
+Message-ID: <CAOc6etbjCYRp4gbSNRtcngwbh93R67JYZHJn0=D=FeiBm5=FNw@mail.gmail.com>
 References: <1447723762-32309-1-git-send-email-eantoranz@gmail.com>
- <CAPig+cTjg8yvmLO0uuWZt4nATUnfxJOj4f_AmvRP9mHsGRmEOg@mail.gmail.com>
- <20151117224809.GE27862@sigill.intra.peff.net>
- <CAPig+cQcmtZJmm_FGMNL4OCTgdFZGyLjVrwbfCCp+0kwBeFuRQ@mail.gmail.com>
+	<CAPig+cTjg8yvmLO0uuWZt4nATUnfxJOj4f_AmvRP9mHsGRmEOg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Edmundo Carmona Antoranz <eantoranz@gmail.com>,
-	Git List <git@vger.kernel.org>, Max Kirillov <max@max630.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Max Kirillov <max@max630.net>,
+	Jeff King <peff@peff.net>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 00:22:45 2015
+X-From: git-owner@vger.kernel.org Wed Nov 18 00:37:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZypaG-0004aV-LZ
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 00:22:45 +0100
+	id 1Zypov-0002gJ-N6
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 00:37:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754221AbbKQXWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 18:22:40 -0500
-Received: from cloud.peff.net ([50.56.180.127]:59033 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751882AbbKQXWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 18:22:39 -0500
-Received: (qmail 17819 invoked by uid 102); 17 Nov 2015 23:22:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Nov 2015 17:22:39 -0600
-Received: (qmail 31461 invoked by uid 107); 17 Nov 2015 23:23:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Nov 2015 18:23:11 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Nov 2015 18:22:37 -0500
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQcmtZJmm_FGMNL4OCTgdFZGyLjVrwbfCCp+0kwBeFuRQ@mail.gmail.com>
+	id S932572AbbKQXhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 18:37:46 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:35562 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932526AbbKQXhq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 18:37:46 -0500
+Received: by pacej9 with SMTP id ej9so23495602pac.2
+        for <git@vger.kernel.org>; Tue, 17 Nov 2015 15:37:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=12wvca4wuSfNZ7GOKfRTlAnUXoJsqjQVrGiwGWIMcyo=;
+        b=rBz3n5yRg+XgDuvFOWUphnkJEhRMZWH7L463TPtuS/VskwAm+UZib+yz6dQaBPIKlb
+         h4qCyY3DRWCfxicbm4jd8gSVNzouyUAmqn9LjevcWczHGVxQWsDpWenNaeptQZsJTaPC
+         0Z8FRIaLuQ5JzGrkM6xXH18zp5vhVuv8uiliDt19vt7ANzOxeab3nXKmQU2x02ULqIlI
+         aegyD4G5NT6YEWIeQmO2opvOUqrLJPNx8KlC7/HQB4shvw4BWnolJq35Lgj5FLWY0d51
+         SU2InbirvApjL/QyZbxBR5G7ges9rxm59wk6ULPSRvT+xEnqCnlUeJPMEy7I8TBXE4/M
+         tABA==
+X-Received: by 10.68.165.131 with SMTP id yy3mr22708545pbb.163.1447803465348;
+ Tue, 17 Nov 2015 15:37:45 -0800 (PST)
+Received: by 10.66.97.70 with HTTP; Tue, 17 Nov 2015 15:37:45 -0800 (PST)
+In-Reply-To: <CAPig+cTjg8yvmLO0uuWZt4nATUnfxJOj4f_AmvRP9mHsGRmEOg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281430>
 
-On Tue, Nov 17, 2015 at 06:01:25PM -0500, Eric Sunshine wrote:
+On Mon, Nov 16, 2015 at 11:11 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> This subject is a bit long; try to keep it to about 72 characters or less.
+>
+> More importantly, though, it doesn't give us a high level overview of
+> the purpose of the patch, which is that it is fixing blame to work on
+> a file at a given revision even if the file no longer exists in the
+> worktree.
 
-> On Tue, Nov 17, 2015 at 5:48 PM, Jeff King <peff@peff.net> wrote:
-> > On Tue, Nov 17, 2015 at 12:11:25AM -0500, Eric Sunshine wrote:
-> >> > blame content even if the path provided does match an existing
-> >> > blob on said revision.
-> >>
-> >> git-blame documentation does not advertise "blame <file> <rev>" as a
-> >> valid invocation. It does advertise "blame <rev> -- <file>", and this
-> >> case already works correctly even when <file> does not exist in the
-> >> worktree.
-> >
-> > Hmm. Out of curiosity I tried:
-> >
-> >   git blame v2.4.0 -- t/t6031-merge-recursive.sh
-> >
-> > and it segfaults. This bisects to Max's recent 1b0d400 (blame: extract
-> > find_single_final, 2015-10-30), but I do not see anything obviously
-> > wrong with it from a quick glance.
-> 
-> In the original code, sb->final received was assigned value of obj,
-> which may have gone through deref_tag(), however, after 1b0d400,
-> sb->final is unconditionally assigned the original value of obj, not
-> the (potentially) deref'd value.
+Sure!
 
-Good eye. I fed it a tag, find_single_final knows that points to a
-commit, then prepare_final casts the tag object to a commit. Whoops.
+> git-blame documentation does not advertise "blame <file> <rev>" as a
+> valid invocation. It does advertise "blame <rev> -- <file>", and this
+> case already works correctly even when <file> does not exist in the
+> worktree.
+>
+> git-annotate documentation, on the other hand, does advertise
+> "annotate <file> <rev>", and it fails to work when <file> is absent
+> from the worktree, so perhaps you want to sell this patch as fixing
+> git-annotate instead?
 
-The patch below fixes it for me. It probably needs a test, but I have to
-run for the moment.
+So, do I forget about the blame patch (given that I'm not fixing an
+advertised syntax, even if it's supported) and fix annotate instead or
+do I fix both? And if I should swing for both, do I create a single
+patch or a chain of two patches, one for each builtin?
 
--- >8 --
-Subject: [PATCH] blame: fix object casting regression
+> This example is certainly illustrative, but an even more common case
+> may be trying to blame/annotate a file which existed in an older
+> revision but doesn't exist anymore at HEAD, thus is absent from the
+> worktree. Such a case could likely be described in a sentence or two
+> without resorting to verbose examples (though, not a big deal if you
+> keep the example).
 
-Commit 1b0d400 refactored the prepare_final() function so
-that it could be reused in multiple places. Originally, the
-loop had two outputs: a commit to stuff into sb->final, and
-the name of the commit from the rev->pending array.
+K.
 
-After the refactor, that loop is put in its own function
-with a single return value: the object_array_entry from the
-rev->pending array. This contains both the name and the object,
-but with one important difference: the object is the
-_original_ object found by the revision parser, not the
-dereferenced commit. If one feeds a tag to "git blame", we
-end up casting the tag object to a "struct commit", which
-causes a segfault.
+>
+> A new test or two would be welcome, possibly in t/annotate-tests.sh if
+> you consider this also fixing git-blame, or in t8001-annotate.sh if
+> you're selling it only as a fix for git-annotate.
 
-Instead, let's return the commit (properly casted) directly
-from the function, and take the "name" as an optional
-out-parameter. This does the right thing, and actually
-simplifies the callers, who no longer need to cast or
-dereference the object_array_entry themselves.
+I guess I'll wait for feedback about my first question before I decide
+what I will do about the tests.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/blame.c | 30 ++++++++++++++----------------
- 1 file changed, 14 insertions(+), 16 deletions(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index ac36738..2184e39 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2403,10 +2403,12 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 	return commit;
- }
- 
--static struct object_array_entry *find_single_final(struct rev_info *revs)
-+static struct commit *find_single_final(struct rev_info *revs,
-+					const char **name_p)
- {
- 	int i;
--	struct object_array_entry *found = NULL;
-+	struct commit *found = NULL;
-+	const char *name = NULL;
- 
- 	for (i = 0; i < revs->pending.nr; i++) {
- 		struct object *obj = revs->pending.objects[i].item;
-@@ -2418,22 +2420,20 @@ static struct object_array_entry *find_single_final(struct rev_info *revs)
- 			die("Non commit %s?", revs->pending.objects[i].name);
- 		if (found)
- 			die("More than one commit to dig from %s and %s?",
--			    revs->pending.objects[i].name,
--			    found->name);
--		found = &(revs->pending.objects[i]);
-+			    revs->pending.objects[i].name, name);
-+		found = (struct commit *)obj;
-+		name = revs->pending.objects[i].name;
- 	}
-+	if (name_p)
-+		*name_p = name;
- 	return found;
- }
- 
- static char *prepare_final(struct scoreboard *sb)
- {
--	struct object_array_entry *found = find_single_final(sb->revs);
--	if (found) {
--		sb->final = (struct commit *) found->item;
--		return xstrdup(found->name);
--	} else {
--		return NULL;
--	}
-+	const char *name;
-+	sb->final = find_single_final(sb->revs, &name);
-+	return xstrdup_or_null(name);
- }
- 
- static char *prepare_initial(struct scoreboard *sb)
-@@ -2721,11 +2721,9 @@ parse_done:
- 		die("Cannot use --contents with final commit object name");
- 
- 	if (reverse && revs.first_parent_only) {
--		struct object_array_entry *entry = find_single_final(sb.revs);
--		if (!entry)
-+		final_commit = find_single_final(sb.revs, NULL);
-+		if (!final_commit)
- 			die("--reverse and --first-parent together require specified latest commit");
--		else
--			final_commit = (struct commit*) entry->item;
- 	}
- 
- 	/*
--- 
-2.6.3.636.g1460207
+Thank you very much for your comments, Eric.
