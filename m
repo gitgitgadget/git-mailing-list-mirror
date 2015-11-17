@@ -1,80 +1,99 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [git-for-windows] Git a single file from remote
-Date: Tue, 17 Nov 2015 14:47:15 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1511171441350.1686@s15462909.onlinehome-server.info>
-References: <f41ee51a-aee4-41d5-b50d-e47ea3cab611@googlegroups.com>
+Subject: Re: Problem with gitk since git-version 2.6, probably a problem with
+ language/locale
+Date: Tue, 17 Nov 2015 15:23:36 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1511171520300.1686@s15462909.onlinehome-server.info>
+References: <loom.20151117T140439-132@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org,
-	git-for-windows <git-for-windows@googlegroups.com>
-To: Chaz <kevinwolf7@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 14:47:26 2015
+Cc: git@vger.kernel.org
+To: Manuel Neubauer <neubauer@melosgmbh.de>
+X-From: git-owner@vger.kernel.org Tue Nov 17 15:43:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZygbU-0008SJ-11
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 14:47:24 +0100
+	id 1ZyhU5-0001dD-Mb
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 15:43:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753176AbbKQNrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 08:47:21 -0500
-Received: from mout.gmx.net ([212.227.15.15]:54970 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751918AbbKQNrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 08:47:19 -0500
+	id S1751616AbbKQOnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 09:43:45 -0500
+Received: from mout-xforward.gmx.net ([82.165.159.41]:62229 "EHLO
+	mout-xforward.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751465AbbKQOno (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 09:43:44 -0500
+X-Greylist: delayed 1203 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Nov 2015 09:43:44 EST
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0MDhny-1aACeg0nhG-00H4kq;
- Tue, 17 Nov 2015 14:47:16 +0100
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0LvPgd-1aORa615r1-010gDU;
+ Tue, 17 Nov 2015 15:23:37 +0100
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <f41ee51a-aee4-41d5-b50d-e47ea3cab611@googlegroups.com>
+In-Reply-To: <loom.20151117T140439-132@post.gmane.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:3p6WgT3epyEXRNdu7StIKkuiqPRjUMMhrsD721d9JCY5KB6R7vn
- K35S4EzUtQAnyp6QWGuJSi3GJ2s5iaRRXDYq9EVxhP8dTcqDb1v58hUxwVNFrDEcYAd3mUn
- slK/KSr3LtMEEMAtp5vRqHeZ+ZuhC6el5QWttoBQV+L0F7Q5fPYeIAOyyMGAO6wslEjACfz
- bdG0THNKxzeQjwsMeBNqg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UeBikmsXUW4=:Ic0SsYiQ6Fjvecpz3pDjXI
- tOopYU9VOTzf+3RoLzdINtWnHHAI4lCChE/KUh2LSQMAYBuVQ57nUnIdJs2TduAW7YNbWuak/
- rnpU1dEjeyTVd506U87M1kIelW2DYScxTI6qxFTP2poZgCsFAD6gY8+QMI2tOJjL2V4Wvvx/t
- YBpARJVnaWwPWqaVMyYA1k3RPDsZfFgEOhis1Y4tTbL4yEJ47Zpq08gMAAZ5wEIBLc6s8DI5L
- Sln9o+/QDBQ040ZJOKSBJP4H9EtnwDpkqqjpFVg2uh/Zr1k2sQmhCrfycrbs2poFibPFC7kE/
- 3Bv0vOEMS8OQV78di97bbBo9XQjo8iy475epKBVBBFg1xA/Q/2Li0fjl9baia+n54i05YQF9F
- 6aqIhAPJkOSnEdwo/SpdtmXzTvoAMBHn9t3UdkNS8QJoCmiCmMctFdC4t9HfMqaZyD0CMjtX/
- I9+1cYO1oPlg/7VGOPYQHv1uD0b4BG/boFvAbO8iVxBIG07dfY+/t3KZp+h00ckFzT9XyovjA
- cuYfPUnma5dKwuf9OV36oka6qpMPa+D2phQQHO+QePI7CrlxV2OqZEKBphQ11drgyeV56FsmW
- mWR3HUCFAfCckK8QpXxVgwivxRXVY9QlhHcqoFFT5s3TuKMh9yvpOFmEOFbHyu8sYFazfRJdI
- kmIA7K9g7SgtyElz4eGN750d8hYkGcsvtxVg3y1PiJMSxGVjHY4v4XIV7IKWs28xNYfrK2fLc
- PfGbUR/6cAGeASb9FHfBk022llaJxyMNV30OjGMiyJW4bic9siv4AeXoev+cVsX6DaWwslh/ 
+X-Provags-ID: V03:K0:nioOARWyKdlbzdqMIBTX9gJbsd0c57imUH1PhQwjlwLC0HHZUF+
+ 90Snr8EZrcqPSDbRC0gzirCTOdN38O19PKqjatMLsOWBSkeR7YaYzxnoTirnFumC/1Yn4/c
+ bwRpag6MtnUt4MlkzYI8nqwPfeC4OuzhVjS8/+g7O9MqnwLIrHjkW82ZKlHTqrB9Di82DBY
+ ZkR382GXgUxGeGJzq17dA==
+X-UI-Out-Filterresults: junk:10;V01:K0:TyF878wcYL4=:A/05BfPNnLwefj3rdKZy9Jth
+ A4u77iPvcefytqs/nH1L6YRXtMJ6IZ55eHwdLH5YT7q/2B1NDO3r1nLWD0SM7gVd1wGKZ+CHN
+ SvXeucARA/uqDqKbLIryx5cP2ol4S50xn8xVxWwFtLfO993SnNZiYmBf/d+tzIkD+OdeAoN33
+ 8i36Y16ROSNN53KY69b4E7pcEhEhKKwO+WC3YbLVF8RrkDmITOCPGaRKs6moQSZH5ERKLogPT
+ 0i67jau+PohAkX9488okj+jOMpoyGIDFI9icMtDi+xNGxgJcQQCLEHaOUQ5Hmkrh3w2h6872I
+ ZXZzitXAeGa2Qbgc1r81oiUrmyJRRTUKN1HbvuSFkoLjUG5+i6h48pHfqqHoV2LN0DtU9MwVp
+ dfHp8tzEJcYfCowcLwQCtsVZKUCLkEPfTMNCfMVkQYX/5MQnihfC0iJBK4KD7EANCnJUjxIAz
+ stZ8Fi8EuIqVIXsqFDjiMnSsL0oPZHpQOwyBBZluQFGYeII3NXrRT1MEBzm4V/U59HEtjBtHg
+ BHZ879c3x0vo+FgOAzr1/Hpv1BULdNV5FefNAh49IAqW9AXPSo2QeZfjvpHcLKD9HwEyaYgwg
+ wKfdUQ1Q+FF28kOFxFBMnoMbKspPmuNTghPS5Y4gxG+AII3AkS8tUrdH8uYssm0B1+MaswZy9
+ dSrwu9mbovnC14rb0VHsOyfWjzt5mhtTFYF8LrbmJyJpEiwKLOWIuMrqLlVsPpFJBxU8/CIAh
+ BdNmWqtWZBraS2Nh7Q4ovNN69RwJGsIcG6QHiWBsVsPMMGaI+eUU6MYe6ZDEkfHkMt2yWgdV 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281409>
 
-Hi Chaz,
+Hi Manuel,
 
-On Mon, 16 Nov 2015, Chaz wrote:
+On Tue, 17 Nov 2015, Manuel Neubauer wrote:
 
-> An origin git repository has been setup.  Added a remote repository 
-> (remotegit).
+> since git-version 2.6, I get the following error on all of the machines here
+> at work:
 > 
-> "git remote -v show" displays both origin and remote links.
+> Error in startup script: bad menu entry index "Ansicht bearbeiten ..."
+>     while executing
+> ".bar.view entryconf [mca "Edit view..."] -state normal"
+>     invoked from within
+> "if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd ne {}} {
+>     # create a view for the files/dirs specified on the command line
+>     se..."
+>     (file "/usr/bin/gitk" line 12442)
 > 
-> What is the best way to copy a single file from the remote repo to the 
-> origin repo?
+> I'm using
+> - openSuSE 13.2
+> - $LANG=de_DE@euro
+> - $LC_ALL=de_DE@euro
+> - $LC_COLLATE=POSIX
+> 
+> The problem occurs when I', trying to use "gitk <FILENAME>" oder something
+> like "gitk ..origin/<BRANCHNAME>".
+> A normal call of "gitk" without any extra arguments works without any problems.
+> 
+> In git-version 2.5.3 this problem isn't present, it came along with version
+> 2.6.x.
 
-This is not specific to Windows, so it would be more appropriate to send
-this question to the Git mailing list (Cc:ed).
+Is this not the same issue that was reported here:
 
-Git is not designed to download specific files, at least not by default.
+http://article.gmane.org/gmane.comp.version-control.git/280095/match=gitk+locale
 
-Having said that, some remotes are configured to allow downloading
-archives and in such a case you might be able to specify something like
-`git archive --remote=<remote> HEAD:README`, but I am personally unaware
-of any remote that supports this.
+and here:
 
-Your best bet may be to fetch an individual ref with the `--shallow`
-option.
+http://article.gmane.org/gmane.comp.version-control.git/281105/match=gitk+locale
+
+and fixed here:
+
+http://article.gmane.org/gmane.comp.version-control.git/279910/match=gitk+locale
+
+?
 
 Ciao,
 Johannes
