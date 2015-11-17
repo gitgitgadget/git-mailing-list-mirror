@@ -1,86 +1,79 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v5 3/6] git-p4: retry kill/cleanup operations in tests
- with timeout
-Date: Tue, 17 Nov 2015 09:38:39 +0000
-Message-ID: <564AF59F.2070601@diamand.org>
-References: <1447592920-89228-1-git-send-email-larsxschneider@gmail.com> <1447592920-89228-4-git-send-email-larsxschneider@gmail.com> <5649958F.2010407@diamand.org> <90549E9A-205A-4848-B794-23E44F325F1E@gmail.com>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 0/5] parse-options: allow -h as a short option
+Date: Tue, 17 Nov 2015 11:19:30 +0100
+Message-ID: <564AFF32.1030406@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 10:38:55 2015
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 17 11:20:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zyciy-0002WL-Ak
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 10:38:52 +0100
+	id 1ZydMx-00054u-59
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 11:20:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753286AbbKQJil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 04:38:41 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:38647 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751041AbbKQJij (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 04:38:39 -0500
-Received: by wmec201 with SMTP id c201so16983253wme.1
-        for <git@vger.kernel.org>; Tue, 17 Nov 2015 01:38:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=2DVcNEFy/zzxssN9liX1RK3QjecCYd496B6nlIbumPs=;
-        b=T+7iIFlpDrw2KufF3r4Q8MMo+q47k7/e8plwMe1qpPW55bUu3k/DJA89Vr3fgNWCxz
-         04rF2bSjx5vX7AykAW92bKxYLFPt0TT8MVAh3RhvUCKEJd73wHSEiTmmCgqtIzExNgOF
-         q0rJzY0OzMsoMRhCgIwIdghwg6M9hXSZcVh8w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=2DVcNEFy/zzxssN9liX1RK3QjecCYd496B6nlIbumPs=;
-        b=bGlQwCtvVT7NB39UFIsGKUVcTx366eEair6HNcRWSh5VzPTWUiKtPBlyxZAJAbQydO
-         aWvOUXZeWcYmb731uG+Y47v0DebJn6hjkNI2e0ci7aOw0HBZBnQs7zVQZvEvp1O9V03o
-         C+jkfXEL+4zjNkz3g8cEfeHFvmJugVW338qGHsSf2qzFPRmDT9xDxyK687JZaWFMvDu6
-         5KCIcumyrs1oW1mAUSpXvCx4BAYXbZktGciDCxu+3NpavDWPByWiLaNdIjh1i9jnWgeX
-         jHB8imJMRJ9fP/qJEQ6amoEsKByOdrgVjqH5/jnKkU1uY6SGqOZ9uZ1Rd+iKErEC8flc
-         qlCg==
-X-Gm-Message-State: ALoCoQk/D93yu1wo6+KWzEQkIP6iE1o0hGlTjyheF4bn9BgloX1YPLhua+7a4TfJCWfa1wXqsboT
-X-Received: by 10.28.22.21 with SMTP id 21mr1372211wmw.72.1447753118344;
-        Tue, 17 Nov 2015 01:38:38 -0800 (PST)
-Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
-        by smtp.gmail.com with ESMTPSA id b12sm23036167wma.6.2015.11.17.01.38.37
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Nov 2015 01:38:37 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-In-Reply-To: <90549E9A-205A-4848-B794-23E44F325F1E@gmail.com>
+	id S1751847AbbKQKUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 05:20:05 -0500
+Received: from mout.web.de ([212.227.15.3]:58075 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751628AbbKQKUB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 05:20:01 -0500
+Received: from [192.168.178.36] ([79.253.153.213]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0Lz2vo-1aTAtN2cxU-014ERI; Tue, 17 Nov 2015 11:19:37
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+X-Provags-ID: V03:K0:sq7HySWL3DcdyP7xwjEbsiDaoVlhgHqDPN4nvoRfhJ881UPjkcw
+ zQUuoXx4xHqhplIbMJuM2RdTdQ681LKOoNY9LR8fz221QjOF+CeQY3tDfDmJQSA0o1rdTIn
+ xyVkmYYjZTCx7FWj7tiyW3X766gXimCwiA8qzV+YMLG9bVKRQ7F5ETt/AZyEzy9JGcORMDK
+ Lk79j69ESQgiIxhwdZNyA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Vbe7VdFa3Jg=:UTLGATn/tExvI6KFZ5gjBC
+ SLY+o6Ji5kvVW+QOxbjrGDTF120pnhqwaE5YRDXZEnFFWLl5cHuvKLgqUjL2YjW65UJ5CFNQg
+ uIhgBWaY1w5wnT0qJJKEt7UyCDQANLtZ2HCeWBBEn1ksZKjjwTVCw8N4oH6F50u5ZMXdEkLLf
+ wpfeHuvwFMxG1edEaM5KwlWQa3MIPj5gSHFOFCey9cEAZiUBHNMlva1s145GevF5vtqGgloua
+ Raw79CCrwyuYtisgppENQhp2OEzM3IgIx4U9208G2Pq3m+8RVBxgPzr4IT7kheJGE2ZNvMBjo
+ hojpX8V0HmywvMDu+hoVSZc0ZW/ZwfwtezbRYVK3Smb81XItGXIKAbG/8/ASfCsO/9jgBV+ZB
+ I1smtoPd6v/Sahdnqm+QoPHL4knCLWXmXYkiAkmvt/fWdI/GeguW08tfUINfVJBQiSgB3BFNo
+ S7l5EcolT/IJ/dllM8Q+uSRtVPAu1qnbRYvP9AWGDC3sT3JReJeDv/NPRtMMtVlwBpRCn5v0c
+ 5QlHXU6PqAkYRHhJ16S8YRuYptd/yiDyKK8NAXqfJlGWtVKEApB7mhDZha7OUsAdfSR6IjMRf
+ Lw4H+fvqWmEan8Fx8gsyK9vqWHdFUqCMwZFgyq9Uoc3AOrUJ+Fe8qMYWJJpwQJdTGp1Uep/v2
+ p64c2zowoEjKzblrp3KDE4TrdF7MPG2UWgx5xBF0TuKRUEhO9LLh1OdEh32i2cgVjqt2b8B9A
+ O8NJoRq1wwUuAPtVwzr0D/eszTKDImZy5a8tEwtVvXyP6Jv4h8H2gORCAzw9C6VaTaZ4ghCL 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281394>
 
-On 17/11/15 08:22, Lars Schneider wrote:
->
-> On 16 Nov 2015, at 09:36, Luke Diamand <luke@diamand.org> wrote:
->
->> On 15/11/15 13:08, larsxschneider@gmail.com wrote:
->>> From: Lars Schneider <larsxschneider@gmail.com>
->>>
->>> In rare cases kill/cleanup operations in tests fail. Retry these
->>> operations with a timeout to make the test less flaky.
->>
->> Should there be a sleep in that retry_until_success loop so that it doesn't spin sending signals to p4d?
-> Agreed. I will add a sleep in the next roll!
->
->
->>
->> Do we need to worry about the time offset being updated (e.g. NTP) while this is running?
-> Interesting question! I would consider this an edge case but I can see how it could happen.
-> Do you see a way to handle that in an easy way?
->
+The short option -h is hard-wired in parseopt to list the options of
+a command together with a short explanation.  If -h is to be given a
+different meaning then the flag PARSE_OPT_NO_INTERNAL_HELP has to be
+specified, which turns off handling for -h, --help and --help-all
+(except that --help handling is effectively overridden by git.c, but
+that's a different story).
 
-You want to somehow call clock_gettime(CLOCK_MONOTONIC). That's not in 
-python until 3.3. Writing a C program seems like overkill but could be a 
-solution if this becomes a problem.
+Most commands that do that, grep and show-ref in particular, still show
+the usage when -h is specified as the only parameter and with --help-all
+by  implementing explicit handlers for them.  This series makes it
+easier for them by letting them override -h handling without any flag.
+
+Rene Scharfe (5):
+  parse-options: deduplicate parse_options_usage() calls
+  parse-options: inline parse_options_usage() at its only remaining caller
+  parse-options: allow -h as a short option
+  grep: stop using PARSE_OPT_NO_INTERNAL_HELP
+  show-ref: stop using PARSE_OPT_NO_INTERNAL_HELP
+
+ builtin/grep.c     | 17 +----------------
+ builtin/show-ref.c | 12 +-----------
+ parse-options.c    | 40 ++++++++++++++++++++--------------------
+ parse-options.h    |  2 +-
+ 4 files changed, 23 insertions(+), 48 deletions(-)
+
+-- 
+2.6.3
