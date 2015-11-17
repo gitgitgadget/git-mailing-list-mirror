@@ -1,86 +1,71 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: [BUG] pre-applypatch can no longer add to staging area
-Date: Wed, 18 Nov 2015 15:15:41 +1300
-Message-ID: <CAFOYHZB_2EfFkO0_PtQXYmh9wbUcZPEtEFDiE-mzotgmm+3TCQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Paul Tan <pyokagan@gmail.com>
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 18 03:15:48 2015
+From: John Keeping <john@keeping.me.uk>
+Subject: [RFC/PATCH] send-email: die if CA path doesn't exist
+Date: Tue, 17 Nov 2015 22:12:07 +0000
+Message-ID: <27f354a4edb166e42006b0c1f778827a3dfd58ac.1447798206.git.john@keeping.me.uk>
+Cc: John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 18 03:24:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZysHi-000625-Sp
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 03:15:47 +0100
+	id 1ZysPm-0001Rl-Sc
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 03:24:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754266AbbKRCPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 21:15:42 -0500
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:33006 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753292AbbKRCPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 21:15:42 -0500
-Received: by igvi2 with SMTP id i2so109934657igv.0
-        for <git@vger.kernel.org>; Tue, 17 Nov 2015 18:15:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=JbyYTeYlS4N/H66GdU2c4yJYIlWVzUiN0an+AA0dLXQ=;
-        b=T5PxNno9Hm8GUuXlXUPvMBHeF77AatuUFEJ8MLxgtnaDh0PURZJqz6QStV+3ZUQjBD
-         jyLUtoygZkFP6WgoZDIMcbhhSvQYtN0YOfCCT+8ixkD2gPq1x22pXP9KNoFFp1sW+8TG
-         V8076aldsQJzaSMvxypuSPIkMqxbSUSRRpwIN5V8zUufDvkImsjSLZNfx79Qtj6QCWCj
-         hcTcRJwIr8Jc9NnPX/Rii8X/bkgR+lETpPYrddrSmfkm2V/V7MSndI2eY6raoHtL+im3
-         9OZHTXZCQ1OSbsvtYXWSxj3Sr8iPSkf04QyuCVV6EWtsJxrrX9pbOtlQuP0yCUA2uS+K
-         vurg==
-X-Received: by 10.50.4.33 with SMTP id h1mr761269igh.24.1447812941455; Tue, 17
- Nov 2015 18:15:41 -0800 (PST)
-Received: by 10.79.84.195 with HTTP; Tue, 17 Nov 2015 18:15:41 -0800 (PST)
+	id S1752420AbbKRCYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 21:24:00 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:33413 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751746AbbKRCX7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 21:23:59 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 1491F9624C9;
+	Wed, 18 Nov 2015 00:14:02 +0000 (GMT)
+X-Quarantine-ID: <CDbRDkIpvzCB>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.199
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id CDbRDkIpvzCB; Wed, 18 Nov 2015 00:14:00 +0000 (GMT)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 5D00E86A292;
+	Tue, 17 Nov 2015 22:12:20 +0000 (GMT)
+X-Mailer: git-send-email 2.6.3.462.gbe2c914
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281438>
 
-Hi,
+If the CA path isn't found it's most likely to indicate a
+misconfiguration, in which case accepting any certificate is unlikely to
+be the correct thing to do.
 
-At $dayjob we've been using a pre-applypatch hook to keep an eye on
-some software metrics as sub-area maintainers receive changes from
-developers. When a particular metric goes up we inform the maintainer
-that they should reject the patch and stop 'git am' from continuing.
-When the metric goes down automatically update the stored metric count
-and include that change in the commit. Prior to git 2.6.3 this was
-working, its probably prior to 2.6.0 the last version I know worked
-was 2.5.3
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ git-send-email.perl | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Consider the following pre-applypatch hook to stop people adding more
-uses of strcpy() to an existing code base.
-
-  #/bin/sh
-  current=$(cat .count)
-  new=$(git grep -c strcpy)
-  if test "$new" -gt "$current"; then
-    echo "Bad patch"
-    exit 1
-  fi
-
-  if  test "$new" -lt "$current"; then
-     echo "Awesome patch"
-     echo "$new" >.count
-     git add .count
-  fi
-
-  exit 0
-
-When a maintainer runs 'git am patch.patch' the hook would run and
-record the new metric value in the staging area before the commit is
-created.
-
-Based on my reading of the pre-applypatch documentation I think this
-is a valid use-case. The hook is invoked with the changes applied but
-before they are committed so it should be OK to add additional changes
-to the staging area as part of the hook. Interestingly with the newer
-git version the change is not even staged.
-
-Thanks,
-Chris
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 8e4c0e1..e057051 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1196,8 +1196,7 @@ sub ssl_verify_params {
+ 		return (SSL_verify_mode => SSL_VERIFY_PEER(),
+ 			SSL_ca_file => $smtp_ssl_cert_path);
+ 	} else {
+-		print STDERR "Not using SSL_VERIFY_PEER because the CA path does not exist.\n";
+-		return (SSL_verify_mode => SSL_VERIFY_NONE());
++		die "CA path does not exist.";
+ 	}
+ }
+ 
+-- 
+2.6.3.462.gbe2c914
