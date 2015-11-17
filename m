@@ -1,94 +1,87 @@
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: Re: [PATCH v2] blame: avoid checking if a file exists on the working
- tree if a revision is provided
-Date: Tue, 17 Nov 2015 17:37:45 -0600
-Message-ID: <CAOc6etbjCYRp4gbSNRtcngwbh93R67JYZHJn0=D=FeiBm5=FNw@mail.gmail.com>
-References: <1447723762-32309-1-git-send-email-eantoranz@gmail.com>
-	<CAPig+cTjg8yvmLO0uuWZt4nATUnfxJOj4f_AmvRP9mHsGRmEOg@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v5 3/6] git-p4: retry kill/cleanup operations in tests
+ with timeout
+Date: Tue, 17 Nov 2015 23:40:01 +0000
+Message-ID: <CAE5ih78ma-71xVgA52LDiWNyPq+tCmXb3GgocO=dF81=yZXuWw@mail.gmail.com>
+References: <1447592920-89228-1-git-send-email-larsxschneider@gmail.com>
+	<1447592920-89228-4-git-send-email-larsxschneider@gmail.com>
+	<CAPig+cQkNB3VzbC_R_T=ppkgvmTbOWnK22hFxyMzJH1DZ_iVhQ@mail.gmail.com>
+	<52A9F66D-12C4-4BB5-A2D4-C476A1E12DC5@gmail.com>
+	<CAPig+cR8igO1bWNgma_yZqrcru_jnKchpRH+i2_AaNj8Atcb9g@mail.gmail.com>
+	<564AF48C.9040406@diamand.org>
+	<CAPig+cT2aBrL6Qh3W3d-ODjj7S0GORkTZMyQ6PBfHCLVqeKBvQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Max Kirillov <max@max630.net>,
-	Jeff King <peff@peff.net>
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 00:37:54 2015
+X-From: git-owner@vger.kernel.org Wed Nov 18 00:40:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zypov-0002gJ-N6
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 00:37:54 +0100
+	id 1Zypr9-0006Mp-4n
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 00:40:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932572AbbKQXhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 18:37:46 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35562 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932526AbbKQXhq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 18:37:46 -0500
-Received: by pacej9 with SMTP id ej9so23495602pac.2
-        for <git@vger.kernel.org>; Tue, 17 Nov 2015 15:37:45 -0800 (PST)
+	id S1754316AbbKQXkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 18:40:04 -0500
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:33064 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752578AbbKQXkD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 18:40:03 -0500
+Received: by obbww6 with SMTP id ww6so20324636obb.0
+        for <git@vger.kernel.org>; Tue, 17 Nov 2015 15:40:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=diamand.org; s=google;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=12wvca4wuSfNZ7GOKfRTlAnUXoJsqjQVrGiwGWIMcyo=;
-        b=rBz3n5yRg+XgDuvFOWUphnkJEhRMZWH7L463TPtuS/VskwAm+UZib+yz6dQaBPIKlb
-         h4qCyY3DRWCfxicbm4jd8gSVNzouyUAmqn9LjevcWczHGVxQWsDpWenNaeptQZsJTaPC
-         0Z8FRIaLuQ5JzGrkM6xXH18zp5vhVuv8uiliDt19vt7ANzOxeab3nXKmQU2x02ULqIlI
-         aegyD4G5NT6YEWIeQmO2opvOUqrLJPNx8KlC7/HQB4shvw4BWnolJq35Lgj5FLWY0d51
-         SU2InbirvApjL/QyZbxBR5G7ges9rxm59wk6ULPSRvT+xEnqCnlUeJPMEy7I8TBXE4/M
-         tABA==
-X-Received: by 10.68.165.131 with SMTP id yy3mr22708545pbb.163.1447803465348;
- Tue, 17 Nov 2015 15:37:45 -0800 (PST)
-Received: by 10.66.97.70 with HTTP; Tue, 17 Nov 2015 15:37:45 -0800 (PST)
-In-Reply-To: <CAPig+cTjg8yvmLO0uuWZt4nATUnfxJOj4f_AmvRP9mHsGRmEOg@mail.gmail.com>
+        bh=QO+TkeNXGBGGA4qWufEG6eRv910ijOSVuo/4wTBmbrg=;
+        b=Q1BqA+mygbgNLS6yIwjwJhejy5OanfCeQQyTFrCkwnYiK4QeXZyczvZXzxvEPRmCWh
+         yPVGjZDU25purt+7kn52/+oz0Zdnccn7ecNTAC1T+zkwT/XEWCqvBOkVDHW1D0K+K7A/
+         /fn64JP8Ir09CeZREbo/NiOXG/YbWbpt8EFrU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=QO+TkeNXGBGGA4qWufEG6eRv910ijOSVuo/4wTBmbrg=;
+        b=TnQX+KKv2vxbaZmHtXnf0COunNLry1PEzrw00CKtARBJ8ikRhisBDY0BnHbcsl4vXl
+         XvFx8N6DccqgfyO32d3TmspLbphGONFuE/Y2eH6+C5M21Svte+02yw7DgPHOd2u1fme4
+         jwzABm2zDroMFasdYTPq5InWHL2ImcSYb0PJJFaXZyZJQywV+Xy7OftTwH2THnsiZpyD
+         W5YS/9ukzmOaG5hd7oa2Uy7TS3SFJ7cXtp3DpEKJvWwzwleYubUM4JYPCzNlalEh1Ooa
+         40OElVL07MhsVVMZOKa5MP0y9tsTzYDxVgZFTkwrUxWJxq7ad2b5Tzdz8mTSgYmrYcPr
+         1KJA==
+X-Gm-Message-State: ALoCoQkc9mNScpwV6eW2wDLr53iEC8vcZgG0TQCXq5ObI/GUtN1tPXxkiLqSYoQUqDJikJugOKPE
+X-Received: by 10.182.33.98 with SMTP id q2mr29253650obi.20.1447803601842;
+ Tue, 17 Nov 2015 15:40:01 -0800 (PST)
+Received: by 10.60.141.40 with HTTP; Tue, 17 Nov 2015 15:40:01 -0800 (PST)
+In-Reply-To: <CAPig+cT2aBrL6Qh3W3d-ODjj7S0GORkTZMyQ6PBfHCLVqeKBvQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281431>
 
-On Mon, Nov 16, 2015 at 11:11 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>
+>> Which other platforms are we talking about here?
+>>
+>> https://www.perforce.com/downloads/helix
+>>
+>> From there, you can get Solaris10, HP-UX, AIX and various flavours of BSD.
+>> Solaris supports "date +%s".
 >
-> This subject is a bit long; try to keep it to about 72 characters or less.
+> The question about "date +%s" portability arose with a suggestion to
+> employ it in git-filter-branch[1]. Apparently, the concern about
+> Solaris was raised in response to a Stack Overflow question[2] which
+> claimed that +%s was not supported by that OS. Unfortunately, however,
+> [2] did not indicate to which (older?) versions of Solaris that
+> shortcoming applied. If Solaris 10 does support +%s, and the Perforce
+> product is only available for Solaris 10, then perhaps concern about
+> +%s a non-issue(?).
 >
-> More importantly, though, it doesn't give us a high level overview of
-> the purpose of the patch, which is that it is fixing blame to work on
-> a file at a given revision even if the file no longer exists in the
-> worktree.
+> [1]: http://git.661346.n2.nabble.com/FEATURE-REQUEST-Filter-branch-extend-progress-with-a-simple-estimated-time-remaning-td7638200.html#a7638504
+> [2]: http://stackoverflow.com/questions/2445198/get-seconds-since-epoch-in-any-posix-compliant-shell
 
-Sure!
-
-> git-blame documentation does not advertise "blame <file> <rev>" as a
-> valid invocation. It does advertise "blame <rev> -- <file>", and this
-> case already works correctly even when <file> does not exist in the
-> worktree.
->
-> git-annotate documentation, on the other hand, does advertise
-> "annotate <file> <rev>", and it fails to work when <file> is absent
-> from the worktree, so perhaps you want to sell this patch as fixing
-> git-annotate instead?
-
-So, do I forget about the blame patch (given that I'm not fixing an
-advertised syntax, even if it's supported) and fix annotate instead or
-do I fix both? And if I should swing for both, do I create a single
-patch or a chain of two patches, one for each builtin?
-
-> This example is certainly illustrative, but an even more common case
-> may be trying to blame/annotate a file which existed in an older
-> revision but doesn't exist anymore at HEAD, thus is absent from the
-> worktree. Such a case could likely be described in a sentence or two
-> without resorting to verbose examples (though, not a big deal if you
-> keep the example).
-
-K.
-
->
-> A new test or two would be welcome, possibly in t/annotate-tests.sh if
-> you consider this also fixing git-blame, or in t8001-annotate.sh if
-> you're selling it only as a fix for git-annotate.
-
-I guess I'll wait for feedback about my first question before I decide
-what I will do about the tests.
-
-Thank you very much for your comments, Eric.
+Rereading the man page more carefully, you're right, Solaris 10
+doesn't do "%s". Using python to get the seconds should work though.
