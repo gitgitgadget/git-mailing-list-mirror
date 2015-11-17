@@ -1,79 +1,127 @@
 From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 0/5] parse-options: allow -h as a short option
-Date: Tue, 17 Nov 2015 11:19:30 +0100
-Message-ID: <564AFF32.1030406@web.de>
+Subject: [PATCH 1/5] parse-options: deduplicate parse_options_usage() calls
+Date: Tue, 17 Nov 2015 11:25:14 +0100
+Message-ID: <564B008A.9000102@web.de>
+References: <564AFF32.1030406@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 17 11:20:13 2015
+X-From: git-owner@vger.kernel.org Tue Nov 17 11:25:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZydMx-00054u-59
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 11:20:11 +0100
+	id 1ZydSL-0004Gz-BS
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 11:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751847AbbKQKUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 05:20:05 -0500
-Received: from mout.web.de ([212.227.15.3]:58075 "EHLO mout.web.de"
+	id S1753573AbbKQKZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 05:25:39 -0500
+Received: from mout.web.de ([212.227.17.12]:61262 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751628AbbKQKUB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 05:20:01 -0500
-Received: from [192.168.178.36] ([79.253.153.213]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0Lz2vo-1aTAtN2cxU-014ERI; Tue, 17 Nov 2015 11:19:37
+	id S1753555AbbKQKZh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 05:25:37 -0500
+Received: from [192.168.178.36] ([79.253.153.213]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MFc1h-1aCiTk0Iar-00EZuL; Tue, 17 Nov 2015 11:25:21
  +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
  Thunderbird/38.3.0
-X-Provags-ID: V03:K0:sq7HySWL3DcdyP7xwjEbsiDaoVlhgHqDPN4nvoRfhJ881UPjkcw
- zQUuoXx4xHqhplIbMJuM2RdTdQ681LKOoNY9LR8fz221QjOF+CeQY3tDfDmJQSA0o1rdTIn
- xyVkmYYjZTCx7FWj7tiyW3X766gXimCwiA8qzV+YMLG9bVKRQ7F5ETt/AZyEzy9JGcORMDK
- Lk79j69ESQgiIxhwdZNyA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Vbe7VdFa3Jg=:UTLGATn/tExvI6KFZ5gjBC
- SLY+o6Ji5kvVW+QOxbjrGDTF120pnhqwaE5YRDXZEnFFWLl5cHuvKLgqUjL2YjW65UJ5CFNQg
- uIhgBWaY1w5wnT0qJJKEt7UyCDQANLtZ2HCeWBBEn1ksZKjjwTVCw8N4oH6F50u5ZMXdEkLLf
- wpfeHuvwFMxG1edEaM5KwlWQa3MIPj5gSHFOFCey9cEAZiUBHNMlva1s145GevF5vtqGgloua
- Raw79CCrwyuYtisgppENQhp2OEzM3IgIx4U9208G2Pq3m+8RVBxgPzr4IT7kheJGE2ZNvMBjo
- hojpX8V0HmywvMDu+hoVSZc0ZW/ZwfwtezbRYVK3Smb81XItGXIKAbG/8/ASfCsO/9jgBV+ZB
- I1smtoPd6v/Sahdnqm+QoPHL4knCLWXmXYkiAkmvt/fWdI/GeguW08tfUINfVJBQiSgB3BFNo
- S7l5EcolT/IJ/dllM8Q+uSRtVPAu1qnbRYvP9AWGDC3sT3JReJeDv/NPRtMMtVlwBpRCn5v0c
- 5QlHXU6PqAkYRHhJ16S8YRuYptd/yiDyKK8NAXqfJlGWtVKEApB7mhDZha7OUsAdfSR6IjMRf
- Lw4H+fvqWmEan8Fx8gsyK9vqWHdFUqCMwZFgyq9Uoc3AOrUJ+Fe8qMYWJJpwQJdTGp1Uep/v2
- p64c2zowoEjKzblrp3KDE4TrdF7MPG2UWgx5xBF0TuKRUEhO9LLh1OdEh32i2cgVjqt2b8B9A
- O8NJoRq1wwUuAPtVwzr0D/eszTKDImZy5a8tEwtVvXyP6Jv4h8H2gORCAzw9C6VaTaZ4ghCL 
+In-Reply-To: <564AFF32.1030406@web.de>
+X-Provags-ID: V03:K0:kExfIGuy+dCmfTsMR/DPs3+t6SqVyIc1+e93k5Y8xBi5cn0FZTt
+ /8ukD7KnJxS7E0VVCiHAileRtGS2Flv5ytjXUVYTJrUgJIQ9zn08EcvUUOJZzmshTWStCFU
+ NgjErpsite/ShJdCU2I6nayeElQeam8cVuhfmB4QuOMd75Tvb3J1+cR6fJ0TGhN7mACTKVL
+ ndTQEWlEwpAUgQuSK6KwA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:t1NH5nkfpfY=:89d90x5ULvr2HErHtwi8LE
+ LWovFAVPjastgV5oSp+VP7g0qjlnBoUWGGvcq0bdB1m+LHJw+p+ZLY6S2ATV3fj5pT8Q1+2Fm
+ wtTXTdJyJcLdQcWKC8sjLvndMKlY73Pud8kpocYlfQnq1yEcLCQwYFCcMNWhS+nbgXhKMqY/u
+ xaTqNa8KJl2TFyMJAfVPuxfVJ+Lv6ww8jEpvNhsNTTIG3c4cplf1TqloGv0nK22CYAM8uOfJQ
+ gIKB4v7biTHCuaRfMNf4YztmJ1kaP2BPSFl2ZhaEP5NN46+Oowqlie0g1J9ry9eNEeeADI94S
+ PHMvNIXO6lJRVqdn3/zXx5XRYK1SehWDCVtCIHZHtJ0qLSxeyxS3Uv1+FVpB/64kYdCp/Ei7r
+ B5Bek2hvtxXDes+7lAbz9FljNcecnhv/A2DogGujr8cG3VqSYLTFXwMFYiOYmVKOgm6MwlOO0
+ v51F2RzvsfiURIDz08/+iHNrzxPw9Vq4edKXTRkEaf5i36Ix4t6ZTANz++3pi9O3Dr1qcDwwA
+ 3j19sZ+/bapoTC2M8rLx7Oq3LpE++iyw1Zr+DvDVNnyk79uIvmx9UkeG04UwA4hZxYdWeiUfk
+ uz5Fm7B6MKPs/W/BUl212cwzWYMixD+xh4TA1UZpP4+PKw86G0QdsvTyyJR8H1sro4Lw+/Krp
+ JWaxkw6UkCiloprl+VSCk56637qFKjctbYxBS4qJNOe8aQbCDkMWmdm8QzoX/4KTGAAGrXCOU
+ BdJiiYsE4aBfCTV5KPUuZRDEbCSWJyqw9QdeAGFMw8dGgEiQNWJstVp3rYG9XscLur2+hzIv 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281395>
 
-The short option -h is hard-wired in parseopt to list the options of
-a command together with a short explanation.  If -h is to be given a
-different meaning then the flag PARSE_OPT_NO_INTERNAL_HELP has to be
-specified, which turns off handling for -h, --help and --help-all
-(except that --help handling is effectively overridden by git.c, but
-that's a different story).
+Avoid long lines and repeating parse_options_usage() calls with their
+duplicate parameters by providing labels with speaking names to jump to.
 
-Most commands that do that, grep and show-ref in particular, still show
-the usage when -h is specified as the only parameter and with --help-all
-by  implementing explicit handlers for them.  This series makes it
-easier for them by letting them override -h handling without any flag.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ parse-options.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-Rene Scharfe (5):
-  parse-options: deduplicate parse_options_usage() calls
-  parse-options: inline parse_options_usage() at its only remaining caller
-  parse-options: allow -h as a short option
-  grep: stop using PARSE_OPT_NO_INTERNAL_HELP
-  show-ref: stop using PARSE_OPT_NO_INTERNAL_HELP
-
- builtin/grep.c     | 17 +----------------
- builtin/show-ref.c | 12 +-----------
- parse-options.c    | 40 ++++++++++++++++++++--------------------
- parse-options.h    |  2 +-
- 4 files changed, 23 insertions(+), 48 deletions(-)
-
+diff --git a/parse-options.c b/parse-options.c
+index 3eceba4..f0b6d9b 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -435,6 +435,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 		       const char * const usagestr[])
+ {
+ 	int internal_help = !(ctx->flags & PARSE_OPT_NO_INTERNAL_HELP);
++	int err = 0;
+ 
+ 	/* we must reset ->opt, unknown short option leave it dangling */
+ 	ctx->opt = NULL;
+@@ -454,10 +455,10 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 		if (arg[1] != '-') {
+ 			ctx->opt = arg + 1;
+ 			if (internal_help && *ctx->opt == 'h')
+-				return parse_options_usage(ctx, usagestr, options, 0);
++				goto show_usage;
+ 			switch (parse_short_opt(ctx, options)) {
+ 			case -1:
+-				return parse_options_usage(ctx, usagestr, options, 1);
++				goto show_usage_error;
+ 			case -2:
+ 				if (ctx->opt)
+ 					check_typos(arg + 1, options);
+@@ -467,10 +468,10 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 				check_typos(arg + 1, options);
+ 			while (ctx->opt) {
+ 				if (internal_help && *ctx->opt == 'h')
+-					return parse_options_usage(ctx, usagestr, options, 0);
++					goto show_usage;
+ 				switch (parse_short_opt(ctx, options)) {
+ 				case -1:
+-					return parse_options_usage(ctx, usagestr, options, 1);
++					goto show_usage_error;
+ 				case -2:
+ 					/* fake a short option thing to hide the fact that we may have
+ 					 * started to parse aggregated stuff
+@@ -496,10 +497,10 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 		if (internal_help && !strcmp(arg + 2, "help-all"))
+ 			return usage_with_options_internal(ctx, usagestr, options, 1, 0);
+ 		if (internal_help && !strcmp(arg + 2, "help"))
+-			return parse_options_usage(ctx, usagestr, options, 0);
++			goto show_usage;
+ 		switch (parse_long_opt(ctx, arg + 2, options)) {
+ 		case -1:
+-			return parse_options_usage(ctx, usagestr, options, 1);
++			goto show_usage_error;
+ 		case -2:
+ 			goto unknown;
+ 		}
+@@ -511,6 +512,11 @@ unknown:
+ 		ctx->opt = NULL;
+ 	}
+ 	return PARSE_OPT_DONE;
++
++ show_usage_error:
++	err = 1;
++ show_usage:
++	return parse_options_usage(ctx, usagestr, options, err);
+ }
+ 
+ int parse_options_end(struct parse_opt_ctx_t *ctx)
 -- 
 2.6.3
