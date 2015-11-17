@@ -1,95 +1,73 @@
 From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: [PATCH v1] blame: avoid checking if a file exists on the working tree if a revision is provided
-Date: Mon, 16 Nov 2015 19:07:17 -0600
-Message-ID: <1447722437-14937-1-git-send-email-eantoranz@gmail.com>
-Cc: max@max630.net, peff@peff.net,
+Subject: Re: [PATCH v1] blame: avoid checking if a file exists on the working
+ tree if a revision is provided
+Date: Mon, 16 Nov 2015 19:16:33 -0600
+Message-ID: <CAOc6etbsqZ=gTGido2b3FXZyY+1JRkeF1O9pk37+7qOogaN6oA@mail.gmail.com>
+References: <1447722437-14937-1-git-send-email-eantoranz@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: max@max630.net, Jeff King <peff@peff.net>,
 	Edmundo Carmona Antoranz <eantoranz@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 17 02:07:34 2015
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 17 02:16:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyUk9-0002sc-Ve
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 02:07:34 +0100
+	id 1ZyUsw-0007jQ-BB
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 02:16:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751946AbbKQBH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Nov 2015 20:07:29 -0500
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:35953 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751053AbbKQBH2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Nov 2015 20:07:28 -0500
-Received: by ykdr82 with SMTP id r82so269024830ykd.3
-        for <git@vger.kernel.org>; Mon, 16 Nov 2015 17:07:28 -0800 (PST)
+	id S1752125AbbKQBQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Nov 2015 20:16:34 -0500
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:33200 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751786AbbKQBQd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Nov 2015 20:16:33 -0500
+Received: by pabfh17 with SMTP id fh17so195649648pab.0
+        for <git@vger.kernel.org>; Mon, 16 Nov 2015 17:16:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=H2UOhyyhvB+PLaxq31JdwxtdXVDhm5CeplyS+eSjlZc=;
-        b=QddPy6R4b0bHFxGjLftAHosMWTrLI1AO9F9PJ4sNjH94rFICnh7DUD7XAPo4uvS+gZ
-         0ShUVjHwQQ1Z2h4RZ8aPd8RJMc+sUSbU0mgA/04obz+wEn5Qt8BrXuqdwt9KxmD6rfwb
-         FDX4zz8+VMRbZzFmUU8EMrd60AzGzsvH2JqNEEk2dqt+UtyrX5M1aScilskGgBqI6t4l
-         rxj9+v6dTze1oiD6+X/7UmhhqhlQkX2oUnso+FWTqo95dVuIRpnXer8sLTUAEQw4m+3G
-         rBhFUZancODpBpI0vm8Dlhn3ZfkPcxafA5kZMEuKvtANDWgZKvM5UsFJSiP1IYw/FpnW
-         vCQA==
-X-Received: by 10.129.124.130 with SMTP id x124mr37900755ywc.34.1447722447872;
-        Mon, 16 Nov 2015 17:07:27 -0800 (PST)
-Received: from linuxerio.cabletica.com (ip157-11-15-186.ct.co.cr. [186.15.11.157])
-        by smtp.gmail.com with ESMTPSA id e66sm8114143ywd.33.2015.11.16.17.07.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 16 Nov 2015 17:07:27 -0800 (PST)
-X-Mailer: git-send-email 2.6.2
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=jskSemX8PnwDUTLf6jU4yp+o0xm7rVDDqglA7dcPxto=;
+        b=JpaleiQHVRIdgkox4PojpNRa6vZl893DEbTQJh1o2TGo/PLKGwFRPbDag6AhAQTFRW
+         c5e67f3PB+YsXrsQO/hRgHcq5rv0fdwauWFjQ2yJ9U2dLhVBxUIJcQU3S27pMZFAd041
+         TtOnvFVGeF4m44RL2SEqf57SlN5No3EfPzjMR7yxBHwTGzDwQAOxOe5/RG1c1nNukVe/
+         sOhoiTPgS5E1rMWfScip3dwgoGqyowxp+UghiOP+PaLIEvJMdBfZ8oyK1Tf56CmUW72R
+         nq1YLtGkUhJjAiM7Q8CZfUHYPiHA2nT18bG0vgToRzRlF+47W6SLA90hqI5VcicngL9X
+         0C5w==
+X-Received: by 10.66.62.202 with SMTP id a10mr58216954pas.131.1447722993448;
+ Mon, 16 Nov 2015 17:16:33 -0800 (PST)
+Received: by 10.66.97.70 with HTTP; Mon, 16 Nov 2015 17:16:33 -0800 (PST)
+In-Reply-To: <1447722437-14937-1-git-send-email-eantoranz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281378>
 
-If a file has been deleted/renamed, blame refused to display
-blame content even if the path provided does match an existing
-blob on said revision.
+On Mon, Nov 16, 2015 at 7:07 PM, Edmundo Carmona Antoranz
+<eantoranz@gmail.com> wrote:
+> -               if (!file_exists(path))
+> -                       die_errno("cannot stat path '%s'", path);
 
-$ git status
-On branch hide
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
+Two things:
+1
+What I would love to do is check if revisions were provided. Something like:
 
-        deleted:    testfile1.txt
+if (no_revisions() && !file_exists(path))
+    die_errno("cannot stat path '%s'", path);
 
-no changes added to commit (use "git add" and/or "git commit -a")
+_but_ revisions are set up a little bit later. I don't know right now
+if I could just move it up (I don't think it would be that simple
+because I see there's some messing up with argv and argc in that 'if'
+that encloses the lines I'm removing). Maybe it would make sense to
+move the check for file existence to _after_ revisions have been set
+up? Even without the check for revisions, it's behaving kind of the
+way I mean it to. But I'm sure it'd be more elegant if I checked if
+revisions were provided.
 
-Before:
-$ git blame testfile1.txt
-fatal: cannot stat path 'testfile1.txt': No such file or directory
-$ git blame testfile1.txt HEAD
-fatal: cannot stat path 'testfile1.txt': No such file or directory
+2 It makes sense to create test cases for this patch, right?
 
-After:
-$ git blame testfile1.txt
-fatal: Cannot lstat 'testfile1.txt': No such file or directory
-$ git blame testfile1.txt HEAD
-^da1a96f testfile2.txt (Edmundo Carmona Antoranz 2015-11-10 17:52:00 -0600 1) testfile 2
-^da1a96f testfile2.txt (Edmundo Carmona Antoranz 2015-11-10 17:52:00 -0600 2)
-^da1a96f testfile2.txt (Edmundo Carmona Antoranz 2015-11-10 17:52:00 -0600 3) Some content
-
-Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
----
- builtin/blame.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 83612f5..db430d5 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2683,8 +2683,6 @@ parse_done:
- 		argv[argc - 1] = "--";
- 
- 		setup_work_tree();
--		if (!file_exists(path))
--			die_errno("cannot stat path '%s'", path);
- 	}
- 
- 	revs.disable_stdin = 1;
--- 
-2.6.2
+Looking forward to your comments. Thanks in advance.
