@@ -1,87 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones
- fail
-Date: Tue, 17 Nov 2015 16:43:48 -0500
-Message-ID: <20151117214347.GB27862@sigill.intra.peff.net>
-References: <1447321061-74381-1-git-send-email-larsxschneider@gmail.com>
- <20151113053547.GD29708@sigill.intra.peff.net>
- <CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
- <CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
- <20151113233807.GD16173@sigill.intra.peff.net>
- <20151113234116.GA18234@sigill.intra.peff.net>
- <CAGZ79kaUZ08GXZjKtYNmRYOCQ0EQpsGd8+6PYFDU1LxYLw818g@mail.gmail.com>
- <564A279C.6000802@web.de>
- <CAGZ79kbh_8oBRnQAmDzh3LANS6iGXNjLkYMLfuk9iysXghHQXg@mail.gmail.com>
- <CACsJy8D-TRJ---4BYrEZeEkd9_5-xgGp4U0nB9YHNtV3zgxrbg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 17 22:44:02 2015
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 0/2] send-email config path expansion
+Date: Tue, 17 Nov 2015 22:01:04 +0000
+Message-ID: <cover.1447797487.git.john@keeping.me.uk>
+Cc: John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 17 23:10:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zyo2d-0005TS-43
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 22:43:55 +0100
+	id 1ZyoST-0001vq-0e
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Nov 2015 23:10:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932216AbbKQVnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 16:43:51 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58950 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752730AbbKQVnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 16:43:50 -0500
-Received: (qmail 10573 invoked by uid 102); 17 Nov 2015 21:43:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Nov 2015 15:43:50 -0600
-Received: (qmail 30101 invoked by uid 107); 17 Nov 2015 21:44:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 17 Nov 2015 16:44:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Nov 2015 16:43:48 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8D-TRJ---4BYrEZeEkd9_5-xgGp4U0nB9YHNtV3zgxrbg@mail.gmail.com>
+	id S932376AbbKQWKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 17:10:30 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:54479 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932355AbbKQWK2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 17:10:28 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 5FFE09621FC;
+	Tue, 17 Nov 2015 22:04:48 +0000 (GMT)
+X-Quarantine-ID: <16bQHjRz0wd9>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 16bQHjRz0wd9; Tue, 17 Nov 2015 22:04:47 +0000 (GMT)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 22BC58E2731;
+	Tue, 17 Nov 2015 22:01:11 +0000 (GMT)
+X-Mailer: git-send-email 2.6.3.462.gbe2c914
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281422>
 
-On Tue, Nov 17, 2015 at 09:17:43PM +0100, Duy Nguyen wrote:
+These two patches enable tilde-expansion for a few more config variables
+in git-send-email.
 
-> On Mon, Nov 16, 2015 at 8:25 PM, Stefan Beller <sbeller@google.com> wrote:
-> > Instead of having to search all branches for the requested sha1, we could have
-> > some sort of data structure to make it not an O(n) operation (n being
-> > all objects
-> > in the repo).
-> >
-> > Maybe I overestimate the work which needs to be done, because the server has
-> > bitmaps nowadays.
-> 
-> Quote from [1]
-> 
-> > If we take the kernel history in rev-list and pick two commits that
-> > are roughly ~10,000 commits apart from one another, JGit can compute
-> > the rev-list --objects between these two commits in about 120
-> > milliseconds (git-core should be faster, or at least comparable).
-> 
-> I think we should be fine (note that --objects is a lot heavier than
-> commit walking). Though.. I just tried it on git.git. 10k commits
-> (without --objects) take about 200ms with C Git..
+The first case is the one that surprised me when it didn't work, the
+second two are the other ones that look like they should be handled as
+paths.
 
-A lot of this depends on the endpoints. We can't store bitmaps for every
-commit, so we often have to fall back to traversing from the commit,
-collecting reachable objects until we hit a commit that does have
-bitmaps.
+John Keeping (2):
+  send-email: expand path in sendemail.smtpsslcertpath config
+  send-email: expand paths in sendemail.{to,cc}cmd config
 
-I think the for the purposes of upload-pack and reachability, it might
-be fine to just walk commits, which as you note is much cheaper. The C
-git bitmap code does not currently have a way to say "I only care about
-commits, do not bother filling in the trees and blobs when you have to
-do a fallback traversal". But it would not be hard to add, I think.
+ git-send-email.perl | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
--Peff
+-- 
+2.6.3.462.gbe2c914
