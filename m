@@ -1,119 +1,99 @@
-From: Johannes =?utf-8?B?TMO2dGhiZXJn?= <johannes@kyriasis.com>
-Subject: Re: Three dot notion used inconsitent?
-Date: Wed, 18 Nov 2015 12:02:13 +0100
-Message-ID: <20151118110213.GA24055@zorg.kyriasis.com>
-References: <1CDF2D38-B73A-4C49-BC10-1F3BA1873733@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones fail
+Date: Wed, 18 Nov 2015 13:32:36 +0100
+Message-ID: <CACsJy8Ah2PgO8CunCvWiKB7RfqMfovWa1a7ro5scHFK+AEAXpg@mail.gmail.com>
+References: <1447321061-74381-1-git-send-email-larsxschneider@gmail.com>
+ <20151113053547.GD29708@sigill.intra.peff.net> <CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
+ <CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
+ <20151113233807.GD16173@sigill.intra.peff.net> <20151113234116.GA18234@sigill.intra.peff.net>
+ <CAGZ79kaUZ08GXZjKtYNmRYOCQ0EQpsGd8+6PYFDU1LxYLw818g@mail.gmail.com>
+ <564A279C.6000802@web.de> <CAGZ79kbh_8oBRnQAmDzh3LANS6iGXNjLkYMLfuk9iysXghHQXg@mail.gmail.com>
+ <CACsJy8D-TRJ---4BYrEZeEkd9_5-xgGp4U0nB9YHNtV3zgxrbg@mail.gmail.com> <20151117214347.GB27862@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2fHTh5uZTiUOsy+g"
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 12:02:46 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Beller <sbeller@google.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 18 13:33:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zz0Vg-0003Jz-6P
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 12:02:44 +0100
+	id 1Zz1vF-00068o-NQ
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 13:33:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754594AbbKRLCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2015 06:02:35 -0500
-Received: from theos.kyriasis.com ([212.71.254.33]:51842 "EHLO
-	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754537AbbKRLCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2015 06:02:16 -0500
-Received: from theos.kyriasis.com (localhost [127.0.0.1])
-	by theos.kyriasis.com (OpenSMTPD) with ESMTP id f40ef087;
-	Wed, 18 Nov 2015 11:02:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=date:from
-	:to:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=theos; bh=crajkjJvYLg4dwdR34KapS31F/c=; b=sjGpr/
-	rfvMM0j5WTUjZ1LLSHIoUd5cA0t+TaeXx2XR2gxlqLsk1A+KXYBRGj9CP1MAFyS6
-	SMqR8EobIb6KTTXGfFHnx2ad6UFIk4rgvIhq+ui4pQtsrEXBrWtZCBE9yxygGohU
-	M0yw+xs9in8FqmXKLQZzVNrKpbTEEI9i9LDRk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=date:from:to
-	:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=theos; b=YPsfv1zBib5khqFqq14xFRrnlXUYgLAU
-	Hx/MNIjIqkDmnaDnmEUP37lp2MipS/QHMo+7EFt1qHP5vWNXM+7/PLC6LpgxFmpt
-	MqcaUfI3YAb6yVU2VU3pt49XWQN6LhWH/F/VmRlZTxdMeDonaSz4GGm0SJo375ub
-	0fscfjNnrA4=
-Received: from zorg.kyriasis.com (c80-217-51-233.bredband.comhem.se [80.217.51.233])
-	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id 132ff06e
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	Wed, 18 Nov 2015 11:02:14 +0000 (UTC)
-Mail-Followup-To: Lars Schneider <larsxschneider@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <1CDF2D38-B73A-4C49-BC10-1F3BA1873733@gmail.com>
-User-Agent: Mutt/1.5.23.1 (2014-03-12)
+	id S1752988AbbKRMdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2015 07:33:09 -0500
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:34424 "EHLO
+	mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751122AbbKRMdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2015 07:33:08 -0500
+Received: by lffu14 with SMTP id u14so25301647lff.1
+        for <git@vger.kernel.org>; Wed, 18 Nov 2015 04:33:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=57rQIHWMswgDN7l4o6NQhF4xgbaxeJdVyx6nX77J4Wg=;
+        b=oKTz98DNi8ij9k4ssg6p1nAZO5NOJkW5n50WIq53mTDKI3GnxNFgbvpdEWYdU1vf22
+         F142Ol24+WdWB26FnbWGbWA7THQwt/901xun3cb2h23koiwvuYQp98o6JavDimQp/lmI
+         FeJvaAvBh8lGUaJz47/PSRV+IxK9jyO98H8szK78bQesdwONN7v8k98e5UyOO7frDa9D
+         VTBycEocJsx9FqBVB5Tzmn5iuqcMI3natx6C9m75vlnnO4TCUZnH4byAb9dEPfrfQcSj
+         X1tj7p4WadxJ8lKjs22iphLscgDWR1QnneeyGM9RmqCh7Zm6LpQHv0/ioFocKisd9LkB
+         3H+g==
+X-Received: by 10.25.43.149 with SMTP id r143mr569892lfr.45.1447849986043;
+ Wed, 18 Nov 2015 04:33:06 -0800 (PST)
+Received: by 10.112.255.229 with HTTP; Wed, 18 Nov 2015 04:32:36 -0800 (PST)
+In-Reply-To: <20151117214347.GB27862@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281448>
 
-
---2fHTh5uZTiUOsy+g
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 18/11, Lars Schneider wrote:
->git diff branchA...branchB
->--> gives me the diff between (the common ancestor of A and B) and B. That=
- means I never see changes on branchA.
+On Tue, Nov 17, 2015 at 10:43 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Nov 17, 2015 at 09:17:43PM +0100, Duy Nguyen wrote:
 >
->git log branchA...branchB
->--> gives me the commits reachable from A and B. That includes changes fro=
-m branchA.
+>> On Mon, Nov 16, 2015 at 8:25 PM, Stefan Beller <sbeller@google.com> wrote:
+>> > Instead of having to search all branches for the requested sha1, we could have
+>> > some sort of data structure to make it not an O(n) operation (n being
+>> > all objects
+>> > in the repo).
+>> >
+>> > Maybe I overestimate the work which needs to be done, because the server has
+>> > bitmaps nowadays.
+>>
+>> Quote from [1]
+>>
+>> > If we take the kernel history in rev-list and pick two commits that
+>> > are roughly ~10,000 commits apart from one another, JGit can compute
+>> > the rev-list --objects between these two commits in about 120
+>> > milliseconds (git-core should be faster, or at least comparable).
+>>
+>> I think we should be fine (note that --objects is a lot heavier than
+>> commit walking). Though.. I just tried it on git.git. 10k commits
+>> (without --objects) take about 200ms with C Git..
 >
->Is this because of a design decision that I do not (yet) understand or is =
-this inconsistent for historical reasons?
+> A lot of this depends on the endpoints. We can't store bitmaps for every
+> commit, so we often have to fall back to traversing from the commit,
+> collecting reachable objects until we hit a commit that does have
+> bitmaps.
 >
+> I think the for the purposes of upload-pack and reachability, it might
+> be fine to just walk commits, which as you note is much cheaper. The C
+> git bitmap code does not currently have a way to say "I only care about
+> commits, do not bother filling in the trees and blobs when you have to
+> do a fallback traversal". But it would not be hard to add, I think.
 
-The standard meaning of A...B is all the commits reachable from A or B,=20
-but not from both. (See gitrevisions(7) for more info.)
-
-git-diff has its own nonstandard definition, where A...B is defined as=20
-all the commits from a comman ancestor of A and B, up to B.
-
---=20
-Sincerely,
-  Johannes L=C3=B6thberg
-  PGP Key ID: 0x50FB9B273A9D0BB5
-  https://theos.kyriasis.com/~kyrias/
-
---2fHTh5uZTiUOsy+g
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQRQBAABCgA6BQJWTFqyMxSAAAAAABUAFXBrYS1hZGRyZXNzQGdudXBnLm9yZ2pv
-aGFubmVzQGt5cmlhc2lzLmNvbQAKCRCQHBwyDrDUXa+uIACC7DxeeUs/Ym7tLCOB
-inTCmNJMrRFmxMfinYWq5iMNcgjZlsIkPU2kAms2uHdvax8D05IYEMqJH0ktZrtX
-uZ2tFiIPsIsnujtF5Xup1Ialoty8uyPKhgqifKt0153JgwydylWv5m2MfnNusru3
-UbD44ecuZEt4uBa9xINlHqo5RTvLGUUaTnLoBn/3ImZ5V2HQvAmhmH+6qyFwHs/Q
-FbBPzH7vaSKECCaGFqnn5nfbcMNXiP26ez5k/Q7BHJwrL7fcyii5hCdvwUS6PutI
-24rbUwlBgmcEjj+OC10a9Bz6NC7wU5ZnRzvv5ZtP3Wgxa//vzeVgZz5wuspLmKmn
-DWeE8n+9RpzrhVBuuX8yBeqxF1B0gTcX02h4DQvgvZp8ykBpL9WO/qP7J73dfgo9
-4iC7keOPDj8q0P1kVLmNs0Dh2ncslo/d/4h7iiX0WpChhpkK/IZbxDOhR89yZWz7
-pieMzMXgTWBDAQ7xvOzJOmR1yjV7W5T+AZxhN9XWj7naU9YS/zS4SLj8sJChJIFr
-iqJ0sQrQameZxCIn0HWQvDpSLjqVPGm878NSqNtoCMXK2vkMTFUB9IJ/YJ49BT9F
-EsiXCIB12yedOwLgYmeqh8VqOaLCMV48+gOiV4QXGZxvQIOortUyIsWsgKIxoKOX
-y0QT/ZG0f314oszu+jXaNJM05W+NertSSsCUDQY46lAkVB5J7IwQwlZoUO7Yk4Ii
-ldeldM437tPBFGgZv6lGYA9igmWll6uisPD4epW4Ui5LELF14Wzk3lgOEHE5/sgn
-8CAkz7I/3na/pyj/8FrURjBuRlbs6eQ7ETNTIdzb8/e//qtH5RrGaCY1VYDouC8x
-jmH5orirO368YSn3cjM88ieco1kk6EcJ9XhdGdtdpOc670hMeZqDRBOXZKqTnU8S
-BhYkv8NgDZKEc3f3EnuPHGYloMWhzJNvXoZXLpH+IBBhfshtg5m/AmgCGPLJKH5v
-byhGufphev7AqA47u75mPsWmSDlvcUTWRxUe4xcUAqnTxczUOaL3Db395+AHB0dQ
-PcOQG0V5jiIMa04Wae43uu8XUGL3wk9w5pQOMUXfhI4JnhPPgytVeAXihEsHpYLO
-JtWiRKQKLUf7YOdK1NkmKeuDPne1pNi024tf9FKi1QDjpMxFgHI0d35nzQZqjDIf
-lXC5XxbBEhj3tFElDjohF3oVVufczduUaUJywZ8l7BGU5q68C9YirfHXMbXB1mVn
-rgUoHHaXGFz68ZHClg6hr85urXlm0Qa81EWIyP4r7Rx98S6fDahPgfNFatgtDLfp
-le0qNMeLp91HXNTZDPBPb3vs8lFjSd3Sk3V1/pO9dukZIdKc5KaydPSfVAGQZnji
-Dv1j
-=WItj
------END PGP SIGNATURE-----
-
---2fHTh5uZTiUOsy+g--
+Yeah I think that was the 10k commits in Shawn's mail: the number of
+commits we may have to walk until we hit a reachability bitmap. It
+looks like C Git will create a bitmap every 5k commits, not 10k,
+though, if I read the code correctly. The point is reachability test
+with the presence of pack bitmaps is not O(n) anymore. Which is
+probably good enough for now.
+-- 
+Duy
