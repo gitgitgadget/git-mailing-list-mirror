@@ -1,98 +1,135 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones fail
-Date: Wed, 18 Nov 2015 13:36:42 -0800
-Message-ID: <CAGZ79kbD54fubzozMD51fTpP1v-6bbBoBtKn=fibLuwMmiioKA@mail.gmail.com>
-References: <CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
-	<CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
-	<20151113233807.GD16173@sigill.intra.peff.net>
-	<20151113234116.GA18234@sigill.intra.peff.net>
-	<CAGZ79kaUZ08GXZjKtYNmRYOCQ0EQpsGd8+6PYFDU1LxYLw818g@mail.gmail.com>
-	<564A279C.6000802@web.de>
-	<CAGZ79kbh_8oBRnQAmDzh3LANS6iGXNjLkYMLfuk9iysXghHQXg@mail.gmail.com>
-	<CACsJy8D-TRJ---4BYrEZeEkd9_5-xgGp4U0nB9YHNtV3zgxrbg@mail.gmail.com>
-	<20151117214347.GB27862@sigill.intra.peff.net>
-	<CACsJy8Ah2PgO8CunCvWiKB7RfqMfovWa1a7ro5scHFK+AEAXpg@mail.gmail.com>
-	<20151118211158.GA32071@sigill.intra.peff.net>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [BUG] gitk --all and git bisect visualize crash in non-english
+ locale
+Date: Wed, 18 Nov 2015 22:53:19 +0100
+Message-ID: <1447883599.28206.1.camel@kaarsemaker.net>
+References: <vpqa8qbrwgc.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>, Terry Parker <tparker@google.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 22:36:58 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Nov 18 22:53:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzAPQ-00047G-Ks
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 22:36:56 +0100
+	id 1ZzAfP-0004yd-Cv
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 22:53:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757202AbbKRVgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2015 16:36:49 -0500
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:34639 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757176AbbKRVgn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2015 16:36:43 -0500
-Received: by ykfs79 with SMTP id s79so86222260ykf.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2015 13:36:42 -0800 (PST)
+	id S1756999AbbKRVxX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Nov 2015 16:53:23 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:36619 "EHLO
+	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751127AbbKRVxW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2015 16:53:22 -0500
+Received: by wmww144 with SMTP id w144so215420515wmw.1
+        for <git@vger.kernel.org>; Wed, 18 Nov 2015 13:53:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Ta6WSpvnyGswwoDa3M2GzQWvUq76oVqhQeXVl50fYvQ=;
-        b=VTc4kCoQTevju8G+MeikPXz00FbyVbZNJ11x6AkVbJfjZyaM9cy995EtVgEBD9qn5C
-         pVYOvLsMuS/m3NiVNGKvFMsn5EQhqLzXpVtc0bb+sXGvbvl8tkFFPB8sITkzB4czLYlN
-         rwyd0zlYBOpoGLJSwkZxpR26q/wcu+4P2wURlPM3EsMSgXtWCGbt6lkxPh3bl1OefSnc
-         kD8umQ0NfewDi3X3aAoxI8n21grsoKvxy0ZiA7nTzSIFTigJzevEHCVuNNdgEA92qvsc
-         XznSuYegjgYh2MLiTdN0gY9hcYTD7gYXymQtn5qLryTmaouWpr1aU4CRV/j7WBQllyyR
-         CBwA==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:content-type
+         :mime-version:content-transfer-encoding;
+        bh=bxyTyKsVytDdEDIUrgTDJowYyDdw9t24JdTZAzcK70w=;
+        b=TGbXk4zVKbL83+uFUinxESbpnHdY7eW6IQotbGVefQw4X1XRy5jNQloYfPqfNbpN1O
+         pbYntKjD9153AoS/e1U0yoxR/YKcirboPwSVKjreh2ssmyxw28SJdBleWPKoG32MnIYt
+         8Q0igesy6WCCh4ohOksGItS7PayV8kR1Aup8HjtfcswK6Hqjdb2awFWcxgEtQXeK9wfn
+         a4muNzCfTxMPPfohFg/2L1SfKJh2xSORE+4Yw70eqYVyxdaCda+vmnGkGG5ABHF3R9WI
+         /vIVlENcEgC6vhMs3URqL+mhiz0lsJ5HW9rtqR8hETi7Wv4Gy1KCgInDtyBNBhw09U2j
+         g/Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Ta6WSpvnyGswwoDa3M2GzQWvUq76oVqhQeXVl50fYvQ=;
-        b=NDhfeyazArmMLJsJFpZvHken5OzeSmdAj/AbZfGZa9K7jUbnDROip3K3yFBn3/S42A
-         q3tul1bZw2Uo3LH1RaCpYx1diCpWIYq4NXdEjPq5yq0nU2LP6lzQz4e2ARPcxPzfZjmW
-         cOxsYxucGcraHu3y2LaMNdfuWfOsKdmaoyx+XNEVSTplem8YPDpzhVI4RF4CZY/kQiF3
-         vNVb71tiH7Y6bgIrtZxdOJ3ast+aUEwR41ICS8EsafV6/CGVV0+WEwlbojj9X/WEkwwq
-         G5y8snl3R3UuDOJYlxj0/GMpNe15csDpA+QelKsQNad2JFW+0rwcfWGQ3t4bAn+rusET
-         a0hQ==
-X-Gm-Message-State: ALoCoQl+OFJSWEqFtWhRASUDkUMr60/EsDlZDAru2FeRiGPqSiGlS2rnGxNv15EAvxWQR2Y4dIYG
-X-Received: by 10.129.133.69 with SMTP id v66mr4289636ywf.68.1447882602382;
- Wed, 18 Nov 2015 13:36:42 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Wed, 18 Nov 2015 13:36:42 -0800 (PST)
-In-Reply-To: <20151118211158.GA32071@sigill.intra.peff.net>
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=bxyTyKsVytDdEDIUrgTDJowYyDdw9t24JdTZAzcK70w=;
+        b=KUyIAz7lucMZDVjKTy6stHW9rlZsqD+ePlFfh+redm4aFS1+jU6FOyCTDQcJXSWhJp
+         TWgZJ7LxwxumRHXm0Es3JFHbzkrCWPG0qduj65AtvMRD5Z8ukTrQktEy3hy/w1A8Mw4z
+         frKMWwb4rHd0JxhU0upatNWabAtipGzJomLYMvUNVB6rZK+fz3scxIY+HEgdr+YOtekF
+         pTFU+AoIPjYNhwWhbppjjDhtr2PpnuqJ7nyRSp54k3f4fP1cHZv7hfRnkFLWZbbSBx4Q
+         6n/R6gttUvq75p+GyeI21gUrYuL3RI0Gu69jUMtliC6SzMCiRx/MC0cPHFXnlYAQGuUp
+         RmAQ==
+X-Gm-Message-State: ALoCoQmoFZbVZqiKxrDgWK4ORdauLFhP+o6JAKfKdfXrAexAmQ9D5+6chs35kmdzu2GxTGpD0GHp
+X-Received: by 10.194.202.163 with SMTP id kj3mr4190704wjc.93.1447883600991;
+        Wed, 18 Nov 2015 13:53:20 -0800 (PST)
+Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id lf10sm4771890wjb.23.2015.11.18.13.53.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Nov 2015 13:53:20 -0800 (PST)
+In-Reply-To: <vpqa8qbrwgc.fsf@anie.imag.fr>
+X-Mailer: Evolution 3.16.5-1ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281461>
 
-On Wed, Nov 18, 2015 at 1:11 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Nov 18, 2015 at 01:32:36PM +0100, Duy Nguyen wrote:
->
->> Yeah I think that was the 10k commits in Shawn's mail: the number of
->> commits we may have to walk until we hit a reachability bitmap. It
->> looks like C Git will create a bitmap every 5k commits, not 10k,
->> though, if I read the code correctly. The point is reachability test
->> with the presence of pack bitmaps is not O(n) anymore. Which is
->> probably good enough for now.
->
-> There are some pathological cases, though. I hit one recently that still
-> took 40s to do "rev-list --objects --all --use-bitmap-index" (it's 80s
-> without bitmaps).  The problem is that it has over 20,000 refs. We try
-> to put a bitmap at the tip of each ref, but it's tough when there are
-> that many.
+Hi Matthieu,
 
-+Terry, who did optimize the JGit implementation for bitmaps,
-as we also had a "lots of refs" hoarder repo, which underperformed
-before.
+This has been reported quite a few times before. A fix is in master,
+see 482456a^2 and children.
 
->
-> I suspect there's room for improvement in the commit selection in such
-> cases. That code hasn't really been tweaked since it was originally
-> written, and repositories like that are extreme outliers.
->
-> -Peff
+On wo, 2015-11-18 at 19:31 +0100, Matthieu Moy wrote:
+> Hi,
+>=20
+> I'm getting the following crash on recent gitk:
+>=20
+>   $ LANG=3Dfr_FR gitk --all
+>   Error in startup script: bad menu entry index "=C3=89diter la vue..=
+=2E"
+>       while executing
+>   ".bar.view entryconf [mca "Edit view..."] -state normal"
+>       invoked from within
+>   "if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd
+> ne {}} {
+>       # create a view for the files/dirs specified on the command
+> line
+>       se..."
+>       (file "/home/moy/local/usr-jessie/bin/gitk" line 12442)
+>=20
+> It's linked to the locale:
+>=20
+>   $ LANG=3DC gitk --all
+>   # Just works
+>=20
+> but does not seem to be related to French in particular nor to the
+> accent:
+>=20
+>   $ LANG=3Des_ES gitk --all
+>   Error in startup script: bad menu entry index "Modificar vista..."
+>       while executing
+>   ".bar.view entryconf [mca "Edit view..."] -state normal"
+>       invoked from within
+>   "if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd
+> ne {}} {
+>       # create a view for the files/dirs specified on the command
+> line
+>       se..."
+>       (file "/home/moy/local/usr-jessie/bin/gitk" line 12442)
+>=20
+> It also works fine without --all.
+>=20
+> It bisects down to:
+>=20
+> commit d99b4b0de27a2bd654a40353b65883e368da6d06
+> Author: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> Date:   Wed Sep 9 15:20:53 2015 +0200
+>=20
+>     gitk: Accelerators for the main menu
+>    =20
+>     This allows fast, keyboard-only usage of the menu (e.g. Alt+V, N
+> to open a
+>     new view).
+>    =20
+>     Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+>     Signed-off-by: Paul Mackerras <paulus@samba.org>
+>=20
+> I'm not fluent enough in Tcl to fix this myself, sorry ;-).
+>=20
+> Thanks,
+>=20
+
+--=20
+Dennis Kaarsemaker
+www.kaarsemaker.net
