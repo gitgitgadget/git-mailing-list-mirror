@@ -1,135 +1,132 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [BUG] gitk --all and git bisect visualize crash in non-english
- locale
-Date: Wed, 18 Nov 2015 22:53:19 +0100
-Message-ID: <1447883599.28206.1.camel@kaarsemaker.net>
-References: <vpqa8qbrwgc.fsf@anie.imag.fr>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] notes: allow merging from arbitrary references
+Date: Wed, 18 Nov 2015 23:29:26 +0100
+Message-ID: <CALKQrge+agZ2NstnjkkVKmgqQRtE1cwiq6d7B9bP4_VApq+e_Q@mail.gmail.com>
+References: <1447432462-21192-1-git-send-email-jacob.e.keller@intel.com>
+	<CALKQrgcKxJqJn+3-rg4DCbT5CFDZW8o9GtCS=kh-iSy0YyGAUA@mail.gmail.com>
+	<CA+P7+xoyCwgYWaiVj0FNVHuaY=kUZA5a3LBMtpe6SirOVeK9rA@mail.gmail.com>
+	<CALKQrgdDH2WZc-xi3ROLUBxdk=yVqfFGN3jN1GjQq4qJj_K+-A@mail.gmail.com>
+	<CA+P7+xqGwb6yejh+HZMt8cwx=4arR6+YKCNVdftuQe5SBY_X9w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Nov 18 22:53:28 2015
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Mike Hommey <mh@glandium.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 18 23:29:42 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzAfP-0004yd-Cv
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 22:53:27 +0100
+	id 1ZzBES-0004XE-2p
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 23:29:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756999AbbKRVxX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Nov 2015 16:53:23 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:36619 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751127AbbKRVxW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2015 16:53:22 -0500
-Received: by wmww144 with SMTP id w144so215420515wmw.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2015 13:53:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:content-type
-         :mime-version:content-transfer-encoding;
-        bh=bxyTyKsVytDdEDIUrgTDJowYyDdw9t24JdTZAzcK70w=;
-        b=TGbXk4zVKbL83+uFUinxESbpnHdY7eW6IQotbGVefQw4X1XRy5jNQloYfPqfNbpN1O
-         pbYntKjD9153AoS/e1U0yoxR/YKcirboPwSVKjreh2ssmyxw28SJdBleWPKoG32MnIYt
-         8Q0igesy6WCCh4ohOksGItS7PayV8kR1Aup8HjtfcswK6Hqjdb2awFWcxgEtQXeK9wfn
-         a4muNzCfTxMPPfohFg/2L1SfKJh2xSORE+4Yw70eqYVyxdaCda+vmnGkGG5ABHF3R9WI
-         /vIVlENcEgC6vhMs3URqL+mhiz0lsJ5HW9rtqR8hETi7Wv4Gy1KCgInDtyBNBhw09U2j
-         g/Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=bxyTyKsVytDdEDIUrgTDJowYyDdw9t24JdTZAzcK70w=;
-        b=KUyIAz7lucMZDVjKTy6stHW9rlZsqD+ePlFfh+redm4aFS1+jU6FOyCTDQcJXSWhJp
-         TWgZJ7LxwxumRHXm0Es3JFHbzkrCWPG0qduj65AtvMRD5Z8ukTrQktEy3hy/w1A8Mw4z
-         frKMWwb4rHd0JxhU0upatNWabAtipGzJomLYMvUNVB6rZK+fz3scxIY+HEgdr+YOtekF
-         pTFU+AoIPjYNhwWhbppjjDhtr2PpnuqJ7nyRSp54k3f4fP1cHZv7hfRnkFLWZbbSBx4Q
-         6n/R6gttUvq75p+GyeI21gUrYuL3RI0Gu69jUMtliC6SzMCiRx/MC0cPHFXnlYAQGuUp
-         RmAQ==
-X-Gm-Message-State: ALoCoQmoFZbVZqiKxrDgWK4ORdauLFhP+o6JAKfKdfXrAexAmQ9D5+6chs35kmdzu2GxTGpD0GHp
-X-Received: by 10.194.202.163 with SMTP id kj3mr4190704wjc.93.1447883600991;
-        Wed, 18 Nov 2015 13:53:20 -0800 (PST)
-Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id lf10sm4771890wjb.23.2015.11.18.13.53.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Nov 2015 13:53:20 -0800 (PST)
-In-Reply-To: <vpqa8qbrwgc.fsf@anie.imag.fr>
-X-Mailer: Evolution 3.16.5-1ubuntu3 
+	id S1757040AbbKRW3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2015 17:29:35 -0500
+Received: from locusts.copyleft.no ([188.94.218.116]:51475 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751411AbbKRW3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2015 17:29:34 -0500
+Received: from mail-yk0-f182.google.com ([209.85.160.182])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1ZzBEK-000O09-T6
+	for git@vger.kernel.org; Wed, 18 Nov 2015 23:29:33 +0100
+Received: by ykfs79 with SMTP id s79so87818120ykf.1
+        for <git@vger.kernel.org>; Wed, 18 Nov 2015 14:29:26 -0800 (PST)
+X-Received: by 10.13.234.151 with SMTP id t145mr4294456ywe.117.1447885766898;
+ Wed, 18 Nov 2015 14:29:26 -0800 (PST)
+Received: by 10.37.208.21 with HTTP; Wed, 18 Nov 2015 14:29:26 -0800 (PST)
+In-Reply-To: <CA+P7+xqGwb6yejh+HZMt8cwx=4arR6+YKCNVdftuQe5SBY_X9w@mail.gmail.com>
+X-Gmail-Original-Message-ID: <CALKQrge+agZ2NstnjkkVKmgqQRtE1cwiq6d7B9bP4_VApq+e_Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281462>
 
-Hi Matthieu,
+On Mon, Nov 16, 2015 at 8:41 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> The main other issue is how to get notes DWIM things to work for all
+> cases where we want to use notes refs, since right now the DWIM is
+> basically done at the top level and only handles notes like things.
+> The problem with it is that if you specify a full ref that *isn't*
+> refs/notes, you will always prefix it with refs/notes, like so:
+>
+> refs/remote-notes/origin => refs/notes/refs/remote-notes/origin,
 
-This has been reported quite a few times before. A fix is in master,
-see 482456a^2 and children.
+I am becoming convinced that this is a bug. I don't know anywhere else
+in Git, where a fully qualified ref name (i.e. anything starting with
+"refs/") is not interpreted verbatim. For the notes code to do just
+that adds unnecessary confusion.
 
-On wo, 2015-11-18 at 19:31 +0100, Matthieu Moy wrote:
-> Hi,
->=20
-> I'm getting the following crash on recent gitk:
->=20
->   $ LANG=3Dfr_FR gitk --all
->   Error in startup script: bad menu entry index "=C3=89diter la vue..=
-=2E"
->       while executing
->   ".bar.view entryconf [mca "Edit view..."] -state normal"
->       invoked from within
->   "if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd
-> ne {}} {
->       # create a view for the files/dirs specified on the command
-> line
->       se..."
->       (file "/home/moy/local/usr-jessie/bin/gitk" line 12442)
->=20
-> It's linked to the locale:
->=20
->   $ LANG=3DC gitk --all
->   # Just works
->=20
-> but does not seem to be related to French in particular nor to the
-> accent:
->=20
->   $ LANG=3Des_ES gitk --all
->   Error in startup script: bad menu entry index "Modificar vista..."
->       while executing
->   ".bar.view entryconf [mca "Edit view..."] -state normal"
->       invoked from within
->   "if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd
-> ne {}} {
->       # create a view for the files/dirs specified on the command
-> line
->       se..."
->       (file "/home/moy/local/usr-jessie/bin/gitk" line 12442)
->=20
-> It also works fine without --all.
->=20
-> It bisects down to:
->=20
-> commit d99b4b0de27a2bd654a40353b65883e368da6d06
-> Author: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-> Date:   Wed Sep 9 15:20:53 2015 +0200
->=20
->     gitk: Accelerators for the main menu
->    =20
->     This allows fast, keyboard-only usage of the menu (e.g. Alt+V, N
-> to open a
->     new view).
->    =20
->     Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
->     Signed-off-by: Paul Mackerras <paulus@samba.org>
->=20
-> I'm not fluent enough in Tcl to fix this myself, sorry ;-).
->=20
-> Thanks,
->=20
+> This makes it really difficult to expand a ref. However, Junio seemed
+> to think this was a possibly valuable expansion under normal
+> circumstances.
 
---=20
-Dennis Kaarsemaker
-www.kaarsemaker.net
+I doubt it. It carries its own set of problems in that refs/foo/bar
+(=> refs/notes/refs/foo/bar) is treated differently from refs/notes/bar
+(=> refs/notes/bar). If users _really_ want to create
+refs/notes/refs/$whatever, they should have to be explicit about that
+(i.e. we should require them to say refs/notes/refs/$whatever instead
+of allowing them to lazily say refs/$whatever). (It even saves them
+from a potential bug if their $whatever happens to start with "notes/",
+in which case the current code already forces them to fully qualify...)
+
+I realize this is a backwards-incompatible change in behavior, but I
+don't think it'll matter much in practice. Given e.g.
+
+  git notes --ref refs/foo list
+
+when refs/foo and refs/notes/refs/foo is both missing:
+  Current behavior: refs/notes/refs/foo lookup fails.
+    Treat like empty notes tree; no output, exit code 0
+  Proposed behavior: refs/foo lookup fails -> refs/notes/refs/foo
+    lookup fails. Same behavior as current.
+
+when refs/notes/refs/foo exists:
+  Current behavior: refs/notes/refs/foo lookup succeeds.
+    Shows notes in that tree
+  Proposed behavior: refs/foo lookup fails -> refs/notes/refs/foo
+    lookup succeeds. Same as current.
+
+when refs/foo exists:
+  Current behavior: refs/notes/refs/foo lookup fails. Treat like empty
+    notes tree; no output, exit code 0
+  Proposed behavior: refs/foo lookup succeeds. Load as notes tree,
+    probably empty, hence no output, exit code 0
+
+when both refs/foo and refs/notes/refs/foo exist:
+  Current behavior: refs/notes/refs/foo lookup succeeds. Shows notes
+    in that tree
+  Proposed behavior: refs/foo lookup succeeds. Load as notes tree,
+    probably empty, hence no output, exit code 0
+
+In other words, this change requires both refs/foo and
+refs/notes/refs/foo to be present in order to cause any real confusion.
+And in that case, the proposed behavior forces you to use fully-
+qualified refs (which will be interpreted as such) whereas the current
+behavior takes what looks like a fully-qualified ref (refs/foo) and
+interprets it like a notes-shorthand (-> refs/notes/refs/foo), which
+I argue is probably more confusing to most users.
+
+> The current solution is to try to do a normal lookup
+> first and only use the notes DWIM after we fail a lookup, which I
+> think is what the above patch attempts to do. This seems ok enough to
+> me.
+
+Yes, given $whatever, we should first lookup $whatever, and only
+failing that, we should try refs/notes/$whatever. Maybe it's also
+worth trying refs/$whatever (before refs/notes/$whatever), since that
+would be consistent with what's currently done for other refs (e.g.
+try "git log heads/master" or "git log tags/v2.6.3" in git.git).
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
