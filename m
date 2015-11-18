@@ -1,73 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones
- fail
-Date: Wed, 18 Nov 2015 16:11:59 -0500
-Message-ID: <20151118211158.GA32071@sigill.intra.peff.net>
-References: <CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
- <CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
- <20151113233807.GD16173@sigill.intra.peff.net>
- <20151113234116.GA18234@sigill.intra.peff.net>
- <CAGZ79kaUZ08GXZjKtYNmRYOCQ0EQpsGd8+6PYFDU1LxYLw818g@mail.gmail.com>
- <564A279C.6000802@web.de>
- <CAGZ79kbh_8oBRnQAmDzh3LANS6iGXNjLkYMLfuk9iysXghHQXg@mail.gmail.com>
- <CACsJy8D-TRJ---4BYrEZeEkd9_5-xgGp4U0nB9YHNtV3zgxrbg@mail.gmail.com>
- <20151117214347.GB27862@sigill.intra.peff.net>
- <CACsJy8Ah2PgO8CunCvWiKB7RfqMfovWa1a7ro5scHFK+AEAXpg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [BUG] --bare is ignored before command word
+Date: Wed, 18 Nov 2015 22:29:20 +0100
+Message-ID: <vpqa8qbov2n.fsf@anie.imag.fr>
+References: <loom.20151118T181639-5@post.gmane.org>
+	<CA+P7+xoD2-eDZQt29KBqZF2g4i+K7XhJG0mhUgqf5iDURBPntg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 22:12:11 2015
+Content-Type: text/plain
+Cc: Ronny Borchert <mister_rs@web.de>,
+	Git mailing list <git@vger.kernel.org>
+To: Jacob Keller <jacob.keller@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 18 22:29:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzA1R-00086r-PT
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 22:12:10 +0100
+	id 1ZzAIF-0001Jz-K1
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 22:29:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756900AbbKRVME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2015 16:12:04 -0500
-Received: from cloud.peff.net ([50.56.180.127]:59431 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755916AbbKRVMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2015 16:12:03 -0500
-Received: (qmail 6312 invoked by uid 102); 18 Nov 2015 21:12:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Nov 2015 15:12:02 -0600
-Received: (qmail 8504 invoked by uid 107); 18 Nov 2015 21:12:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Nov 2015 16:12:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Nov 2015 16:11:59 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8Ah2PgO8CunCvWiKB7RfqMfovWa1a7ro5scHFK+AEAXpg@mail.gmail.com>
+	id S1757046AbbKRV31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2015 16:29:27 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:54040 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756831AbbKRV30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2015 16:29:26 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id tAILTHQq009444
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 18 Nov 2015 22:29:17 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tAILTKaV005733;
+	Wed, 18 Nov 2015 22:29:20 +0100
+In-Reply-To: <CA+P7+xoD2-eDZQt29KBqZF2g4i+K7XhJG0mhUgqf5iDURBPntg@mail.gmail.com>
+	(Jacob Keller's message of "Wed, 18 Nov 2015 12:08:37 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 18 Nov 2015 22:29:17 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: tAILTHQq009444
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1448486961.98368@EJqPreSocc3Os2bD0Ondiw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281459>
 
-On Wed, Nov 18, 2015 at 01:32:36PM +0100, Duy Nguyen wrote:
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-> Yeah I think that was the 10k commits in Shawn's mail: the number of
-> commits we may have to walk until we hit a reachability bitmap. It
-> looks like C Git will create a bitmap every 5k commits, not 10k,
-> though, if I read the code correctly. The point is reachability test
-> with the presence of pack bitmaps is not O(n) anymore. Which is
-> probably good enough for now.
+> On Wed, Nov 18, 2015 at 9:20 AM, Ronny Borchert <mister_rs@web.de> wrote:
+>> I was trying to clone a bare repository. Not sure why I did, maybe
+>> description on website was wrong.
+>> My try:
+>>
+>> git --bare clone https://github.....
+>>
+>> This was leading in creating a none bare repository! No error or warning
+>> message here!
+>> I guess this behavior is also for other --xxx commands.
+>>
+>
+> This is how the git options work. Options before a command word are
+> always ignored.
 
-There are some pathological cases, though. I hit one recently that still
-took 40s to do "rev-list --objects --all --use-bitmap-index" (it's 80s
-without bitmaps).  The problem is that it has over 20,000 refs. We try
-to put a bitmap at the tip of each ref, but it's tough when there are
-that many.
+No, they are not ignored. For example
 
-I suspect there's room for improvement in the commit selection in such
-cases. That code hasn't really been tweaked since it was originally
-written, and repositories like that are extreme outliers.
+$ git --foobar init
+Unknown option: --foobar
 
--Peff
+=> the option is processed, and rejected explicitly.
+
+But as you say, options before the command word apply to "git", not to
+the particular command. The case of --bare is a bit unfortunate: both
+"git" and "git clone" accept a --bare option, with a different meaning
+(read "man git" to find what the first does).
+
+So, I wouldn't call the current behavior a really good one, but it's the
+documented behavior.
+
+It would be nice to warn in this case though: I don't see any use for
+"git --bare clone".
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
