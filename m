@@ -1,75 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/6] remote-http(s): Support SOCKS proxies
-Date: Tue, 17 Nov 2015 22:52:28 -0800
-Message-ID: <xmqqa8qbol3n.fsf@gitster.mtv.corp.google.com>
-References: <cover.1445865176.git.johannes.schindelin@gmx.de>
-	<bf218d020e24216f55d1514c4459e645b13ec075.1445865176.git.johannes.schindelin@gmx.de>
-	<xmqq7fm9gze2.fsf@gitster.mtv.corp.google.com>
-	<20151027012336.GK31271@freya.jamessan.com>
-	<xmqqvb9tdr7v.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.1.00.1510271649430.31610@s15462909.onlinehome-server.info>
-	<alpine.DEB.1.00.1510271651420.31610@s15462909.onlinehome-server.info>
-	<87si4e6c49.fsf@red.patthoyts.tk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] ff-refs: builtin command to fast-forward local
+ refs
+Date: Wed, 18 Nov 2015 10:56:02 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1511181052130.1686@s15462909.onlinehome-server.info>
+References: <1447207885-10911-1-git-send-email-rappazzo@gmail.com> <56431B69.9010007@drmicha.warpmail.net> <CANoM8SV77Jg8qYsn7UZ=a18WvrA_ayAWCnAjN9Tf6Re=r1Ggsg@mail.gmail.com> <CANoM8SWxMeDjwy-GwVc+En8D7N8LyzzsBKtX_MbiS4Z49DjD7g@mail.gmail.com>
+ <564B47AC.7070609@drmicha.warpmail.net> <CANoM8SXrRmXPZQotQgJNNonJcb3rs5LM=JwOYoh4mX4nw2XB-g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	James McCoy <vega.james@gmail.com>, git@vger.kernel.org
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed Nov 18 07:52:42 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mike Rappazzo <rappazzo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 18 10:56:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zywbi-00051k-5t
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 07:52:42 +0100
+	id 1ZyzTL-0000by-U1
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 10:56:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753980AbbKRGwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2015 01:52:37 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51086 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751837AbbKRGwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2015 01:52:36 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6CABE2322F;
-	Wed, 18 Nov 2015 01:52:30 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=brgXGf8Mb63mdVJXJ4twzfXVhig=; b=K05bm1
-	8o5lM9AH3OLwJMK3G91ZgOMA4zoGlnHAgDuFynu08xkBdCa2denO+pk24Sb5REzR
-	zFs62Dvzqc7wbICLrz3dq0Xlazo1gtr4ovXTvbr0B76A7aUVm0hC9iIwz+A6ssUY
-	tf32WgHCzacu+OysqhALsMYtpkFJHTGYS4zLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S0mJ6uuyCDvFnmnoun3fIF6oEciMtuVd
-	vrocgKQnBYwLUwcVKD+QxJheDoWagc7byMVM9FJdHMeg+10vDKsNxbGJnlC8PTdS
-	aRAtycXdyHkFLoPjyB5tkPDGZnrQliXn1rGrt+/nZgoV2yj1J0NgVMW+JkpB+CBP
-	IxT+yjg9t1k=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 642C72322E;
-	Wed, 18 Nov 2015 01:52:30 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DDE9B2322D;
-	Wed, 18 Nov 2015 01:52:29 -0500 (EST)
-In-Reply-To: <87si4e6c49.fsf@red.patthoyts.tk> (Pat Thoyts's message of "Mon,
-	09 Nov 2015 22:28:54 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: EFB078CA-8DC0-11E5-8C98-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S932297AbbKRJ4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2015 04:56:12 -0500
+Received: from mout.gmx.net ([212.227.15.15]:62474 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755462AbbKRJ4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2015 04:56:08 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0M6Ana-1aJPnV1iLS-00yB9m;
+ Wed, 18 Nov 2015 10:56:03 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CANoM8SXrRmXPZQotQgJNNonJcb3rs5LM=JwOYoh4mX4nw2XB-g@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:7bxx1gMPNS6tjFuglsUfx4tosm4B1Byc9A67AEeAgSyKj1uXQRU
+ 4J8ULvpien3e+OSjyj8srJjvUWPJSkthW6gg12WxtaZTVpcgF7V8N/AWkaRZDGft9Mvzdc8
+ xvnUdunv0Lb8zVfY1DlH3fZdMrere+tMIJ1pw/Usa8sB1gs/BjOmsAh8aEHK7zyCNpxLIC0
+ veLc9X/tqwXQKngTC6e9A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SDSgOu+iwhQ=:0i+J+jFHtbWE69EeMQWgY5
+ fUELPgKJgx9L+6BYxvmibErsqCpKxdENgF0h7bJAXiNBLebYNFKt/GJ6lbuA11TPKttbWLr0/
+ cdSfU20CQDZhGE1RGRaeczQquWJ0NYfsIhTwqA/mqglHuVC58lZGX61b3878S1toRXzhYZG5+
+ nbsj3rNTuMF+XXFZmodut3ove4OKLcQNGA39W36+3pJQGQUKav0RRSGGqWvbB8pjFWqiGsi9X
+ WQoMN2+OrMTsnd0eK8jLKWcnxMougcu+QJyD2ZuMpk3dzD1F3l2gRAnsW2xBIGiOGcMBc32tp
+ dpvuQnhSr4iw2zCTTXUjacsRMu0W4g2ZwhLY/mHPfWgXxbKNqY7m0OuCq5FmRXS8yEN/xeNMF
+ tif1ufawNSiDlZTaztNRpgMNzdCOj5IR5f1o+MhM9YqwWqb3kcHwSEKCAEHuiJInRIhwOn60l
+ WtpTcBl+uJKV0oNWLgicMJAMiBNZWTt/kGJIGGSu/iyO2Ne6NNo3oh2te1mFsDBgkG4cHE3Rl
+ MBbkSzWmFveKGDJhuMchUaTdGN7nZ36mioCQsgJEGIdvIpqRcksdUtUdunrNblGY8NJhQfYbH
+ /z43K/D/7Yj9XLhlw1Ri3h6tDv/rbFC6RiFcgZedQrq9XZgs/UhEeV1ztqH+7jHKHZ3XWrHWC
+ 7SAND2yo+nNh4wLU4XCuZerVfm1XHwZaAWGdf4bJrvmb3LNdT556d4lErD3iSbvFqZ9yA+D6x
+ m89NMD2cpjUlU/RzItO7Js0RQnp9MH6YYSopHRWNtYC92/cQgDoZqAFvCVT4RkZv9sA1sDgt 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281443>
 
-Pat Thoyts <patthoyts@users.sourceforge.net> writes:
+Hi Mike,
 
-> A bit late to the party but 'yes'. Frankly by posting something to SO I
-> rather consider it public domain ...
+On Tue, 17 Nov 2015, Mike Rappazzo wrote:
 
-Unless otherwise noted, material posted on stackoverflow by default
-becomes CC-SA-BY (which may not be the best choice for open source
-software).
+> On Tue, Nov 17, 2015 at 10:28 AM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+> > Mike Rappazzo venit, vidit, dixit 17.11.2015 14:58:
+> >
+> > I still don't like the idea of having a new command just for the purpose
+> > of fast-forwarding local branches from specified upstreams.
+> >
+> > What's wrong with "git merge --ff-only" once you check them out? We have
+> > all the gory messages when you checkout a branch or use the git prompt
+> > or "branch -vv". And if you don't - how is forgetting to "ff-refs"
+> > better than forgetting to "merge --ff-only"?
+> >
+> > In short, I don't see a problem that this is solving, but maybe it's
+> > because we use local branches differently, I dunno.
+> 
+> For me I use this command more as a post-fetch:
+> 
+> git fetch --all --prune && git-ff-refs
+> 
+> I imagine that the big difference is in the number of branches that I
+> maintain, and perhaps in the way that I use gitk to visualize them.  I
+> would be happy to add another option to git-fetch for --ff-refs as an
+> alternative if that would feel better than a full-on builtin.
 
-Thanks for the patch.
+I would much prefer, say, `git fetch --all --prune
+--fast-forward-tracking-branches` (with maybe `-T` as short option for
+`--fast-forward-tracking-branches` and/or a shorter `--ff-tracking`) to a
+new builtin.
+
+But yeah, I can see how it is convenient when you have to work with N
+tracking branches where N > 2.
+
+Thanks,
+Dscho
