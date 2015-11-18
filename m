@@ -1,64 +1,65 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Three dot notion used inconsitent?
-Date: Wed, 18 Nov 2015 11:31:17 +0100
-Message-ID: <1CDF2D38-B73A-4C49-BC10-1F3BA1873733@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.1 \(3096.5\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 18 11:31:30 2015
+From: Max Kirillov <max@max630.net>
+Subject: Re: [PATCH] blame: add test case for using tag object as a final ref
+Date: Wed, 18 Nov 2015 12:35:38 +0200
+Message-ID: <CAF7_NFRBJ+6qPkeRx2JQUMTf16WPGhz86MpmX0u994ABXbpMww@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Edmundo Carmona Antoranz <eantoranz@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 18 11:35:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zz01R-0000Nk-JN
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 11:31:30 +0100
+	id 1Zz05X-0006bm-SN
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 11:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753403AbbKRKbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2015 05:31:24 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:38600 "EHLO
-	mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752736AbbKRKbV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2015 05:31:21 -0500
-Received: by wmec201 with SMTP id c201so66282847wme.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2015 02:31:20 -0800 (PST)
+	id S1752736AbbKRKfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2015 05:35:39 -0500
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:37706 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750808AbbKRKfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2015 05:35:38 -0500
+Received: by igcto18 with SMTP id to18so34871108igc.0
+        for <git@vger.kernel.org>; Wed, 18 Nov 2015 02:35:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version;
-        bh=/5Z0YvH/Hf+hau8VAjpgH1LHmpRl5TM8baDNYPIUxmw=;
-        b=qAaUEIq5phcRWPrTjD6fQ1NT4/59gbDKaDTaZLpbQmUtFZbHtmNT94dxQnaOl7yezT
-         xGZMZOyqBM7AVVvQ9fZg+Gwg5/MkOW+JIm6WD6Ahsk1v0IE0THg5QCFo5oi0qsNmQDHd
-         gCDT6FW+F6cFNYoQn2jPJegxZIrEKZwOL8Qi3gCMjFCNYRm1GRKujodomXb8HSkCyyQr
-         lXS7W9OwlSO2fXjYLqhuj8KkeApwv6L64vcWKjJ4PYLMsAMJELPje57giouDecgFetdC
-         lifOSjG7hT6Mz/4ZKb/ZR4euOuGgC+u/1Ki8IziJNCqWEvqfLEc0RaHURA74+hEK0SO3
-         YfVw==
-X-Received: by 10.194.7.69 with SMTP id h5mr976736wja.117.1447842680547;
-        Wed, 18 Nov 2015 02:31:20 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id v4sm2141424wjx.18.2015.11.18.02.31.19
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 18 Nov 2015 02:31:19 -0800 (PST)
-X-Mailer: Apple Mail (2.3096.5)
+        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
+        bh=vsGJBQzAj4t7/AOQwioTJUkMMT8I8glGpxjdMvuvSpc=;
+        b=08CYdelCFEDopbd19HUDUq8VxlKv3XxmJXROFm1uIucLT7rBPydT50RyWJ4KGpHr/t
+         6GVX69X6k2d7OYO9y8eefWy9pPJs+GSDvOgJA6g8qYt/JNp1/HcwHmtyXcJ+nip/coOv
+         mtrC4w1Px8srGTA1HVNLW5BEpSE2VwfUC1fd+nshN3/x9WR/i+1XKJx9TjgDU+MWZBZo
+         qDPELTVCPoHhW2Qrq9nQcHPPKlgKqMy2N9FilX37oQrYJ+8uGWp5ChJh34K3DxcqyFLo
+         OeW2afUWSF0vVWvk27zU7i4w2HaO0pAOzBapS1FzSLuQWM2g+UH8lmakqVAhneSR8DGB
+         nqbg==
+X-Received: by 10.50.83.38 with SMTP id n6mr7117758igy.92.1447842938122; Wed,
+ 18 Nov 2015 02:35:38 -0800 (PST)
+Received: by 10.64.129.168 with HTTP; Wed, 18 Nov 2015 02:35:38 -0800 (PST)
+X-Google-Sender-Auth: gIkqJ7MbbUKhJGGw4-r8VwDRFCw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281446>
 
-Hi,
+On Wed, Nov 18, 2015 at 8:00 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, Nov 18, 2015 at 07:36:32AM +0200, Max Kirillov wrote:
+>
+>> It was discovered [1] that 1b0d40000a broke blaming starting from tag object.
+>> Add test which verifies such blaming works.
+>>
+>> [1] http://mid.gmane.org/20151117224809.GE27862@sigill.intra.peff.net
+>>
+>> Signed-off-by: Max Kirillov <max@max630.net>
+>> ---
+>> Thank you. Sorry, I should have noticed that obj ended up unused.
+>
+> Thanks. Do you mind if I just squash this into the patch with the fix?
 
-I just stumbled across the this:
+Not at all, please squash. 2 patches seem too many indeed
 
-git diff branchA...branchB
---> gives me the diff between (the common ancestor of A and B) and B. That means I never see changes on branchA.
-
-git log branchA...branchB
---> gives me the commits reachable from A and B. That includes changes from branchA.
-
-Is this because of a design decision that I do not (yet) understand or is this inconsistent for historical reasons?
-
-Thanks,
-Lars
+-- 
+Max
