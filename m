@@ -1,87 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [BUG] --bare is ignored before command word
-Date: Wed, 18 Nov 2015 22:29:20 +0100
-Message-ID: <vpqa8qbov2n.fsf@anie.imag.fr>
-References: <loom.20151118T181639-5@post.gmane.org>
-	<CA+P7+xoD2-eDZQt29KBqZF2g4i+K7XhJG0mhUgqf5iDURBPntg@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones fail
+Date: Wed, 18 Nov 2015 13:36:42 -0800
+Message-ID: <CAGZ79kbD54fubzozMD51fTpP1v-6bbBoBtKn=fibLuwMmiioKA@mail.gmail.com>
+References: <CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
+	<CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
+	<20151113233807.GD16173@sigill.intra.peff.net>
+	<20151113234116.GA18234@sigill.intra.peff.net>
+	<CAGZ79kaUZ08GXZjKtYNmRYOCQ0EQpsGd8+6PYFDU1LxYLw818g@mail.gmail.com>
+	<564A279C.6000802@web.de>
+	<CAGZ79kbh_8oBRnQAmDzh3LANS6iGXNjLkYMLfuk9iysXghHQXg@mail.gmail.com>
+	<CACsJy8D-TRJ---4BYrEZeEkd9_5-xgGp4U0nB9YHNtV3zgxrbg@mail.gmail.com>
+	<20151117214347.GB27862@sigill.intra.peff.net>
+	<CACsJy8Ah2PgO8CunCvWiKB7RfqMfovWa1a7ro5scHFK+AEAXpg@mail.gmail.com>
+	<20151118211158.GA32071@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ronny Borchert <mister_rs@web.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Jacob Keller <jacob.keller@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 22:29:32 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>, Terry Parker <tparker@google.com>
+X-From: git-owner@vger.kernel.org Wed Nov 18 22:36:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzAIF-0001Jz-K1
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 22:29:31 +0100
+	id 1ZzAPQ-00047G-Ks
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 22:36:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757046AbbKRV31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2015 16:29:27 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:54040 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756831AbbKRV30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2015 16:29:26 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id tAILTHQq009444
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 18 Nov 2015 22:29:17 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tAILTKaV005733;
-	Wed, 18 Nov 2015 22:29:20 +0100
-In-Reply-To: <CA+P7+xoD2-eDZQt29KBqZF2g4i+K7XhJG0mhUgqf5iDURBPntg@mail.gmail.com>
-	(Jacob Keller's message of "Wed, 18 Nov 2015 12:08:37 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 18 Nov 2015 22:29:17 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: tAILTHQq009444
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1448486961.98368@EJqPreSocc3Os2bD0Ondiw
+	id S1757202AbbKRVgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2015 16:36:49 -0500
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:34639 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757176AbbKRVgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2015 16:36:43 -0500
+Received: by ykfs79 with SMTP id s79so86222260ykf.1
+        for <git@vger.kernel.org>; Wed, 18 Nov 2015 13:36:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Ta6WSpvnyGswwoDa3M2GzQWvUq76oVqhQeXVl50fYvQ=;
+        b=VTc4kCoQTevju8G+MeikPXz00FbyVbZNJ11x6AkVbJfjZyaM9cy995EtVgEBD9qn5C
+         pVYOvLsMuS/m3NiVNGKvFMsn5EQhqLzXpVtc0bb+sXGvbvl8tkFFPB8sITkzB4czLYlN
+         rwyd0zlYBOpoGLJSwkZxpR26q/wcu+4P2wURlPM3EsMSgXtWCGbt6lkxPh3bl1OefSnc
+         kD8umQ0NfewDi3X3aAoxI8n21grsoKvxy0ZiA7nTzSIFTigJzevEHCVuNNdgEA92qvsc
+         XznSuYegjgYh2MLiTdN0gY9hcYTD7gYXymQtn5qLryTmaouWpr1aU4CRV/j7WBQllyyR
+         CBwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=Ta6WSpvnyGswwoDa3M2GzQWvUq76oVqhQeXVl50fYvQ=;
+        b=NDhfeyazArmMLJsJFpZvHken5OzeSmdAj/AbZfGZa9K7jUbnDROip3K3yFBn3/S42A
+         q3tul1bZw2Uo3LH1RaCpYx1diCpWIYq4NXdEjPq5yq0nU2LP6lzQz4e2ARPcxPzfZjmW
+         cOxsYxucGcraHu3y2LaMNdfuWfOsKdmaoyx+XNEVSTplem8YPDpzhVI4RF4CZY/kQiF3
+         vNVb71tiH7Y6bgIrtZxdOJ3ast+aUEwR41ICS8EsafV6/CGVV0+WEwlbojj9X/WEkwwq
+         G5y8snl3R3UuDOJYlxj0/GMpNe15csDpA+QelKsQNad2JFW+0rwcfWGQ3t4bAn+rusET
+         a0hQ==
+X-Gm-Message-State: ALoCoQl+OFJSWEqFtWhRASUDkUMr60/EsDlZDAru2FeRiGPqSiGlS2rnGxNv15EAvxWQR2Y4dIYG
+X-Received: by 10.129.133.69 with SMTP id v66mr4289636ywf.68.1447882602382;
+ Wed, 18 Nov 2015 13:36:42 -0800 (PST)
+Received: by 10.37.196.70 with HTTP; Wed, 18 Nov 2015 13:36:42 -0800 (PST)
+In-Reply-To: <20151118211158.GA32071@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281460>
 
-Jacob Keller <jacob.keller@gmail.com> writes:
-
-> On Wed, Nov 18, 2015 at 9:20 AM, Ronny Borchert <mister_rs@web.de> wrote:
->> I was trying to clone a bare repository. Not sure why I did, maybe
->> description on website was wrong.
->> My try:
->>
->> git --bare clone https://github.....
->>
->> This was leading in creating a none bare repository! No error or warning
->> message here!
->> I guess this behavior is also for other --xxx commands.
->>
+On Wed, Nov 18, 2015 at 1:11 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Nov 18, 2015 at 01:32:36PM +0100, Duy Nguyen wrote:
 >
-> This is how the git options work. Options before a command word are
-> always ignored.
+>> Yeah I think that was the 10k commits in Shawn's mail: the number of
+>> commits we may have to walk until we hit a reachability bitmap. It
+>> looks like C Git will create a bitmap every 5k commits, not 10k,
+>> though, if I read the code correctly. The point is reachability test
+>> with the presence of pack bitmaps is not O(n) anymore. Which is
+>> probably good enough for now.
+>
+> There are some pathological cases, though. I hit one recently that still
+> took 40s to do "rev-list --objects --all --use-bitmap-index" (it's 80s
+> without bitmaps).  The problem is that it has over 20,000 refs. We try
+> to put a bitmap at the tip of each ref, but it's tough when there are
+> that many.
 
-No, they are not ignored. For example
++Terry, who did optimize the JGit implementation for bitmaps,
+as we also had a "lots of refs" hoarder repo, which underperformed
+before.
 
-$ git --foobar init
-Unknown option: --foobar
-
-=> the option is processed, and rejected explicitly.
-
-But as you say, options before the command word apply to "git", not to
-the particular command. The case of --bare is a bit unfortunate: both
-"git" and "git clone" accept a --bare option, with a different meaning
-(read "man git" to find what the first does).
-
-So, I wouldn't call the current behavior a really good one, but it's the
-documented behavior.
-
-It would be nice to warn in this case though: I don't see any use for
-"git --bare clone".
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>
+> I suspect there's room for improvement in the commit selection in such
+> cases. That code hasn't really been tweaked since it was originally
+> written, and repositories like that are extreme outliers.
+>
+> -Peff
