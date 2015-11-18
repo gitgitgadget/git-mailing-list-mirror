@@ -1,67 +1,55 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH] blame: add test case for using tag object as a final ref
-Date: Wed, 18 Nov 2015 07:36:32 +0200
-Message-ID: <1447824992-28520-1-git-send-email-max@max630.net>
-Cc: Max Kirillov <max@max630.net>,
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] blame: add test case for using tag object as a final ref
+Date: Wed, 18 Nov 2015 01:00:18 -0500
+Message-ID: <20151118060018.GA22541@sigill.intra.peff.net>
+References: <1447824992-28520-1-git-send-email-max@max630.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Edmundo Carmona Antoranz <eantoranz@gmail.com>,
 	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed Nov 18 06:36:48 2015
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Wed Nov 18 07:00:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZyvQG-00008X-6s
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 06:36:48 +0100
+	id 1Zyvn8-0001Rx-MW
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 07:00:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751122AbbKRFgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2015 00:36:42 -0500
-Received: from p3plsmtpa11-08.prod.phx3.secureserver.net ([68.178.252.109]:48127
-	"EHLO p3plsmtpa11-08.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750810AbbKRFgm (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2015 00:36:42 -0500
-Received: from wheezy.local ([82.181.81.240])
-	by p3plsmtpa11-08.prod.phx3.secureserver.net with 
-	id itcb1r00B5B68XE01tcfJt; Tue, 17 Nov 2015 22:36:41 -0700
-X-Mailer: git-send-email 2.3.4.2801.g3d0809b
-In-Reply-To: 20151117232237.GA29014@sigill.intra.peff.net
+	id S1751913AbbKRGAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2015 01:00:22 -0500
+Received: from cloud.peff.net ([50.56.180.127]:59179 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750783AbbKRGAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2015 01:00:21 -0500
+Received: (qmail 21516 invoked by uid 102); 18 Nov 2015 06:00:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Nov 2015 00:00:21 -0600
+Received: (qmail 2500 invoked by uid 107); 18 Nov 2015 06:00:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Nov 2015 01:00:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Nov 2015 01:00:18 -0500
+Content-Disposition: inline
+In-Reply-To: <1447824992-28520-1-git-send-email-max@max630.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281441>
 
-It was discovered [1] that 1b0d40000a broke blaming starting from tag object.
-Add test which verifies such blaming works.
+On Wed, Nov 18, 2015 at 07:36:32AM +0200, Max Kirillov wrote:
 
-[1] http://mid.gmane.org/20151117224809.GE27862@sigill.intra.peff.net
+> It was discovered [1] that 1b0d40000a broke blaming starting from tag object.
+> Add test which verifies such blaming works.
+> 
+> [1] http://mid.gmane.org/20151117224809.GE27862@sigill.intra.peff.net
+> 
+> Signed-off-by: Max Kirillov <max@max630.net>
+> ---
+> Thank you. Sorry, I should have noticed that obj ended up unused.
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
-Thank you. Sorry, I should have noticed that obj ended up unused.
+Thanks. Do you mind if I just squash this into the patch with the fix?
 
-Adding test case for it. Looks ok after the fix.
- t/annotate-tests.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index b1673b3..093832f 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -68,6 +68,13 @@ test_expect_success 'blame 1 author' '
- 	check_count A 2
- '
- 
-+test_expect_success 'blame by tag objects' '
-+	git tag -m "test tag" testTag &&
-+	git tag -m "test tag #2" testTag2 testTag &&
-+	check_count -h testTag A 2 &&
-+	check_count -h testTag2 A 2
-+'
-+
- test_expect_success 'setup B lines' '
- 	echo "2A quick brown fox jumps over the" >>file &&
- 	echo "lazy dog" >>file &&
--- 
-2.3.4.2801.g3d0809b
+-Peff
