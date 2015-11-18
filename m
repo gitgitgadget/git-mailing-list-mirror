@@ -1,101 +1,65 @@
-From: Hans Ginzel <hans@matfyz.cz>
-Subject: git rm --recursive
-Date: Wed, 18 Nov 2015 16:06:38 +0100
-Message-ID: <20151118150637.GA49061@artax.karlin.mff.cuni.cz>
+From: Erik Blake <erik@icefield.yk.ca>
+Subject: Unhelpful shortcut parameters for git bash
+Date: Wed, 18 Nov 2015 17:45:14 +0100
+Message-ID: <564CAB1A.20106@icefield.yk.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 18 16:15:43 2015
+X-From: git-owner@vger.kernel.org Wed Nov 18 18:16:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zz4SU-0001BH-TI
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 16:15:43 +0100
+	id 1Zz6Lh-0003fv-9B
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Nov 2015 18:16:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755952AbbKRPPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Nov 2015 10:15:38 -0500
-Received: from artax.karlin.mff.cuni.cz ([195.113.26.195]:41008 "EHLO
-	artax.karlin.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755148AbbKRPPh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2015 10:15:37 -0500
-X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Nov 2015 10:15:37 EST
-Received: by artax.karlin.mff.cuni.cz (Postfix, from userid 1975)
-	id CF8F0468003; Wed, 18 Nov 2015 16:06:38 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754502AbbKRRQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2015 12:16:43 -0500
+Received: from bosmailout10.eigbox.net ([66.96.184.10]:50587 "EHLO
+	bosmailout10.eigbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751843AbbKRRQm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Nov 2015 12:16:42 -0500
+X-Greylist: delayed 1875 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Nov 2015 12:16:42 EST
+Received: from bosmailscan07.eigbox.net ([10.20.15.7])
+	by bosmailout10.eigbox.net with esmtp (Exim)
+	id 1Zz5rK-0007GO-95
+	for git@vger.kernel.org; Wed, 18 Nov 2015 11:45:26 -0500
+Received: from [10.115.3.32] (helo=bosimpout12)
+	by bosmailscan07.eigbox.net with esmtp (Exim)
+	id 1Zz5rK-0001Xv-5I
+	for git@vger.kernel.org; Wed, 18 Nov 2015 11:45:26 -0500
+Received: from bosauthsmtp19.yourhostingaccount.com ([10.20.18.19])
+	by bosimpout12 with 
+	id j4lM1r00K0QhFXN014lQNk; Wed, 18 Nov 2015 11:45:26 -0500
+X-Authority-Analysis: v=2.1 cv=R+2NGLhX c=1 sm=1 tr=0
+ a=9UqFsMnAB6EOkiq4MrOclQ==:117 a=xP2CbvXzu5dUCFSWO2QZHA==:17 a=pq4jwCggAAAA:8
+ a=QPcu4mC3AAAA:8 a=TtUpKRI4puIA:10 a=IkcTkHD0fZMA:10 a=qtqOOiqGOCEA:10
+ a=DecGTpQOfcVzWkJ_SKAA:9 a=QEXdDO2ut3YA:10 a=eLX30sZZgF4A:10
+Received: from [82.194.202.50] (port=56943 helo=[192.168.20.164])
+	by bosauthsmtp19.eigbox.net with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
+	(Exim)
+	id 1Zz5rF-0006Wu-1v
+	for git@vger.kernel.org; Wed, 18 Nov 2015 11:45:21 -0500
+X-Enigmail-Draft-Status: N1010
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+X-EN-UserInfo: 20c972d92b49a3da013d5f179c4005f2:931c98230c6409dcc37fa7e93b490c27
+X-EN-AuthUser: erik@icefield.yk.ca
+X-EN-OrigIP: 82.194.202.50
+X-EN-OrigHost: unknown
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281451>
 
-Hello!
+When creating shortcuts for git bash on Windows machines, the "Target"
+contains the command "C:\PF\Git\git-bash.exe --cd-to-home" and the
+"Start In" field contains %HOMEDRIVE%%HOMEPATH%.
 
-I have added the --recursive alias for the -r option to the rm command.
+This is redundant, and makes it harder to modify the shortcut to start
+bash in the user's directory of choice.
 
-H.
-From 83f197151c04164b0dfd4d127e72439aebaf8b71 Mon Sep 17 00:00:00 2001
-From: Hans Ginzel <hans@matfyz.cz>
-Date: Wed, 18 Nov 2015 15:44:56 +0100
-Subject: [PATCH] builtin: rm: add --recursive to be consistent with GNU rm
-
-
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index f1efc11..0ab1cd4 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -47,6 +47,7 @@ OPTIONS
- 	by the command.
- 
- -r::
-+--recursive::
-         Allow recursive removal when a leading directory name is
-         given.
- 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 80b972f..311b4da 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -269,7 +269,7 @@ static struct option builtin_rm_options[] = {
- 	OPT__QUIET(&quiet, N_("do not list removed files")),
- 	OPT_BOOL( 0 , "cached",         &index_only, N_("only remove from the index")),
- 	OPT__FORCE(&force, N_("override the up-to-date check")),
--	OPT_BOOL('r', NULL,             &recursive,  N_("allow recursive removal")),
-+	OPT_BOOL('r', "recursive",      &recursive,  N_("allow recursive removal")),
- 	OPT_BOOL( 0 , "ignore-unmatch", &ignore_unmatch,
- 				N_("exit with a zero status even if nothing matched")),
- 	OPT_END(),
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 9d90d2c..d7b73f9 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -207,12 +207,25 @@ test_expect_success 'Recursive with -r but dirty' '
- 	test -f frotz/nitfol
- '
- 
-+test_expect_success 'Recursive with --recursive but dirty' '
-+	echo qfwfq >>frotz/nitfol &&
-+	test_must_fail git rm --recursive frotz &&
-+	test -d frotz &&
-+	test -f frotz/nitfol
-+'
-+
- test_expect_success 'Recursive with -r -f' '
- 	git rm -f -r frotz &&
- 	! test -f frotz/nitfol &&
- 	! test -d frotz
- '
- 
-+test_expect_success 'Recursive with --recursive -f' '
-+	git rm -f --recursive frotz &&
-+	! test -f frotz/nitfol &&
-+	! test -d frotz
-+'
-+
- test_expect_success 'Remove nonexistent file returns nonzero exit status' '
- 	test_must_fail git rm nonexistent
- '
--- 
-1.9.1
+The option "--cd-to-home" should be removed. If was not present in 1.9.5
