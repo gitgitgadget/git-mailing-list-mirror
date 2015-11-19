@@ -1,156 +1,141 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6 6/6] Add Travis CI support
-Date: Thu, 19 Nov 2015 09:35:29 -0500
-Message-ID: <20151119143528.GC9353@sigill.intra.peff.net>
-References: <1447923491-15330-1-git-send-email-larsxschneider@gmail.com>
- <1447923491-15330-7-git-send-email-larsxschneider@gmail.com>
+Subject: Re: [PATCHv2] ident.c: add support for IPv6
+Date: Thu, 19 Nov 2015 09:46:32 -0500
+Message-ID: <20151119144632.GD9353@sigill.intra.peff.net>
+References: <1447941260-5395-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, luke@diamand.org, sunshine@sunshineco.com,
-	gitster@pobox.com
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Thu Nov 19 15:35:38 2015
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 19 15:46:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzQJE-00082s-Ov
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 15:35:37 +0100
+	id 1ZzQTw-0006HD-Bg
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 15:46:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933836AbbKSOfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2015 09:35:32 -0500
-Received: from cloud.peff.net ([50.56.180.127]:59727 "HELO cloud.peff.net"
+	id S1758677AbbKSOqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2015 09:46:36 -0500
+Received: from cloud.peff.net ([50.56.180.127]:59736 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933732AbbKSOfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2015 09:35:31 -0500
-Received: (qmail 18109 invoked by uid 102); 19 Nov 2015 14:35:31 -0000
+	id S1758665AbbKSOqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2015 09:46:35 -0500
+Received: (qmail 18570 invoked by uid 102); 19 Nov 2015 14:46:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Nov 2015 08:35:31 -0600
-Received: (qmail 17074 invoked by uid 107); 19 Nov 2015 14:36:03 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Nov 2015 08:46:35 -0600
+Received: (qmail 17139 invoked by uid 107); 19 Nov 2015 14:47:07 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Nov 2015 09:36:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Nov 2015 09:35:29 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Nov 2015 09:47:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Nov 2015 09:46:32 -0500
 Content-Disposition: inline
-In-Reply-To: <1447923491-15330-7-git-send-email-larsxschneider@gmail.com>
+In-Reply-To: <1447941260-5395-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281479>
 
-On Thu, Nov 19, 2015 at 09:58:11AM +0100, larsxschneider@gmail.com wrote:
+On Thu, Nov 19, 2015 at 02:54:20PM +0100, Elia Pinto wrote:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
+> Add IPv6 support by implementing name resolution with the
+> protocol agnostic getaddrinfo(3) API. The old gethostbyname(3)
+> code is still available when git is compiled with NO_IPV6.
 > 
-> The tests are currently executed on "Ubuntu 12.04 LTS Server Edition
-> 64 bit" and on "OS X Mavericks" using gcc and clang.
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> Helped-by: Jeff King <peff@peff.net> 
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+> This is the second version of the patch ($gmane/280488)
+> Changes from previous:
 > 
-> Perforce and Git-LFS are installed and therefore available for the
-> respective tests.
+> - Simplified the implementation, avoiding the duplication of 
+> the function add_domainname (Jeff King) ($gmane/280512)
+> 
+> - Fixed a possible memory leak with getaddrinfo (Eric Sunshine)
+>   ($gmane/280507)
 
-My overall impression is that this is a lot more complicated than I was
-expecting. Can we start with something simpler to gain experience with
-Travis?  And then we can add in more complexity later.
+Thanks, this looks much nicer than the last round. I still have a few
+comments:
 
-For example:
+> diff --git a/ident.c b/ident.c
+> index 5ff1aad..283e83f 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -73,7 +73,12 @@ static int add_mailname_host(struct strbuf *buf)
+>  static void add_domainname(struct strbuf *out)
+>  {
+>  	char buf[1024];
+> +#ifndef NO_IPV6
+> +	struct addrinfo hints, *ai;
+> +	int gai;
+> +#else
+>  	struct hostent *he;
+> +#endif /* NO_IPV6 */
 
-> +addons:
-> +  apt:
-> +    packages:
-> +    - language-pack-is
+Can we bump these declarations closer to the point of use? I think that
+makes it easier to read, as the matching bits are all together.
 
-I doubt most people are running the t0204 right now. Maybe we should
-start without it.
+So this:
 
-> +env:
-> +  global:
-> +    - P4_VERSION="15.1"
-> +    - GIT_LFS_VERSION="1.0.2"
+> +	else	{
+> +#ifndef NO_IPV6
+> +		memset (&hints, '\0', sizeof (hints));
+> +		hints.ai_flags = AI_CANONNAME;
+> +		if (!(gai = getaddrinfo(buf, NULL, &hints, &ai)) && ai && strchr(ai->ai_canonname, '.')) 
+> +			strbuf_addstr(out, ai->ai_canonname);
+> +#else
+> +		if ((he = gethostbyname(buf)) && strchr(he->h_name, '.'))
+> +			strbuf_addstr(out, he->h_name);
+> +#endif /* NO_IPV6 */
 
-I know p4 is your area of interest, but from a project perspective, it
-seems like an odd choice for the initial set of tests.
+becomes:
 
-> +    - DEFAULT_TEST_TARGET=prove
-> +    - GIT_PROVE_OPTS="--timer --jobs 3"
-> +    - GIT_TEST_OPTS="--verbose --tee"
+      else {
+  #ifndef NO_IPV6
+	struct addrinfo hints, *ai;
+	int gai;
+	if (!(gai = getaddrinfo()...))
+  #else
+	struct hostent *he;
+	if ((he = gethostbyname()....))
+  #endif
 
-These all make sense, I guess.
+> +		else
+> +			strbuf_addf(out, "%s.(none)", buf);
 
-> +    - GETTEXT_ISO_LOCALE=YesPlease
-> +    - GETTEXT_LOCALE=YesPlease
+This depends on both sides of the #if ending with a hanging "if" clause.
+I guess that's OK in such a small function, but I do still wonder if we
+can have a helper like:
 
-What are these? I don't think we have any such Makefile knobs. These
-look like variables that get used internally by the test suite, but we
-shouldn't need to set them.
+  static void canonical_name(const char *host, struct strbuf *out)
+  {
+  #ifndef NO_IPV6
+	struct addrinfo hints, *ai;
+	int gai = getaddrinfo(host, NULL, &hints, &ai);
+	if (!gai && ai && strchr(ai->ai_canonname, '.')) {
+		strbuf_addstr(out, ai->ai_canonname);
+		freeaddrinfo(ai);
+	}
+  #else
+	struct hostent *he = gethostbyname(buf);
+	if (he && strchr(he->h_name, '.'))
+		strbuf_addstr(out, he->h_name);
+  }
 
-> +    # - GETTEXT_POISON=YesPlease
+  ...
+  canonical_name(buf, out);
+  if (!out.len)
+	strbuf_addf(out, "%s.(none)", buf);
 
-I'm assuming the "#" means this is commented out. Can we just drop such
-cruft?
+(or possibly have an integer return value from canonical_name instead of
+checking the strbuf length).
 
-> +    - GIT_TEST_CHAIN_LINT=YesPlease
+> +#ifndef NO_IPV6
+> +		if (gai) freeaddrinfo(ai);
+> +#endif /* NO_IPV6 */
 
-This is the default, and we don't need to specify it.
-
-> +    - GIT_TEST_CLONE_2GB=YesPlease
-
-Is it a good idea to run such an expensive test?
-
-> +  matrix:
-> +    -
-> +      # NO_ICONV=YesPlease
-
-Ditto here on the commenting.
-
-> +    - >
-> +      NO_CURL=YesPlease
-
-So if I understand correctly, the point of this list is to test
-alternate configurations. So compiling without curl makes some sense, I
-guess. Though mostly it will just shut off a bunch off tests.
-
-> +      NO_D_INO_IN_DIRENT=YesPlease
-
-But setting platform compat knobs like this seems weird. Nobody sets
-this manually. Either your platform has it, or it does not. And we are
-already testing on alternate platforms to cover such things.
-
-If there's a specific config setup of interest, it makes sense to me to
-try to increase test coverage there. But it feels like you've just
-picked a random laundry list of Makefile knobs and tweaked them, without
-any sense of whether they even make sense together, or match the
-platform.
-
-For instance:
-
-> +      NO_STRCASESTR=YesPlease
-> +      NO_STRLCPY=YesPlease
-
-I wouldn't not be surprised if these cause problems building on some
-platforms that _do_ have these functions.
-
-> +    echo "$(tput setaf 6)Perfoce Server Version$(tput sgr0)";
-> +    p4d -V | grep Rev.;
-> +    echo "$(tput setaf 6)Perfoce Client Version$(tput sgr0)";
-> +    p4 -V | grep Rev.;
-
-s/Perfoce/Perforce/ :)
-
-> +before_script: make configure && ./configure && make --jobs=2
-
-Hmm. I wonder if we actually want to use autoconf here at all; most devs
-do not use it, and Git should generally compile out of the box based on
-config.mak.uname (and if it doesn't, it would be nice to know).
-
-There may be some optional packages that autoconf helps with, though.
-
-
-So overall, I dunno. I do not want to create a bunch of work for you in
-splitting it up. But I'm hesitant to merge something that has a bunch of
-lines that I'm not sure I understand the reasoning for. :-/
-
-I was hoping the first cut could just be telling Travis to run "make
-test", without much fanfare beyond that. Maybe that's not realistic.
+Should this be "if (!gai)"?
 
 -Peff
