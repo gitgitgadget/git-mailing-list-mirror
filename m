@@ -1,66 +1,74 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 0/7] Modernize t9300-fast-import
-Date: Thu, 19 Nov 2015 20:09:42 +0100
-Message-ID: <cover.1447959452.git.j6t@kdbg.org>
+Subject: [PATCH 2/7] modernize t9300: use test_must_fail
+Date: Thu, 19 Nov 2015 20:09:44 +0100
+Message-ID: <46b654a91df9ae0c85e406e6a17ca918b63351ee.1447959452.git.j6t@kdbg.org>
+References: <cover.1447959452.git.j6t@kdbg.org>
 Cc: Johannes Sixt <j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 19 20:10:21 2015
+X-From: git-owner@vger.kernel.org Thu Nov 19 20:10:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzUb6-0006bo-1m
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 20:10:20 +0100
+	id 1ZzUbG-0006r2-R5
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 20:10:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030203AbbKSTKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2015 14:10:12 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:57843 "EHLO bsmtp4.bon.at"
+	id S1161158AbbKSTKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2015 14:10:21 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:34797 "EHLO bsmtp4.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030196AbbKSTKK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2015 14:10:10 -0500
+	id S1161150AbbKSTKT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2015 14:10:19 -0500
 Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp4.bon.at (Postfix) with ESMTPSA id 3p1rDc0LDwz5tlH;
-	Thu, 19 Nov 2015 20:10:07 +0100 (CET)
+	by bsmtp4.bon.at (Postfix) with ESMTPSA id 3p1rDp2mdzz5tlH;
+	Thu, 19 Nov 2015 20:10:18 +0100 (CET)
 Received: from dx.site (localhost [127.0.0.1])
-	by dx.site (Postfix) with ESMTP id 7DB7229D8;
-	Thu, 19 Nov 2015 20:10:07 +0100 (CET)
+	by dx.site (Postfix) with ESMTP id 17C7229D8;
+	Thu, 19 Nov 2015 20:10:18 +0100 (CET)
 X-Mailer: git-send-email 2.6.2.337.ga235d84
+In-Reply-To: <cover.1447959452.git.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281484>
 
-Some time ago, I had to dig into t9300-fast-import and found it quite
-unhelpful that it does not follow our modern best-practices. This series
-brings it up-to-date. I thought I submit it now while it is quiet in
-the area.
+One test case open-codes a test for an expected failure. Replace it by
+test_must_fail.
 
-The larger patches are best viewed using -w -color-words because the
-regular patch text is ... overwhelming.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t9300-fast-import.sh | 17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
 
-Improving shell coding style is outside the scope of this series. I mean
-fixing eyesores such as 'cat >foo <<EOF && cat foo | sort > bar', or minor
-things such as quoting <<\EOF when the here-doc does not require
-substitutions.
-
-In case the large patches don't make it to the list, the series is also
-available from
-
-  https://github.com/j6t/git.git modernize-t9300
-
-Johannes Sixt (7):
-  modernize t9300: single-quote placement and indentation
-  modernize t9300: use test_must_fail
-  modernize t9300: use test_must_be_empty
-  modernize t9300: wrap lines after &&
-  modernize t9300: use test_when_finished for clean-up
-  modernize t9300: mark here-doc words to ignore tab indentation
-  modernize t9300: move test preparations into test_expect_success
-
- t/t9300-fast-import.sh | 3629 ++++++++++++++++++++++++------------------------
- 1 file changed, 1822 insertions(+), 1807 deletions(-)
-
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 566f7bd..e9c7602 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -630,20 +630,9 @@ from refs/heads/branch
+ 
+ INPUT_END
+ test_expect_success 'F: non-fast-forward update skips' '
+-	if git fast-import <input
+-	then
+-		echo BAD gfi did not fail
+-		return 1
+-	else
+-		if test $old_branch = `git rev-parse --verify branch^0`
+-		then
+-			: branch unaffected and failure returned
+-			return 0
+-		else
+-			echo BAD gfi changed branch $old_branch
+-			return 1
+-		fi
+-	fi
++	test_must_fail git fast-import <input &&
++	# branch must remain unaffected
++	test $old_branch = `git rev-parse --verify branch^0`
+ '
+ 
+ test_expect_success 'F: verify pack' '
 -- 
 2.6.2.337.ga235d84
