@@ -1,84 +1,105 @@
-From: Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: Local git repository url
-Date: Thu, 19 Nov 2015 14:26:53 -0800
-Message-ID: <CA+P7+xpq+ebnYqUaszBEuWz90rbuBCoBx=fC6sPiM6kcZXggOA@mail.gmail.com>
-References: <7EF33D3D8E1EA14DB720C3BF1B7A24A80F36F32D@PLYEXM02.customer.edfenergy.net>
- <7EF33D3D8E1EA14DB720C3BF1B7A24A80F36F357@PLYEXM02.customer.edfenergy.net> <20151119140645.7f6c856efc66bd88160fd0c1@domain007.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Vambara, JayaPrakash (Infosys)" <JayaPrakash.Vambara@edfenergy.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Konstantin Khomoutov <kostix+git@007spb.ru>
-X-From: git-owner@vger.kernel.org Thu Nov 19 23:27:20 2015
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH v4 2/2] completion: add support for completing email aliases
+Date: Thu, 19 Nov 2015 14:52:12 -0800
+Message-ID: <1447973532-21666-2-git-send-email-jacob.e.keller@intel.com>
+References: <1447973532-21666-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
+	"Shawn O . Pearce" <spearce@spearce.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Lee Marlow <lee.marlow@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 19 23:52:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzXfk-0000jg-9A
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 23:27:20 +0100
+	id 1ZzY41-0003dw-Vj
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 23:52:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934628AbbKSW1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2015 17:27:14 -0500
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:32908 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934604AbbKSW1N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2015 17:27:13 -0500
-Received: by igvi2 with SMTP id i2so21584123igv.0
-        for <git@vger.kernel.org>; Thu, 19 Nov 2015 14:27:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=zl2WTAWKMAthTdh9wfSJXWNst32MPWGf90PZMl5k94c=;
-        b=xt1GSZIpPC3FOa13xx9vUR6l8NiXkyySIksZS0a9ypsqDlFwgaXx4jfWNC/Rlk38a6
-         s0F9MGrDnHHqoRH07xBp3bU215Vi6PaABi1QzCH6L/0GKQWLxbkOX2tNJvhx+n+v8OJH
-         ++mCnX/O2ZllxxhNFadan0pyfRhA/gn1YPSQcNaYHJhD7wSR7lY2PlL4ny7J2mKi2/yB
-         336u9IYoBGRUusvZ01ofsmcGWpO2DUqI7FAgg1LFqBrOc3JcNpIYe/pj+alBW3DPG2dl
-         mx0r1ora4Xbu/SUp5Pt6unua6kI0H1L1KuQRAcTMhr6dLC8FHFr1VCRr5e61wqAO+35n
-         a9ig==
-X-Received: by 10.50.79.135 with SMTP id j7mr152231igx.73.1447972033207; Thu,
- 19 Nov 2015 14:27:13 -0800 (PST)
-Received: by 10.107.19.227 with HTTP; Thu, 19 Nov 2015 14:26:53 -0800 (PST)
-In-Reply-To: <20151119140645.7f6c856efc66bd88160fd0c1@domain007.com>
+	id S1030301AbbKSWwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2015 17:52:22 -0500
+Received: from mga02.intel.com ([134.134.136.20]:58582 "EHLO mga02.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030192AbbKSWwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2015 17:52:21 -0500
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga101.jf.intel.com with ESMTP; 19 Nov 2015 14:52:20 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.20,319,1444719600"; 
+   d="scan'208";a="824518589"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.123])
+  by orsmga001.jf.intel.com with ESMTP; 19 Nov 2015 14:52:20 -0800
+X-Mailer: git-send-email 2.6.3.491.g3e3f6ce
+In-Reply-To: <1447973532-21666-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281494>
 
-On Thu, Nov 19, 2015 at 3:06 AM, Konstantin Khomoutov
-<kostix+git@007spb.ru> wrote:
-> On Thu, 19 Nov 2015 10:48:51 +0000
-> "Vambara, JayaPrakash (Infosys)" <JayaPrakash.Vambara@edfenergy.com>
-> wrote:
->
->> I am trying to setup a local git repository and manage it from local
->> Jenkins set-up. So, both Jenkins and git are on my local desktop.
->>
->> However, I am trying to give the Repository URL but with no luck.
->>
->> My repository is in D drive in location D:\Git-Try
->>
->> I tried to configure this Repository URL as --- file:///d/Git-Try
->>  also file:///D:\Git-Try , but was not successful.
->>
->> Can you please let me know what should be the Repository URL.
->>
->> I have created the db in above location, pushed few files and
->> commited them as well.
->
-> Try D:/Git-test first.
->
-> Otherwise it might heavily depend on how Jenkins interprets those URLs
-> and whether it even uses stock Git to access the repository (and not
-> something else like JGit).
->
+From: Jacob Keller <jacob.keller@gmail.com>
 
-Jenkins Git plugin uses Git-for-Windows CLI by default. You should be
-safe using any URL which works for git CLI locally. If not, I suggest
-filing a bug against the Jenkins git plugin to help ensure it gets
-fixed :)
+Using the new --dump-aliases option from git-send-email, add completion
+for --to, --cc, --bcc, and --from with the available configured aliases.
 
-Regards,
-Jake
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+
+Notes:
+    - v2
+    * Use git-send-email for parsing instead of re-implementing it in awk
+    
+    - v3
+    * update for change to git-send-email
+    * add support for "--from"
+
+ contrib/completion/git-completion.bash | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 482ca84b451b..111b05302bc7 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -10,6 +10,7 @@
+ #    *) local and remote tag names
+ #    *) .git/remotes file names
+ #    *) git 'subcommands'
++#    *) git email aliases for git-send-email
+ #    *) tree paths within 'ref:path/to/file' expressions
+ #    *) file paths within current working directory and index
+ #    *) common --long-options
+@@ -1711,6 +1712,15 @@ __git_send_email_suppresscc_options="author self cc bodycc sob cccmd body all"
+ 
+ _git_send_email ()
+ {
++	case "$prev" in
++	--to|--cc|--bcc|--from)
++		__gitcomp "
++		$(git --git-dir="$(__gitdir)" send-email --dump-aliases 2>/dev/null)
++		" "" ""
++		return
++		;;
++	esac
++
+ 	case "$cur" in
+ 	--confirm=*)
+ 		__gitcomp "
+@@ -1735,6 +1745,12 @@ _git_send_email ()
+ 			" "" "${cur##--thread=}"
+ 		return
+ 		;;
++	--to=*|--cc=*|--bcc=*|--from=*)
++		__gitcomp "
++		$(git --git-dir="$(__gitdir)" send-email --dump-aliases 2>/dev/null)
++		" "" "${cur#--*=}"
++		return
++		;;
+ 	--*)
+ 		__gitcomp "--annotate --bcc --cc --cc-cmd --chain-reply-to
+ 			--compose --confirm= --dry-run --envelope-sender
+-- 
+2.6.3.491.g3e3f6ce
