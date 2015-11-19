@@ -1,115 +1,80 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCHv2] ident.c: add support for IPv6
-Date: Thu, 19 Nov 2015 14:54:20 +0100
-Message-ID: <1447941260-5395-1-git-send-email-gitter.spiros@gmail.com>
-Cc: peff@peff.net, sunshine@sunshineco.com,
-	Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 19 14:54:37 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones
+ fail
+Date: Thu, 19 Nov 2015 08:58:08 -0500
+Message-ID: <20151119135808.GA9353@sigill.intra.peff.net>
+References: <20151113234116.GA18234@sigill.intra.peff.net>
+ <CAGZ79kaUZ08GXZjKtYNmRYOCQ0EQpsGd8+6PYFDU1LxYLw818g@mail.gmail.com>
+ <564A279C.6000802@web.de>
+ <CAGZ79kbh_8oBRnQAmDzh3LANS6iGXNjLkYMLfuk9iysXghHQXg@mail.gmail.com>
+ <CACsJy8D-TRJ---4BYrEZeEkd9_5-xgGp4U0nB9YHNtV3zgxrbg@mail.gmail.com>
+ <20151117214347.GB27862@sigill.intra.peff.net>
+ <CACsJy8Ah2PgO8CunCvWiKB7RfqMfovWa1a7ro5scHFK+AEAXpg@mail.gmail.com>
+ <20151118211158.GA32071@sigill.intra.peff.net>
+ <CAGZ79kbD54fubzozMD51fTpP1v-6bbBoBtKn=fibLuwMmiioKA@mail.gmail.com>
+ <CAOE36qj2m4e3hw73-QoLbbpGv4RiyhBt_ou7eN4i4q8pF15rdA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Stefan Beller <sbeller@google.com>, Duy Nguyen <pclouds@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Terry Parker <tparker@google.com>
+X-From: git-owner@vger.kernel.org Thu Nov 19 14:58:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzPfV-0006Ij-4I
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 14:54:33 +0100
+	id 1ZzPja-0002kM-Pe
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 14:58:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934043AbbKSNy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2015 08:54:28 -0500
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:33673 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932882AbbKSNy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2015 08:54:27 -0500
-Received: by pabfh17 with SMTP id fh17so84717998pab.0
-        for <git@vger.kernel.org>; Thu, 19 Nov 2015 05:54:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=1XjBDaVfu7uqJ20dqVZSdbOWmltaUljhQDUnyi8ByLc=;
-        b=OnCpXKrmyob5oP1vANyWtpvksr1K95TlvxybShcNmznWXQdOCXSkNCGswoQHpMQfTP
-         udu2f7uRsUdhaqX5/Ls75MNTBVQNlsoqTNT1xprC6MmJP2sAI+MVvy0X+OxWqZHgQEQm
-         hiSZvh1xmHt96w7eegqwBf+vNhh2SzdQpWpA5L5/gYU8KnZDqE/80Zjswtv965S2pn9z
-         6lLIMyPIsnoBQBkYOsQRrcaetABOUJS4QI7YClsYJ6Lyj1310Ja8MyhMV8uKKblY99zK
-         jOzRaf1yuGzjbkeff0rdxZ3GgA3N6ispnYLbJmFMMgks/yVnsaEtAvS4mmrMUBLTh3nk
-         HjVQ==
-X-Received: by 10.66.122.105 with SMTP id lr9mr10858192pab.8.1447941267278;
-        Thu, 19 Nov 2015 05:54:27 -0800 (PST)
-Received: from ubuntu14.nephoscale.com (static-67.207.195.141.nephosdns.com. [67.207.195.141])
-        by smtp.gmail.com with ESMTPSA id cc16sm11048102pac.44.2015.11.19.05.54.26
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Nov 2015 05:54:26 -0800 (PST)
-X-Mailer: git-send-email 2.3.3.GIT
+	id S934177AbbKSN6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2015 08:58:16 -0500
+Received: from cloud.peff.net ([50.56.180.127]:59701 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933902AbbKSN6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2015 08:58:13 -0500
+Received: (qmail 16391 invoked by uid 102); 19 Nov 2015 13:58:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Nov 2015 07:58:13 -0600
+Received: (qmail 16814 invoked by uid 107); 19 Nov 2015 13:58:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 19 Nov 2015 08:58:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Nov 2015 08:58:08 -0500
+Content-Disposition: inline
+In-Reply-To: <CAOE36qj2m4e3hw73-QoLbbpGv4RiyhBt_ou7eN4i4q8pF15rdA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281476>
 
-Add IPv6 support by implementing name resolution with the
-protocol agnostic getaddrinfo(3) API. The old gethostbyname(3)
-code is still available when git is compiled with NO_IPV6.
+On Wed, Nov 18, 2015 at 03:40:02PM -0800, Terry Parker wrote:
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-Helped-by: Jeff King <peff@peff.net> 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
----
-This is the second version of the patch ($gmane/280488)
-Changes from previous:
+> > +Terry, who did optimize the JGit implementation for bitmaps,
+> > as we also had a "lots of refs" hoarder repo, which underperformed
+> > before.
+> 
+> The performance issue with the "hoarder" repo was that the bitmap
+> commit selection algorithm in JGit was selecting too many commits and
+> the hoarder repo caused OOMs.
+> 
+> JGit's selection algorithm walks each branch and makes sure commits
+> are selected every 100-200 commits for "recent" history and every
+> 5000-5100 commits for more distant history. IIUC cgit sorts all commits
+> by date and does a similar selection. Since it doesn't attempt to get
+> even coverage on each branch, the selected commits may have
+> large gaps for a particular branch.
 
-- Simplified the implementation, avoiding the duplication of 
-the function add_domainname (Jeff King) ($gmane/280512)
+Thanks for the data point. I agree that cgit seems to have the opposite
+problem: selecting fewer commits, which gives worse performance at read
+time, but no OOM at write time. :)
 
-- Fixed a possible memory leak with getaddrinfo (Eric Sunshine)
-  ($gmane/280507)
+I suspect there's some low-hanging fruit in tweaking cgit's
+implementation, where we might be able to do a better job of hitting
+near the tips of tags without having to drastically increase the number
+of bitmapped commits. But I haven't looked closely.
 
-
- ident.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
-
-diff --git a/ident.c b/ident.c
-index 5ff1aad..283e83f 100644
---- a/ident.c
-+++ b/ident.c
-@@ -73,7 +73,12 @@ static int add_mailname_host(struct strbuf *buf)
- static void add_domainname(struct strbuf *out)
- {
- 	char buf[1024];
-+#ifndef NO_IPV6
-+	struct addrinfo hints, *ai;
-+	int gai;
-+#else
- 	struct hostent *he;
-+#endif /* NO_IPV6 */
- 
- 	if (gethostname(buf, sizeof(buf))) {
- 		warning("cannot get host name: %s", strerror(errno));
-@@ -82,10 +87,23 @@ static void add_domainname(struct strbuf *out)
- 	}
- 	if (strchr(buf, '.'))
- 		strbuf_addstr(out, buf);
--	else if ((he = gethostbyname(buf)) && strchr(he->h_name, '.'))
--		strbuf_addstr(out, he->h_name);
--	else
--		strbuf_addf(out, "%s.(none)", buf);
-+	else	{
-+#ifndef NO_IPV6
-+		memset (&hints, '\0', sizeof (hints));
-+		hints.ai_flags = AI_CANONNAME;
-+		if (!(gai = getaddrinfo(buf, NULL, &hints, &ai)) && ai && strchr(ai->ai_canonname, '.')) 
-+			strbuf_addstr(out, ai->ai_canonname);
-+#else
-+		if ((he = gethostbyname(buf)) && strchr(he->h_name, '.'))
-+			strbuf_addstr(out, he->h_name);
-+#endif /* NO_IPV6 */
-+		else
-+			strbuf_addf(out, "%s.(none)", buf);
-+
-+#ifndef NO_IPV6
-+		if (gai) freeaddrinfo(ai);
-+#endif /* NO_IPV6 */
-+	}
- }
- 
- static void copy_email(const struct passwd *pw, struct strbuf *email)
--- 
-2.5.0
+-Peff
