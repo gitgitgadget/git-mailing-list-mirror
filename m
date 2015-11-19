@@ -1,68 +1,72 @@
-From: nissen13@sarasmtp.com
-Subject: Re: Witaj, jak sie masz?
-Date: Thu, 19 Nov 2015 01:36:37 +0000
-Message-ID: <907495.37183.qm@smtp106.biz.mail.ne1.yahoo.com>
-Reply-To: msmabelllalbert@hotmail.com
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] --bare is ignored before command word
+Date: Wed, 18 Nov 2015 23:46:46 -0500
+Message-ID: <20151119044646.GA8059@sigill.intra.peff.net>
+References: <loom.20151118T181639-5@post.gmane.org>
+ <CA+P7+xoD2-eDZQt29KBqZF2g4i+K7XhJG0mhUgqf5iDURBPntg@mail.gmail.com>
+ <vpqa8qbov2n.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Mabella <nissen13@sarasmtp.com>
-X-From: git-owner@vger.kernel.org Thu Nov 19 02:44:02 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Jacob Keller <jacob.keller@gmail.com>,
+	Ronny Borchert <mister_rs@web.de>,
+	Git mailing list <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Nov 19 05:46:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzEGW-0003tp-O2
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 02:44:01 +0100
+	id 1ZzH7Z-0007r2-DL
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 05:46:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756342AbbKSBnd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Nov 2015 20:43:33 -0500
-Received: from smtp106.biz.mail.ne1.yahoo.com ([98.138.207.13]:24912 "EHLO
-	smtp106.biz.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752191AbbKSBnc convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Nov 2015 20:43:32 -0500
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Nov 2015 20:43:32 EST
-Received: (qmail 41953 invoked from network); 19 Nov 2015 01:36:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1447897012; bh=hq3SaASjTgfv3Id4rWSgcSG/nHwEeWvegeZ/eCg/zV0=; h=Message-ID:Content-Type:MIME-Version:Content-Transfer-Encoding:Content-Description:Subject:To:From:Date:Reply-To; b=lQi0Cl015koiQBaiGVktGicSGwvB1CjTzR+Dmnc0s6EObmATc4OQaSqOKMJd/6Ix+73h3FmOUe5wNVqNUVkkJj7x2B6abAFK2G4KbkWnAO14HLhr9tsX7UI+cZeX416gKk30Af/rTts5BRMDkvEP4Ip4M4bvEY9eCq3s1oKPiuo=
-X-Yahoo-Newman-Property: ymail-3
-X-YMail-OSG: 4hk88tsVM1kNKMW6mdYRja3CGTch6d0wvdl4nllNLWisTbB
- GQAKtS_v0Zg7GU2cUskKkaY_CFR6ERIyD347jSaC23tavM1lezE8.wHSkoPB
- WKg3_1znn7l0cbV78tJY6vJGn43bt0g_6c1cDRZPqtNY2iSBcl1QGr6O61oj
- W19uMp2DH2dQ0OOtzZaeDy5emd5ISp1wb69LheYYpqrJ7pO6nORhyNsFvxMK
- R_5Fm37NNaLba73x2hSxZnWGoGYf7oXi9_dqCHmNmJgYrb4btYCDWHPbQm87
- vrMfsfbny.vkbuGRJl1mRrPX2iv8jBdRLZNRYPH8FZ72WdDgFJvuLvk7Vpzg
- zXYaX_FQmDn15rP9ZV7ynCoxAeKX576A5boebIiVi2fKkco5F437kUDVGGKW
- ht0lD0xCdJolpyUqIC_teG8ydfYbFPiz088onK2z.nkboYl4jY6MnztHO1hM
- mWJMOKhPLJJXCoNKy68.Ghr4gQiw2cKklvzUALHwFEl1X2tlF0cRi2CTee5E
- 1Acm8TpgabKg1N_GZ52TeexkS
-X-Yahoo-SMTP: Z9nMpUqswBAkM_5YoUZPDCnXZNH7tOuKCPMQeA--
-Content-Description: Mail message body
+	id S933893AbbKSEqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Nov 2015 23:46:51 -0500
+Received: from cloud.peff.net ([50.56.180.127]:59543 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932734AbbKSEqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Nov 2015 23:46:49 -0500
+Received: (qmail 25872 invoked by uid 102); 19 Nov 2015 04:46:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Nov 2015 22:46:49 -0600
+Received: (qmail 12567 invoked by uid 107); 19 Nov 2015 04:47:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 18 Nov 2015 23:47:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Nov 2015 23:46:46 -0500
+Content-Disposition: inline
+In-Reply-To: <vpqa8qbov2n.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281465>
 
-Good day, i am moreen Mabella by name 24 years old single. i am contact=
-ing you as i would like to know you more better for an important issue.=
- kindly return to these mail to enable me give you my full details of t=
-he mail.
+On Wed, Nov 18, 2015 at 10:29:20PM +0100, Matthieu Moy wrote:
 
-Thank you in advance and i look forward reading from you soon have a ni=
-ce day..
+> But as you say, options before the command word apply to "git", not to
+> the particular command. The case of --bare is a bit unfortunate: both
+> "git" and "git clone" accept a --bare option, with a different meaning
+> (read "man git" to find what the first does).
+> 
+> So, I wouldn't call the current behavior a really good one, but it's the
+> documented behavior.
+> 
+> It would be nice to warn in this case though: I don't see any use for
+> "git --bare clone".
 
-Sincerely
-Mabella
+We have a similar situation for "git init". Once upon a time there was
+just "git --bare init", and then 74d3b23 (git-init: accept --bare
+option, 2008-05-28) let us do it either way.
 
-Dzien dobry, jestem Jennifer Mabella wg nazwy 24 lat singiel. Jestem ko=
-ntaktu z toba, jak ja chcialbym wiedziec, ze bardziej lepiej dla waznej=
- kwestii. prosimy zwr=F3cic sie do tych mailem, aby umozliwic mi podac =
-swoje pelne dane poczta.
+I'm tempted to say that "git --bare clone" should work the same way.
+Both init and clone are special in that they are always about creating a
+new repository, not working in an existing one.  That's technically a
+non-compatible behavior change, but AFAICT with the current code the
+option is silently ignored, which just seems buggy.
 
-Z g=F3ry dziekuje i czekam z czytania wkr=F3tce milego dnia ..
+But perhaps I am missing some useful effect it does have.
 
+I'd also be OK with simply flagging it as useless and issuing a warning
+or error.
 
-Z powazaniem
-Mabella
+-Peff
