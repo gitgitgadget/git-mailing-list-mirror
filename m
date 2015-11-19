@@ -1,171 +1,103 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 4/7] modernize t9300: wrap lines after &&
-Date: Thu, 19 Nov 2015 20:09:46 +0100
-Message-ID: <5b25e5967f28ee953145bb80c5d5bfc3b699baa3.1447959452.git.j6t@kdbg.org>
-References: <cover.1447959452.git.j6t@kdbg.org>
-Cc: Johannes Sixt <j6t@kdbg.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 19 20:11:29 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] t1450: add tests for NUL in headers of commits and tags
+Date: Thu, 19 Nov 2015 15:33:04 -0500
+Message-ID: <CAPig+cSXiGVLvq59sUFAzTRoQFf-QswAoMSk20LvJqntzaf65A@mail.gmail.com>
+References: <564DF6BE.6020609@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Thu Nov 19 21:33:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzUcC-0008Q4-6M
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 20:11:28 +0100
+	id 1ZzVtO-0003pC-NF
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 21:33:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161239AbbKSTLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2015 14:11:17 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:57953 "EHLO bsmtp4.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161159AbbKSTK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2015 14:10:26 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp4.bon.at (Postfix) with ESMTPSA id 3p1rDt5r44z5tlG;
-	Thu, 19 Nov 2015 20:10:22 +0100 (CET)
-Received: from dx.site (localhost [127.0.0.1])
-	by dx.site (Postfix) with ESMTP id 8136729D8;
-	Thu, 19 Nov 2015 20:10:22 +0100 (CET)
-X-Mailer: git-send-email 2.6.2.337.ga235d84
-In-Reply-To: <cover.1447959452.git.j6t@kdbg.org>
+	id S1161200AbbKSUdH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Nov 2015 15:33:07 -0500
+Received: from mail-yk0-f194.google.com ([209.85.160.194]:35640 "EHLO
+	mail-yk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030325AbbKSUdF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Nov 2015 15:33:05 -0500
+Received: by ykba77 with SMTP id a77so10265164ykb.2
+        for <git@vger.kernel.org>; Thu, 19 Nov 2015 12:33:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=i8n+tH00IUa5vGMBJmNeMcRLiLbafNzrohAk7vCBFJ0=;
+        b=opECum6MRvrIGEQ79xf6LSusrWGW/Xj+f4gCh1cpz53GquPWhS29yk2RmZlQ6sm3LS
+         PqT1fBtxCIyZjhnd2xeLTlFFKrTnmqb1IJiPSja3RXIY1APh2jFAIL00JC9DJS7DY3G7
+         STbl4tG61N6RVUH2HY4kMMkwuN/ORMEmGWuEVwVNi+fQqfzPqGrT0VewykQ/E/5aR0WO
+         9KfVA0FIW6IQpP70a31crI4+cgUQ7VBM3cvJLtoUGjPLTzfeZMA2AtifhTG7IMHwJlqs
+         RySq35j5as2MqgebHzQ+Wmk8GnsLsvLl+ShnqsGMmDC+g6lHehMWjqjh7SIPXPd2P59w
+         E02g==
+X-Received: by 10.13.234.15 with SMTP id t15mr8601491ywe.110.1447965184956;
+ Thu, 19 Nov 2015 12:33:04 -0800 (PST)
+Received: by 10.31.159.204 with HTTP; Thu, 19 Nov 2015 12:33:04 -0800 (PST)
+In-Reply-To: <564DF6BE.6020609@web.de>
+X-Google-Sender-Auth: jD-dw7j43LWZvRlqz-5XTroMozw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281491>
 
-It is customary to have each command in test snippets on its own line.
-Fix those instances that do not follow this guideline.
+On Thu, Nov 19, 2015 at 11:20 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrot=
+e:
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+> @@ -176,6 +176,18 @@ test_expect_success 'integer overflow in timesta=
+mps is reported' '
+> +test_expect_success 'commit with NUL in header' '
+> +       git cat-file commit HEAD >basis &&
+> +       sed "s/author ./author Q/" <basis | q_to_nul >commit-NUL-head=
+er &&
+> +       new=3D$(git hash-object -t commit -w --stdin <commit-NUL-head=
+er) &&
+> +       test_when_finished "remove_object $new" &&
+> +       git update-ref refs/heads/bogus "$new" &&
+> +       test_when_finished "git update-ref -d refs/heads/bogus" &&
+> +       test_must_fail git fsck 2>out &&
+> +       cat out &&
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- t/t9300-fast-import.sh | 48 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+What is the purpose of this 'cat'?
 
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index ceb3db3..c36afdb 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -130,17 +130,20 @@ test_expect_success 'A: verify tree' '
- 
- echo "$file2_data" >expect
- test_expect_success 'A: verify file2' '
--	git cat-file blob master:file2 >actual && test_cmp expect actual
-+	git cat-file blob master:file2 >actual &&
-+	test_cmp expect actual
- '
- 
- echo "$file3_data" >expect
- test_expect_success 'A: verify file3' '
--	git cat-file blob master:file3 >actual && test_cmp expect actual
-+	git cat-file blob master:file3 >actual &&
-+	test_cmp expect actual
- '
- 
- printf "$file4_data" >expect
- test_expect_success 'A: verify file4' '
--	git cat-file blob master:file4 >actual && test_cmp expect actual
-+	git cat-file blob master:file4 >actual &&
-+	test_cmp expect actual
- '
- 
- cat >expect <<EOF
-@@ -1656,10 +1659,14 @@ INPUT_END
- test_expect_success 'P: superproject & submodule mix' '
- 	git fast-import <input &&
- 	git checkout subuse1 &&
--	rm -rf sub && mkdir sub && (cd sub &&
--	git init &&
--	git fetch --update-head-ok .. refs/heads/sub:refs/heads/master &&
--	git checkout master) &&
-+	rm -rf sub &&
-+	mkdir sub &&
-+	(
-+		cd sub &&
-+		git init &&
-+		git fetch --update-head-ok .. refs/heads/sub:refs/heads/master &&
-+		git checkout master
-+	) &&
- 	git submodule init &&
- 	git submodule update
- '
-@@ -1697,7 +1704,8 @@ INPUT_END
- 
- test_expect_success 'P: verbatim SHA gitlinks' '
- 	git branch -D sub &&
--	git gc && git prune &&
-+	git gc &&
-+	git prune &&
- 	git fast-import <input &&
- 	test $(git rev-parse --verify subuse2) = $(git rev-parse --verify subuse1)
- '
-@@ -1942,17 +1950,20 @@ test_expect_success 'Q: verify first notes tree' '
- 
- echo "$note1_data" >expect
- test_expect_success 'Q: verify first note for first commit' '
--	git cat-file blob refs/notes/foobar~2:$commit1 >actual && test_cmp expect actual
-+	git cat-file blob refs/notes/foobar~2:$commit1 >actual &&
-+	test_cmp expect actual
- '
- 
- echo "$note2_data" >expect
- test_expect_success 'Q: verify first note for second commit' '
--	git cat-file blob refs/notes/foobar~2:$commit2 >actual && test_cmp expect actual
-+	git cat-file blob refs/notes/foobar~2:$commit2 >actual &&
-+	test_cmp expect actual
- '
- 
- echo "$note3_data" >expect
- test_expect_success 'Q: verify first note for third commit' '
--	git cat-file blob refs/notes/foobar~2:$commit3 >actual && test_cmp expect actual
-+	git cat-file blob refs/notes/foobar~2:$commit3 >actual &&
-+	test_cmp expect actual
- '
- 
- cat >expect <<EOF
-@@ -1980,17 +1991,20 @@ test_expect_success 'Q: verify second notes tree' '
- 
- echo "$note1b_data" >expect
- test_expect_success 'Q: verify second note for first commit' '
--	git cat-file blob refs/notes/foobar^:$commit1 >actual && test_cmp expect actual
-+	git cat-file blob refs/notes/foobar^:$commit1 >actual &&
-+	test_cmp expect actual
- '
- 
- echo "$note2_data" >expect
- test_expect_success 'Q: verify first note for second commit' '
--	git cat-file blob refs/notes/foobar^:$commit2 >actual && test_cmp expect actual
-+	git cat-file blob refs/notes/foobar^:$commit2 >actual &&
-+	test_cmp expect actual
- '
- 
- echo "$note3_data" >expect
- test_expect_success 'Q: verify first note for third commit' '
--	git cat-file blob refs/notes/foobar^:$commit3 >actual && test_cmp expect actual
-+	git cat-file blob refs/notes/foobar^:$commit3 >actual &&
-+	test_cmp expect actual
- '
- 
- cat >expect <<EOF
-@@ -2015,7 +2029,8 @@ test_expect_success 'Q: verify third notes tree' '
- 
- echo "$note1c_data" >expect
- test_expect_success 'Q: verify third note for first commit' '
--	git cat-file blob refs/notes/foobar2:$commit1 >actual && test_cmp expect actual
-+	git cat-file blob refs/notes/foobar2:$commit1 >actual &&
-+	test_cmp expect actual
- '
- 
- cat >expect <<EOF
-@@ -2041,7 +2056,8 @@ test_expect_success 'Q: verify fourth notes tree' '
- 
- echo "$note2b_data" >expect
- test_expect_success 'Q: verify second note for second commit' '
--	git cat-file blob refs/notes/foobar:$commit2 >actual && test_cmp expect actual
-+	git cat-file blob refs/notes/foobar:$commit2 >actual &&
-+	test_cmp expect actual
- '
- 
- cat >input <<EOF
--- 
-2.6.2.337.ga235d84
+> +       grep "error in commit $new.*unterminated header: NUL at offse=
+t" out
+> +'
+> @@ -276,6 +288,26 @@ test_expect_success 'tag with bad tagger' '
+> +test_expect_failure 'tag with NUL in header' '
+> +       sha=3D$(git rev-parse HEAD) &&
+> +       q_to_nul >tag-NUL-header <<-EOF &&
+> +       object $sha
+> +       type commit
+> +       tag contains-Q-in-header
+> +       tagger T A Gger <tagger@example.com> 1234567890 -0000
+> +
+> +       This is an invalid tag.
+> +       EOF
+> +
+> +       tag=3D$(git hash-object --literally -t tag -w --stdin <tag-NU=
+L-header) &&
+> +       test_when_finished "remove_object $tag" &&
+> +       echo $tag >.git/refs/tags/wrong &&
+> +       test_when_finished "git update-ref -d refs/tags/wrong" &&
+> +       test_must_fail git fsck --tags 2>out &&
+> +       cat out &&
+
+Ditto.
+
+> +       grep "error in tag $tag.*unterminated header: NUL at offset" =
+out
+> +'
+> +
+> --
+> 2.6.3
