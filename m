@@ -1,258 +1,64 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v4 1/2] sendemail: teach git-send-email to dump alias names
-Date: Thu, 19 Nov 2015 14:52:11 -0800
-Message-ID: <1447973532-21666-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	"Shawn O . Pearce" <spearce@spearce.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Lee Marlow <lee.marlow@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 19 23:52:31 2015
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/7] Modernize t9300-fast-import
+Date: Thu, 19 Nov 2015 22:54:11 -0500
+Message-ID: <CAPig+cSH+BnvnzVY=YhRknynyWkAdbXNMvvrb7GcjEnf6UDFug@mail.gmail.com>
+References: <cover.1447959452.git.j6t@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Nov 20 04:54:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzY41-0003dw-7N
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Nov 2015 23:52:25 +0100
+	id 1Zzcme-000079-Hm
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 04:54:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030293AbbKSWwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Nov 2015 17:52:20 -0500
-Received: from mga02.intel.com ([134.134.136.20]:58582 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030192AbbKSWwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Nov 2015 17:52:19 -0500
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101.jf.intel.com with ESMTP; 19 Nov 2015 14:52:19 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.20,319,1444719600"; 
-   d="scan'208";a="824518542"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.123])
-  by orsmga001.jf.intel.com with ESMTP; 19 Nov 2015 14:52:18 -0800
-X-Mailer: git-send-email 2.6.3.491.g3e3f6ce
+	id S1161603AbbKTDyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Nov 2015 22:54:13 -0500
+Received: from mail-yk0-f194.google.com ([209.85.160.194]:32815 "EHLO
+	mail-yk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161407AbbKTDyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Nov 2015 22:54:12 -0500
+Received: by ykdt74 with SMTP id t74so11399207ykd.0
+        for <git@vger.kernel.org>; Thu, 19 Nov 2015 19:54:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=jm5xzRkIRY7jybpwXFUqx0xI8EXwkJS592qKaQzDajc=;
+        b=pgMz5HC9UrZd5/b/arAjfJDUOThZk1a2PLBt663195MS9yq0lNLlKVcSDk1RKHEX2e
+         tF1LZbgiuSBVSODYOGdIF+2mhIqjH0mBMXO1ESjWm/M/r/zNpUhwoOO8S2y87wLJ8SQr
+         VitMsESb4q8G8Q7TSUh4CSvLiVc6cAfMAR+ku7EQr8JaG7kFWXLz6efPgyumVCA/QlED
+         mi+WfiGhBxXyV4g9yqcMN5uLCxK0dXrA0nm3ksE9nKg7yxGXn2Sh38GG29SmLrDd7kfu
+         YBgot2b4/ZwGveFP13i3UQYAGe9v6YJS4JqsOfW6Zyz8EGv2GpiJ519OMZ5O3w/M9fsh
+         uNWQ==
+X-Received: by 10.13.244.129 with SMTP id d123mr11543887ywf.242.1447991651762;
+ Thu, 19 Nov 2015 19:54:11 -0800 (PST)
+Received: by 10.31.159.204 with HTTP; Thu, 19 Nov 2015 19:54:11 -0800 (PST)
+In-Reply-To: <cover.1447959452.git.j6t@kdbg.org>
+X-Google-Sender-Auth: 5REy8i9Jgh8atR1O-jmiueX1xEg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281496>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Thu, Nov 19, 2015 at 2:09 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Some time ago, I had to dig into t9300-fast-import and found it quite
+> unhelpful that it does not follow our modern best-practices. This series
+> brings it up-to-date. I thought I submit it now while it is quiet in
+> the area.
+>
+> The larger patches are best viewed using -w -color-words because the
+> regular patch text is ... overwhelming.
 
-Add an option "--dump-aliases" which changes the default behavior of
-git-send-email. This mode will simply read the alias files configured by
-sendemail.aliasesfile and sendemail.aliasfiletype and dump a list of all
-configured aliases, one per line. The intended use case for this option
-is the bash-completion script which will use it to autocomplete aliases
-on the options which take addresses.
+For what it's worth, I read through the series (with care, I hope) and
+didn't find anything amiss.
 
-Add some tests for the new option using various alias file formats.
-
-A possible future extension to the alias dump format could be done by
-extending the --dump-aliases to take an optional argument defining the
-format to display. This has not been done in this patch as no user of
-this information has been identified.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-
-Notes:
-    - v2
-    * Add command --list-aliases to git-send-email
-
-    - v3
-    * Add test
-    * change option to --dump-aliases
-    * dump both the alias and its expansion
-
-    - v4
-    * Rework and extend tests
-    * Only print alias names for now, punt full format for when a use case is
-      identified
-    * Ensure no other options are used with --dump-aliases
-
- Documentation/git-send-email.txt | 11 ++++++
- git-send-email.perl              | 15 ++++++++
- t/t9001-send-email.sh            | 82 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 108 insertions(+)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index b9134d234f53..771a7b5b0915 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git send-email' [options] <file|directory|rev-list options>...
-+'git send-email' --dump-aliases
- 
- 
- DESCRIPTION
-@@ -387,6 +388,16 @@ default to '--validate'.
- 	Send emails even if safety checks would prevent it.
- 
- 
-+Information
-+~~~~~~~~~~~
-+
-+--dump-aliases::
-+	Instead of the normal operation, dump the shorthand alias names from
-+	the configured alias file(s), one per line in alphabetical order. Note,
-+	this only includes the alias name and not its expanded email addresses.
-+	See 'sendemail.aliasesfile' for more information about aliases.
-+
-+
- CONFIGURATION
- -------------
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index e907e0eacf31..a475b0d75370 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -46,6 +46,7 @@ package main;
- sub usage {
- 	print <<EOT;
- git send-email [options] <file | directory | rev-list options >
-+git send-email --dump-aliases
- 
-   Composing:
-     --from                  <str>  * Email From:
-@@ -101,6 +102,9 @@ git send-email [options] <file | directory | rev-list options >
-                                      `git format-patch` ones.
-     --force                        * Send even if safety checks would prevent it.
- 
-+  Information:
-+    --dump-aliases                 * Dump configured aliases and exit.
-+
- EOT
- 	exit(1);
- }
-@@ -180,6 +184,7 @@ my ($quiet, $dry_run) = (0, 0);
- my $format_patch;
- my $compose_filename;
- my $force = 0;
-+my $dump_aliases = 0;
- 
- # Handle interactive edition of files.
- my $multiedit;
-@@ -291,6 +296,11 @@ $SIG{INT}  = \&signal_handler;
- 
- my $help;
- my $rc = GetOptions("h" => \$help,
-+                    "dump-aliases" => \$dump_aliases);
-+usage() unless $rc;
-+die "--dump-aliases incompatible with other options\n"
-+    if !$help and $dump_aliases and @ARGV;
-+$rc = GetOptions(
- 		    "sender|from=s" => \$sender,
-                     "in-reply-to=s" => \$initial_reply_to,
- 		    "subject=s" => \$initial_subject,
-@@ -551,6 +561,11 @@ if (@alias_files and $aliasfiletype and defined $parse_alias{$aliasfiletype}) {
- 	}
- }
- 
-+if ($dump_aliases) {
-+    print "$_\n" for (sort keys %aliases);
-+    exit(0);
-+}
-+
- # is_format_patch_arg($f) returns 0 if $f names a patch, or 1 if
- # $f is a revision list specification to be passed to format-patch.
- sub is_format_patch_arg {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 5b4a5ce06b94..3c49536e0e8d 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1555,6 +1555,88 @@ test_expect_success $PREREQ 'sendemail.aliasfile=~/.mailrc' '
- 	grep "^!someone@example\.org!$" commandline1
- '
- 
-+test_dump_aliases () {
-+	msg="$1" && shift &&
-+	filetype="$1" && shift &&
-+	printf '%s\n' "$@" >expect &&
-+	cat >.tmp-email-aliases &&
-+
-+	test_expect_success $PREREQ "$msg" '
-+		clean_fake_sendmail && rm -fr outdir &&
-+		git config --replace-all sendemail.aliasesfile \
-+			"$(pwd)/.tmp-email-aliases" &&
-+		git config sendemail.aliasfiletype "$filetype" &&
-+		git send-email --dump-aliases 2>errors >actual &&
-+		test_cmp expect actual
-+	'
-+}
-+
-+test_dump_aliases '--dump-aliases sendmail format' \
-+	'sendmail' \
-+	'abgroup' \
-+	'alice' \
-+	'bcgrp' \
-+	'bob' \
-+	'chloe' <<-\EOF
-+	alice: Alice W Land <awol@example.com>
-+	bob: Robert Bobbyton <bob@example.com>
-+	chloe: chloe@example.com
-+	abgroup: alice, bob
-+	bcgrp: bob, chloe, Other <o@example.com>
-+	EOF
-+
-+test_dump_aliases '--dump-aliases mutt format' \
-+	'mutt' \
-+	'alice' \
-+	'bob' \
-+	'chloe' \
-+	'donald' <<-\EOF
-+	alias alice Alice W Land <awol@example.com>
-+	alias donald Donald C Carlton <donc@example.com>
-+	alias bob Robert Bobbyton <bob@example.com>
-+	alias chloe chloe@example.com
-+	EOF
-+
-+test_dump_aliases '--dump-aliases mailrc format' \
-+	'mailrc' \
-+	'alice' \
-+	'bob' \
-+	'chloe' \
-+	'eve' <<-\EOF
-+	alias alice   Alice W Land <awol@example.com>
-+	alias eve     Eve <eve@example.com>
-+	alias bob     Robert Bobbyton <bob@example.com>
-+	alias chloe   chloe@example.com
-+	EOF
-+
-+test_dump_aliases '--dump-aliases pine format' \
-+	'pine' \
-+	'alice' \
-+	'bob' \
-+	'chloe' \
-+	'eve' <<-\EOF
-+	alice	Alice W Land	<awol@example.com>
-+	eve	Eve	<eve@example.com>
-+	bob	Robert	Bobbyton <bob@example.com>
-+	chloe		chloe@example.com
-+	EOF
-+
-+test_dump_aliases '--dump-aliases gnus format' \
-+	'gnus' \
-+	'alice' \
-+	'bob' \
-+	'chloe' \
-+	'eve' <<-\EOF
-+	(define-mail-alias "alice" "awol@example.com")
-+	(define-mail-alias "eve" "eve@example.com")
-+	(define-mail-alias "bob" "bob@example.com")
-+	(define-mail-alias "chloe" "chloe@example.com")
-+	EOF
-+
-+test_expect_success '--dump-aliases must be used alone' '
-+	test_must_fail git send-email --dump-aliases --to=janice@example.com -1 refs/heads/accounting
-+'
-+
- test_sendmail_aliases () {
- 	msg="$1" && shift &&
- 	expect="$@" &&
--- 
-2.6.3.491.g3e3f6ce
+> Improving shell coding style is outside the scope of this series. I mean
+> fixing eyesores such as 'cat >foo <<EOF && cat foo | sort > bar', or minor
+> things such as quoting <<\EOF when the here-doc does not require
+> substitutions.
