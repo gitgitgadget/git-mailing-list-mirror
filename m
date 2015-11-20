@@ -1,103 +1,110 @@
 From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH] check-ignore: correct documentation about output
-Date: Fri, 20 Nov 2015 21:29:41 +0100
-Message-ID: <1448051381.6899.2.camel@kaarsemaker.net>
-References: <20151108201036.GA28434@spirit>
-	 <20151120113129.GE11198@sigill.intra.peff.net>
+Subject: [PATCH v2] check-ignore: correct documentation about output
+Date: Fri, 20 Nov 2015 21:30:48 +0100
+Message-ID: <20151120203045.GA16353@spirit>
+References: <1448051381.6899.2.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 20 21:29:55 2015
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 20 21:31:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzsJZ-0002zV-Hi
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 21:29:49 +0100
+	id 1ZzsKe-0004eb-VK
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 21:30:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760211AbbKTU3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2015 15:29:45 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:38654 "EHLO
-	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760137AbbKTU3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2015 15:29:44 -0500
-Received: by wmec201 with SMTP id c201so35689742wme.1
-        for <git@vger.kernel.org>; Fri, 20 Nov 2015 12:29:42 -0800 (PST)
+	id S1760241AbbKTUax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2015 15:30:53 -0500
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:33656 "EHLO
+	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760128AbbKTUaw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2015 15:30:52 -0500
+Received: by wmec201 with SMTP id c201so87930367wme.0
+        for <git@vger.kernel.org>; Fri, 20 Nov 2015 12:30:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:content-type
-         :mime-version:content-transfer-encoding;
-        bh=rNez3M2lAp46O+L+lggHrqybD6Yb1uBMeXTWHMvPf2w=;
-        b=e/IZDvLJosS5bBJp8MtfsJVJMJ+o24HVf/kuCcl1nWX0zytZN15cV0mX7IshEfzbzF
-         RpWhGuwdI2aEzOM7mr228Eb89JjsrDH+o0B63XROu6icjj1j/ZARxRkMBlKq5Qk87OK+
-         fjAPMyuHrpGWcjiJ5DeQ+C9NgHMQWvLVbjye6VQqyKgSQJuaLtSXoJCCuZvCijuLecTY
-         Yg7LGp8DWctK712LiQGGl2ndTjHCO4HSYlaRzpDc7sm6LXG/2ScL9Nq9EjC/1YP9eAZo
-         0SjVv5YZZaH4+99caiPb6+Y6k0BuX2GojrO4TJTLskYP9fVqJRUFRN/VFI5E34ZMYw1P
-         j1nw==
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=9qFzFrkkYcQGK/euP5RrlOZM/LhGghSAb0WrGIN4WPg=;
+        b=OoMBA1WbQQeVQhzXcAVqO90fo3Cm2K0jhSa03LZSG700t/6NIn/8tcbWg4dKjQBaR7
+         6BgIMi6LpT5wGvVvpwjcr9R5p1LB0a74A+j9kqfjg1OYorX2wqh5bjFlV+UWZkjlVDcd
+         Nu4DH7GAQwi+82/NSSmGjXqCxP1JVOUkrI9yMfB2JERzqoTqxtjX36qqcOe15nQL+Ijh
+         csQySwSCLI2P0q6LO8ak+b0eSS+/6y5xDXwhVKKadXdUgCyNoJ/T0daRjNskIB3rcyZU
+         Lo2HiMetSvZ2dLIfXUO4jGDs/awuceLJpDaLBA2C65g2ZbPgTuXxs/kH1+ghOf6wHldC
+         +y0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=rNez3M2lAp46O+L+lggHrqybD6Yb1uBMeXTWHMvPf2w=;
-        b=YyomrRsrqEo7ZYDEE+dDf6Po3NkF1M8PRNzPVvndc8ds6z+Kqf1EU7WF1S7/W2boV9
-         +yjg7vQmAUV+olK/G7S/VyPnTwqWMrGauUcObOb2+PkBIEFrkMBMJ/ZFIAYNOdPucBm0
-         mPqc5XbYEuohmnEPKnNvd/u7WayM3bIKlT4rkcCsocY0Wo8x56TI3X6jMCYRLSYsU4h8
-         WC88yR8fr9TBzBL5QICp1dcueGiYSxpgPXcoNIGx1YXkJqPNrnFkdJpdyAd+UPhcdouc
-         5UAgEzrAwhWdqVmMWa+HPZDVQAMFCK6vhdn6jJbPu1zkgoPCaUnvuqgQGypG4PshcyL5
-         h5EA==
-X-Gm-Message-State: ALoCoQkUUVg+JhM/UsR3raYxsDPHy9qElsJSm1T6yvoHfv703mCZ+Sh6a3o49K1z/1KH9MfUiCmM
-X-Received: by 10.194.92.170 with SMTP id cn10mr16615175wjb.12.1448051382474;
-        Fri, 20 Nov 2015 12:29:42 -0800 (PST)
-Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id i18sm1041723wmf.6.2015.11.20.12.29.41
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=9qFzFrkkYcQGK/euP5RrlOZM/LhGghSAb0WrGIN4WPg=;
+        b=UP/jBtgttOs3sPoKyBnZo55ldZQX7tmfRnJYO8GSCyFq844/eI7g/7eDrNswOJ/Hhi
+         8e4To42Y7kK//SrMeTblZneUZsb5pm3tCGEPYaXdcMc/lFK6iNuoZSWNZgm5PUa/x3WI
+         HSyHzz7wWyU1VUS+NZmkrknURigDVC58R+cZlGYqTpOSiuUsJ7eFzVJizHfPtTo5qyz4
+         0k4wZeK2bZ3RHtgvuSW0fBqSTu37/NCtbORf1NgcQcB8LiXDpUvCwDcX3G3T5svt92Qq
+         n6flu89aF1J1ipekw6RPEDKqD253plMOKJ/o7bp5YNVosLgrUH0NfF1kXjoN5VhAzEXh
+         hh4w==
+X-Gm-Message-State: ALoCoQnRBSOxXEmxQ8GyXhf7Ois8muctVTLArqbPIYvtnJqMCH9JaytFTVC13RNYxmYQAu19FqDp
+X-Received: by 10.28.18.138 with SMTP id 132mr4595559wms.6.1448051450970;
+        Fri, 20 Nov 2015 12:30:50 -0800 (PST)
+Received: from spirit ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id t64sm1064873wmf.23.2015.11.20.12.30.50
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Nov 2015 12:29:42 -0800 (PST)
-In-Reply-To: <20151120113129.GE11198@sigill.intra.peff.net>
-X-Mailer: Evolution 3.16.5-1ubuntu3 
+        Fri, 20 Nov 2015 12:30:50 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1448051381.6899.2.camel@kaarsemaker.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281531>
 
-[Peff, sorry for the duplicate mail. It seems I can't brain today...] 
+By default git check-ignore shows only the filenames that will be
+ignored, not the pattern that causes their exclusion. Instead of moving
+the partial exclude pattern precendence information to the -v option
+where it belongs, link to gitignore(5) which describes this more
+thoroughly.
 
-On vr, 2015-11-20 at 06:31 -0500, Jeff King wrote:
-> On Sun, Nov 08, 2015 at 09:10:39PM +0100, Dennis Kaarsemaker wrote:
-> 
-> > By default git check-ignore shows only the filenames that will be
-> > ignored, not the pattern that causes their exclusion.
-> 
-> Yeah, I think the described behavior is really about the "-v" output.
+Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+---
+ Documentation/git-check-ignore.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Yup.
+diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
+index 59531ab..e94367a 100644
+--- a/Documentation/git-check-ignore.txt
++++ b/Documentation/git-check-ignore.txt
+@@ -16,10 +16,9 @@ DESCRIPTION
+ -----------
+ 
+ For each pathname given via the command-line or from a file via
+-`--stdin`, show the pattern from .gitignore (or other input files to
+-the exclude mechanism) that decides if the pathname is excluded or
+-included.  Later patterns within a file take precedence over earlier
+-ones.
++`--stdin`, check whether the file is excluded by .gitignore (or other
++input files to the exclude mechanism) and output the path if it is
++excluded.
+ 
+ By default, tracked files are not shown at all since they are not
+ subject to exclude rules; but see `--no-index'.
+@@ -32,7 +31,8 @@ OPTIONS
+ 
+ -v, --verbose::
+ 	Also output details about the matching pattern (if any)
+-	for each given pathname.
++	for each given pathname. For precedence rules within and
++	between exclude sources, see linkgit:gitignore[5].
+ 
+ --stdin::
+ 	Read pathnames from the standard input, one per line,
+-- 
+2.6.3-495-gf0a7f49
 
-> > --- a/Documentation/git-check-ignore.txt
-> > +++ b/Documentation/git-check-ignore.txt
-> > @@ -16,10 +16,9 @@ DESCRIPTION
-> >  -----------
-> >  
-> >  For each pathname given via the command-line or from a file via
-> > -`--stdin`, show the pattern from .gitignore (or other input files
-> > to
-> > -the exclude mechanism) that decides if the pathname is excluded or
-> > -included.  Later patterns within a file take precedence over
-> > earlier
-> > -ones.
-> > +`--stdin`, check whether the file is excluded by .gitignore (or
-> > other
-> > +input files to the exclude mechanism) and output the path if it is
-> > +excluded.
-> 
-> This just drops the mention of patterns entirely. Is the description 
-> of "-v" sufficient to cover this (especially I am thinking of the
-> last-pattern-wins behavior)?
-
-The -v should then also describe precendence rules between files. Or
-maybe just link to gitignore(5).
 
 -- 
-Dennis Kaarsemaker
-www.kaarsemaker.net
+Dennis Kaarsemaker <dennis@kaarsemaker.net>
+http://twitter.com/seveas
