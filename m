@@ -1,59 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Documentation/diff: give --word-diff-regex=. example
-Date: Fri, 20 Nov 2015 15:59:44 +0100
-Message-ID: <vpq1tbkhg2n.fsf@anie.imag.fr>
-References: <vpq1tbq812p.fsf@anie.imag.fr>
-	<6697f80b679b2bc910aa02a0fc945453be38c532.1448026505.git.git@drmicha.warpmail.net>
+From: Peter van der Does <peter@avirtualhome.com>
+Subject: git fetch with fetch.prune set bug?
+Date: Fri, 20 Nov 2015 10:19:22 -0500
+Message-ID: <564F39FA.2030107@avirtualhome.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Nov 20 16:02:47 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 20 16:39:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZznBu-0005oc-Gc
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 16:01:34 +0100
+	id 1Zznll-0002B5-CX
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 16:38:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162382AbbKTO7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2015 09:59:52 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:54165 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935176AbbKTO7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2015 09:59:50 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id tAKExgjv030559
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 20 Nov 2015 15:59:43 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tAKExi9P014559;
-	Fri, 20 Nov 2015 15:59:44 +0100
-In-Reply-To: <6697f80b679b2bc910aa02a0fc945453be38c532.1448026505.git.git@drmicha.warpmail.net>
-	(Michael J. Gruber's message of "Fri, 20 Nov 2015 14:36:14 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 20 Nov 2015 15:59:43 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: tAKExgjv030559
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1448636383.46667@KgB5cIUEvRQddeQ9CEKZsg
+	id S1760512AbbKTPid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2015 10:38:33 -0500
+Received: from zandvoort.avirtualhome.com ([96.126.105.64]:42898 "EHLO
+	mail.avirtualhome.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759785AbbKTPic (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2015 10:38:32 -0500
+X-Greylist: delayed 1147 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Nov 2015 10:38:32 EST
+Received: from [192.168.1.106] (c-69-248-80-32.hsd1.nj.comcast.net [69.248.80.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mail.avirtualhome.com (Postfix) with ESMTPSA id 3F32217649
+	for <git@vger.kernel.org>; Fri, 20 Nov 2015 10:19:22 -0500 (EST)
+DKIM-Filter: OpenDKIM Filter v2.9.1 mail.avirtualhome.com 3F32217649
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=avirtualhome.com;
+	s=mail; t=1448032763;
+	bh=GYNK+UVROEZKByDhUkyqmhGUCOz8l7O6VujoBMw46pQ=;
+	h=To:From:Subject:Date:From;
+	b=HdJkSNkq+4cW5Y0GNnNZsVKqCHXZyE3Mt81qrDQGfUUlbZRyDlKSqxaVVON6UWrvJ
+	 YgCaCMKVg1o+E12BwUeXqIlKVQ6Y9/xKnD7r+5nx9biPZqyMq8Qfjqy41FwzFofDJE
+	 qzjk5Zu6hRPXCvoAJEaDv9wH9GqbW+ob36CXQXUQ=
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:44.0) Gecko/20100101
+ Thunderbird/44.0a2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281526>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Hi,
 
-> It's just so useful.
+Doing the following commands:
+$ git config fetch.prune true
+$ git co -b bug/bug-1
+Switched to a new branch 'bug/bug-1'
+$ touch bugfix
+$ git add .
+$ git commit -a
+$ git push --set-upstream origin bug/bug-1
+Counting objects: 2, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 242 bytes | 0 bytes/s, done.
+Total 2 (delta 1), reused 0 (delta 0)
+To git@github.com:petervanderdoes/Testing.git
+ * [new branch]      bug/bug-1 -> bug/bug-1
+Branch bug/bug-1 set up to track remote branch bug/bug-1 from origin.
+$ git fetch origin bug/bug-1:refs/remotes/origin/bug/bug-1
+From github.com:petervanderdoes/Testing
+ x [deleted]         (none)     -> origin/bug/bug-1
+$ git branch -r
+  origin/master
+$ git branch
+* bug/bug-1
+  master
 
-Confirmed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+The branch still exists on the remote repository.
+Is it correct that the git fetch deletes the remote reference?
 
-Thanks,
+
+Peter
+
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Peter van der Does
+
+GPG key: CB317D6E
+
+Site: http://avirtualhome.com
+GitHub: https://github.com/petervanderdoes
+Twitter: @petervanderdoes
