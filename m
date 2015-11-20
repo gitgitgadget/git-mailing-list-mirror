@@ -1,72 +1,103 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] fsck: treat a NUL in a tag header as an error
-Date: Fri, 20 Nov 2015 21:18:52 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1511202118340.1686@s15462909.onlinehome-server.info>
-References: <564DF6BE.6020609@web.de> <564DF7FB.3090704@web.de>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH] check-ignore: correct documentation about output
+Date: Fri, 20 Nov 2015 21:29:41 +0100
+Message-ID: <1448051381.6899.2.camel@kaarsemaker.net>
+References: <20151108201036.GA28434@spirit>
+	 <20151120113129.GE11198@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-2092968461-1448050734=:1686"
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Fri Nov 20 21:19:24 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 20 21:29:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Zzs9T-0003pL-MB
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 21:19:24 +0100
+	id 1ZzsJZ-0002zV-Hi
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 21:29:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1163412AbbKTUTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2015 15:19:16 -0500
-Received: from mout.gmx.net ([212.227.17.20]:63869 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1162547AbbKTUTN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2015 15:19:13 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0LmeGF-1aY6xx2pql-00aB9x;
- Fri, 20 Nov 2015 21:18:54 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <564DF7FB.3090704@web.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:SgaBJewjAIQtBHuaV//DU8qHlkTyFY6u4ykAdXSWDeSltwuQ3Yh
- NLPbCT1NAg/nRsKWAxphgyhQdBcuk2AQ7fF0vTCSwc+quh+aHbZj9Q+vg+UoqLF5pKhkAr7
- 4OZXLUmdDhqM+0hcILusr/vc50yMLcPg+6mHCWhXPzB3RnAk8TwUYbGuAH3gqjnIqXJci63
- axLidbh/ZdDdKpFhP9DEw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VtzObfAxLuQ=:+KkLAtsl4qc+gjc6Uom7nN
- EmBnSbTd90JpWVW2Pzl1gz9jiOJ59mGnEA1oWg+YZugB6wmtUntsQ488pVtrS00ulaqykb0MW
- ht0mbSH9dxkJjIXjaWGZInzUwQ/SXQmeuaDFy/4eT9Ywqh4ikKKpsxKLrOPnqT4vANMv/NUOR
- pveqG2uh7jMZIYZj5/spRus/sWGIRXb+17Eg9sFCAuMU/r7XNBCUbkZ3uicpVfZUuPROr1kfM
- aj6S0F83ZPNBbUtUY8hxovN5ztNhRCD037bISrkxL5FobJ+Bui7Dm9JhnGPOx/9tNuFmkDn1O
- UzMtMKQhmMMjjlr6NOBq/zj7XzjzfGkAIZPy6m1ET99nhCqqc6ybL9iuIc7GUOKsz4zaznjrX
- XX0d+r4ySu6XH/D29XRG9evqxnWvZ/nsyc4ETXG72ERRe6MnsM1KBG5FAgqh/s8Yob+BzM6EM
- M5z8J8oztGnh9bJPgVukvcFF1YFsdWkQtIL0Y6pxBOoEa4RCVr1An2NafiD1ZcuODLypFIgcX
- HOzylV6cPV1meyrMhNMkZnAYshn+I6u5cljH6l1sPGejWG+Fizkox6SJJDs1x53VNzcWzgP02
- 34o/3c3vl7fKrJhPaRQSTzUirspQHiUQz4G1amOjLVPUpG0AXiIwdUqfeGV1DJGEUWsAQ+BHH
- GawRNNOv1KSiX5mGYb9b8KaZpAi38gWbjZtcCVgFs9H4asny7CeRCwW1ZRVLjRrAShzx4Q+SA
- lPAXcDZPRRSrVnoCXQdISJ2LUeRCtVnd14RDojwIP5jyvFi/x49Kb0BFX2mst0OAxAocc7Nq 
+	id S1760211AbbKTU3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2015 15:29:45 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:38654 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760137AbbKTU3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2015 15:29:44 -0500
+Received: by wmec201 with SMTP id c201so35689742wme.1
+        for <git@vger.kernel.org>; Fri, 20 Nov 2015 12:29:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:content-type
+         :mime-version:content-transfer-encoding;
+        bh=rNez3M2lAp46O+L+lggHrqybD6Yb1uBMeXTWHMvPf2w=;
+        b=e/IZDvLJosS5bBJp8MtfsJVJMJ+o24HVf/kuCcl1nWX0zytZN15cV0mX7IshEfzbzF
+         RpWhGuwdI2aEzOM7mr228Eb89JjsrDH+o0B63XROu6icjj1j/ZARxRkMBlKq5Qk87OK+
+         fjAPMyuHrpGWcjiJ5DeQ+C9NgHMQWvLVbjye6VQqyKgSQJuaLtSXoJCCuZvCijuLecTY
+         Yg7LGp8DWctK712LiQGGl2ndTjHCO4HSYlaRzpDc7sm6LXG/2ScL9Nq9EjC/1YP9eAZo
+         0SjVv5YZZaH4+99caiPb6+Y6k0BuX2GojrO4TJTLskYP9fVqJRUFRN/VFI5E34ZMYw1P
+         j1nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=rNez3M2lAp46O+L+lggHrqybD6Yb1uBMeXTWHMvPf2w=;
+        b=YyomrRsrqEo7ZYDEE+dDf6Po3NkF1M8PRNzPVvndc8ds6z+Kqf1EU7WF1S7/W2boV9
+         +yjg7vQmAUV+olK/G7S/VyPnTwqWMrGauUcObOb2+PkBIEFrkMBMJ/ZFIAYNOdPucBm0
+         mPqc5XbYEuohmnEPKnNvd/u7WayM3bIKlT4rkcCsocY0Wo8x56TI3X6jMCYRLSYsU4h8
+         WC88yR8fr9TBzBL5QICp1dcueGiYSxpgPXcoNIGx1YXkJqPNrnFkdJpdyAd+UPhcdouc
+         5UAgEzrAwhWdqVmMWa+HPZDVQAMFCK6vhdn6jJbPu1zkgoPCaUnvuqgQGypG4PshcyL5
+         h5EA==
+X-Gm-Message-State: ALoCoQkUUVg+JhM/UsR3raYxsDPHy9qElsJSm1T6yvoHfv703mCZ+Sh6a3o49K1z/1KH9MfUiCmM
+X-Received: by 10.194.92.170 with SMTP id cn10mr16615175wjb.12.1448051382474;
+        Fri, 20 Nov 2015 12:29:42 -0800 (PST)
+Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id i18sm1041723wmf.6.2015.11.20.12.29.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Nov 2015 12:29:42 -0800 (PST)
+In-Reply-To: <20151120113129.GE11198@sigill.intra.peff.net>
+X-Mailer: Evolution 3.16.5-1ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281530>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+[Peff, sorry for the duplicate mail. It seems I can't brain today...] 
 
---1784107012-2092968461-1448050734=:1686
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On vr, 2015-11-20 at 06:31 -0500, Jeff King wrote:
+> On Sun, Nov 08, 2015 at 09:10:39PM +0100, Dennis Kaarsemaker wrote:
+> 
+> > By default git check-ignore shows only the filenames that will be
+> > ignored, not the pattern that causes their exclusion.
+> 
+> Yeah, I think the described behavior is really about the "-v" output.
 
-Hi Ren=C3=A9,
+Yup.
 
-On Thu, 19 Nov 2015, Ren=C3=A9 Scharfe wrote:
+> > --- a/Documentation/git-check-ignore.txt
+> > +++ b/Documentation/git-check-ignore.txt
+> > @@ -16,10 +16,9 @@ DESCRIPTION
+> >  -----------
+> >  
+> >  For each pathname given via the command-line or from a file via
+> > -`--stdin`, show the pattern from .gitignore (or other input files
+> > to
+> > -the exclude mechanism) that decides if the pathname is excluded or
+> > -included.  Later patterns within a file take precedence over
+> > earlier
+> > -ones.
+> > +`--stdin`, check whether the file is excluded by .gitignore (or
+> > other
+> > +input files to the exclude mechanism) and output the path if it is
+> > +excluded.
+> 
+> This just drops the mention of patterns entirely. Is the description 
+> of "-v" sufficient to cover this (especially I am thinking of the
+> last-pattern-wins behavior)?
 
-> We check the return value of verify_header() for commits already, so do
-> the same for tags as well.
+The -v should then also describe precendence rules between files. Or
+maybe just link to gitignore(5).
 
-Thanks for catching and fixing my bug!
-
-Ciao,
-Dscho
---1784107012-2092968461-1448050734=:1686--
+-- 
+Dennis Kaarsemaker
+www.kaarsemaker.net
