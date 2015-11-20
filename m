@@ -1,93 +1,83 @@
-From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 2/2] rebase: fix preserving commits with --keep-empty
-Date: Fri, 20 Nov 2015 13:04:40 +0100
-Message-ID: <1448021080-4994-3-git-send-email-ps@pks.im>
-References: <1448021080-4994-1-git-send-email-ps@pks.im>
-Cc: ps@pks.im
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 20 13:05:18 2015
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v6 0/6] Add Travis CI support
+Date: Fri, 20 Nov 2015 12:56:04 +0000
+Message-ID: <CAE5ih7-q9JpiAW3pU6XWk+z0sGY8ej+UKEaR0bGuBnR0D9+P5A@mail.gmail.com>
+References: <1447923491-15330-1-git-send-email-larsxschneider@gmail.com>
+	<20151119141409.GB9353@sigill.intra.peff.net>
+	<46C55D27-0B59-41AA-84AD-FED095EBDEE4@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Git Users <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 20 13:56:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzkRC-0007Fl-4q
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 13:05:10 +0100
+	id 1ZzlEn-0005j1-Jk
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 13:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162462AbbKTMFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2015 07:05:00 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:53197 "EHLO
-	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751329AbbKTME6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Nov 2015 07:04:58 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 387502057D
-	for <git@vger.kernel.org>; Fri, 20 Nov 2015 07:04:58 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute5.internal (MEProxy); Fri, 20 Nov 2015 07:04:58 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:date:from:in-reply-to:message-id
-	:references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=IbAb
-	PD9HIU4qRDG4EIR3vzyWrA8=; b=BHX/8sYmBt1Y2K96wLc3YcUgL6lotf9YasRe
-	Tq25jcxhhC4pzbjnRdhFSNC+nzWc8SLAOmoCQtkcWWesyoC1p629G0a1DFOIMzau
-	yd5IxoLVf8bAx+aaXlNXWJ3tPbhxM7Tq2wk4+xfHF9F3dtBVJ/HPxKLFQqrYDIgx
-	n4bPeTc=
-X-Sasl-enc: L5mfdt3XwYVfje55lbYt6BUmhTaXpKHLAVpO+6iPYf0P 1448021097
-Received: from localhost (i59f7870a.versanet.de [89.247.135.10])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 8D721C016EE;
-	Fri, 20 Nov 2015 07:04:57 -0500 (EST)
-X-Mailer: git-send-email 2.6.3
-In-Reply-To: <1448021080-4994-1-git-send-email-ps@pks.im>
+	id S1162720AbbKTM4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2015 07:56:16 -0500
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:35723 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760165AbbKTM4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2015 07:56:04 -0500
+Received: by obbnk6 with SMTP id nk6so85386198obb.2
+        for <git@vger.kernel.org>; Fri, 20 Nov 2015 04:56:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=kc9uBz6r8U7TZZZTKr4lgYaPco/N04qprB9XnICAAcw=;
+        b=f9DEv/otSOFnHcqS+S6dg2qCVfgdLuiQPjZmGOcuXgA8qHp5wxuFKThUKa2qFIf8CQ
+         8fXasXO4lN+NApfGtGpkUXqcLh6wkNPmbW4OHHmelRCGh2gbAmNYfp2+tba7TY2GViET
+         bWfT1sihVlMqx0nYZHlNzDS7Y+1NFy5IyHflU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=kc9uBz6r8U7TZZZTKr4lgYaPco/N04qprB9XnICAAcw=;
+        b=gtDs5hT+zQi2c/Ytge6eHifnwFcrmCzYJPtPnKI9fvCzavrwXJ0wK+i8Sv/g+q2eUO
+         oJS36e26Xl1Cmp3ATerdNCJVembp5QDCiHf5i/VfKD2N1O/CQt/rYlDIBfGXBAhP6oo6
+         Q9zs1MUZ2xbcbTEVpRUvAtTbsV0wSj90QrPiTz8uE8uUbd+dflO7YAW4HHt/Mz+8fZ0y
+         W6rQOBRFodJpftvSJxhRU5EfUcbul8ZecksCqB+1YD4Ll4Kg9e76NeyRIlOf4sAN8z6N
+         QBLr2LeO9ZoX6/cB8kJlamWRdDPH+NxfxS/HfqENW37qHKdMueeCY3Y/x1Ri1xnL+tFx
+         Lydg==
+X-Gm-Message-State: ALoCoQlGkyZyHxZ/X7rEz2VeaiOavpE9m1r8MYhleVwo7BQREmttJDVeewJA3WarnKZBa1HZ2PwD
+X-Received: by 10.60.97.105 with SMTP id dz9mr8383636oeb.40.1448024164262;
+ Fri, 20 Nov 2015 04:56:04 -0800 (PST)
+Received: by 10.60.141.40 with HTTP; Fri, 20 Nov 2015 04:56:04 -0800 (PST)
+In-Reply-To: <46C55D27-0B59-41AA-84AD-FED095EBDEE4@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281517>
 
-When rebasing commits where one or several commits are redundant
-to commits on the branch that is being rebased upon we error out.
-This is due to the usage of `--allow-empty` for the invoked
-cherry-pick command, which will only cause _empty_ commits to be
-picked instead of also allowing redundant commits. As
-git-rebase(1) mentions, though, we also want to keep commits that
-do not change anything from its parents, that is also redundant
-commits.
+On 20 November 2015 at 08:46, Lars Schneider <larsxschneider@gmail.com> wrote:
+>
+> On 19 Nov 2015, at 15:14, Jeff King <peff@peff.net> wrote:
+>
+>
+>>
+>>>  git-p4: retry kill/cleanup operations in tests with timeout
+>>>  git-p4: add p4d timeout in tests
+>>>  git-p4: add trap to kill p4d on test exit
+>>
+>> These are all fairly gross, and I don't have p4d to test with myself.
+>> But if we assume they're all necessary, I suppose it's the best we can
+>> do.
+>
+> Unfortunately I think they are necessary. However, if someone finds a better way for stable p4d tests then I would be happy to see them go away, again.
 
-Fix this by invoking `git cherry-pick --keep-redundant-commits`
-instead, which will cause redundant commits to be rebased
-correctly.
+I think that's just how p4d is I'm afraid. It doesn't like being
+stopped and started quickly (I guess it's not a normal use-case for
+most p4 users). I've made various unsuccessful attempts in the past to
+make these tests work reliably, and Lars' changes are far better than
+anything I ever managed.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- git-rebase--am.sh | 2 +-
- t/t3400-rebase.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-index 9ae898b..ea7b897 100644
---- a/git-rebase--am.sh
-+++ b/git-rebase--am.sh
-@@ -44,7 +44,7 @@ then
- 	# empty commits and even if it didn't the format doesn't really lend
- 	# itself well to recording empty patches.  fortunately, cherry-pick
- 	# makes this easy
--	git cherry-pick ${gpg_sign_opt:+"$gpg_sign_opt"} --allow-empty \
-+	git cherry-pick ${gpg_sign_opt:+"$gpg_sign_opt"} --keep-redundant-commits \
- 		--right-only "$revisions" \
- 		${restrict_revision+^$restrict_revision}
- 	ret=$?
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 6cca319..f43b202 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -255,7 +255,7 @@ test_expect_success 'rebase commit with an ancient timestamp' '
- 	grep "author .* 34567 +0600$" actual
- '
- 
--test_expect_failure 'rebase duplicated commit with --keep-empty' '
-+test_expect_success 'rebase duplicated commit with --keep-empty' '
- 	git reset --hard &&
- 	git checkout master &&
- 
--- 
-2.6.3
+Luke
