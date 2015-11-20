@@ -1,88 +1,112 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 0/5] Use watchman to reduce index refresh time
-Date: Fri, 20 Nov 2015 10:45:21 +0100
-Message-ID: <CAP8UFD00SViJ3fdj2s+z1-GWtrcgrF_pXuUUsEGjzmnxe5_gmQ@mail.gmail.com>
-References: <1446386146-10438-1-git-send-email-pclouds@gmail.com>
-	<CAHVLzcn3j8eLi9VrNoZjyOZ2UzE7=NYF1bqB9UyKmghUoUw1Zg@mail.gmail.com>
-	<CACsJy8DzSEVJYc85-3vSAZ8wB1pR9TLz0RrKyKFfHth9Tq+xyg@mail.gmail.com>
-	<CACsJy8Dz17gRSHch9e=iB2Kq2t4FbssatW84DF8pHTuFMgEgjQ@mail.gmail.com>
-	<CAP8UFD0rAL62eFdtLo__ta=_Yhq4cdRcqmfYTqw3imNa5Lde-A@mail.gmail.com>
-	<1447189468.20147.32.camel@twopensource.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Three dot notion used inconsitent?
+Date: Fri, 20 Nov 2015 10:53:09 +0100
+Message-ID: <564EED85.3080706@drmicha.warpmail.net>
+References: <1CDF2D38-B73A-4C49-BC10-1F3BA1873733@gmail.com>
+ <87lh9vp59u.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Git <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri Nov 20 10:47:06 2015
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 20 10:55:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZziGA-0007TV-Aw
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 10:45:39 +0100
+	id 1ZziNh-00088P-L0
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 10:53:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934919AbbKTJpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2015 04:45:25 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:33190 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934085AbbKTJpW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2015 04:45:22 -0500
-Received: by igvi2 with SMTP id i2so29616511igv.0
-        for <git@vger.kernel.org>; Fri, 20 Nov 2015 01:45:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=won700Rh9Ou0ht1nwo+lAgOijrC0ksngwWCRNWOXGjI=;
-        b=zQXFFEefnoYJ/6cDQNEVM7/oWi1PS9JFJ1fUL1VExcg16jSJT/lYeBP2V9vv8HC3Wd
-         zt3N3lksL0mP6RYB0xI2r3PtX3fgwQIDG2oHfayDgaJZBsAA8fnH83hTOP2Zx0AndTcT
-         5z0RiArqaR/SC38PovIvlijjn6nAXDa3J5uMC4qnm/QYrSgpUXCXa/FDTmI6t8Yoxyxj
-         n7gTgQn4ZAxouFV8iWMCH1//OMzBStCbioyln2n3W1v0OCJpaJSxqksFABMWZvQ5dCiR
-         6h7PgXSFJWNgSIT35T3/+y+wD38QMz0LaUuf1TjVX49V68QMY7er68zbFF3LUUWh0f4R
-         ZaOQ==
-X-Received: by 10.50.59.179 with SMTP id a19mr851992igr.59.1448012721862; Fri,
- 20 Nov 2015 01:45:21 -0800 (PST)
-Received: by 10.36.146.68 with HTTP; Fri, 20 Nov 2015 01:45:21 -0800 (PST)
-In-Reply-To: <1447189468.20147.32.camel@twopensource.com>
+	id S1162383AbbKTJxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2015 04:53:17 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:57754 "EHLO
+	out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752682AbbKTJxL (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Nov 2015 04:53:11 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9E0B42046D
+	for <git@vger.kernel.org>; Fri, 20 Nov 2015 04:53:10 -0500 (EST)
+Received: from frontend1 ([10.202.2.160])
+  by compute2.internal (MEProxy); Fri, 20 Nov 2015 04:53:10 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=Hm69UvNdz4S2oc6DOC9KKkhrpOo=; b=cjVN/V
+	6gEGpY/bEhRsyslfKIQmbNCH5ERJPUIYln2k6gsZM3kHqoFZBczPt0/bCZD9lEvU
+	bCiTN0iL10nFyhP0IoKqKCW57uwbckzxYWWFYjm/4wS8xDCbeQ3iQWdVtByuqZA9
+	nXnC55mgBkgD4BFqaH7+v7ffDqJ/hJYvpb9gM=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Hm69UvNdz4S2oc6
+	DOC9KKkhrpOo=; b=mWyNGT2wh9T/0KVHWsUezHumJOsLYbDxdcHFtewn1Lgu11L
+	af/80H9cI14BLY6eg/K3f96ScNjlClZaBldurolUbuQeztX7DmbIDN2flj5UKcPN
+	0YUisYLVykNev8s+PBeyi+i5eFdySkNZ6Zc10VTo+8AZvAvpeA8tVWdtHkTQ=
+X-Sasl-enc: aqxL4EaFHw4FkThxFtA53v0Ov4zldtPmKjmJlEMmfdgH 1448013190
+Received: from dickson.math.uni-hannover.de (dickson.math.uni-hannover.de [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 09113C016EE;
+	Fri, 20 Nov 2015 04:53:09 -0500 (EST)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <87lh9vp59u.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281503>
 
-On Tue, Nov 10, 2015 at 10:04 PM, David Turner <dturner@twopensource.com> wrote:
-> On Mon, 2015-11-09 at 21:06 +0100, Christian Couder wrote:
->> Using David's series I get worse results than all of the above but I
->> guess it's because his series is based on an ancient git version
->> (v2.0.0-rc0).
->
-> My more-recent series is on top of 2.4, but (for webkit):
-> mine: 0m0.206s
-> duy's: 0m0.107s
+Andreas Schwab venit, vidit, dixit 18.11.2015 18:49:
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+>> git diff branchA...branchB
+>> --> gives me the diff between (the common ancestor of A and B) and B. That means I never see changes on branchA.
+>>
+>> git log branchA...branchB
+>> --> gives me the commits reachable from A and B. That includes changes from branchA.
+>>
+>> Is this because of a design decision that I do not (yet) understand or is this inconsistent for historical reasons?
+> 
+> git diff operates on two revisions.  That is inherently incompatible
+> with the usual meaning of A...B and A..B, which are set operations on
+> the revision history.  That git diff accepts this syntax is only for
+> convenience.
 
-I tried using your more recent series and I get basically no change
-compared to the current git (without using untracked cache) on Webkit
-with around 5600 untracked files. Maybe I am doing something wrong.
+That convenience can be a bit misleading, though, as the OP points out.
+Just to spell this out because the other response (not the one I'm
+replying to) could be misunderstood:
 
-I compiled watchman and installed it. It is in /usr/local/bin/watchman
-but I am not sure it is actually being used though I have configured
-"core.usewatchman" to "true".
+git diff A..B is the diff between (the trees in commits) A and B. It
+will show you the "changes" that are only in A with "-", the changes
+that are only in B with "+" - that is, if you want to think about diffs
+as "positive changes" to a "virtual common base tree".
 
-> However, I'm getting occasional index-helper segfaults due to
-> istate->last_update being NULL.  (I'm using Duy's  index-helper branch
-> from his github + this patchset + a function signature fix due to a
-> newer version of libwatchman).  I haven't looked into why this is --
-> maybe accidentally mixing git versions while testing?
->
-> Also, after messing around for a while (on Duy's branch), I ended up in
-> a state where git status would take ~2.5s every time.  The index helper
-> was alive but evidently not working right.  Killing and restarting it
-> worked.  Actually, I think I can repro this more easily: "git rm
-> Changelog" seems to put the index-helper into this state.
+[ If p are the plus lines and m the minus lines, the diff says
+    B = A + p - m = (A-m) + p
+<=> A = B - p + m = (B-p) + m
+<=> B-p = A-m (virtual common base tree) ]
 
-Thanks for this. I have also seen strange things happening with the
-index-helper.
-When it is working I found that it provides around 10% improvement on
-git rebase time.
+git log A..B will show you all commits that are in (=reachable from) B
+but not in A. That is, it will show you all commits between the "most
+recent" common ancestor (let's call it C) and B (including B), but not
+those between C and A (and not A either).
+
+git log A...B will show you all commits "specific to A and B", i.e.
+those between C and B and those between C and A (including A and B,
+excluding C).
+
+git diff A...B will show you the diff between C and B.
+
+So, both "diff A..B" and "log A...B" show changes/commits introduced by
+A only or B only.
+
+"diff A...B" and "log A..B" show changes/commits introduced by B only.
+
+Maybe there's a way to think about these that makes them actually look
+consistent - the only one that I can think of is the actual
+implementation (we need to compute the merge base for both "..."
+commands), but that's a really bad argument for a user facing notation.
+
+Michael
