@@ -1,110 +1,98 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH v2] check-ignore: correct documentation about output
-Date: Fri, 20 Nov 2015 21:30:48 +0100
-Message-ID: <20151120203045.GA16353@spirit>
-References: <1448051381.6899.2.camel@kaarsemaker.net>
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH 1/2] t1450: add tests for NUL in headers of commits and
+ tags
+Date: Fri, 20 Nov 2015 21:49:58 +0100
+Message-ID: <564F8776.1050706@web.de>
+References: <564DF6BE.6020609@web.de>
+ <CAPig+cSXiGVLvq59sUFAzTRoQFf-QswAoMSk20LvJqntzaf65A@mail.gmail.com>
+ <564E371E.50606@web.de> <20151120111454.GB11198@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 20 21:31:24 2015
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 20 21:50:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzsKe-0004eb-VK
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 21:30:57 +0100
+	id 1ZzsdZ-0001FC-AU
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Nov 2015 21:50:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760241AbbKTUax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2015 15:30:53 -0500
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:33656 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760128AbbKTUaw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Nov 2015 15:30:52 -0500
-Received: by wmec201 with SMTP id c201so87930367wme.0
-        for <git@vger.kernel.org>; Fri, 20 Nov 2015 12:30:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=9qFzFrkkYcQGK/euP5RrlOZM/LhGghSAb0WrGIN4WPg=;
-        b=OoMBA1WbQQeVQhzXcAVqO90fo3Cm2K0jhSa03LZSG700t/6NIn/8tcbWg4dKjQBaR7
-         6BgIMi6LpT5wGvVvpwjcr9R5p1LB0a74A+j9kqfjg1OYorX2wqh5bjFlV+UWZkjlVDcd
-         Nu4DH7GAQwi+82/NSSmGjXqCxP1JVOUkrI9yMfB2JERzqoTqxtjX36qqcOe15nQL+Ijh
-         csQySwSCLI2P0q6LO8ak+b0eSS+/6y5xDXwhVKKadXdUgCyNoJ/T0daRjNskIB3rcyZU
-         Lo2HiMetSvZ2dLIfXUO4jGDs/awuceLJpDaLBA2C65g2ZbPgTuXxs/kH1+ghOf6wHldC
-         +y0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=9qFzFrkkYcQGK/euP5RrlOZM/LhGghSAb0WrGIN4WPg=;
-        b=UP/jBtgttOs3sPoKyBnZo55ldZQX7tmfRnJYO8GSCyFq844/eI7g/7eDrNswOJ/Hhi
-         8e4To42Y7kK//SrMeTblZneUZsb5pm3tCGEPYaXdcMc/lFK6iNuoZSWNZgm5PUa/x3WI
-         HSyHzz7wWyU1VUS+NZmkrknURigDVC58R+cZlGYqTpOSiuUsJ7eFzVJizHfPtTo5qyz4
-         0k4wZeK2bZ3RHtgvuSW0fBqSTu37/NCtbORf1NgcQcB8LiXDpUvCwDcX3G3T5svt92Qq
-         n6flu89aF1J1ipekw6RPEDKqD253plMOKJ/o7bp5YNVosLgrUH0NfF1kXjoN5VhAzEXh
-         hh4w==
-X-Gm-Message-State: ALoCoQnRBSOxXEmxQ8GyXhf7Ois8muctVTLArqbPIYvtnJqMCH9JaytFTVC13RNYxmYQAu19FqDp
-X-Received: by 10.28.18.138 with SMTP id 132mr4595559wms.6.1448051450970;
-        Fri, 20 Nov 2015 12:30:50 -0800 (PST)
-Received: from spirit ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id t64sm1064873wmf.23.2015.11.20.12.30.50
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Nov 2015 12:30:50 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1448051381.6899.2.camel@kaarsemaker.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1760513AbbKTUuY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Nov 2015 15:50:24 -0500
+Received: from mout.web.de ([212.227.17.12]:53850 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760385AbbKTUuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2015 15:50:23 -0500
+Received: from [192.168.178.36] ([79.253.144.111]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0M8Qpi-1aLH6X1rCU-00w0op; Fri, 20 Nov 2015 21:50:11
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <20151120111454.GB11198@sigill.intra.peff.net>
+X-Provags-ID: V03:K0:mqeLibYVSd0rYYaqpUG8pvjzuOzSwsAKyl1kPZr7kw6s0Bj+IfH
+ mne9XLGuud2gofqEJlaulu/w5qevUok84Kn+OdNOVM4kwphkkYmq8mO4P7LpBtiRjoB010A
+ 0mlxRe/2UQ15rE5JIpAG93wT2LAReLSlaBWUQca1xQtXBKsMDrY8/FXOR2fuhQfbM3t5Uld
+ KNmQlXOUdyH0j5B6xUPDg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JnHzniLqAu8=:Q6vWWgcmsfEhKRZPWXmQwq
+ RbmXYCZFHPm/mXbjBl6Ra08vW0bhfIRH0hP+3cwPPqs/c4VKRuh8crpOIZxJoHAR9SyGjVPCt
+ 6kVLVsWQS3iHPdP/NUEU2vHPqYPnwzW0XGwL7a3mCu9aXjID7xhSrzomsVWYwG6PRKZ/XIcZK
+ YaqOCXnRyeCT35L76QMjLiJBVf0qfNYk6N8dMPD0CGjQxKOUGhMl6cZ5BdhePxxQnTHR9AV6K
+ 7QKc51IibqpJ1pNFCSh2jswO1u1IG5nQZ1HJA+0/wrg6qIV//Tu+1eJdnsGlzE8Gatb2S2gwx
+ BPi/6tU+JNI9NCfLssxIzzdmSyNzYiuLvlhmG1npTN71yFykRmMSpeaUsisTFjT7dKUsvYoh/
+ bqHMF7gSEXnqtM/kMkQq0TQQxvkkHdCJAiEXeABOGgqupaCxWMvY1znPOLX3luNIx8dmC3YY3
+ lCrkHMICIKziDoxJ7dpuNUKt8R246ZRb2OCx1qs15NKokN6jrICJ5U7TAipzhMCaFhMrPR6SW
+ SJFqK9eMunLKQMcI+s0zf6Vwqn6bhSXPNWmY+IKTEp0aUoOqLvWqLy3ug2LTJaVDHJoMLaQ32
+ Y62oR0OfE1TJK7bVD2OQbEkdKPH9rVZ/rppw79BOdrKnxNd9MOKnIdPFUF4QrTcv65qLY7hvT
+ x8N5mk4AOpKkmzOzGFsTg0oFRvY1LhexD3ouIMLw/JyFE/5+JSKp4UuFb6SO+eMTHWMVYw48K
+ Z0Lf7iUMeBwjScfqDGzRxzSDm/rcdXkg9kRF9q+Eq7RUCtTEsRaE0Zc9sC8Xv2VAlLPB69vJ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281532>
 
-By default git check-ignore shows only the filenames that will be
-ignored, not the pattern that causes their exclusion. Instead of moving
-the partial exclude pattern precendence information to the -v option
-where it belongs, link to gitignore(5) which describes this more
-thoroughly.
+Am 20.11.2015 um 12:14 schrieb Jeff King:
+> On Thu, Nov 19, 2015 at 09:54:54PM +0100, Ren=C3=A9 Scharfe wrote:
+>
+>>>> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+>>>> @@ -176,6 +176,18 @@ test_expect_success 'integer overflow in time=
+stamps is reported' '
+>>>> +test_expect_success 'commit with NUL in header' '
+>>>> +       git cat-file commit HEAD >basis &&
+>>>> +       sed "s/author ./author Q/" <basis | q_to_nul >commit-NUL-h=
+eader &&
+>>>> +       new=3D$(git hash-object -t commit -w --stdin <commit-NUL-h=
+eader) &&
+>>>> +       test_when_finished "remove_object $new" &&
+>>>> +       git update-ref refs/heads/bogus "$new" &&
+>>>> +       test_when_finished "git update-ref -d refs/heads/bogus" &&
+>>>> +       test_must_fail git fsck 2>out &&
+>>>> +       cat out &&
+>>>
+>>> What is the purpose of this 'cat'?
+>>
+>> It shows the full error message when the test is run with --debug, w=
+hich is
+>> convenient when the following grep doesn't match.  The same is done =
+in most
+>> tests in that file.
+>
+> I'm slightly negative on such a construct, just because it wastes a
+> process in the case where we are not in --verbose mode. I don't mind =
+it
+> in this patch in the spirit of consistency within t1450, but I think =
+we
+> should probably avoid spreading it.
 
-Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
----
- Documentation/git-check-ignore.txt | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+This practice is not used that much (yet).  We can contain it by
+providing an alternative.  I'll send patches for adding a helper
+function similar to test_must_be_empty for that.
 
-diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
-index 59531ab..e94367a 100644
---- a/Documentation/git-check-ignore.txt
-+++ b/Documentation/git-check-ignore.txt
-@@ -16,10 +16,9 @@ DESCRIPTION
- -----------
- 
- For each pathname given via the command-line or from a file via
--`--stdin`, show the pattern from .gitignore (or other input files to
--the exclude mechanism) that decides if the pathname is excluded or
--included.  Later patterns within a file take precedence over earlier
--ones.
-+`--stdin`, check whether the file is excluded by .gitignore (or other
-+input files to the exclude mechanism) and output the path if it is
-+excluded.
- 
- By default, tracked files are not shown at all since they are not
- subject to exclude rules; but see `--no-index'.
-@@ -32,7 +31,8 @@ OPTIONS
- 
- -v, --verbose::
- 	Also output details about the matching pattern (if any)
--	for each given pathname.
-+	for each given pathname. For precedence rules within and
-+	between exclude sources, see linkgit:gitignore[5].
- 
- --stdin::
- 	Read pathnames from the standard input, one per line,
--- 
-2.6.3-495-gf0a7f49
-
-
--- 
-Dennis Kaarsemaker <dennis@kaarsemaker.net>
-http://twitter.com/seveas
+Ren=C3=A9
