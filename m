@@ -1,55 +1,65 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 4/2] test: use test_must_contain
-Date: Sat, 21 Nov 2015 02:16:43 +0100
-Message-ID: <1448068603-2112-1-git-send-email-szeder@ira.uka.de>
-References: <564F878B.3090508@web.de>
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Sat Nov 21 02:18:01 2015
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: Re: [PATCH v1] annotate: skip checking working tree if a revision is provided
+Date: Fri, 20 Nov 2015 19:25:55 -0600
+Message-ID: <CAOc6etbF-yF0bhmmjQG=P=FW0QnokPTXnqLiyPM7uJ7eqom9rw@mail.gmail.com>
+References: <1447809609-17556-1-git-send-email-eantoranz@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
+	Edmundo Carmona Antoranz <eantoranz@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Nov 21 02:26:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ZzwoR-0002YN-3v
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Nov 2015 02:17:59 +0100
+	id 1ZzwwC-0001e2-LV
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Nov 2015 02:26:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760758AbbKUBRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Nov 2015 20:17:24 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:58753 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759759AbbKUBRX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Nov 2015 20:17:23 -0500
-Received: from x590cde9d.dyn.telefonica.de ([89.12.222.157] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
-	iface 141.3.10.81 id 1Zzwnl-0004z5-E6; Sat, 21 Nov 2015 02:17:18 +0100
-X-Mailer: git-send-email 2.6.3.398.g4ce1eda
-In-Reply-To: <564F878B.3090508@web.de>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1448068638.
+	id S1761217AbbKUBZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Nov 2015 20:25:57 -0500
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35113 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760389AbbKUBZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Nov 2015 20:25:56 -0500
+Received: by pacej9 with SMTP id ej9so132257737pac.2
+        for <git@vger.kernel.org>; Fri, 20 Nov 2015 17:25:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0erqhtvCXRyGeAm+hGVnMmN4zhvO0sAEllVsBo4tE8I=;
+        b=tdiKoJA6JfrvfqYECKzO2C+4cQehssu4qd32bf7KJM3JkLfnBuSLyPGLxnlcEx0lbF
+         pvZv3R76WW5ZoEOFGZAB+JuHp3JAls8hBJgkOnxa8V72Vbh1sUhuYO3dgkpzum/rO9Cx
+         do1RuwVMoNYlbO1fjZrHqsiFtzfYDjQSeT8lXRhrMlSvQYKqenHU5R48YypKV9IMjTdU
+         qFlMQPAjIA9q4OAmi1UUekzeTeasgfs4g+Al4eMyfSer+KnfBQnbmtB3vuOH76Iw4ZPB
+         nP/Q39S4XVD3VmNztEKz4wq+gCuEtm7FPRxALvNK2mqgXsdR1iOjJx1M8fpYnbDqXOCj
+         4iag==
+X-Received: by 10.98.75.83 with SMTP id y80mr2756962pfa.77.1448069155869; Fri,
+ 20 Nov 2015 17:25:55 -0800 (PST)
+Received: by 10.66.89.42 with HTTP; Fri, 20 Nov 2015 17:25:55 -0800 (PST)
+In-Reply-To: <1447809609-17556-1-git-send-email-eantoranz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281541>
 
-Hi,
+On Tue, Nov 17, 2015 at 7:20 PM, Edmundo Carmona Antoranz
+<eantoranz@gmail.com> wrote:
+> +       if (!revs.pending.nr && !file_exists(path))
+> +               die_errno("cannot stat path '%s'", path);
+> +
 
-> diff --git a/t/t9810-git-p4-rcs.sh b/t/t9810-git-p4-rcs.sh
-> index 8134ab4..e02b490 100755
-> --- a/t/t9810-git-p4-rcs.sh
-> +++ b/t/t9810-git-p4-rcs.sh
-> @@ -294,8 +294,7 @@ test_expect_success 'cope with rcs keyword file deletion' '
->  		echo "\$Revision\$" >kwdelfile.c &&
->  		p4 add -t ktext kwdelfile.c &&
->  		p4 submit -d "Add file to be deleted" &&
-> -		cat kwdelfile.c &&
-> -		grep 1 kwdelfile.c
-> +		test_must_constain 1 kwdelfile.c
+I was wondering if I should only check the path that is coming from
+"blame" (which is where I'm taking the check from) by checking
+dashdash_pos:
 
-s/constain/contain/
+if (!dashdash_pos && !revs.pending.nr && !file_exists(path))
+    die_errno("cannot stat path '%s'", path);
+
+So that we don't apply the check if we are coming from normal
+dashdash_pos != 0 (and which didn't apply the filesystem check).
+
+Thanks in advance.
