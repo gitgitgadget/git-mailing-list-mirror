@@ -1,107 +1,69 @@
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH 1/3] bash prompt: test dirty index and worktree while on an orphan branch
-Date: Sat, 21 Nov 2015 12:30:07 +0100
-Message-ID: <1448105409-4494-1-git-send-email-szeder@ira.uka.de>
+Subject: [PATCH v1.5 2/3] bash prompt: remove a redundant 'git diff' option
+Date: Sat, 21 Nov 2015 15:46:40 +0100
+Message-ID: <1448117200-7299-1-git-send-email-szeder@ira.uka.de>
+References: <1448105409-4494-2-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Thomas Rast <tr@thomasrast.ch>, git@vger.kernel.org,
 	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 21 12:31:34 2015
+X-From: git-owner@vger.kernel.org Sat Nov 21 15:47:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a06OD-0006Qt-CV
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Nov 2015 12:31:33 +0100
+	id 1a09Rd-0005sq-7z
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Nov 2015 15:47:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751521AbbKULbQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Nov 2015 06:31:16 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:52714 "EHLO
+	id S1760508AbbKUOrN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Nov 2015 09:47:13 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:56802 "EHLO
 	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754268AbbKULaZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Nov 2015 06:30:25 -0500
+	by vger.kernel.org with ESMTP id S1759888AbbKUOrM (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Nov 2015 09:47:12 -0500
 Received: from x4db28c43.dyn.telefonica.de ([77.178.140.67] helo=localhost.localdomain)
 	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
-	iface 141.3.10.81 id 1a06Mx-0003r7-Ka; Sat, 21 Nov 2015 12:30:17 +0100
+	iface 141.3.10.81 id 1a09RU-00023I-FY; Sat, 21 Nov 2015 15:47:09 +0100
 X-Mailer: git-send-email 2.6.3.402.geb6a0f7
+In-Reply-To: <1448105409-4494-2-git-send-email-szeder@ira.uka.de>
 X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1448105417.
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1448117229.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281556>
 
-There is only a single test exercising the dirty state indicator on an
-orphan branch, and in that test neither the index nor the worktree are
-dirty.
-
-Add two failing tests to check the dirty state indicator while either
-the index is dirty or while both the index and the worktree are dirty
-on an orphan branch, and to show that the dirtiness of the index is
-not displayed in these cases (the forth combination, i.e. clean index
-and dirty worktree are impossible on an orphan branch).  Update the
-existing dirty state indicator on clean orphan branch test to match
-the style of the two new tests, most importantly to use 'git checkout
---orphan' instead of cd-ing into a repository that just happens to be
-empty and clean.
+To get the dirty state indicator __git_ps1() runs 'git diff' with
+'--quiet --exit-code' options.  '--quiet' already implies
+'--exit-code', so the latter is unnecessary and can be removed.
 
 Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- t/t9903-bash-prompt.sh | 31 ++++++++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+Reworded the Subject: line, because it sounded as if the patch were to
+remove a command line option of the bash prompt script.
 
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 6b68777b98..2c9d1f928a 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -273,11 +273,36 @@ test_expect_success 'prompt - dirty status indica=
-tor - dirty index and worktree'
- 	test_cmp expected "$actual"
- '
-=20
--test_expect_success 'prompt - dirty status indicator - before root com=
-mit' '
--	printf " (master #)" >expected &&
-+test_expect_success 'prompt - dirty status indicator - orphan branch -=
- clean' '
-+	printf " (orphan #)" >expected &&
-+	test_when_finished "git checkout master" &&
-+	git checkout --orphan orphan &&
-+	git reset --hard &&
-+	(
-+		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
-+		__git_ps1 >"$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_failure 'prompt - dirty status indicator - orphan branch -=
- dirty index' '
-+	printf " (orphan +)" >expected &&
-+	test_when_finished "git checkout master" &&
-+	git checkout --orphan orphan &&
-+	(
-+		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
-+		__git_ps1 >"$actual"
-+	) &&
-+	test_cmp expected "$actual"
-+'
-+
-+test_expect_failure 'prompt - dirty status indicator - orphan branch -=
- dirty index and worktree' '
-+	printf " (orphan *+)" >expected &&
-+	test_when_finished "git checkout master" &&
-+	git checkout --orphan orphan &&
-+	>file &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=3Dy &&
--		cd otherrepo &&
- 		__git_ps1 >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
+The rest is unchanged.
+
+ contrib/completion/git-prompt.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
+prompt.sh
+index 07b52bedf1..7a95fbdcfd 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -476,7 +476,7 @@ __git_ps1 ()
+ 		if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
+ 		   [ "$(git config --bool bash.showDirtyState)" !=3D "false" ]
+ 		then
+-			git diff --no-ext-diff --quiet --exit-code || w=3D"*"
++			git diff --no-ext-diff --quiet || w=3D"*"
+ 			if [ -n "$short_sha" ]; then
+ 				git diff-index --cached --quiet HEAD -- || i=3D"+"
+ 			else
 --=20
 2.6.3.402.geb6a0f7
