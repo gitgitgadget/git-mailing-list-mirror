@@ -1,69 +1,96 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH v1.5 2/3] bash prompt: remove a redundant 'git diff' option
-Date: Sat, 21 Nov 2015 15:46:40 +0100
-Message-ID: <1448117200-7299-1-git-send-email-szeder@ira.uka.de>
-References: <1448105409-4494-2-git-send-email-szeder@ira.uka.de>
+From: Peter van der Does <pvanderdoes@gmail.com>
+Subject: Remote reference deleted on git fetch
+Date: Sat, 21 Nov 2015 10:24:20 -0500
+Message-ID: <56508CA4.9080403@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <tr@thomasrast.ch>, git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 21 15:47:20 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 21 16:24:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a09Rd-0005sq-7z
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Nov 2015 15:47:17 +0100
+	id 1a0A1b-0000mO-RS
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Nov 2015 16:24:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760508AbbKUOrN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Nov 2015 09:47:13 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:56802 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759888AbbKUOrM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Nov 2015 09:47:12 -0500
-Received: from x4db28c43.dyn.telefonica.de ([77.178.140.67] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
-	iface 141.3.10.81 id 1a09RU-00023I-FY; Sat, 21 Nov 2015 15:47:09 +0100
-X-Mailer: git-send-email 2.6.3.402.geb6a0f7
-In-Reply-To: <1448105409-4494-2-git-send-email-szeder@ira.uka.de>
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1448117229.
+	id S1760978AbbKUPYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Nov 2015 10:24:24 -0500
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:33676 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760545AbbKUPYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Nov 2015 10:24:23 -0500
+Received: by vkfr145 with SMTP id r145so14669936vkf.0
+        for <git@vger.kernel.org>; Sat, 21 Nov 2015 07:24:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=y9lU4zrRNPq7Ot/d5WIakLsZ3RzF3M2SHV/FTr5HOhs=;
+        b=jqb8EDRoGDV7mMA2xqsw5pJoZEe6K4KyF0pT+9uiKHxTyI/DpzoJ5SXjTWedmhJxsi
+         g05fTBMPIMPBn7jeJiwwnrJQdKhuE3NYmKmS0Re0lvhUWB8MfpkJfFX5zKcjHDffkfgg
+         M8Du88gwLlLsXyyn0DXNMzQQwfRsUftppR8o3v9W/Srh0EmXt5su0+zBuMi+RKEthkjL
+         iiQFdErnB7l2lQUwXA22+M/nm+Zf1As+UaTiJ/ryLAt0K32foOTF1yW0vgeYrZSyEsoC
+         TlC6uNduZYydi6EhF2pvg7A5YXF+uMxTAS5V3YhLIb4Vxh8jCcL6Q2UotXqVzs/6FK2s
+         gwdQ==
+X-Received: by 10.31.178.1 with SMTP id b1mr6572643vkf.46.1448119462486;
+        Sat, 21 Nov 2015 07:24:22 -0800 (PST)
+Received: from [192.168.1.106] (c-69-248-80-32.hsd1.nj.comcast.net. [69.248.80.32])
+        by smtp.googlemail.com with ESMTPSA id d78sm3717524vka.10.2015.11.21.07.24.21
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 21 Nov 2015 07:24:21 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:44.0) Gecko/20100101
+ Thunderbird/44.0a2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281557>
 
-To get the dirty state indicator __git_ps1() runs 'git diff' with
-'--quiet --exit-code' options.  '--quiet' already implies
-'--exit-code', so the latter is unnecessary and can be removed.
+Hi,
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
-Reworded the Subject: line, because it sounded as if the patch were to
-remove a command line option of the bash prompt script.
+I have enabled fetch.prune and when I do a push of an existing branch
+and fetch that branch the remote reference is deleted. Is this a bug or
+expected behavior?
 
-The rest is unchanged.
+Doing the following commands on an existing repository:
+$ git config fetch.prune true
+$ git checkout -b bug/bug-1
+Switched to a new branch 'bug/bug-1'
+$ touch bugfix
+$ git add .
+$ git commit -a
+$ git push --set-upstream origin bug/bug-1
+Counting objects: 2, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 242 bytes | 0 bytes/s, done.
+Total 2 (delta 1), reused 0 (delta 0)
+To git@github.com:petervanderdoes/Testing.git
+ * [new branch]      bug/bug-1 -> bug/bug-1
+Branch bug/bug-1 set up to track remote branch bug/bug-1 from origin.
+$ git fetch origin bug/bug-1:refs/remotes/origin/bug/bug-1
+>From github.com:petervanderdoes/Testing
+ x [deleted]         (none)     -> origin/bug/bug-1
+$ git branch -r
+  origin/master
+$ git branch
+* bug/bug-1
+  master
 
- contrib/completion/git-prompt.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The branch still exists on the remote repository.
+Is it correct that the git fetch deletes the remote reference?
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
-prompt.sh
-index 07b52bedf1..7a95fbdcfd 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -476,7 +476,7 @@ __git_ps1 ()
- 		if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ] &&
- 		   [ "$(git config --bool bash.showDirtyState)" !=3D "false" ]
- 		then
--			git diff --no-ext-diff --quiet --exit-code || w=3D"*"
-+			git diff --no-ext-diff --quiet || w=3D"*"
- 			if [ -n "$short_sha" ]; then
- 				git diff-index --cached --quiet HEAD -- || i=3D"+"
- 			else
---=20
-2.6.3.402.geb6a0f7
+
+Peter
+
+-- 
+Peter van der Does
+
+GPG key: CB317D6E
+
+Site: http://avirtualhome.com
+GitHub: https://github.com/petervanderdoes
+Twitter: @petervanderdoes
