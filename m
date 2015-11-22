@@ -1,90 +1,67 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v3] ls-files: Add eol diagnostics
-Date: Sun, 22 Nov 2015 09:20:37 +0100
-Message-ID: <56517AD5.6040909@gmail.com>
-References: <56501EFA.7050105@web.de>
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: Re: [PATCH v1] blame: add support for --[no-]progress option
+Date: Sun, 22 Nov 2015 03:07:06 -0600
+Message-ID: <CAOc6etbnOCDPv+25dEgYGajCSbpixMu_ahhsWM7EOCcqYpamUg@mail.gmail.com>
+References: <1448169116-32335-1-git-send-email-eantoranz@gmail.com>
+	<CAOc6etbfzrqT4-5dorCAq_=5Oh9wXV4LgRwK9hrEqjmSYHiBEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 22 09:20:51 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, "Max A.K." <max@max630.net>,
+	Edmundo Carmona Antoranz <eantoranz@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 22 10:08:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a0PtA-0007I0-68
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Nov 2015 09:20:48 +0100
+	id 1a0Qcr-0005Qy-JO
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Nov 2015 10:08:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268AbbKVIUm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Nov 2015 03:20:42 -0500
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:36793 "EHLO
-	mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751011AbbKVIUl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2015 03:20:41 -0500
-Received: by wmww144 with SMTP id w144so63085658wmw.1
-        for <git@vger.kernel.org>; Sun, 22 Nov 2015 00:20:40 -0800 (PST)
+	id S1751287AbbKVJHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Nov 2015 04:07:12 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:33439 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105AbbKVJHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2015 04:07:07 -0500
+Received: by pabfh17 with SMTP id fh17so165718848pab.0
+        for <git@vger.kernel.org>; Sun, 22 Nov 2015 01:07:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=JcdPwGHVN1x0f7i5erNSQtlcdml8YvqpnJ+vLyn953U=;
-        b=qC0DTAcbWmqoewn9tUvbkQukr5Cmujt2KLrc+Fwi/lYT2kKcJ24mp2UbvaTtha1Rup
-         oxowcfl49wa/IW6GjAzxM7f2xCX0LFaVPDjlsPS09is+UTYFpzRNiOw1UVM5NOHDSP4F
-         SzQlt8BDM5T68JaxNICPhn9i8oRPyPGIIr7Q4vf4UwP4jEf7yBLTz22E6ZboKzwMf11J
-         iSMULTSH08op2R4IIHEniMr5IiKuLgRvyAkdEgiwekw5AesXn7GJe2Jt5ZHm1L5OXyeQ
-         jbDz3TxvEIsXb8EMs+WWEakd/WbqI9fmzY5VnRs90oqvHCzgGztKWZNn9dun28YOkPGb
-         dD0g==
-X-Received: by 10.28.94.194 with SMTP id s185mr10015481wmb.90.1448180440656;
-        Sun, 22 Nov 2015 00:20:40 -0800 (PST)
-Received: from [192.168.188.20] (p548D6208.dip0.t-ipconnect.de. [84.141.98.8])
-        by smtp.googlemail.com with ESMTPSA id he3sm7643352wjc.25.2015.11.22.00.20.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 22 Nov 2015 00:20:39 -0800 (PST)
-Newsgroups: gmane.comp.version-control.git
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12)
- Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-In-Reply-To: <56501EFA.7050105@web.de>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=kjSBrBcDdrK1B+cTSoTuAqL4lF0mao9CZeenl3aGiNg=;
+        b=QW4cfDv/cxpOpAA+5fZG6P9TlG7x1X9TbI0cRg+IIrldXdPb6QZnQXoo1jdc55Wkt6
+         NRnp1x1wDVXjvEEe/W3p2qn6GWFDMwTkZDX2fK/JlvhfzIHfXh1yIPjSGiwSJTN9rtvj
+         VCbCO0VrOP7f8UUJl7kCblnBp13K18VJCbLxb4oug/KhD242oej9zZU8sQs+WvCQqzb6
+         JA9QtA7TZ0HfSYG/jcFqeERR1GFD74/0VCKHh4l809wJMVyXFx6U4tdP6Y+zY9iK5vKG
+         wTw4+i7IyJuPgYubfjtdo8JrtEepD46A82JAxpwsEyHigj4WF1mnP2PCHJYc9LHnvVWp
+         hgtg==
+X-Received: by 10.68.182.130 with SMTP id ee2mr29630370pbc.156.1448183226368;
+ Sun, 22 Nov 2015 01:07:06 -0800 (PST)
+Received: by 10.66.89.42 with HTTP; Sun, 22 Nov 2015 01:07:06 -0800 (PST)
+In-Reply-To: <CAOc6etbfzrqT4-5dorCAq_=5Oh9wXV4LgRwK9hrEqjmSYHiBEg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281563>
 
-On 21.11.2015 08:36, Torsten B=C3=B6gershausen wrote:
+I think I found where to calculate the number of blamed lines without
+having to do it from scratch every cycle. It's where the list of
+sb->ent is getting its nodes pointed.... around here:
 
-> git ls-files --eol gives an output like this:
->=20
-> i/text-no-eol   w/text-no-eol   attr/text=3Dauto t/t5100/empty
+for (;;) {
+    struct blame_entry *next = ent->next;
+    found_guilty_entry(ent);
+    if (next) {
+        ent = next;
+        continue;
+    }
+    ent->next = sb->ent;
+    sb->ent = suspect->suspects;
+    suspect->suspects = NULL;
+    break;
+}
 
-I'm sorry if this has been discussed before, but hav you considered to =
-use a header line and omit the prefixed from the columns instead? Like
-
-index         working tree     attributes    file
-
-binary        binary           -text         t/test-binary-2.png
-text-lf       text-lf          eol=3Dlf        t/t5100/rfc2047-info-000=
-7
-text-lf       text-crlf        eol=3Dcrlf      doit.bat
-text-crlf-lf  text-crlf-lf                   locale/XX.po
-
-I believe this would be both easier to read for humans, and easier to p=
-arse for scripts that e.g. want to compare line endings in the index an=
-d working tree.
-
-> +stats_ascii () {
-> +	case "$1" in
-
-[...]
-
-> +		*)
-> +		echo huh $1
-> +		;;
-
-Personally, I'm not a big fan of supposedly funny output like this. How=
- about printing a proper message rather than "huh", even for cases that=
- should not happen?
-
---=20
-Sebastian Schuberth
+So the function I added to blame.c, it's gone.
