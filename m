@@ -1,73 +1,101 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2015, #03; Fri, 20)
-Date: Mon, 23 Nov 2015 00:02:35 +0530
-Message-ID: <CAOLa=ZRpvd-Nd9HiZMt6aZF9bi5i1MHNDZUSdUsGC9C-t+2bSg@mail.gmail.com>
-References: <20151120140937.GA17079@sigill.intra.peff.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] blame: add support for --[no-]progress option
+Date: Sun, 22 Nov 2015 20:58:49 +0100
+Message-ID: <56521E79.4080709@kdbg.org>
+References: <1448208133-29430-1-git-send-email-eantoranz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 22 19:33:20 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, peff@peff.net, max@max630.net
+To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 22 20:59:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a0ZRm-0005ZK-IM
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Nov 2015 19:33:10 +0100
+	id 1a0anN-0007hA-A1
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Nov 2015 20:59:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751736AbbKVSdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Nov 2015 13:33:06 -0500
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:35024 "EHLO
-	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751632AbbKVSdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Nov 2015 13:33:05 -0500
-Received: by vkha189 with SMTP id a189so25287281vkh.2
-        for <git@vger.kernel.org>; Sun, 22 Nov 2015 10:33:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+gXS4Fn9pAqh8eMlTEwmgL/a6ZcQ9iIPhMk6i1IAa3I=;
-        b=rgE/eAUOlWWU0JBCWAdHotvLYe+jC7RDYATmSxOGHPgpa3qJgC2y95RxPasIez4rjX
-         hl1diik1AjN58sZPC5Yedd3ncmAkSZaObqrHdVcci8M63Zmu1ayTolRCuTeASkXkq192
-         xPm54G6yOELh4C+gHktzuaKJaedfXMXfcgm4avEe3B0s3klR1mqtbQ2nL4N0C6buzi4O
-         iKDIecotgyMibfW0vmNIat+2JBahssLjPr/OOBvAhIIVs+XMafbo4WHvlZMIt/Uw4vjj
-         ZVg0FgFrGlnv7pLUtyuVRGy/hbJ8IpSid0WKmJ0s+qUMSjyXZVAUSHozGcMZphdRtvqE
-         9d1A==
-X-Received: by 10.31.178.1 with SMTP id b1mr13669542vkf.46.1448217184589; Sun,
- 22 Nov 2015 10:33:04 -0800 (PST)
-Received: by 10.103.97.199 with HTTP; Sun, 22 Nov 2015 10:32:35 -0800 (PST)
-In-Reply-To: <20151120140937.GA17079@sigill.intra.peff.net>
+	id S1752148AbbKVT6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Nov 2015 14:58:54 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:15344 "EHLO bsmtp4.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752041AbbKVT6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Nov 2015 14:58:53 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp4.bon.at (Postfix) with ESMTPSA id 3p3j9Q4Jl6z5tl9;
+	Sun, 22 Nov 2015 20:58:50 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id CE2BD29D7;
+	Sun, 22 Nov 2015 20:58:49 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <1448208133-29430-1-git-send-email-eantoranz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281568>
+
+Am 22.11.2015 um 17:02 schrieb Edmundo Carmona Antoranz:
+> Will also affect annotate
+>
+> Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+> ---
+>   Documentation/blame-options.txt |  7 +++++++
+>   Documentation/git-blame.txt     |  9 ++++++++-
+>   builtin/blame.c                 | 25 +++++++++++++++++++++++--
+>   3 files changed, 38 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+> index 760eab7..43f4f08 100644
+> --- a/Documentation/blame-options.txt
+> +++ b/Documentation/blame-options.txt
+> @@ -69,6 +69,13 @@ include::line-range-format.txt[]
+>   	iso format is used. For supported values, see the discussion
+>   	of the --date option at linkgit:git-log[1].
+>
+> +--[no-]progress::
+> +	Progress status is reported on the standard error stream
+> +	by default when it is attached to a terminal. This flag
+> +	enables progress reporting even if not attached to a
+> +	terminal.
+> +
+> +
+>   -M|<num>|::
+>   	Detect moved or copied lines within a file. When a commit
+>   	moves or copies a block of lines (e.g. the original file
+> diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+> index e6e947c..2e63397 100644
+> --- a/Documentation/git-blame.txt
+> +++ b/Documentation/git-blame.txt
+> @@ -10,7 +10,8 @@ SYNOPSIS
+>   [verse]
+>   'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental]
+>   	    [-L <range>] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
+> -	    [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>] [--] <file>
+> +	    [--[no-]progress] [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>]
+> +	    [--] <file>
+
+You add the option to to the synopsis of git-blame.txt, but not to 
+git-annotate.txt.
 
 >
-> * kn/for-each-branch-remainder (2015-10-02) 9 commits
->  - branch: implement '--format' option
->  - branch: use ref-filter printing APIs
->  - ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
->  - ref-filter: introduce format_ref_array_item()
->  - ref-filter: adopt get_head_description() from branch.c
->  - ref-filter: modify "%(objectname:short)" to take length
->  - ref-filter: add support for %(path) atom
->  - ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
->  - ref-filter: implement %(if), %(then), and %(else) atoms
+>   DESCRIPTION
+>   -----------
+> @@ -88,6 +89,12 @@ include::blame-options.txt[]
+>   	abbreviated object name, use <n>+1 digits. Note that 1 column
+>   	is used for a caret to mark the boundary commit.
 >
->  More unification among "branch -l", "tag -l" and "for-each-ref --format".
->
->  Expecting a reroll.
->  ($gmane/278926)
->
+> +--[no-]progress::
+> +	Progress status is reported on the standard error stream
+> +	by default when it is attached to a terminal. This flag
+> +	enables progress reporting even if not attached to a
+> +	terminal.
+> +
 
-This series is supposed to follow this:
-http://thread.gmane.org/gmane.comp.version-control.git/281180 which I
-recently sent.
-So replace "for-each-branch-remainder" with this in "Whats cooking"?
+Any particular reason you add this text twice? As can be seen on the 
+hunk header, git-blame.txt includes blame-options.txt.
 
--- 
-Regards,
-Karthik Nayak
+-- Hannes
