@@ -1,70 +1,79 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] ls-files: Add eol diagnostics
-Date: Mon, 23 Nov 2015 15:00:53 -0500
-Message-ID: <CAPig+cSCoa7wneR5HbHwEf0eZVgcvoHddGY4-UOSPJz8wN3Qhg@mail.gmail.com>
-References: <56501EFA.7050105@web.de>
-	<56517AD5.6040909@gmail.com>
-	<5653474E.6050909@web.de>
-	<CAHGBnuO2RQEhK=veSJ7wHoeo_9ngdSt_vJDjYBQxTma1n=Lt5Q@mail.gmail.com>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v6 0/6] Add Travis CI support
+Date: Mon, 23 Nov 2015 21:19:16 +0000
+Message-ID: <565382D4.5010200@diamand.org>
+References: <1447923491-15330-1-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 23 21:01:27 2015
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: sunshine@sunshineco.com, gitster@pobox.com, peff@peff.net
+To: larsxschneider@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 23 22:19:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a0xIf-0007N5-JB
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Nov 2015 21:01:21 +0100
+	id 1a0yW6-0002WW-8J
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Nov 2015 22:19:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752319AbbKWUA5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Nov 2015 15:00:57 -0500
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:35796 "EHLO
-	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751467AbbKWUAy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Nov 2015 15:00:54 -0500
-Received: by vkha189 with SMTP id a189so45623852vkh.2
-        for <git@vger.kernel.org>; Mon, 23 Nov 2015 12:00:53 -0800 (PST)
+	id S1755103AbbKWVTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Nov 2015 16:19:15 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:37065 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752646AbbKWVTO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Nov 2015 16:19:14 -0500
+Received: by wmww144 with SMTP id w144so327374wmw.0
+        for <git@vger.kernel.org>; Mon, 23 Nov 2015 13:19:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=qthOP9Kn2V0OP2mfKSyobl7aRGrNbYsxTpND2qv5U6E=;
-        b=rDd8/DEu2vjrQ1WphxX7Xl8l/vtbZ6g+a0Hz+zJ5EZ+/aDf0yMhyzmCaccB6fy2WQB
-         jok52YUq/4leW+TJGzDCqHcEJlRssXC1Pq3NC7xaGQvGkP89gxaS+dDLe39h7pQxAdit
-         VVDCdivUcV3yY7FyrU5eaGsFBNIB16lc46YJu5SAreXa2Rom6UGQFSTcMzZ3YH1avXSP
-         UcCNZcJFlBbZDLGHEDswrXh952mVnChzjcTB+26Qt3vyncy5ODWdgP38LhIwSMTNAahr
-         7jHDcXbaDvlx26yvILBarMI3bamr+rJykQr7rf87wmajDxwGYTcBkl1gyyyO1rnEdiy5
-         Fy+w==
-X-Received: by 10.31.58.74 with SMTP id h71mr21542656vka.151.1448308853727;
- Mon, 23 Nov 2015 12:00:53 -0800 (PST)
-Received: by 10.31.159.204 with HTTP; Mon, 23 Nov 2015 12:00:53 -0800 (PST)
-In-Reply-To: <CAHGBnuO2RQEhK=veSJ7wHoeo_9ngdSt_vJDjYBQxTma1n=Lt5Q@mail.gmail.com>
-X-Google-Sender-Auth: pOYtHR8vU18YkAv_XCUQI98jjXs
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=QVJUXBnQo0yzY8qzZ9lQk/HSJynHn6rhTyRbGTHX0sY=;
+        b=S+SxbZA89iRD+PAoJpHC5PwHb7HLUQI6p2GRNSVZvCIU38mu+E4ryRa4K20tjxtWC2
+         R4Yqae9kbd64xVQRTT1B4r45yegiC+Q7POZlPT59XMreLqsekcLOXgQk1f69iOmCak7B
+         fHEh7VYNhUrxTyQPabXOULSOJRt4Fm9D2Nad4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=QVJUXBnQo0yzY8qzZ9lQk/HSJynHn6rhTyRbGTHX0sY=;
+        b=XZiphLy6jyz5InbliB36T6DUyuPlNhPVza8/QOWPrRw6M3T5P7QIPI4UsOEU6VOPCW
+         Y92mQf5wY404Lf/M2AVxBWyn9IAINFrYrYQSjCzTC+asAYC7ZutXo8JxDjEg9ACE6DE+
+         Xkb8Hja4kHy+MoHFuVrYhT1imxNjlYmaWBliDQGJbnK42nI/Rh3/1N8jVEtlBTz7vh3L
+         IJH7z8PE3YxFTikpTqUCgJZ5Nn/F5gDHYpepY6u+y+CWSXzUZV3Ah2GCH98klivhTLCv
+         EDtSqYYxXl2mPiEFt62kQCs8yLCUlLgS1J3Po7G+9peS4zBJ7PLKF1+W4okVXDPHwICa
+         XJtw==
+X-Gm-Message-State: ALoCoQliZkmGnwzl2jY3PSamoX2LR+8cw9/8yKwO6TKwcqVc/aIT4zZmZ997WtTm3Wdiq2X3FQUI
+X-Received: by 10.28.101.65 with SMTP id z62mr21888039wmb.84.1448313553296;
+        Mon, 23 Nov 2015 13:19:13 -0800 (PST)
+Received: from [192.168.245.128] (cpc12-cmbg17-2-0-cust914.5-4.cable.virginm.net. [86.30.131.147])
+        by smtp.gmail.com with ESMTPSA id kj3sm15152033wjb.19.2015.11.23.13.19.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 23 Nov 2015 13:19:12 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
+In-Reply-To: <1447923491-15330-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281598>
 
-On Mon, Nov 23, 2015 at 2:45 PM, Sebastian Schuberth
-<sschuberth@gmail.com> wrote:
-> On Mon, Nov 23, 2015 at 6:05 PM, Torsten B=C3=B6gershausen <tboegi@we=
-b.de> wrote:
->> git ls-files -o --eol
->> i/              w/binary        attr/          zlib.o
+On 19/11/15 08:58, larsxschneider@gmail.com wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
 >
-> I see, somewhat convincing I have to agree.
->
-> On another note, how about making the prefix either all just one
-> letter (i.e. "attr/" becomes "a/"), or all multi-letter abbreviations
-> (i.e. "i/" becomes "idx/" and "w/" becomes "wt/" or "wtree/" or
-> "tree/")?
+> diff to v5:
+> * check if PID file still exists on P4D cleanup (thanks Luke)
+> * fix space/tab formatting error
+> * add sleep to timeout loops (thanks Luke)
+> * replace 'date +%s' with platform independent Python function (thanks Eric and Luke)
 
-The latter is answered by [1].
+The first three of these (which fix the git-p4 tests) all look good to 
+me. With these changes, running the t98* tests in parallel now works, 
+which it did not used to do. The changes are not pretty but I think 
+that's inevitable.
 
-[1]: http://article.gmane.org/gmane.comp.version-control.git/280647
+Ack from me.
+
+Luke
