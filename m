@@ -1,107 +1,97 @@
-From: Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: branch --set-upstream-to unexpectedly fails with "starting point ...
- is no branch"
-Date: Mon, 23 Nov 2015 12:04:50 +0100
-Message-ID: <5652F2D2.3050902@syntevo.com>
+From: Matthew Leach <M.Leach@derby.ac.uk>
+Subject: Best practice setup for github projects on server
+Date: Mon, 23 Nov 2015 11:19:00 +0000
+Message-ID: <8A5E5D5720EB7347BF290277F0C633F8010C7E55DFB4@MKT-MBX01.university.ds.derby.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 23 12:14:23 2015
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "'git@vger.kernel.org'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 23 12:26:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a0p4h-000618-52
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Nov 2015 12:14:23 +0100
+	id 1a0pG6-0000O5-PZ
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Nov 2015 12:26:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030AbbKWLOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2015 06:14:17 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.31.30]:51689 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752983AbbKWLOO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2015 06:14:14 -0500
-X-Greylist: delayed 569 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Nov 2015 06:14:14 EST
-Received: from [91.113.179.170] (helo=[192.168.92.20])
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
-	(Exim 4.84)
-	(envelope-from <marc.strapetz@syntevo.com>)
-	id 1a0ou2-0005QA-0G
-	for git@vger.kernel.org; Mon, 23 Nov 2015 12:03:22 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
+	id S1752601AbbKWL0H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Nov 2015 06:26:07 -0500
+Received: from mail1.bemta3.messagelabs.com ([195.245.230.164]:30878 "EHLO
+	mail1.bemta3.messagelabs.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752460AbbKWL0G convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Nov 2015 06:26:06 -0500
+X-Greylist: delayed 412 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Nov 2015 06:26:05 EST
+Received: from [85.158.138.179] by server-4.bemta-3.messagelabs.com id 20/0B-09570-E26F2565; Mon, 23 Nov 2015 11:19:10 +0000
+X-Env-Sender: M.Leach@derby.ac.uk
+X-Msg-Ref: server-4.tower-169.messagelabs.com!1448277532!5873099!51
+X-Originating-IP: [193.60.149.223]
+X-StarScan-Received: 
+X-StarScan-Version: 7.19.2; banners=derby.ac.uk,-,-
+X-VirusChecked: Checked
+Received: (qmail 19024 invoked from network); 23 Nov 2015 11:19:10 -0000
+Received: from dmz-edg01.derby.ac.uk (HELO dmz-edg01.University.ds.derby.ac.uk) (193.60.149.223)
+  by server-4.tower-169.messagelabs.com with RC4-SHA encrypted SMTP; 23 Nov 2015 11:19:10 -0000
+Received: from MKT-HUB02.university.ds.derby.ac.uk (10.31.101.42) by
+ dmz-edg01.derby.ac.uk (193.60.149.223) with Microsoft SMTP Server (TLS) id
+ 8.3.389.2; Mon, 23 Nov 2015 11:19:02 +0000
+Received: from MKT-MBX01.university.ds.derby.ac.uk ([10.31.101.37]) by
+ MKT-HUB02.university.ds.derby.ac.uk ([10.31.101.42]) with mapi; Mon, 23 Nov
+ 2015 11:19:01 +0000
+Thread-Topic: Best practice setup for github projects on server
+Thread-Index: AdEl4KXkEkhHtuO3QdOZM3Hq95C3mg==
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281579>
 
-There is a strange "branch --set-upstream-to" failure for "clones" which 
-haven't been created using "git clone" but constructed using "git init", 
-"git remote add" and "git fetch".
+Hi,
 
-Following script first creates a "main" repository and then constructs 
-the clone. Finally, in the clone branches origin/1 and origin/2 will be 
-present, however it's not possible to invoke "git branch 
---set-upstream-to" for origin/2 (it works fine for origin/1).
+I was hoping that somebody could give me advice since I'm new to git.
 
-I guess the behavior is related to following line in .git/config:
+I'll be installing a couple of projects from github on our servers, and=
+ adding some features.
 
-fetch = refs/heads/1:refs/remotes/origin/1
+Should I create a repository on our server (e.g. in /opt/git/), add the=
+ github project as a remote, and create a branch?  Then on my local mac=
+hine add our server as the remote and then pull / push with that?
 
-However, I don't understand what's the problem for Git here? Definitely 
-the error "starting point 'origin/2' is not a branch" is wrong.
+On the server there will be two web directories: stable and dev.  I was=
+ planning for these to be branches, and then just pull from the server =
+repository using the local protocol.
+
+I think it would mean sorting out merge actions on the server.  I'm hop=
+ing to be able to fetch and integrate updates from the developer's gith=
+ub repository, but without making things more complicated than they nee=
+d to be.
+
+Does anyone have any suggestions?  I drew a diagram if it helps (https:=
+//drive.google.com/file/d/0B7JhUXLbxPT9RkVNMUV6cjJNVnc/view?usp=3Dshari=
+ng)
+
+Thanks
+
+Matthew
 
 
+Matthew Leach=A0
+BSc. PhD. PGCert. FHEA
+Innovation Developer
 
-$ git --version
-git version 2.5.0.windows.1
+Academic Innovation Hub
+Room 107, Enterprise Centre, 37 Bridge Street, Derby, DE1 3LD
 
-$ cd /tmp/gittest
-$ mkdir main
-$ cd main
-$ git init
-$ touch file
-$ git add file
-$ git commit -m "import"
-$ git branch 1
-$ git branch 2
-$ git branch
-   1
-   2
-* master
+The University of Derby has a published policy regarding email and rese=
+rves the right to monitor email traffic. If you believe this was sent t=
+o you in error, please select unsubscribe.
 
-$ cd /tmp/gittest
-$ mkdir clone
-$ cd clone
-$ git init
-Initialized empty Git repository in /tmp/gittest/clone/.git/
-$ git remote add origin /tmp/gittest/main
-$ git config remote.origin.fetch refs/heads/1:refs/remotes/origin/1
-$ git fetch origin
-remote: Counting objects: 3, done.
-remote: Total 3 (delta 0), reused 0 (delta 0)
-Unpacking objects: 100% (3/3), done.
- From /tmp/gittest/main
-  * [new branch]      1          -> origin/1
-
-$ git fetch origin refs/heads/2:refs/remotes/origin/2
- From /tmp/gittest/main
-  * [new branch]      2          -> origin/2
-
-$ git branch --no-track 2 refs/remotes/origin/2
-$ git branch
-   2
-
-# HERE COMES THE STRANGE FAILURE:
-$ git branch --set-upstream-to=origin/2 2
-fatal: Cannot setup tracking information; starting point 'origin/2' is 
-not a branch.
-
-# THIS WORKS AS EXPECTED:
-$ git branch --set-upstream-to=origin/1 2
-Branch 2 set up to track remote branch 1 from origin by rebasing.
-
--Marc
+Unsubscribe and Security information contact:   infosec@derby.ac.uk
+=46or all FOI requests please contact:   foi@derby.ac.uk
+All other Contacts are at http://www.derby.ac.uk/its/contacts/
