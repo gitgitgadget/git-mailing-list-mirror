@@ -1,71 +1,54 @@
-From: charles@hashpling.org
-Subject: [PATCH] http: treat config options sslCAPath and sslCAInfo as paths
-Date: Mon, 23 Nov 2015 12:02:40 +0000
-Message-ID: <1448280160-113572-1-git-send-email-charles@hashpling.org>
+From: Daniel Fahlke <flyingmana@cotya.com>
+Subject: add support for --show-signature in gitk
+Date: Mon, 23 Nov 2015 13:16:26 +0100
+Message-ID: <5653039A.1000203@cotya.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 23 13:18:52 2015
+X-From: git-owner@vger.kernel.org Mon Nov 23 13:23:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a0q50-0004xw-6a
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Nov 2015 13:18:46 +0100
+	id 1a0q9S-0003cW-1u
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Nov 2015 13:23:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752162AbbKWMSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2015 07:18:42 -0500
-Received: from host02.zombieandprude.com ([80.82.119.138]:59649 "EHLO
-	host02.zombieandprude.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751076AbbKWMSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2015 07:18:41 -0500
-X-Greylist: delayed 912 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Nov 2015 07:18:41 EST
-Received: from dab-glb1-h-5-7.dab.02.net ([82.132.218.159]:48317 helo=localhost.localdomain)
-	by host02.zombieandprude.com with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA256:128)
-	(Exim 4.80)
-	(envelope-from <charles@hashpling.org>)
-	id 1a0pqC-0002k5-Mo
-	for git@vger.kernel.org; Mon, 23 Nov 2015 12:03:29 +0000
-X-Mailer: git-send-email 2.6.0
+	id S1753281AbbKWMXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Nov 2015 07:23:17 -0500
+Received: from mailserv.regfish.com ([79.140.61.33]:42582 "EHLO
+	mailserv.regfish.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752852AbbKWMXQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Nov 2015 07:23:16 -0500
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Nov 2015 07:23:16 EST
+Received: (qmail 17637 invoked from network); 23 Nov 2015 12:16:35 -0000
+Received: from f055197149.adsl.alicedsl.de (HELO [192.168.0.103]) (49250-0001@[78.55.197.149])
+          (envelope-sender <flyingmana@cotya.com>)
+          by mailserv.regfish.com (qmail-ldap-1.03) with AES128-SHA encrypted SMTP
+          for <git@vger.kernel.org>; 23 Nov 2015 12:16:35 -0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281582>
 
-From: Charles Bailey <cbailey32@bloomberg.net>
+Hi,
 
-This enables ~ and ~user expansion for these config options.
+the cli command `git log --show-signatures` has the nice feature of
+showing additional informations for signed commits.
+I want to add this informations into the gitk view of a commit.
 
-Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
----
+I already have finished a first draft of this here
+https://github.com/Flyingmana/git/commit/21a93f15e65765bfa98a28538da641877aa9843a
+This only works, when gitk is called together with --show-signature, so
+my question now is, how to best add it, and should I add it as config
+like the "display nearby tags/heads" one?
 
-In the only place that we (optionally) test https specifically, we also
-turn off SSL verification so I couldn't see a sensible way to add an
-automated test.
+I also think about adding it to the commit list somehow, but have no
+idea yet how it would fit in a good way there.
 
-The change is fairly simple and I've tested manually and the effects are
-as I expected - I can point to a certificate bundle or directory in my
-home directory using a ~/ prefix in my .gitconfig.
-
- http.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/http.c b/http.c
-index 42f29ce..5e37252 100644
---- a/http.c
-+++ b/http.c
-@@ -214,10 +214,10 @@ static int http_options(const char *var, const char *value, void *cb)
- #endif
- #if LIBCURL_VERSION_NUM >= 0x070908
- 	if (!strcmp("http.sslcapath", var))
--		return git_config_string(&ssl_capath, var, value);
-+		return git_config_pathname(&ssl_capath, var, value);
- #endif
- 	if (!strcmp("http.sslcainfo", var))
--		return git_config_string(&ssl_cainfo, var, value);
-+		return git_config_pathname(&ssl_cainfo, var, value);
- 	if (!strcmp("http.sslcertpasswordprotected", var)) {
- 		ssl_cert_password_required = git_config_bool(var, value);
- 		return 0;
--- 
-2.6.0
+Now I hope for a bit of feedback if it is the right direction, or if
+there is another attempt to prefer.
