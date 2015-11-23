@@ -1,68 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6 0/6] Add Travis CI support
-Date: Mon, 23 Nov 2015 13:59:43 -0500
-Message-ID: <20151123185943.GE2597@sigill.intra.peff.net>
-References: <1447923491-15330-1-git-send-email-larsxschneider@gmail.com>
- <20151119141409.GB9353@sigill.intra.peff.net>
- <46C55D27-0B59-41AA-84AD-FED095EBDEE4@gmail.com>
- <CAE5ih7-q9JpiAW3pU6XWk+z0sGY8ej+UKEaR0bGuBnR0D9+P5A@mail.gmail.com>
+From: Marc Strapetz <marc.strapetz@syntevo.com>
+Subject: Re: branch --set-upstream-to unexpectedly fails with "starting point
+ ... is no branch"
+Date: Mon, 23 Nov 2015 19:59:48 +0100
+Message-ID: <56536224.3050306@syntevo.com>
+References: <5652F2D2.3050902@syntevo.com>
+ <15ED3D48-282B-44EF-98C6-EA59F18D633E@dwim.me>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Git Users <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Mon Nov 23 19:59:54 2015
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Carlos_Mart=c3=adn_Nieto?= <cmn@dwim.me>
+X-From: git-owner@vger.kernel.org Mon Nov 23 20:00:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a0wL7-0006Jg-7A
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Nov 2015 19:59:49 +0100
+	id 1a0wLR-0006r8-2a
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Nov 2015 20:00:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753429AbbKWS7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2015 13:59:46 -0500
-Received: from cloud.peff.net ([50.56.180.127]:32936 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752862AbbKWS7q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2015 13:59:46 -0500
-Received: (qmail 18385 invoked by uid 102); 23 Nov 2015 18:59:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Nov 2015 12:59:45 -0600
-Received: (qmail 4909 invoked by uid 107); 23 Nov 2015 19:00:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 23 Nov 2015 14:00:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Nov 2015 13:59:43 -0500
-Content-Disposition: inline
-In-Reply-To: <CAE5ih7-q9JpiAW3pU6XWk+z0sGY8ej+UKEaR0bGuBnR0D9+P5A@mail.gmail.com>
+	id S1754716AbbKWTAE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Nov 2015 14:00:04 -0500
+Received: from smtprelay02.ispgateway.de ([80.67.31.36]:36382 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752862AbbKWTAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Nov 2015 14:00:03 -0500
+Received: from [91.113.179.170] (helo=[192.168.92.20])
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
+	(Exim 4.84)
+	(envelope-from <marc.strapetz@syntevo.com>)
+	id 1a0wKv-0002pv-IC; Mon, 23 Nov 2015 19:59:37 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <15ED3D48-282B-44EF-98C6-EA59F18D633E@dwim.me>
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281594>
 
-On Fri, Nov 20, 2015 at 12:56:04PM +0000, Luke Diamand wrote:
+On 23.11.2015 18:04, Carlos Mart=EDn Nieto wrote:
+> Hello Mark,
+>
+> On 23 Nov 2015, at 12:04, Marc Strapetz <marc.strapetz@syntevo.com> w=
+rote:
+>
+>> There is a strange "branch --set-upstream-to" failure for "clones" w=
+hich haven't been created using "git clone" but constructed using "git =
+init", "git remote add" and "git fetch".
+>>
+>> Following script first creates a "main" repository and then construc=
+ts the clone. Finally, in the clone branches origin/1 and origin/2 will=
+ be present, however it's not possible to invoke "git branch --set-upst=
+ream-to" for origin/2 (it works fine for origin/1).
+>>
+>> I guess the behavior is related to following line in .git/config:
+>>
+>> fetch =3D refs/heads/1:refs/remotes/origin/1
+>>
+>> However, I don't understand what's the problem for Git here? Definit=
+ely the error "starting point 'origin/2' is not a branch" is wrong.
+>>
+>
+> That is indeed the issue. The configuration which is stored in the co=
+nfiguration is a remote+branch pair. If there is no fetch refspec confi=
+gured which would create the =91origin/2=92 remote-tracking branch, the=
+ command does not know which remote and branch that would correspond to=
+=2E
 
-> >>>  git-p4: retry kill/cleanup operations in tests with timeout
-> >>>  git-p4: add p4d timeout in tests
-> >>>  git-p4: add trap to kill p4d on test exit
-> >>
-> >> These are all fairly gross, and I don't have p4d to test with myself.
-> >> But if we assume they're all necessary, I suppose it's the best we can
-> >> do.
-> >
-> > Unfortunately I think they are necessary. However, if someone finds a better way for stable p4d tests then I would be happy to see them go away, again.
-> 
-> I think that's just how p4d is I'm afraid. It doesn't like being
-> stopped and started quickly (I guess it's not a normal use-case for
-> most p4 users). I've made various unsuccessful attempts in the past to
-> make these tests work reliably, and Lars' changes are far better than
-> anything I ever managed.
+Thanks, Carlos, I understand now.
 
-Thanks for the extra context. I hope I didn't sound too negative in my
-initial assessment. It was meant to be "this is lamentable but probably
-necessary".
+My goal is to have a clone which will only fetch specific branches, so =
+I=20
+guess I have to stick with "refs/heads/1:refs/remotes/origin/1" for the=
+=20
+beginning and for every new branch X add another=20
+"refs/heads/X:refs/remotes/origin/X"? Or is there a better way?
 
--Peff
+-Marc
