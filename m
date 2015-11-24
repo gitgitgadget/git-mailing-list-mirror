@@ -1,239 +1,88 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Git clone fails during pre-commit hook due to GIT_WORK_TREE=.
- (regression 2.5 -> 2.6)
-Date: Tue, 24 Nov 2015 09:57:35 -0800
-Message-ID: <CAGZ79kY=t9SeoXjgeJjfCMD2=6g3JJxDxcnY6JeJCpUqaN+eOA@mail.gmail.com>
-References: <CA+dzEB=2LJXiLSTqyLw8AeHNwdQicwvEiMg=hVEX0-_s1bySpA@mail.gmail.com>
-	<CA+dzEB=XiGVFg+AhuJM-jUCPmgZKCJHTp3sinrFt8yzXeC_63Q@mail.gmail.com>
+From: Robert Crews <rcrews@hortonworks.com>
+Subject: Mac OS X Git Packaging Problem
+Date: Tue, 24 Nov 2015 19:08:24 +0000
+Message-ID: <7a7427c556404e7ba18ca3f3abea42f5@MBX080-W6-CO-2.EXCH080.SERVERPOD.NET>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Anthony Sottile <asottile@umich.edu>,
-	Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 24 18:57:51 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 24 20:18:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1Hqd-0000sE-6L
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 18:57:47 +0100
+	id 1a1J6x-00018s-8E
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 20:18:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754092AbbKXR5j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Nov 2015 12:57:39 -0500
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:36040 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753118AbbKXR5g convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Nov 2015 12:57:36 -0500
-Received: by ykdr82 with SMTP id r82so27678393ykd.3
-        for <git@vger.kernel.org>; Tue, 24 Nov 2015 09:57:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=+uKUkVhLDkpVFxTYyuiPbgvViut2VMY91haesUKgITc=;
-        b=XA+fsZiPZwK6YDGNnb2zjxcw4y8/iUalkdNTaiMC74zr9VjcvdicqvKyo8p5iCgEiT
-         QzwIgZ03Oy+mRrc3rnzEjXmHAlCJQfIXywv0yNGhAkMXsoFln/CIbTgHMNrivKVEfw6v
-         rgQ+T18Jn2jnXzYt+K6AFKV9FnnV0bLovwK70obsX9BS/XyCcGnfR1xfdyLh5748UkAK
-         FJRdR+lSrzzVRtyxYM17LGaPfyXGOqWqo0AfGP0ZGQLwglfD3ZlEH12H4CNGA3TF8zyL
-         ueE3SnKKcucQCN77SW++eA49D3FwkRMCNARz3mRPuxMCV7bmO9YsF5l8UDM+aGrW9eun
-         Xjyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+uKUkVhLDkpVFxTYyuiPbgvViut2VMY91haesUKgITc=;
-        b=MXii74pFHUPYAXNpxwkyyeT7vG0SwvSro53drQw6OtI4Nn2ZWerpHfQ9sEVaCYy0I8
-         PcPQ9WISsOfNDYR3VqLmf/HGPUsa4rXmKRoJaOtlFkKZAmNWolmNjEJC2pHvd+/W81sX
-         Zx6QT+Q+vQKfT7c5pAHbvpfOZBJ6f3vNKnycFPLLdFdGAYFX6ncjGIn8wKKSwou3MdKG
-         /2k2NgBkTKgPx7Z4dAkLB2QOb6C6SlGfXMYUK2+dWNE5TCHo13tlJ1FLm3wNtnxdESzl
-         SjQjnEX/jPo3IxofHXZP60h3E7KgvYaQhDICRKrBslNx+l+ncJ+q9ayAtMKQ/1omxMrC
-         4g1A==
-X-Gm-Message-State: ALoCoQltIKG3ys1/oVRjgOycqMAK0UwUoWg5QGy2+tIJw3VvRlRgvJa2MnX9M23BoWYVxvyFdGzZ
-X-Received: by 10.13.198.133 with SMTP id i127mr6364633ywd.252.1448387855380;
- Tue, 24 Nov 2015 09:57:35 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Tue, 24 Nov 2015 09:57:35 -0800 (PST)
-In-Reply-To: <CA+dzEB=XiGVFg+AhuJM-jUCPmgZKCJHTp3sinrFt8yzXeC_63Q@mail.gmail.com>
+	id S1754781AbbKXTSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2015 14:18:40 -0500
+Received: from relayvx12c.securemail.intermedia.net ([64.78.52.187]:26067 "EHLO
+	relayvx12c.securemail.intermedia.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754059AbbKXTSj convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2015 14:18:39 -0500
+X-Greylist: delayed 613 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Nov 2015 14:18:39 EST
+Received: from securemail.intermedia.net (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by emg-ca-1-2.localdomain (Postfix) with ESMTPS id 1716A53E36
+	for <git@vger.kernel.org>; Tue, 24 Nov 2015 11:08:26 -0800 (PST)
+x-echoworx-msg-id: 36fa6666-470f-4b12-ba55-445bec20f750
+x-echoworx-emg-received: Tue, 24 Nov 2015 11:08:26.031 -0800
+x-echoworx-action: delivered
+Received: from 10.254.155.17 ([10.254.155.17])
+          by emg-ca-1-2 (JAMES SMTP Server 2.3.2) with SMTP ID 976
+          for <git@vger.kernel.org>;
+          Tue, 24 Nov 2015 11:08:26 -0800 (PST)
+Received: from MBX080-W6-CO-1.exch080.serverpod.net (unknown [10.224.117.105])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by emg-ca-1-2.localdomain (Postfix) with ESMTPS id D25DA53E36
+	for <git@vger.kernel.org>; Tue, 24 Nov 2015 11:08:25 -0800 (PST)
+Received: from MBX080-W6-CO-2.exch080.serverpod.net (10.224.117.106) by
+ MBX080-W6-CO-1.exch080.serverpod.net (10.224.117.105) with Microsoft SMTP
+ Server (TLS) id 15.0.1130.7; Tue, 24 Nov 2015 11:08:25 -0800
+Received: from MBX080-W6-CO-2.exch080.serverpod.net ([10.224.117.106]) by
+ MBX080-W6-CO-2.EXCH080.SERVERPOD.NET ([10.224.117.106]) with mapi id
+ 15.00.1130.005; Tue, 24 Nov 2015 11:08:25 -0800
+Thread-Topic: Mac OS X Git Packaging Problem
+Thread-Index: AQHRJut+zgZTA+MpKUOcK/wPH/qRXA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [192.175.27.10]
+x-source-routing-agent: Processed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281622>
 
-+to Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+This is a bug report for the Mac OS X packaging at
+http://git-scm.com/download/mac . It is not so much a
+software bug as a nonoptimal configuration setting.
 
-On Mon, Nov 23, 2015 at 6:22 PM, Anthony Sottile <asottile@umich.edu> w=
-rote:
-> * Short description of the problem *
->
-> It seems GIT_WORK_DIR is now exported invariantly when calling git
-> hooks such as pre-commit.  If these hooks involve cloning repositorie=
-s
-> they will not fail due to this exported environment variable.  This
-> was not the case in prior versions (such as v2.5.0).
->
-> * Simple reproduction *
->
-> ```
-> $ cat test.sh
-> #!/usr/bin/env bash
-> set -ex
->
-> rm -rf test
->
-> # Exit non {0, 1} to abort git bisect
-> make -j 8 > /dev/null || exit 2
->
-> # Put our new git on the path
-> PATH=3D"$(pwd):$PATH"
->
-> git init test
->
-> pushd test
-> mkdir -p .git/hooks
-> echo 'git clone git://github.com/asottile/css-explore css-explore' >
-> .git/hooks/pre-commit
-> chmod 755 .git/hooks/pre-commit
->
-> git commit -m foo --allow-empty || exit 1
-> ```
->
-> * Under 2.6.3 *
->
-> ```
-> $ ./test.sh
->
-> ...
->
-> + git init test
-> warning: templates not found /home/anthony/share/git-core/templates
-> Initialized empty Git repository in /home/anthony/workspace/git/test/=
-=2Egit/
-> + pushd test
-> ~/workspace/git/test ~/workspace/git
-> + mkdir -p .git/hooks
-> + echo 'git clone git://github.com/asottile/css-explore css-explore'
-> + chmod 755 .git/hooks/pre-commit
-> + git commit -m foo --allow-empty
-> fatal: working tree '.' already exists.
-> + exit 1
-> ```
->
-> * Under 2.5 *
->
-> ```
-> $ ./test.sh
->
-> ...
->
-> + git init test
-> warning: templates not found /home/anthony/share/git-core/templates
-> Initialized empty Git repository in /home/anthony/workspace/git/test/=
-=2Egit/
-> + pushd test
-> ~/workspace/git/test ~/workspace/git
-> + mkdir -p .git/hooks
-> + echo 'git clone git://github.com/asottile/css-explore css-explore'
-> + chmod 755 .git/hooks/pre-commit
-> + git commit -m foo --allow-empty
-> Cloning into 'css-explore'...
-> warning: templates not found /home/anthony/share/git-core/templates
-> remote: Counting objects: 214, done.
-> remote: Total 214 (delta 0), reused 0 (delta 0), pack-reused 214
-> Receiving objects: 100% (214/214), 25.89 KiB | 0 bytes/s, done.
-> Resolving deltas: 100% (129/129), done.
-> Checking connectivity... done.
-> [master (root-commit) 5eb999d] foo
-> ```
->
->
-> * Bisect *
->
-> ```
-> $ git bisect good v2.5.0
-> $ git bisect bad origin/master
-> $ git bisect run ./test.sh
->
-> ...
->
-> d95138e695d99d32dcad528a2a7974f434c51e79 is the first bad commit
-> commit d95138e695d99d32dcad528a2a7974f434c51e79
-> Author: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-> Date:   Fri Jun 26 17:37:35 2015 +0700
->
->     setup: set env $GIT_WORK_TREE when work tree is set, like $GIT_DI=
-R
->
->     In the test case, we run setup_git_dir_gently() the first time to=
- read
->     $GIT_DIR/config so that we can resolve aliases. We'll enter
->     setup_discovered_git_dir() and may or may not call set_git_dir() =
-near
->     the end of the function, depending on whether the detected git di=
-r is
->     ".git" or not. This set_git_dir() will set env var $GIT_DIR.
->
->     For normal repo, git dir detected via setup_discovered_git_dir() =
-will be
->     ".git", and set_git_dir() is not called. If .git file is used how=
-ever,
->     the git dir can't be ".git" and set_git_dir() is called and $GIT_=
-DIR
->     set. This is the key of this problem.
->
->     If we expand an alias (or autocorrect command names), then
->     setup_git_dir_gently() is run the second time. If $GIT_DIR is not=
- set in
->     the first run, we run the same setup_discovered_git_dir() as befo=
-re.
->     Nothing to see. If it is, however, we'll enter setup_explicit_git=
-_dir()
->     this time.
->
->     This is where the "fun" is.  If $GIT_WORK_TREE is not set but
->     $GIT_DIR is, you are supposed to be at the root level of the
->     worktree.  But if you are in a subdir "foo/bar" (real worktree's =
-top
->     is "foo"), this rule bites you: your detected worktree is now
->     "foo/bar", even though the first run correctly detected worktree =
-as
->     "foo". You get "internal error: work tree has already been set" a=
-s a
->     result.
->
->     Bottom line is, when $GIT_DIR is set, $GIT_WORK_TREE should be se=
-t too
->     unless there's no work tree. But setting $GIT_WORK_TREE inside
->     set_git_dir() may backfire. We don't know at that point if work t=
-ree is
->     already configured by the caller. So set it when work tree is
->     detected. It does not harm if $GIT_WORK_TREE is set while $GIT_DI=
-R is
->     not.
->
->     Reported-by: Bj=C3=B8rnar Snoksrud <snoksrud@gmail.com>
->     Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds=
-@gmail.com>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> :100644 100644 9daa0ba4a36ced9f63541203e7bcc2ab9e1eae56
-> 36fbba57fc83afd36d99bf5d4f3a1fc3feefba09 M    environment.c
-> :040000 040000 1d7c4bf77e0fd49ca315271993cb69a8b055c3aa
-> 145d85895cb6cb0810597e1854a7721ccfc8f457 M    t
-> bisect run success
-> ```
->
-> Causing me a few headaches in
-> https://github.com/pre-commit/pre-commit/issues/300
-> I'm working around it in https://github.com/pre-commit/pre-commit/pul=
-l/301
->
-> Thanks,
->
-> Anthony
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Requested Change
+Remove the line "excludesfile = ~/.gitignore" under [core] from
+/usr/local/git/etc/gitconfig
+
+Reasons:
+
+#1
+The documentation at http://git-scm.com/docs/gitignore says the default
+global excludes file is at $HOME/.config/git/ignore. The file
+$HOME/.config/git/ignore is installed, and does indeed have good default
+content, but because of the setting in /usr/local/git/etc/gitconfig, the
+file is blocked from being reached.
+
+#2
+Seems to me the global excludesFile should never be called .gitignore --
+better to be called .gitignore_global -- since the .gitignore name would
+prevent a local .gitignore from being included there. I personally don't
+have my $HOME directory under git control, but if I did, I might want a
+custom .gitignore. And if I did want that, I would be required to set my
+global file explicitly in my own ~/.gitconfig:
+  git config --global core.excludesFile "~/.gitignore_global"
