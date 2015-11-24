@@ -1,79 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] sh-setup: make require_clean_work_tree() work on
- orphan branches
-Date: Tue, 24 Nov 2015 15:50:37 -0500
-Message-ID: <20151124205036.GF7174@sigill.intra.peff.net>
-References: <1448376345-27339-1-git-send-email-szeder@ira.uka.de>
- <1448376345-27339-2-git-send-email-szeder@ira.uka.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v7 2/2] Add Travis CI support
+Date: Tue, 24 Nov 2015 22:03:04 +0100
+Message-ID: <FC9B19DD-97CA-4ECE-BA99-631F5C14F504@gmail.com>
+References: <1448267108-55652-1-git-send-email-larsxschneider@gmail.com> <1448267108-55652-3-git-send-email-larsxschneider@gmail.com> <20151124204004.GC7174@sigill.intra.peff.net>
+Mime-Version: 1.0 (Mac OS X Mail 9.1 \(3096.5\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Nov 24 21:50:49 2015
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 24 22:03:16 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1KY1-0001Zo-Ie
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 21:50:45 +0100
+	id 1a1Kk5-0007aY-AL
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 22:03:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754989AbbKXUum convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Nov 2015 15:50:42 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33408 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754979AbbKXUuj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2015 15:50:39 -0500
-Received: (qmail 21848 invoked by uid 102); 24 Nov 2015 20:50:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 14:50:38 -0600
-Received: (qmail 18113 invoked by uid 107); 24 Nov 2015 20:50:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 15:50:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Nov 2015 15:50:37 -0500
-Content-Disposition: inline
-In-Reply-To: <1448376345-27339-2-git-send-email-szeder@ira.uka.de>
+	id S1754299AbbKXVDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2015 16:03:11 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:33355 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753052AbbKXVDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2015 16:03:08 -0500
+Received: by wmec201 with SMTP id c201so228250554wme.0
+        for <git@vger.kernel.org>; Tue, 24 Nov 2015 13:03:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=/ah01yQ+AvT/l+we2pddVscnF93qM2OsSxYV8HPJOlU=;
+        b=f59Lr8dERT0fY6fTfz3bUqBdiufqSV0YqYd1R0Ei4Hd7DBjirzCqlgP6Cf+1+iTYPV
+         CXiZWwLa5OT2iAvG75w08REAHHt8b99ew92EzadY/wibHJ/YErQE1TgbyPGvT39oOzR2
+         XUfXNstVDMKto/6DWLZqoD2SkbfsOvgLisBJxHTI1iPI7SFl8Arzs3bHLyIMJjDohz/0
+         sD7G3m/0C9GxCIc5ySEsSx6VTm8/L6XvrT6P8XZ7BFw3pQQueOR7sS0uw2HKIXWcmHha
+         TyotBDnfT2+rNAyfU3+rrikef/xhJMqZILsTe4RCT0oPeDAIlIRh/Rg4pJng/+EVdctt
+         EIhQ==
+X-Received: by 10.28.97.197 with SMTP id v188mr471609wmb.63.1448398986688;
+        Tue, 24 Nov 2015 13:03:06 -0800 (PST)
+Received: from slxbook4.fritz.box (a89-182-126-48.net-htp.de. [89.182.126.48])
+        by smtp.gmail.com with ESMTPSA id ft4sm19879848wjb.37.2015.11.24.13.03.05
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 24 Nov 2015 13:03:06 -0800 (PST)
+In-Reply-To: <20151124204004.GC7174@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.3096.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281630>
 
-On Tue, Nov 24, 2015 at 03:45:45PM +0100, SZEDER G=C3=A1bor wrote:
 
-> git-sh-setup's require_clean_work_tree() always exits with error on a=
-n
-> orphan branch, even when the index and worktree are both clean.  The
-> reason is that require_clean_work_tree() starts off with verifying
-> HEAD, to make sure that it can safely pass HEAD to 'git diff-index'
-> later when it comes to checking the cleanness of the index, and error=
-s
-> out finding the invalid HEAD of the orphan branch.
->=20
-> There are scripts requiring a clean worktree that should work on an
-> orphan branch as well, and those should be able to use this function
-> instead of duplicating its functionality and nice error reporting in =
-a
-> way that handles orphan branches.
->=20
-> Fixing this is easy: the index should be compared to the empty tree
-> while on an orphan branch, and to HEAD otherwise.
->=20
-> However, just fixing require_clean_work_tree() this way is also
-> dangerous, because scripts must take care to work properly on orphan
-> branches.  Currently a script calling require_clean_work_tree() would
-> exit on a clean orphan branch, but with the simple fix it would
-> continue executing and who knows what the consequences might be if
-> the script is not prepared for orphan branches.
+> On 24 Nov 2015, at 21:40, Jeff King <peff@peff.net> wrote:
+> 
+> On Mon, Nov 23, 2015 at 09:25:08AM +0100, larsxschneider@gmail.com wrote:
+> 
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>> 
+>> The tests are currently executed on "Ubuntu 12.04 LTS Server Edition
+>> 64 bit" and on "OS X Mavericks" using gcc and clang.
+>> 
+>> Perforce and Git-LFS are installed and therefore available for the
+>> respective tests.
+> 
+> Thanks, I find this one a little easier to digest.
+> 
+> I'm iffy on the NO_GETTEXT change from patch 1. I had hoped we could
+> just build out of the box everywhere, but I think the "do we have
+> libintl" decision is a hard one. Most people _do_ have it and want it,
+> but it sounds like the Travis environment does not. So maybe it is a
+> place where it is worth doing the tweak inside travis.yml and leaving
+> the stock build alone.
 
-Hmm. I suspect this is not a big deal in practice. Lots of scripts
-(including some of our own, through history) get the orphan case wrong.
-I'm not sure that require_clean_work_tree is necessarily the place to b=
-e
-enforcing it, even though it happened to have done so historically.
+OK, I'll try to fix it in the next roll.
 
-Still, it may be prudent to err on the side of caution. I'm on the
-fence.
-
--Peff
+Thanks,
+Lars
