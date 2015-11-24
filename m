@@ -1,79 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/5] ff-refs: builtin command to fast-forward local refs
-Date: Tue, 24 Nov 2015 17:39:03 -0500
-Message-ID: <20151124223903.GG29185@sigill.intra.peff.net>
-References: <1447207885-10911-1-git-send-email-rappazzo@gmail.com>
- <56431B69.9010007@drmicha.warpmail.net>
- <CANoM8SV77Jg8qYsn7UZ=a18WvrA_ayAWCnAjN9Tf6Re=r1Ggsg@mail.gmail.com>
- <CANoM8SWxMeDjwy-GwVc+En8D7N8LyzzsBKtX_MbiS4Z49DjD7g@mail.gmail.com>
- <564B47AC.7070609@drmicha.warpmail.net>
- <CANoM8SXrRmXPZQotQgJNNonJcb3rs5LM=JwOYoh4mX4nw2XB-g@mail.gmail.com>
- <alpine.DEB.1.00.1511181052130.1686@s15462909.onlinehome-server.info>
+From: Beat Bolli <dev+git@drbeat.li>
+Subject: Re: [PATCH] merge-file: consider core.crlf when writing merge markers
+Date: Tue, 24 Nov 2015 23:43:09 +0100
+Message-ID: <5654E7FD.2060000@drbeat.li>
+References: <1448314332-15581-1-git-send-email-dev+git@drbeat.li>
+ <alpine.DEB.1.00.1511240844380.1686@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Mike Rappazzo <rappazzo@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 24 23:39:27 2015
+X-From: git-owner@vger.kernel.org Tue Nov 24 23:44:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1MFD-00068g-7k
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 23:39:27 +0100
+	id 1a1MJm-0006d7-EQ
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 23:44:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932257AbbKXWjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2015 17:39:10 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33515 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932116AbbKXWjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2015 17:39:06 -0500
-Received: (qmail 27841 invoked by uid 102); 24 Nov 2015 22:39:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 16:39:06 -0600
-Received: (qmail 19404 invoked by uid 107); 24 Nov 2015 22:39:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 17:39:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Nov 2015 17:39:03 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.1511181052130.1686@s15462909.onlinehome-server.info>
+	id S932187AbbKXWoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2015 17:44:05 -0500
+Received: from mx1.2b3w.ch ([92.42.186.250]:60652 "EHLO mx1.2b3w.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932109AbbKXWoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2015 17:44:04 -0500
+Received: from mx1.2b3w.ch (localhost [127.0.0.1])
+	by mx1.2b3w.ch (Postfix) with ESMTP id D2919C3445;
+	Tue, 24 Nov 2015 23:43:59 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on dilbert.2b3w.ch
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.3.2
+Received: from mcmini.bolli (178-241-153-5.dyn.cable.fcom.ch [5.153.241.178])
+	by mx1.2b3w.ch (Postfix) with ESMTPSA id A793AC343E;
+	Tue, 24 Nov 2015 23:43:59 +0100 (CET)
+X-Enigmail-Draft-Status: N1110
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.3.0
+In-Reply-To: <alpine.DEB.1.00.1511240844380.1686@s15462909.onlinehome-server.info>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281644>
 
-On Wed, Nov 18, 2015 at 10:56:02AM +0100, Johannes Schindelin wrote:
-
-> > For me I use this command more as a post-fetch:
-> > 
-> > git fetch --all --prune && git-ff-refs
-> > 
-> > I imagine that the big difference is in the number of branches that I
-> > maintain, and perhaps in the way that I use gitk to visualize them.  I
-> > would be happy to add another option to git-fetch for --ff-refs as an
-> > alternative if that would feel better than a full-on builtin.
+On 24.11.15 09:21, Johannes Schindelin wrote:
+> Hi Beat,
 > 
-> I would much prefer, say, `git fetch --all --prune
-> --fast-forward-tracking-branches` (with maybe `-T` as short option for
-> `--fast-forward-tracking-branches` and/or a shorter `--ff-tracking`) to a
-> new builtin.
+> On Mon, 23 Nov 2015, Beat Bolli wrote:
+> 
+>> When merging files in repos with core.eol = crlf, git merge-file inserts
+>> just a LF at the end of the merge markers. Files with mixed line endings
+>> cause trouble in Windows editors and e.g. contrib/git-jump, where an
+>> unmerged file in a run of "git jump merge" is reported as simply "binary
+>> file matches".
+> 
+> Wow, what a beautiful contribution!
+> 
+> I wonder how difficult it would be to make this work with gitattributes,
+> i.e. when .gitattributes' `eol` setting disagrees with core.eol.
+> 
+> I imagine that we could use convert.c to do all the hard work, e.g. by
+> adding a function
+> 
+> 	const char *eol_for_path(const char *path, const char *contents)
+> 	{
+> 		enum eol eol;
+> 		struct conv_attrs ca;
+> 		struct text_stat stats;
+> 
+> 		convert_attrs(&ca, path);
+> 		eol = output_eol(ca.crlf_action);
+> 		if (eol != EOL_CRLF)
+> 			eol = EOL_LF;
+> 		else if (!*contents || (crlf_action != CRLF_AUTO &&
+> 				crlf_action != CRLF_GUESS)
+> 			eol = EOL_CRLF;
+> 		else {
+> 			ca.crlf_action = input_crlf_action(ca.crlf_action,
+> 					ca.eol_attr);
+> 			if (crlf_action == CRLF_GUESS && stats.cr > stats.crlf)
+> 				eol = core_eol;
+> 			else if (stats.crlf)
+> 				eol = EOL_CRLF;
+> 			else
+> 				eol = EOL_LF;
+> 		}
+> 
+> 		return eol == EOL_CRLF ? "\r\n" : "\n";
+> 	}
 
-FWIW, that makes a lot more sense to me, as it would presumably touch
-only branches which track whatever we just updated, and not other random
-refs.
+Hi Johannes,
 
-I have to admit that I'm a little wary of something like ff-refs meeting
-all needs, though. I have custom scripts that match my workflow and tell
-me when a branch could be updated. I could replace part of them with
-"ff-refs --dry-run", but that is really not much code. Basically:
+I have implemented this according to your algorithm. Now, I have to set
+core.autocrlf to true for making the new test pass. Setting core.eol no
+longer has an effect on the merge markers. Is this expected? (I haven't
+set any attributes)
 
-  git for-each-ref --format='%(refname) %(upstream)' refs/heads |
-  while read ref upstream; do
-    git merge-base --is-ancestor $ref $upstream &&
-      echo "$ref can fast-forward"
-  done
+Clearly I don't have much experience with gitattributes and how they
+interact with the core config settings :-\
 
--Peff
+Regards,
+Beat
