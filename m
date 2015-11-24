@@ -1,60 +1,65 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v7 2/2] Add Travis CI support
-Date: Tue, 24 Nov 2015 15:40:05 -0500
-Message-ID: <20151124204004.GC7174@sigill.intra.peff.net>
-References: <1448267108-55652-1-git-send-email-larsxschneider@gmail.com>
- <1448267108-55652-3-git-send-email-larsxschneider@gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2015, #03; Fri, 20)
+Date: Tue, 24 Nov 2015 15:43:00 -0500
+Message-ID: <20151124204259.GD7174@sigill.intra.peff.net>
+References: <20151120140937.GA17079@sigill.intra.peff.net>
+ <565433A9.5050707@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: larsxschneider@gmail.com
-X-From: git-owner@vger.kernel.org Tue Nov 24 21:40:12 2015
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Nov 24 21:43:08 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1KNn-00078C-03
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 21:40:11 +0100
+	id 1a1KQd-0004FU-9p
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 21:43:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754641AbbKXUkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2015 15:40:08 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33393 "HELO cloud.peff.net"
+	id S1754740AbbKXUnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2015 15:43:05 -0500
+Received: from cloud.peff.net ([50.56.180.127]:33397 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754302AbbKXUkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2015 15:40:07 -0500
-Received: (qmail 21359 invoked by uid 102); 24 Nov 2015 20:40:07 -0000
+	id S1754573AbbKXUnD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2015 15:43:03 -0500
+Received: (qmail 21496 invoked by uid 102); 24 Nov 2015 20:43:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 14:40:07 -0600
-Received: (qmail 18029 invoked by uid 107); 24 Nov 2015 20:40:06 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 14:43:02 -0600
+Received: (qmail 18050 invoked by uid 107); 24 Nov 2015 20:43:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 15:40:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Nov 2015 15:40:05 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 15:43:01 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Nov 2015 15:43:00 -0500
 Content-Disposition: inline
-In-Reply-To: <1448267108-55652-3-git-send-email-larsxschneider@gmail.com>
+In-Reply-To: <565433A9.5050707@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281627>
 
-On Mon, Nov 23, 2015 at 09:25:08AM +0100, larsxschneider@gmail.com wrote:
+On Tue, Nov 24, 2015 at 10:53:45AM +0100, Michael J Gruber wrote:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
+> > and all topic branches at:
+> > 
+> >     https://github.com/peff/git/
+> > 
+> > But note that I will _not_ be pushing to kernel.org.
 > 
-> The tests are currently executed on "Ubuntu 12.04 LTS Server Edition
-> 64 bit" and on "OS X Mavericks" using gcc and clang.
+> Does peff/git include the integration branches, too?
+
+Yes, it does.
+
+> Also, that one should be uncontroversial (f[l]amous last words):
 > 
-> Perforce and Git-LFS are installed and therefore available for the
-> respective tests.
+> From: Michael J Gruber <git@drmicha.warpmail.net>
+> Subject: [PATCH] Documentation/diff: give --word-diff-regex=. example
+> Date: Fri, 20 Nov 2015 14:36:14 +0100
+> 
+> Message-ID:
+> <6697f80b679b2bc910aa02a0fc945453be38c532.1448026505.git.git@drmicha.warpmail.net>
 
-Thanks, I find this one a little easier to digest.
-
-I'm iffy on the NO_GETTEXT change from patch 1. I had hoped we could
-just build out of the box everywhere, but I think the "do we have
-libintl" decision is a hard one. Most people _do_ have it and want it,
-but it sounds like the Travis environment does not. So maybe it is a
-place where it is worth doing the tweak inside travis.yml and leaving
-the stock build alone.
+Thanks. It came while I was doing the cycle. I'll include it in the
+current one.
 
 -Peff
