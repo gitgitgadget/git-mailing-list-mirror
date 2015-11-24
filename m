@@ -1,104 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] merge-file: consider core.crlf when writing merge
- markers
-Date: Tue, 24 Nov 2015 09:21:56 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1511240844380.1686@s15462909.onlinehome-server.info>
-References: <1448314332-15581-1-git-send-email-dev+git@drbeat.li>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 2/2] send-email: expand paths in sendemail.{to,cc}cmd
+ config
+Date: Tue, 24 Nov 2015 08:43:53 +0000
+Message-ID: <20151124084353.GH21488@serenity.lan>
+References: <cover.1447797487.git.john@keeping.me.uk>
+ <db0b817c4be57635248a48a529a32719ad232f02.1447797487.git.john@keeping.me.uk>
+ <CAPig+cRY3W4VMgqnRuQFeMk7oueKsA=ZhMAk15LLyZg0KfVvCA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Beat Bolli <dev+git@drbeat.li>
-X-From: git-owner@vger.kernel.org Tue Nov 24 09:22:13 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Nov 24 09:55:53 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a18ra-00082B-3F
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 09:22:10 +0100
+	id 1a19O9-0006QB-S2
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 09:55:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753035AbbKXIWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2015 03:22:05 -0500
-Received: from mout.gmx.net ([212.227.15.19]:55606 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752093AbbKXIWB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2015 03:22:01 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0Ltr89-1aQxAO30Wz-011DBA;
- Tue, 24 Nov 2015 09:21:57 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <1448314332-15581-1-git-send-email-dev+git@drbeat.li>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:9nq9oORz7Cv1KL5cgwPaoMAU+Y7LhBu1t3in7GgSKo5LwhyRcJ4
- ZGzPEbXl19sm31VcXGNc85zEbSYoYPNz0peCZjQ3S9bbkt9LP/H1deoKhDLX01vnR5OW/gg
- 2ql2OtQU3jlYXvTpPOwlBMcZtI4aWNhpfnXbhSRz35+nVqZ/OqI/l8LaItrJRCELH0C2fRM
- kKZBDKcooZF3eYOH41Y/Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+A3j11O8Czk=:sXYugeMxHUM+uIE02QOfLv
- Nz1M2hJE6d2cqFAdTBEsmh20RqMeXdsUBV9tyBB4IvOin6l36IY8qyOUjyAFTYS+glXGq4vKH
- mgt4bky30JoeJw1R7A2XCACcAeTjzmO+KnlP7tNBibC/qFy0TTjtJlBBMYhgTihPMQkS1m85p
- wbJ6DCr6gVl3Atu81AlynQpukWteuW8sSWqcSl5Hvo958cXjO+AIvIFg1RuKFnx+usgFg9b/1
- UcH/7RTih/z3QdcxRH937eM6CT060D7eJ2QYf5oic+7F3qU/ChRFQB8lVsFalqjKbf8nfbB6e
- GIDWw2Isr7F7L2mVcgGXDi92+M7tru2EpzxFzHPIO+yqjtXHZ/8SvOaAuLs/qScrODUCACzth
- ha+tpT7/eoW2wwDYeGcI7zwu9lM9VL1OJoTWgIMA7lvk5twVY0byd8EEvx0HIMx8wWjBM6MoK
- QRkncTeuDHYhwTNWpBnS1DgfZw2D2L4uVEhvEHasadgdixgjebV2J/WPcPNFjXx41zwkWSOO1
- HZVs8bOYyoplhdpW+6Y1CFebY64iGk719kNV1r3V8wAAnyfgBFPXtDJ5vw8TjwiZWQ5OUQIbm
- O/RVpqVASJbgkS/inx+M1Ohz1y4Ub2aCm5yNk5derIZC7NO0y9Nv9fPXkwWP4VS0QJGseauc0
- tQIITY8eDIoEZQ4nKNydCd/84xBRe6qLm6btEBabCeFLgWYmiVyKqZI4YBd/gMAxpJiXuhuxs
- P0FJynGdiHA0VX9lrMGJ1TLL9ARVL74N1gon4wDqT7yK3219GUX0oCvj5C+9/5z1tI0VFa5L 
+	id S1753153AbbKXIzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2015 03:55:45 -0500
+Received: from hyena.aluminati.org ([64.22.123.221]:59339 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753067AbbKXIzn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2015 03:55:43 -0500
+X-Greylist: delayed 518 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Nov 2015 03:55:43 EST
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 4B15F2304D;
+	Tue, 24 Nov 2015 08:47:04 +0000 (GMT)
+X-Quarantine-ID: <KXtvGp+VSx-y>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.199
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id KXtvGp+VSx-y; Tue, 24 Nov 2015 08:47:03 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id 8C9E023027;
+	Tue, 24 Nov 2015 08:43:55 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRY3W4VMgqnRuQFeMk7oueKsA=ZhMAk15LLyZg0KfVvCA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281613>
 
-Hi Beat,
+On Mon, Nov 23, 2015 at 07:04:46PM -0500, Eric Sunshine wrote:
+> On Tue, Nov 17, 2015 at 5:01 PM, John Keeping <john@keeping.me.uk> wrote:
+> > These configuration variables specify the paths to commands so we should
+> > support tilde-expansion for files inside a user's home directory.
+> 
+> Hmm, I don't see anything in the documentation which says that these
+> are paths to commands, and the code itself treats them purely as
+> commands to be invoked, not as paths to commands. What is the
+> behavior, for instance, with --tocmd='foobar -x zopp' or even
+> --tocmd='foobar -x ~/zopp'?
 
-On Mon, 23 Nov 2015, Beat Bolli wrote:
+The path behaviour only expands leading '~' and '~user' (as documented
+in git-config(1)):
 
-> When merging files in repos with core.eol = crlf, git merge-file inserts
-> just a LF at the end of the merge markers. Files with mixed line endings
-> cause trouble in Windows editors and e.g. contrib/git-jump, where an
-> unmerged file in a run of "git jump merge" is reported as simply "binary
-> file matches".
+	$ git -c sendemail.tocmd='foobar -x ~/zopp' config --path sendemail.tocmd
+	foobar -x ~/zopp
 
-Wow, what a beautiful contribution!
-
-I wonder how difficult it would be to make this work with gitattributes,
-i.e. when .gitattributes' `eol` setting disagrees with core.eol.
-
-I imagine that we could use convert.c to do all the hard work, e.g. by
-adding a function
-
-	const char *eol_for_path(const char *path, const char *contents)
-	{
-		enum eol eol;
-		struct conv_attrs ca;
-		struct text_stat stats;
-
-		convert_attrs(&ca, path);
-		eol = output_eol(ca.crlf_action);
-		if (eol != EOL_CRLF)
-			eol = EOL_LF;
-		else if (!*contents || (crlf_action != CRLF_AUTO &&
-				crlf_action != CRLF_GUESS)
-			eol = EOL_CRLF;
-		else {
-			ca.crlf_action = input_crlf_action(ca.crlf_action,
-					ca.eol_attr);
-			if (crlf_action == CRLF_GUESS && stats.cr > stats.crlf)
-				eol = core_eol;
-			else if (stats.crlf)
-				eol = EOL_CRLF;
-			else
-				eol = EOL_LF;
-		}
-
-		return eol == EOL_CRLF ? "\r\n" : "\n";
-	}
-
-Of course you could also make that function return `enum eol` instead of
-`const char *`; that would probably make the changes to xdiff/xmerge.c
-less invasive (and closer to what you have already).
-
-Ciao,
-Dscho
+> > Signed-off-by: John Keeping <john@keeping.me.uk>
+> > ---
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index 719c715..8e4c0e1 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -242,9 +242,7 @@ my %config_settings = (
+> >      "smtpdomain" => \$smtp_domain,
+> >      "smtpauth" => \$smtp_auth,
+> >      "to" => \@initial_to,
+> > -    "tocmd" => \$to_cmd,
+> >      "cc" => \@initial_cc,
+> > -    "cccmd" => \$cc_cmd,
+> >      "aliasfiletype" => \$aliasfiletype,
+> >      "bcc" => \@bcclist,
+> >      "suppresscc" => \@suppress_cc,
+> > @@ -259,6 +257,8 @@ my %config_settings = (
+> >  my %config_path_settings = (
+> >      "aliasesfile" => \@alias_files,
+> >      "smtpsslcertpath" => \$smtp_ssl_cert_path,
+> > +    "tocmd" => \$to_cmd,
+> > +    "cccmd" => \$cc_cmd,
+> >  );
