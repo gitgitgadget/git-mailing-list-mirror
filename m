@@ -1,85 +1,60 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v7 1/2] config.mak.uname: Darwin: define NO_GETTEXT for
- OS X 10.9 and later
-Date: Tue, 24 Nov 2015 15:34:53 -0500
-Message-ID: <20151124203453.GB7174@sigill.intra.peff.net>
+Subject: Re: [PATCH v7 2/2] Add Travis CI support
+Date: Tue, 24 Nov 2015 15:40:05 -0500
+Message-ID: <20151124204004.GC7174@sigill.intra.peff.net>
 References: <1448267108-55652-1-git-send-email-larsxschneider@gmail.com>
- <1448267108-55652-2-git-send-email-larsxschneider@gmail.com>
- <5652FF18.20602@web.de>
+ <1448267108-55652-3-git-send-email-larsxschneider@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: larsxschneider@gmail.com, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Nov 24 21:35:01 2015
+Cc: git@vger.kernel.org
+To: larsxschneider@gmail.com
+X-From: git-owner@vger.kernel.org Tue Nov 24 21:40:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1KIl-0005lq-G5
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 21:34:59 +0100
+	id 1a1KNn-00078C-03
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 21:40:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754356AbbKXUe5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Nov 2015 15:34:57 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33388 "HELO cloud.peff.net"
+	id S1754641AbbKXUkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2015 15:40:08 -0500
+Received: from cloud.peff.net ([50.56.180.127]:33393 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753520AbbKXUe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2015 15:34:56 -0500
-Received: (qmail 21150 invoked by uid 102); 24 Nov 2015 20:34:55 -0000
+	id S1754302AbbKXUkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2015 15:40:07 -0500
+Received: (qmail 21359 invoked by uid 102); 24 Nov 2015 20:40:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 14:34:55 -0600
-Received: (qmail 17982 invoked by uid 107); 24 Nov 2015 20:34:54 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 14:40:07 -0600
+Received: (qmail 18029 invoked by uid 107); 24 Nov 2015 20:40:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 15:34:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Nov 2015 15:34:53 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 15:40:06 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Nov 2015 15:40:05 -0500
 Content-Disposition: inline
-In-Reply-To: <5652FF18.20602@web.de>
+In-Reply-To: <1448267108-55652-3-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281626>
 
-On Mon, Nov 23, 2015 at 12:57:12PM +0100, Torsten B=C3=B6gershausen wro=
-te:
+On Mon, Nov 23, 2015 at 09:25:08AM +0100, larsxschneider@gmail.com wrote:
 
-> >+	# MacOS 10.7 Lion and higher
-> >  	ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" -g=
-e 11 && echo 1),1)
-> >  		HAVE_GETDELIM =3D YesPlease
-> >  	endif
-> >+	# MacOS 10.9 Mavericks and higher
-> >+	ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" -ge=
- 13 && echo 1),1)
-> >+		NO_GETTEXT =3D YesPlease
-> >+	endif
-> >  	NO_MEMMEM =3D YesPlease
-> >  	USE_ST_TIMESPEC =3D YesPlease
-> >  	HAVE_DEV_TTY =3D YesPlease
-> Unless I'm wrong, no Mac OS X had libintl.h, and the "unwritten agree=
-ment
-> (?)" was
-> that either
-> a) libintl ist installed in some way (fink, mac ports, brew, other wa=
-ys)
-> or
-> b) people use
-> NO_GETTEXT=3Dyes make
->=20
-> Doesn't this patch close the door for b), making it impossible to bui=
-ld Git
-> against libintl ?
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> The tests are currently executed on "Ubuntu 12.04 LTS Server Edition
+> 64 bit" and on "OS X Mavericks" using gcc and clang.
+> 
+> Perforce and Git-LFS are installed and therefore available for the
+> respective tests.
 
-I think the right way to do (b) is:
+Thanks, I find this one a little easier to digest.
 
-  make NO_GETTEXT=3DYes
-
-which will override anything we do in config.mak.uname (and likewise,
-anything from autoconf will override it, if we have a test there).
-
-Still, it will be a surprise to packagers in (a), who assume that
-installing libintl and then building git is enough to have gettext
-support (now they would actively need to override NO_GETTEXT).
+I'm iffy on the NO_GETTEXT change from patch 1. I had hoped we could
+just build out of the box everywhere, but I think the "do we have
+libintl" decision is a hard one. Most people _do_ have it and want it,
+but it sounds like the Travis environment does not. So maybe it is a
+place where it is worth doing the tweak inside travis.yml and leaving
+the stock build alone.
 
 -Peff
