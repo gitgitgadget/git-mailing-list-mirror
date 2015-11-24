@@ -1,62 +1,45 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] contrib/subtree: unwrap tag refs
-Date: Tue, 24 Nov 2015 16:52:58 -0500
-Message-ID: <20151124215258.GC29185@sigill.intra.peff.net>
-References: <1447435549-34410-1-git-send-email-mayoff@dqd.com>
+From: Max Kirillov <max@max630.net>
+Subject: Re: What's cooking in git.git (Nov 2015, #03; Fri, 20)
+Date: Wed, 25 Nov 2015 00:04:10 +0200
+Message-ID: <20151124220410.GA5030@wheezy.local>
+References: <20151120140937.GA17079@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "David A. Greene" <greened@obbligato.org>, git@vger.kernel.org
-To: Rob Mayoff <mayoff@dqd.com>
-X-From: git-owner@vger.kernel.org Tue Nov 24 22:53:29 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 24 23:04:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1LWZ-0000Wt-8v
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 22:53:19 +0100
+	id 1a1LhF-0002ox-6o
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 23:04:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932107AbbKXVxD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2015 16:53:03 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33461 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755360AbbKXVxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2015 16:53:00 -0500
-Received: (qmail 25046 invoked by uid 102); 24 Nov 2015 21:53:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 15:53:00 -0600
-Received: (qmail 18809 invoked by uid 107); 24 Nov 2015 21:52:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 16:52:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Nov 2015 16:52:58 -0500
+	id S1755237AbbKXWET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2015 17:04:19 -0500
+Received: from p3plsmtpa08-04.prod.phx3.secureserver.net ([173.201.193.105]:34715
+	"EHLO p3plsmtpa08-04.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754341AbbKXWES (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Nov 2015 17:04:18 -0500
+Received: from wheezy.local ([82.181.81.240])
+	by p3plsmtpa08-04.prod.phx3.secureserver.net with 
+	id la4A1r00C5B68XE01a4Ge5; Tue, 24 Nov 2015 15:04:18 -0700
 Content-Disposition: inline
-In-Reply-To: <1447435549-34410-1-git-send-email-mayoff@dqd.com>
+In-Reply-To: <20151120140937.GA17079@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281636>
 
-On Fri, Nov 13, 2015 at 11:25:49AM -0600, Rob Mayoff wrote:
+On Fri, Nov 20, 2015 at 09:09:37AM -0500, Jeff King wrote:
+> * mk/blame-first-parent (2015-11-20) 1 commit
+>  - blame: fix object casting regression
+> 
+>  Regression fix for a topic already in master.
+> 
+>  Will merge to 'next'.
 
-> If a subtree was added using a tag ref, the tag ref is stored in
-> the subtree commit message instead of the underlying commit's ref.
-> To split or push subsequent changes to the subtree, the subtree
-> command needs to unwrap the tag ref.  This patch makes it do so.
-> 
-> The problem was described in a message to the mailing list from
-> Junio C Hamano dated 29 Apr 2014, with the subject "Re: git subtree
-> issue in more recent versions". The archived message can be found
-> at <http://comments.gmane.org/gmane.comp.version-control.git/247503>.
-> 
-> Signed-off-by: Rob Mayoff <mayoff@dqd.com>
-> ---
-> 
-> changes since v1:
-> 
-> * remove obsolete sub assignments
-> * wrap lines
-
-Thanks.  David, can I get an Ack on this?
-
--Peff
+You mistyped my name in the commit message of 044e0ad679 :)
