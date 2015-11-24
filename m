@@ -1,90 +1,85 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] send-email: die if CA path doesn't exist
-Date: Tue, 24 Nov 2015 14:58:43 -0500
-Message-ID: <20151124195842.GA7174@sigill.intra.peff.net>
-References: <27f354a4edb166e42006b0c1f778827a3dfd58ac.1447798206.git.john@keeping.me.uk>
- <20151120111848.GC11198@sigill.intra.peff.net>
- <20151120194651.GC21488@serenity.lan>
+Subject: Re: [PATCH v7 1/2] config.mak.uname: Darwin: define NO_GETTEXT for
+ OS X 10.9 and later
+Date: Tue, 24 Nov 2015 15:34:53 -0500
+Message-ID: <20151124203453.GB7174@sigill.intra.peff.net>
+References: <1448267108-55652-1-git-send-email-larsxschneider@gmail.com>
+ <1448267108-55652-2-git-send-email-larsxschneider@gmail.com>
+ <5652FF18.20602@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Nov 24 20:58:52 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: larsxschneider@gmail.com, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Nov 24 21:35:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1Jjk-0006S6-KT
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 20:58:48 +0100
+	id 1a1KIl-0005lq-G5
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 21:34:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753661AbbKXT6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2015 14:58:46 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33370 "HELO cloud.peff.net"
+	id S1754356AbbKXUe5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Nov 2015 15:34:57 -0500
+Received: from cloud.peff.net ([50.56.180.127]:33388 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752375AbbKXT6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2015 14:58:45 -0500
-Received: (qmail 19103 invoked by uid 102); 24 Nov 2015 19:58:45 -0000
+	id S1753520AbbKXUe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2015 15:34:56 -0500
+Received: (qmail 21150 invoked by uid 102); 24 Nov 2015 20:34:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 13:58:45 -0600
-Received: (qmail 17635 invoked by uid 107); 24 Nov 2015 19:58:44 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 14:34:55 -0600
+Received: (qmail 17982 invoked by uid 107); 24 Nov 2015 20:34:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 14:58:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Nov 2015 14:58:43 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 24 Nov 2015 15:34:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Nov 2015 15:34:53 -0500
 Content-Disposition: inline
-In-Reply-To: <20151120194651.GC21488@serenity.lan>
+In-Reply-To: <5652FF18.20602@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281625>
 
-On Fri, Nov 20, 2015 at 07:46:51PM +0000, John Keeping wrote:
+On Mon, Nov 23, 2015 at 12:57:12PM +0100, Torsten B=C3=B6gershausen wro=
+te:
 
-> > For people who know their systems are broken and want to proceed anyway,
-> > what is the appropriate work-around? Obviously it involves disabling
-> > peer verification, but would we want to include instructions for doing
-> > so (either in the error message, or perhaps mentioning it in the commit
-> > message)?
-> 
-> The documentation already says:
-> 
-> 	Set it to an empty string to disable certificate verification.
-> 
-> It's a bit lost in the middle of a paragraph but I think that is the
-> best place for the detail of how to disable verification.
-> 
-> Having revisted the patch, I do think the message might be a bit terse,
-> but I can't think of a reasonably concise way to point at the
-> --smtp-ssl-cert-path argument as being the culprit.
+> >+	# MacOS 10.7 Lion and higher
+> >  	ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" -g=
+e 11 && echo 1),1)
+> >  		HAVE_GETDELIM =3D YesPlease
+> >  	endif
+> >+	# MacOS 10.9 Mavericks and higher
+> >+	ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" -ge=
+ 13 && echo 1),1)
+> >+		NO_GETTEXT =3D YesPlease
+> >+	endif
+> >  	NO_MEMMEM =3D YesPlease
+> >  	USE_ST_TIMESPEC =3D YesPlease
+> >  	HAVE_DEV_TTY =3D YesPlease
+> Unless I'm wrong, no Mac OS X had libintl.h, and the "unwritten agree=
+ment
+> (?)" was
+> that either
+> a) libintl ist installed in some way (fink, mac ports, brew, other wa=
+ys)
+> or
+> b) people use
+> NO_GETTEXT=3Dyes make
+>=20
+> Doesn't this patch close the door for b), making it impossible to bui=
+ld Git
+> against libintl ?
 
-Hrm. I was thinking that somebody might not have any clue that
---smtp-ssl-cert-path exists, and with this patch their setup would
-suddenly go from working (well, insecure but passing mail) to broken.
-They need to know where to look to find that documentation.
+I think the right way to do (b) is:
 
-But it looks like this code path only triggers if you have set
-smtp-ssl-cert-path to something bogus. So anybody who does so at least
-knows about the option.
+  make NO_GETTEXT=3DYes
 
-Which makes me wonder what happens when the cert path isn't defined by
-Git. The code says:
+which will override anything we do in config.mak.uname (and likewise,
+anything from autoconf will override it, if we have a test there).
 
-        if (!defined $smtp_ssl_cert_path) {
-                # use the OpenSSL defaults
-                return (SSL_verify_mode => SSL_VERIFY_PEER());
-        }
-
-What does OpenSSL do when there is no cert? Hopefully it reports a
-verification failure (and in that sense your patch is making our code
-consistent with that, which is a good thing).
-
-> Maybe we shouldn't worry too much about that, but should instead put the
-> invalid path into the error message:
-> 
-> 	die "CA path \"$smtp_ssl_cert_path\" does not exist.";
-
-Given what I wrote above, yeah, I'd agree that is sufficient (and I do
-think mentioning the path is helpful).
+Still, it will be a surprise to packagers in (a), who assume that
+installing libintl and then building git is enough to have gettext
+support (now they would actively need to override NO_GETTEXT).
 
 -Peff
