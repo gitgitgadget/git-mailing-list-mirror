@@ -1,155 +1,224 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: git rm --recursive
-Date: Mon, 23 Nov 2015 21:12:42 -0500
-Message-ID: <CAPig+cRF+VumPsbZR0mrGyY7Zbiz+yqRK-29iXUxjneNy4efqw@mail.gmail.com>
-References: <20151118150637.GA49061@artax.karlin.mff.cuni.cz>
+From: Anthony Sottile <asottile@umich.edu>
+Subject: Fwd: Git clone fails during pre-commit hook due to GIT_WORK_TREE=.
+ (regression 2.5 -> 2.6)
+Date: Mon, 23 Nov 2015 18:22:11 -0800
+Message-ID: <CA+dzEB=XiGVFg+AhuJM-jUCPmgZKCJHTp3sinrFt8yzXeC_63Q@mail.gmail.com>
+References: <CA+dzEB=2LJXiLSTqyLw8AeHNwdQicwvEiMg=hVEX0-_s1bySpA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Hans Ginzel <hans@matfyz.cz>
-X-From: git-owner@vger.kernel.org Tue Nov 24 03:12:54 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 24 03:22:34 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a136C-0000jw-6O
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 03:12:52 +0100
+	id 1a13FZ-0003gL-8S
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 03:22:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752760AbbKXCMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Nov 2015 21:12:45 -0500
-Received: from mail-vk0-f52.google.com ([209.85.213.52]:34894 "EHLO
-	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751568AbbKXCMn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Nov 2015 21:12:43 -0500
-Received: by vkha189 with SMTP id a189so2255591vkh.2
-        for <git@vger.kernel.org>; Mon, 23 Nov 2015 18:12:42 -0800 (PST)
+	id S1752657AbbKXCWP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Nov 2015 21:22:15 -0500
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:33901 "EHLO
+	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752360AbbKXCWN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Nov 2015 21:22:13 -0500
+Received: by lffu14 with SMTP id u14so3531264lff.1
+        for <git@vger.kernel.org>; Mon, 23 Nov 2015 18:22:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=imhqQt2hIRaMZw4fm0hJf2V26HLsm0ybNfhAsa9NK08=;
-        b=U9gjOhToSlJHk+U6aesuwz5dTC6AVV7RJtQi8VWUEuJbJsMysle16PAy6gXK2TRk8R
-         gQcu3V4dqJr8haUgbF8JNiwwl8wmq6c8tBuryD3bZC300BqRSzfnHC/kVx5bPFlzOR+e
-         cEoJqhqg/J7PfbGAHKK3KvYsQZVu1WDboZB5a+LZgXZqCqZHXLlCq2Pn5/cZZ+dPTzys
-         dJxJ+oREY0/BwV6VTHTiktVNGvWsmAZcXnmfVHs91HFUEYebTMQy5MKX7qICC8PcSRk6
-         bgb7qwC6Qj6TfFosxjrwj5l/cHo0aj/Yrkh07uhk0yPTB15VUEAZnLTov+SIypbEsUX8
-         n2cQ==
-X-Received: by 10.31.13.205 with SMTP id 196mr23058066vkn.37.1448331162479;
- Mon, 23 Nov 2015 18:12:42 -0800 (PST)
-Received: by 10.31.159.204 with HTTP; Mon, 23 Nov 2015 18:12:42 -0800 (PST)
-In-Reply-To: <20151118150637.GA49061@artax.karlin.mff.cuni.cz>
-X-Google-Sender-Auth: Wa34v18KsoUyOBMlKDg_Sy9Y6ng
+        d=umich-edu.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=GDkoqGN/zVxKliKV5JMNE7qguVE/54uEqlL2qhjhhL8=;
+        b=bOEEJ23aAgVBD+Kz6o2uGWg6FPWxzNck480NN6CjyOVQ9ERylLxSbJOp0ggfcr8LDO
+         xOksMfr0K5kUXCR+CFN40JqLqsSM2pwKoRlGzbCxhtzvz4/GKcyS8K6/il1y0+Lq/iKX
+         QeZ3ROQkBkkFtkEfOq76mu4tlsgjHtRt0EloRtT45Ir4hihk+rmaDuDi4ftcJLc8sbVY
+         AGN19mO5zCphECE5hUDwQWr4+wof0FIu7BWbQiiQ9cR69Q6jIccQStHB05T8T6t17Juk
+         BcJe7nORbaxsz9Oh06HEaY4xnkXdrxXCiVVrP1WXnbwwiVQghZAtBYN41ws6iB7VMSUa
+         0W/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type:content-transfer-encoding;
+        bh=GDkoqGN/zVxKliKV5JMNE7qguVE/54uEqlL2qhjhhL8=;
+        b=Bz6fcchgVBtTXG0GAC3l3KuC71CsHj1cmYJDOAa+vubpdkGVc64OmtiucWZo3eBN13
+         xteDdWbvXhuxBwRclsujcYPqzZ5j/f7V2dUaMdJOLPohOeXHG8PKpAIXhucXkDiuvnH/
+         3x71TbDvjI4SyuAqlzy4iLXwL1D7ifkomZKOGADMcbRvW8EtTIg0ChLhsUV5YPltr6FK
+         uNQJkosEAfKBvYVk9/FMk9U8ycP03LmWOKkK4kBj6F4nPTZmzpSThwNuOgXeToImZZt7
+         IaAEvYs3md84o+UOgQAAVoEJgAdBlp/Tr/0QGv4Rf8T8lYexM/sxoSIPbOmNkJ58WZ1n
+         nvOg==
+X-Gm-Message-State: ALoCoQmf/RHjuA1p5cMzFzMbRE7cUEJXMtcb3mVpQyIQ9Y7OMe35ihr2MuROXUKUWe6xQJ7eUvx7
+X-Received: by 10.112.171.74 with SMTP id as10mr11746175lbc.137.1448331731643;
+ Mon, 23 Nov 2015 18:22:11 -0800 (PST)
+Received: by 10.25.22.164 with HTTP; Mon, 23 Nov 2015 18:22:11 -0800 (PST)
+In-Reply-To: <CA+dzEB=2LJXiLSTqyLw8AeHNwdQicwvEiMg=hVEX0-_s1bySpA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281608>
 
-On Wed, Nov 18, 2015 at 10:06 AM, Hans Ginzel <hans@matfyz.cz> wrote:
-> I have added the --recursive alias for the -r option to the rm command.
+* Short description of the problem *
 
-When sending a patch, separate the patch itself from the above
-commentary with a scissor line (--- 8< ---) so that git-am can extract
-the patch automatically. Alternately, appease git-am by placing the
-commentary below the "---" line just above the diffstat.
+It seems GIT_WORK_DIR is now exported invariantly when calling git
+hooks such as pre-commit.  If these hooks involve cloning repositories
+they will not fail due to this exported environment variable.  This
+was not the case in prior versions (such as v2.5.0).
 
-> From 83f197151c04164b0dfd4d127e72439aebaf8b71 Mon Sep 17 00:00:00 2001
-> From: Hans Ginzel <hans@matfyz.cz>
-> Date: Wed, 18 Nov 2015 15:44:56 +0100
+* Simple reproduction *
 
-All three above lines should be dropped. "From SHA1" is meaningful
-only in your repository, thus not helpful in the patch. "From:" is the
-same as the email address from which you sent the patch, so git-am can
-just pick it up from the email envelope. On this project, the
-important date is when the maintainer applies the patch, so the above
-"Date:" is not interesting.
+```
+$ cat test.sh
+#!/usr/bin/env bash
+set -ex
 
-> Subject: [PATCH] builtin: rm: add --recursive to be consistent with GNU rm
+rm -rf test
 
-The body of the commit message (following the subject) would be a good
-place to explain why --recursive is desirable. Consistency with GNU
-'rm' may be reasonable, but you may need to be more persuasive to
-convince people that the project should support yet another alias for
-an existing option and that whatever future maintenance that involves
-(documentation and code) is really worthwhile, especially since nobody
-has expressed interest in such an alias as yet.
+# Exit non {0, 1} to abort git bisect
+make -j 8 > /dev/null || exit 2
 
-Also, if you're aiming for consistency with GNU 'rm' (or even BSD
-'rm'), wouldn't you want to support -R, as well?
+# Put our new git on the path
+PATH=3D"$(pwd):$PATH"
 
-Similarly, git-rm's -f option behaves differently than -f of Unix 'rm'
-in that even with -f, git-rm still expects the named path to exist,
-whereas Unix 'rm' does not. Is that difference also worth addressing,
-or is that an argument against trying to make git-rm consistent with
-GNU 'rm'?
+git init test
 
-Your Signed-off-by: is missing. See Documentation/SubmittingPatches.
+pushd test
+mkdir -p .git/hooks
+echo 'git clone git://github.com/asottile/css-explore css-explore' >
+=2Egit/hooks/pre-commit
+chmod 755 .git/hooks/pre-commit
 
-More below...
+git commit -m foo --allow-empty || exit 1
+```
 
-> diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-> @@ -47,6 +47,7 @@ OPTIONS
-> -r::
-> +--recursive::
->         Allow recursive removal when a leading directory name is
->         given.
->
-> diff --git a/builtin/rm.c b/builtin/rm.c
-> @@ -269,7 +269,7 @@ static struct option builtin_rm_options[] = {
-> -       OPT_BOOL('r', NULL,             &recursive,  N_("allow recursive
-> removal")),
-> +       OPT_BOOL('r', "recursive",      &recursive,  N_("allow recursive
-> removal")),
-> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-> @@ -207,12 +207,25 @@ test_expect_success 'Recursive with -r but dirty' '
->         test -f frotz/nitfol
-> '
->
-> +test_expect_success 'Recursive with --recursive but dirty' '
-> +       echo qfwfq >>frotz/nitfol &&
-> +       test_must_fail git rm --recursive frotz &&
-> +       test -d frotz &&
-> +       test -f frotz/nitfol
-> +'
+* Under 2.6.3 *
 
-This copy/pasted test isn't doing what you think it's doing. It would
-pass even if you had totally botched the implementation of
---recursive. That's because it actively expects "git rm --recursive"
-to fail, so it would "succeed" for any failure, for instance, due to a
-botched implementation.
+```
+$ ./test.sh
 
-What you probably want to do instead is create a test which verifies
-that "git rm" alone fails when attempting to remove a directory, and
-that "git rm --recursive" succeeds.
+=2E..
 
-> test_expect_success 'Recursive with -r -f' '
->         git rm -f -r frotz &&
->         ! test -f frotz/nitfol &&
->         ! test -d frotz
-> '
->
-> +test_expect_success 'Recursive with --recursive -f' '
-> +       git rm -f --recursive frotz &&
-> +       ! test -f frotz/nitfol &&
-> +       ! test -d frotz
-> +'
++ git init test
+warning: templates not found /home/anthony/share/git-core/templates
+Initialized empty Git repository in /home/anthony/workspace/git/test/.g=
+it/
++ pushd test
+~/workspace/git/test ~/workspace/git
++ mkdir -p .git/hooks
++ echo 'git clone git://github.com/asottile/css-explore css-explore'
++ chmod 755 .git/hooks/pre-commit
++ git commit -m foo --allow-empty
+fatal: working tree '.' already exists.
++ exit 1
+```
 
-This copy/pasted test is in even worse shape. It doesn't pass at all,
-even with a perfectly operational --recursive implementation. (I'm
-guessing that you didn't run the tests after adding this.) This is
-because the preceding test, from which this was copied, destroys state
-prepared by the earlier "Recursive test setup" test upon which this
-new test depends. Without that state, the test can not pass.
+* Under 2.5 *
 
-Anyhow, if you follow the advice above and just craft a new test which
-ensures that "git rm" fails on a directory and "git rm --recursive"
-succeeds, then that should be sufficient to verify that --recursive
-works as an alias for -r, and you can drop these two (bogus)
-copy/pasted tests.
+```
+$ ./test.sh
 
-> test_expect_success 'Remove nonexistent file returns nonzero exit status' '
->         test_must_fail git rm nonexistent
-> '
-> --
-> 1.9.1
+=2E..
+
++ git init test
+warning: templates not found /home/anthony/share/git-core/templates
+Initialized empty Git repository in /home/anthony/workspace/git/test/.g=
+it/
++ pushd test
+~/workspace/git/test ~/workspace/git
++ mkdir -p .git/hooks
++ echo 'git clone git://github.com/asottile/css-explore css-explore'
++ chmod 755 .git/hooks/pre-commit
++ git commit -m foo --allow-empty
+Cloning into 'css-explore'...
+warning: templates not found /home/anthony/share/git-core/templates
+remote: Counting objects: 214, done.
+remote: Total 214 (delta 0), reused 0 (delta 0), pack-reused 214
+Receiving objects: 100% (214/214), 25.89 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (129/129), done.
+Checking connectivity... done.
+[master (root-commit) 5eb999d] foo
+```
+
+
+* Bisect *
+
+```
+$ git bisect good v2.5.0
+$ git bisect bad origin/master
+$ git bisect run ./test.sh
+
+=2E..
+
+d95138e695d99d32dcad528a2a7974f434c51e79 is the first bad commit
+commit d95138e695d99d32dcad528a2a7974f434c51e79
+Author: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Date:   Fri Jun 26 17:37:35 2015 +0700
+
+    setup: set env $GIT_WORK_TREE when work tree is set, like $GIT_DIR
+
+    In the test case, we run setup_git_dir_gently() the first time to r=
+ead
+    $GIT_DIR/config so that we can resolve aliases. We'll enter
+    setup_discovered_git_dir() and may or may not call set_git_dir() ne=
+ar
+    the end of the function, depending on whether the detected git dir =
+is
+    ".git" or not. This set_git_dir() will set env var $GIT_DIR.
+
+    For normal repo, git dir detected via setup_discovered_git_dir() wi=
+ll be
+    ".git", and set_git_dir() is not called. If .git file is used howev=
+er,
+    the git dir can't be ".git" and set_git_dir() is called and $GIT_DI=
+R
+    set. This is the key of this problem.
+
+    If we expand an alias (or autocorrect command names), then
+    setup_git_dir_gently() is run the second time. If $GIT_DIR is not s=
+et in
+    the first run, we run the same setup_discovered_git_dir() as before=
+=2E
+    Nothing to see. If it is, however, we'll enter setup_explicit_git_d=
+ir()
+    this time.
+
+    This is where the "fun" is.  If $GIT_WORK_TREE is not set but
+    $GIT_DIR is, you are supposed to be at the root level of the
+    worktree.  But if you are in a subdir "foo/bar" (real worktree's to=
+p
+    is "foo"), this rule bites you: your detected worktree is now
+    "foo/bar", even though the first run correctly detected worktree as
+    "foo". You get "internal error: work tree has already been set" as =
+a
+    result.
+
+    Bottom line is, when $GIT_DIR is set, $GIT_WORK_TREE should be set =
+too
+    unless there's no work tree. But setting $GIT_WORK_TREE inside
+    set_git_dir() may backfire. We don't know at that point if work tre=
+e is
+    already configured by the caller. So set it when work tree is
+    detected. It does not harm if $GIT_WORK_TREE is set while $GIT_DIR =
+is
+    not.
+
+    Reported-by: Bj=C3=B8rnar Snoksrud <snoksrud@gmail.com>
+    Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+:100644 100644 9daa0ba4a36ced9f63541203e7bcc2ab9e1eae56
+36fbba57fc83afd36d99bf5d4f3a1fc3feefba09 M    environment.c
+:040000 040000 1d7c4bf77e0fd49ca315271993cb69a8b055c3aa
+145d85895cb6cb0810597e1854a7721ccfc8f457 M    t
+bisect run success
+```
+
+Causing me a few headaches in
+https://github.com/pre-commit/pre-commit/issues/300
+I'm working around it in https://github.com/pre-commit/pre-commit/pull/=
+301
+
+Thanks,
+
+Anthony
