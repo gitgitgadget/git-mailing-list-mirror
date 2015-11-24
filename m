@@ -1,88 +1,93 @@
-From: Robert Crews <rcrews@hortonworks.com>
-Subject: Mac OS X Git Packaging Problem
-Date: Tue, 24 Nov 2015 19:08:24 +0000
-Message-ID: <7a7427c556404e7ba18ca3f3abea42f5@MBX080-W6-CO-2.EXCH080.SERVERPOD.NET>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 24 20:18:44 2015
+From: =?windows-1252?Q?Carlos_Mart=EDn_Nieto?= <cmn@dwim.me>
+Subject: Re: branch --set-upstream-to unexpectedly fails with "starting point ... is no branch"
+Date: Tue, 24 Nov 2015 17:58:45 +0100
+Message-ID: <12A15BA3-11C2-426A-87D6-421BA9708A51@dwim.me>
+References: <5652F2D2.3050902@syntevo.com> <15ED3D48-282B-44EF-98C6-EA59F18D633E@dwim.me> <56536224.3050306@syntevo.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Marc Strapetz <marc.strapetz@syntevo.com>
+X-From: git-owner@vger.kernel.org Tue Nov 24 20:37:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1J6x-00018s-8E
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 20:18:43 +0100
+	id 1a1JPA-0002TO-EE
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 20:37:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754781AbbKXTSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2015 14:18:40 -0500
-Received: from relayvx12c.securemail.intermedia.net ([64.78.52.187]:26067 "EHLO
-	relayvx12c.securemail.intermedia.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754059AbbKXTSj convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2015 14:18:39 -0500
-X-Greylist: delayed 613 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Nov 2015 14:18:39 EST
-Received: from securemail.intermedia.net (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by emg-ca-1-2.localdomain (Postfix) with ESMTPS id 1716A53E36
-	for <git@vger.kernel.org>; Tue, 24 Nov 2015 11:08:26 -0800 (PST)
-x-echoworx-msg-id: 36fa6666-470f-4b12-ba55-445bec20f750
-x-echoworx-emg-received: Tue, 24 Nov 2015 11:08:26.031 -0800
-x-echoworx-action: delivered
-Received: from 10.254.155.17 ([10.254.155.17])
-          by emg-ca-1-2 (JAMES SMTP Server 2.3.2) with SMTP ID 976
-          for <git@vger.kernel.org>;
-          Tue, 24 Nov 2015 11:08:26 -0800 (PST)
-Received: from MBX080-W6-CO-1.exch080.serverpod.net (unknown [10.224.117.105])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by emg-ca-1-2.localdomain (Postfix) with ESMTPS id D25DA53E36
-	for <git@vger.kernel.org>; Tue, 24 Nov 2015 11:08:25 -0800 (PST)
-Received: from MBX080-W6-CO-2.exch080.serverpod.net (10.224.117.106) by
- MBX080-W6-CO-1.exch080.serverpod.net (10.224.117.105) with Microsoft SMTP
- Server (TLS) id 15.0.1130.7; Tue, 24 Nov 2015 11:08:25 -0800
-Received: from MBX080-W6-CO-2.exch080.serverpod.net ([10.224.117.106]) by
- MBX080-W6-CO-2.EXCH080.SERVERPOD.NET ([10.224.117.106]) with mapi id
- 15.00.1130.005; Tue, 24 Nov 2015 11:08:25 -0800
-Thread-Topic: Mac OS X Git Packaging Problem
-Thread-Index: AQHRJut+zgZTA+MpKUOcK/wPH/qRXA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [192.175.27.10]
-x-source-routing-agent: Processed
+	id S1754684AbbKXThK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Nov 2015 14:37:10 -0500
+Received: from hessy.dwim.me ([78.47.67.53]:42228 "EHLO hessy.dwim.me"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753083AbbKXThH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Nov 2015 14:37:07 -0500
+Received: from [192.168.44.85] (unknown [195.82.63.198])
+	by hessy.dwim.me (Postfix) with ESMTPSA id 662C280411;
+	Tue, 24 Nov 2015 20:37:03 +0100 (CET)
+In-Reply-To: <56536224.3050306@syntevo.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281623>
 
-This is a bug report for the Mac OS X packaging at
-http://git-scm.com/download/mac . It is not so much a
-software bug as a nonoptimal configuration setting.
 
-Requested Change
-Remove the line "excludesfile = ~/.gitignore" under [core] from
-/usr/local/git/etc/gitconfig
+On 23 Nov 2015, at 19:59, Marc Strapetz <marc.strapetz@syntevo.com> wro=
+te:
 
-Reasons:
+> On 23.11.2015 18:04, Carlos Mart=EDn Nieto wrote:
+>> Hello Mark,
+>>=20
+>> On 23 Nov 2015, at 12:04, Marc Strapetz <marc.strapetz@syntevo.com> =
+wrote:
+>>=20
+>>> There is a strange "branch --set-upstream-to" failure for "clones" =
+which haven't been created using "git clone" but constructed using "git=
+ init", "git remote add" and "git fetch".
+>>>=20
+>>> Following script first creates a "main" repository and then constru=
+cts the clone. Finally, in the clone branches origin/1 and origin/2 wil=
+l be present, however it's not possible to invoke "git branch --set-ups=
+tream-to" for origin/2 (it works fine for origin/1).
+>>>=20
+>>> I guess the behavior is related to following line in .git/config:
+>>>=20
+>>> fetch =3D refs/heads/1:refs/remotes/origin/1
+>>>=20
+>>> However, I don't understand what's the problem for Git here? Defini=
+tely the error "starting point 'origin/2' is not a branch" is wrong.
+>>>=20
+>>=20
+>> That is indeed the issue. The configuration which is stored in the c=
+onfiguration is a remote+branch pair. If there is no fetch refspec conf=
+igured which would create the =91origin/2=92 remote-tracking branch, th=
+e command does not know which remote and branch that would correspond t=
+o.
+>=20
+> Thanks, Carlos, I understand now.
+>=20
+> My goal is to have a clone which will only fetch specific branches, s=
+o I guess I have to stick with "refs/heads/1:refs/remotes/origin/1" for=
+ the beginning and for every new branch X add another "refs/heads/X:ref=
+s/remotes/origin/X"? Or is there a better way?
 
-#1
-The documentation at http://git-scm.com/docs/gitignore says the default
-global excludes file is at $HOME/.config/git/ignore. The file
-$HOME/.config/git/ignore is installed, and does indeed have good default
-content, but because of the setting in /usr/local/git/etc/gitconfig, the
-file is blocked from being reached.
+If you want fine-grained control over what gets downloaded, you=92ll ne=
+ed to restrict either the configured refspecs or the ones which git-fet=
+ch gets.
 
-#2
-Seems to me the global excludesFile should never be called .gitignore --
-better to be called .gitignore_global -- since the .gitignore name would
-prevent a local .gitignore from being included there. I personally don't
-have my $HOME directory under git control, but if I did, I might want a
-custom .gitignore. And if I did want that, I would be required to set my
-global file explicitly in my own ~/.gitconfig:
-  git config --global core.excludesFile "~/.gitignore_global"
+You can configure the individual refspecs so a =91git fetch=92 call wil=
+l download the ones you want, giving you the issue you mention here; or=
+ you can configure the default refspec, but always pass explicit instru=
+ctions to git-fetch, like =91git fetch refs/heads/1 refs/heads/2=92. Ne=
+wer git versions (past 1.9.3 I think) will update the remote-tracking b=
+racnhes when you do it this way.
+
+Both of these are annoying in their own way. The second way might be pr=
+eferable if the fetching is done by a script. But if you absent-mindedl=
+y run a lone =91git fetch=92, then you=92ll download all branches.
+
+Cheers,
+   cmn
