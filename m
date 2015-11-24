@@ -1,105 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: What's cooking in git.git (Nov 2015, #03; Fri, 20)
-Date: Tue, 24 Nov 2015 10:53:45 +0100
-Message-ID: <565433A9.5050707@drmicha.warpmail.net>
-References: <20151120140937.GA17079@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 24 10:53:56 2015
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH] Documentation/git-update-index: add missing opts to synopsys
+Date: Tue, 24 Nov 2015 12:55:07 +0100
+Message-ID: <1448366107-5179-1-git-send-email-chriscool@tuxfamily.org>
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 24 12:56:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1AIL-0001XQ-JU
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 10:53:53 +0100
+	id 1a1CCW-0002l9-3M
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Nov 2015 12:56:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753576AbbKXJxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2015 04:53:52 -0500
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:53564 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752867AbbKXJxs (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Nov 2015 04:53:48 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by mailout.nyi.internal (Postfix) with ESMTP id 4F62C205B6
-	for <git@vger.kernel.org>; Tue, 24 Nov 2015 04:53:47 -0500 (EST)
-Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 24 Nov 2015 04:53:47 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=ONn0nDiaWochDcG2+RS5++vJLQw=; b=fbcie0
-	N6qR3aIt+cAScoXTuFfX/au4l3F35izlPhBlNWo6wLTt/TtZOsmv66ijw6jQ6U8h
-	pbRR4bcLaY5ZmY8loNZI2ZGkJQv5grQDogIv/bIx9o+N/UCn9U4jSrR+S/gcieWI
-	rsRIWkQ+XAcwQH6+WxtuQZFLO7Oz+IXGZ5htA=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=ONn0nDiaWochDcG
-	2+RS5++vJLQw=; b=TQvRXJBZc3dRKfZCSL87YiT9Y9PGD5YeMhKB/muisXhbi9N
-	sp7dmfI6oeBqpCL7KBaiecWznDMpnLMqWS44MbTtMXyMp55fUdlbv7XIO2reQp12
-	ilVECnklGnzxVRnCZ704REI1ll8JtFRcJC8PRAw4uzIusW2N68jas4loC+7k=
-X-Sasl-enc: upiDkOrdrekFxB2XcvdyPTNZDQ8FgCt45Wb320iqo78x 1448358826
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id C72366800E8;
-	Tue, 24 Nov 2015 04:53:46 -0500 (EST)
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <20151120140937.GA17079@sigill.intra.peff.net>
+	id S1753245AbbKXLz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Nov 2015 06:55:57 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:36053 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753237AbbKXLzz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2015 06:55:55 -0500
+Received: by wmww144 with SMTP id w144so135143509wmw.1
+        for <git@vger.kernel.org>; Tue, 24 Nov 2015 03:55:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=n3pQ2U2h4vgbf+TIy4jo/58a4ROY5RscwSYAm3WUTzM=;
+        b=d1WIPjvUdEY37Bg7cbnINq4tiGO2LhD+wrmD2t6KIOiDsxvIEs7HvvbBoO/cSwfwPJ
+         O2SXbMF4kEBAWaTwUsQvsqcbZjVZVJ2+t89H+QtQddGKzBzArpdEfxM3DyDMzst/uWOZ
+         Exgrmwij+yv0hvd3QT4R0qksNHIkQJuNnf62923/uv7GAijQyaPqj9HxzmwRtqYVRARL
+         ld9dTK6qktR/o/hSoAZJbyPWlSvuQnO4tIYTyN70IXLVHdp43Bi+3b9FLEwsQwUPq2CM
+         D6iUIoD0S0pOtiYKPCiCCzZA16R+0rMg/sUaLTfQ1nH5fLeEa6z8TeLjp7jB18hYkPWV
+         +dxQ==
+X-Received: by 10.194.104.132 with SMTP id ge4mr36762900wjb.127.1448366154795;
+        Tue, 24 Nov 2015 03:55:54 -0800 (PST)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id d2sm17921740wjy.16.2015.11.24.03.55.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 24 Nov 2015 03:55:54 -0800 (PST)
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.6.2.412.gf783589.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281615>
 
-Jeff King venit, vidit, dixit 20.11.2015 15:09:
-> What's cooking in git.git (Nov 2015, #03; Fri, 20)
-> --------------------------------------------------
-> 
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.
-> 
-> Sorry for the extreme delay in pushing out my tree. I ended up busier
-> than I expected during the first week of Junio's absence, and then it
-> took me a while to dig myself out of the ever-filling hole of incoming
-> topics. :)
-> 
-> Expect quite a few new topics in this edition.  A number of them have
-> seen review already, and I'm planning to merge them to "next" fairly
-> quickly (I may do another integration cycle late tonight or tomorrow
-> with those changes).
-> 
-> I still have a few threads to comb through on the list. If you don't see
-> the latest version of your topic here, please feel free to ping me, or
-> to repost.
-> 
-> You can find the normal integration branches at:
-> 
->     https://github.com/git/git/
-> 
-> and all topic branches at:
-> 
->     https://github.com/peff/git/
-> 
-> But note that I will _not_ be pushing to kernel.org.
+Untracked cache related options should appear in the synopsis.
 
-Does peff/git include the integration branches, too?
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/git-update-index.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-Also, that one should be uncontroversial (f[l]amous last words):
-
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] Documentation/diff: give --word-diff-regex=. example
-Date: Fri, 20 Nov 2015 14:36:14 +0100
-
-Message-ID:
-<6697f80b679b2bc910aa02a0fc945453be38c532.1448026505.git.git@drmicha.warpmail.net>
-
-http://permalink.gmane.org/gmane.comp.version-control.git/281520>
-
-Thanks for your work!
-
-Michael
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index 1a296bc..3df9c26 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -17,6 +17,7 @@ SYNOPSIS
+ 	     [--[no-]assume-unchanged]
+ 	     [--[no-]skip-worktree]
+ 	     [--ignore-submodules]
++	     [--[no-|force-]untracked-cache]
+ 	     [--really-refresh] [--unresolve] [--again | -g]
+ 	     [--info-only] [--index-info]
+ 	     [-z] [--stdin] [--index-version <n>]
+-- 
+2.6.2.412.gf783589.dirty
