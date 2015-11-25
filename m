@@ -1,60 +1,72 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Sparse checkout in worktree
-Date: Wed, 25 Nov 2015 21:50:23 +0100
-Message-ID: <CACsJy8ALKZqY++gmabZ-GKvrxkTGAq1=yMQh9EApMs3yhUiK=g@mail.gmail.com>
-References: <5655AC29.20801@drmicha.warpmail.net> <CACsJy8Acb0Z3sw7_r6QfTTz=GqedsU76QxjexWf4yZFg9O7W-w@mail.gmail.com>
- <56560FAE.3000605@drmicha.warpmail.net> <CACsJy8BGPk7C3d9JWjRwYrgh4OTUiiAjGzcKcRJy8+-5=x8=Pg@mail.gmail.com>
- <56561D94.7020503@drmicha.warpmail.net>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] convert.c: mark a file-local function static
+Date: Wed, 25 Nov 2015 21:50:01 +0000
+Message-ID: <56562D09.70205@ramsayjones.plus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Nov 25 21:51:11 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Nov 25 22:50:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1h1l-0002qR-ND
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 21:50:58 +0100
+	id 1a1hxN-0003hq-Am
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 22:50:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751639AbbKYUu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 15:50:56 -0500
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:36027 "EHLO
-	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751349AbbKYUuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 15:50:55 -0500
-Received: by lfs39 with SMTP id 39so72285234lfs.3
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 12:50:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=gk8RCzXjAPzwb4aW2JKoX/tf+bNCs2RxRAtDU55wGQ0=;
-        b=vK1ygU7EdvRJjRS/cl6g56RI1KgcyLcbUJU66xbSLMJZNlA8R0ofJCfbHZYhtM86/A
-         M24hwLv58zYSfFUZPQ8WUgMD8vqWwTHUXEXdwm1vztV3si/4sUKIBnTgOJqv8DthXnqN
-         JGq1VAZvZAcH53QQrc7qj30ypEWrQGa6gKi9qjD0vsq4fKhGJOEYQSV0hQiyKmN0ZZNq
-         JnJ6yUU8fuhyTmpa8LBsgZm133elWC8ryLsTaX746FamHn7TUsRuhjsgi2kVMyC+YQb+
-         uXKKDOPiLz8JE9/AVI6Jhr6IVJ6EDhvko3iJenv7YSMHYXANBop9LwWrd4/nrJC0UghC
-         wWJg==
-X-Received: by 10.112.202.168 with SMTP id kj8mr15982626lbc.12.1448484653248;
- Wed, 25 Nov 2015 12:50:53 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Wed, 25 Nov 2015 12:50:23 -0800 (PST)
-In-Reply-To: <56561D94.7020503@drmicha.warpmail.net>
+	id S1751904AbbKYVu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 16:50:28 -0500
+Received: from avasout08.plus.net ([212.159.14.20]:57574 "EHLO
+	avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751703AbbKYVu1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 16:50:27 -0500
+Received: from [10.0.2.15] ([146.200.5.254])
+	by avasout08 with smtp
+	id lxq31r0035UqX4q01xq4rL; Wed, 25 Nov 2015 21:50:06 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=bI7rW6KZ c=1 sm=1 tr=0
+ a=GKs3PHufgjMgxBavMeQJCg==:117 a=GKs3PHufgjMgxBavMeQJCg==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=IkcTkHD0fZMA:10 a=Ohs0rMpPL515yjzs9LoA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281745>
 
-On Wed, Nov 25, 2015 at 9:44 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> OTOH, config is common: core.sparseCheckout
-> So, the per worktree "switch" is the presence of the sparse-checkout file.
 
-Oh.. but yeah, splitting config file per worktree is on my todo list.
-Or you can help finish it [1] if you want to make it happen faster
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/266520
+Hi Torsten,
+
+If you need to re-roll your 'tb/ls-files-eol' patch, could you
+please squash this into the patch.
+
+Thanks.
+
+ATB,
+Ramsay Jones
+
+ convert.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/convert.c b/convert.c
+index c99adcd..0595e21 100644
+--- a/convert.c
++++ b/convert.c
+@@ -118,7 +118,7 @@ static unsigned int gather_convert_stats(const char *data, unsigned long size)
+ 		return 0;
+ }
+ 
+-const char *gather_convert_stats_ascii(const char *data, unsigned long size)
++static const char *gather_convert_stats_ascii(const char *data, unsigned long size)
+ {
+ 	unsigned int convert_stats = gather_convert_stats(data, size);
+ 
 -- 
-Duy
+2.6.0
