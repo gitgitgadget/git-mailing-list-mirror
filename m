@@ -1,95 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] wt-status: use strncmp() for length-limited string
- comparison
-Date: Wed, 25 Nov 2015 04:15:03 -0500
-Message-ID: <20151125091503.GA1779@sigill.intra.peff.net>
-References: <563D2DE7.1030005@web.de>
- <20151124213601.GB29185@sigill.intra.peff.net>
- <56551A11.9030809@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Wed Nov 25 10:15:25 2015
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v4] Documentation/git-update-index: add missing opts to synopsis
+Date: Wed, 25 Nov 2015 10:30:02 +0100
+Message-ID: <1448443802-24507-1-git-send-email-chriscool@tuxfamily.org>
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 25 10:30:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1WAY-0002MF-TG
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 10:15:19 +0100
+	id 1a1WP8-0003O4-HA
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 10:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754737AbbKYJPN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2015 04:15:13 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33772 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755310AbbKYJPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 04:15:07 -0500
-Received: (qmail 28488 invoked by uid 102); 25 Nov 2015 09:15:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 03:15:05 -0600
-Received: (qmail 24475 invoked by uid 107); 25 Nov 2015 09:15:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 04:15:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2015 04:15:03 -0500
-Content-Disposition: inline
-In-Reply-To: <56551A11.9030809@web.de>
+	id S1750964AbbKYJaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 04:30:19 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36698 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750704AbbKYJaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 04:30:17 -0500
+Received: by wmec201 with SMTP id c201so10209033wme.3
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 01:30:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=X6Z5DUae73INSUZsSB4asuB/LZ9NJEhCE/AJKHXpDYI=;
+        b=0q1MTQzvmtEZDIQC9fm2D42F04XlphbGEpfgXLQ9aBRS0VZZWSHz1R7qLeRfYs+AWT
+         0q+25e47nM6yq1ly0IU7HuqVHPfHH6hu7/avfhP+TcZFxp4rjDo9j9ljDYSxXejAOmSk
+         HLtN5SG1TF3R6et3E8XVPm8dmhIN9fiwdnfevQFvYQ4EnCC9sOtqR2GXbdQrLaZGoQ5/
+         Ap+IZp7N54MSZNcMBthzCa3qrwcup+OBchQ97bCMZ9B/4M8XSEyAk5qFjddMOjec5ay2
+         SHxYGU+eFsFiZhdzsDGT/fcb88Ad97rQgEMfMjVdWWSeOnLhbYOAFYdxExTD/GJnfR9x
+         TV7w==
+X-Received: by 10.194.6.196 with SMTP id d4mr22575600wja.120.1448443815516;
+        Wed, 25 Nov 2015 01:30:15 -0800 (PST)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id lx4sm22168409wjb.5.2015.11.25.01.30.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 25 Nov 2015 01:30:14 -0800 (PST)
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.6.3.380.g494b52d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281692>
 
-On Wed, Nov 25, 2015 at 03:16:49AM +0100, Ren=C3=A9 Scharfe wrote:
+Split index related options should appear in the 'SYNOPSIS'
+section.
 
-> > Hmm. I think this is mostly harmless, as a comparison like:
-> >=20
-> >    memcmp("HEAD and more", "HEAD", strlen("HEAD"))
-> [...]
->=20
-> Yes, except it should be strlen("HEAD and more") in your example code=
-;
-> with strlen("HEAD") it would compare just 4 bytes and return 0.
+These options are already documented in the 'OPTIONS' section.
 
-Whoops, yeah. Thank you for figuring out what I meant. :)
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+This v4 contains only the split-index options and applies on top
+of the new master that already contains the untracked-cache options. 
 
-> Using one more variable isn't that bad, as long as it gets a fitting
-> name.  Or we could reuse "end" (I'm not worrying about scanning "HEAD=
-"
-> twice very much):
->=20
-> diff --git a/wt-status.c b/wt-status.c
-> index 435fc28..96a731e 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -1317,14 +1317,14 @@ static int grab_1st_switch(unsigned char *osh=
-a1, unsigned char *nsha1,
->  	target +=3D strlen(" to ");
->  	strbuf_reset(&cb->buf);
->  	hashcpy(cb->nsha1, nsha1);
-> -	for (end =3D target; *end && *end !=3D '\n'; end++)
-> -		;
-> -	if (!memcmp(target, "HEAD", end - target)) {
-> +	if (skip_prefix(target, "HEAD", &end) && (!*end || *end =3D=3D '\n'=
-)) {
->  		/* HEAD is relative. Resolve it to the right reflog entry. */
->  		strbuf_addstr(&cb->buf,
->  			      find_unique_abbrev(nsha1, DEFAULT_ABBREV));
->  		return 1;
->  	}
+ Documentation/git-update-index.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-Yeah, I think parsing left-to-right like this makes things much more
-obvious. And regarding scanning HEAD twice, I think we already do that
-(we find the trailing newline first in the current code). Though I agre=
-e
-that is absurd premature optimization.
-
-> +	for (end =3D target; *end && *end !=3D '\n'; end++)
-> +		;
-
-This loop (which I know you just moved, not wrote) is basically
-strchrnul, isn't it? That might be more readable.
-
--Peff
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index 3df9c26..f4e5a85 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -17,6 +17,7 @@ SYNOPSIS
+ 	     [--[no-]assume-unchanged]
+ 	     [--[no-]skip-worktree]
+ 	     [--ignore-submodules]
++	     [--[no-]split-index]
+ 	     [--[no-|force-]untracked-cache]
+ 	     [--really-refresh] [--unresolve] [--again | -g]
+ 	     [--info-only] [--index-info]
+-- 
+2.6.3.380.g494b52d
