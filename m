@@ -1,135 +1,77 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 5/5] builtin/clone: support submodule groups
-Date: Wed, 25 Nov 2015 12:03:06 -0800
-Message-ID: <CAGZ79kY8=HbKB-om+FynDPf0w4c=12PtJ_9CsUyBU21yyD4CXA@mail.gmail.com>
-References: <1448415139-23675-1-git-send-email-sbeller@google.com>
-	<1448415139-23675-6-git-send-email-sbeller@google.com>
-	<5655F544.6050003@web.de>
-	<CAGZ79kZrBRo9dfU=p8-bgvSpp=SSiXQHZGm7iCQ=9v0f_f_-aQ@mail.gmail.com>
-	<565610FD.9070303@web.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Git clone fails during pre-commit hook due to GIT_WORK_TREE=.
+ (regression 2.5 -> 2.6)
+Date: Wed, 25 Nov 2015 21:13:05 +0100
+Message-ID: <CACsJy8C7xoV9faGpbn_5XGt-CmCj--fgXaCFR-ngs=-pWUnrCA@mail.gmail.com>
+References: <CA+dzEB=2LJXiLSTqyLw8AeHNwdQicwvEiMg=hVEX0-_s1bySpA@mail.gmail.com>
+ <CA+dzEB=XiGVFg+AhuJM-jUCPmgZKCJHTp3sinrFt8yzXeC_63Q@mail.gmail.com> <CAGZ79kY=t9SeoXjgeJjfCMD2=6g3JJxDxcnY6JeJCpUqaN+eOA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Eric Sunshine <ericsunshine@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Nov 25 21:03:13 2015
+	Stefan Beller <sbeller@google.com>
+To: Anthony Sottile <asottile@umich.edu>
+X-From: git-owner@vger.kernel.org Wed Nov 25 21:13:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1gHX-0003J6-Mt
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 21:03:12 +0100
+	id 1a1gRe-0006Yi-Jl
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 21:13:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751931AbbKYUDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 15:03:09 -0500
-Received: from mail-yk0-f173.google.com ([209.85.160.173]:36532 "EHLO
-	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751549AbbKYUDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 15:03:08 -0500
-Received: by ykdr82 with SMTP id r82so67867210ykd.3
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 12:03:06 -0800 (PST)
+	id S1751935AbbKYUNh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2015 15:13:37 -0500
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:35145 "EHLO
+	mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751751AbbKYUNg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2015 15:13:36 -0500
+Received: by lfdl133 with SMTP id l133so73711466lfd.2
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 12:13:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8WypDl3tNDqbYf2VF9N+HS5MN959BE3HvIVWwU3EY3c=;
-        b=O5oFHxvsRp1B1EuM62Yz+jlWLYYt3U6SBnLez5cvlTTolr5QxaHuSEWuu8BMau+Rjz
-         NdOXGclKc1Su2Qmp8aZe7T2zyXwwnJruo2aF2tl8J+MgQbbgp40GopH/YYR70Iq930BN
-         QsbkdR/iVcVvqT2rfhbjFDXQVnkvu8n8HM9XfYaZrTqErkKNHTzCTdAlrKeH2Xf8tVyL
-         jAQvKfwhD3QXsnL77T928W0mEAHtSR/RUFkrAWnsbgpFYgwbSGXTkOmCxxsYmeMWg9kv
-         H/cnRKMrD+cxMoKdDPD/z5nRwpt2YYhQAIvrzOvUKH44qOnDQRrP9WOSrFytVWvUWieJ
-         CVhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=8WypDl3tNDqbYf2VF9N+HS5MN959BE3HvIVWwU3EY3c=;
-        b=S6Ns2V+mQPpmpsvuiokGSXggAudL+/L7ofv/+27z2Gr/tJbeNKda9ca+DGDqtMAoai
-         R4Wzildf8MZQNYeCDkrX4irbktwoyMC2862bz+sHYsQ9zNAOh14/NCMQbFpK2jr7vglg
-         jticuXweh/XWh9/5lM/LwmS1wGxwhaDTy5AUOQotn++aGe6Z3Gshp+eNUIDbFWFWCC16
-         DKLNT1q7cQgdcdVl4l/afQaa6eL4WTgH8UOX82d8jEaPVFgtF4+L8OU5zHMtaHLXdBBY
-         pWvtDClhPU91ZC3DO5WDnDcgHJfFZgXSHESdqHim1j+qwtagLuUxtyDV8bzGybJMCF+S
-         YEGQ==
-X-Gm-Message-State: ALoCoQm66JGZlsLoTOfgdXg3xiDT5ZfFK34hEPALo5pcxFmv7lcWekfPI3QnGuFRhajZnNboBtBo
-X-Received: by 10.13.214.19 with SMTP id y19mr34220810ywd.63.1448481786719;
- Wed, 25 Nov 2015 12:03:06 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Wed, 25 Nov 2015 12:03:06 -0800 (PST)
-In-Reply-To: <565610FD.9070303@web.de>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=JUk0+XFHA27CXQ5/77He4x/A4XtKIbqY4JjOsMAYG40=;
+        b=wvtTDd9L765IO988G0O4x17V/Nx2Hntvjw7SwUb47bbfWymUw2VrM1ADgPVPq32btF
+         S9c8IVdRYBC7DAqCbheZqAm0QQ4f7zuf8mzYWV4sWhS8gqxkVOUrHWKaT75zAWcvrmVH
+         lwr7MCbo41H5Sr0+6OO/fGKh3VCO+/WY1tHPiRRLTZ6o/g1C6+9BdRcjm+bZmLsL5vOo
+         2XU4OYu33D11/XrVokHP6Bg7M5HIX6o0o6dv6AWkVMkQcIRvXKYP09Ejtcx2Y7IVH7N7
+         TS+tEY7rRDIxgXisYuw0rs4FtSks8HHYSqoAoNGv23fI5Rm1tJ819QXB6anYY78tXXuz
+         D8nA==
+X-Received: by 10.25.170.149 with SMTP id t143mr16545961lfe.162.1448482414587;
+ Wed, 25 Nov 2015 12:13:34 -0800 (PST)
+Received: by 10.112.199.5 with HTTP; Wed, 25 Nov 2015 12:13:05 -0800 (PST)
+In-Reply-To: <CAGZ79kY=t9SeoXjgeJjfCMD2=6g3JJxDxcnY6JeJCpUqaN+eOA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281737>
 
-On Wed, Nov 25, 2015 at 11:50 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+On Tue, Nov 24, 2015 at 6:57 PM, Stefan Beller <sbeller@google.com> wro=
+te:
+> +to Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 >
->> My thinking is that groups are implying recursive, whereas recursive
->> implies
->> "all groups", so a git clone --group <half-the-submodules> --recursive
->> makes not much sense to me as it begs the question, what does --recursive
->> mean?
->
->
-> Groups are only about what submodules to update and have nothing to
-> do with recursion. It might make sense to imply recursion, but that's
-> just because that should have been the default for submodules from day
-> one. Recursion and groups are orthogonal, the first is about what to
-> do inside the submodules (carry on or not?) and the latter is about
-> what to do in the superproject (shall I update this submodule?).
-
-I see. So we would not want to mutually exclude recurse and groups,
-but rather have groups implies --recurse, but you are allowed to give
---no-recurse if you explicitely do not want to recurse into the subsubmodules.
-
->
->> Probably recurse into all submodules which are implied by the group
+> On Mon, Nov 23, 2015 at 6:22 PM, Anthony Sottile <asottile@umich.edu>=
+ wrote:
+>> * Short description of the problem *
 >>
->> <half-the-submodules>.
->
->
-> Yep. We also do not recurse into those submodules having set their
-> update setting to "none", so we do not do that for submodules not
-> in any chosen group either.
->
->> And then get all the nested submodules. But in case
->>
->> you use the grouping feature, you could just mark the nested submodules
->> with
->> groups, too?
->
->
-> Not in the top superproject. In a submodule you can specify new groups
-> for its sub-submodules, but these will in most cases be different from
-> those of the superproject.
->
-> Imagine I have this really cool Metaproject which contains the Android
-> superproject as a submodule. Those two will define different groups,
-> and when recursing into the android submodule I need to choose from the
-> Android specific groups. So my Metaproject's .gitmodules could look like
-> this:
->
-> [submodule "android"]
->         path = android
->         url = git://...
->         groups = default,mobile
->         subgroups = devel
->
-> "groups" tells git what superproject groups the android submodule
-> belongs to, and "subgroups" tells git what android submodules are
-> to be checked out when running recursively into it. If you do not
-> configure "subgroups", the whole android submodule is updated when
-> one of the groups "default" or "mobile" is chosen in the superproject.
+>> It seems GIT_WORK_DIR is now exported invariantly when calling git
+>> hooks such as pre-commit.  If these hooks involve cloning repositori=
+es
+>> they will not fail due to this exported environment variable.  This
+>> was not the case in prior versions (such as v2.5.0).
 
-I like the concept of subgroups as it allows to have some control over
-subsubmodules you may want to aggregate from a third party via the
-middleman submodule.
+I'm getting good at fixing one bug and adding ten more. I don't think
+the cited commit is the problem. It just exposes another bug. I did
 
-I'd prefer to delay that feature though by not giving a high priority.
-Also would you go with subsubgroups, too? When does the recursion
-end? In case we have more than the union of groups, but also prohibitive
-terms available, could subgroups clash with the submodules groups spec?
+> ~/w/git $ GIT_WORK_TREE=3Dabc ./git clone .git /tmp/def
+
+and what I got was really surprising, /tmp/def contains the git
+repository while the true worktree is in "abc". It does not make
+sense, at least from the first sight, unless it inherits this from
+git-init, where we do(?)  want GIT_WORK_TREE to specify a separate
+worktree. No time to dig to the bottom yet..
+--=20
+Duy
