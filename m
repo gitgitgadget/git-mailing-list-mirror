@@ -1,113 +1,150 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: 'git log --source' seems to fail to show ref name after the
- first tag comes out.
-Date: Wed, 25 Nov 2015 07:59:57 -0500
-Message-ID: <20151125125956.GC4504@sigill.intra.peff.net>
-References: <CAAe7MbAwWHXxVOu-CU7QpN0K3XTKJ1=xp4-dzSwBQatdAZ1vaQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Raymundo <gypark@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 14:00:05 2015
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH/RFC 10/10] ref-filter: introduce objectname_atom_parser()
+Date: Wed, 25 Nov 2015 19:14:42 +0530
+Message-ID: <1448459082-24492-1-git-send-email-Karthik.188@gmail.com>
+References: <20151124214842.GA4848@sigill.intra.peff.net>
+Cc: gitster@pobox.com, peff@peff.net,
+	Karthik Nayak <Karthik.188@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 25 14:44:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1Zg3-0002AU-Mc
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 14:00:04 +0100
+	id 1a1aN8-00008u-48
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 14:44:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752844AbbKYNAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 08:00:00 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33873 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752361AbbKYM77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 07:59:59 -0500
-Received: (qmail 10601 invoked by uid 102); 25 Nov 2015 12:59:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 06:59:59 -0600
-Received: (qmail 26491 invoked by uid 107); 25 Nov 2015 12:59:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 07:59:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2015 07:59:57 -0500
-Content-Disposition: inline
-In-Reply-To: <CAAe7MbAwWHXxVOu-CU7QpN0K3XTKJ1=xp4-dzSwBQatdAZ1vaQ@mail.gmail.com>
+	id S1751976AbbKYNod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 08:44:33 -0500
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:35950 "EHLO
+	mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750924AbbKYNob (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 08:44:31 -0500
+Received: by pabfh17 with SMTP id fh17so7165339pab.3
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 05:44:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vgAsY1dSxuUfXMpZQcLup16RGxDVWZAznlTj+uD3zcw=;
+        b=DI/I0518RXACLMMeTtwutZ/LWsLTz8ykrJ/bbWOw/6z34ngr9/57+ZWUpkwagYLJvd
+         XBbed4RtpuDg4OGwaRxJ1Nl6jxh6g7PCUWQ2QGPSdkD+z445Ih23O1zQs0ROYYfA8KKE
+         3A9ORvUql8P5rNFB4qkv8lvS/FHJg1jiJ8mBueOzMXLaAF5STza2BB12ZZDkEUTGW6KT
+         r0bAX9mB83a2ZsP32fPqARfjYOKMOuAPybp9LDUx34w77/YlAlv39yAPBTYewlrUUj9N
+         hvCmkmr2rs9FQ18d+LHbvenjQUScr29RKG5ZWZSfT2ziKbwc8AEHkLYU6LOxP60SIQrH
+         op4Q==
+X-Received: by 10.98.80.20 with SMTP id e20mr31189223pfb.23.1448459071081;
+        Wed, 25 Nov 2015 05:44:31 -0800 (PST)
+Received: from ashley.localdomain ([106.51.241.110])
+        by smtp.gmail.com with ESMTPSA id q65sm21070807pfa.18.2015.11.25.05.44.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 25 Nov 2015 05:44:30 -0800 (PST)
+X-Google-Original-From: Karthik Nayak <Karthik.188@gmail.com>
+X-Mailer: git-send-email 2.6.2
+In-Reply-To: <20151124214842.GA4848@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281711>
 
-On Wed, Nov 25, 2015 at 07:29:02PM +0900, Raymundo wrote:
+Introduce objectname_atom_parser() which will parse the
+'%(objectname)' atom and store information into the 'used_atom'
+structure based on the modifiers used along with the atom.
 
-> At first, I'm sorry I'm not good at English.
+Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+---
+ ref-filter.c | 42 +++++++++++++++++++++++++++++++-----------
+ 1 file changed, 31 insertions(+), 11 deletions(-)
 
-No problem. Your report was very clear. :)
-
-> When I execute this command:
-> 
-> git log --oneline --source --all --decorate
-> [...]
-> As you can see, ref names in the second column repeats to disappear
-> and come back, at every lines that contain tags.
-
-I was able to reproduce this pretty easily with a short test case:
-
-  git init
-  git commit --allow-empty -m one
-  git commit --allow-empty -m two
-  git commit --allow-empty -m three
-  git tag -m mytag HEAD^
-
-Starting from one source works:
-
-  $ git log --oneline --source master
-  de009a4 master three
-  b75220d master two
-  62f49bd master one
-
-But starting from the tag as well does not:
-
-  $ git log --oneline --source master mytag
-  de009a4 master three
-  b75220d  two
-  62f49bd  one
-
-Or more simply, starting from the tag never has any sources:
-
-  $ git log --oneline --source mytag
-  b75220d  two
-  62f49bd  one
-
-It's like the tag paints its commit with an empty "source" field (and
-then we propagate that down the graph).
-
-> I tested using Git version 2.6.3
-> 
-> For reference, Git version 1.7.9.rc0 does not have this problem. It
-> shows ref names on all lines well.
-
-Sounds like a good opportunity to use git-bisect. I came up with 2073949
-(traverse_commit_list: support pending blobs/trees with paths,
-2014-10-15) from git v2.2.0, which unfortunately was written by me. :)
-
-This one-liner seems to fix it:
-
-diff --git a/revision.c b/revision.c
-index af2a18e..d434b8b 100644
---- a/revision.c
-+++ b/revision.c
-@@ -297,7 +297,6 @@ static struct commit *handle_commit(struct rev_info *revs,
- 		 * through to the non-tag handlers below. Do not
- 		 * propagate data from the tag's pending entry.
- 		 */
--		name = "";
- 		path = NULL;
- 		mode = 0;
+diff --git a/ref-filter.c b/ref-filter.c
+index 117bbbb..f2add19 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -50,6 +50,10 @@ static struct used_atom {
+ 				lines : 1,
+ 				no_lines;
+ 		} contents;
++		struct {
++			unsigned int shorten : 1,
++				full : 1;
++		} objectname;
+ 	} u;
+ } *used_atom;
+ static int used_atom_cnt, need_tagged, need_symref;
+@@ -123,6 +127,21 @@ void contents_atom_parser(struct used_atom *atom)
+ 		die(_("improper format entered contents:%s"), buf);
+ }
+ 
++void objectname_atom_parser(struct used_atom *atom)
++{
++	const char * buf;
++
++	if (match_atom_name(atom->str, "objectname", &buf))
++		atom->u.objectname.full = 1;
++
++	if (!buf)
++		return;
++	if (!strcmp(buf, "short"))
++		atom->u.objectname.shorten = 1;
++	else
++		die(_("improper format entered objectname:%s"), buf);
++}
++
+ static align_type get_align_position(const char *type)
+ {
+ 	if (!strcmp(type, "right"))
+@@ -186,7 +205,7 @@ static struct {
+ 	{ "refname", FIELD_STR },
+ 	{ "objecttype", FIELD_STR },
+ 	{ "objectsize", FIELD_ULONG },
+-	{ "objectname", FIELD_STR },
++	{ "objectname", FIELD_STR, objectname_atom_parser },
+ 	{ "tree", FIELD_STR },
+ 	{ "parent", FIELD_STR },
+ 	{ "numparent", FIELD_ULONG },
+@@ -463,15 +482,16 @@ static void *get_obj(const unsigned char *sha1, struct object **obj, unsigned lo
+ }
+ 
+ static int grab_objectname(const char *name, const unsigned char *sha1,
+-			    struct atom_value *v)
++			   struct atom_value *v, struct used_atom *atom)
+ {
+-	if (!strcmp(name, "objectname")) {
+-		v->s = xstrdup(sha1_to_hex(sha1));
+-		return 1;
+-	}
+-	if (!strcmp(name, "objectname:short")) {
+-		v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
+-		return 1;
++	if (starts_with(name, "objectname")) {
++		if (atom->u.objectname.shorten) {
++			v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
++			return 1;
++		} else if (atom->u.objectname.full) {
++			v->s = xstrdup(sha1_to_hex(sha1));
++			return 1;
++		}
  	}
-
-But I'm not sure if it causes other problems. In particular, I see why
-we would not propagate a path field, but I do not know why the original
-was avoiding propagating the name field.
-
--Peff
+ 	return 0;
+ }
+@@ -495,7 +515,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+ 			v->s = xstrfmt("%lu", sz);
+ 		}
+ 		else if (deref)
+-			grab_objectname(name, obj->sha1, v);
++			grab_objectname(name, obj->sha1, v, &used_atom[i]);
+ 	}
+ }
+ 
+@@ -1004,7 +1024,7 @@ static void populate_value(struct ref_array_item *ref)
+ 				v->s = xstrdup(buf + 1);
+ 			}
+ 			continue;
+-		} else if (!deref && grab_objectname(name, ref->objectname, v)) {
++		} else if (!deref && grab_objectname(name, ref->objectname, v, atom)) {
+ 			continue;
+ 		} else if (!strcmp(name, "HEAD")) {
+ 			const char *head;
+-- 
+2.6.2
