@@ -1,71 +1,95 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2] Documentation/git-update-index: add missing opts to synopsys
-Date: Wed, 25 Nov 2015 10:13:46 +0100
-Message-ID: <CAP8UFD1wSezOc29ePpr7ELD_X61VhFCsSejLO3XXhd7hgxQ5Zw@mail.gmail.com>
-References: <1448434392-21983-1-git-send-email-chriscool@tuxfamily.org>
-	<20151125090305.GB4696@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] wt-status: use strncmp() for length-limited string
+ comparison
+Date: Wed, 25 Nov 2015 04:15:03 -0500
+Message-ID: <20151125091503.GA1779@sigill.intra.peff.net>
+References: <563D2DE7.1030005@web.de>
+ <20151124213601.GB29185@sigill.intra.peff.net>
+ <56551A11.9030809@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 25 10:14:43 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Wed Nov 25 10:15:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1W9w-00016V-PF
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 10:14:41 +0100
+	id 1a1WAY-0002MF-TG
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 10:15:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755268AbbKYJOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 04:14:18 -0500
-Received: from mail-ig0-f172.google.com ([209.85.213.172]:36446 "EHLO
-	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755239AbbKYJNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 04:13:50 -0500
-Received: by igcph11 with SMTP id ph11so90001272igc.1
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 01:13:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=+vyNSqFMK2eiyX4IrSXIV+K51SrNsI83N/LLTFx4S0M=;
-        b=DVt+FGwWfcWnrjWVP7kvnjT0m59i77oG8OZZ955ILtrCi6irIYvOlQxdBuValVOmR1
-         kOSM/BgIEzuIObR6K7SmN7gN6kHzDLtmugchiTCd++Et29PAhEJMrwFHEYSLPLVlqNnb
-         aRwXsns6xqCBowd0hhlkaB6onwhi6HbSsy0EDCTapvqKLSY0+Utk3IDGGJC8KuQn8b+Q
-         bcLFO/s2LN9wUIlGfsrgdqhVikWKPiXiqEnQQFI4/of4dtHxz2mIOh4rdor/9see5xIG
-         u0POiL+NP98NupD2gctY4/2YyLp7sK+RaCwTPV9RMIJJVnM7eWtqDzlBMUEE+5bHyXwG
-         a9ew==
-X-Received: by 10.50.73.33 with SMTP id i1mr2866737igv.59.1448442826088; Wed,
- 25 Nov 2015 01:13:46 -0800 (PST)
-Received: by 10.36.146.68 with HTTP; Wed, 25 Nov 2015 01:13:46 -0800 (PST)
-In-Reply-To: <20151125090305.GB4696@sigill.intra.peff.net>
+	id S1754737AbbKYJPN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2015 04:15:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:33772 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755310AbbKYJPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 04:15:07 -0500
+Received: (qmail 28488 invoked by uid 102); 25 Nov 2015 09:15:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 03:15:05 -0600
+Received: (qmail 24475 invoked by uid 107); 25 Nov 2015 09:15:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 04:15:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2015 04:15:03 -0500
+Content-Disposition: inline
+In-Reply-To: <56551A11.9030809@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281691>
 
-On Wed, Nov 25, 2015 at 10:03 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Nov 25, 2015 at 07:53:12AM +0100, Christian Couder wrote:
->
->> Untracked cache and split index related options should appear
->> in the 'SYNOPSIS' section.
->>
->> These options are already documented in the 'OPTIONS' section.
->>
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->> Soon after sending the first version I realized that the split index
->> options were not in the synopsys either...
->
-> Sorry, too late. I merged v1 as part of yesterday's cycle, as it seemed
-> obviously correct (that's what I get... :) ).
->
-> Can you please send the change as a patch on top?
+On Wed, Nov 25, 2015 at 03:16:49AM +0100, Ren=C3=A9 Scharfe wrote:
 
-Ok will do.
+> > Hmm. I think this is mostly harmless, as a comparison like:
+> >=20
+> >    memcmp("HEAD and more", "HEAD", strlen("HEAD"))
+> [...]
+>=20
+> Yes, except it should be strlen("HEAD and more") in your example code=
+;
+> with strlen("HEAD") it would compare just 4 bytes and return 0.
+
+Whoops, yeah. Thank you for figuring out what I meant. :)
+
+> Using one more variable isn't that bad, as long as it gets a fitting
+> name.  Or we could reuse "end" (I'm not worrying about scanning "HEAD=
+"
+> twice very much):
+>=20
+> diff --git a/wt-status.c b/wt-status.c
+> index 435fc28..96a731e 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1317,14 +1317,14 @@ static int grab_1st_switch(unsigned char *osh=
+a1, unsigned char *nsha1,
+>  	target +=3D strlen(" to ");
+>  	strbuf_reset(&cb->buf);
+>  	hashcpy(cb->nsha1, nsha1);
+> -	for (end =3D target; *end && *end !=3D '\n'; end++)
+> -		;
+> -	if (!memcmp(target, "HEAD", end - target)) {
+> +	if (skip_prefix(target, "HEAD", &end) && (!*end || *end =3D=3D '\n'=
+)) {
+>  		/* HEAD is relative. Resolve it to the right reflog entry. */
+>  		strbuf_addstr(&cb->buf,
+>  			      find_unique_abbrev(nsha1, DEFAULT_ABBREV));
+>  		return 1;
+>  	}
+
+Yeah, I think parsing left-to-right like this makes things much more
+obvious. And regarding scanning HEAD twice, I think we already do that
+(we find the trailing newline first in the current code). Though I agre=
+e
+that is absurd premature optimization.
+
+> +	for (end =3D target; *end && *end !=3D '\n'; end++)
+> +		;
+
+This loop (which I know you just moved, not wrote) is basically
+strchrnul, isn't it? That might be more readable.
+
+-Peff
