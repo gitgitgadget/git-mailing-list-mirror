@@ -1,91 +1,99 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Sparse checkout in worktree
-Date: Wed, 25 Nov 2015 20:38:58 +0100
-Message-ID: <CACsJy8Acb0Z3sw7_r6QfTTz=GqedsU76QxjexWf4yZFg9O7W-w@mail.gmail.com>
-References: <5655AC29.20801@drmicha.warpmail.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC 01/10] ref-filter: introduce a parsing function for
+ each atom in valid_atom
+Date: Wed, 25 Nov 2015 14:41:15 -0500
+Message-ID: <CAPig+cRcxr7uT2OJX=TnaVf+gXQdw9ydp+7X+Kis4Vb5+6RHiA@mail.gmail.com>
+References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
+	<1447271075-15364-2-git-send-email-Karthik.188@gmail.com>
+	<CAPig+cRYEmbsye78ESOLfmSi56sBFeKpaEkpGSEwF=qrLZWx8g@mail.gmail.com>
+	<CAOLa=ZTFeKMMSRCTWi9RkSvuCh7ZecPudSgsJB4TV76U4aGJJA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Nov 25 20:39:34 2015
+Cc: Git List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 20:41:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1fue-0000Y7-Bx
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 20:39:32 +0100
+	id 1a1fwN-0003ta-1K
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 20:41:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752445AbbKYTjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 14:39:31 -0500
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:35684 "EHLO
-	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752024AbbKYTj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 14:39:29 -0500
-Received: by lfdl133 with SMTP id l133so72751224lfd.2
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 11:39:28 -0800 (PST)
+	id S1752166AbbKYTlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 14:41:18 -0500
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:36588 "EHLO
+	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751270AbbKYTlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 14:41:16 -0500
+Received: by vkay187 with SMTP id y187so41107959vka.3
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 11:41:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=g5ZtEnKmU2MDPJeji6ZyXwD3MWlp7EFCL77GDLmAY08=;
-        b=sn7YdQQkklrLfVL7hxgba0+UCAK3RP2ad9S4gS+6SyLMPEvi+RC4FbERe3JjPaGB+N
-         jJ0ORcVsSVm2uAWxT3ci9ccnp8ur1AHd3e9NEIr/5C0fJVzDkZ5mmkk38+5N6QA0y1/t
-         zIzrCQ+4mOBuRVDhqhChrFaLYPfHw4ExBQU8y5on447COc/LNYMa3MPDwErw2XZ+gELb
-         e09Ue7gZ2shcNhNqydHHyU+Zmy1qGnte08tOPo65VEca/F0Gn7LoPA+MjNejoJztkksL
-         DLE98Xy0A7Wc8sw+fF7K+qpIyuAmNsAgEhFjDFAKHRO56p/OfPqbfZPC7oUL4EjP7BMf
-         MamA==
-X-Received: by 10.112.202.168 with SMTP id kj8mr15886166lbc.12.1448480367989;
- Wed, 25 Nov 2015 11:39:27 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Wed, 25 Nov 2015 11:38:58 -0800 (PST)
-In-Reply-To: <5655AC29.20801@drmicha.warpmail.net>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=k7o62AeA+Ljkk3Iywfl9AYdITxx+X6Y37sjZdccZcLE=;
+        b=EeRRGhH3hgvbnCmkNafGThomEo3UYo5ELK4J7GSKhJrWF1fvZg72m6GtcQDdxy4hKf
+         op69ds31s02tXdhW4A3EC+EEMVCL5RuMBfItwv84pJ2qKhRgJwkEqLtSClJqkoT4wdAJ
+         qJbub6JJDwxGAKB1+k83wyrKXmJ6RcNw99Q5FlVxw6UagwM4e7ncr+Y+EPwlc5BCrzGs
+         cTudqchxUV2Gfc6jG9+Fx7yHWM9HURaHFMWl0IoJP7tnt8cAezC8IM9TIK7kB5OW7nm/
+         +ZgSeb64OuMokMucsigLz8ur5bIuty2MHjWj5ZWWChN0Xm1sqG0c10pP8YGSdRPL9L/S
+         qfZA==
+X-Received: by 10.31.13.205 with SMTP id 196mr35687285vkn.37.1448480476035;
+ Wed, 25 Nov 2015 11:41:16 -0800 (PST)
+Received: by 10.31.159.204 with HTTP; Wed, 25 Nov 2015 11:41:15 -0800 (PST)
+In-Reply-To: <CAOLa=ZTFeKMMSRCTWi9RkSvuCh7ZecPudSgsJB4TV76U4aGJJA@mail.gmail.com>
+X-Google-Sender-Auth: 9ftVrDTQdj_UlV0E4ATfIlmUtHY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281732>
 
-On Wed, Nov 25, 2015 at 1:40 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Hi there,
+On Wed, Nov 25, 2015 at 7:10 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> On Tue, Nov 24, 2015 at 5:14 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Wed, Nov 11, 2015 at 2:44 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>> Introduce a parsing function for each atom in valid_atom. Using this
+>>> we can define special parsing functions for each of the atoms. Since
+>>> we have a third field in valid_atom structure, we now fill out missing
+>>> cmp_type values.
+>>
+>> I don't get it. Why do you need to "fill out missing cmp_type values"
+>> considering that you're never assigning the third field in this patch?
+>> Are you planning on filling in the third field in a future patch?
 >
-> I'm wondering how much it would take to enable worktree specific sparse
-> checkouts. From a superfluous look:
+> I plan on filling that in upcoming patches. Probably, should mention that in
+> the commit message.
+
+Making it clear that this patch is preparatory for introduction of
+'valid_atom' is a good idea, however, adding the unused 'valid_atom'
+field in this patch is not recommended. It would be better to
+introduce 'valid_atom' in the patch which actually needs it.
+
+>>> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+>>> ---
+>>> diff --git a/ref-filter.c b/ref-filter.c
+>>> @@ -19,42 +19,43 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+>>>  static struct {
+>>>         const char *name;
+>>>         cmp_type cmp_type;
+>>> +       void (*parser)(struct used_atom *atom);
+>>
+>> Compiler diagnostic:
+>>
+>>     warning: declaration of 'struct used_atom' will not be
+>>         visible outside of this function [-Wvisibility]
+>>
+>> Indeed, it seems rather odd to introduce the new field in this patch
+>> but never actually do anything with it. It's difficult to understand
+>> the intention.
 >
-> - $GIT_DIR/info/sparse_checkout needs to be worktree specific
+> This is to make way for upcoming patches. But the compiler error is
+> accurate used_atom only becomes a structure in the next patch.
+> Should change that.
 
-It already is.
-
-> - We don't have much tooling around sparse to speak of at all.
->
-> The endgoal would be to have something like
->
-> git checkout [--sparse <pattern>]...
->
-> which sets up the sparse_checkout file and "git worktree" to pass any
-> --sparse option on to "git checkout"
-
-Or.. convert pathspec specified at 'git-checkout' (or git-worktree)
-into sparse patterns. For example,
-
-git worktree add --sparse some-path branch --  foo/
-
-will automatically create sparse-checkout file that limits to 'foo'.
-Not easy (and in some cases probably impossible), but it's more
-intuitive.
-.
-> While in an ideal world we all have micro repos, in the real world we
-> often have larger repos with mostly independent subdirs. For a quick fix
-> on a side branch in a subdir, a new sparse worktree would be an ideal
-> lean solution.
-
-Sparse checkout should eventually be replaced with something better
-that does not keep full tree in index, but I don't think anybody is
-working on that..
-
-> As it is, "git stash save && git checkout" is leaner but interrupts the
-> workflow more, and a local "git clone" with links and alternates is
-> leaner, too, but conceptually overkill if you want to work quickly on an
-> existing side branch.
---
-Duy
+This problem will go away if you introduce the 'valid_atom' field in
+the patch which actually needs it (as suggested above) rather than in
+this patch.
