@@ -1,90 +1,100 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC/PATCH] config: add core.trustmtime
-Date: Wed, 25 Nov 2015 11:39:30 +0100
-Message-ID: <CAP8UFD18KkH25S3RmyuBQrvGYELSTR1FfZAYKzr-Yzd6OJvmxQ@mail.gmail.com>
-References: <1448433323-21037-1-git-send-email-chriscool@tuxfamily.org>
-	<alpine.DEB.1.00.1511251121390.1686@s15462909.onlinehome-server.info>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] merge-file: consider core.crlf when writing merge
+ markers
+Date: Wed, 25 Nov 2015 12:09:17 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1511251205430.1686@s15462909.onlinehome-server.info>
+References: <1448314332-15581-1-git-send-email-dev+git@drbeat.li> <alpine.DEB.1.00.1511240844380.1686@s15462909.onlinehome-server.info> <5654E7FD.2060000@drbeat.li> <5654E9B6.3090801@drbeat.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 25 11:39:53 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Beat Bolli <dev+git@drbeat.li>
+X-From: git-owner@vger.kernel.org Wed Nov 25 12:09:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1XUB-00066W-0V
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 11:39:39 +0100
+	id 1a1Xx2-0002pu-Iy
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 12:09:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752672AbbKYKjc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 05:39:32 -0500
-Received: from mail-io0-f169.google.com ([209.85.223.169]:33611 "EHLO
-	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752616AbbKYKja (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 05:39:30 -0500
-Received: by iouu10 with SMTP id u10so50312977iou.0
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 02:39:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Z8TzEyTzJK1bNFYEwTuQJch42v45FRLsgz//jJFTn1o=;
-        b=zIWXF453N4umr3YnSL7zSi3+UP6xAwAhfTM0nnihVC9Kyu+EuOecihTWa65ljt5itg
-         9jEQ7Qz8Ayin02eBGLcPUv9XxdZ6VQ+H9lxRUGiIy4Ib680OHIPOp8hNHoP/IdE/4Ql3
-         e2JzS66nN8YSWteFe5MTh1OGog5yGyFGQFT/7T49OgJHU6MXVQYDqKLp8SseO1TetxAR
-         igNkc9UwQ2cekBlXti8EAXac73QAdWU4ISPyWEQ5GO1WF7RRbsId21oqnMhM1fLAeTAl
-         9r6FTBWR9IDbDQR/BbrteoJC+c1hiFzcznoMTH+A7hDsrhqyV3jzCQP0zYOIuAENucg1
-         zJhQ==
-X-Received: by 10.107.170.142 with SMTP id g14mr3871182ioj.178.1448447970070;
- Wed, 25 Nov 2015 02:39:30 -0800 (PST)
-Received: by 10.36.146.68 with HTTP; Wed, 25 Nov 2015 02:39:30 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1511251121390.1686@s15462909.onlinehome-server.info>
+	id S1752364AbbKYLJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 06:09:24 -0500
+Received: from mout.gmx.net ([212.227.17.22]:62241 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751609AbbKYLJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 06:09:21 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0Lkwpt-1aZECp0SKz-00amCE;
+ Wed, 25 Nov 2015 12:09:18 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <5654E9B6.3090801@drbeat.li>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:7eR5RpBGgQHwMg5pPHxuzn2mvNzw8KQPVxJSWUW1sCyoWwcFhbS
+ SqM4vLjMveU+SHrVk/qqNzhejQXkW2slSqtlm3hhjPCySU9wABUrXFI4hSlehJzTXwxBuYB
+ l9O8ztX3b0CvEoI/ez2L2r11Ya2lO/VQ7LB1Eav0qHI/8qz5vUrgp/mb3hLM7InLAT6ca0y
+ IZNC2+dd0o+X/jcDmVHgw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bW33cBeOjng=:JCo+DbRYFB9j1HpuZJ1cGs
+ e+W4U/sa+YkJsIXIKcc1tmVIMiIrS8GdzvxFwbftn4gd46F4SLdHbnsYji/WoAwqkwIFt/uYn
+ e4asIhZhRLQT2yiWvI9dd//U9km2Sf/2TPsDMCl8b7DtArFtcVSygK5xQC2TAjFC83OsgH4qq
+ h8cDID0ulV2q6LDVoUp8s7LinuhvwCqKe3u75RoqF/FSXGvx6qq+udPbmFvobkkVQfJqgfkEk
+ QogvoW3nKXO3N10YB50H9uh+CYyM2HNOU1sYvTDpcSvnZAFX29WGu8PGzrzfAEG0zdvdifghf
+ AYNLgYFcWExReVpwFR85aXgIRgsvKeuqWkckOziIPZ52M0BtEg7GB4Hym4y6PXLqkGNrMX/KB
+ xYFYq6eqDjUl+wrp48LKDQR7hISwlEqQK1qVKbLI/2HQlleD7dxd45L+dzer8RZhQ+NW2Qmyv
+ QRIhmalhSlBlcTWHfvciFEEh19OU4Bj2sPN4rzIB4XbJ1thUHMy4wp8hwbq7f28Pz28JDHbZY
+ Os/IOQTKShRPH56DIFE3Ca5uJJHKfy9vHomaBY6+D+ieE0LRBiXUFkkdXL55h10jJE7u6WDHB
+ Uiw136vAgEshrrzvdFQ+fWdB22ijpGGiZnmyPFA/6kepZTXWe0Ag2niQSVdGu0kFgqparOxkr
+ M1HaXq6aj8Ifta+k8sycY6E8YC2Wd5qfajI/oqGUtoYi6JNdgll0qvZSo+6A3PE71+GfCwNR4
+ g/VBl/Op52JEHRXe+P5u4Pb5gankWgKguHkruViJO0EMRmdxU/D3lvGaioRft0K9TY9pHdtZ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281701>
 
-Hi Johannes,
+Hi Beat,
 
-On Wed, Nov 25, 2015 at 11:25 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Christian,
->
-> On Wed, 25 Nov 2015, Christian Couder wrote:
->
->> diff --git a/config.c b/config.c
->> index 248a21a..d720b1f 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -691,6 +691,13 @@ static int git_default_core_config(const char *var, const char *value)
->>               trust_ctime = git_config_bool(var, value);
->>               return 0;
->>       }
->> +     if (!strcmp(var, "core.trustmtime")) {
->> +             if (!strcasecmp(value, "default") || !strcasecmp(value, "check"))
->> +                     trust_mtime = -1;
->> +             else
->> +                     trust_mtime = git_config_maybe_bool(var, value);
->
-> If `core.trustmtime` is set to `OMG, never!`, `git_config_maybe_bool()`
-> will set trust_mtime to -1, i.e. the exact same value as if you had set
-> the variable to `default` or `check`...
+On Tue, 24 Nov 2015, Beat Bolli wrote:
 
-Yeah, I think returning -1 is the safe thing to do in this case.
+> On 24.11.15 23:43, Beat Bolli wrote:
+> > On 24.11.15 09:21, Johannes Schindelin wrote:
+> >>
+> >> On Mon, 23 Nov 2015, Beat Bolli wrote:
+> >>
+> >>> When merging files in repos with core.eol = crlf, git merge-file
+> >>> inserts just a LF at the end of the merge markers. Files with mixed
+> >>> line endings cause trouble in Windows editors and e.g.
+> >>> contrib/git-jump, where an unmerged file in a run of "git jump
+> >>> merge" is reported as simply "binary file matches".
+> >>
+> >> Wow, what a beautiful contribution!
+> >>
+> >> I wonder how difficult it would be to make this work with
+> >> gitattributes, i.e. when .gitattributes' `eol` setting disagrees with
+> >> core.eol.
+> > 
+> > I have implemented this according to your algorithm. Now, I have to
+> > set core.autocrlf to true for making the new test pass. Setting
+> > core.eol no longer has an effect on the merge markers. Is this
+> > expected? (I haven't set any attributes)
+> 
 
-> Maybe you want to be a bit stricter here and either test the return value
-> of `git_config_maybe_bool()` for -1 (and warn in that case), or just
-> delete the `maybe_`?
+No, this is not expected. I guess that I was a bit careless in my
+suggestion (it was just a sketch, after all, not a full implementation):
 
-I thought that if we ever add more options in the future then people
-might be annoyed by older git versions warning about the new options.
-But I am ok to add a warning.
+> enum eol eol_for_path(const char *path, const char *src, size_t len)
+> {
+>         struct conv_attrs ca;
+>         struct text_stat stats;
+> 
+>         convert_attrs(&ca, path);
+>         if (output_eol(ca.crlf_action) != EOL_CRLF)
+>                 return EOL_LF;
 
-Thanks,
-Christian.
+At this point, output_eol(ca.crlf_action) would be EOL_UNSET, I guess, in
+which case we would have to consult core_eol, of course. So it is not
+enough to test for EOL_CRLF but we really need to test for EOL_CRLF,
+EOL_LF and EOL_UNSET explicitly (I would use a switch() statement and use
+a default: rule instead of handling EOL_UNSET specifically).
+
+Ciao,
+Dscho
