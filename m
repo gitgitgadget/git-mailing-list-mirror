@@ -1,321 +1,142 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 5/5] builtin/clone: support submodule groups
-Date: Tue, 24 Nov 2015 17:32:19 -0800
-Message-ID: <1448415139-23675-6-git-send-email-sbeller@google.com>
-References: <1448415139-23675-1-git-send-email-sbeller@google.com>
-Cc: peff@peff.net, gitster@pobox.com, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	ericsunshine@gmail.com, j6t@kdbg.org, hvoigt@hvoigt.net,
-	Stefan Beller <sbeller@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 25 02:32:44 2015
+From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH] wt-status: use strncmp() for length-limited string
+ comparison
+Date: Wed, 25 Nov 2015 03:16:49 +0100
+Message-ID: <56551A11.9030809@web.de>
+References: <563D2DE7.1030005@web.de>
+ <20151124213601.GB29185@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 25 03:17:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1Owl-0005sT-WB
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 02:32:36 +0100
+	id 1a1Pe2-0002u6-1e
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 03:17:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932428AbbKYBcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2015 20:32:32 -0500
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:33455 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932382AbbKYBc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2015 20:32:28 -0500
-Received: by pabfh17 with SMTP id fh17so40845255pab.0
-        for <git@vger.kernel.org>; Tue, 24 Nov 2015 17:32:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wj6MIklu4cHeQD7cK8FmPqhN7YbVmAEwx1g4uUp51ZU=;
-        b=oyIIznjDf5M1Lv6jysly09um4uxG3fpctRAZZqvMOeGtEybr4jwACDMTrALiDp7QQG
-         owRFW8oscLdgKKXV+h3HjtZhVj1BCHsijy5H57HxfHkkZZlYm7Dsoso4HgOEuDOJ5Zx5
-         QEyp+aEf09xd53NaL0kRRBkc9y4ZxQzcz4sGOWkHyHK9y/NnGf2WUszGT9g7diQ3PFSt
-         EPRC7KoT7NKbNwycnh0Uzon1pUy4sLAIshhgORlQVsaO3vNG63btOMILnjXIeEtlldpz
-         dTsCmzbdD00LgQkJXZpPBFLOp8gdnVNqp1RSyeyA2ShVVD2uelC7rL75Huzg6xko1iw9
-         Sy4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=wj6MIklu4cHeQD7cK8FmPqhN7YbVmAEwx1g4uUp51ZU=;
-        b=fdJtgkR7hMKBIwXz8tUVp3ecuOKHpGjIAOBBMbTyVRPzI/tXOCNZU+Bvxj94y+oIVV
-         vNx5nCr30QrstaX2NPBgv/x3WgVthZq4NTHKBEt9giiGA2eIw0CwKkW4PnVdbmTbIX+S
-         wEkrLXL6qs+ERDfycIMlGLfG+kVaMBFDEQCPdz7o4TeCaY4Gn0AFaQP8y4rJOVITieut
-         Y6jNygh2RXuMPxz9g1WnCb9F4NmplDSYk3x8Qc36WNyZ6cGP43qDO+/IDJGnu2ny1qDn
-         GEj7Jws5hx4VOTuRNY2tK+c5Rpx9tPqnDqdyGWQTFmTOSqmV6NYns+ZaFhGEQDtwT91T
-         FZJg==
-X-Gm-Message-State: ALoCoQkvNFlArE+yOsMzKEWI1rbyG1xNpOR1WYRgJqWVq1mkmr82ffhAqiIuAxYrnnlSfH4cAh+5
-X-Received: by 10.67.6.1 with SMTP id cq1mr36744382pad.78.1448415147447;
-        Tue, 24 Nov 2015 17:32:27 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:38f7:d727:e789:685b])
-        by smtp.gmail.com with ESMTPSA id c1sm17377202pas.1.2015.11.24.17.32.26
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 24 Nov 2015 17:32:27 -0800 (PST)
-X-Mailer: git-send-email 2.6.1.261.g0d9c4c1
-In-Reply-To: <1448415139-23675-1-git-send-email-sbeller@google.com>
+	id S1755521AbbKYCRP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Nov 2015 21:17:15 -0500
+Received: from mout.web.de ([212.227.15.14]:59091 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753828AbbKYCRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Nov 2015 21:17:13 -0500
+Received: from [192.168.178.36] ([79.253.150.73]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0MY6lc-1ZoIdk2Ps8-00Uv7l; Wed, 25 Nov 2015 03:16:56
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <20151124213601.GB29185@sigill.intra.peff.net>
+X-Provags-ID: V03:K0:KM/KL6YbYTcAEOotnOXp9IMxN0u/s2sf+wC3+2RGxZGSkAQfVWz
+ YbIvalIy+oNC5I2Yarl0VbV9subqzvKiznNXaz9AOiDjmopk/slsHdRyrlvM9EOvY9V+LD8
+ PZJ/7+SIst/bEfFitSHau41ck1FAzYDomWmX9ddSw7BEEH1FC5rGjfW+SmnIYRlm129jRBs
+ TXrx4BIpbAgbQlnQE/6OQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XK3yOH5vYaU=:hpBsGx0EzhZVmWw6ZFbiCI
+ mA09WuzzcPAIQpr3aBhlnBW/uDpyHOtooCL9PmlvxEIn+1H9EVds97Q0uZVEnoureN7+EcgN5
+ 7O8SzrelVqNxK1r2ORvPVoOTmJOVIG7dlvfPLunvX9OakaZXtOUc58DwnfMPT0/liKkdKOhvT
+ /k672OSfwsmGXV/NfsRjUJPo/CLxTG4eq2ZohOEeEYP3gJV1xGAwlx8gfRtNSof6HIOmWrBen
+ K2XNWnLqvTYbQ5mVTDUy7TOeLANcTtfyQN+5YUwsfmQccjQAslXiHl5O6hWDqES1pbulIQ7pU
+ qyU0ZUJYZ/3TS/3b/nm7WXcCC4ZJBsDJLvELmxjfYYZqzQ0+eaD8BJqSvt/p/8xFi82HjwAVj
+ 5k8g+3yEK2xhwGzJ5kvqI37HX1qcHzv5+bjbMv23UsH6/QNbPZ3SJtaAintS4+BlGx4BHu2HX
+ e8HkkZOfJxzVR1ZdX4pcQYvJwSyoRaZPCjzTT0zp6FijND9GCWzwidM7hhgjC0AQD2+Dzn7rd
+ HJcT6JQYHYXUnmnyjIb0aCymyvdYNQeJRvS/hONcf9I/HmBY8l+BsZzb7FJOy0XOc2Kgfk+UU
+ z/o7OHiNMj+TRbzU1/A4rZGPr1AkdsAXG+62R2bluZJ7Hki+7hlVjZzokcSuaxmrGu13dxXoh
+ zxuBhJFe0eZWx1hpZNQBsK44dbcNL2apCrrBVwTWBaYi+XlyUGU/hthe26nTvoVh/2qBb8Jh9
+ kYnt2RjQJ5A1U+Wfg5KimI1qh8UKozQTL+X3iVW+e9xDfs6ajm2b1iUW+D1hm9hbkDwPwuko 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281675>
 
-This passes each group to the `submodule update` invocation and
-additionally configures the groups to be automatically updated.
+Am 24.11.2015 um 22:36 schrieb Jeff King:
+> On Fri, Nov 06, 2015 at 11:47:03PM +0100, Ren=C3=A9 Scharfe wrote:
+>=20
+>> When a branch name is longer than four characters, memcmp() can read
+>> past the end of the string literal "HEAD".  Use strncmp() instead, w=
+hich
+>> stops at the end of a string.  This fixes the following test failure=
+s
+>> with AddressSanitizer:
+>=20
+> Hmm. I think this is mostly harmless, as a comparison like:
+>=20
+>    memcmp("HEAD and more", "HEAD", strlen("HEAD"))
+>=20
+> would yield non-zero when we compare the NUL in the second string to
+> whatever is in the first. So I assume what is going on is that memcmp=
+ is
+> doing larger compares than byte by byte, and is examining 4 or 8 byte=
+s
+> starting at that NUL.
+>=20
+> The outcome is equivalent, but we do touch memory that is not ours, s=
+o I
+> think this is a positive direction in that sense.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/git-clone.txt | 11 ++++++++
- builtin/clone.c             | 33 ++++++++++++++++++++--
- git-submodule.sh            |  5 ++++
- t/t7400-submodule-basic.sh  | 69 +++++++++++++++++++++++++++++++++++++++++++++
- t/t7406-submodule-update.sh | 32 +++++++++++++++++++++
- 5 files changed, 147 insertions(+), 3 deletions(-)
+Yes, except it should be strlen("HEAD and more") in your example code;
+with strlen("HEAD") it would compare just 4 bytes and return 0.
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 59d8c67..fbf68ab 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -209,6 +209,17 @@ objects from the source repository into a pack in the cloned repository.
- 	repository does not have a worktree/checkout (i.e. if any of
- 	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
- 
-+--group::
-+	After the clone is created, all submodules which are part of the
-+	group are cloned. This option can be given multiple times to specify
-+	different groups. This option will imply automatic submodule
-+	updates for the groups by setting `submodule.update=groups`.
-+	The group selection will be passed on recursively, i.e. if a submodule
-+	is cloned because of group membership, its submodules will
-+	be cloned according to group membership, too. If a submodule is
-+	not cloned however, its submodules are not evaluated for group
-+	membership.
-+
- --separate-git-dir=<git dir>::
- 	Instead of placing the cloned repository where it is supposed
- 	to be, place the cloned repository at the specified directory,
-diff --git a/builtin/clone.c b/builtin/clone.c
-index ce578d2..17e9f54 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -51,6 +51,7 @@ static struct string_list option_config;
- static struct string_list option_reference;
- static int option_dissociate;
- static int max_jobs = -1;
-+static struct string_list submodule_groups;
- 
- static struct option builtin_clone_options[] = {
- 	OPT__VERBOSITY(&option_verbosity),
-@@ -95,6 +96,8 @@ static struct option builtin_clone_options[] = {
- 		   N_("separate git dir from working tree")),
- 	OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
- 			N_("set config inside the new repository")),
-+	OPT_STRING_LIST('g', "group", &submodule_groups, N_("group"),
-+			N_("clone specific submodule groups")),
- 	OPT_END()
- };
- 
-@@ -723,9 +726,18 @@ static int checkout(void)
- 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
- 			   sha1_to_hex(sha1), "1", NULL);
- 
--	if (!err && option_recursive) {
-+	if (err)
-+		goto out;
-+
-+	if (option_recursive || submodule_groups.nr > 0) {
- 		struct argv_array args = ARGV_ARRAY_INIT;
--		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
-+		argv_array_pushl(&args, "submodule", "update", "--init", NULL);
-+
-+		if (option_recursive)
-+			argv_array_pushf(&args, "--recursive");
-+
-+		if (submodule_groups.nr > 0)
-+			argv_array_pushf(&args, "--groups");
- 
- 		if (max_jobs != -1)
- 			argv_array_pushf(&args, "--jobs=%d", max_jobs);
-@@ -733,7 +745,7 @@ static int checkout(void)
- 		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
- 		argv_array_clear(&args);
- 	}
--
-+out:
- 	return err;
- }
- 
-@@ -864,6 +876,21 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		option_no_checkout = 1;
- 	}
- 
-+	if (option_recursive && submodule_groups.nr > 0)
-+		die(_("submodule groups and recursive flag are incompatible"));
-+	if (submodule_groups.nr > 0) {
-+		int first_item = 1;
-+		struct string_list_item *item;
-+		struct strbuf sb = STRBUF_INIT;
-+		strbuf_addstr(&sb, "submodule.groups=");
-+		for_each_string_list_item(item, &submodule_groups) {
-+			strbuf_addf(&sb, "%s%s", first_item ? "" : ",", item->string);
-+			first_item = 0;
-+		}
-+		if (submodule_groups.nr > 0)
-+			string_list_append(&option_config, strbuf_detach(&sb, 0));
-+	}
-+
- 	if (!option_origin)
- 		option_origin = "origin";
- 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 4092a48..e3d1667 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -611,6 +611,7 @@ cmd_deinit()
- #
- cmd_update()
+> But...
+>=20
+>> diff --git a/wt-status.c b/wt-status.c
+>> index 435fc28..8dc281b 100644
+>> --- a/wt-status.c
+>> +++ b/wt-status.c
+>> @@ -1319,7 +1319,7 @@ static int grab_1st_switch(unsigned char *osha=
+1, unsigned char *nsha1,
+>>   	hashcpy(cb->nsha1, nsha1);
+>>   	for (end =3D target; *end && *end !=3D '\n'; end++)
+>>   		;
+>> -	if (!memcmp(target, "HEAD", end - target)) {
+>> +	if (!strncmp(target, "HEAD", end - target)) {
+>=20
+> This will match prefixes like "HEA" in the target, won't it?
+
+Oww, yes. :-/  NB: The existing code does the same.
+
+> I think you want something more like:
+>=20
+>    if (end - target =3D=3D 4 && !memcmp(target, "HEAD", 4))
+>=20
+> I tried to think of a way that didn't involve a magic number. The bes=
+t I
+> came up with is:
+>=20
+>    if (skip_prefix(target, "HEAD", &v) && v =3D=3D end)
+>=20
+> but that requires an extra variable, and is arguably more obfuscated.
+
+Using one more variable isn't that bad, as long as it gets a fitting
+name.  Or we could reuse "end" (I'm not worrying about scanning "HEAD"
+twice very much):
+
+diff --git a/wt-status.c b/wt-status.c
+index 435fc28..96a731e 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1317,14 +1317,14 @@ static int grab_1st_switch(unsigned char *osha1=
+, unsigned char *nsha1,
+ 	target +=3D strlen(" to ");
+ 	strbuf_reset(&cb->buf);
+ 	hashcpy(cb->nsha1, nsha1);
+-	for (end =3D target; *end && *end !=3D '\n'; end++)
+-		;
+-	if (!memcmp(target, "HEAD", end - target)) {
++	if (skip_prefix(target, "HEAD", &end) && (!*end || *end =3D=3D '\n'))=
  {
-+	groups=
- 	# parse $args after "submodule ... update".
- 	while test $# -ne 0
- 	do
-@@ -650,6 +651,9 @@ cmd_update()
- 		--checkout)
- 			update="checkout"
- 			;;
-+		--groups)
-+			groups=1
-+			;;
- 		--depth)
- 			case "$2" in '') usage ;; esac
- 			depth="--depth=$2"
-@@ -691,6 +695,7 @@ cmd_update()
- 		${update:+--update "$update"} \
- 		${reference:+--reference "$reference"} \
- 		${depth:+--depth "$depth"} \
-+		${groups:+--groups} \
- 		${jobs:+$jobs} \
- 		"$@" | {
- 	err=
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index caed4be..e8654d7 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -1049,4 +1049,73 @@ test_expect_success 'submodule init --group works' '
- 	)
- '
- 
-+cat <<EOF > expected
-+submodule
-+-submodule1
-+EOF
-+
-+test_expect_success 'submodule update --groups works' '
-+	test_when_finished "rm -rf super super_clone" &&
-+	mkdir super &&
-+	pwd=$(pwd) &&
-+	(
-+		cd super &&
-+		git init &&
-+		git submodule add --group groupA file://"$pwd"/example2 submodule &&
-+		git submodule add file://"$pwd"/example2 submodule1 &&
-+		git commit -a -m "create repository with 2 submodules, one is in a group"
-+	) &&
-+	git clone super super_clone &&
-+	(
-+		cd super_clone &&
-+		git config submodule.groups groupA &&
-+		git submodule init  &&
-+		git submodule update --groups &&
-+		git submodule status |cut -c1,42-52 | tr -d " " >../actual
-+	) &&
-+	test_cmp actual expected
-+'
-+
-+test_expect_success 'submodule update --init --groups works' '
-+	test_when_finished "rm -rf super super_clone" &&
-+	mkdir super &&
-+	pwd=$(pwd) &&
-+	(
-+		cd super &&
-+		git init &&
-+		git submodule add --group groupA file://"$pwd"/example2 submodule &&
-+		git submodule add file://"$pwd"/example2 submodule1 &&
-+		git commit -a -m "create repository with 2 submodules, one is in a group"
-+	) &&
-+	git clone super super_clone &&
-+	(
-+		cd super_clone &&
-+		git config submodule.groups groupA &&
-+		git submodule update --init --groups &&
-+		git submodule status |cut -c1,42-52 | tr -d " " >../actual
-+	) &&
-+	test_cmp actual expected
-+'
-+
-+test_expect_success 'clone --group works' '
-+	test_when_finished "rm -rf super super_clone" &&
-+	mkdir super &&
-+	pwd=$(pwd) &&
-+	(
-+		cd super &&
-+		git init &&
-+		git submodule add --group groupA file://"$pwd"/example2 submodule &&
-+		git submodule add file://"$pwd"/example2 submodule1 &&
-+		git commit -a -m "create repository with 2 submodules, one is in a group"
-+	) &&
-+	git clone --group groupA super super_clone &&
-+	(
-+		cd super_clone &&
-+		test_pause
-+		git submodule status |cut -c1,42-52 | tr -d " " >../actual
-+	) &&
-+	test_cmp actual expected
-+'
-+
-+
- test_done
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 090891e..7e59846 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -801,4 +801,36 @@ test_expect_success 'git clone passes the parallel jobs config on to submodules'
- 	rm -rf super4
- '
- 
-+cat >expect <<-EOF &&
-+-deeper/submodule
-+-merging
-+-moved/sub module
-+-none
-+-rebasing
-+-submodule
-+-submodule1
-+EOF
-+
-+# none, merging rebasing, submodule1, submodule
-+test_expect_success 'git clone works with submodule groups.' '
-+	test_when_finished "rm -rf super5" &&
-+	(
-+		cd super &&
-+		git config -f .gitmodules  submodule.submodule.groups default &&
-+		git config -f .gitmodules  submodule.submodule1.groups "default,testing" &&
-+		git config -f .gitmodules  submodule.none.groups testing &&
-+		git commit -a -m "assigning groups to submodules"
-+	) &&
-+	git clone --group default --group testing super super5 &&
-+	(
-+		cd super5 &&
-+		git submodule status |cut -c1,43- >../actual
-+	) &&
-+	test_cmp actual expect
-+'
-+
-+test_expect_success 'git submodule update --groups' '
-+	true
-+'
-+
- test_done
--- 
-2.6.1.261.g0d9c4c1
+ 		/* HEAD is relative. Resolve it to the right reflog entry. */
+ 		strbuf_addstr(&cb->buf,
+ 			      find_unique_abbrev(nsha1, DEFAULT_ABBREV));
+ 		return 1;
+ 	}
++	for (end =3D target; *end && *end !=3D '\n'; end++)
++		;
+ 	strbuf_add(&cb->buf, target, end - target);
+ 	return 1;
+ }
