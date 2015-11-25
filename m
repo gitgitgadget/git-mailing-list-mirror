@@ -1,83 +1,113 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Sparse checkout in worktree
-Date: Wed, 25 Nov 2015 13:40:09 +0100
-Message-ID: <5655AC29.20801@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: 'git log --source' seems to fail to show ref name after the
+ first tag comes out.
+Date: Wed, 25 Nov 2015 07:59:57 -0500
+Message-ID: <20151125125956.GC4504@sigill.intra.peff.net>
+References: <CAAe7MbAwWHXxVOu-CU7QpN0K3XTKJ1=xp4-dzSwBQatdAZ1vaQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 25 13:40:20 2015
+Cc: git@vger.kernel.org
+To: Raymundo <gypark@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 14:00:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1ZMu-0002tG-F8
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 13:40:16 +0100
+	id 1a1Zg3-0002AU-Mc
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 14:00:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753213AbbKYMkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 07:40:12 -0500
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:46312 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752568AbbKYMkL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2015 07:40:11 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5474E2081D
-	for <git@vger.kernel.org>; Wed, 25 Nov 2015 07:40:10 -0500 (EST)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Wed, 25 Nov 2015 07:40:10 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=EN2
-	3DrfWGxRHgYZ8jCaiMVS5ur0=; b=PgJ712TMWy6riLPVUvUVxUZmA9bt8FJcgFC
-	92rrmOvjOAXjNil38KhMqt1KNA58yneYfetMOjAcFqvMYidOFr2D/XgQhhp0fFGj
-	Sl4x3wV6AaKH0gpys1SJhPVDW6dtDrjhylYDoaK4sETN44xyIWVT/FOVkSn2PJ7U
-	b/2DDzI4=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=EN23DrfWGxRHgYZ8jCaiMVS5ur0=; b=O3Vlb
-	nbgsi03EOFTnPTMmw55ByvFy81O8JJrBYh4yzducNzo/3248RlS9zwzWK17uQT0P
-	arJ0oTD3NpiejMjmLxGftN5vlTFlI+pF0cs/d2rE5kHFPWMc16By8161xA9o5M2g
-	CtT9kCaRgTjYgQ78LV/jI97BClO/SWv5oGVnsk=
-X-Sasl-enc: WMEiQ+QDzr9nfbQOdNHS6SwFWRg5bYXc4H8GjUTeo/Hx 1448455210
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-	by mail.messagingengine.com (Postfix) with ESMTPA id EAA05C016DB
-	for <git@vger.kernel.org>; Wed, 25 Nov 2015 07:40:09 -0500 (EST)
-X-Mozilla-News-Host: news://news.gmane.org:119
-X-Enigmail-Draft-Status: N1110
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+	id S1752844AbbKYNAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 08:00:00 -0500
+Received: from cloud.peff.net ([50.56.180.127]:33873 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752361AbbKYM77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 07:59:59 -0500
+Received: (qmail 10601 invoked by uid 102); 25 Nov 2015 12:59:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 06:59:59 -0600
+Received: (qmail 26491 invoked by uid 107); 25 Nov 2015 12:59:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 07:59:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2015 07:59:57 -0500
+Content-Disposition: inline
+In-Reply-To: <CAAe7MbAwWHXxVOu-CU7QpN0K3XTKJ1=xp4-dzSwBQatdAZ1vaQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281710>
 
-Hi there,
+On Wed, Nov 25, 2015 at 07:29:02PM +0900, Raymundo wrote:
 
-I'm wondering how much it would take to enable worktree specific sparse
-checkouts. From a superfluous look:
+> At first, I'm sorry I'm not good at English.
 
-- $GIT_DIR/info/sparse_checkout needs to be worktree specific
-- We don't have much tooling around sparse to speak of at all.
+No problem. Your report was very clear. :)
 
-The endgoal would be to have something like
+> When I execute this command:
+> 
+> git log --oneline --source --all --decorate
+> [...]
+> As you can see, ref names in the second column repeats to disappear
+> and come back, at every lines that contain tags.
 
-git checkout [--sparse <pattern>]...
+I was able to reproduce this pretty easily with a short test case:
 
-which sets up the sparse_checkout file and "git worktree" to pass any
---sparse option on to "git checkout".
+  git init
+  git commit --allow-empty -m one
+  git commit --allow-empty -m two
+  git commit --allow-empty -m three
+  git tag -m mytag HEAD^
 
-While in an ideal world we all have micro repos, in the real world we
-often have larger repos with mostly independent subdirs. For a quick fix
-on a side branch in a subdir, a new sparse worktree would be an ideal
-lean solution.
+Starting from one source works:
 
-As it is, "git stash save && git checkout" is leaner but interrupts the
-workflow more, and a local "git clone" with links and alternates is
-leaner, too, but conceptually overkill if you want to work quickly on an
-existing side branch.
+  $ git log --oneline --source master
+  de009a4 master three
+  b75220d master two
+  62f49bd master one
 
-Cheers,
-Michael
+But starting from the tag as well does not:
+
+  $ git log --oneline --source master mytag
+  de009a4 master three
+  b75220d  two
+  62f49bd  one
+
+Or more simply, starting from the tag never has any sources:
+
+  $ git log --oneline --source mytag
+  b75220d  two
+  62f49bd  one
+
+It's like the tag paints its commit with an empty "source" field (and
+then we propagate that down the graph).
+
+> I tested using Git version 2.6.3
+> 
+> For reference, Git version 1.7.9.rc0 does not have this problem. It
+> shows ref names on all lines well.
+
+Sounds like a good opportunity to use git-bisect. I came up with 2073949
+(traverse_commit_list: support pending blobs/trees with paths,
+2014-10-15) from git v2.2.0, which unfortunately was written by me. :)
+
+This one-liner seems to fix it:
+
+diff --git a/revision.c b/revision.c
+index af2a18e..d434b8b 100644
+--- a/revision.c
++++ b/revision.c
+@@ -297,7 +297,6 @@ static struct commit *handle_commit(struct rev_info *revs,
+ 		 * through to the non-tag handlers below. Do not
+ 		 * propagate data from the tag's pending entry.
+ 		 */
+-		name = "";
+ 		path = NULL;
+ 		mode = 0;
+ 	}
+
+But I'm not sure if it causes other problems. In particular, I see why
+we would not propagate a path field, but I do not know why the original
+was avoiding propagating the name field.
+
+-Peff
