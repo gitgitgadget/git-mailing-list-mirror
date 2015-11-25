@@ -1,57 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Nov 2015, #04; Tue, 24)
-Date: Wed, 25 Nov 2015 05:15:44 -0500
-Message-ID: <20151125101543.GA2738@sigill.intra.peff.net>
-References: <20151125010722.GA23632@sigill.intra.peff.net>
- <20151125101342.GE18913@serenity.lan>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2] send-email: die if CA path doesn't exist
+Date: Wed, 25 Nov 2015 10:19:09 +0000
+Message-ID: <20151125101909.GF18913@serenity.lan>
+References: <27f354a4edb166e42006b0c1f778827a3dfd58ac.1447798206.git.john@keeping.me.uk>
+ <554d29f019f52d18cf1d6c5835df0a3a098a1df4.1448407832.git.john@keeping.me.uk>
+ <20151124233536.GB13872@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Nov 25 11:16:12 2015
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 25 11:19:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1X7T-0007md-P3
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 11:16:12 +0100
+	id 1a1XAn-0005YG-Fm
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 11:19:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752256AbbKYKPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 05:15:49 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33797 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751412AbbKYKPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 05:15:47 -0500
-Received: (qmail 31928 invoked by uid 102); 25 Nov 2015 10:15:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 04:15:47 -0600
-Received: (qmail 24902 invoked by uid 107); 25 Nov 2015 10:15:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 05:15:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2015 05:15:44 -0500
+	id S1751936AbbKYKTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 05:19:34 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:43091 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751579AbbKYKTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 05:19:32 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 5FAEC866011;
+	Wed, 25 Nov 2015 10:19:32 +0000 (GMT)
+X-Quarantine-ID: <aC4MYx353r4U>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id aC4MYx353r4U; Wed, 25 Nov 2015 10:19:29 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 49895CDA582;
+	Wed, 25 Nov 2015 10:19:11 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <20151125101342.GE18913@serenity.lan>
+In-Reply-To: <20151124233536.GB13872@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281695>
 
-On Wed, Nov 25, 2015 at 10:13:42AM +0000, John Keeping wrote:
-
-> On Tue, Nov 24, 2015 at 08:07:23PM -0500, Jeff King wrote:
-> > * jk/send-email-ssl-errors (2015-11-24) 1 commit
-> >  - send-email: enable SSL level 1 debug output
-> > 
-> >  Improve error reporting when SMTP TLS fails.
-> > 
-> >  Will merge to 'next'.
+On Tue, Nov 24, 2015 at 06:35:36PM -0500, Jeff King wrote:
+> On Tue, Nov 24, 2015 at 11:31:40PM +0000, John Keeping wrote:
 > 
-> Can you hold off on this one?  I think my last-minute change not to
-> switch on --smtp-debug has introduced a Perl warning that needs to be
-> suppressed.
+> > If the CA path isn't found it's most likely to indicate a
+> > misconfiguration, in which case accepting any certificate is unlikely to
+> > be the correct thing to do.
+> 
+> Thanks.
+> 
+> > Changes since v1:
+> > - add missing path to error message
+> > - remove trailing '.' on error message since die appends "at
+> >   /path/to/git-send-email line ..."
+> 
+> It won't if the error message ends with a newline. We seem to be wildly
+> inconsistent about that in send-email, though.
 
-Sure. Thanks for letting me know.
+Interesting.  I think in this case it would definitely be better to add
+the newline and avoid printing the location in the script, but it may
+make more sense to have a separate pass over git-send-email.perl and fix
+all of the die() calls.
 
--Peff
+I suspect that everything except the equivalent of BUG() should be
+suppressing the location in a user-facing script like this.
