@@ -1,9 +1,10 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 0/5] Submodule Groups
-Date: Wed, 25 Nov 2015 10:00:28 -0800
-Message-ID: <CAGZ79kbd2g9QSuGmyf6Ybp6dCqMfSBqj8WZgfTejXU8OdszaBw@mail.gmail.com>
+Subject: Re: [PATCH 5/5] builtin/clone: support submodule groups
+Date: Wed, 25 Nov 2015 10:08:38 -0800
+Message-ID: <CAGZ79kZrBRo9dfU=p8-bgvSpp=SSiXQHZGm7iCQ=9v0f_f_-aQ@mail.gmail.com>
 References: <1448415139-23675-1-git-send-email-sbeller@google.com>
-	<5655F166.9090601@web.de>
+	<1448415139-23675-6-git-send-email-sbeller@google.com>
+	<5655F544.6050003@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
@@ -11,167 +12,125 @@ Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmail.com>,
 	Eric Sunshine <ericsunshine@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
+	Johannes Sixt <j6t@kdbg.org>, Heiko Voigt <hvoigt@hvoigt.net>
 To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Nov 25 19:00:33 2015
+X-From: git-owner@vger.kernel.org Wed Nov 25 19:08:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1eMq-0002OT-8K
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 19:00:32 +0100
+	id 1a1eUj-000175-TH
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 19:08:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751834AbbKYSAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 13:00:31 -0500
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:34650 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566AbbKYSA3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 13:00:29 -0500
-Received: by ykfs79 with SMTP id s79so64913962ykf.1
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 10:00:28 -0800 (PST)
+	id S1751944AbbKYSIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 13:08:40 -0500
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:33092 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566AbbKYSIj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 13:08:39 -0500
+Received: by ykdv3 with SMTP id v3so64703040ykd.0
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 10:08:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=iWOLV9cwtUonsSBQI0NI7KdK/qshJ5egDp7sVLjBDQ4=;
-        b=ejdg4BfzeA+Z6aZ//6Br1z1Tf0lH9GlSsLqKcNGOTmWB4T2toql/kJfqnk+Ihx8UVO
-         uvHxGBCrlm1OALj/3BNtj6qoHmSC1p9zuT/qNjY3/yPZpApkTegXU6BLYNNuak4hLTax
-         MSj4OsXy3YmPUXmIcdaCS0aVzfMJKd6Ls/bhOdOhP63LvDjlO4viYL+LwEDkGYbeZ1Gq
-         cbUKunh0bYsmz8X2txy4IBREmpHmgYZbNAm8JVpIWv1d3DvKUkTx5fZGqiyAl5lG/p1m
-         /ERKJDUkNmu2ujxWYREM+uBBGBT1QIr7KW8wnKsrZ7tP53vrdK9VzND8OUQzrG2TBNal
-         H6+A==
+        bh=TnICb8jhvwrGsM0jsJr8KXS/GBbRcLgnRuoCANem3Wg=;
+        b=DQ65Rf4VpjI3Rq5AzrBg3VVBJPhi8BoT1mTAR8Vq51r+9NeCdRAOCoM0bWbWiaNg1+
+         VMPmbaFqZJqS1k8nsCPU88mc8d47nX4bq/hUMw5LpTq+kiAtHWIa5MG/e1GEUj04YfPf
+         kwLWb4dHQQhfD0Ad5PtfKjgGPkn0lzjGdfjT8HlenMw6zUp/sRjJdrjjShBbwCystcxE
+         NNjsfnCB124MsOPo85iD//bPDybIGZUXKuZiIE77crJ1Qw3zkFeRhdCvgY4i9YIe++vI
+         6cFrEawyzWFVFnEjYItVS7f6pGj12cf+cRW16sO/I104HoM0SYGfrBcCWWx8GkaNQXoQ
+         n5pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=iWOLV9cwtUonsSBQI0NI7KdK/qshJ5egDp7sVLjBDQ4=;
-        b=dSKSdJ8gHWJDfMCsZiYCF5PZW19XsLFkSNq+tZr31RFguhVcJ+aIcHHzRwL+sIyg0H
-         o1CenUkEe9oCbQn0sjbPxZ3mPeH+03YZyUZSsrB59sJcaKPC3hi9j6wXfzM4XAOYUij3
-         R0asRQVaFykR4DEa57EbpOCpfJnHkpBF+Cxq7WCiqSpKEJjT64wmmbljLXeb8fMExYMB
-         q0ac6r8hQUXSYbiZesOF1DxdFPBtuJfLsYLn1U1nGjEdv7IzPpNa02BLi67TcUOIxChv
-         kHdf1NJuKLXhQgkpWy16zPVdpmpm7ofBM1b4Mgq/sgzdltK5KD0iE4j4T1GNNKtoIhR2
-         0CDQ==
-X-Gm-Message-State: ALoCoQmrR+3qqkU2kfF2cVEuvxhoeA2egTZfd/CJO0E0h7yb+F/tDQqApRh7vrAcfJAQi1wxQJto
-X-Received: by 10.13.214.19 with SMTP id y19mr33757743ywd.63.1448474428796;
- Wed, 25 Nov 2015 10:00:28 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Wed, 25 Nov 2015 10:00:28 -0800 (PST)
-In-Reply-To: <5655F166.9090601@web.de>
+        bh=TnICb8jhvwrGsM0jsJr8KXS/GBbRcLgnRuoCANem3Wg=;
+        b=V/AIZYjMz6+yHiuVmYB+oeh7FPFepplSTIKOlYinfeWaoaPMjBgXNopI5DjquAHsx+
+         VpKiqquVrsFMdRmy2T/eGgtO6lkYxUoj6ZRzbCu/DukKXr3firdTja8DSF47wEz7Ryk4
+         G3R8lXMrTOcPAWvWlhf2+X2pa9RsAODA0IwL3HfIyK1qljdPL1KR7r03kb8VjDC72mEQ
+         g6mNDUyBNRrf1qip9W6s96LOA/3I7nirEXzYukll6e3+7ebU3LCvKv1hCXTWdm1IktO4
+         YMspkZoC+YwJTkMvEKwoXCDXq3m84rqlDXyRPvyLTySlStRlFiZTQPUb/Roi+dXX5fhB
+         C6Mg==
+X-Gm-Message-State: ALoCoQmjGFcoCmVzHPxhfjxiiCUBgGjXdR0LZF1/6mVKpWWhSVhN2DRT1+q1cvEqoK9+GYvTrZPr
+X-Received: by 10.13.251.2 with SMTP id l2mr33801654ywf.44.1448474918529; Wed,
+ 25 Nov 2015 10:08:38 -0800 (PST)
+Received: by 10.37.196.70 with HTTP; Wed, 25 Nov 2015 10:08:38 -0800 (PST)
+In-Reply-To: <5655F544.6050003@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281724>
 
---cc Johannes Sixt
-
-On Wed, Nov 25, 2015 at 9:35 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->> [submodule "gcc"]
->>          path = gcc
->>          url = git://...
->>          groups = default,devel
->> [submodule "linux"]
->>          path = linux
->>          url = git://...
->>          groups = default
->> [submodule "nethack"]
->>          path = nethack
->>          url = git://...
->>          groups = optional,games
+On Wed, Nov 25, 2015 at 9:52 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>> +--group::
+>> +       After the clone is created, all submodules which are part of the
+>> +       group are cloned. This option can be given multiple times to
+>> specify
+>> +       different groups.
 >
 >
-> Yup. Do you want the user to select only a single group or do you
-> plan to support selecting multiple groups at the same time too?
+> Ah, that answers my question in my response to the cover letter ;-)
+>
+>> This option will imply automatic submodule
+>> +       updates for the groups by setting `submodule.update=groups`.
+>
+>
+> Please don't. The per-submodule update setting configures how a
+> submodule has to be updated, adding a global one with a completely
+> different meaning (what submodules should be updated?) is confusing.
+> Why not "submodule.groups=<groups>"?
 
-Yes you should be able to select multiple groups, such as
-default+devel or alternatively default+games.
-
-The logical OR is supported in this patch series (all submodules which are
-in at least one of the specified groups,i.e. A OR B OR C ...)
+The documentation is out of date :/ as I was churning through lots of ideas,
+so we do have a config submodule.groups=<groups> by now, but the
+documentation is wrong.
 
 >
->> and by this series you can work on an arbitrary subgroup of these
->> submodules such
->> using these commands:
+>> +       The group selection will be passed on recursively, i.e. if a
+>> submodule
+>> +       is cloned because of group membership, its submodules will
+>> +       be cloned according to group membership, too. If a submodule is
+>> +       not cloned however, its submodules are not evaluated for group
+>> +       membership.
+>
+>
+> What do you mean by the last sentence? Did the clone fail? Then you
+> cannot update the submodule anyway ...
+
+Consider nested submodules:
+
+    A: superproject containing
+        B: which contains
+            C.
+
+If you clone A with group <C-but-not-B> you won't get C as we do not traverse
+the submodules of B, as we don't clone B. Maybe it's obvious?
+
+>> @@ -864,6 +876,21 @@ int cmd_clone(int argc, const char **argv, const char
+>> *prefix)
+>>                 option_no_checkout = 1;
+>>         }
 >>
->>      git clone --group default --group devel git://...
->>      # will clone the superproject and recursively
->>      # checkout any submodule being in at least one of the groups.
+>> +       if (option_recursive && submodule_groups.nr > 0)
+>> +               die(_("submodule groups and recursive flag are
+>> incompatible"));
 >
 >
-> Does this automatically configure the given group in .git/config, so
-> that all future submodule related commands know about this choice?
-> Me thinks that would make sense ...
+> Me thinks this contradicts your description of the --group option
+> in the man page. I don't see why such a restriction would make
+> sense, what incompatibility are you trying to avoid here? Maybe
+> we need another submodule-specific setting to tell update what
+> groups to use inside that submodule?
 
-It does. Internally it does
+So you want something like
+    "In the top level respect the groups, but recursively get all of them"?
 
-    git config submodule.groups A,B
-    git submodule update --init --groups
-
-whereas submodule update checks if the submodule.groups
-value is set and if so operates on the groups only.
-
->
->>      git submodule add --group default --group devel git://... ..
->>      # will add a submodule, adding 2 submodule
->>      # groups to its entry in .gitmodule
->
->
-> Maybe '--groups default,devel' is easier to grok? Dunno.
-
-I guess that makes sense.
-
->
->>      # as support for clone we want to have:
->>      git config submodule.groups default
->>      git submodule init --groups
->
->
-> Hmm, I doubt it makes much sense to add the --group option to "git
-> submodule init". I'd rather init all submodules and do the group
-> handling only in the "git submodule update" command. That way
-> upstream can change grouping later without having the user to
-> fiddle with her configuration to make that work.
-
-Well if upstream changes grouping later, you could just run
-
-    git submodule update --init --groups
-
-and get what you want?
-
->
->>      # will init all submodules from the default group
->>
->>      # as support for clone we want to have:
->>      git config submodule.groups default
->>      git submodule update --groups
->>
->>      # will update all submodules from the default group
->>
->> Any feedback welcome, specially on the design level!
->> (Do we want to have it stored in the .gitmodules file? Do we want to have
->> the groups configured in .git/config as "submodule.groups", any other way
->> to make it future proof and extend the groups syntax?)
->
->
-> Not sure what exactly you mean by "it" here ;-)
->
-> Talking about what groups a submodule belongs to, an entry in the
-> .gitmodules file makes the most sense to me. That way upstream can
-> change submodule grouping or add new submodules with group assignments
-> from commit to commit, and "git submodule update" will do the right
-> thing for the superproject commit checked out.
->
-> And I believe that the choice which group(s?) the user is interested
-> should be recorded in .git/config, as that is his personal setting
-> that shouldn't be influenced by upstream changes.
-
-Right. I once discussed with Jonathan Nieder, who dreamed of a more
-logical approach to the groups/sets of submodules. So more like set theory,
-i.e. have a more complicated grammar: Get all submodules which are
-in either A or B or (D AND E), but which are never in F.
-So I'd imagine the groups are more like bit tags, and you can describe
-a patterns you want.
-
-I guess we want some more powerful eventually, so I asked this open ended
-question there.
+My thinking is that groups are implying recursive, whereas recursive implies
+"all groups", so a git clone --group <half-the-submodules> --recursive
+makes not much sense to me as it begs the question, what does --recursive
+mean? Probably recurse into all submodules which are implied by the group
+<half-the-submodules>. And then get all the nested submodules. But in case
+you use the grouping feature, you could just mark the nested submodules with
+groups, too?
