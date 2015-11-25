@@ -1,226 +1,211 @@
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: [PATCH v5] blame: add support for --[no-]progress option
-Date: Tue, 24 Nov 2015 22:36:05 -0600
-Message-ID: <1448426165-5139-1-git-send-email-eantoranz@gmail.com>
-Cc: gitster@pobox.com, j6t@kdbg.org, tboegi@web.de,
-	Edmundo Carmona Antoranz <eantoranz@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: [RFC/PATCH] config: add core.trustmtime
+Date: Wed, 25 Nov 2015 07:35:23 +0100
+Message-ID: <1448433323-21037-1-git-send-email-chriscool@tuxfamily.org>
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Christian Couder <chriscool@tuxfamily.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 25 05:36:20 2015
+X-From: git-owner@vger.kernel.org Wed Nov 25 07:36:09 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1RoX-0007Vk-UW
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 05:36:18 +0100
+	id 1a1TgN-0000H9-No
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 07:36:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754171AbbKYEgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Nov 2015 23:36:16 -0500
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:36387 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753855AbbKYEgO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Nov 2015 23:36:14 -0500
-Received: by ykdr82 with SMTP id r82so44068871ykd.3
-        for <git@vger.kernel.org>; Tue, 24 Nov 2015 20:36:14 -0800 (PST)
+	id S1755157AbbKYGf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 01:35:56 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:37777 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754425AbbKYGfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 01:35:55 -0500
+Received: by wmww144 with SMTP id w144so55617244wmw.0
+        for <git@vger.kernel.org>; Tue, 24 Nov 2015 22:35:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=XY5ea9utJ21D5y2sbEBCoIhGFzPMNMLPlzy2+1TS3N8=;
-        b=AhD+SCZ+NLcwkrzWe6JCbrAtxJ1TTdf2ACRixSXWIWwVd3S9c3qI9AiMWcAJtO/zCM
-         thy2huULJcoFytPlc05wpd0jP7+5u9d1MogBtRGgoANHGl6OgcpjvvQaaBhe3xy8zPX+
-         wuQ8p+hRN/OWwrj9liMuoK1zpt9NWO1DuS7FoUAbQ7dUivzs1Tjc3EWO1As/HCI8+GiN
-         Mni1AdpoakfafDas+MfjBU0FKn1km6ThHvDqyw2I44RDsnOLG24sbqGgm0IA3g1Lr5FV
-         2s6rKco3ARU53CRJO+1sYtw8Sla7+h2qQliH+Bg0EtdGXS/iyX0U0r7dmjw981Pz8j9f
-         rwyA==
-X-Received: by 10.129.101.131 with SMTP id z125mr34501060ywb.184.1448426174301;
-        Tue, 24 Nov 2015 20:36:14 -0800 (PST)
-Received: from linuxerio.cabletica.com (ip100-190-15-186.ct.co.cr. [186.15.190.100])
-        by smtp.gmail.com with ESMTPSA id n76sm18486585ywn.0.2015.11.24.20.36.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 24 Nov 2015 20:36:13 -0800 (PST)
-X-Mailer: git-send-email 2.6.2
+        bh=09Kt1Z4waJJG6mLxqtkQg0DZDV1B+ecE5b9a0Z/i0AA=;
+        b=tDX2lUubiQV7kzRpM96y9Fo/jfSoam8Jl1Lbvfz5dqIRzSdg+axeTCjokL5ejSUcGV
+         EJTzCcv1SGNV/4vRl7rDYHiWGKjO19GNRygonyB/36tXBGilpu2oEw9zXgvRhvZLCiUw
+         ysLPMSluqO4EjiVz9i2nCB8nMApjMcGIr+0I7mmBozugVtUqwSrg0AmgNUjzUza8ecsm
+         uBoD6qSOsilAC/FbZZqyF4BPI+Ne9P4HEBDPo/NncA7iph4AIwoFLOsnEsoX1p2FvwFx
+         RTdm+WPn5Iyj6VR00pxTYP8Quy+GI5xZr7eRpK3d6YBuvBIBDB3FL1NwpSJJMqOegS9u
+         IU1w==
+X-Received: by 10.28.21.196 with SMTP id 187mr2510236wmv.82.1448433353569;
+        Tue, 24 Nov 2015 22:35:53 -0800 (PST)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id q77sm1854870wmd.22.2015.11.24.22.35.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 24 Nov 2015 22:35:52 -0800 (PST)
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.6.3.380.g494b52d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281678>
 
-* created struct progress_info in builtin/blame.c
-  this struct holds the information used to display progress so
-  that only one additional parameter is passed to
-  found_guilty_entry().
+When we know that mtime is fully supported by the environment, we
+don't want any slow down because we used --untracked-cache rather
+than --force-untracked-cache, and we don't want untracked cache to
+stop working because we updated a kernel.
 
-* --[no-]progress option is also inherited by git-annotate.
+Also when we know that mtime is not supported by the environment,
+for example because the repo is shared over a network file system,
+then we might want 'git update-index --untracked-cache' to fail
+immediately instead of it testing if it works (because it might
+work on some systems using the repo over the network file system
+but not others).
 
-Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/blame-options.txt |  7 +++++++
- Documentation/git-blame.txt     |  3 ++-
- builtin/blame.c                 | 40 ++++++++++++++++++++++++++++++++++++----
- 3 files changed, 45 insertions(+), 5 deletions(-)
+At Booking.com we know that mtime works everywhere and we don't
+want the untracked cache to stop working when a kernel is upgraded
+or when the repo is copied to a machine with a different kernel.
+I will add tests later if people are ok with this.
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 760eab7..ef642b9 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -69,6 +69,13 @@ include::line-range-format.txt[]
- 	iso format is used. For supported values, see the discussion
- 	of the --date option at linkgit:git-log[1].
+ Documentation/config.txt               | 8 ++++++++
+ Documentation/git-update-index.txt     | 6 +++++-
+ builtin/update-index.c                 | 6 +++++-
+ cache.h                                | 1 +
+ config.c                               | 7 +++++++
+ contrib/completion/git-completion.bash | 1 +
+ dir.c                                  | 2 +-
+ environment.c                          | 1 +
+ 8 files changed, 29 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index b4b0194..186ad17 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -308,6 +308,14 @@ core.trustctime::
+ 	crawlers and some backup systems).
+ 	See linkgit:git-update-index[1]. True by default.
  
-+--[no-]progress::
-+	Progress status is reported on the standard error stream
-+	by default when it is attached to a terminal. This flag
-+	enables progress reporting even if not attached to a
-+	terminal. Progress information won't be displayed if using
-+	`--porcelain` or `--incremental`.
++core.trustmtime::
++	If unset or set to 'default' or 'check', Git will test if
++	mtime is working properly before using features that need a
++	working mtime. If false, Git will refuse to use such
++	features. If set to true, Git will blindly use such features
++	without testing if they work.
++	See linkgit:git-update-index[1].
 +
- -M|<num>|::
- 	Detect moved or copied lines within a file. When a commit
- 	moves or copies a block of lines (e.g. the original file
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index e6e947c..b0154c2 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -10,7 +10,8 @@ SYNOPSIS
- [verse]
- 'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental]
- 	    [-L <range>] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
--	    [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>] [--] <file>
-+	    [--[no-]progress] [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>]
-+	    [--] <file>
+ core.checkStat::
+ 	Determines which stat fields to match between the index
+ 	and work tree. The user can set this to 'default' or
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index 1a296bc..8b4c5af 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -182,7 +182,9 @@ may not support it yet.
+ 	For safety, `--untracked-cache` performs tests on the working
+ 	directory to make sure untracked cache can be used. These
+ 	tests can take a few seconds. `--force-untracked-cache` can be
+-	used to skip the tests.
++	used to skip the tests. If you always want to skip those
++	tests, you can set the `core.trustmtime` configuration
++	variable to 'true', (see linkgit:git-config[1]).
  
- DESCRIPTION
- -----------
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 83612f5..954d32c 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -28,6 +28,7 @@
- #include "line-range.h"
- #include "line-log.h"
- #include "dir.h"
-+#include "progress.h"
+ \--::
+ 	Do not interpret any more arguments as options.
+@@ -398,6 +400,8 @@ It can be useful when the inode change time is regularly modified by
+ something outside Git (file system crawlers and backup systems use
+ ctime for marking files processed) (see linkgit:git-config[1]).
  
- static char blame_usage[] = N_("git blame [<options>] [<rev-opts>] [<rev>] [--] <file>");
++Untracked cache needs a fully working mtime, so it will look at
++`core.trustmtime` configuration variable (see linkgit:git-config[1]).
  
-@@ -50,6 +51,7 @@ static int incremental;
- static int xdl_opts;
- static int abbrev = -1;
- static int no_whole_file_rename;
-+static int show_progress;
+ SEE ALSO
+ --------
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 7431938..c64439f 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1107,9 +1107,13 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 	if (untracked_cache > 0) {
+ 		struct untracked_cache *uc;
  
- static struct date_mode blame_date_mode = { DATE_ISO8601 };
- static size_t blame_date_width;
-@@ -127,6 +129,11 @@ struct origin {
- 	char path[FLEX_ARRAY];
- };
- 
-+struct progress_info {
-+	struct progress *progress;
-+	int blamed_lines;
-+};
-+
- static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b, long ctxlen,
- 		      xdl_emit_hunk_consume_func_t hunk_func, void *cb_data)
- {
-@@ -1746,7 +1753,8 @@ static int emit_one_suspect_detail(struct origin *suspect, int repeat)
-  * The blame_entry is found to be guilty for the range.
-  * Show it in incremental output.
-  */
--static void found_guilty_entry(struct blame_entry *ent)
-+static void found_guilty_entry(struct blame_entry *ent,
-+			   struct progress_info *pi)
- {
- 	if (incremental) {
- 		struct origin *suspect = ent->suspect;
-@@ -1758,6 +1766,8 @@ static void found_guilty_entry(struct blame_entry *ent)
- 		write_filename_info(suspect->path);
- 		maybe_flush_or_die(stdout, "stdout");
- 	}
-+	if (pi)
-+		display_progress(pi->progress, pi->blamed_lines += ent->num_lines);
- }
- 
- /*
-@@ -1768,6 +1778,16 @@ static void assign_blame(struct scoreboard *sb, int opt)
- {
- 	struct rev_info *revs = sb->revs;
- 	struct commit *commit = prio_queue_get(&sb->commits);
-+	struct progress_info *pi = NULL;
-+
-+	if (show_progress) {
-+		pi = malloc(sizeof(*pi));
-+		if (pi) {
-+			pi->progress = start_progress_delay(_("Blaming lines"),
-+			                                    sb->num_lines, 50, 1);
-+			pi->blamed_lines = 0;
++		if (trust_mtime == 0) {
++			fprintf_ln(stderr,_("core.trustmtime is set to false"));
++			return 1;
 +		}
-+	}
- 
- 	while (commit) {
- 		struct blame_entry *ent;
-@@ -1809,7 +1829,7 @@ static void assign_blame(struct scoreboard *sb, int opt)
- 			suspect->guilty = 1;
- 			for (;;) {
- 				struct blame_entry *next = ent->next;
--				found_guilty_entry(ent);
-+				found_guilty_entry(ent, pi);
- 				if (next) {
- 					ent = next;
- 					continue;
-@@ -1825,6 +1845,11 @@ static void assign_blame(struct scoreboard *sb, int opt)
- 		if (DEBUG) /* sanity */
- 			sanity_check_refcnt(sb);
+ 		if (untracked_cache < 2) {
+ 			setup_work_tree();
+-			if (!test_if_untracked_cache_is_supported())
++			if (trust_mtime != 1 && !test_if_untracked_cache_is_supported())
+ 				return 1;
+ 		}
+ 		if (!the_index.untracked) {
+diff --git a/cache.h b/cache.h
+index 736abc0..69a6197 100644
+--- a/cache.h
++++ b/cache.h
+@@ -601,6 +601,7 @@ extern void set_alternate_index_output(const char *);
+ /* Environment bits from configuration mechanism */
+ extern int trust_executable_bit;
+ extern int trust_ctime;
++extern int trust_mtime;
+ extern int check_stat;
+ extern int quote_path_fully;
+ extern int has_symlinks;
+diff --git a/config.c b/config.c
+index 248a21a..d720b1f 100644
+--- a/config.c
++++ b/config.c
+@@ -691,6 +691,13 @@ static int git_default_core_config(const char *var, const char *value)
+ 		trust_ctime = git_config_bool(var, value);
+ 		return 0;
  	}
-+
-+	if (pi) {
-+		stop_progress(&pi->progress);
-+		free(pi);
-+	};
- }
++	if (!strcmp(var, "core.trustmtime")) {
++		if (!strcasecmp(value, "default") || !strcasecmp(value, "check"))
++			trust_mtime = -1;
++		else
++			trust_mtime = git_config_maybe_bool(var, value);
++		return 0;
++	}
+ 	if (!strcmp(var, "core.checkstat")) {
+ 		if (!strcasecmp(value, "default"))
+ 			check_stat = 1;
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 482ca84..39d1c9b 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2038,6 +2038,7 @@ _git_config ()
+ 		core.sparseCheckout
+ 		core.symlinks
+ 		core.trustctime
++		core.trustmtime
+ 		core.warnAmbiguousRefs
+ 		core.whitespace
+ 		core.worktree
+diff --git a/dir.c b/dir.c
+index d2a8f06..b06df1b 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1994,7 +1994,7 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+ 	if (dir->exclude_list_group[EXC_CMDL].nr)
+ 		return NULL;
  
- static const char *format_time(unsigned long time, const char *tz_str,
-@@ -2520,6 +2545,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('b', NULL, &blank_boundary, N_("Show blank SHA-1 for boundary commits (Default: off)")),
- 		OPT_BOOL(0, "root", &show_root, N_("Do not treat root commits as boundaries (Default: off)")),
- 		OPT_BOOL(0, "show-stats", &show_stats, N_("Show work cost statistics")),
-+		OPT_BOOL(0, "progress", &show_progress, N_("Force progress reporting")),
- 		OPT_BIT(0, "score-debug", &output_option, N_("Show output score for blame entries"), OUTPUT_SHOW_SCORE),
- 		OPT_BIT('f', "show-name", &output_option, N_("Show original filename (Default: auto)"), OUTPUT_SHOW_NAME),
- 		OPT_BIT('n', "show-number", &output_option, N_("Show original linenumber (Default: off)"), OUTPUT_SHOW_NUMBER),
-@@ -2555,6 +2581,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+-	if (!ident_in_untracked(dir->untracked)) {
++	if (trust_mtime != 1 && !ident_in_untracked(dir->untracked)) {
+ 		warning(_("Untracked cache is disabled on this system."));
+ 		return NULL;
+ 	}
+diff --git a/environment.c b/environment.c
+index 2da7fe2..c899947 100644
+--- a/environment.c
++++ b/environment.c
+@@ -14,6 +14,7 @@
  
- 	save_commit_buffer = 0;
- 	dashdash_pos = 0;
-+	show_progress = -1;
- 
- 	parse_options_start(&ctx, argc, argv, prefix, options,
- 			    PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_ARGV0);
-@@ -2579,6 +2606,11 @@ parse_done:
- 	DIFF_OPT_CLR(&revs.diffopt, FOLLOW_RENAMES);
- 	argc = parse_options_end(&ctx);
- 
-+	if (incremental || (output_option & OUTPUT_PORCELAIN))
-+		show_progress = 0;
-+	else if (show_progress < 0)
-+		show_progress = isatty(2);
-+
- 	if (0 < abbrev)
- 		/* one more abbrev length is needed for the boundary commit */
- 		abbrev++;
-@@ -2830,11 +2862,11 @@ parse_done:
- 
- 	read_mailmap(&mailmap, NULL);
- 
-+	assign_blame(&sb, opt);
-+
- 	if (!incremental)
- 		setup_pager();
- 
--	assign_blame(&sb, opt);
--
- 	free(final_commit_name);
- 
- 	if (incremental)
+ int trust_executable_bit = 1;
+ int trust_ctime = 1;
++int trust_mtime = -1;
+ int check_stat = 1;
+ int has_symlinks = 1;
+ int minimum_abbrev = 4, default_abbrev = 7;
 -- 
-2.6.2
+2.6.3.380.g494b52d
