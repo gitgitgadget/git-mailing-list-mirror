@@ -1,136 +1,135 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] config: add core.trustmtime
-Date: Wed, 25 Nov 2015 20:51:57 +0100
-Message-ID: <CACsJy8DhAfu7J=WpPAp8HYGLuFQC5+DZyZj6Hs6vruEJEeVKig@mail.gmail.com>
-References: <1448433323-21037-1-git-send-email-chriscool@tuxfamily.org> <CACBZZX4YSvfA=BRayk8CC8ipk_nDdvJfznxjyb-upwP9PKRBSA@mail.gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 5/5] builtin/clone: support submodule groups
+Date: Wed, 25 Nov 2015 12:03:06 -0800
+Message-ID: <CAGZ79kY8=HbKB-om+FynDPf0w4c=12PtJ_9CsUyBU21yyD4CXA@mail.gmail.com>
+References: <1448415139-23675-1-git-send-email-sbeller@google.com>
+	<1448415139-23675-6-git-send-email-sbeller@google.com>
+	<5655F544.6050003@web.de>
+	<CAGZ79kZrBRo9dfU=p8-bgvSpp=SSiXQHZGm7iCQ=9v0f_f_-aQ@mail.gmail.com>
+	<565610FD.9070303@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	David Turner <dturner@twopensource.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 20:52:32 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Eric Sunshine <ericsunshine@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Nov 25 21:03:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1g7D-0008ET-5S
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 20:52:31 +0100
+	id 1a1gHX-0003J6-Mt
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 21:03:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbbKYTwa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Nov 2015 14:52:30 -0500
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:34668 "EHLO
-	mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751542AbbKYTw2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2015 14:52:28 -0500
-Received: by lffu14 with SMTP id u14so73580509lff.1
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 11:52:26 -0800 (PST)
+	id S1751931AbbKYUDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 15:03:09 -0500
+Received: from mail-yk0-f173.google.com ([209.85.160.173]:36532 "EHLO
+	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751549AbbKYUDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 15:03:08 -0500
+Received: by ykdr82 with SMTP id r82so67867210ykd.3
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 12:03:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=FwX5nPLZhSdJ9F4gk8gd9yDUq+ix8pwMK9jAUtEhju8=;
-        b=tpwigmpBPWOp1Xp9i/EA3R18W8ldh4uu2sCacO/4laKtk44gJtg7XPnu3OeZjRaLLl
-         NdgvnXsNy4YlKf9UIySLgK89wS/HswnX4fsNzYJlLBTHf3n4JYU85K2bwYVThLDbiZ7W
-         hWdVteP5ayeFxprLAEtLjtgAeJ2rXMHNz9taD/XElQfZFQKu+Jm7J8HqyEklhm1ufQR4
-         tqg8MuKLouqWXk+/ceToc4MojpL+tOIIHWa2BSguKNkZgHS18UIH3p/VF5DX/XYV7C6u
-         ekBYmoortMvmm8zkWDwx73O0J6DrS29wZvnelb/G0RlpR/HgLCN6SgY2XYen9+SHdPTL
-         Y7qA==
-X-Received: by 10.112.171.74 with SMTP id as10mr15614369lbc.137.1448481146740;
- Wed, 25 Nov 2015 11:52:26 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Wed, 25 Nov 2015 11:51:57 -0800 (PST)
-In-Reply-To: <CACBZZX4YSvfA=BRayk8CC8ipk_nDdvJfznxjyb-upwP9PKRBSA@mail.gmail.com>
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8WypDl3tNDqbYf2VF9N+HS5MN959BE3HvIVWwU3EY3c=;
+        b=O5oFHxvsRp1B1EuM62Yz+jlWLYYt3U6SBnLez5cvlTTolr5QxaHuSEWuu8BMau+Rjz
+         NdOXGclKc1Su2Qmp8aZe7T2zyXwwnJruo2aF2tl8J+MgQbbgp40GopH/YYR70Iq930BN
+         QsbkdR/iVcVvqT2rfhbjFDXQVnkvu8n8HM9XfYaZrTqErkKNHTzCTdAlrKeH2Xf8tVyL
+         jAQvKfwhD3QXsnL77T928W0mEAHtSR/RUFkrAWnsbgpFYgwbSGXTkOmCxxsYmeMWg9kv
+         H/cnRKMrD+cxMoKdDPD/z5nRwpt2YYhQAIvrzOvUKH44qOnDQRrP9WOSrFytVWvUWieJ
+         CVhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=8WypDl3tNDqbYf2VF9N+HS5MN959BE3HvIVWwU3EY3c=;
+        b=S6Ns2V+mQPpmpsvuiokGSXggAudL+/L7ofv/+27z2Gr/tJbeNKda9ca+DGDqtMAoai
+         R4Wzildf8MZQNYeCDkrX4irbktwoyMC2862bz+sHYsQ9zNAOh14/NCMQbFpK2jr7vglg
+         jticuXweh/XWh9/5lM/LwmS1wGxwhaDTy5AUOQotn++aGe6Z3Gshp+eNUIDbFWFWCC16
+         DKLNT1q7cQgdcdVl4l/afQaa6eL4WTgH8UOX82d8jEaPVFgtF4+L8OU5zHMtaHLXdBBY
+         pWvtDClhPU91ZC3DO5WDnDcgHJfFZgXSHESdqHim1j+qwtagLuUxtyDV8bzGybJMCF+S
+         YEGQ==
+X-Gm-Message-State: ALoCoQm66JGZlsLoTOfgdXg3xiDT5ZfFK34hEPALo5pcxFmv7lcWekfPI3QnGuFRhajZnNboBtBo
+X-Received: by 10.13.214.19 with SMTP id y19mr34220810ywd.63.1448481786719;
+ Wed, 25 Nov 2015 12:03:06 -0800 (PST)
+Received: by 10.37.196.70 with HTTP; Wed, 25 Nov 2015 12:03:06 -0800 (PST)
+In-Reply-To: <565610FD.9070303@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281736>
 
-On Wed, Nov 25, 2015 at 10:00 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
-n
-<avarab@gmail.com> wrote:
-> On Wed, Nov 25, 2015 at 7:35 AM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->> At Booking.com we know that mtime works everywhere and we don't
->> want the untracked cache to stop working when a kernel is upgraded
->> or when the repo is copied to a machine with a different kernel.
->> I will add tests later if people are ok with this.
+On Wed, Nov 25, 2015 at 11:50 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
 >
-> I bit more info: I rolled Git out internally with this patch:
-> https://github.com/avar/git/commit/c63f7c12c2664631961add7cf3da901b0b=
-6aa2f2
+>> My thinking is that groups are implying recursive, whereas recursive
+>> implies
+>> "all groups", so a git clone --group <half-the-submodules> --recursive
+>> makes not much sense to me as it begs the question, what does --recursive
+>> mean?
 >
-> The --untracked-cache feature hardcodes the equivalent of:
 >
->     pwd; uname --kernel-name --kernel-release --kernel-version
+> Groups are only about what submodules to update and have nothing to
+> do with recursion. It might make sense to imply recursion, but that's
+> just because that should have been the default for submodules from day
+> one. Recursion and groups are orthogonal, the first is about what to
+> do inside the submodules (carry on or not?) and the latter is about
+> what to do in the superproject (shall I update this submodule?).
+
+I see. So we would not want to mutually exclude recurse and groups,
+but rather have groups implies --recurse, but you are allowed to give
+--no-recurse if you explicitely do not want to recurse into the subsubmodules.
+
 >
-> Into the index. If any of those change it prints out the "cache is
-> disabled" warning.
+>> Probably recurse into all submodules which are implied by the group
+>>
+>> <half-the-submodules>.
 >
-> This patch will make it stop being so afraid of itself to the point o=
-f
-> disabling itself on minor kernel upgrades :)
-
-The problem is, there's no way to teach git to know it's a "minor"
-upgrade.. but if there is a config key to say "don't be paranoid, I
-know what I'm doing", then we can skip that check, or just warn
-instead of disabling the cache.
-
-> A few other issues with this feature I've noticed:
 >
->  * There's no way to just enable it globally via the config. Makes it
-> a bit of a hassle to use it. I wanted to have a config option to
-> enable it via the config, how about "index.untracked_cache =3D true" =
-for
-> the config variable name?
+> Yep. We also do not recurse into those submodules having set their
+> update setting to "none", so we do not do that for submodules not
+> in any chosen group either.
+>
+>> And then get all the nested submodules. But in case
+>>
+>> you use the grouping feature, you could just mark the nested submodules
+>> with
+>> groups, too?
+>
+>
+> Not in the top superproject. In a submodule you can specify new groups
+> for its sub-submodules, but these will in most cases be different from
+> those of the superproject.
+>
+> Imagine I have this really cool Metaproject which contains the Android
+> superproject as a submodule. Those two will define different groups,
+> and when recursing into the android submodule I need to choose from the
+> Android specific groups. So my Metaproject's .gitmodules could look like
+> this:
+>
+> [submodule "android"]
+>         path = android
+>         url = git://...
+>         groups = default,mobile
+>         subgroups = devel
+>
+> "groups" tells git what superproject groups the android submodule
+> belongs to, and "subgroups" tells git what android submodules are
+> to be checked out when running recursively into it. If you do not
+> configure "subgroups", the whole android submodule is updated when
+> one of the groups "default" or "mobile" is chosen in the superproject.
 
-If you haven't noticed, all these experimental features have no real
-UI (update-index is plumbing). I have been waiting for someone like
-you to start using it and figure out the best UI (then implement it)
-;)
+I like the concept of subgroups as it allows to have some control over
+subsubmodules you may want to aggregate from a third party via the
+middleman submodule.
 
->  * Doing "cd /tmp: git --git-dir=3D/git/somewhere/else/.git update-in=
-dex
-> --untracked-cache" doesn't work how I'd expect. It hardcodes "/tmp" a=
-s
-> the directory that "works" into the index, so if you use the working
-> tree you'll never use the untracked cache. I spotted this because I
-> carry out a bunch of git maintenance commands with --git-dir instead
-> of cd-ing to the relevant directories. This works for most other
-> things in git, is it a bug that it doesn't work here?
-
-It needs the current directory at --untrack-cache time to test if the
-directory satisfies the requirements. So either you cd to that
-worktree, or you have to specify --worktree as well. Or am I missing
-something?
-
->  * If you "ctrl+c" git update-index --untracked-cache at an
-> inopportune time you'll end up with a mtime-test-XXXXXX directory in
-> your working tree. Perhaps this tempdir should be created in the .git
-> directory instead?
-
-No because in theory .git could be on a separate file system with
-different semantics. But we should probably clean those files at ^C.
-
->  * Maybe we should have a --test-untracked-cache option, so you can
-> run the tests without enabling it.
-
-I'd say patches welcome.
-
-> Aside from the slight hassle of enabling this and keeping it enabled
-> this feature is great. It's sped up "git status" across the board by
-> about 40%. Slightly less than that on faster spinning disks, slightly
-> more than that on slower ones.
-
-I'm still waiting for the day when watchman support gets merged and
-maybe poke Facebook guys to compare performance with Mercurial :)
-Well, we are probably still behind Mercurial on that day.
-
-Also, there's still work to be done. Right now it's optimized for
-whole-tree "git status", Doing "git status -- abc" will not benefit
-from untracked cache, similarly "git add" with pathspec..
---=20
-Duy
+I'd prefer to delay that feature though by not giving a high priority.
+Also would you go with subsubgroups, too? When does the recursion
+end? In case we have more than the union of groups, but also prohibitive
+terms available, could subgroups clash with the submodules groups spec?
