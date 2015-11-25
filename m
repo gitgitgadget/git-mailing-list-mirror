@@ -1,79 +1,62 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4] Documentation/git-update-index: add missing opts to synopsis
-Date: Wed, 25 Nov 2015 10:30:02 +0100
-Message-ID: <1448443802-24507-1-git-send-email-chriscool@tuxfamily.org>
-Cc: Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 25 10:30:32 2015
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: What's cooking in git.git (Nov 2015, #04; Tue, 24)
+Date: Wed, 25 Nov 2015 10:13:42 +0000
+Message-ID: <20151125101342.GE18913@serenity.lan>
+References: <20151125010722.GA23632@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 25 11:15:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1WP8-0003O4-HA
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 10:30:22 +0100
+	id 1a1X6G-0005UM-PY
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 11:14:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750964AbbKYJaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 04:30:19 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36698 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750704AbbKYJaR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 04:30:17 -0500
-Received: by wmec201 with SMTP id c201so10209033wme.3
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 01:30:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=X6Z5DUae73INSUZsSB4asuB/LZ9NJEhCE/AJKHXpDYI=;
-        b=0q1MTQzvmtEZDIQC9fm2D42F04XlphbGEpfgXLQ9aBRS0VZZWSHz1R7qLeRfYs+AWT
-         0q+25e47nM6yq1ly0IU7HuqVHPfHH6hu7/avfhP+TcZFxp4rjDo9j9ljDYSxXejAOmSk
-         HLtN5SG1TF3R6et3E8XVPm8dmhIN9fiwdnfevQFvYQ4EnCC9sOtqR2GXbdQrLaZGoQ5/
-         Ap+IZp7N54MSZNcMBthzCa3qrwcup+OBchQ97bCMZ9B/4M8XSEyAk5qFjddMOjec5ay2
-         SHxYGU+eFsFiZhdzsDGT/fcb88Ad97rQgEMfMjVdWWSeOnLhbYOAFYdxExTD/GJnfR9x
-         TV7w==
-X-Received: by 10.194.6.196 with SMTP id d4mr22575600wja.120.1448443815516;
-        Wed, 25 Nov 2015 01:30:15 -0800 (PST)
-Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id lx4sm22168409wjb.5.2015.11.25.01.30.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 25 Nov 2015 01:30:14 -0800 (PST)
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.6.3.380.g494b52d
+	id S1752253AbbKYKOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 05:14:49 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:35480 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751049AbbKYKOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 05:14:47 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 20773CDA5B7;
+	Wed, 25 Nov 2015 10:14:44 +0000 (GMT)
+X-Quarantine-ID: <z43bUsNqADDH>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id z43bUsNqADDH; Wed, 25 Nov 2015 10:14:43 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id BB1A0CDA637;
+	Wed, 25 Nov 2015 10:13:44 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <20151125010722.GA23632@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281693>
 
-Split index related options should appear in the 'SYNOPSIS'
-section.
+On Tue, Nov 24, 2015 at 08:07:23PM -0500, Jeff King wrote:
+> * jk/send-email-ssl-errors (2015-11-24) 1 commit
+>  - send-email: enable SSL level 1 debug output
+> 
+>  Improve error reporting when SMTP TLS fails.
+> 
+>  Will merge to 'next'.
 
-These options are already documented in the 'OPTIONS' section.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
-This v4 contains only the split-index options and applies on top
-of the new master that already contains the untracked-cache options. 
-
- Documentation/git-update-index.txt | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 3df9c26..f4e5a85 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -17,6 +17,7 @@ SYNOPSIS
- 	     [--[no-]assume-unchanged]
- 	     [--[no-]skip-worktree]
- 	     [--ignore-submodules]
-+	     [--[no-]split-index]
- 	     [--[no-|force-]untracked-cache]
- 	     [--really-refresh] [--unresolve] [--again | -g]
- 	     [--info-only] [--index-info]
--- 
-2.6.3.380.g494b52d
+Can you hold off on this one?  I think my last-minute change not to
+switch on --smtp-debug has introduced a Perl warning that needs to be
+suppressed.
