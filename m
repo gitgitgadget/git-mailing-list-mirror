@@ -1,163 +1,64 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 5/5] builtin/clone: support submodule groups
-Date: Wed, 25 Nov 2015 14:51:22 -0800
-Message-ID: <CAGZ79kbOO=-nXj5htrg8GXV-iH-62gVwVb_SAGtbz3DOWXC=rg@mail.gmail.com>
-References: <1448415139-23675-1-git-send-email-sbeller@google.com>
-	<1448415139-23675-6-git-send-email-sbeller@google.com>
-	<5655F544.6050003@web.de>
-	<CAGZ79kZrBRo9dfU=p8-bgvSpp=SSiXQHZGm7iCQ=9v0f_f_-aQ@mail.gmail.com>
-	<565610FD.9070303@web.de>
-	<CAGZ79kY8=HbKB-om+FynDPf0w4c=12PtJ_9CsUyBU21yyD4CXA@mail.gmail.com>
-	<5656366D.4010508@web.de>
+From: Stephen & Linda Smith <ischis2@cox.net>
+Subject: Signed tags and git repository
+Date: Wed, 25 Nov 2015 16:19:07 -0700
+Message-ID: <3816223.3lD8Al3iuQ@thunderbird>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Eric Sunshine <ericsunshine@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Nov 25 23:51:32 2015
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 26 01:00:28 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1iuM-0005J6-Hc
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 23:51:26 +0100
+	id 1a1jz8-0007AE-66
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Nov 2015 01:00:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752201AbbKYWvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 17:51:25 -0500
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:33571 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751081AbbKYWvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 17:51:23 -0500
-Received: by ykdv3 with SMTP id v3so72416146ykd.0
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 14:51:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ALwLKU1dibQo7VEwf85AoDiRavJe49/YQH5JiVGU540=;
-        b=lCe1fHBkmjCbFmeUci0camCJXklt0pjzVFNOmlzf0jqKyTIHAQtpZRMX95vrY8Cn9z
-         rgoRrJJN29UmsfKeczTyyPyxxTHku8eJsSO3rO4uFzhtpLUDDX/7KdMfmoD3ctNpX0Kt
-         Wxizbyp5AEG6qAM8wVMN2gliNX3A6n+EYw8HjcB9OE/lxPps5KXUpSzk9w6NSqMYLDzC
-         676+s/nct5EMACymcLxMF3aaJ4goZTcPRQzDyg9ww44u0GtLat4QiFSGgX43+oXRloea
-         0le59+mamXmw/GJ3kGq3Y90fCu6tZOZkSQn9em8bpmKOCmwru+weIBNrHKRGa38MFbhF
-         B2HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ALwLKU1dibQo7VEwf85AoDiRavJe49/YQH5JiVGU540=;
-        b=D47QS6+MBmk94dFsObPpWqEF5V3zLu+ZHwdSQScXpzMSsTmRNVxyMpJLvhwCOv9S45
-         uGd3VXUeeP+8mBfBT1y43vXHK8tiqdSPfqDfAINSNEZ/neRZhDnjIMaBu9yqAnOH7PUk
-         /3+WF1aWlp02a1zZ3hi4GhJJM7ZmKGWj//sHWO0JHfo3WIsO4/V2CpbSt/sMdwkrhNeX
-         P/2NLyHv1xq+THJzeqyqg7/dYD/2MSMGwx74p72uV2q+4Fg+a/UdihoyUe8aH36zHjOn
-         mG3FIQYfRv6CST1EKbS+nMXBaJe7KnVxLsv78hqmFLVFRi4GyANHkfM4ztIn8Avbo3Hk
-         G6tA==
-X-Gm-Message-State: ALoCoQld4wsD/YH101atZ8Qo9BNt9fyyzRNE1oLMx0fEnqsJWex1RRKFkDcFOrdLBw/w5BxXiu8y
-X-Received: by 10.13.235.135 with SMTP id u129mr38233685ywe.48.1448491882955;
- Wed, 25 Nov 2015 14:51:22 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Wed, 25 Nov 2015 14:51:22 -0800 (PST)
-In-Reply-To: <5656366D.4010508@web.de>
+	id S1751536AbbKZAAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 19:00:25 -0500
+Received: from fed1rmfepi105.cox.net ([68.230.241.136]:57924 "EHLO
+	fed1rmfepi105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751198AbbKZAAX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 19:00:23 -0500
+X-Greylist: delayed 2484 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Nov 2015 19:00:23 EST
+Received: from fed1rmimpo306 ([68.230.241.174]) by fed1rmfepo203.cox.net
+          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
+          id <20151125231858.MVJB28496.fed1rmfepo203.cox.net@fed1rmimpo306>
+          for <git@vger.kernel.org>; Wed, 25 Nov 2015 18:18:58 -0500
+Received: from thunderbird ([68.231.74.134])
+	by fed1rmimpo306 with cox
+	id lzJy1r0062tqoqC01zJyR8; Wed, 25 Nov 2015 18:18:58 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020201.565641E2.00EC,ss=1,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.0 cv=LKq4tuq9 c=1 sm=1
+ a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=qtqOOiqGOCEA:10
+ a=O59IILMnOeSoJVEKy6oA:9 a=CjuIK1q_8ugA:10 a=/Rt4pg3TtX3KzfzhvVoEow==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: from thunderbird.localnet (thunderbird [127.0.0.1])
+	by thunderbird (Postfix) with ESMTP id D52A313F66E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2015 16:19:07 -0700 (MST)
+User-Agent: KMail/5.0.2 (Linux/4.2.0-19-generic; KDE/5.15.0; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281750>
 
-On Wed, Nov 25, 2015 at 2:30 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->>
->>
->> I like the concept of subgroups as it allows to have some control over
->> subsubmodules you may want to aggregate from a third party via the
->> middleman submodule.
->
->
-> That's the point (though maybe someone might come up with a better
-> name than "subgroups" ;-). And each repo configures its own submodule
-> groups.
->
->> I'd prefer to delay that feature though by not giving a high priority.
->
->
-> No problem, we can start with "check out all subsubmodules" for now.
-> But I suspect we'll need subgroups rather sooner than later.
+I've been following commits to the linux and git repostitories for some time.   I used signed tags for
+projects that I'm working on.   
 
-Oh!
-I thought we'd recursively propagate the groups, so the subsubmodules
-are checked to be either in groups or subgroups, and the subgroups are
-just a way to enhance the union of groups.
+I know that the linux and git repositories have signed tags, but I'm not able to verify 
+them because my key isn't signed by anyone that leads back to one of the git or linux 
+maintainers. Of course I live in a technical desert since there seems to be no one that I
+can find who lives in Phoenix, AZ that has a relationship to one of those two 
+git repositories.
 
->
->> Also would you go with subsubgroups, too? When does the recursion
->> end?
->
->
-> Subsubgroups do not make sense in the superproject, that can only
-> configure its direct submodules.
+What have others done when they want their keys signed so they can be part of the 
+web of trust? Does either of those two projects have a formal way of establishing these
+relationships?
 
-> I think you are talking about the
-> groups of the subsubmodules, and these have to be chosen inside the
-> first level submodules via the subgroups of its submodules (which
-> are the second level submodules of the superproject). Still with
-> me? ;-)
-
-I believe so.
-
-> So the recursion can go on forever even as soon as we
-> implement the subgroup configuration.
-
-So lets say you have your meta collection repository,
-which looks like that:
-
-operating systems:
-    ubuntu
-        linux
-        nonfree-game
-        ...
-    gentoo
-        ...
-    fedora
-        ...
-    android
-        linux
-        linux-build-configs
-            vendor-phones
-            nexus-family
-
-In the "operating systems" repo I have the submodules
-ubuntu and android marked via a group: "work-related".
-
-Now I want to specify to have the linux, linux-build-configs,
-and in there the nexus-family in the android repository.
-
-One way would be to have the "operating systems" repo to
-have subsubgroups specifying the groups in the
-submodules of linux-build-configs (3rd level of submodules).
-You seem to oppose that.
-
-The other way to do that, would be to have a fork of the android
-repo and put in the right subgroups to select for the right submodules
-in linux-build-configs. So forking and fixing the groups config
-would be the way to make changes from upstream.
-
-I personally would find it easier to have all the spec in the one
-superproject repository as then I don't need to update the
-forks. (the .gitmodules file would get some conflicts, in case of my
-fork there, so it's not easy to maintain long term)
-
-Is there yet another way to handle such a case of deeply nested
-submodules properly?
-
->
->> In case we have more than the union of groups, but also prohibitive
->>
->> terms available, could subgroups clash with the submodules groups spec?
->
->
-> Not that I'm aware of. Groups decide which submodules to update and
-> only for those submodules subgroups tell git what group to use inside
-> that submodule. And so on.
+sps
