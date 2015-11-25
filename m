@@ -1,139 +1,177 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: [RFC PATCH 0/5] Submodule Groups
-Date: Wed, 25 Nov 2015 18:35:34 +0100
-Message-ID: <5655F166.9090601@web.de>
+Date: Wed, 25 Nov 2015 10:00:28 -0800
+Message-ID: <CAGZ79kbd2g9QSuGmyf6Ybp6dCqMfSBqj8WZgfTejXU8OdszaBw@mail.gmail.com>
 References: <1448415139-23675-1-git-send-email-sbeller@google.com>
+	<5655F166.9090601@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: peff@peff.net, gitster@pobox.com, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, ericsunshine@gmail.com,
-	j6t@kdbg.org, hvoigt@hvoigt.net
-To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 25 18:56:16 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Eric Sunshine <ericsunshine@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Nov 25 19:00:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1eIf-0002ba-IU
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 18:56:13 +0100
+	id 1a1eMq-0002OT-8K
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 19:00:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752221AbbKYR4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 12:56:11 -0500
-Received: from mout-xforward.web.de ([82.165.159.35]:65055 "EHLO
-	mout-xforward.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566AbbKYR4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 12:56:07 -0500
-Received: from [192.168.178.41] ([79.211.124.82]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MWAwH-1ZqFxS1oyn-00XLrh; Wed, 25 Nov 2015 18:35:39
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <1448415139-23675-1-git-send-email-sbeller@google.com>
-X-Provags-ID: V03:K0:wrRcP4Tj/cq/IOVQxHXtg3iCUV6DhtqomhitTekHyL9qgxy9GKn
- mEZU4iNhkO+QLWGC54Xggg1H4OObf4socUTnKovl8EKVGv6OaR8zB8lnIsfr8ZmsDDXxL/V
- 5QWHKVNX4KBE6A45YeMer/03OIRyE7fv0sJfd33FlaY6ffvspUiTJtutpZSnh2stVoJDKTi
- uG6mIEcCQFJ2SrvdEhomg==
-X-UI-Out-Filterresults: junk:10;V01:K0:Zzp1Y2/85NU=:IeubXYhXLODcsKlnI6+64mL5
- z5ecKLwNVK2APArK6ThJKa+RGODAtu3pOuP5rC90Bekyw204SPnPCyNYVtIVemBt8MAiw+OWO
- KSwHhtWP0TsRdv8AYgr+F+cHHIQQ+/XrtjklsB6thG2Ejg1uUMHQFRPbAUi+4tch7Pb9BtzMb
- Bj2Fi+oJ5av4YWzbxPnIQs5TcTaRMjxuKjSXRxs3r+ghlTT132UcFD3IOUIRk3y8FyXelCqQF
- FEHxcYsqouuwTB4eUh2VuaP0h9RxisHfiza9ANYmw3JUzSW/AgCEn2p93nSuXu/zEYTHbj7px
- 6ro+wpXYFpiTEcqzjc+F2JrgvCfgBexsodAyovIHjVgJmUFSBmUR1fuYaPeAjuWB6m19LEzvn
- j1At9e7qLB3LiquxFDOOSdUcfFSVKoBnYZfAL40wpKnQmWU0FtxXlPbBVVdScllhJRIPf5Td8
- M/Z8uk3XkVw5LmKgcvn2+pmfkllXFLheIIChdYEgDMD8Vad0CuMDZQ6or+GSRgqJth9oCVpp7
- VvNjCJDRkCT9hBMqAbmrhkQfEFToBK1aTRhsfUHwolotrhgd4K2nyf4lxxnJ5JvkNcphYqsRf
- X+GXg/LJMFqV/DU2zr2aKVGRGVRaMEPuwj8k9lG7dZu0Z0wwJbmN8E8duWlDEfzTO2ULa5Gm7
- nG6w8EoIfI4BEgH4xhLd/G4x64+hl9v1iR1ajVQuNhZF6VWVZ9qg4XlD6m5OvmFA5nsJ9mBM+
- Of0BqTr+JgWAN7k6hfDnXoJr5xIeLubX2HgOyLqmTb+nxcuh8GL9T8AIecQPcM9K4bRUfkGe 
+	id S1751834AbbKYSAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 13:00:31 -0500
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:34650 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566AbbKYSA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 13:00:29 -0500
+Received: by ykfs79 with SMTP id s79so64913962ykf.1
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 10:00:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=iWOLV9cwtUonsSBQI0NI7KdK/qshJ5egDp7sVLjBDQ4=;
+        b=ejdg4BfzeA+Z6aZ//6Br1z1Tf0lH9GlSsLqKcNGOTmWB4T2toql/kJfqnk+Ihx8UVO
+         uvHxGBCrlm1OALj/3BNtj6qoHmSC1p9zuT/qNjY3/yPZpApkTegXU6BLYNNuak4hLTax
+         MSj4OsXy3YmPUXmIcdaCS0aVzfMJKd6Ls/bhOdOhP63LvDjlO4viYL+LwEDkGYbeZ1Gq
+         cbUKunh0bYsmz8X2txy4IBREmpHmgYZbNAm8JVpIWv1d3DvKUkTx5fZGqiyAl5lG/p1m
+         /ERKJDUkNmu2ujxWYREM+uBBGBT1QIr7KW8wnKsrZ7tP53vrdK9VzND8OUQzrG2TBNal
+         H6+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=iWOLV9cwtUonsSBQI0NI7KdK/qshJ5egDp7sVLjBDQ4=;
+        b=dSKSdJ8gHWJDfMCsZiYCF5PZW19XsLFkSNq+tZr31RFguhVcJ+aIcHHzRwL+sIyg0H
+         o1CenUkEe9oCbQn0sjbPxZ3mPeH+03YZyUZSsrB59sJcaKPC3hi9j6wXfzM4XAOYUij3
+         R0asRQVaFykR4DEa57EbpOCpfJnHkpBF+Cxq7WCiqSpKEJjT64wmmbljLXeb8fMExYMB
+         q0ac6r8hQUXSYbiZesOF1DxdFPBtuJfLsYLn1U1nGjEdv7IzPpNa02BLi67TcUOIxChv
+         kHdf1NJuKLXhQgkpWy16zPVdpmpm7ofBM1b4Mgq/sgzdltK5KD0iE4j4T1GNNKtoIhR2
+         0CDQ==
+X-Gm-Message-State: ALoCoQmrR+3qqkU2kfF2cVEuvxhoeA2egTZfd/CJO0E0h7yb+F/tDQqApRh7vrAcfJAQi1wxQJto
+X-Received: by 10.13.214.19 with SMTP id y19mr33757743ywd.63.1448474428796;
+ Wed, 25 Nov 2015 10:00:28 -0800 (PST)
+Received: by 10.37.196.70 with HTTP; Wed, 25 Nov 2015 10:00:28 -0800 (PST)
+In-Reply-To: <5655F166.9090601@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281723>
 
-Am 25.11.2015 um 02:32 schrieb Stefan Beller:
-> This is also available at https://github.com/stefanbeller/git/tree/submodule-groups
-> It applies on top of the submodule-parallel-patch series I sent a few minutes ago.
+--cc Johannes Sixt
+
+On Wed, Nov 25, 2015 at 9:35 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>> [submodule "gcc"]
+>>          path = gcc
+>>          url = git://...
+>>          groups = default,devel
+>> [submodule "linux"]
+>>          path = linux
+>>          url = git://...
+>>          groups = default
+>> [submodule "nethack"]
+>>          path = nethack
+>>          url = git://...
+>>          groups = optional,games
 >
-> Consider having a real large software project in Git with each component
-> in a submodule (such as an operating system, Android, Debian, Fedora,
-> no toy OS such as https://github.com/gittup/gittup as that doesn't quite
-> demonstrate the scale of the problem).
 >
-> If you have lots of submodules, you probably don't need all of them at once,
-> but you have functional units. Some submodules are absolutely required,
-> some are optional and only for very specific purposes.
+> Yup. Do you want the user to select only a single group or do you
+> plan to support selecting multiple groups at the same time too?
+
+Yes you should be able to select multiple groups, such as
+default+devel or alternatively default+games.
+
+The logical OR is supported in this patch series (all submodules which are
+in at least one of the specified groups,i.e. A OR B OR C ...)
+
 >
-> This patch series adds meaning to a "groups" field in the .gitmodules file.
+>> and by this series you can work on an arbitrary subgroup of these
+>> submodules such
+>> using these commands:
+>>
+>>      git clone --group default --group devel git://...
+>>      # will clone the superproject and recursively
+>>      # checkout any submodule being in at least one of the groups.
 >
-> So you could have a .gitmodules file such as:
 >
-> [submodule "gcc"]
->          path = gcc
->          url = git://...
->          groups = default,devel
-> [submodule "linux"]
->          path = linux
->          url = git://...
->          groups = default
-> [submodule "nethack"]
->          path = nethack
->          url = git://...
->          groups = optional,games
+> Does this automatically configure the given group in .git/config, so
+> that all future submodule related commands know about this choice?
+> Me thinks that would make sense ...
 
-Yup. Do you want the user to select only a single group or do you
-plan to support selecting multiple groups at the same time too?
+It does. Internally it does
 
-> and by this series you can work on an arbitrary subgroup of these submodules such
-> using these commands:
+    git config submodule.groups A,B
+    git submodule update --init --groups
+
+whereas submodule update checks if the submodule.groups
+value is set and if so operates on the groups only.
+
 >
->      git clone --group default --group devel git://...
->      # will clone the superproject and recursively
->      # checkout any submodule being in at least one of the groups.
-
-Does this automatically configure the given group in .git/config, so
-that all future submodule related commands know about this choice?
-Me thinks that would make sense ...
-
->      git submodule add --group default --group devel git://... ..
->      # will add a submodule, adding 2 submodule
->      # groups to its entry in .gitmodule
-
-Maybe '--groups default,devel' is easier to grok? Dunno.
-
->      # as support for clone we want to have:
->      git config submodule.groups default
->      git submodule init --groups
-
-Hmm, I doubt it makes much sense to add the --group option to "git
-submodule init". I'd rather init all submodules and do the group
-handling only in the "git submodule update" command. That way
-upstream can change grouping later without having the user to
-fiddle with her configuration to make that work.
-
->      # will init all submodules from the default group
+>>      git submodule add --group default --group devel git://... ..
+>>      # will add a submodule, adding 2 submodule
+>>      # groups to its entry in .gitmodule
 >
->      # as support for clone we want to have:
->      git config submodule.groups default
->      git submodule update --groups
 >
->      # will update all submodules from the default group
+> Maybe '--groups default,devel' is easier to grok? Dunno.
+
+I guess that makes sense.
+
 >
-> Any feedback welcome, specially on the design level!
-> (Do we want to have it stored in the .gitmodules file? Do we want to have
-> the groups configured in .git/config as "submodule.groups", any other way
-> to make it future proof and extend the groups syntax?)
+>>      # as support for clone we want to have:
+>>      git config submodule.groups default
+>>      git submodule init --groups
+>
+>
+> Hmm, I doubt it makes much sense to add the --group option to "git
+> submodule init". I'd rather init all submodules and do the group
+> handling only in the "git submodule update" command. That way
+> upstream can change grouping later without having the user to
+> fiddle with her configuration to make that work.
 
-Not sure what exactly you mean by "it" here ;-)
+Well if upstream changes grouping later, you could just run
 
-Talking about what groups a submodule belongs to, an entry in the
-.gitmodules file makes the most sense to me. That way upstream can
-change submodule grouping or add new submodules with group assignments
-from commit to commit, and "git submodule update" will do the right
-thing for the superproject commit checked out.
+    git submodule update --init --groups
 
-And I believe that the choice which group(s?) the user is interested
-should be recorded in .git/config, as that is his personal setting
-that shouldn't be influenced by upstream changes.
+and get what you want?
+
+>
+>>      # will init all submodules from the default group
+>>
+>>      # as support for clone we want to have:
+>>      git config submodule.groups default
+>>      git submodule update --groups
+>>
+>>      # will update all submodules from the default group
+>>
+>> Any feedback welcome, specially on the design level!
+>> (Do we want to have it stored in the .gitmodules file? Do we want to have
+>> the groups configured in .git/config as "submodule.groups", any other way
+>> to make it future proof and extend the groups syntax?)
+>
+>
+> Not sure what exactly you mean by "it" here ;-)
+>
+> Talking about what groups a submodule belongs to, an entry in the
+> .gitmodules file makes the most sense to me. That way upstream can
+> change submodule grouping or add new submodules with group assignments
+> from commit to commit, and "git submodule update" will do the right
+> thing for the superproject commit checked out.
+>
+> And I believe that the choice which group(s?) the user is interested
+> should be recorded in .git/config, as that is his personal setting
+> that shouldn't be influenced by upstream changes.
+
+Right. I once discussed with Jonathan Nieder, who dreamed of a more
+logical approach to the groups/sets of submodules. So more like set theory,
+i.e. have a more complicated grammar: Get all submodules which are
+in either A or B or (D AND E), but which are never in F.
+So I'd imagine the groups are more like bit tags, and you can describe
+a patterns you want.
+
+I guess we want some more powerful eventually, so I asked this open ended
+question there.
