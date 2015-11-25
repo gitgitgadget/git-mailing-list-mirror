@@ -1,69 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] send-email: die if CA path doesn't exist
-Date: Wed, 25 Nov 2015 05:23:35 -0500
-Message-ID: <20151125102335.GA2844@sigill.intra.peff.net>
-References: <27f354a4edb166e42006b0c1f778827a3dfd58ac.1447798206.git.john@keeping.me.uk>
- <554d29f019f52d18cf1d6c5835df0a3a098a1df4.1448407832.git.john@keeping.me.uk>
- <20151124233536.GB13872@sigill.intra.peff.net>
- <20151125101909.GF18913@serenity.lan>
+From: Raymundo <gypark@gmail.com>
+Subject: 'git log --source' seems to fail to show ref name after the first tag
+ comes out.
+Date: Wed, 25 Nov 2015 19:29:02 +0900
+Message-ID: <CAAe7MbAwWHXxVOu-CU7QpN0K3XTKJ1=xp4-dzSwBQatdAZ1vaQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Nov 25 11:23:50 2015
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 25 11:29:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1XEp-0003lg-9D
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 11:23:47 +0100
+	id 1a1XKH-0005T7-9T
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 11:29:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752513AbbKYKXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 05:23:39 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33807 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752041AbbKYKXi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 05:23:38 -0500
-Received: (qmail 32345 invoked by uid 102); 25 Nov 2015 10:23:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 04:23:38 -0600
-Received: (qmail 25024 invoked by uid 107); 25 Nov 2015 10:23:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 25 Nov 2015 05:23:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Nov 2015 05:23:35 -0500
-Content-Disposition: inline
-In-Reply-To: <20151125101909.GF18913@serenity.lan>
+	id S1752497AbbKYK3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 05:29:23 -0500
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:38017 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752178AbbKYK3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 05:29:22 -0500
+Received: by igbxm8 with SMTP id xm8so34831807igb.1
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 02:29:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=fE2SJA1MlTsVY6KqnvcnFi0Cz6/nTzfdor2y1CUVnxU=;
+        b=XMwBgouSLp7rAj+YxE4l3kaElEM+yNJs8q2zHoXdOLepqpkvQTsZ/743VsH9oZ6zJP
+         +ckeWHM8WgYoVneuWuLbtzbLy7UnHmnIr9VePkfDKc6b9BdSi3ZEEl8aI9cq8uCq1IKQ
+         PdWoARPCeao0CiM+R89lYuh2J2zLC8qbHaQmzbXOmdTYYvMLYpwebQnTpt7+Koz9Qpl9
+         y5SgmuNoLdz5VSZhVbwN/JxAATj7tM08E/47b11LkXRZlFz9pElPqlwgvI0EWT2XXl8B
+         5QPDy2fGEM947pbKjsugPJsOec3Dti7VQwbn1rIkQXWFxv8ViaLedCUAnMCwIvsqwoxM
+         jmhg==
+X-Received: by 10.50.80.14 with SMTP id n14mr3084683igx.56.1448447361449; Wed,
+ 25 Nov 2015 02:29:21 -0800 (PST)
+Received: by 10.36.26.200 with HTTP; Wed, 25 Nov 2015 02:29:02 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281697>
 
-On Wed, Nov 25, 2015 at 10:19:09AM +0000, John Keeping wrote:
+Hello,
 
-> > > Changes since v1:
-> > > - add missing path to error message
-> > > - remove trailing '.' on error message since die appends "at
-> > >   /path/to/git-send-email line ..."
-> > 
-> > It won't if the error message ends with a newline. We seem to be wildly
-> > inconsistent about that in send-email, though.
-> 
-> Interesting.  I think in this case it would definitely be better to add
-> the newline and avoid printing the location in the script, but it may
-> make more sense to have a separate pass over git-send-email.perl and fix
-> all of the die() calls.
-> 
-> I suspect that everything except the equivalent of BUG() should be
-> suppressing the location in a user-facing script like this.
+At first, I'm sorry I'm not good at English.
 
-Yeah, I think I'd agree. Your patch is merged to next, so we'd want a
-separate patch to fix. And I agree that a whole pass over the script
-probably makes sense.
 
-In past projects I have also used a $SIG{__DIE__} handler to massage
-errors into a nicer format, but it unfortunately gets pretty deep into
-Perl voodoo.
+When I execute this command:
 
--Peff
+git log --oneline --source --all --decorate
+
+I get the output below: (I replaced commit messages written in Korean
+with "COMMIT MSG")
+
+295c670 refs/heads/gyparkwiki_base (gyparkwiki_base) COMMIT MSG
+c130d61 refs/heads/master (HEAD -> master, origin/master, origin/HEAD)
+version 2.27a
+6f6f40c refs/heads/gyparkwiki (gyparkwiki) COMMIT MSG
+...
+a37772f refs/heads/gyparkwiki COMMIT MSG
+afeaa51 refs/heads/gyparkwiki COMMIT MSG
+af2676e  (tag: last_CVS_utf) COMMIT MSG   <- ref name is not shown
+from this line
+b4d27c9  COMMIT MSG
+4f834f8  COMMIT MSG
+...
+7534d49  COMMIT MSG
+e5c8a6c  *** empty log message ***
+596aa3e refs/tags/urlprefix (tag: urlprefix) COMMIT MSG  <- ref name
+appears again from this line
+8fc4de3 refs/tags/urlprefix COMMIT MSG
+...
+a0b587 refs/tags/urlprefix COMMIT MSG
+f8526f9 refs/tags/urlprefix COMMIT MSG
+277478b  (tag: last_CVS_testwiki) COMMIT MSG <- ref name disappear
+again from this line
+65919c8  *** empty log message ***
+...
+
+As you can see, ref names in the second column repeats to disappear
+and come back, at every lines that contain tags.
+
+I tested using Git version 2.6.3
+
+For reference, Git version 1.7.9.rc0 does not have this problem. It
+shows ref names on all lines well.
+
+
+Maybe is this a bug?
+
+Thank you.
+G.Y.Park from South Korea
