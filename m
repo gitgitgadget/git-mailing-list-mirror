@@ -1,107 +1,71 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: Git super slow on Windows 7
-Date: Wed, 25 Nov 2015 10:47:05 -0800
-Message-ID: <CAGZ79kZQd4JrQsp6sk8x-OAWMxxbF+a8BXZb1VQSdJeiQ8jhuQ@mail.gmail.com>
-References: <EEA07A84-26D8-4709-97AC-2C4F3A0CC5BD@gmail.com>
-	<0B47434E-00FE-463A-95F1-1F10537C9F7A@gmail.com>
+From: Hassan Munir <hussan.munir@cs.lth.se>
+Subject: A Survey on Git contribution strategies employed by Software Intensive Organizations
+Date: Wed, 25 Nov 2015 18:50:20 +0000 (UTC)
+Message-ID: <loom.20151125T193456-320@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	stephan.arens@autodesk.com
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 25 19:47:17 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 25 19:55:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1f62-0001Yx-5t
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 19:47:14 +0100
+	id 1a1fDk-0008P1-9L
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 19:55:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752159AbbKYSrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 13:47:12 -0500
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:36056 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751915AbbKYSrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 13:47:06 -0500
-Received: by ykdr82 with SMTP id r82so65620302ykd.3
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 10:47:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=azmxEDw0c070gHckm0w9RbHy0ONxw540SqWL1qb8zWQ=;
-        b=Gth4IyNyufSc6MuaQ/Vfz0e9PLZ2O1cDY1vT51UB8oeltpY79r8GgZi8ZRt3uIxX+D
-         FR3jW+SWf3tuoHYJPOlprBgLlTEhRs1zXODlXA31RetJH5wb1Kp/ySGmttq9BaprUz7h
-         fL5nd7GuOHK3XLrsmHR+AwHVSGvdeforYW4TRL+qkMUIgatOEwjAmFNCCUlHkuLT9hnz
-         5dJNsF2aTto8unye+CE7BY/4cBshpyTaZnbejx48/BMpYvXtPPOGMInMletcrEV8ALFF
-         Dhp4hy5Tl7Kl+tzWz/eLgBLUMJPNjqGZc2vq/FTy4zKV24BQyuwKZ/xNU7VxwHcHmwWj
-         soUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=azmxEDw0c070gHckm0w9RbHy0ONxw540SqWL1qb8zWQ=;
-        b=FbPQSxwkhgM8gazX9oEH/I3S/OS/ybP5X7Esf21ROBGzSgHLPBzt6PlkZfbOoVGEZ9
-         LZ+hbjxtvr9r6UQ+8h3Pj4seFqoRSqyzMewnKxWoH4qCGNIcdga2BZfENZh5y2O+q+mp
-         V9LWrbxPhH6Vl0mPOrTIrlDrlnzUxLz1z0+6Rae3zSmqWhLlXMutmCvnZSAyjO3ShwKt
-         1zquOGbr/FdUs+xDHi1OkYUcqMMQfP3z8FnT+QoLlqbLKcJ7UejD6xs4AW4l92rF6XOm
-         ip8xAlUjRFn7ke6M9chh9OH4VKDBmF6WrzhysZdiB0KpNCiZ5ST1zav/4F2D/BOR/kTV
-         5xIQ==
-X-Gm-Message-State: ALoCoQkfiYAGc7aApqQuzcaO4vzKmwmlkv0GLZXhwy6LGb3UeYruSFNhYvO5Noy6xNrCCcX7jNNi
-X-Received: by 10.129.81.147 with SMTP id f141mr33337548ywb.176.1448477225773;
- Wed, 25 Nov 2015 10:47:05 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Wed, 25 Nov 2015 10:47:05 -0800 (PST)
-In-Reply-To: <0B47434E-00FE-463A-95F1-1F10537C9F7A@gmail.com>
+	id S1752481AbbKYSzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 13:55:11 -0500
+Received: from plane.gmane.org ([80.91.229.3]:42251 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752187AbbKYSzJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 13:55:09 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1a1fDc-00089a-8B
+	for git@vger.kernel.org; Wed, 25 Nov 2015 19:55:04 +0100
+Received: from 39.32.206.108 ([39.32.206.108])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 19:55:04 +0100
+Received: from hussan.munir by 39.32.206.108 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 19:55:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 39.32.206.108 (Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281729>
 
-On Wed, Nov 25, 2015 at 10:42 AM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
-> After some investigation I figured that ~50 Submodules are the culprit.
-> Does anyone have an idea how to speed up Git on Windows while keeping 50 Submodules?
->
-> Thanks,
-> Lars
->
->
+Hello Git community,
 
-Use the latest version of Git ;)
+I am studying OSS communities to investigate the OSS contributions 
+strategies employed by the software-Intensive
+organizations. The idea is to see how contributions to OSS help software-
+Intensive organizations to gain value in relation 
+to non-contributors. Therefore, a short survey of 8-10 minutes is 
+formulated for the Git community to get their valuable input. 
 
-Checkout the series merged at 65e1449
-(2015-10-05, Merge branch 'sb/submodule-helper')
+ 
+Please see the survey link below:
 
-    The infrastructure to rewrite "git submodule" in C is being built
-    incrementally.  Let's polish these early parts well enough and make
-    them graduate to 'next' and 'master', so that the more involved
-    follow-up can start cooking on a solid ground.
+https://docs.google.com/forms/d/1v0U-
+SBYz320KNwS2hq0rsrGcn4pinO56rYskkQJ3gSA/viewform
 
-    * sb/submodule-helper:
-      submodule: rewrite `module_clone` shell function in C
-      submodule: rewrite `module_name` shell function in C
-      submodule: rewrite `module_list` shell function in C
 
-More specifically the commits in there:
+Note: This study is part of the research work conducted at Software 
+Engineering Research Group Lund University, Sweden. Your responses will be 
+highly appreciated. Thanks
 
-submodule: rewrite `module_name` shell function in C
 
-    This implements the helper `name` in C instead of shell,
-    yielding a nice performance boost.
-
-    Before this patch, I measured a time (best out of three):
-
-      $ time ./t7400-submodule-basic.sh  >/dev/null
-        real 0m11.066s
-        user 0m3.348s
-        sys 0m8.534s
-
-    With this patch applied I measured (also best out of three)
-
-      $ time ./t7400-submodule-basic.sh  >/dev/null
-        real 0m10.063s
-        user 0m3.044s
-        sys 0m7.487s
+Regard,
+Hussan Munir, 
+Doctoral Candidate. 
+Dept.  of Computer Science,
+Lund University, SWEDEN
