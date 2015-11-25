@@ -1,74 +1,79 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH/RFC 00/10] ref-filter: use parsing functions
-Date: Wed, 25 Nov 2015 17:37:23 +0530
-Message-ID: <CAOLa=ZRW8F9yB7Uw=3r9cp+Vi-6Lv9C-C475y8yi5-fih3dGcA@mail.gmail.com>
-References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com> <20151124214842.GA4848@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 25 13:15:09 2015
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Git super slow on Windows 7
+Date: Wed, 25 Nov 2015 13:35:57 +0100
+Message-ID: <EEA07A84-26D8-4709-97AC-2C4F3A0CC5BD@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.1 \(3096.5\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: GIT Mailing-list <git@vger.kernel.org>, stephan.arens@autodesk.com
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 25 13:36:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1YyW-0000mg-Hp
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 13:15:04 +0100
+	id 1a1ZIq-0004EZ-4W
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 13:36:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753326AbbKYMH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 07:07:56 -0500
-Received: from mail-vk0-f45.google.com ([209.85.213.45]:35996 "EHLO
-	mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753304AbbKYMHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 07:07:53 -0500
-Received: by vkay187 with SMTP id y187so32821879vka.3
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 04:07:53 -0800 (PST)
+	id S1753335AbbKYMgB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 07:36:01 -0500
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:36601 "EHLO
+	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752410AbbKYMgA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Nov 2015 07:36:00 -0500
+Received: by wmww144 with SMTP id w144so178235290wmw.1
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 04:35:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=arj9xnwE1OSneg2/c9it9QNEhDduBL65xr11rTIJvEg=;
-        b=HjTVGuRPKqEQBEjefCT+9COsRv3sa3urvltYXtST6TPfvSWPYyi6WtvqeATq2TZVx6
-         XUmzt3GCsLgy1xQRR2czR26pmmSgXtzjiBPpCZ0LzCf0iT+C2m/PRg1Gwlx6cpc+QUKR
-         nsCgawRTzEv2rMJ+1YVsun1T11iLpCJ/qBen/sx7h7oCV1+IV5JYz0q7lzx6XWdcusX+
-         yZNPYFf4SN31ctUnFRm/dGz+HZbbbpyP4zsNtXl2WZ5B7+bpu0nDielz+dHIcHDjFIK7
-         iP4BzA3xKbQNSnF/FzdftQZsYTTm2n+M5JaDYzKaiO8DRBOKnbQymPYTYxpnNZ0xg+Ok
-         H4Rw==
-X-Received: by 10.31.157.144 with SMTP id g138mr21957185vke.71.1448453272885;
- Wed, 25 Nov 2015 04:07:52 -0800 (PST)
-Received: by 10.103.97.199 with HTTP; Wed, 25 Nov 2015 04:07:23 -0800 (PST)
-In-Reply-To: <20151124214842.GA4848@sigill.intra.peff.net>
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :cc:to:mime-version;
+        bh=z39xB8lwKIYAU5riEliIi4GzO58XZBAk7UbhL+aadIY=;
+        b=R71M18Xst852IIvr615YfHjNvaMIH/1YovNL8+LrDbwOyXEha9lkjlcZJiYuknGdq6
+         xucCtueO6YDt9BS5Xz+wngMyjwLgRsfgr1qXMHqEW5Ze1xRUsqLPmj9g6cIuHX5zOwhO
+         P7fj07tdK5hLDO7y7SoLGQ974AEPYwioZ5eytg28z4CPMpyLCqs8YEREFshm5oe93Bqa
+         PrFqq19epL1OPFIqNOr7/tD1bavjMcItaCjV4I5HFYTspQhnuSXjUX2uLk/eIcLHT49y
+         NkDL9qvg8gLvFNhdsXqE0rhulta1RDRPs5BZ8y7kEVRzpGyEmLaGefoRkdGpIuMfZKpM
+         vEvg==
+X-Received: by 10.28.95.10 with SMTP id t10mr3994991wmb.99.1448454959022;
+        Wed, 25 Nov 2015 04:35:59 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id 186sm3372076wmv.9.2015.11.25.04.35.57
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 25 Nov 2015 04:35:58 -0800 (PST)
+X-Mailer: Apple Mail (2.3096.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281706>
 
-On Wed, Nov 25, 2015 at 3:18 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Nov 12, 2015 at 01:14:26AM +0530, Karthik Nayak wrote:
->
->> Karthik Nayak (10):
->>   ref-filter: introduce a parsing function for each atom in valid_atom
->>   ref-filter: introduce struct used_atom
->>   ref-fitler: bump match_atom() name to the top
->>   ref-filter: skip deref specifier in match_atom_name()
->>   ref-filter: introduce color_atom_parser()
->>   strbuf: introduce strbuf_split_str_without_term()
->>   ref-filter: introduce align_atom_parser()
->>   ref-filter: introduce remote_ref_atom_parser()
->>   ref-filter: introduce contents_atom_parser()
->>   ref-filter: introduce objectname_atom_parser()
->
-> Hmm, your patch 10 does not seem to have made it to the list (at least I
-> did not ever get it, and gmane seems to be down, so I cannot check there).
->
-> -Peff
+Hi Johannes,
 
-That's weird, I'll reply to this mail with patch 10.
+I am working with Git for Windows right now and it is dramatically slower than on OS X.
+I executed "time git status" on Windows and OS X with the same repository and the following results:
 
--- 
-Regards,
-Karthik Nayak
+## Windows git version 2.6.3.windows.1 (with enabled experimental flag on install):
+real    0m1.327s
+user    0m0.000s
+sys     0m0.015s
+
+
+## OS X git version 2.4.9 (Apple Git-60):
+git status  0.06s user 0.13s system 102% cpu 0.186 total
+
+
+Initially it was even slower on Windows (~1.6s). According to [1] I used the following settings to make it faster:
+$ git config --global core.preloadindex true
+$ git config --global core.fscache true
+
+Is this behavior normal/expected?
+If it is not normal, how would you debug the issue? How can I find out why it is so slow?
+
+My user drive is not on a net share and the machine has a SSD.
+
+Thanks,
+Lars
+
+
+[1] http://stackoverflow.com/questions/4485059/git-bash-is-extremely-slow-in-windows-7-x64
