@@ -1,88 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] wt-status: use strncmp() for length-limited string comparison
-Date: Wed, 25 Nov 2015 11:29:39 +0100
-Message-ID: <vpqtwoawewc.fsf@anie.imag.fr>
-References: <563D2DE7.1030005@web.de>
-	<20151124213601.GB29185@sigill.intra.peff.net>
-	<56551A11.9030809@web.de>
-	<20151125091503.GA1779@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] config: add core.trustmtime
+Date: Wed, 25 Nov 2015 11:25:49 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1511251121390.1686@s15462909.onlinehome-server.info>
+References: <1448433323-21037-1-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 25 11:30:11 2015
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 25 11:31:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1XL0-0006sB-Bo
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 11:30:10 +0100
+	id 1a1XLt-0000BQ-Jh
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Nov 2015 11:31:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784AbbKYKaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 05:30:06 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:36730 "EHLO shiva.imag.fr"
+	id S1751785AbbKYKbD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 05:31:03 -0500
+Received: from mout.gmx.net ([212.227.17.22]:58499 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750796AbbKYKaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 05:30:05 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id tAPATc2h006638
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 25 Nov 2015 11:29:38 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tAPATd7i025326;
-	Wed, 25 Nov 2015 11:29:39 +0100
-In-Reply-To: <20151125091503.GA1779@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 25 Nov 2015 04:15:03 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 25 Nov 2015 11:29:39 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: tAPATc2h006638
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1449052183.90227@ng39YTf04OFWEBzopxyppQ
+	id S1750796AbbKYKbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 05:31:01 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0M6O1v-1aH9Vs1I6d-00yRC2;
+ Wed, 25 Nov 2015 11:25:51 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <1448433323-21037-1-git-send-email-chriscool@tuxfamily.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:nAJk0p3eK4fuGMe1o8KwFrRaqaOcDtec/uJgf2lZuwA9W1bFcwR
+ NZggPnKXJ7msSOynqw/UxTVk2TPZ+JSYBS4ZEM0PjpaYg582Bsv28/Wu6SREChi0rsh08DU
+ AhX+yD9xNAG8l3qIgP2r2QdWC4Rjh940yF8paYd3oek2FT9o6UeZ312T6iWSaJyoDwqpoLJ
+ BZ8wQd8YODDvLX3wukgbA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xEqSJCI5UpU=:mWmOGNPSd899JJrFsNUEjP
+ Zv8hQzRBcfpuOH6YvWPO0gvIdyUKUw6GXvsduZYky5FH69ws33BhezsXC9U80r43Vi/eG0uyv
+ VFRHLt/4oJRJqJGqKtbDA+tvc1jDy0EJvFbxSfG2koaw7TPNi2ltLgpxqFS8NDbnaMyRfd5aj
+ 47q/YABt9fVwEg4Y9hUu5fOWPKh6hvKDiQ2K5/Sh5MQx/uRWQ8SYM6eRu4Q311LnIefujp4lX
+ nE10wdc8ieldn6fAkb0oXwRLafffIQiY/io08UoUcQQ8ck/bvyeh3y3l0sSsva4yU6k55FwiP
+ 5LeC+8/kzdtBq1j6qtj53Q/FhkbhgTiCbvKMfzvhedB/1+uUuTa2RYQGNCL1mMFtYWQ289O4f
+ BZFKA4vQPy+gWNT5//UpyfTxGKz8aUBMwpIJ7FGSnws/spEDpd3/H6MQB6FWb0zztY/aAEX4S
+ Clb3U0/bLIt+P+hgwlMMCMbl7rcX3OhRp+NRidV50NMAzLWAnWM3vPMrdknrT5FdzEv+E/YtV
+ TpnmW6p45rgsUfDYMamecPqmT5TnZ6deRolZ0QhytprfbCko4BJY7J8Rl7xR8WpLH/MGz3Akt
+ RL9o4F3FOwn8m/nCgDAgkuCY4nxNiKVDWvvk0VTnK9xE9c3VJyS8q8n+PPQZAFqlHkAX7L47a
+ fHT8mYA3W1YaWN9uC4Ju9Q1o/8cgmxbUu1ibS2lk+nlx2upX/8PnQ7PM9xo7EFcEUhL4gFbig
+ P9DMejnDBYqjg+oyfUSvvRFqhvp26KTGsnh/emw/nBUZwklNPer91OD8fuiJULlHhI0DI+SX 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281699>
 
-Jeff King <peff@peff.net> writes:
+Hi Christian,
 
->> diff --git a/wt-status.c b/wt-status.c
->> index 435fc28..96a731e 100644
->> --- a/wt-status.c
->> +++ b/wt-status.c
->> @@ -1317,14 +1317,14 @@ static int grab_1st_switch(unsigned char *osha1, unsigned char *nsha1,
->>  	target += strlen(" to ");
->>  	strbuf_reset(&cb->buf);
->>  	hashcpy(cb->nsha1, nsha1);
->> -	for (end = target; *end && *end != '\n'; end++)
->> -		;
->> -	if (!memcmp(target, "HEAD", end - target)) {
->> +	if (skip_prefix(target, "HEAD", &end) && (!*end || *end == '\n')) {
->>  		/* HEAD is relative. Resolve it to the right reflog entry. */
->>  		strbuf_addstr(&cb->buf,
->>  			      find_unique_abbrev(nsha1, DEFAULT_ABBREV));
->>  		return 1;
->>  	}
->
-> Yeah, I think parsing left-to-right like this makes things much more
-> obvious.
+On Wed, 25 Nov 2015, Christian Couder wrote:
 
-Agreed.
+> diff --git a/config.c b/config.c
+> index 248a21a..d720b1f 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -691,6 +691,13 @@ static int git_default_core_config(const char *var, const char *value)
+>  		trust_ctime = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> +	if (!strcmp(var, "core.trustmtime")) {
+> +		if (!strcasecmp(value, "default") || !strcasecmp(value, "check"))
+> +			trust_mtime = -1;
+> +		else
+> +			trust_mtime = git_config_maybe_bool(var, value);
 
->> +	for (end = target; *end && *end != '\n'; end++)
->> +		;
->
-> This loop (which I know you just moved, not wrote) is basically
-> strchrnul, isn't it? That might be more readable.
+If `core.trustmtime` is set to `OMG, never!`, `git_config_maybe_bool()`
+will set trust_mtime to -1, i.e. the exact same value as if you had set
+the variable to `default` or `check`...
 
-Agreed too.
+Maybe you want to be a bit stricter here and either test the return value
+of `git_config_maybe_bool()` for -1 (and warn in that case), or just
+delete the `maybe_`?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Ciao,
+Dscho
