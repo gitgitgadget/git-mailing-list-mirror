@@ -1,71 +1,88 @@
-From: Doug Kelly <dougk.ff7@gmail.com>
-Subject: Re: [PATCH 1/3] prepare_packed_git(): find more garbage
-Date: Thu, 26 Nov 2015 00:18:41 -0600
-Message-ID: <CAEtYS8RHk8dbXs2jBRaCDkOHNEEFHWOxCAMFHY9+wJhWSSFpYQ@mail.gmail.com>
-References: <CAGZ79kYPv2OLzMX6t9=mejes9F8CzxAJiERs8GGxDnaAG8Q64g@mail.gmail.com>
-	<1447461987-35450-1-git-send-email-dougk.ff7@gmail.com>
-	<CAGZ79kaCNT06mAGQbHNgZmdBQUyxGFTFA2Y2FXvG2UG+P7s2kg@mail.gmail.com>
+From: Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] notes: allow merging from arbitrary references
+Date: Wed, 25 Nov 2015 22:20:36 -0800
+Message-ID: <CA+P7+xpp4mF5iuZ+i_8vuB4BoHBvpmS=jq-xAeae7bdT9UGHhA@mail.gmail.com>
+References: <1447432462-21192-1-git-send-email-jacob.e.keller@intel.com>
+ <20151124224709.GA13691@sigill.intra.peff.net> <20151124234206.GA31949@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@github.com>, Junio C Hamano <gitster@pobox.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Thu Nov 26 07:18:48 2015
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Mike Hommey <mh@glandium.org>,
+	Johan Herland <johan@herland.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 26 07:20:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1ptE-00029G-9U
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Nov 2015 07:18:44 +0100
+	id 1a1pvN-0006A5-EN
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Nov 2015 07:20:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751966AbbKZGSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Nov 2015 01:18:43 -0500
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:33382 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751224AbbKZGSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Nov 2015 01:18:41 -0500
-Received: by qgea14 with SMTP id a14so48192054qge.0
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 22:18:41 -0800 (PST)
+	id S1750786AbbKZGU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Nov 2015 01:20:57 -0500
+Received: from mail-io0-f173.google.com ([209.85.223.173]:35647 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751334AbbKZGUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Nov 2015 01:20:55 -0500
+Received: by ioc74 with SMTP id 74so75481402ioc.2
+        for <git@vger.kernel.org>; Wed, 25 Nov 2015 22:20:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=TbAztJBfhLersAreFlg2sJbkdEtedj0V0R+UzckXojM=;
-        b=dWeZU0/PVwn4bmAIgm80RU2/ZxLYhpiWqlm5AlvnU5aWWr6pfAEi7y8C3wB+vmbHTd
-         HNpNT+2nmq7ZmJlzIComheRMiF/ONFyiBOQ+aQUlIb/I+2+WQH3Fh5O1adqplgIk0TdO
-         r6fEgAnx+2AdAjPMeb3DH1+wXxAETTuygmtMswcg6c8x0YCifkHmsbyMJoOKbSUqpuWN
-         YlYXnrzsdUlxHXmI6WPV1u5HIyaHMay98WXeayT227rkwek+xSiDMZoVEGpKaAwoP1lR
-         E44mi9yzTp98+BqxsTLIdoV/MYN9FcqCaw/IrmUb5i7TrV2H+hLoNhCtpZBqN3M/OwU2
-         gqPw==
-X-Received: by 10.140.18.168 with SMTP id 37mr24024139qgf.12.1448518721141;
- Wed, 25 Nov 2015 22:18:41 -0800 (PST)
-Received: by 10.55.195.4 with HTTP; Wed, 25 Nov 2015 22:18:41 -0800 (PST)
-In-Reply-To: <CAGZ79kaCNT06mAGQbHNgZmdBQUyxGFTFA2Y2FXvG2UG+P7s2kg@mail.gmail.com>
+        bh=H6oIFGMzFaqhAzl+aTTNAmpx0kw6pf7We82VBuytcDc=;
+        b=LnV8oxdnw7zDQcW+xDejQJchqM3NWBNi/chB/8Pxui68I6W/AbzktaZg+rzg4AeiYk
+         iK0lUN2Q7y3FsYyBUnLG+kLV0rqf1lNZgs9LpUP8YPfLoLz7wagfyUMY7JfyIkiFMZN3
+         8HCqu9neg962yyBq0frELXmJnnSUBPvtOc+BtUnUPReP6BKMgJxymusILTVjHRkURzb/
+         M0hpCct4sqj3rghmatZxIodRsO31AAvKFSN5oqm2dazS+hSkUAnh5ECah201VGN6EA9M
+         ZeUb+idXiDLBGEn1/EkVYl4zRjvoCrwWGs29eslzG45pZtBlEI7/C5aLfjIrcKcoBdUA
+         uTKg==
+X-Received: by 10.107.136.39 with SMTP id k39mr47476719iod.0.1448518855334;
+ Wed, 25 Nov 2015 22:20:55 -0800 (PST)
+Received: by 10.107.19.227 with HTTP; Wed, 25 Nov 2015 22:20:36 -0800 (PST)
+In-Reply-To: <20151124234206.GA31949@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281761>
 
-Apparently, I fixed this and forgot to re-run format-patch, so I sent
-out the same patch the second time... My fault on that one.  I've at
-least checked what I sent this time around, and it seems to match
-what's in my current tree. :) The second and third patches should be
-unmodified.
-
-Thanks for catching that, Stefan!
-
-On Wed, Nov 25, 2015 at 12:43 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, Nov 13, 2015 at 4:46 PM, Doug Kelly <dougk.ff7@gmail.com> wrote:
->>                 return "no corresponding .idx";
->> -       case PACKDIR_FILE_IDX:
->> +       else if (seen_bits & PACKDIR_FILE_IDX && seen_bits ^ ~PACKDIR_FILE_PACK)
+On Tue, Nov 24, 2015 at 3:42 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Nov 24, 2015 at 05:47:09PM -0500, Jeff King wrote:
 >
-> Did you intend to use
->     (seen_bits & PACKDIR_FILE_IDX && !(seen_bits & PACKDIR_FILE_PACK))
-> here?
+>> On Fri, Nov 13, 2015 at 08:34:22AM -0800, Jacob Keller wrote:
+>>
+>> > ---
+>> > I do not remember what version this was since it has been an age ago
+>> > that I sent the previous code. This is mostly just a rebase onto current
+>> > next. I believe I have covered everything previous reviewers noted.
+>>
+>> Please keep topics branched from master where possible. And if not
+>> possible, please indicate which topic in 'next' is required to build on.
+>>
+>> We never merge 'next' itself, only individual topics from it. So I can't
+>> just apply your patch on top of 'next'.
+>>
+>> I did get it to apply on the current master with "am -3", but some tests
+>> in t3310 seem to fail. Can you take a look?
 >
-> I was just looking at the state in peff/pu and it still has the xor
-> variant, which exposes more
-> than just the selected bit to the decision IIRC.
+> I just noticed v2, which I missed earlier. But the same complaints
+> apply. :)
+>
+> -Peff
+
+Yea.. sorry about that. I normally work off next since this is what I
+use day to day for general git use, as I like to run the bleedy edge.
+
+I can respin these on master, but it may take a bit of time as I am on
+vacation at the moment.
+
+I'm also curious if people would rather go the more difficult route
+first or not.
+
+Regards,
+Jake
