@@ -1,80 +1,117 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv2] builtin/clone: support submodule groups
-Date: Wed, 25 Nov 2015 16:33:16 -0800
-Message-ID: <CAGZ79kZ3Pf6PTp_hoC5PrGq59EH35-dzC7jRQhNn-v3jTkFQrg@mail.gmail.com>
-References: <5656366D.4010508@web.de>
-	<1448497884-2624-1-git-send-email-sbeller@google.com>
+From: Johannes =?utf-8?B?TMO2dGhiZXJn?= <johannes@kyriasis.com>
+Subject: Re: Signed tags and git repository
+Date: Thu, 26 Nov 2015 04:56:00 +0100
+Message-ID: <20151126035600.GA11556@zorg.kyriasis.com>
+References: <3816223.3lD8Al3iuQ@thunderbird>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Eric Sunshine <ericsunshine@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Stefan Beller <sbeller@google.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Nov 26 01:33:39 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="NzB8fVQJ5HfG6fxh"
+Cc: Stephen & Linda Smith <ischis2@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 26 04:56:49 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a1kUw-0000jC-Ra
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Nov 2015 01:33:19 +0100
+	id 1a1nfF-0008NO-5y
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Nov 2015 04:56:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395AbbKZAdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Nov 2015 19:33:18 -0500
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:33883 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751198AbbKZAdR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Nov 2015 19:33:17 -0500
-Received: by ykfs79 with SMTP id s79so75029269ykf.1
-        for <git@vger.kernel.org>; Wed, 25 Nov 2015 16:33:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=JrbVirXW5Hiuwq0bY0b4wmftlwOzIxuQHkC1F14idx4=;
-        b=bnQcYNwkhX7TmutOXso1T89KmxS5ceb2sID5ShpLZwY7qZjL1O7q4amhqAq+5j51Vm
-         x5g/WKAhvzrBQKiFSVi2n55c/EL+2pB7TwejVBxTLTnRoq3waXR1cCuTfc9JpIefJQc4
-         4E3ulQKR8KNayZPXVg716YZ8+H0wc7XZYz7wxY0KVIUOtIb6+/pFZcBVCdMTPshOhYnh
-         Oyg5CXDcX43w7XKZepXkXTExWECt+Fh+kevhJmBEdOzAu0VBQO+KQXdjEnwUF0DfgHDB
-         k53FKdt9PkuviFRZgagC4lGcZM+ZIBv4DYdla9PzWmU+ubNRKunDAMxNGig84KRzsWgy
-         zCLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=JrbVirXW5Hiuwq0bY0b4wmftlwOzIxuQHkC1F14idx4=;
-        b=hH84M8GL8eCyB42Uw+BueizAmicGi34+ktPOw+yUJ9iYiQYLxPMlaOhuMnSsasKUHD
-         AuIqPPzgzcbEQfea1S7tt2Wd/YbXHzmlh+QZ4i/4wBQL1yMkzaNxyg2nYl+UubAThu7b
-         6PzxEBGSvZoh0wsXD97rUEf/rybp4uM7vQ70bzByZR//02oXKg70lGfD1ht1INrMtyde
-         4AW5K8BuGXlghApU3BkATQ829dC/v9JlJoUEs7iLQz7XLKYVFnIINeJZ48JKTnHjQBrp
-         WxfSkcazON2ssoKeUFCrR8VJ6yKn1yyoQzq5SHjn5eKQSF/LkYYH0YLes3TBU0yBbUcE
-         enlA==
-X-Gm-Message-State: ALoCoQkUUt/2BVSsdrSLaz06sdxeZz0+wTDWXAA+KPDXNEqv6Nudz5SnoeAWxN3x3QQ3zzbqRmBU
-X-Received: by 10.13.235.135 with SMTP id u129mr38564561ywe.48.1448497996461;
- Wed, 25 Nov 2015 16:33:16 -0800 (PST)
-Received: by 10.37.196.70 with HTTP; Wed, 25 Nov 2015 16:33:16 -0800 (PST)
-In-Reply-To: <1448497884-2624-1-git-send-email-sbeller@google.com>
+	id S1752031AbbKZD4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Nov 2015 22:56:05 -0500
+Received: from theos.kyriasis.com ([212.71.254.33]:33304 "EHLO
+	theos.kyriasis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752012AbbKZD4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Nov 2015 22:56:04 -0500
+Received: from theos.kyriasis.com (localhost [127.0.0.1])
+	by theos.kyriasis.com (OpenSMTPD) with ESMTP id 6f8ace61;
+	Thu, 26 Nov 2015 03:56:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyriasis.com; h=date:from
+	:to:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=theos; bh=q7Q3sl+7Zox3ElshnuKYhCWeTn0=; b=J/9N49
+	Mw0arIzt64/iS44dyaQQhw6pwzcNxKysGmOoJ2SVP5kTT4veRoAYoeYonv/mNzbD
+	iW8oNZTs2YID7e5lQWqRzsYhUTU0suEV6PYN2rVZazpDg4fei2OgPV0W9Wvr2LQU
+	+eI4R0+tsOoKeETfdeUK8Bg36EUEZenOrCGBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=kyriasis.com; h=date:from:to
+	:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=theos; b=kwxYl2E1DisgnMYn9RJxyBEN1aLBlQY6
+	FrgHvSU4OVIk4yIZSlMSBn2tefOVqj0Ea3s20rK/9vDbhPOAZMNEKbVOo98v3XK8
+	S8GSCTnD/RejAN4CBlSCoNS9n7vPFBQ22QLXj2ml2UQ0d54lsrKAJCbAi5HZANUA
+	GLAODnewaqM=
+Received: from zorg.kyriasis.com (c80-217-51-233.bredband.comhem.se [80.217.51.233])
+	by theos.kyriasis.com (OpenSMTPD) with ESMTPSA id 7b49bfce
+	TLS version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO;
+	Thu, 26 Nov 2015 03:56:00 +0000 (UTC)
+Mail-Followup-To: git@vger.kernel.org,
+	Stephen & Linda Smith <ischis2@cox.net>
+Content-Disposition: inline
+In-Reply-To: <3816223.3lD8Al3iuQ@thunderbird>
+User-Agent: Mutt/1.5.23.1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281753>
 
-On Wed, Nov 25, 2015 at 4:31 PM, Stefan Beller <sbeller@google.com> wrote:
-> This passes each group to the `submodule update` invocation and
-> additionally configures the groups to be automatically updated.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->
-> This is a resend of the patch "[PATCH 5/5] builtin/clone: support submodule groups"
-> as that's where Jens and I discussed.
->
-> * reworded the documentation to match reality of the patch
 
-Oh wait, I just wrote down wishful thinking (at least partially)
-You cannot quite specify the comma separated list yet in one --group parameter.
+--NzB8fVQJ5HfG6fxh
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 25/11, Stephen & Linda Smith wrote:
+>I know that the linux and git repositories have signed tags, but I'm not a=
+ble to verify
+>them because my key isn't signed by anyone that leads back to one of the g=
+it or linux
+>maintainers.
+
+Your key would only have to be signed for others to be able to verify=20
+/your/ signatures through the Web of Trust.
+
+You don't even need the Web of Trust though, you can just verify the=20
+signature and then check that the key used to make the signature is the=20
+correct one, then you could either sign the key if you know that the key=20
+belongs to the right person and want to make the signature public, or=20
+make a local signature which is local to your keyring and won't be sent=20
+to eg keyservers. Or just mark the key as trusted overall.
+
+--=20
+Sincerely,
+  Johannes L=C3=B6thberg
+  PGP Key ID: 0x50FB9B273A9D0BB5
+  https://theos.kyriasis.com/~kyrias/
+
+--NzB8fVQJ5HfG6fxh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQRQBAABCgA6BQJWVoLNMxSAAAAAABUAFXBrYS1hZGRyZXNzQGdudXBnLm9yZ2pv
+aGFubmVzQGt5cmlhc2lzLmNvbQAKCRCQHBwyDrDUXWWaIADCEmqavYOK7fk77TlK
+RGHsMcqAZR4z7FyP79KU3F0396iBGQNviRTjCDpd8kBrfam1GwbAfY6sZVyqyReU
+ixNHZbxwoY56HMeCemUmkDIgbGtdbisLtYuvojbfRQtbsCK9ihzCTPLxGKS66ziA
+3o84cgqP4hmbAqFUf0B1JKYrbsHxxoUuG6vnZ09f6ZE1mzYJX78DYisujFRy38uy
+uVIRTsOri7kx2XvHYHNKLcfMmBEYn+ckXMAla9tb2RlCC7IdZJh4V+DBURT2mFf7
+a6j4p4k0ZAbUut0SWu07IH6gbHWxYwmgY4F7Tq+aKD9nqYzG07ZU+KwTNc/Csnao
+WLxAh+WBMLcUu1c+W6g66t/a4t/DZab95x1BYYdmaL8l6XhZ547FU+YgUtDM3x3t
+tPaaljgo+zpTJ+SBwwyyjpLb1TUJM4tgSXgzJNDg8bRtliFVV8UqngrCFO/sWX81
+RlqWBclBlEvmFebWDf6aBNECj6xCugnFBnTr9Id0CWmS2NTyjqQtGd2EbfZ4izYx
+xBdBvMMjo2w0U6bEHNtwp7d9XuAGfdsJk1f5796z/f3aFRKG78OIjjG+LWElWiOg
+oVxzjmnyeT9LTwyHELTgYwMS7t9s3xkYUAmbV+9wj8jU2MqFv1FYo6wiruhPMGYz
+SZFUwAp2gj3WqfyIySNyQtw5JPCLxCuRiQ2QAnzv399tVsPWoJyx20M74WMYxOd2
+dFkBh5l10omvTuqrwASKreTznokCN9LjFCfYqA+RctgPkZR1Dql7gbyPj93nBnPX
+zDwO9BL+/MNAN3yu4LqHqyiCQu/NtxIC3/4xEI3CUGFagYFVnPuKSml4bK+dRMhD
+ZKstCj5rst7xmgqmbx/pXs33JnSxUQb87aONL84JWTVW59bFKHP1has1DwVyxGts
+O+Cd0+gvzwRAnxIRsU4vjQG4ATV5cNR9DGmjTF2m+rdiNXAyiPfRSCSkV51af3OY
+1c4vlR9wsKXywCLzJ3ZG0ijwSWStTmZ9xWbKCi0afTu0HWvVjNuvGpYY1nutS4wY
+N5JFxZLRwA9VYigSrc+1dVC69E++RHfw307K315pmO65FU63wx9JI0LfSCPDsitz
+1ZFeCzmnr8DbTzWmO8fhMBxsiQd3Jyut+X06JThn69T1VjtXsuUxvAul8gKVDpOr
+6cCVc6kOObbybt8aEtmXXVO1Oqt1c78y7wHRBn9LagpfUxCrunnX02b/+gFz4dHN
+uWV0pGCb104Y3/fag5bAOfDtUH1fynFkIclwapS+gFRxgwGciybQ72ovY5z6j9pq
+q5eI9NINeKwCmuhQ/cFyQz0JbjObteooXs/Wx0lS9qf+54z6n0FxuSG3m9LH1tgo
+3GMn
+=oxKo
+-----END PGP SIGNATURE-----
+
+--NzB8fVQJ5HfG6fxh--
