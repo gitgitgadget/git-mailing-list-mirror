@@ -1,71 +1,134 @@
 From: larsxschneider@gmail.com
-Subject: [PATCH v1 0/2] test-must-fail-sigpipe
-Date: Fri, 27 Nov 2015 10:15:12 +0100
-Message-ID: <1448615714-43768-1-git-send-email-larsxschneider@gmail.com>
+Subject: [PATCH v1 2/2] add "ok=sigpipe" to test_must_fail and use it to fix flaky tests
+Date: Fri, 27 Nov 2015 10:15:14 +0100
+Message-ID: <1448615714-43768-3-git-send-email-larsxschneider@gmail.com>
+References: <1448615714-43768-1-git-send-email-larsxschneider@gmail.com>
 Cc: peff@peff.net, ramsay@ramsayjones.plus.com,
 	Lars Schneider <larsxschneider@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 27 10:15:31 2015
+X-From: git-owner@vger.kernel.org Fri Nov 27 10:15:33 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a2F7p-0003Hh-S6
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Nov 2015 10:15:30 +0100
+	id 1a2F7s-0003Hh-GO
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Nov 2015 10:15:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754080AbbK0JPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2015 04:15:23 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:38019 "EHLO
+	id S1754143AbbK0JPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2015 04:15:30 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:33489 "EHLO
 	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754041AbbK0JPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2015 04:15:19 -0500
-Received: by wmec201 with SMTP id c201so50174151wme.1
-        for <git@vger.kernel.org>; Fri, 27 Nov 2015 01:15:18 -0800 (PST)
+	with ESMTP id S1754071AbbK0JPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2015 04:15:21 -0500
+Received: by wmec201 with SMTP id c201so61302910wme.0
+        for <git@vger.kernel.org>; Fri, 27 Nov 2015 01:15:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=ymIpiCM82Gh6qd3+O+SI96qakCoY5pfwo/ZG7Et7Euo=;
-        b=y7vP6mbdMS0GNz41nZ2K/Y+NEUHhyYJ53u26CW0e9vtIYE/1UWmGdXQsPnDMr9vuCe
-         +U+RQqX6EqcGvOgDnYwpwmZKY6golyYa4CtSVrhCgmKDe+RS0lrMV9f9gZMDadMCWbmD
-         zNxTs48lC9yS7w65N7K5iEnT8LaUIMCtPQWhnJdsVHHQeBT+w/LUvdvM/lUPqSfXnJch
-         MSP0PGvfMOId2u3m8swFj07qgW6iTtQfOl7NMeSGdMggcvI5Dr7oq8e40+nmIkuBM+36
-         k8OMvKpHMv+n50KJB7Zw/UPo1u08NDjGcqSzi1k3Zaf1L2oU32SFE3/gG3tUU12wNSha
-         +f+Q==
-X-Received: by 10.28.23.136 with SMTP id 130mr9745151wmx.94.1448615718617;
-        Fri, 27 Nov 2015 01:15:18 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=oOh/Ag/8oYOsoKrlolt227OZsWlEVTYbssqdaIjukVg=;
+        b=nVzricjtGl/X4ygMyI8GdNnmhcBIZFm13jHRv4rfbul21NRMkeKapgu+u9VK0Vgvlv
+         E7eZ3jYgb0EIzVEpkyKy2+KnYVDISTOpjjaS+xozUkyu2DTzi3rwaIrnJ5AG6Psizf6l
+         N6aBkuL0GNT6JGSLuxphqiztU1Yy8mlNfhRUOQfaXktlwPBIMlczVx6a38WwXhRtfBom
+         WlXg6hLACJ1rsucXVUg/izyzvCwoZll3f1Rc+QFPKGmGxYuCM2dI7t0BrdAq+lzrahsQ
+         0sDdGQK23wZGpSwBDAvIGCCyCAXBwwg4Zv3QheVo3s/vB/3LjEIJGa2rCuzj/HBo3SGV
+         MvDw==
+X-Received: by 10.28.14.209 with SMTP id 200mr9291966wmo.103.1448615720567;
+        Fri, 27 Nov 2015 01:15:20 -0800 (PST)
 Received: from slxBook3.fritz.box (p5DDB75CD.dip0.t-ipconnect.de. [93.219.117.205])
-        by smtp.gmail.com with ESMTPSA id lf10sm18438731wjb.23.2015.11.27.01.15.17
+        by smtp.gmail.com with ESMTPSA id lf10sm18438731wjb.23.2015.11.27.01.15.19
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 27 Nov 2015 01:15:17 -0800 (PST)
+        Fri, 27 Nov 2015 01:15:20 -0800 (PST)
 X-Mailer: git-send-email 2.5.1
+In-Reply-To: <1448615714-43768-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281769>
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-As suggested by Peff I made "test-must-fail-sigpipe" a seperate topic.
+t5516 "75 - deny fetch unreachable SHA1, allowtipsha1inwant=true" is
+flaky in the following case:
+1. remote upload-pack finds out "not our ref"
+2. remote sends a response and closes the pipe
+3. fetch-pack still tries to write commands to the remote upload-pack
+4. write call in wrapper.c dies with SIGPIPE
 
-diff to (former) Travis CI v7 topic:
-* added helper function "list_contains" provided by Peff (thanks!)
-* fix return value in "test_must_fail: command succeeded" (thanks Ramsay)
-* use "-eq" instead of "=" (thanks Ramsay)
-* accept SIGPIPE exit for t5504 "push with receive.fsckobjects"
+t5504 "9 - push with transfer.fsckobjects" is flaky, too, and returns
+SIGPIPE once in a while. I had to remove the final "To dst..." output
+check because there is no output if the process dies with SIGPUPE.
 
-Thanks,
-Lars
+Accept such a death-with-sigpipe also as OK when we are expecting a
+failure.
 
-Lars Schneider (2):
-  implement test_might_fail using a refactored test_must_fail
-  add "ok=sigpipe" to test_must_fail and use it to fix flaky tests
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ t/t5504-fetch-receive-strict.sh | 5 ++---
+ t/t5516-fetch-push.sh           | 6 +++---
+ t/test-lib-functions.sh         | 3 +++
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
- t/t5504-fetch-receive-strict.sh |  5 ++---
- t/t5516-fetch-push.sh           |  6 ++---
- t/test-lib-functions.sh         | 50 +++++++++++++++++++++++++++++------------
- 3 files changed, 41 insertions(+), 20 deletions(-)
-
---
+diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
+index 44f3d5f..89224ed 100755
+--- a/t/t5504-fetch-receive-strict.sh
++++ b/t/t5504-fetch-receive-strict.sh
+@@ -100,7 +100,7 @@ test_expect_success 'push with receive.fsckobjects' '
+ 		git config receive.fsckobjects true &&
+ 		git config transfer.fsckobjects false
+ 	) &&
+-	test_must_fail git push --porcelain dst master:refs/heads/test >act &&
++	test_must_fail ok=sigpipe git push --porcelain dst master:refs/heads/test >act &&
+ 	test_cmp exp act
+ '
+ 
+@@ -111,8 +111,7 @@ test_expect_success 'push with transfer.fsckobjects' '
+ 		cd dst &&
+ 		git config transfer.fsckobjects true
+ 	) &&
+-	test_must_fail git push --porcelain dst master:refs/heads/test >act &&
+-	test_cmp exp act
++	test_must_fail ok=sigpipe git push --porcelain dst master:refs/heads/test >act
+ '
+ 
+ cat >bogus-commit <<\EOF
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index ec22c98..0a87e19 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1162,15 +1162,15 @@ do
+ 		mk_empty shallow &&
+ 		(
+ 			cd shallow &&
+-			test_must_fail git fetch ../testrepo/.git $SHA1_3 &&
+-			test_must_fail git fetch ../testrepo/.git $SHA1_1 &&
++			test_must_fail ok=sigpipe git fetch ../testrepo/.git $SHA1_3 &&
++			test_must_fail ok=sigpipe git fetch ../testrepo/.git $SHA1_1 &&
+ 			git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
+ 			git fetch ../testrepo/.git $SHA1_1 &&
+ 			git cat-file commit $SHA1_1 &&
+ 			test_must_fail git cat-file commit $SHA1_2 &&
+ 			git fetch ../testrepo/.git $SHA1_2 &&
+ 			git cat-file commit $SHA1_2 &&
+-			test_must_fail git fetch ../testrepo/.git $SHA1_3
++			test_must_fail ok=sigpipe git fetch ../testrepo/.git $SHA1_3
+ 		)
+ 	'
+ done
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 94c449a..06d3fcb 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -612,6 +612,9 @@ test_must_fail () {
+ 	then
+ 		echo >&2 "test_must_fail: command succeeded: $*"
+ 		return 1
++	elif list_contains "$_test_ok" sigpipe && test "$exit_code" -eq 141
++	then
++		return 0
+ 	elif test $exit_code -gt 129 && test $exit_code -le 192
+ 	then
+ 		echo >&2 "test_must_fail: died by signal: $*"
+-- 
 2.5.1
