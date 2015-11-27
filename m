@@ -1,162 +1,123 @@
-From: larsxschneider@gmail.com
-Subject: [PATCH v8] Add Travis CI support
-Date: Fri, 27 Nov 2015 10:23:27 +0100
-Message-ID: <1448616207-45035-2-git-send-email-larsxschneider@gmail.com>
-References: <1448616207-45035-1-git-send-email-larsxschneider@gmail.com>
-Cc: peff@peff.net, tboegi@web.de,
-	Lars Schneider <larsxschneider@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 27 10:23:44 2015
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v1 1/2] implement test_might_fail using a refactored
+ test_must_fail
+Date: Fri, 27 Nov 2015 12:37:38 +0000
+Message-ID: <56584E92.1030103@ramsayjones.plus.com>
+References: <1448615714-43768-1-git-send-email-larsxschneider@gmail.com>
+ <1448615714-43768-2-git-send-email-larsxschneider@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: peff@peff.net, Junio C Hamano <gitster@pobox.com>
+To: larsxschneider@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 27 13:38:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a2FFk-0001aL-3N
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Nov 2015 10:23:40 +0100
+	id 1a2IIV-0002SJ-ST
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Nov 2015 13:38:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754253AbbK0JXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2015 04:23:38 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:34112 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754152AbbK0JXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2015 04:23:33 -0500
-Received: by wmvv187 with SMTP id v187so61985469wmv.1
-        for <git@vger.kernel.org>; Fri, 27 Nov 2015 01:23:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mfzIDJcpkTnJeAHHrGcUpCOIZ4bJrgSCef4KDLASwtY=;
-        b=C1bQpv99G6MULuElBCAITBhshV3jNUEpMJF07aN7TR8kA0ADAFdfTsX1ODycIhFUIq
-         6QY/ngXxQH17mBgkW5JIfKk35WWjs9HnaruvvHlcmUB9aovYNbQGZwFQsNGh9rjeoRV0
-         G2MC02cSuRKPB+T2k1i49Pugj8w6HM9RwUQ2vtlFe6xj0aPppiFuAVb0DH8ejGDK5mCx
-         PZWdNo23Nv8JhhV/bmo2XB/9lIFcseapODAPVE7v4WNIM540NESNdmpw9WegZh39+MnN
-         3BW0Q2ZzpPbgq5U3D1rlxQDJc79AgPzKBdH/99+IXZfBzYLcoAPbAAbYdpJD6BhdZ9F4
-         YIhA==
-X-Received: by 10.28.171.134 with SMTP id u128mr9531537wme.22.1448616212488;
-        Fri, 27 Nov 2015 01:23:32 -0800 (PST)
-Received: from slxBook3.fritz.box (p5DDB75CD.dip0.t-ipconnect.de. [93.219.117.205])
-        by smtp.gmail.com with ESMTPSA id q77sm6520832wmd.22.2015.11.27.01.23.31
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 27 Nov 2015 01:23:32 -0800 (PST)
-X-Mailer: git-send-email 2.5.1
-In-Reply-To: <1448616207-45035-1-git-send-email-larsxschneider@gmail.com>
+	id S1753705AbbK0Mii (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2015 07:38:38 -0500
+Received: from avasout07.plus.net ([84.93.230.235]:38382 "EHLO
+	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751726AbbK0Mih (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2015 07:38:37 -0500
+Received: from [10.0.2.15] ([146.200.5.254])
+	by avasout07 with smtp
+	id mcdk1r0045UqX4q01cdl5G; Fri, 27 Nov 2015 12:37:46 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=JN/GyJ+b c=1 sm=1 tr=0
+ a=GKs3PHufgjMgxBavMeQJCg==:117 a=GKs3PHufgjMgxBavMeQJCg==:17 a=0Bzu9jTXAAAA:8
+ a=EBOSESyhAAAA:8 a=N659UExz7-8A:10 a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8
+ a=PKzvZo6CAAAA:8 a=o3FO-ax8Mc0QieEsRRwA:9 a=pILNOxqGKmIA:10
+X-AUTH: ramsayjones@:2500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <1448615714-43768-2-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281773>
 
-From: Lars Schneider <larsxschneider@gmail.com>
 
-The tests are currently executed on "Ubuntu 12.04 LTS Server Edition
-64 bit" and on "OS X Mavericks" using gcc and clang.
 
-Perforce and Git-LFS are installed and therefore available for the
-respective tests.
+On 27/11/15 09:15, larsxschneider@gmail.com wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> Add an (optional) first parameter "ok=<special case>" to test_must_fail
+> and return success for "<special case>". Add "success" as
+> "<special case>" and use it to implement "test_might_fail". This removes
+> redundancies in test-lib-function.sh.
+> 
+> You can pass multiple <special case> arguments divided by comma (e.g.
+> "test_must_fail ok=success,something")
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>  t/test-lib-functions.sh | 47 +++++++++++++++++++++++++++++++++--------------
+>  1 file changed, 33 insertions(+), 14 deletions(-)
+> 
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 73e37a1..94c449a 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -569,6 +569,21 @@ test_line_count () {
+>  	fi
+>  }
+>  
+> +# Returns success if a comma separated string of keywords ($1) contains a
+> +# given keyword ($2).
+> +# Examples:
+> +# `list_contains "foo,bar" bar` returns 0
+> +# `list_contains "foo" bar` returns 1
+> +
+> +list_contains () {
+> +	case ",$1," in
+> +	*,$2,*)
+> +		return 0
+> +		;;
+> +	esac
+> +	return 1
+> +}
+> +
+>  # This is not among top-level (test_expect_success | test_expect_failure)
+>  # but is a prefix that can be used in the test script, like:
+>  #
+> @@ -582,18 +597,31 @@ test_line_count () {
+>  # the failure could be due to a segv.  We want a controlled failure.
+>  
+>  test_must_fail () {
+> +	case "$1" in
+> +	ok=*)
+> +		_test_ok=${1#ok=}
+> +		shift
+> +		;;
+> +	*)
+> +		_test_ok=
+> +		;;
+> +	esac
+>  	"$@"
+>  	exit_code=$?
+> -	if test $exit_code = 0; then
+> +	if ! list_contains "$_test_ok" success && test "$exit_code" -eq 0
+> +	then
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- .travis.yml | 91 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 91 insertions(+)
- create mode 100644 .travis.yml
+minor nit:
 
-diff --git a/.travis.yml b/.travis.yml
-new file mode 100644
-index 0000000..c3bf9c6
---- /dev/null
-+++ b/.travis.yml
-@@ -0,0 +1,91 @@
-+language: c
-+
-+os:
-+  - linux
-+  - osx
-+
-+compiler:
-+  - clang
-+  - gcc
-+
-+addons:
-+  apt:
-+    packages:
-+    - language-pack-is
-+
-+env:
-+  global:
-+    - P4_VERSION="15.2"
-+    - GIT_LFS_VERSION="1.1.0"
-+    - DEFAULT_TEST_TARGET=prove
-+    - GIT_PROVE_OPTS="--timer --jobs 3"
-+    - GIT_TEST_OPTS="--verbose --tee"
-+    - CFLAGS="-g -O2 -Wall -Werror"
-+    - GIT_TEST_CLONE_2GB=YesPlease
-+    # t9810 occasionally fails on Travis CI OS X
-+    # t9816 occasionally fails with "TAP out of sequence errors" on Travis CI OS X
-+    - GIT_SKIP_TESTS="t9810 t9816"
-+
-+before_install:
-+  - >
-+    case "${TRAVIS_OS_NAME:-linux}" in
-+    linux)
-+      mkdir --parents custom/p4
-+      pushd custom/p4
-+        wget --quiet http://filehost.perforce.com/perforce/r$P4_VERSION/bin.linux26x86_64/p4d
-+        wget --quiet http://filehost.perforce.com/perforce/r$P4_VERSION/bin.linux26x86_64/p4
-+        chmod u+x p4d
-+        chmod u+x p4
-+        export PATH="$(pwd):$PATH"
-+      popd
-+      mkdir --parents custom/git-lfs
-+      pushd custom/git-lfs
-+        wget --quiet https://github.com/github/git-lfs/releases/download/v$GIT_LFS_VERSION/git-lfs-linux-amd64-$GIT_LFS_VERSION.tar.gz
-+        tar --extract --gunzip --file "git-lfs-linux-amd64-$GIT_LFS_VERSION.tar.gz"
-+        cp git-lfs-$GIT_LFS_VERSION/git-lfs .
-+        export PATH="$(pwd):$PATH"
-+      popd
-+      ;;
-+    osx)
-+      brew_force_set_latest_binary_hash () {
-+        FORMULA=$1
-+        SHA=$(brew fetch --force $FORMULA 2>&1 | grep ^SHA256: | cut -d ' ' -f 2)
-+        sed -E -i.bak "s/sha256 \"[0-9a-f]{64}\"/sha256 \"$SHA\"/g" \
-+          /usr/local/Library/Taps/homebrew/homebrew-binary/$FORMULA.rb
-+      }
-+      brew update --quiet
-+      brew tap homebrew/binary --quiet
-+      brew_force_set_latest_binary_hash perforce
-+      brew_force_set_latest_binary_hash perforce-server
-+      brew install git-lfs perforce-server perforce gettext
-+      brew link --force gettext
-+      ;;
-+    esac;
-+    echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)";
-+    p4d -V | grep Rev.;
-+    echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)";
-+    p4 -V | grep Rev.;
-+    echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)";
-+    git-lfs version;
-+
-+before_script: make --jobs=2
-+
-+script: make --quiet test
-+
-+after_failure:
-+  - >
-+    : '<-- Click here to see detailed test output!                                                        ';
-+    for TEST_EXIT in t/test-results/*.exit;
-+    do
-+      if [ "$(cat "$TEST_EXIT")" != "0" ];
-+      then
-+        TEST_OUT="${TEST_EXIT%exit}out";
-+        echo "------------------------------------------------------------------------";
-+        echo "$(tput setaf 1)${TEST_OUT}...$(tput sgr0)";
-+        echo "------------------------------------------------------------------------";
-+        cat "${TEST_OUT}";
-+      fi;
-+    done;
-+
-+notifications:
-+  email: false
--- 
-2.5.1
+I would prefer this was 'if test $exit_code -eq 0 && ! list_contains ...'
+
+ie. the test on exit code comes first (and no need for the double quotes).
+The whole if..elif.. chain is about testing the exit code, with a couple
+of exceptions ...
+
+The same comment applies to the second patch with exit code 141/SIGPIPE.
+
+ATB,
+Ramsay Jones
