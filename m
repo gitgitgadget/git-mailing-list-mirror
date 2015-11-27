@@ -1,122 +1,76 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCHv3] ident.c: add support for IPv6
-Date: Fri, 27 Nov 2015 14:08:27 +0000
-Message-ID: <1448633307-43339-1-git-send-email-gitter.spiros@gmail.com>
-Cc: peff@peff.net, sunshine@sunshineco.com,
-	Elia Pinto <gitter.spiros@gmail.com>
+From: Daniele Varrazzo <daniele.varrazzo@gmail.com>
+Subject: Bug: git crashes on rebase reporting bogus memory corruption
+Date: Fri, 27 Nov 2015 14:08:52 +0000
+Message-ID: <CA+mi_8Y5bx-RDCV2oFfFRVZz-Jjcii7QbB6k45B5YsLoed-b8g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 27 15:08:36 2015
+X-From: git-owner@vger.kernel.org Fri Nov 27 15:09:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a2JhT-0005GM-VO
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Nov 2015 15:08:36 +0100
+	id 1a2Ji5-0006Wc-Ec
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Nov 2015 15:09:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753457AbbK0OIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2015 09:08:34 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:33759 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751538AbbK0OIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2015 09:08:34 -0500
-Received: by wmec201 with SMTP id c201so72007649wme.0
-        for <git@vger.kernel.org>; Fri, 27 Nov 2015 06:08:33 -0800 (PST)
+	id S1754004AbbK0OJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2015 09:09:14 -0500
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:33197 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750978AbbK0OJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2015 09:09:12 -0500
+Received: by obbww6 with SMTP id ww6so83356351obb.0
+        for <git@vger.kernel.org>; Fri, 27 Nov 2015 06:09:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=FQB4tlksVopabEvv86FDLSfpjt/TxoZIj/n8InNHhLw=;
-        b=uVkU2s7jzfgyIeasfFqXETppPKj5Mqmt7bjPaeWNdUJb9fK5WuZNbtE9KUq6rLtRrL
-         7rLcjNJmHpGT89LQfZT8VSd1n4Bpu/IRrl0jKkjunN824UCQZ4Nf7XT4OrtwzpTmk2G1
-         JmHxY3DPUazHUcAE3d0zXzQJBlCFF9fUrfLSXi+7RakNIIzXCy1r3xGjxagYOgDaVNQB
-         OJUWQBGrW8BbozndMAX6XLJ9TnYHxy5tBEdw33O2QmaFeEHoMh/x4T/0k/x1O5iEgNzB
-         13Wnbg2GwBkewjOLWiwKMyNf3WwUXhVr9V1SeYjOZS/zbUHyF75gcSvh2/RmkWxzbRr4
-         PUWA==
-X-Received: by 10.194.188.49 with SMTP id fx17mr32055865wjc.47.1448633313059;
-        Fri, 27 Nov 2015 06:08:33 -0800 (PST)
-Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
-        by smtp.gmail.com with ESMTPSA id cl5sm32997377wjc.29.2015.11.27.06.08.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 27 Nov 2015 06:08:32 -0800 (PST)
-X-Mailer: git-send-email 2.6.3.368.gf34be46.dirty
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=itPklR9ULdB5QGyqti9a5glZfcVeb0c9Zovo7JwA/RA=;
+        b=h0BH6/gVxbPat2s54VRW9ecKS5a44U6el0Z+zDta9RnounTDt9aPW15C/HjzfSo6O9
+         7apiX/XQTrOUICmpSm+XJ14FiI2zd8LT0Kos9FqDiiSEHZzRsPqIr0FDHgQs3M6DYNJy
+         euN/LPBQH+nB5mZ/Sob/p6mfmtP/2tJ4UpZud2FUS8SOJFWD4sXG5dwYe9eqWYX78jIk
+         HBTaCDGCrfN0By7wQ+psAAuTRwiGCQ+KQitQI3IJCc/5lvPT7ay7ffAQk65SJ6ASvhWM
+         dp0BCrc278wejat9c7geXIwT/24tiffodf6Ix8RUot5673x+XD55taTbXJ4JqGak4g9r
+         fwgw==
+X-Received: by 10.60.142.137 with SMTP id rw9mr35289321oeb.0.1448633351611;
+ Fri, 27 Nov 2015 06:09:11 -0800 (PST)
+Received: by 10.202.90.131 with HTTP; Fri, 27 Nov 2015 06:08:52 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281775>
 
-Add IPv6 support by implementing name resolution with the
-protocol agnostic getaddrinfo(3) API. The old gethostbyname(3)
-code is still available when git is compiled with NO_IPV6.
+Bogus corruption is bogus because I've reproduced it on different machines.
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
----
-This is the third version of the patch ($gmane/280488)
-Changes from previous:
+I was trying to rewrite history in a small repos and replace
+indentation tabs with spaces. Steps to reproduce:
 
-- Simplified the implementation, adding the new
-function canonical_name (Jeff King) ($gmane/281479).
-Fixed a new typo introduced in the second version.
+git clone https://github.com/dvarrazzo/suponoff.git
+git checkout -b gitbug
+git config core.whitespace
+trailing-space,tabwidth=4,tab-in-indent,space-before-tab
+git rebase  6af85bcde9a30c3841b754bbb60c03ba58b88a50 --whitespace=fix
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- ident.c | 32 +++++++++++++++++++++++++++-----
- 1 file changed, 27 insertions(+), 5 deletions(-)
+error reported on crash is:
 
-diff --git a/ident.c b/ident.c
-index 5ff1aad..6695537 100644
---- a/ident.c
-+++ b/ident.c
-@@ -70,10 +70,33 @@ static int add_mailname_host(struct strbuf *buf)
- 	return 0;
- }
- 
-+static int canonical_name(const char *host, struct strbuf *out)
-+{
-+       int status=-1;
-+#ifndef NO_IPV6
-+       struct addrinfo hints, *ai;
-+       memset (&hints, '\0', sizeof (hints));
-+       hints.ai_flags = AI_CANONNAME;
-+       int gai = getaddrinfo(host, NULL, &hints, &ai);
-+       if (!gai) {
-+               if (ai && strchr(ai->ai_canonname, '.')) {
-+                       strbuf_addstr(out, ai->ai_canonname);
-+                       status=0;
-+               }
-+               freeaddrinfo(ai);
-+       }
-+#else
-+       struct hostent *he = gethostbyname(buf);
-+       if (he && strchr(he->h_name, '.')) {
-+                       strbuf_addstr(out, he->h_name);
-+                       status=0;
-+       }
-+#endif /* NO_IPV6 */
-+}
-+
- static void add_domainname(struct strbuf *out)
- {
- 	char buf[1024];
--	struct hostent *he;
- 
- 	if (gethostname(buf, sizeof(buf))) {
- 		warning("cannot get host name: %s", strerror(errno));
-@@ -82,10 +105,9 @@ static void add_domainname(struct strbuf *out)
- 	}
- 	if (strchr(buf, '.'))
- 		strbuf_addstr(out, buf);
--	else if ((he = gethostbyname(buf)) && strchr(he->h_name, '.'))
--		strbuf_addstr(out, he->h_name);
--	else
--		strbuf_addf(out, "%s.(none)", buf);
-+	else {
-+		 if (canonical_name(buf,out) != 0) strbuf_addf(out, "%s.(none)", buf);
-+	}
- }
- 
- static void copy_email(const struct passwd *pw, struct strbuf *email)
--- 
-2.5.0
+Applying: Read configuration from supervisor config itself, added groups tags
+*** Error in `git': malloc(): memory corruption: 0x00000000023f9420 ***
+
+
+Tested with:
+
+CentOS Linux release 7.1.1503 (Core)
+git: 1.8.3.1
+Linux 3.13.0-66-generic #108-Ubuntu SMP Wed Oct 7 15:20:27 UTC 2015
+x86_64 x86_64 x86_64 GNU/Linux
+libc: 2.17-78.el7
+
+Ubuntu 14.04.3 LTS
+git: 1.9.1
+libc: 2.19-0ubuntu6
+kernel: Linux 3.13.0-24-generic #47-Ubuntu SMP Fri May 2 23:30:00 UTC
+2014 x86_64 x86_64 x86_64 GNU/Linux
+
+
+-- Daniele
