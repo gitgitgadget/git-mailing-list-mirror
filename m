@@ -1,77 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [git-for-windows] How is detected binary files?
-Date: Fri, 27 Nov 2015 15:14:58 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1511271510520.1686@s15462909.onlinehome-server.info>
-References: <487b881f-9e3e-4d22-ba1e-af3beeaccd6e@googlegroups.com>
+From: "Jack O'Connor" <oconnor663@gmail.com>
+Subject: GIT_INDEX_FILE relative paths are relative to the work tree
+Date: Fri, 27 Nov 2015 10:17:42 -0500
+Message-ID: <CA+6di1=4GwDg1kksJiKrVtDYSy=Sk=opWcg0=Ekwf0-OoQ2X9g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git-for-windows <git-for-windows@googlegroups.com>,
-	git@vger.kernel.org
-To: Andrzej Borucki <borucki.andrzej@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 27 15:15:07 2015
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 27 16:18:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a2Jnl-0000Rt-Fk
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Nov 2015 15:15:05 +0100
+	id 1a2Kmr-0006EU-Px
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Nov 2015 16:18:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754705AbbK0OPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2015 09:15:05 -0500
-Received: from mout.gmx.net ([212.227.17.21]:52358 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754680AbbK0OPD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2015 09:15:03 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0MLB89-1a2amZ3RmD-000ILj;
- Fri, 27 Nov 2015 15:14:58 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <487b881f-9e3e-4d22-ba1e-af3beeaccd6e@googlegroups.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:+SxYzOwL/7VOOfxOLGvcpJ0Yhbissg/naHcGF945OpEhJ4RnLWb
- szpPIg+apff8kmabyYqb9C9kmvRuNI/7g9ZZMWVvkZHOSY1kdJ44aoLRbw7Nb8uQks5dCt4
- 9FQuUp/pZphXwscLUAC5qM/pgxDcJ04XpydTD2jodzIVaLNhj8MUbYsOw7XT/HkuitK/AXS
- 5BVsrIp5d3tl7DGJ/DwkA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zXhFEAQWUp4=:gRe126WR/JjlMSrQ47slwM
- u6Dsm32exkOlzEmufwmgJYay7vbe2VMcqz5KwUavn1MfQKMmgU1sNP+yxabv165XKZFY55sEo
- ppSj1SQN7fhOVJPpixaiT8RRigCpneEjqWmA9FTjigzKWuzFp6F582XzK8wBsAeaelezO6X8C
- C5QeVjTDPW6ZUIlkSDuKenHR7YOcqqewqJkF8MzIbU43LOx21djseNhvmNl7KJP5alAbLLby0
- Impbfk+XKRy2Tg4v5zj3G+yj5UpwYq5UrXVHKwFXSS199sBqYglZf37M1bPS+m7spa+Xw6wt4
- IItCwwH41y7H+s7IV42RoRmDdKmOQYR2Q8IInbA8up+3FO8q2wKFe52CeoXjSElorMO3pFdjK
- PSWNMO3LYrsJp9gbz4IV1IUVPORoAFngfl5M5MJiBeP7xdLUUu0tZ4BWqyVCNT0tDU5+76Vo0
- 66gDcKE1eZagGUe0wU6TbbMkeGwXnmQgiqXX4Fqde32sUtDF29BprPvD/E11u5XMBsFDPF/NJ
- Vp0Xqplzn0zWKZcanwuRdWjfWuIrLdTxksiO4GIkP4UhK1yNv/j3SMR2QUrTw+HEYqunuu8YV
- ZtDpwiuk1rYjpaFPb13qE4B+dAwVKtciXHXHza/fomb2BunoYv5G3x2PvWjm+SEO1JkwHCBNd
- kUCwn2rUoEO59D/USxqysE5ygrnqSDJmRd/Ki0CW/4zJOaVAwi/YeclvOWFLIGjPqv8hvra+x
- jk78Z8+oqhRuA3PnF+d5levOcz37t44+T+UFVB9ZTHCiQX7YZq2xKzuoE5CWcUQeS31cQ+F0 
+	id S1754734AbbK0PSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2015 10:18:13 -0500
+Received: from mail-vk0-f50.google.com ([209.85.213.50]:36518 "EHLO
+	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754224AbbK0PSM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2015 10:18:12 -0500
+Received: by vkay187 with SMTP id y187so70194907vka.3
+        for <git@vger.kernel.org>; Fri, 27 Nov 2015 07:18:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=r62BuOtBsnkzQrohQtPafqFKuDk/nBfPk+YmGgkCgI0=;
+        b=cMpdSdwDVtXDNlqnwBBkkYbx+AY7UfSgm8w1YV921Ns9Z0fwsNEUuE4JNPvQdQv8H3
+         fYXa2DWvzZOdPfkuXOyyEtPpmP06yGWHlmgiDw7hOIyjw1+ymo8xAXWEKfbTGqFoRdjM
+         6u4Um+7gyqHG/cy+UxBU5BuxHnX4KhOnaLcPVCMxkhJmqWrz6aA8jOIDbGEZ1rncS0sm
+         KBt7FKjfl0bOOinQ0mNRIl1IwBSoJ+/H/TZc+p4khylnTNlpYAlAh/RVucOyi1HZWh8G
+         x6ZH5zjVIOmw2p0DjSlYpzJ4SmA15AenqryU5e5bVjOZORXfT/erM/5ZbfFqx4DqG8df
+         Kr3A==
+X-Received: by 10.31.5.15 with SMTP id 15mr6191799vkf.108.1448637491448; Fri,
+ 27 Nov 2015 07:18:11 -0800 (PST)
+Received: by 10.31.186.132 with HTTP; Fri, 27 Nov 2015 07:17:42 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281777>
 
-Hi Andrzej,
+When I use a relative path in the GIT_INDEX_FILE environment variable,
+git interprets that path relative to the the work tree. This can be
+confusing if my cwd is some subdirectory of my project; in that case
+an index file is created in the project root rather than in my cwd. It
+can also be confusing if I'm using --git-dir and --work-tree, in which
+case the path is interpreted relative to the latter.
 
-On Wed, 25 Nov 2015, Andrzej Borucki wrote:
+Is this behavior intentional? If so, I think it would be worth
+mentioning in the documentation for GIT_INDEX_FILE. But I can't think
+of a case where I would ever want an index file to end up inside my
+work tree.
 
-> How git detects that file is binary? This must be safe because it not 
-> allowed to change line breaks in binary files. 
-> Binary files can contain byte 0 (zero), but:
-> - 16 bit UTF also can contain zero
-> - short binary files can not contain zero
-
-It would probably be better to direct this question to the general Git
-mailing list (you reached the Git for Windows one, and this issue is not
-specific to Windows).
-
-To answer your question, a NUL byte within the first 8000 bytes is indeed
-considered as an indicator for binary files.
-
-If you use UTF-16, you will need to mark your files as such explicitly
-(Git does not handle UTF-16 internally).
-
-As to short binary files, you will also have to mark those explicitly.
-
-Ciao,
-Johannes
+This also comes up in http://stackoverflow.com/a/7645492/823869. Using
+absolute paths is a workaround.
