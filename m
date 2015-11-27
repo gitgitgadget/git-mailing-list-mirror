@@ -1,63 +1,93 @@
-From: Daniele Varrazzo <daniele.varrazzo@gmail.com>
-Subject: Re: Bug: git crashes on rebase reporting bogus memory corruption
-Date: Fri, 27 Nov 2015 16:29:29 +0000
-Message-ID: <CA+mi_8ap9676PHKyuK1kdmLm9WLKO3XTUunjF8cwFyULoL=XOw@mail.gmail.com>
-References: <CA+mi_8Y5bx-RDCV2oFfFRVZz-Jjcii7QbB6k45B5YsLoed-b8g@mail.gmail.com>
+From: DavidLeeCrites <lee@critesclan.com>
+Subject: Re: [remote rejected] master -> master (n/a (unpacker error))
+Date: Fri, 27 Nov 2015 14:37:33 -0700 (MST)
+Message-ID: <1448660253143-7643470.post@n2.nabble.com>
+References: <AANLkTinV2U6Lbbl0N7jVAESEi0mZQ_D3slMEYa68vRT4@mail.gmail.com> <20100513005218.GA20655@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 27 17:29:52 2015
+X-From: git-owner@vger.kernel.org Fri Nov 27 22:37:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a2LuB-0004HZ-Al
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Nov 2015 17:29:51 +0100
+	id 1a2Qi1-0003QP-1s
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Nov 2015 22:37:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754943AbbK0Q3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2015 11:29:51 -0500
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:32773 "EHLO
-	mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754872AbbK0Q3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2015 11:29:49 -0500
-Received: by oixx65 with SMTP id x65so64083524oix.0
-        for <git@vger.kernel.org>; Fri, 27 Nov 2015 08:29:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=9qreqP/G47UmkDWCwdeGLs3eitL8Qn6aDlMpPrSWfxk=;
-        b=xP+rGu6s0znOyz75wy/kMXk4HxE3uti0TQagKw653IxasYDQmQRrBva6HIzUl31NfI
-         VCN1FXpH2eEPpQZfQKiF8tdStlkJ3N4i42IhtmPIeiR4TRlT0ndcFTNZ2UI50zZ5yNCe
-         N0nlwHk5mJd96hpZ8fjhQdSB2Gevk++UFSlLLx/svbhppe7SwL8CAX0r9alL/JZfyGfP
-         Ny/Nd9fyLWWghUdp5CmZ6R/4to94rnTqqdJPkwALcF6BsbHn18npjIuPiC3c+JyGbGmE
-         BKViTk1YD4TUfOefzQ5REXFDglU0Z8WHv694hIG3q5kf+DZsLakDsuQP7NJBBCeS6pq/
-         2UOg==
-X-Received: by 10.202.83.74 with SMTP id h71mr32388551oib.32.1448641789161;
- Fri, 27 Nov 2015 08:29:49 -0800 (PST)
-Received: by 10.202.90.131 with HTTP; Fri, 27 Nov 2015 08:29:29 -0800 (PST)
-In-Reply-To: <CA+mi_8Y5bx-RDCV2oFfFRVZz-Jjcii7QbB6k45B5YsLoed-b8g@mail.gmail.com>
+	id S1755296AbbK0Vhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Nov 2015 16:37:37 -0500
+Received: from mwork.nabble.com ([162.253.133.43]:59288 "EHLO mwork.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755187AbbK0Vhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Nov 2015 16:37:35 -0500
+Received: from mjim.nabble.com (unknown [162.253.133.84])
+	by mwork.nabble.com (Postfix) with ESMTP id D28732EA9E35
+	for <git@vger.kernel.org>; Fri, 27 Nov 2015 13:38:41 -0800 (PST)
+In-Reply-To: <20100513005218.GA20655@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281780>
 
-On Fri, Nov 27, 2015 at 2:08 PM, Daniele Varrazzo
-<daniele.varrazzo@gmail.com> wrote:
-> Bogus corruption is bogus because I've reproduced it on different machines.
->
-> I was trying to rewrite history in a small repos and replace
-> indentation tabs with spaces. Steps to reproduce:
+I am getting the same kinds of errors, but the resolutions offered here did
+not work. After using the ideas (that there was a tmp_* file I did not have
+perms to write to, I started doing some global searches. 
 
-Messing up with that repo. Not sure what reportedly originally still
-works. This should remain as it is:
+One such was this (from inside .git/objects):
+# ls -alR | grep tmp
+ls: reading directory ./97: Input/output error
 
-  git clone -b gitbug https://github.com/dvarrazzo/suponoff.git
-  cd suponoff/
-  git config core.whitespace
-trailing-space,tabwidth=4,tab-in-indent,space-before-tab
-  git rebase  6af85bcde9a30c3841b754bbb60c03ba58b88a50 --whitespace=fix
+So I tried:
+# cd 97
+# ls -l
+ls: reading directory .: Input/output error
+total 0K
 
--- Daniele
+To fix it, I did this:
+# cd ..
+# rm -fr ./97
+
+The git push then worked fine.
+
+I'll add a few more pieces to the puzzle. I have some of my git repositories
+on a USB drive (the ones I get this issue with). I move it from system to
+system. When git works, it works okay. But this irritant hits me about once
+a week. My previous solution was to blow away the repo and rebuild it
+(something suggested several times here). This is the first time I have
+found a workaround.
+
+These are my private repositories that hold my private files. I have a
+github account I use for my public ones, plus my company has both a public
+github and their own privately hosted github. So the same exact computer
+systems (laptops and VMs) use all four with impunity. Almost all of them are
+linux based -- a mix of CentOS 7.x and Linux Mint 14.x; all using git
+v1.9.1. The one exception is osx. Thus the (brand new Toshiba 4T) USB drive
+is built with the exFAT filesystem. When it works, it works okay; but as I
+said, one of my dozen git repos will fail like this on a weekly basis. 
+
+None of the items in my dockerhub or artifactory fail, nor do my rsnapshot
+processes, or VLC/Banshee, etc. 
+
+I've pretty much isolated it down to git. It is the ONLY app that fails. I
+have noted in the past few months that the frequency of errors tells me I
+cannot be using the USB drive for anything else while git is accessing the
+drive. [mac specific: it is better when I use a USB 2.0 hub to plug the
+drive in; we all are probably aware that the mac seems to have more issues
+with USB 3.0...]
+
+Anyway, I figured I'd toss this into the mix. Since it only happens once a
+week or so, I cannot guarantee I'll have an update soon, but if someone is
+curious, ping me, and I'll let you know when it happens again.
+
+DL
+
+
+
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/remote-rejected-master-master-n-a-unpacker-error-tp5043046p7643470.html
+Sent from the git mailing list archive at Nabble.com.
