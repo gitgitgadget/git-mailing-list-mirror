@@ -1,53 +1,76 @@
-From: Jim Shady <jimtheshady@gmail.com>
-Subject: Fuck you
-Date: Fri, 27 Nov 2015 20:23:55 -0500
-Message-ID: <6D096405-430A-4986-8842-39A7980802CD@gmail.com>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Henry Qin <root@hq6.me>
+Subject: Is it possible to build `git` such that the install directory and the
+ deployment prefix is not the same?
+Date: Fri, 27 Nov 2015 23:19:01 -0800
+Message-ID: <CAO8bsPDQ2BX1U0D9=pa99_nkEeRWzuN6QzsMw+2u0GPqO6M9kw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 28 02:24:12 2015
+X-From: git-owner@vger.kernel.org Sat Nov 28 08:26:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a2UFE-0005aZ-JL
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Nov 2015 02:24:08 +0100
+	id 1a2Ztz-0001Pv-ER
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Nov 2015 08:26:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752361AbbK1BYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Nov 2015 20:24:08 -0500
-Received: from mail-yk0-f196.google.com ([209.85.160.196]:36052 "EHLO
-	mail-yk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752344AbbK1BYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Nov 2015 20:24:03 -0500
-Received: by ykdr82 with SMTP id r82so11624832ykd.3
-        for <git@vger.kernel.org>; Fri, 27 Nov 2015 17:24:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:content-transfer-encoding:from:mime-version:subject
-         :message-id:date:to;
-        bh=XI9E/gwr5PwAk7XFrKpM8N5uSIpJTAVA9woVmFMUaAs=;
-        b=SCoPa6EZh5i2qnd6aIxINacW3K2S1+wYleK2HipjlqQdWF2Sw6C9Kw1eG2tbhTEtYF
-         ZHBAw66pgSQWPUYrwlxo+R1T+pmxMshjJR9wy/iJgWnK62Bh1fqFrKc2UgdkGtM5kWzs
-         pk6uLwdAeNJ3z4XQArmw0F2e5aNYMROv0x3DvaYdJtjngoaqaQJZ+HGEmoBWAAqolPCG
-         Px71XTLYsUiJjXjZMVsSw6lMVbGumwzhk64lJ62tifO43B7iPwp/O+KNtWyEi8+a0uC6
-         TFghCp6ZDvErEWSsQNZwP8FbugZkSsOQ5fHb1pvDZWxWNgvtZnmAFuN6PFfWxVcY6bXr
-         kkhQ==
-X-Received: by 10.13.194.193 with SMTP id e184mr43344391ywd.203.1448673841795;
-        Fri, 27 Nov 2015 17:24:01 -0800 (PST)
-Received: from [100.125.37.142] (20.sub-70-193-13.myvzw.com. [70.193.13.20])
-        by smtp.gmail.com with ESMTPSA id 205sm29780193ywg.7.2015.11.27.17.24.01
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 27 Nov 2015 17:24:01 -0800 (PST)
-X-Mailer: iPhone Mail (13B143)
+	id S1750875AbbK1H0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Nov 2015 02:26:35 -0500
+Received: from hq6.me ([104.236.142.227]:42279 "EHLO mail.hq6.me"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750743AbbK1H0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Nov 2015 02:26:33 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Nov 2015 02:26:33 EST
+Received: from mail-ob0-f173.google.com (mail-ob0-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mail.hq6.me (Postfix) with ESMTPSA id 034E51201E0
+	for <git@vger.kernel.org>; Fri, 27 Nov 2015 23:19:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=hq6.me; s=mail;
+	t=1448695173; bh=yKN99Jw5qepqJ5OBVxyhjq7Yy8T4T8IZnAqwaYqJr64=;
+	h=From:Date:Subject:To:From;
+	b=e0BYsne3OQTV+IkhBwh9ZDS68jWaBgzHmXe+fSa/eyKeUJwbFiK+rTHPWw1wgAjse
+	 jGx+PJKSFpXMzh2cg27jbbbJmfY086AmvkQrOtsVUKREVQxrUebJCqCE2g95e4Lq4F
+	 sSy/AHue5V512fpW9F+I7Yjawx9DNzswpuIYBDc0=
+Received: by obdgf3 with SMTP id gf3so96170233obd.3
+        for <git@vger.kernel.org>; Fri, 27 Nov 2015 23:19:31 -0800 (PST)
+X-Received: by 10.182.116.200 with SMTP id jy8mr37898014obb.35.1448695171240;
+ Fri, 27 Nov 2015 23:19:31 -0800 (PST)
+Received: by 10.60.80.169 with HTTP; Fri, 27 Nov 2015 23:19:01 -0800 (PST)
+X-Gmail-Original-Message-ID: <CAO8bsPDQ2BX1U0D9=pa99_nkEeRWzuN6QzsMw+2u0GPqO6M9kw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281782>
+
+Dear Git developers,
+
+I've looked around the online forums and also asked this question on
+Stackoverflow, but have not gotten an answer.
+
+http://stackoverflow.com/questions/33901216/is-it-possible-to-build-git-such-that-the-install-directory-and-the-deployment
+
+Here is the question, copied below for your convenience:
+
+"""
+I am attempting to build git from source, and I would like make
+install to put the binaries into a directory called dist in my source
+directory, so I use the following configure line.
+
+./configure --prefix=`pwd`/dist
+
+Unfortunately, this also causes the build output to assume that this
+is the final install location for git, and therefore hardcode the path
+into various scripts and binaries such as
+libexec/git-core/git-difftool.
+
+Is there a way to specify during either configure or make that I want
+a different path for actual deployment, such as /usr/bin/local, but
+still have make install go into the directory pwd/dist?
+"""
 
 
-
-Gmail.com
+Thanks,
+~Henry
