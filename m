@@ -1,188 +1,214 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: Re: [PATCHv3] ident.c: add support for IPv6
-Date: Sat, 28 Nov 2015 21:48:27 +0100
-Message-ID: <CA+EOSB=i3973MAj1Ti4tbQY23Hq=SDy8zoFLJQ4r1xm7hmZACQ@mail.gmail.com>
-References: <1448633307-43339-1-git-send-email-gitter.spiros@gmail.com>
-	<20151128172341.GE27264@sigill.intra.peff.net>
+From: Alexander Shukaev <git@Alexander.Shukaev.name>
+Subject: Git 'pre-receive' hook and 'git-clang-format' script to reliably
+ reject pushes that violate code style conventions
+Date: Sat, 28 Nov 2015 23:18:15 +0100
+Message-ID: <565A2827.3000609@Alexander.Shukaev.name>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 28 21:49:05 2015
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 28 23:21:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a2mQX-0005AO-Ex
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Nov 2015 21:49:01 +0100
+	id 1a2ns6-0004iA-92
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Nov 2015 23:21:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752629AbbK1Usa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Nov 2015 15:48:30 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:34864 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752427AbbK1Us2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Nov 2015 15:48:28 -0500
-Received: by vkha189 with SMTP id a189so83428836vkh.2
-        for <git@vger.kernel.org>; Sat, 28 Nov 2015 12:48:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=OaP0HabaRdeFN8cBBh9Z7R8eHkwSL9YBaBjZuPqKmX8=;
-        b=wmDtTnSNjb/quPKBbERBEjzO1XCm/+o5uwBUCQDDHN0Bd7BOZWF//p+FznH1Vhw8px
-         AquOKFkK9Q2HVU5k1Jii6qk00EJmftTnHqenW1D0JZJXPZdpXBgg4XpRqGzdviHfRb2V
-         AmrD9FaIHZ11uZ04pQ68Ilqd6lyyM89/xzvKiovR4dq7PyJ+eGj2kto0b8WxWl/qV4IH
-         nWFhaB6IjfrKtCU9OJCUDlQOSpbRf6AVHWaTbODXXUSCpuK81z/a2E76Y5DhWi5GX7qj
-         azt9TRRsxhJ6pT5d32HP2m8y6IO1NgUe9iqSrAONE5pEXzL5vaa+XJvWmdMbeS1qF517
-         b05w==
-X-Received: by 10.31.52.211 with SMTP id b202mr47057156vka.82.1448743707419;
- Sat, 28 Nov 2015 12:48:27 -0800 (PST)
-Received: by 10.31.140.74 with HTTP; Sat, 28 Nov 2015 12:48:27 -0800 (PST)
-In-Reply-To: <20151128172341.GE27264@sigill.intra.peff.net>
+	id S1751362AbbK1WVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Nov 2015 17:21:00 -0500
+Received: from slow1-d.mail.gandi.net ([217.70.178.86]:50619 "EHLO
+	slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751073AbbK1WU6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Nov 2015 17:20:58 -0500
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
+	by slow1-d.mail.gandi.net (Postfix) with ESMTP id C1A4E47B6CC
+	for <git@vger.kernel.org>; Sat, 28 Nov 2015 23:18:33 +0100 (CET)
+Received: from mfilter22-d.gandi.net (mfilter22-d.gandi.net [217.70.178.150])
+	by relay5-d.mail.gandi.net (Postfix) with ESMTP id 77AE841C074
+	for <git@vger.kernel.org>; Sat, 28 Nov 2015 23:18:31 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter22-d.gandi.net
+Received: from relay5-d.mail.gandi.net ([IPv6:::ffff:217.70.183.197])
+	by mfilter22-d.gandi.net (mfilter22-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id QoIAIHqSBakj for <git@vger.kernel.org>;
+	Sat, 28 Nov 2015 23:18:30 +0100 (CET)
+X-Originating-IP: 188.107.44.57
+Received: from [192.168.2.109] (dslb-188-107-044-057.188.107.pools.vodafone-ip.de [188.107.44.57])
+	(Authenticated sender: forum@alexander.shukaev.name)
+	by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id DDE8041C076
+	for <git@vger.kernel.org>; Sat, 28 Nov 2015 23:18:28 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281796>
 
-2015-11-28 18:23 GMT+01:00, Jeff King <peff@peff.net>:
-> On Fri, Nov 27, 2015 at 02:08:27PM +0000, Elia Pinto wrote:
->
->> This is the third version of the patch ($gmane/280488)
->> Changes from previous:
->>
->> - Simplified the implementation, adding the new
->> function canonical_name (Jeff King) ($gmane/281479).
->> Fixed a new typo introduced in the second version.
->
-> Thanks, I think this keeps add_domainname() a lot cleaner. There are a
-> few problems:
->
->> +static int canonical_name(const char *host, struct strbuf *out)
->> +{
->> +       int status=-1;
->
-> Our style is to put whitespace between operators (so "int status = -1;",
-> and other places below).
->
-> This line (and the others) was also indented with spaces, not tabs.
->
->> +#ifndef NO_IPV6
->> +       struct addrinfo hints, *ai;
->> +       memset (&hints, '\0', sizeof (hints));
->> +       hints.ai_flags = AI_CANONNAME;
->> +       int gai = getaddrinfo(host, NULL, &hints, &ai);
->
-> We do C89-style no-decl-after-statement. But this "gai" is only
-> used once, so we can just lump it into the next conditional.
->
->> +       if (!gai) {
->> +               if (ai && strchr(ai->ai_canonname, '.')) {
->> +                       strbuf_addstr(out, ai->ai_canonname);
->> +                       status=0;
->> +               }
->> +               freeaddrinfo(ai);
->> +       }
->> +#else
->> +       struct hostent *he = gethostbyname(buf);
->> +       if (he && strchr(he->h_name, '.')) {
->> +                       strbuf_addstr(out, he->h_name);
->> +                       status=0;
->> +       }
->> +#endif /* NO_IPV6 */
->> +}
->
-> I think you are missing a "return status" here.
->
->> @@ -82,10 +105,9 @@ static void add_domainname(struct strbuf *out)
->>  	}
->>  	if (strchr(buf, '.'))
->>  		strbuf_addstr(out, buf);
->> -	else if ((he = gethostbyname(buf)) && strchr(he->h_name, '.'))
->> -		strbuf_addstr(out, he->h_name);
->> -	else
->> -		strbuf_addf(out, "%s.(none)", buf);
->> +	else {
->> +		 if (canonical_name(buf,out) != 0) strbuf_addf(out, "%s.(none)", buf);
->> +	}
->
-> We always put conditional bodies on the next line, even if they are
-> one-liners.
->
-> Here's what I've queued, addressing those. No need to re-send if you're
-> happy with it:
-Ok for me. Thank you very much
->
-> -- >8 --
-> From: Elia Pinto <gitter.spiros@gmail.com>
-> Subject: [PATCH] ident.c: add support for IPv6
->
-> Add IPv6 support by implementing name resolution with the
-> protocol agnostic getaddrinfo(3) API. The old gethostbyname(3)
-> code is still available when git is compiled with NO_IPV6.
->
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> Helped-by: Jeff King <peff@peff.net>
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  ident.c | 31 +++++++++++++++++++++++++++----
->  1 file changed, 27 insertions(+), 4 deletions(-)
->
-> diff --git a/ident.c b/ident.c
-> index 5ff1aad..4e7f99d 100644
-> --- a/ident.c
-> +++ b/ident.c
-> @@ -70,10 +70,35 @@ static int add_mailname_host(struct strbuf *buf)
->  	return 0;
->  }
->
-> +static int canonical_name(const char *host, struct strbuf *out)
-> +{
-> +	int status = -1;
-> +
-> +#ifndef NO_IPV6
-> +	struct addrinfo hints, *ai;
-> +	memset (&hints, '\0', sizeof (hints));
-> +	hints.ai_flags = AI_CANONNAME;
-> +	if (!getaddrinfo(host, NULL, &hints, &ai)) {
-> +		if (ai && strchr(ai->ai_canonname, '.')) {
-> +			strbuf_addstr(out, ai->ai_canonname);
-> +			status = 0;
-> +		}
-> +		freeaddrinfo(ai);
-> +	}
-> +#else
-> +	struct hostent *he = gethostbyname(buf);
-> +	if (he && strchr(he->h_name, '.')) {
-> +		strbuf_addstr(out, he->h_name);
-> +		status = 0;
-> +	}
-> +#endif /* NO_IPV6 */
-> +
-> +	return status;
-> +}
-> +
->  static void add_domainname(struct strbuf *out)
->  {
->  	char buf[1024];
-> -	struct hostent *he;
->
->  	if (gethostname(buf, sizeof(buf))) {
->  		warning("cannot get host name: %s", strerror(errno));
-> @@ -82,9 +107,7 @@ static void add_domainname(struct strbuf *out)
->  	}
->  	if (strchr(buf, '.'))
->  		strbuf_addstr(out, buf);
-> -	else if ((he = gethostbyname(buf)) && strchr(he->h_name, '.'))
-> -		strbuf_addstr(out, he->h_name);
-> -	else
-> +	else if (canonical_name(buf, out) < 0)
->  		strbuf_addf(out, "%s.(none)", buf);
->  }
->
-> --
-> 2.6.3.636.g1460207
->
->
+Hello,
+
+I have posted a question on Stack Overflow [1].  I would like to post it 
+here as well since nobody has answered it yet.
+
+Let's immediately start with a scrap of the `pre-receive` hook that I've 
+already written:
+
+     #!/bin/sh
+     ##
+       format_bold='\e[1m'
+        format_red='\e[31m'
+     format_normal='\e[0m'
+     ##
+     log_error="${format_bold}${format_red}error${format_normal}"
+     ##
+     stdout() {
+       printf "${1}" "${@:2}"
+     }
+     ##
+     stderr() {
+       stdout "${@}" 1>&2
+     }
+     ##
+     output() {
+       stdout "${1}\n" "${@:2}"
+     }
+     ##
+     error() {
+       stderr "${log_error}: ${1}\n" "${@:2}"
+     }
+     ##
+     die() {
+       error "${@}"
+       exit 1
+     }
+     ##
+     list() {
+       git rev-list "${@}"
+     }
+     ##
+     clang_format() {
+       git --no-pager clang-format --style='file' "${@}"
+     }
+     ##
+     while read sha1_old sha1_new ref; do
+       case "${ref}" in
+       refs/heads/*)
+         branch="$(expr "${ref}" : 'refs/heads/\(.*\)')"
+         if [ "$(expr "${sha1_new}" : '0*$')" -ne 0 ]; then # delete
+           unset sha1_new
+           # ...
+         else # update
+           if [ "$(expr "${sha1_old}" : '0*$')" -ne 0 ]; then # create
+             unset sha1_old
+             sha1_range="${sha1_new}"
+           else
+             sha1_range="${sha1_old}..${sha1_new}"
+             # ...
+             fi
+           fi
+           # ...
+                  GIT_WORK_TREE="$(mktemp --tmpdir -d 'gitXXXXXX')"
+           export GIT_WORK_TREE
+                  GIT_DIR="${GIT_WORK_TREE}/.git"
+           export GIT_DIR
+           mkdir -p "${GIT_DIR}"
+           cp -a * "${GIT_DIR}/"
+           ln -s "${PWD}/../.clang-format" "${GIT_WORK_TREE}/"
+           error=
+           for sha1 in $(list "${sha1_range}"); do
+             git checkout --force "${sha1}" > '/dev/null' 2>&1
+             if [ "$(list --count "${sha1}")" -eq 1 ]; then
+               # What should I put here?
+             else
+               git reset --soft 'HEAD~1' > '/dev/null' 2>&1
+             fi
+             diff="$(clang_format --diff)"
+             if [ "${diff%% *}" = 'diff' ]; then
+               error=1
+               error '%s: %s\n%s'                                       \
+                     'Code style issues detected'                       \
+                     "${sha1}"                                          \
+                     "${diff}"                                          \
+                     1>&2
+             fi
+           done
+           if [ -n "${error}" ]; then
+             die '%s' 'Code style issues detected'
+           fi
+         fi
+         ;;
+       refs/tags/*)
+         tag="$(expr "${ref}" : 'refs/tags/\(.*\)')"
+         # ...
+         ;;
+       *)
+         # ...
+         ;;
+       esac
+     done
+     exit 0
+
+**NOTE:**
+Places with irrelevant code are stubbed with `# ...`.
+
+**NOTE:**
+If you are not familiar with `git-clang-format`, take a look [here][2].
+
+That hook works as expected, and so far, I didn't notice any bugs, but 
+if you spot any problem or have an improvement suggestion, I'd 
+appreciate any report.  Probably, I should give a comment on what's the 
+intention behind this hook.  Well, it does check every pushed revision 
+for compliance with code style conventions using `git-clang-format`, and 
+if any of them does not comply, it will output the relevant diff (the 
+one telling developers what should be fixed) for each of them. 
+Basically, I have two in-depth questions regarding this hook.
+
+First, notice that I perform copy of the remote's (server) bare 
+repository to some temporary directory and check out the code for 
+analysis there.  Let me explain the intention of this.  Note that I do 
+several `git checkout`s and `git reset`s (due to `for` loop) in order to 
+analyze all of the pushed revisions individually with 
+`git-clang-format`.  What I am trying to avoid here, is the (possible) 
+concurrency issue on push access to the remote's (server) bare 
+repository.  That is, I'm under impression that if multiple developers 
+will try to push at the same time to a remote with this `pre-receive` 
+hook installed, that might cause problems if each of these push 
+"sessions" does not do `git checkout`s and `git reset`s with its private 
+copy of the repository.  So, to put it simple, does `git-daemon` have 
+built-in lock management for concurrent push "sessions"?  Will it 
+execute the corresponding `pre-receive` hook instances strictly 
+sequentially or there is a possibility of interleaving (which can 
+potentially cause undefined behavior)?  Something tells me that there 
+should be a built-in solution for this problem with concrete guarantees, 
+otherwise how would remotes work in general (even without complex hooks) 
+being subjected to concurrent pushes?  If there is such a built-in 
+solution, then the copy is redundant and simply reusing the bare 
+repository would actually speed up the processing.  By the way, any 
+reference to official documentation regarding this question is very welcome.
+
+Second, `git-clang-format` processes only *staged* (but not committed) 
+changes vs. specific commit (`HEAD` by default).  Thus, you can easily 
+see where a corner case lies.  Yes, it's with the *root* commits 
+(revisions).  In fact, `git reset --soft 'HEAD~1'` cannot be applied to 
+root commits as they have no parents to reset to.  Hence, the following 
+check with my second question is there:
+
+             if [ "$(list --count "${sha1}")" -eq 1 ]; then
+               # What should I put here?
+             else
+               git reset --soft 'HEAD~1' > '/dev/null' 2>&1
+             fi
+
+I've tried `git update-ref -d 'HEAD'` but this breaks the repository in 
+such a way that `git-clang-format` is not able to process it anymore.  I 
+believe this is related to the fact that all of these pushed revisions 
+that are being analyzed (including this root one) do not really belong 
+to any branch yet.  That is, they are in *detached* `HEAD` state.  It 
+would be perfect to find a solution to this corner case as well, so that 
+*initial* commits can also undergo the same check by `git-clang-format` 
+for compliance with code style conventions.
+
+Peace.
+
+[1] http://stackoverflow.com/q/33924519/1743860
+[2] 
+http://llvm.org/svn/llvm-project/cfe/trunk/tools/clang-format/git-clang-format
