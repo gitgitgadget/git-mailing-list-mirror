@@ -1,114 +1,113 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 5/8] checkout(-index): do not checkout i-t-a entries
-Date: Sun, 29 Nov 2015 16:31:22 +0100
-Message-ID: <20151129153122.GA3719@duynguyen-vnpc.dek-tpc.internal>
-References: <xmqqy4j80wdb.fsf@gitster.dls.corp.google.com>
- <1440205700-19749-1-git-send-email-pclouds@gmail.com>
- <1440205700-19749-6-git-send-email-pclouds@gmail.com>
- <xmqq8u8z1d8r.fsf@gitster.dls.corp.google.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [RFC] OS X El Capitan + Xcode ships without SSL header?!
+Date: Sun, 29 Nov 2015 18:04:54 +0100
+Message-ID: <565B3036.8000604@web.de>
+References: <BBD3F9B1-9FCA-4207-B374-3ADCF19F1431@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, phiggins@google.com, snoksrud@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 29 16:31:56 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Lars Schneider <larsxschneider@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	=?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Nov 29 18:05:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a33xD-00036k-88
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Nov 2015 16:31:55 +0100
+	id 1a35PO-0002ax-9P
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Nov 2015 18:05:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751501AbbK2Pbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Nov 2015 10:31:48 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:34944 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbbK2Pb2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Nov 2015 10:31:28 -0500
-Received: by wmuu63 with SMTP id u63so101541648wmu.0
-        for <git@vger.kernel.org>; Sun, 29 Nov 2015 07:31:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=7qXLI7BS+DrkiuX/6C4YHQw7nEwZ7cKd2OdVZ/eEeYM=;
-        b=yLnONAgtEgTDzQ6l6tgh9VuhN13RYVXB8aK6yoXhH3eRH+gIyfzYg8x59RVn3Yus/K
-         Os67HDHQ/LbBTP8CLE1Y6tH98/l70v6KfR4lRd+E+aFoJ7s4lOTYPxVlKKJZHQEFNtqT
-         ViRImhNLprd6wYpF+Pjt8oBa0LY3lUH7ouc8lNswj0RD3xZrom0VJ3ss7gWgL9MPOJTI
-         /VdSFEfDRPeMBpd1s25AwEimihMJdKXu4Mc0MYtVamzQGXNpa5IU4s0AAzI4RXKr5pKA
-         bxQ0y+QIid6W+k+GqkZxp2hx0qUNNdVxUzFuTRlBkjDCZSPQ+vFnFq4e7K0SUt/2+k3O
-         EmcA==
-X-Received: by 10.194.222.104 with SMTP id ql8mr36870359wjc.157.1448811087303;
-        Sun, 29 Nov 2015 07:31:27 -0800 (PST)
-Received: from duynguyen-vnpc.dek-tpc.internal (host171-164-static.60-79-b.business.telecomitalia.it. [79.60.164.171])
-        by smtp.gmail.com with ESMTPSA id z1sm42357985wje.35.2015.11.29.07.31.25
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 29 Nov 2015 07:31:26 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <xmqq8u8z1d8r.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752167AbbK2RFG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Nov 2015 12:05:06 -0500
+Received: from mout.web.de ([212.227.15.3]:64561 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751935AbbK2RFF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Nov 2015 12:05:05 -0500
+Received: from macce11.local ([213.66.56.100]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0MeNUV-1ZfEMF2Mff-00QAFN; Sun, 29 Nov 2015 18:05:00
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
+In-Reply-To: <BBD3F9B1-9FCA-4207-B374-3ADCF19F1431@gmail.com>
+X-Provags-ID: V03:K0:UqDnOB51BQXVv9jsD+bx/e9OpTGsnCKRNHVwNy+IqZ8fHLebdV/
+ LXjycrLoHYjZ89UwgS03EFr84p+/JlZb+prj7lOK/Cm0DiGpXEy6SngfNHK8Ivb1o/IrtOq
+ 4yzxMeKrZJSeacjQuE9vp11JS5GjrxrdEmtb5G4odyNq9hF1zJ6E+Z5vB0lG3CEuw2fV4RS
+ Llv1mqdyR4RkJk3PrzNsA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2jTIYPgJ1b4=:OklV0PRABhMZpl76fwnB5y
+ a1oGpVWhF6HYARedIjG4yRbUJd3xq/xOH3DpwJA6Jh1hfGAAEK+OW+epyRhtcLQBEm+A2xFrU
+ 3LdbIhXGFCIoXKp8HhqiHpwZjstE0kpH3Mml//BUjrvlUzfeO2D5CaY0veBZZC3hhocNXFsYj
+ /lsYsAh4zsdH2C0lJ+ax6CFCOLwyu7H5NJKuPLSu9N7IXA9WzgY+5Cn7Gc+ZNpQB0pIOQPEUz
+ BRBfLqMkr+TYqs8plFs7dXQHmlN3aBUoJ8FXNe+q7HkQpqrRl+/sRo2wCcY674Qcn8arCCNVw
+ PqLC4KQXbpuc5qRpCb68aot7M0H7U8iX53uOPvyqomk+XeX3JW8KR1tCDcb4jVBIQlZM7/aUB
+ WqZnyCK0DrcKDhoCO45dLqBFBUpEJnmPOjV5ka2Mx1Ax6FRE3OmRU516yvyWbqK0SsCsfAfOn
+ vx6nWpFPI/WBWK44cCWVFTrmYu+ltt0p/yiCtwtJ479feyRKCHpPOBDcHW7auW7wQnvO9e0ej
+ w/D/y+b0/JEC/knA23IQswNhJoX9ZEFFSrwO0US8OwjfpcWdkD5WT9qlT2v+c3uSegD/46ofB
+ Wej6jPcZ7gwWVeWDmBRH1/ruCvjh/zD/fl57qkcvBxYB0yyaondtH+rG/W2u2l8tJoZEz4ev3
+ xTbtF4jbYxSBE4IHgOsUGEe7JCN6QunyAcJxfljo4r6OoqZJ6dvFsggJ/j/dioA+00hMaOADC
+ mfeJmbtNfWLZUKHOr54hdfBrbxpaL55SL+YlbfnZcyjT19iI64lKopaZEf+OjGQG90iiwSd6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281799>
 
-Sorry for this waaay too late response, everything (of the series
-nd/ita-cleanup) is addressed so far except this..
+On 21/11/15 19:58, Lars Schneider wrote:
+> Hi,
+>=20
+> I cannot build Git on a clean machine with OS X El Capitan 10.11, Xco=
+de 7.1.1 and Xcode command line tools because of missing OpenSSL header=
+s.
+>=20
+> It looks like as there are no OpenSSL headers at all. I only found th=
+is weird non working version:
+> /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xc=
+toolchain/usr/lib/swift-migrator/sdk/MacOSX.sdk/usr/include/openssl/ssl=
+=2Eh
+>=20
+> I installed OpenSSL with brew, added the include path and it works.
+>=20
+> Can anyone confirm?
+>=20
+> Thanks,
+> Lars
+>=20
+(Does it make sense that you send a patch which auto-detects brew simil=
+ar to fink or mac ports?)
 
-On Tue, Aug 25, 2015 at 10:36:52AM -0700, Junio C Hamano wrote:
-> > diff --git a/builtin/checkout.c b/builtin/checkout.c
-> > index e1403be..02889d4 100644
-> > --- a/builtin/checkout.c
-> > +++ b/builtin/checkout.c
-> > @@ -300,6 +300,8 @@ static int checkout_paths(const struct checkout_opts *opts,
-> >  			 * anything to this entry at all.
-> >  			 */
-> >  			continue;
-> > +		if (ce_intent_to_add(ce))
-> > +			continue;
-> >  		/*
-> >  		 * Either this entry came from the tree-ish we are
-> >  		 * checking the paths out of, or we are checking out
-> 
-> Hmm, while this does prevent the later code from checking it out, I
-> am not sure how well this interacts with ps_matched[] logic here.
-> If the user told Git that 'foo' is a path that she cares about with
-> "add -N foo", and said "git checkout -- foo", should we be somehow
-> saying that 'foo' did match but there is nothing to check out, or
-> something?
+After some proper updating of one test machine I ran into the same prob=
+lem.
+A possible patch may look like this:
 
-How about this? It does not mess with ps_matched logic. But it does
-not say "nothing to checkout" at the end either. While we could do
-that (in general case, not just because all we are checking out is ita
-entries), I'm not sure if such verbosity helps anyone. I'm thinking of
-dropping the new warning I added here too..
 
--- 8< --
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3e141fc..c11fe71 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -328,12 +328,17 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	if (opts->merge)
- 		unmerge_marked_index(&the_index);
- 
--	/* Any unmerged paths? */
- 	for (pos = 0; pos < active_nr; pos++) {
- 		const struct cache_entry *ce = active_cache[pos];
- 		if (ce->ce_flags & CE_MATCHED) {
--			if (!ce_stage(ce))
-+			if (!ce_stage(ce)) {
-+				if (ce_intent_to_add(ce)) {
-+					warning(_("path '%s' is only intended to add"), ce->name);
-+					ce->ce_flags &= ~CE_MATCHED;
-+				}
- 				continue;
-+			}
-+			/* Any unmerged paths? */
- 			if (opts->force) {
- 				warning(_("path '%s' is unmerged"), ce->name);
- 			} else if (opts->writeout_stage) {
--- 8< --
---
-Duy
+commit 5e7c16f3350e8e62bfdb181b0b5da7352945d046
+Author: Torsten B=F6gershausen <tboegi@web.de>
+Date:   Sun Nov 29 17:29:22 2015 +0100
+
+    Mac OS X 10.11: set NO_OPENSSL
+   =20
+    There is no openssl/ directory any more in Mac OS X 10.11,
+    openssl is depracated since Mac OS X 10.7
+   =20
+    Set NO_OPENSSL to YesPlease as default under Mac OS X, and make it
+    possible to override this and use openssl by defining DARWIN_OPENSS=
+L
+
+diff --git a/config.mak.uname b/config.mak.uname
+index f34dcaa..a8a8b07 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -105,6 +105,12 @@ ifeq ($(uname_S),Darwin)
+        ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" =
+-ge 11 && echo 1),1)
+                HAVE_GETDELIM =3D YesPlease
+        endif
++       # MacOS 10.11  and higher
++       ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" =
+-ge 15 && echo 1),1)
++               ifndef DARWIN_OPENSSL
++                       NO_OPENSSL =3D YesPlease
++               endif
++       endif
+        NO_MEMMEM =3D YesPlease
+        USE_ST_TIMESPEC =3D YesPlease
+        HAVE_DEV_TTY =3D YesPlease
