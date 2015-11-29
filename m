@@ -1,214 +1,148 @@
-From: Alexander Shukaev <git@Alexander.Shukaev.name>
-Subject: Git 'pre-receive' hook and 'git-clang-format' script to reliably
- reject pushes that violate code style conventions
-Date: Sat, 28 Nov 2015 23:18:15 +0100
-Message-ID: <565A2827.3000609@Alexander.Shukaev.name>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5] ls-files: Add eol diagnostics
+Date: Sun, 29 Nov 2015 03:17:38 -0500
+Message-ID: <CAPig+cT-z8SyeY-pentrCHr=g3zt4cW9YOFxFs0nT9_C-QvFwg@mail.gmail.com>
+References: <5659C32C.50007@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 28 23:21:35 2015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Nov 29 12:02:38 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a2ns6-0004iA-92
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Nov 2015 23:21:34 +0100
+	id 1a2zkZ-000819-6o
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Nov 2015 12:02:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362AbbK1WVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Nov 2015 17:21:00 -0500
-Received: from slow1-d.mail.gandi.net ([217.70.178.86]:50619 "EHLO
-	slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751073AbbK1WU6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Nov 2015 17:20:58 -0500
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
-	by slow1-d.mail.gandi.net (Postfix) with ESMTP id C1A4E47B6CC
-	for <git@vger.kernel.org>; Sat, 28 Nov 2015 23:18:33 +0100 (CET)
-Received: from mfilter22-d.gandi.net (mfilter22-d.gandi.net [217.70.178.150])
-	by relay5-d.mail.gandi.net (Postfix) with ESMTP id 77AE841C074
-	for <git@vger.kernel.org>; Sat, 28 Nov 2015 23:18:31 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter22-d.gandi.net
-Received: from relay5-d.mail.gandi.net ([IPv6:::ffff:217.70.183.197])
-	by mfilter22-d.gandi.net (mfilter22-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id QoIAIHqSBakj for <git@vger.kernel.org>;
-	Sat, 28 Nov 2015 23:18:30 +0100 (CET)
-X-Originating-IP: 188.107.44.57
-Received: from [192.168.2.109] (dslb-188-107-044-057.188.107.pools.vodafone-ip.de [188.107.44.57])
-	(Authenticated sender: forum@alexander.shukaev.name)
-	by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id DDE8041C076
-	for <git@vger.kernel.org>; Sat, 28 Nov 2015 23:18:28 +0100 (CET)
+	id S1751344AbbK2IRl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Nov 2015 03:17:41 -0500
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:36536 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750961AbbK2IRj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Nov 2015 03:17:39 -0500
+Received: by vkay187 with SMTP id y187so86824400vka.3
+        for <git@vger.kernel.org>; Sun, 29 Nov 2015 00:17:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=ZDdCADWZV0GMOBlyxrko9aUaUfDyMl4lZbvTUk383vY=;
+        b=o86+yLn4Iqcom74PbwtthAB8zkfMU30J0F4PWYmxo8ctRSSNYciokJ/zE9bxSN4WP2
+         NeHvlemacdcsPE4if69ts4IecoW5kZ7W7O99alWmf/EZmAe8dJ+VAwXnISHPE4F34x9d
+         Jmjw74Lo8Xj3Hc6yb+NhAmwmqcQjMj/BeRac8s5w2H+v8iMTVN1+LPSShoKlRdtqE8fH
+         rZUSf9m1BTwnE0s2fAeG0Ew33AhIgwM7tV4gm5A1KlcW5Kv3GBSei0JevuyQtumymaLD
+         vpU3P4K7jPmJ2AjC0R4P3R2vVwx76lKHCSYrA0jrhLwvd5Of9TTslV9+QEp/TOcLItJ4
+         ubbQ==
+X-Received: by 10.31.52.82 with SMTP id b79mr49720009vka.84.1448785058826;
+ Sun, 29 Nov 2015 00:17:38 -0800 (PST)
+Received: by 10.31.159.204 with HTTP; Sun, 29 Nov 2015 00:17:38 -0800 (PST)
+In-Reply-To: <5659C32C.50007@web.de>
+X-Google-Sender-Auth: c0dc-4yXr6GWsIFzdXQ1CM0VFag
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281797>
 
-Hello,
+On Sat, Nov 28, 2015 at 10:07 AM, Torsten B=C3=B6gershausen <tboegi@web=
+=2Ede> wrote:
+> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+> @@ -213,7 +238,20 @@ checkout_files () {
+>                         git -c core.eol=3D$eol checkout $src$f.txt
+>                 fi
+>         done
+> -
+> +       test_expect_success "ls-files --eol $lfname ${pfx}LF.txt" "
+> +               cat >e <<-EOF &&
 
-I have posted a question on Stack Overflow [1].  I would like to post it 
-here as well since nobody has answered it yet.
+This here-doc requires interpolation, hence -EOF is fine, however...
 
-Let's immediately start with a scrap of the `pre-receive` hook that I've 
-already written:
+> +               i/text-crlf w/$(stats_ascii $crlfname) ${src}CRLF.txt
+> +               i/text-crlf-lf w/$(stats_ascii $lfmixcrlf) ${src}CRLF=
+_mix_LF.txt
+> +               i/text-lf w/$(stats_ascii $lfname) ${src}LF.txt
+> +               i/binary w/$(stats_ascii $lfmixcr) ${src}LF_mix_CR.tx=
+t
+> +               i/binary w/$(stats_ascii $crlfnul) ${src}CRLF_nul.txt
+> +               i/binary w/$(stats_ascii $crlfnul) ${src}LF_nul.txt
+> +               EOF
+> +               sort <e >expect &&
+> +               git ls-files --eol $src* | sed -e 's!attr/[=3Da-z-]*!=
+!g' -e 's/  */ /g' | sort >actual &&
+> +               test_cmp expect actual &&
+> +               rm e expect actual
+> +       "
+>         test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D=
+$crlf gitattributes=3D$attr file=3DLF" "
+>                 compare_ws_file $pfx $lfname    ${src}LF.txt
+>         "
+> @@ -231,6 +269,37 @@ checkout_files () {
+>         "
+>  }
+>
+> +# Test control characters
+> +# NUL SOH CR EOF=3D=3D^Z
+> +test_expect_success 'ls-files --eol -o Text/Binary' '
+> +       test_when_finished "rm e expect actual TeBi_*" &&
+> +       STRT=3DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA &&
+> +       STR=3D$STRT$STRT$STRT$STRT &&
+> +       printf "${STR}BBB\001" >TeBi_127_S &&
+> +       printf "${STR}BBBB\001">TeBi_128_S &&
+> +       printf "${STR}BBB\032" >TeBi_127_E &&
+> +       printf "\032${STR}BBB" >TeBi_E_127 &&
+> +       printf "${STR}BBBB\000">TeBi_128_N &&
+> +       printf "${STR}BBB\012">TeBi_128_L &&
+> +       printf "${STR}BBB\015">TeBi_127_C &&
+> +       printf "${STR}BB\015\012" >TeBi_126_CL &&
+> +       printf "${STR}BB\015\012\015" >TeBi_126_CLC &&
+> +       cat >e <<-EOF &&
 
-     #!/bin/sh
-     ##
-       format_bold='\e[1m'
-        format_red='\e[31m'
-     format_normal='\e[0m'
-     ##
-     log_error="${format_bold}${format_red}error${format_normal}"
-     ##
-     stdout() {
-       printf "${1}" "${@:2}"
-     }
-     ##
-     stderr() {
-       stdout "${@}" 1>&2
-     }
-     ##
-     output() {
-       stdout "${1}\n" "${@:2}"
-     }
-     ##
-     error() {
-       stderr "${log_error}: ${1}\n" "${@:2}"
-     }
-     ##
-     die() {
-       error "${@}"
-       exit 1
-     }
-     ##
-     list() {
-       git rev-list "${@}"
-     }
-     ##
-     clang_format() {
-       git --no-pager clang-format --style='file' "${@}"
-     }
-     ##
-     while read sha1_old sha1_new ref; do
-       case "${ref}" in
-       refs/heads/*)
-         branch="$(expr "${ref}" : 'refs/heads/\(.*\)')"
-         if [ "$(expr "${sha1_new}" : '0*$')" -ne 0 ]; then # delete
-           unset sha1_new
-           # ...
-         else # update
-           if [ "$(expr "${sha1_old}" : '0*$')" -ne 0 ]; then # create
-             unset sha1_old
-             sha1_range="${sha1_new}"
-           else
-             sha1_range="${sha1_old}..${sha1_new}"
-             # ...
-             fi
-           fi
-           # ...
-                  GIT_WORK_TREE="$(mktemp --tmpdir -d 'gitXXXXXX')"
-           export GIT_WORK_TREE
-                  GIT_DIR="${GIT_WORK_TREE}/.git"
-           export GIT_DIR
-           mkdir -p "${GIT_DIR}"
-           cp -a * "${GIT_DIR}/"
-           ln -s "${PWD}/../.clang-format" "${GIT_WORK_TREE}/"
-           error=
-           for sha1 in $(list "${sha1_range}"); do
-             git checkout --force "${sha1}" > '/dev/null' 2>&1
-             if [ "$(list --count "${sha1}")" -eq 1 ]; then
-               # What should I put here?
-             else
-               git reset --soft 'HEAD~1' > '/dev/null' 2>&1
-             fi
-             diff="$(clang_format --diff)"
-             if [ "${diff%% *}" = 'diff' ]; then
-               error=1
-               error '%s: %s\n%s'                                       \
-                     'Code style issues detected'                       \
-                     "${sha1}"                                          \
-                     "${diff}"                                          \
-                     1>&2
-             fi
-           done
-           if [ -n "${error}" ]; then
-             die '%s' 'Code style issues detected'
-           fi
-         fi
-         ;;
-       refs/tags/*)
-         tag="$(expr "${ref}" : 'refs/tags/\(.*\)')"
-         # ...
-         ;;
-       *)
-         # ...
-         ;;
-       esac
-     done
-     exit 0
+Nit: [1] suggested using -\EOF since this here-doc needs no interpolati=
+on.
 
-**NOTE:**
-Places with irrelevant code are stubbed with `# ...`.
+> +       i/ w/binary TeBi_127_S
+> +       i/ w/text-no-eol TeBi_128_S
+> +       i/ w/text-no-eol TeBi_127_E
+> +       i/ w/binary TeBi_E_127
+> +       i/ w/binary TeBi_128_N
+> +       i/ w/text-lf TeBi_128_L
+> +       i/ w/binary TeBi_127_C
+> +       i/ w/text-crlf TeBi_126_CL
+> +       i/ w/binary TeBi_126_CLC
+> +       EOF
+> +       sort <e >expect &&
+> +       git ls-files --eol -o | egrep "TeBi_" | sed -e 's!attr/[=3Da-=
+z-]*!!g' -e "s/  */ /g" | sort >actual &&
+> +       test_cmp expect actual
+> +'
+> @@ -480,4 +549,20 @@ checkout_files    native  true  "lf"      LF    =
+CRLF  CRLF_mix_LF  LF_mix_CR
+> +# Should be the last test case
+> +test_expect_success 'ls-files --eol -d' "
+> +       rm  crlf_false_attr__CRLF.txt crlf_false_attr__CRLF_mix_LF.tx=
+t crlf_false_attr__LF.txt .gitattributes &&
+> +       cat >expect <<-EOF &&
 
-**NOTE:**
-If you are not familiar with `git-clang-format`, take a look [here][2].
+Likewise.
 
-That hook works as expected, and so far, I didn't notice any bugs, but 
-if you spot any problem or have an improvement suggestion, I'd 
-appreciate any report.  Probably, I should give a comment on what's the 
-intention behind this hook.  Well, it does check every pushed revision 
-for compliance with code style conventions using `git-clang-format`, and 
-if any of them does not comply, it will output the relevant diff (the 
-one telling developers what should be fixed) for each of them. 
-Basically, I have two in-depth questions regarding this hook.
+[1]: http://marc.info/?l=3Dgit&m=3D144829967800565&w=3D2
 
-First, notice that I perform copy of the remote's (server) bare 
-repository to some temporary directory and check out the code for 
-analysis there.  Let me explain the intention of this.  Note that I do 
-several `git checkout`s and `git reset`s (due to `for` loop) in order to 
-analyze all of the pushed revisions individually with 
-`git-clang-format`.  What I am trying to avoid here, is the (possible) 
-concurrency issue on push access to the remote's (server) bare 
-repository.  That is, I'm under impression that if multiple developers 
-will try to push at the same time to a remote with this `pre-receive` 
-hook installed, that might cause problems if each of these push 
-"sessions" does not do `git checkout`s and `git reset`s with its private 
-copy of the repository.  So, to put it simple, does `git-daemon` have 
-built-in lock management for concurrent push "sessions"?  Will it 
-execute the corresponding `pre-receive` hook instances strictly 
-sequentially or there is a possibility of interleaving (which can 
-potentially cause undefined behavior)?  Something tells me that there 
-should be a built-in solution for this problem with concrete guarantees, 
-otherwise how would remotes work in general (even without complex hooks) 
-being subjected to concurrent pushes?  If there is such a built-in 
-solution, then the copy is redundant and simply reusing the bare 
-repository would actually speed up the processing.  By the way, any 
-reference to official documentation regarding this question is very welcome.
-
-Second, `git-clang-format` processes only *staged* (but not committed) 
-changes vs. specific commit (`HEAD` by default).  Thus, you can easily 
-see where a corner case lies.  Yes, it's with the *root* commits 
-(revisions).  In fact, `git reset --soft 'HEAD~1'` cannot be applied to 
-root commits as they have no parents to reset to.  Hence, the following 
-check with my second question is there:
-
-             if [ "$(list --count "${sha1}")" -eq 1 ]; then
-               # What should I put here?
-             else
-               git reset --soft 'HEAD~1' > '/dev/null' 2>&1
-             fi
-
-I've tried `git update-ref -d 'HEAD'` but this breaks the repository in 
-such a way that `git-clang-format` is not able to process it anymore.  I 
-believe this is related to the fact that all of these pushed revisions 
-that are being analyzed (including this root one) do not really belong 
-to any branch yet.  That is, they are in *detached* `HEAD` state.  It 
-would be perfect to find a solution to this corner case as well, so that 
-*initial* commits can also undergo the same check by `git-clang-format` 
-for compliance with code style conventions.
-
-Peace.
-
-[1] http://stackoverflow.com/q/33924519/1743860
-[2] 
-http://llvm.org/svn/llvm-project/cfe/trunk/tools/clang-format/git-clang-format
+> +       i/text-crlf w/ crlf_false_attr__CRLF.txt
+> +       i/text-crlf-lf w/ crlf_false_attr__CRLF_mix_LF.txt
+> +       i/text-lf w/ .gitattributes
+> +       i/text-lf w/ crlf_false_attr__LF.txt
+> +       EOF
+> +       git ls-files --eol -d | sed -e 's!attr/[=3Da-z-]*!!g' -e 's/ =
+ */ /g' | sort >actual &&
+> +       test_cmp expect actual &&
+> +       rm expect actual
+> +"
+> +
+> +
+>  test_done
+> --
+> 2.6.2.403.gd7a84e3
