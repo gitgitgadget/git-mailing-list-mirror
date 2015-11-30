@@ -1,96 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones fail
-Date: Mon, 30 Nov 2015 10:11:06 -0800
-Message-ID: <xmqqio4j8iit.fsf@gitster.mtv.corp.google.com>
-References: <1447321061-74381-1-git-send-email-larsxschneider@gmail.com>
-	<20151113053547.GD29708@sigill.intra.peff.net>
-	<CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
-	<CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
+Subject: Re: [RFC] rename detection: allow more renames
+Date: Mon, 30 Nov 2015 10:25:18 -0800
+Message-ID: <xmqqegf78hv5.fsf@gitster.mtv.corp.google.com>
+References: <20151113163506.GD16219@inner.h.apk.li>
+	<20151124233328.GA13872@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Mon Nov 30 19:11:20 2015
+Cc: Andreas Krey <a.krey@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 30 19:25:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3Sv2-0005EW-6A
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 19:11:20 +0100
+	id 1a3T8f-0004oh-IB
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 19:25:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753224AbbK3SLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2015 13:11:15 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63314 "EHLO
+	id S1753810AbbK3SZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2015 13:25:21 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64418 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751484AbbK3SLO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2015 13:11:14 -0500
+	with ESMTP id S1751909AbbK3SZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2015 13:25:20 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9C53A2F6B7;
-	Mon, 30 Nov 2015 13:11:08 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2D34C2FDD6;
+	Mon, 30 Nov 2015 13:25:20 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=i/T9uDDVhoQx4i0ZcN6a9OTUM6w=; b=mgYGbZ
-	9ZXahOTFkBAYR3axtUeEw4O5UiGI1FV7G3P5mWd3GVjmqih+OJVahMWER4/41LSi
-	sWT3iPDWh6YdHjXONquAwggEqbKhmpmEV2WekkwSR+/jUV4TFZir/YKkzSBvb6y/
-	8DcmX57AGaEBeoB2KIyN8BCiVWAC/uf5XQLu8=
+	:content-type; s=sasl; bh=3FDu+Hgqe+5grABNhhElPe3vPUI=; b=J/lW0E
+	fvkOfwDQql7X8VYbh3XEs2dhVZShHg7a4J9l1OWbE1Qnx2h+3DjA6f0DpIHoNat2
+	d3glo6auw7fVZcNaVlkPFtggxGiroypHTM5YURQEbFmSse3ZND4a5NfFYZn1Vb1J
+	SGYWxkuFevY6xVtCL2vq4jnNr0o/9wfz1g8Lo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I3bb1lHX89Du0mkdt2aqszzNWss8t7W9
-	bNOBQIT4h0dGfH/d055tQ/czcxViYpOMkAASqEz6XP92Q9vVG0RJivfVnc5U66NS
-	Q83HdIOXJSBHysBPbg58FEcQI8a2hoBdExjDYYE1hkA4TiV946Q4UdXZ0vvlkqRf
-	mnRo/GERhww=
+	:content-type; q=dns; s=sasl; b=HIu1K2vqPY4afCDwAzz4DlQrhs13UOZy
+	4ia1E+gtoWeGo1D6qLDedEGOCCJzvwJGlPQjXpzOvvlR9htWVlcQ1JDKwH8U7G7z
+	DPv2RHV1c5cqxB8th9TpezrZf1IXk4kIXlgBtfKQf5+T2pTuyPRnaaLSdh69tkU/
+	VhTJ2W/L4I8=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 934D02F6B6;
-	Mon, 30 Nov 2015 13:11:08 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1A21D2FDD5;
+	Mon, 30 Nov 2015 13:25:20 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 11A072F6B5;
-	Mon, 30 Nov 2015 13:11:07 -0500 (EST)
-In-Reply-To: <CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
-	(Stefan Beller's message of "Fri, 13 Nov 2015 15:16:01 -0800")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 83EFC2FDD3;
+	Mon, 30 Nov 2015 13:25:19 -0500 (EST)
+In-Reply-To: <20151124233328.GA13872@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 24 Nov 2015 18:33:28 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BA901CAA-978D-11E5-B974-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: B6138930-978F-11E5-ACFE-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281807>
 
-Stefan Beller <sbeller@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> +cc Junio, Duy
+> On Fri, Nov 13, 2015 at 05:35:06PM +0100, Andreas Krey wrote:
 >
-> So cloning from an arbitrary SHA1 is not a new thing I just came up with,
-> but has been discussed before[1].
+>> The code talks about limiting the size
+>> of the rename matrix, but as far as I
+>> can see, the matrix itself never exists
+>> as such, and the only thing that could
+>> actually overflow is the computation
+>> for the progress indication. This
+>> can be fixed by reporting just the
+>> destinations checked instead of the
+>> combinations, since we only update
+>> the progress once per destination
+>> anyway.
 >
-> Junio wrote on Oct 09, 2014:
->> This is so non-standard a thing to do that I doubt it is worth
->> supporting with "git clone".  "git clone --branch", which is about
-> "> I want to follow that particular branch", would not mesh well with
->> "I want to see the history that leads to this exact commit", either.
->> You would not know which branch(es) is that exact commit is on in
->> the first place.
->
-> I disagree with this. This is the *exact* thing you actually want to do when
-> dealing with submodules.
+> I didn't dig in the archive, but I think we discussed the "just show
+> progress for destinations" before. The problem you run into is that the
+> items aren't a good indication of the amount of work. You really are
+> doing n*m work, so if you just count "m", it can be very misleading if
+> "n" is high (and vice versa).
 
-Yup, I know, but I do not think the above disagrees with you (read
-again ;-).  It merely says "--branch" option to "clone" is not a
-good place to add a new "clone at this single commit" mode of
-operation.
+Right.
 
-In order to propagate "--single-branch" thru "--recurse-submodules",
-I suspect that you would need to teach "clone" a new option that is
-different from "--branch" that allows you to clone the history
-starting from the commit recorded in the tree of the superproject in
-the submodule.  That would be orthogonal to "--depth $n", of course,
-in other words, a top-level "--single-branch --recurse-submodules"
-clone should trigger the "history reachable from a specified commit"
-mode of clone in submodules, and if the top-level one specified the
-"--depth" option, the lower-level ones can limit the depth
-accordingly.
+With s/never exists/no longer exists/ in the above observation, I
+agree that this topic is sensible that it revisits the stale comment
+from days back when we did use the matrix.
