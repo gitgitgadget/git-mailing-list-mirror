@@ -1,88 +1,85 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v8] Add Travis CI support
-Date: Mon, 30 Nov 2015 11:04:13 -0800
-Message-ID: <CAGZ79kaOFsm+GcqzgLQSbY-VFnQsbEJfg+RSjUBozXeE-qLN4g@mail.gmail.com>
-References: <1448616207-45035-1-git-send-email-larsxschneider@gmail.com>
-	<20151128171223.GD27264@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] config: add core.trustmtime
+Date: Mon, 30 Nov 2015 11:05:42 -0800
+Message-ID: <xmqq610j8fzt.fsf@gitster.mtv.corp.google.com>
+References: <1448433323-21037-1-git-send-email-chriscool@tuxfamily.org>
+	<CACBZZX4YSvfA=BRayk8CC8ipk_nDdvJfznxjyb-upwP9PKRBSA@mail.gmail.com>
+	<CACsJy8DhAfu7J=WpPAp8HYGLuFQC5+DZyZj6Hs6vruEJEeVKig@mail.gmail.com>
+	<CAP8UFD2V3nbY2-abW6cGDtB2PR9Q+sN+d0RgTVJORCPg6TPMcQ@mail.gmail.com>
+	<CACsJy8CNRbvsDY+ucFZGcO4+tE9Ud_QNr1k4D=+utawSCrc+Sg@mail.gmail.com>
+	<CACBZZX4jJ_b-5sbor6YibXGASeOa0gx8nEBiv8=54yoHfWL8Fw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 30 20:04:29 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	David Turner <dturner@twopensource.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 30 20:05:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3TkS-0000eX-HV
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 20:04:28 +0100
+	id 1a3Tln-0003Cy-1K
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 20:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754593AbbK3TEX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2015 14:04:23 -0500
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:36516 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754644AbbK3TEN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2015 14:04:13 -0500
-Received: by ykdr82 with SMTP id r82so195150890ykd.3
-        for <git@vger.kernel.org>; Mon, 30 Nov 2015 11:04:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=cuokLCRqzqyzzh2TfkqFux3M4fSqFn2R3jft4N9ieRY=;
-        b=XW9lGSmdZmddh3FxXAWYd5ioZJj1r4VBRnXNKCHOtgq3mOPfU/2Id/l6ZmRrRQAfDD
-         bnYr0IYKIrC53MpQxLP1pbu+xKKl933UUMda/xXssRKbIGkDdqGtNB6rcJjCrVxUKAfc
-         8j9IB14uw4gECG+klUtAV5l7zc0f8vYNavlmjOv+jXTBSXT0sTNFrpYyb1Hd1COzUTgd
-         n3yVLE93bqwnGGnouS1I9rVYwnSfopnp8r66SsijuG3bjgF4bibXBDmUFoVSsu/EKsBP
-         C3ihKfRLhKGlL+smxjjJjOGs+xi2j0DXJurB6yxnhlg715OwdBw+zceCRAPHw189MR0l
-         oQFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=cuokLCRqzqyzzh2TfkqFux3M4fSqFn2R3jft4N9ieRY=;
-        b=dMEyGViWcjyR6nLnhxXKH9/ljJc57J6XzX7cSMyLxk+t+4uJEE3WX8TOkjjAbrCgiI
-         Q/tuFECG4ENL22YqaZbFVdLTOv6DZCsjovKFBZ17swcBAd1jvhODtzLHP9wy7U5cghSs
-         UJ0bRdBOx0E1tBaDKp9T+gNaD8g3pxk8PnecIrWXsV91nth3KDr1FVo1K0bfcESNH5wx
-         K0uSZg2E5SnQ4GAJ6qDAvg3QP7iTWN2uaYIrf9jWtaw3iRz0T4n957W4+TWyTfT8s3u6
-         XIDcpvNv360ZpuGbWilcRgSE8oC/4hWjf9WmtYke+/YtcvcWSSlugSsxrT3UFSuDO9EN
-         mCnQ==
-X-Gm-Message-State: ALoCoQnhG2we4VFd16kkx1NlsMnGqFsRrS/nBuL8nfrebBRc/ZMvxjyjKrIr96JQDqNz1aXmnBSs
-X-Received: by 10.13.251.2 with SMTP id l2mr54923061ywf.44.1448910253135; Mon,
- 30 Nov 2015 11:04:13 -0800 (PST)
-Received: by 10.37.215.16 with HTTP; Mon, 30 Nov 2015 11:04:13 -0800 (PST)
-In-Reply-To: <20151128171223.GD27264@sigill.intra.peff.net>
+	id S1754546AbbK3TFr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Nov 2015 14:05:47 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57215 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751771AbbK3TFq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Nov 2015 14:05:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5D06F2ED3A;
+	Mon, 30 Nov 2015 14:05:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=FGyk6dZL8+TJ
+	Wof1CfAn3sYcbsM=; b=oIB5oECTUFQBK4J3Eudy5lPwD3Px5kksDWRYibDJPgMd
+	s4VF5LflZi7SCSYhCBOBlSCfUu750ygf9+D90USh7zulEx0A272g8vNKDFKC6srP
+	KMJRTOHI9P4jEzWw0QBOqw+kjfZZHUIsMOoEaSzK2L9mi2en+DN/vKZnTv1JNV4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=MneVUY
+	DxVlN40nw2D99hZuAoaM6syaCUoSu5BVyAVZvbKA0dHNngudHsRFY/BkD0VboXFo
+	1VhopH6QDW8uGNjW6JYPF6JN/h2b45Cm1FtFEswyQo+d9Gb17oUq/+7rD6Tl0pos
+	pdT3ojXQX6ApoyHJFKMsZUPTDqIRo1OuerSDk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 528752ED37;
+	Mon, 30 Nov 2015 14:05:45 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B35DC2ED34;
+	Mon, 30 Nov 2015 14:05:44 -0500 (EST)
+In-Reply-To: <CACBZZX4jJ_b-5sbor6YibXGASeOa0gx8nEBiv8=54yoHfWL8Fw@mail.gmail.com>
+	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 27 Nov
+ 2015 02:35:46
+	+0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 5B9B848E-9795-11E5-AE94-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281812>
 
-On Sat, Nov 28, 2015 at 9:12 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Nov 27, 2015 at 10:23:26AM +0100, larsxschneider@gmail.com wrote:
->
->> From: Lars Schneider <larsxschneider@gmail.com>
->>
->> diff to v7:
->> * remove NO_GETTEXT patch and install gettext on OS X to compile with
->>   no additional flags (thanks Torsten)
->> * fix P4 version (15.2 is the latest one available)
->
-> Thanks. I don't have any other comments on this one. I guess the next
-> step is for me to get git/git signed up for Travis, and then merging
-> this to 'master' will have the desired effect.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-I think you can merge it even before signing up for travis. Then it
-would be in the repository
-and any fork (say github.com/stefanbeller/git) could enable it for
-themselves even faster that you
-could for the main repository :)
-
+> Maybe I'm missing some really common breakage with st_mtime on some
+> system, but having a feature the user explicitly enables turn itself
+> off and doing FS-testing that takes 10 seconds when it's enabled seem=
+s
+> like the wrong default to me.
 >
-> -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> We don't do it with core.fileMode, core.ignorecase or core.trustctime
+> or core.symlinks. Do we really need to be treating this differently?
+
+I share the exact thought.  I was looking the other way when
+untracked-cache was done originally ;-), and I would also want to
+know the answers to the above questions.
+
+Thanks.
