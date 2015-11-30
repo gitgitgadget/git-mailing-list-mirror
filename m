@@ -1,132 +1,175 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/8] checkout(-index): do not checkout i-t-a entries
-Date: Mon, 30 Nov 2015 11:17:07 -0800
-Message-ID: <xmqq1tb78fgs.fsf@gitster.mtv.corp.google.com>
-References: <xmqqy4j80wdb.fsf@gitster.dls.corp.google.com>
-	<1440205700-19749-1-git-send-email-pclouds@gmail.com>
-	<1440205700-19749-6-git-send-email-pclouds@gmail.com>
-	<xmqq8u8z1d8r.fsf@gitster.dls.corp.google.com>
-	<20151129153122.GA3719@duynguyen-vnpc.dek-tpc.internal>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2] builtin/clone: support submodule groups
+Date: Mon, 30 Nov 2015 11:31:27 -0800
+Message-ID: <CAGZ79kbUktcGNw4C123dxGoUsi=W+h4vUPWmBm2rExipUOcXqA@mail.gmail.com>
+References: <5656366D.4010508@web.de>
+	<1448497884-2624-1-git-send-email-sbeller@google.com>
+	<20151126045929.GA29107@tsaunders-iceball.corp.tor1.mozilla.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, phiggins@google.com, snoksrud@gmail.com
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 30 20:17:15 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Eric Sunshine <ericsunshine@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Trevor Saunders <tbsaunde@tbsaunde.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Nov 30 20:31:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3Twp-0007Ni-42
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 20:17:15 +0100
+	id 1a3UAg-0007x8-6S
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 20:31:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751637AbbK3TRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2015 14:17:11 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54337 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751237AbbK3TRK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2015 14:17:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 99EDA2F2BC;
-	Mon, 30 Nov 2015 14:17:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3i2ud460lFcxztvdP+WHFDRx1eE=; b=uCldjU
-	pN1JY+eEIr1p0yRUCXhmUGFjz6RFxWRMaQuMgN8qi4vraWQp2XpesLwLSgLBPgDn
-	MKoz9oCL8WTMATgzC4asvVnUfkffLxeocWxfQVmgOoFz4N0LRuClxdaRRDn6FHnX
-	7tJ//Rk/zpIU23x6rkQKhTkrNQ/3C+tWCP/T8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Lhz82RZizWy7K5cvMzRr54TcygQcsUMB
-	sWM7rUDTAokDFoUv6/uLF1+JGZbILMGDVEU5TAvEYoySU4SY4FUlZmpes3PYV5kh
-	Lre9ghey9DQwuUPI7fCDNZRNu+AYCtJpMCbQdMp0UHRx1rZRton1zsSBJgByYIDy
-	tzG7W3Eit2E=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 911AA2F2BB;
-	Mon, 30 Nov 2015 14:17:09 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0E6912F2BA;
-	Mon, 30 Nov 2015 14:17:08 -0500 (EST)
-In-Reply-To: <20151129153122.GA3719@duynguyen-vnpc.dek-tpc.internal> (Duy
-	Nguyen's message of "Sun, 29 Nov 2015 16:31:22 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: F37F3C22-9796-11E5-9D96-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752205AbbK3Tba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2015 14:31:30 -0500
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:34627 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751237AbbK3Tb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2015 14:31:28 -0500
+Received: by ykfs79 with SMTP id s79so198187948ykf.1
+        for <git@vger.kernel.org>; Mon, 30 Nov 2015 11:31:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=E1vAJ8Qdk71UZzXXYbI9csEOkoCLj1TATAlfykUb4Ms=;
+        b=RcHiLu+U5twqAc5y2J4lIfLXKym7wWxubf/GAYiKS/6zdLW207CEw1E11zuNreRmud
+         k+1Y5gTODQiEdmU9lvViBKmgYqkcvSJZ49XdJhX0Z134Pv7+/LrAYqTNuUmcQjiMRFPP
+         EZq8TLR9abBkX7wC8RCVrmF35zXVvVjsrTdQtwQ3BKrKPRE42KlWzHcy5oEuBjVOde/k
+         DiGbeQV3CW0qvb3a1r5nSnfGc+FL3XwBgJNGs+mLXvWrGB+NXXNNJwDQa+l3cNHFSB5K
+         CrdIUAwWNZM/DLOOsrnGraNJYQpYrwS2e3dCwxL5lvstmfL1cmKg+dwgcSBAuZKeNF4v
+         sE9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=E1vAJ8Qdk71UZzXXYbI9csEOkoCLj1TATAlfykUb4Ms=;
+        b=gYiBvQfvtxH1bhz+P2fsSfHAZ71jBj6iwzx9UC+fX8786A/vH+nwoOyFvmXRlm0cyN
+         NeFhO0fnMW4lSq89KQT/p65dUs1wxOjo4KgJ2Jxl8IMWw7ZBonUsuDeUgw0TWexsKWAK
+         TnQFtoPFPnjtY2BTAluI4/Eg6bbOjwBZ6dQ64FBb2Dt/zMN6e6jFkReTs/xXR+73FvFG
+         wOvDEsm7A+TIWJc+lhn7oMtfm9qHSuMsfRbEiVlUzz8VMf4Q8iTYeKUmMS4oEbcZfbr0
+         S479YJDSw/Kbe8o228QRlLVNQf/2Pg8wwUNS8CslJmAf+gZHy34L19N/3+kyLgHKWfjd
+         b8PQ==
+X-Gm-Message-State: ALoCoQlBrSbPe9QqF9iwhzQp2c/epWx2ixv30jiWJZyMwyZmX0cYuuf/bRpqUxibxMJr33BQ5eWz
+X-Received: by 10.13.198.133 with SMTP id i127mr31385614ywd.252.1448911887973;
+ Mon, 30 Nov 2015 11:31:27 -0800 (PST)
+Received: by 10.37.215.16 with HTTP; Mon, 30 Nov 2015 11:31:27 -0800 (PST)
+In-Reply-To: <20151126045929.GA29107@tsaunders-iceball.corp.tor1.mozilla.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281815>
 
-Duy Nguyen <pclouds@gmail.com> writes:
++ cc Duy, Michael, who discussed the sparse checkout recently
 
-> Sorry for this waaay too late response, everything (of the series
-> nd/ita-cleanup) is addressed so far except this..
->
-> On Tue, Aug 25, 2015 at 10:36:52AM -0700, Junio C Hamano wrote:
->> > diff --git a/builtin/checkout.c b/builtin/checkout.c
->> > index e1403be..02889d4 100644
->> > --- a/builtin/checkout.c
->> > +++ b/builtin/checkout.c
->> > @@ -300,6 +300,8 @@ static int checkout_paths(const struct checkout_opts *opts,
->> >  			 * anything to this entry at all.
->> >  			 */
->> >  			continue;
->> > +		if (ce_intent_to_add(ce))
->> > +			continue;
->> >  		/*
->> >  		 * Either this entry came from the tree-ish we are
->> >  		 * checking the paths out of, or we are checking out
->> 
->> Hmm, while this does prevent the later code from checking it out, I
->> am not sure how well this interacts with ps_matched[] logic here.
->> If the user told Git that 'foo' is a path that she cares about with
->> "add -N foo", and said "git checkout -- foo", should we be somehow
->> saying that 'foo' did match but there is nothing to check out, or
->> something?
->
-> How about this? It does not mess with ps_matched logic. But it does
-> not say "nothing to checkout" at the end either. While we could do
-> that (in general case, not just because all we are checking out is ita
-> entries), I'm not sure if such verbosity helps anyone. I'm thinking of
-> dropping the new warning I added here too..
+On Wed, Nov 25, 2015 at 9:00 PM, Trevor Saunders <tbsaunde@tbsaunde.org> wrote:
+> Seeing the recent sparse checkout discussion I realized it might be
+> useful to have a similar sort of feature for sparse checkouts.  So say I
+> had a mobile and desktop client in the same repo and wanted to be able to
+> checkout the commoncode and one client without having to explicitly list
+> all the paths I care about. It seems like UI wise you might want to use
+> --group there too, or at least explaining the difference to users might
+> be interesting, but maybe that's worrying way too much abouta possible
+> future feature.
 
-I agree that these warnings are unwanted when you run "checkout ."
-in a repository with tons of i-t-a paths (but on the other hand,
-having tons of i-t-a paths is unusual so the user might want to be
-reminded of them--I dunno).
+For reference what I was proposing (coverletter [RFC PATCH 0/5]
+Submodule Groups):
+-->8--
+This is also available at
+https://github.com/stefanbeller/git/tree/submodule-groups
+It applies on top of the submodule-parallel-patch series I sent a few
+minutes ago.
 
-With or without the new warning(), this one looks an improvement
-over the previous one to me.
+Consider having a real large software project in Git with each component
+in a submodule (such as an operating system, Android, Debian, Fedora,
+no toy OS such as https://github.com/gittup/gittup as that doesn't quite
+demonstrate the scale of the problem).
 
-Thanks.
+If you have lots of submodules, you probably don't need all of them at once,
+but you have functional units. Some submodules are absolutely required,
+some are optional and only for very specific purposes.
 
-> -- 8< --
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 3e141fc..c11fe71 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -328,12 +328,17 @@ static int checkout_paths(const struct checkout_opts *opts,
->  	if (opts->merge)
->  		unmerge_marked_index(&the_index);
->  
-> -	/* Any unmerged paths? */
->  	for (pos = 0; pos < active_nr; pos++) {
->  		const struct cache_entry *ce = active_cache[pos];
->  		if (ce->ce_flags & CE_MATCHED) {
-> -			if (!ce_stage(ce))
-> +			if (!ce_stage(ce)) {
-> +				if (ce_intent_to_add(ce)) {
-> +					warning(_("path '%s' is only intended to add"), ce->name);
-> +					ce->ce_flags &= ~CE_MATCHED;
-> +				}
->  				continue;
-> +			}
-> +			/* Any unmerged paths? */
->  			if (opts->force) {
->  				warning(_("path '%s' is unmerged"), ce->name);
->  			} else if (opts->writeout_stage) {
-> -- 8< --
-> --
-> Duy
+This patch series adds meaning to a "groups" field in the .gitmodules file.
+
+So you could have a .gitmodules file such as:
+
+[submodule "gcc"]
+        path = gcc
+        url = git://...
+        groups = default,devel
+[submodule "linux"]
+        path = linux
+        url = git://...
+        groups = default
+[submodule "nethack"]
+        path = nethack
+        url = git://...
+        groups = optional,games
+
+and by this series you can work on an arbitrary subgroup of these
+submodules such
+using these commands:
+
+    git clone --group default --group devel git://...
+    # will clone the superproject and recursively
+    # checkout any submodule being in at least one of the groups.
+
+    git submodule add --group default --group devel git://... ..
+    # will add a submodule, adding 2 submodule
+    # groups to its entry in .gitmodule
+
+    # as support for clone we want to have:
+    git config submodule.groups default
+    git submodule init --groups
+    # will init all submodules from the default group
+
+    # as support for clone we want to have:
+    git config submodule.groups default
+    git submodule update --groups
+    # will update all submodules from the default group
+
+Any feedback welcome, specially on the design level!
+(Do we want to have it stored in the .gitmodules file? Do we want to have
+the groups configured in .git/config as "submodule.groups", any other way
+to make it future proof and extend the groups syntax?)
+-->8--
+
+I think the biggest advantage with the groups is to have it not depending on the
+path. Consider your one repository containing both mobile and desktop code,
+where you have a sparse checkout for mobile.
+
+Now what happens if files are renamed, i.e. the leading directory?
+As this change comes in from your dear coworker, who has no idea how
+your .git/info/sparse-checkout looks like, it may happen that more files appear
+in your worktree as your patterns did not cover the renamed case.
+Or some file contents go missing as they are in one of the ignored paths.
+
+This groups feature would solve that as the groups are not dependent on
+the paths or the data itself. However the groups in this proposal are only
+meant to be applied on a submodule level, not in a repository itself.
+
+How would you do that?
+I could imagine a file like .gitgroups (It should be part of the repository,
+such that everybody talks about the same groups), with a similar syntax like
+.gitattributes where some file patterns are assigned one or more groups.
+And in either .git/config (as it is for the submodules here) or in a file
+.git/info/groups (as the sparse checkouts do it in that directory)
+you'd configure the groups you are interested in.
+
+It would be cool to have the same mechanism for both sparse-group-checkout
+and submodules, so I'd propose to use a config option in .git/config,
+such as checkout-group which covers both submodules as well as the
+pattern groups as specified by .gitgroups.
+
+---
+Beware, this is just a first shot spinning around some ideas.
+
+Thanks,
+Stefan
