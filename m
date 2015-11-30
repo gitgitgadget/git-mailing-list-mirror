@@ -1,57 +1,80 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v6] Add git-grep threads param
-Date: Mon, 30 Nov 2015 20:45:24 +0100
-Message-ID: <CACsJy8CyV9K8Kxwd-nOugjsTXN09afJFnXwR9mOE5FpA_hWacg@mail.gmail.com>
-References: <1447242770-20753-1-git-send-email-vleschuk@accesssoftek.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git clone fails during pre-commit hook due to GIT_WORK_TREE=. (regression 2.5 -> 2.6)
+Date: Mon, 30 Nov 2015 12:16:32 -0800
+Message-ID: <xmqqwpsz6y5b.fsf@gitster.mtv.corp.google.com>
+References: <CA+dzEB=2LJXiLSTqyLw8AeHNwdQicwvEiMg=hVEX0-_s1bySpA@mail.gmail.com>
+	<CA+dzEB=XiGVFg+AhuJM-jUCPmgZKCJHTp3sinrFt8yzXeC_63Q@mail.gmail.com>
+	<CAGZ79kY=t9SeoXjgeJjfCMD2=6g3JJxDxcnY6JeJCpUqaN+eOA@mail.gmail.com>
+	<CACsJy8C7xoV9faGpbn_5XGt-CmCj--fgXaCFR-ngs=-pWUnrCA@mail.gmail.com>
+	<CACsJy8Ciuirgk9D_fbQ5pgo-8u1AnM+zBdKUHcz_HLfRqM9QxQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Victor Leschuk <vleschuk@accesssoftek.com>
-To: Victor Leschuk <vleschuk@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 30 20:46:03 2015
+Content-Type: text/plain
+Cc: Anthony Sottile <asottile@umich.edu>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 30 21:16:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3UOf-0008Aq-AL
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 20:46:01 +0100
+	id 1a3UsJ-0005st-Ve
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 21:16:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754610AbbK3Tp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2015 14:45:56 -0500
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:35639 "EHLO
-	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752192AbbK3Tp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2015 14:45:56 -0500
-Received: by lfdl133 with SMTP id l133so210745280lfd.2
-        for <git@vger.kernel.org>; Mon, 30 Nov 2015 11:45:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=RsjsySSuqXtVnyd5wMpzfMp9g/Em/keNmZedlKOa2uM=;
-        b=KsUOapHmSmeeFKJ0xioouqTvUsq5MzJU3719yV5WX7vgIemUEWmBgp7kllr+KTEe3Y
-         XCmlDFmO4Y7F2+BluQfZJmprEVc+DCnwmtNK5KEglz4d7O2er+MrEXD8LZb3ElIn9kdb
-         ePuIJ2XeaJBW5hW5ds/GEcYFKSjNjqvNdt1aklCmR2CO8QpoWcbaPutSLJMtA+ajN3nP
-         YBLkCCbwtCKKXs2HNjEfRkjZtClnE9bwdQMaG/CCZ6d945av1r72jST9ENPvOqlyPZKX
-         9snBI3UY3DXPmwEk78Hl4FCTWBRtcD8I00FH4w21Peg4DQKmv2b42pT+Sxqt10vAPKAI
-         +hiQ==
-X-Received: by 10.112.16.135 with SMTP id g7mr27426736lbd.80.1448912754383;
- Mon, 30 Nov 2015 11:45:54 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Mon, 30 Nov 2015 11:45:24 -0800 (PST)
-In-Reply-To: <1447242770-20753-1-git-send-email-vleschuk@accesssoftek.com>
+	id S1752192AbbK3UQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2015 15:16:36 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53310 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751771AbbK3UQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2015 15:16:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 724432CB26;
+	Mon, 30 Nov 2015 15:16:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tUrNxNDdMc2E9AL3Z08S81NjvyU=; b=G+TpOS
+	VYA6Ig3looGFk2f1goMAgAk36/7rXo5tJrpvW3PgU2u40OdvtDzVTAILWC5V1JU/
+	bDJzRgMQcqhK5ho0fN/w0KSKYg+7lUEZ7Oq4xxMrTY8R52BlNoaTsXHkIk3u7JCe
+	9kQ9tAng1U2qRkXFbhmBUA3ds58ONvq81qBHk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ePDz1ed/y0UqR5oDjSshqedbh6StEFcj
+	zSRePbA2nZYw3aX4EUhmhsmZQen59jAwgYW8Y7KLGxP4GH0E/BiSkNui4aJnP84j
+	sbVLZBU0+pIO9Ymc1kNY7V+NilwuJKOlGjsa/X3g16PIH/qNXt2lGSxXD/eLvt+5
+	f89jcqH5qzg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6A7E12CB25;
+	Mon, 30 Nov 2015 15:16:34 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E3F442CB24;
+	Mon, 30 Nov 2015 15:16:33 -0500 (EST)
+In-Reply-To: <CACsJy8Ciuirgk9D_fbQ5pgo-8u1AnM+zBdKUHcz_HLfRqM9QxQ@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 30 Nov 2015 20:01:07 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4053D08C-979F-11E5-8447-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281820>
 
-I forgot..
+Duy Nguyen <pclouds@gmail.com> writes:
 
-On Wed, Nov 11, 2015 at 12:52 PM, Victor Leschuk <vleschuk@gmail.com> wrote:
-> +       else if (num_threads < 0)
-> +               die("Invalid number of threads specified (%d)", num_threads);
+> I was wrong, GIT_WORK_TREE support was added in git-clone many years
+> ago in 20ccef4 (make git-clone GIT_WORK_TREE aware - 2007-07-06). So
+> my change accidentally triggers an (undocumented) feature. We could
+> add a hack to ignore GIT_WORK_TREE if GIT_DIR is set too, but I don't
+> think people will like it. I don't really like reverting d95138e
+> (setup: set env $GIT_WORK_TREE when work tree is set, like $GIT_DIR -
+> 2015-06-26) because another bug reappears.
 
-Please wrap this string with _() so it can be translated
--- 
-Duy
+> So I'm out of options..
+
+Perhaps d95138e can be reverted and then the bug it tried to fix can
+be fixed in a different way somehow?
+
+(I am not quite up to speed yet, so the above may turn out to be
+infeasible--take it with a large grain of salt please).
