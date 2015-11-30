@@ -1,149 +1,90 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] Make error message after failing commit_lock_file() less confusing
-Date: Mon, 30 Nov 2015 12:40:53 +0100
-Message-ID: <1448883653-9140-1-git-send-email-szeder@ira.uka.de>
+From: SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 2/2] sh-setup: make require_clean_work_tree() work on
+ orphan branches
+Date: Mon, 30 Nov 2015 13:24:24 +0100
+Message-ID: <20151130132424.Horde.2BMsKJ5eWOY71RtsJbP8UQw@webmail.informatik.kit.edu>
+References: <1448376345-27339-1-git-send-email-szeder@ira.uka.de>
+ <1448376345-27339-2-git-send-email-szeder@ira.uka.de>
+ <56555A5B.20504@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	DelSp=Yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 30 12:41:25 2015
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Nov 30 13:25:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3Mpd-0004nf-Bx
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 12:41:21 +0100
+	id 1a3NW4-0007av-4w
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 13:25:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753517AbbK3LlR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Nov 2015 06:41:17 -0500
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:50904 "EHLO
+	id S1753275AbbK3MYq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Nov 2015 07:24:46 -0500
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:52326 "EHLO
 	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751852AbbK3LlQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Nov 2015 06:41:16 -0500
-Received: from x4db1bb21.dyn.telefonica.de ([77.177.187.33] helo=localhost.localdomain)
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 25 
-	iface 141.3.10.81 id 1a3MpU-0002nN-GG; Mon, 30 Nov 2015 12:41:14 +0100
-X-Mailer: git-send-email 2.6.3.420.g7bbb372
+	by vger.kernel.org with ESMTP id S1752606AbbK3MYp convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2015 07:24:45 -0500
+Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail.ira.uka.de)
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	iface 141.3.10.81 id 1a3NVa-0005ZI-8j; Mon, 30 Nov 2015 13:24:42 +0100
+Received: from apache by webmail.ira.uka.de with local (Exim 4.72)
+	(envelope-from <szeder@ira.uka.de>)
+	id 1a3NVI-0000J0-Ez; Mon, 30 Nov 2015 13:24:24 +0100
+Received: from x4db1bb21.dyn.telefonica.de (x4db1bb21.dyn.telefonica.de
+ [77.177.187.33]) by webmail.informatik.kit.edu (Horde Framework) with HTTP;
+ Mon, 30 Nov 2015 13:24:24 +0100
+In-Reply-To: <56555A5B.20504@kdbg.org>
+User-Agent: Horde Application Framework 5
+Content-Disposition: inline
 X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1448883674.
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1448886282.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281804>
 
-The error message after a failing commit_lock_file() call sometimes
-looks like this, causing confusion:
 
-  $ git remote add remote git@server.com/repo.git
-  error: could not commit config file .git/config
-  # Huh?!
-  # I didn't want to commit anything, especially not my config file!
+Quoting Johannes Sixt <j6t@kdbg.org>:
 
-While in the narrow context of the lockfile module using the verb
-'commit' in the error message makes perfect sense, in the broader
-context of git the word 'commit' already has a very specific meaning,
-hence the confusion.
+>> --- a/git-sh-setup.sh
+>> +++ b/git-sh-setup.sh
+>> @@ -200,7 +200,19 @@ require_work_tree () {
+>> }
+>>
+>> require_clean_work_tree () {
+>> -	git rev-parse --verify HEAD >/dev/null || exit 1
+>> +	if git rev-parse --verify HEAD >/dev/null 2>/dev/null
+>> +	then
+>> +		compare_to=3DHEAD
+>> +	else
+>> +		if [ -z "$ORPHAN_OK" ]
+>> +		then
+>> +			echo >&2 "Cannot $1: Your current branch does not have any commi=
+ts yet."
+>> +			exit 1
+>> +		else
+>> +			# SHA1 of an empty tree
+>> +			compare_to=3D4b825dc642cb6eb9a060e54bf8d69288fbee4904
+>> +		fi
+>> +	fi
+>
+> It is worrysome that this now throws away any error message of
+> rev-parse. A more conservative approach would be to test for -z
+> "$ORPHAN_OK" first and entail new behavior only for the "$ORPHAN_OK"
+> case.
 
-Reword these error messages to say "could not write" instead of "could
-not commit".
+Those error messages didn't seem to be helpful and in some cases they
+were even misleading, e.g.:
 
-While at it, include strerror in the error messages after writing the
-config file or the credential store fails to provide some information
-about the cause of the failure, and update the style of the error
-message after writing the reflog fails to match surrounding error
-messages (i.e. no '' around the pathname and no () around the error
-description).
+    $ git checkout --orphan orphan
+    $ git rm -rf .
+    $ git script valid-branch
+    fatal: Needed a single revision
+    $ # Huh?  Didn't I just gave you one?!
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
-
-The error message is of course bikeshedable.
-Some callers of commit_lock_file() say something like "could not move
-updated whatever file <path> into place: <strerror>" on error.  While
-it's truer to the meaning of the original error message and conveys
-more exactly what went wrong (i.e. the actual writing had already
-finished at that point, it's the move that failed), I think those
-details are not necessary and the short and simple "could not write"
-is better.
-
- config.c           | 6 ++++--
- credential-store.c | 3 ++-
- fast-import.c      | 2 +-
- refs.c             | 2 +-
- 4 files changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/config.c b/config.c
-index 248a21ab94..86a5eb2571 100644
---- a/config.c
-+++ b/config.c
-@@ -2144,7 +2144,8 @@ int git_config_set_multivar_in_file(const char *c=
-onfig_filename,
- 	}
-=20
- 	if (commit_lock_file(lock) < 0) {
--		error("could not commit config file %s", config_filename);
-+		error("could not write config file %s: %s", config_filename,
-+		      strerror(errno));
- 		ret =3D CONFIG_NO_WRITE;
- 		lock =3D NULL;
- 		goto out_free;
-@@ -2330,7 +2331,8 @@ int git_config_rename_section_in_file(const char =
-*config_filename,
- 	fclose(config_file);
- unlock_and_out:
- 	if (commit_lock_file(lock) < 0)
--		ret =3D error("could not commit config file %s", config_filename);
-+		ret =3D error("could not write config file %s: %s",
-+			    config_filename, strerror(errno));
- out:
- 	free(filename_buf);
- 	return ret;
-diff --git a/credential-store.c b/credential-store.c
-index 00aea3aa30..fc67d16c10 100644
---- a/credential-store.c
-+++ b/credential-store.c
-@@ -64,7 +64,8 @@ static void rewrite_credential_file(const char *fn, s=
-truct credential *c,
- 		print_line(extra);
- 	parse_credential_file(fn, c, NULL, print_line);
- 	if (commit_lock_file(&credential_lock) < 0)
--		die_errno("unable to commit credential store");
-+		die_errno("unable to write credential store: %s",
-+			  strerror(errno));
- }
-=20
- static void store_credential_file(const char *fn, struct credential *c=
-)
-diff --git a/fast-import.c b/fast-import.c
-index e3b421d514..3c65edb5c4 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1824,7 +1824,7 @@ static void dump_marks(void)
-=20
- 	dump_marks_helper(f, 0, marks);
- 	if (commit_lock_file(&mark_lock)) {
--		failure |=3D error("Unable to commit marks file %s: %s",
-+		failure |=3D error("Unable to write file %s: %s",
- 			export_marks_file, strerror(errno));
- 		return;
- 	}
-diff --git a/refs.c b/refs.c
-index 132eff52ca..b1c7b229b7 100644
---- a/refs.c
-+++ b/refs.c
-@@ -4684,7 +4684,7 @@ int reflog_expire(const char *refname, const unsi=
-gned char *sha1,
- 					get_lock_file_path(lock->lk));
- 			rollback_lock_file(&reflog_lock);
- 		} else if (commit_lock_file(&reflog_lock)) {
--			status |=3D error("unable to commit reflog '%s' (%s)",
-+			status |=3D error("unable to write reflog %s: %s",
- 					log_file, strerror(errno));
- 		} else if (update && commit_ref(lock)) {
- 			status |=3D error("couldn't set %s", lock->ref_name);
---=20
-2.6.3.420.g7bbb372
+G=C3=A1bor
