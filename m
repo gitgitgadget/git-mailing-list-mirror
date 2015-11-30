@@ -1,52 +1,55 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH v6] Add git-grep threads param
-Date: Mon, 30 Nov 2015 20:31:08 +0100
-Message-ID: <CACsJy8AdRnW88uy+U-Q0TKf05KvDQLf3bDcKmqoLTDT3sAzg+w@mail.gmail.com>
-References: <1447242770-20753-1-git-send-email-vleschuk@accesssoftek.com>
+Date: Mon, 30 Nov 2015 14:31:56 -0500
+Message-ID: <CAPig+cQZVgPfjwEsA+iDjvJu_gMtz65TA9ZUt3nTT1VhQxRk9Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Victor Leschuk <vleschuk@accesssoftek.com>
-To: Victor Leschuk <vleschuk@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 30 20:31:45 2015
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	"john@keeping.me.uk" <john@keeping.me.uk>,
+	"peff@peff.net" <peff@peff.net>,
+	Victor Leschuk <vleschuk@gmail.com>,
+	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>
+To: Victor Leschuk <vleschuk@accesssoftek.com>
+X-From: git-owner@vger.kernel.org Mon Nov 30 20:32:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3UAp-0008EM-U9
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 20:31:44 +0100
+	id 1a3UB7-0000L5-SJ
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Nov 2015 20:32:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752695AbbK3Tbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2015 14:31:40 -0500
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:34660 "EHLO
-	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752619AbbK3Tbj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2015 14:31:39 -0500
-Received: by lffu14 with SMTP id u14so211574361lff.1
-        for <git@vger.kernel.org>; Mon, 30 Nov 2015 11:31:38 -0800 (PST)
+	id S1752150AbbK3Tb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2015 14:31:58 -0500
+Received: from mail-vk0-f42.google.com ([209.85.213.42]:34907 "EHLO
+	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751915AbbK3Tb5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2015 14:31:57 -0500
+Received: by vkha189 with SMTP id a189so108789344vkh.2
+        for <git@vger.kernel.org>; Mon, 30 Nov 2015 11:31:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=V3ATQkclXKJTpX+uoOZ/f7gKxNX5bVQ1qN8BpbPjXfI=;
-        b=0W/9N4W8EruBFNsqADtbPQ54KSZSaq5msiKUwpxXcn+1jBakDLCzj10m+VieDA+Og9
-         JfBCombosj+xtKJ9j1FRka57kWgLsS60wzt4+DsTL+Ka8TZkumgnfr48r2D/YJagf69h
-         Xhhfx39wL8xMCKc2zuijxj9vYf9hbvkgR5oXq18ejdSzBSMpRtIWR8hMD0X3Poeeh71S
-         CZjMWDZ8bJY1b0ye0cPmcY0EOMU/jNh+oBEzK9UjXE0zHk+icFAM94ZfwvQ9fD5WDUce
-         K40LfgPhIkOCjLHscOzGUSRB8/XsbVJdalREZpRu9/yZ77k9ZmZ4a+c9xPf3gRqi40Uo
-         eJyg==
-X-Received: by 10.112.137.101 with SMTP id qh5mr6215304lbb.81.1448911897879;
- Mon, 30 Nov 2015 11:31:37 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Mon, 30 Nov 2015 11:31:08 -0800 (PST)
-In-Reply-To: <1447242770-20753-1-git-send-email-vleschuk@accesssoftek.com>
+        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
+        bh=2eBt9d5L5NNpwTRjlPtvghvy4SpNVBG1fHFJH1eTnsA=;
+        b=qURmxvpA6XVOIncI4SbQAIw8LZI/44+XBs6qnyjf0RJyZWMzqf7rNzamJoTetllDLH
+         9c+V/vfYWu5Ylc4ttap0Yz05gRcXcBm9/3N1PnSo7etcCXHaUjG6wcUhPTWePALyG/en
+         NqQ/VFvM0wrtE0fC3t/WH930Ibc7yM+XUGUJWe2j/n76Ji5WJOxh/XBg8F2JrgL26ktI
+         LddyzS+Oopi/rs2YBeLBYtC8qicfOZBJYnA+Kach+7WXbSGEGF6N2lpq9cWdP/ufjUTp
+         fnVLZJ/U1kd1fFJzoqqT4H0knBjbnT9Y4DHxwBSsdpwCZB49ldect2XB74qEpxFwxywB
+         kaNQ==
+X-Received: by 10.31.58.74 with SMTP id h71mr55078057vka.151.1448911916571;
+ Mon, 30 Nov 2015 11:31:56 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 30 Nov 2015 11:31:56 -0800 (PST)
+X-Google-Sender-Auth: IDSAIF17T20Tix53jPIjSYagtbQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281817>
 
-On Wed, Nov 11, 2015 at 12:52 PM, Victor Leschuk <vleschuk@gmail.com> wrote:
+On Mon, Nov 16, 2015 at 8:11 AM, Victor Leschuk
+<vleschuk@accesssoftek.com> wrote:
 > "git grep" can now be configured (or told from the command line)
 >  how many threads to use when searching in the working tree files.
 >
@@ -54,19 +57,79 @@ On Wed, Nov 11, 2015 at 12:52 PM, Victor Leschuk <vleschuk@gmail.com> wrote:
 >  on online_cpus(), e.g. if specific number is not configured
 >  GREP_NUM_THREADS_DEFAULT (8) threads will be used even on 1-core CPU.
 
-Why? (I'm asking for an explanation in the commit message so that I
-will not have to ask again in future)
+It's good that this behavior change (no longer consulting
+online_cpus()) is now mentioned[1] in the commit message, however,
+it's also important for people to understand why this change was made,
+but such explanation is missing here. It's important to justify the
+change in the commit message itself since only a few people were
+involved in the mailing list discussion which led to the change, and
+even those people may forget the reasoning at some point.
 
-> @@ -206,7 +206,8 @@ static void start_threads(struct grep_opt *opt)
->                 strbuf_init(&todo[i].out, 0);
->         }
->
-> -       for (i = 0; i < ARRAY_SIZE(threads); i++) {
-> +       threads = xcalloc(num_threads, sizeof(pthread_t));
+Moreover, this change (dropping online_cpus()) is sufficiently
+significant and distinct from the overall purpose of the present patch
+(adding --threads and 'grep.threads') that it really deserves its own
+separate patch (as hinted by [1]), which would turn this into a
+2-patch series.
 
-I think we usually go with sizeof(*threads), but not sure if it's just
-a personal taste or the preferred style for git.
+[1]: http://article.gmane.org/gmane.comp.version-control.git/281133/
 
+> Signed-off-by: Victor Leschuk <vleschuk@accesssoftek.com>
+> ---
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> @@ -1447,6 +1447,13 @@ grep.extendedRegexp::
+> +grep.threads::
+> +       Number of grep worker threads, use it to tune up performance on
+> +       your machines. Leave it unset (or set to 0) for default behavior,
+> +       which for now is using 8 threads for all systems.
+
+You could drop "for now", which is redundant with the sentence which follows.
+
+> +       Default behavior can be changed in future versions
+> +       to better suit hardware and circumstances.
+
+"may change" might read better than "can be changed".
+
+>  gpg.program::
+>         Use this custom program instead of "gpg" found on $PATH when
+>         making or verifying a PGP signature. The program must support the
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> @@ -53,6 +54,13 @@ grep.extendedRegexp::
+> +grep.threads::
+> +       Number of grep worker threads, use it to tune up performance on
+> +       your machines. Leave it unset (or set to 0) for default behavior,
+> +       which for now is using 8 threads for all systems.
+> +       Default behavior can be changed in future versions
+> +       to better suit hardware and circumstances.
+
+Same comments as above.
+
+> @@ -227,6 +235,13 @@ OPTIONS
+> +--threads <num>::
+> +       Number of grep worker threads, use it to tune up performance on
+> +       your machines. Leave it unset (or set to 0) for default behavior,
+> +       which for now is using 8 threads for all systems.
+> +       Default behavior can be changed in future versions
+> +       to better suit hardware and circumstances.
+
+Ditto.
+
+Would it make more sense just to have the detailed description in one
+place and then reference it from the other places rather than
+repeating in all places?
+
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> @@ -262,10 +265,19 @@ static int wait_all(void)
+> +static int grep_threads_config(const char *var, const char *value, void *cb)
+> +{
+> +       if (!strcmp(var, "grep.threads"))
+> +               num_threads = git_config_int(var, value); /* Sanity check of value will be perfomed later */
+
+Nit: This is a pretty wide line. Perhaps the comment could be moved to
+its own line to stay below 80 columns?
+
+> +       return 0;
+> +}
+> +
 >  static int grep_cmd_config(const char *var, const char *value, void *cb)
 >  {
 >         int st = grep_config(var, value, cb);
@@ -75,12 +138,41 @@ a personal taste or the preferred style for git.
 > +               st = -1;
 > +       else if (git_color_default_config(var, value, cb) < 0)
 >                 st = -1;
+
+Nit: Custom is to add new cases following existing ones, which would
+give you a less noisy diff.
+
 >         return st;
-
-Hm... isn't it simpler to just return -1 instead of assigning to st
-first? I think you could just merge grep_threads_config() in this
-function because it's not that complex to stay separate..
-
 >  }
--- 
-Duy
+> @@ -832,14 +846,18 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>         }
+>
+>  #ifndef NO_PTHREADS
+> -       if (list.nr || cached || online_cpus() == 1)
+> -               use_threads = 0;
+> +       if (list.nr || cached)
+> +               num_threads = 0; /* Can not multi-thread object lookup */
+> +       else if (num_threads == 0)
+> +               num_threads = GREP_NUM_THREADS_DEFAULT; /* User didn't specify value, or just wants default behavior */
+
+Nit: Overly wide line.
+
+> +       else if (num_threads < 0)
+> +               die("Invalid number of threads specified (%d)", num_threads);
+
+If you validate the value earlier, rather than delaying it until here,
+you can give a more useful error message which would state whence the
+bad value arose (config vs. command-line). This may or may not be a
+worthwhile improvement.
+
+>  #else
+> -       use_threads = 0;
+> +       num_threads = 0;
+>  #endif
+>
+>  #ifndef NO_PTHREADS
+> -       if (use_threads) {
+> +       if (num_threads) {
+>                 if (!(opt.name_only || opt.unmatch_name_only || opt.count)
+>                     && (opt.pre_context || opt.post_context ||
+>                         opt.file_break || opt.funcbody))
