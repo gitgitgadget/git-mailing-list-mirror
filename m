@@ -1,88 +1,76 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Dependency query regarding contrib scripts
-Date: Tue, 1 Dec 2015 12:52:04 -0800
-Message-ID: <20151201205204.GE18255@google.com>
-References: <20151201165209.GA28230@salo>
+Subject: Re: [PATCH 0/2] git-candidate: git based patch tracking and review
+Date: Tue, 1 Dec 2015 12:55:27 -0800
+Message-ID: <20151201205527.GF18255@google.com>
+References: <1447160198-23296-1-git-send-email-richard.ipsum@codethink.co.uk>
+ <5643107B.20501@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Richard Ipsum <richard.ipsum@codethink.co.uk>
-X-From: git-owner@vger.kernel.org Tue Dec 01 21:52:21 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Richard Ipsum <richard.ipsum@codethink.co.uk>, git@vger.kernel.org,
+	dborowitz@google.com
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Dec 01 21:55:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3ruO-0005oX-LC
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 21:52:21 +0100
+	id 1a3rxX-0002nd-5A
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 21:55:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756877AbbLAUwN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Dec 2015 15:52:13 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:34963 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756807AbbLAUwH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2015 15:52:07 -0500
-Received: by pacej9 with SMTP id ej9so16302180pac.2
-        for <git@vger.kernel.org>; Tue, 01 Dec 2015 12:52:06 -0800 (PST)
+	id S1755826AbbLAUzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2015 15:55:31 -0500
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:35748 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755131AbbLAUza (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2015 15:55:30 -0500
+Received: by pacej9 with SMTP id ej9so16380136pac.2
+        for <git@vger.kernel.org>; Tue, 01 Dec 2015 12:55:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=OWhAmLb5l92xEV+IwOIPhpTZVZto1oJbDArysyQc+lY=;
-        b=dOiSNKOAeLuT4yKpVNIlEOKdER+d6FwjVRCgs8DHp1xTdiA6FeG19/WIp9HF0Sy/QM
-         TDozyuCye8GWBVHYwF3XABGtPRgzDaLNVnSd/lhn7iar60QrsTU0qtesTLqsMsfF6d3U
-         60/8Eu8cSD5W+1m09yt7TBHxCATrMFMFsILBKdZ7K6ozRFKhPhHkGtsa6uOKxjATXFbA
-         /Yqe4MuZq5ki0R5ZPvm2FoS5GFNLTJMawgk2Nd2zf/cn19qAJWGCrPjNAAoW6Njeft74
-         mdiNBgAtQX5pyb/dVju8WYIlbUvgHdOPjdVTEnF1f3awO6VPCGX0moJ+Kierf6nLrW8q
-         77gA==
-X-Received: by 10.98.18.194 with SMTP id 63mr83215292pfs.43.1449003126843;
-        Tue, 01 Dec 2015 12:52:06 -0800 (PST)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=rEWgEI5QCUW45VTZUny0PabMYH388Uwc9bR2E1lQ8AE=;
+        b=yF6nTE49PKiArGU42UFEokuGWoxgvwgED18BhtUDa4cvZuadtCt8VZr+D1FK5zlUW/
+         Nyk0Pci4j8PqL4I1gxG0U/a70gLOYwCA0g90qQcz4mO+V7OlweNYRjwROZ9kspJJvQTl
+         JE+groxLd5b9+5sfw/dCjmNkEJ4wKpjGNToMLQF6Qt8jOs50vIIxdm+98Igcjgo7e+4S
+         jNxztoGVV/e9w4J6pvEUNZXuwrjEaFTwyAKpxAZVaQ/lx9biKl+l9QUj7JVEqlqVehVz
+         33ew5Re0Jc0zhkIicKVT/3RV/wuYDmVLG4xTegz+d1wSTrNBQkFTGfmxEV+djhsj3NqJ
+         AedQ==
+X-Received: by 10.66.153.198 with SMTP id vi6mr102982362pab.37.1449003329753;
+        Tue, 01 Dec 2015 12:55:29 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:5d66:f78a:ca3a:530b])
-        by smtp.gmail.com with ESMTPSA id a27sm59732605pfj.36.2015.12.01.12.52.05
+        by smtp.gmail.com with ESMTPSA id 25sm23299312pfp.62.2015.12.01.12.55.29
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 01 Dec 2015 12:52:05 -0800 (PST)
+        Tue, 01 Dec 2015 12:55:29 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20151201165209.GA28230@salo>
+In-Reply-To: <5643107B.20501@alum.mit.edu>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281854>
 
-Richard Ipsum wrote:
+Michael Haggerty wrote:
+> On 11/10/2015 01:56 PM, Richard Ipsum wrote:
 
-> Having read the docs for integrating new subcommands into git[1] I am=
- looking
-> for some clarification of the following,
+>> I've continued my work[1] to add patch tracking and candidate review capability
+>> to git.
+>>
+>> git-candidate now has a more git-like user interface, so remote candidates
+>> can now be specified in a similar way to remote refs (e.g. origin/candidate)
+>> as well as various other improvements, such as versioned metadata.
 >
-> "While we strongly encourage coding in portable C for portability,
-> these [C, shell, perl] specific scripting languages are also acceptab=
-le.
-> We won=E2=80=99t accept more without a very strong technical case,
-> as we don=E2=80=99t want to broaden the Git suite=E2=80=99s required =
-dependencies"
->
-> Does this also mean that use of non-core modules by, for example, per=
-l scripts,
-> is out of the question for contrib scripts? Or is it acceptable but i=
-deally
-> minimised?
->
-> In particular I'd like to be able to make use of Git::Raw[2] and also=
- ideally
-> the Moo framework[3].
+> This is a really interesting project. I've seen a blog post or two
+> proposing to store bug tracker information in Git in a distributed way,
+> but I don't recall anything about doing the same for code review
+> information.
 
-contrib is its own world.  Your best bet is to ask the maintainer of
-the relevant contrib script what kind of portability they require
-(cc-ing this list).
-
-If you are the maintainer, then go wild. ;-)
+Cc-ing dborowitz, who has been working on storing Gerrit's code review
+information in Git instead of a separate database (e.g., see [1]).
 
 Thanks,
 Jonathan
 
-> [2]: http://search.cpan.org/~jacquesg/Git-Raw-0.58/lib/Git/Raw.pm
-> [3]: http://search.cpan.org/~haarg/Moo-2.000002/lib/Moo.pm
+[1] https://storage.googleapis.com/gerrit-talks/summit/2015/NoteDB.pdf
