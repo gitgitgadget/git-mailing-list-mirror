@@ -1,85 +1,498 @@
-From: Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v1 2/2] add "ok=sigpipe" to test_must_fail and use it to fix flaky tests
-Date: Tue, 1 Dec 2015 10:05:21 +0100
-Message-ID: <990EBE4C-C71F-4F3F-933F-A070D69C94B0@gmail.com>
-References: <1448615714-43768-1-git-send-email-larsxschneider@gmail.com> <1448615714-43768-3-git-send-email-larsxschneider@gmail.com> <20151128171004.GC27264@sigill.intra.peff.net>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, ramsay@ramsayjones.plus.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 01 10:05:45 2015
+From: Mike Crowe <mac@mcrowe.com>
+Subject: [PATCH v3] push: add recurseSubmodules config option
+Date: Tue,  1 Dec 2015 11:49:43 +0000
+Message-ID: <1448970583-14513-1-git-send-email-mac@mcrowe.com>
+Cc: Mike Crowe <mac@mcrowe.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 01 12:50:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3gsa-0005CF-QO
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 10:05:45 +0100
+	id 1a3jRY-0002YQ-Lk
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 12:50:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755343AbbLAJFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2015 04:05:31 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:35367 "EHLO
-	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755484AbbLAJFY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2015 04:05:24 -0500
-Received: by wmuu63 with SMTP id u63so163552653wmu.0
-        for <git@vger.kernel.org>; Tue, 01 Dec 2015 01:05:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=znZaPuze4JNO3RENkjGcIQyiYhVPwL0V9aZ4rVCxwIA=;
-        b=CCYIZBSiXwPR1ap2u2cLYJ4JbSTvMQC94IIrPEm/zcThsRLF7jKz6y5W3jMLXZmnoK
-         pOCvYNlCHaTutLLOhBPT8PjFvQPYi2m7P/gm8Hk44AeeJ3oFKIndQk7rpFWCzQOUQoH7
-         fFUyhOkaqvmsF3DStG1R/1oFwMKDMxV9sormzlQvBzr2D6eH8AhmGXVQUUpNlSrk3r/a
-         ch9+KQ5+tY4PMdfHr2IpnU2VRcZzx8QgWqThKs9bt0hrwzfOaHqDBA3BgGsxvQUB0P6j
-         adrTWn6bh3gHYGsYio+fPAz/VEV3x6UA+ZRTwSWD8bh7z/yCVtVtbVaLC4z2TdJB7jqJ
-         57FA==
-X-Received: by 10.28.189.5 with SMTP id n5mr35473128wmf.76.1448960723337;
-        Tue, 01 Dec 2015 01:05:23 -0800 (PST)
-Received: from slxbook3.fritz.box (p5DDB7751.dip0.t-ipconnect.de. [93.219.119.81])
-        by smtp.gmail.com with ESMTPSA id b84sm25144075wmh.15.2015.12.01.01.05.22
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 01 Dec 2015 01:05:22 -0800 (PST)
-In-Reply-To: <20151128171004.GC27264@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1754866AbbLALty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2015 06:49:54 -0500
+Received: from relay.appriver.com ([207.97.230.34]:52567 "EHLO
+	relay.appriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752698AbbLALtx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2015 06:49:53 -0500
+Received: from [86.30.112.98] (HELO elite.brightsign)
+  by relay.appriver.com (CommuniGate Pro SMTP 6.1.2)
+  with ESMTP id 649073023; Tue, 01 Dec 2015 06:49:49 -0500
+Received: from chuckie.brightsign ([172.30.1.25] helo=chuckie)
+	by elite.brightsign with esmtp (Exim 4.84)
+	(envelope-from <mcrowe@brightsign.biz>)
+	id 1a3jRL-000Bym-Jj; Tue, 01 Dec 2015 11:49:47 +0000
+Received: from mac by chuckie with local (Exim 4.84)
+	(envelope-from <mcrowe@brightsign.biz>)
+	id 1a3jRL-0003o3-IE; Tue, 01 Dec 2015 11:49:47 +0000
+X-Mailer: git-send-email 2.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281837>
 
+The --recurse-submodules command line parameter has existed for some
+time but it has no config file equivalent.
 
-On 28 Nov 2015, at 18:10, Jeff King <peff@peff.net> wrote:
+Following the style of the corresponding parameter for git fetch,
+invent push.recurseSubmodules to provide a default for this parameter.
+This also requires the addition of --recurse-submodules=no to allow
+the configuration to be overridden on the command line when required.
 
-> On Fri, Nov 27, 2015 at 10:15:14AM +0100, larsxschneider@gmail.com wrote:
-> 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> t5516 "75 - deny fetch unreachable SHA1, allowtipsha1inwant=true" is
->> flaky in the following case:
->> 1. remote upload-pack finds out "not our ref"
->> 2. remote sends a response and closes the pipe
->> 3. fetch-pack still tries to write commands to the remote upload-pack
->> 4. write call in wrapper.c dies with SIGPIPE
->> 
->> t5504 "9 - push with transfer.fsckobjects" is flaky, too, and returns
->> SIGPIPE once in a while. I had to remove the final "To dst..." output
->> check because there is no output if the process dies with SIGPUPE.
-> 
-> s/PUPE/PIPE/ :)
-> 
-> I think it would be nice for future readers to understand a bit better
-> _why_ this is flaky, and why the fix is to the test suite and not to git
-> itself. I added this paragraph in between the two above:
-> 
->    The test is flaky because the sending fetch-pack may or may not have
->    finished writing its output by step (3). If it did, then we see a
->    closed pipe on the next read() call. If it didn't, then we get the
->    SIGPIPE from step (4) above. Both are fine, but the latter fools
->    test_must_fail.
-> 
-Sounds good! Thank you :-)
+The most straightforward way to implement this appears to be to make
+push use code in submodule-config in a similar way to fetch.
 
-- Lars
+Signed-off-by: Mike Crowe <mac@mcrowe.com>
+---
+Changes in v3:
+
+ * Incorporate feedback from Junio C Hamano:
+
+ ** Declare recurse_submodules variable on a separate line.
+
+ ** Accept multiple --recurse-submodules options on the command line
+    and the last one wins.
+
+ * Add extra tests for multiple --recurse-submodules options on
+   command line and improve existing tests slightly.
+
+Changes in v2:
+                                                                                      
+ * Incorporate feedback from Eric Sunshine:                                           
+                                                                                      
+ ** push.recurseSubmodules config option now supports 'no' value.                     
+                                                                                      
+ ** --no-recurse-submodules is now a synonym for                                      
+    --recurse-submodules=no.                                                          
+                                                                                      
+ ** use "git -c" rather than "git config" in tests to avoid leaving                   
+    config options set if a test fails.                                               
+                                                                                      
+ * Fix several && chain failures in tests noticed by Stefan Beller.                   
+                                                                                      
+ * Minor tweaks to documentation                                                      
+                                                                                      
+ * Fix minor naming issues in tests         
+
+ Documentation/config.txt       |  14 ++++
+ Documentation/git-push.txt     |  24 +++---
+ builtin/push.c                 |  35 ++++----
+ submodule-config.c             |  29 +++++++
+ submodule-config.h             |   1 +
+ submodule.h                    |   1 +
+ t/t5531-deep-submodule-push.sh | 182 ++++++++++++++++++++++++++++++++++++++++-
+ 7 files changed, 259 insertions(+), 27 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index b4b0194..8c02e43 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2226,6 +2226,20 @@ push.gpgSign::
+ 	override a value from a lower-priority config file. An explicit
+ 	command-line flag always overrides this config option.
+ 
++push.recurseSubmodules::
++	Make sure all submodule commits used by the revisions to be pushed
++	are available on a remote-tracking branch. If the value is 'check'
++	then Git will verify that all submodule commits that changed in the
++	revisions to be pushed are available on at least one remote of the
++	submodule. If any commits are missing, the push will be aborted and
++	exit with non-zero status. If the value is 'on-demand' then all
++	submodules that changed in the revisions to be pushed will be
++	pushed. If on-demand was not able to push all necessary revisions
++	it will also be aborted and exit with non-zero status. If the value
++	is 'no' then default behavior of ignoring submodules when pushing
++	is retained. You may override this configuration at time of push by
++	specifying '--recurse-submodules=check|on-demand|no'.
++
+ rebase.stat::
+ 	Whether to show a diffstat of what changed upstream since the last
+ 	rebase. False by default.
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 85a4d7d..4c775bc 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -257,16 +257,20 @@ origin +master` to force a push to the `master` branch). See the
+ 	is specified. This flag forces progress status even if the
+ 	standard error stream is not directed to a terminal.
+ 
+---recurse-submodules=check|on-demand::
+-	Make sure all submodule commits used by the revisions to be
+-	pushed are available on a remote-tracking branch. If 'check' is
+-	used Git will verify that all submodule commits that changed in
+-	the revisions to be pushed are available on at least one remote
+-	of the submodule. If any commits are missing the push will be
+-	aborted and exit with non-zero status. If 'on-demand' is used
+-	all submodules that changed in the revisions to be pushed will
+-	be pushed. If on-demand was not able to push all necessary
+-	revisions it will also be aborted and exit with non-zero status.
++--no-recurse-submodules::
++--recurse-submodules=check|on-demand|no::
++	May be used to make sure all submodule commits used by the
++	revisions to be pushed are available on a remote-tracking branch.
++	If 'check' is used Git will verify that all submodule commits that
++	changed in the revisions to be pushed are available on at least one
++	remote of the submodule. If any commits are missing the push will
++	be aborted and exit with non-zero status. If 'on-demand' is used
++	all submodules that changed in the revisions to be pushed will be
++	pushed. If on-demand was not able to push all necessary revisions
++	it will also be aborted and exit with non-zero status. A value of
++	'no' or using '--no-recurse-submodules' can be used to override the
++	push.recurseSubmodules configuration variable when no submodule
++	recursion is required.
+ 
+ --[no-]verify::
+ 	Toggle the pre-push hook (see linkgit:githooks[5]).  The
+diff --git a/builtin/push.c b/builtin/push.c
+index 3bda430..cc29277 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -9,6 +9,7 @@
+ #include "transport.h"
+ #include "parse-options.h"
+ #include "submodule.h"
++#include "submodule-config.h"
+ #include "send-pack.h"
+ 
+ static const char * const push_usage[] = {
+@@ -21,6 +22,7 @@ static int deleterefs;
+ static const char *receivepack;
+ static int verbosity;
+ static int progress = -1;
++static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ 
+ static struct push_cas_option cas;
+ 
+@@ -452,22 +454,14 @@ static int do_push(const char *repo, int flags)
+ static int option_parse_recurse_submodules(const struct option *opt,
+ 				   const char *arg, int unset)
+ {
+-	int *flags = opt->value;
++	int *recurse_submodules = opt->value;
+ 
+-	if (*flags & (TRANSPORT_RECURSE_SUBMODULES_CHECK |
+-		      TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND))
+-		die("%s can only be used once.", opt->long_name);
+-
+-	if (arg) {
+-		if (!strcmp(arg, "check"))
+-			*flags |= TRANSPORT_RECURSE_SUBMODULES_CHECK;
+-		else if (!strcmp(arg, "on-demand"))
+-			*flags |= TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND;
+-		else
+-			die("bad %s argument: %s", opt->long_name, arg);
+-	} else
+-		die("option %s needs an argument (check|on-demand)",
+-				opt->long_name);
++	if (unset)
++		*recurse_submodules = RECURSE_SUBMODULES_OFF;
++	else if (arg)
++		*recurse_submodules = parse_push_recurse_submodules_arg(opt->long_name, arg);
++	else
++		die("%s missing parameter", opt->long_name);
+ 
+ 	return 0;
+ }
+@@ -522,6 +516,10 @@ static int git_push_config(const char *k, const char *v, void *cb)
+ 					return error("Invalid value for '%s'", k);
+ 			}
+ 		}
++	} else if (!strcmp(k, "push.recursesubmodules")) {
++		const char *value;
++		if (!git_config_get_value("push.recursesubmodules", &value))
++			recurse_submodules = parse_push_recurse_submodules_arg(k, value);
+ 	}
+ 
+ 	return git_default_config(k, v, NULL);
+@@ -549,7 +547,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		  0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
+ 		  N_("require old value of ref to be at this value"),
+ 		  PARSE_OPT_OPTARG, parseopt_push_cas_option },
+-		{ OPTION_CALLBACK, 0, "recurse-submodules", &flags, "check|on-demand",
++		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, N_("check|on-demand|no"),
+ 			N_("control recursive pushing of submodules"),
+ 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+ 		OPT_BOOL( 0 , "thin", &thin, N_("use thin pack")),
+@@ -580,6 +578,11 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	if (deleterefs && argc < 2)
+ 		die(_("--delete doesn't make sense without any refs"));
+ 
++	if (recurse_submodules == RECURSE_SUBMODULES_CHECK)
++		flags |= TRANSPORT_RECURSE_SUBMODULES_CHECK;
++	else if (recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
++		flags |= TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND;
++
+ 	if (tags)
+ 		add_refspec("refs/tags/*");
+ 
+diff --git a/submodule-config.c b/submodule-config.c
+index afe0ea8..fe8ceab 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -228,6 +228,35 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
+ 	return parse_fetch_recurse(opt, arg, 1);
+ }
+ 
++static int parse_push_recurse(const char *opt, const char *arg,
++			       int die_on_error)
++{
++	switch (git_config_maybe_bool(opt, arg)) {
++	case 1:
++		/* There's no simple "on" value when pushing */
++		if (die_on_error)
++			die("bad %s argument: %s", opt, arg);
++		else
++			return RECURSE_SUBMODULES_ERROR;
++	case 0:
++		return RECURSE_SUBMODULES_OFF;
++	default:
++		if (!strcmp(arg, "on-demand"))
++			return RECURSE_SUBMODULES_ON_DEMAND;
++		else if (!strcmp(arg, "check"))
++			return RECURSE_SUBMODULES_CHECK;
++		else if (die_on_error)
++			die("bad %s argument: %s", opt, arg);
++		else
++			return RECURSE_SUBMODULES_ERROR;
++	}
++}
++
++int parse_push_recurse_submodules_arg(const char *opt, const char *arg)
++{
++	return parse_push_recurse(opt, arg, 1);
++}
++
+ static void warn_multiple_config(const unsigned char *commit_sha1,
+ 				 const char *name, const char *option)
+ {
+diff --git a/submodule-config.h b/submodule-config.h
+index 9061e4e..9bfa65a 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -19,6 +19,7 @@ struct submodule {
+ };
+ 
+ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
++int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
+ int parse_submodule_config_option(const char *var, const char *value);
+ const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
+ 		const char *name);
+diff --git a/submodule.h b/submodule.h
+index 5507c3d..ddff512 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -5,6 +5,7 @@ struct diff_options;
+ struct argv_array;
+ 
+ enum {
++	RECURSE_SUBMODULES_CHECK = -4,
+ 	RECURSE_SUBMODULES_ERROR = -3,
+ 	RECURSE_SUBMODULES_NONE = -2,
+ 	RECURSE_SUBMODULES_ON_DEMAND = -1,
+diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
+index 6507487..9a637f5 100755
+--- a/t/t5531-deep-submodule-push.sh
++++ b/t/t5531-deep-submodule-push.sh
+@@ -64,7 +64,12 @@ test_expect_success 'push fails if submodule commit not on remote' '
+ 		cd work &&
+ 		git add gar/bage &&
+ 		git commit -m "Third commit for gar/bage" &&
+-		test_must_fail git push --recurse-submodules=check ../pub.git master
++		# the push should fail with --recurse-submodules=check
++		# on the command line...
++		test_must_fail git push --recurse-submodules=check ../pub.git master &&
++
++		# ...or if specified in the configuration..
++		test_must_fail git -c push.recurseSubmodules=check push ../pub.git master
+ 	)
+ '
+ 
+@@ -79,6 +84,181 @@ test_expect_success 'push succeeds after commit was pushed to remote' '
+ 	)
+ '
+ 
++test_expect_success 'push succeeds if submodule commit not on remote but using on-demand on command line' '
++	(
++		cd work/gar/bage &&
++		>recurse-on-demand-on-command-line &&
++		git add recurse-on-demand-on-command-line &&
++		git commit -m "Recurse on-demand on command line junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse on-demand on command line for gar/bage" &&
++		git push --recurse-submodules=on-demand ../pub.git master &&
++		# Check that the supermodule commit got there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master &&
++		# Check that the submodule commit got there too
++		cd gar/bage &&
++		git diff --quiet origin/master master
++	)
++'
++
++test_expect_success 'push succeeds if submodule commit not on remote but using on-demand from config' '
++	(
++		cd work/gar/bage &&
++		>recurse-on-demand-from-config &&
++		git add recurse-on-demand-from-config &&
++		git commit -m "Recurse on-demand from config junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse on-demand from config for gar/bage" &&
++		git -c push.recurseSubmodules=on-demand push ../pub.git master &&
++		# Check that the supermodule commit got there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master &&
++		# Check that the submodule commit got there too
++		cd gar/bage &&
++		git diff --quiet origin/master master
++	)
++'
++
++test_expect_success 'push recurse-submodules cmdline overrides config' '
++	(
++		cd work/gar/bage &&
++		>recurse-check-on-command-line-overriding-config &&
++		git add recurse-check-on-command-line-overriding-config &&
++		git commit -m "Recurse on command-line overridiing config junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse on command-line overriding config for gar/bage" &&
++		test_must_fail git -c push.recurseSubmodules=on-demand push --recurse-submodules=check ../pub.git master &&
++		# Check that the supermodule commit did not get there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master^ &&
++		# Check that the submodule commit did not get there
++		(cd gar/bage && git diff --quiet origin/master master^) &&
++		# Now try the reverse which should succeed
++		git -c push.recurseSubmodules=check push --recurse-submodules=on-demand ../pub.git master &&
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master &&
++		(cd gar/bage && git diff --quiet origin/master master)
++	)
++'
++
++test_expect_success 'push recurse-submodules on cmdline overrides earlier cmdline' '
++	(
++		cd work/gar/bage &&
++		>recurse-check-on-command-line-overriding-earlier-command-line &&
++		git add recurse-check-on-command-line-overriding-earlier-command-line &&
++		git commit -m "Recurse on command-line overridiing earlier command-line junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse on command-line overriding earlier command-line for gar/bage" &&
++		test_must_fail git push --recurse-submodules=on-demand --recurse-submodules=check ../pub.git master &&
++		# Check that the supermodule commit did not get there
++		git fetch ../pub.git &&
++		git diff FETCH_HEAD master^ &&
++		git diff --quiet FETCH_HEAD master^ &&
++		# Check that the submodule commit did not get there
++		(cd gar/bage && git diff --quiet origin/master master^) &&
++		# But the options in the other order should push the submodule
++		git push --recurse-submodules=check --recurse-submodules=on-demand ../pub.git master &&
++		# Check that the submodule commit did get there
++		git fetch ../pub.git &&
++		(cd gar/bage && git diff --quiet origin/master master)
++	)
++'
++
++test_expect_success 'push succeeds if submodule commit not on remote using on-demand from cmdline overriding config' '
++	(
++		cd work/gar/bage &&
++		>recurse-on-demand-on-command-line-overriding-config &&
++		git add recurse-on-demand-on-command-line-overriding-config &&
++		git commit -m "Recurse on-demand on command-line overriding config junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse on-demand on command-line overriding config for gar/bage" &&
++		git -c push.recurseSubmodules=check push --recurse-submodules=on-demand ../pub.git master &&
++		# Check that the supermodule commit got there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master &&
++		# Check that the submodule commit got there
++		cd gar/bage &&
++		git diff --quiet origin/master master
++	)
++'
++
++test_expect_success 'push succeeds if submodule commit disabling recursion from cmdline overriding config' '
++	(
++		cd work/gar/bage &&
++		>recurse-disable-on-command-line-overriding-config &&
++		git add recurse-disable-on-command-line-overriding-config &&
++		git commit -m "Recurse disable on command-line overriding config junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse disable on command-line overriding config for gar/bage" &&
++		git -c push.recurseSubmodules=check push --recurse-submodules=no ../pub.git master &&
++		# Check that the supermodule commit got there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master &&
++		# But that the submodule commit did not
++		( cd gar/bage && git diff --quiet origin/master master^ ) &&
++		# Now push it to avoid confusing future tests
++		git push --recurse-submodules=on-demand ../pub.git master
++	)
++'
++
++test_expect_success 'push succeeds if submodule commit disabling recursion from cmdline (alternative form) overriding config' '
++	(
++		cd work/gar/bage &&
++		>recurse-disable-on-command-line-alt-overriding-config &&
++		git add recurse-disable-on-command-line-alt-overriding-config &&
++		git commit -m "Recurse disable on command-line alternative overriding config junk"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse disable on command-line alternative overriding config for gar/bage" &&
++		git -c push.recurseSubmodules=check push --no-recurse-submodules ../pub.git master &&
++		# Check that the supermodule commit got there
++		git fetch ../pub.git &&
++		git diff --quiet FETCH_HEAD master &&
++		# But that the submodule commit did not
++		( cd gar/bage && git diff --quiet origin/master master^ ) &&
++		# Now push it to avoid confusing future tests
++		git push --recurse-submodules=on-demand ../pub.git master
++	)
++'
++
++test_expect_success 'push fails if recurse submodules option passed as yes' '
++	(
++		cd work/gar/bage &&
++		>recurse-push-fails-if-recurse-submodules-passed-as-yes &&
++		git add recurse-push-fails-if-recurse-submodules-passed-as-yes &&
++		git commit -m "Recurse push fails if recurse submodules option passed as yes"
++	) &&
++	(
++		cd work &&
++		git add gar/bage &&
++		git commit -m "Recurse push fails if recurse submodules option passed as yes for gar/bage" &&
++		test_must_fail git push --recurse-submodules=yes ../pub.git master &&
++		test_must_fail git -c push.recurseSubmodules=yes push ../pub.git master &&
++		git push --recurse-submodules=on-demand ../pub.git master
++	)
++'
++
+ test_expect_success 'push fails when commit on multiple branches if one branch has no remote' '
+ 	(
+ 		cd work/gar/bage &&
+-- 
+2.1.4
