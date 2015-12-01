@@ -1,128 +1,103 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC PATCH 0/5] Submodule Groups
-Date: Mon, 30 Nov 2015 15:54:54 -0800
-Message-ID: <CAGZ79kZGydm=yYkc-Na2QqpGhLB-KEdh7XyxHPYZqZDzpi3F7w@mail.gmail.com>
-References: <1448415139-23675-1-git-send-email-sbeller@google.com>
-	<5655F166.9090601@web.de>
-	<CAGZ79kbd2g9QSuGmyf6Ybp6dCqMfSBqj8WZgfTejXU8OdszaBw@mail.gmail.com>
-	<5656096A.7010408@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: arbitrary memory allocation
+Date: Mon, 30 Nov 2015 16:17:08 -0800
+Message-ID: <xmqqmvtv6n0b.fsf@gitster.mtv.corp.google.com>
+References: <1a012fc79a55cae8b948b28d1259be0c.squirrel@sdfeu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Eric Sunshine <ericsunshine@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Dec 01 00:55:00 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: ytrezq@sdf-eu.org
+X-From: git-owner@vger.kernel.org Tue Dec 01 01:17:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3YHb-0004sO-Qw
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 00:55:00 +0100
+	id 1a3YdB-0002ub-7D
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 01:17:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755337AbbK3Xyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Nov 2015 18:54:55 -0500
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:33602 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754543AbbK3Xyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Nov 2015 18:54:54 -0500
-Received: by ykdv3 with SMTP id v3so204959303ykd.0
-        for <git@vger.kernel.org>; Mon, 30 Nov 2015 15:54:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Fy/GbtK2zzjz002yloW/yZciBe3LMcKxm0qqVtWuJcc=;
-        b=RKtIuJ5raNUD0xdT6fNRg11olrSobnp6l99GJ9pJC+mxz1e7L7aXb3rE3F9IZxBKxM
-         hire+ZY0LO9rVPJ1YOu3nuwv/OijgbD0ldEA4V0wqnG+ev8S0O9KVLYBML+9fuhIHmuP
-         VRARm0TCpCQycebVlKL6YGGY5laevwADkczvoCtijuiI5xnkpKpLIWQlgVkmc2imw+ff
-         kHQDvMhBOG4W5o+oujQF6y0PmqXyxueVuA+I1eHBvWSW4yy7hakrYvFjWc4L5t2+yg4M
-         CaKVsnjqTtmxHNMgSjoD+Nq46pbIzg3cLsAkpRxph8RCLsXMeNJWAUJrqAU7yRKy0g6q
-         cE8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Fy/GbtK2zzjz002yloW/yZciBe3LMcKxm0qqVtWuJcc=;
-        b=iNOjEySbc7DA4XghlG6wy7n51m1nDycVGVQY2Ke0zP/wweqqp3nIsbYAn+3PbizOWt
-         n1+MtTIb0AcWYxGqyOk3Hp5IfB0FDPvtkSxFTJCQTdavtVl21RAgI5O7wAz+4x6aRCpb
-         mS5U7Yk8D7ThL3dUWPkaFsm+F/iDc2iU/RqSV07LPyZLl1YJqxXZCJGmxtGZjPsooVsR
-         hhTJX55kz5SVmB3dBjTcRYiLbGcDbhmL+L44pJv+fXxF3C96m0jBDggmDfaSyUNjJxsa
-         U//goDXuiS6m65Ntm6y9qCaXApM++rKZNYW2oDqulbhhUoXLuoXZdsKFVC4jh/5ap17y
-         I5Xg==
-X-Gm-Message-State: ALoCoQlmbzUfnEW45PJNcjoZBDkP4rMAx8e7bIWrqOAfmvFzn7MgDr4VUJJ7pxewd59zx3z48foN
-X-Received: by 10.13.221.21 with SMTP id g21mr16531602ywe.320.1448927694287;
- Mon, 30 Nov 2015 15:54:54 -0800 (PST)
-Received: by 10.37.215.16 with HTTP; Mon, 30 Nov 2015 15:54:54 -0800 (PST)
-In-Reply-To: <5656096A.7010408@web.de>
+	id S1754181AbbLAARM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Nov 2015 19:17:12 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64863 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751710AbbLAARL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Nov 2015 19:17:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 413D930E9A;
+	Mon, 30 Nov 2015 19:17:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=h+bxK427DELStuN8hfwZ4mljfgs=; b=ZVyCTN
+	Ivn21h7OONEdHpLUf3HQWf9D/LcOy9BE2Iz9VPKxOm9nTMm3fusBbpX3W4kCe4tG
+	oz1dhrjyT+OzflM4kKEI6bCWJXD6NMGVxOdJp3GqBTB/G8gzLVPB85FN0kX3Q4SV
+	JyIj2IecRIU+aUBTieucvsrcKriOHt0kEIKPI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vof7O6U3j7eNgx4o4MoZcHKH5V/wlojK
+	BOiuflOQ4AE+1DGB/LWqFH3OoU3+accth6qO1otug476RB/JbgtxX5INFx/DnSy3
+	6dVnY2y4W/T0dF1fssDgG+md7UZpw2aHjtjAYbgXa/4dmQPv0zc4Qh6O8m8DIiS/
+	YOLGmXjagtw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2BED930E99;
+	Mon, 30 Nov 2015 19:17:10 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 91FC430E98;
+	Mon, 30 Nov 2015 19:17:09 -0500 (EST)
+In-Reply-To: <1a012fc79a55cae8b948b28d1259be0c.squirrel@sdfeu.org>
+	(ytrezq@sdf-eu.org's message of "Thu, 26 Nov 2015 05:06:35 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: DCA7064A-97C0-11E5-A4F7-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281826>
 
-On Wed, Nov 25, 2015 at 11:18 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->>>
->>> Hmm, I doubt it makes much sense to add the --group option to "git
->>> submodule init". I'd rather init all submodules and do the group
->>> handling only in the "git submodule update" command. That way
->>> upstream can change grouping later without having the user to
->>> fiddle with her configuration to make that work.
->>
+ytrezq@sdf-eu.org writes:
 
-Mind to elaborate a bit more here?
-The way I understand you now is to pass not --groups to init,
-but init initializes all submodules. But that is worse IMHO
-(In the naive way of dealing with groups in the first patch series)
-as then we open up two possibilities:
- * a submodule which happened to be part of the repository
-   when cloning is added to a new group, which a user has
-   configured, on pulling, this is no problem, we just checkout
-   the desired version of the submodule.
- * a submodule which was not part of the repository at the time
-   of cloning, is added to the superproject with a group the user
-   is subscribed to. This would not be checked out as it is uninitialized
-   on disk.
+> line_list="0032want "+obj[1][:40]+'\n'
+> while len(line_list)<65430: # Get the ideal tcp packet size for fastest bandwidth (64Ko)
+> 	for i in obj:
+> 		if (i==obj[0]) or (i==obj[1]) or ("pull" in i):
+> 			continue
+> 		line_list+="0032want "+i[:40]+'\n'
+> 		if len(line_list)>65480:
+> 			break
+> ...
+> line_list_len=line_list.count('\n')*56 # Line lengths of the pkt-line format won t fill the ram, so remove them from the size counter
+> count=line_list_len
+> while True:
+> 	sys.stdout.flush()
+> 	sockobj.send(line_list) # for each line, the git-send-pack process allocate append a member to a struct objects array
+> 	print("\r%.2f Mo of ram filled" % float(count/float(1048576))),
+> 	count+=line_list_len
 
-So when a change of the set of submodules as defined by groups
-occurs, that is the point in time, when we want to init/fetch/checkout
-these submodules, no?
+This seems to be attempting to throw "want XXXXXXXX" that are
+outside the original server-side advertisement over and over.  Even
+though the set of distinct "want" lines you can throw at the server
+is bounded by the server-side advertisement (i.e. usually you won't
+be able to throw an object name that does not appear at the tip), by
+repeating the requests, you seem to be hoping that you can exhaust
+the object_array() used in upload-pack.c::receive_needs().
 
->>
->> Well if upstream changes grouping later, you could just run
->>
->>      git submodule update --init --groups
->>
->> and get what you want?
->
->
-> And make life harder than necessary for our users without having
-> a reason for that?
+But does that attack actually work?  After seeing these "want"
+lines, the object name read from there goes through this code:
 
-So if upstream changes groups, ideally we want to follow without much
-hassle for the user. So a plain git pull should /just work/. (I am repeating
-myself here I'd guess), we would need to react to that. if we drop the
---groups call to init, we'd still tell the user to run
+		o = parse_object(sha1_buf);
+		if (!o)
+			die("git upload-pack: not our ref %s",
+			    sha1_to_hex(sha1_buf));
+		if (!(o->flags & WANTED)) {
+			o->flags |= WANTED;
+			if (!is_our_ref(o))
+				has_non_tip = 1;
+			add_object_array(o, NULL, &want_obj);
+		}
 
-     git submodule update
+So it appears to me that the requests the code makes in the second
+and subsequent iterations of "while True:" loop would merely be an
+expensive no-op, without bloating memory footprint.
 
-We do not need --groups any more in a later patch as instead of
-passing in --groups we can detect for `git config submodule.groups`
-to be available or not.
-
---init should not be needed as when the groups are there we automatically
-init new submodules in the group set?
-
-> Except for the URL copying submodule settings
-> on init is wrong, as it sets in stone what happened to be in the
-> .gitmodules file when you ran init and doesn't allow upstream to
-> easily change defaults later. We still do that with the update
-> setting for historical reasons, but I avoided making the same
-> mistake with all the options I added later. You can override
-> these settings if you want or need to, but that shouldn't be
-> necessary by default to make life easier for our users.
->
+It does waste CPU cycle and network socket, though.
