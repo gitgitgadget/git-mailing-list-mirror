@@ -1,120 +1,126 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCHv2] builtin/clone: support submodule groups
-Date: Tue, 1 Dec 2015 10:58:41 -0800
-Message-ID: <CAGZ79kaLKGtfXZpOEY9yR9viwCDfi_cxhwCWNjh5_2qtcdBtzQ@mail.gmail.com>
-References: <5656366D.4010508@web.de>
-	<1448497884-2624-1-git-send-email-sbeller@google.com>
-	<20151126045929.GA29107@tsaunders-iceball.corp.tor1.mozilla.com>
-	<CAGZ79kbUktcGNw4C123dxGoUsi=W+h4vUPWmBm2rExipUOcXqA@mail.gmail.com>
-	<565D43D1.9030207@drmicha.warpmail.net>
+From: Adam Dinwoodie <adam@dinwoodie.org>
+Subject: [PATCH] git-gui: Remove ancient Cygwin compatibility code
+Date: Tue, 1 Dec 2015 19:17:43 +0000
+Message-ID: <20151201191743.GI14466@dinwoodie.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Trevor Saunders <tbsaunde@tbsaunde.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Eric Sunshine <ericsunshine@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Dec 01 19:59:15 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 01 20:17:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3q8g-0006wK-8T
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 19:58:58 +0100
+	id 1a3qQy-0008Cj-3E
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 20:17:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756805AbbLAS6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2015 13:58:54 -0500
-Received: from mail-yk0-f175.google.com ([209.85.160.175]:34433 "EHLO
-	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756907AbbLAS6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2015 13:58:42 -0500
-Received: by ykfs79 with SMTP id s79so19042278ykf.1
-        for <git@vger.kernel.org>; Tue, 01 Dec 2015 10:58:42 -0800 (PST)
+	id S1756768AbbLATRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2015 14:17:48 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:34786 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876AbbLATRr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2015 14:17:47 -0500
+Received: by wmvv187 with SMTP id v187so222434486wmv.1
+        for <git@vger.kernel.org>; Tue, 01 Dec 2015 11:17:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=YrtUYS7e6R0iTX8JWqTISOGrXgP2HK1WnSvhPvrKKwo=;
-        b=Ot39LidBKBwJQn/WLWQB8+cije2QSUZoYe4jkLLNHC0Pa2IQfo2qqW2xf8O5upTYda
-         /OucXeeUcxc6WYGra6MgP15BPu4rETY4O8rR/H6bBf4LNva/72/YAaT0aY5DEM4HJsj+
-         BFIsHL3v3BylbRlc30oc23rhpUgXEQuo+x0rPGjk/EpDZEfKnQSusLAoUx91h9F7v/ce
-         QYriuspC3GUJvxYafE3gGYSPOc/uIHiY/z6UB4Oz/0MM+w4s4ptFyuJLVjp7s7hqntBY
-         l82Q6yE6Ez9XKLtJW4UnklnfZqJwZr7Wr7FsyT5wv9GbjH2/SFrj7Muk9cLHxVCMFNdk
-         DXUA==
+        d=dinwoodie.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=yVapSNifcj4fvSEV8Jo6IGPZBEjjq3vHfDYEJySZnxw=;
+        b=DVx75cGiyNtQ6nmIx6D1JCTuggGChfpRm8eMS/b+xgRBdx8lL0QdqpphMCwClmwjIB
+         Xoox39BPMPwaBWTWCj7Wf4PtJiuVuvRHrL7J0DkhYUh61S0GvSTtD6pUBULfqXXrN8/n
+         6vEJCC+OffFaHcOiQDOH4m+Vq1deOtyFZr6m0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=YrtUYS7e6R0iTX8JWqTISOGrXgP2HK1WnSvhPvrKKwo=;
-        b=Lzz2h/41SlzkSJdpWgcj2YA8B2PJpbin7PQO1yOv7MDD7O2gkDynn6JNodG6DvHzMc
-         9qenRdBojD2RLnLFJH9G6Ih5OBpqmc5gJycn5CoUOWVgD05TrHw63dgcu+9ZpPo0niv6
-         E56bTd92n/eU2D6twIfQBu1ptVZtpR7vDpqCcDh90TS+IrUiCoPnumunsoJ09d0++rSB
-         +jrAcXavkIBQJqdIE2kpF/VqIC6+t2DO/7VJxTSe4gXj59NN7cRrYwmo+Cu3ZWXb5mo7
-         2PVW/GzJBXi+kDc2lNlvJ6pRStMRPbKEP+9z8SSuY2VPjx9nkkusm2o3ItnzwvCLMhpj
-         CrgA==
-X-Gm-Message-State: ALoCoQk/4W+S2VQp5MyCOlAEPegnFtGn5rieiWVmsXzJObsNTIXw9gbBHM17kOwTFpBkWtjegz1v
-X-Received: by 10.13.221.21 with SMTP id g21mr21088927ywe.320.1448996321820;
- Tue, 01 Dec 2015 10:58:41 -0800 (PST)
-Received: by 10.37.215.16 with HTTP; Tue, 1 Dec 2015 10:58:41 -0800 (PST)
-In-Reply-To: <565D43D1.9030207@drmicha.warpmail.net>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=yVapSNifcj4fvSEV8Jo6IGPZBEjjq3vHfDYEJySZnxw=;
+        b=XLZVH6KAadjVFesCpATtA1D+F8IuqwCPCfLl+PVEd3gSN+NwE5ijdt5gmheVVVULGP
+         K+zvxAEjcLLC1vOdRAFUOdsymZ11jrFVLCcSHKts/Ou7y30QZ5dsYLoA3WCHW33neYKm
+         A+7eGANIPy++NrHtMSXVk5IPhMHVlKBeTriCohQPZhmsx6UTDOlIpm6F+Ih7SOkem7sJ
+         g0voiUerapoEZ0WysjcxL1ZvlSPo4PTTgp+LpwMNEN68hlwfTgj1Gf7LCs9Po6N+OiXD
+         v9v5JJDhbCEBsHrqmc2zlVBAC/PQ1xsqFfXscU/3g8oqKSLD7m+nVxTpbBAn6UhkGp8+
+         /p8Q==
+X-Gm-Message-State: ALoCoQk0ML2l4Ql0bNrrmOhDEmDnt7QW5G5iSqfXSC9vkjBQoJLsfl1L9SHUAj8S2yHzY4hG50Gw
+X-Received: by 10.194.236.6 with SMTP id uq6mr59808439wjc.126.1448997466380;
+        Tue, 01 Dec 2015 11:17:46 -0800 (PST)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id gl10sm52803997wjb.30.2015.12.01.11.17.45
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 01 Dec 2015 11:17:45 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281843>
 
-On Mon, Nov 30, 2015 at 10:53 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> I think we have to solve more basic issues for sparse checkouts first.
-> I'm using them with extra worktrees now and everything seems to be
-> working fine. But we need to get the UI right for the simple case (no
-> submodules, maybe not even extra worktrees) first: setting up patterns
-> before checkout etc. Having submodules in mind doesn't hurt, tough.
+Remove special path handling for Cygwin in the git-gui Makefile.  This
+used to be necessary, but has been being patched out of the official
+Cygwin distribution builds since Git v1.7.9, and should really be
+patched out of the upstream code rather than being patched every time in
+the Cygwin build process.
 
-Well my thinking comes from the other side: "I want to improve submodule
-handling, but do I need to pay any attention to sparse checkout?", as Trevor
-pointed out, this may or may not be similar enough from a users perspective,
-that we want to have a similar/same UI there.
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+---
+I'm the current Cygwin maintainer for Git; this code has been patched
+out of the Cygwin Git builds since v1.7.9,* well before I took over.
+It's clearly stable and causing no problems, so having it in the
+upstream code rather than patching every time seems The Right Thing To
+Do.
 
->
-> I still consider sparse checkouts a local "cludge" (not technically
-> cludgy) in the sense that it helps you cater to some specific local
-> needs; not something whose config you'd want to transport as part of the
-> object store.
+(* The actual patch used in the Cygwin builds just replaces `ifeq
+($(uname_O,Cygwin))` with `ifeq ($(uname_O,noThanks))`, but that's
+clearly the appropriate solution for a quick manual patch, not for the
+actual upstream code.)
 
-Right, the submodule groups would be in the same boat. Each user would decide
-locally what groups they think is worth having. Unlike the sparse checkout
-the repository contains the groups however. As fair as I understand the sparse
-checkout you would specify to checkout /foo/* but not checkout /bar/*
+Sending with apologies to Shawn Pearce for the noise; I'd misread the
+SubmittingPatches doc and sent to him alone first.
 
-Now it is likely that some people will have very similar preferences for their
-sparse checkout, so it may make sense to add an abstraction layer in there,
-which can be done by groups. These groups could be defined using similar
-patterns as in .gitattributes or .gitignore in another .gitgroups file. Maybe
-the .gitattributes file could be reused.
+I've based this patch off the git-gui tree rather than the main Git tree
+per the SubmittingPatches doc.  Pipe it through `sed
+'s!Makekfile!git-gui/\0!g'` for a version that applies cleanly to the
+main Git source tree.
 
-The definition of the groups would be in the repository, such that it is kept
-maintained and the individual user only needs to specify a few groups they're
-interested in.
+ Makefile | 21 +++------------------
+ 1 file changed, 3 insertions(+), 18 deletions(-)
 
-Currently you can already checkout submodules in a sparse fashion by just
-initializing and checking out those submodules you want. But I think this
-is not feasible if you have a huge amount of submodules, because you cannot
-apply file patterns like you could with a .git{attributes, ignore, groups}
-file. Because of the missing pattern, I'd want to add the groups.
-
->
-> Minor implementation detail: Do we have any precedence of comma
-> separated values for config values? I'd say we rather use multiple
-> entries, don't we?
-
-Ok, I'll fix that.
-
->
-> Michael
+diff --git a/Makefile b/Makefile
+index 4f00bdd..e369046 100644
+--- a/Makefile
++++ b/Makefile
+@@ -136,25 +136,10 @@
+ GITGUI_RELATIVE :=
+ GITGUI_MACOSXAPP :=
+ 
+-ifeq ($(uname_O),Cygwin)
+-	GITGUI_SCRIPT := `cygpath --windows --absolute "$(GITGUI_SCRIPT)"`
+-
+-	# Is this a Cygwin Tcl/Tk binary?  If so it knows how to do
+-	# POSIX path translation just like cygpath does and we must
+-	# keep libdir in POSIX format so Cygwin packages of git-gui
+-	# work no matter where the user installs them.
+-	#
+-	ifeq ($(shell echo 'puts [file normalize /]' | '$(TCL_PATH_SQ)'),$(shell cygpath --mixed --absolute /))
+-		gg_libdir_sed_in := $(gg_libdir)
+-	else
+-		gg_libdir_sed_in := $(shell cygpath --windows --absolute "$(gg_libdir)")
+-	endif
+-else
+-	ifeq ($(exedir),$(gg_libdir))
+-		GITGUI_RELATIVE := 1
+-	endif
+-	gg_libdir_sed_in := $(gg_libdir)
+-endif
++ifeq ($(exedir),$(gg_libdir))
++	GITGUI_RELATIVE := 1
++endif
++gg_libdir_sed_in := $(gg_libdir)
+ ifeq ($(uname_S),Darwin)
+ 	ifeq ($(shell test -d $(TKFRAMEWORK) && echo y),y)
+ 		GITGUI_MACOSXAPP := YesPlease
+-- 
+2.5.3
