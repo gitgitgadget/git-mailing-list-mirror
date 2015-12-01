@@ -1,118 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones fail
-Date: Tue, 01 Dec 2015 14:22:29 -0800
-Message-ID: <xmqq7fkx7qsa.fsf@gitster.mtv.corp.google.com>
-References: <1447321061-74381-1-git-send-email-larsxschneider@gmail.com>
-	<20151113053547.GD29708@sigill.intra.peff.net>
-	<CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
-	<CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
-	<xmqqio4j8iit.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kYY5FbvMpa2vOun7-h4S2cJvZLn67uPGYVbje55R4dFSg@mail.gmail.com>
-	<CACsJy8CFCu4casNn25b1YPkV==-8kDy3wzYd5uf794R41M0Y9w@mail.gmail.com>
-	<xmqqegf57sfe.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] clean: new option --exclude-from
+Date: Tue, 1 Dec 2015 17:25:38 -0500
+Message-ID: <CAPig+cRa31uriO4qkZUydooNx0V+dNrUgFvTUxoLL9gCjq9AHQ@mail.gmail.com>
+References: <1448549065-16337-1-git-send-email-rouzier@gmail.com>
+	<CAPig+cQMXgan0Hkm+HJt836Xm9AObxr8EW0DXb=puPzWD+v=Dg@mail.gmail.com>
+	<CAGjXF72PgdjBw03ERVYxj+atvsBXK0LeJ6O3zTZgi3-kv9BWsw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 01 23:22:39 2015
+Content-Type: text/plain; charset=UTF-8
+To: James Rouzier <rouzier@gmail.com>, Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 01 23:25:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3tJl-0000FN-8Q
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 23:22:37 +0100
+	id 1a3tMl-0005vL-Dd
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 23:25:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757051AbbLAWWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2015 17:22:33 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54803 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757039AbbLAWWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2015 17:22:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 296393015B;
-	Tue,  1 Dec 2015 17:22:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XCSO0N7MmmqOZTVaidv6ySjD3MA=; b=k8tJbj
-	MfNyhjlR3KpAWoCJNJ+HCRTyNuSOpwVhEVIXadkW35M0gDmo2Jg4fV7okRbYPWI2
-	0aJfunlsBD17CmwJ+ssxzaTLS4nb0kUr1ezAIi7KmmxdMxSN9L8o7y0ZyczVxGvv
-	sYD0Ymuh0kKa0YyeAGbbwm/NgQapA4pE+QtEg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bvSObmvLkB7rzpa3radg8hE5kJlGIWyK
-	/qYWvstYE6PrEhrE/fROhDl3Ppj9vsCWwpdCZwZEH9tuXSnY3snYq7VLXJUtUC43
-	QCrWMxuiLrS1/ZtlEV4UsF7+vx9g3H+69qNIbB+mleS5KiOmLH7q3DsFqT7una7n
-	gtmxkXeS4Lc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 205313015A;
-	Tue,  1 Dec 2015 17:22:31 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7CA9A30159;
-	Tue,  1 Dec 2015 17:22:30 -0500 (EST)
-In-Reply-To: <xmqqegf57sfe.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 01 Dec 2015 13:47:01 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 02DA6398-987A-11E5-98AC-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1757039AbbLAWZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2015 17:25:39 -0500
+Received: from mail-vk0-f50.google.com ([209.85.213.50]:36415 "EHLO
+	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755419AbbLAWZi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2015 17:25:38 -0500
+Received: by vkay187 with SMTP id y187so13664314vka.3
+        for <git@vger.kernel.org>; Tue, 01 Dec 2015 14:25:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:content-type;
+        bh=zgYasvXe9Rxk2xfU4KuyJwzbdMc85xcxmgLuTCyKlis=;
+        b=zWQcFbclw91roiLb4kNkp2GaN+8mUbboQBHbIgz+GObtsxuVhqbbe6enAD60HdXWeX
+         VySBIWXmLBWU5/VDk6gZetLJmCzfKt1n7oSg2+IVyRtPqboU/dKATi6tORC40c5WaZkC
+         J4t133ApMQ/4+0FNGCf2SeMNV5684MUqKYj/WVb3PYUQiq4NGoG3wGXbK0gR5VqYVa/l
+         fcXpUehQMpprGdlXy9/m1WBR61bF6UoysABDP3KfymB3OMUJEQ8wisHSWAfHwPfsRhWz
+         sgslZuhq7ahuqmGI7lXcncpjcEsSb0dkqe/xv3KU9ADNZQ658xHww2PC3WP00gwBakjH
+         SUkw==
+X-Received: by 10.31.134.3 with SMTP id i3mr60027335vkd.14.1449008738123; Tue,
+ 01 Dec 2015 14:25:38 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 1 Dec 2015 14:25:38 -0800 (PST)
+In-Reply-To: <CAGjXF72PgdjBw03ERVYxj+atvsBXK0LeJ6O3zTZgi3-kv9BWsw@mail.gmail.com>
+X-Google-Sender-Auth: vr1xfZ102X-V4kKBq5BZjSysjO8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281859>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Dec 1, 2015 at 4:36 PM, James Rouzier <rouzier@gmail.com> wrote:
+> Eric thank you for the feedback.
 
-> I do not think you would need a new option for this, by the way.
-> Just add a new syntax for the LFS of a refspec that cannot possibly
-> be confused with existing choices of what can come there (i.e. an
-> empty string to denote deletion, or a partial refname), e.g. come up
-> with an appropriate string in $sign and allow the following:
+[re-adding git@vger.kernel.org to recipient list since this response
+was likely intended to be public]
+
+> On Sun, Nov 29, 2015 at 9:24 PM, Eric Sunshine <sunshine@sunshineco.com>
+> wrote:
+>> On Thu, Nov 26, 2015 at 9:44 AM, James <rouzier@gmail.com> wrote:
+>> > From: James Rouzier <rouzier@gmail.com>
+>> >
+>> > Specify a file to read for exclude patterns.
+>> > ---
+>> > @@ -61,6 +61,9 @@ OPTIONS
+>> >         $GIT_DIR/info/exclude, also consider these patterns to be in the
+>> >         set of the ignore rules in effect.
+>> >
+>> > +--exclude-from=<file>::
+>> > +       Read exclude patterns from <file>; 1 per line.
+>>
+>> s/;/,/ maybe?
 >
->     $ git fetch ${sign}c78f7b5ed9dc
->     $ git fetch ${sign}c78f7b5ed9dc:refs/remotes/origin/frotz
+> I copied this from Documentation/git-ls-files.txt to try and keep the
+> documentation style consistent.
+> However if it is believed to be better I will change it here and also in a
+> separate patch for Documentation/git-ls-files.txt
+
+I don't feel strongly about it. Existing precedence may be a good
+argument in its favor.
+
+>> Also, why move the memset() all the way up here as opposed, say, to
+>> moving it just before the parse_options() invocation? Is it just to
+>> make it easier for the next person who comes along wanting to
+>> manipulate 'dir' early on (before git_config(), for instance)?
 >
-> to do the obvious thing, perhaps?  We could even allow some form of
-> extended SHA-1 expressions with some restrictions ...
+> Yes I want to make sure that the 'dir' is initialized before any usage.
+>
+>> > +               git clean -f --exclude-from=.git/clean-exclude &&
+>> > +               test -e 1 &&
+>> > +               test -e 2 &&
+>> > +               ! (test -e 3) &&
+>>
+>> I see that you copied this from the "git clean -e" test, but it's not
+>> obvious why parentheses are needed or wanted, and none of the other
+>> tests use parentheses when negating the return of 'test', thus they
+>> probably ought to be dropped.
+>
+> Ok will do
+>
+>> > +               test -e known
+>>
+>> Modern scripts would normally use test_path_is_file() and
+>> test_path_is_missing() instead of 'test -e', however, you are again
+>> matching existing style in this script, so 'test -e' may be
+>> reasonable.
+>
+> Since it is the standard I could just take the time to upgrade 'test -e' in
+> this test file to use newer standard.
 
-Note that the above example already uses a form of extended SHA-1
-expression, and I personally do not think we should support it in
-the very initial version.
+This test script is probably relatively quiescent right now, so such
+cleanup may be reasonable. Since it is conceptually distinct from the
+purpose of the current patch, you would want to do the cleanup as a
+preparatory patch, thus making this a 2-patch series.
 
-This is because the actual object name, if resolved on the remote
-side, will not be known by "fetch".  To support the "resolve on the
-remote end", we would need protocol extension to have the remote end
-tell the "fetch", i.e. "you asked to fetch HEAD@{4}, the exact
-object name for that is 030000f4c81729d2cb862a317e41a60a7111b98d";
-otherwise we cannot add a line to FETCH_HEAD and cannot update the
-RHS of the refspec.
-
-Instead, we should limit us to 40-hex object name and nothing else
-in the initial incarnation.
-
-i.e.
-
-     $ git fetch ${sign}c78f7b5ed9dc1c6edc8db06ac65860151d54fd07
-     $ git fetch ${sign}c78f7b5ed9dc1c6edc8db06ac65860151d54fd07:refs/remotes/origin/frotz
-
-If the remote end (which, as Peff pointed out earlier, already knows
-how to respond to a fetch request for an exact object when
-configured to do so) allows such a fetch to go through, "fetch" can
-(and will) update the ref named by the RHS of storing refspec with
-the current code, so there is no need to do anything special to
-support this.
-
-As to ${sign}, I was tempted to say an empty string might be
-sufficient (i.e. "do not use 40-hex as your branch name"), but it
-probably is a bad idea.  A single dot "." would be a possibility
-(i.e. a ref component cannot begin with a dot), but squating on it
-and saying "anything that begins with . must be followed by 40-hex
-(and in the future by an extended SHA-1)" would rob extensibility
-from us, so perhaps ".@c78f7b5ed9dc1c6edc8db06ac65860151d54fd07" or
-something?  That is leading "." denotes "this is an extended refspec"
-and the next character denotes what kind of extended refspec it is.
-For now we say that "@" denotes "exact object name is used instead
-of a(n abbreviated) refname".
+>> > +test_expect_success 'git clean -e --exclude-from' '
+>> > +       rm -fr repo &&
+>> > +       mkdir repo &&
+>> > +       (
+>> > +               cd repo &&
+>> > +               git init &&
+>> > +               touch known 1 2 3 &&
+>> > +               git add known &&
+>> > +               echo 1 >> .git/clean-exclude &&
+>> > +               git clean -f -e 2 --exclude-from=.git/clean-exclude &&
+>> > +               test -e 1 &&
+>> > +               test -e 2 &&
+>> > +               ! (test -e 3) &&
+>> > +               test -e known
+>> > +       )
+>> > +'
+>>
+>> Should a test be added which uses --exclude-from multiple times in the
+>> same git-clean invocation?
+>
+> That does make sense will do.
+>
+>> Would it make sense add a test checking the behavior when the file
+>> named by --exclude-from doesn't exist or is otherwise unusable as an
+>> exclusion file?
+>
+> At the moment the add_excludes_from_file function will exit the program if
+> there is a problem loading the exclude file.
+> I could add a test for that behavior. In case in the future this behavior is
+> changed.
