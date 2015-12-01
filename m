@@ -1,83 +1,120 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Git clone fails during pre-commit hook due to GIT_WORK_TREE=.
- (regression 2.5 -> 2.6)
-Date: Tue, 1 Dec 2015 18:59:50 +0100
-Message-ID: <CACsJy8A0WJYb7k6+JUOk9Y_hOMhinWP1T30GHG8fLqkmgMdbhQ@mail.gmail.com>
-References: <CA+dzEB=2LJXiLSTqyLw8AeHNwdQicwvEiMg=hVEX0-_s1bySpA@mail.gmail.com>
- <CA+dzEB=XiGVFg+AhuJM-jUCPmgZKCJHTp3sinrFt8yzXeC_63Q@mail.gmail.com>
- <CAGZ79kY=t9SeoXjgeJjfCMD2=6g3JJxDxcnY6JeJCpUqaN+eOA@mail.gmail.com>
- <CACsJy8C7xoV9faGpbn_5XGt-CmCj--fgXaCFR-ngs=-pWUnrCA@mail.gmail.com>
- <CACsJy8Ciuirgk9D_fbQ5pgo-8u1AnM+zBdKUHcz_HLfRqM9QxQ@mail.gmail.com> <xmqqwpsz6y5b.fsf@gitster.mtv.corp.google.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2] builtin/clone: support submodule groups
+Date: Tue, 1 Dec 2015 10:58:41 -0800
+Message-ID: <CAGZ79kaLKGtfXZpOEY9yR9viwCDfi_cxhwCWNjh5_2qtcdBtzQ@mail.gmail.com>
+References: <5656366D.4010508@web.de>
+	<1448497884-2624-1-git-send-email-sbeller@google.com>
+	<20151126045929.GA29107@tsaunders-iceball.corp.tor1.mozilla.com>
+	<CAGZ79kbUktcGNw4C123dxGoUsi=W+h4vUPWmBm2rExipUOcXqA@mail.gmail.com>
+	<565D43D1.9030207@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Anthony Sottile <asottile@umich.edu>,
+Cc: Trevor Saunders <tbsaunde@tbsaunde.org>,
+	Duy Nguyen <pclouds@gmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 01 19:00:52 2015
+	Jens Lehmann <Jens.Lehmann@web.de>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmail.com>,
+	Eric Sunshine <ericsunshine@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Dec 01 19:59:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3pEO-0005Dm-Hb
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 19:00:49 +0100
+	id 1a3q8g-0006wK-8T
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Dec 2015 19:58:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756687AbbLASAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2015 13:00:45 -0500
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:35276 "EHLO
-	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756632AbbLASAW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2015 13:00:22 -0500
-Received: by lfdl133 with SMTP id l133so19211630lfd.2
-        for <git@vger.kernel.org>; Tue, 01 Dec 2015 10:00:20 -0800 (PST)
+	id S1756805AbbLAS6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2015 13:58:54 -0500
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:34433 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756907AbbLAS6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2015 13:58:42 -0500
+Received: by ykfs79 with SMTP id s79so19042278ykf.1
+        for <git@vger.kernel.org>; Tue, 01 Dec 2015 10:58:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=i/lS4Zansxd3NisY+L5BN7j3T+7bSaOtpRbITlcvVYQ=;
-        b=sdU3GZzlVjSGtHLueecsgml42lKm0yAaNFwYUFNVuuseb+/kw7LqnP25Nmk0yKOPhY
-         EAGZMHVWShvXTQ80Q66mStdruSsJ1Su6p5VpykrK5E0uc0XhhWkY4gjsAyGXK7xI6klV
-         0TBc1qJcSITVnhShQxzsRWP/Gl5cLWoOFoivavD8MYKTMezUV/BuCPQ/Q3iPKD2OqDzE
-         vx2Qx/VofwxRf20hQXEw7j/bFHun5Q98MgXUNPQ2dqKbnw+RuAXttSs96Oqtn5YR0A4S
-         Rda1n8xPjtrShOMIWzHIDY2ulokpiBDCAL+HSHMO09c/dz2R4eLktQF3V6e1LKT6cvP5
-         BscA==
-X-Received: by 10.25.168.6 with SMTP id r6mr30094583lfe.94.1448992820551; Tue,
- 01 Dec 2015 10:00:20 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Tue, 1 Dec 2015 09:59:50 -0800 (PST)
-In-Reply-To: <xmqqwpsz6y5b.fsf@gitster.mtv.corp.google.com>
+        bh=YrtUYS7e6R0iTX8JWqTISOGrXgP2HK1WnSvhPvrKKwo=;
+        b=Ot39LidBKBwJQn/WLWQB8+cije2QSUZoYe4jkLLNHC0Pa2IQfo2qqW2xf8O5upTYda
+         /OucXeeUcxc6WYGra6MgP15BPu4rETY4O8rR/H6bBf4LNva/72/YAaT0aY5DEM4HJsj+
+         BFIsHL3v3BylbRlc30oc23rhpUgXEQuo+x0rPGjk/EpDZEfKnQSusLAoUx91h9F7v/ce
+         QYriuspC3GUJvxYafE3gGYSPOc/uIHiY/z6UB4Oz/0MM+w4s4ptFyuJLVjp7s7hqntBY
+         l82Q6yE6Ez9XKLtJW4UnklnfZqJwZr7Wr7FsyT5wv9GbjH2/SFrj7Muk9cLHxVCMFNdk
+         DXUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=YrtUYS7e6R0iTX8JWqTISOGrXgP2HK1WnSvhPvrKKwo=;
+        b=Lzz2h/41SlzkSJdpWgcj2YA8B2PJpbin7PQO1yOv7MDD7O2gkDynn6JNodG6DvHzMc
+         9qenRdBojD2RLnLFJH9G6Ih5OBpqmc5gJycn5CoUOWVgD05TrHw63dgcu+9ZpPo0niv6
+         E56bTd92n/eU2D6twIfQBu1ptVZtpR7vDpqCcDh90TS+IrUiCoPnumunsoJ09d0++rSB
+         +jrAcXavkIBQJqdIE2kpF/VqIC6+t2DO/7VJxTSe4gXj59NN7cRrYwmo+Cu3ZWXb5mo7
+         2PVW/GzJBXi+kDc2lNlvJ6pRStMRPbKEP+9z8SSuY2VPjx9nkkusm2o3ItnzwvCLMhpj
+         CrgA==
+X-Gm-Message-State: ALoCoQk/4W+S2VQp5MyCOlAEPegnFtGn5rieiWVmsXzJObsNTIXw9gbBHM17kOwTFpBkWtjegz1v
+X-Received: by 10.13.221.21 with SMTP id g21mr21088927ywe.320.1448996321820;
+ Tue, 01 Dec 2015 10:58:41 -0800 (PST)
+Received: by 10.37.215.16 with HTTP; Tue, 1 Dec 2015 10:58:41 -0800 (PST)
+In-Reply-To: <565D43D1.9030207@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281842>
 
-On Mon, Nov 30, 2015 at 9:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> I was wrong, GIT_WORK_TREE support was added in git-clone many years
->> ago in 20ccef4 (make git-clone GIT_WORK_TREE aware - 2007-07-06). So
->> my change accidentally triggers an (undocumented) feature. We could
->> add a hack to ignore GIT_WORK_TREE if GIT_DIR is set too, but I don't
->> think people will like it. I don't really like reverting d95138e
->> (setup: set env $GIT_WORK_TREE when work tree is set, like $GIT_DIR -
->> 2015-06-26) because another bug reappears.
->
->> So I'm out of options..
->
-> Perhaps d95138e can be reverted and then the bug it tried to fix can
-> be fixed in a different way somehow?
->
-> (I am not quite up to speed yet, so the above may turn out to be
-> infeasible--take it with a large grain of salt please).
+On Mon, Nov 30, 2015 at 10:53 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> I think we have to solve more basic issues for sparse checkouts first.
+> I'm using them with extra worktrees now and everything seems to be
+> working fine. But we need to get the UI right for the simple case (no
+> submodules, maybe not even extra worktrees) first: setting up patterns
+> before checkout etc. Having submodules in mind doesn't hurt, tough.
 
-That would mean we do not set $GIT_DIR too early. While it sounds
-good, it could be just another trap, and could be a lot of
-reorganizing setup code. I'm more tempted to revert 20ccef4, with
-deprecation warning for some releases, and a new git-clone option for
-the same functionality. But let me sleep on it (and everybody please
-give ideas if you have any). Meanwhile, maybe reverting d95138e should
-be done any way for now. Broken aliases are not as bad as broken
-hooks.
--- 
-Duy
+Well my thinking comes from the other side: "I want to improve submodule
+handling, but do I need to pay any attention to sparse checkout?", as Trevor
+pointed out, this may or may not be similar enough from a users perspective,
+that we want to have a similar/same UI there.
+
+>
+> I still consider sparse checkouts a local "cludge" (not technically
+> cludgy) in the sense that it helps you cater to some specific local
+> needs; not something whose config you'd want to transport as part of the
+> object store.
+
+Right, the submodule groups would be in the same boat. Each user would decide
+locally what groups they think is worth having. Unlike the sparse checkout
+the repository contains the groups however. As fair as I understand the sparse
+checkout you would specify to checkout /foo/* but not checkout /bar/*
+
+Now it is likely that some people will have very similar preferences for their
+sparse checkout, so it may make sense to add an abstraction layer in there,
+which can be done by groups. These groups could be defined using similar
+patterns as in .gitattributes or .gitignore in another .gitgroups file. Maybe
+the .gitattributes file could be reused.
+
+The definition of the groups would be in the repository, such that it is kept
+maintained and the individual user only needs to specify a few groups they're
+interested in.
+
+Currently you can already checkout submodules in a sparse fashion by just
+initializing and checking out those submodules you want. But I think this
+is not feasible if you have a huge amount of submodules, because you cannot
+apply file patterns like you could with a .git{attributes, ignore, groups}
+file. Because of the missing pattern, I'd want to add the groups.
+
+>
+> Minor implementation detail: Do we have any precedence of comma
+> separated values for config values? I'd say we rather use multiple
+> entries, don't we?
+
+Ok, I'll fix that.
+
+>
+> Michael
