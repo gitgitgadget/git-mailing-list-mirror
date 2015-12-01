@@ -1,144 +1,61 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC 02/10] ref-filter: introduce struct used_atom
-Date: Tue, 1 Dec 2015 18:00:57 -0500
-Message-ID: <CAPig+cRthCCK51XO2mju2VBe6Yvhy_Rp9nVvVUiWd9LuT9BxLQ@mail.gmail.com>
-References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
-	<1447271075-15364-3-git-send-email-Karthik.188@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Nov 2015, #04; Tue, 24)
+Date: Tue, 1 Dec 2015 18:10:44 -0500
+Message-ID: <20151201231044.GA13245@sigill.intra.peff.net>
+References: <20151125010722.GA23632@sigill.intra.peff.net>
+ <20151128154010.GA15706@vauxhall.crustytoothpaste.net>
+ <20151128163543.GA26759@sigill.intra.peff.net>
+ <20151128170932.GC15706@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 02 00:01:03 2015
+Content-Type: text/plain; charset=utf-8
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 02 00:11:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a3tuw-0007mx-KH
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Dec 2015 00:01:02 +0100
+	id 1a3u4T-0006cN-SY
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Dec 2015 00:10:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932213AbbLAXA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Dec 2015 18:00:59 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:35563 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932153AbbLAXA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Dec 2015 18:00:58 -0500
-Received: by vkha189 with SMTP id a189so14132476vkh.2
-        for <git@vger.kernel.org>; Tue, 01 Dec 2015 15:00:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=k4gysFkd4A747hUGUNIgLJ9qdLGBPO6pO9ijqPwcqHg=;
-        b=dpf+IiTlhe7Wrx6HSu4ZeowTfIt61+j2ILaBE4Uv5NMuWGizBK+U4NR6ZbaCnlSA8o
-         GNuaX1dWeUNQNmH6jxEZ9v023P7KZBVp6bowUQSprsgoPwBG0g0pPcuG/lSRvuTvVLCh
-         Mz+3nK+qIcXVsR4kAzSK89jSJY3QF7npuzuX3cT+zxUGwFz0cubq72aoLIJY097QIqOP
-         q8xIsJmSpbf5ApjEYD2vFCuwy+fo9ksLD7F9jVGyJpqfE4Yy4EpMe9Bfy/dqrOYZBX/s
-         1B6u/gW1820qS0k0UdtZuiRS0x3UGymfrZyzAoi0jnymyzKSeJsQx+/gJYqzVK5otkmK
-         hQgA==
-X-Received: by 10.31.52.82 with SMTP id b79mr60119180vka.84.1449010857216;
- Tue, 01 Dec 2015 15:00:57 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Tue, 1 Dec 2015 15:00:57 -0800 (PST)
-In-Reply-To: <1447271075-15364-3-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: wG81CFz42AVSwHL1cliF_Vm1IPM
+	id S932248AbbLAXKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Dec 2015 18:10:49 -0500
+Received: from cloud.peff.net ([50.56.180.127]:35985 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932126AbbLAXKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Dec 2015 18:10:47 -0500
+Received: (qmail 22363 invoked by uid 102); 1 Dec 2015 23:10:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Dec 2015 17:10:47 -0600
+Received: (qmail 23808 invoked by uid 107); 1 Dec 2015 23:10:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 01 Dec 2015 18:10:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Dec 2015 18:10:44 -0500
+Content-Disposition: inline
+In-Reply-To: <20151128170932.GC15706@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281861>
 
-On Wed, Nov 11, 2015 at 2:44 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Introduce the 'used_array' structure which would replace the existing
+On Sat, Nov 28, 2015 at 05:09:32PM +0000, brian m. carlson wrote:
 
-I guess you meant s/used_array/used_atom/ or something?
+> > I got a bunch of conflicts trying to merge it into 'next' and 'pu' and
+> > punted on it. I think the tricky bits are coming from
+> > dt/refs-backend-pre-vtable, where there was a lot of code movement.
+> 
+> I think as for merging into the latest pu, the thing you want to do in
+> refs.c is simply take what pu has.  You'll have to fix up one additional
+> struct object call site.  The same thing goes for builtin/merge.c and
+> builtin/branch.c, where the code I changed has since been eliminated.
+> 
+> I also noticed that merge-recursive.c and builtin/ff-refs.c needed some
+> minor fixups as well, but a quick compile will show you where those are.
+> I've included a diff for those two below.
 
-Also, s/which would/to/
+Thanks, this gave me an opportunity to play with Junio's merge-fix
+scripts. :) The result will be in the "pu" I push out shortly.
 
-> implementation of 'used_array' (which a list of atoms). This helps us
-
-s/which a/which is a/
-
-> parse atom's before hand and store required details into the
-
-s/atom's/atoms/
-s/before hand/beforehand/
-
-> 'used_array' for future usage.
->
-> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
-> ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> @@ -16,6 +16,23 @@
-> +/*
-> + * An atom is a valid field atom listed below, possibly prefixed with
-> + * a "*" to denote deref_tag().
-> + *
-> + * We parse given format string and sort specifiers, and make a list
-> + * of properties that we need to extract out of objects.  ref_array_item
-> + * structure will hold an array of values extracted that can be
-> + * indexed with the "atom number", which is an index into this
-> + * array.
-> + */
-> +static struct used_atom {
-> +       const char *str;
-
-This is really the atom's name, isn't it? If so, perhaps "name" would
-be a better field name.
-
-> +       cmp_type type;
-> +} *used_atom;
-> +static int used_atom_cnt, need_tagged, need_symref;
-> +static int need_color_reset_at_eol;
-> +
->  static struct {
->         const char *name;
->         cmp_type cmp_type;
-> @@ -93,21 +110,6 @@ struct atom_value {
->  };
->
->  /*
-> - * An atom is a valid field atom listed above, possibly prefixed with
-> - * a "*" to denote deref_tag().
-> - *
-> - * We parse given format string and sort specifiers, and make a list
-> - * of properties that we need to extract out of objects.  ref_array_item
-> - * structure will hold an array of values extracted that can be
-> - * indexed with the "atom number", which is an index into this
-> - * array.
-> - */
-> -static const char **used_atom;
-> -static cmp_type *used_atom_type;
-> -static int used_atom_cnt, need_tagged, need_symref;
-> -static int need_color_reset_at_eol;
-
-You're moving this block of declarations up above the valid_atom[]
-array because the previous patch added a new field named "parser" to
-valid_atom[] which references 'struct used_atom' added by this patch
-(2). I wonder if this movement should be done as a separate
-preparatory patch to make it easier to review since, as it stands, the
-reviewer has to read much more carefully to detect changes in the
-moved block.
-
-> -/*
->   * Used to parse format string and sort specifiers
->   */
->  int parse_ref_filter_atom(const char *atom, const char *ep)
-> @@ -787,7 +788,8 @@ static void populate_value(struct ref_array_item *ref)
->
->         /* Fill in specials first */
->         for (i = 0; i < used_atom_cnt; i++) {
-> -               const char *name = used_atom[i];
-> +               struct used_atom *atom = &used_atom[i];
-> +               const char *name = atom->str;
-
-Why not just:
-
-    const char *name = used_atom[i].str;
-
-?
-
->                 struct atom_value *v = &ref->value[i];
->                 int deref = 0;
->                 const char *refname;
+-Peff
