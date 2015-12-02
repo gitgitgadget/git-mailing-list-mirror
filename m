@@ -1,197 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Dec 2015, #01; Tue, 1)
-Date: Wed, 2 Dec 2015 17:31:14 -0500
-Message-ID: <20151202223114.GA20542@sigill.intra.peff.net>
-References: <20151202002450.GA27994@sigill.intra.peff.net>
- <xmqq4mg05wmj.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] sh-setup: make require_clean_work_tree() work on orphan branches
+Date: Wed, 02 Dec 2015 15:07:05 -0800
+Message-ID: <xmqqwpsw4fhi.fsf@gitster.mtv.corp.google.com>
+References: <1448376345-27339-1-git-send-email-szeder@ira.uka.de>
+	<1448376345-27339-2-git-send-email-szeder@ira.uka.de>
+	<20151124205036.GF7174@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 02 23:31:25 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 03 00:07:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4Fvm-0000na-TQ
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Dec 2015 23:31:23 +0100
+	id 1a4GUd-0003uS-Vd
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Dec 2015 00:07:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755727AbbLBWbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2015 17:31:18 -0500
-Received: from cloud.peff.net ([50.56.180.127]:36558 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754635AbbLBWbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2015 17:31:17 -0500
-Received: (qmail 15792 invoked by uid 102); 2 Dec 2015 22:31:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Dec 2015 16:31:17 -0600
-Received: (qmail 4187 invoked by uid 107); 2 Dec 2015 22:31:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 02 Dec 2015 17:31:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Dec 2015 17:31:14 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqq4mg05wmj.fsf@gitster.mtv.corp.google.com>
+	id S1757334AbbLBXHQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Dec 2015 18:07:16 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62479 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757003AbbLBXHN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Dec 2015 18:07:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 862D92F515;
+	Wed,  2 Dec 2015 18:07:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=AEPZwHWrt1XO
+	HlmQUkowEzx2tdw=; b=WvCkjqnnuqlPeRD/KoDl4o7DMDxjfrQgVdUs03v10vGy
+	Kv4Gl8pMrLg+1/0o9knqdQ9LqHMyyhlgFCg4udBpHFPUtqi8jt8BdMESvHFhyS/Z
+	kYsc6xx3fi27iDmbARdwCYFutJUsCwJPgHBAUFiN1j72XmiCOlwwil0jUh1JCGg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=eQBpQG
+	ZpMsG1qQ22nyTWK/hp4r5hQM5Kdy1n6teZbL5BIY701gCTCsBazBv3+PhNinsYYn
+	F/eA+DZKR8QwPTt5KEb6Y5uSI/px9A2BpsNd4NJdQkGekRy+LTBiCOiQiXtz82ym
+	DrjdZue/xLUXnyUpnJJSbkHwSDYiIlw3n80tg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7C2B82F514;
+	Wed,  2 Dec 2015 18:07:12 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7FC272F510;
+	Wed,  2 Dec 2015 18:07:06 -0500 (EST)
+In-Reply-To: <20151124205036.GF7174@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 24 Nov 2015 15:50:37 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 68400376-9949-11E5-8780-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281919>
 
-On Wed, Dec 02, 2015 at 02:11:32PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> I think I managed to get my working area (together with a handful of
-> new entries in the rerere database and a few merge-fix/ entries) in
-> sync with what you pushed out well enough that my automated
-> procedure would recreate the status of various branches you pushed
-> out exactly.
-> 
-> I haven't caught up with the changes in the component branches,
-> though, so it may take a few days until I start picking up new
-> topics from the list traffic.
+> On Tue, Nov 24, 2015 at 03:45:45PM +0100, SZEDER G=C3=A1bor wrote:
+>
+>> git-sh-setup's require_clean_work_tree() always exits with error on =
+an
+>> orphan branch, even when the index and worktree are both clean.  The
+>> reason is that require_clean_work_tree() starts off with verifying
+>> HEAD, to make sure that it can safely pass HEAD to 'git diff-index'
+>> later when it comes to checking the cleanness of the index, and erro=
+rs
+>> out finding the invalid HEAD of the orphan branch.
+>>=20
+>> There are scripts requiring a clean worktree that should work on an
+>> orphan branch as well, and those should be able to use this function
+>> instead of duplicating its functionality and nice error reporting in=
+ a
+>> way that handles orphan branches.
+>>=20
+>> Fixing this is easy: the index should be compared to the empty tree
+>> while on an orphan branch, and to HEAD otherwise.
+>>=20
+>> However, just fixing require_clean_work_tree() this way is also
+>> dangerous, because scripts must take care to work properly on orphan
+>> branches.  Currently a script calling require_clean_work_tree() woul=
+d
+>> exit on a clean orphan branch, but with the simple fix it would
+>> continue executing and who knows what the consequences might be if
+>> the script is not prepared for orphan branches.
+>
+> Hmm. I suspect this is not a big deal in practice. Lots of scripts
+> (including some of our own, through history) get the orphan case wron=
+g.
 
-My whole workspace is at https://github.com/peff/git, if fetching that
-directly is easier. I just noticed that my refspecs were not configured
-to push up refs/merge-fix. I've just fixed that and pushed again.
+The state of the repository this topic wants to deal with better
+would be the same as the state you would get after "tar xf ... &&
+git init && git add .", no?  In the "orphan" case, unlike such a
+plain vanilla "created a new repository" case where the index could
+be empty for a long time before the initial 'git add', the index is
+almost always populated, so most likely this change will not make
+much difference in that require_clean_work_tree() would stop
+operation until "rm --cached ." empties the index.
 
-I'll leave it that way for a few more days, but then will probably take
-it back to my usual contributor setup (i.e., just my topics and personal
-integration branches).
+And if the user did "rm --cached ." to empty the index, it is fine
+for us to happily consider all these files as untracked, even when
+HEAD is not pointing at an existing ref.  So it is likely that the
+added ORPHAN_OK knob would be unnecessary for "orphan" case.
 
-Let me know if there's anything else I can do to help with the handoff.
+However, I suspect that this would affect the users in the "I am a
+new user, I just initialized my first Git repository and I haven't
+done a 'git add' yet" status much more.  Do we have corner cases
+where everyday commands do not work well while on an unborn branch
+immediately after 'git init'?  That is the kind of bug that we need
+to protect users from, either by keeping the "No HEAD yet, no operation
+that requires clean working tree" logic, or by fixing such bugs.
 
-> > * bc/object-id (2015-11-20) 12 commits
-> [...]
-> 
-> Aside from niggles on titles of a handful of changes in this topic,
-> I have a bit of concern with this one and dt/refs-backend-pre-vtable
-> topic (marked as "Will merge to 'master' two cycles from now.",
-> which I am reading as "two cycles" means 2 x (8-10 week release
-> cycle), not "two integration cycles by the maintainer, aka two
-> issues of What's cooking report", which is typically less than a
-> week).
+> I'm not sure that require_clean_work_tree is necessarily the place to=
+ be
+> enforcing it, even though it happened to have done so historically.
 
-My "two cycles from now" meant "two integration cycles". I seemed to do
-only about two per week. You can take those all with a grain of salt. It
-was meant only as a note to myself that the topic seemed risky enough to
-allow extra cooking time in next.
+It is unclear to me what you meant by "it" in "enforcing it".
 
-Since your "Meta/cook -w" output shows dates of merges, I imagine you
-are in the habit of simply looking at those dates and saying "eh, this
-has been in next for 2 weeks and nobody has complained; that's enough
-cooking time".
-
-> The merge resolution in 'pu' discards what this topic did to refs.c
-> because much of the original goes away from there, but does it mean
-> (remember, I haven't caught up with the contents of the topics yet)
-> that the merge reverts part of what this topic did, and in an ideal
-> world, if the other one were more mature when this topic got
-> started, more use of "unsigned char[40]" would have been migrated to
-> "struct object_id" in new files the other one introduced?  Or
-> perhaps we would want to go the other way around, i.e. as this topic
-> conceptually is fairly straight-forward, merge this to 'next' and
-> then down to 'master' (which would not take two release cycles) and
-> then redo the other topic on top?
-
-I took the resolution proposed by brian, which was that the refs.c code
-went away. There was some evil-merge required to make the new
-refs/files-backend.c compile (in my refs/merge-fix/bc/object-id) for
-code that moved. I was surprised there wasn't more, but I think it's
-right. We dropped the _users_ of some sha1/object_id transition code
-(which is why it doesn't need more fixup to compile). We did not drop
-any actual function conversions (which might have been wrong but still
-compiled, if both the function signature and its callers all moved).
-
-As it's all part of an incremental conversion anyway, my feeling was
-that it was OK to move forward as long as it wasn't disturbing topics in
-flight (assuming we're agreed on the overall direction, which I think is
-the case).
-
-> > * mr/ff-refs (2015-11-28) 6 commits
-> [...]
-> 
-> This is another one that needs some evil-merge interaction with
-> bc/object-id, but I have a feeling that this is not such a good
-> addition to our workflow elements, so I am not worried too much
-> about it.  I'm inclined to eject this topic (and will welcome if
-> people come up with an alternative, perhaps based on the "let fetch
-> do so instead" approach discussed there).
-
-Right. There's another merge-fix for this.
-
-I explicitly put this after bc/object-id (requiring another merge-fix,
-rather than rolling it into the bc/object-id merge fix), because I
-expected bc/object-id to graduate, and this one to languish in pu or get
-re-rolled.
-
-I agree that ejecting is fine here.
-
-> > * ps/rebase-keep-empty (2015-11-24) 2 commits
-> >  - rebase: fix preserving commits with --keep-empty
-> >  - rebase: test broken behavior with --keep-empty
-> >
-> >  Keep duplicate commits via rebase --keep-empty.
-> >
-> >  I'm not sure if I agree with this interpretation of the "rebase
-> >  --keep-empty" documentation, but I haven't thought too hard about it.
-> >  Comments welcome.
-> 
-> "--keep-empty" has always been about keeping an originally empty
-> commit, not a commit that becomes empty because of rebasing
-> (i.e. what has already been applied to the updated base).  The
-> documentation, if it leads to any other interpretation, needs to be
-> fixed.
-> 
-> Besides, if "--keep-empty" were to mean "keep redundant ones that
-> are already in the updated base", the patch must do a lot more,
-> e.g. stop filtering with git-cherry patch equivalence.
-> 
-> I'm inclined to eject this topic.
-
-That was my thinking too (and I notice it didn't get any review from
-anybody else).
-
-> > * ls/test-must-fail-sigpipe (2015-11-28) 2 commits
-> >   (merged to 'next' on 2015-12-01 at d374686)
-> >  + add "ok=sigpipe" to test_must_fail and use it to fix flaky tests
-> >  + implement test_might_fail using a refactored test_must_fail
-> >
-> >  Fix some racy client/server tests by treating SIGPIPE the same as a
-> >  normal non-zero exit.
-> >
-> >  Will merge to 'master' two cycles from now.
-> 
-> Hmm, perhaps I misread what you meant by "two cycles", as this is
-> only the test suite and I cannot imagine we would want to be
-> ultra-safe to cook that for two release cycles, and you did mean two
-> issues of "What's cooking" report?
-
-Yes, the latter. Even though it is "only" the test suite, it gave us
-enough trouble that I did not want to go to next and then immediately to
-master in the next cycle (i.e., I wanted to give people time enough to
-complain if it breaks their "make test" in next).
-
-> > * dt/refs-backend-pre-vtable (2015-11-20) 10 commits
-> >   (merged to 'next' on 2015-11-24 at 8fd7293)
-> >  + refs: break out ref conflict checks
-> >  + files_log_ref_write: new function
-> >  + initdb: make safe_create_dir public
-> >  + refs: split filesystem-based refs code into a new file
-> >  + refs/refs-internal.h: new header file
-> >  + refname_is_safe(): improve docstring
-> >  + pack_if_possible_fn(): use ref_type() instead of is_per_worktree_ref()
-> >  + copy_msg(): rename to copy_reflog_msg()
-> >  + verify_refname_available(): new function
-> >  + verify_refname_available(): rename function
-> >
-> >  Code preparation for pluggable ref backends.
-> >
-> >  Will merge to 'master' two cycles from now.
-> 
-> ... that is, I'd very much prefer bc/object-id redone on top of an
-> updated codebase that already has dt/refs-backend-pre-vtable in it.
-
-I think that is OK to do, though I'm not sure the end result will be
-all that different.
-
--Peff
+> Still, it may be prudent to err on the side of caution. I'm on the
+> fence.
