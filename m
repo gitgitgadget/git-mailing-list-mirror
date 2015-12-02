@@ -1,95 +1,57 @@
-From: Taylor Braun-Jones <taylor@braun-jones.org>
-Subject: git-clone fails when current user is not in /etc/passwd
-Date: Wed, 2 Dec 2015 15:10:42 -0500
-Message-ID: <CAKfKJYsyHn7FUOu65AqbvjZD-wAyRScjqUL6kgGDCVzG1myZTQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Charles Bailey <charles@hashpling.org>
+Subject: [PATCH] Fix quoting of redirect in test script
+Date: Wed,  2 Dec 2015 20:50:07 +0000
+Message-ID: <1449089407-14921-1-git-send-email-charles@hashpling.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 02 21:11:57 2015
+X-From: git-owner@vger.kernel.org Wed Dec 02 21:50:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4Dkq-0007Z5-Ax
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Dec 2015 21:11:56 +0100
+	id 1a4EM3-0001x5-4j
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Dec 2015 21:50:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756642AbbLBULw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2015 15:11:52 -0500
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:33970 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755963AbbLBULE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2015 15:11:04 -0500
-Received: by qgeb1 with SMTP id b1so43510920qge.1
-        for <git@vger.kernel.org>; Wed, 02 Dec 2015 12:11:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=braun-jones.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=Ge27VTQ1ezrq4s5L1/ttwwwO+jUeNQLzJVvQKch+vf4=;
-        b=ObE4wFtC8O4cAtRfmImWhBnRATr1TO32yQWBX2L7v8r4L7xVmD5SxHVR9Up/vxpw9j
-         JISLrwdX2J7bFJ1S3oVGGUr6TlCctqVTR6y6oYay2B3jxEsu89eGwJJO5qdDvIfHLXtB
-         iLZd7UZPusGelacuHyG/aVtt9mnONwRxDXJ5k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=Ge27VTQ1ezrq4s5L1/ttwwwO+jUeNQLzJVvQKch+vf4=;
-        b=YWd5VddS2dlGcKy807KA/BCA1itgDnn6emOQcBILLHMjtS84gjerWFsJ9nXSqGcNLa
-         8s7DGfbKV3Up0vOH4ienpCau43DwTKP/GidWJufm2XfnIYpFPoIoGtfBHmFIeotj97M3
-         Ufn55x2Cwws641N2es1ICkM2geXq76vDV5n4CecT5GiOhdi7H2ByEHb6i+vFD/0i1Fvg
-         bD9tlNZTkCaK9SMxaHu541tbG0me7oId37yfJztP+A9lr3UDb5F0VSzerPwHEiQ5Mbwi
-         r2wN/Ug+qs+bJWkLy2LTmpnA9XEnDeCqL8gXAPL1R0sgEhp8D+uqSSpg0XjZnuzKIYEw
-         RVfg==
-X-Gm-Message-State: ALoCoQnpIC0dqXda9myjSAfdww8buA78RbAB5mYpxAnuQK/nNeWrodJJhuRKZxVrw1iA+i1MZiys
-X-Received: by 10.140.94.76 with SMTP id f70mr6392016qge.3.1449087063198;
-        Wed, 02 Dec 2015 12:11:03 -0800 (PST)
-Received: from mail-qk0-f181.google.com (mail-qk0-f181.google.com. [209.85.220.181])
-        by smtp.gmail.com with ESMTPSA id 31sm1872808qgy.13.2015.12.02.12.11.02
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 Dec 2015 12:11:02 -0800 (PST)
-Received: by qkao63 with SMTP id o63so21194054qka.2
-        for <git@vger.kernel.org>; Wed, 02 Dec 2015 12:11:02 -0800 (PST)
-X-Received: by 10.55.215.76 with SMTP id m73mr6257219qki.16.1449087062595;
- Wed, 02 Dec 2015 12:11:02 -0800 (PST)
-Received: by 10.55.128.198 with HTTP; Wed, 2 Dec 2015 12:10:42 -0800 (PST)
-X-Gmail-Original-Message-ID: <CAKfKJYsyHn7FUOu65AqbvjZD-wAyRScjqUL6kgGDCVzG1myZTQ@mail.gmail.com>
+	id S1754643AbbLBUuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2015 15:50:18 -0500
+Received: from host02.zombieandprude.com ([80.82.119.138]:52855 "EHLO
+	host02.zombieandprude.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751881AbbLBUuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2015 15:50:17 -0500
+Received: from hashpling.plus.com ([212.159.69.125]:43553)
+	by host02.zombieandprude.com with esmtpsa (TLS1.2:RSA_AES_128_CBC_SHA256:128)
+	(Exim 4.80)
+	(envelope-from <charles@hashpling.org>)
+	id 1a4ELt-0007Gf-SR; Wed, 02 Dec 2015 20:50:14 +0000
+X-Mailer: git-send-email 2.4.0.53.g8440f74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281915>
 
-My use case it running git clone inside a docker container with
-`docker run --user $(id -u):$(id -g) --volume /foo:/foo ...`. I want
-all /foo/* file creation/access from inside the Docker container to be
-done as the current uid/gid of the host system.
+From: Charles Bailey <cbailey32@bloomberg.net>
 
-Steps to reproduce:
+---
+ t/t3404-rebase-interactive.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-mkdir /tmp/docker-git
-cat > /tmp/docker-git/Dockerfile <<EOF
-FROM ubuntu
-RUN apt-get update && apt-get install -y git-core
-EOF
-docker build -t git /tmp/docker-git/
-docker run --user $(id -u):$(id -g) git git clone
-https://github.com/git/git.git /tmp/git
-# fatal: unable to look up current user in the passwd file: no such user
-echo $? # 128
+If you are using bash (at least 4.3.30 or 4.3.42) this actually causes
+an error due to an "ambiguous redirect" because there is a space in
+"trash directory".
 
-My current workaround is:
-
-cat >> /tmp/docker-git/Dockerfile <<EOF
-RUN git config --system user.name Docker && git config --system
-user.email docker@localhost
-EOF
-
-But I don't see why this should be necessary just to clone a repo. I
-run complex build jobs inside a docker container using this approach
-and git-clone is the first command to fail due to the lack of a passwd
-file entry for the current user. Some complain to stderr, but still
-succeed.
-
-Regards,
-Taylor
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 98eb49a..9067e02 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1234,7 +1234,7 @@ test_expect_success 'tabs and spaces are accepted in the todolist' '
+ 		# Turn single spaces into space/tab mix
+ 		sed "1s/ /	/g; 2s/ /  /g; 3s/ / 	/g" "$1"
+ 		printf "\n\t# comment\n #more\n\t # comment\n"
+-	) >$1.new
++	) >"$1.new"
+ 	mv "$1.new" "$1"
+ 	EOF
+ 	test_set_editor "$(pwd)/add-indent.sh" &&
+-- 
+2.4.0.53.g8440f74
