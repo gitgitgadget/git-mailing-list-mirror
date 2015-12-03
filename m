@@ -1,276 +1,270 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 02/16] refs: add methods for misc ref operations
-Date: Wed,  2 Dec 2015 19:35:07 -0500
-Message-ID: <1449102921-7707-3-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 05/16] refs: add methods for reflog
+Date: Wed,  2 Dec 2015 19:35:10 -0500
+Message-ID: <1449102921-7707-6-git-send-email-dturner@twopensource.com>
 References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>,
-	David Turner <dturner@twitter.com>
+Cc: David Turner <dturner@twopensource.com>,
+	Ronnie Sahlberg <rsahlberg@google.com>
 To: git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Thu Dec 03 01:37:04 2015
+X-From: git-owner@vger.kernel.org Thu Dec 03 01:36:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4HtP-0008GH-Ra
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Dec 2015 01:37:04 +0100
+	id 1a4HtJ-00084v-2O
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Dec 2015 01:36:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757857AbbLCAgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Dec 2015 19:36:10 -0500
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34547 "EHLO
-	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757056AbbLCAfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Dec 2015 19:35:39 -0500
-Received: by ioir85 with SMTP id r85so64745983ioi.1
-        for <git@vger.kernel.org>; Wed, 02 Dec 2015 16:35:38 -0800 (PST)
+	id S1757870AbbLCAgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Dec 2015 19:36:14 -0500
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:38777 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757180AbbLCAfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Dec 2015 19:35:44 -0500
+Received: by igbxm8 with SMTP id xm8so836703igb.1
+        for <git@vger.kernel.org>; Wed, 02 Dec 2015 16:35:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=twopensource-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+qZ1oXcSmWSOqnxo5snmEjnAgRbbSXGaOqEtwYypRig=;
-        b=CjeHghNJBLr/U4U2jJvteP70W125M0CSPWJBdo9oC8H7oztLv4zJym70pEWoa9JdVB
-         1mQdG2PqiyClzIBdf6hXIYYCHTubp4bpakuwErxXA46L5eV375Zvqk0Sdvr6TckPJfqS
-         TfyRjE9JSVhG/iP6En2nYSSq7pMfvDucIB7cr3SrhlJaerghPe7dh7LwRfLD16WAs+Dg
-         zmP2lMXS1EI+AG68oMJlWdx9jQlMSWUvOsYmctfNDnIIJLtwweTz3C7GxV6Xw3Psb0m4
-         ehKjGo5DfBeDMgcjjkT2GyQNo2KbNNNDnS1h9ZRYuRoGDXdbS3EMg5jffaBTGq/9gwdE
-         AN2A==
+        bh=agPBlopJNOVms/BnEJQBYhzvr86RNoocsrsmM/Zm67o=;
+        b=oLq7gOFUnkD7kVL8OQ1OEW2EKtFyOPKU5NicJ7YeciOO4hZi1Q06cxmzWjK7Pt328a
+         a2UtD6V8VlwXZbWHSv3XH7OgvuWFDG/pUCvRM3JgxzzXxfEQf2zF+QPUVMaD+aF34046
+         ZU1QGfcMi7MChbx1E7BKha23DzrUAYOwp9vqjU5ZJfZpkkIlzdSdMM9TFQvt2shIPgc+
+         8ZhF5WRkzttO7yW5LQ8jOLCq0gtlpNMZMWc/ev++YsYD+5u5XxybIXH4VPEknQMcD7hy
+         ImmaoHRZNPOf6rOxfUjUx4Jph0qjRexeXIxldx8RrGKP45C4wyJtSVZQKAdGvEURx0b2
+         IxAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+qZ1oXcSmWSOqnxo5snmEjnAgRbbSXGaOqEtwYypRig=;
-        b=LRrFNTdAWut/G5h+R6Ixd/rmWgXFw7Sj1rGUK9w5N2RKFX3VrYjJaBveexLO09ga6K
-         /jTodAT0+GZgG+tWnBbJNMsev2n66Np9+s4HKU02sK8q77nGIZiHc+xmtKqXdWmQXU9I
-         d6kflO0WEmoRAhc8r6gjJaBlOF1d5Pxu5o+oAolL+/MdjEAWOJtQgpFuzzM+K1kxPDgv
-         VpC2z2/LPJlyCpzo92T99IkswWLVX95eenwzj05HCPbpoauT00Io5e1Mby0gK8S2elDj
-         /06gCXL54T1YfDkIwcXTLq6QlVLhF2EaAA+63Ef6Fc4p7ikBx208NsIJ2jLwSgLKs1XJ
-         NRyA==
-X-Gm-Message-State: ALoCoQlKFC8O8ZcEbgWWUXR8MxpCPBUetAG1l1RRAlUaVnDXHJczBqtX3FAoLKS+0xaZ2eWAUHnQ
-X-Received: by 10.107.46.94 with SMTP id i91mr7137464ioo.67.1449102938331;
-        Wed, 02 Dec 2015 16:35:38 -0800 (PST)
+        bh=agPBlopJNOVms/BnEJQBYhzvr86RNoocsrsmM/Zm67o=;
+        b=nM3CkXGF3Xb4TKSVR1ueQmoCcGj9EwJxZlTg6Mz+8T86bIfQIS3yT8lP5DkchaAmEJ
+         c/vm8rZY749V1Ahda4iQ7HU4H9qdG/9hMfXh5NIg/9cyovdbLTJkAP4fp777G6JGFp2g
+         vddleRz9WxW3okq/XHEooXQ8wNBYD3Of3S9d2Xk2q7mhoU8woJyTrb2rn9n88Hk0aUhy
+         uv/jv3vXGwwi5PDOInYjHSWEu6UTtKC8DhGJq/mogaI7gIHZmmZJVXMjvRUHnw43AHUU
+         RUqKOyEAMG+Tp/TCR8bdeoqTa6hSOE22UU/dw3oLLrlPLfOCm/jP7qgtRl44ru7hMbGd
+         2DfQ==
+X-Gm-Message-State: ALoCoQk/mx+VJmTjhYfpSsyeYYbJfqqOABgCqznVlgP2EWDvRL9yxUjojHa+RT3lKxB1jcTk3Xds
+X-Received: by 10.50.225.38 with SMTP id rh6mr35303029igc.13.1449102943595;
+        Wed, 02 Dec 2015 16:35:43 -0800 (PST)
 Received: from ubuntu.twitter.corp? ([8.25.196.25])
-        by smtp.gmail.com with ESMTPSA id z15sm2108571iod.37.2015.12.02.16.35.36
+        by smtp.gmail.com with ESMTPSA id z15sm2108571iod.37.2015.12.02.16.35.41
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 Dec 2015 16:35:37 -0800 (PST)
+        Wed, 02 Dec 2015 16:35:42 -0800 (PST)
 X-Mailer: git-send-email 2.4.2.749.g0ed01d8-twtrsrc
 In-Reply-To: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281941>
 
-From: Ronnie Sahlberg <sahlberg@google.com>
+In the file-based backend, the reflog piggybacks on the ref lock.
+Since other backends won't have the same sort of ref lock, ref backends
+must also handle reflogs.
 
-Add ref backend methods for:
-resolve_ref_unsafe, verify_refname_available, pack_refs, peel_ref,
-create_symref, resolve_gitlink_ref.
-
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-Signed-off-by: David Turner <dturner@twitter.com>
+Signed-off-by: Ronnie Sahlberg <rsahlberg@google.com>
+Signed-off-by: David Turner <dturner@twopensource.com>
 ---
- builtin/init-db.c    |  1 +
- cache.h              |  7 +++++++
- refs.c               | 36 ++++++++++++++++++++++++++++++++++++
- refs/files-backend.c | 34 +++++++++++++++++++++++-----------
- refs/refs-internal.h | 23 +++++++++++++++++++++++
- 5 files changed, 90 insertions(+), 11 deletions(-)
+ refs.c               | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ refs/files-backend.c | 36 ++++++++++++++++++++++++------------
+ refs/refs-internal.h | 27 +++++++++++++++++++++++++++
+ 3 files changed, 97 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 07229d6..26e1cc3 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -8,6 +8,7 @@
- #include "builtin.h"
- #include "exec_cmd.h"
- #include "parse-options.h"
-+#include "refs.h"
- 
- #ifndef DEFAULT_GIT_TEMPLATE_DIR
- #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
-diff --git a/cache.h b/cache.h
-index 51c35c3..707455a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1111,6 +1111,13 @@ extern char *oid_to_hex(const struct object_id *oid);	/* same static buffer as s
- extern int interpret_branch_name(const char *str, int len, struct strbuf *);
- extern int get_sha1_mb(const char *str, unsigned char *sha1);
- 
-+/*
-+ * Return true iff abbrev_name is a possible abbreviation for
-+ * full_name according to the rules defined by ref_rev_parse_rules in
-+ * refs.c.
-+ */
-+extern int refname_match(const char *abbrev_name, const char *full_name);
-+
- extern int validate_headref(const char *ref);
- 
- extern int base_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
 diff --git a/refs.c b/refs.c
-index babba8a..9562325 100644
+index b9b0244..a8ed77d 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1114,3 +1114,39 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+@@ -1204,3 +1204,49 @@ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
  {
- 	return the_refs_backend->transaction_commit(transaction, err);
+ 	return the_refs_backend->for_each_replace_ref(fn, cb_data);
  }
 +
-+const char *resolve_ref_unsafe(const char *ref, int resolve_flags,
-+			       unsigned char *sha1, int *flags)
++int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
++				void *cb_data)
 +{
-+	return the_refs_backend->resolve_ref_unsafe(ref, resolve_flags, sha1,
-+						    flags);
++	return the_refs_backend->for_each_reflog_ent_reverse(refname, fn,
++							     cb_data);
 +}
 +
-+int verify_refname_available(const char *refname, struct string_list *extra,
-+			     struct string_list *skip, struct strbuf *err)
++int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn,
++			void *cb_data)
 +{
-+	return the_refs_backend->verify_refname_available(refname, extra, skip, err);
++	return the_refs_backend->for_each_reflog_ent(refname, fn, cb_data);
 +}
 +
-+int pack_refs(unsigned int flags)
++int for_each_reflog(each_ref_fn fn, void *cb_data)
 +{
-+	return the_refs_backend->pack_refs(flags);
++	return the_refs_backend->for_each_reflog(fn, cb_data);
 +}
 +
-+int peel_ref(const char *refname, unsigned char *sha1)
++int reflog_exists(const char *refname)
 +{
-+	return the_refs_backend->peel_ref(refname, sha1);
++	return the_refs_backend->reflog_exists(refname);
 +}
 +
-+int create_symref(const char *ref_target, const char *refs_heads_master,
-+		  const char *logmsg)
++int safe_create_reflog(const char *refname, int force_create,
++		       struct strbuf *err)
 +{
-+	return the_refs_backend->create_symref(ref_target, refs_heads_master,
-+					       logmsg);
++	return the_refs_backend->create_reflog(refname, force_create, err);
 +}
 +
-+int resolve_gitlink_ref(const char *path, const char *refname,
-+			unsigned char *sha1)
++int delete_reflog(const char *refname)
 +{
-+	return the_refs_backend->resolve_gitlink_ref(path, refname, sha1);
++	return the_refs_backend->delete_reflog(refname);
++}
++
++int reflog_expire(const char *refname, const unsigned char *sha1,
++		  unsigned int flags,
++		  reflog_expiry_prepare_fn prepare_fn,
++		  reflog_expiry_should_prune_fn should_prune_fn,
++		  reflog_expiry_cleanup_fn cleanup_fn,
++		  void *policy_cb_data)
++{
++	return the_refs_backend->reflog_expire(refname, sha1, flags,
++					       prepare_fn, should_prune_fn,
++					       cleanup_fn, policy_cb_data);
 +}
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index be34772..25fba43 100644
+index bde4892..1f76e34 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1333,7 +1333,8 @@ static int resolve_gitlink_ref_recursive(struct ref_cache *refs,
- 	return resolve_gitlink_ref_recursive(refs, p, sha1, recursion+1);
+@@ -2643,7 +2643,8 @@ static int log_ref_setup(const char *refname, struct strbuf *logfile, struct str
  }
  
--int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1)
-+static int files_resolve_gitlink_ref(const char *path, const char *refname,
-+				     unsigned char *sha1)
- {
- 	int len = strlen(path), retval;
- 	char *submodule;
-@@ -1565,8 +1566,10 @@ static const char *resolve_ref_1(const char *refname,
- 	}
- }
  
--const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
--			       unsigned char *sha1, int *flags)
-+static const char *files_resolve_ref_unsafe(const char *refname,
-+					    int resolve_flags,
-+					    unsigned char *sha1,
-+					    int *flags)
+-int safe_create_reflog(const char *refname, int force_create, struct strbuf *err)
++static int files_create_reflog(const char *refname, int force_create,
++			       struct strbuf *err)
  {
- 	static struct strbuf sb_refname = STRBUF_INIT;
- 	struct strbuf sb_contents = STRBUF_INIT;
-@@ -1615,7 +1618,7 @@ static enum peel_status peel_entry(struct ref_entry *entry, int repeel)
- 	return status;
- }
- 
--int peel_ref(const char *refname, unsigned char *sha1)
-+static int files_peel_ref(const char *refname, unsigned char *sha1)
- {
- 	int flag;
- 	unsigned char base[20];
-@@ -2246,7 +2249,7 @@ static void prune_refs(struct ref_to_prune *r)
- 	}
- }
- 
--int pack_refs(unsigned int flags)
-+static int files_pack_refs(unsigned int flags)
- {
- 	struct pack_refs_cb_data cbdata;
- 
-@@ -2437,10 +2440,10 @@ out:
- 	return ret;
- }
- 
--int verify_refname_available(const char *newname,
--			     struct string_list *extras,
--			     struct string_list *skip,
--			     struct strbuf *err)
-+static int files_verify_refname_available(const char *newname,
-+					  struct string_list *extras,
-+					  struct string_list *skip,
-+					  struct strbuf *err)
- {
- 	struct ref_dir *packed_refs = get_packed_refs(&ref_cache);
- 	struct ref_dir *loose_refs = get_loose_refs(&ref_cache);
-@@ -2811,8 +2814,9 @@ static int commit_ref_update(struct ref_lock *lock,
+ 	int ret;
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -2899,7 +2900,7 @@ static int files_create_symref(const char *ref_target,
  	return 0;
  }
  
--int create_symref(const char *ref_target, const char *refs_heads_master,
--		  const char *logmsg)
-+static int files_create_symref(const char *ref_target,
-+			       const char *refs_heads_master,
-+			       const char *logmsg)
+-int reflog_exists(const char *refname)
++static int files_reflog_exists(const char *refname)
  {
- 	char *lockpath = NULL;
- 	char ref[1000];
-@@ -3515,4 +3519,12 @@ struct ref_be refs_be_files = {
- 	NULL,
+ 	struct stat st;
+ 
+@@ -2907,7 +2908,7 @@ int reflog_exists(const char *refname)
+ 		S_ISREG(st.st_mode);
+ }
+ 
+-int delete_reflog(const char *refname)
++static int files_delete_reflog(const char *refname)
+ {
+ 	return remove_path(git_path("logs/%s", refname));
+ }
+@@ -2951,7 +2952,9 @@ static char *find_beginning_of_line(char *bob, char *scan)
+ 	return scan;
+ }
+ 
+-int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void *cb_data)
++static int files_for_each_reflog_ent_reverse(const char *refname,
++					     each_reflog_ent_fn fn,
++					     void *cb_data)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	FILE *logfp;
+@@ -3053,7 +3056,8 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void
+ 	return ret;
+ }
+ 
+-int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn, void *cb_data)
++static int files_for_each_reflog_ent(const char *refname,
++				     each_reflog_ent_fn fn, void *cb_data)
+ {
+ 	FILE *logfp;
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -3115,7 +3119,7 @@ static int do_for_each_reflog(struct strbuf *name, each_ref_fn fn, void *cb_data
+ 	return retval;
+ }
+ 
+-int for_each_reflog(each_ref_fn fn, void *cb_data)
++static int files_for_each_reflog(each_ref_fn fn, void *cb_data)
+ {
+ 	int retval;
+ 	struct strbuf name;
+@@ -3425,12 +3429,12 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+ 	return 0;
+ }
+ 
+-int reflog_expire(const char *refname, const unsigned char *sha1,
+-		 unsigned int flags,
+-		 reflog_expiry_prepare_fn prepare_fn,
+-		 reflog_expiry_should_prune_fn should_prune_fn,
+-		 reflog_expiry_cleanup_fn cleanup_fn,
+-		 void *policy_cb_data)
++static int files_reflog_expire(const char *refname, const unsigned char *sha1,
++			       unsigned int flags,
++			       reflog_expiry_prepare_fn prepare_fn,
++			       reflog_expiry_should_prune_fn should_prune_fn,
++			       reflog_expiry_cleanup_fn cleanup_fn,
++			       void *policy_cb_data)
+ {
+ 	static struct lock_file reflog_lock;
+ 	struct expire_reflog_cb cb;
+@@ -3535,6 +3539,14 @@ struct ref_be refs_be_files = {
  	"files",
  	files_transaction_commit,
+ 
++	files_for_each_reflog_ent,
++	files_for_each_reflog_ent_reverse,
++	files_for_each_reflog,
++	files_reflog_exists,
++	files_create_reflog,
++	files_delete_reflog,
++	files_reflog_expire,
 +
-+	files_pack_refs,
-+	files_peel_ref,
-+	files_create_symref,
-+
-+	files_resolve_ref_unsafe,
-+	files_verify_refname_available,
-+	files_resolve_gitlink_ref,
- };
+ 	files_pack_refs,
+ 	files_peel_ref,
+ 	files_create_symref,
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index f2c74f3..236bce9 100644
+index 433d0fe..798dee9 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -201,10 +201,33 @@ int rename_ref_available(const char *oldname, const char *newname);
+@@ -211,6 +211,25 @@ int rename_ref_available(const char *oldname, const char *newname);
  typedef int ref_transaction_commit_fn(struct ref_transaction *transaction,
  				      struct strbuf *err);
  
-+/* misc methods */
-+typedef int pack_refs_fn(unsigned int flags);
-+typedef int peel_ref_fn(const char *refname, unsigned char *sha1);
-+typedef int create_symref_fn(const char *ref_target,
-+			     const char *refs_heads_master,
-+			     const char *logmsg);
++/* reflog functions */
++typedef int for_each_reflog_ent_fn(const char *refname,
++				   each_reflog_ent_fn fn,
++				   void *cb_data);
++typedef int for_each_reflog_ent_reverse_fn(const char *refname,
++					   each_reflog_ent_fn fn,
++					   void *cb_data);
++typedef int for_each_reflog_fn(each_ref_fn fn, void *cb_data);
++typedef int reflog_exists_fn(const char *refname);
++typedef int create_reflog_fn(const char *refname, int force_create,
++			     struct strbuf *err);
++typedef int delete_reflog_fn(const char *refname);
++typedef int reflog_expire_fn(const char *refname, const unsigned char *sha1,
++			     unsigned int flags,
++			     reflog_expiry_prepare_fn prepare_fn,
++			     reflog_expiry_should_prune_fn should_prune_fn,
++			     reflog_expiry_cleanup_fn cleanup_fn,
++			     void *policy_cb_data);
 +
-+/* resolution methods */
-+typedef const char *resolve_ref_unsafe_fn(const char *ref,
-+					  int resolve_flags,
-+					  unsigned char *sha1, int *flags);
-+typedef int verify_refname_available_fn(const char *refname, struct string_list *extra, struct string_list *skip, struct strbuf *err);
-+typedef int resolve_gitlink_ref_fn(const char *path, const char *refname,
-+				   unsigned char *sha1);
-+
- struct ref_be {
- 	struct ref_be *next;
+ /* misc methods */
+ typedef int pack_refs_fn(unsigned int flags);
+ typedef int peel_ref_fn(const char *refname, unsigned char *sha1);
+@@ -249,6 +268,14 @@ struct ref_be {
  	const char *name;
  	ref_transaction_commit_fn *transaction_commit;
-+
-+	pack_refs_fn *pack_refs;
-+	peel_ref_fn *peel_ref;
-+	create_symref_fn *create_symref;
-+
-+	resolve_ref_unsafe_fn *resolve_ref_unsafe;
-+	verify_refname_available_fn *verify_refname_available;
-+	resolve_gitlink_ref_fn *resolve_gitlink_ref;
- };
  
- #endif /* REFS_REFS_INTERNAL_H */
++	for_each_reflog_ent_fn *for_each_reflog_ent;
++	for_each_reflog_ent_reverse_fn *for_each_reflog_ent_reverse;
++	for_each_reflog_fn *for_each_reflog;
++	reflog_exists_fn *reflog_exists;
++	create_reflog_fn *create_reflog;
++	delete_reflog_fn *delete_reflog;
++	reflog_expire_fn *reflog_expire;
++
+ 	pack_refs_fn *pack_refs;
+ 	peel_ref_fn *peel_ref;
+ 	create_symref_fn *create_symref;
 -- 
 2.4.2.749.g0ed01d8-twtrsrc
