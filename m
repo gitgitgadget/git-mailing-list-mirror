@@ -1,96 +1,108 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] document submodule sync --recursive
-Date: Thu, 3 Dec 2015 12:22:04 -0800
-Message-ID: <CAGZ79kaX4ZM++jhPcpU0T8eYDobME=iNtbH3KceWbQOOavpHnA@mail.gmail.com>
-References: <1449171207-27201-1-git-send-email-sbeller@google.com>
-	<xmqqh9jzthh3.fsf@gitster.mtv.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>, cederp@opera.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 03 21:22:11 2015
+Subject: [PATCHv2] document submodule sync --recursive
+Date: Thu,  3 Dec 2015 12:41:02 -0800
+Message-ID: <1449175262-3724-1-git-send-email-sbeller@google.com>
+References: <CAGZ79kaX4ZM++jhPcpU0T8eYDobME=iNtbH3KceWbQOOavpHnA@mail.gmail.com>
+Cc: cederp@opera.com, Stefan Beller <sbeller@google.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Dec 03 21:41:12 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4aOI-0003Nj-T9
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Dec 2015 21:22:11 +0100
+	id 1a4agi-0002GC-DI
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Dec 2015 21:41:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753576AbbLCUWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2015 15:22:06 -0500
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:35422 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753541AbbLCUWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2015 15:22:05 -0500
-Received: by ykba77 with SMTP id a77so99749464ykb.2
-        for <git@vger.kernel.org>; Thu, 03 Dec 2015 12:22:04 -0800 (PST)
+	id S1753598AbbLCUlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2015 15:41:08 -0500
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:35773 "EHLO
+	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753519AbbLCUlG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2015 15:41:06 -0500
+Received: by pfu207 with SMTP id 207so13885708pfu.2
+        for <git@vger.kernel.org>; Thu, 03 Dec 2015 12:41:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mGngws3I3f1m9tuY5mzWOgn/kwuK3jwK4JzMuqjOhJM=;
-        b=oa/N+UYrTJMosMLu/xZjXuphqlL4U+1folRoM1G72AEHDcbn7C+mhHUvB/m3w6YLLa
-         tiNUD8m88MmuMRe3eAIoyMRdOJ8hPKB2uhj8xhO8NZAdofgIJLRJdhfiQLNPi16GTEew
-         rEynu2YNxBv53RtBu6gP6iGyfwSsyn+RH6Z3torPN7G+eMyltNt3TCT9C9ommQanzFWV
-         thGEV6eF5JsndiO7VAxoLjb2aWHjR5ez37Y4TMgvAW66AevQrggyrIhHScyBvBPIU48m
-         91HtFbDsv++P7SSxJewGVpFhnpjkDt5my6eg9Wi2txvfH4i6pSmQVCXBK5Bt/UfoxUJ+
-         C9uA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=15POLbgE0+vzlCVeL/PKq3cHgfoeMyudjzL6XNP7utQ=;
+        b=RMbqgcV/otFU0xt8MWcqN6DiBNLHb3mcXMeIzv5VL090fUvVxqqxpafzgcFCluImvG
+         Yohbyq/dxl1DAw5FGTPGJp9/ZD0O8/NlkPO4rj5IhUwPCSthsy7K9A7LP0XP+2maJDRE
+         /uDlQTw0LTvs5WUKaXd9+ATGmvEQLzuQYU4lRBe+pmnI+j46QLTaPDO/5KniQdOHEKGK
+         IM02lg9s6z6vj6P+F5u3vjleCy9YPZioewZLz0/09QmWPNqTVNMCCCRrLl9nSlFHyc7i
+         t5sKfGKhamB6JGhLO+6QB3rKCl35ylgUnRy/gi/wWbFvd6rTaUvO1lj/XcXaceRy2ibu
+         L2XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=mGngws3I3f1m9tuY5mzWOgn/kwuK3jwK4JzMuqjOhJM=;
-        b=lcMVEBilhdDRKo3K+216bwDtVu2QxIKY3YHioHWzvhkvNmcnApdsReDWvdW8WvK3Qe
-         jFNAhQUUZGCTh8b3OiOkPzsWCUeP6P30+V0FvdhYM0iMVGpDn2SZPOeaFc1gcc7innf6
-         nR5G9JSW8zlduM/k0pw8GqgwOJw5LZkLKREy8QYflI7MytQJ7vWc4fGQJJKGCoX8GU+a
-         lCZ2ORO2frtXEi5EUT45Fy52NNsMlRTxpC2zmyYxYz25FbQkhWwGdGdOO4KOW+abq6zH
-         kj64OJY+/XyFAPfUcOtXQ4s0oBe/2f8gkHMEgvGPEmhoOn+Gu/sqYtxEcchFJGT3V80E
-         53KQ==
-X-Gm-Message-State: ALoCoQln6iGOwShTrY6vkn/gPK0PcM91LiEY8oSN//W17oC5Kls/tYdnLKEskBWtMnhu4TpI4Gm/
-X-Received: by 10.129.133.69 with SMTP id v66mr8661147ywf.68.1449174124242;
- Thu, 03 Dec 2015 12:22:04 -0800 (PST)
-Received: by 10.37.215.16 with HTTP; Thu, 3 Dec 2015 12:22:04 -0800 (PST)
-In-Reply-To: <xmqqh9jzthh3.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=15POLbgE0+vzlCVeL/PKq3cHgfoeMyudjzL6XNP7utQ=;
+        b=ftlhrBbDjeu6U/J4S+/m/3PdYn/Rq+pkWUq0DR1CqqX8foq0IIE9keqmxpB8GsaTP2
+         R+rOXtdSkhK+tUkdFGCl2sK20zfBB6ZJpaoeTC4qgQLVVvs0W0BMbYxLU96tkF7m/xv0
+         x1pS8+LrUqz91fjbMkza14ZoNSG+OdR1WcT+pw/7KRy43ZeOurYBs87fkDfX7ajEyrTR
+         cHZmfSlJuZZnpgfBDdNlyQWpLuk0QbO8vywiLw/GrJJo4RhYIFctMuLH/0YEdlU+CAwN
+         v1mplq4Y5VvO7VzLFp5NiyKwggtPSheI+AZgp1RT3B1chbFs30ZqPrVul9EwZ6azLw+s
+         0KTw==
+X-Gm-Message-State: ALoCoQm0e15ojUJ2H0a4A2OM3igjTQ23oD3p+7r5z0jqUBnNUPCfcsfXAz17ePoSUTTG2xNh/jKm
+X-Received: by 10.98.18.130 with SMTP id 2mr15972465pfs.114.1449175266450;
+        Thu, 03 Dec 2015 12:41:06 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:29b2:2f9f:f400:babe])
+        by smtp.gmail.com with ESMTPSA id u76sm12457183pfa.88.2015.12.03.12.41.05
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 03 Dec 2015 12:41:05 -0800 (PST)
+X-Mailer: git-send-email 2.6.1.255.gcc3df29.dirty
+In-Reply-To: <CAGZ79kaX4ZM++jhPcpU0T8eYDobME=iNtbH3KceWbQOOavpHnA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281969>
 
-On Thu, Dec 3, 2015 at 12:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Tested-by: Per Cederqvist <cederp@opera.com>
->
-> Isn't this Reported-by? (genuine question; I haven't caught up with
-> my inbox backlog and do not claim having seen everything Per wrote
-> to this list).
+The git-submodule(1) is inconsistent. In the synopsis, it says:
 
-Per wrote he tested `git submodule sync --recursive` with 2.6.3,
-so yeah the tested refers to the underlying command, not this patch.
-So Reported-by is better here.
+       git submodule [--quiet] sync [--recursive] [--] [<path>...]
 
->
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>
->>  This applies on origin/master.
->
-> Thanks.  Should it go to maintenance track (iow, was the feature
-> that wasn't documented already in maint)?
+The description of the sync does not mention --recursive, and the
+description of --recursive says that it is only available for foreach,
+update and status.
 
-It was introduced via
-(82f49f294c,  Teach --recursive to submodule sync, 2012-10-26)
-so I guess maint is fine, too
+The option was introduced (82f49f294c, Teach --recursive to submodule
+sync, 2012-10-26) a while ago, so let's document it, too.
 
->> @@ -237,6 +237,9 @@ sync::
->>  +
->>  "git submodule sync" synchronizes all submodules while
->>  "git submodule sync \-- A" synchronizes submodule "A" only.
->> ++
->> +If `--recursive` is specified, this command will recurse into the
->> +registered submodules, and update any nested submodules within.
+Reported-by: Per Cederqvist <cederp@opera.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-I should have paid more attention here and s/update/sync/.
+ This applies on either origin/master or origin/maint.
+ 
+ Thanks,
+ Stefan
+ 
+ Documentation/git-submodule.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-I'll prepare a resend.
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index f17687e..1572f05 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -237,6 +237,9 @@ sync::
+ +
+ "git submodule sync" synchronizes all submodules while
+ "git submodule sync \-- A" synchronizes submodule "A" only.
+++
++If `--recursive` is specified, this command will recurse into the
++registered submodules, and sync any nested submodules within.
+ 
+ OPTIONS
+ -------
+@@ -364,7 +367,7 @@ the submodule itself.
+ for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
+ 
+ --recursive::
+-	This option is only valid for foreach, update and status commands.
++	This option is only valid for foreach, update, status and sync commands.
+ 	Traverse submodules recursively. The operation is performed not
+ 	only in the submodules of the current repo, but also
+ 	in any nested submodules inside those submodules (and so on).
+-- 
+2.6.1.255.gcc3df29.dirty
