@@ -1,224 +1,203 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH/RFC 06/10] strbuf: introduce strbuf_split_str_without_term()
-Date: Thu, 3 Dec 2015 23:42:40 +0530
-Message-ID: <CAOLa=ZQz-NE3uKtU72NUyR23QaJE4jf=UqiMptnM+hOmAE9GRw@mail.gmail.com>
-References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
- <1447271075-15364-7-git-send-email-Karthik.188@gmail.com> <CAPig+cSxWybzunt_KWT+prZ=wXMi1wqM44jQZbp1pcz+spJW6A@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 2/2] setup.c: re-fix d95138e (setup: set env $GIT_WORK_TREE when ..
+Date: Thu,  3 Dec 2015 19:17:56 +0100
+Message-ID: <1449166676-30845-2-git-send-email-pclouds@gmail.com>
+References: <xmqqh9k06all.fsf@gitster.mtv.corp.google.com>
+ <1449166676-30845-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Dec 03 19:13:18 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, sbeller@google.com,
+	asottile@umich.edu,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 03 19:18:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4YNY-00014k-G2
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Dec 2015 19:13:17 +0100
+	id 1a4YSd-0001fd-Pd
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Dec 2015 19:18:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751926AbbLCSNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2015 13:13:11 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:34707 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751763AbbLCSNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Dec 2015 13:13:10 -0500
-Received: by vkbs1 with SMTP id s1so50626153vkb.1
-        for <git@vger.kernel.org>; Thu, 03 Dec 2015 10:13:09 -0800 (PST)
+	id S1752676AbbLCSS2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Dec 2015 13:18:28 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:35052 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752669AbbLCSSY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2015 13:18:24 -0500
+Received: by wmuu63 with SMTP id u63so32681849wmu.0
+        for <git@vger.kernel.org>; Thu, 03 Dec 2015 10:18:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Qycxk3OU9zEGL9KH0FDzQw0fairFSIGc+6ugz4/iep4=;
-        b=OxqAAeVpuZuOj6ZB2KiZVR37SYbgGHE7Rd1xLMD/Iof5HYevKM4t+6RgWduZcl79SX
-         BgsT95obVWDenvJ4Svsp+UogQIO8K6C5bVsNY/LuK9Ykg50lFSvy4SN9OZw8sDQqBX+8
-         CDyXIJaelcPQ5If5NPOiLe38X4Riyiicr6+vUgpWcatIduNcXHtGPHS18ujfmQ6vcllU
-         egepj1T0KMVWiUnO6h7622jSU0AeOP3xnBxGSqAtw/MUmgz+c9UpBLE7dXCQAQBLEBr9
-         CXKsBtYlpGcLiEdduRTyNYlp81KQXBP6UK/ujpM4A5/HP36maiazsT+kph227eKUSbQk
-         4QMw==
-X-Received: by 10.31.155.23 with SMTP id d23mr5930786vke.146.1449166389484;
- Thu, 03 Dec 2015 10:13:09 -0800 (PST)
-Received: by 10.103.97.199 with HTTP; Thu, 3 Dec 2015 10:12:40 -0800 (PST)
-In-Reply-To: <CAPig+cSxWybzunt_KWT+prZ=wXMi1wqM44jQZbp1pcz+spJW6A@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=RPBvR4V868uni1XUZP/hov59ecoHZpESz2yVIBt+z18=;
+        b=fOA7HEcWvJYti4yQWFzhOgQmJcaPwmUvTjthkcSIF6x1CX5xkP8jgJspvsfFq04+22
+         qyWNbXj1srPlU3PaAr/2+fc7tvK+LAdJrkbqEZ0ri5U+SKTXr/GUq3s0X3WJhjmAbK1r
+         s/k4dXTAtz15PX2E1uWH8oRIs/jdfdOV0CU5eXHGQ4zHVbCLPTPW1c2+Xd8V1cgs2i0b
+         GJGHv+Fu0qFMoQIEMJtsTMel4lqNdcI0GvwRL52UFUebd8QqslNLXCTZH5Og9Ve+JO7L
+         DacM3VGkz6xg4dNm6tLvshrSGTN9xGXKr697UWSZHL8rcms+gWjvAe1dxJh8mMBRqScu
+         rhYA==
+X-Received: by 10.194.87.99 with SMTP id w3mr12893509wjz.76.1449166703304;
+        Thu, 03 Dec 2015 10:18:23 -0800 (PST)
+Received: from duynguyen-vnpc.dek-tpc.internal.homenet.telecomitalia.it (host171-164-static.60-79-b.business.telecomitalia.it. [79.60.164.171])
+        by smtp.gmail.com with ESMTPSA id e83sm52672wmc.23.2015.12.03.10.18.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 03 Dec 2015 10:18:21 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.513.g477eb31
+In-Reply-To: <1449166676-30845-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281960>
 
-On Wed, Dec 2, 2015 at 1:34 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Nov 11, 2015 at 2:44 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> The current implementation of 'strbuf_split_buf()' includes the
->> terminator at the end of each strbuf post splitting. Include an option
->
-> s/Include an/Add an/
->
->> wherein we can drop the terminator if required. In this context
->
-> s/required/desired/
->
+Commit d95138e [1] fixes a .git file problem by setting GIT_WORK_TREE
+whenever GIT_DIR is set. It sounded harmless because we handle
+GIT_DIR and GIT_WORK_TREE side by side for most commands, with two
+exceptions: git-init and git-clone.
 
-will change.
+"git clone" is not happy with d95138e. This command ignores GIT_DIR
+but respects GIT_WORK_TREE [2] [3] which means it used to run fine
+from a hook, where GIT_DIR was set but GIT_WORK_TREE was not (*). With
+d95138e, GIT_WORK_TREE is set all the time and git-clone interprets
+that as "I give you order to put the worktree here", usually against
+the user's intention.
 
->> introduce a wrapper function 'strbuf_split_str_without_term()' which
->> splits a given string into strbufs without including the terminator.
->>
->> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
->> ---
->> diff --git a/ref-filter.c b/ref-filter.c
->> @@ -892,14 +892,11 @@ static void populate_value(struct ref_array_item *ref)
->>                          * TODO: Implement a function similar to strbuf_split_str()
->>                          * which would omit the separator from the end of each value.
->>                          */
->> -                       s = to_free = strbuf_split_str(valp, ',', 0);
->> +                       s = to_free = strbuf_split_str_without_term(valp, ',', 0);
->>
->>                         align->position = ALIGN_LEFT;
->>
->>                         while (*s) {
->> -                               /*  Strip trailing comma */
->> -                               if (s[1])
->> -                                       strbuf_setlen(s[0], s[0]->len - 1);
->
-> I'd prefer to see this ref-filter.c change split out as a separate
-> patch so as not to pollute the otherwise single-purpose change
-> introduced by this patch (i.e. capability to omit the terminator).
->
-> Also, it might make sense to move this patch to the head of the
-> series, since it's conceptually distinct from the rest of the patches,
-> and could conceivably prove useful on its own, regardless of how the
-> rest of the series fares.
->
+The solution in d95138e is reverted in this commit. Instead we reuse th=
+e
+solution from c056261 [4]. c056261 fixes another setup-messed-up-by-ali=
+as
+by saving and restoring env for git-clone and git-init. Now I conclude
+that setup-messed-by-alias is always evil. So the env restoration is
+done for _all_ commands  whenever aliases are involved. It fixes what
+d95138e tries to fix. And it does not upset git-clone-inside-hooks.
 
-I guess it makes sense to split this into two separate patches. I'll do that and
-push it to the top of the series.
+The test from d95138e remains to verify it's not broken by this. A new
+test is added to make sure git-clone-inside-hooks remains happy.
 
->>                                 if (!strtoul_ui(s[0]->buf, 10, (unsigned int *)&width))
->>                                         ;
->>                                 else if (!strcmp(s[0]->buf, "left"))
->> diff --git a/strbuf.c b/strbuf.c
->> @@ -115,7 +115,7 @@ void strbuf_tolower(struct strbuf *sb)
->>  }
->>
->>  struct strbuf **strbuf_split_buf(const char *str, size_t slen,
->> -                                int terminator, int max)
->> +                                int terminator, int max, int with_term)
->
-> "with_term" might undesirably be interpreted as meaning "use this
-> particular term". Perhaps a different name, such as "include_term",
-> "drop_term", or "omit_term" would be a bit less ambiguous. (I think I
-> prefer "omit_term".)
->
+In future, perhaps we should look up aliases in a separate process
+(provided that Windows folks are happy with one extra process). It'll b=
+e
+cleanest.
 
-True. I too prefer "omit_term" from what you mentioned I'll stick to that.
+(*) GIT_WORK_TREE was not set _most of the time_. In some cases
+    GIT_WORK_TREE is set and git-clone will behave differently. The
+    use of GIT_WORK_TREE to direct git-clone to put work tree
+    elsewhere looks like a mistake because it causes surprises this
+    way. But that's a separate story.
 
->>  {
->>         struct strbuf **ret = NULL;
->>         size_t nr = 0, alloc = 0;
->> @@ -123,18 +123,27 @@ struct strbuf **strbuf_split_buf(const char *str, size_t slen,
->>
->>         while (slen) {
->>                 int len = slen;
->> +               int term = with_term;
->
-> "term" is not a great variable name, and is easily confused with the
-> existing "terminator" input argument. This is really being used as a
-> length adjustment, so perhaps a name such as 'term_adjust' or
-> 'len_adjust' or something better would be preferable.
+[1] d95138e (setup: set env $GIT_WORK_TREE when work tree is set, like
+             $GIT_DIR - 2015-06-26)
+[2] 2beebd2 (clone: create intermediate directories of destination
+             repo - 2008-06-25)
+[3] 20ccef4 (make git-clone GIT_WORK_TREE aware - 2007-07-06)
+[4] c056261 (git potty: restore environments after alias expansion -
+             2014-06-08)
 
-'len_adjust' seems better, will change.
+Reported-by: Anthony Sottile <asottile@umich.edu>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ This may be a brilliant fix, or another invitation for regressions.
 
->
-> Also, since the value of 'with_term' never changes, then 'term' will
-> have the same value each time through the loop, thus you could
-> (should) hoist the declaration and initialization of 'term' outside of
-> the loop.
->
+ environment.c    |  2 --
+ git.c            |  9 ++++-----
+ t/t5601-clone.sh | 23 +++++++++++++++++++++++
+ 3 files changed, 27 insertions(+), 7 deletions(-)
 
-True, will move it out of the loop.
-
-> Due to the way you're using this variable ('term'), you want its value
-> always to be 0 or 1 but you don't do anything to ensure that. What if
-> the user passes in 42 rather than 0 or 1? That would mess up your
-> (below) calculations. Worse, what if the user passes in -42? That
-> would be particularly alarming. To turn this into a boolean value (0
-> or 1), do this instead:
->
->     int term = !!with_term;
-
-Makes sense, will change.
-
->
->>                 if (max <= 0 || nr + 1 < max) {
->>                         const char *end = memchr(str, terminator, slen);
->>                         if (end)
->> -                               len = end - str + 1;
->> +                               len = end - str + term;
->> +                       else
->> +                               /*  When no terminator present, we must add the last character */
->> +                               term = 1;
->>                 }
->>                 t = xmalloc(sizeof(struct strbuf));
->>                 strbuf_init(t, len);
->>                 strbuf_add(t, str, len);
->>                 ALLOC_GROW(ret, nr + 2, alloc);
->>                 ret[nr++] = t;
->> -               str += len;
->> -               slen -= len;
->> +               if (!term) {
->> +                       str += len + 1;
->> +                       slen -= len + 1;
->> +               } else {
->> +                       str += len;
->> +                       slen -= len;
->> +               }
->
-> This new logic is complex and confusing, thus difficult to review for
-> correctness. Rather than messing with 'len' and the existing logic,
-> how about instead, just adjusting the amount you store in the strbuf?
-> That is, instead of all the above changes, you might be able to get by
-> with one little change, something like this (untested):
->
->     - strbuf_add(t, str, len);
->     + strbuf_add(t, str, len - !!end * !!with_term);
->
-
-That seems about right, this should be easier to understand.
-
->>         }
->>         ALLOC_GROW(ret, nr + 1, alloc); /* In case string was empty */
->>         ret[nr] = NULL;
->> diff --git a/strbuf.h b/strbuf.h
->> @@ -465,19 +465,25 @@ static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
->>   * For lighter-weight alternatives, see string_list_split() and
->>   * string_list_split_in_place().
->>   */
->> -extern struct strbuf **strbuf_split_buf(const char *, size_t,
->> -                                       int terminator, int max);
->> +extern struct strbuf **strbuf_split_buf(const char *str, size_t slen,
->> +                                       int terminator, int max, int with_term);
->
-> You also need to update the comment block above this declaration since
-> it still says that each substring includes the terminator. It also
-> fails to mention the new 'with_term' argument added by this patch.
->
-
-Will do :)
-
->> +static inline struct strbuf **strbuf_split_str_without_term(const char *str,
->> +                                                           int terminator, int max)
->
-> This is an uncomfortably long function name. Unfortunately, short and
-> sweet strbuf_split() is already taken. Perhaps
-> strbuf_split_str_drop_term()? strbuf_split_str_omit_term()?
-> strbuf_split_str_no_term()? strbuf_split_noterm()?
->
-
-strbuf_split_str_omit_term() would be nice keeping it consistent with the
-variable name omit_term.
-
--- 
-Regards,
-Karthik Nayak
+diff --git a/environment.c b/environment.c
+index 2da7fe2..1cc4aab 100644
+--- a/environment.c
++++ b/environment.c
+@@ -235,8 +235,6 @@ void set_git_work_tree(const char *new_work_tree)
+ 	}
+ 	git_work_tree_initialized =3D 1;
+ 	work_tree =3D xstrdup(real_path(new_work_tree));
+-	if (setenv(GIT_WORK_TREE_ENVIRONMENT, work_tree, 1))
+-		die("could not set GIT_WORK_TREE to '%s'", work_tree);
+ }
+=20
+ const char *get_git_work_tree(void)
+diff --git a/git.c b/git.c
+index 6ce7043..e2f187d 100644
+--- a/git.c
++++ b/git.c
+@@ -308,7 +308,6 @@ static int handle_alias(int *argcp, const char ***a=
+rgv)
+  * RUN_SETUP for reading from the configuration file.
+  */
+ #define NEED_WORK_TREE		(1<<3)
+-#define NO_SETUP		(1<<4)
+=20
+ struct cmd_struct {
+ 	const char *cmd;
+@@ -390,7 +389,7 @@ static struct cmd_struct commands[] =3D {
+ 	{ "cherry", cmd_cherry, RUN_SETUP },
+ 	{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
+-	{ "clone", cmd_clone, NO_SETUP },
++	{ "clone", cmd_clone },
+ 	{ "column", cmd_column, RUN_SETUP_GENTLY },
+ 	{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+@@ -416,8 +415,8 @@ static struct cmd_struct commands[] =3D {
+ 	{ "hash-object", cmd_hash_object },
+ 	{ "help", cmd_help },
+ 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
+-	{ "init", cmd_init_db, NO_SETUP },
+-	{ "init-db", cmd_init_db, NO_SETUP },
++	{ "init", cmd_init_db },
++	{ "init-db", cmd_init_db },
+ 	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
+ 	{ "log", cmd_log, RUN_SETUP },
+ 	{ "ls-files", cmd_ls_files, RUN_SETUP },
+@@ -531,7 +530,7 @@ static void handle_builtin(int argc, const char **a=
+rgv)
+=20
+ 	builtin =3D get_builtin(cmd);
+ 	if (builtin) {
+-		if (saved_env_before_alias && (builtin->option & NO_SETUP))
++		if (saved_env_before_alias)
+ 			restore_env();
+ 		else
+ 			exit(run_builtin(builtin, argc, argv));
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 9b34f3c..31b4658 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -65,6 +65,29 @@ test_expect_success 'clone respects GIT_WORK_TREE' '
+=20
+ '
+=20
++test_expect_success 'clone from hooks' '
++
++	test_create_repo r0 &&
++	cd r0 &&
++	test_commit initial &&
++	cd .. &&
++	git init r1 &&
++	cd r1 &&
++	cat >.git/hooks/pre-commit <<-\EOF &&
++	#!/bin/sh
++	git clone ../r0 ../r2
++	exit 1
++	EOF
++	chmod u+x .git/hooks/pre-commit &&
++	: >file &&
++	git add file &&
++	test_must_fail git commit -m invoke-hook &&
++	cd .. &&
++	test_cmp r0/.git/HEAD r2/.git/HEAD &&
++	test_cmp r0/initial.t r2/initial.t
++
++'
++
+ test_expect_success 'clone creates intermediate directories' '
+=20
+ 	git clone src long/path/to/dst &&
+--=20
+2.2.0.513.g477eb31
