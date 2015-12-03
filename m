@@ -1,147 +1,101 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] revision.c: fix possible null pointer access
-Date: Thu, 3 Dec 2015 21:34:32 -0000
-Organization: OPDS
-Message-ID: <46311B14CC814F54AC34764F2520947A@PhilipOakley>
-References: <1449171136-31566-1-git-send-email-stefan.naewe@gmail.com> <xmqqlh9bthyb.fsf@gitster.mtv.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>,
-	"Stefan Beller" <stefanbeller@googlemail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Stefan Naewe" <stefan.naewe@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 03 22:44:42 2015
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH v2] send-email: enable SSL level 1 debug output
+Date: Thu,  3 Dec 2015 21:47:18 +0000
+Message-ID: <26c6006ad88146e0abfdfcaf99be686a4fb050c4.1449179138.git.john@keeping.me.uk>
+References: <a56a8d728ffeb6a6c2b0f7decd0485a1906b8f25.1448409432.git.john@keeping.me.uk>
+Cc: John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 03 22:47:39 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4bg8-0002GM-HK
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Dec 2015 22:44:40 +0100
+	id 1a4bj0-00084u-O5
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Dec 2015 22:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751633AbbLCVoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Dec 2015 16:44:23 -0500
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:56420 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750736AbbLCVoW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Dec 2015 16:44:22 -0500
-X-Greylist: delayed 588 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Dec 2015 16:44:21 EST
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2DyGACltGBWPC5BFlxeGQEBAg8BAQEBgwpTbodMrGRVAYYhhBYhhWcBAwEBgU9NAQEBAQEBBwEBAQFBP0EBAQMLAoNcBQEBAQEBAQEIAQEdER4BASELAgMFAgEDFQwlFAEECBIGBwMUBgESCAIBAgMBiAkDCgwJt1OFUw2ETwEBAQcCASCGVIR9glOFU4EVBY1iiH8BgSmEA4VVQ4NSFjODeo52EIdJgnQdgVY+NAEBAYFDgQ+DGgEBAQ
-X-IPAS-Result: A2DyGACltGBWPC5BFlxeGQEBAg8BAQEBgwpTbodMrGRVAYYhhBYhhWcBAwEBgU9NAQEBAQEBBwEBAQFBP0EBAQMLAoNcBQEBAQEBAQEIAQEdER4BASELAgMFAgEDFQwlFAEECBIGBwMUBgESCAIBAgMBiAkDCgwJt1OFUw2ETwEBAQcCASCGVIR9glOFU4EVBY1iiH8BgSmEA4VVQ4NSFjODeo52EIdJgnQdgVY+NAEBAYFDgQ+DGgEBAQ
-X-IronPort-AV: E=Sophos;i="5.20,378,1444690800"; 
-   d="scan'208";a="628954268"
-Received: from host-92-22-65-46.as13285.net (HELO PhilipOakley) ([92.22.65.46])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 03 Dec 2015 21:49:34 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752338AbbLCVre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Dec 2015 16:47:34 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:41308 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752284AbbLCVrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Dec 2015 16:47:33 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id C59C9CDA548;
+	Thu,  3 Dec 2015 21:47:32 +0000 (GMT)
+X-Quarantine-ID: <BujqwBBwNE+5>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1.001
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.001 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_40=-0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id BujqwBBwNE+5; Thu,  3 Dec 2015 21:47:32 +0000 (GMT)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id D093FCDA586;
+	Thu,  3 Dec 2015 21:47:26 +0000 (GMT)
+X-Mailer: git-send-email 2.6.3.462.gbe2c914
+In-Reply-To: <a56a8d728ffeb6a6c2b0f7decd0485a1906b8f25.1448409432.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281975>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Stefan Naewe <stefan.naewe@gmail.com> writes:
->
->> Two functions dereference a tree pointer before checking
->
-> Reading them a bit carefully, a reader would notice that they
-> actually do not dereference the pointer at all.  It just computes
-> another pointer and that is done by adding the offset of object
-> member in the tree struct.
+If a server's certificate isn't accepted by send-email, the output is:
 
-But you can't do that computation (in the error case under consideration). 
-Null can't be added to anything (as far as the implications of the standards 
-go). These are horrid gotchas because they go against the grain of all that 
-binary arithmetic and simplifications we learnt long ago.
+	Unable to initialize SMTP properly. Check config and use --smtp-debug.
 
-That said, the fact that we know it can't be null does save the day, until 
-that is, the compiler [via some coding of an interpretation] decides that it 
-could be null and thus undefined etc etc (which one would argue as poor 
-logic, but standards have no truck with such arguments;-).
+but adding --smtp-debug=1 just produces the same output since we don't
+get as far as talking SMTP.
 
-There were some discussion on undefined behaviour way back (2013-08-08) when 
-Stephan Beller looked at STACK's checking of the Git code, see for example 
-http://article.gmane.org/gmane.comp.version-control.git/231945/
-"3 issues have been discovered using the STACK tool
-The paper regarding that tool can be found at
-https://pdos.csail.mit.edu/papers/stack:sosp13.pdf" (link updated)
+Turning on SSL debug at level 1 gives:
 
-All their source code is publicly available at 
-http://css.csail.mit.edu/stack/
+	DEBUG: .../IO/Socket/SSL.pm:1796: SSL connect attempt failed error:14090086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+	DEBUG: .../IO/Socket/SSL.pm:673: fatal SSL error: SSL connect attempt failed error:14090086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+	DEBUG: .../IO/Socket/SSL.pm:1780: IO::Socket::IP configuration failed
 
->
->> if the pointer is valid. Fix that by doing the check first.
->>
->> Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
->> ---
->> This has been reported through the CppHints newsletter 
->> (http://cpphints.com/hints/40)
->> but doesn't seem to have made its way to the ones who care (the git list
->> that is...)
->
-> Nobody would be surprised, unless the newsletter was sent to this
-> list, which I do not think it was (but if it was sent while I was
-> away, then it is very possible that I didn't see it).
->
->>  revision.c | 12 ++++++++++--
->>  1 file changed, 10 insertions(+), 2 deletions(-)
->>
->> diff --git a/revision.c b/revision.c
->> index 0fbb684..bb40179 100644
->> --- a/revision.c
->> +++ b/revision.c
->> @@ -104,7 +104,12 @@ static void mark_tree_contents_uninteresting(struct 
->> tree *tree)
->>  {
->>  struct tree_desc desc;
->>  struct name_entry entry;
->> - struct object *obj = &tree->object;
->> + struct object *obj;
->> +
->> + if (!tree)
->> + return;
->> +
->> + obj = &tree->object;
->
-> This is questionable; if you check all the callers of this function
-> (there are two of them, I think), you would notice that they both
-> know that tree cannot be NULL here.
->
->>
->>  if (!has_sha1_file(obj->sha1))
->>  return;
->> @@ -135,10 +140,13 @@ static void mark_tree_contents_uninteresting(struct 
->> tree *tree)
->>
->>  void mark_tree_uninteresting(struct tree *tree)
->>  {
->> - struct object *obj = &tree->object;
->> + struct object *obj;
->>
->>  if (!tree)
->>  return;
->> +
->> + obj = &tree->object;
->> +
->>  if (obj->flags & UNINTERESTING)
->>  return;
->
-> This one is not wrong per-se, but an unnecessary change, because no
-> deferencing is involved.  At least, please lose the blank line after
-> the new assignment.
->
->>  obj->flags |= UNINTERESTING;
->
-> Thanks.
+IO::Socket::SSL defines level 1 debug as "print out errors from
+IO::Socket::SSL and ciphers from Net::SSLeay".  In fact, it aliases
+Net::SSLeay::trace which is defined to guarantee silence at level 0 and
+only emit error messages at level 1, so let's enable it by default.
 
---
-Philip 
+The modification of warnings is needed to avoid a warning about:
+
+	Name "IO::Socket::SSL::DEBUG" used only once: possible typo
+
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+Sorry about the delay following up with this.
+
+I don't particularly like the need for brackets and modifying the
+warnings here, but AFAIK there is no other way to avoid a warning that
+is likely to upset users (although I am far from a Perl expert).
+
+ git-send-email.perl | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index e907e0e..72508be 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1318,6 +1318,13 @@ Message-Id: $message_id
+ 			require Net::SMTP::SSL;
+ 			$smtp_domain ||= maildomain();
+ 			require IO::Socket::SSL;
++
++			# Suppress "variable accessed once" warning.
++			{
++				no warnings 'once';
++				$IO::Socket::SSL::DEBUG = 1;
++			}
++
+ 			# Net::SMTP::SSL->new() does not forward any SSL options
+ 			IO::Socket::SSL::set_client_defaults(
+ 				ssl_verify_params());
+-- 
+2.6.3.462.gbe2c914
