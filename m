@@ -1,77 +1,79 @@
-From: Stefan Beller <sbeller@google.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Multiple fetches when unshallowing a shallow clone
-Date: Fri, 4 Dec 2015 13:50:25 -0800
-Message-ID: <CAGZ79kZMNuiiH=8zu4pJXazW8MNYCu_59MBh7iX0f0ws3dfsYA@mail.gmail.com>
+Date: Fri, 4 Dec 2015 16:51:58 -0500
+Message-ID: <20151204215158.GA27987@sigill.intra.peff.net>
 References: <CACs8u9STLLHr3c3O9kQKGEN52DLfJ2LatjWkeaeeLA-xP=gC5Q@mail.gmail.com>
-	<CAGZ79ka=RxVZ49D0wkqTRqspKb=Ce5Ay01muBt_Gk6_rDbH6KA@mail.gmail.com>
-	<20151204212712.GA22493@sigill.intra.peff.net>
-	<CACs8u9Qvqn4KDMKo+RHsQaf+dw+CGtWrOpoUJzaZAqD1rFRiuw@mail.gmail.com>
+ <CAGZ79ka=RxVZ49D0wkqTRqspKb=Ce5Ay01muBt_Gk6_rDbH6KA@mail.gmail.com>
+ <20151204212712.GA22493@sigill.intra.peff.net>
+ <CACs8u9Qvqn4KDMKo+RHsQaf+dw+CGtWrOpoUJzaZAqD1rFRiuw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Jason Paller-Rzepka <jasonpr@google.com>
-X-From: git-owner@vger.kernel.org Fri Dec 04 22:50:36 2015
+X-From: git-owner@vger.kernel.org Fri Dec 04 22:52:15 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4yFP-0007A5-2Z
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 22:50:35 +0100
+	id 1a4yGz-0001sY-LN
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 22:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756696AbbLDVu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 16:50:28 -0500
-Received: from mail-yk0-f176.google.com ([209.85.160.176]:35161 "EHLO
-	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755070AbbLDVuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 16:50:25 -0500
-Received: by ykba77 with SMTP id a77so139745015ykb.2
-        for <git@vger.kernel.org>; Fri, 04 Dec 2015 13:50:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=kDLp/70U34F6S93kSidsnL0MykBue11MtOH8AFgre3k=;
-        b=BujGwBAU6P4NLhs8k36A6b7cCKIy0GWXl8g5aeoI0nMf76Elr+40Wilm8dHWv476Z7
-         T3c+4eYPd/fDi1LDP6SFlQjW6r5tpTO2Uej5LhKtDQ4Q4v+k+0aax07MSL20Phdx8CHx
-         M9AEDaGNetruIyp1LY3sOaUv8VpgtW5o8rJA0fa8ziDv/P5x8lTIUxxPtW/TUn0P6x0e
-         4hE/GWX7ePi2NzcPvntD6DGIOWwn52aJR44DrDRLluQSTttYqnKtc4vj2jNrbskpZvR3
-         /SJkfiCKbmzkHang5Oi5wxt5tBj+1ckQBjbUObN4W2/0oQQPQojr3LI1eiqKye7YhpsW
-         HEXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=kDLp/70U34F6S93kSidsnL0MykBue11MtOH8AFgre3k=;
-        b=J8/SwxfxfduE+hl1Zq0d8BV1ihWOioBXflI+eC3G56rmCGruoQevn/6lvtVKbNj3yE
-         FRc8U7hbi1v34UNNSV3YULa0+WeGUXHER/xEX72OlkBGo5U/Ja8SQFZ14Gh6JEudYOM2
-         C6t8LEWeXjVNbvD/swkfRd2lOMcUgzIbje/ZBN3uwdwqBp+eqf35iIizJXl7hPVuGTxB
-         a6P93FyphLz+6hJdHEzloDzgFl1t+QTOAb8VXjB3BceX8qgnkZ8qdvMcIoPCGaSv5ytg
-         6cQosWaqN9X95xsTe/4uLdoNf6LTkulppPfaiIb+vsPUJGapqQteC6MjvO/Rj1iLLCrJ
-         e9iw==
-X-Gm-Message-State: ALoCoQnJFRatUzaHnekcqz6YbshNmySSxTdT5q5xLIlzluI4fTO7UgT2xebr0RTQQv7D4Tio9oAc
-X-Received: by 10.13.251.2 with SMTP id l2mr13360041ywf.44.1449265825161; Fri,
- 04 Dec 2015 13:50:25 -0800 (PST)
-Received: by 10.37.215.16 with HTTP; Fri, 4 Dec 2015 13:50:25 -0800 (PST)
+	id S1756795AbbLDVwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 16:52:03 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37544 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756789AbbLDVwC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 16:52:02 -0500
+Received: (qmail 6718 invoked by uid 102); 4 Dec 2015 21:52:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Dec 2015 15:52:01 -0600
+Received: (qmail 29041 invoked by uid 107); 4 Dec 2015 21:52:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Dec 2015 16:52:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Dec 2015 16:51:58 -0500
+Content-Disposition: inline
 In-Reply-To: <CACs8u9Qvqn4KDMKo+RHsQaf+dw+CGtWrOpoUJzaZAqD1rFRiuw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282011>
 
-I can reproduce it now. Instead of using my $random version, I just
-needed origin/master
-to reproduce.
+On Fri, Dec 04, 2015 at 04:38:16PM -0500, Jason Paller-Rzepka wrote:
 
-The second fetch is invoked via
-(as outputted via GIT_TRACE=1 git -C git fetch --depth=8)
+> It appears that it happens when the shallow history grows to include a
+> commit that's pointed to by a previously unseen tag.  For example,
+> when I deepen a checkout of git to depth 8, I hit v2.5.2, and a second
+> fetch takes place.
 
-13:44:56.863841 run-command.c:343       trace: run_command:
-'fetch-pack' '--stateless-rpc' '--stdin' '--lock-pack' '--thin'
-'https://github.com/git/git/'
+Yeah. The code is in builtin/fetch.c:backfill_tags.
 
-so it seems like there is no explicit depth given, so I think the 0
-comes from the initialization step and nobody touched it to fill with
-meaningful values.
+> But why would fetching a tag (or set of tags) merit a depth of zero?
+> Doesn't depth 1 mean "give me the the objects, and none of their
+> descendants"?  Why use 0?
+
+That comes from this line:
+
+  transport_set_option(transport, TRANS_OPT_DEPTH, "0");
+
+That line blame back to b888d61 (Make fetch a builtin, 2007-09-10),
+which isn't incredibly helpful.
+
+I think that comes from the original git-fetch.sh, which had:
+
+  ?*)
+          # do not deepen a shallow tree when following tags
+          shallow_depth=
+
+Which makes sense. I think the code at that point is not aware that we
+just "unshallowed" and can therefore drop the depth parameter
+altogether. But I admit I am not all that familiar with the shallow
+code.
+
++cc Duy, who can probably say something way more intelligent about this
+off the top of his head. :)
+
+-Peff
