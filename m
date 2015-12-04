@@ -1,100 +1,101 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: best practices against long git rebase times?
-Date: Fri, 4 Dec 2015 15:31:03 +0000
-Message-ID: <20151204153103.GP18913@serenity.lan>
-References: <20151204150546.GA17210@inner.h.apk.li>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones fail
+Date: Fri, 04 Dec 2015 07:32:57 -0800
+Message-ID: <xmqqd1umteja.fsf@gitster.mtv.corp.google.com>
+References: <1447321061-74381-1-git-send-email-larsxschneider@gmail.com>
+	<20151113053547.GD29708@sigill.intra.peff.net>
+	<CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
+	<CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
+	<xmqqio4j8iit.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kYY5FbvMpa2vOun7-h4S2cJvZLn67uPGYVbje55R4dFSg@mail.gmail.com>
+	<CACsJy8CFCu4casNn25b1YPkV==-8kDy3wzYd5uf794R41M0Y9w@mail.gmail.com>
+	<xmqqegf57sfe.fsf@gitster.mtv.corp.google.com>
+	<xmqq7fkx7qsa.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbtOEMk2woY5rovvC4xduiQRsKp+BXVt=5h9d76tpLWSA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andreas Krey <a.krey@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Dec 04 16:31:33 2015
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Dec 04 16:33:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4sKT-0007iX-6R
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 16:31:25 +0100
+	id 1a4sMJ-0002JP-BH
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 16:33:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753658AbbLDPbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 10:31:18 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:54020 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751897AbbLDPbP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 10:31:15 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id D3B4BCDA63D;
-	Fri,  4 Dec 2015 15:31:14 +0000 (GMT)
-X-Quarantine-ID: <8yP4i9lDZ0+K>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1.5
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.5 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_05=-0.5] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 8yP4i9lDZ0+K; Fri,  4 Dec 2015 15:31:13 +0000 (GMT)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1754119AbbLDPdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 10:33:09 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64135 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753783AbbLDPdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 10:33:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 826F12F32F;
+	Fri,  4 Dec 2015 10:32:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8bxbv3NRN+82bh+OdMB5SJ8P/LA=; b=AH1Qr4
+	sALyzcDIe1CgzdSlc1jf5xkdbJo5AEwKlRm6jBLzZdAUGYMntDBCvXTc/Zfh6nrj
+	ZjwmBplLogNue/HbtB6tJt42V4pzgTQ6p5aKiLQY9TxMKnk/iLvslsaSnW4xhW9N
+	ANu+lUQtFdZA3reKiu3wD70pQFaYjLX9FAht0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gsNNy3RRWJfOYuF+E2ZVtAGfbAwp9xqO
+	RS2Tkr9btmss6WZOSF29gzbDEniKoZBmHDEXC8TlErdKH3LA+hPEzUMby4KLL6dj
+	2qYg+oQciWm1gWe8jrCJOZeUKKHxxyB5llJvtqZ2kv1rBZD+yjpr6jIwSyl4V2fR
+	kOV+CWH/aZM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7B01B2F32E;
+	Fri,  4 Dec 2015 10:32:59 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 4A62A866036;
-	Fri,  4 Dec 2015 15:31:05 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <20151204150546.GA17210@inner.h.apk.li>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DAF532F32D;
+	Fri,  4 Dec 2015 10:32:58 -0500 (EST)
+In-Reply-To: <CAGZ79kbtOEMk2woY5rovvC4xduiQRsKp+BXVt=5h9d76tpLWSA@mail.gmail.com>
+	(Stefan Beller's message of "Thu, 3 Dec 2015 12:03:37 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 4C3A25C2-9A9C-11E5-83AF-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281984>
 
-On Fri, Dec 04, 2015 at 04:05:46PM +0100, Andreas Krey wrote:
-> our workflow is pretty rebase-free for diverse reasons yet.
-> 
-> One obstacle now appearing is that rebases simply take
-> very long - once you might want to do a rebase there are
-> several hundred commits on the remote branch, and our tree
-> isn't small either.
-> 
-> This produces rebase times in the minute range.
-> I suppose this is because rebase tries to see
-> if there are new commits in the destination
-> branch that are identical to one of the local
-> commits, to be able to skip them. (I didn't
-> try to verify this hypothesis.)
-> 
-> What can we do to make this faster?
+Stefan Beller <sbeller@google.com> writes:
 
-I'm pretty sure that you're right and the cherry-pick analysis is where
-the time is spent.
+>> A single dot "." would be a possibility
+>> (i.e. a ref component cannot begin with a dot), but squating on it
+>> and saying "anything that begins with . must be followed by 40-hex
+>> (and in the future by an extended SHA-1)" would rob extensibility
+>> from us, so perhaps ".@c78f7b5ed9dc1c6edc8db06ac65860151d54fd07" or
+>> something?
+>
+> My gut reaction is to reject that notation, as it is very cryptic.
+> Looking at the @ sign, it reminds me of the reflog notion such as HEAD@{-1}.
+> So maybe it would be more appealing to specify
+> HEAD@{c78f7b5ed9dc1c6edc8db06ac65860151d54fd07}
+> to mean a specific commit. By saying HEAD we indicate it is not meant as
+> a branch (both on the remote as well as locally).
+> By having the @{ sequence this would also be dis-ambiguous from any
+> branch.
 
-I looked into this a couple of years ago and I have a variety of
-(half-finished) experiments that might improve the performance of this:
+I specifically rejected that when I wrote the message you are
+responding to, because I think that would make it harder to later
+enhance the mechanism to ask for HEAD@{...}, i.e. extended SHA-1
+expression.
 
-	https://github.com/johnkeeping/git/commits/log-cherry-no-merges
-	https://github.com/johnkeeping/git/commits/patch-id-limit-paths
-	https://github.com/johnkeeping/git/commits/revision-cherry-respect-ancestry-path
-	https://github.com/johnkeeping/git/commits/patch-id-notes-cache
-	http://comments.gmane.org/gmane.comp.version-control.git/224006
+But bikeshedding can be left as an exercise to those who have too
+much time on hand.
 
-I have no idea if any of these changes will apply to modern Git (or if
-some of them are even correct) but I can try to clean them up if there's
-interest.
+> Looking at the big picture here, this being a preparation for improving
+> submodule cloning, we also want to allow tags here?
 
-The commit for patch-id-limit-paths includes some numbers that might be
-relevant for your case:
-
-    Before:
-    $ time git log --cherry master...jk/submodule-subdirectory-ok >/dev/null
-    
-    real    0m0.373s
-    user    0m0.341s
-    sys     0m0.031s
-    
-    After:
-    $ time git log --cherry master...jk/submodule-subdirectory-ok >/dev/null
-    
-    real    0m0.060s
-    user    0m0.055s
-    sys     0m0.005s
+The reason why we need to restrict to raw 40-hex in the initial
+iteration is because we do not want protocol update for an uncooked
+idea.  Hence a tag object name in 40-hex is fine, but a tag refname
+e.g. v1.0 is not.
