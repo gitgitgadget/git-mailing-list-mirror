@@ -1,61 +1,57 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: GIT_WORK_TREE not set as expected when changing git repository
- from a script using a git alias
-Date: Fri, 4 Dec 2015 15:31:50 +0100
-Message-ID: <CACsJy8BSca7qdxcPojaPEjGwur+Nnsq2KFWsKX4gcVKR2N6e6A@mail.gmail.com>
-References: <CAE1CpdRY4fdppx35FyK9fqY8YNzrxvW+WPgqb73mh32tJUF3vQ@mail.gmail.com>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: best practices against long git rebase times?
+Date: Fri, 4 Dec 2015 16:05:46 +0100
+Message-ID: <20151204150546.GA17210@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Gabriel Ganne <gabriel.ganne@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 04 15:32:26 2015
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 04 16:05:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4rPN-0001yi-IW
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 15:32:25 +0100
+	id 1a4rvm-0000Px-Ma
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 16:05:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119AbbLDOcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 09:32:22 -0500
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:36752 "EHLO
-	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751179AbbLDOcV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 09:32:21 -0500
-Received: by lfs39 with SMTP id 39so109780040lfs.3
-        for <git@vger.kernel.org>; Fri, 04 Dec 2015 06:32:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=3tZmqxvyih9GOAqcnqP0t5JX1F4ypcPkuPtTJ7JZaLA=;
-        b=IClEx8t7qd4bUjsbsY+pNzkSGvv4AHw/JlmWi+vJxWVpW7014wy/erUj4yJS3VwJAP
-         0oMpF8ejpCZPezdVlBtQCOG+BnxZjkhMHtabnhyYEUkaP6p0ONs0Y5IOb8UFzk5iLQ+w
-         Vr+MfKUOLCDIJQUDqevUc1PI2V4J+pgC+YRoiq6NhFujnqXyAPPaWvj2nRw9/ZKLKm7U
-         9rXoOPQlbySm4jFgQx1G7adeKmBh8bYqBT4XhAsXcwvt0Q7ljV0C/CQocfXVbRLc2Mps
-         UOGoSClbQ/X6zfXW0TmEjat+TkKDz+Ev5wBLaQxAd6WZvzk1egN+oEBrT756yj7+TxxY
-         4kPQ==
-X-Received: by 10.25.168.6 with SMTP id r6mr8211695lfe.94.1449239539608; Fri,
- 04 Dec 2015 06:32:19 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Fri, 4 Dec 2015 06:31:50 -0800 (PST)
-In-Reply-To: <CAE1CpdRY4fdppx35FyK9fqY8YNzrxvW+WPgqb73mh32tJUF3vQ@mail.gmail.com>
+	id S1753130AbbLDPFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 10:05:50 -0500
+Received: from continuum.iocl.org ([217.140.74.2]:59310 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752765AbbLDPFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 10:05:50 -0500
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id tB4F5k717414;
+	Fri, 4 Dec 2015 16:05:46 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281982>
 
-On Fri, Dec 4, 2015 at 10:54 AM, Gabriel Ganne <gabriel.ganne@gmail.com> wrote:
-> Hi,
->
-> Following commit d95138e695d99d32dcad528a2a7974f434c51e79 (since
-> v2.5.1) the following workflow I use seems broken :
+Hi all,
 
-You are not the first one bitten [1] by that commit. A fix is being
-worked on [2]. Sorry for the trouble.
+our workflow is pretty rebase-free for diverse reasons yet.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/281608
-[2] http://article.gmane.org/gmane.comp.version-control.git/281960
+One obstacle now appearing is that rebases simply take
+very long - once you might want to do a rebase there are
+several hundred commits on the remote branch, and our tree
+isn't small either.
+
+This produces rebase times in the minute range.
+I suppose this is because rebase tries to see
+if there are new commits in the destination
+branch that are identical to one of the local
+commits, to be able to skip them. (I didn't
+try to verify this hypothesis.)
+
+What can we do to make this faster?
+
+Andreas
+
 -- 
-Duy
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
