@@ -1,106 +1,99 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC/PATCH 6/8] config: add core.untrackedCache
-Date: Fri, 4 Dec 2015 20:44:34 +0100
-Message-ID: <CAP8UFD2dHGR-C8u4+sbNFt9EqcLDDHY_ydBjRvzMb2uWjmKEuA@mail.gmail.com>
-References: <1449001899-18956-1-git-send-email-chriscool@tuxfamily.org>
-	<1449001899-18956-7-git-send-email-chriscool@tuxfamily.org>
-	<565E99F9.2020906@web.de>
-	<CACBZZX5eQuaYumFcuW6PO_FCrAd3Vqq8gPyg5JeZ4Kk+0YBGRQ@mail.gmail.com>
-	<5661D340.2010305@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-credential-cache--daemon quits on SIGHUP, can we change it to ignore instead?
+Date: Fri, 04 Dec 2015 12:05:52 -0800
+Message-ID: <xmqqlh9arnbz.fsf@gitster.mtv.corp.google.com>
+References: <20151030001000.GA2123@sigill.intra.peff.net>
+	<CAM-tV-_dc_YEE0Dh2T=8+_DcBiq_rvynOw2cFi+8QizkeGTusw@mail.gmail.com>
+	<20151030005057.GA23251@sigill.intra.peff.net>
+	<CAM-tV-8qSVJFOxLQt9SaYK_WqpxixzPArJnAK=3tHU9inM9Law@mail.gmail.com>
+	<20151030210849.GA7149@sigill.intra.peff.net>
+	<CAM-tV-9CNO_hqnweFpLaRHx4xEA32CPRdq56y6vYMWqURV9kgg@mail.gmail.com>
+	<20151109155342.GB27224@sigill.intra.peff.net>
+	<CAM-tV--hBSdCJckCnMtKgkQB2f_3eN8sXHdFWwg2hzb6s7ufxw@mail.gmail.com>
+	<20151110122501.GA14418@sigill.intra.peff.net>
+	<xmqqpoymrql7.fsf@gitster.mtv.corp.google.com>
+	<20151204190658.GA16692@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Dec 04 20:44:42 2015
+Content-Type: text/plain
+Cc: Noam Postavsky <npostavs@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 04 21:06:03 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4wHZ-00064x-0C
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 20:44:41 +0100
+	id 1a4wcC-0004sv-V9
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 21:06:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447AbbLDToh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Dec 2015 14:44:37 -0500
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:36752 "EHLO
-	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753300AbbLDTog convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Dec 2015 14:44:36 -0500
-Received: by lfs39 with SMTP id 39so115579883lfs.3
-        for <git@vger.kernel.org>; Fri, 04 Dec 2015 11:44:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=CzPSXWzCddtko5T6aH0YME5uH1nGmfV/XFg0/tiCAZc=;
-        b=n2+fB+pBMBdcl08BhKXdVPByKO31Nekv6eqmUAyXPg04C65+ZFwBCtAdmRagga1yW9
-         DHX1O3QFqQCbcA0n8VsYM4Sm99fSluLPxhFTjHcgkbbuAHB4W4cnqU2eBnWmNj9BynRG
-         pXiMTAWHqGzWbDyIKmGpVikgQi2CgkTgoWBABx01gcJexkEFKsFxQuZPI+Zk+oJz5vTQ
-         j5Z5M9v2ZMXe0xlFQIh6gQRMD9OM4DwHs2vfpGJigLR6XbzD/OeGYRyrTAQWEcVuETZJ
-         xyZyqFgqhqV/TIMEr2eyg5ey/9c0TvhaSxsWQ5XU+zOPnIu7iYZyv/06lmOnmw2Q25UT
-         Tq3w==
-X-Received: by 10.25.42.208 with SMTP id q199mr9082341lfq.67.1449258274786;
- Fri, 04 Dec 2015 11:44:34 -0800 (PST)
-Received: by 10.25.152.7 with HTTP; Fri, 4 Dec 2015 11:44:34 -0800 (PST)
-In-Reply-To: <5661D340.2010305@web.de>
+	id S1756166AbbLDUF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 15:05:56 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:65030 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754671AbbLDUFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 15:05:54 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C622530022;
+	Fri,  4 Dec 2015 15:05:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iZ8SUSmfgbtEbgQc4gPQtsIG8uw=; b=VbFA0a
+	5jrY+adGfz2K58AQYrC7JoZiUSTgs3haFF4D0jBn+v0ZcQ464bbsD0zPjLzJoAlg
+	HyrdAQI7wDrZkCQCSPgi5UfLjtx9BUunzSEkPyaNGzWas2R3z1l640Pxri4m7uJz
+	GFij2shJOKC7CdRuOLlZIeED0j3BSPJXQBWs0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tSUPQrCdjbrudk9U51cudgExWXa7saPu
+	r/xBNMqBY99whKL/PWzy8lvaIFSpdcI0LgOVAKfPLxRSDnoKL4969cHzsPR3tH2Q
+	ydPUsfxQGL/kxXXLpHethVCxIYpjVo4IUp7Jl9x25UGnDnB1zXRttw8MWHyWzuUn
+	J8m97YbYl1Q=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BE9E830021;
+	Fri,  4 Dec 2015 15:05:53 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3E56330020;
+	Fri,  4 Dec 2015 15:05:53 -0500 (EST)
+In-Reply-To: <20151204190658.GA16692@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 4 Dec 2015 14:06:59 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 6C1A913A-9AC2-11E5-A52E-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281998>
 
-On Fri, Dec 4, 2015 at 6:54 PM, Torsten B=C3=B6gershausen <tboegi@web.d=
-e> wrote:
->> Current state of affairs:
->>
->>  * Enable on a per-repo basis: git update-index --untracked-cache
->>  * Disable on a per-repo basis: git update-index --no-cache
->>  * Enable system-wide: N/A
->>  * Disable system-wide: N/A
->>
->> With this patch:
->>
->>  * Enable on a per-repo basis: git update-index --untracked-cache OR
->> "git config core.untrackedCache true"
->>  * Disable on a per-repo basis: git update-index --no-cache OR "git
->> config core.untrackedCache false"
->>  * Enable system-wide: git config --global core.untrackedCache true
->>  * Disable system-wide: git config --global core.untrackedCache fals=
-e
->>  * Caveat: The core.untrackedCache config has precidence over "git u=
-pdate-index"
->>
->> With the rest of the patches in this series:
->>
->>  * Enable system-wide & per-repo the same, just tweak
->> core.untrackedCache either for the local .git or --globally
->>  * If you want to test things either per-repo or globally just use
->> "git update-index --test-untracked-cache"
->>  * If you want something exactly like the old --untracked-cache do:
->> "git update-index --test-untracked-cache && git config
->> core.untrackedCache true"
->>
->> I think applying this whole series makes sense. Enabling this featur=
-e
->> doesn't work like anything else in Git, usually you just tweak a
->> config option and thus can easily enable things either system-wide o=
-r
->> per-repo (or any combination of the two), which makes both system
->> administration and local configuration easy.
->>
->> A much saner UI for the CLI tools if we're going to ship git with
->> tests for filesystem features is to separate the testing from the
->> enabling of those features.
+Jeff King <peff@peff.net> writes:
+
+> On Fri, Dec 04, 2015 at 10:55:32AM -0800, Junio C Hamano wrote:
+>> 
+>> I was puzzled that git_config_get_bool() is used here without even
+>> checking if we are inside any Git repository and wondered if it was
+>> correct....
 >
-> My spontanous feeling: squash 6-8 together and add this nice explanat=
-ion
-> to the commit message.
+> This probably _does_ trigger setup_git_env() when it was not otherwise
+> called, and it will back to looking at ".git/config" for the repo-level
+> config. That may fail to find the file if we are in a bare repository,
+> or a subdirectory of the working tree. IOW, I suspect this:
+>
+>   git init --bare foo.git
+>   cd foo.git
+>   git config credential.helper cache
+>   git config credentialcache.ignoreSIGHUP true ;# goes into local config
+>   git fetch https://example.com/foo.git
+>
+> may fail to respect the ignoreSIGHUP option.
+>
+> I guess the solution would be to setup_git_director_gently() in the
+> daemon process.
 
-Ok, I will do that then.
+So I guess I did notice the right breakage ;-)
+
+At least, this won't be a regression but "a new feature initially
+shipped with a broken corner case", so a follow-up fix is welcome,
+but not a big deal that I've already merged it to 'master'.
+
+Thanks.
