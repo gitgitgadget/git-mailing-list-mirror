@@ -1,75 +1,76 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: best practices against long git rebase times?
-Date: Fri, 4 Dec 2015 10:10:12 -0800
-Message-ID: <CAGZ79kaBhO4Qg28VP39inaVsaEbVU_Dy-_6Dy29WCgCJpVq1fw@mail.gmail.com>
-References: <20151204150546.GA17210@inner.h.apk.li>
-	<CANgJU+Ums-zg1kDiW4mm_X_zxreb=wBVc1gpHUOFN=44x1TyRQ@mail.gmail.com>
-	<20151204172851.GQ18913@serenity.lan>
-	<CANgJU+W2NWX4eK8M7GXu7+kmKsyEriau=_WXO8EEQZinCFTtRg@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] git-check-ref-format.txt: typo, s/avoids/avoid/
+Date: Fri,  4 Dec 2015 19:09:32 +0100
+Message-ID: <1449252572-5771-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: John Keeping <john@keeping.me.uk>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Andreas Krey <a.krey@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 04 19:10:23 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 04 19:10:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4uoJ-0006xg-0G
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 19:10:23 +0100
+	id 1a4uoV-0007NE-5e
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 19:10:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754106AbbLDSKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 13:10:16 -0500
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:35009 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754083AbbLDSKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 13:10:13 -0500
-Received: by ykba77 with SMTP id a77so133052169ykb.2
-        for <git@vger.kernel.org>; Fri, 04 Dec 2015 10:10:13 -0800 (PST)
+	id S1754152AbbLDSKa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Dec 2015 13:10:30 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:34982 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752420AbbLDSK3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 13:10:29 -0500
+Received: by wmuu63 with SMTP id u63so72217436wmu.0
+        for <git@vger.kernel.org>; Fri, 04 Dec 2015 10:10:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=5aqJHmhPzF97FFF0ZtdH/pq25PJ3jeU9HDxp+eEvY00=;
-        b=Ns1wkTGoFWRKh0qFylGCX5eB8ddxU/RyrGY1XqHk+2G6QUYot1f4b7SE/49Z3Z8Ld7
-         E+SYHFHgZMPwCDfFJVp883NVCBUv19b+fauL2/hMFtBjgVUxCCGMpRQiKzClk9QHN4Oz
-         4qdbTs+4GdV0c2vln5wYXZBDTBpyL7dCf87vKwhUSyPskNdLlWuAbyHg1UQ87o9FuRKY
-         WvETW6k4WqgCR0i5cxvM+eJfqjJACikqF7IlVtp8Y/VRBaBe/kUSMp3lWq3kvhWsdz2U
-         x+XZKdIdgZ30f652LX6HMRLhiaHumDsVyvzuU+26VvkmmCwOwxcAsIS8UmW5LC8hjVNc
-         DIcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=5aqJHmhPzF97FFF0ZtdH/pq25PJ3jeU9HDxp+eEvY00=;
-        b=B8lBJutpCWGvJDdira73yQOjUpSQGpzyJJTdngkCqNkogWFp5uMlk0ISkUNGknuzE6
-         y+8g+lADW/CgShLwJn4kU6xwu0zNGMVYQtznp5NyI741yWdsSCH6BNj+DesEEHXLzgAk
-         TzZMCEQMjTNRDtoGHnh5KPbkFi+u+oKexlFf2n78fUSjgaej3wuNx4fqq5aItfIse/6L
-         b38tGCKE00Qo23woC3Gg5kT7gABpsClHDjVJacpL4NdrldUAS8t852d0TP07rjlIHWsf
-         /1dhs9y0jfCXQWHGymDQUXsSDGSBuQSOTY+uLlvMBI+X99QsW+BDuM/qvDGh7j0awtMb
-         xP0Q==
-X-Gm-Message-State: ALoCoQlUfZOvFywecoA1t/qwe2tLvvEwdbHEOYUTvhRFmazIWM6wUOzxTsegoPXtAugOVtHTO/ci
-X-Received: by 10.13.214.19 with SMTP id y19mr12403200ywd.63.1449252612967;
- Fri, 04 Dec 2015 10:10:12 -0800 (PST)
-Received: by 10.37.215.16 with HTTP; Fri, 4 Dec 2015 10:10:12 -0800 (PST)
-In-Reply-To: <CANgJU+W2NWX4eK8M7GXu7+kmKsyEriau=_WXO8EEQZinCFTtRg@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=8zFj2x1QOG5Kr1KLt+n6p0LhtXSwd9Xqq/01meS+Nzs=;
+        b=l2pqof5bs4uavf5qiQNzHDujYJEf5aXAjSoJZE8zWXjwLYruzeKQWOfAoQTdodQwp5
+         xRugxYQpbUB1MRpS8xlUuBqEz0GVVxIC4RZpp01muX0BAY6w03NEpUEsShwOOJ3di8Ed
+         W1522rOer2r7fuIj+Q4iktbjOo0qeTtEHFHci7HuJYuDxB+HK6ITAZS6hh+GAyfb/fxi
+         4O3hci0j+2XDRVqN3wJyEfZ/gW02bdIKVXX6l5rHYSGoWnTu07oDVyo5BTDgzLy2dhcd
+         ujfwAfQ9kAebx8+Ot8DehbiDgxU61OCztlYsRM/M+EeH3Eo85XgoldJXKqz+iS+PC7z/
+         JVAQ==
+X-Received: by 10.28.170.133 with SMTP id t127mr6240279wme.65.1449252628345;
+        Fri, 04 Dec 2015 10:10:28 -0800 (PST)
+Received: from duynguyen-vnpc.dek-tpc.internal.homenet.telecomitalia.it (host171-164-static.60-79-b.business.telecomitalia.it. [79.60.164.171])
+        by smtp.gmail.com with ESMTPSA id kj3sm13113065wjb.19.2015.12.04.10.10.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 04 Dec 2015 10:10:27 -0800 (PST)
+X-Mailer: git-send-email 2.2.0.513.g477eb31
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281993>
 
-On Fri, Dec 4, 2015 at 9:33 AM, demerphq <demerphq@gmail.com> wrote:
-> In all fairness however, I do believe that some of the recent changes
-> to git helped, but I dont how much or which. What I do know is we
-> still have the cron sweeper process cleaning refs. (It broke one of my
-> repos that I set up with --reference just the other day).
->
-> Yves
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/git-check-ref-format.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-git-am was rewritten in C, which is used to apply patches.
-This also speeds up rebase.
+diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git=
+-check-ref-format.txt
+index 9044dfa..91a3622 100644
+--- a/Documentation/git-check-ref-format.txt
++++ b/Documentation/git-check-ref-format.txt
+@@ -60,7 +60,7 @@ Git imposes the following rules on how references are=
+ named:
+=20
+ These rules make it easy for shell script based tools to parse
+ reference names, pathname expansion by the shell when a reference name=
+ is used
+-unquoted (by mistake), and also avoids ambiguities in certain
++unquoted (by mistake), and also avoid ambiguities in certain
+ reference name expressions (see linkgit:gitrevisions[7]):
+=20
+ . A double-dot `..` is often used as in `ref1..ref2`, and in some
+--=20
+2.2.0.513.g477eb31
