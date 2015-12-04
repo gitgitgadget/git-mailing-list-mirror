@@ -1,87 +1,61 @@
-From: Nathan Neulinger <nneul@neulinger.org>
-Subject: Feature request - allow requesting a lock timeout
-Date: Fri, 4 Dec 2015 08:28:27 -0600
-Organization: Neulinger Consulting
-Message-ID: <5661A30B.6030803@neulinger.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: GIT_WORK_TREE not set as expected when changing git repository
+ from a script using a git alias
+Date: Fri, 4 Dec 2015 15:31:50 +0100
+Message-ID: <CACsJy8BSca7qdxcPojaPEjGwur+Nnsq2KFWsKX4gcVKR2N6e6A@mail.gmail.com>
+References: <CAE1CpdRY4fdppx35FyK9fqY8YNzrxvW+WPgqb73mh32tJUF3vQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 04 15:28:41 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Gabriel Ganne <gabriel.ganne@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 04 15:32:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4rLi-0003vN-8f
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 15:28:38 +0100
+	id 1a4rPN-0001yi-IW
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 15:32:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753018AbbLDO2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 09:28:33 -0500
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:33377 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752874AbbLDO2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 09:28:30 -0500
-Received: by ykdv3 with SMTP id v3so125385199ykd.0
-        for <git@vger.kernel.org>; Fri, 04 Dec 2015 06:28:29 -0800 (PST)
+	id S1752119AbbLDOcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 09:32:22 -0500
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:36752 "EHLO
+	mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751179AbbLDOcV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 09:32:21 -0500
+Received: by lfs39 with SMTP id 39so109780040lfs.3
+        for <git@vger.kernel.org>; Fri, 04 Dec 2015 06:32:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=neulinger-org.20150623.gappssmtp.com; s=20150623;
-        h=to:from:subject:organization:message-id:date:user-agent
-         :mime-version:content-type:content-transfer-encoding;
-        bh=troQbzjCKs7i88ZX4dqS3Bz4NuC6gHe2B3pVsXmxpbM=;
-        b=OZxpAN5nLJvH7PZxT/N7xl5jOwdlmyzn9vPkoRtUdqKtKu3mqXYsyHml5syheoaXfm
-         L7TkG9cOuBa6ArxBEMasrMqZKpYfgSM85lWaPmqnkklKWeFBXlVlR7iNIzN/8UNq2wDa
-         x8ZMO6CclxN0wGqwSO/hDVdMkFcQqUpkYvxBwPPpllWu7kAi77Zburj0Kk3AlnHuyFyP
-         fOIu8RqMEFnLeulcONc2LiXMuC8qWm8wicZ/XQYNlpFw22lYNNNpErCcLJU8z0UacOyV
-         M+yHM4XiAoc5SBvVea2neEMq+WVCBhP5pB3fM69kewfH+vg05qOR/B+eE5ycDxzyEvL+
-         utfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:from:subject:organization:message-id:date
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=troQbzjCKs7i88ZX4dqS3Bz4NuC6gHe2B3pVsXmxpbM=;
-        b=kZoaqbqt0mXc/TPKWa01QFcKwDG4hfTIXSrq9CskZ2FUy0fTYKcZp3PfvTzb1NO1o7
-         pW+dQbC8TIymS5F8NFOENZiLgddw/CqYDmU6/hwrczh6RfnAlZvKrdulSssAfVfclVSh
-         T/9+ML9pkflbjX/pWCQoyuD2CZN6bccfV3NBcWvh4vE3X/4Li4KOM/T9YL/ojRQWy9KE
-         K1xRapsSPg8bDxn2nvfXw7Ba2cgsGWmxmnaXsxzlJOggIH42sGWr6EUEdjZbynVlNENk
-         QYijEPffKsKIgYPeWQ9b1O7YegFfkyYwQ8HA39cEdPEl7T/rpWHBwWxTOoG1VB2u67Jv
-         dk5Q==
-X-Gm-Message-State: ALoCoQlOvNSsvkq73o5u1exaZL6KH3S7iGh7ZXqf2tF0MvaqLWTk0NwlYT3khEWP39453/ZZ7ChU
-X-Received: by 10.13.205.3 with SMTP id p3mr12713760ywd.22.1449239309782;
-        Fri, 04 Dec 2015 06:28:29 -0800 (PST)
-Received: from infinity.srv.mst.edu (infinity.srv.mst.edu. [131.151.49.1])
-        by smtp.gmail.com with ESMTPSA id c67sm9073326ywe.31.2015.12.04.06.28.28
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 04 Dec 2015 06:28:28 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=3tZmqxvyih9GOAqcnqP0t5JX1F4ypcPkuPtTJ7JZaLA=;
+        b=IClEx8t7qd4bUjsbsY+pNzkSGvv4AHw/JlmWi+vJxWVpW7014wy/erUj4yJS3VwJAP
+         0oMpF8ejpCZPezdVlBtQCOG+BnxZjkhMHtabnhyYEUkaP6p0ONs0Y5IOb8UFzk5iLQ+w
+         Vr+MfKUOLCDIJQUDqevUc1PI2V4J+pgC+YRoiq6NhFujnqXyAPPaWvj2nRw9/ZKLKm7U
+         9rXoOPQlbySm4jFgQx1G7adeKmBh8bYqBT4XhAsXcwvt0Q7ljV0C/CQocfXVbRLc2Mps
+         UOGoSClbQ/X6zfXW0TmEjat+TkKDz+Ev5wBLaQxAd6WZvzk1egN+oEBrT756yj7+TxxY
+         4kPQ==
+X-Received: by 10.25.168.6 with SMTP id r6mr8211695lfe.94.1449239539608; Fri,
+ 04 Dec 2015 06:32:19 -0800 (PST)
+Received: by 10.112.199.5 with HTTP; Fri, 4 Dec 2015 06:31:50 -0800 (PST)
+In-Reply-To: <CAE1CpdRY4fdppx35FyK9fqY8YNzrxvW+WPgqb73mh32tJUF3vQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281981>
 
-It appears that almost all of the locking calls in the current code use hold_lock_file_for_update() which translates 
-into a request with zero timeout.
+On Fri, Dec 4, 2015 at 10:54 AM, Gabriel Ganne <gabriel.ganne@gmail.com> wrote:
+> Hi,
+>
+> Following commit d95138e695d99d32dcad528a2a7974f434c51e79 (since
+> v2.5.1) the following workflow I use seems broken :
 
-This effectively means that for certain classes of usage, you can't use git concurrently without either external locking 
-or retry logic. It would be nice to see a global option "--lock-timeout" that would request a specific non-zero default 
-timeout for many of those operations.
+You are not the first one bitten [1] by that commit. A fix is being
+worked on [2]. Sorry for the trouble.
 
-Even having the option to have a couple-second timeout would eliminate most typical concurrency issues, simplifying some 
-automated use cases.
-
-Horrible/contrived example, but demonstrates the issue:
-
-	for f in `seq 1 150`; do touch $f; (git add $f &); done
-
-You'll get a whole bunch of:
-
-	fatal: Unable to create '/tmp/dummy/.git/index.lock': File exists.
-
--- Nathan
-
-------------------------------------------------------------
-Nathan Neulinger                       nneul@neulinger.org
-Neulinger Consulting                   (573) 612-1412
+[1] http://thread.gmane.org/gmane.comp.version-control.git/281608
+[2] http://article.gmane.org/gmane.comp.version-control.git/281960
+-- 
+Duy
