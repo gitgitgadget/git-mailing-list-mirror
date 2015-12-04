@@ -1,97 +1,102 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Multiple fetches when unshallowing a shallow clone
-Date: Fri, 4 Dec 2015 17:10:09 -0500
-Message-ID: <20151204221009.GA23129@sigill.intra.peff.net>
+Date: Fri, 04 Dec 2015 14:45:22 -0800
+Message-ID: <xmqqh9jxrfy5.fsf@gitster.mtv.corp.google.com>
 References: <CACs8u9STLLHr3c3O9kQKGEN52DLfJ2LatjWkeaeeLA-xP=gC5Q@mail.gmail.com>
- <CAGZ79ka=RxVZ49D0wkqTRqspKb=Ce5Ay01muBt_Gk6_rDbH6KA@mail.gmail.com>
- <20151204212712.GA22493@sigill.intra.peff.net>
- <xmqqoae5ri5x.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79ka=RxVZ49D0wkqTRqspKb=Ce5Ay01muBt_Gk6_rDbH6KA@mail.gmail.com>
+	<20151204212712.GA22493@sigill.intra.peff.net>
+	<CACs8u9Qvqn4KDMKo+RHsQaf+dw+CGtWrOpoUJzaZAqD1rFRiuw@mail.gmail.com>
+	<20151204215158.GA27987@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <sbeller@google.com>,
-	Jason Paller-Rzepka <jasonpr@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 04 23:10:29 2015
+Content-Type: text/plain
+Cc: Jason Paller-Rzepka <jasonpr@google.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
+	<pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 04 23:45:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4yYb-0002fY-OU
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 23:10:26 +0100
+	id 1a4z6b-0002YE-Ui
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 23:45:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932079AbbLDWKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 17:10:13 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37561 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750958AbbLDWKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 17:10:12 -0500
-Received: (qmail 8002 invoked by uid 102); 4 Dec 2015 22:10:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Dec 2015 16:10:11 -0600
-Received: (qmail 29302 invoked by uid 107); 4 Dec 2015 22:10:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Dec 2015 17:10:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Dec 2015 17:10:09 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqoae5ri5x.fsf@gitster.mtv.corp.google.com>
+	id S1755226AbbLDWpa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 17:45:30 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59136 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755162AbbLDWp3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 17:45:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E33D72EBEE;
+	Fri,  4 Dec 2015 17:45:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xWAsmrseH81Jfy2/HPPAUe1tHBg=; b=uAq5Sv
+	x/yeRBbcoot/Knop3OeZWT6hLDCnNTiXmPRs1YvCTZqa6iYLj2BCLBTgcEjNfujN
+	wWODReeRLpbJsb1bnsHHDjri8kK3Ro/+wpZL7bx257ESHknFYEiHTQSFfAuD3unN
+	7OOOMoaAIQWzuuKSnjmpK8ns5G0ssGfVrIFKQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=q42SzGDx9GFTgf5+ITGWJgaLPiC2VPL/
+	KcOEqIH8dbokh9SKJe2pSvKI2ePAGLlwrrp7vp9df+DY3kRXmUjtiypApyQcsNql
+	WHkX8ZEaYxHhOgUEpA69CpCblB8Nwy9lXDJDfgj9E/mGnT+uEazqdMfyyl5ltBKZ
+	QQxsHcVhQ4c=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CF9B42EBED;
+	Fri,  4 Dec 2015 17:45:26 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 073492EBEC;
+	Fri,  4 Dec 2015 17:45:25 -0500 (EST)
+In-Reply-To: <20151204215158.GA27987@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 4 Dec 2015 16:51:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B5ECA79C-9AD8-11E5-9FF8-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282014>
 
-On Fri, Dec 04, 2015 at 01:57:30PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > This seems to reproduce consistently for me:
-> >
-> >   $ git clone --depth=1 git://github.com/git/git
-> >   Cloning into 'git'...
-> >   remote: Counting objects: 2925, done.
-> >   remote: Compressing objects: 100% (2602/2602), done.
-> >   remote: Total 2925 (delta 230), reused 2329 (delta 206), pack-reused 0
-> >   Receiving objects: 100% (2925/2925), 6.17 MiB | 10.80 MiB/s, done.
-> >   Resolving deltas: 100% (230/230), done.
-> >
-> >   $ cd git
-> >   $ git fetch --unshallow
-> >   remote: Counting objects: 185430, done.
-> >   remote: Compressing objects: 100% (46933/46933), done.
-> >   remote: Total 185430 (delta 140505), reused 181589 (delta 136694), pack-reused 0
-> >   Receiving objects: 100% (185430/185430), 52.80 MiB | 10.84 MiB/s, done.
-> >   Resolving deltas: 100% (140505/140505), completed with 1784 local objects.
-> >   remote: Counting objects: 579, done.
-> >   remote: Compressing objects: 100% (579/579), done.
-> >   remote: Total 579 (delta 0), reused 579 (delta 0), pack-reused 0
-> >   Receiving objects: 100% (579/579), 266.85 KiB | 0 bytes/s, done.
-> >   [... fetch output ...]
-> >
-> > That looks like two packs being received for the --unshallow case.
-> 
-> What is puzzling is that I do not seem to see this "two fetches"
-> with the local transport.  I only see "deepen 2147483647" in the
-> protocol log.
+>> But why would fetching a tag (or set of tags) merit a depth of zero?
+>> Doesn't depth 1 mean "give me the the objects, and none of their
+>> descendants"?  Why use 0?
+>
+> That comes from this line:
+>
+>   transport_set_option(transport, TRANS_OPT_DEPTH, "0");
+>
+> That line blame back to b888d61 (Make fetch a builtin, 2007-09-10),
+> which isn't incredibly helpful.
 
-Yeah, I do not ever see "deepen 0" from GIT_TRACE_PACKET output. FWIW,
-here's the output I am using to reproduce this locally:
+Hmm, "0" means "no depth limitations", which is exactly what we want
+in this "unshallow" case, I would think.  The behaviour observed is
+just like a regular fetch that auto-follows tags, where it has to
+make a second fetch if the primary fetch fails to include everything
+that is needed for propagating the tag for whatever reason.
 
-  # do this once
-  git clone --bare git://github.com/git/git src.git
+Having said that, IIRC, these days a depth limited clone is created
+implicitly with --single-branch option, and I am not sure what the
+right behaviour for the auto-following of tags in such a repository.
 
-  # do this for each test run
-  rm -rf repo
-  git clone --no-local --depth=1 src.git repo
-  cd repo
-  echo "==> unshallow" &&
-  git fetch --progress --unshallow 2>&1 | grep remote
-
-And you can see that there are two separate sections (and I traced this
-to backfill_tags() with gdb).
-
-Note that the issue goes away if the shallow clone is done with "--bare"
-(I guess because we pick up tags differently in the initial clone?).
-
--Peff
+> I think that comes from the original git-fetch.sh, which had:
+>
+>   ?*)
+>           # do not deepen a shallow tree when following tags
+>           shallow_depth=
+>
+> Which makes sense. I think the code at that point is not aware that we
+> just "unshallowed" and can therefore drop the depth parameter
+> altogether. But I admit I am not all that familiar with the shallow
+> code.
+>
+> +cc Duy, who can probably say something way more intelligent about this
+> off the top of his head. :)
+>
+> -Peff
