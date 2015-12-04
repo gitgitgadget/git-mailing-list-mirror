@@ -1,59 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] document submodule sync --recursive
-Date: Fri, 04 Dec 2015 13:08:13 -0800
-Message-ID: <xmqqvb8drkg2.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kaX4ZM++jhPcpU0T8eYDobME=iNtbH3KceWbQOOavpHnA@mail.gmail.com>
-	<1449175262-3724-1-git-send-email-sbeller@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Multiple fetches when unshallowing a shallow clone
+Date: Fri, 4 Dec 2015 16:27:12 -0500
+Message-ID: <20151204212712.GA22493@sigill.intra.peff.net>
+References: <CACs8u9STLLHr3c3O9kQKGEN52DLfJ2LatjWkeaeeLA-xP=gC5Q@mail.gmail.com>
+ <CAGZ79ka=RxVZ49D0wkqTRqspKb=Ce5Ay01muBt_Gk6_rDbH6KA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, cederp@opera.com
+Content-Type: text/plain; charset=utf-8
+Cc: Jason Paller-Rzepka <jasonpr@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Dec 04 22:08:21 2015
+X-From: git-owner@vger.kernel.org Fri Dec 04 22:27:21 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4xaX-000779-3i
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 22:08:21 +0100
+	id 1a4xsu-0002ju-Ih
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 22:27:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754512AbbLDVIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 16:08:16 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57197 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754371AbbLDVIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 16:08:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 82EBF316BF;
-	Fri,  4 Dec 2015 16:08:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=d8SN2ftBLo8S+nEqUgWPPSiFfoY=; b=TYniBm
-	P2f0zWTes2nSTAb/ho9aQL5Pc1Ldp7jrsRXBmzKwlpBdqpP8iyhjfuqNTok++N2U
-	EX0pRuPVqYhsMsPazoVUyCBoAhsHyWrvHWRCALrN2pXaOxA5mhQIpyDFv3BHOAD9
-	Bo4GY2oJenGZ0fZNeb26vcKYzKAUHIT0zVjn4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UfCwdfF8zfuVZFC+Zf0g6ST6tu4m8jdr
-	K24leSgUAbtnQcBAo6uHFPAH44/2Thk5EkRI5s095pnOxb2PxMuSjLpcmTe97TWn
-	qliugprYOnfhRcIdQCxRreeL1o4WhVOubBH6IkyhPXET/3GsNY+oEorWC/5IG50X
-	8unoCCz34Uw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7ACBD316BE;
-	Fri,  4 Dec 2015 16:08:15 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F268E316BD;
-	Fri,  4 Dec 2015 16:08:14 -0500 (EST)
-In-Reply-To: <1449175262-3724-1-git-send-email-sbeller@google.com> (Stefan
-	Beller's message of "Thu, 3 Dec 2015 12:41:02 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 225AABEE-9ACB-11E5-9E2C-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1756471AbbLDV1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 16:27:16 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37521 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754906AbbLDV1P (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 16:27:15 -0500
+Received: (qmail 4776 invoked by uid 102); 4 Dec 2015 21:27:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Dec 2015 15:27:15 -0600
+Received: (qmail 28289 invoked by uid 107); 4 Dec 2015 21:27:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Dec 2015 16:27:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Dec 2015 16:27:12 -0500
+Content-Disposition: inline
+In-Reply-To: <CAGZ79ka=RxVZ49D0wkqTRqspKb=Ce5Ay01muBt_Gk6_rDbH6KA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282005>
 
-Thanks, will queue.
+On Fri, Dec 04, 2015 at 12:46:59PM -0800, Stefan Beller wrote:
+
+> On Mon, Nov 30, 2015 at 11:35 AM, Jason Paller-Rzepka
+> <jasonpr@google.com> wrote:
+> > Hi all,
+> >
+> > Would anyone be willing to help me understand some shallow-clone
+> > behavior?  (I found a bug in Dulwich, and I'm looking for some context
+> > so I can determine how to fix it.)
+> >
+> > I learned that cgit sometimes performs two fetches for a `git fetch
+> > --unshallow`: one with depth 'infinity', and a subsequent one with
+> > depth zero.
+> 
+> Is there a condition to trigger this 'sometimes' ?
+> 
+> I just tried reproducing via
+> $ GIT_TRACE=1 git fetch --unshallow
+> 
+> and could not see a second fetch, but only a
+> fetch-pack with --depth=2147483647
+
+This seems to reproduce consistently for me:
+
+  $ git clone --depth=1 git://github.com/git/git
+  Cloning into 'git'...
+  remote: Counting objects: 2925, done.
+  remote: Compressing objects: 100% (2602/2602), done.
+  remote: Total 2925 (delta 230), reused 2329 (delta 206), pack-reused 0
+  Receiving objects: 100% (2925/2925), 6.17 MiB | 10.80 MiB/s, done.
+  Resolving deltas: 100% (230/230), done.
+
+  $ cd git
+  $ git fetch --unshallow
+  remote: Counting objects: 185430, done.
+  remote: Compressing objects: 100% (46933/46933), done.
+  remote: Total 185430 (delta 140505), reused 181589 (delta 136694), pack-reused 0
+  Receiving objects: 100% (185430/185430), 52.80 MiB | 10.84 MiB/s, done.
+  Resolving deltas: 100% (140505/140505), completed with 1784 local objects.
+  remote: Counting objects: 579, done.
+  remote: Compressing objects: 100% (579/579), done.
+  remote: Total 579 (delta 0), reused 579 (delta 0), pack-reused 0
+  Receiving objects: 100% (579/579), 266.85 KiB | 0 bytes/s, done.
+  [... fetch output ...]
+
+That looks like two packs being received for the --unshallow case.
+
+-Peff
