@@ -1,89 +1,72 @@
-From: Jeff King <peff@peff.net>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: Multiple fetches when unshallowing a shallow clone
-Date: Fri, 4 Dec 2015 16:27:12 -0500
-Message-ID: <20151204212712.GA22493@sigill.intra.peff.net>
+Date: Fri, 4 Dec 2015 13:36:47 -0800
+Message-ID: <CAGZ79kZwZuKEuYqRBFBRCu_bY6PmTnC+3e=Znpf24rxZB6hEbA@mail.gmail.com>
 References: <CACs8u9STLLHr3c3O9kQKGEN52DLfJ2LatjWkeaeeLA-xP=gC5Q@mail.gmail.com>
- <CAGZ79ka=RxVZ49D0wkqTRqspKb=Ce5Ay01muBt_Gk6_rDbH6KA@mail.gmail.com>
+	<CAGZ79ka=RxVZ49D0wkqTRqspKb=Ce5Ay01muBt_Gk6_rDbH6KA@mail.gmail.com>
+	<20151204212712.GA22493@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: Jason Paller-Rzepka <jasonpr@google.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Stefan Beller <sbeller@google.com>
-X-From: git-owner@vger.kernel.org Fri Dec 04 22:27:21 2015
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 04 22:36:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4xsu-0002ju-Ih
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 22:27:20 +0100
+	id 1a4y28-00056o-B4
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 22:36:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756471AbbLDV1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 16:27:16 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37521 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754906AbbLDV1P (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 16:27:15 -0500
-Received: (qmail 4776 invoked by uid 102); 4 Dec 2015 21:27:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Dec 2015 15:27:15 -0600
-Received: (qmail 28289 invoked by uid 107); 4 Dec 2015 21:27:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Dec 2015 16:27:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Dec 2015 16:27:12 -0500
-Content-Disposition: inline
-In-Reply-To: <CAGZ79ka=RxVZ49D0wkqTRqspKb=Ce5Ay01muBt_Gk6_rDbH6KA@mail.gmail.com>
+	id S1756496AbbLDVgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 16:36:49 -0500
+Received: from mail-yk0-f181.google.com ([209.85.160.181]:35894 "EHLO
+	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754906AbbLDVgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 16:36:48 -0500
+Received: by ykdr82 with SMTP id r82so139311315ykd.3
+        for <git@vger.kernel.org>; Fri, 04 Dec 2015 13:36:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=HJD2heVF9DHMcPRC/7HN//wh2pepu1dTkv4mk6xBQ1Y=;
+        b=K9OkzHoKg1N2gy6QD4S/J/belD71aEG0G7DquhKlh/Mt1YgdLrwedUjtM8JzUn41wx
+         snDjBakrnT6FjBdHvXQv/G7TALTa9DA4DE63Rlwybx9aKeWr1WMVfngIbnCcdvGjOP6m
+         kBKW4DmS6Hf+Ib36HF8aEfPWcKa9Gt5hr18NbGBJk5g91RF5/2fJztuvV2NBiUji7Vye
+         ihsYPSZrOSp+yhIRmqPwMNBmqpbvymCHtO/MMelhya2iAstU7JDQfqO2gjyO7MJ3lp2I
+         d4c+kl/0xPF+dPThFmWTUl6bSzSCqNWaPUgMBGRkBb+5t/AbnWDH10koTKQI3eEoauib
+         TcGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=HJD2heVF9DHMcPRC/7HN//wh2pepu1dTkv4mk6xBQ1Y=;
+        b=C5qule5ErAm4IaER7BSJzHAbTDPdOSdibLuDtL418zFM74WZ+UU6NKrFkSPou8OJhG
+         zV5vx2UuJqQv1dRRvMTb3bt2zwJA2EXi4QvUI12KpwWzOv0pFnCHo3k7XFOpDF+MVvFI
+         ocWvBuLjaQ/TXXfQd1UZ0gtI5DkFtYfyhI+Uj923glfFlAUkjeujvjN+IQk5xyM7wqtq
+         ow6VN7msBMizYGuGcKKaVnpva/8gfsQZXfMcISeUHg7+kwCgE0bxmOH04DeDR6YgV0qZ
+         lxdGLu6i6j+3PVnBaizqxZG3s4igfoFWAKUYp/JRuRvqA0b2UmHRXbsC56bistErpUXK
+         +WFg==
+X-Gm-Message-State: ALoCoQlgYi7IfmjxL6X4xfSDcXWowU+pWxQmjL2dk6rJnVqDIffUw2j5/zkh5SDBJ7eVl8ohqhUG
+X-Received: by 10.129.104.137 with SMTP id d131mr12913111ywc.199.1449265007506;
+ Fri, 04 Dec 2015 13:36:47 -0800 (PST)
+Received: by 10.37.215.16 with HTTP; Fri, 4 Dec 2015 13:36:47 -0800 (PST)
+In-Reply-To: <20151204212712.GA22493@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282006>
 
-On Fri, Dec 04, 2015 at 12:46:59PM -0800, Stefan Beller wrote:
+On Fri, Dec 4, 2015 at 1:27 PM, Jeff King <peff@peff.net> wrote:
+>>
+>> and could not see a second fetch, but only a
+>> fetch-pack with --depth=2147483647
+>
+> This seems to reproduce consistently for me:
+>
+>   $ git clone --depth=1 git://github.com/git/git
 
-> On Mon, Nov 30, 2015 at 11:35 AM, Jason Paller-Rzepka
-> <jasonpr@google.com> wrote:
-> > Hi all,
-> >
-> > Would anyone be willing to help me understand some shallow-clone
-> > behavior?  (I found a bug in Dulwich, and I'm looking for some context
-> > so I can determine how to fix it.)
-> >
-> > I learned that cgit sometimes performs two fetches for a `git fetch
-> > --unshallow`: one with depth 'infinity', and a subsequent one with
-> > depth zero.
-> 
-> Is there a condition to trigger this 'sometimes' ?
-> 
-> I just tried reproducing via
-> $ GIT_TRACE=1 git fetch --unshallow
-> 
-> and could not see a second fetch, but only a
-> fetch-pack with --depth=2147483647
-
-This seems to reproduce consistently for me:
-
-  $ git clone --depth=1 git://github.com/git/git
-  Cloning into 'git'...
-  remote: Counting objects: 2925, done.
-  remote: Compressing objects: 100% (2602/2602), done.
-  remote: Total 2925 (delta 230), reused 2329 (delta 206), pack-reused 0
-  Receiving objects: 100% (2925/2925), 6.17 MiB | 10.80 MiB/s, done.
-  Resolving deltas: 100% (230/230), done.
-
-  $ cd git
-  $ git fetch --unshallow
-  remote: Counting objects: 185430, done.
-  remote: Compressing objects: 100% (46933/46933), done.
-  remote: Total 185430 (delta 140505), reused 181589 (delta 136694), pack-reused 0
-  Receiving objects: 100% (185430/185430), 52.80 MiB | 10.84 MiB/s, done.
-  Resolving deltas: 100% (140505/140505), completed with 1784 local objects.
-  remote: Counting objects: 579, done.
-  remote: Compressing objects: 100% (579/579), done.
-  remote: Total 579 (delta 0), reused 579 (delta 0), pack-reused 0
-  Receiving objects: 100% (579/579), 266.85 KiB | 0 bytes/s, done.
-  [... fetch output ...]
-
-That looks like two packs being received for the --unshallow case.
-
--Peff
+I used the http protocol, so I guess that's the difference.
