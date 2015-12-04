@@ -1,114 +1,84 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/5] Split .git/config in multiple worktree setup
-Date: Fri, 4 Dec 2015 16:57:14 +0100
-Message-ID: <CACsJy8B6hZGn_KW5PeB33bjU6Y5n3Zbuh1YO0McZZg5DRemB0g@mail.gmail.com>
-References: <1449083626-20075-1-git-send-email-pclouds@gmail.com>
- <20151203061505.GA4314@wheezy.local> <CACsJy8AOeFEKhhmH-TCK6gWZQAJX0kbTS0-=iyCji9eXwBr9QA@mail.gmail.com>
- <20151203205318.GA10006@wheezy.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] add test to demonstrate that shallow recursive clones fail
+Date: Fri, 04 Dec 2015 08:15:34 -0800
+Message-ID: <xmqq1tb2tck9.fsf@gitster.mtv.corp.google.com>
+References: <1447321061-74381-1-git-send-email-larsxschneider@gmail.com>
+	<20151113053547.GD29708@sigill.intra.peff.net>
+	<CAGZ79kbWS=fc-18F=Omv7g4wqgrx4SB=iZHHUC=6ELUYDCWBMA@mail.gmail.com>
+	<CAGZ79kYDKM2ffdiR-+wQ9=HTgCZMG3UstJiNVrSh7rB1p9xecA@mail.gmail.com>
+	<xmqqio4j8iit.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kYY5FbvMpa2vOun7-h4S2cJvZLn67uPGYVbje55R4dFSg@mail.gmail.com>
+	<CACsJy8CFCu4casNn25b1YPkV==-8kDy3wzYd5uf794R41M0Y9w@mail.gmail.com>
+	<xmqqegf57sfe.fsf@gitster.mtv.corp.google.com>
+	<xmqq7fkx7qsa.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbtOEMk2woY5rovvC4xduiQRsKp+BXVt=5h9d76tpLWSA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Max Kirillov <max@max630.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 04 16:57:58 2015
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Dec 04 17:16:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4sk2-00018R-E3
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 16:57:50 +0100
+	id 1a4t1N-0005Ky-RA
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Dec 2015 17:15:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467AbbLDP5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 10:57:46 -0500
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:33727 "EHLO
-	mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753374AbbLDP5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 10:57:45 -0500
-Received: by lfaz4 with SMTP id z4so115033792lfa.0
-        for <git@vger.kernel.org>; Fri, 04 Dec 2015 07:57:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=7iSimqc6iAqg+/0yPuQLwVVlGQlfvkImrgsG4RjWdYU=;
-        b=ubFeM/ZopSpr0kn8bz8NSAtUM3ujIbIUGDdF5DCti7fpErc01xLxjR1bKvgyu6eqGq
-         xF8Ccnf7/rKwuOWvYP7NVRo/R5g74gbnNWL6I0o9RPeoEK6EvwXMxK5BqqH2BgOmA9z0
-         /F6qnTBpTUezzTc5TcQayX8T7U10LYYS/aoCmS+5nKU5ZgyHTO1HaV8pKFYfNTiBoPNC
-         SF7xN3gjkm4m14R399AibabiIIl+rTGj0gVUVmPs2vZqWV6yPYbI42rW2ZZI4/OJ+Tv5
-         AfWyeCynmvUtotr7x5d0xSnBBucebsYoL2bd2UK5DhtgIQG/xIDv2i6OwJzWIS5EU5L4
-         CU0w==
-X-Received: by 10.25.165.202 with SMTP id o193mr8191341lfe.83.1449244664302;
- Fri, 04 Dec 2015 07:57:44 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Fri, 4 Dec 2015 07:57:14 -0800 (PST)
-In-Reply-To: <20151203205318.GA10006@wheezy.local>
+	id S1755056AbbLDQPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 11:15:38 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56513 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753719AbbLDQPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 11:15:37 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6218D2E338;
+	Fri,  4 Dec 2015 11:15:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Oo5+Vejt77bvjECsS/AaHdjAWMA=; b=lMDyDv
+	YODPEYW1+eJQn+Ght0+1NWVuAZcaqU8G+8moooU6qM8JNNpS7lZ07thdVSLy0MrP
+	Fbs0RtFfDj5mVQvXVFppY82SE4Kya2+6DPeFzQ5uJzgalKHP+1xXGVgGMVrDMYNp
+	mO0Ix7NaXuBQSNTr9LNYH7K1IR7GKsrObVYjo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=seM0HFl3cQ6sUf3BFakFKH+IiY8+Fp7z
+	M8BDzBBt0xVRNEi/r7AIUExzbheHnE3D6ZTbid6QtOFUznybfybwPW9lIBoc7F8Q
+	w9PVpv/i4iavAJnRaQ9yfvCMMB0A9q9x9uaodauXEviPWrTTBIgEbhsEtvt718h2
+	ZwwSSMbSkk0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3B9112E336;
+	Fri,  4 Dec 2015 11:15:36 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AC1642E334;
+	Fri,  4 Dec 2015 11:15:35 -0500 (EST)
+In-Reply-To: <CAGZ79kbtOEMk2woY5rovvC4xduiQRsKp+BXVt=5h9d76tpLWSA@mail.gmail.com>
+	(Stefan Beller's message of "Thu, 3 Dec 2015 12:03:37 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 403401AC-9AA2-11E5-B5DC-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/281987>
 
-On Thu, Dec 3, 2015 at 9:53 PM, Max Kirillov <max@max630.net> wrote:
-> On Thu, Dec 03, 2015 at 09:07:07AM +0100, Duy Nguyen wrote:
->> On Thu, Dec 3, 2015 at 7:15 AM, Max Kirillov <max@max630.net> wrote:
->>> Using builtin defaults might be confusing for users -
->>> editing the info/config.worktree they must keep in mind the
->>> list of defaults (which they seem to don't know).
->>
->> All per-worktree variables are marked so in config.txt
+Stefan Beller <sbeller@google.com> writes:
+
+> Did you have any reason to pick . specifically or are we welcome to bikeshed
+> why a colon might be better? (or ":", "?", "[", "\", "^", "~", SP, or TAB)
 >
-> If I were user I would like the list to be more explicit.
+> We could use [id]c78f7b5ed9dc1c6edc8db06ac65860151d54fd07
+> or [const]c78f7b5ed9dc1c6edc8db06ac65860151d54fd07 ?
 
-I wouldn't. I mean, I have more than a dozen of git repos lying
-around, some I don't even remember where. Should I check git release
-notes at every upgrade then fix up _all_ of my repos? That's something
-I rather not do.
+As to the bikeshedding, I kind of like the above.
 
->>> Also, if
->>> anybody wants to extend the default list (like myself, for
->>> submodules), should they edit the info/config.worktree in
->>> provided template of extend the builtin list? What was wrong
->>> with the default in template?
->>
->> Suppose you introduce a new
->> per-worktree variable in the new git version. If it's in the builtin
->> list, we don't have to update every repo's info/config,worktree.
->
-> But how do you see it? Let's, for example, git-N consider
-> some variable as per-repository, and user does have it their
-> .git/config. Then git-N+1 considers it as per-worktree. How
-> does it find the variable while opening some existing
-> worktree? Then, if user sets the variable in some worktree
-> using git-N+1, git-N will no longer be able to see the
-> correct variable value. Does this mean that any change in
-> builtin list should cause repository incompatibility?
+    [object:c78f7b5ed9dc1c6edc8db06ac65860151d54fd07]
 
-Behavior differences between git versions have been alway will always
-be the problem. Yes providing some forward compatibility (by storing
-some logic outside the binary in this case) helps, but I don't think
-it eliminates it. If incompatibilities may lead to a big problem, then
-we can always make the new behavior an "repo extension" to stop older
-binaries from accessing the touched repos.
+would be a more natural way to use the pairwise magic characters
+like [], I suspect.
 
-Most of the time there's only one git version being used. So it should
-not be a big problem. But yes, if a repo is shared over network, then
-multiple git versions accessing the same repo can happen.
-
-On Thu, Dec 3, 2015 at 8:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I agree with your reasoning to have built-in set of files that are
-> per-worktree. I actually prefer *not* to have any configurability
-> to avoid confusion between users.
-
-There are a set of variables where whether they are shared or
-per-worktree is pretty much preference. For example, core.ignoreCase.
-What if I put one worktree on that case-insensitive file system? This
-gives the user some flexibility in managing those variables. _But_
-they can also manage another way with include.path (or a new variant
-that is worktree-aware), with a bit of work.
-
-So killing info/core.worktree is not a bad idea. Even better, we can
-avoid pulling exclude machinery in. But yeah, need to sort out the
-upgrade issue Max mentioned first.
--- 
-Duy
+Thanks.
