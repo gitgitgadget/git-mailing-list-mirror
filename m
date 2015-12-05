@@ -1,84 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Dec 2015, #02; Fri, 4)
-Date: Fri, 04 Dec 2015 16:21:36 -0800
-Message-ID: <xmqqvb8doicv.fsf@gitster.mtv.corp.google.com>
-References: <xmqqa8pprej5.fsf@gitster.mtv.corp.google.com>
-	<20151204232436.GB15064@sigill.intra.peff.net>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 15/16] refs: add LMDB refs backend
+Date: Fri, 04 Dec 2015 19:25:36 -0500
+Organization: Twitter
+Message-ID: <1449275136.3858.2.camel@twopensource.com>
+References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
+	 <1449102921-7707-16-git-send-email-dturner@twopensource.com>
+	 <xmqqzixpoiyt.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 05 01:21:45 2015
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git mailing list <git@vger.kernel.org>, mhagger@alum.mit.edu
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 05 01:25:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a50bf-0000dI-O6
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Dec 2015 01:21:44 +0100
+	id 1a50fZ-00005N-7o
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Dec 2015 01:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753553AbbLEAVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 19:21:39 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:50268 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752623AbbLEAVj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 19:21:39 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 63DE831FF3;
-	Fri,  4 Dec 2015 19:21:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/RHc4NWTF1mX4+BqHjGlwQhMjJ0=; b=C1b/g2
-	4/qZzBMwvcD8GywjgcbFu7wDCodgHo2cTi97NdJHM9ruvyihY1rcb8I0ZF3xmj/8
-	EplxobfZy5N10Rj6oCIvB5ewq6o9Yk656II5cSQ+XFMaTbxSzTZFZl6rWcKoffoZ
-	O+ESW9llbxadcKPiNJAuT54Ti5DLq0arx06OY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BSEIrbWB5PrujWPy7uNNJfMP6J1i5qGQ
-	6rICJLC1ZO34IJOuv+95YC82PpdG7k9NtLaMuLf06jVEZ5D5xQvvjG0hZjER0aTH
-	cI9kyKgjmHJ1FRh4yupW6YIROsyKwKBBhZhrxf19YVAOZC7PSYROuESpb74riNCP
-	6Mmnh/efA/k=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5A6A231FF2;
-	Fri,  4 Dec 2015 19:21:38 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D280F31FEF;
-	Fri,  4 Dec 2015 19:21:37 -0500 (EST)
-In-Reply-To: <20151204232436.GB15064@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 4 Dec 2015 18:24:36 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 26339EE0-9AE6-11E5-AB51-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S932228AbbLEAZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 19:25:41 -0500
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:34940 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932221AbbLEAZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 19:25:39 -0500
+Received: by igl9 with SMTP id 9so43789490igl.0
+        for <git@vger.kernel.org>; Fri, 04 Dec 2015 16:25:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=/2FwApsL/VN/Pp28WE0+oTIjEbunxLJ8KyO0tIJpfkU=;
+        b=gC3n0L13qvvP/yBOzZluon/hDTbzyBJRvMix3H9rZczGVUx/lm9S8WUCto+18KsOyM
+         puvuphtIpkkO9l7nxuEo/a1r47xD4uvBe9UZ/iRKHjKYYCoGmYAEe9/p/hVZ6bhyKRXj
+         iB2LKBSfT6XfQ+4LQJh+Tgn3aSRKcjOJdHpMC5zqPSeanCByHx9zv73pokXFR0OTPiDM
+         a5qpab6vszxyYkHsR4nk0dsQ6kGXYUrQOPxUw4XL65WHCXwSUKVDNo5NMim1iXi/2faI
+         vEZKUlVUI0Mi1wcmFrr/pblf5ERUBFr5yOOxtAG2AoZZbE3LLkrbFprAJGO7Su6k60TA
+         apig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=/2FwApsL/VN/Pp28WE0+oTIjEbunxLJ8KyO0tIJpfkU=;
+        b=HlP76sr4zcfjuQM8+OJQKBj3k3SuOHrfHtJDz7c2pSOqBZFwjYmuvbwxd9CS16zKYX
+         BZrhQi6Z5F+0DRJmdxWF1mOGzPEQHMtmfprV0TJDE1a1JKJkROwtSfJU0Eq8Tc2IF+FI
+         yIasdIYD5RkQpt2MsJctjrfen293lw00RLIOyWETMVFCuZakUS/E+V2Vl34tN22buOyp
+         g13BrSG7m6TkHIJQKxZwk/Msm1zN5Vyd+f0DRuMLZLHkP86bPYe4sQC09qCHRRb0QRG2
+         kjLelVp386xJYyWtON37TtDtrEP4bj4KWuGNn1l+CIE7gIax5mDaznFkSPgzUJggs0CF
+         gzmQ==
+X-Gm-Message-State: ALoCoQlOBtb4B672ofioNFnbEAihliPqf7i9iFp0PHHKQm71CMGTGYp1v5SdMnhAOFWttfJ2ES0UpBm4Ss+FOIQMc1xT/tRd6Q==
+X-Received: by 10.50.59.242 with SMTP id c18mr6358295igr.82.1449275139195;
+        Fri, 04 Dec 2015 16:25:39 -0800 (PST)
+Received: from ubuntu ([8.25.196.26])
+        by smtp.gmail.com with ESMTPSA id c2sm2297562igg.4.2015.12.04.16.25.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 04 Dec 2015 16:25:38 -0800 (PST)
+In-Reply-To: <xmqqzixpoiyt.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282024>
 
-Jeff King <peff@peff.net> writes:
+On Fri, 2015-12-04 at 16:08 -0800, Junio C Hamano wrote:
+> David Turner <dturner@twopensource.com> writes:
+> 
+> > +	while (!mdb_ret) {
+> > +		if (starts_with(key.mv_data, refname) &&
+> > +		    ((char*)key.mv_data)[refname_len - 2] == '/') {
+> 
+> ERROR: "(foo*)" should be "(foo *)"
+> #877: FILE: refs/lmdb-backend.c:514:
+> +                   ((char*)key.mv_data)[refname_len - 2] == '/') {
+> 
+> > +static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *cb_data)
+> > +{
+> > +	unsigned char osha1[20], nsha1[20];
+> > +	char *email_end, *message;
+> > +	unsigned long timestamp;
+> > +	int tz;
+> > +
+> > +	/* old (raw) new (raw) name <email> SP time TAB msg LF */
+> > +	if (sb->len < 41 || sb->buf[sb->len - 1] != '\n' ||
+> > +	    !(email_end = strchr(sb->buf + 40, '>')) ||
+> > +	    email_end[1] != ' ' ||
+> > +	    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
+> > +	    !message || message[0] != ' ' ||
+> > +	    (message[1] != '+' && message[1] != '-') ||
+> > +	    !isdigit(message[2]) || !isdigit(message[3]) ||
+> > +	    !isdigit(message[4]) || !isdigit(message[5]))
+> > +		return 0; /* corrupt? */
+> 
+> ERROR: do not use assignment in if condition
+> #1024: FILE: refs/lmdb-backend.c:661:
+> +       if (sb->len < 41 || sb->buf[sb->len - 1] != '\n' ||
 
-> You may want to update this in the whats-cooking template. :)
+This code is based on code from files-backend.c.  But I can change it
+anyway.
 
-X-<.  This is a bit tricky in that most of the time I want to retain
-the customization I made to the top-portion, and this part does not
-go through a three-way merge as it probably should.
-
->
-> diff --git a/whats-cooking.txt b/whats-cooking.txt
-> index 43394b7..04f6208 100644
-> --- a/whats-cooking.txt
-> +++ b/whats-cooking.txt
-> @@ -25,7 +25,11 @@ and all topic branches at:
->  
->      https://github.com/peff/git/
->  
-> -But note that I will _not_ be pushing to kernel.org.
-> +You can find the changes described here in the integration branches
-> +of the repositories listed at
-> +
-> +    http://git-blame.blogspot.com/p/git-public-repositories.html
-> +
-
-Thanks, but the patch is not quite right, as I won't be pushing to
-peff/git ;-)
+I'll also fix the rest, but wait for further review to post.
