@@ -1,105 +1,89 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 15/16] refs: add LMDB refs backend
-Date: Fri, 04 Dec 2015 19:25:36 -0500
-Organization: Twitter
-Message-ID: <1449275136.3858.2.camel@twopensource.com>
-References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
-	 <1449102921-7707-16-git-send-email-dturner@twopensource.com>
-	 <xmqqzixpoiyt.fsf@gitster.mtv.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Multiple fetches when unshallowing a shallow clone
+Date: Sat, 5 Dec 2015 06:33:47 +0100
+Message-ID: <CACsJy8BSNm6=E6Mo6etv_Lvdd2kpqQ7EEMBAoP-AQraYy3xU8w@mail.gmail.com>
+References: <CACs8u9STLLHr3c3O9kQKGEN52DLfJ2LatjWkeaeeLA-xP=gC5Q@mail.gmail.com>
+ <CAGZ79ka=RxVZ49D0wkqTRqspKb=Ce5Ay01muBt_Gk6_rDbH6KA@mail.gmail.com>
+ <20151204212712.GA22493@sigill.intra.peff.net> <CACs8u9Qvqn4KDMKo+RHsQaf+dw+CGtWrOpoUJzaZAqD1rFRiuw@mail.gmail.com>
+ <20151204215158.GA27987@sigill.intra.peff.net> <xmqqh9jxrfy5.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git mailing list <git@vger.kernel.org>, mhagger@alum.mit.edu
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>,
+	Jason Paller-Rzepka <jasonpr@google.com>,
+	Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 05 01:25:46 2015
+X-From: git-owner@vger.kernel.org Sat Dec 05 06:34:58 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a50fZ-00005N-7o
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Dec 2015 01:25:45 +0100
+	id 1a55Um-0003Et-PA
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Dec 2015 06:34:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932228AbbLEAZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 19:25:41 -0500
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:34940 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932221AbbLEAZj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 19:25:39 -0500
-Received: by igl9 with SMTP id 9so43789490igl.0
-        for <git@vger.kernel.org>; Fri, 04 Dec 2015 16:25:39 -0800 (PST)
+	id S1751132AbbLEFeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2015 00:34:19 -0500
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:36583 "EHLO
+	mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751043AbbLEFeS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Dec 2015 00:34:18 -0500
+Received: by lfs39 with SMTP id 39so121213871lfs.3
+        for <git@vger.kernel.org>; Fri, 04 Dec 2015 21:34:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :organization:content-type:mime-version:content-transfer-encoding;
-        bh=/2FwApsL/VN/Pp28WE0+oTIjEbunxLJ8KyO0tIJpfkU=;
-        b=gC3n0L13qvvP/yBOzZluon/hDTbzyBJRvMix3H9rZczGVUx/lm9S8WUCto+18KsOyM
-         puvuphtIpkkO9l7nxuEo/a1r47xD4uvBe9UZ/iRKHjKYYCoGmYAEe9/p/hVZ6bhyKRXj
-         iB2LKBSfT6XfQ+4LQJh+Tgn3aSRKcjOJdHpMC5zqPSeanCByHx9zv73pokXFR0OTPiDM
-         a5qpab6vszxyYkHsR4nk0dsQ6kGXYUrQOPxUw4XL65WHCXwSUKVDNo5NMim1iXi/2faI
-         vEZKUlVUI0Mi1wcmFrr/pblf5ERUBFr5yOOxtAG2AoZZbE3LLkrbFprAJGO7Su6k60TA
-         apig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=/2FwApsL/VN/Pp28WE0+oTIjEbunxLJ8KyO0tIJpfkU=;
-        b=HlP76sr4zcfjuQM8+OJQKBj3k3SuOHrfHtJDz7c2pSOqBZFwjYmuvbwxd9CS16zKYX
-         BZrhQi6Z5F+0DRJmdxWF1mOGzPEQHMtmfprV0TJDE1a1JKJkROwtSfJU0Eq8Tc2IF+FI
-         yIasdIYD5RkQpt2MsJctjrfen293lw00RLIOyWETMVFCuZakUS/E+V2Vl34tN22buOyp
-         g13BrSG7m6TkHIJQKxZwk/Msm1zN5Vyd+f0DRuMLZLHkP86bPYe4sQC09qCHRRb0QRG2
-         kjLelVp386xJYyWtON37TtDtrEP4bj4KWuGNn1l+CIE7gIax5mDaznFkSPgzUJggs0CF
-         gzmQ==
-X-Gm-Message-State: ALoCoQlOBtb4B672ofioNFnbEAihliPqf7i9iFp0PHHKQm71CMGTGYp1v5SdMnhAOFWttfJ2ES0UpBm4Ss+FOIQMc1xT/tRd6Q==
-X-Received: by 10.50.59.242 with SMTP id c18mr6358295igr.82.1449275139195;
-        Fri, 04 Dec 2015 16:25:39 -0800 (PST)
-Received: from ubuntu ([8.25.196.26])
-        by smtp.gmail.com with ESMTPSA id c2sm2297562igg.4.2015.12.04.16.25.37
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 04 Dec 2015 16:25:38 -0800 (PST)
-In-Reply-To: <xmqqzixpoiyt.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Evolution 3.12.11-0ubuntu3 
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=7imcaIKZ68/b6KOg6jyJTFuSHXeASUKGupxWRg4rv0o=;
+        b=PLBOi01fBkUD7Osv5NashsSseaQ32c3hMnaXaM8KejM0C1lcfULiSQT0LP9eaCBOTm
+         q2sZvMjNTkv9EUtlktA9Iwaht0wnIgKmdcNdpAyCcIcE3QyJg2hHuQvomOAaLggqrKKZ
+         PLuZtgV4wMA8xFm2JPWIy+5CyB/dk43rWJfnG6XiZdS30Ow7YMcI3fFbvUagHtWTt6mp
+         fZBCDKIF1E/ZQ29si/sVx00oGFU3v7pGlS7pTZUYJf+IldTt8rXI/5GYsotomuX3pJUZ
+         2zEKagKbC4b9APIVs7hNldzflmeACgV5BVNtxKusMRRu80PtJ1FtM3sG7A0nOtwAdhVM
+         syIw==
+X-Received: by 10.25.170.149 with SMTP id t143mr9620801lfe.162.1449293656701;
+ Fri, 04 Dec 2015 21:34:16 -0800 (PST)
+Received: by 10.112.199.5 with HTTP; Fri, 4 Dec 2015 21:33:47 -0800 (PST)
+In-Reply-To: <xmqqh9jxrfy5.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282025>
 
-On Fri, 2015-12-04 at 16:08 -0800, Junio C Hamano wrote:
-> David Turner <dturner@twopensource.com> writes:
-> 
-> > +	while (!mdb_ret) {
-> > +		if (starts_with(key.mv_data, refname) &&
-> > +		    ((char*)key.mv_data)[refname_len - 2] == '/') {
-> 
-> ERROR: "(foo*)" should be "(foo *)"
-> #877: FILE: refs/lmdb-backend.c:514:
-> +                   ((char*)key.mv_data)[refname_len - 2] == '/') {
-> 
-> > +static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *cb_data)
-> > +{
-> > +	unsigned char osha1[20], nsha1[20];
-> > +	char *email_end, *message;
-> > +	unsigned long timestamp;
-> > +	int tz;
-> > +
-> > +	/* old (raw) new (raw) name <email> SP time TAB msg LF */
-> > +	if (sb->len < 41 || sb->buf[sb->len - 1] != '\n' ||
-> > +	    !(email_end = strchr(sb->buf + 40, '>')) ||
-> > +	    email_end[1] != ' ' ||
-> > +	    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
-> > +	    !message || message[0] != ' ' ||
-> > +	    (message[1] != '+' && message[1] != '-') ||
-> > +	    !isdigit(message[2]) || !isdigit(message[3]) ||
-> > +	    !isdigit(message[4]) || !isdigit(message[5]))
-> > +		return 0; /* corrupt? */
-> 
-> ERROR: do not use assignment in if condition
-> #1024: FILE: refs/lmdb-backend.c:661:
-> +       if (sb->len < 41 || sb->buf[sb->len - 1] != '\n' ||
+On Fri, Dec 4, 2015 at 11:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>>> But why would fetching a tag (or set of tags) merit a depth of zero?
+>>> Doesn't depth 1 mean "give me the the objects, and none of their
+>>> descendants"?  Why use 0?
+>>
+>> That comes from this line:
+>>
+>>   transport_set_option(transport, TRANS_OPT_DEPTH, "0");
+>>
+>> That line blame back to b888d61 (Make fetch a builtin, 2007-09-10),
+>> which isn't incredibly helpful.
+>
+> Hmm, "0" means "no depth limitations", which is exactly what we want
+> in this "unshallow" case, I would think.  The behaviour observed is
 
-This code is based on code from files-backend.c.  But I can change it
-anyway.
+No depth 0 means "do not change depth", which is why Jeff saw no
+'deepen' lines (and those lines should be rejected any way). It's
+equivalent of doing "git fetch" without --depth.
 
-I'll also fix the rest, but wait for further review to post.
+> just like a regular fetch that auto-follows tags, where it has to
+> make a second fetch if the primary fetch fails to include everything
+> that is needed for propagating the tag for whatever reason.
+>
+> Having said that, IIRC, these days a depth limited clone is created
+> implicitly with --single-branch option, and I am not sure what the
+> right behaviour for the auto-following of tags in such a repository.
+
+I suppose followtags feature has been around long enough that we can
+simply trust that and skip the second fetch? But it's not that easy
+for subsequent fetches after the initial fetch in git-clone, because
+we no longer know if --single-branch was used (of if there is any new
+branch fetched since).
+-- 
+Duy
