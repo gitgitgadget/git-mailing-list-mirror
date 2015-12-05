@@ -1,68 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 13/16] init: allow alternate backends to be set for new
- repos
-Date: Sat, 5 Dec 2015 02:44:44 -0500
-Message-ID: <20151205074444.GD21639@sigill.intra.peff.net>
-References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
- <1449102921-7707-14-git-send-email-dturner@twopensource.com>
- <CACsJy8DDKW4np7N+KA=dpz9uNke0+cyQD-J3U74VM=4WbsjrKQ@mail.gmail.com>
+From: Sam Hocevar <sam@hocevar.net>
+Subject: [PATCH 2/2] git-p4: reduce number of server queries for fetches
+Date: Sat, 5 Dec 2015 12:22:22 +0100
+Message-ID: <20151205112222.GA15873@hocevar.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 05 08:45:05 2015
+Content-Type: text/plain; charset=us-ascii
+Cc: Luke Diamand <luke@diamand.org>, Pete Wyckoff <pw@padd.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+To: Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 05 12:28:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a57Wi-0005oI-CL
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Dec 2015 08:45:04 +0100
+	id 1a5B0P-0003S7-OA
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Dec 2015 12:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752523AbbLEHpA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Dec 2015 02:45:00 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37700 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752129AbbLEHo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Dec 2015 02:44:59 -0500
-Received: (qmail 13011 invoked by uid 102); 5 Dec 2015 07:44:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 05 Dec 2015 01:44:47 -0600
-Received: (qmail 1186 invoked by uid 107); 5 Dec 2015 07:44:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 05 Dec 2015 02:44:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Dec 2015 02:44:44 -0500
+	id S1753751AbbLEL1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Dec 2015 06:27:31 -0500
+Received: from poulet.zoy.org ([193.200.42.166]:38455 "EHLO smtp.zoy.org"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753216AbbLEL1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Dec 2015 06:27:31 -0500
+X-Greylist: delayed 316 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 Dec 2015 06:27:30 EST
+Received: from w00t.w00t (localhost [IPv6:::1])
+	by smtp.zoy.org (Postfix) with ESMTP id 1866C36125E;
+	Sat,  5 Dec 2015 12:22:25 +0100 (CET)
+Received: by w00t.w00t (Postfix, from userid 1000)
+	id B614E21AF6; Sat,  5 Dec 2015 12:22:22 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <CACsJy8DDKW4np7N+KA=dpz9uNke0+cyQD-J3U74VM=4WbsjrKQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Virus-Scanned: clamav-milter 0.98.7 at poulet
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282032>
 
-On Sat, Dec 05, 2015 at 07:30:13AM +0100, Duy Nguyen wrote:
+When fetching changes from a depot using a full client spec, there
+is no need to perform as many queries as there are top-level paths
+in the client spec.  Instead we query all changes in chronological
+order, also getting rid of the need to sort the results and remove
+duplicates.
 
-> On Thu, Dec 3, 2015 at 1:35 AM, David Turner <dturner@twopensource.com> wrote:
-> > git init learns a new argument --refs-backend-type.  Presently, only
-> > "files" is supported, but later we will add other backends.
-> >
-> > When this argument is used, the repository's core.refsBackendType
-> > configuration value is set, and the refs backend's initdb function is
-> > used to set up the ref database.
-> 
-> git-init can also be used on existing repos. What happens in that case
-> if we use --refs-backend-type. Will existing  refs be migrated to the
-> new backend or hidden away?
+Signed-off-by: Sam Hocevar <sam@hocevar.net>
+---
+ git-p4.py | 43 ++++++++++++++++++++-----------------------
+ 1 file changed, 20 insertions(+), 23 deletions(-)
 
-It would be neat if it migrated, but I suspect that may introduce
-complications. It's probably OK in the initial implementation to bail if
-the option is used in an existing repo.
-
-I think the config option needs to be extensions.refsBackendType, too,
-per the logic in 00a09d5 (introduce "extensions" form of
-core.repositoryformatversion, 2015-06-23). And I guess it needs to bump
-core.repositoryformatversion to "1".
-
--Peff
+diff --git a/git-p4.py b/git-p4.py
+index 210f100..ea2bbb2 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -796,39 +796,36 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
+                 die("cannot use --changes-block-size with non-numeric revisions")
+             block_size = None
+ 
+-    # Accumulate change numbers in a dictionary to avoid duplicates
+-    changes = {}
++    changes = []
+ 
+-    for p in depotPaths:
+-        # Retrieve changes a block at a time, to prevent running
+-        # into a MaxResults/MaxScanRows error from the server.
++    # Retrieve changes a block at a time, to prevent running
++    # into a MaxResults/MaxScanRows error from the server.
+ 
+-        while True:
+-            cmd = ['changes']
++    while True:
++        cmd = ['changes']
+ 
+-            if block_size:
+-                end = min(changeEnd, changeStart + block_size)
+-                revisionRange = "%d,%d" % (changeStart, end)
+-            else:
+-                revisionRange = "%s,%s" % (changeStart, changeEnd)
++        if block_size:
++            end = min(changeEnd, changeStart + block_size)
++            revisionRange = "%d,%d" % (changeStart, end)
++        else:
++            revisionRange = "%s,%s" % (changeStart, changeEnd)
+ 
++        for p in depotPaths:
+             cmd += ["%s...@%s" % (p, revisionRange)]
+ 
+-            for line in p4_read_pipe_lines(cmd):
+-                changeNum = int(line.split(" ")[1])
+-                changes[changeNum] = True
++        # Insert changes in chronological order
++        for line in reversed(p4_read_pipe_lines(cmd)):
++            changes.append(int(line.split(" ")[1]))
+ 
+-            if not block_size:
+-                break
++        if not block_size:
++            break
+ 
+-            if end >= changeEnd:
+-                break
++        if end >= changeEnd:
++            break
+ 
+-            changeStart = end + 1
++        changeStart = end + 1
+ 
+-    changelist = changes.keys()
+-    changelist.sort()
+-    return changelist
++    return changes
+ 
+ def p4PathStartsWith(path, prefix):
+     # This method tries to remedy a potential mixed-case issue:
+-- 
+2.6.2
