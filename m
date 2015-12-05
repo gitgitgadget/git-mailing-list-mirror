@@ -1,75 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] revision.c: fix possible null pointer access
-Date: Fri, 4 Dec 2015 18:32:55 -0500
-Message-ID: <20151204233255.GD15064@sigill.intra.peff.net>
-References: <1449171136-31566-1-git-send-email-stefan.naewe@gmail.com>
- <xmqqlh9bthyb.fsf@gitster.mtv.corp.google.com>
- <46311B14CC814F54AC34764F2520947A@PhilipOakley>
- <xmqq610ete8x.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/16] refs: add a backend method structure with transaction functions
+Date: Fri, 04 Dec 2015 16:07:02 -0800
+Message-ID: <xmqqegf1pxll.fsf@gitster.mtv.corp.google.com>
+References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
+	<1449102921-7707-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Philip Oakley <philipoakley@iee.org>,
-	Stefan Naewe <stefan.naewe@gmail.com>, git@vger.kernel.org,
-	Stefan Beller <stefanbeller@googlemail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 05 00:33:03 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sat Dec 05 01:07:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a4zqY-0000Vh-Kn
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Dec 2015 00:33:02 +0100
+	id 1a50Nd-0006sz-5i
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Dec 2015 01:07:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932097AbbLDXc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Dec 2015 18:32:59 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37616 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755356AbbLDXc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Dec 2015 18:32:58 -0500
-Received: (qmail 13004 invoked by uid 102); 4 Dec 2015 23:32:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Dec 2015 17:32:58 -0600
-Received: (qmail 30356 invoked by uid 107); 4 Dec 2015 23:33:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 04 Dec 2015 18:33:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Dec 2015 18:32:55 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqq610ete8x.fsf@gitster.mtv.corp.google.com>
+	id S1754985AbbLEAHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Dec 2015 19:07:06 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58130 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752806AbbLEAHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Dec 2015 19:07:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DF12131A65;
+	Fri,  4 Dec 2015 19:07:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=hzUKkN6Fp8cAJw2spNHpmlJffPk=; b=agoLyytA0sZwguin0MKp
+	x90pDNfSbMBOZIaady7sPko+jyDxJeHsuN+e6Du8sQ8udlGSUQzLCBahXFjuuXPM
+	3eYlRe0DeGYnm0K1qMgEiSJS+pXpdFrzDzjOIee/Vg6CLty89PpsEPJgYucFD5cE
+	+OOfmZtuFvmUSrU9dyZ28dM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=PMkqjj1LPywn6nqjKNb0bqOf+IC1dtv0bEYp+iUy8rnQLv
+	xTldgQKRqJSQpxoBdisiJqD5HNUoc2kHTo9X7wlt/9smisn90lxR+9NLbvc6cfRU
+	qPdume+Cbj2XuQVG1bMVdS6UOG5U/EAyh2l0PYF8aghgd/OMbqby6rwNVdkCQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D7CC731A64;
+	Fri,  4 Dec 2015 19:07:03 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 55CF331A63;
+	Fri,  4 Dec 2015 19:07:03 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1CF4614A-9AE4-11E5-B66A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282020>
 
-On Fri, Dec 04, 2015 at 07:39:10AM -0800, Junio C Hamano wrote:
+David Turner <dturner@twopensource.com> writes:
 
-> > But you can't do that computation (in the error case under
-> > consideration). Null can't be added to anything (as far as the
-> > implications of the standards go). These are horrid gotchas because
-> > they go against the grain of all that binary arithmetic and
-> > simplifications we learnt long ago.
-> 
-> Yeah, but in that hunk that does check !tree, because the function
-> can be fed a NULL, the computed result assigned to object, which is
-> undefined, is never used ;-)
-> 
-> Of course, there used to be exotic platforms that are still standard
-> compliant that triggered a trap when such a pointer computation was
-> made (rather, such a bogus pointer was assigned to a pointer
-> variable).  I do not think anybody attempted to port Git to such a
-> platform, but I agree that it is better to "fix" such a codepath, if
-> only to stop wasting time dealing with them discussing with language
-> lawyers ;-)
+> diff --git a/refs.c b/refs.c
+> index 0f7628d..babba8a 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -10,6 +10,31 @@
+>  #include "tag.h"
+>  
+>  /*
+> + * We always have a files backend and it is the default.
+> + */
+> +extern struct ref_be refs_be_files;
 
-FWIW, I'd worry much more about compilers which do aggressive
-optimizations based on language-lawyering (e.g., removing the null-check
-as dead code, which is legal according to the standard because after you
-computed the pointer based on it, it's all undefined behavior).
-
-I don't think that changes your conclusion, though:
-
-> So as I said in my review, the first hunk is a reject, the second
-> one is OK.
-
--Peff
+It is customary to s/extern //; in C sources.
