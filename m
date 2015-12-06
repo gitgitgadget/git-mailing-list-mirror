@@ -1,599 +1,68 @@
-From: James <rouzier@gmail.com>
-Subject: [PATCH v2 1/2] modernize t7300
-Date: Sun,  6 Dec 2015 09:58:25 -0500
-Message-ID: <1449413906-23256-1-git-send-email-rouzier@gmail.com>
-References: <CAPig+cRa31uriO4qkZUydooNx0V+dNrUgFvTUxoLL9gCjq9AHQ@mail.gmail.com>
-Cc: James Rouzier <rouzier@gmail.com>, sunshine@sunshineco.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 06 15:59:24 2015
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2015, #02; Fri, 4)
+Date: Sun, 6 Dec 2015 10:12:18 -0600
+Message-ID: <CAOc6etZBnB6EKiD3xD-zp-QJz20ueQzdtdJMSZz6wOH_HFZXxw@mail.gmail.com>
+References: <xmqqa8pprej5.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 06 17:19:26 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a5amW-0005kA-QE
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Dec 2015 15:59:21 +0100
+	id 1a5c21-0003kK-LH
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Dec 2015 17:19:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753279AbbLFO7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2015 09:59:09 -0500
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:34410 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753264AbbLFO6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2015 09:58:55 -0500
-Received: by qgeb1 with SMTP id b1so127317837qge.1
-        for <git@vger.kernel.org>; Sun, 06 Dec 2015 06:58:54 -0800 (PST)
+	id S1753276AbbLFQSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2015 11:18:48 -0500
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:33165 "EHLO
+	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753183AbbLFQSr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2015 11:18:47 -0500
+Received: by pfnn128 with SMTP id n128so51476583pfn.0
+        for <git@vger.kernel.org>; Sun, 06 Dec 2015 08:18:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GllWdBAeCjG9EubL/yi7uenYyY1KvjbjBdC+ZAcEn1g=;
-        b=TwNJ7TPvU923aUbQqay9gmlUEwsR4lGsCArWa3QM0RokwEJtiW2wSQN1U0CwV6t0n3
-         C2oNmsIbOltyMh5SWg/GDnpaWw0GRcblKGRYTzXLyUTqTdZ17hEpaNsTB20O0VG9GdjY
-         Lvuc0wjyoiIvAvTHbYX31PSSFiPrij3QZMtMzLOs6oRtN1jhhuN63/f1Wy2wYOXMa5kh
-         S9bxBJN0NRiDak285y1oNyV4Ve27uME0vFNCst6M+2jluPoVfUnoU8bQwHygaoMkaSP0
-         hL3/PMPnRzmxJ7TSezFS8+MxrkWGYfk4tUD+I9HanSDpUejD2lTihuZn2cjKMLlGioO+
-         NISA==
-X-Received: by 10.140.157.82 with SMTP id d79mr32746915qhd.71.1449413934593;
-        Sun, 06 Dec 2015 06:58:54 -0800 (PST)
-Received: from centos6-oc.jr.inverse.ca (modemcable080.32-81-70.mc.videotron.ca. [70.81.32.80])
-        by smtp.gmail.com with ESMTPSA id z72sm9327588qkz.46.2015.12.06.06.58.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 06 Dec 2015 06:58:53 -0800 (PST)
-X-Mailer: git-send-email 2.3.6
-In-Reply-To: <CAPig+cRa31uriO4qkZUydooNx0V+dNrUgFvTUxoLL9gCjq9AHQ@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=NTBqYxZXSWMGDPVnLjLalbZWKqTFKMIMfQxXNZps+iE=;
+        b=IzN/1M8UMWM55qX35igaiWuAxl1BmcbNutaWLlAwY/l4ZWbwGhJR96HVuweHUT5L0L
+         2Hpgr6kMp22jrB0gERXHFATBUI54W7SNbDUyftOu0Wz41nyrvwvvM/vltFIga2lpTbC0
+         Anl+tjD8Vvln0erE+Yh2UYqKYfjqDLADCD0FDoPA+yIVOhrw6dTMsECz6Fw2Plt4Rjq2
+         qx9HUq8oKyat8nOdEoC7Dzdniq60mm1Nl1v2U42vRzo4Q6FOxtVcTgNfbcaqiaS5l+M9
+         oNzGXtTsJeyDMfQVXRHYQT7SUaSt7l/M9zZQUm2/VwKGJ/aEsYuncUcKgTIMwLkkdkJs
+         CZBQ==
+X-Received: by 10.98.16.133 with SMTP id 5mr36386395pfq.150.1449418338285;
+ Sun, 06 Dec 2015 08:12:18 -0800 (PST)
+Received: by 10.66.89.42 with HTTP; Sun, 6 Dec 2015 08:12:18 -0800 (PST)
+In-Reply-To: <xmqqa8pprej5.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282055>
 
-From: James Rouzier <rouzier@gmail.com>
+Hi, Junio, Jeff!
 
----
- t/t7300-clean.sh | 382 +++++++++++++++++++++++++++----------------------------
- 1 file changed, 190 insertions(+), 192 deletions(-)
+On Fri, Dec 4, 2015 at 5:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> * ec/annotate-deleted (2015-11-20) 1 commit
+>  - annotate: skip checking working tree if a revision is provided
+>
+>  Usability fix for annotate-specific "<file> <rev>" syntax with deleted
+>  files.
+>
+>  Waiting for review.
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 86ceb38..d555bb6 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -28,15 +28,15 @@ test_expect_success 'git clean with skip-worktree .gitignore' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so &&
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so &&
- 	git update-index --no-skip-worktree .gitignore &&
- 	git checkout .gitignore
- '
-@@ -46,15 +46,15 @@ test_expect_success 'git clean' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -63,15 +63,15 @@ test_expect_success 'git clean src/' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean src/ &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -80,15 +80,15 @@ test_expect_success 'git clean src/ src/' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean src/ src/ &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -97,16 +97,16 @@ test_expect_success 'git clean with prefix' '
- 	mkdir -p build docs src/test &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so src/test/1.c &&
- 	(cd src/ && git clean) &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test ! -f src/part3.c &&
--	test -f src/test/1.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file src/test/1.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -160,16 +160,16 @@ test_expect_success 'git clean -d with prefix and path' '
- 	mkdir -p build docs src/feature &&
- 	touch a.out src/part3.c src/feature/file.c docs/manual.txt obj.o build/lib.so &&
- 	(cd src/ && git clean -d feature/) &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test -f src/part3.c &&
--	test ! -f src/feature/file.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_missing src/feature/file.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -179,16 +179,16 @@ test_expect_success SYMLINKS 'git clean symbolic link' '
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	ln -s docs/manual.txt src/part4.c &&
- 	git clean &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test ! -f src/part4.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_missing src/part4.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -196,13 +196,13 @@ test_expect_success 'git clean with wildcard' '
- 
- 	touch a.clean b.clean other.c &&
- 	git clean "*.clean" &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.clean &&
--	test ! -f b.clean &&
--	test -f other.c
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.clean &&
-+	test_path_is_missing b.clean &&
-+	test_path_is_file other.c
- 
- '
- 
-@@ -211,15 +211,15 @@ test_expect_success 'git clean -n' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -n &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -228,15 +228,15 @@ test_expect_success 'git clean -d' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -d &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test ! -d docs &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_missing docs &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -245,16 +245,16 @@ test_expect_success 'git clean -d src/ examples/' '
- 	mkdir -p build docs examples &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so examples/1.c &&
- 	git clean -d src/ examples/ &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test ! -f src/part3.c &&
--	test ! -f examples/1.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_missing examples/1.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -263,15 +263,15 @@ test_expect_success 'git clean -x' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -x &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test ! -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -280,15 +280,15 @@ test_expect_success 'git clean -d -x' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -d -x &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test ! -d docs &&
--	test ! -f obj.o &&
--	test ! -d build
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_missing docs &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_missing build
- 
- '
- 
-@@ -297,15 +297,15 @@ test_expect_success 'git clean -d -x with ignored tracked directory' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -d -x -e src &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test -f src/part3.c &&
--	test ! -d docs &&
--	test ! -f obj.o &&
--	test ! -d build
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_missing docs &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_missing build
- 
- '
- 
-@@ -314,15 +314,15 @@ test_expect_success 'git clean -X' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -X &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test ! -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -331,15 +331,15 @@ test_expect_success 'git clean -d -X' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -d -X &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test ! -f obj.o &&
--	test ! -d build
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_missing build
- 
- '
- 
-@@ -348,15 +348,15 @@ test_expect_success 'git clean -d -X with ignored tracked directory' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -d -X -e src &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test ! -f obj.o &&
--	test ! -d build
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_missing build
- 
- '
- 
-@@ -379,29 +379,29 @@ test_expect_success 'clean.requireForce and -n' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -n &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
- test_expect_success 'clean.requireForce and -f' '
- 
- 	git clean -f &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -444,11 +444,11 @@ test_expect_success 'nested git work tree' '
- 		test_commit deeply.nested deeper.world
- 	) &&
- 	git clean -f -d &&
--	test -f foo/.git/index &&
--	test -f foo/hello.world &&
--	test -f baz/boo/.git/index &&
--	test -f baz/boo/deeper.world &&
--	! test -d bar
-+	test_path_is_file foo/.git/index &&
-+	test_path_is_file foo/hello.world &&
-+	test_path_is_file baz/boo/.git/index &&
-+	test_path_is_file baz/boo/deeper.world &&
-+	test_path_is_missing bar
- '
- 
- test_expect_success 'should clean things that almost look like git but are not' '
-@@ -609,32 +609,30 @@ test_expect_success 'force removal of nested git work tree' '
- 		test_commit deeply.nested deeper.world
- 	) &&
- 	git clean -f -f -d &&
--	! test -d foo &&
--	! test -d bar &&
--	! test -d baz
-+	test_path_is_missing foo &&
-+	test_path_is_missing bar &&
-+	test_path_is_missing baz
- '
- 
- test_expect_success 'git clean -e' '
- 	rm -fr repo &&
- 	mkdir repo &&
--	(
--		cd repo &&
--		git init &&
--		touch known 1 2 3 &&
--		git add known &&
--		git clean -f -e 1 -e 2 &&
--		test -e 1 &&
--		test -e 2 &&
--		! (test -e 3) &&
--		test -e known
--	)
-+	cd repo &&
-+	git init &&
-+	touch known 1 2 3 &&
-+	git add known &&
-+	git clean -f -e 1 -e 2 &&
-+	test_path_is_file 1 &&
-+	test_path_is_file 2 &&
-+	test_path_is_missing 3 &&
-+	test_path_is_file known
- '
- 
- test_expect_success SANITY 'git clean -d with an unreadable empty directory' '
- 	mkdir foo &&
- 	chmod a= foo &&
- 	git clean -dfx foo &&
--	! test -d foo
-+	test_path_is_missing foo
- '
- 
- test_expect_success 'git clean -d respects pathspecs (dir is prefix of pathspec)' '
--- 
-2.3.6
+Is there something I have to do about it?
+
+And, another thing, I had sent the fifth version of my patch about
+progress for blame where I took care of all the comments hat Junio
+stated before and I got no comments since. I hoped that patch would be
+listed sometime but I didn't see it in this what's cooking or the
+previous one. Maybe it's bellow your radar? Is there something else I
+can to do about it? ($gmane/281677)
+
+Thanks in advance!
