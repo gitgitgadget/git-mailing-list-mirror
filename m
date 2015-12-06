@@ -1,83 +1,75 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: [PATCH/RFC 3/3] ls-files/dir: use is_git_repo to detect submodules
-Date: Sun, 6 Dec 2015 17:59:26 +0100
-Message-ID: <20151206165926.GI22288@inner.h.apk.li>
-References: <1449252917-3877-1-git-send-email-a.krey@gmx.de> <1449252917-3877-3-git-send-email-a.krey@gmx.de> <20151205073744.GC21639@sigill.intra.peff.net>
+From: Jagan Teki <jagannadh.teki@gmail.com>
+Subject: Show total commit count of two authors or more authors into first author
+Date: Mon, 7 Dec 2015 00:53:35 +0530
+Message-ID: <CAD6G_RQ2Ub8HasupNbUFK2LJfir25tNFTqrqU2ELoEJHOibzHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Dec 06 18:00:12 2015
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 06 20:23:43 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a5cfS-0001Xe-Uh
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Dec 2015 18:00:11 +0100
+	id 1a5euM-0007gA-7L
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Dec 2015 20:23:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753731AbbLFQ7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2015 11:59:33 -0500
-Received: from continuum.iocl.org ([217.140.74.2]:33049 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753282AbbLFQ7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2015 11:59:32 -0500
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id tB6GxQH16331;
-	Sun, 6 Dec 2015 17:59:26 +0100
-Content-Disposition: inline
-In-Reply-To: <20151205073744.GC21639@sigill.intra.peff.net>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1753886AbbLFTXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2015 14:23:40 -0500
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:35951 "EHLO
+	mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753182AbbLFTXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2015 14:23:39 -0500
+Received: by lfs39 with SMTP id 39so136909496lfs.3
+        for <git@vger.kernel.org>; Sun, 06 Dec 2015 11:23:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Bz6sWRmexJNQsFO5SBEydfvEoLlINMKV9IWK1CUErkw=;
+        b=cZWxPholT+ae3MBySaRlCgLT3qpgx8XVlcAPDu9Mr4vt38LYDSfimmwhZOPEO3TULp
+         wltOF+AAMgCV3LjDFr4nPNNoNQYyeiU5YG2MmUyDyIvkNbYbePTNY2DL/I31zsgLnGLI
+         vZuisidqUKHoRuSU4wYJw4uXczDnLtn1vDt0vFA1awdRN5ERYGWS2zk/xJ10tB/VxSO3
+         IvMVXY4U2Dqm6blMFpq2JCivcT7hh6XBtIy5GUSsGD5EbQXTBJBxWQ+puflLKAFp+jai
+         T0LqwO3nwBevrtdyCCApcOrvFMWyQ/dCbaK9M8V8N0E3/cl7kjUmWqoEdfKs9uU3E0oD
+         pNJQ==
+X-Received: by 10.25.85.78 with SMTP id j75mr11884814lfb.46.1449429815453;
+ Sun, 06 Dec 2015 11:23:35 -0800 (PST)
+Received: by 10.25.209.206 with HTTP; Sun, 6 Dec 2015 11:23:35 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282059>
 
-On Sat, 05 Dec 2015 02:37:44 +0000, Jeff King wrote:
-...
-> Hrm. Weird. You'd think it would break with the existing code if I do
-> this, then:
-> 
-...
-> -		(cd a/b/c; git init) &&
-> +		(cd a/b/c; git init && git commit --allow-empty -m foo) &&
->  		git config remote.origin.url ../foo/bar.git &&
->  		git submodule add ../bar/a/b/c ./a/b/c &&
+I usually count commits as below command
 
-I tried a -f here instead; did not work either.
+$ git shortlog -s -n
+   149  Jagan Teki
+   148  Otavio Salvador
+   143  Bo Shen
+   137  Lokesh Vutla
+   134  Minkyu Kang
+   132  Marian Balakowicz
+   129  Haavard Skinnemoen
+   127  Holger Brunck
+   124  Tim Harvey
+   122  Jagannadha Teki
+   120  Daniel Schwierzeck
+   119  Eric Nelson
+   118  Andy Fleming
+   116  Jagannadha Sutradharudu Teki
 
-I guess I will first wade through the other failures my 'fix'
-causes to see the total damage.
+Out of which below three names are with same author which changed
+while submitted patches.
+  149  Jagan Teki
+  122  Jagannadha Teki
+  116  Jagannadha Sutradharudu Teki
 
-...
-> We know it is a git dir, but there is no sha1 for us to actually add as
-> the gitlink entry.
-> 
-> If that is the case, then there is either some very tricky refactoring
-> required,
+I need a command to show to add all commits and show first one as
+   387 Jagan Teki
 
-Yes, it looks like the return code delivered need to be slightly different
-dependent on the user.
+Can anyone help to do this?
 
-> or what we are trying to do here is simply wrong. Maybe it
-> would be simpler to just speed up resolve_gitlink_ref with a better data
-> structure.
-
-Which is what I did on square one, but now we already have a real fix
-for git clean, and now it's even less advantageous the fix the consequence
-(the submodule cache blowing up) instead of the cause (asking for it
-in the first place).
-
-I don't think we should let is_git_repository look for a valid(ish) HEAD.
-
-Andreas
-
-PS: I seem to not quite have send-email under control, the envelope from
-    seems to made the patches not reach the mailing list (nor me in the CC).
-
+thanks!
 -- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+Jagan.
