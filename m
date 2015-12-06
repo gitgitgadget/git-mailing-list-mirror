@@ -1,97 +1,114 @@
-From: Jagan Teki <jteki@openedev.com>
-Subject: Re: Show total commit count of two authors or more authors into first author
-Date: Mon, 7 Dec 2015 01:45:19 +0530
-Message-ID: <CAD6G_RRtH5yBqwrgMxhrSXb++n6CNA2qXcNn+Z2ALSyV8b9ZuA@mail.gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Show total commit count of two authors or more authors into
+ first author
+Date: Sun, 6 Dec 2015 21:20:16 +0000
+Message-ID: <20151206212016.GA585454@vauxhall.crustytoothpaste.net>
 References: <CAD6G_RQ2Ub8HasupNbUFK2LJfir25tNFTqrqU2ELoEJHOibzHA@mail.gmail.com>
-	<87wpsrz843.fsf@igel.home>
+ <87wpsrz843.fsf@igel.home>
+ <CAD6G_RRtH5yBqwrgMxhrSXb++n6CNA2qXcNn+Z2ALSyV8b9ZuA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Dec 06 21:49:45 2015
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="mYCpIKhGyMATD0i+"
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Git List <git@vger.kernel.org>
+To: Jagan Teki <jteki@openedev.com>
+X-From: git-owner@vger.kernel.org Sun Dec 06 22:20:31 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a5gFc-0001fw-T1
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Dec 2015 21:49:45 +0100
+	id 1a5gjN-0004dT-Cg
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Dec 2015 22:20:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754484AbbLFUtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2015 15:49:17 -0500
-Received: from s159.web-hosting.com ([68.65.121.203]:60657 "EHLO
-	s159.web-hosting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754323AbbLFUtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2015 15:49:17 -0500
-X-Greylist: delayed 2035 seconds by postgrey-1.27 at vger.kernel.org; Sun, 06 Dec 2015 15:49:17 EST
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:36688)
-	by server159.web-hosting.com with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
-	(Exim 4.85)
-	(envelope-from <jteki@openedev.com>)
-	id 1a5fiK-004Ifi-Mc
-	for git@vger.kernel.org; Sun, 06 Dec 2015 15:15:22 -0500
-Received: by lbblt2 with SMTP id lt2so45729731lbb.3
-        for <git@vger.kernel.org>; Sun, 06 Dec 2015 12:15:19 -0800 (PST)
-X-Received: by 10.112.136.170 with SMTP id qb10mr12713403lbb.106.1449432919275;
- Sun, 06 Dec 2015 12:15:19 -0800 (PST)
-Received: by 10.25.209.206 with HTTP; Sun, 6 Dec 2015 12:15:19 -0800 (PST)
-In-Reply-To: <87wpsrz843.fsf@igel.home>
-X-Gmail-Original-Message-ID: <CAD6G_RRtH5yBqwrgMxhrSXb++n6CNA2qXcNn+Z2ALSyV8b9ZuA@mail.gmail.com>
-X-OutGoing-Spam-Status: No, score=-2.9
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - server159.web-hosting.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - openedev.com
-X-Get-Message-Sender-Via: server159.web-hosting.com: authenticated_id: jteki@openedev.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-From-Rewrite: unmodified, already matched
+	id S1754558AbbLFVUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2015 16:20:25 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:60746 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754481AbbLFVUY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Dec 2015 16:20:24 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2D5242808C;
+	Sun,  6 Dec 2015 21:20:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1449436822;
+	bh=SaucXXyRMZ5N/sFlrL+SYGw6wwHWCaZl0JisGfvgOxc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CIBwrRufSNDR/xv0QznJPImgqChbaWSnSPQ95AAKg1xSdz0tr/4+5W/uIzvwwYimh
+	 9a1eVFexcWKHuwAJo4LXz+n3Ihjb3c8h8mu1yFIgfEVDYWZhC5X5zNdCBK/8Bj8QkR
+	 z/UkTj4Cb9PrvldjFlWbvDO+f/uB6yLHOFALtDhUjObvhKL3un5ocPop59LX/RC/Ej
+	 1hFzTM4MwsoW6UC680cXLv6NjnhUX4UeeJOEXU65LZHjy6OeL84y5JfPb36S2diRIE
+	 YXsH/o49pYC/D0hzstUuf80v6tLiyGxyAe4llqSdXzMkb5JtBSxiZwdJj+/vecnoMu
+	 mPuiVb0oyuj1Ic06pOR0Xm6nyuwnQcXaRFv97h+YKKPFLsJiI3eGRAx5MgjUFqaJiY
+	 nE2aZbnNzrZeWy3JOiSlVb0A5cbad/VRUyPJS62GdKYqWc631NOBlmJ/Bk9mnPFuxl
+	 0sf80tbzpId09ws0rXOf3Rxvs15rnd1vyQVKg57s+Sf4cwOfgqJ
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jagan Teki <jteki@openedev.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Git List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <CAD6G_RRtH5yBqwrgMxhrSXb++n6CNA2qXcNn+Z2ALSyV8b9ZuA@mail.gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.2.0-1-amd64)
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282064>
 
-On 7 December 2015 at 01:01, Andreas Schwab <schwab@linux-m68k.org> wrote:
-> Jagan Teki <jagannadh.teki@gmail.com> writes:
->
->> Out of which below three names are with same author which changed
->> while submitted patches.
->>   149  Jagan Teki
->>   122  Jagannadha Teki
->>   116  Jagannadha Sutradharudu Teki
->>
->> I need a command to show to add all commits and show first one as
->>    387 Jagan Teki
->>
->> Can anyone help to do this?
->
-> See the "MAPPING AUTHORS" section of git-shortlog(1).
->
->        The .mailmap feature is used to coalesce together commits by the same
->        person in the shortlog, where their name and/or email address was
->        spelled differently.
->
->        If the file .mailmap exists at the toplevel of the repository, or at
->        the location pointed to by the mailmap.file or mailmap.blob
->        configuration options, it is used to map author and committer names and
->        email addresses to canonical real names and email addresses.
 
-Thanks for the info, I'm able to map two author with e-mail but it's
-not working when I group 3
+--mYCpIKhGyMATD0i+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-$ .mailmap
-Jagan Teki <a@abc.com> Jagannadha Teki <x@xynz.com>
+On Mon, Dec 07, 2015 at 01:45:19AM +0530, Jagan Teki wrote:
+> Thanks for the info, I'm able to map two author with e-mail but it's
+> not working when I group 3
+>=20
+> $ .mailmap
+> Jagan Teki <a@abc.com> Jagannadha Teki <x@xynz.com>
+>=20
+> The above worked but how about 3 names mapping
+>=20
+> $ .mailmap
+> Jagan Teki <a@abc.com> Jagannadha Teki <x@xynz.com> Jagannadha
+> Sutradharudu Teki<p@pqr.com>
+>=20
+> Finally I need to map all 3 into Jagan Teki <a@abc.com>
 
-The above worked but how about 3 names mapping
+You probably want to map two at a time.  So something like this:
 
-$ .mailmap
-Jagan Teki <a@abc.com> Jagannadha Teki <x@xynz.com> Jagannadha
-Sutradharudu Teki<p@pqr.com>
+  Jagan Teki <a@abc.com> Jagannadha Teki <x@xynz.com>
+  Jagan Teki <a@abc.com> Jagannadha Sutradharudu Teki <p@pqr.com>
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-Finally I need to map all 3 into Jagan Teki <a@abc.com>
+--mYCpIKhGyMATD0i+
+Content-Type: application/pgp-signature; name="signature.asc"
 
--- 
-Jagan.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.9 (GNU/Linux)
+
+iQIcBAEBCgAGBQJWZKaQAAoJEL9TXYEfUvaLYxYP/RRFLxgJ+Wo5IjjxWAMYKg0B
+rHCFzvUEH9TBJbJeEi7kotzxVFkg3nLp3xbNs6l1XQq+TL4sS822BAaAVuoiJLA+
+DrTJmpsJK+VA3tRxNUsKWeu9WCoNXC50PiJYUNtgLo3fW4xgImoOZ9YDql0fHCKy
+IYt+HQQLUGp4EbFsduz7udYV6BXpetmBrsJKVvPJBGVTDi/uyn7GjljZvyCmtXh9
+LZSJ8CqvyGu35mMKKFMQmIbyyS4agpQXw3m3nGMJ0XL6uq7paW8yhGdGnP5jIhUt
+54sG/K0miqff+k0HHhP6fMt5I0QRKNWzVzvnw6oY4xJuPaB2v2lzm0gdh59U4KFU
+nxobeCw8x/FpFpvMMVno2/COmJ95H0VPu5yW0e0b1WWGdncN9N5z5O1mTav5qJfn
+qEhIC4xcMUG/fp7OX6D+1bsUzFmFJXLYMATjtrNvwmnq6iCroK/x3D9Eqj0W6+uQ
+gSAxxIIT45ezhRJGg98a3I0inIlE8tUrmSSZKfq22MdLcaykb6Aid1FeOzzA6ilB
+OU9NmqKabkG1FKZExAjqUU7kGLod2vtft292OQWmgpon1m8OhesH6WwuZaOkCd9M
+HvdPMyn0CnMMsgxBb0/VWkbMEFTc/vUTBR+4JjLwSTEnXc0i3KZYchBMxp5hmMlQ
+li5RZiRNZKdHP2fjh9VA
+=ZqJr
+-----END PGP SIGNATURE-----
+
+--mYCpIKhGyMATD0i+--
