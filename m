@@ -1,98 +1,93 @@
-From: David Ware <davidw@realtimegenomics.com>
-Subject: Re: git subtree bug produces divergent descendants
-Date: Mon, 7 Dec 2015 11:18:15 +1300
-Message-ID: <CAET=KiXr6nQj13j725FOa0oAbFFdC_zGt-Zyj=EU3+_wOY1A8w@mail.gmail.com>
-References: <CAET=KiVReZMyJmPMMB8eVSqYP9ZF2td-9qdB5KQRTrJSoUt9Bw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: "Eric N. Vander Weele" <ericvw@gmail.com>
+Subject: [PATCH] filter-branch: pass tag name via stdin without newline
+Date: Sun,  6 Dec 2015 17:17:26 -0800
+Message-ID: <1449451046-19752-1-git-send-email-ericvw@gmail.com>
+Cc: johannes.schindelin@gmx.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 06 23:18:21 2015
+X-From: git-owner@vger.kernel.org Mon Dec 07 02:17:48 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a5hdM-0007r0-SH
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Dec 2015 23:18:21 +0100
+	id 1a5kQp-000671-V3
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 02:17:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754584AbbLFWSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2015 17:18:16 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:34759 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754281AbbLFWSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2015 17:18:16 -0500
-Received: by vkbs1 with SMTP id s1so92646330vkb.1
-        for <git@vger.kernel.org>; Sun, 06 Dec 2015 14:18:15 -0800 (PST)
+	id S1754254AbbLGBRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2015 20:17:31 -0500
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:35268 "EHLO
+	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753026AbbLGBRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2015 20:17:30 -0500
+Received: by pfu207 with SMTP id 207so55676898pfu.2
+        for <git@vger.kernel.org>; Sun, 06 Dec 2015 17:17:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=realtimegenomics-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=MvGesul6ALNGI6p3jk/XHRRaqUO78iNu35otnwvSIZE=;
-        b=qrPNIfEmV/olfPJbH94GNCEmg+mu2ylMRBy+35bW0eyhCHExrbqAgEIDzXccFrBE42
-         Fs+7hoRGeey119jB/mcY3OT+DEQ23GzY/e7hqiH6nvCgj1xqQSv0wC0kENmakZXZzrTj
-         lZdYM9bHw/IECd+LuFr6mQ1pjl70J4NWrs42Wjf+8DLoblrl8UO42E5kyTP1Lmj4Wwx/
-         QBOPLs1V9AYpQmcixKqRLA4yWaKnFpjU/19yKlhdk17AnQANwl/crLNbH+YMuyJzysOo
-         A+wpotOjUq7jkinHcsA64jwnKvEoKWTvYZdSLEd2QXQBi7Hd+wf8uxc1dNkrU0BFDMrk
-         r9XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=MvGesul6ALNGI6p3jk/XHRRaqUO78iNu35otnwvSIZE=;
-        b=hYZDVOpbAPMNKNSH5g/ZCLyRFF/NATILqu+JLE2aQXwOTAKOg+yWXDYJpaJCfy/C0Z
-         FqjdUkKiu9EGBu/IOYs2wd6Yr7O/3H83kfckjLELDE1p5TMoIrwfAqzMCO0uIpa6E5y9
-         mJvvKE3rBRgQ+ySOdcnk82dpUNgBopJvopwtydTkFC/5116LC3X6rnkU0jLp4ol4tqCK
-         owxnFtul/uvmQbEdxJO8+AUx5MQDzyHYAPgzjTwWUrwcqmSw4qQv4YAqcZ9K2GYGSRvW
-         gK5vOl9avRdBbz0ivGMzxdtmt1uuMqglsYljIPTCHgZNcLQwZPif31OSLVkaACke9SZY
-         kEVg==
-X-Gm-Message-State: ALoCoQk+QPM76OHzFSNR4dsobKIxbtHuNhSWkHNmwwZ5OddIwzI2vgbpdJFGZm7dN/H2wL3nPBf3
-X-Received: by 10.31.2.67 with SMTP id 64mr19320140vkc.22.1449440295388; Sun,
- 06 Dec 2015 14:18:15 -0800 (PST)
-Received: by 10.31.236.4 with HTTP; Sun, 6 Dec 2015 14:18:15 -0800 (PST)
-In-Reply-To: <CAET=KiVReZMyJmPMMB8eVSqYP9ZF2td-9qdB5KQRTrJSoUt9Bw@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=WFoI/wPiXDbRp2O8iGPBP0kS9/G+soijeDdzhmznm9U=;
+        b=GJS6FfTZ4+v/B/HY+k9AZ58KdRjN+X45dNy+hkx1SY1/v1tCoawH0UjCTjXh/kKL7a
+         ZDetnNuF9F/gVzO24kBIpMxEw8xh2/hBTkRrEiux2RwQemrEZwZCwfMLaUI3ZNJzGQv1
+         rxW+k1FZcrPhUsnk1MzeOUsag1KAXyxfxWosbxeUAdmFyLHtPBpKfEkHkZYYkAjOd9vH
+         IAU4Z4zMtv3NEgGOfTV6urX/MtPpl1snu17dGMKWSD7wg1HJ+NwCoJ0Yl9RyzCFNJLHL
+         qWW/hVMaf8j9r+pJvIUdkPDP8ikZZ0xjGtLPhWGEQJbFToPWRQm1NCLKY3MVNevYy9m7
+         /81g==
+X-Received: by 10.98.13.211 with SMTP id 80mr39391851pfn.112.1449451050428;
+        Sun, 06 Dec 2015 17:17:30 -0800 (PST)
+Received: from localhost.localdomain (c-73-162-222-93.hsd1.ca.comcast.net. [73.162.222.93])
+        by smtp.gmail.com with ESMTPSA id sv8sm1249524pab.13.2015.12.06.17.17.29
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 06 Dec 2015 17:17:29 -0800 (PST)
+X-Mailer: git-send-email 2.6.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282071>
 
-Sorry for the double post, I received a mail blocking notification
-message (due to the attached .sh file) and erroneously thought this
-message had been blocked from the entire list. My later one includes
-the test case as part of the attached patch.
+"git filter-branch --tag-name-filter" fails when the user-provided
+command attempts to trivially append text to the originally tag name,
+passed via stdin, due to an unexpected newline ('\n').  The newline is
+introduced due to "echo" piping the original tag name to the
+user-provided tag name filter command.
 
-Cheers,
-Dave Ware
+The only portable usage of "echo" is without any options and escape
+sequences.  Therefore, replacing "echo" with "printf" is a suitable,
+POSIX compliant alternative.
 
-On Mon, Dec 7, 2015 at 9:41 AM, David Ware <davidw@realtimegenomics.com> wrote:
-> My group has run into a bug with "git-subtree split". Under some
-> circumstances a split created from a descendant of another earlier
-> split is not a descendant of that earlier split (thus blocking
-> pushes). We originally noticed this on v1.9.1 but have also checked it
-> on v2.6.3
->
-> When scanning the commits to produce the subtree it seems to skip
-> creating a new commit if any of the parent commits have the same tree
-> and instead uses that tree in its place. This is fine when the cause
-> is a branch that did not cause any changes to the subtree.  However it
-> creates an issue when the cause is both branches ending up with the
-> same tree through identical alterations (or more likely, one of the
-> branches has just a subset of the alterations on the other, such as a
-> branch just containing cherry-picks).
->
-> The attached bash script (makerepo.sh) reproduces the problem. To use
-> create an empty directory and run the script in it. The resulting
-> 'master' branch has had the latest commits on the 'branch' branch
-> merged into it, so it follows that a subtree on 'folder/' at 'master'
-> should contain all the commits of a subtree on 'folder/' at 'branch'.
-> (These subtrees have been produced at 'subtree_tip' and
-> 'subtree_branch' respectively.)
->
-> The attached patch (against v2.6.3) fixes the issue for the cases
-> we've encountered, however since we're not particularly familiar with
-> git internals we may not have approached this optimally. We suspect it
-> could be improved to also handle the cases where there are more than 2
-> parents.
->
-> Cheers,
-> Dave Ware
+Signed-off-by: Eric N. Vander Weele <ericvw@gmail.com>
+---
+ git-filter-branch.sh     | 2 +-
+ t/t7003-filter-branch.sh | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 98f1779..949cd30 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -503,7 +503,7 @@ if [ "$filter_tag_name" ]; then
+ 		new_sha1="$(cat "../map/$sha1")"
+ 		GIT_COMMIT="$sha1"
+ 		export GIT_COMMIT
+-		new_ref="$(echo "$ref" | eval "$filter_tag_name")" ||
++		new_ref="$(printf "$ref" | eval "$filter_tag_name")" ||
+ 			die "tag name filter failed: $filter_tag_name"
+ 
+ 		echo "$ref -> $new_ref ($sha1 -> $new_sha1)"
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 869e0bf..0db6808 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -269,6 +269,11 @@ test_expect_success 'Tag name filtering retains tag message' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'Tag name filter does not pass tag ref with newline' '
++	git filter-branch -f --tag-name-filter "cat && printf "_append"" -- A &&
++	git rev-parse A_append > /dev/null 2>&1
++'
++
+ faux_gpg_tag='object XXXXXX
+ type commit
+ tag S
+-- 
+2.6.3
