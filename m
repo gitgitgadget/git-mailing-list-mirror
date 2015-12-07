@@ -1,76 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] modernize t7300
-Date: Mon, 07 Dec 2015 14:50:22 -0800
-Message-ID: <xmqqr3ixlvpt.fsf@gitster.mtv.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 2/2] clean: new option --exclude-from
+Date: Mon, 7 Dec 2015 17:53:33 -0500
+Message-ID: <CAPig+cQb754exY9KTTyohTqoin_uzRspQwrmeoDeJ5bQ=0jzLQ@mail.gmail.com>
 References: <CAPig+cRa31uriO4qkZUydooNx0V+dNrUgFvTUxoLL9gCjq9AHQ@mail.gmail.com>
 	<1449413906-23256-1-git-send-email-rouzier@gmail.com>
-	<xmqq610alyy5.fsf@gitster.mtv.corp.google.com>
-	<CAPig+cQOW69-YNaVvqaVYyNt6cT-u92a=i0V6YufnVEmYHy3LA@mail.gmail.com>
+	<1449413906-23256-2-git-send-email-rouzier@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: James <rouzier@gmail.com>, Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 23:50:33 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: James <rouzier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 23:53:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a64c3-0000fk-Qb
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 23:50:32 +0100
+	id 1a64fC-00075i-AV
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 23:53:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756445AbbLGWu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 17:50:28 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51084 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756467AbbLGWuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2015 17:50:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0D3EB32FB1;
-	Mon,  7 Dec 2015 17:50:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=e/6vyDu8I8V9GZ2kwvC5ZQO227Y=; b=IJTOlv
-	pLhNKeVHW/oFF4UuT9uT2eeWL1KtNZEbVBC7POvLzFMMrdC4+hwyalQJF1dvnWeX
-	7H1Lg+sAXzGuvODhygCTnZAQ7gk566hmpCHhu9vr1xrmbQmBRVd/uhAKgvIUGF8+
-	inQ1HZUKvk6g5V+n6eHjiYlKwcj3YZoSC9Sx8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jvs5h64iNCuBkW3kowV40sGpfT72SOnr
-	s8cj4ps9Gwv9E4NWiFQfkH1nh89agQ9IYTfRNmTRX1nE6p79LTzsFyWHozdUO5Bv
-	Q9tRW9hZa1Oi6qhskHb6npJWk6Tre1wFbGiXXVsI5OxGywR7F8UP5VTjD/6KLIbc
-	hyWJR8Nho1M=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 037D532FB0;
-	Mon,  7 Dec 2015 17:50:24 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6F7CF32FA3;
-	Mon,  7 Dec 2015 17:50:23 -0500 (EST)
-In-Reply-To: <CAPig+cQOW69-YNaVvqaVYyNt6cT-u92a=i0V6YufnVEmYHy3LA@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 7 Dec 2015 17:46:00 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E671B8EA-9D34-11E5-B365-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1756656AbbLGWxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2015 17:53:36 -0500
+Received: from mail-vk0-f42.google.com ([209.85.213.42]:34808 "EHLO
+	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756574AbbLGWxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 17:53:34 -0500
+Received: by vkbs1 with SMTP id s1so1396719vkb.1
+        for <git@vger.kernel.org>; Mon, 07 Dec 2015 14:53:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=wrTJd9fFLf69M2VBl3rHZfSW+opdKLCOlUE3exxq/gA=;
+        b=HOTyTbZx6y9coGdIgx8JNtX8IqEuhb4hB6kqDvxxE5ofUPAwDSz9Rxu4PeRLY6m3MI
+         WQbDhJ3wKJGZTnDl5e67NMxFRTdJShPNxkb7LHY2HvxvdeUCpGiyBnWlcc5ZcV2I2Buq
+         8slg6tIH8HsGwXUBU07YMrH/uQOHgr/2WHJnxQusCtpvNW8im2+Y0hx4CxFR+rMdws1Y
+         /9bHQLNW9TquMMWPABTzTuznwaEsjMqGygXeRO9AF4BBj7wpnEzGrh0N2AywGeSh0n2j
+         HPssbTkTn2EVQZFq2kGPKG/nLxJChFvdqab3DXa1MQb/CzkU6K3UPhmmKeG0+TiHoUoF
+         Ilog==
+X-Received: by 10.31.13.205 with SMTP id 196mr252864vkn.37.1449528813901; Mon,
+ 07 Dec 2015 14:53:33 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 7 Dec 2015 14:53:33 -0800 (PST)
+In-Reply-To: <1449413906-23256-2-git-send-email-rouzier@gmail.com>
+X-Google-Sender-Auth: WrvA6xwl0RVrKlZMnK0XMb0x7FM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282137>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+In addition to Peff's and Junio's review comments...
 
-> Alternately, update test_path_foo() functions to accept multiple
-> pathnames, or is that too ugly?
+On Sun, Dec 6, 2015 at 9:58 AM, James <rouzier@gmail.com> wrote:
+> From: James Rouzier <rouzier@gmail.com>
+>
+> Specify a file to read for exclude patterns.
 
-That actually would have been my first choice, except (1) that
-path_is_missing has a cruft whose usefulness is dubious, and (2)
-that "path_exists A B C" and "path_is_missing D E F" would be
-gramatically incorrect.
+Missing Signed-off-by:.
 
-I think we should first see if we can remove that "customized
-message" that appears only in path_is_missing and remove it if
-we can.  Extending "path_is_missing A B C" and friends to work
-would then become trivial.
+> ---
+> diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+> @@ -628,6 +628,66 @@ test_expect_success 'git clean -e' '
+> +test_expect_success 'git clean --exclude-from' '
+> +       rm -fr repo &&
+> +       mkdir repo &&
+> +       cd repo &&
 
-Thanks.
+See my review comments for patch 1/2 as to why you want to wrap 'cd'
+and remaining statements in a subshell.
+
+> +       git init &&
+> +       touch known 1 2 3 &&
+
+Likewise, use '>' rather than 'touch' to create empty files when the
+timestamp isn't significant.
+
+   >1 &&
+   >2 &&
+   >3 &&
+
+> +       git add known &&
+> +       cat >.git/clean-exclude <<-\EOF &&
+> +       1
+> +       2
+> +       EOF
+> +       git clean -f --exclude-from=.git/clean-exclude &&
+> +       test_path_is_file 1 &&
+> +       test_path_is_file 2 &&
+> +       test_path_is_missing 3 &&
+> +       test_path_is_file known
+> +'
+> +
+> +test_expect_success 'git clean -e --exclude-from' '
+> +       rm -fr repo &&
+> +       mkdir repo &&
+> +       cd repo &&
+> +       git init &&
+> +       touch known 1 2 3 &&
+> +       git add known &&
+> +       echo 1 >> .git/clean-exclude &&
+> +       git clean -f -e 2 --exclude-from=.git/clean-exclude &&
+> +       test_path_is_file 1 &&
+> +       test_path_is_file 2 &&
+> +       test_path_is_missing 3 &&
+> +       test_path_is_file known
+> +'
+> +
+> +test_expect_success 'git clean --exclude-from --exclude-from' '
+> +       rm -fr repo &&
+> +       mkdir repo &&
+> +       git init &&
+> +       touch known 1 2 3 &&
+> +       git add known &&
+> +       cat >.git/clean-exclude1 <<-\EOF &&
+> +       1
+> +       EOF
+> +       cat >.git/clean-exclude2 <<-\EOF &&
+> +       2
+> +       EOF
+
+Creation of these single-line files probably would be more readable
+using 'echo', as you do in the test just above (for
+.git/clean-exclude):
+
+    echo 1 >.git/clean-exclude1 &&
+    echo 2 >.git/clean-exclude2 &&
+
+> +       git clean -f --exclude-from=.git/clean-exclude1 --exclude-from=.git/clean-exclude2 &&
+> +       test_path_is_file 1 &&
+> +       test_path_is_file 2 &&
+> +       test_path_is_missing 3 &&
+> +       test_path_is_file known
+> +'
+> +
+> +test_expect_success 'git clean --exclude-from=BADFILE' '
+> +       rm -fr repo &&
+> +       mkdir repo &&
+> +       cd repo &&
+> +       git init &&
+> +       test_expect_code 128 git clean -f --exclude-from=.git/clean-exclude-not-there
+> +'
+> +
+>  test_expect_success SANITY 'git clean -d with an unreadable empty directory' '
+>         mkdir foo &&
+>         chmod a= foo &&
+> --
+> 2.3.6
