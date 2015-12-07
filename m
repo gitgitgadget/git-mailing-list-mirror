@@ -1,93 +1,101 @@
-From: "Eric N. Vander Weele" <ericvw@gmail.com>
-Subject: [PATCH] filter-branch: pass tag name via stdin without newline
-Date: Sun,  6 Dec 2015 17:17:26 -0800
-Message-ID: <1449451046-19752-1-git-send-email-ericvw@gmail.com>
-Cc: johannes.schindelin@gmx.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 07 02:17:48 2015
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] format-patch: introduce option to suppress commit hashes
+Date: Sun, 06 Dec 2015 18:49:14 -0800
+Message-ID: <xmqqh9jvnfbp.fsf@gitster.mtv.corp.google.com>
+References: <1449440196-991107-1-git-send-email-sandals@crustytoothpaste.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+	Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Dec 07 03:49:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a5kQp-000671-V3
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 02:17:36 +0100
+	id 1a5lrf-0005ar-52
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 03:49:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754254AbbLGBRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2015 20:17:31 -0500
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:35268 "EHLO
-	mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753026AbbLGBRa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2015 20:17:30 -0500
-Received: by pfu207 with SMTP id 207so55676898pfu.2
-        for <git@vger.kernel.org>; Sun, 06 Dec 2015 17:17:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=WFoI/wPiXDbRp2O8iGPBP0kS9/G+soijeDdzhmznm9U=;
-        b=GJS6FfTZ4+v/B/HY+k9AZ58KdRjN+X45dNy+hkx1SY1/v1tCoawH0UjCTjXh/kKL7a
-         ZDetnNuF9F/gVzO24kBIpMxEw8xh2/hBTkRrEiux2RwQemrEZwZCwfMLaUI3ZNJzGQv1
-         rxW+k1FZcrPhUsnk1MzeOUsag1KAXyxfxWosbxeUAdmFyLHtPBpKfEkHkZYYkAjOd9vH
-         IAU4Z4zMtv3NEgGOfTV6urX/MtPpl1snu17dGMKWSD7wg1HJ+NwCoJ0Yl9RyzCFNJLHL
-         qWW/hVMaf8j9r+pJvIUdkPDP8ikZZ0xjGtLPhWGEQJbFToPWRQm1NCLKY3MVNevYy9m7
-         /81g==
-X-Received: by 10.98.13.211 with SMTP id 80mr39391851pfn.112.1449451050428;
-        Sun, 06 Dec 2015 17:17:30 -0800 (PST)
-Received: from localhost.localdomain (c-73-162-222-93.hsd1.ca.comcast.net. [73.162.222.93])
-        by smtp.gmail.com with ESMTPSA id sv8sm1249524pab.13.2015.12.06.17.17.29
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 06 Dec 2015 17:17:29 -0800 (PST)
-X-Mailer: git-send-email 2.6.3
+	id S1755059AbbLGCtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2015 21:49:18 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58877 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754816AbbLGCtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2015 21:49:17 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3D3C4311A4;
+	Sun,  6 Dec 2015 21:49:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tN1gcfBVxQ4oV0zYyoAs65f1bhM=; b=FlLIbS
+	fdoD+a42Z0GQYsePHHTAwP5W7RmrOUYQYNOEdCrAOQMKmxIL0Kbpd24dYYXugjws
+	RJ6NjLKyhMSeQpCb55Bv7mwEbyJjsmfmbdXW4B4l/hEWLOgtcabyFiz1hcqv6Oqy
+	BJ2Inf0ngp7DPITg9+FtT+q+HuFMgA+b6KfHY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QFiMLfeXzoskIdrdTOJOC38WLwzGt2BR
+	S+ZFT3DRzqzSZdkxCY7MIt+KHrUajn/kPO3yyTHp2dhRwCK+K0cp+j+iYxSO/h8C
+	gsZaMEFvAG+4sX0npOMKviYW0z1XxZ5FC446FbOiCanAmqH0beeUNgJVhAydBr4L
+	iViz0EqzgCs=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 32C5F311A3;
+	Sun,  6 Dec 2015 21:49:16 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 97634311A2;
+	Sun,  6 Dec 2015 21:49:15 -0500 (EST)
+In-Reply-To: <1449440196-991107-1-git-send-email-sandals@crustytoothpaste.net>
+	(brian m. carlson's message of "Sun, 6 Dec 2015 22:16:34 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 1AA9E720-9C8D-11E5-80AF-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282072>
 
-"git filter-branch --tag-name-filter" fails when the user-provided
-command attempts to trivially append text to the originally tag name,
-passed via stdin, due to an unexpected newline ('\n').  The newline is
-introduced due to "echo" piping the original tag name to the
-user-provided tag name filter command.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-The only portable usage of "echo" is without any options and escape
-sequences.  Therefore, replacing "echo" with "printf" is a suitable,
-POSIX compliant alternative.
+> git format-patch is often used to create patches that are then stored in
+> version control or displayed with diff.  Having the commit hash in the
+> "From " line usually just creates diff noise in these cases, so this
+> series introduces --no-hash to set that to all zeros.
 
-Signed-off-by: Eric N. Vander Weele <ericvw@gmail.com>
----
- git-filter-branch.sh     | 2 +-
- t/t7003-filter-branch.sh | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+I am somewhat negative on this change that deliberately loses
+information in a way that seems too specific to a single workflow.
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 98f1779..949cd30 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -503,7 +503,7 @@ if [ "$filter_tag_name" ]; then
- 		new_sha1="$(cat "../map/$sha1")"
- 		GIT_COMMIT="$sha1"
- 		export GIT_COMMIT
--		new_ref="$(echo "$ref" | eval "$filter_tag_name")" ||
-+		new_ref="$(printf "$ref" | eval "$filter_tag_name")" ||
- 			die "tag name filter failed: $filter_tag_name"
- 
- 		echo "$ref -> $new_ref ($sha1 -> $new_sha1)"
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 869e0bf..0db6808 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -269,6 +269,11 @@ test_expect_success 'Tag name filtering retains tag message' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'Tag name filter does not pass tag ref with newline' '
-+	git filter-branch -f --tag-name-filter "cat && printf "_append"" -- A &&
-+	git rev-parse A_append > /dev/null 2>&1
-+'
-+
- faux_gpg_tag='object XXXXXX
- type commit
- tag S
--- 
-2.6.3
+I understand that in that particular workflow, the patch stored as
+payload in a history needs only the diff part and the commit that
+the patch was taken from is deemed irrelevant.
+
+But the reason why that and only that piece of information is
+expendable, while author, subject and log message text are not is
+because...?  The answer to that question would very much be
+project's workflow dependant.  From that point of view, I'd say the
+users are much better off without the addition of this feature, but
+have a custom script in their workflow to remove parts that their
+project and workflow deems unnecessary.  Your project may deem the
+source commit object name unnecessary.  Another one may think the
+author date and name are, too.  Patch e-mail signature (i.e. what
+comes after a line with "-- ") by default depends on the version of
+Git that happened to have been used to prepare the patch, which may
+not be something you would want.
+
+Stepping back a bit, why is the history from which the patches are
+taken from irrelevant in the first place?  Perhaps because you
+replayed these patches on top of the same base but did not preserve
+their timestamps?  If this user, i.e. the part of the workflow that
+commits generated patches to version control, finds the "irrelevant"
+change irritating, isn't it fair to expect other users, i.e. other
+parts of the same workflow, also find that unnecessary and
+irrelevant rebasing irritating?  It feels like I am seeing an
+entrance to an X-Y problem whose real solution is to stop doing the
+pointless rebases in the first place.
+
+And if that rebase is not pointless, then I am not sure if it is a
+good thing to discard the information that records which incarnation
+of that constantly rebased source tree the patches were taken from.
+
+So...
