@@ -1,87 +1,72 @@
-From: David Ware <davidw@realtimegenomics.com>
-Subject: Re: git subtree bug produces divergent descendants
-Date: Tue, 8 Dec 2015 10:01:32 +1300
-Message-ID: <CAET=KiXHoasXv6_y=SLZEAd=CCzj0T3zW6Wb7rF42=8v2LxZ+w@mail.gmail.com>
-References: <CAET=KiVXh2UZwRSpM_+wX_QpfjBsyfdPPUVDSDoCRVe_0wbhCg@mail.gmail.com>
-	<20151207045307.GA624@flurp.local>
+From: Jeff King <peff@peff.net>
+Subject: Re: best practices against long git rebase times?
+Date: Mon, 7 Dec 2015 16:02:12 -0500
+Message-ID: <20151207210212.GF30203@sigill.intra.peff.net>
+References: <20151204150546.GA17210@inner.h.apk.li>
+ <20151204153103.GP18913@serenity.lan>
+ <20151206164345.GH22288@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 22:01:40 2015
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Dec 07 22:02:20 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a62ug-00084y-0F
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 22:01:38 +0100
+	id 1a62vL-00016g-96
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 22:02:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933109AbbLGVBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 16:01:34 -0500
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:35758 "EHLO
-	mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932813AbbLGVBd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2015 16:01:33 -0500
-Received: by vkha189 with SMTP id a189so110243972vkh.2
-        for <git@vger.kernel.org>; Mon, 07 Dec 2015 13:01:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=realtimegenomics-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=tmVZ2oFycWHSQf28GQ/A9xGBqDmRp3VzRtsxbct7Vjc=;
-        b=RDH3QD3UU84L6RPQzv+TNvlvbR2C4on7ya5LcOEQMy+cfP/RCaOh9hMgGhNFNfv8pM
-         IO2G7+O9pZZCkHh4Eu5CUYwTlz56swHDtUOxfYLW0i3VFjWwhNdeJDDoGYydevYqoYIy
-         KZqSHje6ar4PVBLY8kZ787P3lrF5u1TY2m03i1/lFLpA6Mu5Uu027vDjgtaAvy99kHA1
-         Q/0EdvRW+N+ODluLadkA4mVFMfnsFaAof5TBx/anAqOC/Q20KpIkDRfiWE2DJtX0+BHl
-         G1+5spDTouCA19q8fzyTJqKh4tfdRDczBwFmt9e1mX6DzuPmKb58zJHs2bJOfLwDJRwA
-         zQFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=tmVZ2oFycWHSQf28GQ/A9xGBqDmRp3VzRtsxbct7Vjc=;
-        b=j6eigkOPj7UPAWLuFreylyqVFrD9hdh0HpwypjFhsP2GGt0WrdxERLz6tcy+jOk6Tm
-         thpwtnJYGPljuXg+VBakbEXFlNbzMdqOv+gKA15JHpPVsdnBVa5RNLNXdIWT9eNZnXsn
-         oWc14t2BhLasUHklCJ+XH5GiNBURdPDZOj8NyUvdfZuywugVS0bFV+0hNaxK24MTSzDY
-         zQ0QsKuAGvJd0GpiXIUckyYp15WjIvgUpuwgr64VuS27UJlsPYX5Rp3C6SLIwsMu/855
-         ekhTogf8yucmsOMTqAgBs6iJZrm8ytW+0bNaIwapfe/EYAATFgF7MV9QgXXi8aKTENH3
-         /G5A==
-X-Gm-Message-State: ALoCoQn7fGS3/3Ht+9NUA82DqFdCoMlsIAArmFv5+yMfpCAfQK5wq2H5wNUkeXZJXy0blphzwskd
-X-Received: by 10.31.167.216 with SMTP id q207mr9118523vke.79.1449522092302;
- Mon, 07 Dec 2015 13:01:32 -0800 (PST)
-Received: by 10.31.236.4 with HTTP; Mon, 7 Dec 2015 13:01:32 -0800 (PST)
-In-Reply-To: <20151207045307.GA624@flurp.local>
+	id S933094AbbLGVCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2015 16:02:15 -0500
+Received: from cloud.peff.net ([50.56.180.127]:38512 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932813AbbLGVCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 16:02:15 -0500
+Received: (qmail 17133 invoked by uid 102); 7 Dec 2015 21:02:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Dec 2015 15:02:14 -0600
+Received: (qmail 23390 invoked by uid 107); 7 Dec 2015 21:02:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Dec 2015 16:02:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Dec 2015 16:02:12 -0500
+Content-Disposition: inline
+In-Reply-To: <20151206164345.GH22288@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282124>
 
-Thanks for taking the time to look over it. I'm not familiar with the
-process here.
+On Sun, Dec 06, 2015 at 05:43:45PM +0100, Andreas Krey wrote:
 
-On Mon, Dec 7, 2015 at 5:53 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> Tests don't automatically return to the directory prior to the 'cd',
-> so when this test ends, the current directory will still be
-> 'git_subtree_split_check'. If someone later adds a test following
-> this one, that test will execute within 'git_subtree_split_check',
-> which might not be expected by the test writer.
->
-> To ensure that the prior working directory is restored at the end of
-> the test (regardless of success or failure), tests typically employ a
-> subshell using this idiom:
->
->     mkdir foo &&
->     (
->         cd foo &&
->         ... &&
->         ...
->     )
->
+> On Fri, 04 Dec 2015 15:31:03 +0000, John Keeping wrote:
+> ...
+> > I'm pretty sure that you're right and the cherry-pick analysis is where
+> > the time is spent.
+> 
+> But I'm pretty surprised as to the amount of CPU time that goes there.
+> 
+> I'm now rebasing a single commit with a single blank line added,
+> and for 3000 new commits to rebase over (with 64 MByte of git log -
+> for them) it takes twelve minutes, or about for commits per second,
+> and all user CPU, no I/O. It's pretty linear in number of commits, too.
 
-I'm not at all familiar with this test harness so I had a few problems
-here (like this, and the bash variable). Thank you for the advice.
+You're computing the patch against the parent for each of those 3000
+commits (to get a hash of it to compare against the single hash on the
+other side). Twelve minutes sounds long, but if you have a really
+gigantic tree, it might not be unreasonable.
 
-Cheers,
-Dave Ware
+You can also try compiling with "make XDL_FAST_HASH=" (i.e., setting
+that option to the empty string). Last year I found there were some
+pretty suboptimal corner cases, and you may be hitting one (we should
+probably turn that option off by default; I got stuck on trying to find
+a hash that would perform faster and never followed up[1].
+
+I doubt that is your problem, but it's possible).
+
+-Peff
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/261638
