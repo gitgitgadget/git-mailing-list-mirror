@@ -1,147 +1,83 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 2/2] clean: new option --exclude-from
-Date: Mon, 7 Dec 2015 17:53:33 -0500
-Message-ID: <CAPig+cQb754exY9KTTyohTqoin_uzRspQwrmeoDeJ5bQ=0jzLQ@mail.gmail.com>
-References: <CAPig+cRa31uriO4qkZUydooNx0V+dNrUgFvTUxoLL9gCjq9AHQ@mail.gmail.com>
-	<1449413906-23256-1-git-send-email-rouzier@gmail.com>
-	<1449413906-23256-2-git-send-email-rouzier@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: best practices against long git rebase times?
+Date: Mon, 07 Dec 2015 14:56:33 -0800
+Message-ID: <xmqqmvtllvfi.fsf@gitster.mtv.corp.google.com>
+References: <20151204150546.GA17210@inner.h.apk.li>
+	<20151204153103.GP18913@serenity.lan>
+	<20151206164345.GH22288@inner.h.apk.li>
+	<20151207210212.GF30203@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: James <rouzier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 23:53:46 2015
+Content-Type: text/plain
+Cc: Andreas Krey <a.krey@gmx.de>, John Keeping <john@keeping.me.uk>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 07 23:56:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a64fC-00075i-AV
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 23:53:46 +0100
+	id 1a64i0-0003uM-NQ
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 23:56:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756656AbbLGWxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 17:53:36 -0500
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:34808 "EHLO
-	mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756574AbbLGWxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2015 17:53:34 -0500
-Received: by vkbs1 with SMTP id s1so1396719vkb.1
-        for <git@vger.kernel.org>; Mon, 07 Dec 2015 14:53:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=wrTJd9fFLf69M2VBl3rHZfSW+opdKLCOlUE3exxq/gA=;
-        b=HOTyTbZx6y9coGdIgx8JNtX8IqEuhb4hB6kqDvxxE5ofUPAwDSz9Rxu4PeRLY6m3MI
-         WQbDhJ3wKJGZTnDl5e67NMxFRTdJShPNxkb7LHY2HvxvdeUCpGiyBnWlcc5ZcV2I2Buq
-         8slg6tIH8HsGwXUBU07YMrH/uQOHgr/2WHJnxQusCtpvNW8im2+Y0hx4CxFR+rMdws1Y
-         /9bHQLNW9TquMMWPABTzTuznwaEsjMqGygXeRO9AF4BBj7wpnEzGrh0N2AywGeSh0n2j
-         HPssbTkTn2EVQZFq2kGPKG/nLxJChFvdqab3DXa1MQb/CzkU6K3UPhmmKeG0+TiHoUoF
-         Ilog==
-X-Received: by 10.31.13.205 with SMTP id 196mr252864vkn.37.1449528813901; Mon,
- 07 Dec 2015 14:53:33 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Mon, 7 Dec 2015 14:53:33 -0800 (PST)
-In-Reply-To: <1449413906-23256-2-git-send-email-rouzier@gmail.com>
-X-Google-Sender-Auth: WrvA6xwl0RVrKlZMnK0XMb0x7FM
+	id S1756637AbbLGW4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2015 17:56:36 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62216 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756204AbbLGW4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 17:56:35 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C317E32380;
+	Mon,  7 Dec 2015 17:56:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=14QY3Eu65gQqGGn/SisWNhSilEw=; b=tYQrxq
+	20pyZ3e2GP57N5pXrofT5ukpaiuftPJUj9F0N3B0rEB+86L/x6Sz7Z09A8PopLGm
+	wL1S0GJ+I5dnVW34Icu83VnCz78390eT/wOfc8PZ0Z8DcrR9mFwpM2REA9Du+zau
+	aPfUBBW+35xPOEio5UD9RtHgNtc6O++rEvWT4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=APiAP6tmMalFSiE4LKm5lAQnCUaz4pTD
+	6L9cZVUoZzbbbGhONNMs3oX79ZiRqV/C9RgN+YPU10gvJCz0wpemR9NCKcfJ5Mm1
+	Lw4N1PxKuX+AZIju6eTeuE9hReogblMxVHcVPFgHi7HSHlyotrCOHXc8vTGU0E63
+	zhEZ4kLf31Y=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BA8223237F;
+	Mon,  7 Dec 2015 17:56:34 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 419973237D;
+	Mon,  7 Dec 2015 17:56:34 -0500 (EST)
+In-Reply-To: <20151207210212.GF30203@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 7 Dec 2015 16:02:12 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: C3769BDE-9D35-11E5-B7A8-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282138>
 
-In addition to Peff's and Junio's review comments...
+Jeff King <peff@peff.net> writes:
 
-On Sun, Dec 6, 2015 at 9:58 AM, James <rouzier@gmail.com> wrote:
-> From: James Rouzier <rouzier@gmail.com>
+> You're computing the patch against the parent for each of those 3000
+> commits (to get a hash of it to compare against the single hash on the
+> other side). Twelve minutes sounds long, but if you have a really
+> gigantic tree, it might not be unreasonable.
 >
-> Specify a file to read for exclude patterns.
+> You can also try compiling with "make XDL_FAST_HASH=" (i.e., setting
+> that option to the empty string). Last year I found there were some
+> pretty suboptimal corner cases, and you may be hitting one (we should
+> probably turn that option off by default; I got stuck on trying to find
+> a hash that would perform faster and never followed up[1].
+>
+> I doubt that is your problem, but it's possible).
+>
+> -Peff
+>
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/261638
 
-Missing Signed-off-by:.
-
-> ---
-> diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-> @@ -628,6 +628,66 @@ test_expect_success 'git clean -e' '
-> +test_expect_success 'git clean --exclude-from' '
-> +       rm -fr repo &&
-> +       mkdir repo &&
-> +       cd repo &&
-
-See my review comments for patch 1/2 as to why you want to wrap 'cd'
-and remaining statements in a subshell.
-
-> +       git init &&
-> +       touch known 1 2 3 &&
-
-Likewise, use '>' rather than 'touch' to create empty files when the
-timestamp isn't significant.
-
-   >1 &&
-   >2 &&
-   >3 &&
-
-> +       git add known &&
-> +       cat >.git/clean-exclude <<-\EOF &&
-> +       1
-> +       2
-> +       EOF
-> +       git clean -f --exclude-from=.git/clean-exclude &&
-> +       test_path_is_file 1 &&
-> +       test_path_is_file 2 &&
-> +       test_path_is_missing 3 &&
-> +       test_path_is_file known
-> +'
-> +
-> +test_expect_success 'git clean -e --exclude-from' '
-> +       rm -fr repo &&
-> +       mkdir repo &&
-> +       cd repo &&
-> +       git init &&
-> +       touch known 1 2 3 &&
-> +       git add known &&
-> +       echo 1 >> .git/clean-exclude &&
-> +       git clean -f -e 2 --exclude-from=.git/clean-exclude &&
-> +       test_path_is_file 1 &&
-> +       test_path_is_file 2 &&
-> +       test_path_is_missing 3 &&
-> +       test_path_is_file known
-> +'
-> +
-> +test_expect_success 'git clean --exclude-from --exclude-from' '
-> +       rm -fr repo &&
-> +       mkdir repo &&
-> +       git init &&
-> +       touch known 1 2 3 &&
-> +       git add known &&
-> +       cat >.git/clean-exclude1 <<-\EOF &&
-> +       1
-> +       EOF
-> +       cat >.git/clean-exclude2 <<-\EOF &&
-> +       2
-> +       EOF
-
-Creation of these single-line files probably would be more readable
-using 'echo', as you do in the test just above (for
-.git/clean-exclude):
-
-    echo 1 >.git/clean-exclude1 &&
-    echo 2 >.git/clean-exclude2 &&
-
-> +       git clean -f --exclude-from=.git/clean-exclude1 --exclude-from=.git/clean-exclude2 &&
-> +       test_path_is_file 1 &&
-> +       test_path_is_file 2 &&
-> +       test_path_is_missing 3 &&
-> +       test_path_is_file known
-> +'
-> +
-> +test_expect_success 'git clean --exclude-from=BADFILE' '
-> +       rm -fr repo &&
-> +       mkdir repo &&
-> +       cd repo &&
-> +       git init &&
-> +       test_expect_code 128 git clean -f --exclude-from=.git/clean-exclude-not-there
-> +'
-> +
->  test_expect_success SANITY 'git clean -d with an unreadable empty directory' '
->         mkdir foo &&
->         chmod a= foo &&
-> --
-> 2.3.6
+I vaguely recall having discussed caching the patch-ids somewhere so
+that this does not have to be done every time.  Would such an
+extension help here, I wonder?
