@@ -1,105 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git 2.3.7 hangs on fetch but not clone
-Date: Mon, 7 Dec 2015 15:21:34 -0500
-Message-ID: <20151207202134.GA30203@sigill.intra.peff.net>
-References: <001f01d13073$28d428a0$7a7c79e0$@nexbridge.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] revision.c: fix possible null pointer access
+Date: Mon, 07 Dec 2015 12:31:11 -0800
+Message-ID: <xmqqegeym25s.fsf@gitster.mtv.corp.google.com>
+References: <xmqqlh9bthyb.fsf@gitster.mtv.corp.google.com>
+	<1449329244-4585-1-git-send-email-stefan.naewe@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: 'git mailing list' <git@vger.kernel.org>
-To: "Randall S. Becker" <rsbecker@nexbridge.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 21:21:41 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Stefan Naewe <stefan.naewe@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 21:31:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a62I1-0000c0-51
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 21:21:41 +0100
+	id 1a62RK-0001nK-SJ
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 21:31:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932801AbbLGUVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 15:21:37 -0500
-Received: from cloud.peff.net ([50.56.180.127]:38479 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932668AbbLGUVg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2015 15:21:36 -0500
-Received: (qmail 14757 invoked by uid 102); 7 Dec 2015 20:21:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Dec 2015 14:21:36 -0600
-Received: (qmail 22998 invoked by uid 107); 7 Dec 2015 20:21:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Dec 2015 15:21:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Dec 2015 15:21:34 -0500
-Content-Disposition: inline
-In-Reply-To: <001f01d13073$28d428a0$7a7c79e0$@nexbridge.com>
+	id S932815AbbLGUbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2015 15:31:15 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56740 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932690AbbLGUbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 15:31:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6B6CE32117;
+	Mon,  7 Dec 2015 15:31:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GmAIkVQMT4XvmXvJ7XnZiLw0UFA=; b=ObA8HJ
+	5nfuo5y4MUpTSznRpVCCXgXknq+Iz4s+RG7XjmX9M0eOh20GCPrR0wvk1M+ByJvV
+	Ot8aB/tNgZdB+a21MH/Npcx3Or8Y+A4XDGMBp78QhRgGbRmYVaqFlrXrHlDQKbJA
+	xHWLwtTe7VEg/WTDhZGziIZbcBdroztXM6TF8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GnmrOO90FpDp66ek82tBw7RKHg2A4koM
+	4paFffg0KTSScnjbAAWa5A1ONybaNW4OdfSyGX54OVjgiihbts1KPcV1yuUYAumD
+	alwPJHyQGAJtjpDoM48Fo3ApDaMc0E38+PTsNVYZPH+HV0vPcg7EksXFQRzePd9N
+	sn0YSQf9c2I=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6419F32116;
+	Mon,  7 Dec 2015 15:31:13 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A04AD32113;
+	Mon,  7 Dec 2015 15:31:12 -0500 (EST)
+In-Reply-To: <1449329244-4585-1-git-send-email-stefan.naewe@gmail.com> (Stefan
+	Naewe's message of "Sat, 5 Dec 2015 16:27:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 74F9CCEC-9D21-11E5-88D7-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282117>
 
-On Sun, Dec 06, 2015 at 05:12:12PM -0500, Randall S. Becker wrote:
+Stefan Naewe <stefan.naewe@gmail.com> writes:
 
-> I have some strange behaviour I am trying to diagnose on the NonStop port of
-> git 2.3.7. The situation is we have a *LARGE* cloned repository with some
-> local modifications of openssl, which we are trying to clone again for a
-> Jenkins build. The command:
-> 	git clone /local/openssl openssl
+> mark_tree_uninteresting dereferences a tree pointer before checking
+> if the pointer is valid. Fix that by doing the check first.
+>
+> Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
+> ---
 
-Because the two repositories are on the same local filesystem, git will
-skip the usual pack transfer and just copy or hardlink the object files.
+I still have a problem with "dereferences", as "dereference" is
+about computing an address and accessing memory based on the result,
+and only the first half is happening here.  I can live with "The
+function does a pointer arithmetic on 'tree' before it makes sure
+that 'tree' is not NULL", but in any case, let's queue this as-is
+for now and wait for a while to see if others can come up with a
+more appropriate phrases.
 
-You can add "--no-local" to make it more like the fetch that is failing
-(I suspect it will then fail, too, but if it doesn't, that would be an
-interesting data point).
+Thanks.
 
-> 	remote: Counting objects: 113436, done.
-> 	remote: Compressing objects: 100% (23462/23462), done.
-> then hangs forever without creating any files in the working directory.
-> There are also no files or directories modified since the init operation.
-> Processes left around, and without consuming resources, are:
-> 1493172290 2030043151 - 15:58:29       00:15 git pack-objects --revs --thin
-> --stdout --progress --delta-base-offset --include-tag
-> 452984908  402653262 - 15:58:29       00:00 git -c core.askpass=true fetch
-> --verbose --progress /local/git/openssl +refs/heads/*:refs/remotes/origin/*
-> 402653262 1694498903 - 15:58:28       00:00 git -c core.askpass=true fetch
-> --verbose --progress /local/git/openssl +refs/heads/*:refs/remotes/origin/*
-> 2030043151  402653262 - 15:58:29       00:00 git-upload-pack
-> /local/git/openssl
-
-What are the processes doing?
-
-Upload-pack on the "server" side spawns pack-objects, writes the set of
-wanted objects to its stdin, and then waits for it to produce pack data
-to stdout (which it then multiplexes back to the client). You clearly
-got past the write (since pack-objects finished "Counting objects...").
-I'd expect it to be waiting for input in poll() for input from the
-stdout or stderr of pack-objects. It may also be blocking on write()
-back to the client.
-
-Pack-objects clearly completed delta compression, and so should be
-writing out the final pack.  It doesn't look like it ever wrote the
-"writing objects..." progress line (or perhaps upload-pack got stuck and
-failed to relay it). It's probably blocking on write() to upload-pack.
-
-You have two fetch processes. Presumably you build with NO_PTHREADS and
-one of them is a fork()ed copy to demux the data from upload-pack. It
-clearly runs at least a little while (it relays the "Counting" message).
-It should either be blocking on read() from upload-pack, or perhaps
-blocking on write() back to main fetch.
-
-The main fetch hasn't yet spawned index-pack or unpack-objects, which
-means it hasn't gotten enough of the pack header to do so. So it's
-probably blocking on read() from the sideband demuxer process.
-
-Do you have some equivalent of strace on your system? Or better yet, a
-debugger?
-
-> This does not happen for our smaller repositories. Any pointers on where to
-> look would be appreciated.
-
-My wild guess would be some pipe deadlock between the processes, but I
-don't think we've had any of those lately. And v2.3.7 is not _too_ old
-(there are some fixes for http deadlocks in v2.3.7..v2.6.3, but that
-should not affect you here).
-
--Peff
+>  revision.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/revision.c b/revision.c
+> index 0fbb684..8c569cc 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -135,10 +135,12 @@ static void mark_tree_contents_uninteresting(struct tree *tree)
+>  
+>  void mark_tree_uninteresting(struct tree *tree)
+>  {
+> -	struct object *obj = &tree->object;
+> +	struct object *obj;
+>  
+>  	if (!tree)
+>  		return;
+> +
+> +	obj = &tree->object;
+>  	if (obj->flags & UNINTERESTING)
+>  		return;
+>  	obj->flags |= UNINTERESTING;
