@@ -1,72 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] clean: new option --exclude-from
-Date: Mon, 07 Dec 2015 13:44:43 -0800
-Message-ID: <xmqq1taylyr8.fsf@gitster.mtv.corp.google.com>
-References: <CAPig+cRa31uriO4qkZUydooNx0V+dNrUgFvTUxoLL9gCjq9AHQ@mail.gmail.com>
-	<1449413906-23256-1-git-send-email-rouzier@gmail.com>
-	<1449413906-23256-2-git-send-email-rouzier@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] revision.c: fix possible null pointer access
+Date: Mon, 7 Dec 2015 22:54:23 +0100
+Message-ID: <5666000F.8050306@kdbg.org>
+References: <xmqqlh9bthyb.fsf@gitster.mtv.corp.google.com>
+ <1449329244-4585-1-git-send-email-stefan.naewe@gmail.com>
+ <xmqqegeym25s.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: James <rouzier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 22:44:52 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Naewe <stefan.naewe@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 22:54:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a63aV-0003fx-4s
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 22:44:51 +0100
+	id 1a63jw-0004S6-U7
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 22:54:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755874AbbLGVoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 16:44:46 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57375 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754994AbbLGVop (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2015 16:44:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EA4CF31C54;
-	Mon,  7 Dec 2015 16:44:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CEkQVHJkVRELWLR3ViunmcqC448=; b=Y0XnJ+
-	tn5e+fuPyTTNOsgrnxDGToUfzDSAFFD941vUyD4qaM0q7yacafwRLt2MDzeAwFoC
-	6WNSb/R+VuIbI3WN7cokou0AbZRWRB2DRQNbWqGYvRShd9uHi4ekGddb93sf9KNC
-	fPHLq1cb0JnGxnSgtQ+FdGL24pFj6IBhMmvuk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wzo0kpS+Ms0iBkanvsA/k+r2nZfl3UPl
-	XRJ9CsZxSPD4jnVnBfr8PUOIuME/av3Gi6Xw0uD37D5Y6Ik1ESHN1Xr9M0JShOQL
-	K5sO+Chx5D3RPyMaGmpenvWVJFhvY7qPaRi+ANxLL96WxrWMhGMIkzoxUHOiE0XO
-	Q3+YZqfS3y8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E186331C53;
-	Mon,  7 Dec 2015 16:44:44 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5B46E31C52;
-	Mon,  7 Dec 2015 16:44:44 -0500 (EST)
-In-Reply-To: <1449413906-23256-2-git-send-email-rouzier@gmail.com> (James's
-	message of "Sun, 6 Dec 2015 09:58:26 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BA903BF6-9D2B-11E5-959A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1756319AbbLGVyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2015 16:54:31 -0500
+Received: from bsmtp5.bon.at ([195.3.86.187]:3933 "EHLO bsmtp5.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755999AbbLGVya (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 16:54:30 -0500
+Received: from bsmtp8.bon.at (unknown [192.168.181.101])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 3pDz1w3Gl4z5ttg
+	for <git@vger.kernel.org>; Mon,  7 Dec 2015 22:54:28 +0100 (CET)
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pDz1s41ZXz5tlH;
+	Mon,  7 Dec 2015 22:54:25 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 1A12C438;
+	Mon,  7 Dec 2015 22:54:24 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <xmqqegeym25s.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282132>
 
-James <rouzier@gmail.com> writes:
+Am 07.12.2015 um 21:31 schrieb Junio C Hamano:
+> Stefan Naewe <stefan.naewe@gmail.com> writes:
+>
+>> mark_tree_uninteresting dereferences a tree pointer before checking
+>> if the pointer is valid. Fix that by doing the check first.
+>>
+>> Signed-off-by: Stefan Naewe <stefan.naewe@gmail.com>
+>> ---
+>
+> I still have a problem with "dereferences", as "dereference" is
+> about computing an address and accessing memory based on the result,
+> and only the first half is happening here.  I can live with "The
+> function does a pointer arithmetic on 'tree' before it makes sure
+> that 'tree' is not NULL", but in any case, let's queue this as-is
+> for now and wait for a while to see if others can come up with a
+> more appropriate phrases.
 
-> +static int exclude_from_cb(const struct option *opt,
-> +				     const char *arg, int unset)
-> +{
-> +	struct dir_struct *dir = opt->value;
-> +	add_excludes_from_file(dir, arg);
+Don't shoo away language lawyers, because this is a pure C language rule 
+patch. If this were only about pointer arithmetic, a change would not be 
+necessary. But it isn't. The patch corrects a case where the compiler 
+can remove a NULL pointer check that we actually want to remain. The 
+language rule that gives sufficient room for interpretation to the 
+compiler is about dereferencing a pointer. It is irrelevant that an 
+address of an object is taken after the dereference and then only 
+pointer arithmetic remains---the dereference has already taken place, 
+and that cannot occur for a NULL pointer in a valid program. So, the 
+phrase "dereference" is precise and correct here.
 
-I suspect this is wrong.  add_excludes_from_file() creates a
-new excludes_list that is separate from the command line level and
-pushes that down to the exclude stack.  You'd instead need to add
-each line of the input at the same EXC_CMDL level like -e <pattern>
-option does from the command line, I would think.
+-- Hannes
+
+>
+> Thanks.
+>
+>>   revision.c | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/revision.c b/revision.c
+>> index 0fbb684..8c569cc 100644
+>> --- a/revision.c
+>> +++ b/revision.c
+>> @@ -135,10 +135,12 @@ static void mark_tree_contents_uninteresting(struct tree *tree)
+>>
+>>   void mark_tree_uninteresting(struct tree *tree)
+>>   {
+>> -	struct object *obj = &tree->object;
+>> +	struct object *obj;
+>>
+>>   	if (!tree)
+>>   		return;
+>> +
+>> +	obj = &tree->object;
+>>   	if (obj->flags & UNINTERESTING)
+>>   		return;
+>>   	obj->flags |= UNINTERESTING;
