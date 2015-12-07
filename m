@@ -1,287 +1,515 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH/RFC 07/10] ref-filter: introduce align_atom_parser()
-Date: Mon, 7 Dec 2015 22:30:32 +0530
-Message-ID: <CAOLa=ZSE=zfyxSOQkv+uE=Z4qK9bcMN11kMm2R7gZE+M3mDNFQ@mail.gmail.com>
-References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
- <1447271075-15364-8-git-send-email-Karthik.188@gmail.com> <CAPig+cTYt1qaSLLOmwyZ-BQzOjWGxZ5koJNma1qc67UipPFW5w@mail.gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: [PATCH v7] ls-files: Add eol diagnostics
+Date: Mon, 7 Dec 2015 18:09:13 +0100
+Message-ID: <5665BD39.1040403@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 18:01:09 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 07 18:09:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a5z9x-0006PQ-5f
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 18:01:09 +0100
+	id 1a5zHw-0005Um-2m
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 18:09:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756133AbbLGRBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 12:01:05 -0500
-Received: from mail-vk0-f52.google.com ([209.85.213.52]:35409 "EHLO
-	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755327AbbLGRBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2015 12:01:03 -0500
-Received: by vkha189 with SMTP id a189so105924274vkh.2
-        for <git@vger.kernel.org>; Mon, 07 Dec 2015 09:01:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vTGHBII/fVjSgS4K+nFphxIVTNnMZUhRLP2TJYB5UE8=;
-        b=QaeAw3Jf9JuTqJ2+Ddv6+r6sYUEW3TV9Qq0YBIVcpJsbfHJV/looZ4zvx9SNH4A2WI
-         K8a2SR9fEuQT4Z4NAjr5eKuHdGHBQJCCwlq4w0++BLMDfunrz5obM1YPMKp1CY8cZ8Ay
-         C+9klnOhgGf/9A0bwfKYTOcOifyDmqZR8qtc9kPz5VxcqP00uiOEhxYttEh6W2nA6BVF
-         h4qpU84rCEyRtGC8Q5UTTnNmTxEZuAHRbas/EBw2OSeB2BMJdFtPVfZJqTuRMEpn6whx
-         /QczW5L9po18Ttcn6UIkarAj8MKIQBVZdveuLQA47qlVzYXrHcfIup4D5Oe1f80WAkDv
-         KUew==
-X-Received: by 10.31.155.23 with SMTP id d23mr18938603vke.146.1449507662107;
- Mon, 07 Dec 2015 09:01:02 -0800 (PST)
-Received: by 10.103.97.199 with HTTP; Mon, 7 Dec 2015 09:00:32 -0800 (PST)
-In-Reply-To: <CAPig+cTYt1qaSLLOmwyZ-BQzOjWGxZ5koJNma1qc67UipPFW5w@mail.gmail.com>
+	id S932084AbbLGRJT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Dec 2015 12:09:19 -0500
+Received: from mout.web.de ([212.227.17.11]:57920 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753967AbbLGRJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 12:09:17 -0500
+Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0M8iPI-1ZyEyd1ZJE-00C6EM; Mon, 07 Dec 2015 18:09:15
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.4.0
+X-Provags-ID: V03:K0:9pgQu8yMqXTBjjHs1OB3cmFnIg9W1PlhZK1wdsLY4ho3tDN/ClP
+ VQaVmjapfwfbjqDaJPqUvKJzcc+lz7ypXcOjyH0kjgy+rcTmcuQYw6Bm7uqCVOxOFLdfYer
+ OGcoclisxl/OruhXIgYPJa/3sg6RJ6CHJxsLO4N92W5+calhQxp1AVpxbckDh0o45fk3UmK
+ aokxB0VBe4tjxYx72847g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HCzX21Wnma8=:pWhdwgMxa3dgybyKSTJlU8
+ bKm68Q2Mt2zsJ5SrcbPFMjnZAIUQVFG53LZN4AaSycnAMtD/DHe8WJrJfiifXvke+k7T66+dJ
+ nVmQS6HAbAqTHc4bxcHVvNH+FAjRkJMvSmHX+c0oCoYZvKEfh2Z1Vf34cMO4DN2ANeuNhaMEo
+ SDOxixVsDiNsSElVNCp7VWvCFiAoEalJPgYNkk1hoaMhdo76ayOy34DeKAekhAeluBXGOQv6b
+ scYxtDg+BeihgrIfACyW0bahnLSKHmx+R0D3v2pTy9QysGT4v5wQS1QH018ISQX6d8EU1Ex2C
+ 6aJ0wd5PmsGDDPE/q6NTQzNbrD0wubEaze6j4KLAT387YgPJw5RSOVlpobSYFKAUhUCXyVjhb
+ O4q+1R3ZFNJ1n0nR6pYl21rJqECIsFTXGRGLiSD4Qy8/poSyMAa50I3PAaDCmehFJ3rSASWKh
+ cGBUn1kYQoT+NPLzcAYxkeTfWt5nv9hIehzsXD33a/ZlXKMyWvAoVaFfCMGbnvVk5XvHS8QLs
+ DdCDuNdkSqDpDfbKwfU5zf9q3zi951vnWb2eF7IiPp1UuWB4uM3u/dBjogWB/BpkW/By+5XQu
+ yBy9+Iy+YLqLrw7oiPuzUm2dZ9bUoInHhRSN0h7wIlxWMSwk2SILb+LnWB75az/lp0DOZTO2w
+ M4mH7c1Zl+2ZwpG36bRPO1IOvzRDBD/ruWy9fx1fDa5wBciZrgCkbS1yWWKQksUyPyZTh1SYG
+ 32QFRTWjhlBCMSDhKSR3MFLgM+xGQ2NokZ9SPd0SRYjXmPaNK5oDmv2tUkGwXfWtjRAIKVi3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282099>
 
-On Thu, Dec 3, 2015 at 2:53 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Nov 11, 2015 at 2:44 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> Introduce align_atom_parser() which will parse 'align' atoms and store
->> the required width and position into the 'used_atom' structure. While
->> we're here, add support for the usage of 'width=' and 'position=' when
->> using the 'align' atom (e.g. %(align:position=middle,width=30)).
->
-> This patch is doing too much by both moving code around and modifying
-> that code (somewhat dramatically), thus it is difficult for reviewers
-> to compare the old and new behaviors. It deserves to be split apart
-> into at least two patches. First, the code movement patch which
-> introduces align_atom_parser() (and possibly get_align_position())
-> without any behavior or logical change; then the patch which changes
-> behavior to recognize the spelled-out forms "width=" and "position=".
-> You may even want to spilt it into more patches, for instance by doing
-> the get_align_position() extraction in its own patch.
->
+When working in a cross-platform environment, a user wants to
+check if text files are stored normalized in the repository and if
+=2Egitattributes are set appropriately.
 
-I split it into two separate patches:
-1. add align_atom_parser()
-2. introduce "width=" and "position=" prefixes.
+Make it possible to let Git show the line endings in the index and
+in the working tree and the effective text/eol attributes.
 
-I think now it seems easier to follow.
+The end of line ("eolinfo") are shown like this:
+"binary"       binary file
+"text-no-eol"  text file without any EOL
+"text-lf"      text file with LF
+"text-crlf"    text file with CRLF
+"text-crlf-lf" text file with mixed line endings.
 
->> Add documentation and modify the existing tests in t6302 to reflect
->> the same.
->>
->> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
->> ---
->> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
->> @@ -129,14 +129,16 @@ color::
->>  align::
->>         Left-, middle-, or right-align the content between
->> -       %(align:...) and %(end). The "align:" is followed by `<width>`
->> -       and `<position>` in any order separated by a comma, where the
->> -       `<position>` is either left, right or middle, default being
->> -       left and `<width>` is the total length of the content with
->> -       alignment. If the contents length is more than the width then
->> -       no alignment is performed. If used with '--quote' everything
->> -       in between %(align:...) and %(end) is quoted, but if nested
->> -       then only the topmost level performs quoting.
->> +       %(align:...) and %(end). The "align:" is followed by
->> +       `width=<width>` and `position=<position>` in any order
->> +       separated by a comma, where the `<position>` is either left,
->> +       right or middle, default being left and `<width>` is the total
->> +       length of the content with alignment. The prefix for the
->> +       arguments is not mandatory. If the contents length is more
->
-> This paragraph is so bulky that it's very easy to overlook the bit
-> about the "prefix for the arguments" being optional, and it's not
-> necessarily even clear to the casual reader what that means. It might,
-> therefore, be a good idea to spell it out explicitly. For instance,
-> you might say something like:
->
->     For brevity, the "width=" and/or "position=" prefixes may be
->     omitted, and bare <width> and <position> used instead.
->     For instance, `%(align:<width>,<position>)`.
->
+The effective text/eol attribute is one of these:
+"", "-text", "text", "text=3Dauto", "eol=3Dlf", "eol=3Dcrlf"
 
-Added this in.
+git ls-files --eol gives an output like this:
 
->> +       than the width then no alignment is performed. If used with
->> +       '--quote' everything in between %(align:...) and %(end) is
->> +       quoted, but if nested then only the topmost level performs
->> +       quoting.
->> diff --git a/ref-filter.c b/ref-filter.c
->> @@ -63,6 +69,61 @@ void color_atom_parser(struct used_atom *atom)
->> +static align_type get_align_position(const char *type)
->
-> Taken in context of the callers, this isn't a great function name, as
-> it implies that it is retrieving some value, when in fact it is
-> parsing the input argument. A better name might be
-> parse_align_position().
->
-> Likewise, 'type' isn't necessarily a great argument name. You might
-> instead call it 'pos' or even just short and sweet 's'.
->
+i/text-no-eol   w/text-no-eol   attr/text=3Dauto t/t5100/empty
+i/binary        w/binary        attr/-text     t/test-binary-2.png
+i/text-lf       w/text-lf       attr/eol=3Dlf    t/t5100/rfc2047-info-0=
+007
+i/text-lf       w/text-crlf     attr/eol=3Dcrlf  doit.bat
+i/text-crlf-lf  w/text-crlf-lf  attr/          locale/XX.po
 
-Will change.
+Note that the output is meant to be human-readable and may change.
 
->> +{
->> +       if (!strcmp(type, "right"))
->> +               return ALIGN_RIGHT;
->> +       else if (!strcmp(type, "middle"))
->> +               return ALIGN_MIDDLE;
->> +       else if (!strcmp(type, "left"))
->> +               return ALIGN_LEFT;
->> +       return -1;
->> +}
->> +
->> +void align_atom_parser(struct used_atom *atom)
->> +{
->> +       struct align *align = &atom->u.align;
->> +       const char *buf = NULL;
->> +       struct strbuf **s, **to_free;
->> +       int width = -1;
->> +
->> +       match_atom_name(atom->str, "align", &buf);
->> +       if (!buf)
->> +               die(_("expected format: %%(align:<width>,<position>)"));
->
-> Is this still the way you want this error message to appear, or should
-> it show the long-form of the arguments? (I don't care strongly.)
->
+Helped-By: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+Changes since v6:
+- Fixed potential memory leak in convert.c, when strbuf_read_file()
+  fails.
+- t0027:
+  Cleanups (empty lines, egrep, un-needed quoting)
+  test_when_finished 'rm e expect actual'=20
+  There doesn't seem to be 100% consistency when and how to remove file=
+s.
+  (I think if we create files, we should be able to remove them:
+  use "rm" rather than "rm -f")
+  Add comment about the "last test case", which removes file to run
+  'git ls-files -d"
 
-I think it still holds good, not too keen on changing it either.
+ Documentation/git-ls-files.txt |  22 +++++++++
+ builtin/ls-files.c             |  19 ++++++++
+ convert.c                      |  85 ++++++++++++++++++++++++++++++++
+ convert.h                      |   3 ++
+ t/t0027-auto-crlf.sh           | 108 +++++++++++++++++++++++++++++++++=
++++-----
+ 5 files changed, 226 insertions(+), 11 deletions(-)
 
->> +       s = to_free = strbuf_split_str_without_term(buf, ',', 0);
->> +
->> +       /*  By default align to ALGIN_LEFT */
->
-> What is ALGIN? Regardless of the answer, this comment is not
-> particularly useful since it merely repeats what the code itself
-> already states clearly.
->
-
-will do.
-
->> +       align->position = ALIGN_LEFT;
->> +
->> +       while (*s) {
->> +               int position;
->> +               buf = s[0]->buf;
->> +
->> +               position = get_align_position(buf);
->
-> Why is this assignment way up here rather than down below in the
-> penultimate 'else' arm where its result is actually being checked? By
-> moving it closer to the point of use, the logic becomes easier to
-> understand.
->
-
-makes sense, will do.
-
->> +               if (skip_prefix(buf, "position=", &buf)) {
->> +                       position = get_align_position(buf);
->> +                       if (position == -1)
->> +                               die(_("improper format entered align:%s"), s[0]->buf);
->
-> At this point, you can give a better error message since you know that
-> you were parsing a "position=" argument. Maybe something like
-> "unrecognized position: %s".
->
-
-thanks, will add this in.
-
->> +                       align->position = position;
->> +               } else if (skip_prefix(buf, "width=", &buf)) {
->> +                       if (strtoul_ui(buf, 10, (unsigned int *)&width))
->> +                               die(_("improper format entered align:%s"), s[0]->buf);
->
-> Ditto regarding better error message.
->
-
-will do.
-
->> +               } else if (!strtoul_ui(buf, 10, (unsigned int *)&width))
->> +                               ;
->> +               else if (position != -1)
->> +                       align->position = position;
->> +               else
->> +                       die(_("improper format entered align:%s"), s[0]->buf);
->
-> Here too, it would be more user-friendly to say "unrecognized
-> %%(align) argument: %s".
->
-
-will change.
-
->> +               s++;
->> +       }
->> +
->> +       if (width < 0)
->> +               die(_("positive width expected with the %%(align) atom"));
->> +       align->width = width;
->> +       strbuf_list_free(to_free);
->> +}
->> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
->> @@ -97,7 +97,7 @@ test_expect_success 'left alignment is default' '
->>         refname is refs/tags/three    |refs/tags/three
->>         refname is refs/tags/two      |refs/tags/two
->>         EOF
->> -       git for-each-ref --format="%(align:30)refname is %(refname)%(end)|%(refname)" >actual &&
->> +       git for-each-ref --format="%(align:width=30)refname is %(refname)%(end)|%(refname)" >actual &&
->>         test_cmp expect actual
->>  '
->>
->> @@ -113,7 +113,7 @@ test_expect_success 'middle alignment' '
->>         |  refname is refs/tags/three  |refs/tags/three
->>         |   refname is refs/tags/two   |refs/tags/two
->>         EOF
->> -       git for-each-ref --format="|%(align:middle,30)refname is %(refname)%(end)|%(refname)" >actual &&
->> +       git for-each-ref --format="|%(align:position=middle,30)refname is %(refname)%(end)|%(refname)" >actual &&
->>         test_cmp expect actual
->>  '
->
-> While it may sometimes be reasonable to re-purpose existing tests like
-> this, this probably is not one of those cases. Instead, you should be
-> adding new tests to check all the permutations of the new argument
-> handling. For instance:
->
->     %(align:42)
->     %(align:middle,42)
->     %(align:42,middle)
->     %(align:position=middle,42)
->     %(align:42,position=middle)
->     %(align:middle,width=42)
->     %(align:width=42,middle)
->     %(align:position=middle,width=42)
->     %(align:width=42,position=middle)
->
-> And, it wouldn't hurt to test handling of redundant or extra position
-> and width arguments. Should multiple arguments of the same type result
-> in an error, or should "last one wins (sliently)" be the policy? Once
-> you decide upon a policy, add tests to check that that policy works as
-> expected.
->
-
-Currently like you said, it works on a "last one wins(silently)" policy.
-I think this is what I'd stick with.
-So like you said I'll implement the combinations of tests as suggested
-and those suggested below too.
-
-> In this case, "last one wins (silently)" may be more friendly to
-> script writers, so it might be the better choice. You'd want to add
-> appropriate tests, using the various permutations. For instance:
->
->     %(align:42,width=43)
->     %(align:width=43,42)
->     %(align:42,position=middle,right)
->     %(align:42,right,position=middle)
-
-Thanks for the review :)
-
--- 
-Regards,
-Karthik Nayak
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-file=
+s.txt
+index e26f01f..8f29c99 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -12,6 +12,7 @@ SYNOPSIS
+ 'git ls-files' [-z] [-t] [-v]
+ 		(--[cached|deleted|others|ignored|stage|unmerged|killed|modified])*
+ 		(-[c|d|o|i|s|u|k|m])*
++		[--eol]
+ 		[-x <pattern>|--exclude=3D<pattern>]
+ 		[-X <file>|--exclude-from=3D<file>]
+ 		[--exclude-per-directory=3D<file>]
+@@ -147,6 +148,18 @@ a space) at the start of each line:
+ 	possible for manual inspection; the exact format may change at
+ 	any time.
+=20
++--eol::
++	Show line endings ("eolinfo") and the text/eol attributes ("texteolat=
+tr") of files.
++	"eolinfo" is the file content identification used by Git when
++	the "text" attribute is "auto", or core.autocrlf !=3D false.
++
++	"eolinfo" is either "" (when the the info is not available"), or one =
+of "binary",
++	"text-no-eol", "text-lf", "text-crlf" or "text-crlf-lf".
++	The "texteolattr" can be "", "-text", "text", "text=3Dauto", "eol=3Dl=
+f", "eol=3Dcrlf".
++
++	Both the content in the index ("i/") and the content in the working t=
+ree ("w/")
++	are shown for regular files, followed by the "texteolattr ("attr/").
++
+ \--::
+ 	Do not interpret any more arguments as options.
+=20
+@@ -161,6 +174,15 @@ which case it outputs:
+=20
+         [<tag> ]<mode> <object> <stage> <file>
+=20
++'git ls-files --eol' will show
++	i/<eolinfo> w/<eolinfo> attr/<eolattr> <file>
++
++'git ls-files --eol -o' will show
++	i/          w/<eolinfo> attr/<eolattr> <file>
++
++'git ls-files --eol -s' will show
++[<tag> ]<mode> <object> <stage> i/<eolinfo> w/<eolinfo> attr/<eolattr>=
+ <file>
++
+ 'git ls-files --unmerged' and 'git ls-files --stage' can be used to ex=
+amine
+ detailed information on unmerged paths.
+=20
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index b6a7cb0..ef892bc 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -27,6 +27,7 @@ static int show_killed;
+ static int show_valid_bit;
+ static int line_terminator =3D '\n';
+ static int debug_mode;
++static int show_eol;
+=20
+ static const char *prefix;
+ static int max_prefix_len;
+@@ -47,6 +48,21 @@ static const char *tag_modified =3D "";
+ static const char *tag_skip_worktree =3D "";
+ static const char *tag_resolve_undo =3D "";
+=20
++static void write_eolinfo(const struct cache_entry *ce, const char *pa=
+th)
++{
++	struct stat st;
++	const char *i_txt =3D "";
++	const char *w_txt =3D "";
++	if (!show_eol)
++		return;
++	if (ce && S_ISREG(ce->ce_mode))
++		i_txt =3D get_cached_convert_stats_ascii(ce->name);
++	if (!lstat(path, &st) && (S_ISREG(st.st_mode)))
++		w_txt =3D get_wt_convert_stats_ascii(path);
++	printf("i/%-13s w/%-13s attr/%-9s ", i_txt, w_txt,
++				 get_convert_attr_ascii(path));
++}
++
+ static void write_name(const char *name)
+ {
+ 	/*
+@@ -68,6 +84,7 @@ static void show_dir_entry(const char *tag, struct di=
+r_entry *ent)
+ 		return;
+=20
+ 	fputs(tag, stdout);
++	write_eolinfo(NULL, ent->name);
+ 	write_name(ent->name);
+ }
+=20
+@@ -170,6 +187,7 @@ static void show_ce_entry(const char *tag, const st=
+ruct cache_entry *ce)
+ 		       find_unique_abbrev(ce->sha1,abbrev),
+ 		       ce_stage(ce));
+ 	}
++	write_eolinfo(ce, ce->name);
+ 	write_name(ce->name);
+ 	if (debug_mode) {
+ 		const struct stat_data *sd =3D &ce->ce_stat_data;
+@@ -433,6 +451,7 @@ int cmd_ls_files(int argc, const char **argv, const=
+ char *cmd_prefix)
+ 		OPT_BIT(0, "directory", &dir.flags,
+ 			N_("show 'other' directories' names only"),
+ 			DIR_SHOW_OTHER_DIRECTORIES),
++		OPT_BOOL(0, "eol", &show_eol, N_("show line endings of files")),
+ 		OPT_NEGBIT(0, "empty-directory", &dir.flags,
+ 			N_("don't show empty directories"),
+ 			DIR_HIDE_EMPTY_DIRECTORIES),
+diff --git a/convert.c b/convert.c
+index 814e814..61d6757 100644
+--- a/convert.c
++++ b/convert.c
+@@ -13,6 +13,11 @@
+  * translation when the "text" attribute or "auto_crlf" option is set.
+  */
+=20
++/* Stat bits: When BIN is set, the txt bits are unset */
++#define CONVERT_STAT_BITS_TXT_LF   (1)
++#define CONVERT_STAT_BITS_TXT_CRLF (2)
++#define CONVERT_STAT_BITS_BIN      (4)
++
+ enum crlf_action {
+ 	CRLF_GUESS =3D -1,
+ 	CRLF_BINARY =3D 0,
+@@ -95,6 +100,62 @@ static int is_binary(unsigned long size, struct tex=
+t_stat *stats)
+ 	return 0;
+ }
+=20
++static unsigned int gather_convert_stats(const char *data, unsigned lo=
+ng size)
++{
++	struct text_stat stats;
++	if (!data || !size)
++		return 0;
++	gather_stats(data, size, &stats);
++	if (is_binary(size, &stats) || stats.cr !=3D stats.crlf)
++		return CONVERT_STAT_BITS_BIN;
++	else if (stats.crlf && (stats.crlf =3D=3D stats.lf))
++		return CONVERT_STAT_BITS_TXT_CRLF;
++	else if (stats.crlf && stats.lf)
++		return CONVERT_STAT_BITS_TXT_CRLF | CONVERT_STAT_BITS_TXT_LF;
++	else if (stats.lf)
++		return CONVERT_STAT_BITS_TXT_LF;
++	else
++		return 0;
++}
++
++static const char *gather_convert_stats_ascii(const char *data, unsign=
+ed long size)
++{
++	unsigned int convert_stats =3D gather_convert_stats(data, size);
++
++	if (convert_stats & CONVERT_STAT_BITS_BIN)
++		return "binary";
++	switch (convert_stats) {
++		case CONVERT_STAT_BITS_TXT_LF:
++			return("text-lf");
++		case CONVERT_STAT_BITS_TXT_CRLF:
++			return("text-crlf");
++		case CONVERT_STAT_BITS_TXT_LF | CONVERT_STAT_BITS_TXT_CRLF:
++			return("text-crlf-lf");
++		default:
++			return ("text-no-eol");
++	}
++}
++
++const char *get_cached_convert_stats_ascii(const char *path)
++{
++	const char *ret;
++	unsigned long sz;
++	void *data =3D read_blob_data_from_cache(path, &sz);
++	ret =3D gather_convert_stats_ascii(data, sz);
++	free(data);
++	return ret;
++}
++
++const char *get_wt_convert_stats_ascii(const char *path)
++{
++	const char *ret =3D "";
++	struct strbuf sb =3D STRBUF_INIT;
++	if (strbuf_read_file(&sb, path, 0) >=3D 0)
++		ret =3D gather_convert_stats_ascii(sb.buf, sb.len);
++	strbuf_release(&sb);
++	return ret;
++}
++
+ static enum eol output_eol(enum crlf_action crlf_action)
+ {
+ 	switch (crlf_action) {
+@@ -777,6 +838,30 @@ int would_convert_to_git_filter_fd(const char *pat=
+h)
+ 	return apply_filter(path, NULL, 0, -1, NULL, ca.drv->clean);
+ }
+=20
++const char *get_convert_attr_ascii(const char *path)
++{
++	struct conv_attrs ca;
++	enum crlf_action crlf_action;
++
++	convert_attrs(&ca, path);
++	crlf_action =3D input_crlf_action(ca.crlf_action, ca.eol_attr);
++	switch (crlf_action) {
++		case CRLF_GUESS:
++			return "";
++		case CRLF_BINARY:
++			return "-text";
++		case CRLF_TEXT:
++			return "text";
++		case CRLF_INPUT:
++			return "eol=3Dlf";
++		case CRLF_CRLF:
++			return "eol=3Dcrlf";
++		case CRLF_AUTO:
++			return "text=3Dauto";
++	}
++	return "";
++}
++
+ int convert_to_git(const char *path, const char *src, size_t len,
+                    struct strbuf *dst, enum safe_crlf checksafe)
+ {
+diff --git a/convert.h b/convert.h
+index d9d853c..ccf436b 100644
+--- a/convert.h
++++ b/convert.h
+@@ -32,6 +32,9 @@ enum eol {
+ };
+=20
+ extern enum eol core_eol;
++extern const char *get_cached_convert_stats_ascii(const char *path);
++extern const char *get_wt_convert_stats_ascii(const char *path);
++extern const char *get_convert_attr_ascii(const char *path);
+=20
+ /* returns 1 if *dst was used */
+ extern int convert_to_git(const char *path, const char *src, size_t le=
+n,
+diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+index b343651..a89f2ba 100755
+--- a/t/t0027-auto-crlf.sh
++++ b/t/t0027-auto-crlf.sh
+@@ -56,21 +56,16 @@ create_gitattributes () {
+ }
+=20
+ create_NNO_files () {
+-	lfname=3D$1
+-	crlfname=3D$2
+-	lfmixcrlf=3D$3
+-	lfmixcr=3D$4
+-	crlfnul=3D$5
+ 	for crlf in false true input
+ 	do
+ 		for attr in "" auto text -text lf crlf
+ 		do
+ 			pfx=3DNNO_${crlf}_attr_${attr} &&
+-			cp $lfname    ${pfx}_LF.txt &&
+-			cp $crlfname  ${pfx}_CRLF.txt &&
+-			cp $lfmixcrlf ${pfx}_CRLF_mix_LF.txt &&
+-			cp $lfmixcr   ${pfx}_LF_mix_CR.txt &&
+-			cp $crlfnul   ${pfx}_CRLF_nul.txt
++			cp CRLF_mix_LF ${pfx}_LF.txt &&
++			cp CRLF_mix_LF ${pfx}_CRLF.txt &&
++			cp CRLF_mix_LF ${pfx}_CRLF_mix_LF.txt &&
++			cp CRLF_mix_LF ${pfx}_LF_mix_CR.txt &&
++			cp CRLF_mix_LF ${pfx}_CRLF_nul.txt
+ 		done
+ 	done
+ }
+@@ -96,7 +91,7 @@ commit_check_warn () {
+ 	crlfnul=3D$7
+ 	pfx=3Dcrlf_${crlf}_attr_${attr}
+ 	create_gitattributes "$attr" &&
+-	for f in LF CRLF repoMIX LF_mix_CR CRLF_mix_LF LF_nul CRLF_nul
++	for f in LF CRLF LF_mix_CR CRLF_mix_LF LF_nul CRLF_nul
+ 	do
+ 		fname=3D${pfx}_$f.txt &&
+ 		cp $f $fname &&
+@@ -149,6 +144,36 @@ commit_chk_wrnNNO () {
+ 	'
+ }
+=20
++stats_ascii () {
++	case "$1" in
++		LF)
++		echo text-lf
++		;;
++		CRLF)
++		echo text-crlf
++		;;
++		CRLF_mix_LF)
++		echo text-crlf-lf
++		;;
++		LF_mix_CR)
++		echo binary
++		;;
++		CRLF_nul)
++		echo binary
++		;;
++		LF_nul)
++		echo binary
++		;;
++		CRLF_mix_CR)
++		echo binary
++		;;
++		*)
++		echo error_invalid $1
++		;;
++	esac
++
++}
++
+ check_files_in_repo () {
+ 	crlf=3D$1
+ 	attr=3D$2
+@@ -214,6 +239,20 @@ checkout_files () {
+ 		fi
+ 	done
+=20
++	test_expect_success "ls-files --eol $lfname ${pfx}LF.txt" "
++	  test_when_finished 'rm e expect actual' &&
++		cat >e <<-EOF &&
++		i/text-crlf w/$(stats_ascii $crlfname) ${src}CRLF.txt
++		i/text-crlf-lf w/$(stats_ascii $lfmixcrlf) ${src}CRLF_mix_LF.txt
++		i/text-lf w/$(stats_ascii $lfname) ${src}LF.txt
++		i/binary w/$(stats_ascii $lfmixcr) ${src}LF_mix_CR.txt
++		i/binary w/$(stats_ascii $crlfnul) ${src}CRLF_nul.txt
++		i/binary w/$(stats_ascii $crlfnul) ${src}LF_nul.txt
++		EOF
++		sort <e >expect &&
++		git ls-files --eol $src* | sed -e 's!attr/[=3Da-z-]*!!g' -e 's/  */ =
+/g' | sort >actual &&
++		test_cmp expect actual
++	"
+ 	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$attr file=3DLF" "
+ 		compare_ws_file $pfx $lfname    ${src}LF.txt
+ 	"
+@@ -231,6 +270,37 @@ checkout_files () {
+ 	"
+ }
+=20
++# Test control characters
++# NUL SOH CR EOF=3D=3D^Z
++test_expect_success 'ls-files --eol -o Text/Binary' '
++	test_when_finished "rm e expect actual TeBi_*" &&
++	STRT=3DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA &&
++	STR=3D$STRT$STRT$STRT$STRT &&
++	printf "${STR}BBB\001" >TeBi_127_S &&
++	printf "${STR}BBBB\001">TeBi_128_S &&
++	printf "${STR}BBB\032" >TeBi_127_E &&
++	printf "\032${STR}BBB" >TeBi_E_127 &&
++	printf "${STR}BBBB\000">TeBi_128_N &&
++	printf "${STR}BBB\012">TeBi_128_L &&
++	printf "${STR}BBB\015">TeBi_127_C &&
++	printf "${STR}BB\015\012" >TeBi_126_CL &&
++	printf "${STR}BB\015\012\015" >TeBi_126_CLC &&
++	cat >e <<-\EOF &&
++	i/ w/binary TeBi_127_S
++	i/ w/text-no-eol TeBi_128_S
++	i/ w/text-no-eol TeBi_127_E
++	i/ w/binary TeBi_E_127
++	i/ w/binary TeBi_128_N
++	i/ w/text-lf TeBi_128_L
++	i/ w/binary TeBi_127_C
++	i/ w/text-crlf TeBi_126_CL
++	i/ w/binary TeBi_126_CLC
++	EOF
++	sort <e >expect &&
++	git ls-files --eol -o | grep TeBi_ | sed -e 's!attr/[=3Da-z-]*!!g' -e=
+ "s/  */ /g" | sort >actual &&
++	test_cmp expect actual
++'
++
+ #######
+ test_expect_success 'setup master' '
+ 	echo >.gitattributes &&
+@@ -480,4 +550,20 @@ checkout_files    native  true  "lf"      LF    CR=
+LF  CRLF_mix_LF  LF_mix_CR
+ checkout_files    native  false "crlf"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
+ checkout_files    native  true  "crlf"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
+=20
++
++# Should be the last test case: remove some files from the worktree
++# run 'git ls-files -d'
++test_expect_success 'ls-files --eol -d' "
++	rm  crlf_false_attr__CRLF.txt crlf_false_attr__CRLF_mix_LF.txt crlf_f=
+alse_attr__LF.txt .gitattributes &&
++	cat >expect <<-\EOF &&
++	i/text-crlf w/ crlf_false_attr__CRLF.txt
++	i/text-crlf-lf w/ crlf_false_attr__CRLF_mix_LF.txt
++	i/text-lf w/ .gitattributes
++	i/text-lf w/ crlf_false_attr__LF.txt
++	EOF
++	git ls-files --eol -d | sed -e 's!attr/[=3Da-z-]*!!g' -e 's/  */ /g' =
+| sort >actual &&
++	test_cmp expect actual &&
++	rm expect actual
++"
++
+ test_done
+--=20
+2.6.2.403.gd7a84e3
