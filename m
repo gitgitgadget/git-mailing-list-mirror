@@ -1,101 +1,129 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] format-patch: introduce option to suppress commit hashes
-Date: Sun, 06 Dec 2015 18:49:14 -0800
-Message-ID: <xmqqh9jvnfbp.fsf@gitster.mtv.corp.google.com>
-References: <1449440196-991107-1-git-send-email-sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] filter-branch: pass tag name via stdin without newline
+Date: Sun, 06 Dec 2015 18:55:21 -0800
+Message-ID: <xmqqd1ujnf1i.fsf@gitster.mtv.corp.google.com>
+References: <1449451046-19752-1-git-send-email-ericvw@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
-	Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Mon Dec 07 03:49:23 2015
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
+To: "Eric N. Vander Weele" <ericvw@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 03:56:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a5lrf-0005ar-52
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 03:49:23 +0100
+	id 1a5ly0-0002Bp-1u
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 03:55:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755059AbbLGCtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Dec 2015 21:49:18 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58877 "EHLO
+	id S1755165AbbLGCzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Dec 2015 21:55:52 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:63622 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754816AbbLGCtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Dec 2015 21:49:17 -0500
+	with ESMTP id S1755021AbbLGCzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Dec 2015 21:55:51 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3D3C4311A4;
-	Sun,  6 Dec 2015 21:49:16 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D0E8A31461;
+	Sun,  6 Dec 2015 21:55:50 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tN1gcfBVxQ4oV0zYyoAs65f1bhM=; b=FlLIbS
-	fdoD+a42Z0GQYsePHHTAwP5W7RmrOUYQYNOEdCrAOQMKmxIL0Kbpd24dYYXugjws
-	RJ6NjLKyhMSeQpCb55Bv7mwEbyJjsmfmbdXW4B4l/hEWLOgtcabyFiz1hcqv6Oqy
-	BJ2Inf0ngp7DPITg9+FtT+q+HuFMgA+b6KfHY=
+	:content-type; s=sasl; bh=T8CY5pqdKifoHcpoptIwFbYarjA=; b=ObMa0g
+	xgOkV73iQfaCOXygowVAWYVEBzEDINOyOlH9Ez/UYEfXE14D0dR9DwcpRtQQT60X
+	bdF6QS5ibtlMlfqOvvvOEfRTvCOMYzohlMAJPQ9/U9fa0LpuOAWrmdtRrlnLDU1Q
+	8gORN71bwzrSP71hATZvzcAZhHEXVaTtUJfF8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QFiMLfeXzoskIdrdTOJOC38WLwzGt2BR
-	S+ZFT3DRzqzSZdkxCY7MIt+KHrUajn/kPO3yyTHp2dhRwCK+K0cp+j+iYxSO/h8C
-	gsZaMEFvAG+4sX0npOMKviYW0z1XxZ5FC446FbOiCanAmqH0beeUNgJVhAydBr4L
-	iViz0EqzgCs=
+	:content-type; q=dns; s=sasl; b=uWIAFIE27sW3zkkCIo9fZphP39tMKi7O
+	CJclA4hgvSgd2iztchA7IwJBbgaIkvWcpwq7xhB2Jf/LMWo1IDMDXjjGXOQplirk
+	EIKyvNsND4mw1oyCFrdGO8TgLTCjc7GgI2ROSs6rgnRg1GfVt257XOxsXa8Mel3d
+	7h3icQ6Jbvk=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 32C5F311A3;
-	Sun,  6 Dec 2015 21:49:16 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C3F2431460;
+	Sun,  6 Dec 2015 21:55:50 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 97634311A2;
-	Sun,  6 Dec 2015 21:49:15 -0500 (EST)
-In-Reply-To: <1449440196-991107-1-git-send-email-sandals@crustytoothpaste.net>
-	(brian m. carlson's message of "Sun, 6 Dec 2015 22:16:34 +0000")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3ED663145F;
+	Sun,  6 Dec 2015 21:55:50 -0500 (EST)
+In-Reply-To: <1449451046-19752-1-git-send-email-ericvw@gmail.com> (Eric
+	N. Vander Weele's message of "Sun, 6 Dec 2015 17:17:26 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1AA9E720-9C8D-11E5-80AF-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 05E32512-9C8E-11E5-A704-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282073>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+"Eric N. Vander Weele" <ericvw@gmail.com> writes:
 
-> git format-patch is often used to create patches that are then stored in
-> version control or displayed with diff.  Having the commit hash in the
-> "From " line usually just creates diff noise in these cases, so this
-> series introduces --no-hash to set that to all zeros.
+> "git filter-branch --tag-name-filter" fails when the user-provided
+> command attempts to trivially append text to the originally tag name,
+> passed via stdin, due to an unexpected newline ('\n').  The newline is
+> introduced due to "echo" piping the original tag name to the
+> user-provided tag name filter command.
 
-I am somewhat negative on this change that deliberately loses
-information in a way that seems too specific to a single workflow.
+Is there any other place where we feed such an incomplete line
+(i.e. a line without the terminating LF) to the filters in this
+command?
 
-I understand that in that particular workflow, the patch stored as
-payload in a history needs only the diff part and the commit that
-the patch was taken from is deemed irrelevant.
+I am guessing that the answer to that question would be no, and all
+existing scripts by users expect the newline at the end of each
+line.  So I would have to say that "due to an unexpected newline" is
+a misleading statement--isn't it a bug in your filter that it did
+not expect one?
 
-But the reason why that and only that piece of information is
-expendable, while author, subject and log message text are not is
-because...?  The answer to that question would very much be
-project's workflow dependant.  From that point of view, I'd say the
-users are much better off without the addition of this feature, but
-have a custom script in their workflow to remove parts that their
-project and workflow deems unnecessary.  Your project may deem the
-source commit object name unnecessary.  Another one may think the
-author date and name are, too.  Patch e-mail signature (i.e. what
-comes after a line with "-- ") by default depends on the version of
-Git that happened to have been used to prepare the patch, which may
-not be something you would want.
+> The only portable usage of "echo" is without any options and escape
+> sequences.  Therefore, replacing "echo" with "printf" is a suitable,
+> POSIX compliant alternative.
 
-Stepping back a bit, why is the history from which the patches are
-taken from irrelevant in the first place?  Perhaps because you
-replayed these patches on top of the same base but did not preserve
-their timestamps?  If this user, i.e. the part of the workflow that
-commits generated patches to version control, finds the "irrelevant"
-change irritating, isn't it fair to expect other users, i.e. other
-parts of the same workflow, also find that unnecessary and
-irrelevant rebasing irritating?  It feels like I am seeing an
-entrance to an X-Y problem whose real solution is to stop doing the
-pointless rebases in the first place.
+Yes, if we wanted to emit an incomplete line, we would be using
 
-And if that rebase is not pointless, then I am not sure if it is a
-good thing to discard the information that records which incarnation
-of that constantly rebased source tree the patches were taken from.
+    printf "%s" "$var"
 
-So...
+instead of
+
+    echo -n "$var"
+
+for portability.  But that would not belong to the log message for
+this patch.  If the patch were to correct a script that originally
+used "echo -n" to produce an incomplete line to instead use "printf",
+these three lines would have been a perfect log message.
+
+Thanks.
+
+> Signed-off-by: Eric N. Vander Weele <ericvw@gmail.com>
+> ---
+>  git-filter-branch.sh     | 2 +-
+>  t/t7003-filter-branch.sh | 5 +++++
+>  2 files changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+> index 98f1779..949cd30 100755
+> --- a/git-filter-branch.sh
+> +++ b/git-filter-branch.sh
+> @@ -503,7 +503,7 @@ if [ "$filter_tag_name" ]; then
+>  		new_sha1="$(cat "../map/$sha1")"
+>  		GIT_COMMIT="$sha1"
+>  		export GIT_COMMIT
+> -		new_ref="$(echo "$ref" | eval "$filter_tag_name")" ||
+> +		new_ref="$(printf "$ref" | eval "$filter_tag_name")" ||
+>  			die "tag name filter failed: $filter_tag_name"
+>  
+>  		echo "$ref -> $new_ref ($sha1 -> $new_sha1)"
+> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+> index 869e0bf..0db6808 100755
+> --- a/t/t7003-filter-branch.sh
+> +++ b/t/t7003-filter-branch.sh
+> @@ -269,6 +269,11 @@ test_expect_success 'Tag name filtering retains tag message' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'Tag name filter does not pass tag ref with newline' '
+> +	git filter-branch -f --tag-name-filter "cat && printf "_append"" -- A &&
+> +	git rev-parse A_append > /dev/null 2>&1
+> +'
+> +
+>  faux_gpg_tag='object XXXXXX
+>  type commit
+>  tag S
