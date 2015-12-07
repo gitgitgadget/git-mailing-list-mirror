@@ -1,78 +1,104 @@
-From: Daniel Koverman <dkoverman@predictiveTechnologies.com>
-Subject: Why does send-pack call pack-objects for all remote refs?
-Date: Mon, 7 Dec 2015 21:02:22 +0000
-Message-ID: <4766c8518c2a46afb88fc0a2dd9a1688@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC 3/3] ls-files/dir: use is_git_repo to detect
+ submodules
+Date: Mon, 7 Dec 2015 16:10:52 -0500
+Message-ID: <20151207211052.GG30203@sigill.intra.peff.net>
+References: <1449252917-3877-1-git-send-email-a.krey@gmx.de>
+ <1449252917-3877-3-git-send-email-a.krey@gmx.de>
+ <20151205073744.GC21639@sigill.intra.peff.net>
+ <20151206165926.GI22288@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 07 22:02:29 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Dec 07 22:11:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a62vU-0001OH-Oy
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 22:02:29 +0100
+	id 1a633j-0001Oa-BT
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 22:10:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933124AbbLGVCY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Dec 2015 16:02:24 -0500
-Received: from barracuda10.predictivetechnologies.com ([208.254.18.230]:37042
-	"EHLO barracuda10.predictivetechnologies.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932813AbbLGVCY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 7 Dec 2015 16:02:24 -0500
-Received: from pps.filterd (ProofpointMaster.arlington.predictivetechnologies.com [127.0.0.1])
-	by ProofpointMaster.arlington.predictivetechnologies.com (8.15.0.59/8.15.0.59) with SMTP id tB7KwWwP030748
-	for <git@vger.kernel.org>; Mon, 7 Dec 2015 16:02:23 -0500
-Received: from mail.predictivetechnologies.com ([192.168.70.11])
-	by ProofpointMaster.arlington.predictivetechnologies.com with ESMTP id 1yksucjjph-1
-	(version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 07 Dec 2015 16:02:23 -0500
-Received: from EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com
- (192.168.70.10) by EXCHANGE2U.uunet.arlington.PredictiveTechnologies.com
- (192.168.70.17) with Microsoft SMTP Server (TLS) id 15.0.1044.25; Mon, 7 Dec
- 2015 16:02:22 -0500
-Received: from EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com
- ([fe80::5dc4:68de:a3ba:b43c]) by
- EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com
- ([fe80::5dc4:68de:a3ba:b43c%31]) with mapi id 15.00.1044.021; Mon, 7 Dec 2015
- 16:02:22 -0500
-Thread-Topic: Why does send-pack call pack-objects for all remote refs?
-Thread-Index: AdExMorqL3V8CMb5RwSZLGZxKodLug==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [192.168.1.196]
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2015-12-07_11:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 kscore.is_bulkscore=0
- kscore.compositescore=1 compositescore=0.9 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 kscore.is_spamscore=0 rbsscore=0.9 spamscore=0
- urlsuspectscore=0.9 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1507310000 definitions=main-1512070333
+	id S1754786AbbLGVKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2015 16:10:55 -0500
+Received: from cloud.peff.net ([50.56.180.127]:38520 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752986AbbLGVKy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 16:10:54 -0500
+Received: (qmail 17803 invoked by uid 102); 7 Dec 2015 21:10:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Dec 2015 15:10:54 -0600
+Received: (qmail 23486 invoked by uid 107); 7 Dec 2015 21:10:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 07 Dec 2015 16:10:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Dec 2015 16:10:52 -0500
+Content-Disposition: inline
+In-Reply-To: <20151206165926.GI22288@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282126>
 
-I have a repository which has ~2000 branches on the remote, and it take=
-s ~8 seconds to push a change to one ref. The majority of this time is =
-spent in pack-object. I wrote a hack so that only the ref being updated=
- would be packed (the normal behavior is to pack for every ref on the r=
-emote). =A0The push time dropped to <1 second with (seemingly) no conse=
-quences. This raised a couple of questions:
+On Sun, Dec 06, 2015 at 05:59:26PM +0100, Andreas Krey wrote:
 
-1) Are there consequences for not packing refs that are not being updat=
-ed? Can all operations in send-pack which operate on other refs be skip=
-ped?
-2) Why isn't git more selective about what it packs? Is it simply a per=
-formance optimization not worth the implementation complexity?
-3) Is something about my repository strange? ex: 2000 is too many branc=
-hes, packing for each ref takes me an unusually long time, etc.
+> On Sat, 05 Dec 2015 02:37:44 +0000, Jeff King wrote:
+> ...
+> > Hrm. Weird. You'd think it would break with the existing code if I do
+> > this, then:
+> > 
+> ...
+> > -		(cd a/b/c; git init) &&
+> > +		(cd a/b/c; git init && git commit --allow-empty -m foo) &&
+> >  		git config remote.origin.url ../foo/bar.git &&
+> >  		git submodule add ../bar/a/b/c ./a/b/c &&
+> 
+> I tried a -f here instead; did not work either.
+> 
+> I guess I will first wade through the other failures my 'fix'
+> causes to see the total damage.
 
-Thanks in advance to anyone who takes the time to clarify this for me.
+The only other one I saw was in the completion tests. And it looked like
+`git add` failing in a way similar to what I dug into here. So I think
+it's "just" the one bug.
 
-Daniel
+> > We know it is a git dir, but there is no sha1 for us to actually add as
+> > the gitlink entry.
+> > 
+> > If that is the case, then there is either some very tricky refactoring
+> > required,
+> 
+> Yes, it looks like the return code delivered need to be slightly different
+> dependent on the user.
+
+Maybe. From your patch it looks like the "git-add" code will return it
+as "untracked". Which makes sense if we then want to add it. But if it
+has no HEAD commit we _cannot_ add it, as we have no sha1 to stick in
+the index. It should probably be ignored totally in that case.
+
+But that means you have to actually find out if HEAD is valid or not.
+Which is what the current code is doing. :-/
+
+> > or what we are trying to do here is simply wrong. Maybe it
+> > would be simpler to just speed up resolve_gitlink_ref with a better data
+> > structure.
+> 
+> Which is what I did on square one, but now we already have a real fix
+> for git clean, and now it's even less advantageous the fix the consequence
+> (the submodule cache blowing up) instead of the cause (asking for it
+> in the first place).
+
+I think "clean" is a much simpler case. It only wants to know "can I
+skip this entry as an untracked sub-repo?". And that is similar to what
+"git status" or "git ls-files" wants to know. But "git add" wants to
+know "can I _add_ this entry to the index", and that is a different
+question (but I think answered by the same code that powers ls-files).
+
+> PS: I seem to not quite have send-email under control, the envelope from
+>     seems to made the patches not reach the mailing list (nor me in the CC).
+
+Hmm, yeah. Obviously they made it to me directly, but the list is a
+little bit picky.
+
+-Peff
