@@ -1,77 +1,44 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC/PATCH 2/8] update-index: add --test-untracked-cache
-Date: Mon, 7 Dec 2015 07:18:19 +0100
-Message-ID: <CAP8UFD3qN-_OcdmuaGBAMBToQqf5c2pB+Dvdh3JPb9+S6m3vsQ@mail.gmail.com>
-References: <1449001899-18956-1-git-send-email-chriscool@tuxfamily.org>
-	<1449001899-18956-3-git-send-email-chriscool@tuxfamily.org>
-	<CACsJy8ChATsTatRdz2wM23vfXy_8o1V5FEwMXo+PBqTBzZBBQA@mail.gmail.com>
+From: mikelilin <zbin1986@gmail.com>
+Subject: Re: [PATCHv3] gitweb: fill in missing parts of JavaScript minify
+ support
+Date: Mon, 7 Dec 2015 00:42:03 -0700 (MST)
+Message-ID: <1449474123548-7643775.post@n2.nabble.com>
+References: <4BA44F1F.9030008@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 07:18:36 2015
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 07 08:42:13 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a5p7x-0001bx-Tr
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 07:18:26 +0100
+	id 1a5qR0-00072y-GA
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 08:42:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751450AbbLGGSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 01:18:21 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:33269 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750819AbbLGGSV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2015 01:18:21 -0500
-Received: by lbbkw15 with SMTP id kw15so50211771lbb.0
-        for <git@vger.kernel.org>; Sun, 06 Dec 2015 22:18:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Rlu/OcMP7BLBp9gihsWxNuKFeqzO4Y7SLdgoUAJO+eY=;
-        b=xKroVQ36MK5PQa3rWRdul23d+vo1mZUqYFgPI7JrpGq2PWKFXNpHw9SO0jSPC5LZZ4
-         T+gEFmAKZuut4WjNbZXQTe+AMHS0frVBgkTmnagk6Q+kE3CgLamQnMLxJO/pbPAazT12
-         SSo/qZiQiPYwhDnUxZKYMY9ZnsLVEqaFBdk24SG8gIM6NnfHVHWR3H98Xbc5ObYuDiTB
-         WWXmbaoT/RyFlWUp0A7Gv+R9UYWpPu7kJ0CFQ3Gb+2E2YYuyM/V5/V/+yzL3Lj7Ge1NG
-         N6FKOs8V9yZXFiZm878vBsHG5tCG1EC1aNBvSo329COwjANpN+xLoe3LX1eIRCIOvqlX
-         NSyw==
-X-Received: by 10.112.36.130 with SMTP id q2mr3107766lbj.116.1449469099548;
- Sun, 06 Dec 2015 22:18:19 -0800 (PST)
-Received: by 10.25.152.7 with HTTP; Sun, 6 Dec 2015 22:18:19 -0800 (PST)
-In-Reply-To: <CACsJy8ChATsTatRdz2wM23vfXy_8o1V5FEwMXo+PBqTBzZBBQA@mail.gmail.com>
+	id S1754120AbbLGHmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2015 02:42:05 -0500
+Received: from mwork.nabble.com ([162.253.133.43]:59899 "EHLO mwork.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754065AbbLGHmD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 02:42:03 -0500
+Received: from mjim.nabble.com (unknown [162.253.133.84])
+	by mwork.nabble.com (Postfix) with ESMTP id 6005E2F5AA0F
+	for <git@vger.kernel.org>; Sun,  6 Dec 2015 23:41:57 -0800 (PST)
+In-Reply-To: <4BA44F1F.9030008@mailservices.uwaterloo.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282085>
 
-On Wed, Dec 2, 2015 at 8:17 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, Dec 1, 2015 at 9:31 PM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->> diff --git a/builtin/update-index.c b/builtin/update-index.c
->> index e568acc..b7b5108 100644
->> --- a/builtin/update-index.c
->> +++ b/builtin/update-index.c
->> @@ -996,8 +996,10 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->>                         N_("enable or disable split index")),
->>                 OPT_BOOL(0, "untracked-cache", &untracked_cache,
->>                         N_("enable/disable untracked cache")),
->> +               OPT_SET_INT(0, "test-untracked-cache", &untracked_cache,
->> +                           N_("test if the filesystem supports untracked cache"), 2),
->>                 OPT_SET_INT(0, "force-untracked-cache", &untracked_cache,
->> -                           N_("enable untracked cache without testing the filesystem"), 2),
->> +                           N_("enable untracked cache without testing the filesystem"), 3),
->>                 OPT_END()
->>         };
->
-> I think we got enough numbers to start using enum instead.
+i find a free online tool to  minify javascript
+<http://www.online-code.net/minify-js.html>  .
 
-Ok, I will use an enum.
+
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/PATCHv3-gitweb-fill-in-missing-parts-of-JavaScript-minify-support-tp4767036p7643775.html
+Sent from the git mailing list archive at Nabble.com.
