@@ -1,81 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] format-patch: introduce option to suppress commit hashes
-Date: Mon, 07 Dec 2015 00:22:01 -0800
-Message-ID: <xmqq8u56oehi.fsf@gitster.mtv.corp.google.com>
-References: <1449440196-991107-1-git-send-email-sandals@crustytoothpaste.net>
-	<xmqqh9jvnfbp.fsf@gitster.mtv.corp.google.com>
-	<20151207033020.GA990758@vauxhall.crustytoothpaste.net>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC/PATCH 1/8] update-index: add untracked cache notifications
+Date: Mon, 7 Dec 2015 10:08:03 +0100
+Message-ID: <CAP8UFD0w9X+7TfPvW0mPxgU75HMR=1WWb6baJ2YrdNTDETJ6hQ@mail.gmail.com>
+References: <1449001899-18956-1-git-send-email-chriscool@tuxfamily.org>
+	<1449001899-18956-2-git-send-email-chriscool@tuxfamily.org>
+	<CACsJy8BWEQNnpoXNBWSmmm-Ff7jJ9=+D6748TMXFyospU7jt1A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
-	Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Mon Dec 07 09:22:17 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 10:08:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a5r3o-0006B7-3z
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 09:22:16 +0100
+	id 1a5rmH-0005CI-OQ
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 10:08:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753643AbbLGIWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 03:22:10 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:51286 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753232AbbLGIWJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2015 03:22:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 998DA2CD14;
-	Mon,  7 Dec 2015 03:22:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sTN/KKAwf1UNqq7nFXUduLaIkmw=; b=BRhVSs
-	4PSPQtA4xDpujZloDsgZewRfEyU2vtTCgjG67D6nYeyVGOZKbcnedSB2A9UZPqnN
-	KVgkZqz8APy/ZCVhnHmGnWWpT766LGPvFMaRGKxxLWjdEv6r8XmKOZnXWanvVUp9
-	4SLRSA9Xa6GHBVVETDIDSYH7m7DWf//QmRJas=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ylw0rpgbkqacMWjW5EFEAJzzRs64FGSs
-	pRsriXyn6IX2p+e6Kd0Wyf4zxVFUn0nRj5ZYVqW3H9IwyGawWDoCWbGYAJTro8w1
-	DWWI48LZrB/8QTve0HpztfHcyONlYA+8tgUy/97O0/d3YuEAgKFvQERtniWxr6P8
-	9qs0x9TfSaY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 910232CD13;
-	Mon,  7 Dec 2015 03:22:03 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 05DD32CD12;
-	Mon,  7 Dec 2015 03:22:02 -0500 (EST)
-In-Reply-To: <20151207033020.GA990758@vauxhall.crustytoothpaste.net> (brian
-	m. carlson's message of "Mon, 7 Dec 2015 03:30:20 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 9829CDE0-9CBB-11E5-84A7-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754745AbbLGJIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2015 04:08:06 -0500
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:34662 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754374AbbLGJIE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 04:08:04 -0500
+Received: by lbbcs9 with SMTP id cs9so54367126lbb.1
+        for <git@vger.kernel.org>; Mon, 07 Dec 2015 01:08:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Epwn1KKp8p+2RUMCrQ/VDXBpX9P4JOVpXNQMX+IDOCU=;
+        b=AocVtqtj8BsQjEpS5GL9GEgs3oaavmy06I30hWquJSFcHSEfSd2Dn3I9gbCEpjXyDV
+         gr3mP7w0EP6Us7AHkiDrsPe/EXKnJxkmB4xICLkhTYQN7DKqe3UJiRnH4g2ATsWyADlM
+         hQcuv/Ot6vnFeYHK1bssWefo0TmskQ+TrWTOdzMbjI4iGdkovd23HVLpJ71y2TiP84+o
+         IUBtsw4gH8KDSwKOyMTJl8+n34c+zvTqZlAjTwD3yEFsUygsjIfBn1fhMR3iEOMgMbw2
+         CB3SZhm+s4fnfHXLIoKeFSm1DHs3Fup9No+KhwoDTwPaYyfqIyk9LTFlleaCPnXg2vNs
+         +wig==
+X-Received: by 10.25.142.84 with SMTP id q81mr11198950lfd.77.1449479283077;
+ Mon, 07 Dec 2015 01:08:03 -0800 (PST)
+Received: by 10.25.152.7 with HTTP; Mon, 7 Dec 2015 01:08:03 -0800 (PST)
+In-Reply-To: <CACsJy8BWEQNnpoXNBWSmmm-Ff7jJ9=+D6748TMXFyospU7jt1A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282088>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Wed, Dec 2, 2015 at 8:16 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Dec 1, 2015 at 9:31 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> Doing:
+>>
+>>   cd /tmp
+>>   git --git-dir=/git/somewhere/else/.git update-index --untracked-cache
+>>
+>> doesn't work how one would expect. It hardcodes "/tmp" as the directory
+>> that "works" into the index, so if you use the working tree, you'll
+>> never use the untracked cache.
+>>
+>> With this patch "git update-index --untracked-cache" tells the user in
+>> which directory tests are performed and in which working directory the
+>> untracked cache is allowed.
+>>
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>>  builtin/update-index.c | 4 +++-
+>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/update-index.c b/builtin/update-index.c
+>> index 7431938..e568acc 100644
+>> --- a/builtin/update-index.c
+>> +++ b/builtin/update-index.c
+>> @@ -121,7 +121,7 @@ static int test_if_untracked_cache_is_supported(void)
+>>         if (!mkdtemp(mtime_dir.buf))
+>>                 die_errno("Could not make temporary directory");
+>>
+>> -       fprintf(stderr, _("Testing "));
+>> +       fprintf(stderr, _("Testing mtime in '%s' "), xgetcwd());
+>
+> We probably should respect --verbose. I know I violated it in the first place.
 
-> The hash of the source file isn't generally as much of a problem,
-> because the patch tends to change, even incidentally (line numbers and
-> such), when the hash of the file changes.  It's also something that we
-> have in our history, whereas the temporary branch we rebased in is not.
+The verbose help is:
 
-That is exactly the kind of workflow specific reasoning that tells
-you "object name of the commit that the patch was taken from is the
-only thing that is undesired" that makes me wonder if the feature is
-too workflow specific.  You do something on a temporary branch without
-worrying about producing unnecessary object name churn, and end up
-wanting not to see object names.
+    --verbose             report actions to standard output
 
-But I can buy that a step in the workflow to rebuild the history on
-a temporary branch before going to the next step is a common thing
-to have, so let's decide to accept the goal as a good thing to have,
-and see how well the patched code implements, documents and tests
-the advertised new feature.
+so yeah, it is not respected first because the output is on by
+default, and second because the output is on stderr instead of stdout.
+Anyway it can be a separate patch or patch series to make it respect
+one or both of these points.
 
-Thanks.
+I am not very much interested in doing it myself as I think it's
+interesting to have the output by default especially if the above
+patch is applied. But if people agree that it would be a good thing, I
+will do it.
