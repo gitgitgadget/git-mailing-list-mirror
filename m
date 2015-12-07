@@ -1,114 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Why does send-pack call pack-objects for all remote refs?
-Date: Mon, 07 Dec 2015 14:41:00 -0800
-Message-ID: <xmqqvb89lw5f.fsf@gitster.mtv.corp.google.com>
-References: <4766c8518c2a46afb88fc0a2dd9a1688@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/2] modernize t7300
+Date: Mon, 7 Dec 2015 17:43:48 -0500
+Message-ID: <CAPig+cRqG3mG89Htmjd3a=YzMG36V3an1qUC4siJNBqHzDHQFA@mail.gmail.com>
+References: <CAPig+cRa31uriO4qkZUydooNx0V+dNrUgFvTUxoLL9gCjq9AHQ@mail.gmail.com>
+	<1449413906-23256-1-git-send-email-rouzier@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Daniel Koverman <dkoverman@predictiveTechnologies.com>
-X-From: git-owner@vger.kernel.org Mon Dec 07 23:41:15 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: James <rouzier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 07 23:43:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a64T3-00081O-3W
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 23:41:13 +0100
+	id 1a64Vf-0004iU-0R
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Dec 2015 23:43:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756614AbbLGWlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 17:41:07 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53834 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756605AbbLGWlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2015 17:41:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9814532D4E;
-	Mon,  7 Dec 2015 17:41:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=gC96OBkqL85tokeGS+cO5MFvYaE=; b=M5KAxS
-	8VxImUHWGGaHRL1vSWBtqKuZDsdodhXwjrji1AbGJTtp+Jr3l3c2JSfEWITiVnOo
-	u3ZYv45gRHkRcmisGf/EJpc65XlcRHvMjx/FXR+j/SNc/Dm7BubmTKCZ4AmodTz6
-	TdKmOIazPw7OyKCR/6PsEMrJxnXaAovLZHHV0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EESkPPB4OE7iEYf5Sf6P+cFdNMqhhkno
-	VgVzEF5eYcu0oBZnpLCWpOKOYHBGXDqwsonYxPT4PA2jbuJXPBfFQq3Ih6sseqtg
-	pmzKXTB7vvnmB4+hiMCCRW3wqDhWITzlvVUSxrlA6PxVvdxYFlRzNWFDQ7GJWlar
-	GBgOW3CgmY8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8EBC332D4D;
-	Mon,  7 Dec 2015 17:41:02 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E6F0632D4A;
-	Mon,  7 Dec 2015 17:41:01 -0500 (EST)
-In-Reply-To: <4766c8518c2a46afb88fc0a2dd9a1688@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com>
-	(Daniel Koverman's message of "Mon, 7 Dec 2015 21:02:22 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 97C10238-9D33-11E5-A8AF-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1756643AbbLGWnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2015 17:43:51 -0500
+Received: from mail-vk0-f51.google.com ([209.85.213.51]:33451 "EHLO
+	mail-vk0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756604AbbLGWnt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 17:43:49 -0500
+Received: by vkca188 with SMTP id a188so1311215vkc.0
+        for <git@vger.kernel.org>; Mon, 07 Dec 2015 14:43:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=sVD4/PFASfj+QFd31icjsXClCqvl8M7FEIFa/xqCftg=;
+        b=JE2z3vQzZ9lv3xKaj0kc8fv476HYHzVTVVYwBJS6I8hdXPUmd8yt4HiDdbOJUqVoUO
+         yAn+/AjJZGmowqJdfpDz2b61+8BMhZYfsUXau+jE7sfdyXhlDvPX3soMo6ZBq26JsVv6
+         fR7j4XxBO7pUrkk63vEU0/2nFR5qZWmNKuqDHx9kGk8bG+YC7TwQRKvoNdmLDl46K/2n
+         9mN+ko1ZCopqdaU4R9OBxbM9fNgNcQgJF7G+Z6suz2sY5OqcSOlBo7pCLeBv9wX3TkrO
+         4JrVYq5VHH5tX8WzDEG4nzw1V90TLUguw/vbN8PsOgwCnHC37YyRQAmYhcPOCWZADtEH
+         r5hQ==
+X-Received: by 10.31.47.130 with SMTP id v124mr23670081vkv.117.1449528228431;
+ Mon, 07 Dec 2015 14:43:48 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 7 Dec 2015 14:43:48 -0800 (PST)
+In-Reply-To: <1449413906-23256-1-git-send-email-rouzier@gmail.com>
+X-Google-Sender-Auth: wT_UWXHYhYaLm_koUMJjfMBat50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282134>
 
-Daniel Koverman <dkoverman@predictiveTechnologies.com> writes:
+On Sun, Dec 6, 2015 at 9:58 AM, James <rouzier@gmail.com> wrote:
+> From: James Rouzier <rouzier@gmail.com>
 
-> I have a repository which has ~2000 branches on the remote, and it
-> takes ~8 seconds to push a change to one ref. The majority of this
-> time is spent in pack-object. I wrote a hack so that only the ref
-> being updated would be packed (the normal behavior is to pack for
-> every ref on the remote).
+This would be a good place to explain how you are modernizing the test
+script. Right now, you're just updating to take advantage of
+test_path_is_foo(), but some other modernizations you could do
+include:
 
-I am having a hard time understanding what you are trying to say, as
-nobody's pack-objects "packs for a ref" or "packs a ref", so my
-response has to be based on my best guess---I think you are talking
-about feeding the object names of the tips of all remote refs as
-the bottoms of the revision range to pack-objects.
+* using '>' rather than 'touch' to create empty files when the
+timestamp doesn't matter (which is all cases in this script)
 
-When you are pushing your 'topic' branch to update the 'topic'
-branch at the remote, it is true that we compute
+* (optional) replace unnecessarily complex 'mkdir -p foo' with simpler
+'mkdir foo' (but leave "mkdir -p foo/bar" as is)
 
-	git rev-list --objects $your_topic --not $all_of_the_remote_refs
+* drop blank lines before and after test body; for instance:
 
-to produce a packfile.  And by tweaking this to
+    test_expect_success 'foo' '
 
-	git rev-list --objects $your_topic --not $their_topic
+        blah &&
+        bloo
 
-you will cut down the processing time of 'rev-list', especially if
-you have insane number of refs at the remote end.
+    '
 
-There is a price you would pay for doing so, though.  An obvious one
-is what if the 'topic' branch does not exist yet at the remote.
-Without the "--not ..." part, you would end up sending the entire
-history behind $your_topic, and the way you prevent that from
-happening is to give what are known to exist at the remote end.
-Even when there already is 'topic' at the remote, the contents at
-the paths that are different between your 'topic' and the 'topic' as
-exists at the remote may already exist on some other branches that
-are already at the remote (e.g. you may have merged some branches
-that are common between your repository and the remote, and the only
-object missing from the remote that your repository has to send may
-be a merge commit and the top-level tree object), but limiting the
-bottoms of the revision range only to "--not $their_topic" would rob
-this obvious optimization opportunity from you.
+becomes:
 
-There has to be some way to limit the list of remote-refs that are
-used as bottoms of the revision range.  For example, if you know
-that the remote has all the tags, and that everything in the v1.0
-tag is contained in the v2.0 tag, then a single "--not v2.0" should
-give the same result as "--not v1.0 v2.0" that lists both.  But the
-computation that is needed to figure out which tags and branches are
-not worth listing as bottoms would need to look at all of them at
-least once anyway, so a naive implementation of such would end up
-spending the same cycles, I would suspect.
+    test_expect_success 'foo' '
+        blah &&
+        bloo
+    '
 
-Also it was unclear if you are working with a shallow repository.
-The performance trade-off made between the packsize and the cycles
-is somewhat different between a normal and a shallow repository,
-e.g. 2dacf26d (pack-objects: use --objects-edge-aggressive for
-shallow repos, 2014-12-24) might be a good starting point to think
-about this issue.
+> ---
+> diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+> @@ -609,32 +609,30 @@ test_expect_success 'force removal of nested git work tree' '
+>  test_expect_success 'git clean -e' '
+>         rm -fr repo &&
+>         mkdir repo &&
+> -       (
+> -               cd repo &&
+> -               git init &&
+> -               touch known 1 2 3 &&
+> -               git add known &&
+> -               git clean -f -e 1 -e 2 &&
+> -               test -e 1 &&
+> -               test -e 2 &&
+> -               ! (test -e 3) &&
+> -               test -e known
+> -       )
+> +       cd repo &&
+
+The previous working directory is not automatically restored at the
+end of the test, so this "cd" without corresponding "cd .." causes
+following tests to execute at the incorrect location. Unfortunately,
+you can't just place "cd .." at the end of a test since it will be
+skipped if something before the "cd .." fails. The way the existing
+code deals with this is by using a subshell:
+
+    mkdir repo &&
+    (
+        cd repo &&
+        ...
+    )
+
+The "cd repo" is inside the subshell, so it doesn't affect the parent
+shell, and when the subshell exits, the parent shell remains at the
+correct working directory (regardless of whether the test succeeded or
+failed). Therefore, you don't want to drop the subshell.
+
+> +       git init &&
+> +       touch known 1 2 3 &&
+> +       git add known &&
+> +       git clean -f -e 1 -e 2 &&
+> +       test_path_is_file 1 &&
+> +       test_path_is_file 2 &&
+> +       test_path_is_missing 3 &&
+> +       test_path_is_file known
+>  '
