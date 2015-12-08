@@ -1,102 +1,166 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: rebase has no --verify-signatures
-Date: Tue, 8 Dec 2015 01:21:25 +0000
-Message-ID: <20151208012125.GD990758@vauxhall.crustytoothpaste.net>
-References: <20151207140015.GA14956@netblarch.tu-darmstadt.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] contrib/subtree: fix "subtree split" skipped-merge bug.
+Date: Tue, 8 Dec 2015 01:49:02 -0500
+Message-ID: <CAPig+cR36772YDc5RQRwXP3+ucVWumim9HYTXVMuGXN2cnQ7Ow@mail.gmail.com>
+References: <20151207045307.GA624@flurp.local>
+	<1449521452-19043-1-git-send-email-davidw@realtimegenomics.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="fOHHtNG4YXGJ0yqR"
-Cc: git@vger.kernel.org
-To: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 02:25:18 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Dave Ware <davidw@realtimegenomics.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 07:49:10 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a671q-0002wL-03
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 02:25:18 +0100
+	id 1a6C5G-0000G8-1n
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 07:49:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932466AbbLHBVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 20:21:30 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:34622 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932193AbbLHBV3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Dec 2015 20:21:29 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1EB652808C;
-	Tue,  8 Dec 2015 01:21:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1449537688;
-	bh=uS4ytXuX0E5fMY8Vf1P7qfGFcRHGOJvTTW16I1pZU58=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fZ5pig8QVZcOQhYlBR7DY88ci58+uSk35YP+YuXYgjFHpKl8GV3taEpNGwrHidW8x
-	 99pxriTGkHAxTnB6U5UfwvcbYDECDfdKynnNC+OkgOqugz+Q5dvHb7ymzhbF7k+NKh
-	 OxqfoLkAWv4cEy8A8Q2tJyZ66vMSylMGIFXJP7uDG7bBs1Tf3IRi2+mG9CtzMy5AsE
-	 TIOHOcEJq3kJUDQETj7Eed1AAFIkhEbGQ1MsXHzuoan9MeyFHyBF9cmy8aXKq7rN90
-	 uN3yK2DQCyHq+VG1AXushtyjyo7gv72g+IfHbR3AiU9XlGticHMVVe58OeknzJyhSP
-	 74PQN+nXZ6oZupYSqGTGnMm/9YVb/dXxtrwVqt0I9UoHQpULQDU+XdnSxS5kOyhxjq
-	 P2qQrJq5dxzUfY2Bf1vjXKmKFbOR+GZwb0hro3PDnM4w9H8+unV0z0FOWdKOtFqJwi
-	 S3RndrEG7El00KlvclybSVuVWq3zvM+mahYbcJ5URNWiZJOoHKo
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Alexander 'z33ky' Hirsch <1zeeky@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20151207140015.GA14956@netblarch.tu-darmstadt.de>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.2.0-1-amd64)
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+	id S932938AbbLHGtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2015 01:49:05 -0500
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:34195 "EHLO
+	mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932820AbbLHGtE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2015 01:49:04 -0500
+Received: by vkbs1 with SMTP id s1so6490852vkb.1
+        for <git@vger.kernel.org>; Mon, 07 Dec 2015 22:49:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=19c8jzBFilDExBEypg0LB8yyg5M7CnWPCzYHf0OaQp8=;
+        b=VJfWiV32mDNmxUaQK+VvRXQuDD3ldaQ5w0qAg5+RV5GNBZGq+JEUkmTbvRzOhjNZVG
+         FM36Gw84G/CsYttBCeDXSJbv5mUNki/Y3vyAipmmmqzdduy8GgWXRyrrOPEYH/G0+J6f
+         29RnB/uW64O4BPFAI6QfnDr+T21PRtBaYKeI/QBL2OCundBhoKF2Tl4fQIVmvSdkM27v
+         UTKHWAo1xbAMOzTSZBQStW3r+8iILAmOpPkfwktJgyhJXV+oAihxuAUu4Id8RFUJed3+
+         qhOoFGEgsjIejuN12OPfDgSGY267ConHPbZOamqh1knnVIMEXJbJK+N7mzDSkWKIRoyW
+         IvcA==
+X-Received: by 10.31.182.129 with SMTP id g123mr1965539vkf.45.1449557342564;
+ Mon, 07 Dec 2015 22:49:02 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Mon, 7 Dec 2015 22:49:02 -0800 (PST)
+In-Reply-To: <1449521452-19043-1-git-send-email-davidw@realtimegenomics.com>
+X-Google-Sender-Auth: sKNvULx08x0gM8I0lE2VyPdRhfU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282146>
 
+On Mon, Dec 7, 2015 at 3:50 PM, Dave Ware <davidw@realtimegenomics.com> wrote:
+> [PATCH] contrib/subtree: fix "subtree split" skipped-merge bug.
 
---fOHHtNG4YXGJ0yqR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+As an aid for reviewers, please indicate the version of this patch
+submission. For instance, this is the second attempt, so the subject
+would be decorated as [PATCH v2], and the next one (if submitted) will
+be v3. The -v option of git-format-patch can help automate this.
 
-On Mon, Dec 07, 2015 at 03:00:15PM +0100, Alexander 'z33ky' Hirsch wrote:
-> Is there any technical reason why rebase should not have a
-> --verify-signatures flag? I have written a patch to git-rebase--am
-> which enables it to do such a check. If there is no reason not to
-> include it I'd add documentation and a test and submit it.
+Style: drop the full-stop (period) from the subject line
 
-As far as I know, there is no technical reason that it shouldn't.  It's
-probably that nobody has implemented it yet.  I'd certainly be
-interested in such a patch.
+> A bug occurs in 'git-subtree split' where a merge is skipped even when
+> both parents act on the subtree, provided the merge results in a tree
+> identical to one of the parents. Fix by copying the merge if at least
+> one parent is non-identical, and the non-identical parent is not an
+> ancestor of the identical parent.
+>
+> Also adding a test case, this checks that a descendant can be pushed to
 
-For a thorough change, you'd probably want to make it work with
-git-rebase--merge and git-rebase--interactive as well.  I'm sure I'm not
-the only person who frequently uses rebase -m.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+s/Also adding/Also, add/
+s/, this/which/
 
---fOHHtNG4YXGJ0yqR
-Content-Type: application/pgp-signature; name="signature.asc"
+> it's ancestor in this case.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.9 (GNU/Linux)
+s/it's/its/
 
-iQIcBAEBCgAGBQJWZjCUAAoJEL9TXYEfUvaLTCkQAIuJ1p/T7KmQ25G0mcgsQrri
-PznidvZ+rOIbCw9s1STQINDv5tOVheK5+v5uz3XdKEhBwGK1rdnVhZUAukoKUrt9
-XssaRXOo8G1asqTWvrzUKauPXakLraNmIwz8pRT8u2iqcV6CsR3vCQKYdnrjY1I7
-/WpFBvuXiGYc1o07+QvdxAkRAX0dTBjDc2RBIKaZxiaTr3a5j9txeljC/AqA3QeZ
-4Vkqdvj7AazAHVKHFJDYSLiaOUDpAYcztSQOGmC4AFF7UfHiF+pt80It+7HjVcYf
-q1WWKrMFE98HDfXngIdZBNoticnjxQiKWAz6hQkoo/0Ajqqy3zybm6RSx8A1dr2H
-UOUJu8xDWXvil4ViWbf1UfZF61/5HwHxCQNmqzWVASZ9f5Shabf2R0jw7UCt0dgW
-tsySWZZIvJq7BHHd4r0tq6MN2MdYgeLAQQXzd6BrxrFSe2X0TPT76w47O38DL8nd
-Va5g2In73NAMFPfQMznA997LmGk5DddDEv5vl0wq6kDHlGuvQbB8Rrkn9bXW+qH0
-pSmDCzI9FKDplEnJ7U2Z2AZiVjEXeIV4p6c9KR9vAg1vx5PeHBZe2RKVHp7fEswA
-UZ2LZz7mEwNNiN4Dl81U3kFlMjLdOJChBLRezwkSaeHF9/bLZ5h+UcqYeOsFCYqi
-OPy3xN3togrn0gKLQb6x
-=hwNm
------END PGP SIGNATURE-----
+> Signed-off-by: Dave Ware <davidw@realtimegenomics.com>
+> ---
 
---fOHHtNG4YXGJ0yqR--
+Right here below the "---" line is a good place to describe what
+changed since the previous version. For instance, in v2, you made
+minor improvements to the commit message, added your sign-off, folded
+the new test into the existing t7900-subtree.sh, added a subshell
+around 'cd', and assigned the output of git-rev-list to a shell
+variable rather than dumping it to a file.
+
+Including a link to the previous version, like this[1], is also
+reviewer-friendly.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/282065
+
+As before, I'm not a git-subtree user, so this review is superficial.
+More below...
+
+>  contrib/subtree/git-subtree.sh     | 12 +++++++--
+>  contrib/subtree/t/t7900-subtree.sh | 52 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 62 insertions(+), 2 deletions(-)
+>
+> diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+> index 9051982..ea991eb 100755
+> --- a/contrib/subtree/t/t7900-subtree.sh
+> +++ b/contrib/subtree/t/t7900-subtree.sh
+> @@ -468,4 +468,56 @@ test_expect_success 'verify one file change per commit' '
+>         ))
+>  '
+>
+> +test_expect_success 'subtree descendent check' '
+> +  mkdir git_subtree_split_check &&
+> +  (
+> +    cd git_subtree_split_check &&
+
+Style: indent with tabs rather than spaces
+
+> +    git init &&
+> +
+> +    mkdir folder &&
+> +
+> +    echo a >folder/a &&
+> +    git add . &&
+> +    git commit -m "first commit" &&
+> +
+> +    git branch branch &&
+> +
+> +    echo 0 >folder/0 &&
+> +    git add . &&
+> +    git commit -m "adding 0 to folder" &&
+> +
+> +    echo b >folder/b &&
+> +    git add . &&
+> +    git commit -m "adding b to folder" &&
+> +    cherry=$(git rev-list HEAD -1) &&
+
+git-rev-parse would probably be more idiomatic:
+
+    cherry=$(git rev-parse HEAD)
+
+> +    git checkout branch &&
+> +    echo text >textBranch.txt &&
+> +    git add . &&
+> +    git commit -m "commit to fiddle with branch: branch" &&
+> +
+> +    git cherry-pick $cherry &&
+> +    git checkout master &&
+> +    git merge -m "merge" branch &&
+> +
+> +    git branch noop_branch &&
+> +
+> +    echo d >folder/d &&
+> +    git add . &&
+> +    git commit -m "adding d to folder" &&
+> +
+> +    git checkout noop_branch &&
+> +    echo moreText >anotherText.txt &&
+> +    git add . &&
+> +    git commit -m "irrelevant" &&
+> +
+> +    git checkout master &&
+> +    git merge -m "second merge" noop_branch &&
+> +
+> +    git subtree split --prefix folder/ --branch subtree_tip master &&
+> +    git subtree split --prefix folder/ --branch subtree_branch branch &&
+> +    git push . subtree_tip:subtree_branch
+> +  )
+> +  '
+> +
+>  test_done
+> --
+> 1.9.1
