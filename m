@@ -1,177 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] contrib/subtree: fix "subtree split" skipped-merge bug
-Date: Tue, 08 Dec 2015 13:23:21 -0800
-Message-ID: <xmqqk2ook52u.fsf@gitster.mtv.corp.google.com>
-References: <CAPig+cR36772YDc5RQRwXP3+ucVWumim9HYTXVMuGXN2cnQ7Ow@mail.gmail.com>
-	<1449607160-20608-1-git-send-email-davidw@realtimegenomics.com>
+Subject: Re: [PATCH 7/8] config: add core.untrackedCache
+Date: Tue, 08 Dec 2015 14:43:14 -0800
+Message-ID: <xmqqfuzck1dp.fsf@gitster.mtv.corp.google.com>
+References: <1449594916-21167-1-git-send-email-chriscool@tuxfamily.org>
+	<1449594916-21167-8-git-send-email-chriscool@tuxfamily.org>
+	<xmqqsi3ckadi.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Dave Ware <davidw@realtimegenomics.com>
-X-From: git-owner@vger.kernel.org Tue Dec 08 22:23:29 2015
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Torsten =?utf-8?Q?B=C3=B6gersh?= =?utf-8?Q?ausen?= 
+	<tboegi@web.de>, Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 23:43:52 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6PjM-0006Mc-FE
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 22:23:28 +0100
+	id 1a6Qz7-0004dv-0B
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 23:43:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752780AbbLHVXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2015 16:23:24 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:56977 "EHLO
+	id S1750991AbbLHWnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2015 17:43:17 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61497 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752594AbbLHVXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2015 16:23:24 -0500
+	with ESMTP id S1750912AbbLHWnR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2015 17:43:17 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0D40D3009B;
-	Tue,  8 Dec 2015 16:23:23 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EAB2F32D9C;
+	Tue,  8 Dec 2015 17:43:15 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6LagDROyo7A5yKbrKjrN+lLuuZU=; b=lTjaun
-	AsCvqr9ifALtHGqFPsnTEvaH/Sj6LZhu7sYdBtLWQSRVYzlEVcE/3DV8LcHwass2
-	o1c8+LGBxkqZOVeaADXdjemnv+f0VUNZTMrutMl7eyYe1211i4nIV7QHaLXx8pge
-	+7I1PqJMDu7VoTpwCV7MROzkDXQe41MP95VyI=
+	:content-type; s=sasl; bh=ccLyspqHBrGvZXdF9dTTWSvpJAQ=; b=GvXGl7
+	RutsqWbkZokgBoU9ed4YJSqRW5Uoz1cHSikM30ThD1SUvD4rL9DNqU4S0bh4wf4F
+	rlPShH8UHVzYZ64L0XLM6Moug+PKUF6cIpCZSPTn93vTzkoQrX8enBV9FfBuoRlP
+	Lnped6JmEyM73ednI2jdRlKIsVHrbh2vzzt4o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v7xWObVoQ+6ISz58QRN0Gr7H1G4KhqGu
-	i4yA+7YqlI5uyQ73cA4EDDCAooy+rnWxFmkEG0Bu6DVZkO7YwHxZqpWAW3fAF7at
-	8p5Mz0/5GJYnFwyjoV4jU3VLXWS11H/jC6sja6q++9SeEdBlg+71BWU65yvEC5Pi
-	DJz4zXcipe0=
+	:content-type; q=dns; s=sasl; b=fbFdCq+heTBC00vvAB85kUQNYnVOXAxJ
+	vqoy4b+PIiPGFgYvFlg1zwHvG/Zr08Ng+DFuvCnlDUXwalV04jlJHgOg5+9Xrq5J
+	PWtH+YiBGDkIbdsRHjwImS24SIQdUiqZc6eFYciAI9Q+xDFysSU7Oae28VbuZCFJ
+	B+V4X+X8cUc=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F0FAC3009A;
-	Tue,  8 Dec 2015 16:23:22 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D5D7A32D9B;
+	Tue,  8 Dec 2015 17:43:15 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6254230097;
-	Tue,  8 Dec 2015 16:23:22 -0500 (EST)
-In-Reply-To: <1449607160-20608-1-git-send-email-davidw@realtimegenomics.com>
-	(Dave Ware's message of "Wed, 9 Dec 2015 09:39:20 +1300")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2C57532D9A;
+	Tue,  8 Dec 2015 17:43:15 -0500 (EST)
+In-Reply-To: <xmqqsi3ckadi.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 08 Dec 2015 11:28:57 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: E8DD0F04-9DF1-11E5-97BA-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 119F220A-9DFD-11E5-9BB4-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282178>
 
-Dave Ware <davidw@realtimegenomics.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> A bug occurs in 'git-subtree split' where a merge is skipped even when
-> both parents act on the subtree, provided the merge results in a tree
-> identical to one of the parents. Fix by copying the merge if at least
-> one parent is non-identical, and the non-identical parent is not an
-> ancestor of the identical parent.
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Also, add a test case which checks that a descendant can be pushed to
-> its ancestor in this case.
->
-> Signed-off-by: Dave Ware <davidw@realtimegenomics.com>
-> ---
+>> When we know that mtime is fully supported by the environment, we
+>> might want the untracked cache to be always used by default without
+>> any mtime test or kernel version check being performed.
+>>
+>> Also when we know that mtime is not supported by the environment,
+>> for example because the repo is shared over a network file system,
+>> then we might want 'git update-index --untracked-cache' to fail
+>> immediately instead of preforming tests (because it might work on
+>> some systems using the repo over the network file system but not
+>> others).
+>> ...
+> The logic in this paragraph is fuzzy to me.  Shouldn't the config
+> give a sensible default, that is overriden by command line options?
+> I agree that it is insane to do a runtime check when the user says
+> "update-index --untracked-cache" to enable it, as the user _knows_
+> that enabling it would help (or the user _knows_ that she wants to
+> play with it).  Similarly, shouldn't the config be ignored when the
+> user says "update-index --no-untracked-cache" (hence removing the
+> untracked cache from the resulting index no matter the config is set
+> to)?  ...
 
-The first sentence may be made clearer if you rephrased the early
-part of the sentence this way:
+As I think about this more, it really seems to me that we shouldn't
+need to make this configuration variable that special.  Because I
+think it is a *BUG* in the current implementation to do the runtime
+check even when the user explicitly tells us to use untracked-cache,
+I'd imagine something along the lines of the following would be a
+lot simpler, easier to understand and a generally more useful
+bugfix:
 
-	'git subtree split' can incorrectly skip a merge even when
-        both parents ...
+ 1 Add one boolean configuration variable, core.untrackedCache, that
+   defaults to 'false'.
 
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index 9f06571..b837531 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -479,8 +479,16 @@ copy_or_skip()
->  			p="$p -p $parent"
->  		fi
->  	done
-> -	
-> -	if [ -n "$identical" ]; then
-> +
-> +	copycommit=
-> +	if [ -n "$identical" ] && [ -n "$nonidentical" ]; then
-> +		extras=$(git rev-list --boundary $identical..$nonidentical)
-> +		if [ -n "$extras" ]; then
-> +			# we need to preserve history along the other branch
-> +			copycommit=1
-> +		fi
+ 2 When creating an index file in an empty repository, enable the
+   untracked cache in the index (even without the user runninng
+   "update-index --untracked-cache") iff the configuration is set to
+   'true'.  No runtime check necessary.
 
-What is the significance of "--boundary" here?  I think for the
-purpose of "is the identical one part of the nonidentical one?" you
-do not need it, but there may be something subtle I missed.  I am
-asking this because use of "rev-list --boundary" in scripts is
-almost always a bug.
+ 3 When working on an existing index file, unless the operation is
+   "update-index --[no-]untracked-cache", keep the current setting,
+   regardless of this configuration variable.  No runtime check
+   necessary.
 
-Also, depending on how huge the output from the rev-list could be,
-you might want to use "rev-list --count $i..$n" and compare it with
-0 instead--that way, you would not have to be worried about having
-to carry around a huge string that you would otherwise not use, only
-to see if that string is empty.
+ 4 "update-index --[no-]untracked-cache" should enable or disable
+   the untracked cache as the user tells us, regardless of the
+   configuration variable.  No runtime check necessary.
 
-Thanks.
+It is OK to then add an "auto-detect" on top of the above, that
+would only affect the second bullet point, like so:
 
-> +	fi
-> +	if [ -n "$identical" ] && [ -z "$copycommit" ]; then
->  		echo $identical
->  	else
->  		copy_commit $rev $tree "$p" || exit $?
-> diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-> index 9051982..710278c 100755
-> --- a/contrib/subtree/t/t7900-subtree.sh
-> +++ b/contrib/subtree/t/t7900-subtree.sh
-> @@ -468,4 +468,56 @@ test_expect_success 'verify one file change per commit' '
->  	))
->  '
->  
-> +test_expect_success 'subtree descendent check' '
-> +	mkdir git_subtree_split_check &&
-> +	(
-> +		cd git_subtree_split_check &&
-> +		git init &&
-> +
-> +		mkdir folder &&
-> +
-> +		echo a >folder/a &&
-> +		git add . &&
-> +		git commit -m "first commit" &&
-> +
-> +		git branch branch &&
-> +
-> +		echo 0 >folder/0 &&
-> +		git add . &&
-> +		git commit -m "adding 0 to folder" &&
-> +
-> +		echo b >folder/b &&
-> +		git add . &&
-> +		git commit -m "adding b to folder" &&
-> +		cherry=$(git rev-parse HEAD) &&
-> +
-> +		git checkout branch &&
-> +		echo text >textBranch.txt &&
-> +		git add . &&
-> +		git commit -m "commit to fiddle with branch: branch" &&
-> +
-> +		git cherry-pick $cherry &&
-> +		git checkout master &&
-> +		git merge -m "merge" branch &&
-> +
-> +		git branch noop_branch &&
-> +
-> +		echo d >folder/d &&
-> +		git add . &&
-> +		git commit -m "adding d to folder" &&
-> +
-> +		git checkout noop_branch &&
-> +		echo moreText >anotherText.txt &&
-> +		git add . &&
-> +		git commit -m "irrelevant" &&
-> +
-> +		git checkout master &&
-> +		git merge -m "second merge" noop_branch &&
-> +
-> +		git subtree split --prefix folder/ --branch subtree_tip master &&
-> +		git subtree split --prefix folder/ --branch subtree_branch branch &&
-> +		git push . subtree_tip:subtree_branch
-> +	)
-> +	'
-> +
->  test_done
+ 2a When creating an index file in an empty repository, if the
+    configuration is set to 'auto', do the lengthy runtime check and
+    enable the untracked cache in the index (even without the user
+    runninng "update-index --untracked-cache").
+
+without changing any other in the first 4-bullet list.
+
+Am I missing some other requirements?
