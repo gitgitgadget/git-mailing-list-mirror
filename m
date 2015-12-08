@@ -1,104 +1,81 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH 1/2] git-p4: support multiple depot paths in p4 submit
-Date: Tue, 8 Dec 2015 12:32:55 +0000
-Message-ID: <CAE5ih78K5zzJBK3y-MMf2tWBoPOtkPJzYRZWxH02qBE=OnUhVA@mail.gmail.com>
-References: <20151205112203.GA15745@hocevar.net>
-	<F328D5D9-754A-41CC-A7B2-993B9315ED33@gmail.com>
-	<20151207185129.GA48528@hocevar.net>
-	<14B51656-26D1-4805-9F07-102CBD81B387@gmail.com>
-	<20151208114106.GB48528@hocevar.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 3/2] git.c: make sure we do not leak GIT_* to alias scripts
+Date: Tue, 8 Dec 2015 17:55:20 +0100
+Message-ID: <CACsJy8BHT2+_i4SoG6xv40wGX_gxwZFk=3WYOH196ZiHA7raWQ@mail.gmail.com>
+References: <1449166676-30845-2-git-send-email-pclouds@gmail.com>
+ <1449329538-18623-1-git-send-email-pclouds@gmail.com> <xmqqzixmm6na.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Lars Schneider <larsxschneider@gmail.com>,
-	Git Users <git@vger.kernel.org>, Pete Wyckoff <pw@padd.com>
-To: Sam Hocevar <sam@hocevar.net>
-X-From: git-owner@vger.kernel.org Tue Dec 08 13:33:23 2015
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	Anthony Sottile <asottile@umich.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 08 17:55:56 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6HSK-0000yG-Rj
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 13:33:21 +0100
+	id 1a6LYS-0003O8-2U
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 17:55:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754664AbbLHMc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2015 07:32:56 -0500
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:35406 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753195AbbLHMc4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2015 07:32:56 -0500
-Received: by igl9 with SMTP id 9so94960356igl.0
-        for <git@vger.kernel.org>; Tue, 08 Dec 2015 04:32:55 -0800 (PST)
+	id S1750775AbbLHQzw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Dec 2015 11:55:52 -0500
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:34165 "EHLO
+	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750752AbbLHQzv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2015 11:55:51 -0500
+Received: by lffu14 with SMTP id u14so16717229lff.1
+        for <git@vger.kernel.org>; Tue, 08 Dec 2015 08:55:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=eEjVMO5kE2qlzuyej1LMpqvvEkM+0fRPqJ9ql3shG1w=;
-        b=Y9UgcgtxhjUlrOyOKMICLplBIueCc9mQcGWN8FIl/D1YICedKCx5X5tig2JSbDKDrO
-         c10wZoJkfgLG5VbMjccGTCP7lHwt8y4hDnC2s69S8Elxd2tr45qjeFPH/n6v0+y7Akc6
-         40QOM0e9J3MmbgeLXTOMm5tFQz05XwKdSnf5c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=eEjVMO5kE2qlzuyej1LMpqvvEkM+0fRPqJ9ql3shG1w=;
-        b=euwUiELR0Nv3yB24H5Avv5I64xmByqpt/MadEp3RYViHW6DeOCjxAydMY/kHce5RSx
-         M2fflod4cmSzwApTqb/u9N1nMsF5FhAipxxXYSiQRnQ5yK6PhJB0ULF3C9W1Z7j2LksL
-         jQesgMIjdSaKVvJRG/FqOUeitzKmftPs08ocRxlk76N6FONk1okS/+IYRInNdao/6YO7
-         orbyHw52THHVABuIaQVw+9qaDwmB0Z4KkNNcIVjPxhVIIXqwhipJtAuEfZfe7MPXFvu1
-         u9bvMOzely7TmGa4PxyznvQCInDxNneJsBnrwdgMu+b6B1UIX1u0dsuNRD7szTcgCTW9
-         gnqA==
-X-Gm-Message-State: ALoCoQkzlxghsYTRBoANkyBxcB2HmG792qm091Osst1hnLrZH4yBTRx5y/Dwr6wYorDFHFYZpykiCGkVrQsMgB9GEheKbmtV1g==
-X-Received: by 10.50.43.199 with SMTP id y7mr22221501igl.47.1449577975260;
- Tue, 08 Dec 2015 04:32:55 -0800 (PST)
-Received: by 10.79.94.194 with HTTP; Tue, 8 Dec 2015 04:32:55 -0800 (PST)
-In-Reply-To: <20151208114106.GB48528@hocevar.net>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=hB2WhYHU08GYjS8CbHs5p/69NgR5YDT8kJiilralWGg=;
+        b=Rp24umqx1v6opOBQeTuSSsFvy0sEyocX6wFC9DMoJTZtfFMQJAVynjUvC7l4eFMgVT
+         GlebMqHA7z9Dd/K1FTBxwZShR5LOxExp86g0JZfow6wT8zUyH6lW0qv9GqqLUaPS2nEb
+         6YCZc0R4NHGWdAoI350ZjjlFQY+DIsM8TUs+LaQMj1qfgVZHZTkM1yirm7br0yP8ynh2
+         YYUQ319MwOjglVW6tE6C1M6rlgK2x6FQgSDT3z1+7H/iMzeUf6mD7JjMpotNzB0n3dLJ
+         cEPc/qOiGcD6GuVpv4cw8buigwX6VuuLOpJu4grxwc1UMzoJXD0WxT+8C8VI3rBYBk/k
+         jTRA==
+X-Received: by 10.25.165.202 with SMTP id o193mr226016lfe.83.1449593749656;
+ Tue, 08 Dec 2015 08:55:49 -0800 (PST)
+Received: by 10.112.199.5 with HTTP; Tue, 8 Dec 2015 08:55:20 -0800 (PST)
+In-Reply-To: <xmqqzixmm6na.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282157>
 
-On 8 December 2015 at 11:41, Sam Hocevar <sam@hocevar.net> wrote:
-> On Tue, Dec 08, 2015, Lars Schneider wrote:
+On Mon, Dec 7, 2015 at 7:54 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
->> >   Would a refactor of lib-git-p4.sh (and probably all git-p4 tests) to
->> > support multiple depots be acceptable and/or welcome? I prefer to ask
->> > before I dig into the task.
->>
->> Can you outline your idea a bit? Are you aware of the following way to define client specs: [1] ? Would that help?
+>>  Let's hope there will be no third report about this commit..
 >
->    That's the idea, but the bug occurs when the client view looks like this:
->
->      //depot/... //client/dir1/...
->      //depot2/... //client/dir2/...
->
->    And is then cloned with (it is not legal in Perforce to specify //...
-> directly to grab both depots at once):
->
->      git p4 clone --use-client-spec //depot/... //depot2/...
->
->    Then when a file is modified in dir2/, git p4 submit does not elect it
-> for the changelist. A file in dir1/ will work fine.
->
->    Unfortunately the current test suite assumes everything is under
-> //depot/ so in order to write a test for this situation there are a few
-> things to change in lib-git-p4.sh.
+> Hmm, why does this additional test fail only under prove but pass
+> without it?
 
-I think the existing structure ought to mostly work, but it might need
-a bit of tweaking.
+It passes with prove for me. Some mysterious variable leaks through som=
+ehow?
 
-You would need to create a new depot, but you can do that in your test script.
-
-And you would need a client spec that pointed at this depot, but again
-you can do that in your script with the client_view shell function.
-
-I've not tried it myself though, so maybe it's harder than that.
-
-Luke
-
-
+>> +     env | grep GIT_ | sed "s/=3D.*//" | sort >actual
 >
-> Regards,
-> --
-> Sam.
+> This is more about coding discipline than style, but piping grep
+> output to sed is wasteful.  "sed -ne '/^GIT_/s/=3D.*//p'" or somethin=
+g
+> like that, perhaps?
+
+OK will fix.
+
+> I wondered what happens if the user has an unrelated stray variable
+> whose name happens to begin with GIT_ in her environment, but it
+> turns out that we cleanse them in test-lib.sh fairly early, so that
+> would be fine.  You need to tighten your "grep" pattern, though.
+
+OK
+--=20
+Duy
