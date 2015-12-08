@@ -1,92 +1,102 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: best practices against long git rebase times?
-Date: Tue, 8 Dec 2015 18:45:22 +0100
-Message-ID: <CAP8UFD3fmNSwSBLifWEsCBCSvY74Wh+9auvqyup4mN4Lx1Pf7g@mail.gmail.com>
-References: <20151204150546.GA17210@inner.h.apk.li>
-	<20151204153103.GP18913@serenity.lan>
-	<20151206164345.GH22288@inner.h.apk.li>
-	<20151207210212.GF30203@sigill.intra.peff.net>
-	<xmqqmvtllvfi.fsf@gitster.mtv.corp.google.com>
-	<20151207225957.GB3785@sigill.intra.peff.net>
+From: Daniel Koverman <dkoverman@predictiveTechnologies.com>
+Subject: RE: Why does send-pack call pack-objects for all remote refs?
+Date: Tue, 8 Dec 2015 17:34:43 +0000
+Message-ID: <8712f730fb4c414ebc2b1168ca7948b8@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com>
+References: <4766c8518c2a46afb88fc0a2dd9a1688@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com>
+ <xmqqvb89lw5f.fsf@gitster.mtv.corp.google.com>
+ <20151207225714.GA3785@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>,
-	Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 08 18:45:30 2015
+X-From: git-owner@vger.kernel.org Tue Dec 08 19:01:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6MKO-0001ZX-HB
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 18:45:28 +0100
+	id 1a6MZg-000554-35
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 19:01:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359AbbLHRpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2015 12:45:24 -0500
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:33237 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751236AbbLHRpX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2015 12:45:23 -0500
-Received: by lbbkw15 with SMTP id kw15so15486790lbb.0
-        for <git@vger.kernel.org>; Tue, 08 Dec 2015 09:45:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=fqCdMF4JBTmXeKaeKnEuT7hut6CGEaBagBHA/Y9OGyQ=;
-        b=NdSlSU4ipjC1YC4ETtRVRzPFqXSb8Yl+BVSco5fm/uBSU+wZ6R/YFTazlheGZqxo6q
-         7CAnVsNOw22k3ao/U48lQXsBN+YSAR3WWbyzVKbTQfeCUmlxhfLgpG9arVMlDuFhEgRw
-         +vt2nKVl0claNE6eEKzHwlWqtp7KAEKsQiRbLSKAJAvnjmUG6lI0s4i63uh1XJb8uN5p
-         5PleLWe6pJPkKbvUPyRkzA3P1vFpLtat5bl94ZNLq17H72SNtJLpF4Xz2MCKtlsjAyYK
-         Sa14isM6NVtW8IxcXQdiQmIUJ2Z5MHdEdKzldKjXTx+E3UHQkcUunMAshmH5kB2BVP1X
-         jrNg==
-X-Received: by 10.112.184.45 with SMTP id er13mr464687lbc.133.1449596722079;
- Tue, 08 Dec 2015 09:45:22 -0800 (PST)
-Received: by 10.25.152.7 with HTTP; Tue, 8 Dec 2015 09:45:22 -0800 (PST)
-In-Reply-To: <20151207225957.GB3785@sigill.intra.peff.net>
+	id S1751542AbbLHSBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2015 13:01:12 -0500
+Received: from barracuda10.predictivetechnologies.com ([208.254.18.230]:42167
+	"EHLO barracuda10.predictivetechnologies.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751112AbbLHSBL (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Dec 2015 13:01:11 -0500
+X-Greylist: delayed 1583 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Dec 2015 13:01:10 EST
+Received: from pps.filterd (ProofpointMaster.arlington.predictivetechnologies.com [127.0.0.1])
+	by ProofpointMaster.arlington.predictivetechnologies.com (8.15.0.59/8.15.0.59) with SMTP id tB8HXbLe011184;
+	Tue, 8 Dec 2015 12:34:44 -0500
+Received: from mail.predictivetechnologies.com (cas3u.uunet.arlington.predictivetechnologies.com [192.168.70.16] (may be forged))
+	by ProofpointMaster.arlington.predictivetechnologies.com with ESMTP id 1yp37g814v-1
+	(version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 08 Dec 2015 12:34:44 -0500
+Received: from EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com
+ (192.168.70.16) by EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com
+ (192.168.70.16) with Microsoft SMTP Server (TLS) id 15.0.1044.25; Tue, 8 Dec
+ 2015 12:34:44 -0500
+Received: from EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com
+ ([fe80::5dc4:68de:a3ba:b43c]) by
+ EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com
+ ([fe80::5dc4:68de:a3ba:b43c%31]) with mapi id 15.00.1044.021; Tue, 8 Dec 2015
+ 12:34:44 -0500
+Thread-Topic: Why does send-pack call pack-objects for all remote refs?
+Thread-Index: AdExMorqL3V8CMb5RwSZLGZxKodLugADc/Z+AAsKvQAAHHq8gA==
+In-Reply-To: <20151207225714.GA3785@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [192.168.1.196]
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2015-12-08_11:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 kscore.is_bulkscore=0
+ kscore.compositescore=1 compositescore=0.9 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 kscore.is_spamscore=0 rbsscore=0.9 spamscore=0
+ urlsuspectscore=0.9 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1507310000 definitions=main-1512080303
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282169>
 
-On Mon, Dec 7, 2015 at 11:59 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Dec 07, 2015 at 02:56:33PM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->> > You're computing the patch against the parent for each of those 3000
->> > commits (to get a hash of it to compare against the single hash on the
->> > other side). Twelve minutes sounds long, but if you have a really
->> > gigantic tree, it might not be unreasonable.
->> >
->> > You can also try compiling with "make XDL_FAST_HASH=" (i.e., setting
->> > that option to the empty string). Last year I found there were some
->> > pretty suboptimal corner cases, and you may be hitting one (we should
->> > probably turn that option off by default; I got stuck on trying to find
->> > a hash that would perform faster and never followed up[1].
->> >
->> > I doubt that is your problem, but it's possible).
->> >
->> > -Peff
->> >
->> > [1] http://thread.gmane.org/gmane.comp.version-control.git/261638
->>
->> I vaguely recall having discussed caching the patch-ids somewhere so
->> that this does not have to be done every time.  Would such an
->> extension help here, I wonder?
->
-> I think you missed John's earlier response which gave several pointers
-> to such caching schemes. :)
-
-Yeah, he also gave very interesting performance numbers. Thanks John!
-
-> I used to run with patch-id-caching in my personal fork (I frequently
-> use "git log --cherry-mark" to see what has made it upstream), but I
-> haven't for a while. It did make a big difference in speed, but I never
-> resolved the corner cases around cache invalidation.
-
-I will see if I can work on that after I am done with untracked cache...
+WW91ciBpbnRlcnByZXRhdGlvbiBvZiBteSBlbWFpbCB3YXMgY29ycmVjdC4gQXMgeW91IHBpY2tl
+ZCB1cCBvbiwgSQ0KaGFkIGEgZnVuZGFtZW50YWwgbWlzdW5kZXJzdGFuZGluZyBvZiB3aGF0IHBh
+Y2stb2JqZWN0cyB3YXMgZG9pbmcuDQpUaGFua3MgZm9yIHRoZSBleHBsYW5hdGlvbiwgSSBoYXZl
+IGEgbXVjaCBiZXR0ZXIgaWRlYSBvZiB3aGF0IGlzDQpnb2luZyBvbiBub3cuDQoNCkdpdmVuIG15
+IHVzZSBwYXR0ZXJuLCBpdCBtYXkgYmUgcmVhc29uYWJsZSBmb3IgbWUgdG8gcGF0Y2ggaW4gYW4N
+Cm9wdGlvbiB0byBjb21wdXRlDQoNCiAgICBnaXQgcmV2LWxpc3QgLS1vYmplY3RzICRteV90b3Bp
+YyAtLW5vdCAkc3Vic2V0X29mX3JlbW90ZV9yZWZzDQoNCmNhcGl0YWxpemluZyBvbiBteSBrbm93
+bGVkZ2Ugb2YgdGhpcyBwYXJ0aWN1bGFyIHJlcG9zaXRvcnkgdG8gY29tZQ0KdXAgd2l0aCBoZXVy
+aXN0aWNzIGZvciBwaWNraW5nIGEgcmVhc29uYWJsZSBzdWJzZXQuIFRoaXMgd2lsbA0KY29tZSB3
+aXRoIHRoZSByaXNrIG9mIHNvbWV0aW1lcyBwcm9kdWNpbmcgYW4gdW5uZWNlc3NhcmlseSBsYXJn
+ZQ0KKHBvdGVudGlhbGx5IGFuIG9ic2NlbmVseSBsYXJnZSkgcGFja2ZpbGUuIFlvdSBoYXZlIHRo
+b3JvdWdobHkNCmNvbnZpbmNlZCBtZSB0aGF0IGFuIG9wdGlvbiBsaWtlIHRoYXQgd2lsbCBub3Qg
+Z2VuZXJhbGl6ZSBhbmQgd291bGQNCmJlIHVuc3VpdGFibGUgZm9yIG1haW4gbGluZSBnaXQuDQoN
+Ckl0IGlzIGFsc28gZ29vZCB0byBrbm93IHRoYXQgMjAwMCByZW1vdGUgcmVmcyBpcyBpbnNhbmUu
+IFRoZSBsb3dlcg0KaGFuZ2luZyBmcnVpdCBoZXJlIHNvdW5kcyBsaWtlIHRyaW1taW5nIHRoYXQg
+dG8gYSByZWFzb25hYmxlDQpudW1iZXIsIHNvIEknbGwgdHJ5IHRoYXQgYXBwcm9hY2ggZmlyc3Qu
+DQoNClRoYW5rcyBhZ2FpbiwgSnVuaW8gYW5kIFBlZmYuDQoNCkRhbmllbA0KDQotLS0tLU9yaWdp
+bmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogSmVmZiBLaW5nIFttYWlsdG86cGVmZkBwZWZmLm5ldF0g
+DQpTZW50OiBNb25kYXksIERlY2VtYmVyIDA3LCAyMDE1IDU6NTcgUE0NClRvOiBEYW5pZWwgS292
+ZXJtYW4NCkNjOiBKdW5pbyBDIEhhbWFubzsgZ2l0QHZnZXIua2VybmVsLm9yZw0KU3ViamVjdDog
+UmU6IFdoeSBkb2VzIHNlbmQtcGFjayBjYWxsIHBhY2stb2JqZWN0cyBmb3IgYWxsIHJlbW90ZSBy
+ZWZzPw0KDQpPbiBNb24sIERlYyAwNywgMjAxNSBhdCAwMjo0MTowMFBNIC0wODAwLCBKdW5pbyBD
+IEhhbWFubyB3cm90ZToNCg0KPiBBbHNvIGl0IHdhcyB1bmNsZWFyIGlmIHlvdSBhcmUgd29ya2lu
+ZyB3aXRoIGEgc2hhbGxvdyByZXBvc2l0b3J5Lg0KPiBUaGUgcGVyZm9ybWFuY2UgdHJhZGUtb2Zm
+IG1hZGUgYmV0d2VlbiB0aGUgcGFja3NpemUgYW5kIHRoZSBjeWNsZXMNCj4gaXMgc29tZXdoYXQg
+ZGlmZmVyZW50IGJldHdlZW4gYSBub3JtYWwgYW5kIGEgc2hhbGxvdyByZXBvc2l0b3J5LA0KPiBl
+LmcuIDJkYWNmMjZkIChwYWNrLW9iamVjdHM6IHVzZSAtLW9iamVjdHMtZWRnZS1hZ2dyZXNzaXZl
+IGZvcg0KPiBzaGFsbG93IHJlcG9zLCAyMDE0LTEyLTI0KSBtaWdodCBiZSBhIGdvb2Qgc3RhcnRp
+bmcgcG9pbnQgdG8gdGhpbmsNCj4gYWJvdXQgdGhpcyBpc3N1ZS4NCg0KQWxzbyBub3RlIHRoYXQg
+Zm9yIGEgd2hpbGUgdGhlICJhZ2dyZXNzaXZlIiBmb3JtIHdhcyB1c2VkIGV2ZXJ5d2hlcmUuIEkN
+CnRoaW5rIHRoYXQgc3RhcnRlZCBpbiBmYmQ0YTcwIChsaXN0LW9iamVjdHM6IG1hcmsgbW9yZSBj
+b21taXRzIGFzIGVkZ2VzDQppbiBtYXJrX2VkZ2VzX3VuaW50ZXJlc3RpbmcgLSAyMDEzLTA4LTE2
+KSwgYW5kIHdhcyBmaXhlZCBpbiAxNjg0YzFiDQoocmV2LWxpc3Q6IGFkZCBhbiBvcHRpb24gdG8g
+bWFyayBmZXdlciBlZGdlcyBhcyB1bmludGVyZXN0aW5nLA0KMjAxNC0xMi0yNCkuDQoNClNvIGl0
+IHdhcyBwcmVzZW50IGZyb20gdjEuOC40LjIgdXAgdG8gdjIuMy4wLg0KDQotUGVmZg0K
