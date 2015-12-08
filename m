@@ -1,75 +1,300 @@
 From: larsxschneider@gmail.com
-Subject: [PATCH v2] git-p4: Add option to ignore empty commits
-Date: Tue,  8 Dec 2015 10:36:21 +0100
-Message-ID: <1449567382-63713-1-git-send-email-larsxschneider@gmail.com>
+Subject: [PATCH v2] git-p4: Add option to keep empty commits
+Date: Tue,  8 Dec 2015 10:36:22 +0100
+Message-ID: <1449567382-63713-2-git-send-email-larsxschneider@gmail.com>
+References: <1449567382-63713-1-git-send-email-larsxschneider@gmail.com>
 Cc: luke@diamand.org, gitster@pobox.com,
 	Lars Schneider <larsxschneider@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 08 10:36:34 2015
+X-From: git-owner@vger.kernel.org Tue Dec 08 10:36:36 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6EhF-0003Gp-Gw
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 10:36:33 +0100
+	id 1a6EhG-0003Gp-8w
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 10:36:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756160AbbLHJg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2015 04:36:28 -0500
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:32836 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755129AbbLHJg0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2015 04:36:26 -0500
-Received: by wmec201 with SMTP id c201so203837229wme.0
-        for <git@vger.kernel.org>; Tue, 08 Dec 2015 01:36:25 -0800 (PST)
+	id S1756164AbbLHJga (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2015 04:36:30 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:36567 "EHLO
+	mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755743AbbLHJg1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2015 04:36:27 -0500
+Received: by wmww144 with SMTP id w144so173558881wmw.1
+        for <git@vger.kernel.org>; Tue, 08 Dec 2015 01:36:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=GOAj5OF0z3bDttEI9Y8ImiXS1g24kXW82DDkTW6+ZQI=;
-        b=Ah2Nx8DA95uFKQhb8n/aruaRfU6+TLsnLXR+24UC3GNTgua2o/m48wtFu4u6ze6HEd
-         qzS0fFLUQA3s77PgbBL4QU4TfJffDH7UnRYutnfHzfBhONvLztG6s8HD3NcaRrFZ6tKT
-         +UeDSWXUi8TKEY/X8z1eEEORKabBF+ai3Brg84/7qPjRC9e7CexFFnyLG+t8n15g/y7Q
-         pzOy/dxti02abZeY6XwDCW5CkTNKWvH8V6Cb1yhJXbYIVlsWZtombJBAdB/jEkNuiq1f
-         sOcUFN5S9yvjN/uS5iNb3rnhO65zQLC3GIlL+hGyr6xjfq+bnfPvV0x/BSZa3rboN8cZ
-         +7NQ==
-X-Received: by 10.194.63.142 with SMTP id g14mr2082351wjs.161.1449567384956;
-        Tue, 08 Dec 2015 01:36:24 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=eH/7gZYZRrM7E6uSOoEL8mes5+wZC8Wk5x458gbyVFA=;
+        b=i9OEQbuQwghZMTmjlPUc3N/n3AaAwl5kwuAoSPZfr/JRcVbYuZx2/KerJIxkx4lrpq
+         V4HAuSbheHGzDh2EHpX6gRpJs4U8Zm4ZV5Gp+4gVOXWdxW6qiLFgrXDum69OSwiXPYNK
+         Sqhgsc+63DhlFiy+X5SN4le6HVymAZznjimHl+fl2gOkycsb/Z3U+l+N2VmKelbUotFC
+         UW7Q9bgMCi9NpahnjR57ihvF8Bf+nvQhY/vnzrAWaWwAuOEc9XEo9LrbyoXsOs7X3zv0
+         /NhePogCdfBL6/8IF98bDRNjVYQK3HlkAwn9ouOf49qdp/O/3zHuc2WAPGphiTrhnCJf
+         XZTQ==
+X-Received: by 10.28.46.206 with SMTP id u197mr24738461wmu.86.1449567386086;
+        Tue, 08 Dec 2015 01:36:26 -0800 (PST)
 Received: from slxBook3.fritz.box (p5DDB6FA0.dip0.t-ipconnect.de. [93.219.111.160])
-        by smtp.gmail.com with ESMTPSA id l7sm2133062wjx.14.2015.12.08.01.36.23
+        by smtp.gmail.com with ESMTPSA id l7sm2133062wjx.14.2015.12.08.01.36.25
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 08 Dec 2015 01:36:23 -0800 (PST)
+        Tue, 08 Dec 2015 01:36:25 -0800 (PST)
 X-Mailer: git-send-email 2.5.1
+In-Reply-To: <1449567382-63713-1-git-send-email-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282152>
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-diff to v1:
-* change the default behavior and replace "ignore empty commits" option
-  with "keep empty commits" (thanks Junio/Luke)
-  --> I kept the original topic name in the subject letter to ease finding
-      v1, ok?
-* add 'an' to fix grammar in commit message (thanks Luke)
-* remove quotes around 'true' in docs to avoid confusion (thanks Luke)
-* add deletion test (thanks Junio/Luke)
-* use print statement to avoid ugly \n (thanks Luke)
-* use positional argument specifiers in Python format string syntax to
-  support Python 2.6 (thanks Pete Harlan)
+A changelist that contains only excluded files due to a client spec was
+imported as an empty commit. Fix that issue by ignoring these commits.
+Add option "git-p4.keepEmptyCommits" to make the previous behavior
+available.
 
-Thanks,
-Lars
-
-Lars Schneider (1):
-  git-p4: Add option to keep empty commits
-
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+Helped-by: Pete Harlan
+---
  Documentation/git-p4.txt             |   4 ++
  git-p4.py                            |  44 +++++++-----
  t/t9826-git-p4-keep-empty-commits.sh | 134 +++++++++++++++++++++++++++++++++++
  3 files changed, 165 insertions(+), 17 deletions(-)
  create mode 100755 t/t9826-git-p4-keep-empty-commits.sh
 
---
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index 82aa5d6..b3e768e 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -510,6 +510,10 @@ git-p4.useClientSpec::
+ 	option '--use-client-spec'.  See the "CLIENT SPEC" section above.
+ 	This variable is a boolean, not the name of a p4 client.
+ 
++git-p4.keepEmptyCommits::
++	A changelist that contains only excluded files will be imported
++	as an empty commit if this boolean option is set to true.
++
+ Submit variables
+ ~~~~~~~~~~~~~~~~
+ git-p4.detectRenames::
+diff --git a/git-p4.py b/git-p4.py
+index 0093fa3..62c26bc 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -2288,12 +2288,6 @@ class P4Sync(Command, P4UserMap):
+         filesToDelete = []
+ 
+         for f in files:
+-            # if using a client spec, only add the files that have
+-            # a path in the client
+-            if self.clientSpecDirs:
+-                if self.clientSpecDirs.map_in_client(f['path']) == "":
+-                    continue
+-
+             filesForCommit.append(f)
+             if f['action'] in self.delete_actions:
+                 filesToDelete.append(f)
+@@ -2361,25 +2355,41 @@ class P4Sync(Command, P4UserMap):
+         gitStream.write(description)
+         gitStream.write("\n")
+ 
++    def inClientSpec(self, path):
++        if not self.clientSpecDirs:
++            return True
++        inClientSpec = self.clientSpecDirs.map_in_client(path)
++        if not inClientSpec and self.verbose:
++            print('Ignoring file outside of client spec: {0}'.format(path))
++        return inClientSpec
++
++    def hasBranchPrefix(self, path):
++        if not self.branchPrefixes:
++            return True
++        hasPrefix = [p for p in self.branchPrefixes
++                        if p4PathStartsWith(path, p)]
++        if hasPrefix and self.verbose:
++            print('Ignoring file outside of prefix: {0}'.format(path))
++        return hasPrefix
++
+     def commit(self, details, files, branch, parent = ""):
+         epoch = details["time"]
+         author = details["user"]
+ 
+         if self.verbose:
+-            print "commit into %s" % branch
+-
+-        # start with reading files; if that fails, we should not
+-        # create a commit.
+-        new_files = []
+-        for f in files:
+-            if [p for p in self.branchPrefixes if p4PathStartsWith(f['path'], p)]:
+-                new_files.append (f)
+-            else:
+-                sys.stderr.write("Ignoring file outside of prefix: %s\n" % f['path'])
++            print('commit into {0}'.format(branch))
+ 
+         if self.clientSpecDirs:
+             self.clientSpecDirs.update_client_spec_path_cache(files)
+ 
++        files = [f for f in files
++            if self.inClientSpec(f['path']) and self.hasBranchPrefix(f['path'])]
++
++        if not files and not gitConfigBool('git-p4.keepEmptyCommits'):
++            print('Ignoring revision {0} as it would produce an empty commit.'
++                .format(details['change']))
++            return
++
+         self.gitStream.write("commit %s\n" % branch)
+ #        gitStream.write("mark :%s\n" % details["change"])
+         self.committedChanges.add(int(details["change"]))
+@@ -2403,7 +2413,7 @@ class P4Sync(Command, P4UserMap):
+                 print "parent %s" % parent
+             self.gitStream.write("from %s\n" % parent)
+ 
+-        self.streamP4Files(new_files)
++        self.streamP4Files(files)
+         self.gitStream.write("\n")
+ 
+         change = int(details["change"])
+diff --git a/t/t9826-git-p4-keep-empty-commits.sh b/t/t9826-git-p4-keep-empty-commits.sh
+new file mode 100755
+index 0000000..be12960
+--- /dev/null
++++ b/t/t9826-git-p4-keep-empty-commits.sh
+@@ -0,0 +1,134 @@
++#!/bin/sh
++
++test_description='Clone repositories and keep empty commits'
++
++. ./lib-git-p4.sh
++
++test_expect_success 'start p4d' '
++	start_p4d
++'
++
++test_expect_success 'Create a repo' '
++	client_view "//depot/... //client/..." &&
++	(
++		cd "$cli" &&
++
++		mkdir -p subdir &&
++
++		>subdir/file1.txt &&
++		p4 add subdir/file1.txt &&
++		p4 submit -d "Add file 1" &&
++
++		>file2.txt &&
++		p4 add file2.txt &&
++		p4 submit -d "Add file 2" &&
++
++		>subdir/file3.txt &&
++		p4 add subdir/file3.txt &&
++		p4 submit -d "Add file 3" &&
++
++		>file4.txt &&
++		p4 add file4.txt &&
++		p4 submit -d "Add file 4" &&
++
++		p4 delete subdir/file3.txt &&
++		p4 submit -d "Remove file 3" &&
++
++		p4 delete file4.txt &&
++		p4 submit -d "Remove file 4"
++	)
++'
++
++test_expect_success 'Clone repo root path with all history' '
++	client_view "//depot/... //client/..." &&
++	test_when_finished cleanup_git &&
++	(
++		cd "$git" &&
++		git init . &&
++		git p4 clone --use-client-spec --destination="$git" //depot@all &&
++		cat >expect <<-\EOF &&
++Remove file 4
++[git-p4: depot-paths = "//depot/": change = 6]
++
++Remove file 3
++[git-p4: depot-paths = "//depot/": change = 5]
++
++Add file 4
++[git-p4: depot-paths = "//depot/": change = 4]
++
++Add file 3
++[git-p4: depot-paths = "//depot/": change = 3]
++
++Add file 2
++[git-p4: depot-paths = "//depot/": change = 2]
++
++Add file 1
++[git-p4: depot-paths = "//depot/": change = 1]
++
++		EOF
++		git log --format=%B >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'Clone repo subdir with all history but keep empty commits' '
++	client_view "//depot/subdir/... //client/subdir/..." &&
++	test_when_finished cleanup_git &&
++	(
++		cd "$git" &&
++		git init . &&
++		git config git-p4.keepEmptyCommits true &&
++		git p4 clone --use-client-spec --destination="$git" //depot@all &&
++		cat >expect <<-\EOF &&
++Remove file 4
++[git-p4: depot-paths = "//depot/": change = 6]
++
++Remove file 3
++[git-p4: depot-paths = "//depot/": change = 5]
++
++Add file 4
++[git-p4: depot-paths = "//depot/": change = 4]
++
++Add file 3
++[git-p4: depot-paths = "//depot/": change = 3]
++
++Add file 2
++[git-p4: depot-paths = "//depot/": change = 2]
++
++Add file 1
++[git-p4: depot-paths = "//depot/": change = 1]
++
++		EOF
++		git log --format=%B >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'Clone repo subdir with all history' '
++	client_view "//depot/subdir/... //client/subdir/..." &&
++	test_when_finished cleanup_git &&
++	(
++		cd "$git" &&
++		git init . &&
++		git p4 clone --use-client-spec --destination="$git" --verbose //depot@all &&
++		cat >expect <<-\EOF &&
++Remove file 3
++[git-p4: depot-paths = "//depot/": change = 5]
++
++Add file 3
++[git-p4: depot-paths = "//depot/": change = 3]
++
++Add file 1
++[git-p4: depot-paths = "//depot/": change = 1]
++
++		EOF
++		git log --format=%B >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'kill p4d' '
++	kill_p4d
++'
++
++test_done
+-- 
 2.5.1
