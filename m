@@ -1,96 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Dec 2015, #02; Fri, 4)
-Date: Mon, 07 Dec 2015 16:24:30 -0800
-Message-ID: <xmqqegexlrcx.fsf@gitster.mtv.corp.google.com>
-References: <xmqqa8pprej5.fsf@gitster.mtv.corp.google.com>
-	<CAOc6etZBnB6EKiD3xD-zp-QJz20ueQzdtdJMSZz6wOH_HFZXxw@mail.gmail.com>
-	<20151207204630.GD30203@sigill.intra.peff.net>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 13/16] init: allow alternate backends to be set for new
+ repos
+Date: Mon, 07 Dec 2015 19:38:52 -0500
+Organization: Twitter
+Message-ID: <1449535132.21906.0.camel@twopensource.com>
+References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
+	 <1449102921-7707-14-git-send-email-dturner@twopensource.com>
+	 <CACsJy8DDKW4np7N+KA=dpz9uNke0+cyQD-J3U74VM=4WbsjrKQ@mail.gmail.com>
+	 <20151205074444.GD21639@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Edmundo Carmona Antoranz <eantoranz@gmail.com>,
-	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 08 01:24:47 2015
+X-From: git-owner@vger.kernel.org Tue Dec 08 01:42:27 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a665F-0003ov-Fl
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 01:24:45 +0100
+	id 1a66MK-0004Ge-Og
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Dec 2015 01:42:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754807AbbLHAYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Dec 2015 19:24:41 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:59744 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751881AbbLHAYk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Dec 2015 19:24:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AFA2B321D2;
-	Mon,  7 Dec 2015 19:24:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ANQLpESaXau603YbLvu4TXPffDE=; b=Lna+BZ
-	FBmiLix1R2i1Ko/oGwT90moVORpPcJMeI6x2DjYwklqCKiqPUEIzKS55btLKtyiJ
-	ZC7VQe+47D347v0ayPGiLk70W36IifgRAHaXlNx/ATPOp5tCfRqIkh97Nx3N0ryC
-	Lt60IYrTI/HaoZsWvp/sTLP0cDSbkG4u2/GJk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Uxy3cpuuC3PMrz4SKGwxasYIsqAB5pVR
-	KCoyRCt1j/GXp1zq/GjUQxxqcskqE/2rKzC3buYqRB0mZUaOuIz7we/5YX2jYjuw
-	EIxfox6legWx4l/DReyLgLIRaR+8cUFrYNcHMvIFlAqOcQ2c/7LG7KCo4HeBjkpI
-	HFnj6fvYUqo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A6E9D321D1;
-	Mon,  7 Dec 2015 19:24:39 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2C3F9321D0;
-	Mon,  7 Dec 2015 19:24:39 -0500 (EST)
-In-Reply-To: <20151207204630.GD30203@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 7 Dec 2015 15:46:30 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1183D9DE-9D42-11E5-9F2F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1755967AbbLHAi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Dec 2015 19:38:58 -0500
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:33974 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755268AbbLHAiz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Dec 2015 19:38:55 -0500
+Received: by igvg19 with SMTP id g19so91116986igv.1
+        for <git@vger.kernel.org>; Mon, 07 Dec 2015 16:38:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=ZKaUcQg76u5vBlaHBp+eMSHzwlwJ3nZXRxw33d4jEJc=;
+        b=hqWc+KrbKBag+PbMQqDLDIpT+7mSH5c48/8k20HCK6Lo5cW1VceDXNBEA4yIQ9H4Uz
+         5hob3H+WVEHONYnY+qTGgVhpwtMtIrkJ0g/aYIN5s/cZZTtsKeT/C6REEV68nyWLuxUE
+         bjbuGvbgfeSpxL52dMNWld6qOxdeGEcsGKF9PF+gL8xeB85PlgS9pmvFoUh15Omz3itt
+         er/LmOH0s2Kc5q/L6SPn3+6WCv5dQkExdiRE98czc1gNXAvyUsXOb0sb8XU6rMkijgjz
+         O0J5Er83kucZI/ziz6FPw/ZoyBYPYJFDNA6iZn4ZAghdlaOQaw0BAy1E2l0YmX82mcSg
+         zCCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=ZKaUcQg76u5vBlaHBp+eMSHzwlwJ3nZXRxw33d4jEJc=;
+        b=jHqdwVvx3AxlCmcK9/y+40dn3jIbWucSgMq238Nvl6Orafi/qBKeLyneYM/imjPwrO
+         zM3Bh5YeJqp6Sxu0RrMaYBFUfjpX5krdN2kyJz+bPO5/Xwa1rO7VR2q5Wqj6zUtC1O3V
+         +Gpbc7mtbYKtx3fDLJpn9sI+QKXsby5UD0DL/kE1DunKXYBFs9cSF9DxP8tqrZbaM10u
+         rc02J++aEiN/V3sv5MCPN4394rleYsdY3COkeMHZMooqtHnmOcFTJ4My+NPCd5Hs2sGq
+         ljl3SY82kcgyFUq/B06RPw1CIBwPGJ7O2YlYA6F9qsdH1TnuhMXKQ49Ama1RMZbD5Dzu
+         nc5Q==
+X-Gm-Message-State: ALoCoQm7qu3aORLLRyk0o4oBeSRMnGg9oxprgZSmHiTDdIKEirqLMXYns2KFa+4Aj6e2Y81eR6bLLJ5jz0jJ1DOvozFwP+NaFQ==
+X-Received: by 10.50.62.104 with SMTP id x8mr1240009igr.22.1449535135190;
+        Mon, 07 Dec 2015 16:38:55 -0800 (PST)
+Received: from ubuntu ([8.25.196.25])
+        by smtp.gmail.com with ESMTPSA id uf7sm503740igb.11.2015.12.07.16.38.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 07 Dec 2015 16:38:54 -0800 (PST)
+In-Reply-To: <20151205074444.GD21639@sigill.intra.peff.net>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282143>
 
-Jeff King <peff@peff.net> writes:
+On Sat, 2015-12-05 at 02:44 -0500, Jeff King wrote:
+> On Sat, Dec 05, 2015 at 07:30:13AM +0100, Duy Nguyen wrote:
+> 
+> > On Thu, Dec 3, 2015 at 1:35 AM, David Turner <dturner@twopensource.com> wrote:
+> > > git init learns a new argument --refs-backend-type.  Presently, only
+> > > "files" is supported, but later we will add other backends.
+> > >
+> > > When this argument is used, the repository's core.refsBackendType
+> > > configuration value is set, and the refs backend's initdb function is
+> > > used to set up the ref database.
+> > 
+> > git-init can also be used on existing repos. What happens in that case
+> > if we use --refs-backend-type. Will existing  refs be migrated to the
+> > new backend or hidden away?
 
-> On Sun, Dec 06, 2015 at 10:12:18AM -0600, Edmundo Carmona Antoranz wrote:
->
->> Hi, Junio, Jeff!
->> 
->> On Fri, Dec 4, 2015 at 5:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> > * ec/annotate-deleted (2015-11-20) 1 commit
->> >  - annotate: skip checking working tree if a revision is provided
->> >
->> >  Usability fix for annotate-specific "<file> <rev>" syntax with deleted
->> >  files.
->> >
->> >  Waiting for review.
->> 
->> Is there something I have to do about it?
->
-> A gentle ping is sometimes helpful. :)
->
-> I did not see anything wrong with it, but I think Junio would be a good
-> person to give it a look, as he knows all of the sordid history of blame
-> versus annotate, and the intended allowed command-line orderings.
+I'd like to migrate, but I don't want to write that code prematurely.  I
+figure we can get everything else right first.  
 
-If you bring "intended allowed command-line orderings" into the
-picture, then I would have to say that any effort that encourages
-the use of paths before revs like this patch does should be frowned
-upon---if anything, we should actively discouraging people from
-feeding paths before revs, and this change goes in a wrong direction
-by adding a special case only to annotate, giving another excuse to
-people who think "git log path rev" should work "because annotate
-does".
+> It would be neat if it migrated, but I suspect that may introduce
+> complications. It's probably OK in the initial implementation to bail if
+> the option is used in an existing repo.
 
-If the change is just to 'annotate path rev', and does not change
-'blame path rev', it would be less distasteful, though.
+Will fix.
 
-I'd have to think about it.
+> I think the config option needs to be extensions.refsBackendType, too,
+> per the logic in 00a09d5 (introduce "extensions" form of
+> core.repositoryformatversion, 2015-06-23). And I guess it needs to bump
+> core.repositoryformatversion to "1".
+
+I did that in a later patch, but now is a better time; will fix.
