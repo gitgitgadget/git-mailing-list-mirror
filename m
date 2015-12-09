@@ -1,116 +1,187 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git-clone fails when current user is not in /etc/passwd
-Date: Wed, 9 Dec 2015 19:24:13 +0100
-Message-ID: <CACsJy8Dc3Lsqa2zccoqH7UkDitqDbOTX3EXsUCcN9OHY=LfaKw@mail.gmail.com>
-References: <CAKfKJYsyHn7FUOu65AqbvjZD-wAyRScjqUL6kgGDCVzG1myZTQ@mail.gmail.com>
- <CACsJy8AQFSvcxKqSdWfvGArV60RA96WcvvofpfJ4EuG+q_=t0Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Taylor Braun-Jones <taylor@braun-jones.org>
-X-From: git-owner@vger.kernel.org Wed Dec 09 19:24:51 2015
+From: Dave Ware <davidw@realtimegenomics.com>
+Subject: [PATCH v5] contrib/subtree: fix "subtree split" skipped-merge bug
+Date: Thu, 10 Dec 2015 10:17:33 +1300
+Message-ID: <1449695853-24929-1-git-send-email-davidw@realtimegenomics.com>
+References: <CAPig+cSfkz=SNOn+8yP-QN8gJ0ej1wo3HW+y3NO+QvUCOP=+8A@mail.gmail.com>
+Cc: Dave Ware <davidw@realtimegenomics.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 09 22:18:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6jQ1-0002gC-Gb
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 19:24:49 +0100
+	id 1a6m7t-0003Cx-IW
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 22:18:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753343AbbLISYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2015 13:24:45 -0500
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:34517 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753147AbbLISYo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2015 13:24:44 -0500
-Received: by lbbcs9 with SMTP id cs9so35376202lbb.1
-        for <git@vger.kernel.org>; Wed, 09 Dec 2015 10:24:43 -0800 (PST)
+	id S1751997AbbLIVSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2015 16:18:13 -0500
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:35417 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751354AbbLIVSM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2015 16:18:12 -0500
+Received: by pacej9 with SMTP id ej9so35666371pac.2
+        for <git@vger.kernel.org>; Wed, 09 Dec 2015 13:18:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=pXqmU2dAH6z67SoX936ZHKMKWYdJUYcQD0gCZFLJ5Ew=;
-        b=KxKIjaZyOujmqlr64P86iJCQNmlNOPUN7f2jkP2oizl3pWZ0ToDSMDd1nOneSDFiFN
-         W5sQwhbzYrUBqh5SHJuJ+Igld41SJOff4tVdT+1qW/tCc+gGYNSp0BlXAK7MZjaohDGH
-         yxCDOOuRLgfGXRWGciHLG0BH3hVlHkxie1EEywVVELR+PihrGKk9MviabDJSY9a6uy6K
-         4v7hEfxAbQcDm2pOFXgTAwJUUUEfa2URFRN4HwSMPLiS1LJ4j7PIvXKVrmI8o0UFFiDp
-         uQlptnTzETPuUCnA5DMYoD31RRJ4IeClahA6Aejj9OKHESLkMVZBdnjrsdXf9YEaep2s
-         KNTg==
-X-Received: by 10.112.126.106 with SMTP id mx10mr3183991lbb.3.1449685482856;
- Wed, 09 Dec 2015 10:24:42 -0800 (PST)
-Received: by 10.112.199.5 with HTTP; Wed, 9 Dec 2015 10:24:13 -0800 (PST)
-In-Reply-To: <CACsJy8AQFSvcxKqSdWfvGArV60RA96WcvvofpfJ4EuG+q_=t0Q@mail.gmail.com>
+        d=realtimegenomics-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=v/43HnzZPbFCB4W5RpM/IEc7C2OD3CeS/hiTbbIuAd8=;
+        b=orjMy7JQjaJpFh9faPuBJx7k6LntBeWbwxGQdWMdp2W2wScDzxHzw9D6Z7NnFnotM3
+         yJYLnK8iP9Iy7zmIpBBijrDtR/tEnKVwkKffGXdHwptENq96ZvkTJY/wgtSf04/shzSn
+         3g5jzXCOcEBsGjWTN9rjHOPjzaz8vSnBf7d6HRdKnWGwD3eH+fDOBEsldlFPvM0LP4nm
+         CEvrLnowOfIX4Rvl1kKKSdKdaXZdQHqgE8Fg4E/qASSB+rJ8HeUPA4PNtw45nryLocRy
+         cspZmNmFaXgH2WbLbZU7HsWw2DpVH+1IJyWo4GQ8gfs9s5vq/kGt+4645LXPQi6GFEYV
+         5uqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=v/43HnzZPbFCB4W5RpM/IEc7C2OD3CeS/hiTbbIuAd8=;
+        b=ihfi68GpgprM1NGf2yk4G6svpRwBYcHwpkw8tBeuhfhHib9KB2cWgb5a1O+55lawil
+         LloBw5xwdp+E4LhlVyU6WXMg/KVRUFvoQOuo4ENtHZi3wPBQHX5blGuGDpNYBv/gja2U
+         NQrs89Lax4D8e+3wskPDtZbfi+Z0aY5HfDLE/5I0sbdlLawB9ki7Yg6ZO59XLjb3ODre
+         OvEp/APvRNFxyn1tq9845GybJAv6spkzqRoE96P0EapGuMSU6LeY2T2QhRlJvSEr1sD9
+         Qhi+TAh8IPdocMBa4RkkrIsADx3Gzg3r1pQVGnZqPXkJHqCeGDd6zdZ9FHXNIlWpGHLA
+         /RSg==
+X-Gm-Message-State: ALoCoQkzqec+4IOI/giWBmLW+jNSy9AD5n7JOeWfP/42hRn3lssASEOFc09y0g9TAXIRv6hjgydzW2H3Ucsb2gllrI73LXK3zw==
+X-Received: by 10.66.248.74 with SMTP id yk10mr11151479pac.17.1449695891702;
+        Wed, 09 Dec 2015 13:18:11 -0800 (PST)
+Received: from tinman.nz.realtimegenomics.com ([114.134.15.146])
+        by smtp.googlemail.com with ESMTPSA id d6sm13638323pfj.82.2015.12.09.13.18.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 09 Dec 2015 13:18:11 -0800 (PST)
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <CAPig+cSfkz=SNOn+8yP-QN8gJ0ej1wo3HW+y3NO+QvUCOP=+8A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282197>
 
-On Wed, Dec 9, 2015 at 5:08 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Dec 2, 2015 at 9:10 PM, Taylor Braun-Jones
-> <taylor@braun-jones.org> wrote:
->> My use case it running git clone inside a docker container with
->> `docker run --user $(id -u):$(id -g) --volume /foo:/foo ...`. I want
->> all /foo/* file creation/access from inside the Docker container to be
->> done as the current uid/gid of the host system.
->>
->> Steps to reproduce:
->>
->> mkdir /tmp/docker-git
->> cat > /tmp/docker-git/Dockerfile <<EOF
->> FROM ubuntu
->> RUN apt-get update && apt-get install -y git-core
->> EOF
->> docker build -t git /tmp/docker-git/
->> docker run --user $(id -u):$(id -g) git git clone
->> https://github.com/git/git.git /tmp/git
->> # fatal: unable to look up current user in the passwd file: no such user
->
-> It probably helps if you could get the stack trace to this message
-> (printed from function xgetpwuid_self). I haven't checked if my
-> personal laptop has docker to reproduce this.. In general we won't ask
-> passwd if the user specifies name/email in the config file. But I
-> still don't see why git-clone needs that info in the first place.
+'git subtree split' can incorrectly skip a merge even when both parents
+act on the subtree, provided the merge results in a tree identical to
+one of the parents. Fix by copying the merge if at least one parent is
+non-identical, and the non-identical parent is not an ancestor of the
+identical parent.
 
-Well.. reflog needs it. So either you disable reflog at clone time or
-define name/email via config file. I don't see anything wrong with
-this behavior. Stack trace
+Also, add a test case which checks that a descendant can be pushed to
+its ancestor in this case.
 
-(gdb) bt
-#0  0x0000000000585aaf in xgetpwuid_self () at wrapper.c:608
-#1  0x00000000004ef2c4 in ident_default_name () at ident.c:108
-#2  0x00000000004ef851 in fmt_ident (name=0x0, email=0x0,
-date_str=0x0, flag=0) at ident.c:300
-#3  0x00000000004efb25 in git_committer_info (flag=0) at ident.c:366
-#4  0x000000000052fc6f in log_ref_write_1 (refname=0x16236c0
-"refs/remotes/origin/HEAD", old_sha1=0x7ffc91e44190 "",
-new_sha1=0x7ffc91e44170
-"\355\025\033\215p{o\177V\234qX\212j?!v|}D\177", msg=0x1620e50 "clone:
-from https://github.com/rswier/c4.git", logfile=0x7ffc91e44100,
-flags=0, err=0x7ffc91e44150) at refs.c:3403
-#5  0x000000000052fd85 in log_ref_write (refname=0x16236c0
-"refs/remotes/origin/HEAD", old_sha1=0x7ffc91e44190 "",
-new_sha1=0x7ffc91e44170
-"\355\025\033\215p{o\177V\234qX\212j?!v|}D\177", msg=0x1620e50 "clone:
-from https://github.com/rswier/c4.git", flags=0, err=0x7ffc91e44150)
-at refs.c:3424
-#6  0x00000000005304af in create_symref (ref_target=0x16236c0
-"refs/remotes/origin/HEAD", refs_heads_master=0x1624cc0
-"refs/remotes/origin/master", logmsg=0x1620e50 "clone: from
-https://github.com/rswier/c4.git") at refs.c:3592
-#7  0x000000000042e50c in update_remote_refs (refs=0x1622d40,
-mapped_refs=0x1622cc0, remote_head_points_at=0x1624bc0,
-branch_top=0x1621ca0 "refs/remotes/origin/", msg=0x1620e50 "clone:
-from https://github.com/rswier/c4.git", transport=0x1622960,
-check_connectivity=1) at builtin/clone.c:639
-#8  0x000000000042f80c in cmd_clone (argc=2, argv=0x7ffc91e44ab8,
-prefix=0x0) at builtin/clone.c:1066
-#9  0x0000000000405fda in run_builtin (p=0x825948 <commands+456>,
-argc=5, argv=0x7ffc91e44ab8) at git.c:352
-#10 0x00000000004061d0 in handle_builtin (argc=5, argv=0x7ffc91e44ab8)
-at git.c:542
-#11 0x00000000004062ec in run_argv (argcp=0x7ffc91e4498c,
-argv=0x7ffc91e449a0) at git.c:588
-#12 0x00000000004064df in main (argc=5, av=0x7ffc91e44aa8) at git.c:695
+Signed-off-by: Dave Ware <davidw@realtimegenomics.com>
+---
+
+Notes:
+    Many thanks to Eric Sunshine and Junio Hamano for adivce on this patch
+    
+    Changes since v4
+    - Minor spelling and style fixes to test case
+    Changes since v3:
+    - Improvements to commit message
+    - Removed incorrect use of --boundary on rev-list
+    - Changed use of rev-list to use --count
+    Changes since v2:
+    - Minor improvements to commit message
+    - Changed space indentation to tab indentation in test case
+    - Changed use of rev-list for obtaining commit id to use rev-parse instead
+    Changes since v1:
+    - Minor improvements to commit message
+    - Added sign off
+    - Moved test case from own file into t7900-subtree.sh
+    - Added subshell to test around 'cd'
+    - Moved record of commit for cherry-pick to variable instead of dumping into file
+    
+    [v4]: http://thread.gmane.org/gmane.comp.version-control.git/282065/focus=282182
+    [v3]: http://thread.gmane.org/gmane.comp.version-control.git/282065/focus=282176
+    [v2]: http://thread.gmane.org/gmane.comp.version-control.git/282065/focus=282121
+    [v1]: http://thread.gmane.org/gmane.comp.version-control.git/282065
+
+ contrib/subtree/git-subtree.sh     | 12 +++++++--
+ contrib/subtree/t/t7900-subtree.sh | 52 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 9f06571..ebf99d9 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -479,8 +479,16 @@ copy_or_skip()
+ 			p="$p -p $parent"
+ 		fi
+ 	done
+-	
+-	if [ -n "$identical" ]; then
++
++	copycommit=
++	if [ -n "$identical" ] && [ -n "$nonidentical" ]; then
++		extras=$(git rev-list --count $identical..$nonidentical)
++		if [ "$extras" -ne 0 ]; then
++			# we need to preserve history along the other branch
++			copycommit=1
++		fi
++	fi
++	if [ -n "$identical" ] && [ -z "$copycommit" ]; then
+ 		echo $identical
+ 	else
+ 		copy_commit $rev $tree "$p" || exit $?
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 9051982..4fe4820 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -468,4 +468,56 @@ test_expect_success 'verify one file change per commit' '
+ 	))
+ '
+ 
++test_expect_success 'subtree descendant check' '
++	mkdir git_subtree_split_check &&
++	(
++		cd git_subtree_split_check &&
++		git init &&
++
++		mkdir folder &&
++
++		echo a >folder/a &&
++		git add . &&
++		git commit -m "first commit" &&
++
++		git branch branch &&
++
++		echo 0 >folder/0 &&
++		git add . &&
++		git commit -m "adding 0 to folder" &&
++
++		echo b >folder/b &&
++		git add . &&
++		git commit -m "adding b to folder" &&
++		cherry=$(git rev-parse HEAD) &&
++
++		git checkout branch &&
++		echo text >textBranch.txt &&
++		git add . &&
++		git commit -m "commit to fiddle with branch: branch" &&
++
++		git cherry-pick $cherry &&
++		git checkout master &&
++		git merge -m "merge" branch &&
++
++		git branch noop_branch &&
++
++		echo d >folder/d &&
++		git add . &&
++		git commit -m "adding d to folder" &&
++
++		git checkout noop_branch &&
++		echo moreText >anotherText.txt &&
++		git add . &&
++		git commit -m "irrelevant" &&
++
++		git checkout master &&
++		git merge -m "second merge" noop_branch &&
++
++		git subtree split --prefix folder/ --branch subtree_tip master &&
++		git subtree split --prefix folder/ --branch subtree_branch branch &&
++		git push . subtree_tip:subtree_branch
++	)
++'
++
+ test_done
 -- 
-Duy
+1.9.1
