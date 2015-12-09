@@ -1,65 +1,83 @@
-From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 6/8] dir: add remove_untracked_cache()
-Date: Wed, 9 Dec 2015 08:39:32 +0100
-Message-ID: <5667DAB4.7000002@web.de>
-References: <1449594916-21167-1-git-send-email-chriscool@tuxfamily.org>
- <1449594916-21167-7-git-send-email-chriscool@tuxfamily.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4] contrib/subtree: fix "subtree split" skipped-merge bug
+Date: Wed, 9 Dec 2015 02:52:01 -0500
+Message-ID: <CAPig+cSfkz=SNOn+8yP-QN8gJ0ej1wo3HW+y3NO+QvUCOP=+8A@mail.gmail.com>
+References: <xmqqk2ook52u.fsf@gitster.mtv.corp.google.com>
+	<1449620377-30479-1-git-send-email-davidw@realtimegenomics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	David Turner <dturner@twopensource.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershause?= =?UTF-8?Q?n?= 
-	<tboegi@web.de>, Christian Couder <chriscool@tuxfamily.org>
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 09 08:40:09 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Dave Ware <davidw@realtimegenomics.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 08:52:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6ZM4-0000xu-RT
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 08:40:05 +0100
+	id 1a6ZXl-0000DN-G8
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 08:52:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751819AbbLIHj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2015 02:39:59 -0500
-Received: from mout.web.de ([212.227.17.11]:55681 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751785AbbLIHj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2015 02:39:57 -0500
-Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0LwHkw-1aK7dx3y8s-0184kT; Wed, 09 Dec 2015 08:39:36
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
- Gecko/20100101 Thunderbird/38.4.0
-In-Reply-To: <1449594916-21167-7-git-send-email-chriscool@tuxfamily.org>
-X-Provags-ID: V03:K0:1A5fTe9JDzPSIKblGMR37CcCgIit58NElPcNOWzLcteHAoz7imc
- AIN0EsVuFObmvhPbCzwo69EJqLxaFtdwa7K3n0fTeWxTuTVQ4VURWMqeLQPpoHG26aD3Ttq
- GM1JM8lpeJ75Ifl+cfl3zpv0xtV2xk0A5ITkc64gD0eX3NKy5nE7SXaZjfIhrdQNbCkTJqD
- SqNwFEhThun4vAW6Idn3w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:F/D4BO+RpqQ=:qqcGJaHd0NIDYseouS5zd9
- pMitpUU6LAQWG0jVSKfNbbizPamDc+bggREOvwStT05WxtkVOmAz36PrgXmGMxjqVt4sbCmUB
- HZWisKHebsIET6caCJ/CS+rvzaiOyLDbbEHmBUOo1qZMNCpTmhdQWma/dHSmIEy74U7SY1HzB
- mBoN987tgoONv96s+bmIFU4IqOFEywb/mEkqm83YGCvxxAVzoV7mudEJrElmQ/P2rPmqrpg6h
- WSE+leLPA6ajU2sTepqKbOZA1feKlhnTQJhTkWEpkzcfmlURLR/pRAG/ZfcSHhT9zfzMIStmj
- UavrI9amMAorvrphx36xBxSMC9p1rnEe7ZZ/HoKcBZGJvsZl+SPmVQKEJwmMNi96u0o3ZW51X
- GPYbBwTY8yxpm8KagtWLnhhRB/9gdPcQzmJW4Qq7zESXgaO7Fz66WLNLqBpcnKLYcJa4DSU6W
- RJdHy4AbFAKBaVooV+AuBZBRHFTtNgdY3zAAVLxBDcRx7Zq1/biZPHDy04PFfSpkd1OQm8YsA
- YIWrmp38+0WzRCOJ8lkJw7VJlPEn3RFS6dJabG1kWNnsUBnuGoEmmzGtNIBRgNaNANcVa0llH
- BTuD+ocQvir9F9p0En2uR1oqg5tp8CmUSGY73RkaIaD5LcA4PxRESZYcCVczAkTG4bgVIdChN
- rd1QgGCBbDgFp6oHvs2BG3lj1PMuHluqz8qwz/RxractdZUvmPmOEstZ9RWV/juqg49Ghi9ow
- 3RETSitmInPsWBx51fItBou2SZY18VJaT3CYAxlojXofbeZfunEIflOzsp7Bv5EaFrkksr2V 
+	id S1751783AbbLIHwE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2015 02:52:04 -0500
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:35154 "EHLO
+	mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751214AbbLIHwC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2015 02:52:02 -0500
+Received: by vkha189 with SMTP id a189so38175923vkh.2
+        for <git@vger.kernel.org>; Tue, 08 Dec 2015 23:52:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=FQPXp41ZHjz5L43WRUeqyOo9DP8UjDDlIjpOZb2WKJI=;
+        b=A5gFsM6h2VMIteRQ3h5n2vGNZ1bkCL9ZTtADtf0DhBJWlc4TMhULpkTRtuoZyC9WvZ
+         xTI9rUEIdWLYE15Wm7jDZhCNI/zzip83YgQQjMwQVKc3wEk1dDskdcTlzJ7xHw8IetN/
+         5hFrSmUcJaRHAws5THhPfO2g+bPZUeA7J+yusZ7ePIXWdKJG5HKtwGMhfoNDQe+YEP6O
+         ROIl8VCG33MmkkpXp7QmnKxSzhXqAE3QNMBVU1+z5eQbKxGco8qRSq81CDtDbr1SqkFE
+         OA87kcodaBkcpx21Ulb8x4NIwzDG5eMC/SHGte2rgblmS6EiNiQp2Cq2tBfjM91LYQwW
+         excw==
+X-Received: by 10.31.52.82 with SMTP id b79mr3528454vka.84.1449647521921; Tue,
+ 08 Dec 2015 23:52:01 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Tue, 8 Dec 2015 23:52:01 -0800 (PST)
+In-Reply-To: <1449620377-30479-1-git-send-email-davidw@realtimegenomics.com>
+X-Google-Sender-Auth: q1-q96iGqu9vOsTyuUNw4_jlrjI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282188>
 
-On 08.12.15 18:15, Christian Couder wrote:
-> This new function will be used in a later patch.
-Why not combine 5/8 with 6/8 into a single patch ?
+On Tue, Dec 8, 2015 at 7:19 PM, Dave Ware <davidw@realtimegenomics.com> wrote:
+> 'git subtree split' can incorrectly skip a merge even when both parents
+> act on the subtree, provided the merge results in a tree identical to
+> one of the parents. Fix by copying the merge if at least one parent is
+> non-identical, and the non-identical parent is not an ancestor of the
+> identical parent.
+>
+> Also, add a test case which checks that a descendant can be pushed to
+> its ancestor in this case.
+>
+> Signed-off-by: Dave Ware <davidw@realtimegenomics.com>
+> ---
+> diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+> @@ -468,4 +468,56 @@ test_expect_success 'verify one file change per commit' '
+>         ))
+>  '
+>
+> +test_expect_success 'subtree descendent check' '
 
-(And please consider to mark the series with v2)
+s/descendent/descendant/
+
+> +       mkdir git_subtree_split_check &&
+> +       (
+> +               cd git_subtree_split_check &&
+> +[...]
+> +               git push . subtree_tip:subtree_branch
+> +       )
+> +       '
+
+Style nit: don't indent closing quotation mark
+
+>  test_done
+> --
+> 1.9.1
