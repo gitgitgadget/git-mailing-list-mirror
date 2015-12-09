@@ -1,112 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GPG public keys
-Date: Tue, 08 Dec 2015 17:49:42 -0800
-Message-ID: <xmqqtwnsie6h.fsf@gitster.mtv.corp.google.com>
-References: <9E65FDC7-B4F6-45DC-9B0E-F017B904C868@pixelrebel.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v4] Documentation/git-update-index: add missing opts to synopsis
+Date: Wed, 9 Dec 2015 06:39:04 +0100
+Message-ID: <CAP8UFD1cJdoaT=gPqqDshB9g0e_ZUGJqy21UzUTBPmPB6EkmnQ@mail.gmail.com>
+References: <1448443802-24507-1-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jamie Evans <jamie@pixelrebel.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 02:49:51 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 06:39:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6Tt9-0007YC-CM
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 02:49:51 +0100
+	id 1a6XTQ-0002eB-Lw
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 06:39:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753056AbbLIBtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2015 20:49:47 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62819 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753033AbbLIBtp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2015 20:49:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 804BE32716;
-	Tue,  8 Dec 2015 20:49:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=Hv6KcATAZLoKp3JXiUcR9i3HtF0=; b=c1GQfCQBZHBYrOXpbx6D
-	Ra/ew6cNlFVIETlx95dacyY+HRri9r+zDaU2eZhJCVIpLCAHMlOU3lDbtF0I5BhK
-	ojk4/aiT5GWfZ2qgFD+w/PpYyK12mYXqpxkUehP5c+Qk/8+fc9f8WBSDSnEAdCRN
-	s5oP+10ehvfhtcvr+00fr9U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=OAzVjId1yWQOFeQHCQJVz1srSoIR7lWT6/bITAs73arg0E
-	9xpaTlTdCt05qHwyIfsbMDc/LdpkGst8ExIiYtDb+MShTWx0bF12rFRftz7jvTyd
-	+vA04kYLeqDZ1TRsbm1MEQyVcufOVM9GkG4h1TwVsNdfDdYXa448T6EE96j2U=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 785E732715;
-	Tue,  8 Dec 2015 20:49:44 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F338132714;
-	Tue,  8 Dec 2015 20:49:43 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 1EA2C104-9E17-11E5-BB4E-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753015AbbLIFj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2015 00:39:28 -0500
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:36574 "EHLO
+	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753265AbbLIFjG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2015 00:39:06 -0500
+Received: by lfs39 with SMTP id 39so26958392lfs.3
+        for <git@vger.kernel.org>; Tue, 08 Dec 2015 21:39:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mEt9ouRQirGMImIX9AykxGo/sArt7IHMv8lG5LY4rtU=;
+        b=D7x7q1KmU1xA/v7GJcZS17HCBydftNEOKvoV/HOjdl1jNiTmjh/7+VjSx5qyRsdMOa
+         kB7+PYQ7wscjlIjyF3IbNW+k/ybJELDDrO7oYhb/PYzNbaRnDuj5ZSZWwLyJdZNHmV7B
+         LeYOQRivCSumo2DJtm8/jZQQYkOyHAiV0oI/A6LSxU93Pk/6S3/mTgzSwdwObKerwUmb
+         Zvsta4+UqtECpBorBk8/JLIFgSa8DOu7RmAXKOsAF+BUPfcd6Jhp89Wh8Cr0hQX4QsLd
+         rZpvvy1drs7IAa7WoDGtg5KvjkAN8/WoixPzxMVLIMvo6FYYSM6fBaE5cUwDDobJTwdQ
+         1jaA==
+X-Received: by 10.25.18.93 with SMTP id h90mr1364291lfi.7.1449639544397; Tue,
+ 08 Dec 2015 21:39:04 -0800 (PST)
+Received: by 10.25.152.7 with HTTP; Tue, 8 Dec 2015 21:39:04 -0800 (PST)
+In-Reply-To: <1448443802-24507-1-git-send-email-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282185>
 
-Jamie Evans <jamie@pixelrebel.com> writes:
+On Wed, Nov 25, 2015 at 10:30 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Split index related options should appear in the 'SYNOPSIS'
+> section.
+>
+> These options are already documented in the 'OPTIONS' section.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> This v4 contains only the split-index options and applies on top
+> of the new master that already contains the untracked-cache options.
 
-> Can you please point me to the public GPG keys used for source code signing?
+It looks like this patch has not been applied.
+Maybe I should have given it a different title to avoid confusion with
+a previous patch that added [--[no-|force-]untracked-cache] in the
+SYNOPSIS.
 
-I suspect that you are asking about our project, but instead of
-throwing you a fish, I'll show you how to catch one yourself.
-
-In a copy of linux kernel repository I have lying around from a
-random past, I did this:
-
-    $ git log --show-signature
-
-and saw something like this:
-
-    commit c6fa8e6de3dc420cba092bf155b2ed25bcd537f7
-    merged tag 'arm64-fixes'
-    gpg: Signature made Wed 07 Oct 2015 03:10:34 AM PDT using RSA key ID 84C16334
-    gpg: Can't check signature: public key not found
-    Merge: e82fa92 62c6c61
-    Author: Linus Torvalds <torvalds@linux-foundation.org>
-    Date:   Wed Oct 7 18:17:46 2015 +0100
-
-        Merge tag 'arm64-fixes' of git://git.kernel.org/pub/scm/li...
-
-I do not have the public key with key ID 84C16334, but I can ask
-public keyservers.  Put 0x84C16334 in "Search String" in pgp.mit.edu
-and click "Do the search!"--it would result in the key that was used
-to sign the merge request that resulted in this merge.
-
-I also can do this:
-
-    $ git tag -v v3.0
-
-and I would see something like:
-
-    object 02f8c6aee8df3cdc935e9bdd4f2d020306035dbe
-    type commit
-    tag v3.0
-    tagger Linus Torvalds <torvalds@linux-foundation.org> 1311301049 -0700
-
-    Linux 3.0
-
-    w00t!
-    gpg: Signature made Thu 21 Jul 2011 07:17:44 PM PDT using DSA key ID 76E21CBB
-    gpg: Good signature from "Linus Torvalds (tag signing key) <torvalds@osdl.org>"
-    ...
-
-to find that Linus's tag signing key has ID 0x76E21CBB (I do have
-his key in my keyring, so this does not say "Can't check").
-
-Perhaps you can do the same to whatever project you are interested
-in.  For example, here is a starting point to do the same for our
-recent v2.6.4 tag:
-
-    $ git tag -v v2.6.4
-    gpg: Signature made Tue 08 Dec 2015 02:12:50 PM PST using RSA key ID 96AFE6CB
-    gpg: Can't check signature: public key not found
-    error: could not verify the tag 'v2.6.4'
+>  Documentation/git-update-index.txt | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+> index 3df9c26..f4e5a85 100644
+> --- a/Documentation/git-update-index.txt
+> +++ b/Documentation/git-update-index.txt
+> @@ -17,6 +17,7 @@ SYNOPSIS
+>              [--[no-]assume-unchanged]
+>              [--[no-]skip-worktree]
+>              [--ignore-submodules]
+> +            [--[no-]split-index]
+>              [--[no-|force-]untracked-cache]
+>              [--really-refresh] [--unresolve] [--again | -g]
+>              [--info-only] [--index-info]
+> --
+> 2.6.3.380.g494b52d
+>
