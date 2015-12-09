@@ -1,87 +1,64 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v4] Documentation/git-update-index: add missing opts to synopsis
-Date: Wed, 9 Dec 2015 06:39:04 +0100
-Message-ID: <CAP8UFD1cJdoaT=gPqqDshB9g0e_ZUGJqy21UzUTBPmPB6EkmnQ@mail.gmail.com>
-References: <1448443802-24507-1-git-send-email-chriscool@tuxfamily.org>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 5/8] dir: add add_untracked_cache()
+Date: Wed, 9 Dec 2015 08:37:15 +0100
+Message-ID: <5667DA2B.3000506@web.de>
+References: <1449594916-21167-1-git-send-email-chriscool@tuxfamily.org>
+ <1449594916-21167-6-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	David Turner <dturner@twopensource.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 06:39:35 2015
+	=?UTF-8?Q?Torsten_B=c3=b6gershause?= =?UTF-8?Q?n?= 
+	<tboegi@web.de>, Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 09 08:38:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6XTQ-0002eB-Lw
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 06:39:33 +0100
+	id 1a6ZKl-0006Vy-Vu
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 08:38:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753015AbbLIFj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2015 00:39:28 -0500
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:36574 "EHLO
-	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753265AbbLIFjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2015 00:39:06 -0500
-Received: by lfs39 with SMTP id 39so26958392lfs.3
-        for <git@vger.kernel.org>; Tue, 08 Dec 2015 21:39:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mEt9ouRQirGMImIX9AykxGo/sArt7IHMv8lG5LY4rtU=;
-        b=D7x7q1KmU1xA/v7GJcZS17HCBydftNEOKvoV/HOjdl1jNiTmjh/7+VjSx5qyRsdMOa
-         kB7+PYQ7wscjlIjyF3IbNW+k/ybJELDDrO7oYhb/PYzNbaRnDuj5ZSZWwLyJdZNHmV7B
-         LeYOQRivCSumo2DJtm8/jZQQYkOyHAiV0oI/A6LSxU93Pk/6S3/mTgzSwdwObKerwUmb
-         Zvsta4+UqtECpBorBk8/JLIFgSa8DOu7RmAXKOsAF+BUPfcd6Jhp89Wh8Cr0hQX4QsLd
-         rZpvvy1drs7IAa7WoDGtg5KvjkAN8/WoixPzxMVLIMvo6FYYSM6fBaE5cUwDDobJTwdQ
-         1jaA==
-X-Received: by 10.25.18.93 with SMTP id h90mr1364291lfi.7.1449639544397; Tue,
- 08 Dec 2015 21:39:04 -0800 (PST)
-Received: by 10.25.152.7 with HTTP; Tue, 8 Dec 2015 21:39:04 -0800 (PST)
-In-Reply-To: <1448443802-24507-1-git-send-email-chriscool@tuxfamily.org>
+	id S1751111AbbLIHiF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2015 02:38:05 -0500
+Received: from mout.web.de ([212.227.17.12]:51402 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750937AbbLIHiE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2015 02:38:04 -0500
+Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0LeLSr-1ac4Ia0nzp-00q8Hk; Wed, 09 Dec 2015 08:37:33
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.4.0
+In-Reply-To: <1449594916-21167-6-git-send-email-chriscool@tuxfamily.org>
+X-Provags-ID: V03:K0:6m2IwISlBiuHozg/3OFdIqtVgili3At6nYUHTN5rthN0v4LoJFU
+ MOeeZ8WFiUHCTIMjEKYYUiZH2KvwHmzlyh1eU8t8P3MrOzZOi39rbszzMhx5yPLY2R0yCxp
+ twiZfJwdIsBus9K4ng6oQ9OsC3hk7/Plop0+7ZCm9Y8y/7Aqr8H4v/9NwG2yrneX5YZzMn0
+ PF9uKgtgGi5IOWERNeM+Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1JJqh8iGahI=:Cb0YwBo+6m7JksBGsEry7l
+ l7RDAQSvqNJp2uQyXm2pib5aMjOSq4LLQyw30NepMSBx3BjAOgAeJ5Caj1BMfbBB0jARxy567
+ W3Vvd42LfCe0GEk5MDbkByEUhPjp5PnnCyZtwyDRCzoQ08vPOHun9dMmcpAxdS3AT659Pz4lZ
+ kSyWZPJ3XeFNWeNzTP7wkBrvi+wIHgSGbEHJ7qn97/lecRyIiJltE7u+hwrcipcqpczYJmFuO
+ hB4p4EM03aYiEPvw8OrdNfkLcX99GWZ0sa0tLp7z0YPPz86fHdOXCGt/vow3D2AKjD0k3kS0o
+ tlZojJhNhYJIAGBa+vDNICseOy36XFMDGnG6jHQPhO6aRq6kMCTrXbOw6dwTt3RrnpLGxu0yt
+ zUUonwmIwvH4vY54R5OA65Z6j05eIHuMhWbCIeRnJaWTlY0OSsrjHw3Hr39m9iAftrpZeEj32
+ PChqobP8sMtmoinbUjq0R2JVO7e6LAiGc3mtSV4mSxT5+/RwmAF+132hk+8OVIvSa9W3LMdXm
+ Q1LrDyDsNNDQqUJT7CHJjHdufKP9Q3tL6QMsgb4Sf9haNrvPM4n8pV4VvpfqD1kDvMxZg78Zk
+ mW+G3ir5FAW3FWZm3EwyJ2RGHbdrsrKKdq4S68W545Y/EL5J1iS1Ty0jMoqu+O0sXd8L9GDps
+ 6pmkeEmU/VT4u8NherzradoYrwBCVL47ZAXKHw4mzCM4585R8QUPzGqv6ux9sqwRL0JR6UdXh
+ ks02F71IaCQPQUS1BzlhODEtiH22umMrv6NI7S+1CYUXKFOQf1tifosVugPlEFChC0uJmYSZ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282186>
 
-On Wed, Nov 25, 2015 at 10:30 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> Split index related options should appear in the 'SYNOPSIS'
-> section.
->
-> These options are already documented in the 'OPTIONS' section.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
-> This v4 contains only the split-index options and applies on top
-> of the new master that already contains the untracked-cache options.
-
-It looks like this patch has not been applied.
-Maybe I should have given it a different title to avoid confusion with
-a previous patch that added [--[no-|force-]untracked-cache] in the
-SYNOPSIS.
-
->  Documentation/git-update-index.txt | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-> index 3df9c26..f4e5a85 100644
-> --- a/Documentation/git-update-index.txt
-> +++ b/Documentation/git-update-index.txt
-> @@ -17,6 +17,7 @@ SYNOPSIS
->              [--[no-]assume-unchanged]
->              [--[no-]skip-worktree]
->              [--ignore-submodules]
-> +            [--[no-]split-index]
->              [--[no-|force-]untracked-cache]
->              [--really-refresh] [--unresolve] [--again | -g]
->              [--info-only] [--index-info]
-> --
-> 2.6.3.380.g494b52d
->
+On 08.12.15 18:15, Christian Couder wrote:
+> This new function will be used in a later patch.
+May be 
+Factor out code into add_untracked_cache(), which will be used in the next commit.
