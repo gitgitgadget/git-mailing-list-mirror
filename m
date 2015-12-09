@@ -1,78 +1,112 @@
-From: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
-Subject: Re: rebase has no --verify-signatures
-Date: Thu, 10 Dec 2015 00:20:15 +0100
-Message-ID: <20151209232015.GA1923@blarch>
-References: <20151207140015.GA14956@netblarch.tu-darmstadt.de>
- <20151208012125.GD990758@vauxhall.crustytoothpaste.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: GPG public keys
+Date: Wed, 9 Dec 2015 17:04:14 -0500
+Message-ID: <20151209220413.GA21751@sigill.intra.peff.net>
+References: <9E65FDC7-B4F6-45DC-9B0E-F017B904C868@pixelrebel.com>
+ <xmqqtwnsie6h.fsf@gitster.mtv.corp.google.com>
+ <3860CB92-AD83-4372-AE7C-BBA8BF2D8F67@pixelrebel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 09 23:04:12 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jamie Evans <jamie@pixelrebel.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 23:04:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6mqI-0007i3-42
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 23:04:10 +0100
+	id 1a6mqT-00084m-UV
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 23:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130AbbLIWEE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2015 17:04:04 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:34148 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752100AbbLIWEC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2015 17:04:02 -0500
-Received: by mail-wm0-f45.google.com with SMTP id v187so5872602wmv.1
-        for <git@vger.kernel.org>; Wed, 09 Dec 2015 14:04:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=PDg0GZb1w2uDJDFrjoRT5cKA7l7pMFTGweO+beta4pg=;
-        b=ATt/L55QOg5DDd6MIIgclcmKWI59ftFIf2chexZOYU2pANla9ZHHYBsVK8wkORkZRD
-         anH4zRokU33GsEu7TAxSjb5XD6P1YVShcwwsbxJdY0VH0fsaWuXVA1dNJTYrd/VbDv24
-         xuGWapNCZwj7MGJiGyi4J3riU74lgaOURH8LSkhWe5gdHnLxd32lrEF21CDItmWB4Uv1
-         GezgD9+3isKy9rhFDW+IFf1es5/MyeB3OfcpMfJj8L+mAyxvhdbWvJeZq4mcBidhozCx
-         lwCa6AkI25F2rGzVGogbhLG8l0xlHEt29tvwI/vBxjsIsTbm64Oqh2LbfxrgtCad43zz
-         /92A==
-X-Received: by 10.28.194.7 with SMTP id s7mr31260234wmf.29.1449698641446;
-        Wed, 09 Dec 2015 14:04:01 -0800 (PST)
-Received: from blarch (dslb-084-059-154-159.084.059.pools.vodafone-ip.de. [84.59.154.159])
-        by smtp.gmail.com with ESMTPSA id an7sm9515406wjc.44.2015.12.09.14.04.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Dec 2015 14:04:00 -0800 (PST)
+	id S1752227AbbLIWER convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2015 17:04:17 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39502 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752100AbbLIWER (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2015 17:04:17 -0500
+Received: (qmail 1072 invoked by uid 102); 9 Dec 2015 22:04:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Dec 2015 16:04:16 -0600
+Received: (qmail 13891 invoked by uid 107); 9 Dec 2015 22:04:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Dec 2015 17:04:21 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Dec 2015 17:04:14 -0500
 Content-Disposition: inline
-In-Reply-To: <20151208012125.GD990758@vauxhall.crustytoothpaste.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <3860CB92-AD83-4372-AE7C-BBA8BF2D8F67@pixelrebel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282199>
 
-On Tue, Dec 08, 2015 at 01:21:25AM +0000, brian m. carlson wrote:
-> On Mon, Dec 07, 2015 at 03:00:15PM +0100, Alexander 'z33ky' Hirsch wrote:
-> > Is there any technical reason why rebase should not have a
-> > --verify-signatures flag? I have written a patch to git-rebase--am
-> > which enables it to do such a check. If there is no reason not to
-> > include it I'd add documentation and a test and submit it.
-> 
-> As far as I know, there is no technical reason that it shouldn't.  It's
-> probably that nobody has implemented it yet.  I'd certainly be
-> interested in such a patch.
-> 
-> For a thorough change, you'd probably want to make it work with
-> git-rebase--merge and git-rebase--interactive as well.  I'm sure I'm not
-> the only person who frequently uses rebase -m.
+On Wed, Dec 09, 2015 at 09:03:47AM -0800, Jamie Evans wrote:
 
-Ah, rebase -m. That sounds nice, I didn't know about this feature.
-In fact, I first tried to write the code in git-rebase--merge, thinking this is the default rebase script.
+> Thanks, Junio, for the tutorial!  I had tried to lookup the key, but
+> failed to put the =E2=80=980x=E2=80=99 at the head.
 
-git-rebase--interactive sounds a bit more difficult since you could easily modify commits, thereby removing previously GPG signed commits. Although this sounds like all the more reason why it would be useful to check for it.
+An easier way to get keys is just:
 
-I'll look at the script and ponder about it. I'll post whatever I come up with on Thursday (probably) or Friday.
-I'll put you in the CC when I post the patch.
+  $ gpg --recv-keys 96AFE6CB
+  gpg: requesting key 96AFE6CB from hkp server keys.gnupg.net
+  gpg: key 713660A7: public key "Junio C Hamano <gitster@pobox.com>" im=
+ported
+  [...etc...]
 
-Regards,
-Alexander Hirsch
+You may need to drop a keyserver into your config, like:
+
+  echo "keyserver keys.gnupg.net" >>~/.gnupg/gpg.conf
+
+It doesn't really matter which one you use. Keyservers aren't
+authoritative. They are just a convenience for grabbing the key data,
+and most of the major ones share keys with each other. The real securit=
+y
+comes from the signatures which you get along with the keys.
+
+> I was actually verifying the signature on a tarball release.  Just
+> curious, how do I know the key in the database really belongs to you?
+> It=E2=80=99s has your name and email, but what=E2=80=99s to keep an i=
+mposter from
+> creating a key with your name on it and posting it to the database?  =
+I
+> guess all the signatories on your key are others vouching for your
+> key?
+
+Right. Now that I've got Junio's key from the command above, I can do:
+
+  gpg --list-sigs 96AFE6CB
+
+Of course you won't have those keys either. You can recursively recv-ke=
+y
+them, but that doesn't help if you don't trust them. The same imposter
+can create a network of plausible-looking keys and upload them.
+
+In an ideal world you sign somebody else who signs somebody else who
+signs Junio's key, and therefore you (probably trust it)[1]. But of
+course bootstrapping that process is hard.
+
+In practice, the simplest thing is probably to notice that all of the
+git releases since v1.7.1.4 are signed by 96AFE6CB. If there was an
+imposter, presumably somebody would have noticed by now and complained.
+
+Of course you can't just fetch the v1.7.1.4 tag _now_, because the same
+person impersonating the most recent tag could also be impersonating
+(and back-dating) the older tags. But you could fetch it now, store it
+somewhere trusted (e.g., on your laptop), and wait two weeks. If you
+find no public outcry over hacked git, then it is probably OK to assume
+that is the real key.
+
+-Peff
+
+[1] There are some cool tools to visualize the trust chains.
+    Unfortunately this one does not seem to have Junio's latest key, bu=
+t
+    here is an example going from my key to the key Linus uses to sign
+    the kernel:
+
+      http://pgp.cs.uu.nl/mk_path.cgi?FROM=3D90F6F6B8&TO=3D00411886&PAT=
+HS=3Dtrust+paths
+
+    Of course somebody can impersonate that tool, too. :) But you can
+    fetch all of the individual keys in a path and verify
+    cryptographically that the path exists.
