@@ -1,94 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/2] git.c: make sure we do not leak GIT_* to alias scripts
-Date: Tue, 08 Dec 2015 15:55:24 -0800
-Message-ID: <xmqq1tawjy1f.fsf@gitster.mtv.corp.google.com>
-References: <1449166676-30845-2-git-send-email-pclouds@gmail.com>
-	<1449329538-18623-1-git-send-email-pclouds@gmail.com>
-	<xmqqzixmm6na.fsf@gitster.mtv.corp.google.com>
-	<CACsJy8BHT2+_i4SoG6xv40wGX_gxwZFk=3WYOH196ZiHA7raWQ@mail.gmail.com>
-	<20151208172010.GA12886@sigill.intra.peff.net>
+From: David Ware <davidw@realtimegenomics.com>
+Subject: Re: [PATCH v3] contrib/subtree: fix "subtree split" skipped-merge bug
+Date: Wed, 9 Dec 2015 13:16:52 +1300
+Message-ID: <CAET=KiWRazHNTT5dJakUFGmRKMnFhv3Lxkm2WXa6bue=BrfU+A@mail.gmail.com>
+References: <CAPig+cR36772YDc5RQRwXP3+ucVWumim9HYTXVMuGXN2cnQ7Ow@mail.gmail.com>
+	<1449607160-20608-1-git-send-email-davidw@realtimegenomics.com>
+	<xmqqk2ook52u.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>,
-	Anthony Sottile <asottile@umich.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 09 00:55:34 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 01:16:59 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6S6V-00044B-UU
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 00:55:32 +0100
+	id 1a6SRG-00020N-HY
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 01:16:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751953AbbLHXz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Dec 2015 18:55:27 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58634 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751033AbbLHXz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Dec 2015 18:55:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0975E3264F;
-	Tue,  8 Dec 2015 18:55:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZHqDG6TPRE0W5OQzAWQA3FT7pZw=; b=mBMgah
-	maguhv8uKAkE2NqZxhezHwI1IgNtOkycpNGtC/VWWyYyMnYmRCJczBU5dgZtWxJt
-	43xFuFsc4TnYxRR7Fh8qF3gTyVCls5+MhdNuSWknTxZ1tAUEYg89n49IRYtFJPtc
-	ogE+LTTaTzknJoSTJJmLEBGHYYeHcf34SeGtE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nH6P2N6M59gbK8z1owupraZX2AfASXlk
-	v3NYC8paPDtxONUvmM1Q6GrpKwWG4rDvW+JV/zmLg5zvePRNrN4JZLNAsasjcX4+
-	fd+aZW5uwEvROEPK9jskMazfNplcOsjDJQ4+jcnGupD34XBt1KYQyeQUfI5tQygx
-	jjFvdvZKlwE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 006AF3264E;
-	Tue,  8 Dec 2015 18:55:26 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7905A3264D;
-	Tue,  8 Dec 2015 18:55:25 -0500 (EST)
-In-Reply-To: <20151208172010.GA12886@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 8 Dec 2015 12:20:10 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 26A6BBD6-9E07-11E5-833B-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1751926AbbLIAQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Dec 2015 19:16:54 -0500
+Received: from mail-vk0-f43.google.com ([209.85.213.43]:36741 "EHLO
+	mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751851AbbLIAQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Dec 2015 19:16:53 -0500
+Received: by vkay187 with SMTP id y187so33157643vka.3
+        for <git@vger.kernel.org>; Tue, 08 Dec 2015 16:16:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=realtimegenomics-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Tsrb8mdqa76AXCGGiSNzN3CqKvq71kPg1kn6DsM8Nl4=;
+        b=epz8/JStM7MbvwRLi2stuMpqiajaIP379QcCA75mjzBqauEtFR61m5LKBYAsFcF+bs
+         VD0PG+PSEZ4lHqYYxep7HIE4XNME5811Klo9cNZyrtFaLhPA7mVrLD02aJGEhKIthT1f
+         F1xKNNamZPOmih9BTS4+hGmqdAN1mK+AeGLCQnIGgLULN79v+jUJ+mzh7XSD6Fquif10
+         r0xW8c3c4eaVTFEKjrYrXo0mQ/EkGGQQ7+b3iOcR17dJQgP/c0gNXs4Dq2JzvcwMiSLJ
+         oNJR8DnitxTWoAAuoLSaDAOoow0ma+RxSvXt/RM/u6ywwSE/p7YzLTuDbhBAOSj5gIS5
+         NKPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=Tsrb8mdqa76AXCGGiSNzN3CqKvq71kPg1kn6DsM8Nl4=;
+        b=UZxZ+QUdxxZ2v7XfaoYk3zsgAhzm1Djz8iIOzpYTjVw2z9GLWDdSfSUIQYNC/blmJ7
+         zeB2HcDKIr0488iBY5xQ1dq827ONR5gxxrqQpw7Lb/7ttzd7VrieQPZNbtbi3Bl5JKYO
+         wwgGYwccfIX7myTNXH5QOJ+KyV8oXFJVjCCguAp/aHnBi4zmS7ck21VzZSzPMZK5ouAZ
+         bm/VQ9jhAMcueWvZDMqdRQyec1mHT8s3GseZt2o/Kk32iDIK8qPO7mVUU7sRgleFZVlw
+         wKldasCo5wRv7QQj0ilLlerHjDVctrhXfS/C3qagjHm1UEhYyQcdr2RjiqtCjEEhsMfZ
+         XVhw==
+X-Gm-Message-State: ALoCoQkloNKW8Ema05ROfbYUDR2CK/QgltLW2XljTjGwUTdU2bDzSMmCqzGbPF+uO1C3xKjqiemIZO+h7gfHmuLGnicYnopBPUqzzzyBlc3Ni7VMGMwf0II=
+X-Received: by 10.31.5.132 with SMTP id 126mr2240053vkf.107.1449620212669;
+ Tue, 08 Dec 2015 16:16:52 -0800 (PST)
+Received: by 10.31.236.4 with HTTP; Tue, 8 Dec 2015 16:16:52 -0800 (PST)
+In-Reply-To: <xmqqk2ook52u.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282181>
 
-Jeff King <peff@peff.net> writes:
-
-> It fails for me when run via "make" (with prove or without) but not as
-> "./t0001-init.sh". Looks like extra variables from my config.mak leak
-> through:
+On Wed, Dec 9, 2015 at 10:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Dave Ware <davidw@realtimegenomics.com> writes:
 >
->   $ make t0001-init.sh GIT_TEST_OPTS="-v -i"
->   [...]
->   --- expected    2015-12-08 17:18:06.304699181 +0000
->   +++ actual      2015-12-08 17:18:06.312699180 +0000
->   @@ -9,5 +9,9 @@
->    GIT_MERGE_VERBOSITY
->    GIT_PREFIX
->    GIT_TEMPLATE_DIR
->   +GIT_TEST_GIT_DAEMON
->   +GIT_TEST_HTTPD
->   +GIT_TEST_OPTS
->    GIT_TEXTDOMAINDIR
->    GIT_TRACE_BARE
->   +MAKEFLAGS
->   not ok 6 - No extra GIT_* on alias scripts
+>> A bug occurs in 'git-subtree split' where a merge is skipped even when
+>> both parents act on the subtree, provided the merge results in a tree
+>> identical to one of the parents. Fix by copying the merge if at least
+>> one parent is non-identical, and the non-identical parent is not an
+>> ancestor of the identical parent.
+>>
+>> Also, add a test case which checks that a descendant can be pushed to
+>> its ancestor in this case.
+>>
+>> Signed-off-by: Dave Ware <davidw@realtimegenomics.com>
+>> ---
 >
-> Any GIT_TEST_* is allowed through by test-lib.sh.
+> The first sentence may be made clearer if you rephrased the early
+> part of the sentence this way:
+>
+>         'git subtree split' can incorrectly skip a merge even when
+>         both parents ...
+>
 
-Also GIT_PROVE_OPTS (which caused false positive for me).
+Noted.
 
-Perhaps grab "env" output outside the alias to create the expected
-(instead of a random handcrafted list that you have to maintain as
-the test suite evolves), and compare it from within the alias, or
-something?
+>> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+>> index 9f06571..b837531 100755
+>> --- a/contrib/subtree/git-subtree.sh
+>> +++ b/contrib/subtree/git-subtree.sh
+>> @@ -479,8 +479,16 @@ copy_or_skip()
+>>                       p="$p -p $parent"
+>>               fi
+>>       done
+>> -
+>> -     if [ -n "$identical" ]; then
+>> +
+>> +     copycommit=
+>> +     if [ -n "$identical" ] && [ -n "$nonidentical" ]; then
+>> +             extras=$(git rev-list --boundary $identical..$nonidentical)
+>> +             if [ -n "$extras" ]; then
+>> +                     # we need to preserve history along the other branch
+>> +                     copycommit=1
+>> +             fi
+>
+> What is the significance of "--boundary" here?  I think for the
+> purpose of "is the identical one part of the nonidentical one?" you
+> do not need it, but there may be something subtle I missed.  I am
+> asking this because use of "rev-list --boundary" in scripts is
+> almost always a bug.
+>
+
+The other way around actually I'm trying to determine if nonidentical
+contains any commits
+ not in identical.  I'll confess I don't actually know specifically
+what the --boundary option
+does, this probably came from a stack overflow example while we were
+looking up how to
+best do the check. Further experimentation with the option suggests
+that it does not do what
+I want, so I will remove it. Thank you.
+
+> Also, depending on how huge the output from the rev-list could be,
+> you might want to use "rev-list --count $i..$n" and compare it with
+> 0 instead--that way, you would not have to be worried about having
+> to carry around a huge string that you would otherwise not use, only
+> to see if that string is empty.
+
+Thanks, I didn't know about that option.
