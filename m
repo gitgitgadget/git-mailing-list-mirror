@@ -1,112 +1,118 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: GPG public keys
-Date: Wed, 9 Dec 2015 17:04:14 -0500
-Message-ID: <20151209220413.GA21751@sigill.intra.peff.net>
-References: <9E65FDC7-B4F6-45DC-9B0E-F017B904C868@pixelrebel.com>
- <xmqqtwnsie6h.fsf@gitster.mtv.corp.google.com>
- <3860CB92-AD83-4372-AE7C-BBA8BF2D8F67@pixelrebel.com>
+Subject: Re: publish from certain commit onward, keeping earlier history
+ private, but provable
+Date: Wed, 9 Dec 2015 17:20:41 -0500
+Message-ID: <20151209222041.GB21751@sigill.intra.peff.net>
+References: <35583CFA-3BEE-4844-9F85-ED73A412A97F@joernhees.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jamie Evans <jamie@pixelrebel.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 23:04:23 2015
+Cc: git@vger.kernel.org
+To: =?utf-8?B?SsO2cm4=?= Hees <dev@joernhees.de>
+X-From: git-owner@vger.kernel.org Wed Dec 09 23:20:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6mqT-00084m-UV
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 23:04:22 +0100
+	id 1a6n6Q-0006bj-35
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 23:20:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752227AbbLIWER convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2015 17:04:17 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39502 "HELO cloud.peff.net"
+	id S1753404AbbLIWUp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2015 17:20:45 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39514 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752100AbbLIWER (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2015 17:04:17 -0500
-Received: (qmail 1072 invoked by uid 102); 9 Dec 2015 22:04:16 -0000
+	id S1753382AbbLIWUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2015 17:20:44 -0500
+Received: (qmail 2496 invoked by uid 102); 9 Dec 2015 22:20:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Dec 2015 16:04:16 -0600
-Received: (qmail 13891 invoked by uid 107); 9 Dec 2015 22:04:21 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Dec 2015 16:20:44 -0600
+Received: (qmail 14031 invoked by uid 107); 9 Dec 2015 22:20:48 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Dec 2015 17:04:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Dec 2015 17:04:14 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Dec 2015 17:20:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Dec 2015 17:20:41 -0500
 Content-Disposition: inline
-In-Reply-To: <3860CB92-AD83-4372-AE7C-BBA8BF2D8F67@pixelrebel.com>
+In-Reply-To: <35583CFA-3BEE-4844-9F85-ED73A412A97F@joernhees.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282200>
 
-On Wed, Dec 09, 2015 at 09:03:47AM -0800, Jamie Evans wrote:
+On Wed, Dec 09, 2015 at 02:45:44PM +0100, J=C3=B6rn Hees wrote:
 
-> Thanks, Junio, for the tutorial!  I had tried to lookup the key, but
-> failed to put the =E2=80=980x=E2=80=99 at the head.
+> I've been hacking away on a library for quite some time and have a lo=
+t of commits in my private repository:
+>=20
+> A -> B -> C -> D -> E
+>=20
+> Finally, I'm nearing completion of a first version, and want to
+> publish it to a remote called public from D onward keeping A..C to
+> myself, so public should afterwards look like this:
+>=20
+> D -> E
 
-An easier way to get keys is just:
+The short answer is that you cannot do this without changing the names
+(i.e., sha1 commit ids) of D and E.
 
-  $ gpg --recv-keys 96AFE6CB
-  gpg: requesting key 96AFE6CB from hkp server keys.gnupg.net
-  gpg: key 713660A7: public key "Junio C Hamano <gitster@pobox.com>" im=
-ported
-  [...etc...]
+One of the fundamental assumptions git makes is that if a repository ha=
+s
+an object X, it also has all of the objects reachable from it (past
+commits, their trees, subtrees, and blobs). This is what makes the
+push/fetch object transfer efficient (one side says only "I have X" and
+the other side knows "Ah, that is a whole chunk of objects I do not hav=
+e
+to bother sending", without the names of those objects going over the
+wire).
 
-You may need to drop a keyserver into your config, like:
+The exception, of course, is shallow clones, where one side tells the
+other "I am shallow at cutoff point Y; don't assume I have anything
+below there". This does work, but there are some downsides (for
+instance, we cannot apply some of the same reachability optimizations
+for serving fetches).
 
-  echo "keyserver keys.gnupg.net" >>~/.gnupg/gpg.conf
+>   I can verify that local_public only contains D -> E and that the
+>   commit, tree and parent hashes are the same, which is exactly what =
+i
+>   want.
+>  =20
+>   The problem is that when i try to push to an added public remote
+>   from local_public i get an error like this:
+>  =20
+>   ! [remote rejected] master -> master (shallow update not allowed)
 
-It doesn't really matter which one you use. Keyservers aren't
-authoritative. They are just a convenience for grabbing the key data,
-and most of the major ones share keys with each other. The real securit=
-y
-comes from the signatures which you get along with the keys.
+Right. The receiver must be explicitly configured to accept a shallow
+push (I do not recall offhand whether clients fetching from you would
+also need an explicit config to accept a shallow history).
 
-> I was actually verifying the signature on a tarball release.  Just
-> curious, how do I know the key in the database really belongs to you?
-> It=E2=80=99s has your name and email, but what=E2=80=99s to keep an i=
-mposter from
-> creating a key with your name on it and posting it to the database?  =
-I
-> guess all the signatories on your key are others vouching for your
-> key?
+So the usual path here is to rewrite D and E (with the same trees, but
+they will get new commit ids). If you want to retain the older history
+(commits A-C), you can distribute it separately and use git-replace to
+"graft" it onto the newer history at run-time.
 
-Right. Now that I've got Junio's key from the command above, I can do:
+You can do that with:
 
-  gpg --list-sigs 96AFE6CB
+  # set up a run-time replacement view so that D appears to have
+  # no parents; this doesn't impact the objects themselves, but
+  # rather git will use our parent-less "replacement" D anytime
+  # somebody mentions the original
+  git replace --graft D
 
-Of course you won't have those keys either. You can recursively recv-ke=
-y
-them, but that doesn't help if you don't trust them. The same imposter
-can create a network of plausible-looking keys and upload them.
+  # verify that the history is what you want; if you have a non-linear
+  # history you may have to make several such "cuts" in the graph
+  git log
 
-In an ideal world you sign somebody else who signs somebody else who
-signs Junio's key, and therefore you (probably trust it)[1]. But of
-course bootstrapping that process is hard.
+  # now cement it into place by rewriting
+  git filter-branch
 
-In practice, the simplest thing is probably to notice that all of the
-git releases since v1.7.1.4 are signed by 96AFE6CB. If there was an
-imposter, presumably somebody would have noticed by now and complained.
+Of course that is a bitter pill to swallow if you have reasons for
+wanting to use the old sha1s. E.g., you have internal development
+proceeding against the old tree and want to share a truncated version
+with the public.  In that case I still think the least painful thing is
+to rewrite the truncated history, have _everyone_, internal and public
+work against that, and let internal folks graft the old history on for
+their own use. They can do that with:
 
-Of course you can't just fetch the v1.7.1.4 tag _now_, because the same
-person impersonating the most recent tag could also be impersonating
-(and back-dating) the older tags. But you could fetch it now, store it
-somewhere trusted (e.g., on your laptop), and wait two weeks. If you
-find no public outcry over hacked git, then it is probably OK to assume
-that is the real key.
+  git replace --graft the-rewritten-D the-original-C
 
 -Peff
-
-[1] There are some cool tools to visualize the trust chains.
-    Unfortunately this one does not seem to have Junio's latest key, bu=
-t
-    here is an example going from my key to the key Linus uses to sign
-    the kernel:
-
-      http://pgp.cs.uu.nl/mk_path.cgi?FROM=3D90F6F6B8&TO=3D00411886&PAT=
-HS=3Dtrust+paths
-
-    Of course somebody can impersonate that tool, too. :) But you can
-    fetch all of the individual keys in a path and verify
-    cryptographically that the path exists.
