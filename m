@@ -1,76 +1,51 @@
-From: Taylor Braun-Jones <taylor@braun-jones.org>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: git-clone fails when current user is not in /etc/passwd
-Date: Wed, 9 Dec 2015 10:23:17 -0500
-Message-ID: <CAKfKJYu1frw5QLkkkZo-F1kxbkLREpyudFiCST6h7hSS=LPdmw@mail.gmail.com>
+Date: Wed, 9 Dec 2015 17:08:27 +0100
+Message-ID: <CACsJy8AQFSvcxKqSdWfvGArV60RA96WcvvofpfJ4EuG+q_=t0Q@mail.gmail.com>
 References: <CAKfKJYsyHn7FUOu65AqbvjZD-wAyRScjqUL6kgGDCVzG1myZTQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 09 16:23:45 2015
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Taylor Braun-Jones <taylor@braun-jones.org>
+X-From: git-owner@vger.kernel.org Wed Dec 09 17:09:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6gam-0002OU-16
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 16:23:44 +0100
+	id 1a6hId-0006Xb-5n
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 17:09:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781AbbLIPXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2015 10:23:39 -0500
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:32819 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751724AbbLIPXi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2015 10:23:38 -0500
-Received: by qgea14 with SMTP id a14so84557730qge.0
-        for <git@vger.kernel.org>; Wed, 09 Dec 2015 07:23:37 -0800 (PST)
+	id S1752037AbbLIQI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2015 11:08:59 -0500
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:33380 "EHLO
+	mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751994AbbLIQI6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2015 11:08:58 -0500
+Received: by lfaz4 with SMTP id z4so37709499lfa.0
+        for <git@vger.kernel.org>; Wed, 09 Dec 2015 08:08:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=braun-jones.org; s=google;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=yDRjQA3TNY3Hele82HnQyHZOh74cQ+oOBkDSXTw+FhM=;
-        b=g8UNzycPMSTlBPrTNMt+ucRrl+67ILvDsF0kRGibxOBSUeC00/EcPT9j1SUNmSmfUe
-         HwDA7EB5hPVQ4ufj6IRM0prfXINQUpDQ9kwQbpCsESwllCdkH13RG2Y6w8Du+bT3INSy
-         9ArTMSyZ5kw1OBSYq8ZKu1BlaZ31mCwRn5IUQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=yDRjQA3TNY3Hele82HnQyHZOh74cQ+oOBkDSXTw+FhM=;
-        b=JJmJO2R69nDJEnEp2hmx/o1mpj4yI/4C4ZTrWjQLg77t6446Yrf/LioQ4BkOZf5QLQ
-         PbPJDv2CmwSswiav+Oy6UF13SREg8hWdJq07u2++bmEUAY7fkj7svERAnFoyhtbW97xQ
-         Xia/cVpQ/scGtVfx7XjXTe4sDivTooYXXRhZ03We0Cf7uDkH/FdHIgoITxOgodAMnRpV
-         S+N+1jAgE34+/82P6VE/VniTOnBdboLWg4yvvVx2M3cFwHL1geDCi4F1clknRuvEw3PF
-         /MdTeSQsyOQff4fTWWiIpzxa9q2yf9wIKc/d8sXHWgsnvk2SJ05UPoi9Wd188Ix+0kjC
-         GW/w==
-X-Gm-Message-State: ALoCoQkCfM2G9zrq9G29Ikhrknbvx039qOx0+dNUvvDVu/lY8xYkAMdjaaMxjQsPbwwvZTqPWMmAOCZ5qEWFCsoGrCTYvFsnYQ==
-X-Received: by 10.140.97.229 with SMTP id m92mr8023233qge.22.1449674617610;
-        Wed, 09 Dec 2015 07:23:37 -0800 (PST)
-Received: from mail-qg0-f52.google.com (mail-qg0-f52.google.com. [209.85.192.52])
-        by smtp.gmail.com with ESMTPSA id a136sm4030389qkb.20.2015.12.09.07.23.37
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 Dec 2015 07:23:37 -0800 (PST)
-Received: by qgea14 with SMTP id a14so84557225qge.0
-        for <git@vger.kernel.org>; Wed, 09 Dec 2015 07:23:37 -0800 (PST)
-X-Received: by 10.55.72.85 with SMTP id v82mr8300026qka.52.1449674617121; Wed,
- 09 Dec 2015 07:23:37 -0800 (PST)
-Received: by 10.55.128.198 with HTTP; Wed, 9 Dec 2015 07:23:17 -0800 (PST)
+         :cc:content-type;
+        bh=P33Tbqo6VNGNs1GmkN/V8ns/FtuH+IvJXzqFuAke644=;
+        b=h2vvqgnw2Vl8Fzgg2a601ZniuGCfsrdDrRQHxI5rUO66+4MYhTrHkCg8pG7v77fJ8S
+         gVVEqcXbdosljmfHqHOqQ3mSA/uL8H9VpPq0n6rU8UtLsNrelkZawJ8HX5cOtWxnNqW9
+         /RPjkEyYSm2UMT0DiOz0RubKlKOpPiHtNOVg2neV7nxvZdSHAnnLLM2DhniuPfur2/op
+         QoGrwOPYtGF3Dw7+nmmwkGUkppAgr5ZPopyf/d9ZOTZLq06GXLRdWhiA7NNs3pi1EIHd
+         ZKsqNEQn3OuNLrdg7/iBFqCvEXbEF3j+7H6Npm66eJ3O3DpFQCX9BUStk/gV45GPlmKt
+         ukVw==
+X-Received: by 10.25.137.84 with SMTP id l81mr2641745lfd.45.1449677337049;
+ Wed, 09 Dec 2015 08:08:57 -0800 (PST)
+Received: by 10.112.199.5 with HTTP; Wed, 9 Dec 2015 08:08:27 -0800 (PST)
 In-Reply-To: <CAKfKJYsyHn7FUOu65AqbvjZD-wAyRScjqUL6kgGDCVzG1myZTQ@mail.gmail.com>
-X-Gmail-Original-Message-ID: <CAKfKJYu1frw5QLkkkZo-F1kxbkLREpyudFiCST6h7hSS=LPdmw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282193>
 
-What's the feeling on this one? If there's agreement in principle that
-git-clone should not fail when the current UID cannot be found in
-/etc/passwd then I'm happy to submit a patch to fix it.
-
-Thanks,
-Taylor
-
-On Wed, Dec 2, 2015 at 3:10 PM, Taylor Braun-Jones
+On Wed, Dec 2, 2015 at 9:10 PM, Taylor Braun-Jones
 <taylor@braun-jones.org> wrote:
 > My use case it running git clone inside a docker container with
 > `docker run --user $(id -u):$(id -g) --volume /foo:/foo ...`. I want
@@ -88,20 +63,11 @@ On Wed, Dec 2, 2015 at 3:10 PM, Taylor Braun-Jones
 > docker run --user $(id -u):$(id -g) git git clone
 > https://github.com/git/git.git /tmp/git
 > # fatal: unable to look up current user in the passwd file: no such user
-> echo $? # 128
->
-> My current workaround is:
->
-> cat >> /tmp/docker-git/Dockerfile <<EOF
-> RUN git config --system user.name Docker && git config --system
-> user.email docker@localhost
-> EOF
->
-> But I don't see why this should be necessary just to clone a repo. I
-> run complex build jobs inside a docker container using this approach
-> and git-clone is the first command to fail due to the lack of a passwd
-> file entry for the current user. Some complain to stderr, but still
-> succeed.
->
-> Regards,
-> Taylor
+
+It probably helps if you could get the stack trace to this message
+(printed from function xgetpwuid_self). I haven't checked if my
+personal laptop has docker to reproduce this.. In general we won't ask
+passwd if the user specifies name/email in the config file. But I
+still don't see why git-clone needs that info in the first place.
+-- 
+Duy
