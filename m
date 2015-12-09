@@ -1,112 +1,107 @@
-From: =?utf-8?Q?J=C3=B6rn_Hees?= <dev@joernhees.de>
-Subject: publish from certain commit onward, keeping earlier history private, but provable
-Date: Wed, 9 Dec 2015 14:45:44 +0100
-Message-ID: <35583CFA-3BEE-4844-9F85-ED73A412A97F@joernhees.de>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Taylor Braun-Jones <taylor@braun-jones.org>
+Subject: Re: git-clone fails when current user is not in /etc/passwd
+Date: Wed, 9 Dec 2015 10:23:17 -0500
+Message-ID: <CAKfKJYu1frw5QLkkkZo-F1kxbkLREpyudFiCST6h7hSS=LPdmw@mail.gmail.com>
+References: <CAKfKJYsyHn7FUOu65AqbvjZD-wAyRScjqUL6kgGDCVzG1myZTQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 09 14:56:07 2015
+X-From: git-owner@vger.kernel.org Wed Dec 09 16:23:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6fDx-0001Fi-Dk
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 14:56:05 +0100
+	id 1a6gam-0002OU-16
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 16:23:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754816AbbLINzx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Dec 2015 08:55:53 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.31.35]:49124 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753218AbbLINzu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Dec 2015 08:55:50 -0500
-X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Dec 2015 08:55:49 EST
-Received: from [131.246.194.42] (helo=port-4143.kl.dfki.de)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256)
-	(Exim 4.84)
-	(envelope-from <dev@joernhees.de>)
-	id 1a6f3w-0004I6-38
-	for git@vger.kernel.org; Wed, 09 Dec 2015 14:45:44 +0100
-X-Mailer: Apple Mail (2.2104)
-X-Df-Sender: bWFpbEBqb2VybmhlZXMuZGU=
+	id S1751781AbbLIPXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2015 10:23:39 -0500
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:32819 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751724AbbLIPXi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2015 10:23:38 -0500
+Received: by qgea14 with SMTP id a14so84557730qge.0
+        for <git@vger.kernel.org>; Wed, 09 Dec 2015 07:23:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=braun-jones.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=yDRjQA3TNY3Hele82HnQyHZOh74cQ+oOBkDSXTw+FhM=;
+        b=g8UNzycPMSTlBPrTNMt+ucRrl+67ILvDsF0kRGibxOBSUeC00/EcPT9j1SUNmSmfUe
+         HwDA7EB5hPVQ4ufj6IRM0prfXINQUpDQ9kwQbpCsESwllCdkH13RG2Y6w8Du+bT3INSy
+         9ArTMSyZ5kw1OBSYq8ZKu1BlaZ31mCwRn5IUQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-type;
+        bh=yDRjQA3TNY3Hele82HnQyHZOh74cQ+oOBkDSXTw+FhM=;
+        b=JJmJO2R69nDJEnEp2hmx/o1mpj4yI/4C4ZTrWjQLg77t6446Yrf/LioQ4BkOZf5QLQ
+         PbPJDv2CmwSswiav+Oy6UF13SREg8hWdJq07u2++bmEUAY7fkj7svERAnFoyhtbW97xQ
+         Xia/cVpQ/scGtVfx7XjXTe4sDivTooYXXRhZ03We0Cf7uDkH/FdHIgoITxOgodAMnRpV
+         S+N+1jAgE34+/82P6VE/VniTOnBdboLWg4yvvVx2M3cFwHL1geDCi4F1clknRuvEw3PF
+         /MdTeSQsyOQff4fTWWiIpzxa9q2yf9wIKc/d8sXHWgsnvk2SJ05UPoi9Wd188Ix+0kjC
+         GW/w==
+X-Gm-Message-State: ALoCoQkCfM2G9zrq9G29Ikhrknbvx039qOx0+dNUvvDVu/lY8xYkAMdjaaMxjQsPbwwvZTqPWMmAOCZ5qEWFCsoGrCTYvFsnYQ==
+X-Received: by 10.140.97.229 with SMTP id m92mr8023233qge.22.1449674617610;
+        Wed, 09 Dec 2015 07:23:37 -0800 (PST)
+Received: from mail-qg0-f52.google.com (mail-qg0-f52.google.com. [209.85.192.52])
+        by smtp.gmail.com with ESMTPSA id a136sm4030389qkb.20.2015.12.09.07.23.37
+        for <git@vger.kernel.org>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 09 Dec 2015 07:23:37 -0800 (PST)
+Received: by qgea14 with SMTP id a14so84557225qge.0
+        for <git@vger.kernel.org>; Wed, 09 Dec 2015 07:23:37 -0800 (PST)
+X-Received: by 10.55.72.85 with SMTP id v82mr8300026qka.52.1449674617121; Wed,
+ 09 Dec 2015 07:23:37 -0800 (PST)
+Received: by 10.55.128.198 with HTTP; Wed, 9 Dec 2015 07:23:17 -0800 (PST)
+In-Reply-To: <CAKfKJYsyHn7FUOu65AqbvjZD-wAyRScjqUL6kgGDCVzG1myZTQ@mail.gmail.com>
+X-Gmail-Original-Message-ID: <CAKfKJYu1frw5QLkkkZo-F1kxbkLREpyudFiCST6h7hSS=LPdmw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282192>
 
-Hi,
+What's the feeling on this one? If there's agreement in principle that
+git-clone should not fail when the current UID cannot be found in
+/etc/passwd then I'm happy to submit a patch to fix it.
 
-I've been hacking away on a library for quite some time and have a lot =
-of commits in my private repository:
+Thanks,
+Taylor
 
-A -> B -> C -> D -> E
-
-=46inally, I'm nearing completion of a first version, and want to publi=
-sh it to a remote called public from D onward keeping A..C to myself, s=
-o public should afterwards look like this:
-
-D -> E
-
-My main motivation is that i don't really want to put ridiculously firs=
-t trials online, but still (on demand) I'd like to be able to prove how=
- i arrived at D (think of copyright claims, etc).
-
-As (at the moment) it's pretty much impossible to reverse-engineer the =
-hashes of commits in the chain with times and changesets, i thought jus=
-t keeping D's parent pointer to C would be one of the genius advantages=
- of git. Sadly i can't find a way to actually make this work.
-
-Can i somehow push D -> E to public making it a fully functional public=
- repository with all the necessary objects included to checkout D or E =
-and D still pointing to C as parent? If not, why is that?
-
-What doesn't seem to work:
-
-- push with range
- =20
-  git push public D..E:master
-  error: src refspec D..E does not match any.
-  error: failed to push some refs to '<public>'
-
-- any form of squashing / history rewriting
- =20
-  As far as i know squashing A..D would introduce a new commit removing=
- the parent pointer to C and thereby removing provability of the existe=
-nce of A..C. (Simple example: say C reversed B, then you'd never be abl=
-e to prove B was in there at some point.)
- =20
-  I could obviously manually note the hash of C in the description of t=
-he squash commit, but there already is a parent pointer field, why not =
-use it?
- =20
-  Also in order to contribute further changes to public I'd have to reb=
-ase my private branches on top of this new squashed commit, which just =
-seems as wrong...
-
-- push from local clone with limited depth
- =20
-  I thought i found a solution to this by first creating a local clone =
-local_public with the desired depth before pushing that clone to public=
- like this:
- =20
-  git clone --depth 2 file:///<abspath_private> local_public
- =20
-  With
- =20
-  git log --pretty=3Draw
- =20
-  I can verify that local_public only contains D -> E and that the comm=
-it, tree and parent hashes are the same, which is exactly what i want.
- =20
-  The problem is that when i try to push to an added public remote from=
- local_public i get an error like this:
- =20
-  ! [remote rejected] master -> master (shallow update not allowed)
-
-
-Any ideas how to make this work?
-
-Cheers,
-J=C3=B6rn
+On Wed, Dec 2, 2015 at 3:10 PM, Taylor Braun-Jones
+<taylor@braun-jones.org> wrote:
+> My use case it running git clone inside a docker container with
+> `docker run --user $(id -u):$(id -g) --volume /foo:/foo ...`. I want
+> all /foo/* file creation/access from inside the Docker container to be
+> done as the current uid/gid of the host system.
+>
+> Steps to reproduce:
+>
+> mkdir /tmp/docker-git
+> cat > /tmp/docker-git/Dockerfile <<EOF
+> FROM ubuntu
+> RUN apt-get update && apt-get install -y git-core
+> EOF
+> docker build -t git /tmp/docker-git/
+> docker run --user $(id -u):$(id -g) git git clone
+> https://github.com/git/git.git /tmp/git
+> # fatal: unable to look up current user in the passwd file: no such user
+> echo $? # 128
+>
+> My current workaround is:
+>
+> cat >> /tmp/docker-git/Dockerfile <<EOF
+> RUN git config --system user.name Docker && git config --system
+> user.email docker@localhost
+> EOF
+>
+> But I don't see why this should be necessary just to clone a repo. I
+> run complex build jobs inside a docker container using this approach
+> and git-clone is the first command to fail due to the lack of a passwd
+> file entry for the current user. Some complain to stderr, but still
+> succeed.
+>
+> Regards,
+> Taylor
