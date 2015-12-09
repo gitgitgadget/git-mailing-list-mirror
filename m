@@ -1,101 +1,67 @@
-From: Taylor Braun-Jones <taylor@braun-jones.org>
-Subject: Re: git-clone fails when current user is not in /etc/passwd
-Date: Wed, 9 Dec 2015 17:35:52 -0500
-Message-ID: <CAKfKJYuP1E5aC7SPO91j-KS-P41pYaM7NkTJ9uG6b=VvxbOBwg@mail.gmail.com>
-References: <CAKfKJYsyHn7FUOu65AqbvjZD-wAyRScjqUL6kgGDCVzG1myZTQ@mail.gmail.com>
- <CACsJy8AQFSvcxKqSdWfvGArV60RA96WcvvofpfJ4EuG+q_=t0Q@mail.gmail.com> <CACsJy8Dc3Lsqa2zccoqH7UkDitqDbOTX3EXsUCcN9OHY=LfaKw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: GPG public keys
+Date: Wed, 9 Dec 2015 17:43:36 -0500
+Message-ID: <20151209224335.GB32104@sigill.intra.peff.net>
+References: <9E65FDC7-B4F6-45DC-9B0E-F017B904C868@pixelrebel.com>
+ <xmqqtwnsie6h.fsf@gitster.mtv.corp.google.com>
+ <3860CB92-AD83-4372-AE7C-BBA8BF2D8F67@pixelrebel.com>
+ <20151209220413.GA21751@sigill.intra.peff.net>
+ <CAGZ79kYk0RkwNj2aX6iixGjceKVYTy24os_Xb_wY8BWDZwY+Fg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 09 23:36:20 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Jamie Evans <jamie@pixelrebel.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Wed Dec 09 23:43:44 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6nLO-0003Ly-BL
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 23:36:18 +0100
+	id 1a6nSZ-0001FB-HH
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Dec 2015 23:43:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753291AbbLIWgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2015 17:36:14 -0500
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:33928 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752596AbbLIWgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2015 17:36:13 -0500
-Received: by qgeb1 with SMTP id b1so105167540qge.1
-        for <git@vger.kernel.org>; Wed, 09 Dec 2015 14:36:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=braun-jones.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=x195P2mIa9Ea/b8hNVrRnJKTsoF1E2LMEotA+9xyYXY=;
-        b=chTDd2WM57vwh/JFankXkirCDhugTe/encdBl716l7HnYVwNEThek88arH2sm38Yz6
-         K0SfvLMpAHw/6jJPpBykYYwbaxFDBvs/ZQUUIE53ryKOeW+UI65DAsmvjKX/DBAxc50w
-         /f/dML2meb7CgydB0pOXwXRu40QEBhtbvXOSY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=x195P2mIa9Ea/b8hNVrRnJKTsoF1E2LMEotA+9xyYXY=;
-        b=DMspQl61qjUr0UULKYxd6J7SgwB9OYIECWi2AnVqBSQWLa2jdKJTjp+JlyR+P+xW2P
-         8tKPJwyEfY6O7QHHZit4m7zCvysg9PskUT8IejY9PzI6P+bwnMItfiBnSeGDqj892YQ/
-         oqSw22x80ytOEdeLd/gRnoA0UVYYry9nShrJvJUcbUgFiggImpX6+fwRrq55UmJOfMm9
-         2Dtoq9b8l9mm+nBLEx3Tt/mJWcIlzNy2v6vw5JpLWvkIHbX+nfvNoIuhwQvI1wntYA4s
-         IHQoRqWzvK0EUGrs6mlBdqVNeIzTCvnEmW9Ew/Wzq5f1l2qyJApGk4GJ4GID5n5v+hyh
-         C6NQ==
-X-Gm-Message-State: ALoCoQlIneo+OjnH7Tp757MAi0IurSqGscGsiOzdbeV3gVN8SOTE2t8+bM6ZIT5FDfnyyxEl6iy2VK0AkzoPz4st22cvWmCzgA==
-X-Received: by 10.55.18.7 with SMTP id c7mr11054379qkh.33.1449700572583;
-        Wed, 09 Dec 2015 14:36:12 -0800 (PST)
-Received: from mail-qg0-f42.google.com (mail-qg0-f42.google.com. [209.85.192.42])
-        by smtp.gmail.com with ESMTPSA id h188sm4729647qhh.23.2015.12.09.14.36.11
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 Dec 2015 14:36:11 -0800 (PST)
-Received: by qgcc31 with SMTP id c31so105188714qgc.3
-        for <git@vger.kernel.org>; Wed, 09 Dec 2015 14:36:11 -0800 (PST)
-X-Received: by 10.140.29.33 with SMTP id a30mr10568283qga.88.1449700571637;
- Wed, 09 Dec 2015 14:36:11 -0800 (PST)
-Received: by 10.55.128.198 with HTTP; Wed, 9 Dec 2015 14:35:52 -0800 (PST)
-In-Reply-To: <CACsJy8Dc3Lsqa2zccoqH7UkDitqDbOTX3EXsUCcN9OHY=LfaKw@mail.gmail.com>
-X-Gmail-Original-Message-ID: <CAKfKJYuP1E5aC7SPO91j-KS-P41pYaM7NkTJ9uG6b=VvxbOBwg@mail.gmail.com>
+	id S1753819AbbLIWnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2015 17:43:39 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39548 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753470AbbLIWni (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Dec 2015 17:43:38 -0500
+Received: (qmail 4081 invoked by uid 102); 9 Dec 2015 22:43:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Dec 2015 16:43:38 -0600
+Received: (qmail 14372 invoked by uid 107); 9 Dec 2015 22:43:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 09 Dec 2015 17:43:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Dec 2015 17:43:36 -0500
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYk0RkwNj2aX6iixGjceKVYTy24os_Xb_wY8BWDZwY+Fg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282205>
 
-On Wed, Dec 9, 2015 at 1:24 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Dec 9, 2015 at 5:08 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Wed, Dec 2, 2015 at 9:10 PM, Taylor Braun-Jones
->> <taylor@braun-jones.org> wrote:
->>> My use case it running git clone inside a docker container with
->>> `docker run --user $(id -u):$(id -g) --volume /foo:/foo ...`. I want
->>> all /foo/* file creation/access from inside the Docker container to be
->>> done as the current uid/gid of the host system.
->>>
->>> Steps to reproduce:
->>>
->>> mkdir /tmp/docker-git
->>> cat > /tmp/docker-git/Dockerfile <<EOF
->>> FROM ubuntu
->>> RUN apt-get update && apt-get install -y git-core
->>> EOF
->>> docker build -t git /tmp/docker-git/
->>> docker run --user $(id -u):$(id -g) git git clone
->>> https://github.com/git/git.git /tmp/git
->>> # fatal: unable to look up current user in the passwd file: no such user
->>
->> It probably helps if you could get the stack trace to this message
->> (printed from function xgetpwuid_self). I haven't checked if my
->> personal laptop has docker to reproduce this.. In general we won't ask
->> passwd if the user specifies name/email in the config file. But I
->> still don't see why git-clone needs that info in the first place.
->
-> Well.. reflog needs it. So either you disable reflog at clone time or
-> define name/email via config file. I don't see anything wrong with
-> this behavior.
+On Wed, Dec 09, 2015 at 02:24:17PM -0800, Stefan Beller wrote:
 
-Can't git just use "unknown" and "unknown@localhost" if the name or
-email can not be determined from xgetpwuid? This seems to be the way
-that Mercurial behaves.
+> On Wed, Dec 9, 2015 at 2:04 PM, Jeff King <peff@peff.net> wrote:
+> >
+> > Of course you can't just fetch the v1.7.1.4 tag _now_, because the same
+> > person impersonating the most recent tag could also be impersonating
+> > (and back-dating) the older tags. But you could fetch it now, store it
+> > somewhere trusted (e.g., on your laptop), and wait two weeks. If you
+> > find no public outcry over hacked git, then it is probably OK to assume
+> > that is the real key.
+> >
+> 
+> With all of us pointing out 96AFE6CB being the right hash, you may or may not
+> trust the list enough to also trust the key now.
+
+Who's to assume that I actually checked that 96AFE6CB is right? ;)
+
+Actually, I don't typically verify Junio's tag signatures. I fetch and
+run "make" daily, far more often than he signs, so I would have been
+p0wned long ago.
+
+-Peff
