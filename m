@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] ident: keep a flag for bogus default_email
-Date: Thu, 10 Dec 2015 16:35:36 -0500
-Message-ID: <20151210213535.GB8374@sigill.intra.peff.net>
+Subject: [PATCH 3/3] ident: loosen getpwuid error in non-strict mode
+Date: Thu, 10 Dec 2015 16:41:29 -0500
+Message-ID: <20151210214129.GC8374@sigill.intra.peff.net>
 References: <20151210213228.GB29055@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,141 +9,164 @@ Cc: Taylor Braun-Jones <taylor@braun-jones.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 10 22:35:51 2015
+X-From: git-owner@vger.kernel.org Thu Dec 10 22:41:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a78sK-000658-He
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 22:35:44 +0100
+	id 1a78y2-0000Le-22
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 22:41:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753849AbbLJVfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Dec 2015 16:35:39 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39989 "HELO cloud.peff.net"
+	id S1753804AbbLJVld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Dec 2015 16:41:33 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39993 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753417AbbLJVfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Dec 2015 16:35:38 -0500
-Received: (qmail 13799 invoked by uid 102); 10 Dec 2015 21:35:38 -0000
+	id S1753799AbbLJVlc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2015 16:41:32 -0500
+Received: (qmail 14319 invoked by uid 102); 10 Dec 2015 21:41:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Dec 2015 15:35:38 -0600
-Received: (qmail 24007 invoked by uid 107); 10 Dec 2015 21:35:43 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Dec 2015 15:41:32 -0600
+Received: (qmail 24042 invoked by uid 107); 10 Dec 2015 21:41:37 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Dec 2015 16:35:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Dec 2015 16:35:36 -0500
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 10 Dec 2015 16:41:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Dec 2015 16:41:29 -0500
 Content-Disposition: inline
 In-Reply-To: <20151210213228.GB29055@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282234>
 
-If we have to deduce the user's email address and can't come
-up with something plausible for the hostname, we simply
-write "(none)" or ".(none)" in the hostname.
+If the user has not specified an identity and we have to
+turn to getpwuid() to find the username or gecos field, we
+die immediately when getpwuid fails (e.g., because the user
+does not exist). This is OK for making a commit, where we
+have set IDENT_STRICT and would want to bail on bogus input.
 
-Later, our strict-check is forced to use strstr to look for
-this magic string. This is probably not a problem in
-practice, but it's rather ugly. Let's keep an extra flag
-that tells us the email is bogus, and check that instead.
+But for something like a reflog, where the ident is "best
+effort", it can be pain. For instance, even running "git
+clone" with a UID that is not in /etc/passwd will result in
+git barfing, just because we can't find an ident to put in
+the reflog.
 
-We could get away with simply setting the global in
-add_domainname(); it only gets called to write into
-git_default_email. However, let's make the code a little
-more obvious to future readers by actually passing a pointer
-to our "bogus" flag down the call-chain.
+Instead of dying in xgetpwuid_self, we can instead return a
+fallback value, and set a "bogus" flag. For the username in
+an email, we already have a "default_email_is_bogus" flag.
+For the name field, we introduce (and check) a matching
+"default_name_is_bogus" flag. As a bonus, this means you now
+get the usual "tell me who you are" advice instead of just a
+"no such user" error.
+
+No tests, as this is dependent on configuration outside of
+git's control. However, I did confirm that it behaves
+sensibly when I delete myself from the local /etc/passwd
+(reflogs get written, and commits complain).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I waffled on the "passing it around" thing. The patch is a lot smaller
-if we just set the global directly, and I doubt these static helpers
-will ever get reused for anything else. But the pattern does get reused
-in the next patch, which sets the "email" and "name" flags separately
-depending on context.
+I dislike #ifdefs in the middle of functions like the one below, but I
+couldn't come up with an elegant way to avoid it. We're reusing "struct
+passwd" for our fallback, so we need to know whether we have that field
+to set or not.
 
-I was also tempted to have a single "default_ident_is_flaky", but that
-does get some corner cases wrong (e.g., you have a bogus auto-guessed
-name, an OK auto-guessed email, and set GIT_COMMITTER_NAME but not
-GIT_COMMITTER_EMAIL). I doubt those come up in practice, but it's not
-that hard to do the right thing.
+An obvious alternative would be to always return our own
 
- ident.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+  struct git_passwd_struct {
+	const char *name;
+	const char *gecos;
+  };
+
+and translate the existing getpwuid() on the fly. That still needs an
+#ifdef, but we could then get rid of the #ifdef for the get_gecos()
+macro.
+
+Yet another alternative is to simply zero the fallback passwd struct,
+and pw->pw_gecos will either not exist, or will be NULL. But then the
+callers have to do something sane with the NULL, and the whole point of
+this exercise was to avoid callers having to deal with the error cases
+directly, so...
+
+ ident.c | 30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
 
 diff --git a/ident.c b/ident.c
-index d7c70e2..085cfbe 100644
+index 085cfbe..2d5b876 100644
 --- a/ident.c
 +++ b/ident.c
-@@ -10,6 +10,7 @@
- static struct strbuf git_default_name = STRBUF_INIT;
+@@ -11,6 +11,7 @@ static struct strbuf git_default_name = STRBUF_INIT;
  static struct strbuf git_default_email = STRBUF_INIT;
  static struct strbuf git_default_date = STRBUF_INIT;
-+static int default_email_is_bogus;
+ static int default_email_is_bogus;
++static int default_name_is_bogus;
  
  #define IDENT_NAME_GIVEN 01
  #define IDENT_MAIL_GIVEN 02
-@@ -82,7 +83,7 @@ static int add_mailname_host(struct strbuf *buf)
- 	return 0;
- }
+@@ -24,15 +25,22 @@ static int author_ident_explicitly_given;
+ #define get_gecos(struct_passwd) ((struct_passwd)->pw_gecos)
+ #endif
  
--static void add_domainname(struct strbuf *out)
-+static void add_domainname(struct strbuf *out, int *is_bogus)
+-static struct passwd *xgetpwuid_self(void)
++static struct passwd *xgetpwuid_self(int *is_bogus)
  {
- 	char buf[1024];
- 	struct hostent *he;
-@@ -90,17 +91,21 @@ static void add_domainname(struct strbuf *out)
- 	if (gethostname(buf, sizeof(buf))) {
- 		warning("cannot get host name: %s", strerror(errno));
- 		strbuf_addstr(out, "(none)");
-+		*is_bogus = 1;
- 		return;
- 	}
- 	if (strchr(buf, '.'))
- 		strbuf_addstr(out, buf);
- 	else if ((he = gethostbyname(buf)) && strchr(he->h_name, '.'))
- 		strbuf_addstr(out, he->h_name);
--	else
-+	else {
- 		strbuf_addf(out, "%s.(none)", buf);
-+		*is_bogus = 1;
+ 	struct passwd *pw;
+ 
+ 	errno = 0;
+ 	pw = getpwuid(getuid());
+-	if (!pw)
+-		die(_("unable to look up current user in the passwd file: %s"),
+-		    errno ? strerror(errno) : _("no such user"));
++	if (!pw) {
++		struct passwd fallback;
++		fallback.pw_name = "unknown";
++#ifndef NO_GECOS_IN_PWENT
++		fallback.pw_gecos = "Unknown";
++#endif
++		pw = &fallback;
++		if (is_bogus)
++			*is_bogus = 1;
 +	}
+ 	return pw;
  }
  
--static void copy_email(const struct passwd *pw, struct strbuf *email)
-+static void copy_email(const struct passwd *pw, struct strbuf *email,
-+		       int *is_bogus)
- {
- 	/*
- 	 * Make up a fake email address
-@@ -111,7 +116,7 @@ static void copy_email(const struct passwd *pw, struct strbuf *email)
- 
- 	if (!add_mailname_host(email))
- 		return;	/* read from "/etc/mailname" (Debian) */
--	add_domainname(email);
-+	add_domainname(email, is_bogus);
- }
- 
+@@ -122,7 +130,7 @@ static void copy_email(const struct passwd *pw, struct strbuf *email,
  const char *ident_default_name(void)
-@@ -133,7 +138,8 @@ const char *ident_default_email(void)
+ {
+ 	if (!git_default_name.len) {
+-		copy_gecos(xgetpwuid_self(), &git_default_name);
++		copy_gecos(xgetpwuid_self(&default_name_is_bogus), &git_default_name);
+ 		strbuf_trim(&git_default_name);
+ 	}
+ 	return git_default_name.buf;
+@@ -138,8 +146,8 @@ const char *ident_default_email(void)
  			committer_ident_explicitly_given |= IDENT_MAIL_GIVEN;
  			author_ident_explicitly_given |= IDENT_MAIL_GIVEN;
  		} else
--			copy_email(xgetpwuid_self(), &git_default_email);
-+			copy_email(xgetpwuid_self(), &git_default_email,
-+				   &default_email_is_bogus);
+-			copy_email(xgetpwuid_self(), &git_default_email,
+-				   &default_email_is_bogus);
++			copy_email(xgetpwuid_self(&default_email_is_bogus),
++				   &git_default_email, &default_email_is_bogus);
  		strbuf_trim(&git_default_email);
  	}
  	return git_default_email.buf;
-@@ -325,8 +331,7 @@ const char *fmt_ident(const char *name, const char *email,
+@@ -327,10 +335,16 @@ const char *fmt_ident(const char *name, const char *email,
+ 				fputs(env_hint, stderr);
+ 			die("empty ident name (for <%s>) not allowed", email);
+ 		}
+-		pw = xgetpwuid_self();
++		pw = xgetpwuid_self(NULL);
  		name = pw->pw_name;
  	}
  
--	if (strict && email == git_default_email.buf &&
--	    strstr(email, "(none)")) {
-+	if (strict && email == git_default_email.buf && default_email_is_bogus) {
++	if (want_name && strict &&
++	    name == git_default_name.buf && default_name_is_bogus) {
++		fputs(env_hint, stderr);
++		die("unable to auto-detect name (got '%s')", name);
++	}
++
+ 	if (strict && email == git_default_email.buf && default_email_is_bogus) {
  		fputs(env_hint, stderr);
  		die("unable to auto-detect email address (got '%s')", email);
- 	}
 -- 
 2.6.3.636.g1460207
