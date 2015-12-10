@@ -1,347 +1,134 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule: Port resolve_relative_url from shell to C
-Date: Wed,  9 Dec 2015 17:07:34 -0800
-Message-ID: <1449709654-30189-1-git-send-email-sbeller@google.com>
-Cc: git@vger.kernel.org, jens.lehmann@web.de,
-	Stefan Beller <sbeller@google.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Dec 10 02:07:50 2015
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: GPG public keys
+Date: Thu, 10 Dec 2015 01:16:24 +0000
+Message-ID: <20151210011624.GE990758@vauxhall.crustytoothpaste.net>
+References: <9E65FDC7-B4F6-45DC-9B0E-F017B904C868@pixelrebel.com>
+ <xmqqtwnsie6h.fsf@gitster.mtv.corp.google.com>
+ <3860CB92-AD83-4372-AE7C-BBA8BF2D8F67@pixelrebel.com>
+ <20151209220413.GA21751@sigill.intra.peff.net>
+ <CAGZ79kYk0RkwNj2aX6iixGjceKVYTy24os_Xb_wY8BWDZwY+Fg@mail.gmail.com>
+ <20151209224335.GB32104@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="u5E4XgoOPWr4PD9E"
+Cc: Stefan Beller <sbeller@google.com>,
+	Jamie Evans <jamie@pixelrebel.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 10 02:16:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6pi0-000657-R0
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 02:07:49 +0100
+	id 1a6pqd-00073U-PU
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 02:16:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbbLJBHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2015 20:07:45 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:33153 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751098AbbLJBHn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2015 20:07:43 -0500
-Received: by pabur14 with SMTP id ur14so38354878pab.0
-        for <git@vger.kernel.org>; Wed, 09 Dec 2015 17:07:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=WfZnqAKUFxcmquLuFAXmxI795QhsPDHlVWfOCUwEYq4=;
-        b=Qv9EvqSa9GUYsTZvsmOUgwxB7Qj3TOZ1IElkM15ISyhF2Xe8PcHqtlm5XXCEaGfjo/
-         7yR2U8lcb7EWyWMsXVPAjo+prlp7oRqyXGmAfWqbKP+O86cbG9vudlF5teG/RxOTaUqN
-         ZAimBpzy1S++0QzvP/P9rA6JU32EZ3mAQ+r8GwNzfSQh+NRyS9T2qhyZTtf3Mf1j7Eby
-         Wlu7FfbP7wtuXjTe3LDaA5gzqIbCmY9B8lhaQRca2ykJqPCa+pWHNVSYXghFUUObYTVv
-         KKjy7a0/BzUvrkZoQXwGoWZDTeirJVsRGrKXwJU/3fX8u6UQVyni2aRlr6q1fpRmMn2G
-         Qrcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=WfZnqAKUFxcmquLuFAXmxI795QhsPDHlVWfOCUwEYq4=;
-        b=Y+c6LYpyY6nX4jXAHCzzG79RuE1Weg6qcQzPeHhngxQrwoMIIiYaRu+tO5CfaKnuuD
-         49+Dyo79hJbHizmxVaDMm6Xx8WxxHEjMu1QPNRXQVk4e9jgR2jebLvzDZTIFed7V44eq
-         e5ILAOKwXLGCuGS23keav1rlSpm2oyndlG9trkfOauXimKDh/C+tDNVDkgpZCzKKamH/
-         UVdQ4ukGKeIbVcHD0PZF4G5TW9/pRawyfw0OlfoMyQMxvQUYlMNPDeu0USUO3T4NnpNo
-         /2+ENjXy9zZNHm45feC+/cDE+iMNQT/sg/jnvl4u+vc5mygKgmw+/Ou9vgofk9NSWfmp
-         Zbfw==
-X-Gm-Message-State: ALoCoQkEs6jo0Im6tXGelMjO+Ey7+XJ8s5bFl1XuZO1z4lY9W5e9UqjgUPqqCBiyzrs5sokJOpCr19XMa5VDeWFdX7V/vPrWZg==
-X-Received: by 10.66.219.39 with SMTP id pl7mr12629446pac.88.1449709663312;
-        Wed, 09 Dec 2015 17:07:43 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:548b:ca17:d17e:fa3a])
-        by smtp.gmail.com with ESMTPSA id v64sm14221744pfi.50.2015.12.09.17.07.42
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 09 Dec 2015 17:07:42 -0800 (PST)
-X-Mailer: git-send-email 2.6.3.470.g4b82c23.dirty
+	id S1754019AbbLJBQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Dec 2015 20:16:38 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:38176 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753511AbbLJBQa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Dec 2015 20:16:30 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E7AD52808C;
+	Thu, 10 Dec 2015 01:16:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1449710187;
+	bh=m5OFobwcBiiE2wD2HKSgvkeeal+kpF35qnupx8hc6CQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tB1ntXjeDQry4dmiJztx6Bs8yH68BLncK5seM+ioun4Xlec1BW2FKFVF2wPEdg10Z
+	 m/XXsHNaE9I0lnQBJJKcdpgFz2vkG7egJ/XkDCOLXA1ArIDZZO+6q1+UFRDIj8aIs5
+	 r/EPO3equP8hijoVcQml1bPfBwPyzInEZs1YuQIN8ximIKTpalXpr02KolQ2YXjAtB
+	 9SsbH9S7xKY8Vs9ShSSwnzqW31VLLzXJTkLZMVYcqMWa6L7Mk3PovYcgWf3FobOqsF
+	 ZmcJEUyj4IJGufwY+oNr32jfVyYew3ErvrcnfpD+b0lysIIuVcPdDWie609WBnjmMI
+	 ouZ4gUcav7VVa5SznqspY+WdM+Fo91nWIbaS5KAsQKcxgOPhJKt677Vf7VzdKSI2M5
+	 GhCXNkNdsjEUbr26ZieJgTSWk96NwY3gxnM+vOdbtxeaJSmzL2WhYMdtd5wNDMp777
+	 PHAYOHtUF24gTDodRzaPXuCW0EigrMgBphbIBf3Ey8Ga/bCZzn5
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+	Jamie Evans <jamie@pixelrebel.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20151209224335.GB32104@sigill.intra.peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 4.2.0-1-amd64)
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282209>
 
-This reimplements the helper function `resolve_relative_url` in shell
-in C. This functionality is needed in C for introducing the groups
-feature later on. When using groups, the user should not need to run
-`git submodule init`, but it should be implicit at all appropriate places,
-which are all in C code. As the we would not just call out to `git
-submodule init`, but do a more fine grained structure there, we actually
-need all the init functionality in C before attempting the groups
-feature. To get the init functionality in C, rewriting the
-resolve_relative_url subfunction is a major step.
 
-This also improves the performance:
-(Best out of 3) time ./t7400-submodule-basic.sh
-Before:
-real	0m9.575s
-user	0m2.683s
-sys	0m6.773s
-After:
-real	0m9.293s
-user	0m2.691s
-sys	0m6.549s
+--u5E4XgoOPWr4PD9E
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+On Wed, Dec 09, 2015 at 05:43:36PM -0500, Jeff King wrote:
+> On Wed, Dec 09, 2015 at 02:24:17PM -0800, Stefan Beller wrote:
+>=20
+> > On Wed, Dec 9, 2015 at 2:04 PM, Jeff King <peff@peff.net> wrote:
+> > >
+> > > Of course you can't just fetch the v1.7.1.4 tag _now_, because the sa=
+me
+> > > person impersonating the most recent tag could also be impersonating
+> > > (and back-dating) the older tags. But you could fetch it now, store it
+> > > somewhere trusted (e.g., on your laptop), and wait two weeks. If you
+> > > find no public outcry over hacked git, then it is probably OK to assu=
+me
+> > > that is the real key.
+> > >
+> >=20
+> > With all of us pointing out 96AFE6CB being the right hash, you may or m=
+ay not
+> > trust the list enough to also trust the key now.
+>=20
+> Who's to assume that I actually checked that 96AFE6CB is right? ;)
+>=20
+> Actually, I don't typically verify Junio's tag signatures. I fetch and
+> run "make" daily, far more often than he signs, so I would have been
+> p0wned long ago.
 
- This applies on origin/master, and I'd carry as its own feature branch
- as I am nowhere near done with the groups feature after reading Jens feedback.
- (It took me a while to identify this as a next best step.)
- 
- Thanks,
- Stefan
+It might also be worthwhile to check that the signatures on kernel.org
+match the key in the repo.  kernel.org autosigns the tarballs as well,
+so presumably that key matches what kernel.org has on file for Junio.
 
- builtin/submodule--helper.c | 120 ++++++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  81 ++----------------------------
- 2 files changed, 124 insertions(+), 77 deletions(-)
+It may also be less important that the key really belongs to a human
+named Junio C Hamano than that the same key consistently signs tags and
+tarballs.  I can't personally vouch for the human behind the signatures,
+but when building git from tarballs, I do check that the same key signed
+them.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f4c3eff..f48b5b5 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -9,6 +9,125 @@
- #include "submodule-config.h"
- #include "string-list.h"
- #include "run-command.h"
-+#include "remote.h"
-+#include "refs.h"
-+
-+static const char *get_default_remote(void)
-+{
-+	char *dest = NULL;
-+	unsigned char sha1[20];
-+	int flag;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *refname = resolve_ref_unsafe("HEAD", 0, sha1, &flag);
-+
-+	if (!refname)
-+		die("No such ref: HEAD");
-+
-+	refname = shorten_unambiguous_ref(refname, 0);
-+	strbuf_addf(&sb, "branch.%s.remote", refname);
-+	if (git_config_get_string(sb.buf, &dest))
-+		return "origin";
-+	else
-+		return xstrdup(dest);
-+}
-+
-+/*
-+ * The function takes at most 2 arguments. The first argument is the
-+ * URL that navigates to the submodule origin repo. When relative, this URL
-+ * is relative to the superproject origin URL repo. The second up_path
-+ * argument, if specified, is the relative path that navigates
-+ * from the submodule working tree to the superproject working tree.
-+ *
-+ * The output of the function is the origin URL of the submodule.
-+ *
-+ * The output will either be an absolute URL or filesystem path (if the
-+ * superproject origin URL is an absolute URL or filesystem path,
-+ * respectively) or a relative file system path (if the superproject
-+ * origin URL is a relative file system path).
-+ *
-+ * When the output is a relative file system path, the path is either
-+ * relative to the submodule working tree, if up_path is specified, or to
-+ * the superproject working tree otherwise.
-+ */
-+static const char *relative_url(const char *url, const char *up_path)
-+{
-+	int is_relative = 0;
-+	size_t len;
-+	char *remoteurl = NULL;
-+	char *sep = "/";
-+	const char *out;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *remote = get_default_remote();
-+	strbuf_addf(&sb, "remote.%s.url", remote);
-+
-+	if (git_config_get_string(sb.buf, &remoteurl))
-+		/* the repository is its own authoritative upstream */
-+		remoteurl = xgetcwd();
-+
-+	if (strip_suffix(remoteurl, "/", &len))
-+		remoteurl[len] = '\0';
-+
-+	if (strchr(remoteurl, ':') || skip_prefix(remoteurl, "/", &out))
-+		is_relative = 0;
-+	else if (skip_prefix(remoteurl, "./", &out) ||
-+		    skip_prefix(remoteurl, "../", &out))
-+		is_relative = 1;
-+	else {
-+		is_relative = 1;
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, "./%s", remoteurl);
-+		remoteurl = strbuf_detach(&sb, NULL);
-+	}
-+
-+	while (url) {
-+		if (skip_prefix(url, "../", &out)) {
-+			char *rfind;
-+			url = out;
-+
-+			rfind = strrchr(remoteurl, '/');
-+			if (rfind)
-+				*rfind = '\0';
-+			else {
-+				rfind = strrchr(remoteurl, ':');
-+				if (rfind) {
-+					*rfind = '\0';
-+					sep = ":";
-+				} else {
-+					if (is_relative || !strcmp(".", remoteurl))
-+						die(N_("cannot strip one component off url '%s'"), remoteurl);
-+					else
-+						remoteurl = ".";
-+				}
-+			}
-+		} else if (skip_prefix(url, "./", &out))
-+			url = out;
-+		else
-+			break;
-+	}
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s%s%s", remoteurl, sep, url);
-+
-+	if (!skip_prefix(sb.buf, "./", &out))
-+		out = sb.buf;
-+	out = xstrdup(out);
-+
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s%s", is_relative && up_path ? up_path : "", out);
-+
-+	free((char*)out);
-+	return strbuf_detach(&sb, NULL);
-+}
-+
-+static int resolve_relative_url(int argc, const char **argv, const char *prefix)
-+{
-+	if (argc == 2)
-+		printf("%s\n", relative_url(argv[1], NULL));
-+	else if (argc == 3)
-+		printf("%s\n", relative_url(argv[1], argv[2]));
-+	else
-+		die("BUG: resolve_relative_url only accepts one or two arguments");
-+	return 0;
-+}
- 
- struct module_list {
- 	const struct cache_entry **entries;
-@@ -264,6 +383,7 @@ static struct cmd_struct commands[] = {
- 	{"list", module_list},
- 	{"name", module_name},
- 	{"clone", module_clone},
-+	{"resolve_relative_url", resolve_relative_url},
- };
- 
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 9bc5c5f..6a7a3e4 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -46,79 +46,6 @@ prefix=
- custom_name=
- depth=
- 
--# The function takes at most 2 arguments. The first argument is the
--# URL that navigates to the submodule origin repo. When relative, this URL
--# is relative to the superproject origin URL repo. The second up_path
--# argument, if specified, is the relative path that navigates
--# from the submodule working tree to the superproject working tree.
--#
--# The output of the function is the origin URL of the submodule.
--#
--# The output will either be an absolute URL or filesystem path (if the
--# superproject origin URL is an absolute URL or filesystem path,
--# respectively) or a relative file system path (if the superproject
--# origin URL is a relative file system path).
--#
--# When the output is a relative file system path, the path is either
--# relative to the submodule working tree, if up_path is specified, or to
--# the superproject working tree otherwise.
--resolve_relative_url ()
--{
--	remote=$(get_default_remote)
--	remoteurl=$(git config "remote.$remote.url") ||
--		remoteurl=$(pwd) # the repository is its own authoritative upstream
--	url="$1"
--	remoteurl=${remoteurl%/}
--	sep=/
--	up_path="$2"
--
--	case "$remoteurl" in
--	*:*|/*)
--		is_relative=
--		;;
--	./*|../*)
--		is_relative=t
--		;;
--	*)
--		is_relative=t
--		remoteurl="./$remoteurl"
--		;;
--	esac
--
--	while test -n "$url"
--	do
--		case "$url" in
--		../*)
--			url="${url#../}"
--			case "$remoteurl" in
--			*/*)
--				remoteurl="${remoteurl%/*}"
--				;;
--			*:*)
--				remoteurl="${remoteurl%:*}"
--				sep=:
--				;;
--			*)
--				if test -z "$is_relative" || test "." = "$remoteurl"
--				then
--					die "$(eval_gettext "cannot strip one component off url '\$remoteurl'")"
--				else
--					remoteurl=.
--				fi
--				;;
--			esac
--			;;
--		./*)
--			url="${url#./}"
--			;;
--		*)
--			break;;
--		esac
--	done
--	remoteurl="$remoteurl$sep${url%/}"
--	echo "${is_relative:+${up_path}}${remoteurl#./}"
--}
--
- # Resolve a path to be relative to another path.  This is intended for
- # converting submodule paths when git-submodule is run in a subdirectory
- # and only handles paths where the directory separator is '/'.
-@@ -281,7 +208,7 @@ cmd_add()
- 		die "$(gettext "Relative path can only be used from the toplevel of the working tree")"
- 
- 		# dereference source url relative to parent's url
--		realrepo=$(resolve_relative_url "$repo") || exit
-+		realrepo=$(git submodule--helper resolve_relative_url "$repo") || exit
- 		;;
- 	*:*|/*)
- 		# absolute url
-@@ -485,7 +412,7 @@ cmd_init()
- 			# Possibly a url relative to parent
- 			case "$url" in
- 			./*|../*)
--				url=$(resolve_relative_url "$url") || exit
-+				url=$(git submodule--helper resolve_relative_url "$url") || exit
- 				;;
- 			esac
- 			git config submodule."$name".url "$url" ||
-@@ -1190,9 +1117,9 @@ cmd_sync()
- 			# guarantee a trailing /
- 			up_path=${up_path%/}/ &&
- 			# path from submodule work tree to submodule origin repo
--			sub_origin_url=$(resolve_relative_url "$url" "$up_path") &&
-+			sub_origin_url=$(git submodule--helper resolve_relative_url "$url" "$up_path") &&
- 			# path from superproject work tree to submodule origin repo
--			super_config_url=$(resolve_relative_url "$url") || exit
-+			super_config_url=$(git submodule--helper resolve_relative_url "$url") || exit
- 			;;
- 		*)
- 			sub_origin_url="$url"
--- 
-2.6.3.470.g4b82c23.dirty
+--u5E4XgoOPWr4PD9E
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.9 (GNU/Linux)
+
+iQIcBAEBCgAGBQJWaNJoAAoJEL9TXYEfUvaLZLIP/iyXyVVtvkhUUkXpEqkOospl
+juYy7xNQXPFNbGz3G8tkUvPMRU3K74oi/iQeLAwC52HCX6F5VDnsR60wR4JziN9I
+L76yjlq1BHBXkgnMWVuB6GwVtZJSDRRtOuzNqbMwT7PM7mHDf+Sp2+Do5SGM9kKV
+7i5M7G3DbvhXjec8CY7dw6F4xt2s6TTZRfZP20pm7uUGz+34VBgVnqjx6cvF9vFw
+kdjPrzwfZtf71YslP0S2xNdiXzXYKlPy/9DqtlLB9zlH2RBsJ23GyTZ9PX1OTqsc
+ve7RytGtJw36VrLzGiiWB1xInewOoOe8h4gA8Ibm4TSmRAiSnEIvU9Uy8jQPfHgt
+0u73hQGqbMfri3PvnArGfmElIW9G0HDp6NirmVqlUAHgkl4ZoD7IdeF9mJGV+zif
+E8DltP6y254p4AnvE5lMoH0njjqZaNak7x1/OQnt5ablaEuMOC8Lg0i0wdLCGSY3
+p3JMusr/w/mGFCL0NcYZbEEmieAZYOMPBsjdhUPF5Gc5OqEDYLNFbnjWqUwr8m8m
+Uh8qHdaOv7Z/kcdaLr77JqXoFhukfL5m8BWp64BjjzMEyofjMHfx0+Pe6iDL1eLq
+ucGFqhPOc7FCWetDIlCMUHrVr6zIVIxWCNbtY2ZSCBiB5+PbxmnljHwMCqjJ/vba
+PYNpd3UOcmTVpf4tPH3K
+=E6Pj
+-----END PGP SIGNATURE-----
+
+--u5E4XgoOPWr4PD9E--
