@@ -1,243 +1,351 @@
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: Re: [PATCH v5] blame: add support for --[no-]progress option
-Date: Wed, 9 Dec 2015 22:20:09 -0600
-Message-ID: <CAOc6etYM5NA8sPw49yioa9u3SwvDB-w4mcWzrLaR3FkFdNGoJA@mail.gmail.com>
-References: <1448426165-5139-1-git-send-email-eantoranz@gmail.com>
-	<CAPig+cTQdnrHZWJDD6fqu_mQSJQv3oTz9_0Cu8j1aksUiq0FbQ@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] submodule: Port resolve_relative_url from shell to C
+Date: Thu, 10 Dec 2015 07:48:12 +0100
+Message-ID: <5669202C.2090100@kdbg.org>
+References: <1449709654-30189-1-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Dec 10 05:20:18 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org, jens.lehmann@web.de
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Thu Dec 10 07:48:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6siH-0000ak-Lv
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 05:20:18 +0100
+	id 1a6v1c-00070J-A6
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 07:48:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752712AbbLJEUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Dec 2015 23:20:12 -0500
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33394 "EHLO
-	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752392AbbLJEUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Dec 2015 23:20:10 -0500
-Received: by pfnn128 with SMTP id n128so41090248pfn.0
-        for <git@vger.kernel.org>; Wed, 09 Dec 2015 20:20:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=chXbmG3UsS0xyg4NfImzF7TCvIzQA1+Dcp8GEVo1Nx4=;
-        b=Rsl0s8ludzU4K/PsVvfnGNE3Qd/Oh559YXf3wsOkUWJAh+pFMv+PBxoUGQZHFPQY4B
-         sJONpWYit+MJG8ZGjZ8WoupwJaWFePSY20ksY1sdVA4G+d1Bc/cXcIwvxCVzQOIODFej
-         YulqB+lfGKgpjhQ5SIsbNSXt0skOtqWxk/72DzI2OrFPPzNRbpRaz0hgjhxooXTEX8Xa
-         1+oo4h/SDKEIzNAFs6/Hwxy7Wk0Ny/8HVpaRgPRQnLwCXTIJaVhvSwYU4gQAxXLd5j9r
-         V9fWvr2ZHyCzoCc+dfqyKRReM1Dzg7sfHVNn9JkLDpDLGdn9vqVDOIRShq4mXMD7N94C
-         YBpg==
-X-Received: by 10.98.1.6 with SMTP id 6mr3701126pfb.132.1449721209687; Wed, 09
- Dec 2015 20:20:09 -0800 (PST)
-Received: by 10.66.89.42 with HTTP; Wed, 9 Dec 2015 20:20:09 -0800 (PST)
-In-Reply-To: <CAPig+cTQdnrHZWJDD6fqu_mQSJQv3oTz9_0Cu8j1aksUiq0FbQ@mail.gmail.com>
+	id S1753067AbbLJGsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Dec 2015 01:48:20 -0500
+Received: from bsmtp5.bon.at ([195.3.86.187]:57476 "EHLO bsmtp5.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752953AbbLJGsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2015 01:48:19 -0500
+Received: from bsmtp8.bon.at (unknown [192.168.181.108])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 3pGQmx1rHsz5vLS
+	for <git@vger.kernel.org>; Thu, 10 Dec 2015 07:48:17 +0100 (CET)
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pGQmt1sJYz5tlC;
+	Thu, 10 Dec 2015 07:48:14 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 23D2153B1;
+	Thu, 10 Dec 2015 07:48:13 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.3.0
+In-Reply-To: <1449709654-30189-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282212>
 
-Hey, Eric!
+Am 10.12.2015 um 02:07 schrieb Stefan Beller:
+> This reimplements the helper function `resolve_relative_url` in shell
+> in C. This functionality is needed in C for introducing the groups
+> feature later on. When using groups, the user should not need to run
+> `git submodule init`, but it should be implicit at all appropriate places,
+> which are all in C code. As the we would not just call out to `git
+> submodule init`, but do a more fine grained structure there, we actually
+> need all the init functionality in C before attempting the groups
+> feature. To get the init functionality in C, rewriting the
+> resolve_relative_url subfunction is a major step.
 
-On Tue, Dec 8, 2015 at 2:22 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Nov 24, 2015 at 11:36 PM, Edmundo Carmona Antoranz
-> <eantoranz@gmail.com> wrote:
->> * created struct progress_info in builtin/blame.c
->>   this struct holds the information used to display progress so
->>   that only one additional parameter is passed to
->>   found_guilty_entry().
->
-> Commit messages typically are composed of proper sentences and
-> paragraphs rather than bullets points. Also, write in imperative mood:
-> "Create progress_info..."
->
-> In this case, though, the information in this bullet point isn't all
-> that interesting for the commit message since it's a detail of
-> implementation easily gleaned by reading the patch itself. There's
-> nothing particularly tricky about it, thus it doesn't really deserve
-> to be called out as special in the commit message.
->
-> What might be more interesting and deserve mention in the commit
-> message is how this new option interacts with porcelain and
-> incremental modes and why the choice was made.
->
-> More below...
+I see lots of '/', but no is_dir_sep() in the C version. Did you 
+consider that local URLs can use a backslash as path separator on 
+Windows? In the shell version, this did not matter because bash converts 
+the backslashes to forward slashes for us. But when rewritten in C, this 
+does not happen.
 
-Ok
+Valid URLs are
+
+   D:\foo\bar.git
+   \\server\share\foo\bar
+   ..\..\foo\bar
+
+and all of them with some or all backslashes replaced by forward slashes.
+
+See also connect.c:url_is_local_not_ssh, which ensures that the first 
+example above is considered a local path with a drive letter, not a 
+remote ssh path.
 
 >
->> * --[no-]progress option is also inherited by git-annotate.
->>
->> Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
->> ---
->> diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
->> @@ -69,6 +69,13 @@ include::line-range-format.txt[]
->>         iso format is used. For supported values, see the discussion
->>         of the --date option at linkgit:git-log[1].
->>
->> +--[no-]progress::
->> +       Progress status is reported on the standard error stream
->> +       by default when it is attached to a terminal. This flag
->> +       enables progress reporting even if not attached to a
->> +       terminal. Progress information won't be displayed if using
->> +       `--porcelain` or `--incremental`.
+> This also improves the performance:
+> (Best out of 3) time ./t7400-submodule-basic.sh
+> Before:
+> real	0m9.575s
+> user	0m2.683s
+> sys	0m6.773s
+> After:
+> real	0m9.293s
+> user	0m2.691s
+> sys	0m6.549s
 >
-> Is silently ignoring --progress a good idea when combined with
-> --porcelain or --incremental, or would it be better to error out with
-> a "mutually exclusive options" diagnostic? (Genuine question.)
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 >
-
-I think it makes sense (and so it's documented so people can know what
-could be going on but detecting mutually exclusive options and
-erroring out could also make sense. Who could give some insight?
-
->> diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
->> @@ -10,7 +10,8 @@ SYNOPSIS
->>  [verse]
->>  'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental]
->>             [-L <range>] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
->> -           [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>] [--] <file>
->> +           [--[no-]progress] [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>]
+>   This applies on origin/master, and I'd carry as its own feature branch
+>   as I am nowhere near done with the groups feature after reading Jens feedback.
+>   (It took me a while to identify this as a next best step.)
 >
-> Hmm, is [--[no-]progress] common in Git documentation? (Genuine
-> question.) For the synopsis, I'd have expected to see only
-> [--progress] and leave it to the more detailed description of the
-> option to mention the possibility of negation (but I haven't
-> double-checked other documentation, so my expectation may be skewed).
+>   Thanks,
+>   Stefan
 >
-
-Hmmm.... hadn't noticed that. Will remove it from this part.
-
->>  DESCRIPTION
->>  -----------
->> diff --git a/builtin/blame.c b/builtin/blame.c
->> @@ -127,6 +129,11 @@ struct origin {
->> +struct progress_info {
->> +       struct progress *progress;
->> +       int blamed_lines;
->> +};
->> @@ -1746,7 +1753,8 @@ static int emit_one_suspect_detail(struct origin *suspect, int repeat)
->> -static void found_guilty_entry(struct blame_entry *ent)
->> +static void found_guilty_entry(struct blame_entry *ent,
->> +                          struct progress_info *pi)
->> @@ -1758,6 +1766,8 @@ static void found_guilty_entry(struct blame_entry *ent)
->> +       if (pi)
->> +               display_progress(pi->progress, pi->blamed_lines += ent->num_lines);
+>   builtin/submodule--helper.c | 120 ++++++++++++++++++++++++++++++++++++++++++++
+>   git-submodule.sh            |  81 ++----------------------------
+>   2 files changed, 124 insertions(+), 77 deletions(-)
 >
-> This is updating of 'blamed_lines' is rather subtle and easily
-> overlooked. Splitting it out as a separate statement could improve
-> readability:
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index f4c3eff..f48b5b5 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -9,6 +9,125 @@
+>   #include "submodule-config.h"
+>   #include "string-list.h"
+>   #include "run-command.h"
+> +#include "remote.h"
+> +#include "refs.h"
+> +
+> +static const char *get_default_remote(void)
+> +{
+> +	char *dest = NULL;
+> +	unsigned char sha1[20];
+> +	int flag;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	const char *refname = resolve_ref_unsafe("HEAD", 0, sha1, &flag);
+> +
+> +	if (!refname)
+> +		die("No such ref: HEAD");
+> +
+> +	refname = shorten_unambiguous_ref(refname, 0);
+> +	strbuf_addf(&sb, "branch.%s.remote", refname);
+> +	if (git_config_get_string(sb.buf, &dest))
+> +		return "origin";
+> +	else
+> +		return xstrdup(dest);
+> +}
+> +
+> +/*
+> + * The function takes at most 2 arguments. The first argument is the
+> + * URL that navigates to the submodule origin repo. When relative, this URL
+> + * is relative to the superproject origin URL repo. The second up_path
+> + * argument, if specified, is the relative path that navigates
+> + * from the submodule working tree to the superproject working tree.
+> + *
+> + * The output of the function is the origin URL of the submodule.
+> + *
+> + * The output will either be an absolute URL or filesystem path (if the
+> + * superproject origin URL is an absolute URL or filesystem path,
+> + * respectively) or a relative file system path (if the superproject
+> + * origin URL is a relative file system path).
+> + *
+> + * When the output is a relative file system path, the path is either
+> + * relative to the submodule working tree, if up_path is specified, or to
+> + * the superproject working tree otherwise.
+> + */
+> +static const char *relative_url(const char *url, const char *up_path)
+> +{
+> +	int is_relative = 0;
+> +	size_t len;
+> +	char *remoteurl = NULL;
+> +	char *sep = "/";
+> +	const char *out;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	const char *remote = get_default_remote();
+> +	strbuf_addf(&sb, "remote.%s.url", remote);
+> +
+> +	if (git_config_get_string(sb.buf, &remoteurl))
+> +		/* the repository is its own authoritative upstream */
+> +		remoteurl = xgetcwd();
+> +
+> +	if (strip_suffix(remoteurl, "/", &len))
+> +		remoteurl[len] = '\0';
+> +
+> +	if (strchr(remoteurl, ':') || skip_prefix(remoteurl, "/", &out))
+> +		is_relative = 0;
+> +	else if (skip_prefix(remoteurl, "./", &out) ||
+> +		    skip_prefix(remoteurl, "../", &out))
+> +		is_relative = 1;
+> +	else {
+> +		is_relative = 1;
+> +		strbuf_reset(&sb);
+> +		strbuf_addf(&sb, "./%s", remoteurl);
+> +		remoteurl = strbuf_detach(&sb, NULL);
+> +	}
+> +
+> +	while (url) {
+> +		if (skip_prefix(url, "../", &out)) {
+> +			char *rfind;
+> +			url = out;
+> +
+> +			rfind = strrchr(remoteurl, '/');
+> +			if (rfind)
+> +				*rfind = '\0';
+> +			else {
+> +				rfind = strrchr(remoteurl, ':');
+> +				if (rfind) {
+> +					*rfind = '\0';
+> +					sep = ":";
+> +				} else {
+> +					if (is_relative || !strcmp(".", remoteurl))
+> +						die(N_("cannot strip one component off url '%s'"), remoteurl);
+> +					else
+> +						remoteurl = ".";
+> +				}
+> +			}
+> +		} else if (skip_prefix(url, "./", &out))
+> +			url = out;
+> +		else
+> +			break;
+> +	}
+> +	strbuf_reset(&sb);
+> +	strbuf_addf(&sb, "%s%s%s", remoteurl, sep, url);
+> +
+> +	if (!skip_prefix(sb.buf, "./", &out))
+> +		out = sb.buf;
+> +	out = xstrdup(out);
+> +
+> +	strbuf_reset(&sb);
+> +	strbuf_addf(&sb, "%s%s", is_relative && up_path ? up_path : "", out);
+> +
+> +	free((char*)out);
+> +	return strbuf_detach(&sb, NULL);
+> +}
+> +
+> +static int resolve_relative_url(int argc, const char **argv, const char *prefix)
+> +{
+> +	if (argc == 2)
+> +		printf("%s\n", relative_url(argv[1], NULL));
+> +	else if (argc == 3)
+> +		printf("%s\n", relative_url(argv[1], argv[2]));
+> +	else
+> +		die("BUG: resolve_relative_url only accepts one or two arguments");
+> +	return 0;
+> +}
 >
->     pi->blamed_lines += ent->num_lines;
->     display_progress(pi->progress, pi->blamed_lines);
+>   struct module_list {
+>   	const struct cache_entry **entries;
+> @@ -264,6 +383,7 @@ static struct cmd_struct commands[] = {
+>   	{"list", module_list},
+>   	{"name", module_name},
+>   	{"clone", module_clone},
+> +	{"resolve_relative_url", resolve_relative_url},
+>   };
 >
-
-Ok.
-
->>  }
->> @@ -1768,6 +1778,16 @@ static void assign_blame(struct scoreboard *sb, int opt)
->>  {
->>         struct rev_info *revs = sb->revs;
->>         struct commit *commit = prio_queue_get(&sb->commits);
->> +       struct progress_info *pi = NULL;
->> +
->> +       if (show_progress) {
->> +               pi = malloc(sizeof(*pi));
->> +               if (pi) {
+>   int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 9bc5c5f..6a7a3e4 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -46,79 +46,6 @@ prefix=
+>   custom_name=
+>   depth=
 >
-> xmalloc(), unlike malloc(), will die() upon allocation failure which
-> would allow you to avoid the "if (pi)" conditional.
+> -# The function takes at most 2 arguments. The first argument is the
+> -# URL that navigates to the submodule origin repo. When relative, this URL
+> -# is relative to the superproject origin URL repo. The second up_path
+> -# argument, if specified, is the relative path that navigates
+> -# from the submodule working tree to the superproject working tree.
+> -#
+> -# The output of the function is the origin URL of the submodule.
+> -#
+> -# The output will either be an absolute URL or filesystem path (if the
+> -# superproject origin URL is an absolute URL or filesystem path,
+> -# respectively) or a relative file system path (if the superproject
+> -# origin URL is a relative file system path).
+> -#
+> -# When the output is a relative file system path, the path is either
+> -# relative to the submodule working tree, if up_path is specified, or to
+> -# the superproject working tree otherwise.
+> -resolve_relative_url ()
+> -{
+> -	remote=$(get_default_remote)
+> -	remoteurl=$(git config "remote.$remote.url") ||
+> -		remoteurl=$(pwd) # the repository is its own authoritative upstream
+> -	url="$1"
+> -	remoteurl=${remoteurl%/}
+> -	sep=/
+> -	up_path="$2"
+> -
+> -	case "$remoteurl" in
+> -	*:*|/*)
+> -		is_relative=
+> -		;;
+> -	./*|../*)
+> -		is_relative=t
+> -		;;
+> -	*)
+> -		is_relative=t
+> -		remoteurl="./$remoteurl"
+> -		;;
+> -	esac
+> -
+> -	while test -n "$url"
+> -	do
+> -		case "$url" in
+> -		../*)
+> -			url="${url#../}"
+> -			case "$remoteurl" in
+> -			*/*)
+> -				remoteurl="${remoteurl%/*}"
+> -				;;
+> -			*:*)
+> -				remoteurl="${remoteurl%:*}"
+> -				sep=:
+> -				;;
+> -			*)
+> -				if test -z "$is_relative" || test "." = "$remoteurl"
+> -				then
+> -					die "$(eval_gettext "cannot strip one component off url '\$remoteurl'")"
+> -				else
+> -					remoteurl=.
+> -				fi
+> -				;;
+> -			esac
+> -			;;
+> -		./*)
+> -			url="${url#./}"
+> -			;;
+> -		*)
+> -			break;;
+> -		esac
+> -	done
+> -	remoteurl="$remoteurl$sep${url%/}"
+> -	echo "${is_relative:+${up_path}}${remoteurl#./}"
+> -}
+> -
+>   # Resolve a path to be relative to another path.  This is intended for
+>   # converting submodule paths when git-submodule is run in a subdirectory
+>   # and only handles paths where the directory separator is '/'.
+> @@ -281,7 +208,7 @@ cmd_add()
+>   		die "$(gettext "Relative path can only be used from the toplevel of the working tree")"
 >
-
-Ok.
-
->> +                       pi->progress = start_progress_delay(_("Blaming lines"),
->> +                                                           sb->num_lines, 50, 1);
->> +                       pi->blamed_lines = 0;
->> +               }
->> +       }
->>
->>         while (commit) {
->>                 struct blame_entry *ent;
->> @@ -1809,7 +1829,7 @@ static void assign_blame(struct scoreboard *sb, int opt)
->>                         suspect->guilty = 1;
->>                         for (;;) {
->>                                 struct blame_entry *next = ent->next;
->> -                               found_guilty_entry(ent);
->> +                               found_guilty_entry(ent, pi);
->>                                 if (next) {
->>                                         ent = next;
->>                                         continue;
->> @@ -1825,6 +1845,11 @@ static void assign_blame(struct scoreboard *sb, int opt)
->>                 if (DEBUG) /* sanity */
->>                         sanity_check_refcnt(sb);
->>         }
->> +
->> +       if (pi) {
->> +               stop_progress(&pi->progress);
->> +               free(pi);
->> +       };
+>   		# dereference source url relative to parent's url
+> -		realrepo=$(resolve_relative_url "$repo") || exit
+> +		realrepo=$(git submodule--helper resolve_relative_url "$repo") || exit
+>   		;;
+>   	*:*|/*)
+>   		# absolute url
+> @@ -485,7 +412,7 @@ cmd_init()
+>   			# Possibly a url relative to parent
+>   			case "$url" in
+>   			./*|../*)
+> -				url=$(resolve_relative_url "$url") || exit
+> +				url=$(git submodule--helper resolve_relative_url "$url") || exit
+>   				;;
+>   			esac
+>   			git config submodule."$name".url "$url" ||
+> @@ -1190,9 +1117,9 @@ cmd_sync()
+>   			# guarantee a trailing /
+>   			up_path=${up_path%/}/ &&
+>   			# path from submodule work tree to submodule origin repo
+> -			sub_origin_url=$(resolve_relative_url "$url" "$up_path") &&
+> +			sub_origin_url=$(git submodule--helper resolve_relative_url "$url" "$up_path") &&
+>   			# path from superproject work tree to submodule origin repo
+> -			super_config_url=$(resolve_relative_url "$url") || exit
+> +			super_config_url=$(git submodule--helper resolve_relative_url "$url") || exit
+>   			;;
+>   		*)
+>   			sub_origin_url="$url"
 >
-> Style: drop semi-colon following closing brace
->
-
-Ok.
-
-> Overall, use of malloc/free for the progress_info struct seems to
-> makes the code more complex rather than less. It's not clear why you
-> don't just use a 'struct progress_info' directly, which would lift the
-> burden of freeing the allocated structure, and allow you to drop the
-> conditional around stop_progress() since NULL progress is accepted. In
-> other words, something like this (completely untested):
->
->     struct progress_info pi = { NULL, 0 };
-
-I like it! I'll adjust to not use the pointer.
-
->     if (show_progress) {
->         pi.progress = start_progress_delay(...);
->     ...
->     found_guilty_entry(ent, &pi);
->     ...
->     stop_progress(&pi.progress)
->
-> which is more concise and less likely to leak resources. The code
-> within found_guilty_entry() is also simplified since you can drop the
-> "if (pi)" conditional entirely. This works because it's safe to call
-> display progress with NULL):
->
->     pi->blamed_lines += ent->num_lines;
->     display_progress(pi->progress, pi->blamed_lines);
->
->>  }
->>
->>  static const char *format_time(unsigned long time, const char *tz_str,
->> @@ -2579,6 +2606,11 @@ parse_done:
->>         DIFF_OPT_CLR(&revs.diffopt, FOLLOW_RENAMES);
->>         argc = parse_options_end(&ctx);
->>
->> +       if (incremental || (output_option & OUTPUT_PORCELAIN))
->> +               show_progress = 0;
->> +       else if (show_progress < 0)
->> +               show_progress = isatty(2);
->> +
-
-
-Officially, I think not a single line of the patch survived. :-D
-
-Thanks, man... I'll go through the stuff and let's wait for feedback
-about the detection/error-out in case of using "mutually exclusive"
-options.
-
-Cheers!
