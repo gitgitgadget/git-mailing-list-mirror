@@ -1,64 +1,95 @@
 From: Christian Couder <christian.couder@gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 10
-Date: Thu, 10 Dec 2015 10:22:24 +0100
-Message-ID: <CAP8UFD0A0N2xNNvNcCu4SEx5Kwp6mMfXhfXdxR3iC3F7Zi2A6A@mail.gmail.com>
+Subject: Re: [PATCH 2/8] update-index: use enum for untracked cache options
+Date: Thu, 10 Dec 2015 11:37:53 +0100
+Message-ID: <CAP8UFD3+gsHZuaBweP83or=rEh-LFnz6=ycBCeuhApxp0PzN1A@mail.gmail.com>
+References: <1449594916-21167-1-git-send-email-chriscool@tuxfamily.org>
+	<1449594916-21167-3-git-send-email-chriscool@tuxfamily.org>
+	<xmqq1tawlpqw.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	Nicola Paolucci <npaolucci@atlassian.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pat Thoyts <patthoyts@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	James McCoy <vega.james@gmail.com>, James <rouzier@gmail.com>,
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
-	Stefan Beller <stefanbeller@gmail.com>, lwn@lwn.net
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 10 10:22:36 2015
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 10 11:38:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a6xQn-0007SU-AH
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 10:22:33 +0100
+	id 1a6ybo-0006dW-CX
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 11:38:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754522AbbLJJW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Dec 2015 04:22:28 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34347 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754501AbbLJJWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Dec 2015 04:22:25 -0500
-Received: by lfdl133 with SMTP id l133so173247lfd.1
-        for <git@vger.kernel.org>; Thu, 10 Dec 2015 01:22:24 -0800 (PST)
+	id S1752504AbbLJKh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Dec 2015 05:37:56 -0500
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:33136 "EHLO
+	mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751526AbbLJKhz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2015 05:37:55 -0500
+Received: by lfaz4 with SMTP id z4so53619343lfa.0
+        for <git@vger.kernel.org>; Thu, 10 Dec 2015 02:37:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=8fW7D3JMNweXFhbiGOoJE1u5oz7dL8eCmgBxvt3MybE=;
-        b=aQrP6gDhMWqdmLs+nyT471WqTfwXSrvaSS2hPXPBvI8HCpg4za64XGa9oEQYyqThef
-         uTt1EuVqijeE3uQGElU5/6yeocnsPOo79b/lOmY2q/EIF0C//yFmEeTv7XmN4gmPNsxW
-         iA/ZgbGESGAhovmOyJ/Vu5mETwXmyVnVX+5jl+y6zc1xtmG9Akj+HLnSPxFC/+VcFUr9
-         ptbimmaoQWcwLRjj1ZUfYKOvFxvSB1IUHimqNU3r8C2DAcIZAkoyqZA6U3Mx2tDohhFI
-         ZimJc1h+KMoo+pIz8OLPzKBIPtIqojm4FW/Fbz6Hip6y0woyhXvP0w6XdSb5ndZdzP2M
-         RW7w==
-X-Received: by 10.25.207.205 with SMTP id f196mr4582459lfg.124.1449739344410;
- Thu, 10 Dec 2015 01:22:24 -0800 (PST)
-Received: by 10.25.152.7 with HTTP; Thu, 10 Dec 2015 01:22:24 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=1YEQJvvghOdk6c63OZgSdIA58KQZZy/xTfxl6RsoAas=;
+        b=KseDWFCiJRbUlyTVEgsciRZUn2wTdj2/H+dMW27D/EcA2naLefeNAuV+F2RxuObouE
+         kEQNDol/gkR9Vwt4+eFQpj5+t2Dh+0amXuRZ49uMQ58dtn8ZtMwOHM6xHMfbABXMn7BV
+         9Nu3QJimqgIJEZhXoDw5mcxmmcfQdoJA+nsItJmEskGrJT8UOx9HwnwPNyN7yTOFMx6h
+         vgPurcLXOlUHZX331X8HIwKFc3kk6zwslDxbQjIUA23gdj+pMFSX5UrPS1UtmvKn56ak
+         C+1BkXJiWczoGjTwCpOXt5u+C+JF/pYZx3hSArNfGMZpoAKLOMA+XuPOBcG4dqTky2JC
+         ysRQ==
+X-Received: by 10.25.142.84 with SMTP id q81mr4032294lfd.77.1449743873811;
+ Thu, 10 Dec 2015 02:37:53 -0800 (PST)
+Received: by 10.25.152.7 with HTTP; Thu, 10 Dec 2015 02:37:53 -0800 (PST)
+In-Reply-To: <xmqq1tawlpqw.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282215>
 
-Hi everyone,
+On Tue, Dec 8, 2015 at 8:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>>  builtin/update-index.c | 18 +++++++++++++-----
+>>  1 file changed, 13 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/builtin/update-index.c b/builtin/update-index.c
+>> index 6f6b289..246b3d3 100644
+>> --- a/builtin/update-index.c
+>> +++ b/builtin/update-index.c
+>> @@ -35,6 +35,14 @@ static int mark_skip_worktree_only;
+>>  #define UNMARK_FLAG 2
+>>  static struct strbuf mtime_dir = STRBUF_INIT;
+>>
+>> +/* Untracked cache mode */
+>> +enum uc_mode {
+>> +     UNDEF_UC = -1,
+>> +     NO_UC = 0,
+>> +     UC,
+>> +     FORCE_UC
+>> +};
+>> +
+>
+> With these, the code is much easier to read than with the mystery
+> constants, but did you consider making UC_ a common prefix for
+> further ease-of-reading?  E.g.
+>
+>     UC_UNSPECIFIED
+>     UC_DONTUSE
+>     UC_USE
+>     UC_FORCE
+>
+> or something?
 
-I'm happy announce that the 10th edition of Git Rev News is now published:
+Ok, I will use what you suggest.
 
-https://git.github.io/rev_news/2015/12/09/edition-10/
-
-It was supposed to be published yesterday but I got busy with other
-things. Sorry about that.
-
-Thanks a lot to all the contributors, especially Stefan!
-
-Enjoy,
-Christian, Thomas and Nicola.
+Thanks,
+Christian.
