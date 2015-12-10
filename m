@@ -1,254 +1,227 @@
-From: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
-Subject: [PATCH] rebase: add --verify-signatures
-Date: Thu, 10 Dec 2015 14:03:48 +0100
-Message-ID: <20151210130228.GA22641@netblarch.tu-darmstadt.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] Makefile: add missing phony target
+Date: Thu, 10 Dec 2015 15:24:54 +0000
+Message-ID: <1449761094-37915-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 10 13:56:39 2015
+X-From: git-owner@vger.kernel.org Thu Dec 10 16:25:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a70lz-00029o-3m
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 13:56:39 +0100
+	id 1a735g-0005xy-2v
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 16:25:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310AbbLJM4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Dec 2015 07:56:35 -0500
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:33859 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751276AbbLJM4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Dec 2015 07:56:33 -0500
-Received: by mail-wm0-f50.google.com with SMTP id v187so31743565wmv.1
-        for <git@vger.kernel.org>; Thu, 10 Dec 2015 04:56:33 -0800 (PST)
+	id S1752974AbbLJPZC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Dec 2015 10:25:02 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:37838 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259AbbLJPZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2015 10:25:01 -0500
+Received: by wmww144 with SMTP id w144so29378162wmw.0
+        for <git@vger.kernel.org>; Thu, 10 Dec 2015 07:24:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=v1R4k9VbnI5L+WH5pprOCBVuReq4lM6Tzzhjszc5iyI=;
-        b=tZlYzV8YeTKtGWcOyaqJVu1+IyskG/FIBuvA7qzlUWE3r4O88DbijDrr2mHEo1IvNw
-         +Pd3RnZuCW0+L5B7EITmtJxAbIvoouc9H9DLD+IGXqhHPw/pDDE8HLqoPcU5wiytKYnI
-         kBLJBEYJ5PZnTiN3auBZJZX/dq7To2ApZY28EpuMFyT8xjbtqJx2z6nMsP1e8PHFqfzh
-         REICtsrx4YgPg8SwgbwVbECOr6Eg1xZCNRznOAxq8msAQq5ayxwciGh/cw9WXrKqkbdm
-         JW/5Z/r+wYfbtDb1+94ZmKtzlCZLPxQhFUVG9BPg6UKYYE7vK7YlIQB+qNX+B0Cy8dFS
-         F+cA==
-X-Received: by 10.28.85.129 with SMTP id j123mr19235981wmb.77.1449752192429;
-        Thu, 10 Dec 2015 04:56:32 -0800 (PST)
-Received: from netblarch.tu-darmstadt.de ([2001:41b8:83c:ff04:9da7:8085:e9b4:8150])
-        by smtp.gmail.com with ESMTPSA id h7sm12752203wmf.0.2015.12.10.04.56.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Dec 2015 04:56:31 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        h=from:to:cc:subject:date:message-id;
+        bh=IJ9BLVAzxjZjSfheh/dBMyDGdVXwrvTyPOGCreKj7xo=;
+        b=Rx7ZolO7BEPDqCcvukjIcIRDtvHW+sTndlYsRXoGEtlDF9U2Y1e5vp8efgeU95nQkB
+         tw7qR0V26X+myvSEnpxwXpRfl7VTm9nE6ExEc+8h1zT0Dol0phpiDHg70pR9Fyzrlu9k
+         WOwAY5MH0IQwBBuKs+5er2EgDkZkN1y2CYHTLPdHQF/bRYMXh7KAR1dOlKx6HmdE4oCC
+         6FY44eSVrqUw76JfVfdSSfqrG2urgiWf2cTXm+TeqmkhRz++TFkUt11LJdrOCQhLsLdk
+         SheOMboIbicBMy5wGST2waANVHyoTkFZrMDpUhCPLmwq/+E6cGnHpGo+R1kvtp09H+tx
+         NC7g==
+X-Received: by 10.194.6.225 with SMTP id e1mr12893935wja.67.1449761099276;
+        Thu, 10 Dec 2015 07:24:59 -0800 (PST)
+Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([40.113.119.92])
+        by smtp.gmail.com with ESMTPSA id w4sm12871008wje.49.2015.12.10.07.24.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 10 Dec 2015 07:24:58 -0800 (PST)
+X-Mailer: git-send-email 2.6.3.444.gfd13a2e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282217>
 
-This option works analogous to --verify-signatures for git-merge by
-checking that the commits, that are rebased onto, have good GPG
-signatures.
+Add some missing phony target to Makefile. Also put the .PHONY
+declaration immediately before the target declaration, where necessary,
+for a better readability and a uniform style.
 
-Additionally, git-pull now forwards --verify-signatures to rebase as
-well.
-
-Signed-off-by: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
+ Makefile | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-I'm unsure if the opt_verify_signatures check in builtin/pull.c should
-be moved up to the "/* Shared options */" now.
-
-The output strings from the GPG check are identical to the ones in
-builtin/merge.c; I am unsure about the implications for l10n.
-
-The test is mostly copied from t7612-merge-verify-signatures.sh.
-
- Documentation/git-rebase.txt        |  6 ++++
- builtin/pull.c                      |  2 ++
- git-rebase.sh                       | 44 +++++++++++++++++++++++++
- t/t3427-rebase-verify-signatures.sh | 65 +++++++++++++++++++++++++++++++++++++
- 4 files changed, 117 insertions(+)
- create mode 100755 t/t3427-rebase-verify-signatures.sh
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 6cca8bb..959b12b 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -292,6 +292,12 @@ which makes little sense.
- 	specified, `-s recursive`.  Note the reversal of 'ours' and
- 	'theirs' as noted above for the `-m` option.
+diff --git a/Makefile b/Makefile
+index 43ceeb9..a5fab53 100644
+--- a/Makefile
++++ b/Makefile
+@@ -522,11 +522,11 @@ SCRIPT_PYTHON_INS = $(filter-out $(NO_INSTALL),$(SCRIPT_PYTHON_GEN))
+ # "make -C ../.. SCRIPT_PERL=contrib/foo/bar.perl build-perl-script"
+ # from subdirectories like contrib/*/
+ .PHONY: build-perl-script build-sh-script build-python-script
++.PHONY: install-perl-script install-sh-script install-python-script
+ build-perl-script: $(SCRIPT_PERL_GEN)
+ build-sh-script: $(SCRIPT_SH_GEN)
+ build-python-script: $(SCRIPT_PYTHON_GEN)
  
-+--verify-signatures::
-+--no-verify-signatures::
-+	Verify that the commits in the branch the rebase is onto, but not
-+	present in the working branch, have good GPG signatures and abort the
-+	operation in case they do not.
+-.PHONY: install-perl-script install-sh-script install-python-script
+ install-sh-script: $(SCRIPT_SH_INS)
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ install-perl-script: $(SCRIPT_PERL_INS)
+@@ -534,7 +534,7 @@ install-perl-script: $(SCRIPT_PERL_INS)
+ install-python-script: $(SCRIPT_PYTHON_INS)
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 
+-.PHONY: clean-perl-script clean-sh-script clean-python-script
++.PHONY: clean-sh-script clean-perl-script  clean-python-script
+ clean-sh-script:
+ 	$(RM) $(SCRIPT_SH_GEN)
+ clean-perl-script:
+@@ -546,7 +546,6 @@ SCRIPTS = $(SCRIPT_SH_INS) \
+ 	  $(SCRIPT_PERL_INS) \
+ 	  $(SCRIPT_PYTHON_INS) \
+ 	  git-instaweb
+-
+ ETAGS_TARGET = TAGS
+ 
+ # Empty...
+@@ -1644,6 +1643,9 @@ shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
+ strip: $(PROGRAMS) git$X
+ 	$(STRIP) $(STRIP_OPTS) $^
+ 
++.PHONY: all profile profile-fast
++.PHONY: please_set_SHELL_PATH_to_a_more_modern_shell shell_compatibility_test strip
 +
- -S[<keyid>]::
- --gpg-sign[=<keyid>]::
- 	GPG-sign commits. The `keyid` argument is optional and
-diff --git a/builtin/pull.c b/builtin/pull.c
-index bf3fd3f..37ec0f8 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -774,6 +774,8 @@ static int run_rebase(const unsigned char *curr_head,
- 		argv_array_push(&args, "--preserve-merges");
- 	if (opt_diffstat)
- 		argv_array_push(&args, opt_diffstat);
-+	if (opt_verify_signatures)
-+		argv_array_push(&args, opt_verify_signatures);
- 	argv_array_pushv(&args, opt_strategies.argv);
- 	argv_array_pushv(&args, opt_strategy_opts.argv);
- 	if (opt_gpg_sign)
-diff --git a/git-rebase.sh b/git-rebase.sh
-index af7ba5f..dcfbc3a 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -38,6 +38,7 @@ whitespace=!       passed to 'git apply'
- ignore-whitespace! passed to 'git apply'
- C=!                passed to 'git apply'
- S,gpg-sign?        GPG-sign commits
-+verify-signatures  verify that the commits of onto have valid GPG signatures
-  Actions:
- continue!          continue
- abort!             abort and check out the original branch
-@@ -88,6 +89,7 @@ autosquash=
- keep_empty=
- test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
- gpg_sign_opt=
-+verify_signatures=
+ ### Target-specific flags and dependencies
  
- read_basic_state () {
- 	test -f "$state_dir/head-name" &&
-@@ -339,6 +341,12 @@ do
- 	--gpg-sign=*)
- 		gpg_sign_opt="-S${1#--gpg-sign=}"
- 		;;
-+	--verify-signatures)
-+		verify_signatures=t
-+		;;
-+	--no-verify-signatures)
-+		verify_signatures=
-+		;;
- 	--)
- 		shift
- 		break
-@@ -594,6 +602,42 @@ then
+ # The generic compilation pattern rule and automatically
+@@ -1792,7 +1794,7 @@ GIT-PERL-DEFINES: FORCE
+ 	    fi
+ 
+ 
+-.PHONY: gitweb
++.PHONY: gitweb git-instaweb
+ gitweb:
+ 	$(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) all
+ 
+@@ -2011,6 +2013,7 @@ $(VCSSVN_LIB): $(VCSSVN_OBJS)
+ 
+ export DEFAULT_EDITOR DEFAULT_PAGER
+ 
++.PHONY: doc man html info pdf
+ doc:
+ 	$(MAKE) -C Documentation all
+ 
+@@ -2054,6 +2057,7 @@ po/git.pot: $(GENERATED_H) FORCE
+ 		$(LOCALIZED_PERL)
+ 	mv $@+ $@
+ 
++.PHONY: pot
+ pot: po/git.pot
+ 
+ POFILES := $(wildcard po/*.po)
+@@ -2074,6 +2078,7 @@ $(ETAGS_TARGET): FORCE
+ 	$(RM) $(ETAGS_TARGET)
+ 	$(FIND_SOURCE_FILES) | xargs etags -a -o $(ETAGS_TARGET)
+ 
++.PHONY: tags cscope FORCE
+ tags: FORCE
+ 	$(RM) tags
+ 	$(FIND_SOURCE_FILES) | xargs ctags -a
+@@ -2189,6 +2194,7 @@ export NO_SVN_TESTS
+ export TEST_NO_MALLOC_CHECK
+ 
+ ### Testing rules
++.PHONY: test perf
+ 
+ test: all
+ 	$(MAKE) -C t/ all
+@@ -2196,7 +2202,6 @@ test: all
+ perf: all
+ 	$(MAKE) -C t/perf/ all
+ 
+-.PHONY: test perf
+ 
+ test-ctype$X: ctype.o
+ 
+@@ -2215,6 +2220,7 @@ test-svn-fe$X: vcs-svn/lib.a
+ test-%$X: test-%.o GIT-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+ 
++.PHONY: check_sha1 $(SP_OBJ) sparse check check-sha1
+ check-sha1:: test-sha1$X
+ 	./test-sha1.sh
+ 
+@@ -2224,7 +2230,6 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+ 	$(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
+ 		$(SPARSE_FLAGS) $<
+ 
+-.PHONY: sparse $(SP_OBJ)
+ sparse: $(SP_OBJ)
+ 
+ check: common-cmds.h
+@@ -2237,6 +2242,7 @@ check: common-cmds.h
+ 		exit 1; \
  	fi
- fi
  
-+if test "$verify_signatures"
-+then
-+	if test -n "$rebase_root"
-+	then
-+		foreign_revisions="$orig_head..$onto"
-+	else
-+		foreign_revisions="$orig_head..${restrict_revision-$upstream}"
-+	fi
 +
-+	for cmt in $(git rev-list --reverse "$foreign_revisions")
-+	do
-+		if ! git log -1 --pretty=format:'%G?%n%GS' "$cmt" |
-+		(
-+			read cmt_sig
-+			read cmt_signer
-+			case "$cmt_sig" in
-+			'G')
-+				;;
-+			'U')
-+				die "$(gettext "Commit $cmt has an untrusted GPG signature, allegedly by $cmt_signer.")"
-+				;;
-+			'B')
-+				die "$(gettext "Commit $cmt has a bad GPG signature allegedly by $cmt_signer.")"
-+				;;
-+			*) #'N'
-+				die "$(gettext "Commit $cmt does not have a GPG signature.")"
-+				;;
-+			esac
-+			test "$verbose" && test 'G' = "$cmt_sig" && echo "Commit $cmt has a good GPG signature by $cmt_signer."
-+		)
-+		then
-+			exit 1
-+		fi
-+	done
-+fi
-+
- # If a hook exists, give it a chance to interrupt
- run_pre_rebase_hook "$upstream_arg" "$@"
+ ### Installation rules
  
-diff --git a/t/t3427-rebase-verify-signatures.sh b/t/t3427-rebase-verify-signatures.sh
-new file mode 100755
-index 0000000..1bd0a4d
---- /dev/null
-+++ b/t/t3427-rebase-verify-signatures.sh
-@@ -0,0 +1,65 @@
-+#!/bin/sh
+ ifneq ($(filter /%,$(firstword $(template_dir))),)
+@@ -2263,6 +2269,7 @@ mergetools_instdir_SQ = $(subst ','\'',$(mergetools_instdir))
+ 
+ install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
+ 
++.PHONY: profile-install profile-fast-install install
+ profile-install: profile
+ 	$(MAKE) install
+ 
+@@ -2329,6 +2336,8 @@ endif
+ 	done && \
+ 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
+ 
++.PHONY: install-gitweb install-man install-html install-info install-pdf
++.PHONY: quick-install-doc quick-install-man quick-install-html
+ install-gitweb:
+ 	$(MAKE) -C gitweb install
+ 
+@@ -2365,6 +2374,8 @@ git.spec: git.spec.in GIT-VERSION-FILE
+ 	mv $@+ $@
+ 
+ GIT_TARNAME = git-$(GIT_VERSION)
 +
-+test_description='rebase signature verification tests'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-gpg.sh"
-+
-+test_expect_success GPG 'create signed commits' '
-+	echo 1 >file && git add file &&
-+	test_tick && git commit -m initial &&
-+	git tag initial &&
-+
-+	git checkout -b side-signed &&
-+	echo 3 >elif && git add elif &&
-+	test_tick && git commit -S -m "signed on side" &&
-+	git checkout initial &&
-+
-+	git checkout -b side-unsigned &&
-+	echo 3 >foo && git add foo &&
-+	test_tick && git commit -m "unsigned on side" &&
-+	git checkout initial &&
-+
-+	git checkout -b side-bad &&
-+	echo 3 >bar && git add bar &&
-+	test_tick && git commit -S -m "bad on side" &&
-+	git cat-file commit side-bad >raw &&
-+	sed -e "s/bad/forged bad/" raw >forged &&
-+	git hash-object -w -t commit forged >forged.commit &&
-+	git checkout initial &&
-+
-+	git checkout -b side-untrusted &&
-+	echo 3 >baz && git add baz &&
-+	test_tick && git commit -SB7227189 -m "untrusted on side" &&
-+
-+	git checkout master
-+'
-+
-+test_expect_success GPG 'rebase unsigned commit with verification' '
-+	test_must_fail git rebase --verify-signatures side-unsigned 2>rebaseerror &&
-+	test_i18ngrep "does not have a GPG signature" rebaseerror
-+'
-+
-+test_expect_success GPG 'rebase commit with bad signature with verification' '
-+	test_must_fail git rebase --verify-signatures $(cat forged.commit) 2>rebaseerror &&
-+	test_i18ngrep "has a bad GPG signature" rebaseerror
-+'
-+
-+test_expect_success GPG 'rebase commit with untrusted signature with verification' '
-+	test_must_fail git rebase --verify-signatures side-untrusted 2>rebaseerror &&
-+	test_i18ngrep "has an untrusted GPG signature" rebaseerror
-+'
-+
-+test_expect_success GPG 'rebase signed commit with verification' '
-+	git rebase --verbose --verify-signatures side-signed >rebaseoutput &&
-+	test_i18ngrep "has a good GPG signature" rebaseoutput
-+'
-+
-+test_expect_success GPG 'rebase commit with bad signature without verification (implicit)' '
-+	git rebase $(cat forged.commit)
-+'
-+
-+test_expect_success GPG 'rebase commit with bad signature without verification (explicit)' '
-+	git rebase --no-verify-signatures $(cat forged.commit)
-+'
-+
-+test_done
++.PHONY: dist rpm dist-doc  distclean profile-clean clean
+ dist: git.spec git-archive$(X) configure
+ 	./git-archive --format=tar \
+ 		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
+@@ -2445,9 +2456,6 @@ endif
+ 	$(RM) GIT-USER-AGENT GIT-PREFIX
+ 	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PYTHON-VARS
+ 
+-.PHONY: all install profile-clean clean strip
+-.PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
+-.PHONY: FORCE cscope
+ 
+ ### Check documentation
+ #
+@@ -2499,9 +2507,9 @@ check-builtins::
+ 
+ ### Test suite coverage testing
+ #
+-.PHONY: coverage coverage-clean coverage-compile coverage-test coverage-report
+-.PHONY: coverage-clean-results
+ 
++.PHONY: coverage coverage-clean coverage-compile coverage-test coverage-report
++.PHONY: coverage-clean-results coverage-untested-functions cover_db cover_db_html
+ coverage:
+ 	$(MAKE) coverage-test
+ 	$(MAKE) coverage-untested-functions
+@@ -2543,4 +2551,3 @@ cover_db: coverage-report
+ 
+ cover_db_html: cover_db
+ 	cover -report html -outputdir cover_db_html cover_db
+-
 -- 
-2.6.3
+2.5.0
