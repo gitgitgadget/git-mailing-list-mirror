@@ -1,155 +1,106 @@
-From: Taylor Braun-Jones <taylor@braun-jones.org>
-Subject: Re: git-clone fails when current user is not in /etc/passwd
-Date: Thu, 10 Dec 2015 13:52:30 -0500
-Message-ID: <CAKfKJYt__uD_=E=NBxsVSbv6TO4E7-GvsCdFnSuPPv8n-owhJA@mail.gmail.com>
-References: <CAKfKJYsyHn7FUOu65AqbvjZD-wAyRScjqUL6kgGDCVzG1myZTQ@mail.gmail.com>
- <CACsJy8AQFSvcxKqSdWfvGArV60RA96WcvvofpfJ4EuG+q_=t0Q@mail.gmail.com>
- <CACsJy8Dc3Lsqa2zccoqH7UkDitqDbOTX3EXsUCcN9OHY=LfaKw@mail.gmail.com> <xmqqoadyi1q2.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] Documentation/git-update-index: add missing opts to synopsis
+Date: Thu, 10 Dec 2015 10:59:53 -0800
+Message-ID: <xmqq7fkmi0ye.fsf@gitster.mtv.corp.google.com>
+References: <1448443802-24507-1-git-send-email-chriscool@tuxfamily.org>
+	<CAP8UFD1cJdoaT=gPqqDshB9g0e_ZUGJqy21UzUTBPmPB6EkmnQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 10 19:55:05 2015
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 10 20:00:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a76Mo-0000f7-5b
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 19:55:02 +0100
+	id 1a76Ri-00020W-G2
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Dec 2015 20:00:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753271AbbLJSwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Dec 2015 13:52:54 -0500
-Received: from mail-qg0-f47.google.com ([209.85.192.47]:33729 "EHLO
-	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753232AbbLJSwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Dec 2015 13:52:51 -0500
-Received: by qgea14 with SMTP id a14so157883371qge.0
-        for <git@vger.kernel.org>; Thu, 10 Dec 2015 10:52:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=braun-jones.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=IT95WAnw1Awk2VtIZRPAcrge9i2A/BvLuXDrHavppX4=;
-        b=HBx1LyI2/8lQ6p2dQ/uXM2pG+DIV2rVfSgLJqOz7lwiOWa7O2R2SCPZXDS5hokPE8F
-         dhXy+SExJSc7joKHRR7/xcX9Ke/COUlK94cYk8BanOrwIHL1Zgtrk3PzoFije3NidQwN
-         RssduWITpvUPtVQpmoHgAQZuE9WqldvShyxeQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=IT95WAnw1Awk2VtIZRPAcrge9i2A/BvLuXDrHavppX4=;
-        b=l1JJ/V84940auQtazTtH40uhxD2IZgyfVII2bqtDlOc+v3Hho87l8roebVuucmAC1B
-         OuHq3uvuG3QeB0kM/BgZKQltXzUyZplVzVjOhuo0glamyxVuind9025BCw7gkmoKDMbz
-         gouJKow/NSXpOYRNos96Fbm255MI6ZgRyh3kfNywC82wYQChPyM68GP5dBRYt9nam+A0
-         zzXQE/EkMyaXycaE2Kd31o960lo5jOTPEZnJi+aWBN1cZ0JAd2py5XY2C1MUOFVtZm1z
-         BfmiB42hed6OPbEiaUNscfsDTtlhGoQOIUJHns4MCC9mvKxmVkz9MPRTn42H0/AFOFWv
-         iv0w==
-X-Gm-Message-State: ALoCoQnO1EVFcvvwb2pE4tVTls4YkZLnRStNavLpYxmCXS6l2Ydx/iCcEVP0vBghkFwIH8BcpbhHOS+llp6fUx/nJpnYGzKpBA==
-X-Received: by 10.55.79.207 with SMTP id d198mr16681728qkb.49.1449773570461;
-        Thu, 10 Dec 2015 10:52:50 -0800 (PST)
-Received: from mail-qg0-f41.google.com (mail-qg0-f41.google.com. [209.85.192.41])
-        by smtp.gmail.com with ESMTPSA id g132sm6537404qhc.46.2015.12.10.10.52.49
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 Dec 2015 10:52:49 -0800 (PST)
-Received: by qgea14 with SMTP id a14so157882403qge.0
-        for <git@vger.kernel.org>; Thu, 10 Dec 2015 10:52:49 -0800 (PST)
-X-Received: by 10.140.254.69 with SMTP id z66mr8893917qhc.5.1449773569434;
- Thu, 10 Dec 2015 10:52:49 -0800 (PST)
-Received: by 10.55.128.198 with HTTP; Thu, 10 Dec 2015 10:52:30 -0800 (PST)
-In-Reply-To: <xmqqoadyi1q2.fsf@gitster.mtv.corp.google.com>
-X-Gmail-Original-Message-ID: <CAKfKJYt__uD_=E=NBxsVSbv6TO4E7-GvsCdFnSuPPv8n-owhJA@mail.gmail.com>
+	id S1752990AbbLJS75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Dec 2015 13:59:57 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61550 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752687AbbLJS7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2015 13:59:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3B9FF32AF9;
+	Thu, 10 Dec 2015 13:59:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TkVg/2W//jXPHKUVCf61Qf5XqBc=; b=Fmc2sM
+	2OLNl7eDW1KPu5wszl9+JO2HIv/k2R40fXizZVDhWtTbxU3F13Dhst5VHk2pYNi/
+	rDwoky2zwFjSqwQ0hZZq2Tm8T5CTRugJEIzShOp5NkOIsLG/gF/4PlWMwv2x3s0J
+	7Itcw3Q5/nfN36YmKLJBOGY17XLEgPD46xa6U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xGhAAn6OGEg04ldj1a/nCzCLIuiML8dn
+	xmOPWbxtDhy/my0Wa7RsRNAnQZlShohVJku/Zq2gMQd4qOAsnQpGtTCnooJMarSs
+	29+tN0bpel0Mc6wDNhsq3maflp1Hff2OvwknFqzvRzHjwren2LMybeBd3uRrvThh
+	yrOkgmnUYog=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3325632AF8;
+	Thu, 10 Dec 2015 13:59:55 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7106732AF5;
+	Thu, 10 Dec 2015 13:59:54 -0500 (EST)
+In-Reply-To: <CAP8UFD1cJdoaT=gPqqDshB9g0e_ZUGJqy21UzUTBPmPB6EkmnQ@mail.gmail.com>
+	(Christian Couder's message of "Wed, 9 Dec 2015 06:39:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 32FFE2E4-9F70-11E5-93EF-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282225>
 
-On Thu, Dec 10, 2015 at 1:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> Well.. reflog needs it. So either you disable reflog at clone time or
->> define name/email via config file. I don't see anything wrong with
->> this behavior.
->
-> Hmm, I am not quite sure about that.
->
-> In the codepath that computes ident_default_email(), which is one
-> half of what the "reflog" code you cite wants to do, copy_email()
-> calls copy_email() which in turn calls add_domainname().  If your
-> getpwuid() gave you some username, but your gethostname() gave you a
-> NULL, we do not barf but add "(none)" as and then issue a warning.
->
-> Perhaps we can do the same by returning a structure with members set
-> to a set of fake values.  Because we already have checks in places
-> that really matter to the recorded history (read: not reflog) in the
-> form of *_ident_sufficiently_given() functions, potential damage due
-> to having phoney names returned from here would not be too bad.
->
-> Totally untested...
->
->  ident.c   | 13 ++++++++++---
->  wrapper.c |  4 ----
->  2 files changed, 10 insertions(+), 7 deletions(-)
->
-> diff --git a/ident.c b/ident.c
-> index 4e7f99d..2ccae2c 100644
-> --- a/ident.c
-> +++ b/ident.c
-> @@ -31,7 +31,7 @@ static void copy_gecos(const struct passwd *w, struct strbuf *name)
->          * with commas.  Also & stands for capitalized form of the login name.
->          */
->
-> -       for (src = get_gecos(w); *src && *src != ','; src++) {
-> +       for (src = w ? get_gecos(w) : "&"; *src && *src != ','; src++) {
->                 int ch = *src;
->                 if (ch != '&')
->                         strbuf_addch(name, ch);
-> @@ -117,7 +117,7 @@ static void copy_email(const struct passwd *pw, struct strbuf *email)
->          * Make up a fake email address
->          * (name + '@' + hostname [+ '.' + domainname])
->          */
-> -       strbuf_addstr(email, pw->pw_name);
-> +       strbuf_addstr(email, pw ? pw->pw_name : "unknown");
->         strbuf_addch(email, '@');
->
->         if (!add_mailname_host(email))
-> @@ -332,8 +332,15 @@ const char *fmt_ident(const char *name, const char *email,
->                                 fputs(env_hint, stderr);
->                         die("empty ident name (for <%s>) not allowed", email);
->                 }
-> +               errno = 0;
->                 pw = xgetpwuid_self();
-> -               name = pw->pw_name;
-> +               if (!pw) {
-> +                       warning(_("unable to look up current user: %s"),
-> +                               errno ? strerror(errno) : _("no such user"));
-> +                       name = "unknown";
-> +               } else {
-> +                       name = pw->pw_name;
-> +               }
->         }
->
->         if (strict && email == git_default_email.buf &&
-> diff --git a/wrapper.c b/wrapper.c
-> index 6fcaa4d..16ab45f 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -605,11 +605,7 @@ struct passwd *xgetpwuid_self(void)
->  {
->         struct passwd *pw;
->
-> -       errno = 0;
->         pw = getpwuid(getuid());
-> -       if (!pw)
-> -               die(_("unable to look up current user in the passwd file: %s"),
-> -                   errno ? strerror(errno) : _("no such user"));
->         return pw;
->  }
->
+Christian Couder <christian.couder@gmail.com> writes:
 
-Yes, this looks better.
+> On Wed, Nov 25, 2015 at 10:30 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> Split index related options should appear in the 'SYNOPSIS'
+>> section.
+>>
+>> These options are already documented in the 'OPTIONS' section.
+>>
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>> This v4 contains only the split-index options and applies on top
+>> of the new master that already contains the untracked-cache options.
+>
+> It looks like this patch has not been applied.
+> Maybe I should have given it a different title to avoid confusion with
+> a previous patch that added [--[no-|force-]untracked-cache] in the
+> SYNOPSIS.
 
-+1
+It indeed seems that this was lost in the noise.
+
+
+
+
+>
+>>  Documentation/git-update-index.txt | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+>> index 3df9c26..f4e5a85 100644
+>> --- a/Documentation/git-update-index.txt
+>> +++ b/Documentation/git-update-index.txt
+>> @@ -17,6 +17,7 @@ SYNOPSIS
+>>              [--[no-]assume-unchanged]
+>>              [--[no-]skip-worktree]
+>>              [--ignore-submodules]
+>> +            [--[no-]split-index]
+>>              [--[no-|force-]untracked-cache]
+>>              [--really-refresh] [--unresolve] [--again | -g]
+>>              [--info-only] [--index-info]
+>> --
+>> 2.6.3.380.g494b52d
+>>
