@@ -1,82 +1,63 @@
-From: Stefan Beller <sbeller@google.com>
+From: John Keeping <john@keeping.me.uk>
 Subject: Re: What's cooking in git.git (Dec 2015, #03; Thu, 10)
-Date: Thu, 10 Dec 2015 15:55:34 -0800
-Message-ID: <CAGZ79kY8M-Xv1s4-s7HnjxZ_X19SR4PsWMtQ3yogqN=vjDiMwQ@mail.gmail.com>
+Date: Fri, 11 Dec 2015 00:18:15 +0000
+Message-ID: <20151211001815.GB1581@serenity.lan>
 References: <xmqqmvthhqgf.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kaA6Lo1W-SudX6v5styyGrX-igGC7i=u5AYOvFYK0DOGA@mail.gmail.com>
-	<xmqqvb85g8v9.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 11 00:55:44 2015
+X-From: git-owner@vger.kernel.org Fri Dec 11 01:18:29 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a7B3j-0001Ht-QT
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Dec 2015 00:55:40 +0100
+	id 1a7BPo-0008J3-MY
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Dec 2015 01:18:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751582AbbLJXzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Dec 2015 18:55:35 -0500
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:33602 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751059AbbLJXzf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Dec 2015 18:55:35 -0500
-Received: by mail-ig0-f180.google.com with SMTP id mv3so29291963igc.0
-        for <git@vger.kernel.org>; Thu, 10 Dec 2015 15:55:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=q7pyMVxXOkiyXJ85z99pExyoyhmjhX0QWon6kmIPiqw=;
-        b=eODdT78LfEMFIvlqz58ykI4uTPUczKNWvA+7pURjHoSAaGo9Ysq51mJqCQPe6fb79u
-         VYkNw6E79LsGgoLwRZzvVUJyd1ndPfDPhuNmhzpPNIug9KHqvR7KsXdk74xV51oui4Ai
-         4eF3Q5jmZllE6JySj9KBA30szAzmrc9Vl8Nk96wTdlIjdAVW3x2tA9kWmmSmyWhaY7YB
-         a/NkC8AETu2TsU29XEnEzQBh7Z0i498wsnv7jnepJfVfVr3pyHvsYt4nUBRlWUxxsg9g
-         YxKv0qLRdJ0VKSHE2upCOJedDeCaXHMs0U4scpiD48U3zpV0g5aOX0xnjI2hEYfqY1/z
-         LDmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=q7pyMVxXOkiyXJ85z99pExyoyhmjhX0QWon6kmIPiqw=;
-        b=O4R51Sk4dlrHsXzz4Q3XO1i1X99YVm89Rh81tGtVzdx5Gw91KipJOUaCL5JDgWwMTy
-         55QHMnZsoPuByyMpN/gQQW0SliRk/fKhtcA+l2CbRvkMLOFug5kzjzjxGw5xdYDAIhVa
-         sPFgO+rYXPCBBCOXrWVT3W+NGkMkiRTHd94xSY8QsgK7p820gHeX1V6bvu6MNakRkqS6
-         526+DgGcFwcvGueQFPI/vB4KxuA03rogvNQgAjiuy36HeqOe4KRxtM+BcEz66MvYGUkr
-         HR11I0kqv5AgtZmXoi2erpvsZnAROuhkqJs33eHZj8jnNqltZyI5MUD13/kotk9CSdOR
-         7PzA==
-X-Gm-Message-State: ALoCoQngJ4LpPl5XNd/YJqVmHncOrixTq4BxYjxAoupwg6cVropAQZSpIgZ7ivbDAor/s0eB/Koo5xqdGu168ciJOqgB1cN6KMnpnuaGluSPiwpgKBriAFs=
-X-Received: by 10.50.109.136 with SMTP id hs8mr1828215igb.93.1449791734537;
- Thu, 10 Dec 2015 15:55:34 -0800 (PST)
-Received: by 10.107.19.26 with HTTP; Thu, 10 Dec 2015 15:55:34 -0800 (PST)
-In-Reply-To: <xmqqvb85g8v9.fsf@gitster.mtv.corp.google.com>
+	id S1751873AbbLKASY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Dec 2015 19:18:24 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:52483 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751027AbbLKASX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Dec 2015 19:18:23 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 57F7FCDA547;
+	Fri, 11 Dec 2015 00:18:23 +0000 (GMT)
+X-Quarantine-ID: <OA4DOHx8pw03>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.199
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.199 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8, URIBL_BLOCKED=0.001] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id OA4DOHx8pw03; Fri, 11 Dec 2015 00:18:22 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 9E8E4CDA568;
+	Fri, 11 Dec 2015 00:18:17 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <xmqqmvthhqgf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282248>
 
-On Thu, Dec 10, 2015 at 3:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>> * sb/submodule-parallel-fetch (2015-11-24) 17 commits
->>> ...
->>
->> I assume you plan on merging this after 2.7 settled and then we can
->> also get the above sb/submodule-parallel-update going again.
->
-> Yeah, thanks for reminding me.  I think that would be a good plan
-> that gives us an opportunity to clean up this topic, some parts of
-> which are have "an early patch that was too hastily merged to 'next'
-> had to be tweaked by an 'oops' follow-up patch in the topic"
-> pattern, e.g. "make waitpid the secondary and closed pipe the
-> primary way to monitor children".
->
-> Thanks.
+On Thu, Dec 10, 2015 at 02:46:40PM -0800, Junio C Hamano wrote:
+> * jk/send-email-ssl-errors (2015-11-24) 1 commit
+>  - send-email: enable SSL level 1 debug output
+> 
+>  Improve error reporting when SMTP TLS fails.
+> 
+>  Waiting for a reroll.
+>  ($gmane/281693)
 
-This makes it sound as if you would drop it from next once 2.7 is out,
-expecting a complete reroll, which does the right thing from the beginning?
-That was not was I was expecting, but thanks for clarifying.
+It looks like this got lost in the noise:
+
+http://article.gmane.org/gmane.comp.version-control.git/281975
