@@ -1,87 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Stefan Beller <sbeller@google.com>
 Subject: Re: [RFC] Case insensitive URL rewrite
-Date: Fri, 11 Dec 2015 10:26:41 -0800
-Message-ID: <xmqq7fkkg7tq.fsf@gitster.mtv.corp.google.com>
+Date: Fri, 11 Dec 2015 10:51:58 -0800
+Message-ID: <CAGZ79kZbxFT6_rZUAfUW7Qof8n7mjU53VZb24uGru4LfTfFr=w@mail.gmail.com>
 References: <B207EFC1-48DF-4B8F-8373-28A0CB5660B0@gmail.com>
+	<xmqq7fkkg7tq.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Users <git@vger.kernel.org>
-To: Lars Schneider <larsxschneider@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 11 19:26:51 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Lars Schneider <larsxschneider@gmail.com>,
+	Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 11 19:52:07 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a7SP4-0003nT-W4
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Dec 2015 19:26:51 +0100
+	id 1a7SnW-0004QB-4j
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Dec 2015 19:52:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750990AbbLKS0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Dec 2015 13:26:46 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52348 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750797AbbLKS0p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Dec 2015 13:26:45 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EB92331897;
-	Fri, 11 Dec 2015 13:26:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f4KrdJTRx9W5sTSKHKJedUuRZ7E=; b=xxMgGD
-	FxnSr2WbHn/Hgnf7Rh/rhXwnU/fuV1f4YHG0yEXl8hgWZ2sVhmxl1Uv31TA+i7NI
-	0QqMFvFxUgm3wvEzLVqRErU2fhramfRUYonpS5serK8RR9m45bpqCMVko+cZdOcO
-	2PqcLQoj7hC/FzG/UcBulsUmu4X06U0lbI0KA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gghBUTvwNsIfqXr1wdpHAd5pEah5CexC
-	4Uv83+bbv2d+yLVmXkagJq0WvdKvSE39jpOdsyNGGBPl99jAfLWJcBG6wLavUvGv
-	LKlzTyjvE6hqLskYgsqGHlArPEa6DmMzguKTmP4CZGkS5ljfGG3dk2ipoDwsP0Pm
-	zk0i5afcokI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E453731896;
-	Fri, 11 Dec 2015 13:26:44 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 69B8131893;
-	Fri, 11 Dec 2015 13:26:44 -0500 (EST)
-In-Reply-To: <B207EFC1-48DF-4B8F-8373-28A0CB5660B0@gmail.com> (Lars
-	Schneider's message of "Fri, 11 Dec 2015 14:45:37 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BB388264-A034-11E5-A26C-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1752523AbbLKSwB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Dec 2015 13:52:01 -0500
+Received: from mail-io0-f173.google.com ([209.85.223.173]:33395 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751552AbbLKSwA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Dec 2015 13:52:00 -0500
+Received: by iouu10 with SMTP id u10so138624882iou.0
+        for <git@vger.kernel.org>; Fri, 11 Dec 2015 10:51:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=EWQUg8Y2CmPschgMq1DYn12dLFloShipCtmtSSGfHcM=;
+        b=jN7WuaJJ+7ZbDxoQz+qq0A7xYkyiP11XFEcBRRKTAp7E21+ZNbK/i6wVLABx0V5KYT
+         34obTEZnsykIl9qrRJgZ/iltbo7FOleiippZXaV1cdzw3uBNV8kXi289Sstq2/6cGpf7
+         y1cYQwaHNxMQtWWkGEokMOqG066/jKGbzuObA1Rhmiz6ppbmMgNCMBG+6iP4AHDHLYzK
+         h/DpTChgD9Wrjo8HnxgkelsmUSflqit3GB3OExlcatibFa3g8gvD/YQHSOdYWgrQoJfH
+         z3ySaJlbP0tJcBfEQlOnOQLBJBmoXqtmVKjXSOyBhLekbooEs72s0XdzKitUhTXuAcFc
+         XubQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=EWQUg8Y2CmPschgMq1DYn12dLFloShipCtmtSSGfHcM=;
+        b=Ian/qjBc5guSyR7EpFcXAz7T6T3tE/AtmoQhFdX1Q1bCf5rBDsAIaMFXaeFshGxCQn
+         rj9BjdgJ7qS1gHe6GheQ3Q2CM0kK3FiR+TNgsGZNmevwQDDn0rZgdZ5CxiplEcXj8uQb
+         MFt5qHXeQohItlAMD9Lih8RGlezaURBlF640f0jD4x3jiaSpN3+XWbCInoKEVWpYMUgo
+         3iDAtxQewC2V6jyYCB6AFy9axoinWZ00PyN9ZwFiRpB2ePT7wtW9/Pwsb2p6tLqwhxp7
+         dobnrGLFZE3K2HWHJh1FpQXmzjZyiOWiaLtWWPiABJlJiZh+F/o8Tx/h02c/N+2lCxMX
+         Uqkw==
+X-Gm-Message-State: ALoCoQkISnfJEw6igOEzq0AxhV9sykamHU7Ng2FO2UOk9uKBH/ji2pROb2wHVsg2eOCi4DuJh+nsPzOBf1veALXpWx9WnB1dFIRX05aNrnLPipsMThHM0UQ=
+X-Received: by 10.107.35.15 with SMTP id j15mr18556905ioj.9.1449859918928;
+ Fri, 11 Dec 2015 10:51:58 -0800 (PST)
+Received: by 10.107.141.1 with HTTP; Fri, 11 Dec 2015 10:51:58 -0800 (PST)
+In-Reply-To: <xmqq7fkkg7tq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282268>
 
-Lars Schneider <larsxschneider@gmail.com> writes:
-
-> What do you think about a flag that makes these rewrites case insensitive? E.g. with the following config flag:
+On Fri, Dec 11, 2015 at 10:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> On the other hand, these two MUST be treated as different by
+> default:
 >
-> [url "<actual url base>"]
-> 	insteadOf = <other url base>
-> 	ignorecase = true
+>     git clone https://github.com/GIT/GIT (differences outside host part)
+>     git clone git@github.com:GIT/GIT     (differences outside host part)
 
-I am with Daniel on this.
+This is one of the more obvious examples I would think as the protocol is
+different. What about:
 
-It is perfectly fine to consider these two equivalent.
+     git clone git@example.com:git/git     (differences outside host part)
+     git clone git@example.com:GIT/GIT     (differences outside host part)
 
-    git clone https://github.com/git/git (canonical one)
-    git clone https://GitHub.com/git/git (host part in funny case)
-
-In fact, I think we should do this without any additional
-configuration variable.
-
-On the other hand, these two MUST be treated as different by
-default:
-
-    git clone https://github.com/GIT/GIT (differences outside host part)
-    git clone git@github.com:GIT/GIT     (differences outside host part)
-
-Although I am OK if this is hidden behind a configuration variable,
-I am not sure how much value you would be giving to the users.
-
-In any case, I expect that additional change (on top of what is
-required to make hostname part treated case insensitively) would not
-be too bad, if we were going to fix the hostname part.
+If the host has a filesystem which respects capitalization, these may be
+two different repositories.
