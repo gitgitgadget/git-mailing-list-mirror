@@ -1,98 +1,98 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCHv2] Makefile: add missing phony target
-Date: Fri, 11 Dec 2015 16:13:11 +0100
-Message-ID: <CA+EOSB=a-qWP2-UfYJjPjSr8DD1ER39_rJPc8HAxV5qr+gw1qw@mail.gmail.com>
+Date: Fri, 11 Dec 2015 16:43:18 +0100
+Message-ID: <vpqsi392dpl.fsf@anie.imag.fr>
 References: <1449843766-41658-1-git-send-email-gitter.spiros@gmail.com>
 	<vpq7fkl3v66.fsf@anie.imag.fr>
+	<CA+EOSB=a-qWP2-UfYJjPjSr8DD1ER39_rJPc8HAxV5qr+gw1qw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Dec 11 16:13:20 2015
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 11 16:43:41 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a7PNn-00023x-FK
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Dec 2015 16:13:19 +0100
+	id 1a7Pqx-0002JJ-Ts
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Dec 2015 16:43:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702AbbLKPNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Dec 2015 10:13:14 -0500
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:34546 "EHLO
-	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754668AbbLKPNM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Dec 2015 10:13:12 -0500
-Received: by vkgj66 with SMTP id j66so21135490vkg.1
-        for <git@vger.kernel.org>; Fri, 11 Dec 2015 07:13:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SjVHlI5O1GzTmqiINT0u+nNgVibzlq2WmrLmnkXCS5U=;
-        b=dbyH+ixssCjav7Vse0ad3nWwCCbjk5B9CTetDUgRM60BKz/gfaTvl1uU9fIlghYdrD
-         kOnBOMvocOUGH3iravh2gqapKsbrsW6hFL4WeBI3XXeobh39HLoZNGhib8aNA2CVdWC+
-         x7bhm9zjIUn8+LrAUS8vetHqxxYA0IDl/6lrH12IIun9Cb7LQP3aC5rMc4FZod/c/efz
-         iILRrZMUgTsjmSPffKFedQ01Q8xEvfS4a94gCNUbDtA8Wfwr78WWQ1BIIFdloqIOSRKV
-         mnGi8wJSLs9HNr32pINpCZAxPf5bDs+oj46Io+JG506Ywylj/TOoyCpezQkCYOWtgmWh
-         FBxg==
-X-Received: by 10.31.13.205 with SMTP id 196mr15359382vkn.37.1449846791645;
- Fri, 11 Dec 2015 07:13:11 -0800 (PST)
-Received: by 10.31.56.209 with HTTP; Fri, 11 Dec 2015 07:13:11 -0800 (PST)
-In-Reply-To: <vpq7fkl3v66.fsf@anie.imag.fr>
+	id S1755301AbbLKPnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Dec 2015 10:43:23 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:40419 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753585AbbLKPnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Dec 2015 10:43:22 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id tBBFhGNR023808
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 11 Dec 2015 16:43:16 +0100
+Received: from anie (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tBBFhISJ015180;
+	Fri, 11 Dec 2015 16:43:18 +0100
+In-Reply-To: <CA+EOSB=a-qWP2-UfYJjPjSr8DD1ER39_rJPc8HAxV5qr+gw1qw@mail.gmail.com>
+	(Elia Pinto's message of "Fri, 11 Dec 2015 16:13:11 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 11 Dec 2015 16:43:17 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: tBBFhGNR023808
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1450453398.37094@X8fRYjgy+lDpU1xJ0QvUUw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282261>
 
-2015-12-11 15:40 GMT+01:00 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
-> Elia Pinto <gitter.spiros@gmail.com> writes:
->
->> This is the second version of this patch.
->> Added the corrections suggested by Matthieu Moy ($gmane/282221)
->
-> Sorry, but my main concern was that the patch could not be reviewed in
-> good conditions as-is, and I think it still cannot be. It's very hard to
-> spot which .PHONY rules you're adding and which are just code movement.
-> You should really split this into one "code movement" patch and one
-> "actual bugfix" patch. Or someone with better eyes than me should review
-> the patch ;-).
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-Ok. No problem. I thought there was no need for a patch so simple. But ok.
+> 2015-12-11 15:40 GMT+01:00 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+>> Elia Pinto <gitter.spiros@gmail.com> writes:
+>>
+>>> This is the second version of this patch.
+>>> Added the corrections suggested by Matthieu Moy ($gmane/282221)
+>>
+>> Sorry, but my main concern was that the patch could not be reviewed in
+>> good conditions as-is, and I think it still cannot be. It's very hard to
+>> spot which .PHONY rules you're adding and which are just code movement.
+>> You should really split this into one "code movement" patch and one
+>> "actual bugfix" patch. Or someone with better eyes than me should review
+>> the patch ;-).
+>
+> Ok. No problem. I thought there was no need for a patch so simple. But ok.
 
-Thank you. I will reroll.
->
->> @@ -2215,6 +2221,7 @@ test-svn-fe$X: vcs-svn/lib.a
->>  test-%$X: test-%.o GIT-LDFLAGS $(GITLIBS)
->>       $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+The point is: once a tricky bug was found in a patch (and I did on v1),
+you cannot claim anymore that it is "so simple". If it was that simple,
+you would have cought it before sending.
+
+>>> @@ -2215,6 +2221,7 @@ test-svn-fe$X: vcs-svn/lib.a
+>>>  test-%$X: test-%.o GIT-LDFLAGS $(GITLIBS)
+>>>       $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+>>>
+>>> +.PHONY: check_sha1 $(SP_OBJ) sparse check check-sha1
+>>>  check-sha1:: test-sha1$X
+>>>       ./test-sha1.sh
+>>>
+>>> @@ -2224,7 +2231,6 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+>>>       $(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
+>>>               $(SPARSE_FLAGS) $<
+>>>
+>>> -.PHONY: sparse $(SP_OBJ)
+>>>  sparse: $(SP_OBJ)
 >>
->> +.PHONY: check_sha1 $(SP_OBJ) sparse check check-sha1
->>  check-sha1:: test-sha1$X
->>       ./test-sha1.sh
->>
->> @@ -2224,7 +2231,6 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
->>       $(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
->>               $(SPARSE_FLAGS) $<
->>
->> -.PHONY: sparse $(SP_OBJ)
->>  sparse: $(SP_OBJ)
->
-> This "sparse" movement looks again contradictory with the goal announced
-> in the commit message.
-The idea was to group all the phony before all the target, not to put
-the phony necessarily before the closest target. but ok
->
->> @@ -2237,6 +2243,7 @@ check: common-cmds.h
->>               exit 1; \
->>       fi
->>
->> +
-My bad :=)
->>  ### Installation rules
->
-> Useless hunk.
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+>> This "sparse" movement looks again contradictory with the goal announced
+>> in the commit message.
+> The idea was to group all the phony before all the target, not to put
+> the phony necessarily before the closest target. but ok
+
+I personally prefer the old way. I have no strong objection to changing,
+but currently your commit message says "Also put the .PHONY declaration
+immediately before the target declaration", which is clearly not a
+justification to do this change.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
