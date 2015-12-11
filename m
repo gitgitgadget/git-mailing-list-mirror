@@ -1,77 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 00/10] ref-filter: use parsing functions
-Date: Fri, 11 Dec 2015 14:49:42 -0800
-Message-ID: <xmqq1taseh2x.fsf@gitster.mtv.corp.google.com>
-References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
+From: Stefan Beller <sbeller@google.com>
+Subject: Re: sb/submodule-parallel-fetch, was: Re: What's cooking in git.git
+ (Dec 2015, #03; Thu, 10)
+Date: Fri, 11 Dec 2015 14:52:53 -0800
+Message-ID: <CAGZ79kYOtoWHCzpeHGrCEjTUuKYB3rogfV2dxL_TL5Pcu59RSg@mail.gmail.com>
+References: <xmqqmvthhqgf.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaA6Lo1W-SudX6v5styyGrX-igGC7i=u5AYOvFYK0DOGA@mail.gmail.com>
+	<xmqqvb85g8v9.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kY8M-Xv1s4-s7HnjxZ_X19SR4PsWMtQ3yogqN=vjDiMwQ@mail.gmail.com>
+	<566B4207.8020009@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, matthieu.moy@grenoble-inp.fr
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 11 23:50:00 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Dec 11 23:53:01 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a7WVj-0000rg-I8
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Dec 2015 23:49:59 +0100
+	id 1a7WYd-00080j-Vi
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Dec 2015 23:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752308AbbLKWtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Dec 2015 17:49:50 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55976 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751626AbbLKWtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Dec 2015 17:49:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D881D326FF;
-	Fri, 11 Dec 2015 17:49:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oJZRm8rv60z1Vi/yMTHwty9HqLA=; b=YM++ea
-	SOTRJfIUULphRPF8cF7DRp7bbJSTYIEZ5wsbRcR0sTfKKMWIstL61SppfTsV7HMm
-	wa86XWGRP/HF6po1USpE8bM4EKwANWCR6ZFKKZT/viY9AN/HDEwAuD1A+Y/GEFKU
-	flYDtQylgQ0zrsDMrFIfYRLZLa3+nWLs00pKc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VG9IVZPWIgZwbdZgYzT6hfatLlk/5UYz
-	Jpwu+91f2ysDMYcSQyHXGW/s4VimGVL1eKghG2WoASF4HG1iW8fp/z6ZuIRMPlUP
-	hOX7tRn/MtmRLI5+cI0VJwzYpNNjQBYjMlccvXqilFHrl9WAgGIzUvPslPNEvXfz
-	poHJEkMZn8s=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CF29C326FE;
-	Fri, 11 Dec 2015 17:49:47 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4C26B326FD;
-	Fri, 11 Dec 2015 17:49:47 -0500 (EST)
-In-Reply-To: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
-	(Karthik Nayak's message of "Thu, 12 Nov 2015 01:14:26 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 7A8CD088-A059-11E5-AC13-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1754781AbbLKWwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Dec 2015 17:52:55 -0500
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:34583 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754692AbbLKWwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Dec 2015 17:52:54 -0500
+Received: by mail-ig0-f172.google.com with SMTP id g19so49777784igv.1
+        for <git@vger.kernel.org>; Fri, 11 Dec 2015 14:52:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=KvvXlY8rjU56CW6Kg8t8LfqAfwbQiGHtjlKPSpb9d2M=;
+        b=Ipc3EmbA0w/t94eIHXK7JLq/UqzoMKg+s6/bEf7/JBkPfHxcUL4D5U/GtQ7f5It6v4
+         F8LcFvDdh1gzhENdwU9gAds6tz7r2l6W2BaEeLEDIb/6QMPFMYWcvzk9zxDQWZHk5n+q
+         c7ssbB08izw3+gAnVql6Lp5SbGRrs85pyRJgzYbRmuOfpy8BUvP/XPywnOe507JMYje6
+         1OhRCXLSOje4nhdgGCu+eye03qMb4mTDd2UoJh27NrAU6L06YcxhYJpr4WkldMFPZVjQ
+         pU/7/6NDhdwj1tUe7bQGw2jRjBpRO55Ps15Bs+N4Ta03eJCcc12l1Ekis448bKF8/lC6
+         C51Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=KvvXlY8rjU56CW6Kg8t8LfqAfwbQiGHtjlKPSpb9d2M=;
+        b=gY8H+bHKFW6tTx1ke/trvQQpmmO06pgfe+9z6FnIYPn8Oyawnu+zweBFbh7z72VbMm
+         Sl8mREpfL55IOA0o+yHRpnSOYhQdY6Ng+OGx+aNTxmNGNpkgg5gRgwZjeMMgpRf3QQCD
+         uRFgBGeywxwtxQB/iupXEqt6ldwoXfOj3yd3td2tg51fs9V4CNjrNzuWw0yEROHirocn
+         RR078NHxc7sKtVgFzBfqkqHgIQCamsjfAd8+uztJEVYDJ2IyIYyHJL2q9PTJn6a9yt4r
+         hjSrSpJd+Y/AD8i4fnF3O/Vwa8b2QiBAfhIjctgDBpGMCA1U5GhRR8BYbYKKD//P9uL5
+         97xg==
+X-Gm-Message-State: ALoCoQlfK1xm8eYtkvQx4Vn7mDBQWoMTf0S7+wlY7D51xns4cdg7oBn7iqzr3Ys2JKLSM1SHOjXOZLl4o7nhsusl/8ykAGNlCzm7DNdzR+cuVDYTKtMvI8k=
+X-Received: by 10.50.109.136 with SMTP id hs8mr7055262igb.93.1449874373520;
+ Fri, 11 Dec 2015 14:52:53 -0800 (PST)
+Received: by 10.107.19.26 with HTTP; Fri, 11 Dec 2015 14:52:53 -0800 (PST)
+In-Reply-To: <566B4207.8020009@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282283>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Fri, Dec 11, 2015 at 1:37 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+>
+> Generally, I'm already quite satisfied with the state of the
+> infrastructure at the tip of the branch.
+>
 
-> Karthik Nayak (10):
->   ref-filter: introduce a parsing function for each atom in valid_atom
->   ref-filter: introduce struct used_atom
->   ref-fitler: bump match_atom() name to the top
->   ref-filter: skip deref specifier in match_atom_name()
->   ref-filter: introduce color_atom_parser()
->   strbuf: introduce strbuf_split_str_without_term()
->   ref-filter: introduce align_atom_parser()
->   ref-filter: introduce remote_ref_atom_parser()
->   ref-filter: introduce contents_atom_parser()
->   ref-filter: introduce objectname_atom_parser()
+I was about the rework the patch series.
 
-It seems that this series had seen quite a good inputs, mostly from
-Eric.  I finished reading it over and I didn't find anything more to
-add.  The patches are mostly good and would be ready once these
-points raised during the review are addressed, I think
+> Nevertheless, I have a few niggles.
 
-Thanks.
+If you don't mind I'll split your patch into chunks and
+squash these where appropriate and resend the series
+with the suggestions included without the intermediate stages
+of non compiling code for Windows.
+
+>
+> The primary one is that we are using a global variable of type
+> struct parallel_processes to keep track of the processes. Fortunately,
+> most functions already take a pointer (I gather you did anticipate an
+> object oriented use of the functions). The only exception is pp_init():
+> It returns a pointer to the global object, which is then passed around
+> to the other functions. This does not conform to our usual style,
+> however, where the initializer function takes a pointer to the object,
+> too.
+
+Noted. I thought about the init function as a constructor,
+such as
+
+    foo *pp = new foo();
+
+in C++ would be just syntactic sugar for what I did there.
+I'll adhere to Git style then instead.
+
+>
+> After converting pp_init, we can have a nicely object oriented
+> collection of functions and get rid of the global object ... almost.
+>
+> We still need a global variable for the signal handler. But since
+> signals and their handlers are a global resource, it is not that bad to
+> have a global variable that is dedicated to signal handling.
+>
+> Another small nit is that I found it confusing that the closure
+> parameters are arranged differently in the callback functions. Granted,
+> in get_next_task one of them is an out parameter, but that is actually
+> an argument to move it to the end of the parameter list, IMHO.
+>
+> On top of that I found an error or two in the documentation, and I have
+> a few suggestions for improvements.
+>
+> All this is summarized in the patch below.
+
+Thanks for the improvements!
+
+Stefan
