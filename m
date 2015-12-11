@@ -1,90 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: David Turner <dturner@twopensource.com>
 Subject: Re: [PATCH 02/16] refs: add methods for misc ref operations
-Date: Fri, 11 Dec 2015 15:39:58 -0800
-Message-ID: <xmqqmvtgd06p.fsf@gitster.mtv.corp.google.com>
+Date: Fri, 11 Dec 2015 18:49:25 -0500
+Organization: Twitter
+Message-ID: <1449877765.1678.2.camel@twopensource.com>
 References: <1449102921-7707-1-git-send-email-dturner@twopensource.com>
-	<1449102921-7707-3-git-send-email-dturner@twopensource.com>
+	 <1449102921-7707-3-git-send-email-dturner@twopensource.com>
+	 <xmqqmvtgd06p.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, mhagger@alum.mit.edu,
 	Ronnie Sahlberg <sahlberg@google.com>,
 	David Turner <dturner@twitter.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sat Dec 12 00:40:20 2015
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 12 00:49:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a7XIR-0006pQ-IJ
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Dec 2015 00:40:19 +0100
+	id 1a7XRe-0003rP-JR
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Dec 2015 00:49:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579AbbLKXkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Dec 2015 18:40:13 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55854 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751591AbbLKXkM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Dec 2015 18:40:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BF517339AB;
-	Fri, 11 Dec 2015 18:40:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VPPje0+uh43fRUmwzyT4BcXMy8s=; b=R+N9WW
-	9TQe9ZTpTI7fWbLAb+Gs+lR/inzlijPeOS2+2aZlmNXDzoI6SXBSMDRIA83JtFlk
-	QAsO1GRWHC7Zki81wS9jKxK/HjG0veIQz4lmdWrwV0s6R7EyIDHhMzwc0Od1mt19
-	UtHK4YUHuLLybBK0D8SjPBEXkaUig85vH2BaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H1PsqBsVUjr+R6UPM+lmT/sas4o1vi9F
-	1UbLlLVaiuBOVbQrZBU3x35yRe/eKRUOEVH3iNIfh5V1yB8NiquxBtPKkZdfxFPt
-	ca9hNrvBSEg2kv+BcUOS34zTz5bUACU8WA1AtCrHSCFBovsaNTNYeFP6z+vo5pmR
-	HGqBsyktyJs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B75C1339A9;
-	Fri, 11 Dec 2015 18:40:11 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1CFCD339A8;
-	Fri, 11 Dec 2015 18:40:11 -0500 (EST)
-In-Reply-To: <1449102921-7707-3-git-send-email-dturner@twopensource.com>
-	(David Turner's message of "Wed, 2 Dec 2015 19:35:07 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 84E123D4-A060-11E5-A886-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753536AbbLKXta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Dec 2015 18:49:30 -0500
+Received: from mail-qg0-f45.google.com ([209.85.192.45]:35597 "EHLO
+	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751969AbbLKXt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Dec 2015 18:49:29 -0500
+Received: by qgew101 with SMTP id w101so5740733qge.2
+        for <git@vger.kernel.org>; Fri, 11 Dec 2015 15:49:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=twopensource-com.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:content-type:mime-version:content-transfer-encoding;
+        bh=nMmj1DB8WR7omAHufuBjPkyDJKFyQ4hxi4EcTUv0X2c=;
+        b=OYE42bya8RXJMJi/s00/TTBnmifd9SgJYCw1ZtnVVw6sTPx+j5W5m+R82YRcwbyruR
+         9/OUlFGEprzdFKZNzidqAySCmoEQjGUzHL8bFt7BZvvmUtSXbKrgOoQ3tmUy9Kg5VG+U
+         WKoWGNK7K0gOQy5xsx9L19jku6cEe/Bn/nLji9W9Hw444QHSfDdR4oFSK8d+Q4jQlF5c
+         CM49q0SbSSNBdgXrAKuC1oiqH915JJ9KvFREooVciNi/J9PxXy1KQO4NLIUw/zy+yCOm
+         m8Ud/hZSOPUljAj2/vL03EWeqvg64J8ELZXY6NSSr9LUBRJ+7MU+4Po78w5qPTptfpQG
+         OIOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=nMmj1DB8WR7omAHufuBjPkyDJKFyQ4hxi4EcTUv0X2c=;
+        b=Gb+bSShJTFB35zYVhrSyBhKwc6iALruK1WsqOs1J8jFGdN1h2carCZ485iZIgkl84s
+         cc5nmMt/4TqSV0a/8KZKbZWE2rUp8l5I5djrCth6v2nZwqIR9SpP+nGmQTPUWesngGZN
+         v/fu1EWFRLyAyOjIe1kGsloxsucK4Iws0TIjySO+zdiW6tw+2RYstJnOTjnKnNuzQPGK
+         EPiPeEJ9oHklmQFRsbrvlEqk/L3yBoX1kmsiCVOEbVAsYdo0wMGDMAtNDxON3zFJGrdJ
+         vtWB+L/JcBpJDTLFgaMo1fmATiBdHfOsYhiQSI06iRpH5LW7m5XYeshbNK8lzK+ONjxf
+         lp1A==
+X-Gm-Message-State: ALoCoQmgITrsRG9zdRc0ItAwX81jH5R1KZ9jq3kdJeD0AHKAca9y9berox1P2iLTSa7aKgd1Zi/iGF6j2TO9UjYe7EVOwEYVaA==
+X-Received: by 10.140.42.164 with SMTP id c33mr27219895qga.66.1449877768386;
+        Fri, 11 Dec 2015 15:49:28 -0800 (PST)
+Received: from ubuntu ([8.25.196.26])
+        by smtp.gmail.com with ESMTPSA id w78sm3534169qka.25.2015.12.11.15.49.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 11 Dec 2015 15:49:27 -0800 (PST)
+In-Reply-To: <xmqqmvtgd06p.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Evolution 3.12.11-0ubuntu3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282288>
 
-David Turner <dturner@twopensource.com> writes:
+On Fri, 2015-12-11 at 15:39 -0800, Junio C Hamano wrote:
+> David Turner <dturner@twopensource.com> writes:
+> 
+> >  struct ref_be {
+> >  	struct ref_be *next;
+> >  	const char *name;
+> >  	ref_transaction_commit_fn *transaction_commit;
+> > +
+> > +	pack_refs_fn *pack_refs;
+> > +	peel_ref_fn *peel_ref;
+> > +	create_symref_fn *create_symref;
+> > +
+> > +	resolve_ref_unsafe_fn *resolve_ref_unsafe;
+> > +	verify_refname_available_fn *verify_refname_available;
+> > +	resolve_gitlink_ref_fn *resolve_gitlink_ref;
+> >  };
+> 
+> This may have been pointed out in the previous reviews by somebody
+> else, but I think it is more customary to declare a struct member
+> that is a pointer to a customization function without leading '*',
+> i.e.
+> 
+> 	typedef TYPE (*customize_fn)(ARGS);
+> 
+>         struct vtable {
+> 		...
+>         	cutomize_fn fn;
+> 		...
+> 	};
+> 
+> in our codebase (cf. string_list::cmp, prio_queue::compare).
 
->  struct ref_be {
->  	struct ref_be *next;
->  	const char *name;
->  	ref_transaction_commit_fn *transaction_commit;
-> +
-> +	pack_refs_fn *pack_refs;
-> +	peel_ref_fn *peel_ref;
-> +	create_symref_fn *create_symref;
-> +
-> +	resolve_ref_unsafe_fn *resolve_ref_unsafe;
-> +	verify_refname_available_fn *verify_refname_available;
-> +	resolve_gitlink_ref_fn *resolve_gitlink_ref;
->  };
+The previous review was here:
+http://permalink.gmane.org/gmane.comp.version-control.git/279062
 
-This may have been pointed out in the previous reviews by somebody
-else, but I think it is more customary to declare a struct member
-that is a pointer to a customization function without leading '*',
-i.e.
+Michael wrote:
+> Hmmm, I thought our convention was to define typedefs for functions
+> themselves, not for the pointer-to-function; e.g.,
+>
+>     typedef struct ref_transaction *ref_transaction_begin_fn(struct
+> strbuf *err);
+>
+> (which would require `struct ref_be` to be changed to
+>
+>         ref_transaction_begin_fn *transaction_begin;
 
-	typedef TYPE (*customize_fn)(ARGS);
-
-        struct vtable {
-		...
-        	cutomize_fn fn;
-		...
-	};
-
-in our codebase (cf. string_list::cmp, prio_queue::compare).
+And you agreed.  So I changed it.  Do you want me to change it back?  
