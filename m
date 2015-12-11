@@ -1,98 +1,99 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCHv2] Makefile: add missing phony target
-Date: Fri, 11 Dec 2015 16:43:18 +0100
-Message-ID: <vpqsi392dpl.fsf@anie.imag.fr>
-References: <1449843766-41658-1-git-send-email-gitter.spiros@gmail.com>
-	<vpq7fkl3v66.fsf@anie.imag.fr>
-	<CA+EOSB=a-qWP2-UfYJjPjSr8DD1ER39_rJPc8HAxV5qr+gw1qw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Dec 2015, #03; Thu, 10)
+Date: Fri, 11 Dec 2015 09:39:49 -0800
+Message-ID: <xmqqr3isg9zu.fsf@gitster.mtv.corp.google.com>
+References: <xmqqmvthhqgf.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kaA6Lo1W-SudX6v5styyGrX-igGC7i=u5AYOvFYK0DOGA@mail.gmail.com>
+	<xmqqvb85g8v9.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kY8M-Xv1s4-s7HnjxZ_X19SR4PsWMtQ3yogqN=vjDiMwQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 11 16:43:41 2015
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Fri Dec 11 18:40:02 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a7Pqx-0002JJ-Ts
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Dec 2015 16:43:28 +0100
+	id 1a7Rfh-0000is-Tb
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Dec 2015 18:39:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755301AbbLKPnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Dec 2015 10:43:23 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:40419 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753585AbbLKPnW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Dec 2015 10:43:22 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id tBBFhGNR023808
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Fri, 11 Dec 2015 16:43:16 +0100
-Received: from anie (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id tBBFhISJ015180;
-	Fri, 11 Dec 2015 16:43:18 +0100
-In-Reply-To: <CA+EOSB=a-qWP2-UfYJjPjSr8DD1ER39_rJPc8HAxV5qr+gw1qw@mail.gmail.com>
-	(Elia Pinto's message of "Fri, 11 Dec 2015 16:13:11 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 11 Dec 2015 16:43:17 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: tBBFhGNR023808
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1450453398.37094@X8fRYjgy+lDpU1xJ0QvUUw
+	id S1753072AbbLKRjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Dec 2015 12:39:53 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:52439 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752093AbbLKRjw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Dec 2015 12:39:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C466E307DC;
+	Fri, 11 Dec 2015 12:39:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HcMqyqqjmjfpm6GFVbvQ5VD/Pik=; b=C1F1zy
+	fQfM5PYNzf4dxj0QGG5gI8KLzmQsuUYi97JnBD9tRiBFO5PpYJcCoZmZq23VJYf3
+	PHc5rEEmbLaPjtptV+aJySHr9+AgppnckUfZ74PaksLkKGxfLct2d+uuVzIr4zQf
+	hFJaMdAXHwBTu1/VPvBv3pm2QdskJQ/e14D6M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FRYzZ7myFZgJ9DJR4pyunL3YnVzOVyK0
+	XEnVcVFaJScPOL3EgPdi8mcvVWN9BndDz1f4pq2SW+RXoILPkQk5UTUr10pyiDSR
+	BbJpO57XRQDkuZ6CEWM+6Az1tEop4FXuWhWDQLhalCTy31wLyjoexOVwjLcOGx++
+	5pDqo0FDh6Q=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BB886307DA;
+	Fri, 11 Dec 2015 12:39:51 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3BF1C307D9;
+	Fri, 11 Dec 2015 12:39:51 -0500 (EST)
+In-Reply-To: <CAGZ79kY8M-Xv1s4-s7HnjxZ_X19SR4PsWMtQ3yogqN=vjDiMwQ@mail.gmail.com>
+	(Stefan Beller's message of "Thu, 10 Dec 2015 15:55:34 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 2E6EA954-A02E-11E5-ADB2-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282262>
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> 2015-12-11 15:40 GMT+01:00 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
->> Elia Pinto <gitter.spiros@gmail.com> writes:
+> On Thu, Dec 10, 2015 at 3:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Stefan Beller <sbeller@google.com> writes:
 >>
->>> This is the second version of this patch.
->>> Added the corrections suggested by Matthieu Moy ($gmane/282221)
+>>>> * sb/submodule-parallel-fetch (2015-11-24) 17 commits
+>>>> ...
+>>>
+>>> I assume you plan on merging this after 2.7 settled and then we can
+>>> also get the above sb/submodule-parallel-update going again.
 >>
->> Sorry, but my main concern was that the patch could not be reviewed in
->> good conditions as-is, and I think it still cannot be. It's very hard to
->> spot which .PHONY rules you're adding and which are just code movement.
->> You should really split this into one "code movement" patch and one
->> "actual bugfix" patch. Or someone with better eyes than me should review
->> the patch ;-).
+>> Yeah, thanks for reminding me.  I think that would be a good plan
+>> that gives us an opportunity to clean up this topic, some parts of
+>> which are have "an early patch that was too hastily merged to 'next'
+>> had to be tweaked by an 'oops' follow-up patch in the topic"
+>> pattern, e.g. "make waitpid the secondary and closed pipe the
+>> primary way to monitor children".
+>>
+>> Thanks.
 >
-> Ok. No problem. I thought there was no need for a patch so simple. But ok.
+> This makes it sound as if you would drop it from next once 2.7 is out,
+> expecting a complete reroll, which does the right thing from the beginning?
 
-The point is: once a tricky bug was found in a patch (and I did on v1),
-you cannot claim anymore that it is "so simple". If it was that simple,
-you would have cought it before sending.
+Yes, what is still in 'next' when a new release is made has the
+chance to (re)do the right thing from the beginning, and it also can
+lose merges from other topics in the middle of the topic if they
+have graduated to 'master'.
 
->>> @@ -2215,6 +2221,7 @@ test-svn-fe$X: vcs-svn/lib.a
->>>  test-%$X: test-%.o GIT-LDFLAGS $(GITLIBS)
->>>       $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
->>>
->>> +.PHONY: check_sha1 $(SP_OBJ) sparse check check-sha1
->>>  check-sha1:: test-sha1$X
->>>       ./test-sha1.sh
->>>
->>> @@ -2224,7 +2231,6 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
->>>       $(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
->>>               $(SPARSE_FLAGS) $<
->>>
->>> -.PHONY: sparse $(SP_OBJ)
->>>  sparse: $(SP_OBJ)
->>
->> This "sparse" movement looks again contradictory with the goal announced
->> in the commit message.
-> The idea was to group all the phony before all the target, not to put
-> the phony necessarily before the closest target. but ok
+A topic that did the right thing from this cycle already, but needs
+to stay in 'next' only because the area it touches is so important
+and deserves more real world testing by those who run 'next', may
+not have to reroll.
 
-I personally prefer the old way. I have no strong objection to changing,
-but currently your commit message says "Also put the .PHONY declaration
-immediately before the target declaration", which is clearly not a
-justification to do this change.
+I think two sb/submodule-parallel-* topics fall into the former
+category, i.e. ones that can take advantage of the chance to escape
+the rigidity of 'next' at the release cycle boundary, and I think
+we should grab that opportunity to clean these series up.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks.
