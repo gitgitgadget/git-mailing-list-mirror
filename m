@@ -1,82 +1,91 @@
-From: Nasser Grainawi <nasser@codeaurora.org>
-Subject: Re: Why does send-pack call pack-objects for all remote refs?
-Date: Fri, 11 Dec 2015 21:15:17 -0700
-Message-ID: <EC1A4F48-729B-4DC5-ADB4-C0BEAE104908@codeaurora.org>
-References: <4766c8518c2a46afb88fc0a2dd9a1688@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com> <xmqqvb89lw5f.fsf@gitster.mtv.corp.google.com> <20151207225714.GA3785@sigill.intra.peff.net> <8712f730fb4c414ebc2b1168ca7948b8@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com> <20151210041941.GA4056@sigill.intra.peff.net>
-Mime-Version: 1.0 (Mac OS X Mail 9.1 \(3096.5\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Koverman <dkoverman@predictiveTechnologies.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 12 05:16:02 2015
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 2/8] update-index: use enum for untracked cache options
+Date: Sat, 12 Dec 2015 10:25:37 +0100
+Message-ID: <CAP8UFD24Xm6bVYYJShDXui=ot+YpScaGZ9HC3K+Rqem3y1Rn0w@mail.gmail.com>
+References: <1449594916-21167-1-git-send-email-chriscool@tuxfamily.org>
+	<1449594916-21167-3-git-send-email-chriscool@tuxfamily.org>
+	<xmqq1tawlpqw.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD3+gsHZuaBweP83or=rEh-LFnz6=ycBCeuhApxp0PzN1A@mail.gmail.com>
+	<xmqqh9jqi1ky.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD3AHMEZB+6Ajt8XSsecTp_PSxV_ZxFLbMAYgA3CDhPDng@mail.gmail.com>
+	<xmqqio44g9rm.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 12 10:26:24 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a7bbC-0004mW-RN
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Dec 2015 05:15:59 +0100
+	id 1a7gRb-0000SG-R4
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Dec 2015 10:26:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459AbbLLEPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Dec 2015 23:15:18 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:48850 "EHLO
-	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026AbbLLEPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Dec 2015 23:15:17 -0500
-Received: from smtp.codeaurora.org (localhost [127.0.0.1])
-	by smtp.codeaurora.org (Postfix) with ESMTP id 9B56713EDDD;
-	Sat, 12 Dec 2015 04:15:16 +0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 486)
-	id 6AD9313EEFA; Sat, 12 Dec 2015 04:15:16 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	pdx-caf-smtp.dmz.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.1
-Received: from [192.168.1.8] (c-76-25-249-107.hsd1.co.comcast.net [76.25.249.107])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: nasser@smtp.codeaurora.org)
-	by smtp.codeaurora.org (Postfix) with ESMTPSA id A8F4813EDDD;
-	Sat, 12 Dec 2015 04:15:15 +0000 (UTC)
-In-Reply-To: <20151210041941.GA4056@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.3096.5)
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1751679AbbLLJZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Dec 2015 04:25:41 -0500
+Received: from mail-lb0-f181.google.com ([209.85.217.181]:35094 "EHLO
+	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751227AbbLLJZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Dec 2015 04:25:39 -0500
+Received: by lbpu9 with SMTP id u9so76189634lbp.2
+        for <git@vger.kernel.org>; Sat, 12 Dec 2015 01:25:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=xVUnmsURIa9/OP3bqa6mEZ6iwyVQTOblKsmJ/oFO9BQ=;
+        b=Pb6n0BztQm/9dB6gof0LT8QatikBJueoHnHLhoCt4UhksW76iVcI1TNzSZS9fecX5X
+         4l8fcKttv6sUvbYtD2vbkE4ByR393njoRau4DHJFBNcdCcHsF6qgtAVVqNh2GdHJbMg5
+         0sIE44cEPDCV0IclQ0gzLA9WZxC7gMtewL6A8UO1ug+wxot2nMjwERVogUfcJB9m3Nxq
+         +YsOuKZeWsnZHzw1swFUjwv5Cq79K6N2w2tR0SFw7Hp+NkReF5U7K/edS4WAXhJ43+eW
+         J607Vzcp1DthKVaF6n4x/ijw/7yUhYyTfG9pKBS57I2H9GGpUjTMtUWqTsVk+hraaqBG
+         YVnA==
+X-Received: by 10.112.184.45 with SMTP id er13mr9454500lbc.133.1449912337572;
+ Sat, 12 Dec 2015 01:25:37 -0800 (PST)
+Received: by 10.25.152.7 with HTTP; Sat, 12 Dec 2015 01:25:37 -0800 (PST)
+In-Reply-To: <xmqqio44g9rm.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282299>
 
+On Fri, Dec 11, 2015 at 6:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>>> As you know I am bad at bikeshedding; the only suggestion in the
+>>> above is to have common UC_ prefix ;-)  Don't take what follow UC_
+>>> as my suggestion.
+>>
+>> I am bad at finding names too, so I think what you wrote is pretty good.
+>>
+>> I thought about the following:
+>>
+>>      UC_UNDEF
+>>      UC_DISABLE
+>>      UC_ENABLE
+>>      UC_TEST
+>>      UC_FORCE
+>>
+>> but I am not sure it is much better.
+>
+> I hated the DONTUSE/USE I listed, and I think DISABLE/ENABLE is much
+> much better.  I do prefer unspecified over undef, though.
 
-> On Dec 9, 2015, at 9:19 PM, Jeff King <peff@peff.net> wrote:
-> 
-> On Tue, Dec 08, 2015 at 05:34:43PM +0000, Daniel Koverman wrote:
-> 
->> It is also good to know that 2000 remote refs is insane. The lower
->> hanging fruit here sounds like trimming that to a reasonable
->> number, so I'll try that approach first.
-> 
-> It's definitely a lot, but it's not unheard of. The git project has over
-> 500 tags. That's not 2000, but you're within an order of magnitude.
-> 
-> I have seen repositories with 20,000+ tags. I consider that a bit more
-> ridiculous, but it does work in practice.
-> 
+Ok, then it will be:
 
-We have one at $DAY_JOB with 400,000+ refs. It presents some issues, but
-Martin has raised those with the community and it works pretty well now.
+    UC_UNSPECIFIED
+    UC_DISABLE
+    UC_ENABLE
+    UC_TEST
+    UC_FORCE
 
-Ref advertisement is still a pain...
-
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
--- 
-Qualcomm Innovation Center, Inc.
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, 
-a Linux Foundation Collaborative Project
+Thanks,
+Christian.
