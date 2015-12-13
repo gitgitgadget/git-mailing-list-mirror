@@ -1,71 +1,73 @@
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH v6] blame: add support for --[no-]progress option
-Date: Sat, 12 Dec 2015 18:40:13 -0600
-Message-ID: <CAOc6etYCZOA9SOxWp3cKuY0z249jeb5vYAhvbLEohYGeVqi6Bg@mail.gmail.com>
+Date: Sat, 12 Dec 2015 19:40:24 -0500
+Message-ID: <CAPig+cQ__eueXdeq=CHUicz727hx-THuJxt20_PXGgo=KzK0xA@mail.gmail.com>
 References: <1449964625-27737-1-git-send-email-eantoranz@gmail.com>
 	<CAPig+cQq2Y0m0UJVCMb-9B8qrGNXV7ecf5hDETdgX5w4oUuAvw@mail.gmail.com>
 	<CAOc6etar5DU0w_RFRgUAzK39R43cP=eSwT_=0u2NbgKhdPi8Sg@mail.gmail.com>
-	<CAPig+cQjWgTR9Sd-CutkbuBa1Czp5YApsYoFXc9HS1H08cno7A@mail.gmail.com>
+	<CAOc6etYAbT8Yc3NwB4Rh1dShjDQB_PR2K-HvXpx6dTcB=YaB8w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Dec 13 01:40:21 2015
+To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 13 01:40:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a7ui4-0000Rv-L8
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 01:40:21 +0100
+	id 1a7uiD-0000u0-M0
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 01:40:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751521AbbLMAkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Dec 2015 19:40:15 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:35489 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751172AbbLMAkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Dec 2015 19:40:14 -0500
-Received: by pfd5 with SMTP id 5so23839681pfd.2
-        for <git@vger.kernel.org>; Sat, 12 Dec 2015 16:40:13 -0800 (PST)
+	id S1751525AbbLMAk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Dec 2015 19:40:26 -0500
+Received: from mail-vk0-f49.google.com ([209.85.213.49]:36211 "EHLO
+	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751201AbbLMAkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Dec 2015 19:40:25 -0500
+Received: by vkay187 with SMTP id y187so135836845vka.3
+        for <git@vger.kernel.org>; Sat, 12 Dec 2015 16:40:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=dd1pHyrlLMlPeDxjRxo0Pj6Gh5IhBxkqqjEDUqjIrWc=;
-        b=ceV5oduffgQszqMhIRnLnPuODYK2z9usrkZpiFdZDF0/7VOmE/pVEX6Ub2kK/ISkee
-         QuzuDIp7jfqura0Mn5O99cdzZ1AAonQXIznkhvNorEyxJoS9z3gRNajEE0zHXWoWsCC5
-         mKIeOc/L2z2kTX3fn9jRyC9eDpi1u1NdZc/3xx7Cv+LMpoKc5J1DbMmxPT5h8a/4Klri
-         HW0VVvrKprYM55cELJyLivk51WbOEBxcHpl+jlv5NnsfH0tfjsgbErZlRwB3oLrlpMC/
-         d5+ebzRgAHHENWdv5RtZ6JoY9h4nNbkDVdJWj0hkFgWe5+dzE31bgnjy03xr0TlNjXDO
-         0fsg==
-X-Received: by 10.98.16.205 with SMTP id 74mr4945804pfq.150.1449967213883;
- Sat, 12 Dec 2015 16:40:13 -0800 (PST)
-Received: by 10.66.89.42 with HTTP; Sat, 12 Dec 2015 16:40:13 -0800 (PST)
-In-Reply-To: <CAPig+cQjWgTR9Sd-CutkbuBa1Czp5YApsYoFXc9HS1H08cno7A@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=cGL9ATkxtKrHezFstbNkDTAHy7bB2/9Du8qYMZVXpAc=;
+        b=DFIUrgbaXLAW++EwcJFowZWM0rfRlVDd1uL/J8MuXKkbaJ+nSeX2uF7QBnI8cetmt2
+         tL+NNASRYioUEEPaO+c8Vk/OyFMcvir6N73+IdboxEXIr9cN2+XjQia107i2vdTuEC/9
+         84fT+94/pkV/X8VPka9bb4aCT+xsu+Zm7joF8I87L4tBm9XZJPtB32SnBgOhvcRKY35A
+         GY7ezZif0c0N5Xq72TBntmTYpjrMTm8sr2byUdWOUGOsBs2lI9uoLNxFTL6CA7S9Ym1g
+         SPPz4Pv/2c/grFhxbT0jJWPex1CKnEJQiGzUsFYGvcLNxNfOKeTeiuA4lOvAJsNPdfAb
+         +uKg==
+X-Received: by 10.31.58.142 with SMTP id h136mr19713065vka.115.1449967224722;
+ Sat, 12 Dec 2015 16:40:24 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sat, 12 Dec 2015 16:40:24 -0800 (PST)
+In-Reply-To: <CAOc6etYAbT8Yc3NwB4Rh1dShjDQB_PR2K-HvXpx6dTcB=YaB8w@mail.gmail.com>
+X-Google-Sender-Auth: X68K6LJfOOvD5HefcsVnRzl0gqA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282312>
 
-On Sat, Dec 12, 2015 at 6:37 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>
->> Because, if the user didn't provide --[no-]progress option, then the
->> value in show_progress will move forward being -1 and then in
->> assign_blame, there will be progress output if you chose --incremental
->> or porcelain. So, if you chose --incremental or porcelain, we better
->> set the value to 0 to make sure there will be _no_ progress. Agree?
+On Sat, Dec 12, 2015 at 7:36 PM, Edmundo Carmona Antoranz
+<eantoranz@gmail.com> wrote:
+> On Sat, Dec 12, 2015 at 6:30 PM, Edmundo Carmona Antoranz
+> <eantoranz@gmail.com> wrote:
+> Hmmmm.... if the code in assign_blame changed to this, it would be
+> possible to allow the -1 to go through:
 >
-> Yeah, I was thinking of that and had the correct interpretation in
-> mind when reading the code, but then blocked it out of my brain for
-> some reason when actually composing the response.
+> if (show_progress > 0)
+>     pi.progress = start_progress_delay(_("Blaming lines"),
+> sb->num_lines, 50, 1);
+>
+> But then I think it would be more 'concise' if we had the value set to
+> 0/1 instead of expecting to see a possible value of -1 there (or
+> anywhere else) after progressing if progress will be shown or not in
+> the piece of code we are chatting about.
 
-Good! So, the only things to modify would be:
-- documentation to reflect new policy
-- no need to check for show_progress to ask to finish up struct
-progress instance.
-
-Let's give some time to allow for more comments before my next patch
-version.... so, say, 5 minutes.
+The name "show_progress" does read like a boolean rather than a
+tristate, so making sure its value is 0 or 1 after option processing
+(as your current patch does) is probably the best way to go. I don't
+otherwise feel strongly about it.
