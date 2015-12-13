@@ -1,119 +1,187 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC 00/10] ref-filter: use parsing functions
-Date: Sun, 13 Dec 2015 00:40:35 -0500
-Message-ID: <CAPig+cQtoUXuOZjGjev8MGYUMyjd+n_=o+jOVXkhPReSkWgxmw@mail.gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH/RFC 08/10] ref-filter: introduce remote_ref_atom_parser()
+Date: Sun, 13 Dec 2015 11:32:09 +0530
+Message-ID: <CAOLa=ZQKR4+a-hpL-8xjE-93btWpUt4zAfCGTHBGWwhvLtQoRg@mail.gmail.com>
 References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
-	<xmqq1taseh2x.fsf@gitster.mtv.corp.google.com>
+ <1447271075-15364-9-git-send-email-Karthik.188@gmail.com> <CAPig+cQrTvDQdCiJGLs8iFj2nS1RvtzbSrDRBpx500JRsAiEtQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 13 06:41:06 2015
+Cc: Git List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Dec 13 07:03:22 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a7zP7-0007Yp-Bf
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 06:41:05 +0100
+	id 1a7zkf-0003xR-Sh
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 07:03:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750796AbbLMFkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Dec 2015 00:40:37 -0500
-Received: from mail-vk0-f52.google.com ([209.85.213.52]:34459 "EHLO
-	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750726AbbLMFkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Dec 2015 00:40:36 -0500
-Received: by vkgj66 with SMTP id j66so41185561vkg.1
-        for <git@vger.kernel.org>; Sat, 12 Dec 2015 21:40:35 -0800 (PST)
+	id S1750903AbbLMGCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Dec 2015 01:02:40 -0500
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:32880 "EHLO
+	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750726AbbLMGCk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Dec 2015 01:02:40 -0500
+Received: by vkca188 with SMTP id a188so138420863vkc.0
+        for <git@vger.kernel.org>; Sat, 12 Dec 2015 22:02:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=crSBmc8zKA5/jQJlPjutJ3q9nWDpG17Yjk2ktc2mW38=;
-        b=d8TvYzwoyv+ZXcSpklC694PIFkgvFzxdZVtD1E1g5d9xWA2HeQbE/ZuLQdjG8fb6er
-         TxkhJTjbWPg7b7LZBQhnann/4wC5srzsJloPgcwhO5e7KQy9YoTR39nNMd0Z2RrcgRid
-         XZUHl/6XPizd8cOdCw3Hh7b/hG65JWbO/CRYE1GU45JUKPtFtP6XZuOljioVjETmxIuD
-         L3L+zGE9z0/w1JKNXqEGKKloeXWnWPiAKFyq3bYcbXoCqSYdWeLyFcZOSvlki7fn4nnl
-         Ie+Pm8ZwZO+4GzNzAurLTzJErrAEEuppCWl1b/IBJfxKQR2zciSoHzhVUCkPJDhBKQcs
-         3mqg==
-X-Received: by 10.31.58.142 with SMTP id h136mr20320227vka.115.1449985235657;
- Sat, 12 Dec 2015 21:40:35 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sat, 12 Dec 2015 21:40:35 -0800 (PST)
-In-Reply-To: <xmqq1taseh2x.fsf@gitster.mtv.corp.google.com>
-X-Google-Sender-Auth: CUM2flJVmiQ1YnmiGtDBh5WUp8A
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=pvNAUKCfY1GNc+dVbu+kplWjtAs8fkgHAFoAR7WD/zw=;
+        b=e82i6fTMjvtqM5OuVRmJSCofMAPZs2svt3wjfRbqSNc2A77rM6bzdN6kUPUGoenFXH
+         XkJnTt1WgX0rtaHXBhbhcMCS5eogvPzptgSKCd5Igy0xaMBTqMp5lTZze6MNf295L/r3
+         uhZVWAL7itlmjPbm8oSR/0sU9koVxHnrbc2PIUwhKJC7QVqleGhJ8iagbYQ7sVh1ncx0
+         WnwTnOe6QzmOvmctIirT6I1oJTj3CsH5YIC1XVlej7Y16XGGRvgpzPnIhhZfqg1OnWuE
+         zQ101X3dwxyNK8D2UCIrfX7fhQu9zU/GkxkDiROCI48vi6Gu7zLRjvIncvJeQwoLLf/y
+         95eQ==
+X-Received: by 10.31.8.204 with SMTP id 195mr19701190vki.30.1449986559253;
+ Sat, 12 Dec 2015 22:02:39 -0800 (PST)
+Received: by 10.103.97.199 with HTTP; Sat, 12 Dec 2015 22:02:09 -0800 (PST)
+In-Reply-To: <CAPig+cQrTvDQdCiJGLs8iFj2nS1RvtzbSrDRBpx500JRsAiEtQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282321>
 
-On Fri, Dec 11, 2015 at 5:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
->>   ref-filter: introduce a parsing function for each atom in valid_atom
->>   ref-filter: introduce struct used_atom
->>   ref-fitler: bump match_atom() name to the top
->>   ref-filter: skip deref specifier in match_atom_name()
->>   ref-filter: introduce color_atom_parser()
->>   strbuf: introduce strbuf_split_str_without_term()
->>   ref-filter: introduce align_atom_parser()
->>   ref-filter: introduce remote_ref_atom_parser()
->>   ref-filter: introduce contents_atom_parser()
->>   ref-filter: introduce objectname_atom_parser()
+On Sun, Dec 13, 2015 at 6:23 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Nov 11, 2015 at 2:44 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> Introduce remote_ref_atom_parser() which will parse the '%(upstream)'
+>> and '%(push)' atoms and store information into the 'used_atom'
+>> structure based on the modifiers used along with the corresponding
+>> atom.
+>>
+>> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
+>> ---
+>> diff --git a/ref-filter.c b/ref-filter.c
+>> @@ -37,6 +37,11 @@ static struct used_atom {
+>>         union {
+>>                 const char *color;
+>>                 struct align align;
+>> +               struct {
+>> +                       unsigned int shorten : 1,
+>> +                               track : 1,
+>> +                               trackshort : 1;
+>> +               } remote_ref;
 >
-> It seems that this series had seen quite a good inputs, mostly from
-> Eric.  I finished reading it over and I didn't find anything more to
-> add.  The patches are mostly good and would be ready once these
-> points raised during the review are addressed, I think
+> Are 'shorten', 'track', and 'trackshort' mutually exclusive? If so, a
+> simple enum would be clearer than bitfields:
+>
+>     union {
+>         const char *color;
+>         struct align align;
+>         enum { RR_PLAIN, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
+>             remote_ref;
+>     };
+>
+> Or something.
+>
 
-I'm still a bit fuzzy about what this series is trying to achieve. It
-feels like it wants to avoid doing repeated processing of unchanging
-bits of %(foo:bar) atoms for each ref processed, but it only partly
-achieves that goal. For instance, there are still an awful lot of
-strcmp()s and starts_with()s in that inner loop, and even the
-unchanging %(color:) argument gets re-evaulated repeatedly, which is
-probably quite expensive.
+Sure, will do that.
 
-If the intention is to rid that inner loop of much of the expensive
-processing, then wouldn't we want to introduce an enum of valid atoms
-which is to be a member of 'struct used_atom', and have
-populate_value() switch on the enum value rather than doing all the
-expensive strcmp()s and starts_with()?
+>>         } u;
+>>  } *used_atom;
+>>  static int used_atom_cnt, need_tagged, need_symref;
+>> @@ -69,6 +74,24 @@ void color_atom_parser(struct used_atom *atom)
+>> +void remote_ref_atom_parser(struct used_atom *atom)
+>> +{
+>> +       const char *buf;
+>> +
+>> +       buf = strchr(atom->str, ':');
+>> +       if (!buf)
+>> +               return;
+>> +       buf++;
+>> +       if (!strcmp(buf, "short"))
+>> +               atom->u.remote_ref.shorten = 1;
+>> +       else if (!strcmp(buf, "track"))
+>> +               atom->u.remote_ref.track = 1;
+>> +       else if (!strcmp(buf, "trackshort"))
+>> +               atom->u.remote_ref.trackshort = 1;
+>> +       else
+>> +               die(_("improper format entered align:%s"), buf);
+>
+> "align:"? Also, how about a more grammatically-friendly error message?
+>
 
-    enum atom_type {
-        AT_REFNAME,
-        AT_OBJECTTYPE,
-        ...
-        AT_COLOR,
-        AT_ALIGN
-    };
+Bad copy-paste, will change that.
 
-    static struct used_atom {
-        enum atom_type atom;
-        cmp_type cmp;
-        union {
-            char *color; /* parsed color */
-            struct align align;
-            enum { ... } remote_ref;
-            struct {
-                enum { ... } portion;
-                unsigned int nlines;
-            } contents;
-            int short_objname;
-        } u;
-    } *used_atom;
+>> +}
+>> +
+>> @@ -838,6 +861,42 @@ static inline char *copy_advance(char *dst, const char *src)
+>> +static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+>> +                                   struct branch *branch, const char **s)
+>> +{
+>> +       int num_ours, num_theirs;
+>> +       if (atom->u.remote_ref.shorten)
+>> +               *s = shorten_unambiguous_ref(refname, warn_ambiguous_refs);
+>> +       else if (atom->u.remote_ref.track) {
+>> +               if (stat_tracking_info(branch, &num_ours,
+>> +                                      &num_theirs, NULL))
+>> +                       return;
+>> +               if (!num_ours && !num_theirs)
+>> +                       *s = "";
+>> +               else if (!num_ours)
+>> +                       *s = xstrfmt("[behind %d]", num_theirs);
+>> +               else if (!num_theirs)
+>> +                       *s = xstrfmt("[ahead %d]", num_ours);
+>> +               else
+>> +                       *s = xstrfmt("[ahead %d, behind %d]",
+>> +                                    num_ours, num_theirs);
+>
+> Tangent: These xstrfmt()'d strings are getting leaked, right? Is that
+> something that we need to worry about (if, for instance, a repository
+> contains a lot of tracking refs)? Should there be a NEEDSWORK comment
+> here regarding the issue?
+>
 
-In fact, the 'cmp_type cmp' field can be dropped altogether since it
-can just as easily be looked up when needed by keeping 'enum
-atom_type' and valid_atoms[] in-sync and indexing into valid_atoms[]
-by atom_type:
+This is sort of a problem with most of the values in ref-filter, we dynamically
+allocate memory and do not free it, since the program exits soon after and
+we leave it to the Operating System to do the garbage collection.
 
-    struct used_atom *a = ...;
-    cmp_type cmp = valid_atoms[a->atom].cmp_type;
+Not sure if we'd want to work on this though.
 
-As a bonus, an 'enum atom_type' would resolve the problem of how
-starts_with() is abused in populate_value() for certain cases
-(assuming I'm understanding the logic), such as how matching of
-"color" could incorrectly match some yet-to-be-added atom named
-"colorize".
+>> +       } else if (atom->u.remote_ref.trackshort) {
+>> +               if (stat_tracking_info(branch, &num_ours,
+>> +                                      &num_theirs, NULL))
+>> +                       return;
+>> +
+>> +               if (!num_ours && !num_theirs)
+>> +                       *s = "=";
+>> +               else if (!num_ours)
+>> +                       *s = "<";
+>> +               else if (!num_theirs)
+>> +                       *s = ">";
+>> +               else
+>> +                       *s = "<>";
+>> +       } else
+>> +               *s = refname;
+>> +}
+>> +
+>>  /*
+>>   * Parse the object referred by ref, and grab needed value.
+>>   */
+>> @@ -948,49 +1011,11 @@ static void populate_value(struct ref_array_item *ref)
+>>
+>>                 formatp = strchr(name, ':');
+>>                 if (formatp) {
+>> -                       int num_ours, num_theirs;
+>> -
+>>                         formatp++;
+>>                         if (!strcmp(formatp, "short"))
+>>                                 refname = shorten_unambiguous_ref(refname,
+>>                                                       warn_ambiguous_refs);
+>
+> Is this duplicating work already done by fill_remote_ref_details()?
+>
+
+No, this is only activated when using "refname". fill_remote_ref_details()
+is used by the %(upstream) and %(push) atoms, both of which skip the
+loop using "continue" in populate_value().
+
+-- 
+Regards,
+Karthik Nayak
