@@ -1,107 +1,129 @@
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH/RFC 08/10] ref-filter: introduce remote_ref_atom_parser()
-Date: Sun, 13 Dec 2015 14:23:22 +0530
-Message-ID: <CAOLa=ZQ=GL9F8ecOfa3rQ_rXP6_eEpA+ms8zOz5TBbmY9frnaw@mail.gmail.com>
+Subject: Re: [PATCH/RFC 00/10] ref-filter: use parsing functions
+Date: Sun, 13 Dec 2015 15:01:29 +0530
+Message-ID: <CAOLa=ZSEGf7TAKNkYCogw7nz9UMUxEZ7Vg2vGXHqFP2s=tnWcg@mail.gmail.com>
 References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
- <1447271075-15364-9-git-send-email-Karthik.188@gmail.com> <CAPig+cQrTvDQdCiJGLs8iFj2nS1RvtzbSrDRBpx500JRsAiEtQ@mail.gmail.com>
- <CAOLa=ZQKR4+a-hpL-8xjE-93btWpUt4zAfCGTHBGWwhvLtQoRg@mail.gmail.com>
- <CAOLa=ZQD1ZhkOGr6Y3ZTwkRC--gMVjwXhpvGpBUGuoHjw9hoJQ@mail.gmail.com> <CAPig+cRwD_W5pQSpiHR8izQ+=6stY+XwpXEJ5HU4gi+MQFaH2Q@mail.gmail.com>
+ <xmqq1taseh2x.fsf@gitster.mtv.corp.google.com> <CAPig+cQtoUXuOZjGjev8MGYUMyjd+n_=o+jOVXkhPReSkWgxmw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Dec 13 09:54:37 2015
+X-From: git-owner@vger.kernel.org Sun Dec 13 10:32:50 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a82QL-0001zy-V6
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 09:54:34 +0100
+	id 1a831N-0007QR-J0
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 10:32:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751292AbbLMIxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Dec 2015 03:53:53 -0500
-Received: from mail-vk0-f50.google.com ([209.85.213.50]:36156 "EHLO
-	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751210AbbLMIxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Dec 2015 03:53:53 -0500
-Received: by vkay187 with SMTP id y187so138427053vka.3
-        for <git@vger.kernel.org>; Sun, 13 Dec 2015 00:53:52 -0800 (PST)
+	id S1751523AbbLMJcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Dec 2015 04:32:06 -0500
+Received: from mail-vk0-f49.google.com ([209.85.213.49]:34543 "EHLO
+	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751496AbbLMJcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Dec 2015 04:32:00 -0500
+Received: by vkgj66 with SMTP id j66so42430315vkg.1
+        for <git@vger.kernel.org>; Sun, 13 Dec 2015 01:31:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=6/m5cPGvpD++AH3I44v6SEBCxKZ2qz45piRWBN22auY=;
-        b=iW4K1PBRm4g274t/Rh6SMQNykcuF/yL/1wdbr9n5abrJp5s7f8y0LLroEwK4D8NJvP
-         Mw1CxPtoIwknObfGsgJC1M6zBTm7jPPjHzddqJWKVChEe4nJ/VXtn8ldl7T7b8vTHUMq
-         S7h4TN6GSFVvwGoVrJGGSUgb/WzaYk3ZaU2RKHkUbLAAniFMh5dtKhgWw75SmDjcBff8
-         Yd9moA7cw+iKAVX6MFAZMQmNsNPbi3YmFVkOSg1cztZZ+d5Z3/mnIxg89MkbEt9oGdmf
-         ODHKH/Gbe0OOsZbD4eySa3s8lhbXiwGJWAO8NXpf/sswP356C53z0JPElt5GoZEiH3nV
-         OG6A==
-X-Received: by 10.31.130.80 with SMTP id e77mr20048187vkd.97.1449996832311;
- Sun, 13 Dec 2015 00:53:52 -0800 (PST)
-Received: by 10.103.97.199 with HTTP; Sun, 13 Dec 2015 00:53:22 -0800 (PST)
-In-Reply-To: <CAPig+cRwD_W5pQSpiHR8izQ+=6stY+XwpXEJ5HU4gi+MQFaH2Q@mail.gmail.com>
+        bh=al/HW83aOFT7bgg6Pg7+xilvS/lTkAvrqydu3LZcK8o=;
+        b=l/V3LEqZQSkxyL0XkAEQh5prKB4QFusddg4IgB543OOOg75grZX17zEvSTZRvdiban
+         jOKXwmSfYwtx8FBNSuimrHz4OAoNDVOp0igfZYsPANtadfhpuTI1hGWoFWAksakzxCje
+         ntfgtpBCwclPT+TIMqO6pJbL3TOo9UUppq6CrMauSi0MkrCGbXfJIKdrBMC33T2UZOuY
+         xoLUm97aZbE/2P78HhBjW8vK680gw1p8jstjnmwqEIiXhf1ecccJbTpKJPDiqDxIjPWF
+         HGaTP2MvpBZdxjTyJYtzdaZHANtVMcyq9app6GHqrAeNdmyIT/YCuG3iSz7jc99aOH5J
+         uWpw==
+X-Received: by 10.31.188.83 with SMTP id m80mr20504528vkf.46.1449999119125;
+ Sun, 13 Dec 2015 01:31:59 -0800 (PST)
+Received: by 10.103.97.199 with HTTP; Sun, 13 Dec 2015 01:31:29 -0800 (PST)
+In-Reply-To: <CAPig+cQtoUXuOZjGjev8MGYUMyjd+n_=o+jOVXkhPReSkWgxmw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282328>
 
-On Sun, Dec 13, 2015 at 2:15 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sun, Dec 13, 2015 at 3:32 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>> On Sun, Dec 13, 2015 at 6:23 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->>>> On Wed, Nov 11, 2015 at 2:44 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
->>>>> Introduce remote_ref_atom_parser() which will parse the '%(upstream)'
->>>>> and '%(push)' atoms and store information into the 'used_atom'
->>>>> structure based on the modifiers used along with the corresponding
->>>>> atom.
->>>>>
->>>>> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
->>>>> ---
->>>>> diff --git a/ref-filter.c b/ref-filter.c
->>>>> @@ -37,6 +37,11 @@ static struct used_atom {
->>>>>         union {
->>>>>                 const char *color;
->>>>>                 struct align align;
->>>>> +               struct {
->>>>> +                       unsigned int shorten : 1,
->>>>> +                               track : 1,
->>>>> +                               trackshort : 1;
->>>>> +               } remote_ref;
->>>>
->>>> Are 'shorten', 'track', and 'trackshort' mutually exclusive? If so, a
->>>> simple enum would be clearer than bitfields:
->>>>
->>>>     union {
->>>>         const char *color;
->>>>         struct align align;
->>>>         enum { RR_PLAIN, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
->>>>             remote_ref;
->>>>     };
->>>>
->>>> Or something.
+On Sun, Dec 13, 2015 at 11:10 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, Dec 11, 2015 at 5:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>>   ref-filter: introduce a parsing function for each atom in valid_atom
+>>>   ref-filter: introduce struct used_atom
+>>>   ref-fitler: bump match_atom() name to the top
+>>>   ref-filter: skip deref specifier in match_atom_name()
+>>>   ref-filter: introduce color_atom_parser()
+>>>   strbuf: introduce strbuf_split_str_without_term()
+>>>   ref-filter: introduce align_atom_parser()
+>>>   ref-filter: introduce remote_ref_atom_parser()
+>>>   ref-filter: introduce contents_atom_parser()
+>>>   ref-filter: introduce objectname_atom_parser()
 >>
->> There's also a slight problem with using enum's with the current implementation.
->> The problem is the enum is set to 0 by default (since we use memset).
->> so the first value is set by default, not something we'd want.
+>> It seems that this series had seen quite a good inputs, mostly from
+>> Eric.  I finished reading it over and I didn't find anything more to
+>> add.  The patches are mostly good and would be ready once these
+>> points raised during the review are addressed, I think
 >
-> I'm afraid I don't see the problem. Doesn't the RR_PLAIN in the
-> example cover this case?
+> I'm still a bit fuzzy about what this series is trying to achieve. It
+> feels like it wants to avoid doing repeated processing of unchanging
+> bits of %(foo:bar) atoms for each ref processed, but it only partly
+> achieves that goal. For instance, there are still an awful lot of
+> strcmp()s and starts_with()s in that inner loop, and even the
+> unchanging %(color:) argument gets re-evaulated repeatedly, which is
+> probably quite expensive.
 >
->> So either we stick to the structure
->> with unsigned bits or we introduce a pseudo value in the enum. I
->> prefer the former.
->
-> It's not a pseudo-value, but rather just one of the mutually exclusive states.
 
-This example is actually fine, the next one "%(contents)" is more of
-the problem,
-the check is done in grab_sub_body_contents() where previously "contents.all"
-would be enough to check if we need to add contents value. Now the first enum
-value is selected. Maybe have a "NOT_VALID" field in the enum.
+Yes, you're right. It started off as per Junio's suggestion which you
+can find here: http://thread.gmane.org/gmane.comp.version-control.git/279254
+
+> If the intention is to rid that inner loop of much of the expensive
+> processing, then wouldn't we want to introduce an enum of valid atoms
+> which is to be a member of 'struct used_atom', and have
+> populate_value() switch on the enum value rather than doing all the
+> expensive strcmp()s and starts_with()?
+>
+>     enum atom_type {
+>         AT_REFNAME,
+>         AT_OBJECTTYPE,
+>         ...
+>         AT_COLOR,
+>         AT_ALIGN
+>     };
+>
+>     static struct used_atom {
+>         enum atom_type atom;
+>         cmp_type cmp;
+>         union {
+>             char *color; /* parsed color */
+>             struct align align;
+>             enum { ... } remote_ref;
+>             struct {
+>                 enum { ... } portion;
+>                 unsigned int nlines;
+>             } contents;
+>             int short_objname;
+>         } u;
+>     } *used_atom;
+>
+> In fact, the 'cmp_type cmp' field can be dropped altogether since it
+> can just as easily be looked up when needed by keeping 'enum
+> atom_type' and valid_atoms[] in-sync and indexing into valid_atoms[]
+> by atom_type:
+>
+>     struct used_atom *a = ...;
+>     cmp_type cmp = valid_atoms[a->atom].cmp_type;
+>
+> As a bonus, an 'enum atom_type' would resolve the problem of how
+> starts_with() is abused in populate_value() for certain cases
+> (assuming I'm understanding the logic), such as how matching of
+> "color" could incorrectly match some yet-to-be-added atom named
+> "colorize".
+
+This actually makes sense to me, especially how we can eliminate most of
+the starts_with() in populate_value(). Well then I guess I'll work on this and
+see what I can come up with, Thanks for the review :)
 
 -- 
 Regards,
