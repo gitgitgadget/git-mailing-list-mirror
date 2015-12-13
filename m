@@ -1,137 +1,115 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: query regarding git merge
-Date: Sun, 13 Dec 2015 18:18:00 +0000
-Message-ID: <20151213181800.GK990758@vauxhall.crustytoothpaste.net>
-References: <loom.20151213T185500-631@post.gmane.org>
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH/RFC 05/10] ref-filter: introduce color_atom_parser()
+Date: Mon, 14 Dec 2015 00:16:41 +0530
+Message-ID: <CAOLa=ZQhFXUYvYjJjWDzN6z+HDiXrhJqRbd3CWKTGmDtXn3oJw@mail.gmail.com>
+References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
+ <1447271075-15364-6-git-send-email-Karthik.188@gmail.com> <CAPig+cRXgLqmUf1ZK2QnHbHM6-1Ya=iTx6Jq9YdnkO8aOsq+tQ@mail.gmail.com>
+ <CAOLa=ZQY3PMtfemVAsbHydtguQG9pc2uVTiJ6Qh+jLf6mY4dFw@mail.gmail.com> <CAPig+cSC8fP1KGM1wCXzcfj2QHgvoUUjfBncRH0jKLv1EnYKCg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ogUXNSQj4OI1q3LQ"
-Cc: git@vger.kernel.org
-To: rohit gupta <roborohitgupta75@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 13 19:18:12 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Dec 13 19:47:18 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8BDn-0002tt-Si
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 19:18:12 +0100
+	id 1a8Bfx-0007QG-IF
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 19:47:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752103AbbLMSSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Dec 2015 13:18:07 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:44846 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752075AbbLMSSG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Dec 2015 13:18:06 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f2de:f1ff:feb8:36fd])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 166D0282CA;
-	Sun, 13 Dec 2015 18:18:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1450030684;
-	bh=bLsp4aeFPOc5Vw/orXOLefr+Hw8jspfmAQFvoiAd7aM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Boq1YI/hpFLjVSprcvfL07kJTflVM8hnUbEVYXqeqEPqnVnEf8yHLDSZ4qVGBEe0V
-	 DltoATr3kbOGS7yGcsDRy9cj6l69UZCPd7SKf4kBCr7J+VhkCgGLFgcmXF91IowZVT
-	 k0Hj8sXbvEgLAq4e0oykG9hIZa7o0Vn96Q3Gs6F/i6ClmOScxH9c4G41QkPX3QFGFA
-	 xfRb6PCR43uF9/Mv0mAIMaX6jrP5hnhAbmJRObbD30B5FIPyv0xV5wvEiDm7vYT2Ks
-	 WA3EHhIaNmtVlBSpymyXhLVpMGvXIfM53qj8abmVzUCu4XqyhshvKuP9R0MnuRf6hZ
-	 vHrxCUo7ZFjRfS3apcIiPX2aV26uWkeE/63X+3VG9mIH41u2otExn9l39az3+RXp1g
-	 JZP+TPBt0KSxP/MHG3fQB1P/48Nm8AoYH8YA7cwvG/WxE2xU2HzdxuyBYX5RREAyas
-	 B+58ow685rtaRnc47PGx7joKHYyzrgJ+GzgEU7nGOqWy6Lf71id
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	rohit gupta <roborohitgupta75@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <loom.20151213T185500-631@post.gmane.org>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 4.2.0-1-amd64)
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Spam-Score: -0.262 BAYES_00,RDNS_NONE,T_DKIM_INVALID
+	id S1752280AbbLMSrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Dec 2015 13:47:12 -0500
+Received: from mail-vk0-f45.google.com ([209.85.213.45]:34165 "EHLO
+	mail-vk0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752175AbbLMSrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Dec 2015 13:47:12 -0500
+Received: by vkgj66 with SMTP id j66so46033759vkg.1
+        for <git@vger.kernel.org>; Sun, 13 Dec 2015 10:47:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=bB4Xzuh9wx3u+30ixoLUCpcyC9XS9oAwS5sfyzj2TpM=;
+        b=bULq0bv+FxzRnbW+nKxky40OPnypKUEypkUOF5ep60k/cptaZwSG199J3XEHkQbn3q
+         MLE9uKzHelNIBVlaS7n7YKfOLQl/DjLToM5sc3MOz5Q0JAi+JMb/TSzEJ4zGow/BkMbC
+         j5NR8y4ZWt4kF+yJJbYlMapKnTUvdxBwBp3I6VjVK4LFVFgWps7Q9sZen8scWVFbRyj3
+         N0npazFcyg1HsQQLCi5SPWMjxRFTRBa/FWFuTd71sRnI/LPcfvP/wmTzX1l5nuq+Cxyq
+         xJSWPEtd+sqlBcvGFsipYeKla9n255rdxTo9APNwgRNje7HFgfO50u1NCApxPx9MDyre
+         KTqg==
+X-Received: by 10.31.155.23 with SMTP id d23mr19362948vke.146.1450032431034;
+ Sun, 13 Dec 2015 10:47:11 -0800 (PST)
+Received: by 10.103.97.199 with HTTP; Sun, 13 Dec 2015 10:46:41 -0800 (PST)
+In-Reply-To: <CAPig+cSC8fP1KGM1wCXzcfj2QHgvoUUjfBncRH0jKLv1EnYKCg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282340>
 
+On Sun, Dec 13, 2015 at 11:35 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Thu, Dec 3, 2015 at 8:35 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>> On Wed, Dec 2, 2015 at 4:57 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> On Wed, Nov 11, 2015 at 2:44 PM, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>>> @@ -833,11 +846,10 @@ static void populate_value(struct ref_array_item *ref)
+>>>>                         refname = branch_get_push(branch, NULL);
+>>>>                         if (!refname)
+>>>>                                 continue;
+>>>> -               } else if (match_atom_name(name, "color", &valp)) {
+>>>> +               } else if (starts_with(name, "color")) {
+>>>
+>>> Hmm, so this will also match "colorize". Is that desirable?
+>>
+>> Well the error checking is done when we parse the atom in color_atom_parser()
+>> so here we don't need to worry about something like this.
+>
+> I'm not sure that I understand your response. Let's say that, in the
+> future, someone adds a new atom named "colorize" (which may or may not
+> have its own parser in the valid_atom[] table). color_atom_parser()
+> will never see that atom, thus error checking in color_atom_parser()
+> is not relevant to this case. What is relevant is that the original
+> code:
+>
+>     } if (match_atom_name(name, "color", &valp)) {
+>
+> only matched %(color) or %(color:whatever). It did not match
+> %(colorize). However, the new code:
+>
+>     } else if (starts_with(name, "color")) {
+>
+> is far looser and will match %(colorize) and %(color) and
+> %(color:whatever) and %(coloranything), which is potentially
+> undesirable. It's true that the person adding %(colorize) could be
+> careful and ensure that the if/else chain checks %(colorize) first:
+>
+>     } else if (!strcmp(name, "colorize") {
+>         ...
+>     } else if (starts_with(name, "color")) {
+>         ...
+>     } else ...
+>
+> but that places a certain extra burden on that person. Alternately,
+> you can tighten the matching so that it is as strict as the original:
+>
+>     } else if (!strcmp(name, "color") || starts_with(name, "color:")) {
+>         ...
+>     } else ...
+>
+> Or perhaps upgrade match_atom_name() to make the 'val' argument
+> optional, in which case you might be able to do something like this:
+>
+>     } else if (match_atom_name(name, "color", NULL) {
+>
+> (However, if you introduce an 'enum atom_type' as suggested in my
+> response to the cover letter, then this problem goes away because
+> you'd be switching on the enum value, which is determinate, rather
+> than on a partial string, which may be ambiguous, as illustrated.)
 
---ogUXNSQj4OI1q3LQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ah, Thanks for putting it out. I understand, I'll work on the enum atom_type
+now. that should take care of this :)
 
-On Sun, Dec 13, 2015 at 05:55:59PM +0000, rohit gupta wrote:
-> Hi,
-> I am confused with git merge working.
->=20
-> Suppose I have these 3 files in master branch-
-> a.txt
-> b.txt
-> d.txt
->=20
-> I create a branch, add c.txt to it and commit. So its final contents
-> are-
-> a.txt
-> b.txt
-> c.txt
-> d.txt
->=20
-> Then, I checkout master branch, delete a.txt, add e.txt and commit. So
-> final contents are-
-> b.txt
-> d.txt
-> e.txt
->=20
-> Now when I merge branch in master,
-> its result is-
-> b.txt
-> c.txt
-> d.txt
-> e.txt
->=20
-> Now suppose in branch, a.txt was needed for its working. And in master
-> branch's latest commit a.txt was removed because maybe it wasn't needed
-> or it was introducing bugs.
-> Now, git merge removes that a.txt
-> So now branch functionality wouldn't work.
-> Isn't that wrong??
-
-Instead of thinking of Git as merging two sets of files, think of it as
-merging two sets of changes.  Git computes a merge base based on one or
-more ancestors of both branches.  During a merge, Git takes the
-differences on each side and combines them.  Logically, if a change is
-made on one side but not the other, it will be preserved in the merge.
-
-So in your case, you deleted a.txt on one side and did not modify it on
-the other.  Git applied that change to the result of the merge.  Git has
-no way of knowing that a.txt is still required in the result.
-
-This is a very common question that comes up in a variety of different
-forms.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---ogUXNSQj4OI1q3LQ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.10 (GNU/Linux)
-
-iQIcBAEBCgAGBQJWbbZXAAoJEL9TXYEfUvaLZfIQAKWwT+e5+NuB4k89jbcsMH8/
-rVLMJp4EE4tQUTcv4CLsgXCDT562Ba90jL58PB3Jdj3MuuySewUuKekFy2SAKPL6
-NOekYuANsfWgo/C7q6jgKW+5DnXPdiA3jn+qXJCiMsMuUtwn71jCl9IqsUO1s3YR
-kvA6uYHQTXiYSJ4d/aaV7Gpf89iWBTDc55IlANyd1euUJ9empKDWjjDheKmeHd0c
-J4oBagK2IAADjk/XwMsCo4FBpkRBc1rRg3HpvMxN05hLznXBZkZTG0ZvKkKHUchF
-D4vst7q4YZGKKEpf2HKDJCjCHypr3xPPettFEgQwURH5A6f4N8VuJYg/YGPIt5Cl
-Te3ER6zCrJ8xQPpU+cHTOgSCcsqs8dNie2yr0h3QivtTR8on8Iy4hfpUGRr7Ej8z
-IfKN7pVP+Kg5q5hyDoOWjymZ/coPpM+lCSMoAcxfLqjBsadxTq94M3MMt2yn6pNZ
-Jw0GFpihC5ZRBBSiE33WAVRhv8eOHxEAcBjru1qH4guzRM6LvdjH6JhwejuFPf7v
-R/oSt+teORaV5MknmdLQC6x6ZTD2CRTOElPxfnxMg8Q8FaB8j1I7g76AK4+iyszw
-VaUN3L+Qz0bT5OR+JpokWDEfOcd/xNpg6VsCXl67Q82BfWIZtowwwp85d11da6cD
-ON9Z/a/HKh3lsNNI7uEK
-=7onL
------END PGP SIGNATURE-----
-
---ogUXNSQj4OI1q3LQ--
+-- 
+Regards,
+Karthik Nayak
