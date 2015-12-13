@@ -1,150 +1,79 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 2/3] format-patch: add an option to suppress commit hash
-Date: Sun, 13 Dec 2015 17:27:17 +0000
-Message-ID: <1450027638-788102-3-git-send-email-sandals@crustytoothpaste.net>
-References: <1450027638-788102-1-git-send-email-sandals@crustytoothpaste.net>
-Cc: Stefan Beller <stefanbeller@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
+From: rohit gupta <roborohitgupta75@gmail.com>
+Subject: query regarding git merge
+Date: Sun, 13 Dec 2015 17:55:59 +0000 (UTC)
+Message-ID: <loom.20151213T185500-631@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 13 18:28:16 2015
+X-From: git-owner@vger.kernel.org Sun Dec 13 19:01:11 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8ARR-0000Gh-56
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 18:28:13 +0100
+	id 1a8AxK-0006ef-HI
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 19:01:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043AbbLMR2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Dec 2015 12:28:08 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:44770 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750927AbbLMR10 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Dec 2015 12:27:26 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D8837282CC;
-	Sun, 13 Dec 2015 17:27:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1450027644;
-	bh=PkwXxITMP94Asq/Z6yqyiKoymys9F7orjhT+79m+5MU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PU4xAuJ11cnDeuBtWaCKrX9Deb92sX9P/bYyvnJb9Nh5+joIgj9HacdHqlXfP2VpJ
-	 BJLFB6H2yWEBdOQwJVSlHloKqjsTibc9tzGwTKSJaZc3Eh4TLpbKzEEVuYiFH2fbca
-	 UE3baNDPJn49rKO1983luUf2grOdwLhMSMiln21Sj7S1ik+kG0TJh7Y9dUFKEt4F0h
-	 wkxMo2RbdzyOCfm9SjWBosQdEJFwSS4p4hCCPb6dPwuQfUWPM+kj2g44uTCoe7Lfn2
-	 3MXboUMZQYUER9vo6phHyh4fz+Oy9uVNodwxGwx3W9cFDWdJJDL2J0FznsiGt+lAZb
-	 PaW0ijHCskupdbvzRdEDHzYX8WjQ19bc406nfnqcoyTfOE3ICpudXWEuSB17chg9HX
-	 pOEDkc9cCTcpKVhWf1IdqLh3bGFl7LerhOhjZzvTjW1Yrws9cRqgR4A2QLQLt3QgBY
-	 7ynQ52sxtwFBzxj/s9zn0aue0wYn4PTFARn71oGiSn2fSqDcCOo
-X-Mailer: git-send-email 2.7.0.rc0.173.g4a846af
-In-Reply-To: <1450027638-788102-1-git-send-email-sandals@crustytoothpaste.net>
-X-Spam-Score: -2.49 ALL_TRUSTED,BAYES_00,T_DKIM_INVALID
+	id S1752186AbbLMSA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Dec 2015 13:00:58 -0500
+Received: from plane.gmane.org ([80.91.229.3]:44632 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752136AbbLMSAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Dec 2015 13:00:07 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1a8AwG-0004Na-Qk
+	for git@vger.kernel.org; Sun, 13 Dec 2015 19:00:05 +0100
+Received: from static-235.222.96.14-tataidc.co.in ([static-235.222.96.14-tataidc.co.in])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 13 Dec 2015 19:00:04 +0100
+Received: from roborohitgupta75 by static-235.222.96.14-tataidc.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 13 Dec 2015 19:00:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 14.96.222.235 (Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282337>
 
-Oftentimes, patches created by git format-patch will be stored in
-version control or compared with diff.  In these cases, two otherwise
-identical patches can have different commit hashes, leading to diff
-noise.  Teach git format-patch a --zero-commit option that instead
-produces an all-zero hash to avoid this diff noise.
+Hi,
+I am confused with git merge working.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/git-format-patch.txt | 4 ++++
- builtin/log.c                      | 5 +++++
- log-tree.c                         | 3 ++-
- revision.h                         | 1 +
- t/t4014-format-patch.sh            | 6 ++++++
- 5 files changed, 18 insertions(+), 1 deletion(-)
+Suppose I have these 3 files in master branch-
+a.txt
+b.txt
+d.txt
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 40356491..e3cdaeb9 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -256,6 +256,10 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
- 	using this option cannot be applied properly, but they are
- 	still useful for code review.
- 
-+--zero-commit::
-+  Output an all-zero hash in each patch's From header instead
-+  of the hash of the commit.
-+
- --root::
- 	Treat the revision argument as a <revision range>, even if it
- 	is just a single commit (that would normally be treated as a
-diff --git a/builtin/log.c b/builtin/log.c
-index 069bd3a9..e00cea75 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1196,6 +1196,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	int cover_letter = -1;
- 	int boundary_count = 0;
- 	int no_binary_diff = 0;
-+	int zero_commit = 0;
- 	struct commit *origin = NULL;
- 	const char *in_reply_to = NULL;
- 	struct patch_ids ids;
-@@ -1236,6 +1237,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    PARSE_OPT_NOARG | PARSE_OPT_NONEG, keep_callback },
- 		OPT_BOOL(0, "no-binary", &no_binary_diff,
- 			 N_("don't output binary diffs")),
-+		OPT_BOOL(0, "zero-commit", &zero_commit,
-+			 N_("output all-zero hash in From header")),
- 		OPT_BOOL(0, "ignore-if-in-upstream", &ignore_if_in_upstream,
- 			 N_("don't include a patch matching a commit upstream")),
- 		{ OPTION_SET_INT, 'p', "no-stat", &use_patch_format, NULL,
-@@ -1380,6 +1383,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	/* Always generate a patch */
- 	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
- 
-+	rev.zero_commit = zero_commit;
-+
- 	if (!DIFF_OPT_TST(&rev.diffopt, TEXT) && !no_binary_diff)
- 		DIFF_OPT_SET(&rev.diffopt, BINARY);
- 
-diff --git a/log-tree.c b/log-tree.c
-index 35e78017..f70a30e1 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -342,7 +342,8 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- {
- 	const char *subject = NULL;
- 	const char *extra_headers = opt->extra_headers;
--	const char *name = oid_to_hex(&commit->object.oid);
-+	const char *name = oid_to_hex(opt->zero_commit ?
-+				      &null_oid : &commit->object.oid);
- 
- 	*need_8bit_cte_p = 0; /* unknown */
- 	if (opt->total > 0) {
-diff --git a/revision.h b/revision.h
-index 5bc96868..23857c0e 100644
---- a/revision.h
-+++ b/revision.h
-@@ -135,6 +135,7 @@ struct rev_info {
- 			pretty_given:1,
- 			abbrev_commit:1,
- 			abbrev_commit_given:1,
-+			zero_commit:1,
- 			use_terminator:1,
- 			missing_newline:1,
- 			date_mode_explicit:1,
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 890db117..b740e3da 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1431,4 +1431,10 @@ test_expect_success 'cover letter auto user override' '
- 	test_line_count = 2 list
- '
- 
-+test_expect_success 'format-patch --zero-commit' '
-+	git format-patch --zero-commit --stdout v2..v1 >patch2 &&
-+	cnt=$(egrep "^From 0{40} Mon Sep 17 00:00:00 2001" patch2 | wc -l) &&
-+	test $cnt = 3
-+'
-+
- test_done
+I create a branch, add c.txt to it and commit. So its final contents 
+are-
+a.txt
+b.txt
+c.txt
+d.txt
+
+Then, I checkout master branch, delete a.txt, add e.txt and commit. So 
+final contents are-
+b.txt
+d.txt
+e.txt
+
+Now when I merge branch in master,
+its result is-
+b.txt
+c.txt
+d.txt
+e.txt
+
+Now suppose in branch, a.txt was needed for its working. And in master 
+branch's latest commit a.txt was removed because maybe it wasn't needed 
+or it was introducing bugs.
+Now, git merge removes that a.txt
+So now branch functionality wouldn't work. 
+Isn't that wrong??
