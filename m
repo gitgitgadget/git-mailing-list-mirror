@@ -1,147 +1,119 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC 10/10] ref-filter: introduce objectname_atom_parser()
-Date: Sat, 12 Dec 2015 23:49:33 -0500
-Message-ID: <CAPig+cTduYxSWh5ghmv3vM04saAqrn9TUpBZ0J=TuDOgr05itQ@mail.gmail.com>
-References: <20151124214842.GA4848@sigill.intra.peff.net>
-	<1448459082-24492-1-git-send-email-Karthik.188@gmail.com>
+Subject: Re: [PATCH/RFC 00/10] ref-filter: use parsing functions
+Date: Sun, 13 Dec 2015 00:40:35 -0500
+Message-ID: <CAPig+cQtoUXuOZjGjev8MGYUMyjd+n_=o+jOVXkhPReSkWgxmw@mail.gmail.com>
+References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
+	<xmqq1taseh2x.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 13 05:50:17 2015
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 13 06:41:06 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a7ybu-0007Fw-M2
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 05:50:15 +0100
+	id 1a7zP7-0007Yp-Bf
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 06:41:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421AbbLMEtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Dec 2015 23:49:35 -0500
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:36534 "EHLO
-	mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751352AbbLMEte (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Dec 2015 23:49:34 -0500
-Received: by vkay187 with SMTP id y187so137144670vka.3
-        for <git@vger.kernel.org>; Sat, 12 Dec 2015 20:49:33 -0800 (PST)
+	id S1750796AbbLMFkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Dec 2015 00:40:37 -0500
+Received: from mail-vk0-f52.google.com ([209.85.213.52]:34459 "EHLO
+	mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750726AbbLMFkg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Dec 2015 00:40:36 -0500
+Received: by vkgj66 with SMTP id j66so41185561vkg.1
+        for <git@vger.kernel.org>; Sat, 12 Dec 2015 21:40:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=Y7disfLUgouf7CtRhUTbtwILebnto/5rMw9QD6+rqhI=;
-        b=p3UPKBMXmdK3c4QFyNW0v1HQUWK5mABvGZczpVPw4z8du6CVbynAnrlnXioDpMb5q4
-         syh4a+4Coz7CNZ2XOiFBzQH696YsRoQEmnuqoqxkrW3iFctMjtjSNY4HKGiVY5jF7Mco
-         orC1Cb6+sV/vTmP/A5BYHjdl769lh018YqqY1ayrcqaTV2VuuMZYedtp9gK2hs5CA5Ak
-         ZOBQUlpRCQG9y75FqV69EBwCiNCnfcTlkPgfcNOGYMraNuM4HFsHlS80p9GlUm4twYGi
-         obylYCVA11sNGDQ0eMLIXgAMbOmsH1huyirPNbU51VKHTKiCPwZv6J5wiuAGjnTgmBLM
-         8jig==
-X-Received: by 10.31.182.129 with SMTP id g123mr20208083vkf.45.1449982173245;
- Sat, 12 Dec 2015 20:49:33 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sat, 12 Dec 2015 20:49:33 -0800 (PST)
-In-Reply-To: <1448459082-24492-1-git-send-email-Karthik.188@gmail.com>
-X-Google-Sender-Auth: pAXwHF2CkMWXmlrNRhpqjR0pkb4
+        bh=crSBmc8zKA5/jQJlPjutJ3q9nWDpG17Yjk2ktc2mW38=;
+        b=d8TvYzwoyv+ZXcSpklC694PIFkgvFzxdZVtD1E1g5d9xWA2HeQbE/ZuLQdjG8fb6er
+         TxkhJTjbWPg7b7LZBQhnann/4wC5srzsJloPgcwhO5e7KQy9YoTR39nNMd0Z2RrcgRid
+         XZUHl/6XPizd8cOdCw3Hh7b/hG65JWbO/CRYE1GU45JUKPtFtP6XZuOljioVjETmxIuD
+         L3L+zGE9z0/w1JKNXqEGKKloeXWnWPiAKFyq3bYcbXoCqSYdWeLyFcZOSvlki7fn4nnl
+         Ie+Pm8ZwZO+4GzNzAurLTzJErrAEEuppCWl1b/IBJfxKQR2zciSoHzhVUCkPJDhBKQcs
+         3mqg==
+X-Received: by 10.31.58.142 with SMTP id h136mr20320227vka.115.1449985235657;
+ Sat, 12 Dec 2015 21:40:35 -0800 (PST)
+Received: by 10.31.62.203 with HTTP; Sat, 12 Dec 2015 21:40:35 -0800 (PST)
+In-Reply-To: <xmqq1taseh2x.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Auth: CUM2flJVmiQ1YnmiGtDBh5WUp8A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282320>
 
-On Wed, Nov 25, 2015 at 8:44 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Introduce objectname_atom_parser() which will parse the
-> '%(objectname)' atom and store information into the 'used_atom'
-> structure based on the modifiers used along with the atom.
+On Fri, Dec 11, 2015 at 5:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>>   ref-filter: introduce a parsing function for each atom in valid_atom
+>>   ref-filter: introduce struct used_atom
+>>   ref-fitler: bump match_atom() name to the top
+>>   ref-filter: skip deref specifier in match_atom_name()
+>>   ref-filter: introduce color_atom_parser()
+>>   strbuf: introduce strbuf_split_str_without_term()
+>>   ref-filter: introduce align_atom_parser()
+>>   ref-filter: introduce remote_ref_atom_parser()
+>>   ref-filter: introduce contents_atom_parser()
+>>   ref-filter: introduce objectname_atom_parser()
 >
-> Signed-off-by: Karthik Nayak <Karthik.188@gmail.com>
-> ---
-> diff --git a/ref-filter.c b/ref-filter.c
-> @@ -50,6 +50,10 @@ static struct used_atom {
->                                 lines : 1,
->                                 no_lines;
->                 } contents;
-> +               struct {
-> +                       unsigned int shorten : 1,
-> +                               full : 1;
-> +               } objectname;
+> It seems that this series had seen quite a good inputs, mostly from
+> Eric.  I finished reading it over and I didn't find anything more to
+> add.  The patches are mostly good and would be ready once these
+> points raised during the review are addressed, I think
 
-Same comment as in my patch 8 and 9 reviews: If 'shorten' and 'full'
-are mutually exclusive, then an enum would be clearer. In fact, if
-there are only these two states (full and short), then this could be a
-simple boolean named 'shorten'.
+I'm still a bit fuzzy about what this series is trying to achieve. It
+feels like it wants to avoid doing repeated processing of unchanging
+bits of %(foo:bar) atoms for each ref processed, but it only partly
+achieves that goal. For instance, there are still an awful lot of
+strcmp()s and starts_with()s in that inner loop, and even the
+unchanging %(color:) argument gets re-evaulated repeatedly, which is
+probably quite expensive.
 
->         } u;
->  } *used_atom;
->  static int used_atom_cnt, need_tagged, need_symref;
-> @@ -123,6 +127,21 @@ void contents_atom_parser(struct used_atom *atom)
-> +void objectname_atom_parser(struct used_atom *atom)
-> +{
-> +       const char * buf;
-> +
-> +       if (match_atom_name(atom->str, "objectname", &buf))
-> +               atom->u.objectname.full = 1;
+If the intention is to rid that inner loop of much of the expensive
+processing, then wouldn't we want to introduce an enum of valid atoms
+which is to be a member of 'struct used_atom', and have
+populate_value() switch on the enum value rather than doing all the
+expensive strcmp()s and starts_with()?
 
-Same comment about bogus logic as in patch 9 review: u.objectname.full
-and u.objectname.shorten are both set to 1 for %(objectname:short).
+    enum atom_type {
+        AT_REFNAME,
+        AT_OBJECTTYPE,
+        ...
+        AT_COLOR,
+        AT_ALIGN
+    };
 
-> +
-> +       if (!buf)
-> +               return;
+    static struct used_atom {
+        enum atom_type atom;
+        cmp_type cmp;
+        union {
+            char *color; /* parsed color */
+            struct align align;
+            enum { ... } remote_ref;
+            struct {
+                enum { ... } portion;
+                unsigned int nlines;
+            } contents;
+            int short_objname;
+        } u;
+    } *used_atom;
 
-Same comment about misplaced blank line: Put the blank line after the
-conditional rather than before or drop it altogether.
+In fact, the 'cmp_type cmp' field can be dropped altogether since it
+can just as easily be looked up when needed by keeping 'enum
+atom_type' and valid_atoms[] in-sync and indexing into valid_atoms[]
+by atom_type:
 
-> +       if (!strcmp(buf, "short"))
-> +               atom->u.objectname.shorten = 1;
-> +       else
-> +               die(_("improper format entered objectname:%s"), buf);
+    struct used_atom *a = ...;
+    cmp_type cmp = valid_atoms[a->atom].cmp_type;
 
-Maybe just "unrecognized objectname:%s" or something?
-
-> +}
-> +
-> @@ -463,15 +482,16 @@ static void *get_obj(const unsigned char *sha1, struct object **obj, unsigned lo
->  }
->
->  static int grab_objectname(const char *name, const unsigned char *sha1,
-> -                           struct atom_value *v)
-> +                          struct atom_value *v, struct used_atom *atom)
->  {
-> -       if (!strcmp(name, "objectname")) {
-> -               v->s = xstrdup(sha1_to_hex(sha1));
-> -               return 1;
-> -       }
-> -       if (!strcmp(name, "objectname:short")) {
-> -               v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
-> -               return 1;
-> +       if (starts_with(name, "objectname")) {
-> +               if (atom->u.objectname.shorten) {
-> +                       v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
-> +                       return 1;
-> +               } else if (atom->u.objectname.full) {
-> +                       v->s = xstrdup(sha1_to_hex(sha1));
-> +                       return 1;
-> +               }
->         }
->         return 0;
->  }
-> @@ -495,7 +515,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
->                         v->s = xstrfmt("%lu", sz);
->                 }
->                 else if (deref)
-> -                       grab_objectname(name, obj->sha1, v);
-> +                       grab_objectname(name, obj->sha1, v, &used_atom[i]);
->         }
->  }
->
-> @@ -1004,7 +1024,7 @@ static void populate_value(struct ref_array_item *ref)
->                                 v->s = xstrdup(buf + 1);
->                         }
->                         continue;
-> -               } else if (!deref && grab_objectname(name, ref->objectname, v)) {
-> +               } else if (!deref && grab_objectname(name, ref->objectname, v, atom)) {
->                         continue;
->                 } else if (!strcmp(name, "HEAD")) {
->                         const char *head;
-> --
-> 2.6.2
+As a bonus, an 'enum atom_type' would resolve the problem of how
+starts_with() is abused in populate_value() for certain cases
+(assuming I'm understanding the logic), such as how matching of
+"color" could incorrectly match some yet-to-be-added atom named
+"colorize".
