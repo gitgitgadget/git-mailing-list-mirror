@@ -1,91 +1,79 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 6/8] run-command: add an asynchronous parallel child processor
-Date: Mon, 14 Dec 2015 13:40:28 -0800
-Message-ID: <CAGZ79kbseHv+gbjxFHH8nO_QV-8SS+7u=LYVQ0_K5u39rD0uGQ@mail.gmail.com>
-References: <1450121838-7069-1-git-send-email-sbeller@google.com>
-	<1450121838-7069-7-git-send-email-sbeller@google.com>
-	<566F28EA.3080802@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] format-patch: add an option to suppress commit hash
+Date: Mon, 14 Dec 2015 13:43:15 -0800
+Message-ID: <xmqq6100iu4s.fsf@gitster.mtv.corp.google.com>
+References: <1450027638-788102-1-git-send-email-sandals@crustytoothpaste.net>
+	<1450027638-788102-3-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Eric Sunshine <ericsunshine@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Dec 14 22:40:40 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+	Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Dec 14 22:43:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8arE-0006nN-69
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 22:40:36 +0100
+	id 1a8au1-0003xo-Qb
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 22:43:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932733AbbLNVkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 16:40:32 -0500
-Received: from mail-io0-f174.google.com ([209.85.223.174]:33425 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932382AbbLNVk3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 16:40:29 -0500
-Received: by iow186 with SMTP id 186so41625204iow.0
-        for <git@vger.kernel.org>; Mon, 14 Dec 2015 13:40:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oLIQrZaBOlvWyfYqY9GmqMcVQWSMrZ9ZONiogUdcmjA=;
-        b=oxKw/W/hR0wya5UlNTbrdZYpqKuZDEU1KYM2I49HFprzlIiUnAS9Xk47bvEf2gyi3q
-         HzgwqtTu0j4iiCL4eaOuMKtGxF3ae69/556wS6kTipKjWozWgHjwk/XJT2LzG9DUnkt5
-         wghXWWOKP/gKOlUy6ou9MHrKqYCow18ANAtvh6dxAo40xUXIP7djeB0aVHTbcHULfDPt
-         jAmOZS0MwDxNUXbwW8BVOJ8d0EFYa35SG+ZnAScB8AOU5+YUt2BlwZ4IBr79qXrHICs3
-         ca0mmWwaKzJpXZed/bqLPxmLJYNQfpbTkgKJCgQr9TrH8xLujFJBMxmGbMA+/U2HDz75
-         QtwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=oLIQrZaBOlvWyfYqY9GmqMcVQWSMrZ9ZONiogUdcmjA=;
-        b=D7CMAXCsVeJsOYyPUhYH6c6xxNSPzpYT33O8gin0XvnX+rqv60IVs3TyTFbOs8clY4
-         Kq3xHBn0dMI7JTRCk03IYIZYf8mP3DO0GqeU0RCNu4qpqVxDpKtC6XCAklG+Jmx5Kx7T
-         E6OUI6yvfmE4x2RPVstK3WfpYUZyyBxRpsiWe+j1ULNxNTJEnyKNLT6bAqHHtg5YMFt5
-         7Myy/K8UGuyqhM5hvscYWcI4Z2kMRBnZI6mlYWz5YgdKT7qInRbNXftimGxyi1+NWmVg
-         N+7NtvvLi6GJhAUcwMPYWqXhe2TRHF2vHWGowZT2laLq70DeWE+LnfZUXRECAmL5GFFF
-         +/Kw==
-X-Gm-Message-State: ALoCoQnltRtMEp+F7y4QsnrVubJ2dDR43F9zti896LzWPudD/Tm62o72fXshlq2hfPcRO8h31LUYNqqwQmT/EavTRUG2wDxwwP3fPCu9F5a0fvhaQNwhjUQ=
-X-Received: by 10.107.152.142 with SMTP id a136mr37185872ioe.110.1450129228472;
- Mon, 14 Dec 2015 13:40:28 -0800 (PST)
-Received: by 10.107.8.84 with HTTP; Mon, 14 Dec 2015 13:40:28 -0800 (PST)
-In-Reply-To: <566F28EA.3080802@kdbg.org>
+	id S932382AbbLNVnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 16:43:25 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:53663 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932088AbbLNVnZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 16:43:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4AFA033B9E;
+	Mon, 14 Dec 2015 16:43:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Pte1w9D85++66/lVpE4dbTqO1pg=; b=SOPHEq
+	Ug7jXJApRqbUkpIltpPJIhbPdjCWMTr9uB3p8l4XS2q0PFQb7jmR7IPM+XaactN4
+	pfdGlTwcXSWxkD69VO2bL1l+OYCMzmBgUhynm9bzCb+JyJ3+xE86Uzsa8qJjp3uw
+	UQ7VJU3otW/iv9Vgmu3/WGfuVBsPFjGqUHahc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E9iRCAWCT9UHs68WaoV8H0FuvWQ5F1ir
+	s8cgdUtSRw3AbSazOXEfC9RkZuy2QDP1uzWiWa5Lv37/0dQw1p5n5K+jEN+uoRQe
+	5iou7S8XTm7iqkvTlM/oBwuMaKDTveLPTlJWEUqx5pWiFJ3D6NreCVIyEywfUBNd
+	EeHxo/z8e6k=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 41C4333B9D;
+	Mon, 14 Dec 2015 16:43:24 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A6B4433B8F;
+	Mon, 14 Dec 2015 16:43:23 -0500 (EST)
+In-Reply-To: <1450027638-788102-3-git-send-email-sandals@crustytoothpaste.net>
+	(brian m. carlson's message of "Sun, 13 Dec 2015 17:27:17 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: B35CBAAA-A2AB-11E5-B403-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282425>
 
-On Mon, Dec 14, 2015 at 12:39 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->
-> I can't quite parse the first sentence in this paragraph. Perhaps something
-> like this:
->
-> To detect when a child has finished executing, we check interleaved
-> with other actions (such as checking the liveliness of children or
-> starting new processes) whether the stderr pipe still exists. Once a
-> child closed its stderr stream, we assume it is terminating very soon,
-> and use finish_command() from the single external process execution
-> interface to collect the exit status.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Sounds much better than my words. If a resend is necessary, I'll have your
-reworded version of the paragraph instead.
+> +test_expect_success 'format-patch --zero-commit' '
+> +	git format-patch --zero-commit --stdout v2..v1 >patch2 &&
+> +	cnt=$(egrep "^From 0{40} Mon Sep 17 00:00:00 2001" patch2 | wc -l) &&
+> +	test $cnt = 3
+> +'
 
->
->
->>
->> By maintaining the strong assumption of stderr being open until the
->> very end of a child process, we can avoid other hassle such as an
->> implementation using `waitpid(-1)`, which is not implemented in Windows.
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->
->
+This test is not wrong per-se, but it makes the test as a whole
+somewhat brittle.  People cannot add new commits in the history
+being tested, which would add to the number of patches, without
+adjusting this test, even though all this test cares about is that
+all the mbox "From " lines record the zeroed commit object name.
+
+    git format-patch --zero-commit --stdout v2..v1 |
+    grep "^From " | sort | uniq >actual &&
+    echo "From $_z40 Mon Sep 17 00:00:00 2001" >expect &&
+    test_cmp expect actual
+
+or something like that instead?
