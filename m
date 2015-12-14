@@ -1,77 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Why does send-pack call pack-objects for all remote refs?
-Date: Mon, 14 Dec 2015 16:04:29 -0500
-Message-ID: <20151214210429.GC14788@sigill.intra.peff.net>
-References: <4766c8518c2a46afb88fc0a2dd9a1688@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com>
- <xmqqvb89lw5f.fsf@gitster.mtv.corp.google.com>
- <20151207225714.GA3785@sigill.intra.peff.net>
- <8712f730fb4c414ebc2b1168ca7948b8@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com>
- <20151210041941.GA4056@sigill.intra.peff.net>
- <d0a39b03e49d41e685cf61398c0d1102@EXCHANGE2U.uunet.arlington.PredictiveTechnologies.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git bisect with temporary commits
+Date: Mon, 14 Dec 2015 13:17:03 -0800
+Message-ID: <xmqqegeoivcg.fsf@gitster.mtv.corp.google.com>
+References: <20151214163726.GY13519@tonks> <87si34hphr.fsf@igel.home>
+	<20151214210936.GD14788@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Nasser Grainawi <nasser@codeaurora.org>
-To: Daniel Koverman <dkoverman@predictiveTechnologies.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 22:14:35 2015
+Content-Type: text/plain
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Florian Bruhin <me@the-compiler.org>, git@vger.kernel.org,
+	r.seitz@beh.ch
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 14 22:17:14 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8aS1-00088Y-AF
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 22:14:33 +0100
+	id 1a8aUa-0004Nn-VG
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 22:17:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932400AbbLNVEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 16:04:33 -0500
-Received: from cloud.peff.net ([50.56.180.127]:41494 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932148AbbLNVEc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 16:04:32 -0500
-Received: (qmail 17903 invoked by uid 102); 14 Dec 2015 21:04:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 15:04:32 -0600
-Received: (qmail 31621 invoked by uid 107); 14 Dec 2015 21:04:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 16:04:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Dec 2015 16:04:29 -0500
-Content-Disposition: inline
-In-Reply-To: <d0a39b03e49d41e685cf61398c0d1102@EXCHANGE2U.uunet.arlington.PredictiveTechnologies.com>
+	id S932080AbbLNVRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 16:17:08 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:62257 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753498AbbLNVRG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 16:17:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5337234D5E;
+	Mon, 14 Dec 2015 16:17:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gB8byOy9b5E1j0TUiZ4UeAOOGSQ=; b=u586gK
+	yOJXXdL/HuiHLvTMjtVAri5/zIcjauvmVx3Ke2pM7F2Hbsy780NU+00vcK7G7gJd
+	ccJgHsxQLfOM56/kZe1UAc24fsxgq8K4o425nzWrhllKqcgOMnrua9YIdQzQIA1K
+	3MZ5MIJTEZGZR2iUJUag4SqvBIjNA1fj6G08M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y75JhoSSo0huGfclsIHYzfsFFOe8M5jm
+	JG+N0aeEs5tlWvAYT0so4oxFVxSfyvbw+L7mCTH1r9S+Ukb4OnILHAcEfi1qHymb
+	FqfpWJra1aW6MR+KO9A6IxYOnT/IsmJ0akTSjzKLp6mL5bjC8q7EnyXGkh9R1Jwk
+	g7ORYDm5fwc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4AF6134D5D;
+	Mon, 14 Dec 2015 16:17:05 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 916B334D5C;
+	Mon, 14 Dec 2015 16:17:04 -0500 (EST)
+In-Reply-To: <20151214210936.GD14788@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 14 Dec 2015 16:09:36 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 06318C46-A2A8-11E5-8D00-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282419>
 
-On Mon, Dec 14, 2015 at 01:47:39PM +0000, Daniel Koverman wrote:
+Jeff King <peff@peff.net> writes:
 
-> > You might also try repacking with "git repack -adb", which will
-> > build reachability bitmaps. Pack-objects can use them to compute
-> > the set of required objects much faster.
-> 
-> Running "git repack -adb" caused my push time to incease by about 5x.
-> I made some fresh clones and tried other options with repack, and
-> consistently anything I tried with -b caused the push time to
-> increase about 5x.
-> 
-> I don't know much about reachability bitmaps, but perhaps it is
-> important to note that I timed the pushes after repacking on Git for
-> Windows. My earlier timings were done on both Linux and Windows and I
-> did not see a significant difference.
+>> You should instead tell git that HEAD^ is good, since that is what git
+>> asked you to test.
+>
+> Another alternative is to use "git cherry-pick -n" to create a working
+> tree state that you can test, but leave HEAD at the original commit.
+> Then "git bisect good" does the right thing.
 
-Hmm. I guess that makes sense. The bitmap we want is the set difference
-between the objects we are sending, and the tips the other side has. If
-we have a bitmap at each ref tip, that's very fast. But if you have a
-very large number of refs, we don't make one for each ref, and it has to
-fallback to walking to the nearest one (and it ends up worse than a
-regular walk, because it's filling in the bitmap for each tree, rather
-than just doing the "good enough" commit walk that we usually do).
+I was about to say the same, and "bisect good" at that point does
+mark the correct commit, but does it always do the right thing?  I
+think the procedure must be
 
-I suspect there's room for improvement in the way we select commits to
-store bitmaps for (so that the average walk is smaller). But it's rather
-tricky; there's not a single constant to change to make it work better.
+	git cherry-pick -n $the_fixup
+        test
+        git reset --hard
+        git bisect good (or bad)
 
-Thanks for trying out my suggestion.
+for it to always work, which is not all that different from
 
--Peff
+	git cherry-pick $the_fixup
+        test
+        git reset --hard HEAD^
+        git bisect good (or bad)
