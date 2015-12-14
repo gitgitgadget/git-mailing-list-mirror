@@ -1,89 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/8] Rerolling sb/submodule-parallel-fetch for the time after 2.7
-Date: Mon, 14 Dec 2015 13:00:42 -0800
-Message-ID: <xmqqio40iw3p.fsf@gitster.mtv.corp.google.com>
-References: <1450121838-7069-1-git-send-email-sbeller@google.com>
-	<566F2952.8000307@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git bisect with temporary commits
+Date: Mon, 14 Dec 2015 16:09:36 -0500
+Message-ID: <20151214210936.GD14788@sigill.intra.peff.net>
+References: <20151214163726.GY13519@tonks>
+ <87si34hphr.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-	peff@peff.net, jrnieder@gmail.com, johannes.schindelin@gmail.com,
-	Jens.Lehmann@web.de, ericsunshine@gmail.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Dec 14 22:00:55 2015
+Content-Type: text/plain; charset=utf-8
+Cc: Florian Bruhin <me@the-compiler.org>, git@vger.kernel.org,
+	r.seitz@beh.ch
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Mon Dec 14 22:09:46 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8aEo-0007p5-80
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 22:00:54 +0100
+	id 1a8aNM-0007G6-Ur
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 22:09:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932264AbbLNVAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 16:00:45 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58382 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932088AbbLNVAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 16:00:44 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1319F344B8;
-	Mon, 14 Dec 2015 16:00:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TjqBEMtWw/4LauJHyMCt/trcOQk=; b=LXGgJg
-	qnFDA0H7slH4UP1liR90M3GuMdr+7E+us3Xd0s3YefM+YjQerdxW4W1A0Ogtpuav
-	zzvkK6otw3wV+JKMs+YefhLt//4EfYDw/GF5wm0FTymDWCEkrG4mSS+AaJd6gBiv
-	icYUDayUblAjIaxmxrZSQpO9CO1RW6bZVFGks=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sk4+BNjuWgb7PkFaAVqVkdPIPtQ/la+I
-	B1TMg/1uJ6D4dycEjCXAwd81pc2DX7/DBzhYb10V5ZQcWxv7SieVNKhWD38vt1L7
-	cicGLGJzdxlK50chIFNIFyxTiUVYAxbe5kGOj11AOZzWnpqyLr9Kw9ANGG0cesOY
-	gQplIZV7zG4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 096C1344B7;
-	Mon, 14 Dec 2015 16:00:44 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2E3D6344B6;
-	Mon, 14 Dec 2015 16:00:43 -0500 (EST)
-In-Reply-To: <566F2952.8000307@kdbg.org> (Johannes Sixt's message of "Mon, 14
-	Dec 2015 21:40:50 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: BD659450-A2A5-11E5-9722-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S932650AbbLNVJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 16:09:41 -0500
+Received: from cloud.peff.net ([50.56.180.127]:41497 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932325AbbLNVJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 16:09:39 -0500
+Received: (qmail 18344 invoked by uid 102); 14 Dec 2015 21:09:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 15:09:39 -0600
+Received: (qmail 31655 invoked by uid 107); 14 Dec 2015 21:09:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 16:09:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Dec 2015 16:09:36 -0500
+Content-Disposition: inline
+In-Reply-To: <87si34hphr.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282414>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Mon, Dec 14, 2015 at 07:08:48PM +0100, Andreas Schwab wrote:
 
-> Am 14.12.2015 um 20:37 schrieb Stefan Beller:
->> I am sending out a new version for replacing sb/submodule-parallel-fetch for
->> the time after the 2.7 release.
->>
->> The content are
->>   * all patches as in the branch sb/submodule-parallel-fetch
->>   * inlcuding the fixups as suggested by Hannes,
->>   * write a message to the debug log for better testing and debugging purposes
->>    (a patch cherry picked from the series which is supposed to build on top of this)
->>
->> The patches themselves were rebased such that there are no fixup commits
->> any more, but we get things right the first time.
->>
->> The commit message of "run-command: add an asynchronous parallel child processor"
->> has slightly been updated to mention the fact that we don't want to use waitpid(-1)
->> but rather use the assumption of child's stderr living as long as the child itself.
->
-> Thanks! I rebased a version of sb/submodule-parallel-fetch that
-> includes my suggested improvements, and the result is identical to
-> this series except for the trace output mentioned in the last bullet
-> point.
->
-> With or without addressing my note about the commit message in 6/8:
->
-> Acked-by: Johannes Sixt <j6t@kdbg.org>
+> Florian Bruhin <me@the-compiler.org> writes:
+> 
+> > Now when trying to say it's good (and forgetting to remove the
+> > temporary commits), I get this:
+> >
+> >     $ git bisect good
+> >     Bisecting: a merge base must be tested
+> >     [981e1093dae24b37189bcba2dd848b0c3388080c] still good and does not compile
+> >
+> > Is this intended behaviour? Shouldn't git either do a reset to the
+> > commit we're currently bisecting, or warn the user as it was probably
+> > unintended to add new commits?
+> 
+> You should instead tell git that HEAD^ is good, since that is what git
+> asked you to test.
 
-Thanks, both.  This round does look very clean to build on top.
+Another alternative is to use "git cherry-pick -n" to create a working
+tree state that you can test, but leave HEAD at the original commit.
+Then "git bisect good" does the right thing.
+
+It's the same principle and I don't think there is a reason to prefer
+one over the other. I just find it harder to screw up, as I usually
+script the build/test, so I can stick the cherry-pick there and not have
+to remember it on each "good/bad" report.
+
+-Peff
