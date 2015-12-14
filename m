@@ -1,718 +1,117 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 6/8] run-command: add an asynchronous parallel child processor
-Date: Mon, 14 Dec 2015 11:37:16 -0800
-Message-ID: <1450121838-7069-7-git-send-email-sbeller@google.com>
+Subject: [PATCH 4/8] strbuf: add strbuf_read_once to read without blocking
+Date: Mon, 14 Dec 2015 11:37:14 -0800
+Message-ID: <1450121838-7069-5-git-send-email-sbeller@google.com>
 References: <1450121838-7069-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, gitster@pobox.com, jrnieder@gmail.com,
 	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
 	ericsunshine@gmail.com, j6t@kdbg.org
 To: sbeller@google.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 14 20:37:48 2015
+X-From: git-owner@vger.kernel.org Mon Dec 14 20:37:54 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8YwJ-0003Uc-IT
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 20:37:44 +0100
+	id 1a8YwI-0003Uc-W6
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 20:37:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932151AbbLNThl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 14:37:41 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34955 "EHLO
-	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166AbbLNThh (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753506AbbLNThh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 14 Dec 2015 14:37:37 -0500
-Received: by pff63 with SMTP id 63so16211754pff.2
-        for <git@vger.kernel.org>; Mon, 14 Dec 2015 11:37:37 -0800 (PST)
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:36437 "EHLO
+	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751166AbbLNThe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 14:37:34 -0500
+Received: by pfbu66 with SMTP id u66so66039145pfb.3
+        for <git@vger.kernel.org>; Mon, 14 Dec 2015 11:37:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SPg0y6Pi41NFCw4MuhLgOCiIm3Bp1y3d8fXaHnyxnV4=;
-        b=NmFshjurx59YNPCgWOIkUX2QFvj5Y750UNz42VumfYf/XKCBe8/11dBJaUkpzD9gSi
-         tT3pFGK9aBmu/IGNF8O47AtcWO7tzZEJ1O3TskhEels7Cz1C0mt5JXoh6jQTYmofNenF
-         M2cJlOSR6blxNYjlFRmzfxXsvF3LsiDXvsk8GsOAnfRyV6b7TTo2F800cGH3+6c2Bw/d
-         bM1IQt4kG1AJOSRAMiHPaRduWLe4aXdhaQL/jOEgQRWjGqbkZLKlWFbtn+xO2cwHJHHb
-         t2CuT4n9RYvx2CtAM0zgBHGdOo2gqLzMBEcAzSrxfIOfawzXLIkYNZDMTQC8tG+ccnTl
-         SI4Q==
+        bh=EUuD1qmk9TIAu3WSg0qDBcFwCLCdNMQhLErfTaDd1Vo=;
+        b=INTxZU9m6iMiy/RhR/xY8CIcQuOj9Npn3VXiZXI3Fsg4kRfEkZj7IY5atxkOetiFgR
+         NYPCBTaIobFHuJqYdsRzsriQN8svwHyo2gQwasBJHeYHvVSgoUwKOfZSjykqVPSh0jpz
+         p9+Qe0CQjMj6IE3IHKLYu2vMc19z2wvflCQ4htGLb7aWryfIxDnMtY9cpGjDrHafCcDc
+         mkFoq8gv6GIHqGXqierZ4VtLnvwagJ0S6UE638jEMHiP7rJ8Egp5rIpcCquS2hYxuQkH
+         GsbyOzRtjmKarfJ0/GvIHmvFxZ54xXoBhLlSaVk59QGSZ+pQ44BgcMTb3I1bSV+hn50k
+         yweg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=SPg0y6Pi41NFCw4MuhLgOCiIm3Bp1y3d8fXaHnyxnV4=;
-        b=eLwxo7k3WPKMPbokoUUmVee6IlsZRHUHUXQO85k0S5Ko6cHj2OHGrsyUMzSUyXqABY
-         mdWRiMe1vtz6eclwHMZiNgT7VwxtSYciwqN2zpc+/l0P6wLMZW0zPzIz2DF+hxSMF6N2
-         1uu5k9BHCRgx3ev2gkt0U1QW5A1dAWp3pNWibCKjNmuB4eYav46vQBtfODGeemBxmYdt
-         z/zQiOd4aDCaKG6ba4zYFtaGLhCkM6zyM+in2fLHq5hh6gLOJtK6rawTZFZQvQBwbkS8
-         ylgDW6qc2tUXceb0kY8kiZGXrp+c3nF9ky2nGLWQpTRJq0PC8LRTjQH60zHxwZX/rrFG
-         IyIQ==
-X-Gm-Message-State: ALoCoQnwzwk09Ilg0/8jkIex2bCIsIlOjjC2QM/HpMSzrXjhXH7JtfNgypEaoyKCAQRKIT0gkNJGZMBLo4XdhhuLQt8PHVxfuw==
-X-Received: by 10.98.76.1 with SMTP id z1mr38382194pfa.115.1450121857199;
-        Mon, 14 Dec 2015 11:37:37 -0800 (PST)
+        bh=EUuD1qmk9TIAu3WSg0qDBcFwCLCdNMQhLErfTaDd1Vo=;
+        b=AqjO/eTmbnlryhmP4WBi+Heh1sy9lTytjiqw/ltdHb/WYsntbYd9A9fqZbFmAurViO
+         mpc1bkv4CJ1NbmxFm4ibbPxBi1aefudYfYIWsPxCuAmZOH8y+zs92ih3Pkz+Y2YOW0yp
+         paMahWFrjYQL3toJOZqCGYwbZHiASenmR9qN5OZoOh0Nrh0I8q5TS+0bWOzuRgewJQ4V
+         KXy+is1Y6mAA3vfDoVyiv/UAdl4gVNEE+82UsoozqKCF7ayp4jVvZ8t1YQc4nKclUg0G
+         jLKWALrwPxFBE8Onl7HSszA2y3rRbp2P6wPzlpSziZ0Md0vF0uOlfqRs/I526DOrf16P
+         sawA==
+X-Gm-Message-State: ALoCoQmZt+3Y9V4iJ2DIBBtUmtr5UElEyXOFznc6zTERpe0GKk4rC9QblYkBgZ0Pl02NVeGPCV4bjD1PVPGHalyYcbnmPdTdHA==
+X-Received: by 10.98.72.14 with SMTP id v14mr26101796pfa.159.1450121853699;
+        Mon, 14 Dec 2015 11:37:33 -0800 (PST)
 Received: from localhost ([2620:0:1000:5b00:a894:af1d:9081:95fb])
-        by smtp.gmail.com with ESMTPSA id c14sm44093314pfd.38.2015.12.14.11.37.35
+        by smtp.gmail.com with ESMTPSA id f67sm44112512pfd.9.2015.12.14.11.37.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 14 Dec 2015 11:37:36 -0800 (PST)
+        Mon, 14 Dec 2015 11:37:32 -0800 (PST)
 X-Mailer: git-send-email 2.6.4.443.ge094245.dirty
 In-Reply-To: <1450121838-7069-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282390>
 
-This allows to run external commands in parallel with ordered output
-on stderr.
-
-If we run external commands in parallel we cannot pipe the output directly
-to the our stdout/err as it would mix up. So each process's output will
-flow through a pipe, which we buffer. One subprocess can be directly
-piped to out stdout/err for a low latency feedback to the user.
-
-Example:
-Let's assume we have 5 submodules A,B,C,D,E and each fetch takes a
-different amount of time as the different submodules vary in size, then
-the output of fetches in sequential order might look like this:
-
- time -->
- output: |---A---| |-B-| |-------C-------| |-D-| |-E-|
-
-When we schedule these submodules into maximal two parallel processes,
-a schedule and sample output over time may look like this:
-
-process 1: |---A---| |-D-| |-E-|
-
-process 2: |-B-| |-------C-------|
-
-output:    |---A---|B|---C-------|DE
-
-So A will be perceived as it would run normally in the single child
-version. As B has finished by the time A is done, we can dump its whole
-progress buffer on stderr, such that it looks like it finished in no
-time. Once that is done, C is determined to be the visible child and
-its progress will be reported in real time.
-
-So this way of output is really good for human consumption, as it only
-changes the timing, not the actual output.
-
-For machine consumption the output needs to be prepared in the tasks,
-by either having a prefix per line or per block to indicate whose tasks
-output is displayed, because the output order may not follow the
-original sequential ordering:
-
- |----A----| |--B--| |-C-|
-
-will be scheduled to be all parallel:
-
-process 1: |----A----|
-process 2: |--B--|
-process 3: |-C-|
-output:    |----A----|CB
-
-This happens because C finished before B did, so it will be queued for
-output before B.
-
-The detection when a child has finished executing is done the same way as
-two fold. First we check regularly if the stderr pipe still exists in an
-interleaved manner with other actions such as checking other children
-for their liveliness or starting new children. Once a child closed their
-stderr stream, we assume it is stopping very soon, such that we can use
-the `finish_command` code borrowed from the single external process
-execution interface.
-
-By maintaining the strong assumption of stderr being open until the
-very end of a child process, we can avoid other hassle such as an
-implementation using `waitpid(-1)`, which is not implemented in Windows.
+The new call will read from a file descriptor into a strbuf once. The
+underlying call xread_nonblock is meant to execute without blocking if
+the file descriptor is set to O_NONBLOCK. It is a bug to call
+strbuf_read_once on a file descriptor which would block.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- run-command.c          | 335 +++++++++++++++++++++++++++++++++++++++++++++++++
- run-command.h          |  80 ++++++++++++
- t/t0061-run-command.sh |  53 ++++++++
- test-run-command.c     |  55 +++++++-
- 4 files changed, 522 insertions(+), 1 deletion(-)
+ strbuf.c | 11 +++++++++++
+ strbuf.h |  8 ++++++++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/run-command.c b/run-command.c
-index 13fa452..51fd72c 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -3,6 +3,8 @@
- #include "exec_cmd.h"
- #include "sigchain.h"
- #include "argv-array.h"
-+#include "thread-utils.h"
-+#include "strbuf.h"
- 
- void child_process_init(struct child_process *child)
- {
-@@ -865,3 +867,336 @@ int capture_command(struct child_process *cmd, struct strbuf *buf, size_t hint)
- 	close(cmd->out);
- 	return finish_command(cmd);
+diff --git a/strbuf.c b/strbuf.c
+index d76f0ae..b552a13 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -384,6 +384,17 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
+ 	return sb->len - oldlen;
  }
-+
-+enum child_state {
-+	GIT_CP_FREE,
-+	GIT_CP_WORKING,
-+	GIT_CP_WAIT_CLEANUP,
-+};
-+
-+struct parallel_processes {
-+	void *data;
-+
-+	int max_processes;
-+	int nr_processes;
-+
-+	get_next_task_fn get_next_task;
-+	start_failure_fn start_failure;
-+	task_finished_fn task_finished;
-+
-+	struct {
-+		enum child_state state;
-+		struct child_process process;
-+		struct strbuf err;
-+		void *data;
-+	} *children;
-+	/*
-+	 * The struct pollfd is logically part of *children,
-+	 * but the system call expects it as its own array.
-+	 */
-+	struct pollfd *pfd;
-+
-+	unsigned shutdown : 1;
-+
-+	int output_owner;
-+	struct strbuf buffered_output; /* of finished children */
-+};
-+
-+static int default_start_failure(struct child_process *cp,
-+				 struct strbuf *err,
-+				 void *pp_cb,
-+				 void *pp_task_cb)
-+{
-+	int i;
-+
-+	strbuf_addstr(err, "Starting a child failed:");
-+	for (i = 0; cp->argv[i]; i++)
-+		strbuf_addf(err, " %s", cp->argv[i]);
-+
-+	return 0;
-+}
-+
-+static int default_task_finished(int result,
-+				 struct child_process *cp,
-+				 struct strbuf *err,
-+				 void *pp_cb,
-+				 void *pp_task_cb)
-+{
-+	int i;
-+
-+	if (!result)
-+		return 0;
-+
-+	strbuf_addf(err, "A child failed with return code %d:", result);
-+	for (i = 0; cp->argv[i]; i++)
-+		strbuf_addf(err, " %s", cp->argv[i]);
-+
-+	return 0;
-+}
-+
-+static void kill_children(struct parallel_processes *pp, int signo)
-+{
-+	int i, n = pp->max_processes;
-+
-+	for (i = 0; i < n; i++)
-+		if (pp->children[i].state == GIT_CP_WORKING)
-+			kill(pp->children[i].process.pid, signo);
-+}
-+
-+static struct parallel_processes *pp_for_signal;
-+
-+static void handle_children_on_signal(int signo)
-+{
-+	kill_children(pp_for_signal, signo);
-+	sigchain_pop(signo);
-+	raise(signo);
-+}
-+
-+static void pp_init(struct parallel_processes *pp,
-+		    int n,
-+		    get_next_task_fn get_next_task,
-+		    start_failure_fn start_failure,
-+		    task_finished_fn task_finished,
-+		    void *data)
-+{
-+	int i;
-+
-+	if (n < 1)
-+		n = online_cpus();
-+
-+	pp->max_processes = n;
-+
-+	trace_printf("run_processes_parallel: preparing to run up to %d tasks", n);
-+
-+	pp->data = data;
-+	if (!get_next_task)
-+		die("BUG: you need to specify a get_next_task function");
-+	pp->get_next_task = get_next_task;
-+
-+	pp->start_failure = start_failure ? start_failure : default_start_failure;
-+	pp->task_finished = task_finished ? task_finished : default_task_finished;
-+
-+	pp->nr_processes = 0;
-+	pp->output_owner = 0;
-+	pp->shutdown = 0;
-+	pp->children = xcalloc(n, sizeof(*pp->children));
-+	pp->pfd = xcalloc(n, sizeof(*pp->pfd));
-+	strbuf_init(&pp->buffered_output, 0);
-+
-+	for (i = 0; i < n; i++) {
-+		strbuf_init(&pp->children[i].err, 0);
-+		child_process_init(&pp->children[i].process);
-+		pp->pfd[i].events = POLLIN | POLLHUP;
-+		pp->pfd[i].fd = -1;
-+	}
-+
-+	pp_for_signal = pp;
-+	sigchain_push_common(handle_children_on_signal);
-+}
-+
-+static void pp_cleanup(struct parallel_processes *pp)
-+{
-+	int i;
-+
-+	trace_printf("run_processes_parallel: done");
-+	for (i = 0; i < pp->max_processes; i++) {
-+		strbuf_release(&pp->children[i].err);
-+		child_process_clear(&pp->children[i].process);
-+	}
-+
-+	free(pp->children);
-+	free(pp->pfd);
-+
-+	/*
-+	 * When get_next_task added messages to the buffer in its last
-+	 * iteration, the buffered output is non empty.
-+	 */
-+	fputs(pp->buffered_output.buf, stderr);
-+	strbuf_release(&pp->buffered_output);
-+
-+	sigchain_pop_common();
-+}
-+
-+/* returns
-+ *  0 if a new task was started.
-+ *  1 if no new jobs was started (get_next_task ran out of work, non critical
-+ *    problem with starting a new command)
-+ * <0 no new job was started, user wishes to shutdown early. Use negative code
-+ *    to signal the children.
-+ */
-+static int pp_start_one(struct parallel_processes *pp)
-+{
-+	int i, code;
-+
-+	for (i = 0; i < pp->max_processes; i++)
-+		if (pp->children[i].state == GIT_CP_FREE)
-+			break;
-+	if (i == pp->max_processes)
-+		die("BUG: bookkeeping is hard");
-+
-+	code = pp->get_next_task(&pp->children[i].process,
-+				 &pp->children[i].err,
-+				 pp->data,
-+				 &pp->children[i].data);
-+	if (!code) {
-+		strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
-+		strbuf_reset(&pp->children[i].err);
-+		return 1;
-+	}
-+	pp->children[i].process.err = -1;
-+	pp->children[i].process.stdout_to_stderr = 1;
-+	pp->children[i].process.no_stdin = 1;
-+
-+	if (start_command(&pp->children[i].process)) {
-+		code = pp->start_failure(&pp->children[i].process,
-+					 &pp->children[i].err,
-+					 pp->data,
-+					 &pp->children[i].data);
-+		strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
-+		strbuf_reset(&pp->children[i].err);
-+		if (code)
-+			pp->shutdown = 1;
-+		return code;
-+	}
-+
-+	pp->nr_processes++;
-+	pp->children[i].state = GIT_CP_WORKING;
-+	pp->pfd[i].fd = pp->children[i].process.err;
-+	return 0;
-+}
-+
-+static void pp_buffer_stderr(struct parallel_processes *pp, int output_timeout)
-+{
-+	int i;
-+
-+	while ((i = poll(pp->pfd, pp->max_processes, output_timeout)) < 0) {
-+		if (errno == EINTR)
-+			continue;
-+		pp_cleanup(pp);
-+		die_errno("poll");
-+	}
-+
-+	/* Buffer output from all pipes. */
-+	for (i = 0; i < pp->max_processes; i++) {
-+		if (pp->children[i].state == GIT_CP_WORKING &&
-+		    pp->pfd[i].revents & (POLLIN | POLLHUP)) {
-+			int n = strbuf_read_once(&pp->children[i].err,
-+						 pp->children[i].process.err, 0);
-+			if (n == 0) {
-+				close(pp->children[i].process.err);
-+				pp->children[i].state = GIT_CP_WAIT_CLEANUP;
-+			} else if (n < 0)
-+				if (errno != EAGAIN)
-+					die_errno("read");
-+		}
-+	}
-+}
-+
-+static void pp_output(struct parallel_processes *pp)
-+{
-+	int i = pp->output_owner;
-+	if (pp->children[i].state == GIT_CP_WORKING &&
-+	    pp->children[i].err.len) {
-+		fputs(pp->children[i].err.buf, stderr);
-+		strbuf_reset(&pp->children[i].err);
-+	}
-+}
-+
-+static int pp_collect_finished(struct parallel_processes *pp)
-+{
-+	int i, code;
-+	int n = pp->max_processes;
-+	int result = 0;
-+
-+	while (pp->nr_processes > 0) {
-+		for (i = 0; i < pp->max_processes; i++)
-+			if (pp->children[i].state == GIT_CP_WAIT_CLEANUP)
-+				break;
-+		if (i == pp->max_processes)
-+			break;
-+
-+		code = finish_command(&pp->children[i].process);
-+
-+		code = pp->task_finished(code, &pp->children[i].process,
-+					 &pp->children[i].err, pp->data,
-+					 &pp->children[i].data);
-+
-+		if (code)
-+			result = code;
-+		if (code < 0)
-+			break;
-+
-+		pp->nr_processes--;
-+		pp->children[i].state = GIT_CP_FREE;
-+		pp->pfd[i].fd = -1;
-+		child_process_init(&pp->children[i].process);
-+
-+		if (i != pp->output_owner) {
-+			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
-+			strbuf_reset(&pp->children[i].err);
-+		} else {
-+			fputs(pp->children[i].err.buf, stderr);
-+			strbuf_reset(&pp->children[i].err);
-+
-+			/* Output all other finished child processes */
-+			fputs(pp->buffered_output.buf, stderr);
-+			strbuf_reset(&pp->buffered_output);
-+
-+			/*
-+			 * Pick next process to output live.
-+			 * NEEDSWORK:
-+			 * For now we pick it randomly by doing a round
-+			 * robin. Later we may want to pick the one with
-+			 * the most output or the longest or shortest
-+			 * running process time.
-+			 */
-+			for (i = 0; i < n; i++)
-+				if (pp->children[(pp->output_owner + i) % n].state == GIT_CP_WORKING)
-+					break;
-+			pp->output_owner = (pp->output_owner + i) % n;
-+		}
-+	}
-+	return result;
-+}
-+
-+int run_processes_parallel(int n,
-+			   get_next_task_fn get_next_task,
-+			   start_failure_fn start_failure,
-+			   task_finished_fn task_finished,
-+			   void *pp_cb)
-+{
-+	int i, code;
-+	int output_timeout = 100;
-+	int spawn_cap = 4;
-+	struct parallel_processes pp;
-+
-+	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb);
-+	while (1) {
-+		for (i = 0;
-+		    i < spawn_cap && !pp.shutdown &&
-+		    pp.nr_processes < pp.max_processes;
-+		    i++) {
-+			code = pp_start_one(&pp);
-+			if (!code)
-+				continue;
-+			if (code < 0) {
-+				pp.shutdown = 1;
-+				kill_children(&pp, -code);
-+			}
-+			break;
-+		}
-+		if (!pp.nr_processes)
-+			break;
-+		pp_buffer_stderr(&pp, output_timeout);
-+		pp_output(&pp);
-+		code = pp_collect_finished(&pp);
-+		if (code) {
-+			pp.shutdown = 1;
-+			if (code < 0)
-+				kill_children(&pp, -code);
-+		}
-+	}
-+
-+	pp_cleanup(&pp);
-+	return 0;
-+}
-diff --git a/run-command.h b/run-command.h
-index 12bb26c..d5a57f9 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -122,4 +122,84 @@ int start_async(struct async *async);
- int finish_async(struct async *async);
- int in_async(void);
  
-+/**
-+ * This callback should initialize the child process and preload the
-+ * error channel if desired. The preloading of is useful if you want to
-+ * have a message printed directly before the output of the child process.
-+ * pp_cb is the callback cookie as passed to run_processes_parallel.
-+ * You can store a child process specific callback cookie in pp_task_cb.
-+ *
-+ * Even after returning 0 to indicate that there are no more processes,
-+ * this function will be called again until there are no more running
-+ * child processes.
-+ *
-+ * Return 1 if the next child is ready to run.
-+ * Return 0 if there are currently no more tasks to be processed.
-+ * To send a signal to other child processes for abortion,
-+ * return the negative signal number.
++ssize_t strbuf_read_once(struct strbuf *sb, int fd, size_t hint)
++{
++	ssize_t cnt;
++
++	strbuf_grow(sb, hint ? hint : 8192);
++	cnt = xread_nonblock(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
++	if (cnt > 0)
++		strbuf_setlen(sb, sb->len + cnt);
++	return cnt;
++}
++
+ #define STRBUF_MAXLINK (2*PATH_MAX)
+ 
+ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
+diff --git a/strbuf.h b/strbuf.h
+index 7123fca..c3e5980 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -367,6 +367,14 @@ extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
+ extern ssize_t strbuf_read(struct strbuf *, int fd, size_t hint);
+ 
+ /**
++ * Returns the number of new bytes appended to the sb.
++ * Negative return value signals there was an error returned from
++ * underlying read(2), in which case the caller should check errno.
++ * e.g. errno == EAGAIN when the read may have blocked.
 + */
-+typedef int (*get_next_task_fn)(struct child_process *cp,
-+				struct strbuf *err,
-+				void *pp_cb,
-+				void **pp_task_cb);
++extern ssize_t strbuf_read_once(struct strbuf *, int fd, size_t hint);
 +
 +/**
-+ * This callback is called whenever there are problems starting
-+ * a new process.
-+ *
-+ * You must not write to stdout or stderr in this function. Add your
-+ * message to the strbuf err instead, which will be printed without
-+ * messing up the output of the other parallel processes.
-+ *
-+ * pp_cb is the callback cookie as passed into run_processes_parallel,
-+ * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-+ *
-+ * Return 0 to continue the parallel processing. To abort return non zero.
-+ * To send a signal to other child processes for abortion, return
-+ * the negative signal number.
-+ */
-+typedef int (*start_failure_fn)(struct child_process *cp,
-+				struct strbuf *err,
-+				void *pp_cb,
-+				void *pp_task_cb);
-+
-+/**
-+ * This callback is called on every child process that finished processing.
-+ *
-+ * You must not write to stdout or stderr in this function. Add your
-+ * message to the strbuf err instead, which will be printed without
-+ * messing up the output of the other parallel processes.
-+ *
-+ * pp_cb is the callback cookie as passed into run_processes_parallel,
-+ * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-+ *
-+ * Return 0 to continue the parallel processing.  To abort return non zero.
-+ * To send a signal to other child processes for abortion, return
-+ * the negative signal number.
-+ */
-+typedef int (*task_finished_fn)(int result,
-+				struct child_process *cp,
-+				struct strbuf *err,
-+				void *pp_cb,
-+				void *pp_task_cb);
-+
-+/**
-+ * Runs up to n processes at the same time. Whenever a process can be
-+ * started, the callback get_next_task_fn is called to obtain the data
-+ * required to start another child process.
-+ *
-+ * The children started via this function run in parallel. Their output
-+ * (both stdout and stderr) is routed to stderr in a manner that output
-+ * from different tasks does not interleave.
-+ *
-+ * If start_failure_fn or task_finished_fn are NULL, default handlers
-+ * will be used. The default handlers will print an error message on
-+ * error without issuing an emergency stop.
-+ */
-+int run_processes_parallel(int n,
-+			   get_next_task_fn,
-+			   start_failure_fn,
-+			   task_finished_fn,
-+			   void *pp_cb);
-+
- #endif
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 9acf628..12228b4 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -47,4 +47,57 @@ test_expect_success POSIXPERM,SANITY 'unreadable directory in PATH' '
- 	test_cmp expect actual
- '
- 
-+cat >expect <<-EOF
-+preloaded output of a child
-+Hello
-+World
-+preloaded output of a child
-+Hello
-+World
-+preloaded output of a child
-+Hello
-+World
-+preloaded output of a child
-+Hello
-+World
-+EOF
-+
-+test_expect_success 'run_command runs in parallel with more jobs available than tasks' '
-+	test-run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'run_command runs in parallel with as many jobs as tasks' '
-+	test-run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'run_command runs in parallel with more tasks than jobs available' '
-+	test-run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<-EOF
-+preloaded output of a child
-+asking for a quick stop
-+preloaded output of a child
-+asking for a quick stop
-+preloaded output of a child
-+asking for a quick stop
-+EOF
-+
-+test_expect_success 'run_command is asked to abort gracefully' '
-+	test-run-command run-command-abort 3 false 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<-EOF
-+no further jobs available
-+EOF
-+
-+test_expect_success 'run_command outputs ' '
-+	test-run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/test-run-command.c b/test-run-command.c
-index 89c7de2..f964507 100644
---- a/test-run-command.c
-+++ b/test-run-command.c
-@@ -10,16 +10,54 @@
- 
- #include "git-compat-util.h"
- #include "run-command.h"
-+#include "argv-array.h"
-+#include "strbuf.h"
- #include <string.h>
- #include <errno.h>
- 
-+static int number_callbacks;
-+static int parallel_next(struct child_process *cp,
-+			 struct strbuf *err,
-+			 void *cb,
-+			 void** task_cb)
-+{
-+	struct child_process *d = cb;
-+	if (number_callbacks >= 4)
-+		return 0;
-+
-+	argv_array_pushv(&cp->args, d->argv);
-+	strbuf_addf(err, "preloaded output of a child\n");
-+	number_callbacks++;
-+	return 1;
-+}
-+
-+static int no_job(struct child_process *cp,
-+		  struct strbuf *err,
-+		  void *cb,
-+		  void** task_cb)
-+{
-+	strbuf_addf(err, "no further jobs available\n");
-+	return 0;
-+}
-+
-+static int task_finished(int result,
-+			 struct child_process *cp,
-+			 struct strbuf *err,
-+			 void *pp_cb,
-+			 void *pp_task_cb)
-+{
-+	strbuf_addf(err, "asking for a quick stop\n");
-+	return 1;
-+}
-+
- int main(int argc, char **argv)
- {
- 	struct child_process proc = CHILD_PROCESS_INIT;
-+	int jobs;
- 
- 	if (argc < 3)
- 		return 1;
--	proc.argv = (const char **)argv+2;
-+	proc.argv = (const char **)argv + 2;
- 
- 	if (!strcmp(argv[1], "start-command-ENOENT")) {
- 		if (start_command(&proc) < 0 && errno == ENOENT)
-@@ -30,6 +68,21 @@ int main(int argc, char **argv)
- 	if (!strcmp(argv[1], "run-command"))
- 		exit(run_command(&proc));
- 
-+	jobs = atoi(argv[2]);
-+	proc.argv = (const char **)argv + 3;
-+
-+	if (!strcmp(argv[1], "run-command-parallel"))
-+		exit(run_processes_parallel(jobs, parallel_next,
-+					    NULL, NULL, &proc));
-+
-+	if (!strcmp(argv[1], "run-command-abort"))
-+		exit(run_processes_parallel(jobs, parallel_next,
-+					    NULL, task_finished, &proc));
-+
-+	if (!strcmp(argv[1], "run-command-no-jobs"))
-+		exit(run_processes_parallel(jobs, no_job,
-+					    NULL, task_finished, &proc));
-+
- 	fprintf(stderr, "check usage\n");
- 	return 1;
- }
+  * Read the contents of a file, specified by its path. The third argument
+  * can be used to give a hint about the file size, to avoid reallocs.
+  */
 -- 
 2.6.4.443.ge094245.dirty
