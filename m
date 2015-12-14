@@ -1,76 +1,92 @@
-From: <com.git-scm@io7m.com>
-Subject: Re: What's "wrong" with this fast-import?
-Date: Mon, 14 Dec 2015 16:20:38 +0000
-Organization: io7m.com
-Message-ID: <20151214162038.23aaa1ab@viper.int.arc7.info>
-References: <20151212192540.4ba49fea@viper.int.arc7.info>
-	<1449968019-9570-1-git-send-email-szeder@ira.uka.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: Where does http.sslcainfo get set in Windows (2.6.3)?
+Date: Mon, 14 Dec 2015 17:27:21 +0100
+Message-ID: <74D611CB-89C3-4A5B-A405-1089EB30FB32@gmail.com>
+References: <1450107945.1012555.467004601.1D76923E@webmail.messagingengine.com>
+Mime-Version: 1.0 (Mac OS X Mail 9.1 \(3096.5\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: SZEDER =?UTF-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Dec 14 17:26:25 2015
+To: Titus Barik <titus@barik.net>
+X-From: git-owner@vger.kernel.org Mon Dec 14 17:34:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8VxB-0005V8-16
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 17:26:25 +0100
+	id 1a8W54-0004eP-TI
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 17:34:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752909AbbLNQ0O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2015 11:26:14 -0500
-Received: from ftx-008-i703.relay.mailchannels.net ([50.61.143.3]:42573 "EHLO
-	ftx-008-i703.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752796AbbLNQ0M convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 11:26:12 -0500
-X-Greylist: delayed 318 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Dec 2015 11:26:11 EST
-X-Sender-Id: wwwh|x-authuser|com.git-scm+io7m.com@bs3-dallas.accountservergroup.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 5E9125067;
-	Mon, 14 Dec 2015 16:20:51 +0000 (UTC)
-Received: from bs3-dallas.accountservergroup.com (ip-10-220-9-73.us-west-2.compute.internal [10.220.9.73])
-	by relay.mailchannels.net (Postfix) with ESMTPA id 69F5C50B4;
-	Mon, 14 Dec 2015 16:20:50 +0000 (UTC)
-X-Sender-Id: wwwh|x-authuser|com.git-scm+io7m.com@bs3-dallas.accountservergroup.com
-Received: from bs3-dallas.accountservergroup.com (bs3-dallas.accountservergroup.com [10.205.13.55])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA)
-	by 0.0.0.0:2500 (trex/5.6.1);
-	Mon, 14 Dec 2015 16:20:51 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: wwwh|x-authuser|com.git-scm+io7m.com@bs3-dallas.accountservergroup.com
-X-MailChannels-Auth-Id: wwwh
-X-MC-Loop-Signature: 1450110050552:225325364
-X-MC-Ingress-Time: 1450110050552
-Received: from dsl78-143-196-24.in-addr.fast.co.uk ([78.143.196.24]:53214 helo=viper.int.arc7.info)
-	by bs3-dallas.accountservergroup.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.85)
-	(envelope-from <com.git-scm@io7m.com>)
-	id 1a8Vrl-0001KU-7O; Mon, 14 Dec 2015 10:20:49 -0600
-In-Reply-To: <1449968019-9570-1-git-send-email-szeder@ira.uka.de>
-X-AuthUser: com.git-scm+io7m.com@bs3-dallas.accountservergroup.com
+	id S1752818AbbLNQe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 11:34:27 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:34050 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752414AbbLNQeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 11:34:25 -0500
+Received: by mail-wm0-f45.google.com with SMTP id p66so70440244wmp.1
+        for <git@vger.kernel.org>; Mon, 14 Dec 2015 08:34:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9pu/PXkkqGVwhYqSyPfF/Gqpf7EwSldXj62MEiXPzD8=;
+        b=ItWbNhjlUphw6FHmdYaka0CpEcdT10nt5/LU7Iedb55UrbxdxoWDqzw0DOkvtgIuf4
+         xeTu7xgFpAR4zKKRat1Fu6bFpjjSDw5K1LNgL1SC0w+40YSiHJiHMcGqTt9ze6JPo4n1
+         U0mWCtnXZiq8fBNCXl+xVJTwUmzKCZqBgUNwovwQSen9O2n6MyW0LV2GdgX63+oRQNKs
+         9qNaoRtqs+hWlWI+pwPvlSWNAMYIUVp84aTtxmnXeOvmZFYdq9GvEaSr6FidegT8M0Ro
+         nEbtpTLswy9CF9XqE8ursEhZsQW9oOpPi8rZmt1Yu1nJzHX1+yhttE8tNimFsYqz1ZR9
+         R9wA==
+X-Received: by 10.28.223.212 with SMTP id w203mr26848529wmg.88.1450110442933;
+        Mon, 14 Dec 2015 08:27:22 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id bh6sm30552226wjb.0.2015.12.14.08.27.21
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 14 Dec 2015 08:27:22 -0800 (PST)
+In-Reply-To: <1450107945.1012555.467004601.1D76923E@webmail.messagingengine.com>
+X-Mailer: Apple Mail (2.3096.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282370>
 
-On 2015-12-13T01:53:39 +0100
-SZEDER G=C3=A1bor <szeder@ira.uka.de> wrote:
+Hi Titus,
 
-> All changes
-> compared to the first parent (i.e. the addition of that new readme fi=
-le
-> on the side branch) have to be listed explicitly.
->=20
+try to look here:
+C:\Users\All Users\Git\config
 
-Apologies for the delay: Thanks for this!
+(that's where I found it... maybe different on your end).
 
-It seems that this issue was actually unintentionally fixed in newer
-versions of Fossil, but the schema of repositories created with older
-versions had to be updated in order to actually get the benefits of the
-fix.
+Cheers,
+Lars
 
-M
+> On 14 Dec 2015, at 16:45, Titus Barik <titus@barik.net> wrote:
+> 
+> Hi all,
+> 
+> I'm in Windows using git version: git version 2.6.3.windows.1. Git is
+> installed to /c/Users/tbarik/AppData/Local/Programs/Git/cmd/git.
+> 
+> However, when I look for the config name http.sslcainfo, it returns:
+> 
+> $ git config --get-all http.sslcainfo
+> C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+> 
+> Although I can override the name, I'm trying to figure out where this is
+> being set, since the correct location should be (in this case)
+> C:/Users/tbarik/AppData/Local/Programs/Git/mingw64/ssl/certs/ca-bundle.crt.
+> 
+> I don't see C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt in
+> either --global, --system, or --local, hence my confusion as to where
+> this path is coming from.
+> 
+> Thanks,
+> 
+> Titus
+> 
+> -- 
+> Titus Barik, PE <titus@barik.net>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
