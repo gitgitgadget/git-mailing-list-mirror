@@ -1,89 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: compile error in Git v2.7.0-rc0
-Date: Mon, 14 Dec 2015 12:35:25 -0800
-Message-ID: <xmqqvb80ix9u.fsf@gitster.mtv.corp.google.com>
-References: <CALibRqFajuBuv9ooaBWL1kUzaVps2WfodqucyHni2ggv6JpwDg@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 6/8] run-command: add an asynchronous parallel child
+ processor
+Date: Mon, 14 Dec 2015 21:39:06 +0100
+Message-ID: <566F28EA.3080802@kdbg.org>
+References: <1450121838-7069-1-git-send-email-sbeller@google.com>
+ <1450121838-7069-7-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitter.spiros@gmail.com
-To: johan defries <johandefries@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 21:35:45 2015
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: peff@peff.net, gitster@pobox.com, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	ericsunshine@gmail.com
+To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 14 21:39:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8ZqQ-0004cY-9J
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 21:35:42 +0100
+	id 1a8Zts-00021Z-5r
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 21:39:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932080AbbLNUfi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2015 15:35:38 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55422 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752900AbbLNUfh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2015 15:35:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2E5D33367C;
-	Mon, 14 Dec 2015 15:35:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=AWin90QI9E8N
-	Lb8xDBKZFw8hFfE=; b=IIxG5c9fU7Z6h+uxEHaM5AIt6XmmCCUU5GoY2uYYybcC
-	biUxjsuG4xfuGFxYWpjddSOs/AJLilmmU75rS3Yeob2jjIhaHDkhVmeruZQ22UfV
-	TbGrEfOjgOlo0jssqYFzGMddVBV/CNPMFF+2PQUafSqJaZu//caYEZ+4+EaCvFs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FakjeI
-	8CQhS0qMOJ5K8Qr0wpsh9WceRu80kis0XqVBLWsqqKnla0BzFoKT59NcS8QYWHPC
-	2ZjL1Q4GQ3TU4+EVAQ3oJtzxZbA+18yXHJRTuDcesbLXoeuSyZF6eJdSOhFofI7a
-	7Teo21vnoOimVKu3YRfZ6TL3BXhe1JhiSvv8w=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 263F13367B;
-	Mon, 14 Dec 2015 15:35:36 -0500 (EST)
-Received: from pobox.com (unknown [216.239.45.64])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 940243367A;
-	Mon, 14 Dec 2015 15:35:35 -0500 (EST)
-In-Reply-To: <CALibRqFajuBuv9ooaBWL1kUzaVps2WfodqucyHni2ggv6JpwDg@mail.gmail.com>
-	(johan defries's message of "Mon, 14 Dec 2015 21:28:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 3A98F768-A2A2-11E5-9D9F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+	id S1753321AbbLNUjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 15:39:11 -0500
+Received: from bsmtp8.bon.at ([213.33.87.20]:61479 "EHLO bsmtp8.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752975AbbLNUjK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 15:39:10 -0500
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pKF1l4VHvz5tlR;
+	Mon, 14 Dec 2015 21:39:07 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 96F7853A9;
+	Mon, 14 Dec 2015 21:39:06 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.4.0
+In-Reply-To: <1450121838-7069-7-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282403>
 
-johan defries <johandefries@gmail.com> writes:
-
-> Probably because I have NO_IPV6 defined.
+Am 14.12.2015 um 20:37 schrieb Stefan Beller:
+> This allows to run external commands in parallel with ordered output
+> on stderr.
 >
-> ident.c: In function =E2=80=98canonical_name=E2=80=99:
-> ident.c:89:37: error: =E2=80=98buf=E2=80=99 undeclared (first use in =
-this function)
->   struct hostent *he =3D gethostbyname(buf);
->                                      ^
-> ident.c:89:37: note: each undeclared identifier is reported only once
-> for each function it appears in
-> make: *** [ident.o] Fout 1
+> If we run external commands in parallel we cannot pipe the output directly
+> to the our stdout/err as it would mix up. So each process's output will
+> flow through a pipe, which we buffer. One subprocess can be directly
+> piped to out stdout/err for a low latency feedback to the user.
+>
+> Example:
+> Let's assume we have 5 submodules A,B,C,D,E and each fetch takes a
+> different amount of time as the different submodules vary in size, then
+> the output of fetches in sequential order might look like this:
+>
+>   time -->
+>   output: |---A---| |-B-| |-------C-------| |-D-| |-E-|
+>
+> When we schedule these submodules into maximal two parallel processes,
+> a schedule and sample output over time may look like this:
+>
+> process 1: |---A---| |-D-| |-E-|
+>
+> process 2: |-B-| |-------C-------|
+>
+> output:    |---A---|B|---C-------|DE
+>
+> So A will be perceived as it would run normally in the single child
+> version. As B has finished by the time A is done, we can dump its whole
+> progress buffer on stderr, such that it looks like it finished in no
+> time. Once that is done, C is determined to be the visible child and
+> its progress will be reported in real time.
+>
+> So this way of output is really good for human consumption, as it only
+> changes the timing, not the actual output.
+>
+> For machine consumption the output needs to be prepared in the tasks,
+> by either having a prefix per line or per block to indicate whose tasks
+> output is displayed, because the output order may not follow the
+> original sequential ordering:
+>
+>   |----A----| |--B--| |-C-|
+>
+> will be scheduled to be all parallel:
+>
+> process 1: |----A----|
+> process 2: |--B--|
+> process 3: |-C-|
+> output:    |----A----|CB
+>
+> This happens because C finished before B did, so it will be queued for
+> output before B.
+>
+> The detection when a child has finished executing is done the same way as
+> two fold. First we check regularly if the stderr pipe still exists in an
+> interleaved manner with other actions such as checking other children
+> for their liveliness or starting new children. Once a child closed their
+> stderr stream, we assume it is stopping very soon, such that we can use
+> the `finish_command` code borrowed from the single external process
+> execution interface.
 
-Thanks.  This should perhaps do?
+I can't quite parse the first sentence in this paragraph. Perhaps 
+something like this:
 
- ident.c | 1 +
- 1 file changed, 1 insertion(+)
+To detect when a child has finished executing, we check interleaved
+with other actions (such as checking the liveliness of children or
+starting new processes) whether the stderr pipe still exists. Once a
+child closed its stderr stream, we assume it is terminating very soon,
+and use finish_command() from the single external process execution
+interface to collect the exit status.
 
-diff --git a/ident.c b/ident.c
-index 4e7f99d..2900879 100644
---- a/ident.c
-+++ b/ident.c
-@@ -86,6 +86,7 @@ static int canonical_name(const char *host, struct st=
-rbuf *out)
- 		freeaddrinfo(ai);
- 	}
- #else
-+	char buf[1024];
- 	struct hostent *he =3D gethostbyname(buf);
- 	if (he && strchr(he->h_name, '.')) {
- 		strbuf_addstr(out, he->h_name);
+>
+> By maintaining the strong assumption of stderr being open until the
+> very end of a child process, we can avoid other hassle such as an
+> implementation using `waitpid(-1)`, which is not implemented in Windows.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
