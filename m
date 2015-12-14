@@ -1,111 +1,82 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC 00/10] ref-filter: use parsing functions
-Date: Sun, 13 Dec 2015 16:55:03 -0500
-Message-ID: <CAPig+cSTpLFgeVJuPyFVuRGkwBH_axW1Vik9+6cY4g2Ajeu4iw@mail.gmail.com>
-References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
-	<xmqq1taseh2x.fsf@gitster.mtv.corp.google.com>
-	<CAPig+cQtoUXuOZjGjev8MGYUMyjd+n_=o+jOVXkhPReSkWgxmw@mail.gmail.com>
-	<CAOLa=ZSEGf7TAKNkYCogw7nz9UMUxEZ7Vg2vGXHqFP2s=tnWcg@mail.gmail.com>
+From: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v2 3/3] format-patch: check that header line has expected
+ format
+Date: Mon, 14 Dec 2015 08:16:47 +0100
+Message-ID: <566E6CDF.3020004@web.de>
+References: <1450027638-788102-1-git-send-email-sandals@crustytoothpaste.net>
+ <1450027638-788102-4-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 13 22:55:15 2015
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Beller <stefanbeller@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 14 08:17:51 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8Ebp-0004mi-7C
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Dec 2015 22:55:13 +0100
+	id 1a8NOI-0007vq-Cg
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 08:17:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbbLMVzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Dec 2015 16:55:05 -0500
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:33469 "EHLO
-	mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750811AbbLMVzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Dec 2015 16:55:04 -0500
-Received: by vkca188 with SMTP id a188so144532111vkc.0
-        for <git@vger.kernel.org>; Sun, 13 Dec 2015 13:55:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=QBXwIA9r8uGRE2ZthPbLbTbIuT1Y5UrLAln/7wNu1YA=;
-        b=GIRw9aOJ0I6Cw3su8XYgTF1KJUWo6hV+qCPj1tjNLOmqdjvcqAfLoBoGwtD287aLR2
-         AON0X9IKqB5e8+DI9waNlDkGDYl0gnLOzjLHbZC9FoKyyM+chDuDCw+hdFCkPk8utjYA
-         TtA/dBQ7X2tdWO8pMP8VsZMMGU17w7SqWM4Kd10DiHH9qoZHboEjafIeqHTCjoQbtVQL
-         yx6z67U+mS7LV+nJP4Nrcv4AaySs0IlkiGZrn7jr+jtWEDqGaUAFt4lJsHw4q3OhcM9g
-         Tt2ibBgTIZPTsv3HbAJI7d95h+ROBWzAiy4tqmnXgxAYRN/Xw4eL2OPb9TDJtuqde0rt
-         G/OA==
-X-Received: by 10.31.47.130 with SMTP id v124mr22731373vkv.117.1450043703136;
- Sun, 13 Dec 2015 13:55:03 -0800 (PST)
-Received: by 10.31.62.203 with HTTP; Sun, 13 Dec 2015 13:55:03 -0800 (PST)
-In-Reply-To: <CAOLa=ZSEGf7TAKNkYCogw7nz9UMUxEZ7Vg2vGXHqFP2s=tnWcg@mail.gmail.com>
-X-Google-Sender-Auth: RYr4vWH1VsGRtWK_XLU_3g6G-CQ
+	id S1752671AbbLNHRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 02:17:44 -0500
+Received: from mout.web.de ([212.227.17.12]:60172 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752640AbbLNHRl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 02:17:41 -0500
+Received: from birne9.local ([213.66.56.100]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MBCJd-1ZyiKL3PSH-00ABT8; Mon, 14 Dec 2015 08:16:56
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:38.0)
+ Gecko/20100101 Thunderbird/38.4.0
+In-Reply-To: <1450027638-788102-4-git-send-email-sandals@crustytoothpaste.net>
+X-Provags-ID: V03:K0:iIvJo5IlDElXX/pFvRZJpN5k4pIzEHWRMQtTaVfffI45X/A3zi8
+ BEP2wU/pvSeuMEWMtyJ8bTri0pyNAGxmxTNuV+0VXN448n9JnPCC1prKbb7vt6lFtEcUwGK
+ CNC4g8hLY2M/RfYJMXn9oPjfzz+bBdYhCo9wE4oLIKTUgMveoPzyzIz6Me/YiAo1s9cQscj
+ GvCkLvCkpkJ+RtdDp1m4w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fY9GeuxUJL8=:V70yqYQe2buPKB//aKaMVX
+ m9leL+nyM0uRbbrC+Km5c4zsciVldl2FYjAwK6bjJaQ6vlv1+QST/gu/jzOy+8pKcwZB4Vt3x
+ 98BQiyKtr8lAYsGDLsj4sdHwZa/wP4i+3V7if+uJ5blWvPPVNn//rzS+46knf8tjCKg6RZa4Q
+ vSzRFSt5uoua/MLxfnP2j7DsThThXzN1XjPb5/T7IAholfXHQSbeQzIIK5PrJ+J7RtfryvQmx
+ dl8hCssVBM3AI9AgDa2k6NtmfIHw6N35fE245xyOg2VYhyVaCVG17wHGjgVqRWNrC0WsiswJX
+ EXlrCGT8i6i1Cg6mLY/cgdhT4HoZE6OQa3BgrQ5W2WJKWAoDgddqITWb79yO2gQE+Zwm7PAbm
+ POhyyV4LIsrmxvSLiWUwaWY0BWvknmp2UC+xYlsOLirD5Ej7I6doIxCVIeIXJkSn71zu+sEuo
+ EuCclco3+lRjWFM7gqasLjW8dXb3IQrpkYur99oexuLye2AkWqV/G0M7I7E1VDvRsqwHG78+g
+ yyLydZuu7ZM0AdK/Fkx/pa6tA2N+ty282qiy/AgQPnc27JgoXhWEVo9pYH9uagO7z/M5kmpbH
+ slESrDRzU69fxuEXQvHFZ4RnYhhWCPFqTfSniMP8/OnEWoGpLT1IyLR77OOQes5bEYpNQ/4Yz
+ o36xHZsyYPksEPudgPQhE6VhhyqtWEFZAk5Sw6gFugBBtWiLQ5wJ4a7pvOSOgZVfBWH/9uPeH
+ x4ht9ruWRuvqGu1hpQQhw+vgkGKlAnimGOt7Qz9xKxocf/rgz0ncH4RtffFrIkkIwvxbva3B 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282353>
 
-On Sun, Dec 13, 2015 at 4:31 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> On Sun, Dec 13, 2015 at 11:10 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> If the intention is to rid that inner loop of much of the expensive
->> processing, then wouldn't we want to introduce an enum of valid atoms
->> which is to be a member of 'struct used_atom', and have
->> populate_value() switch on the enum value rather than doing all the
->> expensive strcmp()s and starts_with()?
->>
->>     enum atom_type {
->>         AT_REFNAME,
->>         AT_OBJECTTYPE,
->>         ...
->>         AT_COLOR,
->>         AT_ALIGN
->>     };
->>
->>     static struct used_atom {
->>         enum atom_type atom;
->>         cmp_type cmp;
->>         union {
->>             char *color; /* parsed color */
->>             struct align align;
->>             enum { ... } remote_ref;
->>             struct {
->>                 enum { ... } portion;
->>                 unsigned int nlines;
->>             } contents;
->>             int short_objname;
->>         } u;
->>     } *used_atom;
->>
->> In fact, the 'cmp_type cmp' field can be dropped altogether since it
->> can just as easily be looked up when needed by keeping 'enum
->> atom_type' and valid_atoms[] in-sync and indexing into valid_atoms[]
->> by atom_type:
->>
->>     struct used_atom *a = ...;
->>     cmp_type cmp = valid_atoms[a->atom].cmp_type;
->>
->> As a bonus, an 'enum atom_type' would resolve the problem of how
->> starts_with() is abused in populate_value() for certain cases
->> (assuming I'm understanding the logic), such as how matching of
->> "color" could incorrectly match some yet-to-be-added atom named
->> "colorize".
->
-> This actually makes sense to me, especially how we can eliminate most of
-> the starts_with() in populate_value(). Well then I guess I'll work on this and
-> see what I can come up with, Thanks for the review :)
+On 13.12.15 18:27, brian m. carlson wrote:
+> The format of the "From " header line is very specific to allow
+> utilities to detect Git-style patches.  Add a test that the patches
+> created are in the expected format.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  t/t4014-format-patch.sh | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index b740e3da..362bc228 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -1437,4 +1437,10 @@ test_expect_success 'format-patch --zero-commit' '
+>  	test $cnt = 3
+>  '
+>  
+> +test_expect_success 'From line has expected format' '
+> +	git format-patch --stdout v2..v1 >patch2 &&
+> +	cnt=$(egrep "^From [0-9a-f]{40} Mon Sep 17 00:00:00 2001" patch2 | wc -l) &&
+> +	test $cnt = 3
 
-The 'enum atom_type' approach doesn't necessarily need to be part of
-this patch series; it may make sense to layer it atop the current
-series, which is already long enough to make review onerous. Patches
-in the current series are things you would want to do anyhow for the
-'enum atom_type' approach, and there isn't really anything in the
-current series which should present a roadblock for layering 'enum
-atom_type' atop. Plus, by layering 'enum atom_type' atop, you get a
-chance to polish the current series (based upon review comments) and
-let it settle down, which should make working on 'enum atom_type'
-easier.
+For these kind of things:
+test_line_count() is your friend
