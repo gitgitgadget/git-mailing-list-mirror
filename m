@@ -1,270 +1,123 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 7/8] fetch_populated_submodules: use new parallel job processing
-Date: Mon, 14 Dec 2015 11:37:17 -0800
-Message-ID: <1450121838-7069-8-git-send-email-sbeller@google.com>
-References: <1450121838-7069-1-git-send-email-sbeller@google.com>
-Cc: peff@peff.net, gitster@pobox.com, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	ericsunshine@gmail.com, j6t@kdbg.org
-To: sbeller@google.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 14 20:38:10 2015
+From: Florian Bruhin <me@the-compiler.org>
+Subject: Re: git bisect with temporary commits
+Date: Mon, 14 Dec 2015 20:38:02 +0100
+Message-ID: <20151214193802.GD13519@tonks>
+References: <20151214163726.GY13519@tonks>
+ <87si34hphr.fsf@igel.home>
+ <20151214182255.GB13519@tonks>
+ <xmqqa8pckfa5.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_mehl.schokokeks.org-13414-1450121885-0001-2"
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org,
+	r.seitz@beh.ch
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 20:38:30 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8Ywf-00044n-Ng
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 20:38:06 +0100
+	id 1a8Ywu-0004OH-P9
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 20:38:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932155AbbLNTh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 14:37:56 -0500
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:36480 "EHLO
-	mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753507AbbLNThj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 14:37:39 -0500
-Received: by pfbu66 with SMTP id u66so66040182pfb.3
-        for <git@vger.kernel.org>; Mon, 14 Dec 2015 11:37:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=aMBzcblsf53KvQDHyQqgJtW1txKvoKucNzyz7YEaUnE=;
-        b=emBe55Uf9Km9WF6qDgWwqHygAoD6kBSHuuQTo8WoMTzw6CCqbbYQlFkgzWyexQJgzJ
-         OWF+M7hip5Lyc+bjKb/AZ/Hcu0yfiCiMVa+cjzjJITZEhK4+z9dz5F1AqGj3GuiU1ZH8
-         hZDlklrI2NGGeRglgeqD6ufakbUw4m6eLVkMrX5cJ2axnf/ExsfRtZkJKBoKrYdobPiE
-         K0xyVXOqMKjh2k1FQOyOh79UKKQy0m66u46nUmn7dxDF18pI+2EyH9NgL73p8jTlpQWy
-         XSqKPoc9foXyWYiaZXwXimHWoVk3lVGX0FPD5ZswScgICXaLopeLwm6deh9CSGPOgToC
-         7bOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=aMBzcblsf53KvQDHyQqgJtW1txKvoKucNzyz7YEaUnE=;
-        b=C+NYa440uLVoPfpZwrVYQjdyQ29QPvjB/c3SPzH6COu0JOArUeTFZRPlaXyjg92A0v
-         b0EnVRhikHMHX8RX5cTReg/4o5zkpRSsDtd4WsL9AQCWfCA50Rbtz5avOEI+DzfOOS7t
-         HK1P7JnJa6WFtKzU0qmGtbenAhvZ1ldCRWjKzghIzN/YhW0r2ElAShxmIbg/lMa06h3l
-         TvKmQ9+9k/qBJwlRYrz5ab+xNWWRkHqr9+jVvgyotkVjJtCxPQawDZelcY7Sy/aFLEh/
-         YaH4werREiB0m+zf4AbDVKkadXaUwZ3RNi7nAYcpImIPtlY6TUdSa5L5vVkTsAbi8BKY
-         C9Ng==
-X-Gm-Message-State: ALoCoQl9D9iLg0MNJfoaAY2bNOalsFbtxYWBavW9NRkhY0dCjrcEjviGDpIndzARKyAhrYakQ0k2t5nL/c7bR5LA8ZlMeqZY5A==
-X-Received: by 10.98.14.67 with SMTP id w64mr38895098pfi.163.1450121858770;
-        Mon, 14 Dec 2015 11:37:38 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:a894:af1d:9081:95fb])
-        by smtp.gmail.com with ESMTPSA id c20sm44123772pfd.17.2015.12.14.11.37.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 14 Dec 2015 11:37:37 -0800 (PST)
-X-Mailer: git-send-email 2.6.4.443.ge094245.dirty
-In-Reply-To: <1450121838-7069-1-git-send-email-sbeller@google.com>
+	id S932249AbbLNTiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 14:38:09 -0500
+Received: from mehl.schokokeks.org ([46.4.40.247]:44291 "EHLO
+	mehl.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932231AbbLNTiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 14:38:07 -0500
+Received: from tonks ([2001:41d0:2:3b68::1])
+  (AUTH: PLAIN me@the-compiler.org, TLS: TLSv1/SSLv3,128bits,ECDHE-RSA-AES128-GCM-SHA256)
+  by mehl.schokokeks.org with ESMTPSA; Mon, 14 Dec 2015 20:38:05 +0100
+  id 0000000000000056.00000000566F1A9D.00003466
+Content-Disposition: inline
+In-Reply-To: <xmqqa8pckfa5.fsf@gitster.mtv.corp.google.com>
+Accept-Language: de, en
+X-URL: http://www.the-compiler.org/
+X-Operating-System: Arch Linux
+X-Editor: vim 7.4
+X-PGP-Key: http://www.the-compiler.org/pubkey.asc
+OpenPGP: id=FD55A072; url=http://www.the-compiler.org/pubkey.asc;
+ preference=signencrypt
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282395>
 
-In a later patch we enable parallel processing of submodules, this
-only adds the possibility for it. So this change should not change
-any user facing behavior.
+This is a MIME-formatted message.  If you see this text it means that your
+E-mail software does not support MIME-formatted messages.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- submodule.c | 142 +++++++++++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 98 insertions(+), 44 deletions(-)
+--=_mehl.schokokeks.org-13414-1450121885-0001-2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/submodule.c b/submodule.c
-index 8386477..6a2d786 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -12,6 +12,7 @@
- #include "sha1-array.h"
- #include "argv-array.h"
- #include "blob.h"
-+#include "thread-utils.h"
- 
- static int config_fetch_recurse_submodules = RECURSE_SUBMODULES_ON_DEMAND;
- static struct string_list changed_submodule_paths;
-@@ -610,37 +611,28 @@ static void calculate_changed_submodule_paths(void)
- 	initialized_fetch_ref_tips = 0;
- }
- 
--int fetch_populated_submodules(const struct argv_array *options,
--			       const char *prefix, int command_line_option,
--			       int quiet)
-+struct submodule_parallel_fetch {
-+	int count;
-+	struct argv_array args;
-+	const char *work_tree;
-+	const char *prefix;
-+	int command_line_option;
-+	int quiet;
-+	int result;
-+};
-+#define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0}
-+
-+static int get_next_submodule(struct child_process *cp,
-+			      struct strbuf *err, void *data, void **task_cb)
- {
--	int i, result = 0;
--	struct child_process cp = CHILD_PROCESS_INIT;
--	struct argv_array argv = ARGV_ARRAY_INIT;
--	const char *work_tree = get_git_work_tree();
--	if (!work_tree)
--		goto out;
--
--	if (read_cache() < 0)
--		die("index file corrupt");
--
--	argv_array_push(&argv, "fetch");
--	for (i = 0; i < options->argc; i++)
--		argv_array_push(&argv, options->argv[i]);
--	argv_array_push(&argv, "--recurse-submodules-default");
--	/* default value, "--submodule-prefix" and its value are added later */
--
--	cp.env = local_repo_env;
--	cp.git_cmd = 1;
--	cp.no_stdin = 1;
--
--	calculate_changed_submodule_paths();
-+	int ret = 0;
-+	struct submodule_parallel_fetch *spf = data;
- 
--	for (i = 0; i < active_nr; i++) {
-+	for ( ; spf->count < active_nr; spf->count++) {
- 		struct strbuf submodule_path = STRBUF_INIT;
- 		struct strbuf submodule_git_dir = STRBUF_INIT;
- 		struct strbuf submodule_prefix = STRBUF_INIT;
--		const struct cache_entry *ce = active_cache[i];
-+		const struct cache_entry *ce = active_cache[spf->count];
- 		const char *git_dir, *default_argv;
- 		const struct submodule *submodule;
- 
-@@ -652,7 +644,7 @@ int fetch_populated_submodules(const struct argv_array *options,
- 			submodule = submodule_from_name(null_sha1, ce->name);
- 
- 		default_argv = "yes";
--		if (command_line_option == RECURSE_SUBMODULES_DEFAULT) {
-+		if (spf->command_line_option == RECURSE_SUBMODULES_DEFAULT) {
- 			if (submodule &&
- 			    submodule->fetch_recurse !=
- 						RECURSE_SUBMODULES_NONE) {
-@@ -675,40 +667,102 @@ int fetch_populated_submodules(const struct argv_array *options,
- 					default_argv = "on-demand";
- 				}
- 			}
--		} else if (command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
-+		} else if (spf->command_line_option == RECURSE_SUBMODULES_ON_DEMAND) {
- 			if (!unsorted_string_list_lookup(&changed_submodule_paths, ce->name))
- 				continue;
- 			default_argv = "on-demand";
- 		}
- 
--		strbuf_addf(&submodule_path, "%s/%s", work_tree, ce->name);
-+		strbuf_addf(&submodule_path, "%s/%s", spf->work_tree, ce->name);
- 		strbuf_addf(&submodule_git_dir, "%s/.git", submodule_path.buf);
--		strbuf_addf(&submodule_prefix, "%s%s/", prefix, ce->name);
-+		strbuf_addf(&submodule_prefix, "%s%s/", spf->prefix, ce->name);
- 		git_dir = read_gitfile(submodule_git_dir.buf);
- 		if (!git_dir)
- 			git_dir = submodule_git_dir.buf;
- 		if (is_directory(git_dir)) {
--			if (!quiet)
--				fprintf(stderr, "Fetching submodule %s%s\n", prefix, ce->name);
--			cp.dir = submodule_path.buf;
--			argv_array_push(&argv, default_argv);
--			argv_array_push(&argv, "--submodule-prefix");
--			argv_array_push(&argv, submodule_prefix.buf);
--			cp.argv = argv.argv;
--			if (run_command(&cp))
--				result = 1;
--			argv_array_pop(&argv);
--			argv_array_pop(&argv);
--			argv_array_pop(&argv);
-+			child_process_init(cp);
-+			cp->dir = strbuf_detach(&submodule_path, NULL);
-+			cp->env = local_repo_env;
-+			cp->git_cmd = 1;
-+			if (!spf->quiet)
-+				strbuf_addf(err, "Fetching submodule %s%s\n",
-+					    spf->prefix, ce->name);
-+			argv_array_init(&cp->args);
-+			argv_array_pushv(&cp->args, spf->args.argv);
-+			argv_array_push(&cp->args, default_argv);
-+			argv_array_push(&cp->args, "--submodule-prefix");
-+			argv_array_push(&cp->args, submodule_prefix.buf);
-+			ret = 1;
- 		}
- 		strbuf_release(&submodule_path);
- 		strbuf_release(&submodule_git_dir);
- 		strbuf_release(&submodule_prefix);
-+		if (ret) {
-+			spf->count++;
-+			return 1;
-+		}
- 	}
--	argv_array_clear(&argv);
-+	return 0;
-+}
-+
-+static int fetch_start_failure(struct child_process *cp,
-+			       struct strbuf *err,
-+			       void *cb, void *task_cb)
-+{
-+	struct submodule_parallel_fetch *spf = cb;
-+
-+	spf->result = 1;
-+
-+	return 0;
-+}
-+
-+static int fetch_finish(int retvalue, struct child_process *cp,
-+			struct strbuf *err, void *cb, void *task_cb)
-+{
-+	struct submodule_parallel_fetch *spf = cb;
-+
-+	if (retvalue)
-+		spf->result = 1;
-+
-+	return 0;
-+}
-+
-+int fetch_populated_submodules(const struct argv_array *options,
-+			       const char *prefix, int command_line_option,
-+			       int quiet)
-+{
-+	int i;
-+	int max_parallel_jobs = 1;
-+	struct submodule_parallel_fetch spf = SPF_INIT;
-+
-+	spf.work_tree = get_git_work_tree();
-+	spf.command_line_option = command_line_option;
-+	spf.quiet = quiet;
-+	spf.prefix = prefix;
-+
-+	if (!spf.work_tree)
-+		goto out;
-+
-+	if (read_cache() < 0)
-+		die("index file corrupt");
-+
-+	argv_array_push(&spf.args, "fetch");
-+	for (i = 0; i < options->argc; i++)
-+		argv_array_push(&spf.args, options->argv[i]);
-+	argv_array_push(&spf.args, "--recurse-submodules-default");
-+	/* default value, "--submodule-prefix" and its value are added later */
-+
-+	calculate_changed_submodule_paths();
-+	run_processes_parallel(max_parallel_jobs,
-+			       get_next_submodule,
-+			       fetch_start_failure,
-+			       fetch_finish,
-+			       &spf);
-+
-+	argv_array_clear(&spf.args);
- out:
- 	string_list_clear(&changed_submodule_paths, 1);
--	return result;
-+	return spf.result;
- }
- 
- unsigned is_submodule_modified(const char *path, int ignore_untracked)
--- 
-2.6.4.443.ge094245.dirty
+* Junio C Hamano <gitster@pobox.com> [2015-12-14 11:21:06 -0800]:
+> Florian Bruhin <me@the-compiler.org> writes:
+>=20
+> > * Andreas Schwab <schwab@linux-m68k.org> [2015-12-14 19:08:48 +0100]:
+> >> Florian Bruhin <me@the-compiler.org> writes:
+> >>=20
+> >> > Now when trying to say it's good (and forgetting to remove the
+> >> > temporary commits), I get this:
+> >> >
+> >> >     $ git bisect good
+> >> >     Bisecting: a merge base must be tested
+> >> >     [981e1093dae24b37189bcba2dd848b0c3388080c] still good and does n=
+ot compile
+> >> >
+> >> > Is this intended behaviour? Shouldn't git either do a reset to the
+> >> > commit we're currently bisecting, or warn the user as it was probably
+> >> > unintended to add new commits?
+> >>=20
+> >> You should instead tell git that HEAD^ is good, since that is what git
+> >> asked you to test.
+> >
+> > I see - but wouldn't it make more sense for a "git bisect good" (or
+> > bad, respectively) without arguments to assume I mean the commit
+> > bisect checked out for me, not HEAD?
+> >
+> > I don't see any scenario where the current behaviour would make sense,
+> > but I might be missing something.
+>=20
+> When the commit "bisect" checked out is untestable, the user can
+> freely go to another commit, e.g. "git reset --hard HEAD^" to go
+> back one step, and then test it instead.  "git bisect good" has
+> to mark the then-current HEAD, not the commit that was checked out,
+> for this to work.
+
+That makes sense - thanks for the explanation!
+
+Florian
+
+--=20
+http://www.the-compiler.org | me@the-compiler.org (Mail/XMPP)
+   GPG: 916E B0C8 FD55 A072 | http://the-compiler.org/pubkey.asc
+         I love long mails! | http://email.is-not-s.ms/
+
+--=_mehl.schokokeks.org-13414-1450121885-0001-2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Transfer-Encoding: 7bit
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJWbxqaAAoJEJFusMj9VaBy6RgP/0X9hia5MgGI8k59/QDKSccP
+KLH6ZXXhla4m4bs/Lj1L8oxP/4u39FZHBHTubhvDNi2KX4qwsOiNSWqrvMg/2sYY
+TjAqwU6N78lsFXzcYiDsiqJTdBny/aIiujjZs1XStV2ZpzqL52xmueZoECBbPMOJ
+QA1pmMka5G964r5/k0NfZq7k5F5FmnaWAbvGevYG46ptUob8qm4PWRVDuqnUiq5b
+pL746kzcTjyTekU1dJCIq+nAUfMhfZNy8VgQbOx/2jEqCi2bS+9mItbscrYn7/7l
+I1P53ttiEuBcZzl9z2DqDKl31U0VjoqKwZVmTCblnz2wClyANgi8ahi3/ysu7c9i
+sHkiv4DCTeSf919QDaZ6sZqBs5VOSO7/B25rQ9aCQWvo3d5qZIT7HBRt4+1d9T1T
+UEmf7dwvULTMWmEkkNeZ5a/fxEQOnGCZshwQI/w5P0XzkHRqXHzNZGz3RgjrgiLF
+vkkNHfcgaWaqBoeLYgdD5meV5jbnIWezuoPIeRIML3Eqrn1JqBt5P1E0nEtrjnht
+CvFir96q0FUASjCtVqBnHTI7h/tEzI+lR4Vy4+dwG1l2lLCXRWuidC73GcnW/ypY
+3sk9QFX1b73cZBh3dZtVpg+2do7hZ0fhzsq4Z4+s95rICcQkUdznCn7+IyOvadW1
+kB+sDYNV+6cBuny6Vo3J
+=Gy/f
+-----END PGP SIGNATURE-----
+
+--=_mehl.schokokeks.org-13414-1450121885-0001-2--
