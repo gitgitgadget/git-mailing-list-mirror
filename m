@@ -1,121 +1,142 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH jk/prune-mtime] prune: close directory earlier
- during loose-object directory traversal
-Date: Mon, 14 Dec 2015 11:02:25 -0800
-Message-ID: <xmqqvb80kg5a.fsf@gitster.mtv.corp.google.com>
-References: <55CA5EB0.1000308@kdbg.org>
-	<b9cf9e2168c3b2476bb5bb134a1528be@www.dscho.org>
-	<55CB85A5.5040802@kdbg.org>
-	<20150812175629.GA24964@sigill.intra.peff.net>
-	<xmqqvb84epyl.fsf@gitster.mtv.corp.google.com>
-	<20151211194103.GA5834@sigill.intra.peff.net>
-	<alpine.DEB.2.20.1512131425300.21630@virtualbox>
+Subject: Re: [PATCH/RFC 00/10] ref-filter: use parsing functions
+Date: Mon, 14 Dec 2015 11:06:49 -0800
+Message-ID: <xmqqr3iokfxy.fsf@gitster.mtv.corp.google.com>
+References: <1447271075-15364-1-git-send-email-Karthik.188@gmail.com>
+	<xmqq1taseh2x.fsf@gitster.mtv.corp.google.com>
+	<CAPig+cQtoUXuOZjGjev8MGYUMyjd+n_=o+jOVXkhPReSkWgxmw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>,  Johannes Sixt <j6t@kdbg.org>,  Git Mailing List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBCG77UMM3EJRBRFEXSZQKGQETYKGNKI@googlegroups.com Mon Dec 14 20:02:31 2015
-Return-path: <msysgit+bncBCG77UMM3EJRBRFEXSZQKGQETYKGNKI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ig0-f187.google.com ([209.85.213.187])
+Content-Type: text/plain
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 20:07:04 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBRFEXSZQKGQETYKGNKI@googlegroups.com>)
-	id 1a8YOD-0002hX-Sn
-	for gcvm-msysgit@m.gmane.org; Mon, 14 Dec 2015 20:02:30 +0100
-Received: by igbfn5 with SMTP id fn5sf28838431igb.1
-        for <gcvm-msysgit@m.gmane.org>; Mon, 14 Dec 2015 11:02:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :x-spam-checked-in-group:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=EpNa/Nzdrjo/Uxz/wfKWOyBMJehZ/LjEMMnw3Oh0lIw=;
-        b=p1P9Glb0nHcrWWLiXoDVFXOwd5A7pW+WPZvfKD2+QaNX7WSW/qG7FypQ1DOpU8fylD
-         al53A5NboExe2zH+H1Q5cO84x3JSRSjlZgNeJbbpMQw5GXF1c3MtyXnu5MqCg2ifoKVA
-         Mj9SQsT6WU5hCs3WB5oEiRu3m+ACevdKF8whBJYyHMOQ0sOxVz0+gLZg64iw1a5AmfTN
-         6VAUAnBRhacS6gkaPhon52rEgW4j0tkkZQxNrZuzAzArS7np0tzlowD9Jju7FrHKYhyG
-         y9IfS4u3mGZcKHr1fFWiSDulpJVp/oJvyiUn+faol7lR3MWAy7/ufX+kdDMVB1yagcv5
-         rmgQ==
-X-Received: by 10.182.24.8 with SMTP id q8mr418708obf.15.1450119749195;
-        Mon, 14 Dec 2015 11:02:29 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.24.6 with SMTP id q6ls1766272obf.75.gmail; Mon, 14 Dec
- 2015 11:02:28 -0800 (PST)
-X-Received: by 10.182.22.200 with SMTP id g8mr30633494obf.0.1450119748427;
-        Mon, 14 Dec 2015 11:02:28 -0800 (PST)
-Received: from sasl.smtp.pobox.com (pb-smtp0.int.icgroup.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTPS id g66si376980ywf.4.2015.12.14.11.02.28
-        for <msysgit@googlegroups.com>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 Dec 2015 11:02:28 -0800 (PST)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1a8YSd-0003Th-3W
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 20:07:03 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932169AbbLNTGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 14:06:55 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:57595 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932153AbbLNTGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 14:06:52 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A00903148B;
-	Mon, 14 Dec 2015 14:02:27 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9996931604;
+	Mon, 14 Dec 2015 14:06:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JvCir82U9YxAYFrPmBJjLX+NLOM=; b=kOHBtj
+	eBBkbZO6/+3Sn+gUci5JlXLYi3H+ox5QBYaIVQQ+UDclS+frxCnBBctjdCLlHzEd
+	rAGuDLWuB+GW6XJQE59BoQRw5e2WcMwSLbomexCXDTybDIUxKfIKSchTGlIjK85l
+	7DSjsKKtq5q1meFlIJXaozwFnqwGS7ABmTEnM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QQclz7p8mL8hHGf4qxPjbpofVjhs+5mL
+	TMIoB2mEHASgorznEA9gJhJ+s1ARiPfHWIe9J7fWZ0Fbf4w8Vi4fNuwI/CxxisNP
+	Vgx3GUyslyyDp0+Bbel1rPAJdAyyiHrqv99bAsxRGFeH6j/wdsWHXYs4V8G5+QAo
+	qG+I8vvj3n0=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 974103148A;
-	Mon, 14 Dec 2015 14:02:27 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 90F6631603;
+	Mon, 14 Dec 2015 14:06:51 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CFE6F31489;
-	Mon, 14 Dec 2015 14:02:26 -0500 (EST)
-In-Reply-To: <alpine.DEB.2.20.1512131425300.21630@virtualbox> (Johannes
-	Schindelin's message of "Sun, 13 Dec 2015 14:26:07 +0100 (CET)")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 119F131601;
+	Mon, 14 Dec 2015 14:06:50 -0500 (EST)
+In-Reply-To: <CAPig+cQtoUXuOZjGjev8MGYUMyjd+n_=o+jOVXkhPReSkWgxmw@mail.gmail.com>
+	(Eric Sunshine's message of "Sun, 13 Dec 2015 00:40:35 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: 377AC780-A295-11E5-B60A-6BD26AB36C07-77302942!pb-smtp0.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mailfrom=junio@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Spam-Checked-In-Group: msysgit@googlegroups.com
-X-Google-Group-Id: 152234828034
-List-Post: <https://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <https://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <https://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <https://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <https://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282378>
+X-Pobox-Relay-ID: D4EE03CE-A295-11E5-9686-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282379>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
->> > Sorry for reviving this old thread, but I noticed that we do not
->> > have this patch in our tree yet.  I'll queue to 'pu' for now lest I
->> > forget.  If I missed a good argument or concensus against the change
->> > please let me know, otherwise I'll fast track the change to 2.7 final
->> 
->> Ah, thanks for doing that. I noticed it when picking through "git branch
->> --no-merged pu" of your workspace a few weeks ago, but forgot to follow
->> up. I certainly have no objections.
+> On Fri, Dec 11, 2015 at 5:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>>   ref-filter: introduce a parsing function for each atom in valid_atom
+>>>   ref-filter: introduce struct used_atom
+>>>   ref-fitler: bump match_atom() name to the top
+>>>   ref-filter: skip deref specifier in match_atom_name()
+>>>   ref-filter: introduce color_atom_parser()
+>>>   strbuf: introduce strbuf_split_str_without_term()
+>>>   ref-filter: introduce align_atom_parser()
+>>>   ref-filter: introduce remote_ref_atom_parser()
+>>>   ref-filter: introduce contents_atom_parser()
+>>>   ref-filter: introduce objectname_atom_parser()
+>>
+>> It seems that this series had seen quite a good inputs, mostly from
+>> Eric.  I finished reading it over and I didn't find anything more to
+>> add.  The patches are mostly good and would be ready once these
+>> points raised during the review are addressed, I think
 >
-> Git for Windows carries this patch since Git for Windows v2.5.0. So: no
-> objection from my side, either.
+> I'm still a bit fuzzy about what this series is trying to achieve. It
+> feels like it wants to avoid doing repeated processing of unchanging
+> bits of %(foo:bar) atoms for each ref processed, but it only partly
+> achieves that goal.
 
-Thanks!
+That's very true.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+It seems you two already have hashed it out in the downthread, and I
+think that is in line with an earlier suggestion by Matthieu to
+fully pre-parse in the earlier thread, which was made in response to
+(and is much better than) my "let's start with a half-way solution"
+in $gmane/279254.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Thanks.
 
---- 
-You received this message because you are subscribed to the Google Groups "Git for Windows" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> strcmp()s and starts_with()s in that inner loop, and even the
+> unchanging %(color:) argument gets re-evaulated repeatedly, which is
+> probably quite expensive.
+>
+> If the intention is to rid that inner loop of much of the expensive
+> processing, then wouldn't we want to introduce an enum of valid atoms
+> which is to be a member of 'struct used_atom', and have
+> populate_value() switch on the enum value rather than doing all the
+> expensive strcmp()s and starts_with()?
+>
+>     enum atom_type {
+>         AT_REFNAME,
+>         AT_OBJECTTYPE,
+>         ...
+>         AT_COLOR,
+>         AT_ALIGN
+>     };
+>
+>     static struct used_atom {
+>         enum atom_type atom;
+>         cmp_type cmp;
+>         union {
+>             char *color; /* parsed color */
+>             struct align align;
+>             enum { ... } remote_ref;
+>             struct {
+>                 enum { ... } portion;
+>                 unsigned int nlines;
+>             } contents;
+>             int short_objname;
+>         } u;
+>     } *used_atom;
+>
+> In fact, the 'cmp_type cmp' field can be dropped altogether since it
+> can just as easily be looked up when needed by keeping 'enum
+> atom_type' and valid_atoms[] in-sync and indexing into valid_atoms[]
+> by atom_type:
+>
+>     struct used_atom *a = ...;
+>     cmp_type cmp = valid_atoms[a->atom].cmp_type;
+>
+> As a bonus, an 'enum atom_type' would resolve the problem of how
+> starts_with() is abused in populate_value() for certain cases
+> (assuming I'm understanding the logic), such as how matching of
+> "color" could incorrectly match some yet-to-be-added atom named
+> "colorize".
