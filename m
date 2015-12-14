@@ -1,69 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git bisect with temporary commits
-Date: Mon, 14 Dec 2015 16:09:36 -0500
-Message-ID: <20151214210936.GD14788@sigill.intra.peff.net>
-References: <20151214163726.GY13519@tonks>
- <87si34hphr.fsf@igel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: compile error in Git v2.7.0-rc0
+Date: Mon, 14 Dec 2015 13:11:19 -0800
+Message-ID: <CAPc5daWWSNRdMSaQvakkK=mA_626QfuafmU5SkDTRC9kZpKzSw@mail.gmail.com>
+References: <CALibRqFajuBuv9ooaBWL1kUzaVps2WfodqucyHni2ggv6JpwDg@mail.gmail.com>
+ <xmqqvb80ix9u.fsf@gitster.mtv.corp.google.com> <20151214204624.GA14788@sigill.intra.peff.net>
+ <20151214205241.GB14788@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Florian Bruhin <me@the-compiler.org>, git@vger.kernel.org,
-	r.seitz@beh.ch
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Dec 14 22:09:46 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: johan defries <johandefries@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Elia Pinto <gitter.spiros@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 14 22:12:05 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8aNM-0007G6-Ur
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 22:09:45 +0100
+	id 1a8aPX-0002xk-6H
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 22:11:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932650AbbLNVJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 16:09:41 -0500
-Received: from cloud.peff.net ([50.56.180.127]:41497 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932325AbbLNVJj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 16:09:39 -0500
-Received: (qmail 18344 invoked by uid 102); 14 Dec 2015 21:09:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 15:09:39 -0600
-Received: (qmail 31655 invoked by uid 107); 14 Dec 2015 21:09:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 16:09:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Dec 2015 16:09:36 -0500
-Content-Disposition: inline
-In-Reply-To: <87si34hphr.fsf@igel.home>
+	id S932469AbbLNVLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 16:11:55 -0500
+Received: from mail-io0-f177.google.com ([209.85.223.177]:36798 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932608AbbLNVLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 16:11:39 -0500
+Received: by iofo67 with SMTP id o67so58179587iof.3
+        for <git@vger.kernel.org>; Mon, 14 Dec 2015 13:11:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=aMtnMGFNe0aur3eS3AuybVz5tlAY+MuL8QB7v6OZmJk=;
+        b=XSh5/JQYn7ESR6lhlZUM1LZUGtbU4F3QX3+rnsDN/AsTWiFsUsmFg9CwkYTK2ynHYW
+         MutJeLKGR9PyRjxHy8pIedOKZeI6TkKybAGH5xobkc0KqhLbInZzAdX4Yqay7owO+RHt
+         SRLvmzBkue73ov0eOVhPLpv1U8r8v/5twqrdPSDAeS33YfrOxiDbiF4Ficy26Sa6RqMa
+         8XcPnjSTCHPP4Xf8B4FAQGKHy9QBaty5DONOmi3fZfZi0nsDAkCWOmoytpkv7Rxt6E0s
+         sB7K2uQsxEn+/sV18QuBV0GVfo4V6NRcdooAf43V005CY9Z76HemGcHhDhiC6eSjB5KJ
+         aNxw==
+X-Received: by 10.107.133.205 with SMTP id p74mr37467954ioi.44.1450127498682;
+ Mon, 14 Dec 2015 13:11:38 -0800 (PST)
+Received: by 10.36.52.203 with HTTP; Mon, 14 Dec 2015 13:11:19 -0800 (PST)
+In-Reply-To: <20151214205241.GB14788@sigill.intra.peff.net>
+X-Google-Sender-Auth: L8mCz-YeCpTTazWILaS0CYEOAkg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282415>
 
-On Mon, Dec 14, 2015 at 07:08:48PM +0100, Andreas Schwab wrote:
+On Mon, Dec 14, 2015 at 12:52 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Dec 14, 2015 at 03:46:25PM -0500, Jeff King wrote:
+>
+>> I don't think that fix is right, though. We should be passing "host" to
+>> gethostbyname.
+>
+> Here it is in patch form. It can go on top of ep/ident-with-getaddrinfo.
 
-> Florian Bruhin <me@the-compiler.org> writes:
-> 
-> > Now when trying to say it's good (and forgetting to remove the
-> > temporary commits), I get this:
-> >
-> >     $ git bisect good
-> >     Bisecting: a merge base must be tested
-> >     [981e1093dae24b37189bcba2dd848b0c3388080c] still good and does not compile
-> >
-> > Is this intended behaviour? Shouldn't git either do a reset to the
-> > commit we're currently bisecting, or warn the user as it was probably
-> > unintended to add new commits?
-> 
-> You should instead tell git that HEAD^ is good, since that is what git
-> asked you to test.
 
-Another alternative is to use "git cherry-pick -n" to create a working
-tree state that you can test, but leave HEAD at the original commit.
-Then "git bisect good" does the right thing.
+Thanks.
 
-It's the same principle and I don't think there is a reason to prefer
-one over the other. I just find it harder to screw up, as I usually
-script the build/test, so I can stick the cherry-pick there and not have
-to remember it on each "good/bad" report.
-
--Peff
+I recall you were looking for a brown-paper-bag earlier.
+When you are done with it, could you pass it to me ;-)?
