@@ -1,117 +1,124 @@
 From: Stefan Beller <sbeller@google.com>
-Subject: [PATCH 4/8] strbuf: add strbuf_read_once to read without blocking
-Date: Mon, 14 Dec 2015 11:37:14 -0800
-Message-ID: <1450121838-7069-5-git-send-email-sbeller@google.com>
+Subject: [PATCH 3/8] xread_nonblock: add functionality to read from fds without blocking
+Date: Mon, 14 Dec 2015 11:37:13 -0800
+Message-ID: <1450121838-7069-4-git-send-email-sbeller@google.com>
 References: <1450121838-7069-1-git-send-email-sbeller@google.com>
 Cc: peff@peff.net, gitster@pobox.com, jrnieder@gmail.com,
 	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
 	ericsunshine@gmail.com, j6t@kdbg.org
 To: sbeller@google.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 14 20:37:54 2015
+X-From: git-owner@vger.kernel.org Mon Dec 14 20:38:00 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8YwI-0003Uc-W6
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 20:37:43 +0100
+	id 1a8YwS-0003jc-Sq
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 20:37:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753506AbbLNThh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 14:37:37 -0500
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:36437 "EHLO
-	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166AbbLNThe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 14:37:34 -0500
-Received: by pfbu66 with SMTP id u66so66039145pfb.3
-        for <git@vger.kernel.org>; Mon, 14 Dec 2015 11:37:33 -0800 (PST)
+	id S932122AbbLNThk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 14:37:40 -0500
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:36534 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753496AbbLNThc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 14:37:32 -0500
+Received: by pacdm15 with SMTP id dm15so108440911pac.3
+        for <git@vger.kernel.org>; Mon, 14 Dec 2015 11:37:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EUuD1qmk9TIAu3WSg0qDBcFwCLCdNMQhLErfTaDd1Vo=;
-        b=INTxZU9m6iMiy/RhR/xY8CIcQuOj9Npn3VXiZXI3Fsg4kRfEkZj7IY5atxkOetiFgR
-         NYPCBTaIobFHuJqYdsRzsriQN8svwHyo2gQwasBJHeYHvVSgoUwKOfZSjykqVPSh0jpz
-         p9+Qe0CQjMj6IE3IHKLYu2vMc19z2wvflCQ4htGLb7aWryfIxDnMtY9cpGjDrHafCcDc
-         mkFoq8gv6GIHqGXqierZ4VtLnvwagJ0S6UE638jEMHiP7rJ8Egp5rIpcCquS2hYxuQkH
-         GsbyOzRtjmKarfJ0/GvIHmvFxZ54xXoBhLlSaVk59QGSZ+pQ44BgcMTb3I1bSV+hn50k
-         yweg==
+        bh=EV3upUm0x0/JIJngQ28EisYBhtprsSZVgWz18WY2MvA=;
+        b=aJhEmISt0nwR/+pEMfijCqitj1FOhJYdZNGt8D5qyeN0Q7OkjxHmZCC7slk1KnR4GQ
+         7H4LrwwNyV0sQued1qmGmgrbsee18udkR0c8g0UN3oEHCh7V2f3OkDdSlbuexbWNyl4K
+         KW5WFEBMyWCobsyKJljTi2cwVnNibRvC0gobr/fhJAjsfI7V5/BvLGLE4kgec2yuyq1A
+         /orSf3Okea3oNJv4vVInKqpHjKhODyvJt1GNvAtZzj5SQNJE/p7/UlrkX3NKCTS+md1W
+         t0d3rlzvdg88HG15Cx68/UO9HLtZSMwRkUysbTvLiOA7hRAygLgTK7w27es0oabnLuGc
+         H/hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=EUuD1qmk9TIAu3WSg0qDBcFwCLCdNMQhLErfTaDd1Vo=;
-        b=AqjO/eTmbnlryhmP4WBi+Heh1sy9lTytjiqw/ltdHb/WYsntbYd9A9fqZbFmAurViO
-         mpc1bkv4CJ1NbmxFm4ibbPxBi1aefudYfYIWsPxCuAmZOH8y+zs92ih3Pkz+Y2YOW0yp
-         paMahWFrjYQL3toJOZqCGYwbZHiASenmR9qN5OZoOh0Nrh0I8q5TS+0bWOzuRgewJQ4V
-         KXy+is1Y6mAA3vfDoVyiv/UAdl4gVNEE+82UsoozqKCF7ayp4jVvZ8t1YQc4nKclUg0G
-         jLKWALrwPxFBE8Onl7HSszA2y3rRbp2P6wPzlpSziZ0Md0vF0uOlfqRs/I526DOrf16P
-         sawA==
-X-Gm-Message-State: ALoCoQmZt+3Y9V4iJ2DIBBtUmtr5UElEyXOFznc6zTERpe0GKk4rC9QblYkBgZ0Pl02NVeGPCV4bjD1PVPGHalyYcbnmPdTdHA==
-X-Received: by 10.98.72.14 with SMTP id v14mr26101796pfa.159.1450121853699;
-        Mon, 14 Dec 2015 11:37:33 -0800 (PST)
-Received: from localhost ([2620:0:1000:5b00:a894:af1d:9081:95fb])
-        by smtp.gmail.com with ESMTPSA id f67sm44112512pfd.9.2015.12.14.11.37.32
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        bh=EV3upUm0x0/JIJngQ28EisYBhtprsSZVgWz18WY2MvA=;
+        b=S4LT55bSNANjycW/U95pfvDbzGUEk8GZ1QZEsGsXMKSRGv+51PZFDsIH25cUSDg0oD
+         4HSm5TlxDTp6XpFLJs1B7bsTvshWtA4xGwYYS0JkG4oMP00CyBf/hbBKPumNRCWKQ22w
+         bVjVyEFFvF7eWSnI/RV+urbmhgX3//vZf1edGUy4j/wh8iIdDBCLd8IA02vOTJbODDpx
+         seBP7CLd2oykZ6iqod0zl33uUjCAUPg6VR+3Xg2ew7w3JmlaOfH4ziKFfIi7zABZkC2e
+         rCRKjVITExFXv6MVU54kTz5kbmHpNnLpRYTiJKPMvkHut2BzRvSz1LEKchURhK//X4hp
+         GR4w==
+X-Gm-Message-State: ALoCoQnU+xlt0NtO4xltQRCE9YAlK9TLbuX56V9jq797CrIuNvhLFN2Yq7UPYraHMvgN3LrEhSx8ke/Imtv9tyMye9+iJo41yw==
+X-Received: by 10.66.180.48 with SMTP id dl16mr47709794pac.39.1450121852229;
         Mon, 14 Dec 2015 11:37:32 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:a894:af1d:9081:95fb])
+        by smtp.gmail.com with ESMTPSA id f63sm5810808pfj.35.2015.12.14.11.37.31
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 14 Dec 2015 11:37:31 -0800 (PST)
 X-Mailer: git-send-email 2.6.4.443.ge094245.dirty
 In-Reply-To: <1450121838-7069-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282391>
 
-The new call will read from a file descriptor into a strbuf once. The
-underlying call xread_nonblock is meant to execute without blocking if
-the file descriptor is set to O_NONBLOCK. It is a bug to call
-strbuf_read_once on a file descriptor which would block.
+Provide a wrapper to read(), similar to xread(), that restarts on
+EINTR but not EAGAIN (or EWOULDBLOCK). This enables the caller to
+handle polling itself, possibly polling multiple sockets or performing
+some other action.
 
+Helped-by: Jacob Keller <jacob.keller@gmail.com>
+Helped-by: Jeff King <peff@peff.net>,
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- strbuf.c | 11 +++++++++++
- strbuf.h |  8 ++++++++
- 2 files changed, 19 insertions(+)
+ git-compat-util.h |  1 +
+ wrapper.c         | 22 ++++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/strbuf.c b/strbuf.c
-index d76f0ae..b552a13 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -384,6 +384,17 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
- 	return sb->len - oldlen;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8e39867..87456a3 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -723,6 +723,7 @@ extern void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_
+ extern void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+ extern int xopen(const char *path, int flags, ...);
+ extern ssize_t xread(int fd, void *buf, size_t len);
++extern ssize_t xread_nonblock(int fd, void *buf, size_t len);
+ extern ssize_t xwrite(int fd, const void *buf, size_t len);
+ extern ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+ extern int xdup(int fd);
+diff --git a/wrapper.c b/wrapper.c
+index 4f720fe..f71237c 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -252,6 +252,28 @@ ssize_t xread(int fd, void *buf, size_t len)
  }
  
-+ssize_t strbuf_read_once(struct strbuf *sb, int fd, size_t hint)
+ /*
++ * xread_nonblock() is the same a read(), but it automatically restarts read()
++ * interrupted operations (EINTR). xread_nonblock() DOES NOT GUARANTEE that
++ * "len" bytes is read. EWOULDBLOCK is turned into EAGAIN.
++ */
++ssize_t xread_nonblock(int fd, void *buf, size_t len)
 +{
-+	ssize_t cnt;
-+
-+	strbuf_grow(sb, hint ? hint : 8192);
-+	cnt = xread_nonblock(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
-+	if (cnt > 0)
-+		strbuf_setlen(sb, sb->len + cnt);
-+	return cnt;
++	ssize_t nr;
++	if (len > MAX_IO_SIZE)
++		len = MAX_IO_SIZE;
++	while (1) {
++		nr = read(fd, buf, len);
++		if (nr < 0) {
++			if (errno == EINTR)
++				continue;
++			if (errno == EWOULDBLOCK)
++				errno = EAGAIN;
++		}
++		return nr;
++	}
 +}
 +
- #define STRBUF_MAXLINK (2*PATH_MAX)
- 
- int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
-diff --git a/strbuf.h b/strbuf.h
-index 7123fca..c3e5980 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -367,6 +367,14 @@ extern size_t strbuf_fread(struct strbuf *, size_t, FILE *);
- extern ssize_t strbuf_read(struct strbuf *, int fd, size_t hint);
- 
- /**
-+ * Returns the number of new bytes appended to the sb.
-+ * Negative return value signals there was an error returned from
-+ * underlying read(2), in which case the caller should check errno.
-+ * e.g. errno == EAGAIN when the read may have blocked.
-+ */
-+extern ssize_t strbuf_read_once(struct strbuf *, int fd, size_t hint);
-+
-+/**
-  * Read the contents of a file, specified by its path. The third argument
-  * can be used to give a hint about the file size, to avoid reallocs.
-  */
++/*
+  * xwrite() is the same a write(), but it automatically restarts write()
+  * operations with a recoverable error (EAGAIN and EINTR). xwrite() DOES NOT
+  * GUARANTEE that "len" bytes is written even if the operation is successful.
 -- 
 2.6.4.443.ge094245.dirty
