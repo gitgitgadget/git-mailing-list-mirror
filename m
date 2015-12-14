@@ -1,79 +1,182 @@
-From: Jack McLear <mclear7@hotmail.co.uk>
-Subject: Questions about GIT
-Date: Mon, 14 Dec 2015 10:48:58 +0000
-Message-ID: <HE1PR09MB044194E1689C460D0B1C7D06B1ED0@HE1PR09MB0441.eurprd09.prod.outlook.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 7/8] config: add core.untrackedCache
+Date: Mon, 14 Dec 2015 13:18:25 +0100
+Message-ID: <CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
+References: <1449594916-21167-1-git-send-email-chriscool@tuxfamily.org>
+	<1449594916-21167-8-git-send-email-chriscool@tuxfamily.org>
+	<xmqqsi3ckadi.fsf@gitster.mtv.corp.google.com>
+	<xmqqfuzck1dp.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 14 11:54:10 2015
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 13:18:35 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8Qld-0006xL-SV
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 11:54:10 +0100
+	id 1a8S5I-0003w9-9c
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 13:18:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932206AbbLNKyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 05:54:05 -0500
-Received: from dub004-omc4s25.hotmail.com ([157.55.2.100]:51613 "EHLO
-	DUB004-OMC4S25.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932121AbbLNKyE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2015 05:54:04 -0500
-X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Dec 2015 05:54:03 EST
-Received: from EUR01-DB5-obe.outbound.protection.outlook.com ([157.55.2.72]) by DUB004-OMC4S25.hotmail.com over TLS secured channel with Microsoft SMTPSVC(7.5.7601.23008);
-	 Mon, 14 Dec 2015 02:48:59 -0800
-Received: from HE1PR09MB0441.eurprd09.prod.outlook.com (10.161.121.19) by
- HE1PR09MB0442.eurprd09.prod.outlook.com (10.161.121.20) with Microsoft SMTP
- Server (TLS) id 15.1.355.16; Mon, 14 Dec 2015 10:48:59 +0000
-Received: from HE1PR09MB0441.eurprd09.prod.outlook.com ([10.161.121.19]) by
- HE1PR09MB0441.eurprd09.prod.outlook.com ([10.161.121.19]) with mapi id
- 15.01.0355.012; Mon, 14 Dec 2015 10:48:58 +0000
-Thread-Topic: Questions about GIT
-Thread-Index: AQHRNl0Jmb8+VP8LM0GkeSshARzvxw==
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none
- header.from=hotmail.co.uk;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-microsoft-exchange-diagnostics: 1;HE1PR09MB0442;23:37XUIu5O/Z95TQ5KpnZXu9mWHBvneR1MFD8Hh4W4ch9wBugAsKSUZsNKlzk18Shxadnsd22FDlERmo1+oEklYTNYwMg2bHtQh0eiJWXLaVDNrKP61hFlvR01oDybrG9qGTdWZs2EK6NjuwtCyCiQtzOyuXpiPsIW1Use1fGEOolTmwI4cZ87RPM4ywelDJD0eP5GAUbHSNtNbcdgkka0pg==;5:tyuN2H8qH39f30jlQGU04XTwPwa4DY0p1f9zWvXWG08E6B8LmucDJDgKwkGSq4meOU2ePM8dhvdpvSx/ArLBnO6rS7tu+4TEK/oEBVjnB6rT28sYwhDR6VVXX57cEp3TuwgTjdCJwMKxuBFyKN99Qg==;24:6oc/ib4ZyOJf88KjJ3BqsskpnGPIL9073t4YESUJRtewpFcaCOOf2pXfjFO915uJWNwNco0HrUssg0KaT7z9HUvDEiY6c6nvjj7Cebxdz/c=
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:HE1PR09MB0442;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(432015012)(82015046);SRVR:HE1PR09MB0442;BCL:0;PCL:0;RULEID:;SRVR:HE1PR09MB0442;
-x-forefront-prvs: 0790FB1F33
-x-forefront-antispam-report: SFV:NSPM;SFS:(7070004)(98900002);DIR:OUT;SFP:1901;SCL:1;SRVR:HE1PR09MB0442;H:HE1PR09MB0441.eurprd09.prod.outlook.com;FPR:;SPF:None;LANG:en;
-spamdiagnosticoutput: 1:23
-spamdiagnosticmetadata: NSPM
-Content-ID: <17368335F9B2A842AE3361DB973B7DDE@eurprd09.prod.outlook.com>
-X-OriginatorOrg: sct-15-1-318-15-msonline-outlook-3d97b.templateTenant
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Dec 2015 10:48:58.6094
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1PR09MB0442
-X-OriginalArrivalTime: 14 Dec 2015 10:48:59.0591 (UTC) FILETIME=[09DECD70:01D1365D]
+	id S1753001AbbLNMS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 07:18:28 -0500
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:36485 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752697AbbLNMS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 07:18:27 -0500
+Received: by lbblt2 with SMTP id lt2so105657467lbb.3
+        for <git@vger.kernel.org>; Mon, 14 Dec 2015 04:18:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=wcWuIl+uQi0YgOPHAbkervg/VJ+krcgTHbWeEDquWrE=;
+        b=LGRv3FLk4KimqoMxLLog0hGgB/P/cFoPt6mpSTMWr8zg4kOpiKcyAXbxlPsrIlWbtR
+         upkD0J9PijxrtkUL1tgVl5QgoUjZ2A+4TBCihyTwQEQzYW8kYFWjKhXKaP3BvoLlJxHV
+         vkJd/GQfOAhvool+2lG0nBn1p6TggwD9fcW+q1Mua8XI7jOm+68hbXAhcuPBjg+Wjcm4
+         waSbPc08U5KUb/t+Qh8R92NW4tirfD1tAmbVI3gonkXzPfyhZISwEhtfOQIoCRNLQ823
+         w6UStlDhGJ6mIk+7M96+kZDOdfku6WMZj+CpPFbCTrUI+AAFx4R6qixOuRXgrOWrH1x+
+         V+Qg==
+X-Received: by 10.112.184.45 with SMTP id er13mr12939361lbc.133.1450095505504;
+ Mon, 14 Dec 2015 04:18:25 -0800 (PST)
+Received: by 10.25.152.7 with HTTP; Mon, 14 Dec 2015 04:18:25 -0800 (PST)
+In-Reply-To: <xmqqfuzck1dp.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282355>
 
-SGkNCg0KSeKAmXZlIHJlY2VudGx5IGJlZW4gbWFkZSBhd2FyZSBvZiBHSVQgYW5kIGhhZCBhIGZl
-dyBxdWVzdGlvbnMuDQpJ4oCZbSBjdXJyZW50bHkgd29ya2luZyBvbiBjcmVhdGluZyBhIG1pZGRs
-ZXdhcmUgYmV0d2VlbiBGT1JBTiAoYSBDQUQgc3lzdGVtKSBhbmQgVGVhbWNlbnRlci4NCg0KRG8g
-eW91IGtub3cgaWYgR0lUIHdvdWxkIHdvcmsgYmV0d2VlbiB0aGUgdHdvPw0KDQpXZeKAmXJlIGN1
-cnJlbnRseSB1c2luZyBhIENlbnRyYWxpc2VkIHZlcnNpb24gY29udHJvbCBzeXN0ZW0uDQoNClNv
-IHRvIGNoZWNrIG15IHVuZGVyc3RhbmRpbmcsIHVzaW5nIEdJVCB0byBjcmVhdGUgYSBkaXN0cmli
-dXRlZCB2ZXJzaW9uIGNvbnRyb2wgd291bGQgaGF2ZSB0aGUgZm9sbG93aW5nIGJlbmVmaXRzDQpU
-aGUgQ0FEIGRlc2lnbmVyIHdobyBoYXMgZGVzaWduIGEgcHVtcCBhc3NlbWJseSBmb3IgZXhhbXBs
-ZSBjb3VsZCBjcmVhdGUgYW4gYWRkaXRpb25hbCBicmFuY2ggYW5kIOKAnHBsYXlzIGFyb3VuZOKA
-nSB3aXRoIHRoZSBwdW1wIHRvIG1ha2UgaW1wcm92ZW1lbnRzIHdpdGhvdXQgZWRpdGluZyB0aGUg
-bWFpbiBwdW1wIGJyYW5jaD8NCkNvdWxkIG1vcmUgdGhhbiBvbmUgdXNlciBjcmVhdGUgaW5kZXBl
-bmRlbnQgYnJhbmNoZXM/DQpJZiBib3RoIHVzZXJzIHdhbnRlZCB0byBtZXJnZSB0aGVpciBpbmRl
-cGVuZGVudCBicmFuY2ggd2l0aCB0aGUgbWFpbiBicmFuY2gsIHdoYXQgd291bGQgaGFwcGVuPyBX
-b3VsZCBvbmUgdGFrZSBwcmlvcml0eT8NCg0KSXMgdGhhdCB0aGUgbWFpbiBiZW5lZml0IGluIHRl
-cm1zIG9mIGEgQ0FEIHN5c3RlbSwgdGhlIGJyYW5jaGluZyBhYmlsaXR5Pw0KDQpUaGFua3MNCg0K
-SmFjaw0KDQo=
+On Tue, Dec 8, 2015 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Christian Couder <christian.couder@gmail.com> writes:
+>>
+>>> When we know that mtime is fully supported by the environment, we
+>>> might want the untracked cache to be always used by default without
+>>> any mtime test or kernel version check being performed.
+>>>
+>>> Also when we know that mtime is not supported by the environment,
+>>> for example because the repo is shared over a network file system,
+>>> then we might want 'git update-index --untracked-cache' to fail
+>>> immediately instead of preforming tests (because it might work on
+>>> some systems using the repo over the network file system but not
+>>> others).
+>>> ...
+>> The logic in this paragraph is fuzzy to me.  Shouldn't the config
+>> give a sensible default, that is overriden by command line options?
+
+The problem is that "git update-index --[no-|force-]untracked-cache"
+is not just changing things for the duration of the current command.
+It is in fact changing the configuration of the repository, because it
+is adding the UC (untracked cache) in the index and saving the index,
+which will persist the use of the UC for the following commands.
+
+So it is very different from something like "git status
+--no-untracked-cache" that would perform a "git status" without using
+the UC.
+
+In fact "git update-index --[no-|force-]untracked-cache" is very bad
+because it means that two repositories can be configured differently
+even if they have the same config files.
+
+>> I agree that it is insane to do a runtime check when the user says
+>> "update-index --untracked-cache" to enable it, as the user _knows_
+>> that enabling it would help (or the user _knows_ that she wants to
+>> play with it).  Similarly, shouldn't the config be ignored when the
+>> user says "update-index --no-untracked-cache" (hence removing the
+>> untracked cache from the resulting index no matter the config is set
+>> to)?  ...
+>
+> As I think about this more, it really seems to me that we shouldn't
+> need to make this configuration variable that special.  Because I
+> think it is a *BUG* in the current implementation to do the runtime
+> check even when the user explicitly tells us to use untracked-cache,
+> I'd imagine something along the lines of the following would be a
+> lot simpler, easier to understand and a generally more useful
+> bugfix:
+>
+>  1 Add one boolean configuration variable, core.untrackedCache, that
+>    defaults to 'false'.
+>
+>  2 When creating an index file in an empty repository, enable the
+>    untracked cache in the index (even without the user runninng
+>    "update-index --untracked-cache") iff the configuration is set to
+>    'true'.  No runtime check necessary.
+
+I guess this means that when cloning a repo, it would not use the UC
+unless either "git -c core.untrackedCache=true clone ..." is used, or
+core.untrackedCache is set in the global config.
+
+>  3 When working on an existing index file, unless the operation is
+>    "update-index --[no-]untracked-cache", keep the current setting,
+>    regardless of this configuration variable.  No runtime check
+>    necessary.
+>
+>  4 "update-index --[no-]untracked-cache" should enable or disable
+>    the untracked cache as the user tells us, regardless of the
+>    configuration variable.  No runtime check necessary.
+
+If you want only some repos to use the UC, you will set
+core.untrackedCache in the repo config. Then after cloning such a
+repo, you will copy the config file, and this will not be enough to
+enable the UC. The original repo will use the UC but the cloned one
+will not, and you might wonder why is "git status" slower in the
+cloned repo despite the machines and the config being the same for
+both repos?
+
+And if you have set core.untrackedCache in the global config when you
+clone, UC is enabled, but if you have just set it in the repo config
+after the clone, it is not enabled.
+
+This is quite bad in my opinion.
+
+Also think about system administrators who have a lot of machines with
+lots of repos everywhere on these machines and just upgrade Git from
+let's say v2.4.0 to v2.8.0. They find out that using UC git status
+will be faster and want to provide that to the machine's users knowing
+that they only use recent Linux machines where mtime works well.
+Shouldn't it be nice if they could just enable core.untrackedCache in
+the global config files without having to also cd into every repo and
+use "git update-index --untracked-cache" there?
+
+If we consider that "git update-index --[no-|force-]untracked-cache"
+should not have been created in the first place, and that the good
+mechanism for this is a config variable, and that maybe "git
+update-index --[no-|force-]untracked-cache" should just be deprecated,
+then the important thing is to make the core.untrackedCache config
+variable work in the best possible way.
+
+> It is OK to then add an "auto-detect" on top of the above, that
+> would only affect the second bullet point, like so:
+>
+>  2a When creating an index file in an empty repository, if the
+>     configuration is set to 'auto', do the lengthy runtime check and
+>     enable the untracked cache in the index (even without the user
+>     runninng "update-index --untracked-cache").
+>
+> without changing any other in the first 4-bullet list.
+>
+> Am I missing some other requirements?
+
+It is more about what is a good way to use this feature?
+
+"git update-index --[no-|force-]untracked-cache" is a bad way, so
+let's make it easy for people to not use it at all.
+
+If people can just set core.untrackedCache in an existing repo without
+the need to use "git update-index --untracked-cache" afterwards to
+really enable it, and without having to remember to use it again after
+cloning (supposing core.untrackedCache is not set globally where they
+clone), it is just simpler, and as an added benefit we can deprecate
+"git update-index --[no-|force-]untracked-cache".
+
+Thanks,
+Christian.
