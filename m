@@ -1,45 +1,86 @@
-From: Ros Sothen <ros.sothen@icloud.com>
-Subject: (unknown)
-Date: Mon, 14 Dec 2015 20:14:16 +0700
-Message-ID: <45265F58-0125-4C86-AA45-E9C9A6E9B92F@icloud.com>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 14 15:14:53 2015
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] ident: loosen getpwuid error in non-strict mode
+Date: Mon, 14 Dec 2015 10:07:29 -0500
+Message-ID: <20151214150729.GA21415@sigill.intra.peff.net>
+References: <20151210213228.GB29055@sigill.intra.peff.net>
+ <20151210214129.GC8374@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Taylor Braun-Jones <taylor@braun-jones.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 16:07:47 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8TtX-0002kv-7N
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 15:14:31 +0100
+	id 1a8Uj2-0001gT-D9
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 16:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751392AbbLNOO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 09:14:27 -0500
-Received: from mr22p34im-asmtp003.me.com ([17.111.211.50]:43383 "EHLO
-	mr22p34im-asmtp003.me.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751368AbbLNOO0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 09:14:26 -0500
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Dec 2015 09:14:26 EST
-Received: from [10.37.187.182] (unknown [117.20.113.26])
- by mr22p34im-asmtp003.me.com
- (Oracle Communications Messaging Server 7.0.5.36.0 64bit (built Sep  8 2015))
- with ESMTPSA id <0NZC00FOWNFU4R40@mr22p34im-asmtp003.me.com> for
- git@vger.kernel.org; Mon, 14 Dec 2015 13:14:25 +0000 (GMT)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2015-12-14_08:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1011 suspectscore=1 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1510270003 definitions=main-1512140221
-X-Mailer: iPhone Mail (13C75)
+	id S1752231AbbLNPHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 10:07:33 -0500
+Received: from cloud.peff.net ([50.56.180.127]:41202 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751061AbbLNPHc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 10:07:32 -0500
+Received: (qmail 22513 invoked by uid 102); 14 Dec 2015 15:07:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 09:07:31 -0600
+Received: (qmail 27087 invoked by uid 107); 14 Dec 2015 15:07:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 10:07:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Dec 2015 10:07:29 -0500
+Content-Disposition: inline
+In-Reply-To: <20151210214129.GC8374@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282358>
 
+On Thu, Dec 10, 2015 at 04:41:29PM -0500, Jeff King wrote:
 
+> -static struct passwd *xgetpwuid_self(void)
+> +static struct passwd *xgetpwuid_self(int *is_bogus)
+>  {
+>  	struct passwd *pw;
+>  
+>  	errno = 0;
+>  	pw = getpwuid(getuid());
+> -	if (!pw)
+> -		die(_("unable to look up current user in the passwd file: %s"),
+> -		    errno ? strerror(errno) : _("no such user"));
+> +	if (!pw) {
+> +		struct passwd fallback;
+> +		fallback.pw_name = "unknown";
+> +#ifndef NO_GECOS_IN_PWENT
+> +		fallback.pw_gecos = "Unknown";
+> +#endif
+> +		pw = &fallback;
+> +		if (is_bogus)
+> +			*is_bogus = 1;
+> +	}
+>  	return pw;
 
-Sent from my iPhone
+Ugh. The fallback struct should be static, of course, as we are
+returning its address from the function.
+
+Anybody have a brown paper bag I can borrow?
+
+diff --git a/ident.c b/ident.c
+index 74de079..831072c 100644
+--- a/ident.c
++++ b/ident.c
+@@ -32,7 +32,7 @@ static struct passwd *xgetpwuid_self(int *is_bogus)
+ 	errno = 0;
+ 	pw = getpwuid(getuid());
+ 	if (!pw) {
+-		struct passwd fallback;
++		static struct passwd fallback;
+ 		fallback.pw_name = "unknown";
+ #ifndef NO_GECOS_IN_PWENT
+ 		fallback.pw_gecos = "Unknown";
+
+-Peff
