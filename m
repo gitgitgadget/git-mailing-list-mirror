@@ -1,148 +1,144 @@
-From: Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/8] xread: poll on non blocking fds
-Date: Mon, 14 Dec 2015 15:14:08 -0800
-Message-ID: <CAGZ79kZxp-FVty9uydy0-k6JiFJduLD3-UuxLdJsL0aRWKgs3Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/8] xread_nonblock: add functionality to read from fds without blocking
+Date: Mon, 14 Dec 2015 15:15:29 -0800
+Message-ID: <xmqqio40hbam.fsf@gitster.mtv.corp.google.com>
 References: <1450121838-7069-1-git-send-email-sbeller@google.com>
-	<1450121838-7069-3-git-send-email-sbeller@google.com>
-	<CAPig+cQoranAhJKSZm6jP-hYutkoXkf6461sY1v5NseQVTNL_g@mail.gmail.com>
-	<xmqqmvtchbh7.fsf@gitster.mtv.corp.google.com>
+	<1450121838-7069-4-git-send-email-sbeller@google.com>
+	<CAPig+cSiE8rJD8ohgW99SBJMFE8cJ6UrHKeAucj4fTEmUW7Ntg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <ericsunshine@gmail.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+Content-Type: text/plain
+Cc: Stefan Beller <sbeller@google.com>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmail.com>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
 	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 15 00:14:19 2015
+To: Eric Sunshine <ericsunshine@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 15 00:15:37 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8cJr-000634-1A
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 00:14:15 +0100
+	id 1a8cLB-0000av-0D
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 00:15:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932552AbbLNXOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 18:14:10 -0500
-Received: from mail-ig0-f177.google.com ([209.85.213.177]:34797 "EHLO
-	mail-ig0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753453AbbLNXOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 18:14:09 -0500
-Received: by mail-ig0-f177.google.com with SMTP id m11so9690113igk.1
-        for <git@vger.kernel.org>; Mon, 14 Dec 2015 15:14:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=bFD8izBAz0RQDsVpsKNxdcZ37CJVG9l6+9g3WaEXz/8=;
-        b=anv747HaY7u1AUI9L0kf+XJnjw2n0qgxJJ0sbFB2/z9m955zn+NQtTZbEh+Ohoc5pH
-         oWYiQLWu56RWtfmAtKBLZA13mvNLXyOKlbrz0NcDZt3JdoA4G6ZwvIjxO8mvOsozC5l0
-         sQTkZvThwYTIq8POPP/REtHuNp1CTcjykvKI6xVGCWlG+82c0ibqDFW/9pJ4w4V2Gcny
-         wAbC0A1bNySeddeK54e9/1cMOBsLVZ7xZx1NJOWAGB86MU1sWcoWKbj+M0nX6BdZer7G
-         ODfZ2llonwig7CnyDlLo0jteQTXerOQaghqwPJS64HRCE2UEME6u99GW9elqzyK1rjZF
-         BeHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=bFD8izBAz0RQDsVpsKNxdcZ37CJVG9l6+9g3WaEXz/8=;
-        b=eMtwb5FLFzigGe40uaitNwraUzWQXe/5duhxAEJbl0YN6bunRPIc5Gd7rnX2VjDGNQ
-         /HFJZdFsX6SDUs6YIQMczfwXlQS0epzZtF+Oy4qTl1EExkS5odypefi57zNYPXnddvMB
-         /YRPDYctGXAM6pn2N4Cj02/AtQobRhZMQWiigMcZe0HDtuJphPTpkHEyqVBKG53mrrsZ
-         fcJwAkmBNPdNEBRKZU4AoUWjEhYwUoNL54rJhm/HAJJ9YFQaKvk8t9j3kAJ0yO8I3uHh
-         Gd4fm3XA8XZLDwkmx69O+kAoUdTVaYIbvKvMGkMphx0zn2e56+f2zt8qw446/fCOU89M
-         O6eg==
-X-Gm-Message-State: ALoCoQlVbXmZch27DWdiUEw9ZG+lDtqrsC+VbcVpqc5lbb0yqfJRXn1M8rBhdJkE3wba0kdeu2gDl1lLHWw5M5mfseGkpP/MnjX44LvgyyakVgw5Rbbimh4=
-X-Received: by 10.50.88.97 with SMTP id bf1mr869026igb.94.1450134848490; Mon,
- 14 Dec 2015 15:14:08 -0800 (PST)
-Received: by 10.107.8.84 with HTTP; Mon, 14 Dec 2015 15:14:08 -0800 (PST)
-In-Reply-To: <xmqqmvtchbh7.fsf@gitster.mtv.corp.google.com>
+	id S1753677AbbLNXPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 18:15:33 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64906 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753635AbbLNXPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 18:15:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6B41D349B0;
+	Mon, 14 Dec 2015 18:15:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+7gucW6+Z4L2/OuiqfoQThfWbSw=; b=Tv/8g3
+	Emld0TV86koesskKorAsTL+am/EzEcgpIe/92ehRiH0IJkl7+VWvCeJ2SmqW+81v
+	UftfMTP5oCDwhg9F6xsWdAtD0zBfsMVV+DkBEJIxtOREHcgLRRe5zHNtRLqps0nr
+	81q2akbfK6VjwYi3WTK+kzLYoAAORAA9DXnLg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NQ7UltlhBbjv9M9IJNAKe2KkDpzfXi8R
+	by0a4MkGzLzILiisFAGVuGru5Y0AbB7Cq8YqFg2G32ujAaO5bFZfjyEvi20KAZ/u
+	bkS5e1qF4+OozuUGJF4cocyTe8kD/9uOtiqARsBd3hSheL1s9DHVzPseacJFsgcc
+	RfPR/a1oLPU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 54D0F349AF;
+	Mon, 14 Dec 2015 18:15:31 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B2C76349AE;
+	Mon, 14 Dec 2015 18:15:30 -0500 (EST)
+In-Reply-To: <CAPig+cSiE8rJD8ohgW99SBJMFE8cJ6UrHKeAucj4fTEmUW7Ntg@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 14 Dec 2015 18:03:15 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 91C771E8-A2B8-11E5-8F36-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282450>
 
-On Mon, Dec 14, 2015 at 3:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <ericsunshine@gmail.com> writes:
->
->> This comment tells us what the code itself already says, but not why
->> the value is being ignored. The reader still has to consult the commit
->> message to learn that detail, which makes the value of the comment
->> questionable.
->
-> Let's do this for now, then.
+Eric Sunshine <ericsunshine@gmail.com> writes:
 
-That looks good to me. I'll pick it up for the resend.
+> The last sentence is confusing. From the commit message, we learn that
+> this function doesn't care about EAGAIN or EWOULDBLOCK, yet the above
+> comment seems to imply that it does. What it really ought to be saying
+> is that "as a convenience, errno is transformed from EWOULDBLOCK to
+> EAGAIN so that the caller only has to check for EAGAIN".
 
->
-> -- >8 --
-> From: Stefan Beller <sbeller@google.com>
-> Date: Mon, 14 Dec 2015 11:37:12 -0800
-> Subject: [PATCH] xread: poll on non blocking fds
->
-> The man page of read(2) says:
->
->   EAGAIN The file descriptor fd refers to a file other than a socket
->          and has been marked nonblocking (O_NONBLOCK), and the read
->          would block.
->
->   EAGAIN or EWOULDBLOCK
->          The file descriptor fd refers to a socket and has been marked
->          nonblocking (O_NONBLOCK), and the read would block.  POSIX.1-2001
->          allows either error to be returned for this case, and does not
->          require these constants to have the same value, so a portable
->          application should check for both possibilities.
->
-> If we get an EAGAIN or EWOULDBLOCK the fd must have set O_NONBLOCK.
-> As the intent of xread is to read as much as possible either until the
-> fd is EOF or an actual error occurs, we can ease the feeder of the fd
-> by not spinning the whole time, but rather wait for it politely by not
-> busy waiting.
->
-> We should not care if the call to poll failed, as we're in an infinite
-> loop and can only get out with the correct read().
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> Acked-by: Johannes Sixt <j6t@kdbg.org>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  wrapper.c | 20 ++++++++++++++++++--
->  1 file changed, 18 insertions(+), 2 deletions(-)
->
-> diff --git a/wrapper.c b/wrapper.c
-> index 6fcaa4d..1770efa 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -236,8 +236,24 @@ ssize_t xread(int fd, void *buf, size_t len)
->             len = MAX_IO_SIZE;
->         while (1) {
->                 nr = read(fd, buf, len);
-> -               if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
-> -                       continue;
-> +               if (nr < 0) {
-> +                       if (errno == EINTR)
-> +                               continue;
-> +                       if (errno == EAGAIN || errno == EWOULDBLOCK) {
-> +                               struct pollfd pfd;
-> +                               pfd.events = POLLIN;
-> +                               pfd.fd = fd;
-> +                               /*
-> +                                * it is OK if this poll() failed; we
-> +                                * want to leave this infinite loop
-> +                                * only when read() returns with
-> +                                * success, or an expected failure,
-> +                                * which would be checked by the next
-> +                                * call to read(2).
-> +                                */
-> +                               poll(&pfd, 1, -1);
-> +                       }
-> +               }
->                 return nr;
->         }
->  }
-> --
-> 2.7.0-rc0-109-gb762328
->
+Let's do this for now, then.
+
+-- >8 --
+From: Stefan Beller <sbeller@google.com>
+Date: Mon, 14 Dec 2015 11:37:13 -0800
+Subject: [PATCH] xread_nonblock: add functionality to read from fds without blocking
+
+Provide a wrapper to read(), similar to xread(), that restarts on
+EINTR but not EAGAIN (or EWOULDBLOCK). This enables the caller to
+handle polling itself, possibly polling multiple sockets or performing
+some other action.
+
+Helped-by: Jacob Keller <jacob.keller@gmail.com>
+Helped-by: Jeff King <peff@peff.net>,
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Acked-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git-compat-util.h |  1 +
+ wrapper.c         | 24 ++++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8e39867..87456a3 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -723,6 +723,7 @@ extern void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_
+ extern void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+ extern int xopen(const char *path, int flags, ...);
+ extern ssize_t xread(int fd, void *buf, size_t len);
++extern ssize_t xread_nonblock(int fd, void *buf, size_t len);
+ extern ssize_t xwrite(int fd, const void *buf, size_t len);
+ extern ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+ extern int xdup(int fd);
+diff --git a/wrapper.c b/wrapper.c
+index 1770efa..0b5b03d 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -259,6 +259,30 @@ ssize_t xread(int fd, void *buf, size_t len)
+ }
+ 
+ /*
++ * xread_nonblock() automatically restarts interrupted operations
++ * (EINTR). xread_nonblock() DOES NOT GUARANTEE that "len" bytes is
++ * read.  For convenience to callers that mark the file descriptor
++ * non-blocking, EWOULDBLOCK is turned into EAGAIN to allow them to
++ * check only for EAGAIN (POSIX.1 allows either to be returned).
++ */
++ssize_t xread_nonblock(int fd, void *buf, size_t len)
++{
++	ssize_t nr;
++	if (len > MAX_IO_SIZE)
++		len = MAX_IO_SIZE;
++	while (1) {
++		nr = read(fd, buf, len);
++		if (nr < 0) {
++			if (errno == EINTR)
++				continue;
++			if (errno == EWOULDBLOCK)
++				errno = EAGAIN;
++		}
++		return nr;
++	}
++}
++
++/*
+  * xwrite() is the same a write(), but it automatically restarts write()
+  * operations with a recoverable error (EAGAIN and EINTR). xwrite() DOES NOT
+  * GUARANTEE that "len" bytes is written even if the operation is successful.
+-- 
+2.7.0-rc0-109-gb762328
