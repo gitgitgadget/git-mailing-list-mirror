@@ -1,86 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] ident: loosen getpwuid error in non-strict mode
-Date: Mon, 14 Dec 2015 10:07:29 -0500
-Message-ID: <20151214150729.GA21415@sigill.intra.peff.net>
-References: <20151210213228.GB29055@sigill.intra.peff.net>
- <20151210214129.GC8374@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Taylor Braun-Jones <taylor@braun-jones.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 16:07:47 2015
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH v1 3/4] git gui: de-dup selected repo from recentrepo history
+Date: Mon, 14 Dec 2015 15:09:02 +0000
+Message-ID: <1450105743-2432-4-git-send-email-philipoakley@iee.org>
+References: <3453668A49C94C2AA39911FC594AE151@PhilipOakley>
+ <1450105743-2432-1-git-send-email-philipoakley@iee.org>
+Cc: Alexey Astakhov <asstv7@gmail.com>, sender <philipoakley@iee.org>
+To: Git List <git@vger.kernel.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Mon Dec 14 16:09:25 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8Uj2-0001gT-D9
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 16:07:44 +0100
+	id 1a8Ukb-0003dW-MW
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 16:09:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752231AbbLNPHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 10:07:33 -0500
-Received: from cloud.peff.net ([50.56.180.127]:41202 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751061AbbLNPHc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 10:07:32 -0500
-Received: (qmail 22513 invoked by uid 102); 14 Dec 2015 15:07:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 09:07:31 -0600
-Received: (qmail 27087 invoked by uid 107); 14 Dec 2015 15:07:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 10:07:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Dec 2015 10:07:29 -0500
-Content-Disposition: inline
-In-Reply-To: <20151210214129.GC8374@sigill.intra.peff.net>
+	id S1752398AbbLNPJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 10:09:11 -0500
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:7300 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752441AbbLNPJE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2015 10:09:04 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2ADCwCz2m5WPCSzBlxeGQEBAQELAQIBAQEBAYI5UYFBgmKDfoFYsmKECoYIBAICgSJNAQEBAQEBBwEBAQFAAT+ENQEBBFYjEAhJOQoUBgESiDO9MQEBAQcjhlaOPQWWdo8fh22TTIRnPjSFBgEBAQ
+X-IPAS-Result: A2ADCwCz2m5WPCSzBlxeGQEBAQELAQIBAQEBAYI5UYFBgmKDfoFYsmKECoYIBAICgSJNAQEBAQEBBwEBAQFAAT+ENQEBBFYjEAhJOQoUBgESiDO9MQEBAQcjhlaOPQWWdo8fh22TTIRnPjSFBgEBAQ
+X-IronPort-AV: E=Sophos;i="5.20,427,1444690800"; 
+   d="scan'208";a="570746132"
+Received: from host-92-6-179-36.as43234.net (HELO localhost) ([92.6.179.36])
+  by out1.ip03ir2.opaltelecom.net with ESMTP; 14 Dec 2015 15:31:05 +0000
+X-Mailer: git-send-email 1.9.5
+In-Reply-To: <1450105743-2432-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282359>
 
-On Thu, Dec 10, 2015 at 04:41:29PM -0500, Jeff King wrote:
+When the gui/user selects a repo for display, that repo is brought to
+the end of the recentrepo config list. The logic can fail if there are
+duplicate old entries for the repo (you cannot unset a single config
+entry when duplicates are present).
 
-> -static struct passwd *xgetpwuid_self(void)
-> +static struct passwd *xgetpwuid_self(int *is_bogus)
->  {
->  	struct passwd *pw;
->  
->  	errno = 0;
->  	pw = getpwuid(getuid());
-> -	if (!pw)
-> -		die(_("unable to look up current user in the passwd file: %s"),
-> -		    errno ? strerror(errno) : _("no such user"));
-> +	if (!pw) {
-> +		struct passwd fallback;
-> +		fallback.pw_name = "unknown";
-> +#ifndef NO_GECOS_IN_PWENT
-> +		fallback.pw_gecos = "Unknown";
-> +#endif
-> +		pw = &fallback;
-> +		if (is_bogus)
-> +			*is_bogus = 1;
-> +	}
->  	return pw;
+Similarly, the maxrecentrepo logic could fail if older duplicate entries
+are present.
 
-Ugh. The fallback struct should be static, of course, as we are
-returning its address from the function.
+The first commit of this series ({this}~2) fixed the config unsetting
+issue. Rather than manipulating a local copy of the $recent list (one
+cannot know how many entries were removed), simply re-read it.
 
-Anybody have a brown paper bag I can borrow?
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+ git-gui/lib/choose_repository.tcl | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/ident.c b/ident.c
-index 74de079..831072c 100644
---- a/ident.c
-+++ b/ident.c
-@@ -32,7 +32,7 @@ static struct passwd *xgetpwuid_self(int *is_bogus)
- 	errno = 0;
- 	pw = getpwuid(getuid());
- 	if (!pw) {
--		struct passwd fallback;
-+		static struct passwd fallback;
- 		fallback.pw_name = "unknown";
- #ifndef NO_GECOS_IN_PWENT
- 		fallback.pw_gecos = "Unknown";
-
--Peff
+diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_repository.tcl
+index aa87bcc..ad7a888 100644
+--- a/git-gui/lib/choose_repository.tcl
++++ b/git-gui/lib/choose_repository.tcl
+@@ -262,12 +262,11 @@ proc _append_recentrepos {path} {
+ 	set i [lsearch $recent $path]
+ 	if {$i >= 0} {
+ 		_unset_recentrepo $path
+-		set recent [lreplace $recent $i $i]
+ 	}
+ 
+-	lappend recent $path
+ 	git config --global --add gui.recentrepo $path
+ 	load_config 1
++	set recent [get_config gui.recentrepo]
+ 
+ 	if {[set maxrecent [get_config gui.maxrecentrepo]] eq {}} {
+ 		set maxrecent 10
+@@ -275,7 +274,7 @@ proc _append_recentrepos {path} {
+ 
+ 	while {[llength $recent] > $maxrecent} {
+ 		_unset_recentrepo [lindex $recent 0]
+-		set recent [lrange $recent 1 end]
++		set recent [get_config gui.recentrepo]
+ 	}
+ }
+ 
+-- 
+2.5.2.windows.2
