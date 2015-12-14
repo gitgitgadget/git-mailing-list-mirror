@@ -1,55 +1,63 @@
-From: Rob Cifre <rcifre@gmail.com>
-Subject: Downloading for mac.
-Date: Mon, 14 Dec 2015 16:11:00 -0500
-Message-ID: <D2BE8045-D9EB-4EEA-B49D-4C4E7BA8E4EC@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
+From: Jeff King <peff@peff.net>
+Subject: Re: query regarding git merge
+Date: Mon, 14 Dec 2015 16:13:21 -0500
+Message-ID: <20151214211320.GE14788@sigill.intra.peff.net>
+References: <loom.20151213T185500-631@post.gmane.org>
+ <20151213181800.GK990758@vauxhall.crustytoothpaste.net>
+ <CAGkBSDLMCZR=qrXJKTgpzGGQdogXHN+0Ub8qW=aPq80RjjN=5w@mail.gmail.com>
+ <20151213192316.GM990758@vauxhall.crustytoothpaste.net>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 14 22:12:07 2015
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+To: Rohit Gupta <roborohitgupta75@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 22:13:32 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8aPe-0003Ar-RV
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 22:12:07 +0100
+	id 1a8aR1-0005xj-4p
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 22:13:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932535AbbLNVLc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2015 16:11:32 -0500
-Received: from mail-qg0-f52.google.com ([209.85.192.52]:36056 "EHLO
-	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932080AbbLNVL3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2015 16:11:29 -0500
-Received: by qget30 with SMTP id t30so23425753qge.3
-        for <git@vger.kernel.org>; Mon, 14 Dec 2015 13:11:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version;
-        bh=0LkeESZPCyce9PE+p8i2Xh3M0U5Px41PbwT4Q5QVKHo=;
-        b=P8m2KcCHlFlAtLy9hBIw9GmGyWPEfTpaK9BVYnEVjyTNKL+9/4TE+lfDGB0awomvR0
-         eX4K0MuhG45dxTfik+EG1eAHkKkKvLqhiwZr2nneYWMigavJNMhXIXa7nj2hBcZHmIHo
-         0pHzH3N7comHvmYEsUGYvhV/1wEozYR7I/eFVIyLor54+MRz82w4qQ/JMAc9bYDT58IM
-         hvM9cchP5GEJmaOawLxOIjl8ll86F1CeD3uAohUh67b7arrrpapVNC9JPFnXEgD8GAt/
-         hr5MLPkBlDobKAqF/zetvs/DBGahNxy6pTN39Aq1X660Bki0nhuU5RV4XnMZLhzaYn7r
-         4zug==
-X-Received: by 10.140.27.238 with SMTP id 101mr45459806qgx.4.1450127488009;
-        Mon, 14 Dec 2015 13:11:28 -0800 (PST)
-Received: from robs-mbp.home (ool-18b928c2.dyn.optonline.net. [24.185.40.194])
-        by smtp.gmail.com with ESMTPSA id f193sm1492589qhe.6.2015.12.14.13.11.01
-        for <git@vger.kernel.org>
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Dec 2015 13:11:23 -0800 (PST)
-X-Mailer: Apple Mail (2.3112)
+	id S932385AbbLNVN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 16:13:26 -0500
+Received: from cloud.peff.net ([50.56.180.127]:41510 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932075AbbLNVNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 16:13:23 -0500
+Received: (qmail 18653 invoked by uid 102); 14 Dec 2015 21:13:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.1)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 15:13:23 -0600
+Received: (qmail 31756 invoked by uid 107); 14 Dec 2015 21:13:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 16:13:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Dec 2015 16:13:21 -0500
+Content-Disposition: inline
+In-Reply-To: <20151213192316.GM990758@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282417>
 
-Hello it seems that the download for mac isn=E2=80=99t working on your =
-website.
-Any other location I can download it from?
+On Sun, Dec 13, 2015 at 07:23:17PM +0000, brian m. carlson wrote:
 
-https://git-scm.com/download/mac
+> On Mon, Dec 14, 2015 at 12:03:18AM +0530, Rohit Gupta wrote:
+> > Thanks brian. I understood my mistake in understanding the working of git
+> > merge.
+> > But isn't it wrong? As after merging, branch's logic can't work. How to get
+> > that right then ?
+> 
+> If you know that the merge didn't go the way you wanted, you can either
+> add a follow-up commit, or you can do "git commit --amend" on the merge
+> after making the necessary changes.  In such a case, it may be useful to
+> add a note to the commit message stating that you modified it from the
+> original merge.
+
+And a fundamental takeaway here is that git-merge can only find
+_textual_ conflicts. It is up to the user to determine that the merge
+didn't introduce any _semantic_ conflicts. For example, by building and
+testing the result, which is out of git's scope.
+
+-Peff
