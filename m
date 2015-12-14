@@ -1,85 +1,113 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Why does send-pack call pack-objects for all remote refs?
-Date: Mon, 14 Dec 2015 17:37:18 -0500
-Message-ID: <20151214223717.GA20167@sigill.intra.peff.net>
-References: <4766c8518c2a46afb88fc0a2dd9a1688@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com>
- <xmqqvb89lw5f.fsf@gitster.mtv.corp.google.com>
- <20151207225714.GA3785@sigill.intra.peff.net>
- <8712f730fb4c414ebc2b1168ca7948b8@EXCHANGE1U.uunet.arlington.PredictiveTechnologies.com>
- <20151210041941.GA4056@sigill.intra.peff.net>
- <d0a39b03e49d41e685cf61398c0d1102@EXCHANGE2U.uunet.arlington.PredictiveTechnologies.com>
- <20151214210429.GC14788@sigill.intra.peff.net>
- <20151214223155.GA6594@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Daniel Koverman <dkoverman@predictiveTechnologies.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Nasser Grainawi <nasser@codeaurora.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 23:37:32 2015
+From: Stefan Beller <sbeller@google.com>
+Subject: [PATCH 1/8] submodule-config: keep update strategy around
+Date: Mon, 14 Dec 2015 14:54:18 -0800
+Message-ID: <1450133665-3783-2-git-send-email-sbeller@google.com>
+References: <1450133665-3783-1-git-send-email-sbeller@google.com>
+Cc: peff@peff.net, jrnieder@gmail.com, johannes.schindelin@gmail.com,
+	Jens.Lehmann@web.de, ericsunshine@gmail.com, j6t@kdbg.org
+To: sbeller@google.com, git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Dec 14 23:55:40 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8bkI-0006Qa-5M
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 23:37:30 +0100
+	id 1a8c1n-000154-4m
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 23:55:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932849AbbLNWhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 17:37:22 -0500
-Received: from cloud.peff.net ([50.56.180.127]:41609 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932725AbbLNWhV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 17:37:21 -0500
-Received: (qmail 25847 invoked by uid 102); 14 Dec 2015 22:37:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.1)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 16:37:20 -0600
-Received: (qmail 750 invoked by uid 107); 14 Dec 2015 22:37:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 14 Dec 2015 17:37:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Dec 2015 17:37:18 -0500
-Content-Disposition: inline
-In-Reply-To: <20151214223155.GA6594@google.com>
+	id S932535AbbLNWzC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 17:55:02 -0500
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:34238 "EHLO
+	mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753607AbbLNWy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 17:54:57 -0500
+Received: by pfbo64 with SMTP id o64so34313843pfb.1
+        for <git@vger.kernel.org>; Mon, 14 Dec 2015 14:54:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=uwCzYbZDIe6R8HbIgwTSRg5Cwv8+gPKSZsLIm2vBeAM=;
+        b=GucTgVH3pQjFtJrozu4iDMnWSLy96yvPvU07mT2VSFnjrjPjJtGJHgg6xXRUrtmGuQ
+         xgGOXN/KIW2F4Mcyw9IX3OInVPAcpGhZI/BXSjLq7kHpQfz2qc/KWUpiDWI5JsX2HfJs
+         oc/YV5M8suHHRDfkunwfl5WzoNUDFF/npAf2K9uzqpFE/oF1GVOn+O1VKoUqO0GAr6yN
+         f/JBR/ac842jpwd89CZe06pfj6zTrUqzHRsBzqM0GVZr6nqC4KJifD2w2P3OprYy/hts
+         NYE2bwbHVc4WJNj3aY+MYP2rW3f7HisOZ6U87FYe9WZQDKIOABJOnKgvyvNQ5KU1ysWi
+         T/Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=uwCzYbZDIe6R8HbIgwTSRg5Cwv8+gPKSZsLIm2vBeAM=;
+        b=TJLCiCSY3PyYcHPWzcnCLxMxJcX0hiTx4KyFhRcKyt1mv6HeSrDpiki+6wQ/719MsA
+         U0FIAdOmZYBSEAQXnC4d4o4Ql+T7yLI3ii4OT3P/CxUmYCylvq+mgZeE4VxH+Y6hXFqL
+         Q7cmIRCenreQmgbB2Pg+oV7wa/Pq+i7B7R+ghWuO/CChjtCyDnYT68bgYEuC9KZFLKE4
+         k2CXQnR/IFySx91UqfXeQqRqVF+DwZKlxPjHk6X0TpeMsMd7QYCfBMnp0flaF14y0bsJ
+         jVfWA/4qRtBlMVAPQK9xDKK3kscQsANl0bMbt7d+9yp+DTS4MunbvOVMsZU4O983uU3t
+         Gwkg==
+X-Gm-Message-State: ALoCoQn9YR9nEk5EJRd6ZzOaxM8iQxXXDZ3K1G4LZo2vnH/18PkKXSRyIXpTVTZfSh41RJ4y1SaciXh58lHAxUN384tuYz7Uzg==
+X-Received: by 10.98.42.148 with SMTP id q142mr40591738pfq.0.1450133697344;
+        Mon, 14 Dec 2015 14:54:57 -0800 (PST)
+Received: from localhost ([2620:0:1000:5b00:e502:49aa:9791:cefa])
+        by smtp.gmail.com with ESMTPSA id c14sm44523641pfd.38.2015.12.14.14.54.56
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 14 Dec 2015 14:54:56 -0800 (PST)
+X-Mailer: git-send-email 2.6.4.443.ge094245.dirty
+In-Reply-To: <1450133665-3783-1-git-send-email-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282434>
 
-On Mon, Dec 14, 2015 at 02:31:55PM -0800, Jonathan Nieder wrote:
+We need the submodule update strategies in a later patch.
 
-> > I suspect there's room for improvement in the way we select commits to
-> > store bitmaps for (so that the average walk is smaller). But it's rather
-> > tricky; there's not a single constant to change to make it work better.
-> 
-> Git gc and JGit GC differ here.  JGit partitions the commits being
-> packed by branch and then runs a selection algorithm on each part.
-> Git runs a selection once on a list of all commits.
-> 
-> Some effects:
-> - JGit selects more bitmaps, so the gc takes longer and the resulting
->   bitmap file is larger (bad)
-> - JGit is more likely to have bitmaps for the commits involved in
->   pushes and fetches (good)
-> 
-> The commit selection code, for reference:
-> 
-> https://eclipse.googlesource.com/jgit/jgit/+/86af34e1/org.eclipse.jgit/src/org/eclipse/jgit/internal/storage/pack/PackWriterBitmapPreparer.java#151
-> https://kernel.googlesource.com/pub/scm/git/git/+/ed1c9977/pack-bitmap-write.c#383
-> 
-> Thoughts?
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ submodule-config.c | 11 +++++++++++
+ submodule-config.h |  1 +
+ 2 files changed, 12 insertions(+)
 
-My thought is it would be great if somebody wanted to work on this. :)
-
-My understanding is that JGit's approach has some problems, too. Terry's
-message doesn't seem to have made it to the list, but you can see in the
-quoted bits he mentions some OOM problems during the bitmap write:
-
-  http://article.gmane.org/gmane.comp.version-control.git/281476
-
-That may not be a big deal to work around. I really just haven't looked
-at it at all. Vicent did the original bitmap selection code for C Git,
-and I don't think it has been touched since then.
-
--Peff
+diff --git a/submodule-config.c b/submodule-config.c
+index afe0ea8..4239b0e 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -194,6 +194,7 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
+ 
+ 	submodule->path = NULL;
+ 	submodule->url = NULL;
++	submodule->update = NULL;
+ 	submodule->fetch_recurse = RECURSE_SUBMODULES_NONE;
+ 	submodule->ignore = NULL;
+ 
+@@ -311,6 +312,16 @@ static int parse_config(const char *var, const char *value, void *data)
+ 			free((void *) submodule->url);
+ 			submodule->url = xstrdup(value);
+ 		}
++	} else if (!strcmp(item.buf, "update")) {
++		if (!value)
++			ret = config_error_nonbool(var);
++		else if (!me->overwrite && submodule->update != NULL)
++			warn_multiple_config(me->commit_sha1, submodule->name,
++					     "update");
++		else {
++			free((void *) submodule->update);
++			submodule->update = xstrdup(value);
++		}
+ 	}
+ 
+ 	strbuf_release(&name);
+diff --git a/submodule-config.h b/submodule-config.h
+index 9061e4e..f9e2a29 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -14,6 +14,7 @@ struct submodule {
+ 	const char *url;
+ 	int fetch_recurse;
+ 	const char *ignore;
++	const char *update;
+ 	/* the sha1 blob id of the responsible .gitmodules file */
+ 	unsigned char gitmodules_sha1[20];
+ };
+-- 
+2.6.4.443.ge094245.dirty
