@@ -1,102 +1,76 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 0/8] Rerolling sb/submodule-parallel-fetch for the time
- after 2.7
-Date: Mon, 14 Dec 2015 21:40:50 +0100
-Message-ID: <566F2952.8000307@kdbg.org>
-References: <1450121838-7069-1-git-send-email-sbeller@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Corruption of branch?
+Date: Mon, 14 Dec 2015 12:42:05 -0800
+Message-ID: <xmqqr3ioiwyq.fsf@gitster.mtv.corp.google.com>
+References: <566EFF11.6010600@gmail.com>
+	<CAGZ79kaUw8Hb_7hdAUbvmnmXvm3a-77j5t3zeyQ-7BqwPCSp+A@mail.gmail.com>
+	<566F05B2.8080403@gmail.com>
+	<1450120801.1678.13.camel@twopensource.com>
+	<566F1F96.4060806@gmail.com>
+	<1450124302.16044.1.camel@kaarsemaker.net>
+	<566F277F.4070101@gmail.com>
+	<1450125640.16044.4.camel@kaarsemaker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: peff@peff.net, gitster@pobox.com, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	ericsunshine@gmail.com
-To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 14 21:41:03 2015
+Content-Type: text/plain
+Cc: Thomas Nyberg <tomnyberg@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Stefan Beller <sbeller@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Mon Dec 14 21:42:19 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8ZvV-0004ri-LP
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 21:40:58 +0100
+	id 1a8Zwj-0007Bz-9i
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 21:42:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932110AbbLNUkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 15:40:52 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:58703 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932075AbbLNUkw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 15:40:52 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pKF3k5XBdz5tlJ;
-	Mon, 14 Dec 2015 21:40:50 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 6637E53A9;
-	Mon, 14 Dec 2015 21:40:50 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
-In-Reply-To: <1450121838-7069-1-git-send-email-sbeller@google.com>
+	id S1753390AbbLNUmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 15:42:09 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:54860 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752975AbbLNUmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 15:42:07 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1B53E33AD1;
+	Mon, 14 Dec 2015 15:42:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QEoGCew3hyGTn3MrDwaRAWpVEbc=; b=TgUDox
+	jggwJk3cV5Aac2d5Ly7FfZqa296NOySj9iHQAl+zlRncyjXMJqbiuCt53Pz0JmTI
+	glsrh7Wp+VTBRhkdTK35Mb4pUcilA+hOTUzNwToZpwFw5q7qwEPgl4/Z9j0upUWK
+	1KJfD6EsOaVz+TVS2HHnBxfUYJHLrQ1yhtofI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CeFlTI0cHH6oEU6oIZyc5A/Ya9QSrJkV
+	+AkLPJp9PNOl7lD3/cdaOB9tU5B/OmmR4XX+A3fGnsQIAxEh2UDYIyLJBs61kzIR
+	PRvgwqnV7wapLXw6OQ+sPLtEuBt3Edgq8ku0B+zdWJDGVAayngxo0bXdl0H1TNO4
+	Qib5u4iO5yo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 12B3033AD0;
+	Mon, 14 Dec 2015 15:42:07 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6B14D33ACD;
+	Mon, 14 Dec 2015 15:42:06 -0500 (EST)
+In-Reply-To: <1450125640.16044.4.camel@kaarsemaker.net> (Dennis Kaarsemaker's
+	message of "Mon, 14 Dec 2015 21:40:40 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 23983398-A2A3-11E5-A954-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282406>
 
-Am 14.12.2015 um 20:37 schrieb Stefan Beller:
-> I am sending out a new version for replacing sb/submodule-parallel-fetch for
-> the time after the 2.7 release.
->
-> The content are
->   * all patches as in the branch sb/submodule-parallel-fetch
->   * inlcuding the fixups as suggested by Hannes,
->   * write a message to the debug log for better testing and debugging purposes
->    (a patch cherry picked from the series which is supposed to build on top of this)
->
-> The patches themselves were rebased such that there are no fixup commits
-> any more, but we get things right the first time.
->
-> The commit message of "run-command: add an asynchronous parallel child processor"
-> has slightly been updated to mention the fact that we don't want to use waitpid(-1)
-> but rather use the assumption of child's stderr living as long as the child itself.
+Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
 
-Thanks! I rebased a version of sb/submodule-parallel-fetch that includes 
-my suggested improvements, and the result is identical to this series 
-except for the trace output mentioned in the last bullet point.
+> That leaves only one option: you also have a file or directory named
+> 'frus' in the root of your repository. In this case 'git checkout frus'
+> does the same as 'git checkout -- frus' instead of DWIM'ing 'git
+> checkout frus' to 'git checkout -b frus origin/frus'
 
-With or without addressing my note about the commit message in 6/8:
-
-Acked-by: Johannes Sixt <j6t@kdbg.org>
-
-> Thanks,
-> Stefan
->
->
-> Jonathan Nieder (1):
->    submodule.c: write "Fetching submodule <foo>" to stderr
->
-> Stefan Beller (7):
->    xread: poll on non blocking fds
->    xread_nonblock: add functionality to read from fds without blocking
->    strbuf: add strbuf_read_once to read without blocking
->    sigchain: add command to pop all common signals
->    run-command: add an asynchronous parallel child processor
->    fetch_populated_submodules: use new parallel job processing
->    submodules: allow parallel fetching, add tests and documentation
->
->   Documentation/fetch-options.txt |   7 +
->   builtin/fetch.c                 |   6 +-
->   builtin/pull.c                  |   6 +
->   git-compat-util.h               |   1 +
->   run-command.c                   | 335 ++++++++++++++++++++++++++++++++++++++++
->   run-command.h                   |  80 ++++++++++
->   sigchain.c                      |   9 ++
->   sigchain.h                      |   1 +
->   strbuf.c                        |  11 ++
->   strbuf.h                        |   8 +
->   submodule.c                     | 141 +++++++++++------
->   submodule.h                     |   2 +-
->   t/t0061-run-command.sh          |  53 +++++++
->   t/t5526-fetch-submodules.sh     |  71 ++++++---
->   test-run-command.c              |  55 ++++++-
->   wrapper.c                       |  35 ++++-
->   16 files changed, 747 insertions(+), 74 deletions(-)
->
+;-)  That would be my guess.
