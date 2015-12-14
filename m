@@ -1,120 +1,97 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 6/8] run-command: add an asynchronous parallel child
- processor
-Date: Mon, 14 Dec 2015 21:39:06 +0100
-Message-ID: <566F28EA.3080802@kdbg.org>
-References: <1450121838-7069-1-git-send-email-sbeller@google.com>
- <1450121838-7069-7-git-send-email-sbeller@google.com>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: Corruption of branch?
+Date: Mon, 14 Dec 2015 21:40:40 +0100
+Message-ID: <1450125640.16044.4.camel@kaarsemaker.net>
+References: <566EFF11.6010600@gmail.com>
+	 <CAGZ79kaUw8Hb_7hdAUbvmnmXvm3a-77j5t3zeyQ-7BqwPCSp+A@mail.gmail.com>
+	 <566F05B2.8080403@gmail.com> <1450120801.1678.13.camel@twopensource.com>
+	 <566F1F96.4060806@gmail.com> <1450124302.16044.1.camel@kaarsemaker.net>
+	 <566F277F.4070101@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: peff@peff.net, gitster@pobox.com, jrnieder@gmail.com,
-	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
-	ericsunshine@gmail.com
-To: Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 14 21:39:19 2015
+Cc: Stefan Beller <sbeller@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Thomas Nyberg <tomnyberg@gmail.com>,
+	David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 21:40:55 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8Zts-00021Z-5r
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 21:39:16 +0100
+	id 1a8ZvM-0004cQ-EQ
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 21:40:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753321AbbLNUjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 15:39:11 -0500
-Received: from bsmtp8.bon.at ([213.33.87.20]:61479 "EHLO bsmtp8.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752975AbbLNUjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 15:39:10 -0500
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp8.bon.at (Postfix) with ESMTPSA id 3pKF1l4VHvz5tlR;
-	Mon, 14 Dec 2015 21:39:07 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 96F7853A9;
-	Mon, 14 Dec 2015 21:39:06 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
-In-Reply-To: <1450121838-7069-7-git-send-email-sbeller@google.com>
+	id S1753562AbbLNUkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 15:40:43 -0500
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:38600 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753343AbbLNUkn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 15:40:43 -0500
+Received: by wmpp66 with SMTP id p66so77352038wmp.1
+        for <git@vger.kernel.org>; Mon, 14 Dec 2015 12:40:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :content-type:mime-version:content-transfer-encoding;
+        bh=3n0Kz5pIFxUbQ8VmJmLsjfbJjDZw9TwupHpWUaOujoU=;
+        b=pAc2dJY/BqUXwZjt3RKbUz3RZS2nPTVQM2gjrBWeN/rZMllTG0TShwMumvu4JRD2bT
+         +LT8nBqSEc14mJKtYczuMQt14psc5yxGokKKBJjdMCEkAkdN7uDkhpQ+bQFnbLIOSLMa
+         iV2Rp21ACOUkrcJf8QaTwS6iXVkxCFvwOMu3I0M8nKLbMFYh4x97LLE0p/FF6mh79J7/
+         kVkl99+iS7wMqPggC0zu1bLEeEdQP4PDxUPVgOz0bOikXDW5EXFYfSCIMTHP2qiKMDgy
+         xxLhmVYsbb3qm8gP/FUNCit8FyDpweGElW9KZrcZSCl6dqBUPndjxQVIvWX57gFbOd30
+         tyZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=3n0Kz5pIFxUbQ8VmJmLsjfbJjDZw9TwupHpWUaOujoU=;
+        b=XPEHTsCtoHKAi+/RqQayH/5XvMdmozS3eZKYjt/XOH2tu6diySUZZ9Lx5DDTv/lgYm
+         0Qo7yBLlzQ5fzetR5W1JTJUprC/WtYRayaBoF+6IkcLgoe2dTOKQAYaLK4+ByFrvxC3S
+         ILT0lxfvV4Q8vj0FaAewLaEcNYWpKN/FFHfVZKoTSguP1CUpmoZu9pMPfoFOVDJXhNDG
+         LINY0Tcs3iR0qNobW6OLlzt7waWqYUgIKIbI223uPWNGtQjtXP0OLJVieGhf/3fT9kif
+         21T1djI4bX7Of9BM6fvw4I7gHdxBQnfIkZmXRD/zBo2+LDVhz2eZaFfaoq8nsjw46bed
+         MQVA==
+X-Gm-Message-State: ALoCoQlQ2QNB486g8ulgXBdsE+SZ9V78mgMNeJRrPwXR7IoRYijFPHB5x1F4gEyNpL8ntSUIMIkrO6isPp9wi6Vm31fvoywueg==
+X-Received: by 10.28.64.131 with SMTP id n125mr134205wma.103.1450125641985;
+        Mon, 14 Dec 2015 12:40:41 -0800 (PST)
+Received: from spirit.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id n129sm3734413wmb.1.2015.12.14.12.40.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 Dec 2015 12:40:41 -0800 (PST)
+In-Reply-To: <566F277F.4070101@gmail.com>
+X-Mailer: Evolution 3.16.5-1ubuntu3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282404>
 
-Am 14.12.2015 um 20:37 schrieb Stefan Beller:
-> This allows to run external commands in parallel with ordered output
-> on stderr.
->
-> If we run external commands in parallel we cannot pipe the output directly
-> to the our stdout/err as it would mix up. So each process's output will
-> flow through a pipe, which we buffer. One subprocess can be directly
-> piped to out stdout/err for a low latency feedback to the user.
->
-> Example:
-> Let's assume we have 5 submodules A,B,C,D,E and each fetch takes a
-> different amount of time as the different submodules vary in size, then
-> the output of fetches in sequential order might look like this:
->
->   time -->
->   output: |---A---| |-B-| |-------C-------| |-D-| |-E-|
->
-> When we schedule these submodules into maximal two parallel processes,
-> a schedule and sample output over time may look like this:
->
-> process 1: |---A---| |-D-| |-E-|
->
-> process 2: |-B-| |-------C-------|
->
-> output:    |---A---|B|---C-------|DE
->
-> So A will be perceived as it would run normally in the single child
-> version. As B has finished by the time A is done, we can dump its whole
-> progress buffer on stderr, such that it looks like it finished in no
-> time. Once that is done, C is determined to be the visible child and
-> its progress will be reported in real time.
->
-> So this way of output is really good for human consumption, as it only
-> changes the timing, not the actual output.
->
-> For machine consumption the output needs to be prepared in the tasks,
-> by either having a prefix per line or per block to indicate whose tasks
-> output is displayed, because the output order may not follow the
-> original sequential ordering:
->
->   |----A----| |--B--| |-C-|
->
-> will be scheduled to be all parallel:
->
-> process 1: |----A----|
-> process 2: |--B--|
-> process 3: |-C-|
-> output:    |----A----|CB
->
-> This happens because C finished before B did, so it will be queued for
-> output before B.
->
-> The detection when a child has finished executing is done the same way as
-> two fold. First we check regularly if the stderr pipe still exists in an
-> interleaved manner with other actions such as checking other children
-> for their liveliness or starting new children. Once a child closed their
-> stderr stream, we assume it is stopping very soon, such that we can use
-> the `finish_command` code borrowed from the single external process
-> execution interface.
+On ma, 2015-12-14 at 15:33 -0500, Thomas Nyberg wrote:
+> What exactly are you looking for? Here's the results of the following
+> command:
+> 
+> $ git for-each-ref | grep frus
+> 1750cba5a94b3fe6041aaf49de430a558a3b9bc8 commit 
+> refs/heads/frus_body_cleaning
+> 3a1dbe48299f6eda1cc4b69cab35284c0f0355eb commit	refs/remotes/o
+> rigin/frus
+> 1750cba5a94b3fe6041aaf49de430a558a3b9bc8 commit 
+> refs/remotes/origin/frus_body_cleaning
+> 
+> Sorry if this isn't what you're looking for. I'm actually not very 
+> familiar with these different internal git commands...
 
-I can't quite parse the first sentence in this paragraph. Perhaps 
-something like this:
+This is what I was looking for. Unfortunately it doesn't show any of
+the smoking guns I had hoped for.
 
-To detect when a child has finished executing, we check interleaved
-with other actions (such as checking the liveliness of children or
-starting new processes) whether the stderr pipe still exists. Once a
-child closed its stderr stream, we assume it is terminating very soon,
-and use finish_command() from the single external process execution
-interface to collect the exit status.
+That leaves only one option: you also have a file or directory named
+'frus' in the root of your repository. In this case 'git checkout frus'
+does the same as 'git checkout -- frus' instead of DWIM'ing 'git
+checkout frus' to 'git checkout -b frus origin/frus'
 
->
-> By maintaining the strong assumption of stderr being open until the
-> very end of a child process, we can avoid other hassle such as an
-> implementation using `waitpid(-1)`, which is not implemented in Windows.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
+-- 
+Dennis Kaarsemaker
+www.kaarsemaker.net
