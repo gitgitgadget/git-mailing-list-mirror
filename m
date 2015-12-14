@@ -1,81 +1,95 @@
-From: Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH 0/2] git-p4: fix for handling of multiple depot paths
-Date: Mon, 14 Dec 2015 20:58:06 +0000
-Message-ID: <CAE5ih7_9m8kw=sVj8Sv5mAfT_22-g0vdTb78FvLTrNUkJO0M0g@mail.gmail.com>
-References: <1450037234-15344-1-git-send-email-luke@diamand.org>
-	<CAE5ih7_T1xC9AyO41T4ktJmj6tENaEGbAG556WLyfsYz-jawsw@mail.gmail.com>
-	<xmqqio40kfhl.fsf@gitster.mtv.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/8] xread_nonblock: add functionality to read from fds without blocking
+Date: Mon, 14 Dec 2015 12:59:10 -0800
+Message-ID: <xmqqmvtciw69.fsf@gitster.mtv.corp.google.com>
+References: <1450121838-7069-1-git-send-email-sbeller@google.com>
+	<1450121838-7069-4-git-send-email-sbeller@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Users <git@vger.kernel.org>,
-	James Farwell <jfarwell@vmware.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Sam Hocevar <sam@hocevar.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 21:58:14 2015
+Content-Type: text/plain
+Cc: git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
+	johannes.schindelin@gmail.com, Jens.Lehmann@web.de,
+	ericsunshine@gmail.com, j6t@kdbg.org
+To: Stefan Beller <sbeller@google.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 21:59:23 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8aCD-0003D3-Qs
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 21:58:14 +0100
+	id 1a8aDG-0005AM-N8
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 21:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753500AbbLNU6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 15:58:09 -0500
-Received: from mail-ig0-f170.google.com ([209.85.213.170]:38064 "EHLO
-	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753198AbbLNU6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 15:58:07 -0500
-Received: by igbxm8 with SMTP id xm8so93862938igb.1
-        for <git@vger.kernel.org>; Mon, 14 Dec 2015 12:58:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=N6Go2wWQIRns4iDR+9vPjSUxgIbmhEKJ84DMcId+9qE=;
-        b=GSMLyfKVabsaSkmgiehq2jQJWktIqfeC0/WTsE4tdu00QLAy7Md7wkrAbfa32cFi8Q
-         SHhmC1BTYT1MHTQlgbIpc8dkVEskPnexbmlEa6qzr7VltWaOIpzQ6807dHJBKe2hhrjz
-         6oxuSg10SY8DldfLju09cm5RfHzUMt0jaEsn8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=N6Go2wWQIRns4iDR+9vPjSUxgIbmhEKJ84DMcId+9qE=;
-        b=QHX1/LtsQi02vKW6eHND912iqAcNdFINnwdhQY1lgPtLETy5ERn3Eetm/0VoZYLnXF
-         pamgUGUwcFnRXEMtRmp23uSIdaCEIbs6rJZfnY/aH++e/TjXVUQ62Ib8jPFhcJk3n7cr
-         ViTHwa5Hs+OKwvX8HCoRunmL0uEsXp8XMHzMATkAXUHYVT9gaHfcA9DmkSvYsqCcCzfZ
-         aynENd+aFStPJ10mb38WatCsDqR01pvZPB+I4Cd0wRsUkZwMDHbAu17691AwNOaW7V34
-         UfYEm9sC/ykXwOKdL7IBMYtlvF5MPF7k5fZq41b9x+yltfr2WOtmn06KqIHPA1cA0dbi
-         QaLg==
-X-Gm-Message-State: ALoCoQlAlNHr+juxNqyeczcAgtnC00sJlHg6SDkw8gl05tU8wrKRXqDGqLVbqP5RnE7njHoMQDQSVqYoRybqDrL7iA9XQ6bPAA==
-X-Received: by 10.50.153.69 with SMTP id ve5mr238613igb.80.1450126686466; Mon,
- 14 Dec 2015 12:58:06 -0800 (PST)
-Received: by 10.79.94.194 with HTTP; Mon, 14 Dec 2015 12:58:06 -0800 (PST)
-In-Reply-To: <xmqqio40kfhl.fsf@gitster.mtv.corp.google.com>
+	id S932080AbbLNU7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Dec 2015 15:59:15 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:60326 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753498AbbLNU7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Dec 2015 15:59:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6963F34418;
+	Mon, 14 Dec 2015 15:59:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PEzKvxLiymjK6n3kXwA1/1U23Uc=; b=m2QaMn
+	Ttk9HBY3N63jb6UTW8uhkTukrhmvMiEp7aecCQmJzblomxME4pXKQsdrhf+Hpr4G
+	cwFpgn/JY18xEyNqLSnVZltgOCh2G7zHhiJvL5b1I0g5crb1vInBvCcC13RNl5cl
+	HveR80JGuT3jb8gBuyt5hkrRWXNnYLoujAd+M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ir4LqCodRtzbpfDvXFyzoJPR+N0PaFZr
+	EDkQyk2xduKPl1gON6nY4BguvmSmmZ8EtEnnp7/wV2TG6mQuEKYo1t9u+MrSGz8R
+	ukXs0W9fXgceR1P4N7hUn84uh4i6eoDLx+yPSwHvqlgkLkRQmkdZbTbhJY5qNUCl
+	9H5qz7Ksi/4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 568EA34417;
+	Mon, 14 Dec 2015 15:59:12 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9458134416;
+	Mon, 14 Dec 2015 15:59:11 -0500 (EST)
+In-Reply-To: <1450121838-7069-4-git-send-email-sbeller@google.com> (Stefan
+	Beller's message of "Mon, 14 Dec 2015 11:37:13 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 86A4D372-A2A5-11E5-AF49-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282412>
 
-On 14 December 2015 at 19:16, Junio C Hamano <gitster@pobox.com> wrote:
-> Luke Diamand <luke@diamand.org> writes:
->
->> Having just fixed this, I've now just spotted that Sam Hocevar's fix
->> to reduce the number of P4 transactions also fixes it:
->>
->> https://www.mail-archive.com/git%40vger.kernel.org/msg81880.html
->>
->> That seems like a cleaner fix.
->
-> Hmm, do you mean I should ignore this series and take the other one,
-> take only 1/2 from this for tests and then both patches in the other
-> one, or something else?
+Stefan Beller <sbeller@google.com> writes:
 
-The second of those (take only 1/2 from this for tests, and then both
-from the other) seems like the way to go.
+> Provide a wrapper to read(), similar to xread(), that restarts on
+> EINTR but not EAGAIN (or EWOULDBLOCK). This enables the caller to
+> handle polling itself, possibly polling multiple sockets or performing
+> some other action.
 
-Thanks,
-Luke
+Do you still need this (and use of this in 4/8)?  The description of
+a4433fd4 (run-command: remove set_nonblocking(), 2015-11-05) from
+the previous iteration justifies the removal of set_nonblocking()
+this way:
+
+    run-command: remove set_nonblocking()
+    
+    strbuf_read_once can also operate on blocking file descriptors if we
+    are sure they are ready.  And the poll(2) we call before calling
+    this ensures that this is the case.
+
+Updated run-command in this reroll lacks set_nonblocking(), and does
+have the poll(2) before it calls strbuf_read_once().  Which means
+that xread_nonblock() introduced here and used by [4/8] would read a
+file descriptor that is not marked as nonblock, the read(2) in there
+would never error-return with EWOULDBLOCK, and would be identical to 
+xread() updated by [2/8] in this reroll.
+
+So it appears to me that you can lose this and call xread() in [4/8]?
+
+Ahh, there is a difference if the file descriptor the caller feeds
+strbuf_read_once() happens to be marked as nonblock.  read_once()
+wants to return without doing the poll() in such a case.  Even
+though this series would not introduce any use of a nonblocking file
+descriptor, as a general API function, [4/8] must be prepared for
+such a future caller, hence [3/8] is needed.
+
+OK, thanks.
