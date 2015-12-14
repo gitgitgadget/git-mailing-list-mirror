@@ -1,103 +1,89 @@
-From: Thomas Nyberg <tomnyberg@gmail.com>
-Subject: Re: Corruption of branch?
-Date: Mon, 14 Dec 2015 15:33:03 -0500
-Message-ID: <566F277F.4070101@gmail.com>
-References: <566EFF11.6010600@gmail.com>
- <CAGZ79kaUw8Hb_7hdAUbvmnmXvm3a-77j5t3zeyQ-7BqwPCSp+A@mail.gmail.com>
- <566F05B2.8080403@gmail.com> <1450120801.1678.13.camel@twopensource.com>
- <566F1F96.4060806@gmail.com> <1450124302.16044.1.camel@kaarsemaker.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: compile error in Git v2.7.0-rc0
+Date: Mon, 14 Dec 2015 12:35:25 -0800
+Message-ID: <xmqqvb80ix9u.fsf@gitster.mtv.corp.google.com>
+References: <CALibRqFajuBuv9ooaBWL1kUzaVps2WfodqucyHni2ggv6JpwDg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Beller <sbeller@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-	David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon Dec 14 21:33:14 2015
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitter.spiros@gmail.com
+To: johan defries <johandefries@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 14 21:35:45 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8Zo0-0008V0-P8
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 21:33:13 +0100
+	id 1a8ZqQ-0004cY-9J
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Dec 2015 21:35:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285AbbLNUdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Dec 2015 15:33:08 -0500
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:36541 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752900AbbLNUdH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Dec 2015 15:33:07 -0500
-Received: by qget30 with SMTP id t30so22478968qge.3
-        for <git@vger.kernel.org>; Mon, 14 Dec 2015 12:33:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-type:content-transfer-encoding;
-        bh=fHiZaYhCeBc7Q3PR4R5J5kr3H67NV1P4+mYsti9Hl3I=;
-        b=A7f9YteUPiICp2w8yNCua6cz9Ns+YG8nJhhMAYNbud+6XrxNjt7ZT9m1jQ9irnRH8A
-         kyg3+s6lJtgOH0sSzs+qhzSHOKcs1ERSiIZWVYRa3jeXjTtu5k/0tGprnTzlo/AYhgdg
-         JkksLxfdnVJ4N5xkycOlntiUeYX0XTPxfoiJ7oBPFjQQnkeNCNs4s7LJqM1JNDedEXr+
-         qjqbEchuBzSjEtdamf7JOpYauTPZqRG2dmccgklv0XsZ+eqa93A3HWRST1TNZqmq8ZJ/
-         yasApMGPtpfkfvI9fZvFoYz6+M0PCFtCoMFePVPhEI6t1dcpJq23lq0Il0ApCfM2sEFd
-         6yOQ==
-X-Received: by 10.140.88.51 with SMTP id s48mr22161970qgd.48.1450125185629;
-        Mon, 14 Dec 2015 12:33:05 -0800 (PST)
-Received: from [128.59.76.160] (dyn-128-59-76-160.dyn.columbia.edu. [128.59.76.160])
-        by smtp.googlemail.com with ESMTPSA id 81sm14492076qhx.15.2015.12.14.12.33.04
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Dec 2015 12:33:04 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-In-Reply-To: <1450124302.16044.1.camel@kaarsemaker.net>
+	id S932080AbbLNUfi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Dec 2015 15:35:38 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:55422 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752900AbbLNUfh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Dec 2015 15:35:37 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2E5D33367C;
+	Mon, 14 Dec 2015 15:35:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=AWin90QI9E8N
+	Lb8xDBKZFw8hFfE=; b=IIxG5c9fU7Z6h+uxEHaM5AIt6XmmCCUU5GoY2uYYybcC
+	biUxjsuG4xfuGFxYWpjddSOs/AJLilmmU75rS3Yeob2jjIhaHDkhVmeruZQ22UfV
+	TbGrEfOjgOlo0jssqYFzGMddVBV/CNPMFF+2PQUafSqJaZu//caYEZ+4+EaCvFs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FakjeI
+	8CQhS0qMOJ5K8Qr0wpsh9WceRu80kis0XqVBLWsqqKnla0BzFoKT59NcS8QYWHPC
+	2ZjL1Q4GQ3TU4+EVAQ3oJtzxZbA+18yXHJRTuDcesbLXoeuSyZF6eJdSOhFofI7a
+	7Teo21vnoOimVKu3YRfZ6TL3BXhe1JhiSvv8w=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 263F13367B;
+	Mon, 14 Dec 2015 15:35:36 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 940243367A;
+	Mon, 14 Dec 2015 15:35:35 -0500 (EST)
+In-Reply-To: <CALibRqFajuBuv9ooaBWL1kUzaVps2WfodqucyHni2ggv6JpwDg@mail.gmail.com>
+	(johan defries's message of "Mon, 14 Dec 2015 21:28:52 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: 3A98F768-A2A2-11E5-9D9F-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282402>
 
-What exactly are you looking for? Here's the results of the following 
-command:
+johan defries <johandefries@gmail.com> writes:
 
-$ git for-each-ref | grep frus
-1750cba5a94b3fe6041aaf49de430a558a3b9bc8 commit 
-refs/heads/frus_body_cleaning
-3a1dbe48299f6eda1cc4b69cab35284c0f0355eb commit	refs/remotes/origin/frus
-1750cba5a94b3fe6041aaf49de430a558a3b9bc8 commit 
-refs/remotes/origin/frus_body_cleaning
-
-Sorry if this isn't what you're looking for. I'm actually not very 
-familiar with these different internal git commands...
-
-Regardless this looks to me exactly like what I'd expect given the 
-current situation...it's as if I never checked out the "frus" branch at 
-all (which I suppose is true since this is a fresh copy and "git 
-checkout frus" didn't do anything).
-
-Btw after checking out explicitly with `git checkout -b frus 
-origin/frus`, things look as I'd expect.
-
-$ git for-each-ref | grep frus
-3a1dbe48299f6eda1cc4b69cab35284c0f0355eb commit	refs/heads/frus
-1750cba5a94b3fe6041aaf49de430a558a3b9bc8 commit 
-refs/heads/frus_body_cleaning
-3a1dbe48299f6eda1cc4b69cab35284c0f0355eb commit	refs/remotes/origin/frus
-1750cba5a94b3fe6041aaf49de430a558a3b9bc8 commit 
-refs/remotes/origin/frus_body_cleaning
-
-Btw just to test things a little more I deleted both the frus and 
-frus_body_cleaning branches and tried to recheck them out, but the 
-problem still persists.
-
-Cheers,
-Thomas
-
-On 12/14/2015 03:18 PM, Dennis Kaarsemaker wrote:
-> On ma, 2015-12-14 at 14:59 -0500, Thomas Nyberg wrote:
->> I'm guessing you're looking for namecollisions of some kind?
+> Probably because I have NO_IPV6 defined.
 >
-> I was thinking the same. Can you share the (sanitised) output of
->
-> git for-each-ref?
->
+> ident.c: In function =E2=80=98canonical_name=E2=80=99:
+> ident.c:89:37: error: =E2=80=98buf=E2=80=99 undeclared (first use in =
+this function)
+>   struct hostent *he =3D gethostbyname(buf);
+>                                      ^
+> ident.c:89:37: note: each undeclared identifier is reported only once
+> for each function it appears in
+> make: *** [ident.o] Fout 1
+
+Thanks.  This should perhaps do?
+
+ ident.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/ident.c b/ident.c
+index 4e7f99d..2900879 100644
+--- a/ident.c
++++ b/ident.c
+@@ -86,6 +86,7 @@ static int canonical_name(const char *host, struct st=
+rbuf *out)
+ 		freeaddrinfo(ai);
+ 	}
+ #else
++	char buf[1024];
+ 	struct hostent *he =3D gethostbyname(buf);
+ 	if (he && strchr(he->h_name, '.')) {
+ 		strbuf_addstr(out, he->h_name);
