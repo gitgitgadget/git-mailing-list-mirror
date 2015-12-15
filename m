@@ -1,486 +1,687 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v2.7.0-rc1
-Date: Tue, 15 Dec 2015 14:47:12 -0800
-Message-ID: <xmqqh9jje3db.fsf@gitster.mtv.corp.google.com>
+Subject: What's cooking in git.git (Dec 2015, #05; Tue, 15)
+Date: Tue, 15 Dec 2015 14:48:42 -0800
+Message-ID: <xmqq8u4ve3at.fsf@gitster.mtv.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Tue Dec 15 23:47:31 2015
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+X-From: git-owner@vger.kernel.org Tue Dec 15 23:48:53 2015
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1a8yNW-0008Tg-Bx
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 15 Dec 2015 23:47:31 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1a8yOq-0002Wo-MD
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 23:48:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965598AbbLOWrT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 15 Dec 2015 17:47:19 -0500
-Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:64539 "EHLO
+	id S933759AbbLOWss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2015 17:48:48 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:58323 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753567AbbLOWrP convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 15 Dec 2015 17:47:15 -0500
+	with ESMTP id S933740AbbLOWsq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2015 17:48:46 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 58EBD32184;
-	Tue, 15 Dec 2015 17:47:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=RQZ/8Goz2QyqUK6qI/nOvJjos
-	ng=; b=bq3ES0y4pswwqvLxNXcIVSxsyXm+dnE6OmwSXj/1nC/yZhIRAb7VSiVAR
-	v/hA5AhfhA6X9ue4EjtcbLAZUQaIFZs/6q5WMoCtB1jQM9PBOuZOrKtaZiYbf9QC
-	mD6V22ZO3q3hmlAjV2JTNeW4vfwM0Wqk3L/lOcWN3gvcAcE4ZI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=sPLpv94VipHejBktlDP
-	lwe45lySu1VCsXnKk7EH/E6fiKzNcvOXP/5WfosyfFa6ve/qWyuT3yhP0eJbPBhU
-	guItBk7m7sPiz5iFtniWceoitKBmq8yVx4Dziy7EgIaz7pTIGxhnoRnhn9Sn32Ls
-	xG3EzIprAQjZHbNtxfnUg/1k=
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E3EFE32206;
+	Tue, 15 Dec 2015 17:48:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=Y
+	uA2I+8eOqpDr+CAPphgbWRphW4=; b=Uz0Uhq6U0+7w54s+rY+SQ21snTlQB2nWW
+	jmtanY8KaTuc10mLXcwcQoCJ3rzCBIlDs8pL7FOhWBKPL2vd14Mj8EQbmwKg9rrd
+	3XSKal+eoBR4n+Gz6pAK6Eh3KabZAnm19WD+wn1TIgUuSMKxlv726vzm51wnfAJV
+	9MT2jQb5hs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=N7k
+	y9cm+m+cDb2Qsuzda0e+GxZ7ouuzhPXWuP1tXUC0rPGnGeiqf00upDKKUPJAsq3L
+	goiKp9VS36t4wbTSl2vRcniPXsjE8IAfCjNOyk9Zw3SfH7j/jH2gmx0q0iksH8d8
+	LnwQZHs2aAd1o+K50xe6bs5FEvyzv1IsLzQrG+50=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 506BE32183;
-	Tue, 15 Dec 2015 17:47:14 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DB048321FE;
+	Tue, 15 Dec 2015 17:48:44 -0500 (EST)
 Received: from pobox.com (unknown [216.239.45.64])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7DE5932182;
-	Tue, 15 Dec 2015 17:47:13 -0500 (EST)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2070C321FD;
+	Tue, 15 Dec 2015 17:48:44 -0500 (EST)
+X-master-at: f900c8326a43303685c46b279b9f70411bff1a4b
+X-next-at: 94414c4510aaf2ba48821f6dd770ae47f2829dce
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Pobox-Relay-ID: C888C04A-A37D-11E5-B995-6BD26AB36C07-77302942!pb-smtp0.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: FE8B3FC4-A37D-11E5-86B2-6BD26AB36C07-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282500>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282501>
 
-A release candidate Git v2.7.0-rc1 is now available for testing at
-the usual places.
+Here are the topics that have been cooking.  Commits prefixed with
+'-' are only in 'pu' (proposed updates) while commits prefixed with
+'+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
-The tarballs are found at:
+2.7-rc1 has been tagged.
 
-    https://www.kernel.org/pub/software/scm/git/testing/
+I notice that quite a few topics have been in "waiting for review"
+state without getting anybody helping the review process, leaving
+them in 'pu'--they will not be part of 2.7 anyway, but the sooner
+they are reviewed, in the more polished shape they can start in
+the cycle after 2.7 gets tagged.
 
-The following public repositories all have a copy of the
-'v2.7.0-rc1' tag and the 'master' branch that the tag points at:
+On the other hand, I've marked a handful of topics below as "Will
+discard". They were all dormant after waiting for updates for quite
+a long time; interested people may want to help resurrect them.
 
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+You can find the changes described here in the integration branches of the
+repositories listed at
 
-----------------------------------------------------------------
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
-Git 2.7 Release Notes (draft)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
+--------------------------------------------------
+[New Topics]
 
-Updates since v2.6
-------------------
+* cc/untracked (2015-12-15) 10 commits
+ - dir: do not use untracked cache ident anymore
+ - t7063: add tests for core.untrackedCache
+ - config: add core.untrackedCache
+ - dir: free untracked cache when removing it
+ - dir: add remove_untracked_cache()
+ - dir: add add_untracked_cache()
+ - update-index: move 'uc' var declaration
+ - update-index: add untracked cache notifications
+ - update-index: add --test-untracked-cache
+ - update-index: use enum for untracked cache options
 
-UI, Workflows & Features
+ Update the untracked cache subsystem and change its primary UI from
+ "git update-index" to "git config".
 
- * "git remote" learned "get-url" subcommand to show the URL for a
-   given remote name used for fetching and pushing.
+ Needs review.
 
- * There was no way to defeat a configured rebase.autostash variable
-   from the command line, as "git rebase --no-autostash" was missing.
 
- * "git log --date=3Dlocal" used to only show the normal (default)
-   format in the local timezone.  The command learned to take 'local'
-   as an instruction to use the local timezone with other formats,
+* ep/make-phoney (2015-12-15) 1 commit
+ - Makefile: add missing phony target
 
- * The refs used during a "git bisect" session is now per-worktree so
-   that independent bisect sessions can be done in different worktrees
-   created with "git worktree add".
+ A slight update to the Makefile.
 
- * Users who are too busy to type three extra keystrokes to ask for
-   "git stash show -p" can now set stash.showPatch configuration
-   varible to true to always see the actual patch, not just the list
-   of paths affected with feel for the extent of damage via diffstat.
+ Needs review.
+ Comments?
 
- * "quiltimport" allows to specify the series file by honoring the
-   $QUILT_SERIES environment and also --series command line option.
+--------------------------------------------------
+[Graduated to "master"]
 
- * The use of 'good/bad' in "git bisect" made it confusing to use when
-   hunting for a state change that is not a regression (e.g. bugfix).
-   The command learned 'old/new' and then allows the end user to
-   say e.g. "bisect start --term-old=3Dfast --term-new=3Dslow" to find =
-a
-   performance regression.
+* ep/ident-with-getaddrinfo (2015-12-14) 1 commit
+  (merged to 'next' on 2015-12-15 at 2c19123)
+ + ident: fix undefined variable when NO_IPV6 is set
 
- * "git interpret-trailers" can now run outside of a Git repository.
+ A fix-up for a recent topic.
 
- * "git p4" learned to reencode the pathname it uses to communicate
-   with the p4 depot with a new option.
 
- * Give progress meter to "git filter-branch".
+* jk/prune-mtime (2015-08-12) 1 commit
+  (merged to 'next' on 2015-12-14 at 4fba3f3)
+ + prune: close directory earlier during loose-object directory traversal
 
- * Allow a later "!/abc/def" to override an earlier "/abc" that
-   appears in the same .gitignore file to make it easier to express
-   "everything in /abc directory is ignored, except for ...".
+ The helper used to iterate over loose object directories to prune
+ stale objects did not closedir() immediately when it is done with a
+ directory--a callback such as the one used for "git prune" may want
+ to do rmdir(), but it would fail on open directory on platforms
+ such as WinXP.
 
- * Teach "git p4" to send large blobs outside the repository by
-   talking to Git LFS.
 
- * Prepare for Git on-disk repository representation to undergo
-   backward incompatible changes by introducing a new repository
-   format version "1", with an extension mechanism.
+* jk/send-email-complete-aliases (2015-12-14) 1 commit
+  (merged to 'next' on 2015-12-15 at 6978ff4)
+ + completion: fix completing unstuck email alias arguments
 
- * "git worktree" learned a "list" subcommand.
+ A fix-up for a recent topic.
 
- * "git clone --dissociate" learned that it can be used even when
-   "--reference" was not used at the same time.
 
- * "git blame" learnt to take "--first-parent" and "--reverse" at the
-   same time when it makes sense.
+* ls/p4-keep-empty-commits (2015-12-10) 1 commit
+  (merged to 'next' on 2015-12-11 at 1827062)
+ + git-p4: add option to keep empty commits
 
- * "git checkout" did not follow the usual "--[no-]progress"
-   convention and implemented only "--quiet" that is essentially
-   a superset of "--no-progress".  Extend the command to support the
-   usual "--[no-]progress".
+ "git p4" used to import Perforce CLs that touch only paths outside
+ the client spec as empty commits.  It has been corrected to ignore
+ them instead, with a new configuration git-p4.keepEmptyCommits as a
+ backward compatibility knob.
 
- * The semantics of tranfer.hideRefs configuration variable have been
-   extended to work better with the ref "namespace" feature that lets
-   you throw unrelated bunches of repositories in a single physical
-   repository and virtually serve them as separate ones.
+--------------------------------------------------
+[Stalled]
 
- * send-email config variables whose values are pathnames now go
-   through the ~username/ expansion.
+* kf/http-proxy-auth-methods (2015-11-04) 3 commits
+ . SQUASH???
+ . http: use credential API to handle proxy authentication
+ . http: allow selection of proxy authentication method
 
- * bash completion learnt to TAB-complete recipient addresses given
-   to send-email.
+ New http.proxyAuthMethod configuration variable can be used to
+ specify what authentication method to use, as a way to work around
+ proxies that do not give error response expected by libcurl when
+ CURLAUTH_ANY is used.  Also, the codepath for proxy authentication
+ has been taught to use credential API to store the authentication
+ material in user's keyrings.
 
- * The credential-cache daemon can be told to ignore SIGHUP to work
-   around issue when running Git from inside emacs.
+ I ejected this from pu for the moment, as it conflicts with the
+ pt/http-socks-proxy topic. That is now in master, so it can
+ be re-rolled on top.
 
+ Anybody wants to help rerolling this?  Otherwise will discard. 
 
-Performance, Internal Implementation, Development Support etc.
 
- * The infrastructure to rewrite "git submodule" in C is being built
-   incrementally.  Let's polish these early parts well enough and make
-   them graduate to 'next' and 'master', so that the more involved
-   follow-up can start cooking on a solid ground.
+* nd/ita-cleanup (2015-09-06) 6 commits
+ - grep: make it clear i-t-a entries are ignored
+ - checkout(-index): do not checkout i-t-a entries
+ - apply: make sure check_preimage() does not leave empty file on error
+ - apply: fix adding new files on i-t-a entries
+ - add and use a convenience macro ce_intent_to_add()
+ - blame: remove obsolete comment
 
- * Some features from "git tag -l" and "git branch -l" have been made
-   available to "git for-each-ref" so that eventually the unified
-   implementation can be shared across all three.  The version merged
-   to the 'master' branch earlier had a performance regression in "tag
-   --contains", which has since been corrected.
+ Paths that have been told the index about with "add -N" are not yet
+ in the index, but various commands behaved as if they already are.
 
- * Because "test_when_finished" in our test framework queues the
-   clean-up tasks to be done in a shell variable, it should not be
-   used inside a subshell.  Add a mechanism to allow 'bash' to catch
-   such uses, and fix the ones that were found.
+ Some commits need better explanation.
+ Becoming tired of waiting for a reroll.
+ Will discard.
 
- * The debugging infrastructure for pkt-line based communication has
-   been improved to mark the side-band communication specifically.
 
- * Update "git branch" that list existing branches, using the
-   ref-filter API that is shared with "git tag" and "git
-   for-each-ref".
+* mg/httpd-tests-update-for-apache-2.4 (2015-04-08) 2 commits
+ - t/lib-git-svn: check same httpd module dirs as lib-httpd
+ - t/lib-httpd: load mod_unixd
 
- * The test for various line-ending conversions has been enhanced.
+ This is the first two commits in a three-patch series $gmane/266962
 
- * A few test scripts around "git p4" have been improved for
-   portability.
+ Becoming tired of waiting for a reroll.
+ with updated log message ($gmane/268061).
+ Will discard.
 
- * Many allocations that is manually counted (correctly) that are
-   followed by strcpy/sprintf have been replaced with a less error
-   prone constructs such as xstrfmt.
 
- * The internal stripspace() function has been moved to where it
-   logically belongs to, i.e. strbuf API, and the command line parser
-   of "git stripspace" has been updated to use the parse_options API.
+* wp/sha1-name-negative-match (2015-06-08) 2 commits
+ - sha1_name.c: introduce '^{/!-<negative pattern>}' notation
+ - test for '!' handling in rev-parse's named commits
 
- * "git am" used to spawn "git mailinfo" via run_command() API once
-   per each patch, but learned to make a direct call to mailinfo()
-   instead.
+ Introduce "branch^{/!-<pattern>}" notation to name a commit
+ reachable from branch that does not match the given pattern.
 
- * The implementation of "git mailinfo" was refactored so that a
-   mailinfo() function can be directly called from inside a process.
+ Becoming tired of waiting for a reroll.
+ ($gmane/271213).
+ Anybody wants to help rerolling this?  Otherwise will discard. 
 
- * With a "debug" helper, debugging of a single "git" invocation in
-   our test scripts has become a lot easier.
 
- * The "configure" script did not test for -lpthread correctly, which
-   upset some linkers.
+* ak/format-patch-odir-config (2015-06-19) 1 commit
+ - format-patch: introduce format.outputDirectory configuration
 
- * Cross completed task off of subtree project's todo list.
+ Becoming tired of waiting for a reroll.
+ Anybody wants to help rerolling this?  Otherwise will discard. 
+ ($gmane/272180).
 
- * Test cleanups for the subtree project.
 
- * Clean up style in an ancient test t9300.
+* jc/diff-b-m (2015-02-23) 5 commits
+ . WIPWIP
+ . WIP: diff-b-m
+ - diffcore-rename: allow easier debugging
+ - diffcore-rename.c: add locate_rename_src()
+ - diffcore-break: allow debugging
 
- * Work around some test flakiness with p4d.
+ "git diff -B -M" produced incorrect patch when the postimage of a
+ completely rewritten file is similar to the preimage of a removed
+ file; such a resulting file must not be expressed as a rename from
+ other place.
 
- * Fsck did not correctly detect a NUL-truncated header in a tag.
+ The fix in this patch is broken, unfortunately.
+ Will discard.
 
- * Use a safer behavior when we hit errors verifying remote certificate=
-s.
+--------------------------------------------------
+[Cooking]
 
- * Speed up filter-branch for cases where we only care about rewriting
-   commits, not tree data.
+* vl/grep-configurable-threads (2015-12-15) 3 commits
+ - grep: add --threads=<num> option and grep.threads configuration
+ - grep: slight refactoring to the code that disables threading
+ - grep: allow threading even on a single-core machine
 
- * The parse-options API has been updated to make "-h" command line
-   option work more consistently in all commands.
+ "git grep" can now be configured (or told from the command line)
+ how many threads to use when searching in the working tree files.
 
- * "git svn rebase/mkdirs" got optimized by keeping track of empty
-   directories better.
+ Needs review.
 
- * Fix some racy client/server tests by treating SIGPIPE the same as a
-   normal non-zero exit.
 
- * The necessary infrastructure to build topics using the free Travis
-   CI has been added. Developers forking from this topic (and enabling
-   Travis) can do their own builds, and we can turn on auto-builds for
-   git/git (including build-status for pull requests that people
-   open).
+* fr/rebase-i-continue-preserve-options (2015-12-11) 1 commit
+  (merged to 'next' on 2015-12-15 at e99677a)
+ + rebase -i: remember merge options beyond continue actions
 
+ "git rebase -i" started with merge strategy options did not
+ propagate them upon "git rebase --continue".
 
-Also contains various documentation updates and code clean-ups.
+ Will merge to 'master'.
 
 
-=46ixes since v2.6
-----------------
+* jk/ident-loosen-getpwuid (2015-12-14) 3 commits
+  (merged to 'next' on 2015-12-15 at 0c8137b)
+ + ident: loosen getpwuid error in non-strict mode
+ + ident: keep a flag for bogus default_email
+ + ident: make xgetpwuid_self() a static local helper
 
-Unless otherwise noted, all the fixes since v2.6 in the maintenance
-track are contained in this release (see the maintenance releases'
-notes for details).
+ When getpwuid() on the system returned NULL (e.g. the user is not
+ in the /etc/passwd file or other uid-to-name mappings), the
+ codepath to find who the user is to record it in the reflog barfed
+ and died.  Loosen the check in this codepath, which already accepts
+ questionable ident string (e.g. host part of the e-mail address is
+ obviously bogus), and in general when we operate fmt_ident() function
+ in non-strict mode.
 
- * Very small number of options take a parameter that is optional
-   (which is not a great UI element as they can only appear at the end
-   of the command line).  Add notice to documentation of each and
-   every one of them.
+ Will merge to 'master'.
 
- * "git blame --first-parent v1.0..v2.0" was not rejected but did not
-   limit the blame to commits on the first parent chain.
 
- * "git subtree" (in contrib/) now can take whitespaces in the
-   pathnames, not only in the in-tree pathname but the name of the
-   directory that the repository is in.
+* sg/completion-no-column (2015-12-11) 1 commit
+  (merged to 'next' on 2015-12-15 at 01a2476)
+ + completion: remove 'git column' from porcelain commands
 
- * The ssh transport, just like any other transport over the network,
-   did not clear GIT_* environment variables, but it is possible to
-   use SendEnv and AcceptEnv to leak them to the remote invocation of
-   Git, which is not a good idea at all.  Explicitly clear them just
-   like we do for the local transport.
+ The completion script (in contrib/) used to list "git column"
+ (which is not an end-user facing command) as one of the choices
 
- * Correct "git p4 --detect-labels" so that it does not fail to create
-   a tag that points at a commit that is also being imported.
+ Will merge to 'master'.
 
- * The Makefile always runs the library archiver with hardcoded "crs"
-   options, which was inconvenient for exotic platforms on which
-   people want to use programs with totally different set of command
-   line options.
 
- * Customization to change the behaviour with "make -w" and "make -s"
-   in our Makefile was broken when they were used together.
+* ps/push-delete-option (2015-12-14) 2 commits
+ - push: add '-d' as shorthand for '--delete'
+ - push: add '--delete' flag to synopsis
 
- * Allocation related functions and stdio are unsafe things to call
-   inside a signal handler, and indeed killing the pager can cause
-   glibc to deadlock waiting on allocation mutex as our signal handler
-   tries to free() some data structures in wait_for_pager().  Reduce
-   these unsafe calls.
+ "branch --delete" has "branch -d" but "push --delete" does not.
 
- * The way how --ref/--notes to specify the notes tree reference are
-   DWIMmed was not clearly documented.
 
- * "git gc" used to barf when a symbolic ref has gone dangling
-   (e.g. the branch that used to be your upstream's default when you
-   cloned from it is now gone, and you did "fetch --prune").
+* sh/p4-multi-depot (2015-12-14) 3 commits
+ - git-p4: reduce number of server queries for fetches
+ - git-p4: support multiple depot paths in p4 submit
+ - git-p4: failing test case for skipping changes with multiple depots
 
- * "git clone --dissociate" runs a big "git repack" process at the
-   end, and it helps to close file descriptors that are open on the
-   packs and their idx files before doing so on filesystems that
-   cannot remove a file that is still open.
+ "git p4" when interacting with multiple depots at the same time
+ used to incorrectly drop changes.
 
- * Description of the "log.follow" configuration variable in "git log"
-   documentation is now also copied to "git config" documentation.
+ Reported to be broken.
+ ($gmane/282447)
 
- * "git rebase -i" had a minor regression recently, which stopped
-   considering a line that begins with an indented '#' in its insn
-   sheet not a comment. Further, the code was still too picky on
-   Windows where CRLF left by the editor is turned into a trailing CR
-   on the line read via the "read" built-in command of bash.  Both of
-   these issues are now fixed.
 
- * After "git checkout --detach", "git status" reported a fairly
-   useless "HEAD detached at HEAD", instead of saying at which exact
-   commit.
+* bc/format-patch-null-from-line (2015-12-15) 3 commits
+ - format-patch: check that header line has expected format
+ - format-patch: add an option to suppress commit hash
+ - sha1_file.c: introduce a null_oid constant
 
- * When "git send-email" wanted to talk over Net::SMTP::SSL,
-   Net::Cmd::datasend() did not like to be fed too many bytes at the
-   same time and failed to send messages.  Send the payload one line
-   at a time to work around the problem.
+ "format-patch" has learned a new option to zero-out the commit
+ object name on the mbox "From " line.
 
- * When "git am" was rewritten as a built-in, it stopped paying
-   attention to user.signingkey, which was fixed.
+ Will merge to 'next'.
 
- * It was not possible to use a repository-lookalike created by "git
-   worktree add" as a local source of "git clone".
 
- * On a case insensitive filesystems, setting GIT_WORK_TREE variable
-   using a random cases that does not agree with what the filesystem
-   thinks confused Git that it wasn't inside the working tree.
+* dt/refs-backend-lmdb (2015-12-04) 16 commits
+ - refs: tests for lmdb backend
+ - refs: add LMDB refs backend
+ - refs: allow ref backend to be set for clone
+ - init: allow alternate backends to be set for new repos
+ - refs: always handle non-normal refs in files backend
+ - refs: move duplicate check to common code
+ - refs: make lock generic
+ - refs: add method to rename refs
+ - refs: add methods to init refs backend and db
+ - refs: add method for delete_refs
+ - refs: add method for initial ref transaction commit
+ - refs: add methods for reflog
+ - refs: add do_for_each_per_worktree_ref
+ - refs: add methods for the ref iterators
+ - refs: add methods for misc ref operations
+ - refs: add a backend method structure with transaction functions
 
- * Performance-measurement tests did not work without an installed Git.
+ Building on top of a few refs-backend preparatory series, LMDB
+ based refs backend has been plugged into the system.
 
- * A test script for the HTTP service had a timing dependent bug,
-   which was fixed.
+ Waiting for review.
 
- * There were some classes of errors that "git fsck" diagnosed to its
-   standard error that did not cause it to exit with non-zero status.
 
- * Work around "git p4" failing when the P4 depot records the contents
-   in UTF-16 without UTF-16 BOM.
+* dw/subtree-split-do-not-drop-merge (2015-12-10) 1 commit
+ - contrib/subtree: fix "subtree split" skipped-merge bug
 
- * When "git gc --auto" is backgrounded, its diagnosis message is
-   lost.  Save it to a file in $GIT_DIR and show it next time the "gc
-   --auto" is run.
+ The "split" subcommand of "git subtree" (in contrib/) incorrectly
+ skipped merges when it shouldn't, which was corrected.
 
- * The submodule code has been taught to work better with separate
-   work trees created via "git worktree add".
+ Waiting for review from 'subtree' folks.
 
- * "git gc" is safe to run anytime only because it has the built-in
-   grace period to protect young objects.  In order to run with no
-   grace period, the user must make sure that the repository is
-   quiescent.
 
- * A recent "filter-branch --msg-filter" broke skipping of the commit
-   object header, which is fixed.
+* nd/clear-gitenv-upon-use-of-alias (2015-12-07) 3 commits
+ . git.c: make sure we do not leak GIT_* to alias scripts
+ - setup.c: re-fix d95138e (setup: set env $GIT_WORK_TREE when ..
+ - git.c: make it clear save_env() is for alias handling only
 
- * The normalize_ceiling_entry() function does not muck with the end
-   of the path it accepts, and the real world callers do rely on that,
-   but a test insisted that the function drops a trailing slash.
+ d95138e6 (setup: set env $GIT_WORK_TREE when work tree is set, like
+ $GIT_DIR, 2015-06-26) attempted to work around a glitch in alias
+ handling by overwriting GIT_WORK_TREE environment variable to
+ affect subprocesses when set_git_work_tree() gets called, which
+ resulted in a rather unpleasant regression to "clone" and "init".
+ Try to address the same issue by always restoring the environment
+ and respawning the real underlying command when handling alias.
 
- * A test for interaction between untracked cache and sparse checkout
-   added in Git 2.5 days were flaky.
+ The tip one seems to break tests under "prove".
 
- * A couple of commands still showed "[options]" in their usage string
-   to note where options should come on their command line, but we
-   spell that "[<options>]" in most places these days.
+ Waiting for review.
 
- * The synopsis text and the usage string of subcommands that read
-   list of things from the standard input are often shown as if they
-   only take input from a file on a filesystem, which was misleading.
 
- * "git am -3" had a small regression where it is aborted in its error
-   handling codepath when underlying merge-recursive failed in certain
-   ways, as it assumed that the internal call to merge-recursive will
-   never die, which is not the case (yet).
+* kn/ref-filter-atom-parsing (2015-12-11) 10 commits
+ - ref-filter: introduce objectname_atom_parser()
+ - ref-filter: introduce contents_atom_parser()
+ - ref-filter: introduce remote_ref_atom_parser()
+ - ref-filter: introduce align_atom_parser()
+ - strbuf: introduce strbuf_split_str_without_term()
+ - ref-filter: introduce color_atom_parser()
+ - ref-filter: skip deref specifier in match_atom_name()
+ - ref-filter: bump match_atom() name to the top
+ - ref-filter: introduce struct used_atom
+ - ref-filter: introduce a parsing function for each atom in valid_atom
 
- * The linkage order of libraries was wrong in places around libcurl.
+ Refactoring of ref-filter's format-parsing code, in preparation
+ for "branch --format" and friends.
 
- * The name-hash subsystem that is used to cope with case insensitive
-   filesystems keeps track of directories and their on-filesystem
-   cases for all the paths in the index by holding a pointer to a
-   randomly chosen cache entry that is inside the directory (for its
-   ce->ce_name component).  This pointer was not updated even when the
-   cache entry was removed from the index, leading to use after free.
-   This was fixed by recording the path for each directory instead of
-   borrowing cache entries and restructuring the API somewhat.
+ This replaces (for now) kn/for-each-ref-remainder, which will be built
+ on top.
 
- * "git merge-file" tried to signal how many conflicts it found, which
-   obviously would not work well when there are too many of them.
+ Reviewed mostly by Eric.
 
- * The error message from "git blame --contents --reverse" incorrectly
-   talked about "--contents --children".
+ Waiting for a reroll.
+ ($gmane/281180).
 
- * "git imap-send" did not compile well with older version of cURL libr=
-ary.
 
- * Merging a branch that removes a path and another that changes the
-   mode bits on the same path should have conflicted at the path, but
-   it didn't and silently favoured the removal.
+* bb/merge-marker-crlf (2015-11-24) 1 commit
+ - merge-file: consider core.crlf when writing merge markers
 
- * "git --literal-pathspecs add -u/-A" without any command line
-   argument misbehaved ever since Git 2.0.
+ Write out merge markers using system end-of-line convention.
 
- * "git daemon" uses "run_command()" without "finish_command()", so it
-   needs to release resources itself, which it forgot to do.
+ Waiting for a re-roll to handle gitattributes.
+ ($gmane/281701)
 
- * "git status --branch --short" accessed beyond the constant string
-   "HEAD", which has been corrected.
 
- * We peek objects from submodule's object store by linking it to the
-   list of alternate object databases, but the code to do so forgot to
-   correctly initialize the list.
+* dk/gc-more-wo-pack (2015-11-24) 3 commits
+ - gc: Clean garbage .bitmap files from pack dir
+ - t5304: Add test for .bitmap garbage files
+ - prepare_packed_git(): find more garbage
 
- * The code to prepare the working tree side of temporary directory
-   for the "dir-diff" feature forgot that symbolic links need not be
-   copied (or symlinked) to the temporary area, as the code already
-   special cases and overwrites them.  Besides, it was wrong to try
-   computing the object name of the target of symbolic link, which may
-   not even exist or may be a directory.
+ Follow-on to dk/gc-idx-wo-pack topic, to clean up stale
+ .bitmap and .keep files.
 
- * A Range: request can be responded with a full response and when
-   asked properly libcurl knows how to strip the result down to the
-   requested range.  However, we were hand-crafting a range request
-   and it did not kick in.
+ Waiting for review.
 
- * Having a leftover .idx file without corresponding .pack file in
-   the repository hurts performance; "git gc" learned to prune them.
 
- * Apple's common crypto implementation of SHA1_Update() does not take
-   more than 4GB at a time, and we now have a compile-time workaround
-   for it.
+* jk/send-email-ssl-errors (2015-12-11) 1 commit
+  (merged to 'next' on 2015-12-15 at 104f448)
+ + send-email: enable SSL level 1 debug output
 
- * Produce correct "dirty" marker for shell prompts, even when we
-   are on an orphan or an unborn branch.
+ Improve error reporting when SMTP TLS fails.
 
- * A build without NO_IPv6 used to use gethostbyname() when guessing
-   user's hostname, instead of getaddrinfo() that is used in other
-   codepaths in such a build.
+ Will merge to 'master'.
 
- * The exit code of git-fsck did not reflect some types of errors
-   found in packed objects, which has been corrected.
 
- * The helper used to iterate over loose object directories to prune
-   stale objects did not closedir() immediately when it is done with a
-   directory--a callback such as the one used for "git prune" may want
-   to do rmdir(), but it would fail on open directory on platforms
-   such as WinXP.
+* ps/rebase-keep-empty (2015-11-24) 2 commits
+ - rebase: fix preserving commits with --keep-empty
+ - rebase: test broken behavior with --keep-empty
 
- * "git p4" used to import Perforce CLs that touch only paths outside
-   the client spec as empty commits.  It has been corrected to ignore
-   them instead, with a new configuration git-p4.keepEmptyCommits as a
-   backward compatibility knob.
+ Keep duplicate commits via rebase --keep-empty.
 
- * Code clean-up, minor fixes etc.
+ Of dubious or negative value.
+ Will discard.
+ ($gmane/282107).
 
-----------------------------------------------------------------
 
-Changes since v2.7.0-rc0 are as follows:
+* rm/subtree-unwrap-tags (2015-11-24) 1 commit
+ - contrib/subtree: unwrap tag refs
 
-Charles Bailey (1):
-      t3404: fix quoting of redirect for some versions of bash
+ Waiting for review from subtree folks.
 
-Jeff King (1):
-      ident: fix undefined variable when NO_IPV6 is set
 
-Johannes Sixt (1):
-      prune: close directory earlier during loose-object directory trav=
-ersal
+* sg/sh-require-clean-orphan (2015-11-24) 2 commits
+ - sh-setup: make require_clean_work_tree() work on orphan branches
+ - Add tests for git-sh-setup's require_clean_work_tree()
 
-Junio C Hamano (4):
-      Prepare for 2.6.5
-      Update release notes to 2.7
-      Update draft release notes to 2.6.5
-      Git 2.7-rc1
+ Allow users of git-sh-setup to handle orphan branch state.
 
-Lars Schneider (1):
-      git-p4: add option to keep empty commits
+ This series takes the conservative route of requiring scripts to opt
+ into the looser behavior, at the expense of carrying around a new
+ option-flag forever. I'm not sure if we need to do so.
 
-SZEDER G=C3=A1bor (2):
-      Make error message after failing commit_lock_file() less confusin=
-g
-      completion: fix completing unstuck email alias arguments
+ Needs review.
 
-Stefan Beller (1):
-      document submodule sync --recursive
 
-Stefan Naewe (1):
-      revision.c: fix possible null pointer arithmetic
+* tb/ls-files-eol (2015-11-28) 2 commits
+ - convert.c: mark a file-local function static
+ - ls-files: Add eol diagnostics
+
+ Add options to ls-files to help diagnose end-of-line problems.
+
+ This latest round hasn't gotten any review yet.
+
+ Waiting for review.
+
+
+* ec/annotate-deleted (2015-11-20) 1 commit
+ - annotate: skip checking working tree if a revision is provided
+
+ Usability fix for annotate-specific "<file> <rev>" syntax with deleted
+ files.
+
+ Waiting for review.
+
+
+* mc/push-recurse-submodules-config (2015-12-04) 3 commits
+  (merged to 'next' on 2015-12-08 at 1b81967)
+ + push: follow the "last one wins" convention for --recurse-submodules
+ + push: test that --recurse-submodules on command line overrides config
+  (merged to 'next' on 2015-11-24 at 3644d4b)
+ + push: add recurseSubmodules config option
+
+ Add new config to avoid typing "--recurse-submodules" on each push.
+
+ Waiting for review from submodule folks.
+
+
+* sb/submodule-parallel-fetch (2015-12-14) 8 commits
+ - submodules: allow parallel fetching, add tests and documentation
+ - fetch_populated_submodules: use new parallel job processing
+ - run-command: add an asynchronous parallel child processor
+ - sigchain: add command to pop all common signals
+ - strbuf: add strbuf_read_once to read without blocking
+ - xread_nonblock: add functionality to read from fds without blocking
+ - xread: poll on non blocking fds
+ - submodule.c: write "Fetching submodule <foo>" to stderr
+ (this branch is used by sb/submodule-parallel-update.)
+
+ Add a framework to spawn a group of processes in parallel, and use
+ it to run "git fetch --recurse-submodules" in parallel.
+
+ Rerolled and this seems to be a lot cleaner.  The merge of the
+ earlier one to 'next' has been reverted.
+
+ Will merge to 'next' after a few days.
+
+ 
+* sb/submodule-parallel-update (2015-12-14) 8 commits
+ - clone: allow an explicit argument for parallel submodule clones
+ - submodule update: expose parallelism to the user
+ - git submodule update: have a dedicated helper for cloning
+ - fetching submodules: respect `submodule.fetchJobs` config option
+ - submodule-config: introduce parse_generic_submodule_config
+ - submodule-config: remove name_and_item_from_var
+ - submodule-config: drop check against NULL
+ - submodule-config: keep update strategy around
+ (this branch uses sb/submodule-parallel-fetch.)
+
+ Builds on top of the "fetch --recurse-submodules" work to introduce
+ parallel downloading into multiple submodules for "submodule update".
+
+ Needs review.
+
+
+* jc/strbuf-gets (2015-10-28) 17 commits
+ - test-sha1-array: read command stream with strbuf_gets()
+ - grep: read -f file with strbuf_gets()
+ - send-pack: read list of refs with strbuf_gets()
+ - column: read lines with strbuf_gets()
+ - cat-file: read batch stream with strbuf_gets()
+ - transport-helper: read helper response with strbuf_gets()
+ - clone/sha1_file: read info/alternates with strbuf_gets()
+ - remote.c: read $GIT_DIR/remotes/* with strbuf_gets()
+ - ident.c: read /etc/mailname with strbuf_gets()
+ - rev-parse: read parseopt spec with strbuf_gets()
+ - revision: read --stdin with strbuf_gets()
+ - hash-object: read --stdin-paths with strbuf_gets()
+ - mktree: read textual tree representation with strbuf_gets()
+ - update-index: read list of paths with strbuf_gets() under --stdin
+ - update-index: read --index-info with strbuf_gets()
+ - check-attr, check-ignore, checkout-index: read paths with strbuf_gets()
+ - strbuf: add strbuf_gets()
+
+ Teach codepaths that communicate with users by reading text files
+ to be more lenient to editors that write CRLF-terminated lines.
+ Note that this is only about communication with Git, like feeding
+ list of object names from the standard input instead of from the
+ command line, and does not involve files in the working tree.
+
+ Waiting for review.
+
+
+* mh/notes-allow-reading-treeish (2015-10-08) 3 commits
+  (merged to 'next' on 2015-10-23 at 8a697f0)
+ + notes: allow treeish expressions as notes ref
+ + Merge branch 'jk/notes-dwim-doc' into next
+ + Merge branch 'jc/merge-drop-old-syntax' into next
+ (this branch uses jc/merge-drop-old-syntax.)
+
+ Some "git notes" operations, e.g. "git log --notes=<note>", should
+ be able to read notes from any tree-ish that is shaped like a notes
+ tree, but the notes infrastructure required that the argument must
+ be a ref under refs/notes/.  Loosen it to require a valid ref only
+ when the operation would update the notes (in which case we must
+ have a place to store the updated notes tree, iow, a ref).
+
+ As the patch was done on top of the 'drop old-syntax from merge',
+ this has to wait until that other topic can graduate, unfortunately.
+ It can be redone in a way that does not depend on that topic after
+ this cycle, though.
+
+ Will keep in 'next'.
+
+
+* jc/mailinfo (2015-10-21) 1 commit
+ - mailinfo: ignore in-body header that we do not care about
+
+ Some people write arbitrary garbage at the beginning of a piece of
+ e-mail (or after -- >8 -- scissors -- >8 -- line) in the commit log
+ message and expect them to be discarded, even though "From:" and
+ "Subject:" are the only documented in-body headers that you are
+ supposed to have there.  Allow some garbage (specifically, what may
+ look like RFC2822 headers like "MIME-Version: ...") to be there and
+ ignore them.
+
+ No comments after waiting for a long time.
+ Will discard.
+
+
+* js/am-3-merge-recursive-direct (2015-10-12) 2 commits
+  (merged to 'next' on 2015-10-23 at dc631e5)
+ + am: make a direct call to merge_recursive
+ + merge_recursive_options: introduce the "gently" flag
+
+ The merge_recursive_generic() function has been made a bit safer to
+ call from inside a process.  "git am -3" was taught to make a direct
+ call to the function when falling back to three-way merge.
+
+ Being able to make a direct call would be good in general, but as a
+ performance thing, we would want to see it backed up by numbers.
+
+ I haven't gone through the "gently" change with fine toothed comb;
+ I can see that the change avoids calling die(), but I haven't made
+ sure that the program states (e.g. what's in the in-core index) are
+ adjusted sensibly when it returns to the caller instead of dying,
+ or the codepaths that used to die() are free of resource leaks.
+ The original code certainly did not care the program states at the
+ point of dying exactly because it knew it is going to exit, but now
+ they have to care, and they need to be audited.
+
+ Will keep in 'next'.
+
+
+* sg/pretty-more-date-mode-format (2015-10-07) 1 commit
+ - pretty: add format specifiers for short and raw date formats
+
+ Introduce "%as" and "%aR" placeholders for "log --format" to show
+ the author date in the short and raw formats.
+
+ No comments after waiting for a long time.
+ Will discard.
+
+
+* jk/graph-format-padding (2015-09-14) 1 commit
+ - pretty: pass graph width to pretty formatting for use in '%>|(N)'
+
+ Redefine the way '%>|(N)' padding and the "--graph" option
+ interacts.  It has been that the available columns to display the
+ log message was measured from the edge of the area the graph ended,
+ but with this it becomes the beginning of the entire output.
+
+ I have a suspicion that 50% of the users would appreciate this
+ change, and the remainder see this break their expectation.  If
+ that is the case, we might need to introduce a similar but
+ different alignment operator so that this new behaviour is
+ available to those who want to use it, without negatively affecting
+ existing uses.
+
+ No comments after waiting for a long time.
+ Will discard.
+ ($gmane/278326)
+
+
+* ad/cygwin-wants-rename (2015-08-07) 1 commit
+ - config.mak.uname: Cygwin needs OBJECT_CREATION_USES_RENAMES
+
+ Will hold.
+ ($gmane/275680).
+
+
+* jc/rerere-multi (2015-09-14) 7 commits
+ - rerere: do use multiple variants
+ - t4200: rerere a merge with two identical conflicts
+ - rerere: allow multiple variants to exist
+ - rerere: delay the recording of preimage
+ - rerere: handle leftover rr-cache/$ID directory and postimage files
+ - rerere: scan $GIT_DIR/rr-cache/$ID when instantiating a rerere_id
+ - rerere: split conflict ID further
+
+ "git rerere" can encounter two or more files with the same conflict
+ signature that have to be resolved in different ways, but there was
+ no way to record these separate resolutions.
+
+ Needs review.
+
+
+* jc/merge-drop-old-syntax (2015-04-29) 1 commit
+  (merged to 'next' on 2015-10-07 at 50fed71)
+ + merge: drop 'git merge <message> HEAD <commit>' syntax
+ (this branch is used by mh/notes-allow-reading-treeish.)
+
+ Originally merged to 'next' on 2015-05-28
+
+ Stop supporting "git merge <message> HEAD <commit>" syntax that has
+ been deprecated since October 2007.  It has been reported that
+ git-gui still uses the deprecated syntax, which needs to be fixed
+ before this final step can proceed.
+
+ Will keep in 'next'.
+
+--------------------------------------------------
+[Discarded]
+
+* kn/for-each-branch-remainder (2015-10-02) 9 commits
+ . branch: implement '--format' option
+ . branch: use ref-filter printing APIs
+ . ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
+ . ref-filter: introduce format_ref_array_item()
+ . ref-filter: adopt get_head_description() from branch.c
+ . ref-filter: modify "%(objectname:short)" to take length
+ . ref-filter: add support for %(path) atom
+ . ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
+ . ref-filter: implement %(if), %(then), and %(else) atoms
+
+ More unification among "branch -l", "tag -l" and "for-each-ref --format".
+
+ Ejected from pu for now, as a re-roll should come on top of
+ kn/ref-filter-atom-parsing.
+
+ Expecting a reroll.
+ ($gmane/278926)
