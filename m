@@ -1,111 +1,87 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 7/8] config: add core.untrackedCache
-Date: Tue, 15 Dec 2015 17:42:40 +0100
-Message-ID: <CAP8UFD1g_jZuZdrPs4V1w5Pgtaq9_1NeLkqA5gSGmRQz79bsQA@mail.gmail.com>
-References: <1449594916-21167-1-git-send-email-chriscool@tuxfamily.org>
-	<1449594916-21167-8-git-send-email-chriscool@tuxfamily.org>
-	<xmqqsi3ckadi.fsf@gitster.mtv.corp.google.com>
-	<xmqqfuzck1dp.fsf@gitster.mtv.corp.google.com>
-	<CAP8UFD3at0X9ThpXGTwyPnu_dXFj6x=YzfkCa82m+RsWwhFOOA@mail.gmail.com>
-	<xmqq6100ke7v.fsf@gitster.mtv.corp.google.com>
-	<xmqqa8pciuqq.fsf@gitster.mtv.corp.google.com>
-	<CAP8UFD0ex4JuU=FMDwnSnf9io16=D2_m3x1ajXtCu25OU_DLAw@mail.gmail.com>
-	<566FE228.8040708@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 07/10] dir: free untracked cache when removing it
+Date: Tue, 15 Dec 2015 11:05:44 -0800
+Message-ID: <xmqqlh8vfs6v.fsf@gitster.mtv.corp.google.com>
+References: <1450196907-17805-1-git-send-email-chriscool@tuxfamily.org>
+	<1450196907-17805-8-git-send-email-chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+	<avarab@gmail.com>, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	David Turner <dturner@twopensource.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Dec 15 17:42:51 2015
+	Torsten =?utf-8?Q?B=C3=B6gersh?= =?utf-8?Q?ausen?= 
+	<tboegi@web.de>, Christian Couder <chriscool@tuxfamily.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 15 20:06:04 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1a8sgb-0000sJ-3c
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 17:42:49 +0100
+	id 1a8uvC-0004L1-NH
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Dec 2015 20:06:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965211AbbLOQmo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Dec 2015 11:42:44 -0500
-Received: from mail-lf0-f47.google.com ([209.85.215.47]:36554 "EHLO
-	mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751516AbbLOQmm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Dec 2015 11:42:42 -0500
-Received: by mail-lf0-f47.google.com with SMTP id z124so6137941lfa.3
-        for <git@vger.kernel.org>; Tue, 15 Dec 2015 08:42:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=gX0AJ+X+CkIZRIl7VvzsD8W8Ym54bSr787bM3Dgajjk=;
-        b=TEfT0MD20IPme5c6WYT5u6yxI/OsEdlRWZQ5Z3nNlycp26pPAPbLIsWoe8DTyfYOuh
-         NJbIFdwZMqZ1IEwFg/uCigfJj8Xvz7KoLQ4lH0VbybXtcr4ZuSZCFARJFJX2tbYTe1WL
-         2+8f0Sjr66qPvWo9SN/KCW8PcNVihZNtV+EegnvTC9jwCurkmd8nRsAXZqS63HvnvLeI
-         Zdc5oaWQwmzL5sOcXqdXvspgRj2UH5rPhV2hVsXwY7JFDO5N/1Dx9WBy/s+KDw/8hYNU
-         rRwAdH0XSarnGv6JuWT70EGi2ROjRC95PPVqafF8gc2PTF9a1whO/oROrhWtQ/cdN8tx
-         zh+Q==
-X-Received: by 10.25.163.85 with SMTP id m82mr16097854lfe.76.1450197761080;
- Tue, 15 Dec 2015 08:42:41 -0800 (PST)
-Received: by 10.25.152.7 with HTTP; Tue, 15 Dec 2015 08:42:40 -0800 (PST)
-In-Reply-To: <566FE228.8040708@web.de>
+	id S933478AbbLOTF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Dec 2015 14:05:58 -0500
+Received: from pb-smtp0.int.icgroup.com ([208.72.237.35]:61322 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932190AbbLOTF5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Dec 2015 14:05:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E01D631065;
+	Tue, 15 Dec 2015 14:05:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LQC03zLvOs3CAYNPln3TDFEIIzk=; b=dHxqjf
+	8k9uscW3jFJgkawS92pKJRMXitPK6lz0TS1Fb4/PXz5EVrZymObKH445OjC3rrC5
+	1ujjivsf/vk1wGvUu6Q6BHvgTkQeEr8HStxdh3LhGm7ajrYRYXwfkdRTH0yOfKjs
+	G0NFHVbvJ9tu4TOyTh2yQ0CNZrUP2iCBLf9Ec=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AxNlcKx9ldsZMu2IEIpGj8r6tx6ZJmrs
+	ZB0q31Hz5SUlfMoHNmlPHcTV6AQQBYIqG8OZNyUh+CfgNI4kNOPlRogW439q0ceE
+	UI8UahzTevWo5MvfPe0Q9Uygt2jsJd9gzPMZ1kscTVob+Qhw2rx6pbMWur/+hIAj
+	pDi4ptHLPNw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D470A31064;
+	Tue, 15 Dec 2015 14:05:46 -0500 (EST)
+Received: from pobox.com (unknown [216.239.45.64])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0C18B31062;
+	Tue, 15 Dec 2015 14:05:46 -0500 (EST)
+In-Reply-To: <1450196907-17805-8-git-send-email-chriscool@tuxfamily.org>
+	(Christian Couder's message of "Tue, 15 Dec 2015 17:28:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Pobox-Relay-ID: D8A4F26A-A35E-11E5-9A11-6BD26AB36C07-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/282494>
 
-On Tue, Dec 15, 2015 at 10:49 AM, Torsten B=C3=B6gershausen <tboegi@web=
-=2Ede> wrote:
-> On 15.12.15 10:34, Christian Couder wrote:
->> On Mon, Dec 14, 2015 at 10:30 PM, Junio C Hamano <gitster@pobox.com>=
- wrote:
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>> The primary reason why I do not like your "configuration decides" i=
-s
->>> it will be a huge source of confusions and bugs.  Imagine what
->>> should happen in this sequence, and when should a stale cached
->>> information be discarded?
->>>
->>>  - the configuration is set to 'yes'.
->>>  - the index is updated and written by various commands.
->>>  - more work is done in the working tree without updating the index=
-=2E
->>>  - the configuration is set to 'no'.
->>>  - more work is done in the working tree without updating the index=
-=2E
->>>  - the configuration is set to 'yes'.
->>>  - more work is done in the working tree without updating the index=
-=2E
->>>  - somebody asks "what untracked paths are there?"
->>
+Christian Couder <christian.couder@gmail.com> writes:
+
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  dir.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
->> As far as I understand the UC just stores the mtime of the directori=
-es
->> in the working tree to avoid the need of lstat'ing all the files in
->> the directories.
->
-> This is what I understand:
-> UC stores the mtime of the directories in the working tree to avoid t=
-he need
-> opendir() readdir() closedir() to find new, yet untracked, files.
-> (including sub-directories)
+> diff --git a/dir.c b/dir.c
+> index ffc0286..3b83cc0 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1954,6 +1954,7 @@ void add_untracked_cache(void)
+>  
+>  void remove_untracked_cache(void)
+>  {
+> +	free_untracked_cache(the_index.untracked);
+>  	the_index.untracked = NULL;
+>  	the_index.cache_changed |= UNTRACKED_CHANGED;
+>  }
 
-I think you are probably right too.
-
-In the v2 patch series I just sent, there is:
-
-+This feature works by recording the mtime of the working tree
-+directories and then omitting reading directories and stat calls
-+against files in those directories whose mtime hasn't changed.
-
-I hope it is better.
-
-Thanks,
-Christian.
+Up to this point the series makes sense (again, I am not saying the
+remainder does not ;-)).  But shouldn't this step, as a bugfix,
+appear a lot earlier in the series?
